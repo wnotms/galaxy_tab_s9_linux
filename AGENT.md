@@ -108,13 +108,23 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   X710 slew/PM_EN/TSP-sync/120HS programming, exposes only DSC/120 Hz and uses
   236 x 148 mm dimensions. Stock PPS matches the pinned helpers byte-for-byte
   over its 88 supplied bytes. Kernel, six host tests and an isolated boot
-  bundle validate locally; hardware remains untested. See
-  `docs/DISPLAY_X710_OFFICIAL_V1.md` and `out/boot-bundle-x710-official/`.
-- **Current owner restriction (2026-09-22): no physical tests for now.** Work
-  offline; do not use earlier flash authorization below while this restriction
-  is in force. ccache builds are authorized.
-- Next milestones: complete display transfer/TE/DSC investigation, then a
-  microSD root filesystem, then touch/input. Compilation is not screen validation.
+  bundle validate locally. See `docs/DISPLAY_X710_OFFICIAL_V1.md`.
+- **The panel displays (test 040, `reference/boot-tests/test-040-.../`):** the
+  official candidate was flashed to `boot` only and it works. The owner saw the
+  boot command line on the panel, then a green/black marker, then three lines
+  written two seconds apart appearing live - so the console both decodes and
+  updates. `ctl start` failures are zero, where tests 037-039 never completed a
+  command-mode start. What fixed it was the DDIC's own power-on and refresh-mode
+  programming (`0x60`/`DD 0x13`/`B9 0x10 = 80 00 00 00` for 120HS), not DSC and
+  not the DPU. The panel still cold-boots dark and is still recovered by the
+  framebuffer blank cycle, now in 8 s. Unvalidated: the brightness/gamma/ACL
+  stack, 60 Hz, other panel revisions, and long-run stability.
+- **Current owner restriction (2026-09-22): no physical tests without a direct
+  request.** The test 040 flash was made on the owner's explicit instruction and
+  that instruction supersedes the earlier pause; treat each further flash, reboot
+  or hardware observation as needing its own request. ccache builds are authorized.
+- Next milestones: a microSD root filesystem, then touch/input. Compilation is
+  not screen validation.
 - **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
   gadget exports the microSD partition read-only, Windows mounts it by itself,
   and the report can be read off the running tablet over USB - no TWRP, no power
