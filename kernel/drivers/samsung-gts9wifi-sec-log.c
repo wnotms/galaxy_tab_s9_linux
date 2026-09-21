@@ -30,14 +30,28 @@
  *     from a sibling device, NOT a physically verified X710 implementation.
  *   - Confirm it on the first boot test exactly as described in
  *     docs/FIRST_BOOT_TEST.md before relying on it.
+ *
+ * Boot test 1 (reference/stock/BOOT_TEST_1.md) boot-looped with an empty ring:
+ * registering the console from a platform driver only happens at
+ * device_initcall time, long after the failures this console exists to catch.
+ * The console is therefore registered from an early_initcall now, and the
+ * region can be forced from the command line with
+ *
+ *	gts9_sec_log=0x880200000,0x200000
+ *
+ * so capture does not depend on the device tree reaching Linux at all. Only
+ * one registration ever happens: whichever path runs first owns the ring.
  */
 
 #include <linux/console.h>
+#include <linux/init.h>
 #include <linux/io.h>
 #include <linux/module.h>
 #include <linux/of.h>
+#include <linux/of_address.h>
 #include <linux/of_reserved_mem.h>
 #include <linux/platform_device.h>
+#include <linux/string.h>
 
 /* "LOGM" as a little-endian u32; the tag Samsung's sec_log users look for. */
 #define SEC_LOG_MAGIC	0x4d474f4c
@@ -98,25 +112,22 @@ static void notrace gts9wifi_sec_log_write(struct console *console,
 	WRITE_ONCE(log->header->previous_index, index);
 }
 
-static int gts9wifi_sec_log_probe(struct platform_device *pdev)
+/*
+ * Common bring-up of the ring.  Called either from the early_initcall below or
+ * from the platform driver, whichever runs first; the second caller finds
+ * sec_log already set and leaves the ring alone so the boot log is not reset.
+ */
+static int gts9wifi_sec_log_setup(phys_addr_t base, size_t size, bool early)
 {
-	struct device_node *memory_node;
-	struct reserved_mem *reserved;
 	struct gts9wifi_sec_log *log;
 	void *memory;
 
-	memory_node = of_parse_phandle(pdev->dev.of_node, "memory-region", 0);
-	if (!memory_node)
-		return dev_err_probe(&pdev->dev, -EINVAL,
-				     "missing memory-region\n");
+	if (sec_log)
+		return 0;
+	if (!base || size <= sizeof(struct sec_log_header))
+		return -EINVAL;
 
-	reserved = of_reserved_mem_lookup(memory_node);
-	of_node_put(memory_node);
-	if (!reserved || reserved->size <= sizeof(struct sec_log_header))
-		return dev_err_probe(&pdev->dev, -EINVAL,
-				     "invalid sec_log_buf reservation\n");
-
-	log = devm_kzalloc(&pdev->dev, sizeof(*log), GFP_KERNEL);
+	log = kzalloc(sizeof(*log), GFP_KERNEL);
 	if (!log)
 		return -ENOMEM;
 
@@ -125,14 +136,14 @@ static int gts9wifi_sec_log_probe(struct platform_device *pdev)
 	 * covered by the linear map; memremap gives the driver an explicit
 	 * mapping and keeps the shared region out of normal allocations.
 	 */
-	memory = devm_memremap(&pdev->dev, reserved->base, reserved->size,
-			       MEMREMAP_WB);
-	if (IS_ERR(memory))
-		return dev_err_probe(&pdev->dev, PTR_ERR(memory),
-				     "cannot map sec_log_buf\n");
+	memory = memremap(base, size, MEMREMAP_WB);
+	if (!memory) {
+		kfree(log);
+		return -ENOMEM;
+	}
 
 	log->header = memory;
-	log->data_size = reserved->size - sizeof(*log->header);
+	log->data_size = size - sizeof(*log->header);
 
 	if (READ_ONCE(log->header->magic) != SEC_LOG_MAGIC) {
 		WRITE_ONCE(log->header->boot_count, 0);
@@ -152,20 +163,117 @@ static int gts9wifi_sec_log_probe(struct platform_device *pdev)
 	log->console.index = -1;
 
 	sec_log = log;
-	register_console(&log->console);
-	platform_set_drvdata(pdev, log);
 
-	dev_info(&pdev->dev, "persistent console at %pa (%zu bytes, boot %u)\n",
-		 &reserved->base, (size_t)reserved->size,
-		 READ_ONCE(log->header->boot_count));
+	/*
+	 * Registering replays the whole printk buffer through
+	 * gts9wifi_sec_log_write (CON_PRINTBUFFER), so everything printed before
+	 * this point - including the early arm64 banner - lands in the ring.
+	 */
+	register_console(&log->console);
+
+	pr_info("gts9wifi-sec-log: persistent console at %pa (%zu bytes, boot %u, %s)\n",
+		&base, size, READ_ONCE(log->header->boot_count),
+		early ? "early_initcall" : "platform probe");
 	return 0;
+}
+
+/*
+ * gts9_sec_log=<base>[,<size>] - force the ring location from the command line
+ * so capture does not depend on the device tree that Linux ends up with.
+ */
+static phys_addr_t gts9wifi_sec_log_cmdline_base;
+static phys_addr_t gts9wifi_sec_log_cmdline_size;
+static bool gts9wifi_sec_log_cmdline_set;
+
+static int __init gts9wifi_sec_log_override(char *str)
+{
+	char *sep;
+
+	if (!str || !*str)
+		return -EINVAL;
+
+	sep = strchr(str, ',');
+	if (sep)
+		*sep++ = '\0';
+
+	gts9wifi_sec_log_cmdline_base = memparse(str, NULL);
+	gts9wifi_sec_log_cmdline_size = sep ? memparse(sep, NULL) : 0;
+	gts9wifi_sec_log_cmdline_set = true;
+	return 0;
+}
+early_param("gts9_sec_log", gts9wifi_sec_log_override);
+
+static int __init gts9wifi_sec_log_early_init(void)
+{
+	struct device_node *np, *memory_node;
+	struct resource res;
+	phys_addr_t base;
+	size_t size;
+	int ret;
+
+	if (gts9wifi_sec_log_cmdline_set) {
+		base = gts9wifi_sec_log_cmdline_base;
+		size = gts9wifi_sec_log_cmdline_size;
+	} else {
+		np = of_find_compatible_node(NULL, NULL,
+					     "samsung,gts9wifi-sec-kernel-log");
+		if (!np)
+			return 0;
+
+		memory_node = of_parse_phandle(np, "memory-region", 0);
+		of_node_put(np);
+		if (!memory_node)
+			return 0;
+
+		if (of_address_to_resource(memory_node, 0, &res)) {
+			of_node_put(memory_node);
+			return 0;
+		}
+		of_node_put(memory_node);
+
+		base = res.start;
+		size = resource_size(&res);
+	}
+
+	ret = gts9wifi_sec_log_setup(base, size, true);
+	if (ret)
+		pr_warn("gts9wifi-sec-log: early console not registered (%d)\n",
+			ret);
+	return 0;
+}
+early_initcall(gts9wifi_sec_log_early_init);
+
+static int gts9wifi_sec_log_probe(struct platform_device *pdev)
+{
+	struct device_node *memory_node;
+	struct reserved_mem *reserved;
+
+	if (sec_log) {
+		dev_info(&pdev->dev,
+			 "ring already owned by the early console; leaving it alone\n");
+		return 0;
+	}
+
+	memory_node = of_parse_phandle(pdev->dev.of_node, "memory-region", 0);
+	if (!memory_node)
+		return dev_err_probe(&pdev->dev, -EINVAL,
+				     "missing memory-region\n");
+
+	reserved = of_reserved_mem_lookup(memory_node);
+	of_node_put(memory_node);
+	if (!reserved || reserved->size <= sizeof(struct sec_log_header))
+		return dev_err_probe(&pdev->dev, -EINVAL,
+				     "invalid sec_log_buf reservation\n");
+
+	return gts9wifi_sec_log_setup(reserved->base, reserved->size, false);
 }
 
 static void gts9wifi_sec_log_remove(struct platform_device *pdev)
 {
-	struct gts9wifi_sec_log *log = platform_get_drvdata(pdev);
+	if (!sec_log)
+		return;
 
-	unregister_console(&log->console);
+	unregister_console(&sec_log->console);
 	sec_log = NULL;
 }
 
