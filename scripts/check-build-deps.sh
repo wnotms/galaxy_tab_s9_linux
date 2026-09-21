@@ -32,6 +32,9 @@ need_file() {
 echo '=== source control and shell ==='
 need git 'apt install git'
 need bash 'apt install bash'
+need curl 'apt install curl (AOSP tools and pinned BusyBox)'
+need readelf 'apt install binutils (BusyBox ELF checks)'
+need strings 'apt install binutils (BusyBox applet checks)'
 
 echo
 echo '=== kernel build (ARCH=arm64 LLVM=1) ==='
@@ -75,6 +78,7 @@ need cpio 'apt install cpio'
 need lz4 'apt install lz4 (Samsung ABL needs the legacy LZ4 stream)'
 need sha256sum 'apt install coreutils'
 need stat 'apt install coreutils'
+need dpkg-deb 'apt install dpkg (unpack the pinned BusyBox)'
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 tools=${ANDROID_TOOLS:-${GTS9_WORKDIR:-$repo_root/.work}/tools}
