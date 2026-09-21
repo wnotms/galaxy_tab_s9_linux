@@ -5,19 +5,18 @@ so anything in here is deliberately *not* applied.
 
 ## Why these two are here
 
-Both come from the SM-X910 port (agcarbajo/ubuntu-galaxy-tab-s9-ultra) and both
-address symptoms this board has:
+Both came from the SM-X910 port (agcarbajo/ubuntu-galaxy-tab-s9-ultra) and were
+applied for test 019 together with the PDC config fix.  That test was cut short
+by hand, so it could not say whether they helped or hurt.
 
-- `qmp-ufs-clear-tx-pull-down-on-power-on.patch` — the bootloader leaves the UFS
-  PHY with RX_INTERFACE_MODE bit 6 set, which pulls the TX lines down, so the
-  link never trains.
-- `snps-eusb2-match-samsung-sm8550-init.patch` — Samsung's eUSB2 init sequence,
-  which the port needs before a host can read the gadget's descriptors.
+Test 020 carried the PDC fix alone and answered the question for the UFS patch:
+UFS enumerates without it (`host0 -> 1d84000.ufshc`, `sda`..`sdf` with every
+partition), because what UFS was really waiting for was the PMIC side that the
+PDC unlocked.  The UFS patch is therefore not needed on this board and stays
+here - kept because the reasoning may still matter for suspend/resume.
 
-They were applied for test 019 (boot 307207ce) together with the PDC config fix.
-That test never reached its armed power-off, so it could not say whether they
-helped or hurt, and the run had two independent changes in it.  Test 020 carries
-the PDC fix alone: the microSD card and the RTC only need SPMI to work, and once
-either of them can hold the report, the deferred-probe list and the regulator
-summary will say what UFS is actually waiting for - which is better evidence
-than another guess.  These two go back in one at a time afterwards.
+`snps-eusb2-match-samsung-sm8550-init.patch` was taken back out of this
+directory for test 021: test 020 got the gadget as far as the host seeing
+`VID_0525&PID_A4A7` with a `MI_00` control interface, but no data interface, so
+the COM port cannot be opened.  That is precisely the symptom the port wrote
+the patch for (`the host cannot read its USB descriptor`).

@@ -22,7 +22,12 @@ word - enough to say exactly where storage bring-up stops.
 ## Encoding
 
 `/init` sets the clock to **2031-01-01T00:00:00Z + code** and writes it to the
-RTC, where `code` is a 16-bit value:
+RTC, where `code` is a 16-bit value.  Since test 020 it writes it **twice**:
+once before the report is collected, so the outcome of the write is part of the
+dmesg that travels with the report, and once after persistence, so the value
+left behind records that the report reached a medium.  The write is verified
+through `/sys/class/rtc/rtc0/since_epoch` - the kernel's view of the hardware
+clock, not the system clock - and retried with a correction if it was rounded.
 
 ```
 code = (epoch read back from the RTC) - 1924992000
@@ -31,7 +36,7 @@ bits 0-3    microSD stage          bits 4-7   UFS stage
 bit  8      USB device controller registered
 bit  9      sdhc_2 in /sys/kernel/debug/devices_deferred
 bit  10     ufshc in /sys/kernel/debug/devices_deferred
-bit  11     the bring-up report was persisted somewhere
+bit  11     the bring-up report was persisted somewhere (second write)
 bits 12-15  checksum = nibble sum of bits 0-11
 ```
 
@@ -61,6 +66,13 @@ ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/read-rtc-state.sh
 The tablet only has to be on adb - TWRP is enough, and it does not matter
 whether the boot before it ended in a power-off or a reset.  `--epoch` decodes
 a value read by hand.
+
+## What it reports now
+
+With storage up (test 020), the card carries the report and the RTC word is the
+fallback - it says at a glance whether both storage controllers reached stage 5
+(block device present) and whether the gadget registered, which is exactly the
+line tests 012-019 could not cross.
 
 ## Limits
 
