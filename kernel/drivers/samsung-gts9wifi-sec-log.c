@@ -43,6 +43,8 @@
  * one registration ever happens: whichever path runs first owns the ring.
  */
 
+#include <asm/early_ioremap.h>
+
 #include <linux/console.h>
 #include <linux/init.h>
 #include <linux/io.h>
@@ -180,10 +182,46 @@ static int gts9wifi_sec_log_setup(phys_addr_t base, size_t size, bool early)
 /*
  * gts9_sec_log=<base>[,<size>] - force the ring location from the command line
  * so capture does not depend on the device tree that Linux ends up with.
+ *
+ * This handler also drops a proof-of-life marker into the ring.  It runs from
+ * parse_early_param() inside arm64 setup_arch(), after early_ioremap_init()
+ * but before paging_init(), memory init, the device tree is unflattened and
+ * any console exists.  It therefore answers the one question boot tests 1 and
+ * 2 could not: did the kernel start at all?  If the marker is in the ring, the
+ * image was entered and arm64 setup began; if it is absent, the kernel never
+ * got that far and the fault is in the hand-off, not in a driver.
+ *
+ * The write is bounded (one page) and lands in the oldest end of the ring.  A
+ * later, successful boot overwrites it with the real log, which is the desired
+ * precedence.
  */
 static phys_addr_t gts9wifi_sec_log_cmdline_base;
 static phys_addr_t gts9wifi_sec_log_cmdline_size;
 static bool gts9wifi_sec_log_cmdline_set;
+
+#define GTS9_SEC_LOG_MARKER_LEN	160
+
+static const char gts9wifi_sec_log_marker[] __initconst =
+	"\nGTS9-EARLY-MARKER: arm64 setup_arch reached, early cmdline parsed\n";
+
+static void __init gts9wifi_sec_log_write_proof_of_life(phys_addr_t base)
+{
+	void *marker;
+
+	if (!base)
+		return;
+
+	/* Right after the LOGM header, i.e. the start of the byte ring. */
+	marker = early_memremap(base + sizeof(struct sec_log_header),
+				GTS9_SEC_LOG_MARKER_LEN);
+	if (!marker)
+		return;
+
+	memset(marker, 0, GTS9_SEC_LOG_MARKER_LEN);
+	memcpy(marker, gts9wifi_sec_log_marker,
+	       sizeof(gts9wifi_sec_log_marker) - 1);
+	early_memunmap(marker, GTS9_SEC_LOG_MARKER_LEN);
+}
 
 static int __init gts9wifi_sec_log_override(char *str)
 {
@@ -199,6 +237,8 @@ static int __init gts9wifi_sec_log_override(char *str)
 	gts9wifi_sec_log_cmdline_base = memparse(str, NULL);
 	gts9wifi_sec_log_cmdline_size = sep ? memparse(sep, NULL) : 0;
 	gts9wifi_sec_log_cmdline_set = true;
+
+	gts9wifi_sec_log_write_proof_of_life(gts9wifi_sec_log_cmdline_base);
 	return 0;
 }
 early_param("gts9_sec_log", gts9wifi_sec_log_override);
