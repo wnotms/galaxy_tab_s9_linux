@@ -243,11 +243,21 @@ heimdall flash --BOOT boot.img --INIT_BOOT init_boot.img \
 3. Give it 60–90 seconds. There is no display driver in this kernel, so the
    only interactive output is the serial console and the initramfs shell.
 4. To read the persistent log, reboot to recovery (`Power` + `Volume Up`, or
-   TWRP's reboot menu) and read:
+   TWRP's reboot menu) and read it **immediately** — TWRP's own kernel log
+   overwrites the 2 MiB ring within a couple of minutes:
 
 ```sh
 cat /proc/last_kmsg | tail -200
 ```
+
+   Run the capture tool on the host *before* the reboot so nothing is lost:
+
+```bash
+ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
+```
+
+   It waits for the tablet to reappear and pulls `/proc/last_kmsg` the moment it
+   is readable, then prints the marker counts and a first verdict.
 
 5. Because the panel driver is not part of this kernel and the UART is not
    broken out, `/proc/last_kmsg` is the primary evidence channel: the
