@@ -27,3 +27,13 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
 - `0003-printk-allow-ignoring-samsung-console-null.patch` — the reference
   X910 port's opt-in `ignore_console_null` early parameter. The X710 ABL logs
   also show `console=null`; use it to retain the requested bring-up consoles.
+
+- `0004-drm-panel-add-samsung-ana38407.patch` — Kconfig/Makefile integration
+  for the SM-X710 panel overlay driver.
+- `nxp-ptn3222-apply-dt-register-overrides.patch` — repeater register overrides
+  used by the board's USB bring-up.
+
+The former default `0005` early command-mode kickoff patch is now held in
+`pending/`: the pinned MSM path already kicks off after modeset enable, while
+that patch triggers before resource/vsync/DSC preparation. See
+[the offline display audit](../../docs/DISPLAY_OFFLINE_AUDIT.md).

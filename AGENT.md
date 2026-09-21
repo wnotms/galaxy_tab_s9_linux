@@ -97,13 +97,17 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   the msm DRM master and fails without GPU firmware, which fails the card), and
   that parameter must sit near the *front* of our cmdline - the bootloader appends
   kilobytes of its own and was dropping the last token of ours.
-- The screen still stays dark for one documented reason: the DDIC answers
-  `00 00 00` instead of `80 00 04` on a cold boot and only a real suspend/resume
-  re-initialises the DSI host enough to recover it (rebinding the host under a
-  live DRM master kills USB instead).  That is the next step for display.
-- Next milestones, in order: **the panel's cold-boot re-initialisation**, then
-  **a root filesystem** (M2's last acceptance item - the port's design puts it on
-  the microSD), then touch/input (M3).
+- **Display status update (offline audit, 2026-09-22):** test 038's fb blank
+  cycle recovered panel ID `80 00 04`, but CTL/vblank timeouts and partial
+  pixels remain. Test 039's no-DSC modes exceed the DSI OPP limit and provide
+  no decoding verdict. DSC/120 Hz is the default again; premature kickoff
+  patch 0005 is held in pending because normal MSM kickoff follows modeset
+  enable and DSC preparation. See `docs/DISPLAY_OFFLINE_AUDIT.md`.
+- **Current owner restriction (2026-09-22): no physical tests for now.** Work
+  offline; do not use earlier flash authorization below while this restriction
+  is in force. ccache builds are authorized.
+- Next milestones: complete display transfer/TE/DSC investigation, then a
+  microSD root filesystem, then touch/input. Compilation is not screen validation.
 - **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
   gadget exports the microSD partition read-only, Windows mounts it by itself,
   and the report can be read off the running tablet over USB - no TWRP, no power

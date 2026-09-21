@@ -24,3 +24,18 @@ for the X910's PHY configuration, not for this one, so it stays here.
 The gadget's missing data interface is instead the PTN3222 redriver, which no
 upstream driver programs: see `nxp-ptn3222-apply-dt-register-overrides.patch`,
 now in `kernel/patches/`.
+
+## Premature command-mode kickoff (0005)
+
+`0005-drm-msm-dpu-start-command-mode-at-enable.patch` is retained as historical
+evidence but removed from the default build after the offline audit on
+2026-09-22. Its explanation confuses CRTC atomic_flush with the MSM KMS
+flush_commit. In the pinned source, msm_atomic_commit_tail() invokes
+commit_modeset_enables() before flush_commit(), which reaches
+dpu_crtc_commit_kickoff() -> dpu_encoder_kickoff().
+
+The extra trigger in physical encoder enable runs before the virtual encoder's
+resource control and vsync setup, and before the normal kickoff's preparation
+(including DSC setup). It also adds another pending count. Test 038's partial
+screen observation does not establish this as a correct fix. Do not re-enable
+it without tracing the normal commit path. See docs/DISPLAY_OFFLINE_AUDIT.md.
