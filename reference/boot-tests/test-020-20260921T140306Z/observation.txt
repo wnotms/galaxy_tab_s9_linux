@@ -1,0 +1,44 @@
+2026-09-21T14:03:40Z reboot from recovery requested (test 020, CONFIG_QCOM_PDC)
+adb reboot exit=0
+2026-09-21T14:03:42Z recovery's adb interface disappeared (USB monitor)
+2026-09-21T14:04:12Z USB monitor: GADGET PRESENT - USB\VID_0525&PID_A4A7\GTS9WIFI-0001
+2026-09-21T14:04:42Z USB monitor: COM17 created, but opening it fails with "the device
+                       attached to the system is not functioning"
+2026-09-21T14:07:10Z host still sees VID_0525&PID_A4A7 (device + MI_00 interface)
+2026-09-21T14:11:24Z owner booted the tablet into TWRP; readback follows
+                       (owner interrupted the run by hand again, so the armed
+                       240-315 s power-off telemetry was not observed)
+
+READBACK - the report is on the microSD card:
+  /external_sd/gts9-bringup-report.txt          145352 bytes
+  /external_sd/gts9-bringup-report.txt.sha256   dfbabbe072ada5cc964f051ccd0fed267861e3c40b8680fe5be0b428aa1f67fc
+  host copy hashes to the same value, so the file travelled intact.
+
+From the report (bringup-report.txt):
+
+  spmi_pmic_arb c400000.spmi: PMIC arbiter version v7 (0x70000001)
+      -> the PDC was the missing provider: the SPMI arbiter binds.
+  rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: registered as rtc0
+      -> the PMK8550 RTC is mainline's rtc0, and mainline reads the registers
+         raw: "setting system clock to 1970-09-16T01:59:00 UTC".
+
+  mmc hosts: mmc1 -> 8804000.mmc/mmc_host/mmc1, with mmc1:aaaa (a card)
+  scsi hosts: host0 -> 1d84000.ufshc/host0, scsi devices 0:0:0:0 .. 0:0:0:49488
+  block devices: sda .. sdf with all partitions (sda1..sda34, ...)
+      -> BOTH storage controllers work in mainline.  microSD enumerated as
+         mmc1 (as in recovery), UFS as six SCSI LUNs.
+
+  deferred devices: only smp2p/remoteproc/hwlock/aux_bridge/cpufreq - no
+      sdhc_2, no ufshc, no PHY.  Nothing storage-related is stuck.
+
+  rtc section of the report (collected before the RTC write): /dev/rtc0 exists.
+
+  cmdline as the kernel saw it ends with the bootloader's own additions
+  (console=null nokaslr ... nowatchdog), so the watchdog is off - it did not
+  reset the tablet in test 019.
+
+NOT explained by this run: the RTC state word is still absent (TWRP reads
+1970-09-16 02:06:25 raw, which is simply the clock that was running before the
+boot), and the gadget's CDC-ACM data interface never appears (only MI_00), so
+COM17 cannot be opened.  Both are the next test's job; the report's dmesg was
+collected before the RTC write, so the RTC outcome is not in it.
