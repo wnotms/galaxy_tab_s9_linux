@@ -112,7 +112,9 @@ wait_for_device() {
 parse_header() {
     # parse_header <file with the first block> -> "total body sha256 release"
     local hdr
-    hdr=$(head -c 512 "$1" | head -1 | tr -d '\r')
+    # tr also drops the NUL bytes of a filesystem superblock, so bash never
+    # has to warn about ignoring them.
+    hdr=$(head -c 512 "$1" | tr -d '\0\r' | head -1)
     case "$hdr" in
         GTS9RPT1*) ;;
         *) return 1 ;;
@@ -159,6 +161,39 @@ fetch_raw_report() {
     mv "$tmp/body.bin" "$dest"
     echo "sha256 verified: $got"
     return 0
+}
+
+# Where recovery exposes a card.  TWRP uses /external_sd; the others are here
+# because the mount point is recovery's choice, not ours.
+removable_paths='/external_sd /sdcard1 /mnt/sdcard1 /mnt/media_rw /usb_otg /storage'
+
+fetch_removable_report() {
+    # fetch_removable_report <destination>
+    local dest=$1 mp got want
+    if [ -n "$image" ]; then
+        echo 'an image was given: removable media cannot be searched' >&2
+        return 1
+    fi
+    for mp in $removable_paths /storage/*; do
+        if timeout 60 "$adb" shell "test -r $mp/gts9-bringup-report.txt" >/dev/null 2>&1; then
+            echo "reading $mp/gts9-bringup-report.txt"
+            fetch_file "$mp/gts9-bringup-report.txt" > "$dest" || return 1
+            [ -s "$dest" ] || { echo "read nothing from $mp" >&2; return 1; }
+            want=$(timeout 60 "$adb" shell "cat $mp/gts9-bringup-report.txt.sha256" 2>/dev/null                    | tr -d '\r' | awk '{print $1}')
+            if [ -n "$want" ]; then
+                got=$(sha256sum "$dest" | cut -d' ' -f1)
+                if [ "$got" = "$want" ]; then
+                    echo "sha256 verified: $got"
+                else
+                    echo "WARNING: sidecar says $want, the copy hashes to $got" >&2
+                fi
+            else
+                echo "note: no .sha256 sidecar on the card, the copy is unverified"
+            fi
+            return 0
+        fi
+    done
+    return 1
 }
 
 fetch_mounted_report() {
@@ -215,9 +250,11 @@ if header=$(parse_header "$tmp/head.bin"); then
     else
         exit 1
     fi
+elif fetch_mounted_report "$out"; then
+    :                   # cache carried the report as a file
 else
-    echo 'no GTS9RPT1 header in the partition: trying the filesystem layout'
-    fetch_mounted_report "$out" || {
+    echo 'nothing on the internal cache partition: searching removable media'
+    fetch_removable_report "$out" || {
         echo 'no bring-up report found on the tablet' >&2
         exit 1
     }

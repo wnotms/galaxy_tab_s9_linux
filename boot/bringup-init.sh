@@ -384,9 +384,14 @@ try_report_mount() {
     # try_report_mount <device> <label>
     dev=$1
     [ -b "$dev" ] || return 1
-    for fs in vfat ext4 ext2 f2fs; do
+    # exfat matters: cards of 64 GB and up are formatted that way by default,
+    # and CONFIG_EXFAT_FS is built in.  The SHA-256 sidecar is what the host
+    # reader checks the copy against; it is best effort, the report is not.
+    for fs in vfat exfat ext4 ext2 f2fs; do
         if mount -t $fs -o rw "$dev" /mnt 2>/dev/null; then
             if cp "$REPORT" /mnt/gts9-bringup-report.txt 2>/dev/null; then
+                sha256sum /mnt/gts9-bringup-report.txt \
+                    > /mnt/gts9-bringup-report.txt.sha256 2>/dev/null
                 sync
                 report_target="$dev ($fs, $2)"
                 report_written=1
