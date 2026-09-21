@@ -166,6 +166,13 @@ CONFIG_WLAN_VENDOR_ATH=y
 #    display/GPU power rails all fail to probe without these.
 CONFIG_SPMI_MSM_PMIC_ARB=y
 CONFIG_QCOM_CLK_RPMH=y
+# The SM8550 TCSR clock controller gates the USB reference clocks:
+# usb@a600000 needs <&tcsr TCSR_USB3_CLKREF_EN> and the eUSB2 PHY needs its
+# TCSR ref clock. Without this driver both defer forever (-517), dwc3 never
+# binds, and there is no UDC for the bring-up USB gadget. Evidence: the
+# owner-supplied July kmsg (reference/boot-tests/owner-supplied-july-kernel/)
+# shows a600000.usb and 88e3000.phy stuck on 1fc0000.clock-controller.
+CONFIG_SM_TCSRCC_8550=y
 CONFIG_QCOM_RPMHPD=y
 CONFIG_ARM_SMMU=y
 CONFIG_QCOM_WDT=y
