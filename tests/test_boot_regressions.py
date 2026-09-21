@@ -17,7 +17,10 @@ class BootRegressions(unittest.TestCase):
     def test_init_survives_console_eof_and_missing_console(self):
         source = (ROOT / 'boot/bringup-init.sh').read_text()
         # Run the actual final shell handoff without mounting host filesystems.
-        marker = "log 'dropping to an interactive shell; nothing was written to any block device'"
+        # The earlier log message now precedes USB/storage setup. Extract
+        # only the final supervision loop so this host test cannot run it.
+        marker = '# PID 1 must survive EOF, an unavailable UART'
+        self.assertEqual(source.count(marker), 1)
         handoff = source[source.index(marker):]
         for console in ('/dev/null', '/nonexistent-gts9-console'):
             with self.subTest(console=console), tempfile.TemporaryFile(mode='w+') as output:
