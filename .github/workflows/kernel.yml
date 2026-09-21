@@ -1,27 +1,21 @@
 name: Mainline kernel build
 
 on:
+  # CI is intentionally manual-only. Normal development is validated locally;
+  # pushing to test/main must not start a long kernel build automatically.
   workflow_dispatch:
     inputs:
       build_modules:
         description: Build and install kernel modules
         type: boolean
         default: true
-  push:
-    paths:
-      - 'kernel/**'
-      - 'scripts/**'
-      - 'boot/**'
-      - '.github/workflows/kernel.yml'
 
 jobs:
   kernel:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
-      # Modules are part of the artifact the packaging job consumes, so a push
-      # build produces them too. workflow_dispatch can still opt out.
-      BUILD_MODULES: ${{ github.event_name == 'push' && '1' || (inputs.build_modules && '1' || '0') }}
+      BUILD_MODULES: ${{ inputs.build_modules && '1' || '0' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -67,9 +61,8 @@ jobs:
           path: out/kernel-gts9wifi/
           if-no-files-found: error
 
-  # Host-side packaging smoke test. This proves the images assemble and pass
-  # the validator; it is NOT evidence that the tablet boots, and must never be
-  # reported as such.
+  # Optional host-side packaging smoke test, run only as part of an explicitly
+  # dispatched workflow. This is never evidence that the tablet boots.
   packaging:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
