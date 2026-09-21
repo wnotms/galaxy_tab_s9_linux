@@ -155,11 +155,13 @@ log ''
 proof_seconds=''
 proof_if=''
 proof_code_base=''
+proof_action=${GTS9_PROOF_ACTION:-poweroff}
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_userspace_proof=*) proof_seconds=${arg#gts9_userspace_proof=} ;;
         gts9_proof_if=*) proof_if=${arg#gts9_proof_if=} ;;
         gts9_proof_code=*) proof_code_base=${arg#gts9_proof_code=} ;;
+        gts9_proof_action=*) proof_action=${arg#gts9_proof_action=} ;;
     esac
 done
 
@@ -207,9 +209,23 @@ if [ -n "$proof_seconds" ]; then
                         ;;
                 esac
                 sleep "$proof_seconds"
-                log "userspace proof firing now (PSCI power off)"
                 sync
-                poweroff -f || reboot -f
+                case "$proof_action" in
+                    reboot)
+                        # A plain reset cannot select the recovery boot mode from
+                        # Linux - that needs the BCB in misc (no storage) or the
+                        # PMIC PON reason with Samsung's magic (no evidence yet).
+                        # It is still more convenient than a power cycle: start
+                        # holding Volume Up about five seconds before the reset
+                        # and the bootloader lands in recovery by itself.
+                        log "userspace proof firing now (reset; hold Volume Up for recovery)"
+                        reboot -f
+                        ;;
+                    *)
+                        log "userspace proof firing now (PSCI power off)"
+                        poweroff -f || reboot -f
+                        ;;
+                esac
             ) &
             ;;
     esac

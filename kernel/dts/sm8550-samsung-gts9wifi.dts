@@ -47,11 +47,32 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
+		#address-cells = <2>;
+		#size-cells = <2>;
+
 		/*
-		 * The simple-framebuffer is intentionally gone: the native msm
-		 * DPU + DSI pipeline (below) owns the panel now.  If the panel
-		 * bring-up regresses, recover over SSH (Wi-Fi) or reflash v0.53.
+		 * Console on the panel, through the framebuffer the bootloader is
+		 * already scanning out.
+		 *
+		 * This kernel has no panel driver, the UART is not broken out, and the
+		 * bootloader appends console=null, so before this node there was no way
+		 * to see where a boot stopped: the sec_log ring is overwritten by the
+		 * bootloader on every boot (test 007) and neither storage nor USB
+		 * enumerates yet.  Binding the preserved splash region gives fbcon a
+		 * surface to print the kernel log on, which is exactly the "first
+		 * visual milestone" this port was meant to start from.
+		 *
+		 * 2560x1600 is what the bootloader reports for this panel
+		 * (GTS9_ANA38407_AMSA10FA01), 32bpp is the format it draws in.
 		 */
+		framebuffer0: framebuffer@b8000000 {
+			compatible = "simple-framebuffer";
+			reg = <0x0 0xb8000000 0x0 0x2b00000>;
+			width = <2560>;
+			height = <1600>;
+			stride = <10240>;
+			format = "a8r8g8b8";
+		};
 	};
 
 	reserved-memory {
@@ -1520,12 +1541,19 @@
 };
 
 &mdss {
-	status = "okay";
+	/*
+	 * Deliberately disabled for bring-up.  There is no panel driver yet, so the
+	 * msm driver can only take the display over from the bootloader and leave a
+	 * black screen.  Keeping it off lets the simple-framebuffer bound in
+	 * /chosen keep scanning out the splash region, which is where the kernel
+	 * console becomes visible (see the framebuffer0 node above).
+	 */
+	status = "disabled";
 };
 
 &mdss_dsi0 {
 	vdda-supply = <&vreg_l3e_1p2>;
-	status = "okay";
+	status = "disabled";
 
 	panel@0 {
 		compatible = "samsung,ana38407-amsa10fa01";
