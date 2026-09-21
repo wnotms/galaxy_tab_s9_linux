@@ -150,6 +150,7 @@ mkdir -p "$tree/bin" "$tree/sbin" "$tree/proc" "$tree/sys" "$tree/dev" \
 chmod 1777 "$tree/tmp"
 install -m 0755 "$bb_bin" "$tree/bin/busybox"
 install -m 0755 "$init_src" "$tree/init"
+install -m 0755 "$repo_root/boot/gts9-to-recovery.sh" "$tree/sbin/gts9-to-recovery"
 
 link_applet() {
     # link_applet <applet>

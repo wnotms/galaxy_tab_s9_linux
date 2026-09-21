@@ -169,6 +169,14 @@ write_bcb_recovery() {
     return 0
 }
 
+# The console helper needs the same validated device, so publish it.
+publish_misc_device() {
+    pdev=$(gpt_labelled_device "$BCB_LABEL" 2>/dev/null) || return 1
+    echo "$pdev" > /tmp/gts9-misc-dev
+    return 0
+}
+[ "$gadget_setup" = 1 ] && publish_misc_device
+
 reboot_to_recovery() {
     # Write the BCB and reset, or power off if the bootloader already ignored a
     # recovery request: either way this ends the boot instead of looping.
@@ -288,9 +296,20 @@ USB_GADGET=${GTS9_USB_GADGET:-1}
 # acm (default), msc (mass storage), both - settable from the command line so a
 # boot can switch the gadget without rebuilding the initramfs.
 USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-acm}
+# What /init does with /dev/ttyGS0:
+#   shell  - stream the kernel log and hand the port to a shell (the console)
+#   marker - write a few known lines once and record everything the host sends
+#            into gts9-serial-in.txt on the card, which makes both directions of
+#            the link measurable through the mass-storage channel
+USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-shell}
+# Seconds to leave the gadget alone before collecting the report, so a host can
+# talk to it first (used by the serial probe).
+USB_WAIT=${GTS9_USB_WAIT:-0}
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
+        gts9_usb_console=*) USB_CONSOLE_MODE=${arg#gts9_usb_console=} ;;
+        gts9_usb_wait=*) USB_WAIT=${arg#gts9_usb_wait=} ;;
     esac
 done
 gadget_setup=0
@@ -614,6 +633,18 @@ if [ -n "$proof_seconds" ]; then
     esac
 fi
 
+# Give a host that is talking to the gadget its window before the report is
+# collected: the recorder above is already capturing what it sends.
+case "$USB_WAIT" in
+    ''|*[!0-9]*) ;;
+    *)
+        if [ "$USB_WAIT" -gt 0 ] && [ "$gadget_setup" = 1 ]; then
+            log "waiting ${USB_WAIT}s for the host to use the gadget"
+            sleep "$USB_WAIT"
+        fi
+        ;;
+esac
+
 # Collect the USB state now that the gadget has been attempted, then get the
 # whole report off the device.
 report 'usb device controllers' ls -l /sys/class/udc
@@ -685,6 +716,7 @@ REPORT_MIN_BYTES=$((4 * 1024 * 1024))
 REPORT_TOOLS='dd od awk sha256sum basename wc cut tr head printf mount umount cp timeout'
 
 
+report_mount=''
 try_report_mount() {
     # try_report_mount <device> <label>
     dev=$1
@@ -700,6 +732,15 @@ try_report_mount() {
                 sync
                 report_target="$dev ($fs, $2)"
                 report_written=1
+                # Anything the serial probe recorded goes next to the report, so
+                # the host can read it through the mass-storage export.
+                if [ -s /tmp/gts9-serial-in.txt ]; then
+                    timeout 30 cp /tmp/gts9-serial-in.txt /mnt/gts9-serial-in.txt 2>/dev/null
+                    log "serial input recorded to the medium ($(wc -c < /tmp/gts9-serial-in.txt 2>/dev/null) bytes)"
+                fi
+                sync
+                # Unmount before the LUN is attached: the host mounts this
+                # filesystem itself, and two writers is one too many.
                 umount /mnt 2>/dev/null
                 return 0
             fi
@@ -847,15 +888,43 @@ if [ "$gadget_setup" = 1 ]; then
         i=$((i + 1))
     done
     if [ -c /dev/ttyGS0 ]; then
+        # Whatever the host sends is kept for the report: this is what makes the
+        # host->device direction of the link measurable through the card.
+        ( timeout 900 cat /dev/ttyGS0 >> /tmp/gts9-serial-in.txt 2>/dev/null ) &
+        log 'recording usb serial input to /tmp/gts9-serial-in.txt'
+    fi
+    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" = marker ]; then
+        # Diagnostic mode: prove both directions of the link through the card.
+        # The host should see the marker lines, and whatever it types is recorded
+        # into gts9-serial-in.txt next to the report.
+        log 'usb console in marker mode: writing a marker and recording host input'
+        printf 'GTS9-SERIAL-MARKER ready\n' > /dev/ttyGS0 2>/dev/null
+        printf 'GTS9-SERIAL-MARKER uname=%s\n' "$(uname -r 2>/dev/null)" > /dev/ttyGS0 2>/dev/null
+        printf 'GTS9-SERIAL-MARKER uptime=%s\n' "$(cat /proc/uptime 2>/dev/null | cut -d' ' -f1)" > /dev/ttyGS0 2>/dev/null
+        printf 'GTS9-SERIAL-MARKER end\n' > /dev/ttyGS0 2>/dev/null
+        # Record the host->device direction where the mass-storage export can
+        # reach it: the report's directory on the card.
+        if [ -n "$report_mount" ]; then
+            ( timeout 600 cat /dev/ttyGS0 >> "$report_mount/gts9-serial-in.txt" 2>/dev/null ) &
+            log "recording serial input to $report_mount/gts9-serial-in.txt"
+        else
+            log 'WARN: no mounted medium; serial input cannot be recorded'
+        fi
+    fi
+    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" != marker ]; then
         log 'streaming the kernel log to /dev/ttyGS0'
         (
             cat /dev/kmsg > /dev/ttyGS0 2>/dev/null
         ) &
-        while :; do
-            /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
-            log 'usb shell ended; PID 1 remains alive, retrying in 5s'
-            sleep 5
-        done
+        if [ "$USB_CONSOLE_MODE" = marker ]; then
+            log 'usb console in marker mode: not starting the shell'
+        else
+            while :; do
+                /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
+                log 'usb shell ended; PID 1 remains alive, retrying in 5s'
+                sleep 5
+            done
+        fi
     fi
     log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
 fi
