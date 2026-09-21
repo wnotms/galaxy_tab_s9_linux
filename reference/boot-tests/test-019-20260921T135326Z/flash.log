@@ -1,0 +1,21 @@
+=== 2026-09-21T13:53:32Z test 019 flash: boot (UFS+eUSB2 PHY fixes), init_boot (RTC telemetry), vendor_boot (proof code 600) ===
+--- boot ---
+D:\android\gts9-test019\boot.img: 1 file pushed, 0 skipped. 74.8 MB/s (100663296 bytes in 1.283s)
+307207ce6f2c4e81e07c657c5035db29e6b89116688f409e8e170a72df0b2bb4  /tmp/gts9-test019-boot.img
+expected: 307207ce6f2c4e81e07c657c5035db29e6b89116688f409e8e170a72df0b2bb4
+100663296 bytes (96 M) copied, 0.296295 s, 324 M/s
+307207ce6f2c4e81e07c657c5035db29e6b89116688f409e8e170a72df0b2bb4  /dev/block/by-name/boot
+--- init_boot ---
+D:\android\gts9-test019\init_boot.img: 1 file pushed, 0 skipped. 105.2 MB/s (8388608 bytes in 0.076s)
+b13296a1e4c67ce18515f2a5884859543d59f77478bb547091952ed52cedf620  /tmp/gts9-test019-init_boot.img
+expected: b13296a1e4c67ce18515f2a5884859543d59f77478bb547091952ed52cedf620
+8388608 bytes (8.0 M) copied, 0.019819 s, 404 M/s
+b13296a1e4c67ce18515f2a5884859543d59f77478bb547091952ed52cedf620  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test019\vendor_boot.img: 1 file pushed, 0 skipped. 701.2 MB/s (100663296 bytes in 0.137s)
+11e92536f3e4f6dc158b099fa6fa6b9cd7973da3e0740f3a2c12aabb4d62a3b4  /tmp/gts9-test019-vendor_boot.img
+expected: 11e92536f3e4f6dc158b099fa6fa6b9cd7973da3e0740f3a2c12aabb4d62a3b4
+100663296 bytes (96 M) copied, 0.227639 s, 422 M/s
+11e92536f3e4f6dc158b099fa6fa6b9cd7973da3e0740f3a2c12aabb4d62a3b4  /dev/block/by-name/vendor_boot
+=== 2026-09-21T13:53:52Z test 019: reboot into the mainline kernel ===
+reboot command issued

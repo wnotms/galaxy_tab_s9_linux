@@ -1,0 +1,15 @@
+=== 2026-09-21T13:41:55Z test 018 flash: init_boot (RTC report) + vendor_boot (gts9_rtc_report=1) ===
+--- init_boot ---
+D:\android\gts9-test018\init_boot.img: 1 file pushed, 0 skipped. 250.6 MB/s (8388608 bytes in 0.032s)
+77779f248331ee46206c4ca84d4c5d2f5d1f3371b7327ab408fd8a19affdf92e  /tmp/gts9-test018-init_boot.img
+expected: 77779f248331ee46206c4ca84d4c5d2f5d1f3371b7327ab408fd8a19affdf92e
+8388608 bytes (8.0 M) copied, 0.040507 s, 197 M/s
+77779f248331ee46206c4ca84d4c5d2f5d1f3371b7327ab408fd8a19affdf92e  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test018\vendor_boot.img: 1 file pushed, 0 skipped. 787.5 MB/s (100663296 bytes in 0.122s)
+8bc0ad1b6c0ab2b579dce7f5cb926d4a9374bf9f6e023be96c0859c4f8662eef  /tmp/gts9-test018-vendor_boot.img
+expected: 8bc0ad1b6c0ab2b579dce7f5cb926d4a9374bf9f6e023be96c0859c4f8662eef
+100663296 bytes (96 M) copied, 0.306800 s, 313 M/s
+8bc0ad1b6c0ab2b579dce7f5cb926d4a9374bf9f6e023be96c0859c4f8662eef  /dev/block/by-name/vendor_boot
+=== 2026-09-21T13:41:59Z test 018: reboot into the mainline kernel ===
+reboot command issued

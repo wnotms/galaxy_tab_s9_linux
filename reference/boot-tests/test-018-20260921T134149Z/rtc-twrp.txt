@@ -1,0 +1,23 @@
+rtc_time	: 01:44:31
+rtc_date	: 1970-09-16
+alrm_time	: 06:28:16
+alrm_date	: 2036-02-06
+alarm_IRQ	: no
+alrm_pending	: no
+update IRQ enabled	: no
+periodic IRQ enabled	: no
+periodic IRQ frequency	: 1
+max user IRQ frequency	: 64
+24hr		: yes
+--- rtc class ---
+total 0
+drwxr-xr-x 4 root root    0 2022-09-16 09:40 alarmtimer.0.auto
+-r--r--r-- 1 root root 4096 2026-09-21 21:49 date
+-r--r--r-- 1 root root 4096 2026-09-21 21:49 dev
+lrwxrwxrwx 1 root root    0 2026-09-21 21:49 device -> ../../../c42d000.qcom,spmi:qcom,pmk8550@0:rtc@6100
+-r--r--r-- 1 root root 4096 2026-09-21 21:49 hctosys
+-rw-r--r-- 1 root root 4096 2026-09-21 21:49 max_user_freq
+-r--r--r-- 1 root root 4096 2026-09-21 21:49 name
+drwxr-xr-x 2 root root    0 2022-09-16 09:40 power
+-r--r--r-- 1 root root 4096 2026-09-21 21:49 range
+22297471

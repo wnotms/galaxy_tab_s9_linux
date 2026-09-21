@@ -1,0 +1,6 @@
+waiting up to 900s for the tablet (recovery is enough)...
+RTC clock: 2026-09-21T13:45:50Z
+code     : -134993650
+The clock is not in 2031-01-01, so /init did not leave a state word:
+either it never ran (check the power-off telemetry), the RTC write failed,
+or the clock has since been set from somewhere else.

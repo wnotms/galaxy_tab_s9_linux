@@ -1,0 +1,24 @@
+2026-09-21T13:41:59Z reboot from recovery requested (test 018)
+adb reboot exit=0
+2026-09-21T13:42Z      owner: the tablet switched itself off by itself; no gadget appeared
+                       (the USB monitor that had been running since 13:32:44Z logged no
+                       VID_0525&PID_A4A7 during the boot window)
+2026-09-21T13:44Z      owner booted the tablet into TWRP; adb back at 13:44:5xZ
+
+readback at 2026-09-21T13:45-13:50Z:
+  - RTC (raw registers, /proc/driver/rtc): 1970-09-16 01:48:29, and the corrected clock
+    (date) 2026-09-21T13:46:10Z.  The tablet's RTC offset is therefore ~56 years: recovery
+    applies an offset kept in the PMIC, mainline has no offset cell in its DT.
+    No 2031 date anywhere => the state word was never written.
+  - no GTS9RPT1 header at offset 0 of /dev/block/by-name/cache (still a valid ext4
+    superblock), no gts9-bringup-report.txt in /cache, and nothing on the card.
+  - the card itself is fine and recovery mounts it: /dev/block/mmcblk1p1 on /external_sd
+    type exfat (rw), populated with the owner's files.  The slot therefore works on the
+    stock kernel, and the card is exfat - which the initramfs could not mount before the
+    exfat fix in a439af9.
+  - /proc/partitions in recovery shows the whole UFS LUN0 table (sda1..sda34, userdata
+    235001820 KiB), so UFS is fine on the stock kernel too.
+
+conclusion: neither storage device enumerated in mainline, the report had nowhere to go,
+and the RTC channel did not run.  The next test therefore had to distinguish "no
+/dev/rtc0" from "write failed", which test 019's delay telemetry does.
