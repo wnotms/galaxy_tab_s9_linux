@@ -103,7 +103,7 @@ echo "packing $out" >&2
     cd "$stage"
     find . -print0 | LC_ALL=C sort -z \
         | cpio --reproducible --null -o --format=newc 2>/dev/null
-) | lz4 -q -l -12 - "$out" >/dev/null
+) | lz4 -q -f -l -12 - "$out" >/dev/null
 
 magic=$(head -c4 "$out" | od -An -tx1 | tr -d ' \n')
 if [ "$magic" != 02214c18 ]; then
