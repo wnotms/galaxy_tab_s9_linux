@@ -1,0 +1,59 @@
+From 4b1f9c3a7d21 Mon Sep 17 00:00:00 2001
+From: Galaxy Tab S9 Linux port <noreply@example.invalid>
+Date: Sun, 21 Sep 2026 18:40:00 +0800
+Subject: [PATCH] soc: qcom: hook the SM-X710 persistent console into Kbuild
+
+Adds the Kconfig symbol and Makefile hook for the out-of-tree SM-X710
+persistent console driver.  The driver source itself lives in this
+repository as kernel/drivers/samsung-gts9wifi-sec-log.c and is installed
+into drivers/soc/qcom/ by scripts/prepare-kernel.sh, together with the
+board DTS; this patch only makes Kbuild aware of it.
+
+The symbol is a bool, so the console is always built in: it has to exist
+before the root filesystem is available for the first boot test.
+
+Adapted from the SM-X910 port (agcarbajo/ubuntu-galaxy-tab-s9-ultra,
+kernel/patches/add-samsung-sec-log-console.patch), renamed for the X710
+and split so the driver stays a readable source file rather than an
+opaque patch body.
+
+Signed-off-by: Galaxy Tab S9 Linux port <noreply@example.invalid>
+---
+ drivers/soc/qcom/Kconfig  | 12 ++++++++++++
+ drivers/soc/qcom/Makefile |  1 +
+ 2 files changed, 13 insertions(+)
+
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 2caadbbcf..213cb5f08 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -295,6 +295,18 @@ config QCOM_PBS
+ 	  This module provides the APIs to the client drivers that wants to send the
+ 	  PBS trigger event to the PBS RAM.
+ 
++config SAMSUNG_GTS9WIFI_SEC_LOG
++	bool "Samsung SM-X710 persistent early console"
++	depends on ARCH_QCOM
++	help
++	  Store the kernel console in the Samsung sec_log_buf reserved-memory
++	  ring used by the bootloader and recovery.  This is a bring-up aid for
++	  the Galaxy Tab S9 Wi-Fi (SM-X710): after a warm reset, its TWRP
++	  recovery can expose the previous mainline printk stream as
++	  /proc/last_kmsg.
++
++	  Say Y only for the SM-X710 bring-up kernel.
++
+ endmenu
+ 
+ config QCOM_UBWC_CONFIG
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index b7f1d2a57..01b9ad426 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -40,3 +40,4 @@ qcom_ice-objs			+= ice.o
+ obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+ obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
+ obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
++obj-$(CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG) += samsung-gts9wifi-sec-log.o
+-- 
+2.50.0

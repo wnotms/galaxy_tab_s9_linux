@@ -18,3 +18,9 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
   Azkali's SM-X710 work. Re-check and drop it once the pinned upstream
   `sm8550.dtsi` contains equivalent `qcom_tzlog`, `arch_timer`, and
   `qcom_scm` labels.
+- `0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch` — adds
+  `CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG` and its `drivers/soc/qcom/Makefile` hook
+  for the out-of-tree persistent console. The driver source stays readable as
+  `kernel/drivers/samsung-gts9wifi-sec-log.c` and is installed next to the
+  board DTS by `scripts/prepare-kernel.sh`. Drop both once an equivalent
+  console exists upstream.

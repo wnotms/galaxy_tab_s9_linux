@@ -36,4 +36,19 @@ if ! grep -q '^DTC_FLAGS_sm8550-samsung-gts9wifi := -@$' "$makefile"; then
     printf 'DTC_FLAGS_sm8550-samsung-gts9wifi := -@\n' >> "$makefile"
 fi
 
+# Out-of-tree device drivers.  Kbuild awareness comes from the patch queue
+# above; the driver source stays a reviewable file in kernel/drivers/ instead
+# of being buried in a patch body.
+driver_src="$repo_root/kernel/drivers"
+soc_qcom="$tree/drivers/soc/qcom"
+[ -d "$driver_src" ] || { echo "missing driver overlay: $driver_src" >&2; exit 1; }
+[ -d "$soc_qcom" ] || { echo "not a prepared kernel tree: $soc_qcom" >&2; exit 1; }
+
+shopt -s nullglob
+for drv in "$driver_src"/*.c; do
+    echo "installing ${drv##*/}"
+    install -m 0644 "$drv" "$soc_qcom/${drv##*/}"
+done
+shopt -u nullglob
+
 echo "prepared SM-X710 source overlay: $tree"
