@@ -11,3 +11,16 @@ adb.exe: no devices/emulators found
 expected: c103c5ad79aa4e2f28df868ddf95265f1464ca5deac1f105c6cb50a49dadc35c
 adb.exe: no devices/emulators found
 adb.exe: no devices/emulators found
+=== 2026-09-21T13:26:19Z test 016: UFS + report on internal storage (retry, device reconnected) ===
+--- init_boot ---
+D:\android\gts9-test016\init_boot.img: 1 file pushed, 0 skipped. 114.3 MB/s (8388608 bytes in 0.070s)
+a1ce238d0c3146d97c773699fe6fa0af1f7d02df68754d2ed0dc2361ebf55a4a  /tmp/gts9-test016-init_boot.img
+expected: a1ce238d0c3146d97c773699fe6fa0af1f7d02df68754d2ed0dc2361ebf55a4a
+8388608 bytes (8.0 M) copied, 0.027866 s, 287 M/s
+a1ce238d0c3146d97c773699fe6fa0af1f7d02df68754d2ed0dc2361ebf55a4a  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test016\vendor_boot.img: 1 file pushed, 0 skipped. 737.4 MB/s (100663296 bytes in 0.130s)
+c103c5ad79aa4e2f28df868ddf95265f1464ca5deac1f105c6cb50a49dadc35c  /tmp/gts9-test016-vendor_boot.img
+expected: c103c5ad79aa4e2f28df868ddf95265f1464ca5deac1f105c6cb50a49dadc35c
+100663296 bytes (96 M) copied, 0.248217 s, 387 M/s
+c103c5ad79aa4e2f28df868ddf95265f1464ca5deac1f105c6cb50a49dadc35c  /dev/block/by-name/vendor_boot
