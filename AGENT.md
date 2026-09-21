@@ -58,6 +58,13 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   was actually built, tested or documented.
 - If an operation changes nothing in the tree (a read-only check, for example),
   there is nothing to push; do not create an empty commit.
+- GitHub Actions is **manual-only** (`workflow_dispatch`). A normal push must not
+  start a kernel build or packaging job.
+- Routine development is validated **locally**. After pushing a commit, do not wait
+  for, poll, or require GitHub Actions before continuing.
+- Run the GitHub Actions workflow only when the owner explicitly requests a remote
+  CI check. A local successful build/validation is sufficient evidence for
+  `compiled` / `packaged` status; it is still not evidence of a physical boot.
 
 ## Build commands
 
