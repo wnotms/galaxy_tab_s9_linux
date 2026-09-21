@@ -1,0 +1,58 @@
+From: SM-X710 bring-up <gts9wifi@example.com>
+Subject: [PATCH] drm/msm/dpu: start the command-mode engine when the encoder is enabled
+
+A command-mode (DSI) panel receives nothing until the CTL path has been flushed
+and started, and that kickoff is issued from the atomic flush of the commit that
+enables the CRTC.  The DRM atomic commit order is disable -> planes -> enable,
+so that flush runs *before* dpu_crtc_enable() has enabled the physical encoder:
+_dpu_encoder_kickoff_phys() skips encoders whose enable_state is still
+DPU_ENC_DISABLED, and the flush and start are lost.  dpu_encoder_phys_cmd_enable()
+programs the interface but never starts it either, so the first frame of every
+enable is never scanned out.
+
+On a system with a compositor this is invisible: the compositor's next page flip
+commits again and kicks the engine, and the frame after that is fine.  On a
+fbcon-only system (no composer, no page flips) there is no next commit - fbcon
+writes directly into the scanout buffer - and the panel never receives a single
+frame.  What the user sees is the DDIC's power-on RAM at brightness, and then the
+DDIC blanking itself after its no-data timeout.
+
+Measured on the SM-X710 with the AMSA10FA01 panel: every unblank logged
+
+  [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35,
+      callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+
+from dpu_encoder_phys_cmd_wait_for_commit_done() -> _dpu_encoder_phys_cmd_wait_for_ctl_start()
+(is_started() false because the CTL was never started), and dmesg showed panel id
+80 00 04 with a valid plane/crtc state while the panel never changed content.
+
+Flush and start at the end of the encoder enable, next to the register
+programming that has just made the interface ready.
+---
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 45079ee59..ab34c7003 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -486,6 +486,22 @@ static void dpu_encoder_phys_cmd_enable(struct dpu_encoder_phys *phys_enc)
+ 
+ 	dpu_encoder_phys_cmd_enable_helper(phys_enc);
+ 	phys_enc->enable_state = DPU_ENC_ENABLED;
++
++	/*
++	 * A command-mode panel only shows something once the CTL path has been
++	 * flushed and started, and that normally happens in the atomic flush of
++	 * this very commit - which runs *before* the CRTC is enabled.  The
++	 * kickoff there skips physical encoders that are still disabled, so the
++	 * first frame after every enable is never started.  Nothing else starts
++	 * it either: fbcon writes straight into the scanout buffer without
++	 * committing, so on a compositor-less system the panel keeps showing
++	 * its power-on RAM until it blanks itself.  Flush and start here.
++	 */
++	if (phys_enc->hw_ctl->ops.trigger_flush) {
++		dpu_encoder_phys_inc_pending(phys_enc);
++		phys_enc->hw_ctl->ops.trigger_flush(phys_enc->hw_ctl);
++	}
++	dpu_encoder_helper_trigger_start(phys_enc);
+ }
+ 
+ static void _dpu_encoder_phys_cmd_connect_te(
