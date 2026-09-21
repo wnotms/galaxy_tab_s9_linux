@@ -55,3 +55,9 @@ were extracted under `.work/reference-samsung/official/`, about 13.2 MB.
 `extracted-manifest.json` contains individual file hashes and original paths.
 The large source archive and extracted source are not committed. No driver was
 changed, no build was required, and no physical test was performed for this lookup.
+
+## First mainline candidate derived from this source
+
+See `docs/DISPLAY_X710_OFFICIAL_V1.md` for the revision-D / 120HS changes,
+stock-command tests and the exact generated-PPS comparison. This supersedes
+“no driver was changed” above, which describes the initial source lookup only.

@@ -65,3 +65,19 @@ Local sibling checkout: `../ubuntu-galaxy-tab-s9-ultra`, origin
 
 The X710 board DTS, stock seed and Linux pin are unchanged. These common boot
 changes do not import X910 panel, touch, Wi-Fi or fingerprint hardware.
+
+## X710 panel power-on commands (2026-09-22)
+
+The owner supplied `SM-X710_EUR_15_Opensource.zip`, SHA-256
+`9394aa2a004198cdfee6b1dd3c1a775dfaa990a99a5bd06106cd221516486ebc`.
+Its Kernel.tar.gz contains the exact X710 panel under
+`vendor/qcom/opensource/display-drivers/msm/samsung/`.
+The panel overlay now transcribes SLEW_BOOSTING_OFF/ON, PM_EN_DISP_ON_DELAY,
+TSP_SYNC_SETTING and revision-D/120HS VRR_SETTING from
+`panel_data_file/GTS9_ANA38407_AMSA10FA01.dat`, instead of the sibling X910's
+initialisation. Stock physical dimensions come from the gts9wifi revision-04
+DTS in the same archive. No vendor framework or firmware was imported.
+The source excerpts and full dat SHA-256 are preserved in
+`tests/fixtures/x710-panel-commands.json`; the original DSC payload is tested
+against the actual pinned MSM/DRM helper output. See
+`docs/DISPLAY_X710_OFFICIAL_V1.md` for scope and unverified hardware behavior.

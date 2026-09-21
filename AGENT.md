@@ -103,6 +103,13 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   no decoding verdict. DSC/120 Hz is the default again; premature kickoff
   patch 0005 is held in pending because normal MSM kickoff follows modeset
   enable and DSC preparation. See `docs/DISPLAY_OFFLINE_AUDIT.md`.
+- **Official-source candidate v1 (2026-09-22):** the owner supplied the full
+  X710 source archive, including vendor display commands. The panel now uses
+  X710 slew/PM_EN/TSP-sync/120HS programming, exposes only DSC/120 Hz and uses
+  236 x 148 mm dimensions. Stock PPS matches the pinned helpers byte-for-byte
+  over its 88 supplied bytes. Kernel, six host tests and an isolated boot
+  bundle validate locally; hardware remains untested. See
+  `docs/DISPLAY_X710_OFFICIAL_V1.md` and `out/boot-bundle-x710-official/`.
 - **Current owner restriction (2026-09-22): no physical tests for now.** Work
   offline; do not use earlier flash authorization below while this restriction
   is in force. ccache builds are authorized.

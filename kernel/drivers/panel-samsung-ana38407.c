@@ -5,19 +5,10 @@
  *
  * 2560x1600 command-mode DSI panel, 4 lanes, DSC 1.1 (2 slices 1280x100, 8bpp).
  *
- * Ported from the SM-X910 port's driver for the same DDIC
- * (agcarbajo/ubuntu-galaxy-tab-s9-ultra, kernel/drivers/panel-samsung-ana38407.c,
- * for the 2960x1848 AMSA46AS02).  The DDIC is the same part at the same
- * revision - this tablet's bootloader reports lcd_id=0x800004 and the driver
- * expects exactly 0x80 0x00 0x04 - and the DCS init/exit sequences here are
- * DDIC-level, so they are carried over unchanged.  What *is* panel-specific was
- * re-derived from this tablet's own stock DTBO
- * (GTS9_ANA38407_AMSA10FA01 in board-00's overlay) and replaced: the mode
- * timings (wqxga120hs / wqxga60hs), the DSC geometry, and the compatible.
- *
- * Samsung's proprietary gamma/VRR/ACL/mdnie machinery is intentionally NOT
- * ported: the DPU switches refresh rate by mode-set, and brightness goes through
- * the standard DCS 0x51 path.
+ * Initially ported from the SM-X910 driver. The revision-D power-on,
+ * TSP sync and fixed 120 Hz commands now come from the SM-X710 official
+ * GTS9_ANA38407_AMSA10FA01.dat (see docs/SM_X710_OFFICIAL_DISPLAY_SOURCE.md).
+ * Adaptive gamma/temperature/ACL policy is not implemented by this driver.
  */
 
 #include <linux/backlight.h>
@@ -49,15 +40,6 @@
 #define ANA38407_FOD_BRIGHTNESS		1623
 #define ANA38407_FOD_WATCHDOG_MS	15000
 #define ANA38407_FOD_SETTLE_MS		35
-
-/*
- * The DSI host caches dsi->dsc at attach. Select compression at boot/module
- * load only; changing it at runtime would desynchronise the host and DDIC.
- * Uncompressed operation is an unvalidated diagnostic, not a fallback.
- */
-static bool dsc = true;
-module_param(dsc, bool, 0444);
-MODULE_PARM_DESC(dsc, "Use DSC compression (default true; boot/load-time only)");
 
 /* Revision D, as read back by the bootloader (lcd_id=0x800004). */
 static const u8 ana38407_expected_id[3] = { 0x80, 0x00, 0x04 };
@@ -282,11 +264,42 @@ static void ana38407_fod_watchdog_work(struct work_struct *work)
 			 "failed to leave fingerprint display mode: %d\n", ret);
 }
 
-/*
- * Power-on DCS sequence, transcribed from the panel PDF (macros expanded).
- * Level keys 0xF0/0xF1 0x5A 0x5A unlock; 0xA5 0xA5 relock.  The 0xC0/0xB0/0xC1
- * triples are indirect DDIC register accesses (Samsung "gpara").
- */
+/* Official X710 SLEW_BOOSTING_OFF/ON, before sleep-out and after SP_SETTING. */
+static void ana38407_slew_boost(struct mipi_dsi_multi_context *dsi_ctx, bool on)
+{
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf0, 0x5a, 0x5a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf1, 0x5a, 0x5a);
+	mipi_dsi_dcs_write_var_seq_multi(dsi_ctx, 0xc1, on ? 0x2e : 0x2a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x03);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x13, 0x4f, 0x81);
+	mipi_dsi_dcs_write_var_seq_multi(dsi_ctx, 0xc1, on ? 0x2e : 0x2a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x03);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x13, 0x62, 0x81);
+	mipi_dsi_dcs_write_var_seq_multi(dsi_ctx, 0xc1, on ? 0x2e : 0x2a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x03);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x13, 0x75, 0x81);
+	mipi_dsi_dcs_write_var_seq_multi(dsi_ctx, 0xc1, on ? 0x2e : 0x2a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x03);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x13, 0x88, 0x81);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf0, 0xa5, 0xa5);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf1, 0xa5, 0xa5);
+}
+
+/* Official revision C+ VRR_SETTING, resolved for the sole advertised mode. */
+static void ana38407_set_120hz(struct mipi_dsi_multi_context *dsi_ctx)
+{
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf0, 0x5a, 0x5a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf1, 0x5a, 0x5a);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0x60, 0x00);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x13, 0xdd);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xdd, 0x00);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb0, 0x10, 0xb9);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xb9, 0x80, 0x00, 0x00, 0x00);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf0, 0xa5, 0xa5);
+	mipi_dsi_dcs_write_seq_multi(dsi_ctx, 0xf1, 0xa5, 0xa5);
+}
+
+/* Official X710 POWER_ON_PRE_SETTING, revision D; display-on is in enable. */
 static int ana38407_on(struct ana38407 *ctx)
 {
 	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
@@ -297,24 +310,14 @@ static int ana38407_on(struct ana38407 *ctx)
 
 	ctx->dsi->mode_flags |= MIPI_DSI_MODE_LPM;
 
-	/*
-	 * Rev C/D order (POWER_ON_PRE_SETTING): VBP and the display-on-delay
-	 * register writes come BEFORE sleep-out.  The panel id (0x80 0x00 0x04,
-	 * read by the bootloader as lcd_id=0x800004) is revision D.
-	 */
+	ana38407_slew_boost(&dsi_ctx, false);
 
-	/* VBP_SETTING_FOR_SDC_IP */
+	/* PM_EN_DISP_ON_DELAY: the X710 does not use the X910 VBP write. */
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf1, 0x5a, 0x5a);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc1, 0x0a);
+	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc1, 0x00);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x03);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x09, 0xfd, 0x81);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf1, 0xa5, 0xa5);
-
-	/* DISPLAY_ON_DELAY_SETTING */
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf1, 0x5a, 0x5a);
+	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x14, 0x35, 0x81);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc1, 0x23);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x03);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc0, 0x0f, 0x00, 0x00, 0x00, 0x01, 0x04, 0x81);
@@ -323,12 +326,12 @@ static int ana38407_on(struct ana38407 *ctx)
 
 	/* sleep out */
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x11);
-	mipi_dsi_msleep(&dsi_ctx, 120);
+	mipi_dsi_msleep(&dsi_ctx, 50);
 
 	/*
 	 * Confirm the DDIC answers on the DSI link.  Kept here, right after
 	 * sleep-out, because that is where it reliably responds; prepare()
-	 * checks the result and retries the whole sequence if it is wrong.
+	 * logs a mismatch for the initramfs blank-cycle recovery.
 	 */
 	mipi_dsi_dcs_read(ctx->dsi, 0xda, &id[0], 1);
 	mipi_dsi_dcs_read(ctx->dsi, 0xdb, &id[1], 1);
@@ -393,17 +396,13 @@ static int ana38407_on(struct ana38407 *ctx)
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x0b, 0xb9);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb9, 0xcc);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x0e, 0xb9);
-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb9, 0x15);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
 
-	/* Match the DDIC compression state to the configuration attached to DSI. */
+	/* Stock WT 0x07 / WT 0x0a are packet types, not DCS opcodes. */
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
-	mipi_dsi_compression_mode_multi(&dsi_ctx, !!ctx->dsi->dsc);
-	if (ctx->dsi->dsc) {
-		drm_dsc_pps_payload_pack(&pps, ctx->dsi->dsc);
-		mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
-	}
+	mipi_dsi_compression_mode_multi(&dsi_ctx, true);
+	drm_dsc_pps_payload_pack(&pps, ctx->dsi->dsc);
+	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
 
 	/* DIA_SETTING (digital image adjust on) */
@@ -411,7 +410,7 @@ static int ana38407_on(struct ana38407 *ctx)
 
 	/*
 	 * BRIGHTNESS: dimming control (normal) + an explicit non-zero brightness
-	 * level (0x51, 12-bit).  Without a real 0x51 write the DDIC emits black
+	 * level (0x51).  Without a real 0x51 write the DDIC emits black
 	 * even with the display on.
 	 */
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
@@ -426,15 +425,10 @@ static int ana38407_on(struct ana38407 *ctx)
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xc3, 0x02);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
 
-	/*
-	 * The stock panel declares samsung,delayed-display-on: complete the
-	 * initialisation here, but keep the OLED dark until the bridge's enable
-	 * phase, when the DPU/DSI command-mode stream is ready.  Sending 0x29
-	 * from prepare exposed unsynchronised DSC data after resume: the shell's
-	 * freshly damaged top bar was valid while the rest of the panel GRAM
-	 * contained coloured noise.
-	 */
-	mipi_dsi_msleep(&dsi_ctx, 100);
+	/* Finish POWER_ON_PRE_SETTING before enable sends POWER_ON_POST_SETTING. */
+	mipi_dsi_msleep(&dsi_ctx, 20);
+	ana38407_slew_boost(&dsi_ctx, true);
+	ana38407_set_120hz(&dsi_ctx);
 
 	return dsi_ctx.accum_err;
 }
@@ -562,21 +556,8 @@ out_unlock:
 	return ret ?: cleanup_ret;
 }
 
-/*
- * Stock DTBO wqxga60hs / wqxga120hs timings. DSC prefers 120 Hz.
- * Without DSC, expose only the 60 Hz diagnostic mode. Its large blanking
- * intervals still require 509633 kHz / 3.058 Gbit/s per lane on MSM; no
- * DDIC support for uncompressed input is established. The current SM8550
- * OPP table rejects this mode (382.225 MHz byte clock > 358 MHz maximum).
- */
+/* Fixed 120HS: a 60 Hz mode also needs different DDIC VRR/GLUT programming. */
 static const struct drm_display_mode ana38407_modes[] = {
-	{	/* 60 Hz */
-		.clock = (2560 + 128 + 512 + 203) * (1600 + 127 + 512 + 257) * 60 / 1000,
-		.hdisplay = 2560, .hsync_start = 2560 + 128, .hsync_end = 2560 + 128 + 512,
-		.htotal = 2560 + 128 + 512 + 203,
-		.vdisplay = 1600, .vsync_start = 1600 + 127, .vsync_end = 1600 + 127 + 512,
-		.vtotal = 1600 + 127 + 512 + 257,
-	},
 	{	/* 120 Hz */
 		.clock = (2560 + 34 + 64 + 34) * (1600 + 42 + 64 + 32) * 120 / 1000,
 		.hdisplay = 2560, .hsync_start = 2560 + 34, .hsync_end = 2560 + 34 + 64,
@@ -589,29 +570,25 @@ static const struct drm_display_mode ana38407_modes[] = {
 static int ana38407_get_modes(struct drm_panel *panel,
 			      struct drm_connector *connector)
 {
-	struct ana38407 *ctx = to_ana38407(panel);
 	struct drm_display_mode *mode;
-	bool compressed = !!ctx->dsi->dsc;
 	int i, count = 0;
 
 	for (i = 0; i < ARRAY_SIZE(ana38407_modes); i++) {
-		if (!compressed && i != 0)
-			continue;
 		mode = drm_mode_duplicate(connector->dev, &ana38407_modes[i]);
 		if (!mode)
 			continue;
 		mode->type = DRM_MODE_TYPE_DRIVER;
-		if (i == (compressed ? 1 : 0))
+		if (i == 0)
 			mode->type |= DRM_MODE_TYPE_PREFERRED;
-		mode->width_mm = 313;
-		mode->height_mm = 196;
+		mode->width_mm = 236;
+		mode->height_mm = 148;
 		drm_mode_set_name(mode);
 		drm_mode_probed_add(connector, mode);
 		count++;
 	}
 
-	connector->display_info.width_mm = 313;
-	connector->display_info.height_mm = 196;
+	connector->display_info.width_mm = 236;
+	connector->display_info.height_mm = 148;
 
 	return count;
 }
@@ -937,17 +914,9 @@ static int ana38407_probe(struct mipi_dsi_device *dsi)
 
 	drm_panel_add(&ctx->panel);
 
-	if (dsc) {
-		ana38407_dsc_config(ctx);
-		dsi->dsc = &ctx->dsc;
-	}
-
-	if (!dsi->dsc)
-		dev_warn(dev, "uncompressed 60 Hz exceeds the current DSI OPP table; no usable mode is expected\n");
-
-	dev_info(dev, "DSI configuration: %s, preferred refresh %u Hz\n",
-		 dsi->dsc ? "DSC 8 bpp" : "experimental RGB888",
-		 dsi->dsc ? 120 : 60);
+	ana38407_dsc_config(ctx);
+	dsi->dsc = &ctx->dsc;
+	dev_info(dev, "X710 revision-D init, fixed 120 Hz, DSC 8 bpp\n");
 
 	ret = mipi_dsi_attach(dsi);
 	if (ret < 0) {
