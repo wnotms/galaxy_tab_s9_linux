@@ -50,6 +50,15 @@
 #define ANA38407_FOD_WATCHDOG_MS	15000
 #define ANA38407_FOD_SETTLE_MS		35
 
+/*
+ * The DSI host caches dsi->dsc at attach. Select compression at boot/module
+ * load only; changing it at runtime would desynchronise the host and DDIC.
+ * Uncompressed operation is an unvalidated diagnostic, not a fallback.
+ */
+static bool dsc = true;
+module_param(dsc, bool, 0444);
+MODULE_PARM_DESC(dsc, "Use DSC compression (default true; boot/load-time only)");
+
 /* Revision D, as read back by the bootloader (lcd_id=0x800004). */
 static const u8 ana38407_expected_id[3] = { 0x80, 0x00, 0x04 };
 
@@ -388,16 +397,13 @@ static int ana38407_on(struct ana38407 *ctx)
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb9, 0x15);
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
 
-	/*
-	 * DSC: enable compression and send the Picture Parameter Set as a proper
-	 * MIPI PPS packet generated from drm_dsc_config (this is how mainline
-	 * command-mode DSC panels do it; a hand-rolled DCS 0x0A long write is the
-	 * wrong packet type).
-	 */
+	/* Match the DDIC compression state to the configuration attached to DSI. */
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
-	mipi_dsi_compression_mode_multi(&dsi_ctx, true);
-	drm_dsc_pps_payload_pack(&pps, &ctx->dsc);
-	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
+	mipi_dsi_compression_mode_multi(&dsi_ctx, !!ctx->dsi->dsc);
+	if (ctx->dsi->dsc) {
+		drm_dsc_pps_payload_pack(&pps, ctx->dsi->dsc);
+		mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
+	}
 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
 
 	/* DIA_SETTING (digital image adjust on) */
@@ -556,20 +562,14 @@ out_unlock:
 	return ret ?: cleanup_ret;
 }
 
-/* All five timing modes from the stock DTBO, hactive/vactive 2960x1848. */
 /*
- * Timings from this tablet's stock DTBO: wqxga120hs and wqxga60hs, hfp/hsync/hbp
- * and vfp/vsync/vbp in that order as DRM expects them.  The 120 Hz set is the
- * panel's native rate and is preferred.
+ * Stock DTBO wqxga60hs / wqxga120hs timings. DSC prefers 120 Hz.
+ * Without DSC, expose only the 60 Hz diagnostic mode. Its large blanking
+ * intervals still require 509633 kHz / 3.058 Gbit/s per lane on MSM; no
+ * DDIC support for uncompressed input is established. The current SM8550
+ * OPP table rejects this mode (382.225 MHz byte clock > 358 MHz maximum).
  */
 static const struct drm_display_mode ana38407_modes[] = {
-	{	/* 120 Hz */
-		.clock = (2560 + 34 + 64 + 34) * (1600 + 42 + 64 + 32) * 120 / 1000,
-		.hdisplay = 2560, .hsync_start = 2560 + 34, .hsync_end = 2560 + 34 + 64,
-		.htotal = 2560 + 34 + 64 + 34,
-		.vdisplay = 1600, .vsync_start = 1600 + 42, .vsync_end = 1600 + 42 + 64,
-		.vtotal = 1600 + 42 + 64 + 32,
-	},
 	{	/* 60 Hz */
 		.clock = (2560 + 128 + 512 + 203) * (1600 + 127 + 512 + 257) * 60 / 1000,
 		.hdisplay = 2560, .hsync_start = 2560 + 128, .hsync_end = 2560 + 128 + 512,
@@ -577,20 +577,31 @@ static const struct drm_display_mode ana38407_modes[] = {
 		.vdisplay = 1600, .vsync_start = 1600 + 127, .vsync_end = 1600 + 127 + 512,
 		.vtotal = 1600 + 127 + 512 + 257,
 	},
+	{	/* 120 Hz */
+		.clock = (2560 + 34 + 64 + 34) * (1600 + 42 + 64 + 32) * 120 / 1000,
+		.hdisplay = 2560, .hsync_start = 2560 + 34, .hsync_end = 2560 + 34 + 64,
+		.htotal = 2560 + 34 + 64 + 34,
+		.vdisplay = 1600, .vsync_start = 1600 + 42, .vsync_end = 1600 + 42 + 64,
+		.vtotal = 1600 + 42 + 64 + 32,
+	},
 };
 
 static int ana38407_get_modes(struct drm_panel *panel,
 			      struct drm_connector *connector)
 {
+	struct ana38407 *ctx = to_ana38407(panel);
 	struct drm_display_mode *mode;
+	bool compressed = !!ctx->dsi->dsc;
 	int i, count = 0;
 
 	for (i = 0; i < ARRAY_SIZE(ana38407_modes); i++) {
+		if (!compressed && i != 0)
+			continue;
 		mode = drm_mode_duplicate(connector->dev, &ana38407_modes[i]);
 		if (!mode)
 			continue;
 		mode->type = DRM_MODE_TYPE_DRIVER;
-		if (i == 0)
+		if (i == (compressed ? 1 : 0))
 			mode->type |= DRM_MODE_TYPE_PREFERRED;
 		mode->width_mm = 313;
 		mode->height_mm = 196;
@@ -926,8 +937,17 @@ static int ana38407_probe(struct mipi_dsi_device *dsi)
 
 	drm_panel_add(&ctx->panel);
 
-	ana38407_dsc_config(ctx);
-	dsi->dsc = &ctx->dsc;
+	if (dsc) {
+		ana38407_dsc_config(ctx);
+		dsi->dsc = &ctx->dsc;
+	}
+
+	if (!dsi->dsc)
+		dev_warn(dev, "uncompressed 60 Hz exceeds the current DSI OPP table; no usable mode is expected\n");
+
+	dev_info(dev, "DSI configuration: %s, preferred refresh %u Hz\n",
+		 dsi->dsc ? "DSC 8 bpp" : "experimental RGB888",
+		 dsi->dsc ? 120 : 60);
 
 	ret = mipi_dsi_attach(dsi);
 	if (ret < 0) {
@@ -976,5 +996,5 @@ static struct mipi_dsi_driver ana38407_driver = {
 };
 module_mipi_dsi_driver(ana38407_driver);
 
-MODULE_DESCRIPTION("Samsung ANA38407 AMSA46AS02 (gts9u) DSI panel driver");
+MODULE_DESCRIPTION("Samsung ANA38407 AMSA10FA01 (gts9wifi) DSI panel driver");
 MODULE_LICENSE("GPL");
