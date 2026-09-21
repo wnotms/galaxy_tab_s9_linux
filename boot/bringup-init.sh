@@ -785,6 +785,28 @@ report 'spmi devices' sh -c 'ls -l /sys/bus/spmi/devices/ 2>&1'
 report 'reboot mode' sh -c 'ls -l /sys/class/nvmem/ 2>&1; cat /proc/device-tree/reboot-mode/mode-recovery 2>/dev/null | od -An -tx1; ls -l /sys/bus/platform/drivers/nvmem-reboot-mode/ 2>&1'
 report 'dmesg' dmesg
 
+# The panel's cold-boot recovery, before anything is persisted: a DPMS off/on
+# cycle re-initialises the DSI host and PHY (no suspend, so nothing can strand
+# the tablet), and the report then carries the post-recovery dmesg - including
+# the panel id the DDIC answers once the link is initialised from scratch.
+display_recover
+
+# Keep the console visible: the DRM framebuffer comes up blanked and the default
+# console blanking would hide the very thing this exercise is about.
+if [ -w /sys/class/graphics/fb0/blank ]; then
+    echo 0 > /sys/class/graphics/fb0/blank 2>/dev/null
+    log "display: framebuffer unblanked (blank=$(cat /sys/class/graphics/fb0/blank 2>/dev/null))"
+fi
+if [ -c /dev/tty0 ]; then
+    printf '\nGTS9 mainline: console on the AMSA10FA01 panel (2560x1600)\n' > /dev/tty0 2>/dev/null
+    log 'display: wrote a marker line to /dev/tty0'
+fi
+
+report 'dmesg (after the display recovery)' dmesg
+report 'drm state' sh -c 'cat /sys/kernel/debug/dri/0/state 2>&1 | head -40'
+report 'panel backlight' sh -c 'for b in /sys/class/backlight/*/; do echo "== $b"; for f in brightness max_brightness actual_brightness power/control; do [ -r "$b$f" ] && echo "$f=$(cat "$b$f" 2>&1)"; done; done 2>&1'
+report 'framebuffer' sh -c 'cat /proc/fb 2>&1; for f in name virtual_size stride bits_per_pixel blank; do [ -r /sys/class/graphics/fb0/$f ] && echo "$f=$(cat /sys/class/graphics/fb0/$f 2>&1)"; done'
+
 # ---------------------------------------------------------------------------
 # Getting the evidence out: persist the report.
 #
@@ -968,11 +990,6 @@ if [ "$gadget_setup" = 1 ]; then
             ;;
     esac
 fi
-
-# The panel's cold-boot recovery runs only now, after the report has been
-# collected and persisted: whatever it does to the display, the evidence from
-# this boot is already on the medium.
-display_recover
 
 # ---------------------------------------------------------------------------
 # The short cycle the owner asked for: once everything this boot was going to do
