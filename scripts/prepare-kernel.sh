@@ -8,7 +8,10 @@ fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 patch_dir="$repo_root/kernel/patches"
 stock_cfg="$tree/.config.stock"
 
-[ -d "$tree/.git" ] || { echo "not a git worktree: $tree" >&2; exit 1; }
+git -C "$tree" rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "not a git worktree: $tree" >&2
+    exit 1
+}
 [ -f "$dts_src" ] || { echo "missing board DTS: $dts_src" >&2; exit 1; }
 [ -f "$fragment" ] || { echo "missing config fragment: $fragment" >&2; exit 1; }
 
