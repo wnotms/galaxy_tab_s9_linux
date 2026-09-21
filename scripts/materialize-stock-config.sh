@@ -27,9 +27,9 @@ archive="$tmpdir/stock.config.gz"
 raw="$tmpdir/stock.config"
 
 cat "${parts[@]}" | base64 -d > "$archive"
-printf '%s  %s\\n' "$expected_gzip" "$archive" | sha256sum -c - >/dev/null
+printf '%s  %s\n' "$expected_gzip" "$archive" | sha256sum -c - >/dev/null
 gzip -dc "$archive" > "$raw"
-printf '%s  %s\\n' "$expected_raw" "$raw" | sha256sum -c - >/dev/null
+printf '%s  %s\n' "$expected_raw" "$raw" | sha256sum -c - >/dev/null
 
 if [ -n "$dest" ]; then
     install -m 0644 "$raw" "$dest"

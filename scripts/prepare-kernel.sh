@@ -24,11 +24,11 @@ qcom_dts="$tree/arch/arm64/boot/dts/qcom"
 install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
 
 makefile="$qcom_dts/Makefile"
-if ! grep -q 'sm8550-samsung-gts9wifi\\.dtb' "$makefile"; then
-    printf '\\ndtb-$(CONFIG_ARCH_QCOM) += sm8550-samsung-gts9wifi.dtb\\n' >> "$makefile"
+if ! grep -q 'sm8550-samsung-gts9wifi\.dtb' "$makefile"; then
+    printf '\ndtb-$(CONFIG_ARCH_QCOM) += sm8550-samsung-gts9wifi.dtb\n' >> "$makefile"
 fi
 if ! grep -q '^DTC_FLAGS_sm8550-samsung-gts9wifi := -@$' "$makefile"; then
-    printf 'DTC_FLAGS_sm8550-samsung-gts9wifi := -@\\n' >> "$makefile"
+    printf 'DTC_FLAGS_sm8550-samsung-gts9wifi := -@\n' >> "$makefile"
 fi
 
 # Preserve the owner-extracted Samsung 5.15.153 config as the explicit seed.
