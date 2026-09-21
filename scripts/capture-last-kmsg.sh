@@ -17,7 +17,7 @@ set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 adb=${ADB:-adb}
-out_dir=${CAPTURE_DIR:-${GTS9_WORKDIR:-$repo_root/.work}/boot-logs}
+out_dir=${CAPTURE_DIR:-$repo_root/reference/boot-tests/captures}
 wait_seconds=${WAIT_TIMEOUT:-1800}
 label=${CAPTURE_LABEL:-boot}
 # 1 = the device is still connected when this starts (the normal case for a
@@ -105,7 +105,9 @@ report() {
 }
 
 echo 'markers:'
-report 'Linux version' 'Linux version'
+report 'Linux version (any kernel)' 'Linux version'
+report 'mainline release' '7\.2\.0-rc3-gts9wifi'
+report 'early marker' 'GTS9-EARLY-MARKER'
 report 'sec_log early console line' 'gts9wifi-sec-log:'
 report 'GTS9 MAINLINE INITRAMFS REACHED' 'GTS9 MAINLINE INITRAMFS REACHED'
 report 'gts9-init userspace lines' 'gts9-init:'
@@ -115,10 +117,10 @@ echo
 
 if grep -aq 'GTS9 MAINLINE INITRAMFS REACHED' "$out"; then
     echo 'RESULT: initramfs milestone present -> case A (booted, initramfs reached)'
-elif grep -aq 'Linux version' "$out"; then
+elif grep -aqE 'Linux version 7\.2\.0-rc3-gts9wifi|gts9wifi-sec-log:' "$out"; then
     echo 'RESULT: kernel started -> read the last lines before the reset (case B/D)'
 else
-    echo 'RESULT: no kernel markers in the ring (case C-like, or already overwritten)'
+    echo 'RESULT: no mainline evidence found; kernel entry and log retention remain unproven'
 fi
 echo
 echo 'Keep this file with the test record; it is the primary evidence.'

@@ -8,3 +8,6 @@ out/
 *.o
 *.ko
 *.dtb.tmp
+
+# Physical-test evidence must be versioned, including raw .log files.
+!reference/boot-tests/**/*.log

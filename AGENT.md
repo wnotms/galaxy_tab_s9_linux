@@ -41,7 +41,7 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 2. The upstream checkout under `.work/linux-mainline` stays pristine.
 3. Device changes are staged into a disposable worktree under `.work/build/`.
 4. Kernel build output goes to `.work/build/linux-out` and `out/kernel-gts9wifi`; never commit it.
-5. Use `ARCH=arm64 LLVM=1`. Do not introduce a GCC-only build path unless there is a demonstrated need.
+5. Use `USE_CCACHE=1 ARCH=arm64 LLVM=1`; ccache is required for builds. Do not introduce a GCC-only build path unless there is a demonstrated need.
 6. Keep critical early-boot/storage/console providers built in when the port depends on them before the root filesystem is available.
 7. The owner-extracted stock config is immutable evidence: reconstruct it with `scripts/materialize-stock-config.sh`, verify its recorded SHA-256, then use it as the Kconfig seed. A symbol requested by the mainline fragment but dropped by `olddefconfig` must be treated as a build/config issue, not ignored.
 8. Kernel image, DTB, config and release string must be hashed in every build.
@@ -65,6 +65,44 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 - Run the GitHub Actions workflow only when the owner explicitly requests a remote
   CI check. A local successful build/validation is sufficient evidence for
   `compiled` / `packaged` status; it is still not evidence of a physical boot.
+
+## Current direction and physical-test workflow (owner instruction, 2026-09-21)
+
+- First test the repair built from `89a6601` (see `docs/BOOTLOOP_FIX.md`):
+  prove `ABL -> Linux -> persistent console -> BusyBox /init` before expanding
+  hardware support. The generic initramfs now lives in **init_boot**, so include
+  init_boot whenever the new bundle differs from the flashed version.
+- The owner explicitly requested flashing this candidate and collecting logs.
+  This authorizes a controlled TWRP/adb test of boot, init_boot, vendor_boot and
+  the documented dtbo fallback after validating the bundle, device identity,
+  partition sizes, backups and per-partition write/read-back hashes. Build and
+  validation scripts must remain non-flashing. Do not rewrite recovery, vbmeta,
+  bootloaders, userdata or the partition table as part of these tests.
+- Start log capture before reboot. Observe for 60–90 seconds, then return to
+  recovery and capture immediately. If adb is absent, ask the owner for the
+  physical observation/recovery key action; absence of adb is expected with
+  this minimal initramfs and does not establish a crash.
+- **Every subsequent physical test must have a committed log directory** under
+  `reference/boot-tests/test-NNN-YYYYMMDDTHHMMSSZ/`, including failed or aborted
+  attempts. Save raw last_kmsg, available pstore, recovery dmesg (labelled as
+  recovery), device/layout checks, flash/read-back transcript, artifact hashes,
+  source commit, bundle metadata and an observation/result README. Mark absent
+  logs explicitly; never fabricate a successful capture or overwrite an older
+  test directory. A directory containing only a summary is insufficient when
+  raw logs are available. Do not commit firmware images or partition backups.
+- Hash the archived evidence and commit/push it to `origin/test` after each
+  test, before changing the next kernel/config/DTB. `.work` or external folders
+  are staging locations, not the sole home of test evidence. The capture tool
+  defaults to the tracked archive; pass CAPTURE_DIR for the specific test.
+- Mainline log/marker present: follow the last proven stage and the actual
+  panic/probe output. Init reached: verify persistence, then storage and USB
+  rescue. Reboots without mainline evidence: validate the sec_log retention
+  path and kernel handoff separately. An absent write-back marker, empty pstore
+  or a compressed-file DTB offset does not prove that Linux was never entered.
+- Keep experiments attributable: change one failure hypothesis per follow-up
+  test. MMU-off/head.S or Gunyah watchdog instrumentation remains a separate
+  diagnostic branch, not a default workaround. Record the final device state
+  and any stock restoration with read-back hashes in the test record.
 
 ## Build commands
 
