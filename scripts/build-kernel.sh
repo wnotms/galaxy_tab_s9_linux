@@ -85,6 +85,10 @@ required=(
     CONFIG_PHY_QCOM_QMP CONFIG_PHY_QCOM_QMP_UFS
     CONFIG_PHY_QCOM_QMP_PCIE CONFIG_PHY_QCOM_QMP_COMBO
     CONFIG_SPMI_MSM_PMIC_ARB CONFIG_MFD_SPMI_PMIC
+    # The SPMI arbiter's interrupt comes from the PDC: without it there is no
+    # PMIC at all on this board (card detect, RTC, ADC), and usb@a600000 cannot
+    # resolve its phy interrupts either.
+    CONFIG_QCOM_PDC
     CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
     CONFIG_VT CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE
 )

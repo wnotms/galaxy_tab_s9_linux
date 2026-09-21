@@ -181,6 +181,15 @@ CONFIG_QCOM_TSENS=y
 CONFIG_ARM_QCOM_CPUFREQ_HW=y
 CONFIG_RTC_DRV_PM8XXX=y
 CONFIG_QCOM_SPMI_ADC5=y
+# The PDC is the interrupt controller the SPMI arbiter hangs off
+# (spmi@c400000 interrupts-extended = <&pdc 1 ...>), and usb@a600000 takes its
+# dp/dm/ss phy interrupts from it as well. The stock 5.15 seed leaves the driver
+# out, so in mainline the arbiter never gets its IRQ, defers forever, and the
+# entire PMIC side of the board disappears with it: the microSD card-detect GPIO
+# is pm8550 GPIO 12, and the PMK8550 RTC, ADC and haptics are all SPMI devices.
+# That is the failure shape seen in tests 012-019 - no /dev/mmcblk*, no
+# /dev/rtc0 (the RTC state word of test 018 was never written), and no gadget.
+CONFIG_QCOM_PDC=y
 
 # 3. Usable console. Samsung's Android kernel runs without virtual terminals,
 #    so fbcon never binds the DRM/fbdev emulated console. Enabling VT is what
