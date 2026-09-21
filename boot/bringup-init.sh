@@ -41,6 +41,9 @@ mount_path sysfs /sys
 mount_path devtmpfs /dev
 mount_path tmpfs /tmp
 mount_path tmpfs /run
+# debugfs carries the two things this bring-up has to read: the deferred-probe
+# list (why a device never appeared) and the regulator/clock summaries.
+mount_path debugfs /sys/kernel/debug
 
 # Emit the milestone only after /dev/kmsg exists, so it reaches sec_log even
 # when the bootloader left us without a working interactive console.
@@ -288,6 +291,16 @@ report 'usb device controllers' ls -l /sys/class/udc
 report 'usb gadget state' sh -c 'ls -l /sys/kernel/config/usb_gadget/gts9 2>&1; cat /sys/kernel/config/usb_gadget/gts9/UDC 2>&1'
 report 'dwc3 bindings' sh -c 'ls -l /sys/bus/platform/drivers/dwc3/ 2>&1; ls -l /sys/bus/platform/drivers/dwc3-qcom/ 2>&1'
 report 'ttyGS' sh -c 'ls -l /dev/ttyGS* 2>&1'
+report 'deferred devices' sh -c 'cat /sys/kernel/debug/devices_deferred 2>&1'
+report 'sdhc_2 device links' sh -c 'ls -l /sys/bus/platform/devices/8804000.mmc/ 2>&1'
+report 'ufshc device links' sh -c 'ls -l /sys/bus/platform/devices/1d84000.ufshc/ 2>&1'
+report 'ufs phy device links' sh -c 'ls -l /sys/bus/platform/devices/1d80000.phy/ 2>&1'
+report 'usb phy device links' sh -c 'ls -l /sys/bus/platform/devices/88e3000.phy/ 2>&1'
+report 'mmc hosts' sh -c 'ls -l /sys/class/mmc_host/ 2>&1; ls -l /sys/class/mmc_host/*/ 2>&1'
+report 'scsi hosts' sh -c 'ls -l /sys/class/scsi_host/ 2>&1; ls -l /sys/class/scsi_device/ 2>&1'
+report 'regulator summary' sh -c 'cat /sys/kernel/debug/regulator/regulator_summary 2>&1 | head -80'
+report 'clock summary' sh -c 'cat /sys/kernel/debug/clk/clk_summary 2>&1 | head -120'
+report 'rtc' sh -c 'ls -l /dev/rtc* 2>&1; cat /proc/driver/rtc 2>&1'
 report 'dmesg' dmesg
 
 # ---------------------------------------------------------------------------
@@ -495,6 +508,107 @@ else
         [ "$report_written" = 1 ] && log "bring-up report written to $report_target"
     fi
     [ "$report_written" = 1 ] || log 'WARN: no medium accepted the bring-up report'
+fi
+
+# ---------------------------------------------------------------------------
+# Reporting through the RTC: the one store that survives a power-off here.
+#
+# UFS does not enumerate, so cache/userdata are unreachable and the microSD is
+# the only filesystem in play.  The PMK8550 RTC is battery backed, is driven by
+# a mainline driver that is built in, and busybox can set it - which makes it a
+# small persistent register that the host can read back from recovery with a
+# single `date` call.  It is not a log channel, but it is enough to say *where*
+# storage bring-up stops, without asking anyone to time a power-off.
+#
+# Opt-in through the command line:  gts9_rtc_report=1
+#
+# Layout of the 16-bit value written as the RTC time (epoch 1924992000 =
+# 2031-01-01T00:00:00Z + code, so the date itself marks the value as ours):
+#
+#	bits 0-3   microSD stage   bits 4-7   UFS stage
+#	bit  8     USB device controller registered
+#	bit  9     sdhc_2 in the deferred-probe list
+#	bit 10     ufshc in the deferred-probe list
+#	bit 11     the report was persisted somewhere
+#	bits 12-15 checksum: nibble sum of bits 0-11
+#
+# stage: 0 no platform device, 1 no driver bound, 2 no host, 3 no device,
+#        4 device but no block device, 5 block device present.
+#
+# The host half is scripts/read-rtc-state.sh, and docs/RTC_REPORT.md explains
+# what to conclude from a value.  A failed write is detectable because the
+# value stays whatever the host seeded before the boot.
+# ---------------------------------------------------------------------------
+RTC_REPORT=${GTS9_RTC_REPORT:-0}
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_rtc_report=*) RTC_REPORT=${arg#gts9_rtc_report=} ;;
+    esac
+done
+
+storage_stage() {
+    # storage_stage <platform device> <host class> <device class> <block>
+    [ -e "$1" ] || { echo 0; return; }
+    [ -e "$1/driver" ] || { echo 1; return; }
+    [ -n "$(ls -d $2 2>/dev/null)" ] || { echo 2; return; }
+    [ -n "$(ls -d $3 2>/dev/null)" ] || { echo 3; return; }
+    [ -n "$(ls -d $4 2>/dev/null)" ] || { echo 4; return; }
+    echo 5
+}
+
+rtc_state_word() {
+    state=0
+    mmc_stage=$(storage_stage /sys/bus/platform/devices/8804000.mmc \
+                '/sys/class/mmc_host/mmc[0-9]*' \
+                '/sys/class/mmc_host/mmc[0-9]*/mmc[0-9]*:*' \
+                '/dev/mmcblk*')
+    ufs_stage=$(storage_stage /sys/bus/platform/devices/1d84000.ufshc \
+                '/sys/class/scsi_host/host[0-9]*' \
+                '/sys/class/scsi_device/[0-9]*:*:*:*' \
+                '/dev/sd*')
+    case "$mmc_stage" in ''|*[!0-9]*) mmc_stage=0 ;; esac
+    case "$ufs_stage" in ''|*[!0-9]*) ufs_stage=0 ;; esac
+    state=$(( (mmc_stage & 15) | ((ufs_stage & 15) << 4) ))
+    [ -n "$(ls /sys/class/udc 2>/dev/null)" ] && state=$((state | (1 << 8)))
+    grep -q '8804000' /sys/kernel/debug/devices_deferred 2>/dev/null && state=$((state | (1 << 9)))
+    grep -q '1d84000' /sys/kernel/debug/devices_deferred 2>/dev/null && state=$((state | (1 << 10)))
+    [ "$report_written" = 1 ] && state=$((state | (1 << 11)))
+    chk=$(( ( (state & 15) + ((state >> 4) & 15) + ((state >> 8) & 15) ) & 15 ))
+    log "rtc state word: mmc_stage=$mmc_stage ufs_stage=$ufs_stage udc=$([ -n "$(ls /sys/class/udc 2>/dev/null)" ] && echo yes || echo no) report_written=$report_written -> state=$state code=$(( (chk << 12) | state ))"
+    echo $(( (chk << 12) | state ))
+}
+
+if [ "$RTC_REPORT" = 1 ]; then
+    if [ ! -c /dev/rtc0 ]; then
+        log 'WARN: no /dev/rtc0, cannot leave the state in the RTC'
+    elif ! command -v date >/dev/null 2>&1 || ! command -v hwclock >/dev/null 2>&1; then
+        log 'WARN: date or hwclock missing, cannot leave the state in the RTC'
+    else
+        code=$(rtc_state_word)
+        # 2031-01-01T00:00:00Z is the marker: any date in that day is this
+        # channel, and the real date means nothing was written.
+        epoch=$((1924992000 + code))
+        i=0
+        got=unknown
+        while [ "$i" -lt 3 ]; do
+            date -u -s "@$epoch" >/dev/null 2>&1 || break
+            hwclock -u -w -f /dev/rtc0 >/dev/null 2>&1 || break
+            # Read the value back through the RTC, not the system clock, so a
+            # rounded write is visible and can be compensated for.
+            hwclock -u -s -f /dev/rtc0 >/dev/null 2>&1 || break
+            got=$(date -u +%s 2>/dev/null)
+            case "$got" in ''|*[!0-9]*) got=unknown; break ;; esac
+            [ "$got" = "$epoch" ] && break
+            log "note: the RTC stored $got instead of $epoch; compensating"
+            epoch=$((epoch + (epoch - got)))
+            i=$((i + 1))
+        done
+        if [ "$got" = "$epoch" ]; then
+            log "rtc report written: code=$code epoch=$epoch (2031-01-01 + ${code}s)"
+        else
+            log "WARN: could not confirm the RTC write (wanted epoch $epoch, read back $got)"
+        fi
+    fi
 fi
 
 
