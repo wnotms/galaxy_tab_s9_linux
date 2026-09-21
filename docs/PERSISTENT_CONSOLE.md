@@ -78,7 +78,19 @@ reboot out of a panic bypasses the firmware snapshot step, and recovery uses
 ## How to read it back
 
 After a failed boot, warm-reboot into TWRP and dump the ring **before doing
-anything else** (later boots and TWRP itself can overwrite it):
+anything else**. This is not a formality: boot test 1 showed that TWRP's own
+kernel log fills the whole 2 MiB ring within a couple of minutes (the oldest
+surviving line in that dump was already 379 s into TWRP's uptime), so a manual
+`cat` taken "a moment later" can silently destroy the evidence.
+
+Use the capture tool, which waits for the tablet and pulls the ring the instant
+`/proc/last_kmsg` is readable:
+
+```bash
+ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
+```
+
+It prints the marker counts and a first verdict. Or do it by hand:
 
 ```sh
 cat /proc/last_kmsg > /tmp/last_kmsg.txt   # or pull it off the device
