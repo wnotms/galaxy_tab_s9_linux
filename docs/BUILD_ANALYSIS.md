@@ -271,6 +271,21 @@ Still required before the first physical test is meaningful:
 4. the M3 panel driver if display is required at first boot — also not needed
    for this test, which is judged on the persistent log and the initramfs.
 
-The project state after this round is **ready for the first controlled physical
-boot test**. It is not "hardware verified", and it must not be described that
-way until the owner has run `docs/FIRST_BOOT_TEST.md` and recorded the result.
+The project state after this round was **ready for the first controlled physical
+boot test**. That test has since happened: see
+`reference/boot-tests/test-010-20260921T125507Z/`, where the owner watched the
+tablet power itself off while running this kernel - `ABL -> mainline Linux ->
+BusyBox /init` is therefore reached on hardware.
+
+Two corrections came out of the physical tests and apply to the text above:
+
+- the persistent `sec_log` console does **not** work as an evidence channel on
+  this tablet: the bootloader's own log occupies 2,096,187 of the 2,097,136
+  bytes of the ring on every boot (test 007), so mainline writes are overwritten
+  before recovery can read them. An empty ring is not evidence of anything;
+- the "kernel never reaches `setup_arch`" reading of test 003 was an artefact of
+  that ring and is retracted.
+
+Nothing about storage, display, touch, GPU, radio, audio or charging has been
+validated, and the project must not be described as hardware-verified beyond the
+boot chain above.

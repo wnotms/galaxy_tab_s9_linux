@@ -111,7 +111,15 @@ c22ab1a8982af5d5b49b141043c38bcc78bc64bff200f39ad1f34671023888c9  vendor_boot.im
 
 ## Physical follow-up
 
-Status: repair candidate, **not physically boot-verified**. The EOF failure is
+Status update (test 010, `reference/boot-tests/test-010-20260921T125507Z/`):
+**the repair is physically confirmed.** The owner watched the tablet power
+itself off while running this kernel, which only `/init` can do - so PID 1
+survived, the initramfs ran, and `ABL -> Linux -> BusyBox /init` is established
+on hardware. The reboot loop is gone and the remaining "stuck on the logo" state
+is the running initramfs waiting on a console that does not exist.
+
+Original status line, kept for context: repair candidate, **not physically
+boot-verified**. The EOF failure is
 reproduced locally; there is no hardware trace proving it caused tests 1–4.
 Successful compilation/packaging cannot establish that the tablet boots.
 
