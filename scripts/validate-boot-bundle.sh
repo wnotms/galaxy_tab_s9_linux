@@ -1,0 +1,414 @@
+#!/usr/bin/env bash
+# Validate an Android boot header v4 bundle before anyone flashes it.
+#
+# This is a host-side, read-only checker: it opens the images, unpacks them in
+# a temporary directory, and refuses to pass unless the payload really is the
+# kernel this repository builds, the DTB really carries the Samsung ABL
+# selectors and DTBO labels, the vendor_boot really carries our cmdline,
+# bootconfig, DTB and initramfs, and that initramfs really contains an
+# executable /init plus a BusyBox.  A placeholder or truncated initramfs is a
+# hard failure, because that is exactly the mistake this script exists to
+# catch.
+#
+# It never writes to an image, a partition or a device.
+set -euo pipefail
+
+repo_root=$(cd "$(dirname "$0")/.." && pwd)
+workdir=${GTS9_WORKDIR:-$repo_root/.work}
+bundle_dir=${BUNDLE_OUT_DIR:-$repo_root/out/boot-bundle}
+kernel_out=${KERNEL_OUT_DIR:-$repo_root/out/kernel-gts9wifi}
+cmdline_file=$repo_root/boot/cmdline.example.txt
+bootconfig_file=$repo_root/boot/bootconfig.example.txt
+tools=${ANDROID_TOOLS:-$workdir/tools}
+unpack=$tools/unpack_bootimg.py
+avbtool=$tools/avbtool.py
+expect_kernel=$kernel_out
+
+# Partition sizes, identical to scripts/build-boot-bundle.sh.
+boot_size=100663296
+init_boot_size=8388608
+vendor_boot_size=100663296
+dtbo_size=16777216
+vbmeta_size=131072
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --dir) bundle_dir=$2; shift 2 ;;
+        --cmdline) cmdline_file=$2; shift 2 ;;
+        --bootconfig) bootconfig_file=$2; shift 2 ;;
+        --unpack-bootimg) unpack=$2; shift 2 ;;
+        --avbtool) avbtool=$2; shift 2 ;;
+        --kernel-out) kernel_out=$2; expect_kernel=$2; shift 2 ;;
+        --no-kernel-compare) expect_kernel=; shift ;;
+        -h|--help) sed -n '2,20p' "$0"; exit 0 ;;
+        *) echo "unknown argument: $1" >&2; exit 2 ;;
+    esac
+done
+
+# Safety self-check: a validator must stay read-only.  Refuse to run if this
+# file ever grows a destructive command in command position.
+for forbidden in dd fastboot heimdall odin adb; do
+    if grep -qE "(^|[;&|(]|\\\$\()[[:space:]]*${forbidden}([[:space:]]|\\\$)" "$0"; then
+        echo "refusing to run: $0 references the command '$forbidden'" >&2
+        exit 1
+    fi
+done
+
+failed=0
+pass() { printf 'PASS  %s\n' "$*"; }
+fail() { printf 'FAIL  %s\n' "$*" >&2; failed=$((failed + 1)); }
+note() { printf '      %s\n' "$*"; }
+
+[ -f "$unpack" ] || { echo "missing $unpack (run scripts/stage-android-tools.sh)" >&2; exit 2; }
+[ -f "$avbtool" ] || { echo "missing $avbtool (run scripts/stage-android-tools.sh)" >&2; exit 2; }
+command -v python3 >/dev/null || { echo 'python3 is required' >&2; exit 2; }
+command -v dtc >/dev/null || { echo 'dtc is required' >&2; exit 2; }
+command -v lz4 >/dev/null || { echo 'lz4 is required' >&2; exit 2; }
+command -v cpio >/dev/null || { echo 'cpio is required' >&2; exit 2; }
+[ -d "$bundle_dir" ] || { echo "missing bundle directory: $bundle_dir" >&2; exit 2; }
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+echo "validating bundle: $bundle_dir"
+echo
+
+# --------------------------------------------------------------------------
+echo '--- files and sizes ---'
+# --------------------------------------------------------------------------
+check_image() {
+    # check_image <name> <expected size>
+    local name=$1 expected=$2 path actual
+    path=$bundle_dir/$name
+    if [ ! -f "$path" ]; then
+        fail "$name is missing"
+        return 1
+    fi
+    actual=$(stat -c %s "$path")
+    if [ "$actual" -eq 0 ]; then
+        fail "$name is empty"
+        return 1
+    fi
+    if [ "$actual" -gt "$expected" ]; then
+        fail "$name is $actual bytes, larger than its $expected-byte partition"
+        return 1
+    fi
+    if [ "$actual" -ne "$expected" ]; then
+        fail "$name is $actual bytes, expected the padded $expected-byte partition size"
+        return 1
+    fi
+    pass "$name: $actual bytes"
+    return 0
+}
+
+boot_ok=0; init_boot_ok=0; vendor_boot_ok=0; dtbo_ok=0; vbmeta_ok=0
+if check_image boot.img "$boot_size"; then boot_ok=1; fi
+if check_image init_boot.img "$init_boot_size"; then init_boot_ok=1; fi
+if check_image vendor_boot.img "$vendor_boot_size"; then vendor_boot_ok=1; fi
+if check_image dtbo.img "$dtbo_size"; then dtbo_ok=1; fi
+if check_image vbmeta.img "$vbmeta_size"; then vbmeta_ok=1; fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- boot.img: v4 header, gzip kernel, appended DTB ---'
+# --------------------------------------------------------------------------
+if [ "$boot_ok" = 1 ]; then
+    mkdir -p "$tmp/boot"
+    if python3 "$unpack" --boot_img "$bundle_dir/boot.img" --out "$tmp/boot" \
+            > "$tmp/boot.info" 2>&1; then
+        if grep -q 'boot image header version: 4' "$tmp/boot.info"; then
+            pass 'boot.img: Android boot header version 4'
+        else
+            fail "boot.img: $(grep -m1 'header version' "$tmp/boot.info" || echo 'no header version found')"
+        fi
+
+        if [ ! -s "$tmp/boot/kernel" ]; then
+            fail 'boot.img: no kernel payload extracted'
+        else
+            pass "boot.img: kernel payload $(stat -c %s "$tmp/boot/kernel") bytes"
+            if python3 - "$tmp/boot/kernel" "$tmp/boot/Image" "$tmp/boot/appended.dtb" \
+                    2> "$tmp/payload.log" <<'PY'
+import sys, zlib
+payload, image_out, dtb_out = sys.argv[1:4]
+data = open(payload, 'rb').read()
+if data[:2] != b'\x1f\x8b':
+    sys.exit('kernel payload is not gzip')
+d = zlib.decompressobj(16 + zlib.MAX_WBITS)
+try:
+    image = d.decompress(data)
+except zlib.error as exc:
+    sys.exit(f'kernel payload does not decompress: {exc}')
+if not d.eof:
+    sys.exit('gzip stream is truncated')
+tail = d.unused_data
+open(image_out, 'wb').write(image)
+open(dtb_out, 'wb').write(tail)
+if image[56:60] != b'ARM\x64':
+    sys.exit('payload is not an arm64 Linux Image')
+if tail[:4] != b'\xd0\x0d\xfe\xed':
+    sys.exit('no appended DTB with a valid FDT magic')
+PY
+            then
+                pass "boot.img: valid gzip arm64 Image ($(stat -c %s "$tmp/boot/Image") bytes)"
+                pass "boot.img: appended DTB present ($(stat -c %s "$tmp/boot/appended.dtb") bytes)"
+            else
+                fail 'boot.img: kernel payload or appended DTB is not valid'
+                if [ -s "$tmp/payload.log" ]; then
+                    sed 's/^/      /' "$tmp/payload.log" >&2
+                fi
+            fi
+        fi
+    else
+        fail 'unpack_bootimg could not parse boot.img'
+        sed 's/^/      /' "$tmp/boot.info" >&2
+    fi
+
+    if [ -s "$tmp/boot/appended.dtb" ]; then
+        if dtc -I dtb -O dts -o "$tmp/appended.dts" "$tmp/boot/appended.dtb" 2>"$tmp/dtc.log"; then
+            check_dts() {
+                # check_dts <description> <pattern>
+                if grep -qE "$2" "$tmp/appended.dts"; then
+                    pass "DTB: $1"
+                else
+                    fail "DTB: $1 is missing"
+                fi
+            }
+            check_dts 'model is the SM-X710 tablet' 'model = "Samsung Galaxy Tab S9 Wi-Fi"'
+            check_dts 'ABL compatible selectors' 'compatible = "qcom,kalama-mtp", "qcom,kalama", "qcom,mtp"'
+            check_dts 'qcom,board-id = <0x10008 0x04>' 'qcom,board-id = <0x10008 0x04>'
+            check_dts 'qcom,msm-id pairs' 'qcom,msm-id = <0x218 0x20000 0x207 0x20000 0x207 0x10000 0x218 0x10000>'
+            check_dts '__symbols__/qcom_tzlog' 'qcom_tzlog = "/chosen"'
+            check_dts '__symbols__/arch_timer' 'arch_timer = "/timer"'
+            check_dts '__symbols__/qcom_scm' 'qcom_scm = "/firmware/scm"'
+        else
+            fail 'DTB: appended device tree does not decompile'
+            sed 's/^/      /' "$tmp/dtc.log" >&2
+        fi
+    fi
+
+    # The strongest statement this validator can make about the kernel: the
+    # payload is exactly Image.gz || board DTB from the build output.
+    if [ -n "$expect_kernel" ] && [ -s "$tmp/boot/kernel" ] \
+       && [ -f "$expect_kernel/Image.gz" ] && [ -f "$expect_kernel/sm8550-samsung-gts9wifi.dtb" ]; then
+        cat "$expect_kernel/Image.gz" "$expect_kernel/sm8550-samsung-gts9wifi.dtb" > "$tmp/expected-kernel"
+        if cmp -s "$tmp/boot/kernel" "$tmp/expected-kernel"; then
+            pass 'boot.img: payload is exactly Image.gz || board DTB'
+        else
+            fail 'boot.img: payload is not the current Image.gz || board DTB'
+        fi
+        if cmp -s "$tmp/boot/appended.dtb" "$expect_kernel/sm8550-samsung-gts9wifi.dtb"; then
+            pass 'DTB: appended tree is byte-identical to the built board DTB'
+        else
+            fail 'DTB: appended tree differs from the built board DTB'
+        fi
+    fi
+fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- vendor_boot.img: v4 header, cmdline, bootconfig, DTB, initramfs ---'
+# --------------------------------------------------------------------------
+vendor_ramdisk=
+if [ "$vendor_boot_ok" = 1 ]; then
+    mkdir -p "$tmp/vendor"
+    if python3 "$unpack" --boot_img "$bundle_dir/vendor_boot.img" --out "$tmp/vendor" \
+            > "$tmp/vendor.info" 2>&1; then
+        if grep -q 'vendor boot image header version: 4' "$tmp/vendor.info"; then
+            pass 'vendor_boot.img: header version 4'
+        else
+            fail "vendor_boot.img: $(grep -m1 'header version' "$tmp/vendor.info" || echo 'no header version found')"
+        fi
+
+        vendor_ramdisk=$(find "$tmp/vendor" -maxdepth 1 -name 'vendor_ramdisk*' -type f | head -1)
+        if [ -n "$vendor_ramdisk" ] && [ -s "$vendor_ramdisk" ]; then
+            pass "vendor_boot.img: vendor ramdisk present ($(stat -c %s "$vendor_ramdisk") bytes)"
+        else
+            fail 'vendor_boot.img: no vendor ramdisk'
+        fi
+
+        if [ -s "$tmp/vendor/dtb" ]; then
+            pass "vendor_boot.img: DTB present ($(stat -c %s "$tmp/vendor/dtb") bytes)"
+            if [ -n "$expect_kernel" ] && [ -f "$expect_kernel/sm8550-samsung-gts9wifi.dtb" ]; then
+                if cmp -s "$tmp/vendor/dtb" "$expect_kernel/sm8550-samsung-gts9wifi.dtb"; then
+                    pass 'vendor_boot.img: DTB matches the built board DTB'
+                else
+                    fail 'vendor_boot.img: DTB differs from the built board DTB'
+                fi
+            fi
+        else
+            fail 'vendor_boot.img: no DTB'
+        fi
+
+        expected_cmdline=$(tr '\n' ' ' < "$cmdline_file" | sed 's/[[:space:]]*$//')
+        actual_cmdline=$(sed -n 's/^vendor command line args: //p' "$tmp/vendor.info" | head -1)
+        if [ "$actual_cmdline" = "$expected_cmdline" ]; then
+            pass 'vendor_boot.img: cmdline matches the repository cmdline'
+        else
+            fail 'vendor_boot.img: cmdline differs from the repository cmdline'
+            note "expected: $expected_cmdline"
+            note "actual  : $actual_cmdline"
+        fi
+
+        if [ -f "$tmp/vendor/bootconfig" ]; then
+            if cmp -s "$tmp/vendor/bootconfig" "$bootconfig_file"; then
+                pass 'vendor_boot.img: bootconfig matches the repository file'
+            else
+                fail 'vendor_boot.img: bootconfig differs from the repository file'
+            fi
+        else
+            fail 'vendor_boot.img: no bootconfig extracted'
+        fi
+    else
+        fail 'unpack_bootimg could not parse vendor_boot.img'
+        sed 's/^/      /' "$tmp/vendor.info" >&2
+    fi
+fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- initramfs: legacy LZ4, real /init and /bin/busybox ---'
+# --------------------------------------------------------------------------
+if [ -n "$vendor_ramdisk" ] && [ -s "$vendor_ramdisk" ]; then
+    magic=$(head -c4 "$vendor_ramdisk" | od -An -tx1 | tr -d ' \n')
+    if [ "$magic" = 02214c18 ]; then
+        pass 'initramfs: legacy LZ4 magic 02 21 4c 18'
+        if lz4 -d -q -f "$vendor_ramdisk" "$tmp/initramfs.cpio" 2>"$tmp/lz4.log"; then
+            if cpio -t --quiet < "$tmp/initramfs.cpio" > "$tmp/cpio.list" 2>/dev/null; then
+                entries=$(wc -l < "$tmp/cpio.list")
+                pass "initramfs: cpio archive with $entries entries"
+
+                if grep -qxE '\.?/?init' "$tmp/cpio.list"; then
+                    pass 'initramfs: /init present'
+                    init_line=$(cpio -tv --quiet < "$tmp/initramfs.cpio" 2>/dev/null \
+                        | awk '$NF == "init" {print; exit}')
+                    case "$init_line" in
+                        -rwx*) pass 'initramfs: /init is executable' ;;
+                        '') fail 'initramfs: cannot read the /init entry' ;;
+                        *) fail "initramfs: /init is not executable ($init_line)" ;;
+                    esac
+                else
+                    fail 'initramfs: no /init (a placeholder tree must never be flashed)'
+                fi
+
+                if grep -qE '(^|/)bin/busybox$' "$tmp/cpio.list"; then
+                    pass 'initramfs: /bin/busybox present'
+                else
+                    fail 'initramfs: no /bin/busybox'
+                fi
+            else
+                fail 'initramfs: cpio archive is not readable'
+            fi
+        else
+            fail 'initramfs: not a valid LZ4 stream'
+            sed 's/^/      /' "$tmp/lz4.log" >&2
+        fi
+    else
+        fail "initramfs: magic is $magic, expected 02214c18 (legacy LZ4)"
+    fi
+fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- init_boot.img: empty generic ramdisk ---'
+# --------------------------------------------------------------------------
+if [ "$init_boot_ok" = 1 ]; then
+    mkdir -p "$tmp/initboot"
+    if python3 "$unpack" --boot_img "$bundle_dir/init_boot.img" --out "$tmp/initboot" \
+            > "$tmp/initboot.info" 2>&1; then
+        if grep -q 'boot image header version: 4' "$tmp/initboot.info"; then
+            pass 'init_boot.img: header version 4'
+        else
+            fail 'init_boot.img: not a header version 4 image'
+        fi
+
+        ramdisk=$tmp/initboot/ramdisk
+        if [ -s "$ramdisk" ]; then
+            magic=$(head -c4 "$ramdisk" | od -An -tx1 | tr -d ' \n')
+            if [ "$magic" = 02214c18 ]; then
+                pass 'init_boot.img: generic ramdisk is legacy LZ4'
+                if lz4 -d -q -f "$ramdisk" "$tmp/initboot.cpio" 2>/dev/null; then
+                    entries=$(cpio -t --quiet < "$tmp/initboot.cpio" 2>/dev/null | wc -l)
+                    if [ "$entries" -le 1 ]; then
+                        pass "init_boot.img: generic ramdisk is empty ($entries entry)"
+                    else
+                        fail "init_boot.img: expected an empty ramdisk, found $entries entries"
+                    fi
+                else
+                    fail 'init_boot.img: ramdisk does not decompress'
+                fi
+            else
+                fail "init_boot.img: ramdisk magic is $magic, expected 02214c18"
+            fi
+        else
+            fail 'init_boot.img: no ramdisk'
+        fi
+    else
+        fail 'unpack_bootimg could not parse init_boot.img'
+        sed 's/^/      /' "$tmp/initboot.info" >&2
+    fi
+fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- AVB footers ---'
+# --------------------------------------------------------------------------
+check_avb() {
+    # check_avb <image> <partition name>
+    local image=$1 name=$2
+    if [ ! -f "$bundle_dir/$image" ]; then
+        fail "$image: missing, cannot check AVB"
+        return
+    fi
+    if python3 "$avbtool" info_image --image "$bundle_dir/$image" > "$tmp/avb-$image.txt" 2>&1; then
+        if grep -q "Partition Name: *$name" "$tmp/avb-$image.txt"; then
+            pass "$image: AVB hash descriptor for '$name'"
+        else
+            fail "$image: AVB descriptor does not name '$name'"
+        fi
+    else
+        fail "$image: avbtool cannot parse the image"
+    fi
+}
+if [ "$boot_ok" = 1 ]; then check_avb boot.img boot; fi
+if [ "$init_boot_ok" = 1 ]; then check_avb init_boot.img init_boot; fi
+if [ "$vendor_boot_ok" = 1 ]; then check_avb vendor_boot.img vendor_boot; fi
+if [ "$dtbo_ok" = 1 ]; then check_avb dtbo.img dtbo; fi
+
+if [ "$vbmeta_ok" = 1 ]; then
+    if python3 "$avbtool" info_image --image "$bundle_dir/vbmeta.img" > "$tmp/avb-vbmeta.txt" 2>&1; then
+        flags=$(sed -n 's/^Flags: *//p' "$tmp/avb-vbmeta.txt" | head -1)
+        pass "vbmeta.img: parses (Flags: ${flags:-unknown})"
+        case " ${flags:-} " in
+            *2*)
+                echo
+                echo 'WARNING: vbmeta generated by this repository disables AVB verification'
+                echo 'WARNING: keep the existing device vbmeta unless you have a recovery plan'
+                echo
+                ;;
+        esac
+    else
+        fail 'vbmeta.img: avbtool cannot parse the image'
+    fi
+fi
+
+# --------------------------------------------------------------------------
+echo
+echo '--- SHA-256 manifest ---'
+# --------------------------------------------------------------------------
+if [ -f "$bundle_dir/SHA256SUMS" ]; then
+    if ( cd "$bundle_dir" && sha256sum -c SHA256SUMS --quiet ); then
+        pass 'SHA256SUMS verifies against every image'
+    else
+        fail 'SHA256SUMS does not match the images'
+    fi
+else
+    fail 'SHA256SUMS is missing (rerun scripts/build-boot-bundle.sh)'
+fi
+
+echo
+if [ "$failed" -ne 0 ]; then
+    echo "BOOT BUNDLE VALIDATION FAILED ($failed check(s))"
+    exit 1
+fi
+echo 'BOOT BUNDLE VALIDATION PASSED'
+echo 'Nothing was written: this validator only read the images.'
