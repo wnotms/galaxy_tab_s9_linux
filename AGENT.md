@@ -14,7 +14,8 @@ Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`,
   - `qcom,msm-id = <0x218 0x20000 0x207 0x20000 0x207 0x10000 0x218 0x10000>`
 - Stock config evidence: Linux 5.15.153, Android clang 14.0.7.
 - Mainline build pin: Linux `v7.2-rc3`, commit `a13c140cc289c0b7b3770bce5b3ad42ab35074aa`.
-- Bootstrap board DTS reference: `troikoss/gts9wifi-fedora` commit `656d2ded8031657b60cde22e6fdfbc0b722a9dff`. See `kernel/PROVENANCE.md`.
+- Bootstrap board DTS reference: `troikoss/gts9wifi-fedora` commit `656d2ded8031657b60cde22e6fdfbc0b722a9dff`.
+- Earlier X710 bring-up reference: `Azkali/sm8550-mainline` branch `gts9wifi-7.0`, inspected at `c48fedbd799a2b792a095840eeb96746afe2f327`. See `docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md` and `kernel/PROVENANCE.md`.
 
 Do not silently change either pin. A kernel bump and a hardware-port change must be separate changes so regressions remain attributable.
 
@@ -103,7 +104,9 @@ A failure before Linux entry must be debugged as an ABL/boot-image/DT selection 
 
 ## Samsung ABL constraints
 
-Keep the legacy Samsung selectors in the board DTS unless a physical test proves they are no longer required. The sibling X910 work demonstrated that Samsung ABL can reject an otherwise valid upstream-style DTB before Linux starts. Preserve `/__symbols__` in DTBs used in experiments that exercise Samsung's DT overlay path (`DTC_FLAGS_... := -@`).
+Keep the legacy Samsung selectors in the board DTS unless a physical test proves they are no longer required. The X710 Azkali bring-up and sibling X910 work both demonstrate that Samsung ABL can reject an otherwise valid upstream-style DTB before Linux starts. Preserve `/__symbols__` in DTBs used in experiments that exercise Samsung's DT overlay path (`DTC_FLAGS_... := -@`).
+
+For the pinned Linux 7.2-rc3 baseline, keep `kernel/patches/0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch`: Samsung ABL expects `qcom_tzlog`, `arch_timer`, and `qcom_scm` labels in the SM8550 base tree. Re-check whether the patch is still needed whenever the upstream kernel pin changes.
 
 The current boot-bundle script uses the safer appended-DTB fallback pattern and deliberately does not flash anything. Do not change `dtbo` strategy casually; document the reason and recovery path first.
 
@@ -126,6 +129,7 @@ For the mainline build, reconstruct the stock config, merge `kernel/config/gts9w
 - Keep device-specific quirks gated to SM-X710/SM8550 where practical.
 - If a patch becomes upstream, replace the local copy on the next controlled kernel rebase.
 - Do not add Android-rooting/security modifications to this repository; keep the mainline hardware port focused.
+- Do not import Azkali's `c48fedbd799a` early-boot framebuffer/Gunyah watchdog instrumentation into the default patch queue. If conventional logs are unavailable, reproduce it only as a temporary diagnostic series on a dedicated branch.
 
 ## Logs to request after physical tests
 

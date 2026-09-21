@@ -30,3 +30,24 @@ The Samsung Galaxy Tab S9 Ultra (`SM-X910`, `gts9uwifi`) mainline repositories b
 ## Owner-supplied stock evidence
 
 The owner supplied a live DTB, its decompiled DTS and a stock kernel config. The live DTB/DTS hashes and extracted facts are recorded in `reference/stock/MANIFEST.md` and remain downstream hardware evidence. The **stock kernel config itself is preserved byte-for-byte** as deterministic Base64/gzip parts under `reference/stock/config/`; `scripts/materialize-stock-config.sh` reconstructs the exact original SHA-256 before it is used as the Linux 7.2 Kconfig seed. The downstream DTS is still not a drop-in upstream board description.
+
+
+## Earlier SM-X710 mainline history: Azkali
+
+An earlier direct X710 kernel fork is tracked as an engineering reference:
+
+- repository: `https://github.com/Azkali/sm8550-mainline`
+- branch: `gts9wifi-7.0`
+- inspected head: `c48fedbd799a2b792a095840eeb96746afe2f327`
+- Linux lineage: 7.0
+
+The branch is not used as this repository's kernel source. Its most portable
+result is commit `112203bf04d3`, which documents Samsung ABL's dependency on
+the `qcom_tzlog`, `arch_timer`, and `qcom_scm` DT labels. The pinned
+Linux 7.2-rc3 source was checked and still lacks those labels, so a minimal
+adaptation is carried in
+`kernel/patches/0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch`.
+
+The Azkali branch head also contains invasive early-boot diagnostics in generic
+arm64/EFI/printk/init code. Those changes are retained as debugging knowledge,
+not as production patches. See `docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md`.

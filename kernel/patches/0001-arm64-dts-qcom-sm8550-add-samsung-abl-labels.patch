@@ -1,0 +1,59 @@
+From 112203bf04d3 Mon Sep 17 00:00:00 2001
+From: Azkali Manad <a.ffcc7@gmail.com>
+Date: Fri, 8 May 2026 15:36:19 +0200
+Subject: [PATCH] arm64: dts: qcom: sm8550: add Samsung ABL DTBO labels
+
+Samsung ABL expects legacy labels on three SM8550 base-DTB nodes before it
+will apply the stock-style DTBO flow. The labels are qcom_tzlog on /chosen,
+arch_timer on the architectural timer node, and qcom_scm on the SCM node.
+
+The original gts9wifi work also records qcom_scm as necessary for warm-reset
+boot reliability. Linux v7.2-rc3 (a13c140cc289c) still lacks these labels, so
+carry the small compatibility patch locally until an upstream equivalent is
+present in the pinned baseline.
+
+Source: Azkali/sm8550-mainline commit 112203bf04d3
+Upstream discussion:
+https://lore.kernel.org/all/20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com/
+
+Signed-off-by: Azkali Manad <a.ffcc7@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -31,7 +31,8 @@
+ 	#address-cells = <2>;
+ 	#size-cells = <2>;
+ 
+-	chosen { };
++	/* This label is required by Samsung ABL to apply a DTBO. */
++	qcom_tzlog: chosen { };
+ 
+ 	clocks {
+ 		xo_board: xo-board {
+@@ -449,7 +450,10 @@
+ 	};
+ 
+ 	firmware {
+-		scm: scm {
++		/*
++		 * Samsung ABL also expects qcom_scm across warm resets.
++		 */
++		qcom_scm: scm: scm {
+ 			compatible = "qcom,scm-sm8550", "qcom,scm";
+ 			qcom,dload-mode = <&tcsr 0x19000>;
+ 			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
+@@ -7277,7 +7281,7 @@
+ 		};
+ 	};
+ 
+-	timer {
++	arch_timer: timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW 0>,
+ 			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW 0>,
+-- 
+2.50.0

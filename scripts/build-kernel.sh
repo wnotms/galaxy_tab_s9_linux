@@ -7,6 +7,7 @@ kernel_src=${KERNEL_SRC:-$workdir/linux-mainline}
 kernel_tree=${KERNEL_WORKTREE:-$workdir/build/linux-src-gts9wifi}
 build_dir=${KERNEL_BUILD_DIR:-$workdir/build/linux-out}
 out_dir=${KERNEL_OUT_DIR:-$repo_root/out/kernel-gts9wifi}
+fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 jobs=${JOBS:-$(nproc)}
 build_modules=${BUILD_MODULES:-1}
 
@@ -32,9 +33,26 @@ if [ ! -e "$kernel_tree/.git" ]; then
 fi
 
 bash "$repo_root/scripts/prepare-kernel.sh" "$kernel_tree"
-cp "$kernel_tree/.config" "$build_dir/.config"
 
+# Keep all generated Kconfig state in O=. The source worktree must contain only
+# deliberate DTS/patch changes, otherwise Kbuild rejects the out-of-tree build.
+stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
+"$repo_root/scripts/materialize-stock-config.sh" "$stock_cfg"
+"$kernel_tree/scripts/kconfig/merge_config.sh" -m -O "$build_dir" \
+    "$stock_cfg" "$fragment"
 make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
+
+required=(
+    CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI CONFIG_SERIAL_QCOM_GENI_CONSOLE
+    CONFIG_BLK_DEV_INITRD CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
+    CONFIG_MMC_SDHCI_MSM CONFIG_EXT4_FS CONFIG_PSTORE CONFIG_PSTORE_RAM
+)
+for sym in "${required[@]}"; do
+    if ! grep -qx "$sym=y" "$build_dir/.config"; then
+        echo "required Kconfig symbol is not built-in: $sym" >&2
+        exit 1
+    fi
+done
 
 export KBUILD_BUILD_USER=${KBUILD_BUILD_USER:-gts9-mainline}
 export KBUILD_BUILD_HOST=${KBUILD_BUILD_HOST:-reproducible}

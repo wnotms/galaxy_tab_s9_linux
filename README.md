@@ -14,9 +14,9 @@ The project deliberately separates three things:
 - SoC: Qualcomm SM8550 / `kalama`, Adreno 740
 - Mainline baseline: Linux `v7.2-rc3`, commit `a13c140cc289c0b7b3770bce5b3ad42ab35074aa`
 - Stock evidence supplied for this repository: Linux 5.15.153, Android clang 14.0.7, board-id `0x04`
-- Initial mainline port sources: the hardware-validated SM-X710 work in `troikoss/gts9wifi-fedora`, pinned in `kernel/PROVENANCE.md`
+- Initial mainline port sources: the hardware-validated SM-X710 work in `troikoss/gts9wifi-fedora`, plus the earlier `Azkali/sm8550-mainline` X710 bring-up history, pinned in `kernel/PROVENANCE.md`
 
-The vendored board DTS is a bootstrap baseline derived from a hardware-tested SM-X710 mainline port. This repository intentionally does **not** import that port's entire out-of-tree driver/patch stack on day one. Hardware support is added in small, reviewable steps and must be revalidated on this tablet.
+The vendored board DTS is a bootstrap baseline derived from a hardware-tested SM-X710 mainline port. A small Samsung ABL compatibility patch from the earlier Azkali X710 work is carried separately because Linux 7.2-rc3 still lacks the DTBO labels expected by Samsung's bootloader. This repository intentionally does **not** import that port's entire out-of-tree driver/patch stack on day one. Hardware support is added in small, reviewable steps and must be revalidated on this tablet.
 
 ## Build the kernel
 
@@ -84,6 +84,7 @@ scripts/build-boot-bundle.sh Android boot header v4 packaging, no flashing
 scripts/audit-stock.sh       extracts useful facts from stock config/DTS
 reference/stock/             hashes and facts from the supplied stock artifacts
 docs/MAINLINE_PORT_PLAN.md   staged bring-up and validation plan
+docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md  decisions from the earlier X710 kernel fork
 ```
 
 ## Safety boundary
