@@ -48,6 +48,17 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 9. No build script may flash or repartition a physical device.
 10. Do not claim hardware works because a driver compiles or probes. Record `compiled`, `booted`, `enumerated`, and `physically verified` as different states.
 
+## Remote workflow (owner instruction, 2026-09-21)
+
+- `main` is left alone unless the owner explicitly asks for it. Work happens on a
+  branch (currently `test`) and is pushed there.
+- One purpose per commit; do not batch unrelated work into one commit.
+- **Push to `origin` after every operation.** Verified work must not exist only on
+  the local disk: commit it and push the branch, so the remote always matches what
+  was actually built, tested or documented.
+- If an operation changes nothing in the tree (a read-only check, for example),
+  there is nothing to push; do not create an empty commit.
+
 ## Build commands
 
 Normal build:
