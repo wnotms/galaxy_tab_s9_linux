@@ -242,7 +242,7 @@ assembled and inspected offline; that proves the packaging, not the boot.
 
 | Piece | State |
 |---|---|
-| persistent console | `CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG=y`, driver `kernel/drivers/samsung-gts9wifi-sec-log.c`, compiled into vmlinux with no warnings; the LOGM layout is a bring-up adaptation from the physically validated SM-X910 port and is **not** X710-verified |
+| persistent console | `CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG=y`, driver `kernel/drivers/samsung-gts9wifi-sec-log.c`, compiled into vmlinux with no warnings. The built DTB wires it up as intended: `sec-kernel-log` (`samsung,gts9wifi-sec-kernel-log`) points at `sec-log@880200000` = `0x8:0x80200000 + 0x200000`, i.e. 2 MiB at `0x880200000`, which is the region the driver maps. The LOGM layout is a bring-up adaptation from the physically validated SM-X910 port and is **not** X710-verified |
 | real userspace | `scripts/build-bringup-initramfs.sh` builds a pinned static BusyBox tree with `boot/bringup-init.sh` as `/init`; 1,146,125 B, byte-reproducible, applets present, no modules by design |
 | packaging gate | `scripts/validate-boot-bundle.sh` re-extracts kernel, appended DTB, vendor ramdisk and AVB footers; fails hard when the initramfs has no executable `/init` |
 | device gate | `scripts/check-device-layout.sh` read-only partition audit; the sibling values are an assumption until it confirms them on the tablet |
