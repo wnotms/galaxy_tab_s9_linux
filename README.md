@@ -58,43 +58,48 @@ The build uses LLVM (`ARCH=arm64 LLVM=1`) and a disposable git worktree. The pin
 ## Android boot v4 bundle
 
 The build scripts never flash a tablet. The AOSP tools the packaging needs are
-staged and hash-pinned by the repository, the initramfs is packed and checked
-here, and only then is the bundle assembled:
+staged and hash-pinned by the repository, the initramfs is built, packed and
+checked here, and only then is the bundle assembled and validated:
 
 ```bash
 ./scripts/stage-android-tools.sh          # mkbootimg.py / avbtool.py, hash-pinned
+./scripts/build-bringup-initramfs.sh      # minimal BusyBox initramfs, pinned
 
-./scripts/make-initramfs.sh \
-  --root /path/to/initramfs-tree \
-  --modules out/kernel-gts9wifi/modules-root \
-  --out out/boot-bundle/initramfs.img
-
-./scripts/build-boot-bundle.sh \
-  --initramfs out/boot-bundle/initramfs.img \
-  --cmdline boot/cmdline.example.txt \
-  --bootconfig boot/bootconfig.example.txt
-```
-
-`make-initramfs.sh` packs a tree you supply (it does not generate userspace),
-injects the modules built for this kernel release, runs `depmod`, and refuses
-anything that is not a legacy-LZ4 stream or that does not fit the `vendor_boot`
-budget. `build-boot-bundle.sh` takes `MKBOOTIMG`/`AVBTOOL` from the environment
-and defaults to the staged copies when they are already exported:
-
-```bash
 MKBOOTIMG=$PWD/.work/tools/mkbootimg.py AVBTOOL=$PWD/.work/tools/avbtool.py \
-  ./scripts/build-boot-bundle.sh --initramfs ... --cmdline ... --bootconfig ...
+  ./scripts/build-boot-bundle.sh \
+    --initramfs out/boot-bundle/initramfs-bringup.img \
+    --cmdline boot/cmdline.example.txt \
+    --bootconfig boot/bootconfig.example.txt
+
+./scripts/validate-boot-bundle.sh         # must print BOOT BUNDLE VALIDATION PASSED
 ```
 
-Read `docs/MAINLINE_PORT_PLAN.md` before any physical test. In particular, do not blindly replace Samsung's DTBO or repartition internal storage during early bring-up.
+`build-bringup-initramfs.sh` assembles the minimal bring-up userspace
+(`boot/bringup-init.sh` as `/init`, a pinned static BusyBox and its applets)
+and hands it to `make-initramfs.sh`, which packs a tree, refuses anything that
+is not a legacy-LZ4 stream, and enforces the `vendor_boot` budget. Use
+`make-initramfs.sh --root ... --modules out/kernel-gts9wifi/modules-root`
+directly when a test needs loadable modules; the first boot test does not.
+
+`validate-boot-bundle.sh` is the gate before any physical test: it re-extracts
+the kernel, the appended DTB, the vendor ramdisk and every AVB footer, and
+fails if the initramfs has no executable `/init`. It only reads.
+
+Read `docs/FIRST_BOOT_TEST.md` before any physical test: it defines the single
+success chain, the mandatory stock backup, the recovery plan, the manual flash
+steps and the A–E result classification. In particular, do not blindly replace
+Samsung's DTBO, do not overwrite `vbmeta`, and do not repartition internal
+storage during early bring-up.
 
 ## Repository layout
 
 ```text
 AGENT.md                     rules/context for future coding agents
 kernel/dts/                  translated SM-X710 mainline board DTS
+kernel/drivers/              out-of-tree device drivers (sec_log console)
 kernel/config/               small device Kconfig fragment
 kernel/patches/              local patch queue (initially empty/minimal)
+boot/bringup-init.sh         the /init of the bring-up initramfs
 scripts/prepare-kernel.sh    stages DTS/patches into a disposable tree
 kernel/PROVENANCE.md         source/pin/licensing notes
 scripts/fetch-mainline.sh    obtains and verifies the upstream kernel
@@ -102,9 +107,13 @@ scripts/check-build-deps.sh  reports missing host tools, installs nothing
 scripts/build-kernel.sh      reproducible LLVM build
 scripts/stage-android-tools.sh  hash-pinned AOSP mkbootimg/avbtool staging
 scripts/make-initramfs.sh    packs and verifies the legacy-LZ4 initramfs
+scripts/build-bringup-initramfs.sh  minimal BusyBox initramfs for bring-up
 scripts/build-boot-bundle.sh Android boot header v4 packaging, no flashing
+scripts/validate-boot-bundle.sh  read-only pre-flash bundle gate
+scripts/check-device-layout.sh   read-only partition audit, runs on the tablet
 scripts/audit-stock.sh       extracts useful facts from stock config/DTS
 reference/stock/             hashes and facts from the supplied stock artifacts
+docs/FIRST_BOOT_TEST.md      first physical boot test, recovery plan, A-E cases
 docs/MAINLINE_PORT_PLAN.md   staged bring-up and validation plan
 docs/BUILD_ANALYSIS.md       repository analysis and the verified build result
 docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md  decisions from the earlier X710 kernel fork
@@ -112,4 +121,4 @@ docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md  decisions from the earlier X710 kernel 
 
 ## Safety boundary
 
-Nothing in this repository should invoke Odin, Heimdall, `dd` to a block device, `fastboot flash`, or TWRP flashing automatically. Build and packaging are allowed; flashing is a separate, manual test step after artifact inspection and recovery planning.
+Nothing in this repository should invoke Odin, Heimdall, `dd` to a block device, `fastboot flash`, or TWRP flashing automatically. Build and packaging are allowed; flashing is a separate, manual test step after artifact inspection and recovery planning. `scripts/validate-boot-bundle.sh` and `scripts/check-device-layout.sh` are read-only and refuse to run if a destructive command ever appears in them; the flashing commands live only in `docs/FIRST_BOOT_TEST.md`, for a human to run deliberately.
