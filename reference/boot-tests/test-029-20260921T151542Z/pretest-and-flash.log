@@ -1,0 +1,16 @@
+=== 2026-09-21T15:16:01Z test 029 pretest + flash ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    2ede31a0cd8410eea55658c38e9743dc5c43419944bcae52e3ae24dca4c821dd
+vendor_boot  9b6ad5924ac7e5c74875d479eac41c5ec2c65c72bb6d333744805e17ffe19f06
+--- init_boot ---
+D:\android\gts9-test029\init_boot.img: 1 file pushed, 0 skipped. 357.9 MB/s (8388608 bytes in 0.022s)
+expected: 2d3c4dd6ce3af074ae716f6d2c7d4c311b67ca240b5d7a614ec42bb0e8610598
+8388608 bytes (8.0 M) copied, 0.055969 s, 143 M/s
+2d3c4dd6ce3af074ae716f6d2c7d4c311b67ca240b5d7a614ec42bb0e8610598  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test029\vendor_boot.img: 1 file pushed, 0 skipped. 814.9 MB/s (100663296 bytes in 0.118s)
+expected: 16374d27995a11a439a18c78ea539068cbd120857ab21416ebc5eb5f679a498f
+100663296 bytes (96 M) copied, 0.372322 s, 258 M/s
+16374d27995a11a439a18c78ea539068cbd120857ab21416ebc5eb5f679a498f  /dev/block/by-name/vendor_boot
+=== 2026-09-21T15:16:09Z test 029: reboot (MSC gadget, no inline handover) ===
+reboot issued

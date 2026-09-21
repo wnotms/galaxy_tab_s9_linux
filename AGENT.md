@@ -92,11 +92,15 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 - Next milestones, in order: **a root filesystem** (M2's last acceptance item -
   the port's design puts it on the microSD), then **display and input** (M3: the
   ANA38407 panel and FTS1BA90A touch, which is what makes the tablet usable).
-- Known blockers on the way: an SPMI *write* blocks this kernel uninterruptibly
-  (so `reboot recovery` through the SDAM and the RTC state word are both out
-  until it is understood); the USB gadget enumerates but its CDC-ACM data path
-  carries no bytes even with the PTN3222 redriver programmed, so the USB console
-  is not yet a channel.
+- **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
+  gadget exports the microSD partition read-only, Windows mounts it by itself,
+  and the report can be read off the running tablet over USB - no TWRP, no power
+  button, no owner.  Bulk transfers are therefore fine; the CDC-ACM function is
+  what fails (the host sees its control interface and never its data interface),
+  so a serial console is a gadget-side fix rather than a PHY problem.
+- Known blocker on the way: an SPMI *write* blocks this kernel uninterruptibly,
+  so `reboot recovery` through the SDAM and the RTC state word are both out until
+  it is understood.  The BCB path (a UFS write) replaces the former.
 - The generic initramfs lives in **init_boot**, so include init_boot whenever the
   new bundle differs from the flashed version. `gts9_userspace_proof=<seconds>`
   stays an opt-in in the initramfs (it powers the tablet off by itself) and is

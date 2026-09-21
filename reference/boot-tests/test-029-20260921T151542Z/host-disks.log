@@ -1,0 +1,41 @@
+=== disks before the boot ===
+
+Index Model                            Size InterfaceType
+----- -----                            ---- -------------
+    0 SKHynix_HFS512GDE9X084N  512105932800 SCSI         
+    1 KIOXIA-EXCERIA G2 SSD   1000202273280 SCSI         
+
+
+
+
+DeviceID DriveType VolumeName          Size
+-------- --------- ----------          ----
+C:               3 Windows-SSD 215822102528
+D:               3 新加卷         296014385152
+E:               3             714589519872
+F:               3             107374497792
+
+
+
+=== disks after the boot (2026-09-21T15:17:29Z) ===
+
+Index Model                                      Size InterfaceType
+----- -----                                      ---- -------------
+    0 SKHynix_HFS512GDE9X084N            512105932800 SCSI         
+    1 KIOXIA-EXCERIA G2 SSD             1000202273280 SCSI         
+    2 Linux File-Stor Gadget USB Device   63861073920 USB          
+
+
+
+--- volumes ---
+
+DeviceID DriveType VolumeName          Size FileSystem
+-------- --------- ----------          ---- ----------
+C:               3 Windows-SSD 215822102528 NTFS      
+D:               3 新加卷         296014385152 NTFS      
+E:               3             714589519872 NTFS      
+F:               3             107374497792 NTFS      
+G:               2              63861424128 exFAT     
+
+
+

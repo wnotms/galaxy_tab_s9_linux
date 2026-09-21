@@ -285,7 +285,17 @@ log ''
 # Failure is reported and does not stop the rest of the bring-up.
 # ---------------------------------------------------------------------------
 USB_GADGET=${GTS9_USB_GADGET:-1}
+# acm (default), msc (mass storage), both - settable from the command line so a
+# boot can switch the gadget without rebuilding the initramfs.
+USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-acm}
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
+    esac
+done
 gadget_setup=0
+# Exported read-only to the host when the mass-storage function is in use.
+USB_MSC_BACKING=${GTS9_USB_MSC_BACKING:-/dev/mmcblk1p1}
 
 setup_usb_gadget() {
     [ "$USB_GADGET" = 1 ] || { log 'USB gadget disabled by GTS9_USB_GADGET'; return 0; }
@@ -318,13 +328,30 @@ setup_usb_gadget() {
     echo 'bringup' > "$G/configs/c.1/strings/0x409/configuration" 2>/dev/null
     echo 250 > "$G/configs/c.1/MaxPower" 2>/dev/null
 
-    mkdir -p "$G/functions/acm.usb0" 2>/dev/null
-    ln -sf "$G/functions/acm.usb0" "$G/configs/c.1/acm.usb0" 2>/dev/null
+    case "$USB_GADGET_MODE" in
+        acm|both)
+            mkdir -p "$G/functions/acm.usb0" 2>/dev/null
+            ln -sf "$G/functions/acm.usb0" "$G/configs/c.1/acm.usb0" 2>/dev/null
+            ;;
+    esac
+    case "$USB_GADGET_MODE" in
+        msc|both)
+            # Mass storage, read-only, with no medium to start with: the card is
+            # attached later, once the report has been written and the card is
+            # unmounted again.  Windows then mounts the card itself, which is the
+            # only log channel that needs neither TWRP nor the owner.
+            mkdir -p "$G/functions/mass_storage.usb0" 2>/dev/null
+            echo 1 > "$G/functions/mass_storage.usb0/lun.0/ro" 2>/dev/null
+            echo 0 > "$G/functions/mass_storage.usb0/lun.0/cdrom" 2>/dev/null
+            echo 1 > "$G/functions/mass_storage.usb0/lun.0/removable" 2>/dev/null
+            ln -sf "$G/functions/mass_storage.usb0" "$G/configs/c.1/mass_storage.usb0" 2>/dev/null
+            ;;
+    esac
 
     udc=$(ls /sys/class/udc 2>/dev/null | head -1)
     if [ -n "$udc" ] && echo "$udc" > "$G/UDC" 2>/dev/null; then
         gadget_setup=1
-        log "USB gadget bound to $udc (host sees a CDC-ACM serial port)"
+        log "USB gadget bound to $udc (mode=$USB_GADGET_MODE)"
     else
         log 'WARN: could not bind the USB gadget to a UDC'
     fi
@@ -484,12 +511,15 @@ proof_seconds=''
 proof_if=''
 proof_code_base=''
 proof_action=${GTS9_PROOF_ACTION:-poweroff}
+# 1 = hand the next boot to recovery as soon as this boot's work is done.
+reboot_after=0
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_userspace_proof=*) proof_seconds=${arg#gts9_userspace_proof=} ;;
         gts9_proof_if=*) proof_if=${arg#gts9_proof_if=} ;;
         gts9_proof_code=*) proof_code_base=${arg#gts9_proof_code=} ;;
         gts9_proof_action=*) proof_action=${arg#gts9_proof_action=} ;;
+        gts9_reboot_after=*) reboot_after=${arg#gts9_reboot_after=} ;;
     esac
 done
 
@@ -613,6 +643,9 @@ report 'usb repeater (live DT)' sh -c '
     done'
 report 'ptn3222 binding' sh -c 'ls -l /sys/bus/i2c/drivers/ptn3222/ 2>&1'
 report 'interrupts' sh -c 'cat /proc/interrupts 2>&1'
+report 'udc state' sh -c 'for f in /sys/class/udc/*/; do echo "== $f"; for p in state current_speed maximum_speed function is_a_peripheral; do [ -r "$f$p" ] && echo "-- $p: $(cat "$f$p" 2>&1)"; done; done 2>&1'
+report 'dwc3 debugfs' sh -c 'ls /sys/kernel/debug/usb/ 2>&1; for d in /sys/kernel/debug/usb/*/; do echo "== $d"; ls "$d" 2>&1; for p in mode link_state; do [ -r "$d$p" ] && echo "-- $p: $(cat "$d$p" 2>&1)"; done; done 2>&1'
+report 'gadget functions' sh -c 'ls -l /sys/kernel/config/usb_gadget/gts9/functions/ /sys/kernel/config/usb_gadget/gts9/configs/c.1/ 2>&1; cat /sys/kernel/config/usb_gadget/gts9/functions/mass_storage.usb0/lun.0/file 2>&1'
 report 'spmi devices' sh -c 'ls -l /sys/bus/spmi/devices/ 2>&1'
 report 'reboot mode' sh -c 'ls -l /sys/class/nvmem/ 2>&1; cat /proc/device-tree/reboot-mode/mode-recovery 2>/dev/null | od -An -tx1; ls -l /sys/bus/platform/drivers/nvmem-reboot-mode/ 2>&1'
 report 'dmesg' dmesg
@@ -772,13 +805,32 @@ fi
 # Second write: the value left in the RTC records that the report was persisted.
 [ "$RTC_REPORT" = 1 ] && rtc_write_state 1
 
+# Attach the microSD card to the mass-storage LUN now: by this point the report
+# has been written and the card unmounted, and the host can mount the volume
+# read-only while this boot is still running.
+if [ "$gadget_setup" = 1 ]; then
+    case "$USB_GADGET_MODE" in
+        msc|both)
+            if [ -b "$USB_MSC_BACKING" ]; then
+                if echo "$USB_MSC_BACKING" > /sys/kernel/config/usb_gadget/gts9/functions/mass_storage.usb0/lun.0/file 2>/dev/null; then
+                    log "mass storage: $USB_MSC_BACKING exported read-only to the host"
+                else
+                    log "WARN: could not attach $USB_MSC_BACKING to the mass-storage LUN"
+                fi
+            else
+                log "WARN: $USB_MSC_BACKING is missing; no medium for the mass-storage LUN"
+            fi
+            ;;
+    esac
+fi
+
 # ---------------------------------------------------------------------------
 # The short cycle the owner asked for: once everything this boot was going to do
 # is done, wait ten seconds and hand the next boot to recovery.  The timed proof
 # armed earlier stays as the safety net for a boot that never reaches this point,
 # so a hang still ends in a reboot instead of a tablet left sitting there.
 # ---------------------------------------------------------------------------
-if [ "$proof_action" = recovery-bcb ] && [ -n "$proof_code_base" ]; then
+if [ "$reboot_after" = 1 ] && [ "$proof_action" = recovery-bcb ] && [ -n "$proof_code_base" ]; then
     log "work complete (report_written=$report_written, target=${report_target:-none}); rebooting into recovery in 10s"
     sleep 10
     reboot_to_recovery
