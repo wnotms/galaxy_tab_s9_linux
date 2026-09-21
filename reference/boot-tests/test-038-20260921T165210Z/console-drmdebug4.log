@@ -1,0 +1,11 @@
+2026-09-21T17:06:01Z console open on COM17
+2026-09-21T17:06:04Z SENT  dmesg | grep vsync; echo ---; dmesg | grep -c "enc35"; dmesg | grep "enc35" | tail -4
+2026-09-21T17:06:04Z RECV  dmesg | grep vsync; echo ---; dmesg | grep -c "enc35"; dmesg | grep "enc35
+2026-09-21T17:06:04Z RECV  " | tail -4
+2026-09-21T17:06:04Z RECV  ---
+2026-09-21T17:06:04Z RECV  56
+2026-09-21T17:06:04Z RECV  [  755.778620][   T10] [drm:dpu_encoder_resource_control] enc35
+2026-09-21T17:06:04Z RECV  [  755.803708][   T10] [drm:dpu_encoder_wait_for_commit_done] enc35
+2026-09-21T17:06:04Z RECV  [  755.865886][  T119] [drm:_dpu_encoder_resource_disable] enc35
+2026-09-21T17:06:04Z RECV  [  755.944835][   T10] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T17:06:13Z console session done

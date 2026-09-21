@@ -1,0 +1,9 @@
+2026-09-21T17:03:02Z console open on COM17
+2026-09-21T17:03:05Z SENT  printf "\n\n  GTS9 BAND TEST : white text here + a white band across the middle\n\n" > /dev/tty0; yes | tr y "\377" | dd of=/dev/fb0 bs=10240 seek=600 count=500 2>&1 | tail -1; for i in 1 2 3 4 5 6 7 8 9 10 11 12; do echo 1 > /sys/class/graphics/fb0/blank; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 6; done; echo "cycles done"; dmesg | grep -c "ctl start"
+2026-09-21T17:03:05Z RECV  printf "\n\n  GTS9 BAND TEST : white text here + a white band across the m
+2026-09-21T17:03:05Z RECV  iddle\n\n" > /dev/tty0; yes | tr y "\377" | dd of=/dev/fb0 bs=10240 seek=600 cou
+2026-09-21T17:03:05Z RECV  nt=500 2>&1 | tail -1; for i in 1 2 3 4 5 6 7 8 9 10 11 12; do echo 1 > /sys/cla
+2026-09-21T17:03:05Z RECV  ss/graphics/fb0/blank; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 6;
+2026-09-21T17:03:05Z RECV   done; echo "cycles done"; dmesg | grep -c "ctl start"
+2026-09-21T17:03:05Z RECV  0+500 records out
+2026-09-21T17:03:14Z console session done

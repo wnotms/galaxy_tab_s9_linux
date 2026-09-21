@@ -1,0 +1,23 @@
+2026-09-21T16:54:45Z console open on COM17
+2026-09-21T16:54:48Z SENT  uptime; echo "ctl-start-errors=$(dmesg | grep -c wait_for_irq)"; dmesg | grep -e ana38407 -e "display" | tail -10; echo "fb-blank=$(cat /sys/class/graphics/fb0/blank)"; dmesg | tail -4
+2026-09-21T16:54:48Z RECV  uptime; echo "ctl-start-errors=$(dmesg | grep -c wait_for_irq)"; dmesg | g
+2026-09-21T16:54:48Z RECV  rep -e ana38407 -e "display" | tail -10; echo "fb-blank=$(cat /sys/class/graphic
+2026-09-21T16:54:48Z RECV  s/fb0/blank)"; dmesg | tail -4
+2026-09-21T16:54:48Z RECV   04:49:48 up 1 min,  0 users,  load average: 0.83, 0.29, 0.10
+2026-09-21T16:54:48Z RECV  ctl-start-errors=0
+2026-09-21T16:54:48Z RECV  [   66.756140][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   68.228148][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   69.698481][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   71.140186][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   72.610474][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   74.084072][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   75.556090][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   77.028299][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   78.498471][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  [   79.939378][   T45] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T16:54:48Z RECV  fb-blank=0
+2026-09-21T16:54:48Z RECV  [   80.241993][   T45] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T16:54:48Z RECV  [   80.254012][   T45] [drm:dpu_kms_wait_for_commit_done:527] [dpu error]wait for commit done returned -22
+2026-09-21T16:54:48Z RECV  [   80.350175][   T45] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T16:54:48Z RECV  [   80.362198][   T45] [drm:dpu_kms_wait_for_commit_done:527] [dpu error]wait for commit done returned -22
+2026-09-21T16:54:57Z console session done

@@ -1,0 +1,4 @@
+kernel_source_commit=f8b82635f044b5a3dd9c5a790a5cd1da6b83eb26
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+hypothesis=the atomic flush skips the still-disabled command-mode encoder, so the first frame of every enable is never started; flush and start it at the end of dpu_encoder_phys_cmd_enable(), and recover the panel with a framebuffer blank cycle instead of the connector's dpms
+started_utc=2026-09-21T16:52:10Z

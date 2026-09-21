@@ -1,0 +1,7 @@
+2026-09-21T17:06:24Z console open on COM17
+2026-09-21T17:06:27Z SENT  echo 0xff > /sys/module/drm/parameters/debug; dmesg -c > /dev/null 2>&1; echo "cleared"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 4; echo CYCLEDONE
+2026-09-21T17:06:28Z RECV  echo 0xff > /sys/module/drm/parameters/debug; dmesg -c > /dev/null 2>&1; e
+2026-09-21T17:06:28Z RECV  cho "cleared"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/cl
+2026-09-21T17:06:28Z RECV  ass/graphics/fb0/blank; sleep 4; echo CYCLEDONE
+2026-09-21T17:06:28Z RECV  cleared
+2026-09-21T17:06:37Z console session done

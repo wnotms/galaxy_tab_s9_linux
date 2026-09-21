@@ -1,0 +1,34 @@
+2026-09-21T17:06:53Z console open on COM17
+2026-09-21T17:06:56Z SENT  dmesg | grep -e enc35 -e intf -e "tc " -e vsync -e tear | tail -30
+2026-09-21T17:06:56Z RECV  dmesg | grep -e enc35 -e intf -e "tc " -e vsync -e tear | tail -30
+2026-09-21T17:06:56Z RECV  [  788.790049][  T696] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 1
+2026-09-21T17:06:56Z RECV  [  788.790065][  T696] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 2
+2026-09-21T17:06:56Z RECV  [  788.790343][  T696] [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] enc35 intf1 pp:0 pending_cnt 0
+2026-09-21T17:06:56Z RECV  [  788.790358][  T696] [drm:dpu_encoder_resource_control] enc35
+2026-09-21T17:06:56Z RECV  [  788.790452][  T696] [drm:dpu_encoder_wait_for_commit_done] enc35
+2026-09-21T17:06:56Z RECV  [  788.870348][   T77] [drm:_dpu_encoder_resource_disable] enc35
+2026-09-21T17:06:56Z RECV  [  788.876455][  T696] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T17:06:56Z RECV  [  789.886426][   T10] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T17:06:56Z RECV  [  789.887176][   T10] msm_dpu ae01000.display-controller: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : v p(0,-96)@ 789.566820428 -> 789.567280727 [e 3 us, 0 rep]
+2026-09-21T17:06:56Z RECV  [  789.887195][   T10] msm_dpu ae01000.display-controller: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : v p(0,-96)@ 789.566839282 -> 789.567299581 [e 1 us, 0 rep]
+2026-09-21T17:06:56Z RECV  [  789.887210][   T10] [drm:dpu_encoder_wait_for_commit_done] enc35
+2026-09-21T17:06:56Z RECV  [  805.587515][   T10] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T17:06:56Z RECV  [  805.611127][   T10] msm_dpu ae01000.display-controller: [drm:drm_calc_timestamping_constants] crtc 103: hwmode: htotal 2692, vtotal 1738, vdisplay 1600
+2026-09-21T17:06:56Z RECV  [  805.626283][   T10] msm_dpu ae01000.display-controller: [drm:drm_calc_timestamping_constants] crtc 103: clock 561443 kHz framedur 8333341 linedur 4794
+2026-09-21T17:06:56Z RECV  [  805.654517][   T10] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 1
+2026-09-21T17:06:56Z RECV  [  805.665544][   T10] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 2
+2026-09-21T17:06:56Z RECV  [  805.889959][   T10] [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] enc35 intf1 pp:0 pending_cnt 0
+2026-09-21T17:06:56Z RECV  [  805.900286][   T10] [drm:dpu_encoder_resource_control] enc35
+2026-09-21T17:06:56Z RECV  [  805.925291][   T10] [drm:dpu_encoder_wait_for_commit_done] enc35
+2026-09-21T17:06:56Z RECV  [  805.989206][   T77] [drm:_dpu_encoder_resource_disable] enc35
+2026-09-21T17:06:56Z RECV  [  806.065494][   T10] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T17:06:56Z RECV  [  807.331920][   T10] msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-21T17:06:56Z RECV  [  808.326918][   T10] msm_dpu ae01000.display-controller: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : v p(0,-96)@ 808.006561619 -> 808.007021918 [e 3 us, 0 rep]
+2026-09-21T17:06:56Z RECV  [  808.344880][   T10] msm_dpu ae01000.display-controller: [drm:drm_crtc_vblank_helper_get_vblank_timestamp_internal] crtc 0 : v p(0,-96)@ 808.024523025 -> 808.024983324 [e 2 us, 0 rep]
+2026-09-21T17:06:56Z RECV  [  808.362742][   T10] [drm:dpu_encoder_wait_for_commit_done] enc35
+2026-09-21T17:06:56Z RECV  [  808.488643][   T10] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T17:06:56Z RECV  [  808.512335][   T10] msm_dpu ae01000.display-controller: [drm:drm_calc_timestamping_constants] crtc 103: hwmode: htotal 2692, vtotal 1738, vdisplay 1600
+2026-09-21T17:06:56Z RECV  [  808.527502][   T10] msm_dpu ae01000.display-controller: [drm:drm_calc_timestamping_constants] crtc 103: clock 561443 kHz framedur 8333341 linedur 4794
+2026-09-21T17:06:56Z RECV  [  808.555872][   T10] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 1
+2026-09-21T17:06:56Z RECV  [  808.566937][   T10] [drm:dpu_crtc_atomic_begin] crtc 103 stage:1 - plane 43 sspp 9 fb 105 multirect_idx 2
+2026-09-21T17:07:05Z console session done

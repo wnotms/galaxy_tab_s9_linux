@@ -1,0 +1,7 @@
+2026-09-21T17:05:43Z console open on COM17
+2026-09-21T17:05:46Z SENT  N=$(dmesg | wc -l); echo "lines=$N"; dmesg | grep -c vsync; dmesg | grep -e "no vsync" -e "tc vsync" | tail -6
+2026-09-21T17:05:46Z RECV  N=$(dmesg | wc -l); echo "lines=$N"; dmesg | grep -c vsync; dmesg | grep -
+2026-09-21T17:05:46Z RECV  e "no vsync" -e "tc vsync" | tail -6
+2026-09-21T17:05:46Z RECV  lines=1338
+2026-09-21T17:05:46Z RECV  1
+2026-09-21T17:05:55Z console session done

@@ -1,0 +1,8 @@
+2026-09-21T17:08:06Z console open on COM17
+2026-09-21T17:08:09Z SENT  echo 1 > /sys/module/drm/parameters/debug,echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 5; echo CYCLED,dmesg | tail -150 > /tmp/tr.txt; wc -l /tmp/tr.txt,cat /tmp/tr.txt
+2026-09-21T17:08:09Z RECV  echo 1 > /sys/module/drm/parameters/debug,echo 1 > /sys/class/graphics/fb0
+2026-09-21T17:08:09Z RECV  /blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 5; echo CYCLED,dm
+2026-09-21T17:08:09Z RECV  esg | tail -150 > /tmp/tr.txt; wc -l /tmp/tr.txt,cat /tmp/tr.txt
+2026-09-21T17:08:09Z RECV  /bin/sh: can't create /sys/module/drm/parameters/debug,echo: Permission denied
+2026-09-21T17:08:17Z RECV  wc: /tmp/tr.txt,cat: No such file or directory
+2026-09-21T17:08:17Z console session done

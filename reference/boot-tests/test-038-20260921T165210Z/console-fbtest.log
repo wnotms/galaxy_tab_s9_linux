@@ -1,0 +1,11 @@
+2026-09-21T17:00:40Z console open on COM17
+2026-09-21T17:00:43Z SENT  printf "HELLO" | dd of=/dev/fb0 bs=1 seek=100000 2>&1 | tail -1; echo "readback:"; dd if=/dev/fb0 bs=1 skip=100000 count=6 2>/dev/null | od -An -c | head -2; echo "name=$(cat /sys/class/graphics/fb0/name) stride=$(cat /sys/class/graphics/fb0/stride) vsize=$(cat /sys/class/graphics/fb0/virtual_size)"
+2026-09-21T17:00:43Z RECV  printf "HELLO" | dd of=/dev/fb0 bs=1 seek=100000 2>&1 | tail -1; echo "rea
+2026-09-21T17:00:43Z RECV  dback:"; dd if=/dev/fb0 bs=1 skip=100000 count=6 2>/dev/null | od -An -c | head
+2026-09-21T17:00:43Z RECV  -2; echo "name=$(cat /sys/class/graphics/fb0/name) stride=$(cat /sys/class/graph
+2026-09-21T17:00:43Z RECV  ics/fb0/stride) vsize=$(cat /sys/class/graphics/fb0/virtual_size)"
+2026-09-21T17:00:43Z RECV  5+0 records out
+2026-09-21T17:00:43Z RECV  readback:
+2026-09-21T17:00:43Z RECV     H   E   L   L   O  \0
+2026-09-21T17:00:43Z RECV  name=msm-kmsdrmfb stride=10240 vsize=2560,1600
+2026-09-21T17:00:52Z console session done

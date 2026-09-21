@@ -1,0 +1,12 @@
+2026-09-21T16:55:13Z console open on COM17
+2026-09-21T16:55:16Z SENT  dmesg | grep -e "gts9-init" -e "ana38407" | tail -14; echo ===; dmesg | grep -c "vblank wait timed out"; echo ===; dmesg | grep -e "ctl start" -e "commit done" | tail -3
+2026-09-21T16:55:16Z RECV  dmesg | grep -e "gts9-init" -e "ana38407" | tail -14; echo ===; dmesg | gr
+2026-09-21T16:55:16Z RECV  ep -c "vblank wait timed out"; echo ===; dmesg | grep -e "ctl start" -e "commit
+2026-09-21T16:55:16Z RECV  done" | tail -3
+2026-09-21T16:55:16Z RECV  ===
+2026-09-21T16:55:16Z RECV  45
+2026-09-21T16:55:16Z RECV  ===
+2026-09-21T16:55:16Z RECV  [  107.938007][   T45] [drm:dpu_kms_wait_for_commit_done:527] [dpu error]wait for commit done returned -22
+2026-09-21T16:55:16Z RECV  [  108.034175][   T45] [drm:_dpu_encoder_phys_cmd_wait_for_ctl_start:676] [dpu error]enc35 intf1 ctl start interrupt wait failed
+2026-09-21T16:55:16Z RECV  [  108.046197][   T45] [drm:dpu_kms_wait_for_commit_done:527] [dpu error]wait for commit done returned -22
+2026-09-21T16:55:25Z console session done

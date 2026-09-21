@@ -1,0 +1,4 @@
+2026-09-21T17:04:46Z console open on COM17
+2026-09-21T17:04:49Z SENT  echo 0xff > /sys/module/drm/parameters/debug; echo "dbg=$(cat /sys/module/drm/parameters/debug)"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 4; dmesg | grep -e "tc " -e tearcheck -e vsync -e "cmd" -e kickoff -e "pp " | tail -30
+2026-09-21T17:04:49Z RECV  echo 0xff > /sys/module/drm/parameters/debug; echo "dbg=$(cat /sys/module/drm/parameters/debug)"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 4; dmesg | grep -e "tc " -e tearcheck -e vsync -e "cmd" -e kickoff -e "pp " | tail -30
+2026-09-21T17:04:58Z console session done

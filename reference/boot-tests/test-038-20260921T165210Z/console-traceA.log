@@ -1,0 +1,8 @@
+2026-09-21T17:07:45Z console open on COM17
+2026-09-21T17:07:48Z SENT  echo 1 > /sys/module/drm/parameters/debug; echo "dbg=$(cat /sys/module/drm/parameters/debug)"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 5; dmesg | tail -140 > /tmp/tr.txt; wc -l /tmp/tr.txt; echo SAVED
+2026-09-21T17:07:48Z RECV  echo 1 > /sys/module/drm/parameters/debug; echo "dbg=$(cat /sys/module/drm
+2026-09-21T17:07:48Z RECV  /parameters/debug)"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /
+2026-09-21T17:07:48Z RECV  sys/class/graphics/fb0/blank; sleep 5; dmesg | tail -140 > /tmp/tr.txt; wc -l /t
+2026-09-21T17:07:48Z RECV  mp/tr.txt; echo SAVED
+2026-09-21T17:07:48Z RECV  dbg=1
+2026-09-21T17:07:57Z console session done

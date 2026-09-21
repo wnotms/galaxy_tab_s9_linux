@@ -1,0 +1,9 @@
+2026-09-21T17:01:09Z console open on COM17
+2026-09-21T17:01:13Z SENT  printf "\n\n  GTS9 BAND TEST : text here, and a white band across the middle\n\n" > /dev/tty0; yes | tr y "\377" | dd of=/dev/fb0 bs=10240 seek=600 count=500 2>&1 | tail -1; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 3; echo "blank=$(cat /sys/class/graphics/fb0/blank)"; dmesg | tail -2
+2026-09-21T17:01:13Z RECV  printf "\n\n  GTS9 BAND TEST : text here, and a white band across the midd
+2026-09-21T17:01:13Z RECV  le\n\n" > /dev/tty0; yes | tr y "\377" | dd of=/dev/fb0 bs=10240 seek=600 count=
+2026-09-21T17:01:13Z RECV  500 2>&1 | tail -1; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /s
+2026-09-21T17:01:13Z RECV  ys/class/graphics/fb0/blank; sleep 3; echo "blank=$(cat /sys/class/graphics/fb0/
+2026-09-21T17:01:13Z RECV  blank)"; dmesg | tail -2
+2026-09-21T17:01:13Z RECV  0+500 records out
+2026-09-21T17:01:22Z console session done

@@ -1,0 +1,11 @@
+2026-09-21T17:05:04Z console open on COM17
+2026-09-21T17:05:07Z SENT  dmesg | grep -e "tc " -e tearcheck -e vsync -e "no vsync" -e kickoff -e "enc35" | tail -28
+2026-09-21T17:05:07Z RECV  dmesg | grep -e "tc " -e tearcheck -e vsync -e "no vsync" -e kickoff -e "enc35" | tail -28
+2026-09-21T17:05:14Z RECV  cycles done
+2026-09-21T17:05:14Z RECV  100
+2026-09-21T17:05:14Z RECV  gts9# echo 0xff > /sys/module/drm/parameters/debug; echo "dbg=$(cat /sys/module/
+2026-09-21T17:05:14Z RECV  drm/parameters/debug)"; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0
+2026-09-21T17:05:14Z RECV  > /sys/class/graphics/fb0/blank; sleep 4; dmesg | grep -e "tc " -e tearcheck -e
+2026-09-21T17:05:14Z RECV  vsync -e "cmd" -e kickoff -e "pp " | tail -30
+2026-09-21T17:05:14Z RECV  dbg=255
+2026-09-21T17:05:24Z console session done
