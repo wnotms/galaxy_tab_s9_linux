@@ -1,0 +1,30 @@
+=== 2026-09-21T14:58:11Z test 026 pretest + flash (init_boot + vendor_boot; kernel unchanged) ===
+boot         adb.exe:
+init_boot    adb.exe:
+vendor_boot  adb.exe:
+--- init_boot ---
+adb: error: failed to get feature set: no devices/emulators found
+expected: 49413e770e75fe135317e56c88a76e83f90fbf32f51078789a90a95ad7a0ec31
+adb.exe: no devices/emulators found
+adb.exe: no devices/emulators found
+--- vendor_boot ---
+adb: error: failed to get feature set: no devices/emulators found
+expected: 94ae4f32be12fb6c2c2999ac85acda5304ae6b443f30ca44377f3e667b7c8aa3
+adb.exe: no devices/emulators found
+adb.exe: no devices/emulators found
+=== 2026-09-21T14:59:31Z retry: flash init_boot + vendor_boot for test 026 ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    52aca5d8d2842d3924b49ece04ae2dbfbef7b6307450fec5ece68e4492345297
+vendor_boot  139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+--- init_boot ---
+D:\android\gts9-test026\init_boot.img: 1 file pushed, 0 skipped. 202.7 MB/s (8388608 bytes in 0.039s)
+expected: 49413e770e75fe135317e56c88a76e83f90fbf32f51078789a90a95ad7a0ec31
+8388608 bytes (8.0 M) copied, 0.040001 s, 200 M/s
+49413e770e75fe135317e56c88a76e83f90fbf32f51078789a90a95ad7a0ec31  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test026\vendor_boot.img: 1 file pushed, 0 skipped. 815.6 MB/s (100663296 bytes in 0.118s)
+expected: 94ae4f32be12fb6c2c2999ac85acda5304ae6b443f30ca44377f3e667b7c8aa3
+100663296 bytes (96 M) copied, 0.232917 s, 412 M/s
+94ae4f32be12fb6c2c2999ac85acda5304ae6b443f30ca44377f3e667b7c8aa3  /dev/block/by-name/vendor_boot
+=== 2026-09-21T14:59:44Z test 026: reboot ===
+reboot issued

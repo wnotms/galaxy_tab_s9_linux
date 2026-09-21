@@ -61,7 +61,7 @@ required_applets='sh mount umount cat echo dmesg uname ls mkdir ln cp sync sleep
 # raw disk, and then persists the report either through a filesystem or as a
 # raw, checksummed block.  A missing applet would silently disable the only
 # evidence channel this board has, so these are required as well.
-report_applets='dd od awk sha256sum basename wc cut tr head printf date hwclock'
+report_applets='dd od awk sha256sum basename wc cut tr head printf date hwclock timeout'
 # Convenience applets; missing ones are reported and skipped, not fatal.
 optional_applets='lsmod insmod modprobe rmmod mdev switch_root head tail grep cut tr wc sort sed awk find printf test [ true false date uptime free ps kill sync hexdump od gunzip tar modinfo nproc clear vi less more halt'
 # Applets that belong in /sbin rather than /bin.

@@ -1,0 +1,16 @@
+=== 2026-09-21T14:49:11Z test 025 pretest + flash (init_boot + vendor_boot; kernel unchanged) ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    434c726eeee583794345b3d84ebcc60554d455b377be94e87294d999c5ca6619
+vendor_boot  70ca5ded87c694f6e99c7b1a1b5b9b82a2ee6e77001de11e5ac9bc76dd800016
+--- init_boot ---
+D:\android\gts9-test025\init_boot.img: 1 file pushed, 0 skipped. 138.7 MB/s (8388608 bytes in 0.058s)
+expected: 52aca5d8d2842d3924b49ece04ae2dbfbef7b6307450fec5ece68e4492345297
+8388608 bytes (8.0 M) copied, 0.020024 s, 400 M/s
+52aca5d8d2842d3924b49ece04ae2dbfbef7b6307450fec5ece68e4492345297  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test025\vendor_boot.img: 1 file pushed, 0 skipped. 787.8 MB/s (100663296 bytes in 0.122s)
+expected: 139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+100663296 bytes (96 M) copied, 0.334149 s, 287 M/s
+139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c  /dev/block/by-name/vendor_boot
+=== 2026-09-21T14:49:25Z test 025: reboot ===
+reboot issued

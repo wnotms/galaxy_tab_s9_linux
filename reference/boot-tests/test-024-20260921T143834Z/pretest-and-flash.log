@@ -1,0 +1,21 @@
+=== 2026-09-21T14:40:56Z test 024 pretest + flash (boot, init_boot, vendor_boot all change) ===
+boot         aac25c70483fa08df2a7dc02acd1b3600e18c31a79d76dbb0a969d00b1852ab8
+init_boot    bfb9631fb1bc8d31ed4e50b281a8f04d80cd655d57af6724310e35942ce83a25
+vendor_boot  139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+--- boot ---
+D:\android\gts9-test024\boot.img: 1 file pushed, 0 skipped. 91.2 MB/s (100663296 bytes in 1.052s)
+expected: ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+100663296 bytes (96 M) copied, 0.338738 s, 283 M/s
+ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0  /dev/block/by-name/boot
+--- init_boot ---
+D:\android\gts9-test024\init_boot.img: 1 file pushed, 0 skipped. 190.7 MB/s (8388608 bytes in 0.042s)
+expected: 434c726eeee583794345b3d84ebcc60554d455b377be94e87294d999c5ca6619
+8388608 bytes (8.0 M) copied, 0.040815 s, 196 M/s
+434c726eeee583794345b3d84ebcc60554d455b377be94e87294d999c5ca6619  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test024\vendor_boot.img: 1 file pushed, 0 skipped. 742.7 MB/s (100663296 bytes in 0.129s)
+expected: 70ca5ded87c694f6e99c7b1a1b5b9b82a2ee6e77001de11e5ac9bc76dd800016
+100663296 bytes (96 M) copied, 0.333181 s, 288 M/s
+70ca5ded87c694f6e99c7b1a1b5b9b82a2ee6e77001de11e5ac9bc76dd800016  /dev/block/by-name/vendor_boot
+=== 2026-09-21T14:41:15Z test 024: reboot (gts9_proof_action=recovery; the tablet should come back to TWRP by itself) ===
+reboot issued

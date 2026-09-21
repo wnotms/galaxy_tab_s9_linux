@@ -284,17 +284,24 @@ rtc_write_state() {
     i=0
     got=unknown
     while [ "$i" -lt 3 ]; do
-        if ! out=$(date -u -s "@$epoch" 2>&1); then
-            log "WARN: date -s @$epoch failed: $out"
+        # Every step has a hard timeout: an SPMI write that never completes must
+        # not be able to stop /init before the report and the proof, which is
+        # exactly what happened in tests 021-024.
+        out=$(timeout 5 date -u -s "@$epoch" 2>&1); rc=$?
+        if [ "$rc" != 0 ]; then
+            [ "$rc" = 124 ] && out='timed out after 5s'
+            log "WARN: date -s @$epoch returned $rc: $out"
             return 1
         fi
-        if ! out=$(hwclock -u -w -f /dev/rtc0 2>&1); then
-            log "WARN: hwclock -u -w -f /dev/rtc0 failed: $out"
+        out=$(timeout 5 hwclock -u -w -f /dev/rtc0 2>&1); rc=$?
+        if [ "$rc" != 0 ]; then
+            [ "$rc" = 124 ] && out='timed out after 5s'
+            log "WARN: hwclock -u -w -f /dev/rtc0 returned $rc: $out"
             return 1
         fi
         # Read the hardware clock back through the kernel rather than through
         # the system clock, so a rounded write is visible and can be corrected.
-        got=$(cat /sys/class/rtc/rtc0/since_epoch 2>/dev/null)
+        got=$(timeout 5 cat /sys/class/rtc/rtc0/since_epoch 2>/dev/null)
         case "$got" in
             ''|*[!0-9]*) log 'WARN: cannot read /sys/class/rtc/rtc0/since_epoch'; return 1 ;;
         esac
@@ -313,6 +320,13 @@ rtc_write_state() {
 }
 
 # First write: before the report is collected, so this outcome is in its dmesg.
+#
+# Disabled by default since test 025: RTC_SET_TIME blocks this board's kernel in
+# an uninterruptible SPMI write (RTC_SET_TIME from TWRP returns EACCES before any
+# write happens, and the same hang took the SDAM reboot-mode write in test 024),
+# so with gts9_rtc_report=1 /init never reaches the report or the proof.  The
+# storage stages it carries are in the report anyway; the channel comes back when
+# SPMI writes are understood.
 [ "$RTC_REPORT" = 1 ] && rtc_write_state 0
 
 # ---------------------------------------------------------------------------
@@ -453,6 +467,8 @@ report 'usb repeater (live DT)' sh -c '
         done
     done'
 report 'ptn3222 binding' sh -c 'ls -l /sys/bus/i2c/drivers/ptn3222/ 2>&1'
+report 'interrupts' sh -c 'cat /proc/interrupts 2>&1'
+report 'spmi devices' sh -c 'ls -l /sys/bus/spmi/devices/ 2>&1'
 report 'reboot mode' sh -c 'ls -l /sys/class/nvmem/ 2>&1; cat /proc/device-tree/reboot-mode/mode-recovery 2>/dev/null | od -An -tx1; ls -l /sys/bus/platform/drivers/nvmem-reboot-mode/ 2>&1'
 report 'dmesg' dmesg
 
@@ -488,7 +504,7 @@ REPORT_MIN_BYTES=$((4 * 1024 * 1024))
 # Every tool the persistence path needs.  If one is missing the whole channel is
 # skipped rather than half-executed: a partially written or unverifiable report
 # is worse than a clean "nothing was written", and a wrong write is worse still.
-REPORT_TOOLS='dd od awk sha256sum basename wc cut tr head printf mount umount cp'
+REPORT_TOOLS='dd od awk sha256sum basename wc cut tr head printf mount umount cp timeout'
 
 block_size() {
     bs=$(cat "/sys/class/block/$(basename "$1")/queue/logical_block_size" 2>/dev/null)
@@ -505,7 +521,7 @@ gpt_entries() {
 
     # GPT header is LBA 1; the fields used here are PartitionEntryLBA (72),
     # NumberOfPartitionEntries (80) and SizeOfPartitionEntry (84).
-    hdr=$(dd if="$dev" bs="$ss" skip=1 count=1 2>/dev/null | head -c 92 | \
+    hdr=$(timeout 10 dd if="$dev" bs="$ss" skip=1 count=1 2>/dev/null | head -c 92 | \
           od -An -v -tu1 | tr '\n' ' ')
     [ -n "$hdr" ] || return 1
     sig=$(echo "$hdr" | awk '{printf "%s%s%s%s%s%s%s%s", $1, $2, $3, $4, $5, $6, $7, $8}')
@@ -518,7 +534,7 @@ gpt_entries() {
     [ "$esz" -ge 128 ] && [ "$esz" -le 4096 ] || return 1
     [ "$elba" -ge 2 ] && [ "$elba" -le 4096 ] || return 1
 
-    dd if="$dev" bs="$ss" skip="$elba" count=$(( (nent * esz + ss - 1) / ss )) 2>/dev/null | \
+    timeout 20 dd if="$dev" bs="$ss" skip="$elba" count=$(( (nent * esz + ss - 1) / ss )) 2>/dev/null | \
         head -c $((nent * esz)) | od -An -v -tu1 | tr '\n' ' ' | \
     awk -v nent="$nent" -v esz="$esz" -v ss="$ss" '
         { for (i = 1; i <= NF; i++) b[i - 1] = $i }
@@ -554,8 +570,8 @@ try_report_mount() {
     # and CONFIG_EXFAT_FS is built in.  The SHA-256 sidecar is what the host
     # reader checks the copy against; it is best effort, the report is not.
     for fs in vfat exfat ext4 ext2 f2fs; do
-        if mount -t $fs -o rw "$dev" /mnt 2>/dev/null; then
-            if cp "$REPORT" /mnt/gts9-bringup-report.txt 2>/dev/null; then
+        if timeout 15 mount -t $fs -o rw "$dev" /mnt 2>/dev/null; then
+            if timeout 30 cp "$REPORT" /mnt/gts9-bringup-report.txt 2>/dev/null; then
                 sha256sum /mnt/gts9-bringup-report.txt \
                     > /mnt/gts9-bringup-report.txt.sha256 2>/dev/null
                 sync
@@ -586,7 +602,7 @@ write_report_raw() {
     { printf '%s' "$hdr"; cat "$REPORT"; } > /tmp/gts9-report-block.bin || return 1
     written=$(wc -c < /tmp/gts9-report-block.bin)
     [ "$written" = "$total" ] || { log "WARN: report block is $written bytes, expected $total"; return 1; }
-    dd if=/tmp/gts9-report-block.bin of="$dev" bs="$ss" seek=0 conv=notrunc 2>/dev/null || return 1
+    timeout 30 dd if=/tmp/gts9-report-block.bin of="$dev" bs="$ss" seek=0 conv=notrunc 2>/dev/null || return 1
     sync
     log "raw report block: $total bytes (body $body, sha256 $sha)"
     return 0
