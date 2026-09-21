@@ -190,17 +190,55 @@ Independent verification performed on the artifacts:
 | config assertions | `scripts/build-kernel.sh` | all `=y` and `=m` required symbols present |
 
 
-## 7. What this does and does not prove
+## 7. Boot-chain tooling adopted from the SM-X910 reference port
+
+The adjacent `ubuntu-galaxy-tab-s9-ultra` (SM-X910, `gts9uwifi`) port already
+solves the "built kernel -> flashable bundle" half of the pipeline. Three of
+its host-side pieces were adapted, not copied wholesale: no X910 hardware
+assumption, driver or config was imported, and the X710 boot layout (empty
+generic ramdisk in `init_boot`, real initramfs as a `vendor_boot` platform
+fragment) is kept as this repository defines it.
+
+| New file | Adapted from | Change for this repository |
+|---|---|---|
+| `scripts/check-build-deps.sh` | X910 `scripts/check-build-deps.sh` | kernel half extended for `ARCH=arm64 LLVM=1` (clang/lld/llvm, pahole, libssl/libelf, depmod) plus the AOSP tool check; clang >= 17 is enforced because Linux 7.2 requires it |
+| `scripts/stage-android-tools.sh` | X910 `scripts/stage-android-tools.sh` | the X910 script copies `mkbootimg.py`/`avbtool.py` out of a postmarketOS chroot; this repository has no chroot, so they are downloaded from `android.googlesource.com` at pinned revisions and verified against pinned SHA-256 values, with `unpack_bootimg.py` added for offline inspection |
+| `scripts/make-initramfs.sh` | X910 `scripts/make-initramfs.sh` | the X910 script calls `update-initramfs` inside an Ubuntu rootfs chroot; this one packs a tree supplied with `--root`, injects the modules built for the kernel release, and verifies the legacy-LZ4 stream and the `vendor_boot` budget |
+
+Pipeline smoke test performed on the real artifacts (`out/kernel-gts9wifi/`),
+with a placeholder `/init` tree and the 167 built modules:
+
+```text
+make-initramfs.sh   152 MiB module tree -> 57,898,820 B legacy-LZ4 initramfs
+                    magic 02214c18, inside the 92,274,688 B budget, depmod run
+build-boot-bundle.sh boot.img / init_boot.img / vendor_boot.img / dtbo.img / vbmeta.img
+                    produced at the exact partition sizes
+```
+
+Independent checks on that bundle: `avbtool info_image` reports the `boot` hash
+descriptor with the expected original image size; `unpack_bootimg` reports
+`VNDRBOOT` header v4, the X710 cmdline, the bootconfig, the 175,387 B DTB and
+the 57,898,820 B vendor ramdisk; the extracted ramdisk is byte-identical
+(SHA-256) to the one `make-initramfs.sh` produced; the `init_boot` ramdisk is
+the 82 B empty legacy-LZ4 stream; and the `boot.img` payload is exactly
+`Image.gz || sm8550-samsung-gts9wifi.dtb` (the appended-DTB fallback route).
+
+The test bundle was built in a temporary directory and deleted afterwards: its
+initramfs contained a placeholder `/init`, so it is a pipeline test, not a
+flashable image.
+
+## 8. What this does and does not prove
 
 **compiled** — the statements above.
 
 **not booted**: no artifact in this repository has been flashed or booted on the
 tablet. Per `AGENT.md`, an empty pstore is not evidence of a kernel crash, and
-a driver that compiles is not a driver that probes.
+a driver that compiles is not a driver that probes. The boot bundle above was
+assembled and inspected offline; that proves the packaging, not the boot.
 
 Still required before a physical test:
 
-1. an initramfs (the build produces `Image.gz` + DTB, not a boot bundle);
-2. `mkbootimg`/`avbtool` and `lz4` for `scripts/build-boot-bundle.sh`;
-3. firmware files on the rootfs (`ath11k` QCA6490, `adreno` a740, `qcom` ADSP);
-4. the M3 panel driver if display is required at first boot.
+1. a real initramfs tree for `make-initramfs.sh --root` (the script packs one,
+   it does not generate userspace);
+2. firmware files on the rootfs (`ath11k` QCA6490, `adreno` a740, `qcom` ADSP);
+3. the M3 panel driver if display is required at first boot.
