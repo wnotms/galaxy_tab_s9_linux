@@ -1,0 +1,43 @@
+name: Mainline kernel build
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_modules:
+        description: Build and install kernel modules
+        type: boolean
+        default: true
+  push:
+    paths:
+      - 'kernel/**'
+      - 'scripts/**'
+      - '.github/workflows/kernel.yml'
+
+jobs:
+  kernel:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            git make bc bison flex clang lld llvm ccache \
+            libssl-dev libelf-dev dwarves device-tree-compiler \
+            python3 rsync kmod
+
+      - name: Build pinned mainline kernel
+        env:
+          BUILD_MODULES: ${{ inputs.build_modules && '1' || '0' }}
+          CCACHE_DIR: ${{ github.workspace }}/.ccache
+          KERNEL_CLEAN: '1'
+        run: ./scripts/build-kernel.sh
+
+      - name: Upload kernel artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gts9wifi-mainline-kernel
+          path: out/kernel-gts9wifi/
+          if-no-files-found: error

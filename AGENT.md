@@ -1,0 +1,143 @@
+# AGENT.md — SM-X710 mainline port working rules
+
+## Mission
+
+Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
+
+## Ground truth and pins
+
+- Device: SM-X710 / gts9wifi, Wi-Fi model.
+- SoC: SM8550 / Snapdragon 8 Gen 2; GPU Adreno 740.
+- Samsung ABL selector values observed in the supplied live DTS:
+  - `compatible = "qcom,kalama-mtp", "qcom,kalama", "qcom,mtp"`
+  - `qcom,board-id = <0x10008 0x04>`
+  - `qcom,msm-id = <0x218 0x20000 0x207 0x20000 0x207 0x10000 0x218 0x10000>`
+- Stock config evidence: Linux 5.15.153, Android clang 14.0.7.
+- Mainline build pin: Linux `v7.2-rc3`, commit `a13c140cc289c0b7b3770bce5b3ad42ab35074aa`.
+- Bootstrap board DTS reference: `troikoss/gts9wifi-fedora` commit `656d2ded8031657b60cde22e6fdfbc0b722a9dff`. See `kernel/PROVENANCE.md`.
+
+Do not silently change either pin. A kernel bump and a hardware-port change must be separate changes so regressions remain attributable.
+
+## Stock evidence supplied by the owner
+
+The owner supplied a live DTB, a decompiled live DTS and a full stock `.config`. Their SHA-256 values and extracted hardware facts are recorded in `reference/stock/MANIFEST.md`.
+
+Important device-specific differences from the S9 Ultra/X910:
+
+- SM-X710 panel: `GTS9_ANA38407_AMSA10FA01`.
+- Touch: STM FTS1BA90A, not the X910 Goodix GT9916.
+- Pen: Wacom W90xx / WEZ01 family on I2C.
+- WLAN/BT: QCA6490/WCN6855-class, not X910 WCN7850/Kiwi v2.
+- Power: SM5714 charger/fuel gauge/USB-PD plus SM5440 direct charger.
+- Type-C redriver: Parade PS5169; eUSB2 repeater: NXP PTN3222.
+- Audio: four CS35L45 speaker amplifiers are visible in the stock DTS.
+
+Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call that a mainline port. Translate only evidenced hardware into upstream bindings and keep unsupported vendor-only properties out.
+
+## Repository invariants
+
+1. `scripts/fetch-mainline.sh` must verify the exact upstream commit.
+2. The upstream checkout under `.work/linux-mainline` stays pristine.
+3. Device changes are staged into a disposable worktree under `.work/build/`.
+4. Kernel build output goes to `.work/build/linux-out` and `out/kernel-gts9wifi`; never commit it.
+5. Use `ARCH=arm64 LLVM=1`. Do not introduce a GCC-only build path unless there is a demonstrated need.
+6. Keep critical early-boot/storage/console providers built in when the port depends on them before the root filesystem is available.
+7. A symbol requested by a fragment but dropped by `olddefconfig` must be treated as a build/config issue, not ignored.
+8. Kernel image, DTB, config and release string must be hashed in every build.
+9. No build script may flash or repartition a physical device.
+10. Do not claim hardware works because a driver compiles or probes. Record `compiled`, `booted`, `enumerated`, and `physically verified` as different states.
+
+## Build commands
+
+Normal build:
+
+```bash
+./scripts/fetch-mainline.sh
+./scripts/build-kernel.sh
+```
+
+Clean source-level comparison:
+
+```bash
+KERNEL_CLEAN=1 ./scripts/build-kernel.sh
+```
+
+Faster compile-only iteration when modules are irrelevant:
+
+```bash
+BUILD_MODULES=0 ./scripts/build-kernel.sh
+```
+
+Audit stock evidence supplied locally:
+
+```bash
+./scripts/audit-stock.sh /path/to/stock.config /path/to/live-device-tree.dts
+```
+
+Before committing a script change, at minimum run:
+
+```bash
+bash -n scripts/*.sh
+```
+
+If the build environment is available, also perform `BUILD_MODULES=0 ./scripts/build-kernel.sh`. For config/DTS/patch changes, a clean build is preferred.
+
+## Bring-up order
+
+Do not debug everything at once. Work in this order unless logs prove another dependency is blocking:
+
+1. ABL accepts the Android v4 image and enters Linux.
+2. persistent log / serial diagnostics survive reboot;
+3. reserved-memory is safe and there are no TrustZone fatal resets;
+4. UFS and/or microSD root storage;
+5. USB gadget/Ethernet rescue path;
+6. panel/display;
+7. touch, buttons and S Pen;
+8. GPU/Turnip;
+9. Wi-Fi and Bluetooth;
+10. audio and DSPs;
+11. charging/Type-C/DisplayPort;
+12. cameras, sensors and fingerprint/SPSS.
+
+A failure before Linux entry must be debugged as an ABL/boot-image/DT selection problem. An empty pstore is not evidence of a kernel crash if the bootloader never transferred control.
+
+## Samsung ABL constraints
+
+Keep the legacy Samsung selectors in the board DTS unless a physical test proves they are no longer required. The sibling X910 work demonstrated that Samsung ABL can reject an otherwise valid upstream-style DTB before Linux starts. Preserve `/__symbols__` in DTBs used in experiments that exercise Samsung's DT overlay path (`DTC_FLAGS_... := -@`).
+
+The current boot-bundle script uses the safer appended-DTB fallback pattern and deliberately does not flash anything. Do not change `dtbo` strategy casually; document the reason and recovery path first.
+
+## Working with the stock config
+
+The stock 5.15.153 `.config` is not a valid 7.2 mainline defconfig. Use it to answer questions such as:
+
+- was a hardware block enabled in Samsung's kernel?
+- was a driver built-in or modular?
+- what compiler/Kconfig features did stock use?
+
+For the mainline build, start from upstream arm64 `defconfig`, merge `kernel/config/gts9wifi-mainline.fragment`, then run `olddefconfig`. When adding support, prefer a small fragment delta over replacing a full generated config.
+
+## Patch discipline
+
+- Prefer upstream commits/backports over local patches.
+- Every local patch should have one purpose and an explanatory commit message.
+- Keep device-specific quirks gated to SM-X710/SM8550 where practical.
+- If a patch becomes upstream, replace the local copy on the next controlled kernel rebase.
+- Do not add Android-rooting/security modifications to this repository; keep the mainline hardware port focused.
+
+## Logs to request after physical tests
+
+Ask for the smallest useful evidence set, typically:
+
+```bash
+uname -a
+cat /proc/cmdline
+dmesg -T > dmesg.txt
+cat /proc/iomem > iomem.txt
+cat /sys/firmware/devicetree/base/model 2>/dev/null
+ls -l /dev/dri /dev/mmcblk* /dev/sd* 2>/dev/null
+lspci -nn 2>/dev/null
+ip -br link
+```
+
+For boot failures also collect Samsung/TWRP `last_kmsg` or ramoops/pstore if available. Record the exact artifact hashes that were flashed/tested.
