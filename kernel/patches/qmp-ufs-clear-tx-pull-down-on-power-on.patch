@@ -1,0 +1,96 @@
+From: SM-X910 postmarketOS port <gts9uwifi@example.com>
+Subject: [PATCH] phy: qcom: qmp-ufs: clear the TX pull-down on power-on
+
+Kalama sets RX_INTERFACE_MODE bit 6 before the analog rail collapses, which
+pulls the UFS TX lines down while the PHY is off.  The state survives into the
+next kernel because the PHY block is not reset by a warm boot, and on this
+tablet the bootloader is the one that brings the PHY up (it reads the boot image
+from UFS) and hands over with the bit still set.  Upstream never clears it, so
+the link never trains and UFS never enumerates - the SM-X710 symptom.
+
+Clearing the bit on power-on and restoring it on power-off is what the SM-X910
+port does (kernel/patches/qmp-ufs-reset-serdes-before-power-down-gts9u.patch
+in agcarbajo/ubuntu-galaxy-tab-s9-ultra), where UFS works.
+
+Adapted to this tree: the sibling patch also carries an experimental PCS
+SW_RESET assertion before calibration, which its own description says is
+unvalidated and must stay out of default builds.  It is deliberately not
+included here.
+
+Signed-off-by: SM-X710 bring-up <gts9wifi@example.com>
+---
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+index 0f4ad24aa..f03b38ad6 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+@@ -1177,6 +1177,13 @@ struct qmp_phy_cfg {
+ 
+ 	/* true, if PCS block has no separate SW_RESET register */
+ 	bool no_pcs_sw_reset;
++
++	/*
++	 * RX_INTERFACE_MODE bit 6 pulls the UFS TX lines down while the PHY is
++	 * off.  Kalama's bootloader leaves it set for the handover, so it has
++	 * to be cleared on power-on or the link never trains.
++	 */
++	bool has_tx_pull_down;
+ };
+ 
+ struct qmp_ufs {
+@@ -1772,6 +1779,7 @@ static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
+ 	.vreg_list		= sm8550_ufsphy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(sm8550_ufsphy_vreg_l),
+ 	.regs			= ufsphy_v6_regs_layout,
++	.has_tx_pull_down	= true,
+ };
+ 
+ static const struct qmp_phy_cfg sm8650_ufsphy_cfg = {
+@@ -1922,6 +1930,32 @@ static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg
+ 		qmp_ufs_init_all(qmp, &cfg->tbls_hs_b);
+ }
+ 
++/*
++ * Kalama sets RX_INTERFACE_MODE before the analog rail collapses, which pulls
++ * the UFS TX lines down while the PHY is off; the state survives into the next
++ * kernel because the PHY block is not reset by a warm boot.  Clear it once the
++ * clocks are back, and put it back on power-off.
++ */
++static void qmp_ufs_tx_pull_down_ctrl(struct qmp_ufs *qmp, bool enable)
++{
++	const struct qmp_phy_cfg *cfg = qmp->cfg;
++
++	if (!cfg->has_tx_pull_down)
++		return;
++
++	if (enable) {
++		qphy_setbits(qmp->rx, QSERDES_UFS_V6_RX_INTERFACE_MODE, BIT(6));
++		if (cfg->lanes >= 2)
++			qphy_setbits(qmp->rx2, QSERDES_UFS_V6_RX_INTERFACE_MODE,
++				     BIT(6));
++	} else {
++		qphy_clrbits(qmp->rx, QSERDES_UFS_V6_RX_INTERFACE_MODE, BIT(6));
++		if (cfg->lanes >= 2)
++			qphy_clrbits(qmp->rx2, QSERDES_UFS_V6_RX_INTERFACE_MODE,
++				     BIT(6));
++	}
++}
++
+ static int qmp_ufs_power_on(struct phy *phy)
+ {
+ 	struct qmp_ufs *qmp = phy_get_drvdata(phy);
+@@ -1939,6 +1973,7 @@ static int qmp_ufs_power_on(struct phy *phy)
+ 	if (ret)
+ 		goto err_disable_regulators;
+ 
++	qmp_ufs_tx_pull_down_ctrl(qmp, false);
+ 	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+ 	return 0;
+ 
+@@ -1992,6 +2027,7 @@ static int qmp_ufs_power_off(struct phy *phy)
+ 	/* Put PHY into POWER DOWN state: active low */
+ 	qphy_clrbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+ 			SW_PWRDN);
++	qmp_ufs_tx_pull_down_ctrl(qmp, true);
+ 
+ 	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+ 
