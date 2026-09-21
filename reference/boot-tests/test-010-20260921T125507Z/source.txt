@@ -1,0 +1,5 @@
+kernel_source_commit=70b40141b8bc43008a034f1a86628ef29281a67d
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+hypothesis=current build reaches userspace; /init powers off (or, failing that, resets) after 60s - no peripherals, no persistence needed
+note=test 009 was aborted after 39s when recovery was re-entered too early; same flashed images, no reflash in this test
+started_utc=2026-09-21T12:55:07Z

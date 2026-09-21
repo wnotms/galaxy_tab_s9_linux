@@ -1,0 +1,13 @@
+=== 2026-09-21T12:53:49Z test 009: userspace proof (poweroff after 60s) ===
+--- init_boot ---
+D:\android\gts9-test009\init_boot.img: 1 file pushed, 0 skipped. 255.4 MB/s (8388608 bytes in 0.031s)
+eb11162ff362f77db362bd3c7a6462f72bd36606304686a6f06516886397b85c  /tmp/gts9-test009-init_boot.img
+expected: eb11162ff362f77db362bd3c7a6462f72bd36606304686a6f06516886397b85c
+8388608 bytes (8.0 M) copied, 0.022325 s, 358 M/s
+eb11162ff362f77db362bd3c7a6462f72bd36606304686a6f06516886397b85c  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test009\vendor_boot.img: 1 file pushed, 0 skipped. 816.8 MB/s (100663296 bytes in 0.118s)
+7c1520aaa05e2d1f5583a3d666ffeae3797cefeb0e546a2e34dc7fe955508b1a  /tmp/gts9-test009-vendor_boot.img
+expected: 7c1520aaa05e2d1f5583a3d666ffeae3797cefeb0e546a2e34dc7fe955508b1a
+100663296 bytes (96 M) copied, 0.256506 s, 374 M/s
+7c1520aaa05e2d1f5583a3d666ffeae3797cefeb0e546a2e34dc7fe955508b1a  /dev/block/by-name/vendor_boot
