@@ -133,96 +133,6 @@ log ''
 log 'dropping to an interactive shell; nothing was written to any block device'
 log ''
 
-# ---------------------------------------------------------------------------
-# Peripheral-free proof that userspace was reached.
-#
-# Neither the persistent ring (test 007: the bootloader overwrites it) nor the
-# USB gadget (test 008: mainline dwc3 may not bind yet) can prove that this
-# script ran.  Powering the tablet off needs no peripheral at all: a hung or
-# panicking kernel cannot do it, and panic=0 means the kernel cannot fake it
-# either.  "The tablet switched itself off about a minute after the logo" is
-# then unambiguous evidence that ABL -> Linux -> BusyBox /init completed.
-#
-# Opt-in through the command line, so ordinary boot tests are unaffected:
-#   gts9_userspace_proof=<seconds>
-proof_seconds=''
-proof_if=''
-proof_code_base=''
-proof_action=${GTS9_PROOF_ACTION:-poweroff}
-for arg in $(cat /proc/cmdline 2>/dev/null); do
-    case "$arg" in
-        gts9_userspace_proof=*) proof_seconds=${arg#gts9_userspace_proof=} ;;
-        gts9_proof_if=*) proof_if=${arg#gts9_proof_if=} ;;
-        gts9_proof_code=*) proof_code_base=${arg#gts9_proof_code=} ;;
-        gts9_proof_action=*) proof_action=${arg#gts9_proof_action=} ;;
-    esac
-done
-
-# ---------------------------------------------------------------------------
-# Telemetry without a console: encode the state of the bring-up in the delay
-# before the tablet powers itself off.  The owner only has to time it.
-#
-#   code = 1*microSD device + 2*SCSI/UFS disk + 4*USB device controller
-#   delay = base + 10*code seconds      (base 20 -> 20,30,...,90 s)
-# ---------------------------------------------------------------------------
-if [ -n "$proof_code_base" ]; then
-    case "$proof_code_base" in
-        ''|*[!0-9]*) log "WARN: ignoring invalid gts9_proof_code=$proof_code_base" ;;
-        *)
-            code=0
-            if [ -n "$(ls /dev/mmcblk* 2>/dev/null)" ]; then code=$((code + 1)); fi
-            if [ -n "$(ls /dev/sd* 2>/dev/null)" ]; then code=$((code + 2)); fi
-            if [ -n "$(ls /sys/class/udc 2>/dev/null)" ]; then code=$((code + 4)); fi
-            proof_seconds=$((proof_code_base + 10 * code))
-            log "telemetry code=$code (mmc=$([ $((code & 1)) -ne 0 ] && echo yes || echo no) scsi=$([ $((code & 2)) -ne 0 ] && echo yes || echo no) udc=$([ $((code & 4)) -ne 0 ] && echo yes || echo no)) -> power off in ${proof_seconds}s"
-            ;;
-    esac
-fi
-
-if [ -n "$proof_seconds" ]; then
-    case "$proof_seconds" in
-        ''|*[!0-9]*)
-            log "WARN: ignoring invalid gts9_userspace_proof=$proof_seconds"
-            ;;
-        *)
-            log "userspace proof armed: powering off in ${proof_seconds}s (if=${proof_if:-always})"
-            (
-                case "$proof_if" in
-                    report)
-                        if [ "$report_written" != 1 ]; then
-                            log 'proof suppressed: bring-up report was not written'
-                            exit 0
-                        fi
-                        ;;
-                    udc)
-                        if [ -z "$(ls /sys/class/udc 2>/dev/null)" ]; then
-                            log 'proof suppressed: no UDC registered'
-                            exit 0
-                        fi
-                        ;;
-                esac
-                sleep "$proof_seconds"
-                sync
-                case "$proof_action" in
-                    reboot)
-                        # A plain reset cannot select the recovery boot mode from
-                        # Linux - that needs the BCB in misc (no storage) or the
-                        # PMIC PON reason with Samsung's magic (no evidence yet).
-                        # It is still more convenient than a power cycle: start
-                        # holding Volume Up about five seconds before the reset
-                        # and the bootloader lands in recovery by itself.
-                        log "userspace proof firing now (reset; hold Volume Up for recovery)"
-                        reboot -f
-                        ;;
-                    *)
-                        log "userspace proof firing now (PSCI power off)"
-                        poweroff -f || reboot -f
-                        ;;
-                esac
-            ) &
-            ;;
-    esac
-fi
 
 # ---------------------------------------------------------------------------
 # Live evidence channel: USB gadget.
@@ -540,6 +450,9 @@ fi
 # value stays whatever the host seeded before the boot.
 # ---------------------------------------------------------------------------
 RTC_REPORT=${GTS9_RTC_REPORT:-0}
+# Read by the telemetry block at the end of this script.
+rtc_dev_present=0
+rtc_written=0
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_rtc_report=*) RTC_REPORT=${arg#gts9_rtc_report=} ;;
@@ -584,6 +497,7 @@ if [ "$RTC_REPORT" = 1 ]; then
     elif ! command -v date >/dev/null 2>&1 || ! command -v hwclock >/dev/null 2>&1; then
         log 'WARN: date or hwclock missing, cannot leave the state in the RTC'
     else
+        rtc_dev_present=1
         code=$(rtc_state_word)
         # 2031-01-01T00:00:00Z is the marker: any date in that day is this
         # channel, and the real date means nothing was written.
@@ -604,6 +518,7 @@ if [ "$RTC_REPORT" = 1 ]; then
             i=$((i + 1))
         done
         if [ "$got" = "$epoch" ]; then
+            rtc_written=1
             log "rtc report written: code=$code epoch=$epoch (2031-01-01 + ${code}s)"
         else
             log "WARN: could not confirm the RTC write (wanted epoch $epoch, read back $got)"
@@ -644,3 +559,100 @@ while :; do
     log 'console shell ended or unavailable; PID 1 remains alive, retrying in 5s'
     sleep 5
 done
+
+# ---------------------------------------------------------------------------
+# Peripheral-free proof that userspace was reached.
+#
+# Neither the persistent ring (test 007: the bootloader overwrites it) nor the
+# USB gadget (test 008: mainline dwc3 may not bind yet) can prove that this
+# script ran.  Powering the tablet off needs no peripheral at all: a hung or
+# panicking kernel cannot do it, and panic=0 means the kernel cannot fake it
+# either.  "The tablet switched itself off about a minute after the logo" is
+# then unambiguous evidence that ABL -> Linux -> BusyBox /init completed.
+#
+# Opt-in through the command line, so ordinary boot tests are unaffected:
+#   gts9_userspace_proof=<seconds>
+proof_seconds=''
+proof_if=''
+proof_code_base=''
+proof_action=${GTS9_PROOF_ACTION:-poweroff}
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_userspace_proof=*) proof_seconds=${arg#gts9_userspace_proof=} ;;
+        gts9_proof_if=*) proof_if=${arg#gts9_proof_if=} ;;
+        gts9_proof_code=*) proof_code_base=${arg#gts9_proof_code=} ;;
+        gts9_proof_action=*) proof_action=${arg#gts9_proof_action=} ;;
+    esac
+done
+
+# ---------------------------------------------------------------------------
+# Telemetry without a console: encode the state of the bring-up in the delay
+# before the tablet powers itself off.  The owner only has to time it.
+#
+#   code = 1*RTC device + 2*RTC state word written + 4*microSD device
+#          + 8*SCSI/UFS disk
+#   delay = base + 5*code seconds       (base 20 -> 20,25,...,95 s)
+#
+# Five seconds per step, because the delay now also carries the RTC diagnostics
+# that explain an empty state word, and because a boot always adds the same
+# 5-8 s from reset to this point: measured = 5-8 s + delay.
+# ---------------------------------------------------------------------------
+if [ -n "$proof_code_base" ]; then
+    case "$proof_code_base" in
+        ''|*[!0-9]*) log "WARN: ignoring invalid gts9_proof_code=$proof_code_base" ;;
+        *)
+            code=0
+            [ "$rtc_dev_present" = 1 ] && code=$((code + 1))
+            [ "$rtc_written" = 1 ] && code=$((code + 2))
+            if [ -n "$(ls /dev/mmcblk* 2>/dev/null)" ]; then code=$((code + 4)); fi
+            if [ -n "$(ls /dev/sd* 2>/dev/null)" ]; then code=$((code + 8)); fi
+            proof_seconds=$((proof_code_base + 5 * code))
+            log "telemetry code=$code (rtc_dev=$rtc_dev_present rtc_written=$rtc_written mmc=$([ $((code & 4)) -ne 0 ] && echo yes || echo no) scsi=$([ $((code & 8)) -ne 0 ] && echo yes || echo no)) -> power off in ${proof_seconds}s"
+            ;;
+    esac
+fi
+
+if [ -n "$proof_seconds" ]; then
+    case "$proof_seconds" in
+        ''|*[!0-9]*)
+            log "WARN: ignoring invalid gts9_userspace_proof=$proof_seconds"
+            ;;
+        *)
+            log "userspace proof armed: powering off in ${proof_seconds}s (if=${proof_if:-always})"
+            (
+                case "$proof_if" in
+                    report)
+                        if [ "$report_written" != 1 ]; then
+                            log 'proof suppressed: bring-up report was not written'
+                            exit 0
+                        fi
+                        ;;
+                    udc)
+                        if [ -z "$(ls /sys/class/udc 2>/dev/null)" ]; then
+                            log 'proof suppressed: no UDC registered'
+                            exit 0
+                        fi
+                        ;;
+                esac
+                sleep "$proof_seconds"
+                sync
+                case "$proof_action" in
+                    reboot)
+                        # A plain reset cannot select the recovery boot mode from
+                        # Linux - that needs the BCB in misc (no storage) or the
+                        # PMIC PON reason with Samsung's magic (no evidence yet).
+                        # It is still more convenient than a power cycle: start
+                        # holding Volume Up about five seconds before the reset
+                        # and the bootloader lands in recovery by itself.
+                        log "userspace proof firing now (reset; hold Volume Up for recovery)"
+                        reboot -f
+                        ;;
+                    *)
+                        log "userspace proof firing now (PSCI power off)"
+                        poweroff -f || reboot -f
+                        ;;
+                esac
+            ) &
+            ;;
+    esac
+fi

@@ -14,6 +14,13 @@
 # Encoding (see docs/RTC_REPORT.md):
 #
 #	code = (epoch of the RTC clock) - (epoch of 2031-01-01T00:00:00Z)
+#
+# The value is read from /proc/driver/rtc, which reports the RTC registers
+# themselves.  That matters: Samsung's recovery kernel applies an RTC offset
+# kept in the PMIC (/proc/driver/rtc shows 1970 while `date` shows 2026), and
+# mainline has no offset cell in its DT, so /init writes the registers raw.
+# Reading `date` instead of the registers would look at a value shifted by that
+# offset.  The corrected clock is only printed for context.
 #	bits 0-3    microSD stage      bits 4-7   UFS stage
 #	bit  8      USB device controller registered
 #	bit  9      sdhc_2 in the deferred-probe list
@@ -69,10 +76,20 @@ if [ -z "${epoch:-}" ]; then
     done
     device_present || { echo 'timed out waiting for adb to see the tablet' >&2; exit 1; }
 
-    iso=$(timeout 60 "$adb" shell 'date -u +%Y-%m-%dT%H:%M:%SZ' 2>/dev/null | tr -d '\r')
-    [ -n "$iso" ] || { echo 'could not read the clock (date -u failed)' >&2; exit 1; }
-    epoch=$(date -u -d "$iso" +%s)
-    echo "RTC clock: $iso"
+    rtc=$(timeout 60 "$adb" shell 'cat /proc/driver/rtc' 2>/dev/null | tr -d '\r')
+    raw_date=$(sed -n 's/^rtc_date[[:space:]]*:[[:space:]]*//p' <<<"$rtc")
+    raw_time=$(sed -n 's/^rtc_time[[:space:]]*:[[:space:]]*//p' <<<"$rtc")
+    [ -n "$raw_date" ] && [ -n "$raw_time" ] || {
+        echo 'could not read the RTC registers (/proc/driver/rtc)' >&2
+        exit 1
+    }
+    epoch=$(date -u -d "$raw_date $raw_time" +%s 2>/dev/null) || {
+        echo "cannot parse the RTC registers: '$raw_date $raw_time'" >&2
+        exit 1
+    }
+    corrected=$(timeout 60 "$adb" shell 'date -u +%Y-%m-%dT%H:%M:%SZ' 2>/dev/null | tr -d '\r')
+    echo "RTC registers: $raw_date $raw_time (UTC)"
+    echo "system clock : ${corrected:-unknown}  <- recovery applies Samsung's PMIC offset"
 fi
 
 code=$((epoch - base))
