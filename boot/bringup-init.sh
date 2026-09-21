@@ -887,7 +887,7 @@ if [ "$gadget_setup" = 1 ]; then
         sleep 1
         i=$((i + 1))
     done
-    if [ -c /dev/ttyGS0 ]; then
+    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" = marker ]; then
         # Whatever the host sends is kept for the report: this is what makes the
         # host->device direction of the link measurable through the card.
         ( timeout 900 cat /dev/ttyGS0 >> /tmp/gts9-serial-in.txt 2>/dev/null ) &
@@ -912,19 +912,29 @@ if [ "$gadget_setup" = 1 ]; then
         fi
     fi
     if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" != marker ]; then
-        log 'streaming the kernel log to /dev/ttyGS0'
-        (
-            cat /dev/kmsg > /dev/ttyGS0 2>/dev/null
-        ) &
-        if [ "$USB_CONSOLE_MODE" = marker ]; then
-            log 'usb console in marker mode: not starting the shell'
-        else
-            while :; do
-                /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
-                log 'usb shell ended; PID 1 remains alive, retrying in 5s'
-                sleep 5
-            done
-        fi
+        # The shell is the console.  It is also the only reader of the port, and
+        # it has to stay the only one: a host write only completes while
+        # something on this side is reading, which is exactly why the earlier
+        # boots looked like "sending data hangs" - /init had never reached this
+        # block, and between shell attempts nothing was reading at all.
+        #
+        # The kernel log is *not* streamed here by default: `cat /dev/kmsg` on a
+        # port nobody is draining fills the tty buffer and then blocks the
+        # shell's own output.  The full log travels on the card instead, and
+        # `dmesg` works from the shell.
+        case "$USB_CONSOLE_MODE" in
+            shell+kmsg)
+                log 'streaming the kernel log to /dev/ttyGS0 as well'
+                ( cat /dev/kmsg > /dev/ttyGS0 2>/dev/null ) &
+                ;;
+        esac
+        log 'handing /dev/ttyGS0 to an interactive shell'
+        printf '\nGTS9 bring-up console.  Log: /tmp/bringup-report.txt on the card.\n' > /dev/ttyGS0 2>/dev/null
+        printf 'Type gts9-to-recovery to reboot into TWRP.\n\n' > /dev/ttyGS0 2>/dev/null
+        while :; do
+            PS1='gts9# ' /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
+            log 'usb shell ended (host closed the port); reopening'
+        done
     fi
     log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
 fi

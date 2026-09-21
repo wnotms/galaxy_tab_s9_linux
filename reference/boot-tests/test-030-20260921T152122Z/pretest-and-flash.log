@@ -1,0 +1,16 @@
+=== 2026-09-21T15:22:55Z test 030 pretest + flash ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    2d3c4dd6ce3af074ae716f6d2c7d4c311b67ca240b5d7a614ec42bb0e8610598
+vendor_boot  16374d27995a11a439a18c78ea539068cbd120857ab21416ebc5eb5f679a498f
+--- init_boot ---
+D:\android\gts9-test030\init_boot.img: 1 file pushed, 0 skipped. 112.5 MB/s (8388608 bytes in 0.071s)
+expected: c52fcb369bc551ea78548e48d110d08a161268724f1e14794ce9a4a07736a140
+8388608 bytes (8.0 M) copied, 0.026845 s, 298 M/s
+c52fcb369bc551ea78548e48d110d08a161268724f1e14794ce9a4a07736a140  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test030\vendor_boot.img: 1 file pushed, 0 skipped. 737.9 MB/s (100663296 bytes in 0.130s)
+expected: 03933e33c36c9f377ace42d24721e47a273f84f4766808618977e71409ca1f5f
+100663296 bytes (96 M) copied, 0.239595 s, 401 M/s
+03933e33c36c9f377ace42d24721e47a273f84f4766808618977e71409ca1f5f  /dev/block/by-name/vendor_boot
+=== 2026-09-21T15:23:11Z test 030: reboot (ACM+MSC, marker console, 60s host window) ===
+reboot issued
