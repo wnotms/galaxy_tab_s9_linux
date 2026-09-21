@@ -1,1 +1,1 @@
-console=tty0 console=ttyMSM0,115200n8 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware
+console=tty0 console=ttyMSM0,115200n8 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware gts9_proof_code=20

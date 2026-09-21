@@ -306,7 +306,7 @@ report_written=0
 try_report_on() {
     dev=$1
     [ -b "$dev" ] || return 1
-    for fs in vfat ext4 ext2; do
+    for fs in vfat ext4 ext2 f2fs; do
         if mount -t $fs -o rw "$dev" /mnt 2>/dev/null; then
             if cp "$REPORT" /mnt/gts9-bringup-report.txt 2>/dev/null; then
                 sync
@@ -321,9 +321,14 @@ try_report_on() {
     return 1
 }
 
+# Removable storage first (the microSD is the intended bring-up medium), then
+# every block device the kernel produced, so that a working UFS exposes the
+# report through any partition the kernel can mount.  /cache is the only
+# internal partition this is ever allowed to touch: it is scratch space, and
+# userdata/super/persist/efs stay untouched by policy.
 mkdir -p /mnt
-for dev in /dev/mmcblk0p1 /dev/mmcblk0 /dev/mmcblk1p1 /dev/mmcblk1 \
-           /dev/sda1 /dev/sdb1 /dev/sda /dev/sdb; do
+candidates=$(ls -1 /dev/mmcblk*p* /dev/mmcblk* /dev/sd*[0-9]* /dev/sd* 2>/dev/null)
+for dev in $candidates; do
     if try_report_on "$dev"; then
         log "bring-up report written to $report_target"
         break
