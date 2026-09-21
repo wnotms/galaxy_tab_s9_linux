@@ -1,0 +1,7 @@
+2026-09-21T16:35:22Z console open on COM17
+2026-09-21T16:35:25Z SENT  printf "\033[41m\033[2J" > /dev/tty0; echo red-screen-sent; sleep 5; printf "\033[42m\033[2J" > /dev/tty0; echo green-screen-sent
+2026-09-21T16:35:25Z RECV  printf "\033[41m\033[2J" > /dev/tty0; echo red-screen-sent; sleep 5; print
+2026-09-21T16:35:25Z RECV  f "\033[42m\033[2J" > /dev/tty0; echo green-screen-sent
+2026-09-21T16:35:25Z RECV  red-screen-sent
+2026-09-21T16:35:30Z RECV  green-screen-sent
+2026-09-21T16:35:33Z console session done

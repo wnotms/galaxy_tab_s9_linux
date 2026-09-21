@@ -1,0 +1,14 @@
+=== flash test 037 (init_boot + vendor_boot) ===
+--- init_boot ---
+D:\android\gts9-test037\init_boot.img: 1 file pushed, 0 skipped. 176.6 MB/s (8388608 bytes in 0.045s)
+expected: 8f47bfc4e9547207b1f43cc61cd4d6f618ac077256df2466f2435d9e836f14c5
+8388608 bytes (8.0 M) copied, 0.038774 s, 206 M/s
+8f47bfc4e9547207b1f43cc61cd4d6f618ac077256df2466f2435d9e836f14c5  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test037\vendor_boot.img: 1 file pushed, 0 skipped. 860.5 MB/s (100663296 bytes in 0.112s)
+expected: c1749463bffdaddc816cba5584dfd6fe9a98c4b747db802c8e9d28f5ce07de49
+100663296 bytes (96 M) copied, 0.336089 s, 286 M/s
+c1749463bffdaddc816cba5584dfd6fe9a98c4b747db802c8e9d28f5ce07de49  /dev/block/by-name/vendor_boot
+1+0 records in
+1+0 records out
+2048 bytes (2.0 K) copied, 0.000384 s, 5.0 M/s

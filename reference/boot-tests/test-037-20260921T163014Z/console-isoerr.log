@@ -1,0 +1,16 @@
+2026-09-21T16:46:05Z console open on COM17
+2026-09-21T16:46:08Z SENT  N0=$(dmesg | grep -c wait_for_irq); echo "before=$N0"; echo 1 > /sys/class/graphics/fb0/blank; sleep 3; echo "after-blank=$(dmesg | grep -c wait_for_irq) crtc=$(grep -c "enable=1" /sys/kernel/debug/dri/0/state)"; dmesg | tail -2; echo 0 > /sys/class/graphics/fb0/blank; sleep 4; echo "after-unblank=$(dmesg | grep -c wait_for_irq)"; dmesg | tail -3
+2026-09-21T16:46:08Z RECV  N0=$(dmesg | grep -c wait_for_irq); echo "before=$N0"; echo 1 > /sys/class
+2026-09-21T16:46:08Z RECV  /graphics/fb0/blank; sleep 3; echo "after-blank=$(dmesg | grep -c wait_for_irq)
+2026-09-21T16:46:08Z RECV  crtc=$(grep -c "enable=1" /sys/kernel/debug/dri/0/state)"; dmesg | tail -2; echo
+2026-09-21T16:46:08Z RECV   0 > /sys/class/graphics/fb0/blank; sleep 4; echo "after-unblank=$(dmesg | grep
+2026-09-21T16:46:08Z RECV  -c wait_for_irq)"; dmesg | tail -3
+2026-09-21T16:46:08Z RECV  before=2
+2026-09-21T16:46:11Z RECV  after-blank=2 crtc=1
+2026-09-21T16:46:11Z RECV  [  618.063071][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-21T16:46:11Z RECV  [  618.065725][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-21T16:46:16Z RECV  after-unblank=3
+2026-09-21T16:46:16Z RECV  [  874.656818][  T712] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-21T16:46:16Z RECV  [  874.882413][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-21T16:46:16Z RECV  [  874.888446][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-21T16:46:19Z console session done

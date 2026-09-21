@@ -1,0 +1,9 @@
+2026-09-21T16:32:48Z console open on COM17
+2026-09-21T16:32:51Z SENT  date +%s; (echo 0 > /sys/class/rtc/rtc0/wakealarm; echo $(( $(date +%s) + 30 )) > /sys/class/rtc/rtc0/wakealarm; echo alarm-write-rc=$?; cat /sys/class/rtc/rtc0/wakealarm) > /tmp/alarm.log 2>&1 & sleep 2; cat /tmp/alarm.log
+2026-09-21T16:32:51Z RECV  date +%s; (echo 0 > /sys/class/rtc/rtc0/wakealarm; echo $(( $(date +%s) +
+2026-09-21T16:32:51Z RECV  30 )) > /sys/class/rtc/rtc0/wakealarm; echo alarm-write-rc=$?; cat /sys/class/rt
+2026-09-21T16:32:51Z RECV  c/rtc0/wakealarm) > /tmp/alarm.log 2>&1 & sleep 2; cat /tmp/alarm.log
+2026-09-21T16:32:51Z RECV  22307272
+2026-09-21T16:32:51Z RECV  alarm-write-rc=0
+2026-09-21T16:32:51Z RECV  22307302
+2026-09-21T16:33:00Z console session done

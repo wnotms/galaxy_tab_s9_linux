@@ -1,0 +1,7 @@
+2026-09-21T16:33:08Z console open on COM17
+2026-09-21T16:33:11Z SENT  echo 0 > /sys/class/rtc/rtc0/wakealarm; echo $(( $(date +%s) + 25 )) > /sys/class/rtc/rtc0/wakealarm; cat /sys/class/rtc/rtc0/wakealarm; (echo mem > /sys/power/state; echo rc=$? > /tmp/susp.log) & sleep 3; echo suspending-now
+2026-09-21T16:33:11Z RECV  echo 0 > /sys/class/rtc/rtc0/wakealarm; echo $(( $(date +%s) + 25 )) > /sy
+2026-09-21T16:33:11Z RECV  s/class/rtc/rtc0/wakealarm; cat /sys/class/rtc/rtc0/wakealarm; (echo mem > /sys/
+2026-09-21T16:33:11Z RECV  power/state; echo rc=$? > /tmp/susp.log) & sleep 3; echo suspending-now
+2026-09-21T16:33:11Z RECV  22307317
+2026-09-21T16:33:19Z console session done

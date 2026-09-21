@@ -1,0 +1,12 @@
+2026-09-21T16:40:20Z console open on COM17
+2026-09-21T16:40:23Z SENT  dmesg | grep -c "wait_for_irq"; echo ===ALL===; dmesg | grep -e "wait_for_irq" -e "encoder is disabled" -e "dpu_encoder" | head -20; echo ===IRQNOW===; grep -e "msm-kms" -e dsi_isr -e "dpu" /proc/interrupts
+2026-09-21T16:40:23Z RECV  dmesg | grep -c "wait_for_irq"; echo ===ALL===; dmesg | grep -e "wait_for_
+2026-09-21T16:40:23Z RECV  irq" -e "encoder is disabled" -e "dpu_encoder" | head -20; echo ===IRQNOW===; gr
+2026-09-21T16:40:23Z RECV  ep -e "msm-kms" -e dsi_isr -e "dpu" /proc/interrupts
+2026-09-21T16:40:23Z RECV  1
+2026-09-21T16:40:23Z RECV  ===ALL===
+2026-09-21T16:40:23Z RECV  [  500.936350][  T712] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-21T16:40:23Z RECV  ===IRQNOW===
+2026-09-21T16:40:23Z RECV   181:      28468          0          0          0          0          0          0          0  msm_mdss     0 Edge      msm-kms
+2026-09-21T16:40:23Z RECV   182:       2830          0          0          0          0          0          0          0  msm_mdss     4 Edge      dsi_isr
+2026-09-21T16:40:32Z console session done

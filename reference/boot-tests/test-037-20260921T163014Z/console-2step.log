@@ -1,0 +1,11 @@
+2026-09-21T16:48:13Z console open on COM17
+2026-09-21T16:48:16Z SENT  printf "\033[42m\033[2J\033[30m\n\n   GTS9 KICKOFF TEST : GREEN SCREEN = command mode frame pushed\n\n" > /dev/tty0; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 2; echo "panel-id-lines=$(dmesg | grep -c "ana38407 panel id")"; echo 0 > /sys/class/vtconsole/vtcon1/bind; sleep 1; echo 1 > /sys/class/vtconsole/vtcon1/bind; sleep 3; echo "bind=$(cat /sys/class/vtconsole/vtcon1/bind)"; dmesg | tail -5
+2026-09-21T16:48:16Z RECV  printf "\033[42m\033[2J\033[30m\n\n   GTS9 KICKOFF TEST : GREEN SCREEN = c
+2026-09-21T16:48:16Z RECV  ommand mode frame pushed\n\n" > /dev/tty0; echo 1 > /sys/class/graphics/fb0/blan
+2026-09-21T16:48:16Z RECV  k; sleep 2; echo 0 > /sys/class/graphics/fb0/blank; sleep 2; echo "panel-id-line
+2026-09-21T16:48:16Z RECV  s=$(dmesg | grep -c "ana38407 panel id")"; echo 0 > /sys/class/vtconsole/vtcon1/
+2026-09-21T16:48:16Z RECV  bind; sleep 1; echo 1 > /sys/class/vtconsole/vtcon1/bind; sleep 3; echo "bind=$(
+2026-09-21T16:48:16Z RECV  cat /sys/class/vtconsole/vtcon1/bind)"; dmesg | tail -5
+2026-09-21T16:48:20Z RECV  panel-id-lines=6
+2026-09-21T16:48:24Z RECV  bind=1
+2026-09-21T16:48:24Z console session done

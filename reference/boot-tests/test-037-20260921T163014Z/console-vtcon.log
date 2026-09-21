@@ -1,0 +1,12 @@
+2026-09-21T16:47:27Z console open on COM17
+2026-09-21T16:47:30Z SENT  printf "\n\n  >>> GTS9 KICKOFF TEST : showing this means the command-mode engine started <<<\n\n" > /dev/tty0; echo 0 > /sys/class/vtconsole/vtcon1/bind; sleep 2; echo 1 > /sys/class/vtconsole/vtcon1/bind; sleep 3; echo "bind=$(cat /sys/class/vtconsole/vtcon1/bind)"; dmesg | tail -4
+2026-09-21T16:47:30Z RECV  printf "\n\n  >>> GTS9 KICKOFF TEST : showing this means the command-mode
+2026-09-21T16:47:30Z RECV  engine started <<<\n\n" > /dev/tty0; echo 0 > /sys/class/vtconsole/vtcon1/bind;
+2026-09-21T16:47:30Z RECV  sleep 2; echo 1 > /sys/class/vtconsole/vtcon1/bind; sleep 3; echo "bind=$(cat /s
+2026-09-21T16:47:30Z RECV  ys/class/vtconsole/vtcon1/bind)"; dmesg | tail -4
+2026-09-21T16:47:35Z RECV  bind=1
+2026-09-21T16:47:35Z RECV  [  874.882413][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-21T16:47:35Z RECV  [  874.888446][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-21T16:47:35Z RECV  [  953.583381][  T712] Console: switching to colour dummy device 80x25
+2026-09-21T16:47:35Z RECV  [  955.617971][  T712] Console: switching to colour frame buffer device 320x100
+2026-09-21T16:47:38Z console session done

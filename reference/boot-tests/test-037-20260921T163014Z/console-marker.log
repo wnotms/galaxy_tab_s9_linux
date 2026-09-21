@@ -1,0 +1,7 @@
+2026-09-21T16:34:24Z console open on COM17
+2026-09-21T16:34:27Z SENT  echo 0 > /sys/class/graphics/fb0/blank; printf "\n\n  GTS9 mainline 7.2.0-rc3-gts9wifi : console on the AMSA10FA01 panel\n  panel id 80 00 04, 2560x1600, recovered by an RTC-alarm suspend/resume\n\n" > /dev/tty0; dmesg | tail -1
+2026-09-21T16:34:27Z RECV  echo 0 > /sys/class/graphics/fb0/blank; printf "\n\n  GTS9 mainline 7.2.0-
+2026-09-21T16:34:27Z RECV  rc3-gts9wifi : console on the AMSA10FA01 panel\n  panel id 80 00 04, 2560x1600,
+2026-09-21T16:34:28Z RECV  recovered by an RTC-alarm suspend/resume\n\n" > /dev/tty0; dmesg | tail -1
+2026-09-21T16:34:28Z RECV  [  121.271810][    C4] sh (701): highest shadow stack usage: 488 bytes
+2026-09-21T16:34:37Z console session done

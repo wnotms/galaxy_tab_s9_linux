@@ -1,0 +1,55 @@
+2026-09-21T16:39:52Z console open on COM17
+2026-09-21T16:39:55Z SENT  sed -n "/^crtc\[/,\$p" /sys/kernel/debug/dri/0/state | head -35; echo ===IRQ===; grep -i -e dsi -e dpu -e disp -e tear -e vsync -e mdss /proc/interrupts; echo ===CYCLE===; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo "after-blank=$(cat /sys/class/graphics/fb0/blank)"; echo 0 > /sys/class/graphics/fb0/blank; sleep 3; echo "after-unblank=$(cat /sys/class/graphics/fb0/blank)"; printf "\n\n  >>> GTS9 BLANK CYCLE MARKER : if this text is on the screen the DPU scans out <<<\n\n" > /dev/tty0; dmesg | tail -4
+2026-09-21T16:39:55Z RECV  sed -n "/^crtc\[/,\$p" /sys/kernel/debug/dri/0/state | head -35; echo ===I
+2026-09-21T16:39:55Z RECV  RQ===; grep -i -e dsi -e dpu -e disp -e tear -e vsync -e mdss /proc/interrupts;
+2026-09-21T16:39:55Z RECV  echo ===CYCLE===; echo 1 > /sys/class/graphics/fb0/blank; sleep 2; echo "after-b
+2026-09-21T16:39:55Z RECV  lank=$(cat /sys/class/graphics/fb0/blank)"; echo 0 > /sys/class/graphics/fb0/bla
+2026-09-21T16:39:55Z RECV  nk; sleep 3; echo "after-unblank=$(cat /sys/class/graphics/fb0/blank)"; printf "
+2026-09-21T16:39:55Z RECV  \n\n  >>> GTS9 BLANK CYCLE MARKER : if this text is on the screen the DPU scans
+2026-09-21T16:39:55Z RECV  out <<<\n\n" > /dev/tty0; dmesg | tail -4
+2026-09-21T16:39:55Z RECV  crtc[103]: crtc-0
+2026-09-21T16:39:55Z RECV  	enable=1
+2026-09-21T16:39:55Z RECV  	active=1
+2026-09-21T16:39:55Z RECV  	self_refresh_active=0
+2026-09-21T16:39:55Z RECV  	planes_changed=1
+2026-09-21T16:39:55Z RECV  	mode_changed=0
+2026-09-21T16:39:55Z RECV  	active_changed=0
+2026-09-21T16:39:55Z RECV  	connectors_changed=0
+2026-09-21T16:39:55Z RECV  	color_mgmt_changed=0
+2026-09-21T16:39:55Z RECV  	plane_mask=1
+2026-09-21T16:39:55Z RECV  	connector_mask=1
+2026-09-21T16:39:55Z RECV  	encoder_mask=1
+2026-09-21T16:39:55Z RECV  	mode: "2560x1600": 120 561443 2560 2594 2658 2692 1600 1642 1706 1738 0x48 0x0
+2026-09-21T16:39:55Z RECV  	background_color=ffff000000000000
+2026-09-21T16:39:55Z RECV  	lm[0]=0
+2026-09-21T16:39:55Z RECV  	ctl[0]=0
+2026-09-21T16:39:55Z RECV  	lm[1]=1
+2026-09-21T16:39:55Z RECV  	ctl[1]=0
+2026-09-21T16:39:55Z RECV  crtc[104]: crtc-1
+2026-09-21T16:39:55Z RECV  	enable=0
+2026-09-21T16:39:55Z RECV  	active=0
+2026-09-21T16:39:56Z RECV  	self_refresh_active=0
+2026-09-21T16:39:56Z RECV  	planes_changed=0
+2026-09-21T16:39:56Z RECV  	mode_changed=0
+2026-09-21T16:39:56Z RECV  	active_changed=0
+2026-09-21T16:39:56Z RECV  	connectors_changed=0
+2026-09-21T16:39:56Z RECV  	color_mgmt_changed=0
+2026-09-21T16:39:56Z RECV  	plane_mask=0
+2026-09-21T16:39:56Z RECV  	connector_mask=0
+2026-09-21T16:39:56Z RECV  	encoder_mask=0
+2026-09-21T16:39:56Z RECV  	mode: "": 0 0 0 0 0 0 0 0 0 0 0x0 0x0
+2026-09-21T16:39:56Z RECV  	background_color=ffff000000000000
+2026-09-21T16:39:56Z RECV  connector[36]: DSI-1
+2026-09-21T16:39:56Z RECV  	crtc=crtc-0
+2026-09-21T16:39:56Z RECV  	self_refresh_aware=0
+2026-09-21T16:39:56Z RECV  ===IRQ===
+2026-09-21T16:39:56Z RECV   181:      26960          0          0          0          0          0          0          0  msm_mdss     0 Edge      msm-kms
+2026-09-21T16:39:56Z RECV   182:       2625          0          0          0          0          0          0          0  msm_mdss     4 Edge      dsi_isr
+2026-09-21T16:39:56Z RECV  ===CYCLE===
+2026-09-21T16:39:57Z RECV  after-blank=1
+2026-09-21T16:40:01Z RECV  after-unblank=0
+2026-09-21T16:40:01Z RECV  [  421.311815][    C1] kworker/u32:4 (77): highest shadow stack usage: 752 bytes
+2026-09-21T16:40:01Z RECV  [  500.936350][  T712] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-21T16:40:01Z RECV  [  501.153870][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-21T16:40:01Z RECV  [  501.158387][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-21T16:40:04Z console session done

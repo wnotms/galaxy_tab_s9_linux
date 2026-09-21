@@ -1,0 +1,7 @@
+2026-09-21T16:35:34Z console open on COM17
+2026-09-21T16:35:37Z SENT  yes | tr y "\377" | dd of=/dev/fb0 bs=10240 count=1600 2>&1 | tail -1; echo white-fill-done
+2026-09-21T16:35:37Z RECV  yes | tr y "\377" | dd of=/dev/fb0 bs=10240 count=1600 2>&1 | tail -1; ech
+2026-09-21T16:35:37Z RECV  o white-fill-done
+2026-09-21T16:35:37Z RECV  0+1600 records out
+2026-09-21T16:35:37Z RECV  white-fill-done
+2026-09-21T16:35:46Z console session done

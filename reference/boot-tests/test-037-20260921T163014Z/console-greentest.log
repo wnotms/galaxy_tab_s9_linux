@@ -1,0 +1,10 @@
+2026-09-21T16:41:49Z console open on COM17
+2026-09-21T16:41:52Z SENT  echo 1 > /sys/class/graphics/fb0/blank; sleep 1; printf "\033[42m\033[2J" > /dev/tty0; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 3; echo "blank=$(cat /sys/class/graphics/fb0/blank)"; dmesg | tail -3
+2026-09-21T16:41:52Z RECV  echo 1 > /sys/class/graphics/fb0/blank; sleep 1; printf "\033[42m\033[2J"
+2026-09-21T16:41:52Z RECV  > /dev/tty0; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 3; echo "bla
+2026-09-21T16:41:52Z RECV  nk=$(cat /sys/class/graphics/fb0/blank)"; dmesg | tail -3
+2026-09-21T16:41:58Z RECV  blank=0
+2026-09-21T16:41:58Z RECV  [  617.828326][  T712] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-21T16:41:58Z RECV  [  618.063071][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-21T16:41:58Z RECV  [  618.065725][  T712] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-21T16:42:01Z console session done

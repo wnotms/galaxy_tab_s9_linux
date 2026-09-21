@@ -1,0 +1,16 @@
+2026-09-21T16:36:29Z console open on COM17
+2026-09-21T16:36:32Z SENT  dmesg | grep -i -e fbcon -e switching -e Console: | tail -6; echo ---; cat /proc/consoles; echo ---; ls /sys/class/vtconsole/; for v in /sys/class/vtconsole/vtcon*/; do echo "$v $(cat $v/name) bind=$(cat $v/bind)"; done
+2026-09-21T16:36:32Z RECV  dmesg | grep -i -e fbcon -e switching -e Console: | tail -6; echo ---; cat
+2026-09-21T16:36:32Z RECV   /proc/consoles; echo ---; ls /sys/class/vtconsole/; for v in /sys/class/vtconso
+2026-09-21T16:36:32Z RECV  le/vtcon*/; do echo "$v $(cat $v/name) bind=$(cat $v/bind)"; done
+2026-09-21T16:36:32Z RECV  [    0.024911][    T0] Console: colour dummy device 80x25
+2026-09-21T16:36:32Z RECV  [    5.597151][   T77] Console: switching to colour frame buffer device 320x100
+2026-09-21T16:36:32Z RECV  ---
+2026-09-21T16:36:32Z RECV  ttyMSM0              -W- (EC     )  237:0
+2026-09-21T16:36:32Z RECV  sec_log-1            -W- (E   p a)
+2026-09-21T16:36:32Z RECV  tty0                 -WU (E   p  )    4:1
+2026-09-21T16:36:32Z RECV  ---
+2026-09-21T16:36:32Z RECV  vtcon0  vtcon1
+2026-09-21T16:36:32Z RECV  /sys/class/vtconsole/vtcon0/ (S) dummy device bind=0
+2026-09-21T16:36:32Z RECV  /sys/class/vtconsole/vtcon1/ (M) frame buffer device bind=1
+2026-09-21T16:36:41Z console session done
