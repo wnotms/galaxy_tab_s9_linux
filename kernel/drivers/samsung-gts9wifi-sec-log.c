@@ -199,27 +199,51 @@ static phys_addr_t gts9wifi_sec_log_cmdline_base;
 static phys_addr_t gts9wifi_sec_log_cmdline_size;
 static bool gts9wifi_sec_log_cmdline_set;
 
+/*
+ * The ring location is fixed on this board until the command line is parsed,
+ * and the early markers must not depend on anything that is not set up yet.
+ */
+#define GTS9_SEC_LOG_DEFAULT_BASE	0x880200000ULL
+
 #define GTS9_SEC_LOG_MARKER_LEN	160
 
-static const char gts9wifi_sec_log_marker[] __initconst =
-	"\nGTS9-EARLY-MARKER: arm64 setup_arch reached, early cmdline parsed\n";
+/*
+ * Slot 0 is written from parse_early_param() (early cmdline parsed), slot 1
+ * from setup_arch() before the device tree is touched, slot 2 by head.S
+ * before anything at all.  Separate slots so one boot reports how far it got.
+ */
+static const char *const gts9wifi_sec_log_markers[] __initconst = {
+	"\nGTS9-EARLY-MARKER: parse_early_param reached, cmdline parsed\n",
+	"\nGTS9-SETUPARCH: arm64 setup_arch entered, before setup_machine_fdt\n",
+	"\nGTS9-HEAD: kernel image executing, entry reached with MMU off\n",
+};
 
-static void __init gts9wifi_sec_log_write_proof_of_life(phys_addr_t base)
+/**
+ * gts9_sec_log_early_marker() - write a proof-of-life marker into the ring
+ * @slot: which marker to write (see gts9wifi_sec_log_markers[])
+ * @base: ring physical base, or 0 for the board default
+ *
+ * Called from arch/arm64 code by the bring-up diagnostic patch.  Uses the
+ * fixmap-based early mapping, which is the only way to reach the ring before
+ * paging_init() has built the linear map.
+ */
+void __init gts9_sec_log_early_marker(unsigned int slot, phys_addr_t base)
 {
 	void *marker;
 
-	if (!base)
+	if (slot >= ARRAY_SIZE(gts9wifi_sec_log_markers))
 		return;
+	if (!base)
+		base = GTS9_SEC_LOG_DEFAULT_BASE;
 
-	/* Right after the LOGM header, i.e. the start of the byte ring. */
-	marker = early_memremap(base + sizeof(struct sec_log_header),
-				GTS9_SEC_LOG_MARKER_LEN);
+	marker = early_memremap(base + sizeof(struct sec_log_header) +
+				slot * 0x100, GTS9_SEC_LOG_MARKER_LEN);
 	if (!marker)
 		return;
 
 	memset(marker, 0, GTS9_SEC_LOG_MARKER_LEN);
-	memcpy(marker, gts9wifi_sec_log_marker,
-	       sizeof(gts9wifi_sec_log_marker) - 1);
+	memcpy(marker, gts9wifi_sec_log_markers[slot],
+	       strlen(gts9wifi_sec_log_markers[slot]));
 	early_memunmap(marker, GTS9_SEC_LOG_MARKER_LEN);
 }
 
@@ -238,7 +262,7 @@ static int __init gts9wifi_sec_log_override(char *str)
 	gts9wifi_sec_log_cmdline_size = sep ? memparse(sep, NULL) : 0;
 	gts9wifi_sec_log_cmdline_set = true;
 
-	gts9wifi_sec_log_write_proof_of_life(gts9wifi_sec_log_cmdline_base);
+	gts9_sec_log_early_marker(0, gts9wifi_sec_log_cmdline_base);
 	return 0;
 }
 early_param("gts9_sec_log", gts9wifi_sec_log_override);

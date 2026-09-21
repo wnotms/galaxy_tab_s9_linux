@@ -24,3 +24,6 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
   `kernel/drivers/samsung-gts9wifi-sec-log.c` and is installed next to the
   board DTS by `scripts/prepare-kernel.sh`. Drop both once an equivalent
   console exists upstream.
+- `0003-printk-allow-ignoring-samsung-console-null.patch` — the reference
+  X910 port's opt-in `ignore_console_null` early parameter. The X710 ABL logs
+  also show `console=null`; use it to retain the requested bring-up consoles.

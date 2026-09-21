@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
-# Assemble the initramfs that scripts/build-boot-bundle.sh packages into
-# vendor_boot, and check that it is a stream Samsung's ABL and Linux accept.
-#
-# The bundle script deliberately puts an empty generic ramdisk in init_boot and
-# the real initramfs into vendor_boot as a platform fragment (the appended-DTB
-# fallback route documented in docs/MAINLINE_PORT_PLAN.md).  That means the
-# budget this script enforces is the vendor_boot partition, not init_boot.
+# Assemble the generic initramfs placed in init_boot by build-boot-bundle.sh.
+# Keep room in that 8 MiB partition for the Android header and AVB footer.
+# Large module trees belong on the root filesystem, not this early ramdisk.
 #
 # Two inputs are needed:
 #   --root DIR       an initramfs tree that contains /init (a distro initramfs
@@ -27,9 +23,8 @@ root=
 modules=
 release=
 out=
-# vendor_boot is 100663296 bytes; keep 8 MiB of headroom for the boot header,
-# the DTB, the cmdline and the bootconfig.
-max_size=92274688
+# Conservative budget below init_boot's AVB maximum (header also occupies space).
+max_size=7340032
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -53,7 +48,7 @@ done
 if [ -z "$release" ] && [ -f "$kernel_out/kernel.release" ]; then
     release=$(cat "$kernel_out/kernel.release")
 fi
-: "${release:?--release is required when $KERNEL_OUT_DIR/kernel.release is absent}"
+: "${release:?--release is required when $kernel_out/kernel.release is absent}"
 
 if [ -n "$modules" ]; then
     [ -d "$modules" ] || { echo "missing modules root: $modules" >&2; exit 1; }

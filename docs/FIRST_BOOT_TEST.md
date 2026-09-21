@@ -180,8 +180,8 @@ Expected bundle (`out/boot-bundle/`):
 | Image | Size | Contents |
 |---|---:|---|
 | `boot.img` | 100663296 | `Image.gz` with the board DTB appended, header v4 |
-| `init_boot.img` | 8388608 | empty generic legacy-LZ4 ramdisk |
-| `vendor_boot.img` | 100663296 | board DTB, cmdline, bootconfig, BusyBox initramfs fragment |
+| `init_boot.img` | 8388608 | generic legacy-LZ4 BusyBox initramfs |
+| `vendor_boot.img` | 100663296 | board DTB, cmdline, bootconfig, empty platform ramdisk |
 | `dtbo.img` | 16777216 | deliberately non-table image (forces ABL's appended-DTB fallback) |
 | `vbmeta.img` | 131072 | AVB flags 2 — **see 5.2, do not flash by default** |
 

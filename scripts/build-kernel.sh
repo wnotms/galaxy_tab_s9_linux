@@ -15,6 +15,11 @@ build_modules=${BUILD_MODULES:-1}
 use_ccache=${USE_CCACHE:-auto}
 
 case "$build_modules" in 0|1) ;; *) echo "BUILD_MODULES must be 0 or 1" >&2; exit 2 ;; esac
+case "$use_ccache" in auto|0|1) ;; *) echo "USE_CCACHE must be auto, 0 or 1" >&2; exit 2 ;; esac
+if [ "$use_ccache" = 1 ] && ! command -v ccache >/dev/null 2>&1; then
+    echo 'USE_CCACHE=1 requires ccache; refusing an uncached build' >&2
+    exit 1
+fi
 
 ccache_args=()
 if [ "$use_ccache" != 0 ] && command -v ccache >/dev/null 2>&1; then
@@ -68,7 +73,7 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 
 required=(
     CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI CONFIG_SERIAL_QCOM_GENI_CONSOLE
-    CONFIG_BLK_DEV_INITRD CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
+    CONFIG_BLK_DEV_INITRD CONFIG_RD_LZ4 CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
     CONFIG_MMC_SDHCI_MSM CONFIG_EXT4_FS CONFIG_PSTORE CONFIG_PSTORE_RAM
     # The first boot test depends on the Samsung sec_log_buf console being
     # present before any root filesystem exists.
@@ -89,6 +94,12 @@ for sym in "${required[@]}"; do
         exit 1
     fi
 done
+
+# Do not silently inherit the Android seed's immediate panic reboot.
+grep -qx 'CONFIG_PANIC_TIMEOUT=0' "$build_dir/.config" || {
+    echo 'bring-up requires CONFIG_PANIC_TIMEOUT=0' >&2
+    exit 1
+}
 
 # Radio/transport support stays modular, but a silently dropped module is a
 # config regression just like a dropped built-in.
@@ -135,7 +146,7 @@ fi
 
 (
     cd "$out_dir"
-    sha256sum Image.gz sm8550-samsung-gts9wifi.dtb config > SHA256SUMS
+    sha256sum Image.gz sm8550-samsung-gts9wifi.dtb config kernel.release > SHA256SUMS
 )
 
 cat <<EOF2

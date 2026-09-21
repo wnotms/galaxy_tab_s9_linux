@@ -31,7 +31,7 @@ sudo apt install -y \
 
 ./scripts/check-build-deps.sh   # report anything still missing
 ./scripts/fetch-mainline.sh
-./scripts/build-kernel.sh
+USE_CCACHE=1 ./scripts/build-kernel.sh
 ```
 
 Outputs are written to `out/kernel-gts9wifi/`:
@@ -52,6 +52,9 @@ KERNEL_CLEAN=1 ./scripts/build-kernel.sh
 BUILD_MODULES=0 ./scripts/build-kernel.sh
 JOBS=16 ./scripts/build-kernel.sh
 ```
+
+`USE_CCACHE=1` requires ccache and fails if it is unavailable; the default
+`USE_CCACHE=auto` uses it when installed. The cache survives clean builds.
 
 The build uses LLVM (`ARCH=arm64 LLVM=1`) and a disposable git worktree. The pinned upstream checkout remains pristine. Before Kconfig resolution, `scripts/materialize-stock-config.sh` reconstructs the exact owner-extracted Samsung 5.15.153 `.config` and verifies SHA-256 `80693a069d406fbdafe01b73e65e8f1e15b681451bbb53b9d05fde7a93220112`; Linux 7.2 then merges the small mainline device fragment and runs `olddefconfig`, so obsolete Samsung-only symbols are naturally dropped while the stock baseline remains explicit.
 
@@ -77,13 +80,19 @@ MKBOOTIMG=$PWD/.work/tools/mkbootimg.py AVBTOOL=$PWD/.work/tools/avbtool.py \
 `build-bringup-initramfs.sh` assembles the minimal bring-up userspace
 (`boot/bringup-init.sh` as `/init`, a pinned static BusyBox and its applets)
 and hands it to `make-initramfs.sh`, which packs a tree, refuses anything that
-is not a legacy-LZ4 stream, and enforces the `vendor_boot` budget. Use
+is not a legacy-LZ4 stream, and enforces a 7 MiB budget for the 8 MiB `init_boot` partition. Use
 `make-initramfs.sh --root ... --modules out/kernel-gts9wifi/modules-root`
 directly when a test needs loadable modules; the first boot test does not.
 
 `validate-boot-bundle.sh` is the gate before any physical test: it re-extracts
-the kernel, the appended DTB, the vendor ramdisk and every AVB footer, and
+the kernel, the appended DTB, both ramdisks and every AVB footer, and
 fails if the initramfs has no executable `/init`. It only reads.
+
+The generic BusyBox initramfs now lives in `init_boot.img`; `vendor_boot.img`
+contains an empty platform fragment. Rebuild and update **all changed images**,
+including `init_boot.img`, when moving from the older layout. The bring-up PID 1
+survives a missing console or shell exit. See [boot-loop investigation](docs/BOOTLOOP_FIX.md)
+for the reference comparison and the remaining hardware validation.
 
 Read `docs/FIRST_BOOT_TEST.md` before any physical test: it defines the single
 success chain, the mandatory stock backup, the recovery plan, the manual flash

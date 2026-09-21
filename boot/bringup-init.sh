@@ -36,6 +36,14 @@ mount_path() {
     fi
 }
 
+mount_path proc /proc
+mount_path sysfs /sys
+mount_path devtmpfs /dev
+mount_path tmpfs /tmp
+mount_path tmpfs /run
+
+# Emit the milestone only after /dev/kmsg exists, so it reaches sec_log even
+# when the bootloader left us without a working interactive console.
 log ''
 log '========================================'
 log 'GTS9 MAINLINE INITRAMFS REACHED'
@@ -45,12 +53,6 @@ if command -v busybox >/dev/null 2>&1; then
 else
     log 'WARN: busybox is not on PATH'
 fi
-
-mount_path proc /proc
-mount_path sysfs /sys
-mount_path devtmpfs /dev
-mount_path tmpfs /tmp
-mount_path tmpfs /run
 
 log ''
 log "--- uname -a ---"
@@ -100,4 +102,12 @@ log ''
 log 'dropping to an interactive shell; nothing was written to any block device'
 log ''
 
-exec /bin/sh
+# PID 1 must survive EOF, an unavailable UART and a user's "exit". Replacing
+# init with a shell makes all of those cases panic (Attempted to kill init!).
+# Reopen the console after devtmpfs has been mounted; /dev/console may not
+# have existed when the kernel opened init's standard descriptors.
+while :; do
+    /bin/sh -i </dev/console >/dev/console 2>&1
+    log 'console shell ended or unavailable; PID 1 remains alive, retrying in 5s'
+    sleep 5
+done

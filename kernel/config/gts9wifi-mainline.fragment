@@ -20,6 +20,11 @@ CONFIG_PSTORE_PMSG=y
 CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG=y
 CONFIG_MAGIC_SYSRQ=y
 CONFIG_PM_DEBUG=y
+# Preserve a panic for inspection instead of inheriting stock's immediate
+# reboot (PANIC_TIMEOUT=-1). Firmware watchdog resets are independent of this.
+CONFIG_PANIC_TIMEOUT=0
+# The boot bundle uses legacy LZ4 for both ramdisks.
+CONFIG_RD_LZ4=y
 
 # Root storage: both internal UFS and microSD must work without modules.
 CONFIG_SCSI=y

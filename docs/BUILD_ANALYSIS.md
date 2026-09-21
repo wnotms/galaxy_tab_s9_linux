@@ -1,5 +1,9 @@
 # SM-X710 mainline build: repository analysis and build report
 
+> Historical build analysis: the current ramdisk layout and boot-loop repair
+> are documented in [BOOTLOOP_FIX.md](BOOTLOOP_FIX.md). In the current bundle,
+> init_boot holds BusyBox and vendor_boot has an empty platform archive.
+
 This note records what the repository actually does, what had to be fixed before
 a flashable kernel could be produced, and what the resulting artifacts are.
 It complements `AGENT.md` (working rules) and `docs/MAINLINE_PORT_PLAN.md`

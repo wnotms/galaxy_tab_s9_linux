@@ -49,6 +49,13 @@ gts9_sec_log=0x880200000,0x200000
 
 ## Proof-of-life marker
 
+**Correction (2026-09-21):** absence of this marker is not proof that Linux
+was never entered. The current write-back marker neither cleans its cache lines
+to RAM nor updates the LOGM indices. Recovery retention is unverified on X710;
+see [boot-loop investigation](BOOTLOOP_FIX.md). The conclusions below that infer
+an exact failure boundary from absence are superseded by this qualification.
+
+
 Boot tests 1 and 2 both left the ring empty, which is consistent with two very
 different failures: the kernel never started, or it died before any console
 existed. The `gts9_sec_log=` handler therefore also writes a short marker

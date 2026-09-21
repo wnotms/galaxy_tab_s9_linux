@@ -78,8 +78,8 @@ This preserves the real shipping configuration as an auditable baseline while st
 The tablet keeps the stock Samsung ABL. The expected test bundle is Android boot header v4:
 
 - `boot.img`: mainline `Image.gz` with the board DTB appended;
-- `init_boot.img`: small/empty legacy-LZ4 generic ramdisk when the real initramfs does not fit the 8 MiB partition;
-- `vendor_boot.img`: board DTB, cmdline/bootconfig and the full platform initramfs fragment;
+- `init_boot.img`: legacy-LZ4 generic BusyBox initramfs (7 MiB build budget);
+- `vendor_boot.img`: board DTB, cmdline/bootconfig and an empty platform ramdisk;
 - `dtbo.img`: early experiments should preserve the validated appended-DTB fallback rather than assume Samsung's downstream `ufdt` accepts an upstream tree;
 - `vbmeta.img`: only alter verification state deliberately and with a recovery plan.
 

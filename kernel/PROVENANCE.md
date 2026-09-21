@@ -51,3 +51,17 @@ adaptation is carried in
 The Azkali branch head also contains invasive early-boot diagnostics in generic
 arm64/EFI/printk/init code. Those changes are retained as debugging knowledge,
 not as production patches. See `docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md`.
+
+## Boot-loop repair reference (2026-09-21)
+
+Local sibling checkout: `../ubuntu-galaxy-tab-s9-ultra`, origin
+`https://github.com/agcarbajo/ubuntu-galaxy-tab-s9-ultra`, inspected commit
+`32273b0a410b3e73b20a3a2451e24260fb2a36bd`.
+
+- `kernel/patches/ignore-console-null.patch` is copied unchanged as patch 0003.
+- `configs/vendor_boot/cmdline.txt` supplies the bring-up power-retention flags.
+- `scripts/build-android-v4-bundle.sh` supplies the generic-initramfs placement:
+  real initramfs in init_boot, empty platform archive in vendor_boot.
+
+The X710 board DTS, stock seed and Linux pin are unchanged. These common boot
+changes do not import X910 panel, touch, Wi-Fi or fingerprint hardware.

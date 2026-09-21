@@ -9,7 +9,7 @@
 #	/proc /sys /dev /tmp /run
 #
 # and then hands the tree to scripts/make-initramfs.sh, which packs it as the
-# legacy-LZ4 stream the boot chain expects and enforces the size budget.
+# legacy-LZ4 stream the boot chain expects and enforces the init_boot budget.
 #
 # The first boot test intentionally does NOT include kernel modules: every
 # provider it needs (storage, console, pinctrl, PMIC, ...) is built in, and a

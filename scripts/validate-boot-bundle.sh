@@ -5,8 +5,8 @@
 # a temporary directory, and refuses to pass unless the payload really is the
 # kernel this repository builds, the DTB really carries the Samsung ABL
 # selectors and DTBO labels, the vendor_boot really carries our cmdline,
-# bootconfig, DTB and initramfs, and that initramfs really contains an
-# executable /init plus a BusyBox.  A placeholder or truncated initramfs is a
+# bootconfig and DTB, and init_boot carries our initramfs with an executable
+# /init plus a BusyBox.  A placeholder or truncated initramfs is a
 # hard failure, because that is exactly the mistake this script exists to
 # catch.
 #
@@ -251,7 +251,7 @@ fi
 
 # --------------------------------------------------------------------------
 echo
-echo '--- vendor_boot.img: v4 header, cmdline, bootconfig, DTB, initramfs ---'
+echo '--- vendor_boot.img: v4 header, cmdline, bootconfig, DTB, platform ramdisk ---'
 # --------------------------------------------------------------------------
 vendor_ramdisk=
 if [ "$vendor_boot_ok" = 1 ]; then
@@ -313,52 +313,52 @@ if [ "$vendor_boot_ok" = 1 ]; then
     fi
 fi
 
-# --------------------------------------------------------------------------
-echo
-echo '--- initramfs: legacy LZ4, real /init and /bin/busybox ---'
-# --------------------------------------------------------------------------
-if [ -n "$vendor_ramdisk" ] && [ -s "$vendor_ramdisk" ]; then
-    magic=$(head -c4 "$vendor_ramdisk" | od -An -tx1 | tr -d ' \n')
-    if [ "$magic" = 02214c18 ]; then
-        pass 'initramfs: legacy LZ4 magic 02 21 4c 18'
-        if lz4 -d -q -f "$vendor_ramdisk" "$tmp/initramfs.cpio" 2>"$tmp/lz4.log"; then
-            if cpio -t --quiet < "$tmp/initramfs.cpio" > "$tmp/cpio.list" 2>/dev/null; then
-                entries=$(wc -l < "$tmp/cpio.list")
-                pass "initramfs: cpio archive with $entries entries"
+# Check the actual generic ramdisk, not just the presence of its filename.
+check_initramfs() {
+    local ramdisk=$1 magic entries init_line
+    if [ -n "$ramdisk" ] && [ -s "$ramdisk" ]; then
+        magic=$(head -c4 "$ramdisk" | od -An -tx1 | tr -d ' \n')
+        if [ "$magic" = 02214c18 ]; then
+            pass 'initramfs: legacy LZ4 magic 02 21 4c 18'
+            if lz4 -d -q -f "$ramdisk" "$tmp/initramfs.cpio" 2>"$tmp/lz4.log"; then
+                if cpio -t --quiet < "$tmp/initramfs.cpio" > "$tmp/cpio.list" 2>/dev/null; then
+                    entries=$(wc -l < "$tmp/cpio.list")
+                    pass "initramfs: cpio archive with $entries entries"
 
-                if grep -qxE '\.?/?init' "$tmp/cpio.list"; then
-                    pass 'initramfs: /init present'
-                    init_line=$(cpio -tv --quiet < "$tmp/initramfs.cpio" 2>/dev/null \
-                        | awk '$NF == "init" {print; exit}')
-                    case "$init_line" in
-                        -rwx*) pass 'initramfs: /init is executable' ;;
-                        '') fail 'initramfs: cannot read the /init entry' ;;
-                        *) fail "initramfs: /init is not executable ($init_line)" ;;
-                    esac
-                else
-                    fail 'initramfs: no /init (a placeholder tree must never be flashed)'
-                fi
+                    if grep -qxE '\.?/?init' "$tmp/cpio.list"; then
+                        pass 'initramfs: /init present'
+                        init_line=$(cpio -tv --quiet < "$tmp/initramfs.cpio" 2>/dev/null \
+                            | awk '$NF == "init" {print; exit}')
+                        case "$init_line" in
+                            -rwx*) pass 'initramfs: /init is executable' ;;
+                            '') fail 'initramfs: cannot read the /init entry' ;;
+                            *) fail "initramfs: /init is not executable ($init_line)" ;;
+                        esac
+                    else
+                        fail 'initramfs: no /init (a placeholder tree must never be flashed)'
+                    fi
 
-                if grep -qE '(^|/)bin/busybox$' "$tmp/cpio.list"; then
-                    pass 'initramfs: /bin/busybox present'
+                    if grep -qE '(^|/)bin/busybox$' "$tmp/cpio.list"; then
+                        pass 'initramfs: /bin/busybox present'
+                    else
+                        fail 'initramfs: no /bin/busybox'
+                    fi
                 else
-                    fail 'initramfs: no /bin/busybox'
+                    fail 'initramfs: cpio archive is not readable'
                 fi
             else
-                fail 'initramfs: cpio archive is not readable'
+                fail 'initramfs: not a valid LZ4 stream'
+                sed 's/^/      /' "$tmp/lz4.log" >&2
             fi
         else
-            fail 'initramfs: not a valid LZ4 stream'
-            sed 's/^/      /' "$tmp/lz4.log" >&2
+            fail "initramfs: magic is $magic, expected 02214c18 (legacy LZ4)"
         fi
-    else
-        fail "initramfs: magic is $magic, expected 02214c18 (legacy LZ4)"
     fi
-fi
+}
 
 # --------------------------------------------------------------------------
 echo
-echo '--- init_boot.img: empty generic ramdisk ---'
+echo '--- init_boot.img: generic BusyBox initramfs ---'
 # --------------------------------------------------------------------------
 if [ "$init_boot_ok" = 1 ]; then
     mkdir -p "$tmp/initboot"
@@ -370,30 +370,27 @@ if [ "$init_boot_ok" = 1 ]; then
             fail 'init_boot.img: not a header version 4 image'
         fi
 
-        ramdisk=$tmp/initboot/ramdisk
-        if [ -s "$ramdisk" ]; then
-            magic=$(head -c4 "$ramdisk" | od -An -tx1 | tr -d ' \n')
-            if [ "$magic" = 02214c18 ]; then
-                pass 'init_boot.img: generic ramdisk is legacy LZ4'
-                if lz4 -d -q -f "$ramdisk" "$tmp/initboot.cpio" 2>/dev/null; then
-                    entries=$(cpio -t --quiet < "$tmp/initboot.cpio" 2>/dev/null | wc -l)
-                    if [ "$entries" -le 1 ]; then
-                        pass "init_boot.img: generic ramdisk is empty ($entries entry)"
-                    else
-                        fail "init_boot.img: expected an empty ramdisk, found $entries entries"
-                    fi
-                else
-                    fail 'init_boot.img: ramdisk does not decompress'
-                fi
-            else
-                fail "init_boot.img: ramdisk magic is $magic, expected 02214c18"
-            fi
+        if [ -s "$tmp/initboot/ramdisk" ]; then
+            check_initramfs "$tmp/initboot/ramdisk"
         else
-            fail 'init_boot.img: no ramdisk'
+            fail 'init_boot.img: no generic initramfs'
         fi
+
     else
         fail 'unpack_bootimg could not parse init_boot.img'
         sed 's/^/      /' "$tmp/initboot.info" >&2
+    fi
+fi
+
+# vendor_boot is deliberately an empty platform archive. In particular it
+# must not provide another /init that could overwrite the generic one.
+if [ -n "$vendor_ramdisk" ] && [ -s "$vendor_ramdisk" ]; then
+    if lz4 -d -q -f "$vendor_ramdisk" "$tmp/platform.cpio" &&
+       cpio -t --quiet < "$tmp/platform.cpio" > "$tmp/platform.list" 2>/dev/null &&
+       ! grep -qvE '^\.?/?$' "$tmp/platform.list"; then
+        pass 'vendor_boot.img: empty platform ramdisk'
+    else
+        fail 'vendor_boot.img: platform ramdisk is not an empty archive'
     fi
 fi
 

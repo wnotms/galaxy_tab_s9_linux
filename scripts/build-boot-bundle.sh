@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 # Assemble Samsung Android boot header v4 images. This script NEVER flashes.
 #
-# APPEND_DTB=1 (default) concatenates Image.gz with the board DTB inside
-# boot.img, the layout the SM-X910 port validates. APPEND_DTB=0 keeps boot.img
-# payload pure Image.gz and lets the bootloader use the DTB it already selects
-# out of vendor_boot. Boot test 3 showed the kernel never reaching
-# setup_arch(), and the appended DTB starts at an offset equal to the Image.gz
-# size (21,805,353 bytes, not 8-byte aligned) - arm64 rejects a misaligned FDT
-# pointer outright. APPEND_DTB=0 removes that variable; it is also what the
-# stock SM-X710 boot.img does (raw kernel, no appended DTB).
+# Match the reference port: appended DTB, invalid DTBO fallback, generic
+# initramfs in init_boot and an empty platform fragment in vendor_boot.
+# APPEND_DTB=0 is retained for controlled comparison, not as an alignment fix:
+# the arm64 alignment requirement applies to the runtime x0 address, not the
+# compressed file offset. Check the address ABL actually passes in x0.
 set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
@@ -93,13 +90,13 @@ python3 "$mkbootimg" --kernel "$tmp/boot-kernel" --cmdline '' \
     -o "$out/boot.img"
 add_footer "$out/boot.img" boot "$boot_size"
 
-python3 "$mkbootimg" --ramdisk "$tmp/empty.lz4" --header_version 4 \
+python3 "$mkbootimg" --ramdisk "$tmp/initramfs.lz4" --header_version 4 \
     -o "$out/init_boot.img"
 add_footer "$out/init_boot.img" init_boot "$init_boot_size"
 
 python3 "$mkbootimg" \
     --ramdisk_type platform --ramdisk_name '' \
-    --vendor_ramdisk_fragment "$tmp/initramfs.lz4" \
+    --vendor_ramdisk_fragment "$tmp/empty.lz4" \
     --dtb "$dtb" --vendor_cmdline "$cmdline" --header_version 4 \
     --vendor_boot "$out/vendor_boot.img" \
     --base 0x80000000 --kernel_offset 0x8000 \
@@ -134,6 +131,7 @@ done
 # Machine-readable record of how the images were built, so the validator can
 # check the layout that was actually requested instead of assuming one.
 {
+    printf 'initramfs_location=init_boot\n'
     printf 'append_dtb=%s\n' "$append_dtb"
     printf 'boot_payload=%s\n' "$( [ "$append_dtb" = 1 ] && echo 'image.gz+dtb' || echo 'image.gz' )"
     printf 'image_gz_sha256=%s\n' "$(sha256sum "$image" | cut -d' ' -f1)"
