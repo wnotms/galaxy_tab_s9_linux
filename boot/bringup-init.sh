@@ -102,6 +102,87 @@ log ''
 log 'dropping to an interactive shell; nothing was written to any block device'
 log ''
 
+# ---------------------------------------------------------------------------
+# Live evidence channel: USB gadget.
+#
+# The persistent ring cannot be trusted for this bring-up: the bootloader's own
+# log occupies essentially the whole 2 MiB sec_log_buf on every boot, so
+# anything this kernel writes there can be overwritten before recovery can read
+# it.  A live channel has no such problem - if this script runs, the host sees
+# the device immediately, and if it does not, nothing appears.
+#
+# Bound to the same USB port the bootloader already leaves in device mode.
+# Failure is reported and does not stop the rest of the bring-up.
+# ---------------------------------------------------------------------------
+USB_GADGET=${GTS9_USB_GADGET:-1}
+gadget_setup=0
+
+setup_usb_gadget() {
+    [ "$USB_GADGET" = 1 ] || { log 'USB gadget disabled by GTS9_USB_GADGET'; return 0; }
+
+    if ! mount -t configfs none /sys/kernel/config 2>/dev/null; then
+        log 'WARN: configfs unavailable; cannot set up the USB gadget'
+        return 0
+    fi
+    if [ ! -d /sys/class/udc ] || [ -z "$(ls -A /sys/class/udc 2>/dev/null)" ]; then
+        log 'WARN: no USB device controller (UDC) registered'
+        return 0
+    fi
+
+    G=/sys/kernel/config/usb_gadget/gts9
+    mkdir -p "$G" 2>/dev/null || { log 'WARN: cannot create the gadget directory'; return 0; }
+    echo 0x18d1 > "$G/idVendor" 2>/dev/null
+    echo 0xd001 > "$G/idProduct" 2>/dev/null
+    echo 0x0100 > "$G/bcdDevice" 2>/dev/null
+    echo 0x0200 > "$G/bcdUSB" 2>/dev/null
+
+    mkdir -p "$G/strings/0x409"
+    echo 'Samsung' > "$G/strings/0x409/manufacturer" 2>/dev/null
+    echo 'GTS9 mainline bring-up' > "$G/strings/0x409/product" 2>/dev/null
+    echo 'gts9wifi-0001' > "$G/strings/0x409/serialnumber" 2>/dev/null
+
+    mkdir -p "$G/configs/c.1/strings/0x409"
+    echo 'bringup' > "$G/configs/c.1/strings/0x409/configuration" 2>/dev/null
+    echo 250 > "$G/configs/c.1/MaxPower" 2>/dev/null
+
+    mkdir -p "$G/functions/acm.usb0" 2>/dev/null
+    ln -sf "$G/functions/acm.usb0" "$G/configs/c.1/acm.usb0" 2>/dev/null
+
+    udc=$(ls /sys/class/udc 2>/dev/null | head -1)
+    if [ -n "$udc" ] && echo "$udc" > "$G/UDC" 2>/dev/null; then
+        gadget_setup=1
+        log "USB gadget bound to $udc (host sees a CDC-ACM serial port)"
+    else
+        log 'WARN: could not bind the USB gadget to a UDC'
+    fi
+    return 0
+}
+
+setup_usb_gadget
+
+if [ "$gadget_setup" = 1 ]; then
+    # Wait for the ACM port to appear, then mirror the kernel log onto it and
+    # hand the same port to a shell.  The host side gets live evidence either
+    # way: a port that stays silent means this script never ran.
+    i=0
+    while [ "$i" -lt 20 ] && [ ! -c /dev/ttyGS0 ]; do
+        sleep 1
+        i=$((i + 1))
+    done
+    if [ -c /dev/ttyGS0 ]; then
+        log 'streaming the kernel log to /dev/ttyGS0'
+        (
+            cat /dev/kmsg > /dev/ttyGS0 2>/dev/null
+        ) &
+        while :; do
+            /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
+            log 'usb shell ended; PID 1 remains alive, retrying in 5s'
+            sleep 5
+        done
+    fi
+    log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
+fi
+
 # PID 1 must survive EOF, an unavailable UART and a user's "exit". Replacing
 # init with a shell makes all of those cases panic (Attempted to kill init!).
 # Reopen the console after devtmpfs has been mounted; /dev/console may not

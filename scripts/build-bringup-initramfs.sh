@@ -56,7 +56,7 @@ done
 
 # Applets the bring-up shell must have.  Anything missing here is a build
 # failure, because the first boot test depends on it.
-required_applets='sh mount umount cat echo dmesg uname ls mkdir sleep reboot poweroff'
+required_applets='sh mount umount cat echo dmesg uname ls mkdir ln sleep reboot poweroff'
 # Convenience applets; missing ones are reported and skipped, not fatal.
 optional_applets='lsmod insmod modprobe rmmod mdev switch_root head tail grep cut tr wc sort sed awk find printf test [ true false date uptime free ps kill sync hexdump od gunzip tar modinfo nproc clear vi less more halt'
 # Applets that belong in /sbin rather than /bin.
