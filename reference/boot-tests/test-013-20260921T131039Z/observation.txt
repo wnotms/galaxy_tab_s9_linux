@@ -1,0 +1,9 @@
+2026-09-21T13:10:46Z reboot to system requested (test 013 telemetry: time the power-off)
+adb reboot exit=0
+2026-09-21T13:10:46Z reboot to system; owner timed the automatic power-off
+2026-09-21T13:12Z owner: "powered off after about 60-70 seconds", then rebooted into TWRP
+=> delay 60-70s decodes to code 4 or 5: udc=YES (USB controller enumerated),
+   scsi=NO (no UFS/SCSI disk), mmc=uncertain (bit 0).
+=> USB controller came up (TCSRCC fix worked) but the host never saw a gadget
+   (usb-monitor.log from the previous monitor run shows no VID_0525&PID_A4A7),
+   and mainline UFS does not enumerate.

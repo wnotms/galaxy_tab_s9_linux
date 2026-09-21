@@ -1,0 +1,9 @@
+=== 2026-09-21T13:01:00Z test 011: TCSRCC fix, USB gadget expected ===
+D:\android\gts9-test011\boot.img: 1 file pushed, 0 skipped. 113.6 MB/s (100663296 bytes in 0.845s)
+=== on-device hash ===
+57a973a700ede9895d2ac560badd2b1d6fce4d32a6516f8eab7328016efab841  /tmp/gts9-test011-boot.img
+expected: 57a973a700ede9895d2ac560badd2b1d6fce4d32a6516f8eab7328016efab841
+=== write ===
+100663296 bytes (96 M) copied, 0.234967 s, 409 M/s
+=== read-back ===
+57a973a700ede9895d2ac560badd2b1d6fce4d32a6516f8eab7328016efab841  /dev/block/by-name/boot

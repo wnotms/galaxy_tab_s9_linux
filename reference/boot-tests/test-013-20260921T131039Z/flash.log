@@ -1,0 +1,13 @@
+=== 2026-09-21T13:10:41Z test 013 telemetry ===
+--- init_boot ---
+D:\android\gts9-test013\init_boot.img: 1 file pushed, 0 skipped. 241.4 MB/s (8388608 bytes in 0.033s)
+2d1cad6be04bf15a96a117cc89300f6bab1fde4787607cd0795018c3c4b44ddd  /tmp/gts9-test013-init_boot.img
+expected: 2d1cad6be04bf15a96a117cc89300f6bab1fde4787607cd0795018c3c4b44ddd
+8388608 bytes (8.0 M) copied, 0.021147 s, 378 M/s
+2d1cad6be04bf15a96a117cc89300f6bab1fde4787607cd0795018c3c4b44ddd  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test013\vendor_boot.img: 1 file pushed, 0 skipped. 773.0 MB/s (100663296 bytes in 0.124s)
+197ec0fee70ca6f8c00cda86be68c48be848accb46da68f9167a023b5d8c77f8  /tmp/gts9-test013-vendor_boot.img
+expected: 197ec0fee70ca6f8c00cda86be68c48be848accb46da68f9167a023b5d8c77f8
+100663296 bytes (96 M) copied, 0.224263 s, 428 M/s
+197ec0fee70ca6f8c00cda86be68c48be848accb46da68f9167a023b5d8c77f8  /dev/block/by-name/vendor_boot

@@ -1444,6 +1444,14 @@
 };
 
 &usb_1 {
+	/*
+	 * Force the peripheral role.  The Type-C port is managed by an SM5714 PD
+	 * controller that has no mainline driver, so there is no role switch and
+	 * no extcon to move dwc3 out of its OTG default: the core probes, exposes
+	 * a UDC, and never enables the port.  Test 013 measured exactly that - a
+	 * UDC present in /sys/class/udc while the host saw no device at all.
+	 */
+	dr_mode = "peripheral";
 	status = "okay";
 };
 

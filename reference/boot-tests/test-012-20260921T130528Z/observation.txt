@@ -1,0 +1,6 @@
+2026-09-21T13:06:11Z reboot to system requested (test 012: SD report, proof_if=report, no auto-reboot expected unless the report was written)
+adb reboot exit=0
+2026-09-21T13:07:30Z owner: tablet stayed on the logo and did not power off
+=> conditional proof suppressed => the bring-up report was NOT written to any
+   removable storage => microSD did not come up in the mainline kernel.
+No ring capture is meaningful for this test (test 007) and none was taken.

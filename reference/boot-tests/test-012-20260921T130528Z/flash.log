@@ -1,0 +1,13 @@
+=== 2026-09-21T13:05:36Z test 012: SD report + conditional proof ===
+--- init_boot ---
+D:\android\gts9-test012\init_boot.img: 1 file pushed, 0 skipped. 323.6 MB/s (8388608 bytes in 0.025s)
+cc8a77007a050cffd3707a2ddc9f493733f234bbd8b0f6aa3aa11c9787db7c58  /tmp/gts9-test012-init_boot.img
+expected: cc8a77007a050cffd3707a2ddc9f493733f234bbd8b0f6aa3aa11c9787db7c58
+8388608 bytes (8.0 M) copied, 0.020486 s, 391 M/s
+cc8a77007a050cffd3707a2ddc9f493733f234bbd8b0f6aa3aa11c9787db7c58  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test012\vendor_boot.img: 1 file pushed, 0 skipped. 794.7 MB/s (100663296 bytes in 0.121s)
+09dd8667f03b9fab78c1d78466c2daa6bbc31cde33db1e060de2cd9f669a0082  /tmp/gts9-test012-vendor_boot.img
+expected: 09dd8667f03b9fab78c1d78466c2daa6bbc31cde33db1e060de2cd9f669a0082
+100663296 bytes (96 M) copied, 0.228291 s, 421 M/s
+09dd8667f03b9fab78c1d78466c2daa6bbc31cde33db1e060de2cd9f669a0082  /dev/block/by-name/vendor_boot
