@@ -46,10 +46,32 @@ required=(
     CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI CONFIG_SERIAL_QCOM_GENI_CONSOLE
     CONFIG_BLK_DEV_INITRD CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
     CONFIG_MMC_SDHCI_MSM CONFIG_EXT4_FS CONFIG_PSTORE CONFIG_PSTORE_RAM
+    # SM8550 early-boot providers: without these the board DTS nodes have no
+    # driver at all, because their parent menuconfigs are not part of the
+    # 5.15 Android seed (see the fragment's bring-up section).
+    CONFIG_PINCTRL_MSM CONFIG_PINCTRL_SM8550 CONFIG_PINCTRL_QCOM_SPMI_PMIC
+    CONFIG_PHY_QCOM_QMP CONFIG_PHY_QCOM_QMP_UFS
+    CONFIG_PHY_QCOM_QMP_PCIE CONFIG_PHY_QCOM_QMP_COMBO
+    CONFIG_SPMI_MSM_PMIC_ARB CONFIG_MFD_SPMI_PMIC
+    CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
+    CONFIG_VT CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE
 )
 for sym in "${required[@]}"; do
     if ! grep -qx "$sym=y" "$build_dir/.config"; then
         echo "required Kconfig symbol is not built-in: $sym" >&2
+        exit 1
+    fi
+done
+
+# Radio/transport support stays modular, but a silently dropped module is a
+# config regression just like a dropped built-in.
+required_m=(
+    CONFIG_CFG80211 CONFIG_MAC80211 CONFIG_ATH11K CONFIG_ATH11K_PCI
+    CONFIG_BT CONFIG_BT_HCIUART CONFIG_BT_QCA
+)
+for sym in "${required_m[@]}"; do
+    if ! grep -qx "$sym=m" "$build_dir/.config"; then
+        echo "required Kconfig symbol is not modular: $sym" >&2
         exit 1
     fi
 done
