@@ -11,12 +11,17 @@ on:
     paths:
       - 'kernel/**'
       - 'scripts/**'
+      - 'boot/**'
       - '.github/workflows/kernel.yml'
 
 jobs:
   kernel:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
+    env:
+      # Modules are part of the artifact the packaging job consumes, so a push
+      # build produces them too. workflow_dispatch can still opt out.
+      BUILD_MODULES: ${{ github.event_name == 'push' && '1' || (inputs.build_modules && '1' || '0') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -31,12 +36,29 @@ jobs:
       - name: Validate shell scripts
         run: bash -n scripts/*.sh
 
+      - name: Report host dependencies
+        run: ./scripts/check-build-deps.sh || true
+
       - name: Build pinned mainline kernel
         env:
-          BUILD_MODULES: ${{ inputs.build_modules && '1' || '0' }}
           CCACHE_DIR: ${{ github.workspace }}/.ccache
           KERNEL_CLEAN: '1'
         run: ./scripts/build-kernel.sh
+
+      - name: Verify the artifact set
+        if: env.BUILD_MODULES == '1'
+        run: |
+          set -e
+          cd out/kernel-gts9wifi
+          for f in Image.gz sm8550-samsung-gts9wifi.dtb config kernel.release SHA256SUMS; do
+            test -s "$f" || { echo "missing artifact: $f" >&2; exit 1; }
+          done
+          test -d modules-root || { echo 'missing modules-root' >&2; exit 1; }
+          test -n "$(find modules-root -name '*.ko' -print -quit)" || {
+            echo 'modules-root contains no modules' >&2; exit 1; }
+          sha256sum -c SHA256SUMS
+          echo "release: $(cat kernel.release)"
+          echo "modules: $(find modules-root -name '*.ko' | wc -l)"
 
       - name: Upload kernel artifacts
         uses: actions/upload-artifact@v4
@@ -44,3 +66,74 @@ jobs:
           name: gts9wifi-mainline-kernel
           path: out/kernel-gts9wifi/
           if-no-files-found: error
+
+  # Host-side packaging smoke test. This proves the images assemble and pass
+  # the validator; it is NOT evidence that the tablet boots, and must never be
+  # reported as such.
+  packaging:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    needs: kernel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install packaging dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            python3 curl ca-certificates lz4 cpio dpkg binutils \
+            device-tree-compiler coreutils
+
+      - name: Download the kernel artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: gts9wifi-mainline-kernel
+          path: out/kernel-gts9wifi
+
+      - name: Validate shell scripts
+        run: bash -n scripts/*.sh
+
+      - name: Stage the pinned AOSP tools
+        run: ./scripts/stage-android-tools.sh
+
+      - name: Build the BusyBox bring-up initramfs
+        run: ./scripts/build-bringup-initramfs.sh
+
+      - name: Assemble the Android boot v4 bundle
+        env:
+          MKBOOTIMG: ${{ github.workspace }}/.work/tools/mkbootimg.py
+          AVBTOOL: ${{ github.workspace }}/.work/tools/avbtool.py
+        run: |
+          ./scripts/build-boot-bundle.sh \
+            --initramfs out/boot-bundle/initramfs-bringup.img \
+            --cmdline boot/cmdline.example.txt \
+            --bootconfig boot/bootconfig.example.txt
+
+      - name: Validate the bundle
+        run: ./scripts/validate-boot-bundle.sh | tee out/boot-bundle/validation.txt
+
+      - name: Summarise
+        if: always()
+        run: |
+          {
+            echo '## Packaging smoke test'
+            echo
+            echo 'Images assembled and validated on a host. This is **not** a'
+            echo 'device boot result: nothing was flashed and no tablet was involved.'
+            echo
+            if [ -f out/boot-bundle/validation.txt ]; then
+              echo '```'
+              tail -60 out/boot-bundle/validation.txt
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload packaging evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gts9wifi-boot-bundle-evidence
+          path: |
+            out/boot-bundle/validation.txt
+            out/boot-bundle/SHA256SUMS
+          if-no-files-found: warn
