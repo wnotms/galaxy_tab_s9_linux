@@ -386,6 +386,29 @@ setup_usb_gadget
 # helper's definition.
 publish_misc_device
 
+# Clear a bootloader control block left over from an earlier recovery request.
+#
+# The BCB is what sends the tablet back to TWRP, and nothing on this device
+# clears it afterwards: TWRP's own cmdline still carried androidboot.boot_recovery=1
+# in test 035 after a `gts9-to-recovery` boot.  A stale block therefore drags the
+# next boot into recovery too.  Reaching this line already means we are booting
+# mainline, so the block has served its purpose either way; clearing it here
+# keeps one request to one boot.
+clear_stale_bcb() {
+    pdev=$(cat /tmp/gts9-misc-dev 2>/dev/null)
+    [ -b "$pdev" ] || return 0
+    head=$(timeout 5 dd if="$pdev" bs=1 count=16 2>/dev/null | tr -d '\0')
+    [ "$head" = boot-recovery ] || return 0
+    timeout 10 dd if=/dev/zero of="$pdev" bs=2048 count=1 conv=notrunc 2>/dev/null || {
+        log "WARN: could not clear the stale BCB in $pdev"
+        return 0
+    }
+    sync
+    log "cleared a stale recovery BCB in $pdev (one request, one boot)"
+    return 0
+}
+clear_stale_bcb
+
 # ---------------------------------------------------------------------------
 # Reporting through the RTC.
 #

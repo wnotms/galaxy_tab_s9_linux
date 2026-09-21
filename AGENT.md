@@ -110,9 +110,18 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   button, no owner.  Bulk transfers are therefore fine; the CDC-ACM function is
   what fails (the host sees its control interface and never its data interface),
   so a serial console is a gadget-side fix rather than a PHY problem.
-- Known blocker on the way: an SPMI *write* blocks this kernel uninterruptibly,
+- Known blockers on the way: an SPMI *write* blocks this kernel uninterruptibly,
   so `reboot recovery` through the SDAM and the RTC state word are both out until
-  it is understood.  The BCB path (a UFS write) replaces the former.
+  it is understood - the BCB path (a UFS write) replaces the former.  Nothing on
+  this device clears that BCB afterwards (TWRP's cmdline still said
+  `androidboot.boot_recovery=1` after a `gts9-to-recovery` boot), so `/init` now
+  clears a stale block on every mainline boot: one request, one boot.  Reaching
+  mainline at all means the request was served, so this is safe by construction.
+- USB re-enumeration is marginal: the gadget comes up on most boots, but test 035
+  lost it after a DSI host rebind under a live DRM master, and Windows then
+  reported a failed device-descriptor request (code 43).  Do not rebind the DSI
+  host while DRM holds it; a real suspend/resume is the documented recovery for
+  the panel's cold-boot state.
 - The generic initramfs lives in **init_boot**, so include init_boot whenever the
   new bundle differs from the flashed version. `gts9_userspace_proof=<seconds>`
   stays an opt-in in the initramfs (it powers the tablet off by itself) and is
