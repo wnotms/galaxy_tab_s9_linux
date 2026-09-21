@@ -1,0 +1,23 @@
+=== 2026-09-21T12:49:13Z push init_boot.img (USB gadget initramfs) ===
+D:\android\gts9-test008\init_boot.img: 1 file pushed, 0 skipped. 245.4 MB/s (8388608 bytes in 0.033s)
+=== on-device hash ===
+3bfa2c57f5ce2cf115a3461fa02d504f7583d950e9feaa07f043134c9f09fd7a  /tmp/gts9-test008-init_boot.img
+expected: 3bfa2c57f5ce2cf115a3461fa02d504f7583d950e9feaa07f043134c9f09fd7a
+=== write ===
+8+0 records in
+8+0 records out
+8388608 bytes (8.0 M) copied, 0.041461 s, 193 M/s
+=== read-back ===
+3bfa2c57f5ce2cf115a3461fa02d504f7583d950e9feaa07f043134c9f09fd7a  /dev/block/by-name/init_boot
+=== 2026-09-21T12:50:05Z corrected gadget IDs (0525:a4a7); re-push init_boot ===
+D:\android\gts9-test008\init_boot.img: 1 file pushed, 0 skipped. 200.4 MB/s (8388608 bytes in 0.040s)
+=== push corrected image ===
+D:\android\gts9-test008\init_boot.img: 1 file pushed, 0 skipped. 355.4 MB/s (8388608 bytes in 0.023s)
+=== on-device hash ===
+fc65e8da2703fb28068225047f17e1c46d4116ea8986adebb1d09a08248b42c7  /tmp/gts9-test008-init_boot.img
+expected: fc65e8da2703fb28068225047f17e1c46d4116ea8986adebb1d09a08248b42c7
+=== write ===
+8+0 records out
+8388608 bytes (8.0 M) copied, 0.042117 s, 190 M/s
+=== read-back ===
+fc65e8da2703fb28068225047f17e1c46d4116ea8986adebb1d09a08248b42c7  /dev/block/by-name/init_boot
