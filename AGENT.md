@@ -68,10 +68,29 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 
 ## Current direction and physical-test workflow (owner instruction, 2026-09-21)
 
-- First test the repair built from `89a6601` (see `docs/BOOTLOOP_FIX.md`):
-  prove `ABL -> Linux -> persistent console -> BusyBox /init` before expanding
-  hardware support. The generic initramfs now lives in **init_boot**, so include
-  init_boot whenever the new bundle differs from the flashed version.
+- **Milestone reached (test 010, `reference/boot-tests/test-010-.../`): the
+  owner watched the tablet power itself off while running this port's kernel.**
+  `ABL -> mainline Linux -> BusyBox /init` is therefore established on hardware.
+  A hung kernel cannot power a tablet off and `panic=0` removes the only way it
+  could fake it. Everything below applies to work *beyond* that chain.
+- The "stuck on the Samsung logo" state is a **running initramfs** waiting on a
+  console that does not exist (no panel driver, unreachable UART, and a
+  `console=null` the bootloader appends). Do not read it as a kernel failure.
+- **Do not use the sec_log ring as evidence.** Test 007 measured the
+  bootloader's own log spanning 2,096,187 of the 2,097,136 bytes of
+  `sec_log_buf`, so mainline writes are overwritten before recovery can read
+  them. An empty ring proves nothing. Live channels (USB, once it probes) or
+  physical observation are the evidence paths.
+- Next milestones, in order: **storage** (UFS, microSD) as the prerequisite for
+  a root filesystem, then the **USB rescue channel**, whose blockers are already
+  known: `88e3000.phy` (eUSB2), then `1fc0000.clock-controller`, then
+  `a600000.usb` - see `reference/boot-tests/owner-supplied-july-kernel/`. USB
+  also restores a live log channel, which this port still needs.
+- The generic initramfs lives in **init_boot**, so include init_boot whenever the
+  new bundle differs from the flashed version. `gts9_userspace_proof=<seconds>`
+  stays an opt-in in the initramfs (it powers the tablet off by itself) and is
+  deliberately absent from `boot/cmdline.example.txt`; re-add it to reproduce
+  test 010.
 - The owner explicitly requested flashing this candidate and collecting logs.
   This authorizes a controlled TWRP/adb test of boot, init_boot, vendor_boot and
   the documented dtbo fallback after validating the bundle, device identity,
@@ -81,7 +100,9 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 - Start log capture before reboot. Observe for 60–90 seconds, then return to
   recovery and capture immediately. If adb is absent, ask the owner for the
   physical observation/recovery key action; absence of adb is expected with
-  this minimal initramfs and does not establish a crash.
+  this minimal initramfs and does not establish a crash. When a test's signal is
+  a physical action (power off, reset, screen change), say so and let the owner
+  watch instead of asking for a key combination.
 - **Every subsequent physical test must have a committed log directory** under
   `reference/boot-tests/test-NNN-YYYYMMDDTHHMMSSZ/`, including failed or aborted
   attempts. Save raw last_kmsg, available pstore, recovery dmesg (labelled as
