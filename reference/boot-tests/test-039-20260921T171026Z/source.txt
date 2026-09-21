@@ -1,0 +1,4 @@
+kernel_source_commit=1093fec248a1190b90008bba05cceef364167d55
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+hypothesis=the picture is arriving but not decoding: with DSC disabled and the 60 Hz mode preferred, the frame crosses the link as plain 24 bpp RGB (about 1.5 Gbps per lane), which isolates the compression path from the transfer. If the console then reads correctly, the fault is the panel's DSC setup - whose DCS sequence came from the SM-X910 port because the SM-X710 stock DTBO carries only unresolvable Samsung macros.
+started_utc=2026-09-21T17:10:26Z

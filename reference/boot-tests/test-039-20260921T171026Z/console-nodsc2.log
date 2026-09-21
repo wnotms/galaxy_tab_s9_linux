@@ -1,0 +1,9 @@
+2026-09-21T17:13:59Z console open on COM17
+2026-09-21T17:14:02Z SENT  echo "ctl=$(dmesg | grep -c "ctl start") vblank=$(dmesg | grep -c "vblank wait timed out")"; dmesg | grep "ana38407 panel id" | tail -2; printf "\033[42m\033[2J\033[30m\n   GTS9 NO-DSC TEST : readable text here means DSC was the fault\n\n" > /dev/tty0; (i=0; while [ $i -lt 40 ]; do echo 1 > /sys/class/graphics/fb0/blank; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 6; i=$((i+1)); done) & echo cycles-started
+2026-09-21T17:14:02Z RECV  echo "ctl=$(dmesg | grep -c "ctl start") vblank=$(dmesg | grep -c "vblank wait
+2026-09-21T17:14:02Z RECV   timed out")"; dmesg | grep "ana38407 panel id" | tail -2; printf "\033[42m\033[
+2026-09-21T17:14:02Z RECV  2J\033[30m\n   GTS9 NO-DSC TEST : readable text here means DSC was the fault\n\n
+2026-09-21T17:14:02Z RECV  " > /dev/tty0; (i=0; while [ $i -lt 40 ]; do echo 1 > /sys/class/graphics/fb0/bl
+2026-09-21T17:14:02Z RECV  ank; sleep 1; echo 0 > /sys/class/graphics/fb0/blank; sleep 6; i=$((i+1)); done)
+2026-09-21T17:14:02Z RECV   & echo cycles-started
+2026-09-21T17:14:11Z console session done

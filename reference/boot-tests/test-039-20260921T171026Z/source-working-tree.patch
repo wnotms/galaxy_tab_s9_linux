@@ -1,0 +1,106 @@
+diff --git a/kernel/drivers/panel-samsung-ana38407.c b/kernel/drivers/panel-samsung-ana38407.c
+index 027ee6b..31ea154 100644
+--- a/kernel/drivers/panel-samsung-ana38407.c
++++ b/kernel/drivers/panel-samsung-ana38407.c
+@@ -50,6 +50,23 @@
+ #define ANA38407_FOD_WATCHDOG_MS	15000
+ #define ANA38407_FOD_SETTLE_MS		35
+ 
++/*
++ * EXPERIMENT (test 039): DSC is off by default in this build.  The panel
++ * receives frames - the owner sees the console text collapsed into a few faint
++ * lines - but the picture only decodes partially, and the suspicion is the
++ * DDIC's own DSC setup: the stock SM-X710 DTBO carries no DCS sequence at all
++ * (its on-command string is Samsung macros this port cannot read), so the
++ * compression registers here come from the SM-X910's panel.  With DSC off the
++ * frame goes over the link as plain 24 bpp RGB, exactly as the DDIC sees it in
++ * any non-compressed configuration, which isolates the compression path from
++ * everything else.  It has to be a built-time default because the msm DSI host
++ * reads dsi->dsc once, at attach time, before any module parameter could be
++ * changed at runtime.
++ */
++static bool dsc;
++module_param(dsc, bool, 0644);
++MODULE_PARM_DESC(dsc, "Drive the panel with DSC compression (the stock configuration)");
++
+ /* Revision D, as read back by the bootloader (lcd_id=0x800004). */
+ static const u8 ana38407_expected_id[3] = { 0x80, 0x00, 0x04 };
+ 
+@@ -392,13 +409,16 @@ static int ana38407_on(struct ana38407 *ctx)
+ 	 * DSC: enable compression and send the Picture Parameter Set as a proper
+ 	 * MIPI PPS packet generated from drm_dsc_config (this is how mainline
+ 	 * command-mode DSC panels do it; a hand-rolled DCS 0x0A long write is the
+-	 * wrong packet type).
++	 * wrong packet type).  Skipped entirely when the dsc parameter is off, so
++	 * that the DDIC expects plain RGB and the DSI host sends it.
+ 	 */
+-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
+-	mipi_dsi_compression_mode_multi(&dsi_ctx, true);
+-	drm_dsc_pps_payload_pack(&pps, &ctx->dsc);
+-	mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
+-	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
++	if (dsc) {
++		mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0x5a, 0x5a);
++		mipi_dsi_compression_mode_multi(&dsi_ctx, true);
++		drm_dsc_pps_payload_pack(&pps, &ctx->dsc);
++		mipi_dsi_picture_parameter_set_multi(&dsi_ctx, &pps);
++		mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf0, 0xa5, 0xa5);
++	}
+ 
+ 	/* DIA_SETTING (digital image adjust on) */
+ 	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0x91, 0x02);
+@@ -556,20 +576,17 @@ out_unlock:
+ 	return ret ?: cleanup_ret;
+ }
+ 
+-/* All five timing modes from the stock DTBO, hactive/vactive 2960x1848. */
+ /*
+  * Timings from this tablet's stock DTBO: wqxga120hs and wqxga60hs, hfp/hsync/hbp
+- * and vfp/vsync/vbp in that order as DRM expects them.  The 120 Hz set is the
+- * panel's native rate and is preferred.
++ * and vfp/vsync/vbp in that order as DRM expects them.
++ *
++ * EXPERIMENT (test 039): the 60 Hz set is listed first so that a build without
++ * DSC drives the link at a rate that can carry 24 bpp uncompressed - 2560x1600
++ * x24x60 is about 5.9 Gbps, roughly 1.5 Gbps per lane, the same order as the
++ * SM-X910's working DSC link.  At 120 Hz uncompressed it would need three times
++ * that and the DSI would underrun.
+  */
+ static const struct drm_display_mode ana38407_modes[] = {
+-	{	/* 120 Hz */
+-		.clock = (2560 + 34 + 64 + 34) * (1600 + 42 + 64 + 32) * 120 / 1000,
+-		.hdisplay = 2560, .hsync_start = 2560 + 34, .hsync_end = 2560 + 34 + 64,
+-		.htotal = 2560 + 34 + 64 + 34,
+-		.vdisplay = 1600, .vsync_start = 1600 + 42, .vsync_end = 1600 + 42 + 64,
+-		.vtotal = 1600 + 42 + 64 + 32,
+-	},
+ 	{	/* 60 Hz */
+ 		.clock = (2560 + 128 + 512 + 203) * (1600 + 127 + 512 + 257) * 60 / 1000,
+ 		.hdisplay = 2560, .hsync_start = 2560 + 128, .hsync_end = 2560 + 128 + 512,
+@@ -577,6 +594,13 @@ static const struct drm_display_mode ana38407_modes[] = {
+ 		.vdisplay = 1600, .vsync_start = 1600 + 127, .vsync_end = 1600 + 127 + 512,
+ 		.vtotal = 1600 + 127 + 512 + 257,
+ 	},
++	{	/* 120 Hz */
++		.clock = (2560 + 34 + 64 + 34) * (1600 + 42 + 64 + 32) * 120 / 1000,
++		.hdisplay = 2560, .hsync_start = 2560 + 34, .hsync_end = 2560 + 34 + 64,
++		.htotal = 2560 + 34 + 64 + 34,
++		.vdisplay = 1600, .vsync_start = 1600 + 42, .vsync_end = 1600 + 42 + 64,
++		.vtotal = 1600 + 42 + 64 + 32,
++	},
+ };
+ 
+ static int ana38407_get_modes(struct drm_panel *panel,
+@@ -926,8 +950,10 @@ static int ana38407_probe(struct mipi_dsi_device *dsi)
+ 
+ 	drm_panel_add(&ctx->panel);
+ 
+-	ana38407_dsc_config(ctx);
+-	dsi->dsc = &ctx->dsc;
++	if (dsc) {
++		ana38407_dsc_config(ctx);
++		dsi->dsc = &ctx->dsc;
++	}
+ 
+ 	ret = mipi_dsi_attach(dsi);
+ 	if (ret < 0) {

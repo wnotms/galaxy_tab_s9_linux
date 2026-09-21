@@ -1,0 +1,10 @@
+=== flash test 039 (boot only; init_boot and vendor_boot unchanged) ===
+--- boot ---
+D:\android\gts9-test039\boot.img: 1 file pushed, 0 skipped. 75.1 MB/s (100663296 bytes in 1.279s)
+expected: 69ed370a648457041e812911d8a52aba7d1b5e8ab9d72c239adfd35c98139983
+24576+0 records out
+100663296 bytes (96 M) copied, 0.341655 s, 281 M/s
+69ed370a648457041e812911d8a52aba7d1b5e8ab9d72c239adfd35c98139983  /dev/block/by-name/boot
+--- verify untouched partitions ---
+417cf0706a9be83223ec33a1a8093f8b7d0941ed003460d28700c00a308c4707  /dev/block/by-name/init_boot
+c1749463bffdaddc816cba5584dfd6fe9a98c4b747db802c8e9d28f5ce07de49  /dev/block/by-name/vendor_boot
