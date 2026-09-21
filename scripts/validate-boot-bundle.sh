@@ -70,7 +70,22 @@ command -v cpio >/dev/null || { echo 'cpio is required' >&2; exit 2; }
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
+# How was this bundle built? BUNDLE_INFO is written by build-boot-bundle.sh;
+# without it, assume the historical layout (appended DTB).
+append_dtb=1
+if [ -f "$bundle_dir/BUNDLE_INFO" ]; then
+    case $(sed -n 's/^append_dtb=//p' "$bundle_dir/BUNDLE_INFO" | head -1) in
+        0) append_dtb=0 ;;
+        1) append_dtb=1 ;;
+    esac
+fi
+
 echo "validating bundle: $bundle_dir"
+if [ "$append_dtb" = 1 ]; then
+    echo 'layout: Image.gz + appended board DTB in boot.img'
+else
+    echo 'layout: Image.gz only in boot.img; DTB from vendor_boot'
+fi
 echo
 
 # --------------------------------------------------------------------------
@@ -108,9 +123,42 @@ if check_image vendor_boot.img "$vendor_boot_size"; then vendor_boot_ok=1; fi
 if check_image dtbo.img "$dtbo_size"; then dtbo_ok=1; fi
 if check_image vbmeta.img "$vbmeta_size"; then vbmeta_ok=1; fi
 
+# Board selectors and ABL labels that must be present in whatever tree the
+# tablet actually boots from.
+check_board_dtb() {
+    # check_board_dtb <dtb> <label>
+    local dtb=$1 label=$2 out=$tmp/board-$(basename "$1").dts
+    if ! dtc -I dtb -O dts -o "$out" "$dtb" 2>"$tmp/dtc.log"; then
+        fail "$label does not decompile"
+        sed 's/^/      /' "$tmp/dtc.log" >&2
+        return
+    fi
+    local name pattern
+    while IFS='|' read -r name pattern; do
+        [ -n "$name" ] || continue
+        if grep -qE "$pattern" "$out"; then
+            pass "$label: $name"
+        else
+            fail "$label: $name is missing"
+        fi
+    done <<'CHECKS'
+model is the SM-X710 tablet|model = "Samsung Galaxy Tab S9 Wi-Fi"
+ABL compatible selectors|compatible = "qcom,kalama-mtp", "qcom,kalama", "qcom,mtp"
+qcom,board-id = <0x10008 0x04>|qcom,board-id = <0x10008 0x04>
+qcom,msm-id pairs|qcom,msm-id = <0x218 0x20000 0x207 0x20000 0x207 0x10000 0x218 0x10000>
+__symbols__/qcom_tzlog|qcom_tzlog = "/chosen"
+__symbols__/arch_timer|arch_timer = "/timer"
+__symbols__/qcom_scm|qcom_scm = "/firmware/scm"
+CHECKS
+}
+
 # --------------------------------------------------------------------------
 echo
-echo '--- boot.img: v4 header, gzip kernel, appended DTB ---'
+if [ "$append_dtb" = 1 ]; then
+    echo '--- boot.img: v4 header, gzip kernel, appended DTB ---'
+else
+    echo '--- boot.img: v4 header, gzip kernel (no appended DTB) ---'
+fi
 # --------------------------------------------------------------------------
 if [ "$boot_ok" = 1 ]; then
     mkdir -p "$tmp/boot"
@@ -127,9 +175,9 @@ if [ "$boot_ok" = 1 ]; then
         else
             pass "boot.img: kernel payload $(stat -c %s "$tmp/boot/kernel") bytes"
             if python3 - "$tmp/boot/kernel" "$tmp/boot/Image" "$tmp/boot/appended.dtb" \
-                    2> "$tmp/payload.log" <<'PY'
+                    "$append_dtb" 2> "$tmp/payload.log" <<'PY'
 import sys, zlib
-payload, image_out, dtb_out = sys.argv[1:4]
+payload, image_out, dtb_out, want_dtb = sys.argv[1:5]
 data = open(payload, 'rb').read()
 if data[:2] != b'\x1f\x8b':
     sys.exit('kernel payload is not gzip')
@@ -145,12 +193,20 @@ open(image_out, 'wb').write(image)
 open(dtb_out, 'wb').write(tail)
 if image[56:60] != b'ARM\x64':
     sys.exit('payload is not an arm64 Linux Image')
-if tail[:4] != b'\xd0\x0d\xfe\xed':
-    sys.exit('no appended DTB with a valid FDT magic')
+if want_dtb == '1':
+    if tail[:4] != b'\xd0\x0d\xfe\xed':
+        sys.exit('no appended DTB with a valid FDT magic')
+else:
+    if tail:
+        sys.exit(f'payload has {len(tail)} trailing bytes after the gzip stream')
 PY
             then
                 pass "boot.img: valid gzip arm64 Image ($(stat -c %s "$tmp/boot/Image") bytes)"
-                pass "boot.img: appended DTB present ($(stat -c %s "$tmp/boot/appended.dtb") bytes)"
+                if [ "$append_dtb" = 1 ]; then
+                    pass "boot.img: appended DTB present ($(stat -c %s "$tmp/boot/appended.dtb") bytes)"
+                else
+                    pass 'boot.img: no trailing data after the gzip stream (DTB comes from vendor_boot)'
+                fi
             else
                 fail 'boot.img: kernel payload or appended DTB is not valid'
                 if [ -s "$tmp/payload.log" ]; then
@@ -163,43 +219,32 @@ PY
         sed 's/^/      /' "$tmp/boot.info" >&2
     fi
 
-    if [ -s "$tmp/boot/appended.dtb" ]; then
-        if dtc -I dtb -O dts -o "$tmp/appended.dts" "$tmp/boot/appended.dtb" 2>"$tmp/dtc.log"; then
-            check_dts() {
-                # check_dts <description> <pattern>
-                if grep -qE "$2" "$tmp/appended.dts"; then
-                    pass "DTB: $1"
-                else
-                    fail "DTB: $1 is missing"
-                fi
-            }
-            check_dts 'model is the SM-X710 tablet' 'model = "Samsung Galaxy Tab S9 Wi-Fi"'
-            check_dts 'ABL compatible selectors' 'compatible = "qcom,kalama-mtp", "qcom,kalama", "qcom,mtp"'
-            check_dts 'qcom,board-id = <0x10008 0x04>' 'qcom,board-id = <0x10008 0x04>'
-            check_dts 'qcom,msm-id pairs' 'qcom,msm-id = <0x218 0x20000 0x207 0x20000 0x207 0x10000 0x218 0x10000>'
-            check_dts '__symbols__/qcom_tzlog' 'qcom_tzlog = "/chosen"'
-            check_dts '__symbols__/arch_timer' 'arch_timer = "/timer"'
-            check_dts '__symbols__/qcom_scm' 'qcom_scm = "/firmware/scm"'
-        else
-            fail 'DTB: appended device tree does not decompile'
-            sed 's/^/      /' "$tmp/dtc.log" >&2
-        fi
+    if [ "$append_dtb" = 1 ] && [ -s "$tmp/boot/appended.dtb" ]; then
+        check_board_dtb "$tmp/boot/appended.dtb" 'appended DTB'
     fi
 
     # The strongest statement this validator can make about the kernel: the
-    # payload is exactly Image.gz || board DTB from the build output.
+    # payload is exactly what the build produced for the requested layout.
     if [ -n "$expect_kernel" ] && [ -s "$tmp/boot/kernel" ] \
        && [ -f "$expect_kernel/Image.gz" ] && [ -f "$expect_kernel/sm8550-samsung-gts9wifi.dtb" ]; then
-        cat "$expect_kernel/Image.gz" "$expect_kernel/sm8550-samsung-gts9wifi.dtb" > "$tmp/expected-kernel"
-        if cmp -s "$tmp/boot/kernel" "$tmp/expected-kernel"; then
-            pass 'boot.img: payload is exactly Image.gz || board DTB'
+        if [ "$append_dtb" = 1 ]; then
+            cat "$expect_kernel/Image.gz" "$expect_kernel/sm8550-samsung-gts9wifi.dtb" > "$tmp/expected-kernel"
+            if cmp -s "$tmp/boot/kernel" "$tmp/expected-kernel"; then
+                pass 'boot.img: payload is exactly Image.gz || board DTB'
+            else
+                fail 'boot.img: payload is not the current Image.gz || board DTB'
+            fi
+            if cmp -s "$tmp/boot/appended.dtb" "$expect_kernel/sm8550-samsung-gts9wifi.dtb"; then
+                pass 'DTB: appended tree is byte-identical to the built board DTB'
+            else
+                fail 'DTB: appended tree differs from the built board DTB'
+            fi
         else
-            fail 'boot.img: payload is not the current Image.gz || board DTB'
-        fi
-        if cmp -s "$tmp/boot/appended.dtb" "$expect_kernel/sm8550-samsung-gts9wifi.dtb"; then
-            pass 'DTB: appended tree is byte-identical to the built board DTB'
-        else
-            fail 'DTB: appended tree differs from the built board DTB'
+            if cmp -s "$tmp/boot/kernel" "$expect_kernel/Image.gz"; then
+                pass 'boot.img: payload is exactly the current Image.gz'
+            else
+                fail 'boot.img: payload is not the current Image.gz'
+            fi
         fi
     fi
 fi
@@ -235,6 +280,10 @@ if [ "$vendor_boot_ok" = 1 ]; then
                     fail 'vendor_boot.img: DTB differs from the built board DTB'
                 fi
             fi
+            # The vendor_boot tree is the one the bootloader actually hands
+            # over, so its selectors are checked regardless of whether the
+            # boot.img payload also carries a copy.
+            check_board_dtb "$tmp/vendor/dtb" 'vendor_boot DTB'
         else
             fail 'vendor_boot.img: no DTB'
         fi

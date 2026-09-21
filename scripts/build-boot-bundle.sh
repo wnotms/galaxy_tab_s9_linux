@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 # Assemble Samsung Android boot header v4 images. This script NEVER flashes.
+#
+# APPEND_DTB=1 (default) concatenates Image.gz with the board DTB inside
+# boot.img, the layout the SM-X910 port validates. APPEND_DTB=0 keeps boot.img
+# payload pure Image.gz and lets the bootloader use the DTB it already selects
+# out of vendor_boot. Boot test 3 showed the kernel never reaching
+# setup_arch(), and the appended DTB starts at an offset equal to the Image.gz
+# size (21,805,353 bytes, not 8-byte aligned) - arm64 rejects a misaligned FDT
+# pointer outright. APPEND_DTB=0 removes that variable; it is also what the
+# stock SM-X710 boot.img does (raw kernel, no appended DTB).
 set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
@@ -7,6 +16,9 @@ kernel_out=${KERNEL_OUT_DIR:-$repo_root/out/kernel-gts9wifi}
 out=${BUNDLE_OUT_DIR:-$repo_root/out/boot-bundle}
 mkbootimg=${MKBOOTIMG:-}
 avbtool=${AVBTOOL:-}
+append_dtb=${APPEND_DTB:-1}
+
+case "$append_dtb" in 0|1) ;; *) echo "APPEND_DTB must be 0 or 1" >&2; exit 2 ;; esac
 
 boot_size=100663296
 init_boot_size=8388608
@@ -52,7 +64,14 @@ add_footer() {
         --partition_name "$name" --partition_size "$size" --salt "$salt"
 }
 
-cat "$image" "$dtb" > "$tmp/Image.gz-dtb"
+if [ "$append_dtb" = 1 ]; then
+    cat "$image" "$dtb" > "$tmp/boot-kernel"
+    echo "boot.img payload: Image.gz + appended board DTB"
+else
+    cp "$image" "$tmp/boot-kernel"
+    echo "boot.img payload: Image.gz only (DTB comes from vendor_boot)"
+fi
+echo "  payload size: $(stat -c %s "$tmp/boot-kernel") bytes"
 
 mkdir -p "$tmp/empty"
 touch -d '@0' "$tmp/empty"
@@ -69,7 +88,7 @@ esac
 
 cmdline=$(tr '\n' ' ' < "$cmdline_file" | sed 's/[[:space:]]*$//')
 
-python3 "$mkbootimg" --kernel "$tmp/Image.gz-dtb" --cmdline '' \
+python3 "$mkbootimg" --kernel "$tmp/boot-kernel" --cmdline '' \
     --header_version 4 --os_version 13 --os_patch_level 2025-07 \
     -o "$out/boot.img"
 add_footer "$out/boot.img" boot "$boot_size"
@@ -111,5 +130,18 @@ done
     cd "$out"
     sha256sum *.img > SHA256SUMS
 )
+
+# Machine-readable record of how the images were built, so the validator can
+# check the layout that was actually requested instead of assuming one.
+{
+    printf 'append_dtb=%s\n' "$append_dtb"
+    printf 'boot_payload=%s\n' "$( [ "$append_dtb" = 1 ] && echo 'image.gz+dtb' || echo 'image.gz' )"
+    printf 'image_gz_sha256=%s\n' "$(sha256sum "$image" | cut -d' ' -f1)"
+    printf 'dtb_sha256=%s\n' "$(sha256sum "$dtb" | cut -d' ' -f1)"
+    printf 'initramfs_sha256=%s\n' "$(sha256sum "$initramfs" | cut -d' ' -f1)"
+    printf 'kernel_release=%s\n' "$(cat "$kernel_out/kernel.release" 2>/dev/null || echo unknown)"
+} > "$out/BUNDLE_INFO"
+cat "$out/BUNDLE_INFO"
+
 cat "$out/SHA256SUMS"
 echo "bundle assembled only; nothing was flashed"
