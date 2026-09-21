@@ -45,7 +45,9 @@ CONFIG_SM_GCC_8550=y
 CONFIG_SM_GPUCC_8550=y
 CONFIG_SM_DISPCC_8550=y
 CONFIG_PINCTRL_SM8550=y
-CONFIG_PINCTRL_SPMI_PMIC=y
+# Was PINCTRL_SPMI_PMIC in 5.15; renamed upstream and still required for the
+# PM8550/PMK8550 GPIO and MPP blocks used by the board DTS.
+CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
 CONFIG_REGULATOR=y
 CONFIG_REGULATOR_QCOM_RPMH=y
 
@@ -126,3 +128,46 @@ CONFIG_QCOM_FASTRPC=y
 
 # Bring-up kernel: Rust is unnecessary and increases toolchain requirements.
 # CONFIG_RUST is not set
+
+# ---------------------------------------------------------------------------
+# Bring-up deltas over the immutable 5.15.153 stock seed.
+#
+# The seed stays byte-for-byte evidence; everything here is an explicit,
+# reviewable override. Sections 1 and 2 exist because olddefconfig silently
+# dropped symbols requested above (AGENT.md rule 7): the drivers were not
+# even visible because their parent menuconfigs are absent from a 5.15
+# Android tree.
+# ---------------------------------------------------------------------------
+
+# 1. Kconfig parents/selects for drivers requested above. Without these,
+#    olddefconfig hides the driver symbol entirely:
+#      PINCTRL_MSM      -> PINCTRL_SM8550 (TLMM: every GPIO in the board DTS)
+#      PHY_QCOM_QMP     -> PHY_QCOM_QMP_UFS / _PCIE / _COMBO (menuconfig)
+#      MFD_SPMI_PMIC    -> INPUT_PM8941_PWRKEY, RTC_DRV_PM8XXX
+#      WLAN_VENDOR_ATH  -> ATH_COMMON / ATH11K / ATH11K_PCI
+CONFIG_PINCTRL_MSM=y
+CONFIG_PHY_QCOM_QMP=y
+CONFIG_PHY_QCOM_QMP_USB=y
+CONFIG_MFD_SPMI_PMIC=y
+CONFIG_WLAN_VENDOR_ATH=y
+
+# 2. SM8550 platform plumbing that the board DTS depends on but that the
+#    stock 5.15 Android config leaves out. UFS, PCIe, USB, the PMICs and the
+#    display/GPU power rails all fail to probe without these.
+CONFIG_SPMI_MSM_PMIC_ARB=y
+CONFIG_QCOM_CLK_RPMH=y
+CONFIG_QCOM_RPMHPD=y
+CONFIG_ARM_SMMU=y
+CONFIG_QCOM_WDT=y
+CONFIG_NVMEM_QCOM_QFPROM=y
+CONFIG_QCOM_TSENS=y
+CONFIG_ARM_QCOM_CPUFREQ_HW=y
+CONFIG_RTC_DRV_PM8XXX=y
+CONFIG_QCOM_SPMI_ADC5=y
+
+# 3. Usable console. Samsung's Android kernel runs without virtual terminals,
+#    so fbcon never binds the DRM/fbdev emulated console. Enabling VT is what
+#    makes the FRAMEBUFFER_CONSOLE request in the display section above
+#    reachable at all (drivers/video/console/Kconfig is sourced `if VT`).
+CONFIG_VT=y
+CONFIG_VT_CONSOLE=y
