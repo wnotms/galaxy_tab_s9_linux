@@ -57,6 +57,11 @@ done
 # Applets the bring-up shell must have.  Anything missing here is a build
 # failure, because the first boot test depends on it.
 required_applets='sh mount umount cat echo dmesg uname ls mkdir ln cp sync sleep reboot poweroff'
+# Applets the report channel needs on top of that: it parses GPT headers off a
+# raw disk, and then persists the report either through a filesystem or as a
+# raw, checksummed block.  A missing applet would silently disable the only
+# evidence channel this board has, so these are required as well.
+report_applets='dd od awk sha256sum basename wc cut tr head printf'
 # Convenience applets; missing ones are reported and skipped, not fatal.
 optional_applets='lsmod insmod modprobe rmmod mdev switch_root head tail grep cut tr wc sort sed awk find printf test [ true false date uptime free ps kill sync hexdump od gunzip tar modinfo nproc clear vi less more halt'
 # Applets that belong in /sbin rather than /bin.
@@ -91,7 +96,7 @@ verify_busybox() {
     # on the build host.
     strings -a -n 1 "$bin" > "$tmp/applets.txt"
     local applet
-    for applet in $required_applets; do
+    for applet in $required_applets $report_applets; do
         grep -Fqx -- "$applet" "$tmp/applets.txt" || \
             fail "$label does not provide the required applet '$applet'"
     done
@@ -156,7 +161,7 @@ link_applet() {
 }
 
 missing_optional=
-for applet in $required_applets $optional_applets; do
+for applet in $required_applets $report_applets $optional_applets; do
     if grep -Fqx -- "$applet" "$tmp/applets.txt"; then
         link_applet "$applet"
     else
