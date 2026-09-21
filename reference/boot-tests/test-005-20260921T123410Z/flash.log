@@ -1,0 +1,43 @@
+2026-09-21T12:34:46.087885+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'mkdir -p /tmp/gts9-test005']
+2026-09-21T12:34:46.169213+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'blockdev --getsize64 /dev/block/by-name/boot']
+100663296
+2026-09-21T12:34:46.260586+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'push', '\\\\wsl.localhost\\Ubuntu-26.04\\home\\ms\\Samsung\\galaxy_tab_s9_linux\\out\\boot-bundle\\boot.img', '/tmp/gts9-test005/boot.img']
+\\wsl.localhost\Ubuntu-26.04\home\ms\Samsung\galaxy_tab_s9_linux\out\boot-bundle\boot.img: 1 file pushed, 0 skipped. 52.8 MB/s (100663296 bytes in 1.817s)
+2026-09-21T12:34:48.159088+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /tmp/gts9-test005/boot.img']
+1d11c1f3bc10aade4e60543688e7d2e6a12c073e5d434672c4141750da1679ba  /tmp/gts9-test005/boot.img
+2026-09-21T12:34:48.299632+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'dd if=/tmp/gts9-test005/boot.img of=/dev/block/by-name/boot bs=4194304 && sync']
+24+0 records in
+24+0 records out
+100663296 bytes (96 M) copied, 0.234690 s, 409 M/s
+2026-09-21T12:34:48.626275+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /dev/block/by-name/boot']
+1d11c1f3bc10aade4e60543688e7d2e6a12c073e5d434672c4141750da1679ba  /dev/block/by-name/boot
+VERIFIED boot 1d11c1f3bc10aade4e60543688e7d2e6a12c073e5d434672c4141750da1679ba
+2026-09-21T12:34:48.778911+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'blockdev --getsize64 /dev/block/by-name/init_boot']
+8388608
+2026-09-21T12:34:48.853721+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'push', '\\\\wsl.localhost\\Ubuntu-26.04\\home\\ms\\Samsung\\galaxy_tab_s9_linux\\out\\boot-bundle\\init_boot.img', '/tmp/gts9-test005/init_boot.img']
+\\wsl.localhost\Ubuntu-26.04\home\ms\Samsung\galaxy_tab_s9_linux\out\boot-bundle\init_boot.img: 1 file pushed, 0 skipped. 61.9 MB/s (8388608 bytes in 0.129s)
+2026-09-21T12:34:49.052693+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /tmp/gts9-test005/init_boot.img']
+ab89f78b9eef19292bf07e86868171b1d6d96363b2212303c488ac1902656b9e  /tmp/gts9-test005/init_boot.img
+2026-09-21T12:34:49.133605+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'dd if=/tmp/gts9-test005/init_boot.img of=/dev/block/by-name/init_boot bs=4194304 && sync']
+2+0 records in
+2+0 records out
+8388608 bytes (8.0 M) copied, 0.020052 s, 399 M/s
+2026-09-21T12:34:49.238177+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /dev/block/by-name/init_boot']
+ab89f78b9eef19292bf07e86868171b1d6d96363b2212303c488ac1902656b9e  /dev/block/by-name/init_boot
+VERIFIED init_boot ab89f78b9eef19292bf07e86868171b1d6d96363b2212303c488ac1902656b9e
+2026-09-21T12:34:49.321130+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'blockdev --getsize64 /dev/block/by-name/vendor_boot']
+100663296
+2026-09-21T12:34:49.395059+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'push', '\\\\wsl.localhost\\Ubuntu-26.04\\home\\ms\\Samsung\\galaxy_tab_s9_linux\\out\\boot-bundle\\vendor_boot.img', '/tmp/gts9-test005/vendor_boot.img']
+\\wsl.localhost\Ubuntu-26.04\home\ms\Samsung\galaxy_tab_s9_linux\out\boot-bundle\vendor_boot.img: 1 file pushed, 0 skipped. 83.3 MB/s (100663296 bytes in 1.152s)
+2026-09-21T12:34:50.624629+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /tmp/gts9-test005/vendor_boot.img']
+c22ab1a8982af5d5b49b141043c38bcc78bc64bff200f39ad1f34671023888c9  /tmp/gts9-test005/vendor_boot.img
+2026-09-21T12:34:50.764220+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'dd if=/tmp/gts9-test005/vendor_boot.img of=/dev/block/by-name/vendor_boot bs=4194304 && sync']
+24+0 records in
+24+0 records out
+100663296 bytes (96 M) copied, 0.228239 s, 421 M/s
+2026-09-21T12:34:51.073370+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /dev/block/by-name/vendor_boot']
+c22ab1a8982af5d5b49b141043c38bcc78bc64bff200f39ad1f34671023888c9  /dev/block/by-name/vendor_boot
+VERIFIED vendor_boot c22ab1a8982af5d5b49b141043c38bcc78bc64bff200f39ad1f34671023888c9
+2026-09-21T12:34:51.228581+00:00 ['/mnt/d/android/platform-tools/adb.exe', '-s', 'R52X10045LT', 'shell', 'sha256sum /dev/block/by-name/dtbo']
+c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3  /dev/block/by-name/dtbo
+dtbo already matched; no write needed. vbmeta/recovery untouched.

@@ -43,6 +43,7 @@
  * one registration ever happens: whichever path runs first owns the ring.
  */
 
+#include <asm/cacheflush.h>
 #include <asm/early_ioremap.h>
 
 #include <linux/console.h>
@@ -78,6 +79,17 @@ struct gts9wifi_sec_log {
 
 static struct gts9wifi_sec_log *sec_log;
 
+/*
+ * The ring is reached through a write-back mapping (both the linear map and
+ * memremap(MEMREMAP_WB)), and it is read back by TWRP through *physical*
+ * memory after a reset.  A reset does not clean our caches, so every write
+ * that must survive has to be cleaned to the point of coherency explicitly.
+ */
+static void notrace gts9wifi_sec_log_flush(void *start, size_t len)
+{
+	dcache_clean_poc((unsigned long)start, (unsigned long)start + len);
+}
+
 static void notrace gts9wifi_sec_log_write(struct console *console,
 					   const char *text,
 					   unsigned int count)
@@ -112,6 +124,18 @@ static void notrace gts9wifi_sec_log_write(struct console *console,
 	index += count;
 	WRITE_ONCE(log->header->index, index);
 	WRITE_ONCE(log->header->previous_index, index);
+
+	/*
+	 * Push the new bytes and the indices out to DRAM.  The ring is mapped
+	 * write-back, and recovery reads physical memory after a warm reset -
+	 * a reset does not flush our caches, so without this the log that was
+	 * just written is exactly the part that disappears.  This is why every
+	 * capture before this fix found the ring holding only the bootloader's
+	 * own (uncached) log.
+	 */
+	gts9wifi_sec_log_flush(log->header, sizeof(*log->header) + first);
+	if (first != count)
+		gts9wifi_sec_log_flush(log->header->data, count - first);
 }
 
 /*
@@ -158,6 +182,7 @@ static int gts9wifi_sec_log_setup(phys_addr_t base, size_t size, bool early)
 	WRITE_ONCE(log->header->previous_index,
 		   READ_ONCE(log->header->index));
 	WRITE_ONCE(log->header->index, 0);
+	gts9wifi_sec_log_flush(log->header, sizeof(*log->header));
 
 	strscpy(log->console.name, "sec_log", sizeof(log->console.name));
 	log->console.write = gts9wifi_sec_log_write;
@@ -237,13 +262,17 @@ void __init gts9_sec_log_early_marker(unsigned int slot, phys_addr_t base)
 		base = GTS9_SEC_LOG_DEFAULT_BASE;
 
 	marker = early_memremap(base + sizeof(struct sec_log_header) +
-				slot * 0x100, GTS9_SEC_LOG_MARKER_LEN);
-	if (!marker)
+				slot * 0x100, GTS9_SEC_LOG_MARKER_LEN);	if (!marker)
 		return;
 
 	memset(marker, 0, GTS9_SEC_LOG_MARKER_LEN);
 	memcpy(marker, gts9wifi_sec_log_markers[slot],
 	       strlen(gts9wifi_sec_log_markers[slot]));
+	/*
+	 * Clean before unmapping: a marker left dirty in cache is exactly the
+	 * evidence that is lost when the next reset happens.
+	 */
+	gts9wifi_sec_log_flush(marker, GTS9_SEC_LOG_MARKER_LEN);
 	early_memunmap(marker, GTS9_SEC_LOG_MARKER_LEN);
 }
 

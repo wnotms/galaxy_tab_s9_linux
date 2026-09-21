@@ -1,0 +1,26 @@
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+SM-X710
+gts9wifi
+orange
+Linux localhost 5.15.94-Foldiby-+ #1 SMP PREEMPT Wed Jan 31 14:41:24 UTC 2024 aarch64
+1625.66 12988.34
+Filesystem      Size Used Avail Use% Mounted on
+tmpfs           5.1G 596K  5.1G   1% /tmp
+boot
+100663296
+ae4965752727445e3cda5710d0592a8bd08879f6de6c00f632f8fc6faf8ba55d  /dev/block/by-name/boot
+init_boot
+8388608
+26dd7517e1dbe65155a866d6fdb50c08f71268de6d009563a6edf23a8d179522  /dev/block/by-name/init_boot
+vendor_boot
+100663296
+b9f0cfd1e16013a36d66c57f1dcb71ca9afdea91abd1d30fae0665df2758a8d1  /dev/block/by-name/vendor_boot
+dtbo
+16777216
+c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3  /dev/block/by-name/dtbo
+vbmeta
+131072
+9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4  /dev/block/by-name/vbmeta
+recovery
+109576192
+e61d6499f0e17b190a3d0f6da12c3774681560b22002293762cc6f861a127ec6  /dev/block/by-name/recovery
