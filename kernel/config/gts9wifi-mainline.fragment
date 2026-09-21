@@ -171,3 +171,29 @@ CONFIG_QCOM_SPMI_ADC5=y
 #    reachable at all (drivers/video/console/Kconfig is sourced `if VT`).
 CONFIG_VT=y
 CONFIG_VT_CONSOLE=y
+
+# 4. Toolchain/debug profile for a flashable bring-up kernel. The stock seed
+#    is an Android debug configuration: Clang full LTO + kCFI + KASAN + UBSAN
+#    + -Werror. Full LTO turns the final link into a single-threaded,
+#    multi-hour, high-memory step, and kCFI/KASAN change the runtime
+#    behaviour of every early probe. Re-enable them per subsystem once the
+#    port is stable; the seed keeps the stock intent on record.
+CONFIG_LTO_NONE=y
+# CONFIG_LTO_CLANG_FULL is not set
+# CONFIG_LTO_CLANG_THIN is not set
+# CONFIG_CFI is not set
+# CONFIG_KASAN is not set
+# CONFIG_UBSAN is not set
+# CONFIG_WERROR is not set
+
+# 5. Do not inject Samsung's downstream debug cmdline
+#    ("stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected
+#    cgroup_disable=pressure") into a kernel that no longer enables KASAN.
+CONFIG_CMDLINE=""
+
+# 6. Stable module path: keep the git-describe suffix out of the release
+#    string so the module directory does not drift with worktree state.
+#    (setlocalversion still appends "-dirty" while the device overlay is
+#    uncommitted, which is accurate for these artifacts.)
+CONFIG_LOCALVERSION="-gts9wifi"
+# CONFIG_LOCALVERSION_AUTO is not set
