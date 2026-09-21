@@ -430,7 +430,14 @@
 };
 
 &scm {
-	interrupts = <GIC_SPI 930 IRQ_TYPE_EDGE_RISING>;
+	/*
+	 * SM8550's GIC is #interrupt-cells = <4> (the fourth cell selects the
+	 * PPI partition and is 0 for an SPI), so a three-cell specifier is
+	 * malformed: dtc reports it and of_irq_parse_one() fails with
+	 * -ENODATA, which makes qcom_scm_probe() fall back to probing without
+	 * the SCM waitqueue interrupt.
+	 */
+	interrupts = <GIC_SPI 930 IRQ_TYPE_EDGE_RISING 0>;
 };
 
 &apps_rsc {
