@@ -154,12 +154,35 @@ log ''
 # ---------------------------------------------------------------------------
 proof_seconds=''
 proof_if=''
+proof_code_base=''
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_userspace_proof=*) proof_seconds=${arg#gts9_userspace_proof=} ;;
         gts9_proof_if=*) proof_if=${arg#gts9_proof_if=} ;;
+        gts9_proof_code=*) proof_code_base=${arg#gts9_proof_code=} ;;
     esac
 done
+
+# ---------------------------------------------------------------------------
+# Telemetry without a console: encode the state of the bring-up in the delay
+# before the tablet powers itself off.  The owner only has to time it.
+#
+#   code = 1*microSD device + 2*SCSI/UFS disk + 4*USB device controller
+#   delay = base + 10*code seconds      (base 20 -> 20,30,...,90 s)
+# ---------------------------------------------------------------------------
+if [ -n "$proof_code_base" ]; then
+    case "$proof_code_base" in
+        ''|*[!0-9]*) log "WARN: ignoring invalid gts9_proof_code=$proof_code_base" ;;
+        *)
+            code=0
+            if [ -n "$(ls /dev/mmcblk* 2>/dev/null)" ]; then code=$((code + 1)); fi
+            if [ -n "$(ls /dev/sd* 2>/dev/null)" ]; then code=$((code + 2)); fi
+            if [ -n "$(ls /sys/class/udc 2>/dev/null)" ]; then code=$((code + 4)); fi
+            proof_seconds=$((proof_code_base + 10 * code))
+            log "telemetry code=$code (mmc=$([ $((code & 1)) -ne 0 ] && echo yes || echo no) scsi=$([ $((code & 2)) -ne 0 ] && echo yes || echo no) udc=$([ $((code & 4)) -ne 0 ] && echo yes || echo no)) -> power off in ${proof_seconds}s"
+            ;;
+    esac
+fi
 
 if [ -n "$proof_seconds" ]; then
     case "$proof_seconds" in
