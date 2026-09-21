@@ -10,8 +10,32 @@ out_dir=${KERNEL_OUT_DIR:-$repo_root/out/kernel-gts9wifi}
 fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 jobs=${JOBS:-$(nproc)}
 build_modules=${BUILD_MODULES:-1}
+# ccache turns a KERNEL_CLEAN=1 rebuild from a full recompile into a cache
+# replay. Enabled whenever ccache is installed; USE_CCACHE=0 opts out.
+use_ccache=${USE_CCACHE:-auto}
 
 case "$build_modules" in 0|1) ;; *) echo "BUILD_MODULES must be 0 or 1" >&2; exit 2 ;; esac
+
+ccache_args=()
+if [ "$use_ccache" != 0 ] && command -v ccache >/dev/null 2>&1; then
+    # Keep the cache outside the build tree: KERNEL_CLEAN=1 deletes that, and
+    # the whole point is to survive it. The worktree path is stable across
+    # clean builds, so absolute-path hashing stays cacheable.
+    export CCACHE_DIR=${CCACHE_DIR:-$workdir/ccache}
+    export CCACHE_BASEDIR=${CCACHE_BASEDIR:-$workdir}
+    # Only sloppiness that cannot change the produced object: reusing a cached
+    # object whose include timestamps differ is fine because the content is
+    # hashed anyway. time_macros is deliberately NOT set: it lets ccache replay
+    # an object compiled with a different __DATE__/__TIME__, which made the
+    # same source produce a different Image.gz than a non-ccache build.
+    export CCACHE_SLOPPINESS=${CCACHE_SLOPPINESS:-include_file_ctime,include_file_mtime}
+    mkdir -p "$CCACHE_DIR"
+    ccache_args=(CC="ccache clang")
+    echo "ccache enabled: CCACHE_DIR=$CCACHE_DIR"
+    ccache --show-stats --verbose 2>/dev/null | sed -n '1,6p' || true
+elif [ "$use_ccache" != 0 ]; then
+    echo "ccache not found; compiling without it" >&2
+fi
 
 "$repo_root/scripts/fetch-mainline.sh"
 
@@ -90,7 +114,8 @@ if [ "$build_modules" = 1 ]; then
     make_targets+=(modules)
 fi
 
-make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 -j"$jobs" "${make_targets[@]}"
+make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 "${ccache_args[@]}" \
+    -j"$jobs" "${make_targets[@]}"
 
 release=$(make -s -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 kernelrelease)
 
