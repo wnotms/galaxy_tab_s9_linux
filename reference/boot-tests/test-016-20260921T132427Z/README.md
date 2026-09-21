@@ -51,4 +51,12 @@ device after writing.
 
 ## Result
 
-Pending: the owner has to start the boot and time the automatic power-off.
+Never run physically: while the tablet was still sitting in TWRP, review of the
+report writer showed that it enumerated every block device the kernel produced,
+so the first boot in which UFS enumerates would have tried to mount `sda1`
+(modemst1) and the rest of the modem/userdata partitions read-write before it
+reached `cache`. That is not an acceptable risk, so the writer was replaced by
+the GPT-verified `cache`-only version (`boot/bringup-init.sh`, commit `3e045a5`)
+and the bundle was reflashed as **test 017**. The images below were on the
+tablet and were replaced by test 017's `init_boot`; `boot` and `vendor_boot` are
+byte-identical between the two tests.
