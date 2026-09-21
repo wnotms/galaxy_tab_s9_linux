@@ -81,11 +81,22 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   `sec_log_buf`, so mainline writes are overwritten before recovery can read
   them. An empty ring proves nothing. Live channels (USB, once it probes) or
   physical observation are the evidence paths.
-- Next milestones, in order: **storage** (UFS, microSD) as the prerequisite for
-  a root filesystem, then the **USB rescue channel**, whose blockers are already
-  known: `88e3000.phy` (eUSB2), then `1fc0000.clock-controller`, then
-  `a600000.usb` - see `reference/boot-tests/owner-supplied-july-kernel/`. USB
-  also restores a live log channel, which this port still needs.
+- **Storage is up** (test 020): the missing provider was `CONFIG_QCOM_PDC`, the
+  interrupt controller the SPMI arbiter hangs off.  With it the microSD (`mmc1`)
+  and UFS (`sda`..`sdf`) both enumerate, the PMIC GPIO card detect works, and the
+  bring-up report reaches the card - see tests 020 and 028.
+- **The evidence loop is closed** (test 028): `/init` writes the report to the
+  microSD card, waits ten seconds and resets into TWRP through the Android
+  bootloader control block, so a test costs about half a minute and needs no
+  hand-carried recovery boot.  `scripts/read-bringup-report.sh` reads the card.
+- Next milestones, in order: **a root filesystem** (M2's last acceptance item -
+  the port's design puts it on the microSD), then **display and input** (M3: the
+  ANA38407 panel and FTS1BA90A touch, which is what makes the tablet usable).
+- Known blockers on the way: an SPMI *write* blocks this kernel uninterruptibly
+  (so `reboot recovery` through the SDAM and the RTC state word are both out
+  until it is understood); the USB gadget enumerates but its CDC-ACM data path
+  carries no bytes even with the PTN3222 redriver programmed, so the USB console
+  is not yet a channel.
 - The generic initramfs lives in **init_boot**, so include init_boot whenever the
   new bundle differs from the flashed version. `gts9_userspace_proof=<seconds>`
   stays an opt-in in the initramfs (it powers the tablet off by itself) and is

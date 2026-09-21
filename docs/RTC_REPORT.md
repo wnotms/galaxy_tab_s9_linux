@@ -57,6 +57,19 @@ nothing was written (no `/init`, no `/dev/rtc0`, or a failed write).  The
 checksum makes a rounded or partial write fail closed instead of being read as
 a different state.
 
+## Off by default: SPMI writes block this kernel
+
+Writing the RTC is a *write* over SPMI, and on this board an SPMI write blocks
+the calling thread uninterruptibly: `timeout` cannot break it, and the same hang
+took the SDAM reboot-mode write in test 024.  Tests 021-027 therefore sat at the
+logo and never wrote a report.  Every SPMI *read* works - card detect, the RTC
+registers, the regulators, the ADC - which is why the card and UFS paths are
+fine.
+
+So `gts9_rtc_report=1` is opt-in and **not** in `boot/cmdline.example.txt`; the
+storage stages it carries are in the report anyway.  The channel comes back when
+the SPMI write path is understood.
+
 ## Reading it
 
 ```sh

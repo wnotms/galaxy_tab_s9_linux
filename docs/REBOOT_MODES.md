@@ -49,8 +49,18 @@ the script records that and falls back to a plain reset - which lands back in
 mainline, so a failed experiment looks like a boot loop rather than a dead
 tablet, and holding Volume Up still gets TWRP.
 
-## Status
+## Status: confirmed, through the BCB rather than RESTART2
 
-Not yet observed on hardware: test 024 is the first run with
-`gts9_proof_action=recovery`.  Until it is confirmed, the default stays
+`reboot recovery` (RESTART2) is *not* usable on this board: it reaches the SDAM
+through an SPMI write, and an SPMI write blocks this kernel uninterruptibly
+(tests 024/025).  What works is the bootloader control block - `boot-recovery` in
+the first bytes of `misc`, a UFS write that succeeds:
+
+    gts9_proof_action=recovery-bcb
+
+`/init` writes it ten seconds after the boot's work is done and resets.  Test 028
+closed the loop: 33 seconds from `adb reboot` to the tablet sitting in TWRP
+again, unattended, with the report on the microSD card.
+
+The old RESTART2 text below is kept for the record of what was tried.  Until it is confirmed, the default stays
 `poweroff` and the workflow keeps asking the owner to boot recovery by hand.
