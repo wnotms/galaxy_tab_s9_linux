@@ -29,4 +29,4 @@ The Samsung Galaxy Tab S9 Ultra (`SM-X910`, `gts9uwifi`) mainline repositories b
 
 ## Owner-supplied stock evidence
 
-The owner supplied a live DTB, its decompiled DTS and a stock kernel config. These are not redistributed in this bootstrap commit; their hashes and extracted facts are recorded in `reference/stock/MANIFEST.md`. The raw downstream artifacts contain large amounts of Samsung/vendor description that should not be mistaken for upstream bindings.
+The owner supplied a live DTB, its decompiled DTS and a stock kernel config. The live DTB/DTS hashes and extracted facts are recorded in `reference/stock/MANIFEST.md` and remain downstream hardware evidence. The **stock kernel config itself is preserved byte-for-byte** as deterministic Base64/gzip parts under `reference/stock/config/`; `scripts/materialize-stock-config.sh` reconstructs the exact original SHA-256 before it is used as the Linux 7.2 Kconfig seed. The downstream DTS is still not a drop-in upstream board description.

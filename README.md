@@ -4,7 +4,7 @@ This repository is a reproducible bring-up workspace for running an upstream Lin
 
 The project deliberately separates three things:
 
-1. **stock evidence** — Samsung 5.15.153 config / live DTB / decompiled DTS are hardware documentation only;
+1. **stock evidence** — the owner-extracted Samsung 5.15.153 config is preserved byte-for-byte as the Kconfig seed; the live DTB/decompiled DTS remain hardware documentation;
 2. **mainline port layer** — board DTS, out-of-tree drivers and a small patch set carried on top of a pinned upstream kernel;
 3. **build output** — generated outside the source checkout and never flashed automatically.
 
@@ -25,7 +25,7 @@ Ubuntu 24.04 / Debian-like host:
 ```bash
 sudo apt update
 sudo apt install -y \
-  git make bc bison flex clang lld llvm ccache \
+  git make bc bison flex clang lld llvm ccache gzip \
   libssl-dev libelf-dev dwarves device-tree-compiler \
   python3 rsync kmod
 
@@ -52,7 +52,7 @@ BUILD_MODULES=0 ./scripts/build-kernel.sh
 JOBS=16 ./scripts/build-kernel.sh
 ```
 
-The build uses LLVM (`ARCH=arm64 LLVM=1`) and a disposable git worktree. The pinned upstream checkout remains pristine.
+The build uses LLVM (`ARCH=arm64 LLVM=1`) and a disposable git worktree. The pinned upstream checkout remains pristine. Before Kconfig resolution, `scripts/materialize-stock-config.sh` reconstructs the exact owner-extracted Samsung 5.15.153 `.config` and verifies SHA-256 `80693a069d406fbdafe01b73e65e8f1e15b681451bbb53b9d05fde7a93220112`; Linux 7.2 then merges the small mainline device fragment and runs `olddefconfig`, so obsolete Samsung-only symbols are naturally dropped while the stock baseline remains explicit.
 
 ## Android boot v4 bundle
 

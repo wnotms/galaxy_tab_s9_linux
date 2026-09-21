@@ -24,7 +24,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            git make bc bison flex clang lld llvm ccache \
+            git make bc bison flex clang lld llvm ccache gzip \
             libssl-dev libelf-dev dwarves device-tree-compiler \
             python3 rsync kmod
 

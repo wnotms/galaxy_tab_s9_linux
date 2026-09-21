@@ -8,7 +8,7 @@ These hashes identify the artifacts inspected when this repository was initializ
 | decompiled live DTS | `7bf40be5a9ededd23bf3c1725252fc28973be9b18b68e25fc5019502e03d723c` | model `Samsung GTS9WIFI PROJECT (board-id,04)` |
 | stock kernel config | `80693a069d406fbdafe01b73e65e8f1e15b681451bbb53b9d05fde7a93220112` | Linux/arm64 5.15.153, Android clang 14.0.7 |
 
-The raw files were supplied directly by the device owner and are treated as hardware evidence. They are intentionally not used as the Linux 7.2 mainline build config or as a drop-in mainline DTS.
+The raw files were supplied directly by the device owner. The live DTB/DTS are hardware evidence and are not drop-in upstream descriptions. The stock config is preserved exactly under `reference/stock/config/` as deterministic Base64/gzip parts; reconstructing it yields SHA-256 `80693a069d406fbdafe01b73e65e8f1e15b681451bbb53b9d05fde7a93220112` and 191,842 bytes. It is the Linux 7.2 Kconfig **seed**, after which the mainline fragment and `olddefconfig` resolve version-specific differences.
 
 ## Key facts extracted from the live DTS
 
@@ -46,3 +46,27 @@ CONFIG_SERIAL_QCOM_GENI_CONSOLE=y
 ```
 
 Use `scripts/audit-stock.sh` when a refreshed stock config/DTS is captured. If a future agent commits raw stock artifacts, put them under `reference/stock/raw/`, document their source/firmware build, and keep them out of the mainline build path.
+
+
+## Exact stock config storage
+
+The repository stores a deterministic `gzip -n -9` stream encoded as five Base64 parts:
+
+```text
+reference/stock/config/SM-X710-stock-5.15.153.config.gz.b64.part00
+reference/stock/config/SM-X710-stock-5.15.153.config.gz.b64.part01
+reference/stock/config/SM-X710-stock-5.15.153.config.gz.b64.part02
+reference/stock/config/SM-X710-stock-5.15.153.config.gz.b64.part03
+reference/stock/config/SM-X710-stock-5.15.153.config.gz.b64.part04
+```
+
+Deterministic gzip SHA-256: `9a3a7f40efa79d6fecf6717cbb5f6273dc70d03b9c03de1f01115ab555befb33`.
+
+Reconstruct and verify:
+
+```bash
+./scripts/materialize-stock-config.sh /tmp/SM-X710-stock.config
+sha256sum /tmp/SM-X710-stock.config
+```
+
+The script refuses to install the reconstructed config unless the uncompressed hash matches the owner-supplied original.

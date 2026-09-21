@@ -42,7 +42,7 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
 4. Kernel build output goes to `.work/build/linux-out` and `out/kernel-gts9wifi`; never commit it.
 5. Use `ARCH=arm64 LLVM=1`. Do not introduce a GCC-only build path unless there is a demonstrated need.
 6. Keep critical early-boot/storage/console providers built in when the port depends on them before the root filesystem is available.
-7. A symbol requested by a fragment but dropped by `olddefconfig` must be treated as a build/config issue, not ignored.
+7. The owner-extracted stock config is immutable evidence: reconstruct it with `scripts/materialize-stock-config.sh`, verify its recorded SHA-256, then use it as the Kconfig seed. A symbol requested by the mainline fragment but dropped by `olddefconfig` must be treated as a build/config issue, not ignored.
 8. Kernel image, DTB, config and release string must be hashed in every build.
 9. No build script may flash or repartition a physical device.
 10. Do not claim hardware works because a driver compiles or probes. Record `compiled`, `booted`, `enumerated`, and `physically verified` as different states.
@@ -109,13 +109,15 @@ The current boot-bundle script uses the safer appended-DTB fallback pattern and 
 
 ## Working with the stock config
 
-The stock 5.15.153 `.config` is not a valid 7.2 mainline defconfig. Use it to answer questions such as:
+The owner-extracted stock 5.15.153 `.config` is the **immutable seed and evidence baseline**, but it is not assumed to map one-for-one onto Linux 7.2. It is stored as deterministic Base64/gzip parts under `reference/stock/config/`; `scripts/materialize-stock-config.sh` reconstructs the original bytes and refuses a SHA-256 mismatch.
+
+Use the stock config to answer questions such as:
 
 - was a hardware block enabled in Samsung's kernel?
 - was a driver built-in or modular?
 - what compiler/Kconfig features did stock use?
 
-For the mainline build, start from upstream arm64 `defconfig`, merge `kernel/config/gts9wifi-mainline.fragment`, then run `olddefconfig`. When adding support, prefer a small fragment delta over replacing a full generated config.
+For the mainline build, reconstruct the stock config, merge `kernel/config/gts9wifi-mainline.fragment`, then run Linux 7.2 `olddefconfig`. Unknown Samsung/Android-only 5.15 symbols are expected to disappear; required upstream symbols must be asserted explicitly by the fragment/build checks. Never edit the stock seed in place. A refreshed stock extraction must be added as a new identified artifact with updated hashes.
 
 ## Patch discipline
 

@@ -60,18 +60,18 @@ The X910 repositories remain useful for shared SM8550/Samsung issues (ABL DT sel
 
 ## 5. Build configuration model
 
-The stock 5.15.153 config is reference-only. Mainline uses:
+The owner-extracted stock 5.15.153 config is preserved byte-for-byte and used as the initial Kconfig seed:
 
 ```text
-upstream arm64 defconfig
-             +
+owner-extracted Samsung 5.15.153 .config
+               +
 kernel/config/gts9wifi-mainline.fragment
-             |
-             v
-         olddefconfig
+               |
+               v
+       Linux 7.2 olddefconfig
 ```
 
-This is preferable to feeding the stock `.config` to Linux 7.2 because hundreds of Samsung/Android-only symbols would disappear while new mainline dependencies would be resolved implicitly. Keeping a clean mainline base plus a device fragment makes the actual port requirements reviewable.
+This preserves the real shipping configuration as an auditable baseline while still letting Linux 7.2 discard Samsung/Android-only symbols that no longer exist and resolve new upstream dependencies. The small mainline fragment is where required upstream symbols are overridden/asserted; it remains reviewable instead of replacing the stock evidence with a generated 7.2 config.
 
 ## 6. Samsung boot chain
 

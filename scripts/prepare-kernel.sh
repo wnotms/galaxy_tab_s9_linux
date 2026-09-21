@@ -6,6 +6,7 @@ repo_root=$(cd "$(dirname "$0")/.." && pwd)
 dts_src="$repo_root/kernel/dts/sm8550-samsung-gts9wifi.dts"
 fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 patch_dir="$repo_root/kernel/patches"
+stock_cfg="$tree/.config.stock"
 
 [ -d "$tree/.git" ] || { echo "not a git worktree: $tree" >&2; exit 1; }
 [ -f "$dts_src" ] || { echo "missing board DTS: $dts_src" >&2; exit 1; }
@@ -23,17 +24,19 @@ qcom_dts="$tree/arch/arm64/boot/dts/qcom"
 install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
 
 makefile="$qcom_dts/Makefile"
-if ! grep -q 'sm8550-samsung-gts9wifi\.dtb' "$makefile"; then
-    printf '\ndtb-$(CONFIG_ARCH_QCOM) += sm8550-samsung-gts9wifi.dtb\n' >> "$makefile"
+if ! grep -q 'sm8550-samsung-gts9wifi\\.dtb' "$makefile"; then
+    printf '\\ndtb-$(CONFIG_ARCH_QCOM) += sm8550-samsung-gts9wifi.dtb\\n' >> "$makefile"
 fi
-
 if ! grep -q '^DTC_FLAGS_sm8550-samsung-gts9wifi := -@$' "$makefile"; then
-    printf 'DTC_FLAGS_sm8550-samsung-gts9wifi := -@\n' >> "$makefile"
+    printf 'DTC_FLAGS_sm8550-samsung-gts9wifi := -@\\n' >> "$makefile"
 fi
 
-make -C "$tree" ARCH=arm64 LLVM=1 defconfig
-"$tree/scripts/kconfig/merge_config.sh" -m -O "$tree" \
-    "$tree/.config" "$fragment"
+# Preserve the owner-extracted Samsung 5.15.153 config as the explicit seed.
+# Linux 7.2 olddefconfig is allowed to discard obsolete downstream-only symbols,
+# while the small mainline fragment below forces/records the upstream settings
+# the port actually depends on.
+"$repo_root/scripts/materialize-stock-config.sh" "$stock_cfg"
+"$tree/scripts/kconfig/merge_config.sh" -m -O "$tree" "$stock_cfg" "$fragment"
 make -C "$tree" ARCH=arm64 LLVM=1 olddefconfig
 
 required=(
@@ -48,4 +51,4 @@ for sym in "${required[@]}"; do
     fi
 done
 
-echo "prepared SM-X710 mainline tree: $tree"
+echo "prepared SM-X710 mainline tree from verified stock config seed: $tree"
