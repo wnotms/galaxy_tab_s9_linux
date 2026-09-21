@@ -47,6 +47,34 @@ gts9_sec_log=0x880200000,0x200000
 `boot/cmdline.example.txt` carries this parameter, so a bundle built by
 `scripts/build-boot-bundle.sh` is covered even if the DTB hand-off is wrong.
 
+## Proof-of-life marker
+
+Boot tests 1 and 2 both left the ring empty, which is consistent with two very
+different failures: the kernel never started, or it died before any console
+existed. The `gts9_sec_log=` handler therefore also writes a short marker
+straight into the ring:
+
+```text
+GTS9-EARLY-MARKER: arm64 setup_arch reached, early cmdline parsed
+```
+
+It is written with `early_memremap()` from `parse_early_param()` inside
+`setup_arch()`, which runs after `early_ioremap_init()` but **before**
+`paging_init()`, before the device tree is unflattened, and long before any
+console or initcall. Reading the ring afterwards therefore answers the
+question directly:
+
+| Ring content | Conclusion |
+|---|---|
+| marker present, no `Linux version` | the image was entered and arm64 setup began; the failure is between `setup_arch` and the console, i.e. still kernel-side |
+| marker absent | the kernel never reached `setup_arch`; the fault is in the hand-off (decompression, entry, or the `x0` FDT), not in a driver |
+| marker plus `Linux version` and the console line | the kernel boots far enough to log; read the last lines before the reset |
+
+The marker is written at the start of the ring's byte area (the oldest data)
+and is deliberately overwritten by the real log once the console registers, so
+a successful boot looks exactly as it did before.
+
+
 ## On-memory format
 
 Compatible with the downstream ring the bootloader and recovery use:
