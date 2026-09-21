@@ -1,0 +1,8 @@
+=== flash test 040 (boot only; init_boot/vendor_boot/dtbo unchanged) ===
+kernel Image.gz a304ebef1051cd02d485d16db0a1ae4382d68953e50e6abd1e84c7e37385433f
+--- boot ---
+D:\android\gts9-test040\boot.img: 1 file pushed, 0 skipped. 83.2 MB/s (100663296 bytes in 1.154s)
+expected: 27752545b2d1155ce1072bccc89c3c0c6fd1d63d6db55c739439d415eccd23cf
+24576+0 records out
+100663296 bytes (96 M) copied, 0.346283 s, 277 M/s
+27752545b2d1155ce1072bccc89c3c0c6fd1d63d6db55c739439d415eccd23cf  /dev/block/by-name/boot
