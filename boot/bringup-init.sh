@@ -169,6 +169,19 @@ write_bcb_recovery() {
     return 0
 }
 
+reboot_to_recovery() {
+    # Write the BCB and reset, or power off if the bootloader already ignored a
+    # recovery request: either way this ends the boot instead of looping.
+    if bcb_asks_recovery; then
+        log 'WARN: misc already asks for recovery and the bootloader did not act on it; powering off instead of looping'
+        poweroff -f || reboot -f
+        return
+    fi
+    write_bcb_recovery || log 'WARN: the BCB write failed; falling back to a plain reset'
+    sync
+    reboot -f
+}
+
 
 
 # Emit the milestone only after /dev/kmsg exists, so it reaches sec_log even
@@ -536,13 +549,7 @@ if [ -n "$proof_seconds" ]; then
                         # Ask ABL for recovery through the BCB in misc, then
                         # reset: no SPMI write, no owner, no power button.
                         log 'userspace proof firing now (BCB boot-recovery + reset)'
-                        if bcb_asks_recovery; then
-                            log 'WARN: misc already asks for recovery and the bootloader did not act on it; powering off instead of looping'
-                            poweroff -f || reboot -f
-                        else
-                            write_bcb_recovery || log 'WARN: the BCB write failed; falling back to a plain reset'
-                            reboot -f
-                        fi
+                        reboot_to_recovery
                         ;;
                     recovery)
                         # reboot(2) RESTART2 with the string "recovery" is what
@@ -643,6 +650,7 @@ REPORT_MIN_BYTES=$((4 * 1024 * 1024))
 # skipped rather than half-executed: a partially written or unverifiable report
 # is worse than a clean "nothing was written", and a wrong write is worse still.
 REPORT_TOOLS='dd od awk sha256sum basename wc cut tr head printf mount umount cp timeout'
+
 
 try_report_mount() {
     # try_report_mount <device> <label>
@@ -763,6 +771,18 @@ fi
 
 # Second write: the value left in the RTC records that the report was persisted.
 [ "$RTC_REPORT" = 1 ] && rtc_write_state 1
+
+# ---------------------------------------------------------------------------
+# The short cycle the owner asked for: once everything this boot was going to do
+# is done, wait ten seconds and hand the next boot to recovery.  The timed proof
+# armed earlier stays as the safety net for a boot that never reaches this point,
+# so a hang still ends in a reboot instead of a tablet left sitting there.
+# ---------------------------------------------------------------------------
+if [ "$proof_action" = recovery-bcb ] && [ -n "$proof_code_base" ]; then
+    log "work complete (report_written=$report_written, target=${report_target:-none}); rebooting into recovery in 10s"
+    sleep 10
+    reboot_to_recovery
+fi
 
 
 if [ "$gadget_setup" = 1 ]; then
