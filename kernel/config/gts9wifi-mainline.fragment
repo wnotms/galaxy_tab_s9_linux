@@ -1,0 +1,128 @@
+# Samsung Galaxy Tab S9 Wi-Fi (SM-X710 / gts9wifi) early mainline fragment.
+# Keep this file limited to upstream Kconfig symbols. Out-of-tree subsystem
+# drivers are added later with the patch/driver that defines their symbol.
+
+# Early boot and diagnostics.
+CONFIG_BLK_DEV_INITRD=y
+CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS_MOUNT=y
+CONFIG_SERIAL_QCOM_GENI=y
+CONFIG_SERIAL_QCOM_GENI_CONSOLE=y
+CONFIG_PRINTK_TIME=y
+CONFIG_PSTORE=y
+CONFIG_PSTORE_RAM=y
+CONFIG_PSTORE_CONSOLE=y
+CONFIG_PSTORE_PMSG=y
+CONFIG_MAGIC_SYSRQ=y
+CONFIG_PM_DEBUG=y
+
+# Root storage: both internal UFS and microSD must work without modules.
+CONFIG_SCSI=y
+CONFIG_SCSI_UFSHCD=y
+CONFIG_SCSI_UFS_QCOM=y
+CONFIG_PHY_QCOM_QMP_UFS=y
+CONFIG_MMC=y
+CONFIG_MMC_BLOCK=y
+CONFIG_MMC_SDHCI=y
+CONFIG_MMC_SDHCI_PLTFM=y
+CONFIG_MMC_SDHCI_MSM=y
+CONFIG_EXT4_FS=y
+CONFIG_EFI_PARTITION=y
+
+# SM8550 platform plumbing used by several early providers.
+CONFIG_ARCH_QCOM=y
+CONFIG_QCOM_SMEM=y
+CONFIG_QCOM_SMP2P=y
+CONFIG_QCOM_RPMH=y
+CONFIG_QCOM_COMMAND_DB=y
+CONFIG_QCOM_SCM=y
+CONFIG_QCOM_LLCC=y
+CONFIG_INTERCONNECT=y
+CONFIG_INTERCONNECT_QCOM=y
+CONFIG_INTERCONNECT_QCOM_SM8550=y
+CONFIG_COMMON_CLK_QCOM=y
+CONFIG_SM_GCC_8550=y
+CONFIG_SM_GPUCC_8550=y
+CONFIG_SM_DISPCC_8550=y
+CONFIG_PINCTRL_SM8550=y
+CONFIG_PINCTRL_SPMI_PMIC=y
+CONFIG_REGULATOR=y
+CONFIG_REGULATOR_QCOM_RPMH=y
+
+# Display/GPU. The board DTS may still require device-specific panel work, but
+# the upstream MSM/DPU/Adreno side should be built into early test kernels.
+CONFIG_DRM=y
+CONFIG_DRM_MSM=y
+CONFIG_DRM_SIMPLEDRM=y
+CONFIG_DRM_FBDEV_EMULATION=y
+CONFIG_FB=y
+CONFIG_FRAMEBUFFER_CONSOLE=y
+
+# USB rescue path and Type-C core.
+CONFIG_USB=y
+CONFIG_USB_DWC3=y
+CONFIG_USB_DWC3_QCOM=y
+CONFIG_USB_ROLE_SWITCH=y
+CONFIG_USB_GADGET=y
+CONFIG_USB_CONFIGFS=y
+CONFIG_USB_CONFIGFS_NCM=y
+CONFIG_USB_F_NCM=y
+CONFIG_USB_USBNET=y
+CONFIG_USB_NET_CDC_NCM=y
+CONFIG_USB_STORAGE=y
+CONFIG_USB_UAS=y
+CONFIG_TYPEC=y
+CONFIG_TYPEC_TCPM=y
+CONFIG_PHY_SNPS_EUSB2=y
+CONFIG_PHY_QCOM_EUSB2_REPEATER=y
+CONFIG_PHY_NXP_PTN3222=y
+CONFIG_PHY_QCOM_QMP_COMBO=y
+
+# Input/I2C foundations. The stock X710 uses STM FTS1BA90A + Wacom WEZ01;
+# their device-specific drivers are intentionally not invented here.
+CONFIG_INPUT=y
+CONFIG_INPUT_EVDEV=y
+CONFIG_I2C=y
+CONFIG_I2C_CHARDEV=y
+CONFIG_I2C_QCOM_GENI=y
+CONFIG_QCOM_GPI_DMA=y
+CONFIG_KEYBOARD_GPIO=y
+CONFIG_INPUT_PM8941_PWRKEY=y
+
+# PCIe/radio foundations. X710 stock evidence identifies QCA6490/WCN6855-class
+# hardware; ath11k is upstream and can be modular while early boot stays small.
+CONFIG_PCI=y
+CONFIG_PCIE_QCOM=y
+CONFIG_PHY_QCOM_QMP_PCIE=y
+CONFIG_MHI_BUS=y
+CONFIG_WLAN=y
+CONFIG_RFKILL=y
+CONFIG_CFG80211=m
+CONFIG_MAC80211=m
+CONFIG_ATH_COMMON=m
+CONFIG_ATH11K=m
+CONFIG_ATH11K_PCI=m
+
+# Bluetooth QCA transport. Modular is preferable once firmware is supplied by
+# the real rootfs rather than relying on an early initramfs copy.
+CONFIG_BT=m
+CONFIG_BT_HCIUART=m
+CONFIG_BT_HCIUART_SERDEV=y
+CONFIG_BT_HCIUART_H4=y
+CONFIG_BT_HCIUART_QCA=y
+CONFIG_BT_QCA=m
+
+# Remoteproc/RPMSG foundations for later ADSP/audio/sensor work.
+CONFIG_REMOTEPROC=y
+CONFIG_QCOM_RPROC_COMMON=y
+CONFIG_QCOM_Q6V5_COMMON=y
+CONFIG_QCOM_Q6V5_PAS=y
+CONFIG_QCOM_SYSMON=y
+CONFIG_RPMSG=y
+CONFIG_RPMSG_QCOM_GLINK_SMEM=y
+CONFIG_QRTR=y
+CONFIG_QRTR_SMD=y
+CONFIG_QCOM_FASTRPC=y
+
+# Bring-up kernel: Rust is unnecessary and increases toolchain requirements.
+# CONFIG_RUST is not set
