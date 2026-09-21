@@ -25,6 +25,33 @@ for patch in "$patch_dir"/*.patch; do
 done
 shopt -u nullglob
 
+# A patch that is dropped from the queue is *not* reverted by git apply, so a
+# reused worktree silently keeps building it.  Refuse to continue when tracked
+# files are modified that no queued patch claims - the DTS install and the
+# Makefile edits below are deliberate and happen after this check.
+shopt -s nullglob
+queued=("$patch_dir"/*.patch)
+shopt -u nullglob
+unaccounted=
+while read -r changed; do
+    [ -n "$changed" ] || continue
+    claimed=false
+    for patch in "${queued[@]}"; do
+        if grep -q "^+++ b/$changed\$" "$patch"; then
+            claimed=true
+            break
+        fi
+    done
+    [ "$claimed" = true ] || unaccounted="$unaccounted $changed"
+done < <(git -C "$tree" diff --name-only)
+
+if [ -n "$unaccounted" ]; then
+    echo "refusing to build: the worktree carries changes no queued patch claims:" >&2
+    for f in $unaccounted; do echo "  $f" >&2; done
+    echo "revert them (git -C $tree checkout -- <file>) or add the patch back" >&2
+    exit 1
+fi
+
 qcom_dts="$tree/arch/arm64/boot/dts/qcom"
 install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
 

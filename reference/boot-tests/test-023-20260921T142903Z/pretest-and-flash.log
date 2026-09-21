@@ -1,0 +1,10 @@
+=== 2026-09-21T14:29:05Z test 023 pretest + flash init_boot only (kernel unchanged from test 022) ===
+boot         aac25c70483fa08df2a7dc02acd1b3600e18c31a79d76dbb0a969d00b1852ab8
+init_boot    50725fa120166febd1ecaea4cbb510829831b23753cf2ff76cff1920a2aff590
+vendor_boot  139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+D:\android\gts9-test023\init_boot.img: 1 file pushed, 0 skipped. 270.1 MB/s (8388608 bytes in 0.030s)
+expected: bfb9631fb1bc8d31ed4e50b281a8f04d80cd655d57af6724310e35942ce83a25
+8388608 bytes (8.0 M) copied, 0.040336 s, 198 M/s
+bfb9631fb1bc8d31ed4e50b281a8f04d80cd655d57af6724310e35942ce83a25  /dev/block/by-name/init_boot
+=== 2026-09-21T14:29:18Z test 023: reboot into the mainline kernel ===
+reboot command issued

@@ -190,6 +190,14 @@ CONFIG_QCOM_SPMI_ADC5=y
 # That is the failure shape seen in tests 012-019 - no /dev/mmcblk*, no
 # /dev/rtc0 (the RTC state word of test 018 was never written), and no gadget.
 CONFIG_QCOM_PDC=y
+# Rebooting into a named bootloader mode. The board DT already declares
+# reboot-mode (nvmem-reboot-mode, mode-recovery = 0x01) on the PMK8550's SDAM,
+# but neither the SDAM nvmem provider nor the driver were built, so /init could
+# only power the tablet off after a test. With these, a RESTART2 reboot with the
+# string "recovery" leaves 0x01 in the SDAM cell that Samsung's ABL reads, which
+# is the difference between a dead tablet and one that comes back in TWRP.
+CONFIG_NVMEM_SPMI_SDAM=y
+CONFIG_NVMEM_REBOOT_MODE=y
 
 # 3. Usable console. Samsung's Android kernel runs without virtual terminals,
 #    so fbcon never binds the DRM/fbdev emulated console. Enabling VT is what

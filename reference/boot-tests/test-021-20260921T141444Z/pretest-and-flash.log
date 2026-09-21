@@ -1,0 +1,19 @@
+=== 2026-09-21T14:14:46Z test 021 pretest + flash ===
+List of devices attached
+R52X10045LT	recovery
+
+boot         e47e30b3358facbfdc7b039ea3db063ee88ce59260bef260d553e4e86e04b5ec
+init_boot    b13296a1e4c67ce18515f2a5884859543d59f77478bb547091952ed52cedf620
+vendor_boot  139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+--- boot ---
+D:\android\gts9-test021\boot.img: 1 file pushed, 0 skipped. 82.9 MB/s (100663296 bytes in 1.158s)
+expected: a2a9a5047c9afdba90dc5aeb400967645feff54ea962b6ee8636284647910120
+100663296 bytes (96 M) copied, 0.328434 s, 292 M/s
+a2a9a5047c9afdba90dc5aeb400967645feff54ea962b6ee8636284647910120  /dev/block/by-name/boot
+--- init_boot ---
+D:\android\gts9-test021\init_boot.img: 1 file pushed, 0 skipped. 346.7 MB/s (8388608 bytes in 0.023s)
+expected: 50725fa120166febd1ecaea4cbb510829831b23753cf2ff76cff1920a2aff590
+8388608 bytes (8.0 M) copied, 0.024000 s, 333 M/s
+50725fa120166febd1ecaea4cbb510829831b23753cf2ff76cff1920a2aff590  /dev/block/by-name/init_boot
+=== 2026-09-21T14:15:02Z test 021: reboot into the mainline kernel ===
+reboot command issued

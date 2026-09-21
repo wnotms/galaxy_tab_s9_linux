@@ -172,6 +172,24 @@ if [ -n "$missing_optional" ]; then
     echo "note: this BusyBox build does not provide:$missing_optional"
 fi
 
+# Reboot helper: busybox can only ask for a plain restart, and the bootloader
+# mode is chosen by the *string* passed to reboot(2) RESTART2.  Compiled here
+# for the target, freestanding (no libc), one binary per mode.
+reboot_helper_src="$repo_root/boot/gts9-reboot-mode.c"
+command -v clang >/dev/null || fail 'clang is required to build the reboot helper'
+for mode in recovery; do
+    out_bin="$tree/bin/gts9-reboot-$mode"
+    clang --target=aarch64-linux-gnu -nostdlib -static -O2 -fuse-ld=lld \
+          -DGTS9_REBOOT_MODE="\"$mode\"" -o "$out_bin" "$reboot_helper_src" || \
+        fail "cannot build the $mode reboot helper"
+    readelf -h "$out_bin" | grep -q 'Machine:.*AArch64' || \
+        fail "the $mode reboot helper is not an aarch64 ELF"
+    if readelf -l "$out_bin" 2>/dev/null | grep -q INTERP; then
+        fail "the $mode reboot helper is dynamically linked"
+    fi
+    echo "built reboot helper: $out_bin ($(stat -c %s "$out_bin") bytes)"
+done
+
 if [ -n "$modules" ]; then
     echo "including modules from $modules"
     exec_args=(--modules "$modules")

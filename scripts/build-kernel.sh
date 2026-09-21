@@ -89,6 +89,9 @@ required=(
     # PMIC at all on this board (card detect, RTC, ADC), and usb@a600000 cannot
     # resolve its phy interrupts either.
     CONFIG_QCOM_PDC
+    # Reboot-mode support: the SDAM cell comes from SPMI and the driver turns
+    # the reboot command string into the value ABL reads.
+    CONFIG_NVMEM_SPMI_SDAM CONFIG_NVMEM_REBOOT_MODE
     CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
     CONFIG_VT CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE
 )

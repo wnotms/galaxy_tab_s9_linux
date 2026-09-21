@@ -1,31 +1,35 @@
 From: SM-X910 postmarketOS port <gts9uwifi@example.com>
 Subject: [PATCH] phy: nxp: ptn3222: apply the board's register overrides
 
-The SM-X710's high-speed USB path runs through an NXP PTN3222 redriver on i2c
-(the board DTS models it and hangs usb_1_hsphy's `phys` off it).  The generic
-driver only enables the supplies and releases reset; Samsung's downstream
-driver then programs the repeater, and without those four registers the physical
-link never comes up properly.
+The SM-X710's high-speed USB path runs through an NXP PTN3222 redriver on i2c:
+the board DTS models it, hangs usb_1_hsphy's `phys` off it, and Samsung's own
+overlay wires it the same way (`usb-repeater = <&nxp_eusb2_repeater>`).  The
+generic upstream driver only enables the supplies and releases reset; Samsung's
+downstream driver then programs the repeater, and without those registers the
+physical link is marginal.
 
-That is exactly what test 020 showed from the outside: the gadget's device
-descriptor and control interface (MI_00) enumerate, Windows creates COM17, and
-the port cannot be opened because the data interface never appears and the bulk
-path is unusable.  The X910 port carries this patch for the same reason ("the
-generic driver only controls supplies and reset, leaving the physical link
-unusable and the DWC3 core unable to complete its soft reset"), and the values
-are already in this board's DTS:
+That is what test 020 showed from the outside: the gadget's device descriptor
+and control interface (MI_00) enumerate, Windows creates COM17, and the port
+cannot be opened because the data interface never appears.  The X910 port
+carries this patch for the same reason ("the generic driver only controls
+supplies and reset, leaving the physical link unusable and the DWC3 core unable
+to complete its soft reset"), and the values are already in this board's DTS:
 
 	qcom,param-override-seq = <0x20 0x06 0x21 0x07 0x63 0x08 0x03 0x09 0x01 0x0a>;
 
 Each pair is (value, register), applied over the same i2c regmap after the
-documented post-reset interval.  Adapted to this tree; the sibling patch is
+documented post-reset interval.  A probe-time line reports how many override
+cells the driver actually sees, because the report has to be able to show
+whether that is zero on this board.
+
+Adapted to this tree; the sibling patch is
 kernel/patches/configure-nxp-ptn3222-from-dt.patch in
 agcarbajo/ubuntu-galaxy-tab-s9-ultra.
 
 Signed-off-by: SM-X710 bring-up <gts9wifi@example.com>
 ---
 diff --git a/drivers/phy/phy-nxp-ptn3222.c b/drivers/phy/phy-nxp-ptn3222.c
-index 6cb79b5c4..9c1685b5d 100644
+index 6cb79b5c4..dad11e8e8 100644
 --- a/drivers/phy/phy-nxp-ptn3222.c
 +++ b/drivers/phy/phy-nxp-ptn3222.c
 @@ -3,6 +3,7 @@
@@ -96,7 +100,7 @@ index 6cb79b5c4..9c1685b5d 100644
  }
  
  static int ptn3222_exit(struct phy *phy)
-@@ -64,13 +97,33 @@ static int ptn3222_probe(struct i2c_client *client)
+@@ -64,13 +97,36 @@ static int ptn3222_probe(struct i2c_client *client)
  	struct device *dev = &client->dev;
  	struct phy_provider *phy_provider;
  	struct ptn3222 *ptn3222;
@@ -115,6 +119,9 @@ index 6cb79b5c4..9c1685b5d 100644
 +
 +	count = of_property_count_u32_elems(dev->of_node,
 +					    "qcom,param-override-seq");
++	/* Always say what the driver sees: whether the board's overrides arrive
++	 * at probe time is exactly what the bring-up report has to show. */
++	dev_info(dev, "repeater %pOFn: %d override cells\n", dev->of_node, count);
 +	if (count > 0) {
 +		if (count > PTN3222_MAX_INIT_CELLS || count % 2)
 +			return dev_err_probe(dev, -EINVAL,
