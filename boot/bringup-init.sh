@@ -45,6 +45,132 @@ mount_path tmpfs /run
 # list (why a device never appeared) and the regulator/clock summaries.
 mount_path debugfs /sys/kernel/debug
 
+block_size() {
+    bs=$(cat "/sys/class/block/$(basename "$1")/queue/logical_block_size" 2>/dev/null)
+    case "$bs" in ''|*[!0-9]*) bs=512 ;; esac
+    echo "$bs"
+}
+
+gpt_entries() {
+    # gpt_entries <disk> -> "<index> <start_lba> <sectors> <bytes> <name>" for
+    # every named GPT entry, or nothing when the disk carries no readable GPT.
+    dev=$1
+    [ -b "$dev" ] || return 1
+    ss=$(block_size "$dev")
+
+    # GPT header is LBA 1; the fields used here are PartitionEntryLBA (72),
+    # NumberOfPartitionEntries (80) and SizeOfPartitionEntry (84).
+    hdr=$(timeout 10 dd if="$dev" bs="$ss" skip=1 count=1 2>/dev/null | head -c 92 | \
+          od -An -v -tu1 | tr '\n' ' ')
+    [ -n "$hdr" ] || return 1
+    sig=$(echo "$hdr" | awk '{printf "%s%s%s%s%s%s%s%s", $1, $2, $3, $4, $5, $6, $7, $8}')
+    [ "$sig" = 6970733280658284 ] || return 1              # "EFI PART"
+    elba=$(echo "$hdr" | awk '{print $73 + 256*$74 + 65536*$75 + 16777216*$76 + 4294967296*($77 + 256*$78 + 65536*$79 + 16777216*$80)}')
+    nent=$(echo "$hdr" | awk '{print $81 + 256*$82 + 65536*$83 + 16777216*$84}')
+    esz=$(echo "$hdr" | awk '{print $85 + 256*$86 + 65536*$87 + 16777216*$88}')
+    case "$nent$esz$elba" in ''|*[!0-9]*) return 1 ;; esac
+    [ "$nent" -ge 1 ] && [ "$nent" -le 1024 ] || return 1
+    [ "$esz" -ge 128 ] && [ "$esz" -le 4096 ] || return 1
+    [ "$elba" -ge 2 ] && [ "$elba" -le 4096 ] || return 1
+
+    timeout 20 dd if="$dev" bs="$ss" skip="$elba" count=$(( (nent * esz + ss - 1) / ss )) 2>/dev/null | \
+        head -c $((nent * esz)) | od -An -v -tu1 | tr '\n' ' ' | \
+    awk -v nent="$nent" -v esz="$esz" -v ss="$ss" '
+        { for (i = 1; i <= NF; i++) b[i - 1] = $i }
+        END {
+            for (e = 0; e < nent; e++) {
+                o = e * esz
+                s = b[o+32] + 256*b[o+33] + 65536*b[o+34] + 16777216*b[o+35]
+                n = b[o+40] + 256*b[o+41] + 65536*b[o+42] + 16777216*b[o+43]
+                if (s == 0 || n < s) continue
+                esc = ""
+                for (j = 0; j < 36; j++) {
+                    lo = b[o+56+2*j]; hi = b[o+56+2*j+1]
+                    if (lo == 0 && hi == 0) break
+                    if (hi != 0 || lo < 32 || lo > 126) { esc = ""; break }
+                    esc = esc sprintf("\\%03o", lo)
+                }
+                if (esc == "") continue
+                printf "%d %d %d %d %s\n", e, s, n - s + 1, (n - s + 1) * ss, esc
+            }
+        }' | while read -r index start sectors nbytes esc; do
+            # Names are UTF-16LE; only the ASCII subset reaches this point, so
+            # octal escapes are enough to get them back.
+            printf '%d %d %d %d %s\n' "$index" "$start" "$sectors" "$nbytes" \
+                   "$(printf '%b' "$esc")"
+        done
+}
+
+gpt_labelled_device() {
+    # gpt_labelled_device <label> -> the partition device for a GPT-labelled
+    # partition, and only when the kernel's own start/size agree with the GPT.
+    # A wrong device here would mean writing a bootloader control block into
+    # somebody else's partition, so this fails closed like the report does.
+    want=$1
+    for disk in /dev/sd?; do
+        [ -b "$disk" ] || continue
+        ss=$(block_size "$disk")
+        entries=$(gpt_entries "$disk" 2>/dev/null)
+        [ -n "$entries" ] || continue
+        match=$(echo "$entries" | awk -v name="$want" '$5 == name { print; exit }')
+        [ -n "$match" ] || continue
+        set -- $match
+        index=$1; start=$2; nbytes=$4
+        pdev="${disk}$((index + 1))"
+        pbase=$(basename "$pdev")
+        [ -b "$pdev" ] || continue
+        kstart=$(cat "/sys/class/block/$pbase/start" 2>/dev/null)
+        ksize=$(cat "/sys/class/block/$pbase/size" 2>/dev/null)
+        case "$kstart$ksize" in ''|*[!0-9]*) continue ;; esac
+        if [ "$((kstart * 512))" != "$((start * ss))" ] || [ "$((ksize * 512))" != "$nbytes" ]; then
+            log "WARN: GPT and kernel disagree about $pdev ($want)"
+            continue
+        fi
+        echo "$pdev"
+        return 0
+    done
+    return 1
+}
+
+# ---------------------------------------------------------------------------
+# Automatic reboot into recovery, without a working power button or an owner.
+#
+# Android's bootloader control block is the standard way to ask a bootloader for
+# a boot mode: the first bytes of `misc` hold an ASCII command, and ABL boots
+# recovery when it reads "boot-recovery".  That is a *UFS* write, which is why
+# it is usable here at all - the SPMI write that reboot(2) RESTART2 performs
+# through the SDAM reboot-mode cell blocks this board's kernel (tests 024/025).
+#
+# One shot only: if the block already asks for recovery and the bootloader
+# ignored it, /init powers the tablet off instead of resetting it again, so a
+# failed experiment ends rather than looping.
+# ---------------------------------------------------------------------------
+BCB_LABEL=misc
+
+bcb_asks_recovery() {
+    pdev=$(gpt_labelled_device "$BCB_LABEL" 2>/dev/null) || return 1
+    head=$(timeout 5 dd if="$pdev" bs=1 count=16 2>/dev/null | tr -d '\0')
+    [ "$head" = boot-recovery ]
+}
+
+write_bcb_recovery() {
+    pdev=$(gpt_labelled_device "$BCB_LABEL" 2>/dev/null) || {
+        log "WARN: no $BCB_LABEL partition found for the BCB"
+        return 1
+    }
+    dd if=/dev/zero of=/tmp/gts9-bcb.bin bs=2048 count=1 2>/dev/null || return 1
+    printf 'boot-recovery' | dd of=/tmp/gts9-bcb.bin bs=1 seek=0 conv=notrunc 2>/dev/null || return 1
+    timeout 30 dd if=/tmp/gts9-bcb.bin of="$pdev" bs=2048 seek=0 conv=notrunc 2>/dev/null || {
+        log "WARN: could not write the BCB to $pdev"
+        return 1
+    }
+    sync
+    log "BCB written to $pdev ($BCB_LABEL): command=boot-recovery"
+    return 0
+}
+
+
+
 # Emit the milestone only after /dev/kmsg exists, so it reaches sec_log even
 # when the bootloader left us without a working interactive console.
 # Everything printed below is also collected into /tmp/bringup-report.txt and
@@ -406,6 +532,18 @@ if [ -n "$proof_seconds" ]; then
                 sleep "$proof_seconds"
                 sync
                 case "$proof_action" in
+                    recovery-bcb)
+                        # Ask ABL for recovery through the BCB in misc, then
+                        # reset: no SPMI write, no owner, no power button.
+                        log 'userspace proof firing now (BCB boot-recovery + reset)'
+                        if bcb_asks_recovery; then
+                            log 'WARN: misc already asks for recovery and the bootloader did not act on it; powering off instead of looping'
+                            poweroff -f || reboot -f
+                        else
+                            write_bcb_recovery || log 'WARN: the BCB write failed; falling back to a plain reset'
+                            reboot -f
+                        fi
+                        ;;
                     recovery)
                         # reboot(2) RESTART2 with the string "recovery" is what
                         # the nvmem reboot-mode driver turns into 0x01 in the
@@ -505,62 +643,6 @@ REPORT_MIN_BYTES=$((4 * 1024 * 1024))
 # skipped rather than half-executed: a partially written or unverifiable report
 # is worse than a clean "nothing was written", and a wrong write is worse still.
 REPORT_TOOLS='dd od awk sha256sum basename wc cut tr head printf mount umount cp timeout'
-
-block_size() {
-    bs=$(cat "/sys/class/block/$(basename "$1")/queue/logical_block_size" 2>/dev/null)
-    case "$bs" in ''|*[!0-9]*) bs=512 ;; esac
-    echo "$bs"
-}
-
-gpt_entries() {
-    # gpt_entries <disk> -> "<index> <start_lba> <sectors> <bytes> <name>" for
-    # every named GPT entry, or nothing when the disk carries no readable GPT.
-    dev=$1
-    [ -b "$dev" ] || return 1
-    ss=$(block_size "$dev")
-
-    # GPT header is LBA 1; the fields used here are PartitionEntryLBA (72),
-    # NumberOfPartitionEntries (80) and SizeOfPartitionEntry (84).
-    hdr=$(timeout 10 dd if="$dev" bs="$ss" skip=1 count=1 2>/dev/null | head -c 92 | \
-          od -An -v -tu1 | tr '\n' ' ')
-    [ -n "$hdr" ] || return 1
-    sig=$(echo "$hdr" | awk '{printf "%s%s%s%s%s%s%s%s", $1, $2, $3, $4, $5, $6, $7, $8}')
-    [ "$sig" = 6970733280658284 ] || return 1              # "EFI PART"
-    elba=$(echo "$hdr" | awk '{print $73 + 256*$74 + 65536*$75 + 16777216*$76 + 4294967296*($77 + 256*$78 + 65536*$79 + 16777216*$80)}')
-    nent=$(echo "$hdr" | awk '{print $81 + 256*$82 + 65536*$83 + 16777216*$84}')
-    esz=$(echo "$hdr" | awk '{print $85 + 256*$86 + 65536*$87 + 16777216*$88}')
-    case "$nent$esz$elba" in ''|*[!0-9]*) return 1 ;; esac
-    [ "$nent" -ge 1 ] && [ "$nent" -le 1024 ] || return 1
-    [ "$esz" -ge 128 ] && [ "$esz" -le 4096 ] || return 1
-    [ "$elba" -ge 2 ] && [ "$elba" -le 4096 ] || return 1
-
-    timeout 20 dd if="$dev" bs="$ss" skip="$elba" count=$(( (nent * esz + ss - 1) / ss )) 2>/dev/null | \
-        head -c $((nent * esz)) | od -An -v -tu1 | tr '\n' ' ' | \
-    awk -v nent="$nent" -v esz="$esz" -v ss="$ss" '
-        { for (i = 1; i <= NF; i++) b[i - 1] = $i }
-        END {
-            for (e = 0; e < nent; e++) {
-                o = e * esz
-                s = b[o+32] + 256*b[o+33] + 65536*b[o+34] + 16777216*b[o+35]
-                n = b[o+40] + 256*b[o+41] + 65536*b[o+42] + 16777216*b[o+43]
-                if (s == 0 || n < s) continue
-                esc = ""
-                for (j = 0; j < 36; j++) {
-                    lo = b[o+56+2*j]; hi = b[o+56+2*j+1]
-                    if (lo == 0 && hi == 0) break
-                    if (hi != 0 || lo < 32 || lo > 126) { esc = ""; break }
-                    esc = esc sprintf("\\%03o", lo)
-                }
-                if (esc == "") continue
-                printf "%d %d %d %d %s\n", e, s, n - s + 1, (n - s + 1) * ss, esc
-            }
-        }' | while read -r index start sectors nbytes esc; do
-            # Names are UTF-16LE; only the ASCII subset reaches this point, so
-            # octal escapes are enough to get them back.
-            printf '%d %d %d %d %s\n' "$index" "$start" "$sectors" "$nbytes" \
-                   "$(printf '%b' "$esc")"
-        done
-}
 
 try_report_mount() {
     # try_report_mount <device> <label>
