@@ -1,0 +1,22 @@
+2026-09-21T15:55:20Z console open on COM17
+2026-09-21T15:55:23Z SENT  ls /sys/class/drm/
+2026-09-21T15:55:23Z RECV  ls /sys/class/drm/
+2026-09-21T15:55:23Z RECV  version
+2026-09-21T15:55:32Z console session done
+2026-09-21T15:55:33Z console open on COM17
+2026-09-21T15:55:36Z SENT  cat /sys/class/graphics/fb0/name
+2026-09-21T15:55:36Z RECV  cat /sys/class/graphics/fb0/name
+2026-09-21T15:55:36Z RECV  cat: can't open '/sys/class/graphics/fb0/name': No such file or directory
+2026-09-21T15:55:45Z console session done
+2026-09-21T15:55:45Z console open on COM17
+2026-09-21T15:55:48Z SENT  cat /sys/kernel/debug/devices_deferred
+2026-09-21T15:55:48Z RECV  cat /sys/kernel/debug/devices_deferred
+2026-09-21T15:55:48Z RECV  6800000.remoteproc	platform: wait for supplier /smp2p-adsp/slave-kernel
+2026-09-21T15:55:48Z RECV  81d00000.smem	qcom-smem: failed to retrieve hwlock
+2026-09-21T15:55:48Z RECV  17d91000.cpufreq	qcom-cpufreq-hw: Failed to find icc paths
+2026-09-21T15:55:48Z RECV  aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-21T15:55:48Z RECV  smp2p-adsp	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:55:48Z RECV  smp2p-cdsp	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:55:48Z RECV  smp2p-modem	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:55:48Z RECV  1c00000.pcie	qcom-pcie: cannot initialize host
+2026-09-21T15:55:57Z console session done

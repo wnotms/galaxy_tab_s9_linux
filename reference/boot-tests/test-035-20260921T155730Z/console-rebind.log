@@ -1,0 +1,6 @@
+2026-09-21T16:11:28Z console open on COM17
+2026-09-21T16:11:31Z SENT  echo ae94000.dsi > /sys/bus/platform/drivers/msm_dsi/unbind; sleep 1; echo ae94000.dsi > /sys/bus/platform/drivers/msm_dsi/bind; sleep 3; dmesg | grep -i ana38407 | tail -3
+2026-09-21T16:11:31Z RECV  echo ae94000.dsi > /sys/bus/platform/drivers/msm_dsi/unbind; sleep 1; echo
+2026-09-21T16:11:31Z RECV   ae94000.dsi > /sys/bus/platform/drivers/msm_dsi/bind; sleep 3; dmesg | grep -i
+2026-09-21T16:11:31Z RECV  ana38407 | tail -3
+2026-09-21T16:12:13Z console session done

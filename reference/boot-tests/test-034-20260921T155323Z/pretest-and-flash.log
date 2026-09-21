@@ -1,0 +1,12 @@
+=== flash test 034 (boot + vendor_boot; DTB changed) ===
+--- boot ---
+D:\android\gts9-test034\boot.img: 1 file pushed, 0 skipped. 83.0 MB/s (100663296 bytes in 1.156s)
+expected: 013ffa94ae6bd9d2983de74994ca50a4cc6f72c648f3eb67edb3f4af29eebf62
+100663296 bytes (96 M) copied, 0.215793 s, 445 M/s
+013ffa94ae6bd9d2983de74994ca50a4cc6f72c648f3eb67edb3f4af29eebf62  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test034\vendor_boot.img: 1 file pushed, 0 skipped. 809.6 MB/s (100663296 bytes in 0.119s)
+expected: aacde92552c04d66f706bb0079f5f932ce6b34a4891562e45f192e62959d96cb
+100663296 bytes (96 M) copied, 0.222675 s, 431 M/s
+aacde92552c04d66f706bb0079f5f932ce6b34a4891562e45f192e62959d96cb  /dev/block/by-name/vendor_boot
+=== 2026-09-21T15:54:04Z test 034: reboot ===

@@ -89,9 +89,21 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   microSD card, waits ten seconds and resets into TWRP through the Android
   bootloader control block, so a test costs about half a minute and needs no
   hand-carried recovery boot.  `scripts/read-bringup-report.sh` reads the card.
-- Next milestones, in order: **a root filesystem** (M2's last acceptance item -
-  the port's design puts it on the microSD), then **display and input** (M3: the
-  ANA38407 panel and FTS1BA90A touch, which is what makes the tablet usable).
+- **The display pipeline is up** (test 035): the ported ANA38407 panel driver
+  probes, `card0`/`card0-DSI-1` exist, the connector reports `connected`,
+  `2560x1600` appears twice (the panel's 120 Hz and 60 Hz mode sets) and
+  `/proc/fb` is `msm-kmsdrmfb`, so fbcon finally has a real surface.  Two things
+  had to be true at once: `msm.separate_gpu_kms=1` (the Adreno is a component of
+  the msm DRM master and fails without GPU firmware, which fails the card), and
+  that parameter must sit near the *front* of our cmdline - the bootloader appends
+  kilobytes of its own and was dropping the last token of ours.
+- The screen still stays dark for one documented reason: the DDIC answers
+  `00 00 00` instead of `80 00 04` on a cold boot and only a real suspend/resume
+  re-initialises the DSI host enough to recover it (rebinding the host under a
+  live DRM master kills USB instead).  That is the next step for display.
+- Next milestones, in order: **the panel's cold-boot re-initialisation**, then
+  **a root filesystem** (M2's last acceptance item - the port's design puts it on
+  the microSD), then touch/input (M3).
 - **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
   gadget exports the microSD partition read-only, Windows mounts it by itself,
   and the report can be read off the running tablet over USB - no TWRP, no power

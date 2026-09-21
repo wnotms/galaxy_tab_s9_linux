@@ -51,28 +51,14 @@
 		#size-cells = <2>;
 
 		/*
-		 * Console on the panel, through the framebuffer the bootloader is
-		 * already scanning out.
-		 *
-		 * This kernel has no panel driver, the UART is not broken out, and the
-		 * bootloader appends console=null, so before this node there was no way
-		 * to see where a boot stopped: the sec_log ring is overwritten by the
-		 * bootloader on every boot (test 007) and neither storage nor USB
-		 * enumerates yet.  Binding the preserved splash region gives fbcon a
-		 * surface to print the kernel log on, which is exactly the "first
-		 * visual milestone" this port was meant to start from.
-		 *
-		 * 2560x1600 is what the bootloader reports for this panel
-		 * (GTS9_ANA38407_AMSA10FA01), 32bpp is the format it draws in.
+		 * No simple-framebuffer here any more.  The bootloader's splash lives
+		 * in a command-mode panel that never refreshes, so binding that region
+		 * put the console on a surface nobody could see (test 015).  The DRM
+		 * pipeline plus the panel driver below is the console now, and leaving
+		 * the splash node in would make fbcon bind to it instead: fbcon takes
+		 * the first registered framebuffer, and a simple-framebuffer claims one
+		 * before the msm driver has probed.
 		 */
-		framebuffer0: framebuffer@b8000000 {
-			compatible = "simple-framebuffer";
-			reg = <0x0 0xb8000000 0x0 0x2b00000>;
-			width = <2560>;
-			height = <1600>;
-			stride = <10240>;
-			format = "a8r8g8b8";
-		};
 	};
 
 	reserved-memory {
@@ -1492,13 +1478,19 @@
 
 &mdss_dp0 {
 	/*
-	 * The ANA38407 needs one platform suspend/resume after a cold boot.
-	 * Activating the external DPU encoder before that cycle makes the
-	 * platform suspend reset the board.  Keep Type-C negotiation and USB
-	 * host mode alive, but replay its out-of-band HPD after the recovery.
+	 * Off while the panel is what matters.  On mainline the DisplayPort
+	 * controller is one of the components the msm DRM master waits for, and
+	 * here it never finishes probing: test 033 showed msm_dpu (ae01000) and
+	 * msm_dsi (ae94000) both bound while ae90000.displayport-controller sat in
+	 * the deferred list, so /sys/class/drm/ stayed empty and no framebuffer -
+	 * and therefore no console - was ever created.
+	 *
+	 * `qcom,defer-hpd-until-first-resume` is not a mainline property (it comes
+	 * from the SM-X910 port's msm-dp patch), so it explains nothing here; the
+	 * DP comes back when that port's DP support is ported, and Type-C/USB host
+	 * mode is unaffected either way.
 	 */
-	qcom,defer-hpd-until-first-resume;
-	status = "okay";
+	status = "disabled";
 };
 
 &xo_board {
@@ -1542,18 +1534,17 @@
 
 &mdss {
 	/*
-	 * Deliberately disabled for bring-up.  There is no panel driver yet, so the
-	 * msm driver can only take the display over from the bootloader and leave a
-	 * black screen.  Keeping it off lets the simple-framebuffer bound in
-	 * /chosen keep scanning out the splash region, which is where the kernel
-	 * console becomes visible (see the framebuffer0 node above).
+	 * The display pipeline mainline already has for SM8550 (mdss, the DPU, the
+	 * DSI host and the 4nm DSI PHY) plus the panel driver this port adds.  With
+	 * /chosen's simple-framebuffer gone, fbcon binds to the DRM framebuffer and
+	 * the kernel console appears on the panel.
 	 */
-	status = "disabled";
+	status = "okay";
 };
 
 &mdss_dsi0 {
 	vdda-supply = <&vreg_l3e_1p2>;
-	status = "disabled";
+	status = "okay";
 
 	panel@0 {
 		compatible = "samsung,ana38407-amsa10fa01";

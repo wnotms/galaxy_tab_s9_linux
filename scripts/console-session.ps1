@@ -36,11 +36,18 @@ while ((Get-Date) -lt $openDeadline) {
 }
 if (-not $sp -or -not $sp.IsOpen) { Log "could not open $Port"; exit 1 }
 $sp.DiscardInBuffer()
+Start-Sleep -Seconds 3   # let the shell on the tablet come up after the open
 foreach ($cmd in $Commands) {
-    try { $sp.WriteLine($cmd); Log ("SENT  " + $cmd) } catch { Log ("send failed: " + $_.Exception.Message); break }
-    $until = (Get-Date).AddSeconds(6)
-    while ((Get-Date) -lt $until) {
-        try { $line = $sp.ReadLine(); if ($line) { Log ("RECV  " + $line.TrimEnd()) } } catch [TimeoutException] { }
+    $got = 0
+    foreach ($attempt in 1..2) {
+        try { $sp.WriteLine($cmd); Log ("SENT  " + $cmd) } catch { Log ("send failed: " + $_.Exception.Message); break }
+        $until = (Get-Date).AddSeconds(8)
+        while ((Get-Date) -lt $until) {
+            try { $line = $sp.ReadLine(); if ($line) { Log ("RECV  " + $line.TrimEnd()); $got++ } } catch [TimeoutException] { }
+        }
+        if ($got -gt 0) { break }
+        Log "no output for '$cmd'; retrying once"
+        Start-Sleep -Seconds 2
     }
 }
 if ($Then -ne "") {

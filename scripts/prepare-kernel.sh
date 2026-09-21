@@ -35,6 +35,10 @@ shopt -u nullglob
 unaccounted=
 while read -r changed; do
     [ -n "$changed" ] || continue
+    # Files this script maintains below (the DTB registration) are expected.
+    case "$changed" in
+        arch/arm64/boot/dts/qcom/Makefile) continue ;;
+    esac
     claimed=false
     for patch in "${queued[@]}"; do
         if grep -q "^+++ b/$changed\$" "$patch"; then
@@ -68,13 +72,22 @@ fi
 # of being buried in a patch body.
 driver_src="$repo_root/kernel/drivers"
 soc_qcom="$tree/drivers/soc/qcom"
+panel_dir="$tree/drivers/gpu/drm/panel"
 [ -d "$driver_src" ] || { echo "missing driver overlay: $driver_src" >&2; exit 1; }
 [ -d "$soc_qcom" ] || { echo "not a prepared kernel tree: $soc_qcom" >&2; exit 1; }
+[ -d "$panel_dir" ] || { echo "not a prepared kernel tree: $panel_dir" >&2; exit 1; }
 
+# Overlay drivers go where their subsystem expects them: a DRM panel has to sit
+# next to the other panels for Kbuild to pick it up with the patch queue's
+# Kconfig/Makefile entry.
 shopt -s nullglob
 for drv in "$driver_src"/*.c; do
-    echo "installing ${drv##*/}"
-    install -m 0644 "$drv" "$soc_qcom/${drv##*/}"
+    case "${drv##*/}" in
+        panel-*) dest=$panel_dir ;;
+        *)       dest=$soc_qcom ;;
+    esac
+    echo "installing ${drv##*/} -> ${dest##*/}/"
+    install -m 0644 "$drv" "$dest/${drv##*/}"
 done
 shopt -u nullglob
 

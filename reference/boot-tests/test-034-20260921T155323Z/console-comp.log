@@ -1,0 +1,165 @@
+2026-09-21T15:56:09Z console open on COM17
+2026-09-21T15:56:12Z SENT  ls /sys/bus/platform/drivers/msm_mdss/
+2026-09-21T15:56:12Z RECV  ls /sys/bus/platform/drivers/msm_mdss/
+2026-09-21T15:56:12Z RECV  ls: /sys/bus/platform/drivers/msm_mdss/: No such file or directory
+2026-09-21T15:56:21Z console session done
+2026-09-21T15:56:22Z console open on COM17
+2026-09-21T15:56:25Z SENT  ls /sys/bus/platform/drivers/msm/
+2026-09-21T15:56:25Z RECV  ls /sys/bus/platform/drivers/msm/
+2026-09-21T15:56:25Z RECV  ls: /sys/bus/platform/drivers/msm/: No such file or directory
+2026-09-21T15:56:34Z console session done
+2026-09-21T15:56:34Z console open on COM17
+2026-09-21T15:56:37Z SENT  dmesg | grep -i -e msm -e component | tail -12
+2026-09-21T15:56:37Z RECV  dmesg | grep -i -e msm -e component | tail -12
+2026-09-21T15:56:37Z RECV  [    4.392549][   T77] printk: legacy console [ttyMSM0] enabled
+2026-09-21T15:56:37Z RECV  [    5.341288][   T77] msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-21T15:56:37Z RECV  [    5.642274][   T77]  component_bind_all+0x138/0x25c
+2026-09-21T15:56:37Z RECV  [    5.647285][   T77]  msm_drm_init+0x124/0x1b0
+2026-09-21T15:56:37Z RECV  [    5.651772][   T77]  msm_drm_bind+0x38/0x48
+2026-09-21T15:56:37Z RECV  [    5.662341][   T77]  __component_add+0xd4/0x18c
+2026-09-21T15:56:37Z RECV  [    5.666995][   T77]  component_add+0x18/0x28
+2026-09-21T15:56:37Z RECV  [    5.749388][   T77]  msm_dsi_host_register+0x44/0x64
+2026-09-21T15:56:37Z RECV  [    5.754489][   T77]  msm_dsi_manager_register+0x14c/0x1e0
+2026-09-21T15:56:37Z RECV  [    5.925162][   T77] msm_dpu ae01000.display-controller: failed to load adreno gpu
+2026-09-21T15:56:37Z RECV  [    5.933160][   T77] msm_dpu ae01000.display-controller: failed to bind 3d00000.gpu (ops a3xx_ops): -22
+2026-09-21T15:56:37Z RECV  [    5.942755][   T77] msm_dpu ae01000.display-controller: adev bind failed: -22
+2026-09-21T15:56:46Z console session done
+2026-09-21T15:56:47Z console open on COM17
+2026-09-21T15:56:50Z SENT  ls /sys/bus/platform/devices/
+2026-09-21T15:56:50Z RECV  ls /sys/bus/platform/devices/
+2026-09-21T15:56:50Z RECV  100000.clock-controller
+2026-09-21T15:56:50Z RECV  10c3000.rng
+2026-09-21T15:56:50Z RECV  14680000.sram
+2026-09-21T15:56:50Z RECV  1500000.interconnect
+2026-09-21T15:56:50Z RECV  15000000.iommu
+2026-09-21T15:56:50Z RECV  1600000.interconnect
+2026-09-21T15:56:50Z RECV  1680000.interconnect
+2026-09-21T15:56:50Z RECV  16c0000.interconnect
+2026-09-21T15:56:50Z RECV  16e0000.interconnect
+2026-09-21T15:56:50Z RECV  1700000.interconnect
+2026-09-21T15:56:50Z RECV  17420000.timer
+2026-09-21T15:56:50Z RECV  1780000.interconnect
+2026-09-21T15:56:50Z RECV  17a00000.rsc
+2026-09-21T15:56:50Z RECV  17a00000.rsc:bcm-voter
+2026-09-21T15:56:50Z RECV  17a00000.rsc:clock-controller
+2026-09-21T15:56:50Z RECV  17a00000.rsc:power-controller
+2026-09-21T15:56:50Z RECV  17a00000.rsc:regulators-0
+2026-09-21T15:56:50Z RECV  17a00000.rsc:regulators-1
+2026-09-21T15:56:50Z RECV  17a00000.rsc:regulators-3
+2026-09-21T15:56:50Z RECV  17a00000.rsc:regulators-4
+2026-09-21T15:56:50Z RECV  17a00000.rsc:regulators-5
+2026-09-21T15:56:50Z RECV  17d90000.interconnect
+2026-09-21T15:56:50Z RECV  17d91000.cpufreq
+2026-09-21T15:56:50Z RECV  1c00000.pcie
+2026-09-21T15:56:50Z RECV  1c00000.pcie:pcie@0:wifi@0
+2026-09-21T15:56:50Z RECV  1c06000.phy
+2026-09-21T15:56:50Z RECV  1d80000.phy
+2026-09-21T15:56:50Z RECV  1d84000.ufshc
+2026-09-21T15:56:50Z RECV  1d88000.crypto
+2026-09-21T15:56:50Z RECV  1dc4000.dma-controller
+2026-09-21T15:56:50Z RECV  1dfa000.crypto
+2026-09-21T15:56:50Z RECV  1f40000.hwlock
+2026-09-21T15:56:50Z RECV  1fc0000.clock-controller
+2026-09-21T15:56:50Z RECV  24091000.pmu
+2026-09-21T15:56:50Z RECV  240b6400.pmu
+2026-09-21T15:56:50Z RECV  24100000.interconnect
+2026-09-21T15:56:50Z RECV  25000000.system-cache-controller
+2026-09-21T15:56:50Z RECV  320c0000.interconnect
+2026-09-21T15:56:50Z RECV  3d00000.gpu
+2026-09-21T15:56:50Z RECV  3d6a000.gmu
+2026-09-21T15:56:50Z RECV  3d90000.clock-controller
+2026-09-21T15:56:50Z RECV  3da0000.iommu
+2026-09-21T15:56:51Z RECV  408000.mailbox
+2026-09-21T15:56:51Z RECV  6800000.remoteproc
+2026-09-21T15:56:51Z RECV  6aa0000.codec
+2026-09-21T15:56:51Z RECV  6ac0000.codec
+2026-09-21T15:56:51Z RECV  6ae0000.codec
+2026-09-21T15:56:51Z RECV  6b00000.codec
+2026-09-21T15:56:51Z RECV  6d44000.codec
+2026-09-21T15:56:51Z RECV  6e80000.pinctrl
+2026-09-21T15:56:51Z RECV  800000.dma-controller
+2026-09-21T15:56:51Z RECV  81c60000.aop-cmd-db-region
+2026-09-21T15:56:51Z RECV  81d00000.smem
+2026-09-21T15:56:51Z RECV  8804000.mmc
+2026-09-21T15:56:51Z RECV  88e3000.phy
+2026-09-21T15:56:51Z RECV  88e8000.phy
+2026-09-21T15:56:51Z RECV  890000.i2c
+2026-09-21T15:56:51Z RECV  898000.serial
+2026-09-21T15:56:51Z RECV  8c0000.geniqup
+2026-09-21T15:56:51Z RECV  98c000.i2c
+2026-09-21T15:56:51Z RECV  998000.i2c
+2026-09-21T15:56:51Z RECV  9a0000.i2c
+2026-09-21T15:56:51Z RECV  9a4000.i2c
+2026-09-21T15:56:51Z RECV  9c0000.geniqup
+2026-09-21T15:56:51Z RECV  a00000.dma-controller
+2026-09-21T15:56:51Z RECV  a600000.usb
+2026-09-21T15:56:51Z RECV  a8c000.i2c
+2026-09-21T15:56:51Z RECV  a90000.i2c
+2026-09-21T15:56:51Z RECV  a98000.i2c
+2026-09-21T15:56:51Z RECV  a9c000.serial
+2026-09-21T15:56:51Z RECV  aa00000.video-codec
+2026-09-21T15:56:51Z RECV  aaf0000.clock-controller
+2026-09-21T15:56:51Z RECV  ac0000.geniqup
+2026-09-21T15:56:51Z RECV  ac15000.cci
+2026-09-21T15:56:51Z RECV  ac16000.cci
+2026-09-21T15:56:51Z RECV  acb7000.isp
+2026-09-21T15:56:51Z RECV  ade0000.clock-controller
+2026-09-21T15:56:51Z RECV  ae00000.display-subsystem
+2026-09-21T15:56:51Z RECV  ae01000.display-controller
+2026-09-21T15:56:51Z RECV  ae94000.dsi
+2026-09-21T15:56:51Z RECV  ae95000.phy
+2026-09-21T15:56:51Z RECV  af00000.clock-controller
+2026-09-21T15:56:51Z RECV  alarmtimer.0.auto
+2026-09-21T15:56:51Z RECV  b220000.interrupt-controller
+2026-09-21T15:56:51Z RECV  battery
+2026-09-21T15:56:51Z RECV  c271000.thermal-sensor
+2026-09-21T15:56:51Z RECV  c272000.thermal-sensor
+2026-09-21T15:56:51Z RECV  c273000.thermal-sensor
+2026-09-21T15:56:51Z RECV  c300000.power-management
+2026-09-21T15:56:51Z RECV  c3f0000.sram
+2026-09-21T15:56:51Z RECV  c400000.spmi
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@0:adc@9000
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@0:gpio@b800
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@0:nvram@7100
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@0:pon@1300
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@0:rtc@6100
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@1:gpio@8800
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@1:temp-alarm@a00
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@3:gpio@8800
+2026-09-21T15:56:51Z RECV  c400000.spmi:pmic@3:temp-alarm@a00
+2026-09-21T15:56:51Z RECV  d4a80000.rmtfs-region
+2026-09-21T15:56:51Z RECV  dummy_hcd.0
+2026-09-21T15:56:51Z RECV  dummy_udc.0
+2026-09-21T15:56:51Z RECV  f100000.pinctrl
+2026-09-21T15:56:51Z RECV  firmware:scm
+2026-09-21T15:56:51Z RECV  gpio-keys
+2026-09-21T15:56:51Z RECV  hypervisor
+2026-09-21T15:56:51Z RECV  hypervisor:qcom,gh-watchdog
+2026-09-21T15:56:51Z RECV  hypervisor:qcom,gunyah-vm
+2026-09-21T15:56:51Z RECV  hypervisor:qcom,resource-manager-rpc@066b3ea58726bf7b
+2026-09-21T15:56:51Z RECV  interconnect-0
+2026-09-21T15:56:51Z RECV  interconnect-1
+2026-09-21T15:56:51Z RECV  pmu-a510
+2026-09-21T15:56:51Z RECV  pmu-a710
+2026-09-21T15:56:51Z RECV  pmu-a715
+2026-09-21T15:56:51Z RECV  pmu-x3
+2026-09-21T15:56:51Z RECV  psci
+2026-09-21T15:56:51Z RECV  qcom_llcc_edac
+2026-09-21T15:56:51Z RECV  qcomtee
+2026-09-21T15:56:51Z RECV  rear-cam-vio-regulator
+2026-09-21T15:56:51Z RECV  reboot-mode
+2026-09-21T15:56:51Z RECV  regulator-display-avdd
+2026-09-21T15:56:51Z RECV  regulator-panel-ldo
+2026-09-21T15:56:51Z RECV  regulator-speaker-vdd
+2026-09-21T15:56:51Z RECV  sec-kernel-log
+2026-09-21T15:56:51Z RECV  smccc_trng
+2026-09-21T15:56:51Z RECV  smp2p-adsp
+2026-09-21T15:56:51Z RECV  smp2p-cdsp
+2026-09-21T15:56:51Z RECV  smp2p-modem
+2026-09-21T15:56:51Z RECV  soc@0
+2026-09-21T15:56:51Z RECV  sound
+2026-09-21T15:56:51Z RECV  timer
+2026-09-21T15:56:51Z RECV  usb-c-sbu-mux
+2026-09-21T15:56:51Z RECV  vph-pwr-regulator
+2026-09-21T15:56:51Z RECV  wcn6855-pmu
+2026-09-21T15:57:01Z console session done

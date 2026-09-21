@@ -1,0 +1,46 @@
+From: SM-X710 bring-up <gts9wifi@example.com>
+Subject: [PATCH] drm/panel: add the SM-X710's AMSA10FA01 (ANA38407) panel
+
+The panel driver itself is an out-of-tree overlay file
+(kernel/drivers/panel-samsung-ana38407.c, installed by prepare-kernel.sh); this
+patch only wires it into the tree's Kconfig and Makefile, which has to happen in
+the source tree because Kbuild cannot be extended from an out-of-tree file.
+
+The panel is a 2560x1600 command-mode DSI panel with DSC 1.1, so the entry
+depends on DRM_MIPI_DSI and BACKLIGHT_CLASS_DEVICE and selects the VESA DSC
+display helper that drm_dsc_pps_payload_pack() comes from.
+---
+diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+index 7450b2762..474b51020 100644
+--- a/drivers/gpu/drm/panel/Kconfig
++++ b/drivers/gpu/drm/panel/Kconfig
+@@ -853,6 +853,17 @@ config DRM_PANEL_SAMSUNG_S6E88A0_AMS452EF01
+ 	select DRM_MIPI_DSI
+ 	select VIDEOMODE_HELPERS
+ 
++config DRM_PANEL_SAMSUNG_ANA38407
++	tristate "Samsung AMSA10FA01 (Anapass ANA38407) panel"
++	depends on OF
++	depends on DRM_MIPI_DSI
++	depends on BACKLIGHT_CLASS_DEVICE
++	select DRM_DISPLAY_DSC_HELPER
++	help
++	  Say Y or M here if you want to enable support for the Samsung
++	  AMSA10FA01 (Anapass ANA38407 DDIC) 2560x1600 command-mode panel as
++	  fitted to the Galaxy Tab S9 Wi-Fi (SM-X710, gts9wifi).
++
+ config DRM_PANEL_SAMSUNG_ATNA33XC20
+ 	tristate "Samsung ATNA33XC20 eDP panel"
+ 	depends on OF
+diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+index c2c5cf817..f185d5625 100644
+--- a/drivers/gpu/drm/panel/Makefile
++++ b/drivers/gpu/drm/panel/Makefile
+@@ -82,6 +82,7 @@ obj-$(CONFIG_DRM_PANEL_RENESAS_R69328) += panel-renesas-r69328.o
+ obj-$(CONFIG_DRM_PANEL_RONBO_RB070D30) += panel-ronbo-rb070d30.o
+ obj-$(CONFIG_DRM_PANEL_SAMSUNG_AMS581VF01) += panel-samsung-ams581vf01.o
+ obj-$(CONFIG_DRM_PANEL_SAMSUNG_AMS639RQ08) += panel-samsung-ams639rq08.o
++obj-$(CONFIG_DRM_PANEL_SAMSUNG_ANA38407) += panel-samsung-ana38407.o
+ obj-$(CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20) += panel-samsung-atna33xc20.o
+ obj-$(CONFIG_DRM_PANEL_SAMSUNG_DB7430) += panel-samsung-db7430.o
+ obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o

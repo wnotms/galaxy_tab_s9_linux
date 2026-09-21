@@ -1,0 +1,30 @@
+2026-09-21T15:51:10Z console open on COM17
+2026-09-21T15:51:13Z SENT  ls /sys/bus/platform/drivers/msm_dpu/
+2026-09-21T15:51:13Z RECV  ls /sys/bus/platform/drivers/msm_dpu/
+2026-09-21T15:51:13Z RECV  ae01000.display-controller  uevent
+2026-09-21T15:51:13Z RECV  bind                        unbind
+2026-09-21T15:51:13Z RECV  module
+2026-09-21T15:51:22Z console session done
+2026-09-21T15:51:22Z console open on COM17
+2026-09-21T15:51:25Z SENT  ls /sys/bus/platform/drivers/msm_dsi/
+2026-09-21T15:51:25Z RECV  ls /sys/bus/platform/drivers/msm_dsi/
+2026-09-21T15:51:25Z RECV  ae94000.dsi  bind         module       uevent       unbind
+2026-09-21T15:51:34Z console session done
+2026-09-21T15:51:35Z console open on COM17
+2026-09-21T15:51:38Z SENT  ls /sys/class/drm/
+2026-09-21T15:51:38Z RECV  ls /sys/class/drm/
+2026-09-21T15:51:38Z RECV  version
+2026-09-21T15:51:47Z console session done
+2026-09-21T15:51:48Z console open on COM17
+2026-09-21T15:51:51Z SENT  cat /sys/kernel/debug/devices_deferred
+2026-09-21T15:51:51Z RECV  cat /sys/kernel/debug/devices_deferred
+2026-09-21T15:51:51Z RECV  6800000.remoteproc	platform: wait for supplier /smp2p-adsp/slave-kernel
+2026-09-21T15:51:51Z RECV  81d00000.smem	qcom-smem: failed to retrieve hwlock
+2026-09-21T15:51:51Z RECV  17d91000.cpufreq	qcom-cpufreq-hw: Failed to find icc paths
+2026-09-21T15:51:51Z RECV  aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-21T15:51:51Z RECV  smp2p-adsp	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:51:51Z RECV  smp2p-cdsp	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:51:51Z RECV  smp2p-modem	qcom_smp2p: IRQ index 0 not found
+2026-09-21T15:51:51Z RECV  ae90000.displayport-controller
+2026-09-21T15:51:51Z RECV  1c00000.pcie	qcom-pcie: cannot initialize host
+2026-09-21T15:52:00Z console session done

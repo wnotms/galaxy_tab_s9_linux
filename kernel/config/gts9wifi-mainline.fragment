@@ -190,6 +190,12 @@ CONFIG_QCOM_SPMI_ADC5=y
 # That is the failure shape seen in tests 012-019 - no /dev/mmcblk*, no
 # /dev/rtc0 (the RTC state word of test 018 was never written), and no gadget.
 CONFIG_QCOM_PDC=y
+# The AMSA10FA01 panel: mainline has mdss, the DPU, the DSI host and the 4nm DSI
+# PHY for SM8550, but no driver for this panel, so the display stays dark and
+# the kernel console has nowhere to go.  The driver is an overlay file
+# (kernel/drivers/panel-samsung-ana38407.c) wired in by
+# kernel/patches/0004-drm-panel-add-samsung-ana38407.patch.
+CONFIG_DRM_PANEL_SAMSUNG_ANA38407=y
 # Rebooting into a named bootloader mode. The board DT already declares
 # reboot-mode (nvmem-reboot-mode, mode-recovery = 0x01) on the PMK8550's SDAM,
 # but neither the SDAM nvmem provider nor the driver were built, so /init could

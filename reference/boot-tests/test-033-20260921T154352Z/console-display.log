@@ -1,0 +1,19 @@
+2026-09-21T15:46:01Z console open on COM17
+2026-09-21T15:46:01Z SENT  dmesg | grep -iE "ana38407|msm|dsi|dpu|panel" | tail -15
+2026-09-21T15:46:01Z RECV  dmesg | grep -iE "ana38407|msm|dsi|dpu|panel" | tail -15
+2026-09-21T15:46:01Z RECV  [    1.933174][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-21T15:46:02Z RECV  [    1.945101][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000
+2026-09-21T15:46:02Z RECV  [    1.957702][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:02Z RECV  [    1.995439][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-21T15:46:02Z RECV  [    2.274780][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-21T15:46:02Z RECV  [    2.883956][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-21T15:46:02Z RECV  [    3.882415][   T13] sdhci_msm 8804000.mmc: Got CD GPIO
+2026-09-21T15:46:02Z RECV  [    3.886646][   T81] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 167, base_baud = 0) is a MSM
+2026-09-21T15:46:02Z RECV  [    3.902838][   T81] a9c000.serial: ttyMSM0 at MMIO 0xa9c000 (irq = 171, base_baud = 0) is a MSM
+2026-09-21T15:46:02Z RECV  [    4.616987][   T81] printk: legacy console [ttyMSM0] enabled
+2026-09-21T15:46:02Z RECV  [    4.694837][   T81] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:02Z RECV  [    4.737783][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:02Z RECV  [    4.751600][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:02Z RECV  [    4.871024][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:02Z RECV  [    4.884793][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:08Z console session done

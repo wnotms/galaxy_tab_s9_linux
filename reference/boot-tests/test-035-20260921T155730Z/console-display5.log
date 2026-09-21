@@ -1,0 +1,24 @@
+2026-09-21T16:10:26Z console open on COM17
+2026-09-21T16:10:29Z SENT  dmesg | grep -i ana38407
+2026-09-21T16:10:29Z RECV  dmesg | grep -i ana38407
+2026-09-21T16:10:29Z RECV  [    0.000000][    T0] Kernel command line: console=tty0 console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware gts9_proof_code=1800 gts9_proof_action=recovery-bcb gts9_usb_gadget=both  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 \
+2026-09-21T16:10:29Z RECV  [    5.455176][   T13] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-21T16:10:29Z RECV  [    5.457766][   T13] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-21T16:10:29Z RECV  [    5.585056][   T13] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-21T16:10:38Z console session done
+2026-09-21T16:10:39Z console open on COM17
+2026-09-21T16:10:42Z SENT  cat /sys/class/drm/card0-DSI-1/status
+2026-09-21T16:10:42Z RECV  cat /sys/class/drm/card0-DSI-1/status
+2026-09-21T16:10:42Z RECV  connected
+2026-09-21T16:10:51Z console session done
+2026-09-21T16:10:51Z console open on COM17
+2026-09-21T16:10:54Z SENT  cat /proc/fb
+2026-09-21T16:10:54Z RECV  cat /proc/fb
+2026-09-21T16:10:54Z RECV  0 msm-kmsdrmfb
+2026-09-21T16:11:03Z console session done
+2026-09-21T16:11:04Z console open on COM17
+2026-09-21T16:11:07Z SENT  cat /sys/class/drm/card0-DSI-1/modes
+2026-09-21T16:11:07Z RECV  cat /sys/class/drm/card0-DSI-1/modes
+2026-09-21T16:11:07Z RECV  2560x1600
+2026-09-21T16:11:07Z RECV  2560x1600
+2026-09-21T16:11:16Z console session done

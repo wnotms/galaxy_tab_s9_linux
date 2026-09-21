@@ -1,0 +1,138 @@
+2026-09-21T15:46:13Z console open on COM17
+2026-09-21T15:46:13Z SENT  dmesg | grep -i ana38407
+2026-09-21T15:46:13Z RECV  dmesg | grep -i ana38407
+2026-09-21T15:46:13Z RECV  [    0.000000][    T0] Kernel command line: console=tty0 console=ttyMSM0,115200n8 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware gts9_proof_code=1800 gts9_proof_action=recovery-bcb gts9_usb_gadget=both  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 \
+2026-09-21T15:46:19Z console session done
+2026-09-21T15:46:19Z console open on COM17
+2026-09-21T15:46:19Z SENT  cat /sys/class/drm/*/status 2>&1
+2026-09-21T15:46:19Z RECV  cat /sys/class/drm/*/status 2>&1
+2026-09-21T15:46:19Z RECV  cat: can't open '/sys/class/drm/*/status': No such file or directory
+2026-09-21T15:46:25Z console session done
+2026-09-21T15:46:26Z console open on COM17
+2026-09-21T15:46:26Z SENT  cat /proc/fb 2>&1; ls /sys/class/graphics/ 2>&1
+2026-09-21T15:46:26Z RECV  cat /proc/fb 2>&1; ls /sys/class/graphics/ 2>&1
+2026-09-21T15:46:26Z RECV  fbcon
+2026-09-21T15:46:32Z console session done
+2026-09-21T15:46:33Z console open on COM17
+2026-09-21T15:46:33Z SENT  ls /sys/class/backlight/ 2>&1
+2026-09-21T15:46:33Z RECV  ls /sys/class/backlight/ 2>&1
+2026-09-21T15:46:33Z RECV  ae94000.dsi.0
+2026-09-21T15:46:39Z console session done
+2026-09-21T15:46:39Z console open on COM17
+2026-09-21T15:46:39Z SENT  dmesg | grep -iE "msm-drm|dpu|dsi.*probe|panel" | tail -8
+2026-09-21T15:46:39Z RECV  dmesg | grep -iE "msm-drm|dpu|dsi.*probe|panel" | tail -8
+2026-09-21T15:46:39Z RECV  [    1.222771][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:39Z RECV  [    1.300111][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:39Z RECV  [    1.879709][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:39Z RECV  [    1.957702][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:39Z RECV  [    4.737783][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:39Z RECV  [    4.751600][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:39Z RECV  [    4.871024][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-21T15:46:39Z RECV  [    4.884793][   T81] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-21T15:46:45Z console session done
+2026-09-21T15:47:07Z console open on COM17
+2026-09-21T15:47:10Z SENT  dmesg | grep -i ana38407
+2026-09-21T15:47:10Z RECV  dmesg | grep -i ana38407
+2026-09-21T15:47:10Z RECV  [    0.000000][    T0] Kernel command line: console=tty0 console=ttyMSM0,115200n8 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware gts9_proof_code=1800 gts9_proof_action=recovery-bcb gts9_usb_gadget=both  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 \
+2026-09-21T15:47:19Z console session done
+2026-09-21T15:47:20Z console open on COM17
+2026-09-21T15:47:23Z SENT  cat /sys/class/drm/*/status 2>&1
+2026-09-21T15:47:23Z RECV  cat /sys/class/drm/*/status 2>&1
+2026-09-21T15:47:23Z RECV  cat: can't open '/sys/class/drm/*/status': No such file or directory
+2026-09-21T15:47:32Z console session done
+2026-09-21T15:47:32Z console open on COM17
+2026-09-21T15:47:35Z SENT  cat /proc/fb 2>&1
+2026-09-21T15:47:35Z RECV  cat /proc/fb 2>&1
+2026-09-21T15:47:44Z console session done
+2026-09-21T15:47:55Z console open on COM17
+2026-09-21T15:47:58Z SENT  ls -l /sys/bus/platform/devices/ | grep -E "ae00000|ae94000|ae95000"
+2026-09-21T15:47:58Z RECV  ls -l /sys/bus/platform/devices/ | grep -E "ae00000|ae94000|ae95000"
+2026-09-21T15:47:58Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 03:42 ae00000.display-subsystem -> ../../../devices/platform/soc@0/ae00000.display-subsystem
+2026-09-21T15:47:58Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 03:42 ae01000.display-controller -> ../../../devices/platform/soc@0/ae00000.display-subsystem/ae01000.display-controller
+2026-09-21T15:47:58Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 03:42 ae90000.displayport-controller -> ../../../devices/platform/soc@0/ae00000.display-subsystem/ae90000.displayport-controller
+2026-09-21T15:47:58Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 03:42 ae94000.dsi -> ../../../devices/platform/soc@0/ae00000.display-subsystem/ae94000.dsi
+2026-09-21T15:47:58Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 03:42 ae95000.phy -> ../../../devices/platform/soc@0/ae00000.display-subsystem/ae95000.phy
+2026-09-21T15:48:07Z console session done
+2026-09-21T15:48:08Z console open on COM17
+2026-09-21T15:48:11Z SENT  cat /sys/kernel/debug/devices_deferred 2>&1 | grep -iE "ae|drm|panel" 
+2026-09-21T15:48:11Z RECV  cat /sys/kernel/debug/devices_deferred 2>&1 | grep -iE "ae|drm|panel"
+2026-09-21T15:48:11Z RECV  aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-21T15:48:11Z RECV  ae90000.displayport-controller
+2026-09-21T15:48:20Z console session done
+2026-09-21T15:48:20Z console open on COM17
+2026-09-21T15:48:23Z SENT  ls /sys/bus/platform/drivers/ | grep -iE "msm|mdss|dpu|dsi"
+2026-09-21T15:48:23Z RECV  ls /sys/bus/platform/drivers/ | grep -iE "msm|mdss|dpu|dsi"
+2026-09-21T15:48:23Z RECV  hdmi_msm
+2026-09-21T15:48:23Z RECV  msm-dp-display
+2026-09-21T15:48:23Z RECV  msm-mdss
+2026-09-21T15:48:23Z RECV  msm8916-pinctrl
+2026-09-21T15:48:23Z RECV  msm8953-pinctrl
+2026-09-21T15:48:23Z RECV  msm8976-pinctrl
+2026-09-21T15:48:23Z RECV  msm8994-pinctrl
+2026-09-21T15:48:23Z RECV  msm8996-pinctrl
+2026-09-21T15:48:24Z RECV  msm8998-pinctrl
+2026-09-21T15:48:24Z RECV  msm_dpu
+2026-09-21T15:48:24Z RECV  msm_dsi
+2026-09-21T15:48:24Z RECV  msm_dsi_phy
+2026-09-21T15:48:24Z RECV  msm_hdmi_phy
+2026-09-21T15:48:24Z RECV  msm_mdp
+2026-09-21T15:48:24Z RECV  qcom-qmp-msm8996-pcie-phy
+2026-09-21T15:48:24Z RECV  sdhci_msm
+2026-09-21T15:48:33Z console session done
+2026-09-21T15:48:33Z console open on COM17
+2026-09-21T15:48:36Z SENT  dmesg | grep -iE "msm|dpu|drm|mdss|dsi_|panel" | grep -viE "Fixed dependency" | head -20
+2026-09-21T15:48:36Z RECV  dmesg | grep -iE "msm|dpu|drm|mdss|dsi_|panel" | grep -viE "Fixed dependen
+2026-09-21T15:48:36Z RECV  cy" | head -20
+2026-09-21T15:48:36Z RECV  [    0.000000][    T0] Kernel command line: console=tty0 console=ttyMSM0,115200n8 loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused gts9_sec_log=0x880200000,0x200000 firmware_class.path=/lib/firmware gts9_proof_code=1800 gts9_proof_action=recovery-bcb gts9_usb_gadget=both  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 \
+2026-09-21T15:48:36Z RECV  [    0.000000][    T0] Kernel command line: msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-21T15:48:36Z RECV  [    2.594222][    T1] disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
+2026-09-21T15:48:36Z RECV  [    3.882415][   T13] sdhci_msm 8804000.mmc: Got CD GPIO
+2026-09-21T15:48:36Z RECV  [    3.886646][   T81] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 167, base_baud = 0) is a MSM
+2026-09-21T15:48:36Z RECV  [    3.902838][   T81] a9c000.serial: ttyMSM0 at MMIO 0xa9c000 (irq = 171, base_baud = 0) is a MSM
+2026-09-21T15:48:36Z RECV  [    4.616987][   T81] printk: legacy console [ttyMSM0] enabled
+2026-09-21T15:48:36Z RECV  [   16.732582][   T70] auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-21T15:48:45Z console session done
+2026-09-21T15:48:54Z console open on COM17
+2026-09-21T15:48:57Z SENT  ls /proc/device-tree/soc@0/ | grep -iE "ae0|display" 
+2026-09-21T15:48:57Z RECV  ls /proc/device-tree/soc@0/ | grep -iE "ae0|display"
+2026-09-21T15:48:57Z RECV  codec@6ae0000
+2026-09-21T15:48:57Z RECV  display-subsystem@ae00000
+2026-09-21T15:49:06Z console session done
+2026-09-21T15:49:06Z console open on COM17
+2026-09-21T15:49:09Z SENT  cat /proc/device-tree/soc@0/display-subsystem@ae00000/status 2>&1; echo ---
+2026-09-21T15:49:09Z RECV  cat /proc/device-tree/soc@0/display-subsystem@ae00000/status 2>&1; echo --
+2026-09-21T15:49:09Z RECV  -
+2026-09-21T15:49:09Z RECV  okay ---
+2026-09-21T15:49:18Z console session done
+2026-09-21T15:49:19Z console open on COM17
+2026-09-21T15:49:22Z SENT  cat /proc/device-tree/soc@0/display-subsystem@ae00000/dsi@ae94000/status 2>&1; echo ---
+2026-09-21T15:49:22Z RECV  cat /proc/device-tree/soc@0/display-subsystem@ae00000/dsi@ae94000/status 2
+2026-09-21T15:49:22Z RECV  >&1; echo ---
+2026-09-21T15:49:22Z RECV  okay ---
+2026-09-21T15:49:31Z console session done
+2026-09-21T15:49:31Z console open on COM17
+2026-09-21T15:49:35Z SENT  ls /sys/bus/platform/drivers/ | wc -l; ls /sys/bus/platform/drivers/ | head -20
+2026-09-21T15:49:35Z RECV  ls /sys/bus/platform/drivers/ | wc -l; ls /sys/bus/platform/drivers/ | hea
+2026-09-21T15:49:35Z RECV  d -20
+2026-09-21T15:49:35Z RECV  190
+2026-09-21T15:49:35Z RECV  GICv5 IWB
+2026-09-21T15:49:35Z RECV  Hisilicon MBIGEN-V2
+2026-09-21T15:49:35Z RECV  adreno
+2026-09-21T15:49:35Z RECV  alarmtimer
+2026-09-21T15:49:35Z RECV  arch-timer-mmio
+2026-09-21T15:49:35Z RECV  arm-scmi
+2026-09-21T15:49:35Z RECV  arm-smmu
+2026-09-21T15:49:35Z RECV  armv8-pmu
+2026-09-21T15:49:35Z RECV  basic-mmio-gpio
+2026-09-21T15:49:35Z RECV  bcm_voter
+2026-09-21T15:49:35Z RECV  clk-rpmh
+2026-09-21T15:49:35Z RECV  cmd-db
+2026-09-21T15:49:35Z RECV  disp_cc-sm8550
+2026-09-21T15:49:35Z RECV  dummy_hcd
+2026-09-21T15:49:35Z RECV  dummy_udc
+2026-09-21T15:49:35Z RECV  dw-apb-uart
+2026-09-21T15:49:35Z RECV  dw-pcie
+2026-09-21T15:49:35Z RECV  dwc3
+2026-09-21T15:49:35Z RECV  dwc3-generic-plat
+2026-09-21T15:49:35Z RECV  dwc3-of-simple
+2026-09-21T15:49:44Z console session done
