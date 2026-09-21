@@ -713,39 +713,40 @@ display_recover() {
     fi
 
     # What the panel needs is the DSI host and PHY initialised from scratch
-    # rather than inherited from the state the bootloader left behind.  A DPMS
-    # off/on cycle is the safe way to get that: msm_dsi_host_disable drops the
-    # host's runtime-PM reference, so the host and PHY power down, and enabling
-    # the connector again brings them back up through their probe-time init.
+    # rather than inherited from the state the bootloader left behind, and a
+    # framebuffer blank/unblank cycle does exactly that: blanking disables the
+    # CRTC, so the DSI bridge's post_disable drops the host's runtime-PM
+    # reference and host and PHY power down; unblanking brings them back up
+    # through the probe-time init path and reads the panel id back.
     #
-    # This replaced `echo mem > /sys/power/state`.  A full suspend does the same
-    # thing to the DSI link, but it also needs a wakeup source: the PMIC power
+    # The connector's `dpms` attribute was the first attempt and does not work
+    # here - `echo off > card0-DSI-1/dpms` fails, so the link is never torn down
+    # and the panel stays at 00 00 00.
+    #
+    # This also replaced `echo mem > /sys/power/state`.  A full suspend does the
+    # same thing to the DSI link, but it needs a wakeup source: the PMIC power
     # key turned out not to wake this board (test 036) and `echo freeze` did not
     # either, so a suspend there means a tablet that has to be force-reset.  A
-    # DPMS cycle cannot strand anything.
-    # Leave the USB controller able to wake the tablet too: a suspend without a
-    # wakeup source is what stranded test 036.
-    [ -w /sys/bus/platform/devices/a600000.usb/power/wakeup ] && \
-        echo enabled > /sys/bus/platform/devices/a600000.usb/power/wakeup 2>/dev/null
-    log 'display: the panel is in its cold-boot state (id 00 00 00); cycling DPMS to re-initialise the DSI link'
-    if [ ! -w /sys/class/drm/card0-DSI-1/dpms ]; then
-        log 'WARN: display: no writable dpms attribute; cannot recover the panel'
+    # blank cycle cannot strand anything.
+    log 'display: the panel is in its cold-boot state (id 00 00 00); cycling the framebuffer blank to re-initialise the DSI link'
+    if [ ! -w /sys/class/graphics/fb0/blank ]; then
+        log 'WARN: display: no writable fb0/blank; cannot recover the panel'
         return 0
     fi
-    if timeout 30 sh -c 'echo off > /sys/class/drm/card0-DSI-1/dpms' 2>/dev/null; then
+    if timeout 30 sh -c 'echo 1 > /sys/class/graphics/fb0/blank' 2>/dev/null; then
         sleep 2
-        if timeout 30 sh -c 'echo on > /sys/class/drm/card0-DSI-1/dpms' 2>/dev/null; then
+        if timeout 30 sh -c 'echo 0 > /sys/class/graphics/fb0/blank' 2>/dev/null; then
             sleep 3
-            if dmesg 2>/dev/null | grep -q 'panel id 00 00 00'; then
-                log 'WARN: display: the panel still answers 00 00 00 after the DPMS cycle'
+            if dmesg 2>/dev/null | grep -q 'ana38407 panel id: 80 00 04'; then
+                log 'display: the blank cycle re-initialised the link; the panel answered its id'
             else
-                log 'display: the DPMS cycle re-initialised the link; the panel answered its id'
+                log 'WARN: display: the panel did not answer 80 00 04 after the blank cycle'
             fi
         else
-            log 'WARN: display: could not turn the connector back on'
+            log 'WARN: display: could not unblank the framebuffer'
         fi
     else
-        log 'WARN: display: could not turn the connector off'
+        log 'WARN: display: could not blank the framebuffer'
     fi
     return 0
 }
