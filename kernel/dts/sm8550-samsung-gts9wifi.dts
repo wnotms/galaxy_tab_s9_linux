@@ -330,6 +330,14 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&volume_up_n>, <&hall_cover_n>;
 
+		/*
+		 * The volume keys are on TLMM lines and need wakeup-source to bring
+		 * the tablet back from a suspend; the power key below is a PMIC input
+		 * and is a wakeup source on its own.  Both matter for the panel's
+		 * cold-boot recovery, which needs a suspend/resume cycle.
+		 */
+		wakeup-source;
+
 		key-volume-up {
 			label = "Volume Up";
 			linux,code = <KEY_VOLUMEUP>;
@@ -1050,6 +1058,17 @@
  * SM5714 fuel-gauge die temperature.  The stock DT exposes it as PMK8550 ADC5
  * Gen3 virtual channel 0x144 (PM8550 SID 1, AMUX1 with 100 kOhm pull-up).
  */
+&pon_pwrkey {
+	/*
+	 * Mainline ships this disabled.  Enabling it gives the tablet a working
+	 * power button (input event, and a wakeup source), which is what makes a
+	 * suspend/resume cycle safe to attempt from /init: without it a suspend on
+	 * this board has no way back, which is exactly how the `echo freeze` test
+	 * left the tablet asleep.
+	 */
+	status = "okay";
+};
+
 &pmk8550 {
 	pmk8550_vadc: adc@9000 {
 		compatible = "qcom,spmi-adc5-gen3";

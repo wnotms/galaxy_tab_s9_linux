@@ -1,0 +1,9 @@
+2026-09-21T16:28:36Z console open on COM17
+2026-09-21T16:28:39Z SENT  echo 0 > /sys/class/graphics/fb0/blank; sleep 1; echo GTS9 MAINLINE CONSOLE ON THE PANEL > /dev/tty0; sleep 1; cat /sys/class/graphics/fb0/blank; dmesg | tail -2
+2026-09-21T16:28:39Z RECV  echo 0 > /sys/class/graphics/fb0/blank; sleep 1; echo GTS9 MAINLINE CONSOL
+2026-09-21T16:28:39Z RECV  E ON THE PANEL > /dev/tty0; sleep 1; cat /sys/class/graphics/fb0/blank; dmesg |
+2026-09-21T16:28:39Z RECV  tail -2
+2026-09-21T16:28:41Z RECV  0
+2026-09-21T16:28:41Z RECV  [   17.646587][   T10] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-21T16:28:41Z RECV  [   36.130142][   T94] regulator: Not disabling unused regulators
+2026-09-21T16:28:47Z console session done

@@ -307,11 +307,14 @@ USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-shell}
 # Seconds to leave the gadget alone before collecting the report, so a host can
 # talk to it first (used by the serial probe).
 USB_WAIT=${GTS9_USB_WAIT:-0}
+# 1 = try to recover the panel's cold-boot state (see display_recover below).
+DISPLAY_RECOVER=${GTS9_DISPLAY_RECOVER:-0}
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
         gts9_usb_console=*) USB_CONSOLE_MODE=${arg#gts9_usb_console=} ;;
         gts9_usb_wait=*) USB_WAIT=${arg#gts9_usb_wait=} ;;
+        gts9_display_recover=*) DISPLAY_RECOVER=${arg#gts9_display_recover=} ;;
     esac
 done
 gadget_setup=0
@@ -675,6 +678,77 @@ case "$USB_WAIT" in
         ;;
 esac
 
+# ---------------------------------------------------------------------------
+# The panel's cold-boot state.
+#
+# The DDIC answers 00 00 00 instead of 80 00 04 on a cold boot even though the
+# link is up, and the panel then stays dark; the SM-X910 port's driver records
+# that only a *from-scratch* re-initialisation of the DSI host and PHY recovers
+# it.  Replaying the panel's own init sequence, toggling reset and cycling its
+# supplies were all measured not to help, and so did unbinding the DSI host under
+# a live DRM master (test 035: USB re-enumeration broke).
+#
+# What has not been tried is the safe version of "from scratch": unbind the DRM
+# master itself, which unprepares the panel and tears the whole display pipeline
+# down, then bind it again so every piece - host, PHY, panel - probes fresh.
+# That is a driver rebind rather than a system suspend, so it cannot leave the
+# tablet asleep with no wakeup source, which is what `echo freeze` did.
+# ---------------------------------------------------------------------------
+display_recover() {
+    [ "$DISPLAY_RECOVER" = 1 ] || return 0
+
+    # The master only exists once the pipeline probed; give it a moment.
+    i=0
+    while [ "$i" -lt 20 ] && [ ! -e /sys/class/drm/card0-DSI-1 ]; do
+        sleep 1
+        i=$((i + 1))
+    done
+    if [ ! -e /sys/class/drm/card0-DSI-1 ]; then
+        log 'display: no DSI connector appeared; nothing to recover'
+        return 0
+    fi
+    if ! dmesg 2>/dev/null | grep -q 'panel id 00 00 00'; then
+        log 'display: the panel answered its id, no recovery needed'
+        return 0
+    fi
+
+    # What the panel needs is the DSI host and PHY initialised from scratch
+    # rather than inherited from the state the bootloader left behind.  A DPMS
+    # off/on cycle is the safe way to get that: msm_dsi_host_disable drops the
+    # host's runtime-PM reference, so the host and PHY power down, and enabling
+    # the connector again brings them back up through their probe-time init.
+    #
+    # This replaced `echo mem > /sys/power/state`.  A full suspend does the same
+    # thing to the DSI link, but it also needs a wakeup source: the PMIC power
+    # key turned out not to wake this board (test 036) and `echo freeze` did not
+    # either, so a suspend there means a tablet that has to be force-reset.  A
+    # DPMS cycle cannot strand anything.
+    # Leave the USB controller able to wake the tablet too: a suspend without a
+    # wakeup source is what stranded test 036.
+    [ -w /sys/bus/platform/devices/a600000.usb/power/wakeup ] && \
+        echo enabled > /sys/bus/platform/devices/a600000.usb/power/wakeup 2>/dev/null
+    log 'display: the panel is in its cold-boot state (id 00 00 00); cycling DPMS to re-initialise the DSI link'
+    if [ ! -w /sys/class/drm/card0-DSI-1/dpms ]; then
+        log 'WARN: display: no writable dpms attribute; cannot recover the panel'
+        return 0
+    fi
+    if timeout 30 sh -c 'echo off > /sys/class/drm/card0-DSI-1/dpms' 2>/dev/null; then
+        sleep 2
+        if timeout 30 sh -c 'echo on > /sys/class/drm/card0-DSI-1/dpms' 2>/dev/null; then
+            sleep 3
+            if dmesg 2>/dev/null | grep -q 'panel id 00 00 00'; then
+                log 'WARN: display: the panel still answers 00 00 00 after the DPMS cycle'
+            else
+                log 'display: the DPMS cycle re-initialised the link; the panel answered its id'
+            fi
+        else
+            log 'WARN: display: could not turn the connector back on'
+        fi
+    else
+        log 'WARN: display: could not turn the connector off'
+    fi
+    return 0
+}
 # Collect the USB state now that the gadget has been attempted, then get the
 # whole report off the device.
 report 'usb device controllers' ls -l /sys/class/udc
@@ -894,6 +968,11 @@ if [ "$gadget_setup" = 1 ]; then
             ;;
     esac
 fi
+
+# The panel's cold-boot recovery runs only now, after the report has been
+# collected and persisted: whatever it does to the display, the evidence from
+# this boot is already on the medium.
+display_recover
 
 # ---------------------------------------------------------------------------
 # The short cycle the owner asked for: once everything this boot was going to do

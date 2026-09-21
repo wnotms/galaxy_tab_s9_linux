@@ -1,0 +1,23 @@
+2026-09-21T16:21:06Z console open on COM17
+2026-09-21T16:21:09Z SENT  ls -l /sys/bus/platform/devices/ae00000.display-subsystem/driver; ls /sys/bus/platform/drivers/ | grep -c .; ls /sys/bus/platform/drivers/ | grep msm
+2026-09-21T16:21:09Z RECV  ls -l /sys/bus/platform/devices/ae00000.display-subsystem/driver; ls /sys/
+2026-09-21T16:21:09Z RECV  bus/platform/drivers/ | grep -c .; ls /sys/bus/platform/drivers/ | grep msm
+2026-09-21T16:21:09Z RECV  lrwxrwxrwx    1 0        0                0 Sep 16 04:16 /sys/bus/platform/devices/ae00000.display-subsystem/driver -> ../../../../bus/platform/drivers/msm-mdss
+2026-09-21T16:21:10Z RECV  190
+2026-09-21T16:21:10Z RECV  hdmi_msm
+2026-09-21T16:21:10Z RECV  msm-dp-display
+2026-09-21T16:21:10Z RECV  msm-mdss
+2026-09-21T16:21:10Z RECV  msm8916-pinctrl
+2026-09-21T16:21:10Z RECV  msm8953-pinctrl
+2026-09-21T16:21:10Z RECV  msm8976-pinctrl
+2026-09-21T16:21:10Z RECV  msm8994-pinctrl
+2026-09-21T16:21:10Z RECV  msm8996-pinctrl
+2026-09-21T16:21:10Z RECV  msm8998-pinctrl
+2026-09-21T16:21:10Z RECV  msm_dpu
+2026-09-21T16:21:10Z RECV  msm_dsi
+2026-09-21T16:21:10Z RECV  msm_dsi_phy
+2026-09-21T16:21:10Z RECV  msm_hdmi_phy
+2026-09-21T16:21:10Z RECV  msm_mdp
+2026-09-21T16:21:10Z RECV  qcom-qmp-msm8996-pcie-phy
+2026-09-21T16:21:10Z RECV  sdhci_msm
+2026-09-21T16:21:19Z console session done

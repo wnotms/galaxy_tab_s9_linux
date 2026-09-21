@@ -1,0 +1,4 @@
+kernel_source_commit=6178e80d7c0ccee72076869661f2403329587996
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+hypothesis=with the PMIC power key and the volume keys as wakeup sources, a suspend/resume during /init re-initialises the DSI host and PHY, so the panel answers 80 00 04 and the console becomes visible
+started_utc=2026-09-21T16:23:04Z

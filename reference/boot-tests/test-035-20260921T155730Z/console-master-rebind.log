@@ -1,0 +1,12 @@
+2026-09-21T16:20:34Z console open on COM17
+2026-09-21T16:20:37Z SENT  dmesg | grep -i ana38407 | tail -1; echo ae00000.display-subsystem > /sys/bus/platform/drivers/msm/unbind; sleep 2; echo ae00000.display-subsystem > /sys/bus/platform/drivers/msm/bind; sleep 3; dmesg | grep -i ana38407 | tail -3
+2026-09-21T16:20:37Z RECV  dmesg | grep -i ana38407 | tail -1; echo ae00000.display-subsystem > /sys/
+2026-09-21T16:20:37Z RECV  bus/platform/drivers/msm/unbind; sleep 2; echo ae00000.display-subsystem > /sys/
+2026-09-21T16:20:37Z RECV  bus/platform/drivers/msm/bind; sleep 3; dmesg | grep -i ana38407 | tail -3
+2026-09-21T16:20:37Z RECV  [    5.484841][   T76] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-21T16:20:37Z RECV  /bin/sh: can't create /sys/bus/platform/drivers/msm/unbind: nonexistent directory
+2026-09-21T16:20:39Z RECV  /bin/sh: can't create /sys/bus/platform/drivers/msm/bind: nonexistent directory
+2026-09-21T16:20:42Z RECV  [    5.348548][   T76] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-21T16:20:42Z RECV  [    5.353943][   T76] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-21T16:20:42Z RECV  [    5.484841][   T76] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-21T16:20:45Z console session done

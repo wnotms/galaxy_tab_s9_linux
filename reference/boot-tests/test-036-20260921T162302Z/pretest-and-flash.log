@@ -1,0 +1,20 @@
+=== 2026-09-21T16:23:40Z flash test 036 (boot DTB, init_boot, vendor_boot) ===
+--- boot ---
+D:\android\gts9-test036\boot.img: 1 file pushed, 0 skipped. 80.7 MB/s (100663296 bytes in 1.189s)
+expected: 3add1ae978531f49f85d41e3564ad359f3580a646db6bceca6342772a122931b
+100663296 bytes (96 M) copied, 0.343694 s, 279 M/s
+3add1ae978531f49f85d41e3564ad359f3580a646db6bceca6342772a122931b  /dev/block/by-name/boot
+--- init_boot ---
+D:\android\gts9-test036\init_boot.img: 1 file pushed, 0 skipped. 177.7 MB/s (8388608 bytes in 0.045s)
+expected: d40517a964204326c734a641e8bec60875fdc229da4781eeaeab33cdce0230d1
+8388608 bytes (8.0 M) copied, 0.039935 s, 200 M/s
+d40517a964204326c734a641e8bec60875fdc229da4781eeaeab33cdce0230d1  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test036\vendor_boot.img: 1 file pushed, 0 skipped. 821.6 MB/s (100663296 bytes in 0.117s)
+expected: 2eb8b0217ad547d159151d4c65fcc267e0c619535adb78781963a2cd72a7003a
+100663296 bytes (96 M) copied, 0.337654 s, 284 M/s
+2eb8b0217ad547d159151d4c65fcc267e0c619535adb78781963a2cd72a7003a  /dev/block/by-name/vendor_boot
+--- clear any stale BCB ---
+1+0 records in
+1+0 records out
+2048 bytes (2.0 K) copied, 0.001836 s, 1.0 M/s

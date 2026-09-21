@@ -1,0 +1,6 @@
+2026-09-21T16:16:33Z console open on COM17
+2026-09-21T16:16:36Z SENT  dmesg | grep -i ana38407 | tail -2
+2026-09-21T16:16:36Z RECV  dmesg | grep -i ana38407 | tail -2
+2026-09-21T16:16:36Z RECV  [    5.357014][   T12] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-21T16:16:36Z RECV  [    5.481137][   T12] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-21T16:16:45Z console session done
