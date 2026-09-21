@@ -225,20 +225,48 @@ the 82 B empty legacy-LZ4 stream; and the `boot.img` payload is exactly
 
 The test bundle was built in a temporary directory and deleted afterwards: its
 initramfs contained a placeholder `/init`, so it is a pipeline test, not a
-flashable image.
+flashable image. Section 9 replaces that placeholder with a real BusyBox tree,
+and the validator now rejects an `/init`-less archive outright.
 
 ## 8. What this does and does not prove
 
-**compiled** — the statements above.
+**compiled** and **packaged** — the statements above, plus the first-boot
+additions below.
 
 **not booted**: no artifact in this repository has been flashed or booted on the
 tablet. Per `AGENT.md`, an empty pstore is not evidence of a kernel crash, and
 a driver that compiles is not a driver that probes. The boot bundle above was
 assembled and inspected offline; that proves the packaging, not the boot.
 
-Still required before a physical test:
+## 9. First-boot readiness added after the initial build
 
-1. a real initramfs tree for `make-initramfs.sh --root` (the script packs one,
-   it does not generate userspace);
-2. firmware files on the rootfs (`ath11k` QCA6490, `adreno` a740, `qcom` ADSP);
-3. the M3 panel driver if display is required at first boot.
+| Piece | State |
+|---|---|
+| persistent console | `CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG=y`, driver `kernel/drivers/samsung-gts9wifi-sec-log.c`, compiled into vmlinux with no warnings; the LOGM layout is a bring-up adaptation from the physically validated SM-X910 port and is **not** X710-verified |
+| real userspace | `scripts/build-bringup-initramfs.sh` builds a pinned static BusyBox tree with `boot/bringup-init.sh` as `/init`; 1,146,125 B, byte-reproducible, applets present, no modules by design |
+| packaging gate | `scripts/validate-boot-bundle.sh` re-extracts kernel, appended DTB, vendor ramdisk and AVB footers; fails hard when the initramfs has no executable `/init` |
+| device gate | `scripts/check-device-layout.sh` read-only partition audit; the sibling values are an assumption until it confirms them on the tablet |
+| procedure | `docs/FIRST_BOOT_TEST.md` (audit → backup → recovery plan → build → validate → manual flash → test → A–E classification → evidence) and `reference/stock/BOOT_CHAIN.md` |
+
+End-to-end host-side run of the current tree:
+
+```text
+build-kernel.sh            Image.gz ddf356a0…  DTB 1c105090…  config aa414454…
+build-bringup-initramfs.sh 1,146,125 B legacy-LZ4, sha256 4c2764ba…
+build-boot-bundle.sh       boot/init_boot/vendor_boot/dtbo/vbmeta at partition size
+validate-boot-bundle.sh    BOOT BUNDLE VALIDATION PASSED (exit 0)
+```
+
+Still required before the first physical test is meaningful:
+
+1. the owner runs `check-device-layout.sh` on the tablet and reconciles the
+   real partition sizes with `reference/stock/BOOT_CHAIN.md`;
+2. the mandatory stock boot-chain backup;
+3. firmware files on any later rootfs (`ath11k` QCA6490, `adreno` a740, `qcom`
+   ADSP) — not needed for this test;
+4. the M3 panel driver if display is required at first boot — also not needed
+   for this test, which is judged on the persistent log and the initramfs.
+
+The project state after this round is **ready for the first controlled physical
+boot test**. It is not "hardware verified", and it must not be described that
+way until the owner has run `docs/FIRST_BOOT_TEST.md` and recorded the result.
