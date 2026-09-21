@@ -1,0 +1,13 @@
+=== 2026-09-21T13:20:52Z test 015: panel console ===
+--- boot ---
+D:\android\gts9-test015\boot.img: 1 file pushed, 0 skipped. 99.8 MB/s (100663296 bytes in 0.962s)
+457f276e89631d5efcfa99267ad72f9706c8cf348ed907110427db9005a234da  /tmp/gts9-test015-boot.img
+expected: 457f276e89631d5efcfa99267ad72f9706c8cf348ed907110427db9005a234da
+100663296 bytes (96 M) copied, 0.255845 s, 375 M/s
+457f276e89631d5efcfa99267ad72f9706c8cf348ed907110427db9005a234da  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test015\vendor_boot.img: 1 file pushed, 0 skipped. 662.0 MB/s (100663296 bytes in 0.145s)
+8a0c5147e87a2b27867cb2b4b7ea0f9fd67c1d3cfc7db228b96640819e53f081  /tmp/gts9-test015-vendor_boot.img
+expected: 8a0c5147e87a2b27867cb2b4b7ea0f9fd67c1d3cfc7db228b96640819e53f081
+100663296 bytes (96 M) copied, 0.489804 s, 196 M/s
+8a0c5147e87a2b27867cb2b4b7ea0f9fd67c1d3cfc7db228b96640819e53f081  /dev/block/by-name/vendor_boot

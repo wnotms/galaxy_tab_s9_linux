@@ -1,0 +1,13 @@
+=== 2026-09-21T13:24:30Z test 016: UFS + report on internal storage ===
+--- init_boot ---
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+expected: a1ce238d0c3146d97c773699fe6fa0af1f7d02df68754d2ed0dc2361ebf55a4a
+adb.exe: no devices/emulators found
+adb.exe: no devices/emulators found
+--- vendor_boot ---
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+expected: c103c5ad79aa4e2f28df868ddf95265f1464ca5deac1f105c6cb50a49dadc35c
+adb.exe: no devices/emulators found
+adb.exe: no devices/emulators found

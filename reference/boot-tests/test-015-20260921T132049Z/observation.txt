@@ -1,0 +1,8 @@
+2026-09-21T13:20:59Z reboot to system requested (test 015: panel console, no proof armed - the tablet should stay on)
+adb reboot exit=0
+2026-09-21T13:23Z owner: "stuck at the logo screen" - no kernel text appeared on the panel
+=> simple-framebuffer did not produce a visible console. Most likely the panel is
+   a command-mode panel holding the bootloader's frame in its own RAM: without the
+   panel/DPU driver nothing re-triggers a frame, so writes to the splash buffer
+   never reach the display. The panel is therefore not a usable output channel for
+   this bring-up stage.

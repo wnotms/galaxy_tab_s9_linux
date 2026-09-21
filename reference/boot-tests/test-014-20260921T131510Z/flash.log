@@ -1,0 +1,13 @@
+=== 2026-09-21T13:15:13Z test 014: dr_mode=peripheral ===
+--- boot ---
+D:\android\gts9-test014\boot.img: 1 file pushed, 0 skipped. 77.9 MB/s (100663296 bytes in 1.233s)
+8ee769d1c1a15155729b60455cad15927e2553798b90cf9a959b2083265442ed  /tmp/gts9-test014-boot.img
+expected: 8ee769d1c1a15155729b60455cad15927e2553798b90cf9a959b2083265442ed
+100663296 bytes (96 M) copied, 0.227742 s, 422 M/s
+8ee769d1c1a15155729b60455cad15927e2553798b90cf9a959b2083265442ed  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test014\vendor_boot.img: 1 file pushed, 0 skipped. 676.3 MB/s (100663296 bytes in 0.142s)
+28981121b28bf7115f542c8aacdaa3e72587ebf7b072a0526b6d37047c839fad  /tmp/gts9-test014-vendor_boot.img
+expected: 28981121b28bf7115f542c8aacdaa3e72587ebf7b072a0526b6d37047c839fad
+100663296 bytes (96 M) copied, 0.225335 s, 426 M/s
+28981121b28bf7115f542c8aacdaa3e72587ebf7b072a0526b6d37047c839fad  /dev/block/by-name/vendor_boot
