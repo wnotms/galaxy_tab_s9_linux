@@ -1,0 +1,16 @@
+=== 2026-09-21T15:07:52Z test 027 pretest + flash (init_boot + vendor_boot; kernel unchanged) ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    49413e770e75fe135317e56c88a76e83f90fbf32f51078789a90a95ad7a0ec31
+vendor_boot  94ae4f32be12fb6c2c2999ac85acda5304ae6b443f30ca44377f3e667b7c8aa3
+--- init_boot ---
+D:\android\gts9-test027\init_boot.img: 1 file pushed, 0 skipped. 198.4 MB/s (8388608 bytes in 0.040s)
+expected: d841aa4fc4e2d595b89b2476a29569e7d4aeeca5cc2cd292fbc9d39ee9f3afdf
+8388608 bytes (8.0 M) copied, 0.020718 s, 386 M/s
+d841aa4fc4e2d595b89b2476a29569e7d4aeeca5cc2cd292fbc9d39ee9f3afdf  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test027\vendor_boot.img: 1 file pushed, 0 skipped. 803.3 MB/s (100663296 bytes in 0.119s)
+expected: 267ff4168117dac4a41b100daa75d4d24e91c01c919b1eb4d1b6ec87c254206f
+100663296 bytes (96 M) copied, 0.231874 s, 414 M/s
+267ff4168117dac4a41b100daa75d4d24e91c01c919b1eb4d1b6ec87c254206f  /dev/block/by-name/vendor_boot
+=== 2026-09-21T15:08:07Z test 027: reboot (expect ~120 s and an automatic return to TWRP) ===
+reboot issued

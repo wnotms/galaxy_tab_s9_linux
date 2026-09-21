@@ -1,0 +1,37 @@
+2026-09-21T15:12:18Z reboot from recovery requested (test 028)
+adb reboot exit=0
+2026-09-21T15:12:51Z adb reports the tablet in recovery AGAIN - 33 s later and with no
+                       intervention: mainline booted, did its work, wrote the BCB into
+                       misc and reset itself into TWRP.
+
+host-timeline.log has the polls; the USB gadget did not appear in them because the
+whole cycle is shorter than Windows' own enumeration delay.
+
+readback (TWRP, card mounted by hand at /tmp/sd because TWRP's automount is skipped
+when /data needs a password):
+  gts9-bringup-report.txt        155414 bytes, sha256 47524c7c...
+  gts9-bringup-report.txt.sha256 matches, so the copy is intact.
+  The previous report (test 020's, 145352 bytes) is gone from the card: this one is new.
+
+From the report:
+
+  gts9-init: telemetry code=12 (rtc_dev=0 rtc_written=0 mmc=yes scsi=yes)
+             -> power off in 150s
+      -> the microSD (mmc1) and UFS (sda..sdf) both enumerated, and the RTC
+         channel is off by design (SPMI writes block this kernel).
+  gts9-init: userspace proof armed: powering off in 150s
+      -> the timed safety net, which never had to fire: the work finished first.
+
+  ptn3222 7-004f: repeater redriver: 10 override cells
+  ptn3222 7-004f: applied 5 register overrides
+      -> the board's qcom,param-override-seq does reach the driver and is written
+         to the redriver.  The "no overrides applied" reading from test 022 was an
+         artefact: that test never wrote a report and the card still held test
+         020's file.
+
+  177: 1 0 0 0 GICv3 165 Level dwc3        (dwc3's interrupt is live)
+  gts9-init: USB gadget bound to a600000.usb, /dev/ttyGS0 present
+  /cache, /dev/sda..sdf, mmc1: all enumerated.
+
+The BCB write itself is after the report is collected, so its own log line is not in
+the file; the evidence that it worked is the automatic return to TWRP above.
