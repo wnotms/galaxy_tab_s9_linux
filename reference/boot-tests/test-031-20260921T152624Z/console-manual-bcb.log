@@ -1,0 +1,10 @@
+2026-09-21T15:31:43Z console open on COM17
+2026-09-21T15:31:43Z SENT  printf 'boot-recovery' | dd of=/dev/sda10 bs=1 seek=0 conv=notrunc 2>&1; sync; echo BCB-SET; dd if=/dev/sda10 bs=1 count=16 2>/dev/null | tr -d '\0'; echo; reboot -f
+2026-09-21T15:31:43Z RECV  printf 'boot-recovery' | dd of=/dev/sda10 bs=1 seek=0 conv=notrunc 2>&1; s
+2026-09-21T15:31:43Z RECV  ync; echo BCB-SET; dd if=/dev/sda10 bs=1 count=16 2>/dev/null | tr -d '\0'; echo
+2026-09-21T15:31:43Z RECV  ; reboot -f
+2026-09-21T15:31:43Z RECV  13+0 records in
+2026-09-21T15:31:43Z RECV  13+0 records out
+2026-09-21T15:31:43Z RECV  BCB-SET
+2026-09-21T15:31:43Z RECV  boot-recovery
+2026-09-21T15:31:49Z console session done

@@ -171,12 +171,14 @@ write_bcb_recovery() {
 
 # The console helper needs the same validated device, so publish it.
 publish_misc_device() {
-    pdev=$(gpt_labelled_device "$BCB_LABEL" 2>/dev/null) || return 1
+    pdev=$(gpt_labelled_device "$BCB_LABEL" 2>/dev/null) || {
+        log "WARN: no validated $BCB_LABEL device; the console helper cannot reboot to recovery"
+        return 1
+    }
     echo "$pdev" > /tmp/gts9-misc-dev
+    log "console helper: gts9-to-recovery will write the BCB to $pdev"
     return 0
 }
-[ "$gadget_setup" = 1 ] && publish_misc_device
-
 reboot_to_recovery() {
     # Write the BCB and reset, or power off if the bootloader already ignored a
     # recovery request: either way this ends the boot instead of looping.
@@ -378,6 +380,11 @@ setup_usb_gadget() {
 }
 
 setup_usb_gadget
+
+# The console helper needs the validated misc device, and the GPT can only be
+# read once UFS is enumerated - which is why this runs here and not next to the
+# helper's definition.
+publish_misc_device
 
 # ---------------------------------------------------------------------------
 # Reporting through the RTC.

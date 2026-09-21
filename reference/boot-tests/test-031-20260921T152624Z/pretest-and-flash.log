@@ -1,0 +1,16 @@
+=== 2026-09-21T15:26:26Z test 031 pretest + flash ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    c52fcb369bc551ea78548e48d110d08a161268724f1e14794ce9a4a07736a140
+vendor_boot  03933e33c36c9f377ace42d24721e47a273f84f4766808618977e71409ca1f5f
+--- init_boot ---
+D:\android\gts9-test031\init_boot.img: 1 file pushed, 0 skipped. 129.0 MB/s (8388608 bytes in 0.062s)
+expected: c7e5b360e28331826c3c95493baf24d54a359acec2158d5ec50421d295dafd81
+8388608 bytes (8.0 M) copied, 0.043962 s, 182 M/s
+c7e5b360e28331826c3c95493baf24d54a359acec2158d5ec50421d295dafd81  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test031\vendor_boot.img: 1 file pushed, 0 skipped. 718.1 MB/s (100663296 bytes in 0.134s)
+expected: 5aae758cd66a07563252afaffaf9653ab75249afec4268d95fcd959da65f55fa
+100663296 bytes (96 M) copied, 0.341976 s, 281 M/s
+5aae758cd66a07563252afaffaf9653ab75249afec4268d95fcd959da65f55fa  /dev/block/by-name/vendor_boot
+=== 2026-09-21T15:26:41Z test 031: reboot (console + mass storage, 30 min safety net) ===
+reboot issued

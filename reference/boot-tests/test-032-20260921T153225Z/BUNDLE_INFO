@@ -1,0 +1,7 @@
+initramfs_location=init_boot
+append_dtb=1
+boot_payload=image.gz+dtb
+image_gz_sha256=e938bd0fcb696d6c0bde71dd259466a93e6e96e48a85d88fd48d555ca35a917f
+dtb_sha256=ed60aa930a5f0880b3bf81c4573a994b26beaf86fba2960bc942ac341091c427
+initramfs_sha256=b122b17f5d951fb3093a466734cdf887d0591ead26e3b03a64783de35b56d6d7
+kernel_release=7.2.0-rc3-gts9wifi-dirty

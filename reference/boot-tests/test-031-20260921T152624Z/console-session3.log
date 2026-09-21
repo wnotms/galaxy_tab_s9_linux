@@ -1,0 +1,20 @@
+2026-09-21T15:28:24Z console open on COM17
+2026-09-21T15:28:24Z SENT  ls /dev/mmcblk1p1 /dev/sd? 2>&1 | head -4
+2026-09-21T15:28:24Z RECV  ls /dev/mmcblk1p1 /dev/sd? 2>&1 | head -4
+2026-09-21T15:28:24Z RECV  /dev/mmcblk1p1
+2026-09-21T15:28:24Z RECV  /dev/sda
+2026-09-21T15:28:24Z RECV  /dev/sdb
+2026-09-21T15:28:24Z RECV  /dev/sdc
+2026-09-21T15:28:30Z SENT  df -h 2>/dev/null | head -4
+2026-09-21T15:28:30Z RECV  gts9# [6ndf -h 2>/dev/null | head -4
+2026-09-21T15:28:30Z RECV  Filesystem                Size      Used Available Use% Mounted on
+2026-09-21T15:28:30Z RECV  devtmpfs                  5.2G         0      5.2G   0% /dev
+2026-09-21T15:28:30Z RECV  tmpfs                     5.2G    156.0K      5.2G   0% /tmp
+2026-09-21T15:28:30Z RECV  tmpfs                     5.2G         0      5.2G   0% /run
+2026-09-21T15:28:36Z SENT  dmesg | tail -4
+2026-09-21T15:28:36Z RECV  gts9# [6ndmesg | tail -4
+2026-09-21T15:28:36Z RECV  [   16.007348][  T141] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-21T15:28:36Z RECV  [   16.015228][  T141] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-21T15:28:36Z RECV  [   16.024167][  T141] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-21T15:28:36Z RECV  [   34.077376][   T87] regulator: Not disabling unused regulators
+2026-09-21T15:28:42Z console session done

@@ -1,0 +1,8 @@
+=== 2026-09-21T15:32:27Z test 032 pretest + flash init_boot (cmdline unchanged) ===
+boot         ba948a938ee1fe8280f31b19cd4196e061b127179e247d5517cf9e06fc235fc0
+init_boot    c7e5b360e28331826c3c95493baf24d54a359acec2158d5ec50421d295dafd81
+vendor_boot  5aae758cd66a07563252afaffaf9653ab75249afec4268d95fcd959da65f55fa
+D:\android\gts9-test032\init_boot.img: 1 file pushed, 0 skipped. 103.4 MB/s (8388608 bytes in 0.077s)
+expected: d43750a0b472be24e92e35f4d8006178d46a8380f6dcc7b00c6c48e87c906035
+8388608 bytes (8.0 M) copied, 0.039800 s, 201 M/s
+d43750a0b472be24e92e35f4d8006178d46a8380f6dcc7b00c6c48e87c906035  /dev/block/by-name/init_boot

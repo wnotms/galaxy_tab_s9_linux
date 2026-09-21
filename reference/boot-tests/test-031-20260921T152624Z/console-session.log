@@ -1,0 +1,6 @@
+2026-09-21T15:27:04Z console open on COM17
+2026-09-21T15:27:04Z SENT  uname -a,uptime,ls /dev/mmcblk* /dev/sd* 2>&1 | head -4,cat /proc/cmdline | tr ' ' '\n' | tail -3
+2026-09-21T15:27:04Z RECV  uname -a,uptime,ls /dev/mmcblk* /dev/sd* 2>&1 | head -4,cat /proc/cmdline
+2026-09-21T15:27:04Z RECV  | tr ' ' '\n' | tail -3
+2026-09-21T15:27:04Z RECV  head: invalid number '4,cat'
+2026-09-21T15:27:10Z console session done

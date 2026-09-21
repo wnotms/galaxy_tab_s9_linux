@@ -1,0 +1,15 @@
+2026-09-21T15:31:09Z console open on COM17
+2026-09-21T15:31:09Z SENT  cat /proc/uptime
+2026-09-21T15:31:09Z RECV  cat /proc/uptime
+2026-09-21T15:31:09Z RECV  251.70 2006.27
+2026-09-21T15:31:15Z SENT  cat /tmp/gts9-misc-dev 2>&1
+2026-09-21T15:31:15Z RECV  gts9# [6ncat /tmp/gts9-misc-dev 2>&1
+2026-09-21T15:31:15Z RECV  cat: can't open '/tmp/gts9-misc-dev': No such file or directory
+2026-09-21T15:31:21Z SENT  dd if=/dev/sda10 bs=1 count=16 2>/dev/null | od -c | head -2
+2026-09-21T15:31:21Z RECV  gts9# [6ndd if=/dev/sda10 bs=1 count=16 2>/dev/null | od -c | head -2
+2026-09-21T15:31:22Z RECV  0000000  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+2026-09-21T15:31:22Z RECV  0000020
+2026-09-21T15:31:28Z SENT  ls -l /sbin/gts9-to-recovery
+2026-09-21T15:31:28Z RECV  gts9# [6nls -l /sbin/gts9-to-recovery
+2026-09-21T15:31:28Z RECV  -rwxr-xr-x    1 1000     1000           833 Jan  1  1970 /sbin/gts9-to-recovery
+2026-09-21T15:31:34Z console session done
