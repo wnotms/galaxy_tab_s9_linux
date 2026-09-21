@@ -15,8 +15,12 @@ partition), because what UFS was really waiting for was the PMIC side that the
 PDC unlocked.  The UFS patch is therefore not needed on this board and stays
 here - kept because the reasoning may still matter for suspend/resume.
 
-`snps-eusb2-match-samsung-sm8550-init.patch` was taken back out of this
-directory for test 021: test 020 got the gadget as far as the host seeing
-`VID_0525&PID_A4A7` with a `MI_00` control interface, but no data interface, so
-the COM port cannot be opened.  That is precisely the symptom the port wrote
-the patch for (`the host cannot read its USB descriptor`).
+`snps-eusb2-match-samsung-sm8550-init.patch` was tried in test 021 and **broke
+USB on this board**: with it, no gadget appears on the host at all (test 020,
+without it, at least reached a host-visible `VID_0525&PID_A4A7` with its control
+interface).  Samsung's CPBIAS=1 plus the post-POR delay is the right sequence
+for the X910's PHY configuration, not for this one, so it stays here.
+
+The gadget's missing data interface is instead the PTN3222 redriver, which no
+upstream driver programs: see `nxp-ptn3222-apply-dt-register-overrides.patch`,
+now in `kernel/patches/`.
