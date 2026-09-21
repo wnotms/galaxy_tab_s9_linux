@@ -46,6 +46,9 @@ required=(
     CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI CONFIG_SERIAL_QCOM_GENI_CONSOLE
     CONFIG_BLK_DEV_INITRD CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
     CONFIG_MMC_SDHCI_MSM CONFIG_EXT4_FS CONFIG_PSTORE CONFIG_PSTORE_RAM
+    # The first boot test depends on the Samsung sec_log_buf console being
+    # present before any root filesystem exists.
+    CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG
     # SM8550 early-boot providers: without these the board DTS nodes have no
     # driver at all, because their parent menuconfigs are not part of the
     # 5.15 Android seed (see the fragment's bring-up section).

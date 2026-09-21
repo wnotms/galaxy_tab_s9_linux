@@ -13,6 +13,11 @@ CONFIG_PSTORE=y
 CONFIG_PSTORE_RAM=y
 CONFIG_PSTORE_CONSOLE=y
 CONFIG_PSTORE_PMSG=y
+# Primary persistent log channel for the first boot test: the kernel console is
+# written into Samsung's sec_log_buf ring, which TWRP/recovery exposes as
+# /proc/last_kmsg after a warm reset.  Built in, because it must exist before
+# any root filesystem is available (driver: kernel/drivers/, patch 0002).
+CONFIG_SAMSUNG_GTS9WIFI_SEC_LOG=y
 CONFIG_MAGIC_SYSRQ=y
 CONFIG_PM_DEBUG=y
 
