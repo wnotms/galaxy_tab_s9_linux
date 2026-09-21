@@ -71,13 +71,37 @@ struct sec_log_header {
 	u8 data[];
 };
 
+/*
+ * Reserved at the very end of the ring for evidence that must survive the next
+ * kernel.  TWRP's SEC_LOG writer restarts at index 0 and overwrites the start
+ * of the ring within a minute or two, which is why every earlier capture of
+ * the log area came back empty.  Anything written here stays until a full
+ * 2 MiB of later logging wraps around to it.
+ *
+ * Layout at the end of the reserved region:
+ *
+ *	[ ... LOGM byte ring ... ][ markers 1 KiB ][ tail window 4 KiB ]
+ */
+#define GTS9_SEC_LOG_MARKER_AREA	0x400
+#define GTS9_SEC_LOG_TAIL_SIZE		0x1000
+#define GTS9_SEC_LOG_TAIL_PREFIX	"GTS9-TAIL-WINDOW: most recent mainline console output\n"
+#define GTS9_SEC_LOG_TAIL_PREFIX_LEN	(sizeof(GTS9_SEC_LOG_TAIL_PREFIX) - 1)
+#define GTS9_SEC_LOG_MARKER_LEN		160
+
 struct gts9wifi_sec_log {
 	struct sec_log_header *header;
 	size_t data_size;
+	void *markers;		/* marker area, before the tail window */
+	u8 *tail;		/* rolling copy of the newest console output */
+	size_t tail_pos;
 	struct console console;
 };
 
+static size_t gts9wifi_sec_log_ring_size = 0x200000;
+
 static struct gts9wifi_sec_log *sec_log;
+
+void __init gts9_sec_log_early_marker(unsigned int slot, phys_addr_t base);
 
 /*
  * The ring is reached through a write-back mapping (both the linear map and
@@ -88,6 +112,39 @@ static struct gts9wifi_sec_log *sec_log;
 static void notrace gts9wifi_sec_log_flush(void *start, size_t len)
 {
 	dcache_clean_poc((unsigned long)start, (unsigned long)start + len);
+}
+
+/*
+ * Keep the newest console output in the protected tail window.  The window is
+ * a small ring that never wraps into itself in practice: once it is full it
+ * restarts just after the prefix, so what remains readable is always the most
+ * recent output followed by the oldest surviving part of the window.
+ */
+static void notrace gts9wifi_sec_log_tail_append(struct gts9wifi_sec_log *log,
+						 const char *text,
+						 unsigned int count)
+{
+	size_t space, n;
+
+	if (!log->tail || !count)
+		return;
+
+	space = GTS9_SEC_LOG_TAIL_SIZE - log->tail_pos;
+	n = min_t(size_t, count, space);
+	memcpy(log->tail + log->tail_pos, text, n);
+	log->tail_pos += n;
+
+	if (log->tail_pos >= GTS9_SEC_LOG_TAIL_SIZE) {
+		log->tail_pos = GTS9_SEC_LOG_TAIL_PREFIX_LEN;
+		if (n < count) {
+			size_t rest = min_t(size_t, count - n,
+					   GTS9_SEC_LOG_TAIL_SIZE - log->tail_pos);
+			memcpy(log->tail + log->tail_pos, text + n, rest);
+			log->tail_pos += rest;
+		}
+	}
+
+	gts9wifi_sec_log_flush(log->tail, GTS9_SEC_LOG_TAIL_SIZE);
 }
 
 static void notrace gts9wifi_sec_log_write(struct console *console,
@@ -136,6 +193,9 @@ static void notrace gts9wifi_sec_log_write(struct console *console,
 	gts9wifi_sec_log_flush(log->header, sizeof(*log->header) + first);
 	if (first != count)
 		gts9wifi_sec_log_flush(log->header->data, count - first);
+
+	/* Mirror the same bytes where the next kernel cannot overwrite them. */
+	gts9wifi_sec_log_tail_append(log, text, count);
 }
 
 /*
@@ -170,6 +230,17 @@ static int gts9wifi_sec_log_setup(phys_addr_t base, size_t size, bool early)
 
 	log->header = memory;
 	log->data_size = size - sizeof(*log->header);
+	gts9wifi_sec_log_ring_size = size;
+
+	if (size > GTS9_SEC_LOG_TAIL_SIZE + GTS9_SEC_LOG_MARKER_AREA + 0x1000) {
+		log->tail = (u8 *)memory + size - GTS9_SEC_LOG_TAIL_SIZE;
+		log->markers = (u8 *)memory + size - GTS9_SEC_LOG_TAIL_SIZE -
+			       GTS9_SEC_LOG_MARKER_AREA;
+		memcpy(log->tail, GTS9_SEC_LOG_TAIL_PREFIX,
+		       GTS9_SEC_LOG_TAIL_PREFIX_LEN);
+		log->tail_pos = GTS9_SEC_LOG_TAIL_PREFIX_LEN;
+		gts9wifi_sec_log_flush(log->tail, GTS9_SEC_LOG_TAIL_SIZE);
+	}
 
 	if (READ_ONCE(log->header->magic) != SEC_LOG_MAGIC) {
 		WRITE_ONCE(log->header->boot_count, 0);
@@ -201,6 +272,13 @@ static int gts9wifi_sec_log_setup(phys_addr_t base, size_t size, bool early)
 	pr_info("gts9wifi-sec-log: persistent console at %pa (%zu bytes, boot %u, %s)\n",
 		&base, size, READ_ONCE(log->header->boot_count),
 		early ? "early_initcall" : "platform probe");
+
+	/* Registration itself is a milestone worth keeping at the ring end. */
+	if (log->markers) {
+		const char *msg = "GTS9-CONSOLE-REGISTERED: sec_log console live";
+		memcpy(log->markers, msg, strlen(msg));
+		gts9wifi_sec_log_flush(log->markers, GTS9_SEC_LOG_MARKER_LEN);
+	}
 	return 0;
 }
 
@@ -229,8 +307,6 @@ static bool gts9wifi_sec_log_cmdline_set;
  * and the early markers must not depend on anything that is not set up yet.
  */
 #define GTS9_SEC_LOG_DEFAULT_BASE	0x880200000ULL
-
-#define GTS9_SEC_LOG_MARKER_LEN	160
 
 /*
  * Slot 0 is written from parse_early_param() (early cmdline parsed), slot 1
@@ -261,8 +337,16 @@ void __init gts9_sec_log_early_marker(unsigned int slot, phys_addr_t base)
 	if (!base)
 		base = GTS9_SEC_LOG_DEFAULT_BASE;
 
-	marker = early_memremap(base + sizeof(struct sec_log_header) +
-				slot * 0x100, GTS9_SEC_LOG_MARKER_LEN);	if (!marker)
+	/*
+	 * Keep the marker away from the start of the ring: the recovery kernel
+	 * restarts its own LOGM writes at index 0 and would overwrite it long
+	 * before anyone can read it back.
+	 */
+	marker = early_memremap(base + gts9wifi_sec_log_ring_size -
+				GTS9_SEC_LOG_TAIL_SIZE -
+				GTS9_SEC_LOG_MARKER_AREA + slot * 0x100,
+				GTS9_SEC_LOG_MARKER_LEN);
+	if (!marker)
 		return;
 
 	memset(marker, 0, GTS9_SEC_LOG_MARKER_LEN);

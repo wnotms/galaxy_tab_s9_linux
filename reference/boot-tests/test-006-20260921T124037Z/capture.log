@@ -1,0 +1,22 @@
+device is connected: waiting for it to disappear (reboot) first...
+device is gone; waiting for recovery to come back...
+waiting up to 2400s for the tablet and /proc/last_kmsg...
+capturing /proc/last_kmsg to /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-006-20260921T124037Z/last_kmsg-test006-20260921T124052Z.txt
+
+captured : /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-006-20260921T124037Z/last_kmsg-test006-20260921T124052Z.txt
+size     : 2097136 bytes
+sha256   : bbd94e7d10d9f1ddf114530cfb5efc3ff8aea0968d785e21eee9f90805f23e66
+
+markers:
+  Linux version (any kernel)         1
+  mainline release                   0
+  early marker                       0
+  sec_log early console line         0
+  GTS9 MAINLINE INITRAMFS REACHED    0
+  gts9-init userspace lines          0
+  Kernel panic                       0
+  Unable to handle kernel            0
+
+RESULT: no mainline evidence found; kernel entry and log retention remain unproven
+
+Keep this file with the test record; it is the primary evidence.

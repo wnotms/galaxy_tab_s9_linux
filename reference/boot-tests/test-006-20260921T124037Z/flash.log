@@ -1,0 +1,11 @@
+=== 2026-09-21T12:40:47Z push boot.img ===
+D:\android\gts9-test006\boot.img: 1 file pushed, 0 skipped. 81.8 MB/s (100663296 bytes in 1.174s)
+=== on-device hash ===
+68845be7227e56098aa1e141b43e008043740c362091d7d90179924a1d36d321  /tmp/gts9-test006-boot.img
+expected: 68845be7227e56098aa1e141b43e008043740c362091d7d90179924a1d36d321
+=== write ===
+24+0 records in
+24+0 records out
+100663296 bytes (96 M) copied, 0.201522 s, 476 M/s
+=== read-back ===
+68845be7227e56098aa1e141b43e008043740c362091d7d90179924a1d36d321  /dev/block/by-name/boot
