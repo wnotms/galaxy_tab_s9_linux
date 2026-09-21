@@ -1,0 +1,21 @@
+2026-09-21T13:53:52Z reboot from recovery requested (test 019)
+adb reboot exit=0
+2026-09-21T13:53:54Z recovery's adb interface disappeared (USB monitor)
+2026-09-21T13:58:39Z host check: no adb device, no gadget (tablet still inside the armed
+                       600 s window; the delay would have been 600-660 s)
+2026-09-21T14:00:0xZ tablet already in TWRP (uptime 0 min)
+2026-09-21T14:0xZ   owner: "I accidentally manually rebooted into TWRP" - the run was
+                    ended by hand, ~6 minutes in, before the armed proof could fire.
+
+readback (TWRP):
+  - RTC registers unchanged: 1970-09-16 01:58 (raw), corrected clock the real 2026-09-21.
+    No 2031 state word => /init did not write one.
+  - no GTS9RPT1 block in cache, no report file in /cache or on the card
+  - /proc/last_kmsg holds recovery's own kernel log (Samsung panel driver strings,
+    GICv3 irq counts) and none of the mainline markers: the bootloader overwrites the
+    ring on every boot, exactly as test 007 concluded.
+
+conclusion: this run says nothing about the two PHY patches it carried, because it was
+cut short by hand.  It is recorded as superseded, and its boot image (307207ce, with the
+SM-X910 UFS and eUSB2 patches) was replaced by test 020's PDC-only build (e47e30b3)
+before any further conclusion was drawn.

@@ -1,0 +1,25 @@
+=== 2026-09-21T14:03:13Z test 020 pretest state ===
+List of devices attached
+R52X10045LT	recovery
+
+--- RTC registers before the boot ---
+rtc_time	: 01:58:14
+rtc_date	: 1970-09-16
+boot         307207ce6f2c4e81e07c657c5035db29e6b89116688f409e8e170a72df0b2bb4
+init_boot    b13296a1e4c67ce18515f2a5884859543d59f77478bb547091952ed52cedf620
+vendor_boot  11e92536f3e4f6dc158b099fa6fa6b9cd7973da3e0740f3a2c12aabb4d62a3b4
+--- flash boot.img only (init_boot/vendor_boot are unchanged from test 019) ---
+--- boot ---
+D:\android\gts9-test020\boot.img: 1 file pushed, 0 skipped. 73.7 MB/s (100663296 bytes in 1.303s)
+e47e30b3358facbfdc7b039ea3db063ee88ce59260bef260d553e4e86e04b5ec  /tmp/gts9-test020-boot.img
+expected: e47e30b3358facbfdc7b039ea3db063ee88ce59260bef260d553e4e86e04b5ec
+100663296 bytes (96 M) copied, 0.221301 s, 434 M/s
+e47e30b3358facbfdc7b039ea3db063ee88ce59260bef260d553e4e86e04b5ec  /dev/block/by-name/boot
+=== 2026-09-21T14:03:25Z test 020: also flashing vendor_boot (cmdline proof code 240, new vs test 019's 600) ===
+D:\android\gts9-test020\vendor_boot.img: 1 file pushed, 0 skipped. 824.1 MB/s (100663296 bytes in 0.116s)
+139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c  /tmp/gts9-test020-vendor_boot.img
+expected: 139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c
+100663296 bytes (96 M) copied, 0.249462 s, 385 M/s
+139e0f5d544e248bbfb940f30101096794e43020e6febe48cd56135624659d9c  /dev/block/by-name/vendor_boot
+=== 2026-09-21T14:03:40Z test 020: reboot into the mainline kernel (PDC built in) ===
+reboot command issued
