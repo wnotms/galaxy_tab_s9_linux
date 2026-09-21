@@ -67,6 +67,31 @@ b217662c51b33a9e88f994c05c11ee5c9de0f0ac0c0b3df8e34dc9878c5030f8  first 4096 byt
 
 So a change to that hash afterwards is this boot's report and nothing else.
 
-## Result
+## Result: UFS still does not enumerate
 
-Pending: the owner has to start the boot and time the automatic power-off.
+Owner: **about 68 s** from the TWRP screen disappearing to the tablet switching
+itself off, then back into TWRP by hand.  No USB gadget ever appeared
+(`usb-monitor.log`, watching VID_0525&PID_A4A7 for 30 minutes).
+
+The measurement always includes reset-to-`/init` time (5-8 s), so it is one of
+the tabulated steps: ~68 s is **code 4 = 60 s - UDC yes, SCSI disk no, microSD
+no**. Code 5 (70 s) would need a measured value *above* 70 s, and code 6 (80 s)
+is 12 s away.
+
+The read-back confirms it independently: `cache` still carries a valid ext4
+superblock at offset 0, so the raw path never ran, and TWRP's own rw mount of
+`/cache` shows no `gts9-bringup-report.txt`, so the mount path never ran either.
+The channel is correct but has nothing to write to.
+
+### Correction: this was not a test of TCSRCC
+
+`CONFIG_SM_TCSRCC_8550=y` came in with commit `7c7aa1b`, which is an ancestor of
+test 013's kernel (`f778a373`). Test 013 already ran with TCSRCC and already
+read 60-70 s, so test 016/017 could not have decided anything about it: **UFS is
+not blocked by the TCSRCC clock controller.** The same applies to the older
+claim that TCSRCC "fixed" USB - there is no pre-TCSRCC telemetry measurement to
+compare against, so "the UDC is present" is a fact and "because of TCSRCC" is
+not.
+
+What the two tests did establish is the delay calibration: measured = code delay
++ 5-8 s, which resolves test 013's "60-70 s" as code 4 as well.
