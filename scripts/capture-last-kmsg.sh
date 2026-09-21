@@ -20,6 +20,15 @@ adb=${ADB:-adb}
 out_dir=${CAPTURE_DIR:-${GTS9_WORKDIR:-$repo_root/.work}/boot-logs}
 wait_seconds=${WAIT_TIMEOUT:-1800}
 label=${CAPTURE_LABEL:-boot}
+# 1 = the device is still connected when this starts (the normal case for a
+# boot test: start it, then reboot the tablet). Wait for it to disappear
+# first, so the ring captured is the new boot's and not the current one.
+wait_for_reconnect=${WAIT_FOR_RECONNECT:-1}
+
+device_present() {
+    "$adb" devices 2>/dev/null | tr -d '\r' \
+        | awk 'NR > 1 && $2 ~ /^(device|recovery)$/ { found = 1 } END { exit !found }'
+}
 
 # Safety self-check, same idea as the other read-only tools in this repository.
 for forbidden in dd fastboot heimdall odin; do
@@ -44,8 +53,7 @@ out=$out_dir/last_kmsg-$label-$stamp.txt
 wait_for_ring() {
     local deadline=$((SECONDS + wait_seconds))
     while [ "$SECONDS" -lt "$deadline" ]; do
-        if "$adb" devices 2>/dev/null | tr -d '\r' \
-                | awk 'NR > 1 && $2 ~ /^(device|recovery)$/ { found = 1 } END { exit !found }'; then
+        if device_present; then
             if timeout 60 "$adb" shell 'test -r /proc/last_kmsg' >/dev/null 2>&1; then
                 return 0
             fi
@@ -54,6 +62,19 @@ wait_for_ring() {
     done
     return 1
 }
+
+if [ "$wait_for_reconnect" = 1 ] && device_present; then
+    echo 'device is connected: waiting for it to disappear (reboot) first...'
+    gone_deadline=$((SECONDS + wait_seconds))
+    while [ "$SECONDS" -lt "$gone_deadline" ] && device_present; do
+        sleep 2
+    done
+    if device_present; then
+        echo 'device never disappeared; refusing to capture the current ring' >&2
+        exit 1
+    fi
+    echo 'device is gone; waiting for recovery to come back...'
+fi
 
 echo "waiting up to ${wait_seconds}s for the tablet and /proc/last_kmsg..."
 if ! wait_for_ring; then
