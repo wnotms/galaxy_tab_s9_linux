@@ -63,6 +63,7 @@ struct samsung_pogo {
 static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
+static void pogo_boot_go(struct samsung_pogo *p);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -229,6 +230,39 @@ static bool pogo_boot_enter(struct samsung_pogo *p)
 }
 
 /*
+ * STM32 AN3155 GO: the command, then the address with its XOR checksum.
+ *
+ * Stock has the case but only sets cmd[0] and breaks, so it never sends the
+ * address and never worked; the frame is 0x21, its complement, the four address
+ * bytes big-endian, and the XOR of those bytes.  Every step is acknowledged.
+ */
+static void pogo_boot_go(struct samsung_pogo *p)
+{
+	static const u8 cmd[] = { POGO_BOOT_CMD_GO, ~POGO_BOOT_CMD_GO };
+	static const u8 addr[] = { 0x08, 0x00, 0x00, 0x00, 0x08 };
+	u8 resp = 0;
+
+	if (i2c_master_send(p->boot, cmd, sizeof(cmd)) != sizeof(cmd)) {
+		dev_info(&p->client->dev, "bootloader GO command refused\n");
+		return;
+	}
+	if (i2c_master_recv(p->boot, &resp, 1) != 1 || resp != POGO_BOOT_RESP_ACK) {
+		dev_info(&p->client->dev, "bootloader GO command not acked (%#x)\n", resp);
+		return;
+	}
+	if (i2c_master_send(p->boot, addr, sizeof(addr)) != sizeof(addr)) {
+		dev_info(&p->client->dev, "bootloader GO address refused\n");
+		return;
+	}
+	resp = 0;
+	if (i2c_master_recv(p->boot, &resp, 1) == 1 && resp == POGO_BOOT_RESP_ACK)
+		dev_info(&p->client->dev,
+			 "MCU bootloader accepted GO 0x08000000, application should be running\n");
+	else
+		dev_info(&p->client->dev, "bootloader GO address not acked (%#x)\n", resp);
+}
+
+/*
  * Get the MCU into its application.
  *
  * Samsung's driver never has to: its log shows the application answering on the
@@ -246,7 +280,7 @@ static bool pogo_boot_enter(struct samsung_pogo *p)
 static void pogo_bootloader_probe(struct samsung_pogo *p)
 {
 	static const u8 get_ver[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
-	u8 version[4], resp = 0, go = POGO_BOOT_CMD_GO;
+	u8 version[4], resp = 0;
 	int ret;
 
 	if (!pogo_boot_enter(p)) {
@@ -263,7 +297,22 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	    i2c_master_recv(p->boot, &resp, 1) == 1)
 		dev_info(&p->client->dev, "MCU bootloader version %#x\n", resp);
 
-	/* stm32_sysboot_disconnect(), timings included. */
+	/*
+	 * Jump while the bootloader is still listening: the earlier attempt went
+	 * out after the disconnect and timed out because by then the MCU answered
+	 * on neither interface.
+	 */
+	pogo_boot_go(p);
+	msleep(150);
+
+	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+	dev_info(&p->client->dev,
+		 "application after GO: %d%s\n", ret,
+		 ret ? " (not running)" : " (running)");
+	if (!ret)
+		return;
+
+	/* No GO either: fall back to the vendor's reset-based entry. */
 	gpiod_set_value_cansleep(p->swclk, 0);
 	msleep(1);
 	gpiod_set_value_cansleep(p->nrst, 0);
@@ -274,19 +323,6 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
 	dev_info(&p->client->dev,
 		 "application after the reset entry: %d%s\n", ret,
-		 ret ? " (did not start)" : " (running)");
-	if (!ret)
-		return;
-
-	/* Still in the bootloader: ask it to jump. */
-	if (!pogo_boot_enter(p))
-		return;
-	ret = i2c_master_send(p->boot, &go, 1);
-	dev_info(&p->client->dev, "MCU bootloader GO (0x%02x): %d\n", go, ret);
-	msleep(150);
-	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
-	dev_info(&p->client->dev,
-		 "application after GO: %d%s\n", ret,
 		 ret ? " (still not running)" : " (running)");
 }
 
