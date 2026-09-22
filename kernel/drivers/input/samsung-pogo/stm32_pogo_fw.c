@@ -1,8 +1,5 @@
-#if IS_ENABLED(CONFIG_KEYBOARD_STM32_POGO_V3)
+#include <linux/types.h>
 #include "stm32_pogo_v3.h"
-#else
-#endif
-
 /* Target specific definitions
  *  1. Startup delay
  *     STM32 target needs at least t-ms delay after reset msecs
@@ -404,31 +401,31 @@ static int stm32_sysboot_connect(struct stm32_dev *data)
 	input_info(true, &data->client->dev, "%s start\n", __func__);
 
 	/* Assert NRST reset */
-	gpio_direction_output(dtdata->mcu_nrst, 0);
+	gpiod_direction_output(dtdata->mcu_nrst, 0);
 	/* Change BOOT pins to System Bootloader */
-	gpio_direction_output(dtdata->mcu_swclk, 1);
+	gpiod_direction_output(dtdata->mcu_swclk, 1);
 	/* NRST should hold down (Vnf(NRST) > 300 ns), considering capacitor, give enough time */
 	stm32_delay(3);
 	/* Release NRST reset */
-	gpio_direction_output(dtdata->mcu_nrst, 1);
+	gpiod_direction_output(dtdata->mcu_nrst, 1);
 	/* Put little delay for the target prepared */
 	stm32_delay(STM32_BOOT_I2C_STARTUP_DELAY);
-	gpio_direction_output(dtdata->mcu_swclk, 0);
+	gpiod_direction_output(dtdata->mcu_swclk, 0);
 
 	/* STEP2. Send SYNC frame then waiting for ACK */
 	ret = stm32_sysboot_mcu_chip_command(data, STM32_BOOT_I2C_CMD_SYNC);
 	if (ret >= 0) {
 		/* STEP3. When I2C mode, Turn to the MCU system boot mode once again for protocol == SYSBOOT_PROTO_I2C */
 		/* Assert NRST reset */
-		gpio_direction_output(dtdata->mcu_nrst, 0);
-		gpio_direction_output(dtdata->mcu_swclk, 1);
+		gpiod_direction_output(dtdata->mcu_nrst, 0);
+		gpiod_direction_output(dtdata->mcu_swclk, 1);
 		/* NRST should hold down (Vnf(NRST) > 300 ns), considering capacitor, give enough time */
 		stm32_delay(3);
 		/* Release NRST reset */
-		gpio_direction_output(dtdata->mcu_nrst, 1);
+		gpiod_direction_output(dtdata->mcu_nrst, 1);
 		/* Put little delay for the target prepared */
 		stm32_delay(STM32_BOOT_I2C_STARTUP_DELAY);
-		gpio_direction_output(dtdata->mcu_swclk, 0);
+		gpiod_direction_output(dtdata->mcu_swclk, 0);
 	}
 
 	return ret;
@@ -779,14 +776,14 @@ static void stm32_sysboot_disconnect(struct stm32_dev *data)
 	struct stm32_devicetree_data *dtdata = data->dtdata;
 	input_info(true, &data->client->dev, "%s start\n", __func__);
 	/* Change BOOT pins to Main flash */
-	gpio_direction_output(dtdata->mcu_swclk, 0);
+	gpiod_direction_output(dtdata->mcu_swclk, 0);
 	stm32_delay(1);
 	/* Assert NRST reset */
-	gpio_direction_output(dtdata->mcu_nrst, 0);
+	gpiod_direction_output(dtdata->mcu_nrst, 0);
 	/* NRST should hold down (Vnf(NRST) > 300 ns), considering capacitor, give enough time */
 	stm32_delay(2);
 	/* Release NRST reset */
-	gpio_direction_output(dtdata->mcu_nrst, 1);
+	gpiod_direction_output(dtdata->mcu_nrst, 1);
 	stm32_delay(150);
 }
 

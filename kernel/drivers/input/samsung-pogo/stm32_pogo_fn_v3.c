@@ -29,8 +29,8 @@ void stm32_print_info(struct stm32_dev *stm32)
 			stm32->ic_fw_ver.hw_rev);
 	input_info(true, &stm32->client->dev, "TC_v%02X%02X.%X, con:%d/%d, int:%d, depth:%d, rst:%d, hall:%d model_id:0x%x\n",
 			stm32->tc_fw_ver_of_ic.major_ver, stm32->tc_fw_ver_of_ic.minor_ver,
-			stm32->tc_fw_ver_of_ic.data_ver, stm32->connect_state, gpio_get_value(stm32->dtdata->gpio_conn),
-			gpio_get_value(stm32->dtdata->gpio_int), desc->depth, stm32->reset_count, stm32->hall_closed,
+			stm32->tc_fw_ver_of_ic.data_ver, stm32->connect_state, gpiod_get_value(stm32->dtdata->gpio_conn),
+			gpiod_get_value(stm32->dtdata->gpio_int), desc->depth, stm32->reset_count, stm32->hall_closed,
 			stm32->keyboard_model);
 }
 
@@ -48,9 +48,9 @@ void stm32_power_reset(struct stm32_dev *stm32)
 		stm32->reset_count++;
 	input_err(true, &stm32->client->dev, "%s, %d\n", __func__, stm32->reset_count);
 
-	gpio_direction_output(stm32->dtdata->mcu_nrst, 0);
+	gpiod_direction_output(stm32->dtdata->mcu_nrst, 0);
 	stm32_delay(3);
-	gpio_direction_output(stm32->dtdata->mcu_nrst, 1);
+	gpiod_direction_output(stm32->dtdata->mcu_nrst, 1);
 	stm32_delay(10);
 }
 

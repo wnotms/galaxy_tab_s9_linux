@@ -152,9 +152,9 @@ static ssize_t hw_reset_show(struct device *dev, struct device_attribute *attr, 
 	struct stm32_dev *data = dev_get_drvdata(dev);
 
 	input_info(true, dev, "%s\n", __func__);
-	gpio_direction_output(data->dtdata->mcu_nrst, 0);
+	gpiod_direction_output(data->dtdata->mcu_nrst, 0);
 	stm32_delay(3);
-	gpio_direction_output(data->dtdata->mcu_nrst, 1);
+	gpiod_direction_output(data->dtdata->mcu_nrst, 1);
 
 	return snprintf(buf, 5, "%d\n", data->dtdata->mcu_nrst);
 }
@@ -636,7 +636,7 @@ static ssize_t block_pogo_keyboard_store(struct device *dev, struct device_attri
 
 	stm32->pogo_enable = !!param;
 
-	gpio_direction_output(stm32->dtdata->mcu_nrst, stm32->pogo_enable);
+	gpiod_direction_output(stm32->dtdata->mcu_nrst, stm32->pogo_enable);
 	stm32_delay(3);
 
 	return size;
@@ -928,7 +928,7 @@ static struct attribute *key_attributes[] = {
 	NULL,
 };
 
-static struct attribute_group key_attr_group = {
+static struct attribute_group key_attr_group __maybe_unused = {
 	.attrs = key_attributes,
 };
 

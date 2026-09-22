@@ -49,29 +49,42 @@ Nothing in this list runs on the path between the rail coming up and
 * the MUIC path is empty in the bring-up set (only one msm-bus vote is used, and
   the compat header provides it as a no-op).
 
-## Remaining work, and the one real adaptation
+## The adaptation, and its result
 
-The first compile attempt stops at the first vendor header line:
+This kernel has removed the integer GPIO API the vendor driver was written
+against, and the first compile stopped at `'linux/of_gpio.h' file not found`.
+The conversion is done and changes no behaviour:
+
+* the six `dtdata->gpio_*` fields are `struct gpio_desc *`, and `stm32_parse_dt()`
+  uses `devm_gpiod_get_optional()` with the board DTS's own property names
+  (`announce`, `connect`, `swclk`, `nrst`, `sda`, `scl`);
+* `gpio_direction_output`/`gpio_get_value`/`gpio_to_irq` became their `gpiod_*`
+  equivalents, and the explicit request/free pairs disappeared with devm;
+* four smaller API moves: the 1-argument i2c probe and void `remove`, an inlined
+  `i2c_new_dummy_device()` (the vendor's version guard hid it), a `linux/types.h`
+  include, and `SEC_TS_WAKE_LOCK_TIME`, `sec_delay()` and `sec_device_destroy()`
+  from `samsung_pogo_compat.h`;
+* `samsung_pogo_stubs.c` defines the notifier, backlight and msm-bus services the
+  vendor header declares, so the signatures match exactly.
+
+All seven objects now compile clean:
 
 ```
-stm32_pogo_v3.h:36:10: fatal error: 'linux/of_gpio.h' file not found
+stm32_pogo_i2c_v3  stm32_pogo_core_v3  stm32_pogo_cmd_v3  stm32_pogo_fw
+stm32_pogo_interrupt_v3  stm32_pogo_fn_v3  samsung_pogo_stubs
 ```
 
-This kernel has removed the integer GPIO API, and the vendor driver is written
-against it: `stm32_parse_dt()` stores raw gpio numbers with
-`of_get_named_gpio()` and the driver then uses `gpio_direction_output()`,
-`gpio_get_value()` and `gpio_to_irq()` at about thirty call sites. The board DTS
-already names every one of those lines with a standard `-gpios` suffix
-(`connect-gpios`, `swclk-gpios`, `nrst-gpios`, `sda-gpios`, `scl-gpios`,
-`announce-gpios`), so the conversion is mechanical and changes no behaviour:
+## What is left
 
-1. the six `dtdata->gpio_*` fields become `struct gpio_desc *`;
-2. `stm32_parse_dt()` uses `devm_gpiod_get_optional()` for those six names;
-3. `gpio_direction_output` → `gpiod_direction_output`, `gpio_get_value` →
-   `gpiod_get_value`, `gpio_to_irq` → `gpiod_to_irq`, and the explicit
-   `gpio_request`/`gpio_free` pairs disappear with devm;
-4. then wire `KEYBOARD_SAMSUNG_POGO_VENDOR_PORT` into the kernel Kconfig and into
-   `scripts/prepare-kernel.sh`'s driver copy list (the port is a directory, not a
-   `keyboard-*.c` file, so the script needs one more rule), and let
-   `scripts/build-kernel.sh`'s required-symbol check accept either driver;
-5. compile, then run the A/B on hardware and record it as a new test.
+1. Wire the Kconfig choice into the kernel: add
+   `obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT) += samsung-pogo/` to
+   `drivers/input/keyboard/Makefile` and source this directory's Kconfig from
+   there, as a queued patch beside `0006-input-add-samsung-pogo-keyboard.patch`.
+2. Teach `scripts/prepare-kernel.sh` to copy this directory (the driver-prefix
+   rule only copies `kernel/drivers/*.c`), and let `scripts/build-kernel.sh`'s
+   required-symbol check accept either driver symbol.
+3. Build, then run the A/B on hardware with everything else unchanged and record
+   it under `reference/boot-tests/`: if this driver brings `0x2a` up and
+   `keyboard-samsung-pogo.c` does not, the fault is in the driver's logic; if
+   neither does, it is below the driver - controller, pinctrl, regulator, clock
+   or runtime PM.

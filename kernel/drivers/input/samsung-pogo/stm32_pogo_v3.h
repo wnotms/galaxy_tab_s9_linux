@@ -10,7 +10,7 @@
 #include <linux/workqueue.h>
 #include <linux/input.h>
 #include <linux/delay.h>
-#include <linux/gpio.h>
+#include <linux/gpio/consumer.h>
 #include <linux/i2c.h>
 #include <linux/irq.h>
 #include <linux/errno.h>
@@ -33,11 +33,9 @@
 #endif
 
 #if IS_ENABLED(CONFIG_OF)
-#include <linux/of_gpio.h>
 #endif
 
-#include "../sec_input.h"
-#include "../sec_tsp_log.h"
+#include "samsung_pogo_compat.h"
 #include "pogo_notifier_v3.h"
 
 /* Utility MACROs */
@@ -433,12 +431,12 @@ struct stm32_dev {
 };
 
 struct stm32_devicetree_data {
-	int gpio_int;
-	int gpio_sda;
-	int gpio_scl;
-	int gpio_conn;
-	int mcu_swclk;
-	int mcu_nrst;
+	struct gpio_desc *gpio_int;
+	struct gpio_desc *gpio_sda;
+	struct gpio_desc *gpio_scl;
+	struct gpio_desc *gpio_conn;
+	struct gpio_desc *mcu_swclk;
+	struct gpio_desc *mcu_nrst;
 	u32 irq_type;
 	u32 irq_conn_type;
 	struct regulator *vdd_vreg;

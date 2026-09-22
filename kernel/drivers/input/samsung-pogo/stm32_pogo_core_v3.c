@@ -91,38 +91,38 @@ static int stm32_parse_dt(struct device *dev, struct stm32_dev *stm32)
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->gpio_int = of_get_named_gpio(np, "stm32,irq_gpio", 0);
-	if (!gpio_is_valid(stm32->dtdata->gpio_int)) {
+	stm32->dtdata->gpio_int = devm_gpiod_get_optional(dev, "announce", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->gpio_int)) {
 		input_err(true, dev, "unable to get gpio_int\n");
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->gpio_sda = of_get_named_gpio(np, "stm32,sda_gpio", 0);
-	if (!gpio_is_valid(stm32->dtdata->gpio_sda)) {
+	stm32->dtdata->gpio_sda = devm_gpiod_get_optional(dev, "sda", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->gpio_sda)) {
 		input_err(true, dev, "unable to get gpio_sda\n");
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->gpio_scl = of_get_named_gpio(np, "stm32,scl_gpio", 0);
-	if (!gpio_is_valid(stm32->dtdata->gpio_scl)) {
+	stm32->dtdata->gpio_scl = devm_gpiod_get_optional(dev, "scl", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->gpio_scl)) {
 		input_err(true, dev, "unable to get gpio_scl\n");
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->gpio_conn = of_get_named_gpio(np, "stm32,irq_conn", 0);
-	if (!gpio_is_valid(stm32->dtdata->gpio_conn)) {
-		input_err(true, dev, "unable to get irq_conn\n");
+	stm32->dtdata->gpio_conn = devm_gpiod_get_optional(dev, "connect", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->gpio_conn)) {
+		input_err(true, dev, "unable to get gpio_conn\n");
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->mcu_swclk = of_get_named_gpio(np, "stm32,mcu_swclk", 0);
-	if (!gpio_is_valid(stm32->dtdata->mcu_swclk)) {
+	stm32->dtdata->mcu_swclk = devm_gpiod_get_optional(dev, "swclk", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->mcu_swclk)) {
 		input_err(true, dev, "unable to get mcu_swclk\n");
 		return SEC_ERROR;
 	}
 
-	stm32->dtdata->mcu_nrst = of_get_named_gpio(np, "stm32,mcu_nrst", 0);
-	if (!gpio_is_valid(stm32->dtdata->mcu_nrst)) {
+	stm32->dtdata->mcu_nrst = devm_gpiod_get_optional(dev, "nrst", GPIOD_ASIS);
+	if (IS_ERR(stm32->dtdata->mcu_nrst)) {
 		input_err(true, dev, "unable to get mcu_nrst\n");
 		return SEC_ERROR;
 	}
@@ -236,11 +236,7 @@ static int stm32_i2c_new_dummy(struct stm32_dev *stm32, u16 address)
 {
 	input_info(true, &stm32->client->dev, "%s: client_boot address:0x%x\n", __func__, address);
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 4, 0))
 	stm32->client_boot = i2c_new_dummy_device(stm32->client->adapter, address);
-#else
-	stm32->client_boot = i2c_new_dummy(stm32->client->adapter, address);
-#endif
 	if (IS_ERR(stm32->client_boot)) {
 		input_err(true, &stm32->client->dev, "%s: client_boot err:%ld\n",
 				__func__, PTR_ERR(stm32->client_boot));
@@ -315,7 +311,7 @@ int stm32_pogo_v3_start(struct stm32_dev *stm32)
 		goto interrupt_err;
 	}
 
-	stm32->connect_state = gpio_get_value(stm32->dtdata->gpio_conn);
+	stm32->connect_state = gpiod_get_value(stm32->dtdata->gpio_conn);
 	if (stm32->connect_state)
 		atomic_set(&stm32->check_ic_flag, true);
 	else

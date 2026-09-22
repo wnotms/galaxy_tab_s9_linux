@@ -77,8 +77,8 @@ static int stm32_keyboard_start(struct stm32_dev *stm32)
 	return 0;
 out:
 	input_err(true, &stm32->client->dev, "%s: failed. int:%d, sda:%d, scl:%d\n",
-			__func__, gpio_get_value(stm32->dtdata->gpio_int), gpio_get_value(stm32->dtdata->gpio_sda),
-			gpio_get_value(stm32->dtdata->gpio_scl));
+			__func__, gpiod_get_value(stm32->dtdata->gpio_int), gpiod_get_value(stm32->dtdata->gpio_sda),
+			gpiod_get_value(stm32->dtdata->gpio_scl));
 
 	stm32_enable_irq(stm32, INT_DISABLE_NOSYNC);
 
@@ -144,7 +144,7 @@ static void stm32_check_conn_work(struct work_struct *work)
 	int current_conn_state;
 
 	mutex_lock(&stm32->conn_lock);
-	current_conn_state = gpio_get_value(stm32->dtdata->gpio_conn);
+	current_conn_state = gpiod_get_value(stm32->dtdata->gpio_conn);
 	input_info(true, &stm32->client->dev, "%s: con:%d, current:%d\n",
 			__func__, stm32->connect_state, current_conn_state);
 	if (stm32->connect_state) {
@@ -350,7 +350,7 @@ static irqreturn_t stm32_dev_isr(int irq, void *dev_id)
 #if IS_ENABLED(CONFIG_QCOM_BUS_SCALING) || IS_ENABLED(CONFIG_INTERCONNECT)
 	int ret = 0;
 #endif
-	if (gpio_get_value(stm32->dtdata->gpio_int))
+	if (gpiod_get_value(stm32->dtdata->gpio_int))
 		return IRQ_HANDLED;
 #if IS_ENABLED(CONFIG_QCOM_BUS_SCALING)
 	if (stm32->stm32_bus_perf_client) {
@@ -467,8 +467,8 @@ static irqreturn_t stm32_conn_isr(int irq, void *dev_id)
 	}
 #endif
 	cancel_delayed_work_sync(&stm32->check_conn_work);
-	input_info(true, &stm32->client->dev, "%s (%d)\n", __func__, gpio_get_value(stm32->dtdata->gpio_conn));
-	if (!gpio_get_value(stm32->dtdata->gpio_conn)) {
+	input_info(true, &stm32->client->dev, "%s (%d)\n", __func__, gpiod_get_value(stm32->dtdata->gpio_conn));
+	if (!gpiod_get_value(stm32->dtdata->gpio_conn)) {
 		stm32_dev_regulator(stm32, 0);
 		if (!stm32->flip_working)
 			schedule_delayed_work(&stm32->check_conn_work, msecs_to_jiffies(250));
@@ -498,7 +498,7 @@ int stm32_interrupt_init(struct stm32_dev *stm32)
 	INIT_DELAYED_WORK(&stm32->check_conn_work, stm32_check_conn_work);
 	INIT_DELAYED_WORK(&stm32->check_init_work, stm32_check_init_work);
 
-	stm32->dev_irq = gpio_to_irq(stm32->dtdata->gpio_int);
+	stm32->dev_irq = gpiod_to_irq(stm32->dtdata->gpio_int);
 	if (stm32->dev_irq < 0) {
 		input_info(true, &stm32->client->dev, "%s failed to load INT PIN (%d)\n", __func__, stm32->dev_irq);
 		return SEC_ERROR;
@@ -506,7 +506,7 @@ int stm32_interrupt_init(struct stm32_dev *stm32)
 
 	input_info(true, &stm32->client->dev, "%s INT mode (%d)\n", __func__, stm32->dev_irq);
 
-	stm32->conn_irq = gpio_to_irq(stm32->dtdata->gpio_conn);
+	stm32->conn_irq = gpiod_to_irq(stm32->dtdata->gpio_conn);
 	if (stm32->conn_irq < 0) {
 		input_info(true, &stm32->client->dev, "%s failed to load CONN INT PIN (%d)\n",
 				__func__, stm32->conn_irq);

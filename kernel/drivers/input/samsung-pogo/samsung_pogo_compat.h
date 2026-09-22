@@ -2,20 +2,13 @@
 /*
  * Compatibility layer for the imported Samsung stm32_pogo_v3 sources.
  *
- * The vendor files are imported verbatim except for this header and the include
- * lines that pull Samsung's frameworks.  Everything the bring-up path actually
- * needs is provided here with no behaviour of its own:
+ * The vendor files are imported verbatim except for their includes and this
+ * header, which supplies what Samsung's frameworks provided and nothing else.
+ * The function stubs live in samsung_pogo_stubs.c so that their signatures match
+ * the vendor's own prototypes exactly.
  *
- *   - Samsung's logging wrappers, whose first argument is a verbosity flag
- *   - the pogo notifier registration (only used to tell other drivers that the
- *     cover appeared; nothing in the bring-up depends on it)
- *   - kbd_max77816_* (a keyboard backlight controller; the vendor log itself
- *     prints "not support device" on this board)
- *   - MUIC and msm-bus votes, which the vendor driver uses for power and
- *     bandwidth accounting, not for the MCU handshake
- *
- * sec_device_create()/sysfs are deliberately absent: the port keeps the
- * bring-up and drops the Android interfaces, as agreed for this experiment.
+ * Dropped on purpose, as agreed for this experiment: sec_class sysfs, factory
+ * and FOTA interfaces, Samsung's logging class and the sec_input framework.
  */
 #ifndef __SAMSUNG_POGO_COMPAT_H__
 #define __SAMSUNG_POGO_COMPAT_H__
@@ -34,60 +27,31 @@
 #define input_dbg(verbose, dev, fmt, ...) \
 	dev_dbg((dev), fmt, ##__VA_ARGS__)
 
-/* pogo notifier: registered by the vendor driver, consumed by other drivers. */
-static inline int pogo_notifier_register(struct notifier_block *nb)
-{
-	return 0;
-}
+/* Samsung's return convention, from sec_input.h. */
+#ifndef SEC_SUCCESS
+#define SEC_SUCCESS	0
+#endif
+#ifndef SEC_ERROR
+#define SEC_ERROR	(-1)
+#endif
 
-static inline int pogo_notifier_unregister(struct notifier_block *nb)
-{
-	return 0;
-}
+/*
+ * Samsung's wake-lock timeout for touch/key wakeups (sec_input.h).  Only the
+ * timeout value is used; the wakeup source itself is registered by the driver.
+ */
+#ifndef SEC_TS_WAKE_LOCK_TIME
+#define SEC_TS_WAKE_LOCK_TIME	2000
+#endif
 
-static inline int pogo_notifier_notify(void *data, unsigned long event, void *v,
-				       void *extra)
-{
-	return 0;
-}
+/* Samsung's millisecond delay helper, from sec_common_fn. */
+#define sec_delay(ms)	msleep(ms)
 
-/* Keyboard backlight controller: not present on this cover. */
-static inline int kbd_max77816_init(void *stm32)
-{
-	return 0;
-}
+/* sec_class device lifetime: nothing is created here, so nothing is destroyed. */
+#define sec_device_destroy(dev)		do { } while (0)
 
-static inline void kbd_max77816_control_init(void *stm32)
-{
-	input_info(true, &((struct stm32_dev *)stm32)->client->dev,
-		   "kbd_max77816_control : not support device\n");
-}
-
-static inline int kbd_max77816_control(void *stm32, int on)
-{
-	return 0;
-}
-
-/* MUIC: the vendor driver only mirrors cover events into it. */
-static inline int muic_notifier_register(struct notifier_block *nb)
-{
-	return 0;
-}
-
-/* msm-bus bandwidth votes are accounting only. */
-struct msm_bus_scale_pdata;
-static inline void *msm_bus_scale_register_client(struct msm_bus_scale_pdata *p)
-{
-	return NULL;
-}
-
-static inline int msm_bus_scale_client_update_request(void *client, unsigned int idx)
-{
-	return 0;
-}
-
-static inline void msm_bus_scale_unregister_client(void *client)
-{
-}
+/* msm-bus bandwidth votes are accounting only; nothing is voted here. */
+struct msm_bus_scale_pdata {
+	int unused;
+};
 
 #endif /* __SAMSUNG_POGO_COMPAT_H__ */

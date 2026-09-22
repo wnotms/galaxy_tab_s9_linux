@@ -44,9 +44,9 @@ int stm32_i2c_read_bulk(struct i2c_client *client, u8 *data, u8 length)
 		if (ret != 1) {
 			pogo_notifier_notify(stm32, POGO_NOTIFIER_ID_RESET, 0, 0);
 			input_err(true, &client->dev, "scl:%d, sda:%d, int:%d\n",
-					gpio_get_value(stm32->dtdata->gpio_scl),
-					gpio_get_value(stm32->dtdata->gpio_sda),
-					gpio_get_value(stm32->dtdata->gpio_int));
+					gpiod_get_value(stm32->dtdata->gpio_scl),
+					gpiod_get_value(stm32->dtdata->gpio_sda),
+					gpiod_get_value(stm32->dtdata->gpio_int));
 			ret = -EIO;
 			stm32_delay(10);
 			if ((!stm32->connect_state) && (client->addr != 0x51) && mutex_is_locked(&stm32->conn_lock)) {
@@ -272,7 +272,7 @@ static int stm32_dev_allocate(struct i2c_client *client)
 	return SEC_SUCCESS;
 }
 
-static int stm32_dev_probe(struct i2c_client *client, const struct i2c_device_id *id)
+static int stm32_dev_probe(struct i2c_client *client)
 {
 	struct stm32_dev *stm32;
 	int ret = 0;
@@ -311,7 +311,7 @@ static int stm32_dev_probe(struct i2c_client *client, const struct i2c_device_id
 	return ret;
 }
 
-static int stm32_dev_remove(struct i2c_client *client)
+static void stm32_dev_remove(struct i2c_client *client)
 {
 	struct stm32_dev *stm32 = i2c_get_clientdata(client);
 
@@ -335,7 +335,6 @@ static int stm32_dev_remove(struct i2c_client *client)
 	free_irq(stm32->conn_irq, stm32);
 	sec_device_destroy(stm32->sec_pogo->devt);
 
-	return 0;
 }
 
 #if IS_ENABLED(CONFIG_PM)
