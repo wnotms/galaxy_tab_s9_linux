@@ -36,6 +36,7 @@
 #define POGO_BOOT_ADDR			0x51
 #define POGO_BOOT_CMD_SYNC		0xFF
 #define POGO_BOOT_CMD_GET_VER		0x01
+#define POGO_BOOT_CMD_READ		0x11
 #define POGO_BOOT_CMD_GO		0x21
 #define POGO_BOOT_RESP_ACK		0x79
 
@@ -63,7 +64,7 @@ struct samsung_pogo {
 static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
-static void pogo_boot_go(struct samsung_pogo *p);
+static void pogo_boot_go(struct samsung_pogo *p, u32 addr);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -237,36 +238,105 @@ static bool pogo_boot_enter(struct samsung_pogo *p)
 }
 
 /*
+ * STM32 AN4221 framing: a command or an address goes out as those bytes followed
+ * by their XOR, and each is acknowledged.
+ */
+static int pogo_boot_xfer(struct samsung_pogo *p, const u8 *buf, size_t len)
+{
+	u8 resp = 0;
+
+	if (i2c_master_send(p->boot, buf, len) != len)
+		return -EIO;
+	if (i2c_master_recv(p->boot, &resp, 1) != 1 || resp != POGO_BOOT_RESP_ACK)
+		return -EPROTO;
+	return 0;
+}
+
+/* READ (0x11): command, address, length, then the data. */
+static int pogo_boot_read(struct samsung_pogo *p, u32 addr, u8 *buf, u16 len)
+{
+	u8 cmd[2] = { POGO_BOOT_CMD_READ, ~POGO_BOOT_CMD_READ };
+	u8 ab[5], nb[2];
+	int ret;
+
+	ab[0] = addr >> 24; ab[1] = addr >> 16; ab[2] = addr >> 8; ab[3] = addr;
+	ab[4] = ab[0] ^ ab[1] ^ ab[2] ^ ab[3];
+	nb[0] = len - 1;
+	/* Samsung sends the byte count and its complement, then waits for the ACK. */
+	nb[1] = ~nb[0];
+
+	ret = pogo_boot_xfer(p, cmd, sizeof(cmd));
+	if (ret)
+		return ret;
+	ret = pogo_boot_xfer(p, ab, sizeof(ab));
+	if (ret)
+		return ret;
+	ret = pogo_boot_xfer(p, nb, sizeof(nb));
+	if (ret)
+		return ret;
+	if (i2c_master_recv(p->boot, buf, len) != len)
+		return -EIO;
+	return 0;
+}
+
+/*
+ * Where does the application live?
+ *
+ * Samsung's stm32_fw_header starts the flash with a magic word, the versions and
+ * - at offsets 28 and 32 - boot_bank_addr and target_bank_addr.  The application
+ * is in a *bank*, so GO 0x08000000 jumps at the header and nothing runs, which is
+ * exactly what tests 047 and 048 measured: both GO acknowledgements accepted and
+ * no application afterwards.  Read the header through the bootloader and use the
+ * address it names.
+ */
+static u32 pogo_boot_app_address(struct samsung_pogo *p)
+{
+	u8 hdr[48];
+	u32 boot, target;
+
+	if (pogo_boot_read(p, 0x08000000, hdr, sizeof(hdr))) {
+		dev_info(&p->client->dev, "could not read the firmware header\n");
+		return 0x08000000;
+	}
+
+	boot = hdr[28] | hdr[29] << 8 | hdr[30] << 16 | (u32)hdr[31] << 24;
+	target = hdr[32] | hdr[33] << 8 | hdr[34] << 16 | (u32)hdr[35] << 24;
+	dev_info(&p->client->dev,
+		 "MCU firmware header: magic %*phN boot bank %#x target bank %#x\n",
+		 8, hdr, boot, target);
+
+	if ((boot & 0xff000000) == 0x08000000)
+		return boot;
+	if ((target & 0xff000000) == 0x08000000)
+		return target;
+	dev_info(&p->client->dev, "no usable bank address in the header\n");
+	return 0x08000000;
+}
+
+/*
  * STM32 AN4221 GO: the command, then the address with its XOR checksum.
  *
  * Stock has the case but only sets cmd[0] and breaks, so it never sends the
  * address and never worked; the frame is 0x21, its complement, the four address
  * bytes big-endian, and the XOR of those bytes.  Every step is acknowledged.
  */
-static void pogo_boot_go(struct samsung_pogo *p)
+static void pogo_boot_go(struct samsung_pogo *p, u32 addr)
 {
-	static const u8 cmd[] = { POGO_BOOT_CMD_GO, ~POGO_BOOT_CMD_GO };
-	static const u8 addr[] = { 0x08, 0x00, 0x00, 0x00, 0x08 };
-	u8 resp = 0;
+	u8 cmd[] = { POGO_BOOT_CMD_GO, ~POGO_BOOT_CMD_GO };
+	u8 ab[5];
+	int ret;
 
-	if (i2c_master_send(p->boot, cmd, sizeof(cmd)) != sizeof(cmd)) {
-		dev_info(&p->client->dev, "bootloader GO command refused\n");
+	ab[0] = addr >> 24; ab[1] = addr >> 16; ab[2] = addr >> 8; ab[3] = addr;
+	ab[4] = ab[0] ^ ab[1] ^ ab[2] ^ ab[3];
+
+	ret = pogo_boot_xfer(p, cmd, sizeof(cmd));
+	if (ret) {
+		dev_info(&p->client->dev, "bootloader GO command refused (%d)\n", ret);
 		return;
 	}
-	if (i2c_master_recv(p->boot, &resp, 1) != 1 || resp != POGO_BOOT_RESP_ACK) {
-		dev_info(&p->client->dev, "bootloader GO command not acked (%#x)\n", resp);
-		return;
-	}
-	if (i2c_master_send(p->boot, addr, sizeof(addr)) != sizeof(addr)) {
-		dev_info(&p->client->dev, "bootloader GO address refused\n");
-		return;
-	}
-	resp = 0;
-	if (i2c_master_recv(p->boot, &resp, 1) == 1 && resp == POGO_BOOT_RESP_ACK)
-		dev_info(&p->client->dev,
-			 "MCU bootloader accepted GO 0x08000000, application should be running\n");
-	else
-		dev_info(&p->client->dev, "bootloader GO address not acked (%#x)\n", resp);
+	ret = pogo_boot_xfer(p, ab, sizeof(ab));
+	dev_info(&p->client->dev, "bootloader GO %#x: %s\n", addr,
+		 ret ? "address refused" : "accepted");
 }
 
 /* AN4221 Get Version returns ACK, version, ACK in separate read frames. */
@@ -358,7 +428,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	 * out after the disconnect and timed out because by then the MCU answered
 	 * on neither interface.
 	 */
-	pogo_boot_go(p);
+	pogo_boot_go(p, pogo_boot_app_address(p));
 	ret = pogo_wait_application(p, "GO");
 	if (!ret)
 		return;

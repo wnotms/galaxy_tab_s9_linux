@@ -76,6 +76,7 @@ int main(void) {
 #include <string.h>
 #include <errno.h>
 typedef uint8_t u8;
+typedef uint32_t u32;
 #define POGO_BOOT_CMD_GET_VER 0x01
 #define POGO_BOOT_CMD_GO 0x21
 #define POGO_BOOT_RESP_ACK 0x79
@@ -122,6 +123,9 @@ static void pogo_scan_bus(struct samsung_pogo *p) {}
 static bool pogo_boot_enter(struct samsung_pogo *p) {
  entries++; phase = 0; return !entry_failure;
 }
+/* The bank lookup reads the firmware header; it has its own path and is mocked
+   here so this harness keeps testing the GO/version/startup sequencing. */
+static u32 pogo_boot_app_address(struct samsung_pogo *p) { return 0x08000000; }
 static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n) {
  if (!app) return -ENXIO;
  memset(buf, 0, n);
@@ -152,7 +156,7 @@ static int i2c_master_recv(struct i2c_client *c, u8 *buf, int n) {
  return 1;
 }
 '''
-        for name in ('pogo_boot_version', 'pogo_boot_go', 'pogo_wait_application', 'pogo_bootloader_probe',
+        for name in ('pogo_boot_xfer', 'pogo_boot_version', 'pogo_boot_go', 'pogo_wait_application', 'pogo_bootloader_probe',
                      'pogo_read_mcu', 'pogo_connect_work'):
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
                                    source, flags=re.M)
@@ -173,7 +177,7 @@ int main(void) {
  u8 version;
  clear(&p);
  assert(!pogo_boot_version(&p, &version) && version == 0x12 && phase == 4);
- pogo_boot_go(&p); assert(phase == 8 && app);
+ pogo_boot_go(&p, 0x08000000); assert(phase == 8 && app);
  /* Every short/error transfer must abort the version exchange. */
  for (int i=1; i<=4; i++) {
   clear(&p); fail_at=i; fail_value=0;
@@ -188,11 +192,11 @@ int main(void) {
  /* GO must stop on every failed transfer and either rejected ACK. */
  for (int i=1; i<=4; i++) {
   clear(&p); fail_at=i; fail_value=-ENXIO;
-  pogo_boot_go(&p); assert(transfers == i && !app);
+  pogo_boot_go(&p, 0x08000000); assert(transfers == i && !app);
  }
- clear(&p); bad_ack=5; pogo_boot_go(&p); assert(transfers == 2 && !app);
+ clear(&p); bad_ack=5; pogo_boot_go(&p, 0x08000000); assert(transfers == 2 && !app);
  clear(&p); bad_ack=7; app_after_go=0;
- pogo_boot_go(&p); assert(transfers == 4 && !app);
+ pogo_boot_go(&p, 0x08000000); assert(transfers == 4 && !app);
  /* Both startup success paths must set ready without resetting the app. */
  clear(&p); app=1;
  pogo_connect_work(&p.connect_work.work);
