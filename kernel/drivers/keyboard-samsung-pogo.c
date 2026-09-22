@@ -81,6 +81,9 @@ struct samsung_pogo {
 	unsigned int stuck_fails;
 	/* Re-seat detection: the connect line floats while the cover is off. */
 	bool conn_attached;
+	/* Logical level of the connect line at the last 250 ms check. */
+	bool connect_state;
+	struct delayed_work conn_check_work;
 	bool rearm_pending;
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
@@ -691,11 +694,71 @@ static void pogo_watch_work(struct work_struct *work)
 			   msecs_to_jiffies(POGO_WATCH_MS));
 }
 
+/*
+ * Detach, in the order stock uses: stop the data interrupt first and only if it is
+ * actually armed (a repeated or unbalanced enable/disable pair is what killed the
+ * keyboard in test 105), drop every key state so nothing stays logically pressed,
+ * then switch the rail off.
+ */
+static void pogo_detach(struct samsung_pogo *p)
+{
+	dev_info(&p->client->dev, "pogo: confirmed detach (connect line %d)\n",
+		 p->connect_state);
+	if (p->irq_armed) {
+		/*
+		 * nosync on purpose: this runs from a work item that the interrupt
+		 * itself may have queued, and disable_irq() would wait for a handler
+		 * that cannot complete while this work holds the protocol lock.
+		 */
+		disable_irq_nosync(p->client->irq);
+		p->irq_armed = false;
+		dev_info(&p->client->dev, "pogo: DATA IRQ disabled\n");
+	}
+	p->event_enabled = false;
+	p->ready = false;
+	pogo_release_keys(p);
+	pogo_power_off(p);
+	dev_info(&p->client->dev, "pogo: rail off, state=DETACHED\n");
+}
+
+/*
+ * Stock's stm32_check_conn_work(): read the line and act only on a real state
+ * change.  The 250 ms delay before this runs is what makes that safe on a line
+ * carrying 1492-2431 edges per boot.
+ */
+static void pogo_conn_check_work(struct work_struct *work)
+{
+	struct samsung_pogo *p = container_of(to_delayed_work(work),
+					     struct samsung_pogo, conn_check_work);
+	int level;
+
+	mutex_lock(&p->lock);
+	level = gpiod_get_value_cansleep(p->connected);
+	if (level == p->connect_state) {
+		mutex_unlock(&p->lock);
+		return;
+	}
+	dev_info(&p->client->dev,
+		 "pogo: connect line reads %d (was %d) after the 250 ms check\n",
+		 level, p->connect_state);
+	p->connect_state = level;
+	if (!level)
+		pogo_detach(p);
+	mutex_unlock(&p->lock);
+}
+
 static irqreturn_t pogo_connect_irq(int irq, void *data)
 {
 	struct samsung_pogo *p = data;
 
-	mod_delayed_work(system_percpu_wq, &p->connect_work, msecs_to_jiffies(20));
+	/*
+	 * Stock's stm32_conn_isr() reacts to a *checked* state rather than to the
+	 * edge: this line carries 1492-2431 edges per boot here, and reacting to
+	 * each one is what reset a working keyboard twice in this project.  The
+	 * 250 ms delay filters the transients before anything is decided.
+	 */
+	mod_delayed_work(system_percpu_wq, &p->conn_check_work,
+			 msecs_to_jiffies(250));
 	return IRQ_HANDLED;
 }
 
@@ -1466,6 +1529,7 @@ static void pogo_stop(void *data)
 
 	disable_irq(p->connect_irq);
 	device_remove_file(&p->client->dev, &dev_attr_rearm);
+	cancel_delayed_work_sync(&p->conn_check_work);
 	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
 	if (p->event_enabled) {
@@ -1496,6 +1560,7 @@ static int pogo_probe(struct i2c_client *client)
 	mutex_init(&p->lock);
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
 	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
+	INIT_DELAYED_WORK(&p->conn_check_work, pogo_conn_check_work);
 	if (device_create_file(&client->dev, &dev_attr_rearm))
 		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
@@ -1509,6 +1574,7 @@ static int pogo_probe(struct i2c_client *client)
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
 	p->conn_attached = true;
 	p->conn_level = gpiod_get_value_cansleep(p->connected);
+	p->connect_state = p->conn_level;
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
