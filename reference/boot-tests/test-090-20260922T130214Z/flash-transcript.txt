@@ -1,0 +1,23 @@
+# test 090 flash transcript (host-side, 2026-09-22, from the WSL working copy)
+# ADB: D:\android\platform-tools\adb.exe, device R52X10045LT in TWRP recovery
+$ sha256sum out/boot-bundle-pogo-event/{boot.img,vendor_boot.img}
+a6fce2f9f3ddb4c28480051658c22a28e7956c6a0a2b6cbbebcee0ac10c848ed  out/boot-bundle-pogo-event/boot.img
+b5f3cda09e2b0bfaf736c5b73c423a6481eb6220a121bce22ef5103b53ecb707  out/boot-bundle-pogo-event/vendor_boot.img
+$ adb push boot.img /tmp/boot.img
+D:\android\gts9-test090\boot.img: 1 file pushed, 0 skipped. 82.8 MB/s (100663296 bytes in 1.160s)
+$ adb push vendor_boot.img /tmp/vendor_boot.img
+D:\android\gts9-test090\vendor_boot.img: 1 file pushed, 0 skipped. 811.5 MB/s (100663296 bytes in 0.118s)
+$ adb shell "dd if=/tmp/boot.img of=/dev/block/by-name/boot bs=4096 && dd if=/tmp/vendor_boot.img of=/dev/block/by-name/vendor_boot bs=4096"
+100663296 bytes (96 M) copied, 0.240824 s, 399 M/s
+$ adb shell "sha256sum /dev/block/by-name/boot; sha256sum /dev/block/by-name/vendor_boot"
+boot-readback=a6fce2f9f3ddb4c28480051658c22a28e7956c6a0a2b6cbbebcee0ac10c848ed
+vb-readback=b5f3cda09e2b0bfaf736c5b73c423a6481eb6220a121bce22ef5103b53ecb707
+expected-boot=a6fce2f9f3ddb4c28480051658c22a28e7956c6a0a2b6cbbebcee0ac10c848ed
+$ adb shell "dd if=/dev/zero of=/dev/block/by-name/misc bs=2048 count=1 conv=notrunc"
+2048 bytes (2.0 K) copied, 0.001540 s, 1.2 M/s     -> bcb-cleared
+$ adb shell reboot system        (plain reboot sometimes lands in recovery; reboot system was used)
+# 95 s later: console capture attempt produced no output
+$ powershell [System.IO.Ports.SerialPort]::GetPortNames()   -> (empty: no serial adapter present)
+$ adb devices                                               -> (empty: mainline initramfs has no adbd)
+# RESULT NOT MEASURED. No write was made to recovery, vbmeta, init_boot, dtbo, userdata,
+# persist, efs or the partition table.

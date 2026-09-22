@@ -1,0 +1,4 @@
+Owner authorization: 刷入测试, followed by 继续修复 and 修复键盘驱动，可以参考s9u的对应驱动或搜索其它开源仓库的实现.
+Source: 0f0b759. Independent test 090; earlier untracked test-087 logs were not changed.
+Hypothesis: physical-low DATA IRQ and nonblocking event startup. Diagnostic module parameter remains default false. No MCU firmware changes.
+Recovery plan: gts9-to-recovery over USB console; manual recovery keys if unavailable. Current partitions backed up and stock backups retained.
