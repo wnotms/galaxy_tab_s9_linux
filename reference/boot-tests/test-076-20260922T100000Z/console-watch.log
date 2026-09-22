@@ -1,0 +1,10 @@
+2026-09-22T10:38:11Z console open on COM17
+2026-09-22T10:38:14Z SENT  dmesg | grep -aiE "silence|announce line|rail rose|application" | tail -12
+2026-09-22T10:38:14Z RECV  dmesg | grep -aiE "silence|announce line|rail rose|application" | tail -12
+2026-09-22T10:38:14Z RECV  [    3.575996][   T51] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed (level 0)
+2026-09-22T10:38:14Z RECV  [    3.593097][   T51] samsung-pogo-keyboard 5-002a: just after the rail rose: rail on, boot0/swclk 0, nrst 1, announce 0
+2026-09-22T10:38:14Z RECV  [    3.810104][   T51] samsung-pogo-keyboard 5-002a: announce line 0 -> 1 after 200 ms of silence
+2026-09-22T10:38:14Z RECV  [    5.203952][   T51] samsung-pogo-keyboard 5-002a: announce line 1 -> 0 after 1000 ms of silence
+2026-09-22T10:38:14Z RECV  [    9.497457][   T51] samsung-pogo-keyboard 5-002a: right after the rail cycle: application -6, bootloader -6, announce level 0
+2026-09-22T10:38:14Z RECV  [    9.540062][   T51] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T10:38:23Z console session done

@@ -1,0 +1,8 @@
+source_commit=1ed2712 ("pogo: watch the MCU's own line for five seconds without touching the bus")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-075
+hypothesis=Whether the application announces itself unprompted under mainline has never been measured cleanly: earlier silent windows sampled the line only at the end (test 060) or produced traffic before the sample (tests 068/075).  Stock's application asserts the line about 135 ms after the rail rises and the driver then reads the event.  Five seconds of watching the line every 100 ms, with no I2C transaction in the window, separates "the application is alive and trying to talk" from "it never reaches that point".
+change=connect_work watches pogo_announce_level() every 100 ms for five seconds after the rail rises and logs every transition; no bus traffic in that window.
+predictions=1) the line moves (high->low or low->high) => the application is running and asking to be read, so the host's inability to read the event is the whole fault; 2) the line never moves => the application does not reach its own announcement, which points at its startup rather than at the read.
+images=out/boot-bundle-test076/boot.img 2035f42f8ae27c9f03e8f2d796a4c44f6f5c467862c1ddfd00d2f0fc6111eb0c; vendor_boot 3ec6c8d1, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T10:00:00Z
