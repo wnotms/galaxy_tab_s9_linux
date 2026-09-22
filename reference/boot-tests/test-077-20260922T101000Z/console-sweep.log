@@ -1,0 +1,9 @@
+2026-09-22T10:42:02Z console open on COM17
+2026-09-22T10:42:05Z SENT  dmesg | grep -aiE "acknowledges|announce line|MCU|application" | tail -12
+2026-09-22T10:42:05Z RECV  dmesg | grep -aiE "acknowledges|announce line|MCU|application" | tail -12
+2026-09-22T10:42:05Z RECV  [    4.807984][   T78] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed (level 1)
+2026-09-22T10:42:05Z RECV  [    4.807992][  T118] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T10:42:05Z RECV  [    6.778405][   T78] samsung-pogo-keyboard 5-002a: i2c-5 acknowledges: (nothing)
+2026-09-22T10:42:05Z RECV  [   12.334119][   T78] samsung-pogo-keyboard 5-002a: right after the rail cycle: application -6, bootloader -6, announce level 0
+2026-09-22T10:42:05Z RECV  [   12.376644][   T78] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T10:42:14Z console session done

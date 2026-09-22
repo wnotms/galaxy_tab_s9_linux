@@ -1,0 +1,8 @@
+source_commit=7b477b9 ("pogo: sweep the whole 7-bit address range while the application is up")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-076
+hypothesis=Test 076 showed the application running and announcing itself unprompted even with no host traffic, while test 074's five-address probe found nothing.  Either the application serves an address outside 0x2a-0x2d/0x51, or its I2C slave is not participating at all.  Sweeping the full 7-bit range with the one-byte write that really ACKs an address, while the application is up, separates those two.
+change=pogo_scan_bus() sweeps 0x08-0x77 and runs in connect_work right after the rail rises, instead of only in the failure path.
+predictions=1) an address answers => the application serves it and the port has been reading the wrong one; 2) nothing answers across the whole range while the application's own line is being driven => the slave is not participating, and the remaining difference is in how the host's controller presents the address phase - the one layer never compared, since stock runs i2c-msm-geni and mainline runs i2c-qcom-geni.
+images=out/boot-bundle-test077/boot.img e8218c8567117352389b1ceda77f3905363e681c00d42e9aa95f0c7d5b2d946b; vendor_boot 3ec6c8d1, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T10:10:00Z
