@@ -1992,7 +1992,16 @@
 		function = "gpio";
 		drive-strength = <2>;
 		input-enable;
-		bias-disable;
+		/*
+		 * Pull-up, not bias-disable: stock reads both lines as 1 (int:1 and
+		 * con:1/1 in every status line) while this board's free-floating
+		 * connector leaves them toggling when nothing drives them, which
+		 * makes the vendor driver's state machine alternate
+		 * keyboard_start/keyboard_stop and never reach the application read
+		 * (test 072).  The pull-up reproduces the levels stock observes
+		 * without changing any output.
+		 */
+		bias-pull-up;
 	};
 
 	pogo_swclk: pogo-swclk-state {
