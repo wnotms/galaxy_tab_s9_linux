@@ -1,0 +1,14 @@
+2026-09-22T08:18:11Z console open on COM17
+2026-09-22T08:18:14Z SENT  dmesg | grep -iE "geni_ios|NACK|scl/sda|GENI_TIMEOUT" | tail -10
+2026-09-22T08:18:14Z RECV  dmesg | grep -iE "geni_ios|NACK|scl/sda|GENI_TIMEOUT" | tail -10
+2026-09-22T08:18:14Z RECV  [   57.856940][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T08:18:14Z RECV  [   57.876776][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T08:18:14Z RECV  [   58.178153][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T08:18:14Z RECV  [   58.197998][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T08:18:14Z RECV  [   58.464133][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T08:18:14Z RECV  [   58.483992][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T08:18:14Z RECV  [   58.754099][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T08:18:14Z RECV  [   58.773930][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T08:18:14Z RECV  [   59.041367][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T08:18:14Z RECV  [   59.061165][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T08:18:23Z console session done

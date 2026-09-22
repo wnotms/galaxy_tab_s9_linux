@@ -1,0 +1,8 @@
+=== test 063 flash (boot only) + BCB clear ===
+D:\android\gts9-test063\boot.img: 1 file pushed, 0 skipped. 78.8 MB/s (100663296 bytes in 1.218s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.231012 s, 416 M/s
+boot read-back b1dd9917c9a57211b8096a03310c3f385606d51fffcc6436a042e8c2d3aa7ce6  /dev/block/by-name/boot
+expected b1dd9917c9a57211b8096a03310c3f385606d51fffcc6436a042e8c2d3aa7ce6
+bcb-cleared

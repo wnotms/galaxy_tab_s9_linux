@@ -1,0 +1,8 @@
+source_commit=03ccc25 ("i2c: print the bus line levels for the NACK path too", patch 0008 v2)
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-062
+hypothesis=Every -ENXIO in this bring-up has two possible meanings: the STM32 does not acknowledge its address (idle bus, real NACK), or a bus line is not idle (something holding SDA/SCL down) - the stock kernel's own driver on this bus (i2c-msm-geni.c, CONFIG_I2C_MSM_GENI) separates them by reading SE_GENI_IOS before every transfer.  Mainline reads the same register but only in geni_i2c_err_misc(), which geni_i2c_err() calls only from its default branch: NACK and GENI_TIMEOUT log at dev_dbg and skip it.  That is why test 062's first patch produced no output at all - the two cases this board hits are exactly the two that print nothing.
+change=patch 0008 now also logs the NACK/timeout message at info level and calls geni_i2c_err_misc() for it, so the line-level verdict is printed: "scl/sda high, idle bus" versus "scl/sda NOT both high".  No functional change.
+predictions=1) "scl/sda high, idle bus" => the bus is fine and the MCU NACKs its address: the fault is on the STM32 side (it is not serving 0x2a), and the bootloader-vs-application asymmetry is about the MCU's own state. 2) "scl/sda NOT both high" => the port has been misreading the situation entirely: the transfers fail because a line is held (e.g. by the MCU in reset or unpowered), and the fix is about power/reset, not about the protocol.
+images=out/boot-bundle-test063/boot.img b1dd9917c9a57211b8096a03310c3f385606d51fffcc6436a042e8c2d3aa7ce6; vendor_boot 8d76f912, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:25:00Z
