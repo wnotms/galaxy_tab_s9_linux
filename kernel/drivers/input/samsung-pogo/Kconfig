@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# A/B choice: exactly one pogo keyboard driver may be built, because both bind
+# the same DT node.  CONFIG_KEYBOARD_SAMSUNG_POGO_SIMPLE is the port written for
+# this bring-up; CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT is Samsung's own
+# stm32_pogo_v3 imported nearly verbatim.  Comparing the two on identical
+# hardware, kernel, DTS and initramfs is what tells whether the fault is in the
+# driver's logic or below it.
+#
+config KEYBOARD_SAMSUNG_POGO_SIMPLE
+	tristate "Samsung pogo keyboard (mainline port)"
+	depends on I2C
+	depends on !KEYBOARD_SAMSUNG_POGO_VENDOR_PORT
+	help
+	  The driver in drivers/input/keyboard/keyboard-samsung-pogo.c.
+
+config KEYBOARD_SAMSUNG_POGO_VENDOR_PORT
+	tristate "Samsung pogo keyboard (vendor stm32_pogo_v3 port)"
+	depends on I2C
+	depends on !KEYBOARD_SAMSUNG_POGO_SIMPLE
+	help
+	  Samsung's stm32_pogo_v3 imported from the SM-X710 open source release,
+	  with only the Android interfaces removed (sec_class sysfs, factory and
+	  FOTA interfaces, Samsung logging and framework stubs).  Probe order,
+	  regulator and GPIO timing, IRQ timing, workqueues, CHECK_VERSION,
+	  GET_MODE and the reconnect flow are kept as they are.
