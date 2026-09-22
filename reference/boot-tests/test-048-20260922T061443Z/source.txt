@@ -1,0 +1,5 @@
+source_commit=74c8ec662ed3fc5825a196ac393f0785e97c824b
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner asked to continue the repair ("检查仓库变化，继续修复") and had already authorised flashing ("刷入测试") for tests 046 and 047; this flash is part of that continuation
+hypothesis=GO is acknowledged but the application has not been given time to answer: test 047 reset the MCU 150 ms after the first NACK, so a slower uninterrupted start was never measured. This candidate polls read-only for up to five seconds before any reset
+started_utc=2026-09-22T06:14:43Z
