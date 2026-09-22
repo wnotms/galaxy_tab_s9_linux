@@ -205,6 +205,16 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
  * transfers or it does not.
  */
 /* stm32_sysboot_connect(): SWCLK high across NRST selects the bootloader. */
+static void pogo_boot_reset(struct samsung_pogo *p)
+{
+	gpiod_set_value_cansleep(p->nrst, 0);
+	gpiod_set_value_cansleep(p->swclk, 1);
+	msleep(3);
+	gpiod_set_value_cansleep(p->nrst, 1);
+	msleep(50); /* STM32_BOOT_I2C_STARTUP_DELAY */
+	gpiod_set_value_cansleep(p->swclk, 0);
+}
+
 static bool pogo_boot_enter(struct samsung_pogo *p)
 {
 	u8 sync = POGO_BOOT_CMD_SYNC;
@@ -212,14 +222,17 @@ static bool pogo_boot_enter(struct samsung_pogo *p)
 	if (!p->boot)
 		return false;
 
-	gpiod_set_value_cansleep(p->swclk, 1);
-	gpiod_set_value_cansleep(p->nrst, 0);
-	msleep(3);
-	gpiod_set_value_cansleep(p->nrst, 1);
-	msleep(50); /* STM32_BOOT_I2C_STARTUP_DELAY */
-	gpiod_set_value_cansleep(p->swclk, 0);
+	pogo_boot_reset(p);
+	if (i2c_master_send(p->boot, &sync, 1) != 1)
+		return false;
 
-	return i2c_master_send(p->boot, &sync, 1) == 1;
+	/*
+	 * Stock's I2C connect STEP3 resets again after the unknown-command
+	 * probe.  Do not send another 0xFF in the new session: the following
+	 * Get Version/GO must start with a clean command parser.
+	 */
+	pogo_boot_reset(p);
+	return true;
 }
 
 /*

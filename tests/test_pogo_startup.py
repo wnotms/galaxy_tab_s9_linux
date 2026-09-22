@@ -10,6 +10,60 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PogoStartup(unittest.TestCase):
+    def test_boot_entry_clears_probe_before_commands(self):
+        source = (ROOT / 'kernel/drivers/keyboard-samsung-pogo.c').read_text()
+        harness = r'''
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
+typedef uint8_t u8;
+#define POGO_BOOT_CMD_SYNC 0xff
+struct i2c_client { int unused; };
+struct samsung_pogo { struct i2c_client *boot; int *nrst, *swclk; };
+static int reset_pin, boot_pin, step, send_result = 1;
+/* Samsung stm32_sysboot_connect: reset, probe, reset without another probe. */
+static const int expected[] = {1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6};
+static void record(int action) {
+ assert(step < (int)(sizeof(expected) / sizeof(expected[0])));
+ assert(action == expected[step++]);
+}
+static void gpiod_set_value_cansleep(int *pin, int v) {
+ if (pin == &reset_pin) record(v ? 4 : 1);
+ else { assert(pin == &boot_pin); record(v ? 2 : 6); }
+}
+static void msleep(int ms) { assert(ms == 3 || ms == 50); record(ms == 3 ? 3 : 5); }
+static int i2c_master_send(struct i2c_client *c, const u8 *buf, int len) {
+ assert(c && len == 1 && *buf == 0xff); record(7); return send_result;
+}
+'''
+        for name in ('pogo_boot_reset', 'pogo_boot_enter'):
+            definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
+                                   source, flags=re.M)
+            self.assertIsNotNone(definition, name)
+            harness += '\n' + function(source[definition.start():], name) + '\n'
+        harness += r'''
+int main(void) {
+ struct i2c_client client = {0};
+ struct samsung_pogo p = {.boot=&client, .nrst=&reset_pin, .swclk=&boot_pin};
+ assert(pogo_boot_enter(&p) && step == 13);
+ step=0; send_result=-6;
+ assert(!pogo_boot_enter(&p) && step == 7);
+ step=0; send_result=0;
+ assert(!pogo_boot_enter(&p) && step == 7);
+ step=0; p.boot=0;
+ assert(!pogo_boot_enter(&p) && !step);
+ return 0;
+}
+'''
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Path(tmp) / 'entry.c'
+            exe = Path(tmp) / 'entry'
+            c.write_text(harness)
+            subprocess.run(['clang', '-Wall', '-Wextra', '-Werror',
+                            '-fsanitize=address,undefined', '-g', str(c),
+                            '-o', str(exe)], check=True)
+            subprocess.run([str(exe)], check=True)
+
     def test_startup(self):
         source = (ROOT / 'kernel/drivers/keyboard-samsung-pogo.c').read_text()
         # The shared extractor expects definitions, not forward declarations.

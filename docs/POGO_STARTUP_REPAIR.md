@@ -97,3 +97,21 @@ version/mode line. Success requires a mode-1 application plus real key-down and
 key-up events, including releases and Caps Lock behavior. A GO ACK alone is not
 proof of application startup. Archive raw logs and hashes under a new
 `reference/boot-tests/test-NNN-.../` directory before another experiment.
+
+## Hardware follow-up: test 046 and Samsung connect STEP3
+
+Test 046 booted `ad4463f`, with working screen/USB console, but Get Version
+returned -110 and GO was refused. Reset-based app entry still NAKed. See the
+complete [test record](../reference/boot-tests/test-046-20260922T055740Z/README.md).
+
+Samsung's `stm32_sysboot_connect()` (lines 400–436 of the supplied firmware
+source) has a second boot-mode reset after the successful 0xFF probe. Crucially,
+it does not transmit 0xFF after that reset. `STM32_BOOT_I2C_CMD_SYNC` is labelled
+UNKNOWN in its command switch. Our original helper lacked that step; invoking
+it twice also sent the unknown command twice. The next candidate factors out
+the GPIO reset sequence and performs reset → 0xFF probe → reset → commands.
+The second reset occurs before Get Version/GO, never after successful app entry.
+
+A new host test executes the actual reset and entry functions and checks the
+sequence against Samsung STEP3, including short/error probe and missing-client
+paths. All 10 host tests pass. Hardware confirmation remains separate.

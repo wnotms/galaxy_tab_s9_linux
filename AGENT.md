@@ -184,9 +184,17 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   restarts a failed version session before GO, preserves successful application
   startup and checks mode on both success paths. Bus recovery now runs only after
   an application read fails. See `docs/POGO_STARTUP_REPAIR.md` for validation.
-  **Next step:** test the corrected candidate, capture GO command/address ACKs
-  and application version/mode, then verify real key-down/key-up events. No key
-  has been typed through this driver yet; offline tests do not change that status.
+  Test 046 (`reference/boot-tests/test-046-20260922T055740Z/`) booted that
+  candidate and returned safely to TWRP. The owner saw the console, but version
+  exchange timed out (-110), GO was refused, and the application still NAKed
+  after reset. The version error did not identify a transfer stage. Stock's
+  `stm32_sysboot_connect()` then revealed a missing STEP3: after probing with
+  unknown command 0xFF it resets into the bootloader again, without another
+  probe, before issuing commands. The follow-up candidate now mirrors that
+  sequence, tested against the actual GPIO/reset helper on the host.
+  **Next step:** test the post-probe reset candidate, capture application
+  version/mode and then real key-down/key-up events. No key has been typed
+  through this driver yet; offline tests do not change that status.
 - **Display regression, found and fixed (2026-09-22, round 5).**  The owner
   reported a blank screen; `display_recover` was cycling the framebuffer as soon as
   `fb0` appeared, 5.91 s, before the panel driver's first read at 6.29 s, and had
