@@ -135,7 +135,12 @@ static void pogo_connect_work(struct work_struct *work)
 				 "pogo rail on, MCU out of reset, awaiting the model announcement\n");
 		}
 	}
-	dev_info_ratelimited(&p->client->dev, "connect line reads %d\n", conn);
+	/*
+	 * Diagnostic only, and at debug level: the line is a bias-disable input
+	 * that a floating connector toggles at about 10 Hz, which flooded the
+	 * panel console when this was dev_info_ratelimited.
+	 */
+	dev_dbg(&p->client->dev, "connect line reads %d\n", conn);
 	mutex_unlock(&p->lock);
 }
 
