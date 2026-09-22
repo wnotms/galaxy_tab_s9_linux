@@ -1,0 +1,16 @@
+2026-09-22T07:10:10Z console open on COM17
+2026-09-22T07:10:13Z SENT  dmesg | grep -i -e "powered up again" -e "MCU" -e "application" -e "bootloader" -e "option bytes" | tail -16; echo ---; dmesg | grep -iE "mass storage|gadget|serial" | tail -5
+2026-09-22T07:10:13Z RECV  dmesg | grep -i -e "powered up again" -e "MCU" -e "application" -e "bootlo
+2026-09-22T07:10:13Z RECV  ader" -e "option bytes" | tail -16; echo ---; dmesg | grep -iE "mass storage|gad
+2026-09-22T07:10:13Z RECV  get|serial" | tail -5
+2026-09-22T07:10:13Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T07:10:13Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:10:13Z RECV  [    4.468568][   T81] samsung-pogo-keyboard 5-002a: MCU powered up again with BOOT0 low
+2026-09-22T07:10:13Z RECV  [    4.534816][   T81] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:10:13Z RECV  ---
+2026-09-22T07:10:13Z RECV  [    3.972269][   T76] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 167, base_baud = 0) is a MSM
+2026-09-22T07:10:13Z RECV  [    3.982521][   T76] serial serial0: tty port ttyHS1 registered
+2026-09-22T07:10:13Z RECV  [    4.022848][   T76] a9c000.serial: ttyMSM0 at MMIO 0xa9c000 (irq = 175, base_baud = 0) is a MSM
+2026-09-22T07:10:13Z RECV  [    5.914175][    T1]     gts9_usb_gadget=acm
+2026-09-22T07:10:13Z RECV  [    7.403412][    T1] gts9-init: USB gadget bound to a600000.usb (mode=acm)
+2026-09-22T07:10:22Z console session done

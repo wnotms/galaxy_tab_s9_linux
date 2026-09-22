@@ -1,0 +1,21 @@
+=== test 054 pretest + flash (boot + vendor_boot) ===
+gts9wifi
+boot 33afd56dd3bdebd29960683343033713e365f35bff1d6b5ae7a9b26f0ed8af5f  /dev/block/by-name/boot
+init_boot 12b77d174d4074c1215e1e2e39230d57b7a8ab9c0e06f3bdcef7dc5c89276e5f  /dev/block/by-name/init_boot
+vendor_boot 828dadec334fa440aca7f81879cc6405240e9a7ff0388f6b1608caa6e2535d25  /dev/block/by-name/vendor_boot
+dtbo c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3  /dev/block/by-name/dtbo
+/dev/block/by-name/boot: 1 file pulled, 0 skipped. 26.3 MB/s (100663296 bytes in 3.643s)
+33afd56dd3bdebd29960683343033713e365f35bff1d6b5ae7a9b26f0ed8af5f  .work/backups/test-054-20260922T070850Z/boot.img
+D:\android\gts9-test054\boot.img: 1 file pushed, 0 skipped. 80.0 MB/s (100663296 bytes in 1.200s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.333803 s, 288 M/s
+boot read-back efb5b992c344bb88900bf04a5f6f9fba7da09972fa3e97f2e10130a83652d1be  /dev/block/by-name/boot
+/dev/block/by-name/vendor_boot: 1 file pulled, 0 skipped. 25.6 MB/s (100663296 bytes in 3.749s)
+828dadec334fa440aca7f81879cc6405240e9a7ff0388f6b1608caa6e2535d25  .work/backups/test-054-20260922T070850Z/vendor_boot.img
+D:\android\gts9-test054\vendor_boot.img: 1 file pushed, 0 skipped. 720.7 MB/s (100663296 bytes in 0.133s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.325437 s, 295 M/s
+vendor_boot read-back 6b24a94670ed66fb1c32878273751eeb6447d0d5c53ad6b5cf69f8304d2c4813  /dev/block/by-name/vendor_boot
+expected boot efb5b992c344bb88900bf04a5f6f9fba7da09972fa3e97f2e10130a83652d1be vendor_boot 6b24a94670ed66fb1c32878273751eeb6447d0d5c53ad6b5cf69f8304d2c4813

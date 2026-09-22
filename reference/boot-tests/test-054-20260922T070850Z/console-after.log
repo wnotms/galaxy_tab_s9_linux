@@ -1,0 +1,16 @@
+2026-09-22T07:11:20Z console open on COM17
+2026-09-22T07:11:24Z SENT  dmesg | grep -i -e "MCU" -e "application" -e "bootloader" -e "option bytes" -e "answered" | tail -14
+2026-09-22T07:11:24Z RECV  dmesg | grep -i -e "MCU" -e "application" -e "bootloader" -e "option bytes
+2026-09-22T07:11:24Z RECV  " -e "answered" | tail -14
+2026-09-22T07:11:24Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T07:11:24Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:11:24Z RECV  [    4.468568][   T81] samsung-pogo-keyboard 5-002a: MCU powered up again with BOOT0 low
+2026-09-22T07:11:24Z RECV  [    4.534816][   T81] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:11:24Z RECV  [   68.509632][   T81] samsung-pogo-keyboard 5-002a: no answer from the MCU application after 60000 ms (-6)
+2026-09-22T07:11:24Z RECV  [   68.581435][   T81] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T07:11:24Z RECV  [   68.717238][   T81] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T07:11:24Z RECV  [   68.735273][   T81] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T07:11:24Z RECV  [   68.748693][   T81] samsung-pogo-keyboard 5-002a: MCU IC version 00340034
+2026-09-22T07:11:24Z RECV  [   68.797497][   T81] samsung-pogo-keyboard 5-002a: MCU option bytes 0xfefffeaa: RDP 0xaa, bit 24 clear
+2026-09-22T07:11:24Z RECV  [   68.982460][   T81] samsung-pogo-keyboard 5-002a: after the disconnected reset: application -6, bootloader -6, connect 1
+2026-09-22T07:11:33Z console session done
