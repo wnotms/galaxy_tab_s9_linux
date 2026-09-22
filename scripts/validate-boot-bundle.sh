@@ -328,7 +328,7 @@ check_initramfs() {
                     if grep -qxE '\.?/?init' "$tmp/cpio.list"; then
                         pass 'initramfs: /init present'
                         init_line=$(cpio -tv --quiet < "$tmp/initramfs.cpio" 2>/dev/null \
-                            | awk '$NF == "init" {print; exit}')
+                            | awk '$NF == "init" {print}')
                         case "$init_line" in
                             -rwx*) pass 'initramfs: /init is executable' ;;
                             '') fail 'initramfs: cannot read the /init entry' ;;
