@@ -85,6 +85,9 @@ struct samsung_pogo {
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
 	int conn_same;
+	/* Explicit re-arm: 0 none, 1 soft (no reset), 2 hard (full reset). */
+	u8 rearm_mode;
+	bool irq_armed;
 	unsigned long last_rearm;
 	int connect_irq;
 	bool powered;
@@ -243,6 +246,38 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 	int conn, ret, i;
 
 	mutex_lock(&p->lock);
+	/*
+	 * An explicit request from sysfs.  Nothing here can fire by itself: the two
+	 * automatic attempts at acting on the connect line each broke a working
+	 * keyboard, so the recovery is deliberately manual until the probe says which
+	 * sequence a re-seated part actually needs.
+	 */
+	if (p->rearm_mode) {
+		u8 how = p->rearm_mode;
+
+		p->rearm_mode = 0;
+		if (how == 1) {
+			if (regulator_enable(p->vdd))
+				dev_warn(&p->client->dev, "re-arm(soft): could not raise the rail\n");
+			else
+				p->powered = true;
+			msleep(50);
+			p->event_enabled = true;
+			if (!p->irq_armed) {
+				p->irq_armed = true;
+				mutex_unlock(&p->lock);
+				enable_irq(p->client->irq);
+			} else {
+				mutex_unlock(&p->lock);
+			}
+			dev_info(&p->client->dev,
+				 "re-arm(soft): rail on and DATA armed, no reset, no rail drop\n");
+			return;
+		}
+		/* hard: fall through to the reset sequence by pretending to be unpowered */
+		p->powered = false;
+		dev_info(&p->client->dev, "re-arm(hard): running the full boot sequence\n");
+	}
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
@@ -515,6 +550,7 @@ static void pogo_connect_work(struct work_struct *work)
 out:
 	mutex_unlock(&p->lock);
 	if (arm) {
+		p->irq_armed = true;
 		enable_irq(p->client->irq);
 		dev_info(&p->client->dev,
 			 "keyboard powered; DATA IRQ armed, waiting for model packet\n");
@@ -1387,11 +1423,43 @@ static int pogo_led(struct input_dev *input, unsigned int type,
 	return 0;
 }
 
+/*
+ * echo soft > rearm : bring the keyboard up without touching the reset line
+ * echo hard > rearm : run the full boot sequence (app-entry reset, rail, arm)
+ *
+ * Both are explicit by design; see the note in pogo_connect_work().
+ */
+static ssize_t rearm_store(struct device *dev, struct device_attribute *attr,
+			   const char *buf, size_t count)
+{
+	struct samsung_pogo *p = dev_get_drvdata(dev);
+
+	if (sysfs_streq(buf, "soft"))
+		p->rearm_mode = 1;
+	else if (sysfs_streq(buf, "hard"))
+		p->rearm_mode = 2;
+	else
+		return -EINVAL;
+	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
+	return count;
+}
+
+static ssize_t rearm_show(struct device *dev, struct device_attribute *attr,
+			  char *buf)
+{
+	struct samsung_pogo *p = dev_get_drvdata(dev);
+
+	return sysfs_emit(buf, "powered=%d event_enabled=%d armed=%d announcements=%u\n",
+			  p->powered, p->event_enabled, p->irq_armed, p->announce_seen);
+}
+static DEVICE_ATTR_RW(rearm);
+
 static void pogo_stop(void *data)
 {
 	struct samsung_pogo *p = data;
 
 	disable_irq(p->connect_irq);
+	device_remove_file(&p->client->dev, &dev_attr_rearm);
 	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
 	if (p->event_enabled) {
@@ -1422,6 +1490,8 @@ static int pogo_probe(struct i2c_client *client)
 	mutex_init(&p->lock);
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
 	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
+	if (device_create_file(&client->dev, &dev_attr_rearm))
+		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
 	 * Start out assuming the cover is seated: the first watchdog tick sees a
 	 * stable connect line on any working cover, and treating that as a re-seat
@@ -1429,6 +1499,7 @@ static int pogo_probe(struct i2c_client *client)
 	 * up.  Only instability followed by stability is a re-seat.
 	 */
 	p->conn_attached = true;
+	p->conn_level = gpiod_get_value_cansleep(p->connected);
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
