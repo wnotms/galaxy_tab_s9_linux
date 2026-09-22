@@ -555,18 +555,21 @@ static void pogo_watch_work(struct work_struct *work)
 		p->conn_attached = stable;
 	}
 	if (!rearm && p->powered && p->event_enabled) {
+		/*
+		 * Observe only, never reset from here.  Measured on test 100: the
+		 * boot handshake succeeds, GET_MODE then NACKs two seconds later
+		 * while the keyboard was working, and a reset at that point left the
+		 * part silent - the poll was resetting a healthy keyboard every six
+		 * seconds and the key count stayed at zero.  An idle application
+		 * simply does not serve this read, so a NACK is not evidence of a
+		 * fault and must not touch the reset line.
+		 */
 		ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 		if (ret) {
 			if (++p->poll_fails == 1)
 				dev_info(&p->client->dev,
-					 "keep-alive: GET_MODE failed (%d); counting\n", ret);
-			if (p->poll_fails >= POGO_WATCH_FAILS) {
-				p->poll_fails = 0;
-				rearm = true;
-				p->powered = false;
-				p->event_enabled = false;
-				p->ready = false;
-			}
+					 "keep-alive: GET_MODE NACKed (%d) - idle applications do not serve this read; not re-arming\n",
+					 ret);
 		} else if (p->poll_fails) {
 			dev_info(&p->client->dev, "keep-alive: GET_MODE answered again\n");
 			p->poll_fails = 0;
@@ -1350,6 +1353,13 @@ static int pogo_probe(struct i2c_client *client)
 	mutex_init(&p->lock);
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
 	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
+	/*
+	 * Start out assuming the cover is seated: the first watchdog tick sees a
+	 * stable connect line on any working cover, and treating that as a re-seat
+	 * would re-arm - and so disturb - the keyboard the boot path just brought
+	 * up.  Only instability followed by stability is a re-seat.
+	 */
+	p->conn_attached = true;
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
