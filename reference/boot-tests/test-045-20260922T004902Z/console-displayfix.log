@@ -1,0 +1,10 @@
+2026-09-22T03:09:57Z console open on COM17
+2026-09-22T03:10:00Z SENT  dmesg | grep -i -e "gts9-init: display" -e "ana38407 panel id" | tail -8
+2026-09-22T03:10:00Z RECV  dmesg | grep -i -e "gts9-init: display" -e "ana38407 panel id" | tail -8
+2026-09-22T03:10:00Z RECV  [    5.460473][   T77] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-22T03:10:00Z RECV  [    5.943551][    T1] gts9-init: display: framebuffer cycle for first-enable zero ID
+2026-09-22T03:10:00Z RECV  [    6.327614][  T200] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-22T03:10:00Z RECV  [    6.523423][    T1] gts9-init: display: cycle 1 recovered panel ID 80 00 04
+2026-09-22T03:10:00Z RECV  [    7.531277][    T1] gts9-init: display: framebuffer unblanked (blank=0)
+2026-09-22T03:10:00Z RECV  [    7.544907][    T1] gts9-init: display: wrote a marker line to /dev/tty0
+2026-09-22T03:10:09Z console session done

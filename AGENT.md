@@ -162,14 +162,27 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   *application*: after the vendor's `sysboot_disconnect()` sequence the bootloader
   goes quiet and 0x2a never answers, which is what a boot-mode selection problem
   looks like.
-  **Next step:** send the bootloader's jump command `STM32_BOOT_I2C_CMD_GO` (0x21)
-  to 0x51 after the version read, then read 0x2a again.  Stock has the case but
-  never sends it, so the vendor relies on reset-with-SWCLK-low alone - which is
-  exactly what is not working here.  Also worth ruling out if the application
-  comes up and then dies: mainline's `dmic45-default-state` muxes **gpio12/13** to
-  `dmic3_clk`/`dmic4_data`, the same pins as the keyboard's SWCLK and NRST (they
-  are ours today, but TWRP never probes audio and mainline does).  No key has been
-  typed through this driver yet.
+  Round 5 tried both app-entry mechanisms on hardware and both failed: the
+  vendor's exact `stm32_sysboot_disconnect()` timings leave 0x2a NAKing, and the
+  bootloader's `GO` (0x21) write then times out because by that point the MCU
+  answers on neither interface.  It has left the bootloader without the
+  application coming up on i2c.
+  **Next step: stop disturbing it.**  Stock's `rst:0` says the application was
+  already running when its driver probed, and that driver never powers the rail,
+  pulses NRST or enters the bootloader to get there - the bootloader has probably
+  started it already, and every reset this port performs is a chance to lose it.
+  Read 0x2a first, with no rail cycle, no bootloader dance and no reset; if that
+  answers, the keyboard works and the helping was the fault.  Also still worth
+  ruling out if the application comes up and then dies: mainline's
+  `dmic45-default-state` muxes **gpio12/13** to `dmic3_clk`/`dmic4_data`, the same
+  pins as SWCLK and NRST (ours today, but TWRP never probes audio).  No key has
+  been typed through this driver yet.
+- **Display regression, found and fixed (2026-09-22, round 5).**  The owner
+  reported a blank screen; `display_recover` was cycling the framebuffer as soon as
+  `fb0` appeared, 5.91 s, before the panel driver's first read at 6.29 s, and had
+  no retry - so test 040's working display stayed dark.  It now waits for the
+  driver's own line and retries the full cycle up to three times; cycle 1 recovers
+  `80 00 04` at 6.5 s and the owner confirms the console is visible again.
 - **Physical tests need a recorded owner request (2026-09-22).** The test 040
   flash was made on one and tests 041-045 continued under the same recorded
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or

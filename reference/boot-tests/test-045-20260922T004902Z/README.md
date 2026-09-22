@@ -290,3 +290,53 @@ the reset-with-SWCLK-low to start the application AND never exercises it in a ca
 mainline has to handle.  Sending 0x21 to 0x51 after the version read, then reading
 0x2a again, is the next measurement: it either brings the application up (and the
 keyboard works) or it does not, and either way the boot-mode question is answered.
+
+## Round 5: the display regression, fixed and confirmed
+
+The owner reported a blank screen mid-round.  The cause was in the boot script, not
+the panel: `display_recover` cycled the framebuffer as soon as `fb0` appeared, and
+on this boot that was 5.91 s while the panel driver logged its first read at
+6.29 s.  The cycle therefore re-initialised a link that had not come up yet, the
+recovery's own success check failed, and nothing retried - so a display that
+worked in test 040 stayed dark.
+
+The recovery now waits for the driver's own line (`ana38407 panel id: 00 00 00`,
+not the summary that follows it) before touching the framebuffer, and retries the
+full blank/unblank cycle up to three times, stopping at the first `80 00 04`:
+
+```
+[    5.460473] ana38407 panel id: 00 00 00
+[    5.943551] gts9-init: display: framebuffer cycle for first-enable zero ID
+[    6.327614] ana38407 panel id: 80 00 04
+[    6.523423] gts9-init: display: cycle 1 recovered panel ID 80 00 04
+[    7.544907] gts9-init: display: wrote a marker line to /dev/tty0
+```
+
+Cycle 1 recovers it, 1.7 s earlier than test 040's single cycle did, and the owner
+confirms the console is visible again.
+
+## Round 5 keyboard: two app-entry attempts, both measured
+
+With the bootloader reachable, both ways of starting the application were tried on
+hardware and both failed, which is itself the useful result:
+
+```
+[    4.080860] MCU bootloader took the 0xFF sync
+[    5.325535] application after the reset entry: -6 (did not start)
+[    6.397110] MCU bootloader GO (0x21): -110
+[    7.584067] application after GO: -110 (still not running)
+```
+
+The reset entry uses the vendor's exact `stm32_sysboot_disconnect()` timings
+(SWCLK low, 1 ms, NRST low, 2 ms, NRST high, 150 ms) and 0x2a still NAKs.  The GO
+write then times out (-ETIMEDOUT, not a NAK): by that point the MCU answers on
+neither interface, so the part has left the bootloader without the application
+coming up on i2c.
+
+**Next step:** stop disturbing it.  Stock's log has `rst:0` - the application was
+already running when its driver probed, and that driver never powers the rail,
+pulses NRST or enters the bootloader to get there.  Everything this port does to
+"help" (rail power-cycle, bootloader dance, reset entry) happens to a part that the
+bootloader has probably already started, and each reset is a chance to lose it.
+Reading 0x2a first, with no rail cycle and no reset, is the next measurement - and
+if that answers, the keyboard works and the helping was the fault.

@@ -1,0 +1,10 @@
+2026-09-22T03:06:20Z console open on COM17
+2026-09-22T03:06:23Z SENT  dmesg | grep -i -e "ana38407" -e "gts9-init: display" | tail -6
+2026-09-22T03:06:23Z RECV  dmesg | grep -i -e "ana38407" -e "gts9-init: display" | tail -6
+2026-09-22T03:06:23Z RECV  [    5.913000][    T1] gts9-init: display: early framebuffer cycle for first-enable zero ID
+2026-09-22T03:06:23Z RECV  [    6.293013][  T194] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-22T03:06:23Z RECV  [    6.295140][  T194] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-22T03:06:23Z RECV  [    6.356018][  T194] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-22T03:06:23Z RECV  [    7.496349][    T1] gts9-init: display: framebuffer unblanked (blank=0)
+2026-09-22T03:06:23Z RECV  [    7.507286][    T1] gts9-init: display: wrote a marker line to /dev/tty0
+2026-09-22T03:06:32Z console session done
