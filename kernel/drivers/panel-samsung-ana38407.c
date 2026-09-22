@@ -514,6 +514,15 @@ static int ana38407_prepare(struct drm_panel *panel)
 	ana38407_reset(ctx);
 
 	ret = ana38407_on(ctx);
+	/* Test a DDIC sleep/reset cycle without tearing down the DSI host. */
+	if (!ret && !ctx->id[0] && !ctx->id[1] && !ctx->id[2]) {
+		dev_info(&ctx->dsi->dev, "retrying zero ID after DDIC sleep/reset\n");
+		ret = ana38407_sleep_in(ctx);
+		if (!ret) {
+			ana38407_reset(ctx);
+			ret = ana38407_on(ctx);
+		}
+	}
 	if (ret) {
 		gpiod_set_value_cansleep(ctx->reset_gpio, 0);
 		regulator_bulk_disable(ARRAY_SIZE(ana38407_supplies), ctx->supplies);
