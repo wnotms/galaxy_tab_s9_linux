@@ -124,12 +124,22 @@ static void pogo_connect_work(struct work_struct *work)
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
+		/*
+		 * Mainline's regulator core can switch this rail off during late
+		 * init, before this driver claims it, which leaves the MCU latched
+		 * in a brown-out state that an NRST pulse alone does not clear.
+		 * Give it a real power cycle, then take it out of reset with SWCLK
+		 * already low, as the stock keyboard_start does.
+		 */
+		if (regulator_is_enabled(p->vdd)) {
+			regulator_disable(p->vdd);
+			msleep(100);
+		}
 		ret = regulator_enable(p->vdd);
 		if (ret) {
 			dev_err(&p->client->dev, "power on failed: %d\n", ret);
 		} else {
 			p->powered = true;
-			/* Rail up, SWCLK low, then release the MCU from reset. */
 			gpiod_set_value_cansleep(p->swclk, 0);
 			gpiod_set_value_cansleep(p->nrst, 0);
 			msleep(10);
@@ -138,7 +148,7 @@ static void pogo_connect_work(struct work_struct *work)
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "pogo rail on, MCU out of reset, reading its version\n");
+				 "pogo rail power-cycled, MCU out of reset, reading its version\n");
 			pogo_read_mcu(p);
 		}
 	}
