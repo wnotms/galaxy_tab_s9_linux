@@ -1,0 +1,7 @@
+2026-09-22T10:15:21Z console open on COM17
+2026-09-22T10:15:24Z SENT  dmesg | grep -aiE "read_version|\[MODE\]|CRC|Failed to read|check_ic|support_keyboard|version:" | tail -20
+2026-09-22T10:15:24Z RECV  dmesg | grep -aiE "read_version|\[MODE\]|CRC|Failed to read|check_ic|suppo
+2026-09-22T10:15:24Z RECV  rt_keyboard|version:" | tail -20
+2026-09-22T10:15:24Z RECV  [    0.616042][    T1] CPU features: detected: CRC32 instructions
+2026-09-22T10:15:24Z RECV  [    6.401985][   T76] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-22T10:15:33Z console session done

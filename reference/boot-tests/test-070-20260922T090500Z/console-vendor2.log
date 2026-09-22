@@ -1,0 +1,18 @@
+2026-09-22T10:12:30Z console open on COM17
+2026-09-22T10:12:33Z SENT  dmesg | grep -aiE "stm32|pogo" | tail -30
+2026-09-22T10:12:33Z RECV  dmesg | grep -aiE "stm32|pogo" | tail -30
+2026-09-22T10:12:33Z RECV  [    2.509592][    T1] stm32_dev_init++
+2026-09-22T10:12:33Z RECV  [    3.988472][   T12] stm32_pogo_i2c 5-002a: deferred_flag boot stm32_dev_probe
+2026-09-22T10:12:33Z RECV  [    4.732381][   T12] stm32_pogo_i2c 5-002a: stm32_dev_probe++
+2026-09-22T10:12:33Z RECV  [    4.738218][   T12] stm32_pogo_i2c 5-002a: stm32_i2c_new_dummy: client_boot address:0x51
+2026-09-22T10:12:33Z RECV  [    4.777361][   T12] stm32_pogo_i2c 5-002a: gpio_sda not available (-22), continuing
+2026-09-22T10:12:33Z RECV  [    4.795411][   T12] stm32_pogo_i2c 5-002a: gpio_scl not available (-22), continuing
+2026-09-22T10:12:33Z RECV  [    4.795425][   T12] stm32_pogo_i2c 5-002a: stm32_parse_dt: irq_type property:2008, 8200
+2026-09-22T10:12:33Z RECV  [    4.812302][   T12] stm32_pogo_i2c 5-002a: stm32_parse_dt: irq_conn_type property:2003, 8195
+2026-09-22T10:12:33Z RECV  [    4.812303][   T12] OF: /soc@0/geniqup@8c0000/i2c@89c000/keyboard@2a: Read of boolean property 'stm32_vddo-supply' with a value.
+2026-09-22T10:12:33Z RECV  [    4.812355][   T12] stm32_pogo_i2c 5-002a: stm32_parse_dt: model_name_row1:EF-DT870 model_name_row2:EF-DT630 model_name_row3:(null)
+2026-09-22T10:12:33Z RECV  [    4.833211][   T12] stm32_pogo_i2c 5-002a: unable to get fota_fw_path -22
+2026-09-22T10:12:33Z RECV  [    4.833212][   T12] stm32_pogo_i2c 5-002a: Failed to use device tree
+2026-09-22T10:12:33Z RECV  [    4.833237][   T12] stm32_pogo_i2c 5-002a: Error at stm32_pogo_v3_start
+2026-09-22T10:12:33Z RECV  [    4.849366][   T12] stm32_pogo_i2c 5-002a: probe with driver stm32_pogo_i2c failed with error -1
+2026-09-22T10:12:42Z console session done

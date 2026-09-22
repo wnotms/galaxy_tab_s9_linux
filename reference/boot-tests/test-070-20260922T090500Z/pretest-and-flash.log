@@ -1,0 +1,25 @@
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+expected 48d0d9d0d822f4dd095f179b565d563e08fbff4fb9cdeb01458c48034463140a
+adb.exe: no devices/emulators found
+adb.exe: no devices/emulators found
+D:\android\gts9-test070\boot.img: 1 file pushed, 0 skipped. 70.6 MB/s (100663296 bytes in 1.359s)
+100663296 bytes (96 M) copied, 0.333897 s, 288 M/s
+boot read-back 48d0d9d0d822f4dd095f179b565d563e08fbff4fb9cdeb01458c48034463140a  /dev/block/by-name/boot
+expected 48d0d9d0d822f4dd095f179b565d563e08fbff4fb9cdeb01458c48034463140a
+bcb-cleared
+D:\android\gts9-test070\boot.img: 1 file pushed, 0 skipped. 73.8 MB/s (100663296 bytes in 1.302s)
+100663296 bytes (96 M) copied, 0.338734 s, 283 M/s
+boot read-back 1771bbd14235d73aeb813fdf0292d900302cfb3b27302292734311ecf78cd0c7  /dev/block/by-name/boot
+D:\android\gts9-test070\vendor_boot.img: 1 file pushed, 0 skipped. 802.0 MB/s (100663296 bytes in 0.120s)
+100663296 bytes (96 M) copied, 0.247553 s, 388 M/s
+vendor_boot read-back fa137de969571543db08bc6a70f17dc4e04b74cb863a88e84a602aa082c34886  /dev/block/by-name/vendor_boot
+expected boot 1771bbd14235d73aeb813fdf0292d900302cfb3b27302292734311ecf78cd0c7 vendor_boot fa137de969571543db08bc6a70f17dc4e04b74cb863a88e84a602aa082c34886
+bcb-cleared
+D:\android\gts9-test070\boot.img: 1 file pushed, 0 skipped. 86.0 MB/s (100663296 bytes in 1.117s)
+100663296 bytes (96 M) copied, 0.351993 s, 273 M/s
+boot read-back 31a17dede8ad42f2d0ef3fffe5d85967f15f83d1a4adf4d6fbf07cd77dda0e2f  /dev/block/by-name/boot
+D:\android\gts9-test070\vendor_boot.img: 1 file pushed, 0 skipped. 705.1 MB/s (100663296 bytes in 0.136s)
+100663296 bytes (96 M) copied, 0.440753 s, 218 M/s
+vendor_boot read-back 3a2f767c52dca1995c7ae8a47ae1fd2fbc00ea355697ec45bfbdd3fc5c619920  /dev/block/by-name/vendor_boot
+bcb-cleared

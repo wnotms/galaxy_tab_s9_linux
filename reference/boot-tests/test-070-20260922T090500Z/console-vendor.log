@@ -1,0 +1,29 @@
+2026-09-22T10:08:37Z console open on COM17
+2026-09-22T10:08:40Z SENT  dmesg | grep -aiE "stm32|pogo" | tail -28
+2026-09-22T10:08:40Z RECV  dmesg | grep -aiE "stm32|pogo" | tail -28
+2026-09-22T10:08:40Z RECV  [    2.517082][    T1] stm32_dev_init++
+2026-09-22T10:08:40Z RECV  [    3.999845][   T12] stm32_pogo_i2c 5-002a: deferred_flag boot stm32_dev_probe
+2026-09-22T10:08:40Z RECV  [    4.696412][   T12] stm32_pogo_i2c 5-002a: stm32_dev_probe++
+2026-09-22T10:08:40Z RECV  [    4.702251][   T12] stm32_pogo_i2c 5-002a: stm32_i2c_new_dummy: client_boot address:0x51
+2026-09-22T10:08:40Z RECV  [    5.090689][   T12] stm32_pogo_i2c 5-002a: unable to get gpio_sda
+2026-09-22T10:08:40Z RECV  [    5.096964][   T12] stm32_pogo_i2c 5-002a: Failed to use device tree
+2026-09-22T10:08:40Z RECV  [    5.111367][   T12] stm32_pogo_i2c 5-002a: Error at stm32_pogo_v3_start
+2026-09-22T10:08:40Z RECV  [    5.127083][   T12] stm32_pogo_i2c 5-002a: probe with driver stm32_pogo_i2c failed with error -1
+2026-09-22T10:08:49Z console session done
+2026-09-22T10:09:57Z console open on COM17
+2026-09-22T10:10:00Z SENT  dmesg | grep -aiE "stm32|pogo" | tail -30
+2026-09-22T10:10:00Z RECV  dmesg | grep -aiE "stm32|pogo" | tail -30
+2026-09-22T10:10:00Z RECV  [    2.511500][    T1] stm32_dev_init++
+2026-09-22T10:10:00Z RECV  [    3.998105][   T79] stm32_pogo_i2c 5-002a: deferred_flag boot stm32_dev_probe
+2026-09-22T10:10:00Z RECV  [    4.730111][   T79] stm32_pogo_i2c 5-002a: stm32_dev_probe++
+2026-09-22T10:10:00Z RECV  [    4.735955][   T79] stm32_pogo_i2c 5-002a: stm32_i2c_new_dummy: client_boot address:0x51
+2026-09-22T10:10:00Z RECV  [    4.775094][   T79] stm32_pogo_i2c 5-002a: gpio_sda not available (-22), continuing
+2026-09-22T10:10:00Z RECV  [    4.793141][   T79] stm32_pogo_i2c 5-002a: gpio_scl not available (-22), continuing
+2026-09-22T10:10:00Z RECV  [    4.793152][   T79] stm32_pogo_i2c 5-002a: stm32_parse_dt: Failed to get irq_type property
+2026-09-22T10:10:00Z RECV  [    4.793153][   T79] stm32_pogo_i2c 5-002a: stm32_parse_dt: Failed to get irq_conn_type property
+2026-09-22T10:10:00Z RECV  [    4.813146][   T79] stm32_pogo_i2c 5-002a: stm32_parse_dt: not use regulator
+2026-09-22T10:10:00Z RECV  [    4.813147][   T79] stm32_pogo_i2c 5-002a: unable to get model_name -22
+2026-09-22T10:10:00Z RECV  [    4.813148][   T79] stm32_pogo_i2c 5-002a: Failed to use device tree
+2026-09-22T10:10:00Z RECV  [    4.813166][   T79] stm32_pogo_i2c 5-002a: Error at stm32_pogo_v3_start
+2026-09-22T10:10:00Z RECV  [    4.830940][   T79] stm32_pogo_i2c 5-002a: probe with driver stm32_pogo_i2c failed with error -1
+2026-09-22T10:10:09Z console session done

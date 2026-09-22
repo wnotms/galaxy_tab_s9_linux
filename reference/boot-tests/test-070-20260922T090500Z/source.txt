@@ -1,0 +1,8 @@
+source_commit=506195e (vendor port A/B: sda/scl made optional)
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-069 plus the owner's A/B plan
+hypothesis=Same A/B as test 069, whose first boot showed the vendor driver probing in mainline and then failing at "unable to get gpio_sda" - a pinctrl-model difference (mainline gives gpio72/106 to the controller as qup2_se7, so requesting them as GPIOs returns -EINVAL) rather than anything to do with the MCU.  The vendor driver only reads those lines for diagnostics, so with them optional the port should reach its handshake, and then the A/B question is finally being asked.
+change=the sda and scl claims stay but their failure is logged and tolerated (descriptor NULL); swclk, nrst, connect and announce remain required.
+predictions=1) the log shows the vendor probe completing, the rail switched by stm32_keyboard_start(), then a successful CHECK_VERSION with version 1.4, [MODE] 1 and CRC 0xEADF376E => the fault was in the mainline port's logic; 2) the same idle-bus -ENXIO as the port saw => the fault is below the driver (controller, pinctrl, regulator, clock, runtime PM) and the A/B has done its job.
+images=out/boot-bundle-test070/boot.img 48d0d9d0d822f4dd095f179b565d563e08fbff4fb9cdeb01458c48034463140a; vendor_boot 4d496064, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T09:05:00Z

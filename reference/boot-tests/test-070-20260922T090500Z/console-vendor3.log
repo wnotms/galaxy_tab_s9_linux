@@ -1,0 +1,36 @@
+2026-09-22T10:15:01Z console open on COM17
+2026-09-22T10:15:04Z SENT  dmesg | grep -aiE "stm32|pogo" | tail -32
+2026-09-22T10:15:05Z RECV  dmesg | grep -aiE "stm32|pogo" | tail -32
+2026-09-22T10:15:05Z RECV  [   19.590568][  T109] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:15:05Z RECV  [   19.652164][  T109] stm32_pogo_i2c 5-002a: stm32_enable_irq: enable dev irq
+2026-09-22T10:15:05Z RECV  [   19.659702][  T109] stm32_pogo_i2c 5-002a: stm32_keyboard_start done
+2026-09-22T10:15:05Z RECV  [   19.666926][   T10] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 1
+2026-09-22T10:15:05Z RECV  [   19.675009][   T10] stm32_pogo_i2c 5-002a: stm32_dev_regulator: vdd is already enabled
+2026-09-22T10:15:05Z RECV  [   19.684663][   T10] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:15:05Z RECV  [   19.748174][   T10] stm32_pogo_i2c 5-002a: stm32_enable_irq: enable dev irq
+2026-09-22T10:15:05Z RECV  [   19.756800][   T10] stm32_pogo_i2c 5-002a: stm32_keyboard_start done
+2026-09-22T10:15:05Z RECV  [   19.764766][  T170] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:15:05Z RECV  [   19.772056][  T170] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:15:05Z RECV  [   19.780634][  T170] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:15:05Z RECV  [   19.787907][  T170] stm32_pogo_i2c 5-002a: stm32_dev_regulator: vdd is already disabled
+2026-09-22T10:15:05Z RECV  [   19.797477][  T170] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:15:05Z RECV  [   19.883359][  T170] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:15:05Z RECV  [   19.890811][  T221] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:1, current:1
+2026-09-22T10:15:05Z RECV  [   19.900331][  T221] stm32_pogo_i2c 5-002a: kbd_max77816_control : not support device
+2026-09-22T10:15:05Z RECV  [   19.909690][  T221] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:15:05Z RECV  [   21.700148][  T109] stm32_pogo_i2c 5-002a: stm32_check_init_work: start
+2026-09-22T10:15:05Z RECV  [   21.707348][  T109] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 0
+2026-09-22T10:15:05Z RECV  [   21.714240][  T109] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:15:05Z RECV  [   21.722435][  T109] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:15:05Z RECV  [   21.723748][  T170] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:15:05Z RECV  [   21.729586][  T109] stm32_pogo_i2c 5-002a: stm32_keyboard_stop: done
+2026-09-22T10:15:05Z RECV  [   21.746170][  T170] stm32_pogo_i2c 5-002a: stm32_dev_regulator: vdd is already disabled
+2026-09-22T10:15:05Z RECV  [   21.756045][  T170] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:15:05Z RECV  [   21.846245][  T170] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:15:05Z RECV  [   21.853637][   T10] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:0, current:1
+2026-09-22T10:15:05Z RECV  [   21.863142][   T10] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 1
+2026-09-22T10:15:05Z RECV  [   21.871038][   T10] stm32_pogo_i2c 5-002a: kbd_max77816_control : not support device
+2026-09-22T10:15:05Z RECV  [   21.880383][   T10] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:15:05Z RECV  [   21.944260][   T10] stm32_pogo_i2c 5-002a: stm32_enable_irq: enable dev irq
+2026-09-22T10:15:05Z RECV  [   21.952862][   T10] stm32_pogo_i2c 5-002a: stm32_keyboard_start done
+2026-09-22T10:15:14Z console session done
