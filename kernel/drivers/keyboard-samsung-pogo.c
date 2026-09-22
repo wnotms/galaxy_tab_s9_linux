@@ -475,10 +475,8 @@ static void pogo_connect_work(struct work_struct *work)
 
 		p->rearm_mode = 0;
 		if (how == 1) {
-			if (regulator_enable(p->vdd))
+			if (pogo_power_on(p))
 				dev_warn(&p->client->dev, "re-arm(soft): could not raise the rail\n");
-			else
-				p->powered = true;
 			msleep(50);
 			p->event_enabled = true;
 			if (!p->irq_armed) {
@@ -492,8 +490,8 @@ static void pogo_connect_work(struct work_struct *work)
 				 "re-arm(soft): rail on and DATA armed, no reset, no rail drop\n");
 			return;
 		}
-		/* hard: fall through to the reset sequence by pretending to be unpowered */
-		p->powered = false;
+		/* hard: really drop the rail first, then run the cold sequence */
+		pogo_power_off(p);
 		dev_info(&p->client->dev, "re-arm(hard): running the full boot sequence\n");
 	}
 	if (!p->powered) {
