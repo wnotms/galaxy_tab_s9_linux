@@ -1,0 +1,8 @@
+source_commit=9de099e ("pinctrl: sample the pogo pins at probe and again thirty seconds in")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-082
+hypothesis=Test 082 showed the MCU runs and pulses its line even with gpio10 held low by the driver's own pinctrl state, so that pin is not the MCU's supply but probably its level shifter's enable - and the pinconf state says output-low.  If the pinconf wins over the regulator's write, gpio10 has been low in every test since 058, the shifter has been unpowered, and the MCU's I2C would be isolated - which is exactly the "nothing acknowledges at any address" of test 077 and the inverted line sense of test 082.
+change=the pinctrl diagnostic takes a second, read-only sample every thirty seconds: the IO register of gpio10, 12, 13, 62, 72, 75 and 106, which on this TLMM holds the driven output value as well as the input bit.
+predictions=1) gpio10's output bit is high in the later samples => the regulator's enable does move the pin, the shifter is powered, and this explanation is wrong; 2) the bit is still low => the pinconf overrides the regulator and the level shifter has never been on, which is the fault and a one-line fix.
+images=out/boot-bundle-test083/boot.img fa7f32d13318ef8564e0d307532c500b68abb25d2422a246fc5b41037c5a6a51; vendor_boot 7bd7dcf9, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T11:10:00Z

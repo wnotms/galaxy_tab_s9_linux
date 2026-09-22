@@ -1,0 +1,12 @@
+2026-09-22T11:11:28Z console open on COM17
+2026-09-22T11:11:31Z SENT  dmesg | grep -a "pin " | grep -a "io 0x" | tail -8
+2026-09-22T11:11:31Z RECV  dmesg | grep -a "pin " | grep -a "io 0x" | tail -8
+2026-09-22T11:11:31Z RECV  [    3.048854][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 106 (gpio106) at probe: ctl 0x1 io 0x1
+2026-09-22T11:11:31Z RECV  [   34.081264][    T9]   pin 10: io 0x0
+2026-09-22T11:11:31Z RECV  [   34.085933][    T9]   pin 12: io 0x0
+2026-09-22T11:11:31Z RECV  [   34.090542][    T9]   pin 13: io 0x3
+2026-09-22T11:11:31Z RECV  [   34.095146][    T9]   pin 62: io 0x1
+2026-09-22T11:11:31Z RECV  [   34.099747][    T9]   pin 72: io 0x1
+2026-09-22T11:11:31Z RECV  [   34.104374][    T9]   pin 75: io 0x1
+2026-09-22T11:11:31Z RECV  [   34.108979][    T9]   pin 106: io 0x1
+2026-09-22T11:11:40Z console session done

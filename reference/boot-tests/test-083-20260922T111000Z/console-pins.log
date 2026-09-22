@@ -1,0 +1,16 @@
+2026-09-22T11:09:28Z console open on COM17
+2026-09-22T11:09:32Z SENT  dmesg | grep -aiE "pogo pin|pins 30 s" | tail -18
+2026-09-22T11:09:32Z RECV  dmesg | grep -aiE "pogo pin|pins 30 s" | tail -18
+2026-09-22T11:09:41Z console session done
+2026-09-22T11:11:11Z console open on COM17
+2026-09-22T11:11:14Z SENT  dmesg | grep -aiE "pogo pin|pins 30 s" | tail -20
+2026-09-22T11:11:14Z RECV  dmesg | grep -aiE "pogo pin|pins 30 s" | tail -20
+2026-09-22T11:11:14Z RECV  [    2.988246][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 10 (gpio10) at probe: ctl 0x1 io 0x0
+2026-09-22T11:11:14Z RECV  [    3.004660][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 12 (gpio12) at probe: ctl 0x1 io 0x0
+2026-09-22T11:11:14Z RECV  [    3.013499][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 13 (gpio13) at probe: ctl 0x1 io 0x0
+2026-09-22T11:11:14Z RECV  [    3.022339][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 62 (gpio62) at probe: ctl 0x1 io 0x0
+2026-09-22T11:11:14Z RECV  [    3.031176][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 72 (gpio72) at probe: ctl 0x1 io 0x1
+2026-09-22T11:11:14Z RECV  [    3.040014][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 75 (gpio75) at probe: ctl 0x1 io 0x0
+2026-09-22T11:11:14Z RECV  [    3.048854][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 106 (gpio106) at probe: ctl 0x1 io 0x1
+2026-09-22T11:11:14Z RECV  [   34.076330][    T9] pogo pins 30 s in:
+2026-09-22T11:11:23Z console session done
