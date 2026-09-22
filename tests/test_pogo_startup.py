@@ -87,6 +87,7 @@ typedef uint16_t u16;
 #define POGO_MODE_APP 1
 #define POGO_MODE_DFU 2
 #define POGO_IC_VERSION_OFFSET 0x08000200
+#define POGO_POLL_INTERVAL_MS 250
 #define dev_info(...) ((void)0)
 #define dev_info_ratelimited(...) ((void)0)
 #define dev_err(...) ((void)0)
@@ -237,31 +238,34 @@ int main(void) {
  pogo_connect_work(&p.connect_work.work);
  assert(p.ready && p.event_enabled && enables == 1 && !resets && !entries && !recoveries);
  pogo_connect_work(&p.connect_work.work); assert(enables == 1 && !resets);
+ /* An application that never answers is waited for, then the bootloader is
+    entered once, and its disconnect - not a GO - starts the application. */
  clear(&p);
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && p.event_enabled && entries == 1 && !recoveries && phase == 11);
- /* Stock's bootloader visit ends in exactly one reset - never in a GO. */
+ assert(p.ready && p.event_enabled && entries == 1 && recoveries == 1 && phase == 11);
  assert(resets == 1);
- /* An application needing two seconds must be waited for, not reset again. */
- clear(&p); startup_delay=2000;
+ /* An application needing two seconds is waited for, and nothing is reset:
+    the bootloader is only entered when the application never answers. */
+ clear(&p); app_ready_at = 2000;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && resets == 1 && !recoveries && jiffies >= 2000 && jiffies < 2200);
+ assert(p.ready && !resets && !entries && recoveries == 1 && jiffies >= 2000 && jiffies < 2100);
  /* Absence is bounded, and polling itself never manipulates reset or bus. */
  clear(&p);
- assert(pogo_wait_application(&p, "test") == -ENXIO);
+ assert(pogo_wait_application(&p, "test", 5000) == -ENXIO);
  assert(jiffies >= 5000 && jiffies <= 5150 && !resets && !recoveries);
  /* The deadline arithmetic must work across a jiffies wrap. */
  clear(&p); jiffies=(unsigned long)-1000;
- assert(pogo_wait_application(&p, "wrap") == -ENXIO && jiffies < 4200);
+ assert(pogo_wait_application(&p, "wrap", 5000) == -ENXIO && jiffies < 4200);
  /* A failed version exchange requires a fresh session before the READ. */
  clear(&p); bad_ack=3;
  pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
  clear(&p); fail_at=4; fail_value=-ETIMEDOUT;
  pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
- /* The probe starts the application by reset, and the caller sees it ready. */
+ /* The patient poll fails first, then the probe starts the application by
+    reset, and the caller sees it ready. */
  clear(&p);
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && resets == 1 && !recoveries);
+ assert(p.ready && resets == 1 && recoveries == 1);
  clear(&p); entry_failure=1;
  pogo_bootloader_probe(&p); assert(!transfers && !app);
  clear(&p); power_error=-EIO;

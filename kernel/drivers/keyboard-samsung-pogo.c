@@ -43,6 +43,8 @@
 #define POGO_BOOT_RESP_ACK		0x79
 /* Where Samsung's driver reads the MCU's IC version from flash. */
 #define POGO_IC_VERSION_OFFSET		0x08000200
+/* How often the application is polled while it starts. */
+#define POGO_POLL_INTERVAL_MS		250
 /* Samsung's header inside the firmware image; the magic there is "STM32". */
 #define POGO_FW_HEADER_L0		0x080000bc
 #define POGO_FW_HEADER_G0		0x080000c0
@@ -72,6 +74,7 @@ static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
+static int pogo_wait_application(struct samsung_pogo *p, const char *entry, unsigned int timeout_ms);
 static int pogo_boot_version(struct samsung_pogo *p, u8 *version);
 
 /* Each call ends with STOP, matching the stock protocol. */
@@ -167,31 +170,29 @@ static void pogo_connect_work(struct work_struct *work)
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
-		u8 version[4];
-
 		/*
-		 * Ask the application first, without changing anything.  Stock's log
-		 * shows rst:0 - the application was already running when its driver
-		 * probed - and that driver never powers the rail, pulses NRST or
-		 * enters the bootloader to get there: the bootloader has started it
-		 * already, and every reset this port performs is a chance to lose it.
+		 * Ask the application first, without changing anything: it is the
+		 * bootloader that starts it, and every reset this port performs is
+		 * a chance to restart that from the beginning.
 		 */
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
 			msleep(20);
-			ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION,
-					    version, sizeof(version));
-			if (ret) {
+			/*
+			 * Ask the application first and give it time: it is the
+			 * bootloader that starts it, and every reset this port
+			 * performs is a chance to restart that from the beginning.
+			 */
+			ret = pogo_read_mcu(p);
+			if (!ret) {
+				dev_info(&p->client->dev,
+					 "MCU application already running\n");
+			} else {
 				dev_info(&p->client->dev,
 					 "MCU application did not answer; entering its bootloader\n");
 				pogo_bootloader_probe(p);
-			} else {
-				dev_info(&p->client->dev,
-					 "MCU application already running, version %u.%u\n",
-					 version[3], version[2]);
+				pogo_read_mcu(p);
 			}
-			/* Preserve a successful app entry; check mode before accepting keys. */
-			pogo_read_mcu(p);
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
 		} else {
@@ -425,10 +426,11 @@ static int pogo_boot_version(struct samsung_pogo *p, u8 *version)
  * first NACK at 150 ms, so it never measured a slower, uninterrupted start.
  * Allow five seconds of read-only polling before considering a reset fallback.
  */
-static int pogo_wait_application(struct samsung_pogo *p, const char *entry)
+static int pogo_wait_application(struct samsung_pogo *p, const char *entry,
+				 unsigned int timeout_ms)
 {
 	unsigned long start = jiffies;
-	unsigned long deadline = start + msecs_to_jiffies(5000);
+	unsigned long deadline = start + msecs_to_jiffies(timeout_ms);
 	u8 version[4];
 	int ret;
 
@@ -489,7 +491,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	pogo_boot_dump_header(p);
 	pogo_boot_disconnect(p);
 	pogo_boot_report(p, "after the disconnected reset");
-	pogo_wait_application(p, "bootloader start");
+	pogo_wait_application(p, "bootloader start", 30000);
 	pogo_boot_report(p, "five seconds later");
 }
 
@@ -576,45 +578,50 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 
 	p->ready = false;
 
-	for (i = 0; i < 40; i++) {
+	/*
+	 * Wait for the application instead of resetting it.
+	 *
+	 * Stock's driver first reads the version tens of seconds into the boot
+	 * (33 s in its own log) and never resets the part to get there, while
+	 * this port polled at 4 s and then pulsed NRST every ~50 ms.  If the
+	 * application needs time from power-on to bring its I2C slave up, that
+	 * loop restarts it forever: which is what the logs show - the connect
+	 * line reads 1 at power-on and 0 after the first reset, and no address
+	 * answers afterwards.  So poll patiently and touch nothing.
+	 */
+	for (i = 0; i < 240; i++) {
 		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
 				    sizeof(version));
 		if (!ret)
 			break;
 		/* Do not disturb a working application or its bus pinmux. */
-		if (!i)
+		if (!i) {
 			pogo_recover_bus(p);
-		/*
-		 * Copy the vendor's own diagnostic: its I2C failure path prints
-		 * the raw SCL and SDA levels (stm32_pogo_i2c_v3.c), which is what
-		 * separates "the bus is being held" from "the bus is idle and the
-		 * MCU is simply not there".
-		 */
-		dev_info_ratelimited(&p->client->dev,
-				     "attempt %d failed: scl:%d sda:%d conn:%d\n",
-				     i,
-				     p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
-				     p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
-				     gpiod_get_value_cansleep(p->connected));
-		/*
-		 * Samsung's retry loop pulses NRST again on every failed attempt
-		 * (stm32_power_reset, reset_count up to 100000) and only then
-		 * reads the version back, so a single reset after power-on is not
-		 * what this part expects.
-		 */
-		gpiod_set_value_cansleep(p->nrst, 0);
-		msleep(3);
-		gpiod_set_value_cansleep(p->nrst, 1);
-		msleep(50);
+			dev_info(&p->client->dev,
+				 "waiting up to %u ms for the MCU application\n",
+				 240 * POGO_POLL_INTERVAL_MS);
+		}
+		if (!(i % 10))
+			/* Copy the vendor's own diagnostic levels. */
+			dev_info(&p->client->dev,
+				 "no answer after %u ms: scl:%d sda:%d conn:%d\n",
+				 i * POGO_POLL_INTERVAL_MS,
+				 p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
+				 p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
+				 gpiod_get_value_cansleep(p->connected));
+		msleep(POGO_POLL_INTERVAL_MS);
 	}
 	if (ret) {
-		dev_info(&p->client->dev, "no answer from the MCU after %d resets (%d)\n",
-			 i, ret);
+		dev_info(&p->client->dev,
+			 "no answer from the MCU application after %u ms (%d)\n",
+			 i * POGO_POLL_INTERVAL_MS, ret);
 		pogo_scan_bus(p);
 		return ret;
 	}
 	if (i)
-		dev_info(&p->client->dev, "MCU answered after %d extra reset(s)\n", i);
+		dev_info(&p->client->dev,
+			 "MCU application answered after %u ms\n",
+			 i * POGO_POLL_INTERVAL_MS);
 	ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 	if (ret) {
 		dev_info(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
