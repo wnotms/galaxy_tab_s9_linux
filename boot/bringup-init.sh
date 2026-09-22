@@ -386,6 +386,20 @@ DISPLAY_RECOVER=${GTS9_DISPLAY_RECOVER:-0}
 # console is the only channel and the report is read with
 # `cat /tmp/bringup-report.txt`.  1 restores the card and cache persistence.
 CARD_MOUNT=${GTS9_CARD_MOUNT:-0}
+# ---------------------------------------------------------------------------
+# Optional root filesystem handoff.  With gts9_rootfs=/dev/mmcblk1p1 the initramfs
+# mounts the microSD and hands PID 1 to the Debian systemd on it; without the token
+# this boot behaves exactly as it did before.  Parsed before the USB options because
+# the mass-storage backing below must know that the device is about to become the
+# running root filesystem.
+# ---------------------------------------------------------------------------
+ROOTFS_DEVICE=''
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;
+    esac
+done
+
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
@@ -397,6 +411,16 @@ done
 gadget_setup=0
 # Exported read-only to the host when the mass-storage function is in use.
 USB_MSC_BACKING=${GTS9_USB_MSC_BACKING:-/dev/mmcblk1p1}
+# Host and tablet writing the same ext4 at once destroys it.  Whatever the cmdline
+# asked for, the device that becomes the root filesystem is never exported.
+if [ -n "$ROOTFS_DEVICE" ]; then
+    case "$USB_GADGET_MODE" in
+        msc|both)
+            log "gts9-rootfs: root device is $ROOTFS_DEVICE; USB mass storage disabled"
+            USB_GADGET_MODE=acm
+            ;;
+    esac
+fi
 
 setup_usb_gadget() {
     [ "$USB_GADGET" = 1 ] || { log 'USB gadget disabled by GTS9_USB_GADGET'; return 0; }
@@ -651,6 +675,14 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
         gts9_reboot_after=*) reboot_after=${arg#gts9_reboot_after=} ;;
     esac
 done
+
+if [ -n "$ROOTFS_DEVICE" ]; then
+    proof_seconds=''
+    proof_if=''
+    proof_code_base=''
+    reboot_after=0
+    log 'gts9-rootfs: proof and recovery timers disabled for this boot'
+fi
 
 # ---------------------------------------------------------------------------
 # Telemetry without a console: encode the state of the bring-up in the delay
@@ -1100,6 +1132,80 @@ if [ "$reboot_after" = 1 ] && [ "$proof_action" = recovery-bcb ] && [ -n "$proof
     reboot_to_recovery
 fi
 
+
+# ---------------------------------------------------------------------------
+# Root filesystem handoff to the microSD.
+#
+# Everything that can fail is checked, and unwound, before the irreversible part.
+# The virtual filesystems are moved last and the only thing after that is
+# exec switch_root.  Returning from here always means "no handoff happened", so the
+# caller falls back to the BusyBox rescue environment: never a panic, never a
+# reboot, and PID 1 never exits.
+# ---------------------------------------------------------------------------
+ROOTFS_WAIT_MS=${GTS9_ROOTFS_WAIT_MS:-15000}
+
+boot_rootfs()
+{
+    waited=0
+
+    log "gts9-rootfs: requested root device $ROOTFS_DEVICE"
+    log 'gts9-rootfs: waiting for root device'
+    while [ ! -b "$ROOTFS_DEVICE" ] && [ "$waited" -lt "$ROOTFS_WAIT_MS" ]; do
+        sleep 1
+        waited=$((waited + 1000))
+    done
+    if [ ! -b "$ROOTFS_DEVICE" ]; then
+        log "gts9-rootfs: ERROR: $ROOTFS_DEVICE did not appear within ${ROOTFS_WAIT_MS} ms"
+        return 1
+    fi
+    log "gts9-rootfs: root device ready after ${waited} ms"
+
+    mkdir -p /newroot
+    log 'gts9-rootfs: mounting ext4'
+    if ! mount -t ext4 -o rw "$ROOTFS_DEVICE" /newroot; then
+        log 'gts9-rootfs: ERROR: mount failed'
+        return 1
+    fi
+    log 'gts9-rootfs: rootfs mounted rw'
+
+    if [ ! -x /newroot/sbin/init ]; then
+        log 'gts9-rootfs: ERROR: /newroot/sbin/init is missing or not executable'
+        umount /newroot 2>/dev/null
+        return 1
+    fi
+    if [ -r /newroot/etc/os-release ]; then
+        log "gts9-rootfs: Debian userspace found: $(head -n 1 /newroot/etc/os-release 2>/dev/null)"
+    fi
+    if [ -x /newroot/usr/lib/systemd/systemd ]; then
+        log 'gts9-rootfs: /sbin/init -> systemd'
+    fi
+    if ! command -v switch_root >/dev/null 2>&1; then
+        log 'gts9-rootfs: ERROR: no switch_root applet in this initramfs'
+        umount /newroot 2>/dev/null
+        return 1
+    fi
+
+    mkdir -p /newroot/dev /newroot/proc /newroot/sys /newroot/run
+    log 'gts9-rootfs: preparing switch_root'
+
+    for vfs in dev proc sys run; do
+        if ! mount --move "/$vfs" "/newroot/$vfs" 2>/dev/null &&
+           ! mount -o move "/$vfs" "/newroot/$vfs" 2>/dev/null; then
+            log "gts9-rootfs: WARNING: could not move /$vfs; systemd will mount its own"
+        fi
+    done
+
+    log 'gts9-rootfs: handing PID 1 to /sbin/init'
+    exec switch_root /newroot /sbin/init
+    log 'gts9-rootfs: ERROR: switch_root returned'
+    return 1
+}
+
+if [ -n "$ROOTFS_DEVICE" ]; then
+    if ! boot_rootfs; then
+        log 'gts9-rootfs: falling back to BusyBox rescue shell'
+    fi
+fi
 
 start_panel_shell
 
