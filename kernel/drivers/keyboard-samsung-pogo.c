@@ -176,7 +176,7 @@ static void pogo_connect_work(struct work_struct *work)
 {
 	struct samsung_pogo *p = container_of(to_delayed_work(work),
 					     struct samsung_pogo, connect_work);
-	int conn, ret;
+	int conn, ret, i;
 
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
@@ -211,8 +211,30 @@ static void pogo_connect_work(struct work_struct *work)
 				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
 				 pogo_announce_level(p));
 			pogo_startup_sample(p, "just after the rail rose");
-			msleep(130);   /* stock's application speaks at about 135 ms */
-			pogo_startup_sample(p, "at the moment stock's application speaks");
+			/*
+			 * Watch the MCU's own line for five seconds without putting a
+			 * single byte on the bus.  Stock's application asserts it about
+			 * 135 ms after the rail rises, and every mainline candidate so
+			 * far has either polled during that window or sampled the line
+			 * only at its end, so whether the application announces itself
+			 * unprompted here has never been measured.
+			 */
+			{
+				int last = pogo_announce_level(p);
+
+				for (i = 0; i < 50; i++) {
+					int now;
+
+					msleep(100);
+					now = pogo_announce_level(p);
+					if (now != last) {
+						dev_info(&p->client->dev,
+							 "announce line %d -> %d after %u ms of silence\n",
+							 last, now, (i + 1) * 100);
+						last = now;
+					}
+				}
+			}
 			/* Who is there, before anything else is touched. */
 			pogo_state_report(p, "right after the rail cycle");
 			/* Read-only poll; nothing in this window changes a pin. */
