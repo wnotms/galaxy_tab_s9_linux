@@ -1,0 +1,129 @@
+SM-X710
+orange
+Linux localhost 5.15.94-Foldiby-+ #1 SMP PREEMPT Wed Jan 31 14:41:24 UTC 2024 aarch64
+stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected cgroup_disable=pressure loglevel=6 kpti=0 log_buf_len=256K kernel.panic_on_rcu_stall=1 service_locator.enable=1 msm_rtb.filter=0x237 rcupdate.rcu_expedited=1 rcu_nocbs=0-7 swiotlb=noforce loop.max_part=7 fw_devlink.strict=1 allow_mismatched_32bit_el0 cpufreq.default_governor=performance printk.console_no_auto_verbose=1 kasan=off sysctl.kernel.sched_pelt_multiplier=4 can.stats_timer=0 pcie_ports=compat irqaffinity=0-2 disable_dma32=on no-steal-acc cgroup.memory=nokmem,nosocket video=vfb:640x400,bpp=32,memsize=3072000 printk.devkmsg=on firmware_class.path=/vendor/firmware_mnt/image bootconfig androidboot.hardware=qcom androidboot.memcg=1 androidboot.usbcontroller=a600000.dwc3 loop.max_part=7 buildvariant=eng androidboot.verifiedbootstate=orange androidboot.keymaster=1  androidboot.ulcnt=2 androidboot.vbmeta.avb_version=1.2 androidboot.vbmeta.device_state=unlocked androidboot.vbmeta.hash_alg=sha256 androidboot.vbmeta.size=10880 androidboot.vbmeta.digest=8e0022d401c0bbe24bd1a3825a0199867e041e6724e1bd46331cc755711fe61c androidboot.veritymode=enforcing androidboot.veritymode.managed=yes androidboot.bootdevice=1d84000.ufshc androidboot.fstab_suffix=default androidboot.boot_devices=soc/1d84000.ufshc androidboot.serialno=R52X10045LT androidboot.baseband=msm msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 androidboot.dtbo_idx=3 androidboot.dtb_idx=0 console=null androidboot.sec_atd.tty=/dev/ttyHS5 nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 androidboot.revision=6 androidboot.subpcb=4 androidboot.slavepcb=7 androidboot.appcb=7 androidboot.ap_serial=0x000004376B3AFD64 androidboot.vib_le.param.offset=9445520 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 androidboot.cm.param.offset=9437632 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 androidboot.pd.param.offset=9445516 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 androidboot.wc.param.offset=9437228 androidboot.debug_level=0x4f4c msm_rtb.enable=0 nowatchdog androidboot.cp_debug_level=0x55FF androidboot.cp_reserved_mem=off androidboot.reserve_mem_region=0x0 androidboot.force_upload=0x0 androidboot.upload_offset=9438196 androidboot.boot_recovery=1 androidboot.first_stage_console=2 androidboot.carrierid.param.offset=9437644 androidboot.carrierid= androidboot.sales.param.offset=9437648 androidboot.sales_code=CHN sec-battery.sales_code=CHN androidboot.prototype.param.offset=9437660 androidboot.im.param.offset=9437232 androidboot.me.param.offset=9437312 androidboot.sn.param.offset=9437392 androidboot.pr.param.offset=9437472 androidboot.sku.param.offset=9437552 androidboot.prodcode.param.offset=9445416 androidboot.windowcolor.param.offset=9445496 androidboot.kg=0x1 androidboot.kg.bit=00 androidboot.kg.ap=AAAA000000000000000004376B3AFD64 androidboot.fastbootd=false androidboot.warranty_bit=1 androidboot.wb.hs=303 androidboot.wb.snapQB=CUSTOM androidboot.ucs_mode=0 androidboot.swp_config=0 androidboot.rp=5 androidboot.svb.ver=SVB1.0 androidboot.em.did=2004376B3AFD6411 androidboot.em.model=SM-X710 androidboot.em.status=0x0 androidboot.sb.debug0=0x0,0,0,0 androidboot.em.rdx_dump=false androidboot.bootloader=X710ZCU5CYH4 androidboot.edtbo_ver=-1 sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 androidboot.hdm_status=NONE hdm.status=NONE androidboot.ddr_start_type=1 androidboot.dram_info=01,09,08,12G androidboot.edtbo_offset=9438216 frpc-adsprpc.signoff=0x7277 sec_debug.debug_level=0x4f4c sec_debug.enable=0 sec_debug.enable_user=0 sec_debug.force_upload=0x0 sec_debug.ap_serial=0x000004376B3AFD64 sec_debug.dump_sink=0x0 sec_debug.reboot_multicmd=0x1 sec_qc_hw_param.revision=6 sec_qc_user_reset.boot_recovery=1 androidboot.cp_force_ssr=0xDEADDEAD
+I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+N: Name="gpio-keys"
+P: Phys=gpio-keys/input0
+S: Sysfs=/devices/platform/soc/soc:gpio_keys/input/input0
+U: Uniq=
+H: Handlers=event0 cpufreq sec_key_notifier sec_tsp_dumpkey 
+B: PROP=0
+B: EV=3
+B: KEY=8000000000000 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="meta_event"
+P: Phys=
+S: Sysfs=/devices/virtual/input/input1
+U: Uniq=
+H: Handlers=event1 
+B: PROP=0
+B: EV=5
+B: REL=c0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="pmic_pwrkey"
+P: Phys=pmic_pwrkey/input0
+S: Sysfs=/devices/platform/soc/c42d000.qcom,spmi/spmi-0/0-00/c42d000.qcom,spmi:qcom,pmk8550@0:pon_hlos@1300/c42d000.qcom,spmi:qcom,pmk8550@0:pon_hlos@1300:pwrkey/input/input2
+U: Uniq=
+H: Handlers=event2 cpufreq sec_key_notifier sec_tsp_dumpkey 
+B: PROP=0
+B: EV=3
+B: KEY=10000000000000 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="pmic_resin"
+P: Phys=pmic_resin/input0
+S: Sysfs=/devices/platform/soc/c42d000.qcom,spmi/spmi-0/0-00/c42d000.qcom,spmi:qcom,pmk8550@0:pon_hlos@1300/c42d000.qcom,spmi:qcom,pmk8550@0:pon_hlos@1300:resin/input/input3
+U: Uniq=
+H: Handlers=event3 cpufreq sec_key_notifier sec_tsp_dumpkey 
+B: PROP=0
+B: EV=3
+B: KEY=4000000000000 0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="hall_wacom"
+P: Phys=hall_wacom
+S: Sysfs=/devices/virtual/input/input4
+U: Uniq=
+H: Handlers=event4 
+B: PROP=0
+B: EV=21
+B: SW=1000
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="hall"
+P: Phys=hall
+S: Sysfs=/devices/virtual/input/input5
+U: Uniq=
+H: Handlers=event5 
+B: PROP=0
+B: EV=21
+B: SW=10000
+
+I: Bus=0018 Vendor=0000 Product=0000 Version=0000
+N: Name="grip_sensor_wifi"
+P: Phys=
+S: Sysfs=/devices/virtual/input/input6
+U: Uniq=
+H: Handlers=event6 
+B: PROP=0
+B: EV=5
+B: REL=283
+
+I: Bus=0018 Vendor=0000 Product=0000 Version=0000
+N: Name="grip_notifier"
+P: Phys=
+S: Sysfs=/devices/virtual/input/input7
+U: Uniq=
+H: Handlers=event7 
+B: PROP=0
+B: EV=5
+B: REL=1
+
+I: Bus=0018 Vendor=0000 Product=0000 Version=0000
+N: Name="sec_touchscreen"
+P: Phys=sec_touchscreen
+S: Sysfs=/devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.i2c/i2c-39/39-0049/input/input8
+U: Uniq=
+H: Handlers=event8 cpufreq sec_key_notifier sec_tsp_dumpkey sde 
+B: PROP=2
+B: EV=2b
+B: KEY=4000000000000000 0 4000000000 80 0 420 3000000 0 8000 0 0
+B: ABS=263800000000003
+B: SW=0
+
+I: Bus=0018 Vendor=0000 Product=0000 Version=0000
+N: Name="sec_touchpad"
+P: Phys=sec_touchpad
+S: Sysfs=/devices/platform/soc/ac0000.qcom,qupv3_1_geni_se/a90000.i2c/i2c-39/39-0049/input/input9
+U: Uniq=
+H: Handlers=event9 cpufreq sec_key_notifier sec_tsp_dumpkey sde 
+B: PROP=1
+B: EV=2b
+B: KEY=4000000000000000 0 4000000000 80 0 e520 3000000 0 8000 0 0
+B: ABS=263800000000003
+B: SW=0
+
+I: Bus=0000 Vendor=0000 Product=0000 Version=0000
+N: Name="hall_logical"
+P: Phys=hall_logical
+S: Sysfs=/devices/platform/samsung_mobile_device/samsung_mobile_device:hall_logical/input/input11
+U: Uniq=
+H: Handlers=event10 
+B: PROP=0
+B: EV=100021
+B: SW=12400
+
+I: Bus=0018 Vendor=04e8 Product=a035 Version=0000
+N: Name="Book Cover Keyboard Slim (EF-DX710)"
+P: Phys=
+S: Sysfs=/devices/platform/soc/soc:pogo_kpd/input/input12
+U: Uniq=
+H: Handlers=sysrq leds event11 cpufreq sec_key_notifier sec_tsp_dumpkey 
+B: PROP=0
+B: EV=20003
+B: KEY=3ffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffbff 8000ffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffe
+B: LED=2
+
