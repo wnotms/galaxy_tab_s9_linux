@@ -1933,6 +1933,19 @@
 		sda-gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
 		scl-gpios = <&tlmm 106 GPIO_ACTIVE_HIGH>;
 		vdd-supply = <&vreg_pogo>;
+		/*
+		 * Samsung's own property names, so the imported stm32_pogo_v3 can
+		 * bind this same node - the A/B has to differ in the driver only.
+		 * The mainline port ignores all of them; the vendor driver needs
+		 * them, and reads the two IRQ types and its supply from here.
+		 */
+		stm32_vddo-supply = <&vreg_pogo>;
+		stm32,irq_type = <0x2008>;
+		stm32,irq_conn_type = <0x2003>;
+		stm32,model_name = "EF-DX715", "EF-DX710";
+		stm32,model_name_row = "EF-DT870", "EF-DT630";
+		stm32,fw_name = "keyboard_stm/stm32_gts9family.bin";
+		samsung,stop-after-trans;
 		pinctrl-names = "default", "recovery";
 		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;
 		/* Moves the controller's SDA/SCL to plain GPIOs for bus recovery. */
