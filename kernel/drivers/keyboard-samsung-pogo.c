@@ -13,7 +13,6 @@
 #include <linux/interrupt.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
-#include <linux/gpio/consumer.h>
 #include <linux/of.h>
 #include <linux/pinctrl/consumer.h>
 #include <linux/regulator/consumer.h>
@@ -158,27 +157,21 @@ static void pogo_connect_work(struct work_struct *work)
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
 			msleep(20);
-			if (!pogo_read_reg(p, POGO_CMD_CHECK_VERSION,
-					   version, sizeof(version))) {
-				p->event_enabled = true;
-				enable_irq(p->client->irq);
+			ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION,
+					    version, sizeof(version));
+			if (ret) {
+				dev_info(&p->client->dev,
+					 "MCU application did not answer; entering its bootloader\n");
+				pogo_bootloader_probe(p);
+			} else {
 				dev_info(&p->client->dev,
 					 "MCU application already running, version %u.%u\n",
 					 version[3], version[2]);
-				mutex_unlock(&p->lock);
-				return;
 			}
-			dev_info(&p->client->dev,
-				 "MCU application did not answer; entering its bootloader\n");
-			pogo_bootloader_probe(p);
-			gpiod_set_value_cansleep(p->swclk, 0);
-			gpiod_set_value_cansleep(p->nrst, 0);
-			msleep(10);
-			gpiod_set_value_cansleep(p->nrst, 1);
-			msleep(50); /* stock keyboard_start power settling */
+			/* Preserve a successful app entry; check mode before accepting keys. */
+			pogo_read_mcu(p);
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
-			pogo_read_mcu(p);
 		} else {
 			dev_err(&p->client->dev, "power on failed\n");
 		}
@@ -230,7 +223,7 @@ static bool pogo_boot_enter(struct samsung_pogo *p)
 }
 
 /*
- * STM32 AN3155 GO: the command, then the address with its XOR checksum.
+ * STM32 AN4221 GO: the command, then the address with its XOR checksum.
  *
  * Stock has the case but only sets cmd[0] and breaks, so it never sends the
  * address and never worked; the frame is 0x21, its complement, the four address
@@ -262,6 +255,30 @@ static void pogo_boot_go(struct samsung_pogo *p)
 		dev_info(&p->client->dev, "bootloader GO address not acked (%#x)\n", resp);
 }
 
+/* AN4221 Get Version returns ACK, version, ACK in separate read frames. */
+static int pogo_boot_version(struct samsung_pogo *p, u8 *version)
+{
+	static const u8 cmd[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
+	u8 ack;
+	int ret;
+
+	ret = i2c_master_send(p->boot, cmd, sizeof(cmd));
+	if (ret != sizeof(cmd))
+		return ret < 0 ? ret : -EIO;
+	ret = i2c_master_recv(p->boot, &ack, 1);
+	if (ret != 1)
+		return ret < 0 ? ret : -EIO;
+	if (ack != POGO_BOOT_RESP_ACK)
+		return -EPROTO;
+	ret = i2c_master_recv(p->boot, version, 1);
+	if (ret != 1)
+		return ret < 0 ? ret : -EIO;
+	ret = i2c_master_recv(p->boot, &ack, 1);
+	if (ret != 1)
+		return ret < 0 ? ret : -EIO;
+	return ack == POGO_BOOT_RESP_ACK ? 0 : -EPROTO;
+}
+
 /*
  * Get the MCU into its application.
  *
@@ -271,31 +288,30 @@ static void pogo_boot_go(struct samsung_pogo *p)
  * part sits in its system bootloader instead: it takes the 0xFF sync and reports
  * version 0x12, and the application at 0x2a never answers.
  *
- * Two ways out are tried in order.  First the vendor's own app entry,
- * stm32_sysboot_disconnect(), with its exact timings - SWCLK back for main flash,
- * 1 ms, NRST low, 2 ms, NRST high, then the 150 ms it allows the application to
- * start.  If 0x2a still does not answer, the bootloader's own jump command,
- * STM32_BOOT_I2C_CMD_GO (0x21), which stock defines but never sends.
+ * Try GO in a completed bootloader session first, then the vendor's
+ * reset-based stm32_sysboot_disconnect() if the application still fails.
  */
 static void pogo_bootloader_probe(struct samsung_pogo *p)
 {
-	static const u8 get_ver[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
-	u8 version[4], resp = 0;
+	u8 version[4], boot_version;
 	int ret;
 
 	if (!pogo_boot_enter(p)) {
 		dev_info(&p->client->dev,
-			 "MCU bootloader did not take the 0xFF sync: the part is not running\n");
+			 "MCU bootloader did not take the 0xFF sync\n");
 		return;
 	}
 	dev_info(&p->client->dev, "MCU bootloader took the 0xFF sync\n");
 
-	/* The vendor re-enters boot mode, then reads the version back. */
-	pogo_boot_enter(p);
-	if (i2c_master_send(p->boot, get_ver, sizeof(get_ver)) == sizeof(get_ver) &&
-	    i2c_master_recv(p->boot, &resp, 1) == 1 && resp == POGO_BOOT_RESP_ACK &&
-	    i2c_master_recv(p->boot, &resp, 1) == 1)
-		dev_info(&p->client->dev, "MCU bootloader version %#x\n", resp);
+	ret = pogo_boot_version(p, &boot_version);
+	if (ret) {
+		dev_info(&p->client->dev, "bootloader version exchange failed: %d\n", ret);
+		/* An incomplete reply must not become GO's command ACK. */
+		if (!pogo_boot_enter(p))
+			return;
+	} else {
+		dev_info(&p->client->dev, "MCU bootloader version %#x\n", boot_version);
+	}
 
 	/*
 	 * Jump while the bootloader is still listening: the earlier attempt went
@@ -426,14 +442,16 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 	u8 version[4], mode;
 	int ret, i;
 
-	/* The bootloader can leave the bus held; free it before talking. */
-	pogo_recover_bus(p);
+	p->ready = false;
 
 	for (i = 0; i < 40; i++) {
 		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
 				    sizeof(version));
 		if (!ret)
 			break;
+		/* Do not disturb a working application or its bus pinmux. */
+		if (!i)
+			pogo_recover_bus(p);
 		/*
 		 * Copy the vendor's own diagnostic: its I2C failure path prints
 		 * the raw SCL and SDA levels (stm32_pogo_i2c_v3.c), which is what

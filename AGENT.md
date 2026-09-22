@@ -119,7 +119,7 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   not the DPU. The panel still cold-boots dark and is still recovered by the
   framebuffer blank cycle, now in 8 s. Unvalidated: the brightness/gamma/ACL
   stack, 60 Hz, other panel revisions, and long-run stability.
-- **Pogo keyboard: driver complete, MCU still silent on mainline (test 045,
+- **Pogo keyboard: input driver registered, application startup unresolved (test 045,
   `reference/boot-tests/test-045-.../`).** The driver
   (`kernel/drivers/keyboard-samsung-pogo.c`, `0006-input-add-samsung-pogo-keyboard.patch`)
   binds on hardware, registers `Book Cover Keyboard Slim (EF-DX710)` as event0,
@@ -129,7 +129,7 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   rail on every edge reset the STM32 before it could answer, the diagnostic
   flooded the panel console, the handshake was passive, and the SWD pins were not
   owned by the driver.
-  What remains is not in the driver. Every read returns a clean `-ENXIO` (a NACK:
+  At that stage every application read returned `-ENXIO` (a NACK:
   the transfer ran, the bus was idle, nothing acknowledged) and a quick-write scan
   of the whole adapter finds **no device at any address**, while TWRP's stock
   kernel enumerates the same cover minutes earlier as `EF-DX710_v1.4.1.0`,
@@ -174,15 +174,19 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   is genuine hardware sharing present in the vendor tree as well
   (`dmic45_clk_active`/`dmic45_data_active`, `function = "func1"`), and inactive
   here - the pinmux still shows those pins owned by `5-002a` minutes in.
-  **Next step:** send the bootloader's `GO` (0x21) *while the bootloader session is
-  live* - SYNC, then GO, then read 0x2a, with no reset in between.  The earlier GO
-  failed for a timing reason, not a protocol one: it went out after
-  `sysboot_disconnect()` and its 150 ms, when the MCU had already stopped
-  answering, and returned -ETIMEDOUT rather than a NAK.  Also still worth
-  ruling out if the application comes up and then dies: mainline's
-  `dmic45-default-state` muxes **gpio12/13** to `dmic3_clk`/`dmic4_data`, the same
-  pins as SWCLK and NRST (ours today, but TWRP never probes audio).  No key has
-  been typed through this driver yet.
+  Round 7 offline audit (2026-09-22): commit `776b7d4` sends GO while the
+  bootloader session is live, but leaves Get Version's final ACK unread. Samsung's
+  `stm32_sysboot_i2c_get_info()` and ST AN4221 both require ACK/version/ACK.
+  The caller also unconditionally resets after app entry, and the read-first
+  success path skips mode checking, leaving `ready` false. These are driver
+  defects; the earlier assertion that the remaining issue lies outside the driver
+  was not established. The new candidate consumes the full version response,
+  restarts a failed version session before GO, preserves successful application
+  startup and checks mode on both success paths. Bus recovery now runs only after
+  an application read fails. See `docs/POGO_STARTUP_REPAIR.md` for validation.
+  **Next step:** test the corrected candidate, capture GO command/address ACKs
+  and application version/mode, then verify real key-down/key-up events. No key
+  has been typed through this driver yet; offline tests do not change that status.
 - **Display regression, found and fixed (2026-09-22, round 5).**  The owner
   reported a blank screen; `display_recover` was cycling the framebuffer as soon as
   `fb0` appeared, 5.91 s, before the panel driver's first read at 6.29 s, and had
