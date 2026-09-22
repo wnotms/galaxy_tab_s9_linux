@@ -379,3 +379,23 @@ The GO attempt failed for a timing reason, not a protocol one: it was sent *afte
 answering - the write returned `-ETIMEDOUT`, not a NAK.  Inside the bootloader
 session the interface is alive (SYNC and GET_VER both work), so the next attempt is
 SYNC → **GO** → read 0x2a, with no reset in between.
+
+### The GO frame, ready to implement
+
+`STM32_BOOT_I2C_REQ_CMD_LEN` is `CMD_LEN + CHECKSUM_LEN` and every command in this
+protocol is followed by its complement, which is why `GET_VER` goes out as
+`0x01, 0xFE`.  `STM32_BOOT_I2C_REQ_ADDRESS_LEN` is `ADDRESS_LEN + CHECKSUM_LEN`,
+and `stm32_pogo_fw.c` defines the application's base as **0x08000000**.
+
+So the bootloader's GO needs the address stock's stub omits - the vendor's case
+only sets `cmd[0] = 0x21` and breaks, which is why it never worked there either:
+
+```
+0x21  0xDE  0x08 0x00 0x00 0x00  0x08
+cmd   ~cmd  address, big endian  XOR checksum of the address
+```
+
+Send that inside a live bootloader session (SYNC, then GO, then read 0x2a, with no
+reset in between) and the application either starts - in which case the keyboard
+works - or the MCU stays quiet and the boot-mode question is closed from the other
+side.
