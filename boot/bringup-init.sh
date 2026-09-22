@@ -341,6 +341,16 @@ report 'mounts' cat /proc/mounts
 report 'pstore' sh -c 'ls -l /sys/fs/pstore 2>&1'
 
 log ''
+# The bootloader appends ignore_loglevel, so the console starts at DEBUG and kernel
+# messages bury the shell prompt (the owner reported exactly that).  That option only
+# sets the *initial* console level, so this sysctl really does quieten the console from
+# here on while dmesg keeps every message.
+if [ -w /proc/sys/kernel/printk ]; then
+    if printf '4 4 1 7\n' > /proc/sys/kernel/printk 2>/dev/null; then
+        log 'console loglevel set to 4: kernel messages no longer overwrite the shell'
+    fi
+fi
+
 log 'dropping to an interactive shell; nothing was written to any block device'
 log ''
 

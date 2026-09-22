@@ -1329,7 +1329,7 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	 * something other than a clean key packet has to be visible to be
 	 * diagnosed at all.
 	 */
-	dev_info(&p->client->dev, "packet from the MCU: %02x %02x %02x (size %u)\n",
+	dev_dbg(&p->client->dev, "packet from the MCU: %02x %02x %02x (size %u)\n",
 		 header[0], header[1], header[2], size);
 	/* Stock treats an empty startup header as a model announcement. */
 	if (size == 0 || size == 3) {
@@ -1354,7 +1354,7 @@ static irqreturn_t pogo_irq(int irq, void *data)
 
 		for (i = 0; i < n; i++)
 			snprintf(hex + 3 * i, 4, "%02x ", payload[i]);
-		dev_info(&p->client->dev, "payload (%u bytes): %s%s\n",
+		dev_dbg(&p->client->dev, "payload (%u bytes): %s%s\n",
 			 size, hex, size > 16 ? "..." : "");
 	}
 	/* Stock noise signature, checked only when all three bytes exist. */
@@ -1382,7 +1382,7 @@ static irqreturn_t pogo_irq(int irq, void *data)
 			 * is logged: one line per key transition, which is what a
 			 * physical key press must produce.
 			 */
-			dev_info(&p->client->dev, "key %#x %s (from the MCU packet)\n",
+			dev_dbg(&p->client->dev, "key %#x %s (from the MCU packet)\n",
 				 event & 0x7fff,
 				 (event & 0x8000) ? "pressed" : "released");
 			input_report_key(p->input, event & 0x7fff, !!(event & 0x8000));

@@ -34,6 +34,8 @@ struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  unsigned long last_rearm;
  int conn_same;
  bool reconnect;
+ bool irq_armed;
+ unsigned int poll_tick;
 };
 static u8 wire[128];
 /* The handler now gates on the line being asserted, as stock's ISR does. */

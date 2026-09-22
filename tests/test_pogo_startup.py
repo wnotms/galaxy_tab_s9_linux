@@ -112,6 +112,8 @@ struct samsung_pogo {
  unsigned long last_rearm;
  int conn_same;
  bool reconnect;
+ bool irq_armed;
+ unsigned int poll_tick;
 };
 static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never
