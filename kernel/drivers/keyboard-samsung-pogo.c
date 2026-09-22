@@ -81,6 +81,7 @@ struct samsung_pogo {
 static int pogo_read_mcu(struct samsung_pogo *p);
 static int pogo_announce_level(struct samsung_pogo *p);
 static void pogo_state_report(struct samsung_pogo *p, const char *stage);
+static void pogo_startup_sample(struct samsung_pogo *p, const char *when);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
@@ -209,6 +210,9 @@ static void pogo_connect_work(struct work_struct *work)
 			dev_info(&p->client->dev,
 				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
 				 pogo_announce_level(p));
+			pogo_startup_sample(p, "just after the rail rose");
+			msleep(130);   /* stock's application speaks at about 135 ms */
+			pogo_startup_sample(p, "at the moment stock's application speaks");
 			/* Who is there, before anything else is touched. */
 			pogo_state_report(p, "right after the rail cycle");
 			/* Read-only poll; nothing in this window changes a pin. */
@@ -428,6 +432,27 @@ static int pogo_announce_level(struct samsung_pogo *p)
 	if (!p->announce)
 		return -1;
 	return gpiod_get_value_cansleep(p->announce);
+}
+
+/*
+ * What the application sees at its startup.
+ *
+ * The rail is its power, SWCLK is its BOOT0, NRST is its reset and the announce
+ * line is the only output it drives by itself.  Sampling those four together,
+ * around the moment the rail rises, is the one comparison with the stock trace
+ * that has not been made: everything else about the startup has been
+ * reproduced value for value (test 072), and the application still never serves
+ * an I2C address (test 074).
+ */
+static void pogo_startup_sample(struct samsung_pogo *p, const char *when)
+{
+	dev_info(&p->client->dev,
+		 "%s: rail %s, boot0/swclk %d, nrst %d, announce %d\n",
+		 when,
+		 p->vdd && regulator_is_enabled(p->vdd) ? "on" : "off",
+		 p->swclk ? gpiod_get_value_cansleep(p->swclk) : -1,
+		 p->nrst ? gpiod_get_value_cansleep(p->nrst) : -1,
+		 pogo_announce_level(p));
 }
 
 /*
