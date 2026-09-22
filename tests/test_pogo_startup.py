@@ -133,6 +133,7 @@ static void pogo_recover_bus(struct samsung_pogo *p) { recoveries++; }
 /* Diagnostics: the header dump and the interface report read flash and the
    bootloader again, which the READ tests above already cover byte for byte. */
 static void pogo_boot_dump_header(struct samsung_pogo *p) {}
+static void pogo_boot_dump_option_bytes(struct samsung_pogo *p) {}
 static void pogo_boot_report(struct samsung_pogo *p, const char *stage) {}
 static void pogo_scan_bus(struct samsung_pogo *p) {}
 static bool pogo_boot_enter(struct samsung_pogo *p) {

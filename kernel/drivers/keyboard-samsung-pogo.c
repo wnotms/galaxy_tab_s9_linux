@@ -45,6 +45,8 @@
 #define POGO_IC_VERSION_OFFSET		0x08000200
 /* How often the application is polled while it starts. */
 #define POGO_POLL_INTERVAL_MS		250
+/* The MCU's option bytes, at the address in Samsung's stm32_memory_map. */
+#define POGO_OPTION_BYTE_OFFSET		0x1FFF7800
 /* Samsung's header inside the firmware image; the magic there is "STM32". */
 #define POGO_FW_HEADER_L0		0x080000bc
 #define POGO_FW_HEADER_G0		0x080000c0
@@ -364,6 +366,29 @@ failed:
 }
 
 /*
+ * Samsung's stm32_target_option_update() reads the option bytes on every boot and
+ * clears bit 24 when it is set, then reconnects.  This port has never done that
+ * step, so the first question is what the word actually holds: read only, and say
+ * whether the vendor's write would do anything at all.
+ */
+static void pogo_boot_dump_option_bytes(struct samsung_pogo *p)
+{
+	u8 ob[4];
+	u32 word;
+	int ret;
+
+	ret = pogo_boot_read(p, POGO_OPTION_BYTE_OFFSET, ob, sizeof(ob));
+	if (ret) {
+		dev_info(&p->client->dev, "could not read the option bytes (%d)\n", ret);
+		return;
+	}
+	word = pogo_le32(ob);
+	dev_info(&p->client->dev,
+		 "MCU option bytes %#x: RDP %#x, bit 24 %s\n",
+		 word, word & 0xff, (word & BIT(24)) ? "set (stock clears it)" : "clear");
+}
+
+/*
  * Which interface answers right now.  The bootloader at 0x51 and the keyboard
  * application at 0x2a are mutually exclusive, so this is how the port tells a
  * running application from a part that stayed in its bootloader.
@@ -489,6 +514,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	 */
 	pogo_boot_ic_version(p, ic_version);
 	pogo_boot_dump_header(p);
+	pogo_boot_dump_option_bytes(p);
 	pogo_boot_disconnect(p);
 	pogo_boot_report(p, "after the disconnected reset");
 	pogo_wait_application(p, "bootloader start", 30000);
