@@ -536,7 +536,7 @@ out:
  * cleared so the proven bring-up path (app-entry reset, rail, arm DATA) runs again
  * through pogo_connect_work() rather than a second copy of it.
  */
-#define POGO_WATCH_MS		2000
+#define POGO_WATCH_MS		5000
 #define POGO_WATCH_FAILS	3
 
 static void pogo_watch_work(struct work_struct *work)
@@ -568,30 +568,15 @@ static void pogo_watch_work(struct work_struct *work)
 				stable = false;
 		}
 		/*
-		 * Re-seat detection that does not depend on the line being noisy when
-		 * the cover is away.  Test 104 measured that assumption failing: a
-		 * physical unplug/replug happened with no "cover re-seated" line at
-		 * all, so the unstable-to-stable transition never occurred and nothing
-		 * re-armed.  Any level change of the connect line is now treated as a
-		 * physical event, rate-limited to one re-arm per ten seconds so a
-		 * floating line cannot turn into a reset storm.
+		 * Observe the level only.  Test 106: re-arming on any change of this
+		 * line was a mistake - it toggles at about 10 Hz on this hardware
+		 * (1492-2431 edge interrupts per boot) even with the cover seated, so
+		 * that rule reset a working keyboard every ten seconds and the owner
+		 * saw no keys at all after boot.  Nothing re-arms on this line any more;
+		 * the one automatic re-arm left needs the application to be *asserting*
+		 * announce while refusing to answer.
 		 */
-		if (level != p->conn_level) {
-			p->conn_level = level;
-			if (time_after(jiffies, p->last_rearm +
-				       msecs_to_jiffies(10000))) {
-				p->last_rearm = jiffies;
-				dev_info(&p->client->dev,
-					 "connect line changed to %d; re-arming (rate-limited)\n",
-					 level);
-				rearm = true;
-				p->rearm_pending = true;
-				p->powered = false;
-				p->event_enabled = false;
-				p->ready = false;
-				p->poll_fails = 0;
-			}
-		}
+		p->conn_level = level;
 		if (stable && !p->conn_attached) {
 			dev_info(&p->client->dev,
 				 "cover re-seated (connect line stable after instability); re-arming the application\n");
