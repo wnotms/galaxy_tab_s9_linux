@@ -1,0 +1,31 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] drm/msm/dsi: quiesce inherited X710 PHY lanes before enable
+
+Test candidate: a full fb blank cycle recovers the first zero panel ID.
+Limit the experiment to X710 and use the existing powered PHY disable path
+before enable; no panel command or userspace delay changes.
+
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+@@ -5,6 +5,7 @@
+ 
+ #include <linux/clk-provider.h>
+ #include <linux/platform_device.h>
++#include <linux/of.h>
+ #include <linux/pm_clock.h>
+ #include <linux/pm_runtime.h>
+ #include <dt-bindings/phy/phy.h>
+@@ -760,6 +761,13 @@
+ 		goto reg_en_fail;
+ 	}
+ 
++	/* X710 ABL leaves the DSI PHY driving its splash. Quiesce the
++	 * inherited lanes before programming them, as a blank cycle does.
++	 */
++	if (of_machine_is_compatible("samsung,gts9wifi") &&
++	    phy->cfg->ops.disable)
++		phy->cfg->ops.disable(phy);
++
+ 	ret = phy->cfg->ops.enable(phy, clk_req);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "%s: phy enable failed, %d\n", __func__, ret);
