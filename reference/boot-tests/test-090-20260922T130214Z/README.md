@@ -42,7 +42,62 @@ adb shell reboot system
 `recovery` and `vbmeta` were not touched, and no backup, userdata, persist, efs or
 partition-table write was made. Raw transcript: `flash-transcript.txt`.
 
-## Result: not measured — the bench link dropped
+## Result: measured — the interrupt never fires, so the driver never asks
+
+The console came back and the running kernel answered. The candidate boots and
+registers its input device, and the non-blocking startup works exactly as written:
+
+```
+[    4.098609] input: Book Cover Keyboard Slim (EF-DX710) as .../i2c-5/5-002a/input/input0
+[    4.190272] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+ 170:          0  ...  msmgpio     75 Level     5-002a     <- announcements delivered: 0
+ 171:       2431  ...  msmgpio     62 Edge      pogo-connect
+ 188:          0  ...  msmgpio    107 Edge      Book Cover
+dmesg | grep -c "event transfer failed"  ->  0
+```
+
+So over the whole ~2.5 minutes of uptime measured here: the DATA interrupt was
+armed at 4.19 s and was **delivered zero times**, and because the new normal path
+reads only in response to a packet, **no read of 0x2a was ever attempted**. Nothing
+in this boot contradicts or confirms anything about the slave: the application was
+never asked.
+
+This is the mirror image of test 087, where the same interrupt was armed inside the
+diagnostic path and delivered exactly once. Neither boot ever got the driver and the
+announcement into the same room: in 087 the handler could not run because the
+startup work held the mutex, and here it can run but the line stays quiet.
+
+**Standing hypothesis, not yet a finding:** the application drives that line in a
+train of transitions only in the first ~25 s after the MCU starts (tests 087 and
+088 both measured the train), and the MCU is powered independently of gpio10 (test
+082) and is not power-cycled by a Linux reboot - so a boot that misses the train
+waits forever for an announcement that will not come again. In tests 087/088 the
+train was visible because the diagnostic path armed nothing and merely watched; the
+new normal path arms DATA at 4.19 s, which is earlier than the train's first
+transition in either of those boots, so "armed too late" does not explain this boot
+by itself. What is missing is any host transaction at all while the line is
+asserted.
+
+## Candidates this implies (one per test, cheapest first)
+
+1. **Ask anyway after a short timeout.** Arm DATA as now, and if no packet arrives
+   within ~1-2 s, make one version read of 0x2a regardless. It is a single safe read
+   and it is the only way to learn whether the application's slave is listening when
+   nothing has announced itself. This is also what makes the driver independent of a
+   one-shot announcement.
+2. **Reproduce stock's real power cycle before asking.** Stock's captured bring-up
+   powers the accessory off, waits ~400 ms and brings it back with BOOT0 low *before*
+   the application answers, and test 087 found the port's own rail disable had been a
+   no-op ("unbalanced disables for pogo-vdd") - so the sequence stock actually relies
+   on has never run here. The corrected cycle exists in
+   `pogo_diagnostic_connect_work()`; test 088 measured it dropping the rail for real
+   (`rail off: regulator off`), and only the diagnostic switch keeps it out of the
+   normal path.
+3. **Confirm the application is running at all**, by reading its line's *logical*
+   level with the active-low descriptor over a few seconds (the pin-state dump prints
+   register values and cannot answer this).
+
+## Original expectation, for the record: not measured - the bench link dropped
 
 The flash is verified; the boot outcome is **not**. 95 s after `reboot system` the
 console capture was attempted and produced nothing, and the host then reported:

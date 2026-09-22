@@ -1,0 +1,10 @@
+2026-09-22T13:11:18Z console open on COM17
+2026-09-22T13:11:21Z SENT  uname -a; dmesg | grep -a "5-002a" | head -30; cat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a -c "event transfer failed"
+2026-09-22T13:11:21Z RECV  uname -a; dmesg | grep -a "5-002a" | head -30; cat /proc/interrupts | grep
+2026-09-22T13:11:21Z RECV   -a "5-002a"; dmesg | grep -a -c "event transfer failed"
+2026-09-22T13:11:21Z RECV  Linux (none) 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+2026-09-22T13:11:21Z RECV  [    4.098609][   T13] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T13:11:21Z RECV  [    4.190272][   T78] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-22T13:11:21Z RECV   170:          0          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T13:11:21Z RECV  0
+2026-09-22T13:11:30Z console session done

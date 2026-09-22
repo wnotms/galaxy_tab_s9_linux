@@ -1,0 +1,14 @@
+2026-09-22T13:11:53Z console open on COM17
+2026-09-22T13:11:56Z SENT  cat /proc/interrupts | grep -aE "5-002a|pogo-connect|Book Cover"; dmesg | grep -a "pogo pins" | tail -18; dmesg | grep -a "Book Cover" | tail -4
+2026-09-22T13:11:56Z RECV  cat /proc/interrupts | grep -aE "5-002a|pogo-connect|Book Cover"; dmesg |
+2026-09-22T13:11:56Z RECV  grep -a "pogo pins" | tail -18; dmesg | grep -a "Book Cover" | tail -4
+2026-09-22T13:11:56Z RECV   170:          0          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T13:11:56Z RECV   171:       2431          0          0          0          0          0          0          0  msmgpio     62 Edge      pogo-connect
+2026-09-22T13:11:56Z RECV   188:          0          0          0          0          0          0          0          0  msmgpio    107 Edge      Book Cover
+2026-09-22T13:11:56Z RECV  [   34.081405][    T9] pogo pins 30 s in:
+2026-09-22T13:11:56Z RECV  [   64.802756][   T92] pogo pins 30 s in:
+2026-09-22T13:11:56Z RECV  [   95.520093][    T9] pogo pins 30 s in:
+2026-09-22T13:11:56Z RECV  [  126.240063][    T9] pogo pins 30 s in:
+2026-09-22T13:11:56Z RECV  [  156.961384][    T9] pogo pins 30 s in:
+2026-09-22T13:11:56Z RECV  [    4.098609][   T13] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T13:12:05Z console session done
