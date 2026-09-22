@@ -1,0 +1,4 @@
+Owner authorization in this conversation: 刷入测试
+Candidate: ad4463f; out/boot-bundle-pogo-startup
+Purpose: completed bootloader version ACK, preserved application startup and ready state.
+Recovery plan: use live USB console gts9-to-recovery after 60–90 seconds; if unavailable use physical recovery keys. TWRP and original stock backups retained. Restore changed boot-chain partitions from .work/backups/test-046-20260922T055740Z if this candidate cannot boot. Do not alter recovery, vbmeta or userdata.

@@ -1,0 +1,52 @@
+2026-09-22T06:00:04Z console open on COM17
+2026-09-22T06:00:07Z SENT  cat /proc/uptime; dmesg | grep -E "pogo|89c000|timed out|timeout"; cat /proc/bus/input/devices
+2026-09-22T06:00:07Z RECV  cat /proc/uptime; dmesg | grep -E "pogo|89c000|timed out|timeout"; cat /pr
+2026-09-22T06:00:07Z RECV  oc/bus/input/devices
+2026-09-22T06:00:07Z RECV  78.02 614.44
+2026-09-22T06:00:07Z RECV  [    3.987801][   T76] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T06:00:07Z RECV  [    4.079253][   T63] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T06:00:07Z RECV  [    4.164032][   T63] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T06:00:07Z RECV  [    5.185401][   T63] samsung-pogo-keyboard 5-002a: bootloader version exchange failed: -110
+2026-09-22T06:00:07Z RECV  [    6.273504][   T63] samsung-pogo-keyboard 5-002a: bootloader GO command refused
+2026-09-22T06:00:07Z RECV  [    7.460040][   T63] samsung-pogo-keyboard 5-002a: application after GO: -110 (not running)
+2026-09-22T06:00:07Z RECV  [    7.644248][   T63] samsung-pogo-keyboard 5-002a: application after the reset entry: -6 (still not running)
+2026-09-22T06:00:07Z RECV  [    7.654659][   T63] sm8550-tlmm f100000.pinctrl: pin GPIO_72 already requested by 89c000.i2c; cannot claim for 5-002a
+2026-09-22T06:00:07Z RECV  [    7.686866][   T63] samsung-pogo-keyboard 5-002a: error -EINVAL: Error applying setting, reverse things back
+2026-09-22T06:00:07Z RECV  [    7.697116][   T63] samsung-pogo-keyboard 5-002a: attempt 0 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    7.776507][   T63] samsung-pogo-keyboard 5-002a: attempt 1 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    7.853018][   T63] samsung-pogo-keyboard 5-002a: attempt 2 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    7.929388][   T63] samsung-pogo-keyboard 5-002a: attempt 3 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.006040][   T63] samsung-pogo-keyboard 5-002a: attempt 4 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.078124][   T63] samsung-pogo-keyboard 5-002a: attempt 5 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.150851][   T63] samsung-pogo-keyboard 5-002a: attempt 6 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.221922][   T63] samsung-pogo-keyboard 5-002a: attempt 7 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.294935][   T63] samsung-pogo-keyboard 5-002a: attempt 8 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [    8.364174][   T63] samsung-pogo-keyboard 5-002a: attempt 9 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:00:07Z RECV  [   10.380913][   T63] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T06:00:07Z RECV  [   10.445756][   T63] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T06:00:07Z RECV  I: Bus=0018 Vendor=04e8 Product=a035 Version=0000
+2026-09-22T06:00:07Z RECV  N: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-22T06:00:07Z RECV  P: Phys=
+2026-09-22T06:00:07Z RECV  S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T06:00:07Z RECV  U: Uniq=
+2026-09-22T06:00:07Z RECV  H: Handlers=sysrq kbd leds event0
+2026-09-22T06:00:07Z RECV  B: PROP=0
+2026-09-22T06:00:07Z RECV  B: EV=120003
+2026-09-22T06:00:07Z RECV  B: KEY=3ffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffbff 8000ffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffe
+2026-09-22T06:00:07Z RECV  B: LED=2
+2026-09-22T06:00:07Z RECV  
+2026-09-22T06:00:07Z RECV  I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+2026-09-22T06:00:07Z RECV  N: Name="gpio-keys"
+2026-09-22T06:00:07Z RECV  P: Phys=gpio-keys/input0
+2026-09-22T06:00:07Z RECV  S: Sysfs=/devices/platform/gpio-keys/input/input1
+2026-09-22T06:00:07Z RECV  U: Uniq=
+2026-09-22T06:00:07Z RECV  H: Handlers=kbd event1
+2026-09-22T06:00:07Z RECV  B: PROP=0
+2026-09-22T06:00:07Z RECV  B: EV=23
+2026-09-22T06:00:07Z RECV  B: KEY=8000000000000 0
+2026-09-22T06:00:07Z RECV  B: SW=1
+2026-09-22T06:00:07Z RECV  
+2026-09-22T06:00:18Z SENT  gts9-to-recovery
+2026-09-22T06:00:18Z RECV  gts9# [6ngts9-to-recovery
+2026-09-22T06:00:18Z RECV  gts9-to-recovery: BCB written to /dev/sda10; rebooting into recovery
+2026-09-22T06:00:23Z console session done

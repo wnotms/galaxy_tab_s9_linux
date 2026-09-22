@@ -1,0 +1,1156 @@
+2026-09-22T05:58:56Z console open on COM17
+2026-09-22T05:58:59Z SENT  uname -a; cat /proc/uptime
+2026-09-22T05:58:59Z RECV  uname -a; cat /proc/uptime
+2026-09-22T05:58:59Z RECV  Linux (none) 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+2026-09-22T05:58:59Z RECV  10.76 76.91
+2026-09-22T05:59:08Z SENT  dmesg
+2026-09-22T05:59:08Z RECV  gts9# [6ndmesg
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] Booting Linux on physical CPU 0x0000000000 [0x411fd461]
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] Linux version 7.2.0-rc3-gts9wifi-dirty (gts9-mainline@reproducible) (Ubuntu clang version 21.1.8 (6ubuntu1), Ubuntu LLD 21.1.8) #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] KASLR disabled on command line
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] random: crng init done
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] Machine model: Samsung Galaxy Tab S9 Wi-Fi
+2026-09-22T05:59:08Z RECV  [    0.000000][    T0] printk: debug: ignoring loglevel setting.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] earlycon: qcom_geni0 at MMIO 0x0000000000a9c000 (options '115200n8')
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] printk: legacy bootconsole [qcom_geni0] enabled
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] efi: UEFI not found.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b01ff000..0x00000000b01fffff (4 KiB) nomap non-reusable kaslr_region
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b1000000..0x00000000b45fffff (55296 KiB) map non-reusable uh_guest_region
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b0200000..0x00000000b023ffff (256 KiB) map non-reusable uh_heap_region
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000080000000..0x00000000809fffff (10240 KiB) nomap non-reusable hyp-region@80000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000080a00000..0x0000000080dfffff (4096 KiB) nomap non-reusable cpusys-vm-region@80a00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000080e00000..0x00000000811cffff (3904 KiB) nomap non-reusable hyp-tags-region@80e00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d8100000..0x00000000d813ffff (256 KiB) nomap non-reusable xbl-sc-region@d8100000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000811d0000..0x00000000811fffff (192 KiB) nomap non-reusable hyp-tags-reserved-region@811d0000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081a00000..0x0000000081c5ffff (2432 KiB) nomap non-reusable xbl-dt-log-merged-region@81a00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081c60000..0x0000000081c7ffff (128 KiB) nomap non-reusable aop-cmd-db-region@81c60000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081c80000..0x0000000081cf3fff (464 KiB) nomap non-reusable aop-config-merged-region@81c80000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081d00000..0x0000000081efffff (2048 KiB) nomap non-reusable smem@81d00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081f00000..0x0000000081f1ffff (128 KiB) nomap non-reusable adsp-mhi-region@81f00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000082600000..0x00000000826fffff (1024 KiB) nomap non-reusable global-sync-region@82600000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000082700000..0x00000000827fffff (1024 KiB) nomap non-reusable tz-stat-region@82700000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000082800000..0x0000000086dfffff (71680 KiB) nomap non-reusable cdsp-secure-heap-region@82800000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000008a800000..0x000000009affffff (270336 KiB) nomap non-reusable mpss-region@8a800000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b000000..0x000000009b07ffff (512 KiB) nomap non-reusable q6-mpss-dtb-region@9b000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b080000..0x000000009b08ffff (64 KiB) nomap non-reusable ipa-fw-region@9b080000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b090000..0x000000009b099fff (40 KiB) nomap non-reusable ipa-gsi-region@9b090000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b09a000..0x000000009b09bfff (8 KiB) nomap non-reusable gpu-micro-code-region@9b09a000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b100000..0x000000009b27ffff (1536 KiB) nomap non-reusable spss-region@9b100000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b280000..0x000000009b2dffff (384 KiB) nomap non-reusable spu-tz-shared-region@9b280000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b2e0000..0x000000009b2fffff (128 KiB) nomap non-reusable spu-modem-shared-region@9b2e0000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009b300000..0x000000009bafffff (8192 KiB) nomap non-reusable camera-region@9b300000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009bb00000..0x000000009c1fffff (7168 KiB) nomap non-reusable video-region@9bb00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009c200000..0x000000009c8fffff (7168 KiB) nomap non-reusable cvp-region@9c200000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009c900000..0x000000009e8fffff (32768 KiB) nomap non-reusable cdsp-region@9c900000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009e900000..0x000000009e97ffff (512 KiB) nomap non-reusable q6-cdsp-dtb-region@9e900000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009e980000..0x000000009e9fffff (512 KiB) nomap non-reusable q6-adsp-dtb-region@9e980000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d4a80000..0x00000000d4cfffff (2560 KiB) nomap non-reusable rmtfs-region@d4a80000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d4d00000..0x00000000d7ffffff (52224 KiB) nomap non-reusable mpss-dsm-region@d4d00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d8000000..0x00000000d80fffff (1024 KiB) nomap non-reusable tz-reserved-region@d8000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d8140000..0x00000000d82fffff (1792 KiB) nomap non-reusable cpucp-fw-region@d8140000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d8300000..0x00000000d87fffff (5120 KiB) nomap non-reusable qtee-region@d8300000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000d8800000..0x00000000e11fffff (141312 KiB) nomap non-reusable ta-region@d8800000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000e1200000..0x00000000e393ffff (40192 KiB) nomap non-reusable tz-tags-region@e1200000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000e6440000..0x00000000e671cfff (2932 KiB) nomap non-reusable hwfence-shbuf-region@e6440000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f3600000..0x00000000f80edfff (76728 KiB) nomap non-reusable trust-ui-vm-region@f3600000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f80ee000..0x00000000f80eefff (4 KiB) nomap non-reusable trust-ui-vm-dump-region@f80ee000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f80ef000..0x00000000f80f7fff (36 KiB) nomap non-reusable trust-ui-vm-qrt-region@f80ef000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f80f8000..0x00000000f80fbfff (16 KiB) nomap non-reusable trust-ui-vm-vblk0-ring-region@f80f8000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f80fc000..0x00000000f80fffff (16 KiB) nomap non-reusable trust-ui-vm-vblk1-ring-region@f80fc000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f8100000..0x00000000f81fffff (1024 KiB) nomap non-reusable trust-ui-vm-swiotlb-region@f8100000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000f8400000..0x00000000fcbfffff (73728 KiB) nomap non-reusable oem-vm-region@f8400000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000fcc00000..0x00000000fcc03fff (16 KiB) nomap non-reusable oem-vm-vblk0-ring-region@fcc00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000fcc04000..0x00000000fcd03fff (1024 KiB) nomap non-reusable oem-vm-swiotlb-region@fcc04000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000fce00000..0x00000000ff6fffff (41984 KiB) nomap non-reusable hyp-ext-tags-region@fce00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000ff700000..0x00000000ff7fffff (1024 KiB) nomap non-reusable hyp-ext-reserved-region@ff700000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b01ff000..0x00000000b01fffff (4 KiB) nomap non-reusable kaslr@b01ff000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b0200000..0x00000000b023ffff (256 KiB) nomap non-reusable uh-heap@b0200000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b1000000..0x00000000b3ffffff (49152 KiB) nomap non-reusable uh-guest@b1000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000081cf4000..0x0000000081cf4fff (4 KiB) nomap non-reusable chipinfo@81cf4000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000a7d00000..0x00000000a7ffffff (3072 KiB) nomap non-reusable sec-xbl-ramdump@a7d00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x000000009ea00000..0x00000000a43b3fff (91856 KiB) nomap non-reusable adspslpi@9ea00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000ff800000..0x00000000ffdfffff (6144 KiB) nomap non-reusable llcc-lpi@ff800000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000000b8000000..0x00000000baafffff (44032 KiB) nomap non-reusable splash_region
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880100000..0x00000008801fefff (1020 KiB) nomap non-reusable sec-debug-pool@880100000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x00000008801ff000..0x00000008801fffff (4 KiB) nomap non-reusable sec-reset-info@8801ff000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880200000..0x00000008803fffff (2048 KiB) map non-reusable sec-log@880200000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880400000..0x00000008808fffff (5120 KiB) nomap non-reusable sec-debug-bl@880400000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880900000..0x0000000880afffff (2048 KiB) nomap non-reusable sec-pmsg@880900000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880b00000..0x0000000880b00fff (4 KiB) nomap non-reusable google-debug-kinfo@880b00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880b01000..0x0000000880b01fff (4 KiB) nomap non-reusable hdm@880b01000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: 0x0000000880c00000..0x000000088b8fffff (177152 KiB) nomap non-reusable sec-qcom-rdx@880c00000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] kaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] cma: Reserved 16 MiB at 0x00000000f2600000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: probing for conduit method from DT.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: PSCIv1.1 detected in firmware.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: Using standard PSCI v0.2 function IDs
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: MIGRATE_INFO_TYPE not supported.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: SMC Calling Convention v1.3
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] psci: OSI mode supported.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] WARNING: x1-x3 nonzero in violation of boot protocol:
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] 	x1: 0000000080000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] 	x2: 00000000280b0000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] 	x3: 0000000000000000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Zone ranges:
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   DMA32    [mem 0x0000000080000000-0x00000000ffffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   Normal   [mem 0x0000000100000000-0x0000000affffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Movable zone start for each node
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Early memory node ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000080000000-0x0000000080dfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000811d0000-0x00000000811fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000081200000-0x00000000819fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000081a00000-0x0000000081cf4fff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000081cf5000-0x0000000081cfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000081d00000-0x0000000081f1ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000081f20000-0x00000000825fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000082600000-0x0000000086dfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000086e00000-0x000000008a7fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x000000008a800000-0x000000009b09bfff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x000000009b09c000-0x000000009b0fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x000000009b100000-0x00000000a43b3fff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000a43b4000-0x00000000a7cfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000a7d00000-0x00000000a7ffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000a8000000-0x00000000b01fefff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000b01ff000-0x00000000b01fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000b0200000-0x00000000b7ffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000b8000000-0x00000000baafffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000bab00000-0x00000000d4a7ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000d4a80000-0x00000000d7ffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000d8140000-0x00000000d815ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000e11f0000-0x00000000e393ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000e3940000-0x00000000e643ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000e6440000-0x00000000e671cfff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000e671d000-0x00000000f35fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000f3600000-0x00000000f81fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000f8200000-0x00000000f83fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000f8400000-0x00000000fcd03fff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000fcd04000-0x00000000fcdfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000fce00000-0x00000000ffdfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000000ffe00000-0x00000000ffffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880000000-0x00000008800fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880100000-0x00000008801fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880200000-0x00000008803fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880400000-0x0000000880b01fff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880b02000-0x0000000880bfffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x0000000880c00000-0x000000088b8fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x000000088b900000-0x00000008b77fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000008b7a00000-0x00000008b97fffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0]   node   0: [mem 0x00000008c0000000-0x0000000affffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Initmem setup node 0 [mem 0x0000000080000000-0x0000000affffffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] On node 0, zone DMA32: 976 pages in unavailable ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] On node 0, zone DMA32: 320 pages in unavailable ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] On node 0, zone DMA32: 37008 pages in unavailable ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] On node 0, zone Normal: 512 pages in unavailable ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] On node 0, zone Normal: 26624 pages in unavailable ranges
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] percpu: Embedded 35 pages/cpu s103832 r8192 d31336 u143360
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] pcpu-alloc: s103832 r8192 d31336 u143360 alloc=35*4096
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 [0] 4 [0] 5 [0] 6 [0] 7
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Detected PIPT I-cache on CPU0
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: Branch Target Identification
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: Address authentication (architected QARMA5 algorithm)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: GICv3 CPU interface
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: Spectre-v4
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: ARM erratum 2457168
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: ARM erratum 2658417
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: Broken broadcast TLBI completion
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] CPU features: detected: ARM errata 2966298, 3117295
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] alternatives: applying boot alternatives
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Kernel command line: console=tty0 console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=both gts9_sec_log=0x880200000,0x200000 gts9_proof_code=1800 gts9_proof_action=recovery-bcb loglevel=7 ignore_loglevel ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 \
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Kernel command line: cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Unknown kernel command line parameters "gts9_display_recover=1 gts9_usb_gadget=both gts9_proof_code=1800 gts9_proof_action=recovery-bcb sapa=0", will be passed to user space.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Dentry cache hash table entries: 2097152 (order: 12, 16777216 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Inode-cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] software IO TLB: area num 8.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] software IO TLB: mapped [mem 0x00000000ee600000-0x00000000f2600000] (64MB)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Built 1 zonelists, mobility grouping on.  Total pages: 3080288
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: Preemptible hierarchical RCU implementation.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: 	RCU event tracing is enabled.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: 	RCU restricting CPUs from NR_CPUS=32 to nr_cpu_ids=8.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: 	RCU priority boosting: priority 1 delay 500 ms.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] 	Trampoline variant of Tasks RCU enabled.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] 	Tracing variant of Tasks RCU enabled.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: 988 SPIs implemented
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: 0 Extended SPIs implemented
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] Root IRQ handler: gic_handle_irq
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GICv3 features: 16 PPIs, DirectLPI
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GICD_CTLR.DS=1, SCR_EL3.FIQ=0
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: Enabling SGIs without active state
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: CPU0: found redistributor 0 region 0:0x0000000017180000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] ITS [mem 0x17140000-0x1717ffff]
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] ITS@0x0000000017140000: Devices Table too large, reduce ids 32->19
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] ITS@0x0000000017140000: Devices too large, reduce ITS pages 1024->256
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] ITS@0x0000000017140000: allocated 131072 Devices @88be00000 (indirect, esz 8, psz 4K, shr 1)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] ITS@0x0000000017140000: allocated 4096 Interrupt Collections @88bd47000 (flat, esz 1, psz 4K, shr 1)
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: using LPI property table @0x000000088bd60000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: CPU0: using allocated LPI pending table @0x000000088bd70000
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-0[0] { /cpus/cpu@0[0] /cpus/cpu@100[1] /cpus/cpu@200[2] }
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-1[1] { /cpus/cpu@300[3] /cpus/cpu@400[4] }
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-2[2] { /cpus/cpu@500[5] /cpus/cpu@600[6] }
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-3[3] { /cpus/cpu@700[7] }
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] arch_timer: cp15 timer running at 19.20MHz (virt).
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+2026-09-22T05:59:09Z RECV  [    0.000000][    T0] sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+2026-09-22T05:59:09Z RECV  [    0.009090][    T0] arm-pv: using stolen time PV
+2026-09-22T05:59:09Z RECV  [    0.013977][    T0] kfence: initialized - using 524288 bytes for 63 objects at 0x(____ptrval____)-0x(____ptrval____)
+2026-09-22T05:59:09Z RECV  [    0.024953][    T0] Console: colour dummy device 80x25
+2026-09-22T05:59:09Z RECV  [    0.030258][    T0] printk: legacy console [tty0] enabled
+2026-09-22T05:59:09Z RECV  [    0.135922][    T0] Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+2026-09-22T05:59:09Z RECV  [    0.147189][    T0] pid_max: default: 32768 minimum: 301
+2026-09-22T05:59:09Z RECV  [    0.152993][    T0] SELinux:  Initializing.
+2026-09-22T05:59:09Z RECV  [    0.157780][    T0] Mount-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    0.166309][    T0] Mountpoint-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    0.175495][    T0] VFS: Finished mounting rootfs on nullfs
+2026-09-22T05:59:09Z RECV  [    0.183160][    T1] rcu: Hierarchical SRCU implementation.
+2026-09-22T05:59:09Z RECV  [    0.188840][    T1] rcu: 	Max phase no-delay instances is 1000.
+2026-09-22T05:59:09Z RECV  [    0.195204][    T1] Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+2026-09-22T05:59:09Z RECV  [    0.204597][    T1] dyndbg: Ignore empty _ddebug table in a CONFIG_DYNAMIC_DEBUG_CORE build
+2026-09-22T05:59:09Z RECV  [    0.213213][    T1] printk: legacy console [sec_log-1] enabled
+2026-09-22T05:59:09Z RECV  [    0.219754][    T1] gts9wifi-sec-log: persistent console at 0x0000000880200000 (2097152 bytes, boot 1667, early_initcall)
+2026-09-22T05:59:09Z RECV  [    0.231027][    T1] EFI services will not be available.
+2026-09-22T05:59:09Z RECV  [    0.236772][    T1] smp: Bringing up secondary CPUs ...
+2026-09-22T05:59:09Z RECV  [    0.243130][    T0] Detected PIPT I-cache on CPU1
+2026-09-22T05:59:09Z RECV  [    0.243264][    T0] GICv3: CPU1: found redistributor 100 region 0:0x00000000171c0000
+2026-09-22T05:59:09Z RECV  [    0.243338][    T0] GICv3: CPU1: using allocated LPI pending table @0x000000088bd80000
+2026-09-22T05:59:09Z RECV  [    0.243421][    T0] CPU1: Booted secondary processor 0x0000000100 [0x411fd461]
+2026-09-22T05:59:09Z RECV  [    0.244427][    T0] Detected PIPT I-cache on CPU2
+2026-09-22T05:59:09Z RECV  [    0.244545][    T0] GICv3: CPU2: found redistributor 200 region 0:0x0000000017200000
+2026-09-22T05:59:09Z RECV  [    0.244610][    T0] GICv3: CPU2: using allocated LPI pending table @0x000000088bd90000
+2026-09-22T05:59:09Z RECV  [    0.244683][    T0] CPU2: Booted secondary processor 0x0000000200 [0x411fd461]
+2026-09-22T05:59:09Z RECV  [    0.245921][    T0] CPU features: detected: Spectre-BHB
+2026-09-22T05:59:09Z RECV  [    0.245942][    T0] CPU features: detected: ARM erratum 2645198
+2026-09-22T05:59:09Z RECV  [    0.245952][    T0] CPU features: detected: SSBS not fully self-synchronizing
+2026-09-22T05:59:09Z RECV  [    0.245976][    T0] Detected PIPT I-cache on CPU3
+2026-09-22T05:59:09Z RECV  [    0.245987][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU3: 0x00000010212122
+2026-09-22T05:59:09Z RECV  [    0.246001][    T0] CPU features: Unsupported CPU feature variation detected.
+2026-09-22T05:59:09Z RECV  [    0.246104][    T0] GICv3: CPU3: found redistributor 300 region 0:0x0000000017240000
+2026-09-22T05:59:09Z RECV  [    0.246184][    T0] GICv3: CPU3: using allocated LPI pending table @0x000000088bda0000
+2026-09-22T05:59:09Z RECV  [    0.246270][    T0] CPU3: Booted secondary processor 0x0000000300 [0x411fd4d0]
+2026-09-22T05:59:09Z RECV  [    0.247372][    T0] Detected PIPT I-cache on CPU4
+2026-09-22T05:59:09Z RECV  [    0.247395][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU4: 0x00000010212122
+2026-09-22T05:59:09Z RECV  [    0.247513][    T0] GICv3: CPU4: found redistributor 400 region 0:0x0000000017280000
+2026-09-22T05:59:09Z RECV  [    0.247596][    T0] GICv3: CPU4: using allocated LPI pending table @0x000000088bdb0000
+2026-09-22T05:59:09Z RECV  [    0.247686][    T0] CPU4: Booted secondary processor 0x0000000400 [0x411fd4d0]
+2026-09-22T05:59:09Z RECV  [    0.248833][    T0] CPU features: detected: ARM erratum 2067961 or 2054223
+2026-09-22T05:59:09Z RECV  [    0.248846][    T0] Detected PIPT I-cache on CPU5
+2026-09-22T05:59:09Z RECV  [    0.248850][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU5: 0x00000010212122
+2026-09-22T05:59:09Z RECV  [    0.248855][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU5: 0x00000001021110
+2026-09-22T05:59:09Z RECV  [    0.248888][    T0] GICv3: CPU5: found redistributor 500 region 0:0x00000000172c0000
+2026-09-22T05:59:09Z RECV  [    0.248924][    T0] GICv3: CPU5: using allocated LPI pending table @0x000000088bdc0000
+2026-09-22T05:59:09Z RECV  [    0.248982][    T0] CPU5: Booted secondary processor 0x0000000500 [0x412fd470]
+2026-09-22T05:59:09Z RECV  [    0.250021][    T0] Detected PIPT I-cache on CPU6
+2026-09-22T05:59:09Z RECV  [    0.250029][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU6: 0x00000010212122
+2026-09-22T05:59:09Z RECV  [    0.250035][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU6: 0x00000001021110
+2026-09-22T05:59:09Z RECV  [    0.250069][    T0] GICv3: CPU6: found redistributor 600 region 0:0x0000000017300000
+2026-09-22T05:59:09Z RECV  [    0.250104][    T0] GICv3: CPU6: using allocated LPI pending table @0x000000088bdd0000
+2026-09-22T05:59:09Z RECV  [    0.250164][    T0] CPU6: Booted secondary processor 0x0000000600 [0x412fd470]
+2026-09-22T05:59:09Z RECV  [    0.251523][    T0] Detected PIPT I-cache on CPU7
+2026-09-22T05:59:09Z RECV  [    0.251542][    T0] CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU7: 0x00000010212122
+2026-09-22T05:59:09Z RECV  [    0.251651][    T0] GICv3: CPU7: found redistributor 700 region 0:0x0000000017340000
+2026-09-22T05:59:09Z RECV  [    0.251730][    T0] GICv3: CPU7: using allocated LPI pending table @0x000000088bde0000
+2026-09-22T05:59:09Z RECV  [    0.251812][    T0] CPU7: Booted secondary processor 0x0000000700 [0x411fd4e0]
+2026-09-22T05:59:09Z RECV  [    0.251968][    T1] smp: Brought up 1 node, 8 CPUs
+2026-09-22T05:59:09Z RECV  [    0.581398][    T1] SMP: Total of 8 processors activated.
+2026-09-22T05:59:09Z RECV  [    0.586979][    T1] CPU: All CPU(s) started at EL1
+2026-09-22T05:59:09Z RECV  [    0.591978][    T1] CPU features: detected: ARMv8.4 Translation Table Level
+2026-09-22T05:59:09Z RECV  [    0.599171][    T1] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+2026-09-22T05:59:09Z RECV  [    0.608785][    T1] CPU features: detected: Common not Private translations
+2026-09-22T05:59:09Z RECV  [    0.615968][    T1] CPU features: detected: CRC32 instructions
+2026-09-22T05:59:09Z RECV  [    0.621981][    T1] CPU features: detected: Data independent timing control (DIT)
+2026-09-22T05:59:09Z RECV  [    0.629692][    T1] CPU features: detected: E0PD
+2026-09-22T05:59:09Z RECV  [    0.634460][    T1] CPU features: detected: Enhanced Virtualization Traps
+2026-09-22T05:59:09Z RECV  [    0.641458][    T1] CPU features: detected: Generic authentication (architected QARMA5 algorithm)
+2026-09-22T05:59:09Z RECV  [    0.650589][    T1] CPU features: detected: RCpc load-acquire (LDAPR)
+2026-09-22T05:59:09Z RECV  [    0.657226][    T1] CPU features: detected: LSE atomic instructions
+2026-09-22T05:59:09Z RECV  [    0.663688][    T1] CPU features: detected: Privileged Access Never
+2026-09-22T05:59:09Z RECV  [    0.670150][    T1] CPU features: detected: PMUv3
+2026-09-22T05:59:09Z RECV  [    0.675003][    T1] CPU features: detected: Speculation barrier (SB)
+2026-09-22T05:59:09Z RECV  [    0.681554][    T1] CPU features: detected: Stage-2 Force Write-Back
+2026-09-22T05:59:09Z RECV  [    0.688105][    T1] CPU features: detected: TLB range maintenance instructions
+2026-09-22T05:59:09Z RECV  [    0.695549][    T1] CPU features: detected: XNX
+2026-09-22T05:59:09Z RECV  [    0.700231][    T1] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+2026-09-22T05:59:09Z RECV  [    0.708222][    T1] alternatives: applying system-wide alternatives
+2026-09-22T05:59:09Z RECV  [    0.718646][    T1] CPU features: detected: Activity Monitors Unit (AMU) on CPU0-7
+2026-09-22T05:59:09Z RECV  [    0.726487][    T1] CPU features: detected: Hardware dirty bit management on CPU0-7
+2026-09-22T05:59:09Z RECV  [    0.734911][    T1] Memory: 10827196K/12321152K available (20800K kernel code, 2698K rwdata, 21756K rodata, 1472K init, 512K bss, 1465740K reserved, 16384K cma-reserved)
+2026-09-22T05:59:09Z RECV  [    0.751079][    T1] devtmpfs: initialized
+2026-09-22T05:59:09Z RECV  [    0.758759][    T1] posixtimers hash table entries: 4096 (order: 4, 65536 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    0.767083][    T1] futex hash table entries: 2048 (131072 bytes on 1 NUMA nodes, total 128 KiB, linear).
+2026-09-22T05:59:09Z RECV  [    0.776960][    T1] 20896 pages in range for non-PLT usage
+2026-09-22T05:59:09Z RECV  [    0.776961][    T1] 512416 pages in range for PLT usage
+2026-09-22T05:59:09Z RECV  [    0.783359][    T1] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+2026-09-22T05:59:09Z RECV  [    0.795845][    T1] DMA: preallocated 2048 KiB GFP_KERNEL pool for atomic allocations
+2026-09-22T05:59:09Z RECV  [    0.804024][    T1] DMA: preallocated 2048 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+2026-09-22T05:59:09Z RECV  [    0.812971][    T1] audit: initializing netlink subsys (disabled)
+2026-09-22T05:59:09Z RECV  [    0.819341][   T68] audit: type=2000 audit(0.500:1): state=initialized audit_enabled=0 res=1
+2026-09-22T05:59:09Z RECV  [    0.828389][    T1] thermal_sys: Registered thermal governor 'step_wise'
+2026-09-22T05:59:09Z RECV  [    0.828391][    T1] thermal_sys: Registered thermal governor 'user_space'
+2026-09-22T05:59:09Z RECV  [    0.835287][    T1] thermal_sys: Registered thermal governor 'power_allocator'
+2026-09-22T05:59:09Z RECV  [    0.842283][    T1] cpuidle: using governor menu
+2026-09-22T05:59:09Z RECV  [    0.854477][    T1] NET: Registered PF_QIPCRTR protocol family
+2026-09-22T05:59:09Z RECV  [    0.860550][    T1] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+2026-09-22T05:59:09Z RECV  [    0.868395][    T1] ASID allocator initialised with 65536 entries
+2026-09-22T05:59:09Z RECV  [    0.874900][    T1] Serial: AMBA PL011 UART driver
+2026-09-22T05:59:09Z RECV  [    0.880370][    T1] CPUidle PSCI: Initialized CPU PM domain topology using OSI mode
+2026-09-22T05:59:09Z RECV  [    0.889608][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    0.899096][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+2026-09-22T05:59:09Z RECV  [    0.908573][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+2026-09-22T05:59:09Z RECV  [    0.918088][    T1] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    0.928816][    T1] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:09Z RECV  [    0.942554][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:09Z RECV  [    0.956224][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    0.967646][    T1] /soc@0/interconnect@16e0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    0.977947][    T1] /soc@0/phy@1c06000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    0.987428][    T1] /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+2026-09-22T05:59:09Z RECV  [    0.996016][    T1] /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.005490][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+2026-09-22T05:59:09Z RECV  [    1.014876][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.024524][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+2026-09-22T05:59:09Z RECV  [    1.033236][    T1] /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.043460][    T1] /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.053658][    T1] /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac16000/i2c-bus@1/camera@21
+2026-09-22T05:59:09Z RECV  [    1.063846][    T1] /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac15000/i2c-bus@1/camera@21
+2026-09-22T05:59:09Z RECV  [    1.074191][    T1] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:09Z RECV  [    1.088630][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-22T05:59:09Z RECV  [    1.102441][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+2026-09-22T05:59:09Z RECV  [    1.117085][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:09Z RECV  [    1.130860][    T1] /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-22T05:59:09Z RECV  [    1.142756][    T1] /soc@0/clock-controller@af00000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/phy@ae95000
+2026-09-22T05:59:09Z RECV  [    1.154641][    T1] /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.164117][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    1.172525][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:09Z RECV  [    1.183239][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.192710][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:09Z RECV  [    1.204047][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.212450][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e3000
+2026-09-22T05:59:09Z RECV  [    1.220852][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+2026-09-22T05:59:09Z RECV  [    1.230061][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.239548][    T1] /soc@0/interrupt-controller@17100000: Fixed dependency cycle(s) with /soc@0/interrupt-controller@17100000
+2026-09-22T05:59:09Z RECV  [    1.251244][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.260716][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+2026-09-22T05:59:09Z RECV  [    1.270183][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+2026-09-22T05:59:09Z RECV  [    1.279752][    T1] /soc@0/geniqup@8c0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.289521][    T1] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.300247][    T1] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:09Z RECV  [    1.313964][    T1] /soc@0/geniqup@9c0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.323769][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:09Z RECV  [    1.337440][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    1.348844][    T1] /soc@0/geniqup@ac0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.358836][    T1] /soc@0/interconnect@16e0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.369323][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+2026-09-22T05:59:09Z RECV  [    1.378816][    T1] /soc@0/phy@1c06000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.388385][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+2026-09-22T05:59:09Z RECV  [    1.397876][    T1] /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+2026-09-22T05:59:09Z RECV  [    1.406469][    T1] /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.415979][    T1] /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+2026-09-22T05:59:09Z RECV  [    1.424588][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+2026-09-22T05:59:09Z RECV  [    1.433984][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.443641][    T1] /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+2026-09-22T05:59:09Z RECV  [    1.452931][    T1] /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.463191][    T1] /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.473469][    T1] /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.483687][    T1] /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+2026-09-22T05:59:09Z RECV  [    1.493897][    T1] /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac16000/i2c-bus@1/camera@21
+2026-09-22T05:59:09Z RECV  [    1.504101][    T1] /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac15000/i2c-bus@1/camera@21
+2026-09-22T05:59:09Z RECV  [    1.514549][    T1] /soc@0/display-subsystem@ae00000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-22T05:59:09Z RECV  [    1.525658][    T1] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:09Z RECV  [    1.540185][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-22T05:59:09Z RECV  [    1.554085][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+2026-09-22T05:59:09Z RECV  [    1.569049][    T1] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:09Z RECV  [    1.582839][    T1] /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-22T05:59:09Z RECV  [    1.594775][    T1] /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-22T05:59:09Z RECV  [    1.606811][    T1] /soc@0/display-subsystem@ae00000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+2026-09-22T05:59:09Z RECV  [    1.617674][    T1] /soc@0/clock-controller@af00000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/phy@ae95000
+2026-09-22T05:59:09Z RECV  [    1.629595][    T1] /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/geniqup@ac0000/i2c@a98000/redriver@4f
+2026-09-22T05:59:09Z RECV  [    1.640314][    T1] /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.649894][    T1] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.660620][    T1] /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.670116][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    1.678537][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:09Z RECV  [    1.689253][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.698767][    T1] /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    1.707192][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    1.718543][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:09Z RECV  [    1.729889][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:09Z RECV  [    1.738304][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e3000
+2026-09-22T05:59:09Z RECV  [    1.746722][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+2026-09-22T05:59:09Z RECV  [    1.755943][    T1] /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+2026-09-22T05:59:09Z RECV  [    1.768328][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+2026-09-22T05:59:09Z RECV  [    1.779386][    T1] /usb-c-sbu-mux: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:09Z RECV  [    1.792705][    T1] iommu: Default domain type: Translated
+2026-09-22T05:59:09Z RECV  [    1.798371][    T1] iommu: DMA domain TLB invalidation policy: strict mode
+2026-09-22T05:59:09Z RECV  [    1.808905][    T1] SCSI subsystem initialized
+2026-09-22T05:59:09Z RECV  [    1.813519][    T1] usbcore: registered new interface driver usbfs
+2026-09-22T05:59:09Z RECV  [    1.819880][    T1] usbcore: registered new interface driver hub
+2026-09-22T05:59:09Z RECV  [    1.826064][    T1] usbcore: registered new device driver usb
+2026-09-22T05:59:09Z RECV  [    1.831996][    T1] mc: Linux media interface: v0.10
+2026-09-22T05:59:09Z RECV  [    1.837110][    T1] videodev: Linux video capture interface: v2.00
+2026-09-22T05:59:09Z RECV  [    1.843473][    T1] pps_core: LinuxPPS API ver. 1 registered
+2026-09-22T05:59:09Z RECV  [    1.849295][    T1] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+2026-09-22T05:59:09Z RECV  [    1.859386][    T1] PTP clock support registered
+2026-09-22T05:59:09Z RECV  [    1.864143][    T1] EDAC MC: Ver: 3.0.0
+2026-09-22T05:59:09Z RECV  [    1.868159][    T1] scmi_core: SCMI protocol bus registered
+2026-09-22T05:59:09Z RECV  [    1.874009][    T1] Advanced Linux Sound Architecture Driver Initialized.
+2026-09-22T05:59:09Z RECV  [    1.881207][    T1] nfc: nfc_init: NFC Core ver 0.1
+2026-09-22T05:59:09Z RECV  [    1.886240][    T1] NET: Registered PF_NFC protocol family
+2026-09-22T05:59:09Z RECV  [    1.891986][    T1] clocksource: Switched to clocksource arch_sys_counter
+2026-09-22T05:59:09Z RECV  [    1.899055][    T1] VFS: Disk quotas dquot_6.6.0
+2026-09-22T05:59:09Z RECV  [    1.903823][    T1] VFS: Dquot-cache hash table entries: 512 (4096 bytes)
+2026-09-22T05:59:09Z RECV  [    1.913859][    T1] NET: Registered PF_INET protocol family
+2026-09-22T05:59:09Z RECV  [    1.919677][    T1] IP idents hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.929942][    T1] tcp_listen_portaddr_hash hash table entries: 8192 (order: 5, 131072 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.939517][    T1] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.948221][    T1] TCP established hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.957353][    T1] TCP bind hash table entries: 65536 (order: 9, 2097152 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.965787][    T1] TCP: Hash tables configured (established 131072 bind 65536)
+2026-09-22T05:59:09Z RECV  [    1.973333][    T1] UDP hash table entries: 8192 (order: 7, 524288 bytes, linear)
+2026-09-22T05:59:09Z RECV  [    1.981080][    T1] NET: Registered PF_UNIX/PF_LOCAL protocol family
+2026-09-22T05:59:09Z RECV  [    1.987619][    T1] NET: Registered PF_XDP protocol family
+2026-09-22T05:59:09Z RECV  [    1.993269][    T1] PCI: CLS 0 bytes, default 64
+2026-09-22T05:59:09Z RECV  [    1.998085][   T13] Trying to unpack rootfs image as initramfs...
+2026-09-22T05:59:09Z RECV  [    2.004387][    T1] kvm [1]: HYP mode not available
+2026-09-22T05:59:09Z RECV  [    2.006792][   T13] Freeing initrd memory: 1140K
+2026-09-22T05:59:09Z RECV  [    2.009720][    T1] Initialise system trusted keyrings
+2026-09-22T05:59:09Z RECV  [    2.019506][    T1] workingset: timestamp_bits=46 (anon: 41) max_order=22 bucket_order=0 (anon: 0)
+2026-09-22T05:59:09Z RECV  [    2.028946][    T1] fuse: init (API version 7.45)
+2026-09-22T05:59:09Z RECV  [    2.043793][    T1] Key type asymmetric registered
+2026-09-22T05:59:09Z RECV  [    2.048733][    T1] Asymmetric key parser 'x509' registered
+2026-09-22T05:59:09Z RECV  [    2.054477][    T1] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 238)
+2026-09-22T05:59:09Z RECV  [    2.062798][    T1] io scheduler mq-deadline registered
+2026-09-22T05:59:09Z RECV  [    2.068169][    T1] io scheduler kyber registered
+2026-09-22T05:59:09Z RECV  [    2.073009][    T1] io scheduler bfq registered
+2026-09-22T05:59:09Z RECV  [    2.080721][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+2026-09-22T05:59:09Z RECV  [    2.091731][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:09Z RECV  [    2.105394][    T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:09Z RECV  [    2.117532][    T1] gts9wifi-sec-kernel-log sec-kernel-log: ring already owned by the early console; leaving it alone
+2026-09-22T05:59:10Z RECV  [    2.128977][   T13] vreg_l1b_1p8: Setting 1800000-1800000uV
+2026-09-22T05:59:10Z RECV  [    2.129069][   T77] vreg_l1c_1p1: Setting 1104000-1104000uV
+2026-09-22T05:59:10Z RECV  [    2.129083][   T76] vreg_s2g_1p012: Setting 1016000-1016000uV
+2026-09-22T05:59:10Z RECV  [    2.129108][   T12] vreg_s4e_0p952: Setting 952000-952000uV
+2026-09-22T05:59:10Z RECV  [    2.134895][   T76] vreg_s4g_1p352: Setting 1352000-1352000uV
+2026-09-22T05:59:10Z RECV  [    2.134938][   T12] vreg_l1e_0p88: Setting 880000-880000uV
+2026-09-22T05:59:10Z RECV  [    2.140555][   T13] vreg_l4b_1p8: Setting 1800000-1800000uV
+2026-09-22T05:59:10Z RECV  [    2.140661][   T12] vreg_l3e_1p2: Setting 1200000-1200000uV
+2026-09-22T05:59:10Z RECV  [    2.146547][   T76] vreg_s5g_0p966: Setting 968000-968000uV
+2026-09-22T05:59:10Z RECV  [    2.152350][   T13] vreg_l5b_3p104: Setting 3104000-3104000uV
+2026-09-22T05:59:10Z RECV  [    2.158151][   T76] vreg_s6g_1p904: Setting 1904000-1904000uV
+2026-09-22T05:59:10Z RECV  [    2.163879][   T13] vreg_l8b_1p8: Setting 1800000-3000000uV
+2026-09-22T05:59:10Z RECV  [    2.169568][   T76] vreg_l3g_1p2: Setting 1200000-1200000uV
+2026-09-22T05:59:10Z RECV  [    2.175257][   T13] vreg_l9b_2p9: Setting 2960000-3000000uV
+2026-09-22T05:59:10Z RECV  [    2.181043][   T76] vreg_l1g_1p2: Setting 1200000-1200000uV
+2026-09-22T05:59:10Z RECV  [    2.186902][   T13] vreg_l10b_1p8: Setting 1800000-1800000uV
+2026-09-22T05:59:10Z RECV  [    2.221929][   T13] vreg_l11b_1p1: Setting 1104000-1104000uV
+2026-09-22T05:59:10Z RECV  [    2.227826][   T13] vreg_l12b_1p8: Setting 1800000-1800000uV
+2026-09-22T05:59:10Z RECV  [    2.233767][   T13] vreg_l13b_3p0: Setting 3000000-3000000uV
+2026-09-22T05:59:10Z RECV  [    2.235422][    T1] brd: module loaded
+2026-09-22T05:59:10Z RECV  [    2.239649][   T13] vreg_l14b_3p3: Setting 3304000-3304000uV
+2026-09-22T05:59:10Z RECV  [    2.249387][   T13] vreg_l15b_1p8: Setting 1800000-1800000uV
+2026-09-22T05:59:10Z RECV  [    2.250156][    T1] loop: module loaded
+2026-09-22T05:59:10Z RECV  [    2.255313][   T13] vreg_l16b_3p0: Setting 3000000-3000000uV
+2026-09-22T05:59:10Z RECV  [    2.259300][    T1] spmi_pmic_arb c400000.spmi: PMIC arbiter version v7 (0x70000001)
+2026-09-22T05:59:10Z RECV  [    2.265144][   T13] vreg_l17b_2p5: Setting 2504000-2504000uV
+2026-09-22T05:59:10Z RECV  [    2.279400][    T1] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+2026-09-22T05:59:10Z RECV  [    2.288171][    T1] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+2026-09-22T05:59:10Z RECV  [    2.298795][    T1] MACsec IEEE 802.1AE
+2026-09-22T05:59:10Z RECV  [    2.302816][    T1] tun: Universal TUN/TAP device driver, 1.6
+2026-09-22T05:59:10Z RECV  [    2.308822][    T1] CAN device driver interface
+2026-09-22T05:59:10Z RECV  [    2.313490][    T1] PPP generic driver version 2.4.2
+2026-09-22T05:59:10Z RECV  [    2.318655][    T1] PPP BSD Compression module registered
+2026-09-22T05:59:10Z RECV  [    2.324217][    T1] PPP Deflate Compression module registered
+2026-09-22T05:59:10Z RECV  [    2.330125][    T1] PPP MPPE Compression module registered
+2026-09-22T05:59:10Z RECV  [    2.335769][    T1] NET: Registered PF_PPPOX protocol family
+2026-09-22T05:59:10Z RECV  [    2.341590][    T1] PPTP driver version 0.8.5
+2026-09-22T05:59:10Z RECV  [    2.346104][    T1] usbcore: registered new interface driver rtl8150
+2026-09-22T05:59:10Z RECV  [    2.352643][    T1] usbcore: registered new device driver r8152-cfgselector
+2026-09-22T05:59:10Z RECV  [    2.359803][    T1] usbcore: registered new interface driver r8152
+2026-09-22T05:59:10Z RECV  [    2.366161][    T1] usbcore: registered new interface driver asix
+2026-09-22T05:59:10Z RECV  [    2.372435][    T1] usbcore: registered new interface driver ax88179_178a
+2026-09-22T05:59:10Z RECV  [    2.379418][    T1] usbcore: registered new interface driver cdc_ether
+2026-09-22T05:59:10Z RECV  [    2.386138][    T1] usbcore: registered new interface driver cdc_eem
+2026-09-22T05:59:10Z RECV  [    2.392676][    T1] usbcore: registered new interface driver cdc_ncm
+2026-09-22T05:59:10Z RECV  [    2.399211][    T1] usbcore: registered new interface driver aqc111
+2026-09-22T05:59:10Z RECV  [    2.405658][    T1] usbcore: registered new interface driver r8153_ecm
+2026-09-22T05:59:10Z RECV  [    2.412626][    T1] usbcore: registered new interface driver cdc_acm
+2026-09-22T05:59:10Z RECV  [    2.419163][    T1] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+2026-09-22T05:59:10Z RECV  [    2.428189][    T1] usbcore: registered new interface driver uas
+2026-09-22T05:59:10Z RECV  [    2.434379][    T1] usbcore: registered new interface driver usb-storage
+2026-09-22T05:59:10Z RECV  [    2.441330][    T1] dummy_hcd dummy_hcd.0: USB Host+Gadget Emulator, driver 02 May 2005
+2026-09-22T05:59:10Z RECV  [    2.449556][    T1] dummy_hcd dummy_hcd.0: Dummy host controller
+2026-09-22T05:59:10Z RECV  [    2.455738][    T1] dummy_hcd dummy_hcd.0: new USB bus registered, assigned bus number 1
+2026-09-22T05:59:10Z RECV  [    2.464088][    T1] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.02
+2026-09-22T05:59:10Z RECV  [    2.473296][    T1] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+2026-09-22T05:59:10Z RECV  [    2.481430][    T1] usb usb1: Product: Dummy host controller
+2026-09-22T05:59:10Z RECV  [    2.487251][    T1] usb usb1: Manufacturer: Linux 7.2.0-rc3-gts9wifi-dirty dummy_hcd
+2026-09-22T05:59:10Z RECV  [    2.495200][    T1] usb usb1: SerialNumber: dummy_hcd.0
+2026-09-22T05:59:10Z RECV  [    2.500725][    T1] hub 1-0:1.0: USB hub found
+2026-09-22T05:59:10Z RECV  [    2.505311][    T1] hub 1-0:1.0: 1 port detected
+2026-09-22T05:59:10Z RECV  [    2.510198][    T1] usbcore: registered new interface driver xpad
+2026-09-22T05:59:10Z RECV  [    2.516882][    T1] rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: registered as rtc0
+2026-09-22T05:59:10Z RECV  [    2.524425][    T1] rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: setting system clock to 1970-09-16T17:53:52 UTC (22355632)
+2026-09-22T05:59:10Z RECV  [    2.535510][    T1] i2c_dev: i2c /dev entries driver
+2026-09-22T05:59:10Z RECV  [    2.540679][    T1] usbcore: registered new interface driver uvcvideo
+2026-09-22T05:59:10Z RECV  [    2.550783][    T1] device-mapper: uevent: version 1.0.3
+2026-09-22T05:59:10Z RECV  [    2.556353][    T1] device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+2026-09-22T05:59:10Z RECV  [    2.566797][    T1] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+2026-09-22T05:59:10Z RECV  [    2.574199][    T1] clocksource: arch_mmio_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+2026-09-22T05:59:10Z RECV  [    2.586073][    T1] arch-timer-mmio 17420000.timer: mmio timer running at 19.20MHz (virt)
+2026-09-22T05:59:10Z RECV  [    2.594537][    T1] hid: raw HID events driver (C) Jiri Kosina
+2026-09-22T05:59:10Z RECV  [    2.601183][    T1] usbcore: registered new interface driver usbhid
+2026-09-22T05:59:10Z RECV  [    2.607627][    T1] usbhid: USB HID core driver
+2026-09-22T05:59:10Z RECV  [    2.615767][    T1] hw perfevents: enabled with armv9_cortex_a510 PMU driver, 7 (0,8000003f) counters available
+2026-09-22T05:59:10Z RECV  [    2.628422][    T1] hw perfevents: enabled with armv9_cortex_a710 PMU driver, 7 (0,8000003f) counters available
+2026-09-22T05:59:10Z RECV  [    2.640595][    T1] hw perfevents: enabled with armv9_cortex_a715 PMU driver, 7 (0,8000003f) counters available
+2026-09-22T05:59:10Z RECV  [    2.652882][    T1] hw perfevents: enabled with armv9_cortex_x3 PMU driver, 7 (0,8000003f) counters available
+2026-09-22T05:59:10Z RECV  [    2.663201][   T81] watchdog: NMI not fully supported
+2026-09-22T05:59:10Z RECV  [    2.668404][   T81] watchdog: Hard watchdog permanently disabled
+2026-09-22T05:59:10Z RECV  [    2.669618][    T1] gnss: GNSS driver registered with major 507
+2026-09-22T05:59:10Z RECV  [    2.680984][    T1] usbcore: registered new interface driver snd-usb-audio
+2026-09-22T05:59:10Z RECV  [    2.688111][    T1] GACT probability NOT on
+2026-09-22T05:59:10Z RECV  [    2.692426][    T1] Mirror/redirect action on
+2026-09-22T05:59:10Z RECV  [    2.696923][    T1] u32 classifier
+2026-09-22T05:59:10Z RECV  [    2.700429][    T1]     input device check on
+2026-09-22T05:59:10Z RECV  [    2.704914][    T1]     Actions configured
+2026-09-22T05:59:10Z RECV  [    2.709286][    T1] nf_conntrack_irc: The irc conntrack helper is scheduled for removal.
+2026-09-22T05:59:10Z RECV  [    2.709286][    T1] Please contact the netfilter-devel mailing list if you still need this.
+2026-09-22T05:59:10Z RECV  [    2.726144][    T1] The pptp conntrack helper is scheduled for removal.
+2026-09-22T05:59:10Z RECV  [    2.726144][    T1] Please contact the netfilter-devel mailing list if you still need this.
+2026-09-22T05:59:10Z RECV  [    2.741598][    T1] xt_time: kernel timezone is -0000
+2026-09-22T05:59:10Z RECV  [    2.746821][    T1] ipip: IPv4 and MPLS over IPv4 tunneling driver
+2026-09-22T05:59:10Z RECV  [    2.753237][    T1] gre: GRE over IPv4 demultiplexer driver
+2026-09-22T05:59:10Z RECV  [    2.758967][    T1] ip_gre: GRE over IPv4 tunneling driver
+2026-09-22T05:59:10Z RECV  [    2.764709][    T1] IPv4 over IPsec tunneling driver
+2026-09-22T05:59:10Z RECV  [    2.769854][    T1] Initializing XFRM netlink socket
+2026-09-22T05:59:10Z RECV  [    2.774966][    T1] IPsec XFRM device driver
+2026-09-22T05:59:10Z RECV  [    2.779382][    T1] NET: Registered PF_INET6 protocol family
+2026-09-22T05:59:10Z RECV  [    2.788169][    T1] Segment Routing with IPv6
+2026-09-22T05:59:10Z RECV  [    2.792672][    T1] In-situ OAM (IOAM) with IPv6
+2026-09-22T05:59:10Z RECV  [    2.797442][    T1] mip6: Mobile IPv6
+2026-09-22T05:59:10Z RECV  [    2.801319][    T1] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+2026-09-22T05:59:10Z RECV  [    2.808221][    T1] ip6_gre: GRE over IPv6 tunneling driver
+2026-09-22T05:59:10Z RECV  [    2.813995][    T1] NET: Registered PF_PACKET protocol family
+2026-09-22T05:59:10Z RECV  [    2.819912][    T1] PFKEY is deprecated and scheduled to be removed in 2027, please contact the netdev mailing list
+2026-09-22T05:59:10Z RECV  [    2.830626][    T1] NET: Registered PF_KEY protocol family
+2026-09-22T05:59:10Z RECV  [    2.836279][    T1] Bridge firewalling registered
+2026-09-22T05:59:10Z RECV  [    2.841114][    T1] can: controller area network core
+2026-09-22T05:59:10Z RECV  [    2.846319][    T1] NET: Registered PF_CAN protocol family
+2026-09-22T05:59:10Z RECV  [    2.851962][    T1] can: raw protocol
+2026-09-22T05:59:10Z RECV  [    2.855738][    T1] can: broadcast manager protocol
+2026-09-22T05:59:10Z RECV  [    2.860759][    T1] can: netlink gateway - max_hops=1
+2026-09-22T05:59:10Z RECV  [    2.865965][    T1] l2tp_core: L2TP core driver, V2.0
+2026-09-22T05:59:10Z RECV  [    2.871165][    T1] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+2026-09-22T05:59:10Z RECV  [    2.876807][    T1] 8021q: 802.1Q VLAN Support v1.8
+2026-09-22T05:59:10Z RECV  [    2.881830][    T1] tipc: Activated (version 2.0.0)
+2026-09-22T05:59:10Z RECV  [    2.886861][    T1] NET: Registered PF_TIPC protocol family
+2026-09-22T05:59:10Z RECV  [    2.892605][    T1] tipc: Started in single node mode
+2026-09-22T05:59:10Z RECV  [    2.897815][    T1] 9pnet: Installing 9P2000 support
+2026-09-22T05:59:10Z RECV  [    2.902942][    T1] NET: Registered PF_IEEE802154 protocol family
+2026-09-22T05:59:10Z RECV  [    2.910712][    T1] NET: Registered PF_VSOCK protocol family
+2026-09-22T05:59:10Z RECV  [    2.919162][    T1] registered taskstats version 1
+2026-09-22T05:59:10Z RECV  [    2.924224][    T1] Loading compiled-in X.509 certificates
+2026-09-22T05:59:10Z RECV  [    2.930698][  T106] cryptomgr_probe (106) used greatest stack depth: 15288 bytes left
+2026-09-22T05:59:10Z RECV  [    2.930911][    T1] Loaded X.509 cert 'Build time autogenerated kernel key: e9011aa6fa998bcecb0f3f0f2e2e85b797c728c0'
+2026-09-22T05:59:10Z RECV  [    2.951476][    T1] page_owner is disabled
+2026-09-22T05:59:10Z RECV  [    2.955794][    T1] Key type .fscrypt registered
+2026-09-22T05:59:10Z RECV  [    2.960550][    T1] Key type fscrypt-provisioning registered
+2026-09-22T05:59:10Z RECV  [    2.982520][   T76] qcom_scm: convention: smc arm 64
+2026-09-22T05:59:10Z RECV  [    2.984009][    C1] cryptomgr_probe (106): highest shadow stack usage: 144 bytes
+2026-09-22T05:59:10Z RECV  [    2.997107][   T76] qcom-ice 1d88000.crypto: Found QC Inline Crypto Engine (ICE) v4.0.1
+2026-09-22T05:59:10Z RECV  [    2.997556][   T12] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    3.005357][   T76] qcom-ice 1d88000.crypto: QC Hardware Key Manager (HWKM) version v2
+2026-09-22T05:59:10Z RECV  [    3.013738][   T12] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    3.022016][   T76] qcom-ice 1d88000.crypto: A supported HWKM is not present. Supporting raw keys only.
+2026-09-22T05:59:10Z RECV  [    3.030672][   T12] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:10Z RECV  [    3.040652][   T77] vreg_l3f_0p88: Setting 880000-912000uV
+2026-09-22T05:59:10Z RECV  [    3.040763][   T76] arm-smmu 3da0000.iommu: probing hardware configuration...
+2026-09-22T05:59:10Z RECV  [    3.040765][   T76] arm-smmu 3da0000.iommu: SMMUv2 with:
+2026-09-22T05:59:10Z RECV  [    3.040789][   T76] arm-smmu 3da0000.iommu: 	stage 1 translation
+2026-09-22T05:59:10Z RECV  [    3.040790][   T76] arm-smmu 3da0000.iommu: 	coherent table walk
+2026-09-22T05:59:10Z RECV  [    3.040791][   T76] arm-smmu 3da0000.iommu: 	stream matching with 24 register groups
+2026-09-22T05:59:10Z RECV  [    3.040806][   T76] arm-smmu 3da0000.iommu: 	22 context banks (0 stage-2 only)
+2026-09-22T05:59:10Z RECV  [    3.040822][   T76] arm-smmu 3da0000.iommu: 	Supported page sizes: 0x61311000
+2026-09-22T05:59:10Z RECV  [    3.040823][   T76] arm-smmu 3da0000.iommu: 	Stage-1: 48-bit VA -> 36-bit IPA
+2026-09-22T05:59:10Z RECV  [    3.040870][   T76] arm-smmu 3da0000.iommu: 	preserved 0 boot mappings
+2026-09-22T05:59:10Z RECV  [    3.042134][   T76] platform 3d00000.gpu: Adding to iommu group 0
+2026-09-22T05:59:10Z RECV  [    3.042199][   T76] platform 3d6a000.gmu: Adding to iommu group 1
+2026-09-22T05:59:10Z RECV  [    3.043603][   T76] arm-smmu 15000000.iommu: probing hardware configuration...
+2026-09-22T05:59:10Z RECV  [    3.043604][   T76] arm-smmu 15000000.iommu: SMMUv2 with:
+2026-09-22T05:59:10Z RECV  [    3.043615][   T76] arm-smmu 15000000.iommu: 	stage 1 translation
+2026-09-22T05:59:10Z RECV  [    3.043615][   T76] arm-smmu 15000000.iommu: 	coherent table walk
+2026-09-22T05:59:10Z RECV  [    3.043617][   T76] arm-smmu 15000000.iommu: 	stream matching with 105 register groups
+2026-09-22T05:59:10Z RECV  [    3.043624][   T76] arm-smmu 15000000.iommu: 	70 context banks (0 stage-2 only)
+2026-09-22T05:59:10Z RECV  [    3.044293][   T76] arm-smmu 15000000.iommu: 	Supported page sizes: 0x61311000
+2026-09-22T05:59:10Z RECV  [    3.044294][   T76] arm-smmu 15000000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
+2026-09-22T05:59:10Z RECV  [    3.044314][   T76] arm-smmu 15000000.iommu: 	preserved 0 boot mappings
+2026-09-22T05:59:10Z RECV  [    3.045795][   T76] platform 800000.dma-controller: Adding to iommu group 2
+2026-09-22T05:59:10Z RECV  [    3.045832][   T76] platform 8c0000.geniqup: Adding to iommu group 3
+2026-09-22T05:59:10Z RECV  [    3.045868][   T76] platform a00000.dma-controller: Adding to iommu group 4
+2026-09-22T05:59:10Z RECV  [    3.045901][   T76] platform ac0000.geniqup: Adding to iommu group 5
+2026-09-22T05:59:10Z RECV  [    3.045951][   T76] platform 1dc4000.dma-controller: Adding to iommu group 6
+2026-09-22T05:59:10Z RECV  [    3.045990][   T76] platform 1dfa000.crypto: Adding to iommu group 6
+2026-09-22T05:59:10Z RECV  [    3.046019][   T76] platform 1d84000.ufshc: Adding to iommu group 7
+2026-09-22T05:59:10Z RECV  [    3.046057][   T76] platform 8804000.mmc: Adding to iommu group 8
+2026-09-22T05:59:10Z RECV  [    3.046108][   T76] platform aa00000.video-codec: Adding to iommu group 9
+2026-09-22T05:59:10Z RECV  [    3.046143][   T76] platform acb7000.isp: Adding to iommu group 10
+2026-09-22T05:59:10Z RECV  [    3.046177][   T76] platform ae00000.display-subsystem: Adding to iommu group 11
+2026-09-22T05:59:10Z RECV  [    3.046212][   T76] platform a600000.usb: Adding to iommu group 12
+2026-09-22T05:59:10Z RECV  [    3.048073][   T12] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:10Z RECV  [    3.048087][   T12] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:10Z RECV  [    3.053753][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.302469][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.310785][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.318958][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8135200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.331552][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.339872][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.351865][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8002100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.364465][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.372784][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.382503][   T76] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+2026-09-22T05:59:10Z RECV  [    3.385200][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.393515][   T76] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:10Z RECV  [    3.406059][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.419709][   T76] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+2026-09-22T05:59:10Z RECV  [    3.427999][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.440659][   T90] sdhci_msm 8804000.mmc: Got CD GPIO
+2026-09-22T05:59:10Z RECV  [    3.448095][   T76] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+2026-09-22T05:59:10Z RECV  [    3.452081][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8002100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452090][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452096][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.452116][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80d3d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452122][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452127][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.452144][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80e7400, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452148][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452153][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.452169][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80f7200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452174][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452179][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.452195][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8108200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452199][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452204][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.452219][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8117600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+2026-09-22T05:59:10Z RECV  [    3.452223][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+2026-09-22T05:59:10Z RECV  [    3.452228][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+2026-09-22T05:59:10Z RECV  [    3.643407][   T76] ------------[ cut here ]------------
+2026-09-22T05:59:10Z RECV  [    3.648874][   T76] disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
+2026-09-22T05:59:10Z RECV  [    3.648890][   T76] WARNING: ../linux-src-gts9wifi/drivers/clk/qcom/clk-rcg2.c:136 at update_config+0xdc/0xf0, CPU#7: kworker/u32:3/76
+2026-09-22T05:59:10Z RECV  [    3.669064][   T76] Modules linked in:
+2026-09-22T05:59:10Z RECV  [    3.672915][   T76] CPU: 7 UID: 0 PID: 76 Comm: kworker/u32:3 Tainted: G S                  7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-22T05:59:10Z RECV  [    3.684778][   T76] Tainted: [S]=CPU_OUT_OF_SPEC
+2026-09-22T05:59:10Z RECV  [    3.689522][   T76] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+2026-09-22T05:59:10Z RECV  [    3.695957][   T76] Workqueue: events_unbound deferred_probe_work_func
+2026-09-22T05:59:10Z RECV  [    3.702664][   T76] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+2026-09-22T05:59:10Z RECV  [    3.710526][   T76] pc : update_config+0xdc/0xf0
+2026-09-22T05:59:10Z RECV  [    3.715271][   T76] lr : update_config+0xd8/0xf0
+2026-09-22T05:59:10Z RECV  [    3.720014][   T76] sp : ffffffc0839d3990
+2026-09-22T05:59:10Z RECV  [    3.724128][   T76] x29: ffffffc0839d39a0 x28: 0000000061c88647 x27: ffffff880f65fe00
+2026-09-22T05:59:10Z RECV  [    3.732159][   T76] x26: ffffffc082ecd000 x25: ffffffc082ecd000 x24: ffffff880cd93010
+2026-09-22T05:59:10Z RECV  [    3.740189][   T76] x23: ffffffc0821eae42 x22: ffffffc081c54e38 x21: 0000000000000001
+2026-09-22T05:59:10Z RECV  [    3.748223][   T76] x20: ffffffc0821eae42 x19: ffffffc082d6c658 x18: ffffffc08395d0a0
+2026-09-22T05:59:10Z RECV  [    3.756254][   T76] x17: 0000000000000000 x16: 00000000000003c4 x15: 0000000000000100
+2026-09-22T05:59:10Z RECV  [    3.764285][   T76] x14: ffffffc082bda068 x13: 0000000000000120 x12: 0000000000000100
+2026-09-22T05:59:10Z RECV  [    3.772318][   T76] x11: 00000000000000c0 x10: 5203d24596a34233 x9 : 770cd97832f28500
+2026-09-22T05:59:10Z RECV  [    3.780349][   T76] x8 : 770cd97832f28500 x7 : 0000000000000000 x6 : 0000000000000007
+2026-09-22T05:59:10Z RECV  [    3.788382][   T76] x5 : 0000000000000001 x4 : 00000000d97d78dc x3 : 0000000000000000
+2026-09-22T05:59:10Z RECV  [    3.796416][   T76] x2 : 0000000000000004 x1 : ffffff880d435280 x0 : 00000000fffffff0
+2026-09-22T05:59:10Z RECV  [    3.804450][   T76] Call trace:
+2026-09-22T05:59:10Z RECV  [    3.807682][   T76]  update_config+0xdc/0xf0 (P)
+2026-09-22T05:59:10Z RECV  [    3.812429][   T76]  clk_rcg2_shared_init+0x58/0x90
+2026-09-22T05:59:10Z RECV  [    3.817440][   T76]  __clk_register+0x418/0xacc
+2026-09-22T05:59:10Z RECV  [    3.822095][   T76]  devm_clk_hw_register+0x7c/0xc8
+2026-09-22T05:59:10Z RECV  [    3.827108][   T76]  devm_clk_register_regmap+0x58/0x6c
+2026-09-22T05:59:10Z RECV  [    3.832470][   T76]  qcom_cc_really_probe+0x334/0x3dc
+2026-09-22T05:59:10Z RECV  [    3.837661][   T76]  disp_cc_sm8550_probe+0x1d4/0x204
+2026-09-22T05:59:10Z RECV  [    3.842843][   T76]  platform_probe+0x60/0xa4
+2026-09-22T05:59:10Z RECV  [    3.847316][   T76]  really_probe+0x14c/0x2f0
+2026-09-22T05:59:10Z RECV  [    3.851788][   T76]  __driver_probe_device+0xd4/0x134
+2026-09-22T05:59:10Z RECV  [    3.856971][   T76]  driver_probe_device+0x48/0x218
+2026-09-22T05:59:10Z RECV  [    3.861985][   T76]  __device_attach_driver+0x144/0x194
+2026-09-22T05:59:10Z RECV  [    3.867354][   T76]  bus_for_each_drv+0xf8/0x154
+2026-09-22T05:59:10Z RECV  [    3.872096][   T76]  __device_attach+0x104/0x194
+2026-09-22T05:59:10Z RECV  [    3.876837][   T76]  device_initial_probe+0x3c/0x5c
+2026-09-22T05:59:10Z RECV  [    3.881850][   T76]  bus_probe_device+0x90/0x100
+2026-09-22T05:59:10Z RECV  [    3.886596][   T76]  deferred_probe_work_func+0x80/0xe0
+2026-09-22T05:59:10Z RECV  [    3.891958][   T76]  process_scheduled_works+0x18c/0x4d0
+2026-09-22T05:59:10Z RECV  [    3.897410][   T76]  worker_thread+0x1f8/0x2e8
+2026-09-22T05:59:10Z RECV  [    3.901978][   T76]  kthread+0x108/0x134
+2026-09-22T05:59:10Z RECV  [    3.906007][   T76]  ret_from_fork+0x10/0x20
+2026-09-22T05:59:10Z RECV  [    3.910396][   T76] ---[ end trace 0000000000000000 ]---
+2026-09-22T05:59:10Z RECV  [    3.917337][   T76] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:10Z RECV  [    3.931501][   T90] mmc1: SDHCI controller on 8804000.mmc [8804000.mmc] using ADMA 64-bit
+2026-09-22T05:59:10Z RECV  [    3.934785][   T76] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+2026-09-22T05:59:10Z RECV  [    3.953586][   T76] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+2026-09-22T05:59:10Z RECV  [    3.968013][   T76] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 168, base_baud = 0) is a MSM
+2026-09-22T05:59:10Z RECV  [    3.978342][   T76] serial serial0: tty port ttyHS1 registered
+2026-09-22T05:59:10Z RECV  [    3.987801][   T76] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T05:59:10Z RECV  [    4.004304][   T76] ptn3222 8-004f: repeater redriver: 10 override cells
+2026-09-22T05:59:10Z RECV  [    4.012125][   T76] a9c000.serial: ttyMSM0 at MMIO 0xa9c000 (irq = 175, base_baud = 0) is a MSM
+2026-09-22T05:59:10Z RECV  [    4.079253][   T63] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T05:59:10Z RECV  [    4.089217][   T76] printk: legacy console [ttyMSM0] enabled
+2026-09-22T05:59:10Z RECV  [    4.100847][   T76] printk: legacy bootconsole [qcom_geni0] disabled
+2026-09-22T05:59:10Z RECV  [    4.118958][   T76] adreno 3d00000.gpu: supply vdd not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    4.126845][   T76] adreno 3d00000.gpu: supply vddcx not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    4.142140][   T76] platform 3d6a000.gmu: [drm:a6xx_gmu_acd_probe] *ERROR* Unable to send ACD state to AOSS
+2026-09-22T05:59:10Z RECV  [    4.152203][   T76] ------------[ cut here ]------------
+2026-09-22T05:59:10Z RECV  [    4.157670][   T76] Unable to drop a managed device link reference
+2026-09-22T05:59:10Z RECV  [    4.164032][   T63] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T05:59:10Z RECV  [    4.171919][   T76] WARNING: ../linux-src-gts9wifi/drivers/base/core.c:1020 at device_link_put_kref+0x38/0x108, CPU#7: kworker/u32:3/76
+2026-09-22T05:59:10Z RECV  [    4.184412][   T76] Modules linked in:
+2026-09-22T05:59:10Z RECV  [    4.188278][   T76] CPU: 7 UID: 0 PID: 76 Comm: kworker/u32:3 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-22T05:59:10Z RECV  [    4.200143][   T76] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+2026-09-22T05:59:10Z RECV  [    4.205784][   T76] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+2026-09-22T05:59:10Z RECV  [    4.212223][   T76] Workqueue: events_unbound deferred_probe_work_func
+2026-09-22T05:59:10Z RECV  [    4.218932][   T76] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+2026-09-22T05:59:10Z RECV  [    4.223571][   T39] mmc1: new UHS-I speed SDR104 SDXC card at address aaaa
+2026-09-22T05:59:10Z RECV  [    4.226788][   T76] pc : device_link_put_kref+0x38/0x108
+2026-09-22T05:59:10Z RECV  [    4.226790][   T76] lr : device_link_put_kref+0x38/0x108
+2026-09-22T05:59:10Z RECV  [    4.226793][   T76] sp : ffffffc0839d3910
+2026-09-22T05:59:10Z RECV  [    4.226793][   T76] x29: ffffffc0839d3910 x28: ffffffc081c9bec8 x27: ffffffc081c9e838
+2026-09-22T05:59:10Z RECV  [    4.226795][   T76] x26: ffffffc081c9e838 x25: ffffff880c68da80 x24: 000000000000000a
+2026-09-22T05:59:10Z RECV  [    4.226797][   T76] x23: ffffff880caab800 x22: 00000000ffffffea x21: ffffff880cd94800
+2026-09-22T05:59:10Z RECV  [    4.226798][   T76] x20: ffffffc082ed5480 x19: ffffff880cd94800 x18: ffffffc08395d0a8
+2026-09-22T05:59:10Z RECV  [    4.281052][   T76] x17: ffffffc081538570 x16: 0000000000000008 x15: 0000000000000100
+2026-09-22T05:59:10Z RECV  [    4.289093][   T76] x14: ffffffc082bda068 x13: 0000000000000120 x12: 0000000000000100
+2026-09-22T05:59:10Z RECV  [    4.297133][   T76] x11: 00000000000000c0 x10: 5203d24596a34233 x9 : 770cd97832f28500
+2026-09-22T05:59:10Z RECV  [    4.305173][   T76] x8 : 770cd97832f28500 x7 : 0720072007200720 x6 : 0720072007200720
+2026-09-22T05:59:10Z RECV  [    4.313211][   T76] x5 : 0000000000000001 x4 : 00000000f8aa39c9 x3 : 0000000000000000
+2026-09-22T05:59:10Z RECV  [    4.321254][   T76] x2 : 0000000000000004 x1 : ffffff880d435280 x0 : ffffff8a727f4a88
+2026-09-22T05:59:10Z RECV  [    4.329293][   T76] Call trace:
+2026-09-22T05:59:10Z RECV  [    4.332530][   T76]  device_link_put_kref+0x38/0x108 (P)
+2026-09-22T05:59:10Z RECV  [    4.337987][   T76]  device_link_del+0x30/0x4c
+2026-09-22T05:59:10Z RECV  [    4.342560][   T76]  a6xx_gmu_init+0x5e8/0x63c
+2026-09-22T05:59:10Z RECV  [    4.347134][   T76]  a6xx_gpu_init+0x4b4/0x5dc
+2026-09-22T05:59:10Z RECV  [    4.351706][   T76]  adreno_bind+0x160/0x1dc
+2026-09-22T05:59:10Z RECV  [    4.356095][   T76]  msm_drm_init+0xf8/0x1b0
+2026-09-22T05:59:10Z RECV  [    4.360489][   T76]  msm_gpu_probe+0x64/0x80
+2026-09-22T05:59:10Z RECV  [    4.364879][   T76]  adreno_probe+0x44/0x6c
+2026-09-22T05:59:10Z RECV  [    4.369178][   T76]  platform_probe+0x60/0xa4
+2026-09-22T05:59:10Z RECV  [    4.373657][   T76]  really_probe+0x14c/0x2f0
+2026-09-22T05:59:10Z RECV  [    4.378137][   T76]  __driver_probe_device+0xd4/0x134
+2026-09-22T05:59:10Z RECV  [    4.383336][   T76]  driver_probe_device+0x48/0x218
+2026-09-22T05:59:10Z RECV  [    4.388354][   T76]  __device_attach_driver+0x144/0x194
+2026-09-22T05:59:10Z RECV  [    4.393721][   T76]  bus_for_each_drv+0xf8/0x154
+2026-09-22T05:59:10Z RECV  [    4.398474][   T76]  __device_attach+0x104/0x194
+2026-09-22T05:59:10Z RECV  [    4.403225][   T76]  device_initial_probe+0x3c/0x5c
+2026-09-22T05:59:10Z RECV  [    4.408244][   T76]  bus_probe_device+0x90/0x100
+2026-09-22T05:59:10Z RECV  [    4.412996][   T76]  deferred_probe_work_func+0x80/0xe0
+2026-09-22T05:59:10Z RECV  [    4.418363][   T76]  process_scheduled_works+0x18c/0x4d0
+2026-09-22T05:59:10Z RECV  [    4.423823][   T76]  worker_thread+0x1f8/0x2e8
+2026-09-22T05:59:10Z RECV  [    4.428396][   T76]  kthread+0x108/0x134
+2026-09-22T05:59:10Z RECV  [    4.432430][   T76]  ret_from_fork+0x10/0x20
+2026-09-22T05:59:10Z RECV  [    4.436823][   T76] ---[ end trace 0000000000000000 ]---
+2026-09-22T05:59:10Z RECV  [    4.442997][   T39] mmcblk1: mmc1:aaaa SL64G 59.5 GiB
+2026-09-22T05:59:10Z RECV  [    4.444372][  T137] irq/30-arm-smmu (137) used greatest stack depth: 14832 bytes left
+2026-09-22T05:59:10Z RECV  [    4.462460][   T39]  mmcblk1: p1
+2026-09-22T05:59:10Z RECV  [    4.520456][   T76] adreno 3d00000.gpu: failed to load adreno gpu
+2026-09-22T05:59:10Z RECV  [    4.526766][   T76] adreno 3d00000.gpu: probe with driver adreno failed with error -22
+2026-09-22T05:59:10Z RECV  [    4.560489][   T76] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:10Z RECV  [    4.575407][   T76] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:10Z RECV  [    4.589792][   T76] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-22T05:59:10Z RECV  [    4.603542][   T76] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+2026-09-22T05:59:10Z RECV  [    4.617960][   T76] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:10Z RECV  [    4.639436][   T76] ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+2026-09-22T05:59:10Z RECV  [    4.640336][   T12] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    4.647327][   T76] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find vccq2-supply regulator, assuming enabled
+2026-09-22T05:59:10Z RECV  [    4.655647][   T12] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    4.675937][   T12] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:10Z RECV  [    4.682289][   T76] scsi host0: ufshcd
+2026-09-22T05:59:10Z RECV  [    4.683812][   T12] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:10Z RECV  [    4.696610][   T12] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:10Z RECV  [    4.726060][   T76] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-22T05:59:10Z RECV  [    4.727892][   T75] scsi 0:0:0:49488: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.739833][   T76] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-22T05:59:10Z RECV  [    4.763103][   T76] panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+2026-09-22T05:59:10Z RECV  [    4.763404][   T75] scsi 0:0:0:49476: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.772787][   T76] msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-22T05:59:10Z RECV  [    4.783900][   T75] scsi 0:0:0:49456: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.792025][   T76] [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+2026-09-22T05:59:10Z RECV  [    4.801727][   T75] scsi 0:0:0:0: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.816286][   T76] [drm] Initialized msm-kms 1.13.0 for ae01000.display-controller on minor 0
+2026-09-22T05:59:10Z RECV  [    4.817553][   T75] scsi 0:0:0:1: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.817586][   T90] sd 0:0:0:0: [sda] 62275584 4096-byte logical blocks: (255 GB/238 GiB)
+2026-09-22T05:59:10Z RECV  [    4.817633][   T90] sd 0:0:0:0: [sda] Write Protect is off
+2026-09-22T05:59:10Z RECV  [    4.817634][   T90] sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
+2026-09-22T05:59:10Z RECV  [    4.817723][   T90] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.817771][   T90] sd 0:0:0:0: [sda] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.817772][   T90] sd 0:0:0:0: [sda] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.825146][   T76] msm_dpu ae01000.display-controller: no GPU device was found
+2026-09-22T05:59:10Z RECV  [    4.836019][   T75] scsi 0:0:0:2: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.836490][   T12] sd 0:0:0:1: [sdb] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+2026-09-22T05:59:10Z RECV  [    4.836542][   T12] sd 0:0:0:1: [sdb] Write Protect is on
+2026-09-22T05:59:10Z RECV  [    4.836543][   T12] sd 0:0:0:1: [sdb] Mode Sense: 00 32 00 90
+2026-09-22T05:59:10Z RECV  [    4.836638][   T12] sd 0:0:0:1: [sdb] Write cache: disabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.836685][   T12] sd 0:0:0:1: [sdb] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.836686][   T12] sd 0:0:0:1: [sdb] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.941446][   T75] scsi 0:0:0:3: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.941908][   T90]  sda: sda1 sda2 sda3 sda4 sda5 sda6 sda7 sda8 sda9 sda10 sda11 sda12 sda13 sda14 sda15 sda16 sda17 sda18 sda19 sda20 sda21 sda22 sda23 sda24 sda25 sda26 sda27 sda28 sda29 sda30 sda31 sda32 sda33 sda34
+2026-09-22T05:59:10Z RECV  [    4.942160][  T117] sd 0:0:0:2: [sdc] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+2026-09-22T05:59:10Z RECV  [    4.942353][  T117] sd 0:0:0:2: [sdc] Write Protect is off
+2026-09-22T05:59:10Z RECV  [    4.942356][  T117] sd 0:0:0:2: [sdc] Mode Sense: 00 32 00 10
+2026-09-22T05:59:10Z RECV  [    4.942770][  T117] sd 0:0:0:2: [sdc] Write cache: disabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.942999][  T117] sd 0:0:0:2: [sdc] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.943002][  T117] sd 0:0:0:2: [sdc] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.943052][   T75] scsi 0:0:0:4: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.943719][   T77] sd 0:0:0:3: [sdd] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+2026-09-22T05:59:10Z RECV  [    4.943824][   T77] sd 0:0:0:3: [sdd] Write Protect is off
+2026-09-22T05:59:10Z RECV  [    4.943831][   T77] sd 0:0:0:3: [sdd] Mode Sense: 00 32 00 10
+2026-09-22T05:59:10Z RECV  [    4.944236][   T75] scsi 0:0:0:5: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-22T05:59:10Z RECV  [    4.944428][   T77] sd 0:0:0:3: [sdd] Write cache: enabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.944728][   T77] sd 0:0:0:3: [sdd] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.944735][   T77] sd 0:0:0:3: [sdd] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.944987][  T112] sd 0:0:0:4: [sde] 163840 4096-byte logical blocks: (671 MB/640 MiB)
+2026-09-22T05:59:10Z RECV  [    4.945271][  T112] sd 0:0:0:4: [sde] Write Protect is on
+2026-09-22T05:59:10Z RECV  [    4.945279][  T112] sd 0:0:0:4: [sde] Mode Sense: 00 32 00 90
+2026-09-22T05:59:10Z RECV  [    4.945280][  T165] sd 0:0:0:5: [sdf] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+2026-09-22T05:59:10Z RECV  [    4.945327][  T165] sd 0:0:0:5: [sdf] Write Protect is off
+2026-09-22T05:59:10Z RECV  [    4.945328][  T165] sd 0:0:0:5: [sdf] Mode Sense: 00 32 00 10
+2026-09-22T05:59:10Z RECV  [    4.946535][   T90] sd 0:0:0:0: [sda] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    4.947068][  T112] sd 0:0:0:4: [sde] Write cache: disabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.947088][  T165] sd 0:0:0:5: [sdf] Write cache: enabled, read cache: enabled, supports DPO and FUA
+2026-09-22T05:59:10Z RECV  [    4.947148][  T165] sd 0:0:0:5: [sdf] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.947149][  T165] sd 0:0:0:5: [sdf] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.947198][  T112] sd 0:0:0:4: [sde] Preferred minimum I/O size 4096 bytes
+2026-09-22T05:59:10Z RECV  [    4.947204][  T112] sd 0:0:0:4: [sde] Optimal transfer size 524288 bytes
+2026-09-22T05:59:10Z RECV  [    4.949757][   T12]  sdb: sdb1 sdb2 sdb3 sdb4
+2026-09-22T05:59:10Z RECV  [    4.949859][   T12] sd 0:0:0:1: [sdb] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    4.980748][  T117]  sdc: sdc1 sdc2 sdc3
+2026-09-22T05:59:10Z RECV  [    4.980845][  T165]  sdf: sdf1 sdf2
+2026-09-22T05:59:10Z RECV  [    4.980866][  T117] sd 0:0:0:2: [sdc] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    4.980907][  T165] sd 0:0:0:5: [sdf] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    4.981036][  T112]  sde: sde1 sde2 sde3 sde4 sde5 sde6 sde7 sde8 sde9 sde10 sde11 sde12 sde13 sde14 sde15 sde16 sde17 sde18 sde19 sde20 sde21 sde22 sde23 sde24 sde25 sde26 sde27 sde28 sde29 sde30 sde31 sde32 sde33 sde34 sde35 sde36 sde37 sde38
+2026-09-22T05:59:10Z RECV  [    4.981131][   T77]  sdd: sdd1 sdd2 sdd3 sdd4
+2026-09-22T05:59:10Z RECV  [    4.981510][   T77] sd 0:0:0:3: [sdd] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    4.982029][  T112] sd 0:0:0:4: [sde] Attached SCSI disk
+2026-09-22T05:59:10Z RECV  [    5.080049][   T76] msm_dsi_host_cmd_rx:Invalid response cmd
+2026-09-22T05:59:10Z RECV  [    5.082834][   T76] msm_dsi_host_cmd_rx:Invalid response cmd
+2026-09-22T05:59:10Z RECV  [    5.085612][   T76] msm_dsi_host_cmd_rx:Invalid response cmd
+2026-09-22T05:59:10Z RECV  [    5.085626][   T76] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-22T05:59:10Z RECV  [    5.087345][   T76] msm_dsi_host_cmd_rx:Invalid response cmd
+2026-09-22T05:59:10Z RECV  [    5.087906][   T76] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-22T05:59:10Z RECV  [    5.137917][   T76] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-22T05:59:10Z RECV  [    5.161436][   T76] fb0: sys_imageblit: framebuffer is not in virtual address space.
+2026-09-22T05:59:10Z RECV  [    5.183558][   T76] Console: switching to colour frame buffer device 320x100
+2026-09-22T05:59:10Z RECV  [    5.185401][   T63] samsung-pogo-keyboard 5-002a: bootloader version exchange failed: -110
+2026-09-22T05:59:10Z RECV  [    5.597181][   T76] msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+2026-09-22T05:59:10Z RECV  [    5.619499][   T76] ptn3222 8-004f: applied 5 register overrides
+2026-09-22T05:59:10Z RECV  [    5.657395][    T1] input: gpio-keys as /devices/platform/gpio-keys/input/input1
+2026-09-22T05:59:10Z RECV  [    5.657608][   T77] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    5.665736][    T1] clk: Not disabling unused clocks
+2026-09-22T05:59:10Z RECV  [    5.673418][   T77] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    5.678439][    T1] PM: genpd: Not disabling unused power domains
+2026-09-22T05:59:10Z RECV  [    5.678457][    T1] ALSA device list:
+2026-09-22T05:59:10Z RECV  [    5.687348][   T77] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:10Z RECV  [    5.693466][    T1]   No soundcards found.
+2026-09-22T05:59:10Z RECV  [    5.709584][   T77] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:10Z RECV  [    5.718587][   T77] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:10Z RECV  [    5.736684][    T1] Freeing unused kernel memory: 1472K
+2026-09-22T05:59:10Z RECV  [    5.736919][   T77] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    5.742114][    T1] Run /init as init process
+2026-09-22T05:59:10Z RECV  [    5.750407][   T77] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:10Z RECV  [    5.754862][    T1]   with arguments:
+2026-09-22T05:59:10Z RECV  [    5.763653][   T77] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:11Z RECV  [    5.767385][    T1]     /init
+2026-09-22T05:59:11Z RECV  [    5.775253][   T77] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:11Z RECV  [    5.778306][    T1]   with environment:
+2026-09-22T05:59:11Z RECV  [    5.787239][   T77] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:11Z RECV  [    5.791182][    T1]     HOME=/
+2026-09-22T05:59:11Z RECV  [    5.803337][    T1]     TERM=linux
+2026-09-22T05:59:11Z RECV  [    5.806861][    T1]     gts9_display_recover=1
+2026-09-22T05:59:11Z RECV  [    5.811439][    T1]     gts9_usb_gadget=both
+2026-09-22T05:59:11Z RECV  [    5.815842][    T1]     gts9_proof_code=1800
+2026-09-22T05:59:11Z RECV  [    5.820561][    T1] fb0: sys_fillrect: framebuffer is not in virtual address space.
+2026-09-22T05:59:11Z RECV  [    5.828931][    T1]     gts9_proof_action=recovery-bcb
+2026-09-22T05:59:11Z RECV  [    5.834534][    T1]     sapa=0
+2026-09-22T05:59:11Z RECV  [    5.839473][  T175] mkdir (175) used greatest stack depth: 13904 bytes left
+2026-09-22T05:59:11Z RECV  [    5.848237][  T176] mount (176) used greatest stack depth: 13008 bytes left
+2026-09-22T05:59:11Z RECV  [    5.857279][    T1] gts9-init: mounted devtmpfs on /dev
+2026-09-22T05:59:11Z RECV  [    5.865339][    T1] gts9-init: mounted tmpfs on /tmp
+2026-09-22T05:59:11Z RECV  [    5.872752][  T184] mount (184) used greatest stack depth: 12896 bytes left
+2026-09-22T05:59:11Z RECV  [    5.880546][    T1] gts9-init: mounted tmpfs on /run
+2026-09-22T05:59:11Z RECV  [    5.888888][    T1] gts9-init: mounted debugfs on /sys/kernel/debug
+2026-09-22T05:59:11Z RECV  [    5.903996][    C5] mount (176): highest shadow stack usage: 216 bytes
+2026-09-22T05:59:11Z RECV  [    5.904019][    C1] mkdir (175): highest shadow stack usage: 264 bytes
+2026-09-22T05:59:11Z RECV  [    5.925682][    T1] gts9-init: display: framebuffer cycle for first-enable zero ID
+2026-09-22T05:59:11Z RECV  [    6.135924][  T192] sh (192) used greatest stack depth: 11760 bytes left
+2026-09-22T05:59:11Z RECV  [    6.144846][  T196] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-22T05:59:11Z RECV  [    6.183995][    C2] sh (192): highest shadow stack usage: 432 bytes
+2026-09-22T05:59:11Z RECV  [    6.273504][   T63] samsung-pogo-keyboard 5-002a: bootloader GO command refused
+2026-09-22T05:59:11Z RECV  [    6.310462][  T196] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-22T05:59:11Z RECV  [    6.315409][  T196] panel-samsung-ana38407 ae94000.dsi.0: ana38407 cell id: cb1405150d17120bee0c8c
+2026-09-22T05:59:11Z RECV  [    6.501275][  T196] sh (196) used greatest stack depth: 11488 bytes left
+2026-09-22T05:59:11Z RECV  [    6.512040][    T1] gts9-init: display: cycle 1 recovered panel ID 80 00 04
+2026-09-22T05:59:11Z RECV  [    6.520431][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.527052][    T1] gts9-init: ========================================
+2026-09-22T05:59:11Z RECV  [    6.537969][    T1] gts9-init: GTS9 MAINLINE INITRAMFS REACHED
+2026-09-22T05:59:11Z RECV  [    6.547398][    T1] gts9-init: ========================================
+2026-09-22T05:59:11Z RECV  [    6.559750][    T1] gts9-init: initramfs userspace is running: BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) multi-call binary.
+2026-09-22T05:59:11Z RECV  [    6.577699][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.583821][    T1] gts9-init: --- uname -a ---
+2026-09-22T05:59:11Z RECV  [    6.590680][    T1] gts9-init: Linux (none) 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+2026-09-22T05:59:11Z RECV  [    6.608883][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.615412][    T1] gts9-init: --- /proc/cmdline ---
+2026-09-22T05:59:11Z RECV  [    6.615991][    C5] sh (196): highest shadow stack usage: 448 bytes
+2026-09-22T05:59:11Z RECV  [    6.629110][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.638630][    T1] gts9-init: --- device tree model ---
+2026-09-22T05:59:11Z RECV  [    6.650502][    T1] gts9-init: Samsung Galaxy Tab S9 Wi-Fi
+2026-09-22T05:59:11Z RECV  [    6.661871][    T1] gts9-init: compatible: qcom,kalama-mtp qcom,kalama qcom,mtp samsung,gts9wifi qcom,sm8550
+2026-09-22T05:59:11Z RECV  [    6.676957][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.687033][    T1] gts9-init: --- /proc/partitions ---
+2026-09-22T05:59:11Z RECV  [    6.941273][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    6.946991][    T1] gts9-init: --- /sys/class/block ---
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] gts9-init: loop0
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop1
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop10
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop11
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop12
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop13
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop14
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop15
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop16
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop17
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop18
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop19
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop2
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop20
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop21
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop22
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop23
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop24
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop25
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop26
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop27
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop28
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop29
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop3
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop30
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop31
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop32
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop33
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop34
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop35
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop36
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop37
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop38
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop39
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop4
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop40
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop41
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop42
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop43
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop44
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop45
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop46
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop47
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop5
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop6
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop7
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop8
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] loop9
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] mmcblk1
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] mmcblk1p1
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram0
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram1
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram10
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram11
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram12
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram13
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram14
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram15
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram2
+2026-09-22T05:59:11Z RECV  [    6.962087][    T1] ram3
+2026-09-22T05:59:11Z RECV  [    7.169534][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    7.176358][    T1] gts9-init: --- /sys/fs/pstore ---
+2026-09-22T05:59:11Z RECV  [    7.187662][    T1] gts9-init: pstore is present and empty
+2026-09-22T05:59:11Z RECV  [    7.198443][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    7.207570][    T1] gts9-init: --- uptime ---
+2026-09-22T05:59:11Z RECV  [    7.219074][    T1] gts9-init: 6.89 46.93
+2026-09-22T05:59:11Z RECV  [    7.236449][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    7.242494][    T1] gts9-init: dropping to an interactive shell; nothing was written to any block device
+2026-09-22T05:59:11Z RECV  [    7.252377][    T1] gts9-init:
+2026-09-22T05:59:11Z RECV  [    7.265250][  T228] Mass Storage Function, version: 2009/09/11
+2026-09-22T05:59:11Z RECV  [    7.273881][  T228] LUN: removable file: (no medium)
+2026-09-22T05:59:11Z RECV  [    7.315281][    T1] gts9-init: USB gadget bound to a600000.usb (mode=both)
+2026-09-22T05:59:11Z RECV  [    7.316406][  T112] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:11Z RECV  [    7.343353][  T112] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:11Z RECV  [    7.357717][  T112] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:11Z RECV  [    7.371395][  T112] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:11Z RECV  [    7.385797][    T1] gts9-init: console helper: gts9-to-recovery will write the BCB to /dev/sda10
+2026-09-22T05:59:11Z RECV  [    7.385908][  T112] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:11Z RECV  [    7.415209][    T1] gts9-init: telemetry code=12 (rtc_dev=0 rtc_written=0 mmc=yes scsi=yes) -> power off in 1860s
+2026-09-22T05:59:11Z RECV  [    7.431836][    T1] gts9-init: userspace proof armed: powering off in 1860s (if=always)
+2026-09-22T05:59:11Z RECV  [    7.460040][   T63] samsung-pogo-keyboard 5-002a: application after GO: -110 (not running)
+2026-09-22T05:59:11Z RECV  [    7.507124][    T1] gts9-init: display: framebuffer unblanked (blank=0)
+2026-09-22T05:59:11Z RECV  [    7.520742][    T1] gts9-init: display: wrote a marker line to /dev/tty0
+2026-09-22T05:59:11Z RECV  [    7.644248][   T63] samsung-pogo-keyboard 5-002a: application after the reset entry: -6 (still not running)
+2026-09-22T05:59:11Z RECV  [    7.654659][   T63] sm8550-tlmm f100000.pinctrl: pin GPIO_72 already requested by 89c000.i2c; cannot claim for 5-002a
+2026-09-22T05:59:11Z RECV  [    7.665938][   T63] sm8550-tlmm f100000.pinctrl: error -EINVAL: pin-72 (5-002a)
+2026-09-22T05:59:11Z RECV  [    7.673595][   T63] sm8550-tlmm f100000.pinctrl: error -EINVAL: could not request pin 72 (GPIO_72) from group gpio72 on device f100000.pinctrl
+2026-09-22T05:59:11Z RECV  [    7.686866][   T63] samsung-pogo-keyboard 5-002a: error -EINVAL: Error applying setting, reverse things back
+2026-09-22T05:59:11Z RECV  [    7.697116][   T63] samsung-pogo-keyboard 5-002a: attempt 0 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    7.718336][  T705] exFAT-fs (mmcblk1): invalid fs_name
+2026-09-22T05:59:11Z RECV  [    7.724511][  T705] exFAT-fs (mmcblk1): failed to read boot sector
+2026-09-22T05:59:11Z RECV  [    7.731995][  T705] exFAT-fs (mmcblk1): failed to recognize exfat type
+2026-09-22T05:59:11Z RECV  [    7.748108][  T718] F2FS-fs (mmcblk1): Magic Mismatch, valid(0xf2f52010) - read(0x0)
+2026-09-22T05:59:11Z RECV  [    7.756956][  T718] F2FS-fs (mmcblk1): Can't find valid F2FS filesystem in 1th superblock
+2026-09-22T05:59:11Z RECV  [    7.770138][  T718] F2FS-fs (mmcblk1): Magic Mismatch, valid(0xf2f52010) - read(0x0)
+2026-09-22T05:59:11Z RECV  [    7.776507][   T63] samsung-pogo-keyboard 5-002a: attempt 1 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    7.778105][  T718] F2FS-fs (mmcblk1): Can't find valid F2FS filesystem in 2th superblock
+2026-09-22T05:59:11Z RECV  [    7.841469][    T1] gts9-init: bring-up report written to /dev/mmcblk1p1 (exfat, removable)
+2026-09-22T05:59:11Z RECV  [    7.853018][   T63] samsung-pogo-keyboard 5-002a: attempt 2 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    7.863907][    T1] gts9-init: mass storage: /dev/mmcblk1p1 exported read-only to the host
+2026-09-22T05:59:11Z RECV  [    7.873124][    T1] gts9-init: handing /dev/ttyGS0 to an interactive shell
+2026-09-22T05:59:11Z RECV  [    7.929388][   T63] samsung-pogo-keyboard 5-002a: attempt 3 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.006040][   T63] samsung-pogo-keyboard 5-002a: attempt 4 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.078124][   T63] samsung-pogo-keyboard 5-002a: attempt 5 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.150851][   T63] samsung-pogo-keyboard 5-002a: attempt 6 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.221922][   T63] samsung-pogo-keyboard 5-002a: attempt 7 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.294935][   T63] samsung-pogo-keyboard 5-002a: attempt 8 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [    8.364174][   T63] samsung-pogo-keyboard 5-002a: attempt 9 failed: scl:-1 sda:-1 conn:0
+2026-09-22T05:59:11Z RECV  [   10.380913][   T63] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T05:59:11Z RECV  [   10.445756][   T63] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T05:59:11Z RECV  [   17.443661][   T63] platform 6800000.remoteproc: deferred probe pending: platform: wait for supplier /smp2p-adsp/slave-kernel
+2026-09-22T05:59:11Z RECV  [   17.444795][   T76] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-22T05:59:11Z RECV  [   17.455283][   T63] platform 81d00000.smem: deferred probe pending: qcom-smem: failed to retrieve hwlock
+2026-09-22T05:59:11Z RECV  [   17.455284][   T63] platform 17d91000.cpufreq: deferred probe pending: qcom-cpufreq-hw: Failed to find icc paths
+2026-09-22T05:59:11Z RECV  [   17.455285][   T63] auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-22T05:59:11Z RECV  [   17.455286][   T63] platform smp2p-adsp: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-22T05:59:11Z RECV  [   17.455287][   T63] platform smp2p-cdsp: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-22T05:59:11Z RECV  [   17.463697][   T76] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-22T05:59:11Z RECV  [   17.473337][   T63] platform smp2p-modem: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-22T05:59:11Z RECV  [   17.473340][   T63] qnoc-sm8550 1500000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-22T05:59:11Z RECV  [   17.542869][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to 1c00000.pcie
+2026-09-22T05:59:11Z RECV  [   17.551363][   T63] qnoc-sm8550 16c0000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-22T05:59:11Z RECV  [   17.560392][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to 1c00000.pcie
+2026-09-22T05:59:11Z RECV  [   17.569604][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to 1dfa000.crypto
+2026-09-22T05:59:11Z RECV  [   17.578285][   T63] qnoc-sm8550 1700000.interconnect: sync_state() pending due to 1dfa000.crypto
+2026-09-22T05:59:11Z RECV  [   17.587500][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to 3d00000.gpu
+2026-09-22T05:59:11Z RECV  [   17.595910][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+2026-09-22T05:59:11Z RECV  [   17.605040][   T63] gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+2026-09-22T05:59:11Z RECV  [   17.614532][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.623658][   T63] qnoc-sm8550 1780000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.633317][   T63] qnoc-sm8550 1600000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.642979][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.652825][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-22T05:59:11Z RECV  [   17.663115][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to acb7000.isp
+2026-09-22T05:59:11Z RECV  [   17.671538][   T63] qnoc-sm8550 1780000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-22T05:59:11Z RECV  [   17.680503][   T63] qnoc-sm8550 1600000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-22T05:59:11Z RECV  [   17.689469][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to acb7000.isp
+2026-09-22T05:59:11Z RECV  [   17.698639][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-22T05:59:11Z RECV  [   17.708974][   T63] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-22T05:59:11Z RECV  [   17.719904][   T63] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-22T05:59:11Z RECV  [   17.730832][   T63] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.741312][   T63] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to 6800000.remoteproc
+2026-09-22T05:59:11Z RECV  [   17.751704][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d90000.interconnect
+2026-09-22T05:59:11Z RECV  [   17.761764][   T63] gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+2026-09-22T05:59:11Z RECV  [   17.771358][   T63] qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-22T05:59:11Z RECV  [   17.779890][   T63] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-22T05:59:11Z RECV  [   17.789048][   T63] qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-22T05:59:11Z RECV  [   17.798120][   T63] qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-22T05:59:11Z RECV  [   17.807896][   T63] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 3d00000.gpu
+2026-09-22T05:59:11Z RECV  [   17.816968][   T63] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-22T05:59:11Z RECV  [   17.826528][   T76] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-22T05:59:11Z RECV  [   17.834809][   T76] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-22T05:59:11Z RECV  [   17.844088][   T76] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-22T05:59:17Z SENT  cat /proc/bus/input/devices; cat /proc/interrupts
+2026-09-22T05:59:17Z RECV  gts9# [6ncat /proc/bus/input/devices; cat /proc/interrupts
+2026-09-22T05:59:17Z RECV  I: Bus=0018 Vendor=04e8 Product=a035 Version=0000
+2026-09-22T05:59:17Z RECV  N: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-22T05:59:17Z RECV  P: Phys=
+2026-09-22T05:59:17Z RECV  S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T05:59:17Z RECV  U: Uniq=
+2026-09-22T05:59:17Z RECV  H: Handlers=sysrq kbd leds event0
+2026-09-22T05:59:17Z RECV  B: PROP=0
+2026-09-22T05:59:17Z RECV  B: EV=120003
+2026-09-22T05:59:17Z RECV  B: KEY=3ffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffbff 8000ffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffe
+2026-09-22T05:59:17Z RECV  B: LED=2
+2026-09-22T05:59:17Z RECV  
+2026-09-22T05:59:17Z RECV  I: Bus=0019 Vendor=0001 Product=0001 Version=0100
+2026-09-22T05:59:17Z RECV  N: Name="gpio-keys"
+2026-09-22T05:59:17Z RECV  P: Phys=gpio-keys/input0
+2026-09-22T05:59:17Z RECV  S: Sysfs=/devices/platform/gpio-keys/input/input1
+2026-09-22T05:59:17Z RECV  U: Uniq=
+2026-09-22T05:59:17Z RECV  H: Handlers=kbd event1
+2026-09-22T05:59:17Z RECV  B: PROP=0
+2026-09-22T05:59:17Z RECV  B: EV=23
+2026-09-22T05:59:17Z RECV  B: KEY=8000000000000 0
+2026-09-22T05:59:17Z RECV  B: SW=1
+2026-09-22T05:59:17Z RECV  
+2026-09-22T05:59:17Z RECV              CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7
+2026-09-22T05:59:17Z RECV    11:       1659       1131        852       1002       1089       1011       1065       1449  GICv3       27 Level     arch_timer
+2026-09-22T05:59:17Z RECV    13:        415          0          0          0          0          0          0          0  GICv3       37 Level     apps_rsc
+2026-09-22T05:59:17Z RECV    16:          0          0          0          0          0          0          0          0  pmic_arb  6431283 Edge      pm8xxx_rtc_alarm
+2026-09-22T05:59:17Z RECV    17:          0          0          0          0          0          0          0          0  GICv3      538 Level     c271000.thermal-sensor
+2026-09-22T05:59:17Z RECV    18:          0          0          0          0          0          0          0          0  GICv3      672 Level     c271000.thermal-sensor
+2026-09-22T05:59:17Z RECV    19:          0          0          0          0          0          0          0          0  GICv3      539 Level     c272000.thermal-sensor
+2026-09-22T05:59:17Z RECV    20:          0          0          0          0          0          0          0          0  GICv3      673 Level     c272000.thermal-sensor
+2026-09-22T05:59:17Z RECV    21:          0          0          0          0          0          0          0          0  GICv3      540 Level     c273000.thermal-sensor
+2026-09-22T05:59:17Z RECV    22:          0          0          0          0          0          0          0          0  GICv3      674 Level     c273000.thermal-sensor
+2026-09-22T05:59:17Z RECV    24:          0          0          0          0          0          0          0          0  GICv3       38 Level     arch_mem_timer
+2026-09-22T05:59:17Z RECV    25:          0          0          0          0          0          0          0          0  GICv3       23 Level     arm-pmu, arm-pmu, arm-pmu, arm-pmu
+2026-09-22T05:59:17Z RECV    27:          0          0          0          0          0          0          0          0  GICv3      962 Edge      qcom-scm
+2026-09-22T05:59:17Z RECV    28:          0          0          0          0          0          0          0          0  GICv3      705 Level     arm-smmu global fault
+2026-09-22T05:59:17Z RECV    54:          0          0          0          0          0          0          0          0  GICv3       97 Level     arm-smmu global fault
+2026-09-22T05:59:17Z RECV    55:          0          0          0          0          0          0          0          0  GICv3      129 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    56:          0          0          0          0          0          0          0          0  GICv3      130 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    57:          0          0          0          0          0          0          0          0  GICv3      131 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    58:          0          0          0          0          0          0          0          0  GICv3      132 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    59:          0          0          0          0          0          0          0          0  GICv3      133 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    60:          0          0          0          0          0          0          0          0  GICv3      134 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    61:          0          0          0          0          0          0          0          0  GICv3      135 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    62:          0          0          0          0          0          0          0          0  GICv3      136 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    63:          0          0          0          0          0          0          0          0  GICv3      137 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    64:       6355          0          0          0          0          0          0          0  GICv3      138 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    65:          0          0          0          0          0          0          0          0  GICv3      139 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV    66:          0          0          0          0          0          0          0          0  GICv3      140 Level     arm-smmu-context-fault
+2026-09-22T05:59:17Z RECV   151:          0          0          0          0          0          0          0          0  GICv3      499 Level     98c000.i2c
+2026-09-22T05:59:17Z RECV   152:          0          0          0          0          0          0          0          0  GICv3      502 Level     998000.i2c
+2026-09-22T05:59:17Z RECV   153:          0          0          0          0          0          0          0          0  GICv3      504 Level     9a0000.i2c
+2026-09-22T05:59:17Z RECV   154:          0          0          0          0          0          0          0          0  GICv3      505 Level     9a4000.i2c
+2026-09-22T05:59:17Z RECV   155:        220          0          0          0          0          0          0          0  GICv3      239 Level     mmc1
+2026-09-22T05:59:17Z RECV   161:          5          0          0          0          0          0          0          0  GICv3      312 Level     gpi-dma
+2026-09-22T05:59:17Z RECV   165:          2          0          0          0          0          0          0          0  GICv3      255 Level     8804000.mmc
+2026-09-22T05:59:17Z RECV   166:          0          0          0          0          0          0          0          0  spmi-gpio   11 Edge      8804000.mmc cd
+2026-09-22T05:59:17Z RECV   167:          0          0          0          0          0          0          0          0  GICv3      618 Level     890000.i2c
+2026-09-22T05:59:17Z RECV   168:          0          0          0          0          0          0          0          0  GICv3      493 Level     qcom_geni_serial_uart1
+2026-09-22T05:59:17Z RECV   169:        318          0          0          0          0          0          0          0  GICv3      494 Level     89c000.i2c
+2026-09-22T05:59:17Z RECV   170:          0          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T05:59:17Z RECV   171:        186          0          0          0          0          0          0          0  msmgpio     62 Edge      pogo-connect
+2026-09-22T05:59:17Z RECV   172:          0          0          0          0          0          0          0          0  GICv3      388 Level     a8c000.i2c
+2026-09-22T05:59:17Z RECV   173:          0          0          0          0          0          0          0          0  GICv3      389 Level     a90000.i2c
+2026-09-22T05:59:17Z RECV   174:         10          0          0          0          0          0          0          0  GICv3      395 Level     a98000.i2c
+2026-09-22T05:59:17Z RECV   175:        149          0          0          0          0          0          0          0  GICv3      611 Level     qcom_geni_serial_uart0
+2026-09-22T05:59:17Z RECV   180:          0          0          0          0          0          0          0          0  PDC         14 Edge      dp_hs_phy_irq
+2026-09-22T05:59:17Z RECV   181:          0          0          0          0          0          0          0          0  PDC         15 Edge      dm_hs_phy_irq
+2026-09-22T05:59:17Z RECV   182:          0          0          0          0          0          0          0          0  PDC         17 Level     ss_phy_irq
+2026-09-22T05:59:17Z RECV   183:        421          0          0          0          0          0          0          0  GICv3      297 Level     ufshcd
+2026-09-22T05:59:17Z RECV   184:       1651          0          0          0          0          0          0          0  msm_mdss     0 Edge      msm-kms
+2026-09-22T05:59:17Z RECV   185:        410          0          0          0          0          0          0          0  msm_mdss     4 Edge      dsi_isr
+2026-09-22T05:59:17Z RECV   186:       1180          0          0          0          0          0          0          0  GICv3      165 Level     dwc3
+2026-09-22T05:59:17Z RECV   187:          0          0          0          0          0          0          0          0  spmi-gpio    5 Edge      Volume Up
+2026-09-22T05:59:17Z RECV   188:          0          0          0          0          0          0          0          0  msmgpio    107 Edge      Book Cover
+2026-09-22T05:59:17Z RECV  IPI0:        161        147        167         90         98         94         97        209  Rescheduling interrupts
+2026-09-22T05:59:17Z RECV  IPI1:        656       1328        523        637        748        941        727       1791  Function call interrupts
+2026-09-22T05:59:17Z RECV  IPI2:          0          0          0          0          0          0          0          0  CPU stop interrupts
+2026-09-22T05:59:17Z RECV  IPI3:          0          0          0          0          0          0          0          0  CPU stop NMIs
+2026-09-22T05:59:17Z RECV  IPI4:          0          0          0          0          0          0          0          0  Timer broadcast interrupts
+2026-09-22T05:59:17Z RECV  IPI5:         13          3          2          9         11          8         11         83  IRQ work interrupts
+2026-09-22T05:59:17Z RECV  IPI6:          0          0          0          0          0          0          0          0  CPU backtrace interrupts
+2026-09-22T05:59:17Z RECV  IPI7:          0          0          0          0          0          0          0          0  KGDB roundup interrupts
+2026-09-22T05:59:17Z RECV   Err:          0
+2026-09-22T05:59:26Z console session done
