@@ -1910,18 +1910,10 @@
 		compatible = "samsung,x710-pogo-keyboard";
 		reg = <0x2a>;
 		interrupt-parent = <&tlmm>;
-		/*
-		 * Level-high, not level-low: the measured line rests low and the
-		 * application pulses it high when it has something to send (tests
-		 * 076 and 082) - the opposite sense to the one stock reports
-		 * (int:1 at rest, ISR on the falling edge).  With a level-low
-		 * interrupt the handler only runs while the line is low, i.e.
-		 * exactly when the application is *not* asking, so every read this
-		 * project has made happened outside the window in which the
-		 * application may be serving its slave.  This is the first test of
-		 * reading during the pulse instead.
+		/* DATA is physically active-low, as in Samsung's 0x2008 IRQ type.
+		 * announce-gpios returns logical 1 when that physical pin is low.
 		 */
-		interrupts = <75 IRQ_TYPE_LEVEL_HIGH>;
+		interrupts = <75 IRQ_TYPE_LEVEL_LOW>;
 		connect-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
 		/*
 		 * The MCU's announce line, claimed as a GPIO as well as used as an
@@ -1957,7 +1949,7 @@
 		 * them, and reads the two IRQ types and its supply from here.
 		 */
 		stm32_vddo-supply = <&vreg_pogo>;
-		stm32,irq_type = <0x2004>;
+		stm32,irq_type = <0x2008>;
 		stm32,irq_conn_type = <0x2003>;
 		stm32,model_name = "EF-DX715", "EF-DX710";
 		stm32,model_name_row = "EF-DT870", "EF-DT630";

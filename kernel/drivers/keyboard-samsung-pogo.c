@@ -53,6 +53,11 @@
 #define POGO_FW_HEADER_L0		0x080000bc
 #define POGO_FW_HEADER_G0		0x080000c0
 
+/* Opt-in experiments must not delay the normal announcement handshake. */
+static bool startup_diagnostics;
+module_param(startup_diagnostics, bool, 0444);
+MODULE_PARM_DESC(startup_diagnostics, "Run intrusive legacy startup diagnostics (default off)");
+
 struct samsung_pogo {
 	struct i2c_client *client;
 	struct i2c_client *boot;
@@ -173,7 +178,7 @@ static void pogo_power_off(struct samsung_pogo *p)
  * could announce anything.  So the rail is enabled once and the announce
  * interrupt stays armed; the connect line is only logged, ratelimited.
  */
-static void pogo_connect_work(struct work_struct *work)
+static void pogo_diagnostic_connect_work(struct work_struct *work)
 {
 	struct samsung_pogo *p = container_of(to_delayed_work(work),
 					     struct samsung_pogo, connect_work);
@@ -192,6 +197,7 @@ static void pogo_connect_work(struct work_struct *work)
 		 */
 		{
 			int last = pogo_announce_level(p);
+			int tried = 0;
 
 			dev_info(&p->client->dev,
 				 "no-action window: announce %d, rail %s, nothing touched for 30000 ms\n",
@@ -206,6 +212,41 @@ static void pogo_connect_work(struct work_struct *work)
 						 "no-action: announce %d -> %d after %u ms\n",
 						 last, now, (i + 1) * 100);
 					last = now;
+				}
+				/*
+				 * The application asks for attention for about
+				 * twenty-five seconds after it starts and then
+				 * stops asking for good: tests 087 and 088 measured
+				 * the same train (~4.5-29 s and ~11.8-33 s) with the
+				 * rail left alone in one and genuinely dropped in
+				 * the other.  No run has ever read the bus while
+				 * that train was running - every read in the project
+				 * happened after it, when the line was already held
+				 * high and silent.  This is that read: it goes to
+				 * 0x2a alone, no pin is written, and the rail stays
+				 * exactly as the bootloader left it.
+				 */
+				if (now && !tried) {
+					u8 hdr[] = { 3, 0, READ_ONCE(p->caps) };
+					int k;
+
+					tried = 1;
+					dev_info(&p->client->dev,
+						 "application is asking (announce rose %u ms into the window); reading 0x2a now, nothing touched\n",
+						 (i + 1) * 100);
+					pogo_scan_bus(p);
+					for (k = 0; k < 3; k++) {
+						ret = pogo_write(p, hdr, sizeof(hdr));
+						if (!ret)
+							ret = pogo_read(p, hdr, sizeof(hdr));
+						dev_info(&p->client->dev,
+							 "read %d inside the announcement: %d%s\n",
+							 k, ret, ret ? "" :
+							 " - the application answered");
+						if (!ret)
+							break;
+						msleep(50);
+					}
 				}
 			}
 			dev_info(&p->client->dev, "no-action window over; announce %d\n",
@@ -231,7 +272,31 @@ static void pogo_connect_work(struct work_struct *work)
 		 * the rail rose, with no host transaction in between.
 		 */
 		gpiod_set_value_cansleep(p->swclk, 0);
-		regulator_disable(p->vdd);
+		/*
+		 * Take a reference before dropping the rail.  Without one the
+		 * regulator core refuses the disable - "unbalanced disables for
+		 * pogo-vdd", test 087 - and because nothing else holds the supply
+		 * either, the disable was a no-op: the pad stayed high, the MCU was
+		 * never switched off, and the "stock's own cycle" this driver
+		 * claims to perform had never actually happened in any run.  The
+		 * claim is what makes the off window real, and the log line below
+		 * is what proves it.
+		 */
+		ret = regulator_enable(p->vdd);
+		if (ret)
+			dev_warn(&p->client->dev,
+				 "could not claim the rail: %d\n", ret);
+		else
+			p->powered = true;
+		ret = regulator_disable(p->vdd);
+		if (ret)
+			dev_warn(&p->client->dev, "rail did not drop: %d\n", ret);
+		else
+			p->powered = false;
+		dev_info(&p->client->dev,
+			 "rail off: regulator %s, announce %d (the MCU is unpowered when both say so)\n",
+			 regulator_is_enabled(p->vdd) ? "still on" : "off",
+			 pogo_announce_level(p));
 		msleep(400);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
@@ -295,6 +360,47 @@ static void pogo_connect_work(struct work_struct *work)
 	 */
 	dev_dbg(&p->client->dev, "connect line reads %d\n", conn);
 	mutex_unlock(&p->lock);
+}
+
+/*
+ * Match the event-driven startup used by Samsung and the X910 port.  Return
+ * immediately after arming DATA: holding lock while polling the application
+ * prevents pogo_irq() from reading the very announcement we are waiting for.
+ * Keep bootloader visits, scans and rail cycling behind the diagnostic switch.
+ */
+static void pogo_connect_work(struct work_struct *work)
+{
+	struct samsung_pogo *p = container_of(to_delayed_work(work),
+					     struct samsung_pogo, connect_work);
+	bool arm = false;
+	int ret;
+
+	if (startup_diagnostics) {
+		pogo_diagnostic_connect_work(work);
+		return;
+	}
+
+	mutex_lock(&p->lock);
+	if (!p->powered) {
+		ret = regulator_enable(p->vdd);
+		if (ret) {
+			dev_err(&p->client->dev, "power on failed: %d\n", ret);
+			goto out;
+		}
+		p->powered = true;
+		msleep(50);
+	}
+	if (!p->event_enabled) {
+		p->event_enabled = true;
+		arm = true;
+	}
+out:
+	mutex_unlock(&p->lock);
+	if (arm) {
+		enable_irq(p->client->irq);
+		dev_info(&p->client->dev,
+			 "keyboard powered; DATA IRQ armed, waiting for model packet\n");
+	}
 }
 
 static irqreturn_t pogo_connect_irq(int irq, void *data)
@@ -773,6 +879,7 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 {
 	u8 version[4], mode;
 	int ret, i;
+	int attempts = startup_diagnostics ? 240 : 1;
 
 	p->ready = false;
 
@@ -787,7 +894,7 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 	 * line reads 1 at power-on and 0 after the first reset, and no address
 	 * answers afterwards.  So poll patiently and touch nothing.
 	 */
-	for (i = 0; i < 240; i++) {
+	for (i = 0; i < attempts; i++) {
 		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
 				    sizeof(version));
 		if (!ret)
@@ -799,11 +906,11 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		 * the first candidate that leaves the application's bus, pins and
 		 * power completely alone while it starts.
 		 */
-		if (!i)
+		if (!i && startup_diagnostics)
 			dev_info(&p->client->dev,
 				 "waiting up to %u ms for the MCU application\n",
 				 240 * POGO_POLL_INTERVAL_MS);
-		if (!(i % 10))
+		if (startup_diagnostics && !(i % 10))
 			/* Copy the vendor's own diagnostic levels. */
 			dev_info(&p->client->dev,
 				 "no answer after %u ms: scl:%d sda:%d conn:%d\n",
@@ -811,20 +918,23 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 				 p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
 				 p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
 				 gpiod_get_value_cansleep(p->connected));
-		msleep(POGO_POLL_INTERVAL_MS);
+		if (i + 1 < attempts)
+			msleep(POGO_POLL_INTERVAL_MS);
 	}
 	if (ret) {
 		dev_info(&p->client->dev,
-			 "no answer from the MCU application after %u ms (%d)\n",
-			 i * POGO_POLL_INTERVAL_MS, ret);
+			 "MCU version read failed after %d attempt(s): %d\n",
+			 i, ret);
 		/*
 		 * Diagnostics only, and only now: the recovery bit-bangs SCL/SDA
 		 * and moves the controller's pinmux, and the scan talks to every
 		 * address, so neither belongs in a window that is supposed to
 		 * leave the application alone.
 		 */
-		pogo_recover_bus(p);
-		pogo_scan_bus(p);
+		if (startup_diagnostics) {
+			pogo_recover_bus(p);
+			pogo_scan_bus(p);
+		}
 		return ret;
 	}
 	if (i)

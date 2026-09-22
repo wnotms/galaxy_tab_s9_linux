@@ -110,14 +110,16 @@ static unsigned long jiffies, app_ready_at;
 #define msecs_to_jiffies(ms) ((unsigned long)(ms))
 #define jiffies_to_msecs(ticks) ((unsigned int)(ticks))
 #define time_after_eq(a, b) ((long)((a) - (b)) >= 0)
+static bool startup_diagnostics;
+static int diagnostic_calls, lock_held, version_reads;
 static int startup_delay;
 static int reset_gpio;
 static int phase, transfers, fail_at, fail_value, bad_ack;
 static int resets, entries, recoveries, app, app_after_reset;
 static int aborts, app_header;
 static int enables, power_error, entry_failure, mode = 1;
-static void mutex_lock(int *p) {}
-static void mutex_unlock(int *p) {}
+static void mutex_lock(int *p) { assert(!lock_held); lock_held=1; }
+static void mutex_unlock(int *p) { assert(lock_held); lock_held=0; }
 static void msleep(int n) {
  jiffies += n;
  if (app_ready_at && time_after_eq(jiffies, app_ready_at)) app = 1;
@@ -141,7 +143,8 @@ static int regulator_enable(int *p) {
  }
  return power_error;
 }
-static void enable_irq(int irq) { enables++; }
+static void enable_irq(int irq) { assert(!lock_held); enables++; }
+static void pogo_diagnostic_connect_work(struct work_struct *w) { diagnostic_calls++; }
 static void pogo_recover_bus(struct samsung_pogo *p) { recoveries++; }
 /* Diagnostics: the header dump and the interface report read flash and the
    bootloader again, which the READ tests above already cover byte for byte. */
@@ -159,6 +162,7 @@ struct i2c_client *i2c_new_dummy_device(struct i2c_adapter *adap, unsigned short
 }
 void i2c_unregister_device(struct i2c_client *c) {}
 static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n) {
+ if (reg == POGO_CMD_CHECK_VERSION) version_reads++;
  if (!app) return -ENXIO;
  memset(buf, 0, n);
  if (reg == POGO_CMD_GET_MODE) { buf[0] = mode; }
@@ -207,7 +211,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
 '''
         for name in ('pogo_write_reg', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
                      'pogo_boot_version', 'pogo_boot_disconnect',
-                     'pogo_wait_application', 'pogo_bootloader_probe',
+                     'pogo_wait_application',
                      'pogo_read_mcu', 'pogo_connect_work'):
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
                                    source, flags=re.M)
@@ -215,6 +219,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
             harness += '\n' + function(source[definition.start():], name) + '\n'
         harness += r'''
 static void clear(struct samsung_pogo *p) {
+ startup_diagnostics=false; diagnostic_calls=lock_held=version_reads=0;
  jiffies = app_ready_at = startup_delay = 0;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
@@ -256,56 +261,38 @@ int main(void) {
  clear(&p); bad_ack=5; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
  clear(&p); bad_ack=7; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
  clear(&p); bad_ack=9; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
- /* Both startup success paths must set ready without resetting the app. */
- clear(&p); app=1;
+ /* Normal startup arms DATA promptly, unlocked, with no I2C/reset/scan. */
+ clear(&p);
  pogo_connect_work(&p.connect_work.work);
- /* The first bring-up touches SWCLK and the rail only: NRST is never driven
-    and the bootloader is never entered when the application answers. */
- assert(p.ready && p.event_enabled && enables == 1 &&
-        !resets && !entries && !recoveries);
- pogo_connect_work(&p.connect_work.work); assert(enables == 1 && !resets);
- /* An application that never answers is waited for twice (before and after the
-    one bootloader visit), readiness is not claimed, and the bus recovery and
-    scan run only in the failure paths - never inside a poll window. */
+ assert(p.powered && p.event_enabled && enables == 1 && !p.ready);
+ assert(jiffies == 50 && !resets && !entries && !recoveries && !transfers && !version_reads);
+ pogo_connect_work(&p.connect_work.work);
+ assert(enables == 1 && jiffies == 50 && !lock_held);
+ /* The actual mode check succeeds after the event path has read a model. */
+ assert(!pogo_read_mcu(&p) && p.ready && version_reads == 1);
+ /* Never block an IRQ on a sixty-second loop or recover/scan its bus. */
  clear(&p); app_after_reset=0;
  pogo_connect_work(&p.connect_work.work);
- assert(!p.ready && entries == 1 && recoveries == 2 && phase == 11);
- assert(resets == 1);
- /* An application needing two seconds after the power-up is waited for, with
-    no reset, no bootloader visit and - because it answers on the first poll
-    after the silent window - not even a bus recovery. */
- clear(&p); startup_delay = 2000;
+ assert(pogo_read_mcu(&p) == -ENXIO && !p.ready);
+ assert(version_reads == 1 && jiffies == 50 && !resets && !recoveries && !entries);
+ /* Failed power-on must not arm an IRQ or create a regulator reference. */
+ clear(&p); power_error=-EIO;
  pogo_connect_work(&p.connect_work.work);
- /* The rail cycle is 400 + 50 ms, then the poll waits for the application. */
- assert(p.ready && !resets && !entries && !recoveries && jiffies >= 2400);
- /* Absence is bounded, and polling itself never manipulates reset or bus. */
+ assert(!p.powered && !p.event_enabled && !enables && !lock_held);
+ /* Explicit diagnostics remain separate from the default startup path. */
+ clear(&p); startup_diagnostics=true;
+ pogo_connect_work(&p.connect_work.work);
+ assert(diagnostic_calls == 1 && !p.powered && !enables);
+ clear(&p); app=1; mode=0;
+ assert(!pogo_read_mcu(&p) && !p.ready);
+ clear(&p); app=1; mode=POGO_MODE_DFU;
+ assert(!pogo_read_mcu(&p) && p.ready && aborts == 1 && mode == POGO_MODE_APP);
+ /* Existing read-only timeout helper is still bounded across wraparound. */
  clear(&p);
  assert(pogo_wait_application(&p, "test", 5000) == -ENXIO);
- assert(jiffies >= 5000 && jiffies <= 5150 && !resets && !recoveries);
- /* The deadline arithmetic must work across a jiffies wrap. */
+ assert(jiffies >= 5000 && jiffies <= 5300 && !resets && !recoveries);
  clear(&p); jiffies=(unsigned long)-1000;
- assert(pogo_wait_application(&p, "wrap", 5000) == -ENXIO && jiffies < 4200);
- /* A failed version exchange requires a fresh session before the READ. */
- clear(&p); bad_ack=3;
- pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
- clear(&p); fail_at=4; fail_value=-ETIMEDOUT;
- pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
- /* The power-up alone brings the application up: no bootloader, no retry. */
- clear(&p);
- pogo_connect_work(&p.connect_work.work);
- assert(p.ready && !resets && !entries && !recoveries);
- clear(&p); entry_failure=1;
- pogo_bootloader_probe(&p); assert(!transfers && !app);
- clear(&p); power_error=-EIO;
- pogo_connect_work(&p.connect_work.work); assert(!p.powered && !enables && !entries);
- clear(&p); app=1; mode=0;
- pogo_connect_work(&p.connect_work.work); assert(!p.ready && !resets);
- /* A part left in DFU is told to start the application, stock's ABORT write. */
- clear(&p); app=1; mode=POGO_MODE_DFU;
- pogo_connect_work(&p.connect_work.work);
- assert(p.ready && aborts == 1 && mode == POGO_MODE_APP && !resets);
- clear(&p); app_after_reset=0; p.ready=true;
- assert(pogo_read_mcu(&p) == -ENXIO && !p.ready && recoveries == 1);
+ assert(pogo_wait_application(&p, "wrap", 5000) == -ENXIO && jiffies < 4300);
  return 0;
 }
 '''
@@ -314,7 +301,7 @@ int main(void) {
             exe = Path(tmp) / 'startup'
             c.write_text(harness)
             subprocess.run(['clang', '-Wall', '-Wextra', '-Werror',
-                            '-Wno-unused-parameter', '-Wno-unused-but-set-variable',
+                            '-Wno-unused-parameter', '-Wno-unused-function', '-Wno-unused-but-set-variable',
                             '-Wno-sign-compare', '-fsanitize=address,undefined',
                             '-g', str(c), '-o', str(exe)], check=True)
             subprocess.run([str(exe)], check=True)

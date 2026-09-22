@@ -289,6 +289,20 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   diagnostic branch, not a default workaround. Record the final device state
   and any stock restoration with read-back hashes in the test record.
 
+## Latest pogo audit (2026-09-22, after f6c5c6b)
+
+The current candidate restores DATA to IRQ_TYPE_LEVEL_LOW: announce-gpios is
+GPIO_ACTIVE_LOW, so descriptor 1 means a physical low, not a high pulse. The
+normal startup now releases the protocol mutex before enabling DATA, with only
+50 ms power settling and no bootloader/scan/rail cycle. A model event makes a
+single version-read attempt, not a minute-long loop under that same mutex.
+Previous local startup experiments remain opt-in through
+`keyboard_samsung_pogo.startup_diagnostics=1`; do not enable this for normal
+keyboard validation. See `docs/POGO_EVENT_STARTUP.md` for the pinned S9U source
+comparison and limits. The S9U firmware-update result is not permission or proof
+that X710 needs another MCU image. Host tests pass; record physical results
+separately and keep pre-existing test-087 logs distinct from new tests.
+
 ## Build commands
 
 Normal build:

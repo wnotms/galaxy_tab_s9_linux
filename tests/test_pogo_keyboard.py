@@ -56,7 +56,7 @@ static int pogo_read(struct samsung_pogo *p, u8 *b, int n) {
 static void pogo_release_keys(struct samsung_pogo *p) { (void)p; releases++; }
 static int pogo_hello(struct samsung_pogo *p,u8 model) { (void)p; assert(model==2); hellos++; return 0; }
 '''
-        harness += '\n' + function(source, 'pogo_irq') + '\n'
+        harness += '\n' + function(source[source.index('static irqreturn_t pogo_irq('):], 'pogo_irq') + '\n'
         harness += r'''
 static void packet(unsigned int size, u8 id) {
  memset(wire,0,sizeof(wire)); wire[0]=size; wire[1]=size>>8; wire[2]=id;
