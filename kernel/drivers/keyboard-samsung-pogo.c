@@ -45,6 +45,8 @@
 #define POGO_IC_VERSION_OFFSET		0x08000200
 /* How often the application is polled while it starts. */
 #define POGO_POLL_INTERVAL_MS		250
+/* How long the MCU is left completely alone after its power-up. */
+#define POGO_SILENT_WINDOW_MS		30000
 /* The MCU's option bytes, at the address in Samsung's stm32_memory_map. */
 #define POGO_OPTION_BYTE_OFFSET		0x1FFF7800
 /* Samsung's header inside the firmware image; the magic there is "STM32". */
@@ -187,6 +189,22 @@ static void pogo_connect_work(struct work_struct *work)
 			p->powered = true;
 			msleep(20);
 			dev_info(&p->client->dev, "MCU rail on with BOOT0 low\n");
+			/*
+			 * Leave everything alone for a while first.  Stock's driver
+			 * does not address the MCU until its connect work runs tens
+			 * of seconds into the boot, so nothing is known about what
+			 * the application needs in its first seconds - and every
+			 * mainline candidate so far started polling at ~4 s.  Only
+			 * the announce line's level is read here: that is passive
+			 * evidence of whether the application is alive at all.
+			 */
+			dev_info(&p->client->dev,
+				 "leaving the MCU alone for %u ms\n",
+				 POGO_SILENT_WINDOW_MS);
+			msleep(POGO_SILENT_WINDOW_MS);
+			dev_info(&p->client->dev,
+				 "silent window over; connect line %d\n",
+				 gpiod_get_value_cansleep(p->connected));
 			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
 			if (!ret) {
@@ -622,13 +640,17 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 				    sizeof(version));
 		if (!ret)
 			break;
-		/* Do not disturb a working application or its bus pinmux. */
-		if (!i) {
-			pogo_recover_bus(p);
+		/*
+		 * Absolutely no side effects in this window: no bus recovery (that
+		 * bit-bangs SCL/SDA and switches the controller's pinmux), no
+		 * pinctrl change, no reset and no bootloader access.  Test 060 is
+		 * the first candidate that leaves the application's bus, pins and
+		 * power completely alone while it starts.
+		 */
+		if (!i)
 			dev_info(&p->client->dev,
 				 "waiting up to %u ms for the MCU application\n",
 				 240 * POGO_POLL_INTERVAL_MS);
-		}
 		if (!(i % 10))
 			/* Copy the vendor's own diagnostic levels. */
 			dev_info(&p->client->dev,
@@ -643,6 +665,13 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		dev_info(&p->client->dev,
 			 "no answer from the MCU application after %u ms (%d)\n",
 			 i * POGO_POLL_INTERVAL_MS, ret);
+		/*
+		 * Diagnostics only, and only now: the recovery bit-bangs SCL/SDA
+		 * and moves the controller's pinmux, and the scan talks to every
+		 * address, so neither belongs in a window that is supposed to
+		 * leave the application alone.
+		 */
+		pogo_recover_bus(p);
 		pogo_scan_bus(p);
 		return ret;
 	}

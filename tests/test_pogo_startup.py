@@ -88,6 +88,7 @@ typedef uint16_t u16;
 #define POGO_MODE_DFU 2
 #define POGO_IC_VERSION_OFFSET 0x08000200
 #define POGO_POLL_INTERVAL_MS 250
+#define POGO_SILENT_WINDOW_MS 30000
 #define dev_info(...) ((void)0)
 #define dev_info_ratelimited(...) ((void)0)
 #define dev_err(...) ((void)0)
@@ -246,17 +247,19 @@ int main(void) {
  assert(p.ready && p.event_enabled && enables == 1 && !resets && !entries && !recoveries);
  pogo_connect_work(&p.connect_work.work); assert(enables == 1 && !resets);
  /* An application that never answers is waited for twice (before and after the
-    one bootloader visit), and readiness is not claimed. */
+    one bootloader visit), readiness is not claimed, and the bus recovery and
+    scan run only in the failure paths - never inside a poll window. */
  clear(&p); app_after_reset=0;
  pogo_connect_work(&p.connect_work.work);
  assert(!p.ready && entries == 1 && recoveries == 2 && phase == 11);
  assert(resets == 1);
  /* An application needing two seconds after the power-up is waited for, with
-    no reset and no bootloader visit. */
+    no reset, no bootloader visit and - because it answers on the first poll
+    after the silent window - not even a bus recovery. */
  clear(&p); startup_delay = 2000;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && !resets && !entries && recoveries == 1 &&
-        jiffies >= 2000 && jiffies < 2300);
+ assert(p.ready && !resets && !entries && !recoveries &&
+        jiffies >= 30020 && jiffies < 31000);
  /* Absence is bounded, and polling itself never manipulates reset or bus. */
  clear(&p);
  assert(pogo_wait_application(&p, "test", 5000) == -ENXIO);
