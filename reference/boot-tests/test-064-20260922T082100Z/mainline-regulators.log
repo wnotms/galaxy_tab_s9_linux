@@ -1,0 +1,59 @@
+2026-09-22T08:20:44Z console open on COM17
+2026-09-22T08:20:47Z SENT  cat /sys/kernel/debug/regulator/regulator_summary
+2026-09-22T08:20:47Z RECV  cat /sys/kernel/debug/regulator/regulator_summary
+2026-09-22T08:20:47Z RECV   regulator                      use open bypass  opmode voltage current     min     max
+2026-09-22T08:20:47Z RECV  ---------------------------------------------------------------------------------------
+2026-09-22T08:20:47Z RECV   regulator-dummy                 14   18      0 unknown     0mV     0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l1c_1p1                  0    0      0  normal  1104mV     0mA  1104mV  1104mV
+2026-09-22T08:20:47Z RECV      vreg_l1b_1p8                  1    0      0  normal  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV      vreg_l4b_1p8                  0    1      0  normal  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV         rear_cam_vio               0    0      0 unknown  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV      vreg_l5b_3p104                1    1      0  normal  3104mV     0mA  3104mV  3104mV
+2026-09-22T08:20:47Z RECV         8-004f-vdd3v3              1                                11mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l8b_1p8                  1    1      0  normal  1800mV     0mA  1800mV  3000mV
+2026-09-22T08:20:47Z RECV         8804000.mmc-vqmmc          1                               325mA  1800mV  1950mV
+2026-09-22T08:20:47Z RECV      vreg_l9b_2p9                  1    1      0  normal  3000mV     0mA  2960mV  3000mV
+2026-09-22T08:20:47Z RECV         8804000.mmc-vmmc           1                               800mA  3000mV  3000mV
+2026-09-22T08:20:47Z RECV      vreg_l10b_1p8                 1    0      0  normal  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV      vreg_l11b_1p1                 1    1      0  normal  1104mV     0mA  1104mV  1104mV
+2026-09-22T08:20:47Z RECV         ae94000.dsi.0-vdd          1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l12b_1p8                 1    1      0  normal  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV         ae94000.dsi.0-vddio        1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l13b_3p0                 1    1      0  normal  3000mV     0mA  3000mV  3000mV
+2026-09-22T08:20:47Z RECV         ae94000.dsi.0-vci          1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l14b_3p3                 0    0      0  normal  3304mV     0mA  3304mV  3304mV
+2026-09-22T08:20:47Z RECV      vreg_l15b_1p8                 1    1      0  normal  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV         8-004f-vdd1v8              1                                55mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l16b_3p0                 1    0      0  normal  3000mV     0mA  3000mV  3000mV
+2026-09-22T08:20:47Z RECV      vreg_l17b_2p5                 0    1      0    idle  2504mV     0mA  2504mV  2504mV
+2026-09-22T08:20:47Z RECV         1d84000.ufshc-vcc          0                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l1e_0p88                 2    4      0  normal   880mV     0mA   880mV   880mV
+2026-09-22T08:20:47Z RECV         ae95000.phy-vdds           1                                98mA     0mV     0mV
+2026-09-22T08:20:47Z RECV         88e3000.phy-vdd            1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV         1d80000.phy-vdda-phy       0                               188mA*    0mV     0mV
+2026-09-22T08:20:47Z RECV         1c06000.phy-vdda-phy       0                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l3e_1p2                  3    5      0  normal  1200mV     0mA  1200mV  1200mV
+2026-09-22T08:20:47Z RECV         ae94000.dsi-vdda           1                                16mA     0mV     0mV
+2026-09-22T08:20:47Z RECV         88e8000.phy-vdda-phy       1                                21mA     0mV     0mV
+2026-09-22T08:20:47Z RECV         88e3000.phy-vdda12         1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV         1d80000.phy-vdda-pll       0                                18mA*    0mV     0mV
+2026-09-22T08:20:47Z RECV         1c06000.phy-vdda-pll       0                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l3g_1p2                  0    1      0  normal  1200mV     0mA  1200mV  1200mV
+2026-09-22T08:20:47Z RECV         1d84000.ufshc-vdd-hba      0                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_l1g_1p2                  1    1      0    idle  1200mV     0mA  1200mV  1200mV
+2026-09-22T08:20:47Z RECV         1d84000.ufshc-vccq         1                                 1mA     0mV     0mV
+2026-09-22T08:20:47Z RECV   vph_pwr                          2    5      0 unknown  3700mV     0mA  3700mV  3700mV
+2026-09-22T08:20:47Z RECV      vreg_s4e_0p952                1    1      0    fast   952mV     0mA   952mV   952mV
+2026-09-22T08:20:47Z RECV         vreg_l3f_0p88              1    1      0  normal   880mV     0mA   880mV   912mV
+2026-09-22T08:20:47Z RECV            88e8000.phy-vdda-pll    1                                36mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      vreg_s2g_1p012                0    0      0    fast  1016mV     0mA  1016mV  1016mV
+2026-09-22T08:20:47Z RECV      vreg_s4g_1p352                0    0      0    fast  1352mV     0mA  1352mV  1352mV
+2026-09-22T08:20:47Z RECV      vreg_s5g_0p966                0    0      0    fast   968mV     0mA   968mV   968mV
+2026-09-22T08:20:47Z RECV      vreg_s6g_1p904                0    0      0    fast  1904mV     0mA  1904mV  1904mV
+2026-09-22T08:20:47Z RECV   speaker_vdd                      1    0      0 unknown     0mV     0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV   pogo-vdd                         1    1      0 unknown     0mV     0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV      5-002a-vdd                    1                                 0mA     0mV     0mV
+2026-09-22T08:20:47Z RECV   panel_ldo_en                     1    0      0 unknown  1800mV     0mA  1800mV  1800mV
+2026-09-22T08:20:47Z RECV   display_panel_avdd               1    1      0 unknown  5500mV     0mA  5500mV  5500mV
+2026-09-22T08:20:47Z RECV      ae94000.dsi.0-avdd            1                                 0mA     0mV     0mV
+2026-09-22T08:20:56Z console session done
