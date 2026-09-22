@@ -1,0 +1,8 @@
+2026-09-22T10:34:28Z console open on COM17
+2026-09-22T10:34:32Z SENT  dmesg | grep -aiE "rail|boot0|nrst|announce" | tail -10
+2026-09-22T10:34:32Z RECV  dmesg | grep -aiE "rail|boot0|nrst|announce" | tail -10
+2026-09-22T10:34:32Z RECV  [    4.772048][  T115] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed (level 0)
+2026-09-22T10:34:32Z RECV  [    4.782067][  T115] samsung-pogo-keyboard 5-002a: just after the rail rose: rail on, boot0/swclk 0, nrst 1, announce 0
+2026-09-22T10:34:32Z RECV  [    4.929008][  T115] samsung-pogo-keyboard 5-002a: at the moment stock's application speaks: rail on, boot0/swclk 0, nrst 1, announce 0
+2026-09-22T10:34:32Z RECV  [    5.014095][  T115] samsung-pogo-keyboard 5-002a: right after the rail cycle: application -6, bootloader -6, announce level 0
+2026-09-22T10:34:41Z console session done

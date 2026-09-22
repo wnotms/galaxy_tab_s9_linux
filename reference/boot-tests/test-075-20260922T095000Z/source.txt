@@ -1,0 +1,8 @@
+source_commit=fbc8d1a ("pogo: sample what the application sees at its startup")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-074
+hypothesis=Everything about the startup has been reproduced - the vendor driver runs stock's complete firmware path value for value (test 072) and the MCU asserts the announce line only its application drives (tests 067/074) - yet its I2C slave serves no address at all (test 074).  The one comparison never made is what the application finds at the instant it starts: the rail, its BOOT0 (SWCLK), its reset (NRST) and the announce line, sampled together at the transition and 130 ms later, against the same instant in the stock trace.
+change=pogo_startup_sample() prints all four, read-only, just after the rail rises and again 130 ms later; no behaviour changes.
+predictions=1) all four match stock's expectation (rail on, BOOT0 low, NRST released, announce driven) => what the application sees is not the difference and the remaining candidates are all outside the pogo path - the controller, pinctrl, clock or the supply the rail itself depends on; 2) any of them differs from what stock has at the same instant => that signal is the difference and it is measured, not inferred.
+images=out/boot-bundle-test075/boot.img 05c28b50792a061b6d35ceb1f6247271ac33e5101c508b09133d865b82b8089b; vendor_boot 3ec6c8d1, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T09:50:00Z
