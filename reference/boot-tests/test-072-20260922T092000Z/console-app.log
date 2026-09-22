@@ -1,0 +1,25 @@
+2026-09-22T10:22:36Z console open on COM17
+2026-09-22T10:22:39Z SENT  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|support_keyboard|Failed to read|check_ic|conn|keyboard_connect" | tail -20
+2026-09-22T10:22:39Z RECV  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|support_keyboard|Failed
+2026-09-22T10:22:39Z RECV  to read|check_ic|conn|keyboard_connect" | tail -20
+2026-09-22T10:22:39Z RECV  [   34.056276][  T107] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:0, current:1
+2026-09-22T10:22:39Z RECV  [   34.065566][  T107] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 1
+2026-09-22T10:22:39Z RECV  [   36.051905][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   36.189155][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:22:39Z RECV  [   36.214055][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   36.248979][    T9] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 0
+2026-09-22T10:22:39Z RECV  [   36.361825][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:22:39Z RECV  [   36.369051][  T107] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:0, current:1
+2026-09-22T10:22:39Z RECV  [   36.378404][  T107] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 1
+2026-09-22T10:22:39Z RECV  [   38.364481][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   38.503337][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:22:39Z RECV  [   38.528270][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   38.563277][    T9] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 0
+2026-09-22T10:22:39Z RECV  [   38.676087][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:22:39Z RECV  [   38.683421][  T107] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:0, current:1
+2026-09-22T10:22:39Z RECV  [   38.692840][  T107] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 1
+2026-09-22T10:22:39Z RECV  [   40.678451][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   40.816936][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:22:39Z RECV  [   40.841881][  T158] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:22:39Z RECV  [   40.876832][  T107] stm32_pogo_i2c 5-002a: stm32_keyboard_connect: 0
+2026-09-22T10:22:49Z console session done

@@ -1,0 +1,27 @@
+2026-09-22T10:22:16Z console open on COM17
+2026-09-22T10:22:19Z SENT  dmesg | grep -aiE "stm32|pogo" | grep -aiE "firmware|checksum|validation|sync|disconnect|ic_ver|option|empty|read_version|MODE|CRC|Failed" | tail -22
+2026-09-22T10:22:20Z RECV  dmesg | grep -aiE "stm32|pogo" | grep -aiE "firmware|checksum|validation|s
+2026-09-22T10:22:20Z RECV  ync|disconnect|ic_ver|option|empty|read_version|MODE|CRC|Failed" | tail -22
+2026-09-22T10:22:20Z RECV  [    5.656503][   T77] stm32_pogo_i2c 5-002a: stm32_target_empty_check_status
+2026-09-22T10:22:20Z RECV  [    5.666928][   T77] stm32_pogo_i2c 5-002a: stm32_target_empty_check_status Flash Word: 0x200056C0
+2026-09-22T10:22:20Z RECV  [    5.676035][   T77] stm32_pogo_i2c 5-002a: stm32_dev_checksum address: 0x800c800, len=812
+2026-09-22T10:22:20Z RECV  [    5.727310][   T77] stm32_pogo_i2c 5-002a: stm32_dev_checksum: checksum ic:0x7E2341C8 bin 0x7E2341C8
+2026-09-22T10:22:20Z RECV  [    5.736714][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_disconnect start
+2026-09-22T10:22:20Z RECV  [    5.901142][   T77] stm32_pogo_i2c 5-002a: stm32_dev_checksum: done
+2026-09-22T10:22:20Z RECV  [    5.907604][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation start
+2026-09-22T10:22:20Z RECV  [    5.988654][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_i2c_sync
+2026-09-22T10:22:20Z RECV  [    5.996836][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_i2c_sync succeed to connect to target
+2026-09-22T10:22:20Z RECV  [    6.065150][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Connection OK
+2026-09-22T10:22:20Z RECV  [    6.142118][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+2026-09-22T10:22:20Z RECV  [    6.159497][   T77] stm32_pogo_i2c 5-002a: stm32_sysboot_disconnect start
+2026-09-22T10:22:20Z RECV  [    6.332661][   T77] stm32_pogo_i2c 5-002a: stm32_dev_check_firmware_version phone:00340034 ic:00340034
+2026-09-22T10:22:20Z RECV  [    6.342215][   T77] stm32_pogo_i2c 5-002a: stm32_dev_firmware_update_mode: skip - fw update
+2026-09-22T10:22:20Z RECV  [    6.353890][   T77] stm32_pogo_i2c 5-002a: stm32_interrupt_init INT mode (170)
+2026-09-22T10:22:20Z RECV  [    6.382026][   T77] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [    8.605676][   T81] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [   10.986775][  T107] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [   13.296997][  T107] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [   15.620071][  T107] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [   17.934516][  T107] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:20Z RECV  [   20.249594][    T9] stm32_pogo_i2c 5-002a: stm32_enable_irq: disable dev irq nosync
+2026-09-22T10:22:29Z console session done
