@@ -80,6 +80,7 @@ struct samsung_pogo {
 
 static int pogo_read_mcu(struct samsung_pogo *p);
 static int pogo_announce_level(struct samsung_pogo *p);
+static void pogo_state_report(struct samsung_pogo *p, const char *stage);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
@@ -208,6 +209,8 @@ static void pogo_connect_work(struct work_struct *work)
 			dev_info(&p->client->dev,
 				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
 				 pogo_announce_level(p));
+			/* Who is there, before anything else is touched. */
+			pogo_state_report(p, "right after the rail cycle");
 			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
 			dev_info(&p->client->dev,
@@ -425,6 +428,27 @@ static int pogo_announce_level(struct samsung_pogo *p)
 	if (!p->announce)
 		return -1;
 	return gpiod_get_value_cansleep(p->announce);
+}
+
+/*
+ * Ask the part what it is, without changing anything.
+ *
+ * The announce line says the MCU is alive (test 067) but not which interface it
+ * serves, and the two are mutually exclusive: if the bootloader at 0x51 answers
+ * on its own the part is sitting in its system bootloader, and if only 0x2a
+ * answers it runs its application interface.  No dance, no reset, no GO - both
+ * probes are plain reads.
+ */
+static void pogo_state_report(struct samsung_pogo *p, const char *stage)
+{
+	u8 version[4], boot_version;
+	int app, boot;
+
+	app = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+	boot = pogo_boot_version(p, &boot_version);
+	dev_info(&p->client->dev,
+		 "%s: application %d, bootloader %d, announce level %d\n",
+		 stage, app, boot, pogo_announce_level(p));
 }
 
 /*

@@ -129,6 +129,8 @@ static void gpiod_set_value_cansleep(int *p, int v) {
 static void regulator_disable(int *p) { (void)p; }
 /* The announce line's level now comes from a gpiolib descriptor. */
 static int pogo_announce_level(struct samsung_pogo *p) { return 0; }
+/* The who-is-there report is diagnostics: both probes are plain reads. */
+static void pogo_state_report(struct samsung_pogo *p, const char *stage) {}
 static int regulator_enable(int *p) {
  /* The application starts when the rail comes up, which is the MCU's power-on
     in the minimal flow; it may take a moment before it answers. */
