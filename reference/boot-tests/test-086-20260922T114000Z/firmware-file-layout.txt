@@ -1,0 +1,13 @@
+=== the firmware file's own layout (host-side, no device touched) ===
+size: 52012 bytes, sha256:
+379ee664216a76b4f16fdc0889b9feb2f9c6281db9df26dc81f7f9bd39452619  .work/firmware/keyboard_stm/stm32_gts9family.bin
+
+file[0:8]:
+00000000: c056 0020 a5c4 0008 c5c4 0008 e5c4 0008  .V. ............
+file[0xb0:0xe0]:
+000000b0: edc7 0008 1dc8 0008 4fc9 0008 0000 0000  ........O.......
+000000c0: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+000000d0: 0000 0000 0000 0000 0000 0000 0000 0000  ................
+"STM32" occurrences:
+2149:STM32
+2356:STM32
