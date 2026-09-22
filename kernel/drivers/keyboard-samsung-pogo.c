@@ -382,6 +382,38 @@ static void pogo_connect_work(struct work_struct *work)
 
 	mutex_lock(&p->lock);
 	if (!p->powered) {
+		/*
+		 * Release the MCU from its system bootloader.  On STM32 BOOT0 is
+		 * sampled on the NRST release, so a part that is already sitting
+		 * in the ROM bootloader stays there for ever, and a Linux reboot
+		 * does not power-cycle it.  That is this board's symptom exactly:
+		 * 0x51 answers a full firmware menu while 0x2a never acknowledges
+		 * anything, and test 091 showed that asking 0x2a directly, with no
+		 * reset, NAKs the same way - as SM-X800 measured over 12,158 polls
+		 * with zero ACKs.  Samsung's X710 driver runs this sequence on
+		 * every probe (stm32_sysboot_disconnect(): BOOT0 low, NRST low
+		 * >= 2 ms, high, 150 ms) and the SM-X910 port documents the
+		 * failure: "The STM32 otherwise remains silent at its application
+		 * address even when both VDDO and the MAX77816 output are
+		 * present."
+		 *
+		 * The order is strict - reset before the rail is raised - so claim
+		 * the supply and drive it low first instead of resetting a part
+		 * that is already powered.  No 0x51 traffic happens in this boot:
+		 * a bare read there returns 0x1F and wedges the bootloader until
+		 * the next BOOT0/NRST pulse.
+		 */
+		ret = regulator_enable(p->vdd);
+		if (!ret) {
+			p->powered = true;
+			if (!regulator_disable(p->vdd))
+				p->powered = false;
+		}
+		gpiod_set_value_cansleep(p->swclk, 0);	/* BOOT0 low: application */
+		gpiod_set_value_cansleep(p->nrst, 0);
+		msleep(2);
+		gpiod_set_value_cansleep(p->nrst, 1);
+		msleep(150);				/* STM32_BOOT_I2C_STARTUP_DELAY */
 		ret = regulator_enable(p->vdd);
 		if (ret) {
 			dev_err(&p->client->dev, "power on failed: %d\n", ret);
@@ -389,6 +421,8 @@ static void pogo_connect_work(struct work_struct *work)
 		}
 		p->powered = true;
 		msleep(50);
+		dev_info(&p->client->dev,
+			 "application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on\n");
 	}
 	if (!p->event_enabled) {
 		p->event_enabled = true;

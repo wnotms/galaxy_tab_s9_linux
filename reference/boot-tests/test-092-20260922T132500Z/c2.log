@@ -1,0 +1,11 @@
+2026-09-22T13:32:29Z console open on COM17
+2026-09-22T13:32:32Z SENT  dmesg | grep -a "5-002a" | head -25; cat /proc/interrupts | grep -a "5-002a"
+2026-09-22T13:32:32Z RECV  dmesg | grep -a "5-002a" | head -25; cat /proc/interrupts | grep -a "5-002
+2026-09-22T13:32:32Z RECV  a"
+2026-09-22T13:32:32Z RECV  [    4.082862][   T77] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T13:32:32Z RECV  [    4.584829][   T94] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-22T13:32:32Z RECV  [    4.597188][   T94] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-22T13:32:32Z RECV  [    4.716681][  T123] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T13:32:32Z RECV  [    4.733333][  T123] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-22T13:32:32Z RECV   170:          1          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T13:32:41Z console session done

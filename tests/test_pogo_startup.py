@@ -107,6 +107,15 @@ struct samsung_pogo {
  unsigned int announce_seen;
 };
 static unsigned long jiffies, app_ready_at;
+/* The normal startup re-arms its own work once to ask an application that never
+   announced itself; record the delay instead of running a workqueue. */
+static unsigned int fallback_ms;
+static bool pogo_read_mcu_polled;
+static int mod_delayed_work(void *wq, struct delayed_work *dwork, unsigned long delay)
+{
+ (void)wq; (void)dwork; fallback_ms = (unsigned int)delay; return 1;
+}
+#define system_percpu_wq ((void *)0)
 #define msecs_to_jiffies(ms) ((unsigned long)(ms))
 #define jiffies_to_msecs(ticks) ((unsigned int)(ticks))
 #define time_after_eq(a, b) ((long)((a) - (b)) >= 0)
@@ -220,7 +229,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
         harness += r'''
 static void clear(struct samsung_pogo *p) {
  startup_diagnostics=false; diagnostic_calls=lock_held=version_reads=0;
- jiffies = app_ready_at = startup_delay = 0;
+ jiffies = app_ready_at = startup_delay = 0; fallback_ms = 0;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
  aborts = app_header = 0;
@@ -268,6 +277,7 @@ int main(void) {
  assert(jiffies == 50 && !resets && !entries && !recoveries && !transfers && !version_reads);
  pogo_connect_work(&p.connect_work.work);
  assert(enables == 1 && jiffies == 50 && !lock_held);
+ assert(!version_reads);   /* the port never polls 0x2a: it is served only inside ATTN */
  /* The actual mode check succeeds after the event path has read a model. */
  assert(!pogo_read_mcu(&p) && p.ready && version_reads == 1);
  /* Never block an IRQ on a sixty-second loop or recover/scan its bus. */
