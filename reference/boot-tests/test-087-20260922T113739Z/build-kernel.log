@@ -1,0 +1,968 @@
+ccache enabled: CCACHE_DIR=/home/ms/.cache/ccache
+Cache directory:                          /home/ms/.cache/ccache
+Config file:                              /home/ms/.cache/ccache/ccache.conf
+System config file:                       /etc/ccache.conf
+Stats updated:                            Tue Sep 22 19:17:51 2026
+Cacheable calls:                           737250 / 772427 (95.45%)
+  Hits:                                    677696 / 737250 (91.92%)
+using existing upstream checkout: /home/ms/Samsung/galaxy_tab_s9_linux/.work/linux-mainline
+verified upstream Linux: v7.2-rc3 @ a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+applying 0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch
+applying 0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch
+applying 0003-printk-allow-ignoring-samsung-console-null.patch
+applying 0004-drm-panel-add-samsung-ana38407.patch
+applying 0006-input-add-samsung-pogo-keyboard.patch
+applying 0008-i2c-qcom-geni-log-bus-lines-on-error.patch
+applying 0010-pinctrl-report-pogo-pin-state-at-probe.patch
+applying nxp-ptn3222-apply-dt-register-overrides.patch
+installing keyboard-samsung-pogo.c -> keyboard/
+installing panel-samsung-ana38407.c -> panel/
+installing samsung-gts9wifi-sec-log.c -> qcom/
+installing samsung-pogo/ -> drivers/input/keyboard/samsung-pogo/
+prepared SM-X710 source overlay: /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi
+materialized verified stock config: /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/SM-X710-stock-5.15.153.config
+Using /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/SM-X710-stock-5.15.153.config as base
+Merging /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment
+Value of CONFIG_WERROR is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_WERROR=y
+New value: # CONFIG_WERROR is not set
+
+Value of CONFIG_LOCALVERSION is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LOCALVERSION=""
+New value: CONFIG_LOCALVERSION="-gts9wifi"
+
+Value of CONFIG_LOCALVERSION_AUTO is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LOCALVERSION_AUTO=y
+New value: # CONFIG_LOCALVERSION_AUTO is not set
+
+Value of CONFIG_CMDLINE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_CMDLINE="stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected cgroup_disable=pressure"
+New value: CONFIG_CMDLINE=""
+
+Value of CONFIG_ARM_QCOM_CPUFREQ_HW is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_ARM_QCOM_CPUFREQ_HW is not set
+New value: CONFIG_ARM_QCOM_CPUFREQ_HW=y
+
+Value of CONFIG_LTO_NONE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_LTO_NONE is not set
+New value: CONFIG_LTO_NONE=y
+
+Value of CONFIG_LTO_CLANG_FULL is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LTO_CLANG_FULL=y
+New value: # CONFIG_LTO_CLANG_FULL is not set
+
+Value of CONFIG_QRTR is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QRTR is not set
+New value: CONFIG_QRTR=y
+
+Value of CONFIG_BT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT=y
+New value: CONFIG_BT=m
+
+Value of CONFIG_BT_QCA is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT_QCA=y
+New value: CONFIG_BT_QCA=m
+
+Value of CONFIG_BT_HCIUART is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT_HCIUART=y
+New value: CONFIG_BT_HCIUART=m
+
+Value of CONFIG_CFG80211 is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_CFG80211 is not set
+New value: CONFIG_CFG80211=m
+
+Value of CONFIG_DEVTMPFS_MOUNT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DEVTMPFS_MOUNT is not set
+New value: CONFIG_DEVTMPFS_MOUNT=y
+
+Value of CONFIG_MHI_BUS is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MHI_BUS is not set
+New value: CONFIG_MHI_BUS=y
+
+Value of CONFIG_QCOM_FASTRPC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_FASTRPC is not set
+New value: CONFIG_QCOM_FASTRPC=y
+
+Value of CONFIG_SCSI_UFS_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_SCSI_UFS_QCOM is not set
+New value: CONFIG_SCSI_UFS_QCOM=y
+
+Value of CONFIG_WLAN_VENDOR_ATH is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_WLAN_VENDOR_ATH is not set
+New value: CONFIG_WLAN_VENDOR_ATH=y
+
+Value of CONFIG_VT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_VT is not set
+New value: CONFIG_VT=y
+
+Value of CONFIG_I2C_CHARDEV is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_I2C_CHARDEV is not set
+New value: CONFIG_I2C_CHARDEV=y
+
+Value of CONFIG_I2C_QCOM_GENI is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_I2C_QCOM_GENI is not set
+New value: CONFIG_I2C_QCOM_GENI=y
+
+Value of CONFIG_SPMI_MSM_PMIC_ARB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_SPMI_MSM_PMIC_ARB is not set
+New value: CONFIG_SPMI_MSM_PMIC_ARB=y
+
+Value of CONFIG_PINCTRL_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PINCTRL_MSM is not set
+New value: CONFIG_PINCTRL_MSM=y
+
+Value of CONFIG_PINCTRL_QCOM_SPMI_PMIC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PINCTRL_QCOM_SPMI_PMIC is not set
+New value: CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+
+Value of CONFIG_NVMEM_REBOOT_MODE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_NVMEM_REBOOT_MODE is not set
+New value: CONFIG_NVMEM_REBOOT_MODE=y
+
+Value of CONFIG_QCOM_WDT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_WDT is not set
+New value: CONFIG_QCOM_WDT=y
+
+Value of CONFIG_MFD_SPMI_PMIC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MFD_SPMI_PMIC is not set
+New value: CONFIG_MFD_SPMI_PMIC=y
+
+Value of CONFIG_DRM_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DRM_MSM is not set
+New value: CONFIG_DRM_MSM=y
+
+Value of CONFIG_DRM_SIMPLEDRM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DRM_SIMPLEDRM is not set
+New value: CONFIG_DRM_SIMPLEDRM=y
+
+Value of CONFIG_FB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_FB is not set
+New value: CONFIG_FB=y
+
+Value of CONFIG_MMC_SDHCI_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MMC_SDHCI_MSM is not set
+New value: CONFIG_MMC_SDHCI_MSM=y
+
+Value of CONFIG_QCOM_GPI_DMA is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_GPI_DMA is not set
+New value: CONFIG_QCOM_GPI_DMA=y
+
+Value of CONFIG_COMMON_CLK_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_COMMON_CLK_QCOM is not set
+New value: CONFIG_COMMON_CLK_QCOM=y
+
+Value of CONFIG_ARM_SMMU is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_ARM_SMMU is not set
+New value: CONFIG_ARM_SMMU=y
+
+Value of CONFIG_QCOM_SYSMON is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SYSMON is not set
+New value: CONFIG_QCOM_SYSMON=y
+
+Value of CONFIG_QCOM_COMMAND_DB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_COMMAND_DB is not set
+New value: CONFIG_QCOM_COMMAND_DB=y
+
+Value of CONFIG_QCOM_LLCC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_LLCC is not set
+New value: CONFIG_QCOM_LLCC=y
+
+Value of CONFIG_QCOM_RPMH is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_RPMH is not set
+New value: CONFIG_QCOM_RPMH=y
+
+Value of CONFIG_QCOM_SMEM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SMEM is not set
+New value: CONFIG_QCOM_SMEM=y
+
+Value of CONFIG_QCOM_SPMI_ADC5 is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SPMI_ADC5 is not set
+New value: CONFIG_QCOM_SPMI_ADC5=y
+
+Value of CONFIG_QCOM_PDC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_PDC is not set
+New value: CONFIG_QCOM_PDC=y
+
+Value of CONFIG_PHY_QCOM_QMP is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PHY_QCOM_QMP is not set
+New value: CONFIG_PHY_QCOM_QMP=y
+
+Value of CONFIG_NVMEM_SPMI_SDAM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_NVMEM_SPMI_SDAM is not set
+New value: CONFIG_NVMEM_SPMI_SDAM=y
+
+Value of CONFIG_INTERCONNECT_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_INTERCONNECT_QCOM is not set
+New value: CONFIG_INTERCONNECT_QCOM=y
+
+Value of CONFIG_UBSAN is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_UBSAN=y
+New value: # CONFIG_UBSAN is not set
+
+Value of CONFIG_KASAN is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_KASAN=y
+New value: # CONFIG_KASAN is not set
+
+Value of CONFIG_PANIC_TIMEOUT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_PANIC_TIMEOUT=-1
+New value: CONFIG_PANIC_TIMEOUT=0
+
+#
+# merged configuration written to /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/.config (needs make)
+#
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+.config:767:warning: symbol value '0' invalid for BASE_SMALL
+.config:6840:warning: symbol value 'n' invalid for BOOTPARAM_SOFTLOCKUP_PANIC
+.config:6844:warning: symbol value 'n' invalid for BOOTPARAM_HUNG_TASK_PANIC
+#
+# configuration written to .config
+#
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+  SYNC    include/config/auto.conf
+  DESCEND bpf/resolve_btfids
+  DTC     arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb
+  INSTALL libsubcmd_headers
+  CC      drivers/phy/phy-nxp-ptn3222.o
+  CC      drivers/pinctrl/qcom/pinctrl-msm.o
+  CC      kernel/printk/printk.o
+  AR      drivers/phy/built-in.a
+  CC      drivers/soc/qcom/samsung-gts9wifi-sec-log.o
+  AR      drivers/pinctrl/qcom/built-in.a
+  AR      drivers/soc/qcom/built-in.a
+  AR      drivers/pinctrl/built-in.a
+  AR      drivers/soc/built-in.a
+  AR      kernel/printk/built-in.a
+  UPD     kernel/config_data
+  GZIP    kernel/config_data.gz
+  CC      kernel/configs.o
+  CC      drivers/input/keyboard/keyboard-samsung-pogo.o
+  CC      drivers/i2c/busses/i2c-qcom-geni.o
+  AR      drivers/input/keyboard/built-in.a
+  AR      drivers/i2c/busses/built-in.a
+  AR      drivers/input/built-in.a
+  AR      drivers/i2c/built-in.a
+  CC      drivers/gpu/drm/panel/panel-samsung-ana38407.o
+  AR      drivers/gpu/drm/panel/built-in.a
+  AR      drivers/gpu/drm/built-in.a
+  AR      drivers/gpu/built-in.a
+  AR      drivers/built-in.a
+  AR      kernel/built-in.a
+  AR      built-in.a
+  AR      built-in-fixup.a
+  COPY    vmlinux.a
+  LD      vmlinux.o
+  GEN     .vmlinux.objs
+  MODPOST Module.symvers
+  CC      .vmlinux.export.o
+  KSYMS   .tmp_vmlinux0.kallsyms.S
+  AS      .tmp_vmlinux0.kallsyms.o
+  LD      .tmp_vmlinux1
+  BTF     .tmp_vmlinux1
+  NM      .tmp_vmlinux1.syms
+  KSYMS   .tmp_vmlinux1.kallsyms.S
+  AS      .tmp_vmlinux1.kallsyms.o
+  LD      .tmp_vmlinux2
+  NM      .tmp_vmlinux2.syms
+  KSYMS   .tmp_vmlinux2.kallsyms.S
+  AS      .tmp_vmlinux2.kallsyms.o
+  LD      vmlinux.unstripped
+  BTFIDS  vmlinux.unstripped
+  NM      System.map
+  SORTTAB vmlinux.unstripped
+  OBJCOPY vmlinux
+  GEN     modules.builtin.modinfo
+  GEN     modules.builtin
+  OBJCOPY arch/arm64/boot/Image
+  GZIP    arch/arm64/boot/Image.gz
+  LD [M]  mm/zsmalloc.ko
+  LD [M]  drivers/gpio/gpio-shared-proxy.ko
+  LD [M]  drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko
+  LD [M]  drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko
+  LD [M]  drivers/clk/qcom/gcc-x1e80100.ko
+  LD [M]  drivers/clk/qcom/camcc-x1p42100.ko
+  LD [M]  drivers/clk/qcom/videocc-x1p42100.ko
+  LD [M]  drivers/block/zram/zram.ko
+  LD [M]  drivers/net/wireless/ath/ath11k/ath11k.ko
+  LD [M]  drivers/net/wireless/ath/ath11k/ath11k_pci.ko
+  LD [M]  drivers/net/wireless/ath/ath.ko
+  BTF [M] mm/zsmalloc.ko
+  BTF [M] drivers/gpio/gpio-shared-proxy.ko
+  BTF [M] drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko
+  BTF [M] drivers/block/zram/zram.ko
+  BTF [M] drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko
+  BTF [M] drivers/clk/qcom/gcc-x1e80100.ko
+  BTF [M] drivers/clk/qcom/camcc-x1p42100.ko
+  BTF [M] drivers/clk/qcom/videocc-x1p42100.ko
+  BTF [M] drivers/net/wireless/ath/ath11k/ath11k_pci.ko
+  BTF [M] drivers/net/wireless/ath/ath.ko
+  BTF [M] drivers/net/wireless/ath/ath11k/ath11k.ko
+  LD [M]  drivers/media/tuners/e4000.ko
+  LD [M]  drivers/media/tuners/fc0011.ko
+  LD [M]  drivers/media/tuners/fc0013.ko
+  LD [M]  drivers/media/tuners/fc0012.ko
+  LD [M]  drivers/media/tuners/fc2580.ko
+  LD [M]  drivers/media/tuners/it913x.ko
+  LD [M]  drivers/media/tuners/m88rs6000t.ko
+  LD [M]  drivers/media/tuners/max2165.ko
+  BTF [M] drivers/media/tuners/e4000.ko
+  BTF [M] drivers/media/tuners/fc0011.ko
+  LD [M]  drivers/media/tuners/mc44s803.ko
+  LD [M]  drivers/media/tuners/msi001.ko
+  BTF [M] drivers/media/tuners/fc0012.ko
+  BTF [M] drivers/media/tuners/fc0013.ko
+  BTF [M] drivers/media/tuners/fc2580.ko
+  BTF [M] drivers/media/tuners/it913x.ko
+  BTF [M] drivers/media/tuners/m88rs6000t.ko
+  BTF [M] drivers/media/tuners/mc44s803.ko
+  BTF [M] drivers/media/tuners/max2165.ko
+  BTF [M] drivers/media/tuners/msi001.ko
+  LD [M]  drivers/media/tuners/mt2060.ko
+  LD [M]  drivers/media/tuners/mt2063.ko
+  LD [M]  drivers/media/tuners/mt20xx.ko
+  BTF [M] drivers/media/tuners/mt2060.ko
+  LD [M]  drivers/media/tuners/mt2131.ko
+  LD [M]  drivers/media/tuners/mt2266.ko
+  LD [M]  drivers/media/tuners/mxl301rf.ko
+  LD [M]  drivers/media/tuners/mxl5005s.ko
+  LD [M]  drivers/media/tuners/mxl5007t.ko
+  LD [M]  drivers/media/tuners/qm1d1b0004.ko
+  LD [M]  drivers/media/tuners/qm1d1c0042.ko
+  BTF [M] drivers/media/tuners/mt2063.ko
+  BTF [M] drivers/media/tuners/mxl301rf.ko
+  BTF [M] drivers/media/tuners/mt2131.ko
+  LD [M]  drivers/media/tuners/qt1010.ko
+  BTF [M] drivers/media/tuners/mt20xx.ko
+  BTF [M] drivers/media/tuners/mt2266.ko
+  BTF [M] drivers/media/tuners/mxl5005s.ko
+  BTF [M] drivers/media/tuners/mxl5007t.ko
+  BTF [M] drivers/media/tuners/qm1d1b0004.ko
+  BTF [M] drivers/media/tuners/qm1d1c0042.ko
+  BTF [M] drivers/media/tuners/qt1010.ko
+  LD [M]  drivers/media/tuners/r820t.ko
+  BTF [M] drivers/media/tuners/r820t.ko
+  LD [M]  drivers/media/tuners/si2157.ko
+  LD [M]  drivers/media/tuners/tuner-simple.ko
+  LD [M]  drivers/media/tuners/tuner-types.ko
+  LD [M]  drivers/media/tuners/tda18212.ko
+  LD [M]  drivers/media/tuners/tda18218.ko
+  LD [M]  drivers/media/tuners/tda18250.ko
+  LD [M]  drivers/media/tuners/tda18271.ko
+  LD [M]  drivers/media/tuners/tda827x.ko
+  BTF [M] drivers/media/tuners/si2157.ko
+  BTF [M] drivers/media/tuners/tuner-simple.ko
+  LD [M]  drivers/media/tuners/tda8290.ko
+  BTF [M] drivers/media/tuners/tuner-types.ko
+  BTF [M] drivers/media/tuners/tda18212.ko
+  BTF [M] drivers/media/tuners/tda18218.ko
+  BTF [M] drivers/media/tuners/tda18250.ko
+  BTF [M] drivers/media/tuners/tda18271.ko
+  BTF [M] drivers/media/tuners/tda827x.ko
+  LD [M]  drivers/media/tuners/tda9887.ko
+  BTF [M] drivers/media/tuners/tda8290.ko
+  BTF [M] drivers/media/tuners/tda9887.ko
+  LD [M]  drivers/media/tuners/tea5761.ko
+  LD [M]  drivers/media/tuners/tea5767.ko
+  BTF [M] drivers/media/tuners/tea5761.ko
+  LD [M]  drivers/media/tuners/tua9001.ko
+  LD [M]  drivers/media/tuners/xc2028.ko
+  LD [M]  drivers/media/tuners/xc4000.ko
+  LD [M]  drivers/media/tuners/xc5000.ko
+  LD [M]  drivers/media/dvb-frontends/a8293.ko
+  BTF [M] drivers/media/tuners/tea5767.ko
+  LD [M]  drivers/media/dvb-frontends/af9033.ko
+  BTF [M] drivers/media/tuners/tua9001.ko
+  BTF [M] drivers/media/tuners/xc2028.ko
+  BTF [M] drivers/media/tuners/xc4000.ko
+  BTF [M] drivers/media/dvb-frontends/a8293.ko
+  LD [M]  drivers/media/dvb-frontends/ascot2e.ko
+  BTF [M] drivers/media/tuners/xc5000.ko
+  LD [M]  drivers/media/dvb-frontends/atbm8830.ko
+  BTF [M] drivers/media/dvb-frontends/af9033.ko
+  LD [M]  drivers/media/dvb-frontends/au8522_common.ko
+  BTF [M] drivers/media/dvb-frontends/ascot2e.ko
+  BTF [M] drivers/media/dvb-frontends/atbm8830.ko
+  BTF [M] drivers/media/dvb-frontends/au8522_common.ko
+  LD [M]  drivers/media/dvb-frontends/au8522_dig.ko
+  LD [M]  drivers/media/dvb-frontends/au8522_decoder.ko
+  LD [M]  drivers/media/dvb-frontends/bcm3510.ko
+  BTF [M] drivers/media/dvb-frontends/au8522_dig.ko
+  LD [M]  drivers/media/dvb-frontends/cx22700.ko
+  LD [M]  drivers/media/dvb-frontends/cx22702.ko
+  LD [M]  drivers/media/dvb-frontends/cx24110.ko
+  BTF [M] drivers/media/dvb-frontends/bcm3510.ko
+  BTF [M] drivers/media/dvb-frontends/au8522_decoder.ko
+  LD [M]  drivers/media/dvb-frontends/cx24116.ko
+  LD [M]  drivers/media/dvb-frontends/cx24117.ko
+  BTF [M] drivers/media/dvb-frontends/cx22700.ko
+  BTF [M] drivers/media/dvb-frontends/cx22702.ko
+  LD [M]  drivers/media/dvb-frontends/cx24120.ko
+  LD [M]  drivers/media/dvb-frontends/cx24123.ko
+  BTF [M] drivers/media/dvb-frontends/cx24117.ko
+  BTF [M] drivers/media/dvb-frontends/cx24110.ko
+  LD [M]  drivers/media/dvb-frontends/cxd2099.ko
+  BTF [M] drivers/media/dvb-frontends/cx24116.ko
+  BTF [M] drivers/media/dvb-frontends/cx24120.ko
+  BTF [M] drivers/media/dvb-frontends/cx24123.ko
+  BTF [M] drivers/media/dvb-frontends/cxd2099.ko
+  LD [M]  drivers/media/dvb-frontends/cxd2820r.ko
+  LD [M]  drivers/media/dvb-frontends/cxd2841er.ko
+  LD [M]  drivers/media/dvb-frontends/cxd2880/cxd2880.ko
+  LD [M]  drivers/media/dvb-frontends/dib3000mb.ko
+  BTF [M] drivers/media/dvb-frontends/cxd2820r.ko
+  LD [M]  drivers/media/dvb-frontends/dib3000mc.ko
+  BTF [M] drivers/media/dvb-frontends/cxd2841er.ko
+  BTF [M] drivers/media/dvb-frontends/cxd2880/cxd2880.ko
+  LD [M]  drivers/media/dvb-frontends/dibx000_common.ko
+  LD [M]  drivers/media/dvb-frontends/dib7000m.ko
+  BTF [M] drivers/media/dvb-frontends/dib3000mb.ko
+  BTF [M] drivers/media/dvb-frontends/dib3000mc.ko
+  BTF [M] drivers/media/dvb-frontends/dibx000_common.ko
+  LD [M]  drivers/media/dvb-frontends/dib7000p.ko
+  BTF [M] drivers/media/dvb-frontends/dib7000m.ko
+  LD [M]  drivers/media/dvb-frontends/dib8000.ko
+  LD [M]  drivers/media/dvb-frontends/dib9000.ko
+  LD [M]  drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko
+  BTF [M] drivers/media/dvb-frontends/dib7000p.ko
+  BTF [M] drivers/media/dvb-frontends/dib8000.ko
+  BTF [M] drivers/media/dvb-frontends/dib9000.ko
+  BTF [M] drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko
+  LD [M]  drivers/media/dvb-frontends/drxd.ko
+  LD [M]  drivers/media/dvb-frontends/drxk.ko
+  LD [M]  drivers/media/dvb-frontends/ds3000.ko
+  LD [M]  drivers/media/dvb-frontends/ec100.ko
+  LD [M]  drivers/media/dvb-frontends/helene.ko
+  LD [M]  drivers/media/dvb-frontends/horus3a.ko
+  BTF [M] drivers/media/dvb-frontends/drxd.ko
+  BTF [M] drivers/media/dvb-frontends/ds3000.ko
+  BTF [M] drivers/media/dvb-frontends/drxk.ko
+  BTF [M] drivers/media/dvb-frontends/ec100.ko
+  BTF [M] drivers/media/dvb-frontends/helene.ko
+  LD [M]  drivers/media/dvb-frontends/isl6405.ko
+  BTF [M] drivers/media/dvb-frontends/horus3a.ko
+  LD [M]  drivers/media/dvb-frontends/isl6421.ko
+  BTF [M] drivers/media/dvb-frontends/isl6405.ko
+  LD [M]  drivers/media/dvb-frontends/isl6423.ko
+  LD [M]  drivers/media/dvb-frontends/ix2505v.ko
+  BTF [M] drivers/media/dvb-frontends/isl6421.ko
+  LD [M]  drivers/media/dvb-frontends/l64781.ko
+  BTF [M] drivers/media/dvb-frontends/isl6423.ko
+  BTF [M] drivers/media/dvb-frontends/ix2505v.ko
+  BTF [M] drivers/media/dvb-frontends/l64781.ko
+  LD [M]  drivers/media/dvb-frontends/lg2160.ko
+  LD [M]  drivers/media/dvb-frontends/lgdt3305.ko
+  LD [M]  drivers/media/dvb-frontends/lgdt330x.ko
+  LD [M]  drivers/media/dvb-frontends/lgs8gl5.ko
+  LD [M]  drivers/media/dvb-frontends/lgs8gxx.ko
+  BTF [M] drivers/media/dvb-frontends/lg2160.ko
+  BTF [M] drivers/media/dvb-frontends/lgdt330x.ko
+  BTF [M] drivers/media/dvb-frontends/lgs8gl5.ko
+  BTF [M] drivers/media/dvb-frontends/lgdt3305.ko
+  LD [M]  drivers/media/dvb-frontends/lnbh25.ko
+  LD [M]  drivers/media/dvb-frontends/lnbh29.ko
+  BTF [M] drivers/media/dvb-frontends/lgs8gxx.ko
+  BTF [M] drivers/media/dvb-frontends/lnbh25.ko
+  BTF [M] drivers/media/dvb-frontends/lnbh29.ko
+  LD [M]  drivers/media/dvb-frontends/lnbp21.ko
+  LD [M]  drivers/media/dvb-frontends/lnbp22.ko
+  LD [M]  drivers/media/dvb-frontends/m88rs2000.ko
+  LD [M]  drivers/media/dvb-frontends/mb86a16.ko
+  BTF [M] drivers/media/dvb-frontends/lnbp21.ko
+  BTF [M] drivers/media/dvb-frontends/lnbp22.ko
+  BTF [M] drivers/media/dvb-frontends/m88rs2000.ko
+  BTF [M] drivers/media/dvb-frontends/mb86a16.ko
+  LD [M]  drivers/media/dvb-frontends/mb86a20s.ko
+  LD [M]  drivers/media/dvb-frontends/mn88443x.ko
+  LD [M]  drivers/media/dvb-frontends/mn88472.ko
+  LD [M]  drivers/media/dvb-frontends/mn88473.ko
+  BTF [M] drivers/media/dvb-frontends/mb86a20s.ko
+  LD [M]  drivers/media/dvb-frontends/mt312.ko
+  BTF [M] drivers/media/dvb-frontends/mn88443x.ko
+  LD [M]  drivers/media/dvb-frontends/mt352.ko
+  BTF [M] drivers/media/dvb-frontends/mn88472.ko
+  LD [M]  drivers/media/dvb-frontends/mxl5xx.ko
+  BTF [M] drivers/media/dvb-frontends/mn88473.ko
+  BTF [M] drivers/media/dvb-frontends/mt312.ko
+  BTF [M] drivers/media/dvb-frontends/mxl5xx.ko
+  BTF [M] drivers/media/dvb-frontends/mt352.ko
+  LD [M]  drivers/media/dvb-frontends/mxl692.ko
+  LD [M]  drivers/media/dvb-frontends/nxt200x.ko
+  LD [M]  drivers/media/dvb-frontends/nxt6000.ko
+  BTF [M] drivers/media/dvb-frontends/mxl692.ko
+  LD [M]  drivers/media/dvb-frontends/or51132.ko
+  BTF [M] drivers/media/dvb-frontends/nxt200x.ko
+  BTF [M] drivers/media/dvb-frontends/nxt6000.ko
+  BTF [M] drivers/media/dvb-frontends/or51132.ko
+  LD [M]  drivers/media/dvb-frontends/or51211.ko
+  LD [M]  drivers/media/dvb-frontends/dvb-pll.ko
+  BTF [M] drivers/media/dvb-frontends/or51211.ko
+  BTF [M] drivers/media/dvb-frontends/dvb-pll.ko
+  LD [M]  drivers/media/dvb-frontends/s5h1409.ko
+  LD [M]  drivers/media/dvb-frontends/s5h1411.ko
+  LD [M]  drivers/media/dvb-frontends/s5h1420.ko
+  LD [M]  drivers/media/dvb-frontends/s5h1432.ko
+  LD [M]  drivers/media/dvb-frontends/s921.ko
+  BTF [M] drivers/media/dvb-frontends/s5h1409.ko
+  BTF [M] drivers/media/dvb-frontends/s5h1411.ko
+  BTF [M] drivers/media/dvb-frontends/s5h1420.ko
+  BTF [M] drivers/media/dvb-frontends/s5h1432.ko
+  LD [M]  drivers/media/dvb-frontends/si2165.ko
+  BTF [M] drivers/media/dvb-frontends/s921.ko
+  LD [M]  drivers/media/dvb-frontends/si21xx.ko
+  BTF [M] drivers/media/dvb-frontends/si2165.ko
+  BTF [M] drivers/media/dvb-frontends/si21xx.ko
+  LD [M]  drivers/media/dvb-frontends/sp2.ko
+  LD [M]  drivers/media/dvb-frontends/sp887x.ko
+  BTF [M] drivers/media/dvb-frontends/sp887x.ko
+  BTF [M] drivers/media/dvb-frontends/sp2.ko
+  LD [M]  drivers/media/dvb-frontends/stb0899.ko
+  LD [M]  drivers/media/dvb-frontends/stb6000.ko
+  BTF [M] drivers/media/dvb-frontends/stb0899.ko
+  LD [M]  drivers/media/dvb-frontends/stb6100.ko
+  LD [M]  drivers/media/dvb-frontends/stv0288.ko
+  BTF [M] drivers/media/dvb-frontends/stb6000.ko
+  BTF [M] drivers/media/dvb-frontends/stb6100.ko
+  LD [M]  drivers/media/dvb-frontends/stv0297.ko
+  LD [M]  drivers/media/dvb-frontends/stv0299.ko
+  BTF [M] drivers/media/dvb-frontends/stv0288.ko
+  BTF [M] drivers/media/dvb-frontends/stv0297.ko
+  LD [M]  drivers/media/dvb-frontends/stv0367.ko
+  LD [M]  drivers/media/dvb-frontends/stv0900.ko
+  LD [M]  drivers/media/dvb-frontends/stv090x.ko
+  BTF [M] drivers/media/dvb-frontends/stv0299.ko
+  BTF [M] drivers/media/dvb-frontends/stv0367.ko
+  BTF [M] drivers/media/dvb-frontends/stv090x.ko
+  BTF [M] drivers/media/dvb-frontends/stv0900.ko
+  LD [M]  drivers/media/dvb-frontends/stv0910.ko
+  LD [M]  drivers/media/dvb-frontends/stv6110.ko
+  BTF [M] drivers/media/dvb-frontends/stv0910.ko
+  BTF [M] drivers/media/dvb-frontends/stv6110.ko
+  LD [M]  drivers/media/dvb-frontends/stv6110x.ko
+  LD [M]  drivers/media/dvb-frontends/stv6111.ko
+  LD [M]  drivers/media/dvb-frontends/tc90522.ko
+  LD [M]  drivers/media/dvb-frontends/tda10021.ko
+  BTF [M] drivers/media/dvb-frontends/stv6110x.ko
+  BTF [M] drivers/media/dvb-frontends/stv6111.ko
+  LD [M]  drivers/media/dvb-frontends/tda10023.ko
+  BTF [M] drivers/media/dvb-frontends/tc90522.ko
+  BTF [M] drivers/media/dvb-frontends/tda10021.ko
+  BTF [M] drivers/media/dvb-frontends/tda10023.ko
+  LD [M]  drivers/media/dvb-frontends/tda10048.ko
+  LD [M]  drivers/media/dvb-frontends/tda1004x.ko
+  LD [M]  drivers/media/dvb-frontends/tda10071.ko
+  LD [M]  drivers/media/dvb-frontends/tda10086.ko
+  LD [M]  drivers/media/dvb-frontends/tda18271c2dd.ko
+  BTF [M] drivers/media/dvb-frontends/tda10048.ko
+  BTF [M] drivers/media/dvb-frontends/tda10071.ko
+  BTF [M] drivers/media/dvb-frontends/tda1004x.ko
+  BTF [M] drivers/media/dvb-frontends/tda10086.ko
+  BTF [M] drivers/media/dvb-frontends/tda18271c2dd.ko
+  LD [M]  drivers/media/dvb-frontends/tda665x.ko
+  LD [M]  drivers/media/dvb-frontends/tda8083.ko
+  BTF [M] drivers/media/dvb-frontends/tda665x.ko
+  BTF [M] drivers/media/dvb-frontends/tda8083.ko
+  LD [M]  drivers/media/dvb-frontends/tda8261.ko
+  LD [M]  drivers/media/dvb-frontends/tda826x.ko
+  LD [M]  drivers/media/dvb-frontends/ts2020.ko
+  LD [M]  drivers/media/dvb-frontends/tua6100.ko
+  BTF [M] drivers/media/dvb-frontends/tda8261.ko
+  BTF [M] drivers/media/dvb-frontends/ts2020.ko
+  BTF [M] drivers/media/dvb-frontends/tda826x.ko
+  LD [M]  drivers/media/dvb-frontends/cx24113.ko
+  BTF [M] drivers/media/dvb-frontends/tua6100.ko
+  BTF [M] drivers/media/dvb-frontends/cx24113.ko
+  LD [M]  drivers/media/dvb-frontends/dib0070.ko
+  LD [M]  drivers/media/dvb-frontends/dib0090.ko
+  LD [M]  drivers/media/dvb-frontends/itd1000.ko
+  LD [M]  drivers/media/dvb-frontends/ves1820.ko
+  BTF [M] drivers/media/dvb-frontends/dib0070.ko
+  LD [M]  drivers/media/dvb-frontends/ves1x93.ko
+  BTF [M] drivers/media/dvb-frontends/itd1000.ko
+  BTF [M] drivers/media/dvb-frontends/dib0090.ko
+  BTF [M] drivers/media/dvb-frontends/ves1820.ko
+  BTF [M] drivers/media/dvb-frontends/ves1x93.ko
+  LD [M]  drivers/media/dvb-frontends/zd1301_demod.ko
+  LD [M]  drivers/media/dvb-frontends/zl10036.ko
+  BTF [M] drivers/media/dvb-frontends/zd1301_demod.ko
+  BTF [M] drivers/media/dvb-frontends/zl10036.ko
+  LD [M]  drivers/media/dvb-frontends/zl10039.ko
+  LD [M]  drivers/media/dvb-frontends/zl10353.ko
+  LD [M]  drivers/media/spi/cxd2880-spi.ko
+  LD [M]  drivers/power/sequencing/pwrseq-qcom-wcn.ko
+  LD [M]  drivers/bluetooth/hci_uart.ko
+  BTF [M] drivers/media/dvb-frontends/zl10039.ko
+  BTF [M] drivers/media/spi/cxd2880-spi.ko
+  BTF [M] drivers/media/dvb-frontends/zl10353.ko
+  BTF [M] drivers/power/sequencing/pwrseq-qcom-wcn.ko
+  BTF [M] drivers/bluetooth/hci_uart.ko
+  LD [M]  drivers/bluetooth/btsdio.ko
+  LD [M]  drivers/bluetooth/btbcm.ko
+  LD [M]  drivers/bluetooth/btqca.ko
+  BTF [M] drivers/bluetooth/btbcm.ko
+  LD [M]  net/wireless/cfg80211.ko
+  LD [M]  net/qrtr/qrtr-mhi.ko
+  BTF [M] drivers/bluetooth/btsdio.ko
+  BTF [M] drivers/bluetooth/btqca.ko
+  BTF [M] net/qrtr/qrtr-mhi.ko
+  LD [M]  net/bluetooth/bluetooth.ko
+  LD [M]  net/mac80211/mac80211.ko
+  BTF [M] net/wireless/cfg80211.ko
+  BTF [M] net/bluetooth/bluetooth.ko
+  BTF [M] net/mac80211/mac80211.ko
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+  SYMLINK /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/build
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/modules.order
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/modules.builtin
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/modules.builtin.modinfo
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/mm/zsmalloc.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/mm/zsmalloc.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/gpio/gpio-shared-proxy.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/gpio/gpio-shared-proxy.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/gcc-x1e80100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/gcc-x1e80100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/camcc-x1p42100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/camcc-x1p42100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/videocc-x1p42100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/clk/qcom/videocc-x1p42100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/block/zram/zram.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/block/zram/zram.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/e4000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/e4000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0011.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0011.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0012.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0012.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0013.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc0013.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc2580.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/fc2580.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/it913x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/it913x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/m88rs6000t.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/m88rs6000t.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/max2165.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/max2165.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mc44s803.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mc44s803.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/msi001.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/msi001.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2060.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2060.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2063.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2063.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt20xx.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt20xx.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2131.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2131.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2266.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mt2266.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl301rf.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl301rf.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl5005s.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl5005s.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl5007t.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/mxl5007t.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qm1d1b0004.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qm1d1b0004.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qm1d1c0042.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qm1d1c0042.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qt1010.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/qt1010.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/r820t.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/r820t.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/si2157.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/si2157.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tuner-simple.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tuner-simple.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tuner-types.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tuner-types.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18212.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18212.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18218.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18218.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18250.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18250.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18271.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda18271.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda827x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda827x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda8290.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda8290.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda9887.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tda9887.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tea5761.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tea5761.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tea5767.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tea5767.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tua9001.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/tua9001.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc2028.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc2028.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc4000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc4000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc5000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/tuners/xc5000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/a8293.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/a8293.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/af9033.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/af9033.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ascot2e.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ascot2e.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/atbm8830.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/atbm8830.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_common.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_common.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_dig.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_dig.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_decoder.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/au8522_decoder.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/bcm3510.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/bcm3510.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx22700.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx22700.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx22702.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx22702.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24110.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24110.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24116.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24116.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24117.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24117.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24120.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24120.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24123.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24123.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2099.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2099.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2820r.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2820r.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2841er.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2841er.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib3000mb.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib3000mb.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib3000mc.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib3000mc.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dibx000_common.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dibx000_common.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib7000m.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib7000m.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib7000p.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib7000p.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib8000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib8000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib9000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib9000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drxd.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drxd.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drxk.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/drxk.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ds3000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ds3000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ec100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ec100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/helene.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/helene.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/horus3a.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/horus3a.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6405.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6405.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6421.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6421.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6423.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/isl6423.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ix2505v.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ix2505v.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/l64781.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/l64781.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lg2160.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lg2160.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgdt3305.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgdt3305.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgdt330x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgdt330x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgs8gl5.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgs8gl5.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgs8gxx.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lgs8gxx.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbh25.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbh25.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbh29.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbh29.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbp21.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbp21.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbp22.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/lnbp22.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/m88rs2000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/m88rs2000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mb86a16.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mb86a16.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mb86a20s.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mb86a20s.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88443x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88443x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88472.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88472.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88473.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mn88473.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mt312.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mt312.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mt352.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mt352.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mxl5xx.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mxl5xx.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mxl692.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/mxl692.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/nxt200x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/nxt200x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/nxt6000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/nxt6000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/or51132.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/or51132.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/or51211.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/or51211.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dvb-pll.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dvb-pll.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1409.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1409.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1411.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1411.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1420.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1420.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1432.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s5h1432.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s921.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/s921.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/si2165.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/si2165.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/si21xx.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/si21xx.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/sp2.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/sp2.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/sp887x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/sp887x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb0899.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb0899.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb6000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb6000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb6100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stb6100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0288.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0288.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0297.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0297.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0299.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0299.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0367.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0367.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0900.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0900.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv090x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv090x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0910.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv0910.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6110.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6110.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6110x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6110x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6111.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/stv6111.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tc90522.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tc90522.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10021.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10021.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10023.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10023.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10048.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10048.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda1004x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda1004x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10071.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10071.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10086.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda10086.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda18271c2dd.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda18271c2dd.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda665x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda665x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda8083.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda8083.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda8261.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda8261.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda826x.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tda826x.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ts2020.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ts2020.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tua6100.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/tua6100.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24113.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/cx24113.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib0070.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib0070.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib0090.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/dib0090.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/itd1000.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/itd1000.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ves1820.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ves1820.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ves1x93.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/ves1x93.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zd1301_demod.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zd1301_demod.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10036.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10036.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10039.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10039.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10353.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/dvb-frontends/zl10353.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/spi/cxd2880-spi.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/media/spi/cxd2880-spi.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/hci_uart.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/hci_uart.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btsdio.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btsdio.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btbcm.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btbcm.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btqca.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btqca.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/wireless/cfg80211.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/wireless/cfg80211.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/qrtr/qrtr-mhi.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/qrtr/qrtr-mhi.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/bluetooth/bluetooth.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/bluetooth/bluetooth.ko
+  INSTALL /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/mac80211/mac80211.ko
+  SIGN    /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/mac80211/mac80211.ko
+  DEPMOD  /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+
+Build complete
+  release: 7.2.0-rc3-gts9wifi-dirty
+  output : /home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi
+
+1c5d381391bb29a24eceb461d776b47893e919fca443a05647be253546fee0af  Image.gz
+de9055acbb1ae42ff69d1af8656265b986dd679c7a367fe201955aac76e59499  sm8550-samsung-gts9wifi.dtb
+e8d3fd612d9e0612296a32040f29217b3d7f12eda92b0f52f772710458aec72a  config
+b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658  kernel.release
