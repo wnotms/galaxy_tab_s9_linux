@@ -110,6 +110,8 @@ struct samsung_pogo {
  unsigned int stuck_fails;
  int conn_level;
  unsigned long last_rearm;
+ int conn_same;
+ bool reconnect;
 };
 static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never

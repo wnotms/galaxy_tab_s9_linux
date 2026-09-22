@@ -84,6 +84,8 @@ struct samsung_pogo {
 	bool rearm_pending;
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
+	int conn_same;
+	bool reconnect;
 	unsigned long last_rearm;
 	int connect_irq;
 	bool powered;
@@ -241,6 +243,29 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 	int conn, ret, i;
 
 	mutex_lock(&p->lock);
+	if (p->reconnect) {
+		/*
+		 * A reconnect is not a cold start.  The vendor A/B measured what stock
+		 * does when the cover comes back (test 110): stm32_keyboard_connect(1)
+		 * raises the rail and arms the interrupt and nothing else - no rail
+		 * drop, no NRST - and the application announces 0.2 s later.  Driving
+		 * the reset sequence into a freshly powered part is what this port got
+		 * wrong: it interrupted an application that was starting correctly,
+		 * which is why re-seating left the keyboard dead.
+		 */
+		p->reconnect = false;
+		if (regulator_enable(p->vdd))
+			dev_warn(&p->client->dev, "reconnect: could not raise the rail\n");
+		else
+			p->powered = true;
+		msleep(50);
+		p->event_enabled = true;
+		mutex_unlock(&p->lock);
+		enable_irq(p->client->irq);
+		dev_info(&p->client->dev,
+			 "reconnect: rail on and DATA armed, no reset\n");
+		return;
+	}
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
@@ -568,26 +593,38 @@ static void pogo_watch_work(struct work_struct *work)
 				stable = false;
 		}
 		/*
-		 * Observe the level only.  Test 106: re-arming on any change of this
-		 * line was a mistake - it toggles at about 10 Hz on this hardware
-		 * (1492-2431 edge interrupts per boot) even with the cover seated, so
-		 * that rule reset a working keyboard every ten seconds and the owner
-		 * saw no keys at all after boot.  Nothing re-arms on this line any more;
-		 * the one automatic re-arm left needs the application to be *asserting*
-		 * announce while refusing to answer.
+		 * Debounced connect state, as stock's stm32_check_conn_work does: the line
+		 * is *sampled* (it carries 1492-2431 edges per boot, so edges are useless
+		 * here) and only a state change surviving two consecutive samples acts.  A
+		 * detach is logged; a re-attach brings the keyboard back the way stock
+		 * does - rail on and DATA armed, no reset at all - because a hot-plugged
+		 * MCU has just been powered with BOOT0 low and is already running its
+		 * application (vendor A/B, test 110).
 		 */
-		p->conn_level = level;
-		if (stable && !p->conn_attached) {
-			dev_info(&p->client->dev,
-				 "cover re-seated (connect line stable after instability); re-arming the application\n");
-			rearm = true;
-			p->rearm_pending = true;
-			p->powered = false;
-			p->event_enabled = false;
-			p->ready = false;
-			p->poll_fails = 0;
+		if (level != p->conn_level) {
+			if (++p->conn_same >= 2) {
+				p->conn_level = level;
+				p->conn_same = 0;
+				p->conn_attached = stable;
+				if (level) {
+					dev_info(&p->client->dev,
+						 "cover re-attached (connect line %d after a debounce): bringing it up without a reset\n",
+						 level);
+					rearm = true;
+					p->reconnect = true;
+					p->powered = false;
+					p->event_enabled = false;
+					p->ready = false;
+					p->poll_fails = 0;
+				} else {
+					dev_info(&p->client->dev,
+						 "cover detached (connect line %d); keys stop until it is back\n",
+						 level);
+				}
+			}
+		} else {
+			p->conn_same = 0;
 		}
-		p->conn_attached = stable;
 	}
 	if (!rearm && p->powered && p->event_enabled) {
 		/*
@@ -615,7 +652,7 @@ static void pogo_watch_work(struct work_struct *work)
 			 * re-armed with the long sequence.
 			 */
 			if (pogo_announce_level(p)) {
-				if (++p->stuck_fails >= 2) {
+				if (!p->reconnect && ++p->stuck_fails >= 2) {
 					dev_info(&p->client->dev,
 						 "application asserts announce but does not answer; re-arming\n");
 					p->stuck_fails = 0;
@@ -1420,6 +1457,9 @@ static int pogo_probe(struct i2c_client *client)
 	 * up.  Only instability followed by stability is a re-seat.
 	 */
 	p->conn_attached = true;
+	/* Remember the level now, so the first sampling tick cannot read a change
+	   that never happened and disturb the boot bring-up. */
+	p->conn_level = gpiod_get_value_cansleep(p->connected);
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
