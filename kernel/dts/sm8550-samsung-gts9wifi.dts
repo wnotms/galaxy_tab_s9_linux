@@ -1932,14 +1932,18 @@
 		function = "gpio";
 		drive-strength = <2>;
 		/*
-		 * The vendor's ldo_gpio1 state drives this pin high, and it has to
-		 * be here as well: without it the pin comes out of the TLMM probe
-		 * low, the keyboard's rail is unpowered until the regulator
-		 * happens to be enabled, and the MCU never answers - mainline saw
-		 * a clean NACK at 0x2a and a bus scan that found nothing, while
-		 * TWRP's stock kernel enumerated the same cover (test 045).
+		 * Deliberately *not* output-high.  Samsung's own node does drive
+		 * this pin high from a pinctrl state, but that applies at the
+		 * fixed regulator's probe - before the pogo driver has applied
+		 * its own pinctrl state and so before gpio12 (SWCLK, the MCU's
+		 * BOOT0) is driven low.  The stock driver instead switches the
+		 * rail in stm32_interrupt_init(), i.e. after it owns those pins,
+		 * and test 055 showed that on this device stock reaches a working
+		 * application without ever entering the bootloader.  Leaving the
+		 * pin to the regulator makes mainline power the MCU at the same
+		 * point in the same order: pins configured, then rail on, then
+		 * NRST released.
 		 */
-		output-high;
 		bias-disable;
 	};
 

@@ -111,7 +111,7 @@ static int startup_delay;
 static int reset_gpio;
 static int phase, transfers, fail_at, fail_value, bad_ack;
 static int resets, entries, recoveries, app, app_after_reset;
-static int aborts, app_header, cycles;
+static int aborts, app_header;
 static int enables, power_error, entry_failure, mode = 1;
 static void mutex_lock(int *p) {}
 static void mutex_unlock(int *p) {}
@@ -130,9 +130,6 @@ static void gpiod_set_value_cansleep(int *p, int v) {
 static int regulator_enable(int *p) { return power_error; }
 static void enable_irq(int irq) { enables++; }
 static void pogo_recover_bus(struct samsung_pogo *p) { recoveries++; }
-/* The power cycle moves the rail and both reset pins; the reset path is
-   already covered by the disconnect tests. */
-static void pogo_power_cycle(struct samsung_pogo *p) { cycles++; }
 /* Diagnostics: the header dump and the interface report read flash and the
    bootloader again, which the READ tests above already cover byte for byte. */
 static void pogo_boot_dump_header(struct samsung_pogo *p) {}
@@ -202,7 +199,7 @@ static void clear(struct samsung_pogo *p) {
  jiffies = app_ready_at = startup_delay = 0;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
- aborts = app_header = cycles = 0;
+ aborts = app_header = 0;
  /* The application starts when NRST is pulsed with BOOT0 low. */
  app_after_reset = 1; mode = POGO_MODE_APP;
  p->powered = p->ready = p->event_enabled = false;
@@ -240,19 +237,20 @@ int main(void) {
  /* Both startup success paths must set ready without resetting the app. */
  clear(&p); app=1;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && p.event_enabled && enables == 1 && !resets && !entries && !recoveries);
- pogo_connect_work(&p.connect_work.work); assert(enables == 1 && !resets);
- /* An application that never answers is waited for, then the bootloader is
-    entered once, and its disconnect - not a GO - starts the application. */
- clear(&p);
+ /* The power-up asserts NRST once, with BOOT0 low; nothing else is touched. */
+ assert(p.ready && p.event_enabled && enables == 1 && resets == 1 && !entries && !recoveries);
+ pogo_connect_work(&p.connect_work.work); assert(enables == 1 && resets == 1);
+ /* An application that never answers is waited for twice (before and after the
+    one bootloader visit), and readiness is not claimed. */
+ clear(&p); app_after_reset=0;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && p.event_enabled && entries == 1 && recoveries == 1 && phase == 11);
- assert(resets == 1);
- /* An application needing two seconds is waited for, and nothing is reset:
-    the bootloader is only entered when the application never answers. */
- clear(&p); app_ready_at = 2000;
+ assert(!p.ready && entries == 1 && recoveries == 2 && phase == 11);
+ assert(resets == 2);
+ /* An application needing two seconds after the power-up is waited for, and
+    the bootloader is never entered. */
+ clear(&p); startup_delay = 2000;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && !resets && !entries && recoveries == 1 && jiffies >= 2000 && jiffies < 2100);
+ assert(p.ready && resets == 1 && !entries && recoveries == 1 && jiffies >= 2000 && jiffies < 2300);
  /* Absence is bounded, and polling itself never manipulates reset or bus. */
  clear(&p);
  assert(pogo_wait_application(&p, "test", 5000) == -ENXIO);
@@ -265,21 +263,20 @@ int main(void) {
  pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
  clear(&p); fail_at=4; fail_value=-ETIMEDOUT;
  pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
- /* The patient poll fails first, then the probe starts the application by
-    reset, and the caller sees it ready. */
+ /* The power-up alone brings the application up: no bootloader, no retry. */
  clear(&p);
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && resets == 1 && recoveries == 1);
+ assert(p.ready && resets == 1 && !entries && !recoveries);
  clear(&p); entry_failure=1;
  pogo_bootloader_probe(&p); assert(!transfers && !app);
  clear(&p); power_error=-EIO;
  pogo_connect_work(&p.connect_work.work); assert(!p.powered && !enables && !entries);
  clear(&p); app=1; mode=0;
- pogo_connect_work(&p.connect_work.work); assert(!p.ready && !resets);
+ pogo_connect_work(&p.connect_work.work); assert(!p.ready && resets == 1);
  /* A part left in DFU is told to start the application, stock's ABORT write. */
  clear(&p); app=1; mode=POGO_MODE_DFU;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && aborts == 1 && mode == POGO_MODE_APP && !resets);
+ assert(p.ready && aborts == 1 && mode == POGO_MODE_APP && resets == 1);
  clear(&p); app_after_reset=0; p.ready=true;
  assert(pogo_read_mcu(&p) == -ENXIO && !p.ready && recoveries == 1);
  return 0;

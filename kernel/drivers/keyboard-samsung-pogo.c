@@ -73,7 +73,6 @@ struct samsung_pogo {
 };
 
 static int pogo_read_mcu(struct samsung_pogo *p);
-static void pogo_power_cycle(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
@@ -174,19 +173,25 @@ static void pogo_connect_work(struct work_struct *work)
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
-		 * Ask the application first, without changing anything: it is the
-		 * bootloader that starts it, and every reset this port performs is
-		 * a chance to restart that from the beginning.
+		 * Power the MCU up in the order the stock driver uses: BOOT0 low
+		 * and NRST asserted first, then the rail.  gpio10 has no
+		 * output-high pinctrl state any more (see the board DTS), so this
+		 * is the MCU's power-on, and it is the only reset that can still
+		 * change this part's boot source.  Nothing else - no SWCLK dance,
+		 * no GO, no reset loop - is attempted before the application is
+		 * given its chance to answer.
 		 */
+		gpiod_set_value_cansleep(p->swclk, 0);
+		gpiod_set_value_cansleep(p->nrst, 0);
+		msleep(20);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
-			msleep(20);
-			pogo_power_cycle(p);
-			/*
-			 * Ask the application first and give it time: it is the
-			 * bootloader that starts it, and every reset this port
-			 * performs is a chance to restart that from the beginning.
-			 */
+			msleep(50);
+			gpiod_set_value_cansleep(p->nrst, 1);
+			msleep(150);
+			dev_info(&p->client->dev,
+				 "MCU powered up with BOOT0 low and NRST released\n");
+			/* Now let the application answer on its own. */
 			ret = pogo_read_mcu(p);
 			if (!ret) {
 				dev_info(&p->client->dev,
@@ -404,32 +409,6 @@ static void pogo_boot_report(struct samsung_pogo *p, const char *stage)
 	boot = pogo_boot_version(p, &boot_version);
 	dev_info(&p->client->dev, "%s: application %d, bootloader %d, connect %d\n",
 		 stage, app, boot, gpiod_get_value_cansleep(p->connected));
-}
-
-/*
- * Give the MCU a real power-on with BOOT0 low.
- *
- * The rail is the STM32's own logic supply (stm32_vddo, gpio10) and Samsung's
- * driver powers it down and up too.  A power-on reset is the one reset that can
- * still change the boot source on parts whose option bytes select the software
- * BOOT0: an NRST pulse cannot, which is why the dance, the disconnect and the
- * GO never brought the application up under mainline.  SWCLK (BOOT0) is driven
- * low and NRST is held asserted while the rail returns, so the part comes up the
- * way the stock stack leaves it.
- */
-static void pogo_power_cycle(struct samsung_pogo *p)
-{
-	/* The rail is already enabled by the caller, so this pair really moves it. */
-	regulator_disable(p->vdd);
-	gpiod_set_value_cansleep(p->swclk, 0);
-	gpiod_set_value_cansleep(p->nrst, 0);
-	msleep(50);
-	if (regulator_enable(p->vdd))
-		dev_err(&p->client->dev, "power cycle: the MCU rail did not come back\n");
-	msleep(50);
-	gpiod_set_value_cansleep(p->nrst, 1);
-	msleep(150);
-	dev_info(&p->client->dev, "MCU powered up again with BOOT0 low\n");
 }
 
 /*
