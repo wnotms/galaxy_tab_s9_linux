@@ -192,9 +192,17 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   unknown command 0xFF it resets into the bootloader again, without another
   probe, before issuing commands. The follow-up candidate now mirrors that
   sequence, tested against the actual GPIO/reset helper on the host.
-  **Next step:** test the post-probe reset candidate, capture application
-  version/mode and then real key-down/key-up events. No key has been typed
-  through this driver yet; offline tests do not change that status.
+  Test 047 (`reference/boot-tests/test-047-20260922T060344Z/`) validates that
+  correction: the full version exchange returns 0x12 and both GO command/address
+  ACKs succeed. Application 0x2a still NAKs after 150 ms; the fallback resets it
+  and 40 further retries fail. The owner confirmed the keyboard stayed attached
+  and unfolded. Pretest TWRP identifies EF-DX710, firmware 34, con:1/1, rst:0.
+  Both tests returned safely to TWRP; 1d8a977 remains installed with read-back
+  hashes verified. No key has been typed through mainline yet.
+  **Next step:** investigate application startup after the acknowledged GO.
+  Allow bounded polling without further reset before concluding it never starts;
+  consider read-only MCU identification/vector-table inspection if needed.
+  A GO ACK alone proves neither execution nor a valid application target.
 - **Display regression, found and fixed (2026-09-22, round 5).**  The owner
   reported a blank screen; `display_recover` was cycling the framebuffer as soon as
   `fb0` appeared, 5.91 s, before the panel driver's first read at 6.29 s, and had

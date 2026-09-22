@@ -1,0 +1,273 @@
+2026-09-22T06:06:19Z console open on COM17
+2026-09-22T06:06:22Z SENT  cat /proc/uptime; dmesg | grep -E "pogo|89c000"
+2026-09-22T06:06:22Z RECV  cat /proc/uptime; dmesg | grep -E "pogo|89c000"
+2026-09-22T06:06:22Z RECV  99.28 784.12
+2026-09-22T06:06:22Z RECV  [    3.049138][   T76] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T06:06:22Z RECV  [    4.066874][   T51] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T06:06:22Z RECV  [    4.299989][   T51] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T06:06:22Z RECV  [    4.312137][   T51] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T06:06:22Z RECV  [    4.325562][   T51] samsung-pogo-keyboard 5-002a: MCU bootloader accepted GO 0x08000000, application should be running
+2026-09-22T06:06:22Z RECV  [    4.497567][   T51] samsung-pogo-keyboard 5-002a: application after GO: -6 (not running)
+2026-09-22T06:06:22Z RECV  [    4.685084][   T51] samsung-pogo-keyboard 5-002a: application after the reset entry: -6 (still not running)
+2026-09-22T06:06:22Z RECV  [    4.693344][   T51] sm8550-tlmm f100000.pinctrl: pin GPIO_72 already requested by 89c000.i2c; cannot claim for 5-002a
+2026-09-22T06:06:22Z RECV  [    4.719278][   T51] samsung-pogo-keyboard 5-002a: error -EINVAL: Error applying setting, reverse things back
+2026-09-22T06:06:22Z RECV  [    4.772016][   T51] samsung-pogo-keyboard 5-002a: attempt 0 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    4.857267][   T51] samsung-pogo-keyboard 5-002a: attempt 1 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    4.933250][   T51] samsung-pogo-keyboard 5-002a: attempt 2 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.004823][   T51] samsung-pogo-keyboard 5-002a: attempt 3 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.098759][   T51] samsung-pogo-keyboard 5-002a: attempt 4 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.473885][   T51] samsung-pogo-keyboard 5-002a: attempt 5 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.537375][   T51] samsung-pogo-keyboard 5-002a: attempt 6 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.601111][   T51] samsung-pogo-keyboard 5-002a: attempt 7 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.665422][   T51] samsung-pogo-keyboard 5-002a: attempt 8 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    5.741419][   T51] samsung-pogo-keyboard 5-002a: attempt 9 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:06:22Z RECV  [    7.796288][   T51] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T06:06:22Z RECV  [    7.829153][   T51] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T06:06:31Z SENT  cat /sys/kernel/debug/gpio; cat /proc/interrupts | grep -E "002a|pogo|89c000"
+2026-09-22T06:06:31Z RECV  gts9# [6ncat /sys/kernel/debug/gpio; cat /proc/interrupts | grep -E "002a|pogo|89c0
+2026-09-22T06:06:31Z RECV  00"
+2026-09-22T06:06:31Z RECV  gpiochip0: 12 GPIOs, parent: platform/c400000.spmi:pmic@1:gpio@8800, c400000.spmi:pmic@1:gpio@8800:
+2026-09-22T06:06:31Z RECV   gpio1 : out  high normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio3 : out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio4 : out  high normal  vin-1 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio5 : in   low  normal  vin-0 pull-up 31.5uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio6 : in   high normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio7 : out  high func1   vin-1 no pull                     push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio8 : in   high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio9 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio10: in   high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio11: out  high normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio12: in   low  normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV  
+2026-09-22T06:06:31Z RECV  gpiochip1: 6 GPIOs, parent: platform/c400000.spmi:pmic@3:gpio@8800, c400000.spmi:pmic@3:gpio@8800:
+2026-09-22T06:06:31Z RECV   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio4 : out  high normal  vin-1 no pull                     push-pull  medium  atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio5 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio6 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV  
+2026-09-22T06:06:31Z RECV  gpiochip2: 6 GPIOs, parent: platform/c400000.spmi:pmic@0:gpio@b800, c400000.spmi:pmic@0:gpio@b800:
+2026-09-22T06:06:31Z RECV   gpio1 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio3 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio4 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio5 : in   low  normal  vin-0 pull-down 10uA              push-pull  high    atest-1 dtest-0
+2026-09-22T06:06:31Z RECV   gpio6 : in   high normal  vin-0 no pull                     push-pull  low     atest-1 dtest-0
+2026-09-22T06:06:31Z RECV  
+2026-09-22T06:06:31Z RECV  gpiochip3: 211 GPIOs, parent: platform/f100000.pinctrl, f100000.pinctrl:
+2026-09-22T06:06:31Z RECV   gpio0   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio1   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio2   : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio3   : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio4   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio5   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio6   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio7   : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio8   : in  high func1 8mA pull up
+2026-09-22T06:06:31Z RECV   gpio9   : in  high func1 8mA pull up
+2026-09-22T06:06:31Z RECV   gpio10  : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio11  : in  low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio12  : out low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio13  : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio14  : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio15  : out low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio16  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio17  : in  low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio18  : out low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio19  : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio20  : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio21  : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio22  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio23  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio24  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio25  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio26  : out low  func1 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio27  : out low  func1 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio28  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio29  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio30  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio31  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio32  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio33  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio34  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio35  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio40  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio41  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio42  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio43  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio44  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio45  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio46  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio47  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio48  : out high func2 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio49  : out high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio50  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio51  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio52  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio53  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio54  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio55  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio56  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio57  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio58  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio59  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio60  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio61  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio62  : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio63  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio64  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio65  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio66  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio67  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio68  : in  high func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio69  : in  high func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio70  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio71  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio72  : in  high func2 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio73  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio74  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio75  : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio76  : in  low  func1 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio77  : in  high func1 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio78  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio79  : in  low  func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio80  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio81  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio82  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio83  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio84  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio85  : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio86  : in  low  func1 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio87  : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio88  : in  high func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio89  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio90  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio91  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio92  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio93  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio94  : out low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio95  : in  low  func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio96  : in  high func0 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio97  : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio98  : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio99  : in  low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio100 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio101 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio102 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio103 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio104 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio105 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio106 : in  high func2 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio107 : in  high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio108 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio109 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio110 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio111 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio112 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio113 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio114 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio115 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio116 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio117 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio118 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio119 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio120 : egpio
+2026-09-22T06:06:31Z RECV   gpio121 : in  low  func0 8mA pull down
+2026-09-22T06:06:31Z RECV   gpio122 : in  low  func0 8mA pull down
+2026-09-22T06:06:31Z RECV   gpio123 : in  low  func0 8mA pull down
+2026-09-22T06:06:31Z RECV   gpio124 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio125 : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio126 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio127 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio128 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio129 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio130 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio131 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio132 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio133 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio134 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio135 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio136 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio137 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio138 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio139 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio140 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio141 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio142 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio143 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio144 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio145 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio146 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio147 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio148 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio149 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio150 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio151 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio152 : in  low  func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio153 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio154 : in  high func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio155 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio156 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio157 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio158 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio159 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio160 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio161 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio162 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio163 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio164 : in  low  func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio165 : egpio
+2026-09-22T06:06:31Z RECV   gpio166 : egpio
+2026-09-22T06:06:31Z RECV   gpio167 : egpio
+2026-09-22T06:06:31Z RECV   gpio168 : egpio
+2026-09-22T06:06:31Z RECV   gpio169 : egpio
+2026-09-22T06:06:31Z RECV   gpio170 : egpio
+2026-09-22T06:06:31Z RECV   gpio171 : egpio
+2026-09-22T06:06:31Z RECV   gpio172 : egpio
+2026-09-22T06:06:31Z RECV   gpio173 : egpio
+2026-09-22T06:06:31Z RECV   gpio174 : egpio
+2026-09-22T06:06:31Z RECV   gpio175 : egpio
+2026-09-22T06:06:31Z RECV   gpio176 : egpio
+2026-09-22T06:06:31Z RECV   gpio177 : egpio
+2026-09-22T06:06:31Z RECV   gpio178 : egpio
+2026-09-22T06:06:31Z RECV   gpio179 : egpio
+2026-09-22T06:06:31Z RECV   gpio180 : egpio
+2026-09-22T06:06:31Z RECV   gpio181 : egpio
+2026-09-22T06:06:31Z RECV   gpio182 : egpio
+2026-09-22T06:06:31Z RECV   gpio183 : egpio
+2026-09-22T06:06:31Z RECV   gpio184 : egpio
+2026-09-22T06:06:31Z RECV   gpio185 : egpio
+2026-09-22T06:06:31Z RECV   gpio186 : in  high func0 2mA pull down
+2026-09-22T06:06:31Z RECV   gpio187 : out high func0 2mA no pull
+2026-09-22T06:06:31Z RECV   gpio188 : egpio
+2026-09-22T06:06:31Z RECV   gpio189 : egpio
+2026-09-22T06:06:31Z RECV   gpio190 : egpio
+2026-09-22T06:06:31Z RECV   gpio191 : egpio
+2026-09-22T06:06:31Z RECV   gpio192 : egpio
+2026-09-22T06:06:31Z RECV   gpio193 : egpio
+2026-09-22T06:06:31Z RECV   gpio194 : egpio
+2026-09-22T06:06:31Z RECV   gpio195 : egpio
+2026-09-22T06:06:31Z RECV   gpio196 : egpio
+2026-09-22T06:06:31Z RECV   gpio197 : egpio
+2026-09-22T06:06:31Z RECV   gpio198 : egpio
+2026-09-22T06:06:31Z RECV   gpio199 : egpio
+2026-09-22T06:06:31Z RECV   gpio200 : egpio
+2026-09-22T06:06:31Z RECV   gpio201 : egpio
+2026-09-22T06:06:31Z RECV   gpio202 : egpio
+2026-09-22T06:06:31Z RECV   gpio203 : egpio
+2026-09-22T06:06:31Z RECV   gpio204 : egpio
+2026-09-22T06:06:31Z RECV   gpio205 : egpio
+2026-09-22T06:06:31Z RECV   gpio206 : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio207 : in  high func1 2mA pull up
+2026-09-22T06:06:31Z RECV   gpio208 : egpio
+2026-09-22T06:06:31Z RECV   gpio209 : egpio
+2026-09-22T06:06:31Z RECV   ufs_reset: in  low  func0 8mA pull down
+2026-09-22T06:06:31Z RECV   168:        326          0          0          0          0          0          0          0  GICv3      494 Level     89c000.i2c
+2026-09-22T06:06:31Z RECV   169:          0          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T06:06:31Z RECV   171:       1036          0          0          0          0          0          0          0  msmgpio     62 Edge      pogo-connect
+2026-09-22T06:06:42Z SENT  gts9-to-recovery
+2026-09-22T06:06:42Z RECV  gts9# [6ngts9-to-recovery
+2026-09-22T06:06:42Z RECV  gts9-to-recovery: BCB written to /dev/sda10; rebooting into recovery
+2026-09-22T06:06:47Z console session done

@@ -1,0 +1,4 @@
+Current owner request: 刷入测试. Follow-up to test 046 under the same request and original keyboard repair task.
+Source: 1d8a977. Candidate out/boot-bundle-pogo-step3.
+Hypothesis: Samsung connect STEP3 resets after the unknown 0xFF probe without another probe; this leaves a clean command parser for Get Version/GO.
+Recovery: gts9-to-recovery through live console after observation; physical recovery keys if USB fails. Pretest boot-chain backups and original stock backup retained.

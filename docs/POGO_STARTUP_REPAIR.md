@@ -115,3 +115,15 @@ The second reset occurs before Get Version/GO, never after successful app entry.
 A new host test executes the actual reset and entry functions and checks the
 sequence against Samsung STEP3, including short/error probe and missing-client
 paths. All 10 host tests pass. Hardware confirmation remains separate.
+
+## Hardware follow-up: test 047
+
+[The second test](../reference/boot-tests/test-047-20260922T060344Z/README.md)
+validated source `1d8a977`: complete version `0x12` and GO command/address ACKs
+now succeed. The application still NAKs after the 150 ms wait and the reset
+fallback does not revive it. No real key events were observed. The tablet
+returned to TWRP with the corrected candidate installed and hashes verified.
+This is a bootloader communication fix, not completed keyboard support.
+
+Next distinguish slow application startup (poll without resetting it) from a
+wrong/unusable application entry point, using read-only MCU inspection if needed.
