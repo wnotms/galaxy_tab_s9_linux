@@ -11,6 +11,7 @@
 #include <linux/i2c.h>
 #include <linux/input.h>
 #include <linux/interrupt.h>
+#include <linux/jiffies.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
 #include <linux/of.h>
@@ -293,6 +294,32 @@ static int pogo_boot_version(struct samsung_pogo *p, u8 *version)
 }
 
 /*
+ * A GO ACK is not application readiness.  Test 047 reset the MCU after the
+ * first NACK at 150 ms, so it never measured a slower, uninterrupted start.
+ * Allow five seconds of read-only polling before considering a reset fallback.
+ */
+static int pogo_wait_application(struct samsung_pogo *p, const char *entry)
+{
+	unsigned long start = jiffies;
+	unsigned long deadline = start + msecs_to_jiffies(5000);
+	u8 version[4];
+	int ret;
+
+	msleep(150);
+	for (;;) {
+		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+		if (!ret || time_after_eq(jiffies, deadline))
+			break;
+		msleep(100);
+	}
+	dev_info(&p->client->dev,
+		 "application after %s: %d after %u ms without reset%s\n",
+		 entry, ret, jiffies_to_msecs(jiffies - start),
+		 ret ? " (no version response)" : " (version received)");
+	return ret;
+}
+
+/*
  * Get the MCU into its application.
  *
  * Samsung's driver never has to: its log shows the application answering on the
@@ -306,7 +333,7 @@ static int pogo_boot_version(struct samsung_pogo *p, u8 *version)
  */
 static void pogo_bootloader_probe(struct samsung_pogo *p)
 {
-	u8 version[4], boot_version;
+	u8 boot_version;
 	int ret;
 
 	if (!pogo_boot_enter(p)) {
@@ -332,12 +359,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	 * on neither interface.
 	 */
 	pogo_boot_go(p);
-	msleep(150);
-
-	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
-	dev_info(&p->client->dev,
-		 "application after GO: %d%s\n", ret,
-		 ret ? " (not running)" : " (running)");
+	ret = pogo_wait_application(p, "GO");
 	if (!ret)
 		return;
 
@@ -347,12 +369,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	gpiod_set_value_cansleep(p->nrst, 0);
 	msleep(2);
 	gpiod_set_value_cansleep(p->nrst, 1);
-	msleep(150);
-
-	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
-	dev_info(&p->client->dev,
-		 "application after the reset entry: %d%s\n", ret,
-		 ret ? " (still not running)" : " (running)");
+	pogo_wait_application(p, "reset entry");
 }
 
 /*

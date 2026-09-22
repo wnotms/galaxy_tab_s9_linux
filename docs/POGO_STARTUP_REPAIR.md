@@ -127,3 +127,18 @@ This is a bootloader communication fix, not completed keyboard support.
 
 Next distinguish slow application startup (poll without resetting it) from a
 wrong/unusable application entry point, using read-only MCU inspection if needed.
+
+## Uninterrupted application startup candidate
+
+The next candidate polls CHECK_VERSION for a five-second jiffies-based window
+after GO and after the vendor reset entry. It starts at the existing 150 ms
+settling point and retries every 100 ms without changing GPIOs, rail, pinmux or
+bootloader state. Each attempt can extend the window by the adapter's transfer
+timeout; this is not a hard real-time five-second limit. The final log includes
+elapsed time and distinguishes a version response from mere GO acknowledgement.
+
+The existing 40-reset diagnostic loop remains only after both complete startup
+windows fail. A host regression emulates a two-second application startup and
+checks that the caller reaches ready without reset or bus recovery. Additional
+cases verify the absent-application timeout and deadline wraparound. All ten
+host tests pass; this is a timing hypothesis pending physical measurement.

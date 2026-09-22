@@ -96,16 +96,24 @@ struct samsung_pogo {
  struct delayed_work connect_work;
  bool powered, ready, event_enabled;
 };
+static unsigned long jiffies, app_ready_at;
+#define msecs_to_jiffies(ms) ((unsigned long)(ms))
+#define jiffies_to_msecs(ticks) ((unsigned int)(ticks))
+#define time_after_eq(a, b) ((long)((a) - (b)) >= 0)
+static int startup_delay;
 static int reset_gpio;
 static int phase, transfers, fail_at, fail_value, bad_ack;
 static int resets, entries, recoveries, app, app_after_go, app_after_reset;
 static int enables, power_error, entry_failure, mode = 1;
 static void mutex_lock(int *p) {}
 static void mutex_unlock(int *p) {}
-static void msleep(int n) {}
+static void msleep(int n) {
+ jiffies += n;
+ if (app_ready_at && time_after_eq(jiffies, app_ready_at)) app = 1;
+}
 static int gpiod_get_value_cansleep(int *p) { return 1; }
 static void gpiod_set_value_cansleep(int *p, int v) {
- if (p == &reset_gpio && !v) { resets++; app = app_after_reset; }
+ if (p == &reset_gpio && !v) { resets++; app_ready_at=0; app = app_after_reset; }
 }
 static int regulator_enable(int *p) { return power_error; }
 static void enable_irq(int irq) { enables++; }
@@ -136,12 +144,15 @@ static int i2c_master_recv(struct i2c_client *c, u8 *buf, int n) {
  assert(n == 1);
  assert(phase == 1 || phase == 2 || phase == 3 || phase == 5 || phase == 7);
  *buf = phase == 2 ? 0x12 : (bad_ack == phase ? 0x1f : 0x79);
- if (phase == 7) app = app_after_go;
+ if (phase == 7) {
+  app = app_after_go;
+  if (startup_delay) { app=0; app_ready_at=jiffies+startup_delay; }
+ }
  phase++;
  return 1;
 }
 '''
-        for name in ('pogo_boot_version', 'pogo_boot_go', 'pogo_bootloader_probe',
+        for name in ('pogo_boot_version', 'pogo_boot_go', 'pogo_wait_application', 'pogo_bootloader_probe',
                      'pogo_read_mcu', 'pogo_connect_work'):
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
                                    source, flags=re.M)
@@ -149,6 +160,7 @@ static int i2c_master_recv(struct i2c_client *c, u8 *buf, int n) {
             harness += '\n' + function(source[definition.start():], name) + '\n'
         harness += r'''
 static void clear(struct samsung_pogo *p) {
+ jiffies = app_ready_at = startup_delay = 0;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
  app_after_go = 1; app_after_reset = 0; mode = 1;
@@ -189,6 +201,17 @@ int main(void) {
  clear(&p);
  pogo_connect_work(&p.connect_work.work);
  assert(p.ready && p.event_enabled && entries == 1 && !resets && !recoveries && phase == 8);
+ /* An application needing two seconds must not be reset at 150 ms. */
+ clear(&p); startup_delay=2000;
+ pogo_connect_work(&p.connect_work.work);
+ assert(p.ready && !resets && !recoveries && jiffies >= 2000 && jiffies < 2200);
+ /* Absence is bounded, and polling itself never manipulates reset or bus. */
+ clear(&p);
+ assert(pogo_wait_application(&p, "test") == -ENXIO);
+ assert(jiffies >= 5000 && jiffies <= 5150 && !resets && !recoveries);
+ /* The deadline arithmetic must work across a jiffies wrap. */
+ clear(&p); jiffies=(unsigned long)-1000;
+ assert(pogo_wait_application(&p, "wrap") == -ENXIO && jiffies < 4200);
  /* A failed version exchange requires a fresh session before GO. */
  clear(&p); bad_ack=3;
  pogo_bootloader_probe(&p); assert(entries == 2 && app && !resets);
