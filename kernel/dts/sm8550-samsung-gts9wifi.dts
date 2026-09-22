@@ -1897,6 +1897,15 @@
 		interrupt-parent = <&tlmm>;
 		interrupts = <75 IRQ_TYPE_LEVEL_LOW>;
 		connect-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
+		/*
+		 * The STM32's SWD pins.  Samsung's own node hands both to the
+		 * driver (stm32,mcu_swclk/mcu_nrst) rather than leaving them to
+		 * pinctrl, because the MCU has to come out of reset *after* the
+		 * rail is up with SWCLK already low, or it can start in the ROM
+		 * bootloader instead of running the keyboard firmware.
+		 */
+		swclk-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
+		nrst-gpios = <&tlmm 13 GPIO_ACTIVE_HIGH>;
 		vdd-supply = <&vreg_pogo>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;

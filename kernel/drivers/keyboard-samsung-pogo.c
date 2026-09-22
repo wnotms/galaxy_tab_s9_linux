@@ -25,6 +25,8 @@ struct samsung_pogo {
 	struct i2c_client *client;
 	struct input_dev *input;
 	struct gpio_desc *connected;
+	struct gpio_desc *swclk;
+	struct gpio_desc *nrst;
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
@@ -121,11 +123,16 @@ static void pogo_connect_work(struct work_struct *work)
 			dev_err(&p->client->dev, "power on failed: %d\n", ret);
 		} else {
 			p->powered = true;
+			/* Rail up, SWCLK low, then release the MCU from reset. */
+			gpiod_set_value_cansleep(p->swclk, 0);
+			gpiod_set_value_cansleep(p->nrst, 0);
+			msleep(10);
+			gpiod_set_value_cansleep(p->nrst, 1);
 			msleep(50); /* stock keyboard_start power settling */
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "pogo rail on, awaiting the model announcement\n");
+				 "pogo rail on, MCU out of reset, awaiting the model announcement\n");
 		}
 	}
 	dev_info_ratelimited(&p->client->dev, "connect line reads %d\n", conn);
@@ -290,6 +297,18 @@ static int pogo_probe(struct i2c_client *client)
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	if (IS_ERR(p->connected))
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
+	/*
+	 * The MCU's SWD pins, owned here rather than left to the pinctrl default:
+	 * the STM32 boots into its keyboard firmware only if SWCLK is low when
+	 * NRST is released, and Samsung's own driver takes both explicitly
+	 * (stm32,mcu_swclk / stm32,mcu_nrst).
+	 */
+	p->swclk = devm_gpiod_get(dev, "swclk", GPIOD_OUT_LOW);
+	if (IS_ERR(p->swclk))
+		return dev_err_probe(dev, PTR_ERR(p->swclk), "swclk GPIO\n");
+	p->nrst = devm_gpiod_get(dev, "nrst", GPIOD_OUT_HIGH);
+	if (IS_ERR(p->nrst))
+		return dev_err_probe(dev, PTR_ERR(p->nrst), "nrst GPIO\n");
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
 		return dev_err_probe(dev, PTR_ERR(p->vdd), "vdd supply\n");
