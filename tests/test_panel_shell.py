@@ -32,6 +32,13 @@ class PanelShell(unittest.TestCase):
         usb = INIT.index('while [ "$i" -lt 20 ] && [ ! -c /dev/ttyGS0 ]')
         self.assertLess(call, usb, 'the USB section ends in a loop that never returns')
 
+    def test_job_control_is_on_for_the_launch(self):
+        # Without it the child inherits SIGINT as SIG_IGN and Ctrl-C does nothing.
+        body = INIT[INIT.index('start_panel_shell()'):]
+        body = body[:body.index('\n}\n')]
+        self.assertIn('set -m', body)
+        self.assertIn('set +m', body)
+
     def test_panel_carries_only_the_shell(self):
         self.assertNotIn('cat /dev/kmsg > /dev/tty1', INIT)
         self.assertIn('tty0/active', INIT, 'the foreground VT must be logged')

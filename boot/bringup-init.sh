@@ -1057,6 +1057,13 @@ start_panel_shell()
     fi
     log "panel shell: foreground VT is $(cat /sys/class/tty/tty0/active 2>/dev/null)"
 
+    # A background job of a shell without job control has SIGINT and SIGQUIT set to
+    # SIG_IGN (POSIX), and a shell cannot reset a signal that was already ignored when it
+    # started - measured on the device: the panel shell owned tty1's foreground process
+    # group (pgrp == tpgid == 752) and still had SigIgn bit 1 set, so Ctrl-C did nothing.
+    # Enabling job control for the launch makes the asynchronous child start with a
+    # default SIGINT instead.
+    set -m 2>/dev/null || true
     (
         while :; do
             printf '\033c' > /dev/tty1 2>/dev/null
@@ -1081,6 +1088,7 @@ start_panel_shell()
             sleep 1
         done
     ) &
+    set +m 2>/dev/null || true
 
     log 'panel shell started on /dev/tty1 (local bring-up/rescue shell)'
 }

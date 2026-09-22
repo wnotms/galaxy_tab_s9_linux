@@ -151,6 +151,21 @@ chmod 1777 "$tree/tmp"
 install -m 0755 "$bb_bin" "$tree/bin/busybox"
 install -m 0755 "$init_src" "$tree/init"
 install -m 0755 "$repo_root/boot/gts9-to-recovery.sh" "$tree/sbin/gts9-to-recovery"
+# A freestanding aarch64 helper that clears the SIGINT/SIGQUIT dispositions a shell
+# cannot clear itself (see boot/gts9-exec-default.c).  Without it the background
+# panel shell inherits SIG_IGN and Ctrl-C does nothing.
+if command -v clang >/dev/null 2>&1 && command -v ld.lld >/dev/null 2>&1; then
+    if clang --target=aarch64-linux-gnu -nostdlib -static -ffreestanding \
+             -fno-stack-protector -fno-builtin -fuse-ld=lld -Wl,--build-id=none -Wl,-n \
+             -o "$tree/sbin/gts9-exec-default" "$repo_root/boot/gts9-exec-default.c" 2>/dev/null; then
+        chmod 0755 "$tree/sbin/gts9-exec-default"
+        echo "initramfs: installed gts9-exec-default ($(stat -c %s "$tree/sbin/gts9-exec-default") bytes)"
+    else
+        echo "initramfs: WARNING could not build gts9-exec-default; the panel shell falls back" >&2
+    fi
+else
+    echo "initramfs: WARNING clang/ld.lld missing; the panel shell falls back" >&2
+fi
 
 link_applet() {
     # link_applet <applet>
