@@ -45,8 +45,6 @@
 #define POGO_IC_VERSION_OFFSET		0x08000200
 /* How often the application is polled while it starts. */
 #define POGO_POLL_INTERVAL_MS		250
-/* How long the MCU's bus is left alone after its power-up. */
-#define POGO_FIRST_POLL_SILENCE_MS	30000
 /* The MCU's option bytes, at the address in Samsung's stm32_memory_map. */
 #define POGO_OPTION_BYTE_OFFSET		0x1FFF7800
 /* Samsung's header inside the firmware image; the magic there is "STM32". */
@@ -175,41 +173,24 @@ static void pogo_connect_work(struct work_struct *work)
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
-		 * Power the MCU up in the order the stock driver uses: BOOT0 low
-		 * and NRST asserted first, then the rail.  gpio10 has no
-		 * output-high pinctrl state any more (see the board DTS), so this
-		 * is the MCU's power-on, and it is the only reset that can still
-		 * change this part's boot source.  Nothing else - no SWCLK dance,
-		 * no GO, no reset loop - is attempted before the application is
-		 * given its chance to answer.
+		 * The first bring-up does exactly what the stock driver does on
+		 * this device: hold SWCLK (BOOT0) low, leave NRST alone (its
+		 * pinctrl default is output-high), switch the rail and read the
+		 * application.  No SWCLK dance, no NRST pulse, no 0x51 access
+		 * before the application has had its chance - test 055 showed the
+		 * stock stack reaches a running application without ever entering
+		 * the system bootloader, and the bootloader stays only as the
+		 * fallback below.
 		 */
 		gpiod_set_value_cansleep(p->swclk, 0);
-		gpiod_set_value_cansleep(p->nrst, 0);
-		msleep(20);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
-			msleep(50);
-			gpiod_set_value_cansleep(p->nrst, 1);
-			msleep(150);
-			dev_info(&p->client->dev,
-				 "MCU powered up with BOOT0 low and NRST released\n");
-			/*
-			 * Leave the bus alone first.  Stock's driver does not talk
-			 * to the MCU until its connect work runs tens of seconds
-			 * into the boot, and every mainline attempt so far has
-			 * polled from the first seconds on.  If the application's
-			 * I2C slave latches an error from traffic it sees while it
-			 * is still starting, continuous polling would keep it from
-			 * ever coming up.
-			 */
-			dev_info(&p->client->dev,
-				 "leaving the MCU bus silent for %u ms before the first poll\n",
-				 POGO_FIRST_POLL_SILENCE_MS);
-			msleep(POGO_FIRST_POLL_SILENCE_MS);
+			msleep(20);
+			dev_info(&p->client->dev, "MCU rail on with BOOT0 low\n");
+			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
 			if (!ret) {
-				dev_info(&p->client->dev,
-					 "MCU application already running\n");
+				dev_info(&p->client->dev, "MCU application running\n");
 			} else {
 				dev_info(&p->client->dev,
 					 "MCU application did not answer; entering its bootloader\n");
