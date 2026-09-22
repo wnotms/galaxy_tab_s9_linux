@@ -45,6 +45,52 @@ mount_path tmpfs /run
 # list (why a device never appeared) and the regulator/clock summaries.
 mount_path debugfs /sys/kernel/debug
 
+# Recover before USB/report work so diagnostic collection cannot prolong black.
+# Tests 041-043 show neither PHY/host power cycling before prepare nor a DDIC
+# sleep/reset retry alone replaces the full framebuffer modeset cycle.
+DISPLAY_RECOVER=1
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in gts9_display_recover=*) DISPLAY_RECOVER=${arg#gts9_display_recover=} ;; esac
+done
+
+display_recover() {
+    [ "$DISPLAY_RECOVER" = 1 ] || return 0
+    i=0
+    while [ "$i" -lt 100 ] && [ ! -w /sys/class/graphics/fb0/blank ]; do
+        sleep 0.05
+        i=$((i + 1))
+    done
+    if [ ! -w /sys/class/graphics/fb0/blank ]; then
+        log 'display: no writable framebuffer appeared; cannot recover'
+        return 0
+    fi
+    if ! dmesg | grep -q 'panel id 00 00 00'; then
+        log 'display: no zero-ID failure recorded; skipping recovery'
+        return 0
+    fi
+    log 'display: early framebuffer cycle for first-enable zero ID'
+    # Both writes synchronously complete panel/host teardown and prepare;
+    # panel sleep/reset delays are already implemented in the driver.
+    if timeout 5 sh -c 'echo 1 > /sys/class/graphics/fb0/blank'; then
+        if timeout 5 sh -c 'echo 0 > /sys/class/graphics/fb0/blank'; then
+            if dmesg | grep -q 'ana38407 panel id: 80 00 04'; then
+                log 'display: early cycle recovered panel ID 80 00 04'
+            else
+                log 'WARN: display: early cycle did not recover the panel ID'
+            fi
+        else
+            log 'WARN: display: unblank failed or timed out'
+        fi
+    else
+        log 'WARN: display: blank failed or timed out'
+    fi
+}
+display_recover
+if [ -c /dev/tty0 ]; then
+    printf '\nGTS9 mainline: early display console ready\n' > /dev/tty0 2>/dev/null
+fi
+
+
 block_size() {
     bs=$(cat "/sys/class/block/$(basename "$1")/queue/logical_block_size" 2>/dev/null)
     case "$bs" in ''|*[!0-9]*) bs=512 ;; esac
@@ -314,7 +360,6 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
         gts9_usb_console=*) USB_CONSOLE_MODE=${arg#gts9_usb_console=} ;;
         gts9_usb_wait=*) USB_WAIT=${arg#gts9_usb_wait=} ;;
-        gts9_display_recover=*) DISPLAY_RECOVER=${arg#gts9_display_recover=} ;;
     esac
 done
 gadget_setup=0
@@ -678,78 +723,6 @@ case "$USB_WAIT" in
         ;;
 esac
 
-# ---------------------------------------------------------------------------
-# The panel's cold-boot state.
-#
-# The DDIC answers 00 00 00 instead of 80 00 04 on a cold boot even though the
-# link is up, and the panel then stays dark; the SM-X910 port's driver records
-# that only a *from-scratch* re-initialisation of the DSI host and PHY recovers
-# it.  Replaying the panel's own init sequence, toggling reset and cycling its
-# supplies were all measured not to help, and so did unbinding the DSI host under
-# a live DRM master (test 035: USB re-enumeration broke).
-#
-# What has not been tried is the safe version of "from scratch": unbind the DRM
-# master itself, which unprepares the panel and tears the whole display pipeline
-# down, then bind it again so every piece - host, PHY, panel - probes fresh.
-# That is a driver rebind rather than a system suspend, so it cannot leave the
-# tablet asleep with no wakeup source, which is what `echo freeze` did.
-# ---------------------------------------------------------------------------
-display_recover() {
-    [ "$DISPLAY_RECOVER" = 1 ] || return 0
-
-    # The master only exists once the pipeline probed; give it a moment.
-    i=0
-    while [ "$i" -lt 20 ] && [ ! -e /sys/class/drm/card0-DSI-1 ]; do
-        sleep 1
-        i=$((i + 1))
-    done
-    if [ ! -e /sys/class/drm/card0-DSI-1 ]; then
-        log 'display: no DSI connector appeared; nothing to recover'
-        return 0
-    fi
-    if ! dmesg 2>/dev/null | grep -q 'panel id 00 00 00'; then
-        log 'display: the panel answered its id, no recovery needed'
-        return 0
-    fi
-
-    # What the panel needs is the DSI host and PHY initialised from scratch
-    # rather than inherited from the state the bootloader left behind, and a
-    # framebuffer blank/unblank cycle does exactly that: blanking disables the
-    # CRTC, so the DSI bridge's post_disable drops the host's runtime-PM
-    # reference and host and PHY power down; unblanking brings them back up
-    # through the probe-time init path and reads the panel id back.
-    #
-    # The connector's `dpms` attribute was the first attempt and does not work
-    # here - `echo off > card0-DSI-1/dpms` fails, so the link is never torn down
-    # and the panel stays at 00 00 00.
-    #
-    # This also replaced `echo mem > /sys/power/state`.  A full suspend does the
-    # same thing to the DSI link, but it needs a wakeup source: the PMIC power
-    # key turned out not to wake this board (test 036) and `echo freeze` did not
-    # either, so a suspend there means a tablet that has to be force-reset.  A
-    # blank cycle cannot strand anything.
-    log 'display: the panel is in its cold-boot state (id 00 00 00); cycling the framebuffer blank to re-initialise the DSI link'
-    if [ ! -w /sys/class/graphics/fb0/blank ]; then
-        log 'WARN: display: no writable fb0/blank; cannot recover the panel'
-        return 0
-    fi
-    if timeout 30 sh -c 'echo 1 > /sys/class/graphics/fb0/blank' 2>/dev/null; then
-        sleep 2
-        if timeout 30 sh -c 'echo 0 > /sys/class/graphics/fb0/blank' 2>/dev/null; then
-            sleep 3
-            if dmesg 2>/dev/null | grep -q 'ana38407 panel id: 80 00 04'; then
-                log 'display: the blank cycle re-initialised the link; the panel answered its id'
-            else
-                log 'WARN: display: the panel did not answer 80 00 04 after the blank cycle'
-            fi
-        else
-            log 'WARN: display: could not unblank the framebuffer'
-        fi
-    else
-        log 'WARN: display: could not blank the framebuffer'
-    fi
-    return 0
-}
 # Collect the USB state now that the gadget has been attempted, then get the
 # whole report off the device.
 report 'usb device controllers' ls -l /sys/class/udc
@@ -785,12 +758,6 @@ report 'gadget functions' sh -c 'ls -l /sys/kernel/config/usb_gadget/gts9/functi
 report 'spmi devices' sh -c 'ls -l /sys/bus/spmi/devices/ 2>&1'
 report 'reboot mode' sh -c 'ls -l /sys/class/nvmem/ 2>&1; cat /proc/device-tree/reboot-mode/mode-recovery 2>/dev/null | od -An -tx1; ls -l /sys/bus/platform/drivers/nvmem-reboot-mode/ 2>&1'
 report 'dmesg' dmesg
-
-# The panel's cold-boot recovery, before anything is persisted: a DPMS off/on
-# cycle re-initialises the DSI host and PHY (no suspend, so nothing can strand
-# the tablet), and the report then carries the post-recovery dmesg - including
-# the panel id the DDIC answers once the link is initialised from scratch.
-display_recover
 
 # Keep the console visible: the DRM framebuffer comes up blanked and the default
 # console blanking would hide the very thing this exercise is about.
