@@ -1,0 +1,8 @@
+source_commit=early-high commit ("dts: drive the rail pin high from the earliest moment")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-084
+hypothesis=The MCU is powered independently of gpio10 (test 082), so it runs from tablet power-on and may check whatever that rail feeds at its own power-up - before any driver exists.  Every earlier build with the pin high early (before test 058) lacked the firmware path, the vendor driver and the reproduced firmware state, so the combination "rail high from boot + vendor port + firmware + fixed pulse state" has never been measured.
+change=pogo_supply sets output-high again, so the pad is high from the TLMM's first configuration; the regulator still owns the pin and the vendor port with the firmware is the built combination.
+predictions=1) the application answers => the rail had to be high at the MCU's own power-up, and the fault was in the ordering of a supply the host controls; 2) it still NACKs with the pad verified high => the rail's timing is excluded as well, on top of its level (test 084), and the host side is closed with every signal measured and matching.
+images=out/boot-bundle-test085/boot.img dd00574ebcd85fcee64302c00e395ec7261eef539998c7a4bada643192cb6210 and vendor_boot.img b5f3cda09e2b0bfaf736c5b73c423a6481eb6220a121bce22ef5103b53ecb707 (both carry the new DTB); init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T11:30:00Z

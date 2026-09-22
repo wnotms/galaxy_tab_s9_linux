@@ -1,0 +1,15 @@
+2026-09-22T11:19:51Z console open on COM17
+2026-09-22T11:19:54Z SENT  dmesg | grep -aiE "pin 10:|read_version|\[MODE\]|CRC 0x|I2C retry" | tail -10
+2026-09-22T11:19:54Z RECV  dmesg | grep -aiE "pin 10:|read_version|\[MODE\]|CRC 0x|I2C retry" | tail
+2026-09-22T11:19:54Z RECV  -10
+2026-09-22T11:19:54Z RECV  [   11.349218][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   13.616528][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   18.013578][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   20.286462][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   22.568637][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   24.748162][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   29.121418][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   33.516081][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:19:54Z RECV  [   34.833645][  T218]   pin 10: io 0x3
+2026-09-22T11:19:54Z RECV  [   35.864329][  T161] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:20:03Z console session done
