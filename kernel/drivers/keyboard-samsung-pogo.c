@@ -94,6 +94,17 @@ static void pogo_power_off(struct samsung_pogo *p)
 		p->powered = false;
 }
 
+/*
+ * Power the keyboard, then let it announce itself.
+ *
+ * The connect line is an edge source, not a presence level: the stock node sets
+ * gpio62 up with IRQ_TYPE_EDGE_BOTH and bias-disable, and Samsung's own driver
+ * enables the rail unconditionally and takes the model announcement over i2c as
+ * the proof that a keyboard is seated.  Gating on the level is what made this
+ * driver report "keyboard disconnected" on a tablet whose stock firmware
+ * enumerates the keyboard, so every edge now cycles the rail instead and the
+ * level is logged for diagnostics only.
+ */
 static void pogo_connect_work(struct work_struct *work)
 {
 	struct samsung_pogo *p = container_of(to_delayed_work(work),
@@ -106,22 +117,19 @@ static void pogo_connect_work(struct work_struct *work)
 	}
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
-	if (conn == 0) {
-		pogo_power_off(p);
-		dev_info(&p->client->dev, "keyboard disconnected\n");
-	} else if (conn > 0 && !p->powered) {
-		ret = regulator_enable(p->vdd);
-		if (ret) {
-			dev_err(&p->client->dev, "power on failed: %d\n", ret);
-		} else {
-			p->powered = true;
-			msleep(50); /* stock keyboard_start power settling */
-			dev_info(&p->client->dev, "keyboard attached, awaiting hello\n");
-		}
-	}
-	if (conn > 0 && p->powered) {
+	/* An edge means the cover moved: take the keyboard down first. */
+	pogo_power_off(p);
+	ret = regulator_enable(p->vdd);
+	if (ret) {
+		dev_err(&p->client->dev, "power on failed: %d\n", ret);
+	} else {
+		p->powered = true;
+		msleep(50); /* stock keyboard_start power settling */
 		p->event_enabled = true;
 		enable_irq(p->client->irq);
+		dev_info(&p->client->dev,
+			 "pogo rail on (connect line reads %d), awaiting the model announcement\n",
+			 conn);
 	}
 	mutex_unlock(&p->lock);
 }
@@ -130,7 +138,7 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
 {
 	struct samsung_pogo *p = data;
 
-	mod_delayed_work(system_wq, &p->connect_work, msecs_to_jiffies(20));
+	mod_delayed_work(system_percpu_wq, &p->connect_work, msecs_to_jiffies(20));
 	return IRQ_HANDLED;
 }
 
@@ -169,7 +177,12 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	int ret = 0;
 
 	mutex_lock(&p->lock);
-	if (!p->powered || gpiod_get_value_cansleep(p->connected) <= 0)
+	/*
+	 * Only the rail matters here.  The connect line is an edge source with
+	 * bias-disable, so its level must not decide whether the keyboard may
+	 * speak: the model announcement is what proves it is there.
+	 */
+	if (!p->powered)
 		goto out;
 	ret = pogo_write(p, header, sizeof(header));
 	if (ret)
@@ -319,7 +332,7 @@ static int pogo_probe(struct i2c_client *client)
 	if (ret)
 		return ret;
 	enable_irq(p->connect_irq);
-	mod_delayed_work(system_wq, &p->connect_work, 0);
+	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
 	return 0;
 }
 
@@ -334,7 +347,7 @@ static int pogo_resume(struct device *dev)
 	struct samsung_pogo *p = i2c_get_clientdata(to_i2c_client(dev));
 
 	enable_irq(p->connect_irq);
-	mod_delayed_work(system_wq, &p->connect_work, 0);
+	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
 	return 0;
 }
 
