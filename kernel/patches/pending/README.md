@@ -39,3 +39,24 @@ resource control and vsync setup, and before the normal kickoff's preparation
 (including DSC setup). It also adds another pending count. Test 038's partial
 screen observation does not establish this as a correct fix. Do not re-enable
 it without tracing the normal commit path. See docs/DISPLAY_OFFLINE_AUDIT.md.
+
+## First-enable DSI candidates (tests 041 and 043)
+
+Two candidates tried to remove the framebuffer blank cycle from the panel's
+cold-boot recovery by fixing the first enable instead. Both are retired, and
+both keep the `0005-` prefix they were written with:
+
+- `0005-drm-msm-dsi-quiesce-x710-phy-before-enable.patch` (test 041) quiesces
+  the inherited PHY lanes before enable. First ID was still `00 00 00` at
+  5.391 s and only the blank cycle recovered `80 00 04` at 7.953 s, so lane
+  quiesce alone is not the missing step. See
+  `reference/boot-tests/test-041-.../README.md`.
+- `0005-drm-msm-dsi-cycle-x710-link-before-panel.patch` (test 042/043) runs the
+  normal host/PHY off path once before the initial panel prepare. IDs were still
+  zero at 5.586 s and 5.880 s; the full modeset teardown of the blank cycle
+  recovers the panel at 8.486 s. Which part of that teardown is essential is
+  still not isolated. See `reference/boot-tests/test-043-.../README.md`.
+
+The recovery itself is now run early and without fixed sleeps (de7bd2b,
+verified in test 044), so the blank cycle costs a few seconds rather than the
+120 s of the original suspend/resume workaround.
