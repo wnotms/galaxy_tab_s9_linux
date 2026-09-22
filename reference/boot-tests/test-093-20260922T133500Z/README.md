@@ -26,7 +26,7 @@ Two console sessions were taken at 13:35Z. COM17 is present on the host and open
 but the tablet sent nothing at all, and `adb devices` is empty - so the device is
 not in its mainline state (mainline has no adbd, but it does print to this console)
 and is most likely powered off or running stock Android. No flash was attempted and
-no result is claimed. `c.log` and `c2.log` record the empty sessions.
+no result is claimed. The empty sessions are not archived (the capture files were not written to the host).
 
 ## Next step
 
