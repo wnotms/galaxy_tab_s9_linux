@@ -1,0 +1,8 @@
+source_commit=4ae7b7c ("pogo: probe the bus by a real write, and build the mainline port again")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab350aa
+authorization=standing device-test authorisation recorded for tests 046-073
+hypothesis=Every "i2c-5 answers at: (nothing)" this project has printed was meaningless: the scan used SMBus QUICK, which this controller does not support, so it could never find anything.  With a real one-byte write to a small address set, the question becomes answerable: does the MCU acknowledge somewhere other than 0x2a - 0x2b, 0x2c, 0x2d, its system bootloader at 0x51 - or nowhere at all while its announce line is asserted?
+change=pogo_scan_bus() probes 0x2a, 0x2b, 0x2c, 0x2d and 0x51 by writing one byte to an i2c dummy client for each, and logs which acknowledge; the config is back on the mainline port, whose failure path runs the probe.
+predictions=1) only 0x51 acks => the part is in its bootloader, and the application interface is simply not there; 2) a different application address acks => the MCU's application is alive at another address and the port has been talking to the wrong one; 3) nothing acks while the announce line reads 1 => the MCU drives its line but serves no I2C address at all, which points at the slave's own initialisation rather than at the host.
+images=out/boot-bundle-test074/boot.img 3b8eb80d0a6015cad9d3ac14a9c67525877662314b268efee6b9a114bf658ffe; vendor_boot 3ec6c8d1 (bias change), init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T09:40:00Z

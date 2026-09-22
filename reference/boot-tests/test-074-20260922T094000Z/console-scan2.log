@@ -1,0 +1,8 @@
+2026-09-22T10:30:50Z console open on COM17
+2026-09-22T10:30:53Z SENT  dmesg | grep -aiE "acknowledges|answers at|no answer from|application did not" | tail -8
+2026-09-22T10:30:53Z RECV  dmesg | grep -aiE "acknowledges|answers at|no answer from|application did
+2026-09-22T10:30:53Z RECV  not" | tail -8
+2026-09-22T10:30:53Z RECV  [   76.541014][   T78] samsung-pogo-keyboard 5-002a: no answer from the MCU application after 60000 ms (-6)
+2026-09-22T10:30:53Z RECV  [   76.710846][   T78] samsung-pogo-keyboard 5-002a: i2c-5 acknowledges: (nothing)
+2026-09-22T10:30:53Z RECV  [   76.726675][   T78] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T10:31:02Z console session done
