@@ -84,6 +84,7 @@ struct samsung_pogo {
 	bool rearm_pending;
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
+	int conn_same;
 	unsigned long last_rearm;
 	int connect_irq;
 	bool powered;
@@ -105,6 +106,7 @@ static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
 static int pogo_wait_application(struct samsung_pogo *p, const char *entry, unsigned int timeout_ms);
 static int pogo_boot_version(struct samsung_pogo *p, u8 *version);
+static int pogo_boot_ic_version(struct samsung_pogo *p, u8 *version);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -568,26 +570,33 @@ static void pogo_watch_work(struct work_struct *work)
 				stable = false;
 		}
 		/*
-		 * Observe the level only.  Test 106: re-arming on any change of this
-		 * line was a mistake - it toggles at about 10 Hz on this hardware
-		 * (1492-2431 edge interrupts per boot) even with the cover seated, so
-		 * that rule reset a working keyboard every ten seconds and the owner
-		 * saw no keys at all after boot.  Nothing re-arms on this line any more;
-		 * the one automatic re-arm left needs the application to be *asserting*
-		 * announce while refusing to answer.
+		 * Read-only.  Two attempts at acting on this line have each cost the
+		 * owner a working keyboard (a reset loop, then an unbalanced enable_irq),
+		 * so the line is only observed now: it is sampled once a second, and a
+		 * change that survives five samples is logged together with everything the
+		 * driver knows plus one non-destructive read of each interface.  Whatever
+		 * comes next is designed from these lines and not from a theory.
 		 */
-		p->conn_level = level;
-		if (stable && !p->conn_attached) {
-			dev_info(&p->client->dev,
-				 "cover re-seated (connect line stable after instability); re-arming the application\n");
-			rearm = true;
-			p->rearm_pending = true;
-			p->powered = false;
-			p->event_enabled = false;
-			p->ready = false;
-			p->poll_fails = 0;
+		if (level != p->conn_level) {
+			if (++p->conn_same >= 5) {
+				u8 rb = 0;
+
+				p->conn_level = level;
+				p->conn_same = 0;
+				p->conn_attached = stable;
+				dev_info(&p->client->dev,
+					 "PROBE connect -> %d (stable %d, announce %d, %s, announcements %u)\n",
+					 level, stable, pogo_announce_level(p),
+					 p->event_enabled ? "DATA armed" : "DATA not armed",
+					 p->announce_seen);
+				dev_info(&p->client->dev, "PROBE 0x2a GET_MODE -> %d\n",
+					 pogo_read_reg(p, POGO_CMD_GET_MODE, &rb, sizeof(rb)));
+				dev_info(&p->client->dev, "PROBE 0x51 IC version -> %d\n",
+					 pogo_boot_ic_version(p, &rb));
+			}
+		} else {
+			p->conn_same = 0;
 		}
-		p->conn_attached = stable;
 	}
 	if (!rearm && p->powered && p->event_enabled) {
 		/*
