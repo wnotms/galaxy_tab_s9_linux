@@ -45,6 +45,12 @@ keeps the historical `0005-*` names because the display documentation refers to
 them: `0005` was the retired command-mode kickoff patch, so the keyboard is
 `0006`.
 
+`0009` was the second half of the keyboard A/B: the Kconfig/Makefile wiring that
+makes the imported `samsung-pogo/` directory selectable. It has been retired,
+because `scripts/prepare-kernel.sh` installs that directory and inserts both
+lines itself, so the patch had become a duplicate of the script and would have
+conflicted with it. The number is not reused.
+
 The former default `0005` early command-mode kickoff patch is now held in
 `pending/`: the pinned MSM path already kicks off after modeset enable, while
 that patch triggers before resource/vsync/DSC preparation. See
