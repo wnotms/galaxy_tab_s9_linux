@@ -40,16 +40,38 @@ pogo_notifier_v3.h         device/event ids and notifier payloads
 Nothing in this list runs on the path between the rail coming up and
 `CHECK_VERSION` succeeding, which is the only thing the first A/B step asks.
 
-## Remaining work before it can be built
+## Done in the import
 
-1. Give the port the same compatible string as the board DTS
-   (`samsung,x710-pogo-keyboard`) or add the key's node to its match table.
-2. Replace the missing `sec_device_create()`/sysfs and `stm32_init_cmd()` body
-   with a no-op (the compat header documents the boundary).
-3. Strip the msm-bus DT parse and the MUIC notifier registration from
-   `stm32_pogo_core_v3.c`.
-4. Wire the Kconfig choice into the kernel build and into
-   `scripts/prepare-kernel.sh`'s driver copy list, so
-   `CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT=y` builds this instead of
-   `keyboard-samsung-pogo.c`.
-5. Compile, then A/B on hardware and record the result as a new test.
+* the match table now carries the board DTS's compatible
+  (`samsung,x710-pogo-keyboard`) beside the vendor's own string;
+* `stm32_init_cmd()` keeps its place in the probe sequence and its success
+  contract but no longer creates the sec_keypad class device or its sysfs group;
+* the MUIC path is empty in the bring-up set (only one msm-bus vote is used, and
+  the compat header provides it as a no-op).
+
+## Remaining work, and the one real adaptation
+
+The first compile attempt stops at the first vendor header line:
+
+```
+stm32_pogo_v3.h:36:10: fatal error: 'linux/of_gpio.h' file not found
+```
+
+This kernel has removed the integer GPIO API, and the vendor driver is written
+against it: `stm32_parse_dt()` stores raw gpio numbers with
+`of_get_named_gpio()` and the driver then uses `gpio_direction_output()`,
+`gpio_get_value()` and `gpio_to_irq()` at about thirty call sites. The board DTS
+already names every one of those lines with a standard `-gpios` suffix
+(`connect-gpios`, `swclk-gpios`, `nrst-gpios`, `sda-gpios`, `scl-gpios`,
+`announce-gpios`), so the conversion is mechanical and changes no behaviour:
+
+1. the six `dtdata->gpio_*` fields become `struct gpio_desc *`;
+2. `stm32_parse_dt()` uses `devm_gpiod_get_optional()` for those six names;
+3. `gpio_direction_output` → `gpiod_direction_output`, `gpio_get_value` →
+   `gpiod_get_value`, `gpio_to_irq` → `gpiod_to_irq`, and the explicit
+   `gpio_request`/`gpio_free` pairs disappear with devm;
+4. then wire `KEYBOARD_SAMSUNG_POGO_VENDOR_PORT` into the kernel Kconfig and into
+   `scripts/prepare-kernel.sh`'s driver copy list (the port is a directory, not a
+   `keyboard-*.c` file, so the script needs one more rule), and let
+   `scripts/build-kernel.sh`'s required-symbol check accept either driver;
+5. compile, then run the A/B on hardware and record it as a new test.

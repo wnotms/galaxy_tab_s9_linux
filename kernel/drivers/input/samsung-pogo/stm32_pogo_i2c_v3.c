@@ -388,6 +388,8 @@ static const struct i2c_device_id stm32_dev_id[] = {
 };
 
 static struct of_device_id stm32_match_table[] = {
+	/* The board DTS uses this one; the vendor's own string is kept beside it. */
+	{ .compatible = "samsung,x710-pogo-keyboard", },
 	{ .compatible = "stm,stm32_pogo",},
 	{ },
 };

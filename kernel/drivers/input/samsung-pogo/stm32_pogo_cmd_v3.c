@@ -934,20 +934,15 @@ static struct attribute_group key_attr_group = {
 
 int stm32_init_cmd(struct stm32_dev *stm32)
 {
-	int ret = 0;
-
-	stm32->sec_pogo = sec_device_create(stm32, "sec_keypad");
-	if (IS_ERR(stm32->sec_pogo)) {
-		input_err(true, &stm32->client->dev, "Failed to create sec_keypad device\n");
-		return SEC_ERROR;
-	}
-
-	ret = sysfs_create_group(&stm32->sec_pogo->kobj, &key_attr_group);
-	if (ret) {
-		input_err(true, &stm32->client->dev, "Failed to create sysfs: %d\n", ret);
-		stm32_destroy_fn(stm32);
-		return SEC_ERROR;
-	}
+	/*
+	 * The vendor body creates Samsung's sec_keypad class device and the sysfs
+	 * attribute group there.  This port keeps the bring-up and drops the
+	 * Android interfaces (see samsung_pogo_compat.h), so the function keeps
+	 * its place in the probe sequence and its success contract but does
+	 * nothing.
+	 */
+	input_info(true, &stm32->client->dev, "%s: Android sysfs interfaces omitted\n",
+		   __func__);
 
 	return SEC_SUCCESS;
 }
