@@ -28,6 +28,7 @@
 #define POGO_CMD_CHECK_VERSION		0x02
 #define POGO_CMD_ABORT			0x17
 #define POGO_MODE_APP			1
+#define POGO_MODE_DFU			2
 
 /*
  * The MCU's system bootloader, from stm32_pogo_v3_start() and
@@ -421,6 +422,82 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	pogo_boot_ic_version(p, ic_version);
 	pogo_boot_disconnect(p);
 	pogo_wait_application(p, "bootloader start");
+}
+
+/*
+ * Free a bus the keyboard may be holding, and report the line levels.
+ *
+ * The controller's two pins are multiplexed to qup2_se7, so gpiolib will not hand
+ * them out while that state is selected; the "recovery" pinctrl state moves them
+ * to plain GPIOs for the duration.  Nine clocks plus a STOP is the standard I2C
+ * bus recovery, and the levels printed here are the measurement Samsung's own
+ * driver takes when a transfer fails.
+ */
+static void pogo_recover_bus(struct samsung_pogo *p)
+{
+	struct gpio_desc *sda, *scl;
+	int i;
+
+	if (!p->bus_gpio)
+		return;
+	if (pinctrl_select_state(p->pinctrl, p->bus_gpio))
+		return;
+
+	sda = gpiod_get_optional(&p->client->dev, "sda", GPIOD_IN);
+	scl = gpiod_get_optional(&p->client->dev, "scl", GPIOD_IN);
+	if (IS_ERR(sda))
+		sda = NULL;
+	if (IS_ERR(scl))
+		scl = NULL;
+
+	dev_info(&p->client->dev, "bus before recovery: scl:%d sda:%d conn:%d\n",
+		 scl ? gpiod_get_value_cansleep(scl) : -1,
+		 sda ? gpiod_get_value_cansleep(sda) : -1,
+		 gpiod_get_value_cansleep(p->connected));
+
+	if (sda && scl) {
+		gpiod_direction_output(scl, 1);
+		gpiod_direction_output(sda, 1);
+		for (i = 0; i < 9; i++) {
+			gpiod_set_value_cansleep(scl, 0);
+			udelay(5);
+			gpiod_set_value_cansleep(scl, 1);
+			udelay(5);
+		}
+		/* STOP: SDA released while SCL is high. */
+		gpiod_set_value_cansleep(sda, 0);
+		udelay(5);
+		gpiod_set_value_cansleep(scl, 1);
+		udelay(5);
+		gpiod_set_value_cansleep(sda, 1);
+		udelay(5);
+
+		dev_info(&p->client->dev, "bus after recovery: scl:%d sda:%d\n",
+			 gpiod_get_value_cansleep(scl),
+			 gpiod_get_value_cansleep(sda));
+		gpiod_put(sda);
+		gpiod_put(scl);
+	}
+
+	pinctrl_select_state(p->pinctrl,
+			     pinctrl_lookup_state(p->pinctrl, "default"));
+}
+
+static void pogo_scan_bus(struct samsung_pogo *p)
+{
+	struct i2c_adapter *adap = p->client->adapter;
+	union i2c_smbus_data dummy;
+	char found[96];
+	int i, n = 0;
+
+	for (i = 0x08; i < 0x78 && n < (int)sizeof(found) - 7; i++) {
+		if (i2c_smbus_xfer(adap, i, 0, I2C_SMBUS_WRITE, 0,
+				   I2C_SMBUS_QUICK, &dummy) < 0)
+			continue;
+		n += scnprintf(found + n, sizeof(found) - n, " %#x", i);
+	}
+	dev_info(&p->client->dev, "i2c-%d answers at:%s\n", adap->nr,
+		 n ? found : " (nothing)");
 }
 
 static int pogo_read_mcu(struct samsung_pogo *p)
