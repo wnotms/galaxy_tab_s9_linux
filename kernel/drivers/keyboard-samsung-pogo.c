@@ -75,6 +75,9 @@ struct samsung_pogo {
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
+	/* Keep-alive: the MCU stops answering after a while and nothing re-arms it. */
+	struct delayed_work watch_work;
+	unsigned int poll_fails;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
@@ -481,6 +484,60 @@ out:
 		dev_info(&p->client->dev,
 			 "keyboard powered; DATA IRQ armed, waiting for model packet\n");
 	}
+}
+
+/*
+ * Keep the application alive.
+ *
+ * Measured on hardware (2026-09-22): the keyboard works after the app-entry
+ * reset, reports keys, and then goes completely silent - the last packet was at
+ * kernel time 44 s, no announce interrupt arrived afterwards, and neither the
+ * gate nor any transfer that failed had anything to do with it.  A physical
+ * re-seat did not bring it back either, because this driver's startup is
+ * one-shot: once powered/event_enabled are set, pogo_connect_work() does nothing,
+ * so a stopped MCU is never released again.
+ *
+ * So poll it.  GET_MODE is a one-byte read that does not consume a queued key
+ * event, so a healthy idle keyboard answers it harmlessly; three consecutive
+ * failures mean the application has stopped taking the bus, and the two flags are
+ * cleared so the proven bring-up path (app-entry reset, rail, arm DATA) runs again
+ * through pogo_connect_work() rather than a second copy of it.
+ */
+#define POGO_WATCH_MS		2000
+#define POGO_WATCH_FAILS	3
+
+static void pogo_watch_work(struct work_struct *work)
+{
+	struct samsung_pogo *p = container_of(to_delayed_work(work),
+					     struct samsung_pogo, watch_work);
+	u8 mode = 0;
+	int ret = 0;
+	bool rearm = false;
+
+	mutex_lock(&p->lock);
+	if (p->powered && p->event_enabled) {
+		ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
+		if (ret) {
+			if (++p->poll_fails >= POGO_WATCH_FAILS) {
+				p->poll_fails = 0;
+				rearm = true;
+				p->powered = false;
+				p->event_enabled = false;
+				p->ready = false;
+			}
+		} else {
+			p->poll_fails = 0;
+		}
+	}
+	mutex_unlock(&p->lock);
+
+	if (rearm) {
+		dev_info(&p->client->dev,
+			 "MCU stopped answering the keep-alive; re-running the application-entry reset\n");
+		mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
+	}
+	queue_delayed_work(system_percpu_wq, &p->watch_work,
+			   msecs_to_jiffies(POGO_WATCH_MS));
 }
 
 static irqreturn_t pogo_connect_irq(int irq, void *data)
@@ -1220,6 +1277,7 @@ static void pogo_stop(void *data)
 	struct samsung_pogo *p = data;
 
 	disable_irq(p->connect_irq);
+	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
 	if (p->event_enabled) {
 		disable_irq(p->client->irq);
@@ -1248,6 +1306,7 @@ static int pogo_probe(struct i2c_client *client)
 	p->caps = 1;
 	mutex_init(&p->lock);
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
+	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
@@ -1330,6 +1389,7 @@ static int pogo_probe(struct i2c_client *client)
 		return ret;
 	enable_irq(p->connect_irq);
 	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
+		queue_delayed_work(system_percpu_wq, &p->watch_work, msecs_to_jiffies(POGO_WATCH_MS));
 	return 0;
 }
 

@@ -1,0 +1,17 @@
+2026-09-22T14:21:58Z console open on COM17
+2026-09-22T14:21:59Z RECV  echo READY1
+2026-09-22T14:21:59Z RECV  READY1
+2026-09-22T14:21:59Z shell answered after 1 poll(s)
+2026-09-22T14:21:59Z SENT  dmesg | grep -a "5-002a" | tail -8; cat /proc/interrupts | grep -a "5-002a"
+2026-09-22T14:22:06Z RECV  gts9# [6ndmesg | grep -a "5-002a" | tail -8; cat /proc/interrupts | grep -a "5-002a
+2026-09-22T14:22:06Z RECV  "
+2026-09-22T14:22:06Z RECV  [    4.695709][  T115] samsung-pogo-keyboard 5-002a: packet from the MCU: 03 00 02 (size 3)
+2026-09-22T14:22:06Z RECV  [    4.722200][  T115] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-22T14:22:06Z RECV  [    4.939688][  T115] samsung-pogo-keyboard 5-002a: CHECK_CRC: 0 - answered
+2026-09-22T14:22:06Z RECV  [    4.939696][  T115] samsung-pogo-keyboard 5-002a: CRC32 6e 37 df ea
+2026-09-22T14:22:06Z RECV  [    4.941960][  T115] samsung-pogo-keyboard 5-002a: GET_TC_FW_VERSION (EP2): 0 - answered; stock's capture has the MCU's next ATTN 0.2 ms later
+2026-09-22T14:22:06Z RECV  [    4.941989][  T115] samsung-pogo-keyboard 5-002a: MCU announced itself (2)
+2026-09-22T14:22:06Z RECV  [    4.942881][  T115] samsung-pogo-keyboard 5-002a: packet from the MCU: 04 00 04 (size 4)
+2026-09-22T14:22:06Z RECV  [    4.943143][  T115] samsung-pogo-keyboard 5-002a: payload (1 bytes): 02
+2026-09-22T14:22:06Z RECV   170:          2          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T14:22:06Z console run done (ready=True)

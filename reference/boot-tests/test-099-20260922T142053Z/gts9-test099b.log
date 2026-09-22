@@ -1,0 +1,21 @@
+2026-09-22T14:25:48Z console open on COM17
+2026-09-22T14:25:49Z RECV  echo READY1
+2026-09-22T14:25:49Z RECV  READY1
+2026-09-22T14:25:49Z shell answered after 1 poll(s)
+2026-09-22T14:25:49Z SENT  dmesg | grep -a -cE "stopped answering the keep-alive"; dmesg | grep -a "key 0x" | tail -8; dmesg | grep -a "key 0x" | wc -l; cat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a "application-entry reset" | wc -l
+2026-09-22T14:25:58Z RECV  gts9# [6ndmesg | grep -a -cE "stopped answering the keep-alive"; dmesg | grep -a "k
+2026-09-22T14:25:58Z RECV  ey 0x" | tail -8; dmesg | grep -a "key 0x" | wc -l; cat /proc/interrupts | grep
+2026-09-22T14:25:58Z RECV  -a "5-002a"; dmesg | grep -a "application-entry reset" | wc -l
+2026-09-22T14:25:58Z RECV  8
+2026-09-22T14:25:58Z RECV  [  193.237668][  T115] samsung-pogo-keyboard 5-002a: key 0x16 pressed (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  193.414815][  T115] samsung-pogo-keyboard 5-002a: key 0x23 pressed (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  193.448215][  T115] samsung-pogo-keyboard 5-002a: key 0x16 released (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  193.582707][  T115] samsung-pogo-keyboard 5-002a: key 0x23 released (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  193.611598][  T115] samsung-pogo-keyboard 5-002a: key 0x16 pressed (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  193.675297][  T115] samsung-pogo-keyboard 5-002a: key 0x16 released (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  195.428328][  T115] samsung-pogo-keyboard 5-002a: key 0x39 pressed (from the MCU packet)
+2026-09-22T14:25:58Z RECV  [  195.526308][  T115] samsung-pogo-keyboard 5-002a: key 0x39 released (from the MCU packet)
+2026-09-22T14:25:58Z RECV  26
+2026-09-22T14:25:58Z RECV   170:         28          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T14:25:58Z RECV  17
+2026-09-22T14:25:58Z console run done (ready=True)
