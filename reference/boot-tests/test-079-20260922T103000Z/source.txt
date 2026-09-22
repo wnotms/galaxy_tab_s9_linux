@@ -1,0 +1,8 @@
+source_commit=100 kHz DTS commit ("dts: back to 100 kHz, now that the vendor path can run")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-078
+hypothesis=The bus was moved to 400 kHz in test 059 on the strength of the downstream binding's default, and that comparison used the mainline port *before* the stock firmware was available.  The combination now built - the vendor driver running its complete stock firmware path at 100 kHz - has never been measured, and a slave that answers only at one rate is exactly the marginality the vendor's reset-before-trans quirk exists for.
+change=clock-frequency back to 100000 on the pogo controller in the board DTS; the vendor port is the built driver and the initramfs carries the firmware.
+predictions=1) the application answers (CHECK_VERSION, [MODE] 1, CRC 0xEADF376E) => the rate was the last host-side difference and stage two of the success criteria is met; 2) the same -6 NACK at 100 kHz => the rate is excluded for both drivers and both firmware states, and the fault is inside the application's own behaviour with no host-side variable left.
+images=out/boot-bundle-test079/boot.img c1fb38a75cdb12ba2523ae713ec9d91ef08eb896bc7206bc98d2764867960463 and vendor_boot.img 7bd7dcf959390afde42aaa7998976b742557937141c929ef0eb1f52df84804f3 (both carry the new DTB); init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T10:30:00Z

@@ -1,0 +1,17 @@
+2026-09-22T10:49:25Z console open on COM17
+2026-09-22T10:49:28Z SENT  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|I2C retry|no answer|version:" | tail -12
+2026-09-22T10:49:29Z RECV  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|I2C retry|no answer|vers
+2026-09-22T10:49:29Z RECV  ion:" | tail -12
+2026-09-22T10:49:29Z RECV  [    5.553651][   T76] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+2026-09-22T10:49:29Z RECV  [    6.144255][   T76] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+2026-09-22T10:49:29Z RECV  [    8.565105][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   10.917166][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   13.282624][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   15.549380][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   17.821664][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   20.093907][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   22.366519][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   26.763998][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   29.034671][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:29Z RECV  [   31.305737][  T169] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:49:38Z console session done
