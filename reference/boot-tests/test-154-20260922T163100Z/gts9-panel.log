@@ -1,0 +1,27 @@
+2026-09-22T16:32:40Z console open on COM17
+2026-09-22T16:32:41Z RECV  echo READY1
+2026-09-22T16:32:41Z RECV  READY1
+2026-09-22T16:32:41Z shell answered after 1 poll(s)
+2026-09-22T16:32:41Z SENT  cat /sys/class/tty/tty0/active; dmesg | grep -ai "panel shell"; echo ---; cat /proc/cmdline; echo ---; grep -aA4 "EF-DX710" /proc/bus/input/devices | head -6; echo ---; cat /proc/sys/kernel/printk; echo ---; echo "i2c=$(dmesg | grep -ac geni_i2c) pogo=$(dmesg | grep -ac 5-002a) drm=$(dmesg | grep -ac msm_dpu) reg=$(dmesg | grep -ac regulator)"
+2026-09-22T16:32:57Z RECV  gts9# [6ncat /sys/class/tty/tty0/active; dmesg | grep -ai "panel shell"; echo ---;
+2026-09-22T16:32:57Z RECV  cat /proc/cmdline; echo ---; grep -aA4 "EF-DX710" /proc/bus/input/devices | head
+2026-09-22T16:32:57Z RECV   -6; echo ---; cat /proc/sys/kernel/printk; echo ---; echo "i2c=$(dmesg | grep -
+2026-09-22T16:32:57Z RECV  ac geni_i2c) pogo=$(dmesg | grep -ac 5-002a) drm=$(dmesg | grep -ac msm_dpu) reg
+2026-09-22T16:32:57Z RECV  =$(dmesg | grep -ac regulator)"
+2026-09-22T16:32:57Z RECV  tty1
+2026-09-22T16:32:57Z RECV  [    1.663239][    T1] gts9-init: console loglevel set to 1: kernel messages stay out of the panel shell
+2026-09-22T16:32:57Z RECV  [    2.046603][    T1] gts9-init: panel shell: foreground VT is tty1
+2026-09-22T16:32:57Z RECV  [    2.046668][    T1] gts9-init: panel shell started on /dev/tty1 (local bring-up/rescue shell)
+2026-09-22T16:32:57Z RECV  ---
+2026-09-22T16:32:57Z RECV  console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=acm gts9_sec_log=0x880200000,0x200000 gts9_proof_code=1800 gts9_proof_action=recovery-bcb loglevel=4 ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-22T16:32:57Z RECV  ---
+2026-09-22T16:32:57Z RECV  N: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-22T16:32:57Z RECV  P: Phys=
+2026-09-22T16:32:57Z RECV  S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T16:32:57Z RECV  U: Uniq=
+2026-09-22T16:32:57Z RECV  H: Handlers=sysrq kbd leds event0
+2026-09-22T16:32:57Z RECV  ---
+2026-09-22T16:32:57Z RECV  1	4	1	7
+2026-09-22T16:32:57Z RECV  ---
+2026-09-22T16:32:57Z RECV  i2c=0 pogo=12 drm=3 reg=16
+2026-09-22T16:32:57Z console run done (ready=True)
