@@ -1,0 +1,7 @@
+source_commit=17647ad ("pogo: report where the firmware header is and which interface answers")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner asked to continue the repair ("检查仓库变化，继续修复") and asked to reduce the wait between system switches; this flash continues the authorisation recorded for tests 046-050 ("刷入测试")
+question=After stock's exact sequence (dance, sync, version, IC version at 0x08000200, disconnect with BOOT0 low and one NRST pulse) the application still does not answer (test 050). Two readings separate the remaining cases: (a) does Samsung's "STM32" header exist at 0x080000bc or 0x080000c0 inside the image whose vector table is at 0x08000000, and what do status_boot_mode and the two bank addresses say; (b) after the disconnected reset, does the part answer at 0x51 (still in its bootloader) or at 0x2a (application started), or neither.
+predictions=1) the header is at one of the two offsets and names both banks, so the firmware layout is known. 2) the report immediately after the reset says which interface answers; if bootloader=0 and application=-ENXIO the part is neither in its bootloader nor answering, which rules out "it stayed in the bootloader" and points at the application itself.
+images=out/boot-bundle-test051/boot.img c4d07441b3a9238619777bc694320103c3020cda6637d69c0c32f152e574c590; init_boot/vendor_boot/dtbo unchanged (2fb24cd0, 828dadec, c17418be) and already on the device
+started_utc=2026-09-22T06:51:20Z

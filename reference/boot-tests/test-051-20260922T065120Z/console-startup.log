@@ -1,0 +1,26 @@
+2026-09-22T06:52:32Z console open on COM17
+2026-09-22T06:52:35Z SENT  dmesg | grep -i -e "bootloader" -e "IC version" -e "firmware header" -e "application" -e "STM32" -e "no answer" -e "disconnected" | tail -22; echo ---; dmesg | grep -i pogo | tail -8
+2026-09-22T06:52:35Z RECV  dmesg | grep -i -e "bootloader" -e "IC version" -e "firmware header" -e "a
+2026-09-22T06:52:35Z RECV  pplication" -e "STM32" -e "no answer" -e "disconnected" | tail -22; echo ---; dm
+2026-09-22T06:52:35Z RECV  esg | grep -i pogo | tail -8
+2026-09-22T06:52:36Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T06:52:36Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T06:52:36Z RECV  [    4.215372][   T79] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T06:52:36Z RECV  [    4.356735][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T06:52:36Z RECV  [    4.365761][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T06:52:36Z RECV  [    4.381244][   T79] samsung-pogo-keyboard 5-002a: MCU IC version 00340034
+2026-09-22T06:52:36Z RECV  [    4.436876][   T79] samsung-pogo-keyboard 5-002a: no STM32 header at 0x80000c0 or 0x80000bc, first bytes 00000000000000000000000000000000
+2026-09-22T06:52:36Z RECV  [    4.642448][   T79] samsung-pogo-keyboard 5-002a: after the disconnected reset: application -6, bootloader -6, connect 1
+2026-09-22T06:52:36Z RECV  [    9.683301][   T79] samsung-pogo-keyboard 5-002a: application after bootloader start: -6 after 5024 ms without reset (no version response)
+2026-09-22T06:52:36Z RECV  [    9.697711][   T79] samsung-pogo-keyboard 5-002a: five seconds later: application -6, bootloader -6, connect 1
+2026-09-22T06:52:36Z RECV  [   12.394354][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T06:52:36Z RECV  ---
+2026-09-22T06:52:36Z RECV  [   10.036917][   T79] samsung-pogo-keyboard 5-002a: attempt 4 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   10.111699][   T79] samsung-pogo-keyboard 5-002a: attempt 5 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   10.183325][   T79] samsung-pogo-keyboard 5-002a: attempt 6 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   10.254026][   T79] samsung-pogo-keyboard 5-002a: attempt 7 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   10.325176][   T79] samsung-pogo-keyboard 5-002a: attempt 8 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   10.399234][   T79] samsung-pogo-keyboard 5-002a: attempt 9 failed: scl:-1 sda:-1 conn:0
+2026-09-22T06:52:36Z RECV  [   12.394354][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T06:52:36Z RECV  [   12.468966][   T79] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T06:52:45Z console session done
