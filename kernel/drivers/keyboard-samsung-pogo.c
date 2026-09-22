@@ -731,6 +731,7 @@ static void pogo_conn_check_work(struct work_struct *work)
 	struct samsung_pogo *p = container_of(to_delayed_work(work),
 					     struct samsung_pogo, conn_check_work);
 	int level;
+	bool arm = false;
 
 	mutex_lock(&p->lock);
 	level = gpiod_get_value_cansleep(p->connected);
@@ -742,9 +743,39 @@ static void pogo_conn_check_work(struct work_struct *work)
 		 "pogo: connect line reads %d (was %d) after the 250 ms check\n",
 		 level, p->connect_state);
 	p->connect_state = level;
-	if (!level)
+	if (!level) {
 		pogo_detach(p);
+		mutex_unlock(&p->lock);
+		return;
+	}
+
+	/*
+	 * Hot reconnect, exactly as stock's stm32_keyboard_connect(1) does it: raise
+	 * the rail, settle 50 ms and arm the data interrupt.  No NRST pulse, no
+	 * BOOT0 manipulation, no 0x51 access, no rail drop - a hot-plugged MCU has
+	 * just been powered with BOOT0 low and is already running its application,
+	 * which then announces itself and is served by the verified pogo_hello()
+	 * path (CHECK_VERSION, GET_MODE, 200 ms, CHECK_CRC, GET_TC_FW_VERSION).
+	 * Driving the cold sequence into that part is what this port got wrong.
+	 */
+	if (pogo_power_on(p)) {
+		dev_warn(&p->client->dev, "pogo: hot reconnect could not raise the rail\n");
+		mutex_unlock(&p->lock);
+		return;
+	}
+	msleep(50);
+	p->ready = false;
+	p->event_enabled = true;
+	if (!p->irq_armed) {
+		p->irq_armed = true;
+		arm = true;
+	}
 	mutex_unlock(&p->lock);
+	if (arm)
+		enable_irq(p->client->irq);
+	dev_info(&p->client->dev,
+		 "pogo: hot reconnect: rail on, DATA %s, no reset (stock model)\n",
+		 arm ? "armed" : "already armed");
 }
 
 static irqreturn_t pogo_connect_irq(int irq, void *data)
