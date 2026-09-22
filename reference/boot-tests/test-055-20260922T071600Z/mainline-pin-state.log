@@ -1,0 +1,34 @@
+2026-09-22T07:17:51Z console open on COM17
+2026-09-22T07:17:54Z SENT  for p in 10 12 13 62 72 75 106; do grep -H "pin $p " /sys/kernel/debug/pinctrl/*/pinmux-pins 2>/dev/null | head -1; done; echo ===gpio===; grep -iE "pogo|swclk|nrst|gpio-?(10|12|13|62|75)\b" /sys/kernel/debug/gpio 2>/dev/null | head -20; echo ===regulator===; grep -iE "pogo|vdd|stm32" /sys/kernel/debug/regulator/regulator_summary 2>/dev/null | head -10
+2026-09-22T07:17:54Z RECV  for p in 10 12 13 62 72 75 106; do grep -H "pin $p " /sys/kernel/debug/pin
+2026-09-22T07:17:54Z RECV  ctrl/*/pinmux-pins 2>/dev/null | head -1; done; echo ===gpio===; grep -iE "pogo|
+2026-09-22T07:17:54Z RECV  swclk|nrst|gpio-?(10|12|13|62|75)\b" /sys/kernel/debug/gpio 2>/dev/null | head -
+2026-09-22T07:17:54Z RECV  20; echo ===regulator===; grep -iE "pogo|vdd|stm32" /sys/kernel/debug/regulator/
+2026-09-22T07:17:54Z RECV  regulator_summary 2>/dev/null | head -10
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/c400000.spmi:pmic@1:gpio@8800/pinmux-pins:pin 10 (gpio11): (MUX UNCLAIMED) c400000.spmi:pmic@1:gpio@8800:522
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 12 (GPIO_12): device 5-002a function gpio group gpio12
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 13 (GPIO_13): device 5-002a function gpio group gpio13
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 62 (GPIO_62): device 5-002a function gpio group gpio62
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 72 (GPIO_72): device 89c000.i2c function qup2_se7 group gpio72
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 75 (GPIO_75): device 5-002a function gpio group gpio75
+2026-09-22T07:17:54Z RECV  /sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins:pin 106 (GPIO_106): device 89c000.i2c function qup2_se7 group gpio106
+2026-09-22T07:17:54Z RECV  ===gpio===
+2026-09-22T07:17:54Z RECV   gpio10: in   high normal  vin-1 no pull                     push-pull  low     atest-1 dtest-0
+2026-09-22T07:17:54Z RECV   gpio12: in   low  normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
+2026-09-22T07:17:54Z RECV   gpio10  : out high func0 2mA no pull
+2026-09-22T07:17:54Z RECV   gpio12  : out low  func0 2mA no pull
+2026-09-22T07:17:54Z RECV   gpio13  : out high func0 2mA no pull
+2026-09-22T07:17:54Z RECV   gpio62  : in  low  func0 2mA no pull
+2026-09-22T07:17:54Z RECV   gpio75  : in  high func0 2mA no pull
+2026-09-22T07:17:54Z RECV  ===regulator===
+2026-09-22T07:17:54Z RECV         88e3000.phy-vdd            1                                 0mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         ae95000.phy-vdds           1                                98mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         1d80000.phy-vdda-phy       0                               188mA*    0mV     0mV
+2026-09-22T07:17:54Z RECV         1c06000.phy-vdda-phy       0                                 0mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         ae94000.dsi-vdda           1                                16mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         88e3000.phy-vdda12         1                                 0mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         88e8000.phy-vdda-phy       1                                21mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         1d80000.phy-vdda-pll       0                                18mA*    0mV     0mV
+2026-09-22T07:17:54Z RECV         1c06000.phy-vdda-pll       0                                 0mA     0mV     0mV
+2026-09-22T07:17:54Z RECV         8-004f-vdd3v3              1                                11mA     0mV     0mV
+2026-09-22T07:18:03Z console session done

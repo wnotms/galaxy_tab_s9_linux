@@ -1,0 +1,40 @@
+=== stock I2C byte log (debug_level=1, live app session) ===
+[   17.610850] sec sec_keypad: [sec_input] keyboard_connected_show: 1
+[   17.692244] stm32_pogo_i2c 44-002a: [sec_input] debug_level_show: 0
+[   17.767169] stm32_pogo_i2c 44-002a: [sec_input] debug_level_store: 1
+--
+[   18.306196] [sec_input] stm32_i2c_write_burst: 03 00 01 
+[   18.308212] [sec_input] stm32_i2c_read_bulk: 03 00 02 
+[   18.308229] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_int_proc: support_keyboard_model 0x2
+[   18.308401] [sec_input] stm32_i2c_write_burst: 04 00 01 
+[   18.308519] [sec_input] stm32_i2c_write_burst: 02 
+[   18.310126] [sec_input] stm32_i2c_read_bulk: 07 00 01 
+[   18.310310] [sec_input] stm32_i2c_read_bulk: 00 01 04 01 
+[   18.310327] stm32_pogo_i2c 44-002a: [sec_input] stm32_read_version: [IC] version:1.4, model_id:01, hw_rev:00
+[   18.310348] [GRIP_WIFI] a96t396_pogo_notifier: pogo attach
+--
+[   18.320064] [sec_input] stm32_i2c_write_burst: 04 00 01 
+[   18.320186] [sec_input] stm32_i2c_write_burst: 01 
+[   18.321744] [sec_input] stm32_i2c_read_bulk: 04 00 01 
+[   18.321856] [sec_input] stm32_i2c_read_bulk: 01 
+[   18.321867] stm32_pogo_i2c 44-002a: [sec_input] [MODE] 1
+[   18.321875] stm32_pogo_i2c 44-002a: [sec_input] stm32_set_mode: already same mode buff:1, mode:1
+[   18.524076] [sec_input] stm32_i2c_write_burst: 04 00 01 
+[   18.524198] [sec_input] stm32_i2c_write_burst: 03 
+[   18.530645] [sec_input] stm32_i2c_read_bulk: 07 00 01 
+[   18.530834] [sec_input] stm32_i2c_read_bulk: 6E 37 DF EA 
+[   18.530849] stm32_pogo_i2c 44-002a: [sec_input] stm32_read_crc: [IC] BOOT CRC32 = 0xEADF376E
+[   18.531018] [sec_input] stm32_i2c_write_burst: 04 00 02 
+[   18.531137] [sec_input] stm32_i2c_write_burst: 18 
+[   18.531723] [sec_input] stm32_i2c_read_bulk: 09 00 02 
+[   18.531993] [sec_input] stm32_i2c_read_bulk: 09 00 FF 00 00 00 
+[   18.532060] stm32_pogo_i2c 44-002a: [sec_input] stm32_read_tc_version: [TC IC] version:0xFF00, data ver:0x9
+[   18.532184] [sec_input] stm32_i2c_write_burst: 03 00 01 
+[   18.532344] [sec_input] stm32_i2c_read_bulk: 04 00 04 
+[   18.532460] [sec_input] stm32_i2c_read_bulk: 02 
+[   18.532472] input input11: [sec_input] logical_hallic_notifier_handler hall_status = 2 (NORMAL)
+[   18.532484] stm32_kpd soc:pogo_kpd: [sec_input] release_all_key_bypass
+--
+[   21.956302] sec sec_keypad: [sec_input] keyboard_connected_show: 1
+[   22.215909] sm5714-charger sm5714-charger: sm5714_chg_get_property: psp=37
+[   22.215914] sm5714_fg_get_property: charge_counter = 10059730

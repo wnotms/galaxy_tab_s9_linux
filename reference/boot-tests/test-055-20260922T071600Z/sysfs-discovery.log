@@ -1,0 +1,55 @@
+=== stock pogo sysfs attributes (TWRP, stock kernel) ===
+total 0
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 ap_pmic -> ../../devices/virtual/sec/ap_pmic
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 bsp -> ../../devices/virtual/sec/bsp
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 ccic -> ../../devices/virtual/sec/ccic
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 hall_ic -> ../../devices/virtual/sec/hall_ic
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 hall_logical -> ../../devices/virtual/sec/hall_logical
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 hdm -> ../../devices/virtual/sec/hdm
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 msm_dwc3 -> ../../devices/virtual/sec/msm_dwc3
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 muic -> ../../devices/virtual/sec/muic
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 pcie-wifi -> ../../devices/virtual/sec/pcie-wifi
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sb-notify -> ../../devices/virtual/sec/sb-notify
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sdcard -> ../../devices/virtual/sec/sdcard
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sddata -> ../../devices/virtual/sec/sddata
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sdinfo -> ../../devices/virtual/sec/sdinfo
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec-ap-thermistor -> ../../devices/virtual/sec/sec-ap-thermistor
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec-cp-thermistor -> ../../devices/virtual/sec/sec-cp-thermistor
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec-pa-thermistor -> ../../devices/virtual/sec/sec-pa-thermistor
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec-wf-thermistor -> ../../devices/virtual/sec/sec-wf-thermistor
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_abc -> ../../devices/virtual/sec/sec_abc
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_abc_hub -> ../../devices/virtual/sec/sec_abc_hub
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_debug -> ../../devices/virtual/sec/sec_debug
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_detect_conn -> ../../devices/virtual/sec/sec_detect_conn
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_hw_param -> ../../devices/virtual/sec/sec_hw_param
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_keypad -> ../../devices/virtual/sec/sec_keypad
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_misc -> ../../devices/virtual/sec/sec_misc
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 sec_param -> ../../devices/virtual/sec/sec_param
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 switch -> ../../devices/virtual/sec/switch
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 tsp -> ../../devices/virtual/sec/tsp
+lrwxrwxrwx 1 root root 0 2026-09-22 07:16 ufs -> ../../devices/virtual/sec/ufs
+--- sec_keypad attrs ---
+total 0
+-rw-r--r-- 1 root root 4096 2026-09-22 07:16 block_pogo_keyboard
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 check_fw_update
+-rw-r--r-- 1 root root 4096 2026-09-22 07:16 debug_level
+-rw-r--r-- 1 root root 4096 2026-09-22 07:16 enabled
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 fw_mcu_update
+--w------- 1 root root 4096 2026-09-22 07:16 fw_update
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_crc
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_fw_ver_bin
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_fw_ver_ic
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_mcu_fw_ver
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_tc_crc
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_tc_fw_ver_bin
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 get_tc_fw_ver_ic
+-r--r--r-- 1 root root 4096 2026-09-22 07:16 hw_reset
+-rw-r--r-- 1 root root 4096 2026-09-22 07:16 keyboard_connected
+drwxr-xr-x 2 root root    0 2022-09-16 19:11 power
+--w------- 1 root root 4096 2026-09-22 07:16 sec_pogo_keyboard_fw
+lrwxrwxrwx 1 root root    0 2026-09-22 07:16 subsystem -> ../../../../class/sec
+-rw-r--r-- 1 root root 4096 2022-09-16 19:11 uevent
+--- find debug_level ---
+/sys/class/input_booster/debug_level
+/sys/devices/virtual/sec/sec_keypad/debug_level
+/sys/module/sec_debug/parameters/debug_level
