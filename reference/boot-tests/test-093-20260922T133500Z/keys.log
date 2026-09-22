@@ -1,0 +1,7 @@
+2026-09-22T13:44:32Z console open on COM17
+2026-09-22T13:44:35Z SENT  cat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a "key 0x" | tail -20; dmesg | grep -a -c "key 0x"
+2026-09-22T13:44:35Z RECV  cat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a "key 0x" | tail -
+2026-09-22T13:44:35Z RECV  20; dmesg | grep -a -c "key 0x"
+2026-09-22T13:44:35Z RECV   170:          1          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T13:44:35Z RECV  0
+2026-09-22T13:44:44Z console session done
