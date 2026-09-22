@@ -346,8 +346,8 @@ log ''
 # sets the *initial* console level, so this sysctl really does quieten the console from
 # here on while dmesg keeps every message.
 if [ -w /proc/sys/kernel/printk ]; then
-    if printf '4 4 1 7\n' > /proc/sys/kernel/printk 2>/dev/null; then
-        log 'console loglevel set to 4: kernel messages no longer overwrite the shell'
+    if printf '1 4 1 7\n' > /proc/sys/kernel/printk 2>/dev/null; then
+        log 'console loglevel set to 1: kernel messages stay out of the panel shell'
     fi
 fi
 
@@ -1020,12 +1020,73 @@ fi
 # armed earlier stays as the safety net for a boot that never reaches this point,
 # so a hang still ends in a reboot instead of a tablet left sitting there.
 # ---------------------------------------------------------------------------
+# The panel shell: tty1 on the framebuffer, driven by the pogo keyboard.
+#
+# Until now the tablet's own screen was a kernel printk console, so it showed a
+# scrolling log that nothing could be typed into.  This starts an interactive
+# BusyBox shell on tty1 *in the background*, so PID 1 keeps running its own
+# sequence and the USB ACM shell on ttyGS0 is untouched.  It is a bring-up /
+# rescue shell by design: when a future gts9_rootfs= boot takes over the panel,
+# this is not started at all and the rootfs's own getty owns tty1.
+# ---------------------------------------------------------------------------
+start_panel_shell()
+{
+    if grep -q 'gts9_rootfs=' /proc/cmdline 2>/dev/null; then
+        log 'panel shell: a rootfs boot was requested; leaving tty1 to the rootfs'
+        return 0
+    fi
+    if [ ! -c /dev/tty1 ]; then
+        log 'WARN: /dev/tty1 unavailable; panel shell not started'
+        return 0
+    fi
+
+    # Only the shell goes to the panel.  The report, /proc/interrupts, DRM state
+    # and every driver log stay in dmesg and in the report file.
+    if [ -w /sys/class/graphics/fb0/blank ]; then
+        echo 0 > /sys/class/graphics/fb0/blank 2>/dev/null || true
+    fi
+    if command -v chvt >/dev/null 2>&1; then
+        chvt 1 >/dev/null 2>&1 || true
+    fi
+    log "panel shell: foreground VT is $(cat /sys/class/tty/tty0/active 2>/dev/null)"
+
+    (
+        while :; do
+            printf '\033c' > /dev/tty1 2>/dev/null
+            {
+                printf '\r\nGTS9 mainline\r\n'
+                printf 'Linux %s\r\n' "$(uname -r 2>/dev/null)"
+                printf '\r\nLocal shell: tty1\r\n'
+                printf 'Kernel log: dmesg\r\n'
+                printf 'USB shell: /dev/ttyGS0\r\n\r\n'
+            } > /dev/tty1 2>/dev/null
+
+            # setsid makes this a session leader with no controlling terminal,
+            # so the tty it opens first becomes its controlling one - that is
+            # what gives normal interactive behaviour, Ctrl-C included.  It runs
+            # in the background: PID 1 stays PID 1 and an `exit` in here only
+            # restarts this loop.
+            if command -v setsid >/dev/null 2>&1; then
+                setsid /bin/sh -c 'PS1="gts9# " exec /bin/sh -i </dev/tty1 >/dev/tty1 2>&1'
+            else
+                PS1='gts9# ' /bin/sh -i </dev/tty1 >/dev/tty1 2>&1
+            fi
+            sleep 1
+        done
+    ) &
+
+    log 'panel shell started on /dev/tty1 (local bring-up/rescue shell)'
+}
+
+# ---------------------------------------------------------------------------
 if [ "$reboot_after" = 1 ] && [ "$proof_action" = recovery-bcb ] && [ -n "$proof_code_base" ]; then
     log "work complete (report_written=$report_written, target=${report_target:-none}); rebooting into recovery in 10s"
     sleep 10
     reboot_to_recovery
 fi
 
+
+start_panel_shell
 
 if [ "$gadget_setup" = 1 ]; then
     # Wait for the ACM port to appear, then mirror the kernel log onto it and
