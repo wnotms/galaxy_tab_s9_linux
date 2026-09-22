@@ -1,0 +1,6 @@
+2026-09-22T07:38:29Z console open on COM17
+2026-09-22T07:38:32Z SENT  dmesg | grep -i -e "rail on" -e "MCU" -e "application" | tail -8
+2026-09-22T07:38:32Z RECV  dmesg | grep -i -e "rail on" -e "MCU" -e "application" | tail -8
+2026-09-22T07:38:32Z RECV  [    4.093424][   T81] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low
+2026-09-22T07:38:32Z RECV  [    4.150393][   T81] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:38:41Z console session done

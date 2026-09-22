@@ -1889,7 +1889,16 @@
 
 &i2c15 {
 	status = "okay";
-	clock-frequency = <100000>;
+	/*
+	 * 400 kHz, not 100 kHz: the downstream controller binding documents
+	 * qcom,clk-freq-out as "when missing default to 400000Hz", and Samsung's
+	 * own node for this keyboard sets the two samsung,* quirks but not that
+	 * property - so the stock kernel runs this serial engine at 400 kHz
+	 * while this port asked for 100 kHz.  The STM32 answers as a bootloader
+	 * at either rate, but its application may be timing-sensitive, which is
+	 * what the vendor's quirks on this bus suggest.
+	 */
+	clock-frequency = <400000>;
 
 	keyboard@2a {
 		compatible = "samsung,x710-pogo-keyboard";
