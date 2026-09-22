@@ -1922,6 +1922,15 @@
 		pins = "gpio10";
 		function = "gpio";
 		drive-strength = <2>;
+		/*
+		 * The vendor's ldo_gpio1 state drives this pin high, and it has to
+		 * be here as well: without it the pin comes out of the TLMM probe
+		 * low, the keyboard's rail is unpowered until the regulator
+		 * happens to be enabled, and the MCU never answers - mainline saw
+		 * a clean NACK at 0x2a and a bus scan that found nothing, while
+		 * TWRP's stock kernel enumerated the same cover (test 045).
+		 */
+		output-high;
 		bias-disable;
 	};
 
