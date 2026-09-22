@@ -1,0 +1,12 @@
+2026-09-22T02:40:06Z console open on COM17
+2026-09-22T02:40:09Z SENT  dmesg | grep -i -e "unavailable" -e "attempt" -e "no answer" | tail -8
+2026-09-22T02:40:09Z RECV  dmesg | grep -i -e "unavailable" -e "attempt" -e "no answer" | tail -8
+2026-09-22T02:40:09Z RECV  [    4.713321][   T63] samsung-pogo-keyboard 5-002a: attempt 3 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    4.788770][   T63] samsung-pogo-keyboard 5-002a: attempt 4 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    4.896199][   T63] samsung-pogo-keyboard 5-002a: attempt 5 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    4.988455][   T63] samsung-pogo-keyboard 5-002a: attempt 6 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    5.064440][   T63] samsung-pogo-keyboard 5-002a: attempt 7 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    5.148437][   T63] samsung-pogo-keyboard 5-002a: attempt 8 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    5.464894][   T63] samsung-pogo-keyboard 5-002a: attempt 9 failed: scl:-1 sda:-1 conn:0
+2026-09-22T02:40:09Z RECV  [    7.808286][   T63] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T02:40:18Z console session done

@@ -138,10 +138,20 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   candidates were fitted and did not help: patch 0007
   (`samsung,reset-before-trans`, now in `pending/`) and an explicit rail
   power-cycle; both are retired with that result recorded.
-  **Next measurement:** the stock kernel's `regulator_summary` in TWRP, to find
-  which supply feeds the pogo rail - it is a switch, so its source has to be on as
-  well, and mainline may leave that source disabled. No key has been typed through
-  this driver yet.
+  Round 2 compared the stock and mainline regulator tables: the pogo rail is
+  enabled in **both** (`fixed_regulator${#}` / `pogo-vdd`, use=1, each with its
+  client as consumer), no relevant rail differs, and the rail's source is not
+  modelled as a parent in either tree.  It also established that gpiolib refuses
+  to hand out gpio72/106 while they are multiplexed to `qup2_se7` (-EINVAL) and
+  that `of_get_named_gpio()` no longer exists, which is why the vendor reads those
+  lines with `gpio_get_value()` on numbers it never claims.
+  **Next step:** a "recovery" pinctrl state that moves those pins to GPIO is in
+  the board node and referenced correctly, but the driver printed neither
+  `bus before recovery` nor `bus after recovery`, so `pinctrl_lookup_state()`
+  failed and the path was skipped without logging why.  Log those errors first,
+  then read the SCL/SDA levels - held low means bus recovery, both high means the
+  bus is free and the MCU is not answering.  No key has been typed through this
+  driver yet.
 - **Physical tests need a recorded owner request (2026-09-22).** The test 040
   flash was made on one and tests 041-045 continued under the same recorded
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or

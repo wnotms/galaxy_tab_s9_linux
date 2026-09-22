@@ -146,3 +146,39 @@ The remaining suspect is therefore outside the keyboard driver: the pogo rail is
 a *switch*, and whatever feeds it has to be on as well.  The next measurement is
 the stock kernel's `regulator_summary` in TWRP, to see which supply feeds that
 rail and whether mainline leaves it disabled.
+
+## Round 2: the rail is on in both kernels, and the bus lines are next
+
+The stock kernel's regulator table was captured in TWRP
+(`twrp-regulator-summary.txt`) and compared with mainline's from the same boot
+(`bringup-report-cycle.txt`).  The pogo rail is enabled in **both**:
+`fixed_regulator${#} use=1 open=1` in stock, `pogo-vdd use=1 open=1` in mainline,
+each with its client as the consumer.  A full name-keyed diff is not conclusive
+because the two trees name the PMIC rails differently (`pm_humu_l13` against
+`vreg_l13b_3p0`), but no rail that matters here - pogo, panel, USB, UFS, the MMP
+and display GDSCs - is on in stock and off in mainline.  The rail's *source* is
+not modelled as a parent in either tree, since the fixed regulator has no
+`vin-supply`.
+
+Samsung's v3 driver (`stm32_pogo_i2c_v3.c`) prints **scl/sda levels** on a failed
+transfer, which is the measurement this investigation still lacks: a clean NACK
+says the bus was idle, not whether a line is being held.  Reproducing that took
+three attempts, and the first two are worth recording:
+
+1. `devm_gpiod_get_optional(dev, "sda"/"scl", GPIOD_IN)` fails with **-EINVAL**
+   while the pins are multiplexed to `qup2_se7` - gpiolib will not hand out a pin
+   the controller owns.  That is why the vendor reads them with `gpio_get_value()`
+   on numbers it never claims.
+2. `of_get_named_gpio()` no longer exists in this kernel, so the unclaimed-read
+   route is not available either.
+
+The remaining approach, now in place, is a **"recovery" pinctrl state** that moves
+gpio72/gpio106 to plain GPIOs, after which they can be claimed, read and clocked:
+nine clocks plus a STOP is the standard I2C recovery and doubles as the fix if the
+bootloader left the bus held.  The DTB carries the state and the board node
+references it (`pinctrl-names = "default", "recovery"`, verified in both the built
+DTB and the live tree), but the driver logged neither `bus before recovery` nor
+`bus after recovery`, which means `pinctrl_lookup_state()` returned an error and
+the code skipped the whole path - **silently, because its error branches do not
+log**.  That is the next thing to fix, and it is four lines: report why
+`devm_pinctrl_get()` or the state lookup failed, then read the levels.

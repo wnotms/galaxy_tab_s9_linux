@@ -1,0 +1,6 @@
+2026-09-22T02:40:36Z console open on COM17
+2026-09-22T02:40:39Z SENT  p=$(find /proc/device-tree -name "keyboard@2a" 2>/dev/null | head -1); echo "path=$p"; ls $p 2>&1 | tr "\n" " "
+2026-09-22T02:40:39Z RECV  p=$(find /proc/device-tree -name "keyboard@2a" 2>/dev/null | head -1); ech
+2026-09-22T02:40:39Z RECV  o "path=$p"; ls $p 2>&1 | tr "\n" " "
+2026-09-22T02:40:39Z RECV  path=
+2026-09-22T02:40:48Z console session done
