@@ -71,6 +71,9 @@ struct samsung_pogo {
 	bool powered;
 	bool event_enabled;
 	bool ready;
+	/* Passive detection of a live application: see the announce handler. */
+	bool observe_only;
+	unsigned int announce_seen;
 	u8 caps;
 };
 
@@ -198,13 +201,20 @@ static void pogo_connect_work(struct work_struct *work)
 			 * the announce line's level is read here: that is passive
 			 * evidence of whether the application is alive at all.
 			 */
+			p->announce_seen = 0;
+			p->observe_only = true;
+			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "leaving the MCU alone for %u ms\n",
+				 "leaving the MCU alone for %u ms (announce line armed)\n",
 				 POGO_SILENT_WINDOW_MS);
 			msleep(POGO_SILENT_WINDOW_MS);
+			p->observe_only = false;
+			if (!p->announce_seen)
+				disable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "silent window over; connect line %d\n",
-				 gpiod_get_value_cansleep(p->connected));
+				 "silent window over; connect line %d, %u announce IRQ(s)\n",
+				 gpiod_get_value_cansleep(p->connected),
+				 p->announce_seen);
 			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
 			if (!ret) {
@@ -729,6 +739,21 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	unsigned int size, i, key;
 	u16 event;
 	int ret = 0;
+
+	/*
+	 * Passive evidence that the application is alive: this line is the MCU's
+	 * own announce/attention interrupt, so it is asserted by the application
+	 * and by nothing else.  While observing, do not touch the bus - one
+	 * interrupt is enough to answer the question, and servicing it would put
+	 * traffic on a bus that is deliberately being left alone.
+	 */
+	if (READ_ONCE(p->observe_only)) {
+		p->announce_seen++;
+		dev_info(&p->client->dev,
+			 "MCU asserted its announce line while being observed\n");
+		disable_irq_nosync(irq);
+		return IRQ_HANDLED;
+	}
 
 	mutex_lock(&p->lock);
 	/*

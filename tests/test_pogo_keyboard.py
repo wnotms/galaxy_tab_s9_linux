@@ -27,7 +27,8 @@ typedef int irqreturn_t;
 struct input_dev { bool keybit[KEY_CNT]; };
 struct i2c_client { int dev; };
 struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
- int lock; int *connected; bool powered, ready; u8 caps; };
+ int lock; int *connected; bool powered, ready; u8 caps;
+ bool observe_only; unsigned int announce_seen; };
 static u8 wire[128];
 static int pos, available, short_read, reports, releases, hellos, writes;
 static int codes[50], values[50];
@@ -35,7 +36,9 @@ static unsigned int get_unaligned_le16(const u8 *p) { return p[0] | (p[1]<<8); }
 static void mutex_lock(int *x) { (void)x; }
 static void mutex_unlock(int *x) { (void)x; }
 static int gpiod_get_value_cansleep(int *x) { return *x; }
+static void disable_irq_nosync(int irq) { (void)irq; }
 static bool test_bit(unsigned int n, bool *b) { return b[n]; }
+#define dev_info(...) ((void)0)
 #define dev_warn_ratelimited(...) ((void)0)
 #define dev_err_ratelimited(...) ((void)0)
 static void msleep(int n) { (void)n; }
