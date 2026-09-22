@@ -1,0 +1,8 @@
+source_commit=c3b699e ("pogo: use the rail cycle the stock trace shows, and service the announce line")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-064, plus this round's continuation of the owner's plan
+hypothesis=The captured stock bring-up cycle (reference/twrp-pogo-working/bringup-cycle-dmesg.log) shows the MCU asserting its announce line 135 ms after the rail rises, with no host transaction in between, while mainline arms the same interrupt and sees nothing in 30 s (test 061).  Stock's sequence at that moment is rail off -> 410 ms -> rail on -> 50 ms -> event IRQ enabled.  If the announcement is what this port has been missing, reproducing that exact cycle - and servicing the interrupt instead of only observing it - should produce an announcement and then a successful CHECK_VERSION.
+change=connect_work now runs stock's rail cycle (SWCLK low, NRST untouched, rail off 400 ms, rail on, 50 ms, event IRQ armed and serviced) instead of a single enable plus a 30 s silent window; every announce interrupt is counted and the count is logged after the poll.
+predictions=1) "MCU announced itself (1)" appears within ~1 s of "MCU rail on with BOOT0 low, announce line armed" and the poll then logs the model/hw/firmware/mode line => first-stage success criterion met (0x2a answers); 2) "application poll finished (-6), 0 announcement(s)" => the difference is not in this driver's timing and the next step is the vendor-port A/B (GENI/pinctrl/regulator/runtime-PM layer).
+images=out/boot-bundle-test065/boot.img 9e0f212c10527afac9844b3a79e6352c75214a5fdd178b042f264b4d523d2460; vendor_boot 8d76f912, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:45:00Z

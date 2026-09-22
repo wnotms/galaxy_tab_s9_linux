@@ -1,0 +1,8 @@
+2026-09-22T08:30:23Z console open on COM17
+2026-09-22T08:30:26Z SENT  dmesg | grep -i -e "announced" -e "MCU" -e "application" -e "answered" -e "bootloader" | tail -12
+2026-09-22T08:30:26Z RECV  dmesg | grep -i -e "announced" -e "MCU" -e "application" -e "answered" -e
+2026-09-22T08:30:26Z RECV  "bootloader" | tail -12
+2026-09-22T08:30:26Z RECV  [    4.792353][   T90] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed
+2026-09-22T08:30:26Z RECV  [    4.792364][  T119] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T08:30:26Z RECV  [    4.848644][   T90] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T08:30:35Z console session done
