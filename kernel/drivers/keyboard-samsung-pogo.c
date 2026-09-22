@@ -645,18 +645,37 @@ static void pogo_recover_bus(struct samsung_pogo *p)
 
 static void pogo_scan_bus(struct samsung_pogo *p)
 {
+	/*
+	 * A real address probe, not SMBus QUICK: this controller's functionality
+	 * mask is I2C_FUNC_SMBUS_EMUL without I2C_FUNC_SMBUS_QUICK, so the old
+	 * scan could never find anything and its "answers at: (nothing)" said
+	 * nothing at all.  A one-byte write to a dummy client is supported and
+	 * ACKs the address, which is exactly the question: does the MCU answer
+	 * somewhere else - 0x2b, 0x2c, its bootloader 0x51 - or nowhere?
+	 *
+	 * The range is deliberately small: this bus carries the MCU and little
+	 * else, and a scan should not write to addresses whose owners are
+	 * unknown.
+	 */
+	static const unsigned short probes[] = { 0x2a, 0x2b, 0x2c, 0x2d, 0x51 };
 	struct i2c_adapter *adap = p->client->adapter;
-	union i2c_smbus_data dummy;
-	char found[96];
+	char found[64];
 	int i, n = 0;
+	u8 byte = 0;
 
-	for (i = 0x08; i < 0x78 && n < (int)sizeof(found) - 7; i++) {
-		if (i2c_smbus_xfer(adap, i, 0, I2C_SMBUS_WRITE, 0,
-				   I2C_SMBUS_QUICK, &dummy) < 0)
+	for (i = 0; i < ARRAY_SIZE(probes); i++) {
+		struct i2c_client *dummy = i2c_new_dummy_device(adap, probes[i]);
+		int ret;
+
+		if (IS_ERR(dummy))
 			continue;
-		n += scnprintf(found + n, sizeof(found) - n, " %#x", i);
+		ret = i2c_master_send(dummy, &byte, 1);
+		i2c_unregister_device(dummy);
+		if (ret == 1)
+			n += scnprintf(found + n, sizeof(found) - n, " %#x", probes[i]);
 	}
-	dev_info(&p->client->dev, "i2c-%d answers at:%s\n", adap->nr,
+
+	dev_info(&p->client->dev, "i2c-%d acknowledges:%s\n", adap->nr,
 		 n ? found : " (nothing)");
 }
 
