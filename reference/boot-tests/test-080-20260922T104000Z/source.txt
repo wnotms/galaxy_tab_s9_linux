@@ -1,0 +1,8 @@
+source_commit=7c9eaf9 ("pinctrl: report the pogo pins' state when the TLMM probes")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-079
+hypothesis=P3 of the owner's plan, the last host-controlled item never measured: the *transition* of the pogo pins rather than their final state.  Every final state matches stock (tests 055/064) and every settable variable has been excluded (075-079), but what the bootloader leaves in the pin control registers - and whether the TLMM probe or anything before it passes through a state the MCU never sees under stock - has never been looked at.
+change=patch 0010: read-only, one-shot, msm_pinctrl_probe() prints the control and IO registers of gpio10, 12, 13, 62, 72, 75 and 106 with the group owning each pin.
+predictions=1) the seven registers show the bootloader's own configuration, and the values are the ones stock also starts from => the transition adds nothing and the pins are definitively not the difference; 2) a register differs from what the MCU expects at power-up (for example a pin left muxed away from gpio, or an output enable set) => the boot sequence does pass through a state stock does not, and that is the difference to fix.
+images=out/boot-bundle-test080/boot.img 7c7eebf11fb16080541c4e9cd16edbcc7116d72268cfe033259822f56cb8444d; vendor_boot 7bd7dcf9, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T10:40:00Z

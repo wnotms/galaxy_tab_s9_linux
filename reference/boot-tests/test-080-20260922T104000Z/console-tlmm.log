@@ -1,0 +1,11 @@
+2026-09-22T10:53:54Z console open on COM17
+2026-09-22T10:53:57Z SENT  dmesg | grep -aiE "pogo pin" | head -12
+2026-09-22T10:53:58Z RECV  dmesg | grep -aiE "pogo pin" | head -12
+2026-09-22T10:53:58Z RECV  [    2.987988][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 10 (gpio10) at probe: ctl 0x1 io 0x0
+2026-09-22T10:53:58Z RECV  [    2.996839][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 12 (gpio12) at probe: ctl 0x1 io 0x0
+2026-09-22T10:53:58Z RECV  [    3.005676][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 13 (gpio13) at probe: ctl 0x1 io 0x0
+2026-09-22T10:53:58Z RECV  [    3.014513][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 62 (gpio62) at probe: ctl 0x1 io 0x0
+2026-09-22T10:53:58Z RECV  [    3.023349][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 72 (gpio72) at probe: ctl 0x1 io 0x1
+2026-09-22T10:53:58Z RECV  [    3.032183][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 75 (gpio75) at probe: ctl 0x1 io 0x0
+2026-09-22T10:53:58Z RECV  [    3.041022][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 106 (gpio106) at probe: ctl 0x1 io 0x1
+2026-09-22T10:54:07Z console session done
