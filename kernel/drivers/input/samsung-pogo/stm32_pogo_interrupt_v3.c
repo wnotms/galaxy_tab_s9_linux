@@ -170,7 +170,14 @@ static void stm32_check_init_work(struct work_struct *work)
 
 	if (!atomic_read(&stm32->check_conn_flag)) {
 		input_info(true, &stm32->client->dev, "%s: start\n", __func__);
-		stm32->connect_state = 0;
+		/*
+		 * Experiment for this port: on this board the connect line is
+		 * pulsed rather than steady (test 073), and dropping
+		 * connect_state here made the driver stop the keyboard and never
+		 * reach stm32_read_version.  Keep the cover considered connected
+		 * so the stock code path runs to its application read - the one
+		 * behaviour this port has never been able to observe.
+		 */
 		stm32_keyboard_connect(stm32);
 	}
 }
