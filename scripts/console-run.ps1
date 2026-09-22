@@ -1,0 +1,69 @@
+# Fast console helper: open the port, wait for the tablet's shell to answer, then
+# run the commands.  The point is to stop paying fixed sleeps: console-session.ps1
+# sleeps 3 s before every session and waits 8 s per command, which is fine for a
+# settled shell but wastes a minute per test when the only question is "is the
+# shell up yet?".  This one sends a heartbeat every PollMs and returns as soon as
+# the shell echoes it, so a boot costs its real duration and nothing more.
+#
+#   powershell -ExecutionPolicy Bypass -File scripts/console-run.ps1 `
+#       -Out D:\android\gts9-testNNN\boot.log -Commands 'dmesg | grep -a pogo'
+#
+# -WaitReadySeconds 0 skips the heartbeat and runs the commands immediately.
+param(
+    [string]$Port = "COM17",
+    [string]$Out = "$env:TEMP\gts9-console-run.log",
+    [string[]]$Commands = @("uname -a"),
+    [int]$WaitReadySeconds = 120,
+    [int]$PollMs = 1000,
+    [int]$ReadSeconds = 4
+)
+function Log([string]$m) {
+    $l = "{0} {1}" -f (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ"), $m
+    try { Add-Content -Path $Out -Value $l } catch { }
+    Write-Output $l
+}
+$sp = $null
+$openDeadline = (Get-Date).AddSeconds(30)
+while ((Get-Date) -lt $openDeadline) {
+    try {
+        $sp = New-Object System.IO.Ports.SerialPort $Port, 115200, 'None', 8, 'One'
+        $sp.ReadTimeout = 700; $sp.WriteTimeout = 4000
+        $sp.DtrEnable = $true; $sp.RtsEnable = $true; $sp.NewLine = "`n"
+        $sp.Open(); Log "console open on $Port"; break
+    } catch { Start-Sleep -Milliseconds 500 }
+}
+if (-not $sp -or -not $sp.IsOpen) { Log "could not open $Port"; exit 1 }
+
+function ReadFor([int]$seconds) {
+    $got = @()
+    $until = (Get-Date).AddSeconds($seconds)
+    while ((Get-Date) -lt $until) {
+        try { $line = $sp.ReadLine(); if ($line) { $got += $line.TrimEnd() } } catch [TimeoutException] { }
+    }
+    return $got
+}
+function Drain() { [void](ReadFor 1) }
+
+$ready = $false
+if ($WaitReadySeconds -gt 0) {
+    try { $sp.DiscardInBuffer() } catch { }
+    $deadline = (Get-Date).AddSeconds($WaitReadySeconds)
+    $n = 0
+    while ((Get-Date) -lt $deadline) {
+        $n++
+        $marker = "READY$n"
+        try { $sp.WriteLine("echo $marker") } catch { }
+        foreach ($line in (ReadFor ([Math]::Max(1, [int]($PollMs / 1000))))) {
+            Log ("RECV  " + $line)
+            if ($line -match $marker) { $ready = $true }
+        }
+        if ($ready) { Log "shell answered after $n poll(s)"; break }
+    }
+    if (-not $ready) { Log "shell never answered within $WaitReadySeconds s" }
+}
+foreach ($cmd in $Commands) {
+    try { $sp.WriteLine($cmd); Log ("SENT  " + $cmd) } catch { Log ("send failed: " + $_.Exception.Message) }
+    foreach ($line in (ReadFor $ReadSeconds)) { Log ("RECV  " + $line) }
+}
+try { $sp.Close() } catch { }
+Log "console run done (ready=$ready)"
