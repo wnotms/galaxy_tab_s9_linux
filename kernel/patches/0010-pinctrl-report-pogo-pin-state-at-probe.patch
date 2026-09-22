@@ -1,0 +1,52 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] pinctrl: qcom: report the pogo pins' state when the TLMM probes
+
+Every final state of these seven pins is known to match the stock kernel, and
+every host-side variable that could be set has been excluded (tests 075-079).
+What has never been looked at is the *transition*: what the bootloader leaves in
+the pin control registers, and whether this probe or anything before it passes
+through a state the keyboard's MCU never sees under stock.
+
+Read-only, at probe, before any driver claims the pins: the control and IO
+registers of gpio10, 12, 13, 62, 72, 75 and 106.
+---
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 11db6564c..bb29115e6 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1597,6 +1597,35 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+ 		return dev_err_probe(&pdev->dev, ret,
+ 				     "Couldn't register pinctrl driver\n");
+ 
++	/*
++	 * Bring-up diagnostic: what state did the bootloader leave the pogo
++	 * keyboard's pins in, before any driver has touched them?  The final
++	 * states are known to match the stock kernel (tests 055/064); whether
++	 * this probe - or anything before it - passes through a state the
++	 * keyboard's MCU never sees under stock is the one host-controlled
++	 * question left (P3 of the plan, tests 075-079).
++	 */
++	{
++		static const unsigned int watch[] = { 10, 12, 13, 62, 72, 75, 106 };
++		unsigned int g, k, w;
++
++		for (g = 0; g < soc_data->ngroups; g++) {
++			const struct msm_pingroup *grp = &soc_data->groups[g];
++
++			for (k = 0; k < grp->grp.npins; k++) {
++				for (w = 0; w < ARRAY_SIZE(watch); w++) {
++					if (grp->grp.pins[k] != watch[w])
++						continue;
++					dev_info(&pdev->dev,
++						 "pogo pin %u (%s) at probe: ctl %#x io %#x\n",
++						 grp->grp.pins[k], grp->grp.name,
++						 readl(pctrl->regs[grp->tile] + grp->ctl_reg),
++						 readl(pctrl->regs[grp->tile] + grp->io_reg));
++				}
++			}
++		}
++	}
++
+ 	for (i = 0; i < soc_data->nfunctions; i++) {
+ 		func = &soc_data->functions[i];
+ 
