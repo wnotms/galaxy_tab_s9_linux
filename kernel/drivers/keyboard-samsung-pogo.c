@@ -173,17 +173,29 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 	u8 version[4], mode;
 	int ret, i;
 
-	for (i = 0; i < 50; i++) {
+	for (i = 0; i < 40; i++) {
 		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
 				    sizeof(version));
 		if (!ret)
 			break;
-		msleep(20);
+		/*
+		 * Samsung's retry loop pulses NRST again on every failed attempt
+		 * (stm32_power_reset, reset_count up to 100000) and only then
+		 * reads the version back, so a single reset after power-on is not
+		 * what this part expects.
+		 */
+		gpiod_set_value_cansleep(p->nrst, 0);
+		msleep(3);
+		gpiod_set_value_cansleep(p->nrst, 1);
+		msleep(50);
 	}
 	if (ret) {
-		dev_info(&p->client->dev, "no answer from the MCU (%d)\n", ret);
+		dev_info(&p->client->dev, "no answer from the MCU after %d resets (%d)\n",
+			 i, ret);
 		return ret;
 	}
+	if (i)
+		dev_info(&p->client->dev, "MCU answered after %d extra reset(s)\n", i);
 	ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 	if (ret) {
 		dev_info(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
