@@ -1907,6 +1907,16 @@
 		interrupts = <75 IRQ_TYPE_LEVEL_LOW>;
 		connect-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
 		/*
+		 * The MCU's announce line, claimed as a GPIO as well as used as an
+		 * interrupt, which is how Samsung's node hands it over
+		 * (stm32,irq_gpio + gpio_to_irq).  The descriptor is what makes its
+		 * level readable: the MCU drives this line by itself, so its level
+		 * is the only signal about the application that needs no host
+		 * traffic, and the irqchip on this platform does not report line
+		 * levels (test 066 read -1).
+		 */
+		announce-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
+		/*
 		 * The STM32's SWD pins.  Samsung's own node hands both to the
 		 * driver (stm32,mcu_swclk/mcu_nrst) rather than leaving them to
 		 * pinctrl, because the MCU has to come out of reset *after* the

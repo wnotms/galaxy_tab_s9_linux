@@ -58,6 +58,7 @@ struct samsung_pogo {
 	struct i2c_client *boot;
 	struct input_dev *input;
 	struct gpio_desc *connected;
+	struct gpio_desc *announce;
 	struct gpio_desc *swclk;
 	struct gpio_desc *nrst;
 	struct pinctrl *pinctrl;
@@ -421,11 +422,9 @@ static void pogo_boot_dump_option_bytes(struct samsung_pogo *p)
  */
 static int pogo_announce_level(struct samsung_pogo *p)
 {
-	bool level = false;
-
-	if (irq_get_irqchip_state(p->client->irq, IRQCHIP_STATE_LINE_LEVEL, &level))
+	if (!p->announce)
 		return -1;
-	return level ? 1 : 0;
+	return gpiod_get_value_cansleep(p->announce);
 }
 
 /*
@@ -882,6 +881,7 @@ static int pogo_probe(struct i2c_client *client)
 	mutex_init(&p->lock);
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
+	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
 	/*

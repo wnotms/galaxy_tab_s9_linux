@@ -127,8 +127,8 @@ static void gpiod_set_value_cansleep(int *p, int v) {
  if (p == &reset_gpio && !v) { resets++; app = app_after_reset; app_ready_at = 0; }
 }
 static void regulator_disable(int *p) { (void)p; }
-#define IRQCHIP_STATE_LINE_LEVEL 3
-static int irq_get_irqchip_state(int irq, int which, bool *v) { *v = true; return 0; }
+/* The announce line's level now comes from a gpiolib descriptor. */
+static int pogo_announce_level(struct samsung_pogo *p) { return 0; }
 static int regulator_enable(int *p) {
  /* The application starts when the rail comes up, which is the MCU's power-on
     in the minimal flow; it may take a moment before it answers. */
@@ -196,7 +196,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
  return ret == len ? 0 : ret < 0 ? ret : -EIO;
 }
 '''
-        for name in ('pogo_write_reg', 'pogo_announce_level', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
+        for name in ('pogo_write_reg', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
                      'pogo_boot_version', 'pogo_boot_disconnect',
                      'pogo_wait_application', 'pogo_bootloader_probe',
                      'pogo_read_mcu', 'pogo_connect_work'):
@@ -221,8 +221,8 @@ int main(void) {
  u8 version, ic[4];
  clear(&p);
  /* The announce line's level is read from the irqchip, not inferred from a
-    firing interrupt: the mock reports it high. */
- assert(pogo_announce_level(&p) == 1);
+    firing interrupt: the mock reports it low, as mainline has seen. */
+ assert(pogo_announce_level(&p) == 0);
  assert(!pogo_boot_version(&p, &version) && version == 0x12 && phase == 4);
  /* The IC version READ: exactly one frame per phase, ending at 0x08000200. */
  clear(&p);
