@@ -1,0 +1,90 @@
+=== stock dtbo overlay, stm32@2a (extracted from the device's own dtbo.img) ===
+			stm32@2a {
+				status = "ok";
+				compatible = "stm,stm32_pogo";
+				reg = <0x2a>;
+				pinctrl-names = "default";
+				pinctrl-0 = <0x67 0x68 0x69 0x6a>;
+				stm32_vddo-supply = <0x6b>;
+				stm32,irq_gpio = <0xffffffff 0x4b 0x00>;
+				stm32,irq_conn = <0xffffffff 0x3e 0x00>;
+				stm32,irq_type = <0x2008>;
+				stm32,irq_conn_type = <0x2003>;
+				stm32,mcu_swclk = <0xffffffff 0x0c 0x00>;
+				stm32,mcu_nrst = <0xffffffff 0x0d 0x00>;
+				stm32,sda_gpio = <0xffffffff 0x48 0x00>;
+				stm32,scl_gpio = <0xffffffff 0x6a 0x00>;
+				stm32,fw_name = "keyboard_stm/stm32_gts9family.bin";
+				qcom,msm-bus,name = "sec,keyboard";
+				qcom,msm-bus,active-only;
+				qcom,msm-bus,num-cases = <0x02>;
+				qcom,msm-bus,num-paths = <0x01>;
+				qcom,msm-bus,vectors-KBps = <0x01 0x200 0x00 0x00 0x01 0x200 0x00 0x3e12a0>;
+				stm32,model_name = "EF-DX715", "EF-DX710";
+				stm32,model_name_row = "EF-DT870", "EF-DT630";
+				stm32,fota_fw_path = [00];
+				support_open_close;
+				phandle = <0x159>;
+			};
+
+=== stock fixed_regulator@1 (the stm32_vddo supply) ===
+				fixed_regulator@1 {
+					compatible = "regulator-fixed";
+					regulator-name = "fixed_regulator${#}";
+					gpio = <0xffffffff 0x0a 0x00>;
+					pinctrl-names = "default";
+					pinctrl-0 = <0x07>;
+					enable-active-high;
+					phandle = <0x6b>;
+				};
+
+=== stock swclk/nrst pin states ===
+				};
+			};
+		};
+	};
+
+	fragment@68 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+
+			swclk_gpio {
+				phandle = <0x69>;
+
+				mux {
+					pins = "gpio12";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio12";
+					drive-strength = <0x02>;
+					output-low;
+					bias-disable;
+				};
+			};
+		};
+	};
+
+	fragment@69 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+
+			nrst_gpio {
+				phandle = <0x6a>;
+
+				mux {
+					pins = "gpio13";
+					function = "gpio";
+				};
+
+				config {
+					pins = "gpio13";
+					drive-strength = <0x02>;
+					output-high;
+					bias-disable;
+				};
+			};
+		};
