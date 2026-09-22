@@ -1,0 +1,6 @@
+2026-09-22T10:57:33Z console open on COM17
+2026-09-22T10:57:36Z SENT  dmesg | grep -a "stm32_pogo_i2c" | tail -8
+2026-09-22T10:57:36Z RECV  dmesg | grep -a "stm32_pogo_i2c" | tail -8
+2026-09-22T10:57:36Z RECV  [    4.072872][   T76] stm32_pogo_i2c 5-002a: deferred_flag boot stm32_dev_probe
+2026-09-22T10:57:36Z RECV  [    4.854547][   T76] stm32_pogo_i2c 5-002a: error -EINVAL: Error applying setting, reverse things back
+2026-09-22T10:57:45Z console session done

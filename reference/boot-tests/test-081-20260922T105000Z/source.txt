@@ -1,0 +1,8 @@
+source_commit=early-pin commit ("dts: release the MCU's reset as early as mainline can")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-080
+hypothesis=Test 080 left exactly one transition difference: the MCU is held in reset by the bootloader until a driver applies the board's pin state, at ~4.7 s in mainline and ~1.6 s in stock.  If that window matters to the MCU's startup, releasing NRST and driving BOOT0 low with the rail regulator - which probes earlier than the i2c driver - should change the outcome.
+change=pogo_swclk and pogo_nrst are added to vreg_pogo's pinctrl-0 as well as to the keyboard node, so the two reset pins are configured when the regulator probes; nothing else changes.
+predictions=1) the pins are configured earlier in the boot and the application answers => the reset-release window was the difference; 2) the pins are configured earlier and the application still NACKs on an idle bus => the transition window is closed like the rest of the host side, and no host-controlled variable remains.
+images=out/boot-bundle-test081/boot.img e1257ebe6e834f54e96e7471f1abb81a9fdc48225cc5bddc72806fe422bfaad9 and vendor_boot.img 6078701261b3506b21fc78350965e72580497bc89b1de4c8120c6a0c543ba582 (both carry the new DTB); init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T10:50:00Z

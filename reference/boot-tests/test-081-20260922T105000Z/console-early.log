@@ -1,0 +1,12 @@
+2026-09-22T10:56:58Z console open on COM17
+2026-09-22T10:57:01Z SENT  dmesg | grep -aiE "pogo pin|read_version|\[MODE\]|I2C retry|MCU rail" | head -14
+2026-09-22T10:57:01Z RECV  dmesg | grep -aiE "pogo pin|read_version|\[MODE\]|I2C retry|MCU rail" | he
+2026-09-22T10:57:01Z RECV  ad -14
+2026-09-22T10:57:01Z RECV  [    2.997165][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 10 (gpio10) at probe: ctl 0x1 io 0x0
+2026-09-22T10:57:01Z RECV  [    3.006016][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 12 (gpio12) at probe: ctl 0x1 io 0x0
+2026-09-22T10:57:01Z RECV  [    3.014855][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 13 (gpio13) at probe: ctl 0x1 io 0x0
+2026-09-22T10:57:01Z RECV  [    3.023693][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 62 (gpio62) at probe: ctl 0x1 io 0x0
+2026-09-22T10:57:01Z RECV  [    3.032533][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 72 (gpio72) at probe: ctl 0x1 io 0x1
+2026-09-22T10:57:01Z RECV  [    3.041374][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 75 (gpio75) at probe: ctl 0x1 io 0x0
+2026-09-22T10:57:01Z RECV  [    3.050216][   T76] sm8550-tlmm f100000.pinctrl: pogo pin 106 (gpio106) at probe: ctl 0x1 io 0x1
+2026-09-22T10:57:10Z console session done

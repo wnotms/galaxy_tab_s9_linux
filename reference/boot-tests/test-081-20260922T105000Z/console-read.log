@@ -1,0 +1,6 @@
+2026-09-22T10:57:16Z console open on COM17
+2026-09-22T10:57:19Z SENT  dmesg | grep -a "stm32_pogo_i2c" | grep -aiE "probe|regulator on|I2C retry|version|MODE|CRC" | head -12
+2026-09-22T10:57:19Z RECV  dmesg | grep -a "stm32_pogo_i2c" | grep -aiE "probe|regulator on|I2C retry
+2026-09-22T10:57:19Z RECV  |version|MODE|CRC" | head -12
+2026-09-22T10:57:19Z RECV  [    4.072872][   T76] stm32_pogo_i2c 5-002a: deferred_flag boot stm32_dev_probe
+2026-09-22T10:57:28Z console session done
