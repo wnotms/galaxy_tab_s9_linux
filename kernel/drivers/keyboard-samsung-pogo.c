@@ -1039,6 +1039,21 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	 * is how this port tells "the application started" from "the line is
 	 * quiet", which is the one difference tests 058-063 kept hitting.
 	 */
+	/*
+	 * Stock's own ISR opens with the same gate: stm32_dev_isr() returns
+	 * immediately unless its interrupt GPIO reads the asserted level, which
+	 * on this board is the MCU pulling the line low (the vendor node declares
+	 * it active-high, this one active-low, so the descriptor value here is
+	 * logical assertion).  Without the gate a delivery that arrives while the
+	 * line is already released would be decoded anyway and its failure would
+	 * be indistinguishable from a real packet; with it, that case is logged
+	 * and skipped, which is evidence either way.
+	 */
+	if (!pogo_announce_level(p)) {
+		dev_warn_ratelimited(&p->client->dev,
+				     "interrupt with the announce line released; no packet read\n");
+		return IRQ_HANDLED;
+	}
 	p->announce_seen++;
 	if (p->announce_seen < 4)
 		dev_info(&p->client->dev, "MCU announced itself (%u)\n",

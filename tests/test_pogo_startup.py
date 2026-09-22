@@ -138,7 +138,9 @@ static void gpiod_set_value_cansleep(int *p, int v) {
 }
 static void regulator_disable(int *p) { (void)p; }
 /* The announce line's level now comes from a gpiolib descriptor. */
-static int pogo_announce_level(struct samsung_pogo *p) { return 0; }
+/* The handler now gates on the line being asserted, as stock's ISR does, so the
+   mock reports an asserted line by default: a released line means no packet. */
+static int pogo_announce_level(struct samsung_pogo *p) { return 1; }
 /* The who-is-there report is diagnostics: both probes are plain reads. */
 static void pogo_state_report(struct samsung_pogo *p, const char *stage) {}
 static void pogo_startup_sample(struct samsung_pogo *p, const char *when) {}
