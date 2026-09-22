@@ -1,0 +1,11 @@
+2026-09-22T13:49:48Z console open on COM17
+2026-09-22T13:49:49Z RECV  echo READY1
+2026-09-22T13:49:49Z RECV  READY1
+2026-09-22T13:49:49Z shell answered after 1 poll(s)
+2026-09-22T13:49:49Z SENT  cat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a "packet from the MCU" | tail -15; dmesg | grep -a -cE "packet from the MCU|key 0x"
+2026-09-22T13:49:55Z RECV  gts9# [6ncat /proc/interrupts | grep -a "5-002a"; dmesg | grep -a "packet from the
+2026-09-22T13:49:55Z RECV  MCU" | tail -15; dmesg | grep -a -cE "packet from the MCU|key 0x"
+2026-09-22T13:49:55Z RECV   170:          1          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T13:49:55Z RECV  [    4.447915][  T125] samsung-pogo-keyboard 5-002a: packet from the MCU: 03 00 02 (size 3)
+2026-09-22T13:49:55Z RECV  1
+2026-09-22T13:49:55Z console run done (ready=True)

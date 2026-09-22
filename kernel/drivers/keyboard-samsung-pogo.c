@@ -1059,6 +1059,15 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	if (ret)
 		goto error;
 	size = get_unaligned_le16(header);
+	/*
+	 * Say what the application actually sent, whatever it is.  Until test 093
+	 * the handler logged only successful key decodes, so a packet that arrived
+	 * with an unexpected size or id was invisible; a key press that produces
+	 * something other than a clean key packet has to be visible to be
+	 * diagnosed at all.
+	 */
+	dev_info(&p->client->dev, "packet from the MCU: %02x %02x %02x (size %u)\n",
+		 header[0], header[1], header[2], size);
 	/* Stock treats an empty startup header as a model announcement. */
 	if (size == 0 || size == 3) {
 		ret = pogo_hello(p, header[2]);
@@ -1076,6 +1085,15 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	ret = pogo_read(p, payload, size);
 	if (ret)
 		goto error;
+	if (size) {
+		char hex[3 * 16 + 1];
+		unsigned int n = size > 16 ? 16 : size;
+
+		for (i = 0; i < n; i++)
+			snprintf(hex + 3 * i, 4, "%02x ", payload[i]);
+		dev_info(&p->client->dev, "payload (%u bytes): %s%s\n",
+			 size, hex, size > 16 ? "..." : "");
+	}
 	/* Stock noise signature, checked only when all three bytes exist. */
 	if (size >= 3 && payload[0] == 3 && payload[1] == 0 && payload[2] == 5)
 		goto out;
