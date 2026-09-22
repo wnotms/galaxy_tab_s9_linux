@@ -27,8 +27,18 @@
 #define POGO_CMD_GET_MODE		0x01
 #define POGO_CMD_CHECK_VERSION		0x02
 
+/*
+ * The MCU's system bootloader, from stm32_pogo_v3_start() and
+ * stm32_sysboot_i2c_sync(): a second I2C address that Samsung's driver
+ * instantiates first and that the application interface at 0x2a only follows.
+ * A one-byte 0xFF write is the whole handshake.
+ */
+#define POGO_BOOT_ADDR			0x51
+#define POGO_BOOT_CMD_SYNC		0xFF
+
 struct samsung_pogo {
 	struct i2c_client *client;
+	struct i2c_client *boot;
 	struct input_dev *input;
 	struct gpio_desc *connected;
 	struct gpio_desc *swclk;
@@ -48,6 +58,7 @@ struct samsung_pogo {
 };
 
 static int pogo_read_mcu(struct samsung_pogo *p);
+static void pogo_bootloader_probe(struct samsung_pogo *p);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -146,6 +157,7 @@ static void pogo_connect_work(struct work_struct *work)
 			dev_err(&p->client->dev, "power on failed: %d\n", ret);
 		} else {
 			p->powered = true;
+			pogo_bootloader_probe(p);
 			gpiod_set_value_cansleep(p->swclk, 0);
 			gpiod_set_value_cansleep(p->nrst, 0);
 			msleep(10);
@@ -173,6 +185,43 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
 
 	mod_delayed_work(system_percpu_wq, &p->connect_work, msecs_to_jiffies(20));
 	return IRQ_HANDLED;
+}
+
+/*
+ * Ask the MCU's system bootloader whether the part is running at all.
+ *
+ * Samsung's driver instantiates 0x51 before anything else and runs its firmware
+ * menu there, and its own log shows the application answering first try with no
+ * reset - the MCU is already running by the time it probes.  In mainline it is
+ * not, and every application read NAKs, so the question this answers is whether
+ * the part is powered and executing at all: SWCLK is held high across NRST as
+ * stm32_sysboot_connect() does, and a single 0xFF write to the bootloader either
+ * transfers or it does not.
+ */
+static void pogo_bootloader_probe(struct samsung_pogo *p)
+{
+	u8 sync = POGO_BOOT_CMD_SYNC;
+	int ret;
+
+	if (!p->boot)
+		return;
+
+	/* stm32_sysboot_connect(): SWCLK high selects the system bootloader. */
+	gpiod_set_value_cansleep(p->swclk, 1);
+	gpiod_set_value_cansleep(p->nrst, 0);
+	msleep(3);
+	gpiod_set_value_cansleep(p->nrst, 1);
+	msleep(50); /* STM32_BOOT_I2C_STARTUP_DELAY */
+	gpiod_set_value_cansleep(p->swclk, 0);
+
+	ret = i2c_master_send(p->boot, &sync, 1);
+	if (ret == 1)
+		dev_info(&p->client->dev,
+			 "MCU bootloader took the 0xFF sync: the part is powered and executing\n");
+	else
+		dev_info(&p->client->dev,
+			 "MCU bootloader did not take the 0xFF sync (%d): the part is not running\n",
+			 ret);
 }
 
 /*
@@ -488,6 +537,12 @@ static int pogo_probe(struct i2c_client *client)
 	 * time, which is why gpiolib refuses to hand them out while that state
 	 * is selected.
 	 */
+	p->boot = devm_i2c_new_dummy_device(dev, client->adapter, POGO_BOOT_ADDR);
+	if (IS_ERR(p->boot)) {
+		dev_info(dev, "no bootloader client at %#x: %ld\n",
+			 POGO_BOOT_ADDR, PTR_ERR(p->boot));
+		p->boot = NULL;
+	}
 	p->pinctrl = devm_pinctrl_get(dev);
 	if (IS_ERR(p->pinctrl)) {
 		p->pinctrl = NULL;
