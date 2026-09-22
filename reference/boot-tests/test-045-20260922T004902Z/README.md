@@ -217,3 +217,28 @@ is the address to talk to next.
 *there*.  If it does, the part is alive and the problem is moving it into the
 application; if 0x51 NAKs as well, the MCU is unpowered and the question moves off
 the driver entirely, to the connector's supply.
+
+### The bootloader protocol, ready to implement
+
+All of it is in `stm32_pogo_fw.c` and `stm32_pogo_v3.h`:
+
+| item | value |
+| --- | --- |
+| bootloader I2C address | `0x51` (`boot_addr` in `stm32_pogo_v3_start`) |
+| initialise / SYNC command | `STM32_BOOT_I2C_CMD_SYNC` = **0xFF** |
+| ACK / NACK responses | **0x79** / **0x1F** |
+| version command | `0x01` followed by its complement (`0xFE`) |
+| id command | `0x02` followed by its complement (`0xFD`) |
+| startup delay | `STM32_BOOT_I2C_STARTUP_DELAY` = 50 ms |
+| sync retries | 3, 50 ms apart |
+
+Entering the bootloader (`stm32_sysboot_connect`): NRST low, SWCLK **high**,
+3 ms, NRST released, 50 ms, then SWCLK low.  Sending `0xFF` afterwards is the
+handshake: a `0x79` response proves the MCU is powered and executing, and a NACK
+(or the bus staying quiet) proves it is not.
+
+So the next implementation is small and its outcome is binary: instantiate 0x51,
+do that pin dance, write `0xFF`, read one byte.  ACK means the part is alive and
+only has to be moved into the application (SWCLK low, NRST pulse - which the
+driver already does); NACK means the MCU is unpowered and the problem is the
+connector's supply, not the driver.
