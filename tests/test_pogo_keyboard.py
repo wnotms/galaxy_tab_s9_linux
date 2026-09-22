@@ -28,7 +28,8 @@ struct input_dev { bool keybit[KEY_CNT]; };
 struct i2c_client { int dev; };
 struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  int lock; int *connected; bool powered, ready; u8 caps;
- bool observe_only; unsigned int announce_seen; };
+ bool observe_only; unsigned int announce_seen;  bool rearm_pending;
+};
 static u8 wire[128];
 /* The handler now gates on the line being asserted, as stock's ISR does. */
 static int pogo_announce_level(struct samsung_pogo *p) { return 1; }

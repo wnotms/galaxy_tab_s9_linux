@@ -245,3 +245,9 @@ CONFIG_INPUT_KEYBOARD=y
 # lines to build the mainline port instead.
 CONFIG_KEYBOARD_SAMSUNG_POGO=y
 # CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT is not set
+
+# Console font: the 8x16 default is unreadable on a 2560x1600 panel.
+# FONTS is selected by FRAMEBUFFER_CONSOLE, but assert it explicitly so the
+# Terminus font is not dropped by olddefconfig (it depends on FONTS).
+CONFIG_FONTS=y
+CONFIG_FONT_TER16x32=y

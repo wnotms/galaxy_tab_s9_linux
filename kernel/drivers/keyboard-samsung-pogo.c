@@ -80,6 +80,7 @@ struct samsung_pogo {
 	unsigned int poll_fails;
 	/* Re-seat detection: the connect line floats while the cover is off. */
 	bool conn_attached;
+	bool rearm_pending;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
@@ -355,7 +356,15 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 		 * NRST pulse: 22 re-arms produced no announcement.  Hold the supply
 		 * down long enough to be a real power cycle.
 		 */
-		msleep(1000);
+		/*
+		 * A hot-replugged cover does not come back through the boot sequence:
+		 * test 101 measured the re-seat detection firing correctly and the
+		 * re-arm then producing no announcement at all.  Give a re-arm more
+		 * than the boot path needs - a three second power cycle and an extra
+		 * NRST pulse once the rail is up - because the part was powered
+		 * before this sequence started.
+		 */
+		msleep(p->rearm_pending ? 3000 : 1000);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
 			msleep(50);
@@ -479,6 +488,17 @@ static void pogo_connect_work(struct work_struct *work)
 		}
 		p->powered = true;
 		msleep(50);
+		if (p->rearm_pending) {
+			/* BOOT0 is already low, so this only resets, it does not select
+			   the bootloader.  Give the part a second chance after power-up. */
+			gpiod_set_value_cansleep(p->nrst, 0);
+			msleep(2);
+			gpiod_set_value_cansleep(p->nrst, 1);
+			msleep(150);
+			p->rearm_pending = false;
+			dev_info(&p->client->dev,
+				 "re-arm used the long sequence: 3 s power cycle and a second NRST pulse after power-up\n");
+		}
 		dev_info(&p->client->dev,
 			 "application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on\n");
 	}
@@ -547,6 +567,7 @@ static void pogo_watch_work(struct work_struct *work)
 			dev_info(&p->client->dev,
 				 "cover re-seated (connect line stable after instability); re-arming the application\n");
 			rearm = true;
+			p->rearm_pending = true;
 			p->powered = false;
 			p->event_enabled = false;
 			p->ready = false;

@@ -19,7 +19,8 @@ class PogoStartup(unittest.TestCase):
 typedef uint8_t u8;
 #define POGO_BOOT_CMD_SYNC 0xff
 struct i2c_client { int unused; };
-struct samsung_pogo { struct i2c_client *boot; int *nrst, *swclk; };
+struct samsung_pogo { struct i2c_client *boot; int *nrst, *swclk;  bool rearm_pending;
+};
 static int reset_pin, boot_pin, step, send_result = 1;
 /* Samsung stm32_sysboot_connect: reset, probe, reset without another probe. */
 static const int expected[] = {1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6};
@@ -105,6 +106,7 @@ struct samsung_pogo {
  bool powered, ready, event_enabled;
  bool observe_only;
  unsigned int announce_seen;
+ bool rearm_pending;
 };
 static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never
