@@ -194,8 +194,8 @@ static void pogo_recover_bus(struct samsung_pogo *p)
 	if (pinctrl_select_state(p->pinctrl, p->bus_gpio))
 		return;
 
-	sda = gpiod_get_optional(p->client->dev, "sda", GPIOD_IN);
-	scl = gpiod_get_optional(p->client->dev, "scl", GPIOD_IN);
+	sda = gpiod_get_optional(&p->client->dev, "sda", GPIOD_IN);
+	scl = gpiod_get_optional(&p->client->dev, "scl", GPIOD_IN);
 	if (IS_ERR(sda))
 		sda = NULL;
 	if (IS_ERR(scl))
