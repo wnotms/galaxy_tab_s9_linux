@@ -199,10 +199,26 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   and unfolded. Pretest TWRP identifies EF-DX710, firmware 34, con:1/1, rst:0.
   Both tests returned safely to TWRP; 1d8a977 remains installed with read-back
   hashes verified. No key has been typed through mainline yet.
-  **Next step:** investigate application startup after the acknowledged GO.
-  Allow bounded polling without further reset before concluding it never starts;
-  consider read-only MCU identification/vector-table inspection if needed.
-  A GO ACK alone proves neither execution nor a valid application target.
+- **The acknowledged GO was the wrong command (2026-09-22, round 6).**  Tests 048
+  and 049 settled it: no reset timing and no polling window makes the application
+  answer after `GO 0x08000000`, and the READ path (now working, framed exactly like
+  `stm32_sysboot_i2c_read`) shows `0x08000000` holds a Cortex-M vector table
+  (SP `0x200056c0`, reset vector `0x0800c4a5`), not Samsung's `"STM32"` header -
+  that header sits at offset `0xbc`/`0xc0` *inside* the image. After the GO the MCU
+  answered on neither `0x2a` nor `0x51`. The vendor's own bring-up, run on every
+  stock boot, never sends GO: `stm32_sysboot_mcu_validation()` enters the system
+  bootloader, `stm32_sysboot_i2c_read()` takes the IC version from `0x08000200`
+  (stock prints its last byte as `mcu_fw(ic):34`) and `stm32_sysboot_disconnect()`
+  - BOOT0 low, one NRST pulse, 150 ms - releases the part so the application runs
+  from flash. The port now does exactly that, plus stock's
+  `stm32_set_mode(MODE_APP)`: a part reporting DFU mode gets the ABORT command
+  (`0x17`) before it is read again. Test 050 measures it.
+- **The host harness is not a compile test (2026-09-22).**  `tests/test_pogo_startup.py`
+  strips forward declarations (`re.sub(r'^static [^\n]+;\n', ...)`) and mocks the
+  helpers it does not extract, so it passed while the driver still called
+  `pogo_recover_bus()` and `pogo_scan_bus()` after their definitions had been
+  deleted. Always run `scripts/build-kernel.sh` before flashing, and treat the
+  kernel build - not the harness - as the gate.
 - **Display regression, found and fixed (2026-09-22, round 5).**  The owner
   reported a blank screen; `display_recover` was cycling the framebuffer as soon as
   `fb0` appeared, 5.91 s, before the panel driver's first read at 6.29 s, and had
