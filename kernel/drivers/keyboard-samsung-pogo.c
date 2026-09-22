@@ -81,6 +81,7 @@ struct samsung_pogo {
 static int pogo_read_mcu(struct samsung_pogo *p);
 static int pogo_announce_level(struct samsung_pogo *p);
 static void pogo_state_report(struct samsung_pogo *p, const char *stage);
+static void pogo_scan_bus(struct samsung_pogo *p);
 static void pogo_startup_sample(struct samsung_pogo *p, const char *when);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
@@ -219,6 +220,7 @@ static void pogo_connect_work(struct work_struct *work)
 			 * only at its end, so whether the application announces itself
 			 * unprompted here has never been measured.
 			 */
+			pogo_scan_bus(p);
 			{
 				int last = pogo_announce_level(p);
 
@@ -704,13 +706,23 @@ static void pogo_scan_bus(struct samsung_pogo *p)
 	 * else, and a scan should not write to addresses whose owners are
 	 * unknown.
 	 */
-	static const unsigned short probes[] = { 0x2a, 0x2b, 0x2c, 0x2d, 0x51 };
+	static unsigned short probes[0x70];
+	int nprobes = 0, a;
+
 	struct i2c_adapter *adap = p->client->adapter;
-	char found[64];
+	char found[160];
 	int i, n = 0;
 	u8 byte = 0;
 
-	for (i = 0; i < ARRAY_SIZE(probes); i++) {
+	/*
+	 * The five-address probe of test 074 found nothing, so sweep the whole
+	 * 7-bit range now: with the application announcing itself (test 076), an
+	 * address that answers is the answer.
+	 */
+	for (a = 0x08; a < 0x78; a++)
+		probes[nprobes++] = a;
+
+	for (i = 0; i < nprobes; i++) {
 		struct i2c_client *dummy = i2c_new_dummy_device(adap, probes[i]);
 		int ret;
 

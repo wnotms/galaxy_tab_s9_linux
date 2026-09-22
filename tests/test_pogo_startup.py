@@ -152,6 +152,12 @@ static void pogo_scan_bus(struct samsung_pogo *p) {}
 static bool pogo_boot_enter(struct samsung_pogo *p) {
  entries++; phase = 0; return !entry_failure;
 }
+struct i2c_adapter { int nr; };
+struct i2c_client *i2c_new_dummy_device(struct i2c_adapter *adap, unsigned short addr)
+{
+ static struct i2c_client dummy; return &dummy;
+}
+void i2c_unregister_device(struct i2c_client *c) {}
 static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n) {
  if (!app) return -ENXIO;
  memset(buf, 0, n);
