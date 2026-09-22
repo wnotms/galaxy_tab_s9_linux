@@ -1,7 +1,12 @@
-# test-164 — Debian first boot, evidence collected over the serial console
+# test-164 — Debian first boot, evidence collected from the running system
 
-The handoff goal was already confirmed by the owner; this is the section 22/23 evidence,
-gathered from a shell on the tablet itself over the ttyMSM0 serial line.
+The handoff goal was already confirmed by the owner; this is the section 22/23 evidence
+gathered from a shell on the tablet itself.
+
+> **Serial-console correction:** the Windows USB COM port is the ACM gadget endpoint
+> `/dev/ttyGS0`, not `ttyMSM0`. `ttyMSM0` is the separate Qualcomm GENI UART selected
+> by the kernel cmdline. Earlier wording in this record conflated the two transports. The
+> boot evidence below is unchanged by that correction.
 
 ```
 $ uname -a
@@ -55,13 +60,19 @@ Every item the task asked to check is answered: systemd is PID 1, the root files
 the microSD partition with its `debian-root` label mounted rw, the cmdline carries
 `gts9_rootfs=` and no `gts9_proof_code`/`gts9_proof_action`/`gts9_reboot_after`, the
 foreground VT is tty1, getty@tty1 is enabled and running, systemd reports no failed units,
-and the pogo keyboard still carries the `kbd` handler with `event0`.  The Windows serial
-console hosts a shell on the tablet as well now, which is where this was collected.
+and the pogo keyboard still carries the `kbd` handler with `event0`.
+
+The Windows COM path has since been verified separately: the gadget creates
+`/dev/ttyGS0`, and Debian serves a login on it after
+`sudo systemctl enable --now serial-getty@ttyGS0.service`. The ACM gadget is created by
+the initramfs before `switch_root`; the initramfs BusyBox shell is not reached on a
+successful handoff, which is why the COM port could enumerate yet remain silent before the
+Debian getty was enabled.
 
 ## Deliberately not in this repository
 
 The raw console captures live outside the tree and are not committed: they contain the
-login attempt typed while opening the session.  No credential - username or password -
+login attempt typed while opening the session. No credential - username or password -
 is written into this repository, by the owner's explicit instruction, and none appears in
 the commits.
 

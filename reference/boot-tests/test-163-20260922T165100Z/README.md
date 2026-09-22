@@ -28,29 +28,38 @@ proof/recovery timers are disabled so nothing reboots the tablet out from under 
 Commits: `477d21a` (the handoff), `8446136` (the Debian cmdline profile), `d11fd3b` (keep
 the rescue shell reachable when a handoff fails).
 
-## Correction recorded here too
+## Correction: Windows USB serial is ttyGS0, not ttyMSM0
 
-When the first candidate was flashed I read the silent *serial* line as "handoff failed and
-the rescue shell was suppressed". Both halves were wrong: the handoff had succeeded, and the
-serial has no userspace getty because systemd's getty generator only matches known serial
-name prefixes - `ttyMSM0` is not one of them. The guard removal in `d11fd3b` is still
-correct for the failure path, which is what section 18 asks for.
+The first Debian candidate was initially diagnosed from a silent Windows COM port. The
+handoff had actually succeeded. The host-visible Windows COM port is the USB gadget ACM
+function, whose device-side tty is `/dev/ttyGS0`.
+
+`ttyMSM0` is a different interface: it is the Qualcomm GENI UART selected by
+`console=ttyMSM0,115200n8` for the kernel console. It must not be used as the name for the
+Windows USB ACM path.
+
+The initramfs creates the ACM gadget before `boot_rootfs()`. On a successful rootfs boot,
+`exec switch_root /newroot /sbin/init` runs before the later BusyBox `ttyGS0` shell code,
+so the gadget survives the handoff but no initramfs userspace shell is left reading it.
+Debian therefore needs its own getty on `ttyGS0`:
+
+```
+sudo systemctl enable --now serial-getty@ttyGS0.service
+```
+
+The owner verified that Windows serial access works after enabling that service. See
+`docs/USB_SERIAL_CONSOLE.md` for the stable mapping and the reason for the silent-port
+symptom.
 
 ## Owed: the three key confirmations from the owner
 
-Requested from the tty1 session (the screen with the pogo keyboard), because neither the
-serial console nor my host tools can reach a shell inside Debian:
+Requested from the tty1 session (the screen with the pogo keyboard):
 
 ```
 cat /etc/os-release                       expect Debian GNU/Linux 13 (trixie)
 ps -p 1 -o pid,comm,args                  expect systemd
 findmnt /                                 expect source /dev/mmcblk1p1
 ```
-
-Also decided: the owner wants a `serial-getty@ttyMSM0` so the Windows serial console can
-host a shell in Debian as well, which needs one file inside the rootfs - their explicit
-authorisation for this change, since the stage normally forbids touching the card's
-contents.
 
 ## Owner confirmations (the three key items)
 
@@ -69,9 +78,6 @@ Samsung ABL -> mainline boot.img -> SM-X710 DTB -> this initramfs
   -> EF-DX710 keyboard login -> Debian shell
 ```
 
-The goal is met.  Still open by the owner's own choice, not by failure: the serial console
-in Debian has kernel output but no userspace shell, so they decided to enable
-`serial-getty@ttyMSM0.service` from the tty1 session
-(`sudo systemctl enable --now serial-getty@ttyMSM0.service`), which is a one-file change
-inside the rootfs; the initramfs deliberately does not write to the rootfs, so that stays a
-manual step unless they ask for it to be automated.
+The Debian boot goal is met. The Windows USB serial login is now independently verified via
+`serial-getty@ttyGS0.service`. A getty on `ttyMSM0`, if explicitly enabled for a physical
+UART setup, is separate from the USB ACM console.
