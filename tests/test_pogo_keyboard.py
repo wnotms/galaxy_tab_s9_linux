@@ -30,6 +30,8 @@ struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  int lock; int *connected; bool powered, ready; u8 caps;
  bool observe_only; unsigned int announce_seen; };
 static u8 wire[128];
+/* The handler now gates on the line being asserted, as stock's ISR does. */
+static int pogo_announce_level(struct samsung_pogo *p) { return 1; }
 static int pos, available, short_read, reports, releases, hellos, writes;
 static int codes[50], values[50];
 static unsigned int get_unaligned_le16(const u8 *p) { return p[0] | (p[1]<<8); }

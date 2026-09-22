@@ -139,8 +139,9 @@ static void gpiod_set_value_cansleep(int *p, int v) {
 static void regulator_disable(int *p) { (void)p; }
 /* The announce line's level now comes from a gpiolib descriptor. */
 /* The handler now gates on the line being asserted, as stock's ISR does, so the
-   mock reports an asserted line by default: a released line means no packet. */
-static int pogo_announce_level(struct samsung_pogo *p) { return 1; }
+   mock reports an asserted line by default and can be released per test. */
+static int announce_mock = 1;
+static int pogo_announce_level(struct samsung_pogo *p) { return announce_mock; }
 /* The who-is-there report is diagnostics: both probes are plain reads. */
 static void pogo_state_report(struct samsung_pogo *p, const char *stage) {}
 static void pogo_startup_sample(struct samsung_pogo *p, const char *when) {}
@@ -230,7 +231,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
         harness += r'''
 static void clear(struct samsung_pogo *p) {
  startup_diagnostics=false; diagnostic_calls=lock_held=version_reads=0;
- jiffies = app_ready_at = startup_delay = 0; fallback_ms = 0;
+ jiffies = app_ready_at = startup_delay = 0; fallback_ms = 0; announce_mock = 1;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
  aborts = app_header = 0;
@@ -246,7 +247,7 @@ int main(void) {
  clear(&p);
  /* The announce line's level is read from the irqchip, not inferred from a
     firing interrupt: the mock reports it low, as mainline has seen. */
- assert(pogo_announce_level(&p) == 0);
+ announce_mock = 0; assert(pogo_announce_level(&p) == 0); announce_mock = 1;
  assert(!pogo_boot_version(&p, &version) && version == 0x12 && phase == 4);
  /* The IC version READ: exactly one frame per phase, ending at 0x08000200. */
  clear(&p);
