@@ -145,13 +145,22 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   to hand out gpio72/106 while they are multiplexed to `qup2_se7` (-EINVAL) and
   that `of_get_named_gpio()` no longer exists, which is why the vendor reads those
   lines with `gpio_get_value()` on numbers it never claims.
-  **Next step:** a "recovery" pinctrl state that moves those pins to GPIO is in
-  the board node and referenced correctly, but the driver printed neither
-  `bus before recovery` nor `bus after recovery`, so `pinctrl_lookup_state()`
-  failed and the path was skipped without logging why.  Log those errors first,
-  then read the SCL/SDA levels - held low means bus recovery, both high means the
-  bus is free and the MCU is not answering.  No key has been typed through this
-  driver yet.
+  Round 3 read the tree TWRP is built from: it uses a **prebuilt stock kernel**
+  plus stock `dtb.img`/`dtbo.img` and Samsung's module stack, so its working
+  environment is not reproducible in mainline.  Two facts came out of it.  Stock's
+  log shows `rst:0`, so the MCU answered first try and was *already running* when
+  the stock driver probed - nothing in that driver powers it from cold.  And
+  `stm32_pogo_v3_start()` begins by instantiating a second I2C client at
+  **`boot_addr = 0x51`**, the STM32's **system bootloader** interface, then runs
+  `stm32_dev_firmware_update_menu(stm32, 0)`; the application interface at 0x2a is
+  used only after that, and `client->addr != 0x51` guards the driver's power-reset
+  and connect-state paths.
+  **Next step:** implement that handshake - instantiate 0x51, run the
+  `sysboot_connect` pin dance (NRST low, SWCLK high, release, SWCLK low), send the
+  SYNC frame - and see whether the MCU answers there.  Answering means the part is
+  alive and only has to be moved into the application; a NAK there too means it is
+  unpowered and the question leaves the driver for the connector's supply.  No key
+  has been typed through this driver yet.
 - **Physical tests need a recorded owner request (2026-09-22).** The test 040
   flash was made on one and tests 041-045 continued under the same recorded
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or

@@ -182,3 +182,38 @@ DTB and the live tree), but the driver logged neither `bus before recovery` nor
 the code skipped the whole path - **silently, because its error branches do not
 log**.  That is the next thing to fix, and it is four lines: report why
 `devm_pinctrl_get()` or the state lookup failed, then read the levels.
+
+## Round 3: what the TWRP tree shows, and the 0x51 bootloader interface
+
+The owner pointed at the source tree TWRP is built from
+(`/home/ms/Samsung/android_device_samsung_gts9wifi`).  It builds against a
+**prebuilt stock kernel** (`prebuilt/kernel`, `TARGET_FORCE_PREBUILT_KERNEL`), a
+prebuilt `dtb.img` and `dtbo.img`, and its ramdisk loads Samsung's module stack
+(`stm32_pogo_v3.ko` plus `sec_input_notifier`, `sec_common_fn`, `matrix-keymap`
+and eight more).  So the working environment is stock 5.15 plus stock firmware
+blobs - not a configuration mainline can copy directly.
+
+Two things came out of it that matter:
+
+1. **Stock's log shows `rst:0`** - the MCU answered on the *first* attempt, with
+   no reset needed.  The keyboard was already running when the stock driver
+   probed at 33 s, so nothing in that driver powers it up from cold.  In mainline
+   it is dead at 4 s and no amount of rail or reset work revives it.
+2. **`stm32_pogo_v3_start()` talks to `0x51` first.**  Its first action is
+   `stm32_i2c_new_dummy(stm32, boot_addr)` with `boot_addr = 0x51`, then
+   `stm32_dev_firmware_update_menu(stm32, 0)` - the STM32's **system bootloader**
+   interface, which the driver also treats specially everywhere else
+   (`client->addr != 0x51` guards the power-reset and connect-state logic).  The
+   application interface at 0x2a is only used after that flow, and the bootloader
+   is entered with NRST low, SWCLK **high**, NRST released, then SWCLK low again
+   (`stm32_sysboot_connect`).
+
+The bus scan already covered 0x08-0x77, so 0x51 was probed and also NAKed.  That
+does not make the interface irrelevant: the scan is a quick-write probe, and this
+is the address to talk to next.
+
+**Next step:** implement the bootloader handshake - instantiate 0x51, run the
+`sysboot_connect` pin dance, send the SYNC frame - and see whether the MCU answers
+*there*.  If it does, the part is alive and the problem is moving it into the
+application; if 0x51 NAKs as well, the MCU is unpowered and the question moves off
+the driver entirely, to the connector's supply.
