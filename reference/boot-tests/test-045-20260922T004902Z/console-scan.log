@@ -1,0 +1,8 @@
+2026-09-22T02:01:18Z console open on COM17
+2026-09-22T02:01:21Z SENT  dmesg | grep -i -e pogo -e MCU -e "i2c-5" | tail -8
+2026-09-22T02:01:21Z RECV  dmesg | grep -i -e pogo -e MCU -e "i2c-5" | tail -8
+2026-09-22T02:01:21Z RECV  [    3.070297][   T77] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T02:01:21Z RECV  [    4.043981][   T79] samsung-pogo-keyboard 5-002a: pogo rail on, MCU out of reset, reading its version
+2026-09-22T02:01:21Z RECV  [    7.323968][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T02:01:21Z RECV  [    7.373228][   T79] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T02:01:30Z console session done

@@ -1,0 +1,52 @@
+=== flash test 045 (boot + init_boot + vendor_boot) ===
+kernel Image.gz de8a2c1bc294230a18fac08f6cb8e73f1f17c5259c121ae2457a35642764db95
+--- boot ---
+D:\android\gts9-test045\boot.img: 1 file pushed, 0 skipped. 76.9 MB/s (100663296 bytes in 1.249s)
+expected: 072f693e8ed798d28e2abd1e0578346dc2edfe268f47e268aa0f65d6d728be9d
+100663296 bytes (96 M) copied, 0.348101 s, 276 M/s
+072f693e8ed798d28e2abd1e0578346dc2edfe268f47e268aa0f65d6d728be9d  /dev/block/by-name/boot
+--- init_boot ---
+D:\android\gts9-test045\init_boot.img: 1 file pushed, 0 skipped. 114.7 MB/s (8388608 bytes in 0.070s)
+expected: 3198ae1ffd48a3a0df90ea772af5e3256b5391cc65002b47c6d29818bf2ba73e
+8388608 bytes (8.0 M) copied, 0.021479 s, 372 M/s
+3198ae1ffd48a3a0df90ea772af5e3256b5391cc65002b47c6d29818bf2ba73e  /dev/block/by-name/init_boot
+--- vendor_boot ---
+D:\android\gts9-test045\vendor_boot.img: 1 file pushed, 0 skipped. 692.6 MB/s (100663296 bytes in 0.139s)
+expected: 9eb5645e542fea20d720d3a9f93ad1dc55c1093d789f520f3130b798ea828ff0
+100663296 bytes (96 M) copied, 0.244079 s, 393 M/s
+9eb5645e542fea20d720d3a9f93ad1dc55c1093d789f520f3130b798ea828ff0  /dev/block/by-name/vendor_boot
+=== flash test 045b (boot only, edge-not-level fix) ===
+D:\android\gts9-test045\boot-edge.img: 1 file pushed, 0 skipped. 69.7 MB/s (100663296 bytes in 1.377s)
+expected: c7f28c2175647c4ee33a9584bc3138d16f68eb04cb7f6e25b703df2d8c05d080
+100663296 bytes (96 M) copied, 0.338342 s, 284 M/s
+c7f28c2175647c4ee33a9584bc3138d16f68eb04cb7f6e25b703df2d8c05d080  /dev/block/by-name/boot
+=== flash test 045c (boot only, rail stays on) ===
+D:\android\gts9-test045\boot-rail.img: 1 file pushed, 0 skipped. 97.2 MB/s (100663296 bytes in 0.987s)
+expected: 9742fa551296eb14b72c3772f2bc97cef0d81d70c6e6ec384e72dc31d1d85b13
+100663296 bytes (96 M) copied, 0.375500 s, 256 M/s
+9742fa551296eb14b72c3772f2bc97cef0d81d70c6e6ec384e72dc31d1d85b13  /dev/block/by-name/boot
+=== flash test 045d (boot + vendor_boot: MCU reset + quiet log) ===
+--- boot ---
+D:\android\gts9-test045\boot.img: 1 file pushed, 0 skipped. 82.9 MB/s (100663296 bytes in 1.158s)
+expected: e0f91c378c85f59ed73c58d012b30c97f9b9835e28630899b28b9e32f74b7c1d
+100663296 bytes (96 M) copied, 0.363077 s, 264 M/s
+e0f91c378c85f59ed73c58d012b30c97f9b9835e28630899b28b9e32f74b7c1d  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test045\vendor_boot.img: 1 file pushed, 0 skipped. 853.5 MB/s (100663296 bytes in 0.112s)
+expected: 66c7ddc5479bc78aa618238cb22bd5ec958a48674e188f0944bc71f17c374f03
+100663296 bytes (96 M) copied, 0.361737 s, 265 M/s
+66c7ddc5479bc78aa618238cb22bd5ec958a48674e188f0944bc71f17c374f03  /dev/block/by-name/vendor_boot
+=== flash test 045e (boot only: polled MCU handshake) ===
+D:\android\gts9-test045\boot-poll.img: 1 file pushed, 0 skipped. 99.6 MB/s (100663296 bytes in 0.964s)
+expected: 2b5c4763332112023cbed7d1d2135da6eeac796216ded7dd3b85fca88202993a
+100663296 bytes (96 M) copied, 0.543875 s, 177 M/s
+2b5c4763332112023cbed7d1d2135da6eeac796216ded7dd3b85fca88202993a  /dev/block/by-name/boot
+=== flash test 045f (boot only: reset-per-retry handshake) ===
+D:\android\gts9-test045\boot-retry.img: 1 file pushed, 0 skipped. 75.1 MB/s (100663296 bytes in 1.279s)
+expected: 46679cb704a4bdba9899a75b70d6ae86bececb7a17706cfabc3a9a25dd94292b
+100663296 bytes (96 M) copied, 0.522782 s, 184 M/s
+46679cb704a4bdba9899a75b70d6ae86bececb7a17706cfabc3a9a25dd94292b  /dev/block/by-name/boot
+=== flash test 045g (boot only: bus scan diagnostic) ===
+D:\android\gts9-test045\boot-scan.img: 1 file pushed, 0 skipped. 88.4 MB/s (100663296 bytes in 1.086s)
+100663296 bytes (96 M) copied, 0.347601 s, 276 M/s
+fe218fd59d6d8d750dc35f20d426a5d02529ab07a2c2225fbc3b151db34f11aa  /dev/block/by-name/boot

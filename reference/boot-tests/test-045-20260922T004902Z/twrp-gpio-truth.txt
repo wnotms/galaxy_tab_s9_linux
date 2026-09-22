@@ -1,0 +1,66 @@
+=== TWRP gpio ground truth ===
+=== TWRP pinctrl ===
+=== TWRP: mount debugfs and dump pin mux ===
+c42d000.qcom,spmi:qcom,pm8550@1:pinctrl@8800
+c42d000.qcom,spmi:qcom,pm8550ve_f@5:pinctrl@8800
+c42d000.qcom,spmi:qcom,pm8550vs@2:pinctrl@8800
+c42d000.qcom,spmi:qcom,pm8550vs@3:pinctrl@8800
+c42d000.qcom,spmi:qcom,pm8550vs@4:pinctrl@8800
+tr: write error: Broken pipe
+--- pins 10/12/13/62/75 ---
+pin 10 (gpio11) 10:c42d000.qcom,spmi:qcom,pm8550@1:pinctrl@8800 
+pin 10 (GPIO_10) 10:f000000.pinctrl 
+pin 12 (GPIO_12) 12:f000000.pinctrl 
+pin 13 (GPIO_13) 13:f000000.pinctrl 
+pin 62 (GPIO_62) 62:f000000.pinctrl 
+pin 75 (GPIO_75) 75:f000000.pinctrl 
+--- gpio values ---
+=== files ===
+gpio-ranges
+pinconf-groups
+pinconf-pins
+pingroups
+pinmux-functions
+pinmux-pins
+=== pinmux ===
+pin 10 (GPIO_10): samsung_mobile_device:fixed_regulator@1 f000000.pinctrl:311 function gpio group gpio10
+pin 12 (GPIO_12): 44-002a (GPIO UNCLAIMED) function gpio group gpio12
+pin 13 (GPIO_13): 44-002a (GPIO UNCLAIMED) function gpio group gpio13
+pin 62 (GPIO_62): 44-002a (GPIO UNCLAIMED) function gpio group gpio62
+pin 75 (GPIO_75): 44-002a (GPIO UNCLAIMED) function gpio group gpio75
+=== pinconf ===
+pin 10 (GPIO_10): 
+pin 12 (GPIO_12): 
+pin 13 (GPIO_13): 
+pin 62 (GPIO_62): 
+pin 75 (GPIO_75): 
+=== TWRP pinconf detail ===
+pin 10 (GPIO_10): 
+pin 11 (GPIO_11): 
+pin 12 (GPIO_12): 
+pin 13 (GPIO_13): 
+pin 14 (GPIO_14): 
+pin 15 (GPIO_15): 
+pin 16 (GPIO_16): 
+pin 17 (GPIO_17): 
+--
+pin 62 (GPIO_62): 
+pin 63 (GPIO_63): 
+pin 64 (GPIO_64): 
+pin 65 (GPIO_65): 
+pin 66 (GPIO_66): 
+--
+pin 75 (GPIO_75): 
+pin 76 (GPIO_76): 
+pin 77 (GPIO_77): 
+pin 78 (GPIO_78): 
+pin 79 (GPIO_79): 
+=== stock kernel keyboard status after mainline boots ===
+[   33.782074] stm32_pogo_i2c 44-002a: [sec_input] mcu_fw(bin):34, mcu_fw(ic):34, EF-DX710_v1.4.1.0
+[   33.782078] stm32_pogo_i2c 44-002a: [sec_input] TC_vFF00.9, con:1/1, int:1, depth:0, rst:0, hall:0 model_id:0x2
+[   64.502075] stm32_pogo_i2c 44-002a: [sec_input] mcu_fw(bin):34, mcu_fw(ic):34, EF-DX710_v1.4.1.0
+[   64.502086] stm32_pogo_i2c 44-002a: [sec_input] TC_vFF00.9, con:1/1, int:1, depth:0, rst:0, hall:0 model_id:0x2
+--- input devices ---
+N: Name="Book Cover Keyboard Slim (EF-DX710)"
+P: Phys=
+S: Sysfs=/devices/platform/soc/soc:pogo_kpd/input/input12

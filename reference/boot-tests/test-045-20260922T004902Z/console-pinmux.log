@@ -1,0 +1,13 @@
+2026-09-22T02:01:38Z console open on COM17
+2026-09-22T02:01:42Z SENT  cat /sys/kernel/debug/pinctrl/*/pinmux-pins 2>/dev/null | grep -E "pin (72|106|62|75|10|12|13) "
+2026-09-22T02:01:42Z RECV  cat /sys/kernel/debug/pinctrl/*/pinmux-pins 2>/dev/null | grep -E "pin (72
+2026-09-22T02:01:42Z RECV  |106|62|75|10|12|13) "
+2026-09-22T02:01:42Z RECV  pin 10 (gpio11): (MUX UNCLAIMED) c400000.spmi:pmic@1:gpio@8800:522
+2026-09-22T02:01:42Z RECV  pin 10 (GPIO_10): device regulator-pogo function gpio group gpio10
+2026-09-22T02:01:42Z RECV  pin 12 (GPIO_12): device 5-002a function gpio group gpio12
+2026-09-22T02:01:42Z RECV  pin 13 (GPIO_13): device 5-002a function gpio group gpio13
+2026-09-22T02:01:42Z RECV  pin 62 (GPIO_62): device 5-002a function gpio group gpio62
+2026-09-22T02:01:42Z RECV  pin 72 (GPIO_72): device 89c000.i2c function qup2_se7 group gpio72
+2026-09-22T02:01:42Z RECV  pin 75 (GPIO_75): device 5-002a function gpio group gpio75
+2026-09-22T02:01:42Z RECV  pin 106 (GPIO_106): device 89c000.i2c function qup2_se7 group gpio106
+2026-09-22T02:01:51Z console session done

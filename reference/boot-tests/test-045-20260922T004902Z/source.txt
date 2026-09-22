@@ -1,0 +1,5 @@
+source_commit=1d71286bc12d66fd39c6a8f72e80e12b99912bcd
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner requested a physical test ("进行实机测试") on 2026-09-22; this is the recorded request the test rule requires, and it covers flashing boot/init_boot/vendor_boot, booting mainline and observing the keyboard
+hypothesis=with the EF-DX710 driver built in, mainline binds the STM32 at QUP2 SE7 (i2c15 address 0x2a), completes the model handshake the stock firmware answers as model 0x02, and delivers key events on an evdev node; the bring-up report carries the binding, the handshake and the input device list, and typing produces bytes on that node
+started_utc=2026-09-22T00:49:02Z
