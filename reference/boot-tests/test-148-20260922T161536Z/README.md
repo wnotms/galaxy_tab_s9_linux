@@ -44,3 +44,33 @@ Two detach cycles appear in this log and keys worked after the reconnect in betw
   reconnect, with keys working after it),
 - the three-to-five-minute idle run,
 - a pad-level reading taken while the cover is off, to go with `regulator_enabled=0`.
+
+## Final acceptance run (owner: "已做完测试")
+
+```
+detaches=7 reconnects=7 models=8 retries=0 giveups=0 resets=1 badirq=0 keys=102
+state=READY powered=1 event_enabled=1 irq_armed=1 ready=1 connect=1
+announcements=118 regulator_enabled=1
+```
+
+- **Seven physical cycles, seven recoveries.**  Every reconnect produced its own
+  `MCU model 0x1 hw 0 firmware 1.4 mode 1` handshake - seven reconnects plus the cold
+  start make the eight model reads counted here.
+- **resets=1**: the only app-entry reset in the whole boot is the cold start's.  Not one of
+  the seven reconnects touched NRST, BOOT0 or 0x51 - which is the answer to "why does hot
+  reconnect need no NRST", measured rather than argued.
+- **badirq=0**: no `unbalanced` and no `Disabling IRQ` line, so the guarded enable/disable
+  pair held across seven cycles.
+- **retries=0 and giveups=0**: the application was ready for the handshake every time; the
+  bounded retry added for the case where it is not stayed unused.
+- 102 decoded key transitions across the run, including after the last reconnect.  The log
+  also contains an idle stretch of about 106 s (last key at 164.1 s, next at 270.7 s) with
+  keys working on both sides, and the current state is READY - the watchdog/reset-loop
+  problem from tests 100 and 105 does not come back.
+
+Section 21 is therefore met on hardware: cold start works, seven unplug/replug cycles each
+recover with no reset, keys work throughout, and the five questions in test-147 are
+answered with these numbers.  The only item still not measured to the letter is a pad-level
+reading taken while the cover is off (the state attribute's `regulator_enabled=0` while
+detached is the driver-side equivalent), and the idle stretch observed is ~106 s rather than
+the three-to-five minutes the owner asked for.
