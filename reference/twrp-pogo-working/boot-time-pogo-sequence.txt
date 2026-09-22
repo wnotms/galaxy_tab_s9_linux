@@ -1,0 +1,61 @@
+=== stock boot-time pogo sequence, captured from TWRP within 20 s of boot ===
+[    1.640277] init: Loading module /lib/modules/stm32_pogo_v3.ko with args ''
+[    1.641248] stm32_dev_init++
+[    1.641345] stm32_pogo_i2c 44-002a: [sec_input] deferred_flag boot stm32_dev_probe
+[    1.641492] init: Loaded kernel module /lib/modules/stm32_pogo_v3.ko
+[    1.740124] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_probe++
+[    1.740139] stm32_pogo_i2c 44-002a: [sec_input] stm32_i2c_new_dummy: client_boot address:0x51
+[    1.740171] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: irq_type property:2008, 8200
+[    1.740174] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: irq_conn_type property:2003, 8195
+[    1.740293] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: model_name_row1:EF-DT870 model_name_row2:EF-DT630 model_name_row3:(null)
+[    1.740297] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: Failed to get i2c_burstmax property
+[    1.740299] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: scl: 407, sda: 373, int:376, conn: 363, mcu_swclk: 313, mcu_nrst: 314
+[    1.740302] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: model_name1:EF-DX715 model_name2:EF-DX710 model_name3:(null) mcu_fw_name:keyboard_stm/stm32_gts9family.bin i2c-burstmax:100
+[    1.740305] stm32_pogo_i2c 44-002a: [sec_input] stm32_parse_dt: count:-22 open_close:1, booster_power_cnt:0(0)
+[    1.740326] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_firmware_update_mode start
+[    1.740350] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_firmware_update_mode: succeeded to request firmware retry_count:9
+[    1.740361] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_checksum: cal checksum:0x7E2341C8 last_sector_number:25 size:52012 memory_map_size:2048
+[    1.740364] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation start
+[    1.740365] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_connect start
+[    1.796916] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    1.796919] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_sync 
+[    1.797032] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_sync succeed to connect to target
+[    1.852933] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation Connection OK
+[    1.852935] stm32_pogo_i2c 44-002a: [sec_input] mcu stm32_sysboot_i2c_info
+[    1.852937] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    1.852938] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info cmd[0]:0x2, cmd[1]:0xfd
+[    1.853394] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info succeed to get info id 1120
+[    1.853396] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    1.853397] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info cmd[0]:0x1, cmd[1]:0xfe
+[    1.853791] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info succeed to get info version 18
+[    1.853793] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+[    1.853795] stm32_pogo_i2c 44-002a: [sec_input] stm32_target_option_update
+[    1.854673] stm32_pogo_i2c 44-002a: [sec_input] stm32_target_option_update optionbyte is 0, success
+[    1.854675] stm32_pogo_i2c 44-002a: [sec_input] stm32_target_empty_check_status
+[    1.855553] stm32_pogo_i2c 44-002a: [sec_input] stm32_target_empty_check_status Flash Word: 0x200056C0
+[    1.855555] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_checksum address: 0x800c800, len=812
+[    1.878583] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_checksum: checksum ic:0x7E2341C8 bin 0x7E2341C8
+[    1.878585] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_disconnect start
+[    2.036955] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_checksum: done
+[    2.036960] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation start
+[    2.036961] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_connect start
+[    2.069427] wacom_w90xx 38-0056: [sec_input] boot_addr: 0x9, origin: (0,0), max_coords: (0,0), max_pressure: 4095, max_height: 255, max_tilt: (63,63) invert: (0,0,0), fw_path: wez01_gts9.bin, module_ver:2, table_swap:2, cover_noti:1,cover_detect:1, pogo_cover:1
+[    2.092909] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    2.092912] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_sync 
+[    2.093025] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_sync succeed to connect to target
+[    2.148910] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation Connection OK
+[    2.148912] stm32_pogo_i2c 44-002a: [sec_input] mcu stm32_sysboot_i2c_info
+[    2.148914] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    2.148915] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info cmd[0]:0x2, cmd[1]:0xfd
+[    2.149364] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info succeed to get info id 1120
+[    2.149366] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_chip_command start
+[    2.149368] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info cmd[0]:0x1, cmd[1]:0xfe
+[    2.149782] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_i2c_get_info succeed to get info version 18
+[    2.149784] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+[    2.150719] stm32_pogo_i2c 44-002a: [sec_input] stm32_sysboot_disconnect start
+[    2.274020] Modules linked in: wez01(+) sec_thermistor hwmon pdic_sm5714 sec_direct_charger snvm muic_sm5714 stm_ts_fts1b90a a96t396 stm32_pogo_v3 dc_vibrator sm5714_fuelgauge hall_ic hall_ic_notifier sm5440_charger abc_hub sec_abc_detect_conn sm5714_charger sec_battery sec_pd mfd_sm5714 input_booster_lkm sb_core fingerprint fingerprint_sysfs sec_cmd sec_input_notifier sec_tsp_dumpkey sec_common_fn sec_secure_touch sec_tclm_v2 sec_tsp_log kperfmon dropdump dev_ril_bridge sec_vibrator vibrator_vib_info sec_panel_notifier_v2 switch_gpio sec_qc_rdx_bootdev sec_qc_rst_exinfo sec_qc_hw_param sec_qc_smem sec_qc_qcom_wdt_core sec_qc_soc_id sec_qc_qcom_reboot_reason sec_qc_rbcmd sec_reboot_cmd sec_arm64_debug sec_arm64_fsimd_debug icc_test nvmem_qfprom industrialio_buffer_cb qcom_spmi_adc5_gen3 qcom_vadc_common gh_irq_lend qcom_q6v5_pas hdm qcom_q6v5 sec_audio_sysfs snd_debug_proc qcom_pil_info mhi_dev_drv mhi_dev_net ep_pcie_drv leds_qpnp_vibrator_ldo leds_qti_tri_led
+[    2.308914] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_save_version_of_bin 052052
+[    2.308919] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_check_firmware_version phone:00340034 ic:00340034
+[    2.308923] stm32_pogo_i2c 44-002a: [sec_input] stm32_dev_firmware_update_mode: skip - fw update
+[    2.308931] [sec_input] stm32_pogo_kpd_init
+[    2.309055] stm32_kpd soc:pogo_kpd: [sec_input] stm32_keypad_probe
