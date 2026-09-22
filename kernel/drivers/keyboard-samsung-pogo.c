@@ -1094,6 +1094,16 @@ static irqreturn_t pogo_irq(int irq, void *data)
 		}
 		for (i = 0; i < size; i += 2) {
 			event = get_unaligned_le16(payload + i);
+			/*
+			 * The remaining acceptance stages are "a real key interrupt"
+			 * and "EV_KEY on /dev/input/eventX".  Neither is visible from
+			 * a device with no evtest and no adbd, so every reported key
+			 * is logged: one line per key transition, which is what a
+			 * physical key press must produce.
+			 */
+			dev_info(&p->client->dev, "key %#x %s (from the MCU packet)\n",
+				 event & 0x7fff,
+				 (event & 0x8000) ? "pressed" : "released");
 			input_report_key(p->input, event & 0x7fff, !!(event & 0x8000));
 			input_sync(p->input);
 		}
