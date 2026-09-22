@@ -1,0 +1,23 @@
+2026-09-22T12:33:15Z console open on COM17
+2026-09-22T12:33:18Z SENT  dmesg | grep -A14 "pogo pins" | tail -46; cat /proc/interrupts | grep -iE "msmgpio|5-002a|samsung"
+2026-09-22T12:33:18Z RECV  dmesg | grep -A14 "pogo pins" | tail -46; cat /proc/interrupts | grep -iE
+2026-09-22T12:33:18Z RECV  "msmgpio|5-002a|samsung"
+2026-09-22T12:33:18Z RECV  [  126.236207][  T171] pogo pins 30 s in:
+2026-09-22T12:33:18Z RECV  [  126.240497][  T171]   pin 10: io 0x3
+2026-09-22T12:33:18Z RECV  [  126.244575][  T171]   pin 12: io 0x0
+2026-09-22T12:33:18Z RECV  [  126.248646][  T171]   pin 13: io 0x3
+2026-09-22T12:33:18Z RECV  [  126.252712][  T171]   pin 62: io 0x1
+2026-09-22T12:33:18Z RECV  [  126.256776][  T171]   pin 72: io 0x1
+2026-09-22T12:33:18Z RECV  [  126.260834][  T171]   pin 75: io 0x1
+2026-09-22T12:33:18Z RECV  [  126.264890][  T171]   pin 106: io 0x1
+2026-09-22T12:33:18Z RECV  [  126.281648][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:33:18Z RECV  [  126.291616][    C0] geni_i2c 89c000.i2c: DMA:0 tx_stat:0x0, rx_stat:0x0, irq-stat:0x409
+2026-09-22T12:33:18Z RECV  [  126.301300][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T12:33:18Z RECV  [  126.417872][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:33:18Z RECV  [  126.427847][    C0] geni_i2c 89c000.i2c: DMA:0 tx_stat:0x0, rx_stat:0x0, irq-stat:0x409
+2026-09-22T12:33:18Z RECV  [  126.437554][    C0] geni_i2c 89c000.i2c: m_cmd:0x8005400, geni_status:0x0, geni_ios:0x7 (scl/sda high, idle bus)
+2026-09-22T12:33:18Z RECV  [  126.554203][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:33:18Z RECV   169:          1          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T12:33:18Z RECV   171:       1828          0          0          0          0          0          0          0  msmgpio     62 Edge      pogo-connect
+2026-09-22T12:33:18Z RECV   188:          0          0          0          0          0          0          0          0  msmgpio    107 Edge      Book Cover
+2026-09-22T12:33:27Z console session done

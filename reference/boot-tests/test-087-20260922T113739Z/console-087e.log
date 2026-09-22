@@ -1,0 +1,33 @@
+2026-09-22T12:34:03Z console open on COM17
+2026-09-22T12:34:06Z SENT  dmesg | grep -A8 "pogo pins"
+2026-09-22T12:34:06Z RECV  dmesg | grep -A8 "pogo pins"
+2026-09-22T12:34:06Z RECV  [  126.236207][  T171] pogo pins 30 s in:
+2026-09-22T12:34:06Z RECV  [  126.240497][  T171]   pin 10: io 0x3
+2026-09-22T12:34:06Z RECV  [  126.244575][  T171]   pin 12: io 0x0
+2026-09-22T12:34:06Z RECV  [  126.248646][  T171]   pin 13: io 0x3
+2026-09-22T12:34:06Z RECV  [  126.252712][  T171]   pin 62: io 0x1
+2026-09-22T12:34:06Z RECV  [  126.256776][  T171]   pin 72: io 0x1
+2026-09-22T12:34:06Z RECV  [  126.260834][  T171]   pin 75: io 0x1
+2026-09-22T12:34:06Z RECV  [  126.264890][  T171]   pin 106: io 0x1
+2026-09-22T12:34:06Z RECV  [  126.281648][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:34:06Z RECV  --
+2026-09-22T12:34:06Z RECV  [  156.956215][  T123] pogo pins 30 s in:
+2026-09-22T12:34:06Z RECV  [  156.960427][  T123]   pin 10: io 0x3
+2026-09-22T12:34:06Z RECV  [  156.964393][  T123]   pin 12: io 0x0
+2026-09-22T12:34:06Z RECV  [  156.968363][  T123]   pin 13: io 0x3
+2026-09-22T12:34:06Z RECV  [  156.972329][  T123]   pin 62: io 0x1
+2026-09-22T12:34:06Z RECV  [  156.976293][  T123]   pin 72: io 0x1
+2026-09-22T12:34:06Z RECV  [  156.980258][  T123]   pin 75: io 0x1
+2026-09-22T12:34:06Z RECV  [  156.984221][  T123]   pin 106: io 0x1
+2026-09-22T12:34:06Z RECV  [  157.181246][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:34:06Z RECV  --
+2026-09-22T12:34:06Z RECV  [  187.682250][  T214] pogo pins 30 s in:
+2026-09-22T12:34:06Z RECV  [  187.687754][  T214]   pin 10: io 0x3
+2026-09-22T12:34:06Z RECV  [  187.693043][  T214]   pin 12: io 0x0
+2026-09-22T12:34:06Z RECV  [  187.698289][  T214]   pin 13: io 0x3
+2026-09-22T12:34:06Z RECV  [  187.703553][  T214]   pin 62: io 0x0
+2026-09-22T12:34:06Z RECV  [  187.708796][  T214]   pin 72: io 0x1
+2026-09-22T12:34:06Z RECV  [  187.714014][  T214]   pin 75: io 0x1
+2026-09-22T12:34:06Z RECV  [  187.719193][  T214]   pin 106: io 0x1
+2026-09-22T12:34:06Z RECV  [  187.838083][    C0] geni_i2c 89c000.i2c: NACK: slv unresponsive, check its power/reset-ln
+2026-09-22T12:34:15Z console session done

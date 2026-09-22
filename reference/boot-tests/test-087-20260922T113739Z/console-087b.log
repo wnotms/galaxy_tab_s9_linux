@@ -1,0 +1,40 @@
+2026-09-22T12:32:31Z console open on COM17
+2026-09-22T12:32:34Z SENT  cat /proc/interrupts | grep -iE "pogo|89c000"; dmesg | grep -iE "event transfer|announced|announce" | head -30; dmesg | grep -iE "unbalanced|WARNING|pogo-vdd" | head -8
+2026-09-22T12:32:34Z RECV  cat /proc/interrupts | grep -iE "pogo|89c000"; dmesg | grep -iE "event tra
+2026-09-22T12:32:34Z RECV  nsfer|announced|announce" | head -30; dmesg | grep -iE "unbalanced|WARNING|pogo-
+2026-09-22T12:32:34Z RECV  vdd" | head -8
+2026-09-22T12:32:34Z RECV   168:        634          0          0          0          0          0          0          0  GICv3      494 Level     89c000.i2c
+2026-09-22T12:32:34Z RECV   171:       1151          0          0          0          0          0          0          0  msmgpio     62 Edge      pogo-connect
+2026-09-22T12:32:34Z RECV  [   11.860520][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 7300 ms
+2026-09-22T12:32:34Z RECV  [   12.076203][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 7500 ms
+2026-09-22T12:32:34Z RECV  [   12.709883][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 8100 ms
+2026-09-22T12:32:34Z RECV  [   12.925080][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 8300 ms
+2026-09-22T12:32:34Z RECV  [   13.558067][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 8900 ms
+2026-09-22T12:32:34Z RECV  [   13.774111][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 9100 ms
+2026-09-22T12:32:34Z RECV  [   14.405886][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 9700 ms
+2026-09-22T12:32:34Z RECV  [   14.620199][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 9900 ms
+2026-09-22T12:32:34Z RECV  [   15.252208][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 10500 ms
+2026-09-22T12:32:34Z RECV  [   15.469082][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 10700 ms
+2026-09-22T12:32:34Z RECV  [   16.101104][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 11300 ms
+2026-09-22T12:32:34Z RECV  [   16.214196][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 11400 ms
+2026-09-22T12:32:34Z RECV  [   16.949120][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 12100 ms
+2026-09-22T12:32:34Z RECV  [   17.061361][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 12200 ms
+2026-09-22T12:32:34Z RECV  [   17.748301][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 12800 ms
+2026-09-22T12:32:34Z RECV  [   17.966183][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 13000 ms
+2026-09-22T12:32:34Z RECV  [   18.598174][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 13600 ms
+2026-09-22T12:32:34Z RECV  [   18.813889][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 13800 ms
+2026-09-22T12:32:34Z RECV  [   19.444688][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 14400 ms
+2026-09-22T12:32:34Z RECV  [   19.556591][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 14500 ms
+2026-09-22T12:32:34Z RECV  [   20.190184][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 15100 ms
+2026-09-22T12:32:34Z RECV  [   20.405898][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 15300 ms
+2026-09-22T12:32:34Z RECV  [   21.037887][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 15900 ms
+2026-09-22T12:32:34Z RECV  [   21.253100][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 16100 ms
+2026-09-22T12:32:34Z RECV  [   21.886137][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 16700 ms
+2026-09-22T12:32:34Z RECV  [   22.102031][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 16900 ms
+2026-09-22T12:32:34Z RECV  [   22.732570][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 17500 ms
+2026-09-22T12:32:34Z RECV  [   22.948202][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 17700 ms
+2026-09-22T12:32:34Z RECV  [   23.581095][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 0 -> 1 after 18300 ms
+2026-09-22T12:32:34Z RECV  [   23.796206][   T80] samsung-pogo-keyboard 5-002a: no-action: announce 1 -> 0 after 18500 ms
+2026-09-22T12:32:34Z RECV  [   36.034171][   T80] unbalanced disables for pogo-vdd
+2026-09-22T12:32:34Z RECV  [   36.039493][   T80] WARNING: ../linux-src-gts9wifi/drivers/regulator/core.c:3245 at _regulator_disable+0x64/0x27c, CPU#7: kworker/7:3/80
+2026-09-22T12:32:43Z console session done
