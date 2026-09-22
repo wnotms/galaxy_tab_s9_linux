@@ -29,6 +29,9 @@ struct i2c_client { int dev; };
 struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  int lock; int *connected; bool powered, ready; u8 caps;
  bool observe_only; unsigned int announce_seen;  bool rearm_pending;
+ unsigned int stuck_fails;
+ int conn_level;
+ unsigned long last_rearm;
 };
 static u8 wire[128];
 /* The handler now gates on the line being asserted, as stock's ISR does. */
@@ -96,7 +99,5 @@ int main(void) {
             subprocess.run([str(exe)], check=True)
 
 if __name__ == '__main__':
-    unittest.main() unsigned int stuck_fails;
- int conn_level;
- unsigned long last_rearm;
+    unittest.main()
 

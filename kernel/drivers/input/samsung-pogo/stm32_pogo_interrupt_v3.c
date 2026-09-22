@@ -357,7 +357,16 @@ static irqreturn_t stm32_dev_isr(int irq, void *dev_id)
 #if IS_ENABLED(CONFIG_QCOM_BUS_SCALING) || IS_ENABLED(CONFIG_INTERCONNECT)
 	int ret = 0;
 #endif
-	if (gpiod_get_value(stm32->dtdata->gpio_int))
+	/*
+	 * Stock read a raw integer GPIO here, so this tested the physical level and
+	 * returned while the line was high.  In this port the descriptor is
+	 * GPIO_ACTIVE_LOW and gpiod_get_value() returns *logical assertion*, i.e. 1
+	 * exactly when the MCU is asking for attention - the imported copy
+	 * therefore returned early on every real interrupt and never read a port.
+	 * Invert it to restore stock's meaning: service the interrupt when the
+	 * line is asserted.
+	 */
+	if (!gpiod_get_value(stm32->dtdata->gpio_int))
 		return IRQ_HANDLED;
 #if IS_ENABLED(CONFIG_QCOM_BUS_SCALING)
 	if (stm32->stm32_bus_perf_client) {
