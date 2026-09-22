@@ -246,38 +246,6 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 	int conn, ret, i;
 
 	mutex_lock(&p->lock);
-	/*
-	 * An explicit request from sysfs.  Nothing here can fire by itself: the two
-	 * automatic attempts at acting on the connect line each broke a working
-	 * keyboard, so the recovery is deliberately manual until the probe says which
-	 * sequence a re-seated part actually needs.
-	 */
-	if (p->rearm_mode) {
-		u8 how = p->rearm_mode;
-
-		p->rearm_mode = 0;
-		if (how == 1) {
-			if (regulator_enable(p->vdd))
-				dev_warn(&p->client->dev, "re-arm(soft): could not raise the rail\n");
-			else
-				p->powered = true;
-			msleep(50);
-			p->event_enabled = true;
-			if (!p->irq_armed) {
-				p->irq_armed = true;
-				mutex_unlock(&p->lock);
-				enable_irq(p->client->irq);
-			} else {
-				mutex_unlock(&p->lock);
-			}
-			dev_info(&p->client->dev,
-				 "re-arm(soft): rail on and DATA armed, no reset, no rail drop\n");
-			return;
-		}
-		/* hard: fall through to the reset sequence by pretending to be unpowered */
-		p->powered = false;
-		dev_info(&p->client->dev, "re-arm(hard): running the full boot sequence\n");
-	}
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
@@ -489,6 +457,38 @@ static void pogo_connect_work(struct work_struct *work)
 	}
 
 	mutex_lock(&p->lock);
+	/*
+	 * An explicit request from sysfs.  Nothing here can fire by itself: the two
+	 * automatic attempts at acting on the connect line each broke a working
+	 * keyboard, so the recovery is deliberately manual until the probe says which
+	 * sequence a re-seated part actually needs.
+	 */
+	if (p->rearm_mode) {
+		u8 how = p->rearm_mode;
+
+		p->rearm_mode = 0;
+		if (how == 1) {
+			if (regulator_enable(p->vdd))
+				dev_warn(&p->client->dev, "re-arm(soft): could not raise the rail\n");
+			else
+				p->powered = true;
+			msleep(50);
+			p->event_enabled = true;
+			if (!p->irq_armed) {
+				p->irq_armed = true;
+				mutex_unlock(&p->lock);
+				enable_irq(p->client->irq);
+			} else {
+				mutex_unlock(&p->lock);
+			}
+			dev_info(&p->client->dev,
+				 "re-arm(soft): rail on and DATA armed, no reset, no rail drop\n");
+			return;
+		}
+		/* hard: fall through to the reset sequence by pretending to be unpowered */
+		p->powered = false;
+		dev_info(&p->client->dev, "re-arm(hard): running the full boot sequence\n");
+	}
 	if (!p->powered) {
 		/*
 		 * Release the MCU from its system bootloader.  On STM32 BOOT0 is

@@ -114,7 +114,10 @@ struct samsung_pogo {
  bool reconnect;
  bool irq_armed;
  unsigned int poll_tick;
+ u8 rearm_mode;
 };
+/* The new re-arm path warns on a failed regulator enable. */
+static void dev_warn(const void *dev, const char *fmt, ...) { (void)dev; (void)fmt; }
 static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never
    announced itself; record the delay instead of running a workqueue. */
