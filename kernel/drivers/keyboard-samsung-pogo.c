@@ -417,7 +417,15 @@ static int pogo_probe(struct i2c_client *client)
 	 * reading the input buffer is how Samsung's driver reports a held bus.
 	 */
 	p->sda = devm_gpiod_get_optional(dev, "sda", GPIOD_IN);
+	if (IS_ERR(p->sda)) {
+		dev_info(dev, "sda line unavailable: %ld\n", PTR_ERR(p->sda));
+		p->sda = NULL;
+	}
 	p->scl = devm_gpiod_get_optional(dev, "scl", GPIOD_IN);
+	if (IS_ERR(p->scl)) {
+		dev_info(dev, "scl line unavailable: %ld\n", PTR_ERR(p->scl));
+		p->scl = NULL;
+	}
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
 		return dev_err_probe(dev, PTR_ERR(p->vdd), "vdd supply\n");
