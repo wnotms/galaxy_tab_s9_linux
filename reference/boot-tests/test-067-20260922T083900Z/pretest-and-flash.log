@@ -1,0 +1,14 @@
+=== test 067 flash (boot + vendor_boot) + BCB clear ===
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+expected boot 8c37beafd18ff27dc65b326f97c89fe757484e44212711a92749c7344424e021 vendor_boot 4d4960640927e000ee9ebc7612430745a63cdb55f617e1859918823d9b66313e
+adb.exe: no devices/emulators found
+D:\android\gts9-test067\boot.img: 1 file pushed, 0 skipped. 94.8 MB/s (100663296 bytes in 1.013s)
+100663296 bytes (96 M) copied, 0.252360 s, 380 M/s
+boot read-back 8c37beafd18ff27dc65b326f97c89fe757484e44212711a92749c7344424e021  /dev/block/by-name/boot
+D:\android\gts9-test067\vendor_boot.img: 1 file pushed, 0 skipped. 747.8 MB/s (100663296 bytes in 0.128s)
+100663296 bytes (96 M) copied, 0.421208 s, 228 M/s
+vendor_boot read-back 4d4960640927e000ee9ebc7612430745a63cdb55f617e1859918823d9b66313e  /dev/block/by-name/vendor_boot
+bcb-cleared

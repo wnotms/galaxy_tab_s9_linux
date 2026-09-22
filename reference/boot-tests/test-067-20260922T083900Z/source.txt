@@ -1,0 +1,8 @@
+source_commit=bbf3fbf ("pogo: claim the announce line as a GPIO so its level can be read")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-066
+hypothesis=The announce line is the only signal the MCU drives by itself.  Stock prints it as int:1 while its application runs; test 066 could not read its level because this platform's irqchip does not implement IRQCHIP_STATE_LINE_LEVEL.  Samsung's node avoids that by handing the line over as a GPIO (stm32,irq_gpio + gpio_to_irq), so this candidate claims it the same way (announce-gpios + devm_gpiod_get_optional(GPIOD_IN)) and prints the level: 1 means the MCU is driving the line and the application is alive under mainline, 0 means it is not running.
+change=board DTS gains announce-gpios for gpio75; the driver claims it read-only and pogo_announce_level() returns its level, logged at rail-on and at the end of the poll.  No behavioural change to the interrupt: it is still the DT interrupt, and no I2C traffic is added.
+predictions=1) level 1 at rail-on and after the poll => the MCU drives the line, the application is alive, and the fault is in the response path (next: vendor-port A/B); 2) level 0 => the MCU is not driving its own announce line, i.e. the application is not running under mainline and the difference is environmental (GENI/pinctrl/regulator/runtime-PM layer).
+images=out/boot-bundle-test067/boot.img 8c37beafd18ff27dc65b326f97c89fe757484e44212711a92749c7344424e021 and vendor_boot.img 4d4960640927e000ee9ebc7612430745a63cdb55f617e1859918823d9b66313e (both carry the new DTB); init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:39:00Z
