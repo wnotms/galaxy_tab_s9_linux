@@ -1,0 +1,8 @@
+2026-09-22T08:42:33Z console open on COM17
+2026-09-22T08:42:36Z SENT  dmesg | grep -a "samsung-pogo-keyboard" | grep -aiE "rail cycle|level|bootloader|application" | tail -8
+2026-09-22T08:42:36Z RECV  dmesg | grep -a "samsung-pogo-keyboard" | grep -aiE "rail cycle|level|boot
+2026-09-22T08:42:36Z RECV  loader|application" | tail -8
+2026-09-22T08:42:36Z RECV  [    4.491944][   T80] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed (level 1)
+2026-09-22T08:42:36Z RECV  [    4.617962][   T80] samsung-pogo-keyboard 5-002a: right after the rail cycle: application -6, bootloader -6, announce level 0
+2026-09-22T08:42:36Z RECV  [    4.656773][   T80] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T08:42:45Z console session done

@@ -1,0 +1,7 @@
+source_commit=150b8ef ("pogo: probe both interfaces right after the rail cycle")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-067
+hypothesis=Test 067 showed the MCU alive with its announce line high while 0x2a NACKs.  Two possibilities remain, and a plain read separates them: the part sits in its system bootloader (0x51 answers on its own) or it runs its application interface and the missing piece is elsewhere (only 0x2a answers).  pogo_state_report() probes both right after the rail cycle, with no dance, no reset and no GO.
+predictions=1) bootloader answers, application does not => the part never leaves the bootloader under mainline; 2) application answers => the interface is up and the earlier NACKs had another cause; 3) neither answers => the part is alive (line driven) but serves no interface yet at that instant.
+images=out/boot-bundle-test068/boot.img 303b8673a4d171f36eec33eb7a002de645d42606e4eb7ba3d5101debae0781c8; vendor_boot 4d496064, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:45:00Z
