@@ -406,8 +406,8 @@ static void pogo_connect_work(struct work_struct *work)
 		ret = regulator_enable(p->vdd);
 		if (!ret) {
 			p->powered = true;
-			if (!regulator_disable(p->vdd))
-				p->powered = false;
+			regulator_disable(p->vdd);
+			p->powered = false;
 		}
 		gpiod_set_value_cansleep(p->swclk, 0);	/* BOOT0 low: application */
 		gpiod_set_value_cansleep(p->nrst, 0);
