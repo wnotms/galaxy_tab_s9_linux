@@ -1,0 +1,12 @@
+2026-09-22T02:13:53Z console open on COM17
+2026-09-22T02:13:56Z SENT  dmesg | grep -i -e "re-arming" -e "geni" -e "firmware" | tail -8
+2026-09-22T02:13:56Z RECV  dmesg | grep -i -e "re-arming" -e "geni" -e "firmware" | tail -8
+2026-09-22T02:13:56Z RECV  [    9.153604][   T93] geni_i2c 89c000.i2c: Failed to read firmware-name property: -22
+2026-09-22T02:13:56Z RECV  [    9.153605][   T93] geni_i2c 89c000.i2c: error re-arming the SE: -22
+2026-09-22T02:13:56Z RECV  [    9.153605][   T93] geni_i2c 89c000.i2c: Failed to read firmware-name property: -22
+2026-09-22T02:13:56Z RECV  [    9.153606][   T93] geni_i2c 89c000.i2c: error re-arming the SE: -22
+2026-09-22T02:13:56Z RECV  [    9.153607][   T93] geni_i2c 89c000.i2c: Failed to read firmware-name property: -22
+2026-09-22T02:13:56Z RECV  [    9.153607][   T93] geni_i2c 89c000.i2c: error re-arming the SE: -22
+2026-09-22T02:13:56Z RECV  [    9.153608][   T93] geni_i2c 89c000.i2c: Failed to read firmware-name property: -22
+2026-09-22T02:13:56Z RECV  [    9.153608][   T93] geni_i2c 89c000.i2c: error re-arming the SE: -22
+2026-09-22T02:14:05Z console session done

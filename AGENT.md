@@ -119,19 +119,31 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   not the DPU. The panel still cold-boots dark and is still recovered by the
   framebuffer blank cycle, now in 8 s. Unvalidated: the brightness/gamma/ACL
   stack, 60 Hz, other panel revisions, and long-run stability.
-- **Pogo keyboard driver ready, not yet exercised in mainline (2026-09-22,
-  work in progress completed):** `kernel/drivers/keyboard-samsung-pogo.c` is a
-  native I2C/input port of Samsung's GPLv2 `stm32_pogo_*_v3` protocol for the
-  EF-DX710 Slim cover keyboard, wired in by
-  `0006-input-add-samsung-pogo-keyboard.patch`, with the QUP2 SE7 node, the
-  GPIO10 rail, connect GPIO and IRQ pinctrl in the board DTS. Validated offline
-  only: the kernel builds with `CONFIG_KEYBOARD_SAMSUNG_POGO=y`, the DTB parses,
-  and `tests/test_pogo_keyboard.py` drives the real `pogo_irq()` through a mock
-  transport over 12 packet and error cases. The hardware baseline is TWRP's
-  stock kernel, which already enumerates the attached keyboard as model 0x02,
-  MCU firmware 1.4 (test 041). No key has been typed through this driver yet.
+- **Pogo keyboard: driver complete, MCU still silent on mainline (test 045,
+  `reference/boot-tests/test-045-.../`).** The driver
+  (`kernel/drivers/keyboard-samsung-pogo.c`, `0006-input-add-samsung-pogo-keyboard.patch`)
+  binds on hardware, registers `Book Cover Keyboard Slim (EF-DX710)` as event0,
+  powers the rail, pulses the MCU's reset and reads its version actively, which is
+  how Samsung's own driver proves presence. Five real faults were found and fixed
+  along the way: the connect line is an edge not a presence level, cycling the
+  rail on every edge reset the STM32 before it could answer, the diagnostic
+  flooded the panel console, the handshake was passive, and the SWD pins were not
+  owned by the driver.
+  What remains is not in the driver. Every read returns a clean `-ENXIO` (a NACK:
+  the transfer ran, the bus was idle, nothing acknowledged) and a quick-write scan
+  of the whole adapter finds **no device at any address**, while TWRP's stock
+  kernel enumerates the same cover minutes earlier as `EF-DX710_v1.4.1.0`,
+  `con:1/1`, `model_id 0x2`. The controller, pins (`qup2_se7` on gpio72/106),
+  address, IRQ type, reset and rail model all match the vendor node. Two
+  candidates were fitted and did not help: patch 0007
+  (`samsung,reset-before-trans`, now in `pending/`) and an explicit rail
+  power-cycle; both are retired with that result recorded.
+  **Next measurement:** the stock kernel's `regulator_summary` in TWRP, to find
+  which supply feeds the pogo rail - it is a switch, so its source has to be on as
+  well, and mainline may leave that source disabled. No key has been typed through
+  this driver yet.
 - **Physical tests need a recorded owner request (2026-09-22).** The test 040
-  flash was made on one and tests 041-044 continued under the same recorded
+  flash was made on one and tests 041-045 continued under the same recorded
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or
   claim a hardware observation without a current request; ccache builds are
   always authorized. Compilation is not screen or keyboard validation.

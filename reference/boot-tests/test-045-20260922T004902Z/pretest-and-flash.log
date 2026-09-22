@@ -50,3 +50,29 @@ expected: 46679cb704a4bdba9899a75b70d6ae86bececb7a17706cfabc3a9a25dd94292b
 D:\android\gts9-test045\boot-scan.img: 1 file pushed, 0 skipped. 88.4 MB/s (100663296 bytes in 1.086s)
 100663296 bytes (96 M) copied, 0.347601 s, 276 M/s
 fe218fd59d6d8d750dc35f20d426a5d02529ab07a2c2225fbc3b151db34f11aa  /dev/block/by-name/boot
+=== flash test 045h (boot + vendor_boot: rail pin high) ===
+--- boot ---
+D:\android\gts9-test045\boot.img: 1 file pushed, 0 skipped. 69.8 MB/s (100663296 bytes in 1.376s)
+100663296 bytes (96 M) copied, 0.578072 s, 166 M/s
+aa812dd74ba379e34621ed176f20db2f57b714440ec745eb0ea68db2cecd74bd  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test045\vendor_boot.img: 1 file pushed, 0 skipped. 631.1 MB/s (100663296 bytes in 0.152s)
+100663296 bytes (96 M) copied, 0.303392 s, 316 M/s
+1ef5a1685bac1cde332a0f29e74357c0c93fc7f8f206f47c2ff8a195150263cf  /dev/block/by-name/vendor_boot
+=== flash test 045i (boot + vendor_boot: geni reset-before-trans) ===
+--- boot ---
+D:\android\gts9-test045\boot.img: 1 file pushed, 0 skipped. 71.9 MB/s (100663296 bytes in 1.335s)
+100663296 bytes (96 M) copied, 0.527996 s, 182 M/s
+87fc90d171cb4276bc1a53c4f7651660358437a213f0fb788554959d2de9b43c  /dev/block/by-name/boot
+--- vendor_boot ---
+D:\android\gts9-test045\vendor_boot.img: 1 file pushed, 0 skipped. 542.7 MB/s (100663296 bytes in 0.177s)
+100663296 bytes (96 M) copied, 0.335698 s, 286 M/s
+14c8bd615f25f231cb0aa37de556bead4e9d348521614e0f990ef6c5ef93969e  /dev/block/by-name/vendor_boot
+=== flash test 045j (boot only: SE re-arm quirk) ===
+D:\android\gts9-test045\boot-rearm.img: 1 file pushed, 0 skipped. 104.5 MB/s (100663296 bytes in 0.918s)
+100663296 bytes (96 M) copied, 0.444584 s, 216 M/s
+ceb4782adaa251dc029d831bcfc59013819e5c2dce0afb9b4421469d698a50ca  /dev/block/by-name/boot
+=== flash test 045k (boot only: rail power cycle) ===
+D:\android\gts9-test045\boot-cycle.img: 1 file pushed, 0 skipped. 88.5 MB/s (100663296 bytes in 1.084s)
+100663296 bytes (96 M) copied, 0.530803 s, 181 M/s
+e41d96b725d6e2b25a7e70d62caac5c37ad8aaf4f53912a5c63263894a3de7d4  /dev/block/by-name/boot

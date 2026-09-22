@@ -1,0 +1,7 @@
+2026-09-22T02:23:33Z console open on COM17
+2026-09-22T02:23:36Z SENT  dmesg | grep -i -e pogo -e MCU -e "answers at" | tail -6
+2026-09-22T02:23:36Z RECV  dmesg | grep -i -e pogo -e MCU -e "answers at" | tail -6
+2026-09-22T02:23:36Z RECV  [    4.152971][   T79] samsung-pogo-keyboard 5-002a: pogo rail power-cycled, MCU out of reset, reading its version
+2026-09-22T02:23:36Z RECV  [    7.391303][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T02:23:36Z RECV  [    7.441192][   T79] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T02:23:45Z console session done

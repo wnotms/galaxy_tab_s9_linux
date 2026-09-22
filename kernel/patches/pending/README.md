@@ -60,3 +60,16 @@ both keep the `0005-` prefix they were written with:
 The recovery itself is now run early and without fixed sleeps (de7bd2b,
 verified in test 044), so the blank cycle costs a few seconds rather than the
 120 s of the original suspend/resume workaround.
+
+## SE re-arm candidate (0007)
+
+`0007-i2c-qcom-geni-rearm-se-before-transfers.patch` implements the vendor's
+`samsung,reset-before-trans` property by replaying the tail of the serial-engine
+firmware load before every transfer.  It is correct and harmless - test 045 fitted
+it and the transfers still completed normally - but the pogo keyboard's MCU did
+not answer with it either, so it is held here rather than in the default build.
+The board node no longer carries the property.
+
+The first version of that patch called `geni_load_se_firmware()`, which cannot
+work on SM8550: no node in the SoC tree sets `firmware-name`, so it returns
+-EINVAL and every transfer failed with -22 until it was rewritten.

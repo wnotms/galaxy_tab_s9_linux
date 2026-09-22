@@ -115,3 +115,34 @@ upstream yet.
 | `bringup-report*.txt` | the four boot reports from the iterated kernels |
 | `device-layout.txt`, `pretest-and-flash.log` | pretest hashes, backups and every verified flash |
 | `console-gpio.log`, `console-reattach.log` | the earlier connect-line observations |
+
+## Two more candidates tried on hardware, both retired
+
+Neither fixed it, and both are recorded because they narrow the field:
+
+- **`samsung,reset-before-trans`** (the vendor's I2C quirk, patch 0007).  The
+  first implementation called `geni_load_se_firmware()` and failed before
+  touching the bus - SM8550 sets no `firmware-name`, so every transfer returned
+  `-22` instead of a NACK.  Rewritten to replay the register sequence
+  (`geni_se_rearm()`), the transfers came back clean and the MCU still did not
+  answer.  The quirk is correct but it is not the missing piece, so it is held in
+  `kernel/patches/pending/`.
+- **Power-cycling the rail** instead of only enabling it, in case mainline's
+  regulator core drops it before the driver claims it and leaves the MCU
+  brown-out latched.  `pogo rail power-cycled, MCU out of reset` then the same
+  `-ENXIO` and the same empty scan.
+
+## What the evidence now says
+
+Everything on the host side is right, and each item was measured rather than
+assumed: the controller owns `qup2_se7` on gpio72/gpio106, the rail is
+`regulator-pogo` on gpio10 driven high, SWCLK is driven low and NRST is pulsed
+and released, the address is 0x2a with `IRQ_TYPE_LEVEL_LOW`, and the transfers
+complete - a NACK is the hardware reporting that the bus was idle and nothing
+acknowledged.  The slave is simply not running in mainline, and is running for
+TWRP's stock kernel minutes earlier, on the same tablet and cover.
+
+The remaining suspect is therefore outside the keyboard driver: the pogo rail is
+a *switch*, and whatever feeds it has to be on as well.  The next measurement is
+the stock kernel's `regulator_summary` in TWRP, to see which supply feeds that
+rail and whether mainline leaves it disabled.
