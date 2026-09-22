@@ -119,12 +119,24 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   not the DPU. The panel still cold-boots dark and is still recovered by the
   framebuffer blank cycle, now in 8 s. Unvalidated: the brightness/gamma/ACL
   stack, 60 Hz, other panel revisions, and long-run stability.
-- **Current owner restriction (2026-09-22): no physical tests without a direct
-  request.** The test 040 flash was made on the owner's explicit instruction and
-  that instruction supersedes the earlier pause; treat each further flash, reboot
-  or hardware observation as needing its own request. ccache builds are authorized.
-- Next milestones: a microSD root filesystem, then touch/input. Compilation is
-  not screen validation.
+- **Pogo keyboard driver ready, not yet exercised in mainline (2026-09-22,
+  work in progress completed):** `kernel/drivers/keyboard-samsung-pogo.c` is a
+  native I2C/input port of Samsung's GPLv2 `stm32_pogo_*_v3` protocol for the
+  EF-DX710 Slim cover keyboard, wired in by
+  `0006-input-add-samsung-pogo-keyboard.patch`, with the QUP2 SE7 node, the
+  GPIO10 rail, connect GPIO and IRQ pinctrl in the board DTS. Validated offline
+  only: the kernel builds with `CONFIG_KEYBOARD_SAMSUNG_POGO=y`, the DTB parses,
+  and `tests/test_pogo_keyboard.py` drives the real `pogo_irq()` through a mock
+  transport over 12 packet and error cases. The hardware baseline is TWRP's
+  stock kernel, which already enumerates the attached keyboard as model 0x02,
+  MCU firmware 1.4 (test 041). No key has been typed through this driver yet.
+- **Physical tests need a recorded owner request (2026-09-22).** The test 040
+  flash was made on one and tests 041-044 continued under the same recorded
+  authorization, which each test's `source.txt` quotes. Do not flash, reboot or
+  claim a hardware observation without a current request; ccache builds are
+  always authorized. Compilation is not screen or keyboard validation.
+- Next milestones: a microSD root filesystem, then the touchscreen, and the pogo
+  keyboard's first run on mainline. Compilation is not screen validation.
 - **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
   gadget exports the microSD partition read-only, Windows mounts it by itself,
   and the report can be read off the running tablet over USB - no TWRP, no power
