@@ -97,16 +97,28 @@ static int stm32_parse_dt(struct device *dev, struct stm32_dev *stm32)
 		return SEC_ERROR;
 	}
 
+	/*
+	 * The controller owns these two lines in mainline (qup2_se7), so asking
+	 * for them can fail with -EINVAL.  The vendor driver only reads them for
+	 * its diagnostic prints, so absence is not fatal here either.
+	 */
 	stm32->dtdata->gpio_sda = devm_gpiod_get_optional(dev, "sda", GPIOD_ASIS);
 	if (IS_ERR(stm32->dtdata->gpio_sda)) {
-		input_err(true, dev, "unable to get gpio_sda\n");
-		return SEC_ERROR;
+		input_info(true, dev, "gpio_sda not available (%ld), continuing\n",
+			   PTR_ERR(stm32->dtdata->gpio_sda));
+		stm32->dtdata->gpio_sda = NULL;
 	}
 
+	/*
+	 * The controller owns these two lines in mainline (qup2_se7), so asking
+	 * for them can fail with -EINVAL.  The vendor driver only reads them for
+	 * its diagnostic prints, so absence is not fatal here either.
+	 */
 	stm32->dtdata->gpio_scl = devm_gpiod_get_optional(dev, "scl", GPIOD_ASIS);
 	if (IS_ERR(stm32->dtdata->gpio_scl)) {
-		input_err(true, dev, "unable to get gpio_scl\n");
-		return SEC_ERROR;
+		input_info(true, dev, "gpio_scl not available (%ld), continuing\n",
+			   PTR_ERR(stm32->dtdata->gpio_scl));
+		stm32->dtdata->gpio_scl = NULL;
 	}
 
 	stm32->dtdata->gpio_conn = devm_gpiod_get_optional(dev, "connect", GPIOD_ASIS);
