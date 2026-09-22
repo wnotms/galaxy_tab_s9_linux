@@ -1,0 +1,7 @@
+2026-09-22T08:35:13Z console open on COM17
+2026-09-22T08:35:16Z SENT  dmesg | grep -a "samsung-pogo-keyboard" | grep -aiE "rail on|announce level|poll finished|announced" | tail -8
+2026-09-22T08:35:16Z RECV  dmesg | grep -a "samsung-pogo-keyboard" | grep -aiE "rail on|announce leve
+2026-09-22T08:35:16Z RECV  l|poll finished|announced" | tail -8
+2026-09-22T08:35:16Z RECV  [    4.718431][   T81] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low, announce line armed (level -1)
+2026-09-22T08:35:16Z RECV  [    4.736655][  T115] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T08:35:25Z console session done

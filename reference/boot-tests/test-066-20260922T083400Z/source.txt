@@ -1,0 +1,8 @@
+source_commit=c6f1974 ("pogo: read the announce line's level instead of inferring it from interrupts")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-065
+hypothesis=Test 065's "announcement" was a bias-disable level-low line that was already low, not an announcement, and a firing interrupt therefore says nothing about the MCU's state.  Stock's status line prints the same line as int:1 while its application runs (reference/twrp-pogo-working).  The question this measures directly: after mainline powers the MCU up, what level does the MCU leave its announce line at - 1 (driven, application alive) or 0 (not driven, application not running)?
+change=pogo_announce_level() reads IRQCHIP_STATE_LINE_LEVEL from the irqchip and is logged both at rail-on and at the end of the poll.  No behavioural change: no register writes, no new I2C traffic.
+predictions=1) level 1 at rail-on and after the poll => the MCU drives the line and the application is alive, so the fault is in the response path and the next step is the vendor-port A/B; 2) level 0 => the MCU is not driving its own announce line, the application is not running under mainline, and the difference is environmental (GENI/pinctrl/regulator/runtime-PM layer).
+images=out/boot-bundle-test066/boot.img 2008d152554c1de56d604204a6382e05befe70f3e0c5f553d16ac755e37d42f0; vendor_boot 8d76f912, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:34:00Z
