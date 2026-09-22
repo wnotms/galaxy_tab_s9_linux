@@ -1,0 +1,28 @@
+2026-09-22T07:06:18Z console open on COM17
+2026-09-22T07:06:21Z SENT  cat /proc/mounts | grep -i -e mmc -e mnt; echo ---; grep -i -e "card mount" -e "mass storage" -e "option bytes" -e "IC version" -e "application" -e "bootloader" /tmp/bringup-report.txt | tail -12; echo ===dmesg===; dmesg | grep -i -e "option bytes" -e "IC version" -e "MCU application" -e "bootloader" | tail -10
+2026-09-22T07:06:21Z RECV  cat /proc/mounts | grep -i -e mmc -e mnt; echo ---; grep -i -e "card mount
+2026-09-22T07:06:21Z RECV  " -e "mass storage" -e "option bytes" -e "IC version" -e "application" -e "bootl
+2026-09-22T07:06:21Z RECV  oader" /tmp/bringup-report.txt | tail -12; echo ===dmesg===; dmesg | grep -i -e
+2026-09-22T07:06:21Z RECV  "option bytes" -e "IC version" -e "MCU application" -e "bootloader" | tail -10
+2026-09-22T07:06:21Z RECV  ---
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:06:21Z RECV  [    3.866290][   T79] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:06:21Z RECV  [    7.480411][  T232] Mass Storage Function, version: 2009/09/11
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:06:21Z RECV  [    3.866290][   T79] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:06:21Z RECV  [    7.480411][  T232] Mass Storage Function, version: 2009/09/11
+2026-09-22T07:06:21Z RECV  [    3.866290][   T79] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:06:21Z RECV  ===dmesg===
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T07:06:21Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:06:21Z RECV  [    3.866290][   T79] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:06:21Z RECV  [   68.093801][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU application after 60000 ms (-6)
+2026-09-22T07:06:21Z RECV  [   68.178614][   T79] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T07:06:21Z RECV  [   68.320102][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T07:06:21Z RECV  [   68.331868][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T07:06:21Z RECV  [   68.347487][   T79] samsung-pogo-keyboard 5-002a: MCU IC version 00340034
+2026-09-22T07:06:21Z RECV  [   68.394789][   T79] samsung-pogo-keyboard 5-002a: MCU option bytes 0xfefffeaa: RDP 0xaa, bit 24 clear
+2026-09-22T07:06:21Z RECV  [   68.580443][   T79] samsung-pogo-keyboard 5-002a: after the disconnected reset: application -6, bootloader -6, connect 1
+2026-09-22T07:06:30Z console session done
