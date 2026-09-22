@@ -1,0 +1,8 @@
+source_commit=453fae5 ("samsung-pogo: the A/B kernel builds with the vendor port")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-068 plus the owner's plan, stages five and six (vendor port and A/B)
+hypothesis=The owner's A/B: with the same kernel, DTS, GENI driver, initramfs and hardware, only the pogo driver differs.  If Samsung's own stm32_pogo_v3 (imported into kernel/drivers/input/samsung-pogo/, Android interfaces removed) brings the application interface up while keyboard-samsung-pogo.c does not, the fault is in the driver's logic; if neither does, the fault is below the driver - controller, pinctrl, regulator, clock or runtime PM.
+change=CONFIG_KEYBOARD_SAMSUNG_POGO is off and CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT=y, so this boot.img contains the vendor driver (System.map: stm32_dev_probe, stm32_pogo_v3_start) and not the mainline port.
+predictions=1) the vendor driver's log shows its probe sequence, the rail being switched by stm32_keyboard_start(), and then a successful CHECK_VERSION with version 1.4, [MODE] 1 and CRC 0xEADF376E => the fault was in the port's logic; 2) the same -ENXIO on an idle bus as the port saw => the fault is below the driver, and stages five/six have done their job.
+images=out/boot-bundle-test069/boot.img 39ff3c2f5bff173ee3dedd0322fb1f7eb6d010cf8f6652d5612595cc17a10770; vendor_boot 4d496064, init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T09:00:00Z
