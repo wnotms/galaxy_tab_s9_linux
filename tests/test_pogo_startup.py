@@ -110,7 +110,6 @@ static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never
    announced itself; record the delay instead of running a workqueue. */
 static unsigned int fallback_ms;
-static bool pogo_read_mcu_polled;
 static int mod_delayed_work(void *wq, struct delayed_work *dwork, unsigned long delay)
 {
  (void)wq; (void)dwork; fallback_ms = (unsigned int)delay; return 1;
