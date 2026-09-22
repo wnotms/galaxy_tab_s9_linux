@@ -211,17 +211,33 @@ static void pogo_release_keys(struct samsung_pogo *p)
 }
 
 /* lock held; data IRQ is disabled before power-off by the caller. */
-static void pogo_power_off(struct samsung_pogo *p)
+/*
+ * The only two places this driver touches the rail, and both are idempotent.
+ * p->powered follows the regulator instead of leading it: assigning it by hand
+ * leaves the regulator's enable count above zero, so the next enable/disable pair
+ * is 1 -> 2 -> 1 and the pad never drops.  Every caller goes through these.
+ */
+static int pogo_power_on(struct samsung_pogo *p)
 {
 	int ret;
 
+	if (p->powered)
+		return 0;
+	ret = regulator_enable(p->vdd);
+	if (ret)
+		return ret;
+	p->powered = true;
+	return 0;
+}
+
+static void pogo_power_off(struct samsung_pogo *p)
+{
 	p->ready = false;
 	pogo_release_keys(p);
 	if (!p->powered)
 		return;
-	ret = regulator_disable(p->vdd);
-	if (ret)
-		dev_warn(&p->client->dev, "power off failed: %d\n", ret);
+	if (regulator_disable(p->vdd))
+		dev_warn(&p->client->dev, "could not drop the rail\n");
 	else
 		p->powered = false;
 }
@@ -511,12 +527,8 @@ static void pogo_connect_work(struct work_struct *work)
 		 * a bare read there returns 0x1F and wedges the bootloader until
 		 * the next BOOT0/NRST pulse.
 		 */
-		ret = regulator_enable(p->vdd);
-		if (!ret) {
-			p->powered = true;
-			regulator_disable(p->vdd);
-			p->powered = false;
-		}
+		if (!pogo_power_on(p))
+			pogo_power_off(p);
 		gpiod_set_value_cansleep(p->swclk, 0);	/* BOOT0 low: application */
 		gpiod_set_value_cansleep(p->nrst, 0);
 		msleep(2);

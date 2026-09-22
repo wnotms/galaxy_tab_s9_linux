@@ -148,10 +148,12 @@ static int gpiod_get_value_cansleep(int *p) { return 1; }
 static void gpiod_set_value_cansleep(int *p, int v) {
  if (p == &reset_gpio && !v) { resets++; app = app_after_reset; app_ready_at = 0; }
 }
-static void regulator_disable(int *p) { (void)p; }
+static int regulator_disable(int *p) { (void)p; return 0; }
 /* The announce line's level now comes from a gpiolib descriptor. */
 /* The handler now gates on the line being asserted, as stock's ISR does, so the
    mock reports an asserted line by default and can be released per test. */
+/* pogo_power_off() releases keys; that behaviour is checked elsewhere. */
+static void pogo_release_keys(struct samsung_pogo *p) { (void)p; }
 static int announce_mock = 1;
 static int pogo_announce_level(struct samsung_pogo *p) { return announce_mock; }
 /* The who-is-there report is diagnostics: both probes are plain reads. */
@@ -232,7 +234,7 @@ static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
  return ret == len ? 0 : ret < 0 ? ret : -EIO;
 }
 '''
-        for name in ('pogo_write_reg', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
+        for name in ('pogo_power_on', 'pogo_power_off', 'pogo_write_reg', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
                      'pogo_boot_version', 'pogo_boot_disconnect',
                      'pogo_wait_application',
                      'pogo_read_mcu', 'pogo_connect_work'):
