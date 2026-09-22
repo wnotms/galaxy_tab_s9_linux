@@ -95,15 +95,17 @@ static void pogo_power_off(struct samsung_pogo *p)
 }
 
 /*
- * Power the keyboard, then let it announce itself.
+ * Bring the keyboard up once, and leave the rail on.
  *
  * The connect line is an edge source, not a presence level: the stock node sets
  * gpio62 up with IRQ_TYPE_EDGE_BOTH and bias-disable, and Samsung's own driver
  * enables the rail unconditionally and takes the model announcement over i2c as
  * the proof that a keyboard is seated.  Gating on the level is what made this
- * driver report "keyboard disconnected" on a tablet whose stock firmware
- * enumerates the keyboard, so every edge now cycles the rail instead and the
- * level is logged for diagnostics only.
+ * driver report "keyboard disconnected" first time round; cycling the rail on
+ * every edge was worse - test 045 measured 37 connect interrupts and repeated
+ * "rail on" lines in the first boot, because each edge reset the STM32 before it
+ * could announce anything.  So the rail is enabled once and the announce
+ * interrupt stays armed; the connect line is only logged, ratelimited.
  */
 static void pogo_connect_work(struct work_struct *work)
 {
@@ -111,26 +113,22 @@ static void pogo_connect_work(struct work_struct *work)
 					     struct samsung_pogo, connect_work);
 	int conn, ret;
 
-	if (p->event_enabled) {
-		disable_irq(p->client->irq);
-		p->event_enabled = false;
-	}
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
-	/* An edge means the cover moved: take the keyboard down first. */
-	pogo_power_off(p);
-	ret = regulator_enable(p->vdd);
-	if (ret) {
-		dev_err(&p->client->dev, "power on failed: %d\n", ret);
-	} else {
-		p->powered = true;
-		msleep(50); /* stock keyboard_start power settling */
-		p->event_enabled = true;
-		enable_irq(p->client->irq);
-		dev_info(&p->client->dev,
-			 "pogo rail on (connect line reads %d), awaiting the model announcement\n",
-			 conn);
+	if (!p->powered) {
+		ret = regulator_enable(p->vdd);
+		if (ret) {
+			dev_err(&p->client->dev, "power on failed: %d\n", ret);
+		} else {
+			p->powered = true;
+			msleep(50); /* stock keyboard_start power settling */
+			p->event_enabled = true;
+			enable_irq(p->client->irq);
+			dev_info(&p->client->dev,
+				 "pogo rail on, awaiting the model announcement\n");
+		}
 	}
+	dev_info_ratelimited(&p->client->dev, "connect line reads %d\n", conn);
 	mutex_unlock(&p->lock);
 }
 
