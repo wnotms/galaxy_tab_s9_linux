@@ -62,6 +62,14 @@ if ($WaitReadySeconds -gt 0) {
     if (-not $ready) { Log "shell never answered within $WaitReadySeconds s" }
 }
 foreach ($cmd in $Commands) {
+    if ($cmd -eq '') {
+        # Pure listen: do not write at all.  A write can block (and time out) when the
+        # other side deasserts flow control, and then the capture never happens - which
+        # is exactly what hid the state of the Debian serial line.
+        Log 'listening only (no command sent)'
+        foreach ($line in (ReadFor $ReadSeconds)) { Log ("RECV  " + $line) }
+        continue
+    }
     try { $sp.WriteLine($cmd); Log ("SENT  " + $cmd) } catch { Log ("send failed: " + $_.Exception.Message) }
     foreach ($line in (ReadFor $ReadSeconds)) { Log ("RECV  " + $line) }
 }
