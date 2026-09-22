@@ -1,0 +1,11 @@
+2026-09-22T03:17:06Z console open on COM17
+2026-09-22T03:17:09Z SENT  dmesg | grep -i -e "MCU application" -e "panel id" -e "display: cycle" | tail -6
+2026-09-22T03:17:09Z RECV  dmesg | grep -i -e "MCU application" -e "panel id" -e "display: cycle" | t
+2026-09-22T03:17:09Z RECV  ail -6
+2026-09-22T03:17:09Z RECV  [    5.473217][   T76] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-22T03:17:09Z RECV  [    6.275531][  T198] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-22T03:17:09Z RECV  [    6.329118][  T198] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-22T03:17:09Z RECV  [    6.486864][    T1] gts9-init: display: cycle 1 did not recover the panel ID yet
+2026-09-22T03:17:09Z RECV  [    7.250613][  T206] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-22T03:17:09Z RECV  [    7.396642][    T1] gts9-init: display: cycle 2 recovered panel ID 80 00 04
+2026-09-22T03:17:18Z console session done

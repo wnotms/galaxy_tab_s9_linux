@@ -340,3 +340,42 @@ pulses NRST or enters the bootloader to get there.  Everything this port does to
 bootloader has probably already started, and each reset is a chance to lose it.
 Reading 0x2a first, with no rail cycle and no reset, is the next measurement - and
 if that answers, the keyboard works and the helping was the fault.
+
+## Round 6: read-first disproved, and the retry saved a second boot
+
+Two results, one for each half of the objective.
+
+**Display.** The next boot after the fix needed **cycle 2**: cycle 1 ran at 6.49 s and
+did not recover, cycle 2 recovered `80 00 04` at 7.25 s.  The panel comes up on the
+first cycle or the second depending on how the boot settles, so the retry is not
+belt-and-braces - without it that boot would have been dark again, exactly like the
+one the owner reported.
+
+```
+[    5.473217] panel id 00 00 00, expected 80 00 04
+[    6.275531] ana38407 panel id: 00 00 00
+[    6.486864] gts9-init: display: cycle 1 did not recover the panel ID yet
+[    7.250613] ana38407 panel id: 80 00 04
+[    7.396642] gts9-init: display: cycle 2 recovered panel ID 80 00 04
+```
+
+**Keyboard: "read the application first" is disproved.**  The build that enables the
+rail and reads 0x2a *before* touching SWCLK, NRST or the bootloader logged no
+"application already running" line - the app does not answer first either.  So the
+MCU really does sit in its system bootloader in mainline, and after the bootloader
+session plus either app-entry attempt it goes quiet on both interfaces.
+
+**The DMIC pin sharing is not a mainline bug.**  The vendor's own DT puts
+`dmic45_clk_active`/`dmic45_data_active` on **gpio12 and gpio13** with
+`function = "func1"` - the same two pins as the keyboard's SWCLK and NRST.  It is
+genuine hardware sharing, present in both trees, and not active here: the pinmux
+still shows those pins owned by `5-002a` minutes into the boot because mainline's
+audio stack never comes up.
+
+### Next step: send GO while the bootloader is still live
+
+The GO attempt failed for a timing reason, not a protocol one: it was sent *after*
+`sysboot_disconnect()` and its 150 ms, by which point the MCU had already stopped
+answering - the write returned `-ETIMEDOUT`, not a NAK.  Inside the bootloader
+session the interface is alive (SYNC and GET_VER both work), so the next attempt is
+SYNC → **GO** → read 0x2a, with no reset in between.

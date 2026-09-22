@@ -167,12 +167,18 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   bootloader's `GO` (0x21) write then times out because by that point the MCU
   answers on neither interface.  It has left the bootloader without the
   application coming up on i2c.
-  **Next step: stop disturbing it.**  Stock's `rst:0` says the application was
-  already running when its driver probed, and that driver never powers the rail,
-  pulses NRST or enters the bootloader to get there - the bootloader has probably
-  started it already, and every reset this port performs is a chance to lose it.
-  Read 0x2a first, with no rail cycle, no bootloader dance and no reset; if that
-  answers, the keyboard works and the helping was the fault.  Also still worth
+  Round 6 disproved the read-first hypothesis: with no rail cycle, no reset and no
+  bootloader dance the application does not answer either, so the MCU genuinely
+  sits in its system bootloader and goes quiet on both interfaces after any
+  app-entry attempt.  It also established that the gpio12/13 sharing with the DMIC
+  is genuine hardware sharing present in the vendor tree as well
+  (`dmic45_clk_active`/`dmic45_data_active`, `function = "func1"`), and inactive
+  here - the pinmux still shows those pins owned by `5-002a` minutes in.
+  **Next step:** send the bootloader's `GO` (0x21) *while the bootloader session is
+  live* - SYNC, then GO, then read 0x2a, with no reset in between.  The earlier GO
+  failed for a timing reason, not a protocol one: it went out after
+  `sysboot_disconnect()` and its 150 ms, when the MCU had already stopped
+  answering, and returned -ETIMEDOUT rather than a NAK.  Also still worth
   ruling out if the application comes up and then dies: mainline's
   `dmic45-default-state` muxes **gpio12/13** to `dmic3_clk`/`dmic4_data`, the same
   pins as SWCLK and NRST (ours today, but TWRP never probes audio).  No key has
