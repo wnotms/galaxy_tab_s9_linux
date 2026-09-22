@@ -84,6 +84,7 @@ shopt -s nullglob
 for drv in "$driver_src"/*.c; do
     case "${drv##*/}" in
         panel-*) dest=$panel_dir ;;
+        keyboard-*) dest="$tree/drivers/input/keyboard" ;;
         *)       dest=$soc_qcom ;;
     esac
     echo "installing ${drv##*/} -> ${dest##*/}/"

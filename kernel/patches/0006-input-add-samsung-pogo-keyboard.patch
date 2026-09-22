@@ -1,0 +1,27 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] Input: wire Samsung X710 pogo keyboard into Kbuild
+
+Protocol port of the official STM32 v3 driver, using native I2C and input.
+
+--- a/drivers/input/keyboard/Kconfig
++++ b/drivers/input/keyboard/Kconfig
+@@ -806,4 +806,11 @@
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called cypress-sf.
+ 
++config KEYBOARD_SAMSUNG_POGO
++	tristate "Samsung X710 pogo keyboard"
++	depends on I2C && OF && GPIOLIB && REGULATOR
++	help
++	  Native input driver for the STM32-powered EF-DX710 Slim keyboard.
++	  Supports hotplug and key events without Samsung Android frameworks.
++
+ endif
+--- a/drivers/input/keyboard/Makefile
++++ b/drivers/input/keyboard/Makefile
+@@ -71,3 +71,5 @@
+ obj-$(CONFIG_KEYBOARD_TM2_TOUCHKEY)	+= tm2-touchkey.o
+ obj-$(CONFIG_KEYBOARD_TWL4030)		+= twl4030_keypad.o
+ obj-$(CONFIG_KEYBOARD_XTKBD)		+= xtkbd.o
++
++obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO) += keyboard-samsung-pogo.o

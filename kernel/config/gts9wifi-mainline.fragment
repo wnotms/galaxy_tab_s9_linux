@@ -237,3 +237,7 @@ CONFIG_CMDLINE=""
 #    uncommitted, which is accurate for these artifacts.)
 CONFIG_LOCALVERSION="-gts9wifi"
 # CONFIG_LOCALVERSION_AUTO is not set
+
+# Official EF-DX710 STM32 pogo keyboard, native input port.
+CONFIG_INPUT_KEYBOARD=y
+CONFIG_KEYBOARD_SAMSUNG_POGO=y

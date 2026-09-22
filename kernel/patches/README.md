@@ -30,8 +30,20 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
 
 - `0004-drm-panel-add-samsung-ana38407.patch` — Kconfig/Makefile integration
   for the SM-X710 panel overlay driver.
+- `0006-input-add-samsung-pogo-keyboard.patch` — Kconfig/Makefile integration
+  for the EF-DX710 pogo keyboard overlay driver
+  (`kernel/drivers/keyboard-samsung-pogo.c`, installed by
+  `scripts/prepare-kernel.sh`). That driver is a native protocol port of
+  Samsung's GPLv2 `stm32_pogo_*_v3` sources in the X710 open-source archive;
+  the firmware-update, raw-register and DFU surfaces are deliberately not
+  exposed.
 - `nxp-ptn3222-apply-dt-register-overrides.patch` — repeater register overrides
   used by the board's USB bring-up.
+
+Numbers in this directory are unique and are not reused from `pending/`, which
+keeps the historical `0005-*` names because the display documentation refers to
+them: `0005` was the retired command-mode kickoff patch, so the keyboard is
+`0006`.
 
 The former default `0005` early command-mode kickoff patch is now held in
 `pending/`: the pinned MSM path already kicks off after modeset enable, while

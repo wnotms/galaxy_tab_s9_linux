@@ -1874,3 +1874,69 @@
 		};
 	};
 };
+
+/* Official X710 pogo connector: STM32 at QUP2 SE7, GPIO10 load switch. */
+/ {
+	vreg_pogo: regulator-pogo {
+		compatible = "regulator-fixed";
+		regulator-name = "pogo-vdd";
+		gpio = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pogo_supply>;
+	};
+};
+
+&i2c15 {
+	status = "okay";
+	clock-frequency = <100000>;
+
+	keyboard@2a {
+		compatible = "samsung,x710-pogo-keyboard";
+		reg = <0x2a>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <75 IRQ_TYPE_LEVEL_LOW>;
+		connect-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
+		vdd-supply = <&vreg_pogo>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;
+	};
+};
+
+&qup_i2c15_data_clk {
+	drive-strength = <2>;
+	bias-pull-up;
+};
+
+&tlmm {
+	pogo_supply: pogo-supply-state {
+		pins = "gpio10";
+		function = "gpio";
+		drive-strength = <2>;
+		bias-disable;
+	};
+
+	pogo_irq: pogo-irq-state {
+		pins = "gpio75", "gpio62";
+		function = "gpio";
+		drive-strength = <2>;
+		input-enable;
+		bias-disable;
+	};
+
+	pogo_swclk: pogo-swclk-state {
+		pins = "gpio12";
+		function = "gpio";
+		drive-strength = <2>;
+		output-low;
+		bias-disable;
+	};
+
+	pogo_nrst: pogo-nrst-state {
+		pins = "gpio13";
+		function = "gpio";
+		drive-strength = <2>;
+		output-high;
+		bias-disable;
+	};
+};
