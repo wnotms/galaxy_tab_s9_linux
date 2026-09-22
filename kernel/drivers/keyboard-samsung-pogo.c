@@ -359,17 +359,9 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 		 * claim is what makes the off window real, and the log line below
 		 * is what proves it.
 		 */
-		ret = regulator_enable(p->vdd);
-		if (ret)
-			dev_warn(&p->client->dev,
-				 "could not claim the rail: %d\n", ret);
-		else
-			p->powered = true;
-		ret = regulator_disable(p->vdd);
-		if (ret)
-			dev_warn(&p->client->dev, "rail did not drop: %d\n", ret);
-		else
-			p->powered = false;
+		if (pogo_power_on(p))
+			dev_warn(&p->client->dev, "could not claim the rail\n");
+		pogo_power_off(p);
 		dev_info(&p->client->dev,
 			 "rail off: regulator %s, announce %d (the MCU is unpowered when both say so)\n",
 			 regulator_is_enabled(p->vdd) ? "still on" : "off",
@@ -390,8 +382,7 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 		 * before this sequence started.
 		 */
 		msleep(p->rearm_pending ? 3000 : 1000);
-		if (!regulator_enable(p->vdd)) {
-			p->powered = true;
+		if (!pogo_power_on(p)) {
 			msleep(50);
 			p->announce_seen = 0;
 			p->observe_only = false;
@@ -534,7 +525,7 @@ static void pogo_connect_work(struct work_struct *work)
 		msleep(2);
 		gpiod_set_value_cansleep(p->nrst, 1);
 		msleep(150);				/* STM32_BOOT_I2C_STARTUP_DELAY */
-		ret = regulator_enable(p->vdd);
+		ret = pogo_power_on(p);
 		if (ret) {
 			dev_err(&p->client->dev, "power on failed: %d\n", ret);
 			goto out;
