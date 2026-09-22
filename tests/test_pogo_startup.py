@@ -107,6 +107,7 @@ struct samsung_pogo {
  bool observe_only;
  unsigned int announce_seen;
  bool rearm_pending;
+ unsigned int stuck_fails;
 };
 static unsigned long jiffies, app_ready_at;
 /* The normal startup re-arms its own work once to ask an application that never

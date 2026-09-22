@@ -96,4 +96,5 @@ int main(void) {
             subprocess.run([str(exe)], check=True)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main() unsigned int stuck_fails;
+

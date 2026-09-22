@@ -78,6 +78,7 @@ struct samsung_pogo {
 	/* Keep-alive: the MCU stops answering after a while and nothing re-arms it. */
 	struct delayed_work watch_work;
 	unsigned int poll_fails;
+	unsigned int stuck_fails;
 	/* Re-seat detection: the connect line floats while the cover is off. */
 	bool conn_attached;
 	bool rearm_pending;
@@ -532,7 +533,7 @@ out:
  * cleared so the proven bring-up path (app-entry reset, rail, arm DATA) runs again
  * through pogo_connect_work() rather than a second copy of it.
  */
-#define POGO_WATCH_MS		2000
+#define POGO_WATCH_MS		5000
 #define POGO_WATCH_FAILS	3
 
 static void pogo_watch_work(struct work_struct *work)
@@ -591,7 +592,32 @@ static void pogo_watch_work(struct work_struct *work)
 				dev_info(&p->client->dev,
 					 "keep-alive: GET_MODE NACKed (%d) - idle applications do not serve this read; not re-arming\n",
 					 ret);
-		} else if (p->poll_fails) {
+			/*
+			 * The distinction that matters: an idle but healthy
+			 * application releases the announce line and NACKs this read,
+			 * which is normal and must not be reset.  An application that
+			 * is *asserting* the line while refusing to answer is asking
+			 * for attention it cannot serve - that is the dead state this
+			 * watchdog exists for, and after two seconds of it the part is
+			 * re-armed with the long sequence.
+			 */
+			if (pogo_announce_level(p)) {
+				if (++p->stuck_fails >= 2) {
+					dev_info(&p->client->dev,
+						 "application asserts announce but does not answer; re-arming\n");
+					p->stuck_fails = 0;
+					rearm = true;
+					p->rearm_pending = true;
+					p->powered = false;
+					p->event_enabled = false;
+					p->ready = false;
+					p->poll_fails = 0;
+				}
+			} else {
+				p->stuck_fails = 0;
+			}
+		} else if (p->poll_fails || p->stuck_fails) {
+			p->stuck_fails = 0;
 			dev_info(&p->client->dev, "keep-alive: GET_MODE answered again\n");
 			p->poll_fails = 0;
 		}
