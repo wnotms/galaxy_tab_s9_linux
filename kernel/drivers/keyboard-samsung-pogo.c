@@ -78,6 +78,7 @@ struct samsung_pogo {
 };
 
 static int pogo_read_mcu(struct samsung_pogo *p);
+static int pogo_announce_level(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
@@ -204,12 +205,13 @@ static void pogo_connect_work(struct work_struct *work)
 			p->observe_only = false;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "MCU rail on with BOOT0 low, announce line armed\n");
+				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
+				 pogo_announce_level(p));
 			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
 			dev_info(&p->client->dev,
-				 "application poll finished (%d), %u announcement(s)\n",
-				 ret, p->announce_seen);
+				 "application poll finished (%d), %u announcement(s), announce level %d\n",
+				 ret, p->announce_seen, pogo_announce_level(p));
 			if (!ret) {
 				dev_info(&p->client->dev, "MCU application running\n");
 			} else {
@@ -408,6 +410,22 @@ static void pogo_boot_dump_option_bytes(struct samsung_pogo *p)
 	dev_info(&p->client->dev,
 		 "MCU option bytes %#x: RDP %#x, bit 24 %s\n",
 		 word, word & 0xff, (word & BIT(24)) ? "set (stock clears it)" : "clear");
+}
+
+/*
+ * The MCU drives its announce line itself, so its level is the only signal that
+ * says anything about the application without the host speaking first.  Stock's
+ * status line prints it as int:1 while the application runs; here it is read
+ * from the irqchip rather than inferred from whether the interrupt fired, so
+ * that a floating line cannot be mistaken for an announcement.
+ */
+static int pogo_announce_level(struct samsung_pogo *p)
+{
+	bool level = false;
+
+	if (irq_get_irqchip_state(p->client->irq, IRQCHIP_STATE_LINE_LEVEL, &level))
+		return -1;
+	return level ? 1 : 0;
 }
 
 /*
