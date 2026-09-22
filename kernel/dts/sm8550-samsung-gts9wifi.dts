@@ -1973,15 +1973,16 @@
 		function = "gpio";
 		drive-strength = <2>;
 		/*
-		 * An explicit LOW, not output-high: this state is applied when the
-		 * fixed regulator probes, which is before the pogo driver applies
-		 * its own pin states, and output-high would power the STM32 there -
-		 * with SWCLK (BOOT0) still undriven.  Low keeps the MCU unpowered
-		 * until the driver owns SWCLK and releases the rail itself, which
-		 * is the order stock uses (stm32_dev_regulator(1) in
-		 * stm32_interrupt_init(), after the driver's pins are configured).
+		 * No output value here at all.  output-high powered the MCU before
+		 * the driver owned its pins, so it was changed to output-low in
+		 * test 058 - which then won over the fixed regulator's own write
+		 * and left the pad low even with the rail reported as enabled
+		 * (test 083: pin 10 reads io 0x0 thirty seconds in, with
+		 * regulator_is_enabled() true).  Leaving the level to the
+		 * regulator keeps the ordering the pin state was for - the
+		 * regulator drives it low at probe and the driver's enable raises
+		 * it - and lets that enable actually reach the pad.
 		 */
-		output-low;
 		bias-disable;
 	};
 

@@ -243,5 +243,5 @@ CONFIG_INPUT_KEYBOARD=y
 # A/B: exactly one pogo driver is built.  The vendor port is the imported
 # Samsung stm32_pogo_v3 (kernel/drivers/input/samsung-pogo/); flip these two
 # lines to build the mainline port instead.
-CONFIG_KEYBOARD_SAMSUNG_POGO=y
-# CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT is not set
+# CONFIG_KEYBOARD_SAMSUNG_POGO is not set
+CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT=y
