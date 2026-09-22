@@ -1,0 +1,6 @@
+2026-09-22T06:33:47Z console open on COM17
+2026-09-22T06:33:50Z SENT  dmesg | grep -i -e "MCU firmware header" -e "bootloader" -e "GO " -e "application after" -e "no answer" | tail -20,dmesg | grep -i pogo | tail -25
+2026-09-22T06:33:50Z RECV  dmesg | grep -i -e "MCU firmware header" -e "bootloader" -e "GO " -e "appl
+2026-09-22T06:33:50Z RECV  ication after" -e "no answer" | tail -20,dmesg | grep -i pogo | tail -25
+2026-09-22T06:33:50Z RECV  tail: invalid number '20,dmesg'
+2026-09-22T06:33:59Z console session done

@@ -1,0 +1,6 @@
+source_commit=e9ac79e (e9ac79ec, "pogo: jump to the bank address read from the firmware header")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner asked to continue the repair ("检查仓库变化，继续修复"); this flash is the next measurement in that continuation, under the standing authorization recorded for tests 046-048 ("刷入测试")
+hypothesis=GO 0x08000000 is acknowledged but the application never answers (tests 047 and 048). 0x08000000 is the firmware header, not the application entry: Samsung's struct stm32_fw_header starts the flash image and carries boot_bank_addr at offset 28 and target_bank_addr at offset 32. This candidate reads the 48-byte header over the bootloader's READ command (0x11) and jumps at the bank address it names. The header itself is logged, so one boot records magic, status_boot_mode and both bank addresses even if the application still does not answer
+images=out/boot-bundle-test049/boot.img 55f73ebebf8ee077d9e9e1958d7bc830a011134166bc9b74a8635e9ab3ebf325; init_boot/vendor_boot/dtbo unchanged and already validated on the device
+started_utc=2026-09-22T06:28:22Z
