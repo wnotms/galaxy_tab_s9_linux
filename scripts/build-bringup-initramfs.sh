@@ -191,6 +191,23 @@ for mode in recovery; do
     echo "built reboot helper: $out_bin ($(stat -c %s "$out_bin") bytes)"
 done
 
+# The pogo keyboard's firmware, when it is available.  The STM32 application is
+# only reached by the vendor driver's firmware path, which returns early when
+# request_firmware() fails, so a test that wants that path has to carry the file
+# the stock ramdisk carries.  It is Samsung's proprietary blob and deliberately
+# not tracked in this repository: copy it from the TWRP device tree, e.g.
+#   recovery/root/vendor/firmware_mnt/image/keyboard_stm/stm32_gts9family.bin
+# into .work/firmware/keyboard_stm/ and it is picked up here.
+fw_src="$repo_root/.work/firmware"
+if [ -d "$fw_src" ] && [ -n "$(find "$fw_src" -type f 2>/dev/null | head -1)" ]; then
+    mkdir -p "$tree/lib/firmware"
+    cp -a "$fw_src"/. "$tree/lib/firmware/"
+    echo "including firmware from $fw_src:"
+    find "$tree/lib/firmware" -type f -printf '  %p (%s bytes)\n'
+else
+    echo "no firmware under $fw_src; the vendor driver's firmware path will abort"
+fi
+
 if [ -n "$modules" ]; then
     echo "including modules from $modules"
     exec_args=(--modules "$modules")
