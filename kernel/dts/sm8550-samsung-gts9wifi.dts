@@ -1882,8 +1882,16 @@
 		regulator-name = "pogo-vdd";
 		gpio = <&tlmm 10 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
+		/*
+		 * The keyboard's own pins are applied here as well as in the
+		 * keyboard node below, because this regulator probes earlier than
+		 * the i2c driver does: the MCU's reset line is held low by the
+		 * bootloader (test 080) and this releases it as early as mainline
+		 * can.  Stock's driver is a module loaded at ~1.6 s and does the
+		 * same thing three seconds sooner.
+		 */
 		pinctrl-names = "default";
-		pinctrl-0 = <&pogo_supply>;
+		pinctrl-0 = <&pogo_supply &pogo_swclk &pogo_nrst>;
 	};
 };
 
