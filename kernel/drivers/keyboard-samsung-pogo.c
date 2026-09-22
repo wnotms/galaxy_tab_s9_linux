@@ -660,18 +660,17 @@ static void pogo_watch_work(struct work_struct *work)
 			 * watchdog exists for, and after two seconds of it the part is
 			 * re-armed with the long sequence.
 			 */
+			/*
+			 * Diagnostic only.  An application that asserts announce while
+			 * refusing to answer looks dead, but acting on it would mean
+			 * deriving a recovery from a GET_MODE NACK, which is forbidden
+			 * here: test 100 showed a NACK-triggered re-arm killing a working
+			 * keyboard.  Report the state once and change nothing.
+			 */
 			if (pogo_announce_level(p)) {
-				if (++p->stuck_fails >= 2) {
+				if (p->stuck_fails++ == 5)
 					dev_info(&p->client->dev,
-						 "application asserts announce but does not answer; re-arming\n");
-					p->stuck_fails = 0;
-					rearm = true;
-					p->rearm_pending = true;
-					p->powered = false;
-					p->event_enabled = false;
-					p->ready = false;
-					p->poll_fails = 0;
-				}
+						 "diagnostic: announce asserted and GET_MODE NACKing for five polls (no re-arm)\n");
 			} else {
 				p->stuck_fails = 0;
 			}
@@ -1450,8 +1449,14 @@ static ssize_t rearm_show(struct device *dev, struct device_attribute *attr,
 {
 	struct samsung_pogo *p = dev_get_drvdata(dev);
 
-	return sysfs_emit(buf, "powered=%d event_enabled=%d armed=%d announcements=%u\n",
-			  p->powered, p->event_enabled, p->irq_armed, p->announce_seen);
+	return sysfs_emit(buf,
+			  "state=%s\npowered=%d\nevent_enabled=%d\nirq_armed=%d\nready=%d\n"
+			  "connect=%d\nannounce=%d\nannouncements=%u\nregulator_enabled=%d\n",
+			  p->ready ? "READY" : (p->powered ? "STARTING" : "DETACHED"),
+			  p->powered, p->event_enabled, p->irq_armed, p->ready,
+			  gpiod_get_value_cansleep(p->connected),
+			  pogo_announce_level(p), p->announce_seen,
+			  p->vdd ? regulator_is_enabled(p->vdd) : -1);
 }
 static DEVICE_ATTR_RW(rearm);
 
