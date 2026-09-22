@@ -14,6 +14,7 @@
 # link check used in test 030, and collect-card.ps1 copies the report and its
 # sha256 sidecar off the exported volume.
 #
+param(
     [string]$Port = "COM17",
     [string]$Out = "$env:TEMP\gts9-console.log",
     [string[]]$Commands = @("uname -a", "uptime", "ls /dev/mmcblk* /dev/sd* | head"),

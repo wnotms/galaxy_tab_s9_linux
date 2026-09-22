@@ -14,6 +14,11 @@
 # link check used in test 030, and collect-card.ps1 copies the report and its
 # sha256 sidecar off the exported volume.
 #
+param(
+    [string]$Drive = "G:",
+    [string]$Dest = "$env:TEMP\gts9-card",
+    [string]$Out = "$env:TEMP\gts9-card.log"
+)
 function Log([string]$m) { $l = "{0} {1}" -f (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ"), $m; Add-Content -Path $Out -Value $l; Write-Output $l }
 New-Item -ItemType Directory -Force -Path $Dest | Out-Null
 $deadline = (Get-Date).AddSeconds(300)
