@@ -26,6 +26,8 @@
 /* STM32 command ids, from Samsung's stm32_pogo_v3.h. */
 #define POGO_CMD_GET_MODE		0x01
 #define POGO_CMD_CHECK_VERSION		0x02
+#define POGO_CMD_ABORT			0x17
+#define POGO_MODE_APP			1
 
 /*
  * The MCU's system bootloader, from stm32_pogo_v3_start() and
@@ -37,8 +39,9 @@
 #define POGO_BOOT_CMD_SYNC		0xFF
 #define POGO_BOOT_CMD_GET_VER		0x01
 #define POGO_BOOT_CMD_READ		0x11
-#define POGO_BOOT_CMD_GO		0x21
 #define POGO_BOOT_RESP_ACK		0x79
+/* Where Samsung's driver reads the MCU's IC version from flash. */
+#define POGO_IC_VERSION_OFFSET		0x08000200
 
 struct samsung_pogo {
 	struct i2c_client *client;
@@ -64,7 +67,7 @@ struct samsung_pogo {
 static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
-static void pogo_boot_go(struct samsung_pogo *p, u32 addr);
+static void pogo_boot_disconnect(struct samsung_pogo *p);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -98,6 +101,18 @@ static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int len)
 	if (get_unaligned_le16(header) != len + 3 || header[2] != 1)
 		return -EPROTO;
 	return pogo_read(p, buf, len);
+}
+
+/* Samsung's stm32_i2c_reg_write: the same header, then the command byte. */
+static int pogo_write_reg(struct samsung_pogo *p, u8 reg)
+{
+	u8 header[] = { 4, 0, 1 };
+	int ret;
+
+	ret = pogo_write(p, header, sizeof(header));
+	if (ret)
+		return ret;
+	return pogo_write(p, &reg, 1);
 }
 
 static void pogo_release_keys(struct samsung_pogo *p)
@@ -280,63 +295,38 @@ static int pogo_boot_read(struct samsung_pogo *p, u32 addr, u8 *buf, u16 len)
 }
 
 /*
- * Where does the application live?
- *
- * Samsung's stm32_fw_header starts the flash with a magic word, the versions and
- * - at offsets 28 and 32 - boot_bank_addr and target_bank_addr.  The application
- * is in a *bank*, so GO 0x08000000 jumps at the header and nothing runs, which is
- * exactly what tests 047 and 048 measured: both GO acknowledgements accepted and
- * no application afterwards.  Read the header through the bootloader and use the
- * address it names.
+ * The IC version lives in flash at 0x08000200 and is only reachable through the
+ * bootloader.  Stock reads it here on every boot and prints the last byte as
+ * mcu_fw(ic):34, so it is both useful and a check on this READ path.
  */
-static u32 pogo_boot_app_address(struct samsung_pogo *p)
+static int pogo_boot_ic_version(struct samsung_pogo *p, u8 *version)
 {
-	u8 hdr[48];
-	u32 boot, target;
+	int ret = pogo_boot_read(p, POGO_IC_VERSION_OFFSET, version, 4);
 
-	if (pogo_boot_read(p, 0x08000000, hdr, sizeof(hdr))) {
-		dev_info(&p->client->dev, "could not read the firmware header\n");
-		return 0x08000000;
-	}
+	if (ret)
+		dev_info(&p->client->dev, "could not read the IC version (%d)\n", ret);
+	else
+		dev_info(&p->client->dev, "MCU IC version %*phN\n", 4, version);
 
-	boot = hdr[28] | hdr[29] << 8 | hdr[30] << 16 | (u32)hdr[31] << 24;
-	target = hdr[32] | hdr[33] << 8 | hdr[34] << 16 | (u32)hdr[35] << 24;
-	dev_info(&p->client->dev,
-		 "MCU firmware header: magic %*phN boot bank %#x target bank %#x\n",
-		 8, hdr, boot, target);
-
-	if ((boot & 0xff000000) == 0x08000000)
-		return boot;
-	if ((target & 0xff000000) == 0x08000000)
-		return target;
-	dev_info(&p->client->dev, "no usable bank address in the header\n");
-	return 0x08000000;
+	return ret;
 }
 
 /*
- * STM32 AN4221 GO: the command, then the address with its XOR checksum.
- *
- * Stock has the case but only sets cmd[0] and breaks, so it never sends the
- * address and never worked; the frame is 0x21, its complement, the four address
- * bytes big-endian, and the XOR of those bytes.  Every step is acknowledged.
+ * How the application is started, from stm32_sysboot_disconnect(): BOOT0 (the
+ * SWCLK line) low, then one NRST pulse, then a 150 ms settle.  Stock runs this
+ * on every boot - after the bootloader has answered, and without ever sending
+ * GO.  GO 0x08000000 was acknowledged here but started nothing (tests 047, 048
+ * and 049), and after a GO the MCU stopped answering on either address, so the
+ * vendor's own way out of the bootloader is the one to use.
  */
-static void pogo_boot_go(struct samsung_pogo *p, u32 addr)
+static void pogo_boot_disconnect(struct samsung_pogo *p)
 {
-	u8 cmd[] = { POGO_BOOT_CMD_GO, ~POGO_BOOT_CMD_GO };
-	u8 ab[5];
-	int ret;
-
-	ab[0] = addr >> 24; ab[1] = addr >> 16; ab[2] = addr >> 8; ab[3] = addr;
-	ab[4] = ab[0] ^ ab[1] ^ ab[2] ^ ab[3];
-
-	ret = pogo_boot_xfer(p, cmd, sizeof(cmd));
-	if (ret) {
-		dev_info(&p->client->dev, "bootloader GO command refused (%d)\n", ret);
-		return;
-	}
-	ret = pogo_boot_xfer(p, ab, sizeof(ab));
-	dev_info(&p->client->dev, "bootloader GO %#x: %s\n", addr,
-		 ret ? "address refused" : "accepted");
+	gpiod_set_value_cansleep(p->swclk, 0);
+	msleep(1);
+	gpiod_set_value_cansleep(p->nrst, 0);
+	msleep(2); /* STM32_BOOT_I2C_STARTUP_DELAY_NRST */
+	gpiod_set_value_cansleep(p->nrst, 1);
+	msleep(150);
 }
 
 /* AN4221 Get Version returns ACK, version, ACK in separate read frames. */
@@ -403,7 +393,7 @@ static int pogo_wait_application(struct samsung_pogo *p, const char *entry)
  */
 static void pogo_bootloader_probe(struct samsung_pogo *p)
 {
-	u8 boot_version;
+	u8 boot_version, ic_version[4];
 	int ret;
 
 	if (!pogo_boot_enter(p)) {
@@ -416,7 +406,7 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	ret = pogo_boot_version(p, &boot_version);
 	if (ret) {
 		dev_info(&p->client->dev, "bootloader version exchange failed: %d\n", ret);
-		/* An incomplete reply must not become GO's command ACK. */
+		/* An incomplete reply must not become the next command's ACK. */
 		if (!pogo_boot_enter(p))
 			return;
 	} else {
@@ -424,119 +414,15 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	}
 
 	/*
-	 * Jump while the bootloader is still listening: the earlier attempt went
-	 * out after the disconnect and timed out because by then the MCU answered
-	 * on neither interface.
+	 * Stock reads the IC version and then leaves the bootloader the vendor's
+	 * way.  Never send GO: it was acknowledged but started nothing, and it
+	 * left the MCU answering on neither address.
 	 */
-	pogo_boot_go(p, pogo_boot_app_address(p));
-	ret = pogo_wait_application(p, "GO");
-	if (!ret)
-		return;
-
-	/* No GO either: fall back to the vendor's reset-based entry. */
-	gpiod_set_value_cansleep(p->swclk, 0);
-	msleep(1);
-	gpiod_set_value_cansleep(p->nrst, 0);
-	msleep(2);
-	gpiod_set_value_cansleep(p->nrst, 1);
-	pogo_wait_application(p, "reset entry");
+	pogo_boot_ic_version(p, ic_version);
+	pogo_boot_disconnect(p);
+	pogo_wait_application(p, "bootloader start");
 }
 
-/*
- * Free a bus the keyboard may be holding, and report the line levels.
- *
- * The controller's two pins are multiplexed to qup2_se7, so gpiolib will not hand
- * them out while that state is selected; the "recovery" pinctrl state moves them
- * to plain GPIOs for the duration.  Nine clocks plus a STOP is the standard I2C
- * bus recovery, and the levels printed here are the measurement Samsung's own
- * driver takes when a transfer fails.
- */
-static void pogo_recover_bus(struct samsung_pogo *p)
-{
-	struct gpio_desc *sda, *scl;
-	int i;
-
-	if (!p->bus_gpio)
-		return;
-	if (pinctrl_select_state(p->pinctrl, p->bus_gpio))
-		return;
-
-	sda = gpiod_get_optional(&p->client->dev, "sda", GPIOD_IN);
-	scl = gpiod_get_optional(&p->client->dev, "scl", GPIOD_IN);
-	if (IS_ERR(sda))
-		sda = NULL;
-	if (IS_ERR(scl))
-		scl = NULL;
-
-	dev_info(&p->client->dev, "bus before recovery: scl:%d sda:%d conn:%d\n",
-		 scl ? gpiod_get_value_cansleep(scl) : -1,
-		 sda ? gpiod_get_value_cansleep(sda) : -1,
-		 gpiod_get_value_cansleep(p->connected));
-
-	if (sda && scl) {
-		gpiod_direction_output(scl, 1);
-		gpiod_direction_output(sda, 1);
-		for (i = 0; i < 9; i++) {
-			gpiod_set_value_cansleep(scl, 0);
-			udelay(5);
-			gpiod_set_value_cansleep(scl, 1);
-			udelay(5);
-		}
-		/* STOP: SDA released while SCL is high. */
-		gpiod_set_value_cansleep(sda, 0);
-		udelay(5);
-		gpiod_set_value_cansleep(scl, 1);
-		udelay(5);
-		gpiod_set_value_cansleep(sda, 1);
-		udelay(5);
-
-		dev_info(&p->client->dev, "bus after recovery: scl:%d sda:%d\n",
-			 gpiod_get_value_cansleep(scl),
-			 gpiod_get_value_cansleep(sda));
-		gpiod_put(sda);
-		gpiod_put(scl);
-	}
-
-	pinctrl_select_state(p->pinctrl,
-			     pinctrl_lookup_state(p->pinctrl, "default"));
-}
-
-/*
- * What is actually on this bus?
- *
- * The stock firmware answers at 0x2a on the same controller and the same two
- * pins (gpio72/gpio106, qup2_se7), while mainline gets a clean -ENXIO from every
- * attempt - a NACK means the bus is idle and nobody acknowledged, not that the
- * bus is stuck.  An STM32 that came up in its ROM bootloader answers at a
- * different address, and one that never powered answers at none, so scan once
- * and put the answer in the bring-up report.
- */
-static void pogo_scan_bus(struct samsung_pogo *p)
-{
-	struct i2c_adapter *adap = p->client->adapter;
-	union i2c_smbus_data dummy;
-	char found[96];
-	int i, n = 0;
-
-	for (i = 0x08; i < 0x78 && n < (int)sizeof(found) - 7; i++) {
-		if (i2c_smbus_xfer(adap, i, 0, I2C_SMBUS_WRITE, 0,
-				   I2C_SMBUS_QUICK, &dummy) < 0)
-			continue;
-		n += scnprintf(found + n, sizeof(found) - n, " %#x", i);
-	}
-	dev_info(&p->client->dev, "i2c-%d answers at:%s\n", adap->nr,
-		 n ? found : " (nothing)");
-}
-
-/*
- * Ask the MCU who it is: STM32_CMD_CHECK_VERSION returns hw revision, model id,
- * firmware minor and major, and STM32_CMD_GET_MODE says whether it is running
- * the keyboard application.  Samsung's driver polls exactly this pair and
- * retries, and it is the real presence test - an unsolicited announcement is not
- * how the stock part introduces itself, which is why a driver that only listened
- * for one never got past "awaiting the model announcement" on hardware that
- * TWRP's stock kernel enumerated as EF-DX710_v1.4.1.0, model_id 0x2.
- */
 static int pogo_read_mcu(struct samsung_pogo *p)
 {
 	u8 version[4], mode;
@@ -588,7 +474,23 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		dev_info(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
 		return ret;
 	}
-	p->ready = mode == 1;
+	if (mode == POGO_MODE_DFU) {
+		/*
+		 * Samsung's stm32_set_mode(MODE_APP): a part left in DFU mode is
+		 * told to abort the update and start the application, and only
+		 * then is it asked again.
+		 */
+		dev_info(&p->client->dev, "MCU is in DFU mode; asking for the application\n");
+		ret = pogo_write_reg(p, POGO_CMD_ABORT);
+		msleep(200);
+		if (!ret)
+			ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
+		if (ret) {
+			dev_info(&p->client->dev, "MCU did not leave DFU mode (%d)\n", ret);
+			return ret;
+		}
+	}
+	p->ready = mode == POGO_MODE_APP;
 	dev_info(&p->client->dev,
 		 "MCU model %#x hw %u firmware %u.%u mode %u%s\n",
 		 version[1], version[0], version[3], version[2], mode,

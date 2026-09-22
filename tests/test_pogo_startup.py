@@ -77,11 +77,16 @@ int main(void) {
 #include <errno.h>
 typedef uint8_t u8;
 typedef uint32_t u32;
+typedef uint16_t u16;
 #define POGO_BOOT_CMD_GET_VER 0x01
-#define POGO_BOOT_CMD_GO 0x21
+#define POGO_BOOT_CMD_READ 0x11
 #define POGO_BOOT_RESP_ACK 0x79
 #define POGO_CMD_CHECK_VERSION 2
 #define POGO_CMD_GET_MODE 1
+#define POGO_CMD_ABORT 0x17
+#define POGO_MODE_APP 1
+#define POGO_MODE_DFU 2
+#define POGO_IC_VERSION_OFFSET 0x08000200
 #define dev_info(...) ((void)0)
 #define dev_info_ratelimited(...) ((void)0)
 #define dev_err(...) ((void)0)
@@ -104,7 +109,8 @@ static unsigned long jiffies, app_ready_at;
 static int startup_delay;
 static int reset_gpio;
 static int phase, transfers, fail_at, fail_value, bad_ack;
-static int resets, entries, recoveries, app, app_after_go, app_after_reset;
+static int resets, entries, recoveries, app, app_after_reset;
+static int aborts, app_header;
 static int enables, power_error, entry_failure, mode = 1;
 static void mutex_lock(int *p) {}
 static void mutex_unlock(int *p) {}
@@ -114,7 +120,11 @@ static void msleep(int n) {
 }
 static int gpiod_get_value_cansleep(int *p) { return 1; }
 static void gpiod_set_value_cansleep(int *p, int v) {
- if (p == &reset_gpio && !v) { resets++; app_ready_at=0; app = app_after_reset; }
+ if (p == &reset_gpio && !v) {
+  resets++; app = app_after_reset; app_ready_at = 0;
+  /* The application may need a moment after the reset before it answers. */
+  if (startup_delay) { app = 0; app_ready_at = jiffies + startup_delay; }
+ }
 }
 static int regulator_enable(int *p) { return power_error; }
 static void enable_irq(int irq) { enables++; }
@@ -123,9 +133,6 @@ static void pogo_scan_bus(struct samsung_pogo *p) {}
 static bool pogo_boot_enter(struct samsung_pogo *p) {
  entries++; phase = 0; return !entry_failure;
 }
-/* The bank lookup reads the firmware header; it has its own path and is mocked
-   here so this harness keeps testing the GO/version/startup sequencing. */
-static u32 pogo_boot_app_address(struct samsung_pogo *p) { return 0x08000000; }
 static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n) {
  if (!app) return -ENXIO;
  memset(buf, 0, n);
@@ -136,27 +143,46 @@ static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n) {
 static int i2c_master_send(struct i2c_client *c, const u8 *buf, int n) {
  if (++transfers == fail_at) return fail_value;
  if (phase == 0 && n == 2 && buf[0] == 1 && buf[1] == 0xfe) phase = 1;
- else if ((phase == 0 || phase == 4) && n == 2 && buf[0] == 0x21 && buf[1] == 0xde) phase = 5;
+ /* A READ may follow the re-sync of a failed version exchange, so accept it
+    both where Get Version would have been and after its reply. */
+ else if ((phase == 0 || phase == 4) && n == 2 && buf[0] == 0x11 && buf[1] == 0xee) phase = 5;
  else if (phase == 6 && n == 5) {
-  static const u8 address[] = {8, 0, 0, 0, 8};
+  /* 0x08000200 big-endian, with the XOR of those bytes. */
+  static const u8 address[] = {8, 0, 2, 0, 0x0a};
   assert(!memcmp(buf, address, 5)); phase = 7;
+ } else if (phase == 8 && n == 2) {
+  /* four bytes: len - 1 and its complement, not the XOR. */
+  assert(buf[0] == 3 && buf[1] == 0xfc); phase = 9;
+ } else if (n == 3) {
+  assert(buf[0] == 4 && buf[1] == 0 && buf[2] == 1); app_header = 1;
+ } else if (app_header && n == 1) {
+  app_header = 0;
+  if (buf[0] == POGO_CMD_ABORT) { aborts++; mode = POGO_MODE_APP; }
+  else assert(!"unexpected application command");
  } else assert(!"write before the preceding response completed");
  return n;
 }
 static int i2c_master_recv(struct i2c_client *c, u8 *buf, int n) {
  if (++transfers == fail_at) return fail_value;
- assert(n == 1);
- assert(phase == 1 || phase == 2 || phase == 3 || phase == 5 || phase == 7);
- *buf = phase == 2 ? 0x12 : (bad_ack == phase ? 0x1f : 0x79);
- if (phase == 7) {
-  app = app_after_go;
-  if (startup_delay) { app=0; app_ready_at=jiffies+startup_delay; }
+ if (phase == 10) {
+  static const u8 ic[] = {0x0a, 0x02, 0x01, 0x34};
+  assert(n == 4); memcpy(buf, ic, sizeof(ic)); phase = 11; return n;
  }
+ assert(n == 1);
+ assert(phase == 1 || phase == 2 || phase == 3 || phase == 5 || phase == 7 || phase == 9);
+ *buf = phase == 2 ? 0x12 : (bad_ack == phase ? 0x1f : 0x79);
  phase++;
  return 1;
 }
+/* The real helper, so the ABORT write is framed by the real code path. */
+static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len) {
+ int ret = i2c_master_send(p->client, buf, len);
+ return ret == len ? 0 : ret < 0 ? ret : -EIO;
+}
 '''
-        for name in ('pogo_boot_xfer', 'pogo_boot_version', 'pogo_boot_go', 'pogo_wait_application', 'pogo_bootloader_probe',
+        for name in ('pogo_write_reg', 'pogo_boot_xfer', 'pogo_boot_read', 'pogo_boot_ic_version',
+                     'pogo_boot_version', 'pogo_boot_disconnect',
+                     'pogo_wait_application', 'pogo_bootloader_probe',
                      'pogo_read_mcu', 'pogo_connect_work'):
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
                                    source, flags=re.M)
@@ -167,17 +193,21 @@ static void clear(struct samsung_pogo *p) {
  jiffies = app_ready_at = startup_delay = 0;
  phase = transfers = fail_at = bad_ack = resets = entries = recoveries = 0;
  app = enables = power_error = entry_failure = 0;
- app_after_go = 1; app_after_reset = 0; mode = 1;
+ aborts = app_header = 0;
+ /* The application starts when NRST is pulsed with BOOT0 low. */
+ app_after_reset = 1; mode = POGO_MODE_APP;
  p->powered = p->ready = p->event_enabled = false;
 }
 int main(void) {
  struct i2c_client client = {0}; int gpio;
  struct samsung_pogo p = {.client=&client, .boot=&client,
   .connected=&gpio, .nrst=&reset_gpio, .swclk=&gpio};
- u8 version;
+ u8 version, ic[4];
  clear(&p);
  assert(!pogo_boot_version(&p, &version) && version == 0x12 && phase == 4);
- pogo_boot_go(&p, 0x08000000); assert(phase == 8 && app);
+ /* The IC version READ: exactly one frame per phase, ending at 0x08000200. */
+ clear(&p);
+ assert(!pogo_boot_ic_version(&p, ic) && phase == 11 && ic[3] == 0x34);
  /* Every short/error transfer must abort the version exchange. */
  for (int i=1; i<=4; i++) {
   clear(&p); fail_at=i; fail_value=0;
@@ -189,14 +219,15 @@ int main(void) {
   clear(&p); bad_ack=i;
   assert(pogo_boot_version(&p,&version) == -EPROTO);
  }
- /* GO must stop on every failed transfer and either rejected ACK. */
- for (int i=1; i<=4; i++) {
+ /* The READ is seven transfers (command, address, length, payload) and must
+    stop on every failed one and on either rejected ACK. */
+ for (int i=1; i<=7; i++) {
   clear(&p); fail_at=i; fail_value=-ENXIO;
-  pogo_boot_go(&p, 0x08000000); assert(transfers == i && !app);
+  assert(pogo_boot_ic_version(&p, ic) < 0 && transfers == i && !app);
  }
- clear(&p); bad_ack=5; pogo_boot_go(&p, 0x08000000); assert(transfers == 2 && !app);
- clear(&p); bad_ack=7; app_after_go=0;
- pogo_boot_go(&p, 0x08000000); assert(transfers == 4 && !app);
+ clear(&p); bad_ack=5; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
+ clear(&p); bad_ack=7; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
+ clear(&p); bad_ack=9; assert(pogo_boot_ic_version(&p, ic) == -EPROTO);
  /* Both startup success paths must set ready without resetting the app. */
  clear(&p); app=1;
  pogo_connect_work(&p.connect_work.work);
@@ -204,11 +235,13 @@ int main(void) {
  pogo_connect_work(&p.connect_work.work); assert(enables == 1 && !resets);
  clear(&p);
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && p.event_enabled && entries == 1 && !resets && !recoveries && phase == 8);
- /* An application needing two seconds must not be reset at 150 ms. */
+ assert(p.ready && p.event_enabled && entries == 1 && !recoveries && phase == 11);
+ /* Stock's bootloader visit ends in exactly one reset - never in a GO. */
+ assert(resets == 1);
+ /* An application needing two seconds must be waited for, not reset again. */
  clear(&p); startup_delay=2000;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && !resets && !recoveries && jiffies >= 2000 && jiffies < 2200);
+ assert(p.ready && resets == 1 && !recoveries && jiffies >= 2000 && jiffies < 2200);
  /* Absence is bounded, and polling itself never manipulates reset or bus. */
  clear(&p);
  assert(pogo_wait_application(&p, "test") == -ENXIO);
@@ -216,13 +249,13 @@ int main(void) {
  /* The deadline arithmetic must work across a jiffies wrap. */
  clear(&p); jiffies=(unsigned long)-1000;
  assert(pogo_wait_application(&p, "wrap") == -ENXIO && jiffies < 4200);
- /* A failed version exchange requires a fresh session before GO. */
+ /* A failed version exchange requires a fresh session before the READ. */
  clear(&p); bad_ack=3;
- pogo_bootloader_probe(&p); assert(entries == 2 && app && !resets);
+ pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
  clear(&p); fail_at=4; fail_value=-ETIMEDOUT;
- pogo_bootloader_probe(&p); assert(entries == 2 && app && !resets);
- /* Failed GO permits the vendor reset fallback; success survives the caller. */
- clear(&p); app_after_go=0; app_after_reset=1;
+ pogo_bootloader_probe(&p); assert(entries == 2 && app && resets == 1);
+ /* The probe starts the application by reset, and the caller sees it ready. */
+ clear(&p);
  pogo_connect_work(&p.connect_work.work);
  assert(p.ready && resets == 1 && !recoveries);
  clear(&p); entry_failure=1;
@@ -231,7 +264,11 @@ int main(void) {
  pogo_connect_work(&p.connect_work.work); assert(!p.powered && !enables && !entries);
  clear(&p); app=1; mode=0;
  pogo_connect_work(&p.connect_work.work); assert(!p.ready && !resets);
- clear(&p); app_after_go=0; p.ready=true;
+ /* A part left in DFU is told to start the application, stock's ABORT write. */
+ clear(&p); app=1; mode=POGO_MODE_DFU;
+ pogo_connect_work(&p.connect_work.work);
+ assert(p.ready && aborts == 1 && mode == POGO_MODE_APP && !resets);
+ clear(&p); app_after_reset=0; p.ready=true;
  assert(pogo_read_mcu(&p) == -ENXIO && !p.ready && recoveries == 1);
  return 0;
 }
