@@ -22,6 +22,7 @@ PORT=${PORT:-COM17}
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 STAGE=${STAGE:-/mnt/d/android/gts9-flash}
 LOG=${LOG:-$STAGE/flash.log}
+WIN_LOG=${WIN_LOG:-D:\\android\\gts9-flash\\flash.log}
 RECOVERY_TIMEOUT=${RECOVERY_TIMEOUT:-300}
 SHELL_TIMEOUT=${SHELL_TIMEOUT:-120}
 
@@ -35,13 +36,15 @@ declare -a TIMES=()
 mark() { TIMES+=("$1=$(( $(date +%s) - T0 ))s"); }
 
 T0=$(date +%s)
-state=$($ADB get-state 2>/dev/null | tail -1 || true)
+# adb.exe is a Windows binary: its output arrives with CRLF, and an unstripped
+# trailing CR makes "recovery\r" compare unequal to "recovery".
+state=$($ADB get-state 2>/dev/null | tr -d '\r' | tail -1 || true)
 phase "device state: ${state:-none}"
 
 if [ "$state" != "recovery" ]; then
 	phase "asking the tablet for recovery over the console (BCB, no sleep, no polling)"
 	powershell.exe -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
-		-Out "$LOG" -Commands 'gts9-to-recovery' -WaitReadySeconds 10 -ReadSeconds 3 >/dev/null
+		-Out "$WIN_LOG" -Commands 'gts9-to-recovery' -WaitReadySeconds 10 -ReadSeconds 3 >/dev/null
 fi
 mark trigger
 
@@ -50,11 +53,13 @@ if ! timeout "$RECOVERY_TIMEOUT" "$ADB" wait-for-recovery 2>/dev/null; then
 	# Older platform-tools lack wait-for-recovery: fall back to a one-second poll.
 	deadline=$(( $(date +%s) + RECOVERY_TIMEOUT ))
 	while [ "$(date +%s)" -lt "$deadline" ]; do
-		[ "$($ADB get-state 2>/dev/null | tail -1)" = "recovery" ] && break
+		if [ "$($ADB get-state 2>/dev/null | tr -d '\r' | tail -1)" = "recovery" ]; then
+			break
+		fi
 		sleep 1
 	done
 fi
-[ "$($ADB get-state 2>/dev/null | tail -1)" = "recovery" ] || { phase "no adb recovery"; exit 1; }
+[ "$($ADB get-state 2>/dev/null | tr -d '\r' | tail -1)" = "recovery" ] || { phase "no adb recovery"; exit 1; }
 mark recovery
 
 phase "pushing and writing $PART"
@@ -72,7 +77,7 @@ mark reboot
 
 phase "waiting for the mainline shell (console heartbeat)"
 powershell.exe -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
-	-Out "$LOG" -Commands 'uname -a' -WaitReadySeconds "$SHELL_TIMEOUT" -ReadSeconds 4 \
+	-Out "$WIN_LOG" -Commands 'uname -a' -WaitReadySeconds "$SHELL_TIMEOUT" -ReadSeconds 4 \
 	| grep -aE "shell answered|Linux \(none\)" | tail -2 || true
 mark shell
 
