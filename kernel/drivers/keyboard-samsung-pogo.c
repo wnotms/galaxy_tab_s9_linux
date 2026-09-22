@@ -27,6 +27,8 @@
 #define POGO_CMD_GET_MODE		0x01
 #define POGO_CMD_CHECK_VERSION		0x02
 #define POGO_CMD_ABORT			0x17
+#define POGO_CMD_CHECK_CRC		0x03
+#define POGO_CMD_GET_TC_VERSION		0x18
 #define POGO_MODE_APP			1
 #define POGO_MODE_DFU			2
 
@@ -126,6 +128,50 @@ static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int len)
 	if (get_unaligned_le16(header) != len + 3 || header[2] != 1)
 		return -EPROTO;
 	return pogo_read(p, buf, len);
+}
+
+/*
+ * The same frame on an explicit endpoint.  Stock's post-announcement sequence is
+ * not finished by GET_MODE: it sends CHECK_CRC on EP 1 and then asks for the
+ * touch-controller firmware version on EP 2, and in both stock byte captures on
+ * this unit the MCU's next ATTN (a hall packet, 04 00 04) arrives 0.2 ms after
+ * that second reply.  This port stopped after GET_MODE, which is exactly where
+ * the MCU goes quiet, so the two frames are sent here.
+ */
+static int pogo_read_reg_ep(struct samsung_pogo *p, u8 ep, u8 reg, u8 *buf, int len)
+{
+	u8 header[] = { 4, 0, ep };
+	int ret;
+
+	ret = pogo_write(p, header, sizeof(header));
+	if (ret)
+		return ret;
+	ret = pogo_write(p, &reg, 1);
+	if (ret)
+		return ret;
+	ret = pogo_read(p, header, sizeof(header));
+	if (ret)
+		return ret;
+	if (get_unaligned_le16(header) != len + 3 || header[2] != ep)
+		return -EPROTO;
+	return pogo_read(p, buf, len);
+}
+
+/* Stock settles 200 ms after GET_MODE before these frames. */
+static void pogo_stock_tail(struct samsung_pogo *p)
+{
+	u8 crc[4], tc[6];
+	int ret;
+
+	msleep(200);
+	ret = pogo_read_reg_ep(p, 1, POGO_CMD_CHECK_CRC, crc, sizeof(crc));
+	dev_info(&p->client->dev, "CHECK_CRC: %d%s\n", ret,
+		 ret ? "" : " - answered");
+	if (!ret)
+		dev_info(&p->client->dev, "CRC32 %*ph\n", (int)sizeof(crc), crc);
+	ret = pogo_read_reg_ep(p, 2, POGO_CMD_GET_TC_VERSION, tc, sizeof(tc));
+	dev_info(&p->client->dev, "GET_TC_FW_VERSION (EP2): %d%s\n", ret,
+		 ret ? "" : " - answered; stock's capture has the MCU's next ATTN 0.2 ms later");
 }
 
 /* Samsung's stm32_i2c_reg_write: the same header, then the command byte. */
@@ -1013,6 +1059,8 @@ static int pogo_hello(struct samsung_pogo *p, u8 model)
 	if (model != POGO_MODEL_DX710)
 		dev_warn(&p->client->dev, "announced keyboard model %#x\n", model);
 	ret = pogo_read_mcu(p);
+	if (!ret)
+		pogo_stock_tail(p);
 	/* Never attempt to rewrite keyboard firmware. */
 	return ret;
 }

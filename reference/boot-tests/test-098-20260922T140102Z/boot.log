@@ -1,0 +1,21 @@
+2026-09-22T14:03:34Z console open on COM17
+2026-09-22T14:03:36Z RECV  echo READY1
+2026-09-22T14:03:36Z RECV  READY1
+2026-09-22T14:03:36Z shell answered after 1 poll(s)
+2026-09-22T14:03:36Z SENT  dmesg | grep -a "5-002a" | head -16; cat /proc/interrupts | grep -a "5-002a"
+2026-09-22T14:03:43Z RECV  gts9# [6ndmesg | grep -a "5-002a" | head -16; cat /proc/interrupts | grep -a "5-002
+2026-09-22T14:03:43Z RECV  a"
+2026-09-22T14:03:43Z RECV  [    3.105761][   T77] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input0
+2026-09-22T14:03:43Z RECV  [    4.009191][   T87] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-22T14:03:43Z RECV  [    4.027670][   T87] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-22T14:03:43Z RECV  [    4.310166][  T120] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T14:03:43Z RECV  [    4.328309][  T120] samsung-pogo-keyboard 5-002a: packet from the MCU: 03 00 02 (size 3)
+2026-09-22T14:03:43Z RECV  [    4.347185][  T120] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-22T14:03:43Z RECV  [    4.576032][  T120] samsung-pogo-keyboard 5-002a: CHECK_CRC: 0 - answered
+2026-09-22T14:03:43Z RECV  [    4.576039][  T120] samsung-pogo-keyboard 5-002a: CRC32 6e 37 df ea
+2026-09-22T14:03:43Z RECV  [    4.578814][  T120] samsung-pogo-keyboard 5-002a: GET_TC_FW_VERSION (EP2): 0 - answered; stock's capture has the MCU's next ATTN 0.2 ms later
+2026-09-22T14:03:43Z RECV  [    4.578843][  T120] samsung-pogo-keyboard 5-002a: MCU announced itself (2)
+2026-09-22T14:03:43Z RECV  [    4.579735][  T120] samsung-pogo-keyboard 5-002a: packet from the MCU: 04 00 04 (size 4)
+2026-09-22T14:03:43Z RECV  [    4.579997][  T120] samsung-pogo-keyboard 5-002a: payload (1 bytes): 02
+2026-09-22T14:03:43Z RECV   169:          2          0          0          0          0          0          0          0  msmgpio     75 Level     5-002a
+2026-09-22T14:03:43Z console run done (ready=True)
