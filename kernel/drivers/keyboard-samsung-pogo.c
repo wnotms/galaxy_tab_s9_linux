@@ -13,7 +13,9 @@
 #include <linux/interrupt.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
+#include <linux/gpio.h>
 #include <linux/of.h>
+#include <linux/of_gpio.h>
 #include <linux/regulator/consumer.h>
 #include <linux/unaligned.h>
 #include <linux/workqueue.h>
@@ -31,8 +33,9 @@ struct samsung_pogo {
 	struct gpio_desc *connected;
 	struct gpio_desc *swclk;
 	struct gpio_desc *nrst;
-	struct gpio_desc *sda;
-	struct gpio_desc *scl;
+	/* Global GPIO numbers, read unclaimed like the vendor driver does. */
+	int sda;
+	int scl;
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
@@ -226,8 +229,8 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		dev_info_ratelimited(&p->client->dev,
 				     "attempt %d failed: scl:%d sda:%d conn:%d\n",
 				     i,
-				     p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
-				     p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
+				     gpio_is_valid(p->scl) ? gpio_get_value(p->scl) : -1,
+				     gpio_is_valid(p->sda) ? gpio_get_value(p->sda) : -1,
 				     gpiod_get_value_cansleep(p->connected));
 		/*
 		 * Samsung's retry loop pulses NRST again on every failed attempt
@@ -416,16 +419,14 @@ static int pogo_probe(struct i2c_client *client)
 	 * multiplexed to the controller by the i2c node's pinctrl state, and
 	 * reading the input buffer is how Samsung's driver reports a held bus.
 	 */
-	p->sda = devm_gpiod_get_optional(dev, "sda", GPIOD_IN);
-	if (IS_ERR(p->sda)) {
-		dev_info(dev, "sda line unavailable: %ld\n", PTR_ERR(p->sda));
-		p->sda = NULL;
-	}
-	p->scl = devm_gpiod_get_optional(dev, "scl", GPIOD_IN);
-	if (IS_ERR(p->scl)) {
-		dev_info(dev, "scl line unavailable: %ld\n", PTR_ERR(p->scl));
-		p->scl = NULL;
-	}
+	/*
+	 * The I2C lines, as numbers rather than claimed descriptors: the pins
+	 * are multiplexed to the controller, so gpiolib refuses to hand them out
+	 * (-EINVAL) - but its input buffer still reads the line, which is what
+	 * Samsung's driver relies on when it prints scl/sda on a failed transfer.
+	 */
+	p->sda = of_get_named_gpio(dev->of_node, "sda-gpios", 0);
+	p->scl = of_get_named_gpio(dev->of_node, "scl-gpios", 0);
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
 		return dev_err_probe(dev, PTR_ERR(p->vdd), "vdd supply\n");
