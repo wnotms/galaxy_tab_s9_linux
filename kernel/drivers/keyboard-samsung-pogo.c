@@ -78,6 +78,8 @@ struct samsung_pogo {
 	/* Keep-alive: the MCU stops answering after a while and nothing re-arms it. */
 	struct delayed_work watch_work;
 	unsigned int poll_fails;
+	/* Re-seat detection: the connect line floats while the cover is off. */
+	bool conn_attached;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
@@ -346,7 +348,14 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 			 "rail off: regulator %s, announce %d (the MCU is unpowered when both say so)\n",
 			 regulator_is_enabled(p->vdd) ? "still on" : "off",
 			 pogo_announce_level(p));
-		msleep(400);
+		/*
+		 * A hot-plugged cover keeps its state through a short drop (test 082
+		 * measured the MCU still running with this rail low), and after a
+		 * re-seat the part has been seen to stay silent even through a 2 ms
+		 * NRST pulse: 22 re-arms produced no announcement.  Hold the supply
+		 * down long enough to be a real power cycle.
+		 */
+		msleep(1000);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
 			msleep(50);
@@ -515,17 +524,51 @@ static void pogo_watch_work(struct work_struct *work)
 	bool rearm = false;
 
 	mutex_lock(&p->lock);
-	if (p->powered && p->event_enabled) {
+	/*
+	 * Re-seat detection first.  The connect line is an edge source with
+	 * bias-disable: while no cover is seated it floats and toggles at about
+	 * 10 Hz, and once the cover is back it is driven and reads the same every
+	 * time.  A transition from unstable to stable therefore means the cover was
+	 * just re-attached - and after a re-seat the application has to be brought
+	 * up again, which the one-shot startup never did (test 099's follow-up: 22
+	 * watchdog re-arms, no announcement, no key packet).
+	 */
+	{
+		int level = gpiod_get_value_cansleep(p->connected);
+		bool stable = true;
+		unsigned int i;
+
+		for (i = 0; i < 4; i++) {
+			msleep(20);
+			if (gpiod_get_value_cansleep(p->connected) != level)
+				stable = false;
+		}
+		if (stable && !p->conn_attached) {
+			dev_info(&p->client->dev,
+				 "cover re-seated (connect line stable after instability); re-arming the application\n");
+			rearm = true;
+			p->powered = false;
+			p->event_enabled = false;
+			p->ready = false;
+			p->poll_fails = 0;
+		}
+		p->conn_attached = stable;
+	}
+	if (!rearm && p->powered && p->event_enabled) {
 		ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 		if (ret) {
-			if (++p->poll_fails >= POGO_WATCH_FAILS) {
+			if (++p->poll_fails == 1)
+				dev_info(&p->client->dev,
+					 "keep-alive: GET_MODE failed (%d); counting\n", ret);
+			if (p->poll_fails >= POGO_WATCH_FAILS) {
 				p->poll_fails = 0;
 				rearm = true;
 				p->powered = false;
 				p->event_enabled = false;
 				p->ready = false;
 			}
-		} else {
+		} else if (p->poll_fails) {
+			dev_info(&p->client->dev, "keep-alive: GET_MODE answered again\n");
 			p->poll_fails = 0;
 		}
 	}
@@ -533,7 +576,7 @@ static void pogo_watch_work(struct work_struct *work)
 
 	if (rearm) {
 		dev_info(&p->client->dev,
-			 "MCU stopped answering the keep-alive; re-running the application-entry reset\n");
+			 "re-arming: re-running the application-entry reset and handshake\n");
 		mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
 	}
 	queue_delayed_work(system_percpu_wq, &p->watch_work,
