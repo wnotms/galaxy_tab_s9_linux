@@ -35,6 +35,8 @@
  */
 #define POGO_BOOT_ADDR			0x51
 #define POGO_BOOT_CMD_SYNC		0xFF
+#define POGO_BOOT_CMD_GET_VER		0x01
+#define POGO_BOOT_RESP_ACK		0x79
 
 struct samsung_pogo {
 	struct i2c_client *client;
@@ -200,7 +202,9 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
  */
 static void pogo_bootloader_probe(struct samsung_pogo *p)
 {
+	static const u8 get_ver[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
 	u8 sync = POGO_BOOT_CMD_SYNC;
+	u8 resp = 0;
 	int ret;
 
 	if (!p->boot)
@@ -215,13 +219,43 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	gpiod_set_value_cansleep(p->swclk, 0);
 
 	ret = i2c_master_send(p->boot, &sync, 1);
-	if (ret == 1)
+	if (ret != 1) {
 		dev_info(&p->client->dev,
-			 "MCU bootloader took the 0xFF sync: the part is powered and executing\n");
-	else
-		dev_info(&p->client->dev,
-			 "MCU bootloader did not take the 0xFF sync (%d): the part is not running\n",
-			 ret);
+			 "MCU bootloader did not take the 0xFF sync (%d)\n", ret);
+		return;
+	}
+	dev_info(&p->client->dev, "MCU bootloader took the 0xFF sync\n");
+
+	/*
+	 * The vendor re-enters boot mode after a successful sync and reads the
+	 * version back before releasing the part, so do the same - and report the
+	 * version, because it is the first thing this part has ever told us.
+	 */
+	gpiod_set_value_cansleep(p->swclk, 1);
+	gpiod_set_value_cansleep(p->nrst, 0);
+	msleep(3);
+	gpiod_set_value_cansleep(p->nrst, 1);
+	msleep(50);
+	gpiod_set_value_cansleep(p->swclk, 0);
+
+	if (i2c_master_send(p->boot, get_ver, sizeof(get_ver)) == sizeof(get_ver) &&
+	    i2c_master_recv(p->boot, &resp, 1) == 1 && resp == POGO_BOOT_RESP_ACK &&
+	    i2c_master_recv(p->boot, &resp, 1) == 1) {
+		dev_info(&p->client->dev, "MCU bootloader version %#x\n", resp);
+	} else {
+		dev_info(&p->client->dev, "MCU bootloader GET_VER failed (last %#x)\n", resp);
+	}
+
+	/*
+	 * stm32_sysboot_disconnect(): SWCLK back for main flash, then release the
+	 * reset and give the application the vendor's 150 ms to start.
+	 */
+	gpiod_set_value_cansleep(p->swclk, 0);
+	msleep(1);
+	gpiod_set_value_cansleep(p->nrst, 0);
+	msleep(2);
+	gpiod_set_value_cansleep(p->nrst, 1);
+	msleep(150);
 }
 
 /*
