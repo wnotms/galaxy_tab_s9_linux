@@ -1904,7 +1904,17 @@
 	 * the vendor driver running its complete stock path.  If the
 	 * application's slave is marginal at 400 kHz, this is where it shows.
 	 */
-	clock-frequency = <100000>;
+	/*
+	 * Stock runs this SE at 400 kHz: qcom,clk-freq-out is absent from its bus
+	 * node, so i2c-msm-geni defaults to 400000, and the vendor log says so
+	 * ("Bus frequency is set to 400000Hz").  100 kHz was retried in test 059, but
+	 * that was before the app-entry reset existed, so the application never came
+	 * up in that run and the rate was never tested against a live application.
+	 * Now that it does answer the handshake, this is the one stock condition the
+	 * port has never reproduced: the key-report path may have a timing budget the
+	 * slower bus breaks even though the handshake survives it.
+	 */
+	clock-frequency = <400000>;
 
 	keyboard@2a {
 		compatible = "samsung,x710-pogo-keyboard";
