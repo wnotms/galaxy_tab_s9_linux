@@ -1,0 +1,71 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] i2c: qcom-geni: re-arm the serial engine on samsung,reset-before-trans
+
+Samsung's SM-X710 device tree marks the QUP2 SE7 I2C controller that hosts the
+EF-DX710 pogo keyboard with samsung,reset-before-trans (and stop-after-trans),
+and its downstream geni driver reloads the serial engine before every transfer
+because of it.
+
+Without that, mainline binds the keyboard, drives its rail and pulses its reset,
+and the STM32 still never answers: every read returns -ENXIO (a clean NACK, so
+the bus is idle rather than stuck) and a quick-write scan of the whole adapter
+finds no device at any address, while TWRP's stock kernel on the same tablet, the
+same controller and the same two pins enumerates the cover as
+EF-DX710_v1.4.1.0, con:1/1, model_id 0x2 in the same session (test 045).
+
+The data sheet level reason is not documented; the behaviour is.  Reloading the
+SE firmware is the closest mainline equivalent of the vendor's controller reset -
+it is exactly what probe does once - and geni_load_se_firmware() is already
+exported, so this stays inside the I2C driver and is gated by the DT property, so
+no other board is affected.  qcom_geni_i2c_conf() re-applies the I2C packing and
+watermarks directly after.
+---
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index d2f5055b0..f77e24c45 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -119,6 +119,7 @@ struct geni_i2c_dev {
+ 	bool gpi_mode;
+ 	bool abort_done;
+ 	bool is_tx_multi_desc_xfer;
++	bool reset_before_trans;
+ 	u32 num_msgs;
+ 	struct geni_i2c_gpi_multi_desc_xfer i2c_multi_desc_config;
+ };
+@@ -921,6 +922,22 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
+ 		return ret;
+ 	}
+ 
++	/*
++	 * Boards that ask for samsung,reset-before-trans want the serial engine
++	 * reloaded before each transfer, exactly as probe leaves it.  Reloading
++	 * the SE firmware resets the controller and its RAM configuration;
++	 * qcom_geni_i2c_conf() below re-applies the I2C packing and watermarks.
++	 */
++	if (gi2c->reset_before_trans) {
++		ret = geni_load_se_firmware(&gi2c->se, GENI_SE_I2C);
++		if (ret) {
++			dev_err(gi2c->se.dev, "error re-arming the SE: %d\n", ret);
++			pm_runtime_put_noidle(gi2c->se.dev);
++			pm_runtime_set_suspended(gi2c->se.dev);
++			return ret;
++		}
++	}
++
+ 	qcom_geni_i2c_conf(gi2c);
+ 
+ 	if (gi2c->gpi_mode)
+@@ -1055,6 +1072,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	gi2c->adap.dev.parent = dev;
+ 	gi2c->adap.dev.of_node = dev->of_node;
+ 	strscpy(gi2c->adap.name, "Geni-I2C", sizeof(gi2c->adap.name));
++	/*
++	 * Some boards need the serial engine re-armed before every transfer.
++	 * Samsung's SM-X710 node asks for it with samsung,reset-before-trans,
++	 * and without it the pogo keyboard's STM32 never answers.
++	 */
++	gi2c->reset_before_trans =
++		of_property_read_bool(dev->of_node, "samsung,reset-before-trans");
+ 
+ 	ret = geni_icc_get(&gi2c->se, desc ? desc->icc_ddr : "qup-memory");
+ 	if (ret)

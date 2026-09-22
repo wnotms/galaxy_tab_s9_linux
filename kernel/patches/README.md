@@ -37,6 +37,11 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
   Samsung's GPLv2 `stm32_pogo_*_v3` sources in the X710 open-source archive;
   the firmware-update, raw-register and DFU surfaces are deliberately not
   exposed.
+- `0007-i2c-qcom-geni-rearm-se-before-transfers.patch` — honours the vendor
+  `samsung,reset-before-trans` property by reloading the serial engine before
+  every transfer.  The SM-X710's `i2c15` node (the pogo keyboard's controller)
+  carries it, and without it the keyboard's STM32 never answers on mainline while
+  the stock kernel enumerates it on the same controller and pins (test 045).
 - `nxp-ptn3222-apply-dt-register-overrides.patch` — repeater register overrides
   used by the board's USB bring-up.
 

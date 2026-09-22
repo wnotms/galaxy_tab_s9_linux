@@ -1890,6 +1890,14 @@
 &i2c15 {
 	status = "okay";
 	clock-frequency = <100000>;
+	/*
+	 * The vendor node for this controller asks its geni driver to reload the
+	 * serial engine before every transfer, and the pogo keyboard's STM32 does
+	 * not answer without it.  Honoured by
+	 * 0007-i2c-qcom-geni-rearm-se-before-transfers.patch; harmless to any
+	 * other kernel, which simply ignores the property.
+	 */
+	samsung,reset-before-trans;
 
 	keyboard@2a {
 		compatible = "samsung,x710-pogo-keyboard";
