@@ -1,0 +1,41 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] Input: make the vendor stm32_pogo_v3 port selectable
+
+Second half of the A/B: the imported Samsung driver in
+drivers/input/keyboard/samsung-pogo/ is a directory, so it needs its own
+Kconfig and a Makefile line, and its symbol is mutually exclusive with
+KEYBOARD_SAMSUNG_POGO - both bind the same DT node, and the point of the pair is
+to run one at a time on identical hardware.
+
+This patch is applied after 0006-input-add-samsung-pogo-keyboard.patch, so the
+context below includes the symbol that patch adds.
+---
+diff --git a/drivers/input/keyboard/Kconfig b/drivers/input/keyboard/Kconfig
+index 9d1019ba0..6f557935b 100644
+--- a/drivers/input/keyboard/Kconfig
++++ b/drivers/input/keyboard/Kconfig
+@@ -806,4 +806,13 @@ config KEYBOARD_CYPRESS_SF
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called cypress-sf.
+ 
++source "drivers/input/keyboard/samsung-pogo/Kconfig"
++
++config KEYBOARD_SAMSUNG_POGO
++	tristate "Samsung X710 pogo keyboard"
++	depends on I2C && OF && GPIOLIB && REGULATOR
++	help
++	  Native input driver for the STM32-powered EF-DX710 Slim keyboard.
++	  Supports hotplug and key events without Samsung Android frameworks.
++
+ endif
+diff --git a/drivers/input/keyboard/Makefile b/drivers/input/keyboard/Makefile
+index 60bb7baf8..c7e8753fd 100644
+--- a/drivers/input/keyboard/Makefile
++++ b/drivers/input/keyboard/Makefile
+@@ -71,3 +71,6 @@ obj-$(CONFIG_KEYBOARD_TEGRA)		+= tegra-kbc.o
+ obj-$(CONFIG_KEYBOARD_TM2_TOUCHKEY)	+= tm2-touchkey.o
+ obj-$(CONFIG_KEYBOARD_TWL4030)		+= twl4030_keypad.o
+ obj-$(CONFIG_KEYBOARD_XTKBD)		+= xtkbd.o
++
++obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO) += keyboard-samsung-pogo.o
++obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT) += samsung-pogo/

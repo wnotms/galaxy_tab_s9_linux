@@ -96,8 +96,14 @@ required=(
     CONFIG_DRM_PANEL_SAMSUNG_ANA38407 CONFIG_DRM_DISPLAY_DSC_HELPER
     CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
     CONFIG_VT CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE
-    CONFIG_KEYBOARD_SAMSUNG_POGO CONFIG_INPUT_EVDEV CONFIG_I2C_QCOM_GENI
+    CONFIG_INPUT_EVDEV CONFIG_I2C_QCOM_GENI
 )
+# Exactly one pogo driver is built: the mainline port or the imported vendor one.
+if ! grep -qx 'CONFIG_KEYBOARD_SAMSUNG_POGO=y' "$build_dir/.config" &&
+   ! grep -qx 'CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT=y' "$build_dir/.config"; then
+    echo "neither pogo keyboard driver is built-in (CONFIG_KEYBOARD_SAMSUNG_POGO or _VENDOR_PORT)" >&2
+    exit 1
+fi
 for sym in "${required[@]}"; do
     if ! grep -qx "$sym=y" "$build_dir/.config"; then
         echo "required Kconfig symbol is not built-in: $sym" >&2

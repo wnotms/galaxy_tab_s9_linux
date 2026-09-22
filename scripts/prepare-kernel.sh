@@ -92,4 +92,15 @@ for drv in "$driver_src"/*.c; do
 done
 shopt -u nullglob
 
+# The vendor port is a directory, not a keyboard-*.c file, so it is copied as
+# one: Kbuild then descends into it through the entry patch 0009 adds.
+port_src="$repo_root/kernel/drivers/input/samsung-pogo"
+port_dest="$tree/drivers/input/keyboard/samsung-pogo"
+if [ -d "$port_src" ]; then
+    mkdir -p "$port_dest"
+    install -m 0644 "$port_src"/*.c "$port_src"/*.h "$port_dest/"
+    install -m 0644 "$port_src"/Kconfig "$port_dest/"
+    echo "installing samsung-pogo/ -> drivers/input/keyboard/samsung-pogo/"
+fi
+
 echo "prepared SM-X710 source overlay: $tree"
