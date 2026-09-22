@@ -1,31 +1,63 @@
 From: X710 bring-up <bringup@localhost>
-Subject: [PATCH] pinctrl: qcom: report the pogo pins' state when the TLMM probes
+Subject: [PATCH] pinctrl: qcom: sample the pogo pins at probe and thirty seconds in
 
-Every final state of these seven pins is known to match the stock kernel, and
-every host-side variable that could be set has been excluded (tests 075-079).
-What has never been looked at is the *transition*: what the bootloader leaves in
-the pin control registers, and whether this probe or anything before it passes
-through a state the keyboard's MCU never sees under stock.
+P3 of the plan asked for the pins' *transition* rather than their final state,
+and the last question in it is whether gpio10 - the pin the keyboard's rail
+switches - is really driven where the driver thinks it is.  Test 082 showed the
+MCU runs even with that pin held low, so the pin is not the MCU's supply but
+probably its level shifter's enable, and the pinconf state says output-low.
 
-Read-only, at probe, before any driver claims the pins: the control and IO
-registers of gpio10, 12, 13, 62, 72, 75 and 106.
+Two read-only samples, one-shot at probe and repeating every thirty seconds
+afterwards: the control and IO registers of gpio10, 12, 13, 62, 72, 75 and 106.
+The IO register holds the output value the TLMM is driving as well as the input
+bit, so the second sample says whether enabling the regulator moved the pin.
 ---
 diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 11db6564c..bb29115e6 100644
+index 11db6564c..a593d0055 100644
 --- a/drivers/pinctrl/qcom/pinctrl-msm.c
 +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1597,6 +1597,35 @@ int msm_pinctrl_probe(struct platform_device *pdev,
+@@ -1539,6 +1539,36 @@ SIMPLE_DEV_PM_OPS(msm_pinctrl_dev_pm_ops, msm_pinctrl_suspend,
+ 
+ EXPORT_SYMBOL(msm_pinctrl_dev_pm_ops);
+ 
++/*
++ * Bring-up diagnostic: the pogo keyboard's seven pins, sampled twice.
++ *
++ * The first sample, at probe, shows what the bootloader left in the control and
++ * IO registers before any driver owned them, and it is where the pins' addresses
++ * are collected.  The second, thirty seconds later, shows what they hold once the
++ * keyboard driver has enabled its rail and applied its own states: if a pinconf
++ * keeps a pin low, the regulator's write never shows, and the keyboard's level
++ * shifter would never be powered - one explanation of every NACK this project
++ * has recorded since test 046.
++ */
++static void __iomem *pogo_pin_regs[128];
++static void pogo_pin_report_work(struct work_struct *work);
++static DECLARE_DELAYED_WORK(msm_pogo_pin_report, pogo_pin_report_work);
++
++static void pogo_pin_report_work(struct work_struct *work)
++{
++	static const unsigned int watch[] = { 10, 12, 13, 62, 72, 75, 106 };
++	unsigned int w;
++
++	pr_info("pogo pins 30 s in:\n");
++	for (w = 0; w < ARRAY_SIZE(watch); w++) {
++		if (!pogo_pin_regs[watch[w]])
++			continue;
++		pr_info("  pin %u: io %#x\n", watch[w],
++			readl(pogo_pin_regs[watch[w]]));
++	}
++	schedule_delayed_work(&msm_pogo_pin_report, msecs_to_jiffies(30000));
++}
++
+ int msm_pinctrl_probe(struct platform_device *pdev,
+ 		      const struct msm_pinctrl_soc_data *soc_data)
+ {
+@@ -1597,6 +1627,31 @@ int msm_pinctrl_probe(struct platform_device *pdev,
  		return dev_err_probe(&pdev->dev, ret,
  				     "Couldn't register pinctrl driver\n");
  
-+	/*
-+	 * Bring-up diagnostic: what state did the bootloader leave the pogo
-+	 * keyboard's pins in, before any driver has touched them?  The final
-+	 * states are known to match the stock kernel (tests 055/064); whether
-+	 * this probe - or anything before it - passes through a state the
-+	 * keyboard's MCU never sees under stock is the one host-controlled
-+	 * question left (P3 of the plan, tests 075-079).
-+	 */
++	/* First sample: what the bootloader left, and where the pins live. */
 +	{
 +		static const unsigned int watch[] = { 10, 12, 13, 62, 72, 75, 106 };
 +		unsigned int g, k, w;
@@ -37,14 +69,17 @@ index 11db6564c..bb29115e6 100644
 +				for (w = 0; w < ARRAY_SIZE(watch); w++) {
 +					if (grp->grp.pins[k] != watch[w])
 +						continue;
++					pogo_pin_regs[watch[w]] =
++						pctrl->regs[grp->tile] + grp->io_reg;
 +					dev_info(&pdev->dev,
 +						 "pogo pin %u (%s) at probe: ctl %#x io %#x\n",
 +						 grp->grp.pins[k], grp->grp.name,
 +						 readl(pctrl->regs[grp->tile] + grp->ctl_reg),
-+						 readl(pctrl->regs[grp->tile] + grp->io_reg));
++						 readl(pogo_pin_regs[watch[w]]));
 +				}
 +			}
 +		}
++		schedule_delayed_work(&msm_pogo_pin_report, msecs_to_jiffies(30000));
 +	}
 +
  	for (i = 0; i < soc_data->nfunctions; i++) {
