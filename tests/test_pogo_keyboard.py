@@ -26,6 +26,8 @@ typedef int irqreturn_t;
 #define READ_ONCE(x) (x)
 struct input_dev { bool keybit[KEY_CNT]; };
 struct i2c_client { int dev; };
+#define msecs_to_jiffies(ms) ((unsigned long)(ms))
+struct delayed_work { int unused; };
 struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  int lock; int *connected; bool powered, ready; u8 caps;
  bool observe_only; unsigned int announce_seen;  bool rearm_pending;
@@ -37,6 +39,8 @@ struct samsung_pogo { struct input_dev *input; struct i2c_client *client;
  bool irq_armed;
  unsigned int poll_tick;
  u8 rearm_mode;
+ struct delayed_work hello_work;
+ unsigned int hello_tries;
 };
 static u8 wire[128];
 /* The handler now gates on the line being asserted, as stock's ISR does. */
@@ -44,6 +48,9 @@ static int pogo_announce_level(struct samsung_pogo *p) { return 1; }
 static int pos, available, short_read, reports, releases, hellos, writes;
 static int codes[50], values[50];
 static unsigned int get_unaligned_le16(const u8 *p) { return p[0] | (p[1]<<8); }
+static int mod_delayed_work(void *wq, struct delayed_work *w, unsigned long d)
+{ (void)wq; (void)w; (void)d; return 1; }
+#define system_percpu_wq ((void *)0)
 static void mutex_lock(int *x) { (void)x; }
 static void mutex_unlock(int *x) { (void)x; }
 static int gpiod_get_value_cansleep(int *x) { return *x; }

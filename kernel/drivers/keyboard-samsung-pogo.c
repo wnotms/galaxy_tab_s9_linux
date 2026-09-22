@@ -84,6 +84,8 @@ struct samsung_pogo {
 	/* Logical level of the connect line at the last 250 ms check. */
 	bool connect_state;
 	struct delayed_work conn_check_work;
+	struct delayed_work hello_work;
+	unsigned int hello_tries;
 	bool rearm_pending;
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
@@ -776,6 +778,51 @@ static void pogo_conn_check_work(struct work_struct *work)
 	dev_info(&p->client->dev,
 		 "pogo: hot reconnect: rail on, DATA %s, no reset (stock model)\n",
 		 arm ? "armed" : "already armed");
+}
+
+/*
+ * Stock retries the handshake instead of giving up: stm32_dev_isr() sets
+ * check_ic_flag and schedules check_ic_work() 10 ms out when the version read
+ * fails.  The same thing happens here after a hot reconnect - the application
+ * announces before it is ready to be read, the header write is NACKed and the
+ * keyboard would stay silent.  This retries the *read* only: no reset, no rail
+ * change, no 0x51 access, and it stops after a few attempts.
+ */
+#define POGO_HELLO_TRIES	5
+
+static void pogo_hello_work(struct work_struct *work)
+{
+	struct samsung_pogo *p = container_of(to_delayed_work(work),
+					     struct samsung_pogo, hello_work);
+	int ret;
+
+	mutex_lock(&p->lock);
+	if (!p->powered || !p->event_enabled) {
+		mutex_unlock(&p->lock);
+		return;
+	}
+	ret = pogo_read_mcu(p);
+	if (!ret)
+		pogo_stock_tail(p);
+	mutex_unlock(&p->lock);
+	if (ret) {
+		if (++p->hello_tries < POGO_HELLO_TRIES) {
+			dev_info(&p->client->dev,
+				 "handshake retry %u/%u failed (%d)\n",
+				 p->hello_tries, POGO_HELLO_TRIES, ret);
+			mod_delayed_work(system_percpu_wq, &p->hello_work,
+					 msecs_to_jiffies(100));
+		} else {
+			dev_info(&p->client->dev,
+				 "handshake gave up after %u attempts\n",
+				 p->hello_tries);
+		}
+	} else {
+		dev_info(&p->client->dev,
+			 "handshake completed after %u retr%s\n", p->hello_tries,
+			 p->hello_tries == 1 ? "y" : "ies");
+		p->hello_tries = 0;
+	}
 }
 
 static irqreturn_t pogo_connect_irq(int irq, void *data)
@@ -1498,6 +1545,13 @@ static irqreturn_t pogo_irq(int irq, void *data)
 error:
 	pogo_release_keys(p);
 	dev_err_ratelimited(&p->client->dev, "event transfer failed: %d\n", ret);
+	/*
+	 * The application announced but was not ready to be read - exactly the
+	 * state right after a hot reconnect.  Retry the handshake the way stock
+	 * does; nothing about the power or the reset line changes.
+	 */
+	p->hello_tries = 0;
+	mod_delayed_work(system_percpu_wq, &p->hello_work, msecs_to_jiffies(100));
 	/* Avoid a tight level-low interrupt storm on a failed bus. */
 	msleep(20);
 out:
@@ -1560,6 +1614,7 @@ static void pogo_stop(void *data)
 
 	disable_irq(p->connect_irq);
 	device_remove_file(&p->client->dev, &dev_attr_rearm);
+	cancel_delayed_work_sync(&p->hello_work);
 	cancel_delayed_work_sync(&p->conn_check_work);
 	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
@@ -1592,6 +1647,7 @@ static int pogo_probe(struct i2c_client *client)
 	INIT_DELAYED_WORK(&p->connect_work, pogo_connect_work);
 	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
 	INIT_DELAYED_WORK(&p->conn_check_work, pogo_conn_check_work);
+	INIT_DELAYED_WORK(&p->hello_work, pogo_hello_work);
 	if (device_create_file(&client->dev, &dev_attr_rearm))
 		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
