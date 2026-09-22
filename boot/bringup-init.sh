@@ -1035,8 +1035,15 @@ start_panel_shell()
         log 'panel shell: a rootfs boot was requested; leaving tty1 to the rootfs'
         return 0
     fi
+    # Wait briefly for the VT to appear: /dev/tty1 is normally there by this
+    # point, but a slow DRM/fbcon bring-up must not cost the panel its shell.
+    i=0
+    while [ "$i" -lt 10 ] && [ ! -c /dev/tty1 ]; do
+        sleep 1
+        i=$((i + 1))
+    done
     if [ ! -c /dev/tty1 ]; then
-        log 'WARN: /dev/tty1 unavailable; panel shell not started'
+        log 'WARN: /dev/tty1 unavailable after 10 s; panel shell not started'
         return 0
     fi
 
