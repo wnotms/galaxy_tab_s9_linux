@@ -1,0 +1,48 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] i2c: qcom-geni: log the bus line levels when a transfer fails
+
+geni_i2c_err_misc() already reads SE_GENI_IOS - the SDA and SCL line levels -
+but only prints it with dev_dbg, which is compiled out here, so a failed
+transfer reports nothing but -ENXIO.
+
+That ambiguity has cost several hardware tests.  The driver this board's stock
+kernel uses on this bus (i2c-msm-geni.c, CONFIG_I2C_MSM_GENI) reads the same
+register before every transfer and returns -ENXIO when SCL and SDA are not both
+high - "IO lines in bad state, Power the slave" - so -ENXIO can mean either a
+real address NACK or a bus that something is holding down, and this port has
+never been able to tell them apart: its own line-level diagnostics cannot claim
+gpio72/106 while the controller owns them and print -1 instead.
+
+Print the line levels, the master command and the GENI status at info level on
+the error path.  The check, the error codes and the recovery path are untouched.
+---
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index d2f5055b0..5953b2a7a 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -234,10 +234,21 @@ static void geni_i2c_err_misc(struct geni_i2c_dev *gi2c)
+ 		rx_st = readl_relaxed(gi2c->se.base + SE_GENI_RX_FIFO_STATUS);
+ 		tx_st = readl_relaxed(gi2c->se.base + SE_GENI_TX_FIFO_STATUS);
+ 	}
+-	dev_dbg(gi2c->se.dev, "DMA:%d tx_stat:0x%x, rx_stat:0x%x, irq-stat:0x%x\n",
+-		dma, tx_st, rx_st, m_stat);
+-	dev_dbg(gi2c->se.dev, "m_cmd:0x%x, geni_status:0x%x, geni_ios:0x%x\n",
+-		m_cmd, geni_s, geni_ios);
++	/*
++	 * Bits 0 and 1 of SE_GENI_IOS are the SDA and SCL line levels: 0x3 means
++	 * both are high, i.e. an idle bus, so a failure is a real address NACK;
++	 * anything else means something is holding a line down.  This is the
++	 * distinction the downstream driver this board's stock kernel uses makes
++	 * before every transfer, and it is invisible at dev_dbg here.
++	 */
++	dev_info(gi2c->se.dev, "DMA:%d tx_stat:0x%x, rx_stat:0x%x, irq-stat:0x%x\n",
++		 dma, tx_st, rx_st, m_stat);
++	dev_info(gi2c->se.dev,
++		 "m_cmd:0x%x, geni_status:0x%x, geni_ios:0x%x (%s)\n",
++		 m_cmd, geni_s, geni_ios,
++		 (geni_ios & 0x3) == 0x3 ? "scl/sda high, idle bus" :
++					   "scl/sda NOT both high");
++
+ }
+ 
+ static void geni_i2c_err(struct geni_i2c_dev *gi2c, int err)
