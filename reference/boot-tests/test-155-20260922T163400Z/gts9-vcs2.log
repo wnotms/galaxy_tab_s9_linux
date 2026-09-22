@@ -1,0 +1,17 @@
+2026-09-22T16:33:45Z console open on COM17
+2026-09-22T16:33:46Z RECV  echo READY1
+2026-09-22T16:33:46Z RECV  READY1
+2026-09-22T16:33:46Z shell answered after 1 poll(s)
+2026-09-22T16:33:46Z SENT  cat /dev/vcs1 | tr -d "\000" | tr -s " " | head -c 500; echo "=== which tty each shell owns ==="; for p in 707 709; do printf "pid %s: " "$p"; ls -l /proc/$p/fd/0 2>/dev/null | sed "s/.*-> //"; done; echo "=== shell parents ==="; for p in 707 709; do printf "pid %s ppid: " "$p"; awk "/^PPid:/{print \$2}" /proc/$p/status 2>/dev/null; done
+2026-09-22T16:34:01Z RECV  gts9# [6ncat /dev/vcs1 | tr -d "\000" | tr -s " " | head -c 500; echo "=== which tt
+2026-09-22T16:34:01Z RECV  y each shell owns ==="; for p in 707 709; do printf "pid %s: " "$p"; ls -l /proc
+2026-09-22T16:34:01Z RECV  /$p/fd/0 2>/dev/null | sed "s/.*-> //"; done; echo "=== shell parents ==="; for
+2026-09-22T16:34:01Z RECV  p in 707 709; do printf "pid %s ppid: " "$p"; awk "/^PPid:/{print \$2}" /proc/$p
+2026-09-22T16:34:01Z RECV  /status 2>/dev/null; done
+2026-09-22T16:34:01Z RECV   GTS9 mainline Linux 7.2.0-rc3-gts9wifi-dirty Local shell: tty1 Kernel log: dmesg USB shell: /dev/ttyGS0 BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash) Enter 'help' for a list of built-in commands. gts9# gts9# ls bin dev etc init lib proc root run sbin sys tmp gts9# echo hello hello gts9# uname -a Linux (none) 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux gts9# lsbl === which tty each shell owns ===
+2026-09-22T16:34:01Z RECV  pid 707: /dev/ttyGS0
+2026-09-22T16:34:01Z RECV  pid 709: /dev/tty1
+2026-09-22T16:34:01Z RECV  === shell parents ===
+2026-09-22T16:34:01Z RECV  pid 707 ppid: 1
+2026-09-22T16:34:01Z RECV  pid 709 ppid: 706
+2026-09-22T16:34:01Z console run done (ready=True)

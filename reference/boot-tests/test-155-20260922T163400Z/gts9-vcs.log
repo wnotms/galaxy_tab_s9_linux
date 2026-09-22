@@ -1,0 +1,26 @@
+2026-09-22T16:33:23Z console open on COM17
+2026-09-22T16:33:24Z RECV  echo READY1
+2026-09-22T16:33:24Z RECV  READY1
+2026-09-22T16:33:24Z shell answered after 1 poll(s)
+2026-09-22T16:33:24Z SENT  echo "=== tty1 screen buffer (/dev/vcs1) ==="; cat /dev/vcs1 | tr -d "\000" | head -c 300; echo; echo "=== shells and VTs ==="; ps | grep -aE "sh|PID" | head -8; echo "=== tty nodes ==="; ls -l /dev/tty1 /dev/ttyGS0 2>&1; echo "=== active VT ==="; cat /sys/class/tty/tty0/active
+2026-09-22T16:33:38Z RECV  gts9# [6necho "=== tty1 screen buffer (/dev/vcs1) ==="; cat /dev/vcs1 | tr -d "\000
+2026-09-22T16:33:38Z RECV  " | head -c 300; echo; echo "=== shells and VTs ==="; ps | grep -aE "sh|PID" | h
+2026-09-22T16:33:38Z RECV  ead -8; echo "=== tty nodes ==="; ls -l /dev/tty1 /dev/ttyGS0 2>&1; echo "=== ac
+2026-09-22T16:33:38Z RECV  tive VT ==="; cat /sys/class/tty/tty0/active
+2026-09-22T16:33:38Z RECV  === tty1 screen buffer (/dev/vcs1) ===
+2026-09-22T16:33:38Z RECV                                                                                                                                                                  GTS9 mainline
+2026-09-22T16:33:38Z RECV  === shells and VTs ===
+2026-09-22T16:33:38Z RECV  PID   USER     COMMAND
+2026-09-22T16:33:38Z RECV      1 0        {init} /bin/sh /init
+2026-09-22T16:33:38Z RECV    152 0        [irq/183-ufshcd]
+2026-09-22T16:33:38Z RECV    153 0        [disp_snapshot]
+2026-09-22T16:33:38Z RECV    326 0        {init} /bin/sh /init
+2026-09-22T16:33:38Z RECV    706 0        {init} /bin/sh /init
+2026-09-22T16:33:38Z RECV    707 0        /bin/sh -i
+2026-09-22T16:33:38Z RECV    709 0        /bin/sh -i
+2026-09-22T16:33:38Z RECV  === tty nodes ===
+2026-09-22T16:33:38Z RECV  crw-------    1 0        0           4,   1 Sep 17 04:27 /dev/tty1
+2026-09-22T16:33:38Z RECV  crw-------    1 0        0         234,   0 Sep 17 04:28 /dev/ttyGS0
+2026-09-22T16:33:38Z RECV  === active VT ===
+2026-09-22T16:33:38Z RECV  tty1
+2026-09-22T16:33:38Z console run done (ready=True)
