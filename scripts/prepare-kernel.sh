@@ -13,6 +13,12 @@ git -C "$tree" rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
 [ -f "$dts_src" ] || { echo "missing board DTS: $dts_src" >&2; exit 1; }
 
 shopt -s nullglob
+# Start from the pinned upstream state every time: an interrupted or failed
+# run leaves patches and copied drivers behind, and re-applying them then
+# fails on context that is already there.
+git -C "$tree" checkout -- . 2>/dev/null || true
+git -C "$tree" clean -fdq -- arch drivers include 2>/dev/null || true
+
 for patch in "$patch_dir"/*.patch; do
     if git -C "$tree" apply --reverse --check "$patch" >/dev/null 2>&1; then
         echo "already applied: ${patch##*/}"
@@ -80,6 +86,7 @@ panel_dir="$tree/drivers/gpu/drm/panel"
 # Overlay drivers go where their subsystem expects them: a DRM panel has to sit
 # next to the other panels for Kbuild to pick it up with the patch queue's
 # Kconfig/Makefile entry.
+
 shopt -s nullglob
 for drv in "$driver_src"/*.c; do
     case "${drv##*/}" in
@@ -93,13 +100,34 @@ done
 shopt -u nullglob
 
 # The vendor port is a directory, not a keyboard-*.c file, so it is copied as
-# one: Kbuild then descends into it through the entry patch 0009 adds.
+# one and Kbuild is pointed at it here rather than by a patch: the two lines
+# below have to land after whatever added the mainline port's symbol, and doing
+# it in the overlay keeps that independent of patch order and context.
 port_src="$repo_root/kernel/drivers/input/samsung-pogo"
 port_dest="$tree/drivers/input/keyboard/samsung-pogo"
 if [ -d "$port_src" ]; then
     mkdir -p "$port_dest"
     install -m 0644 "$port_src"/*.c "$port_src"/*.h "$port_dest/"
-    install -m 0644 "$port_src"/Kconfig "$port_dest/"
+    install -m 0644 "$port_src"/Kconfig "$port_src"/Makefile "$port_dest/"
+
+    kb_kconfig="$tree/drivers/input/keyboard/Kconfig"
+    if ! grep -q 'samsung-pogo/Kconfig' "$kb_kconfig"; then
+        python3 - "$kb_kconfig" <<'PYEOF'
+import pathlib, sys
+p = pathlib.Path(sys.argv[1])
+s = p.read_text()
+i = s.rstrip().rfind('\nendif')
+s = s[:i] + '\nsource "drivers/input/keyboard/samsung-pogo/Kconfig"\n' + s[i:]
+p.write_text(s)
+PYEOF
+    fi
+
+    kb_makefile="$tree/drivers/input/keyboard/Makefile"
+    if ! grep -q 'SAMSUNG_POGO_VENDOR_PORT' "$kb_makefile"; then
+        printf 'obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT) += samsung-pogo/\n' \
+            >> "$kb_makefile"
+    fi
+
     echo "installing samsung-pogo/ -> drivers/input/keyboard/samsung-pogo/"
 fi
 

@@ -64,3 +64,63 @@ void msm_bus_scale_unregister_client(void *client)
 {
 }
 EXPORT_SYMBOL_GPL(msm_bus_scale_unregister_client);
+
+/*
+ * The vendor files left out of this port: the two child input devices, the
+ * notifier module and the voting module.  The bring-up path calls into them
+ * only after - or beside - the MCU handshake, so they are stubs here and the
+ * A/B still answers its question.  Their signatures are copied from the
+ * vendor's own header.
+ */
+int boot_module_id;
+
+void stm32_send_conn_noti(struct stm32_dev *stm32)
+{
+}
+
+void pogo_set_conn_state(int state)
+{
+}
+
+void stm32_register_notify(struct stm32_dev *stm32)
+{
+}
+
+void stm32_unregister_notify(struct stm32_dev *stm32)
+{
+}
+
+int stm32_init_voting(struct stm32_dev *stm32)
+{
+	return 0;
+}
+
+void stm32_destroy_voting(struct stm32_dev *stm32)
+{
+}
+
+void stm32_voting_remove(struct stm32_dev *stm32)
+{
+}
+
+void stm32_voting_suspend(struct stm32_dev *stm32)
+{
+}
+
+int stm32_pogo_kpd_init(void)
+{
+	return 0;
+}
+
+void stm32_pogo_kpd_exit(void)
+{
+}
+
+int stm32_pogo_touchpad_init(void)
+{
+	return 0;
+}
+
+void stm32_pogo_touchpad_exit(void)
+{
+}
