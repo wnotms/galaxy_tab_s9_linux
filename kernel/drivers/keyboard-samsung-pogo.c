@@ -1498,9 +1498,11 @@ static int pogo_probe(struct i2c_client *client)
 	 * would re-arm - and so disturb - the keyboard the boot path just brought
 	 * up.  Only instability followed by stability is a re-seat.
 	 */
+	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
+	if (IS_ERR(p->connected))
+		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
 	p->conn_attached = true;
 	p->conn_level = gpiod_get_value_cansleep(p->connected);
-	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
 	if (IS_ERR(p->connected))
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
