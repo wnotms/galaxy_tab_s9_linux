@@ -1982,7 +1982,15 @@
 		 * regulator keeps the ordering the pin state was for - the
 		 * regulator drives it low at probe and the driver's enable raises
 		 * it - and lets that enable actually reach the pad.
+		 *
+		 * This measurement goes further: high from the earliest moment the
+		 * TLMM can drive it.  The MCU turns out to be powered independently
+		 * of this pin (test 082), so if its application checks anything fed
+		 * by this rail at its own power-up - which happens at tablet
+		 * power-on, before any driver - then a pin that rises later never
+		 * helps it.  output-high is the only way to have it high then.
 		 */
+		output-high;
 		bias-disable;
 	};
 
