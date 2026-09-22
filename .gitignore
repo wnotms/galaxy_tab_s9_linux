@@ -9,5 +9,9 @@ out/
 *.ko
 *.dtb.tmp
 
+# Host-test bytecode, from running tests/ with unittest.
+__pycache__/
+*.pyc
+
 # Physical-test evidence must be versioned, including raw .log files.
 !reference/boot-tests/**/*.log
