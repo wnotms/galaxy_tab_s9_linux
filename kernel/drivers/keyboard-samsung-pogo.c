@@ -45,6 +45,8 @@
 #define POGO_IC_VERSION_OFFSET		0x08000200
 /* How often the application is polled while it starts. */
 #define POGO_POLL_INTERVAL_MS		250
+/* How long the MCU's bus is left alone after its power-up. */
+#define POGO_FIRST_POLL_SILENCE_MS	30000
 /* The MCU's option bytes, at the address in Samsung's stm32_memory_map. */
 #define POGO_OPTION_BYTE_OFFSET		0x1FFF7800
 /* Samsung's header inside the firmware image; the magic there is "STM32". */
@@ -191,7 +193,19 @@ static void pogo_connect_work(struct work_struct *work)
 			msleep(150);
 			dev_info(&p->client->dev,
 				 "MCU powered up with BOOT0 low and NRST released\n");
-			/* Now let the application answer on its own. */
+			/*
+			 * Leave the bus alone first.  Stock's driver does not talk
+			 * to the MCU until its connect work runs tens of seconds
+			 * into the boot, and every mainline attempt so far has
+			 * polled from the first seconds on.  If the application's
+			 * I2C slave latches an error from traffic it sees while it
+			 * is still starting, continuous polling would keep it from
+			 * ever coming up.
+			 */
+			dev_info(&p->client->dev,
+				 "leaving the MCU bus silent for %u ms before the first poll\n",
+				 POGO_FIRST_POLL_SILENCE_MS);
+			msleep(POGO_FIRST_POLL_SILENCE_MS);
 			ret = pogo_read_mcu(p);
 			if (!ret) {
 				dev_info(&p->client->dev,

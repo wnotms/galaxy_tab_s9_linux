@@ -88,6 +88,7 @@ typedef uint16_t u16;
 #define POGO_MODE_DFU 2
 #define POGO_IC_VERSION_OFFSET 0x08000200
 #define POGO_POLL_INTERVAL_MS 250
+#define POGO_FIRST_POLL_SILENCE_MS 30000
 #define dev_info(...) ((void)0)
 #define dev_info_ratelimited(...) ((void)0)
 #define dev_err(...) ((void)0)
@@ -250,7 +251,10 @@ int main(void) {
     the bootloader is never entered. */
  clear(&p); startup_delay = 2000;
  pogo_connect_work(&p.connect_work.work);
- assert(p.ready && resets == 1 && !entries && recoveries == 1 && jiffies >= 2000 && jiffies < 2300);
+ /* The bus is left silent first (30 s), then one poll finds the application:
+    one power-up reset, no bootloader visit, one bus-recovery log. */
+ assert(p.ready && resets == 1 && !entries && !recoveries &&
+        jiffies >= 30220 && jiffies < 31000);
  /* Absence is bounded, and polling itself never manipulates reset or bus. */
  clear(&p);
  assert(pogo_wait_application(&p, "test", 5000) == -ENXIO);
