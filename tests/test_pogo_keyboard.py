@@ -97,4 +97,6 @@ int main(void) {
 
 if __name__ == '__main__':
     unittest.main() unsigned int stuck_fails;
+ int conn_level;
+ unsigned long last_rearm;
 

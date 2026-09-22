@@ -82,6 +82,9 @@ struct samsung_pogo {
 	/* Re-seat detection: the connect line floats while the cover is off. */
 	bool conn_attached;
 	bool rearm_pending;
+	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
+	int conn_level;
+	unsigned long last_rearm;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
@@ -533,7 +536,7 @@ out:
  * cleared so the proven bring-up path (app-entry reset, rail, arm DATA) runs again
  * through pogo_connect_work() rather than a second copy of it.
  */
-#define POGO_WATCH_MS		5000
+#define POGO_WATCH_MS		2000
 #define POGO_WATCH_FAILS	3
 
 static void pogo_watch_work(struct work_struct *work)
@@ -563,6 +566,31 @@ static void pogo_watch_work(struct work_struct *work)
 			msleep(20);
 			if (gpiod_get_value_cansleep(p->connected) != level)
 				stable = false;
+		}
+		/*
+		 * Re-seat detection that does not depend on the line being noisy when
+		 * the cover is away.  Test 104 measured that assumption failing: a
+		 * physical unplug/replug happened with no "cover re-seated" line at
+		 * all, so the unstable-to-stable transition never occurred and nothing
+		 * re-armed.  Any level change of the connect line is now treated as a
+		 * physical event, rate-limited to one re-arm per ten seconds so a
+		 * floating line cannot turn into a reset storm.
+		 */
+		if (level != p->conn_level) {
+			p->conn_level = level;
+			if (time_after(jiffies, p->last_rearm +
+				       msecs_to_jiffies(10000))) {
+				p->last_rearm = jiffies;
+				dev_info(&p->client->dev,
+					 "connect line changed to %d; re-arming (rate-limited)\n",
+					 level);
+				rearm = true;
+				p->rearm_pending = true;
+				p->powered = false;
+				p->event_enabled = false;
+				p->ready = false;
+				p->poll_fails = 0;
+			}
 		}
 		if (stable && !p->conn_attached) {
 			dev_info(&p->client->dev,
