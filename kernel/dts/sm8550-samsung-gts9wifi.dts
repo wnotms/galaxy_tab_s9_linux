@@ -1945,6 +1945,9 @@
 		stm32,model_name = "EF-DX715", "EF-DX710";
 		stm32,model_name_row = "EF-DT870", "EF-DT630";
 		stm32,fw_name = "keyboard_stm/stm32_gts9family.bin";
+		stm32,fota_fw_path = "keyboard_stm";
+		stm32,i2c-burstmax = <32>;
+		support_open_close;
 		samsung,stop-after-trans;
 		pinctrl-names = "default", "recovery";
 		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;
