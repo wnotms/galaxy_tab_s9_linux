@@ -13,9 +13,9 @@
 #include <linux/interrupt.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
-#include <linux/gpio.h>
+#include <linux/gpio/consumer.h>
 #include <linux/of.h>
-#include <linux/of_gpio.h>
+#include <linux/pinctrl/consumer.h>
 #include <linux/regulator/consumer.h>
 #include <linux/unaligned.h>
 #include <linux/workqueue.h>
@@ -33,9 +33,10 @@ struct samsung_pogo {
 	struct gpio_desc *connected;
 	struct gpio_desc *swclk;
 	struct gpio_desc *nrst;
-	/* Global GPIO numbers, read unclaimed like the vendor driver does. */
-	int sda;
-	int scl;
+	struct pinctrl *pinctrl;
+	struct pinctrl_state *bus_gpio;
+	struct gpio_desc *sda;
+	struct gpio_desc *scl;
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
@@ -175,6 +176,65 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
 }
 
 /*
+ * Free a bus the keyboard may be holding, and report the line levels.
+ *
+ * The controller's two pins are multiplexed to qup2_se7, so gpiolib will not hand
+ * them out while that state is selected; the "recovery" pinctrl state moves them
+ * to plain GPIOs for the duration.  Nine clocks plus a STOP is the standard I2C
+ * bus recovery, and the levels printed here are the measurement Samsung's own
+ * driver takes when a transfer fails.
+ */
+static void pogo_recover_bus(struct samsung_pogo *p)
+{
+	struct gpio_desc *sda, *scl;
+	int i;
+
+	if (!p->bus_gpio)
+		return;
+	if (pinctrl_select_state(p->pinctrl, p->bus_gpio))
+		return;
+
+	sda = gpiod_get_optional(p->client->dev, "sda", GPIOD_IN);
+	scl = gpiod_get_optional(p->client->dev, "scl", GPIOD_IN);
+	if (IS_ERR(sda))
+		sda = NULL;
+	if (IS_ERR(scl))
+		scl = NULL;
+
+	dev_info(&p->client->dev, "bus before recovery: scl:%d sda:%d conn:%d\n",
+		 scl ? gpiod_get_value_cansleep(scl) : -1,
+		 sda ? gpiod_get_value_cansleep(sda) : -1,
+		 gpiod_get_value_cansleep(p->connected));
+
+	if (sda && scl) {
+		gpiod_direction_output(scl, 1);
+		gpiod_direction_output(sda, 1);
+		for (i = 0; i < 9; i++) {
+			gpiod_set_value_cansleep(scl, 0);
+			udelay(5);
+			gpiod_set_value_cansleep(scl, 1);
+			udelay(5);
+		}
+		/* STOP: SDA released while SCL is high. */
+		gpiod_set_value_cansleep(sda, 0);
+		udelay(5);
+		gpiod_set_value_cansleep(scl, 1);
+		udelay(5);
+		gpiod_set_value_cansleep(sda, 1);
+		udelay(5);
+
+		dev_info(&p->client->dev, "bus after recovery: scl:%d sda:%d\n",
+			 gpiod_get_value_cansleep(scl),
+			 gpiod_get_value_cansleep(sda));
+		gpiod_put(sda);
+		gpiod_put(scl);
+	}
+
+	pinctrl_select_state(p->pinctrl,
+			     pinctrl_lookup_state(p->pinctrl, "default"));
+}
+
+/*
  * What is actually on this bus?
  *
  * The stock firmware answers at 0x2a on the same controller and the same two
@@ -215,6 +275,9 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 	u8 version[4], mode;
 	int ret, i;
 
+	/* The bootloader can leave the bus held; free it before talking. */
+	pogo_recover_bus(p);
+
 	for (i = 0; i < 40; i++) {
 		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
 				    sizeof(version));
@@ -229,8 +292,8 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		dev_info_ratelimited(&p->client->dev,
 				     "attempt %d failed: scl:%d sda:%d conn:%d\n",
 				     i,
-				     gpio_is_valid(p->scl) ? gpio_get_value(p->scl) : -1,
-				     gpio_is_valid(p->sda) ? gpio_get_value(p->sda) : -1,
+				     p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
+				     p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
 				     gpiod_get_value_cansleep(p->connected));
 		/*
 		 * Samsung's retry loop pulses NRST again on every failed attempt
@@ -420,13 +483,19 @@ static int pogo_probe(struct i2c_client *client)
 	 * reading the input buffer is how Samsung's driver reports a held bus.
 	 */
 	/*
-	 * The I2C lines, as numbers rather than claimed descriptors: the pins
-	 * are multiplexed to the controller, so gpiolib refuses to hand them out
-	 * (-EINVAL) - but its input buffer still reads the line, which is what
-	 * Samsung's driver relies on when it prints scl/sda on a failed transfer.
+	 * A pinctrl state that moves the controller's SDA/SCL back to plain
+	 * GPIOs, for bus recovery.  The pins belong to qup2_se7 the rest of the
+	 * time, which is why gpiolib refuses to hand them out while that state
+	 * is selected.
 	 */
-	p->sda = of_get_named_gpio(dev->of_node, "sda-gpios", 0);
-	p->scl = of_get_named_gpio(dev->of_node, "scl-gpios", 0);
+	p->pinctrl = devm_pinctrl_get(dev);
+	if (IS_ERR(p->pinctrl)) {
+		p->pinctrl = NULL;
+	} else {
+		p->bus_gpio = pinctrl_lookup_state(p->pinctrl, "recovery");
+		if (IS_ERR(p->bus_gpio))
+			p->bus_gpio = NULL;
+	}
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
 		return dev_err_probe(dev, PTR_ERR(p->vdd), "vdd supply\n");

@@ -1914,8 +1914,10 @@
 		sda-gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
 		scl-gpios = <&tlmm 106 GPIO_ACTIVE_HIGH>;
 		vdd-supply = <&vreg_pogo>;
-		pinctrl-names = "default";
+		pinctrl-names = "default", "recovery";
 		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;
+		/* Moves the controller's SDA/SCL to plain GPIOs for bus recovery. */
+		pinctrl-1 = <&pogo_bus_gpio>;
 	};
 };
 
@@ -1939,6 +1941,14 @@
 		 */
 		output-high;
 		bias-disable;
+	};
+
+	pogo_bus_gpio: pogo-bus-gpio-state {
+		pins = "gpio72", "gpio106";
+		function = "gpio";
+		drive-strength = <2>;
+		input-enable;
+		bias-pull-up;
 	};
 
 	pogo_irq: pogo-irq-state {
