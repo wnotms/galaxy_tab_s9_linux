@@ -51,3 +51,27 @@ Also decided: the owner wants a `serial-getty@ttyMSM0` so the Windows serial con
 host a shell in Debian as well, which needs one file inside the rootfs - their explicit
 authorisation for this change, since the stage normally forbids touching the card's
 contents.
+
+## Owner confirmations (the three key items)
+
+```
+Debian GNU/Linux 13 (trixie)
+systemd
+/dev/mmcblk1p1
+```
+
+That closes the chain the task asked for, each link observed on hardware:
+
+```
+Samsung ABL -> mainline boot.img -> SM-X710 DTB -> this initramfs
+  -> /dev/mmcblk1p1 (ext4, mounted rw on /newroot)
+  -> switch_root -> systemd as PID 1 -> getty@tty1 on the panel
+  -> EF-DX710 keyboard login -> Debian shell
+```
+
+The goal is met.  Still open by the owner's own choice, not by failure: the serial console
+in Debian has kernel output but no userspace shell, so they decided to enable
+`serial-getty@ttyMSM0.service` from the tty1 session
+(`sudo systemctl enable --now serial-getty@ttyMSM0.service`), which is a one-file change
+inside the rootfs; the initramfs deliberately does not write to the rootfs, so that stays a
+manual step unless they ask for it to be automated.
