@@ -155,12 +155,21 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   `stm32_dev_firmware_update_menu(stm32, 0)`; the application interface at 0x2a is
   used only after that, and `client->addr != 0x51` guards the driver's power-reset
   and connect-state paths.
-  **Next step:** implement that handshake - instantiate 0x51, run the
-  `sysboot_connect` pin dance (NRST low, SWCLK high, release, SWCLK low), send the
-  SYNC frame - and see whether the MCU answers there.  Answering means the part is
-  alive and only has to be moved into the application; a NAK there too means it is
-  unpowered and the question leaves the driver for the connector's supply.  No key
-  has been typed through this driver yet.
+  Round 4 implemented that handshake and it answered: `MCU bootloader took the
+  0xFF sync`, then `MCU bootloader version 0x12`.  **The MCU is powered and
+  executing** - rail, bus, pins and address are all correct, and the whole
+  power/supply line of investigation is closed.  What does not happen is the
+  *application*: after the vendor's `sysboot_disconnect()` sequence the bootloader
+  goes quiet and 0x2a never answers, which is what a boot-mode selection problem
+  looks like.
+  **Next step:** send the bootloader's jump command `STM32_BOOT_I2C_CMD_GO` (0x21)
+  to 0x51 after the version read, then read 0x2a again.  Stock has the case but
+  never sends it, so the vendor relies on reset-with-SWCLK-low alone - which is
+  exactly what is not working here.  Also worth ruling out if the application
+  comes up and then dies: mainline's `dmic45-default-state` muxes **gpio12/13** to
+  `dmic3_clk`/`dmic4_data`, the same pins as the keyboard's SWCLK and NRST (they
+  are ours today, but TWRP never probes audio and mainline does).  No key has been
+  typed through this driver yet.
 - **Physical tests need a recorded owner request (2026-09-22).** The test 040
   flash was made on one and tests 041-045 continued under the same recorded
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or

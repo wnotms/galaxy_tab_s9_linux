@@ -1,0 +1,11 @@
+2026-09-22T03:00:08Z console open on COM17
+2026-09-22T03:00:11Z SENT  dmesg | grep -i -e "bootloader" -e "MCU model" -e "no answer" -e "answers at" | tail -6
+2026-09-22T03:00:11Z RECV  dmesg | grep -i -e "bootloader" -e "MCU model" -e "no answer" -e "answers
+2026-09-22T03:00:11Z RECV  at" | tail -6
+2026-09-22T03:00:11Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T03:00:11Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T03:00:11Z RECV  [    4.086091][   T63] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T03:00:11Z RECV  [    4.438800][   T63] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T03:00:11Z RECV  [    8.215872][   T63] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T03:00:11Z RECV  [    8.273392][   T63] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+2026-09-22T03:00:20Z console session done

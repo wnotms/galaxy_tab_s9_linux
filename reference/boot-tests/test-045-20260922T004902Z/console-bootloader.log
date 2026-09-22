@@ -1,0 +1,8 @@
+2026-09-22T02:55:23Z console open on COM17
+2026-09-22T02:55:26Z SENT  dmesg | grep -i -e "bootloader" -e "0xFF sync" -e "no answer" | tail -5
+2026-09-22T02:55:26Z RECV  dmesg | grep -i -e "bootloader" -e "0xFF sync" -e "no answer" | tail -5
+2026-09-22T02:55:26Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T02:55:26Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T02:55:26Z RECV  [    4.096931][   T39] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync: the part is powered and executing
+2026-09-22T02:55:26Z RECV  [    7.668193][   T39] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+2026-09-22T02:55:35Z console session done

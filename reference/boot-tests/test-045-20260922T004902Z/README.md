@@ -242,3 +242,51 @@ do that pin dance, write `0xFF`, read one byte.  ACK means the part is alive and
 only has to be moved into the application (SWCLK low, NRST pulse - which the
 driver already does); NACK means the MCU is unpowered and the problem is the
 connector's supply, not the driver.
+
+## Round 4: the MCU is alive - its bootloader answers
+
+Implementing the 0x51 handshake settled the biggest open question.  The driver now
+instantiates the bootloader client, holds SWCLK high across an NRST pulse as
+`stm32_sysboot_connect()` does, writes the single `0xFF` sync, then re-enters boot
+mode and reads the version, exactly as stock does:
+
+```
+[    4.086091] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+[    4.438800] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+[    8.215872] samsung-pogo-keyboard 5-002a: no answer from the MCU after 40 resets (-6)
+[    8.273392] samsung-pogo-keyboard 5-002a: i2c-5 answers at: (nothing)
+```
+
+So the part is **powered and executing**, its rail is fine, and the bus, pins and
+address are all correct.  What does not happen is the *application*: after the
+vendor's `stm32_sysboot_disconnect()` sequence (SWCLK low, NRST low, NRST high,
+150 ms) the bootloader stops answering and 0x2a never does either.  The MCU is not
+dead - it has simply left the bootloader without the application coming up, which
+is what a boot-mode selection problem looks like.
+
+### A pin conflict mainline has and the vendor's working case does not exercise
+
+mainline's `sm8550.dtsi` puts the digital microphones on **gpio12 and gpio13**:
+
+```
+dmic45-default-state {
+        clk-pins  { pins = "gpio12"; function = "dmic3_clk";  };
+        data-pins { pins = "gpio13"; function = "dmic4_data"; };
+};
+```
+
+Those are the keyboard's SWCLK and NRST.  A live check showed `device 5-002a
+function gpio` on both while this driver held them, so they are not being taken
+today, and TWRP never probes audio at all - but it is a real hazard for any boot
+where the DMIC driver applies its state after this one, and it is the first thing
+to rule out if the application starts and then dies.
+
+### Next step: start the application explicitly
+
+The bootloader's own jump command is `STM32_BOOT_I2C_CMD_GO` = **0x21**
+(`stm32_pogo_v3.h`).  Stock's `sysboot_mcu_chip_command()` has the case but only
+sets `cmd[0]` and breaks, so it never sends it - which means the vendor relies on
+the reset-with-SWCLK-low to start the application AND never exercises it in a case
+mainline has to handle.  Sending 0x21 to 0x51 after the version read, then reading
+0x2a again, is the next measurement: it either brings the application up (and the
+keyboard works) or it does not, and either way the boot-mode question is answered.
