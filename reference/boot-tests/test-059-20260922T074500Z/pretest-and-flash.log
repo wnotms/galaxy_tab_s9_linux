@@ -1,0 +1,19 @@
+=== test 059 flash (boot + vendor_boot) ===
+adb.exe: no devices/emulators found
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+adb: error: failed to get feature set: no devices/emulators found
+adb.exe: no devices/emulators found
+=== test 059 flash (boot + vendor_boot) ===
+boot 417cd29c289e9f1c8621ac4783375bb1323d830902e454cd58da89e83a8a1b16  /dev/block/by-name/boot
+vendor_boot b8f2d5ed063890b9bd3137ee694695ad900bcd84189a084d8f2df47e013b7bc5  /dev/block/by-name/vendor_boot
+D:\android\gts9-test059\boot.img: 1 file pushed, 0 skipped. 70.0 MB/s (100663296 bytes in 1.371s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.233699 s, 411 M/s
+boot read-back e699cc5ce60004899891c97a1788490e27146efc392f93ddbf5adbeb11ad01c9  /dev/block/by-name/boot
+D:\android\gts9-test059\vendor_boot.img: 1 file pushed, 0 skipped. 815.3 MB/s (100663296 bytes in 0.118s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.256259 s, 375 M/s
+vendor_boot read-back 8d76f912c5af2994b49a33a113825f21d1bcc71adf676f2cc25767fe754bd29e  /dev/block/by-name/vendor_boot

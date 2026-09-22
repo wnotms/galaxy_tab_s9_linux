@@ -1,0 +1,8 @@
+source_commit=d65975e (bus-rate candidate: pogo I2C controller at 400 kHz)
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-058 ("刷入测试" / "检查仓库变化，继续修复"), plus this round's direction to work from the official source and keep testing on hardware
+hypothesis=The stock kernel runs the pogo serial engine at 400 kHz (the downstream controller binding documents qcom,clk-freq-out as "when missing default to 400000Hz", and Samsung's node for this keyboard sets the two samsung,* quirks but not that property), while this port asked for 100 kHz on the same controller.  The STM32's system bootloader answers at either rate, but its application interface may be timing-sensitive - which is what a vendor that adds reset-before-trans and stop-after-trans to this one bus suggests.  This separates "the application never runs" from "the application is running but does not answer the mainline controller at 100 kHz".
+change=one line, DT only: clock-frequency = <400000> on &i2c15, the controller that hosts keyboard@2a.  No driver change, no bootloader involvement, no reset.
+predictions=1) the driver logs "MCU application answered after N ms" inside the read-only poll and then the model/hw/firmware/mode line, with no bootloader visit; 2) if the rate is not the cause, the log is identical to test 058 (60 s silent poll, then the bootloader answering).
+images=out/boot-bundle-test059/boot.img e699cc5ce60004899891c97a1788490e27146efc392f93ddbf5adbeb11ad01c9 and vendor_boot.img 8d76f912c5af2994b49a33a113825f21d1bcc71adf676f2cc25767fe754bd29e; init_boot 12b77d17 unchanged; dtbo c17418be untouched
+started_utc=2026-09-22T07:45:00Z
