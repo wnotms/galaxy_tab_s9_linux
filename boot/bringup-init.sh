@@ -775,6 +775,24 @@ report 'drm state' sh -c 'cat /sys/kernel/debug/dri/0/state 2>&1 | head -40'
 report 'panel backlight' sh -c 'for b in /sys/class/backlight/*/; do echo "== $b"; for f in brightness max_brightness actual_brightness power/control; do [ -r "$b$f" ] && echo "$f=$(cat "$b$f" 2>&1)"; done; done 2>&1'
 report 'framebuffer' sh -c 'cat /proc/fb 2>&1; for f in name virtual_size stride bits_per_pixel blank; do [ -r /sys/class/graphics/fb0/$f ] && echo "$f=$(cat /sys/class/graphics/fb0/$f 2>&1)"; done'
 
+# The EF-DX710 pogo keyboard, so its first mainline boot is judged from the
+# report rather than from a photograph of the screen: whether the STM32 bound at
+# all, whether the model handshake happened, and what the input layer sees.
+# TWRP's stock kernel already enumerates this keyboard (model 0x02, MCU firmware
+# 1.4, test 041), which is the baseline these lines are compared against.
+report 'pogo keyboard' sh -c '
+    ls -l /sys/bus/i2c/drivers/samsung-pogo-keyboard/ 2>&1
+    for d in /sys/bus/i2c/devices/*/; do
+        [ -r "$d/name" ] || continue
+        n=$(cat "$d/name" 2>/dev/null)
+        case "$n" in
+            *ogo*|*DX710*|*eyboard*) echo "== $d $n"; ls "$d" 2>&1 | head -12 ;;
+        esac
+    done
+    cat /sys/kernel/debug/gpio 2>&1 | grep -i -e pogo -e connect | head -10
+    dmesg | grep -i -e pogo -e EF-DX710 -e keyboard | tail -15'
+report 'input devices' sh -c 'cat /proc/bus/input/devices 2>&1 | head -50'
+
 # ---------------------------------------------------------------------------
 # Getting the evidence out: persist the report.
 #

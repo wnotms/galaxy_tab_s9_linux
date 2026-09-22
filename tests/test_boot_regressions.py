@@ -39,6 +39,23 @@ class BootRegressions(unittest.TestCase):
                         os.killpg(proc.pid, signal.SIGKILL)
                     proc.wait()
 
+    def test_pogo_report_section_is_valid_shell(self):
+        source = (ROOT / 'boot/bringup-init.sh').read_text()
+        marker = "report 'pogo keyboard' sh -c '"
+        self.assertEqual(source.count(marker), 1,
+                         'the keyboard report section must exist exactly once')
+        # The body is single-quoted and contains no single quote of its own, so
+        # it can be lifted out and handed to the shell the initramfs really uses.
+        body = source.split(marker, 1)[1].split("'", 1)[0]
+        result = subprocess.run(['/bin/sh', '-n', '-c', body],
+                                capture_output=True, text=True, timeout=5)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        # It has to report what a first mainline boot is judged on: whether the
+        # driver bound, and the model handshake the stock keyboard answers.
+        self.assertIn('samsung-pogo-keyboard', body)
+        self.assertIn('EF-DX710', body)
+        self.assertEqual(source.count("report 'input devices'"), 1)
+
     def test_explicit_ccache_request_fails_when_missing(self):
         with tempfile.TemporaryDirectory() as tools:
             # dirname is needed to locate the repo before checking ccache.
