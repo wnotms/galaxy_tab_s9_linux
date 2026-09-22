@@ -1,0 +1,40 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] drm/msm/dsi: test first-enable X710 link power cycle
+
+Run the normal host/PHY off path before initial panel prepare. Scoped to
+non-bonded X710 and once per host lifetime. Hardware candidate only.
+
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -43,6 +43,7 @@
+ 
+ 	struct device *phy_dev;
+ 	bool phy_enabled;
++	bool x710_link_cycled;
+ 
+ 	int id;
+ };
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -296,6 +296,21 @@
+ 		return;
+ 	}
+ 
++	/* Bring inherited X710 splash state through the normal off path before
++	 * the panel sends its first command. Test 041 ruled out PHY-only off.
++	 */
++	if (!is_bonded_dsi && !msm_dsi->x710_link_cycled &&
++	    of_machine_is_compatible("samsung,gts9wifi")) {
++		dsi_mgr_bridge_power_off(bridge);
++		ret = dsi_mgr_bridge_power_on(bridge);
++		if (ret) {
++			dev_err(&msm_dsi->pdev->dev, "X710 link cycle failed: %d\n", ret);
++			return;
++		}
++		msm_dsi->x710_link_cycled = true;
++		dev_info(&msm_dsi->pdev->dev, "X710 first-enable link cycle complete\n");
++	}
++
+ 	ret = msm_dsi_host_enable(host);
+ 	if (ret) {
+ 		pr_err("%s: enable host %d failed, %d\n", __func__, id, ret);
