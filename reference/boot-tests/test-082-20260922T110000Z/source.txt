@@ -1,0 +1,8 @@
+source_commit=8e00aa5 ("pogo: spend the first thirty seconds doing nothing at all")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-081
+hypothesis=Every candidate so far enabled the rail before reading, and the rail's pinctrl state has held gpio10 low since test 058 - so the MCU's supply is switched by this driver and by nothing else.  A part that was already running from tablet power-on and was disturbed by that enablement would look exactly like a part that never starts.  Thirty seconds of touching nothing (no rail, no pin writes, no IRQ arming, only the announce line read) separates those.
+change=connect_work spends its first 30 s in a no-action window, sampling the announce line every 100 ms and then reporting what answers at 0x2a and 0x51; the normal bring-up follows, so the boot still completes.
+predictions=1) the line moves or 0x2a answers during/after the window => the application runs without this driver and something the driver does is what breaks it, which would re-open the whole bring-up; 2) neither happens, and the line only moves once the rail is enabled => the application genuinely needs the rail enabled first, and the read failure is downstream of the MCU's own state.
+images=out/boot-bundle-test082/boot.img 40af28f6d6906f3dc1a363b237a2eaf6638992eb85c7247374ff95ea1da57ce1; vendor_boot 7bd7dcf9, init_boot aed8f3c5, dtbo c17418be unchanged
+started_utc=2026-09-22T11:00:00Z
