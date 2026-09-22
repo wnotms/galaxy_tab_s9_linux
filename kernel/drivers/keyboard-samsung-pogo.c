@@ -43,6 +43,9 @@
 #define POGO_BOOT_RESP_ACK		0x79
 /* Where Samsung's driver reads the MCU's IC version from flash. */
 #define POGO_IC_VERSION_OFFSET		0x08000200
+/* Samsung's header inside the firmware image; the magic there is "STM32". */
+#define POGO_FW_HEADER_L0		0x080000bc
+#define POGO_FW_HEADER_G0		0x080000c0
 
 struct samsung_pogo {
 	struct i2c_client *client;
@@ -69,6 +72,7 @@ static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
 static bool pogo_boot_enter(struct samsung_pogo *p);
 static void pogo_boot_disconnect(struct samsung_pogo *p);
+static int pogo_boot_version(struct samsung_pogo *p, u8 *version);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -312,6 +316,68 @@ static int pogo_boot_ic_version(struct samsung_pogo *p, u8 *version)
 	return ret;
 }
 
+static u32 pogo_le32(const u8 *p)
+{
+	return p[0] | p[1] << 8 | p[2] << 16 | (u32)p[3] << 24;
+}
+
+/*
+ * Where the firmware header is and what it says.
+ *
+ * Test 049 read 0x08000000 and got a Cortex-M vector table (SP 0x200056c0,
+ * reset vector 0x0800c4a5), so the application image starts there and Samsung's
+ * header - whose magic is the ASCII "STM32" (stm32_pogo_cmd_v3.c) - sits at file
+ * offset 0xbc (L0) or 0xc0 (G0) inside that image.  The bank addresses and
+ * status_boot_mode are worth having: they say which bank holds the application
+ * and whether the part considers itself in application or update mode.
+ */
+static void pogo_boot_dump_header(struct samsung_pogo *p)
+{
+	u8 hdr[48];
+	u32 addr = POGO_FW_HEADER_G0;
+	int ret;
+
+	ret = pogo_boot_read(p, addr, hdr, sizeof(hdr));
+	if (ret)
+		goto failed;
+	if (memcmp(hdr, "STM32", 5)) {
+		addr = POGO_FW_HEADER_L0;
+		ret = pogo_boot_read(p, addr, hdr, sizeof(hdr));
+		if (ret)
+			goto failed;
+	}
+	if (memcmp(hdr, "STM32", 5)) {
+		dev_info(&p->client->dev,
+			 "no STM32 header at %#x or %#x, first bytes %*phN\n",
+			 POGO_FW_HEADER_G0, POGO_FW_HEADER_L0, 16, hdr);
+		return;
+	}
+	dev_info(&p->client->dev,
+		 "MCU firmware header at %#x: magic %.5s status %#x boot %u.%u target %u.%u boot bank %#x target bank %#x\n",
+		 addr, hdr, pogo_le32(hdr + 8),
+		 hdr[23], hdr[22], hdr[27], hdr[26],
+		 pogo_le32(hdr + 28), pogo_le32(hdr + 32));
+	return;
+failed:
+	dev_info(&p->client->dev, "could not read the firmware header (%d)\n", ret);
+}
+
+/*
+ * Which interface answers right now.  The bootloader at 0x51 and the keyboard
+ * application at 0x2a are mutually exclusive, so this is how the port tells a
+ * running application from a part that stayed in its bootloader.
+ */
+static void pogo_boot_report(struct samsung_pogo *p, const char *stage)
+{
+	u8 version[4], boot_version;
+	int app, boot;
+
+	app = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+	boot = pogo_boot_version(p, &boot_version);
+	dev_info(&p->client->dev, "%s: application %d, bootloader %d, connect %d\n",
+		 stage, app, boot, gpiod_get_value_cansleep(p->connected));
+}
+
 /*
  * How the application is started, from stm32_sysboot_disconnect(): BOOT0 (the
  * SWCLK line) low, then one NRST pulse, then a 150 ms settle.  Stock runs this
@@ -420,8 +486,11 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	 * left the MCU answering on neither address.
 	 */
 	pogo_boot_ic_version(p, ic_version);
+	pogo_boot_dump_header(p);
 	pogo_boot_disconnect(p);
+	pogo_boot_report(p, "after the disconnected reset");
 	pogo_wait_application(p, "bootloader start");
+	pogo_boot_report(p, "five seconds later");
 }
 
 /*
