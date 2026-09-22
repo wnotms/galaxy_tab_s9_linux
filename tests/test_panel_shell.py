@@ -45,11 +45,16 @@ class PanelShell(unittest.TestCase):
         self.assertIn('chvt 1', INIT)
         self.assertIn('/dev/tty1', INIT)
 
-    def test_rootfs_boot_skips_the_panel_shell(self):
+    def test_rescue_shell_survives_a_failed_handoff(self):
+        # The handoff runs before the panel shell and succeeds by exec'ing switch_root,
+        # so ordering - not a cmdline check - is what keeps BusyBox off tty1.  The panel
+        # shell must stay reachable when the handoff fails: the first Debian candidate
+        # suppressed it in both cases and booted to a silent screen.
         body = INIT[INIT.index('start_panel_shell()'):]
         body = body[:body.index('\n}\n')]
-        self.assertIn('gts9_rootfs=', body,
-                      'a rootfs boot must keep the initramfs shell off tty1')
+        self.assertNotIn("grep -q 'gts9_rootfs='", body)
+        self.assertIn('if ! boot_rootfs; then', INIT)
+        self.assertIn('falling back to BusyBox rescue shell', INIT)
 
     def test_printk_is_quietened_but_not_disabled(self):
         self.assertIn("printf '1 4 1 7\\n' > /proc/sys/kernel/printk", INIT)

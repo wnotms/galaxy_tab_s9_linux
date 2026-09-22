@@ -1063,10 +1063,12 @@ fi
 # ---------------------------------------------------------------------------
 start_panel_shell()
 {
-    if grep -q 'gts9_rootfs=' /proc/cmdline 2>/dev/null; then
-        log 'panel shell: a rootfs boot was requested; leaving tty1 to the rootfs'
-        return 0
-    fi
+    # No "a rootfs was requested" guard here.  Ordering provides that guarantee: the
+    # rootfs handoff runs *before* this function, and succeeds by exec'ing switch_root,
+    # so reaching this point means either no rootfs was requested or the handoff failed -
+    # and a failed handoff must leave the owner a rescue shell (section 18).  The old
+    # cmdline check suppressed the shell in both cases, which is why the first Debian
+    # candidate booted to a silent screen with no way in.
     # Wait briefly for the VT to appear: /dev/tty1 is normally there by this
     # point, but a slow DRM/fbcon bring-up must not cost the panel its shell.
     i=0
