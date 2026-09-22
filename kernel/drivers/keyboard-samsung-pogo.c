@@ -31,6 +31,8 @@ struct samsung_pogo {
 	struct gpio_desc *connected;
 	struct gpio_desc *swclk;
 	struct gpio_desc *nrst;
+	struct gpio_desc *sda;
+	struct gpio_desc *scl;
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
@@ -216,6 +218,18 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		if (!ret)
 			break;
 		/*
+		 * Copy the vendor's own diagnostic: its I2C failure path prints
+		 * the raw SCL and SDA levels (stm32_pogo_i2c_v3.c), which is what
+		 * separates "the bus is being held" from "the bus is idle and the
+		 * MCU is simply not there".
+		 */
+		dev_info_ratelimited(&p->client->dev,
+				     "attempt %d failed: scl:%d sda:%d conn:%d\n",
+				     i,
+				     p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
+				     p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
+				     gpiod_get_value_cansleep(p->connected));
+		/*
 		 * Samsung's retry loop pulses NRST again on every failed attempt
 		 * (stm32_power_reset, reset_count up to 100000) and only then
 		 * reads the version back, so a single reset after power-on is not
@@ -397,6 +411,13 @@ static int pogo_probe(struct i2c_client *client)
 	p->nrst = devm_gpiod_get(dev, "nrst", GPIOD_OUT_HIGH);
 	if (IS_ERR(p->nrst))
 		return dev_err_probe(dev, PTR_ERR(p->nrst), "nrst GPIO\n");
+	/*
+	 * The I2C lines, as inputs and only for diagnostics: the pins stay
+	 * multiplexed to the controller by the i2c node's pinctrl state, and
+	 * reading the input buffer is how Samsung's driver reports a held bus.
+	 */
+	p->sda = devm_gpiod_get_optional(dev, "sda", GPIOD_IN);
+	p->scl = devm_gpiod_get_optional(dev, "scl", GPIOD_IN);
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
 		return dev_err_probe(dev, PTR_ERR(p->vdd), "vdd supply\n");

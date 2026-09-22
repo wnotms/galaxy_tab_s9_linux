@@ -1906,6 +1906,13 @@
 		 */
 		swclk-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
 		nrst-gpios = <&tlmm 13 GPIO_ACTIVE_HIGH>;
+		/*
+		 * The controller's own SDA/SCL, read as inputs for the bus
+		 * diagnostic the vendor driver also prints on an I2C failure.
+		 * Claiming them does not move them off qup2_se7.
+		 */
+		sda-gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>;
+		scl-gpios = <&tlmm 106 GPIO_ACTIVE_HIGH>;
 		vdd-supply = <&vreg_pogo>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pogo_irq &pogo_swclk &pogo_nrst>;
