@@ -1,0 +1,8 @@
+source_commit=d7a1586 ("samsung-pogo: let the vendor path run to its application read")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-077
+hypothesis=The stock driver's own read of the application has never been observed in mainline: its state machine gates on the connect line, which this board pulses rather than holds (test 073), so check_init_work dropped connect_state, stopped the keyboard and never reached stm32_check_ic_work -> stm32_read_version.  With the cover kept considered connected, the stock code path runs through to the read, and its outcome is the cleanest comparison yet of the read path under mainline.
+change=an experiment marked as such in the source: check_init_work keeps connect_state so the vendor path reaches its application read.  Nothing else changes; the vendor port is the built driver.
+predictions=1) the read succeeds ([IC] version 1.4, [MODE] 1, CRC 0xEADF376E) => the application does serve 0x2a once the driver behaves like stock's, and the remaining work is input/key handling; 2) the read fails with the idle-bus NACK => the application's slave is genuinely not participating, with the stock code path and stock's preconditions both reproduced.
+images=out/boot-bundle-test078/boot.img da9d4f1fed340e5822ab8a1060c165333b896893e3764a322ba9ea2b73bc3365; vendor_boot 3ec6c8d1, init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T10:20:00Z

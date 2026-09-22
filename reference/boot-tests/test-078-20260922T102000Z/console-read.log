@@ -1,0 +1,8 @@
+2026-09-22T10:46:09Z console open on COM17
+2026-09-22T10:46:12Z SENT  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|support_keyboard|Failed to read|check_ic|version:" | tail -14
+2026-09-22T10:46:12Z RECV  dmesg | grep -aiE "read_version|\[MODE\]|BOOT CRC|support_keyboard|Failed
+2026-09-22T10:46:12Z RECV  to read|check_ic|version:" | tail -14
+2026-09-22T10:46:12Z RECV  [    5.557766][   T76] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+2026-09-22T10:46:12Z RECV  [    6.076630][   T76] stm32_pogo_i2c 5-002a: stm32_sysboot_mcu_validation Get target info OK Target PID: 0x460 Bootloader version: 0x12
+2026-09-22T10:46:12Z RECV  [    6.825703][   T76] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-22T10:46:21Z console session done

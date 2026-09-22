@@ -1,0 +1,20 @@
+2026-09-22T10:46:27Z console open on COM17
+2026-09-22T10:46:30Z SENT  dmesg | grep -a "stm32_pogo_i2c" | tail -16
+2026-09-22T10:46:30Z RECV  dmesg | grep -a "stm32_pogo_i2c" | tail -16
+2026-09-22T10:46:30Z RECV  [   43.804876][  T217] stm32_pogo_i2c 5-002a: stm32_keyboard_start done
+2026-09-22T10:46:30Z RECV  [   44.550489][  T168] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:46:30Z RECV  [   44.557640][  T168] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:46:30Z RECV  [   44.629762][  T167] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T10:46:30Z RECV  [   44.639087][  T167] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C write over retry limit
+2026-09-22T10:46:30Z RECV  [   44.649105][  T167] stm32_pogo_i2c 5-002a: stm32_power_reset, 16
+2026-09-22T10:46:30Z RECV  [   44.656581][  T168] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:46:30Z RECV  [   44.664036][   T10] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:1, current:1
+2026-09-22T10:46:30Z RECV  [   44.673307][   T10] stm32_pogo_i2c 5-002a: kbd_max77816_control : not support device
+2026-09-22T10:46:30Z RECV  [   44.682687][   T10] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:46:30Z RECV  [   44.690959][  T168] stm32_pogo_i2c 5-002a: stm32_conn_isr (0)
+2026-09-22T10:46:30Z RECV  [   44.698159][  T168] stm32_pogo_i2c 5-002a: stm32_dev_regulator off: vdd:off
+2026-09-22T10:46:30Z RECV  [   44.786426][  T168] stm32_pogo_i2c 5-002a: stm32_conn_isr (1)
+2026-09-22T10:46:30Z RECV  [   44.793754][  T217] stm32_pogo_i2c 5-002a: stm32_check_conn_work: con:1, current:1
+2026-09-22T10:46:30Z RECV  [   44.802829][  T217] stm32_pogo_i2c 5-002a: kbd_max77816_control : not support device
+2026-09-22T10:46:30Z RECV  [   44.812417][  T217] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T10:46:39Z console session done
