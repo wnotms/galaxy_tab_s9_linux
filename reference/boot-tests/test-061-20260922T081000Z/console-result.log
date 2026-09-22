@@ -1,0 +1,10 @@
+2026-09-22T08:02:14Z console open on COM17
+2026-09-22T08:02:17Z SENT  dmesg | grep -i -e "silent window over" -e "announce" -e "MCU application" -e "bootloader" -e "answered" | tail -10
+2026-09-22T08:02:17Z RECV  dmesg | grep -i -e "silent window over" -e "announce" -e "MCU application"
+2026-09-22T08:02:17Z RECV   -e "bootloader" -e "answered" | tail -10
+2026-09-22T08:02:17Z RECV  [    0.000000][    T0] [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-22T08:02:17Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T08:02:17Z RECV  [    4.103529][   T90] samsung-pogo-keyboard 5-002a: leaving the MCU alone for 30000 ms (announce line armed)
+2026-09-22T08:02:17Z RECV  [   36.124155][   T90] samsung-pogo-keyboard 5-002a: silent window over; connect line 0, 0 announce IRQ(s)
+2026-09-22T08:02:17Z RECV  [   36.143789][   T90] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T08:02:26Z console session done

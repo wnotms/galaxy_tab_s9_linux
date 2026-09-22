@@ -1,0 +1,14 @@
+=== does any driver consume the two samsung,* quirks? (complete buildable tree) ===
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/boot/dts/samsung/galaxytab/gts9wifi/gts9wifi_eur_open_w00_r04.dts
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/boot/dts/samsung/galaxytab/gts9wifi/gts9wifi_eur_open_w00_r00.dts
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/boot/dts/samsung/galaxytab/gts9wifi/gts9wifi_eur_open_w00_r01.dts
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/boot/dts/samsung/galaxytab/gts9wifi/gts9wifi_eur_open_w00_r02.dts
+(only DTS files above => no consumer)
+
+=== which GENI driver does the stock build use? ===
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/configs/vendor/kalama-gki_defconfig:772:CONFIG_I2C_MSM_GENI=m
+/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/configs/vendor/kalama_GKI.config:62:CONFIG_I2C_MSM_GENI=m
+
+driver objects:
+93:obj-$(CONFIG_I2C_QCOM_GENI)	+= i2c-qcom-geni.o
+94:obj-$(CONFIG_I2C_MSM_GENI)	+= i2c-msm-geni.o

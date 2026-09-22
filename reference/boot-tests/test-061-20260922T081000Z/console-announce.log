@@ -1,0 +1,8 @@
+2026-09-22T08:01:14Z console open on COM17
+2026-09-22T08:01:17Z SENT  dmesg | grep -i -e "rail on" -e "alone" -e "silent window" -e "announce" -e "MCU" -e "application" | tail -10
+2026-09-22T08:01:17Z RECV  dmesg | grep -i -e "rail on" -e "alone" -e "silent window" -e "announce" -
+2026-09-22T08:01:17Z RECV  e "MCU" -e "application" | tail -10
+2026-09-22T08:01:17Z RECV  [    2.118160][    T1] gts9wifi-sec-kernel-log sec-kernel-log: ring already owned by the early console; leaving it alone
+2026-09-22T08:01:17Z RECV  [    4.081249][   T90] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low
+2026-09-22T08:01:17Z RECV  [    4.103529][   T90] samsung-pogo-keyboard 5-002a: leaving the MCU alone for 30000 ms (announce line armed)
+2026-09-22T08:01:26Z console session done
