@@ -1,0 +1,24 @@
+2026-09-22T15:38:22Z console open on COM17
+2026-09-22T15:38:24Z RECV  echo READY1
+2026-09-22T15:38:24Z RECV  READY1
+2026-09-22T15:38:24Z shell answered after 1 poll(s)
+2026-09-22T15:38:24Z SENT  cat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -a "PROBE" | tail -4; echo "--- SOFT ---"; echo soft > /sys/bus/i2c/devices/5-002a/rearm; sleep 4; cat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -aE "re-arm|announced" | tail -3; echo "--- HARD ---"; echo hard > /sys/bus/i2c/devices/5-002a/rearm; sleep 6; cat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -aE "re-arm|announced|application-entry" | tail -4
+2026-09-22T15:38:44Z RECV  gts9# [6ncat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -a "PROBE" | tail -4;
+2026-09-22T15:38:44Z RECV  echo "--- SOFT ---"; echo soft > /sys/bus/i2c/devices/5-002a/rearm; sleep 4; cat
+2026-09-22T15:38:44Z RECV   /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -aE "re-arm|announced" | tail -
+2026-09-22T15:38:44Z RECV  3; echo "--- HARD ---"; echo hard > /sys/bus/i2c/devices/5-002a/rearm; sleep 6;
+2026-09-22T15:38:44Z RECV  cat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -aE "re-arm|announced|applic
+2026-09-22T15:38:44Z RECV  ation-entry" | tail -4
+2026-09-22T15:38:44Z RECV  powered=1 event_enabled=1 armed=1 announcements=2
+2026-09-22T15:38:44Z RECV  --- SOFT ---
+2026-09-22T15:38:44Z RECV  powered=1 event_enabled=1 armed=1 announcements=2
+2026-09-22T15:38:44Z RECV  [    4.773536][  T122] samsung-pogo-keyboard 5-002a: MCU announced itself (1)
+2026-09-22T15:38:44Z RECV  [    5.356252][  T122] samsung-pogo-keyboard 5-002a: MCU announced itself (2)
+2026-09-22T15:38:44Z RECV  [   21.804610][   T51] samsung-pogo-keyboard 5-002a: re-arm(soft): rail on and DATA armed, no reset, no rail drop
+2026-09-22T15:38:44Z RECV  --- HARD ---
+2026-09-22T15:38:44Z RECV  powered=1 event_enabled=1 armed=1 announcements=2
+2026-09-22T15:38:44Z RECV  [   21.804610][   T51] samsung-pogo-keyboard 5-002a: re-arm(soft): rail on and DATA armed, no reset, no rail drop
+2026-09-22T15:38:44Z RECV  [   25.762961][   T51] samsung-pogo-keyboard 5-002a: re-arm(hard): running the full boot sequence
+2026-09-22T15:38:44Z RECV  [   25.989456][   T51] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-22T15:38:44Z RECV  [   29.854491][   T10] samsung-pogo-keyboard 5-002a: keep-alive: GET_MODE NACKed (-6) - idle applications do not serve this read; not re-arming
+2026-09-22T15:38:44Z console run done (ready=True)

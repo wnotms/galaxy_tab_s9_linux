@@ -1,0 +1,12 @@
+2026-09-22T15:38:54Z console open on COM17
+2026-09-22T15:38:56Z RECV  echo READY1
+2026-09-22T15:38:56Z RECV  READY1
+2026-09-22T15:38:56Z shell answered after 1 poll(s)
+2026-09-22T15:38:56Z SENT  cat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -a -c "announced itself"; dmesg | grep -a -c "key 0x"; uptime
+2026-09-22T15:39:04Z RECV  gts9# [6ncat /sys/bus/i2c/devices/5-002a/rearm; dmesg | grep -a -c "announced itsel
+2026-09-22T15:39:04Z RECV  f"; dmesg | grep -a -c "key 0x"; uptime
+2026-09-22T15:39:04Z RECV  powered=1 event_enabled=1 armed=1 announcements=2
+2026-09-22T15:39:04Z RECV  2
+2026-09-22T15:39:04Z RECV  0
+2026-09-22T15:39:04Z RECV   03:33:57 up 0 min,  0 users,  load average: 0.52, 0.19, 0.07
+2026-09-22T15:39:04Z console run done (ready=True)
