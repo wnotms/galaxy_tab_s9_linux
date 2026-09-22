@@ -371,11 +371,17 @@ USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-shell}
 USB_WAIT=${GTS9_USB_WAIT:-0}
 # 1 = try to recover the panel's cold-boot state (see display_recover below).
 DISPLAY_RECOVER=${GTS9_DISPLAY_RECOVER:-0}
+# 0 = leave the microSD card alone (default since 2026-09-22, on the owner's
+# request): nothing mounts it and nothing is exported over USB, so the debug
+# console is the only channel and the report is read with
+# `cat /tmp/bringup-report.txt`.  1 restores the card and cache persistence.
+CARD_MOUNT=${GTS9_CARD_MOUNT:-0}
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
         gts9_usb_console=*) USB_CONSOLE_MODE=${arg#gts9_usb_console=} ;;
         gts9_usb_wait=*) USB_WAIT=${arg#gts9_usb_wait=} ;;
+        gts9_card_mount=*) CARD_MOUNT=${arg#gts9_card_mount=} ;;
     esac
 done
 gadget_setup=0
@@ -951,7 +957,10 @@ for tool in $REPORT_TOOLS; do
     command -v "$tool" >/dev/null 2>&1 || missing_tools="$missing_tools $tool"
 done
 
-if [ -n "$missing_tools" ]; then
+if [ "$CARD_MOUNT" != 1 ]; then
+    log 'card mount and internal persistence disabled by GTS9_CARD_MOUNT=0'
+    log 'the report stays in /tmp; read it over the console with: cat /tmp/bringup-report.txt'
+elif [ -n "$missing_tools" ]; then
     log "WARN: report persistence disabled, missing tools:$missing_tools"
 else
     # Removable storage first: a card is the intended medium and writing to it
@@ -980,7 +989,9 @@ fi
 if [ "$gadget_setup" = 1 ]; then
     case "$USB_GADGET_MODE" in
         msc|both)
-            if [ -b "$USB_MSC_BACKING" ]; then
+            if [ "$CARD_MOUNT" != 1 ]; then
+                log 'mass storage not attached: GTS9_CARD_MOUNT=0 keeps the card untouched'
+            elif [ -b "$USB_MSC_BACKING" ]; then
                 if echo "$USB_MSC_BACKING" > /sys/kernel/config/usb_gadget/gts9/functions/mass_storage.usb0/lun.0/file 2>/dev/null; then
                     log "mass storage: $USB_MSC_BACKING exported read-only to the host"
                 else
@@ -1057,7 +1068,7 @@ if [ "$gadget_setup" = 1 ]; then
                 ;;
         esac
         log 'handing /dev/ttyGS0 to an interactive shell'
-        printf '\nGTS9 bring-up console.  Log: /tmp/bringup-report.txt on the card.\n' > /dev/ttyGS0 2>/dev/null
+        printf '\nGTS9 bring-up console.  Log: cat /tmp/bringup-report.txt\n' > /dev/ttyGS0 2>/dev/null
         printf 'Type gts9-to-recovery to reboot into TWRP.\n\n' > /dev/ttyGS0 2>/dev/null
         while :; do
             PS1='gts9# ' /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
