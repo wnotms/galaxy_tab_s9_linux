@@ -36,6 +36,7 @@
 #define POGO_BOOT_ADDR			0x51
 #define POGO_BOOT_CMD_SYNC		0xFF
 #define POGO_BOOT_CMD_GET_VER		0x01
+#define POGO_BOOT_CMD_GO		0x21
 #define POGO_BOOT_RESP_ACK		0x79
 
 struct samsung_pogo {
@@ -61,6 +62,7 @@ struct samsung_pogo {
 
 static int pogo_read_mcu(struct samsung_pogo *p);
 static void pogo_bootloader_probe(struct samsung_pogo *p);
+static bool pogo_boot_enter(struct samsung_pogo *p);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -143,22 +145,30 @@ static void pogo_connect_work(struct work_struct *work)
 	mutex_lock(&p->lock);
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
+		u8 version[4];
+
 		/*
-		 * Mainline's regulator core can switch this rail off during late
-		 * init, before this driver claims it, which leaves the MCU latched
-		 * in a brown-out state that an NRST pulse alone does not clear.
-		 * Give it a real power cycle, then take it out of reset with SWCLK
-		 * already low, as the stock keyboard_start does.
+		 * Ask the application first, without changing anything.  Stock's log
+		 * shows rst:0 - the application was already running when its driver
+		 * probed - and that driver never powers the rail, pulses NRST or
+		 * enters the bootloader to get there: the bootloader has started it
+		 * already, and every reset this port performs is a chance to lose it.
 		 */
-		if (regulator_is_enabled(p->vdd)) {
-			regulator_disable(p->vdd);
-			msleep(100);
-		}
-		ret = regulator_enable(p->vdd);
-		if (ret) {
-			dev_err(&p->client->dev, "power on failed: %d\n", ret);
-		} else {
+		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
+			msleep(20);
+			if (!pogo_read_reg(p, POGO_CMD_CHECK_VERSION,
+					   version, sizeof(version))) {
+				p->event_enabled = true;
+				enable_irq(p->client->irq);
+				dev_info(&p->client->dev,
+					 "MCU application already running, version %u.%u\n",
+					 version[3], version[2]);
+				mutex_unlock(&p->lock);
+				return;
+			}
+			dev_info(&p->client->dev,
+				 "MCU application did not answer; entering its bootloader\n");
 			pogo_bootloader_probe(p);
 			gpiod_set_value_cansleep(p->swclk, 0);
 			gpiod_set_value_cansleep(p->nrst, 0);
@@ -167,9 +177,9 @@ static void pogo_connect_work(struct work_struct *work)
 			msleep(50); /* stock keyboard_start power settling */
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
-			dev_info(&p->client->dev,
-				 "pogo rail power-cycled, MCU out of reset, reading its version\n");
 			pogo_read_mcu(p);
+		} else {
+			dev_err(&p->client->dev, "power on failed\n");
 		}
 	}
 	/*
@@ -200,17 +210,14 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
  * stm32_sysboot_connect() does, and a single 0xFF write to the bootloader either
  * transfers or it does not.
  */
-static void pogo_bootloader_probe(struct samsung_pogo *p)
+/* stm32_sysboot_connect(): SWCLK high across NRST selects the bootloader. */
+static bool pogo_boot_enter(struct samsung_pogo *p)
 {
-	static const u8 get_ver[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
 	u8 sync = POGO_BOOT_CMD_SYNC;
-	u8 resp = 0;
-	int ret;
 
 	if (!p->boot)
-		return;
+		return false;
 
-	/* stm32_sysboot_connect(): SWCLK high selects the system bootloader. */
 	gpiod_set_value_cansleep(p->swclk, 1);
 	gpiod_set_value_cansleep(p->nrst, 0);
 	msleep(3);
@@ -218,44 +225,69 @@ static void pogo_bootloader_probe(struct samsung_pogo *p)
 	msleep(50); /* STM32_BOOT_I2C_STARTUP_DELAY */
 	gpiod_set_value_cansleep(p->swclk, 0);
 
-	ret = i2c_master_send(p->boot, &sync, 1);
-	if (ret != 1) {
+	return i2c_master_send(p->boot, &sync, 1) == 1;
+}
+
+/*
+ * Get the MCU into its application.
+ *
+ * Samsung's driver never has to: its log shows the application answering on the
+ * first attempt with no reset at all (rst:0), so something earlier - the
+ * bootloader, in the boot it runs from - has already started it.  In mainline the
+ * part sits in its system bootloader instead: it takes the 0xFF sync and reports
+ * version 0x12, and the application at 0x2a never answers.
+ *
+ * Two ways out are tried in order.  First the vendor's own app entry,
+ * stm32_sysboot_disconnect(), with its exact timings - SWCLK back for main flash,
+ * 1 ms, NRST low, 2 ms, NRST high, then the 150 ms it allows the application to
+ * start.  If 0x2a still does not answer, the bootloader's own jump command,
+ * STM32_BOOT_I2C_CMD_GO (0x21), which stock defines but never sends.
+ */
+static void pogo_bootloader_probe(struct samsung_pogo *p)
+{
+	static const u8 get_ver[] = { POGO_BOOT_CMD_GET_VER, ~POGO_BOOT_CMD_GET_VER };
+	u8 version[4], resp = 0, go = POGO_BOOT_CMD_GO;
+	int ret;
+
+	if (!pogo_boot_enter(p)) {
 		dev_info(&p->client->dev,
-			 "MCU bootloader did not take the 0xFF sync (%d)\n", ret);
+			 "MCU bootloader did not take the 0xFF sync: the part is not running\n");
 		return;
 	}
 	dev_info(&p->client->dev, "MCU bootloader took the 0xFF sync\n");
 
-	/*
-	 * The vendor re-enters boot mode after a successful sync and reads the
-	 * version back before releasing the part, so do the same - and report the
-	 * version, because it is the first thing this part has ever told us.
-	 */
-	gpiod_set_value_cansleep(p->swclk, 1);
-	gpiod_set_value_cansleep(p->nrst, 0);
-	msleep(3);
-	gpiod_set_value_cansleep(p->nrst, 1);
-	msleep(50);
-	gpiod_set_value_cansleep(p->swclk, 0);
-
+	/* The vendor re-enters boot mode, then reads the version back. */
+	pogo_boot_enter(p);
 	if (i2c_master_send(p->boot, get_ver, sizeof(get_ver)) == sizeof(get_ver) &&
 	    i2c_master_recv(p->boot, &resp, 1) == 1 && resp == POGO_BOOT_RESP_ACK &&
-	    i2c_master_recv(p->boot, &resp, 1) == 1) {
+	    i2c_master_recv(p->boot, &resp, 1) == 1)
 		dev_info(&p->client->dev, "MCU bootloader version %#x\n", resp);
-	} else {
-		dev_info(&p->client->dev, "MCU bootloader GET_VER failed (last %#x)\n", resp);
-	}
 
-	/*
-	 * stm32_sysboot_disconnect(): SWCLK back for main flash, then release the
-	 * reset and give the application the vendor's 150 ms to start.
-	 */
+	/* stm32_sysboot_disconnect(), timings included. */
 	gpiod_set_value_cansleep(p->swclk, 0);
 	msleep(1);
 	gpiod_set_value_cansleep(p->nrst, 0);
 	msleep(2);
 	gpiod_set_value_cansleep(p->nrst, 1);
 	msleep(150);
+
+	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+	dev_info(&p->client->dev,
+		 "application after the reset entry: %d%s\n", ret,
+		 ret ? " (did not start)" : " (running)");
+	if (!ret)
+		return;
+
+	/* Still in the bootloader: ask it to jump. */
+	if (!pogo_boot_enter(p))
+		return;
+	ret = i2c_master_send(p->boot, &go, 1);
+	dev_info(&p->client->dev, "MCU bootloader GO (0x%02x): %d\n", go, ret);
+	msleep(150);
+	ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version, sizeof(version));
+	dev_info(&p->client->dev,
+		 "application after GO: %d%s\n", ret,
+		 ret ? " (still not running)" : " (running)");
 }
 
 /*
