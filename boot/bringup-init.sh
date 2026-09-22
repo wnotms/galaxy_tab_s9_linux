@@ -64,26 +64,42 @@ display_recover() {
         log 'display: no writable framebuffer appeared; cannot recover'
         return 0
     fi
-    if ! dmesg | grep -q 'panel id 00 00 00'; then
+    # Wait for the panel driver's own first read before cycling anything.  fb0
+    # appears while the panel is still probing - test 045's boot cycled at 5.91 s
+    # and the driver logged its zero ID at 6.29 s - and a cycle before that only
+    # re-initialises a link that had not come up yet, which left the panel dark
+    # with nothing to retry it.
+    i=0
+    while [ "$i" -lt 10 ] && ! dmesg | grep -q 'ana38407 panel id: 00 00 00'; do
+        sleep 1
+        i=$((i + 1))
+    done
+    if ! dmesg | grep -q 'ana38407 panel id: 00 00 00'; then
         log 'display: no zero-ID failure recorded; skipping recovery'
         return 0
     fi
-    log 'display: early framebuffer cycle for first-enable zero ID'
+    log 'display: framebuffer cycle for first-enable zero ID'
     # Both writes synchronously complete panel/host teardown and prepare;
-    # panel sleep/reset delays are already implemented in the driver.
-    if timeout 5 sh -c 'echo 1 > /sys/class/graphics/fb0/blank'; then
-        if timeout 5 sh -c 'echo 0 > /sys/class/graphics/fb0/blank'; then
+    # panel sleep/reset delays are already implemented in the driver.  Retry,
+    # because a single cycle is not guaranteed to catch a link that is still
+    # settling - tests 041-043 each needed the full teardown, not a partial one.
+    i=0
+    while [ "$i" -lt 3 ]; do
+        i=$((i + 1))
+        if timeout 5 sh -c 'echo 1 > /sys/class/graphics/fb0/blank' &&
+           timeout 5 sh -c 'echo 0 > /sys/class/graphics/fb0/blank'; then
             if dmesg | grep -q 'ana38407 panel id: 80 00 04'; then
-                log 'display: early cycle recovered panel ID 80 00 04'
-            else
-                log 'WARN: display: early cycle did not recover the panel ID'
+                log "display: cycle $i recovered panel ID 80 00 04"
+                return 0
             fi
+            log "display: cycle $i did not recover the panel ID yet"
         else
-            log 'WARN: display: unblank failed or timed out'
+            log "WARN: display: cycle $i blank/unblank failed or timed out"
         fi
-    else
-        log 'WARN: display: blank failed or timed out'
-    fi
+        sleep 1
+    done
+    log 'WARN: display: the panel did not come up after 3 framebuffer cycles'
+    return 0
 }
 display_recover
 if [ -c /dev/tty0 ]; then
