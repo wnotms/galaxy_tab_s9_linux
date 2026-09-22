@@ -183,6 +183,37 @@ static void pogo_connect_work(struct work_struct *work)
 	conn = gpiod_get_value_cansleep(p->connected);
 	if (!p->powered) {
 		/*
+		 * No-action window, first: does the MCU run its application without
+		 * this driver doing anything at all - no rail, no pin writes, no
+		 * IRQ arming?  Every candidate so far has enabled the rail before
+		 * reading, so a part that was already running and was disturbed by
+		 * that would look exactly like a part that never starts.  Only the
+		 * announce line is read here.
+		 */
+		{
+			int last = pogo_announce_level(p);
+
+			dev_info(&p->client->dev,
+				 "no-action window: announce %d, rail %s, nothing touched for 30000 ms\n",
+				 last, p->vdd && regulator_is_enabled(p->vdd) ? "on" : "off");
+			for (i = 0; i < 300; i++) {
+				int now;
+
+				msleep(100);
+				now = pogo_announce_level(p);
+				if (now != last) {
+					dev_info(&p->client->dev,
+						 "no-action: announce %d -> %d after %u ms\n",
+						 last, now, (i + 1) * 100);
+					last = now;
+				}
+			}
+			dev_info(&p->client->dev, "no-action window over; announce %d\n",
+				 pogo_announce_level(p));
+			pogo_state_report(p, "after the no-action window");
+		}
+
+		/*
 		 * The first bring-up does exactly what the stock driver does on
 		 * this device: hold SWCLK (BOOT0) low, leave NRST alone (its
 		 * pinctrl default is output-high), switch the rail and read the
