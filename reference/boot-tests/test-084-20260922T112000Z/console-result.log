@@ -1,0 +1,19 @@
+2026-09-22T11:16:20Z console open on COM17
+2026-09-22T11:16:23Z SENT  dmesg | grep -aiE "pin 10|read_version|\[MODE\]|CRC|I2C retry|regulator on" | tail -14
+2026-09-22T11:16:24Z RECV  dmesg | grep -aiE "pin 10|read_version|\[MODE\]|CRC|I2C retry|regulator on
+2026-09-22T11:16:24Z RECV  " | tail -14
+2026-09-22T11:16:24Z RECV  [   34.858419][  T158] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:16:24Z RECV  [   35.036473][  T209] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   37.013089][  T209] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   37.226205][  T700] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   37.234398][  T158] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:16:24Z RECV  [   37.412456][  T700] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   39.212038][  T700] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   39.602346][  T209] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   39.610540][  T158] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:16:24Z RECV  [   39.788760][  T209] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   41.765462][  T209] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   41.979190][  T700] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:24Z RECV  [   41.987437][  T158] stm32_pogo_i2c 5-002a: stm32_i2c_write_burst: I2C retry 3, ret:-6
+2026-09-22T11:16:24Z RECV  [   42.165902][  T700] stm32_pogo_i2c 5-002a: stm32_dev_regulator on: vdd:on
+2026-09-22T11:16:33Z console session done

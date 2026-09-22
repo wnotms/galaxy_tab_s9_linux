@@ -1,0 +1,8 @@
+source_commit=22985e6 ("dts: let the regulator, not the pinconf, decide the rail pin's level")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-083
+hypothesis=Test 083 measured gpio10's pad low while the regulator reported itself enabled: the pinconf output-low added in test 058 was winning over the fixed regulator's write, so the rail pin - most likely the keyboard's level shifter enable - has been low in every test since.  Removing the output value leaves the level to the regulator, which drives the pin low at probe and high when the driver enables it.
+change=pogo_supply keeps function gpio, drive-strength and bias-disable but no output value; the vendor port with the firmware in the initramfs is the built combination, the most faithful this project has.
+predictions=1) pin 10 reads io 0x3 in the thirty-second sample and the application answers ([IC] version 1.4, [MODE] 1, CRC 0xEADF376E) => the configuration bug was the fault; 2) the pad goes high but 0x2a still NACKs => the bug is fixed, the signal is now what stock has, and the investigation returns to the MCU's own state with one fewer unknown.
+images=out/boot-bundle-test084/boot.img 3def79e0d1d8fec6d34fd08b754daaf390e62583244cf0d93e770de38205b868 and vendor_boot.img 6be74b07f686a725d1e8f8568155b49964abc55e675a9dd61b50d4516c5ee52b (both carry the new DTB); init_boot aed8f3c5 (with firmware), dtbo c17418be unchanged
+started_utc=2026-09-22T11:20:00Z

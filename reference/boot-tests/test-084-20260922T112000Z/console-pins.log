@@ -1,0 +1,6 @@
+2026-09-22T11:16:38Z console open on COM17
+2026-09-22T11:16:41Z SENT  dmesg | grep -aE "pin (10|13): io" | tail -4
+2026-09-22T11:16:42Z RECV  dmesg | grep -aE "pin (10|13): io" | tail -4
+2026-09-22T11:16:42Z RECV  [   34.084224][   T98]   pin 10: io 0x3
+2026-09-22T11:16:42Z RECV  [   34.092322][   T98]   pin 13: io 0x3
+2026-09-22T11:16:51Z console session done
