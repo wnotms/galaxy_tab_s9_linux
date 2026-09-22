@@ -1,0 +1,17 @@
+2026-09-22T07:55:42Z console open on COM17
+2026-09-22T07:55:45Z SENT  dmesg | grep -i -e "silent window" -e "MCU" -e "application" -e "answered" -e "bootloader" | tail -12
+2026-09-22T07:55:45Z RECV  dmesg | grep -i -e "silent window" -e "MCU" -e "application" -e "answered"
+2026-09-22T07:55:45Z RECV   -e "bootloader" | tail -12
+2026-09-22T07:55:45Z RECV  [    0.000000][    T0] This indicates a broken bootloader or old kernel
+2026-09-22T07:55:45Z RECV  [    4.100977][   T79] samsung-pogo-keyboard 5-002a: MCU rail on with BOOT0 low
+2026-09-22T07:55:45Z RECV  [    4.123272][   T79] samsung-pogo-keyboard 5-002a: leaving the MCU alone for 30000 ms
+2026-09-22T07:55:45Z RECV  [   36.130264][   T79] samsung-pogo-keyboard 5-002a: silent window over; connect line 0
+2026-09-22T07:55:45Z RECV  [   36.143371][   T79] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:55:45Z RECV  [   99.612028][   T79] samsung-pogo-keyboard 5-002a: no answer from the MCU application after 60000 ms (-6)
+2026-09-22T07:55:45Z RECV  [   99.707754][   T79] samsung-pogo-keyboard 5-002a: MCU application did not answer; entering its bootloader
+2026-09-22T07:55:45Z RECV  [   99.845705][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader took the 0xFF sync
+2026-09-22T07:55:45Z RECV  [   99.855626][   T79] samsung-pogo-keyboard 5-002a: MCU bootloader version 0x12
+2026-09-22T07:55:45Z RECV  [   99.864303][   T79] samsung-pogo-keyboard 5-002a: MCU IC version 00340034
+2026-09-22T07:55:45Z RECV  [   99.903356][   T79] samsung-pogo-keyboard 5-002a: MCU option bytes 0xfefffeaa: RDP 0xaa, bit 24 clear
+2026-09-22T07:55:45Z RECV  [  100.086692][   T79] samsung-pogo-keyboard 5-002a: after the disconnected reset: application -6, bootloader -6, connect 1
+2026-09-22T07:55:54Z console session done

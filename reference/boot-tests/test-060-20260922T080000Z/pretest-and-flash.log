@@ -1,0 +1,9 @@
+=== test 060 flash (boot only) ===
+boot e699cc5ce60004899891c97a1788490e27146efc392f93ddbf5adbeb11ad01c9  /dev/block/by-name/boot
+vendor_boot 8d76f912c5af2994b49a33a113825f21d1bcc71adf676f2cc25767fe754bd29e  /dev/block/by-name/vendor_boot
+D:\android\gts9-test060\boot.img: 1 file pushed, 0 skipped. 85.0 MB/s (100663296 bytes in 1.130s)
+96+0 records in
+96+0 records out
+100663296 bytes (96 M) copied, 0.353970 s, 271 M/s
+boot read-back ae45f2402e3418259adac7e3ee3e5ecb69ed67835636a903b478f8bfad6578e0  /dev/block/by-name/boot
+expected ae45f2402e3418259adac7e3ee3e5ecb69ed67835636a903b478f8bfad6578e0

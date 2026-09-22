@@ -1,0 +1,8 @@
+source_commit=1721ac8 ("i2c: log the GENI bus line levels when a transfer fails")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=standing device-test authorisation recorded for tests 046-061 plus this round's direction to keep testing on hardware
+hypothesis=Two possibilities behind every -ENXIO this bring-up has reported: (a) the STM32 really NACKs its address (an idle bus, nothing listening), or (b) the bus is not idle - something is holding SDA or SCL down - which the GENI controller reports with the same -ENXIO.  The stock kernel's own driver on this bus (i2c-msm-geni.c, CONFIG_I2C_MSM_GENI) distinguishes the two by reading SE_GENI_IOS before every transfer and returning -ENXIO when SCL and SDA are not both high.  Mainline reads the same register in geni_i2c_err_misc() but only at dev_dbg, and this port's gpio-level diagnostics cannot see the lines at all (the controller owns gpio72/106 and they read back -1), so the distinction has never been measured here.
+change=patch 0008 raises those two dev_dbg lines to dev_info and spells out the verdict ("scl/sda high, idle bus" versus "scl/sda NOT both high").  No functional change: no register writes, no new checks, error codes and recovery untouched.
+predictions=1) "scl/sda high, idle bus" => the MCU is simply not answering, and the next step is on the MCU side; 2) "scl/sda NOT both high" => something (most likely the unpowered or resetting MCU) is holding a line, every transfer so far failed for that reason rather than for a NACK, and the fix is about the bus and the MCU's power/reset state, not about the driver.
+images=out/boot-bundle-test062/ ; init_boot 12b77d17, dtbo c17418be unchanged
+started_utc=2026-09-22T08:20:00Z
