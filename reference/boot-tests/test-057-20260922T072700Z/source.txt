@@ -1,0 +1,7 @@
+source_commit=e13f667 ("pogo: leave the bus silent before the first poll")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner asked to continue the repair ("检查仓库变化，继续修复"), to reduce the wait between system switches, for the card's automatic mount to be off with only the serial console, and pointed at the official source in the parent folder
+hypothesis=The application's I2C slave may latch an error from traffic it sees while it is still starting, so continuous polling from the first seconds keeps it from ever coming up.  Stock does not talk to the MCU until its connect work runs tens of seconds into the boot; every mainline candidate so far polled every 250 ms from ~4 s.  connect_work now leaves the bus silent for 30 s after the MCU's power-up before the first poll.
+predictions=1) the log shows "leaving the MCU bus silent for 30000 ms before the first poll" and then, ~30 s later, either "MCU application answered after N ms" with the model/hw/firmware/mode line and no bootloader visit, or the same silent 60 s poll and bootloader visit as before.
+images=out/boot-bundle-test057/boot.img e087592fee9fb25c5e7de558536e5ec8b775ad033fcdb89b6ef2a0a8e3f4238e; vendor_boot baac5dc5 (unchanged since test 056), init_boot 12b77d17, dtbo c17418be
+started_utc=2026-09-22T07:27:00Z
