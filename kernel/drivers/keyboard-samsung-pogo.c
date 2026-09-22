@@ -21,6 +21,10 @@
 #define POGO_MAX_PAYLOAD 100
 #define POGO_MODEL_DX710 0x02
 
+/* STM32 command ids, from Samsung's stm32_pogo_v3.h. */
+#define POGO_CMD_GET_MODE		0x01
+#define POGO_CMD_CHECK_VERSION		0x02
+
 struct samsung_pogo {
 	struct i2c_client *client;
 	struct input_dev *input;
@@ -36,6 +40,8 @@ struct samsung_pogo {
 	bool ready;
 	u8 caps;
 };
+
+static int pogo_read_mcu(struct samsung_pogo *p);
 
 /* Each call ends with STOP, matching the stock protocol. */
 static int pogo_write(struct samsung_pogo *p, const u8 *buf, int len)
@@ -132,7 +138,8 @@ static void pogo_connect_work(struct work_struct *work)
 			p->event_enabled = true;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "pogo rail on, MCU out of reset, awaiting the model announcement\n");
+				 "pogo rail on, MCU out of reset, reading its version\n");
+			pogo_read_mcu(p);
 		}
 	}
 	/*
@@ -152,29 +159,55 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
-static int pogo_hello(struct samsung_pogo *p, u8 model)
+/*
+ * Ask the MCU who it is: STM32_CMD_CHECK_VERSION returns hw revision, model id,
+ * firmware minor and major, and STM32_CMD_GET_MODE says whether it is running
+ * the keyboard application.  Samsung's driver polls exactly this pair and
+ * retries, and it is the real presence test - an unsolicited announcement is not
+ * how the stock part introduces itself, which is why a driver that only listened
+ * for one never got past "awaiting the model announcement" on hardware that
+ * TWRP's stock kernel enumerated as EF-DX710_v1.4.1.0, model_id 0x2.
+ */
+static int pogo_read_mcu(struct samsung_pogo *p)
 {
 	u8 version[4], mode;
+	int ret, i;
+
+	for (i = 0; i < 50; i++) {
+		ret = pogo_read_reg(p, POGO_CMD_CHECK_VERSION, version,
+				    sizeof(version));
+		if (!ret)
+			break;
+		msleep(20);
+	}
+	if (ret) {
+		dev_info(&p->client->dev, "no answer from the MCU (%d)\n", ret);
+		return ret;
+	}
+	ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
+	if (ret) {
+		dev_info(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
+		return ret;
+	}
+	p->ready = mode == 1;
+	dev_info(&p->client->dev,
+		 "MCU model %#x hw %u firmware %u.%u mode %u%s\n",
+		 version[1], version[0], version[3], version[2], mode,
+		 p->ready ? "" : " (not in application mode)");
+	return 0;
+}
+
+static int pogo_hello(struct samsung_pogo *p, u8 model)
+{
 	int ret;
 
 	p->ready = false;
 	pogo_release_keys(p);
-	if (model != POGO_MODEL_DX710) {
-		dev_warn(&p->client->dev, "unsupported keyboard model %#x\n", model);
-		return 0;
-	}
-	ret = pogo_read_reg(p, 0x02, version, sizeof(version));
-	if (ret)
-		return ret;
-	ret = pogo_read_reg(p, 0x01, &mode, sizeof(mode));
-	if (ret)
-		return ret;
-	dev_info(&p->client->dev,
-		 "EF-DX710 model %#x firmware %u.%u hw %u, mode %u\n",
-		 model, version[3], version[2], version[0], mode);
-	/* Application mode only. Never attempt to rewrite keyboard firmware. */
-	p->ready = mode == 1;
-	return 0;
+	if (model != POGO_MODEL_DX710)
+		dev_warn(&p->client->dev, "announced keyboard model %#x\n", model);
+	ret = pogo_read_mcu(p);
+	/* Never attempt to rewrite keyboard firmware. */
+	return ret;
 }
 
 static irqreturn_t pogo_irq(int irq, void *data)
