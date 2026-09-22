@@ -1,0 +1,7 @@
+source_commit=a72e728 ("pogo: wait for the application instead of resetting it")
+upstream_kernel_commit=a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+authorization=owner asked to continue the repair ("检查仓库变化，继续修复") and asked to reduce the wait between system switches; this flash continues the authorisation recorded for tests 046-051 ("刷入测试")
+hypothesis=The application needs time from power-on before its I2C slave answers, and this port has been resetting it every ~50 ms while polling at 4 s, restarting that delay forever. Evidence: the connect line reads 1 at power-on and 0 after the first reset; no address answers after the resets (test 051: application -6, bootloader -6); stock's driver first reads the application 33 s into its boot and never resets it (rst:0); stock's own vendor loop pulses NRST per failed attempt, which is what this port copied and what a slow-starting part cannot survive.
+predictions=The application answers CHECK_VERSION within the 60 s patient poll with no reset, SWCLK, NRST or bus manipulation at all; the driver then reads GET_MODE and reports the model/hw/firmware/mode line. If it answers only after the bootloader visit, the disconnect reset restarts the application and the second patient poll (30 s) picks it up.
+images=out/boot-bundle-test052/boot.img fbf1693507d4e030575a4539712b53cbfba63430bfcd25f1e29d6ea3fb257c8e; init_boot/vendor_boot/dtbo unchanged (2fb24cd0, 828dadec, c17418be) and already on the device
+started_utc=2026-09-22T06:57:03Z

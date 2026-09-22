@@ -1,0 +1,35 @@
+2026-09-22T07:00:45Z console open on COM17
+2026-09-22T07:00:48Z SENT  dmesg | grep -i -e "MCU" -e "application" -e "bootloader" -e "no answer" -e "waiting up to" | tail -30
+2026-09-22T07:00:48Z RECV  dmesg | grep -i -e "MCU" -e "application" -e "bootloader" -e "no answer" -
+2026-09-22T07:00:48Z RECV  e "waiting up to" | tail -30
+2026-09-22T07:00:48Z RECV  [   67.427546][   T93] samsung-pogo-keyboard 5-002a: MCU IC version 00340034
+2026-09-22T07:00:48Z RECV  [   67.645711][   T93] samsung-pogo-keyboard 5-002a: after the disconnected reset: application -6, bootloader -6, connect 1
+2026-09-22T07:00:48Z RECV  [   97.677316][   T93] samsung-pogo-keyboard 5-002a: application after bootloader start: -6 after 30020 ms without reset (no version response)
+2026-09-22T07:00:48Z RECV  [   97.693939][   T93] samsung-pogo-keyboard 5-002a: five seconds later: application -6, bootloader -6, connect 1
+2026-09-22T07:00:48Z RECV  [   97.748975][   T93] samsung-pogo-keyboard 5-002a: waiting up to 60000 ms for the MCU application
+2026-09-22T07:00:48Z RECV  [   97.758348][   T93] samsung-pogo-keyboard 5-002a: no answer after 0 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  100.509992][   T93] samsung-pogo-keyboard 5-002a: no answer after 2500 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  103.103108][   T93] samsung-pogo-keyboard 5-002a: no answer after 5000 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  105.693932][   T93] samsung-pogo-keyboard 5-002a: no answer after 7500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  108.287508][   T93] samsung-pogo-keyboard 5-002a: no answer after 10000 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  110.858317][   T93] samsung-pogo-keyboard 5-002a: no answer after 12500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  113.505320][   T93] samsung-pogo-keyboard 5-002a: no answer after 15000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  116.159012][   T93] samsung-pogo-keyboard 5-002a: no answer after 17500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  118.815756][   T93] samsung-pogo-keyboard 5-002a: no answer after 20000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  121.406615][   T93] samsung-pogo-keyboard 5-002a: no answer after 22500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  124.127795][   T93] samsung-pogo-keyboard 5-002a: no answer after 25000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  126.845737][   T93] samsung-pogo-keyboard 5-002a: no answer after 27500 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  129.440207][   T93] samsung-pogo-keyboard 5-002a: no answer after 30000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  132.156595][   T93] samsung-pogo-keyboard 5-002a: no answer after 32500 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  134.749908][   T93] samsung-pogo-keyboard 5-002a: no answer after 35000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  137.407719][   T93] samsung-pogo-keyboard 5-002a: no answer after 37500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  140.096456][   T93] samsung-pogo-keyboard 5-002a: no answer after 40000 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  142.684760][   T93] samsung-pogo-keyboard 5-002a: no answer after 42500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  145.278671][   T93] samsung-pogo-keyboard 5-002a: no answer after 45000 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  147.901145][   T93] samsung-pogo-keyboard 5-002a: no answer after 47500 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  150.495791][   T93] samsung-pogo-keyboard 5-002a: no answer after 50000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  153.155744][   T93] samsung-pogo-keyboard 5-002a: no answer after 52500 ms: scl:-1 sda:-1 conn:0
+2026-09-22T07:00:48Z RECV  [  155.743411][   T93] samsung-pogo-keyboard 5-002a: no answer after 55000 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  158.367060][   T93] samsung-pogo-keyboard 5-002a: no answer after 57500 ms: scl:-1 sda:-1 conn:1
+2026-09-22T07:00:48Z RECV  [  161.118193][   T93] samsung-pogo-keyboard 5-002a: no answer from the MCU application after 60000 ms (-6)
+2026-09-22T07:00:57Z console session done
