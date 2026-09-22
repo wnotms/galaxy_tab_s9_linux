@@ -160,6 +160,33 @@ static irqreturn_t pogo_connect_irq(int irq, void *data)
 }
 
 /*
+ * What is actually on this bus?
+ *
+ * The stock firmware answers at 0x2a on the same controller and the same two
+ * pins (gpio72/gpio106, qup2_se7), while mainline gets a clean -ENXIO from every
+ * attempt - a NACK means the bus is idle and nobody acknowledged, not that the
+ * bus is stuck.  An STM32 that came up in its ROM bootloader answers at a
+ * different address, and one that never powered answers at none, so scan once
+ * and put the answer in the bring-up report.
+ */
+static void pogo_scan_bus(struct samsung_pogo *p)
+{
+	struct i2c_adapter *adap = p->client->adapter;
+	union i2c_smbus_data dummy;
+	char found[96];
+	int i, n = 0;
+
+	for (i = 0x08; i < 0x78 && n < (int)sizeof(found) - 7; i++) {
+		if (i2c_smbus_xfer(adap, i, 0, I2C_SMBUS_WRITE, 0,
+				   I2C_SMBUS_QUICK, &dummy) < 0)
+			continue;
+		n += scnprintf(found + n, sizeof(found) - n, " %#x", i);
+	}
+	dev_info(&p->client->dev, "i2c-%d answers at:%s\n", adap->nr,
+		 n ? found : " (nothing)");
+}
+
+/*
  * Ask the MCU who it is: STM32_CMD_CHECK_VERSION returns hw revision, model id,
  * firmware minor and major, and STM32_CMD_GET_MODE says whether it is running
  * the keyboard application.  Samsung's driver polls exactly this pair and
@@ -192,6 +219,7 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 	if (ret) {
 		dev_info(&p->client->dev, "no answer from the MCU after %d resets (%d)\n",
 			 i, ret);
+		pogo_scan_bus(p);
 		return ret;
 	}
 	if (i)
