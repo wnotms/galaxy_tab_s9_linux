@@ -187,36 +187,29 @@ static void pogo_connect_work(struct work_struct *work)
 		 * the system bootloader, and the bootloader stays only as the
 		 * fallback below.
 		 */
+		/*
+		 * Stock's own cycle, from the captured bring-up trace: the rail is
+		 * switched off, left off for ~400 ms, switched on again with SWCLK
+		 * (BOOT0) held low and NRST untouched, and the event interrupt is
+		 * enabled 50 ms later.  The MCU then announces itself ~135 ms after
+		 * the rail rose, with no host transaction in between.
+		 */
 		gpiod_set_value_cansleep(p->swclk, 0);
+		regulator_disable(p->vdd);
+		msleep(400);
 		if (!regulator_enable(p->vdd)) {
 			p->powered = true;
-			msleep(20);
-			dev_info(&p->client->dev, "MCU rail on with BOOT0 low\n");
-			/*
-			 * Leave everything alone for a while first.  Stock's driver
-			 * does not address the MCU until its connect work runs tens
-			 * of seconds into the boot, so nothing is known about what
-			 * the application needs in its first seconds - and every
-			 * mainline candidate so far started polling at ~4 s.  Only
-			 * the announce line's level is read here: that is passive
-			 * evidence of whether the application is alive at all.
-			 */
+			msleep(50);
 			p->announce_seen = 0;
-			p->observe_only = true;
+			p->observe_only = false;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
-				 "leaving the MCU alone for %u ms (announce line armed)\n",
-				 POGO_SILENT_WINDOW_MS);
-			msleep(POGO_SILENT_WINDOW_MS);
-			p->observe_only = false;
-			if (!p->announce_seen)
-				disable_irq(p->client->irq);
-			dev_info(&p->client->dev,
-				 "silent window over; connect line %d, %u announce IRQ(s)\n",
-				 gpiod_get_value_cansleep(p->connected),
-				 p->announce_seen);
+				 "MCU rail on with BOOT0 low, announce line armed\n");
 			/* Read-only poll; nothing in this window changes a pin. */
 			ret = pogo_read_mcu(p);
+			dev_info(&p->client->dev,
+				 "application poll finished (%d), %u announcement(s)\n",
+				 ret, p->announce_seen);
 			if (!ret) {
 				dev_info(&p->client->dev, "MCU application running\n");
 			} else {
@@ -226,7 +219,6 @@ static void pogo_connect_work(struct work_struct *work)
 				pogo_read_mcu(p);
 			}
 			p->event_enabled = true;
-			enable_irq(p->client->irq);
 		} else {
 			dev_err(&p->client->dev, "power on failed\n");
 		}
@@ -747,13 +739,16 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	 * interrupt is enough to answer the question, and servicing it would put
 	 * traffic on a bus that is deliberately being left alone.
 	 */
-	if (READ_ONCE(p->observe_only)) {
-		p->announce_seen++;
-		dev_info(&p->client->dev,
-			 "MCU asserted its announce line while being observed\n");
-		disable_irq_nosync(irq);
-		return IRQ_HANDLED;
-	}
+	/*
+	 * The application announces itself on this line within ~150 ms of its
+	 * power-up in the stock stack, before any host transaction.  Counting it
+	 * is how this port tells "the application started" from "the line is
+	 * quiet", which is the one difference tests 058-063 kept hitting.
+	 */
+	p->announce_seen++;
+	if (p->announce_seen < 4)
+		dev_info(&p->client->dev, "MCU announced itself (%u)\n",
+			 p->announce_seen);
 
 	mutex_lock(&p->lock);
 	/*
