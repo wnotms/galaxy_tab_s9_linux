@@ -64,3 +64,39 @@ again, unattended, with the report on the microSD card.
 
 The old RESTART2 text below is kept for the record of what was tried.  Until it is confirmed, the default stays
 `poweroff` and the workflow keeps asking the owner to boot recovery by hand.
+
+## Asking for recovery from a running Debian system
+
+`boot/gts9-debian-to-recovery.sh` is the same request from the other side of
+`switch_root`:
+
+    sudo ./gts9-debian-to-recovery.sh --check    # inspect only, change nothing
+    sudo ./gts9-debian-to-recovery.sh            # show what it found, then ask
+    sudo ./gts9-debian-to-recovery.sh --yes      # write the BCB and reboot
+    sudo ./gts9-debian-to-recovery.sh --clear    # remove a stale request
+
+It writes the same 2048-byte block, byte for byte, that the initramfs helper
+writes - one zeroed block with `boot-recovery` at offset 0 - and then asks for an
+**ordinary** restart.  It never passes a reboot mode string; that is the whole
+reason it can work where `reboot recovery` cannot.
+
+Two properties make the round trip safe:
+
+- **One request, one boot.**  `clear_stale_bcb` in `boot/bringup-init.sh` runs
+  before `boot_rootfs()`, so the next mainline boot clears the block whatever
+  brought it there.  Recovery is visited once and the reset after it returns to
+  Debian.
+- **A refusal is free.**  If ABL ignores the request the tablet boots mainline
+  again and the block is cleared on the way, so a failed attempt costs one
+  ordinary boot rather than a loop or a dead tablet.  Holding Volume Up during
+  power-on still selects TWRP by hand.
+
+The helper will not write to anything it cannot positively identify: it requires
+a GPT partition labelled exactly `misc`, on a SCSI/UFS parent (so the microSD,
+which is `mmcblk1`, is excluded by name), not mounted and not the running root,
+and it verifies the read-back before rebooting.  On this board that resolves to
+`/dev/sda10` - GPT index 9, 256 sectors.
+
+`tests/test_debian_recovery_boot.py` covers the guards, the byte layout and the
+ordering guarantee above.  The block layout test executes the shipped `write_bcb`
+and compares the bytes, so a change to the sequence fails the suite.
