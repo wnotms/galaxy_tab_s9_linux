@@ -1,0 +1,22 @@
+
+=== corrected overlay deployment 2026-09-23T18:05:39Z ===
+tar sha256: b8b881f7b7338f2c528ee53137109012b4e613ae9788e5657ad57a3b697edccb (no lib/bin/sbin entries)
+b8b881f7b7338f2c528ee53137109012b4e613ae9788e5657ad57a3b697edccb  /tmp/gts9-debian-overlay.tar
+mmc_devices=/dev/mmcblk1,/dev/mmcblk1p1
+--- end ---
+--- pre-extract usr-merge state ---
+lrwxrwxrwx 1 root root 7 2026-07-18 01:05 /mnt/debian/bin -> usr/bin
+lrwxrwxrwx 1 root root 7 2026-09-24 02:02 /mnt/debian/lib -> usr/lib
+lrwxrwxrwx 1 root root 8 2026-07-18 01:05 /mnt/debian/sbin -> usr/sbin
+tar exit=0
+gts9-enable-units: 10 link(s) in /mnt/debian/etc/systemd/system
+--- post-extract usr-merge state ---
+lrwxrwxrwx 1 root root 7 2026-07-18 01:05 /mnt/debian/bin -> usr/bin
+lrwxrwxrwx 1 root root 7 2026-09-24 02:02 /mnt/debian/lib -> usr/lib
+lrwxrwxrwx 1 root root 8 2026-07-18 01:05 /mnt/debian/sbin -> usr/sbin
+--- init resolves? ---
+lrwxrwxrwx 1 root root 22 2026-04-14 03:38 /mnt/debian/sbin/init -> ../lib/systemd/systemd
+/mnt/debian/usr/lib/systemd/systemd
+sbin/init executable OK
+--- loader resolves? ---
+loader OK

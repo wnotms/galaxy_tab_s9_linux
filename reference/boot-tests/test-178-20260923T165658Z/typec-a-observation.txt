@@ -1,0 +1,14 @@
+=== Type-C Phase A observation 2026-09-23T17:06:48Z ===
+reboot to system issued: 2026-09-23T17:04:05Z (from TWRP, BCB clear, Type-C attached, Type-C is the only intended variable)
+candidate: init_boot c22078ad... (minimal rootfs initramfs from HEAD 4a80b47 + persistent state)
+debian overlay: 5d4044a9... (units/helpers/autologin, no modules)
+
+host observations:
+- ADB device list empty from 17:04:25Z onward (expected: minimal profile has no adbd)
+- Windows COM port list empty on every poll 17:04:29Z - 17:06:21Z (USB ACM gadget never enumerated)
+- usbipd list at 17:07Z: no 0525:a4a7 gadget and no 18d1:* recovery interface on the bus
+- owner observation: screen is black
+
+This boot state cannot be classified from the panel or from USB: the minimal
+profile starts before both exist.  The persistent record on the Debian root
+filesystem decides which stage was reached.

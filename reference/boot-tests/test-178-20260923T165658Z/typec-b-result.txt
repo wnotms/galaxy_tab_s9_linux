@@ -1,0 +1,37 @@
+=== Battery-only Phase B RESULT 2026-09-23T18:20:52Z ===
+
+Boot: Type-C unplugged, device powered off, long-press Power, ~2-3 min wait,
+      Type-C replugged afterwards only to reach the console.
+
+Persistent record (/var/log/gts9-minimal-last-boot):
+format_version=1
+origin=initramfs
+boot_id=a6d6f60c-ff77-4ae4-aa39-5bfc70c3df7d
+kernel_release=7.2.0-rc3-gts9wifi-dirty
+root_device=/dev/mmcblk1p1
+stage=switch-root-synced
+stage_history=kernel-userspace,waiting-root,root-found,mounting-root,root-mounted,init-found,switch-root,switch-root-synced
+failure=none
+mmc_devices=/dev/mmcblk1,/dev/mmcblk1p1
+debian_origin=debian-systemd
+debian_boot_id=a6d6f60c-ff77-4ae4-aa39-5bfc70c3df7d
+debian_boot_id_match=yes
+debian_kernel_release=7.2.0-rc3-gts9wifi-dirty
+debian_root_source=/dev/mmcblk1p1
+debian_root_fstype=ext4
+debian_stage=multi-user
+debian_stage_history=systemd-entered,local-fs,basic,usb-acm-ready,panel-unavailable,tty1-getty-active,multi-user
+debian_failure=none
+
+Console checks over COM17 after the battery-only boot:
+2026-09-23T18:20:14Z RECV  uid=0(root) gid=0(root) groups=0(root)
+2026-09-23T18:20:21Z RECV  debian_stage=multi-user
+2026-09-23T18:20:21Z RECV  debian_stage_history=systemd-entered,local-fs,basic,usb-acm-ready,panel-unavailable,tty1-getty-active,multi-user
+2026-09-23T18:20:27Z RECV  0 loaded units listed.
+2026-09-23T18:20:34Z RECV       Active: active (running) since Tue 2026-04-14 03:38:08 CST; 1min 41s ago
+2026-09-23T18:20:34Z RECV     Main PID: 593 (login)
+
+VERDICT: battery-only minimal Debian boot PASS - Type-C/VBUS is not a
+rootfs handoff dependency.  Panel is the only failing subsystem
+(panel-unavailable: no fb0, because the minimal cmdline lacked
+msm.separate_gpu_kms=1 - fixed in affeec9, pending reflash).

@@ -1,0 +1,20 @@
+=== verify /lib repair from TWRP 2026-09-23T18:04:05Z ===
+--- /lib ---
+lrwxrwxrwx 1 root root 7 2026-09-24 02:02 /mnt/debian/lib -> usr/lib
+--- /lib/systemd/systemd ---
+-rwxr-xr-x 1 root root 133584 2026-04-14 03:38 /mnt/debian/lib/systemd/systemd
+--- /lib/ld-linux-aarch64.so.1 ---
+lrwxrwxrwx 1 root root 39 2026-06-30 05:37 /mnt/debian/lib/ld-linux-aarch64.so.1 -> aarch64-linux-gnu/ld-linux-aarch64.so.1
+--- /sbin/init ---
+lrwxrwxrwx 1 root root 22 2026-04-14 03:38 /mnt/debian/sbin/init -> ../lib/systemd/systemd
+--- firmware ---
+/mnt/debian/lib/firmware/keyboard_stm:
+total 52
+-rw-r--r-- 1 root root 52012 2026-09-24 02:02 stm32_gts9family.bin
+
+/mnt/debian/usr/lib/firmware/keyboard_stm:
+total 52
+-rw-r--r-- 1 root root 52012 2026-09-24 02:02 stm32_gts9family.bin
+--- record ---
+stage=switch-root-synced
+stage_history=kernel-userspace,waiting-root,root-found,mounting-root,root-mounted,init-found,switch-root,switch-root-synced

@@ -1,0 +1,15 @@
+=== Debian overlay deployment 2026-09-23T16:59:01Z ===
+twrp-mount-debian: unmounted /mnt/debian
+
+twrp-mount-debian: trying /dev/block/mmcblk1p1
+twrp-mount-debian: mounted /dev/block/mmcblk1p1 read-write at /mnt/debian (maintenance mode)
+twrp-mount-debian: device=/dev/block/mmcblk1p1 label=- uuid=-
+twrp-mount-debian: run 'sh /tmp/twrp-mount-debian.sh --umount' when done; nothing was formatted and no fsck ran
+twrp-mount-debian: no gts9-minimal-last-boot in /mnt/debian/var/log
+
+--- verify target is Debian ---
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+13.7
+--- overlay sha256 on device ---
+b1e3af80fb744ecba2d759ac67f0bacc0d1b514acd0f8cfc7ab08a538fab2a77  /tmp/gts9-debian-overlay.tar

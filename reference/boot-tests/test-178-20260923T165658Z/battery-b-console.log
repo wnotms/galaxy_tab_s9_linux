@@ -1,0 +1,80 @@
+2026-09-23T18:20:06Z console open on COM17
+2026-09-23T18:20:08Z RECV  echo READY1
+2026-09-23T18:20:08Z RECV  [?2004lREADY1
+2026-09-23T18:20:08Z shell answered after 1 poll(s)
+2026-09-23T18:20:08Z SENT  id; uptime
+2026-09-23T18:20:14Z RECV  [?2004hroot@gts9:/home/ms# id; uptime
+2026-09-23T18:20:14Z RECV  [?2004luid=0(root) gid=0(root) groups=0(root)
+2026-09-23T18:20:14Z RECV   03:39:30 up 1 min,  1 user,  load average: 0.04, 0.02, 0.00
+2026-09-23T18:20:14Z SENT  cat /var/log/gts9-minimal-last-boot
+2026-09-23T18:20:21Z RECV  [?2004hroot@gts9:/home/ms# cat /var/log/gts9-minimal-last-boot
+2026-09-23T18:20:21Z RECV  [?2004lformat_version=1
+2026-09-23T18:20:21Z RECV  origin=initramfs
+2026-09-23T18:20:21Z RECV  boot_id=a6d6f60c-ff77-4ae4-aa39-5bfc70c3df7d
+2026-09-23T18:20:21Z RECV  kernel_release=7.2.0-rc3-gts9wifi-dirty
+2026-09-23T18:20:21Z RECV  cmdline=console=ttyMSM0,115200n8 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr panic=10 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-23T18:20:21Z RECV  timestamp=1970-09-18T06:13:44Z
+2026-09-23T18:20:21Z RECV  uptime_seconds=1.00
+2026-09-23T18:20:21Z RECV  root_device=/dev/mmcblk1p1
+2026-09-23T18:20:21Z RECV  stage=switch-root-synced
+2026-09-23T18:20:21Z RECV  stage_history=kernel-userspace,waiting-root,root-found,mounting-root,root-mounted,init-found,switch-root,switch-root-synced
+2026-09-23T18:20:21Z RECV  failure=none
+2026-09-23T18:20:21Z RECV  mmc_devices=/dev/mmcblk1,/dev/mmcblk1p1
+2026-09-23T18:20:21Z RECV  debian_origin=debian-systemd
+2026-09-23T18:20:21Z RECV  debian_boot_id=a6d6f60c-ff77-4ae4-aa39-5bfc70c3df7d
+2026-09-23T18:20:21Z RECV  debian_boot_id_match=yes
+2026-09-23T18:20:21Z RECV  debian_kernel_release=7.2.0-rc3-gts9wifi-dirty
+2026-09-23T18:20:21Z RECV  debian_root_source=/dev/mmcblk1p1
+2026-09-23T18:20:21Z RECV  debian_root_fstype=ext4
+2026-09-23T18:20:21Z RECV  debian_stage=multi-user
+2026-09-23T18:20:21Z RECV  debian_stage_history=systemd-entered,local-fs,basic,usb-acm-ready,panel-unavailable,tty1-getty-active,multi-user
+2026-09-23T18:20:21Z RECV  debian_failure=none
+2026-09-23T18:20:21Z RECV  debian_updated_timestamp=2026-04-13T19:38:13Z
+2026-09-23T18:20:21Z RECV  debian_updated_uptime_seconds=9.85
+2026-09-23T18:20:21Z SENT  systemctl --failed --no-pager
+2026-09-23T18:20:27Z RECV  [?2004hroot@gts9:/home/ms# systemctl --failed --no-pager
+2026-09-23T18:20:27Z RECV  [?2004l[4m [0m[4m [0m[4mUNIT[0m[4m [0m[4mLOAD[0m[4m [0m[4mACTIVE[0m[4m [0m[4mSUB[0m[4m [0m[4mDESCRIPTION[0m
+2026-09-23T18:20:27Z RECV  
+2026-09-23T18:20:27Z RECV  0 loaded units listed.
+2026-09-23T18:20:27Z SENT  systemctl status serial-getty@ttyGS0.service --no-pager | head -12
+2026-09-23T18:20:34Z RECV  [?2004hroot@gts9:/home/ms# systemctl status serial-getty@ttyGS0.service --no-pager | head -12
+2026-09-23T18:20:34Z RECV  [?2004l??? serial-getty@ttyGS0.service - Serial Getty on ttyGS0
+2026-09-23T18:20:34Z RECV       Loaded: loaded (/usr/lib/systemd/system/serial-getty@.service; enabled; preset: enabled)
+2026-09-23T18:20:34Z RECV      Drop-In: /etc/systemd/system/serial-getty@ttyGS0.service.d
+2026-09-23T18:20:34Z RECV               ??????autologin.conf
+2026-09-23T18:20:34Z RECV       Active: active (running) since Tue 2026-04-14 03:38:08 CST; 1min 41s ago
+2026-09-23T18:20:34Z RECV   Invocation: 06f0ba159a1746f186cd609905eabefd
+2026-09-23T18:20:34Z RECV         Docs: man:agetty(8)
+2026-09-23T18:20:34Z RECV               man:systemd-getty-generator(8)
+2026-09-23T18:20:34Z RECV               https://0pointer.de/blog/projects/serial-console.html
+2026-09-23T18:20:34Z RECV     Main PID: 593 (login)
+2026-09-23T18:20:34Z RECV        Tasks: 0 (limit: 14053)
+2026-09-23T18:20:34Z RECV       Memory: 3.1M (peak: 3.7M)
+2026-09-23T18:20:34Z SENT  journalctl -b --no-pager | grep -Ei "ttyGS0|gts9|Debian GNU" | tail -25
+2026-09-23T18:20:40Z RECV  [?2004hroot@gts9:/home/ms# journalctl -b --no-pager | grep -Ei "ttyGS0|gts9|Debian GNU" | tail -25
+2026-09-23T18:20:40Z RECV  [?2004lApr 14 03:38:18 gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aa00000.video-codec
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to acb7000.isp
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to acb7000.isp
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to 6800000.remoteproc
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d90000.interconnect
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:18 gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-23T18:20:40Z RECV  Apr 14 03:38:35 gts9 kernel: regulator: Not disabling unused regulators
+2026-09-23T18:20:40Z console run done (ready=True)

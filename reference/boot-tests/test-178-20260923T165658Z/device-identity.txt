@@ -1,0 +1,17 @@
+=== TWRP identity ===
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+gts9wifi
+SM-X710
+twrp_gts9wifi-eng 16.1.0 SP2A.220405.004 eng.ms.20260917.094451 test-keys
+R52X10045LT
+X710ZCU5CYH4
+=== by-name boot chain ===
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 boot -> /dev/block/sda21
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 dtbo -> /dev/block/sda30
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 init_boot -> /dev/block/sda22
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 vbmeta -> /dev/block/sde15
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 vbmeta_system -> /dev/block/sda18
+lrwxrwxrwx 1 root root 16 2022-09-18 12:14 vendor_boot -> /dev/block/sda24
+=== TWRP mounts ===
+/dev/block/sda28 /cache ext4 rw,seclabel,relatime 0 0
+/dev/block/mmcblk1p1 /external_sd ext4 rw,seclabel,relatime 0 0

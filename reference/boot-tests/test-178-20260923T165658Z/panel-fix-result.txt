@@ -1,0 +1,31 @@
+=== Panel fix validation (vendor_boot 1abb4c68, msm.separate_gpu_kms=1) 2026-09-23T18:23:09Z ===
+
+Before (Phase A/B, cmdline without the parameter):
+  panel-samsung-ana38407: error -EINVAL: failed to attach to DSI host
+  probe failed with error -22  -> no fb0 -> panel-unavailable
+
+After (cmdline with msm.separate_gpu_kms=1):
+debian_stage_history=systemd-entered,local-fs,usb-acm-ready,panel-recovered,tty1-getty-active,multi-user
+2026-09-23T18:22:37Z SENT  dmesg | grep -iE "ana38407|panel-samsung" | tail -12
+root@gts9:~# dmesg | grep -iE "ana38407|panel-samsung" | tail -12
+[    0.581979] [     T12] panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+[    0.740595] [     T12] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+[    0.741560] [     T12] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+[    0.777815] [     T12] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+[    4.632607] [    T605] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-23T18:22:43Z SENT  ls /sys/class/graphics/ 2>/dev/null; echo "--- backlight ---"; ls /sys/class/backlight/ 2>/dev/null; echo "--- fb0 blank ---"; cat /sys/class/graphics/fb0/blank 2>/dev/null
+root@gts9:~# ls /sys/class/graphics/ 2>/dev/null; echo "--- backlight ---"; ls /sys/class/backlight/ 2>/dev/null; echo "--- fb0 blank ---"; cat /sys/class/graphics/fb0/blank 2>/dev/null
+fb0  fbcon
+--- backlight ---
+ae94000.dsi.0
+--- fb0 blank ---
+2026-09-23T18:22:50Z SENT  systemctl status gts9-panel-recover.service --no-pager | head -14
+root@gts9:~# systemctl status gts9-panel-recover.service --no-pager | head -14
+??? gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery
+     Loaded: loaded (/usr/lib/systemd/system/gts9-panel-recover.service; enabled; preset: enabled)
+    Process: 521 ExecStart=/usr/libexec/gts9-panel-recover (code=exited, status=0/SUCCESS)
+Apr 14 03:38:07 gts9 systemd[1]: Starting gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery...
+
+Verdict: Debian-side panel cold-boot recovery verified on hardware:
+  zero ID 00 00 00 at 0.74 s -> gts9-panel-recover cycle 1 -> 80 00 04,
+  fb0 + backlight present, fb0/blank=0, stage panel-recovered.

@@ -1,0 +1,35 @@
+=== Debian gts9 userspace state BEFORE overlay deployment 2026-09-23T16:58:45Z ===
+--- /usr/libexec/gts9-* ---
+-rwxr-xr-x 1 root root  667 2026-04-14 04:46 gts9-record-boot-stage
+-rwxr-xr-x 1 root root  451 2026-04-14 04:46 gts9-record-poweroff-stage
+--- /usr/lib/systemd/system/gts9-* ---
+-rw-r--r-- 1 root root  335 2026-04-14 04:46 gts9-boot-stage.service
+-rw-r--r-- 1 root root  455 2026-04-14 04:46 gts9-getty-stage.service
+-rw-r--r-- 1 root root  277 2026-04-14 04:46 gts9-poweroff-stage.service
+--- /etc/systemd/system (gts9, wants) ---
+/mnt/debian/etc/systemd/system:
+/mnt/debian/etc/systemd/system/basic.target.wants:
+lrwxrwxrwx 1 root root 47 2026-04-14 04:46 gts9-boot-stage.service -> /usr/lib/systemd/system/gts9-boot-stage.service
+/mnt/debian/etc/systemd/system/getty.target.wants:
+lrwxrwxrwx 1 root root 45 2026-04-14 03:56 serial-getty@ttyGS0.service -> /usr/lib/systemd/system/serial-getty@.service
+lrwxrwxrwx 1 root root 45 2026-09-22 23:15 serial-getty@ttyMSM0.service -> /usr/lib/systemd/system/serial-getty@.service
+/mnt/debian/etc/systemd/system/multi-user.target.wants:
+lrwxrwxrwx 1 root root 48 2026-04-14 04:46 gts9-getty-stage.service -> /usr/lib/systemd/system/gts9-getty-stage.service
+/mnt/debian/etc/systemd/system/network-online.target.wants:
+/mnt/debian/etc/systemd/system/ssh.service.wants:
+/mnt/debian/etc/systemd/system/ssh.socket.wants:
+/mnt/debian/etc/systemd/system/sshd.service.wants:
+/mnt/debian/etc/systemd/system/sshd@.service.wants:
+/mnt/debian/etc/systemd/system/sysinit.target.wants:
+/mnt/debian/etc/systemd/system/systemd-poweroff.service.wants:
+lrwxrwxrwx 1 root root 51 2026-04-14 04:46 gts9-poweroff-stage.service -> /usr/lib/systemd/system/gts9-poweroff-stage.service
+/mnt/debian/etc/systemd/system/timers.target.wants:
+--- /var/log/gts9-* ---
+-rw-r--r-- 1 root root    956 2026-04-14 03:38 gts9-last-boot-stage
+-rw-r--r-- 1 root root    129 2026-04-14 03:52 gts9-last-poweroff-stage
+--- /lib/modules ---
+(none)
+--- /lib/firmware (keyboard) ---
+(none)
+--- root fs uuid/state ---
+(dumpe2fs unavailable)

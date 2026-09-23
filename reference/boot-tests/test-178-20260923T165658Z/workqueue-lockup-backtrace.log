@@ -1,0 +1,129 @@
+2026-09-23T18:40:57Z console open on COM17
+2026-09-23T18:40:59Z RECV  echo READY1
+2026-09-23T18:40:59Z RECV  [?2004lREADY1
+2026-09-23T18:40:59Z shell answered after 1 poll(s)
+2026-09-23T18:40:59Z SENT  journalctl -b -1 -k --no-pager | grep -B2 -A25 "Showing backtraces" | head -80
+2026-09-23T18:41:09Z RECV  [?2004hroot@gts9:~# journalctl -b -1 -k --no-pager | grep -B2 -A25 "Showing backtraces" | head -80
+2026-09-23T18:41:09Z RECV  [?2004lApr 14 03:39:06 gts9 kernel:     pending: blk_mq_timeout_work
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:06 gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 13 92 93 77 90 12 171 91 170
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:06 gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 86s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 81s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 86s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: workqueue events_unbound: flags=0x2
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:     in-flight: 75:toggle_allocation_gate for 86s
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: workqueue kblockd: flags=0x118
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:   pwq 7: cpus=1 node=0 flags=0x0 nice=-20 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel:     pending: blk_mq_timeout_work
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 13 92 93 77 90 12 171 91 170
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:36 gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: rcu:         4-...0: (1 ticks this GP) idle=b04c/1/0x4000000000000000 softirq=791/791 fqs=14
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: rcu:         5-...0: (1 GPs behind) idle=b324/1/0x4000000000000000 softirq=662/662 fqs=14
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: rcu:         (detected by 0, t=26033 jiffies, g=221, q=1363 ncpus=8)
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: Sending NMI from CPU 0 to CPUs 4:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: ------------[ cut here ]------------
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: WARNING: ../linux-src-poweroff-trace/drivers/gpu/drm/drm_vblank.c:1329 at drm_crtc_wait_one_vblank+0x390/0x3a4, CPU#2: kworker/2:2/110
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: Modules linked in:
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: CPU: 2 UID: 0 PID: 110 Comm: kworker/2:2 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: Workqueue: events drm_fb_helper_damage_work
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: pc : drm_crtc_wait_one_vblank+0x390/0x3a4
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: lr : drm_crtc_wait_one_vblank+0x388/0x3a4
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: sp : ffffffc0849ebc50
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x29: ffffffc0849ebc80 x28: ffffffc082cc6000 x27: 000000007fffffff
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x26: 00000000000001a0 x25: ffffff880e84a480 x24: 0000000000000cdc
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x23: 0000000000000000 x22: ffffffc08227e8b0 x21: ffffffc0822673dc
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x20: ffffff880d48a000 x19: 0000000000000000 x18: ffffffc08484d030
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x17: 2074756f2064656d x16: 6974207469617720 x15: 0000000000000003
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x14: ffffffc082d118f0 x13: 0000000000000fff x12: 0000000000000003
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x11: 0000000000000003 x10: 0000000000000001 x9 : f5a3e7f200f4f000
+2026-09-23T18:41:09Z RECV  Apr 14 03:39:55 gts9 kernel: x8 : f5a3e7f200f4f000 x7 : 2e30303031306561 x6 : 207570645f6d736d
+2026-09-23T18:41:09Z RECV  --
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:14 gts9 kernel: pool 30: cpus=7 node=0 flags=0x0 nice=0 hung=0s workers=5 idle: 63 78 80 79
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:14 gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 92 93 77 90 12 171 91 170
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:14 gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 153s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 148s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 153s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: workqueue events_unbound: flags=0x2
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:     in-flight: 75:toggle_allocation_gate for 153s
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: workqueue kblockd: flags=0x118
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:   pwq 7: cpus=1 node=0 flags=0x0 nice=-20 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel:     pending: blk_mq_timeout_work
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 13 92 93 77 90 12 171 91 170
+2026-09-23T18:41:09Z RECV  Apr 14 03:40:44 gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 184s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 179s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 184s!
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: workqueue events_unbound: flags=0x2
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:     in-flight: 75:toggle_allocation_gate for 184s
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:     pending: vmstat_update
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel: workqueue writeback: flags=0x4a
+2026-09-23T18:41:09Z RECV  Apr 14 03:41:15 gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-23T18:41:09Z SENT  journalctl -b -1 -k --no-pager | grep -iE "Call trace|pogo|i2c|geni|sdhci|mmc|drm|workqueue" | tail -40
+2026-09-23T18:41:19Z RECV  [?2004hroot@gts9:~# journalctl -b -1 -k --no-pager | grep -iE "Call trace|pogo|i2c|geni|sdhci|mmc|drm|workqueue" | tail -40
+2026-09-23T18:41:19Z RECV  [?2004lApr 14 03:43:00 gts9 kernel: mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000003
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Cmd:       0x0000193a | Max curr: 0x00000000
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000900
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: Host ctl2: 0x0000000b
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000ffffff218
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: mmc1: sdhci: ============================================
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: Call trace:
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: Workqueue: events_unbound toggle_allocation_gate
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: Call trace:
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 289s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 284s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 289s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: workqueue events: flags=0x100
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel:     in-flight: 76:pogo_watch_work for 17s
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: workqueue events_unbound: flags=0x2
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: workqueue writeback: flags=0x4a
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:00 gts9 kernel: workqueue kblockd: flags=0x118
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 319s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 314s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 319s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: workqueue events_unbound: flags=0x2
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-23T18:41:19Z RECV  Apr 14 03:43:30 gts9 kernel: workqueue kblockd: flags=0x118
+2026-09-23T18:41:19Z RECV  Apr 14 03:44:00 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 350s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:44:00 gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=-20 stuck for 345s!
+2026-09-23T18:41:19Z RECV  Apr 14 03:44:01 gts9 kernel: BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 350s!
+2026-09-23T18:41:19Z console run done (ready=True)

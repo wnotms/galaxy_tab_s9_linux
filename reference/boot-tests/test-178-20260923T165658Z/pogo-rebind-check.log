@@ -1,0 +1,50 @@
+2026-09-23T18:25:41Z console open on COM17
+2026-09-23T18:25:42Z RECV  echo READY1
+2026-09-23T18:25:42Z RECV  [?2004lREADY1
+2026-09-23T18:25:42Z shell answered after 1 poll(s)
+2026-09-23T18:25:42Z SENT  ls /sys/bus/i2c/drivers/ | grep -i pogo; ls -l /sys/bus/i2c/drivers/*pogo* 2>/dev/null | head
+2026-09-23T18:25:49Z RECV  [?2004hroot@gts9:~# ls /sys/bus/i2c/drivers/ | grep -i pogo; ls -l /sys/bus/i2c/drivers/*pogo* 2>/dev/null | head
+2026-09-23T18:25:49Z RECV  [?2004lsamsung-pogo-keyboard
+2026-09-23T18:25:49Z RECV  total 0
+2026-09-23T18:25:49Z RECV  lrwxrwxrwx 1 root root    0 Apr 14 03:41 5-002a -> ../../../../devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a
+2026-09-23T18:25:49Z RECV  --w------- 1 root root 4096 Apr 14 03:41 bind
+2026-09-23T18:25:49Z RECV  --w------- 1 root root 4096 Apr 14 03:38 uevent
+2026-09-23T18:25:49Z RECV  --w------- 1 root root 4096 Apr 14 03:41 unbind
+2026-09-23T18:25:49Z SENT  grep -i "state\|connect" /sys/bus/i2c/devices/5-002a/* 2>/dev/null | head -10
+2026-09-23T18:25:55Z RECV  [?2004hroot@gts9:~# grep -i "state\|connect" /sys/bus/i2c/devices/5-002a/* 2>/dev/null | head -10
+2026-09-23T18:25:55Z RECV  [?2004l/sys/bus/i2c/devices/5-002a/rearm:state=DETACHED
+2026-09-23T18:25:55Z RECV  /sys/bus/i2c/devices/5-002a/rearm:connect=0
+2026-09-23T18:25:55Z SENT  echo 5-002a > /sys/bus/i2c/drivers/samsung-pogo-keyboard/unbind 2>&1; sleep 1; echo 5-002a > /sys/bus/i2c/drivers/samsung-pogo-keyboard/bind 2>&1; echo rebind_rc=$?
+2026-09-23T18:26:01Z RECV  [?2004hroot@gts9:~# echo 5-002a > /sys/bus/i2c/drivers/samsung-pogo-keyboard/unbind 2>&1; sleep 1; echo 5-002a > /sys/bus/i2c/drivers/samsung-pogo-keyboard/bind 2>&1; echo rebind_rc=$?
+2026-09-23T18:26:01Z RECV  [?2004lrebind_rc=0
+2026-09-23T18:26:01Z SENT  sleep 3; dmesg | tail -20
+2026-09-23T18:26:08Z RECV  [?2004hroot@gts9:~# sleep 3; dmesg | tail -20
+2026-09-23T18:26:08Z RECV  [?2004l[   14.563414] [    T113] qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-23T18:26:08Z RECV  [   14.563420] [    T113] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-23T18:26:08Z RECV  [   14.563425] [    T113] qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-23T18:26:08Z RECV  [   14.563430] [    T113] qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-23T18:26:08Z RECV  [   14.563436] [    T113] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 3d00000.gpu
+2026-09-23T18:26:08Z RECV  [   14.563441] [    T113] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-23T18:26:08Z RECV  [   14.563658] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-23T18:26:08Z RECV  [   14.563788] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-23T18:26:08Z RECV  [   14.563944] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-23T18:26:08Z RECV  [   14.563971] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-23T18:26:08Z RECV  [   14.563985] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-23T18:26:08Z RECV  [   31.712469] [    T113] regulator: Not disabling unused regulators
+2026-09-23T18:26:08Z RECV  [  229.643549] [    T767] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input4
+2026-09-23T18:26:08Z RECV  [  229.669759] [    T171] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-23T18:26:08Z RECV  [  229.669799] [    T171] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-23T18:26:08Z RECV  [  229.669856] [    T171] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-23T18:26:08Z RECV  [  229.669864] [    T171] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-23T18:26:08Z RECV  [  229.669868] [    T171] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-23T18:26:08Z RECV  [  229.889114] [    T145] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-23T18:26:08Z RECV  [  229.889176] [    T145] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-23T18:26:08Z SENT  cat /proc/bus/input/devices | grep -A5 -i "EF-DX710"
+2026-09-23T18:26:14Z RECV  [?2004hroot@gts9:~# cat /proc/bus/input/devices | grep -A5 -i "EF-DX710"
+2026-09-23T18:26:14Z RECV  [?2004lN: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-23T18:26:14Z RECV  P: Phys=
+2026-09-23T18:26:14Z RECV  S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input4
+2026-09-23T18:26:14Z RECV  U: Uniq=
+2026-09-23T18:26:14Z RECV  H: Handlers=sysrq kbd leds event2
+2026-09-23T18:26:14Z RECV  B: PROP=0
+2026-09-23T18:26:14Z console run done (ready=True)

@@ -1,0 +1,17 @@
+
+=== keyboard rollback on the card 2026-09-23T18:32:27Z ===
+de703b89adf92232cc82cd56397e80e13189af43a55401207388df8f37d04bef  /tmp/gts9-debian-overlay.tar
+--- end ---
+--- remove the reverted pogo artifacts ---
+rm rc=0
+--- re-extract the clean overlay ---
+tar exit=0
+gts9-enable-units: 10 link(s) in /mnt/debian/etc/systemd/system
+--- pogo artifacts left? ---
+helper: gone
+unit: gone
+enablement: gone
+--- usr-merge + init ---
+lrwxrwxrwx 1 root root 7 2026-09-23 18:02 /mnt/debian/lib -> usr/lib
+init OK
+umount rc=0

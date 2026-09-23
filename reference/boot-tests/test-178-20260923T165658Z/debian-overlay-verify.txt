@@ -1,0 +1,15 @@
+=== post-extraction sync + symlink verification 2026-09-23T16:59:21Z ===
+sync rc=0
+--- resolve every gts9 enablement symlink ---
+BROKEN  /mnt/debian/etc/systemd/system/basic.target.wants/gts9-boot-stage.service -> /usr/lib/systemd/system/gts9-boot-stage.service
+BROKEN  /mnt/debian/etc/systemd/system/basic.target.wants/gts9-debian-entered.service -> /usr/lib/systemd/system/gts9-debian-entered.service
+BROKEN  /mnt/debian/etc/systemd/system/getty.target.wants/serial-getty@ttyGS0.service -> /usr/lib/systemd/system/serial-getty@.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-debian-basic-stage.service -> /usr/lib/systemd/system/gts9-debian-basic-stage.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-debian-getty-stage.service -> /usr/lib/systemd/system/gts9-debian-getty-stage.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-debian-multi-user-stage.service -> /usr/lib/systemd/system/gts9-debian-multi-user-stage.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-getty-stage.service -> /usr/lib/systemd/system/gts9-getty-stage.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-panel-recover.service -> /usr/lib/systemd/system/gts9-panel-recover.service
+BROKEN  /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-usb-acm.service -> /usr/lib/systemd/system/gts9-usb-acm.service
+BROKEN  /mnt/debian/etc/systemd/system/systemd-poweroff.service.wants/gts9-poweroff-stage.service -> /usr/lib/systemd/system/gts9-poweroff-stage.service
+--- tar errors count ---
+tar -t rc=0

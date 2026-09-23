@@ -1,0 +1,20 @@
+=== persistent record read from TWRP 2026-09-23T17:08:59Z ===
+twrp-mount-debian: trying /dev/block/mmcblk1p1
+twrp-mount-debian: mounted /dev/block/mmcblk1p1 read-only at /mnt/debian (logs only; no journal replay)
+twrp-mount-debian: device=/dev/block/mmcblk1p1 label=- uuid=-
+twrp-mount-debian: run 'sh /tmp/twrp-mount-debian.sh --umount' when done; nothing was formatted and no fsck ran
+
+--- /mnt/debian/var/log/gts9-minimal-last-boot ---
+format_version=1
+origin=initramfs
+boot_id=unknown
+kernel_release=7.2.0-rc3-gts9wifi-dirty
+cmdline=unavailable
+timestamp=1970-09-18T05:02:40Z
+uptime_seconds=0.58
+root_device=/dev/mmcblk1p1
+stage=switch-root
+stage_history=kernel-userspace,waiting-root,root-found,mounting-root,root-mounted,init-found,switch-root
+failure=none
+mmc_devices=none(found:hosts=)
+--- end ---

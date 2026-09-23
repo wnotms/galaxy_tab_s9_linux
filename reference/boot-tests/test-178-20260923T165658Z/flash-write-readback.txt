@@ -1,0 +1,48 @@
+=== init_boot flash 2026-09-23T17:03:30Z ===
+host candidate:
+c22078ad7a0008d139f9ce376ee745691ead565dbec9f979f31a6026a55073fd  out/test-178/bundle/init_boot.img
+host size: 8388608 bytes
+on-device candidate:
+c22078ad7a0008d139f9ce376ee745691ead565dbec9f979f31a6026a55073fd  /tmp/init_boot-new.img
+candidate size: 8388608 bytes
+target: /dev/block/sda22
+target size: 16384 sectors = 8388608 bytes
+
+--- writing ---
+8388608 bytes (8.0 M) copied, 0.040645 s, 197 M/s
+--- read back ---
+c22078ad7a0008d139f9ce376ee745691ead565dbec9f979f31a6026a55073fd  /dev/block/by-name/init_boot
+
+=== init_boot flash #2 (instrumented) 2026-09-23T17:12:20Z ===
+candidate: e72651da911bb60f8a1509a9e3e653e859d9f881674acffe8e1461462ef97445 (initramfs 6a5f1f94, trampoline 81ba58ae)
+e72651da911bb60f8a1509a9e3e653e859d9f881674acffe8e1461462ef97445  /tmp/init_boot-new.img
+8388608 bytes (8.0 M) copied, 0.041232 s, 194 M/s
+e72651da911bb60f8a1509a9e3e653e859d9f881674acffe8e1461462ef97445  /dev/block/by-name/init_boot
+
+=== init_boot flash #3 (selftest + handoff markers) 2026-09-23T17:21:58Z ===
+candidate: 0da9ebc50d2c60071d5631c3b39a44cc2cb1ad0e04691bffe370f9d8e8f48598 (initramfs 3c7fd743, trampoline a3315491)
+0da9ebc50d2c60071d5631c3b39a44cc2cb1ad0e04691bffe370f9d8e8f48598  /tmp/init_boot-new.img
+8388608 bytes (8.0 M) copied, 0.040627 s, 197 M/s
+0da9ebc50d2c60071d5631c3b39a44cc2cb1ad0e04691bffe370f9d8e8f48598  /dev/block/by-name/init_boot
+
+=== candidate #4 flash (safe path) 2026-09-23T17:42:45Z ===
+init_boot candidate : 9985eeef89844a6018d4664fdf4d52f89d3d7ab7d7dcef7c53d08dba08ce5834
+vendor_boot candidate: 0738bd1f6041e9964d1e579fb9bcd6280c78e9e7f3ed975079f20126af773024 (cmdline now panic=10)
+initramfs: 0889d6cd82fd9dd1e40efb240ec25de6b753809e9abae5d02d7dd751fdcb0a5f (default handoff /sbin/init)
+--- hashes on device ---
+9985eeef89844a6018d4664fdf4d52f89d3d7ab7d7dcef7c53d08dba08ce5834  /tmp/init_boot-new.img
+0738bd1f6041e9964d1e579fb9bcd6280c78e9e7f3ed975079f20126af773024  /tmp/vendor_boot-new.img
+--- sizes ---
+/tmp/init_boot-new.img 8388608
+/tmp/vendor_boot-new.img 100663296
+--- write ---
+8388608 bytes (8.0 M) copied, 0.024145 s, 331 M/s
+100663296 bytes (96 M) copied, 0.243195 s, 395 M/s
+--- read back ---
+9985eeef89844a6018d4664fdf4d52f89d3d7ab7d7dcef7c53d08dba08ce5834  /dev/block/by-name/init_boot
+0738bd1f6041e9964d1e579fb9bcd6280c78e9e7f3ed975079f20126af773024  /dev/block/by-name/vendor_boot
+
+=== vendor_boot flash (panel cmdline fix) 2026-09-23T18:21:48Z ===
+1abb4c68b8103020d7935f5057225abe1e6b6b2222f58a6e93e254eb851af27c  /tmp/vendor_boot-new.img
+100663296 bytes (96 M) copied, 0.351987 s, 273 M/s
+1abb4c68b8103020d7935f5057225abe1e6b6b2222f58a6e93e254eb851af27c  /dev/block/by-name/vendor_boot

@@ -1,0 +1,76 @@
+=== Debian userspace state AFTER overlay deployment 2026-09-23T17:03:16Z ===
+--- helpers ---
+-rwxr-xr-x 1 root root 2373 2026-09-24 01:01 gts9-enable-units
+-rwxr-xr-x 1 root root 4247 2026-09-24 00:41 gts9-panel-recover
+-rwxr-xr-x 1 root root  667 2026-09-23 19:00 gts9-record-boot-stage
+-rwxr-xr-x 1 root root 5867 2026-09-24 00:48 gts9-record-debian-stage
+-rwxr-xr-x 1 root root  451 2026-09-23 19:24 gts9-record-poweroff-stage
+-rwxr-xr-x 1 root root 4112 2026-09-24 00:39 gts9-usb-acm
+--- units ---
+-rw-r--r-- 1 root root  335 2026-09-23 19:00 gts9-boot-stage.service
+-rw-r--r-- 1 root root  299 2026-09-24 00:38 gts9-debian-basic-stage.service
+-rw-r--r-- 1 root root  352 2026-09-24 00:38 gts9-debian-entered.service
+-rw-r--r-- 1 root root  491 2026-09-24 00:38 gts9-debian-getty-stage.service
+-rw-r--r-- 1 root root  289 2026-09-24 00:38 gts9-debian-multi-user-stage.service
+-rw-r--r-- 1 root root  455 2026-09-23 19:00 gts9-getty-stage.service
+-rw-r--r-- 1 root root  249 2026-09-24 00:41 gts9-panel-recover.service
+-rw-r--r-- 1 root root  277 2026-09-23 19:09 gts9-poweroff-stage.service
+-rw-r--r-- 1 root root  251 2026-09-24 00:39 gts9-usb-acm.service
+--- autologin drop-in ---
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
+--- entered unit ---
+[Unit]
+Description=Record entry into Debian after the minimal rootfs handoff
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+ConditionPathExists=/var/log/gts9-minimal-last-boot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-debian-stage systemd-entered local-fs
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
+--- usb unit ---
+[Unit]
+Description=X710 USB ACM debug console (configfs)
+After=local-fs.target
+Before=serial-getty@ttyGS0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-usb-acm
+RemainAfterExit=yes
+TimeoutStartSec=45
+
+[Install]
+WantedBy=multi-user.target
+--- panel unit ---
+[Unit]
+Description=X710 ANA38407 cold-boot panel recovery
+After=local-fs.target
+Before=getty@tty1.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-panel-recover
+RemainAfterExit=yes
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target
+--- modules (none expected) ---
+(no module tree)
+--- firmware ---
+total 52
+-rw-r--r-- 1 root root 52012 2026-09-22 18:18 stm32_gts9family.bin
+--- no leftover persistent record ---
+-rw-r--r-- 1 root root    956 2026-04-14 03:38 gts9-last-boot-stage
+-rw-r--r-- 1 root root    129 2026-04-14 03:52 gts9-last-poweroff-stage
+
+=== unmounting ===
+twrp-mount-debian: unmounted /mnt/debian

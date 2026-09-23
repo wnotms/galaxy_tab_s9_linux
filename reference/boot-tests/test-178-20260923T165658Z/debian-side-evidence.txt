@@ -1,0 +1,42 @@
+=== Debian-side evidence after the minimal boot 2026-09-23T17:09:14Z ===
+--- /var/log listing by time ---
+total 296
+-rw-r--r-- 1 root root 115465 2026-09-22 23:29 dpkg.log
+-rw-r--r-- 1 root root  12557 2026-09-22 23:29 alternatives.log
+drwxr-xr-x 2 root root   4096 2026-09-22 23:29 apt
+drwxr-xr-x 3 root root   4096 2026-09-22 23:10 runit
+-rw-r--r-- 1 root root  84811 2026-09-22 23:06 bootstrap.log
+drwx------ 2 root root   4096 2026-09-22 23:04 private
+lrwxrwxrwx 1 root root     39 2026-09-22 23:04 README -> ../../usr/share/doc/systemd/README.logs
+-rw-rw-r-- 1 root 43        0 2026-09-22 23:02 lastlog
+-rw-rw---- 1 root 43        0 2026-09-22 23:02 btmp
+-rw-rw-r-- 1 root 43    39200 2026-04-14 04:23 wtmp
+-rw-r--r-- 1 root root    129 2026-04-14 03:52 gts9-last-poweroff-stage
+-rw-r--r-- 1 root root    956 2026-04-14 03:38 gts9-last-boot-stage
+drwxr-sr-x 3 root 999    4096 2026-04-14 03:38 journal
+-rw-r--r-- 1 root root    355 1970-09-18 13:02 gts9-minimal-last-boot
+--- persistent journal? ---
+drwxr-sr-x 3 root 999 4096 2026-04-14 03:38 /mnt/debian/var/log/journal
+total 12
+drwxr-sr-x 2 root 999 12288 2026-04-14 03:50 3c2a1b8f2d624db4b5ffdc836050fcf6
+-rw-r--r-- 1 root root 33 2026-04-14 03:38 /mnt/debian/etc/machine-id
+3c2a1b8f2d624db4b5ffdc836050fcf6
+--- record + last-boot-stage ---
+GTS9_BOOT_STAGE=systemd-basic
+stage_uptime_seconds=4.10
+stage_timestamp=2026-04-13T19:38:06Z
+stage_boot_id=d51540a5-2535-4144-b1cd-489369f2fb4a
+GTS9_BOOT_STAGE=tty1-getty-active
+stage_uptime_seconds=5.36
+stage_timestamp=2026-04-13T19:38:07Z
+stage_boot_id=d51540a5-2535-4144-b1cd-489369f2fb4a
+--- /run leftovers (tmpfs, expected empty) ---
+adduser
+lock
+log
+runit
+sendsigs.omit.d
+shm
+sshd
+systemd
+user

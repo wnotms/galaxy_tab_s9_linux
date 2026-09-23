@@ -1,0 +1,16 @@
+=== overlay deployment (helper flow) 2026-09-23T17:03:12Z ===
+5d4044a9a9166e4c804533904e3ad19cfd01be59219b407015c06ecc738c3b95  /tmp/gts9-debian-overlay.tar
+tar exit=0
+gts9-enable-units: 10 link(s) in /mnt/debian/etc/systemd/system
+helper exit=0
+--- links and in-root resolution ---
+OK  /etc/systemd/system/getty.target.wants/serial-getty@ttyGS0.service -> ../../../../usr/lib/systemd/system/serial-getty@.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-debian-getty-stage.service -> ../../../../usr/lib/systemd/system/gts9-debian-getty-stage.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-getty-stage.service -> ../../../../usr/lib/systemd/system/gts9-getty-stage.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-debian-multi-user-stage.service -> ../../../../usr/lib/systemd/system/gts9-debian-multi-user-stage.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-debian-basic-stage.service -> ../../../../usr/lib/systemd/system/gts9-debian-basic-stage.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-usb-acm.service -> ../../../../usr/lib/systemd/system/gts9-usb-acm.service
+OK  /etc/systemd/system/multi-user.target.wants/gts9-panel-recover.service -> ../../../../usr/lib/systemd/system/gts9-panel-recover.service
+OK  /etc/systemd/system/basic.target.wants/gts9-boot-stage.service -> ../../../../usr/lib/systemd/system/gts9-boot-stage.service
+OK  /etc/systemd/system/basic.target.wants/gts9-debian-entered.service -> ../../../../usr/lib/systemd/system/gts9-debian-entered.service
+OK  /etc/systemd/system/systemd-poweroff.service.wants/gts9-poweroff-stage.service -> ../../../../usr/lib/systemd/system/gts9-poweroff-stage.service

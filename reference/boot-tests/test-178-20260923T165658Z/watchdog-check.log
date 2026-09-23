@@ -1,0 +1,33 @@
+2026-09-23T18:42:16Z console open on COM17
+2026-09-23T18:42:18Z RECV  echo READY1
+2026-09-23T18:42:18Z RECV  [?2004lREADY1
+2026-09-23T18:42:18Z shell answered after 1 poll(s)
+2026-09-23T18:42:18Z SENT  ls -l /dev/watchdog* 2>/dev/null; echo "--- watchdog class ---"; ls /sys/class/watchdog/ 2>/dev/null; for w in /sys/class/watchdog/*; do echo "$w: $(cat $w/identity 2>/dev/null) state=$(cat $w/state 2>/dev/null) timeout=$(cat $w/timeout 2>/dev/null)"; done
+2026-09-23T18:42:24Z RECV  [?2004hroot@gts9:~# ls -l /dev/watchdog* 2>/dev/null; echo "--- watchdog class ---"; ls /sys/class/watchdog/ 2>/dev/null; for w in /sys/class/watchdog/*; do echo "$w: $(cat $w/identity 2>/dev/null) state=$(cat $w/state 2>/dev/null) timeout=$(cat $w/timeout 2>/dev/null)"; done
+2026-09-23T18:42:24Z RECV  [?2004l--- watchdog class ---
+2026-09-23T18:42:24Z RECV  /sys/class/watchdog/*:  state= timeout=
+2026-09-23T18:42:24Z SENT  systemctl show -p RuntimeWatchdogUSec -p RebootWatchdogUSec
+2026-09-23T18:42:30Z RECV  [?2004hroot@gts9:~# systemctl show -p RuntimeWatchdogUSec -p RebootWatchdogUSec
+2026-09-23T18:42:30Z RECV  [?2004lRuntimeWatchdogUSec=0[m
+2026-09-23T18:42:30Z RECV  RebootWatchdogUSec=10min[m
+2026-09-23T18:42:30Z SENT  dmesg | grep -iE "watchdog|wdt" | tail -10
+2026-09-23T18:42:37Z RECV  [K[?2004hroot@gts9:~# dmesg | grep -iE "watchdog|wdt" | tail -10
+2026-09-23T18:42:37Z RECV  [?2004l[    0.000000] [      T0] Kernel command line: console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 \
+2026-09-23T18:42:37Z RECV  [    0.000000] [      T0] Kernel command line: msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-23T18:42:37Z RECV  [    0.306185] [     T63] watchdog: NMI not fully supported
+2026-09-23T18:42:37Z RECV  [    0.306186] [     T63] watchdog: Hard watchdog permanently disabled
+2026-09-23T18:42:37Z SENT  journalctl -b -1 -k --no-pager | grep -iE "dpu error|frame done|vblank" | tail -12
+2026-09-23T18:42:43Z RECV  [?2004hroot@gts9:~# journalctl -b -1 -k --no-pager | grep -iE "dpu error|frame done|vblank" | tail -12
+2026-09-23T18:42:43Z RECV  [?2004lApr 14 03:40:14 gts9 kernel: WARNING: ../linux-src-poweroff-trace/drivers/gpu/drm/drm_vblank.c:1329 at drm_crtc_wait_one_vblank+0x390/0x3a4, CPU#2: kworker/2:2/110
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: pc : drm_crtc_wait_one_vblank+0x390/0x3a4
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: lr : drm_crtc_wait_one_vblank+0x388/0x3a4
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel:  drm_crtc_wait_one_vblank+0x390/0x3a4 (P)
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel:  drm_client_modeset_wait_for_vblank+0x54/0x88
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: WARNING: ../linux-src-poweroff-trace/drivers/gpu/drm/drm_vblank.c:1329 at drm_crtc_wait_one_vblank+0x390/0x3a4, CPU#2: kworker/2:2/110
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: pc : drm_crtc_wait_one_vblank+0x390/0x3a4
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel: lr : drm_crtc_wait_one_vblank+0x388/0x3a4
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel:  drm_crtc_wait_one_vblank+0x390/0x3a4 (P)
+2026-09-23T18:42:43Z RECV  Apr 14 03:40:14 gts9 kernel:  drm_client_modeset_wait_for_vblank+0x54/0x88
+2026-09-23T18:42:43Z console run done (ready=True)

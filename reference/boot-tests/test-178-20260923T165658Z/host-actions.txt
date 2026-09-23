@@ -1,0 +1,18 @@
+=== host actions test-178 2026-09-23T17:04:04Z ===
+source HEAD: 4c77bd9fbfccdd954111b13f5392736d626b036b
+candidate init_boot: c22078ad7a0008d139f9ce376ee745691ead565dbec9f979f31a6026a55073fd
+device vendor_boot unchanged: 740bbd6392c13dec5999a6b75800b05462965fc67d25b58744c9469c2596f900
+device boot unchanged: 822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86
+
+2026-09-23T17:04:04Z reboot system from TWRP (BCB clear; Type-C attached)
+2026-09-23T17:04:04Z adb: R52X10045LT	recovery
+2026-09-23T17:04:05Z reboot system issued
+2026-09-23T17:06:48Z owner reports black screen; no COM, no adb, no USB gadget on the bus
+2026-09-23T17:12:24Z reboot system (instrumented init_boot, Type-C attached)
+2026-09-23T17:22:01Z reboot system (candidate #3: selftest + handoff markers, Type-C attached)
+2026-09-23T17:42:48Z reboot system (candidate #4: /sbin/init default, panic=10, Type-C attached)
+2026-09-23T18:05:43Z reboot system (repaired card + corrected overlay; minimal profile; Type-C attached)
+2026-09-23T18:21:52Z reboot system (panel cmdline fix; Type-C attached)
+2026-09-23T18:27:34Z deploy overlay with pogo recovery
+2026-09-23T18:28:25Z reboot system (overlay with pogo recovery)
+2026-09-23T18:32:31Z reboot system (keyboard rollback; verify keyboard still works)

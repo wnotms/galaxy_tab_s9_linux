@@ -1,0 +1,15 @@
+=== TWRP layout audit (read-only) 2026-09-23T16:57:13Z ===
+== boot /dev/block/sda21
+   size: 196608 sectors
+== init_boot /dev/block/sda22
+   size: 16384 sectors
+== vendor_boot /dev/block/sda24
+   size: 196608 sectors
+== dtbo /dev/block/sda30
+   size: 32768 sectors
+== vbmeta /dev/block/sde15
+   size: 256 sectors
+
+--- /proc/partitions (mmc + sd) ---
+ 179        0  120872960 mmcblk1
+ 179        1  120870912 mmcblk1p1

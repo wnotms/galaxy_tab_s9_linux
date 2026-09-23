@@ -1,0 +1,50 @@
+2026-09-23T18:29:15Z console open on COM17
+2026-09-23T18:29:17Z RECV  echo READY1
+2026-09-23T18:29:17Z RECV  [?2004lREADY1
+2026-09-23T18:29:17Z shell answered after 1 poll(s)
+2026-09-23T18:29:17Z SENT  grep -E "debian_stage|pogo" /var/log/gts9-minimal-last-boot
+2026-09-23T18:29:23Z RECV  [?2004hroot@gts9:~# grep -E "debian_stage|pogo" /var/log/gts9-minimal-last-boot
+2026-09-23T18:29:23Z RECV  [?2004ldebian_stage=multi-user
+2026-09-23T18:29:23Z RECV  debian_stage_history=systemd-entered,local-fs,basic,usb-acm-ready,panel-recovered,tty1-getty-active,pogo-absent,multi-user
+2026-09-23T18:29:23Z SENT  systemctl status gts9-pogo-recover.service --no-pager | head -12
+2026-09-23T18:29:30Z RECV  [?2004hroot@gts9:~# systemctl status gts9-pogo-recover.service --no-pager | head -12
+2026-09-23T18:29:30Z RECV  [?2004l??? gts9-pogo-recover.service - X710 Pogo keyboard cold-boot recovery
+2026-09-23T18:29:30Z RECV       Loaded: loaded (/usr/lib/systemd/system/gts9-pogo-recover.service; enabled; preset: enabled)
+2026-09-23T18:29:30Z RECV       Active: active (exited) since Tue 2026-04-14 03:38:10 CST; 36s ago
+2026-09-23T18:29:30Z RECV   Invocation: d2a467a007cd46dba41ff1519b35c77b
+2026-09-23T18:29:30Z RECV      Process: 519 ExecStart=/usr/libexec/gts9-pogo-recover (code=exited, status=0/SUCCESS)
+2026-09-23T18:29:30Z RECV     Main PID: 519 (code=exited, status=0/SUCCESS)
+2026-09-23T18:29:30Z RECV     Mem peak: 4.1M
+2026-09-23T18:29:30Z RECV          CPU: 59ms
+2026-09-23T18:29:30Z RECV  
+2026-09-23T18:29:30Z RECV  Apr 14 03:38:07 gts9 systemd[1]: Starting gts9-pogo-recover.service - X710 Pogo keyboard cold-boot recovery...
+2026-09-23T18:29:30Z RECV  Apr 14 03:38:10 gts9 gts9-pogo-recover[519]: gts9-pogo-recover: no keyboard attached (state=DETACHED connect=0)
+2026-09-23T18:29:30Z RECV  Apr 14 03:38:10 gts9 gts9-pogo-recover[710]: GTS9_DEBIAN_STAGE=pogo-absent
+2026-09-23T18:29:30Z SENT  dmesg | grep -iE "pogo|EF-DX710" | tail -12
+2026-09-23T18:29:36Z RECV  [?2004hroot@gts9:~# dmesg | grep -iE "pogo|EF-DX710" | tail -12
+2026-09-23T18:29:36Z RECV  [?2004l[    0.629642] [    T111] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-23T18:29:36Z RECV  [    0.629657] [    T111] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-23T18:29:36Z RECV  [    0.667604] [      T9] samsung-pogo-keyboard 5-002a: pogo: connect line reads 0 (was 1) after the 250 ms check
+2026-09-23T18:29:36Z RECV  [    0.667613] [      T9] samsung-pogo-keyboard 5-002a: pogo: confirmed detach (connect line 0)
+2026-09-23T18:29:36Z RECV  [    0.667634] [      T9] samsung-pogo-keyboard 5-002a: pogo: DATA IRQ disabled
+2026-09-23T18:29:36Z RECV  [    0.667649] [      T9] samsung-pogo-keyboard 5-002a: pogo: rail off, state=DETACHED
+2026-09-23T18:29:36Z RECV  [    1.756492] [      T1] systemd[1]: Configuration file /usr/lib/systemd/system/gts9-pogo-recover.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+2026-09-23T18:29:36Z RECV  [    7.074847] [    T519] gts9-pogo-recover: no keyboard attached (state=DETACHED connect=0)
+2026-09-23T18:29:36Z RECV  [    7.102083] [    T710] gts9-debian: GTS9_DEBIAN_STAGE=pogo-absent
+2026-09-23T18:29:36Z RECV  [   34.079607] [    T134] samsung-pogo-keyboard 5-002a: pogo: connect line reads 1 (was 0) after the 250 ms check
+2026-09-23T18:29:36Z RECV  [   34.136858] [    T134] samsung-pogo-keyboard 5-002a: pogo: hot reconnect: rail on, DATA armed, no reset (stock model)
+2026-09-23T18:29:36Z RECV  [   34.277457] [    T119] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-23T18:29:36Z SENT  cat /proc/bus/input/devices | grep -A5 -i "EF-DX710"
+2026-09-23T18:29:43Z RECV  [?2004hroot@gts9:~# cat /proc/bus/input/devices | grep -A5 -i "EF-DX710"
+2026-09-23T18:29:43Z RECV  [?2004lN: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-23T18:29:43Z RECV  P: Phys=
+2026-09-23T18:29:43Z RECV  S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input2
+2026-09-23T18:29:43Z RECV  U: Uniq=
+2026-09-23T18:29:43Z RECV  H: Handlers=sysrq kbd leds event2
+2026-09-23T18:29:43Z RECV  B: PROP=0
+2026-09-23T18:29:43Z SENT  systemctl --failed --no-pager
+2026-09-23T18:29:49Z RECV  [?2004hroot@gts9:~# systemctl --failed --no-pager
+2026-09-23T18:29:49Z RECV  [?2004l[4m [0m[4m [0m[4mUNIT[0m[4m [0m[4mLOAD[0m[4m [0m[4mACTIVE[0m[4m [0m[4mSUB[0m[4m [0m[4mDESCRIPTION[0m
+2026-09-23T18:29:49Z RECV  
+2026-09-23T18:29:49Z RECV  0 loaded units listed.
+2026-09-23T18:29:49Z console run done (ready=True)

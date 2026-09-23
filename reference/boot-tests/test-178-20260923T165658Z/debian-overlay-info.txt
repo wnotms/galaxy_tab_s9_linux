@@ -1,0 +1,53 @@
+=== Debian overlay for test-178 ===
+source HEAD: 4a80b479650a286b6cfdd80af8ca3ca21699b393
+modules: skipped (card has no module tree; boot path needs none)
+firmware source: .work/firmware
+
+b1e3af80fb744ecba2d759ac67f0bacc0d1b514acd0f8cfc7ab08a538fab2a77  out/test-178/gts9-debian-overlay.tar
+
+--- file list ---
+./
+./lib/
+./lib/firmware/
+./lib/firmware/keyboard_stm/
+./lib/firmware/keyboard_stm/stm32_gts9family.bin
+./usr/
+./usr/lib/
+./usr/lib/systemd/
+./usr/lib/systemd/system/
+./usr/lib/systemd/system/gts9-panel-recover.service
+./usr/lib/systemd/system/gts9-usb-acm.service
+./usr/lib/systemd/system/gts9-debian-multi-user-stage.service
+./usr/lib/systemd/system/gts9-debian-getty-stage.service
+./usr/lib/systemd/system/gts9-debian-basic-stage.service
+./usr/lib/systemd/system/gts9-debian-entered.service
+./usr/lib/systemd/system/gts9-poweroff-stage.service
+./usr/lib/systemd/system/gts9-getty-stage.service
+./usr/lib/systemd/system/gts9-boot-stage.service
+./usr/libexec/
+./usr/libexec/gts9-panel-recover
+./usr/libexec/gts9-usb-acm
+./usr/libexec/gts9-record-debian-stage
+./usr/libexec/gts9-record-poweroff-stage
+./usr/libexec/gts9-record-boot-stage
+./etc/
+./etc/systemd/
+./etc/systemd/system/
+./etc/systemd/system/systemd-poweroff.service.wants/
+./etc/systemd/system/systemd-poweroff.service.wants/gts9-poweroff-stage.service
+./etc/systemd/system/multi-user.target.wants/
+./etc/systemd/system/multi-user.target.wants/gts9-usb-acm.service
+./etc/systemd/system/multi-user.target.wants/gts9-panel-recover.service
+./etc/systemd/system/multi-user.target.wants/gts9-getty-stage.service
+./etc/systemd/system/multi-user.target.wants/gts9-debian-multi-user-stage.service
+./etc/systemd/system/multi-user.target.wants/gts9-debian-getty-stage.service
+./etc/systemd/system/multi-user.target.wants/gts9-debian-basic-stage.service
+./etc/systemd/system/basic.target.wants/
+./etc/systemd/system/basic.target.wants/gts9-debian-entered.service
+./etc/systemd/system/basic.target.wants/gts9-boot-stage.service
+./etc/systemd/system/serial-getty@ttyGS0.service.d/
+./etc/systemd/system/serial-getty@ttyGS0.service.d/autologin.conf
+./etc/systemd/system/getty.target.wants/
+./etc/systemd/system/getty.target.wants/serial-getty@ttyGS0.service
+./etc/systemd/logind.conf.d/
+./etc/systemd/logind.conf.d/60-gts9-power-key.conf

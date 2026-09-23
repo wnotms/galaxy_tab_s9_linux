@@ -1,0 +1,60 @@
+=== overlay re-deployment with relative symlinks 2026-09-23T17:00:30Z ===
+b1ffd135f4929305da071974c4dd8adb76e8d511aff5f78f09da5219d6e35b28  /tmp/gts9-debian-overlay.tar
+tar: './etc/systemd/system/systemd-poweroff.service.wants/gts9-poweroff-stage.service' /usr/lib/systemd/system/gts9-poweroff-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-usb-acm.service' /usr/lib/systemd/system/gts9-usb-acm.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-panel-recover.service' /usr/lib/systemd/system/gts9-panel-recover.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-getty-stage.service' /usr/lib/systemd/system/gts9-getty-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-debian-multi-user-stage.service' /usr/lib/systemd/system/gts9-debian-multi-user-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-debian-getty-stage.service' /usr/lib/systemd/system/gts9-debian-getty-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/multi-user.target.wants/gts9-debian-basic-stage.service' /usr/lib/systemd/system/gts9-debian-basic-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/basic.target.wants/gts9-debian-entered.service' /usr/lib/systemd/system/gts9-debian-entered.service not under '/mnt/debian'
+tar: './etc/systemd/system/basic.target.wants/gts9-boot-stage.service' /usr/lib/systemd/system/gts9-boot-stage.service not under '/mnt/debian'
+tar: './etc/systemd/system/getty.target.wants/serial-getty@ttyGS0.service' /usr/lib/systemd/system/serial-getty@.service not under '/mnt/debian'
+tar exit=1
+sync exit=0
+--- links (relative) ---
+LINK gts9-boot-stage.service -> /usr/lib/systemd/system/gts9-boot-stage.service
+LINK gts9-debian-entered.service -> /usr/lib/systemd/system/gts9-debian-entered.service
+LINK getty@tty1.service -> /usr/lib/systemd/system/getty@.service
+LINK serial-getty@ttyGS0.service -> /usr/lib/systemd/system/serial-getty@.service
+LINK serial-getty@ttyMSM0.service -> /usr/lib/systemd/system/serial-getty@.service
+LINK cron.service -> /usr/lib/systemd/system/cron.service
+LINK e2scrub_reap.service -> /usr/lib/systemd/system/e2scrub_reap.service
+LINK gts9-debian-basic-stage.service -> /usr/lib/systemd/system/gts9-debian-basic-stage.service
+LINK gts9-debian-getty-stage.service -> /usr/lib/systemd/system/gts9-debian-getty-stage.service
+LINK gts9-debian-multi-user-stage.service -> /usr/lib/systemd/system/gts9-debian-multi-user-stage.service
+LINK gts9-getty-stage.service -> /usr/lib/systemd/system/gts9-getty-stage.service
+LINK gts9-panel-recover.service -> /usr/lib/systemd/system/gts9-panel-recover.service
+LINK gts9-usb-acm.service -> /usr/lib/systemd/system/gts9-usb-acm.service
+LINK networking.service -> /usr/lib/systemd/system/networking.service
+LINK ssh.service -> /usr/lib/systemd/system/ssh.service
+LINK networking.service -> /usr/lib/systemd/system/networking.service
+LINK sshd-keygen.service -> /usr/lib/systemd/system/sshd-keygen.service
+LINK sshd-keygen.service -> /usr/lib/systemd/system/sshd-keygen.service
+LINK sshd-keygen.service -> /usr/lib/systemd/system/sshd-keygen.service
+LINK sshd-keygen.service -> /usr/lib/systemd/system/sshd-keygen.service
+LINK systemd-pstore.service -> /usr/lib/systemd/system/systemd-pstore.service
+LINK gts9-poweroff-stage.service -> /usr/lib/systemd/system/gts9-poweroff-stage.service
+--- resolve check inside Debian root ---
+BROKEN  gts9-boot-stage.service
+BROKEN  gts9-debian-entered.service
+BROKEN  getty@tty1.service
+BROKEN  serial-getty@ttyGS0.service
+BROKEN  serial-getty@ttyMSM0.service
+BROKEN  cron.service
+BROKEN  e2scrub_reap.service
+BROKEN  gts9-debian-basic-stage.service
+BROKEN  gts9-debian-getty-stage.service
+BROKEN  gts9-debian-multi-user-stage.service
+BROKEN  gts9-getty-stage.service
+BROKEN  gts9-panel-recover.service
+BROKEN  gts9-usb-acm.service
+BROKEN  networking.service
+BROKEN  ssh.service
+BROKEN  networking.service
+BROKEN  sshd-keygen.service
+BROKEN  sshd-keygen.service
+BROKEN  sshd-keygen.service
+BROKEN  sshd-keygen.service
+BROKEN  systemd-pstore.service
+BROKEN  gts9-poweroff-stage.service

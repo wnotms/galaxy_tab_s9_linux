@@ -1,0 +1,44 @@
+=== record raw bytes 2026-09-23T17:19:04Z ===
+-rw-r--r-- 1 root root 1614 1970-09-18 13:11 /mnt/debian/var/log/gts9-minimal-last-boot
+size: 1614
+--- tail 400 bytes ---
+0000040   i   g   n   o   f   f   =   0   x   7   2   7   7  \n   t   i
+0000060   m   e   s   t   a   m   p   =   1   9   7   0   -   0   9   -
+0000100   1   8   T   0   5   :   1   1   :   5   1   Z  \n   u   p   t
+0000120   i   m   e   _   s   e   c   o   n   d   s   =   0   .   5   2
+0000140  \n   r   o   o   t   _   d   e   v   i   c   e   =   /   d   e
+0000160   v   /   m   m   c   b   l   k   1   p   1  \n   s   t   a   g
+0000200   e   =   s   w   i   t   c   h   -   r   o   o   t  \n   s   t
+0000220   a   g   e   _   h   i   s   t   o   r   y   =   k   e   r   n
+0000240   e   l   -   u   s   e   r   s   p   a   c   e   ,   w   a   i
+0000260   t   i   n   g   -   r   o   o   t   ,   r   o   o   t   -   f
+0000300   o   u   n   d   ,   m   o   u   n   t   i   n   g   -   r   o
+0000320   o   t   ,   r   o   o   t   -   m   o   u   n   t   e   d   ,
+0000340   i   n   i   t   -   f   o   u   n   d   ,   s   w   i   t   c
+0000360   h   -   r   o   o   t  \n   f   a   i   l   u   r   e   =   n
+0000400   o   n   e  \n   m   m   c   _   d   e   v   i   c   e   s   =
+0000420   /   d   e   v   /   m   m   c   b   l   k   1   ,   /   d   e
+0000440   v   /   m   m   c   b   l   k   1   p   1  \n  \0  \0  \0  \0
+0000460  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0000620
+--- does it contain trampoline? ---
+0
+--- all files in /var/log written this boot ---
+total 304
+drwxr-xr-x  6 root root   4096 1970-09-18 13:11 .
+drwxr-xr-x 11 root root   4096 2026-04-14 03:38 ..
+lrwxrwxrwx  1 root root     39 2026-09-22 23:04 README -> ../../usr/share/doc/systemd/README.logs
+-rw-r--r--  1 root root  12557 2026-09-22 23:29 alternatives.log
+drwxr-xr-x  2 root root   4096 2026-09-22 23:29 apt
+-rw-r--r--  1 root root  84811 2026-09-22 23:06 bootstrap.log
+-rw-rw----  1 root 43        0 2026-09-22 23:02 btmp
+-rw-r--r--  1 root root 115465 2026-09-22 23:29 dpkg.log
+-rw-r--r--  1 root root    956 2026-04-14 03:38 gts9-last-boot-stage
+-rw-r--r--  1 root root    129 2026-04-14 03:52 gts9-last-poweroff-stage
+-rw-r--r--  1 root root   1614 1970-09-18 13:11 gts9-minimal-last-boot
+drwxr-sr-x  3 root 999    4096 2026-04-14 03:38 journal
+-rw-rw-r--  1 root 43        0 2026-09-22 23:02 lastlog
+drwx------  2 root root   4096 2026-09-22 23:04 private
+drwxr-xr-x  3 root root   4096 2026-09-22 23:10 runit
+-rw-rw-r--  1 root 43    39200 2026-04-14 04:23 wtmp

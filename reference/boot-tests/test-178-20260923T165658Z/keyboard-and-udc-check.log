@@ -1,0 +1,55 @@
+2026-09-23T18:24:57Z console open on COM17
+2026-09-23T18:24:58Z RECV  echo READY1
+2026-09-23T18:24:58Z RECV  [?2004lREADY1
+2026-09-23T18:24:58Z shell answered after 1 poll(s)
+2026-09-23T18:24:58Z SENT  dmesg | grep -iE "pogo|stm32|keyboard_stm|keyboard-samsung" | tail -20
+2026-09-23T18:25:05Z RECV  [?2004hroot@gts9:~# dmesg | grep -iE "pogo|stm32|keyboard_stm|keyboard-samsung" | tail -20
+2026-09-23T18:25:05Z RECV  [?2004l[    0.627590] [    T108] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-23T18:25:05Z RECV  [    0.627614] [    T108] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-23T18:25:05Z RECV  [    0.671626] [    T145] samsung-pogo-keyboard 5-002a: pogo: connect line reads 0 (was 1) after the 250 ms check
+2026-09-23T18:25:05Z RECV  [    0.671634] [    T145] samsung-pogo-keyboard 5-002a: pogo: confirmed detach (connect line 0)
+2026-09-23T18:25:05Z RECV  [    0.671650] [    T145] samsung-pogo-keyboard 5-002a: pogo: DATA IRQ disabled
+2026-09-23T18:25:05Z RECV  [    0.671662] [    T145] samsung-pogo-keyboard 5-002a: pogo: rail off, state=DETACHED
+2026-09-23T18:25:05Z SENT  cat /proc/bus/input/devices | grep -iE "Name=|Pogo|stm32" | tail -12
+2026-09-23T18:25:11Z RECV  [?2004hroot@gts9:~# cat /proc/bus/input/devices | grep -iE "Name=|Pogo|stm32" | tail -12
+2026-09-23T18:25:11Z RECV  [?2004lN: Name="pmic_pwrkey"
+2026-09-23T18:25:11Z RECV  N: Name="pmic_resin"
+2026-09-23T18:25:11Z RECV  N: Name="Book Cover Keyboard Slim (EF-DX710)"
+2026-09-23T18:25:11Z RECV  N: Name="gpio-keys"
+2026-09-23T18:25:11Z SENT  ls -l /sys/bus/i2c/devices/ | grep -i "0-00\|pogo\|stm32" ; ls /sys/bus/i2c/devices/*/name 2>/dev/null | head
+2026-09-23T18:25:18Z RECV  [?2004hroot@gts9:~# ls -l /sys/bus/i2c/devices/ | grep -i "0-00\|pogo\|stm32" ; ls /sys/bus/i2c/devices/*/name 2>/dev/null | head
+2026-09-23T18:25:18Z RECV  [?2004llrwxrwxrwx 1 root root 0 Apr 14 03:38 0-0063 -> ../../../devices/platform/soc@0/9c0000.geniqup/98c000.i2c/i2c-0/0-0063
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/0-0063/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/1-0030/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/1-0031/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/1-0032/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/1-0033/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/2-0049/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/3-0033/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/4-0028/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/5-002a/name
+2026-09-23T18:25:18Z RECV  /sys/bus/i2c/devices/6-0056/name
+2026-09-23T18:25:18Z SENT  journalctl -b --no-pager | grep -iE "pogo|stm32|firmware" | tail -15
+2026-09-23T18:25:24Z RECV  [?2004hroot@gts9:~# journalctl -b --no-pager | grep -iE "pogo|stm32|firmware" | tail -15
+2026-09-23T18:25:24Z RECV  [?2004lApr 14 03:38:05 gts9 kernel: [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: psci: PSCIv1.1 detected in firmware.
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: Kernel command line: console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 \
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: connect line reads 0 (was 1) after the 250 ms check
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: confirmed detach (connect line 0)
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: DATA IRQ disabled
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: rail off, state=DETACHED
+2026-09-23T18:25:24Z RECV  Apr 14 03:38:05 gts9 systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+2026-09-23T18:25:24Z SENT  ls -l /sys/class/udc/*/state /sys/class/udc/ 2>/dev/null; cat /sys/class/udc/*/state 2>/dev/null
+2026-09-23T18:25:30Z RECV  [?2004hroot@gts9:~# ls -l /sys/class/udc/*/state /sys/class/udc/ 2>/dev/null; cat /sys/class/udc/*/state 2>/dev/null
+2026-09-23T18:25:30Z RECV  [?2004l-r--r--r-- 1 root root 4096 Apr 14 03:41 /sys/class/udc/a600000.usb/state
+2026-09-23T18:25:30Z RECV  -r--r--r-- 1 root root 4096 Apr 14 03:41 /sys/class/udc/dummy_udc.0/state
+2026-09-23T18:25:30Z RECV  
+2026-09-23T18:25:30Z RECV  /sys/class/udc/:
+2026-09-23T18:25:30Z RECV  total 0
+2026-09-23T18:25:30Z RECV  lrwxrwxrwx 1 root root 0 Apr 14 03:38 a600000.usb -> ../../devices/platform/soc@0/a600000.usb/udc/a600000.usb
+2026-09-23T18:25:30Z RECV  lrwxrwxrwx 1 root root 0 Apr 14 03:38 dummy_udc.0 -> ../../devices/platform/dummy_udc.0/udc/dummy_udc.0
+2026-09-23T18:25:30Z RECV  configured
+2026-09-23T18:25:30Z RECV  not attached
+2026-09-23T18:25:30Z console run done (ready=True)
