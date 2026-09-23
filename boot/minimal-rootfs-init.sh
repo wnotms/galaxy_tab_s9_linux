@@ -96,7 +96,13 @@ minimal_fail() {
     minimal_rescue_shell
 }
 
-MINIMAL_INIT=/run/gts9-minimal-pid1
+# The handoff init defaults to the direct /sbin/init path that the full
+# bring-up profile has already proven on this device.  The static trampoline
+# (with its post-switch_root watchdog) is opt-in through
+# gts9_minimal_init=/run/gts9-minimal-pid1 while it is still being validated:
+# test 178 boot #3 hung the tablet hard enough that no key combination reached
+# TWRP, so the default path must be the one with a working history.
+MINIMAL_INIT=/sbin/init
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;

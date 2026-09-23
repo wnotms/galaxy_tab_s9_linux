@@ -96,9 +96,11 @@ class MinimalRootfsStateTests(unittest.TestCase):
         self.assertIn('[ ! -x /newroot/run/gts9-minimal-pid1 ]', INIT)
         self.assertIn('gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=}',
                       INIT)
-        # The init path is a variable, so the direct /sbin/init handoff can be
-        # selected from the cmdline without rebuilding the initramfs.
-        self.assertIn('MINIMAL_INIT=/run/gts9-minimal-pid1', INIT)
+        # The handoff init is a variable: the proven direct /sbin/init path is
+        # the default, and the trampoline is opt-in from the cmdline.
+        self.assertIn('MINIMAL_INIT=/sbin/init', INIT)
+        self.assertIn('gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=}',
+                      INIT)
 
     def test_every_required_stage_is_recorded_in_order(self):
         offsets = [INIT.index(f'minimal_state_stage {stage}')

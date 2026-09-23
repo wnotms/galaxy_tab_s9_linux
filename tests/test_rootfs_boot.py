@@ -144,6 +144,17 @@ class RootfsBoot(unittest.TestCase):
     def test_timers_disabled_in_rootfs_mode(self):
         self.assertIn('proof and recovery timers disabled', INIT)
 
+    def test_minimal_cmdline_recovers_from_a_panic(self):
+        # A panicking kernel with panic=0 leaves the tablet hung with no USB
+        # and no key response (test 178 boots #2 and #3); the minimal profile
+        # must reboot instead so the device stays reachable.
+        tokens = MINIMAL_CMDLINE.split()
+        self.assertIn('panic=10', tokens)
+        self.assertNotIn('panic=0', tokens)
+        normal = CMDLINE.split()
+        self.assertIn('panic=0', normal,
+                      'the full bring-up cmdline is not being changed here')
+
     def test_cmdline_profile(self):
         tokens = CMDLINE.split()
         self.assertIn('gts9_rootfs=/dev/mmcblk1p1', tokens)
@@ -177,7 +188,7 @@ class RootfsBoot(unittest.TestCase):
         self.assertIn('GTS9_MINIMAL_FAIL=$GTS9_MINIMAL_FAILURE', MINIMAL_STATE)
         self.assertIn('ROOTFS_WAIT_SECONDS=30', MINIMAL_INIT)
         self.assertIn('exec switch_root /newroot "$MINIMAL_INIT"', MINIMAL_INIT)
-        self.assertIn('MINIMAL_INIT=/run/gts9-minimal-pid1', MINIMAL_INIT)
+        self.assertIn('MINIMAL_INIT=/sbin/init', MINIMAL_INIT)
         self.assertIn('if [ ! -x /newroot/sbin/init ]', MINIMAL_INIT)
         self.assertIn('cp /bin/busybox /run/busybox', MINIMAL_INIT)
 
