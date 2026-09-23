@@ -89,7 +89,12 @@ struct samsung_pogo {
 	int conn_same;
 	/* Explicit re-arm: 0 none, 1 soft (no reset), 2 hard (full reset). */
 	u8 rearm_mode;
+	/*
+	 * Armed state of the DATA IRQ, and of the connect IRQ, each kept in step
+	 * with every enable_irq()/disable_irq() pair on that line.
+	 */
 	bool irq_armed;
+	bool conn_irq_armed;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
@@ -239,6 +244,30 @@ static void pogo_power_off(struct samsung_pogo *p)
 		dev_warn(&p->client->dev, "could not drop the rail\n");
 	else
 		p->powered = false;
+}
+
+/*
+ * The connect IRQ, enabled once at probe and only ever toggled from process
+ * context.  conn_irq_armed is the single source of truth so that suspend and
+ * remove cannot each disable it, which is the "Unbalanced disable_irq" that the
+ * same mistake produced on the DATA line in test 105.  The DATA IRQ is tracked
+ * the same way by irq_armed, but is toggled by hand because pogo_detach() must
+ * use disable_irq_nosync() while holding the protocol lock.
+ */
+static void pogo_connect_irq_enable(struct samsung_pogo *p)
+{
+	if (p->conn_irq_armed)
+		return;
+	p->conn_irq_armed = true;
+	enable_irq(p->connect_irq);
+}
+
+static void pogo_connect_irq_disable(struct samsung_pogo *p)
+{
+	if (!p->conn_irq_armed)
+		return;
+	p->conn_irq_armed = false;
+	disable_irq(p->connect_irq);
 }
 
 /*
@@ -434,6 +463,7 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 		if (!pogo_power_on(p)) {
 			msleep(50);
 			p->announce_seen = 0;
+			p->irq_armed = true;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
 				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
@@ -583,7 +613,8 @@ static void pogo_connect_work(struct work_struct *work)
 	}
 	if (!p->event_enabled) {
 		p->event_enabled = true;
-		arm = true;
+		/* irq_armed is the authority on enable_irq(), not this flag. */
+		arm = !p->irq_armed;
 	}
 out:
 	mutex_unlock(&p->lock);
@@ -710,6 +741,41 @@ static void pogo_detach(struct samsung_pogo *p)
 }
 
 /*
+ * Hot reconnect, exactly as stock's stm32_keyboard_connect(1) does it: raise the
+ * rail, settle 50 ms and arm the data interrupt.  No NRST pulse, no BOOT0
+ * manipulation, no 0x51 access, no rail drop - a hot-plugged MCU has just been
+ * powered with BOOT0 low and is already running its application, which then
+ * announces itself and is served by the verified pogo_hello() path
+ * (CHECK_VERSION, GET_MODE, 200 ms, CHECK_CRC, GET_TC_FW_VERSION).  Driving the
+ * cold sequence into that part is what this port got wrong.
+ *
+ * A part that was still powered - the resume case, where the rail is left up so
+ * a seated MCU keeps running - keeps its READY flag and its key state and only
+ * has its interrupt re-armed.
+ *
+ * Lock held.  Returns true when the caller must enable_irq() the DATA line after
+ * dropping the lock.
+ */
+static bool pogo_hot_connect(struct samsung_pogo *p)
+{
+	bool was_powered = p->powered;
+
+	if (pogo_power_on(p)) {
+		dev_warn(&p->client->dev, "pogo: hot reconnect could not raise the rail\n");
+		return false;
+	}
+	if (!was_powered) {
+		msleep(50);
+		p->ready = false;
+	}
+	p->event_enabled = true;
+	if (p->irq_armed)
+		return false;
+	p->irq_armed = true;
+	return true;
+}
+
+/*
  * Stock's stm32_check_conn_work(): read the line and act only on a real state
  * change.  The 250 ms delay before this runs is what makes that safe on a line
  * carrying 1492-2431 edges per boot.
@@ -719,7 +785,7 @@ static void pogo_conn_check_work(struct work_struct *work)
 	struct samsung_pogo *p = container_of(to_delayed_work(work),
 					     struct samsung_pogo, conn_check_work);
 	int level;
-	bool arm = false;
+	bool arm;
 
 	mutex_lock(&p->lock);
 	level = gpiod_get_value_cansleep(p->connected);
@@ -736,28 +802,7 @@ static void pogo_conn_check_work(struct work_struct *work)
 		mutex_unlock(&p->lock);
 		return;
 	}
-
-	/*
-	 * Hot reconnect, exactly as stock's stm32_keyboard_connect(1) does it: raise
-	 * the rail, settle 50 ms and arm the data interrupt.  No NRST pulse, no
-	 * BOOT0 manipulation, no 0x51 access, no rail drop - a hot-plugged MCU has
-	 * just been powered with BOOT0 low and is already running its application,
-	 * which then announces itself and is served by the verified pogo_hello()
-	 * path (CHECK_VERSION, GET_MODE, 200 ms, CHECK_CRC, GET_TC_FW_VERSION).
-	 * Driving the cold sequence into that part is what this port got wrong.
-	 */
-	if (pogo_power_on(p)) {
-		dev_warn(&p->client->dev, "pogo: hot reconnect could not raise the rail\n");
-		mutex_unlock(&p->lock);
-		return;
-	}
-	msleep(50);
-	p->ready = false;
-	p->event_enabled = true;
-	if (!p->irq_armed) {
-		p->irq_armed = true;
-		arm = true;
-	}
+	arm = pogo_hot_connect(p);
 	mutex_unlock(&p->lock);
 	if (arm)
 		enable_irq(p->client->irq);
@@ -1593,20 +1638,28 @@ static ssize_t rearm_show(struct device *dev, struct device_attribute *attr,
 }
 static DEVICE_ATTR_RW(rearm);
 
-static void pogo_stop(void *data)
+/*
+ * Teardown, run once from devm as the driver is removed.  This is the only place
+ * that may destroy the driver's own objects: it removes the sysfs attribute and
+ * the rail, and it is deliberately not the suspend handler - suspend has to keep
+ * every one of these alive for resume to restore them.
+ */
+static void pogo_remove(void *data)
 {
 	struct samsung_pogo *p = data;
 
-	disable_irq(p->connect_irq);
+	/* Stop the connect edges first, so nothing can queue work behind us. */
+	pogo_connect_irq_disable(p);
 	device_remove_file(&p->client->dev, &dev_attr_rearm);
 	cancel_delayed_work_sync(&p->hello_work);
 	cancel_delayed_work_sync(&p->conn_check_work);
 	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
-	if (p->event_enabled) {
+	if (p->irq_armed) {
 		disable_irq(p->client->irq);
-		p->event_enabled = false;
+		p->irq_armed = false;
 	}
+	p->event_enabled = false;
 	mutex_lock(&p->lock);
 	pogo_power_off(p);
 	mutex_unlock(&p->lock);
@@ -1722,27 +1775,80 @@ static int pogo_probe(struct i2c_client *client)
 	if (ret)
 		return dev_err_probe(dev, ret, "connect IRQ\n");
 	/* Add cleanup before allowing work to start; IRQs are freed after it. */
-	ret = devm_add_action_or_reset(dev, pogo_stop, p);
+	ret = devm_add_action_or_reset(dev, pogo_remove, p);
 	if (ret)
 		return ret;
-	enable_irq(p->connect_irq);
+	pogo_connect_irq_enable(p);
 	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
-		queue_delayed_work(system_percpu_wq, &p->watch_work, msecs_to_jiffies(POGO_WATCH_MS));
+	queue_delayed_work(system_percpu_wq, &p->watch_work,
+			   msecs_to_jiffies(POGO_WATCH_MS));
 	return 0;
 }
 
+/*
+ * Suspend, as a recoverable stop rather than a teardown.
+ *
+ * Nothing here is destroyed: the rearm attribute, the work structs and both
+ * requested IRQs stay in place, and the rail is left exactly as it is.  A seated
+ * MCU therefore keeps its supply and keeps running, so resume does not have to
+ * reset it.  All that stops is the machinery that would put traffic on a bus
+ * whose controller is going down: the 5 s watchdog, the deferred handshake, the
+ * 250 ms connect check and any pending cold bring-up.
+ *
+ * event_enabled is cleared with the DATA IRQ so the flag never claims a line is
+ * armed while it is not; irq_armed carries the same meaning for that IRQ and is
+ * cleared with it.
+ */
 static int pogo_suspend(struct device *dev)
-{
-	pogo_stop(i2c_get_clientdata(to_i2c_client(dev)));
-	return 0;
-}
-
-static int pogo_resume(struct device *dev)
 {
 	struct samsung_pogo *p = i2c_get_clientdata(to_i2c_client(dev));
 
-	enable_irq(p->connect_irq);
-	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
+	pogo_connect_irq_disable(p);
+	cancel_delayed_work_sync(&p->hello_work);
+	cancel_delayed_work_sync(&p->conn_check_work);
+	cancel_delayed_work_sync(&p->watch_work);
+	cancel_delayed_work_sync(&p->connect_work);
+	if (p->irq_armed) {
+		disable_irq(p->client->irq);
+		p->irq_armed = false;
+	}
+	p->event_enabled = false;
+	/* Nothing may stay logically pressed across the gap. */
+	mutex_lock(&p->lock);
+	pogo_release_keys(p);
+	mutex_unlock(&p->lock);
+
+	return 0;
+}
+
+/*
+ * Resume by reading the line instead of trusting the state we went down with:
+ * the connect IRQ was off, so a cover that moved during suspend produced no edge
+ * and connect_state is stale.  A line that reads detached takes the verified
+ * pogo_detach() path; one that reads attached re-enters the verified hot
+ * reconnect, which leaves a still-powered MCU alone and only re-arms its
+ * interrupt.  No NRST, no BOOT0, no 0x51, and no sysfs or IRQ re-request.
+ */
+static int pogo_resume(struct device *dev)
+{
+	struct samsung_pogo *p = i2c_get_clientdata(to_i2c_client(dev));
+	bool arm = false;
+
+	mutex_lock(&p->lock);
+	if (gpiod_get_value_cansleep(p->connected)) {
+		p->connect_state = true;
+		arm = pogo_hot_connect(p);
+	} else if (p->connect_state) {
+		p->connect_state = false;
+		pogo_detach(p);
+	}
+	mutex_unlock(&p->lock);
+
+	pogo_connect_irq_enable(p);
+	if (arm)
+		enable_irq(p->client->irq);
+	queue_delayed_work(system_percpu_wq, &p->watch_work,
+			   msecs_to_jiffies(POGO_WATCH_MS));
 	return 0;
 }
 
