@@ -91,6 +91,9 @@ struct mipi_dsi_device { int dev; unsigned long mode_flags; struct drm_dsc_confi
 struct mipi_dsi_multi_context { struct mipi_dsi_device *dsi; int accum_err; };
 struct ana38407 { struct mipi_dsi_device *dsi; u8 id[3]; char cell_id[23]; u16 user_brightness; };
 #define dev_info(...)
+/* The cell id moved to debug level; the panel id stays at dev_info because the
+   initramfs recovery greps dmesg for it. */
+#define dev_dbg(...)
 #define dev_warn(...)
 static int fail_at, writes;
 static void emit(struct mipi_dsi_multi_context *ctx, const char *type, const u8 *p, size_t n) {

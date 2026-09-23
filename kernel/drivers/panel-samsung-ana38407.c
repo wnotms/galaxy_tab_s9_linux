@@ -45,17 +45,18 @@
 static const u8 ana38407_expected_id[3] = { 0x80, 0x00, 0x04 };
 
 /*
- * On a cold boot the DDIC answers 00:00:00 and emits black, even though the
- * link is up and DRM reports the connector enabled; a suspend/resume then
- * recovers it and the id reads 80:00:04.  So the id is a reliable signal, and
- * the fault is not in this driver: replaying the init sequence, toggling reset
- * and even dropping the panel supplies the way unprepare/prepare does were all
- * measured to leave it at 00:00:00.  What differs on resume is that the DSI
- * host and PHY are re-initialised from scratch, rather than inherited from the
- * state the bootloader left behind after painting its logo.
+ * Cold-boot state: the DDIC answers 00:00:00 and emits black even though the
+ * link is up and DRM reports the connector enabled, and a later DSI host
+ * re-initialisation - a suspend/resume, or the initramfs blank cycle - recovers
+ * it to 80:00:04.  The id is therefore a reliable signal, and the defect is not
+ * in this driver: re-running the init sequence, toggling reset and dropping the
+ * panel supplies exactly as unprepare/prepare does were each measured to leave
+ * it at 00:00:00.  What differs on resume is that the DSI host and PHY are
+ * re-initialised from scratch rather than inherited from the state the
+ * bootloader left after painting its logo.  See docs/DISPLAY_OFFLINE_AUDIT.md.
  *
- * Log the mismatch so the cause is visible, but do not burn boot time cycling
- * the panel for a fix that does not work at this level.
+ * Report the mismatch so the recovery has something to act on, but do not burn
+ * boot time cycling the panel for a fix that does not work at this level.
  */
 
 struct ana38407 {
@@ -339,6 +340,13 @@ static int ana38407_on(struct ana38407 *ctx)
 	memcpy(ctx->id, id, sizeof(ctx->id));
 	dev_info(&ctx->dsi->dev, "ana38407 panel id: %02x %02x %02x\n",
 		 id[0], id[1], id[2]);
+	/*
+	 * That line is an interface, not just a log: boot/bringup-init.sh greps
+	 * dmesg for "ana38407 panel id: 00 00 00" to decide whether to run the
+	 * framebuffer blank cycle and for "80 00 04" to confirm it worked.  Keep
+	 * it at dev_info with this exact wording - demoting it to dev_dbg drops
+	 * it from the ring and silently disables gts9_display_recover.
+	 */
 
 	/*
 	 * Samsung's fingerprint TA binds optical calibration to the panel cell ID.
@@ -356,7 +364,7 @@ static int ana38407_on(struct ana38407 *ctx)
 			 module_info[7], module_info[8], module_info[9],
 			 module_info[10], module_info[0], module_info[1],
 			 module_info[2], module_info[3]);
-		dev_info(&ctx->dsi->dev, "ana38407 cell id: %s\n", ctx->cell_id);
+		dev_dbg(&ctx->dsi->dev, "ana38407 cell id: %s\n", ctx->cell_id);
 	} else {
 		ctx->cell_id[0] = '\0';
 		dev_warn(&ctx->dsi->dev,
