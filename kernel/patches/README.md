@@ -2,6 +2,15 @@
 
 This directory starts intentionally small. `scripts/prepare-kernel.sh` applies every `*.patch` here in lexical order with `git apply --check` before applying it.
 
+There are three distinct patch locations:
+
+- `kernel/patches/*.patch` is the default queue applied by the build script.
+- `kernel/patches/diagnostic/` keeps temporary measurements for manual,
+  one-off use. The prepare script ignores this directory.
+- `kernel/patches/pending/` keeps experiments and candidates that are retired,
+  rejected, unnecessary, or still unresolved. They are not build candidates
+  until new evidence justifies a separate change.
+
 Add a patch only when one of these is true:
 
 1. it is a backport of an upstream fix needed by the pinned kernel;

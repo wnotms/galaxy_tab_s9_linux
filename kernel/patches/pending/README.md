@@ -1,24 +1,13 @@
 # Patches held back from the default build
 
-`prepare-kernel.sh` applies `kernel/patches/*.patch` and ignores subdirectories, so
-anything in here is deliberately *not* applied. Keep it that way: every candidate below
-was fitted on hardware, and every one of them has a recorded outcome. This directory is
-the attribution record for work that was done and set aside - not a queue of pending
-work, and not a place to re-enable something without a new measurement.
+`prepare-kernel.sh` applies only `kernel/patches/*.patch` and ignores
+subdirectories, so nothing here is applied by default. This directory records
+experiments that were retired, rejected, unnecessary, or remain unresolved; it
+is not a queue to re-enable without new evidence. The active root-level queue
+is documented in [`../README.md`](../README.md).
 
-The default queue is unchanged and contains none of these:
-
-```
-0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch
-0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch
-0003-printk-allow-ignoring-samsung-console-null.patch
-0004-drm-panel-add-samsung-ana38407.patch
-0006-input-add-samsung-pogo-keyboard.patch
-nxp-ptn3222-apply-dt-register-overrides.patch
-```
-
-Note that `0008` also touches `drivers/i2c/busses/i2c-qcom-geni.c`, but it is only the
-NACK/timeout bus-line logging patch - it is not the SE re-arm below.
+The GENI bus-line logging patch `0008` is kept separately under `diagnostic/`.
+It is not the SE re-arm patch `0007` documented below.
 
 ## Dispositions
 
