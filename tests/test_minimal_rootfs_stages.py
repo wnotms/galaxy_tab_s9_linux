@@ -275,7 +275,8 @@ class MinimalPid1HandoverEvidence(unittest.TestCase):
         for marker in ('trampoline=entered', 'trampoline=exec-init',
                        'trampoline=exec-failed errno=',
                        'trampoline=watchdog-started', 'trampoline=alive-',
-                       'trampoline=pid1 '):
+                       'trampoline=pid1 ', 'trampoline=diagnostics-dumped',
+                       '/var/log/gts9-minimal-dmesg.txt'):
             self.assertIn(marker, self.SOURCE, marker)
         self.assertIn('/var/log/gts9-minimal-last-boot', self.SOURCE)
         self.assertIn('/proc/1/comm', self.SOURCE)
@@ -307,7 +308,10 @@ class MinimalPid1HandoverEvidence(unittest.TestCase):
             strings = subprocess.run(['strings', '-a', binary], text=True,
                                      capture_output=True, check=True).stdout
             for marker in ('trampoline=entered', 'trampoline=exec-init',
-                           '/var/log/gts9-minimal-last-boot', '/proc/1/comm'):
+                           'trampoline=diagnostics-dumped',
+                           '/var/log/gts9-minimal-last-boot',
+                           '/var/log/gts9-minimal-dmesg.txt',
+                           '/proc/1/comm'):
                 self.assertIn(marker, strings, marker)
             headers = subprocess.run(['readelf', '-l', binary], text=True,
                                      capture_output=True, check=True).stdout

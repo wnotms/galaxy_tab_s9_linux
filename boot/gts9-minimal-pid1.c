@@ -103,6 +103,7 @@ static void emit(const char *message, long length)
  * PID 1 is handed over.
  */
 static long record_fd = -1;
+static char record_number_buffer[64];
 
 static void record_open(void)
 {
@@ -227,6 +228,52 @@ __attribute__((noreturn)) static void rescue_loop(void)
 	}
 }
 
+static void record_alive(int seconds)
+{
+	char number[24];
+
+	record_write("trampoline=alive-");
+	number_to_text(seconds, number);
+	record_write(number);
+	record_write("s\n");
+	record_write("trampoline=pid1 ");
+	if (read_file("/proc/1/comm", record_number_buffer, sizeof(record_number_buffer)) > 0)
+		record_write(record_number_buffer);
+	else
+		record_write("unreadable");
+	record_write("\n");
+}
+
+/*
+ * The panel may be dark and the USB console may never appear, so the watchdog
+ * also copies the kernel log and the early systemd state onto the Debian root
+ * filesystem.  This runs from the /run BusyBox that the minimal initramfs
+ * staged before switch_root; if it is gone, the exec simply fails.
+ */
+static void dump_diagnostics(void)
+{
+	static const char script[] =
+		"exec >/var/log/gts9-minimal-dmesg.txt 2>&1; "
+		"echo '=== dmesg ==='; dmesg; "
+		"echo '=== /proc/1/status ==='; cat /proc/1/status; "
+		"echo '=== /proc/1/stack ==='; cat /proc/1/stack; "
+		"echo '=== journal ==='; journalctl -b --no-pager; "
+		"echo '=== list-jobs ==='; systemctl list-jobs --no-pager; "
+		"echo '=== failed ==='; systemctl --failed --no-pager; "
+		"echo '=== dump done ==='";
+	static char *argv[] = { "busybox", "sh", "-c", (char *)script, 0 };
+	static char *envp[] = {
+		"PATH=/run:/sbin:/bin:/usr/sbin:/usr/bin", "TERM=linux", 0
+	};
+
+	if (sys_call6(SYS_clone, SIGCHLD, 0, 0, 0, 0, 0) != 0)
+		return;
+
+	sys_call6(SYS_execve, (long)"/run/busybox", (long)argv, (long)envp, 0, 0, 0);
+	for (;;)
+		sleep_one_second();
+}
+
 /*
  * Runs as an ordinary child of PID 1.  Its only job is to leave a trace on
  * the disk when nothing else can: the panel may be dark and the USB console
@@ -235,27 +282,25 @@ __attribute__((noreturn)) static void rescue_loop(void)
  */
 static void watchdog_loop(void)
 {
-	static const int checkpoints[] = { 30, 60, 90 };
-	char buffer[64];
-	char errno_text[24];
 	int index;
 
 	record_write("trampoline=watchdog-started\n");
 
-	for (index = 0; index < (int)(sizeof(checkpoints) / sizeof(checkpoints[0])); index++) {
-		int step = checkpoints[index] - (index ? checkpoints[index - 1] : 0);
-
-		sleep_seconds(step);
-		record_write("trampoline=alive-");
-		number_to_text(checkpoints[index], errno_text);
-		record_write(errno_text);
-		record_write("s\n");
-		record_write("trampoline=pid1 ");
-		if (read_file("/proc/1/comm", buffer, sizeof(buffer)) > 0)
-			record_write(buffer);
-		else
-			record_write("unreadable");
-		record_write("\n");
+	for (index = 0; index < 3; index++) {
+		sleep_seconds(index == 0 ? 30 : (index == 1 ? 15 : 45));
+		switch (index) {
+		case 0:
+			record_alive(30);
+			break;
+		case 1:
+			/* systemd has had 45 s: capture whatever it left behind. */
+			dump_diagnostics();
+			record_write("trampoline=diagnostics-dumped\n");
+			break;
+		default:
+			record_alive(90);
+			break;
+		}
 	}
 }
 
