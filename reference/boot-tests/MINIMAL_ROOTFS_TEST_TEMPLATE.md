@@ -77,13 +77,54 @@ back from this file or from a retained kernel/serial log.
 - serial/getty evidence:
 - panel state (record separately; it is not a boot-state verdict):
 
+## Test order
+
+Run the two phases with the same flashed images and the same cmdline; Type-C is
+the only intended variable.
+
+### Phase A - Type-C attached
+
+Boot with `gts9_minimal_rootfs=1` and Type-C connected. Even a black screen is
+expected to become a Debian boot: the panel and the USB console are now Debian
+services. Wait for the full boot, then, if Windows shows the COM port, log in
+automatically as root and record:
+
+```sh
+id
+uname -a
+findmnt /
+systemctl --failed
+systemctl status gts9-usb-acm.service
+systemctl status gts9-panel-recover.service
+cat /var/log/gts9-minimal-last-boot
+```
+
+If there is still no COM port or panel output, go to TWRP, mount the Debian
+root read-only and read the same record (see `docs/TWRP_DEBIAN_RECOVERY.md`).
+Record only the markers that were actually read back.
+
+### Phase B - battery-only
+
+Only after Phase A proves `debian_stage=systemd-entered` (the rootfs chain
+does not depend on Type-C): power the tablet off completely, disconnect
+Type-C, power on, wait through the full boot, and - if there is no visible
+output - enter TWRP and read the persistent stage record.
+
+Result: if `systemd-entered` and `multi-user` are present, Type-C is not a
+rootfs dependency and the remaining problem is USB attach or panel recovery.
+If the record stops at `waiting-root`, investigate SDHCI/`sdhc_2`, `vmmc`,
+`vqmmc`, card detect, RPMh, clock and pinctrl before touching any regulator.
+
 ## Logs and files
 
 - Kernel log source and filename:
 - UART / serial transcript:
 - `dmesg` or journal filename:
 - `last_kmsg` / pstore filename, or why unavailable:
+- Commands run in Phase A over the USB console (transcript):
+- TWRP mount and read of the record (transcript):
 - `SHA256SUMS` for evidence files:
+- `sec_log`/`last_kmsg` absence: `expected` (bootloader overwrote it) / other:
 
 ## Result
 
