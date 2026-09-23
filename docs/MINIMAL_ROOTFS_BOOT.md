@@ -77,6 +77,34 @@ Debian appends its own `debian_*` keys to the same file (see
 `rootfs-overlay/`), so one file answers "how far did the last boot get" for the
 whole chain. The initramfs block is never rewritten by Debian.
 
+## Debian stage chain
+
+`rootfs-overlay/usr/libexec/gts9-record-debian-stage` continues the record from
+inside Debian. It replaces only the `debian_*` keys, keeps the initramfs block
+byte for byte, and is a successful no-op when the record is absent, so a
+regular bring-up boot (which writes `/var/log/gts9-last-boot-stage`) is
+unaffected. Four oneshot units feed it, each of them individually disableable
+from TWRP:
+
+| Unit | Stage recorded | Ordering |
+|---|---|---|
+| `gts9-debian-entered.service` | `systemd-entered`, `local-fs` | `DefaultDependencies=no`, `After=local-fs.target`, `Before=basic.target` |
+| `gts9-debian-basic-stage.service` | `basic` | `After=basic.target`, `Before=multi-user.target` |
+| `gts9-debian-getty-stage.service` | `tty1-getty-active` or `tty1-getty-inactive` | `After=getty.target`, `Before=multi-user.target` |
+| `gts9-debian-multi-user-stage.service` | `multi-user` | `After=multi-user.target` |
+
+Every unit carries `ConditionPathExists=/var/log/gts9-minimal-last-boot`, so
+they activate only for this profile. Each stage is also printed as
+`GTS9_DEBIAN_STAGE=<stage>` on the journal and on `/dev/kmsg`. The helper
+additionally records `debian_boot_id` and `debian_boot_id_match` (does the
+record belong to the boot Debian is running in?), `debian_kernel_release`,
+`debian_root_source` and `debian_root_fstype`, which is how `/ = Debian TF`
+is confirmed from the file alone.
+
+The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`) and the panel
+recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`
+or `panel-unavailable`.
+
 Reading it from TWRP, after booting recovery with the card still inserted:
 
 ```sh

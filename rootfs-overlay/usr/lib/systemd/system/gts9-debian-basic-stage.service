@@ -1,0 +1,13 @@
+[Unit]
+Description=Record that Debian reached basic.target
+After=basic.target
+Before=multi-user.target
+ConditionPathExists=/var/log/gts9-minimal-last-boot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-debian-stage basic
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

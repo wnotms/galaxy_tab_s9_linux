@@ -1,0 +1,14 @@
+[Unit]
+Description=Record entry into Debian after the minimal rootfs handoff
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+ConditionPathExists=/var/log/gts9-minimal-last-boot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-debian-stage systemd-entered local-fs
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target

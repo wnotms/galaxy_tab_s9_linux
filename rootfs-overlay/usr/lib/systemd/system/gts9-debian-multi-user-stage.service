@@ -1,0 +1,12 @@
+[Unit]
+Description=Record that Debian reached multi-user.target
+After=multi-user.target
+ConditionPathExists=/var/log/gts9-minimal-last-boot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-debian-stage multi-user
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

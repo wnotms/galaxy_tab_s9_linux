@@ -1,0 +1,187 @@
+#!/bin/sh
+# Continue the persistent minimal-rootfs boot record from inside Debian.
+#
+# The initramfs writes /var/log/gts9-minimal-last-boot before switch_root (see
+# docs/MINIMAL_ROOTFS_BOOT.md).  This helper appends the Debian half of the same
+# boot to that file, so one record answers "how far did the last boot get" for
+# the whole chain:
+#
+#	gts9-record-debian-stage [--failure REASON] [--set KEY=VALUE]... STAGE...
+#
+# The initramfs block is never rewritten.  Every Debian-owned key carries the
+# debian_ prefix and is replaced on each call, so the tail of the file always
+# describes the most recent Debian state.  Each STAGE is also printed as
+# GTS9_DEBIAN_STAGE=<stage> on stdout (the journal) and on /dev/kmsg.
+#
+# The update is atomic: a temporary file next to the record is written,
+# chmod'ed, synced and only then renamed over the record.
+#
+# The helper is a no-op when the record does not exist, which is what keeps a
+# regular bring-up boot (that writes /var/log/gts9-last-boot-stage instead)
+# untouched.
+
+set -u
+
+RECORD=${GTS9_MINIMAL_BOOT_RECORD:-/var/log/gts9-minimal-last-boot}
+
+usage() {
+	cat <<'EOF'
+usage: gts9-record-debian-stage [--failure REASON] [--set KEY=VALUE]... STAGE...
+
+Appends STAGE... to debian_stage_history in the minimal-rootfs boot record and
+sets debian_stage to the last one.  Without the record file the command is a
+successful no-op.
+EOF
+}
+
+stages=''
+failure=none
+extra=''
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+	--failure)
+		[ $# -ge 2 ] || { echo 'gts9-record-debian-stage: --failure needs a reason' >&2; exit 2; }
+		failure=$2
+		shift 2
+		;;
+	--set)
+		[ $# -ge 2 ] || { echo 'gts9-record-debian-stage: --set needs KEY=VALUE' >&2; exit 2; }
+		extra="${extra}$2
+"
+		shift 2
+		;;
+	-h | --help)
+		usage
+		exit 0
+		;;
+	-*)
+		echo "gts9-record-debian-stage: unknown option: $1" >&2
+		exit 2
+		;;
+	*)
+		if [ -n "$stages" ]; then
+			stages="${stages},$1"
+		else
+			stages=$1
+		fi
+		shift
+		;;
+	esac
+done
+
+if [ "$stages" = '' ] && [ "$extra" = '' ]; then
+	usage >&2
+	exit 2
+fi
+
+# Nothing to continue: a regular bring-up boot, or a minimal boot that never
+# reached the root filesystem (in which case Debian cannot be running either).
+[ -f "$RECORD" ] || exit 0
+
+record_value() {
+	sed -n "s/^$1=//p" "$RECORD" 2>/dev/null | tail -n 1
+}
+
+record_boot_id=$(record_value boot_id)
+debian_boot_id=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)
+if [ -n "$record_boot_id" ] && [ "$record_boot_id" = "$debian_boot_id" ]; then
+	boot_id_match=yes
+else
+	boot_id_match=no
+fi
+
+kernel_release=$(uname -r 2>/dev/null || echo unknown)
+root_source=$(findmnt -n -o SOURCE / 2>/dev/null || true)
+root_fstype=$(findmnt -n -o FSTYPE / 2>/dev/null || true)
+if [ -z "$root_source" ]; then
+	root_source=$(awk '$2 == "/" { print $1; exit }' /proc/mounts 2>/dev/null || true)
+fi
+if [ -z "$root_fstype" ]; then
+	root_fstype=$(awk '$2 == "/" { print $3; exit }' /proc/mounts 2>/dev/null || true)
+fi
+root_source=${root_source:-unknown}
+root_fstype=${root_fstype:-unknown}
+
+history=$(record_value debian_stage_history)
+last_stage=$(record_value debian_stage)
+
+if [ -n "$stages" ]; then
+	remaining=$stages
+	while [ -n "$remaining" ]; do
+		stage=${remaining%%,*}
+		case "$remaining" in
+		*,*) remaining=${remaining#*,} ;;
+		*) remaining='' ;;
+		esac
+		printf 'GTS9_DEBIAN_STAGE=%s\n' "$stage"
+		if [ -w /dev/kmsg ]; then
+			printf 'gts9-debian: GTS9_DEBIAN_STAGE=%s\n' "$stage" > /dev/kmsg 2>/dev/null || true
+		fi
+		last_stage=$stage
+		case ",$history," in
+		*",$stage,"*)
+			# Append-only history; never grow it with a repeat.
+			;;
+		*)
+			if [ -n "$history" ]; then
+				history="${history},$stage"
+			else
+				history=$stage
+			fi
+			;;
+		esac
+	done
+fi
+
+tmp="${RECORD}.tmp.$$"
+{
+	# Keep the initramfs block exactly as it was written.
+	while IFS= read -r line || [ -n "$line" ]; do
+		case "$line" in
+		debian_*) continue ;;
+		esac
+		printf '%s\n' "$line"
+	done < "$RECORD"
+
+	printf 'debian_origin=debian-systemd\n'
+	printf 'debian_boot_id=%s\n' "$debian_boot_id"
+	printf 'debian_boot_id_match=%s\n' "$boot_id_match"
+	printf 'debian_kernel_release=%s\n' "$kernel_release"
+	printf 'debian_root_source=%s\n' "$root_source"
+	printf 'debian_root_fstype=%s\n' "$root_fstype"
+	if [ -n "$last_stage" ]; then
+		printf 'debian_stage=%s\n' "$last_stage"
+	fi
+	if [ -n "$history" ]; then
+		printf 'debian_stage_history=%s\n' "$history"
+	fi
+	printf 'debian_failure=%s\n' "$failure"
+	printf 'debian_updated_timestamp=%s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo unknown)"
+	printf 'debian_updated_uptime_seconds=%s\n' "$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
+	if [ -n "$extra" ]; then
+		printf '%s' "$extra" | while IFS= read -r field; do
+			[ -n "$field" ] || continue
+			case "$field" in
+			debian_*) printf '%s\n' "$field" ;;
+			*) printf 'debian_%s\n' "$field" ;;
+			esac
+		done
+	fi
+	:
+} > "$tmp" || {
+	rm -f "$tmp" 2>/dev/null || true
+	echo 'gts9-record-debian-stage: cannot write the boot record' >&2
+	exit 1
+}
+
+chmod 0644 "$tmp" 2>/dev/null || true
+sync
+mv -f "$tmp" "$RECORD" || {
+	rm -f "$tmp" 2>/dev/null || true
+	echo 'gts9-record-debian-stage: cannot install the boot record' >&2
+	exit 1
+}
+sync
+
+exit 0

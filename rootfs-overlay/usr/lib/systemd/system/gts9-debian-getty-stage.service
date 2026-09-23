@@ -1,0 +1,13 @@
+[Unit]
+Description=Record whether the Debian tty1 login getty started
+After=getty.target
+Before=multi-user.target
+ConditionPathExists=/var/log/gts9-minimal-last-boot
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'if systemctl is-active --quiet getty@tty1.service; then exec /usr/libexec/gts9-record-debian-stage tty1-getty-active; else exec /usr/libexec/gts9-record-debian-stage --failure tty1-getty-inactive tty1-getty-inactive; fi'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
