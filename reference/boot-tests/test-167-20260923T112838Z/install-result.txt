@@ -1,0 +1,21 @@
+Device: SM-X710 running Debian 13; kernel 7.2.0-rc3-gts9wifi-dirty.
+Boot ID: d67a8a42-6314-4671-98b4-d12d2f68a3cb.
+Transport: Windows COM17, 115200 8N1.
+
+Enabled units reported by systemctl is-enabled:
+enabled
+enabled
+enabled
+
+systemd-analyze verify returned success with no diagnostic output.
+systemctl show -p Wants systemd-poweroff.service reported:
+Wants=gts9-poweroff-stage.service
+
+Installed-file SHA-256 values:
+30c50875266770ad71319bdf0e0ede56a72d71da1403218298b6ece8c1d709b6  /usr/libexec/gts9-record-boot-stage
+a82336253e189c42e9abf6bfee1d621a54aaa7cb3b08cd5e81d14827ef24173f  /usr/libexec/gts9-record-poweroff-stage
+8a95ec35c0cfff1c6c4dc378d11c17d4702fe0a5007e991c7e22d5f9bc090ad6  /usr/lib/systemd/system/gts9-boot-stage.service
+5c288fd056d1e79e1b16d7496d73ee883be1bcf2afd254443b6ee8b1121bc77d  /usr/lib/systemd/system/gts9-getty-stage.service
+fd29cf0bd1a816da67d7c10b1d41665f227baf7728089e4c9522cac86abc641f  /usr/lib/systemd/system/gts9-poweroff-stage.service
+
+No poweroff or reboot command was issued. No partition was written.
