@@ -87,13 +87,17 @@ parents**: the drivers were not merely disabled, they were invisible, because a
 | `PHY_QCOM_QMP_PCIE` | `PHY_QCOM_QMP` | no PCIe PHY → no Wi-Fi |
 | `PHY_QCOM_QMP_COMBO` | `PHY_QCOM_QMP` | no USB3/DP combo PHY |
 | `INPUT_PM8941_PWRKEY` | `MFD_SPMI_PMIC` | no power key |
+| `POWER_RESET_QCOM_PON` | `ARCH_QCOM` + `MFD_SPMI_PMIC` | no PMIC PON child devices, so the enabled power-key driver has nothing to bind to |
 | `RTC_DRV_PM8XXX` | `MFD_SPMI_PMIC` | no RTC |
 | `ATH11K`, `ATH11K_PCI` | `WLAN_VENDOR_ATH` | no Wi-Fi driver at all |
 | `FRAMEBUFFER_CONSOLE` | `VT` (console Kconfig is sourced only `if VT`) | no fbcon console |
 
 The fragment's bring-up section now asserts those parents, and
 `scripts/build-kernel.sh` asserts the resulting symbols (`=y` and `=m`) so a
-future silent drop fails the build instead of shipping.
+future silent drop fails the build instead of shipping. The same check keeps
+`POWER_RESET_QCOM_PON` built in: its `devm_of_platform_populate()` call creates
+the `qcom,pmk8350-pwrkey` child whose PMIC IRQ is the board's power-button wake
+source.
 
 A second, larger gap is SM8550 platform plumbing that the stock Android config
 never needed by those names: `SPMI_MSM_PMIC_ARB` (PMIC bus → regulators, GPIO,

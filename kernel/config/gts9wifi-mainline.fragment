@@ -100,6 +100,10 @@ CONFIG_I2C_QCOM_GENI=y
 CONFIG_QCOM_GPI_DMA=y
 CONFIG_KEYBOARD_GPIO=y
 CONFIG_INPUT_PM8941_PWRKEY=y
+# Populate the PON child nodes for qcom,pmk8350-pwrkey so the PMIC power key
+# is registered as an input device and its default wake source can arm
+# the PON IRQ.
+CONFIG_POWER_RESET_QCOM_PON=y
 
 # PCIe/radio foundations. X710 stock evidence identifies QCA6490/WCN6855-class
 # hardware; ath11k is upstream and can be modular while early boot stays small.

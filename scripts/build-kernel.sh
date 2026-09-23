@@ -92,6 +92,9 @@ required=(
     # Reboot-mode support: the SDAM cell comes from SPMI and the driver turns
     # the reboot command string into the value ABL reads.
     CONFIG_NVMEM_SPMI_SDAM CONFIG_NVMEM_REBOOT_MODE
+    # PON creates its pwrkey/resin child devices; without it the enabled
+    # INPUT_PM8941_PWRKEY driver has no device to bind to.
+    CONFIG_POWER_RESET_QCOM_PON
     # Display: the panel driver is the only piece mainline lacks for this board.
     CONFIG_DRM_PANEL_SAMSUNG_ANA38407 CONFIG_DRM_DISPLAY_DSC_HELPER
     CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
