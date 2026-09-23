@@ -221,6 +221,33 @@ class MinimalRootfsStateTests(unittest.TestCase):
             self.assertNotIn(bashism, STATE.read_text(), bashism)
 
 
+    def test_boot_facts_are_frozen_before_the_vfs_move(self):
+        """After /dev /proc /sys /run move, the old paths are empty.
+
+        The switch-root write happens after that move, so the facts must be
+        captured while they are still readable - otherwise the record that
+        TWRP reads says cmdline=unavailable and boot_id=unknown.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            result = run_library(tmp, (
+                'minimal_state_init\n'
+                'minimal_state_stage root-mounted\n'
+                'minimal_state_persist_enable "$GTS9_MINIMAL_LOG_DIR"\n'
+                # Simulate the move: the old paths no longer answer.
+                'minimal_state_boot_id() { echo unknown; }\n'
+                'minimal_state_kernel_release() { echo unknown; }\n'
+                'minimal_state_cmdline() { echo unavailable; }\n'
+                'minimal_state_mmc_devices() { echo none; }\n'
+                'minimal_state_stage switch-root\n'
+            ))
+            self.assertEqual(result.returncode, 0, result.stderr)
+            fields = parse_record(f'{tmp}/gts9-minimal-last-boot')
+            self.assertEqual(fields['stage'], 'switch-root')
+            self.assertNotEqual(fields['cmdline'], 'unavailable')
+            self.assertNotEqual(fields['boot_id'], 'unknown')
+            self.assertNotEqual(fields['kernel_release'], 'unknown')
+            self.assertNotEqual(fields['mmc_devices'], 'none')
+
     def test_the_builder_links_every_applet_the_minimal_path_calls(self):
         """A missing applet only fails on the tablet; catch it at build time.
 
@@ -237,6 +264,54 @@ class MinimalRootfsStateTests(unittest.TestCase):
         for applet in used:
             self.assertIn(applet, linked,
                           f'{applet} must be linked into the initramfs')
+
+
+class MinimalPid1HandoverEvidence(unittest.TestCase):
+    """The trampoline is the last place that can write evidence to disk."""
+
+    SOURCE = (ROOT / 'boot' / 'gts9-minimal-pid1.c').read_text()
+
+    def test_trampoline_records_its_handover_on_the_debian_root(self):
+        for marker in ('trampoline=entered', 'trampoline=exec-init',
+                       'trampoline=exec-failed errno=',
+                       'trampoline=watchdog-started', 'trampoline=alive-',
+                       'trampoline=pid1 '):
+            self.assertIn(marker, self.SOURCE, marker)
+        self.assertIn('/var/log/gts9-minimal-last-boot', self.SOURCE)
+        self.assertIn('/proc/1/comm', self.SOURCE)
+        self.assertIn('O_APPEND', self.SOURCE)
+        self.assertIn('O_CREAT', self.SOURCE)
+
+    def test_watchdog_survives_the_exec_and_record_is_opened_once(self):
+        # The watchdog is forked before exec'ing init, so it outlives the
+        # handover; and the record descriptor is opened exactly once, so a
+        # later write can never recreate a half file at the record path.
+        self.assertLess(self.SOURCE.index('watchdog_loop();'),
+                        self.SOURCE.index('record_write(marker_exec);'))
+        self.assertEqual(self.SOURCE.count('record_open();'), 1)
+        self.assertIn('static long record_fd = -1;', self.SOURCE)
+
+    def test_trampoline_compiles_static_and_contains_the_markers(self):
+        clang = shutil.which('clang')
+        if not clang or not shutil.which('ld.lld'):
+            self.skipTest('clang/ld.lld is unavailable')
+        with tempfile.TemporaryDirectory() as tmp:
+            binary = os.path.join(tmp, 'gts9-minimal-pid1')
+            build = subprocess.run(
+                [clang, '--target=aarch64-linux-gnu', '-nostdlib', '-static',
+                 '-ffreestanding', '-fno-stack-protector', '-fno-builtin',
+                 '-fuse-ld=lld', '-Wl,--build-id=none', '-Wl,-n',
+                 '-o', binary, str(ROOT / 'boot' / 'gts9-minimal-pid1.c')],
+                text=True, capture_output=True, check=False)
+            self.assertEqual(build.returncode, 0, build.stderr)
+            strings = subprocess.run(['strings', '-a', binary], text=True,
+                                     capture_output=True, check=True).stdout
+            for marker in ('trampoline=entered', 'trampoline=exec-init',
+                           '/var/log/gts9-minimal-last-boot', '/proc/1/comm'):
+                self.assertIn(marker, strings, marker)
+            headers = subprocess.run(['readelf', '-l', binary], text=True,
+                                     capture_output=True, check=True).stdout
+            self.assertNotIn('INTERP', headers)
 
 
 class MinimalRootfsStateHostSupport(unittest.TestCase):

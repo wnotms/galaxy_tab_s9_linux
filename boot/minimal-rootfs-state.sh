@@ -26,6 +26,11 @@ GTS9_MINIMAL_ROOT_DEVICE=${GTS9_MINIMAL_ROOT_DEVICE:-unknown}
 GTS9_MINIMAL_PERSIST=${GTS9_MINIMAL_PERSIST:-0}
 GTS9_MINIMAL_FIRST_TIMESTAMP=${GTS9_MINIMAL_FIRST_TIMESTAMP:-}
 GTS9_MINIMAL_FIRST_UPTIME=${GTS9_MINIMAL_FIRST_UPTIME:-}
+GTS9_MINIMAL_FROZEN=${GTS9_MINIMAL_FROZEN:-0}
+GTS9_MINIMAL_BOOT_ID=${GTS9_MINIMAL_BOOT_ID:-}
+GTS9_MINIMAL_KERNEL_RELEASE=${GTS9_MINIMAL_KERNEL_RELEASE:-}
+GTS9_MINIMAL_CMDLINE=${GTS9_MINIMAL_CMDLINE:-}
+GTS9_MINIMAL_MMC_DEVICES=${GTS9_MINIMAL_MMC_DEVICES:-}
 
 # Emit one line on every channel that can be reached without DRM, fbcon, tty1
 # or USB: stdout (serial console), the kernel log, and /dev/console.  tty1 is
@@ -90,6 +95,18 @@ minimal_state_init() {
     GTS9_MINIMAL_FIRST_UPTIME=$(minimal_state_uptime)
 }
 
+# The boot facts are read from /proc and /dev, which stop being reachable at
+# those paths once /dev /proc /sys /run are moved into the Debian root.  Freeze
+# them while they are still readable, so the switch-root write - which happens
+# after the move - cannot replace real values with "unknown".
+minimal_state_freeze_facts() {
+    GTS9_MINIMAL_FROZEN=1
+    GTS9_MINIMAL_BOOT_ID=$(minimal_state_boot_id)
+    GTS9_MINIMAL_KERNEL_RELEASE=$(minimal_state_kernel_release)
+    GTS9_MINIMAL_CMDLINE=$(minimal_state_cmdline)
+    GTS9_MINIMAL_MMC_DEVICES=$(minimal_state_mmc_devices)
+}
+
 # Record a stage before the root filesystem exists: the value is kept in RAM
 # and emitted, and nothing is persisted yet.
 minimal_state_stage() {
@@ -123,6 +140,7 @@ minimal_state_persist_enable() {
     GTS9_MINIMAL_LOG_DIR=${1:-$GTS9_MINIMAL_LOG_DIR}
     GTS9_MINIMAL_RECORD=$GTS9_MINIMAL_LOG_DIR/gts9-minimal-last-boot
     GTS9_MINIMAL_PERSIST=1
+    minimal_state_freeze_facts
     minimal_emit "GTS9_MINIMAL_RECORD=$GTS9_MINIMAL_RECORD"
     minimal_state_write
 }
@@ -140,18 +158,29 @@ minimal_state_write() {
 
     minimal_state_tmp="${GTS9_MINIMAL_RECORD}.tmp"
     {
+        if [ "$GTS9_MINIMAL_FROZEN" = 1 ]; then
+            minimal_state_boot_id_value=$GTS9_MINIMAL_BOOT_ID
+            minimal_state_kernel_value=$GTS9_MINIMAL_KERNEL_RELEASE
+            minimal_state_cmdline_value=$GTS9_MINIMAL_CMDLINE
+            minimal_state_mmc_value=$GTS9_MINIMAL_MMC_DEVICES
+        else
+            minimal_state_boot_id_value=$(minimal_state_boot_id)
+            minimal_state_kernel_value=$(minimal_state_kernel_release)
+            minimal_state_cmdline_value=$(minimal_state_cmdline)
+            minimal_state_mmc_value=$(minimal_state_mmc_devices)
+        fi
         printf 'format_version=%s\n' "$GTS9_MINIMAL_FORMAT_VERSION"
         printf 'origin=initramfs\n'
-        printf 'boot_id=%s\n' "$(minimal_state_boot_id)"
-        printf 'kernel_release=%s\n' "$(minimal_state_kernel_release)"
-        printf 'cmdline=%s\n' "$(minimal_state_cmdline)"
+        printf 'boot_id=%s\n' "$minimal_state_boot_id_value"
+        printf 'kernel_release=%s\n' "$minimal_state_kernel_value"
+        printf 'cmdline=%s\n' "$minimal_state_cmdline_value"
         printf 'timestamp=%s\n' "${GTS9_MINIMAL_FIRST_TIMESTAMP:-unknown}"
         printf 'uptime_seconds=%s\n' "${GTS9_MINIMAL_FIRST_UPTIME:-unknown}"
         printf 'root_device=%s\n' "$GTS9_MINIMAL_ROOT_DEVICE"
         printf 'stage=%s\n' "$GTS9_MINIMAL_STAGE"
         printf 'stage_history=%s\n' "${GTS9_MINIMAL_STAGE_HISTORY:-$GTS9_MINIMAL_STAGE}"
         printf 'failure=%s\n' "$GTS9_MINIMAL_FAILURE"
-        printf 'mmc_devices=%s\n' "$(minimal_state_mmc_devices)"
+        printf 'mmc_devices=%s\n' "$minimal_state_mmc_value"
     } > "$minimal_state_tmp" 2>/dev/null || {
         rm -f "$minimal_state_tmp" 2>/dev/null || true
         minimal_emit 'GTS9_MINIMAL_WARN=state-write-failed'
