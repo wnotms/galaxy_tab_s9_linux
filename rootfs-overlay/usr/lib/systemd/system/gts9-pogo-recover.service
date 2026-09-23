@@ -1,0 +1,12 @@
+[Unit]
+Description=X710 Pogo keyboard cold-boot recovery
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-pogo-recover
+RemainAfterExit=yes
+TimeoutStartSec=45
+
+[Install]
+WantedBy=multi-user.target

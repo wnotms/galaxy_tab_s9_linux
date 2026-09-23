@@ -106,9 +106,19 @@ succeeds: `debian_failure=` keeps the most recent reason and
 `debian_failure_history=` lists every distinct reason seen in that boot, so a
 getty or panel failure stays visible in the final record.
 
-The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`) and the panel
+The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`), the panel
 recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`
-or `panel-unavailable`.
+or `panel-unavailable`, and the Pogo keyboard service adds `pogo-recovered`,
+`pogo-ok`, `pogo-absent` or `pogo-recovery-failed`.
+
+Both hardware recoveries exist because the built-in drivers probe within the
+first second of kernel boot: the panel then reads the cold-boot zero ID and
+the keyboard's STM32 is not ready to answer the connect-line check, so the
+driver powers the rail off and reports DETACHED.  Test 178 confirmed on
+hardware that the same devices come up when the driver's own recovery entry
+points are used later from Debian (panel: one framebuffer blank/unblank cycle;
+keyboard: `echo hard > /sys/bus/i2c/devices/5-002a/rearm`).  Debian owns the
+sequencing, the drivers still own the hardware.
 
 ## Deploying the Debian userspace
 
