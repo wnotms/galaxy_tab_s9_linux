@@ -87,10 +87,27 @@ directly when a test needs loadable modules; the first boot test does not.
 The opt-in `gts9_minimal_rootfs=1` profile branches to a separate, small
 rootfs handoff path before display, USB, UFS, or bring-up report operations.
 It waits up to 30 seconds for the microSD root, mounts ext4 and switches to
-Debian, or leaves a BusyBox rescue shell with block-device diagnostics. The
+Debian, or leaves a BusyBox rescue shell with block-device diagnostics. Each
+stage is persisted to `/var/log/gts9-minimal-last-boot` on the Debian root, so a
+black screen with no USB console can still be diagnosed offline from TWRP. The
 default cmdline is unchanged; see
 [minimal rootfs boot](docs/MINIMAL_ROOTFS_BOOT.md) and
 `boot/cmdline.minimal-rootfs.example.txt` for the controlled A/B profile.
+
+Debian now owns the userspace bring-up that used to live in the initramfs -
+the USB ACM console, the ttyGS0 root console, the X710 panel cold-boot recovery
+and the boot-stage units - under `rootfs-overlay/`. Install them with:
+
+```bash
+sudo ./scripts/install-debian-rootfs.sh /mnt/debian      # mounted rootfs
+./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar  # for TWRP
+```
+
+The tarball carries relative paths only, so TWRP deploys it with
+`cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar`. Kernel modules are
+installed under `lib/modules/<release>`, firmware under `lib/firmware/`, and
+`depmod -b` generates the module dependencies. See
+[TWRP offline maintenance](docs/TWRP_DEBIAN_RECOVERY.md).
 
 `validate-boot-bundle.sh` is the gate before any physical test: it re-extracts
 the kernel, the appended DTB, both ramdisks and every AVB footer, and
@@ -118,7 +135,9 @@ kernel/config/               small device Kconfig fragment
 kernel/patches/              local patch queue (initially empty/minimal)
 boot/bringup-init.sh         the /init of the bring-up initramfs
 boot/minimal-rootfs-init.sh opt-in minimal rootfs handoff profile
+boot/minimal-rootfs-state.sh  persistent minimal boot-stage record
 boot/gts9-minimal-pid1.c     static PID 1 exec-failure rescue helper
+rootfs-overlay/              Debian userspace: units, helpers, getty config
 scripts/prepare-kernel.sh    stages DTS/patches into a disposable tree
 kernel/PROVENANCE.md         source/pin/licensing notes
 scripts/fetch-mainline.sh    obtains and verifies the upstream kernel
@@ -129,11 +148,14 @@ scripts/make-initramfs.sh    packs and verifies the legacy-LZ4 initramfs
 scripts/build-bringup-initramfs.sh  minimal BusyBox initramfs for bring-up
 scripts/build-boot-bundle.sh Android boot header v4 packaging, no flashing
 scripts/validate-boot-bundle.sh  read-only pre-flash bundle gate
+scripts/install-debian-rootfs.sh  Debian overlay install / TWRP tarball
+scripts/twrp-mount-debian.sh  safe offline Debian mount helper for TWRP
 scripts/check-device-layout.sh   read-only partition audit, runs on the tablet
 scripts/audit-stock.sh       extracts useful facts from stock config/DTS
 reference/stock/             hashes and facts from the supplied stock artifacts
 docs/FIRST_BOOT_TEST.md      first physical boot test, recovery plan, A-E cases
 docs/MINIMAL_ROOTFS_BOOT.md  minimal Debian rootfs profile and A/B procedure
+docs/TWRP_DEBIAN_RECOVERY.md TWRP offline inspection, repair and deployment
 docs/MAINLINE_PORT_PLAN.md   staged bring-up and validation plan
 docs/BUILD_ANALYSIS.md       repository analysis and the verified build result
 docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md  decisions from the earlier X710 kernel fork

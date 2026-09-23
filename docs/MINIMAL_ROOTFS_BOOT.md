@@ -105,6 +105,43 @@ The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`) and the panel
 recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`
 or `panel-unavailable`.
 
+## Deploying the Debian userspace
+
+`scripts/install-debian-rootfs.sh` installs everything named above from
+`rootfs-overlay/` in one reproducible step. Both modes build the identical
+tree from the identical sources:
+
+```bash
+# With the card mounted on the host:
+sudo ./scripts/install-debian-rootfs.sh /mnt/debian
+
+# For TWRP (recommended; the tablet has no repository):
+./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar
+adb push out/gts9-debian-overlay.tar /tmp/
+# in TWRP:
+cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar
+```
+
+The installer copies the overlay (units, helpers, logind and getty
+configuration), creates each unit's enablement symlink from its own
+`WantedBy=` so no `systemctl` is needed, replaces `lib/modules/<release>`
+with the modules built for this kernel, copies firmware to `lib/firmware/`,
+and runs `depmod -b <target> <release>`. The module release is taken from the
+module tree and must match `kernel.release` written next to `modules-root`;
+a mismatch aborts the install instead of deploying modules for a different
+kernel. `--skip-modules`, `--skip-firmware`, `--modules DIR` and
+`--firmware DIR` override the defaults.
+
+The installer never formats, never runs `fsck`, writes nothing outside the
+given target and refuses `/`. It is idempotent: running it twice produces the
+same tree, and the tarball carries relative paths only, so TWRP can extract it
+with `tar -xpf` into the mounted root.
+
+Kernel modules and firmware live in Debian, not in the minimal initramfs. The
+initramfs keeps the built-in providers the root handoff needs (MMC/SDHCI,
+ext4, RPMh, PMIC, PDC, clock, pinctrl) and only receives modules when the
+builder is called with `--modules` for a dedicated bring-up test.
+
 Reading it from TWRP, after booting recovery with the card still inserted:
 
 ```sh
