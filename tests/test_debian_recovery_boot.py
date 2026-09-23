@@ -88,6 +88,32 @@ class DebianRecoveryBoot(unittest.TestCase):
         self.assertIn('\t\texec systemctl reboot\n', code)
         self.assertNotIn('reboot -f', code)
 
+    def test_existing_recovery_request_still_requires_confirmation(self):
+        """An already-written BCB must not turn a default invocation into a surprise reboot."""
+        branch = re.search(r'^write\)\n(.*?)\n\t;;', self.text, flags=re.M | re.S)
+        self.assertIsNotNone(branch)
+        self.assertIn('confirm_write', branch.group(1))
+
+        harness = ('PROG=test\nBCB_COMMAND=boot-recovery\n'
+                   'assume_yes=0\ndo_reboot=1\ncurrent=boot-recovery\n'
+                   'dev=/dev/sda10\n'
+                   'die() { echo "$*" >&2; exit 1; }\n'
+                   + shell_function(self.text, 'confirm_write')
+                   + '\nconfirm_write\n')
+        r = subprocess.run(['sh', '-eu', '-c', harness],
+                           capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('no terminal to confirm', r.stderr)
+
+    def test_bcb_read_failure_does_not_look_like_an_empty_request(self):
+        harness = ('die() { echo "$*" >&2; exit 1; }\n'
+                   + shell_function(self.text, 'bcb_command')
+                   + '\nbcb_command /definitely/not/a/block/device\n')
+        r = subprocess.run(['sh', '-eu', '-c', harness],
+                           capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('cannot read the BCB', r.stderr)
+
     def test_refuses_anything_that_is_not_ufs_misc(self):
         """Every guard fails closed: a wrong device is somebody else's partition."""
         for guard in ('must run as root',

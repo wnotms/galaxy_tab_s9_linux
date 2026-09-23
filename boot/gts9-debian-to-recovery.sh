@@ -154,7 +154,14 @@ validate_misc() {
 }
 
 bcb_command() {
-	timeout 5 dd if="$1" bs=1 count=32 2>/dev/null | tr -d '\0'
+	tmp=$(mktemp) || die "cannot create a temporary file to read the BCB"
+	if ! timeout 5 dd if="$1" of="$tmp" bs=32 count=1 2>/dev/null; then
+		rm -f "$tmp"
+		die "cannot read the BCB from $1"
+	fi
+	command=$(tr -d '\0' < "$tmp")
+	rm -f "$tmp"
+	printf '%s' "$command"
 }
 
 # ---------------------------------------------------------------------------
@@ -204,6 +211,25 @@ reboot_now() {
 	exec reboot
 }
 
+confirm_write() {
+	[ "$assume_yes" = 1 ] && return 0
+	[ -t 0 ] || die "no terminal to confirm on; re-run with --yes to proceed"
+
+	if [ "$current" = "$BCB_COMMAND" ]; then
+		prompt="$dev already asks for recovery; reboot now?"
+	elif [ "$do_reboot" = 1 ]; then
+		prompt="write $BCB_COMMAND to $dev and reboot?"
+	else
+		prompt="write $BCB_COMMAND to $dev without rebooting?"
+	fi
+	printf '%s: %s [y/N] ' "$PROG" "$prompt"
+	read -r reply || reply=
+	case "$reply" in
+	y | Y | yes | YES) : ;;
+	*) die "not confirmed; no change made" ;;
+	esac
+}
+
 # ---------------------------------------------------------------------------
 
 if [ -z "$dev" ]; then
@@ -232,20 +258,12 @@ clear)
 write)
 	if [ "$current" = "$BCB_COMMAND" ]; then
 		info "$dev already asks for recovery; keeping it"
+		if [ "$do_reboot" = 1 ]; then
+			confirm_write
+		fi
 	else
 		info "current BCB command: ${current:-(empty)}"
-		if [ "$assume_yes" = 0 ]; then
-			if [ -t 0 ]; then
-				printf '%s: write boot-recovery to %s and reboot? [y/N] ' "$PROG" "$dev"
-				read -r reply || reply=
-				case "$reply" in
-				y | Y | yes | YES) : ;;
-				*) die "not confirmed; nothing written" ;;
-				esac
-			else
-				die "no terminal to confirm on; re-run with --yes to proceed"
-			fi
-		fi
+		confirm_write
 		write_bcb
 	fi
 	;;

@@ -100,3 +100,30 @@ and it verifies the read-back before rebooting.  On this board that resolves to
 `tests/test_debian_recovery_boot.py` covers the guards, the byte layout and the
 ordering guarantee above.  The block layout test executes the shipped `write_bcb`
 and compares the bytes, so a change to the sequence fails the suite.
+
+### Getting the helper onto the tablet
+
+The helper is a single POSIX shell script and needs no build step. Debian's root
+filesystem is the microSD the tablet is already running from, and its USB mass
+storage export is read-only, so copy the helper over the serial console once.
+
+On the host, encode the repository copy:
+
+    base64 -w 76 boot/gts9-debian-to-recovery.sh
+
+In a root shell on the tablet's serial console, create the file and paste the
+complete encoded output between the markers:
+
+    install -d -m 0755 /usr/local/sbin
+    base64 -d > /usr/local/sbin/gts9-debian-to-recovery <<'GTS9_BASE64'
+    <paste the complete output from the host command here>
+    GTS9_BASE64
+    chmod 0755 /usr/local/sbin/gts9-debian-to-recovery
+    /usr/local/sbin/gts9-debian-to-recovery --check
+
+After that, use `gts9-debian-to-recovery` on the tablet whenever TWRP is needed.
+The default invocation asks before writing and rebooting; `--yes` is for a
+deliberate non-interactive run. Do not use a hand-written `dd` shortcut: the
+helper checks the GPT label, UFS parent, partition size, mount state, read
+errors, and BCB read-back before it can reboot. Keep the restart plain; do not
+add a recovery mode string to `systemctl reboot` or `reboot`.
