@@ -457,11 +457,22 @@ static int gts9wifi_sec_log_probe(struct platform_device *pdev)
 
 static void gts9wifi_sec_log_remove(struct platform_device *pdev)
 {
-	if (!sec_log)
+	struct gts9wifi_sec_log *log = sec_log;
+	int ret;
+
+	if (!log)
 		return;
 
-	unregister_console(&sec_log->console);
+	ret = unregister_console(&log->console);
+	if (ret) {
+		dev_warn(&pdev->dev,
+			 "could not unregister persistent console: %d\n", ret);
+		return;
+	}
+
 	sec_log = NULL;
+	memunmap(log->header);
+	kfree(log);
 }
 
 static const struct of_device_id gts9wifi_sec_log_of_match[] = {
