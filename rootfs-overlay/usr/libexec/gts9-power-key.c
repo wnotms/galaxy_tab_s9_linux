@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
- * gts9-power-key - short power-key press blanks the panel, nothing else.
+ * gts9-power-key - short power-key press turns the screen off, nothing else.
  *
  * systemd-logind's power-key actions all stop the machine in some way:
  * poweroff shuts it down, suspend freezes the SoC and - on this tablet - takes
@@ -8,7 +8,15 @@
  * when it is most useful.  The owner asked for the screen to go off and the
  * machine to keep running, so this small daemon owns the key instead:
  *
- *	short press -> toggle /sys/class/graphics/fb0/blank (panel off/on)
+ *	short press -> backlight off / backlight restored
+ *
+ * The backlight is used rather than /sys/class/graphics/fb0/blank on purpose.
+ * Blanking fb0 is a full modeset on the DPU, and test 178 caught that path
+ * hanging the tablet twice (enc35 frame done timeout -> vblank wait timeout ->
+ * workqueue lockup, with two CPUs that stop answering NMIs).  A backlight
+ * write is a single DSI DCS brightness command inside the panel driver - the
+ * same path a desktop brightness slider uses - and touches neither the DPU
+ * encoder nor vblank.
  *
  * Nothing else changes: no suspend, no poweroff, no USB reconfiguration.
  * The kernel's own long-press handling is untouched, so the tablet can still
@@ -35,9 +43,15 @@
 #define EV_KEY 0x01
 #define KEY_POWER 116
 
-#define BLANK_PATH "/sys/class/graphics/fb0/blank"
+#define BACKLIGHT_DIR "/sys/class/backlight/ae94000.dsi.0"
+#define BRIGHTNESS_PATH BACKLIGHT_DIR "/brightness"
+#define BL_POWER_PATH BACKLIGHT_DIR "/bl_power"
+#define MAX_BRIGHTNESS_PATH BACKLIGHT_DIR "/max_brightness"
+#define SAVED_BRIGHTNESS_PATH "/run/gts9-power-key.brightness"
 #define KMSG_PATH "/dev/kmsg"
 #define INPUT_NAME_PATTERN "pwrkey"
+#define BL_POWER_ON "0"
+#define BL_POWER_OFF "4"
 
 struct input_event {
 	long seconds;
@@ -140,40 +154,106 @@ static long read_file(const char *path, char *buffer, long size)
 	return got;
 }
 
-static int write_text(const char *path, const char *text)
+/*
+ * The backlight is the only thing this daemon controls.  It may be absent (no
+ * panel came up), in which case the key simply does nothing.
+ */
+static int write_file_text(const char *path, const char *text, long length)
 {
 	long fd = sys_call6(SYS_openat, AT_FDCWD, (long)path, O_WRONLY, 0, 0, 0);
 
 	if (fd < 0)
 		return -1;
-	sys_call6(SYS_write, fd, (long)text, str_len(text), 0, 0, 0);
+	sys_call6(SYS_write, fd, (long)text, length, 0, 0, 0);
 	sys_call6(SYS_close, fd, 0, 0, 0, 0, 0);
 	return 0;
 }
 
-/*
- * The panel is the only thing this daemon controls.  fb0 may be absent (no
- * panel came up), in which case the key simply does nothing.
- */
-static int toggle_blank(void)
+static int read_number(const char *path, long *value)
 {
 	char buffer[32];
-	long got = read_file(BLANK_PATH, buffer, sizeof(buffer));
-	const char *message;
+	long got = read_file(path, buffer, sizeof(buffer));
+	long result = 0;
+	int digits = 0;
+	long i;
 
 	if (got <= 0)
 		return -1;
-
-	if (buffer[0] == '0') {
-		if (write_text(BLANK_PATH, "1") != 0)
-			return -1;
-		message = "gts9-power-key: screen off (fb0 blank=1, system keeps running)\n";
-	} else {
-		if (write_text(BLANK_PATH, "0") != 0)
-			return -1;
-		message = "gts9-power-key: screen on (fb0 blank=0)\n";
+	for (i = 0; i < got; i++) {
+		if (buffer[i] < '0' || buffer[i] > '9')
+			break;
+		result = result * 10 + (buffer[i] - '0');
+		digits++;
 	}
-	log_message(message);
+	if (!digits)
+		return -1;
+	*value = result;
+	return 0;
+}
+
+static void write_number(const char *path, long value)
+{
+	char buffer[24];
+	char digits[24];
+	int count = 0;
+	int i = 0;
+
+	do {
+		digits[count++] = (char)('0' + value % 10);
+		value /= 10;
+	} while (value && count < (int)sizeof(digits));
+	while (count > 0)
+		buffer[i++] = digits[--count];
+	buffer[i] = '\n';
+	write_file_text(path, buffer, i + 1);
+}
+
+static int toggle_backlight(void)
+{
+	long power;
+	long brightness;
+	long max_brightness;
+
+	if (read_number(BL_POWER_PATH, &power) != 0)
+		return -1;
+
+	if (power == 0) {
+		/* Screen on: remember the level, then power the backlight down. */
+		char saved[24];
+		int length = 0;
+
+		if (read_number(BRIGHTNESS_PATH, &brightness) == 0) {
+			long value = brightness;
+			char digits[24];
+			int count = 0;
+
+			do {
+				digits[count++] = (char)('0' + value % 10);
+				value /= 10;
+			} while (value && count < (int)sizeof(digits));
+			while (count > 0)
+				saved[length++] = digits[--count];
+			saved[length++] = '\n';
+			write_file_text(SAVED_BRIGHTNESS_PATH, saved, length);
+		}
+		if (write_file_text(BL_POWER_PATH, BL_POWER_OFF,
+				    sizeof(BL_POWER_OFF) - 1) != 0)
+			return -1;
+		log_message("gts9-power-key: screen off (backlight off, system keeps running)\n");
+		return 0;
+	}
+
+	/* Screen off: power the backlight back up at the remembered level. */
+	if (write_file_text(BL_POWER_PATH, BL_POWER_ON,
+			    sizeof(BL_POWER_ON) - 1) != 0)
+		return -1;
+	if (read_number(SAVED_BRIGHTNESS_PATH, &brightness) != 0) {
+		if (read_number(MAX_BRIGHTNESS_PATH, &max_brightness) != 0)
+			max_brightness = 0x7ff;
+		brightness = max_brightness;
+	}
+	write_number(BRIGHTNESS_PATH, brightness);
+	log_message("gts9-power-key: screen on (backlight restored)\n");
 	return 0;
 }
 
@@ -234,14 +314,14 @@ __attribute__((noreturn, used)) void gts9_main(long argc, char **argv)
 	int fd;
 
 	if (argc >= 2 && str_contains(argv[1], "toggle"))
-		exit_now(toggle_blank() == 0 ? 0 : 1);
+		exit_now(toggle_backlight() == 0 ? 0 : 1);
 
 	fd = open_power_key();
 	if (fd < 0) {
 		log_message("gts9-power-key: no PMIC power key input device found\n");
 		exit_now(1);
 	}
-	log_message("gts9-power-key: watching the power key; short press blanks the panel\n");
+	log_message("gts9-power-key: watching the power key; short press turns the backlight off\n");
 
 	for (;;) {
 		long got = sys_call6(SYS_read, fd, (long)&event, sizeof(event), 0, 0, 0);
@@ -264,7 +344,7 @@ __attribute__((noreturn, used)) void gts9_main(long argc, char **argv)
 			continue;
 		if (event.value != 1)
 			continue;
-		toggle_blank();
+		toggle_backlight();
 	}
 }
 

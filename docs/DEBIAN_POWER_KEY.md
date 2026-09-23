@@ -14,9 +14,18 @@ made COM17 vanish until the next reboot).
 
 | Action | Result |
 |---|---|
-| Short press | Toggles `/sys/class/graphics/fb0/blank`: screen off / screen on |
+| Short press | Backlight off / backlight restored (remembered level) |
 | Long press | Unchanged: the PMIC's own forced power-off path |
 | USB console | **Never affected** - the system keeps running |
+
+The backlight (`/sys/class/backlight/ae94000.dsi.0/bl_power` plus the
+remembered `brightness`) is used rather than
+`/sys/class/graphics/fb0/blank` **on purpose**: blanking fb0 is a full modeset
+on the DPU, and test 178 caught that path hanging the tablet twice (enc35
+frame done timeout, vblank wait timeout, workqueue lockup, two CPUs that stop
+answering NMIs). A backlight write is a single DSI DCS brightness command
+inside the panel driver - the same path a desktop brightness slider uses - and
+touches neither the DPU encoder nor vblank.
 
 Two pieces implement that:
 
@@ -44,15 +53,15 @@ Verify on the tablet without pressing anything:
 
 ```sh
 gts9-power-key --toggle        # screen off, USB console unchanged
-cat /sys/class/graphics/fb0/blank
+cat /sys/class/backlight/ae94000.dsi.0/bl_power
 gts9-power-key --toggle        # screen on again
 systemctl status gts9-power-key.service
 journalctl -u gts9-power-key -b
 ```
 
-Both the blank and the unblank are logged to the kernel log
-(`gts9-power-key: screen off (fb0 blank=1, system keeps running)`), so a short
-press can be confirmed from the console even while the screen is dark.
+Both transitions are logged to the kernel log
+(`gts9-power-key: screen off (backlight off, system keeps running)`), so a
+short press can be confirmed from the console even while the screen is dark.
 
 To restore the previous suspend-on-short-press behavior, set
 `HandlePowerKey=suspend` in the drop-in, remove

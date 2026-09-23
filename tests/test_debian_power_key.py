@@ -35,8 +35,15 @@ class PowerKeyPolicy(unittest.TestCase):
         for forbidden in ('reboot', 'poweroff', 'suspend', 'hibernate'):
             self.assertNotIn(forbidden, text, forbidden)
 
-    def test_daemon_toggles_the_panel_only(self):
-        self.assertIn('/sys/class/graphics/fb0/blank', SOURCE_TEXT)
+    def test_daemon_uses_the_backlight_and_not_the_framebuffer(self):
+        # fb0/blank is a DPU modeset and hung the tablet twice (test 178);
+        # the backlight is a single DSI brightness write.
+        self.assertIn('/sys/class/backlight/ae94000.dsi.0', SOURCE_TEXT)
+        self.assertIn('BL_POWER_PATH', SOURCE_TEXT)
+        self.assertIn('BRIGHTNESS_PATH', SOURCE_TEXT)
+        # Only the code matters: the header comment explains why fb0/blank
+        # (a DPU modeset) is avoided.
+        self.assertNotIn('fb0/blank', SOURCE_CODE)
         self.assertIn('#define KEY_POWER 116', SOURCE_TEXT)
         self.assertIn('#define EV_KEY 0x01', SOURCE_TEXT)
         self.assertIn('"pwrkey"', SOURCE_TEXT)
