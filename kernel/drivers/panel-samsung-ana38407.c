@@ -107,7 +107,7 @@ static inline struct ana38407 *to_ana38407(struct drm_panel *panel)
  */
 static int ana38407_power_on(struct ana38407 *ctx)
 {
-	int ret;
+	int disable_ret, ret;
 
 	ret = regulator_enable(ctx->supplies[0].consumer);	/* vddio */
 	if (ret)
@@ -117,8 +117,13 @@ static int ana38407_power_on(struct ana38407 *ctx)
 
 	ret = regulator_bulk_enable(ARRAY_SIZE(ana38407_supplies) - 1,
 				    &ctx->supplies[1]);		/* vdd, vci, avdd */
-	if (ret)
-		regulator_disable(ctx->supplies[0].consumer);
+	if (ret) {
+		disable_ret = regulator_disable(ctx->supplies[0].consumer);
+		if (disable_ret)
+			dev_err(&ctx->dsi->dev,
+				"failed to disable vddio after power-on error: %d\n",
+				disable_ret);
+	}
 
 	return ret;
 }
@@ -509,7 +514,7 @@ static int ana38407_sleep_in(struct ana38407 *ctx)
 static int ana38407_prepare(struct drm_panel *panel)
 {
 	struct ana38407 *ctx = to_ana38407(panel);
-	int ret;
+	int disable_ret, ret;
 
 	mutex_lock(&ctx->lock);
 	if (ctx->prepared) {
@@ -526,7 +531,12 @@ static int ana38407_prepare(struct drm_panel *panel)
 	ret = ana38407_on(ctx);
 	if (ret) {
 		gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-		regulator_bulk_disable(ARRAY_SIZE(ana38407_supplies), ctx->supplies);
+		disable_ret = regulator_bulk_disable(ARRAY_SIZE(ana38407_supplies),
+						     ctx->supplies);
+		if (disable_ret)
+			dev_err(&ctx->dsi->dev,
+				"failed to disable regulators after prepare error: %d\n",
+				disable_ret);
 		goto out_unlock;
 	}
 	ctx->prepared = true;
@@ -546,7 +556,7 @@ out_unlock:
 static int ana38407_unprepare(struct drm_panel *panel)
 {
 	struct ana38407 *ctx = to_ana38407(panel);
-	int cleanup_ret = 0, ret = 0;
+	int cleanup_ret = 0, disable_ret = 0, ret = 0;
 
 	mutex_lock(&ctx->lock);
 	if (!ctx->prepared)
@@ -555,15 +565,29 @@ static int ana38407_unprepare(struct drm_panel *panel)
 	cleanup_ret = ana38407_fod_cleanup_locked(ctx);
 	ret = ana38407_sleep_in(ctx);
 	ctx->enabled = false;
-	ctx->prepared = false;
 	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-	regulator_bulk_disable(ARRAY_SIZE(ana38407_supplies), ctx->supplies);
+	disable_ret = regulator_bulk_disable(ARRAY_SIZE(ana38407_supplies),
+					     ctx->supplies);
+	if (disable_ret) {
+		dev_err(&ctx->dsi->dev,
+			"failed to disable panel regulators: %d\n", disable_ret);
+	} else {
+		ctx->prepared = false;
+	}
 
 out_unlock:
 	mutex_unlock(&ctx->lock);
 	cancel_delayed_work_sync(&ctx->fod_watchdog);
 
-	return ret ?: cleanup_ret;
+	if (cleanup_ret)
+		dev_warn(&ctx->dsi->dev,
+			 "failed to clear FOD state before power-off: %d\n",
+			 cleanup_ret);
+	if (ret)
+		dev_warn(&ctx->dsi->dev,
+			 "sleep-in command failed before power-off: %d\n", ret);
+
+	return disable_ret;
 }
 
 /* Fixed 120HS: a 60 Hz mode also needs different DDIC VRR/GLUT programming. */
