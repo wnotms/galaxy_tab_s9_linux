@@ -84,7 +84,9 @@ class MinimalRootfsStateTests(unittest.TestCase):
                          'minimal_state_stage switch-root-synced')
 
     def test_trampoline_is_self_tested_before_the_handoff(self):
-        self.assertIn('selftest "$SELFTEST_FILE"', INIT)
+        # Bounded, so a hung trampoline cannot freeze PID 1 (test 178 #3).
+        self.assertIn('timeout 5 /run/gts9-minimal-pid1 selftest "$SELFTEST_FILE"',
+                      INIT)
         self.assertIn('minimal_state_stage switch-root-selftest-ok', INIT)
         self.assertIn('minimal_state_stage switch-root-selftest-failed', INIT)
         self.assertIn('MINIMAL_INIT=/sbin/init', INIT)
@@ -307,6 +309,10 @@ class MinimalPid1HandoverEvidence(unittest.TestCase):
         # write to the path it is given.
         self.assertIn('str_eq(argv[1], "selftest")', self.SOURCE)
         self.assertIn('exit_now(0)', self.SOURCE)
+        # Markers must be durable: a force power-off after a hang lost the
+        # unsynced appends once already.
+        self.assertIn('SYS_sync', self.SOURCE)
+        self.assertIn('sys_call6(SYS_sync, 0, 0, 0, 0, 0, 0);', self.SOURCE)
         self.assertIn('/var/log/gts9-minimal-last-boot', self.SOURCE)
         self.assertIn('/proc/1/comm', self.SOURCE)
         self.assertIn('O_APPEND', self.SOURCE)

@@ -189,7 +189,10 @@ if [ "$MINIMAL_INIT" = /run/gts9-minimal-pid1 ]; then
     # atomically, so a marker appended to the record now would be replaced by
     # the switch-root write a moment later.
     SELFTEST_FILE=$GTS9_MINIMAL_LOG_DIR/gts9-minimal-trampoline-selftest
-    if /run/gts9-minimal-pid1 selftest "$SELFTEST_FILE"; then
+    # Bounded: a trampoline that never returns must not freeze PID 1 in the
+    # initramfs, which is what test 178 boot #3 did (the record stopped at
+    # init-found and even the key combination could not reach TWRP).
+    if timeout 5 /run/gts9-minimal-pid1 selftest "$SELFTEST_FILE"; then
         minimal_emit 'GTS9_MINIMAL_TRAMPOLINE=selftest-ok'
         minimal_state_stage switch-root-selftest-ok
     else

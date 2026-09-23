@@ -37,6 +37,7 @@
 #define SYS_dup3     24
 #define SYS_ioctl    29
 #define SYS_exit_group 94
+#define SYS_sync     81
 
 #define AT_FDCWD (-100)
 #define O_WRONLY 1
@@ -123,9 +124,22 @@ static void record_open_at(const char *path)
 
 static void record_write(const char *text)
 {
-	if (record_fd >= 0)
+	if (record_fd >= 0) {
 		sys_write(record_fd, text, str_len(text));
-	/* The kernel log is a second, independent copy while it exists. */
+		/*
+		 * Push it to the disk immediately.  These markers exist for the
+		 * case where nothing else can report, and test 178 showed what
+		 * happens otherwise: the tablet was force-powered-off while the
+		 * appends were still only in the page cache, so the record
+		 * survived with NUL bytes where the markers had been.
+		 */
+		sys_call6(SYS_sync, 0, 0, 0, 0, 0, 0);
+	}
+	/*
+	 * The kernel log is a second copy while it exists, but a full ring
+	 * buffer makes the write fail (O_NONBLOCK) or block, and PID 1 must
+	 * never be stuck behind a log write: keep it best-effort only.
+	 */
 	write_path("/dev/kmsg", text, str_len(text));
 }
 
@@ -270,7 +284,7 @@ static void dump_diagnostics(void)
 		"echo '=== journal ==='; journalctl -b --no-pager; "
 		"echo '=== list-jobs ==='; systemctl list-jobs --no-pager; "
 		"echo '=== failed ==='; systemctl --failed --no-pager; "
-		"echo '=== dump done ==='";
+		"echo '=== dump done ==='; sync";
 	static char *argv[] = { "busybox", "sh", "-c", (char *)script, 0 };
 	static char *envp[] = {
 		"PATH=/run:/sbin:/bin:/usr/sbin:/usr/bin", "TERM=linux", 0
