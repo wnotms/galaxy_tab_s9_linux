@@ -484,7 +484,9 @@ static int ana38407_disable(struct drm_panel *panel)
 	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
 	mipi_dsi_msleep(&dsi_ctx, 20);
 	ret = dsi_ctx.accum_err;
-	ctx->enabled = false;
+	/* drm_panel keeps enabled set when this callback returns an error. */
+	if (!ret && !cleanup_ret)
+		ctx->enabled = false;
 
 out_unlock:
 	mutex_unlock(&ctx->lock);
