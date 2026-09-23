@@ -1,0 +1,49 @@
+COM17_OPENED
+
+gts9 login: ms
+Password:
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+[?2004hms@gts9:~$ printf '\\n=== GTS9_READONLY_BEGIN ===\\n'
+[?2004l
+\n=== GTS9_READONLY_BEGIN ===\n[?2004hms@gts9:~$ id
+[?2004l
+uid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+[?2004hms@gts9:~$ printf "boot_id="; cat /proc/sys/kernel/random/boot_id
+[?2004l
+boot_id=9e66d41f-e612-4ab7-9ab9-3a0a4218b865
+[?2004hms@gts9:~$ uname -a
+[?2004l
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+[?2004hms@gts9:~$ printf "=== last boot stage ===\\n"; cat /var/log/gts9-last-boot-stage 2>&1
+[?2004l
+=== last boot stage ===
+cat: /var/log/gts9-last-boot-stage: No such file or directory
+[?2004hms@gts9:~$ printf "=== last poweroff stage ===\\n"; cat /var/log/gts9-last-poweroff-stage 2>&1
+[?2004l
+=== last poweroff stage ===
+stage=systemd-poweroff-service
+timestamp=2026-04-13T19:44:12Z
+uptime_seconds=370.02
+boot_id=fbdf54c1-3232-4127-b399-f4d4f98d0974
+[?2004hms@gts9:~$ printf "=== serial getty ===\\n"; systemctl is-active serial-getty@ttyGS0.service 2>&1
+[?2004l
+=== serial getty ===
+active
+[?2004hms@gts9:~$ printf "=== current-boot root handoff journal ===\\n"; journalctl -b --no-pager -o short-monotonic -g "gts9-rootfs|switch_root|Started Getty" 2>&1 | tail -35
+[?2004l
+=== current-boot root handoff journal ===
+Failed to search journal ACL: Operation not supported
+-- No entries --
+[?2004hms@gts9:~$ printf '\\n=== GTS9_READONLY_END ===\\n'
+[?2004l
+\n=== GTS9_READONLY_END ===\n[?2004hms@gts9:~$ exit
+[?2004l
+logout
+[!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n

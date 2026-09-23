@@ -1,0 +1,9 @@
+source_commit=7d04768985c8ba8fc5b5ed847a3d31679fc34447
+host=Windows PowerShell over WSL
+transport=COM17 USB ACM, 115200 8N1
+probe_1=read only, no prompt, no input
+probe_2=empty return, login, read-only commands, logout
+commands=boot_id, uname, cmdline, findmnt, df, ls /dev/mmcblk*, stage-file reads, systemctl is-active, unprivileged journalctl query
+credentials=read from owner's local mode-600 file; values not captured or committed
+device_changes=none
+connection=Type-C reconnected before boot; battery-only startup not tested

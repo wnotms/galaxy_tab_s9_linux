@@ -1,0 +1,40 @@
+COM17_OPENED
+
+gts9 login: ms
+Password:
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+[?2004hms@gts9:~$ printf '\\n=== GTS9_ROOTFS_READONLY_BEGIN ===\\n'
+[?2004l
+\n=== GTS9_ROOTFS_READONLY_BEGIN ===\n[?2004hms@gts9:~$ printf "boot_id="; cat /proc/sys/kernel/random/boot_id
+[?2004l
+boot_id=9e66d41f-e612-4ab7-9ab9-3a0a4218b865
+[?2004hms@gts9:~$ printf "cmdline="; cat /proc/cmdline
+[?2004l
+cmdline=console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=acm gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+[?2004hms@gts9:~$ findmnt -n -o SOURCE,FSTYPE,OPTIONS / 2>&1
+[?2004l
+/dev/mmcblk1p1 ext4 rw,noatime
+[?2004hms@gts9:~$ df -h / 2>&1
+[?2004l
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk1p1  113G  975M  107G   1% /
+[?2004hms@gts9:~$ ls -l /dev/mmcblk* 2>&1
+[?2004l
+brw-rw---- 1 root disk 179, 0 Apr 14 03:38 [0m[40;33;01m/dev/mmcblk1[0m
+brw-rw---- 1 root disk 179, 1 Apr 14 03:38 [40;33;01m/dev/mmcblk1p1[0m
+[?2004hms@gts9:~$ printf "stage_file="; if test -r /var/log/gts9-last-boot-stage; then cat /var/log/gts9-last-boot-stage; else echo absent; fi
+[?2004l
+stage_file=absent
+[?2004hms@gts9:~$ printf '\\n=== GTS9_ROOTFS_READONLY_END ===\\n'
+[?2004l
+\n=== GTS9_ROOTFS_READONLY_END ===\n[?2004hms@gts9:~$ exit
+[?2004l
+logout
+[!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n
