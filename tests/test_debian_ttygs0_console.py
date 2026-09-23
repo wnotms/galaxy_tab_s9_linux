@@ -38,8 +38,10 @@ class TtyGs0Console(unittest.TestCase):
     def test_console_is_enabled_through_the_instance_symlink(self):
         link = WANTS / 'serial-getty@ttyGS0.service'
         self.assertTrue(link.is_symlink(), 'the ttyGS0 console must be enabled')
+        # Relative on purpose: TWRP's busybox tar refuses absolute symlink
+        # targets that already exist outside the extraction root.
         self.assertEqual(link.readlink().as_posix(),
-                         '/usr/lib/systemd/system/serial-getty@.service')
+                         '../../../../usr/lib/systemd/system/serial-getty@.service')
 
     def test_no_other_getty_is_enabled_by_the_overlay(self):
         entries = sorted(p.name for p in WANTS.iterdir())

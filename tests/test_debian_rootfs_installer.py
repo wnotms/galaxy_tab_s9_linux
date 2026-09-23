@@ -81,7 +81,7 @@ class DebianRootfsInstaller(unittest.TestCase):
         self.assertEqual(
             os.readlink(self.target / 'etc/systemd/system/getty.target.wants' /
                         'serial-getty@ttyGS0.service'),
-            '/usr/lib/systemd/system/serial-getty@.service')
+            '../../../../usr/lib/systemd/system/serial-getty@.service')
 
     def test_enablement_symlinks_match_each_units_wantedby(self):
         self.install()
@@ -95,7 +95,23 @@ class DebianRootfsInstaller(unittest.TestCase):
                         f'{want}.wants' / unit.name)
                 self.assertTrue(link.is_symlink(), f'{unit.name} -> {want}')
                 self.assertEqual(os.readlink(link),
-                                 f'/usr/lib/systemd/system/{unit.name}')
+                                 f'../../../../usr/lib/systemd/system/{unit.name}')
+
+    def test_all_enablement_symlinks_are_relative(self):
+        """TWRP's busybox tar refuses absolute symlink targets.
+
+        It reports "not under '<root>'" and exits non-zero when a stored link
+        target is absolute, so every link in the tree must be relative.
+        """
+        self.install()
+        links = [p for p in self.target.rglob('*') if p.is_symlink()]
+        self.assertTrue(links)
+        for path in links:
+            self.assertFalse(os.readlink(path).startswith('/'), str(path))
+        shipped = (OVERLAY / 'etc/systemd/system/getty.target.wants' /
+                   'serial-getty@ttyGS0.service')
+        self.assertTrue(shipped.is_symlink())
+        self.assertFalse(os.readlink(shipped).startswith('/'))
 
     def test_installer_is_repeatable(self):
         first = self.install()

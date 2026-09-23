@@ -125,7 +125,14 @@ sudo ./scripts/install-debian-rootfs.sh /mnt/debian
 adb push out/gts9-debian-overlay.tar /tmp/
 # in TWRP:
 cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar
+sync
 ```
+
+Both the archive entries and every enablement symlink it carries are relative.
+TWRP's busybox `tar` refuses absolute symlink targets that lie outside the
+extraction root (`... not under '/mnt/debian'`, non-zero exit), so absolute
+`systemctl enable`-style links would make a re-deployment fail to sync. The
+installer therefore writes relative links, which systemd accepts.
 
 The installer copies the overlay (units, helpers, logind and getty
 configuration), creates each unit's enablement symlink from its own

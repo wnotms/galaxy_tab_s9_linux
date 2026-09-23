@@ -88,8 +88,12 @@ install_units_and_enablement() {
 			[ -n "$wants" ] || continue
 			dir="$dest/etc/systemd/system/${wants}.wants"
 			mkdir -p "$dir"
-			# Same link systemctl enable would create.
-			ln -sfn "/usr/lib/systemd/system/$name" "$dir/$name"
+			# Relative on purpose.  systemd accepts both, but TWRP's busybox
+			# tar refuses to replace a symlink whose stored target is absolute
+			# and outside the extraction root: it warns "not under" and exits
+			# non-zero, so a re-deployment would silently stop syncing.
+			# Depth is fixed: <dest>/etc/systemd/system/<target>.wants/.
+			ln -sfn "../../../../usr/lib/systemd/system/$name" "$dir/$name"
 		done < <(enablement_wants "$unit")
 	done
 }

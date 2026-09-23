@@ -115,7 +115,12 @@ sh /tmp/twrp-mount-debian.sh --umount
 ```
 
 The tarball contains relative paths only, so extraction cannot escape
-`/mnt/debian`. It carries the units, the helpers, the enablement symlinks, the
+`/mnt/debian`, and every enablement symlink it ships is relative as well.
+That second part matters: TWRP's busybox `tar` refuses to replace a symlink
+whose stored target is absolute and outside the extraction root - it reports
+`... not under '/mnt/debian'` and exits non-zero - so an overlay built with
+absolute `systemctl enable`-style links would stop syncing on re-deployment.
+Run `sync` unconditionally after extraction, and check the exit status. It carries the units, the helpers, the enablement symlinks, the
 kernel modules under `lib/modules/<release>` and firmware under
 `lib/firmware/`; `depmod` has already been run against the tree.
 
