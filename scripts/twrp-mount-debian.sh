@@ -202,21 +202,20 @@ done
 
 if [ "$DO_LIST" = 1 ]; then
 	printf '%-24s %-8s %-16s %-38s %s\n' DEVICE FSTYPE LABEL UUID SECTORS
-	printf '%s' "$lines" | while IFS= read -r line; do
-		[ -n "$line" ] || continue
-		dev=${line%%|*}
-		rest=${line#*|}
-		type=${rest%%|*}
-		rest=${rest#*|}
-		label=${rest%%|*}
-		rest=${rest#*|}
-		uuid=${rest%%|*}
-		rest=${rest#*|}
-		sectors=${rest%%|*}
+	# IFS='|' read, not ${line%%|*}: TWRP's /system/bin/sh (mksh) treats the
+	# unquoted '|' inside a parameter expansion as a pipe and expands to "".
+	printf '%s' "$lines" | while IFS='|' read -r dev type label uuid sectors; do
+		[ -n "$dev" ] || continue
+		[ -n "$type" ] || type=-
+		[ -n "$label" ] || label=-
+		[ -n "$uuid" ] || uuid=-
 		printf '%-24s %-8s %-16s %-38s %s\n' \
-			"$dev" "${type:--}" "$label" "$uuid" "$sectors"
+			"$dev" "$type" "$label" "$uuid" "$sectors"
 	done
 	[ -n "$lines" ] || note 'no MMC partitions found'
+	if ! has_blkid; then
+		note 'blkid is unavailable here; LABEL/UUID are shown as -'
+	fi
 	echo
 	note 'UFS devices (/dev/sd*) are never listed or mounted'
 	exit 0
@@ -240,25 +239,16 @@ if [ -n "$EXPLICIT_DEVICE" ]; then
 else
 	# Labels first (a Debian/root label is the strongest hint), then the
 	# largest partition, and always confirm by mounting read-only.
-	printf '%s' "$lines" | while IFS= read -r line; do
-		[ -n "$line" ] || continue
-		case "$line" in
-		*"|ext4|"*) ;;
-		*) continue ;;
-		esac
-		if [ -n "$WANT_UUID" ]; then
-			case "|$line|" in
-			*"|$WANT_UUID|"*) ;;
-			*) continue ;;
-			esac
+	printf '%s' "$lines" | while IFS='|' read -r dev type label uuid sectors; do
+		[ -n "$dev" ] || continue
+		[ "$type" = ext4 ] || continue
+		if [ -n "$WANT_UUID" ] && [ "$uuid" != "$WANT_UUID" ]; then
+			continue
 		fi
-		if [ -n "$WANT_LABEL" ]; then
-			case "|$line|" in
-			*"|$WANT_LABEL|"*) ;;
-			*) continue ;;
-			esac
+		if [ -n "$WANT_LABEL" ] && [ "$label" != "$WANT_LABEL" ]; then
+			continue
 		fi
-		printf '%s\n' "$line"
+		printf '%s|%s|%s|%s|%s\n' "$dev" "$type" "$label" "$uuid" "$sectors"
 	done | sort -t'|' -k3,3r -k5,5nr > "$tmpdir/ranked"
 	if [ ! -s "$tmpdir/ranked" ]; then
 		die 'no ext4 MMC partition found; nothing was mounted and nothing was changed'
@@ -292,8 +282,8 @@ if [ -n "$selected" ]; then
 	final=$selected
 else
 	: > "$tmpdir/result"
-	while IFS= read -r line; do
-		dev=${line%%|*}
+	while IFS='|' read -r dev type label uuid sectors; do
+		[ -n "$dev" ] || continue
 		note "trying $dev"
 		if try_mount "$dev"; then
 			printf '%s\n' "$dev" > "$tmpdir/result"

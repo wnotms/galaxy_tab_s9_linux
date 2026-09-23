@@ -234,10 +234,24 @@ class TwrpMountDebian(unittest.TestCase):
                           'sgdisk', 'parted', 'dd of=', '> /dev/', 'mount -a'):
             self.assertNotIn(forbidden, commands, forbidden)
 
+    def test_script_avoids_pipe_inside_parameter_expansions(self):
+        """TWRP's /system/bin/sh is mksh.
+
+        On the tablet `${line%%|*}` expands to the empty string there, which
+        broke the partition table until the splitting moved to
+        IFS='|' read.  Keep the construct out of this script.
+        """
+        code = '\n'.join(line.split('#', 1)[0]
+                         for line in SCRIPT_CODE.splitlines())
+        self.assertIsNone(
+            re.search(r'\$\{[^}]*[#%]{1,2}[^}]*\|', code),
+            'unquoted | inside a parameter expansion breaks under mksh')
+        self.assertIn("IFS='|' read", SCRIPT_TEXT)
+
     def test_script_is_posix_and_busybox_friendly(self):
         for bashism in ('[[', 'declare ', 'local ', 'function ', '${!'):
             self.assertNotIn(bashism, SCRIPT_CODE, bashism)
-        # TWRP's shell is busybox ash; the shebang must not demand bash.
+        # TWRP's shell is mksh; the shebang must not demand bash.
         self.assertTrue(SCRIPT_TEXT.startswith('#!/bin/sh'))
         check = subprocess.run(['dash', '-n', str(SCRIPT)] if shutil.which('dash')
                                else ['/bin/sh', '-n', str(SCRIPT)],
