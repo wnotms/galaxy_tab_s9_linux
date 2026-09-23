@@ -33,6 +33,66 @@ include `root-timeout`, `root-mount`, `missing-init` and
 `switch-root-returned`. The rescue shell uses `/dev/console`; neither tty1,
 DRM nor USB ACM is required.
 
+## Persistent boot-stage record
+
+A black panel and an absent USB console say nothing about how far the boot got,
+and Samsung's bootloader overwrites `sec_log`, so the minimal profile records
+its stages on the Debian root filesystem itself:
+
+```text
+/var/log/gts9-minimal-last-boot          # on the Debian root, /dev/mmcblk1p1
+```
+
+The record is written by `boot/minimal-rootfs-state.sh`, which
+`boot/minimal-rootfs-init.sh` sources from `/minimal-rootfs-state.sh` in the
+initramfs. Nothing can be persisted before the root filesystem is mounted, so
+`waiting-root`, `root-found` and `mounting-root` stay in RAM and go to
+`/dev/kmsg` and `/dev/console`; immediately after `root-mounted`, the whole
+history is written to Debian at once and every later stage updates the same
+file. The file is replaced atomically - write `<record>.tmp`, `chmod 0644`,
+`sync`, rename - so a reader never sees a half-written record. The
+`switch-root` stage is written and synced before `exec switch_root`, which is
+what lets TWRP prove that the card mounted, `/sbin/init` was found and the
+handoff was about to run even when Debian itself never reports anything.
+
+Format (one `key=value` per line, stable key set of version 1):
+
+```text
+format_version=1
+origin=initramfs
+boot_id=<kernel boot id of the initramfs boot>
+kernel_release=<uname -r>
+cmdline=<full /proc/cmdline>
+timestamp=<UTC time of the first record write>
+uptime_seconds=<uptime at the first record write>
+root_device=<configured gts9_rootfs device>
+stage=<last initramfs stage>
+stage_history=<comma-separated stages, in order>
+failure=<none or the failure code>
+mmc_devices=<every /dev/mmcblk* node seen, or none(found:hosts=...)>
+```
+
+Debian appends its own `debian_*` keys to the same file (see
+`docs/TWRP_DEBIAN_RECOVERY.md` and the `gts9-debian-*` units in
+`rootfs-overlay/`), so one file answers "how far did the last boot get" for the
+whole chain. The initramfs block is never rewritten by Debian.
+
+Reading it from TWRP, after booting recovery with the card still inserted:
+
+```sh
+adb shell
+# Identify the Debian ext4 partition first; recovery block numbering may differ.
+blkid
+mkdir -p /mnt/debian
+mount -t ext4 -o ro /dev/block/mmcblk1p1 /mnt/debian     # only after blkid confirms it
+cat /mnt/debian/var/log/gts9-minimal-last-boot
+umount /mnt/debian
+```
+
+`scripts/twrp-mount-debian.sh` performs that detection safely (it refuses
+non-MMC devices, never formats and never runs a repairing `fsck`); see
+`docs/TWRP_DEBIAN_RECOVERY.md`.
+
 ## Work skipped before `boot_rootfs()`
 
 In the regular profile, `boot_rootfs()` is reached only after initial debugfs

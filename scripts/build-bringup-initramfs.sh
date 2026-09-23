@@ -31,6 +31,7 @@ tree=${BRINGUP_TREE:-$repo_root/out/bringup-initramfs}
 out=${BRINGUP_INITRAMFS:-$out_dir/initramfs-bringup.img}
 init_src="$repo_root/boot/bringup-init.sh"
 minimal_init_src="$repo_root/boot/minimal-rootfs-init.sh"
+minimal_state_src="$repo_root/boot/minimal-rootfs-state.sh"
 minimal_pid1_src="$repo_root/boot/gts9-minimal-pid1.c"
 download_dir=${BRINGUP_DOWNLOAD_DIR:-$workdir/downloads}
 
@@ -73,6 +74,7 @@ fail() { echo "error: $*" >&2; exit 1; }
 
 [ -f "$init_src" ] || fail "missing /init source: $init_src"
 [ -f "$minimal_init_src" ] || fail "missing minimal rootfs init source: $minimal_init_src"
+[ -f "$minimal_state_src" ] || fail "missing minimal rootfs state source: $minimal_state_src"
 [ -f "$minimal_pid1_src" ] || fail "missing minimal PID 1 helper source: $minimal_pid1_src"
 command -v readelf >/dev/null || fail 'readelf is required (apt install binutils)'
 command -v strings >/dev/null || fail 'strings is required (apt install binutils)'
@@ -157,6 +159,10 @@ chmod 1777 "$tree/tmp"
 install -m 0755 "$bb_bin" "$tree/bin/busybox"
 install -m 0755 "$init_src" "$tree/init"
 install -m 0755 "$minimal_init_src" "$tree/minimal-rootfs-init"
+# Sourced by /minimal-rootfs-init: it owns the persistent stage record written
+# to the Debian root filesystem.  It is deliberately a separate file so host
+# tests can exercise the record format without an initramfs.
+install -m 0644 "$minimal_state_src" "$tree/minimal-rootfs-state.sh"
 install -m 0755 "$repo_root/boot/gts9-to-recovery.sh" "$tree/sbin/gts9-to-recovery"
 
 # This trampoline is the new init only for the minimal rootfs profile. It

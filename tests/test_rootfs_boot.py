@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INIT = (ROOT / 'boot' / 'bringup-init.sh').read_text()
 MINIMAL_INIT = (ROOT / 'boot' / 'minimal-rootfs-init.sh').read_text()
+MINIMAL_STATE = (ROOT / 'boot' / 'minimal-rootfs-state.sh').read_text()
 CMDLINE = (ROOT / 'boot' / 'cmdline.example.txt').read_text()
 MINIMAL_CMDLINE = (ROOT / 'boot' / 'cmdline.minimal-rootfs.example.txt').read_text()
 TRACE_CMDLINE = (ROOT / 'boot' / 'cmdline.boot-trace.example.txt').read_text()
@@ -168,12 +169,12 @@ class RootfsBoot(unittest.TestCase):
     def test_minimal_profile_stage_order_and_bounded_root_wait(self):
         stages = ('kernel-userspace', 'waiting-root', 'root-found',
                   'mounting-root', 'root-mounted', 'init-found', 'switch-root')
-        offsets = [MINIMAL_INIT.index(f'minimal_stage {stage}') for stage in stages]
+        offsets = [MINIMAL_INIT.index(f'minimal_state_stage {stage}') for stage in stages]
         self.assertEqual(offsets, sorted(offsets))
         for failure in ('root-timeout', 'root-mount', 'missing-init',
                         'switch-root-returned'):
             self.assertIn(f'minimal_fail {failure}', MINIMAL_INIT)
-        self.assertIn('GTS9_MINIMAL_FAIL=$minimal_reason', MINIMAL_INIT)
+        self.assertIn('GTS9_MINIMAL_FAIL=$GTS9_MINIMAL_FAILURE', MINIMAL_STATE)
         self.assertIn('ROOTFS_WAIT_SECONDS=30', MINIMAL_INIT)
         self.assertIn('exec switch_root /newroot /run/gts9-minimal-pid1', MINIMAL_INIT)
         self.assertIn('if [ ! -x /newroot/sbin/init ]', MINIMAL_INIT)
@@ -196,6 +197,9 @@ class RootfsBoot(unittest.TestCase):
         self.assertIn("'sh mount umount switch_root", builder)
         self.assertIn('minimal_init_src=', builder)
         self.assertIn('install -m 0755 "$minimal_init_src" "$tree/minimal-rootfs-init"',
+                      builder)
+        self.assertIn('minimal_state_src=', builder)
+        self.assertIn('install -m 0644 "$minimal_state_src" "$tree/minimal-rootfs-state.sh"',
                       builder)
         self.assertIn('gts9-minimal-pid1', builder)
         self.assertIn('GTS9_MINIMAL_FAIL=switch-root-returned', pid1)
