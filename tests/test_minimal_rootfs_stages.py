@@ -221,6 +221,24 @@ class MinimalRootfsStateTests(unittest.TestCase):
             self.assertNotIn(bashism, STATE.read_text(), bashism)
 
 
+    def test_the_builder_links_every_applet_the_minimal_path_calls(self):
+        """A missing applet only fails on the tablet; catch it at build time.
+
+        rm was absent from the linked applets until the state library started
+        removing its temporary file, which would have printed 'rm: not found'
+        on a device whose only report channel is that file.
+        """
+        required = BUILDER.split("required_applets='", 1)[1].split("'", 1)[0].split()
+        report = BUILDER.split("report_applets='", 1)[1].split("'", 1)[0].split()
+        linked = set(required) | set(report)
+        used = ('sh', 'mount', 'umount', 'switch_root', 'cat', 'uname', 'ls',
+                'mkdir', 'cp', 'mv', 'rm', 'chmod', 'sync', 'sleep', 'grep',
+                'printf', 'cut', 'date')
+        for applet in used:
+            self.assertIn(applet, linked,
+                          f'{applet} must be linked into the initramfs')
+
+
 class MinimalRootfsStateHostSupport(unittest.TestCase):
     def test_sh_is_available_for_the_functional_tests(self):
         self.assertTrue(shutil.which('sh'))
