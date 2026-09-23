@@ -129,6 +129,20 @@ class DebianRecoveryBoot(unittest.TestCase):
         # The microSD is mmcblk1; it must be excluded by name.
         self.assertIn('mmcblk*', self.text)
 
+    def test_partition_name_guard_accepts_x710_misc_partition(self):
+        """The X710's UFS misc node is /dev/sda10, with a letter before digits."""
+        match = re.search(
+            r'^\s*(sd(?:\[[^]]+\]){2}\*)\)\s*:\s*;;$',
+            self.text, flags=re.M)
+        self.assertIsNotNone(match, 'SCSI partition-name guard not found')
+        pattern = match.group(1)
+        for name, should_match in (('sda10', True), ('sdb2', True),
+                                   ('sda', False), ('mmcblk1p1', False)):
+            script = (f"case '{name}' in {pattern}) exit 0 ;; "
+                      "*) exit 1 ;; esac")
+            result = subprocess.run(['sh', '-c', script], check=False)
+            self.assertEqual(result.returncode == 0, should_match, name)
+
     def test_expected_layout_matches_the_recorded_gpt_entry(self):
         """misc is GPT index 9, 256 sectors, which is /dev/sda10."""
         self.assertIn('EXPECTED_SECTORS=256', self.text)

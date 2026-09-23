@@ -122,7 +122,7 @@ validate_misc() {
 	mmcblk* | nvme* | loop* | dm-* | md* | ram*)
 		die "refusing $candidate: $base is not a UFS partition"
 		;;
-	sd[0-9]*) : ;;
+	sd[a-z][0-9]*) : ;;
 	*) die "refusing $candidate: unexpected partition name" ;;
 	esac
 
