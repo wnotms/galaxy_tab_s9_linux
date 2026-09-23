@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parent.parent
 OVERLAY = ROOT / 'rootfs-overlay' / 'usr'
 HELPER = OVERLAY / 'libexec' / 'gts9-record-debian-stage'
 UNIT_DIR = OVERLAY / 'lib' / 'systemd' / 'system'
+MINIMAL_STATE = ROOT / 'boot' / 'minimal-rootfs-state.sh'
+
+INITRAMFS_STAGES = ('kernel-userspace', 'waiting-root', 'root-found',
+                    'mounting-root', 'root-mounted', 'init-found', 'switch-root')
 
 INITRAMFS_RECORD = """\
 format_version=1
@@ -183,8 +187,21 @@ class DebianStageHelper(unittest.TestCase):
                    '--set', 'usb_acm=failed', 'tty1-getty-inactive')
         fields = parse(self.record)
         self.assertEqual(fields['debian_failure'], 'tty1-getty-inactive')
+        self.assertEqual(fields['debian_failure_history'], 'tty1-getty-inactive')
         self.assertEqual(fields['debian_usb_acm'], 'failed')
         self.assertEqual(fields['debian_stage'], 'tty1-getty-inactive')
+
+    def test_a_failure_survives_later_successful_stages(self):
+        original = self.write_record()
+        run_helper(original, '--failure', 'tty1-getty-inactive', 'basic')
+        run_helper(original, 'usb-acm-ready')
+        run_helper(original, '--failure', 'panel-recovery-failed', 'multi-user')
+        run_helper(original, 'local-fs')
+        fields = parse(self.record)
+        self.assertEqual(fields['debian_stage'], 'local-fs')
+        self.assertEqual(fields['debian_failure'], 'panel-recovery-failed')
+        self.assertEqual(fields['debian_failure_history'],
+                         'tty1-getty-inactive,panel-recovery-failed')
 
     def test_unknown_options_and_empty_stage_lists_fail_loudly(self):
         original = self.write_record()
@@ -208,6 +225,79 @@ class DebianStageHelper(unittest.TestCase):
         text = HELPER.read_text()
         for bashism in ('[[', 'declare ', 'local ', 'function ', '${!'):
             self.assertNotIn(bashism, text, bashism)
+
+
+class InitramfsToDebianChain(unittest.TestCase):
+    """Run the real initramfs writer and the real unit commands in one boot."""
+
+    def test_one_record_covers_the_whole_handoff(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            record = Path(tmp) / 'gts9-minimal-last-boot'
+
+            # 1. The initramfs half: stages in RAM until the root is mounted,
+            #    then the whole history persisted, then switch-root flushed.
+            initramfs = subprocess.run(
+                ['/bin/sh', '-c',
+                 f'. {MINIMAL_STATE}\n'
+                 'minimal_state_init\n'
+                 + ''.join(f'minimal_state_stage {stage}\n'
+                           for stage in INITRAMFS_STAGES)
+                 + 'minimal_state_persist_enable "$GTS9_MINIMAL_LOG_DIR"\n'],
+                env=dict(os.environ, GTS9_MINIMAL_LOG_DIR=tmp),
+                text=True, capture_output=True, check=False)
+            self.assertEqual(initramfs.returncode, 0, initramfs.stderr)
+            self.assertTrue(record.is_file())
+
+            # 2. The Debian half: run the exact ExecStart command of every
+            #    stage unit, with the helper path pointing at this checkout.
+            #    The getty unit asks systemd whether tty1 is up; the stub says
+            #    no, so the recorded stage is deterministic on any host.
+            stub_bin = Path(tmp) / 'bin'
+            stub_bin.mkdir()
+            (stub_bin / 'systemctl').write_text('#!/bin/sh\nexit 1\n')
+            (stub_bin / 'systemctl').chmod(0o755)
+            env = dict(os.environ, GTS9_MINIMAL_BOOT_RECORD=str(record))
+            env['PATH'] = f'{stub_bin}:{env["PATH"]}'
+            for unit_name in ('gts9-debian-entered.service',
+                              'gts9-debian-basic-stage.service',
+                              'gts9-debian-getty-stage.service'):
+                unit = (UNIT_DIR / unit_name).read_text()
+                command = next(line.split('=', 1)[1]
+                               for line in unit.splitlines()
+                               if line.startswith('ExecStart='))
+                command = command.replace('/usr/libexec/gts9-record-debian-stage',
+                                          str(HELPER))
+                result = subprocess.run(['/bin/sh', '-c', command], env=env,
+                                        text=True, capture_output=True,
+                                        check=False)
+                self.assertEqual(result.returncode, 0, f'{unit_name}: {result.stderr}')
+            # The USB service records its own outcome when it binds the gadget.
+            result = run_helper(record, 'usb-acm-ready')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            unit = (UNIT_DIR / 'gts9-debian-multi-user-stage.service').read_text()
+            command = next(line.split('=', 1)[1]
+                           for line in unit.splitlines()
+                           if line.startswith('ExecStart='))
+            result = subprocess.run(['/bin/sh', '-c',
+                                     command.replace(
+                                         '/usr/libexec/gts9-record-debian-stage',
+                                         str(HELPER))],
+                                    env=env, text=True, capture_output=True,
+                                    check=False)
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+            fields = parse(record)
+            self.assertEqual(fields['stage'], 'switch-root')
+            self.assertEqual(fields['stage_history'], ','.join(INITRAMFS_STAGES))
+            self.assertEqual(fields['failure'], 'none')
+            self.assertEqual(fields['debian_stage'], 'multi-user')
+            self.assertEqual(fields['debian_stage_history'],
+                             'systemd-entered,local-fs,basic,'
+                             'tty1-getty-inactive,usb-acm-ready,multi-user')
+            self.assertEqual(fields['debian_failure'], 'tty1-getty-inactive')
+            # One record, one boot: no temporary file may be left behind.
+            self.assertFalse(Path(f'{record}.tmp').exists())
+            self.assertEqual(record.read_text().count('format_version='), 1)
 
 
 if __name__ == '__main__':

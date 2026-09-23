@@ -101,6 +101,11 @@ record belong to the boot Debian is running in?), `debian_kernel_release`,
 `debian_root_source` and `debian_root_fstype`, which is how `/ = Debian TF`
 is confirmed from the file alone.
 
+A failure recorded by one service is not erased by a later service that
+succeeds: `debian_failure=` keeps the most recent reason and
+`debian_failure_history=` lists every distinct reason seen in that boot, so a
+getty or panel failure stays visible in the final record.
+
 The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`) and the panel
 recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`
 or `panel-unavailable`.

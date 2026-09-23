@@ -106,6 +106,26 @@ root_fstype=${root_fstype:-unknown}
 history=$(record_value debian_stage_history)
 last_stage=$(record_value debian_stage)
 
+# A failure recorded by an early unit must not be erased by a later unit that
+# succeeds: the reason stays visible, and every distinct reason is listed.
+previous_failure=$(record_value debian_failure)
+failure_history=$(record_value debian_failure_history)
+if [ "$failure" = none ] && [ -n "$previous_failure" ] && [ "$previous_failure" != none ]; then
+	failure=$previous_failure
+fi
+if [ "$failure" != none ]; then
+	case ",$failure_history," in
+	*",$failure,"*) ;;
+	*)
+		if [ -n "$failure_history" ]; then
+			failure_history="${failure_history},$failure"
+		else
+			failure_history=$failure
+		fi
+		;;
+	esac
+fi
+
 if [ -n "$stages" ]; then
 	remaining=$stages
 	while [ -n "$remaining" ]; do
@@ -157,6 +177,9 @@ tmp="${RECORD}.tmp.$$"
 		printf 'debian_stage_history=%s\n' "$history"
 	fi
 	printf 'debian_failure=%s\n' "$failure"
+	if [ -n "$failure_history" ]; then
+		printf 'debian_failure_history=%s\n' "$failure_history"
+	fi
 	printf 'debian_updated_timestamp=%s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo unknown)"
 	printf 'debian_updated_uptime_seconds=%s\n' "$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
 	if [ -n "$extra" ]; then
