@@ -64,3 +64,10 @@ that measurement on a disposable prepared kernel worktree, run
 `git -C <worktree> apply <repo>/kernel/patches/diagnostic/0008-i2c-qcom-geni-log-bus-lines-on-error.patch`
 after `scripts/prepare-kernel.sh`, then rebuild. A subsequent prepare restores
 the pinned source before applying the default queue.
+
+`0010-pinctrl-report-pogo-pin-state-at-probe.patch` is also diagnostic-only in
+`diagnostic/`. It sampled TLMM registers and rescheduled itself every 30 seconds
+while investigating GPIO ownership. The Pogo driver's GPIO and IRQ paths do not
+consume those samples; the patch only read and logged MMIO state. To reproduce
+that measurement, manually apply it to a disposable prepared worktree as shown
+in `diagnostic/README.md`.

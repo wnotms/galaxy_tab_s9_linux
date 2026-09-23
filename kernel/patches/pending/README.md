@@ -14,7 +14,6 @@ The default queue is unchanged and contains none of these:
 0003-printk-allow-ignoring-samsung-console-null.patch
 0004-drm-panel-add-samsung-ana38407.patch
 0006-input-add-samsung-pogo-keyboard.patch
-0010-pinctrl-report-pogo-pin-state-at-probe.patch
 nxp-ptn3222-apply-dt-register-overrides.patch
 ```
 
