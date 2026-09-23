@@ -110,19 +110,29 @@ adb shell sh /tmp/twrp-mount-debian.sh --rw
 adb shell
 cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar
 sync
+sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian
+sync
 cd /
 sh /tmp/twrp-mount-debian.sh --umount
 ```
 
-The tarball contains relative paths only, so extraction cannot escape
-`/mnt/debian`, and every enablement symlink it ships is relative as well.
-That second part matters: TWRP's busybox `tar` refuses to replace a symlink
-whose stored target is absolute and outside the extraction root - it reports
-`... not under '/mnt/debian'` and exits non-zero - so an overlay built with
-absolute `systemctl enable`-style links would stop syncing on re-deployment.
-Run `sync` unconditionally after extraction, and check the exit status. It carries the units, the helpers, the enablement symlinks, the
-kernel modules under `lib/modules/<release>` and firmware under
-`lib/firmware/`; `depmod` has already been run against the tree.
+Two details matter here, both learned on the tablet:
+
+- The tarball carries regular files with relative paths only - it contains no
+  symlink entries at all. TWRP's busybox `tar` refuses to replace a symlink
+  that resolves outside the extraction root (it prints
+  `... not under '/mnt/debian'` and exits non-zero), so an archive carrying
+  `systemctl enable`-style links could be extracted once on a fresh rootfs but
+  never updated again.
+- `gts9-enable-units` therefore creates every enablement symlink after
+  extraction, from each unit's own `WantedBy=` line, as relative links. It is
+  the same helper the host installer uses, it needs no `systemctl`, and it is
+  safe to run repeatedly. It only ever writes links named after gts9 units
+  (plus the ttyGS0 getty instance).
+
+The tarball also carries the units, the helpers, the kernel modules under
+`lib/modules/<release>` and firmware under `lib/firmware/`; `depmod` has
+already been run against the tree when modules were included.
 
 Pushing individual files with `adb push` is acceptable for a one-off debug
 change, but it is not the reproducible deployment path: use the tarball.

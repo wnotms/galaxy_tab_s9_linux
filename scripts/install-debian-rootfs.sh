@@ -11,17 +11,19 @@
 #	./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar
 #	adb push out/gts9-debian-overlay.tar /tmp/
 #	# in TWRP:
-#	cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar
+#	cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar && sync
+#	sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian
 #
-# Both modes build the same tree from the same sources, so a deployed tarball
-# and a direct install are byte-identical.  Everything is idempotent: running
-# it again over an existing rootfs replaces the managed files and leaves the
-# rest of Debian alone.
+# Both modes install the same files from the same sources, and both enable the
+# units with the same helper, so a deployed tarball and a direct install end up
+# identical.  Everything is idempotent: running it again over an existing rootfs
+# replaces the managed files and leaves the rest of Debian alone.
 #
 # Installed content:
-#   * rootfs-overlay/ (systemd units, helpers, logind and getty configuration)
-#   * enablement symlinks derived from each unit's WantedBy= (no systemctl is
-#     needed, which is what makes the TWRP extraction work)
+#   * rootfs-overlay/ (units, helpers, logind and getty configuration; regular
+#     files only - the tarball carries no symlinks, see gts9-enable-units)
+#   * enablement symlinks created by usr/libexec/gts9-enable-units from each
+#     unit's own WantedBy= (no systemctl needed, works in TWRP)
 #   * kernel modules under lib/modules/<release> plus a basedir depmod
 #   * firmware under lib/firmware/
 #
@@ -70,32 +72,20 @@ fi
 
 copy_overlay() {
 	local dest=$1
-	# -a keeps the enablement symlinks under etc/systemd/system.
+	# The overlay contains regular files and directories only: enablement
+	# symlinks are created by usr/libexec/gts9-enable-units below, because
+	# TWRP's busybox tar refuses to replace an existing symlink that points
+	# outside the extraction root and would then exit non-zero.
 	cp -a "$overlay"/. "$dest"/
 }
 
-enablement_wants() {
-	# enablement_wants UNITFILE -> the WantedBy= targets of a unit, one per line
-	sed -n 's/^WantedBy=//p' "$1" | tr ' ' '\n' | sed '/^$/d'
-}
-
 install_units_and_enablement() {
-	local dest=$1 unit name wants dir
-	for unit in "$dest"/usr/lib/systemd/system/gts9-*.service; do
-		[ -f "$unit" ] || continue
-		name=${unit##*/}
-		while read -r wants; do
-			[ -n "$wants" ] || continue
-			dir="$dest/etc/systemd/system/${wants}.wants"
-			mkdir -p "$dir"
-			# Relative on purpose.  systemd accepts both, but TWRP's busybox
-			# tar refuses to replace a symlink whose stored target is absolute
-			# and outside the extraction root: it warns "not under" and exits
-			# non-zero, so a re-deployment would silently stop syncing.
-			# Depth is fixed: <dest>/etc/systemd/system/<target>.wants/.
-			ln -sfn "../../../../usr/lib/systemd/system/$name" "$dir/$name"
-		done < <(enablement_wants "$unit")
-	done
+	local dest=$1
+	local helper=$dest/usr/libexec/gts9-enable-units
+	[ -f "$helper" ] || fail "missing $helper in the overlay"
+	# Same helper the TWRP procedure runs after extraction, so a direct
+	# install and a deployed tarball enable exactly the same units.
+	sh "$helper" "$dest" || fail 'could not create the unit enablement symlinks'
 }
 
 module_release() {
@@ -174,10 +164,16 @@ run_depmod() {
 }
 
 install_tree() {
-	local dest=$1
+	# install_tree DEST [enablement]
+	# The tarball is built without the enablement symlinks: TWRP creates them
+	# with gts9-enable-units after extracting, because busybox tar refuses to
+	# replace an existing link that points outside the extraction root.
+	local dest=$1 enablement=${2:-yes}
 	[ -d "$dest" ] || fail "not a directory: $dest"
 	copy_overlay "$dest"
-	install_units_and_enablement "$dest"
+	if [ "$enablement" = yes ]; then
+		install_units_and_enablement "$dest"
+	fi
 	install_modules "$dest"
 	install_firmware "$dest"
 	run_depmod "$dest"
@@ -187,13 +183,16 @@ if [ -n "$tar_file" ]; then
 	command -v tar >/dev/null 2>&1 || fail 'tar is required'
 	staging=$(mktemp -d)
 	trap 'rm -rf "$staging"' EXIT
-	install_tree "$staging"
+	install_tree "$staging" no
 	mkdir -p "$(dirname "$tar_file")"
-	# Relative entries only: TWRP extracts this with `cd /mnt/debian && tar -xpf`.
+	# Regular files and relative paths only, and no symlink entries: TWRP's
+	# busybox tar refuses to replace an existing symlink that resolves outside
+	# the extraction root.  gts9-enable-units creates the links afterwards.
 	tar --format=gnu --owner=0 --group=0 --numeric-owner \
 		-C "$staging" -cpf "$tar_file" .
 	note "overlay tarball: $tar_file"
-	note "deploy with: adb push $tar_file /tmp/ && cd /mnt/debian && tar -xpf /tmp/${tar_file##*/}"
+	note "deploy with: adb push $tar_file /tmp/ && cd /mnt/debian && tar -xpf /tmp/${tar_file##*/} && sync"
+	note "then enable the units: sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian"
 	exit 0
 fi
 

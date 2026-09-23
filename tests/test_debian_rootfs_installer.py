@@ -51,6 +51,9 @@ class DebianRootfsInstaller(unittest.TestCase):
         (self.target / 'etc' / 'systemd').mkdir(parents=True)
         (self.target / 'etc' / 'os-release').write_text('ID=debian\n')
         (self.target / 'usr' / 'lib' / 'systemd' / 'system').mkdir(parents=True)
+        # A real Debian rootfs has the template the ttyGS0 console instantiates.
+        (self.target / 'usr/lib/systemd/system/serial-getty@.service').write_text(
+            '[Unit]\nDescription=Serial Getty on %I\n[Service]\n')
 
     def install(self, *args, **kwargs):
         return run_installer('--skip-modules', '--skip-firmware',
@@ -61,7 +64,7 @@ class DebianRootfsInstaller(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for helper in ('gts9-record-boot-stage', 'gts9-record-poweroff-stage',
                        'gts9-record-debian-stage', 'gts9-usb-acm',
-                       'gts9-panel-recover'):
+                       'gts9-panel-recover', 'gts9-enable-units'):
             path = self.target / 'usr' / 'libexec' / helper
             self.assertTrue(path.is_file(), helper)
             self.assertTrue(os.access(path, os.X_OK), helper)
@@ -78,6 +81,7 @@ class DebianRootfsInstaller(unittest.TestCase):
                      'serial-getty@ttyGS0.service.d' / 'autologin.conf')
         self.assertTrue(autologin.is_file())
         self.assertIn('--autologin root', autologin.read_text())
+        # The overlay ships no symlinks; the helper creates this one too.
         self.assertEqual(
             os.readlink(self.target / 'etc/systemd/system/getty.target.wants' /
                         'serial-getty@ttyGS0.service'),
@@ -98,20 +102,48 @@ class DebianRootfsInstaller(unittest.TestCase):
                                  f'../../../../usr/lib/systemd/system/{unit.name}')
 
     def test_all_enablement_symlinks_are_relative(self):
-        """TWRP's busybox tar refuses absolute symlink targets.
+        """Every generated link must be relative.
 
-        It reports "not under '<root>'" and exits non-zero when a stored link
-        target is absolute, so every link in the tree must be relative.
+        TWRP's busybox tar refuses to replace a symlink whose stored target is
+        absolute and outside the extraction root, so the deployed tree must not
+        contain such links.
         """
         self.install()
         links = [p for p in self.target.rglob('*') if p.is_symlink()]
         self.assertTrue(links)
         for path in links:
             self.assertFalse(os.readlink(path).startswith('/'), str(path))
-        shipped = (OVERLAY / 'etc/systemd/system/getty.target.wants' /
-                   'serial-getty@ttyGS0.service')
-        self.assertTrue(shipped.is_symlink())
-        self.assertFalse(os.readlink(shipped).startswith('/'))
+
+    def test_overlay_ships_no_symlinks_at_all(self):
+        links = [p for p in OVERLAY.rglob('*') if p.is_symlink()]
+        self.assertEqual(links, [],
+                         'enablement links belong to gts9-enable-units')
+
+    def test_tarball_contains_no_symlink_entries(self):
+        tar_file = self.root / 'gts9-debian-overlay.tar'
+        result = run_installer('--tar', str(tar_file), '--skip-modules',
+                               '--skip-firmware')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        listing = subprocess.run(['tar', '-tvf', str(tar_file)], text=True,
+                                 capture_output=True, check=True).stdout
+        self.assertNotIn(' -> ', listing,
+                         'a symlink entry would make TWRP extraction fail')
+        # The tree is only complete after the documented helper runs.
+        self.assertIn('gts9-enable-units', listing)
+
+    def test_enable_helper_is_idempotent_and_scoped(self):
+        helper = OVERLAY / 'usr' / 'libexec' / 'gts9-enable-units'
+        self.assertTrue(os.access(helper, os.X_OK))
+        self.install()
+        before = snapshot(self.target)
+        again = subprocess.run(['sh', str(self.target / 'usr/libexec/gts9-enable-units'),
+                                str(self.target)], text=True,
+                               capture_output=True, check=False)
+        self.assertEqual(again.returncode, 0, again.stderr)
+        self.assertEqual(snapshot(self.target), before)
+        # Unrelated enablement links are never touched.
+        self.assertFalse((self.target / 'etc/systemd/system/getty.target.wants' /
+                          'serial-getty@ttyMSM0.service').exists())
 
     def test_installer_is_repeatable(self):
         first = self.install()

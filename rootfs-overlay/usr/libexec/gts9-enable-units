@@ -1,0 +1,70 @@
+#!/bin/sh
+# Create the systemd enablement symlinks for the gts9 units of a Debian root.
+#
+# Why this exists instead of shipping the symlinks in the overlay tarball:
+# TWRP's busybox tar refuses to replace a symlink whose stored target is
+# absolute and outside the extraction root.  It prints
+#
+#	... not under '/mnt/debian'
+#
+# and exits non-zero, so an overlay that carried the enablement links could be
+# extracted once (on a fresh rootfs) but never updated afterwards.  The tarball
+# therefore carries regular files only, and this helper - which runs the same
+# way on the host and inside TWRP - creates the links.
+#
+# Usage: gts9-enable-units [TARGET_ROOT]      (default /)
+#
+# It is idempotent, only ever touches links named after gts9 units (plus the
+# ttyGS0 getty instance) and never removes anything else.  systemctl is not
+# required; the links are created from each unit's own WantedBy= line, so the
+# result is what `systemctl enable` would produce.
+
+set -u
+
+root=${1:-/}
+unit_dir=$root/usr/lib/systemd/system
+etc_dir=$root/etc/systemd/system
+
+if [ ! -d "$unit_dir" ]; then
+	echo "gts9-enable-units: $unit_dir does not exist" >&2
+	exit 1
+fi
+
+created=0
+
+link_unit() {
+	# link_unit WANTS LINK_NAME [TARGET_NAME]
+	# TARGET_NAME defaults to LINK_NAME; a template instance links to its
+	# template file (serial-getty@ttyGS0.service -> serial-getty@.service).
+	wants=$1
+	name=$2
+	target=${3:-$2}
+	case "$wants" in
+	'' | */* | *..*) return 0 ;;
+	esac
+	dir=$etc_dir/${wants}.wants
+	mkdir -p "$dir" 2>/dev/null || return 0
+	# rm the link first: ln -sf without -n may dereference an existing link
+	# in some implementations, and this must never touch the target file.
+	rm -f "$dir/$name" 2>/dev/null || true
+	# Relative so the deployed tree stays self-contained.
+	ln -s "../../../../usr/lib/systemd/system/$target" "$dir/$name" 2>/dev/null || return 0
+	created=$((created + 1))
+}
+
+for unit in "$unit_dir"/gts9-*.service; do
+	[ -f "$unit" ] || continue
+	name=${unit##*/}
+	for wants in $(sed -n 's/^WantedBy=//p' "$unit" 2>/dev/null); do
+		link_unit "$wants" "$name"
+	done
+done
+
+# The USB debug console is a template instance, not a gts9 unit, so its
+# enablement is explicit here.
+if [ -f "$unit_dir/serial-getty@.service" ]; then
+	link_unit getty.target serial-getty@ttyGS0.service serial-getty@.service
+fi
+
+echo "gts9-enable-units: $created link(s) in $etc_dir"
+exit 0

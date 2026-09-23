@@ -126,13 +126,18 @@ adb push out/gts9-debian-overlay.tar /tmp/
 # in TWRP:
 cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar
 sync
+sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian
+sync
 ```
 
-Both the archive entries and every enablement symlink it carries are relative.
-TWRP's busybox `tar` refuses absolute symlink targets that lie outside the
-extraction root (`... not under '/mnt/debian'`, non-zero exit), so absolute
-`systemctl enable`-style links would make a re-deployment fail to sync. The
-installer therefore writes relative links, which systemd accepts.
+The tarball contains regular files with relative paths and no symlink entries:
+TWRP's busybox `tar` refuses to replace a symlink that resolves outside the
+extraction root (`... not under '/mnt/debian'`, non-zero exit), so it could not
+update an archive that carried `systemctl enable`-style links. The
+`gts9-enable-units` helper creates the enablement symlinks afterwards - the
+same helper the host installer runs - as relative links derived from each
+unit's `WantedBy=` line. systemd accepts the relative form (verified with
+`systemctl --root ... is-enabled`).
 
 The installer copies the overlay (units, helpers, logind and getty
 configuration), creates each unit's enablement symlink from its own
