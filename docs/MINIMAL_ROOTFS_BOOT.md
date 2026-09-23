@@ -141,8 +141,11 @@ unit's `WantedBy=` line. systemd accepts the relative form (verified with
 
 The installer copies the overlay (units, helpers, logind and getty
 configuration), creates each unit's enablement symlink from its own
-`WantedBy=` so no `systemctl` is needed, replaces `lib/modules/<release>`
-with the modules built for this kernel, copies firmware to `lib/firmware/`,
+`WantedBy=` so no `systemctl` is needed, replaces `usr/lib/modules/<release>`
+with the modules built for this kernel, copies firmware to
+`usr/lib/firmware/` (never below `lib/`: see
+`docs/TWRP_DEBIAN_RECOVERY.md` for why an archive entry there destroys the
+usr-merge and panics the kernel),
 and runs `depmod -b <target> <release>`. The module release is taken from the
 module tree and must match `kernel.release` written next to `modules-root`;
 a mismatch aborts the install instead of deploying modules for a different

@@ -54,6 +54,11 @@ class DebianRootfsInstaller(unittest.TestCase):
         # A real Debian rootfs has the template the ttyGS0 console instantiates.
         (self.target / 'usr/lib/systemd/system/serial-getty@.service').write_text(
             '[Unit]\nDescription=Serial Getty on %I\n[Service]\n')
+        # And it is usr-merged: /lib, /bin and /sbin are symlinks into /usr.
+        for link in ('lib', 'bin', 'sbin'):
+            (self.target / link).symlink_to(f'usr/{link}')
+        (self.target / 'usr/lib/systemd/systemd').write_text('systemd\n')
+        (self.target / 'usr/lib/systemd/systemd').chmod(0o755)
 
     def install(self, *args, **kwargs):
         return run_installer('--skip-modules', '--skip-firmware',
@@ -153,6 +158,45 @@ class DebianRootfsInstaller(unittest.TestCase):
         self.assertEqual(second.returncode, 0, second.stderr)
         self.assertEqual(snapshot(self.target), before)
 
+    def test_never_writes_below_lib_bin_or_sbin(self):
+        """A lib/ entry in the tarball replaces the /lib usr-merge symlink.
+
+        TWRP's busybox tar does that, and the resulting dangling /sbin/init
+        makes switch_root die and the kernel panic (test 178 boots 1-4).
+        """
+        kernel_dir = self.root / 'kernel-gts9wifi'
+        module_file = (kernel_dir / 'modules-root' / 'lib' / 'modules' /
+                       '7.2.0-test' / 'extra' / 'foo.ko')
+        module_file.parent.mkdir(parents=True)
+        module_file.write_text('not a real module\n')
+        (kernel_dir / 'kernel.release').write_text('7.2.0-test\n')
+        firmware = self.root / 'firmware'
+        (firmware / 'keyboard_stm').mkdir(parents=True)
+        (firmware / 'keyboard_stm' / 'stm32_gts9family.bin').write_text('blob\n')
+        tar_file = self.root / 'overlay.tar'
+        result = run_installer('--tar', str(tar_file),
+                               '--modules', str(kernel_dir / 'modules-root'),
+                               '--firmware', str(firmware),
+                               env={'GTS9_DEPMOD': 'depmod-that-does-not-exist'})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        listing = subprocess.run(['tar', '-tf', str(tar_file)], text=True,
+                                 capture_output=True, check=True).stdout.split()
+        for entry in listing:
+            rel = entry[2:] if entry.startswith('./') else entry.lstrip('/')
+            first = rel.split('/', 1)[0]
+            self.assertNotIn(first, ('lib', 'bin', 'sbin', 'lib64'), entry)
+        self.assertIn('./usr/lib/modules/7.2.0-test/extra/foo.ko', listing)
+        self.assertIn('./usr/lib/firmware/keyboard_stm/stm32_gts9family.bin',
+                      listing)
+
+    def test_refuses_a_rootfs_whose_usr_merge_is_already_broken(self):
+        # Simulate the damage: a real /lib directory instead of a symlink.
+        (self.target / 'lib').unlink()
+        (self.target / 'lib' / 'firmware').mkdir(parents=True)
+        result = self.install()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('is a real directory', result.stderr)
+
     def test_refuses_the_host_root_and_non_debian_targets(self):
         root = run_installer('--skip-modules', '--skip-firmware', '/')
         self.assertNotEqual(root.returncode, 0)
@@ -208,11 +252,14 @@ class DebianRootfsInstaller(unittest.TestCase):
         result = run_installer('--modules', str(kernel_dir / 'modules-root'),
                                '--skip-firmware', str(self.target))
         self.assertEqual(result.returncode, 0, result.stderr)
-        installed = (self.target / 'lib' / 'modules' / '7.2.0-test' /
+        # usr/lib/modules, so no lib/ entry can ever clobber the usr-merge.
+        installed = (self.target / 'usr' / 'lib' / 'modules' / '7.2.0-test' /
                      'extra' / 'foo.ko')
         self.assertTrue(installed.is_file())
-        releases = [p.name for p in (self.target / 'lib' / 'modules').iterdir()]
+        releases = [p.name for p in
+                    (self.target / 'usr/lib/modules').iterdir()]
         self.assertEqual(releases, ['7.2.0-test'])
+        self.assertTrue((self.target / 'lib').is_symlink())
 
     def test_module_release_must_match_the_recorded_kernel_release(self):
         kernel_dir = self.root / 'kernel-gts9wifi'
@@ -233,9 +280,10 @@ class DebianRootfsInstaller(unittest.TestCase):
         result = run_installer('--firmware', str(firmware), '--skip-modules',
                                str(self.target))
         self.assertEqual(result.returncode, 0, result.stderr)
-        installed = (self.target / 'lib' / 'firmware' / 'keyboard_stm' /
+        installed = (self.target / 'usr' / 'lib' / 'firmware' / 'keyboard_stm' /
                      'stm32_gts9family.bin')
         self.assertEqual(installed.read_text(), 'blob\n')
+        self.assertTrue((self.target / 'lib').is_symlink())
 
     def test_depmod_runs_against_the_installed_tree(self):
         kernel_dir = self.root / 'kernel-gts9wifi'

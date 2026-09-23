@@ -131,8 +131,32 @@ Two details matter here, both learned on the tablet:
   (plus the ttyGS0 getty instance).
 
 The tarball also carries the units, the helpers, the kernel modules under
-`lib/modules/<release>` and firmware under `lib/firmware/`; `depmod` has
-already been run against the tree when modules were included.
+`usr/lib/modules/<release>` and firmware under `usr/lib/firmware/`; `depmod`
+has already been run against the tree when modules were included.
+
+### Never let an archive entry land below `lib/`, `bin/` or `sbin/`
+
+Debian is usr-merged: `/lib`, `/bin` and `/sbin` are symlinks into `/usr`.  A
+tar entry below `lib/` makes TWRP's busybox `tar` replace that symlink with a
+real directory, which leaves `/sbin/init` -> `/lib/systemd/systemd` and
+`/lib/ld-linux-aarch64.so.1` dangling.  `execve("/sbin/init")` then fails,
+`switch_root` dies, PID 1 exits and the kernel panics - with `panic=0` the
+tablet hangs with no USB and no key response (test 178 boots 1-3), with
+`panic=10` it reboots in a loop (boot 4).
+
+`install-debian-rootfs.sh` therefore installs modules and firmware under
+`usr/lib/...` and refuses to finish if it finds `/lib`, `/bin` or `/sbin` as
+real directories.  Verify after every extraction:
+
+```sh
+ls -ld /mnt/debian/lib /mnt/debian/bin /mnt/debian/sbin   # symlinks, not dirs
+ls -l  /mnt/debian/sbin/init                              # must resolve
+```
+
+If `/lib` was already replaced by a directory, the fix is offline: move
+`lib/firmware/*` to `usr/lib/firmware/`, `rmdir lib/firmware lib` and recreate
+the `lib -> usr/lib` symlink (test 178 did exactly that with `debugfs` on a
+detached card).
 
 Pushing individual files with `adb push` is acceptable for a one-off debug
 change, but it is not the reproducible deployment path: use the tarball.

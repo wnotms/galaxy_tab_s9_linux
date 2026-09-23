@@ -107,8 +107,9 @@ The tarball contains regular files with relative paths only, so TWRP deploys it
 with `cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar`, followed by
 `sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian` to create the systemd
 enablement links (TWRP's busybox tar cannot update archives that carry
-symlinks). Kernel modules are installed under `lib/modules/<release>`, firmware
-under `lib/firmware/`, and `depmod -b` generates the module dependencies. See
+symlinks). Kernel modules are installed under `usr/lib/modules/<release>`, firmware
+under `usr/lib/firmware/` (never below `lib/`, which would break the Debian
+usr-merge symlinks), and `depmod -b` generates the module dependencies. See
 [TWRP offline maintenance](docs/TWRP_DEBIAN_RECOVERY.md).
 
 `validate-boot-bundle.sh` is the gate before any physical test: it re-extracts

@@ -123,12 +123,16 @@ install_modules() {
 	release=$(module_release "$modules_root")
 	src=$modules_root/lib/modules/$release
 	[ -d "$src" ] || fail "missing module directory: $src"
-	mkdir -p "$dest/lib/modules"
-	tmp=$dest/lib/modules/.$release.gts9-tmp
+	# usr/lib/modules, never lib/modules: Debian is usr-merged, and an archive
+	# entry below lib/ makes TWRP's busybox tar replace the /lib symlink with a
+	# real directory.  That is what broke /sbin/init and panicked the kernel in
+	# test 178.  /lib/modules resolves here through the symlink anyway.
+	mkdir -p "$dest/usr/lib/modules"
+	tmp=$dest/usr/lib/modules/.$release.gts9-tmp
 	rm -rf "$tmp"
 	cp -a "$src" "$tmp"
-	rm -rf "$dest/lib/modules/$release"
-	mv "$tmp" "$dest/lib/modules/$release"
+	rm -rf "$dest/usr/lib/modules/$release"
+	mv "$tmp" "$dest/usr/lib/modules/$release"
 	note "installed modules for $release"
 }
 
@@ -140,20 +144,21 @@ install_firmware() {
 		note "no firmware at $firmware_root; skipping"
 		return 0
 	fi
-	mkdir -p "$dest/lib/firmware"
-	cp -a "$firmware_root"/. "$dest/lib/firmware"/
+	# Same usr-merge rule as the modules above.
+	mkdir -p "$dest/usr/lib/firmware"
+	cp -a "$firmware_root"/. "$dest/usr/lib/firmware"/
 	note 'installed firmware'
 }
 
 run_depmod() {
 	local dest=$1 release
 	[ "$do_modules" = 1 ] || return 0
-	[ -d "$dest/lib/modules" ] || return 0
+	[ -d "$dest/usr/lib/modules" ] || return 0
 	command -v "$depmod" >/dev/null 2>&1 || {
 		note 'depmod is unavailable; module dependencies were not generated'
 		return 0
 	}
-	for path in "$dest"/lib/modules/*/; do
+	for path in "$dest"/usr/lib/modules/*/; do
 		release=$(basename "$path")
 		if "$depmod" -b "$dest" "$release" 2>/dev/null; then
 			note "generated module dependencies for $release"
@@ -161,6 +166,24 @@ run_depmod() {
 			note "WARNING: depmod -b $dest $release failed; Debian will not modprobe by alias"
 		fi
 	done
+}
+
+verify_usr_merge() {
+	# verify_usr_merge DEST
+	# Debian is usr-merged: /lib, /bin and /sbin are symlinks into /usr.  If one
+	# of them is a real directory the layout is already broken and booting it
+	# fails at execve(/sbin/init) with a kernel panic, so refuse to pretend the
+	# install succeeded.  Fixtures without systemd are not a Debian rootfs and
+	# are skipped.
+	local dest=$1 link
+	[ -e "$dest/usr/lib/systemd/systemd" ] || return 0
+	for link in lib bin sbin; do
+		if [ -e "$dest/$link" ] && [ ! -L "$dest/$link" ]; then
+			fail "$dest/$link is a real directory, not a symlink into usr/: the rootfs is not usr-merged and /sbin/init would not resolve"
+		fi
+	done
+	[ -x "$dest/usr/lib/systemd/systemd" ] || \
+		fail "$dest/usr/lib/systemd/systemd is missing or not executable"
 }
 
 install_tree() {
@@ -177,6 +200,7 @@ install_tree() {
 	install_modules "$dest"
 	install_firmware "$dest"
 	run_depmod "$dest"
+	verify_usr_merge "$dest"
 }
 
 if [ -n "$tar_file" ]; then
