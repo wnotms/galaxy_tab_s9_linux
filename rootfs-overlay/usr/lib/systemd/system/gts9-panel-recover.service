@@ -1,0 +1,13 @@
+[Unit]
+Description=X710 ANA38407 cold-boot panel recovery
+After=local-fs.target
+Before=getty@tty1.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-panel-recover
+RemainAfterExit=yes
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target

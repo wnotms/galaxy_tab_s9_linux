@@ -1,0 +1,143 @@
+#!/bin/sh
+# X710 (ANA38407) cold-boot panel recovery, moved from the initramfs.
+#
+# The driver's first enable sometimes reads a dead DDIC and logs
+#
+#	ana38407 panel id: 00 00 00
+#
+# instead of 80 00 04, and the panel stays dark.  Tests 040-045 established
+# that the X710 recovers from a framebuffer blank/unblank cycle - not from the
+# S9U platform suspend/resume sequence, which is why this helper migrates the
+# blank-cycle logic that was verified on this tablet.
+#
+# The service is deliberately harmless when it cannot help:
+#   * every wait is bounded,
+#   * a panel that never failed is left completely alone,
+#   * a failure to recover is recorded and then ignored - the exit status is
+#     always 0, nothing reboots, and tty1/USB keep running.
+#
+# Outcomes are recorded in the boot record as panel-recovered, panel-ok,
+# panel-recovery-failed or panel-unavailable.
+
+set -u
+
+FB_BLANK=${GTS9_PANEL_FB_BLANK:-/sys/class/graphics/fb0/blank}
+KMSG=${GTS9_PANEL_KMSG:-/dev/kmsg}
+STAGE_HELPER=${GTS9_STAGE_HELPER:-/usr/libexec/gts9-record-debian-stage}
+DMESG_FILE=${GTS9_PANEL_DMESG_FILE:-}
+FB_WAIT_SECONDS=${GTS9_PANEL_FB_WAIT_SECONDS:-5}
+ID_WAIT_SECONDS=${GTS9_PANEL_ID_WAIT_SECONDS:-5}
+SETTLE_SECONDS=${GTS9_PANEL_SETTLE_SECONDS:-2}
+CYCLES=${GTS9_PANEL_CYCLES:-3}
+CYCLE_TIMEOUT=${GTS9_PANEL_CYCLE_TIMEOUT:-5}
+
+# Exact driver wording; see kernel/drivers/panel-samsung-ana38407.c.  It is an
+# interface, not a log line, and must not be reworded.
+ID_FAILURE='ana38407 panel id: 00 00 00'
+ID_OK='ana38407 panel id: 80 00 04'
+
+report() {
+	echo "gts9-panel-recover: $*"
+	if [ -w "$KMSG" ]; then
+		printf 'gts9-panel-recover: %s\n' "$*" > "$KMSG" 2>/dev/null || true
+	fi
+}
+
+record_stage() {
+	if [ -x "$STAGE_HELPER" ]; then
+		"$STAGE_HELPER" "$@" || true
+	fi
+}
+
+finish() {
+	# finish STAGE MESSAGE [FAILURE]
+	report "$2"
+	if [ $# -ge 3 ] && [ -n "$3" ]; then
+		record_stage --failure "$3" "$1"
+	else
+		record_stage "$1"
+	fi
+	exit 0
+}
+
+kernel_log() {
+	if [ -n "$DMESG_FILE" ]; then
+		[ -r "$DMESG_FILE" ] || return 1
+		cat "$DMESG_FILE" 2>/dev/null
+		return 0
+	fi
+	command -v dmesg >/dev/null 2>&1 || return 1
+	dmesg 2>/dev/null
+}
+
+log_has() {
+	kernel_log 2>/dev/null | grep -q "$1"
+}
+
+waited=0
+while [ "$waited" -lt "$FB_WAIT_SECONDS" ] && [ ! -w "$FB_BLANK" ]; do
+	sleep 1
+	waited=$((waited + 1))
+done
+if [ ! -w "$FB_BLANK" ]; then
+	finish panel-unavailable \
+		"no writable framebuffer after ${FB_WAIT_SECONDS}s; nothing to cycle"
+fi
+
+# Wait for the driver's own first read before cycling anything: fb0 appears
+# while the panel is still probing, and a cycle before that only re-initialises
+# a link that had not come up yet.
+if ! log_has "$ID_FAILURE"; then
+	waited=0
+	while [ "$waited" -lt "$ID_WAIT_SECONDS" ] && ! log_has "$ID_FAILURE"; do
+		sleep 1
+		waited=$((waited + 1))
+	done
+fi
+if ! log_has "$ID_FAILURE"; then
+	if log_has "$ID_OK"; then
+		finish panel-ok 'panel ID 80 00 04; no recovery needed'
+	fi
+	# No kernel log source at all means "not checked", which is not the same
+	# as "healthy".
+	if ! kernel_log >/dev/null 2>&1; then
+		finish panel-unavailable 'no kernel log available to check the panel ID'
+	fi
+	finish panel-ok 'no first-enable zero panel ID recorded; nothing to recover'
+fi
+
+report 'first-enable zero panel ID recorded; cycling the framebuffer'
+cycle=0
+while [ "$cycle" -lt "$CYCLES" ]; do
+	cycle=$((cycle + 1))
+	blanked=0
+	if timeout "$CYCLE_TIMEOUT" sh -c "echo 1 > '$FB_BLANK'" 2>/dev/null; then
+		# Both writes synchronously complete panel/host teardown and prepare in
+		# the driver, so a bounded settle afterwards is enough for the ID line.
+		if timeout "$CYCLE_TIMEOUT" sh -c "echo 0 > '$FB_BLANK'" 2>/dev/null; then
+			blanked=1
+		else
+			report "cycle $cycle: unblank failed or timed out"
+		fi
+	else
+		report "cycle $cycle: blank failed or timed out"
+	fi
+
+	if [ "$blanked" = 1 ]; then
+		waited=0
+		while [ "$waited" -lt "$SETTLE_SECONDS" ]; do
+			if log_has "$ID_OK"; then
+				break
+			fi
+			sleep 1
+			waited=$((waited + 1))
+		done
+		if log_has "$ID_OK"; then
+			finish panel-recovered "cycle $cycle recovered panel ID 80 00 04"
+		fi
+		report "cycle $cycle did not recover the panel ID yet"
+	fi
+done
+
+finish panel-recovery-failed \
+	"panel did not come up after $CYCLES framebuffer cycles" panel-recovery-failed
