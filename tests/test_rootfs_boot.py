@@ -57,6 +57,11 @@ class RootfsBoot(unittest.TestCase):
         self.assertIn('GTS9_BOOT_REPORT_END=$report_title status=$report_status', INIT)
         self.assertIn('if [ "$BOOT_TRACE_CONSOLE" = 1 ]; then\n            echo "exit_status=$report_status"',
                       INIT)
+        proc_mount = INIT.index('mount_path proc /proc')
+        trace_option = INIT.index('gts9_boot_trace_console=*)')
+        first_stage = INIT.index('record_boot_stage kernel-userspace')
+        self.assertLess(proc_mount, trace_option)
+        self.assertLess(trace_option, first_stage)
 
     def test_rootfs_diagnostic_is_written_only_after_mount(self):
         mount = INIT.index("log 'gts9-rootfs: rootfs mounted rw'")

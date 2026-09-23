@@ -18,12 +18,6 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH
 
 BOOT_TRACE_CONSOLE=0
-for arg in $(cat /proc/cmdline 2>/dev/null); do
-    case "$arg" in
-        gts9_boot_trace_console=*) BOOT_TRACE_CONSOLE=${arg#gts9_boot_trace_console=} ;;
-    esac
-done
-case "$BOOT_TRACE_CONSOLE" in 1) ;; *) BOOT_TRACE_CONSOLE=0 ;; esac
 
 log() {
     echo "$*"
@@ -123,6 +117,15 @@ mount_path() {
 }
 
 mount_path proc /proc
+# /proc/cmdline is unavailable until procfs is mounted in this initramfs.
+# Read the opt-in console trace switch before recording the first boot stage.
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_boot_trace_console=*) BOOT_TRACE_CONSOLE=${arg#gts9_boot_trace_console=} ;;
+    esac
+done
+case "$BOOT_TRACE_CONSOLE" in 1) ;; *) BOOT_TRACE_CONSOLE=0 ;; esac
+
 mount_path sysfs /sys
 mount_path devtmpfs /dev
 mount_path tmpfs /tmp
