@@ -1,0 +1,23 @@
+2026-09-23T06:08:48Z console open on COM17
+2026-09-23T06:08:51Z SENT  for f in /sys/class/block/sda10/size /sys/class/block/sda10/queue/logical_block_size /sys/class/block/sda10/queue/physical_block_size /sys/class/block/sda10/uevent /sys/class/block/sda/queue/logical_block_size; do echo "== $f"; cat "$f"; done; lsblk -b -o NAME,PARTLABEL,SIZE,LOG-SEC,PHY-SEC,MOUNTPOINTS /dev/sda10
+2026-09-23T06:08:51Z RECV  for f in /sys/class/block/sda10/size /sys/class/block/sda10/queue/logical_block_size /sys/class/block/sda10/queue/physical_block_size /sys/class/block/sda10/uevent /sys/class/block/sda/queue/logical_block_size; do echo "== $f"; cat "$f"; done; lsblk -b -o NAME,PARTLABEL,SIZE,LOG-SEC,PHY-SEC,MOUNTPOINTS /dev/sda10
+2026-09-23T06:08:51Z RECV  [?2004l== /sys/class/block/sda10/size
+2026-09-23T06:08:51Z RECV  2048
+2026-09-23T06:08:51Z RECV  == /sys/class/block/sda10/queue/logical_block_size
+2026-09-23T06:08:51Z RECV  cat: /sys/class/block/sda10/queue/logical_block_size: No such file or directory
+2026-09-23T06:08:51Z RECV  == /sys/class/block/sda10/queue/physical_block_size
+2026-09-23T06:08:51Z RECV  cat: /sys/class/block/sda10/queue/physical_block_size: No such file or directory
+2026-09-23T06:08:51Z RECV  == /sys/class/block/sda10/uevent
+2026-09-23T06:08:51Z RECV  MAJOR=8
+2026-09-23T06:08:51Z RECV  MINOR=10
+2026-09-23T06:08:51Z RECV  DEVNAME=sda10
+2026-09-23T06:08:51Z RECV  DEVTYPE=partition
+2026-09-23T06:08:51Z RECV  DISKSEQ=65
+2026-09-23T06:08:51Z RECV  PARTN=10
+2026-09-23T06:08:51Z RECV  PARTNAME=misc
+2026-09-23T06:08:51Z RECV  PARTUUID=82acc91f-357c-4a68-9c8f-689e1b1a23a1
+2026-09-23T06:08:51Z RECV  == /sys/class/block/sda/queue/logical_block_size
+2026-09-23T06:08:51Z RECV  4096
+2026-09-23T06:08:51Z RECV  NAME  PARTLABEL    SIZE LOG-SEC PHY-SEC MOUNTPOINTS
+2026-09-23T06:08:51Z RECV  sda10 misc      1048576    4096    4096
+2026-09-23T06:09:00Z console session done

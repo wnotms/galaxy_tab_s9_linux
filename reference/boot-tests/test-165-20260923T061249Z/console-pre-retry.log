@@ -1,0 +1,24 @@
+2026-09-23T05:30:35Z console open on COM17
+2026-09-23T05:30:38Z SENT  id; uname -a; cat /etc/os-release; findmnt /; cat /proc/cmdline; ls -l /usr/local/sbin/gts9-debian-to-recovery 2>&1; ls -l /dev/disk/by-partlabel/misc 2>&1; lsblk -o NAME,PARTLABEL,SIZE,MOUNTPOINTS | grep -E "misc|mmcblk1p1|NAME"
+2026-09-23T05:30:38Z RECV  id; uname -a; cat /etc/os-release; findmnt /; cat /proc/cmdline; ls -l /usr/local/sbin/gts9-debian-to-recovery 2>&1; ls -l /dev/disk/by-partlabel/misc 2>&1; lsblk -o NAME,PARTLABEL,SIZE,MOUNTPOINTS | grep -E "misc|mmcblk1p1|NAME"
+2026-09-23T05:30:38Z RECV  [?2004luid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+2026-09-23T05:30:39Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+2026-09-23T05:30:39Z RECV  PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+2026-09-23T05:30:39Z RECV  NAME="Debian GNU/Linux"
+2026-09-23T05:30:39Z RECV  VERSION_ID="13"
+2026-09-23T05:30:39Z RECV  VERSION="13 (trixie)"
+2026-09-23T05:30:39Z RECV  VERSION_CODENAME=trixie
+2026-09-23T05:30:39Z RECV  DEBIAN_VERSION_FULL=13.7
+2026-09-23T05:30:39Z RECV  ID=debian
+2026-09-23T05:30:39Z RECV  HOME_URL="https://www.debian.org/"
+2026-09-23T05:30:39Z RECV  SUPPORT_URL="https://www.debian.org/support"
+2026-09-23T05:30:39Z RECV  BUG_REPORT_URL="https://bugs.debian.org/"
+2026-09-23T05:30:39Z RECV  TARGET SOURCE         FSTYPE OPTIONS
+2026-09-23T05:30:39Z RECV  /      /dev/mmcblk1p1 ext4   rw,noatime
+2026-09-23T05:30:39Z RECV  console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=acm gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-23T05:30:39Z RECV  ls: cannot access '/usr/local/sbin/gts9-debian-to-recovery': No such file or directory
+2026-09-23T05:30:39Z RECV  lrwxrwxrwx 1 root root 11 Apr 14 03:38 [0m[01;36m/dev/disk/by-partlabel/misc[0m -> [40;33;01m../../sda10[0m
+2026-09-23T05:30:39Z RECV  NAME        PARTLABEL              SIZE MOUNTPOINTS
+2026-09-23T05:30:39Z RECV  ??????sda10     misc                     1M
+2026-09-23T05:30:39Z RECV  ??????mmcblk1p1 Linux data partition 115.3G /
+2026-09-23T05:30:48Z console session done

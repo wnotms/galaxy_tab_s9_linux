@@ -1,0 +1,12 @@
+2026-09-23T06:07:58Z console open on COM17
+2026-09-23T06:08:01Z SENT  sudo -n sh -c 'install -m 0755 /home/ms/gts9-debian-to-recovery.sh /usr/local/sbin/gts9-debian-to-recovery && /usr/local/sbin/gts9-debian-to-recovery --check' && echo __CHECK_OK__
+2026-09-23T06:08:01Z RECV  sudo -n sh -c 'install -m 0755 /home/ms/gts9-debian-to-recovery.sh /usr/local/sbin/gts9-debian-to-recovery && /usr/local/sbin/gts9-debian-to-recovery --check' && echo __CHECK_OK__
+2026-09-23T06:08:01Z RECV  [?2004lgts9-debian-to-recovery: found the misc partition as /dev/sda10
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: WARNING: /dev/sda10 is 2048 sectors, expected 256; continuing, the label is authoritative
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: device        : /dev/sda10 (2048 sectors)
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: partition name: misc
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: BCB command   : (empty, boots mainline)
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: no change made
+2026-09-23T06:08:01Z RECV  gts9-debian-to-recovery: done; nothing was rebooted
+2026-09-23T06:08:01Z RECV  __CHECK_OK__
+2026-09-23T06:08:10Z console session done

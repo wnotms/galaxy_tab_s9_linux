@@ -1,0 +1,5 @@
+2026-09-23T05:30:00Z console open on COM17
+2026-09-23T05:30:03Z SENT  id,uname -a,cat /etc/os-release,findmnt /,cat /proc/cmdline,ls -l /usr/local/sbin/gts9-debian-to-recovery 2>&1,ls -l /dev/disk/by-partlabel/misc 2>&1,lsblk -o NAME,PARTLABEL,SIZE,MOUNTPOINTS | grep -E "misc|mmcblk1p1|NAME"
+2026-09-23T05:30:03Z RECV  id,uname -a,cat /etc/os-release,findmnt /,cat /proc/cmdline,ls -l /usr/local/sbin/gts9-debian-to-recovery 2>&1,ls -l /dev/disk/by-partlabel/misc 2>&1,lsblk -o NAME,PARTLABEL,SIZE,MOUNTPOINTS | grep -E "misc|mmcblk1p1|NAME"
+2026-09-23T05:30:03Z RECV  [?2004l-bash: 1,ls: ambiguous redirect
+2026-09-23T05:30:12Z console session done
