@@ -176,7 +176,8 @@ class RootfsBoot(unittest.TestCase):
             self.assertIn(f'minimal_fail {failure}', MINIMAL_INIT)
         self.assertIn('GTS9_MINIMAL_FAIL=$GTS9_MINIMAL_FAILURE', MINIMAL_STATE)
         self.assertIn('ROOTFS_WAIT_SECONDS=30', MINIMAL_INIT)
-        self.assertIn('exec switch_root /newroot /run/gts9-minimal-pid1', MINIMAL_INIT)
+        self.assertIn('exec switch_root /newroot "$MINIMAL_INIT"', MINIMAL_INIT)
+        self.assertIn('MINIMAL_INIT=/run/gts9-minimal-pid1', MINIMAL_INIT)
         self.assertIn('if [ ! -x /newroot/sbin/init ]', MINIMAL_INIT)
         self.assertIn('cp /bin/busybox /run/busybox', MINIMAL_INIT)
 

@@ -96,9 +96,11 @@ minimal_fail() {
     minimal_rescue_shell
 }
 
+MINIMAL_INIT=/run/gts9-minimal-pid1
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;
+        gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=} ;;
     esac
 done
 GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
@@ -171,6 +173,26 @@ if ! cp /sbin/gts9-minimal-pid1 /run/gts9-minimal-pid1 ||
     minimal_emit 'could not stage the minimal PID 1 rescue helper'
     minimal_fail switch-root-returned
 fi
+
+# Run the staged trampoline once, normally, before the handoff.  If it cannot
+# execute or cannot append to the record, it would kill PID 1 inside
+# switch_root with nothing on the disk to show for it - so fall back to the
+# proven direct /sbin/init path instead of risking a silent dead device.
+if [ "$MINIMAL_INIT" = /run/gts9-minimal-pid1 ]; then
+    # The marker goes to its own file: the library rewrites the record
+    # atomically, so a marker appended to the record now would be replaced by
+    # the switch-root write a moment later.
+    SELFTEST_FILE=$GTS9_MINIMAL_LOG_DIR/gts9-minimal-trampoline-selftest
+    if /run/gts9-minimal-pid1 selftest "$SELFTEST_FILE"; then
+        minimal_emit 'GTS9_MINIMAL_TRAMPOLINE=selftest-ok'
+        minimal_state_stage switch-root-selftest-ok
+    else
+        minimal_emit 'GTS9_MINIMAL_TRAMPOLINE=selftest-failed'
+        minimal_state_stage switch-root-selftest-failed
+        minimal_emit 'falling back to /sbin/init for the handoff'
+        MINIMAL_INIT=/sbin/init
+    fi
+fi
 MOVED_VFS=''
 for vfs in dev proc sys run; do
     if ! mount --move "/$vfs" "/newroot/$vfs" 2>/dev/null &&
@@ -186,12 +208,24 @@ for vfs in dev proc sys run; do
     MOVED_VFS="$vfs $MOVED_VFS"
 done
 
+# The staged helper must be reachable in the new root exactly as switch_root
+# will resolve it: /run is the tmpfs that was just moved there.
+if [ "$MINIMAL_INIT" = /run/gts9-minimal-pid1 ] &&
+   [ ! -x /newroot/run/gts9-minimal-pid1 ]; then
+    minimal_emit 'the staged PID 1 helper is not executable in the new root'
+    minimal_fail switch-root-returned
+fi
+
 # Written and flushed before the only irreversible step: even if Debian's
 # /sbin/init never reaches systemd, TWRP can still prove that the card mounted,
 # /sbin/init was found and switch_root was about to run.
 minimal_state_stage switch-root
 sync
-exec switch_root /newroot /run/gts9-minimal-pid1
+# A separate marker after the standalone sync: if the record stops at
+# switch-root, the sync never returned; if it stops here, the handoff itself
+# (switch_root or the exec of the new init) is what failed.
+minimal_state_stage switch-root-synced
+exec switch_root /newroot "$MINIMAL_INIT"
 
 # The static PID 1 trampoline execs the already-validated /sbin/init. If that
 # exec returns, it reports the failure and keeps a BusyBox rescue shell alive.

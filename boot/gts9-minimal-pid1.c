@@ -36,6 +36,7 @@
 #define SYS_wait4    260
 #define SYS_dup3     24
 #define SYS_ioctl    29
+#define SYS_exit_group 94
 
 #define AT_FDCWD (-100)
 #define O_WRONLY 1
@@ -64,6 +65,15 @@ static long sys_call6(long n, long a, long b, long c, long d, long e, long f)
 		     : "memory", "x6", "x7", "x9", "x10", "x11", "x12",
 		       "x13", "x14", "x15", "x16", "x17", "x18");
 	return x0;
+}
+
+static int str_eq(const char *left, const char *right)
+{
+	while (*left && *left == *right) {
+		left++;
+		right++;
+	}
+	return *left == *right;
 }
 
 static long str_len(const char *text)
@@ -105,9 +115,9 @@ static void emit(const char *message, long length)
 static long record_fd = -1;
 static char record_number_buffer[64];
 
-static void record_open(void)
+static void record_open_at(const char *path)
 {
-	record_fd = sys_call6(SYS_openat, AT_FDCWD, (long)RECORD_PATH,
+	record_fd = sys_call6(SYS_openat, AT_FDCWD, (long)path,
 			      O_WRONLY | O_APPEND | O_CREAT, 0644, 0, 0);
 }
 
@@ -304,7 +314,14 @@ static void watchdog_loop(void)
 	}
 }
 
-__attribute__((noreturn, used)) void gts9_start(void)
+__attribute__((noreturn)) static void exit_now(long code)
+{
+	sys_call6(SYS_exit_group, code, 0, 0, 0, 0, 0);
+	for (;;)
+		sleep_one_second();
+}
+
+__attribute__((noreturn, used)) void gts9_start(long argc, char **argv)
 {
 	static const char failure[] =
 		"GTS9_MINIMAL_FAIL=switch-root-returned\n";
@@ -313,12 +330,24 @@ __attribute__((noreturn, used)) void gts9_start(void)
 	static const char kmsg_failure[] =
 		"gts9-minimal-pid1: GTS9_MINIMAL_FAIL=switch-root-returned\n";
 	static const char marker_entered[] = "trampoline=entered\n";
-	static const char marker_exec[] = "trampoline=exec-init\n";
+	static const char marker_exec[] = "trampoline=exec-init /sbin/init\n";
 	static const char marker_failed[] = "trampoline=exec-failed errno=";
 	long error;
 	char errno_text[24];
 
-	record_open();
+	/*
+	 * `gts9-minimal-pid1 selftest RECORD` is run by the minimal initramfs
+	 * before the irreversible handoff: it proves the trampoline can execute
+	 * and append to the record, so a broken helper cannot kill PID 1 inside
+	 * switch_root without a trace.
+	 */
+	if (argc >= 3 && str_eq(argv[1], "selftest")) {
+		record_open_at(argv[2]);
+		record_write("trampoline=selftest-ok\n");
+		exit_now(0);
+	}
+
+	record_open_at(RECORD_PATH);
 	record_write(marker_entered);
 
 	/* Fork the watchdog before the exec: it must survive the handover. */

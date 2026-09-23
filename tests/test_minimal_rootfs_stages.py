@@ -72,11 +72,33 @@ class MinimalRootfsStateTests(unittest.TestCase):
     def test_switch_root_marker_is_flushed_before_the_handoff(self):
         marker = INIT.index('minimal_state_stage switch-root')
         sync = INIT.index('\nsync\n', marker)
-        exec_ = INIT.index('exec switch_root /newroot /run/gts9-minimal-pid1')
+        synced = INIT.index('minimal_state_stage switch-root-synced')
+        exec_ = INIT.index('exec switch_root /newroot "$MINIMAL_INIT"')
         self.assertLess(marker, sync)
-        self.assertLess(sync, exec_)
-        # Nothing may run between the final marker and the handoff.
-        self.assertEqual(INIT[sync:exec_].strip(), 'sync')
+        self.assertLess(sync, synced)
+        self.assertLess(synced, exec_)
+        # switch-root-synced is the last thing written before the handoff, and
+        # it is what separates "the standalone sync hung" from "the handoff
+        # failed" when the record stops there.
+        self.assertEqual(INIT[synced:exec_].splitlines()[-1].strip(),
+                         'minimal_state_stage switch-root-synced')
+
+    def test_trampoline_is_self_tested_before_the_handoff(self):
+        self.assertIn('selftest "$SELFTEST_FILE"', INIT)
+        self.assertIn('minimal_state_stage switch-root-selftest-ok', INIT)
+        self.assertIn('minimal_state_stage switch-root-selftest-failed', INIT)
+        self.assertIn('MINIMAL_INIT=/sbin/init', INIT)
+        selftest = INIT.index('selftest "$SELFTEST_FILE"')
+        move = INIT.index('MOVED_VFS=')
+        self.assertLess(selftest, move)
+
+    def test_the_handoff_checks_the_staged_helper_in_the_new_root(self):
+        self.assertIn('[ ! -x /newroot/run/gts9-minimal-pid1 ]', INIT)
+        self.assertIn('gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=}',
+                      INIT)
+        # The init path is a variable, so the direct /sbin/init handoff can be
+        # selected from the cmdline without rebuilding the initramfs.
+        self.assertIn('MINIMAL_INIT=/run/gts9-minimal-pid1', INIT)
 
     def test_every_required_stage_is_recorded_in_order(self):
         offsets = [INIT.index(f'minimal_state_stage {stage}')
@@ -272,12 +294,17 @@ class MinimalPid1HandoverEvidence(unittest.TestCase):
     SOURCE = (ROOT / 'boot' / 'gts9-minimal-pid1.c').read_text()
 
     def test_trampoline_records_its_handover_on_the_debian_root(self):
-        for marker in ('trampoline=entered', 'trampoline=exec-init',
+        for marker in ('trampoline=entered', 'trampoline=exec-init /sbin/init',
                        'trampoline=exec-failed errno=',
                        'trampoline=watchdog-started', 'trampoline=alive-',
                        'trampoline=pid1 ', 'trampoline=diagnostics-dumped',
+                       'trampoline=selftest-ok',
                        '/var/log/gts9-minimal-dmesg.txt'):
             self.assertIn(marker, self.SOURCE, marker)
+        # The selftest must be an early branch that exits, and must be able to
+        # write to the path it is given.
+        self.assertIn('str_eq(argv[1], "selftest")', self.SOURCE)
+        self.assertIn('exit_now(0)', self.SOURCE)
         self.assertIn('/var/log/gts9-minimal-last-boot', self.SOURCE)
         self.assertIn('/proc/1/comm', self.SOURCE)
         self.assertIn('O_APPEND', self.SOURCE)
@@ -289,7 +316,8 @@ class MinimalPid1HandoverEvidence(unittest.TestCase):
         # later write can never recreate a half file at the record path.
         self.assertLess(self.SOURCE.index('watchdog_loop();'),
                         self.SOURCE.index('record_write(marker_exec);'))
-        self.assertEqual(self.SOURCE.count('record_open();'), 1)
+        # Opened once for the real handover (the selftest opens its own path).
+        self.assertEqual(self.SOURCE.count('record_open_at(RECORD_PATH);'), 1)
         self.assertIn('static long record_fd = -1;', self.SOURCE)
 
     def test_trampoline_compiles_static_and_contains_the_markers(self):
