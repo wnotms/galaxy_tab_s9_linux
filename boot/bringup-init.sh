@@ -25,6 +25,76 @@ log() {
     fi
 }
 
+BOOT_STAGE=''
+BOOT_STAGE_HISTORY=''
+BOOT_FAILURE='none'
+BOOT_DIAG_FILE=''
+ROOTFS_STATE='not-mounted'
+
+write_rootfs_boot_state() {
+    [ -n "$BOOT_DIAG_FILE" ] || return 0
+
+    diag_tmp="${BOOT_DIAG_FILE}.tmp"
+    diag_time=$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo unknown)
+    diag_uptime=$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)
+    diag_boot_id=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)
+    diag_cmdline=$(cat /proc/cmdline 2>/dev/null || echo unavailable)
+    diag_mmc_hosts=$(ls -1 /sys/class/mmc_host 2>/dev/null | tr '\n' ',')
+    diag_mmc_devices=''
+    for diag_mmc_device in /dev/mmcblk*; do
+        [ -e "$diag_mmc_device" ] || continue
+        diag_mmc_devices="${diag_mmc_devices}${diag_mmc_device},"
+    done
+    diag_mmc_devices=${diag_mmc_devices%,}
+    diag_mmc_regulators=$(grep -E 'vreg_l8b_1p8|vreg_l9b_2p9|8804000.mmc-vqmmc|8804000.mmc-vmmc' \
+        /sys/kernel/debug/regulator/regulator_summary 2>/dev/null | tr '\n' ';')
+    diag_mmc_log=$(dmesg 2>/dev/null | grep -Ei 'sdhci|mmc[0-9]' | tail -n 12 | tr '\n' ';')
+
+    {
+        printf 'timestamp=%s\n' "$diag_time"
+        printf 'uptime_seconds=%s\n' "$diag_uptime"
+        printf 'boot_id=%s\n' "$diag_boot_id"
+        printf 'cmdline=%s\n' "$diag_cmdline"
+        printf 'stage=%s\n' "$BOOT_STAGE"
+        printf 'stage_history=%s\n' "$BOOT_STAGE_HISTORY"
+        printf 'failure=%s\n' "$BOOT_FAILURE"
+        printf 'root_device=%s\n' "$ROOTFS_DEVICE"
+        printf 'rootfs_state=%s\n' "$ROOTFS_STATE"
+        printf 'mmc_hosts=%s\n' "${diag_mmc_hosts:-none}"
+        printf 'mmc_block_devices=%s\n' "${diag_mmc_devices:-none}"
+        printf 'mmc_regulators=%s\n' "${diag_mmc_regulators:-unavailable}"
+        printf 'mmc_log=%s\n' "${diag_mmc_log:-unavailable}"
+    } > "$diag_tmp" || {
+        rm -f "$diag_tmp"
+        log 'WARN: could not write rootfs boot-stage record'
+        return 1
+    }
+
+    chmod 0644 "$diag_tmp" && mv -f "$diag_tmp" "$BOOT_DIAG_FILE" || {
+        rm -f "$diag_tmp"
+        log 'WARN: could not install rootfs boot-stage record'
+        return 1
+    }
+}
+
+record_boot_stage() {
+    BOOT_STAGE=$1
+    if [ -n "$BOOT_STAGE_HISTORY" ]; then
+        BOOT_STAGE_HISTORY="${BOOT_STAGE_HISTORY},$BOOT_STAGE"
+    else
+        BOOT_STAGE_HISTORY=$BOOT_STAGE
+    fi
+    log "GTS9_BOOT_STAGE=$BOOT_STAGE"
+    log "GTS9_BOOT_UPTIME=$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
+    write_rootfs_boot_state
+}
+
+record_boot_failure() {
+    BOOT_FAILURE=$1
+    log "GTS9_BOOT_FAIL=$BOOT_FAILURE"
+    write_rootfs_boot_state
+}
+
 mount_path() {
     # mount_path <fstype> <target>
     mkdir -p "$2" 2>/dev/null || true
@@ -44,6 +114,7 @@ mount_path tmpfs /run
 # debugfs carries the two things this bring-up has to read: the deferred-probe
 # list (why a device never appeared) and the regulator/clock summaries.
 mount_path debugfs /sys/kernel/debug
+record_boot_stage kernel-userspace
 
 # Recover before USB/report work so diagnostic collection cannot prolong black.
 # Tests 041-043 show neither PHY/host power cycling before prepare nor a DDIC
@@ -102,6 +173,11 @@ display_recover() {
     return 0
 }
 display_recover
+if [ -w /sys/class/graphics/fb0/blank ]; then
+    record_boot_stage framebuffer-control-available
+else
+    record_boot_stage framebuffer-control-unavailable
+fi
 if [ -c /dev/tty0 ]; then
     printf '\nGTS9 mainline: early display console ready\n' > /dev/tty0 2>/dev/null
 fi
@@ -1102,7 +1178,14 @@ start_panel_shell()
         while :; do
             printf '\033c' > /dev/tty1 2>/dev/null
             {
-                printf '\r\nGTS9 mainline\r\n'
+                if [ -n "$ROOTFS_FAILURE" ]; then
+                    printf '\r\nGTS9 rescue shell\r\n'
+                    printf 'rootfs handoff failed\r\n'
+                    printf 'reason: %s\r\n' "$ROOTFS_FAILURE"
+                    printf 'last stage: %s\r\n' "${BOOT_STAGE:-unknown}"
+                else
+                    printf '\r\nGTS9 mainline\r\n'
+                fi
                 printf 'Linux %s\r\n' "$(uname -r 2>/dev/null)"
                 printf '\r\nLocal shell: tty1\r\n'
                 printf 'Kernel log: dmesg\r\n'
@@ -1145,6 +1228,7 @@ fi
 # reboot, and PID 1 never exits.
 # ---------------------------------------------------------------------------
 ROOTFS_WAIT_MS=${GTS9_ROOTFS_WAIT_MS:-15000}
+ROOTFS_FAILURE=''
 
 boot_rootfs()
 {
@@ -1152,26 +1236,39 @@ boot_rootfs()
 
     log "gts9-rootfs: requested root device $ROOTFS_DEVICE"
     log 'gts9-rootfs: waiting for root device'
+    record_boot_stage waiting-mmc
     while [ ! -b "$ROOTFS_DEVICE" ] && [ "$waited" -lt "$ROOTFS_WAIT_MS" ]; do
         sleep 1
         waited=$((waited + 1000))
     done
     if [ ! -b "$ROOTFS_DEVICE" ]; then
         log "gts9-rootfs: ERROR: $ROOTFS_DEVICE did not appear within ${ROOTFS_WAIT_MS} ms"
+        record_boot_failure mmc-timeout
+        ROOTFS_FAILURE=mmc-timeout
         return 1
     fi
     log "gts9-rootfs: root device ready after ${waited} ms"
+    record_boot_stage mmc-found
 
     mkdir -p /newroot
     log 'gts9-rootfs: mounting ext4'
+    record_boot_stage mounting-root
     if ! mount -t ext4 -o rw "$ROOTFS_DEVICE" /newroot; then
         log 'gts9-rootfs: ERROR: mount failed'
+        record_boot_failure root-mount
+        ROOTFS_FAILURE=root-mount
         return 1
     fi
     log 'gts9-rootfs: rootfs mounted rw'
+    ROOTFS_STATE=mounted-rw
+    BOOT_DIAG_FILE=/newroot/var/log/gts9-last-boot-stage
+    mkdir -p /newroot/var/log 2>/dev/null || true
+    record_boot_stage root-mounted
 
     if [ ! -x /newroot/sbin/init ]; then
         log 'gts9-rootfs: ERROR: /newroot/sbin/init is missing or not executable'
+        record_boot_failure missing-init
+        ROOTFS_FAILURE=missing-init
         umount /newroot 2>/dev/null
         return 1
     fi
@@ -1183,12 +1280,15 @@ boot_rootfs()
     fi
     if ! command -v switch_root >/dev/null 2>&1; then
         log 'gts9-rootfs: ERROR: no switch_root applet in this initramfs'
+        record_boot_failure missing-switch-root
+        ROOTFS_FAILURE=missing-switch-root
         umount /newroot 2>/dev/null
         return 1
     fi
 
     mkdir -p /newroot/dev /newroot/proc /newroot/sys /newroot/run
     log 'gts9-rootfs: preparing switch_root'
+    record_boot_stage init-found
 
     for vfs in dev proc sys run; do
         if ! mount --move "/$vfs" "/newroot/$vfs" 2>/dev/null &&
@@ -1198,8 +1298,12 @@ boot_rootfs()
     done
 
     log 'gts9-rootfs: handing PID 1 to /sbin/init'
+    record_boot_stage switch-root
+    sync
     exec switch_root /newroot /sbin/init
     log 'gts9-rootfs: ERROR: switch_root returned'
+    record_boot_failure switch-root-returned
+    ROOTFS_FAILURE=switch-root-returned
     return 1
 }
 

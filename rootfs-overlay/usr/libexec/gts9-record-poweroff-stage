@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+record=/var/log/gts9-last-poweroff-stage
+tmp="${record}.tmp.$$"
+{
+	printf 'stage=systemd-poweroff-service\n'
+	printf 'timestamp=%s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo unknown)"
+	printf 'uptime_seconds=%s\n' "$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
+	printf 'boot_id=%s\n' "$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)"
+} > "$tmp"
+
+chmod 0644 "$tmp"
+mv -f "$tmp" "$record"

@@ -56,7 +56,7 @@ done
 
 # Applets the bring-up shell must have.  Anything missing here is a build
 # failure, because the first boot test depends on it.
-required_applets='sh mount umount cat echo dmesg uname ls mkdir ln cp sync sleep reboot poweroff'
+required_applets='sh mount umount cat echo dmesg uname ls mkdir ln cp mv chmod sync sleep reboot poweroff grep tail'
 # Applets the report channel needs on top of that: it parses GPT headers off a
 # raw disk, and then persists the report either through a filesystem or as a
 # raw, checksummed block.  A missing applet would silently disable the only

@@ -1,0 +1,12 @@
+[Unit]
+Description=Record entry into the systemd poweroff shutdown service
+DefaultDependencies=no
+After=umount.target
+Before=systemd-poweroff.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-poweroff-stage
+
+[Install]
+WantedBy=systemd-poweroff.service

@@ -1,0 +1,14 @@
+[Unit]
+Description=Record Debian boot progress after the initramfs handoff
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+ConditionPathExists=/var/log/gts9-last-boot-stage
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /usr/libexec/gts9-record-boot-stage systemd-basic
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
