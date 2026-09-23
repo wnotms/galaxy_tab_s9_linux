@@ -5,6 +5,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 INIT = (ROOT / 'boot' / 'bringup-init.sh').read_text()
 CMDLINE = (ROOT / 'boot' / 'cmdline.example.txt').read_text()
+TRACE_CMDLINE = (ROOT / 'boot' / 'cmdline.boot-trace.example.txt').read_text()
 OVERLAY = ROOT / 'rootfs-overlay' / 'usr'
 
 
@@ -44,6 +45,18 @@ class RootfsBoot(unittest.TestCase):
             self.assertIn(f'record_boot_failure {failure}', INIT)
         self.assertIn('GTS9_BOOT_STAGE=', INIT)
         self.assertIn('GTS9_BOOT_FAIL=', INIT)
+
+    def test_panel_boot_trace_is_opt_in_and_covers_reports(self):
+        normal_tokens = CMDLINE.split()
+        trace_tokens = TRACE_CMDLINE.split()
+        self.assertNotIn('gts9_boot_trace_console=1', normal_tokens)
+        self.assertIn('gts9_boot_trace_console=1', trace_tokens)
+        self.assertIn('gts9_boot_trace_console=*)', INIT)
+        self.assertIn('[ "$BOOT_TRACE_CONSOLE" = 1 ] || return 0', INIT)
+        self.assertIn('GTS9_BOOT_REPORT_BEGIN=$report_title', INIT)
+        self.assertIn('GTS9_BOOT_REPORT_END=$report_title status=$report_status', INIT)
+        self.assertIn('if [ "$BOOT_TRACE_CONSOLE" = 1 ]; then\n            echo "exit_status=$report_status"',
+                      INIT)
 
     def test_rootfs_diagnostic_is_written_only_after_mount(self):
         mount = INIT.index("log 'gts9-rootfs: rootfs mounted rw'")

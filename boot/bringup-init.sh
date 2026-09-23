@@ -17,12 +17,26 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH
 
+BOOT_TRACE_CONSOLE=0
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_boot_trace_console=*) BOOT_TRACE_CONSOLE=${arg#gts9_boot_trace_console=} ;;
+    esac
+done
+case "$BOOT_TRACE_CONSOLE" in 1) ;; *) BOOT_TRACE_CONSOLE=0 ;; esac
+
 log() {
     echo "$*"
     # Keep the persistent kernel log useful even when the shell is never seen.
     if [ -w /dev/kmsg ]; then
         echo "gts9-init: $*" > /dev/kmsg 2>/dev/null || true
     fi
+}
+
+trace_boot_console() {
+    [ "$BOOT_TRACE_CONSOLE" = 1 ] || return 0
+    [ -c /dev/tty0 ] || return 0
+    printf '\r\n%s\r\n' "$*" > /dev/tty0 2>/dev/null || true
 }
 
 BOOT_STAGE=''
@@ -86,12 +100,14 @@ record_boot_stage() {
     fi
     log "GTS9_BOOT_STAGE=$BOOT_STAGE"
     log "GTS9_BOOT_UPTIME=$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
+    trace_boot_console "GTS9_BOOT_STAGE=$BOOT_STAGE"
     write_rootfs_boot_state
 }
 
 record_boot_failure() {
     BOOT_FAILURE=$1
     log "GTS9_BOOT_FAIL=$BOOT_FAILURE"
+    trace_boot_console "GTS9_BOOT_FAIL=$BOOT_FAILURE"
     write_rootfs_boot_state
 }
 
@@ -342,12 +358,25 @@ REPORT=/tmp/bringup-report.txt
 
 report() {
     # report <section title> <command...>
+    report_title=$1
+    shift
+    if [ "$BOOT_TRACE_CONSOLE" = 1 ]; then
+        log "GTS9_BOOT_REPORT_BEGIN=$report_title"
+        trace_boot_console "GTS9_BOOT_REPORT_BEGIN=$report_title"
+    fi
     {
-        echo "===== $1 ====="
-        shift
+        echo "===== $report_title ====="
         "$@" 2>&1
+        report_status=$?
+        if [ "$BOOT_TRACE_CONSOLE" = 1 ]; then
+            echo "exit_status=$report_status"
+        fi
         echo
     } >> "$REPORT"
+    if [ "$BOOT_TRACE_CONSOLE" = 1 ]; then
+        log "GTS9_BOOT_REPORT_END=$report_title status=$report_status"
+        trace_boot_console "GTS9_BOOT_REPORT_END=$report_title status=$report_status"
+    fi
 }
 
 log ''
