@@ -1,0 +1,117 @@
+#!/bin/sh
+# X710 USB ACM debug console, created from Debian userspace.
+#
+# This is the configfs sequence that boot/bringup-init.sh proved on the tablet
+# (idVendor 0x0525 / idProduct 0xa4a7, ACM only), moved out of the initramfs:
+# USB is not allowed to be a root-filesystem dependency, so the initramfs hands
+# PID 1 to Debian first and Debian brings the console up afterwards.
+#
+# Scope is deliberately one function: acm.usb0.  No mass storage, NCM, RNDIS,
+# MTP or adb, and no block device is touched - the gadget must never be able to
+# disturb the root filesystem it is running from.
+#
+# Every wait is bounded.  A failure exits non-zero so `systemctl --failed`
+# shows it, but nothing here reboots, panics or blocks the boot targets; the
+# panel/tty1 path and the rest of Debian keep running.
+
+set -u
+
+# The defaults are the real paths; the GTS9_USB_* overrides exist so the host
+# tests can drive the whole sequence against a temporary configfs-shaped tree.
+CONFIGFS=${GTS9_USB_CONFIGFS:-/sys/kernel/config}
+GADGET=${GTS9_USB_GADGET_DIR:-$CONFIGFS/usb_gadget/gts9}
+UDC_DIR=${GTS9_USB_UDC_DIR:-/sys/class/udc}
+TTY_DEVICE=${GTS9_USB_TTY:-/dev/ttyGS0}
+UDC_WAIT_SECONDS=${GTS9_USB_UDC_WAIT_SECONDS:-15}
+TTY_WAIT_SECONDS=${GTS9_USB_TTY_WAIT_SECONDS:-5}
+STAGE_HELPER=${GTS9_STAGE_HELPER:-/usr/libexec/gts9-record-debian-stage}
+
+record_stage() {
+	if [ -x "$STAGE_HELPER" ]; then
+		"$STAGE_HELPER" "$@" || true
+	fi
+}
+
+fail() {
+	echo "gts9-usb-acm: $*" >&2
+	record_stage --failure usb-acm-failed usb-acm-failed
+	exit 1
+}
+
+write_value() {
+	# write_value PATH VALUE
+	if ! echo "$2" > "$1" 2>/dev/null; then
+		fail "cannot write $1"
+	fi
+}
+
+if [ ! -d "$CONFIGFS/usb_gadget" ]; then
+	mkdir -p "$CONFIGFS" 2>/dev/null || true
+	mount -t configfs none "$CONFIGFS" 2>/dev/null || true
+fi
+if [ ! -d "$CONFIGFS/usb_gadget" ]; then
+	fail 'configfs is not available'
+fi
+
+# A gadget left over from an earlier userspace and still bound is already the
+# console this service exists to provide; do not tear it down and rebuild it.
+if [ -d "$GADGET" ] && [ -d "$GADGET/functions/acm.usb0" ]; then
+	bound_udc=$(cat "$GADGET/UDC" 2>/dev/null || true)
+	if [ -n "$bound_udc" ]; then
+		echo "gts9-usb-acm: gadget already bound to $bound_udc"
+		record_stage usb-acm-ready
+		exit 0
+	fi
+fi
+
+mkdir -p "$GADGET" 2>/dev/null || fail "cannot create $GADGET"
+
+# Same verified identifiers as the initramfs gadget: Windows already maps
+# these to the COM port the bring-up logs were captured from.
+mkdir -p "$GADGET/strings/0x409" 2>/dev/null || fail 'cannot create gadget strings'
+mkdir -p "$GADGET/configs/c.1/strings/0x409" 2>/dev/null || fail 'cannot create the gadget configuration'
+
+write_value "$GADGET/idVendor" 0x0525
+write_value "$GADGET/idProduct" 0xa4a7
+write_value "$GADGET/bcdDevice" 0x0100
+write_value "$GADGET/bcdUSB" 0x0200
+write_value "$GADGET/strings/0x409/manufacturer" Samsung
+write_value "$GADGET/strings/0x409/product" 'GTS9 mainline Debian debug console'
+write_value "$GADGET/strings/0x409/serialnumber" gts9wifi-0001
+write_value "$GADGET/configs/c.1/strings/0x409/configuration" bringup
+write_value "$GADGET/configs/c.1/MaxPower" 250
+
+mkdir -p "$GADGET/functions/acm.usb0" 2>/dev/null || fail 'cannot create the ACM function'
+if [ ! -e "$GADGET/configs/c.1/acm.usb0" ]; then
+	ln -s "$GADGET/functions/acm.usb0" "$GADGET/configs/c.1/acm.usb0" 2>/dev/null || \
+		fail 'cannot link the ACM function into the configuration'
+fi
+
+waited=0
+while [ "$waited" -lt "$UDC_WAIT_SECONDS" ] && \
+      [ -z "$(ls -A "$UDC_DIR" 2>/dev/null)" ]; do
+	sleep 1
+	waited=$((waited + 1))
+done
+udc=$(ls "$UDC_DIR" 2>/dev/null | head -n 1)
+if [ -z "$udc" ]; then
+	fail "no USB device controller after ${UDC_WAIT_SECONDS}s"
+fi
+
+if ! echo "$udc" > "$GADGET/UDC" 2>/dev/null; then
+	fail "cannot bind the gadget to $udc"
+fi
+
+waited=0
+while [ "$waited" -lt "$TTY_WAIT_SECONDS" ] && [ ! -c "$TTY_DEVICE" ]; do
+	sleep 1
+	waited=$((waited + 1))
+done
+if [ -c "$TTY_DEVICE" ]; then
+	echo "gts9-usb-acm: bound to $udc; $TTY_DEVICE is ready"
+else
+	echo "gts9-usb-acm: bound to $udc; $TTY_DEVICE has not appeared yet" >&2
+fi
+
+record_stage usb-acm-ready
+exit 0

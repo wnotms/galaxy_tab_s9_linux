@@ -1,0 +1,13 @@
+[Unit]
+Description=X710 USB ACM debug console (configfs)
+After=local-fs.target
+Before=serial-getty@ttyGS0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-usb-acm
+RemainAfterExit=yes
+TimeoutStartSec=45
+
+[Install]
+WantedBy=multi-user.target
