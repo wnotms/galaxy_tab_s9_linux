@@ -1,0 +1,7 @@
+owner_request=explicit authorization to flash local diagnostic candidate and test
+scope=boot,init_boot,vendor_boot only; vbmeta and dtbo excluded
+repository_branch=test
+repository_head_before_test=d5e7d51a7d6d2b54179ff947bec9b86aac1e15b0
+candidate_source_commit=7d04768985c8ba8fc5b5ed847a3d31679fc34447
+transport=Windows ADB/TWRP plus COM17 Debian recovery helper
+credentials=local mode-600 file only; never print or archive values
