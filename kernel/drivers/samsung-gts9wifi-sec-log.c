@@ -31,6 +31,16 @@
  *   - Confirm it on the first boot test exactly as described in
  *     docs/FIRST_BOOT_TEST.md before relying on it.
  *
+ * Measured limit, and the reason this stays bring-up-only infrastructure: boot
+ * test 007 (reference/boot-tests/test-007-20260921T124538Z/) counted the
+ * bootloader's own log spanning essentially the whole 2 MiB ring - 2,096,187 of
+ * 2,097,136 bytes - with the newest session ending at the very end of it.  The
+ * ring is only read after that bootloader has run, so mainline writes are
+ * overwritten whatever offset they use, the protected tail window included.
+ * Keep the driver for bring-up, but never read an empty ring as evidence that
+ * the kernel did not start.  Do not replace it with pstore/ramoops until warm
+ * reboot and panic persistence have been confirmed on this hardware.
+ *
  * Boot test 1 (reference/stock/BOOT_TEST_1.md) boot-looped with an empty ring:
  * registering the console from a platform driver only happens at
  * device_initcall time, long after the failures this console exists to catch.
