@@ -3,27 +3,35 @@
 #
 # The keyboard's STM32 is powered from the tablet's Pogo rail, and the
 # built-in driver probes at around 0.6 s - before the MCU is ready to answer.
-# On this tablet that makes the connect-line check read 0, so the driver
-# concludes "confirmed detach", powers the rail off and reports DETACHED with
-# no working input device.  The same hardware recovers completely when the
-# driver's own rearm interface is used later:
+# On this tablet that makes its 250 ms connect-line check read 0, so the
+# driver concludes "confirmed detach", powers the rail off and reports
+# DETACHED (test 178: no usable input device at boot).  Two things bring it
+# back, and both are covered here:
+#
+#   * the driver's own hot-reconnect: when the connect line goes high later it
+#     powers the rail, arms the IRQ and reads the MCU model (observed at 34 s
+#     after boot in test 178);
+#   * the driver's explicit rearm interface, which runs the full boot sequence
+#     again:
 #
 #	echo hard > /sys/bus/i2c/devices/5-002a/rearm
 #
-# (test 178: a manual re-probe 229 s after boot brought up
-# "Book Cover Keyboard Slim (EF-DX710)" with handlers sysrq kbd leds event2).
-#
-# This is the same pattern as the panel recovery: the sequencing is userspace
-# policy, the driver still owns the hardware.  The service is bounded and
-# always exits 0; a keyboard that cannot be recovered never blocks the boot.
+# This service is therefore an observer with a bounded window: it watches the
+# driver's state/connect attributes for up to GTS9_POGO_WINDOW_SECONDS, lets
+# the driver's hot-reconnect win if it can, and only asks for a hard rearm
+# when a keyboard is attached (connect=1) while the driver still reports
+# DETACHED.  It is the same "userspace owns the sequencing, the driver owns
+# the hardware" split as the panel recovery, it always exits 0, and it never
+# blocks the boot.
 
 set -u
 
 POGO_SYSFS=${GTS9_POGO_SYSFS:-/sys/bus/i2c/devices/5-002a/rearm}
 STAGE_HELPER=${GTS9_STAGE_HELPER:-/usr/libexec/gts9-record-debian-stage}
 KMSG=${GTS9_POGO_KMSG:-/dev/kmsg}
-SETTLE_SECONDS=${GTS9_POGO_SETTLE_SECONDS:-3}
-READY_WAIT_SECONDS=${GTS9_POGO_READY_WAIT_SECONDS:-5}
+WINDOW_SECONDS=${GTS9_POGO_WINDOW_SECONDS:-60}
+POLL_SECONDS=${GTS9_POGO_POLL_SECONDS:-5}
+REARM_WAIT_SECONDS=${GTS9_POGO_REARM_WAIT_SECONDS:-3}
 
 report() {
 	echo "gts9-pogo-recover: $*"
@@ -58,36 +66,46 @@ if [ ! -r "$POGO_SYSFS" ]; then
 	finish pogo-absent 'the Pogo keyboard driver is not present'
 fi
 
-# The early probe gives up within 250 ms; give the rail and the MCU a moment
-# before deciding that nothing is attached.
-sleep "$SETTLE_SECONDS"
+saw_connect=0
+saw_not_ready=0
+elapsed=0
+while [ "$elapsed" -lt "$WINDOW_SECONDS" ]; do
+	state=$(field state)
+	connect=$(field connect)
 
-state=$(field state)
-connect=$(field connect)
-if [ "$state" = READY ]; then
-	finish pogo-ok "keyboard is ${state} (connect=${connect:-?})"
-fi
-
-if [ "$connect" != 1 ]; then
-	finish pogo-absent "no keyboard attached (state=${state:-?} connect=${connect:-?})"
-fi
-
-report "keyboard attached but the driver reports ${state:-?}; requesting a hard rearm"
-if ! echo hard > "$POGO_SYSFS" 2>/dev/null; then
-	finish pogo-recovery-failed 'the rearm attribute rejected the request' \
-		pogo-recovery-failed
-fi
-
-waited=0
-while [ "$waited" -lt "$READY_WAIT_SECONDS" ]; do
-	if [ "$(field state)" = READY ]; then
-		finish pogo-recovered \
-			"keyboard READY after a hard rearm (connect=$(field connect))"
+	if [ "$state" = READY ]; then
+		if [ "$saw_not_ready" = 1 ]; then
+			finish pogo-recovered \
+				"keyboard READY after the driver reconnected (connect=$connect)"
+		fi
+		finish pogo-ok "keyboard already READY (connect=$connect)"
 	fi
-	sleep 1
-	waited=$((waited + 1))
+	saw_not_ready=1
+
+	if [ "$connect" = 1 ]; then
+		saw_connect=1
+		report "keyboard attached but the driver reports ${state:-?}; requesting a hard rearm"
+		echo hard > "$POGO_SYSFS" 2>/dev/null || true
+		waited=0
+		while [ "$waited" -lt "$REARM_WAIT_SECONDS" ]; do
+			sleep 1
+			waited=$((waited + 1))
+			if [ "$(field state)" = READY ]; then
+				finish pogo-recovered \
+					"keyboard READY after a hard rearm (connect=$(field connect))"
+			fi
+		done
+		report "the hard rearm did not bring the keyboard up yet"
+	fi
+
+	sleep "$POLL_SECONDS"
+	elapsed=$((elapsed + POLL_SECONDS))
 done
 
-finish pogo-recovery-failed \
-	"keyboard still $(field state) after ${READY_WAIT_SECONDS}s" \
-	pogo-recovery-failed
+if [ "$saw_connect" = 1 ]; then
+	finish pogo-recovery-failed \
+		"keyboard attached but still $(field state) after ${WINDOW_SECONDS}s" \
+		pogo-recovery-failed
+fi
+finish pogo-absent \
+	"no keyboard attached within ${WINDOW_SECONDS}s (connect=0)"
