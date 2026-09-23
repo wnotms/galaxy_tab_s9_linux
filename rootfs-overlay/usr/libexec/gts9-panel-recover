@@ -36,6 +36,21 @@ CYCLE_TIMEOUT=${GTS9_PANEL_CYCLE_TIMEOUT:-5}
 ID_FAILURE='ana38407 panel id: 00 00 00'
 ID_OK='ana38407 panel id: 80 00 04'
 
+# The framebuffer blank/unblank cycle is the only way back for a cold-boot
+# zero panel ID, but it is also a full modeset on a DPU that can hiccup: test
+# 178 caught an intermittent DPU hang in the same path (enc35 frame done
+# timeout -> vblank wait timeout -> workqueue lockup -> RCU stall).  A
+# dark-but-stable panel is sometimes preferable while that is investigated, so
+# gts9_panel_recover=0 turns the cycle off without touching anything else.
+CMDLINE_FILE=${GTS9_PANEL_CMDLINE:-/proc/cmdline}
+RECOVERY_ENABLED=1
+for panel_arg in $(cat "$CMDLINE_FILE" 2>/dev/null); do
+	case "$panel_arg" in
+	gts9_panel_recover=*) RECOVERY_ENABLED=${panel_arg#gts9_panel_recover=} ;;
+	esac
+done
+case "$RECOVERY_ENABLED" in 0) ;; *) RECOVERY_ENABLED=1 ;; esac
+
 report() {
 	echo "gts9-panel-recover: $*"
 	if [ -w "$KMSG" ]; then
@@ -104,6 +119,11 @@ if ! log_has "$ID_FAILURE"; then
 		finish panel-unavailable 'no kernel log available to check the panel ID'
 	fi
 	finish panel-ok 'no first-enable zero panel ID recorded; nothing to recover'
+fi
+
+if [ "$RECOVERY_ENABLED" != 1 ]; then
+	finish panel-recovery-disabled \
+		'gts9_panel_recover=0: leaving the dark panel alone'
 fi
 
 report 'first-enable zero panel ID recorded; cycling the framebuffer'

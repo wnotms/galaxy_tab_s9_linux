@@ -45,6 +45,8 @@ class PanelRecoverServiceTests(unittest.TestCase):
         self.record = self.root / 'gts9-minimal-last-boot'
         self.record.write_text(INITRAMFS_RECORD)
         self.kmsg = self.root / 'kmsg'
+        (self.root / 'cmdline').write_text(
+            'console=ttyMSM0,115200n8 gts9_minimal_rootfs=1')
 
     def run_helper(self, env=None, **overrides):
         environment = dict(os.environ,
@@ -57,7 +59,8 @@ class PanelRecoverServiceTests(unittest.TestCase):
                            GTS9_PANEL_ID_WAIT_SECONDS='1',
                            GTS9_PANEL_SETTLE_SECONDS='1',
                            GTS9_PANEL_CYCLES='3',
-                           GTS9_PANEL_CYCLE_TIMEOUT='2')
+                           GTS9_PANEL_CYCLE_TIMEOUT='2',
+                           GTS9_PANEL_CMDLINE=str(self.root / 'cmdline'))
         environment.update(overrides)
         if env:
             environment.update(env)
@@ -135,11 +138,33 @@ class PanelRecoverServiceTests(unittest.TestCase):
         self.assertEqual(self.stages()['debian_stage'], 'panel-unavailable')
         self.assertIn('no kernel log available', result.stdout)
 
+    def test_cmdline_can_keep_the_dark_panel_alone(self):
+        # The cycle is a full modeset on a DPU that can hang (test 178);
+        # gts9_panel_recover=0 keeps the stable dark-panel behaviour.
+        (self.root / 'cmdline').write_text(
+            'console=ttyMSM0,115200n8 gts9_minimal_rootfs=1 gts9_panel_recover=0')
+        self.log.write_text(ID_FAILURE + '\n')
+        result = self.run_helper()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.stages()['debian_stage'], 'panel-recovery-disabled')
+        self.assertNotIn('cycling the framebuffer', result.stdout)
+
+    def test_recovery_is_enabled_by_default(self):
+        self.log.write_text(ID_FAILURE + '\n')
+        watcher = self.recover_in_background()
+        try:
+            result = self.run_helper()
+        finally:
+            watcher.wait(timeout=10)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.stages()['debian_stage'], 'panel-recovered')
+
     def test_service_is_ordered_before_tty1_and_blocks_nothing(self):
         self.assertIn('After=local-fs.target', UNIT)
         self.assertIn('Before=getty@tty1.service', UNIT)
         self.assertIn('Type=oneshot', UNIT)
         self.assertIn('ExecStart=/usr/libexec/gts9-panel-recover', UNIT)
+        self.assertIn('gts9_panel_recover=*)', HELPER_TEXT)
         self.assertIn('WantedBy=multi-user.target', UNIT)
         self.assertNotIn('Requires=', UNIT)
         self.assertNotIn('Before=multi-user.target', UNIT)
