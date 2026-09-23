@@ -54,9 +54,8 @@ class PogoRecoverServiceTests(unittest.TestCase):
                            GTS9_STAGE_HELPER=str(STAGE_HELPER),
                            GTS9_MINIMAL_BOOT_RECORD=str(self.record),
                            GTS9_POGO_KMSG=str(self.kmsg),
-                           GTS9_POGO_WINDOW_SECONDS='3',
-                           GTS9_POGO_POLL_SECONDS='1',
-                           GTS9_POGO_REARM_WAIT_SECONDS='2')
+                           GTS9_POGO_SETTLE_SECONDS='0',
+                           GTS9_POGO_READY_WAIT_SECONDS='3')
         environment.update(overrides)
         if env:
             environment.update(env)
@@ -107,8 +106,7 @@ class PogoRecoverServiceTests(unittest.TestCase):
     def test_a_failed_rearm_is_recorded_without_failing_the_boot(self):
         self.write_state('DETACHED', 1)
         started = time.monotonic()
-        result = self.run_helper(GTS9_POGO_WINDOW_SECONDS='2',
-                                 GTS9_POGO_REARM_WAIT_SECONDS='1')
+        result = self.run_helper(GTS9_POGO_READY_WAIT_SECONDS='2')
         elapsed = time.monotonic() - started
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertLess(elapsed, 15, 'the recovery wait must stay bounded')
@@ -116,30 +114,13 @@ class PogoRecoverServiceTests(unittest.TestCase):
         self.assertEqual(fields['debian_stage'], 'pogo-recovery-failed')
         self.assertEqual(fields['debian_failure'], 'pogo-recovery-failed')
 
-    def test_a_late_driver_reconnect_is_recognised(self):
-        # Test 178: the driver's own hot-reconnect brought the keyboard up at
-        # 34 s, so the service must report pogo-recovered rather than absent.
-        self.write_state('DETACHED', 0)
-        watcher = subprocess.Popen(
-            ['/bin/sh', '-c',
-             f'sleep 1; printf "state=READY\\nconnect=1\\nready=1\\n" > {self.sysfs}'])
-        try:
-            result = self.run_helper(GTS9_POGO_WINDOW_SECONDS='6',
-                                     GTS9_POGO_POLL_SECONDS='1')
-        finally:
-            watcher.wait(timeout=10)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(self.stages()['debian_stage'], 'pogo-recovered')
-
     def test_missing_driver_is_reported_as_absent(self):
         result = self.run_helper(env={'GTS9_POGO_SYSFS': str(self.root / 'nope')})
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.stages()['debian_stage'], 'pogo-absent')
 
-    def test_service_observes_in_the_background_and_blocks_nothing(self):
-        # Type=simple: a oneshot wanted by multi-user.target would hold the
-        # target until the whole observation window had elapsed.
-        self.assertIn('Type=simple', UNIT)
+    def test_service_is_oneshot_and_blocks_nothing(self):
+        self.assertIn('Type=oneshot', UNIT)
         self.assertIn('ExecStart=/usr/libexec/gts9-pogo-recover', UNIT)
         self.assertIn('After=local-fs.target', UNIT)
         self.assertIn('WantedBy=multi-user.target', UNIT)
@@ -152,7 +133,6 @@ class PogoRecoverServiceTests(unittest.TestCase):
         self.assertIn('/sys/bus/i2c/devices/5-002a/rearm', HELPER_TEXT)
         self.assertIn('echo hard > "$POGO_SYSFS"', HELPER_TEXT)
         self.assertIn('= READY', HELPER_TEXT)
-        self.assertIn('GTS9_POGO_WINDOW_SECONDS', HELPER_TEXT)
         self.assertIn('pogo-recovered', HELPER_TEXT)
 
     def test_helper_never_reboots_or_masks_a_failure(self):

@@ -3,11 +3,10 @@ Description=X710 Pogo keyboard cold-boot recovery
 After=local-fs.target
 
 [Service]
-# Type=simple on purpose: this is an observer with a bounded window, so it must
-# not hold up multi-user.target (a oneshot wanted by the target would).
-Type=simple
+Type=oneshot
 ExecStart=/usr/libexec/gts9-pogo-recover
-TimeoutStartSec=90
+RemainAfterExit=yes
+TimeoutStartSec=45
 
 [Install]
 WantedBy=multi-user.target
