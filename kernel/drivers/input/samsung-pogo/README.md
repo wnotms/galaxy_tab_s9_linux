@@ -1,11 +1,12 @@
-# `samsung-pogo` — Samsung's own `stm32_pogo_v3`, imported for an A/B
+# `samsung-pogo` — Samsung's own `stm32_pogo_v3`, retained for reference
 
-This directory is the second half of the A/B the investigation needs: the same
-hardware, kernel, DTS, GENI driver and initramfs, with **only** the pogo driver
-swapped. If this one brings the application interface up and
-`drivers/input/keyboard/keyboard-samsung-pogo.c` does not, the fault is in the
-driver's logic; if neither does, the fault is below the driver — controller,
-pinctrl, regulator, clock or runtime PM.
+This is a reference implementation only. The default SM-X710 build uses
+`kernel/drivers/keyboard-samsung-pogo.c` and does not copy this directory into
+the prepared kernel tree. `scripts/prepare-kernel.sh` installs it only when run
+with `GTS9_INSTALL_VENDOR_POGO=1`, for a deliberate manual A/B comparison.
+
+It preserves the source needed for future A/B comparisons without adding a
+second Pogo implementation to the normal source overlay or default Kbuild path.
 
 ## What is here
 
@@ -74,17 +75,11 @@ stm32_pogo_i2c_v3  stm32_pogo_core_v3  stm32_pogo_cmd_v3  stm32_pogo_fw
 stm32_pogo_interrupt_v3  stm32_pogo_fn_v3  samsung_pogo_stubs
 ```
 
-## What is left
+## Optional A/B setup
 
-1. Wire the Kconfig choice into the kernel: add
-   `obj-$(CONFIG_KEYBOARD_SAMSUNG_POGO_VENDOR_PORT) += samsung-pogo/` to
-   `drivers/input/keyboard/Makefile` and source this directory's Kconfig from
-   there, as a queued patch beside `0006-input-add-samsung-pogo-keyboard.patch`.
-2. Teach `scripts/prepare-kernel.sh` to copy this directory (the driver-prefix
-   rule only copies `kernel/drivers/*.c`), and let `scripts/build-kernel.sh`'s
-   required-symbol check accept either driver symbol.
-3. Build, then run the A/B on hardware with everything else unchanged and record
-   it under `reference/boot-tests/`: if this driver brings `0x2a` up and
-   `keyboard-samsung-pogo.c` does not, the fault is in the driver's logic; if
-   neither does, it is below the driver - controller, pinctrl, regulator, clock
-   or runtime PM.
+Run `GTS9_INSTALL_VENDOR_POGO=1 scripts/prepare-kernel.sh <worktree>` to copy
+this reference driver and add its Kconfig/Makefile entries for a manual A/B.
+The normal `scripts/build-kernel.sh` intentionally requires the verified
+mainline symbol; changing the kernel configuration for a vendor comparison is
+an explicit experiment. A later default prepare resets the worktree and removes
+the optional files and Kbuild edits.

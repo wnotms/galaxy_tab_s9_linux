@@ -5,6 +5,12 @@ tree=${1:?usage: prepare-kernel.sh LINUX_WORKTREE}
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 dts_src="$repo_root/kernel/dts/sm8550-samsung-gts9wifi.dts"
 patch_dir="$repo_root/kernel/patches"
+install_vendor_pogo=${GTS9_INSTALL_VENDOR_POGO:-0}
+
+case "$install_vendor_pogo" in
+    0|1) ;;
+    *) echo "GTS9_INSTALL_VENDOR_POGO must be 0 or 1" >&2; exit 2 ;;
+esac
 
 git -C "$tree" rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
     echo "not a git worktree: $tree" >&2
@@ -99,13 +105,16 @@ for drv in "$driver_src"/*.c; do
 done
 shopt -u nullglob
 
-# The vendor port is a directory, not a keyboard-*.c file, so it is copied as
-# one and Kbuild is pointed at it here rather than by a patch: the two lines
-# below have to land after whatever added the mainline port's symbol, and doing
-# it in the overlay keeps that independent of patch order and context.
+# Samsung's vendor Pogo import is retained for source comparison only. It is
+# not part of the default X710 build; opt in explicitly for a manual A/B.
 port_src="$repo_root/kernel/drivers/input/samsung-pogo"
 port_dest="$tree/drivers/input/keyboard/samsung-pogo"
-if [ -d "$port_src" ]; then
+if [ "$install_vendor_pogo" = 1 ]; then
+    [ -d "$port_src" ] || {
+        echo "missing optional vendor Pogo source: $port_src" >&2
+        exit 1
+    }
+
     mkdir -p "$port_dest"
     install -m 0644 "$port_src"/*.c "$port_src"/*.h "$port_dest/"
     install -m 0644 "$port_src"/Kconfig "$port_src"/Makefile "$port_dest/"
