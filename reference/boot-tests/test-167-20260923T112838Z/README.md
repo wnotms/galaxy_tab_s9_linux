@@ -6,10 +6,10 @@ to the running Debian root filesystem. All three units are enabled,
 `systemd-analyze verify` returned success, and the device's file hashes match
 the repository files.
 
-No `poweroff`, reboot, or partition-write command was issued. The device was
-left running Debian. This test only prepares the next boot/shutdown
-observation; it does not test the kernel's power-off handler or battery-only
-cold boot.
+The files were installed through the running Debian root filesystem. No raw
+partition-flash, `poweroff`, or reboot command was issued. The device was left
+running Debian. This test only prepares the next boot/shutdown observation; it
+does not test the kernel's power-off handler or battery-only cold boot.
 
 ## Evidence inventory
 

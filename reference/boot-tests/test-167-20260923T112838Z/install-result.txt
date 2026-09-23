@@ -18,4 +18,5 @@ a82336253e189c42e9abf6bfee1d621a54aaa7cb3b08cd5e81d14827ef24173f  /usr/libexec/g
 5c288fd056d1e79e1b16d7496d73ee883be1bcf2afd254443b6ee8b1121bc77d  /usr/lib/systemd/system/gts9-getty-stage.service
 fd29cf0bd1a816da67d7c10b1d41665f227baf7728089e4c9522cac86abc641f  /usr/lib/systemd/system/gts9-poweroff-stage.service
 
-No poweroff or reboot command was issued. No partition was written.
+The files were written through the running Debian root filesystem. No raw
+partition-flash, poweroff, or reboot command was issued.
