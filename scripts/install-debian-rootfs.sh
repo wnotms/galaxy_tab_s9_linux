@@ -22,6 +22,7 @@
 # Installed content:
 #   * rootfs-overlay/ (units, helpers, logind and getty configuration; regular
 #     files only - the tarball carries no symlinks, see gts9-enable-units)
+#   * the freestanding C helpers in usr/libexec/*.c compiled for aarch64
 #   * enablement symlinks created by usr/libexec/gts9-enable-units from each
 #     unit's own WantedBy= (no systemctl needed, works in TWRP)
 #   * kernel modules under lib/modules/<release> plus a basedir depmod
@@ -40,6 +41,10 @@ tar_file=
 do_modules=1
 do_firmware=1
 depmod=${GTS9_DEPMOD:-depmod}
+# Toolchain used for the freestanding overlay helpers; overridable so tests
+# (and hosts without clang) can exercise the "no toolchain" path.
+cc=${GTS9_CC:-clang}
+linker=${GTS9_LD:-ld.lld}
 
 usage() {
 	sed -n '2,30p' "$0"
@@ -86,6 +91,40 @@ install_units_and_enablement() {
 	# Same helper the TWRP procedure runs after extraction, so a direct
 	# install and a deployed tarball enable exactly the same units.
 	sh "$helper" "$dest" || fail 'could not create the unit enablement symlinks'
+}
+
+build_native_helpers() {
+	# The overlay ships a few freestanding C helpers for the tablet; they are
+	# compiled here so the repository stores sources, never prebuilt binaries.
+	# Missing toolchain is a warning: everything except those helpers still
+	# gets installed.
+	local dest=$1 source name output
+	local built=0
+	for source in "$dest"/usr/libexec/*.c; do
+		[ -f "$source" ] || continue
+		name=${source##*/}
+		output=${source%.c}
+		if ! command -v "$cc" >/dev/null 2>&1 || ! command -v "$linker" >/dev/null 2>&1; then
+			note "WARNING: clang/ld.lld missing; $name was not built"
+			rm -f "$source"
+			continue
+		fi
+		if ! "$cc" --target=aarch64-linux-gnu -nostdlib -static -ffreestanding \
+		     -fno-stack-protector -fno-builtin -fuse-ld=lld \
+		     -Wl,--build-id=none -Wl,-n -o "$output" "$source"; then
+			fail "cannot build $name"
+		fi
+		if readelf -l "$output" 2>/dev/null | grep -q INTERP; then
+			fail "$name is dynamically linked"
+		fi
+		chmod 0755 "$output"
+		# Only the binary belongs on the Debian root filesystem.
+		rm -f "$source"
+		built=$((built + 1))
+	done
+	if [ "$built" -gt 0 ]; then
+		note "built $built native helper(s) for the tablet"
+	fi
 }
 
 module_release() {
@@ -194,6 +233,7 @@ install_tree() {
 	local dest=$1 enablement=${2:-yes}
 	[ -d "$dest" ] || fail "not a directory: $dest"
 	copy_overlay "$dest"
+	build_native_helpers "$dest"
 	if [ "$enablement" = yes ]; then
 		install_units_and_enablement "$dest"
 	fi
