@@ -1663,8 +1663,8 @@ static int pogo_probe(struct i2c_client *client)
 	p->conn_level = gpiod_get_value_cansleep(p->connected);
 	p->connect_state = p->conn_level;
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
-	if (IS_ERR(p->connected))
-		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
+	if (IS_ERR(p->announce))
+		return dev_err_probe(dev, PTR_ERR(p->announce), "announce GPIO\n");
 	/*
 	 * The MCU's SWD pins, owned here rather than left to the pinctrl default:
 	 * the STM32 boots into its keyboard firmware only if SWCLK is low when
