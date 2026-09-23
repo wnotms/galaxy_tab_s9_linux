@@ -55,3 +55,12 @@ The former default `0005` early command-mode kickoff patch is now held in
 `pending/`: the pinned MSM path already kicks off after modeset enable, while
 that patch triggers before resource/vsync/DSC preparation. See
 [the offline display audit](../../docs/DISPLAY_OFFLINE_AUDIT.md).
+
+`0008-i2c-qcom-geni-log-bus-lines-on-error.patch` is diagnostic-only and lives
+in `diagnostic/`. It was used to distinguish an address NACK from a non-idle
+GENI bus while bringing up the keyboard. The normal Pogo path now works without
+this instrumentation, so it is not applied to the default kernel. To reproduce
+that measurement on a disposable prepared kernel worktree, run
+`git -C <worktree> apply <repo>/kernel/patches/diagnostic/0008-i2c-qcom-geni-log-bus-lines-on-error.patch`
+after `scripts/prepare-kernel.sh`, then rebuild. A subsequent prepare restores
+the pinned source before applying the default queue.
