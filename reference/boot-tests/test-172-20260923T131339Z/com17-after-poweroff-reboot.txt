@@ -1,0 +1,128 @@
+Read-only Debian diagnostics started UTC 2026-09-23T13:36:27.8722907Z
+[!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n
+Debian GNU/Linux 13 gts9 ttyGS0
+
+gts9 login: 
+[SENT] login username: ms
+ms
+Password: 
+[SENT] [login password omitted]
+
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+[?2004hms@gts9:~$ 
+[SENT] [read-only boot, rootfs, and stage-marker audit]
+printf "__TEST172_READONLY_BEGIN__\n"; id; printf "boot_id="; cat /proc/sys/kernel/random/boot_id; uname -a; printf "cmdline="; cat /proc/cmdline; printf "root="; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf "boot_stage_file="; cat /var/log/gts9-last-boot-stage 2>&1; printf "poweroff_stage_file="; cat /var/log/gts9-last-poweroff-stage 2>&1; printf "serial_getty="; systemctl is-active serial-getty@ttyGS0.service 2>&1; printf "__TEST172_READONLY_DONE__\n"
+[?2004l__TEST172_READONLY_BEGIN__
+uid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+boot_id=59582609-ebb8-4e5b-8f76-9d7eb8727880
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+cmdline=console=tty0 console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=acm gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware gts9_boot_trace_console=1 gts9_poweroff_trace=1 fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=1 nfc_sec.nfc_param_lpcharge=1 flicker_sensor.flicker_param_lpcharge=1 cpufreq_limit.lpcharge=1 sec-battery.lpcharge=1 max77705_charger.lpcharge=1 max77705-fuelgauge.lpcharge=1 p9320_charger.lpcharge=1 s2miw04_charger.lpcharge=1 cps4038_charger.lpcharge=1 nu1668_charger.lpcharge=1 msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+root=/dev/mmcblk1p1 ext4 rw,noatime
+boot_stage_file=timestamp=1970-09-18T01:29:37Z
+uptime_seconds=unknown
+boot_id=unknown
+cmdline=unavailable
+stage=switch-root
+stage_history=kernel-userspace,framebuffer-control-available,waiting-mmc,mmc-found,mounting-root,root-mounted,init-found,switch-root
+failure=none
+root_device=/dev/mmcblk1p1
+rootfs_state=mounted-rw
+mmc_hosts=none
+mmc_block_devices=none
+mmc_regulators=unavailable
+mmc_log=[    0.350026][   T90] sdhci_msm 8804000.mmc: Got CD GPIO;[    0.414295][   T90] mmc1: SDHCI controller on 8804000.mmc [8804000.mmc] using ADMA 64-bit;[    0.593840][   T86] mmc1: new UHS-I speed SDR104 SDXC card at address 13ab;[    0.594005][   T86] mmcblk1: mmc1:13ab SE128 115 GiB;
+GTS9_BOOT_STAGE=systemd-basic
+stage_uptime_seconds=4.15
+stage_timestamp=2026-04-13T19:38:06Z
+stage_boot_id=59582609-ebb8-4e5b-8f76-9d7eb8727880
+GTS9_BOOT_STAGE=tty1-getty-active
+stage_uptime_seconds=5.48
+stage_timestamp=2026-04-13T19:38:07Z
+stage_boot_id=59582609-ebb8-4e5b-8f76-9d7eb8727880
+poweroff_stage_file=stage=systemd-poweroff-service
+timestamp=2026-04-13T19:44:56Z
+uptime_seconds=414.48
+boot_id=7231ad1e-5caf-47e9-82d6-6ed06525cbd8
+serial_getty=active
+__TEST172_READONLY_DONE__
+[?2004hms@gts9:~$ 
+[SENT] [read-only filtered kernel trace query]
+sudo -S sh -c "dmesg | grep -E 'GTS9_POWER_OFF|GTS9_BOOT_REPORT|GTS9 MAINLINE INITRAMFS REACHED|gts9-init:|Power down|switch_root|gts9-rootfs' | tail -200"; rc=$?; printf "\n__TEST172_DMESG_RC=%s__\n" "$rc"
+[?2004l[sudo] password for ms: 
+[SENT] [sudo credential omitted]
+
+[    0.854144] [      T1] gts9-init: mounted devtmpfs on /dev
+[    0.856384] [      T1] gts9-init: mounted tmpfs on /tmp
+[    0.858168] [      T1] gts9-init: mounted tmpfs on /run
+[    0.860241] [      T1] gts9-init: mounted debugfs on /sys/kernel/debug
+[    0.860281] [      T1] gts9-init: GTS9_BOOT_STAGE=kernel-userspace
+[    0.861691] [      T1] gts9-init: GTS9_BOOT_UPTIME=0.85
+[    0.876841] [      T1] gts9-init: display: framebuffer cycle for first-enable zero ID
+[    1.303822] [      T1] gts9-init: display: cycle 1 recovered panel ID 80 00 04
+[    1.303884] [      T1] gts9-init: GTS9_BOOT_STAGE=framebuffer-control-available
+[    1.305040] [      T1] gts9-init: GTS9_BOOT_UPTIME=1.30
+[    1.305371] [      T1] gts9-init: 
+[    1.305403] [      T1] gts9-init: ========================================
+[    1.305430] [      T1] gts9-init: GTS9 MAINLINE INITRAMFS REACHED
+[    1.305459] [      T1] gts9-init: ========================================
+[    1.306632] [      T1] gts9-init: initramfs userspace is running: BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) multi-call binary.
+[    1.306665] [      T1] gts9-init: 
+[    1.306721] [      T1] gts9-init: --- uname -a ---
+[    1.306977] [      T1] gts9-init: Linux (none) 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+[    1.307016] [      T1] gts9-init: 
+[    1.307062] [      T1] gts9-init: --- /proc/cmdline ---
+[    1.307554] [      T1] gts9-init: 
+[    1.307596] [      T1] gts9-init: --- device tree model ---
+[    1.308754] [      T1] gts9-init: Samsung Galaxy Tab S9 Wi-Fi
+[    1.309762] [      T1] gts9-init: compatible: qcom,kalama-mtp qcom,kalama qcom,mtp samsung,gts9wifi qcom,sm8550 
+[    1.309786] [      T1] gts9-init: 
+[    1.309809] [      T1] gts9-init: --- /proc/partitions ---
+[    1.658214] [      T1] gts9-init: 
+[    1.658240] [      T1] gts9-init: --- /sys/class/block ---
+[    1.662716] [      T1] gts9-init: loop0
+[    1.662741] [      T1] gts9-init: 
+[    1.662765] [      T1] gts9-init: --- /sys/fs/pstore ---
+[    1.663569] [      T1] gts9-init: pstore is present and empty
+[    1.663637] [      T1] gts9-init: 
+[    1.663711] [      T1] gts9-init: --- uptime ---
+[    1.664975] [      T1] gts9-init: 1.66 11.94
+[    1.673347] [      T1] gts9-init: 
+[    1.673509] [      T1] gts9-init: console loglevel set to 1: kernel messages stay out of the panel shell
+[    1.673537] [      T1] gts9-init: dropping to an interactive shell; nothing was written to any block device
+[    1.673559] [      T1] gts9-init: 
+[    1.710710] [      T1] gts9-init: USB gadget bound to a600000.usb (mode=acm)
+[    1.766691] [      T1] gts9-init: console helper: gts9-to-recovery will write the BCB to /dev/sda10
+[    1.774512] [      T1] gts9-init: gts9-rootfs: proof and recovery timers disabled for this boot
+[    1.860558] [      T1] gts9-init: display: framebuffer unblanked (blank=0)
+[    1.860781] [      T1] gts9-init: display: wrote a marker line to /dev/tty0
+[    2.150279] [      T1] gts9-init: card mount and internal persistence disabled by GTS9_CARD_MOUNT=0
+[    2.150387] [      T1] gts9-init: the report stays in /tmp; read it over the console with: cat /tmp/bringup-report.txt
+[    2.150799] [      T1] gts9-init: gts9-rootfs: requested root device /dev/mmcblk1p1
+[    2.150827] [      T1] gts9-init: gts9-rootfs: waiting for root device
+[    2.150861] [      T1] gts9-init: GTS9_BOOT_STAGE=waiting-mmc
+[    2.152174] [      T1] gts9-init: GTS9_BOOT_UPTIME=2.14
+[    2.152396] [      T1] gts9-init: gts9-rootfs: root device ready after 0 ms
+[    2.152437] [      T1] gts9-init: GTS9_BOOT_STAGE=mmc-found
+[    2.154014] [      T1] gts9-init: GTS9_BOOT_UPTIME=2.15
+[    2.154784] [      T1] gts9-init: gts9-rootfs: mounting ext4
+[    2.154883] [      T1] gts9-init: GTS9_BOOT_STAGE=mounting-root
+[    2.156202] [      T1] gts9-init: GTS9_BOOT_UPTIME=2.15
+[    2.286471] [      T1] gts9-init: gts9-rootfs: rootfs mounted rw
+[    2.290898] [      T1] gts9-init: GTS9_BOOT_STAGE=root-mounted
+[    2.292228] [      T1] gts9-init: GTS9_BOOT_UPTIME=2.28
+[    2.325294] [      T1] gts9-init: gts9-rootfs: Debian userspace found: PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+[    2.325445] [      T1] gts9-init: gts9-rootfs: /sbin/init -> systemd
+[    2.327740] [      T1] gts9-init: gts9-rootfs: preparing switch_root
+[    2.327888] [      T1] gts9-init: GTS9_BOOT_STAGE=init-found
+[    2.329211] [      T1] gts9-init: GTS9_BOOT_UPTIME=2.32
+
+__TEST172_DMESG_RC=0__
+[?2004hms@gts9:~$ 
+Read-only diagnostics ended UTC 2026-09-23T13:36:32.2713589Z

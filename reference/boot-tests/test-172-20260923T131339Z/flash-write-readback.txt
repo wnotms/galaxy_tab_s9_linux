@@ -1,0 +1,18 @@
+Authorized candidate flash in TWRP. Scope is exactly boot, init_boot, vendor_boot. vbmeta and dtbo are excluded.
+identity: model=SM-X710, device=gts9wifi, adb_state=recovery
+prewrite verified boot: capacity=100663296, candidate_sha256=822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86, backup_sha256=40c1927ad858041c9534d89209dff425c23cf92b200a05137c5f3678eab10c63; host/TWRP copies match
+prewrite verified init_boot: capacity=8388608, candidate_sha256=7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c, backup_sha256=8153930a9cd3b15a46b116891497efc004e58c1c101a8f23799b325ee9e1aefc; host/TWRP copies match
+prewrite verified vendor_boot: capacity=100663296, candidate_sha256=09bd4bea84d5a0477652002f6e4cd66091b4536f1cd7eb3d5d1a5bf45b2eb61b, backup_sha256=4b3df932eda8f23cbd95029a0d3b679c1372d6d073573164cd881bc155204ea9; host/TWRP copies match
+WRITE boot: dd if=/tmp/gts9-test172-boot.img of=/dev/block/by-name/boot bs=4M
+dd_exit=0
+dd_stderr=24+0 records in | 24+0 records out | 100663296 bytes (96 M) copied, 0.333692 s, 288 M/s
+readback boot: sha256=822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86; expected=822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86; match=True
+WRITE init_boot: dd if=/tmp/gts9-test172-init_boot.img of=/dev/block/by-name/init_boot bs=4M
+dd_exit=0
+dd_stderr=2+0 records in | 2+0 records out | 8388608 bytes (8.0 M) copied, 0.042079 s, 190 M/s
+readback init_boot: sha256=7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c; expected=7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c; match=True
+WRITE vendor_boot: dd if=/tmp/gts9-test172-vendor_boot.img of=/dev/block/by-name/vendor_boot bs=4M
+dd_exit=0
+dd_stderr=24+0 records in | 24+0 records out | 100663296 bytes (96 M) copied, 0.352464 s, 272 M/s
+readback vendor_boot: sha256=09bd4bea84d5a0477652002f6e4cd66091b4536f1cd7eb3d5d1a5bf45b2eb61b; expected=09bd4bea84d5a0477652002f6e4cd66091b4536f1cd7eb3d5d1a5bf45b2eb61b; match=True
+RESULT: all three authorized partitions match the candidate hashes; vbmeta and dtbo untouched

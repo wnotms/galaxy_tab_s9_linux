@@ -1,0 +1,28 @@
+COM17 preflight started UTC 2026-09-23T13:15:17.4778744Z
+
+[SENT] [blank return for login prompt]
+
+
+gts9 login: 
+[SENT] login username: ms
+ms
+
+Password: 
+[SENT] [password omitted]
+
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+[?2004hms@gts9:~$ 
+[SENT] 
+printf '\n=== TEST172_PREFLIGHT_BEGIN ===\n'; id; printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'model='; getprop ro.product.model; printf 'device='; getprop ro.product.device; uname -a; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf '\n=== RECOVERY_HELPER_CHECK ===\n'; sudo -n /usr/local/sbin/gts9-debian-to-recovery --check; printf '__TEST172_PREFLIGHT_DONE__\n'
+[?2004l
+
+=== TEST172_PREFLIGHT_BEGIN ===
+
+COM17 preflight/recovery request ended UTC 2026-09-23T13:15:18.4229415Z

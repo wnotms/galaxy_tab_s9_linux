@@ -1,0 +1,35 @@
+COM17 preflight started UTC 2026-09-23T13:15:44.9662968Z
+sudo: a password is required
+__TEST172_PREFLIGHT_DONE__
+[?2004hms@gts9:~$ 
+[SENT] [blank return for login prompt]
+
+[?2004l
+[?2004hms@gts9:~$ 
+[SENT] login username: ms
+ms
+[?2004l
+-bash: ms: command not found
+[?2004hms@gts9:~$ 
+[SENT] [password omitted]
+[REDACTED]
+[?2004l
+-bash: [REDACTED]: command not found
+[?2004hms@gts9:~$ 
+[SENT] 
+printf '\n=== TEST172_PREFLIGHT_BEGIN ===\n'; id; printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'model='; getprop ro.product.model; printf 'device='; getprop ro.product.device; uname -a; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf '\n=== RECOVERY_HELPER_CHECK ===\n'; sudo -n /usr/local/sbin/gts9-debian-to-recovery --check; printf '__TEST172_PREFLIGHT_DONE__\n'
+[?2004l
+
+=== TEST172_PREFLIGHT_BEGIN ===
+uid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+boot_id=9e66d41f-e612-4ab7-9ab9-3a0a4218b865
+model=-bash: getprop: command not found
+device=-bash: getprop: command not found
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+/dev/mmcblk1p1 ext4 rw,noatime
+
+=== RECOVERY_HELPER_CHECK ===
+sudo: a password is required
+__TEST172_PREFLIGHT_DONE__
+[?2004hms@gts9:~$ 
+COM17 preflight/recovery request ended UTC 2026-09-23T13:16:10.7875714Z

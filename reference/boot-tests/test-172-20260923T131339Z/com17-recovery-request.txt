@@ -1,0 +1,45 @@
+COM17 safe session started UTC 2026-09-23T13:20:53.3406529Z
+
+[SENT] [empty return to request Debian getty prompt]
+
+[?2004l[?2004hms@gts9:~$ 
+[SENT] [remove any accidental credential-shaped command from current shell history]
+set +o history; for n in $(history | awk '$2 ~ /^[0-9][0-9][0-9][0-9][0-9][0-9]ms$/ {print $1}' | sort -rn); do history -d $n; done; history -w; set -o history; printf '__HISTORY_REMAINING='; history | awk '$2 ~ /^[0-9][0-9][0-9][0-9][0-9][0-9]ms$/ {n++} END {print n+0}'; printf '__TEST172_HISTORY_CLEANED__\n'
+[?2004l__HISTORY_REMAINING=0
+__TEST172_HISTORY_CLEANED__
+[?2004hms@gts9:~$ 
+[SENT] [read-only Debian and helper preflight]
+printf '__TEST172_PREFLIGHT_BEGIN__\n'; id; printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'model='; tr -d '\000' < /proc/device-tree/model; printf '\n'; uname -a; findmnt -n -o SOURCE,FSTYPE,OPTIONS /; printf 'helper='; ls -l /usr/local/sbin/gts9-debian-to-recovery; cat /proc/cmdline; printf '__TEST172_PREFLIGHT_DONE__\n'
+[?2004l__TEST172_PREFLIGHT_BEGIN__
+uid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+boot_id=9e66d41f-e612-4ab7-9ab9-3a0a4218b865
+model=Samsung Galaxy Tab S9 Wi-Fi
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+/dev/mmcblk1p1 ext4 rw,noatime
+helper=-rwxr-xr-x 1 root root 9036 Apr 14  2026 [0m[01;32m/usr/local/sbin/gts9-debian-to-recovery[0m
+console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_usb_gadget=acm gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+__TEST172_PREFLIGHT_DONE__
+[?2004hms@gts9:~$ 
+[SENT] [read-only recovery helper check]
+sudo -S /usr/local/sbin/gts9-debian-to-recovery --check; rc=$?; printf "\n__TEST172_CHECK_RC=%s__\n" "$rc"
+[?2004l[sudo] password for ms: 
+[SENT] [sudo credential omitted]
+
+gts9-debian-to-recovery: found the misc partition as /dev/sda10
+gts9-debian-to-recovery: device        : /dev/sda10 (2048 sectors)
+gts9-debian-to-recovery: partition name: misc
+gts9-debian-to-recovery: BCB command   : (empty, boots mainline)
+gts9-debian-to-recovery: no change made
+gts9-debian-to-recovery: done; nothing was rebooted
+
+__TEST172_CHECK_RC=0__
+[?2004hms@gts9:~$ 
+[SENT] [authorized BCB request and reboot to TWRP]
+sudo -S /usr/local/sbin/gts9-debian-to-recovery --yes
+[?2004lgts9-debian-to-recovery: found the misc partition as /dev/sda10
+gts9-debian-to-recovery: current BCB command: (empty)
+gts9-debian-to-recovery: BCB written to /dev/sda10 and verified: boot-recovery
+gts9-debian-to-recovery: rebooting with a plain restart; the recovery request is in the BCB, not in the kernel
+[?2004hms@gts9:~$ [?2004l[?2004h[?2004l
+[!p]104[?7h[6n[32766;32766H[6n
+COM17 safe session ended UTC 2026-09-23T13:21:14.9652053Z

@@ -1,0 +1,60 @@
+AUDIT_UTC=2026-09-23T14:13:57.7220128Z
+COM17_OPEN_OK
+
+gts9 login: ms
+Password: 
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+[?2004hms@gts9:~$ echo __POST_FORCE_RESET_AUDIT__; id
+[?2004l__POST_FORCE_RESET_AUDIT__
+uid=1000(ms) gid=1000(ms) groups=1000(ms),27(sudo)
+[?2004hms@gts9:~$ printf "boot_id="; cat /proc/sys/kernel/random/boot_id
+[?2004lboot_id=5168f244-374c-4c5f-9ad7-431fdc035cbc
+[?2004hms@gts9:~$ uname -r
+[?2004l7.2.0-rc3-gts9wifi-dirty
+[?2004hms@gts9:~$ findmnt -n -o SOURCE,FSTYPE,OPTIONS /
+[?2004l/dev/mmcblk1p1 ext4 rw,noatime
+[?2004hms@gts9:~$ grep -v "^cmdline=" /var/log/gts9-last-boot-stage 2>&1
+[?2004ltimestamp=1970-09-18T02:03:02Z
+uptime_seconds=unknown
+boot_id=unknown
+stage=switch-root
+stage_history=kernel-userspace,framebuffer-control-available,waiting-mmc,mmc-found,mounting-root,root-mounted,init-found,switch-root
+failure=none
+root_device=/dev/mmcblk1p1
+rootfs_state=mounted-rw
+mmc_hosts=none
+mmc_block_devices=none
+mmc_regulators=unavailable
+mmc_log=[    0.423839][   T80] sdhci_msm 8804000.mmc: Got CD GPIO;[    0.489136][   T80] mmc1: SDHCI controller on 8804000.mmc [8804000.mmc] using ADMA 64-bit;[    0.675197][  T121] mmc1: new UHS-I speed SDR104 SDXC card at address 13ab;[    0.675359][  T121] mmcblk1: mmc1:13ab SE128 115 GiB;
+GTS9_BOOT_STAGE=systemd-basic
+stage_uptime_seconds=4.43
+stage_timestamp=2026-04-13T19:38:06Z
+stage_boot_id=5168f244-374c-4c5f-9ad7-431fdc035cbc
+GTS9_BOOT_STAGE=tty1-getty-active
+stage_uptime_seconds=5.61
+stage_timestamp=2026-04-13T19:38:07Z
+stage_boot_id=5168f244-374c-4c5f-9ad7-431fdc035cbc
+[?2004hms@gts9:~$ for s in getty@tty1.service serial-getty@ttyGS0.service; do printf "%s=" "$s"; systemctl is-active "$s" 2>&1; done
+[?2004lgetty@tty1.service=active
+serial-getty@ttyGS0.service=active
+[?2004hms@gts9:~$ for f in /sys/class/udc/*/state; do printf "%s=" "$f"; cat "$f"; done [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ke
+[?2004l/sys/class/udc/a600000.usb/state=configured
+/sys/class/udc/dummy_udc.0/state=not attached
+[?2004hms@gts9:~$ grep -A5 -B1 -i -e pogo -e EF-DX710 /proc/bus/input/devices 2>&1 | head -n 24
+[?2004lI: Bus=0018 Vendor=04e8 Product=a035 Version=0000
+N: Name="Book Cover Keyboard Slim (EF-DX710)"
+P: Phys=
+S: Sysfs=/devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input2
+U: Uniq=
+H: Handlers=sysrq kbd leds event2 
+B: PROP=0
+[?2004hms@gts9:~$ echo __POST_FORCE_RESET_AUDIT_DONE__
+[?2004l__POST_FORCE_RESET_AUDIT_DONE__
+[?2004hms@gts9:~$ AUDIT_READ_ONLY_ONLY
