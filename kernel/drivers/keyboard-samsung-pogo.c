@@ -70,8 +70,6 @@ struct samsung_pogo {
 	struct gpio_desc *nrst;
 	struct pinctrl *pinctrl;
 	struct pinctrl_state *bus_gpio;
-	struct gpio_desc *sda;
-	struct gpio_desc *scl;
 	struct regulator *vdd;
 	struct mutex lock;
 	struct delayed_work connect_work;
@@ -1373,10 +1371,8 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 		if (startup_diagnostics && !(i % 10))
 			/* Copy the vendor's own diagnostic levels. */
 			dev_info(&p->client->dev,
-				 "no answer after %u ms: scl:%d sda:%d conn:%d\n",
+				 "no answer after %u ms: conn:%d\n",
 				 i * POGO_POLL_INTERVAL_MS,
-				 p->scl ? gpiod_get_value_cansleep(p->scl) : -1,
-				 p->sda ? gpiod_get_value_cansleep(p->sda) : -1,
 				 gpiod_get_value_cansleep(p->connected));
 		if (i + 1 < attempts)
 			msleep(POGO_POLL_INTERVAL_MS);
@@ -1714,30 +1710,24 @@ static int pogo_probe(struct i2c_client *client)
 	p->nrst = devm_gpiod_get(dev, "nrst", GPIOD_OUT_HIGH);
 	if (IS_ERR(p->nrst))
 		return dev_err_probe(dev, PTR_ERR(p->nrst), "nrst GPIO\n");
-	/*
-	 * The I2C lines, as inputs and only for diagnostics: the pins stay
-	 * multiplexed to the controller by the i2c node's pinctrl state, and
-	 * reading the input buffer is how Samsung's driver reports a held bus.
-	 */
-	/*
-	 * A pinctrl state that moves the controller's SDA/SCL back to plain
-	 * GPIOs, for bus recovery.  The pins belong to qup2_se7 the rest of the
-	 * time, which is why gpiolib refuses to hand them out while that state
-	 * is selected.
-	 */
-	p->boot = devm_i2c_new_dummy_device(dev, client->adapter, POGO_BOOT_ADDR);
-	if (IS_ERR(p->boot)) {
-		dev_dbg(dev, "no bootloader client at %#x: %ld\n",
-			POGO_BOOT_ADDR, PTR_ERR(p->boot));
-		p->boot = NULL;
-	}
-	p->pinctrl = devm_pinctrl_get(dev);
-	if (IS_ERR(p->pinctrl)) {
-		p->pinctrl = NULL;
-	} else {
-		p->bus_gpio = pinctrl_lookup_state(p->pinctrl, "recovery");
-		if (IS_ERR(p->bus_gpio))
-			p->bus_gpio = NULL;
+	/* Legacy bootloader and GPIO recovery probes are opt-in only. */
+	if (startup_diagnostics) {
+		p->boot = devm_i2c_new_dummy_device(dev, client->adapter,
+						    POGO_BOOT_ADDR);
+		if (IS_ERR(p->boot)) {
+			dev_dbg(dev, "no bootloader client at %#x: %ld\n",
+				POGO_BOOT_ADDR, PTR_ERR(p->boot));
+			p->boot = NULL;
+		}
+
+		p->pinctrl = devm_pinctrl_get(dev);
+		if (IS_ERR(p->pinctrl)) {
+			p->pinctrl = NULL;
+		} else {
+			p->bus_gpio = pinctrl_lookup_state(p->pinctrl, "recovery");
+			if (IS_ERR(p->bus_gpio))
+				p->bus_gpio = NULL;
+		}
 	}
 	p->vdd = devm_regulator_get(dev, "vdd");
 	if (IS_ERR(p->vdd))
