@@ -306,6 +306,17 @@ class PogoSuspend(unittest.TestCase):
         self.assertNotIn('device_remove_file', source)
         self.assertLess(probe.index('devm_add_action_or_reset'),
                         probe.index('devm_device_add_group'))
+        for name in ('pogo_remove', 'pogo_suspend'):
+            match = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
+                              source, flags=re.M)
+            self.assertIsNotNone(match, name)
+            teardown = function(source[match.start():], name)
+            self.assertLess(teardown.index('pogo_connect_irq_disable'),
+                            teardown.index('cancel_delayed_work_sync(&p->connect_work)'))
+            self.assertLess(teardown.index('cancel_delayed_work_sync(&p->conn_check_work)'),
+                            teardown.index('disable_irq(p->client->irq)'))
+            self.assertLess(teardown.index('disable_irq(p->client->irq)'),
+                            teardown.index('cancel_delayed_work_sync(&p->hello_work)'))
         harness = HARNESS_HEAD
         for name in FUNCTIONS:
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',

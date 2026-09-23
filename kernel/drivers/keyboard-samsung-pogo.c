@@ -1654,14 +1654,15 @@ static void pogo_remove(void *data)
 
 	/* Stop the connect edges first, so nothing can queue work behind us. */
 	pogo_connect_irq_disable(p);
-	cancel_delayed_work_sync(&p->hello_work);
-	cancel_delayed_work_sync(&p->conn_check_work);
-	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
+	cancel_delayed_work_sync(&p->conn_check_work);
 	if (p->irq_armed) {
 		disable_irq(p->client->irq);
 		p->irq_armed = false;
 	}
+	/* DATA IRQ is now synchronized, so it cannot queue hello_work again. */
+	cancel_delayed_work_sync(&p->hello_work);
+	cancel_delayed_work_sync(&p->watch_work);
 	p->event_enabled = false;
 	mutex_lock(&p->lock);
 	pogo_power_off(p);
@@ -1803,14 +1804,15 @@ static int pogo_suspend(struct device *dev)
 	struct samsung_pogo *p = i2c_get_clientdata(to_i2c_client(dev));
 
 	pogo_connect_irq_disable(p);
-	cancel_delayed_work_sync(&p->hello_work);
-	cancel_delayed_work_sync(&p->conn_check_work);
-	cancel_delayed_work_sync(&p->watch_work);
 	cancel_delayed_work_sync(&p->connect_work);
+	cancel_delayed_work_sync(&p->conn_check_work);
 	if (p->irq_armed) {
 		disable_irq(p->client->irq);
 		p->irq_armed = false;
 	}
+	/* DATA IRQ is now synchronized, so it cannot queue hello_work again. */
+	cancel_delayed_work_sync(&p->hello_work);
+	cancel_delayed_work_sync(&p->watch_work);
 	p->event_enabled = false;
 	/* Nothing may stay logically pressed across the gap. */
 	mutex_lock(&p->lock);
