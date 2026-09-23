@@ -1,0 +1,15 @@
+Read-only serial audit after test-173 reboot; cmdline intentionally omitted.
+
+Kernel: 7.2.0-rc3-gts9wifi-dirty
+Root: /dev/mmcblk1p1 ext4
+Persistent stage: switch-root
+Stage history: kernel-userspace, framebuffer-control-available, waiting-mmc,
+               mmc-found, mounting-root, root-mounted, init-found, switch-root
+Later userspace stages: systemd-basic, tty1-getty-active
+SDHCI host/card dmesg: host around 0.45 s; UHS-I SD card around 0.63 s
+UDC state: configured
+
+The initial initramfs record reports uptime_seconds=unknown,
+boot_id=unknown, mmc_hosts=none, and mmc_block_devices=none; its mmc_log is
+populated. The subsequent stage entries contain uptime, timestamp, and boot
+ID. No cmdline or device serial number was recorded in this file.

@@ -1,0 +1,19 @@
+test-173 authorized flash record
+
+Target: SM-X710 / gts9wifi, identified in TWRP by model and device property.
+ADB state before write: recovery
+Partition written: init_boot only (/dev/block/by-name/init_boot)
+Partition capacity: 8388608 bytes
+
+Pre-write partition SHA-256 (test-172 image):
+7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c
+
+Candidate image SHA-256:
+b555751605630f6a83da3d7edd7cc25413a87d98a3d7afaf83618258d390567f
+
+The candidate was pushed to TWRP /tmp, where its size and SHA-256 were
+verified before writing. `dd` wrote 8388608 bytes to init_boot. TWRP then
+reported the same capacity and SHA-256 from the partition. A separate host
+read-back check also returned adb exit status 0 and an exact hash match.
+
+No other partition was written.

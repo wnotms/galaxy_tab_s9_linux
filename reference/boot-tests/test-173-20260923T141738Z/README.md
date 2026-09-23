@@ -1,7 +1,9 @@
 # Test 173 — corrected early-boot trace candidate
 
-**Status:** built and host-validated; not flashed. This candidate fixes the
-test-172 initramfs trace-option parsing order so
+**Status:** built, host-validated, and flashed to `init_boot` only. Device
+read-back SHA-256 matched, and a Type-C-attached reboot reached Debian. The
+corrected boot-stage trace appeared in the captured kernel log and persisted
+stage file. This candidate fixes the test-172 initramfs trace-option parsing order so
 `gts9_boot_trace_console=1` is read only after `/proc` is mounted. No kernel,
 DTB, hardware sequence, rootfs path, or poweroff handler was changed.
 
@@ -25,14 +27,32 @@ test-172 cmdline and built kernel. Build artifacts and validation output are
 kept outside Git at:
 `/home/ms/Samsung/gts9-flash-tests/test-173-20260923T141738Z`.
 
-No partition was written. If later flashed, limit the write to `init_boot`,
-read it back, and compare its full hash. Do not flash `dtbo`, `vbmeta`, or any
-other partition for this diagnostic test.
+`flash-write-readback.txt` records the single-partition write. The previous
+`init_boot` hash matched test-172 before the write; the new full-partition hash
+matches test-173. No `boot`, `vendor_boot`, `dtbo`, `vbmeta`, or other
+partition was written.
 
 ## Test intent
 
-After a future authorized install, the next no-Type-C start should print the
+The next no-Type-C start should print the
 opt-in `GTS9_BOOT_STAGE`/`GTS9_BOOT_FAIL` milestones on the panel console.
 Use the visible stage to distinguish initramfs, microSD enumeration, root
 mount, switch_root, and userspace progress. The source of the earlier cursor
 stall and the device's shutdown behavior remain unresolved.
+
+## Type-C-attached boot observation
+
+After `reboot system` from TWRP, Debian booted with kernel
+`7.2.0-rc3-gts9wifi-dirty`; `/` was `/dev/mmcblk1p1` ext4. The persisted
+history reached `switch-root`, `systemd-basic`, and `tty1-getty-active`. The
+kernel log included `kernel-userspace`, `framebuffer-control-available`,
+`waiting-mmc`, `mmc-found`, `mounting-root`, `root-mounted`, and `init-found`.
+The SDHCI host and card appeared at about 0.45 s and 0.63 s respectively;
+root mount and init discovery followed at about 2.38 s and 2.42 s. UDC state
+was `configured` during the read-only audit.
+
+The initramfs portion of the persistent report still has `uptime_seconds`,
+`boot_id`, and sysfs-derived MMC host/device fields as `unknown`/`none`, even
+though its MMC log and later systemd stage records are populated. Those fields
+need a separate diagnostic-quality review; they do not change the observed
+stage history. The audit omitted the persisted cmdline.
