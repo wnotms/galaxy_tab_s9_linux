@@ -1,0 +1,24 @@
+Partition: init_boot
+Image: out/boot-bundle-minimal-rootfs/init_boot.img
+Host size: 8388608 bytes
+Expected SHA-256: 4515b081f58e5c630a6ad49dfb7a64ca937c977267227375280235147d462baa
+out/boot-bundle-minimal-rootfs/init_boot.img: 1 file pushed, 0 skipped. 67.6 MB/s (8388608 bytes in 0.118s)
+TWRP staged-image SHA-256: 4515b081f58e5c630a6ad49dfb7a64ca937c977267227375280235147d462baa
+2048+0 records in
+2048+0 records out
+8388608 bytes (8.0 M) copied, 0.042361 s, 189 M/s
+TWRP read-back SHA-256: 4515b081f58e5c630a6ad49dfb7a64ca937c977267227375280235147d462baa
+RESULT: init_boot write and read-back match.
+
+Partition: vendor_boot
+Image: out/boot-bundle-minimal-rootfs/vendor_boot.img
+Host size: 100663296 bytes
+Expected SHA-256: 740bbd6392c13dec5999a6b75800b05462965fc67d25b58744c9469c2596f900
+out/boot-bundle-minimal-rootfs/vendor_boot.img: 1 file pushed, 0 skipped. 85.5 MB/s (100663296 bytes in 1.122s)
+TWRP staged-image SHA-256: 740bbd6392c13dec5999a6b75800b05462965fc67d25b58744c9469c2596f900
+24576+0 records in
+24576+0 records out
+100663296 bytes (96 M) copied, 0.365498 s, 263 M/s
+TWRP read-back SHA-256: 740bbd6392c13dec5999a6b75800b05462965fc67d25b58744c9469c2596f900
+RESULT: vendor_boot write and read-back match.
+No other boot-chain partition was written.

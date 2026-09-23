@@ -1,0 +1,17 @@
+# Type-C A — host and owner observations
+
+- Host initiated `adb shell 'reboot system'` at 2026-09-23T16:16:00Z. ADB
+  returned 255 with no text as the recovery transport disconnected.
+- Windows ADB listed no connected device on repeated checks from
+  16:16:15Z through 16:17:01Z.
+- WSL had no `/dev/ttyACM*` node at the follow-up check; the raw serial capture
+  had not reconnected after reboot.
+- `usbipd list` showed no connected Samsung device (only a persisted Samsung
+  CDC driver entry).
+- Owner observation: screen black and device appeared unresponsive. This is a
+  panel/user observation only; it does not identify the Linux boot stage.
+- No ADB/serial evidence currently confirms whether the minimal initramfs found
+  `/dev/mmcblk1p1`, mounted it, or handed off to Debian. USB gadget setup is
+  intentionally omitted by this profile, so absent USB enumeration is not
+  itself a rootfs failure.
+- A host-side `/proc/last_kmsg` capture is armed and waiting for TWRP ADB.

@@ -1,0 +1,5 @@
+2026-09-23T16:04:38.233452+00:00 opened /dev/ttyACM0 at 115200 8N1
+2026-09-23T16:04:49.820725+00:00 host->device ENTER
+2026-09-23T16:04:59.700908+00:00 host->device printf '\nGTS9_TEST177_PREFLIGHT_UTC=%s\n' "$(date -u +%FT%TZ)"; uname -a; findmnt -n -o SOURCE,FSTYPE /; grep -o 'gts9_[^ ]*' /proc/cmdline | head -12; systemctl is-active serial-getty@ttyGS0.service; systemctl is-active usb-gadget.target; sudo -S -p 'GTS9_SUDO_PROMPT:' /usr/local/sbin/gts9-debian-to-recovery --check
+2026-09-23T16:05:11.536813+00:00 host->device sudo -S -p 'GTS9_RECOVERY_SUDO_PROMPT:' /usr/local/sbin/gts9-debian-to-recovery --yes
+2026-09-23T16:05:13.974943+00:00 serial disconnected: SerialException

@@ -1,0 +1,27 @@
+
+[?2004l[?2004hms@gts9:~$ 
+[?2004l[?2004hms@gts9:~$ printf '\nGTS9_TEST177_PREFLIGHT_UTC=%s\n' "$(date -u +%FT%TZ)"; uname -a; findmnt -n -o SOURCE,FSTYPE /; grep -o 'gts9_[^ ]*' /proc/cmdline | head -12; systemctl is-active serial-getty@ttyGS0.service; systemctl is-active usb-gadget.target; sudo -S -p 'GTS9_SUDO_PROMPT:' /usr/local/sbin/gts9-debian-to-recovery --check
+[?2004l
+GTS9_TEST177_PREFLIGHT_UTC=2026-04-13T20:38:08Z
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+/dev/mmcblk1p1 ext4
+gts9_display_recover=1
+gts9_usb_gadget=acm
+gts9_rootfs=/dev/mmcblk1p1
+gts9_sec_log=0x880200000,0x200000
+gts9_boot_trace_console=1
+gts9_poweroff_trace=1
+active
+active
+gts9-debian-to-recovery: found the misc partition as /dev/sda10
+gts9-debian-to-recovery: device        : /dev/sda10 (2048 sectors)
+gts9-debian-to-recovery: partition name: misc
+gts9-debian-to-recovery: BCB command   : (empty, boots mainline)
+gts9-debian-to-recovery: no change made
+gts9-debian-to-recovery: done; nothing was rebooted
+[?2004hms@gts9:~$ sudo -S -p 'GTS9_RECOVERY_SUDO_PROMPT:' /usr/local/sbin/gts9-debian-to-recovery --yes
+[?2004lgts9-debian-to-recovery: found the misc partition as /dev/sda10
+gts9-debian-to-recovery: current BCB command: (empty)
+gts9-debian-to-recovery: BCB written to /dev/sda10 and verified: boot-recovery
+gts9-debian-to-recovery: rebooting with a plain restart; the recovery request is in the BCB, not in the kernel
+[!p]104[?7h[6n[32766;32766H[6n

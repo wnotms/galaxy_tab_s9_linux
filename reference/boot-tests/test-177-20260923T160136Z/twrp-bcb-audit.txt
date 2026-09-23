@@ -1,0 +1,7 @@
+Host timestamp (UTC): 2026-09-23T16:15:05Z
+ADB target: R52X10045LT recovery product:twrp_gts9wifi model:SM_X710 device:gts9wifi
+TWRP shell: uid=0(root)
+misc: /dev/block/by-name/misc -> /dev/block/sda10; size 1048576 bytes
+Read command: dd if=/dev/block/by-name/misc bs=32 count=1 2>/dev/null | od -An -v -tx1
+Observed first 32 bytes: 32 zero bytes
+Action: none; TWRP had already cleared the one-shot recovery BCB request.

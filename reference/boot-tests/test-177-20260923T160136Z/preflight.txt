@@ -1,0 +1,7 @@
+Owner-reported setup: tablet connected to the computer over Type-C and booted into Debian.
+WSL USB serial endpoint: /dev/ttyACM0, Linux USB CDC ACM gadget, VID:PID 0525:a4a7.
+ADB showed no device while Debian was running; this is expected for the current ACM-only gadget.
+Serial login succeeded as ms. No credentials are recorded in this archive.
+Read-only Debian state: Linux 7.2.0-rc3-gts9wifi-dirty; /dev/mmcblk1p1 mounted as ext4 root; serial-getty@ttyGS0 active.
+Current boot cmdline used the regular profile (gts9_display_recover=1, gts9_usb_gadget=acm, gts9_rootfs=/dev/mmcblk1p1, trace options); gts9_minimal_rootfs=1 was absent.
+Read-only gts9-debian-to-recovery --check found /dev/sda10, GPT label misc, 2048 sectors; BCB was empty. No partition was written during this check.

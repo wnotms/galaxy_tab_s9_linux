@@ -1,0 +1,43 @@
+=== SM-X710 boot-chain partition layout (read-only) ===
+ro.product.device: gts9wifi
+ro.build.display.id: twrp_gts9wifi-eng 16.1.0 SP2A.220405.004 eng.ms.20260917.094451 test-keys
+ro.build.fingerprint: samsung/twrp_gts9wifi/gts9wifi:16.1.0/SP2A.220405.004/eng.ms.20260917.094451:eng/test-keys
+
+===== boot =====
+  path    : /dev/block/sda21
+  size    : 100663296 bytes
+  expected: 100663296 bytes (repository bundle padding)
+  status  : MATCH
+
+===== init_boot =====
+  path    : /dev/block/sda22
+  size    : 8388608 bytes
+  expected: 8388608 bytes (repository bundle padding)
+  status  : MATCH
+
+===== vendor_boot =====
+  path    : /dev/block/sda24
+  size    : 100663296 bytes
+  expected: 100663296 bytes (repository bundle padding)
+  status  : MATCH
+
+===== dtbo =====
+  path    : /dev/block/sda30
+  size    : 16777216 bytes
+  expected: 16777216 bytes (repository bundle padding)
+  status  : MATCH
+
+===== vbmeta =====
+  path    : /dev/block/sde15
+  size    : 131072 bytes
+  expected: 131072 bytes (repository bundle padding)
+  status  : MATCH
+
+=== summary ===
+partitions checked : 5
+size mismatches    : 0
+missing/unreadable : 0
+
+Layout matches the repository bundle padding.
+This is a prerequisite, not permission: follow docs/FIRST_BOOT_TEST.md,
+back up the stock boot chain first, and keep the recovery path ready.
