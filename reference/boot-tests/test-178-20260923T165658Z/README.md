@@ -1,7 +1,8 @@
 # Test 178 — minimal initramfs to Debian on real hardware
 
-**Status:** Phase A (Type-C) PASS. Phase B (battery-only) PASS. Debian-side
-panel recovery and ttyGS0 root autologin verified. One intermittent DPU hang
+**Status:** Phase A (Type-C) PASS. Phase B (battery-only) PASS, including a
+final repeat with the panel-enabled image set. Debian-side panel recovery and
+ttyGS0 root autologin verified. One intermittent DPU hang
 found and documented. The Pogo keyboard recovery service was added, tested and
 then reverted at the owner's request (the keyboard works; the earlier failure
 was physical contact).
@@ -152,6 +153,27 @@ host staging directory (raw `.bin` are not committed).
   extraction (the log line `... not under '/mnt/debian'` is in
   `debian-overlay-deploy.txt`); the DPU hang is triggered by the panel
   modeset, because no fb0 (i.e. no fbcon damage work) never hung.
-- **Not yet tested**: a battery-only run with the final panel-enabled
-  `vendor_boot`; modules installed into Debian (`usr/lib/modules`); Wi-Fi,
-  Bluetooth, GPU, audio, camera, sensors; the DPU hang fix itself.
+- **Not yet tested**: modules installed into Debian (`usr/lib/modules`);
+  Wi-Fi, Bluetooth, GPU, audio, camera, sensors; the DPU hang fix itself.
+
+## Final battery-only confirmation (panel-enabled images)
+
+Same `init_boot`/`vendor_boot` as the panel run above, Type-C unplugged for the
+boot (see `final-battery-b-result.txt`, `final-battery-b-console.log`):
+
+```text
+boot_id=0bf46cc6-031e-4a7d-95ff-81d6c066bd20   (distinct again)
+stage=switch-root-synced   failure=none   debian_boot_id_match=yes
+debian_root_source=/dev/mmcblk1p1   debian_root_fstype=ext4
+debian_stage=multi-user
+debian_stage_history=systemd-entered,local-fs,basic,usb-acm-ready,
+                     panel-recovered,tty1-getty-active,multi-user
+debian_failure=none
+systemctl is-system-running: running       systemctl --failed: 0 units
+```
+
+`systemctl poweroff` on this tablet does not cut power (the known, separate
+poweroff issue: systemd finishes, PSCI SYSTEM_OFF does not power the device
+down, the last framebuffer stays with a blinking cursor). The battery-only run
+was therefore started with a long Power press after a forced power-off, as
+described in the earlier Phase B run.
