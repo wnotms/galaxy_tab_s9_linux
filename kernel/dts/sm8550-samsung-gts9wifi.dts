@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
- * Initial mainline device tree for the Samsung Galaxy Tab S9 Wi-Fi
- * (SM-X710, gts9wifi).
+ * Mainline device tree for the Samsung Galaxy Tab S9 Wi-Fi (SM-X710,
+ * gts9wifi).
  *
- * Only hardware evidenced by the live downstream tree is enabled here.
- * Native display support remains disabled; Samsung ABL's preserved splash
- * framebuffer is used for the first visual milestone.
+ * This file describes the hardware: board facts, why a property is required
+ * and why a node is disabled.  The experiments behind those decisions are
+ * indexed in docs/BRINGUP_HISTORY.md, which links each archived boot test.
  */
 
 /dts-v1/;
@@ -51,13 +51,10 @@
 		#size-cells = <2>;
 
 		/*
-		 * No simple-framebuffer here any more.  The bootloader's splash lives
-		 * in a command-mode panel that never refreshes, so binding that region
-		 * put the console on a surface nobody could see (test 015).  The DRM
-		 * pipeline plus the panel driver below is the console now, and leaving
-		 * the splash node in would make fbcon bind to it instead: fbcon takes
-		 * the first registered framebuffer, and a simple-framebuffer claims one
-		 * before the msm driver has probed.
+		 * No simple-framebuffer: fbcon takes the first registered
+		 * framebuffer, and a simple-framebuffer claims one before the msm
+		 * driver has probed, which would take the console away from the DRM
+		 * panel pipeline below.
 		 */
 	};
 
@@ -179,16 +176,11 @@
 
 		/*
 		 * AOP PDC programming for the QCA6490, from the stock X710
-		 * cnss qcom,pdc_init_table.  The pmOS port dropped these votes
-		 * (c49bd79) after finding the xo-clk strobe alone starts the
-		 * chip - but that only holds when the boot chain hands the chip
-		 * over already powered.  After a full poweroff (cold handoff)
-		 * the PMU never completes power-up without these votes: PCIe
-		 * trains only after the bus scan, so ath11k never sees the
-		 * endpoint, and the BT ROM never answers its version read
-		 * (reproduced on device, 2026-09-04).  Values are the ones
-		 * verified on this board by the original commit (pmOS 3e9e3ef)
-		 * and cross-checked against the stock X910 dtbo.
+		 * cnss qcom,pdc_init_table.  Required after a cold handoff:
+		 * without these votes the PMU never completes power-up, PCIe
+		 * never trains and the BT ROM never answers its version read.
+		 * Values are the ones verified on this board and cross-checked
+		 * against the stock X910 dtbo.
 		 */
 		qcom,qmp = <&aoss_qmp>;
 		qcom,wlan-pdc-init =
@@ -333,8 +325,7 @@
 		/*
 		 * The volume keys are on TLMM lines and need wakeup-source to bring
 		 * the tablet back from a suspend; the power key below is a PMIC input
-		 * and is a wakeup source on its own.  Both matter for the panel's
-		 * cold-boot recovery, which needs a suspend/resume cycle.
+		 * and is a wakeup source on its own.
 		 */
 		wakeup-source;
 
@@ -427,10 +418,9 @@
 };
 
 /*
- * The v0.5 video ends after the two preceding LPASS NOC providers probe and
- * before this provider can return.  Audio is out of scope for milestone 1;
- * keep the unsafe access quiescent until its board-specific power sequence is
- * understood.
+ * Disabled: enabling this provider hangs the boot after the two preceding
+ * LPASS NOC providers probe.  Audio is out of scope until its board-specific
+ * power sequence is understood.
  */
 &lpass_ag_noc {
 	status = "disabled";
@@ -456,7 +446,7 @@
 };
 
 &apps_rsc {
-	/* PM8550B: only the two external-SD rails needed for milestone 1. */
+	/* PM8550B rails. */
 	regulators-0 {
 		compatible = "qcom,pm8550-rpmh-regulators";
 		qcom,pmic-id = "b";
@@ -708,9 +698,8 @@
 		};
 
 		/*
-		 * Do not add vdd-l3-supply here.  Mainline SM8550 boards expose
-		 * PM8550VS-G LDO3 directly, and the experimental S4G parent used in
-		 * v0.20 created a fixed dependency cycle with this provider.
+		 * Do not add vdd-l3-supply here: the S4G parent creates a fixed
+		 * dependency cycle with this provider.
 		 */
 		vreg_l3g_1p2: ldo3 {
 			regulator-name = "vreg_l3g_1p2";
@@ -951,11 +940,8 @@
 	 * QUPv3 i2c-master-hub runs its SEs in FIFO/PIO mode (no GPI DMA), and at
 	 * 1 MHz Fast-Mode Plus the SE accepts the M_CMD but never drives the bus
 	 * (mid-hang: bus idle, both lines high, zero interrupts) - the QUP core
-	 * clock available to PIO is not enough for FM+.  Every upstream SM8550
-	 * board that puts real devices on the i2c hub runs it at <=400 kHz
-	 * (sm8550-hdk/mtp/qrd typec muxes at default, sony-xperia-yodo at 400 kHz);
-	 * none run it at 1 MHz.  400 kHz is ample for CS35L45 register access and
-	 * DSP firmware download.
+	 * clock available to PIO is not enough for FM+.  400 kHz is ample for
+	 * CS35L45 register access and DSP firmware download.
 	 */
 	clock-frequency = <400000>;
 	status = "okay";
@@ -1061,10 +1047,8 @@
 &pon_pwrkey {
 	/*
 	 * Mainline ships this disabled.  Enabling it gives the tablet a working
-	 * power button (input event, and a wakeup source), which is what makes a
-	 * suspend/resume cycle safe to attempt from /init: without it a suspend on
-	 * this board has no way back, which is exactly how the `echo freeze` test
-	 * left the tablet asleep.
+	 * power button (input event, and a wakeup source); without it a suspend on
+	 * this board has no way back.
 	 */
 	status = "okay";
 };
@@ -1168,19 +1152,14 @@
 			displayport = <&mdss_dp0>;
 
 			/*
-			 * Samsung's board data allows 3 A at 9 V on the switching
-			 * charger, but stock firmware only ever drew 15 W of that
-			 * (9 V / 1.66 A) and left the rest of a 45 W adapter unused.
-			 * Advertise the board's whole 3 A: the Sink Capabilities only
-			 * set what a contract may grant, and sm5714_battery.c decides
-			 * how much is actually drawn (its fast_charge attribute, which
-			 * the gnome-gts9wifi settings page drives through
-			 * gts9wifi-device-control).
+			 * The board allows 3 A at 9 V on the switching charger, so
+			 * advertise the whole 3 A: the Sink Capabilities only set what
+			 * a contract may grant, and sm5714_battery.c decides how much
+			 * is actually drawn.
 			 *
-			 * Nothing above 9 V is offered.  The fast path on this board is
-			 * the SM5440 2:1 pump on a PPS contract -- what the vendor's
-			 * own direct charger drives once Q4 is open -- and the vendor
-			 * never asks for more than its 11 V VBUS OVP minus 500 mV.
+			 * Nothing above 9 V is offered: the fast path on this board is
+			 * the SM5440 2:1 pump on a PPS contract, and the vendor never
+			 * asks for more than its 11 V VBUS OVP minus 500 mV.
 			 * op-sink-microwatt stays at the stock 15 W because tcpm
 			 * applies it only to programmable (PPS/AVS) operating points:
 			 * it sets the floor the pump may request, not the fixed
@@ -1474,8 +1453,7 @@
 	 * Force the peripheral role.  The Type-C port is managed by an SM5714 PD
 	 * controller that has no mainline driver, so there is no role switch and
 	 * no extcon to move dwc3 out of its OTG default: the core probes, exposes
-	 * a UDC, and never enables the port.  Test 013 measured exactly that - a
-	 * UDC present in /sys/class/udc while the host saw no device at all.
+	 * a UDC, and never enables the port.
 	 */
 	dr_mode = "peripheral";
 	status = "okay";
@@ -1497,17 +1475,11 @@
 
 &mdss_dp0 {
 	/*
-	 * Off while the panel is what matters.  On mainline the DisplayPort
-	 * controller is one of the components the msm DRM master waits for, and
-	 * here it never finishes probing: test 033 showed msm_dpu (ae01000) and
-	 * msm_dsi (ae94000) both bound while ae90000.displayport-controller sat in
-	 * the deferred list, so /sys/class/drm/ stayed empty and no framebuffer -
-	 * and therefore no console - was ever created.
-	 *
-	 * `qcom,defer-hpd-until-first-resume` is not a mainline property (it comes
-	 * from the SM-X910 port's msm-dp patch), so it explains nothing here; the
-	 * DP comes back when that port's DP support is ported, and Type-C/USB host
-	 * mode is unaffected either way.
+	 * Disabled: on mainline the DisplayPort controller is one of the
+	 * components the msm DRM master waits for, and here it never finishes
+	 * probing, so no DRM card, framebuffer or console is created.  The DP
+	 * comes back when DP support is ported; Type-C/USB host mode is
+	 * unaffected either way.
 	 */
 	status = "disabled";
 };
@@ -1599,9 +1571,8 @@
 };
 
 /*
- * Internal UFS.  The rootfs boots from the microSD; this only exists so pmOS
- * can reach the on-device boot partition and flash new builds over SSH without
- * a TWRP round-trip.  A UFS probe failure does not affect the SD boot.
+ * Internal UFS.  Not on the boot path (rootfs is on the microSD), so a probe
+ * failure does not break booting.
  */
 &ufs_mem_hc {
 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
@@ -1620,15 +1591,15 @@
 };
 
 /*
- * ADSP (audio DSP) — step 1 of internal audio.  Uses Samsung's own signed
- * firmware (adsp.mdt + adsp_dtb.mdt + segments, extracted from apnhlos) because
- * the reference qcom/sm8550/adsp.mbn is Qualcomm-signed and rejected by Samsung
- * secure boot.  The sm8550-adsp-pas driver has dtb_pas_id set, so the second
- * firmware-name entry (index 1) is mandatory — without it request_firmware for
- * adsp_dtb.mdt fails and the ADSP never boots.  Both paths carry the qcom/sm8550
- * prefix so the loader looks under /usr/lib/firmware/qcom/sm8550/.
+ * ADSP (audio DSP).  Uses Samsung's own signed firmware (adsp.mdt +
+ * adsp_dtb.mdt + segments, extracted from apnhlos) because the reference
+ * qcom/sm8550/adsp.mbn is Qualcomm-signed and rejected by Samsung secure boot.
+ * The sm8550-adsp-pas driver has dtb_pas_id set, so the second firmware-name
+ * entry (index 1) is mandatory - without it request_firmware for adsp_dtb.mdt
+ * fails and the ADSP never boots.  Both paths carry the qcom/sm8550 prefix so
+ * the loader looks under /usr/lib/firmware/qcom/sm8550/.
  * The ADSP is not on the boot path (rootfs is on the microSD), so a probe
- * failure does not break booting.  q6/soundwire/codecs/sound come later.
+ * failure does not break booting.
  */
 &lpass_tlmm {
 	dmic45_default: dmic45-default-state {
@@ -1694,16 +1665,13 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&hub_i2c4_data_clk>;
 	/*
-	 * Bring-up: drop the LPASS interconnect path.  The upstream node votes
-	 * bandwidth over <&lpass_lpicx_noc MASTER_LPASS_PROC ... &mc_virt
-	 * SLAVE_EBI1 ...>, but on this tree of_icc_get for that path never
-	 * resolves (the LPASS sub-graph does not connect to mc_virt in the
-	 * registered icc graph; lpass_ag_noc@7e40000 is disabled upstream), so
-	 * the driver stays in -EPROBE_DEFER and never reaches firmware load.
-	 * qcom_q6v5_init() treats a NULL path as valid (devm_of_icc_get returns
-	 * NULL when the property is absent, and icc_set_bw(NULL,...) is a no-op),
-	 * so deleting it lets the ADSP actually attempt PAS auth/boot.  Restore a
-	 * real path once the LPASS interconnect graph is fixed.
+	 * Bring-up: drop the LPASS interconnect path.  of_icc_get for the
+	 * upstream path never resolves on this tree (the LPASS sub-graph does not
+	 * connect to mc_virt in the registered icc graph), so the driver stays in
+	 * -EPROBE_DEFER and never reaches firmware load.  qcom_q6v5_init() treats
+	 * a NULL path as valid, so deleting the property lets the ADSP attempt PAS
+	 * auth/boot.  Restore a real path once the LPASS interconnect graph is
+	 * fixed.
 	 */
 	/delete-property/ interconnects;
 	status = "okay";
@@ -1711,33 +1679,31 @@
 
 /*
  * Speaker I2C bus drive strength.  The four CS35L45 amplifiers sit on the QUPv3
- * I2C master hub SE6 (998000.i2c, Samsung's I2C18) which this board runs at
- * 1 MHz, i.e. Fast-Mode Plus.  Mainline's generic hub_i2c6_data_clk state asks
- * for the weakest TLMM setting, drive-strength = <2>; Samsung's own
- * qupv3_hub_i2c6_{sda,scl}_active states use <8> for the same two pins with the
- * same pull-up and the same mux (their per-line i2chub0_se6_l0/l1 functions are
- * mainline's single i2chub0_se6, func1 on gpio8 and gpio9).
+ * I2C master hub SE6 (998000.i2c, Samsung's I2C18).  Mainline's generic
+ * hub_i2c6_data_clk state asks for the weakest TLMM setting, drive-strength =
+ * <2>; Samsung's own qupv3_hub_i2c6_{sda,scl}_active states use <8> for the
+ * same two pins with the same pull-up and the same mux (their per-line
+ * i2chub0_se6_l0/l1 functions are mainline's single i2chub0_se6, func1 on gpio8
+ * and gpio9).
  *
- * With 2 mA the edges cannot meet FM+ timing against four amplifier loads: the
+ * With 2 mA the edges cannot meet the timing against four amplifier loads: the
  * GENI controller never completes the first transfer and returns -110 after
  * ~1.0 s, which surfaces as "Timeout waiting for OTP boot" even though the rail
- * (tlmm19) is high and the shared reset (tlmm42) is verifiably released - a
- * gpio/i2c ftrace shows gpio 578 going 0 -> 1 and then a single i2c_write whose
- * i2c_result is ret=-110.  Match Samsung's drive strength; nothing else in the
- * bus configuration differs from stock.
+ * (tlmm19) is high and the shared reset (tlmm42) is verifiably released.  Match
+ * Samsung's drive strength; nothing else in the bus configuration differs from
+ * stock.
  */
 &hub_i2c6_data_clk {
 	drive-strength = <8>;
 };
 
 /*
- * Camera — rear 13 MP HI1337 + DW9808 autofocus, front 12 MP HI1337.
+ * Camera - rear 13 MP HI1337 + DW9808 autofocus, front 12 MP HI1337.
  * Both sensors answer at the same 7-bit address 0x21 (they sit on
  * different CCI buses): rear on CCI0 bus 1, front on CCI1 bus 1, with
  * the VCM at 0x0c on CCI1 bus 0.  The front module's EEPROM is the
  * device at 0x20 on CCI1 bus 1 in the stock tree (qcom,eeprom20,
- * slave-addr 0x40), which is what first made 0x20 look like the sensor
- * address; see the hi1337_front node for the address-sweep evidence.
+ * slave-addr 0x40) - the EEPROM, not the sensor.
  *
  * Samsung's L11B rail carries both display VDD and the front camera
  * digital core (pm_humu_l11); see the L11B regulator comment above.
@@ -1787,8 +1753,7 @@
 		orientation = <1>;
 		/*
 		 * Landscape-native rear module; frames are already upright.
-		 * Declaring <90> made libcamera report the wrong rotation and
-		 * GNOME Camera's viewfinder rotate by 90°.
+		 * Do not declare <90>: the value is applied as-is.
 		 */
 		rotation = <0>;
 		lens-focus = <&rear_focus>;
@@ -1833,9 +1798,6 @@
 		 * address as the rear module (different CCI bus).  Stock's
 		 * slaveAddress 0x40 / qcom,eeprom20 reg 0x20 on cci1 master 1
 		 * is the module EEPROM, not the sensor: probing 0x20 NAKs.
-		 * Verified by a full 0x08..0x77 address sweep on the front bus
-		 * with the sensor powered and MCLK4 running, where only 0x21
-		 * returned model 0x1337 / vendor 0x2000.
 		 */
 		reg = <0x21>;
 		clocks = <&camcc CAM_CC_MCLK4_CLK>;
@@ -1855,12 +1817,9 @@
 		orientation = <0>;
 		/*
 		 * V4L2's `rotation` / V4L2_CID_CAMERA_SENSOR_ROTATION must be 0 for
-		 * this module, same as the rear one.  Measured on this stack
-		 * (GNOME Snapshot's front viewfinder): 0 -> upright, 180 ->
-		 * upside down, 270 -> 90 deg anticlockwise, i.e. the value is
-		 * applied clockwise as-is.  Stock's `sensor-position-roll` (rear
-		 * 90, front 270) does not map onto this property - the rear node
-		 * needs 0 despite stock saying 90, and 270 here is wrong.
+		 * this module, same as the rear one: the value is applied clockwise
+		 * as-is.  Stock's `sensor-position-roll` (rear 90, front 270) does
+		 * not map onto this property.
 		 */
 		rotation = <0>;
 
@@ -1883,11 +1842,10 @@
 		gpio = <&tlmm 10 GPIO_ACTIVE_HIGH>;
 		enable-active-high;
 		/*
-		 * Only the rail pin.  An experiment that added the keyboard's own
-		 * pin states here as well (to release the MCU's reset earlier)
-		 * failed: two devices applying the same pinctrl group makes the
-		 * keyboard driver's own application fail with -EINVAL, and its
-		 * probe then never completes (test 081).
+		 * Only the rail pin.  The keyboard's own pin states must not be
+		 * added here: two devices applying the same pinctrl group makes the
+		 * keyboard driver's own application fail with -EINVAL and its probe
+		 * never completes.
 		 */
 		pinctrl-names = "default";
 		pinctrl-0 = <&pogo_supply>;
@@ -1897,22 +1855,9 @@
 &i2c15 {
 	status = "okay";
 	/*
-	 * Back to 100 kHz for this measurement.  The rate was raised to 400 kHz
-	 * in test 059 on the strength of the downstream binding's default, and
-	 * that comparison was made with the mainline port and *before* the
-	 * stock firmware was available - so 100 kHz has never been tried with
-	 * the vendor driver running its complete stock path.  If the
-	 * application's slave is marginal at 400 kHz, this is where it shows.
-	 */
-	/*
 	 * Stock runs this SE at 400 kHz: qcom,clk-freq-out is absent from its bus
 	 * node, so i2c-msm-geni defaults to 400000, and the vendor log says so
-	 * ("Bus frequency is set to 400000Hz").  100 kHz was retried in test 059, but
-	 * that was before the app-entry reset existed, so the application never came
-	 * up in that run and the rate was never tested against a live application.
-	 * Now that it does answer the handshake, this is the one stock condition the
-	 * port has never reproduced: the key-report path may have a timing budget the
-	 * slower bus breaks even though the handshake survives it.
+	 * ("Bus frequency is set to 400000Hz").
 	 */
 	clock-frequency = <400000>;
 
@@ -1932,7 +1877,7 @@
 		 * level readable: the MCU drives this line by itself, so its level
 		 * is the only signal about the application that needs no host
 		 * traffic, and the irqchip on this platform does not report line
-		 * levels (test 066 read -1).
+		 * levels.
 		 */
 		announce-gpios = <&tlmm 75 GPIO_ACTIVE_LOW>;
 		/*
@@ -1986,22 +1931,14 @@
 		function = "gpio";
 		drive-strength = <2>;
 		/*
-		 * No output value here at all.  output-high powered the MCU before
-		 * the driver owned its pins, so it was changed to output-low in
-		 * test 058 - which then won over the fixed regulator's own write
-		 * and left the pad low even with the rail reported as enabled
-		 * (test 083: pin 10 reads io 0x0 thirty seconds in, with
-		 * regulator_is_enabled() true).  Leaving the level to the
-		 * regulator keeps the ordering the pin state was for - the
-		 * regulator drives it low at probe and the driver's enable raises
-		 * it - and lets that enable actually reach the pad.
-		 *
-		 * This measurement goes further: high from the earliest moment the
-		 * TLMM can drive it.  The MCU turns out to be powered independently
-		 * of this pin (test 082), so if its application checks anything fed
-		 * by this rail at its own power-up - which happens at tablet
-		 * power-on, before any driver - then a pin that rises later never
-		 * helps it.  output-high is the only way to have it high then.
+		 * output-high, deliberately.  A pinconf output-low wins over the fixed
+		 * regulator's own write and leaves the pad low even with the rail reported
+		 * as enabled (test 083: pin 10 read io 0x0 thirty seconds in, with
+		 * regulator_is_enabled() true), so the level must not be pinned low.  The
+		 * MCU is powered independently of this pin (test 082) and checks the rail
+		 * at its own power-up, which happens at tablet power-on before any driver
+		 * runs, so a pin that rises later never helps it.  output-high is the only
+		 * way to have the pad high from the earliest moment the TLMM can drive it.
 		 */
 		output-high;
 		bias-disable;
@@ -2025,9 +1962,9 @@
 		 * con:1/1 in every status line) while this board's free-floating
 		 * connector leaves them toggling when nothing drives them, which
 		 * makes the vendor driver's state machine alternate
-		 * keyboard_start/keyboard_stop and never reach the application read
-		 * (test 072).  The pull-up reproduces the levels stock observes
-		 * without changing any output.
+		 * keyboard_start/keyboard_stop and never reach the application read.
+		 * The pull-up reproduces the levels stock observes without changing
+		 * any output.
 		 */
 		bias-pull-up;
 	};
