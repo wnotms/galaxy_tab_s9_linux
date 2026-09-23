@@ -132,6 +132,27 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
 done
 case "$BOOT_TRACE_CONSOLE" in 1) ;; *) BOOT_TRACE_CONSOLE=0 ;; esac
 
+# The minimal rootfs profile is an isolated experiment: after procfs is
+# available, hand control to a small /init implementation before mounting
+# debugfs or touching the panel, USB, UFS, PMIC diagnostics, or report paths.
+MINIMAL_ROOTFS=0
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_minimal_rootfs=*) MINIMAL_ROOTFS=${arg#gts9_minimal_rootfs=} ;;
+    esac
+done
+if [ "$MINIMAL_ROOTFS" = 1 ]; then
+    if [ -x /minimal-rootfs-init ]; then
+        exec /minimal-rootfs-init
+    fi
+    log 'GTS9_MINIMAL_FAIL=initramfs-profile-missing'
+    log 'ERROR: /minimal-rootfs-init is missing; staying in the initramfs shell'
+    while :; do
+        /bin/sh -i
+        sleep 1
+    done
+fi
+
 mount_path sysfs /sys
 mount_path devtmpfs /dev
 mount_path tmpfs /tmp

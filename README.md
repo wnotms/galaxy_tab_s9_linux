@@ -84,6 +84,14 @@ is not a legacy-LZ4 stream, and enforces a 7 MiB budget for the 8 MiB `init_boot
 `make-initramfs.sh --root ... --modules out/kernel-gts9wifi/modules-root`
 directly when a test needs loadable modules; the first boot test does not.
 
+The opt-in `gts9_minimal_rootfs=1` profile branches to a separate, small
+rootfs handoff path before display, USB, UFS, or bring-up report operations.
+It waits up to 30 seconds for the microSD root, mounts ext4 and switches to
+Debian, or leaves a BusyBox rescue shell with block-device diagnostics. The
+default cmdline is unchanged; see
+[minimal rootfs boot](docs/MINIMAL_ROOTFS_BOOT.md) and
+`boot/cmdline.minimal-rootfs.example.txt` for the controlled A/B profile.
+
 `validate-boot-bundle.sh` is the gate before any physical test: it re-extracts
 the kernel, the appended DTB, both ramdisks and every AVB footer, and
 fails if the initramfs has no executable `/init`. It only reads.
@@ -109,6 +117,8 @@ kernel/drivers/              out-of-tree device drivers (sec_log console)
 kernel/config/               small device Kconfig fragment
 kernel/patches/              local patch queue (initially empty/minimal)
 boot/bringup-init.sh         the /init of the bring-up initramfs
+boot/minimal-rootfs-init.sh opt-in minimal rootfs handoff profile
+boot/gts9-minimal-pid1.c     static PID 1 exec-failure rescue helper
 scripts/prepare-kernel.sh    stages DTS/patches into a disposable tree
 kernel/PROVENANCE.md         source/pin/licensing notes
 scripts/fetch-mainline.sh    obtains and verifies the upstream kernel
@@ -123,6 +133,7 @@ scripts/check-device-layout.sh   read-only partition audit, runs on the tablet
 scripts/audit-stock.sh       extracts useful facts from stock config/DTS
 reference/stock/             hashes and facts from the supplied stock artifacts
 docs/FIRST_BOOT_TEST.md      first physical boot test, recovery plan, A-E cases
+docs/MINIMAL_ROOTFS_BOOT.md  minimal Debian rootfs profile and A/B procedure
 docs/MAINLINE_PORT_PLAN.md   staged bring-up and validation plan
 docs/BUILD_ANALYSIS.md       repository analysis and the verified build result
 docs/AZKALI_SM8550_MAINLINE_ANALYSIS.md  decisions from the earlier X710 kernel fork

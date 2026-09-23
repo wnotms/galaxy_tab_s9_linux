@@ -9,7 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 INIT = (ROOT / 'boot' / 'bringup-init.sh').read_text()
+MINIMAL_INIT = (ROOT / 'boot' / 'minimal-rootfs-init.sh').read_text()
 CMDLINE = (ROOT / 'boot' / 'cmdline.example.txt').read_text()
+MINIMAL_CMDLINE = (ROOT / 'boot' / 'cmdline.minimal-rootfs.example.txt').read_text()
 TRACE_CMDLINE = (ROOT / 'boot' / 'cmdline.boot-trace.example.txt').read_text()
 OVERLAY = ROOT / 'rootfs-overlay' / 'usr'
 
@@ -150,6 +152,54 @@ class RootfsBoot(unittest.TestCase):
         self.assertIn('console=ttyMSM0,115200n8', tokens)
         self.assertIn('earlycon', tokens)
         self.assertIn('fbcon=font:TER16x32', tokens)
+
+    def test_minimal_profile_is_opt_in_and_branches_before_bringup(self):
+        normal_tokens = CMDLINE.split()
+        minimal_tokens = MINIMAL_CMDLINE.split()
+        self.assertNotIn('gts9_minimal_rootfs=1', normal_tokens)
+        self.assertIn('gts9_minimal_rootfs=1', minimal_tokens)
+        self.assertIn('gts9_rootfs=/dev/mmcblk1p1', minimal_tokens)
+        branch = INIT.index('exec /minimal-rootfs-init')
+        self.assertLess(branch, INIT.index('mount_path sysfs /sys'))
+        self.assertLess(branch, INIT.index('display_recover\n'))
+        self.assertLess(branch, INIT.index('setup_usb_gadget\n'))
+        self.assertLess(branch, INIT.index('report \'regulator summary\''))
+
+    def test_minimal_profile_stage_order_and_bounded_root_wait(self):
+        stages = ('kernel-userspace', 'waiting-root', 'root-found',
+                  'mounting-root', 'root-mounted', 'init-found', 'switch-root')
+        offsets = [MINIMAL_INIT.index(f'minimal_stage {stage}') for stage in stages]
+        self.assertEqual(offsets, sorted(offsets))
+        for failure in ('root-timeout', 'root-mount', 'missing-init',
+                        'switch-root-returned'):
+            self.assertIn(f'minimal_fail {failure}', MINIMAL_INIT)
+        self.assertIn('GTS9_MINIMAL_FAIL=$minimal_reason', MINIMAL_INIT)
+        self.assertIn('ROOTFS_WAIT_SECONDS=30', MINIMAL_INIT)
+        self.assertIn('exec switch_root /newroot /run/gts9-minimal-pid1', MINIMAL_INIT)
+        self.assertIn('if [ ! -x /newroot/sbin/init ]', MINIMAL_INIT)
+        self.assertIn('cp /bin/busybox /run/busybox', MINIMAL_INIT)
+
+    def test_minimal_profile_rescue_does_not_depend_on_panel_or_usb(self):
+        self.assertIn('cat /proc/partitions', MINIMAL_INIT)
+        self.assertIn('ls -l /sys/class/block', MINIMAL_INIT)
+        self.assertIn('ls -l /dev/mmcblk*', MINIMAL_INIT)
+        self.assertIn('/bin/sh -i </dev/console >/dev/console 2>&1', MINIMAL_INIT)
+        for noncritical in ('display_recover', 'setup_usb_gadget', 'gpt_entries',
+                            'rtc_write_state', 'regulator_summary', 'clk_summary'):
+            self.assertNotIn(noncritical, MINIMAL_INIT)
+        self.assertNotIn('reboot', MINIMAL_INIT)
+        self.assertNotIn('poweroff', MINIMAL_INIT)
+
+    def test_minimal_initramfs_requires_switch_root_and_installs_profile(self):
+        builder = (ROOT / 'scripts' / 'build-bringup-initramfs.sh').read_text()
+        pid1 = (ROOT / 'boot' / 'gts9-minimal-pid1.c').read_text()
+        self.assertIn("'sh mount umount switch_root", builder)
+        self.assertIn('minimal_init_src=', builder)
+        self.assertIn('install -m 0755 "$minimal_init_src" "$tree/minimal-rootfs-init"',
+                      builder)
+        self.assertIn('gts9-minimal-pid1', builder)
+        self.assertIn('GTS9_MINIMAL_FAIL=switch-root-returned', pid1)
+        self.assertIn('SYS_execve', pid1)
 
 
 if __name__ == '__main__':

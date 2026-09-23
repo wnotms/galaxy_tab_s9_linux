@@ -30,6 +30,8 @@ out_dir=${BUNDLE_OUT_DIR:-$repo_root/out/boot-bundle}
 tree=${BRINGUP_TREE:-$repo_root/out/bringup-initramfs}
 out=${BRINGUP_INITRAMFS:-$out_dir/initramfs-bringup.img}
 init_src="$repo_root/boot/bringup-init.sh"
+minimal_init_src="$repo_root/boot/minimal-rootfs-init.sh"
+minimal_pid1_src="$repo_root/boot/gts9-minimal-pid1.c"
 download_dir=${BRINGUP_DOWNLOAD_DIR:-$workdir/downloads}
 
 # Ubuntu 24.04 arm64 busybox-static (1.36.1-6ubuntu3.1).  Pinned by URL and by
@@ -56,7 +58,7 @@ done
 
 # Applets the bring-up shell must have.  Anything missing here is a build
 # failure, because the first boot test depends on it.
-required_applets='sh mount umount cat echo dmesg uname ls mkdir ln cp mv chmod sync sleep reboot poweroff grep tail'
+required_applets='sh mount umount switch_root cat echo dmesg uname ls mkdir ln cp mv chmod sync sleep reboot poweroff grep tail'
 # Applets the report channel needs on top of that: it parses GPT headers off a
 # raw disk, and then persists the report either through a filesystem or as a
 # raw, checksummed block.  A missing applet would silently disable the only
@@ -70,9 +72,13 @@ sbin_applets='mount umount reboot poweroff halt switch_root insmod modprobe rmmo
 fail() { echo "error: $*" >&2; exit 1; }
 
 [ -f "$init_src" ] || fail "missing /init source: $init_src"
+[ -f "$minimal_init_src" ] || fail "missing minimal rootfs init source: $minimal_init_src"
+[ -f "$minimal_pid1_src" ] || fail "missing minimal PID 1 helper source: $minimal_pid1_src"
 command -v readelf >/dev/null || fail 'readelf is required (apt install binutils)'
 command -v strings >/dev/null || fail 'strings is required (apt install binutils)'
 command -v sha256sum >/dev/null || fail 'sha256sum is required'
+command -v clang >/dev/null || fail 'clang is required to build the minimal PID 1 helper'
+command -v ld.lld >/dev/null || fail 'ld.lld is required to build the minimal PID 1 helper'
 
 verify_busybox() {
     # verify_busybox <path> <expected-sha256|-> [<label>]
@@ -150,7 +156,26 @@ mkdir -p "$tree/bin" "$tree/sbin" "$tree/proc" "$tree/sys" "$tree/dev" \
 chmod 1777 "$tree/tmp"
 install -m 0755 "$bb_bin" "$tree/bin/busybox"
 install -m 0755 "$init_src" "$tree/init"
+install -m 0755 "$minimal_init_src" "$tree/minimal-rootfs-init"
 install -m 0755 "$repo_root/boot/gts9-to-recovery.sh" "$tree/sbin/gts9-to-recovery"
+
+# This trampoline is the new init only for the minimal rootfs profile. It
+# execs Debian's /sbin/init and can still report a failed exec while keeping
+# PID 1 alive in a BusyBox rescue shell.
+minimal_pid1="$tree/sbin/gts9-minimal-pid1"
+clang --target=aarch64-linux-gnu -nostdlib -static -ffreestanding \
+      -fno-stack-protector -fno-builtin -fuse-ld=lld \
+      -Wl,--build-id=none -Wl,-n \
+      -o "$minimal_pid1" "$minimal_pid1_src" || \
+    fail 'cannot build the minimal rootfs PID 1 helper'
+readelf -h "$minimal_pid1" | grep -q 'Machine:.*AArch64' || \
+    fail 'the minimal rootfs PID 1 helper is not an aarch64 ELF'
+if readelf -l "$minimal_pid1" 2>/dev/null | grep -q INTERP; then
+    fail 'the minimal rootfs PID 1 helper is dynamically linked'
+fi
+chmod 0755 "$minimal_pid1"
+echo "built minimal rootfs PID 1 helper: $minimal_pid1 ($(stat -c %s "$minimal_pid1") bytes)"
+
 # A freestanding aarch64 helper that clears the SIGINT/SIGQUIT dispositions a shell
 # cannot clear itself (see boot/gts9-exec-default.c).  Without it the background
 # panel shell inherits SIG_IGN and Ctrl-C does nothing.
