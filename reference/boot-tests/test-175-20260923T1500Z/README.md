@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-23 UTC
 
-**Result:** stalled after `init-found`; no successful Debian login in this trial.
+**Result:** no Debian login became visible; later boot state is unknown.
 
 ## Setup
 
@@ -27,22 +27,23 @@ GTS9_BOOT_STAGE=root-mounted
 GTS9_BOOT_STAGE=init-found
 ```
 
-The cursor stopped updating while `init-found` was the last visible stage.
-The photo contains no `switch-root`, `systemd-basic`, `tty1-getty-active`, or
-`GTS9_BOOT_FAIL` marker. Reconnecting Type-C did not advance the screen. Windows
-reported “Unknown USB Device / Device Descriptor Request Failed”, and COM17 was
-unavailable, so no post-failure serial log could be collected.
+The cursor stopped updating while `init-found` was the last visible stage. The
+photo contains no `switch-root` or `GTS9_BOOT_FAIL` marker. Reconnecting Type-C
+did not advance the screen. Windows reported “Unknown USB Device / Device
+Descriptor Request Failed”, and COM17 was unavailable, so no post-failure
+serial or systemd-stage log could be collected.
 
 ## What this establishes
 
 For this battery-start attempt, the trace confirms that the microSD was
 enumerated, the root filesystem mounted, and `/sbin/init` was found. The missing
-`switch-root` screen marker does not prove that execution stopped before the
-handoff: that marker is recorded after the initramfs moves `/dev`, `/proc`,
-`/sys`, and `/run`, while the separate framebuffer trace writer checks
-`/dev/tty0`, whose availability can change after `/dev` is moved. The available
-evidence does not determine whether execution stopped during the handoff or
-later, including during early systemd startup.
+`switch-root` screen marker is expected with the current trace implementation:
+`boot_rootfs()` moves the `/dev` mount before recording that stage, while
+`trace_boot_console()` reopens `/dev/tty0` for every marker. After the move,
+`/dev/tty0` is no longer available at the initramfs path. Thus the photo does
+not show whether the handoff succeeded, whether the display stopped updating,
+or whether systemd started and hung early. A persistent boot-stage record,
+kernel log, or working serial capture is needed to locate that point.
 
 This differs from test-174: reconnecting Type-C did not restore visible boot
 progress in this attempt. The USB descriptor failure also prevented further
