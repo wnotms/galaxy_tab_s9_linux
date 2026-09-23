@@ -8,6 +8,17 @@ Nothing here is new evidence: every entry summarises a test that is already arch
 `reference/boot-tests/`. Follow the link for the raw logs, the flashed artifact hashes and
 the owner's observation.
 
+## Frozen known-good baseline
+
+`d36c14a451019e44f334afc4b4c5d41b72971b8e` is the **Debian console boot
+known-good baseline** for the current bring-up phase. Its recorded hardware
+state is Samsung ABL → Linux 7.2-rc3, native panel and tty1, Debian 13 on the
+microSD with systemd as PID 1, EF-DX710 Pogo cold boot and repeated hot
+detach/reconnect, USB ACM on `/dev/ttyGS0` with Windows COM and
+`serial-getty@ttyGS0`, working microSD, and enumerated UFS. Later maintenance
+commits are kept as separate steps after this reference; this commit and its
+test evidence are not to be rewritten or squashed.
+
 The rule applied when the comments were rewritten: the DTS keeps hardware facts,
 electrical relationships, why a property is required, why a node is disabled and the
 official Samsung correspondence. Numbered experiments, owner observations, disproved
