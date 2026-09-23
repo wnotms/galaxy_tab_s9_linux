@@ -37,6 +37,8 @@ reconnected, is consistent with the poweroff path reaching a real off state and
 the PMIC treating VBUS insertion as a boot event. It is strong physical
 evidence, but there was no battery-current measurement or direct PSCI call
 trace, so this does not prove which low-level handler completed the transition.
+The power-key check was a short press only; a sustained press was not tested, so
+the result does not establish that battery-only cold boot is impossible.
 
 The post-reconnect screen is an early initramfs marker. Because the interactive
 rescue shell did not appear and COM17 had no Debian prompt, this boot has not

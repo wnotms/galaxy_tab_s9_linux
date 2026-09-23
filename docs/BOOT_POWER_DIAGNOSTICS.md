@@ -53,22 +53,31 @@ firmware version 1.1 and the SMC conduit; `psci_0_2_set_functions()` installs
 `psci_sys_poweroff()` in the legacy `pm_power_off` slot, and
 `psci_sys_poweroff()` invokes `PSCI_0_2_FN_SYSTEM_OFF`. The generic poweroff
 code wraps that legacy callback in a temporary default-priority sys-off
-handler when it runs. The kernel does not query `PSCI_FEATURES(SYSTEM_OFF)` in
-this path, so source and PSCI version prove that Linux will issue the call if
-it reaches this stage, not how the firmware handled this particular call.
+handler when it runs. The arm64 path stops secondary CPUs before dispatching
+the sys-off chain. The kernel does not query `PSCI_FEATURES(SYSTEM_OFF)` in
+this path: PSCI `SYSTEM_OFF` is part of the v0.2 function set, and Linux calls
+it without checking the return value. `psci_sys_poweroff()` discards the SMC
+return value, so a returned error is not reported and no Qualcomm fallback is
+tried by that callback. The logged PSCI/SMCCC versions prove the conduit was
+discovered, not that this particular `SYSTEM_OFF` call succeeded.
+With `CONFIG_HIBERNATION=y`, Linux can also register a higher-priority PSCI
+`SYSTEM_OFF2` handler if `PSCI_FEATURES(SYSTEM_OFF2)` advertises hibernate-off;
+that callback is gated on entering hibernation and returns through the normal
+handler chain for an ordinary poweroff.
 
-There is no competing Qualcomm power-off handler in this DT. The Qualcomm PON
-driver supplies power-key/resin input; it does not register the platform
-power-off callback. The runtime tree has no `qcom,pshold` node, so the MSM
-PS_HOLD power-off driver is not active. The PMK8550 PWRKEY variant also sets
-`supports_ps_hold_poff_config = false`, so it does not register the legacy
-PS_HOLD reboot notifier. The separate `qcom,pmk8350-pon` reboot-mode driver
-only writes SDAM when a configured mode matches the reboot command; the DTS has
-recovery and bootloader modes but no `normal` mapping, so the standard null
-poweroff command does not request an SDAM mode write. UEFI runtime services
-are absent and there is no ramoops backend. COM17 is the USB ACM gadget, while
-the kernel console is `ttyMSM0`; therefore the lack of `Power down` on COM17 is
-not evidence that the kernel did not reach the PSCI callback.
+There is no competing Qualcomm power-off handler in this DT. The
+`qcom,pmk8350-pon` MFD driver populates the PMK8550 power-key/resin child and
+registers reboot-mode handling, but it has no power-off callback. Its reboot
+mode writer only touches SDAM when a configured mode matches the reboot
+command; the DTS has recovery and bootloader modes but no `normal` mapping, so
+the standard null poweroff command does not request an SDAM mode write. The
+PMK8550 PWRKEY variant also sets `supports_ps_hold_poff_config = false`, so it
+does not register the legacy PS_HOLD reboot notifier. The runtime tree has no
+`qcom,pshold` node, so the MSM PS_HOLD power-off driver is not active. UEFI
+runtime services are absent and there is no ramoops backend. COM17 is the USB
+ACM gadget, while the kernel console is `ttyMSM0`; therefore the lack of
+`Power down` on COM17 is not evidence that the kernel did not reach the PSCI
+callback.
 
 The test-169 screen after VBUS reconnect shows `GTS9 mainline: early display
 console ready` and `GTS9 mainline: console on the AMSA10FA01 panel`. COM17 did
@@ -104,7 +113,8 @@ boot confirms `PM: suspend entry (deep)` and `PM: suspend exit`, so the
 power-key suspend/resume path completed. See test 166. Test 169 separately
 reports that a short power-key press did not start the tablet while Type-C was
 disconnected after poweroff; this is a battery-only startup result, not a
-suspend/resume result.
+suspend/resume result. It was only a short press, so it does not establish
+whether a sustained power-key hold starts the tablet on battery.
 
 ## Diagnostic changes
 
