@@ -6,10 +6,15 @@ repo_root=$(cd "$(dirname "$0")/.." && pwd)
 dts_src="$repo_root/kernel/dts/sm8550-samsung-gts9wifi.dts"
 patch_dir="$repo_root/kernel/patches"
 install_vendor_pogo=${GTS9_INSTALL_VENDOR_POGO:-0}
+poweroff_trace=${GTS9_POWEROFF_TRACE:-0}
 
 case "$install_vendor_pogo" in
     0|1) ;;
     *) echo "GTS9_INSTALL_VENDOR_POGO must be 0 or 1" >&2; exit 2 ;;
+esac
+case "$poweroff_trace" in
+    0|1) ;;
+    *) echo "GTS9_POWEROFF_TRACE must be 0 or 1" >&2; exit 2 ;;
 esac
 
 git -C "$tree" rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
@@ -35,6 +40,22 @@ for patch in "$patch_dir"/*.patch; do
     git -C "$tree" apply --check "$patch"
     git -C "$tree" apply "$patch"
 done
+
+if [ "$poweroff_trace" = 1 ]; then
+    patch="$patch_dir/diagnostic/0020-gts9-poweroff-path-trace.patch"
+    [ -f "$patch" ] || {
+        echo "missing optional poweroff trace patch: $patch" >&2
+        exit 1
+    }
+
+    if git -C "$tree" apply --reverse --check "$patch" >/dev/null 2>&1; then
+        echo "already applied: ${patch##*/}"
+    else
+        echo "applying diagnostic ${patch##*/}"
+        git -C "$tree" apply --check "$patch"
+        git -C "$tree" apply "$patch"
+    fi
+fi
 shopt -u nullglob
 
 # A patch that is dropped from the queue is *not* reverted by git apply, so a
@@ -44,6 +65,9 @@ shopt -u nullglob
 shopt -s nullglob
 queued=("$patch_dir"/*.patch)
 shopt -u nullglob
+if [ "$poweroff_trace" = 1 ]; then
+    queued+=("$patch_dir/diagnostic/0020-gts9-poweroff-path-trace.patch")
+fi
 unaccounted=
 while read -r changed; do
     [ -n "$changed" ] || continue

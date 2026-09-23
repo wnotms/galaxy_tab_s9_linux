@@ -1,0 +1,128 @@
+diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+index e73bae6cb..a9647437e 100644
+--- a/drivers/firmware/psci/psci.c
++++ b/drivers/firmware/psci/psci.c
+@@ -331,7 +331,15 @@ static struct notifier_block psci_sys_reset_nb = {
+ 
+ static void psci_sys_poweroff(void)
+ {
+-	invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
++	unsigned long ret;
++
++	if (gts9_poweroff_trace_enabled()) {
++		pr_emerg("GTS9_POWER_OFF: PSCI SYSTEM_OFF call\n");
++		pr_flush(1000, true);
++	}
++	ret = invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: PSCI SYSTEM_OFF returned 0x%lx\n", ret);
+ }
+ 
+ #ifdef CONFIG_HIBERNATION
+diff --git a/include/linux/reboot.h b/include/linux/reboot.h
+index aa08c3bbb..4e0572a37 100644
+--- a/include/linux/reboot.h
++++ b/include/linux/reboot.h
+@@ -64,6 +64,7 @@ struct pt_regs;
+ extern void machine_crash_shutdown(struct pt_regs *);
+ 
+ void do_kernel_power_off(void);
++bool gts9_poweroff_trace_enabled(void);
+ 
+ /*
+  * sys-off handler API.
+diff --git a/kernel/reboot.c b/kernel/reboot.c
+index 695c33e75..92c7d069b 100644
+--- a/kernel/reboot.c
++++ b/kernel/reboot.c
+@@ -10,11 +10,13 @@
+ #include <linux/atomic.h>
+ #include <linux/ctype.h>
+ #include <linux/export.h>
++#include <linux/init.h>
+ #include <linux/kexec.h>
+ #include <linux/kmod.h>
+ #include <linux/kmsg_dump.h>
+ #include <linux/reboot.h>
+ #include <linux/suspend.h>
++#include <linux/string.h>
+ #include <linux/syscalls.h>
+ #include <linux/syscore_ops.h>
+ #include <linux/uaccess.h>
+@@ -68,6 +70,20 @@ struct sys_off_handler {
+  */
+ static bool poweroff_fallback_to_halt;
+ 
++static bool gts9_poweroff_trace;
++
++static int __init gts9_poweroff_trace_setup(char *str)
++{
++	gts9_poweroff_trace = !strcmp(str, "1");
++	return 0;
++}
++early_param("gts9_poweroff_trace", gts9_poweroff_trace_setup);
++
++bool gts9_poweroff_trace_enabled(void)
++{
++	return gts9_poweroff_trace;
++}
++
+ /*
+  * Temporary stub that prevents linkage failure while we're in process
+  * of removing all uses of legacy pm_power_off() around the kernel.
+@@ -343,6 +359,7 @@ static int sys_off_notify(struct notifier_block *nb,
+ {
+ 	struct sys_off_handler *handler;
+ 	struct sys_off_data data = {};
++	int ret;
+ 
+ 	handler = container_of(nb, struct sys_off_handler, nb);
+ 	data.cb_data = handler->cb_data;
+@@ -350,7 +367,14 @@ static int sys_off_notify(struct notifier_block *nb,
+ 	data.cmd = cmd;
+ 	data.dev = handler->dev;
+ 
+-	return handler->sys_off_cb(&data);
++	if (gts9_poweroff_trace_enabled() && mode == SYS_OFF_MODE_POWER_OFF)
++		pr_emerg("GTS9_POWER_OFF: sys-off priority=%d callback=%ps\n",
++			 handler->nb.priority, handler->sys_off_cb);
++	ret = handler->sys_off_cb(&data);
++	if (gts9_poweroff_trace_enabled() && mode == SYS_OFF_MODE_POWER_OFF)
++		pr_emerg("GTS9_POWER_OFF: sys-off callback returned %d\n", ret);
++
++	return ret;
+ }
+ 
+ static struct sys_off_handler platform_sys_off_handler;
+@@ -667,6 +691,10 @@ void do_kernel_power_off(void)
+ {
+ 	struct sys_off_handler *sys_off = NULL;
+ 
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: dispatch legacy pm_power_off=%ps\n",
++			 pm_power_off);
++
+ 	/*
+ 	 * Register sys-off handlers for legacy PM callback. This allows
+ 	 * legacy PM callbacks temporary co-exist with the new sys-off API.
+@@ -704,10 +732,20 @@ EXPORT_SYMBOL_GPL(kernel_can_power_off);
+  */
+ void kernel_power_off(void)
+ {
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: kernel_power_off entered\n");
+ 	kernel_shutdown_prepare(SYSTEM_POWER_OFF);
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: shutdown preparation complete\n");
+ 	do_kernel_power_off_prepare();
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: power-off prepare handlers complete\n");
+ 	migrate_to_reboot_cpu();
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: migrated to reboot CPU\n");
+ 	syscore_shutdown();
++	if (gts9_poweroff_trace_enabled())
++		pr_emerg("GTS9_POWER_OFF: syscore shutdown complete\n");
+ 	pr_emerg("Power down\n");
+ 	pr_flush(1000, true);
+ 	kmsg_dump(KMSG_DUMP_SHUTDOWN);

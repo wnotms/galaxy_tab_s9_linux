@@ -176,15 +176,55 @@ existing vbmeta. Preserve current partition backups and verify read-back hashes
 before any device test.
 
 The device is still at the early-display screen, so the added trace has not yet
-been observed. On the next authorized boot, record which `GTS9_BOOT_REPORT_BEGIN`
-marker is last on the panel; a missing matching END marker will identify the
-report read that failed to return. If every report finishes, the rootfs stage
-markers will distinguish MMC wait, root mount, and handoff. First reproduce
-with Type-C connected, then compare a controlled battery-only start. For
-poweroff, the systemd marker already proves entry into the final service; a
-direct kernel trace still requires a usable `ttyMSM0` capture or a separately
-validated persistent-kernel-log mechanism. Do not infer a microSD or regulator
-fault from this screen alone.
+been observed. On the next authorized boot, record which
+`GTS9_BOOT_REPORT_BEGIN` marker is last on the panel; a missing matching END
+marker will identify the report read that failed to return. If every report
+finishes, the rootfs stage markers will distinguish MMC wait, root mount, and
+handoff. First reproduce with Type-C connected, then compare a controlled
+battery-only start. For poweroff, the systemd marker already proves entry into
+the final service; a direct kernel trace still requires a usable `ttyMSM0`
+capture or a separately validated persistent-kernel-log mechanism. Do not
+infer a microSD or regulator fault from this screen alone.
+
+During this session the owner reconfirmed that the panel still showed the
+same two early-console lines. A read-only COM17 capture attempt opened the
+port for six seconds and received no matching boot-stage or rootfs lines. This
+does not reveal the stalled command because this boot lacks the opt-in report
+trace. The supplied photo has the same image hash recorded for test 169, so it
+adds no new boot-stage evidence. The next meaningful read is from a boot using
+the staged `gts9_boot_trace_console=1` initramfs; do not infer a new failure
+from the silent serial interval alone.
+
+For a later poweroff trial, the diagnostic-only
+`kernel/patches/diagnostic/0020-gts9-poweroff-path-trace.patch` can be enabled
+with `GTS9_POWEROFF_TRACE=1` during an isolated kernel build and the
+`boot/cmdline.poweroff-trace.example.txt` profile. With the command-line flag
+also enabled, it records Linux shutdown boundaries, sys-off callback symbols
+and priorities, and the point immediately before PSCI `SYSTEM_OFF`; if the SMC
+returns, it records the return value. It flushes that last marker before
+entering firmware and can add up to one second to the diagnostic attempt. The
+patch is not part of the default queue, does not alter the poweroff handler,
+and has not been flashed or tested on the device. A pre-call marker proves the
+Linux callback reached the SMC boundary, not that firmware powered the device
+off.
+
+The separate host-built `out/boot-poweroff-trace` bundle passed
+`scripts/validate-boot-bundle.sh` against its diagnostic cmdline and matching
+kernel output. Its kernel release is `7.2.0-rc3-gts9wifi-dirty`; image hashes
+are:
+
+```text
+boot.img       822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86
+init_boot.img  7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c
+vendor_boot.img 09bd4bea84d5a0477652002f6e4cd66091b4536f1cd7eb3d5d1a5bf45b2eb61b
+dtbo.img       c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3
+vbmeta.img     b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4
+```
+
+Only `boot.img`, `init_boot.img`, and `vendor_boot.img` contain the diagnostic
+kernel, initramfs, and cmdline. The generated `vbmeta.img` disables AVB and
+must not replace the device's existing vbmeta. The bundle is local and has not
+been flashed.
 
 Do not change the SD rails, PMIC/charger configuration, USB PHY, or display
 sequence based only on the cursor. The next change should follow a stage or
