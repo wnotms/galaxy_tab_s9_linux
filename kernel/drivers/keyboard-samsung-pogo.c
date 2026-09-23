@@ -179,13 +179,13 @@ static void pogo_stock_tail(struct samsung_pogo *p)
 
 	msleep(200);
 	ret = pogo_read_reg_ep(p, 1, POGO_CMD_CHECK_CRC, crc, sizeof(crc));
-	dev_info(&p->client->dev, "CHECK_CRC: %d%s\n", ret,
-		 ret ? "" : " - answered");
+	dev_dbg(&p->client->dev, "CHECK_CRC: %d%s\n", ret,
+		ret ? "" : " - answered");
 	if (!ret)
-		dev_info(&p->client->dev, "CRC32 %*ph\n", (int)sizeof(crc), crc);
+		dev_dbg(&p->client->dev, "CRC32 %*ph\n", (int)sizeof(crc), crc);
 	ret = pogo_read_reg_ep(p, 2, POGO_CMD_GET_TC_VERSION, tc, sizeof(tc));
-	dev_info(&p->client->dev, "GET_TC_FW_VERSION (EP2): %d%s\n", ret,
-		 ret ? "" : " - answered; stock's capture has the MCU's next ATTN 0.2 ms later");
+	dev_dbg(&p->client->dev, "GET_TC_FW_VERSION (EP2): %d%s\n", ret,
+		ret ? "" : " - answered; stock's capture has the MCU's next ATTN 0.2 ms later");
 }
 
 /* Samsung's stm32_i2c_reg_write: the same header, then the command byte. */
@@ -644,9 +644,9 @@ static void pogo_watch_work(struct work_struct *work)
 		ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 		if (ret) {
 			if (++p->poll_fails == 1)
-				dev_info(&p->client->dev,
-					 "keep-alive: GET_MODE NACKed (%d) - idle applications do not serve this read; not re-arming\n",
-					 ret);
+				dev_dbg_ratelimited(&p->client->dev,
+						    "keep-alive: GET_MODE NACKed (%d) - idle applications do not serve this read; not re-arming\n",
+						    ret);
 			/*
 			 * The distinction that matters: an idle but healthy
 			 * application releases the announce line and NACKs this read,
@@ -665,14 +665,14 @@ static void pogo_watch_work(struct work_struct *work)
 			 */
 			if (pogo_announce_level(p)) {
 				if (p->stuck_fails++ == 5)
-					dev_info(&p->client->dev,
-						 "diagnostic: announce asserted and GET_MODE NACKing for five polls (no re-arm)\n");
+					dev_dbg(&p->client->dev,
+						"diagnostic: announce asserted and GET_MODE NACKing for five polls (no re-arm)\n");
 			} else {
 				p->stuck_fails = 0;
 			}
 		} else if (p->poll_fails || p->stuck_fails) {
 			p->stuck_fails = 0;
-			dev_info(&p->client->dev, "keep-alive: GET_MODE answered again\n");
+			dev_dbg(&p->client->dev, "keep-alive: GET_MODE answered again\n");
 			p->poll_fails = 0;
 		}
 	}
@@ -793,13 +793,13 @@ static void pogo_hello_work(struct work_struct *work)
 	mutex_unlock(&p->lock);
 	if (ret) {
 		if (++p->hello_tries < POGO_HELLO_TRIES) {
-			dev_info(&p->client->dev,
-				 "handshake retry %u/%u failed (%d)\n",
-				 p->hello_tries, POGO_HELLO_TRIES, ret);
+			dev_dbg(&p->client->dev,
+				"handshake retry %u/%u failed (%d)\n",
+				p->hello_tries, POGO_HELLO_TRIES, ret);
 			mod_delayed_work(system_percpu_wq, &p->hello_work,
 					 msecs_to_jiffies(100));
 		} else {
-			dev_info(&p->client->dev,
+			dev_warn(&p->client->dev,
 				 "handshake gave up after %u attempts\n",
 				 p->hello_tries);
 		}
@@ -1337,9 +1337,9 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 			msleep(POGO_POLL_INTERVAL_MS);
 	}
 	if (ret) {
-		dev_info(&p->client->dev,
-			 "MCU version read failed after %d attempt(s): %d\n",
-			 i, ret);
+		dev_dbg(&p->client->dev,
+			"MCU version read failed after %d attempt(s): %d\n",
+			i, ret);
 		/*
 		 * Diagnostics only, and only now: the recovery bit-bangs SCL/SDA
 		 * and moves the controller's pinmux, and the scan talks to every
@@ -1358,7 +1358,7 @@ static int pogo_read_mcu(struct samsung_pogo *p)
 			 i * POGO_POLL_INTERVAL_MS);
 	ret = pogo_read_reg(p, POGO_CMD_GET_MODE, &mode, sizeof(mode));
 	if (ret) {
-		dev_info(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
+		dev_dbg(&p->client->dev, "MCU answered, mode read failed (%d)\n", ret);
 		return ret;
 	}
 	if (mode == POGO_MODE_DFU) {
@@ -1433,14 +1433,14 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	 * and skipped, which is evidence either way.
 	 */
 	if (!pogo_announce_level(p)) {
-		dev_warn_ratelimited(&p->client->dev,
-				     "interrupt with the announce line released; no packet read\n");
+		dev_dbg_ratelimited(&p->client->dev,
+				    "interrupt with the announce line released; no packet read\n");
 		return IRQ_HANDLED;
 	}
 	p->announce_seen++;
 	if (p->announce_seen < 4)
-		dev_info(&p->client->dev, "MCU announced itself (%u)\n",
-			 p->announce_seen);
+		dev_dbg(&p->client->dev, "MCU announced itself (%u)\n",
+			p->announce_seen);
 
 	mutex_lock(&p->lock);
 	/*
@@ -1464,8 +1464,8 @@ static irqreturn_t pogo_irq(int irq, void *data)
 	 * something other than a clean key packet has to be visible to be
 	 * diagnosed at all.
 	 */
-	dev_info(&p->client->dev, "packet from the MCU: %02x %02x %02x (size %u)\n",
-		 header[0], header[1], header[2], size);
+	dev_dbg(&p->client->dev, "packet from the MCU: %02x %02x %02x (size %u)\n",
+		header[0], header[1], header[2], size);
 	/* Stock treats an empty startup header as a model announcement. */
 	if (size == 0 || size == 3) {
 		ret = pogo_hello(p, header[2]);
@@ -1489,8 +1489,8 @@ static irqreturn_t pogo_irq(int irq, void *data)
 
 		for (i = 0; i < n; i++)
 			snprintf(hex + 3 * i, 4, "%02x ", payload[i]);
-		dev_info(&p->client->dev, "payload (%u bytes): %s%s\n",
-			 size, hex, size > 16 ? "..." : "");
+		dev_dbg(&p->client->dev, "payload (%u bytes): %s%s\n",
+			size, hex, size > 16 ? "..." : "");
 	}
 	/* Stock noise signature, checked only when all three bytes exist. */
 	if (size >= 3 && payload[0] == 3 && payload[1] == 0 && payload[2] == 5)
@@ -1511,15 +1511,14 @@ static irqreturn_t pogo_irq(int irq, void *data)
 		for (i = 0; i < size; i += 2) {
 			event = get_unaligned_le16(payload + i);
 			/*
-			 * The remaining acceptance stages are "a real key interrupt"
-			 * and "EV_KEY on /dev/input/eventX".  Neither is visible from
-			 * a device with no evtest and no adbd, so every reported key
-			 * is logged: one line per key transition, which is what a
-			 * physical key press must produce.
+			 * Protocol-level detail: one line per key transition, which
+			 * is exactly the per-keypress noise a normal Debian session
+			 * must not put in dmesg.  The input layer already publishes
+			 * the same information on /dev/input/eventX.
 			 */
-			dev_info(&p->client->dev, "key %#x %s (from the MCU packet)\n",
-				 event & 0x7fff,
-				 (event & 0x8000) ? "pressed" : "released");
+			dev_dbg(&p->client->dev, "key %#x %s (from the MCU packet)\n",
+				event & 0x7fff,
+				(event & 0x8000) ? "pressed" : "released");
 			input_report_key(p->input, event & 0x7fff, !!(event & 0x8000));
 			input_sync(p->input);
 		}
@@ -1675,8 +1674,8 @@ static int pogo_probe(struct i2c_client *client)
 	 */
 	p->boot = devm_i2c_new_dummy_device(dev, client->adapter, POGO_BOOT_ADDR);
 	if (IS_ERR(p->boot)) {
-		dev_info(dev, "no bootloader client at %#x: %ld\n",
-			 POGO_BOOT_ADDR, PTR_ERR(p->boot));
+		dev_dbg(dev, "no bootloader client at %#x: %ld\n",
+			POGO_BOOT_ADDR, PTR_ERR(p->boot));
 		p->boot = NULL;
 	}
 	p->pinctrl = devm_pinctrl_get(dev);

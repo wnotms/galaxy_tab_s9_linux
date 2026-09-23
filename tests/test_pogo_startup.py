@@ -357,6 +357,8 @@ typedef uint8_t u8;
 static void dev_note(const void *dev, const char *fmt, ...)
 { (void)dev; (void)fmt; }
 #define dev_info(dev, fmt, ...) dev_note(dev, fmt, ##__VA_ARGS__)
+#define dev_dbg(dev, fmt, ...) dev_note(dev, fmt, ##__VA_ARGS__)
+#define dev_dbg_ratelimited(dev, fmt, ...) dev_note(dev, fmt, ##__VA_ARGS__)
 #define container_of(ptr, type, member) ((type *)((char *)(ptr) - offsetof(type, member)))
 struct work_struct { int unused; };
 struct delayed_work { struct work_struct work; };

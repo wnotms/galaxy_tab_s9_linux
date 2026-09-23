@@ -59,6 +59,10 @@ static bool test_bit(unsigned int n, bool *b) { return b[n]; }
 #define dev_info(...) ((void)0)
 #define dev_warn_ratelimited(...) ((void)0)
 #define dev_err_ratelimited(...) ((void)0)
+/* Routine protocol traffic moved to debug level.  None of these calls has a
+   side effect in its argument list, so discarding them is safe here. */
+#define dev_dbg(...) ((void)0)
+#define dev_dbg_ratelimited(...) ((void)0)
 static void msleep(int n) { (void)n; }
 static void input_sync(struct input_dev *i) { (void)i; }
 static void input_report_key(struct input_dev *i, unsigned int c, int v) {
@@ -109,6 +113,23 @@ int main(void) {
             subprocess.run(['clang', '-Wall', '-Wextra', '-Wno-unused-parameter',
                             '-fsanitize=address,undefined', '-g', str(c), '-o', str(exe)], check=True)
             subprocess.run([str(exe)], check=True)
+
+    def test_irq_path_is_quiet_by_default(self):
+        """No per-key or per-packet line may reach dmesg at info level."""
+        source = (ROOT / 'kernel/drivers/keyboard-samsung-pogo.c').read_text()
+        body = function(source[source.index('static irqreturn_t pogo_irq('):],
+                        'pogo_irq')
+        # The interrupt path runs once per key transition, so nothing in it may
+        # be dev_info(); the same information is on /dev/input/eventX already.
+        self.assertNotIn('dev_info(', body)
+        # Quiet is not the same as silent: a malformed packet and a failed
+        # transfer must still be reported, through the ratelimited warnings.
+        self.assertIn('dev_warn_ratelimited(', body)
+        self.assertIn('dev_err_ratelimited(', body)
+        # The three routine reports are debug level.
+        for needle in ('"packet from the MCU', '"payload (%u bytes)', '"key %#x %s'):
+            self.assertIn('dev_dbg(&p->client->dev, ' + needle, body)
+
 
 if __name__ == '__main__':
     unittest.main()
