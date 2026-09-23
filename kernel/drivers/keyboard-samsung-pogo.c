@@ -7,6 +7,7 @@
  * No MCU firmware update, raw debug register or DFU interface is exposed.
  */
 #include <linux/delay.h>
+#include <linux/device.h>
 #include <linux/gpio/consumer.h>
 #include <linux/i2c.h>
 #include <linux/input.h>
@@ -1633,12 +1634,19 @@ static ssize_t rearm_show(struct device *dev, struct device_attribute *attr,
 			  p->vdd ? regulator_is_enabled(p->vdd) : -1);
 }
 static DEVICE_ATTR_RW(rearm);
+static struct attribute *pogo_attrs[] = {
+	&dev_attr_rearm.attr,
+	NULL,
+};
+
+static const struct attribute_group pogo_attr_group = {
+	.attrs = pogo_attrs,
+};
 
 /*
  * Teardown, run once from devm as the driver is removed.  This is the only place
- * that may destroy the driver's own objects: it removes the sysfs attribute and
- * the rail, and it is deliberately not the suspend handler - suspend has to keep
- * every one of these alive for resume to restore them.
+ * that stops works and powers off the rail. The devm sysfs group is removed
+ * before this action runs; suspend keeps both in place for resume to restore.
  */
 static void pogo_remove(void *data)
 {
@@ -1646,7 +1654,6 @@ static void pogo_remove(void *data)
 
 	/* Stop the connect edges first, so nothing can queue work behind us. */
 	pogo_connect_irq_disable(p);
-	device_remove_file(&p->client->dev, &dev_attr_rearm);
 	cancel_delayed_work_sync(&p->hello_work);
 	cancel_delayed_work_sync(&p->conn_check_work);
 	cancel_delayed_work_sync(&p->watch_work);
@@ -1682,8 +1689,6 @@ static int pogo_probe(struct i2c_client *client)
 	INIT_DELAYED_WORK(&p->watch_work, pogo_watch_work);
 	INIT_DELAYED_WORK(&p->conn_check_work, pogo_conn_check_work);
 	INIT_DELAYED_WORK(&p->hello_work, pogo_hello_work);
-	if (device_create_file(&client->dev, &dev_attr_rearm))
-		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
 	 * The connect line is an edge source, so the level is recorded here only
 	 * as the starting point for the diagnostic re-seat tracking in
@@ -1768,6 +1773,10 @@ static int pogo_probe(struct i2c_client *client)
 	ret = devm_add_action_or_reset(dev, pogo_remove, p);
 	if (ret)
 		return ret;
+	/* Register after the cleanup action so devres removes sysfs before teardown. */
+	ret = devm_device_add_group(dev, &pogo_attr_group);
+	if (ret)
+		dev_warn(dev, "could not create the rearm attribute: %d\n", ret);
 	pogo_connect_irq_enable(p);
 	mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
 	queue_delayed_work(system_percpu_wq, &p->watch_work,

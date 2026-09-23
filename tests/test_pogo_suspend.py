@@ -40,8 +40,6 @@ typedef uint8_t u8;
 #define CONNECT_IRQ 1
 #define DATA_IRQ 2
 #define NIRQ 8
-struct device_attribute { int unused; };
-static struct device_attribute dev_attr_rearm;
 struct i2c_client { int irq, dev; };
 struct device { int unused; };
 struct work_struct { int unused; };
@@ -73,8 +71,8 @@ static void msleep(int n) { assert(n >= 0); sleeps++; }
 static void queue_delayed_work(void *wq, struct delayed_work *w, unsigned long d)
 { (void)wq; (void)w; (void)d; queued++; }
 static void cancel_delayed_work_sync(struct delayed_work *w) { (void)w; cancelled++; }
-static void device_remove_file(const void *d, struct device_attribute *a)
-{ (void)d; (void)a; removes++; }
+/* Devres removes the managed sysfs group before invoking pogo_remove(). */
+static void release_rearm_group(void) { removes++; }
 static void pogo_release_keys(struct samsung_pogo *p) { (void)p; releases++; }
 /* Strict: the kernel warns on an unbalanced enable/disable, so abort here. */
 static void enable_irq(int irq)
@@ -276,8 +274,9 @@ int main(void)
  assert(!p.event_enabled && !p.irq_armed && !irq_enabled[DATA_IRQ]);
  assert(reg_count == 0 && !lock_held);
 
- /* Teardown is the one place the attribute and both lines go away. */
+ /* Devres removes sysfs before the teardown action and IRQ cleanup. */
  bring_up_attached();
+ release_rearm_group();
  pogo_remove(&p);
  assert(SINCE(removes) == 1 && reg_count == 0 && !lock_held);
  assert(!p.powered && !p.event_enabled && !p.irq_armed && !p.conn_irq_armed);
@@ -287,6 +286,7 @@ int main(void)
  bring_up_attached();
  pogo_suspend(&dev);
  snap();
+ release_rearm_group();
  pogo_remove(&p);
  assert(SINCE(removes) == 1 && reg_count == 0 && !lock_held);
  assert(irq_enables[CONNECT_IRQ] == irq_disables[CONNECT_IRQ]);
@@ -301,6 +301,11 @@ int main(void)
 class PogoSuspend(unittest.TestCase):
     def test_suspend_resume_lifecycle(self):
         source = (ROOT / 'kernel/drivers/keyboard-samsung-pogo.c').read_text()
+        probe = source[source.index('static int pogo_probe('):]
+        self.assertNotIn('device_create_file', source)
+        self.assertNotIn('device_remove_file', source)
+        self.assertLess(probe.index('devm_add_action_or_reset'),
+                        probe.index('devm_device_add_group'))
         harness = HARNESS_HEAD
         for name in FUNCTIONS:
             definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
