@@ -79,27 +79,21 @@ struct samsung_pogo {
 	struct delayed_work watch_work;
 	unsigned int poll_fails;
 	unsigned int stuck_fails;
-	/* Re-seat detection: the connect line floats while the cover is off. */
-	bool conn_attached;
 	/* Logical level of the connect line at the last 250 ms check. */
 	bool connect_state;
 	struct delayed_work conn_check_work;
 	struct delayed_work hello_work;
 	unsigned int hello_tries;
-	bool rearm_pending;
 	/* Physical-event tracking for the connect line, see pogo_watch_work(). */
 	int conn_level;
 	int conn_same;
 	/* Explicit re-arm: 0 none, 1 soft (no reset), 2 hard (full reset). */
 	u8 rearm_mode;
 	bool irq_armed;
-	unsigned long last_rearm;
 	int connect_irq;
 	bool powered;
 	bool event_enabled;
 	bool ready;
-	/* Passive detection of a live application: see the announce handler. */
-	bool observe_only;
 	unsigned int announce_seen;
 	u8 caps;
 };
@@ -381,16 +375,14 @@ static void pogo_diagnostic_connect_work(struct work_struct *work)
 		/*
 		 * A hot-replugged cover does not come back through the boot sequence:
 		 * test 101 measured the re-seat detection firing correctly and the
-		 * re-arm then producing no announcement at all.  Give a re-arm more
-		 * than the boot path needs - a three second power cycle and an extra
-		 * NRST pulse once the rail is up - because the part was powered
-		 * before this sequence started.
+		 * re-arm then producing no announcement at all.  Hold the supply down
+		 * for a full second before trying again, because the part was already
+		 * powered when this sequence started.
 		 */
-		msleep(p->rearm_pending ? 3000 : 1000);
+		msleep(1000);
 		if (!pogo_power_on(p)) {
 			msleep(50);
 			p->announce_seen = 0;
-			p->observe_only = false;
 			enable_irq(p->client->irq);
 			dev_info(&p->client->dev,
 				 "MCU rail on with BOOT0 low, announce line armed (level %d)\n",
@@ -535,17 +527,6 @@ static void pogo_connect_work(struct work_struct *work)
 		}
 		p->powered = true;
 		msleep(50);
-		if (p->rearm_pending) {
-			/* BOOT0 is already low, so this only resets, it does not select
-			   the bootloader.  Give the part a second chance after power-up. */
-			gpiod_set_value_cansleep(p->nrst, 0);
-			msleep(2);
-			gpiod_set_value_cansleep(p->nrst, 1);
-			msleep(150);
-			p->rearm_pending = false;
-			dev_info(&p->client->dev,
-				 "re-arm used the long sequence: 3 s power cycle and a second NRST pulse after power-up\n");
-		}
 		dev_info(&p->client->dev,
 			 "application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on\n");
 	}
@@ -575,13 +556,12 @@ out:
  * so a stopped MCU is never released again.
  *
  * So poll it.  GET_MODE is a one-byte read that does not consume a queued key
- * event, so a healthy idle keyboard answers it harmlessly; three consecutive
- * failures mean the application has stopped taking the bus, and the two flags are
- * cleared so the proven bring-up path (app-entry reset, rail, arm DATA) runs again
- * through pogo_connect_work() rather than a second copy of it.
+ * event, so a healthy idle keyboard answers it harmlessly.  The answer is
+ * reported and never acted on: test 100 showed a NACK-triggered re-arm killing a
+ * working keyboard, so this watchdog only observes, and a recovery stays an
+ * explicit request through the rearm attribute.
  */
 #define POGO_WATCH_MS		5000
-#define POGO_WATCH_FAILS	3
 
 static void pogo_watch_work(struct work_struct *work)
 {
@@ -589,7 +569,6 @@ static void pogo_watch_work(struct work_struct *work)
 					     struct samsung_pogo, watch_work);
 	u8 mode = 0;
 	int ret = 0;
-	bool rearm = false;
 
 	mutex_lock(&p->lock);
 	/*
@@ -625,7 +604,6 @@ static void pogo_watch_work(struct work_struct *work)
 
 				p->conn_level = level;
 				p->conn_same = 0;
-				p->conn_attached = stable;
 				dev_info(&p->client->dev,
 					 "PROBE connect -> %d (stable %d, announce %d, %s, announcements %u)\n",
 					 level, stable, pogo_announce_level(p),
@@ -640,7 +618,7 @@ static void pogo_watch_work(struct work_struct *work)
 			p->conn_same = 0;
 		}
 	}
-	if (!rearm && p->powered && p->event_enabled) {
+	if (p->powered && p->event_enabled) {
 		/*
 		 * Observe only, never reset from here.  Measured on test 100: the
 		 * boot handshake succeeds, GET_MODE then NACKs two seconds later
@@ -687,11 +665,6 @@ static void pogo_watch_work(struct work_struct *work)
 	}
 	mutex_unlock(&p->lock);
 
-	if (rearm) {
-		dev_info(&p->client->dev,
-			 "re-arming: re-running the application-entry reset and handshake\n");
-		mod_delayed_work(system_percpu_wq, &p->connect_work, 0);
-	}
 	queue_delayed_work(system_percpu_wq, &p->watch_work,
 			   msecs_to_jiffies(POGO_WATCH_MS));
 }
@@ -1651,15 +1624,13 @@ static int pogo_probe(struct i2c_client *client)
 	if (device_create_file(&client->dev, &dev_attr_rearm))
 		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
-	 * Start out assuming the cover is seated: the first watchdog tick sees a
-	 * stable connect line on any working cover, and treating that as a re-seat
-	 * would re-arm - and so disturb - the keyboard the boot path just brought
-	 * up.  Only instability followed by stability is a re-seat.
+	 * The connect line is an edge source, so the level is recorded here only
+	 * as the starting point for pogo_watch_work()'s re-seat tracking; the
+	 * hotplug path itself is IRQ-driven, see pogo_conn_check_work().
 	 */
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	if (IS_ERR(p->connected))
 		return dev_err_probe(dev, PTR_ERR(p->connected), "connect GPIO\n");
-	p->conn_attached = true;
 	p->conn_level = gpiod_get_value_cansleep(p->connected);
 	p->connect_state = p->conn_level;
 	p->announce = devm_gpiod_get_optional(&p->client->dev, "announce", GPIOD_IN);
