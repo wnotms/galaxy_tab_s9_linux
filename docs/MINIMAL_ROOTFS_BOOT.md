@@ -107,8 +107,45 @@ succeeds: `debian_failure=` keeps the most recent reason and
 getty or panel failure stays visible in the final record.
 
 The USB ACM service adds `usb-acm-ready` (or `usb-acm-failed`) and the panel
-recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`
-or `panel-unavailable`.
+recovery service adds `panel-recovered`, `panel-ok`, `panel-recovery-failed`,
+`panel-recovery-disabled` or `panel-unavailable`.
+
+### Known issue: intermittent DPU hang after a panel modeset
+
+Test 178 caught one boot in which the panel came up and then the whole system
+stalled: the screen kept the last framebuffer image with a blinking cursor,
+keyboard input still echoed, but no getty ever ran and the USB console stopped
+answering. The journal of that boot shows the mechanism:
+
+```text
+[drm:dpu_encoder_frame_done_timeout] [dpu error]enc35 frame done timeout
+msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+WARNING: drm_vblank.c:1329 at drm_crtc_wait_one_vblank
+Workqueue: events drm_fb_helper_damage_work
+BUG: workqueue lockup - pool cpus=1/4 stuck for 319s!
+rcu: INFO: rcu_preempt detected stalls on CPUs/tasks: 4, 5
+After 10 seconds, these CPUS still haven't responded to the NMI: 4, 5
+```
+
+The DPU stops delivering frame-done/vblank events, the fbcon damage worker
+(`drm_fb_helper_damage_work` -> `drm_client_modeset_wait_for_vblank`) waits on
+a vblank that never comes, two CPUs go unresponsive and everything that
+depends on the workqueues - including systemd's getty jobs - stops. There is
+no hardware watchdog to fall back on (`nowatchdog`, `Hard watchdog permanently
+disabled`), and a stall is not a panic, so `panic=10` does not recover it.
+
+The trigger is a modeset on the DPU, which is what the cold-boot panel
+recovery does. Until that is fixed driver-side, the recovery can be turned off
+from the cmdline while everything else stays:
+
+```text
+gts9_panel_recover=0
+```
+
+The service then records `panel-recovery-disabled` and leaves the dark panel
+alone: dark, but stable. Without `msm.separate_gpu_kms=1` there is no fb0 at
+all, no fbcon damage work and therefore none of this - which is why every
+pre-panel-fix boot was stable.
 
 ## Deploying the Debian userspace
 
