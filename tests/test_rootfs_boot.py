@@ -144,6 +144,17 @@ class RootfsBoot(unittest.TestCase):
     def test_timers_disabled_in_rootfs_mode(self):
         self.assertIn('proof and recovery timers disabled', INIT)
 
+    def test_minimal_cmdline_keeps_the_display_parameter_up_front(self):
+        # test 035: without msm.separate_gpu_kms=1 the DSI host never accepts
+        # the panel, probe fails with -EINVAL and there is no fb0 at all; the
+        # bootloader appends its own cmdline, so it has to stay near the front.
+        tokens = MINIMAL_CMDLINE.split()
+        self.assertIn('msm.separate_gpu_kms=1', tokens)
+        self.assertLess(tokens.index('msm.separate_gpu_kms=1'), 3)
+        self.assertIn('fbcon=font:TER16x32', tokens)
+        self.assertIn('gts9_minimal_rootfs=1', tokens)
+        self.assertIn('gts9_rootfs=/dev/mmcblk1p1', tokens)
+
     def test_minimal_cmdline_recovers_from_a_panic(self):
         # A panicking kernel with panic=0 leaves the tablet hung with no USB
         # and no key response (test 178 boots #2 and #3); the minimal profile
