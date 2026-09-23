@@ -145,7 +145,9 @@ class DebianRecoveryBoot(unittest.TestCase):
 
     def test_expected_layout_matches_the_recorded_gpt_entry(self):
         """misc is GPT index 9, 256 sectors, which is /dev/sda10."""
-        self.assertIn('EXPECTED_SECTORS=256', self.text)
+        self.assertIn('EXPECTED_SECTORS=2048', self.text)
+        # The GPT uses 4096-byte logical sectors; sysfs `size` uses 512-byte units.
+        self.assertEqual(256 * 4096 // 512, 2048)
         report = (ROOT / 'reference/boot-tests/test-047-20260922T060344Z'
                   / 'bringup-report.txt')
         if not report.is_file():

@@ -36,9 +36,10 @@ PROG=${0##*/}
 MISC_LABEL=misc
 BCB_COMMAND='boot-recovery'
 BCB_BYTES=2048
-# The recorded layout for this board: GPT index 9, 256 sectors, /dev/sda10.
-# Used only as a cross-check, never as the way the device is found.
-EXPECTED_SECTORS=256
+# GPT records 256 4096-byte sectors. Linux sysfs `size` uses 512-byte sectors,
+# so the same /dev/sda10 partition is reported as 2048 sectors there.
+# This is only a cross-check; the GPT label is how the device is found.
+EXPECTED_SECTORS=2048
 
 action=write
 assume_yes=0
