@@ -18,6 +18,7 @@ PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH
 
 BOOT_TRACE_CONSOLE=0
+BOOT_TRACE_CONSOLE_FD_OPEN=0
 
 log() {
     echo "$*"
@@ -29,8 +30,13 @@ log() {
 
 trace_boot_console() {
     [ "$BOOT_TRACE_CONSOLE" = 1 ] || return 0
-    [ -c /dev/tty0 ] || return 0
-    printf '\r\n%s\r\n' "$*" > /dev/tty0 2>/dev/null || true
+    if [ "$BOOT_TRACE_CONSOLE_FD_OPEN" != 1 ]; then
+        # Keep the VT descriptor open across the /dev move in boot_rootfs().
+        [ -c /dev/tty0 ] || return 0
+        exec 3>/dev/tty0 || return 0
+        BOOT_TRACE_CONSOLE_FD_OPEN=1
+    fi
+    printf '\r\n%s\r\n' "$*" >&3 2>/dev/null || true
 }
 
 BOOT_STAGE=''
@@ -1332,7 +1338,7 @@ boot_rootfs()
     log 'gts9-rootfs: handing PID 1 to /sbin/init'
     record_boot_stage switch-root
     sync
-    exec switch_root /newroot /sbin/init
+    exec switch_root /newroot /sbin/init 3>&-
     log 'gts9-rootfs: ERROR: switch_root returned'
     record_boot_failure switch-root-returned
     ROOTFS_FAILURE=switch-root-returned

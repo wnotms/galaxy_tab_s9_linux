@@ -1,4 +1,9 @@
 """Host checks for the optional Debian microSD boot (gts9_rootfs=)."""
+import os
+import pty
+import shlex
+import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -62,6 +67,46 @@ class RootfsBoot(unittest.TestCase):
         first_stage = INIT.index('record_boot_stage kernel-userspace')
         self.assertLess(proc_mount, trace_option)
         self.assertLess(trace_option, first_stage)
+
+    def test_boot_trace_tty_stays_available_after_dev_move(self):
+        start = INIT.index('trace_boot_console() {')
+        end = INIT.index('\n}\n', start) + 2
+        trace_function = INIT[start:end].replace(
+            '/dev/tty0', '"$GTS9_TEST_TTY"')
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            dev = root / 'dev'
+            moved_dev = root / 'newroot' / 'dev'
+            dev.mkdir()
+            moved_dev.parent.mkdir()
+            master_fd, slave_fd = pty.openpty()
+            try:
+                tty_path = os.ttyname(slave_fd)
+                (dev / 'tty0').symlink_to(tty_path)
+                shell_script = '\n'.join((
+                    'BOOT_TRACE_CONSOLE=1',
+                    'BOOT_TRACE_CONSOLE_FD_OPEN=0',
+                    trace_function,
+                    'trace_boot_console before-dev-move',
+                    f'mv {shlex.quote(str(dev))} {shlex.quote(str(moved_dev))}',
+                    'trace_boot_console after-dev-move',
+                    'exec 3>&-',
+                    '[ ! -e /proc/$$/fd/3 ]',
+                ))
+                env = dict(os.environ, GTS9_TEST_TTY=str(dev / 'tty0'))
+                result = subprocess.run(
+                    ['/bin/sh', '-c', shell_script],
+                    env=env, text=True, capture_output=True, check=False)
+                output = os.read(master_fd, 4096).decode()
+            finally:
+                os.close(master_fd)
+                os.close(slave_fd)
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('before-dev-move', output)
+        self.assertIn('after-dev-move', output)
+        self.assertIn('exec switch_root /newroot /sbin/init 3>&-', INIT)
 
     def test_rootfs_diagnostic_is_written_only_after_mount(self):
         mount = INIT.index("log 'gts9-rootfs: rootfs mounted rw'")
