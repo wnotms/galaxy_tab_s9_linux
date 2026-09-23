@@ -1,0 +1,14 @@
+Source: read-only COM17 query of journalctl -b --grep='suspend|resume|power key'
+Boot ID: d67a8a42-6314-4671-98b4-d12d2f68a3cb
+
+[ 2646.032090] systemd-logind: Power key pressed short.
+[ 2646.032301] systemd-logind: Suspending...
+[ 2646.042405] systemd: Starting systemd-suspend.service - System Suspend...
+[ 2646.076894] systemd-sleep: Performing sleep operation 'suspend'...
+[ 2646.080013] kernel: PM: suspend entry (deep)
+[ 2646.747178] systemd-logind: Power key pressed short.
+[ 2646.747220] systemd-sleep: System returned from sleep operation 'suspend'.
+[ 2646.748832] kernel: PM: suspend exit
+[ 2647.172927] systemd: systemd-suspend.service: Deactivated successfully.
+[ 2647.173540] systemd: Finished systemd-suspend.service - System Suspend.
+[ 2647.188696] systemd-logind: Operation 'suspend' finished.

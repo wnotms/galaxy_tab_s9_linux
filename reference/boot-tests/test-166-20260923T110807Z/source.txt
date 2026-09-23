@@ -1,0 +1,9 @@
+Owner report in the active session: after a short power-key press turned the
+screen off, another short press restored the screen and keyboard; the owner
+replied “已恢复”. The physical key events were not recorded by video. Caps
+Lock operation was not separately confirmed after this wake cycle.
+
+The same-session COM17 read-only audit reported kernel
+7.2.0-rc3-gts9wifi-dirty, boot ID d67a8a42-6314-4671-98b4-d12d2f68a3cb, and
+uptime 2749.73 seconds. The diagnostic initramfs changes were still unbuilt
+and unflashed. No partition was written.
