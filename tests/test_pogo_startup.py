@@ -340,5 +340,105 @@ int main(void) {
             subprocess.run([str(exe)], check=True)
 
 
+    def test_watch_work_leaves_the_bootloader_alone(self):
+        """The watchdog must not read 0x51 unless the diagnostics are opted in."""
+        source = (ROOT / 'kernel/drivers/keyboard-samsung-pogo.c').read_text()
+        harness = r'''
+#include <assert.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stddef.h>
+typedef uint8_t u8;
+#define POGO_CMD_GET_MODE 1
+#define POGO_WATCH_MS 5000
+/* The driver performs the diagnostic bus reads inside dev_info() arguments, so
+   the mock must evaluate them: a do-nothing macro would erase the very calls
+   this test exists to count. */
+static void dev_note(const void *dev, const char *fmt, ...)
+{ (void)dev; (void)fmt; }
+#define dev_info(dev, fmt, ...) dev_note(dev, fmt, ##__VA_ARGS__)
+#define container_of(ptr, type, member) ((type *)((char *)(ptr) - offsetof(type, member)))
+struct work_struct { int unused; };
+struct delayed_work { struct work_struct work; };
+#define to_delayed_work(w) container_of(w, struct delayed_work, work)
+struct i2c_client { int dev; };
+struct samsung_pogo {
+ struct i2c_client *client;
+ struct delayed_work watch_work;
+ int lock, *connected;
+ bool powered, event_enabled;
+ int conn_level, conn_same;
+ unsigned int announce_seen, poll_fails, stuck_fails;
+};
+static bool startup_diagnostics;
+static int lock_held, app_reads, boot_reads, queued;
+static void mutex_lock(int *p) { assert(!lock_held); lock_held = 1; }
+static void mutex_unlock(int *p) { assert(lock_held); lock_held = 0; }
+/* The line is driven and reads the same every sample, so the probe's
+   stability loop settles and its level differs from the recorded one. */
+static int gpiod_get_value_cansleep(int *p) { (void)p; return 1; }
+static int pogo_announce_level(struct samsung_pogo *p) { (void)p; return 0; }
+static void queue_delayed_work(void *wq, struct delayed_work *w, unsigned long d)
+{ (void)wq; (void)w; (void)d; queued++; }
+#define system_percpu_wq ((void *)0)
+#define msecs_to_jiffies(ms) ((unsigned long)(ms))
+static void msleep(int n) { (void)n; }
+/* The application read the keep-alive makes, and the bootloader read the
+   legacy re-seat probe makes: the two are counted apart on purpose. */
+static int pogo_read_reg(struct samsung_pogo *p, u8 reg, u8 *buf, int n)
+{ (void)p; (void)buf; (void)n; assert(reg == POGO_CMD_GET_MODE); app_reads++; return 0; }
+static int pogo_boot_ic_version(struct samsung_pogo *p, u8 *v)
+{ (void)p; (void)v; boot_reads++; return 0; }
+'''
+        for name in ('pogo_reseat_probe', 'pogo_watch_work'):
+            definition = re.search(r'^static [^\n]*\b' + name + r'\([^;]*?\)\n\{',
+                                   source, flags=re.M)
+            self.assertIsNotNone(definition, name)
+            harness += '\n' + function(source[definition.start():], name) + '\n'
+        harness += r'''
+static void arm(struct samsung_pogo *p) {
+ startup_diagnostics = false;
+ lock_held = app_reads = boot_reads = queued = 0;
+ p->powered = p->event_enabled = true;
+ /* A settled, changed level: the re-seat probe would fire its report here. */
+ p->conn_level = 0; p->conn_same = 4;
+}
+int main(void) {
+ int gpio = 1;
+ struct i2c_client client = {0};
+ struct samsung_pogo p = {.client=&client, .connected=&gpio};
+
+ /* Default path: the keep-alive read to 0x2a happens, 0x51 is never touched
+    and the probe's extra application read never happens either. */
+ arm(&p);
+ pogo_watch_work(&p.watch_work.work);
+ assert(!lock_held && queued == 1);
+ assert(app_reads == 1 && boot_reads == 0);
+
+ /* The same state with the diagnostics opted in: now both interfaces are read,
+    which is what the default path must not do. */
+ arm(&p); startup_diagnostics = true;
+ pogo_watch_work(&p.watch_work.work);
+ assert(!lock_held && queued == 1);
+ assert(app_reads == 2 && boot_reads == 1);
+
+ /* An unpowered or unarmed driver must not reach the bus at all. */
+ arm(&p); p.powered = false;
+ pogo_watch_work(&p.watch_work.work);
+ assert(app_reads == 0 && boot_reads == 0);
+ return 0;
+}
+'''
+        with tempfile.TemporaryDirectory() as tmp:
+            c = Path(tmp) / 'watch.c'
+            exe = Path(tmp) / 'watch'
+            c.write_text(harness)
+            subprocess.run(['clang', '-Wall', '-Wextra', '-Werror',
+                            '-Wno-unused-parameter', '-Wno-unused-function',
+                            '-fsanitize=address,undefined',
+                            '-g', str(c), '-o', str(exe)], check=True)
+            subprocess.run([str(exe)], check=True)
+
+
 if __name__ == '__main__':
     unittest.main()

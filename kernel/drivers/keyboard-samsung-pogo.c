@@ -242,6 +242,57 @@ static void pogo_power_off(struct samsung_pogo *p)
 }
 
 /*
+ * Legacy re-seat probe, bring-up only.
+ *
+ * The connect line is an edge source with bias-disable: while no cover is
+ * seated it floats and toggles at about 10 Hz, and once the cover is back it is
+ * driven and reads the same every time.  Sampling the line is read-only, but the
+ * report below also reads the application at 0x2a and the MCU's system
+ * bootloader at 0x51, and those accesses are a bring-up experiment: the verified
+ * hotplug path is the connect IRQ with pogo_detach()/pogo_conn_check_work(), and
+ * it needs none of this.  Keep it behind startup_diagnostics so the default path
+ * never speaks to 0x51.
+ */
+static void pogo_reseat_probe(struct samsung_pogo *p)
+{
+	int level = gpiod_get_value_cansleep(p->connected);
+	bool stable = true;
+	unsigned int i;
+
+	for (i = 0; i < 4; i++) {
+		msleep(20);
+		if (gpiod_get_value_cansleep(p->connected) != level)
+			stable = false;
+	}
+	/*
+	 * Read-only.  Two attempts at acting on this line have each cost the owner
+	 * a working keyboard (a reset loop, then an unbalanced enable_irq), so the
+	 * line is only observed: it is sampled once a second, and a change that
+	 * survives five samples is logged together with everything the driver
+	 * knows plus one non-destructive read of each interface.
+	 */
+	if (level != p->conn_level) {
+		if (++p->conn_same >= 5) {
+			u8 rb = 0;
+
+			p->conn_level = level;
+			p->conn_same = 0;
+			dev_info(&p->client->dev,
+				 "PROBE connect -> %d (stable %d, announce %d, %s, announcements %u)\n",
+				 level, stable, pogo_announce_level(p),
+				 p->event_enabled ? "DATA armed" : "DATA not armed",
+				 p->announce_seen);
+			dev_info(&p->client->dev, "PROBE 0x2a GET_MODE -> %d\n",
+				 pogo_read_reg(p, POGO_CMD_GET_MODE, &rb, sizeof(rb)));
+			dev_info(&p->client->dev, "PROBE 0x51 IC version -> %d\n",
+				 pogo_boot_ic_version(p, &rb));
+		}
+	} else {
+		p->conn_same = 0;
+	}
+}
+
+/*
  * Bring the keyboard up once, and leave the rail on.
  *
  * The connect line is an edge source, not a presence level: the stock node sets
@@ -571,53 +622,15 @@ static void pogo_watch_work(struct work_struct *work)
 	int ret = 0;
 
 	mutex_lock(&p->lock);
+
 	/*
-	 * Re-seat detection first.  The connect line is an edge source with
-	 * bias-disable: while no cover is seated it floats and toggles at about
-	 * 10 Hz, and once the cover is back it is driven and reads the same every
-	 * time.  A transition from unstable to stable therefore means the cover was
-	 * just re-attached - and after a re-seat the application has to be brought
-	 * up again, which the one-shot startup never did (test 099's follow-up: 22
-	 * watchdog re-arms, no announcement, no key packet).
+	 * The re-seat probe speaks to 0x51 and 0x2a, so it belongs to the
+	 * bring-up diagnostics; the verified hotplug path is the connect IRQ and
+	 * pogo_conn_check_work(), which this watchdog does not replace.
 	 */
-	{
-		int level = gpiod_get_value_cansleep(p->connected);
-		bool stable = true;
-		unsigned int i;
+	if (startup_diagnostics)
+		pogo_reseat_probe(p);
 
-		for (i = 0; i < 4; i++) {
-			msleep(20);
-			if (gpiod_get_value_cansleep(p->connected) != level)
-				stable = false;
-		}
-		/*
-		 * Read-only.  Two attempts at acting on this line have each cost the
-		 * owner a working keyboard (a reset loop, then an unbalanced enable_irq),
-		 * so the line is only observed now: it is sampled once a second, and a
-		 * change that survives five samples is logged together with everything the
-		 * driver knows plus one non-destructive read of each interface.  Whatever
-		 * comes next is designed from these lines and not from a theory.
-		 */
-		if (level != p->conn_level) {
-			if (++p->conn_same >= 5) {
-				u8 rb = 0;
-
-				p->conn_level = level;
-				p->conn_same = 0;
-				dev_info(&p->client->dev,
-					 "PROBE connect -> %d (stable %d, announce %d, %s, announcements %u)\n",
-					 level, stable, pogo_announce_level(p),
-					 p->event_enabled ? "DATA armed" : "DATA not armed",
-					 p->announce_seen);
-				dev_info(&p->client->dev, "PROBE 0x2a GET_MODE -> %d\n",
-					 pogo_read_reg(p, POGO_CMD_GET_MODE, &rb, sizeof(rb)));
-				dev_info(&p->client->dev, "PROBE 0x51 IC version -> %d\n",
-					 pogo_boot_ic_version(p, &rb));
-			}
-		} else {
-			p->conn_same = 0;
-		}
-	}
 	if (p->powered && p->event_enabled) {
 		/*
 		 * Observe only, never reset from here.  Measured on test 100: the
@@ -1625,8 +1638,9 @@ static int pogo_probe(struct i2c_client *client)
 		dev_warn(&client->dev, "could not create the rearm attribute\n");
 	/*
 	 * The connect line is an edge source, so the level is recorded here only
-	 * as the starting point for pogo_watch_work()'s re-seat tracking; the
-	 * hotplug path itself is IRQ-driven, see pogo_conn_check_work().
+	 * as the starting point for the diagnostic re-seat tracking in
+	 * pogo_reseat_probe(); the hotplug path itself is IRQ-driven, see
+	 * pogo_conn_check_work().
 	 */
 	p->connected = devm_gpiod_get(dev, "connect", GPIOD_IN);
 	if (IS_ERR(p->connected))
