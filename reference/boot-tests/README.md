@@ -19,3 +19,9 @@ cold boots in separate directories using `MINIMAL_ROOTFS_TEST_TEMPLATE.md`.
 Keep the kernel, DTB, initramfs, cmdline and bundle hashes identical across the
 pair; record whether `/dev/mmcblk1p1`, `switch-root` and Debian/systemd were
 observed. A panel image is not a system-state result.
+
+The authoritative minimal-profile evidence is the record the boot itself
+writes to `/var/log/gts9-minimal-last-boot` on the Debian root filesystem. Read
+it live over the USB console, or offline from TWRP with
+`scripts/twrp-mount-debian.sh`. A missing `sec_log`/`last_kmsg` is expected -
+the bootloader overwrites that ring - and is not a boot result.

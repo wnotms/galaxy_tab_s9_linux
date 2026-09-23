@@ -357,6 +357,40 @@ Do not debug everything at once. Work in this order unless logs prove another de
 
 A failure before Linux entry must be debugged as an ABL/boot-image/DT selection problem. An empty pstore is not evidence of a kernel crash if the bootloader never transferred control.
 
+## Boot architecture after the Debian userspace split (2026-09-24)
+
+The minimal profile (`gts9_minimal_rootfs=1`) now does one thing: find the TF
+card, mount it, and `switch_root` into Debian. Everything that used to happen
+in the initramfs before that - panel recovery, the USB ACM gadget, the report
+channels - is Debian's job:
+
+- `boot/minimal-rootfs-init.sh` + `boot/minimal-rootfs-state.sh` write the
+  persistent stage record `/var/log/gts9-minimal-last-boot` on the Debian root
+  (atomic replace, `switch-root` flushed before the exec).
+- `rootfs-overlay/` carries the Debian units and helpers:
+  `gts9-debian-entered/basic/getty/multi-user-stage.service` continue the same
+  record from systemd, `gts9-usb-acm.service` creates only `acm.usb0`,
+  `gts9-panel-recover.service` runs the X710 framebuffer blank/unblank cycle,
+  and the ttyGS0 drop-in auto-logs in root on that console only.
+- `scripts/install-debian-rootfs.sh` installs that overlay into a mounted
+  Debian root or builds `out/gts9-debian-overlay.tar` for TWRP.  Kernel
+  modules and firmware live in Debian under `lib/modules/<release>` and
+  `lib/firmware/`; the minimal initramfs carries neither.
+- `scripts/twrp-mount-debian.sh` and `docs/TWRP_DEBIAN_RECOVERY.md` are the
+  offline path: identify the ext4 partition, mount it read-only and read the
+  record when the panel is black and no USB console appears.
+
+Rules that follow from this:
+
+- Never make USB, DRM or tty1 a dependency of the root handoff. Panel and USB
+  must fail independently of each other.
+- A black screen plus no COM port is not a rootfs failure verdict; read the
+  persistent record first (live or from TWRP).
+- Do not modify regulator/PMIC parameters without stage evidence proving that
+  the card never appeared.
+- Keep the boot-critical providers built in (MMC/SDHCI, ext4, RPMh, PMIC, PDC,
+  clock, pinctrl); do not move Pogo or the panel to modules yet.
+
 ## Samsung ABL constraints
 
 Keep the legacy Samsung selectors in the board DTS unless a physical test proves they are no longer required. The X710 Azkali bring-up and sibling X910 work both demonstrate that Samsung ABL can reject an otherwise valid upstream-style DTB before Linux starts. Preserve `/__symbols__` in DTBs used in experiments that exercise Samsung's DT overlay path (`DTC_FLAGS_... := -@`).
