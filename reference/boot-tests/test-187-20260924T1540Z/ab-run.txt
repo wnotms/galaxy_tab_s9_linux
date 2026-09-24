@@ -1,0 +1,94 @@
+2026-09-24T15:40:25Z test-187 stall A/B: rounds=5 allow_power=0
+2026-09-24T15:40:25Z profiles are run in the order A (baseline, = profile D), B (no-ACD), C (no-GPU)
+2026-09-24T15:40:25Z each profile needs its boot.img/vendor_boot.img flashed first - see candidate.txt
+2026-09-24T15:40:25Z ==============================================================
+2026-09-24T15:40:25Z profile: baseline
+2026-09-24T15:40:25Z expected vendor_boot.img from out/boot-bundle-test187-baseline/
+2026-09-24T15:40:25Z ==============================================================
+  2026-09-24T15:40:25Z stall A/B profile=baseline rounds=5 allow_power=0 window=150s
+  2026-09-24T15:40:25Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+  2026-09-24T15:40:58Z RECV  boot_id=f7b1e8de-1487-4eb3-8819-5cb273b2b740
+  2026-09-24T15:40:58Z RECV  uptime=4500.63
+  2026-09-24T15:40:58Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+  2026-09-24T15:40:58Z RECV  gpu=1
+  2026-09-24T15:40:58Z RECV  gmu_bound=0
+  2026-09-24T15:40:58Z RECV  gpu_bound=0
+  2026-09-24T15:40:58Z RECV  aoss_bound=0
+  2026-09-24T15:40:58Z RECV  deferred=8
+  2026-09-24T15:40:58Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T15:40:58Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+  2026-09-24T15:40:58Z RECV  failed=0
+  2026-09-24T15:40:58Z dry run: nothing was rebooted.  Set GTS9_ALLOW_POWER=1 to run 5 rounds.
+  2026-09-24T15:40:58Z when you do, this script will: capture COM19 for 150s, issue
+  2026-09-24T15:40:58Z 'systemctl reboot' on COM17, then read journalctl -b -1 for the metrics.
+2026-09-24T15:40:58Z ==============================================================
+2026-09-24T15:40:58Z profile: no-acd
+2026-09-24T15:40:58Z expected vendor_boot.img from out/boot-bundle-test187-no-acd/
+2026-09-24T15:40:58Z ==============================================================
+2026-09-24T15:41:29Z test-187 stall A/B: rounds=5 allow_power=0
+2026-09-24T15:41:29Z profiles are run in the order A (baseline, = profile D), B (no-ACD), C (no-GPU)
+2026-09-24T15:41:29Z each profile needs its boot.img/vendor_boot.img flashed first - see candidate.txt
+2026-09-24T15:41:29Z ==============================================================
+2026-09-24T15:41:29Z profile: baseline
+2026-09-24T15:41:29Z expected vendor_boot.img from out/boot-bundle-test187-baseline/
+2026-09-24T15:41:29Z ==============================================================
+  2026-09-24T15:41:29Z stall A/B profile=baseline rounds=5 allow_power=0 window=150s
+  2026-09-24T15:41:29Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+  2026-09-24T15:42:03Z RECV  boot_id=f7b1e8de-1487-4eb3-8819-5cb273b2b740
+  2026-09-24T15:42:03Z RECV  uptime=4565.83
+  2026-09-24T15:42:03Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+  2026-09-24T15:42:03Z RECV  gpu=1
+  2026-09-24T15:42:03Z RECV  gmu_bound=0
+  2026-09-24T15:42:03Z RECV  gpu_bound=0
+  2026-09-24T15:42:03Z RECV  aoss_bound=0
+  2026-09-24T15:42:03Z RECV  deferred=8
+  2026-09-24T15:42:03Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T15:42:03Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+  2026-09-24T15:42:03Z RECV  failed=0
+  2026-09-24T15:42:03Z dry run: nothing was rebooted.  Set GTS9_ALLOW_POWER=1 to run 5 rounds.
+  2026-09-24T15:42:03Z when you do, this script will: capture COM19 for 150s, issue
+  2026-09-24T15:42:03Z 'systemctl reboot' on COM17, then read journalctl -b -1 for the metrics.
+2026-09-24T15:42:03Z ==============================================================
+2026-09-24T15:42:03Z profile: no-acd
+2026-09-24T15:42:03Z expected vendor_boot.img from out/boot-bundle-test187-no-acd/
+2026-09-24T15:42:03Z ==============================================================
+  2026-09-24T15:42:04Z stall A/B profile=no-acd rounds=5 allow_power=0 window=150s
+  2026-09-24T15:42:04Z cmdline file: boot/cmdline.stall-ab-no-acd.example.txt
+  2026-09-24T15:42:36Z RECV  boot_id=f7b1e8de-1487-4eb3-8819-5cb273b2b740
+  2026-09-24T15:42:36Z RECV  uptime=4598.66
+  2026-09-24T15:42:36Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+  2026-09-24T15:42:36Z RECV  gpu=1
+  2026-09-24T15:42:36Z RECV  gmu_bound=0
+  2026-09-24T15:42:36Z RECV  gpu_bound=0
+  2026-09-24T15:42:36Z RECV  aoss_bound=0
+  2026-09-24T15:42:36Z RECV  deferred=8
+  2026-09-24T15:42:36Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T15:42:36Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+  2026-09-24T15:42:36Z RECV  failed=0
+  2026-09-24T15:42:36Z WARNING: tablet cmdline lacks msm.disable_acd=1
+  2026-09-24T15:42:36Z dry run: nothing was rebooted.  Set GTS9_ALLOW_POWER=1 to run 5 rounds.
+  2026-09-24T15:42:36Z when you do, this script will: capture COM19 for 150s, issue
+  2026-09-24T15:42:36Z 'systemctl reboot' on COM17, then read journalctl -b -1 for the metrics.
+2026-09-24T15:42:36Z ==============================================================
+2026-09-24T15:42:36Z profile: no-gpu
+2026-09-24T15:42:36Z expected vendor_boot.img from out/boot-bundle-test187-no-gpu/
+2026-09-24T15:42:36Z ==============================================================
+  2026-09-24T15:42:36Z stall A/B profile=no-gpu rounds=5 allow_power=0 window=150s
+  2026-09-24T15:42:36Z cmdline file: boot/cmdline.stall-ab-no-gpu.example.txt
+  2026-09-24T15:43:09Z RECV  boot_id=f7b1e8de-1487-4eb3-8819-5cb273b2b740
+  2026-09-24T15:43:09Z RECV  uptime=4631.38
+  2026-09-24T15:43:09Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+  2026-09-24T15:43:09Z RECV  gpu=1
+  2026-09-24T15:43:09Z RECV  gmu_bound=0
+  2026-09-24T15:43:09Z RECV  gpu_bound=0
+  2026-09-24T15:43:09Z RECV  aoss_bound=0
+  2026-09-24T15:43:09Z RECV  deferred=8
+  2026-09-24T15:43:09Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T15:43:09Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+  2026-09-24T15:43:09Z RECV  failed=0
+  2026-09-24T15:43:09Z WARNING: tablet cmdline lacks msm.no_gpu=1
+  2026-09-24T15:43:09Z dry run: nothing was rebooted.  Set GTS9_ALLOW_POWER=1 to run 5 rounds.
+  2026-09-24T15:43:09Z when you do, this script will: capture COM19 for 150s, issue
+  2026-09-24T15:43:09Z 'systemctl reboot' on COM17, then read journalctl -b -1 for the metrics.
+2026-09-24T15:43:09Z dry run complete: nothing was flashed and nothing was rebooted
+2026-09-24T15:43:09Z re-run with GTS9_ALLOW_POWER=1, one profile per flash, to collect data

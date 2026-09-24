@@ -390,6 +390,106 @@ class HarnessContractTests(unittest.TestCase):
                 self.assertNotIn(forbidden, text)
 
 
+class Test187CandidateTests(unittest.TestCase):
+    """test-187 is a real one-variable A/B: one kernel, three command lines.
+
+    These checks only run when the bundles exist, so a fresh checkout without a
+    build does not fail; they are here so that a rebuilt candidate cannot
+    silently stop being an A/B (for example by the kernel differing between
+    profiles, which would make every profile comparison meaningless).
+    """
+    TESTDIR = "reference/boot-tests/test-187-20260924T1540Z"
+    BUNDLES = {
+        "baseline": "out/boot-bundle-test187-baseline",
+        "no-acd": "out/boot-bundle-test187-no-acd",
+        "no-gpu": "out/boot-bundle-test187-no-gpu",
+        "rpmh-debug": "out/boot-bundle-test187-rpmh-debug",
+    }
+
+    def _bundle(self, name):
+        path = ROOT / self.BUNDLES[name]
+        if not (path / "boot.img").exists():
+            self.skipTest(f"{self.BUNDLES[name]} not built")
+        return path
+
+    def test_the_candidate_is_documented_as_not_flashed(self):
+        text = read(f"{self.TESTDIR}/candidate.txt")
+        self.assertIn("NOT flashed", text)
+        # The magic phrase the brief asks the round to stop at.  Normalise the
+        # line wrapping and markdown emphasis before matching.
+        flat = re.sub(r"[*_\s]+", " ", text)
+        self.assertIn("candidate ready for physical test", flat)
+
+    def test_all_profiles_share_one_kernel(self):
+        """The whole A/B rests on this."""
+        digests = {}
+        for name in self.BUNDLES:
+            digests[name] = sha256(f"{self.BUNDLES[name]}/boot.img")
+        self.assertEqual(
+            len(set(digests.values())), 1,
+            f"profiles must share one boot.img, got {digests}",
+        )
+
+    def test_the_profiles_differ_only_in_vendor_boot(self):
+        for part in ("init_boot.img", "dtbo.img", "vbmeta.img"):
+            digests = {n: sha256(f"{self.BUNDLES[n]}/{part}") for n in self.BUNDLES}
+            with self.subTest(partition=part):
+                self.assertEqual(len(set(digests.values())), 1)
+
+        vb = {n: sha256(f"{self.BUNDLES[n]}/vendor_boot.img") for n in self.BUNDLES}
+        self.assertEqual(
+            len(set(vb.values())), len(vb),
+            "each profile must have its own vendor_boot.img",
+        )
+
+    def test_the_candidate_records_the_real_hashes(self):
+        """Guards against the candidate describing images it did not build."""
+        text = read(f"{self.TESTDIR}/candidate.txt")
+        for name in self.BUNDLES:
+            with self.subTest(profile=name):
+                self.assertIn(sha256(f"{self.BUNDLES[name]}/vendor_boot.img"), text)
+        self.assertIn(sha256(f"{self.BUNDLES['baseline']}/boot.img"), text)
+        self.assertIn(sha256("out/kernel-gts9wifi/Image.gz"), text)
+
+    def test_the_rpmh_debug_profile_reuses_the_verified_cmdline_bundle(self):
+        """E differs from test-186 only by the kernel, not the command line."""
+        prior = ROOT / "out/boot-bundle-rpmh-debug/vendor_boot.img"
+        here = ROOT / self.BUNDLES["rpmh-debug"] / "vendor_boot.img"
+        if not prior.exists() or not here.exists():
+            self.skipTest("bundles not built")
+        self.assertEqual(
+            hashlib.sha256(prior.read_bytes()).hexdigest(),
+            hashlib.sha256(here.read_bytes()).hexdigest(),
+        )
+
+    def test_the_runner_covers_the_three_profiles_in_order(self):
+        text = read(f"{self.TESTDIR}/ab-run.sh")
+        self.assertIn("for profile in baseline no-acd no-gpu", text)
+        # It must not flash anything itself.
+        for forbidden in ("fastboot", "dd if=", "avbtool", "mkbootimg"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, text)
+        # ...and it must not reboot without permission.
+        self.assertIn("GTS9_ALLOW_POWER", text)
+
+    def test_the_result_matrix_is_decided_before_the_data(self):
+        text = read(f"{self.TESTDIR}/candidate.txt")
+        for branch in (
+            "the ACD requirement is on the causal path",
+            "GPU/GMU registration is required",
+            "GPU/GMU is **demoted**",
+            "not reproduced this round",
+        ):
+            with self.subTest(branch=branch):
+                self.assertIn(branch, text)
+
+    def test_it_does_not_credit_the_config_fix_for_the_missing_warning(self):
+        """Patch 0007 is in the same kernel, so the WARN cannot be attributed."""
+        for name in ("candidate.txt", "README.md"):
+            with self.subTest(file=name):
+                self.assertIn("0007", read(f"{self.TESTDIR}/{name}"))
+
+
 class DocumentationTests(unittest.TestCase):
     """The phase's claims stay tied to their evidence."""
 
