@@ -13,27 +13,41 @@
 # turns them back on - the parameters only exist in the off direction
 # (`nowatchdog`, `nosoftlockup`).  The runtime equivalent is the sysctl
 # /proc/sys/kernel/watchdog: its write path (proc_watchdog_common() ->
-# proc_watchdog_update()) re-arms the detectors, and that is what this helper
-# writes.  The hung-task detector needs the same treatment for a second reason:
-# this kernel registers no early parameter for hung_task_panic or
-# hung_task_timeout_secs (checked in kernel/hung_task.c), so they are
-# sysctl-only.
+# proc_watchdog_update()) re-arms the detectors.  The hung-task detector needs
+# the same treatment for a second reason: this kernel registers no early
+# parameter for hung_task_panic or hung_task_timeout_secs (checked in
+# kernel/hung_task.c), so they are sysctl-only.
 #
 # Everything here is a mainline software mechanism.  No watchdog MMIO, no PMIC
-# register, no device-tree change: /dev/watchdog0 does not exist on this port
-# (CONFIG_QCOM_WDT=y but no watchdog device is registered, and
-# CONFIG_SOFT_WATCHDOG is not set, so the vendor's softdog.soft_panic=1 has no
-# driver to attach to).
+# register, no device-tree node: /dev/watchdog0 does not exist on this port.
+#
+# Output discipline (measured 2026-09-24)
+# --------------------------------------
+# This helper used to be a `StandardOutput=journal+console` unit whose applier
+# printed the whole ~30 line report with `cat "$REPORT"`.  On a cold boot that
+# cost 151 seconds of service lifetime:
+#
+#   journal timestamps of all 28 report lines: [4.646574]   (one instant)
+#   ExecMainStartTimestampMonotonic:  4310086               (4.31 s)
+#   ExecMainExitTimestampMonotonic:  155868809              (155.87 s)
+#
+# journald received every line at 4.65 s, so no sysctl was slow; the process
+# was blocked writing the same bytes to /dev/console -> tty0 -> fbcon -> DRM,
+# which is the display path under investigation.  The console caught up ~150 s
+# later - what the operator saw as "4.7 s ... 125 s".  It was output backlog,
+# not a system stall: the journal has real entries at 14, 31, 68, 69, 171 s.
+#
+# Therefore: the report goes to a file, the journal gets one line, and every
+# step carries a real monotonic duration so the next occurrence is measured
+# rather than guessed.  `status` prints the full report for a human.
 #
 # Usage:
 #	gts9-watchdog-debug apply     arm the profile (default)
-#	gts9-watchdog-debug status    print the current state, change nothing
+#	gts9-watchdog-debug status    print report + step trace, change nothing
 #	gts9-watchdog-debug off       disarm the detectors again
 #
-# `apply --force` skips the command-line gate.  It exists for bring-up: the
-# profile can then be exercised over the serial console before the matching
-# vendor_boot is flashed, and a stall hunt does not have to wait for a flash
-# cycle to start.
+# `apply --force` skips the command-line gate (bring-up before the matching
+# vendor_boot is flashed).
 #
 # The helper never fails a boot: every step is best-effort, unsupported knobs
 # are reported as unsupported, and the exit status is always 0.
@@ -44,16 +58,31 @@ MODE=${1:-apply}
 FORCE=${2:-}
 FLAG=gts9_watchdog_debug=1
 REPORT=/var/log/gts9-watchdog-debug.txt
+TRACE=/run/gts9-watchdog-debug.trace
+TRACE_ARCHIVE=/var/log/gts9-watchdog-debug.trace
 
 # Stall thresholds.  The point of this profile is an unattended
 # stall -> panic -> reboot -> evidence loop, so the values are deliberately in
 # the 30-60 s range: long enough that a transient hiccup does not reboot the
-# tablet, short enough that a wedged display recovers without a human.  A 1-3 s
-# timeout would fire on ordinary boot-time latency.
+# tablet, short enough that a wedged display recovers without a human.
 HUNG_TASK_TIMEOUT=45
 WQ_PANIC_ON_STALL_TIME=45
 
 WRITTEN=""
+SLOWEST=""
+SLOWEST_MS=0
+PSTORE_BACKEND=unknown
+PSTORE_RECORDS=0
+
+# uptime_ms - /proc/uptime in milliseconds, no external tools, no wall clock.
+uptime_ms() {
+	set -- $(cut -d' ' -f1 /proc/uptime 2>/dev/null | tr '.' ' ')
+	printf '%s\n' "$(( ${1:-0} * 1000 + $(printf '%s' "${2:-0}" | cut -c1-3) * 10 ))"
+}
+
+trace() {
+	printf '%s\n' "$*" >>"$TRACE" 2>/dev/null || true
+}
 
 read_file() {
 	if [ -r "$1" ]; then
@@ -72,22 +101,42 @@ has_flag() {
 }
 
 # write_value PATH VALUE LABEL
-# Writes VALUE, then reports what the kernel actually kept.  `unsupported` means
-# the knob does not exist on this build; a write that does not change the value
-# is reported as REJECTED.
+# Writes VALUE, reports what the kernel actually kept, and records a real
+# monotonic duration for the step in $TRACE.  `unsupported` means the knob does
+# not exist on this build; a write that does not change the value is REJECTED.
 write_value() {
 	path=$1
 	value=$2
 	label=$3
 	before=$(read_file "$path")
+
+	trace "BEGIN $label"
 	if [ "$before" = absent ]; then
 		WRITTEN="${WRITTEN}${label}: unsupported ($path does not exist)
 "
+		trace "step=$label path=$path result=unsupported"
+		trace "END $label"
 		return 0
 	fi
+
+	start=$(uptime_ms)
 	printf '%s\n' "$value" >"$path" 2>/dev/null || true
 	after=$(read_file "$path")
+	end=$(uptime_ms)
+	duration=$((end - start))
 	if [ "$after" = "$value" ]; then
+		result=ok
+	else
+		result=rejected
+	fi
+	if [ "$duration" -gt "$SLOWEST_MS" ]; then
+		SLOWEST_MS=$duration
+		SLOWEST=$label
+	fi
+	trace "step=$label path=$path start_ms=$start end_ms=$end duration_ms=$duration before=$before requested=$value effective=$after result=$result"
+	trace "END $label"
+
+	if [ "$result" = ok ]; then
 		WRITTEN="${WRITTEN}${label}: requested=$value effective=$after (was $before)
 "
 	else
@@ -97,10 +146,24 @@ write_value() {
 	return 0
 }
 
+pstore_state() {
+	# A registered backend and saved records are different things: ramoops can
+	# be registered (with printk attached to it) while /sys/fs/pstore is empty
+	# because no record survived the reset.  Report both, never one as the other.
+	if dmesg 2>/dev/null | grep -a -q 'Registered ramoops as persistent store backend'; then
+		PSTORE_BACKEND=ramoops-registered
+	elif [ -d /sys/fs/pstore ]; then
+		PSTORE_BACKEND=mounted-no-backend
+	else
+		PSTORE_BACKEND=absent
+	fi
+	PSTORE_RECORDS=$(ls -A /sys/fs/pstore 2>/dev/null | wc -l)
+}
+
 report() {
 	panic_now=$(read_file /proc/sys/kernel/panic)
 	if [ "$panic_now" = 0 ]; then
-		panic_state="MISSING (panic=0: a panic would not reboot. Use boot/cmdline.watchdog-debug.example.txt)"
+		panic_state="MISSING (panic=0: a panic would not reboot)"
 	else
 		panic_state="armed (panic=$panic_now)"
 	fi
@@ -114,11 +177,9 @@ report() {
 	else
 		wdt_device="absent (no /dev/watchdog0, /sys/class/watchdog empty)"
 	fi
-	if [ -n "$(ls -A /sys/fs/pstore 2>/dev/null)" ]; then
-		pstore=present
-	else
-		pstore="absent (/sys/fs/pstore empty: CONFIG_PSTORE_RAM=y but no ramoops node)"
-	fi
+	pstore_state
+
+	total_ms=$(( $(uptime_ms) - start_ms ))
 	{
 		echo "# gts9 watchdog debug profile"
 		echo "mode=$MODE"
@@ -140,17 +201,34 @@ report() {
 		echo "workqueue.panic_on_stall_time=$(read_file /sys/module/workqueue/parameters/panic_on_stall_time)"
 		echo "hardlockup=$hardlockup"
 		echo "watchdog_device=$wdt_device"
-		echo "pstore_backend=$pstore"
+		echo "pstore_backend=$PSTORE_BACKEND"
+		echo "pstore_records=$PSTORE_RECORDS"
+		echo "helper_total_ms=$total_ms"
+		echo "helper_slowest_step=${SLOWEST:-none}"
+		echo "helper_slowest_ms=$SLOWEST_MS"
 		echo "# evidence: the serial console capture is the only pre-reboot source until a persistent store exists"
 	} >"$REPORT" 2>/dev/null || true
-	cat "$REPORT" 2>/dev/null || true
 }
+
+# summary_line - the single line that goes to the journal.
+summary_line() {
+	armed=$(read_file /proc/sys/kernel/watchdog)
+	slp=$(read_file /proc/sys/kernel/softlockup_panic)
+	htp=$(read_file /proc/sys/kernel/hung_task_panic)
+	wq=$(read_file /sys/module/workqueue/parameters/panic_on_stall_time)
+	panic_now=$(read_file /proc/sys/kernel/panic)
+	total=$(( $(uptime_ms) - start_ms ))
+	echo "gts9-watchdog-debug: armed=$armed softlockup=$slp hung_task=$htp wq=$wq panic=$panic_now pstore=$PSTORE_BACKEND records=$PSTORE_RECORDS steps_slow=${SLOWEST:-none} total_ms=$total"
+}
+
+start_ms=$(uptime_ms)
+: >"$TRACE" 2>/dev/null || true
+trace "# gts9-watchdog-debug mode=$MODE start_ms=$start_ms"
 
 case "$MODE" in
 apply)
 	if ! has_flag; then
 		echo "gts9-watchdog-debug: $FLAG not on the command line; nothing to do"
-		echo "gts9-watchdog-debug: boot with boot/cmdline.watchdog-debug.example.txt to arm this profile"
 		exit 0
 	fi
 
@@ -160,23 +238,25 @@ apply)
 	write_value /proc/sys/kernel/softlockup_all_cpu_backtrace 1 kernel.softlockup_all_cpu_backtrace
 
 	# 2. Hung-task detector: sysctl-only in this kernel, 45 s timeout, panic on
-	#    the first report.  The all-CPU backtrace is what names the blocked owner.
+	#    the first report.
 	write_value /proc/sys/kernel/hung_task_timeout_secs "$HUNG_TASK_TIMEOUT" kernel.hung_task_timeout_secs
 	write_value /proc/sys/kernel/hung_task_panic 1 kernel.hung_task_panic
 	write_value /proc/sys/kernel/hung_task_warnings 5 kernel.hung_task_warnings
 	write_value /proc/sys/kernel/hung_task_all_cpu_backtrace 1 kernel.hung_task_all_cpu_backtrace
 
 	# 3. Workqueue stall watchdog.  panic_on_stall is the *cumulative* stall
-	#    counter and stays off; panic_on_stall_time panics on one stall that
-	#    lasts this long, which is the DPU signature being chased.
+	#    counter and stays off; panic_on_stall_time panics on one long stall.
 	write_value /sys/module/workqueue/parameters/panic_on_stall 0 workqueue.panic_on_stall
 	write_value /sys/module/workqueue/parameters/panic_on_stall_time "$WQ_PANIC_ON_STALL_TIME" workqueue.panic_on_stall_time
 
 	# 4. An oops is a wedge for this purpose: let the tablet take its own reboot
-	#    path (panic=10 is already on the command line) instead of a dead console.
+	#    path instead of a dead console.
 	write_value /proc/sys/kernel/panic_on_oops 1 kernel.panic_on_oops
 
 	report
+	# One persistent write, after the run: no fsync per sysctl.
+	cp "$TRACE" "$TRACE_ARCHIVE" 2>/dev/null || true
+	summary_line
 	;;
 off)
 	write_value /proc/sys/kernel/softlockup_panic 0 kernel.softlockup_panic
@@ -184,9 +264,17 @@ off)
 	write_value /sys/module/workqueue/parameters/panic_on_stall_time 0 workqueue.panic_on_stall_time
 	write_value /proc/sys/kernel/watchdog 0 kernel.watchdog
 	report
+	cp "$TRACE" "$TRACE_ARCHIVE" 2>/dev/null || true
+	summary_line
 	;;
 status)
+	# Human-readable: the full report and the per-step trace.
 	report
+	cp "$TRACE" "$TRACE_ARCHIVE" 2>/dev/null || true
+	echo "--- $REPORT"
+	cat "$REPORT" 2>/dev/null
+	echo "--- $TRACE_ARCHIVE"
+	cat "$TRACE_ARCHIVE" 2>/dev/null
 	;;
 *)
 	echo "usage: gts9-watchdog-debug [apply|status|off]" >&2

@@ -7,13 +7,19 @@ Before=multi-user.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-# The report goes to the console as well as the journal: the serial capture on
-# the host is the only evidence channel that survives a wedged microSD.
-StandardOutput=journal+console
+# Journal only, deliberately.  With journal+console this unit spent 151 s of a
+# cold boot blocked writing its report to /dev/console -> tty0 -> fbcon -> DRM
+# while journald had the same bytes 4.65 s in, which is the display path the
+# stall hunt is investigating: the instrumentation must not load the system it
+# measures.  The helper now prints one summary line; the full report is in
+# /var/log/gts9-watchdog-debug.txt and `gts9-watchdog-debug status`.
+StandardOutput=journal
 ExecStart=/usr/libexec/gts9-watchdog-debug apply
 # A profile failure must never hold up the boot; the helper already exits 0 for
 # every unsupported knob, and this is the belt to its braces.
 SuccessExitStatus=0 1 2
+# Kept on purpose: with the console output gone, a start->exit time above this
+# means systemd or the kernel lost scheduling, not that a sysctl was slow.
 TimeoutStartSec=30
 
 [Install]
