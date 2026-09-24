@@ -11,6 +11,10 @@ set -u
 
 T=${GTS9_TRACE_ROOT:-/sys/kernel/debug/tracing}
 EVENTS="
+workqueue:workqueue_queue_work
+workqueue:workqueue_execute_start
+power:device_pm_callback_start
+power:device_pm_callback_end
 dpu:dpu_enc_kickoff
 dpu:dpu_enc_prepare_kickoff
 dpu:dpu_enc_enable
@@ -47,6 +51,8 @@ drm:drm_vblank_event_queued
 
 echo 0 > "$T/tracing_on"
 echo > "$T/trace"
+# 16 MiB so the ring still holds the seconds before a stall.
+echo 16384 > "$T/buffer_size_kb" 2>/dev/null || true
 
 armed=0
 for e in $EVENTS; do

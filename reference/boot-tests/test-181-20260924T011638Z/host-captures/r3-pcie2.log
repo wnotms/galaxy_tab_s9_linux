@@ -1,0 +1,28 @@
+2026-09-24T02:49:19Z console open on COM17
+2026-09-24T02:49:20Z RECV  echo READY1
+2026-09-24T02:49:20Z RECV  [?2004lREADY1
+2026-09-24T02:49:20Z shell answered after 1 poll(s)
+2026-09-24T02:49:20Z SENT  echo PC;echo THISBOOT;dmesg | grep -a pcie | tail -6;echo PREV;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -a pcie | tail -3;echo GOODBOOT;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "pcie|PCI host|link up" | tail -8
+2026-09-24T02:50:01Z RECV  [?2004hroot@gts9:~# echo PC;echo THISBOOT;dmesg | grep -a pcie | tail -6;echo PREV;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -a pcie | tail -3;echo GOODBOOT;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "pcie|PCI host|link up" | tail -8
+2026-09-24T02:50:01Z RECV  [?2004lPC
+2026-09-24T02:50:01Z RECV  THISBOOT
+2026-09-24T02:50:01Z RECV  [   14.050466] [     T10] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:50:01Z RECV  [   14.051458] [     T13] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-24T02:50:01Z RECV  [   14.051634] [     T13] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-24T02:50:01Z RECV  [   14.051808] [     T13] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-24T02:50:01Z RECV  [   14.051839] [     T13] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-24T02:50:01Z RECV  [   14.051855] [     T13] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:01Z RECV  PREV
+2026-09-24T02:50:01Z RECV  [   14.053613] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-24T02:50:01Z RECV  [   14.053731] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-24T02:50:01Z RECV  [   14.053852] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:01Z RECV  GOODBOOT
+2026-09-24T02:50:01Z RECV  [   14.305510] gts9 kernel: qnoc-sm8550 16c0000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:50:01Z RECV  [   14.305637] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:50:01Z RECV  [   14.308704] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:50:01Z RECV  [   14.308811] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-24T02:50:01Z RECV  [   14.308933] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-24T02:50:01Z RECV  [   14.309043] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-24T02:50:01Z RECV  [   14.309148] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-24T02:50:01Z RECV  [   14.309256] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:01Z console run done (ready=True)

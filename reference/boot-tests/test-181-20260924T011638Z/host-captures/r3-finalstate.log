@@ -1,0 +1,15 @@
+2026-09-24T02:51:22Z console open on COM17
+2026-09-24T02:51:24Z RECV  echo READY1
+2026-09-24T02:51:24Z RECV  [?2004lREADY1
+2026-09-24T02:51:24Z shell answered after 1 poll(s)
+2026-09-24T02:51:24Z SENT  echo FS;echo 0 > /sys/kernel/debug/tracing/tracing_on;cat /sys/kernel/debug/tracing/tracing_on;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;systemctl is-active gts9-power-key.service;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) fb0=$(cat /sys/class/graphics/fb0/blank)";dmesg | grep -acE "frame.done.timeout|workqueue.lockup|rcu_preempt"
+2026-09-24T02:51:38Z RECV  [?2004hroot@gts9:~# echo FS;echo 0 > /sys/kernel/debug/tracing/tracing_on;cat /sys/kernel/debug/tracing/tracing_on;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;systemctl is-active gts9-power-key.service;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) fb0=$(cat /sys/class/graphics/fb0/blank)";dmesg | grep -acE "frame.done.timeout|workqueue.lockup|rcu_preempt"
+2026-09-24T02:51:38Z RECV  [?2004lFS
+2026-09-24T02:51:38Z RECV  0
+2026-09-24T02:51:38Z RECV  boot_id=44d9f54d-bd65-4037-b0ea-8897439a9a59
+2026-09-24T02:51:38Z RECV  408.41
+2026-09-24T02:51:38Z RECV  running
+2026-09-24T02:51:38Z RECV  active
+2026-09-24T02:51:38Z RECV  bl=0 fb0=0
+2026-09-24T02:51:38Z RECV  0
+2026-09-24T02:51:38Z console run done (ready=True)

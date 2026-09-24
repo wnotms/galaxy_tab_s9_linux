@@ -141,11 +141,16 @@ Two things follow for this investigation:
   victim of the same wedge.  Test 178's `enc35 frame done timeout` and this
   stall share the symptom, not necessarily the cause.
 
-The last normal log line before the wedge was deferred-probe completion (PCIe
-host bridge) at 14.3 s; the stall was detected at 36.3 s, so the trigger sits in
-that quiet interval.  The recorder now preserves the previous boot's snapshot as
-`/var/log/gts9-dpu-flight.txt.prev`, so the next occurrence keeps its trace
-instead of only its journal.
+Both stalls share one last normal log line: the `qcom-pcie 1c00000.pcie`
+host-bridge probe at ~14.05 s, after which nothing is logged until the RCU stall
+at ~36 s.  Healthy boots print the same three lines and continue, no boot ever
+logs a `pci_bus`/link-up message, and both PCIe nodes are `okay` in the device
+tree.  That points at a core stalling inside the PCIe probe (a config/link
+access that never returns) rather than at the DPU — see
+`reference/boot-tests/test-181-20260924T011638Z/README.md` for the second stall,
+the per-stall actor table and the proposed PCIe A/B.  The recorder now preserves
+the previous boot's snapshot as `/var/log/gts9-dpu-flight.txt.prev`, so the next
+occurrence keeps its trace instead of only its journal.
 
 ## Reading a snapshot
 

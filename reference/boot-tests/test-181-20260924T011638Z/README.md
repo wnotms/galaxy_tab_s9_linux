@@ -88,6 +88,74 @@ necessarily the *cause*.  The DPU damage worker being merely pending here means
 the DPU path is a candidate victim of the same wedge rather than proven to be
 the trigger.
 
+## Second stall, and the PCIe correlation (2026-09-24 ~02:34Z)
+
+The extended hunt (36 events, 16 MiB ring) stalled again on the boot started by
+round 4's reboot (~02:34:30): by round 5 (~02:35:40) the reboot command no
+longer took effect, COM17 was enumerated but could not be opened, and the
+screen held a stuck cursor.  The journal of that boot (`-b -1` at the time of
+writing) reports the same shape as the first stall with different actors:
+
+```text
+[   35.962309] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   35.963745] After 10 seconds, these CPUS still haven't responded to the NMI: 7
+[   62.439818] BUG: workqueue lockup - pool cpus=5 node=0 … stuck for 57s!
+[   62.440080]     in-flight: 75:toggle_allocation_gate for 57s
+[   62.440205]     in-flight: 13:pm_runtime_work for 57s
+[   62.440232]     in-flight: 174:pm_runtime_work for 57s
+[   62.440253]     in-flight: 77:pm_runtime_work for 57s
+```
+
+| | first stall | second stall |
+|---|---|---|
+| NMI-unresponsive CPU | 5 | 7 |
+| work stuck in the hung pool | `fqdir_free_fn` (IP fragments) | `toggle_allocation_gate` (KFENCE) |
+| runtime-PM work stuck | 4 × `pm_runtime_work` | 3 × `pm_runtime_work` |
+
+Both times the **last normal log line is the same** — the PCIe host-bridge
+probe:
+
+```text
+[   14.05…] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[   14.05…] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[   14.05…] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+            <silence until the RCU stall at ~36 s>
+```
+
+Healthy boots print exactly the same three lines (14.05 s in the current boot,
+14.31 s in an earlier good one) and carry on — the next normal line is
+`regulator: Not disabling unused regulators` at ~31.7 s.  In no boot does a
+`pci_bus …`/link-up message ever appear, and the device tree has both
+controllers enabled:
+
+```text
+/proc/device-tree/soc@0/pcie@1c00000/status = "okay"
+/proc/device-tree/soc@0/pcie@1c08000/status = "okay"
+```
+
+Reading: the probe advances to the point where it talks to the link and then
+sometimes never returns.  A PCIe config/link access with no link up is a known
+way to stall an ARM core on an MMIO read that never completes — and a core that
+never returns is exactly what "still haven't responded to the NMI" reports.
+Everything else in the stall reports (a hung workqueue pool, blocked
+`pm_runtime_work`, a *pending* `drm_fb_helper_damage_work`, RCU stalls) is
+downstream of that.
+
+The flight recorder's preserved first snapshot (uptime 3.74 s, before the
+wedge) also shows the display pipeline was healthy up to that point:
+`kickoff=3, frame_done=3, connect_te=3, pdone_timeout=0, frame_done_timeout=0`.
+
+### Next step (not done in this round)
+
+A/B the hypothesis by disabling the two PCIe controllers in the board DTS
+(neither has a mainline client on this tablet yet — the modem and WCN7850 are
+both unsupported here), rebuilding the DTB in `vendor_boot`, and re-running the
+boot hunt.  Stalls dropping to zero over a comparable number of boots would
+confirm the correlation.  The trade-off — PCIe must come back for modem/WiFi
+work — has to be documented with whatever fix is chosen, and a driver-level
+guard (skip the config access when the link never came up) is preferable to
+leaving the controllers disabled forever.
+
 ## What ran, and what it showed
 
 | Experiment | Result | Capture |

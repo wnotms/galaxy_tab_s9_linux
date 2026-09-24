@@ -1,0 +1,12 @@
+2026-09-24T02:45:25Z console open on COM17
+2026-09-24T02:45:26Z RECV  echo READY1
+2026-09-24T02:45:26Z RECV  [?2004lREADY1
+2026-09-24T02:45:26Z shell answered after 1 poll(s)
+2026-09-24T02:45:26Z SENT  echo S2;F=/var/log/gts9-dpu-flight.txt.prev;echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) pdone=$(grep -ac pdone_timeout $F) fdtimeout=$(grep -ac frame_done_timeout $F) reset=$(grep -ac prepare_kickoff_reset $F) connects_te=$(grep -ac connect_te $F) wq_exec=$(grep -ac workqueue_execute_start $F)";echo ---DMESG-TAIL---;sed -n "/dmesg tail/,/irq counts/p" $F | head -20;echo ---IRQ---;grep -a -A3 "irq counts" $F | head -5;echo ---TRACE-LAST---;awk "/trace tail/,/trace header/" $F | tail -18
+2026-09-24T02:46:07Z RECV  [?2004hroot@gts9:~# echo S2;F=/var/log/gts9-dpu-flight.txt.prev;echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) pdone=$(grep -ac pdone_timeout $F) fdtimeout=$(grep -ac frame_done_timeout $F) reset=$(grep -ac prepare_kickoff_reset $F) connects_te=$(grep -ac connect_te $F) wq_exec=$(grep -ac workqueue_execute_start $F)";echo ---DMESG-TAIL---;sed -n "/dmesg tail/,/irq counts/p" $F | head -20;echo ---IRQ---;grep -a -A3 "irq counts" $F | head -5;echo ---TRACE-LAST---;awk "/trace tail/,/trace header/" $F | tail -18
+2026-09-24T02:46:07Z RECV  [?2004lS2
+2026-09-24T02:46:07Z RECV  kickoff=3 fd=3 pdone=0 fdtimeout=0 reset=0 connects_te=3 wq_exec=125
+2026-09-24T02:46:07Z RECV  ---DMESG-TAIL---
+2026-09-24T02:46:07Z RECV  ---IRQ---
+2026-09-24T02:46:07Z RECV  ---TRACE-LAST---
+2026-09-24T02:46:07Z console run done (ready=True)

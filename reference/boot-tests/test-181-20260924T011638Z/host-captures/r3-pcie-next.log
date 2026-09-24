@@ -1,0 +1,81 @@
+2026-09-24T02:50:07Z console open on COM17
+2026-09-24T02:50:09Z RECV  echo READY1
+2026-09-24T02:50:09Z RECV  [?2004lREADY1
+2026-09-24T02:50:09Z shell answered after 1 poll(s)
+2026-09-24T02:50:09Z SENT  echo NX;dmesg | sed -n "/MEM 0x0060300000/,+10p";echo ---ANYPCI---;dmesg | grep -aiE "pci_bus|PCI host bridge to bus|link up|phy link|pcieport|msi" | tail -10;echo ---DT---;grep -a -A3 "pcie@1c00000" /proc/device-tree/soc@0/pcie@1c00000/status 2>/dev/null;cat /proc/device-tree/soc@0/pcie@1c00000/status 2>/dev/null;echo;ls /proc/device-tree/soc@0/ | grep -ai pcie
+2026-09-24T02:50:49Z RECV  [?2004hroot@gts9:~# echo NX;dmesg | sed -n "/MEM 0x0060300000/,+10p";echo ---ANYPCI---;dmesg | grep -aiE "pci_bus|PCI host bridge to bus|link up|phy link|pcieport|msi" | tail -10;echo ---DT---;grep -a -A3 "pcie@1c00000" /proc/device-tree/soc@0/pcie@1c00000/status 2>/dev/null;cat /proc/device-tree/soc@0/pcie@1c00000/status 2>/dev/null;echo;ls /proc/device-tree/soc@0/ | grep -ai pcie
+2026-09-24T02:50:49Z RECV  [?2004lNX
+2026-09-24T02:50:49Z RECV  [    0.332972] [     T91] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    0.333565] [     T79] vreg_l3f_0p88: Setting 880000-912000uV
+2026-09-24T02:50:49Z RECV  [    0.334549] [     T12] arm-smmu 3da0000.iommu: probing hardware configuration...
+2026-09-24T02:50:49Z RECV  [    0.334556] [     T12] arm-smmu 3da0000.iommu: SMMUv2 with:
+2026-09-24T02:50:49Z RECV  [    0.334593] [     T12] arm-smmu 3da0000.iommu: 	stage 1 translation
+2026-09-24T02:50:49Z RECV  [    0.334598] [     T12] arm-smmu 3da0000.iommu: 	coherent table walk
+2026-09-24T02:50:49Z RECV  [    0.334603] [     T12] arm-smmu 3da0000.iommu: 	stream matching with 24 register groups
+2026-09-24T02:50:49Z RECV  [    0.334624] [     T12] arm-smmu 3da0000.iommu: 	22 context banks (0 stage-2 only)
+2026-09-24T02:50:49Z RECV  [    0.334645] [     T12] arm-smmu 3da0000.iommu: 	Supported page sizes: 0x61311000
+2026-09-24T02:50:49Z RECV  [    0.334650] [     T12] arm-smmu 3da0000.iommu: 	Stage-1: 48-bit VA -> 36-bit IPA
+2026-09-24T02:50:49Z RECV  [    0.334720] [     T12] arm-smmu 3da0000.iommu: 	preserved 0 boot mappings
+2026-09-24T02:50:49Z RECV  [    0.648888] [     T79] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    0.721232] [    T131] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-24T02:50:49Z RECV  [    0.783905] [     T12] adreno 3d00000.gpu: failed to load adreno gpu
+2026-09-24T02:50:49Z RECV  [    0.783973] [     T12] adreno 3d00000.gpu: probe with driver adreno failed with error -22
+2026-09-24T02:50:49Z RECV  [    0.788870] [     T88]  mmcblk1: p1
+2026-09-24T02:50:49Z RECV  [    0.819998] [     T12] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T02:50:49Z RECV  [    0.820624] [     T12] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T02:50:49Z RECV  [    0.820646] [     T12] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-24T02:50:49Z RECV  [    0.820650] [     T12] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+2026-09-24T02:50:49Z RECV  [    0.820716] [     T12] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T02:50:49Z RECV  [    0.825640] [     T12] ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+2026-09-24T02:50:49Z RECV  [    0.877097] [     T79] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    0.877375] [     T12] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-24T02:50:49Z RECV  [    0.877397] [     T12] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T02:50:49Z RECV  [    0.877624] [     T12] panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+2026-09-24T02:50:49Z RECV  [    0.877658] [     T91] scsi 0:0:0:49488: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-24T02:50:49Z RECV  [    0.877672] [     T12] msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-24T02:50:49Z RECV  [    0.879005] [     T91] scsi 0:0:0:49476: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-24T02:50:49Z RECV  [    0.879424] [     T12] [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+2026-09-24T02:50:49Z RECV  [    0.880029] [     T91] scsi 0:0:0:49456: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+2026-09-24T02:50:49Z RECV  [    0.880559] [     T12] [drm] Initialized msm-kms 1.13.0 for ae01000.display-controller on minor 0
+2026-09-24T02:50:49Z RECV  [    0.880570] [     T12] msm_dpu ae01000.display-controller: no GPU device was found
+2026-09-24T02:50:49Z RECV  [    1.182549] [     T12] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    1.184962] [      T1] input: gpio-keys as /devices/platform/gpio-keys/input/input3
+2026-09-24T02:50:49Z RECV  [    1.185764] [      T1] clk: Not disabling unused clocks
+2026-09-24T02:50:49Z RECV  [    1.185768] [      T1] PM: genpd: Not disabling unused power domains
+2026-09-24T02:50:49Z RECV  [    1.185792] [      T1] ALSA device list:
+2026-09-24T02:50:49Z RECV  [    1.185794] [      T1]   No soundcards found.
+2026-09-24T02:50:49Z RECV  [    1.190516] [      T1] Freeing unused kernel memory: 1472K
+2026-09-24T02:50:49Z RECV  [    1.190560] [      T1] Run /init as init process
+2026-09-24T02:50:49Z RECV  [    1.190561] [      T1]   with arguments:
+2026-09-24T02:50:49Z RECV  [    1.190562] [      T1]     /init
+2026-09-24T02:50:49Z RECV  [    1.190562] [      T1]   with environment:
+2026-09-24T02:50:49Z RECV  [    1.193484] [     T79] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    1.202531] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=kernel-userspace
+2026-09-24T02:50:49Z RECV  [    1.202607] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=waiting-root
+2026-09-24T02:50:49Z RECV  [    1.202676] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=root-found
+2026-09-24T02:50:49Z RECV  [    1.203155] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=mounting-root
+2026-09-24T02:50:49Z RECV  [    1.263495] [      C7] minimal-rootfs- (223): highest shadow stack usage: 176 bytes
+2026-09-24T02:50:49Z RECV  [    1.263505] [      C0] mount (216): highest shadow stack usage: 232 bytes
+2026-09-24T02:50:49Z RECV  [    1.275508] [      C4] cat (211): highest shadow stack usage: 240 bytes
+2026-09-24T02:50:49Z RECV  [    1.474863] [    T228] EXT4-fs (mmcblk1p1): recovery complete
+2026-09-24T02:50:49Z RECV  [    1.476356] [    T228] EXT4-fs (mmcblk1p1): mounted filesystem 851819a7-0d96-4217-b64a-aeeee5d8be61 r/w with ordered data mode. Quota mode: none.
+2026-09-24T02:50:49Z RECV  [    1.476553] [    T228] mount (228) used greatest stack depth: 10672 bytes left
+2026-09-24T02:50:49Z RECV  [    3.919881] [     T13] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [    3.949053] [    T719] gts9-debian: GTS9_DEBIAN_STAGE=usb-acm-ready
+2026-09-24T02:50:49Z RECV  [    4.163192] [    T755] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T02:50:49Z RECV  [    4.300545] [    T755] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T02:50:49Z RECV  [    4.465475] [    T689] gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T02:50:49Z RECV  [    4.490825] [    T770] gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T02:50:49Z RECV  [    4.721437] [    T804] gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T02:50:49Z RECV  [    5.005123] [    T851] gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T02:50:49Z RECV  [   14.050211] [     T10] platform 6800000.remoteproc: deferred probe pending: platform: wait for supplier /smp2p-adsp/slave-kernel
+2026-09-24T02:50:49Z RECV  [   14.050229] [     T10] platform 81d00000.smem: deferred probe pending: qcom-smem: failed to retrieve hwlock
+2026-09-24T02:50:49Z RECV  [   14.050234] [     T10] platform 17d91000.cpufreq: deferred probe pending: qcom-cpufreq-hw: Failed to find icc paths
+2026-09-24T02:50:49Z RECV  [   14.051855] [     T13] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:50:49Z RECV  [   31.713195] [     T87] regulator: Not disabling unused regulators
+2026-09-24T02:50:49Z RECV  ---ANYPCI---
+2026-09-24T02:50:49Z RECV  ---DT---
+2026-09-24T02:50:49Z RECV  okay 
+2026-09-24T02:50:49Z RECV  pcie@1c00000
+2026-09-24T02:50:49Z RECV  pcie@1c08000
+2026-09-24T02:50:49Z console run done (ready=True)

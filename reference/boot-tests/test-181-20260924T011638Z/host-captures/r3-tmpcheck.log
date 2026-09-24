@@ -1,0 +1,10 @@
+2026-09-24T02:51:49Z console open on COM17
+2026-09-24T02:51:51Z RECV  echo READY1
+2026-09-24T02:51:51Z RECV  [?2004lREADY1
+2026-09-24T02:51:51Z shell answered after 1 poll(s)
+2026-09-24T02:51:51Z SENT  echo TC;ls -l /var/log/gts9-dpu-flight* 2>&1;F=/var/log/gts9-dpu-flight.txt.tmp;if [ -f $F ]; then echo "lines=$(wc -l < $F)";echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) wq=$(grep -ac workqueue_execute_start $F) pm=$(grep -ac device_pm_callback_start $F)";echo ---TAIL---;tail -6 $F;fi
+2026-09-24T02:52:16Z RECV  [?2004hroot@gts9:~# echo TC;ls -l /var/log/gts9-dpu-flight* 2>&1;F=/var/log/gts9-dpu-flight.txt.tmp;if [ -f $F ]; then echo "lines=$(wc -l < $F)";echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) wq=$(grep -ac workqueue_execute_start $F) pm=$(grep -ac device_pm_callback_start $F)";echo ---TAIL---;tail -6 $F;fi
+2026-09-24T02:52:16Z RECV  [?2004lTC
+2026-09-24T02:52:16Z RECV  -rw-r--r-- 1 root root 901054 Apr 14 03:44 /var/log/gts9-dpu-flight.txt
+2026-09-24T02:52:16Z RECV  -rw-r--r-- 1 root root  68226 Apr 14 03:38 /var/log/gts9-dpu-flight.txt.prev
+2026-09-24T02:52:16Z console run done (ready=True)

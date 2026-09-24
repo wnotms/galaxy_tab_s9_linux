@@ -1,49 +1,74 @@
-2026-09-24T02:00:08Z === boot round 1 ===
-2026-09-24T02:00:09.785Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:00:19.151Z SENT  systemctl reboot
-2026-09-24T02:00:22.411Z PRESENCE usb0525:a4a7=False
-2026-09-24T02:00:40.706Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:01:09.409Z watch done: lines=15 com_disconnects=0 com_reconnects=0
-2026-09-24T02:01:37Z RECV  boot_id=c490f610-ef0a-46cd-83fc-a4458b15ea57
-2026-09-24T02:01:37Z RECV  36.09
-2026-09-24T02:01:37Z RECV  running
-2026-09-24T02:01:37Z RECV  panel_bad=1
-2026-09-24T02:01:37Z RECV  panel_ok=1
-2026-09-24T02:01:37Z RECV  recovery=1
-2026-09-24T02:01:37Z RECV  dpu_err=0
-2026-09-24T02:01:37Z RECV  flight=active
-2026-09-24T02:01:37Z RECV  lines=7427
-2026-09-24T02:01:37Z RECV  kickoff=167 fd=167 pdone=0 fdtimeout=0 reset=0 rc0=0
-2026-09-24T02:01:37Z === boot round 2 ===
-2026-09-24T02:01:38.661Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:01:48.645Z SENT  systemctl reboot
-2026-09-24T02:01:50.987Z PRESENCE usb0525:a4a7=False
-2026-09-24T02:02:11.040Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:02:38.725Z watch done: lines=15 com_disconnects=0 com_reconnects=0
-2026-09-24T02:03:06Z RECV  boot_id=99bb1e40-b763-4d8c-8e55-2c3daf3242e7
-2026-09-24T02:03:06Z RECV  35.94
-2026-09-24T02:03:06Z RECV  running
-2026-09-24T02:03:06Z RECV  panel_bad=1
-2026-09-24T02:03:06Z RECV  panel_ok=1
-2026-09-24T02:03:06Z RECV  recovery=1
-2026-09-24T02:03:06Z RECV  dpu_err=0
-2026-09-24T02:03:06Z RECV  flight=active
-2026-09-24T02:03:06Z RECV  lines=7480
-2026-09-24T02:03:06Z RECV  kickoff=169 fd=169 pdone=0 fdtimeout=0 reset=0 rc0=0
-2026-09-24T02:03:06Z === boot round 3 ===
-2026-09-24T02:03:08.025Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:03:17.847Z SENT  systemctl reboot
-2026-09-24T02:03:20.164Z PRESENCE usb0525:a4a7=False
-2026-09-24T02:03:40.056Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:05:07.072Z watch done: lines=2 com_disconnects=0 com_reconnects=0
-2026-09-24T02:06:08Z === boot round 4 ===
-2026-09-24T02:06:09.983Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:07:09.136Z watch done: lines=0 com_disconnects=0 com_reconnects=0
-2026-09-24T02:07:40Z === boot round 5 ===
-2026-09-24T02:07:41.784Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:08:41.445Z watch done: lines=0 com_disconnects=0 com_reconnects=0
-2026-09-24T02:09:12Z === boot round 6 ===
-2026-09-24T02:09:13.973Z PRESENCE usb0525:a4a7=True
-2026-09-24T02:10:13.140Z watch done: lines=0 com_disconnects=0 com_reconnects=0
-2026-09-24T02:10:44Z === boot round 7 ===
-2026-09-24T02:10:45.385Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:29:35Z === boot round 1 ===
+2026-09-24T02:29:36.581Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:29:46.391Z SENT  systemctl reboot
+2026-09-24T02:29:49.934Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:30:08.090Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:30:35.694Z watch done: lines=15 com_disconnects=0 com_reconnects=0
+2026-09-24T02:31:03Z RECV  boot_id=86c08635-b58a-4f5d-9198-ce66d2bbf1b7
+2026-09-24T02:31:03Z RECV  35.06
+2026-09-24T02:31:03Z RECV  running
+2026-09-24T02:31:03Z RECV  panel_bad=1
+2026-09-24T02:31:03Z RECV  panel_ok=1
+2026-09-24T02:31:03Z RECV  recovery=1
+2026-09-24T02:31:03Z RECV  dpu_err=0
+2026-09-24T02:31:03Z RECV  flight=active
+2026-09-24T02:31:03Z RECV  lines=8090
+2026-09-24T02:31:03Z RECV  kickoff=110 fd=111 pdone=0 fdtimeout=0 reset=0 rc0=0
+2026-09-24T02:31:03Z === boot round 2 ===
+2026-09-24T02:31:04.646Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:31:14.599Z SENT  systemctl reboot
+2026-09-24T02:31:16.817Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:31:36.290Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:32:03.883Z watch done: lines=15 com_disconnects=0 com_reconnects=0
+2026-09-24T02:32:31Z RECV  boot_id=e97aa662-38a9-48f1-8346-37b32012d9ec
+2026-09-24T02:32:31Z RECV  35.09
+2026-09-24T02:32:31Z RECV  running
+2026-09-24T02:32:31Z RECV  panel_bad=1
+2026-09-24T02:32:31Z RECV  panel_ok=1
+2026-09-24T02:32:31Z RECV  recovery=1
+2026-09-24T02:32:31Z RECV  dpu_err=0
+2026-09-24T02:32:31Z RECV  flight=active
+2026-09-24T02:32:31Z RECV  lines=8090
+2026-09-24T02:32:31Z RECV  kickoff=111 fd=112 pdone=0 fdtimeout=0 reset=0 rc0=0
+2026-09-24T02:32:31Z === boot round 3 ===
+2026-09-24T02:32:32.773Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:32:42.722Z SENT  systemctl reboot
+2026-09-24T02:32:44.948Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:33:04.102Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:33:32.649Z watch done: lines=14 com_disconnects=0 com_reconnects=0
+2026-09-24T02:34:00Z RECV  boot_id=efdc0c30-0d76-4572-8e6b-f16754e9c9d9
+2026-09-24T02:34:00Z RECV  35.77
+2026-09-24T02:34:00Z RECV  running
+2026-09-24T02:34:00Z RECV  panel_bad=1
+2026-09-24T02:34:00Z RECV  panel_ok=1
+2026-09-24T02:34:00Z RECV  recovery=1
+2026-09-24T02:34:00Z RECV  dpu_err=0
+2026-09-24T02:34:00Z RECV  flight=active
+2026-09-24T02:34:00Z RECV  lines=8090
+2026-09-24T02:34:00Z RECV  kickoff=111 fd=111 pdone=0 fdtimeout=0 reset=0 rc0=0
+2026-09-24T02:34:00Z === boot round 4 ===
+2026-09-24T02:34:01.566Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:34:11.467Z SENT  systemctl reboot
+2026-09-24T02:34:13.686Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:34:33.014Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:35:01.407Z watch done: lines=2 com_disconnects=0 com_reconnects=0
+2026-09-24T02:35:28Z === boot round 5 ===
+2026-09-24T02:35:30.317Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:35:40.074Z SENT  systemctl reboot
+2026-09-24T02:36:29.571Z watch done: lines=1 com_disconnects=0 com_reconnects=0
+2026-09-24T02:36:57Z === boot round 6 ===
+2026-09-24T02:36:58.413Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:37:08.183Z SENT  systemctl reboot
+2026-09-24T02:37:57.825Z watch done: lines=1 com_disconnects=0 com_reconnects=0
+2026-09-24T02:38:25Z === boot round 7 ===
+2026-09-24T02:38:26.709Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:38:36.756Z SENT  systemctl reboot
+2026-09-24T02:39:25.887Z watch done: lines=1 com_disconnects=0 com_reconnects=0
+2026-09-24T02:39:53Z === boot round 8 ===
+2026-09-24T02:39:54.841Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:40:04.699Z SENT  systemctl reboot
+2026-09-24T02:40:54.166Z watch done: lines=1 com_disconnects=0 com_reconnects=0
+2026-09-24T02:41:21Z === boot round 9 ===
+2026-09-24T02:41:23.280Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:41:32.551Z SENT  systemctl reboot
+2026-09-24T02:42:22.468Z watch done: lines=0 com_disconnects=0 com_reconnects=0

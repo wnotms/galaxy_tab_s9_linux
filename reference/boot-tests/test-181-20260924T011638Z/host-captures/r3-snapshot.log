@@ -1,0 +1,16 @@
+2026-09-24T02:44:50Z console open on COM17
+2026-09-24T02:44:51Z RECV  echo READY1
+2026-09-24T02:44:51Z RECV  [?2004lREADY1
+2026-09-24T02:44:51Z shell answered after 1 poll(s)
+2026-09-24T02:44:51Z SENT  echo SN;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;ls -l /var/log/gts9-dpu-flight*.txt*;F=/var/log/gts9-dpu-flight.txt.prev;echo "prev_lines=$(wc -l < $F)";grep -an "snapshot\|trace tail\|dmesg tail\|irq counts\|end snapshot" $F | tail -10
+2026-09-24T02:45:17Z RECV  [?2004hroot@gts9:~# echo SN;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;ls -l /var/log/gts9-dpu-flight*.txt*;F=/var/log/gts9-dpu-flight.txt.prev;echo "prev_lines=$(wc -l < $F)";grep -an "snapshot\|trace tail\|dmesg tail\|irq counts\|end snapshot" $F | tail -10
+2026-09-24T02:45:17Z RECV  [?2004lSN
+2026-09-24T02:45:17Z RECV  boot_id=44d9f54d-bd65-4037-b0ea-8897439a9a59
+2026-09-24T02:45:17Z RECV  15.95
+2026-09-24T02:45:17Z RECV  running
+2026-09-24T02:45:17Z RECV  -rw-r--r-- 1 root root 844813 Apr 14 03:38 /var/log/gts9-dpu-flight.txt
+2026-09-24T02:45:17Z RECV  -rw-r--r-- 1 root root  68226 Apr 14 03:38 /var/log/gts9-dpu-flight.txt.prev
+2026-09-24T02:45:17Z RECV  prev_lines=522
+2026-09-24T02:45:17Z RECV  1:=== snapshot 2026-04-13T19:38:07Z uptime=3.74 ===
+2026-09-24T02:45:17Z RECV  522:=== end snapshot 1 ===
+2026-09-24T02:45:17Z console run done (ready=True)

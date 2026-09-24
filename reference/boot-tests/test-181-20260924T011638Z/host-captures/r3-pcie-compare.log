@@ -1,0 +1,8 @@
+2026-09-24T02:48:33Z console open on COM17
+2026-09-24T02:48:35Z RECV  echo READY1
+2026-09-24T02:48:35Z RECV  [?2004lREADY1
+2026-09-24T02:48:35Z shell answered after 1 poll(s)
+2026-09-24T02:48:35Z SENT  echo PC;echo "this boot:";dmesg | grep -a "pcie" | tail -8;echo ---PREVBOOT(-1)---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -a "pcie" | tail -4;echo ---GOODBOOT(-2)---;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "pcie|link up|PCI host" | tail -8
+2026-09-24T02:49:15Z RECV  [?2004hroot@gts9:~# echo PC;echo "this boot:";dmesg | grep -a "pcie" | tail -8;echo ---PREVBOOT(-1)---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -a "pcie" | tail -4;echo ---GOODBOOT(-2)---;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "pcie|link up|PCI host" | tail -8
+2026-09-24T02:49:15Z RECV  [?2004l-bash: syntax error near unexpected token `('
+2026-09-24T02:49:15Z console run done (ready=True)

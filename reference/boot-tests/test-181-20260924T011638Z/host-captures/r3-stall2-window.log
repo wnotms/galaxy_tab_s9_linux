@@ -1,0 +1,36 @@
+2026-09-24T02:47:28Z console open on COM17
+2026-09-24T02:47:30Z RECV  echo READY1
+2026-09-24T02:47:30Z RECV  [?2004lREADY1
+2026-09-24T02:47:30Z shell answered after 1 poll(s)
+2026-09-24T02:47:30Z SENT  echo W2;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | awk -F"[][]" "{split(\$2,a,\" \"); if (a[1]+0 < 35.9) print}" | tail -28
+2026-09-24T02:48:20Z RECV  [?2004hroot@gts9:~# echo W2;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | awk -F"[][]" "{split(\$2,a,\" \"); if (a[1]+0 < 35.9) print}" | tail -28
+2026-09-24T02:48:20Z RECV  [?2004lW2
+2026-09-24T02:48:20Z RECV  [   14.050460] gts9 kernel: gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+2026-09-24T02:48:20Z RECV  [   14.050595] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.050713] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.050854] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.050997] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.051119] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-24T02:48:20Z RECV  [   14.051245] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to acb7000.isp
+2026-09-24T02:48:20Z RECV  [   14.051365] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:48:20Z RECV  [   14.051486] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:48:20Z RECV  [   14.051610] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to acb7000.isp
+2026-09-24T02:48:20Z RECV  [   14.051739] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T02:48:20Z RECV  [   14.051857] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T02:48:20Z RECV  [   14.052015] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-24T02:48:20Z RECV  [   14.052151] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.052274] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to 6800000.remoteproc
+2026-09-24T02:48:20Z RECV  [   14.052395] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d90000.interconnect
+2026-09-24T02:48:20Z RECV  [   14.052518] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+2026-09-24T02:48:20Z RECV  [   14.052644] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-24T02:48:20Z RECV  [   14.052759] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-24T02:48:20Z RECV  [   14.052888] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:48:20Z RECV  [   14.053008] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:48:20Z RECV  [   14.053125] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 3d00000.gpu
+2026-09-24T02:48:20Z RECV  [   14.053240] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:48:20Z RECV  [   14.053360] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-24T02:48:20Z RECV  [   14.053490] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-24T02:48:20Z RECV  [   14.053613] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-24T02:48:20Z RECV  [   14.053731] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-24T02:48:20Z RECV  [   14.053852] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:48:20Z console run done (ready=True)

@@ -1,0 +1,17 @@
+2026-09-24T02:51:00Z console open on COM17
+2026-09-24T02:51:02Z RECV  echo READY1
+2026-09-24T02:51:02Z RECV  [?2004lREADY1
+2026-09-24T02:51:02Z shell answered after 1 poll(s)
+2026-09-24T02:51:02Z SENT  echo SF;systemctl disable --now gts9-dpu-flight.service 2>&1 | tail -2;systemctl is-active gts9-dpu-flight.service;systemctl is-enabled gts9-dpu-flight.service 2>&1;/usr/local/sbin/gts9-dpu-trace-arm stop;cat /sys/kernel/debug/tracing/tracing_on;/usr/local/sbin/gts9-dpu-trace-arm;cat /sys/kernel/debug/tracing/tracing_on;echo "events=$(ls /sys/kernel/debug/tracing/events/dpu/*/enable 2>/dev/null | wc -l)"
+2026-09-24T02:51:17Z RECV  [?2004hroot@gts9:~# echo SF;systemctl disable --now gts9-dpu-flight.service 2>&1 | tail -2;systemctl is-active gts9-dpu-flight.service;systemctl is-enabled gts9-dpu-flight.service 2>&1;/usr/local/sbin/gts9-dpu-trace-arm stop;cat /sys/kernel/debug/tracing/tracing_on;/usr/local/sbin/gts9-dpu-trace-arm;cat /sys/kernel/debug/tracing/tracing_on;echo "events=$(ls /sys/kernel/debug/tracing/events/dpu/*/enable 2>/dev/null | wc -l)"
+2026-09-24T02:51:17Z RECV  [?2004lSF
+2026-09-24T02:51:17Z RECV  Removed '/etc/systemd/system/multi-user.target.wants/gts9-dpu-flight.service'.
+2026-09-24T02:51:17Z RECV  inactive
+2026-09-24T02:51:17Z RECV  disabled
+2026-09-24T02:51:17Z RECV  gts9-dpu-trace: 36 events armed, tracing_on=1, buffer=16387 kB
+2026-09-24T02:51:17Z RECV  gts9-dpu-trace: tracing off
+2026-09-24T02:51:17Z RECV  0
+2026-09-24T02:51:17Z RECV  gts9-dpu-trace: 36 events armed, tracing_on=1, buffer=16387 kB
+2026-09-24T02:51:17Z RECV  1
+2026-09-24T02:51:17Z RECV  events=69
+2026-09-24T02:51:17Z console run done (ready=True)
