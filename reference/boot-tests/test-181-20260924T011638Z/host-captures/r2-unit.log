@@ -1,0 +1,13 @@
+2026-09-24T01:24:04Z console open on COM17
+2026-09-24T01:24:05Z RECV  echo READY1
+2026-09-24T01:24:05Z RECV  [?2004lREADY1
+2026-09-24T01:24:05Z shell answered after 1 poll(s)
+2026-09-24T01:24:05Z SENT  echo UN;printf '%s' 'W1VuaXRdCkRlc2NyaXB0aW9uPVg3MTAgRFBVIGZsaWdodCByZWNvcmRlciAodGVzdC0xODEgZGlhZ25vc3RpYykKQWZ0ZXI9bG9jYWwtZnMudGFyZ2V0CkJlZm9yZT1ndHM5LXBhbmVsLXJlY292ZXIuc2VydmljZQoKW1NlcnZpY2VdClR5cGU9c2ltcGxlCkV4ZWNTdGFydFByZT0vdXNyL2xvY2FsL3NiaW4vZ3RzOS1kcHUtdHJhY2UtYXJtCkV4ZWNTdGFydD0vdXNyL2xvY2FsL3NiaW4vZ3RzOS1kcHUtZmxpZ2h0IC92YXIvbG9nL2d0czktZHB1LWZsaWdodC50eHQgNQpSZXN0YXJ0PW5vCgpbSW5zdGFsbF0KV2FudGVkQnk9bXVsdGktdXNlci50YXJnZXQK' | base64 -d > /etc/systemd/system/gts9-dpu-flight.service;systemctl daemon-reload;ln -sf /etc/systemd/system/gts9-dpu-flight.service /etc/systemd/system/multi-user.target.wants/gts9-dpu-flight.service;systemctl is-enabled gts9-dpu-flight.service;cat /etc/systemd/system/gts9-dpu-flight.service | head -4
+2026-09-24T01:24:20Z RECV  [?2004hroot@gts9:~# echo UN;printf '%s' 'W1VuaXRdCkRlc2NyaXB0aW9uPVg3MTAgRFBVIGZsaWdodCByZWNvcmRlciAodGVzdC0xODEgZGlhZ25vc3RpYykKQWZ0ZXI9bG9jYWwtZnMudGFyZ2V0CkJlZm9yZT1ndHM5LXBhbmVsLXJlY292ZXIuc2VydmljZQoKW1NlcnZpY2VdClR5cGU9c2ltcGxlCkV4ZWNTdGFydFByZT0vdXNyL2xvY2FsL3NiaW4vZ3RzOS1kcHUtdHJhY2UtYXJtCkV4ZWNTdGFydD0vdXNyL2xvY2FsL3NiaW4vZ3RzOS1kcHUtZmxpZ2h0IC92YXIvbG9nL2d0czktZHB1LWZsaWdodC50eHQgNQpSZXN0YXJ0PW5vCgpbSW5zdGFsbF0KV2FudGVkQnk9bXVsdGktdXNlci50YXJnZXQK' | base64 -d > /etc/systemd/system/gts9-dpu-flight.service;systemctl daemon-reload;ln -sf /etc/systemd/system/gts9-dpu-flight.service /etc/systemd/system/multi-user.target.wants/gts9-dpu-flight.service;systemctl is-enabled gts9-dpu-flight.service;cat /etc/systemd/system/gts9-dpu-flight.service | head -4
+2026-09-24T01:24:20Z RECV  [?2004lUN
+2026-09-24T01:24:20Z RECV  enabled
+2026-09-24T01:24:20Z RECV  [Unit]
+2026-09-24T01:24:20Z RECV  Description=X710 DPU flight recorder (test-181 diagnostic)
+2026-09-24T01:24:20Z RECV  After=local-fs.target
+2026-09-24T01:24:20Z RECV  Before=gts9-panel-recover.service
+2026-09-24T01:24:20Z console run done (ready=True)

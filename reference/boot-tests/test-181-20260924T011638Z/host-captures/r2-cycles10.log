@@ -1,0 +1,24 @@
+2026-09-24T01:17:25Z console open on COM17
+2026-09-24T01:17:27Z RECV  echo READY1
+2026-09-24T01:17:27Z RECV  [?2004lREADY1
+2026-09-24T01:17:27Z shell answered after 1 poll(s)
+2026-09-24T01:17:27Z SENT  echo CYC;dmesg -C;i=0;while [ $i -lt 10 ]; do i=$((i+1)); timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank" || echo "blank $i failed"; sleep 0.3; timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank" || echo "unblank $i failed"; sleep 0.7; done;echo DONE;echo "fb0=$(cat /sys/class/graphics/fb0/blank)";echo "err=$(dmesg | grep -acE \"frame done timeout|vblank wait timed out|workqueue lockup|rcu_preempt\")";dmesg | grep -aE "dpu|vblank|frame done|panel id" | tail -8
+2026-09-24T01:17:57Z RECV  [?2004hroot@gts9:~# echo CYC;dmesg -C;i=0;while [ $i -lt 10 ]; do i=$((i+1)); timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank" || echo "blank $i failed"; sleep 0.3; timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank" || echo "unblank $i failed"; sleep 0.7; done;echo DONE;echo "fb0=$(cat /sys/class/graphics/fb0/blank)";echo "err=$(dmesg | grep -acE \"frame done timeout|vblank wait timed out|workqueue lockup|rcu_preempt\")";dmesg | grep -aE "dpu|vblank|frame done|panel id" | tail -8
+2026-09-24T01:17:57Z RECV  [?2004lCYC
+2026-09-24T01:17:57Z RECV  DONE
+2026-09-24T01:17:57Z RECV  fb0=0
+2026-09-24T01:17:57Z RECV  -bash: rcu_preempt": command not found
+2026-09-24T01:17:57Z RECV  -bash: vblank: command not found
+2026-09-24T01:17:57Z RECV  -bash: workqueue: command not found
+2026-09-24T01:17:57Z RECV  grep: done: No such file or directory
+2026-09-24T01:17:57Z RECV  grep: timeout: No such file or directory
+2026-09-24T01:17:57Z RECV  err=
+2026-09-24T01:17:57Z RECV  [ 1944.340410] [   T1451] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:17:57Z RECV  [ 1944.485940] [   T1451] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T01:17:57Z RECV  [ 1945.808503] [   T1457] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:17:57Z RECV  [ 1945.961815] [   T1457] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T01:17:57Z RECV  [ 1947.282470] [   T1473] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:17:57Z RECV  [ 1947.434144] [   T1473] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T01:17:57Z RECV  [ 1948.781611] [   T1479] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:17:57Z RECV  [ 1948.940715] [   T1479] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T01:17:57Z console run done (ready=True)

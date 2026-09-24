@@ -1,0 +1,12 @@
+2026-09-24T01:22:15Z console open on COM17
+2026-09-24T01:22:17Z RECV  echo READY1
+2026-09-24T01:22:17Z RECV  [?2004lREADY1
+2026-09-24T01:22:17Z shell answered after 1 poll(s)
+2026-09-24T01:22:17Z SENT  echo BATCH;dmesg -C;i=0;while [ $i -lt 20 ]; do i=$((i+1));echo "MARK cyc$i" > /sys/kernel/debug/tracing/trace_marker;timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.2;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 0.5;done;echo DONE;T=/sys/kernel/debug/tracing;echo "err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt")";echo "kickoff=$(grep -ac dpu_enc_kickoff $T/trace) framedone=$(grep -ac dpu_enc_frame_done_cb $T/trace) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $T/trace) waittimeout=$(grep -ac dpu_enc_wait_event_timeout $T/trace) vblank=$(grep -ac dpu_crtc_vblank $T/trace) irq186=$(grep -ac "irq=186" $T/trace)";cat /proc/uptime
+2026-09-24T01:23:02Z RECV  [?2004hroot@gts9:~# echo BATCH;dmesg -C;i=0;while [ $i -lt 20 ]; do i=$((i+1));echo "MARK cyc$i" > /sys/kernel/debug/tracing/trace_marker;timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.2;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 0.5;done;echo DONE;T=/sys/kernel/debug/tracing;echo "err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt")";echo "kickoff=$(grep -ac dpu_enc_kickoff $T/trace) framedone=$(grep -ac dpu_enc_frame_done_cb $T/trace) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $T/trace) waittimeout=$(grep -ac dpu_enc_wait_event_timeout $T/trace) vblank=$(grep -ac dpu_crtc_vblank $T/trace) irq186=$(grep -ac "irq=186" $T/trace)";cat /proc/uptime
+2026-09-24T01:23:02Z RECV  [?2004lBATCH
+2026-09-24T01:23:02Z RECV  DONE
+2026-09-24T01:23:02Z RECV  err=0
+2026-09-24T01:23:02Z RECV  kickoff=275 framedone=275 fdtimeout=0 waittimeout=828 vblank=2408 irq186=5078
+2026-09-24T01:23:02Z RECV  2249.53 17961.99
+2026-09-24T01:23:02Z console run done (ready=True)

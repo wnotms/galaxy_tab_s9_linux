@@ -1,0 +1,14 @@
+2026-09-24T01:17:03Z console open on COM17
+2026-09-24T01:17:04Z RECV  echo READY1
+2026-09-24T01:17:04Z RECV  [?2004lREADY1
+2026-09-24T01:17:04Z shell answered after 1 poll(s)
+2026-09-24T01:17:04Z SENT  echo ARM;T=/sys/kernel/debug/tracing;echo 0 > $T/tracing_on;echo > $T/trace;echo 8192 > $T/buffer_size_kb;echo "irq==186 || irq==187" > $T/events/irq/irq_handler_entry/filter;echo "irq==186 || irq==187" > $T/events/irq/irq_handler_exit/filter;echo 1 > $T/events/irq/enable;echo 1 > $T/events/drm/enable;echo 1 > $T/events/drm_msm_atomic/enable;echo 1 > $T/tracing_on;echo "tracing=$(cat $T/tracing_on) buf=$(cat $T/buffer_size_kb)";nohup /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3 >/dev/null 2>&1 & sleep 5;pgrep -af dpu-flight;ls -l /var/log/gts9-dpu-flight.txt;wc -l /var/log/gts9-dpu-flight.txt;grep -ac "msm_atomic\|drm_vblank" /var/log/gts9-dpu-flight.txt
+2026-09-24T01:17:21Z RECV  [?2004hroot@gts9:~# echo ARM;T=/sys/kernel/debug/tracing;echo 0 > $T/tracing_on;echo > $T/trace;echo 8192 > $T/buffer_size_kb;echo "irq==186 || irq==187" > $T/events/irq/irq_handler_entry/filter;echo "irq==186 || irq==187" > $T/events/irq/irq_handler_exit/filter;echo 1 > $T/events/irq/enable;echo 1 > $T/events/drm/enable;echo 1 > $T/events/drm_msm_atomic/enable;echo 1 > $T/tracing_on;echo "tracing=$(cat $T/tracing_on) buf=$(cat $T/buffer_size_kb)";nohup /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3 >/dev/null 2>&1 & sleep 5;pgrep -af dpu-flight;ls -l /var/log/gts9-dpu-flight.txt;wc -l /var/log/gts9-dpu-flight.txt;grep -ac "msm_atomic\|drm_vblank" /var/log/gts9-dpu-flight.txt
+2026-09-24T01:17:21Z RECV  [?2004lARM
+2026-09-24T01:17:21Z RECV  tracing=1 buf=8195
+2026-09-24T01:17:21Z RECV  [1] 1289
+2026-09-24T01:17:21Z RECV  1289 /bin/sh /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3
+2026-09-24T01:17:21Z RECV  -rw-r--r-- 1 root root 50591 Apr 14 04:09 /var/log/gts9-dpu-flight.txt
+2026-09-24T01:17:21Z RECV  590 /var/log/gts9-dpu-flight.txt
+2026-09-24T01:17:21Z RECV  40
+2026-09-24T01:17:21Z console run done (ready=True)

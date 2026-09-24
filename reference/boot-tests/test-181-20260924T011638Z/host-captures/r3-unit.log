@@ -1,0 +1,11 @@
+2026-09-24T01:47:27Z console open on COM17
+2026-09-24T01:47:29Z RECV  echo READY1
+2026-09-24T01:47:29Z RECV  [?2004lREADY1
+2026-09-24T01:47:29Z shell answered after 1 poll(s)
+2026-09-24T01:47:29Z SENT  echo UU;printf '%s' 'W1VuaXRdCkRlc2NyaXB0aW9uPVg3MTAgRFBVIGZsaWdodCByZWNvcmRlciAodGVzdC0xODEgZGlhZ25vc3RpYykKQWZ0ZXI9bG9jYWwtZnMudGFyZ2V0CkJlZm9yZT1ndHM5LXBhbmVsLXJlY292ZXIuc2VydmljZQoKW1NlcnZpY2VdClR5cGU9c2ltcGxlCkVudmlyb25tZW50PUdUUzlfRFBVX1RSQUNFX0xJTkVTPTgwMDAKRXhlY1N0YXJ0UHJlPS91c3IvbG9jYWwvc2Jpbi9ndHM5LWRwdS10cmFjZS1hcm0KRXhlY1N0YXJ0PS91c3IvbG9jYWwvc2Jpbi9ndHM5LWRwdS1mbGlnaHQgL3Zhci9sb2cvZ3RzOS1kcHUtZmxpZ2h0LnR4dCA1ClJlc3RhcnQ9bm8KCltJbnN0YWxsXQpXYW50ZWRCeT1tdWx0aS11c2VyLnRhcmdldAo=' | base64 -d > /etc/systemd/system/gts9-dpu-flight.service;systemctl daemon-reload;systemctl restart gts9-dpu-flight.service;sleep 3;systemctl is-active gts9-dpu-flight.service;grep -c TRACE_LINES /etc/systemd/system/gts9-dpu-flight.service;wc -l /var/log/gts9-dpu-flight.txt
+2026-09-24T01:47:41Z RECV  [?2004hroot@gts9:~# echo UU;printf '%s' 'W1VuaXRdCkRlc2NyaXB0aW9uPVg3MTAgRFBVIGZsaWdodCByZWNvcmRlciAodGVzdC0xODEgZGlhZ25vc3RpYykKQWZ0ZXI9bG9jYWwtZnMudGFyZ2V0CkJlZm9yZT1ndHM5LXBhbmVsLXJlY292ZXIuc2VydmljZQoKW1NlcnZpY2VdClR5cGU9c2ltcGxlCkVudmlyb25tZW50PUdUUzlfRFBVX1RSQUNFX0xJTkVTPTgwMDAKRXhlY1N0YXJ0UHJlPS91c3IvbG9jYWwvc2Jpbi9ndHM5LWRwdS10cmFjZS1hcm0KRXhlY1N0YXJ0PS91c3IvbG9jYWwvc2Jpbi9ndHM5LWRwdS1mbGlnaHQgL3Zhci9sb2cvZ3RzOS1kcHUtZmxpZ2h0LnR4dCA1ClJlc3RhcnQ9bm8KCltJbnN0YWxsXQpXYW50ZWRCeT1tdWx0aS11c2VyLnRhcmdldAo=' | base64 -d > /etc/systemd/system/gts9-dpu-flight.service;systemctl daemon-reload;systemctl restart gts9-dpu-flight.service;sleep 3;systemctl is-active gts9-dpu-flight.service;grep -c TRACE_LINES /etc/systemd/system/gts9-dpu-flight.service;wc -l /var/log/gts9-dpu-flight.txt
+2026-09-24T01:47:41Z RECV  [?2004lUU
+2026-09-24T01:47:41Z RECV  active
+2026-09-24T01:47:41Z RECV  1
+2026-09-24T01:47:41Z RECV  115 /var/log/gts9-dpu-flight.txt
+2026-09-24T01:47:41Z console run done (ready=True)

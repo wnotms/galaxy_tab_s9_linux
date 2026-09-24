@@ -1,0 +1,17 @@
+2026-09-24T01:56:06Z console open on COM17
+2026-09-24T01:56:07Z RECV  echo READY1
+2026-09-24T01:56:07Z RECV  [?2004lREADY1
+2026-09-24T01:56:07Z shell answered after 1 poll(s)
+2026-09-24T01:56:07Z SENT  echo RACE;dmesg -C;i=0;while [ $i -lt 80 ]; do i=$((i+1));timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";echo "gts9-race $i" > /dev/kmsg;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";echo "gts9-race-b $i" > /dev/kmsg;done;echo RACE_DONE;F=/sys/kernel/debug/tracing/trace;echo "pdone_timeout=$(grep -ac dpu_enc_phys_cmd_pdone_timeout $F) fd_timeout=$(grep -ac dpu_enc_frame_done_timeout $F) kickoff_reset=$(grep -ac dpu_enc_prepare_kickoff_reset $F) kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F)";echo "dpu_err=$(dmesg | grep -acE "frame.done.timeout|kickoff.timeout|workqueue.lockup|rcu_preempt")";dmesg | grep -aE "dpu_encoder|frame done" | tail -5;cat /proc/uptime
+2026-09-24T01:57:17Z RECV  [?2004hroot@gts9:~# echo RACE;dmesg -C;i=0;while [ $i -lt 80 ]; do i=$((i+1));timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";echo "gts9-race $i" > /dev/kmsg;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";echo "gts9-race-b $i" > /dev/kmsg;done;echo RACE_DONE;F=/sys/kernel/debug/tracing/trace;echo "pdone_timeout=$(grep -ac dpu_enc_phys_cmd_pdone_timeout $F) fd_timeout=$(grep -ac dpu_enc_frame_done_timeout $F) kickoff_reset=$(grep -ac dpu_enc_prepare_kickoff_reset $F) kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F)";echo "dpu_err=$(dmesg | grep -acE "frame.done.timeout|kickoff.timeout|workqueue.lockup|rcu_preempt")";dmesg | grep -aE "dpu_encoder|frame done" | tail -5;cat /proc/uptime
+2026-09-24T01:57:17Z RECV  [?2004lRACE
+2026-09-24T01:57:17Z RECV  RACE_DONE
+2026-09-24T01:57:17Z RECV  pdone_timeout=0 fd_timeout=0 kickoff_reset=0 kickoff=1104 fd=1105
+2026-09-24T01:57:17Z RECV  dpu_err=0
+2026-09-24T01:57:17Z RECV  [  172.361056] [   T1555] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:57:17Z RECV  [  172.863188] [   T1559] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:57:17Z RECV  [  173.350547] [   T1571] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:57:17Z RECV  [  173.824817] [   T1577] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:57:17Z RECV  [  174.310432] [   T1581] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:57:17Z RECV  175.02 1382.32
+2026-09-24T01:57:17Z console run done (ready=True)

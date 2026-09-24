@@ -1,0 +1,11 @@
+2026-09-24T01:18:43Z console open on COM17
+2026-09-24T01:18:45Z RECV  echo READY1
+2026-09-24T01:18:45Z RECV  [?2004lREADY1
+2026-09-24T01:18:45Z shell answered after 1 poll(s)
+2026-09-24T01:18:45Z SENT  echo TW;F=/var/log/gts9-dpu-flight.txt;grep -ac "MARK cycle" $F;wc -l $F;echo ---WINDOW---;awk "/MARK cycle5 blank/,/MARK cycle5 unblank/" $F | grep -aE "MARK|msm_atomic|irq_handler|drm_vblank" | head -40
+2026-09-24T01:19:07Z RECV  [?2004hroot@gts9:~# echo TW;F=/var/log/gts9-dpu-flight.txt;grep -ac "MARK cycle" $F;wc -l $F;echo ---WINDOW---;awk "/MARK cycle5 blank/,/MARK cycle5 unblank/" $F | grep -aE "MARK|msm_atomic|irq_handler|drm_vblank" | head -40
+2026-09-24T01:19:07Z RECV  [?2004lTW
+2026-09-24T01:19:07Z RECV  0
+2026-09-24T01:19:07Z RECV  8040 /var/log/gts9-dpu-flight.txt
+2026-09-24T01:19:07Z RECV  ---WINDOW---
+2026-09-24T01:19:07Z console run done (ready=True)

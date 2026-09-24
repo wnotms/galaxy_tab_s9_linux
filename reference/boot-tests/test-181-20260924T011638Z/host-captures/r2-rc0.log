@@ -1,0 +1,20 @@
+2026-09-24T01:23:34Z console open on COM17
+2026-09-24T01:23:36Z RECV  echo READY1
+2026-09-24T01:23:36Z RECV  [?2004lREADY1
+2026-09-24T01:23:36Z shell answered after 1 poll(s)
+2026-09-24T01:23:36Z SENT  echo RC;T=/sys/kernel/debug/tracing;echo "wait_total=$(grep -ac dpu_enc_wait_event_timeout $T/trace)";echo "wait_rc0=$(grep -a dpu_enc_wait_event_timeout $T/trace | grep -ac "rc=0,")";echo "wait_rc1=$(grep -a dpu_enc_wait_event_timeout $T/trace | grep -ac "rc=1,")";grep -a "dpu_enc_wait_event_timeout" $T/trace | tail -3;echo ---FD---;grep -a "dpu_enc_frame_done_cb" $T/trace | tail -2;echo ---KICK---;grep -a "dpu_enc_kickoff" $T/trace | tail -2
+2026-09-24T01:23:54Z RECV  [?2004hroot@gts9:~# echo RC;T=/sys/kernel/debug/tracing;echo "wait_total=$(grep -ac dpu_enc_wait_event_timeout $T/trace)";echo "wait_rc0=$(grep -a dpu_enc_wait_event_timeout $T/trace | grep -ac "rc=0,")";echo "wait_rc1=$(grep -a dpu_enc_wait_event_timeout $T/trace | grep -ac "rc=1,")";grep -a "dpu_enc_wait_event_timeout" $T/trace | tail -3;echo ---FD---;grep -a "dpu_enc_frame_done_cb" $T/trace | tail -2;echo ---KICK---;grep -a "dpu_enc_kickoff" $T/trace | tail -2
+2026-09-24T01:23:54Z RECV  [?2004lRC
+2026-09-24T01:23:54Z RECV  wait_total=1635
+2026-09-24T01:23:54Z RECV  wait_rc0=0
+2026-09-24T01:23:54Z RECV  wait_rc1=0
+2026-09-24T01:23:54Z RECV       kworker/1:0-898     [001] .....  2304.455321: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=2304451, expected=2304535 cnt=0
+2026-09-24T01:23:54Z RECV       kworker/1:0-898     [001] .....  2304.455460: dpu_enc_wait_event_timeout: id=35, IRQ=[0, 8], rc=21, time=2304451, expected=2304535 cnt=0
+2026-09-24T01:23:54Z RECV       kworker/1:0-898     [001] .....  2304.455775: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=2304452, expected=2304536 cnt=0
+2026-09-24T01:23:54Z RECV  ---FD---
+2026-09-24T01:23:54Z RECV            <idle>-0       [000] d.h2.  2304.470209: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T01:23:54Z RECV            <idle>-0       [000] d.h2.  2304.678531: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T01:23:54Z RECV  ---KICK---
+2026-09-24T01:23:54Z RECV       kworker/1:0-898     [001] .....  2304.455521: dpu_enc_kickoff: id=35
+2026-09-24T01:23:54Z RECV       kworker/1:0-898     [001] .....  2304.663807: dpu_enc_kickoff: id=35
+2026-09-24T01:23:54Z console run done (ready=True)

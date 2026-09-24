@@ -1,0 +1,30 @@
+2026-09-24T01:20:28Z console open on COM17
+2026-09-24T01:20:30Z RECV  echo READY1
+2026-09-24T01:20:30Z RECV  [?2004lREADY1
+2026-09-24T01:20:30Z shell answered after 1 poll(s)
+2026-09-24T01:20:30Z SENT  echo W2;F=/var/log/gts9-dpu-onecycle.txt;awk "/MARK onecycle blank/,/MARK onecycle unblank/" $F > /tmp/win.txt;wc -l /tmp/win.txt;echo "irq186=$(grep -ac \"irq=186\" /tmp/win.txt) irq187=$(grep -ac \"irq=187\" /tmp/win.txt)";echo ---SAMPLE-IRQ---;grep -a "irq_handler_entry" /tmp/win.txt | head -4;echo ---VBLANK---;grep -a "drm_vblank" /tmp/win.txt | head -6;echo ---TAIL---;tail -12 /tmp/win.txt
+2026-09-24T01:20:50Z RECV  [?2004hroot@gts9:~# echo W2;F=/var/log/gts9-dpu-onecycle.txt;awk "/MARK onecycle blank/,/MARK onecycle unblank/" $F > /tmp/win.txt;wc -l /tmp/win.txt;echo "irq186=$(grep -ac \"irq=186\" /tmp/win.txt) irq187=$(grep -ac \"irq=187\" /tmp/win.txt)";echo ---SAMPLE-IRQ---;grep -a "irq_handler_entry" /tmp/win.txt | head -4;echo ---VBLANK---;grep -a "drm_vblank" /tmp/win.txt | head -6;echo ---TAIL---;tail -12 /tmp/win.txt
+2026-09-24T01:20:50Z RECV  [?2004lW2
+2026-09-24T01:20:50Z RECV  266 /tmp/win.txt
+2026-09-24T01:20:50Z RECV  irq186=0 irq187=0
+2026-09-24T01:20:50Z RECV  ---SAMPLE-IRQ---
+2026-09-24T01:20:50Z RECV            <idle>-0       [000] d.h1.  2078.500855: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T01:20:50Z RECV            <idle>-0       [000] d.h1.  2078.505028: irq_handler_entry: irq=187 name=dsi_isr
+2026-09-24T01:20:50Z RECV            <idle>-0       [000] d.h1.  2078.505219: irq_handler_entry: irq=187 name=dsi_isr
+2026-09-24T01:20:50Z RECV            <idle>-0       [000] d.h1.  2078.509185: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T01:20:50Z RECV  ---VBLANK---
+2026-09-24T01:20:50Z RECV                sh-1993    [003] d..1.  2078.678517: drm_vblank_event_delivered: file=0000000000000000, crtc=0, seq=101612
+2026-09-24T01:20:50Z RECV  ---TAIL---
+2026-09-24T01:20:50Z RECV       kworker/3:0-1162    [003] .....  2078.683012: msm_atomic_wait_flush_finish: crtc_mask=1
+2026-09-24T01:20:50Z RECV       kworker/3:0-1162    [003] .....  2078.683121: msm_atomic_flush_commit: crtc_mask=1
+2026-09-24T01:20:50Z RECV       kworker/3:0-1162    [003] .....  2078.683122: msm_atomic_wait_flush_start: crtc_mask=1
+2026-09-24T01:20:50Z RECV       kworker/3:0-1162    [003] .....  2078.683122: msm_atomic_wait_flush_finish: crtc_mask=1
+2026-09-24T01:20:50Z RECV       kworker/3:0-1162    [003] .....  2078.683486: msm_atomic_commit_tail_finish: async=0 crtc_mask=1
+2026-09-24T01:20:50Z RECV            <idle>-0       [003] d.h1.  2078.683530: softirq_raise: vec=9 [action=RCU]
+2026-09-24T01:20:50Z RECV           timeout-1992    [006] d.h1.  2078.683533: softirq_raise: vec=7 [action=SCHED]
+2026-09-24T01:20:50Z RECV            <idle>-0       [003] ..s1.  2078.683537: softirq_entry: vec=9 [action=RCU]
+2026-09-24T01:20:50Z RECV           timeout-1992    [006] ..s1.  2078.683539: softirq_entry: vec=7 [action=SCHED]
+2026-09-24T01:20:50Z RECV           timeout-1992    [006] ..s1.  2078.683541: softirq_exit: vec=7 [action=SCHED]
+2026-09-24T01:20:50Z RECV            <idle>-0       [003] ..s1.  2078.683542: softirq_exit: vec=9 [action=RCU]
+2026-09-24T01:20:50Z RECV              bash-772     [000] ...1.  2078.684380: tracing_mark_write: MARK onecycle unblank
+2026-09-24T01:20:50Z console run done (ready=True)

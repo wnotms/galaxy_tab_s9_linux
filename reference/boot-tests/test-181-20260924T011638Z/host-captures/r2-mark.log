@@ -1,0 +1,18 @@
+2026-09-24T01:18:10Z console open on COM17
+2026-09-24T01:18:12Z RECV  echo READY1
+2026-09-24T01:18:12Z RECV  [?2004lREADY1
+2026-09-24T01:18:12Z shell answered after 1 poll(s)
+2026-09-24T01:18:12Z SENT  echo MK;pkill -f dpu-flight;sleep 1;GTS9_DPU_TRACE_LINES=8000 nohup /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3 >/dev/null 2>&1 & sleep 4;ls -l /sys/kernel/debug/tracing/trace_marker;T=/sys/kernel/debug/tracing;i=0;while [ $i -lt 5 ]; do i=$((i+1));echo "MARK cycle$i blank" > $T/trace_marker;timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.3;echo "MARK cycle$i unblank" > $T/trace_marker;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 1;echo "cycle$i: $(grep -a msm-kms /proc/interrupts | awk "{print \$2}") $(grep -a dsi_isr /proc/interrupts | awk "{print \$2}")";done;echo DONE;pgrep -af dpu-flight | head -2
+2026-09-24T01:18:37Z RECV  [?2004hroot@gts9:~# echo MK;pkill -f dpu-flight;sleep 1;GTS9_DPU_TRACE_LINES=8000 nohup /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3 >/dev/null 2>&1 & sleep 4;ls -l /sys/kernel/debug/tracing/trace_marker;T=/sys/kernel/debug/tracing;i=0;while [ $i -lt 5 ]; do i=$((i+1));echo "MARK cycle$i blank" > $T/trace_marker;timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.3;echo "MARK cycle$i unblank" > $T/trace_marker;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 1;echo "cycle$i: $(grep -a msm-kms /proc/interrupts | awk "{print \$2}") $(grep -a dsi_isr /proc/interrupts | awk "{print \$2}")";done;echo DONE;pgrep -af dpu-flight | head -2
+2026-09-24T01:18:37Z RECV  [?2004lMK
+2026-09-24T01:18:37Z RECV  [1]+  Terminated              nohup /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3 > /dev/null 2>&1
+2026-09-24T01:18:37Z RECV  [1] 1594
+2026-09-24T01:18:37Z RECV  --w--w---- 1 root root 0 Jan  1  1970 /sys/kernel/debug/tracing/trace_marker
+2026-09-24T01:18:37Z RECV  cycle1: 117009 11687
+2026-09-24T01:18:37Z RECV  cycle2: 117095 11807
+2026-09-24T01:18:37Z RECV  cycle3: 117184 11928
+2026-09-24T01:18:37Z RECV  cycle4: 117275 12049
+2026-09-24T01:18:37Z RECV  cycle5: 117363 12170
+2026-09-24T01:18:37Z RECV  DONE
+2026-09-24T01:18:37Z RECV  1594 /bin/sh /usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 3
+2026-09-24T01:18:37Z console run done (ready=True)

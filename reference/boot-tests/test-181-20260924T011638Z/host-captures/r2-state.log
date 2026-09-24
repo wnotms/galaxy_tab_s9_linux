@@ -1,0 +1,17 @@
+2026-09-24T01:15:51Z console open on COM17
+2026-09-24T01:15:52Z RECV  echo READY1
+2026-09-24T01:15:52Z RECV  [?2004lREADY1
+2026-09-24T01:15:52Z shell answered after 1 poll(s)
+2026-09-24T01:15:52Z SENT  echo R2;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cat /proc/uptime;systemctl is-system-running;cat /proc/cmdline | tr " " "\n" | grep -E "panel_recover|gts9_";echo ---PANEL---;dmesg | grep -a "panel id" | tail -3;dmesg | grep -acE "frame done timeout|vblank wait timed out|workqueue lockup|rcu_preempt"
+2026-09-24T01:16:05Z RECV  [?2004hroot@gts9:~# echo R2;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cat /proc/uptime;systemctl is-system-running;cat /proc/cmdline | tr " " "\n" | grep -E "panel_recover|gts9_";echo ---PANEL---;dmesg | grep -a "panel id" | tail -3;dmesg | grep -acE "frame done timeout|vblank wait timed out|workqueue lockup|rcu_preempt"
+2026-09-24T01:16:05Z RECV  [?2004lR2
+2026-09-24T01:16:05Z RECV  boot_id=42efa64f-ef35-484b-877b-2385a5fc4b48
+2026-09-24T01:16:05Z RECV  1840.82 14703.21
+2026-09-24T01:16:05Z RECV  running
+2026-09-24T01:16:05Z RECV  gts9_minimal_rootfs=1
+2026-09-24T01:16:05Z RECV  gts9_rootfs=/dev/mmcblk1p1
+2026-09-24T01:16:05Z RECV  gts9_sec_log=0x880200000,0x200000
+2026-09-24T01:16:05Z RECV  gts9_poweroff_trace=1
+2026-09-24T01:16:05Z RECV  ---PANEL---
+2026-09-24T01:16:05Z RECV  0
+2026-09-24T01:16:05Z console run done (ready=True)

@@ -1,0 +1,34 @@
+2026-09-24T01:19:49Z console open on COM17
+2026-09-24T01:19:50Z RECV  echo READY1
+2026-09-24T01:19:50Z RECV  [?2004lREADY1
+2026-09-24T01:19:50Z shell answered after 1 poll(s)
+2026-09-24T01:19:50Z SENT  echo ONE;T=/sys/kernel/debug/tracing;echo 0 > $T/tracing_on;echo > $T/trace;echo 1 > $T/tracing_on;echo "MARK onecycle blank" > $T/trace_marker;i0=$(grep -a msm-kms /proc/interrupts | awk "{print \$2}");timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";echo "MARK onecycle unblank" > $T/trace_marker;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 2;echo 0 > $T/tracing_on;sleep 6;i1=$(grep -a msm-kms /proc/interrupts | awk "{print \$2}");d1=$(grep -a dsi_isr /proc/interrupts | awk "{print \$2}");cp $T/trace /var/log/gts9-dpu-onecycle.txt;sync;echo "marks=$(grep -ac MARK /var/log/gts9-dpu-onecycle.txt) lines=$(wc -l < /var/log/gts9-dpu-onecycle.txt) irq_before=$i0 irq_after10s=$i1 dsi=$d1";echo ---ATOMIC---;grep -a "msm_atomic" /var/log/gts9-dpu-onecycle.txt | head -24
+2026-09-24T01:20:19Z RECV  [?2004hroot@gts9:~# echo ONE;T=/sys/kernel/debug/tracing;echo 0 > $T/tracing_on;echo > $T/trace;echo 1 > $T/tracing_on;echo "MARK onecycle blank" > $T/trace_marker;i0=$(grep -a msm-kms /proc/interrupts | awk "{print \$2}");timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";echo "MARK onecycle unblank" > $T/trace_marker;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 2;echo 0 > $T/tracing_on;sleep 6;i1=$(grep -a msm-kms /proc/interrupts | awk "{print \$2}");d1=$(grep -a dsi_isr /proc/interrupts | awk "{print \$2}");cp $T/trace /var/log/gts9-dpu-onecycle.txt;sync;echo "marks=$(grep -ac MARK /var/log/gts9-dpu-onecycle.txt) lines=$(wc -l < /var/log/gts9-dpu-onecycle.txt) irq_before=$i0 irq_after10s=$i1 dsi=$d1";echo ---ATOMIC---;grep -a "msm_atomic" /var/log/gts9-dpu-onecycle.txt | head -24
+2026-09-24T01:20:19Z RECV  [?2004lONE
+2026-09-24T01:20:19Z RECV  marks=2 lines=2521 irq_before=122321 irq_after10s=122822 dsi=12738
+2026-09-24T01:20:19Z RECV  ---ATOMIC---
+2026-09-24T01:20:19Z RECV                sh-1993    [004] .....  2078.504808: msm_atomic_commit_tail_start: async=0 crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [004] .....  2078.504811: msm_atomic_wait_flush_start: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [004] .....  2078.504812: msm_atomic_wait_flush_finish: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.678700: msm_atomic_flush_commit: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.678702: msm_atomic_wait_flush_start: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.678703: msm_atomic_wait_flush_finish: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680194: msm_atomic_commit_tail_finish: async=0 crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680266: msm_atomic_commit_tail_start: async=0 crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680322: msm_atomic_wait_flush_start: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680323: msm_atomic_wait_flush_finish: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680433: msm_atomic_flush_commit: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680433: msm_atomic_wait_flush_start: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.680434: msm_atomic_wait_flush_finish: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1993    [003] .....  2078.682914: msm_atomic_commit_tail_finish: async=0 crtc_mask=3
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.682955: msm_atomic_commit_tail_start: async=0 crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683011: msm_atomic_wait_flush_start: crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683012: msm_atomic_wait_flush_finish: crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683121: msm_atomic_flush_commit: crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683122: msm_atomic_wait_flush_start: crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683122: msm_atomic_wait_flush_finish: crtc_mask=1
+2026-09-24T01:20:19Z RECV       kworker/3:0-1162    [003] .....  2078.683486: msm_atomic_commit_tail_finish: async=0 crtc_mask=1
+2026-09-24T01:20:19Z RECV                sh-1995    [002] .....  2078.688826: msm_atomic_commit_tail_start: async=0 crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1995    [002] .....  2078.689215: msm_atomic_wait_flush_start: crtc_mask=3
+2026-09-24T01:20:19Z RECV                sh-1995    [002] .....  2078.689253: msm_atomic_wait_flush_finish: crtc_mask=3
+2026-09-24T01:20:19Z console run done (ready=True)

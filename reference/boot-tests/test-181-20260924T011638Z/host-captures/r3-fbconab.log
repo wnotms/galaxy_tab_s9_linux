@@ -1,0 +1,17 @@
+2026-09-24T01:55:15Z console open on COM17
+2026-09-24T01:55:16Z RECV  echo READY1
+2026-09-24T01:55:16Z RECV  [?2004lREADY1
+2026-09-24T01:55:16Z shell answered after 1 poll(s)
+2026-09-24T01:55:16Z SENT  echo FBA;for f in /sys/class/vtconsole/vtcon*; do echo "$f name=$(cat $f/name) bind=$(cat $f/bind)"; done;dmesg -C;V=$(for f in /sys/class/vtconsole/vtcon*; do if grep -qa "frame buffer" $f/name 2>/dev/null; then echo $f; fi; done | head -1);echo "target=$V";echo 0 > $V/bind;sleep 1;i=0;while [ $i -lt 5 ]; do i=$((i+1));timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.3;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 0.5;done;echo "unbound_cycles_done err=$(dmesg | grep -ac dpu_encoder_helper_wait_for_irq) lockup=$(dmesg | grep -acE "frame.done.timeout|workqueue.lockup|rcu_preempt")";echo 1 > $V/bind;sleep 1;echo "rebind=$(cat $V/bind)";dmesg | grep -a "dpu" | tail -4
+2026-09-24T01:55:56Z RECV  [?2004hroot@gts9:~# echo FBA;for f in /sys/class/vtconsole/vtcon*; do echo "$f name=$(cat $f/name) bind=$(cat $f/bind)"; done;dmesg -C;V=$(for f in /sys/class/vtconsole/vtcon*; do if grep -qa "frame buffer" $f/name 2>/dev/null; then echo $f; fi; done | head -1);echo "target=$V";echo 0 > $V/bind;sleep 1;i=0;while [ $i -lt 5 ]; do i=$((i+1));timeout 5 sh -c "echo 1 > /sys/class/graphics/fb0/blank";sleep 0.3;timeout 5 sh -c "echo 0 > /sys/class/graphics/fb0/blank";sleep 0.5;done;echo "unbound_cycles_done err=$(dmesg | grep -ac dpu_encoder_helper_wait_for_irq) lockup=$(dmesg | grep -acE "frame.done.timeout|workqueue.lockup|rcu_preempt")";echo 1 > $V/bind;sleep 1;echo "rebind=$(cat $V/bind)";dmesg | grep -a "dpu" | tail -4 [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K4
+2026-09-24T01:55:56Z RECV  [?2004lFBA
+2026-09-24T01:55:56Z RECV  /sys/class/vtconsole/vtcon0 name=(S) dummy device bind=0
+2026-09-24T01:55:56Z RECV  /sys/class/vtconsole/vtcon1 name=(M) frame buffer device bind=1
+2026-09-24T01:55:56Z RECV  target=/sys/class/vtconsole/vtcon1
+2026-09-24T01:55:56Z RECV  unbound_cycles_done err=5 lockup=0
+2026-09-24T01:55:56Z RECV  rebind=1
+2026-09-24T01:55:56Z RECV  [   86.940492] [   T1060] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:55:56Z RECV  [   88.210919] [   T1066] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:55:56Z RECV  [   89.480506] [   T1072] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:55:56Z RECV  [   90.748256] [   T1086] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T01:55:56Z console run done (ready=True)

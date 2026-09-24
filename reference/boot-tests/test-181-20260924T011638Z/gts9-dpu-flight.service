@@ -1,0 +1,13 @@
+[Unit]
+Description=X710 DPU flight recorder (test-181 diagnostic)
+After=local-fs.target
+Before=gts9-panel-recover.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/local/sbin/gts9-dpu-trace-arm
+ExecStart=/usr/local/sbin/gts9-dpu-flight /var/log/gts9-dpu-flight.txt 5
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

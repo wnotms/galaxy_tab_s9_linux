@@ -1,0 +1,17 @@
+2026-09-24T01:16:14Z console open on COM17
+2026-09-24T01:16:15Z RECV  echo READY1
+2026-09-24T01:16:15Z RECV  [?2004lREADY1
+2026-09-24T01:16:15Z shell answered after 1 poll(s)
+2026-09-24T01:16:15Z SENT  echo IRQ;cat /proc/interrupts | grep -aiE "dpu|dsi|mdss|disp|encoder" ;echo ---TOP---;head -3 /proc/interrupts;echo ---TRACEFS---;ls /sys/kernel/debug/tracing/events/drm_msm_atomic/msm_atomic_commit_tail_start/ 2>/dev/null;cat /sys/kernel/debug/tracing/buffer_size_kb 2>/dev/null
+2026-09-24T01:16:27Z RECV  [?2004hroot@gts9:~# echo IRQ;cat /proc/interrupts | grep -aiE "dpu|dsi|mdss|disp|encoder" ;echo ---TOP---;head -3 /proc/interrupts;echo ---TRACEFS---;ls /sys/kernel/debug/tracing/events/drm_msm_atomic/msm_atomic_commit_tail_start/ 2>/dev/null;cat /sys/kernel/debug/tracing/buffer_size_kb 2>/dev/null
+2026-09-24T01:16:27Z RECV  [?2004lIRQ
+2026-09-24T01:16:27Z RECV   186:     109968          0          0          0          0          0          0          0  msm_mdss     0 Edge      msm-kms
+2026-09-24T01:16:27Z RECV   187:       9856          0          0          0          0          0          0          0  msm_mdss     4 Edge      dsi_isr
+2026-09-24T01:16:27Z RECV  ---TOP---
+2026-09-24T01:16:27Z RECV              CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7
+2026-09-24T01:16:27Z RECV    11:      39560      14374      14625      11797      15777      12218      14035      35331  GICv3       27 Level     arch_timer
+2026-09-24T01:16:27Z RECV    13:       2802          0          0          0          0          0          0          0  GICv3       37 Level     apps_rsc
+2026-09-24T01:16:27Z RECV  ---TRACEFS---
+2026-09-24T01:16:27Z RECV  enable	filter	format	hist  id  trigger
+2026-09-24T01:16:27Z RECV  7 (expanded: 1408)
+2026-09-24T01:16:27Z console run done (ready=True)
