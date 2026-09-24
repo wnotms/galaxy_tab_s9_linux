@@ -1,0 +1,7 @@
+[   13.400000] watchdog: BUG: soft lockup - CPU#5 stuck for 22s! [kworker/u32:18:174]
+[   14.270000] gts9-rpmh: dev=5-002a state=0 batch_index=1/2
+[   14.270100] gts9-rpmh: TIMEOUT rsc=apps_rsc state=0 cmds=2 cpu=5 comm=kworker/u32:18 pid=174
+[   14.270200] gts9-rpmh: holder_tcs=-1 group=-1 (request not stashed in any TCS)
+[   14.270300] gts9-rpmh: irq_status=0x00000000 irq_enable=0x00007fff
+[   14.270400] gts9-rpmh: ring_summary send=1 done=0 matched_send=0 matched_done=0 => no matching send in the ring: it did not reach TCS programming
+[   18.000000] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:

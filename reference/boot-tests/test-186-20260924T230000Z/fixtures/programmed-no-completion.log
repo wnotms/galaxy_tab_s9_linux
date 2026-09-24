@@ -1,0 +1,18 @@
+[    4.310000] gts9 gts9-usb-acm[556]: gts9-usb-acm: ttyGS1 is the kernel console
+[   14.270000] WARNING: drivers/soc/qcom/rpmh.c:386 at rpmh_write_batch+0x1b4/0x25c, CPU#6: kworker/6:0/57
+[   14.270100] gts9-rpmh: dev=1c00000.interconnect state=0 batch_index=1/1
+[   14.270200] gts9-rpmh: TIMEOUT rsc=apps_rsc state=0 cmds=1 cpu=6 comm=kworker/6:0 pid=57
+[   14.270300] gts9-rpmh:   cmd[0] addr=0x00017004 data=0x00000001 wait=0
+[   14.270400] gts9-rpmh: tcs_in_use=0x00000008 num_tcs=15
+[   14.270500] gts9-rpmh: irq_status=0x00000000 irq_enable=0x00007fff
+[   14.270600] gts9-rpmh: group[0] mask=0x00007fff offset=0 num_tcs=15 req[0]=0000000000000000
+[   14.270700] gts9-rpmh: in_use tcs=3 irq_bit=0 req=00000000deadbeef  <-- the timed-out request
+[   14.270800] gts9-rpmh:   tcs[3] cmd_enable=0x00000001 wait_for_cmpl=0x00000000
+[   14.270900] gts9-rpmh:     cmd[0] msgid=0x04000021 addr=0x00017004 data=0x00000001
+[   14.271000] gts9-rpmh: holder_tcs=3 group=0 (request is still stashed in a TCS)
+[   14.271100] gts9-rpmh: ring last 3 of 9 events
+[   14.271200] gts9-rpmh:   +4271ms kind=send tcs=3 cmd=0 state=0 addr=0x00017004 data=0x00000001  <-- matches
+[   14.271300] gts9-rpmh:   +5002ms kind=send tcs=1 cmd=0 state=0 addr=0x00017010 data=0x00000000
+[   14.271400] gts9-rpmh:   +9001ms kind=done tcs=1 cmd=0 state=0 addr=0x00017010 data=0x00000000
+[   14.271500] gts9-rpmh: ring_summary send=2 done=1 matched_send=1 matched_done=0 => this request was programmed but never completed: look at RSC/TCS/IRQ
+[   20.000000] [drm:dpu_encoder_frame_done_timeout:2731] *ERROR* enc35 frame done timeout

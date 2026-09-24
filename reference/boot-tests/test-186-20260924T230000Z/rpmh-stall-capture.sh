@@ -66,20 +66,6 @@ probe() {
 	cat "$out"
 }
 
-# first_anomaly LOG - earliest monotonic timestamp among the known signatures.
-first_anomaly() {
-	local log=$1 name ts best="" bestname="none"
-	for name in "gts9-rpmh: TIMEOUT" "soft lockup" "workqueue: .*stall" "rcu:.*detected stall" "frame done timeout" "mmc.*[Tt]imeout"; do
-		ts=$(grep -a -m1 -E "$name" "$log" 2>/dev/null | grep -a -o -E "^\[ *[0-9]+\.[0-9]+\]" | tr -dc '0-9.')
-		[ -n "$ts" ] || continue
-		if [ -z "$best" ] || [ "$(printf '%s\n%s\n' "$ts" "$best" | sort -g | head -1)" = "$ts" ]; then
-			best=$ts
-			bestname=$name
-		fi
-	done
-	printf '%s at %s' "$bestname" "${best:-n/a}"
-}
-
 say "test-186 RPMh stall capture: rounds=$N allow_power=$ALLOW window=${WINDOW}s"
 
 pre=$(preflight)
@@ -120,15 +106,19 @@ for i in $(seq 1 "$N"); do
 	printf '%s\n' "$txt" | grep -aE "boot_id=|gts9-rpmh|lockup|stall|timeout" | head -12 | sed 's/^/  /' | tee -a "$OUT"
 	new_id=$(field "$ROUNDS_DIR/probe-$i.txt" 'boot_id=')
 
-	verdict=not-reproduced
-	grep -aq "gts9-rpmh: TIMEOUT" "$klog" 2>/dev/null && verdict=rpmh-timeout-captured
-	grep -aq "soft lockup" "$klog" 2>/dev/null && verdict=${verdict}-plus-soft-lockup
+	# Apply the pre-agreed decision tree to this capture (docs/NEXT_STALL_
+	# DEBUG_PLAN.md §8) and keep its output next to the raw log.
+	"$D/classify-round.sh" "$klog" >"$ROUNDS_DIR/round-$i-branch.txt" 2>&1 || true
+	branch=$(grep -a -m1 '^branch=' "$ROUNDS_DIR/round-$i-branch.txt" 2>/dev/null | cut -d= -f2)
+	first=$(grep -a -m1 '^first_anomaly=' "$ROUNDS_DIR/round-$i-branch.txt" 2>/dev/null | cut -d= -f2-)
+	verdict=${branch:-unclassified}
 
 	{
 		echo "round=$i"
 		echo "boot_id_before=$boot_id"
 		echo "boot_id_after=${new_id:-none}"
-		echo "first_anomaly=$(first_anomaly "$klog")"
+		echo "first_anomaly=$first"
+		echo "branch=$verdict"
 		echo "rpmh_timeouts=$(count 'gts9-rpmh: TIMEOUT' "$klog")"
 		echo "rpmh_late_completions=$(count 'gts9-rpmh: LATE COMPLETION' "$klog")"
 		echo "ring_summary=$(grep -a -m1 'gts9-rpmh: ring_summary' "$klog" 2>/dev/null)"

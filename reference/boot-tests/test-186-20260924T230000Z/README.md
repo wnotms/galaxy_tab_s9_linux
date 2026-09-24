@@ -47,8 +47,8 @@ over the shell, the previous boot's kernel log filtered to
 timeout|rpmh_write_batch` in monotonic order. Recorded per round: boot_id
 before/after, the first anomaly by monotonic timestamp, the RPMh dump block
 (`rounds/round-N-rpmh-dump.txt`), the timeout count, any `LATE COMPLETION`, the
-`ring_summary`, `holder_tcs`, `irq_status`, soft-lockup/DPU/MMC counts, and a
-verdict.
+`ring_summary`, `holder_tcs`, `irq_status`, soft-lockup/DPU/MMC counts, and the
+branch from `classify-round.sh` (`docs/NEXT_STALL_DEBUG_PLAN.md` §8).
 
 ## Success / failure criteria
 
@@ -59,6 +59,12 @@ verdict.
   not observed, or never reached programming.
 * An anomaly printed *before* the first `gts9-rpmh: TIMEOUT` means RPMh is a
   victim: follow that anomaly instead, per the plan's decision tree.
-* No stall in any round → record **"not reproduced this round"**. It is not
-  evidence that anything was fixed, and it is not a reason to change code or
-  add more instrumentation.
+* No stall in any round → the classifier prints `branch=no-anomaly`: record
+  **"not reproduced this round"**. It is not evidence that anything was fixed,
+  and it is not a reason to change code or add more instrumentation.
+* `branch=victim-other-anomaly-earlier` means RPMh is a victim: follow the
+  earlier anomaly, do not deepen the RPMh dump.
+* `branch=rpmh-programmed-no-completion` → RSC/TCS/hardware-completion/IRQ;
+  `branch=rpmh-irq-pending` → IRQ delivery/masking/CPU state;
+  `branch=rpmh-completed-late` → the request-lifetime hazard of plan §3a is
+  confirmed and a *separate* fix patch is the next discussion, not this one.
