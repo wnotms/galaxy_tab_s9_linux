@@ -1,0 +1,15 @@
+[Unit]
+Description=X710 previous-boot evidence collector
+Documentation=file:/usr/share/doc/gts9/WATCHDOG_X710.md
+After=local-fs.target
+Before=multi-user.target gts9-dpu-flight.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+StandardOutput=journal+console
+ExecStart=/usr/libexec/gts9-prev-boot-evidence
+TimeoutStartSec=180
+
+[Install]
+WantedBy=multi-user.target

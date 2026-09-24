@@ -1,0 +1,178 @@
+#!/bin/sh
+# gts9-prev-boot-evidence - archive the previous boot's evidence at every boot.
+#
+# The X710 stall wedges the microSD path (mmc1 timeouts in the stall reports),
+# so the journal of a stalled boot can stop within seconds of the wedge and the
+# trace recorder can be cut off mid-file.  Nothing on this device survives the
+# stall by itself: /sys/fs/pstore is empty (CONFIG_PSTORE_RAM=y but no ramoops
+# node) and /dev/watchdog0 does not exist.
+#
+# What does survive is the previous boot's journal *up to* the wedge, the trace
+# files the recorder already wrote to the microSD, and the serial console
+# capture on the host.  This helper collects the first two into one directory
+# per boot so the next round starts from a known place, and distils the stall
+# markers into a handful of lines that can be read back over a 115200 baud
+# console in seconds:
+#
+#	/var/log/gts9-boot-evidence/<utc>-<boot_id8>/
+#	    verdict.txt          key=value summary of the previous boot
+#	    prev-kernel.log      journalctl -b -1 -k -o short-monotonic
+#	    prev-all.log         journalctl -b -1 -o short-monotonic
+#	    stream-prev-tail.txt last 80 lines of the trace recorder's .prev
+#	    stream-prev1-tail.txt last 80 lines of its .1.prev
+#	    watchdog.txt         watchdog state at this boot
+#
+# It is informational only: it never changes a kernel parameter, never fails a
+# boot, and keeps only the newest few directories.
+
+set -u
+
+DEST_ROOT=/var/log/gts9-boot-evidence
+KEEP=8
+STREAM=/var/log/gts9-dpu-stream.txt
+
+boot_id=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)
+short_id=$(echo "$boot_id" | cut -c1-8)
+stamp=$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo notime)
+dir=$DEST_ROOT/$stamp-$short_id
+
+mkdir -p "$dir" || exit 0
+
+echo "$boot_id" >"$dir/boot-id.txt" 2>/dev/null || true
+cut -d' ' -f1 /proc/uptime >"$dir/uptime.txt" 2>/dev/null || true
+cat /proc/cmdline >"$dir/cmdline.txt" 2>/dev/null || true
+dmesg 2>/dev/null | grep -a -E 'Kernel command line|watchdog' | head -20 >"$dir/dmesg-watchdog.txt" 2>/dev/null || true
+
+# --- previous boot, from the journal -----------------------------------------
+prev_state=none
+if journalctl -b -1 -k -o short-monotonic --no-pager >"$dir/prev-kernel.log" 2>/dev/null; then
+	if [ -s "$dir/prev-kernel.log" ]; then
+		prev_state=present
+	else
+		prev_state=empty
+	fi
+fi
+journalctl -b -1 -o short-monotonic --no-pager >"$dir/prev-all.log" 2>/dev/null || true
+
+# --- previous boot, from pstore ----------------------------------------------
+# A panic report never reaches the journal (journald does not run at panic time)
+# but the ramoops console buffer does keep it across the reset.  Copy it before
+# anything can delete or overwrite it: this is the only place the panic stack
+# survives on this port.
+mkdir -p "$dir/pstore" 2>/dev/null || true
+pstore_list=""
+if [ -d /sys/fs/pstore ]; then
+	for rec in /sys/fs/pstore/*; do
+		[ -f "$rec" ] || continue
+		name=${rec##*/}
+		pstore_list="$pstore_list$name "
+		cp "$rec" "$dir/pstore/$name" 2>/dev/null || true
+	done
+fi
+echo "$pstore_list" >"$dir/pstore/list.txt" 2>/dev/null || true
+
+grep -a -n -E 'Kernel panic|BUG: soft lockup|BUG: hard LOCKUP|watchdog: BUG|watchdog: watch|unable to handle|hung_task|blocked for more than|rcu.*detected stall|rcu.*starved|frame done timeout|kickoff timeout|Timeout waiting for hardware cmd interrupt|sdhci: =|Call trace|task:|Workqueue:' \
+	"$dir/prev-kernel.log" 2>/dev/null | tail -120 >"$dir/prev-signatures.txt" 2>/dev/null || true
+
+count() {
+	grep -a -c -E "$1" "$dir/prev-kernel.log" 2>/dev/null || echo 0
+}
+
+panic=$(count 'Kernel panic')
+lockup=$(count 'BUG: soft lockup|watchdog: BUG')
+hardlock=$(count 'BUG: hard LOCKUP|Hard LOCKUP')
+hung=$(count 'hung_task|blocked for more than')
+rcu=$(count 'rcu.*detected stall|rcu.*starved')
+dpu=$(count 'frame done timeout|kickoff timeout')
+mmc=$(count 'Timeout waiting for hardware cmd interrupt|sdhci: =')
+
+# The pstore console record is the authoritative "did it panic" evidence.
+pstore_panic=0
+pstore_lockup=0
+for rec in "$dir"/pstore/console* "$dir"/pstore/dmesg*; do
+	[ -f "$rec" ] || continue
+	pstore_panic=$((pstore_panic + $(grep -a -c 'Kernel panic' "$rec" 2>/dev/null || echo 0)))
+	pstore_lockup=$((pstore_lockup + $(grep -a -c -E 'BUG: soft lockup|watchdog: BUG|workqueue: stall|hung_task: blocked' "$rec" 2>/dev/null || echo 0)))
+done
+
+if [ "$pstore_panic" -gt 0 ]; then
+	prev_end=panic
+elif grep -a -q 'systemd-shutdown' "$dir/prev-all.log" 2>/dev/null; then
+	prev_end=clean-shutdown
+elif grep -a -q 'Kernel panic' "$dir/prev-kernel.log" 2>/dev/null; then
+	prev_end=panic
+elif [ "$prev_state" = none ]; then
+	prev_end=unknown
+else
+	prev_end=hard-reset-or-incomplete
+fi
+
+{
+	echo "collected_utc=$stamp"
+	echo "boot_id=$boot_id"
+	echo "previous_boot=$prev_state"
+	echo "previous_boot_end=$prev_end"
+	echo "prev_kernel_lines=$(wc -l <"$dir/prev-kernel.log" 2>/dev/null || echo 0)"
+	echo "marker_panic=$panic"
+	echo "marker_soft_lockup=$lockup"
+	echo "marker_hard_lockup=$hardlock"
+	echo "marker_hung_task=$hung"
+	echo "marker_rcu_stall=$rcu"
+	echo "marker_dpu_timeout=$dpu"
+	echo "marker_mmc_timeout=$mmc"
+	echo "pstore_records=$pstore_list"
+	echo "pstore_panic_lines=$pstore_panic"
+	echo "pstore_lockup_lines=$pstore_lockup"
+	echo "watchdog_enabled=$(cat /proc/sys/kernel/watchdog 2>/dev/null || echo absent)"
+	echo "softlockup_panic=$(cat /proc/sys/kernel/softlockup_panic 2>/dev/null || echo absent)"
+	echo "hung_task_panic=$(cat /proc/sys/kernel/hung_task_panic 2>/dev/null || echo absent)"
+	echo "wq_panic_on_stall_time=$(cat /sys/module/workqueue/parameters/panic_on_stall_time 2>/dev/null || echo absent)"
+} >"$dir/verdict.txt" 2>/dev/null || true
+
+# --- trace recorder, before it rotates the files itself ----------------------
+mkdir -p "$dir/stream" 2>/dev/null || true
+ls -l "$STREAM"* >"$dir/stream/ls.txt" 2>/dev/null || true
+for which in prev 1.prev; do
+	f=$STREAM.$which
+	[ -f "$f" ] || continue
+	case $which in
+	prev) out=$dir/stream/stream-prev-tail.txt ;;
+	*) out=$dir/stream/stream-prev1-tail.txt ;;
+	esac
+	{
+		echo "# $f size=$(wc -c <"$f" 2>/dev/null)"
+		echo "# first line:"
+		head -1 "$f" 2>/dev/null | cut -c1-200
+		echo "# last 80 lines:"
+		tail -80 "$f" 2>/dev/null | cut -c1-200
+	} >"$out" 2>/dev/null || true
+done
+
+# --- watchdog state at this boot ---------------------------------------------
+{
+	echo "watchdog=$(cat /proc/sys/kernel/watchdog 2>/dev/null || echo absent)"
+	echo "watchdog_thresh=$(cat /proc/sys/kernel/watchdog_thresh 2>/dev/null || echo absent)"
+	echo "softlockup_panic=$(cat /proc/sys/kernel/softlockup_panic 2>/dev/null || echo absent)"
+	echo "softlockup_all_cpu_backtrace=$(cat /proc/sys/kernel/softlockup_all_cpu_backtrace 2>/dev/null || echo absent)"
+	echo "hung_task_timeout_secs=$(cat /proc/sys/kernel/hung_task_timeout_secs 2>/dev/null || echo absent)"
+	echo "hung_task_panic=$(cat /proc/sys/kernel/hung_task_panic 2>/dev/null || echo absent)"
+	echo "panic=$(cat /proc/sys/kernel/panic 2>/dev/null || echo absent)"
+	echo "workqueue.panic_on_stall=$(cat /sys/module/workqueue/parameters/panic_on_stall 2>/dev/null || echo absent)"
+	echo "workqueue.panic_on_stall_time=$(cat /sys/module/workqueue/parameters/panic_on_stall_time 2>/dev/null || echo absent)"
+	echo "workqueue.watchdog_thresh=$(cat /sys/module/workqueue/parameters/watchdog_thresh 2>/dev/null || echo absent)"
+	echo "dev_watchdog=$(ls /dev/watchdog* 2>/dev/null | tr '\n' ' ' || echo none)"
+	echo "pstore=$(ls -A /sys/fs/pstore 2>/dev/null | tr '\n' ' ' || echo none)"
+	cat /var/log/gts9-watchdog-debug.txt 2>/dev/null || true
+} >"$dir/watchdog.txt" 2>/dev/null || true
+
+# --- keep the newest few ------------------------------------------------------
+if [ -d "$DEST_ROOT" ]; then
+	ls -1dt "$DEST_ROOT"/*/ 2>/dev/null | tail -n +$((KEEP + 1)) | while read -r old; do
+		case "$old" in
+		"$DEST_ROOT"/*/) rm -rf "$old" 2>/dev/null || true ;;
+		esac
+	done
+fi
+
+echo "gts9-prev-boot-evidence: $dir previous_boot=$prev_state end=$prev_end panic=$panic lockup=$lockup hung=$hung rcu=$rcu dpu=$dpu mmc=$mmc"
+exit 0
