@@ -36,10 +36,12 @@ say() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" | tee -a "$OUT"; 
 case "$ROUNDS" in ''|*[!0-9]*) echo "usage: ab-run.sh [rounds]" >&2; exit 2 ;; esac
 
 say "test-187 stall A/B: rounds=$ROUNDS allow_power=$ALLOW"
-say "profiles are run in the order A (baseline, = profile D), B (no-ACD), C (no-GPU)"
+say "profiles are run in the order A (baseline, = profile D), G (late deferred),"
+say "B (no-ACD), C (no-GPU).  A then G is the highest-value pair: G attacks the"
+say "stall mechanism directly with no code change at all."
 say "each profile needs its boot.img/vendor_boot.img flashed first - see candidate.txt"
 
-for profile in baseline no-acd no-gpu; do
+for profile in baseline late-deferred no-acd no-gpu; do
 	say "=============================================================="
 	say "profile: $profile"
 	say "expected vendor_boot.img from out/boot-bundle-test187-$profile/"
@@ -80,7 +82,7 @@ say "=============================================================="
 "$AB" --summary 2>&1 | sed 's/^/  /' | tee -a "$OUT"
 
 # Per-profile verdict lines, so the README can be written from data.
-for profile in baseline no-acd no-gpu; do
+for profile in baseline late-deferred no-acd no-gpu; do
 	dir=$RESULTS/$profile
 	[ -d "$dir" ] || continue
 	rounds=$(ls "$dir"/round-*.txt 2>/dev/null | wc -l)

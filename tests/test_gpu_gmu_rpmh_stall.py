@@ -24,7 +24,9 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 BASELINE = "boot/cmdline.stall-ab-baseline.example.txt"
 NO_ACD = "boot/cmdline.stall-ab-no-acd.example.txt"
 NO_GPU = "boot/cmdline.stall-ab-no-gpu.example.txt"
-PROFILES = (BASELINE, NO_ACD, NO_GPU)
+LATE_DEFERRED = "boot/cmdline.stall-ab-late-deferred.example.txt"
+# A, B, C and G share one kernel and differ only in the command line.
+PROFILES = (BASELINE, NO_ACD, NO_GPU, LATE_DEFERRED)
 
 BACKPORT = "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch"
 FRAGMENT = "kernel/config/gts9wifi-mainline.fragment"
@@ -73,13 +75,26 @@ class AbProfileTests(unittest.TestCase):
         base = tokens(BASELINE)
         self.assertEqual(tokens(NO_ACD), base[:2] + ["msm.disable_acd=1"] + base[2:])
         self.assertEqual(tokens(NO_GPU), base[:2] + ["msm.no_gpu=1"] + base[2:])
+        # Profile G is the round-2 burst-decoupling axis: same kernel as A/B/C,
+        # only the instant of the deferred-probe-timeout burst moves.
+        self.assertEqual(
+            tokens(LATE_DEFERRED),
+            base[:2] + ["deferred_probe_timeout=300"] + base[2:],
+        )
+
+    def test_the_burst_decoupling_token_is_exclusive_to_profile_g(self):
+        self.assertIn("deferred_probe_timeout=300", tokens(LATE_DEFERRED))
+        for name in (BASELINE, NO_ACD, NO_GPU):
+            with self.subTest(cmdline=name):
+                joined = " ".join(tokens(name))
+                self.assertNotIn("deferred_probe_timeout", joined)
 
     def test_the_one_added_token_is_the_documented_one(self):
         self.assertIn("msm.disable_acd=1", tokens(NO_ACD))
         self.assertNotIn("msm.no_gpu=1", tokens(NO_ACD))
         self.assertIn("msm.no_gpu=1", tokens(NO_GPU))
         self.assertNotIn("msm.disable_acd=1", tokens(NO_GPU))
-        for tok in ("msm.disable_acd", "msm.no_gpu"):
+        for tok in ("msm.disable_acd", "msm.no_gpu", "deferred_probe_timeout"):
             self.assertFalse(
                 [t for t in tokens(BASELINE) if t.startswith(tok)],
                 f"the baseline profile must not carry {tok}",
@@ -403,6 +418,7 @@ class Test187CandidateTests(unittest.TestCase):
         "baseline": "out/boot-bundle-test187-baseline",
         "no-acd": "out/boot-bundle-test187-no-acd",
         "no-gpu": "out/boot-bundle-test187-no-gpu",
+        "late-deferred": "out/boot-bundle-test187-late-deferred",
         "rpmh-debug": "out/boot-bundle-test187-rpmh-debug",
     }
 
@@ -488,7 +504,8 @@ class Test187CandidateTests(unittest.TestCase):
 
     def test_the_runner_covers_the_three_profiles_in_order(self):
         text = read(f"{self.TESTDIR}/ab-run.sh")
-        self.assertIn("for profile in baseline no-acd no-gpu", text)
+        # A first, then G (the new burst-decoupling axis), then B and C.
+        self.assertIn("for profile in baseline late-deferred no-acd no-gpu", text)
         # It must not flash anything itself.
         for forbidden in ("fastboot", "dd if=", "avbtool", "mkbootimg"):
             with self.subTest(forbidden=forbidden):
@@ -564,6 +581,71 @@ class BuildReproducibilityTests(unittest.TestCase):
         if "CONFIG_MODULE_SIG=y" not in text:
             self.skipTest("module signing is off in this config")
         self.assertIn('CONFIG_MODULE_SIG_KEY="certs/signing_key.pem"', text)
+
+
+class EvidenceProvenanceTests(unittest.TestCase):
+    """Synthetic fixtures must never be presented as hardware evidence.
+
+    Round 1 wrote a "measured timeline" section that cited
+    test-186-*/fixtures/*.log as real device captures.  Those files are
+    synthetic: the commit that added them says so ("Three synthetic fixtures pin
+    the branches"), test-186 has no rounds/ directory because it was never run on
+    the device, and the timestamps in them exist nowhere else.  A reviewer cannot
+    tell synthetic from captured by looking at a log, so the distinction has to
+    be enforced here.
+    """
+    FIXTURES = "reference/boot-tests/test-186-20260924T230000Z/fixtures"
+    TEST186 = "reference/boot-tests/test-186-20260924T230000Z"
+    PLAN = "docs/GPU_GMU_RPMH_STALL_PLAN.md"
+    # A timestamp that only the synthetic fixture contains.
+    FIXTURE_ONLY_TS = "13.400000"
+
+    def test_the_fixtures_are_synthetic(self):
+        """If this stops being true the guard below must be revisited."""
+        self.assertIn("synthetic", read(f"{self.TEST186}/README.md").lower())
+        # test-186 was never executed: no per-round output directory.
+        self.assertFalse(
+            (ROOT / f"{self.TEST186}/rounds").exists(),
+            "test-186 now has rounds/ - if it really ran, the fixtures are "
+            "captured evidence and the round-2 correction must be revisited",
+        )
+
+    def test_the_plan_no_longer_cites_a_fixture_as_hardware_evidence(self):
+        text = read(self.PLAN)
+        # The correction note may *mention* the fixture path; what it must not do
+        # is present it as the source of a measurement.  Guard the specific
+        # wording round 1 used.
+        self.assertNotIn("### 4.1 The stall, from", text)
+        self.assertNotIn(
+            "Measured timeline (from real hardware evidence only)",
+            text,
+        )
+
+    def test_the_plan_keeps_the_correction_note(self):
+        text = read(self.PLAN)
+        self.assertIn("Correction (round 2)", text)
+        self.assertIn("synthetic", text)
+        self.assertIn("test-186", text)
+
+    def test_the_fixture_only_timestamp_is_not_quoted_as_real(self):
+        """13.400000 appears only in the fixture; it must not be a plan fact."""
+        # It may appear inside the correction note (which names it as fixture
+        # content), so check the facts table specifically.
+        text = read(self.PLAN)
+        facts = text.split("## 2.")[0]
+        self.assertNotIn(self.FIXTURE_ONLY_TS, facts)
+
+    def test_no_real_rpmh_dump_is_claimed(self):
+        """Patch 0021 has never run on the device; the plan must say so."""
+        text = read(self.PLAN)
+        self.assertIn("no captured RPMh timeout dump", text)
+        self.assertIn("never run on the device", text)
+        self.assertIn("unexercised", text)
+
+    def test_the_fixtures_are_still_labelled_in_their_own_directory(self):
+        """A reader who lands on fixtures/ directly must not be misled."""
+        readme = read(f"{self.TEST186}/README.md")
+        self.assertIn("synthetic", readme.lower())
 
 
 class DocumentationTests(unittest.TestCase):

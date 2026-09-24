@@ -1,5 +1,22 @@
 # test-186 — capture one real 13-14 s stall with the RPMh timeout diagnostic on
 
+> **NOT RUN. The files under `fixtures/` are synthetic, not captured.**
+>
+> This test has never been executed on the device: there is no `rounds/`
+> directory and no capture exists. The three files in `fixtures/`
+> (`victim.log`, `programmed-no-completion.log`, `no-anomaly.log`) were written
+> by hand to pin the branches of `classify-round.sh`; the commit that added them
+> says so ("Three synthetic fixtures pin the branches").
+>
+> They must **never** be cited as hardware evidence. A round-1 revision of
+> `docs/GPU_GMU_RPMH_STALL_PLAN.md` did exactly that and had to be corrected —
+> see that document's "Correction (round 2)" note and
+> `tests/test_gpu_gmu_rpmh_stall.py::EvidenceProvenanceTests`. The timestamps in
+> them (for example `13.400000`) appear nowhere else in this repository.
+>
+> When this test is eventually run, the real dumps go in `rounds/` and these
+> fixtures stay fixtures.
+
 Goal: reproduce a real stall with **exactly one** new variable compared with
 test-184 profile A — the opt-in RPMh timeout state dump — and decide, from the
 pre-agreed tree in `docs/NEXT_STALL_DEBUG_PLAN.md` §8, which layer of

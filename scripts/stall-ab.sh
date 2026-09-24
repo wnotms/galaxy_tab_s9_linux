@@ -10,12 +10,15 @@
 #	baseline   profile A  no extra token
 #	no-acd     profile B  msm.disable_acd=1
 #	no-gpu     profile C  msm.no_gpu=1
+#	late-deferred  profile G  deferred_probe_timeout=300
+#
+# Profile G moves the deferred-probe-timeout burst (~14.3 s) out of the stall
+# window without changing which devices are deferred, separating "the
+# whole-system re-probe + sync_state burst" from "the GPU specifically".
 #
 # Profiles only change vendor_boot.img: boot.img (kernel + DTB) and
-# init_boot.img (initramfs) must be identical across the three, or the A/B is
-# not an A/B.  This script therefore refuses to run unless the operator states
-# the boot image hash it was told to use (GTS9_EXPECT_KERNEL_SHA) and the
-# on-device kernel release/hash check in the probe agrees with it.
+# init_boot.img (initramfs) must be identical across them, or the A/B is not an
+# A/B.  All profiles must be built from one kernel and one initramfs.
 #
 # SAFETY: this script never flashes and never writes a partition or the BCB.
 # It issues reboots over the USB shell console, and only when
@@ -25,6 +28,7 @@
 #	scripts/stall-ab.sh baseline 5
 #	scripts/stall-ab.sh no-acd 5
 #	scripts/stall-ab.sh no-gpu 5
+#	scripts/stall-ab.sh late-deferred 5
 #	GTS9_ALLOW_POWER=1 scripts/stall-ab.sh baseline 5
 #
 #	scripts/stall-ab.sh --summary              # table over whatever was run
@@ -77,7 +81,7 @@ usage() {
 	cat >&2 <<'EOF'
 usage: stall-ab.sh PROFILE ROUNDS
        stall-ab.sh --summary
-PROFILE is one of: baseline, no-acd, no-gpu
+PROFILE is one of: baseline, no-acd, no-gpu, late-deferred
 EOF
 	exit 2
 }
@@ -130,7 +134,7 @@ if [ "${1:-}" = "--summary" ]; then
 fi
 
 PROFILE=${1:-}; ROUNDS=${2:-5}
-case "$PROFILE" in baseline|no-acd|no-gpu) ;; *) usage ;; esac
+case "$PROFILE" in baseline|no-acd|no-gpu|late-deferred) ;; *) usage ;; esac
 case "$ROUNDS" in ''|*[!0-9]*) usage ;; esac
 [ "$ROUNDS" -ge 1 ] || usage
 
@@ -142,13 +146,20 @@ CMDLINE=$REPO/boot/cmdline.stall-ab-$PROFILE.example.txt
 case "$PROFILE" in
 	baseline)
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "baseline must not carry msm.disable_acd"
-		grep -q 'msm.no_gpu' "$CMDLINE" && die "baseline must not carry msm.no_gpu" ;;
+		grep -q 'msm.no_gpu' "$CMDLINE" && die "baseline must not carry msm.no_gpu"
+		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "baseline must not carry deferred_probe_timeout" ;;
 	no-acd)
 		grep -q 'msm.disable_acd=1' "$CMDLINE" || die "no-acd profile lacks msm.disable_acd=1"
-		grep -q 'msm.no_gpu' "$CMDLINE" && die "no-acd must not carry msm.no_gpu" ;;
+		grep -q 'msm.no_gpu' "$CMDLINE" && die "no-acd must not carry msm.no_gpu"
+		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "no-acd must not carry deferred_probe_timeout" ;;
 	no-gpu)
 		grep -q 'msm.no_gpu=1' "$CMDLINE" || die "no-gpu profile lacks msm.no_gpu=1"
-		grep -q 'msm.disable_acd' "$CMDLINE" && die "no-gpu must not carry msm.disable_acd" ;;
+		grep -q 'msm.disable_acd' "$CMDLINE" && die "no-gpu must not carry msm.disable_acd"
+		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "no-gpu must not carry deferred_probe_timeout" ;;
+	late-deferred)
+		grep -q 'deferred_probe_timeout=300' "$CMDLINE" || die "late-deferred profile lacks deferred_probe_timeout=300"
+		grep -q 'msm.no_gpu' "$CMDLINE" && die "late-deferred must not carry msm.no_gpu"
+		grep -q 'msm.disable_acd' "$CMDLINE" && die "late-deferred must not carry msm.disable_acd" ;;
 esac
 grep -q 'msm.separate_gpu_kms=1' "$CMDLINE" || die "every profile keeps msm.separate_gpu_kms=1"
 grep -q 'gts9_watchdog_debug=1' "$CMDLINE" || die "every profile keeps the watchdog detectors"
