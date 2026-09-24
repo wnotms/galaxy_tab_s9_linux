@@ -1,0 +1,56 @@
+2026-09-24T19:52:44Z dry run: would raise the console loglevel, capture COM17+COM19 for
+2026-09-24T19:52:44Z 900s per round, issue 'systemctl reboot', and inspect the
+2026-09-24T19:52:44Z capture for a panic. Set GTS9_ALLOW_POWER=1 to actually run it.
+2026-09-24T19:52:47Z === shutdown round 1/2 ===
+2026-09-24T19:53:49Z   loglevel: after=8
+2026-09-24T19:54:29Z   shutdown triggered at 19:54:29; captures running
+  round=1
+  kind=warm-reboot
+  console_bytes=373
+  console_lines=6
+  panic_lines=0
+  0
+  softlockup_lines=0
+  0
+  hardlockup_lines=0
+  0
+  hungtask_lines=0
+  0
+  rcu_lines=0
+  0
+  calltrace_lines=0
+  0
+  systemd_shutdown_seen=0
+  0
+  connection_terminated=0
+  0
+  sd_shutting_down=0
+  0
+2026-09-24T20:06:50Z   shutdown completed normally this round (no stall on this attempt)
+2026-09-24T20:06:50Z === shutdown round 2/2 ===
+2026-09-24T20:07:52Z   loglevel: after=8
+2026-09-24T20:08:32Z   shutdown triggered at 20:08:32; captures running
+  round=2
+  kind=warm-reboot
+  console_bytes=373
+  console_lines=6
+  panic_lines=0
+  0
+  softlockup_lines=0
+  0
+  hardlockup_lines=0
+  0
+  hungtask_lines=0
+  0
+  rcu_lines=0
+  0
+  calltrace_lines=0
+  0
+  systemd_shutdown_seen=0
+  0
+  connection_terminated=0
+  0
+  sd_shutting_down=0
+  0
+2026-09-24T20:20:53Z   shutdown completed normally this round (no stall on this attempt)
+2026-09-24T20:20:53Z done; captures under /mnt/c/gts9-work/shutdown-cap and /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-187-20260924T1540Z/shutdown-N-console.log
