@@ -370,6 +370,13 @@ observed family of stuck workers, and the SD/DPU timeouts follow. Before this
 round the same wedge needed a physical power hold; now the tablet is back on its
 own inside ~1 minute with the round's evidence on disk.
 
+The warning is also a clean discriminator: in the loop's healthy boots the same
+capture contains **zero** `rpmh_write_batch` lines, while the stalling boot
+printed it 14.27 s in — and the pogo keyboard is docked and answering in both
+(`samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed`, `MCU model
+0x1 hw 0 firmware 1.4 mode 1`). So the keyboard's poll is the caller, not the
+cause; what makes the RSC stop answering is still open.
+
 ---
 
 ## 8. The unattended loop

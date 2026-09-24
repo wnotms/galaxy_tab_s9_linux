@@ -74,8 +74,20 @@ echo "$pstore_list" >"$dir/pstore/list.txt" 2>/dev/null || true
 grep -a -n -E 'Kernel panic|BUG: soft lockup|BUG: hard LOCKUP|watchdog: BUG|watchdog: watch|unable to handle|hung_task|blocked for more than|rcu.*detected stall|rcu.*starved|frame done timeout|kickoff timeout|Timeout waiting for hardware cmd interrupt|sdhci: =|Call trace|task:|Workqueue:' \
 	"$dir/prev-kernel.log" 2>/dev/null | tail -120 >"$dir/prev-signatures.txt" 2>/dev/null || true
 
+# count_in FILE PATTERN - same, for an arbitrary file.
+count_in() {
+	local n
+	n=$(grep -a -c -E "$2" "$1" 2>/dev/null)
+	printf '%s' "${n:-0}"
+}
+
+# count PATTERN - one number, always.  `grep -c` already prints 0 on no match
+# and exits 1, so `|| echo 0` would print a second 0 and split every verdict
+# line in two.
 count() {
-	grep -a -c -E "$1" "$dir/prev-kernel.log" 2>/dev/null || echo 0
+	local n
+	n=$(grep -a -c -E "$1" "$dir/prev-kernel.log" 2>/dev/null)
+	printf '%s' "${n:-0}"
 }
 
 panic=$(count 'Kernel panic')
@@ -91,8 +103,8 @@ pstore_panic=0
 pstore_lockup=0
 for rec in "$dir"/pstore/console* "$dir"/pstore/dmesg*; do
 	[ -f "$rec" ] || continue
-	pstore_panic=$((pstore_panic + $(grep -a -c 'Kernel panic' "$rec" 2>/dev/null || echo 0)))
-	pstore_lockup=$((pstore_lockup + $(grep -a -c -E 'BUG: soft lockup|watchdog: BUG|workqueue: stall|hung_task: blocked' "$rec" 2>/dev/null || echo 0)))
+	pstore_panic=$((pstore_panic + $(count_in "$rec" 'Kernel panic')))
+	pstore_lockup=$((pstore_lockup + $(count_in "$rec" 'BUG: soft lockup|watchdog: BUG|workqueue: stall|hung_task: blocked')))
 done
 
 if [ "$pstore_panic" -gt 0 ]; then
