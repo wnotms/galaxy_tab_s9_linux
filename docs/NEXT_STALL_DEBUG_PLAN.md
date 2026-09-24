@@ -58,6 +58,42 @@ this phase, so the decision points below cannot be re-interpreted afterwards.
 7. Does the stall still reproduce with only the detectors armed plus an
    opt-in RPMh timeout dump?
 
+### 3a. The request-lifetime hazard, spelled out
+
+`rpmh_write_batch()` frees its batch on timeout while the RSC may still be
+holding a pointer to it. Concretely, in this tree:
+
+1. `rpmh_rsc_send_data()` → `claim_tcs_for_req()` programs a TCS and stashes
+   `tcs->req[tcs_id - tcs->offset] = &rpm_msgs[i].msg`; the request itself is
+   the `struct rpmh_request` that `rpmh_write_batch()` allocated as one `ptr`.
+2. If the RSC does not raise the completion interrupt inside `RPMH_TIMEOUT_MS`,
+   `rpmh_write_batch()` warns, sets `-ETIMEDOUT` and `kfree(ptr)` — freeing the
+   request, its message array and the completion array.
+3. `tcs->req[...]` is **only** cleared by `tcs_tx_done()` → `get_req_from_tcs()`
+   → `rpmh_tx_done()`. Nothing clears it on the timeout path, and the code
+   comment there says so: "Better hope they never finish because they'll signal
+   the completion that we're going to free once we've returned from this
+   function."
+4. If the RSC completes **later**, `tcs_tx_done()` reads the stale pointer,
+   `rpmh_tx_done()` runs `container_of()` on freed memory, calls
+   `complete()` on a freed `struct completion` and may `kfree()` the same
+   object a second time.
+
+That is a use-after-free on a live interrupt path, and it is a *plausible
+mechanism* for a one-off RPMh timeout to become a system-wide wedge: a corrupted
+waitqueue or a double free inside an IRQ handler is exactly the kind of damage
+that leaves several CPUs spinning and makes unrelated workers look stuck. It is
+also entirely consistent with what the recorded stalls look like — one early
+`rpmh_write_batch` timeout, then victims in unrelated subsystems.
+
+What this round does about it: nothing to the lifetime. Patch 0021 *reports* the
+hazard (`LATE COMPLETION ... the rpmh_write_batch() lifetime hazard is real`,
+plus `holder_tcs` in the dump so "the request is still stashed" is visible), and
+test-186 records whether it happens. A fix — for example deferring the free
+while `tcs->req[]` still references the request, or making `tcs_tx_done()`
+validate the pointer — is a separate patch with its own argument and its own
+review, and is deliberately not bundled here.
+
 ## 4. Why RPMh/RSC is the next thing to investigate
 
 * It is the **earliest** anomaly we have actually captured in a failing boot

@@ -68,7 +68,7 @@ Cost and scope:
 * the normal path gains one predictable branch on send and on completion
   (`if (unlikely(gts9_rpmh_debug))`), nothing else;
 * a 128-entry, 20-byte ring of send/completion events lives in RAM (2.5 KiB,
-  no allocation, no I/O, no per-event print);
+  no allocation, no I/O, no per-event print, no continuous tracing);
 * **only a real timeout prints**: one structured dump with the calling task,
   RSC name, state, every command's addr/data/wait, `tcs_in_use`, the RSC IRQ
   status, the per-TCS `CMD_ENABLE`/`CMD_MSGID`/`CMD_ADDR`/`CMD_DATA` registers,
@@ -76,9 +76,13 @@ Cost and scope:
   a `ring_summary` line that states whether a matching completion was seen;
 * the request is remembered after the timeout, so a completion that arrives
   later prints `LATE COMPLETION ... the rpmh_write_batch() lifetime hazard is
-  real`. This only *reports* the hazard the existing code comments warn about;
-  it does not change the lifetime or the semantics;
-* all output is prefixed `gts9-rpmh:` so a harness can extract it.
+  real`. This only *reports* the hazard the existing code comments warn about
+  (analysis in `docs/NEXT_STALL_DEBUG_PLAN.md` §3a: `tcs->req[]` is cleared only
+  by `tcs_tx_done()`, so a late interrupt would touch a freed request); it does
+  not change the lifetime or the semantics, and no fix is bundled;
+* all output is prefixed `gts9-rpmh:` so a harness can extract it;
+* the patch is **purely additive** - it removes no upstream line, so it cannot
+  have changed the warning, the free, the return path or the timeout value.
 
 Build and package:
 
