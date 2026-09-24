@@ -1,10 +1,10 @@
-2026-09-24T21:25:16Z console open on COM17
-2026-09-24T21:25:18Z RECV  echo READY1
-2026-09-24T21:25:18Z RECV  [?2004lREADY1
-2026-09-24T21:25:18Z shell answered after 1 poll(s)
-2026-09-24T21:25:18Z SENT  echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
-2026-09-24T21:26:18Z RECV  [?2004hroot@gts9:~# echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
-2026-09-24T21:26:18Z RECV  [?2004lbefore=4	4	1	7
-2026-09-24T21:26:18Z RECV  after=8	4	1	7
-2026-09-24T21:26:18Z RECV  LVL_SET
-2026-09-24T21:26:18Z console run done (ready=True)
+2026-09-24T22:07:09Z console open on COM17
+2026-09-24T22:07:10Z RECV  echo READY1
+2026-09-24T22:07:10Z RECV  [?2004lREADY1
+2026-09-24T22:07:10Z shell answered after 1 poll(s)
+2026-09-24T22:07:10Z SENT  echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
+2026-09-24T22:08:10Z RECV  [?2004hroot@gts9:~# echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
+2026-09-24T22:08:10Z RECV  [?2004lbefore=4	4	1	7
+2026-09-24T22:08:10Z RECV  after=8	4	1	7
+2026-09-24T22:08:10Z RECV  LVL_SET
+2026-09-24T22:08:10Z console run done (ready=True)
