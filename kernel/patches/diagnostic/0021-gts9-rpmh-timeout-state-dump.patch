@@ -21,10 +21,10 @@ index e3cf1beff..b82c6c9e8 100644
 +
  #endif /* __RPM_INTERNAL_H__ */
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index c6f7d5c9c..9c4164340 100644
+index c6f7d5c9c..c9004a345 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -489,6 +489,196 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+@@ -489,6 +489,209 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
   *
   * This is used for all types of transfers (active, sleep, and wake).
   */
@@ -127,7 +127,9 @@ index c6f7d5c9c..9c4164340 100644
 +	int j;
 +
 +	enable = read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id);
-+	pr_err("gts9-rpmh:   tcs[%d] cmd_enable=0x%08x\n", tcs_id, enable);
++	pr_err("gts9-rpmh:   tcs[%d] cmd_enable=0x%08x wait_for_cmpl=0x%08x\n",
++	       tcs_id, enable,
++	       read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_WAIT_FOR_CMPL], tcs_id));
 +	for (j = 0; j < MAX_RPMH_PAYLOAD; j++) {
 +		if (!(enable & BIT(j)))
 +			continue;
@@ -145,7 +147,7 @@ index c6f7d5c9c..9c4164340 100644
 +	unsigned long irq_status;
 +	int i, j, seq, start;
 +	int send = 0, done = 0, matched_send = 0, matched_done = 0;
-+	int holder = -1;
++	int holder = -1, holder_group = -1;
 +
 +	if (!drv || !msg)
 +		return;
@@ -161,7 +163,12 @@ index c6f7d5c9c..9c4164340 100644
 +	pr_err("gts9-rpmh: tcs_in_use=0x%08lx num_tcs=%d\n",
 +	       drv->tcs_in_use[0], drv->num_tcs);
 +	irq_status = readl_relaxed(drv->tcs_base + drv->regs[RSC_DRV_IRQ_STATUS]);
-+	pr_err("gts9-rpmh: irq_status=0x%08lx\n", irq_status);
++	pr_err("gts9-rpmh: irq_status=0x%08lx irq_enable=0x%08x\n", irq_status,
++	       readl_relaxed(drv->tcs_base + drv->regs[RSC_DRV_IRQ_ENABLE]));
++	/* CMD_STATUS/CMD_RESP_DATA are deliberately not read: no mainline code
++	 * path reads them, and poking an unproven register on a controller that
++	 * has stopped answering is not something a diagnostic should risk.
++	 */
 +	for (i = 0; i < TCS_TYPE_NR; i++)
 +		pr_err("gts9-rpmh: group[%d] mask=0x%08x offset=%d num_tcs=%d req[0]=%px\n",
 +		       i, drv->tcs[i].mask, drv->tcs[i].offset,
@@ -170,14 +177,20 @@ index c6f7d5c9c..9c4164340 100644
 +	for_each_set_bit(i, drv->tcs_in_use, MAX_TCS_NR) {
 +		const struct tcs_request *stashed = get_req_from_tcs((struct rsc_drv *)drv, i);
 +
-+		if (stashed == msg)
++		if (stashed == msg) {
 +			holder = i;
++			holder_group = -1;
++			for (j = 0; j < TCS_TYPE_NR; j++) {
++				if (drv->tcs[j].mask & BIT(i))
++					holder_group = j;
++			}
++		}
 +		pr_err("gts9-rpmh: in_use tcs=%d irq_bit=%d req=%px%s\n", i,
 +		       !!(irq_status & BIT(i)), stashed,
 +		       stashed == msg ? "  <-- the timed-out request" : "");
 +		gts9_rpmh_dump_tcs(drv, i);
 +	}
-+	pr_err("gts9-rpmh: holder_tcs=%d (%s)\n", holder,
++	pr_err("gts9-rpmh: holder_tcs=%d group=%d (%s)\n", holder, holder_group,
 +	       holder < 0 ? "request not stashed in any TCS: it never reached programming, or it was already reclaimed"
 +			  : "request is still stashed in a TCS");
 +
@@ -221,7 +234,7 @@ index c6f7d5c9c..9c4164340 100644
  static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
  			       const struct tcs_request *msg)
  {
-@@ -515,6 +705,8 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+@@ -515,6 +718,8 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
  		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], tcs_id, j, cmd->addr);
  		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_DATA], tcs_id, j, cmd->data);
  		trace_rpmh_send_msg(drv, tcs_id, msg->state, j, msgid, cmd);
@@ -231,7 +244,7 @@ index c6f7d5c9c..9c4164340 100644
  
  	cmd_enable |= read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id);
 diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index ca37da3dc..f526bcb03 100644
+index ca37da3dc..4db47319e 100644
 --- a/drivers/soc/qcom/rpmh.c
 +++ b/drivers/soc/qcom/rpmh.c
 @@ -83,6 +83,13 @@ void rpmh_tx_done(const struct tcs_request *msg)
@@ -248,7 +261,7 @@ index ca37da3dc..f526bcb03 100644
  	if (!compl)
  		goto exit;
  
-@@ -384,6 +391,15 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
+@@ -384,6 +391,19 @@ int rpmh_write_batch(const struct device *dev, enum rpmh_state state,
  			 * we've returned from this function.
  			 */
  			WARN_ON(1);
@@ -258,9 +271,13 @@ index ca37da3dc..f526bcb03 100644
 +			 * completion/lifetime hazard the comment above warns
 +			 * about is exactly what this dump is meant to expose.
 +			 */
-+			if (gts9_rpmh_debug_enabled())
++			if (gts9_rpmh_debug_enabled()) {
++				pr_err("gts9-rpmh: dev=%s state=%u batch_index=%d/%d\n",
++				       dev ? dev_name(dev) : "none", state,
++				       i + 1, count);
 +				gts9_rpmh_dump_timeout(ctrlr_to_drv(ctrlr),
 +						       &rpm_msgs[i].msg);
++			}
  			ret = -ETIMEDOUT;
  			goto exit;
  		}
