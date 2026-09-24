@@ -114,43 +114,57 @@ it.
 | Cold boots with the recovery cycle executed (`panel id: 00 00 00` → cycle 1 → `80 00 04`) | no DRM error; **one stall reproduced** (see below) |
 | 30 backlight-only screen toggles (test 180) | 0 DPU/vblank/workqueue/RCU errors |
 
-## The one reproduction: a CPU wedge, not a frame-done timeout
+## What four reproductions showed (tests 181 and 182)
 
-A cold boot during the hunt recovered the panel normally and then stalled: the
-console echoed but stopped executing, the panel kept a stuck cursor, the Pogo
-keyboard was dead, and only a ~15 s PMIC hold recovered the tablet (`nowatchdog`
-means nothing else will).  The kernel reported:
+Four cold boots stalled, all of them starting in the same **~13.3-14.3 s
+window after boot** (the deferred-probe / late-init burst).  Three wedged a CPU;
+one broke the DPU first and took the machine down through the display path.
+
+| | stall 1 | stall 2 | stall 3 (PCIe0 off) | stall 4 (PCIe0 off) |
+|---|---|---|---|---|
+| NMI-unresponsive CPU | 5 | 7 | 5 | (RCU stall reported) |
+| last normal log | PCIe probe 14.05 s | PCIe probe 14.05 s | sync_state dump 13.54 s | DPU overflow 13.263 s |
+| `pm_runtime_work` stuck | 4 | 3 | 3 | - |
+| other stuck work | `fqdir_free_fn` | `toggle_allocation_gate` | `fqdir_free_fn`, `pogo_watch_work` | `drm_fb_helper_damage_work` pending |
+
+A fifth experiment (test 182) disabled the PCIe0 controller on the theory that
+the host-bridge probe was the trigger; the stall came back unchanged with no
+PCIe code running at all, so that theory is dead — the probe had only been the
+last thing that logged before the quiet window.
+
+### The DPU chain, from a full `trace_pipe` capture
+
+The streaming recorder (`gts9-dpu-stream.sh`) captured 4.7 MB / 48,864 lines
+for the stall-4 boot.  Read against `dpu_crtc.c`:
 
 ```text
-rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-rcu:     5-...0: (0 ticks this GP) …
-After 10 seconds, these CPUS still haven't responded to the NMI: 5
-BUG: workqueue lockup - pool cpus=1 … stuck for 56s!
-    in-flight: 27:fqdir_free_fn for 56s
-workqueue pm: in-flight: 75:pm_runtime_work for 56s (and three more)
-workqueue events: pending: drm_fb_helper_damage_work
+[    5.284091] last dpu_crtc_frame_event_done        (frame_pending reached 0)
+[   13.262979] crtc103 event 1 overflow              <- first dropped frame event
+[  109.852601] dpu_enc_kickoff                       <- last kickoff
+[  109.867301] dpu_enc_frame_done_cb + crtc frame event (last completed frame)
+[  109.87 ...] no kickoff, no frame-done, no crtc frame event
+[  172.6  ...] irq=186 msm-kms + dpu_crtc_vblank_cb every ~8 ms, to the end
 ```
 
-Two things follow for this investigation:
+- `dpu_crtc_frame_event_cb()` takes an entry from a fixed-size
+  `frame_event_list` and queues it on the CRTC's kthread worker; with no entry
+  free it **drops** the event and logs the rate-limited `overflow` message.
+- `dpu_crtc_frame_event_work()` decrements `frame_pending` and, for a DONE
+  event, `complete_all(&dpu_crtc->frame_done_comp)` — the completion the commit
+  path waits on.
+- Dropping a DONE event therefore loses that completion: the next commit waits
+  forever, `drm_fb_helper_damage_work` stops draining, and the workqueue/RCU
+  reports follow.  The vblank IRQs never stop, which is why the panel keeps the
+  last frame instead of going dark.
 
-- The primary event is a **CPU that stops answering NMIs**.  The stuck work
-  items span unrelated subsystems (`fqdir_free_fn`, `pm_runtime_work`, with the
-  DRM damage worker merely *pending*), which is what a global stall looks like.
-- In this instance there is **no** `frame done timeout` and **no** `vblank wait
-  timed out`, so the DPU path is not proven to be the trigger — it may be a
-  victim of the same wedge.  Test 178's `enc35 frame done timeout` and this
-  stall share the symptom, not necessarily the cause.
+Counts over that boot: kickoff 65, frame-done 66, crtc frame event 66,
+`frame_event_done` 29, `frame_event_more_pending` 0, `frame_done_timeout` 0,
+`pdone_timeout` 0.
 
-Both stalls share one last normal log line: the `qcom-pcie 1c00000.pcie`
-host-bridge probe at ~14.05 s, after which nothing is logged until the RCU stall
-at ~36 s.  Healthy boots print the same three lines and continue, no boot ever
-logs a `pci_bus`/link-up message, and both PCIe nodes are `okay` in the device
-tree.  That points at a core stalling inside the PCIe probe (a config/link
-access that never returns) rather than at the DPU — see
-`reference/boot-tests/test-181-20260924T011638Z/README.md` for the second stall,
-the per-stall actor table and the proposed PCIe A/B.  The recorder now preserves
-the previous boot's snapshot as `/var/log/gts9-dpu-flight.txt.prev`, so the next
-occurrence keeps its trace instead of only its journal.
+Still open: *why* the per-CRTC event kthread stops draining at ~13.3 s.  That is
+the same window in which the other three stalls wedge a CPU, so the next hunt
+should trace that thread's scheduling and the `deferred_probe_work_func` burst
+rather than the display path.
 
 ## Reading a snapshot
 

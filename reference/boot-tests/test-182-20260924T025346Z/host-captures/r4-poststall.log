@@ -1,0 +1,19 @@
+2026-09-24T03:07:45Z console open on COM17
+2026-09-24T03:07:46Z RECV  echo READY1
+2026-09-24T03:07:46Z RECV  [?2004lREADY1
+2026-09-24T03:07:46Z shell answered after 1 poll(s)
+2026-09-24T03:07:46Z SENT  echo PS;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo "pcie0=$(cat /proc/device-tree/soc@0/pcie@1c00000/status)";ls -l /var/log/gts9-dpu-flight* | awk "{print \$5, \$9}";F=/var/log/gts9-dpu-flight.txt.prev;echo "prev_lines=$(wc -l < $F)";grep -ac "snapshot" $F;grep -a "snapshot" $F | tail -2
+2026-09-24T03:08:12Z RECV  [?2004hroot@gts9:~# echo PS;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo "pcie0=$(cat /proc/device-tree/soc@0/pcie@1c00000/status)";ls -l /var/log/gts9-dpu-flight* | awk "{print \$5, \$9}";F=/var/log/gts9-dpu-flight.txt.prev;echo "prev_lines=$(wc -l < $F)";grep -ac "snapshot" $F;grep -a "snapshot" $F | tail -2
+2026-09-24T03:08:12Z RECV  [?2004lPS
+2026-09-24T03:08:12Z RECV  boot_id=6c6a5310-6bb4-4626-b68a-dbd797e24d3c
+2026-09-24T03:08:12Z RECV  13.09
+2026-09-24T03:08:12Z RECV  running
+2026-09-24T03:08:12Z RECV  -bash: warning: command substitution: ignored null byte in input
+2026-09-24T03:08:12Z RECV  pcie0=disabled
+2026-09-24T03:08:12Z RECV  698213 /var/log/gts9-dpu-flight.txt
+2026-09-24T03:08:12Z RECV  44592 /var/log/gts9-dpu-flight.txt.prev
+2026-09-24T03:08:12Z RECV  prev_lines=358
+2026-09-24T03:08:12Z RECV  2
+2026-09-24T03:08:12Z RECV  === snapshot 2026-04-13T19:38:07Z uptime=3.40 ===
+2026-09-24T03:08:12Z RECV  === end snapshot 1 ===
+2026-09-24T03:08:12Z console run done (ready=True)

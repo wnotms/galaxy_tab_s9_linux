@@ -1,0 +1,48 @@
+2026-09-24T07:29:55Z console open on COM17
+2026-09-24T07:29:57Z RECV  echo READY1
+2026-09-24T07:29:57Z RECV  [?2004lREADY1
+2026-09-24T07:29:57Z shell answered after 1 poll(s)
+2026-09-24T07:29:57Z SENT  echo WN;F=/var/log/gts9-dpu-stream.txt.prev;awk "\$4+0 >= 109.80 && \$4+0 <= 109.95 {print}" $F | grep -aE "dpu_|drm_|workqueue_execute_start|irq_handler_entry" | head -40
+2026-09-24T07:30:42Z RECV  [?2004hroot@gts9:~# echo WN;F=/var/log/gts9-dpu-stream.txt.prev;awk "\$4+0 >= 109.80 && \$4+0 <= 109.95 {print}" $F | grep -aE "dpu_|drm_|workqueue_execute_start|irq_handler_entry" | head -40
+2026-09-24T07:30:42Z RECV  [?2004lWN
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] dNh2.   109.800166: dpu_enc_phys_cmd_pp_tx_done: id=35, pp=0, new_count=1, event=1
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] dNh3.   109.800189: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.800230: workqueue_execute_start: work struct 0000000046dc97c4: function drm_fb_helper_damage_work
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.800241: workqueue_execute_start: work struct 00000000f1835829: function vblank_ctrl_worker
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.800241: dpu_crtc_vblank: id:103 enable:true state{enabled:true}
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.800241: dpu_enc_vblank_cb: id=35, enable=true
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.800242: dpu_enc_vblank_cb: id=37, enable=true
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h1.   109.802277: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] dNh4.   109.802308: drm_vblank_event: crtc=0, seq=12063, time=109799145464, high-prec=true
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] dNh3.   109.802310: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802366: dpu_kms_wait_for_commit_done: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802381: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=109798, expected=109882 cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802382: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9], pp=0, atomic_cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802497: dpu_kms_commit: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802506: dpu_enc_prepare_kickoff: id=35
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802507: dpu_enc_wait_event_timeout: id=35, IRQ=[0, 8], rc=21, time=109798, expected=109882 cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802508: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_pp_tx_done_irq, IRQ=[0, 8], pp=0, atomic_cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802552: dpu_enc_kickoff: id=35
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] d..1.   109.802555: dpu_enc_trigger_flush: id=35, intf_mode=INTF_MODE_CMD, intf_idx=2, wb_idx=-1, pending_kickoff_cnt=1 ctl_idx=1 extra_flush_bits=0x0 pending_flush_ret=0x4208c0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] d..1.   109.802559: dpu_enc_trigger_start: id=35, val=1
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] d.h1.   109.802565: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802598: dpu_enc_phys_cmd_connect_te: id=35, enable=true
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802602: dpu_kms_wait_for_commit_done: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802605: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=109798, expected=109882 cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802606: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9], pp=0, atomic_cnt=0
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] .....   109.802608: dpu_crtc_complete_commit: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] d..1.   109.802609: dpu_crtc_complete_flip: id=103
+2026-09-24T07:30:42Z RECV       kworker/0:6-174     [000] d..1.   109.802610: drm_vblank_event_delivered: file=0000000000000000, crtc=0, seq=12063
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h1.   109.810609: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h4.   109.810637: drm_vblank_event: crtc=0, seq=12064, time=109807440491, high-prec=true
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h3.   109.810648: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.810649: workqueue_execute_start: work struct 00000000c330d888: function vblank_ctrl_worker
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.810650: dpu_crtc_vblank: id:103 enable:false state{enabled:true}
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.810650: dpu_enc_vblank_cb: id=35, enable=false
+2026-09-24T07:30:42Z RECV     kworker/u32:3-77      [005] .....   109.810650: dpu_enc_vblank_cb: id=37, enable=false
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h1.   109.817280: irq_handler_entry: irq=187 name=dsi_isr
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h1.   109.817285: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h2.   109.817289: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h2.   109.817291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:30:42Z RECV            <idle>-0       [000] d.h5.   109.817312: workqueue_queue_work: work struct=0000000046dc97c4 function=drm_fb_helper_damage_work workqueue=events req_cpu=32 cpu=0
+2026-09-24T07:30:42Z console run done (ready=True)

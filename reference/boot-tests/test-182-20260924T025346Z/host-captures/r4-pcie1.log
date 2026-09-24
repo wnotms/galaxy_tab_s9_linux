@@ -1,0 +1,14 @@
+2026-09-24T02:53:26Z console open on COM17
+2026-09-24T02:53:28Z RECV  echo READY1
+2026-09-24T02:53:28Z RECV  [?2004lREADY1
+2026-09-24T02:53:28Z shell answered after 1 poll(s)
+2026-09-24T02:53:28Z SENT  echo P1;for n in pcie@1c00000 pcie@1c08000; do echo "$n=$(cat /proc/device-tree/soc@0/$n/status 2>/dev/null)"; done;systemctl is-system-running;cat /proc/uptime
+2026-09-24T02:53:38Z RECV  [?2004hroot@gts9:~# echo P1;for n in pcie@1c00000 pcie@1c08000; do echo "$n=$(cat /proc/device-tree/soc@0/$n/status 2>/dev/null)"; done;systemctl is-system-running;cat /proc/uptime
+2026-09-24T02:53:38Z RECV  [?2004lP1
+2026-09-24T02:53:38Z RECV  -bash: warning: command substitution: ignored null byte in input
+2026-09-24T02:53:38Z RECV  pcie@1c00000=okay
+2026-09-24T02:53:38Z RECV  -bash: warning: command substitution: ignored null byte in input
+2026-09-24T02:53:38Z RECV  pcie@1c08000=disabled
+2026-09-24T02:53:38Z RECV  running
+2026-09-24T02:53:38Z RECV  532.54 4232.75
+2026-09-24T02:53:38Z console run done (ready=True)

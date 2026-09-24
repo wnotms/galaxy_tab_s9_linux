@@ -1,0 +1,50 @@
+2026-09-24T07:31:43Z console open on COM17
+2026-09-24T07:31:45Z RECV  echo READY1
+2026-09-24T07:31:45Z RECV  [?2004lREADY1
+2026-09-24T07:31:45Z shell answered after 1 poll(s)
+2026-09-24T07:31:45Z SENT  echo FO;F=/var/log/gts9-dpu-stream.txt.prev;awk "\$4+0 >= 13.20 && \$4+0 <= 13.40 {print}" $F | grep -aE "dpu_|drm_|workqueue_execute_start|irq_handler_entry" | head -42
+2026-09-24T07:32:30Z RECV  [?2004hroot@gts9:~# echo FO;F=/var/log/gts9-dpu-stream.txt.prev;awk "\$4+0 >= 13.20 && \$4+0 <= 13.40 {print}" $F | grep -aE "dpu_|drm_|workqueue_execute_start|irq_handler_entry" | head -42
+2026-09-24T07:32:30Z RECV  [?2004lFO
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.201878: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.201905: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.210211: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.210238: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.218545: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.218571: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.226878: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.226905: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.235213: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.235240: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] .....    13.237032: workqueue_execute_start: work struct 0000000062f52b71: function flush_to_ldisc
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] d..1.    13.237033: workqueue_queue_work: work struct=0000000046dc97c4 function=drm_fb_helper_damage_work workqueue=events req_cpu=32 cpu=5
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.237037: workqueue_execute_start: work struct 0000000046dc97c4: function drm_fb_helper_damage_work
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] .....    13.237042: workqueue_execute_start: work struct 0000000024d95db8: function vblank_ctrl_worker
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] .....    13.237042: dpu_crtc_vblank: id:103 enable:true state{enabled:true}
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] .....    13.237042: dpu_enc_vblank_cb: id=35, enable=true
+2026-09-24T07:32:30Z RECV     kworker/u32:5-90      [005] .....    13.237042: dpu_enc_vblank_cb: id=37, enable=true
+2026-09-24T07:32:30Z RECV       kworker/0:6-174     [000] .....    13.237097: workqueue_execute_start: work struct 000000000d00f549: function console_callback
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.243546: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h4.    13.243583: drm_vblank_event: crtc=0, seq=476, time=13240420084, high-prec=true
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.243586: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243591: dpu_kms_wait_for_commit_done: id=103
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243593: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=13239, expected=13323 cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243593: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9], pp=0, atomic_cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243707: dpu_kms_commit: id=103
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243707: dpu_enc_prepare_kickoff: id=35
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243708: dpu_enc_wait_event_timeout: id=35, IRQ=[0, 8], rc=21, time=13240, expected=13324 cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243708: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_pp_tx_done_irq, IRQ=[0, 8], pp=0, atomic_cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243748: dpu_enc_kickoff: id=35
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] d..1.    13.243749: dpu_enc_trigger_flush: id=35, intf_mode=INTF_MODE_CMD, intf_idx=2, wb_idx=-1, pending_kickoff_cnt=1 ctl_idx=1 extra_flush_bits=0x0 pending_flush_ret=0x4208c0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] d..1.    13.243753: dpu_enc_trigger_start: id=35, val=1
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243754: dpu_enc_phys_cmd_connect_te: id=35, enable=true
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243757: dpu_kms_wait_for_commit_done: id=103
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.243759: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243771: dpu_enc_wait_event_timeout: id=35, IRQ=[1, 9], rc=21, time=13240, expected=13324 cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243771: dpu_enc_irq_wait_success: id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9], pp=0, atomic_cnt=0
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] .....    13.243771: dpu_crtc_complete_commit: id=103
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] d..1.    13.243772: dpu_crtc_complete_flip: id=103
+2026-09-24T07:32:30Z RECV       kworker/5:0-51      [005] d..1.    13.243772: drm_vblank_event_delivered: file=0000000000000000, crtc=0, seq=476
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h1.    13.251879: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h4.    13.251910: drm_vblank_event: crtc=0, seq=477, time=13248707660, high-prec=true
+2026-09-24T07:32:30Z RECV            <idle>-0       [000] d.h3.    13.251925: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:32:30Z console run done (ready=True)

@@ -1,0 +1,25 @@
+2026-09-24T07:30:52Z console open on COM17
+2026-09-24T07:30:54Z RECV  echo READY1
+2026-09-24T07:30:54Z RECV  [?2004lREADY1
+2026-09-24T07:30:54Z shell answered after 1 poll(s)
+2026-09-24T07:30:54Z SENT  echo OV;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aE "overflow|frame done|timeout|stall|lockup|Workqueue" | head -14;echo ---AROUND-FIRST---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -an "overflow" | head -2
+2026-09-24T07:31:34Z RECV  [?2004hroot@gts9:~# echo OV;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aE "overflow|frame done|timeout|stall|lockup|Workqueue" | head -14;echo ---AROUND-FIRST---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -an "overflow" | head -2
+2026-09-24T07:31:34Z RECV  [?2004lOV
+2026-09-24T07:31:34Z RECV  [    1.985734] gts9 kernel: 9pnet: Installing 9P2000 support
+2026-09-24T07:31:34Z RECV  [    1.993225] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T07:31:34Z RECV  [    1.994618] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T07:31:34Z RECV  [   13.262979] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.287855] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.312860] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.337926] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.362929] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.387931] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.412929] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.437861] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.462856] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   13.487864] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  [   36.514686] gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-24T07:31:34Z RECV  ---AROUND-FIRST---
+2026-09-24T07:31:34Z RECV  1096:[   13.262979] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z RECV  1097:[   13.287855] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:31:34Z console run done (ready=True)

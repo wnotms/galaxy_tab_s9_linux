@@ -1,0 +1,12 @@
+2026-09-24T02:56:44Z console open on COM17
+2026-09-24T02:56:46Z RECV  echo READY1
+2026-09-24T02:56:46Z RECV  [?2004lREADY1
+2026-09-24T02:56:46Z shell answered after 1 poll(s)
+2026-09-24T02:56:46Z SENT  echo RA;systemctl enable --now gts9-dpu-flight.service 2>&1 | tail -1;sleep 3;systemctl is-active gts9-dpu-flight.service;cat /sys/kernel/debug/tracing/tracing_on;ls -l /var/log/gts9-dpu-flight.txt | awk "{print \$5}"
+2026-09-24T02:56:58Z RECV  [?2004hroot@gts9:~# echo RA;systemctl enable --now gts9-dpu-flight.service 2>&1 | tail -1;sleep 3;systemctl is-active gts9-dpu-flight.service;cat /sys/kernel/debug/tracing/tracing_on;ls -l /var/log/gts9-dpu-flight.txt | awk "{print \$5}"
+2026-09-24T02:56:58Z RECV  [?2004lRA
+2026-09-24T02:56:58Z RECV  Created symlink '/etc/systemd/system/multi-user.target.wants/gts9-dpu-flight.service' ??? '/etc/systemd/system/gts9-dpu-flight.service'.
+2026-09-24T02:56:58Z RECV  active
+2026-09-24T02:56:58Z RECV  1
+2026-09-24T02:56:58Z RECV  26391
+2026-09-24T02:56:58Z console run done (ready=True)

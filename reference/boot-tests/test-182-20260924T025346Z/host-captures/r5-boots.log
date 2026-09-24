@@ -1,0 +1,22 @@
+2026-09-24T07:28:52Z console open on COM17
+2026-09-24T07:28:54Z RECV  echo READY1
+2026-09-24T07:28:54Z RECV  [?2004lREADY1
+2026-09-24T07:28:54Z shell answered after 1 poll(s)
+2026-09-24T07:28:54Z SENT  echo BO;journalctl --list-boots 2>/dev/null | tail -6;for b in -1 -2 -3 -4; do echo "== $b ==";echo "lines=$(journalctl -b $b --no-pager 2>/dev/null | wc -l) overflow=$(journalctl -b $b --no-pager 2>/dev/null | grep -ac crtc103) stall=$(journalctl -b $b --no-pager 2>/dev/null | grep -ac "detected stalls") last=$(journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | tail -1 | cut -c1-90)";done
+2026-09-24T07:29:44Z RECV  [?2004hroot@gts9:~# echo BO;journalctl --list-boots 2>/dev/null | tail -6;for b in -1 -2 -3 -4; do echo "== $b ==";echo "lines=$(journalctl -b $b --no-pager 2>/dev/null | wc -l) overflow=$(journalctl -b $b --no-pager 2>/dev/null | grep -ac crtc103) stall=$(journalctl -b $b --no-pager 2>/dev/null | grep -ac "detected stalls") last=$(journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | tail -1 | cut -c1-90)";done
+2026-09-24T07:29:44Z RECV  [?2004lBO
+2026-09-24T07:29:44Z RECV   -5 f3909d4b4f474965994a9ca301310d90 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:39:17 CST
+2026-09-24T07:29:44Z RECV   -4 18b797212cc4410bbb3678e5f44f4022 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:46:20 CST
+2026-09-24T07:29:44Z RECV   -3 6c6a53106bb44626b68adbd797e24d3c Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:40:36 CST
+2026-09-24T07:29:44Z RECV   -2 0f7183bdf14a4197a9c39c018d518649 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:39:17 CST
+2026-09-24T07:29:44Z RECV   -1 d5adf27ef4e647c8804b970cda22f970 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:41:06 CST
+2026-09-24T07:29:44Z RECV    0 972ea430a8b446b0bccb87a1441dd444 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 07:39:34 CST
+2026-09-24T07:29:44Z RECV  == -1 ==
+2026-09-24T07:29:44Z RECV  lines=1228 overflow=37 stall=3 last=[  182.856861] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T07:29:44Z RECV  == -2 ==
+2026-09-24T07:29:44Z RECV  lines=1312 overflow=0 stall=0 last=[   74.239746] gts9 systemd-journald[263]: Journal stopped
+2026-09-24T07:29:44Z RECV  == -3 ==
+2026-09-24T07:29:44Z RECV  lines=1319 overflow=0 stall=0 last=[  153.656924] gts9 systemd-journald[280]: Journal stopped
+2026-09-24T07:29:44Z RECV  == -4 ==
+2026-09-24T07:29:44Z RECV  lines=2116 overflow=0 stall=7 last=[  496.766345] gts9 kernel: BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=-20
+2026-09-24T07:29:44Z console run done (ready=True)

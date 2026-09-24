@@ -1,0 +1,5 @@
+2026-09-24T03:19:01Z console open on COM17
+2026-09-24T03:19:02Z RECV  echo READY1
+2026-09-24T03:19:02Z RECV  [?2004lREADY1
+2026-09-24T03:19:02Z shell answered after 1 poll(s)
+2026-09-24T03:19:02Z SENT  echo AN;F=/var/log/gts9-dpu-stream.txt.prev;echo "first=$(head -1 $F | awk "{print \$4}") last=$(tail -1 $F | awk "{print \$4}")";echo ---LAST-DPU---;grep -an "dpu_enc_kickoff\|dpu_enc_frame_done_cb\|dpu_crtc_frame_event" $F | tail -14;echo ---TAIL---;tail -14 $F

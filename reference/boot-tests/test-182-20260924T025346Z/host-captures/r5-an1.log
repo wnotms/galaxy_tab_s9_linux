@@ -1,0 +1,31 @@
+2026-09-24T07:27:50Z console open on COM17
+2026-09-24T07:27:52Z RECV  echo READY1
+2026-09-24T07:27:52Z RECV  [?2004lREADY1
+2026-09-24T07:27:52Z shell answered after 1 poll(s)
+2026-09-24T07:27:52Z SENT  echo AN1;cut -d" " -f1 /proc/uptime;systemctl is-system-running;F=/var/log/gts9-dpu-stream.txt.prev;echo "first=$(head -1 $F | awk "{print \$4}") last=$(tail -1 $F | awk "{print \$4}")";echo ---LAST-DPU---;grep -an "dpu_enc_kickoff\|dpu_enc_frame_done_cb\|dpu_crtc_frame" $F | tail -12;echo ---TAIL---;tail -6 $F
+2026-09-24T07:28:32Z RECV  [?2004hroot@gts9:~# echo AN1;cut -d" " -f1 /proc/uptime;systemctl is-system-running;F=/var/log/gts9-dpu-stream.txt.prev;echo "first=$(head -1 $F | awk "{print \$4}") last=$(tail -1 $F | awk "{print \$4}")";echo ---LAST-DPU---;grep -an "dpu_enc_kickoff\|dpu_enc_frame_done_cb\|dpu_crtc_frame" $F | tail -12;echo ---TAIL---;tail -6 $F
+2026-09-24T07:28:32Z RECV  [?2004lAN1
+2026-09-24T07:28:32Z RECV  15005.66
+2026-09-24T07:28:32Z RECV  running
+2026-09-24T07:28:32Z RECV  first=3.597175: last=172.610892:
+2026-09-24T07:28:32Z RECV  ---LAST-DPU---
+2026-09-24T07:28:32Z RECV  31489:     kworker/0:6-174     [000] .....   109.777557: dpu_enc_kickoff: id=35
+2026-09-24T07:28:32Z RECV  31510:          <idle>-0       [000] d.h2.   109.792290: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T07:28:32Z RECV  31511:          <idle>-0       [000] d.h2.   109.792291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:28:32Z RECV  31531:     kworker/0:6-174     [000] .....   109.802552: dpu_enc_kickoff: id=35
+2026-09-24T07:28:32Z RECV  31552:          <idle>-0       [000] d.h2.   109.817289: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T07:28:32Z RECV  31553:          <idle>-0       [000] d.h2.   109.817291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:28:32Z RECV  31581:     kworker/0:6-174     [000] .....   109.827611: dpu_enc_kickoff: id=35
+2026-09-24T07:28:32Z RECV  31602:          <idle>-0       [000] d.h2.   109.842299: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T07:28:32Z RECV  31603:          <idle>-0       [000] d.h2.   109.842302: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:28:32Z RECV  31623:     kworker/0:6-174     [000] .....   109.852601: dpu_enc_kickoff: id=35
+2026-09-24T07:28:32Z RECV  31644:          <idle>-0       [000] d.h2.   109.867297: dpu_enc_frame_done_cb: id=35, idx=0, frame_busy_mask=1
+2026-09-24T07:28:32Z RECV  31645:          <idle>-0       [000] d.h2.   109.867301: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:28:32Z RECV  ---TAIL---
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h1.   172.594199: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h3.   172.594225: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h1.   172.602533: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h3.   172.602559: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h1.   172.610866: irq_handler_entry: irq=186 name=msm-kms
+2026-09-24T07:28:32Z RECV            <idle>-0       [000] d.h3.   172.610892: dpu_crtc_vblank_cb: id=103
+2026-09-24T07:28:32Z console run done (ready=True)

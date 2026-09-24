@@ -1,0 +1,29 @@
+2026-09-24T07:33:49Z console open on COM17
+2026-09-24T07:33:50Z RECV  echo READY1
+2026-09-24T07:33:50Z RECV  [?2004lREADY1
+2026-09-24T07:33:50Z shell answered after 1 poll(s)
+2026-09-24T07:33:50Z SENT  echo DT;F=/var/log/gts9-dpu-stream.txt.prev;grep -a dpu_crtc_frame_event_done $F | awk "{print \$4}" | tail -6;echo "---done_last_ts above---";grep -a dpu_crtc_frame_event_cb $F | awk "{print \$4}" | sed -n "28,34p";echo ---KICKOFF-AFTER---;grep -a dpu_enc_kickoff $F | awk "{print \$4}" | tail -6
+2026-09-24T07:34:30Z RECV  [?2004hroot@gts9:~# echo DT;F=/var/log/gts9-dpu-stream.txt.prev;grep -a dpu_crtc_frame_event_done $F | awk "{print \$4}" | tail -6;echo "---done_last_ts above---";grep -a dpu_crtc_frame_event_cb $F | awk "{print \$4}" | sed -n "28,34p";echo ---KICKOFF-AFTER---;grep -a dpu_enc_kickoff $F | awk "{print \$4}" | tail -6
+2026-09-24T07:34:30Z RECV  [?2004lDT
+2026-09-24T07:34:30Z RECV  4.783564:
+2026-09-24T07:34:30Z RECV  4.791888:
+2026-09-24T07:34:30Z RECV  4.800225:
+2026-09-24T07:34:30Z RECV  4.875223:
+2026-09-24T07:34:30Z RECV  5.075606:
+2026-09-24T07:34:30Z RECV  5.284091:
+2026-09-24T07:34:30Z RECV  ---done_last_ts above---
+2026-09-24T07:34:30Z RECV  5.075588:
+2026-09-24T07:34:30Z RECV  5.283547:
+2026-09-24T07:34:30Z RECV  5.483849:
+2026-09-24T07:34:30Z RECV  11.450229:
+2026-09-24T07:34:30Z RECV  12.225232:
+2026-09-24T07:34:30Z RECV  13.083567:
+2026-09-24T07:34:30Z RECV  13.258568:
+2026-09-24T07:34:30Z RECV  ---KICKOFF-AFTER---
+2026-09-24T07:34:30Z RECV  109.727610:
+2026-09-24T07:34:30Z RECV  109.752554:
+2026-09-24T07:34:30Z RECV  109.777557:
+2026-09-24T07:34:30Z RECV  109.802552:
+2026-09-24T07:34:30Z RECV  109.827611:
+2026-09-24T07:34:30Z RECV  109.852601:
+2026-09-24T07:34:30Z console run done (ready=True)

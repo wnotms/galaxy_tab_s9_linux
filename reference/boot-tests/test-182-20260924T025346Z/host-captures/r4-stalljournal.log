@@ -1,0 +1,39 @@
+2026-09-24T03:08:24Z console open on COM17
+2026-09-24T03:08:25Z RECV  echo READY1
+2026-09-24T03:08:25Z RECV  [?2004lREADY1
+2026-09-24T03:08:25Z shell answered after 1 poll(s)
+2026-09-24T03:08:25Z SENT  echo SJ;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aE "detected stalls|responded to the NMI|workqueue lockup|in-flight|hung=|Workqueue:" | head -18;echo ---LASTNORMAL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | awk -F"[][]" "{split(\$2,a,\" \"); if (a[1]+0 < 25.7) print}" | tail -12
+2026-09-24T03:09:11Z RECV  [?2004hroot@gts9:~# echo SJ;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aE "detected stalls|responded to the NMI|workqueue lockup|in-flight|hung=|Workqueue:" | head -18;echo ---LASTNORMAL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | awk -F"[][]" "{split(\$2,a,\" \"); if (a[1]+0 < 25.7) print}" | tail -12
+2026-09-24T03:09:11Z RECV  [?2004lSJ
+2026-09-24T03:09:11Z RECV  [    1.697818] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T03:09:11Z RECV  [    1.698799] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T03:09:11Z RECV  [   35.832010] gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-24T03:09:11Z RECV  [   35.832111] gts9 kernel: After 10 seconds, these CPUS still haven't responded to the NMI: 5
+2026-09-24T03:09:11Z RECV  [   35.876308] gts9 kernel: BUG: workqueue lockup - pool cpus=2 node=0 flags=0x0 nice=0 stuck for 31s!
+2026-09-24T03:09:11Z RECV  [   35.890101] gts9 kernel: BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=0 stuck for 30s!
+2026-09-24T03:09:11Z RECV  [   36.053430] gts9 kernel:     in-flight: 78:pogo_watch_work for 10s
+2026-09-24T03:09:11Z RECV  [   36.053464] gts9 kernel:     in-flight: 140:fqdir_free_fn for 31s
+2026-09-24T03:09:11Z RECV  [   36.053667] gts9 kernel:     in-flight: 12:pm_runtime_work for 30s
+2026-09-24T03:09:11Z RECV  [   36.053696] gts9 kernel:     in-flight: 77:pm_runtime_work for 30s
+2026-09-24T03:09:11Z RECV  [   36.053724] gts9 kernel:     in-flight: 75:pm_runtime_work for 30s
+2026-09-24T03:09:11Z RECV  [   36.053791] gts9 kernel: pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=11 idle: 39 76 79 192 190 189 128 129 195 193
+2026-09-24T03:09:11Z RECV  [   36.053806] gts9 kernel: pool 26: cpus=6 node=0 flags=0x0 nice=0 hung=30s workers=12 idle: 57 139 138 137 136 135 134 133 132 142 141
+2026-09-24T03:09:11Z RECV  [   36.053818] gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 102 100 13 97 99 182 181 183
+2026-09-24T03:09:11Z RECV  [   36.053883] gts9 kernel: Workqueue: events fqdir_free_fn
+2026-09-24T03:09:11Z RECV  [   66.547593] gts9 kernel: BUG: workqueue lockup - pool cpus=2 node=0 flags=0x0 nice=0 stuck for 61s!
+2026-09-24T03:09:11Z RECV  [   66.547676] gts9 kernel: BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=0 stuck for 60s!
+2026-09-24T03:09:11Z RECV  [   66.685024] gts9 kernel: BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=-20 stuck for 59s!
+2026-09-24T03:09:11Z RECV  ---LASTNORMAL---
+2026-09-24T03:09:11Z RECV  [   13.542847] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T03:09:11Z RECV  [   13.542958] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T03:09:11Z RECV  [   13.543089] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-24T03:09:11Z RECV  [   13.543204] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+2026-09-24T03:09:11Z RECV  [   13.543317] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to 6800000.remoteproc
+2026-09-24T03:09:11Z RECV  [   13.543431] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d90000.interconnect
+2026-09-24T03:09:11Z RECV  [   13.543539] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+2026-09-24T03:09:11Z RECV  [   13.543650] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-24T03:09:11Z RECV  [   13.543760] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-24T03:09:11Z RECV  [   13.543891] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T03:09:11Z RECV  [   13.544018] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T03:09:11Z RECV  [   13.544138] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 3d00000.gpu
+2026-09-24T03:09:11Z console run done (ready=True)

@@ -1,0 +1,15 @@
+2026-09-24T03:18:23Z console open on COM17
+2026-09-24T03:18:25Z RECV  echo READY1
+2026-09-24T03:18:25Z RECV  [?2004lREADY1
+2026-09-24T03:18:25Z shell answered after 1 poll(s)
+2026-09-24T03:18:25Z SENT  echo SC2;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;ls -l /var/log/gts9-dpu-stream* | awk "{print \$5, \$9}";F=/var/log/gts9-dpu-stream.txt.prev;echo "prev_bytes=$(wc -c < $F) lines=$(wc -l < $F)";echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdt=$(grep -ac frame_done_timeout $F) pdc=$(grep -ac pdone_timeout $F) wq=$(grep -ac workqueue_execute_start $F)"
+2026-09-24T03:18:55Z RECV  [?2004hroot@gts9:~# echo SC2;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;ls -l /var/log/gts9-dpu-stream* | awk "{print \$5, \$9}";F=/var/log/gts9-dpu-stream.txt.prev;echo "prev_bytes=$(wc -c < $F) lines=$(wc -l < $F)";echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdt=$(grep -ac frame_done_timeout $F) pdc=$(grep -ac pdone_timeout $F) wq=$(grep -ac workqueue_execute_start $F)"
+2026-09-24T03:18:55Z RECV  [?2004lSC2
+2026-09-24T03:18:55Z RECV  boot_id=972ea430-a8b4-46b0-bccb-87a1441dd444
+2026-09-24T03:18:55Z RECV  38.09
+2026-09-24T03:18:55Z RECV  running
+2026-09-24T03:18:55Z RECV  1832883 /var/log/gts9-dpu-stream.txt
+2026-09-24T03:18:55Z RECV  4687502 /var/log/gts9-dpu-stream.txt.prev
+2026-09-24T03:18:55Z RECV  prev_bytes=4687502 lines=48864
+2026-09-24T03:18:55Z RECV  kickoff=65 fd=66 fdt=0 pdc=0 wq=3927
+2026-09-24T03:18:55Z console run done (ready=True)

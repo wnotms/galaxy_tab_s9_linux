@@ -1,0 +1,18 @@
+2026-09-24T07:32:39Z console open on COM17
+2026-09-24T07:32:41Z RECV  echo READY1
+2026-09-24T07:32:41Z RECV  [?2004lREADY1
+2026-09-24T07:32:41Z shell answered after 1 poll(s)
+2026-09-24T07:32:41Z SENT  echo FE;F=/var/log/gts9-dpu-stream.txt.prev;echo "cb=$(grep -ac dpu_crtc_frame_event_cb $F) done=$(grep -ac dpu_crtc_frame_event_done $F) more=$(grep -ac frame_event_more_pending $F)";echo ---LAST-DONE---;grep -a "dpu_crtc_frame_event" $F | tail -8
+2026-09-24T07:33:21Z RECV  [?2004hroot@gts9:~# echo FE;F=/var/log/gts9-dpu-stream.txt.prev;echo "cb=$(grep -ac dpu_crtc_frame_event_cb $F) done=$(grep -ac dpu_crtc_frame_event_done $F) more=$(grep -ac frame_event_more_pending $F)";echo ---LAST-DONE---;grep -a "dpu_crtc_frame_event" $F | tail -8
+2026-09-24T07:33:21Z RECV  [?2004lFE
+2026-09-24T07:33:21Z RECV  cb=66 done=29 more=0
+2026-09-24T07:33:21Z RECV  ---LAST-DONE---
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.692303: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.717302: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.742301: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.767291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.792291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.817291: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.842302: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z RECV            <idle>-0       [000] d.h2.   109.867301: dpu_crtc_frame_event_cb: id=103, event=1
+2026-09-24T07:33:21Z console run done (ready=True)
