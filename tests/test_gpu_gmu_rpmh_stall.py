@@ -596,6 +596,7 @@ class EvidenceProvenanceTests(unittest.TestCase):
     """
     FIXTURES = "reference/boot-tests/test-186-20260924T230000Z/fixtures"
     TEST186 = "reference/boot-tests/test-186-20260924T230000Z"
+    TESTDIR = "reference/boot-tests/test-187-20260924T1540Z"
     PLAN = "docs/GPU_GMU_RPMH_STALL_PLAN.md"
     # A timestamp that only the synthetic fixture contains.
     FIXTURE_ONLY_TS = "13.400000"
@@ -646,6 +647,41 @@ class EvidenceProvenanceTests(unittest.TestCase):
         """A reader who lands on fixtures/ directly must not be misled."""
         readme = read(f"{self.TEST186}/README.md")
         self.assertIn("synthetic", readme.lower())
+
+
+    def test_the_burst_timing_is_not_claimed_as_late_initcall_plus_10s(self):
+        """Round 3 correction: driver_register() re-arms the timer.
+
+        The burst fires 10 s after the LAST driver_register() that found the work
+        pending, not 10 s after late_initcall. Getting this wrong makes the
+        13-14 s window look like a fixed consequence of the GPU failure, which the
+        live counter-example disproves.
+        """
+        text = read(self.PLAN)
+        self.assertIn("deferred_probe_extend_timeout", text)
+        self.assertIn("driver_register", text)
+        # The disproving observation must be recorded, not just the mechanism.
+        self.assertIn("35.805", text)
+        self.assertIn("not sufficient", text.lower())
+
+    def test_the_live_preflight_evidence_is_present(self):
+        d = f"{self.TESTDIR}/live-preflight"
+        text = read(f"{d}/README.md")
+        for needle in (
+            "GPU_UNBOUND",
+            "GMU_UNBOUND",
+            "AOSS_UNBOUND",
+            "error -22",
+            "35.805388",
+            "f7b1e8de-1487-4eb3-8819-5cb273b2b740",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_the_live_preflight_is_documented_as_read_only(self):
+        text = read(f"{self.TESTDIR}/live-preflight/README.md")
+        self.assertIn("read-only", text)
+        self.assertIn("Nothing was written", text)
 
 
 class DocumentationTests(unittest.TestCase):

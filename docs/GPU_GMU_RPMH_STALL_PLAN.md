@@ -136,7 +136,8 @@ gmu@3d6a000 + gpu@3d00000 stay deferred       [PROVEN, real dump §4.3 14.3096 s
 gcc / gpucc / interconnect-1 can never
 finish sync_state()                           [PROVEN, real dump §4.3 14.3098 s]
         ↓
-deferred_probe_timeout fires at late_initcall + 10 s          [PROVEN, real dump §4.2 14.3076 s]
+deferred_probe_timeout fires 10 s after the last
+driver_register() that found it pending                [PROVEN, source + real dumps §4.2]
         ↓
 whole pending set re-probed + sync_state walked simultaneously [PROVEN, source §4.2]
         ↓
@@ -145,6 +146,11 @@ whole pending set re-probed + sync_state walked simultaneously [PROVEN, source �
 one CPU stops running its watchdog kthread    [OBSERVED, 4 real stalls §4.2]
         ↓
 stall is visible in the 13.3-14.3 s window    [OBSERVED, 4 real stalls §4.2]
+
+NOT sufficient on its own: the same burst ran to completion
+without a stall at 35.8 s on a live boot with identical
+GPU defects (round-3 live pre-flight).  So the burst is
+necessary-looking but demonstrably not sufficient.   [OBSERVED, live §4.2]
 ```
 
 **What is proven and what is not.** The chain from the missing config down to
@@ -245,11 +251,54 @@ flush_work(&deferred_probe_work);
 fw_devlink_probing_done();
 ```
 
-and it is armed by `late_initcall(deferred_probe_initcall)`, which calls
-`schedule_delayed_work(&deferred_probe_timeout_work,
-driver_deferred_probe_timeout * HZ)`. With
-`CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10` (fact 23), a dump at **14.3076 s**
-means late-init completed at **≈4.31 s**.
+**When it fires (corrected in round 3).** It is *not* "late_initcall + 10 s".
+`deferred_probe_initcall()` arms it:
+
+```c
+if (driver_deferred_probe_timeout > 0)
+        schedule_delayed_work(&deferred_probe_timeout_work,
+                              driver_deferred_probe_timeout * HZ);
+```
+
+but `driver_register()` — called for **every** driver — immediately re-arms it
+while it is still pending:
+
+```c
+/* drivers/base/driver.c, end of driver_register() */
+deferred_probe_extend_timeout();
+    -> if (delayed_work_pending(&deferred_probe_timeout_work) &&
+            mod_delayed_work(..., secs_to_jiffies(driver_deferred_probe_timeout)))
+```
+
+So the burst fires **10 s after the last `driver_register()` that found the work
+still pending**. With `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10` (fact 23) a dump
+at 14.3076 s means the last such registration was at ≈4.31 s — not that
+"late_initcall ran at 4.31 s", and not that anything happened to the GPU then.
+
+**Live counter-example that forces this correction.** On the currently flashed
+image the same defects reproduce exactly — GPU/GMU/AOSS all unbound, ACD error,
+`probe with driver adreno failed with error -22` — yet that boot was **clean**
+(0 soft lockups, 0 RPMh timeouts) and its burst ran at **35.805 s**, not
+13–14 s. See `reference/boot-tests/test-187-*/live-preflight/README.md`.
+
+Two things follow, and both are recorded rather than papered over:
+
+1. **The burst alone is not sufficient to stall the machine.** It is a real,
+   deterministic, system-wide event, and here it ran to completion harmlessly.
+2. **The 13.3–14.3 s clustering is a property of what last re-armed the timer in
+   those boots**, not of a fixed delay. A stalling boot's last driver
+   registration must have landed around 3.3–4.3 s.
+
+So profile G tests whether *moving the burst moves the stall* — a weaker and more
+honest claim than "the burst is the trigger". It remains the right experiment,
+because if the stall follows the burst the mechanism is confirmed regardless of
+what pins the timer, and if the stall does not follow it, the burst is
+exonerated and the RPMh/RSC direction returns.
+
+**Answering "what last re-armed the timer" in a stalling boot is now an explicit
+open question**, and it is answerable from an existing capture: the interval
+between the last `driver_register()` and the burst is exactly 10 s, so the
+registration time is recoverable from any log that has the burst timestamp.
 
 **So the stall is coincident with a single, deterministic, whole-system event: at
 ~4.3 s + 10 s the kernel re-probes every device still on the deferred list and
