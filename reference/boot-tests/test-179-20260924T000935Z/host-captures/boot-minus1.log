@@ -1,0 +1,98 @@
+2026-09-24T00:10:27Z console open on COM17
+2026-09-24T00:10:28Z RECV  echo READY1
+2026-09-24T00:10:28Z RECV  [?2004lREADY1
+2026-09-24T00:10:28Z shell answered after 1 poll(s)
+2026-09-24T00:10:28Z SENT  echo B1;journalctl -b -1 -o short-monotonic --no-pager 2>&1 | tail -n 90
+2026-09-24T00:10:54Z RECV  [?2004hroot@gts9:~# echo B1;journalctl -b -1 -o short-monotonic --no-pager 2>&1 | tail -n 90
+2026-09-24T00:10:54Z RECV  [?2004lB1
+2026-09-24T00:10:54Z RECV  [   27.439363] gts9 systemd[748]: Stopped target paths.target - Paths.
+2026-09-24T00:10:54Z RECV  [   27.439374] gts9 systemd[748]: Stopped target sockets.target - Sockets.
+2026-09-24T00:10:54Z RECV  [   27.439385] gts9 systemd[748]: Stopped target timers.target - Timers.
+2026-09-24T00:10:54Z RECV  [   27.439593] gts9 systemd[748]: Closed dbus.socket - D-Bus User Message Bus Socket.
+2026-09-24T00:10:54Z RECV  [   27.440050] gts9 systemd[748]: Stopping ssh-agent.socket - OpenSSH Agent socket...
+2026-09-24T00:10:54Z RECV  [   27.448304] gts9 systemd-logind[570]: Removed session 1.
+2026-09-24T00:10:54Z RECV  [   27.448726] gts9 systemd-logind[570]: Failed to apply ACLs: Operation not supported
+2026-09-24T00:10:54Z RECV  [   27.481953] gts9 systemd[748]: Closed ssh-agent.socket - OpenSSH Agent socket.
+2026-09-24T00:10:54Z RECV  [   27.482383] gts9 systemd[748]: Removed slice app.slice - User Application Slice.
+2026-09-24T00:10:54Z RECV  [   27.482401] gts9 systemd[748]: Reached target shutdown.target - Shutdown.
+2026-09-24T00:10:54Z RECV  [   27.482472] gts9 systemd[748]: Finished systemd-exit.service - Exit the Session.
+2026-09-24T00:10:54Z RECV  [   27.482487] gts9 systemd[748]: Reached target exit.target - Exit the Session.
+2026-09-24T00:10:54Z RECV  [   27.510486] gts9 systemd-logind[570]: Removed session 2.
+2026-09-24T00:10:54Z RECV  [   27.511615] gts9 systemd[1]: user@1000.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.511897] gts9 systemd[1]: Stopped user@1000.service - User Manager for UID 1000.
+2026-09-24T00:10:54Z RECV  [   27.695659] gts9 systemd[1]: Stopping systemd-user-sessions.service - Permit User Sessions...
+2026-09-24T00:10:54Z RECV  [   27.705858] gts9 systemd[1]: Stopping user-runtime-dir@1000.service - User Runtime Directory /run/user/1000...
+2026-09-24T00:10:54Z RECV  [   27.741403] gts9 systemd[1]: run-user-1000.mount: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.741546] gts9 systemd[1]: Unmounted run-user-1000.mount - /run/user/1000.
+2026-09-24T00:10:54Z RECV  [   27.751153] gts9 systemd[1]: systemd-user-sessions.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.751751] gts9 systemd[1]: Stopped systemd-user-sessions.service - Permit User Sessions.
+2026-09-24T00:10:54Z RECV  [   27.761832] gts9 systemd[1]: user-runtime-dir@1000.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.762415] gts9 systemd[1]: Stopped user-runtime-dir@1000.service - User Runtime Directory /run/user/1000.
+2026-09-24T00:10:54Z RECV  [   27.776960] gts9 systemd[1]: Removed slice user-1000.slice - User Slice of UID 1000.
+2026-09-24T00:10:54Z RECV  [   27.785630] gts9 systemd[1]: Stopped target network.target - Network.
+2026-09-24T00:10:54Z RECV  [   27.792858] gts9 systemd[1]: Stopped target remote-fs.target - Remote File Systems.
+2026-09-24T00:10:54Z RECV  [   27.804518] gts9 systemd[1]: Stopping dbus.service - D-Bus System Message Bus...
+2026-09-24T00:10:54Z RECV  [   27.813622] gts9 systemd[1]: Stopping networking.service - Raise network interfaces...
+2026-09-24T00:10:54Z RECV  [   27.821154] gts9 systemd[1]: Stopping systemd-logind.service - User Login Management...
+2026-09-24T00:10:54Z RECV  [   27.830169] gts9 systemd[1]: dbus.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.856676] gts9 systemd[1]: Stopped dbus.service - D-Bus System Message Bus.
+2026-09-24T00:10:54Z RECV  [   27.869114] gts9 systemd[1]: systemd-logind.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.869269] gts9 systemd[1]: Stopped systemd-logind.service - User Login Management.
+2026-09-24T00:10:54Z RECV  [   27.884545] gts9 systemd[1]: Stopped target basic.target - Basic System.
+2026-09-24T00:10:54Z RECV  [   27.896259] gts9 systemd[1]: Stopped target paths.target - Path Units.
+2026-09-24T00:10:54Z RECV  [   27.903311] gts9 systemd[1]: systemd-ask-password-console.path: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.903455] gts9 systemd[1]: Stopped systemd-ask-password-console.path - Dispatch Password Requests to Console Directory Watch.
+2026-09-24T00:10:54Z RECV  [   27.913208] gts9 systemd[1]: systemd-ask-password-wall.path: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.936185] gts9 systemd[1]: Stopped systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+2026-09-24T00:10:54Z RECV  [   27.945969] gts9 systemd[1]: Stopped target slices.target - Slice Units.
+2026-09-24T00:10:54Z RECV  [   27.953795] gts9 systemd[1]: Removed slice user.slice - User and Session Slice.
+2026-09-24T00:10:54Z RECV  [   27.961542] gts9 systemd[1]: Stopped target sockets.target - Socket Units.
+2026-09-24T00:10:54Z RECV  [   27.969003] gts9 systemd[1]: dbus.socket: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.969164] gts9 systemd[1]: Closed dbus.socket - D-Bus System Message Bus Socket.
+2026-09-24T00:10:54Z RECV  [   27.977333] gts9 systemd[1]: sshd-unix-local.socket: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.977481] gts9 systemd[1]: Closed sshd-unix-local.socket - OpenSSH Server Socket (systemd-ssh-generator, AF_UNIX Local).
+2026-09-24T00:10:54Z RECV  [   27.987324] gts9 systemd[1]: systemd-hostnamed.socket: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   27.987473] gts9 systemd[1]: Closed systemd-hostnamed.socket - Hostname Service Socket.
+2026-09-24T00:10:54Z RECV  [   27.995983] gts9 systemd[1]: Stopped target sysinit.target - System Initialization.
+2026-09-24T00:10:54Z RECV  [   28.006511] gts9 systemd[1]: Stopping systemd-backlight@backlight:ae94000.dsi.0.service - Load/Save Screen Backlight Brightness of backlight:ae94000.dsi.0...
+2026-09-24T00:10:54Z RECV  [   28.015291] gts9 systemd[1]: systemd-tmpfiles-setup.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.015524] gts9 systemd[1]: Stopped systemd-tmpfiles-setup.service - Create System Files and Directories.
+2026-09-24T00:10:54Z RECV  [   28.026887] gts9 systemd[1]: networking.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.052679] gts9 systemd[1]: Stopped networking.service - Raise network interfaces.
+2026-09-24T00:10:54Z RECV  [   28.062569] gts9 systemd[1]: Stopped target local-fs.target - Local File Systems.
+2026-09-24T00:10:54Z RECV  [   28.070534] gts9 systemd[1]: Stopped target local-fs-pre.target - Preparation for Local File Systems.
+2026-09-24T00:10:54Z RECV  [   28.081392] gts9 systemd[1]: Unmounting run-lock.mount - Legacy Locks Directory /run/lock...
+2026-09-24T00:10:54Z RECV  [   28.090331] gts9 systemd[1]: Unmounting tmp.mount - Temporary Directory /tmp...
+2026-09-24T00:10:54Z RECV  [   28.097059] gts9 systemd[1]: systemd-sysctl.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.097252] gts9 systemd[1]: Stopped systemd-sysctl.service - Apply Kernel Variables.
+2026-09-24T00:10:54Z RECV  [   28.105638] gts9 systemd[1]: systemd-modules-load.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.105814] gts9 systemd[1]: Stopped systemd-modules-load.service - Load Kernel Modules.
+2026-09-24T00:10:54Z RECV  [   28.114455] gts9 systemd[1]: systemd-tmpfiles-setup-dev.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.114612] gts9 systemd[1]: Stopped systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev.
+2026-09-24T00:10:54Z RECV  [   28.124395] gts9 systemd[1]: systemd-tmpfiles-setup-dev-early.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.124570] gts9 systemd[1]: Stopped systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully.
+2026-09-24T00:10:54Z RECV  [   28.137937] gts9 systemd[1]: systemd-backlight@backlight:ae94000.dsi.0.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.138566] gts9 systemd[1]: Stopped systemd-backlight@backlight:ae94000.dsi.0.service - Load/Save Screen Backlight Brightness of backlight:ae94000.dsi.0.
+2026-09-24T00:10:54Z RECV  [   28.148818] gts9 systemd[1]: run-lock.mount: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.149420] gts9 systemd[1]: Unmounted run-lock.mount - Legacy Locks Directory /run/lock.
+2026-09-24T00:10:54Z RECV  [   28.158360] gts9 systemd[1]: tmp.mount: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.158966] gts9 systemd[1]: Unmounted tmp.mount - Temporary Directory /tmp.
+2026-09-24T00:10:54Z RECV  [   28.170608] gts9 systemd[1]: Removed slice system-systemd\x2dbacklight.slice - Slice /system/systemd-backlight.
+2026-09-24T00:10:54Z RECV  [   28.180421] gts9 systemd[1]: Stopped target swap.target - Swaps.
+2026-09-24T00:10:54Z RECV  [   28.186843] gts9 systemd[1]: Reached target umount.target - Unmount All Filesystems.
+2026-09-24T00:10:54Z RECV  [   28.197480] gts9 systemd[1]: Starting gts9-poweroff-stage.service - Record entry into the systemd poweroff shutdown service...
+2026-09-24T00:10:54Z RECV  [   28.206169] gts9 systemd[1]: systemd-remount-fs.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.206371] gts9 systemd[1]: Stopped systemd-remount-fs.service - Remount Root and Kernel File Systems.
+2026-09-24T00:10:54Z RECV  [   28.216276] gts9 systemd[1]: Reached target shutdown.target - System Shutdown.
+2026-09-24T00:10:54Z RECV  [   28.223939] gts9 systemd[1]: Reached target final.target - Late Shutdown Services.
+2026-09-24T00:10:54Z RECV  [   28.240464] gts9 systemd[1]: gts9-poweroff-stage.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.241091] gts9 systemd[1]: Finished gts9-poweroff-stage.service - Record entry into the systemd poweroff shutdown service.
+2026-09-24T00:10:54Z RECV  [   28.251572] gts9 systemd[1]: systemd-poweroff.service: Deactivated successfully.
+2026-09-24T00:10:54Z RECV  [   28.251676] gts9 systemd[1]: Finished systemd-poweroff.service - System Power Off.
+2026-09-24T00:10:54Z RECV  [   28.259643] gts9 systemd[1]: Reached target poweroff.target - System Power Off.
+2026-09-24T00:10:54Z RECV  [   28.276033] gts9 systemd[1]: Shutting down.
+2026-09-24T00:10:54Z RECV  [   28.392205] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:10:54Z RECV  [   28.675425] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:10:54Z RECV  [   28.675517] gts9 systemd-journald[264]: Received SIGTERM from PID 1 (systemd-shutdow).
+2026-09-24T00:10:54Z RECV  [   28.675571] gts9 systemd-journald[264]: Journal stopped
+2026-09-24T00:10:54Z console run done (ready=True)

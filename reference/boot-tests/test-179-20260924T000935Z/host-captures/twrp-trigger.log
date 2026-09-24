@@ -1,0 +1,13 @@
+2026-09-24T00:21:50Z console open on COM17
+2026-09-24T00:21:52Z RECV  echo READY1
+2026-09-24T00:21:52Z RECV  [?2004lREADY1
+2026-09-24T00:21:52Z shell answered after 1 poll(s)
+2026-09-24T00:21:52Z SENT  echo TRIGGER; sync; gts9-debian-to-recovery --yes
+2026-09-24T00:21:56Z RECV  [?2004hroot@gts9:~# echo TRIGGER; sync; gts9-debian-to-recovery --yes
+2026-09-24T00:21:56Z RECV  [?2004lTRIGGER
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: found the misc partition as /dev/sda10
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: current BCB command: (empty)
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: BCB written to /dev/sda10 and verified: boot-recovery
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: rebooting with a plain restart; the recovery request is in the BCB, not in the kernel
+2026-09-24T00:21:56Z RECV  [?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T00:21:56Z console run done (ready=True)

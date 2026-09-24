@@ -1,0 +1,13 @@
+2026-09-24T00:31:56Z console open on COM17
+2026-09-24T00:31:57Z RECV  echo READY1
+2026-09-24T00:31:57Z RECV  [?2004lREADY1
+2026-09-24T00:31:57Z shell answered after 1 poll(s)
+2026-09-24T00:31:57Z SENT  echo P4PRE;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cat /proc/uptime;systemctl is-system-running;systemctl is-active gts9-power-key.service;cat /sys/class/graphics/fb0/blank
+2026-09-24T00:32:08Z RECV  [?2004hroot@gts9:~# echo P4PRE;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cat /proc/uptime;systemctl is-system-running;systemctl is-active gts9-power-key.service;cat /sys/class/graphics/fb0/blank
+2026-09-24T00:32:08Z RECV  [?2004lP4PRE
+2026-09-24T00:32:08Z RECV  boot_id=60fb1021-0bec-47ea-948d-694e6e0db3d7
+2026-09-24T00:32:08Z RECV  466.91 3718.03
+2026-09-24T00:32:08Z RECV  running
+2026-09-24T00:32:08Z RECV  inactive
+2026-09-24T00:32:08Z RECV  0
+2026-09-24T00:32:08Z console run done (ready=True)

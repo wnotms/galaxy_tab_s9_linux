@@ -1,0 +1,12 @@
+2026-09-24T00:34:43Z console open on COM17
+2026-09-24T00:34:44Z RECV  echo READY1
+2026-09-24T00:34:44Z RECV  [?2004lREADY1
+2026-09-24T00:34:44Z shell answered after 1 poll(s)
+2026-09-24T00:34:44Z SENT  echo ABPRE-p1;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d' ' -f1 /proc/uptime;systemctl is-system-running;echo lpcharge1=$(tr ' ' '\n' < /proc/cmdline | grep -c 'lpcharge=1')
+2026-09-24T00:34:56Z RECV  [?2004hroot@gts9:~# echo ABPRE-p1;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d' ' -f1 /proc/uptime;systemctl is-system-running;echo lpcharge1=$(tr ' ' '\n' < /proc/cmdline | grep -c 'lpcharge=1')
+2026-09-24T00:34:56Z RECV  [?2004lABPRE-p1
+2026-09-24T00:34:56Z RECV  boot_id=bec55a95-7c69-4c03-8000-ccc60b78e7df
+2026-09-24T00:34:56Z RECV  126.85
+2026-09-24T00:34:56Z RECV  running
+2026-09-24T00:34:56Z RECV  lpcharge1=13
+2026-09-24T00:34:57Z console run done (ready=True)

@@ -1,0 +1,49 @@
+2026-09-24T00:11:15Z console open on COM17
+2026-09-24T00:11:16Z RECV  echo READY1
+2026-09-24T00:11:16Z RECV  [?2004lREADY1
+2026-09-24T00:11:16Z shell answered after 1 poll(s)
+2026-09-24T00:11:16Z SENT  echo BB;for b in -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11; do echo "== boot $b =="; journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | grep -E "Reached target (poweroff|halt|reboot)\.target|Shutting down|systemd-shutdown\[1\]|Journal stopped|Powering off|Rebooting|Halting" | tail -6; done
+2026-09-24T00:11:38Z RECV  [?2004hroot@gts9:~# echo BB;for b in -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 -11; do echo "== boot $b =="; journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | grep -E "Reached target (poweroff|halt|reboot)\.target|Shutting down|systemd-shutdown\[1\]|Journal stopped|Powering off|Rebooting|Halting" | tail -6; done
+2026-09-24T00:11:38Z RECV  [?2004lBB
+2026-09-24T00:11:38Z RECV  == boot -1 ==
+2026-09-24T00:11:38Z RECV  [   28.259643] gts9 systemd[1]: Reached target poweroff.target - System Power Off.
+2026-09-24T00:11:38Z RECV  [   28.276033] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [   28.392205] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [   28.675425] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [   28.675571] gts9 systemd-journald[264]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -2 ==
+2026-09-24T00:11:38Z RECV  == boot -3 ==
+2026-09-24T00:11:38Z RECV  [  355.164091] gts9 systemd[1]: Reached target poweroff.target - System Power Off.
+2026-09-24T00:11:38Z RECV  [  355.176219] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [  355.284209] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [  355.622295] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [  355.622488] gts9 systemd-journald[274]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -4 ==
+2026-09-24T00:11:38Z RECV  [  470.952266] gts9 systemd[1]: Reached target reboot.target - System Reboot.
+2026-09-24T00:11:38Z RECV  [  470.964103] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [  471.052015] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [  471.363460] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [  471.363593] gts9 systemd-journald[269]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -5 ==
+2026-09-24T00:11:38Z RECV  == boot -6 ==
+2026-09-24T00:11:38Z RECV  == boot -7 ==
+2026-09-24T00:11:38Z RECV  [  194.960116] gts9 systemd[1]: Reached target reboot.target - System Reboot.
+2026-09-24T00:11:38Z RECV  [  194.972034] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [  195.044251] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [  195.386287] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [  195.386459] gts9 systemd-journald[259]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -8 ==
+2026-09-24T00:11:38Z RECV  [  334.838197] gts9 systemd[1]: Reached target reboot.target - System Reboot.
+2026-09-24T00:11:38Z RECV  [  334.845485] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [  334.956518] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [  335.133676] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [  335.133849] gts9 systemd-journald[274]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -9 ==
+2026-09-24T00:11:38Z RECV  [  152.748354] gts9 systemd[1]: Reached target reboot.target - System Reboot.
+2026-09-24T00:11:38Z RECV  [  152.760042] gts9 systemd[1]: Shutting down.
+2026-09-24T00:11:38Z RECV  [  152.844145] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:11:38Z RECV  [  153.054987] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:11:38Z RECV  [  153.055150] gts9 systemd-journald[257]: Journal stopped
+2026-09-24T00:11:38Z RECV  == boot -10 ==
+2026-09-24T00:11:38Z RECV  == boot -11 ==
+2026-09-24T00:11:38Z console run done (ready=True)

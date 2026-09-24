@@ -1,0 +1,6 @@
+2026-09-24T00:23:51Z console open on COM17
+2026-09-24T00:23:53Z RECV  echo READY1
+2026-09-24T00:23:53Z shell answered after 1 poll(s)
+2026-09-24T00:23:53Z SENT  echo PF2;cat /proc/cmdline;cat /proc/sys/kernel/random/boot_id;systemctl is-system-running;grep -c "GTS9_POWER_OFF" /dev/kmsg 2>/dev/null || true
+2026-09-24T00:24:03Z RECV  echo PF2;cat /proc/cmdline;cat /proc/sys/kernel/random/boot_id;systemctl is-system-running;grep -c "GTS9_POWER_OFF" /dev/kmsg 2>/dev/null || true
+2026-09-24T00:24:03Z console run done (ready=True)

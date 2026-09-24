@@ -1,0 +1,52 @@
+2026-09-24T00:25:52Z console open on COM17
+2026-09-24T00:25:54Z RECV  echo READY1
+2026-09-24T00:25:54Z RECV  [?2004lREADY1
+2026-09-24T00:25:54Z shell answered after 1 poll(s)
+2026-09-24T00:25:54Z SENT  echo JB2;echo "--- boot -1 dpu/panel/powerkey ---";journalctl -b -1 --no-pager 2>/dev/null | grep -iE "dpu|vblank|workqueue|rcu_|panel|fb0|blank|power-key|suspend" | tail -30;echo "--- boot -1 line count ---";journalctl -b -1 --no-pager 2>/dev/null | wc -l;echo "--- boot 0 dpu ---";journalctl -b 0 --no-pager 2>/dev/null | grep -iE "dpu|vblank|workqueue|rcu_|frame done" | tail -10
+2026-09-24T00:26:19Z RECV  [?2004hroot@gts9:~# echo JB2;echo "--- boot -1 dpu/panel/powerkey ---";journalctl -b -1 --no-pager 2>/dev/null | grep -iE "dpu|vblank|workqueue|rcu_|panel|fb0|blank|power-key|suspend" | tail -30;echo "--- boot -1 line count ---";journalctl -b -1 --no-pager 2>/dev/null | wc -l;echo "--- boot 0 dpu ---";journalctl -b 0 --no-pager 2>/dev/null | grep -iE "dpu|vblank|workqueue|rcu_|frame done" | tail -10
+2026-09-24T00:26:19Z RECV  [?2004lJB2
+2026-09-24T00:26:19Z RECV  --- boot -1 dpu/panel/powerkey ---
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: no GPU device was found
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: fb0: sys_imageblit: framebuffer is not in virtual address space.
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: fb0: sys_fillrect: framebuffer is not in virtual address space.
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 (udev-worker)[425]: ifb0: Could not set Alias=, MACAddress=/MACAddressPolicy=, TransmitQueues=, ReceiveQueues=, TransmitQueueLength=, MTUBytes=, GenericSegmentOffloadMaxBytes= or GenericSegmentOffloadMaxSegments=, ignoring: Operation not supported
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 systemd[1]: Starting gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery...
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 systemd[1]: Started gts9-power-key.service - X710 power key: blank the panel only.
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 gts9-power-key: watching the power key; short press blanks the panel
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 gts9-panel-recover[522]: gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 kernel: [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 gts9-panel-recover[522]: gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 gts9-panel-recover[630]: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:07 gts9 systemd[1]: Finished gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery.
+2026-09-24T00:26:19Z RECV  --- boot -1 line count ---
+2026-09-24T00:26:19Z RECV  1120
+2026-09-24T00:26:19Z RECV  --- boot 0 dpu ---
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: no GPU device was found
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:05 gts9 kernel: msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+2026-09-24T00:26:19Z RECV  Apr 14 03:38:06 gts9 kernel: [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T00:26:19Z console run done (ready=True)

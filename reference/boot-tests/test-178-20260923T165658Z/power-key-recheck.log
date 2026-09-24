@@ -1,0 +1,13 @@
+2026-09-23T18:59:53Z console open on COM17
+2026-09-23T18:59:55Z RECV  echo READY1
+2026-09-23T18:59:55Z shell answered after 1 poll(s)
+2026-09-23T18:59:55Z listening only (no command sent)
+2026-09-23T19:00:01Z SENT  echo STILL_HERE; cat /sys/class/graphics/fb0/blank; uptime
+2026-09-23T19:00:07Z RECV  echo STILL_HERE; cat /sys/class/graphics/fb0/blank; uptime
+2026-09-23T19:00:07Z SENT  systemctl is-system-running; systemctl --failed --no-pager | tail -3
+2026-09-23T19:00:14Z RECV  systemctl is-system-running; systemctl --failed --no-pager | tail -3
+2026-09-23T19:00:14Z SENT  journalctl -b -k --no-pager | grep -aiE "dpu error|frame done|vblank|workqueue|rcu:" | tail -8
+2026-09-23T19:00:20Z RECV  journalctl -b -k --no-pager | grep -aiE "dpu error|frame done|vblank|workqueue|rcu:" | tail -8
+2026-09-23T19:00:20Z SENT  dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-23T19:00:26Z RECV  dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-23T19:00:26Z console run done (ready=True)

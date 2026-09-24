@@ -1,0 +1,18 @@
+2026-09-24T00:27:20Z console open on COM17
+2026-09-24T00:27:22Z RECV  echo READY1
+2026-09-24T00:27:22Z RECV  [?2004lREADY1
+2026-09-24T00:27:22Z shell answered after 1 poll(s)
+2026-09-24T00:27:22Z SENT  echo SD;systemctl stop gts9-power-key.service;systemctl is-active gts9-power-key.service;systemctl is-enabled gts9-power-key.service;echo "--- state ---";echo boot_id=$(cat /proc/sys/kernel/random/boot_id);uptime;systemctl is-system-running;echo "--- powerkey cfg ---";grep -r HandlePowerKey /etc/systemd/logind.conf.d/;echo "--- daemon binary ---";ls -l /usr/libexec/gts9-power-key 2>&1;strings /usr/libexec/gts9-power-key 2>/dev/null | grep -i -m3 "blank\|backlight"
+2026-09-24T00:27:36Z RECV  [?2004hroot@gts9:~# echo SD;systemctl stop gts9-power-key.service;systemctl is-active gts9-power-key.service;systemctl is-enabled gts9-power-key.service;echo "--- state ---";echo boot_id=$(cat /proc/sys/kernel/random/boot_id);uptime;systemctl is-system-running;echo "--- powerkey cfg ---";grep -r HandlePowerKey /etc/systemd/logind.conf.d/;echo "--- daemon binary ---";ls -l /usr/libexec/gts9-power-key 2>&1;strings /usr/libexec/gts9-power-key 2>/dev/null | grep -i -m3 "blank\|backlight"
+2026-09-24T00:27:36Z RECV  [?2004lSD
+2026-09-24T00:27:36Z RECV  inactive
+2026-09-24T00:27:36Z RECV  enabled
+2026-09-24T00:27:36Z RECV  --- state ---
+2026-09-24T00:27:36Z RECV  boot_id=60fb1021-0bec-47ea-948d-694e6e0db3d7
+2026-09-24T00:27:36Z RECV   03:41:14 up 3 min,  1 user,  load average: 0.11, 0.04, 0.01
+2026-09-24T00:27:36Z RECV  running
+2026-09-24T00:27:36Z RECV  --- powerkey cfg ---
+2026-09-24T00:27:36Z RECV  /etc/systemd/logind.conf.d/60-gts9-power-key.conf:HandlePowerKey=ignore
+2026-09-24T00:27:36Z RECV  --- daemon binary ---
+2026-09-24T00:27:36Z RECV  -rwxr-xr-x. 1 root root 4528 Sep 24  2026 /usr/libexec/gts9-power-key
+2026-09-24T00:27:36Z console run done (ready=True)

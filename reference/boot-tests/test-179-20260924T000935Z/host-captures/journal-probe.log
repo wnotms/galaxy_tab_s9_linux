@@ -1,0 +1,46 @@
+2026-09-24T00:10:06Z console open on COM17
+2026-09-24T00:10:08Z RECV  echo READY1
+2026-09-24T00:10:08Z RECV  [?2004lREADY1
+2026-09-24T00:10:08Z shell answered after 1 poll(s)
+2026-09-24T00:10:08Z SENT  echo J1;systemctl --version | head -3;ls -la /var/log/ | head -30;journalctl --list-boots 2>&1 | tail -12;echo ---POWEROFF-MARKER---;cat /var/log/gts9-last-poweroff-stage 2>&1;echo ---SYSTEMCTL-DRYRUN---;systemctl --help 2>&1 | grep -i -m2 dry-run
+2026-09-24T00:10:20Z RECV  [?2004hroot@gts9:~# echo J1;systemctl --version | head -3;ls -la /var/log/ | head -30;journalctl --list-boots 2>&1 | tail -12;echo ---POWEROFF-MARKER---;cat /var/log/gts9-last-poweroff-stage 2>&1;echo ---SYSTEMCTL-DRYRUN---;systemctl --help 2>&1 | grep -i -m2 dry-run
+2026-09-24T00:10:20Z RECV  [?2004lJ1
+2026-09-24T00:10:20Z RECV  systemd 257 (257.13-1~deb13u1)
+2026-09-24T00:10:20Z RECV  +PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE
+2026-09-24T00:10:20Z RECV  total 320
+2026-09-24T00:10:20Z RECV  drwxr-xr-x   6 root root              4096 Apr 14 03:38 .
+2026-09-24T00:10:20Z RECV  drwxr-xr-x  11 root root              4096 Apr 14 03:38 ..
+2026-09-24T00:10:20Z RECV  lrwxrwxrwx   1 root root                39 Sep 22  2026 README -> ../../usr/share/doc/systemd/README.logs
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root             12557 Sep 22  2026 alternatives.log
+2026-09-24T00:10:20Z RECV  drwxr-xr-x   2 root root              4096 Sep 22  2026 apt
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root             84811 Sep 22  2026 bootstrap.log
+2026-09-24T00:10:20Z RECV  -rw-rw----   1 root utmp                 0 Sep 22  2026 btmp
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root            115465 Sep 22  2026 dpkg.log
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root              4752 Apr 14 03:38 gts9-last-boot-stage
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root               128 Apr 14 03:38 gts9-last-poweroff-stage
+2026-09-24T00:10:20Z RECV  -rw-r--r--   1 root root              2031 Apr 14 03:38 gts9-minimal-last-boot
+2026-09-24T00:10:20Z RECV  drwxr-sr-x+  3 root systemd-journal   4096 Apr 14 03:38 journal
+2026-09-24T00:10:20Z RECV  -rw-rw-r--   1 root utmp                 0 Sep 22  2026 lastlog
+2026-09-24T00:10:20Z RECV  drwx------   2 root root              4096 Sep 22  2026 private
+2026-09-24T00:10:20Z RECV  drwxr-xr-x   3 root root              4096 Sep 22  2026 runit
+2026-09-24T00:10:20Z RECV  -rw-rw-r--   1 root utmp             52400 Apr 14 03:38 wtmp
+2026-09-24T00:10:20Z RECV  -11 e87a3c79f027409e9a6fdd526606590f Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:41:07 CST
+2026-09-24T00:10:20Z RECV  -10 e0deedf7668b4ed58614cec323e132ae Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:46:02 CST
+2026-09-24T00:10:20Z RECV   -9 a6d6f60cff774ae4aa395bfc70c3df7d Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:40:36 CST
+2026-09-24T00:10:20Z RECV   -8 a1b94cf522b94d1b8dc448f875328317 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:43:38 CST
+2026-09-24T00:10:20Z RECV   -7 add9fbd0181c4e3aa1c60f32d8f4e2a7 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:41:18 CST
+2026-09-24T00:10:20Z RECV   -6 1c082657fe2e4834b7aa1b1eee44f185 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:44:01 CST
+2026-09-24T00:10:20Z RECV   -5 d090e3c01b9348f0b3cf179fd06326ed Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:46:36 CST
+2026-09-24T00:10:20Z RECV   -4 0bf46cc6031e4a7d95ff81d6c066bd20 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:46:11 CST
+2026-09-24T00:10:20Z RECV   -3 ebee8ee4a99747a8a65b72d7d8b3f9d0 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:43:59 CST
+2026-09-24T00:10:20Z RECV   -2 705a177e19db4531a8ded9c2e435fc26 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:31 CST
+2026-09-24T00:10:20Z RECV   -1 8c2340282b1f478998c80ec921b7951d Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:32 CST
+2026-09-24T00:10:20Z RECV    0 42549565d5a843d1b67ddbe7061451e6 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:35 CST
+2026-09-24T00:10:20Z RECV  ---POWEROFF-MARKER---
+2026-09-24T00:10:20Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:10:20Z RECV  timestamp=2026-04-13T19:38:31Z
+2026-09-24T00:10:20Z RECV  uptime_seconds=28.23
+2026-09-24T00:10:20Z RECV  boot_id=8c234028-2b1f-4789-98c8-0ec921b7951d
+2026-09-24T00:10:20Z RECV  ---SYSTEMCTL-DRYRUN---
+2026-09-24T00:10:20Z RECV       --dry-run           Only print what would be done
+2026-09-24T00:10:20Z console run done (ready=True)

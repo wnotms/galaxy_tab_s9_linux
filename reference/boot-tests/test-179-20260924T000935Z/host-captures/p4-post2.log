@@ -1,0 +1,32 @@
+2026-09-24T00:33:54Z console open on COM17
+2026-09-24T00:33:56Z RECV  echo READY1
+2026-09-24T00:33:56Z RECV  [?2004lREADY1
+2026-09-24T00:33:56Z shell answered after 1 poll(s)
+2026-09-24T00:33:56Z SENT  echo P4POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;echo ---LPCHARGE---;tr " " "\n" < /proc/cmdline | grep -c "lpcharge=1";tr " " "\n" < /proc/cmdline | grep "lpcharge" | head -6;echo ---PREV-JOURNAL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -8;echo ---MARKER---;cat /var/log/gts9-last-poweroff-stage 2>&1
+2026-09-24T00:34:21Z RECV  [?2004hroot@gts9:~# echo P4POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;echo ---LPCHARGE---;tr " " "\n" < /proc/cmdline | grep -c "lpcharge=1";tr " " "\n" < /proc/cmdline | grep "lpcharge" | head -6;echo ---PREV-JOURNAL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -8;echo ---MARKER---;cat /var/log/gts9-last-poweroff-stage 2>&1
+2026-09-24T00:34:21Z RECV  [?2004lP4POST
+2026-09-24T00:34:21Z RECV  boot_id=bec55a95-7c69-4c03-8000-ccc60b78e7df
+2026-09-24T00:34:21Z RECV  78.26
+2026-09-24T00:34:21Z RECV  ---LPCHARGE---
+2026-09-24T00:34:21Z RECV  13
+2026-09-24T00:34:21Z RECV  pdic_notifier_module.pdic_param_lpcharge=1
+2026-09-24T00:34:21Z RECV  nfc_sec.nfc_param_lpcharge=1
+2026-09-24T00:34:21Z RECV  flicker_sensor.flicker_param_lpcharge=1
+2026-09-24T00:34:21Z RECV  cpufreq_limit.lpcharge=1
+2026-09-24T00:34:21Z RECV  sec-battery.lpcharge=1
+2026-09-24T00:34:21Z RECV  max77705_charger.lpcharge=1
+2026-09-24T00:34:21Z RECV  ---PREV-JOURNAL---
+2026-09-24T00:34:21Z RECV  [  501.949144] gts9 systemd[1]: systemd-poweroff.service: Deactivated successfully.
+2026-09-24T00:34:21Z RECV  [  501.949172] gts9 systemd[1]: Finished systemd-poweroff.service - System Power Off.
+2026-09-24T00:34:21Z RECV  [  501.949809] gts9 systemd[1]: Reached target poweroff.target - System Power Off.
+2026-09-24T00:34:21Z RECV  [  501.950401] gts9 systemd[1]: Shutting down.
+2026-09-24T00:34:21Z RECV  [  502.064253] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T00:34:21Z RECV  [  502.259053] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T00:34:21Z RECV  [  502.259238] gts9 systemd-journald[278]: Received SIGTERM from PID 1 (systemd-shutdow).
+2026-09-24T00:34:21Z RECV  [  502.259405] gts9 systemd-journald[278]: Journal stopped
+2026-09-24T00:34:21Z RECV  ---MARKER---
+2026-09-24T00:34:21Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:34:21Z RECV  timestamp=2026-04-13T19:46:25Z
+2026-09-24T00:34:21Z RECV  uptime_seconds=501.94
+2026-09-24T00:34:21Z RECV  boot_id=60fb1021-0bec-47ea-948d-694e6e0db3d7
+2026-09-24T00:34:21Z console run done (ready=True)

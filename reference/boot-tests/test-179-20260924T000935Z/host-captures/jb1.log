@@ -1,0 +1,38 @@
+2026-09-24T00:25:14Z console open on COM17
+2026-09-24T00:25:15Z RECV  echo READY1
+2026-09-24T00:25:15Z RECV  [?2004lREADY1
+2026-09-24T00:25:15Z shell answered after 1 poll(s)
+2026-09-24T00:25:15Z SENT  echo JB;journalctl --list-boots 2>/dev/null | tail -4;echo ---PREV-BOOT-TAIL---;journalctl -b -1 -o short-monotonic --no-pager 2>&1 | tail -25
+2026-09-24T00:25:41Z RECV  [?2004hroot@gts9:~# echo JB;journalctl --list-boots 2>/dev/null | tail -4;echo ---PREV-BOOT-TAIL---;journalctl -b -1 -o short-monotonic --no-pager 2>&1 | tail -25
+2026-09-24T00:25:41Z RECV  [?2004lJB
+2026-09-24T00:25:41Z RECV   -3 8c2340282b1f478998c80ec921b7951d Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:32 CST
+2026-09-24T00:25:41Z RECV   -2 42549565d5a843d1b67ddbe7061451e6 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:54:24 CST
+2026-09-24T00:25:41Z RECV   -1 b8bc2a77d6bc4bc7ba40b0fe3c296d91 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:07 CST
+2026-09-24T00:25:41Z RECV    0 60fb10210bec47ea948d694e6e0db3d7 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:34 CST
+2026-09-24T00:25:41Z RECV  ---PREV-BOOT-TAIL---
+2026-09-24T00:25:41Z RECV  [    3.996034] gts9 gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T00:25:41Z RECV  [    4.016388] gts9 gts9-panel-recover[630]: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T00:25:41Z RECV  [    4.020014] gts9 gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T00:25:41Z RECV  [    4.044028] gts9 kernel: sh (573): highest shadow stack usage: 504 bytes
+2026-09-24T00:25:41Z RECV  [    4.061609] gts9 sshd[623]: Server listening on 0.0.0.0 port 22.
+2026-09-24T00:25:41Z RECV  [    4.061759] gts9 sshd[623]: Server listening on :: port 22.
+2026-09-24T00:25:41Z RECV  [    4.061968] gts9 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+2026-09-24T00:25:41Z RECV  [    4.062803] gts9 dbus-daemon[519]: [system] Successfully activated service 'org.freedesktop.systemd1'
+2026-09-24T00:25:41Z RECV  [    4.165216] gts9 systemd[1]: Finished gts9-usb-acm.service - X710 USB ACM debug console (configfs).
+2026-09-24T00:25:41Z RECV  [    4.167794] gts9 systemd[1]: Started serial-getty@ttyGS0.service - Serial Getty on ttyGS0.
+2026-09-24T00:25:41Z RECV  [    4.276534] gts9 systemd[1]: Finished gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery.
+2026-09-24T00:25:41Z RECV  [    4.278817] gts9 systemd[1]: Started getty@tty1.service - Getty on tty1.
+2026-09-24T00:25:41Z RECV  [    4.279593] gts9 systemd[1]: Reached target getty.target - Login Prompts.
+2026-09-24T00:25:41Z RECV  [    4.281377] gts9 systemd[1]: Starting gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started...
+2026-09-24T00:25:41Z RECV  [    4.282945] gts9 systemd[1]: Starting gts9-getty-stage.service - Record whether the Debian tty1 login getty started...
+2026-09-24T00:25:41Z RECV  [    4.356293] gts9 sh[666]: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T00:25:41Z RECV  [    4.360100] gts9 gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T00:25:41Z RECV  [    4.497437] gts9 systemd[1]: gts9-getty-stage.service: Deactivated successfully.
+2026-09-24T00:25:41Z RECV  [    4.497645] gts9 systemd[1]: Finished gts9-getty-stage.service - Record whether the Debian tty1 login getty started.
+2026-09-24T00:25:41Z RECV  [    4.551439] gts9 systemd[1]: Finished gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started.
+2026-09-24T00:25:41Z RECV  [    4.552470] gts9 systemd[1]: Reached target multi-user.target - Multi-User System.
+2026-09-24T00:25:41Z RECV  [    4.553164] gts9 systemd[1]: Reached target graphical.target - Graphical Interface.
+2026-09-24T00:25:41Z RECV  [    4.555004] gts9 systemd[1]: Starting gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target...
+2026-09-24T00:25:41Z RECV  [    4.614261] gts9 sh[713]: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T00:25:41Z RECV  [    4.616018] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T00:25:41Z console run done (ready=True)

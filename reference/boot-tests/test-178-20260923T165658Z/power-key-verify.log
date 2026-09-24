@@ -1,0 +1,28 @@
+2026-09-23T18:59:11Z console open on COM17
+2026-09-23T18:59:12Z RECV  echo READY1
+2026-09-23T18:59:12Z RECV  [?2004lREADY1
+2026-09-23T18:59:12Z shell answered after 1 poll(s)
+2026-09-23T18:59:12Z SENT  systemctl status gts9-power-key.service --no-pager | head -8
+2026-09-23T18:59:18Z RECV  [?2004hroot@gts9:~# systemctl status gts9-power-key.service --no-pager | head -8
+2026-09-23T18:59:18Z RECV  [?2004l??? gts9-power-key.service - X710 power key: blank the panel only
+2026-09-23T18:59:18Z RECV       Loaded: loaded (/usr/lib/systemd/system/gts9-power-key.service; enabled; preset: enabled)
+2026-09-23T18:59:18Z RECV       Active: active (running) since Tue 2026-04-14 03:38:07 CST; 43s ago
+2026-09-23T18:59:18Z RECV   Invocation: 6f06a0b842cd469a80a484ee87680f83
+2026-09-23T18:59:18Z RECV     Main PID: 540 (gts9-power-key)
+2026-09-23T18:59:18Z RECV        Tasks: 1 (limit: 14053)
+2026-09-23T18:59:18Z RECV       Memory: 60K (peak: 2M)
+2026-09-23T18:59:18Z RECV          CPU: 5ms
+2026-09-23T18:59:18Z SENT  grep -r HandlePowerKey /etc/systemd/logind.conf.d/ /usr/lib/systemd/logind.conf 2>/dev/null | head -4
+2026-09-23T18:59:23Z RECV  [?2004hroot@gts9:~# grep -r HandlePowerKey /etc/systemd/logind.conf.d/ /usr/lib/systemd/logind.conf 2>/dev/null | head -4
+2026-09-23T18:59:23Z RECV  [?2004l/etc/systemd/logind.conf.d/60-gts9-power-key.conf:HandlePowerKey=ignore
+2026-09-23T18:59:23Z SENT  cat /sys/class/graphics/fb0/blank; echo "--- toggle off ---"; /usr/libexec/gts9-power-key --toggle; echo "toggle rc=$?"; cat /sys/class/graphics/fb0/blank
+2026-09-23T18:59:29Z RECV  [?2004hroot@gts9:~# cat /sys/class/graphics/fb0/blank; echo "--- toggle off ---"; /usr/libexec/gts9-power-key --toggle; echo "toggle rc=$?"; cat /sys/class/graphics/fb0/blank
+2026-09-23T18:59:29Z RECV  [?2004l0
+2026-09-23T18:59:29Z RECV  --- toggle off ---
+2026-09-23T18:59:29Z SENT  echo GTS9_CONSOLE_STILL_ALIVE=$(date +%s)
+2026-09-23T18:59:35Z RECV  echo GTS9_CONSOLE_STILL_ALIVE=$(date +%s)
+2026-09-23T18:59:35Z SENT  dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-23T18:59:40Z RECV  dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-23T18:59:40Z SENT  echo "--- toggle on ---"; /usr/libexec/gts9-power-key --toggle; cat /sys/class/graphics/fb0/blank
+2026-09-23T18:59:46Z RECV  echo "--- toggle on ---"; /usr/libexec/gts9-power-key --toggle; cat /sys/class/graphics/fb0/blank
+2026-09-23T18:59:46Z console run done (ready=True)

@@ -1,0 +1,16 @@
+2026-09-24T00:18:45Z console open on COM17
+2026-09-24T00:18:47Z RECV  echo READY1
+2026-09-24T00:18:47Z RECV  [?2004lREADY1
+2026-09-24T00:18:47Z shell answered after 1 poll(s)
+2026-09-24T00:18:47Z SENT  echo T1;ls -l /usr/local/sbin/gts9-debian-to-recovery /usr/local/sbin/gts9-to-recovery 2>&1;ls /dev/sda* 2>&1 | head -5;cat /proc/sys/kernel/random/boot_id
+2026-09-24T00:18:52Z RECV  [?2004hroot@gts9:~# echo T1;ls -l /usr/local/sbin/gts9-debian-to-recovery /usr/local/sbin/gts9-to-recovery 2>&1;ls /dev/sda* 2>&1 | head -5;cat /proc/sys/kernel/random/boot_id
+2026-09-24T00:18:52Z RECV  [?2004lT1
+2026-09-24T00:18:52Z RECV  ls: cannot access '/usr/local/sbin/gts9-to-recovery': No such file or directory
+2026-09-24T00:18:52Z RECV  -rwxr-xr-x 1 root root 9036 Apr 14  2026 /usr/local/sbin/gts9-debian-to-recovery
+2026-09-24T00:18:52Z RECV  /dev/sda
+2026-09-24T00:18:52Z RECV  /dev/sda1
+2026-09-24T00:18:52Z RECV  /dev/sda10
+2026-09-24T00:18:52Z RECV  /dev/sda11
+2026-09-24T00:18:52Z RECV  /dev/sda12
+2026-09-24T00:18:52Z RECV  42549565-d5a8-43d1-b67d-dbe7061451e6
+2026-09-24T00:18:52Z console run done (ready=True)

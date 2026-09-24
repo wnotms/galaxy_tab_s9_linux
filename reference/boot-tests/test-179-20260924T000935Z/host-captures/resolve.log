@@ -1,0 +1,22 @@
+2026-09-24T00:09:38Z console open on COM17
+2026-09-24T00:09:39Z RECV  echo READY1
+2026-09-24T00:09:39Z RECV  [?2004lREADY1
+2026-09-24T00:09:39Z shell answered after 1 poll(s)
+2026-09-24T00:09:39Z SENT  echo R1;type -a shutdown poweroff;readlink -f "$(command -v shutdown)";readlink -f "$(command -v poweroff)";ls -l /sbin/shutdown /sbin/poweroff /usr/sbin/shutdown /usr/sbin/poweroff /bin/poweroff 2>&1;file /sbin/shutdown /sbin/poweroff 2>&1;md5sum /sbin/shutdown /sbin/poweroff 2>&1
+2026-09-24T00:09:48Z RECV  [?2004hroot@gts9:~# echo R1;type -a shutdown poweroff;readlink -f "$(command -v shutdown)";readlink -f "$(command -v poweroff)";ls -l /sbin/shutdown /sbin/poweroff /usr/sbin/shutdown /usr/sbin/poweroff /bin/poweroff 2>&1;file /sbin/shutdown /sbin/poweroff 2>&1;md5sum /sbin/shutdown /sbin/poweroff 2>&1
+2026-09-24T00:09:48Z RECV  [?2004lR1
+2026-09-24T00:09:48Z RECV  shutdown is /usr/sbin/shutdown
+2026-09-24T00:09:48Z RECV  shutdown is /sbin/shutdown
+2026-09-24T00:09:48Z RECV  poweroff is /usr/sbin/poweroff
+2026-09-24T00:09:48Z RECV  poweroff is /sbin/poweroff
+2026-09-24T00:09:48Z RECV  /usr/bin/systemctl
+2026-09-24T00:09:48Z RECV  /usr/bin/systemctl
+2026-09-24T00:09:48Z RECV  ls: cannot access '/bin/poweroff': No such file or directory
+2026-09-24T00:09:48Z RECV  lrwxrwxrwx 1 root root 16 Apr 14 03:38 /sbin/poweroff -> ../bin/systemctl
+2026-09-24T00:09:48Z RECV  lrwxrwxrwx 1 root root 16 Apr 14 03:38 /sbin/shutdown -> ../bin/systemctl
+2026-09-24T00:09:48Z RECV  lrwxrwxrwx 1 root root 16 Apr 14 03:38 /usr/sbin/poweroff -> ../bin/systemctl
+2026-09-24T00:09:48Z RECV  lrwxrwxrwx 1 root root 16 Apr 14 03:38 /usr/sbin/shutdown -> ../bin/systemctl
+2026-09-24T00:09:48Z RECV  -bash: file: command not found
+2026-09-24T00:09:48Z RECV  2c2515eeb6b923cbb70bee173180bf3d  /sbin/shutdown
+2026-09-24T00:09:48Z RECV  2c2515eeb6b923cbb70bee173180bf3d  /sbin/poweroff
+2026-09-24T00:09:48Z console run done (ready=True)

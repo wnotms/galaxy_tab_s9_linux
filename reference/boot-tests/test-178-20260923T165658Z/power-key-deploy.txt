@@ -1,0 +1,18 @@
+
+=== power-key overlay deploy 2026-09-23T18:58:05Z ===
+a1cf2b46cc345fceb0112e5544f22a81fca267513d68c4f01136f05e0ef81683  /tmp/gts9-debian-overlay.tar
+--- end ---
+tar exit=0
+gts9-enable-units: 11 link(s) in /mnt/debian/etc/systemd/system
+--- helper + unit + link ---
+lrwxrwxrwx 1 root root   57 2026-09-23 18:58 /mnt/debian/etc/systemd/system/multi-user.target.wants/gts9-power-key.service -> ../../../../usr/lib/systemd/system/gts9-power-key.service
+-rw-r--r-- 1 root root  205 2026-09-23 18:56 /mnt/debian/usr/lib/systemd/system/gts9-power-key.service
+-rwxr-xr-x 1 root root 4528 2026-09-23 18:57 /mnt/debian/usr/libexec/gts9-power-key
+--- no .c left ---
+no sources installed
+--- logind policy ---
+HandlePowerKey=ignore
+--- usr-merge + init ---
+lrwxrwxrwx 1 root root 7 2026-09-23 18:02 /mnt/debian/lib -> usr/lib
+init OK
+umount rc=0

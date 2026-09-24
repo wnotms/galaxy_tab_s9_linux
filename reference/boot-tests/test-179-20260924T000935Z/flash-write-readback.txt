@@ -1,0 +1,40 @@
+# test-179 verified flash of vendor_boot (filtered: the raw tee also captured
+# ~4000 lines of a benign PowerShell IOException dump while the console
+# disappeared during the TWRP reboot; those add no evidence)
+
+/tmp/vb-after.img: 1 file pulled, 0 skipped. 32.5 MB/s (100663296 bytes in 2.956s)
+/tmp/vb-before.img: 1 file pulled, 0 skipped. 25.5 MB/s (100663296 bytes in 3.772s)
+100663296 bytes (96 M) copied, 0.099709 s, 963 M/s
+100663296 bytes (96 M) copied, 0.102328 s, 938 M/s
+100663296 bytes (96 M) copied, 0.356269 s, 269 M/s
+2026-09-24T00:21:49Z === test-179 verified flash of vendor_boot ===
+2026-09-24T00:21:50Z asking the tablet for TWRP over the console (BCB write + reboot)
+2026-09-24T00:21:50Z host image : /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-179-20260924T000935Z/bundle-power-trace/vendor_boot.img
+2026-09-24T00:21:50Z host sha256: 3c88b36b7b3f1703ccd751b77522fa6d16596650e627893e3131848c96731dec
+2026-09-24T00:21:56Z RECV  [?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: BCB written to /dev/sda10 and verified: boot-recovery
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: current BCB command: (empty)
+2026-09-24T00:21:56Z RECV  gts9-debian-to-recovery: rebooting with a plain restart; the recovery request is in the BCB, not in the kernel
+2026-09-24T00:21:56Z console run done (ready=True)
+2026-09-24T00:21:56Z waiting for adb recovery (up to 300 s)
+2026-09-24T00:22:17Z --- backup: vendor_boot before ---
+2026-09-24T00:22:17Z adb state: recovery
+2026-09-24T00:22:22Z --- push instrumented image ---
+2026-09-24T00:22:22Z --- write vendor_boot ---
+2026-09-24T00:22:22Z PASS backup matches the live device hash read in Debian (1abb4c68...)
+2026-09-24T00:22:22Z host sha256 of pulled backup: 1abb4c68b8103020d7935f5057225abe1e6b6b2222f58a6e93e254eb851af27c
+2026-09-24T00:22:23Z --- readback: vendor_boot after ---
+2026-09-24T00:22:23Z write done
+2026-09-24T00:22:26Z PASS readback verifies
+2026-09-24T00:22:26Z expected                     : 3c88b36b7b3f1703ccd751b77522fa6d16596650e627893e3131848c96731dec
+2026-09-24T00:22:26Z host sha256 of pulled readback: 3c88b36b7b3f1703ccd751b77522fa6d16596650e627893e3131848c96731dec
+2026-09-24T00:22:27Z --- clear BCB, reboot to system ---
+2026-09-24T00:22:27Z reboot issued; waiting for the Debian console
+2026-09-24T00:22:46Z console open on COM17
+2026-09-24T00:22:48Z RECV  echo READY1
+2026-09-24T00:22:48Z SENT  echo POSTFLASH; cat /proc/cmdline; cat /proc/sys/kernel/random/boot_id; systemctl is-system-running
+2026-09-24T00:22:48Z shell answered after 1 poll(s)
+2026-09-24T00:22:54Z === flash procedure done ===
+2026-09-24T00:22:54Z RECV  echo POSTFLASH; cat /proc/cmdline; cat /proc/sys/kernel/random/boot_id; systemctl is-system-running
+2026-09-24T00:22:54Z console run done (ready=True)
+D:\android\gts9-flash\vendor_boot-179.img: 1 file pushed, 0 skipped. 761.3 MB/s (100663296 bytes in 0.126s)

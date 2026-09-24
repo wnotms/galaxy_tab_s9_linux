@@ -1,0 +1,15 @@
+2026-09-24T00:26:31Z console open on COM17
+2026-09-24T00:26:32Z RECV  echo READY1
+2026-09-24T00:26:32Z RECV  [?2004lREADY1
+2026-09-24T00:26:32Z shell answered after 1 poll(s)
+2026-09-24T00:26:32Z SENT  echo PS;cat /sys/class/graphics/fb0/blank;cat /sys/class/backlight/ae94000.dsi.0/brightness;for f in /sys/class/vtconsole/vtcon*; do echo "$f name=$(cat $f/name) bind=$(cat $f/bind)"; done;fgconsole 2>/dev/null;ls -l /dev/tty0 2>&1;systemctl is-active getty@tty1 serial-getty@ttyGS0
+2026-09-24T00:26:47Z RECV  [?2004hroot@gts9:~# echo PS;cat /sys/class/graphics/fb0/blank;cat /sys/class/backlight/ae94000.dsi.0/brightness;for f in /sys/class/vtconsole/vtcon*; do echo "$f name=$(cat $f/name) bind=$(cat $f/bind)"; done;fgconsole 2>/dev/null;ls -l /dev/tty0 2>&1;systemctl is-active getty@tty1 serial-getty@ttyGS0
+2026-09-24T00:26:47Z RECV  [?2004lPS
+2026-09-24T00:26:47Z RECV  0
+2026-09-24T00:26:47Z RECV  2047
+2026-09-24T00:26:47Z RECV  /sys/class/vtconsole/vtcon0 name=(S) dummy device bind=0
+2026-09-24T00:26:47Z RECV  /sys/class/vtconsole/vtcon1 name=(M) frame buffer device bind=1
+2026-09-24T00:26:47Z RECV  crw------- 1 root tty 4, 0 Apr 14 03:38 /dev/tty0
+2026-09-24T00:26:47Z RECV  active
+2026-09-24T00:26:47Z RECV  active
+2026-09-24T00:26:47Z console run done (ready=True)

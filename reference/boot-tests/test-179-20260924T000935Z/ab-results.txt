@@ -1,0 +1,74 @@
+2026-09-24T00:34:42Z A/B run start; device: SM-X710, vendor_boot 3c88b36b (console=tty0 gts9_poweroff_trace=1)
+2026-09-24T00:34:42Z === p1 : shutdown -P now ===
+2026-09-24T00:34:42Z --- pre-state ---
+2026-09-24T00:34:57Z --- sending 'shutdown -P now' with the host watcher armed ---
+2026-09-24T00:34:58.528Z PRESENCE com=True ports=[COM17]
+2026-09-24T00:34:58.533Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:35:13.291Z SENT  shutdown -P now
+2026-09-24T00:35:16.573Z PRESENCE usb0525:a4a7=False
+2026-09-24T00:35:24.834Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:37:17.745Z watch done: lines=15 com_disconnects=0 com_reconnects=0
+2026-09-24T00:37:17Z --- post-state (waits for the console to return) ---
+2026-09-24T00:37:40Z RECV  boot_id=84a628e5-93d9-43f3-9e2b-db83564fe314
+2026-09-24T00:37:40Z RECV  120.10
+2026-09-24T00:37:40Z RECV  running
+2026-09-24T00:37:40Z RECV  lpcharge1=13
+2026-09-24T00:37:40Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:37:40Z RECV  timestamp=2026-04-13T19:40:39Z
+2026-09-24T00:37:40Z RECV  uptime_seconds=156.53
+2026-09-24T00:37:40Z RECV  boot_id=bec55a95-7c69-4c03-8000-ccc60b78e7df
+2026-09-24T00:37:40Z === p2 : shutdown now ===
+2026-09-24T00:37:40Z --- pre-state ---
+2026-09-24T00:37:54Z --- sending 'shutdown now' with the host watcher armed ---
+2026-09-24T00:37:56.525Z PRESENCE com=True ports=[COM17]
+2026-09-24T00:37:56.529Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:38:10.604Z SENT  shutdown now
+2026-09-24T00:38:14.026Z PRESENCE usb0525:a4a7=False
+2026-09-24T00:38:22.401Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:40:15.783Z watch done: lines=15 com_disconnects=0 com_reconnects=0
+2026-09-24T00:40:15Z --- post-state (waits for the console to return) ---
+2026-09-24T00:40:38Z RECV  boot_id=6ae34442-12cc-4991-8386-89b59868f1ca
+2026-09-24T00:40:38Z RECV  120.92
+2026-09-24T00:40:38Z RECV  running
+2026-09-24T00:40:38Z RECV  lpcharge1=13
+2026-09-24T00:40:38Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:40:38Z RECV  timestamp=2026-04-13T19:40:55Z
+2026-09-24T00:40:38Z RECV  uptime_seconds=172.19
+2026-09-24T00:40:38Z RECV  boot_id=84a628e5-93d9-43f3-9e2b-db83564fe314
+2026-09-24T00:40:38Z === p3 : systemctl poweroff ===
+2026-09-24T00:40:38Z --- pre-state ---
+2026-09-24T00:40:52Z --- sending 'systemctl poweroff' with the host watcher armed ---
+2026-09-24T00:40:54.076Z PRESENCE com=True ports=[COM17]
+2026-09-24T00:40:54.079Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:41:08.418Z SENT  systemctl poweroff
+2026-09-24T00:41:11.875Z PRESENCE usb0525:a4a7=False
+2026-09-24T00:41:20.112Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:43:13.416Z watch done: lines=14 com_disconnects=0 com_reconnects=0
+2026-09-24T00:43:13Z --- post-state (waits for the console to return) ---
+2026-09-24T00:43:35Z RECV  boot_id=a4a65a66-2d85-4910-a4a3-a2d545fefd83
+2026-09-24T00:43:35Z RECV  120.65
+2026-09-24T00:43:35Z RECV  running
+2026-09-24T00:43:35Z RECV  lpcharge1=13
+2026-09-24T00:43:35Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:43:35Z RECV  timestamp=2026-04-13T19:40:56Z
+2026-09-24T00:43:35Z RECV  uptime_seconds=172.76
+2026-09-24T00:43:35Z RECV  boot_id=6ae34442-12cc-4991-8386-89b59868f1ca
+2026-09-24T00:43:36Z === p5 : shutdown ===
+2026-09-24T00:43:36Z --- pre-state ---
+2026-09-24T00:43:50Z --- sending 'shutdown' with the host watcher armed ---
+2026-09-24T00:43:51.643Z PRESENCE com=True ports=[COM17]
+2026-09-24T00:43:51.646Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:44:05.697Z SENT  shutdown
+2026-09-24T00:45:09.173Z PRESENCE usb0525:a4a7=False
+2026-09-24T00:45:17.415Z PRESENCE usb0525:a4a7=True
+2026-09-24T00:46:11.036Z watch done: lines=16 com_disconnects=0 com_reconnects=0
+2026-09-24T00:46:11Z --- post-state (waits for the console to return) ---
+2026-09-24T00:46:33Z RECV  boot_id=42efa64f-ef35-484b-877b-2385a5fc4b48
+2026-09-24T00:46:33Z RECV  60.95
+2026-09-24T00:46:33Z RECV  running
+2026-09-24T00:46:33Z RECV  lpcharge1=13
+2026-09-24T00:46:33Z RECV  stage=systemd-poweroff-service
+2026-09-24T00:46:33Z RECV  timestamp=2026-04-13T19:41:55Z
+2026-09-24T00:46:33Z RECV  uptime_seconds=232.28
+2026-09-24T00:46:33Z RECV  boot_id=a4a65a66-2d85-4910-a4a3-a2d545fefd83
+2026-09-24T00:46:33Z A/B run done

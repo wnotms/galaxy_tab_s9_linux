@@ -1,0 +1,23 @@
+2026-09-24T00:21:05Z console open on COM17
+2026-09-24T00:21:06Z RECV  echo READY1
+2026-09-24T00:21:06Z RECV  [?2004lREADY1
+2026-09-24T00:21:06Z shell answered after 1 poll(s)
+2026-09-24T00:21:06Z SENT  echo PREF;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);uptime;systemctl is-system-running;echo ---PART-SHA---;sha256sum /dev/sda21 /dev/sda22 /dev/sda24 2>&1;echo ---PANEL---;dmesg | grep -c "panel id: 80 00 04";dmesg | grep -c "panel id: 00 00 00";cat /sys/class/graphics/fb0/blank 2>&1;cat /sys/class/backlight/ae94000.dsi.0/brightness 2>&1;echo ---POWERKEY---;systemctl is-active gts9-power-key.service;grep -r HandlePowerKey /etc/systemd/logind.conf.d/ 2>/dev/null
+2026-09-24T00:21:37Z RECV  [?2004hroot@gts9:~# echo PREF;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);uptime;systemctl is-system-running;echo ---PART-SHA---;sha256sum /dev/sda21 /dev/sda22 /dev/sda24 2>&1;echo ---PANEL---;dmesg | grep -c "panel id: 80 00 04";dmesg | grep -c "panel id: 00 00 00";cat /sys/class/graphics/fb0/blank 2>&1;cat /sys/class/backlight/ae94000.dsi.0/brightness 2>&1;echo ---POWERKEY---;systemctl is-active gts9-power-key.service;grep -r HandlePowerKey /etc/systemd/logind.conf.d/ 2>/dev/null
+2026-09-24T00:21:37Z RECV  [?2004lPREF
+2026-09-24T00:21:37Z RECV  boot_id=42549565-d5a8-43d1-b67d-dbe7061451e6
+2026-09-24T00:21:37Z RECV   03:53:36 up 15 min,  1 user,  load average: 0.00, 0.03, 0.00
+2026-09-24T00:21:37Z RECV  running
+2026-09-24T00:21:37Z RECV  ---PART-SHA---
+2026-09-24T00:21:37Z RECV  822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86  /dev/sda21
+2026-09-24T00:21:37Z RECV  9985eeef89844a6018d4664fdf4d52f89d3d7ab7d7dcef7c53d08dba08ce5834  /dev/sda22
+2026-09-24T00:21:37Z RECV  1abb4c68b8103020d7935f5057225abe1e6b6b2222f58a6e93e254eb851af27c  /dev/sda24
+2026-09-24T00:21:37Z RECV  ---PANEL---
+2026-09-24T00:21:37Z RECV  1
+2026-09-24T00:21:37Z RECV  1
+2026-09-24T00:21:37Z RECV  0
+2026-09-24T00:21:37Z RECV  2047
+2026-09-24T00:21:37Z RECV  ---POWERKEY---
+2026-09-24T00:21:37Z RECV  active
+2026-09-24T00:21:37Z RECV  /etc/systemd/logind.conf.d/60-gts9-power-key.conf:HandlePowerKey=ignore
+2026-09-24T00:21:37Z console run done (ready=True)

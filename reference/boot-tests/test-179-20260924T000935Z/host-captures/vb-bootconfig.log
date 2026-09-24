@@ -1,0 +1,20 @@
+2026-09-24T00:20:05Z console open on COM17
+2026-09-24T00:20:07Z RECV  echo READY1
+2026-09-24T00:20:07Z RECV  [?2004lREADY1
+2026-09-24T00:20:07Z shell answered after 1 poll(s)
+2026-09-24T00:20:07Z SENT  echo BC;echo ---BOOTCONFIG---;dd if=/dev/sda24 bs=1 skip=192512 count=111 2>/dev/null | tr -d "\000";echo;echo ---DTB-SHA---;dd if=/dev/sda24 bs=1 skip=8192 count=177425 2>/dev/null | sha256sum;echo ---TABLE---;dd if=/dev/sda24 bs=1 skip=188416 count=108 2>/dev/null | od -A d -t x1 | head -8
+2026-09-24T00:20:27Z RECV  [?2004hroot@gts9:~# echo BC;echo ---BOOTCONFIG---;dd if=/dev/sda24 bs=1 skip=192512 count=111 2>/dev/null | tr -d "\000";echo;echo ---DTB-SHA---;dd if=/dev/sda24 bs=1 skip=8192 count=177425 2>/dev/null | sha256sum;echo ---TABLE---;dd if=/dev/sda24 bs=1 skip=188416 count=108 2>/dev/null | od -A d -t x1 | head -8
+2026-09-24T00:20:27Z RECV  [?2004lBC
+2026-09-24T00:20:27Z RECV  ---BOOTCONFIG---
+2026-09-24T00:20:27Z RECV  # Keep this file intentionally small during bring-up.
+2026-09-24T00:20:27Z RECV  # Add only settings proven necessary by a physical test.
+2026-09-24T00:20:27Z RECV  
+2026-09-24T00:20:27Z RECV  ---DTB-SHA---
+2026-09-24T00:20:27Z RECV  f49b373462a278fcafb858fa9f59dac174d88b4f14810ad2638509d9c2e9e9be  -
+2026-09-24T00:20:27Z RECV  ---TABLE---
+2026-09-24T00:20:27Z RECV  0000000 52 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00
+2026-09-24T00:20:27Z RECV  0000016 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+2026-09-24T00:20:27Z RECV  *
+2026-09-24T00:20:27Z RECV  0000096 00 00 00 00 00 00 00 00 00 00 00 00
+2026-09-24T00:20:27Z RECV  0000108
+2026-09-24T00:20:27Z console run done (ready=True)

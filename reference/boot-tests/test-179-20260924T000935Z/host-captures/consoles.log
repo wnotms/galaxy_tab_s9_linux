@@ -1,0 +1,18 @@
+2026-09-24T00:27:42Z console open on COM17
+2026-09-24T00:27:44Z RECV  echo READY1
+2026-09-24T00:27:44Z RECV  [?2004lREADY1
+2026-09-24T00:27:44Z shell answered after 1 poll(s)
+2026-09-24T00:27:44Z SENT  echo CN;cat /proc/consoles;echo ---SECLOG---;dmesg | grep -i "sec.log\|sec_log" | head -5;ls /dev/gts9* /proc/last_kmsg 2>&1 | head -5
+2026-09-24T00:27:56Z RECV  [?2004hroot@gts9:~# echo CN;cat /proc/consoles;echo ---SECLOG---;dmesg | grep -i "sec.log\|sec_log" | head -5;ls /dev/gts9* /proc/last_kmsg 2>&1 | head -5
+2026-09-24T00:27:56Z RECV  [?2004lCN
+2026-09-24T00:27:56Z RECV  tty0                 -WU (EC     )    4:1
+2026-09-24T00:27:56Z RECV  ttyMSM0              -W- (E   p  )  237:0
+2026-09-24T00:27:56Z RECV  sec_log-1            -W- (E   p a)
+2026-09-24T00:27:56Z RECV  ---SECLOG---
+2026-09-24T00:27:56Z RECV  [    0.000000] [      T0] OF: reserved mem: 0x0000000880200000..0x00000008803fffff (2048 KiB) map non-reusable sec-log@880200000
+2026-09-24T00:27:56Z RECV  [    0.000000] [      T0] Kernel command line: console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32 console=tty0 gts9_poweroff_trace=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 \
+2026-09-24T00:27:56Z RECV  [    0.103741] [      T1] printk: legacy console [sec_log-1] enabled
+2026-09-24T00:27:56Z RECV  [    0.103882] [      T1] gts9wifi-sec-log: persistent console at 0x0000000880200000 (2097152 bytes, boot 1963, early_initcall)
+2026-09-24T00:27:56Z RECV  ls: cannot access '/dev/gts9*': No such file or directory
+2026-09-24T00:27:56Z RECV  ls: cannot access '/proc/last_kmsg': No such file or directory
+2026-09-24T00:27:56Z console run done (ready=True)

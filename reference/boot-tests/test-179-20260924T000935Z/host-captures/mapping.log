@@ -1,0 +1,9 @@
+2026-09-24T00:11:46Z console open on COM17
+2026-09-24T00:11:47Z RECV  echo READY1
+2026-09-24T00:11:47Z RECV  [?2004lREADY1
+2026-09-24T00:11:47Z shell answered after 1 poll(s)
+2026-09-24T00:11:47Z SENT  echo M1;ls -l /usr/share/man/man8/shutdown.8.gz 2>&1;zcat /usr/share/man/man8/shutdown.8.gz 2>/dev/null | sed -n "1,60p" | col -b 2>/dev/null | head -45
+2026-09-24T00:12:08Z RECV  [?2004hroot@gts9:~# echo M1;ls -l /usr/share/man/man8/shutdown.8.gz 2>&1;zcat /usr/share/man/man8/shutdown.8.gz 2>/dev/null | sed -n "1,60p" | col -b 2>/dev/null | head -45
+2026-09-24T00:12:08Z RECV  [?2004lM1
+2026-09-24T00:12:08Z RECV  -rw-r--r-- 1 root root 1380 Apr 14 03:38 /usr/share/man/man8/shutdown.8.gz
+2026-09-24T00:12:08Z console run done (ready=True)

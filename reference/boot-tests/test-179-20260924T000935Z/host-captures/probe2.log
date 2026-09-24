@@ -1,0 +1,14 @@
+2026-09-24T00:09:09Z console open on COM17
+2026-09-24T00:09:10Z RECV  echo READY1
+2026-09-24T00:09:10Z RECV  [?2004lREADY1
+2026-09-24T00:09:10Z shell answered after 1 poll(s)
+2026-09-24T00:09:10Z SENT  echo P2;uptime;cat /proc/uptime;systemctl is-system-running;cat /proc/sys/kernel/random/boot_id;uname -a;cat /proc/cmdline
+2026-09-24T00:09:16Z RECV  [?2004hroot@gts9:~# echo P2;uptime;cat /proc/uptime;systemctl is-system-running;cat /proc/sys/kernel/random/boot_id;uname -a;cat /proc/cmdline
+2026-09-24T00:09:16Z RECV  [?2004lP2
+2026-09-24T00:09:16Z RECV   03:41:40 up 3 min,  1 user,  load average: 0.01, 0.01, 0.00
+2026-09-24T00:09:16Z RECV  216.77 1722.31
+2026-09-24T00:09:16Z RECV  running
+2026-09-24T00:09:16Z RECV  42549565-d5a8-43d1-b67d-dbe7061451e6
+2026-09-24T00:09:16Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+2026-09-24T00:09:16Z RECV  console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+2026-09-24T00:09:16Z console run done (ready=True)

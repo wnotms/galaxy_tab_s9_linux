@@ -1,0 +1,8 @@
+2026-09-24T00:08:59Z console open on COM17
+2026-09-24T00:09:00Z RECV  echo READY1
+2026-09-24T00:09:00Z RECV  [?2004lREADY1
+2026-09-24T00:09:00Z shell answered after 1 poll(s)
+2026-09-24T00:09:00Z SENT  echo READY-PROBE,uptime,cat /proc/uptime,systemctl is-system-running,cat /proc/sys/kernel/random/boot_id,uname -a
+2026-09-24T00:09:04Z RECV  [?2004hroot@gts9:~# echo READY-PROBE,uptime,cat /proc/uptime,systemctl is-system-running,cat /proc/sys/kernel/random/boot_id,uname -a
+2026-09-24T00:09:04Z RECV  [?2004lREADY-PROBE,uptime,cat /proc/uptime,systemctl is-system-running,cat /proc/sys/kernel/random/boot_id,uname -a
+2026-09-24T00:09:04Z console run done (ready=True)

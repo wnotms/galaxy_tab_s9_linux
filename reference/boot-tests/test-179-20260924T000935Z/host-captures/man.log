@@ -1,0 +1,116 @@
+2026-09-24T00:12:15Z console open on COM17
+2026-09-24T00:12:16Z RECV  echo READY1
+2026-09-24T00:12:16Z RECV  [?2004lREADY1
+2026-09-24T00:12:16Z shell answered after 1 poll(s)
+2026-09-24T00:12:16Z SENT  echo M2;zcat /usr/share/man/man8/shutdown.8.gz | head -c 3000
+2026-09-24T00:12:35Z RECV  [?2004hroot@gts9:~# echo M2;zcat /usr/share/man/man8/shutdown.8.gz | head -c 3000
+2026-09-24T00:12:35Z RECV  [?2004lM2
+2026-09-24T00:12:35Z RECV  '\" t
+2026-09-24T00:12:35Z RECV  .TH "SHUTDOWN" "8" "" "systemd 257.13" "shutdown"
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .\" * Define some portability stuff
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-09-24T00:12:35Z RECV  .\" http://bugs.debian.org/507673
+2026-09-24T00:12:35Z RECV  .\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+2026-09-24T00:12:35Z RECV  .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2026-09-24T00:12:35Z RECV  .ie \n(.g .ds Aq \(aq
+2026-09-24T00:12:35Z RECV  .el       .ds Aq '
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .\" * set default formatting
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .\" disable hyphenation
+2026-09-24T00:12:35Z RECV  .nh
+2026-09-24T00:12:35Z RECV  .\" disable justification (adjust text to left margin only)
+2026-09-24T00:12:35Z RECV  .ad l
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .\" * MAIN CONTENT STARTS HERE *
+2026-09-24T00:12:35Z RECV  .\" -----------------------------------------------------------------
+2026-09-24T00:12:35Z RECV  .SH "NAME"
+2026-09-24T00:12:35Z RECV  shutdown \- Halt, power off or reboot the machine
+2026-09-24T00:12:35Z RECV  .SH "SYNOPSIS"
+2026-09-24T00:12:35Z RECV  .HP \w'\fBshutdown\fR\ 'u
+2026-09-24T00:12:35Z RECV  \fBshutdown\fR [OPTIONS...] [TIME] [WALL...]
+2026-09-24T00:12:35Z RECV  .SH "DESCRIPTION"
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fBshutdown\fR
+2026-09-24T00:12:35Z RECV  may be used to halt, power off, or reboot the machine\&.
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  The first argument may be a time string (which is usually
+2026-09-24T00:12:35Z RECV  "now")\&. Optionally, this may be followed by a wall message to be sent to all logged\-in users before going down\&.
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  The time string may either be in the format
+2026-09-24T00:12:35Z RECV  "hh:mm"
+2026-09-24T00:12:35Z RECV  for hour/minutes specifying the time to execute the shutdown at, specified in 24h clock format\&. Alternatively it may be in the syntax
+2026-09-24T00:12:35Z RECV  "+m"
+2026-09-24T00:12:35Z RECV  referring to the specified number of minutes m from now\&.
+2026-09-24T00:12:35Z RECV  "now"
+2026-09-24T00:12:35Z RECV  is an alias for
+2026-09-24T00:12:35Z RECV  "+0", i\&.e\&. for triggering an immediate shutdown\&. If no time argument is specified,
+2026-09-24T00:12:35Z RECV  "+1"
+2026-09-24T00:12:35Z RECV  is implied\&.
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  Note that to specify a wall message you must specify a time argument, too\&.
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  If the time argument is used, 5 minutes before the system goes down the
+2026-09-24T00:12:35Z RECV  /run/nologin
+2026-09-24T00:12:35Z RECV  file is created to ensure that further logins shall not be allowed\&.
+2026-09-24T00:12:35Z RECV  .SH "OPTIONS"
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  The following options are understood:
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-\-help\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Print a short help text and exit\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-H\fR, \fB\-\-halt\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Halt the machine\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-P\fR, \fB\-\-poweroff\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Power the machine off (the default)\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-r\fR, \fB\-\-reboot\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Reboot the machine\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-h\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  The same as
+2026-09-24T00:12:35Z RECV  \fB\-\-poweroff\fR, but does not override the action to take if it is "halt"\&. E\&.g\&.
+2026-09-24T00:12:35Z RECV  \fBshutdown \-\-reboot \-h\fR
+2026-09-24T00:12:35Z RECV  means "poweroff", but
+2026-09-24T00:12:35Z RECV  \fBshutdown \-\-halt \-h\fR
+2026-09-24T00:12:35Z RECV  means "halt"\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-k\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Do not halt, power off, or reboot, but just write the wall message\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-\-no\-wall\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Do not send wall message before halt, power off, or reboot\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-c\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Cancel a pending shutdown\&. This may be used to cancel the effect of an invocation of
+2026-09-24T00:12:35Z RECV  \fBshutdown\fR
+2026-09-24T00:12:35Z RECV  with a time argument that is not
+2026-09-24T00:12:35Z RECV  "+0"
+2026-09-24T00:12:35Z RECV  or
+2026-09-24T00:12:35Z RECV  "now"\&.
+2026-09-24T00:12:35Z RECV  .RE
+2026-09-24T00:12:35Z RECV  .PP
+2026-09-24T00:12:35Z RECV  \fB\-\-show\fR
+2026-09-24T00:12:35Z RECV  .RS 4
+2026-09-24T00:12:35Z RECV  Show a pending shutdown action and time if there is any\&.
+2026-09-24T00:12:35Z RECV  .sp
+2026-09-24T00:12:35Z console run done (ready=True)

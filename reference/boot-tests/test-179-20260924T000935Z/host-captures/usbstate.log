@@ -1,0 +1,28 @@
+2026-09-24T00:13:50Z console open on COM17
+2026-09-24T00:13:52Z RECV  echo READY1
+2026-09-24T00:13:52Z RECV  [?2004lREADY1
+2026-09-24T00:13:52Z shell answered after 1 poll(s)
+2026-09-24T00:13:52Z SENT  echo U1;ls /sys/class/power_supply/;for p in /sys/class/power_supply/*; do echo "$p: $(cat $p/type 2>/dev/null) online=$(cat $p/online 2>/dev/null) status=$(cat $p/status 2>/dev/null) current=$(cat $p/current_now 2>/dev/null) voltage=$(cat $p/voltage_now 2>/dev/null)"; done;echo ---UDC---;ls /sys/class/udc/;cat /sys/class/udc/*/state 2>/dev/null;ls /sys/kernel/config/usb_gadget/ 2>&1;cat /sys/kernel/config/usb_gadget/*/UDC 2>/dev/null;echo ---ACM-SVC---;systemctl status gts9-usb-acm.service --no-pager 2>&1 | head -12
+2026-09-24T00:14:10Z RECV  [?2004hroot@gts9:~# echo U1;ls /sys/class/power_supply/;for p in /sys/class/power_supply/*; do echo "$p: $(cat $p/type 2>/dev/null) online=$(cat $p/online 2>/dev/null) status=$(cat $p/status 2>/dev/null) current=$(cat $p/current_now 2>/dev/null) voltage=$(cat $p/voltage_now 2>/dev/null)"; done;echo ---UDC---;ls /sys/class/udc/;cat /sys/class/udc/*/state 2>/dev/null;ls /sys/kernel/config/usb_gadget/ 2>&1;cat /sys/kernel/config/usb_gadget/*/UDC 2>/dev/null;echo ---ACM-SVC---;systemctl status gts9-usb-acm.service --no-pager 2>&1 | head -12
+2026-09-24T00:14:10Z RECV  [?2004lU1
+2026-09-24T00:14:10Z RECV  /sys/class/power_supply/*:  online= status= current= voltage=
+2026-09-24T00:14:10Z RECV  ---UDC---
+2026-09-24T00:14:10Z RECV  a600000.usb  dummy_udc.0
+2026-09-24T00:14:10Z RECV  configured
+2026-09-24T00:14:10Z RECV  not attached
+2026-09-24T00:14:10Z RECV  gts9
+2026-09-24T00:14:10Z RECV  a600000.usb
+2026-09-24T00:14:10Z RECV  ---ACM-SVC---
+2026-09-24T00:14:10Z RECV  ??? gts9-usb-acm.service - X710 USB ACM debug console (configfs)
+2026-09-24T00:14:10Z RECV       Loaded: loaded (/usr/lib/systemd/system/gts9-usb-acm.service; enabled; preset: enabled)
+2026-09-24T00:14:10Z RECV       Active: active (exited) since Tue 2026-04-14 03:38:08 CST; 8min ago
+2026-09-24T00:14:10Z RECV   Invocation: ce58e97d05074618a1450ba25ad26096
+2026-09-24T00:14:10Z RECV      Process: 519 ExecStart=/usr/libexec/gts9-usb-acm (code=exited, status=0/SUCCESS)
+2026-09-24T00:14:10Z RECV     Main PID: 519 (code=exited, status=0/SUCCESS)
+2026-09-24T00:14:10Z RECV     Mem peak: 3.9M
+2026-09-24T00:14:10Z RECV          CPU: 83ms
+2026-09-24T00:14:10Z RECV  
+2026-09-24T00:14:10Z RECV  Apr 14 03:38:07 gts9 systemd[1]: Starting gts9-usb-acm.service - X710 USB ACM debug console (configfs)...
+2026-09-24T00:14:10Z RECV  Apr 14 03:38:07 gts9 gts9-usb-acm[519]: gts9-usb-acm: bound to a600000.usb; /dev/ttyGS0 is ready
+2026-09-24T00:14:10Z RECV  Apr 14 03:38:07 gts9 gts9-usb-acm[567]: GTS9_DEBIAN_STAGE=usb-acm-ready
+2026-09-24T00:14:10Z console run done (ready=True)
