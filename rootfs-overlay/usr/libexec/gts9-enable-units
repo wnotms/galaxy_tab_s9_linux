@@ -60,10 +60,23 @@ for unit in "$unit_dir"/gts9-*.service; do
 	done
 done
 
-# The USB debug console is a template instance, not a gts9 unit, so its
-# enablement is explicit here.
-if [ -f "$unit_dir/serial-getty@.service" ]; then
-	link_unit getty.target serial-getty@ttyGS0.service serial-getty@.service
+# The USB debug console used to be the generic serial-getty@ttyGS0 instance.
+# It is now gts9-acm-getty.service, which is a gts9 unit and is enabled by the
+# loop above: the generic instance depends on dev-ttyGS0.device and times out
+# when the gadget is created a moment later.  Remove the old link if a previous
+# install made one, so the port is not opened twice.
+rm -f "$etc_dir/getty.target.wants/serial-getty@ttyGS0.service" 2>/dev/null || true
+
+# ttyMSM0: the SoC UART is a *kernel* console (console=ttyMSM0,115200n8 and
+# earlycon stay on the command line) with nothing attached to it, and the device
+# node only appears when the GENI driver finishes probing.  systemd's
+# getty-generator creates serial-getty@ttyMSM0.service from the console=
+# argument, and a previous install enabled it too; both made boot wait for
+# dev-ttyMSM0.device, which timed out on 2026-09-24.  Mask that one instance
+# only - tty1 and the ACM console are untouched - and drop the enable link.
+rm -f "$etc_dir/getty.target.wants/serial-getty@ttyMSM0.service" 2>/dev/null || true
+if [ -d "$etc_dir" ] && [ ! -e "$etc_dir/serial-getty@ttyMSM0.service" ]; then
+	ln -s /dev/null "$etc_dir/serial-getty@ttyMSM0.service" 2>/dev/null || true
 fi
 
 echo "gts9-enable-units: $created link(s) in $etc_dir"
