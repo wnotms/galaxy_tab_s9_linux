@@ -17,13 +17,13 @@ Run it before flashing anything:
 
 | partition | now (flashed) | candidate | note |
 |---|---|---|---|
-| boot | 2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923 | 20de7d1ec15b8e2fef5fd2f75684f865df71d06c658654357b64b6b0528a4500 | kernel with the RPMh diagnostic (0021); still `CONFIG_U_SERIAL_CONSOLE=y` |
+| boot | 2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923 | a4cba434d99dbf4e6c848060d26c285956d9f7e74698b07d4945b5467671d572 | kernel with the RPMh diagnostic (0021); still `CONFIG_U_SERIAL_CONSOLE=y` |
 | vendor_boot | f1f4ccf76d91f8841cbb5f7752bf9ce19f01f8fdf95714ab35d6765a0615cc56 | f5ff011ab0d78c0e4458e69a44bcaff6e35934571213cc3dc90416b5821a890d | built from `boot/cmdline.rpmh-debug.example.txt` |
 | init_boot | 7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c | unchanged | |
 | dtbo | c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3 | unchanged | |
 | vbmeta | b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4 | unchanged | |
 
-Kernel payload SHA256 `b0c169e7bc0bfda49e163c5c7528552be69bf59e6db9c4959583801da8301288`
+Kernel payload SHA256 `d5a782c33c7f7ac46568ed7ca07068824b321545d04421244c326039d9e272f3`
 (Image.gz), board DTB `b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596`.
 
 Both partitions carry the board DTB, so the pair moves together. The flash must
@@ -65,3 +65,24 @@ and read `rounds/round-N.txt`:
   contain patch 0021, so a plain `scripts/prepare-kernel.sh` + build reverts it.
 * The diagnostic is inert without `gts9_rpmh_debug=1` on the command line, so a
   candidate kernel can also be left flashed while booting a profile without it.
+
+## How this candidate was verified (no device involved)
+
+```sh
+GTS9_RPMH_DEBUG=1 BUILD_MODULES=0 \
+KERNEL_WORKTREE="$PWD/.work/build/linux-src-poweroff-trace" \
+KERNEL_BUILD_DIR="$PWD/.work/build/linux-out-poweroff-trace" \
+KERNEL_OUT_DIR="$PWD/out/kernel-rpmh-debug-check" \
+scripts/build-kernel.sh
+```
+
+Result: `Build complete`, exit 0, release `7.2.0-rc3-gts9wifi-dirty`.
+`git -C <worktree> diff --stat` afterwards shows exactly the three rpmh files
+(`rpmh.c +20`, `rpmh-rsc.c +205`, `rpmh-internal.h +13`, 238 insertions, no
+deletions), which is the proof that the diagnostic was in the build rather than
+merely in the repository. A separate object-level build earlier confirmed the
+patch compiles from a pristine tree after `git apply --check`.
+
+Host checks: `bash -n` over every script, and
+`python3 -m unittest discover -s tests -p "test_*.py"` - see the round report
+for the count.
