@@ -55,6 +55,15 @@ PROBE_CMDS='R=/tmp/gts9-probe.txt; { echo "REL=$(uname -r)"; echo "BID=$(cat /pr
 
 extract() { sed -n 's/.*RECV  //p' "$1" | grep -aE '^(REL|BID|UP|GPU|DEF|SL|HT|RCU|RPMH|DPU|MMC|BURST|ACD|DROP|FAILED)='; }
 
+# The device archives the PREVIOUS boot itself (gts9-prev-boot-evidence), and its
+# verdict says whether that boot ended cleanly, panicked, or was a hard reset.
+# That is how an unattended reboot is detected without the console surviving the
+# round - see docs/BOOT_TIMING_AND_STALL_EVIDENCE.md.  pstore does NOT survive on
+# this port, so this archive is the only per-boot evidence channel that does.
+EVID_CMDS='R=/tmp/gts9-evid.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; [ -n "$D" ] && grep -aE "^(previous_boot_end|marker_panic|marker_soft_lockup|marker_hard_lockup|marker_hung_task|marker_rcu_stall|marker_dpu_timeout|marker_mmc_timeout|boot_id)=" "$D/verdict.txt" 2>/dev/null; echo "EVIDCOUNT=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | wc -l)"; } > $R 2>&1; cat $R'
+
+extract_evid() { sed -n 's/.*RECV  //p' "$1" | grep -aE '^(EVIDDIR|EVIDCOUNT|previous_boot_end|marker_|boot_id)='; }
+
 say "profile=$PROFILE rounds=$ROUNDS kind=warm-reboot allow_power=$ALLOW"
 
 # --- preflight -------------------------------------------------------------
@@ -106,13 +115,32 @@ for i in $(seq 1 "$ROUNDS"); do
 		say "  round $i: NO DATA - stopping the series (an unprobed round is not a clean round)"
 		break
 	fi
+	console "evid$i" "$EVID_CMDS" "$DIR/evid-$i-raw.txt" 3 || true
 	{
 		echo "profile=$PROFILE"
 		echo "round=$i"
 		echo "kind=warm-reboot"
 		echo "status=ok"
 		extract "$DIR/probe-$i-raw.txt" 2>/dev/null
+		extract_evid "$DIR/evid-$i-raw.txt" 2>/dev/null
 	} >"$DIR/round-$i.txt"
+
+	# Classify the round from the device's own archive of the boot we just ended.
+	prev_end=$(sed -n 's/^previous_boot_end=//p' "$DIR/round-$i.txt" | head -1)
+	markers=$(grep -aE '^marker_' "$DIR/round-$i.txt" | grep -avE '=0$' | tr '\n' ' ')
+	if [ -n "$markers" ]; then
+		echo "verdict=STALL-CAPTURED" >>"$DIR/round-$i.txt"
+		echo "stall_markers=$markers" >>"$DIR/round-$i.txt"
+		say "  *** STALL CAPTURED in round $i: $markers"
+	elif [ "$prev_end" = "hard-reset-or-incomplete" ]; then
+		echo "verdict=unattended-reboot" >>"$DIR/round-$i.txt"
+		say "  *** UNATTENDED REBOOT before round $i (no marker matched; inspect the archive)"
+	elif [ "$prev_end" = "panic" ]; then
+		echo "verdict=previous-boot-panicked" >>"$DIR/round-$i.txt"
+		say "  *** previous boot panicked (see the evidence directory)"
+	else
+		echo "verdict=clean" >>"$DIR/round-$i.txt"
+	fi
 	say "  $(grep -aE '^(BID|UP|GPU|SL|RCU|RPMH|BURST|ACD|DROP)=' "$DIR/round-$i.txt" 2>/dev/null | tr '\n' ' ')"
 
 	# A boot_id we did not cause is potentially the stall itself. Detect it.
