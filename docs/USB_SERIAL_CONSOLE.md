@@ -8,17 +8,42 @@ bring-up work does not confuse the physical Qualcomm UART with the USB gadget se
 | Linux device | Transport | Purpose |
 | --- | --- | --- |
 | `/dev/tty1` | framebuffer VT + EF-DX710 keyboard | local tablet login |
-| `/dev/ttyGS0` | USB ConfigFS ACM gadget | Windows USB COM login |
-| `/dev/ttyMSM0` | Qualcomm GENI UART | physical UART / kernel console |
+| `/dev/ttyGS0` | USB ConfigFS ACM gadget, first interface | **userspace root shell** (`gts9-acm-getty.service`, autologin root) |
+| `/dev/ttyGS1` | USB ConfigFS ACM gadget, second interface | **kernel printk console** (`console=ttyGS1`) |
+| `/dev/ttyMSM0` | Qualcomm GENI UART | physical UART; kernel console (`console=ttyMSM0,115200n8`, `earlycon`), no userspace getty |
 
-The kernel cmdline intentionally contains:
+The mapping above is the current, hardware-verified one (2026-09-24,
+`reference/boot-tests/test-183-*` and `test-184-*`). Read it as three separate
+things that are easy to confuse:
 
-```
-console=ttyMSM0,115200n8
-```
+* `ttyMSM0` is the **SoC's physical GENI UART**. `console=ttyMSM0,115200n8` and
+  `earlycon` keep it as a *kernel* console for bring-up. Nothing is attached to
+  it on this tablet, so it does **not** want a userspace getty:
+  `systemctl-getty-generator` used to create `serial-getty@ttyMSM0.service` from
+  the `console=` argument, and while `/dev/ttyMSM0` did not exist yet the boot
+  waited for `dev-ttyMSM0.device` and hit its 90 s timeout. That one instance is
+  now masked (`gts9-enable-units`); the kernel console and `earlycon` are
+  untouched.
+* `ttyGS0` is the **USB ACM userspace channel**: the Windows COM port that gives
+  a root shell. It is served by `gts9-acm-getty.service`, not by the generic
+  `serial-getty@ttyGS0.service` — the generic instance waits for
+  `dev-ttyGS0.device`, which is created later by `gts9-usb-acm.service`, so it
+  timed out and failed; with no process holding the tty open the gadget has no
+  OUT requests and host writes time out as well, which looks like a dead tablet.
+  `gts9-acm-getty.service` is ordered `After=gts9-usb-acm.service` and runs
+  `agetty --autologin root` directly on `ttyGS0`.
+* `ttyGS1` is the **second ACM interface** and carries `printk`
+  (`CONFIG_U_SERIAL_CONSOLE=y`, `console=ttyGS1` in the command line). A gadget
+  serial console takes its port's IN endpoint, so a port cannot be both the
+  kernel console and a login shell — that is why the two roles are split across
+  two interfaces. The host sees two COM ports; both are needed, and the kernel
+  console is where live kernel messages (and anything printed before a panic)
+  arrive.
 
-That selects the Qualcomm UART as a kernel console. It does **not** mean that a Windows COM
-device created by the USB-C gadget maps to `ttyMSM0`.
+`gts9-kmsg-console` (the userspace mirror of `/dev/kmsg`) is a third, optional
+piece: it exists for boots whose command line has no ttyGS console, is gated by
+`gts9_kmsg_mirror=1`, and steps aside by itself when the kernel already owns a
+ttyGS console.
 
 ## Why the Windows COM port was present but silent after switch_root
 
@@ -44,7 +69,7 @@ BusyBox shell alive inside the Debian system.
 Enable systemd's serial getty on the USB gadget tty:
 
 ```
-sudo systemctl enable --now serial-getty@ttyGS0.service
+sudo systemctl enable --now gts9-acm-getty.service
 ```
 
 Verified on the tablet: Windows serial access works after this service is enabled. Because
@@ -54,9 +79,11 @@ the unit is enabled, subsequent Debian boots should start it automatically whene
 Useful checks:
 
 ```
-ls -l /dev/ttyGS0
-systemctl is-enabled serial-getty@ttyGS0.service
-systemctl status serial-getty@ttyGS0.service --no-pager
+ls -l /dev/ttyGS0 /dev/ttyGS1
+systemctl is-enabled gts9-acm-getty.service
+systemctl status gts9-acm-getty.service --no-pager
+# the generic instance must stay disabled, and the ttyMSM0 one masked:
+systemctl is-enabled serial-getty@ttyGS0.service serial-getty@ttyMSM0.service
 cat /sys/kernel/config/usb_gadget/gts9/UDC
 ```
 
@@ -66,7 +93,13 @@ If Windows sees the COM port but it is silent, first check which process, if any
 
 ## ttyMSM0 remains separate
 
-A `serial-getty@ttyMSM0.service` may also be enabled when a userspace login is wanted on
+**It is masked on this tablet** (`serial-getty@ttyMSM0.service -> /dev/null`): the
+UART has no userspace login attached and the device node appears late. Do not
+remove that mask to "restore" the getty, and do not remove `console=ttyMSM0` or
+`earlycon` to hide the timeout.
+
+Historically a `serial-getty@ttyMSM0.service` could be enabled when a userspace login is wanted on
 the physical Qualcomm UART, but that service does not provide the Windows USB ACM console.
 
-Do not replace `ttyGS0` with `ttyMSM0` in USB-console documentation, tests or scripts.
+Do not replace `ttyGS0` with `ttyMSM0` in USB-console documentation, tests or
+scripts, and do not treat `ttyGS1` as a second shell: it is the kernel console.
