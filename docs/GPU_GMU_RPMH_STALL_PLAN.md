@@ -362,6 +362,61 @@ burst *causing* the wedge. That is exactly what the §7 matrix tests.
 
 ---
 
+### 4.4 AMENDMENT (round 11): the burst is NOT a sufficient mechanism
+
+Rounds 9-11 tested §4.2-4.3's central claim — that the deferred-probe burst is the
+trigger — against real hardware, and it does not hold as a sufficient cause.
+
+Measured on 8 post-fix boots (the device's own retained `gts9-boot-evidence`
+records, previous boot's kernel log read per boot):
+
+| boot | last monotonic timestamp reached | `sync_state() pending` lines |
+|---|---|---|
+| `…-1084b57a` | 89.99 s | 31 |
+| `…-14f0722f` | 90.51 s | 31 |
+| `…-7f8878b7` | 45.21 s | 31 |
+| `…-b69787e2` | 659.61 s | 29 |
+| `…-1f85d97b` | 2615.21 s (43.6 min) | 29 |
+| `…-61f93d8e` | 709.80 s | 29 |
+| `…-994ad160` | 378.88 s | 29 |
+| `…-cd04c0ef` | 377.84 s | 29 |
+
+Every one of those boots lived far past the 13-14 s window and carried the full
+`sync_state` load (29-31 pending lines), and **none stalled**. The burst still
+fires, in the same place, with the same shape:
+
+```
+[   14.304464] platform 6800000.remoteproc: deferred probe pending: ...
+[   14.306552] gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+[   14.306668] gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+```
+
+So the burst is **not** what wedges the machine — it occurs, at the same timing and
+with the same `sync_state` content, on boots that survive. And the `sync_state`
+blockage on `gmu@3d6a000` (§4.3) is likewise not the differentiator: it is present
+on every surviving boot, because it is upstream-correct behaviour (there is no
+`qcom,adreno-gmu` platform driver in this tree), and the AOSS QMP fix does not and
+should not change it.
+
+**What does differ** between the surviving boots and the archived failures is the
+GPU chain. The failures carried `Unable to send ACD state to AOSS`,
+`Unable to drop a managed device link reference`, and
+`probe with driver adreno failed with error -22`. None of the surviving boots has
+any of those; the current boot shows instead
+`[drm] Initialized msm 1.13.0 for 3d00000.gpu on minor 0`.
+
+**Read §4.2-4.3 accordingly:** the burst coincides with the stall window and the GPU
+defect was on the path into it, but the burst alone demonstrably completes without
+wedging. The AOSS QMP + IPCC fix removed the GPU-probe failure chain, and 8 boots
+that reached the window with the full `sync_state` load did not stall.
+
+**Still not a proof**, for a reason independent of sample size: the two archived
+failures were found by inspection rather than by counting attempts, so there is no
+pre-fix rate to compare against. The supportable statement is "the window is reached
+on every boot and no longer wedges", not "the failure is eliminated".
+
+---
+
 ## 5. Excluded directions (do not re-investigate)
 
 * **PCIe0 / its PHY** — disabled in DTS for a full A/B, stall reproduced (fact 7).
@@ -535,6 +590,15 @@ the 13–14 s wedge, and none of them is acted on this round:
 | D removes the ACD error but **not** the stall | a real bug was fixed and it is **not** the sufficient root cause | record exactly that; go to G, then E |
 | F removes the `device_link_put_kref` WARN but the stall remains | a real GMU driver bug was fixed, not sufficient for the stall | record exactly that; never call it "the fix failed" |
 | no stall in any profile | "not reproduced this round" | repeat A; do not change code |
+
+**Status of G after round 11 (read this before running it).** G's premise was that
+the deferred-probe burst is the prime suspect. §4.4 now contradicts that: 8
+post-fix boots reached the burst at the same ~14.3 s with the same `sync_state`
+load and did not stall. G therefore no longer tests a leading hypothesis — it would
+test a weakened one. It remains a valid ablation, but the higher-value work is now
+to determine whether the pre-fix failure recurs at all, since the AOSS QMP + IPCC
+fix removed the only difference observed between surviving and failing boots. Keep
+G in reserve for the case where the failure returns with the GPU already bound.
 
 **Why G is high value.** It is a pure cmdline change (`deferred_probe_timeout=300`)
 on the *same* kernel as A/B/C, needs no new code, and moves the one deterministic
