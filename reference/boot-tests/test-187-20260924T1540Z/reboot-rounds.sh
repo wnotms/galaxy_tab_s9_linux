@@ -39,7 +39,7 @@ console() {
 	while [ "$n" -le "$tries" ]; do
 		timeout 420 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
 			-Out "$WIN\\$tag-$n.log" -Port "$PORT" \
-			-WaitReadySeconds 240 -ReadSeconds 90 \
+			-WaitReadySeconds 420 -ReadSeconds 90 \
 			-Commands "$cmds" >"$raw" 2>&1
 		if ! grep -aq "could not open\|send failed" "$raw"; then
 			return 0
@@ -72,7 +72,7 @@ esac
 
 # Confirm the device is actually running this profile's command line.
 gotcmd=$(timeout 300 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
-	-Out "$WIN\\cmdline.log" -Port "$PORT" -WaitReadySeconds 120 -ReadSeconds 40 \
+	-Out "$WIN\\cmdline.log" -Port "$PORT" -WaitReadySeconds 300 -ReadSeconds 40 \
 	-Commands 'cat /proc/cmdline' 2>/dev/null | grep -a "console=ttyMSM0" | tail -1 || true)
 case "$PROFILE" in
 	baseline)
@@ -92,17 +92,39 @@ fi
 for i in $(seq 1 "$ROUNDS"); do
 	say "=== round $i/$ROUNDS (warm reboot) ==="
 	console "reboot$i" 'systemctl reboot' "$DIR/reboot-$i-raw.txt" 3 || say "  reboot $i: could not issue"
-	sleep 70
+	sleep 150
 	if ! console "probe$i" "$PROBE_CMDS" "$DIR/probe-$i-raw.txt" 4; then
-		say "  round $i: probe could not run; recording empty"
+		# An empty round reads exactly like a clean round in a summary table.
+		# Mark it no-data and STOP: a series of unprobed rounds is not evidence.
+		{
+			echo "profile=$PROFILE"
+			echo "round=$i"
+			echo "kind=warm-reboot"
+			echo "status=no-data"
+			echo "note=console probe could not run; this round proves nothing"
+		} >"$DIR/round-$i.txt"
+		say "  round $i: NO DATA - stopping the series (an unprobed round is not a clean round)"
+		break
 	fi
 	{
 		echo "profile=$PROFILE"
 		echo "round=$i"
 		echo "kind=warm-reboot"
+		echo "status=ok"
 		extract "$DIR/probe-$i-raw.txt" 2>/dev/null
 	} >"$DIR/round-$i.txt"
 	say "  $(grep -aE '^(BID|UP|GPU|SL|RCU|RPMH|BURST|ACD|DROP)=' "$DIR/round-$i.txt" 2>/dev/null | tr '\n' ' ')"
+
+	# A boot_id we did not cause is potentially the stall itself. Detect it.
+	prevbid=$(sed -n 's/^BID=//p' "$DIR/preflight.txt" 2>/dev/null | head -1)
+	curbid=$(sed -n 's/^BID=//p' "$DIR/round-$i.txt" 2>/dev/null | head -1)
+	if [ -n "$prevbid" ] && [ -n "$curbid" ] && [ "$prevbid" = "$curbid" ]; then
+		# We asked for a reboot, so the id MUST change. If it did not, the
+		# reboot never happened and this round describes the previous boot.
+		echo "status=stale-boot" >>"$DIR/round-$i.txt"
+		say "  WARNING: boot_id unchanged ($curbid) - the reboot did not happen; round is stale"
+		break
+	fi
 done
 
 say "=== series complete: $PROFILE ==="
