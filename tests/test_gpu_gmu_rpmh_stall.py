@@ -428,13 +428,26 @@ class Test187CandidateTests(unittest.TestCase):
             self.skipTest(f"{self.BUNDLES[name]} not built")
         return path
 
-    def test_the_candidate_is_documented_as_not_flashed(self):
+    def test_the_candidate_records_its_current_flash_status(self):
+        """The candidate must say truthfully whether it has been flashed.
+
+        It was written as "not flashed" in round 1; profile A was then flashed and
+        booted in round 3 once the owner authorised it. Either state is fine, but
+        the document has to match reality and must not claim a fix.
+        """
         text = read(f"{self.TESTDIR}/candidate.txt")
-        self.assertIn("NOT flashed", text)
-        # The magic phrase the brief asks the round to stop at.  Normalise the
-        # line wrapping and markdown emphasis before matching.
-        flat = re.sub(r"[*_\s]+", " ", text)
-        self.assertIn("candidate ready for physical test", flat)
+        flashed = "has since been flashed" in text
+        not_flashed = "NOT flashed" in text
+        self.assertTrue(
+            flashed or not_flashed,
+            "candidate must state its flash status explicitly",
+        )
+        if flashed:
+            # Once flashed, it must point at the on-device result and must not
+            # overclaim: the stall A/B is still outstanding.
+            self.assertIn("on-device/README.md", text)
+            self.assertIn("no fix claim", text)
+            self.assertIn("still outstanding", text)
 
     def test_all_profiles_share_one_kernel(self):
         """The whole A/B rests on this."""

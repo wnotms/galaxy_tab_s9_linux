@@ -1,9 +1,15 @@
-# test-187 candidate — built and verified, NOT flashed
+# test-187 candidate — profile A flash-verified on hardware (GPU now binds)
+#
+# See on-device/README.md for the on-device result. The stall-rate A/B (profile A
+# vs G) has still NOT been run, so there is no fix claim here.
 
-Four bundles assembled and validated locally. **Nothing was written to the
-tablet.** The safety rule for this phase is that flashing and power actions need
-explicit authorisation, and this round stops at *candidate ready for physical
-test*.
+Five bundles assembled and validated locally. **Profile A has since been flashed
+and booted on hardware** with the owner's explicit authorisation, and the GPU now
+binds — see `on-device/README.md`. The stall-rate A/B is still outstanding, so
+there is no fix claim here.
+
+The bundles were rebuilt after the round-3 `CONFIG_QCOM_IPCC` fix; every hash
+below is from that single build.
 
 ## Why this candidate exists
 
@@ -27,12 +33,12 @@ one-variable experiment.
 
 | image | sha256 | note |
 |---|---|---|
-| `boot.img` | `afd9371633cdc9f75c0a54c9a2f57bb865fb68736aa2996c3681503c072e3ee6` | identical in all five bundles |
+| `boot.img` | `12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c` | identical in all five bundles; **flash-verified and booted, GPU binds** |
 | `init_boot.img` | `7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c` | unchanged from the flashed image |
 | `dtbo.img` | `c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3` | unchanged |
 | `vbmeta.img` | `b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4` | unchanged |
 
-Kernel payload `Image.gz` `c825426bd7e06f16c6e9e7fd46a2605acfa0cd1e9747789eed403afaacce90ca`,
+Kernel payload `Image.gz` `7e109e8f830440c774c04acc66685764a3ec3189d765898a8496489e22b1a491`,
 board DTB `b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596`,
 initramfs `7064945c07c929d9ff0764f2f7c56b49d74ff90a0663588d3b3bf7cfce0131bf`.
 
@@ -46,7 +52,7 @@ verification rebuild produced `c825426b…`, and **all five bundles were then
 rebuilt from the single current build** so they are mutually consistent again.
 
 Each bundle's `BUNDLE_INFO` records the build it came from, and all five now read
-`image_gz_sha256=c825426bd7e06f16c6e9e7fd46a2605acfa0cd1e9747789eed403afaacce90ca`,
+`image_gz_sha256=7e109e8f830440c774c04acc66685764a3ec3189d765898a8496489e22b1a491`,
 which matches `out/kernel-gts9wifi/Image.gz`.
 
 **Operational consequence for the operator: do not rebuild between flashing
@@ -59,7 +65,10 @@ That kernel contains, in order:
 1. `0001`, `0002`, `0003`, `0004`, `0006`, `nxp-ptn3222-…` — the existing queue;
 2. **`0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch`** — new,
    the upstream GMU cxpd `DL_FLAG_STATELESS` fix;
-3. **`CONFIG_QCOM_AOSS_QMP=y`** — new, the config fix;
+3. **`CONFIG_QCOM_AOSS_QMP=y` and `CONFIG_QCOM_IPCC=y`** — new, the config fix.
+   Both are required: AOSS QMP takes its mailbox from IPCC, and with only the
+   first one `qcom_aoss_qmp` fails with "failed to acquire ipc mailbox" and the
+   GPU stays unbound. Verified on hardware — see `on-device/README.md`;
 4. `diagnostic/0021-…` with the new `rsc_id` field — compiled in, inert unless
    `gts9_rpmh_debug=1` is on the command line.
 
@@ -76,10 +85,13 @@ That kernel contains, in order:
 Profile **G** is new in round 2 and is the most decisive single test available.
 The four recorded stalls all begin in the 13.3-14.3 s window, and a real capture
 (`test-181-*/host-captures/r3-shutdown-window.log`, 14.3076-14.3127 s) shows that
-window **is** the `deferred_probe_timeout` burst: at `late_initcall + 10 s` the
-kernel re-probes every deferred device and walks `sync_state` across the whole
-clock/interconnect/power-domain graph at once. That same dump names the GPU and
-GMU as the reason `gcc`/`gpucc`/interconnect can never finish `sync_state`:
+window is the `deferred_probe_timeout` burst. Corrected in round 3: the burst is
+**not** at `late_initcall + 10 s`, because `driver_register()` re-arms the timer
+via `deferred_probe_extend_timeout()`, so it fires 10 s after the last driver
+registration that found the work pending. What the burst does is re-probe every
+deferred device and walk `sync_state` across the whole clock/interconnect/
+power-domain graph at once. That dump names the GPU and GMU as the reason
+`gcc`/`gpucc`/interconnect can never finish `sync_state`:
 
 ```
 qnoc-sm8550 interconnect-1: sync_state() pending due to 3d00000.gpu
@@ -183,16 +195,17 @@ logged all seven default-queue patches plus diagnostic `0021` as applied, and
 `grep -c 'gts9_rpmh_ev_add\|rsc_id'` on the build worktree's `rpmh-rsc.c` returns
 10, which is the proof the diagnostic was compiled in rather than merely present
 in the repository. The resolved `out/kernel-gts9wifi/config` contains
-`CONFIG_QCOM_AOSS_QMP=y` alongside `CONFIG_MAILBOX=y`, `CONFIG_COMMON_CLK=y` and
-`CONFIG_PM=y`.
+`CONFIG_QCOM_AOSS_QMP=y` and `CONFIG_QCOM_IPCC=y` alongside `CONFIG_MAILBOX=y`,
+`CONFIG_COMMON_CLK=y` and `CONFIG_PM=y`. `readlink -f` on the booted device now
+resolves `3d00000.gpu/driver` to `/sys/bus/platform/drivers/adreno`.
 
 Bundles were assembled with `scripts/build-boot-bundle.sh` and validated with
-`scripts/validate-boot-bundle.sh`: **0 failures** for all four bundle/profile
+`scripts/validate-boot-bundle.sh`: **0 failures** for all four stall-A/B bundle/profile
 combinations, including the AVB descriptors, the partition sizes, the empty
 platform ramdisk and `SHA256SUMS` verification.
 
 Host checks: `bash -n` over every `scripts/*.sh`, and
-`python3 -m unittest discover -s tests -p "test_*.py"` → 244 tests, OK.
+`python3 -m unittest discover -s tests -p "test_*.py"` → 267 tests, OK.
 
 A live read-only preflight over the USB shell also succeeded against the
 **currently flashed** image and returned the `gpu_bound=0 / gmu_bound=0 /
