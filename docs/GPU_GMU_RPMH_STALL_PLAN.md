@@ -263,13 +263,22 @@ Notes:
 
 * A, B and C share **one kernel** and differ only in `vendor_boot` cmdline. That is
   the cheapest possible A/B and it is why they come first.
+* **D is already built and its config change is committed**
+  (`config: enable QCOM_AOSS_QMP so the SM8550 GPU can bind`). The resolved
+  `out/kernel-gts9wifi/config` contains `CONFIG_QCOM_AOSS_QMP=y` with
+  `CONFIG_MAILBOX=y`, `CONFIG_COMMON_CLK=y` and `CONFIG_PM=y`. What is *not* yet
+  known is whether the GPU binds on real hardware — that is a physical-boot
+  question, and it is the single most informative round available.
+  Because D changes the kernel, its `boot.img` differs from A/B/C; that is
+  expected and must be recorded in the round's artifact manifest.
 * F is a real upstream bugfix that is worth carrying regardless of the stall
-  outcome (see `docs/X710_X910_GPU_RPMH_DIFF.md` §"upstream fix"), but on its own
-  it is *only* a WARN removal: with ACD still failing, the GPU stays deferred.
-* D is the first profile that could plausibly make the GPU actually bind. Whether
-  the GPU binding is good or bad for the stall is an open question — it could
-  remove the retry storm or add a new RPMh voter. Both outcomes are informative
-  and both must be recorded.
+  outcome (see `docs/X710_X910_GPU_RPMH_DIFF.md` §"upstream fix"), and it is
+  **already in the default queue**, so every build from here on contains it. It is
+  *only* a WARN removal: with ACD still failing, the GPU stays deferred, so F must
+  not be credited with anything beyond that.
+* E's patch metadata is recorded in advance in
+  `docs/RPMH_RSC_DEBUG_PATCH_STATUS.md`, together with why the existing opt-in
+  patch `0021` is tried first.
 
 ### 7.1 Profiles
 
