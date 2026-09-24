@@ -1380,7 +1380,16 @@
 	status = "okay";
 };
 
-/* X710 downstream uses PCIe0 and GPIO94/96 for the QCA6490 WLAN endpoint. */
+/*
+ * X710 downstream uses PCIe0 and GPIO94/96 for the QCA6490 WLAN endpoint.
+ *
+ * Test 182 disabled this controller to test whether its probe caused the
+ * cold-boot stall of test 181.  It did not: the stall reproduced unchanged
+ * with pcie0 disabled and no PCIe code running, so the correlation was an
+ * artefact (the probe was simply the last thing that logged before the quiet
+ * window).  The node stays enabled; the stall investigation continues in
+ * docs/DPU_TRACE.md and reference/boot-tests/test-182-*.
+ */
 &pcie0 {
 	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
 	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;

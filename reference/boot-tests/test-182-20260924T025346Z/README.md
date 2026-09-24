@@ -175,3 +175,24 @@ Read against `dpu_crtc.c`:
    dropped without completing `frame_done_comp`, so a lost event degrades one
    frame instead of wedging the machine.  That is a robustness fix, not the
    root cause, and must not be presented as one.
+
+## Rollback (done)
+
+The falsified DTS change was reverted in the same session, and the tablet was
+flashed back to the known-good pair with the same verified procedure
+(`rollback-write-readback.txt`):
+
+```text
+boot       <- boot-before.img        readback 822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86  PASS
+vendor_boot<- vendor_boot-before.img readback 3c88b36b7b3f1703ccd751b77522fa6d16596650e627893e3131848c96731dec  PASS
+```
+
+Verified on the tablet afterwards: `pcie0=okay`, `dmesg | grep -c pcie` = 40
+(the probe runs again), `systemctl is-system-running` = running, and the
+rebuilt reverted DTB is byte-identical to the original known-good one
+(`f49b373462a278fcafb858fa9f59dac174d88b4f14810ad2638509d9c2e9e9be`).
+
+The diagnostic recorder is disabled again (`systemctl disable --now
+gts9-dpu-flight.service`, tracing off) so it does not keep writing the microSD;
+the scripts stay installed and re-arm with
+`systemctl enable --now gts9-dpu-flight.service`.
