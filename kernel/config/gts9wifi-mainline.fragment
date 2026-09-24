@@ -47,6 +47,20 @@ CONFIG_QCOM_RPMH=y
 CONFIG_QCOM_COMMAND_DB=y
 CONFIG_QCOM_SCM=y
 CONFIG_QCOM_LLCC=y
+# AOSS QMP. The SM8550 device tree wires gmu@3d6a000 to aoss_qmp
+# (qcom,qmp = <&aoss_qmp>), because a6xx_gmu_acd_probe() has to tell AOSS
+# whether GPU adaptive clock distribution is enabled. Upstream sm8550.dtsi
+# gives all eight GPU OPP nodes a qcom,opp-acd-level, so cmd->enable_by_level
+# is always non-zero on this board and the driver takes its
+#     if (cmd->enable_by_level && IS_ERR_OR_NULL(gmu->qmp))
+# branch. Without this symbol no driver binds to power-management@c300000,
+# qmp_get() returns -EPROBE_DEFER forever (the node exists, its drvdata does
+# not), and a6xx_gmu_init() aborts with "Unable to send ACD state to AOSS" ->
+# -EINVAL. The GPU then never binds, and the cxpd device-link teardown on that
+# error path raises the "Unable to drop a managed device link reference"
+# warning. The X910 port sets this symbol and does not show the failure; see
+# docs/GPU_GMU_RPMH_STALL_PLAN.md and docs/X710_X910_GPU_RPMH_DIFF.md.
+CONFIG_QCOM_AOSS_QMP=y
 CONFIG_INTERCONNECT=y
 CONFIG_INTERCONNECT_QCOM=y
 CONFIG_INTERCONNECT_QCOM_SM8550=y
