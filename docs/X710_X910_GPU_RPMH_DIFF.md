@@ -191,6 +191,7 @@ This is the finding that explains why X910 does not show the X710 early anomaly.
 | | X710 | X910 | class |
 |---|---|---|---|
 | `CONFIG_QCOM_AOSS_QMP` | **not set** (`out/kernel-gts9wifi/config`: `# CONFIG_QCOM_AOSS_QMP is not set`); the symbol is absent from `kernel/config/gts9wifi-mainline.fragment` | **`=y`** (`config-mainline.aarch64`: `CONFIG_QCOM_AOSS_QMP=y`) | **possibly relevant → causal** |
+| **`CONFIG_DRM_MSM`** | **`=y` (built-in)** — `out/kernel-gts9wifi/config:4853` | **`=m` (module)** — `config-mainline.aarch64:6524` | **possibly relevant → causal to the timing** |
 | `aoss_qmp` DT node | present, enabled, `compatible = "qcom,sm8550-aoss-qmp", "qcom,aoss-qmp"` | same | same hardware |
 | GMU `qcom,qmp` phandle | present (`<&aoss_qmp>`) | same | same hardware |
 | driver bound to `aoss_qmp` | **no** (`aoss_bound=0`, live probe) | yes | **causal** |
@@ -215,6 +216,31 @@ CONFIG_QCOM_AOSS_QMP unset on X710, =y on X910
 
 **X910 does not show this because its kernel contains the provider.** Its DT is
 not different in any way that matters here; it simply has the driver compiled in.
+
+### 5.1 A second, independent reason the two ports differ: `DRM_MSM` is a module on X910
+
+X710 builds `CONFIG_DRM_MSM=y`; X910 builds `CONFIG_DRM_MSM=m`. That is not a
+cosmetic difference, because `adreno_register()` is called from
+`msm_drm_register()`, so the entire adreno/GMU probe lands in a different phase:
+
+| | X710 (`=y`) | X910 (`=m`) |
+|---|---|---|
+| when the adreno driver registers | built-in `module_init` during `do_initcalls` | at `modprobe` time, from userspace |
+| when `gpu@3d00000` is probed | inside the initcall/deferred-probe window | after userspace has started |
+| does the GPU participate in `deferred_probe_timeout_work`? | **yes** | not at that point |
+| can the GPU block `gcc`/`gpucc`/interconnect `sync_state()` during boot? | **yes** — real dump, §5 | no |
+
+So X910 avoids the early-boot involvement of the GPU on *two* independent axes:
+it has the AOSS QMP provider (so the GPU binds instead of deferring forever), and
+it loads the display/GPU driver late (so even a deferring GPU would not be sitting
+on the deferred list when the timeout burst runs).
+
+**Do not copy `=m` to X710 as a fix.** X710 needs `msm` built in: the panel console
+is the only bring-up console (`docs/DISPLAY_X710_OFFICIAL_V1.md`,
+`docs/USB_SERIAL_CONSOLE.md`) and it must exist before any root filesystem, which
+is exactly why the fragment keeps `CONFIG_DRM_MSM=y`. The actionable part of this
+difference is the *AOSS QMP* half, which profile A/D already tests. The `=m` half
+is recorded so the comparison is honest, not as a proposed change.
 
 Independent corroboration that this dependency is real and not X710-specific: the
 X910 source adds even more ACD levels (a 9th OPP with
@@ -278,9 +304,33 @@ Question from the brief: are these expected, and does X910 have them?
 
 | item | X710 | X910 | class |
 |---|---|---|---|
-| `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT` | `10` (`out/kernel-gts9wifi/config:1871`) | `needs stock X710 evidence` → X910 value not yet read; **must be read from the X910 resolved config, not assumed** | possibly relevant |
+| `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT` | `10` (`out/kernel-gts9wifi/config:1871`) | **`10`** (`.work/x910/…/kernel/config/config-mainline.aarch64:2097`) | **same hardware / not a differentiator** |
 | pending deferred list at runtime | **8 devices** (live probe) | unknown | — |
 | GPU contributes to the pending list | **yes** — permanent `-EPROBE_DEFER` | no | causal |
+
+**The deferred-probe timeout value is identical in both ports**, so it is *not*
+why X910 does not stall. Round 1 listed this as `needs stock X710 evidence`; it is
+now read from the X910 resolved mainline config and closed.
+
+What that leaves is the *composition* of the pending set, which is the actual
+difference:
+
+* **X910**: `CONFIG_QCOM_AOSS_QMP=y` → the GMU's `qmp_get()` succeeds → the GPU
+  and GMU **bind** → they leave the deferred list → `gcc`, `gpucc` and the
+  interconnect providers can complete `sync_state()` normally.
+* **X710**: no AOSS QMP driver → the GMU defers **forever** → `gcc`, `gpucc` and
+  `interconnect-1` can never finish `sync_state()` (real dump, §5) → at
+  `late_initcall + 10 s` the timeout work re-probes that much larger pending set
+  and walks `sync_state` across the whole graph at once.
+
+So the correct reading of the X910 comparison is **not** "X910 avoids a
+deferred-probe timeout" — both have the same 10 s timer and both fire it. It is
+"X910's pending set is smaller and its `sync_state` graph is quiescent by the time
+the timer fires, because its GPU actually probed."
+
+That also means raising X710's timeout (profile G) is a legitimate *diagnostic*
+for whether the burst is the trigger, but **not** a fix: it only moves the burst
+later. The fix remains giving the GPU its provider.
 
 The X710 deferred-probe timeout (10 s) sits inside the observed 13–14 s stall
 window, and the GPU sits on the pending list for the whole time. This is
