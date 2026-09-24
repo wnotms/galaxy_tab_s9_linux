@@ -1,0 +1,77 @@
+#!/bin/sh
+# gts9-kmsg-console - mirror kernel messages onto the USB serial link.
+#
+# Why this exists
+# ---------------
+# The USB cable is the only machine-readable channel off this tablet, but it is
+# a *userspace* channel: the kernel command line is
+#
+#	console=ttyMSM0,115200n8 ... console=tty0
+#
+# so printk goes to the SoC UART and to the local VT, and never to the ACM
+# gadget.  Every console capture taken on the host so far proves it: a panic
+# test on 2026-09-24 lost the panic report completely, because the gadget only
+# came back after the reboot and the kernel log of the dead boot was gone with
+# it (/sys/fs/pstore is empty on this port).
+#
+# The stall evidence we do have - the soft-lockup report, the enc35 frame-done
+# timeouts, the RCU stalls - reached us as photographs of the tablet's screen,
+# which is not something an unattended loop can use.  This helper copies
+# /dev/kmsg to /dev/ttyGS0 as it is written, so the same messages land in the
+# host's serial capture with correct ordering.
+#
+# It cannot capture the panic message itself: panic() runs on one CPU with the
+# others stopped and schedules nothing, so a userspace reader never gets to see
+# the final lines.  Everything *leading up to* the panic arrives, which is what
+# the stall analysis needs; capturing the panic line needs a persistent store
+# (ramoops) and is tracked separately.
+#
+# Usage: gts9-kmsg-console [device] [--force]      (default /dev/ttyGS0)
+#
+# Gated on the watchdog debug profile, exactly like gts9-watchdog-debug: an
+# ordinary boot must not have kernel messages sprayed over the login console.
+
+set -u
+
+DEV=${1:-/dev/ttyGS0}
+case "${2:-}" in
+--force) FORCE=1 ;;
+*) FORCE=0 ;;
+esac
+FLAG=gts9_watchdog_debug=1
+
+if [ "$FORCE" != 1 ]; then
+	case " $(cat /proc/cmdline 2>/dev/null) " in
+	*" $FLAG "*) ;;
+	*)
+		echo "gts9-kmsg-console: $FLAG not on the command line; not mirroring"
+		exit 0
+		;;
+	esac
+fi
+
+command -v dmesg >/dev/null 2>&1 || {
+	echo "gts9-kmsg-console: dmesg is not available" >&2
+	exit 0
+}
+
+echo "gts9-kmsg-console: mirroring /dev/kmsg to $DEV"
+
+# Restart the reader whenever the gadget disappears (cable pulled, host closes
+# the port, gadget re-bound).  A write error to a tty is not fatal here: the
+# loop just reopens it, and the kernel ring keeps the messages that were
+# missed only for as long as the buffer holds them, which is why the reader is
+# kept as close to /dev/kmsg as possible.
+while :; do
+	if [ ! -w "$DEV" ]; then
+		sleep 2
+		continue
+	fi
+	# reltime keeps the kernel's monotonic stamp: it is what lines the mirror
+	# up with the tablet's own dmesg.  -x adds facility/level decoration.
+	dmesg --follow --time-format reltime -x 2>/dev/null |
+		while IFS= read -r line; do
+			printf 'K %s\n' "$line" >"$DEV" 2>/dev/null || break
+		done
+	sleep 1
+done

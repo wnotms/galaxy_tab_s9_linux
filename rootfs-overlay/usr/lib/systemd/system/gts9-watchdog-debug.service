@@ -1,0 +1,20 @@
+[Unit]
+Description=X710 watchdog stall-test profile (software lockup detectors)
+Documentation=file:/usr/share/doc/gts9/WATCHDOG_X710.md
+After=local-fs.target
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# The report goes to the console as well as the journal: the serial capture on
+# the host is the only evidence channel that survives a wedged microSD.
+StandardOutput=journal+console
+ExecStart=/usr/libexec/gts9-watchdog-debug apply
+# A profile failure must never hold up the boot; the helper already exits 0 for
+# every unsupported knob, and this is the belt to its braces.
+SuccessExitStatus=0 1 2
+TimeoutStartSec=30
+
+[Install]
+WantedBy=multi-user.target

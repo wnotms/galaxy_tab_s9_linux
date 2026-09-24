@@ -1,0 +1,197 @@
+#!/bin/sh
+# gts9-watchdog-debug - arm the X710 software-watchdog stall-test profile.
+#
+# Why a runtime helper and not just kernel parameters
+# ---------------------------------------------------
+# The ABL appends its own command-line tail to the kernel command line:
+#
+#	msm_drm.dsi_display0=... console=null nokaslr watchdog.stop_on_reboot=0
+#	softdog.soft_panic=1 ... msm_rtb.enable=0 nowatchdog ...
+#
+# `nowatchdog` (kernel/watchdog.c:nowatchdog_setup()) clears watchdog_enabled,
+# so every boot starts with the lockup detectors off, and no kernel parameter
+# turns them back on - the parameters only exist in the off direction
+# (`nowatchdog`, `nosoftlockup`).  The runtime equivalent is the sysctl
+# /proc/sys/kernel/watchdog: its write path (proc_watchdog_common() ->
+# proc_watchdog_update()) re-arms the detectors, and that is what this helper
+# writes.  The hung-task detector needs the same treatment for a second reason:
+# this kernel registers no early parameter for hung_task_panic or
+# hung_task_timeout_secs (checked in kernel/hung_task.c), so they are
+# sysctl-only.
+#
+# Everything here is a mainline software mechanism.  No watchdog MMIO, no PMIC
+# register, no device-tree change: /dev/watchdog0 does not exist on this port
+# (CONFIG_QCOM_WDT=y but no watchdog device is registered, and
+# CONFIG_SOFT_WATCHDOG is not set, so the vendor's softdog.soft_panic=1 has no
+# driver to attach to).
+#
+# Usage:
+#	gts9-watchdog-debug apply     arm the profile (default)
+#	gts9-watchdog-debug status    print the current state, change nothing
+#	gts9-watchdog-debug off       disarm the detectors again
+#
+# `apply --force` skips the command-line gate.  It exists for bring-up: the
+# profile can then be exercised over the serial console before the matching
+# vendor_boot is flashed, and a stall hunt does not have to wait for a flash
+# cycle to start.
+#
+# The helper never fails a boot: every step is best-effort, unsupported knobs
+# are reported as unsupported, and the exit status is always 0.
+
+set -u
+
+MODE=${1:-apply}
+FORCE=${2:-}
+FLAG=gts9_watchdog_debug=1
+REPORT=/var/log/gts9-watchdog-debug.txt
+
+# Stall thresholds.  The point of this profile is an unattended
+# stall -> panic -> reboot -> evidence loop, so the values are deliberately in
+# the 30-60 s range: long enough that a transient hiccup does not reboot the
+# tablet, short enough that a wedged display recovers without a human.  A 1-3 s
+# timeout would fire on ordinary boot-time latency.
+HUNG_TASK_TIMEOUT=45
+WQ_PANIC_ON_STALL_TIME=45
+
+WRITTEN=""
+
+read_file() {
+	if [ -r "$1" ]; then
+		tr -d '\n' <"$1" 2>/dev/null || echo unreadable
+	else
+		echo absent
+	fi
+}
+
+has_flag() {
+	[ "$FORCE" = "--force" ] && return 0
+	case " $(cat /proc/cmdline 2>/dev/null) " in
+	*" $FLAG "*) return 0 ;;
+	esac
+	return 1
+}
+
+# write_value PATH VALUE LABEL
+# Writes VALUE, then reports what the kernel actually kept.  `unsupported` means
+# the knob does not exist on this build; a write that does not change the value
+# is reported as REJECTED.
+write_value() {
+	path=$1
+	value=$2
+	label=$3
+	before=$(read_file "$path")
+	if [ "$before" = absent ]; then
+		WRITTEN="${WRITTEN}${label}: unsupported ($path does not exist)
+"
+		return 0
+	fi
+	printf '%s\n' "$value" >"$path" 2>/dev/null || true
+	after=$(read_file "$path")
+	if [ "$after" = "$value" ]; then
+		WRITTEN="${WRITTEN}${label}: requested=$value effective=$after (was $before)
+"
+	else
+		WRITTEN="${WRITTEN}${label}: requested=$value effective=$after REJECTED (was $before)
+"
+	fi
+	return 0
+}
+
+report() {
+	panic_now=$(read_file /proc/sys/kernel/panic)
+	if [ "$panic_now" = 0 ]; then
+		panic_state="MISSING (panic=0: a panic would not reboot. Use boot/cmdline.watchdog-debug.example.txt)"
+	else
+		panic_state="armed (panic=$panic_now)"
+	fi
+	if dmesg 2>/dev/null | grep -a -q 'Hard watchdog permanently disabled'; then
+		hardlockup="unsupported (watchdog: Hard watchdog permanently disabled)"
+	else
+		hardlockup=unknown
+	fi
+	if [ -e /dev/watchdog0 ]; then
+		wdt_device=present
+	else
+		wdt_device="absent (no /dev/watchdog0, /sys/class/watchdog empty)"
+	fi
+	if [ -n "$(ls -A /sys/fs/pstore 2>/dev/null)" ]; then
+		pstore=present
+	else
+		pstore="absent (/sys/fs/pstore empty: CONFIG_PSTORE_RAM=y but no ramoops node)"
+	fi
+	{
+		echo "# gts9 watchdog debug profile"
+		echo "mode=$MODE"
+		echo "utc=$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null)"
+		echo "boot_id=$(read_file /proc/sys/kernel/random/boot_id)"
+		echo "uptime=$(cut -d' ' -f1 /proc/uptime 2>/dev/null)"
+		echo "cmdline_flag=$FLAG"
+		printf '%s' "$WRITTEN"
+		echo "panic_reboot=$panic_state"
+		echo "kernel.watchdog=$(read_file /proc/sys/kernel/watchdog)"
+		echo "kernel.watchdog_thresh=$(read_file /proc/sys/kernel/watchdog_thresh)"
+		echo "kernel.softlockup_panic=$(read_file /proc/sys/kernel/softlockup_panic)"
+		echo "kernel.softlockup_all_cpu_backtrace=$(read_file /proc/sys/kernel/softlockup_all_cpu_backtrace)"
+		echo "kernel.hung_task_timeout_secs=$(read_file /proc/sys/kernel/hung_task_timeout_secs)"
+		echo "kernel.hung_task_panic=$(read_file /proc/sys/kernel/hung_task_panic)"
+		echo "kernel.hung_task_warnings=$(read_file /proc/sys/kernel/hung_task_warnings)"
+		echo "workqueue.watchdog_thresh=$(read_file /sys/module/workqueue/parameters/watchdog_thresh)"
+		echo "workqueue.panic_on_stall=$(read_file /sys/module/workqueue/parameters/panic_on_stall)"
+		echo "workqueue.panic_on_stall_time=$(read_file /sys/module/workqueue/parameters/panic_on_stall_time)"
+		echo "hardlockup=$hardlockup"
+		echo "watchdog_device=$wdt_device"
+		echo "pstore_backend=$pstore"
+		echo "# evidence: the serial console capture is the only pre-reboot source until a persistent store exists"
+	} >"$REPORT" 2>/dev/null || true
+	cat "$REPORT" 2>/dev/null || true
+}
+
+case "$MODE" in
+apply)
+	if ! has_flag; then
+		echo "gts9-watchdog-debug: $FLAG not on the command line; nothing to do"
+		echo "gts9-watchdog-debug: boot with boot/cmdline.watchdog-debug.example.txt to arm this profile"
+		exit 0
+	fi
+
+	# 1. Soft-lockup detector, re-armed at runtime (undoes the ABL's nowatchdog).
+	write_value /proc/sys/kernel/watchdog 1 kernel.watchdog
+	write_value /proc/sys/kernel/softlockup_panic 1 kernel.softlockup_panic
+	write_value /proc/sys/kernel/softlockup_all_cpu_backtrace 1 kernel.softlockup_all_cpu_backtrace
+
+	# 2. Hung-task detector: sysctl-only in this kernel, 45 s timeout, panic on
+	#    the first report.  The all-CPU backtrace is what names the blocked owner.
+	write_value /proc/sys/kernel/hung_task_timeout_secs "$HUNG_TASK_TIMEOUT" kernel.hung_task_timeout_secs
+	write_value /proc/sys/kernel/hung_task_panic 1 kernel.hung_task_panic
+	write_value /proc/sys/kernel/hung_task_warnings 5 kernel.hung_task_warnings
+	write_value /proc/sys/kernel/hung_task_all_cpu_backtrace 1 kernel.hung_task_all_cpu_backtrace
+
+	# 3. Workqueue stall watchdog.  panic_on_stall is the *cumulative* stall
+	#    counter and stays off; panic_on_stall_time panics on one stall that
+	#    lasts this long, which is the DPU signature being chased.
+	write_value /sys/module/workqueue/parameters/panic_on_stall 0 workqueue.panic_on_stall
+	write_value /sys/module/workqueue/parameters/panic_on_stall_time "$WQ_PANIC_ON_STALL_TIME" workqueue.panic_on_stall_time
+
+	# 4. An oops is a wedge for this purpose: let the tablet take its own reboot
+	#    path (panic=10 is already on the command line) instead of a dead console.
+	write_value /proc/sys/kernel/panic_on_oops 1 kernel.panic_on_oops
+
+	report
+	;;
+off)
+	write_value /proc/sys/kernel/softlockup_panic 0 kernel.softlockup_panic
+	write_value /proc/sys/kernel/hung_task_panic 0 kernel.hung_task_panic
+	write_value /sys/module/workqueue/parameters/panic_on_stall_time 0 workqueue.panic_on_stall_time
+	write_value /proc/sys/kernel/watchdog 0 kernel.watchdog
+	report
+	;;
+status)
+	report
+	;;
+*)
+	echo "usage: gts9-watchdog-debug [apply|status|off]" >&2
+	exit 2
+	;;
+esac
+
+exit 0

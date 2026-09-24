@@ -1,0 +1,19 @@
+[Unit]
+Description=X710 kernel-message mirror onto the USB console
+Documentation=file:/usr/share/doc/gts9/WATCHDOG_X710.md
+After=gts9-usb-acm.service local-fs.target
+Before=multi-user.target
+
+[Service]
+Type=simple
+# The mirror is a diagnostic tap: if it dies, the serial login must still work,
+# so it restarts instead of failing the boot.  on-failure, not always: without
+# the debug flag on the command line the helper exits 0 immediately, and that
+# clean exit must not become a restart loop.
+Restart=on-failure
+RestartSec=3
+ExecStart=/usr/libexec/gts9-kmsg-console /dev/ttyGS0
+SuccessExitStatus=0 1
+
+[Install]
+WantedBy=multi-user.target
