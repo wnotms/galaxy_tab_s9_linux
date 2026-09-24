@@ -1,5 +1,56 @@
 # Debian boot and power-off diagnostics
 
+## Correction after test 179 (2026-09-24): the platform does power the tablet off
+
+Text further down that treats the power-off path as unproven, or that reads a
+missing `Power down` line as evidence about `PSCI SYSTEM_OFF`, is superseded.
+The corrected statement is:
+
+> A previous `systemctl`/`poweroff` path stopped at the final framebuffer, but
+> the owner has since verified that `shutdown` can physically power the tablet
+> off.  Therefore the platform is known to possess at least one working
+> shutdown path.  The remaining issue is to identify why `poweroff` and
+> `shutdown` differ.
+
+Test 179 then answered that remaining question on hardware, from fresh boots,
+with the kernel power-off trace enabled (`gts9_poweroff_trace=1`) and
+`console=tty0` so the panel carries the shutdown messages:
+
+| Test | Command | `boot_id` before | USB gone → back (host clock) | `boot_id` after | `lpcharge=1` | Result |
+|---|---|---|---|---|---|---|
+| P4 | `poweroff` | `60fb1021…` | 00:32:33.6 → 00:32:43.0 | `bec55a95…` | 13 params | PASS |
+| P1 | `shutdown -P now` | `bec55a95…` | 00:35:16.6 → 00:35:24.8 | `84a628e5…` | 13 params | PASS |
+| P2 | `shutdown now` | `84a628e5…` | 00:38:14.0 → 00:38:22.4 | `6ae34442…` | 13 params | PASS |
+| P3 | `systemctl poweroff` | `6ae34442…` | 00:41:11.9 → 00:41:20.1 | `a4a65a66…` | 13 params | PASS |
+| P5 | `shutdown` | `a4a65a66…` | 00:45:09.2 → 00:45:17.4 | `42efa64f…` | 13 params | PASS |
+
+`lpcharge=1` is the bootloader's own record that this start was a
+charger-triggered one, i.e. a start after the platform lost power; every plain
+reboot in the same session (the TWRP `reboot system` and the owner's forced
+restart) carried `lpcharge=0`.  Each run also shows the full systemd power-off
+sequence in the previous boot's persistent journal
+(`Reached target poweroff.target` → `Shutting down.` →
+`systemd-shutdown[1]: Syncing filesystems and block devices.`) and a
+`/var/log/gts9-last-poweroff-stage` marker whose recorded `boot_id` matches the
+boot that was shut down.
+
+All five entry points are the same program.  `/sbin/shutdown`,
+`/usr/sbin/shutdown`, `/sbin/poweroff` and `/usr/sbin/poweroff` are symlinks to
+`/usr/bin/systemctl` (identical md5 `2c2515eeb6b923cbb70bee173180bf3d`), and
+systemd's `shutdown(8)` documents `-P/--poweroff` as the default action, so the
+four spellings select the same `poweroff.target`.  The only measured difference
+is timing: plain `shutdown` uses the sysvinit default of one minute
+(`Shutdown scheduled for …, use 'shutdown -c' to cancel.`, power off 63.5 s
+after the command) while the other four act within about three seconds.
+
+Consequence for this repository: there is no evidence for a kernel-side
+power-off defect, and no PMIC, PSCI, PON, SPMI or `pshold` change is justified
+by it.  The earlier "poweroff stops at a blinking cursor" observation belongs to
+an older image and session (test 172 is the record of that image), and it does
+not reproduce with the current image set.  Historical test records are left
+unchanged: test 172 recorded what that particular image did, and later physical
+runs showed `shutdown` powering the tablet off normally.
+
 ## What current evidence says
 
 The device can boot the current mainline kernel into Debian when Type-C is
@@ -35,6 +86,10 @@ owner-observed physical power-off from a BusyBox initramfs. That establishes
 that an earlier image on this device could power off, but it does not test the
 current Debian shutdown path or identify the present cursor state.
 
+**Superseded by test 179**: on the current image the Debian shutdown path does
+reach the kernel and the platform does lose power, for all four entry points;
+see the correction section at the top of this file.
+
 Tests 168-169 add a useful physical A/B. In test 168, Debian recorded entry to
 `systemd-poweroff.service`, then a new boot ID appeared after the owner saw the
 tablet turn off and start again with Type-C still connected. In test 169, the
@@ -44,6 +99,13 @@ started it automatically. This strongly supports VBUS insertion as the cause
 of the automatic start. It is consistent with Linux having reached a real
 power-off state, but there is no battery-current measurement or direct PSCI
 trace, so the low-level call itself remains unproven.
+
+**Superseded by test 179** (see the correction section at the top): the
+charger-triggered start after each of the four power-off entry points is now
+recorded by the bootloader itself as `lpcharge=1`, which is positive evidence
+that power was removed, and the owner observed the panel going fully dark with
+the charging screen before each restart.  The automatic restart with Type-C
+attached is normal Samsung behaviour, not a power-off failure.
 
 The source-level path is clear. systemd's final poweroff invokes Linux
 `kernel_power_off()`, which runs shutdown preparation, migrates to the reboot
@@ -153,6 +215,11 @@ power sequence, display timing, or the kernel power-off handler.
 
 ## Next hardware observations
 
+The notes in this section were written while test 172's candidate was on the
+device and are kept as the record of that session.  Test 179 later ran the
+power-off A/B on the current image; its numbers are in the correction section
+at the top and in `reference/boot-tests/test-179-20260924T000935Z/`.
+
 Two host-built bundles are available locally. `out/boot-power-diag` passed
 validation with rootfs stage markers; it was not flashed during test 169. The
 newer `out/boot-power-trace` also passed
@@ -207,6 +274,17 @@ patch is not part of the default queue, does not alter the poweroff handler,
 and has not been flashed or tested on the device. A pre-call marker proves the
 Linux callback reached the SMC boundary, not that firmware powered the device
 off.
+
+Test 179 has since exercised it on hardware: the flashed `boot` partition
+(`822ca9dc…`) was already a `GTS9_POWEROFF_TRACE=1` build, and the only change
+was a rebuilt `vendor_boot` whose command line adds `gts9_poweroff_trace=1`
+and `console=tty0`, so every trace line reaches the panel as well as the
+`sec_log` ring.  One limitation matters for reading the result: the `sec_log`
+ring lives in DRAM, so a *successful* power off destroys the copy.  The trace
+is only recoverable after a power-off attempt that leaves the SoC running (and
+then only through TWRP's `/proc/last_kmsg`); the panel is the working sink for
+a successful one, and the ABL `lpcharge=` flag is the host-visible proof that
+power was actually removed.
 
 The separate host-built `out/boot-poweroff-trace` bundle passed
 `scripts/validate-boot-bundle.sh` against its diagnostic cmdline and matching
