@@ -1,0 +1,21 @@
+2026-09-24T00:49:15Z console open on COM17
+2026-09-24T00:49:16Z RECV  echo READY1
+2026-09-24T00:49:16Z RECV  [?2004lREADY1
+2026-09-24T00:49:16Z shell answered after 1 poll(s)
+2026-09-24T00:49:16Z SENT  echo LK2;printf "[Login]\nHandlePowerKey=ignore\n" > /etc/systemd/logind.conf.d/60-gts9-power-key.conf;cat /etc/systemd/logind.conf.d/60-gts9-power-key.conf;systemctl restart systemd-logind;sleep 2;systemctl is-active systemd-logind;systemctl is-active gts9-power-key.service;journalctl -b -u systemd-logind --no-pager | tail -6;echo ---UINPUT---;ls -l /dev/uinput 2>&1;which python3 evtest 2>&1
+2026-09-24T00:49:35Z RECV  [?2004hroot@gts9:~# echo LK2;printf "[Login]\nHandlePowerKey=ignore\n" > /etc/systemd/logind.conf.d/60-gts9-power-key.conf;cat /etc/systemd/logind.conf.d/60-gts9-power-key.conf;systemctl restart systemd-logind;sleep 2;systemctl is-active systemd-logind;systemctl is-active gts9-power-key.service;journalctl -b -u systemd-logind --no-pager | tail -6;echo ---UINPUT---;ls -l /dev/uinput 2>&1;which python3 evtest 2>&1
+2026-09-24T00:49:35Z RECV  [?2004lLK2
+2026-09-24T00:49:35Z RECV  [Login]
+2026-09-24T00:49:35Z RECV  HandlePowerKey=ignore
+2026-09-24T00:49:35Z RECV  active
+2026-09-24T00:49:35Z RECV  active
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd-logind[823]: Watching system buttons on /dev/input/event3 (gpio-keys)
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd-logind[823]: Watching system buttons on /dev/input/event2 (Book Cover Keyboard Slim (EF-DX710))
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd-logind[823]: Watching system buttons on /dev/input/event0 (pmic_pwrkey)
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd-logind[823]: New session 2 of user root.
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd-logind[823]: New session 1 of user root.
+2026-09-24T00:49:35Z RECV  Apr 14 03:42:08 gts9 systemd[1]: Started systemd-logind.service - User Login Management.
+2026-09-24T00:49:35Z RECV  ---UINPUT---
+2026-09-24T00:49:35Z RECV  crw------- 1 root root 10, 223 Apr 14 03:38 /dev/uinput
+2026-09-24T00:49:35Z RECV  /usr/bin/evtest
+2026-09-24T00:49:35Z console run done (ready=True)

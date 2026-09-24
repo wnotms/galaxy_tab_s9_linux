@@ -1,0 +1,32 @@
+2026-09-24T01:02:27Z console open on COM17
+2026-09-24T01:02:28Z RECV  echo READY1
+2026-09-24T01:02:28Z RECV  [?2004lREADY1
+2026-09-24T01:02:28Z shell answered after 1 poll(s)
+2026-09-24T01:02:28Z SENT  echo STRESS;dmesg -C;date -u;/usr/libexec/gts9-power-key --stress 30;echo stress_rc=$?;date -u;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/;echo ---DMESG---;dmesg | grep -aE "power-key|dpu|vblank|workqueue|rcu_preempt" | tail -14;echo ---FD---;ls -l /proc/$(pidof gts9-power-key)/fd/ 2>&1 | tail -3
+2026-09-24T01:03:48Z RECV  [?2004hroot@gts9:~# echo STRESS;dmesg -C;date -u;/usr/libexec/gts9-power-key --stress 30;echo stress_rc=$?;date -u;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/;echo ---DMESG---;dmesg | grep -aE "power-key|dpu|vblank|workqueue|rcu_preempt" | tail -14;echo ---FD---;ls -l /proc/$(pidof gts9-power-key)/fd/ 2>&1 | tail -3
+2026-09-24T01:03:48Z RECV  [?2004lSTRESS
+2026-09-24T01:03:48Z RECV  Mon Apr 13 19:55:20 UTC 2026
+2026-09-24T01:03:48Z RECV  stress_rc=0
+2026-09-24T01:03:48Z RECV  Mon Apr 13 19:56:20 UTC 2026
+2026-09-24T01:03:48Z RECV  bl=0 br=2047 fb0=0
+2026-09-24T01:03:48Z RECV  last-brightness
+2026-09-24T01:03:48Z RECV  ---DMESG---
+2026-09-24T01:03:48Z RECV  [ 1085.682105] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1086.683878] [   T1126] gts9-power-key: stress 2 cycles done
+2026-09-24T01:03:48Z RECV  [ 1086.684632] [   T1126] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:03:48Z RECV  [ 1087.688284] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1088.691810] [   T1126] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:03:48Z RECV  [ 1089.694719] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1090.698198] [   T1126] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:03:48Z RECV  [ 1091.701544] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1092.702810] [   T1126] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:03:48Z RECV  [ 1093.705050] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1094.706864] [   T1126] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:03:48Z RECV  [ 1095.709180] [   T1126] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:03:48Z RECV  [ 1096.709299] [   T1126] gts9-power-key: stress 3 cycles done
+2026-09-24T01:03:48Z RECV  [ 1096.709311] [   T1126] gts9-power-key: stress finished
+2026-09-24T01:03:48Z RECV  ---FD---
+2026-09-24T01:03:48Z RECV  lrwx------ 1 root root 64 Apr 14 03:54 1 -> socket:[18957]
+2026-09-24T01:03:48Z RECV  lrwx------ 1 root root 64 Apr 14 03:54 2 -> socket:[18957]
+2026-09-24T01:03:48Z RECV  lr-x------ 1 root root 64 Apr 14 03:54 3 -> /dev/input/event0
+2026-09-24T01:03:48Z console run done (ready=True)

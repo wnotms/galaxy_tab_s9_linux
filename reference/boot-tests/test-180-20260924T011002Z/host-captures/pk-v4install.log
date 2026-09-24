@@ -1,0 +1,17 @@
+2026-09-24T01:01:56Z console open on COM17
+2026-09-24T01:01:57Z RECV  echo READY1
+2026-09-24T01:01:57Z RECV  [?2004lREADY1
+2026-09-24T01:01:57Z shell answered after 1 poll(s)
+2026-09-24T01:01:57Z SENT  echo INST;install -m 0755 /tmp/pk-v4 /usr/libexec/gts9-power-key;sha256sum /usr/libexec/gts9-power-key;systemctl restart gts9-power-key.service;sleep 2;systemctl is-active gts9-power-key.service;dmesg | grep -a "power-key" | tail -3;echo ---EVTEST-NAMES---;for i in 0 1 2; do timeout 1 evtest /dev/input/event$i 2>&1 | grep -m1 "Input device name"; done
+2026-09-24T01:02:16Z RECV  [?2004hroot@gts9:~# echo INST;install -m 0755 /tmp/pk-v4 /usr/libexec/gts9-power-key;sha256sum /usr/libexec/gts9-power-key;systemctl restart gts9-power-key.service;sleep 2;systemctl is-active gts9-power-key.service;dmesg | grep -a "power-key" | tail -3;echo ---EVTEST-NAMES---;for i in 0 1 2; do timeout 1 evtest /dev/input/event$i 2>&1 | grep -m1 "Input device name"; done
+2026-09-24T01:02:16Z RECV  [?2004lINST
+2026-09-24T01:02:16Z RECV  346467269e3f9c01eb69cfd6ce53138b6bc9d455be1654685266cb9e09603bf4  /usr/libexec/gts9-power-key
+2026-09-24T01:02:16Z RECV  active
+2026-09-24T01:02:16Z RECV  [ 1005.896029] [   T1109] gts9-power-key: no argument seen (freestanding entry)
+2026-09-24T01:02:16Z RECV  [ 1005.896095] [   T1109] gts9-power-key: found the PMIC power key by capability
+2026-09-24T01:02:16Z RECV  [ 1005.896099] [   T1109] gts9-power-key: watching the power key; short press turns the backlight off
+2026-09-24T01:02:16Z RECV  ---EVTEST-NAMES---
+2026-09-24T01:02:16Z RECV  Input device name: "pmic_pwrkey"
+2026-09-24T01:02:16Z RECV  Input device name: "pmic_resin"
+2026-09-24T01:02:16Z RECV  Input device name: "Book Cover Keyboard Slim (EF-DX710)"
+2026-09-24T01:02:16Z console run done (ready=True)

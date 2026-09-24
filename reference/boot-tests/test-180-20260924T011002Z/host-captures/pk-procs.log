@@ -1,0 +1,14 @@
+2026-09-24T01:09:40Z console open on COM17
+2026-09-24T01:09:41Z RECV  echo READY1
+2026-09-24T01:09:41Z RECV  [?2004lREADY1
+2026-09-24T01:09:41Z shell answered after 1 poll(s)
+2026-09-24T01:09:41Z SENT  echo PROC;ps -eo pid,ppid,etime,args | grep -a "[g]ts9-power-key";echo "count=$(pgrep -c gts9-power-key)";echo ---HOLDERS---;for p in $(pgrep gts9-power-key); do echo "pid=$p $(readlink /proc/$p/fd/3 2>/dev/null)"; done;echo ---EVTEST-RAW---;timeout 12 evtest /dev/input/event0 2>&1 | grep -aE "Event: time|type 1" | head -12
+2026-09-24T01:09:56Z RECV  [?2004hroot@gts9:~# echo PROC;ps -eo pid,ppid,etime,args | grep -a "[g]ts9-power-key";echo "count=$(pgrep -c gts9-power-key)";echo ---HOLDERS---;for p in $(pgrep gts9-power-key); do echo "pid=$p $(readlink /proc/$p/fd/3 2>/dev/null)"; done;echo ---EVTEST-RAW---;timeout 12 evtest /dev/input/event0 2>&1 | grep -aE "Event: time|type 1" | head -12
+2026-09-24T01:09:56Z RECV  [?2004lPROC
+2026-09-24T01:09:56Z RECV     1109       1       07:43 /usr/libexec/gts9-power-key
+2026-09-24T01:09:56Z RECV  count=1
+2026-09-24T01:09:56Z RECV  ---HOLDERS---
+2026-09-24T01:09:56Z RECV  pid=1109 /dev/input/event0
+2026-09-24T01:09:56Z RECV  ---EVTEST-RAW---
+2026-09-24T01:09:56Z RECV  Terminated
+2026-09-24T01:09:56Z console run done (ready=True)

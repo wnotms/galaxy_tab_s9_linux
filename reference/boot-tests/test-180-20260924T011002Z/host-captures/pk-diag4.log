@@ -1,0 +1,13 @@
+2026-09-24T00:59:34Z console open on COM17
+2026-09-24T00:59:35Z RECV  echo READY1
+2026-09-24T00:59:35Z RECV  [?2004lREADY1
+2026-09-24T00:59:35Z shell answered after 1 poll(s)
+2026-09-24T00:59:35Z SENT  echo D4;dmesg -C;/tmp/pk-v3 --diag;echo diag_rc=$?;dmesg | grep -a "power-key"
+2026-09-24T00:59:52Z RECV  [?2004hroot@gts9:~# echo D4;dmesg -C;/tmp/pk-v3 --diag;echo diag_rc=$?;dmesg | grep -a "power-key"
+2026-09-24T00:59:52Z RECV  [?2004lD4
+2026-09-24T00:59:52Z RECV  diag_rc=0
+2026-09-24T00:59:52Z RECV  [  863.588954] [   T1082] gts9-power-key: argv1=--diag
+2026-09-24T00:59:52Z RECV  [  863.589100] [   T1082] gts9-power-key: diag /dev/input/event0 ev_rc=-22 ev=0x0 key_rc=-22 keypower=0 sysfs_keypower=1 name=
+2026-09-24T00:59:52Z RECV  [  863.619621] [   T1082] gts9-power-key: diag /dev/input/event1 ev_rc=-22 ev=0x0 key_rc=-22 keypower=0 sysfs_keypower=1 name=
+2026-09-24T00:59:52Z RECV  [  863.644321] [   T1082] gts9-power-key: diag /dev/input/event2 ev_rc=-22 ev=0x0 key_rc=-22 keypower=0 sysfs_keypower=1 name=
+2026-09-24T00:59:52Z console run done (ready=True)

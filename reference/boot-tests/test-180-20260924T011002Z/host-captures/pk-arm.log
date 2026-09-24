@@ -1,0 +1,12 @@
+2026-09-24T01:04:44Z console open on COM17
+2026-09-24T01:04:46Z RECV  echo READY1
+2026-09-24T01:04:46Z RECV  [?2004lREADY1
+2026-09-24T01:04:46Z shell answered after 1 poll(s)
+2026-09-24T01:04:46Z SENT  echo ARM;dmesg -C;echo "cleared";echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power)";systemctl is-active gts9-power-key.service;cat /proc/uptime
+2026-09-24T01:04:58Z RECV  [?2004hroot@gts9:~# echo ARM;dmesg -C;echo "cleared";echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power)";systemctl is-active gts9-power-key.service;cat /proc/uptime
+2026-09-24T01:04:58Z RECV  [?2004lARM
+2026-09-24T01:04:58Z RECV  cleared
+2026-09-24T01:04:58Z RECV  bl=0
+2026-09-24T01:04:58Z RECV  active
+2026-09-24T01:04:58Z RECV  1173.98 9372.61
+2026-09-24T01:04:58Z console run done (ready=True)

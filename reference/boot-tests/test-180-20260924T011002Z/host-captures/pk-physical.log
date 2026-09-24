@@ -1,0 +1,22 @@
+2026-09-24T01:09:06Z console open on COM17
+2026-09-24T01:09:08Z RECV  echo READY1
+2026-09-24T01:09:08Z RECV  [?2004lREADY1
+2026-09-24T01:09:08Z shell answered after 1 poll(s)
+2026-09-24T01:09:08Z SENT  echo PHYS;dmesg | grep -a "power-key";echo ---STATE---;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/ 2>&1;echo ---ERR---;dmesg | grep -acE "dpu error|vblank wait timed out|workqueue lockup|rcu_preempt detected";systemctl is-system-running;cat /proc/uptime
+2026-09-24T01:09:24Z RECV  [?2004hroot@gts9:~# echo PHYS;dmesg | grep -a "power-key";echo ---STATE---;echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/ 2>&1;echo ---ERR---;dmesg | grep -acE "dpu error|vblank wait timed out|workqueue lockup|rcu_preempt detected";systemctl is-system-running;cat /proc/uptime
+2026-09-24T01:09:24Z RECV  [?2004lPHYS
+2026-09-24T01:09:24Z RECV  [ 1402.798817] [   T1109] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:09:24Z RECV  [ 1407.810496] [   T1109] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:09:24Z RECV  [ 1412.721496] [   T1109] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:09:24Z RECV  [ 1415.180495] [   T1109] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:09:24Z RECV  [ 1418.245899] [   T1109] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:09:24Z RECV  [ 1421.359411] [   T1109] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:09:24Z RECV  [ 1427.752280] [   T1109] gts9-power-key: long press ignored (PMIC owns it)
+2026-09-24T01:09:24Z RECV  ---STATE---
+2026-09-24T01:09:24Z RECV  bl=0 br=2047 fb0=0
+2026-09-24T01:09:24Z RECV  last-brightness
+2026-09-24T01:09:24Z RECV  ---ERR---
+2026-09-24T01:09:24Z RECV  0
+2026-09-24T01:09:24Z RECV  running
+2026-09-24T01:09:24Z RECV  1435.92 11466.67
+2026-09-24T01:09:24Z console run done (ready=True)

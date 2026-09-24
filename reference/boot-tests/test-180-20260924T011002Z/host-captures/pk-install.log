@@ -1,0 +1,26 @@
+2026-09-24T00:52:12Z console open on COM17
+2026-09-24T00:52:14Z RECV  echo READY1
+2026-09-24T00:52:14Z RECV  [?2004lREADY1
+2026-09-24T00:52:14Z shell answered after 1 poll(s)
+2026-09-24T00:52:14Z SENT  echo PK1;install -m 0755 /tmp/gts9-power-key.new /usr/libexec/gts9-power-key;sha256sum /usr/libexec/gts9-power-key;systemctl restart gts9-power-key.service;sleep 1;systemctl is-active gts9-power-key.service;echo "--- toggle off ---";/usr/libexec/gts9-power-key --toggle;echo rc=$?;cat /sys/class/backlight/ae94000.dsi.0/bl_power;cat /sys/class/backlight/ae94000.dsi.0/brightness;ls -l /run/gts9-power-key/ 2>&1;cat /sys/class/graphics/fb0/blank;echo "--- toggle on ---";/usr/libexec/gts9-power-key --toggle;echo rc=$?;cat /sys/class/backlight/ae94000.dsi.0/bl_power;cat /sys/class/backlight/ae94000.dsi.0/brightness;ls -l /run/gts9-power-key/ 2>&1;cat /sys/class/graphics/fb0/blank;dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-24T00:52:36Z RECV  [?2004hroot@gts9:~# echo PK1;install -m 0755 /tmp/gts9-power-key.new /usr/libexec/gts9-power-key;sha256sum /usr/libexec/gts9-power-key;systemctl restart gts9-power-key.service;sleep 1;systemctl is-active gts9-power-key.service;echo "--- toggle off ---";/usr/libexec/gts9-power-key --toggle;echo rc=$?;cat /sys/class/backlight/ae94000.dsi.0/bl_power;cat /sys/class/backlight/ae94000.dsi.0/brightness;ls -l /run/gts9-power-key/ 2>&1;cat /sys/class/graphics/fb0/blank;echo "--- toggle on ---";/usr/libexec/gts9-power-key --toggle;echo rc=$?;cat /sys/class/backlight/ae94000.dsi.0/bl_power;cat /sys/class/backlight/ae94000.dsi.0/brightness;ls -l /run/gts9-power-key/ 2>&1;cat /sys/class/graphics/fb0/blank;dmesg | grep -a "gts9-power-key" | tail -4
+2026-09-24T00:52:36Z RECV  [?2004lPK1
+2026-09-24T00:52:36Z RECV  0fd9911fdaa394f6d5194ef13028dae8056f2a0f7d48153d2a0ce929d7049c99  /usr/libexec/gts9-power-key
+2026-09-24T00:52:36Z RECV  activating
+2026-09-24T00:52:36Z RECV  --- toggle off ---
+2026-09-24T00:52:36Z RECV  rc=1
+2026-09-24T00:52:36Z RECV  0
+2026-09-24T00:52:36Z RECV  2047
+2026-09-24T00:52:36Z RECV  ls: cannot access '/run/gts9-power-key/': No such file or directory
+2026-09-24T00:52:36Z RECV  0
+2026-09-24T00:52:36Z RECV  --- toggle on ---
+2026-09-24T00:52:36Z RECV  rc=1
+2026-09-24T00:52:36Z RECV  0
+2026-09-24T00:52:36Z RECV  2047
+2026-09-24T00:52:36Z RECV  ls: cannot access '/run/gts9-power-key/': No such file or directory
+2026-09-24T00:52:36Z RECV  0
+2026-09-24T00:52:36Z RECV  [  416.882765] [    T522] gts9-power-key: screen off (fb0 blank=1, system keeps running)
+2026-09-24T00:52:36Z RECV  [  422.424509] [    T866] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:52:36Z RECV  [  423.424475] [    T872] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:52:36Z RECV  [  423.528108] [    T877] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:52:36Z console run done (ready=True)

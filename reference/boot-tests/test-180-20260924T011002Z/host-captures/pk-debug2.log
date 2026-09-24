@@ -1,0 +1,19 @@
+2026-09-24T00:53:40Z console open on COM17
+2026-09-24T00:53:42Z RECV  echo READY1
+2026-09-24T00:53:42Z RECV  [?2004lREADY1
+2026-09-24T00:53:42Z shell answered after 1 poll(s)
+2026-09-24T00:53:42Z SENT  echo DBG2;systemctl stop gts9-power-key.service;evtest --query /dev/input/event0 EV_KEY KEY_POWER;echo evtest_rc=$?;/usr/libexec/gts9-power-key --toggle;echo new_toggle_rc=$?;dmesg | grep -a "power-key" | tail -3;echo ---STATE---;cat /sys/class/backlight/ae94000.dsi.0/bl_power;ls -l /run/gts9-power-key/ 2>&1;echo ---OLD---;ls -l /tmp/gts9-power-key.old;sha256sum /tmp/gts9-power-key.old
+2026-09-24T00:54:00Z RECV  [?2004hroot@gts9:~# echo DBG2;systemctl stop gts9-power-key.service;evtest --query /dev/input/event0 EV_KEY KEY_POWER;echo evtest_rc=$?;/usr/libexec/gts9-power-key --toggle;echo new_toggle_rc=$?;dmesg | grep -a "power-key" | tail -3;echo ---STATE---;cat /sys/class/backlight/ae94000.dsi.0/bl_power;ls -l /run/gts9-power-key/ 2>&1;echo ---OLD---;ls -l /tmp/gts9-power-key.old;sha256sum /tmp/gts9-power-key.old
+2026-09-24T00:54:00Z RECV  [?2004lDBG2
+2026-09-24T00:54:00Z RECV  evtest_rc=0
+2026-09-24T00:54:00Z RECV  new_toggle_rc=1
+2026-09-24T00:54:00Z RECV  [  507.771962] [   T1009] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:54:00Z RECV  [  510.019975] [   T1011] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:54:00Z RECV  [  510.364256] [   T1016] gts9-power-key: no KEY_POWER input device found
+2026-09-24T00:54:00Z RECV  ---STATE---
+2026-09-24T00:54:00Z RECV  0
+2026-09-24T00:54:00Z RECV  ls: cannot access '/run/gts9-power-key/': No such file or directory
+2026-09-24T00:54:00Z RECV  ---OLD---
+2026-09-24T00:54:00Z RECV  -rwxr-xr-x 1 root root 4528 Sep 24  2026 /tmp/gts9-power-key.old
+2026-09-24T00:54:00Z RECV  0981937707ec6491b26b938f1af19a92cd0a24f07f8e093bb3a33ba50e475950  /tmp/gts9-power-key.old
+2026-09-24T00:54:00Z console run done (ready=True)

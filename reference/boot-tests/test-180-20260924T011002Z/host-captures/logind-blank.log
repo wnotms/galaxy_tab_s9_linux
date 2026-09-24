@@ -1,0 +1,30 @@
+2026-09-24T00:48:38Z console open on COM17
+2026-09-24T00:48:40Z RECV  echo READY1
+2026-09-24T00:48:40Z RECV  [?2004lREADY1
+2026-09-24T00:48:40Z shell answered after 1 poll(s)
+2026-09-24T00:48:40Z SENT  echo LK1;cp -a /etc/systemd/logind.conf.d/60-gts9-power-key.conf /tmp/60-gts9-power-key.conf.orig;printf "[Login]\nHandlePowerKey=blank\nHandlePowerKeyLongPress=ignore\n" > /etc/systemd/logind.conf.d/60-gts9-power-key.conf;cat /etc/systemd/logind.conf.d/60-gts9-power-key.conf;systemctl restart systemd-logind;sleep 2;systemctl is-active systemd-logind;journalctl -b -u systemd-logind --no-pager | tail -18
+2026-09-24T00:49:00Z RECV  [?2004hroot@gts9:~# echo LK1;cp -a /etc/systemd/logind.conf.d/60-gts9-power-key.conf /tmp/60-gts9-power-key.conf.orig;printf "[Login]\nHandlePowerKey=blank\nHandlePowerKeyLongPress=ignore\n" > /etc/systemd/logind.conf.d/60-gts9-power-key.conf;cat /etc/systemd/logind.conf.d/60-gts9-power-key.conf;systemctl restart systemd-logind;sleep 2;systemctl is-active systemd-logind;journalctl -b -u systemd-logind --no-pager | tail -18
+2026-09-24T00:49:00Z RECV  [?2004lLK1
+2026-09-24T00:49:00Z RECV  [Login]
+2026-09-24T00:49:00Z RECV  HandlePowerKey=blank
+2026-09-24T00:49:00Z RECV  HandlePowerKeyLongPress=ignore
+2026-09-24T00:49:00Z RECV  active
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:07 gts9 systemd-logind[526]: Watching system buttons on /dev/input/event3 (gpio-keys)
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:07 gts9 systemd-logind[526]: Watching system buttons on /dev/input/event2 (Book Cover Keyboard Slim (EF-DX710))
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:07 gts9 systemd-logind[526]: Watching system buttons on /dev/input/event0 (pmic_pwrkey)
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:07 gts9 systemd[1]: Started systemd-logind.service - User Login Management.
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:09 gts9 systemd-logind[526]: New session 1 of user root.
+2026-09-24T00:49:00Z RECV  Apr 14 03:38:09 gts9 systemd-logind[526]: New session 2 of user root.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd[1]: Stopping systemd-logind.service - User Login Management...
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd[1]: systemd-logind.service: Deactivated successfully.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd[1]: Stopped systemd-logind.service - User Login Management.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd[1]: Starting systemd-logind.service - User Login Management...
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: /etc/systemd/logind.conf.d/60-gts9-power-key.conf:2: Failed to parse HandlePowerKey=blank, ignoring: Invalid argument
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: New seat seat0.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: Watching system buttons on /dev/input/event3 (gpio-keys)
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: Watching system buttons on /dev/input/event2 (Book Cover Keyboard Slim (EF-DX710))
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: Watching system buttons on /dev/input/event0 (pmic_pwrkey)
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: New session 1 of user root.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd-logind[800]: New session 2 of user root.
+2026-09-24T00:49:00Z RECV  Apr 14 03:41:31 gts9 systemd[1]: Started systemd-logind.service - User Login Management.
+2026-09-24T00:49:00Z console run done (ready=True)

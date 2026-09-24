@@ -1,0 +1,22 @@
+2026-09-24T01:12:29Z console open on COM17
+2026-09-24T01:12:31Z RECV  echo READY1
+2026-09-24T01:12:31Z RECV  [?2004lREADY1
+2026-09-24T01:12:31Z shell answered after 1 poll(s)
+2026-09-24T01:12:31Z SENT  echo FINAL;sha256sum /usr/libexec/gts9-power-key;dmesg -C;date -u;/usr/libexec/gts9-power-key --stress 30;echo rc=$?;date -u;echo "off=$(dmesg | grep -ac \"screen off\") on=$(dmesg | grep -ac \"screen on\") err=$(dmesg | grep -acE \"dpu error|vblank wait timed out|workqueue lockup|rcu_preempt detected\")";echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/;systemctl is-system-running
+2026-09-24T01:13:50Z RECV  [?2004hroot@gts9:~# echo FINAL;sha256sum /usr/libexec/gts9-power-key;dmesg -C;date -u;/usr/libexec/gts9-power-key --stress 30;echo rc=$?;date -u;echo "off=$(dmesg | grep -ac \"screen off\") on=$(dmesg | grep -ac \"screen on\") err=$(dmesg | grep -acE \"dpu error|vblank wait timed out|workqueue lockup|rcu_preempt detected\")";echo "bl=$(cat /sys/class/backlight/ae94000.dsi.0/bl_power) br=$(cat /sys/class/backlight/ae94000.dsi.0/brightness) fb0=$(cat /sys/class/graphics/fb0/blank)";ls /run/gts9-power-key/;systemctl is-system-running
+2026-09-24T01:13:50Z RECV  [?2004lFINAL
+2026-09-24T01:13:50Z RECV  db803a74c5bbc30d74d224a5b33f436b1ab9e00a0a8967931ec16055f77d1296  /usr/libexec/gts9-power-key
+2026-09-24T01:13:50Z RECV  Mon Apr 13 20:05:22 UTC 2026
+2026-09-24T01:13:50Z RECV  rc=0
+2026-09-24T01:13:50Z RECV  Mon Apr 13 20:06:23 UTC 2026
+2026-09-24T01:13:50Z RECV  grep: off": No such file or directory
+2026-09-24T01:13:50Z RECV  grep: on": No such file or directory
+2026-09-24T01:13:50Z RECV  -bash: rcu_preempt: command not found
+2026-09-24T01:13:50Z RECV  -bash: vblank: command not found
+2026-09-24T01:13:50Z RECV  grep: error: No such file or directory
+2026-09-24T01:13:50Z RECV  -bash: workqueue: command not found
+2026-09-24T01:13:50Z RECV  off= on= err=
+2026-09-24T01:13:50Z RECV  bl=0 br=2047 fb0=0
+2026-09-24T01:13:50Z RECV  last-brightness
+2026-09-24T01:13:50Z RECV  running
+2026-09-24T01:13:50Z console run done (ready=True)

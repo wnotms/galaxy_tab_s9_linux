@@ -1,0 +1,16 @@
+2026-09-24T01:13:54Z console open on COM17
+2026-09-24T01:13:55Z RECV  echo READY1
+2026-09-24T01:13:55Z RECV  [?2004lREADY1
+2026-09-24T01:13:55Z shell answered after 1 poll(s)
+2026-09-24T01:13:55Z SENT  echo FV;dmesg | grep -ac screen.off 2>/dev/null;dmesg | grep -ac "screen on";dmesg | grep -acE "dpu|vblank|workqueue|rcu_preempt";dmesg | grep -a "power-key" | head -3;systemctl is-active gts9-power-key.service;cat /proc/uptime
+2026-09-24T01:14:09Z RECV  [?2004hroot@gts9:~# echo FV;dmesg | grep -ac screen.off 2>/dev/null;dmesg | grep -ac "screen on";dmesg | grep -acE "dpu|vblank|workqueue|rcu_preempt";dmesg | grep -a "power-key" | head -3;systemctl is-active gts9-power-key.service;cat /proc/uptime [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ke
+2026-09-24T01:14:09Z RECV  [?2004lFV
+2026-09-24T01:14:09Z RECV  30
+2026-09-24T01:14:09Z RECV  30
+2026-09-24T01:14:09Z RECV  0
+2026-09-24T01:14:09Z RECV  [ 1639.339346] [   T1214] gts9-power-key: argv1=--stress
+2026-09-24T01:14:09Z RECV  [ 1639.339708] [   T1214] gts9-power-key: screen off (backlight off, system keeps running)
+2026-09-24T01:14:09Z RECV  [ 1640.343323] [   T1214] gts9-power-key: screen on (backlight restored)
+2026-09-24T01:14:09Z RECV  active
+2026-09-24T01:14:09Z RECV  1723.35 13764.12
+2026-09-24T01:14:09Z console run done (ready=True)
