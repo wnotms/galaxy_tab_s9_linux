@@ -24,8 +24,8 @@ which gives the next experiment a much cheaper and sharper entry point than
 | 7 | PCIe0 is **not** the stall cause | test-182 A/B with `pcie0` + PHY disabled still stalled |
 | 8 | the 4.7 s → 125 s "pause" was `/dev/console → tty0 → fbcon → DRM` output backlog | test-184: all 28 report lines journal-timestamped `[4.646574]` |
 | 9 | the DPU really does fail later in a stall, but that is not proof it is the common cause | `docs/DPU_TRACE.md` |
-| 10 | real stalls cluster at **13.3–14.3 s** after boot | §4.1 |
-| 11 | the earliest captured software-visible anomaly in a failing boot is an **ACTIVE_ONLY RPMh transaction timeout** | `rpmh_write_batch()` `WARN_ON(1)`, `rpmh.c:386`, at +14.27 s |
+| 10 | real stalls cluster at **13.3–14.3 s** after boot, and that window is the deferred-probe-timeout burst | `docs/DPU_TRACE.md` four-stall table; real dump at 14.3076 s in `test-181-*/host-captures/r3-shutdown-window.log` — §4.2 |
+| 11 | an **ACTIVE_ONLY RPMh transaction timeout** has been seen in a failing boot | round brief; **no captured dump exists in this repository** — patch `0021` has never run on the device (test-186 was never executed), so the exact timestamp is not evidence here. Corrected in round 2; see §4.4. |
 | 12 | `pogo_watch_work` is a *victim*, not established as the cause | `docs/NEXT_STALL_DEBUG_PLAN.md` §1 |
 | 13 | ramoops is registered but no record survives a reboot | test-183/184 |
 | 14 | no Gunyah/`qcom,gh-watchdog` driver exists in this tree | test-183 audit |
@@ -43,7 +43,7 @@ which gives the next experiment a much cheaper and sharper entry point than
 | 21 | Upstream `sm8550.dtsi` gives **all eight** GPU OPP nodes a `qcom,opp-acd-level`, and the X710 DTS does not remove them (its only `&gpu` override is `status = "okay"` + `zap-shader/firmware-name`). So `cmd->enable_by_level != 0` is guaranteed on this board. `a6xx_gmu_build_freq_table()` seeds index 0 with the "off" level, so `nr_gpu_freqs = 9` and the ACD loop sets `BIT(1)..BIT(8)` = **`0x1fe`**. | `sm8550.dtsi:2879-2939` (8 × `qcom,opp-acd-level`); `kernel/dts/sm8550-samsung-gts9wifi.dts:1459-1466`; `a6xx_gmu.c` `a6xx_gmu_build_freq_table()` |
 | 22 | The X910 port **does** enable AOSS QMP: `CONFIG_QCOM_AOSS_QMP=y` in its mainline config, and it carries a patch that pulls the provider in. | `.work/x910/ubuntu-galaxy-tab-s9-ultra/kernel/config/config-mainline.aarch64:9924`; `.../kernel/patches/build-wcn-pcie-providers-in.patch` |
 | 23 | `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10` is the resolved value. | `out/kernel-gts9wifi/config:1871` |
-| 24 | `RPMH_TIMEOUT_MS` is 10 s, so a +14.27 s `rpmh_write_batch()` warning means the batch was **submitted at ≈ +4.27 s**. | `drivers/soc/qcom/rpmh.c:25` |
+| 24 | `RPMH_TIMEOUT_MS` is 10 s, so **if** a `rpmh_write_batch()` warning is ever captured at time T, the batch was submitted at ≈ T−10 s. No such warning is currently on record from a real boot. | `drivers/soc/qcom/rpmh.c:25` |
 
 ---
 
@@ -109,11 +109,14 @@ stuck one layer earlier, at ACD/AOSS.
 ## 3. Hypothesis under test (explicitly a hypothesis, not a proven root cause)
 
 > The X710 kernel is missing `CONFIG_QCOM_AOSS_QMP`, the provider the SM8550 GPU
-> device tree requires for ACD. That leaves the GPU in a permanent probe-defer,
-> and the resulting early-boot init/cleanup burst — GPU probe + device-link
-> teardown + deferred-probe retry storm + sync_state at
-> `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT` — is the trigger that wedges the apps_rsc
-> TCS machinery at ≈ +4.27 s and produces the observed 13–14 s stall.
+> device tree requires for ACD. That leaves `gmu@3d6a000` and `gpu@3d00000`
+> permanently on the deferred-probe list, which in turn prevents `gcc`, `gpucc`
+> and the interconnect providers from ever completing `sync_state()`. At
+> `late_initcall + CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT` (≈4.3 s + 10 s ≈
+> **14.3 s**) the deferred-probe timeout work re-probes the entire pending set and
+> walks `sync_state` across the whole clock/interconnect/power-domain graph at
+> once — and the four recorded stalls all begin inside that same 13.3–14.3 s
+> window.
 
 Stated as a chain, with the *unproven* links marked:
 
@@ -122,29 +125,40 @@ CONFIG_QCOM_AOSS_QMP unset                    [PROVEN, fact 19]
         ↓
 aoss_qmp device has no driver                 [PROVEN]
         ↓
-qmp_get() → -EPROBE_DEFER                     [PROVEN, source]
+qmp_get() → -EPROBE_DEFER (forever)           [PROVEN, source]
         ↓
-a6xx_gmu_acd_probe() → "Unable to send ACD state to AOSS", -EINVAL   [PROVEN, source + log]
+a6xx_gmu_acd_probe() → "Unable to send ACD state to AOSS", -EINVAL   [PROVEN, source + real logs §4.1]
         ↓
-GPU probe fails; device_link_del() WARN       [PROVEN, log]
+GPU probe fails; device_link_del() WARN       [PROVEN, real logs §4.1]
         ↓
-GPU permanently deferred; retried forever     [PROVEN, source]
+gmu@3d6a000 + gpu@3d00000 stay deferred       [PROVEN, real dump §4.3 14.3096 s]
         ↓
-??? early-boot init/cleanup burst ???         [HYPOTHESIS]
+gcc / gpucc / interconnect-1 can never
+finish sync_state()                           [PROVEN, real dump §4.3 14.3098 s]
         ↓
-apps_rsc stops completing TCS transactions ≈ +4.27 s   [OBSERVED, §4.2]
+deferred_probe_timeout fires at late_initcall + 10 s          [PROVEN, real dump §4.2 14.3076 s]
         ↓
-RPMh clients block on their 10 s completions  [OBSERVED, §4.2]
+whole pending set re-probed + sync_state walked simultaneously [PROVEN, source §4.2]
         ↓
-CPU#5 stops running the watchdog kthread      [OBSERVED, §4.1]
+??? that simultaneous burst wedges a CPU ???  [HYPOTHESIS — coincidence in time, not yet causation]
         ↓
-soft lockup fires at +13.4 s, RPMh WARN at +14.27 s   [OBSERVED, §4.1]
+one CPU stops running its watchdog kthread    [OBSERVED, 4 real stalls §4.2]
+        ↓
+stall is visible in the 13.3-14.3 s window    [OBSERVED, 4 real stalls §4.2]
 ```
 
-The `???` link is the whole question. It is **not** established that the missing
-config causes the RSC wedge; it is established that the missing config is a real
-bug that must be fixed regardless, and that it makes every GPU/GMU/RPMh hypothesis
-untestable until it is fixed.
+**What is proven and what is not.** The chain from the missing config down to
+"the sync_state walk of the whole graph happens at 14.3 s with the GPU and GMU in
+it" is proven from source plus a real dump. The single `???` link is whether that
+burst *causes* the wedge. It is the only deterministic, system-wide event in the
+observed stall window, which makes it the leading candidate — but coincidence in
+time is not causation, and the §7 matrix exists to test it.
+
+Note what this framing no longer depends on: the earlier revision leaned on an
+"RPMh TCS machinery wedged at ≈4.27 s" story built from synthetic fixtures. That
+story is gone (§4.4). The current hypothesis needs no RPMh timeout at all, which
+means **the RPMh/RSC layer may be a victim rather than a participant** — and that
+is precisely the possibility the brief warns against prejudging.
 
 **Necessary correction to the brief's framing.** The brief lists
 `msm.disable_acd=1` as an A/B "to isolate the GPU ACD → AOSS QMP path". Because
@@ -156,51 +170,146 @@ we remove the ACD requirement?"*, not *"is ACD the cause?"*.
 
 ---
 
-## 4. Measured timeline (from real hardware evidence only)
+## 4. Measured timeline
 
 All figures are `journalctl -o short-monotonic` / console-capture monotonic
 timestamps. No screen ordering is used (test-184 fact 8).
 
-### 4.1 The stall, from `reference/boot-tests/test-186-*/fixtures/victim.log`
+> **Correction (round 2).** An earlier revision of this section cited
+> `reference/boot-tests/test-186-*/fixtures/victim.log` and
+> `.../programmed-no-completion.log` as real hardware evidence. **They are not.**
+> They are synthetic fixtures written to pin `classify-round.sh`'s branches, as
+> that commit's own message states ("Three synthetic fixtures pin the branches").
+> test-186 has no `rounds/` directory because it **was never run on the device**,
+> and the `13.400000` / `14.270000` timestamps appear nowhere except that fixture
+> file. They have been removed from this section and from fact 11. The real
+> evidence is below, and it is stronger than the fixture was.
 
-| monotonic | event |
+### 4.1 The GPU init failure (real, repeated on many boots)
+
+From `test-183-*/rounds-inject/inject-{1,2,3}-console.log` and
+`test-046-*` / `test-047-*` console captures:
+
+| order | event |
 |---|---|
-| ~4.09 s | `printk: legacy console [ttyMSM0] enabled` — GPU probe window opens |
-| ~4.12 s | `adreno 3d00000.gpu: supply vdd not found, using dummy regulator` |
-| ~4.13 s | `adreno 3d00000.gpu: supply vddcx not found, using dummy regulator` |
-| ~4.14 s | `platform 3d6a000.gmu: [drm:a6xx_gmu_acd_probe] *ERROR* Unable to send ACD state to AOSS` |
-| ~4.15 s | `Unable to drop a managed device link reference` + `device_link_put_kref` WARN, `Workqueue: events_unbound deferred_probe_work_func` |
-| **13.400 s** | `watchdog: BUG: soft lockup - CPU#5 stuck for 22s! [kworker/u32:18:174]` |
-| **14.270 s** | `WARNING: drivers/soc/qcom/rpmh.c:386 at rpmh_write_batch` (10 s timeout ⇒ submit ≈ **4.27 s**) |
+| 1 | `platform 3d6a000.gmu: Adding to iommu group 1` |
+| 2 | `adreno 3d00000.gpu: supply vdd not found, using dummy regulator` |
+| 3 | `adreno 3d00000.gpu: supply vddcx not found, using dummy regulator` |
+| 4 | `platform 3d6a000.gmu: [drm:a6xx_gmu_acd_probe] *ERROR* Unable to send ACD state to AOSS` |
+| 5 | `Unable to drop a managed device link reference` + `device_link_put_kref` WARN, `Workqueue: events_unbound deferred_probe_work_func` |
 
-Note the soft-lockup line's own arithmetic: "stuck for 22s" at 13.400 s places the
-last run of that CPU's watchdog kthread at ≈ **-8.6 s**, i.e. before kernel start.
-That number is not usable as a stall-onset estimate; it is quoted here so nobody
-later reads 13.4 s as "the stall began at 13.4 s". The reliable statement is the
-weaker one: **by 13.4 s, CPU#5 had not run its watchdog kthread for far longer
-than the threshold.**
+This cluster repeats on every boot captured, in the same order. The absolute
+window is the early-console window; the console's own `[...]` field on those
+lines is a **delta**, not an absolute timestamp, so the exact absolute time comes
+from the surrounding absolute lines (~4.1–4.2 s), not from the delta field.
 
-### 4.2 What actually stopped, from `test-186-*/fixtures/programmed-no-completion.log`
+### 4.2 The stall window is the deferred-probe-timeout burst (real)
 
-Both RPMh clients in the ring submitted at ≈ +4.27 s and both timed out at
-+14.27 s:
+This is the finding that reframes the investigation, and it comes from real
+evidence in two places.
 
-| client | submitted | TCS outcome | ring summary |
-|---|---|---|---|
-| `1c00000.interconnect`, `kworker/6:0` | +4271 ms, `tcs=3` | `tcs_in_use=0x8`, `cmd_enable=0x1`, request still stashed | `send=2 done=1 matched_send=1 matched_done=0` → *programmed but never completed* |
-| `5-002a` (pogo), `kworker/u32:18` | not in ring | `holder_tcs=-1` | `send=1 done=0 matched_send=0` → *did not reach TCS programming* |
+**`docs/DPU_TRACE.md` §"What four reproductions showed"** — four cold boots
+stalled, all in the **~13.3–14.3 s** window, described there as *"the
+deferred-probe / late-init burst"*:
 
-So one client had its command written into a TCS that was never completed, and a
-*different* client could not get a TCS at all. A plausible reading — hypothesis,
-not fact — is that one stuck TCS plus the client-side cache blocked behind it
-stops every later RPMh client on that RSC.
+| | stall 1 | stall 2 | stall 3 (PCIe0 off) | stall 4 (PCIe0 off) |
+|---|---|---|---|---|
+| NMI-unresponsive CPU | 5 | 7 | 5 | (RCU stall) |
+| last normal log | PCIe probe **14.05 s** | PCIe probe **14.05 s** | **sync_state dump 13.54 s** | DPU overflow **13.263 s** |
+| `pm_runtime_work` stuck | 4 | 3 | 3 | – |
+| other stuck work | `fqdir_free_fn` | `toggle_allocation_gate` | `fqdir_free_fn`, `pogo_watch_work` | `drm_fb_helper_damage_work` pending |
 
-`tcs_in_use=0x8`, `irq_status=0x0`, `irq_enable=0x7fff`: the TCS bit is set as
-in-use, no TCS completion bit was raised, and the RSC irq was enabled. Per the
-decision tree in `docs/NEXT_STALL_DEBUG_PLAN.md` §8 this is the
-"programmed, no completion, TCS still in use with CMD_ENABLE set" row — i.e.
-**the request reached the RSC and never completed**, which points at RSC/TCS
-hardware completion, not at IRQ delivery.
+**`test-181-*/host-captures/r3-shutdown-window.log`** — the same burst with
+absolute monotonic timestamps, at **14.3076–14.3127 s**:
+
+```
+[   14.307609] platform 6800000.remoteproc: deferred probe pending: ...
+[   14.308413] platform smp2p-adsp: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+[   14.308836] qnoc-sm8550 1500000.interconnect: sync_state() pending due to 1c00000.pcie
+[   14.309643] qnoc-sm8550 interconnect-1: sync_state() pending due to 3d00000.gpu
+[   14.309755] gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+[   14.309869] gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+[   14.311135] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+[   14.312532] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+```
+
+This is `deferred_probe_timeout_work_func()` in `drivers/base/dd.c`. Its
+mechanism, from the source:
+
+```c
+fw_devlink_drivers_done();
+driver_deferred_probe_timeout = 0;
+driver_deferred_probe_trigger();   /* <- re-probes EVERY deferred device */
+flush_work(&deferred_probe_work);
+/* then prints the still-pending list and walks sync_state */
+fw_devlink_probing_done();
+```
+
+and it is armed by `late_initcall(deferred_probe_initcall)`, which calls
+`schedule_delayed_work(&deferred_probe_timeout_work,
+driver_deferred_probe_timeout * HZ)`. With
+`CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10` (fact 23), a dump at **14.3076 s**
+means late-init completed at **≈4.31 s**.
+
+**So the stall is coincident with a single, deterministic, whole-system event: at
+~4.3 s + 10 s the kernel re-probes every device still on the deferred list and
+then walks every provider's `sync_state`.**
+
+### 4.3 Why the GPU sits in that burst
+
+At 14.309755 s and 14.309869 s the dump shows:
+
+```
+gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+```
+
+`gcc` and `gpucc` **cannot complete `sync_state()` while the GMU is unbound**, and
+the GMU is unbound precisely because of the ACD/AOSS failure in §2 — that probe
+returned `-EPROBE_DEFER` and can never succeed while
+`CONFIG_QCOM_AOSS_QMP` is unset. `driver_deferred_probe_timeout = 0` does not
+help: `qmp_get()` returns `-EPROBE_DEFER` directly rather than through
+`driver_deferred_probe_check_state()`, so no timeout value can let the GMU bind.
+
+`qnoc-sm8550 interconnect-1: sync_state() pending due to 3d00000.gpu` shows the
+interconnect is likewise waiting on the GPU.
+
+**This is the concrete, evidenced mechanism linking the GPU defect to the stall
+window** — and it is stronger than the "retry storm" wording used earlier in this
+document:
+
+```
+CONFIG_QCOM_AOSS_QMP unset                       [PROVEN, fact 19]
+  → aoss_qmp has no driver                        [PROVEN]
+  → qmp_get() -> -EPROBE_DEFER forever            [PROVEN, source]
+  → a6xx_gmu_acd_probe() -> -EINVAL               [PROVEN, source + real logs]
+  → gmu@3d6a000 and gpu@3d00000 stay on the
+    deferred list permanently                     [PROVEN, real dump 14.3096 s]
+  → gcc / gpucc / interconnect-1 can never
+    finish sync_state()                           [PROVEN, real dump 14.3098 s]
+  → deferred_probe_timeout fires at ~4.3 s + 10 s [PROVEN, real dump 14.3076 s]
+  → simultaneous re-probe + sync_state walk of
+    the whole pending set                         [PROVEN, source]
+  → the ~13.3-14.3 s stall window                  [PROVEN, 4 real stalls]
+```
+
+The last link is *coincidence in time*, not yet proof of causation: the stall has
+been observed in the same window on four boots, and the burst is the only
+deterministic system-wide event in that window, but no run has yet shown the
+burst *causing* the wedge. That is exactly what the §7 matrix tests.
+
+### 4.4 What is still NOT real evidence
+
+* **There is no captured RPMh timeout dump.** Patch `0021` has never run on the
+  device; test-186 was never executed. Everything in the earlier revision of this
+  document about `tcs_in_use=0x8`, `irq_status=0x0`, `holder_tcs`, `ring_summary`
+  and a `1c00000.interconnect` caller was synthetic-fixture content and has been
+  removed. The §8 decision tree therefore remains **unexercised**.
+* **The `+14.27 s` RPMh warning is not a real observation.** Fact 11 has been
+  corrected: the real starting point is that an RPMh/ACTIVE_ONLY timeout *was*
+  seen in a failing boot per the round brief, but its exact timestamp is not in
+  this repository's evidence, and no 10-second-submission arithmetic should be
+  built on it until a real dump exists.
 
 ---
 
@@ -231,18 +340,30 @@ hardware completion, not at IRQ delivery.
 
 ## 6. Carried forward from `NEXT_STALL_DEBUG_PLAN.md`
 
-The RPMh/RSC layer work is still the right long-term direction and its analysis
-stands unchanged:
+The RPMh/RSC layer work is still available and its analysis stands:
 
 * the `rpmh_write_batch()` **request-lifetime hazard** (`tcs->req[]` still points
-  at a batch that the timeout path `kfree()`s) is real, is reported by patch
-  `0021`, and is analysed in `docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md`;
+  at a batch that the timeout path `kfree()`s) is real in source, is reported by
+  patch `0021`, and is analysed in `docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md`;
 * the request/TCS/IRQ decision tree (§8 of that document) is the right tool for
-  classifying a captured timeout, and §4.2 above already lands in one of its rows.
+  classifying a captured timeout — **and it is still unexercised**, because no
+  real timeout dump has ever been captured (§4.4). Nothing in §4.2 above "lands
+  in one of its rows"; that claim came from synthetic fixtures and has been
+  removed.
 
-What changes is **priority**: the ACD/AOSS config defect is cheaper to test, is a
-defect either way, and currently prevents the GPU from reaching the RPMh layer at
-all. Test it first.
+What changes is **priority and framing**. Two things are now true that were not
+before:
+
+1. The ACD/AOSS config defect is cheaper to test, is a defect either way, and
+   currently prevents the GPU from reaching the RPMh layer at all.
+2. The strongest evidenced mechanism for the stall window (§4.2/§4.3) **does not
+   require an RPMh timeout**. It requires only the deferred-probe timeout burst.
+   So the RPMh layer may be a victim or an unrelated bystander, and the RPMh
+   debug backport drops further down the priority list than the previous revision
+   of this document placed it.
+
+Test the config fix first; reach for RPMh instrumentation only if the A/B leaves
+the burst hypothesis standing.
 
 ---
 
@@ -258,11 +379,18 @@ One variable per round. **B+C+D+E must never be combined.**
 | **D** | AOSS QMP fix | `+ CONFIG_QCOM_AOSS_QMP=y` (no patch) | — | does giving the GPU its provider fix the GPU and/or the stall? |
 | **E** | D + RPMh debug | `+ CONFIG_QCOM_AOSS_QMP=y`, `GTS9_RPMH_DEBUG=1` | `+ gts9_rpmh_debug=1` | if the stall survives D, classify the timeout per the §8 tree |
 | **F** | cxpd backport | `+ 0007-…-stateless.patch` | — | does the `device_link_put_kref` WARN disappear, and does the stall change? |
+| **G** | burst decoupled | none (same kernel as A/B/C) | `+ deferred_probe_timeout=300` | is the **deferred-probe-timeout burst** the trigger, independently of the GPU? |
 
 Notes:
 
-* A, B and C share **one kernel** and differ only in `vendor_boot` cmdline. That is
-  the cheapest possible A/B and it is why they come first.
+* A, B, C and G share **one kernel** and differ only in `vendor_boot` cmdline.
+  That is the cheapest possible A/B and it is why they come first.
+* **G is new in round 2** and is the most decisive single test available, because
+  it attacks the mechanism of §4.2/§4.3 directly: same kernel, same broken GPU,
+  same pending set — only the *instant* of the whole-system re-probe + sync_state
+  walk moves (to ~304 s instead of ~14.3 s). If the stall tracks the timer, the
+  burst is the trigger; if it does not, the burst is exonerated. Neither outcome
+  requires new code or new instrumentation.
 * **D is already built and its config change is committed**
   (`config: enable QCOM_AOSS_QMP so the SM8550 GPU can bind`). The resolved
   `out/kernel-gts9wifi/config` contains `CONFIG_QCOM_AOSS_QMP=y` with
@@ -294,9 +422,13 @@ detectors, and `panic=10`.
   A + `msm.disable_acd=1`, nothing else.
 * **Profile C — no-GPU** (`boot/cmdline.stall-ab-no-gpu.example.txt`):
   A + `msm.no_gpu=1`, nothing else; `msm.separate_gpu_kms=1` already present.
+* **Profile G — burst decoupled** (`boot/cmdline.stall-ab-late-deferred.example.txt`):
+  A + `deferred_probe_timeout=300`, nothing else. Moves the deferred-probe-timeout
+  burst (§4.2) from ~14.3 s to ~304 s without changing the pending set, so it
+  isolates *the burst* from *the GPU*.
 
 Changing a profile changes **only `vendor_boot.img`**. `boot.img` (kernel + DTB)
-and `init_boot.img` (initramfs) are byte-identical across A/B/C by construction.
+and `init_boot.img` (initramfs) are byte-identical across A/B/C/G by construction.
 
 ---
 
@@ -335,8 +467,9 @@ the 13–14 s wedge, and none of them is acted on this round:
    benign re-configuration or a real timing issue in `dispcc`.
 2. The `-ENOMEM` from a pstore `memcpy`-through-`copy_from` path seen on some
    stalls (a witness of memory corruption *if* real; not reproduced under control).
-3. `deferred_probe_timeout` expiry at +10 s with a non-empty pending list — the
-   GPU contributes to that list by construction (fact 20 chain).
+3. `deferred_probe_timeout` expiry with a non-empty pending list — **promoted in
+   round 2** from "unexplained warning" to the leading mechanism (§4.2/§4.3) and
+   therefore to a testable axis, profile **G** in §7.
 
 ---
 
@@ -344,13 +477,31 @@ the 13–14 s wedge, and none of them is acted on this round:
 
 | Observation | Conclusion to draw | Next step |
 |---|---|---|
-| A stalls, **B does not** | the ACD requirement is on the causal path; GPU now binds | fix properly with **D**, not by shipping `disable_acd`; investigate ACD→AOSS→GMU ordering |
-| A stalls, B stalls, **C does not** | GPU/GMU *registration* is required for the stall, but not specifically ACD | go to D; if D also stalls, instrument GMU init ordering |
-| **C still stalls** | GPU/GMU is **demoted**; the stall is independent of the adreno driver entirely | stop spending time on GPU; go to **E** and the §6 RPMh/RSC tree, then IRQ/scheduler/deferred-probe |
+| A stalls, **B does not** | the ACD requirement is on the causal path; GPU now binds | fix properly with the config, not by shipping `disable_acd`; investigate ACD→AOSS→GMU ordering |
+| A stalls, B stalls, **C does not** | GPU/GMU *registration* is required for the stall, but not specifically ACD | go to **G** to separate "the burst" from "the GPU"; if G also stalls, instrument GMU init ordering |
+| **C still stalls** | GPU/GMU is **demoted**; the stall is independent of the adreno driver entirely | go to **G** first (tests the burst without touching the GPU), then **E** and the §6 RPMh/RSC tree |
+| **G does not stall** | the deferred-probe-timeout burst is the mechanism, independent of *which* device is deferred | strongest possible confirmation of §4.2; then reduce what is pending rather than the timer |
+| **G still stalls** | the burst is **not** the trigger either; both the GPU chain and the burst hypothesis are weakened | go to **E** and the §6 RPMh/RSC tree with the desktop otherwise unchanged |
 | D removes the ACD error **and** the stall | the missing provider is the cause | ship D; re-run A to confirm the rate change |
-| D removes the ACD error but **not** the stall | a real bug was fixed and it is **not** the sufficient root cause | record exactly that; go to E |
+| D removes the ACD error but **not** the stall | a real bug was fixed and it is **not** the sufficient root cause | record exactly that; go to G, then E |
 | F removes the `device_link_put_kref` WARN but the stall remains | a real GMU driver bug was fixed, not sufficient for the stall | record exactly that; never call it "the fix failed" |
 | no stall in any profile | "not reproduced this round" | repeat A; do not change code |
+
+**Why G is high value.** It is a pure cmdline change (`deferred_probe_timeout=300`)
+on the *same* kernel as A/B/C, needs no new code, and moves the one deterministic
+system-wide event out of the observed stall window while leaving every deferred
+device — GPU included — exactly as broken as it is in A. If the stall follows the
+timer, §4.2 is confirmed and the fix direction becomes "reduce what is pending at
+late_initcall", not "find a driver bug". If the stall stays at 13–14 s with no
+burst there, the burst is exonerated and the RPMh/RSC direction returns to the
+front. Either answer is decisive, which is what makes it a good experiment.
+
+The parameter cannot *disable* the burst: `drivers/base/dd.c` arms it only
+`if (driver_deferred_probe_timeout > 0)`, and `= 0` additionally changes
+`driver_deferred_probe_check_state()` to return `-ETIMEDOUT` instead of
+`-EPROBE_DEFER`, which alters behaviour for every optional supplier rather than
+ablating the burst. A large positive value is the clean way to decouple the
+timing.
 
 ---
 
