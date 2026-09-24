@@ -1,0 +1,88 @@
+2026-09-24T13:40:17Z test-184 observer A/B: rounds=5 profile=A
+2026-09-24T13:40:17Z === round 1 (A) ===
+2026-09-24T13:40:29.449Z PRESENCE usb0525:a4a7=False
+2026-09-24T13:40:48.314Z PRESENCE usb0525:a4a7=True
+  2026-09-24T13:42:04Z RECV  boot_id=f83c4b83-e640-4185-9980-c6b26f54e7d3
+  2026-09-24T13:42:04Z RECV  uptime=59.37
+  2026-09-24T13:42:04Z RECV  getty=active
+  2026-09-24T13:42:04Z RECV  msm0=masked
+  2026-09-24T13:42:04Z RECV  failed=0
+  2026-09-24T13:42:04Z RECV  Result=success ExecMainStartTimestampMonotonic=4208663 ExecMainExitTimestampMonotonic=4801278
+  boot_id=f83c4b83-e640-4185-9980-c6b26f54e7d3
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T13:42:04Z === round 2 (A) ===
+2026-09-24T13:42:16.097Z PRESENCE usb0525:a4a7=False
+2026-09-24T13:42:34.651Z PRESENCE usb0525:a4a7=True
+  2026-09-24T13:43:49Z RECV  boot_id=b0963810-aa8d-4ff0-a5cd-5f33821067c8
+  2026-09-24T13:43:49Z RECV  uptime=57.61
+  2026-09-24T13:43:49Z RECV  getty=active
+  2026-09-24T13:43:49Z RECV  msm0=masked
+  2026-09-24T13:43:49Z RECV  failed=0
+  2026-09-24T13:43:49Z RECV  Result=success ExecMainStartTimestampMonotonic=3800597 ExecMainExitTimestampMonotonic=4369923
+  boot_id=b0963810-aa8d-4ff0-a5cd-5f33821067c8
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T13:43:49Z === round 3 (A) ===
+2026-09-24T13:44:01.256Z PRESENCE usb0525:a4a7=False
+2026-09-24T13:44:20.973Z PRESENCE usb0525:a4a7=True
+  2026-09-24T13:45:34Z RECV  boot_id=14f0722f-086d-4ef8-a131-a21e1718b3ec
+  2026-09-24T13:45:34Z RECV  uptime=57.54
+  2026-09-24T13:45:34Z RECV  getty=active
+  2026-09-24T13:45:34Z RECV  msm0=masked
+  2026-09-24T13:45:34Z RECV  failed=0
+  2026-09-24T13:45:34Z RECV  Result=success ExecMainStartTimestampMonotonic=4208799 ExecMainExitTimestampMonotonic=4784855
+  boot_id=14f0722f-086d-4ef8-a131-a21e1718b3ec
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T13:45:34Z === round 4 (A) ===
+2026-09-24T13:45:46.038Z PRESENCE usb0525:a4a7=False
+2026-09-24T13:46:05.838Z PRESENCE usb0525:a4a7=True
+  boot_id=
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T13:47:58Z === round 5 (A) ===
+2026-09-24T13:48:08.480Z SENT  systemctl reboot
+2026-09-24T13:48:39.695Z PRESENCE usb0525:a4a7=False
+  2026-09-24T13:49:43Z RECV  boot_id=8d7db274-74b1-4a34-8a0c-d16cd0eb8f9d
+  2026-09-24T13:49:43Z RECV  uptime=29.70
+  2026-09-24T13:49:43Z RECV  getty=active
+  2026-09-24T13:49:43Z RECV  msm0=masked
+  2026-09-24T13:49:43Z RECV  failed=0
+  2026-09-24T13:49:43Z RECV  Result=success ExecMainStartTimestampMonotonic=4316439 ExecMainExitTimestampMonotonic=4880568
+  boot_id=8d7db274-74b1-4a34-8a0c-d16cd0eb8f9d
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T13:49:44Z observer A/B done: profile=A rounds=5
+2026-09-24T14:14:35Z test-184 observer A/B: rounds=3 profile=D
+2026-09-24T14:14:35Z === round 1 (D) ===
+2026-09-24T14:14:46.499Z PRESENCE usb0525:a4a7=False
+2026-09-24T14:15:06.510Z PRESENCE usb0525:a4a7=True
+  2026-09-24T14:16:20Z RECV  boot_id=7f8878b7-490c-4757-9c47-ec0129063eee
+  2026-09-24T14:16:20Z RECV  uptime=58.29
+  2026-09-24T14:16:20Z RECV  getty=active
+  2026-09-24T14:16:20Z RECV  msm0=masked
+  2026-09-24T14:16:20Z RECV  failed=0
+  2026-09-24T14:16:20Z RECV  Result=success ExecMainStartTimestampMonotonic=4172758 ExecMainExitTimestampMonotonic=4760695
+  boot_id=7f8878b7-490c-4757-9c47-ec0129063eee
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T14:16:20Z === round 2 (D) ===
+2026-09-24T14:16:31.164Z PRESENCE usb0525:a4a7=False
+2026-09-24T14:16:50.333Z PRESENCE usb0525:a4a7=True
+  boot_id=
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T14:20:45Z === round 3 (D) ===
+2026-09-24T14:20:55.529Z PRESENCE usb0525:a4a7=False
+2026-09-24T14:21:14.646Z PRESENCE usb0525:a4a7=True
+  2026-09-24T14:22:29Z RECV  boot_id=10875d6b-6968-4b9c-94ed-e3411a5d7bd6
+  2026-09-24T14:22:29Z RECV  uptime=58.32
+  2026-09-24T14:22:29Z RECV  getty=active
+  2026-09-24T14:22:29Z RECV  msm0=masked
+  2026-09-24T14:22:29Z RECV  failed=0
+  2026-09-24T14:22:29Z RECV  Result=success ExecMainStartTimestampMonotonic=3724603 ExecMainExitTimestampMonotonic=4268272
+  boot_id=10875d6b-6968-4b9c-94ed-e3411a5d7bd6
+  console_stall_markers=0
+  getty_timeout=0
+2026-09-24T14:22:30Z observer A/B done: profile=D rounds=3

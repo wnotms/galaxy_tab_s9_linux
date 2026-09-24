@@ -2015,3 +2015,16 @@
 2026-09-24T11:37:57.481Z RECV  K syslog:info  : [Apr14 03:39] [    T288] systemd-journald[288]: /var/log/journal/3c2a1b8f2d624db4b5ffdc836050fcf6/user-1000.journal: Realtime clock jumped backwards relative to last journal entry, rotating.
 2026-09-24T11:38:43.504Z port closed (watch end)
 2026-09-24T11:38:43.506Z watch done: lines=976 com_disconnects=0 com_reconnects=0
+2026-09-24T14:24:25.622Z watch start: port=COM17 seconds=180 command='rmmod gts9_stall_test 2>/dev/null; insmod /root/gts9_stall_test.ko mode=1 seconds=30' at 10s
+2026-09-24T14:24:26.573Z PRESENCE com=True ports=[COM17,COM19]
+2026-09-24T14:24:26.575Z PRESENCE usb0525:a4a7=True
+2026-09-24T14:24:26.599Z port open on COM17
+2026-09-24T14:24:36.507Z SENT  rmmod gts9_stall_test 2>/dev/null; insmod /root/gts9_stall_test.ko mode=1 seconds=30
+2026-09-24T14:24:36.512Z RECV  rmmod gts9_stall_test 2>/dev/null; insmod /root/gts9_stall_test.ko mode=1 seconds=30
+2026-09-24T14:25:12.997Z read failed: 使用“0”个参数调用“ReadLine”时发生异常:“端口被关闭。”
+2026-09-24T14:25:13.004Z port closed (read error)
+2026-09-24T14:25:14.298Z PRESENCE usb0525:a4a7=False
+2026-09-24T14:25:32.932Z port open on COM17
+2026-09-24T14:25:33.969Z PRESENCE usb0525:a4a7=True
+2026-09-24T14:27:25.676Z port closed (watch end)
+2026-09-24T14:27:25.678Z watch done: lines=1 com_disconnects=0 com_reconnects=0

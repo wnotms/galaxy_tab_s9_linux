@@ -1,0 +1,24 @@
+2026-09-24T12:11:08Z === test-183 U_SERIAL_CONSOLE boot pair flash ===
+2026-09-24T12:11:08Z adb state: recovery
+2026-09-24T12:11:09Z --- boot: host sha256 2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923 (expected current dfbe70f4779564948cb8d9ce22049c779a8fb271a64795b8131d96e3b1bf5a7b) ---
+100663296 bytes (96 M) copied, 0.099136 s, 968 M/s
+/tmp/boot-before.img: 1 file pulled, 0 skipped. 35.3 MB/s (100663296 bytes in 2.717s)
+2026-09-24T12:11:12Z PASS boot backup matches the recorded current image (dfbe70f4779564948cb8d9ce22049c779a8fb271a64795b8131d96e3b1bf5a7b)
+D:\android\gts9-flash\boot-console.img: 1 file pushed, 0 skipped. 75.2 MB/s (100663296 bytes in 1.276s)
+2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923  /tmp/boot-new.img
+100663296 bytes (96 M) copied, 0.208608 s, 460 M/s
+100663296 bytes (96 M) copied, 0.043255 s, 2.1 G/s
+/tmp/boot-after.img: 1 file pulled, 0 skipped. 33.9 MB/s (100663296 bytes in 2.830s)
+2026-09-24T12:11:17Z PASS boot readback verifies (2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923)
+2026-09-24T12:11:18Z --- vendor_boot: host sha256 c9d7531116ba0e4424a0b059eaa683815f39bf479894eadd8556327fb7c53242 (expected current eb8f2b211e7a4c4d33a25b542d6c225ea15965e7a9a40890838b7bc7a4de71fb) ---
+100663296 bytes (96 M) copied, 0.042304 s, 2.2 G/s
+/tmp/vendor_boot-before.img: 1 file pulled, 0 skipped. 33.9 MB/s (100663296 bytes in 2.828s)
+2026-09-24T12:11:21Z PASS vendor_boot backup matches the recorded current image (eb8f2b211e7a4c4d33a25b542d6c225ea15965e7a9a40890838b7bc7a4de71fb)
+D:\android\gts9-flash\vendor_boot-console.img: 1 file pushed, 0 skipped. 722.3 MB/s (100663296 bytes in 0.133s)
+c9d7531116ba0e4424a0b059eaa683815f39bf479894eadd8556327fb7c53242  /tmp/vendor_boot-new.img
+100663296 bytes (96 M) copied, 0.218442 s, 439 M/s
+100663296 bytes (96 M) copied, 0.103070 s, 931 M/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 34.8 MB/s (100663296 bytes in 2.758s)
+2026-09-24T12:11:25Z PASS vendor_boot readback verifies (c9d7531116ba0e4424a0b059eaa683815f39bf479894eadd8556327fb7c53242)
+2026-09-24T12:11:25Z --- clear BCB, reboot to system ---
+2026-09-24T12:11:31Z === flash done ===

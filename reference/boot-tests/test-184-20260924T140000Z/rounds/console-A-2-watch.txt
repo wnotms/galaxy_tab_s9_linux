@@ -1,0 +1,57 @@
+2026-09-24T13:42:05.023Z watch start: port=COM19 seconds=60 command='' at 10s
+2026-09-24T13:42:06.281Z PRESENCE com=True ports=[COM17,COM19]
+2026-09-24T13:42:06.284Z PRESENCE usb0525:a4a7=True
+2026-09-24T13:42:06.315Z port open on COM19
+2026-09-24T13:42:14.053Z RECV           Stopping [0;1;39msession-1.scope[0m - Session 1 of User root...
+2026-09-24T13:42:14.058Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39msystem-modprobe.slice[0m - Slice /system/modprobe.
+2026-09-24T13:42:14.063Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mgraphical.target[0m - Graphical Interface.
+2026-09-24T13:42:14.066Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mtimers.target[0m - Timer Units.
+2026-09-24T13:42:14.070Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mapt-daily-upgrade.timer[0m - ???y apt upgrade and clean activities.
+2026-09-24T13:42:14.074Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mapt-daily.timer[0m - Daily apt download activities.
+2026-09-24T13:42:14.077Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mdpkg-db-backup.timer[0m - Daily dpkg database backup timer.
+2026-09-24T13:42:15.027Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39me2scrub_all.timer[0m - Period???Metadata Check for All Filesystems.
+2026-09-24T13:42:15.031Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mfstrim.timer[0m - Discard unused filesystem blocks once a week.
+2026-09-24T13:42:15.036Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mlogrotate.timer[0m - Daily rotation of log files.
+2026-09-24T13:42:15.041Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-tmpfiles-clean.tim???[0my Cleanup of Temporary Directories.
+2026-09-24T13:42:15.044Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39musb-gadget.target[0m - Hardware activated USB gadget.
+2026-09-24T13:42:15.048Z RECV  [[0;32m  OK  [0m] Closed [0;1;39msystemd-rfkill.socket[0m - Loa???ll Switch Status /dev/rfkill Watch.
+2026-09-24T13:42:15.053Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-multi-user-sta???[0mt Debian reached multi-user.target.
+2026-09-24T13:42:15.058Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mmulti-user.target[0m - Multi-User System.
+2026-09-24T13:42:15.061Z RECV           Stopping [0;1;39mcron.service[0m - Regular ba???ground program processing daemon...
+2026-09-24T13:42:15.066Z RECV           Stopping [0;1;39mgts9-acm-getty.service[0m - ???console (ttyGS0, autologin root)...
+2026-09-24T13:42:15.070Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-basic-stage.se???[0md that Debian reached basic.target.
+2026-09-24T13:42:15.074Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-getty-stage.se???[0mhe Debian tty1 login getty started.
+2026-09-24T13:42:15.077Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mgetty.target[0m - Login Prompts.
+2026-09-24T13:42:15.080Z RECV           Stopping [0;1;39mgetty@tty1.service[0m - Getty on tty1...
+2026-09-24T13:42:16.086Z PRESENCE usb0525:a4a7=False
+2026-09-24T13:42:16.102Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+2026-09-24T13:42:16.115Z port closed (read error)
+2026-09-24T13:42:34.831Z PRESENCE usb0525:a4a7=True
+2026-09-24T13:42:34.839Z port open on COM19
+2026-09-24T13:42:34.916Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39msystem-systemd\x2dba???[0m - Slice /system/systemd-backlight.
+2026-09-24T13:42:35.855Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39musb-gadget.target[0m - Hardware activated USB gadget.
+2026-09-24T13:42:35.858Z RECV  [[0;32m  OK  [0m] Listening on [0;1;39msystemd-rfkill.socket[0m???ll Switch Status /dev/rfkill Watch.
+2026-09-24T13:42:35.862Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgetty@tty1.service[0m - Getty on tty1.
+2026-09-24T13:42:35.864Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgetty.target[0m - Login Prompts.
+2026-09-24T13:42:35.867Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgts9-acm-getty.service[0m - X???l console (ttyGS0, autologin root).
+2026-09-24T13:42:35.870Z RECV           Starting [0;1;39mgts9-debian-getty-stage.s???[0m Debian tty1 login getty started...
+2026-09-24T13:42:35.872Z RECV           Starting [0;1;39mgts9-getty-stage.service[0m ??? Debian tty1 login getty started...
+2026-09-24T13:42:35.875Z RECV           Starting [0;1;39msystemd-backlight@backlig???[0mtness of backlight:ae94000.dsi.0...
+2026-09-24T13:42:35.881Z RECV  [[0;32m  OK  [0m] Finished [0;1;39msystemd-backlight@backlig???[0mghtness of backlight:ae94000.dsi.0.
+2026-09-24T13:42:35.884Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-getty-stage.service[0m ???he Debian tty1 login getty started.
+2026-09-24T13:42:35.886Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-getty-stage.s???[0mhe Debian tty1 login getty started.
+2026-09-24T13:42:35.888Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
+2026-09-24T13:42:35.891Z RECV           Starting [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
+2026-09-24T13:42:35.894Z RECV  [[0;32m  OK  [0m] Finished [0;1;39muser-runtime-dir@0.servic???[0mUser Runtime Directory /run/user/0.
+2026-09-24T13:42:35.897Z RECV           Starting [0;1;39muser@0.service[0m - User Manager for UID 0...
+2026-09-24T13:42:35.899Z RECV  [[0;32m  OK  [0m] Finished [0;1;39me2scrub_reap.service[0m - Re???line ext4 Metadata Check Snapshots.
+2026-09-24T13:42:35.903Z RECV  [    5.863901] gts9-prev-boot-evidence[536]: gts9-prev-boot-evidence: /var/log/gts9-boot-evidence/20260413T193807Z-b0963810 previous_boot=present end=clean-shutdown panic=0 lockup=0 hung=0 rcu=0 dpu=0 mmc=0
+2026-09-24T13:42:35.905Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-prev-boot-evidence.s???[0m0 previous-boot evidence collector.
+2026-09-24T13:42:35.908Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mmulti-user.target[0m - Multi-User System.
+2026-09-24T13:42:35.910Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgraphical.target[0m - Graphical Interface.
+2026-09-24T13:42:35.913Z RECV           Starting [0;1;39mgts9-debian-multi-user-st???[0mDebian reached multi-user.target...
+2026-09-24T13:42:35.915Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-multi-user-st???[0mt Debian reached multi-user.target.
+2026-09-24T13:42:35.918Z RECV  [[0;32m  OK  [0m] Started [0;1;39muser@0.service[0m - User Manager for UID 0.
+2026-09-24T13:42:36.876Z RECV  [[0;32m  OK  [0m] Started [0;1;39msession-1.scope[0m - Session 1 of User root.
+2026-09-24T13:43:05.168Z port closed (watch end)
+2026-09-24T13:43:05.171Z watch done: lines=46 com_disconnects=0 com_reconnects=0

@@ -1,0 +1,16 @@
+2026-09-24T13:43:25Z console open on COM17
+2026-09-24T13:43:27Z RECV  echo READY1
+2026-09-24T13:43:27Z RECV  [?2004lREADY1
+2026-09-24T13:43:27Z shell answered after 1 poll(s)
+2026-09-24T13:43:27Z SENT  echo AB;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;echo uptime=$(cut -d" " -f1 /proc/uptime);echo getty=$(systemctl is-active gts9-acm-getty.service);echo msm0=$(systemctl is-enabled serial-getty@ttyMSM0.service 2>&1);echo failed=$(systemctl --failed --no-pager --plain | grep -c "loaded failed");systemctl show gts9-watchdog-debug -p Result -p ExecMainStartTimestampMonotonic -p ExecMainExitTimestampMonotonic | tr "\n" " ";echo;journalctl -b -o short-monotonic --no-pager 2>/dev/null | grep -a "gts9-watchdog-debug:" | head -1;journalctl -b -k -o short-monotonic --no-pager 2>/dev/null | grep -a -c -E "soft lockup|hung_task|workqueue: stall|Kernel panic|rpmh_write_batch|frame done timeout"
+2026-09-24T13:43:49Z RECV  [?2004hroot@gts9:~# echo AB;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;echo uptime=$(cut -d" " -f1 /proc/uptime);echo getty=$(systemctl is-active gts9-acm-getty.service);echo msm0=$(systemctl is-enabled serial-getty@ttyMSM0.service 2>&1);echo failed=$(systemctl --failed --no-pager --plain | grep -c "loaded failed");systemctl show gts9-watchdog-debug -p Result -p ExecMainStartTimestampMonotonic -p ExecMainExitTimestampMonotonic | tr "\n" " ";echo;journalctl -b -o short-monotonic --no-pager 2>/dev/null | grep -a "gts9-watchdog-debug:" | head -1;journalctl -b -k -o short-monotonic --no-pager 2>/dev/null | grep -a -c -E "soft lockup|hung_task|workqueue: stall|Kernel panic|rpmh_write_batch|frame done timeout"
+2026-09-24T13:43:49Z RECV  [?2004lAB
+2026-09-24T13:43:49Z RECV  boot_id=b0963810-aa8d-4ff0-a5cd-5f33821067c8
+2026-09-24T13:43:49Z RECV  uptime=57.61
+2026-09-24T13:43:49Z RECV  getty=active
+2026-09-24T13:43:49Z RECV  msm0=masked
+2026-09-24T13:43:49Z RECV  failed=0
+2026-09-24T13:43:49Z RECV  Result=success ExecMainStartTimestampMonotonic=3800597 ExecMainExitTimestampMonotonic=4369923
+2026-09-24T13:43:49Z RECV  [    4.093247] gts9 gts9-watchdog-debug[700]: /usr/libexec/gts9-watchdog-debug: 80: arithmetic expression: expecting EOF: " 4 * 1000 + 08 * 10 "
+2026-09-24T13:43:49Z RECV  0
+2026-09-24T13:43:49Z console run done (ready=True)

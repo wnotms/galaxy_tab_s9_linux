@@ -1,0 +1,16 @@
+2026-09-24T14:15:57Z console open on COM17
+2026-09-24T14:15:58Z RECV  echo READY1
+2026-09-24T14:15:58Z RECV  [?2004lREADY1
+2026-09-24T14:15:58Z shell answered after 1 poll(s)
+2026-09-24T14:15:58Z SENT  echo AB;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;echo uptime=$(cut -d" " -f1 /proc/uptime);echo getty=$(systemctl is-active gts9-acm-getty.service);echo msm0=$(systemctl is-enabled serial-getty@ttyMSM0.service 2>&1);echo failed=$(systemctl --failed --no-pager --plain | grep -c "loaded failed");systemctl show gts9-watchdog-debug -p Result -p ExecMainStartTimestampMonotonic -p ExecMainExitTimestampMonotonic | tr "\n" " ";echo;journalctl -b -o short-monotonic --no-pager 2>/dev/null | grep -a "gts9-watchdog-debug:" | head -1;journalctl -b -k -o short-monotonic --no-pager 2>/dev/null | grep -a -c -E "soft lockup|hung_task|workqueue: stall|Kernel panic|rpmh_write_batch|frame done timeout"
+2026-09-24T14:16:20Z RECV  [?2004hroot@gts9:~# echo AB;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;echo uptime=$(cut -d" " -f1 /proc/uptime);echo getty=$(systemctl is-active gts9-acm-getty.service);echo msm0=$(systemctl is-enabled serial-getty@ttyMSM0.service 2>&1);echo failed=$(systemctl --failed --no-pager --plain | grep -c "loaded failed");systemctl show gts9-watchdog-debug -p Result -p ExecMainStartTimestampMonotonic -p ExecMainExitTimestampMonotonic | tr "\n" " ";echo;journalctl -b -o short-monotonic --no-pager 2>/dev/null | grep -a "gts9-watchdog-debug:" | head -1;journalctl -b -k -o short-monotonic --no-pager 2>/dev/null | grep -a -c -E "soft lockup|hung_task|workqueue: stall|Kernel panic|rpmh_write_batch|frame done timeout"
+2026-09-24T14:16:20Z RECV  [?2004lAB
+2026-09-24T14:16:20Z RECV  boot_id=7f8878b7-490c-4757-9c47-ec0129063eee
+2026-09-24T14:16:20Z RECV  uptime=58.29
+2026-09-24T14:16:20Z RECV  getty=active
+2026-09-24T14:16:20Z RECV  msm0=masked
+2026-09-24T14:16:20Z RECV  failed=0
+2026-09-24T14:16:20Z RECV  Result=success ExecMainStartTimestampMonotonic=4172758 ExecMainExitTimestampMonotonic=4760695
+2026-09-24T14:16:20Z RECV  [    4.671070] gts9 gts9-watchdog-debug[568]: gts9-watchdog-debug: armed=1 softlockup=1 hung_task=1 wq=45 panic=10 pstore=ramoops-registered records=0 steps_slow=kernel.watchdog total_ms=370
+2026-09-24T14:16:20Z RECV  0
+2026-09-24T14:16:20Z console run done (ready=True)

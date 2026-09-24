@@ -6,9 +6,15 @@
 # USB is not allowed to be a root-filesystem dependency, so the initramfs hands
 # PID 1 to Debian first and Debian brings the console up afterwards.
 #
-# Scope is deliberately one function: acm.usb0.  No mass storage, NCM, RNDIS,
-# MTP or adb, and no block device is touched - the gadget must never be able to
-# disturb the root filesystem it is running from.
+# Two functions, deliberately, and nothing else: acm.usb0 carries the login
+# shell, acm.usb1 carries the kernel console.  They must be separate because a
+# gadget serial console takes the port's IN endpoint for printk
+# (gs_console_connect() -> cons->req), so a port that is both the kernel
+# console and the getty can only ever send kernel messages - measured on
+# 2026-09-24, when adding console=ttyGS0 to the command line silently killed the
+# remote shell.  No mass storage, NCM, RNDIS, MTP or adb, and no block device is
+# touched: the gadget must never be able to disturb the root filesystem it runs
+# from.
 #
 # Every wait is bounded.  A failure exits non-zero so `systemctl --failed`
 # shows it, but nothing here reboots, panics or blocks the boot targets; the
@@ -53,12 +59,37 @@ if [ ! -d "$CONFIGFS/usb_gadget" ]; then
 	fail 'configfs is not available'
 fi
 
+# split_consoles - give ttyGS0 to the getty and ttyGS1 to printk.
+#
+# u_serial gives the *first* allocated port a console automatically
+# (gserial_alloc_line() -> gs_console_init()), so acm.usb0 starts out owning the
+# IN endpoint and the login shell cannot send a byte.  The configfs "console"
+# attribute is the switch: 0 unregisters the console and releases the endpoint,
+# 1 registers printk on the port named by console=ttyGS1.
+#
+# Both writes are best-effort: without CONFIG_U_SERIAL_CONSOLE the attribute
+# does not exist, and the gadget must still come up on a kernel that has no
+# gadget console (the known-good image does not).
+split_consoles() {
+	if [ -e "$GADGET/functions/acm.usb0/console" ]; then
+		echo 0 > "$GADGET/functions/acm.usb0/console" 2>/dev/null &&
+			echo "gts9-usb-acm: released ttyGS0 for the login shell" ||
+			echo "gts9-usb-acm: could not release the ttyGS0 console" >&2
+	fi
+	if [ -e "$GADGET/functions/acm.usb1/console" ]; then
+		echo 1 > "$GADGET/functions/acm.usb1/console" 2>/dev/null &&
+			echo "gts9-usb-acm: ttyGS1 is the kernel console (console=ttyGS1)" ||
+			echo "gts9-usb-acm: could not enable the ttyGS1 console" >&2
+	fi
+}
+
 # A gadget left over from an earlier userspace and still bound is already the
 # console this service exists to provide; do not tear it down and rebuild it.
 if [ -d "$GADGET" ] && [ -d "$GADGET/functions/acm.usb0" ]; then
 	bound_udc=$(cat "$GADGET/UDC" 2>/dev/null || true)
 	if [ -n "$bound_udc" ]; then
 		echo "gts9-usb-acm: gadget already bound to $bound_udc"
+		split_consoles
 		record_stage usb-acm-ready
 		exit 0
 	fi
@@ -87,6 +118,14 @@ if [ ! -e "$GADGET/configs/c.1/acm.usb0" ]; then
 		fail 'cannot link the ACM function into the configuration'
 fi
 
+# Second ACM port: the kernel console.  Created after acm.usb0 so u_serial hands
+# it line 1 (gserial_alloc_line() picks the first free port).
+mkdir -p "$GADGET/functions/acm.usb1" 2>/dev/null || fail 'cannot create the console ACM function'
+if [ ! -e "$GADGET/configs/c.1/acm.usb1" ]; then
+	ln -s "$GADGET/functions/acm.usb1" "$GADGET/configs/c.1/acm.usb1" 2>/dev/null || \
+		fail 'cannot link the console ACM function into the configuration'
+fi
+
 waited=0
 while [ "$waited" -lt "$UDC_WAIT_SECONDS" ] && \
       [ -z "$(ls -A "$UDC_DIR" 2>/dev/null)" ]; do
@@ -112,6 +151,8 @@ if [ -c "$TTY_DEVICE" ]; then
 else
 	echo "gts9-usb-acm: bound to $udc; $TTY_DEVICE has not appeared yet" >&2
 fi
+
+split_consoles
 
 record_stage usb-acm-ready
 exit 0

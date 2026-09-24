@@ -35,6 +35,11 @@ CW=$REPO/scripts/console-watch.ps1
 PS=powershell.exe
 N=${1:-6}
 WINDOW=${2:-180}
+# The kernel console lives on the *second* ACM port (console=ttyGS1, see
+# gts9-usb-acm): the first port carries the login shell, and a gadget serial
+# console takes the port's IN endpoint, so one port cannot do both.  COMCAP is
+# where printk lands; the shell stays on COM17 for the probes.
+COMCAP=${GTS9_CONSOLE_PORT:-COM19}
 WINROOT='C:\gts9-work\test183'
 WINLOCAL=/mnt/c/gts9-work/test183
 
@@ -131,16 +136,33 @@ for i in $(seq 1 "$N"); do
 	# boot, the stall window and (with the profile armed) the panic reboot that
 	# follows it.  Nothing is sent after the reboot, so a stalled tablet is
 	# never touched while it recovers.
+	# The reboot command goes to the shell port, the kernel log is captured on
+	# the console port; they are different COM ports and do not interfere.
 	timeout $((WINDOW + 150)) "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CW" \
-		-Out "$WINROOT\\round-$i.log" -Seconds "$WINDOW" \
+		-Out "$WINROOT\\round-$i-console.log" -Seconds "$WINDOW" -Port "$COMCAP" \
+		2>&1 | grep -aE "PRESENCE|watch done" | tail -4 | tee -a "$OUT" &
+	comcap_pid=$!
+	sleep 2
+	timeout $((WINDOW + 60)) "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CW" \
+		-Out "$WINROOT\\round-$i.log" -Seconds 30 \
 		-Command 'systemctl reboot' -CommandAtSeconds 8 \
 		2>&1 | grep -aE "SENT|PRESENCE usb|watch done" | tail -6 | tee -a "$OUT"
+	wait "$comcap_pid" 2>/dev/null || true
 
+	# Two captures per round: the shell port (reboot timing, USB gaps) and the
+	# kernel console port (the actual kernel log, which no longer depends on a
+	# userspace mirror).
 	log=$ROUNDS_DIR/round-$i-console.log
-	cp "$WINLOCAL/round-$i.log" "$log" 2>/dev/null || say "WARNING: no console capture for round $i"
+	cp "$WINLOCAL/round-$i-console.log" "$log" 2>/dev/null || say "WARNING: no kernel console capture for round $i"
+	klog=$ROUNDS_DIR/round-$i-kernel.log
+	cp "$WINLOCAL/round-$i.log" "$klog" 2>/dev/null || say "WARNING: no shell port capture for round $i"
 
+	# Stall markers may appear on either capture; classify the kernel console
+	# log and fold the shell-port capture in after it.
 	classify "$log" "$i" >/dev/null
-	grep -aE "marker_|_line=" "$ROUNDS_DIR/round-$i.txt" | grep -avE "=0$|=$" | sed 's/^/  /' | tee -a "$OUT"
+	classify "$klog" "$i-shell" >/dev/null
+	grep -aE "marker_|_line=" "$ROUNDS_DIR/round-$i-shell.txt" | grep -avE "=0$|=$" | sed 's/^/  shell: /' | tee -a "$OUT"
+	grep -aE "marker_|_line=" "$ROUNDS_DIR/round-$i.txt" | grep -avE "=0$|=$" | sed 's/^/  kern:  /' | tee -a "$OUT"
 
 	probe=$(device_probe "$i")
 	printf '%s\n' "$probe" | grep -aE "boot_id=|running=|wd=|previous_boot=|previous_boot_end=|pstore_panic_lines=|marker_panic=|marker_soft_lockup=|shell never answered|could not open|probe=" | sed 's/^/  /' | tee -a "$OUT"

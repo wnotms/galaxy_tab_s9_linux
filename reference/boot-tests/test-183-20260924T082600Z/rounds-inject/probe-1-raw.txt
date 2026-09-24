@@ -1,31 +1,19 @@
-2026-09-24T11:38:49Z console open on COM17
-2026-09-24T11:38:50Z RECV  echo READY1
-2026-09-24T11:38:50Z RECV  [?2004lREADY1
-2026-09-24T11:38:50Z shell answered after 1 poll(s)
-2026-09-24T11:38:50Z SENT  echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
-2026-09-24T11:39:11Z RECV  [?2004hroot@gts9:~# echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
-2026-09-24T11:39:11Z RECV  [?2004lIP
-2026-09-24T11:39:11Z RECV  boot_id=25691451-c48c-40bd-9e36-5033b738fe53
-2026-09-24T11:39:11Z RECV  124.67
-2026-09-24T11:39:11Z RECV  running=running
-2026-09-24T11:39:11Z RECV  dir=/var/log/gts9-boot-evidence/20260413T193806Z-25691451/
-2026-09-24T11:39:11Z RECV  collected_utc=20260413T193806Z
-2026-09-24T11:39:11Z RECV  boot_id=25691451-c48c-40bd-9e36-5033b738fe53
-2026-09-24T11:39:11Z RECV  previous_boot=present
-2026-09-24T11:39:11Z RECV  previous_boot_end=hard-reset-or-incomplete
-2026-09-24T11:39:11Z RECV  prev_kernel_lines=1040
-2026-09-24T11:39:11Z RECV  marker_panic=0
-2026-09-24T11:39:11Z RECV  marker_soft_lockup=0
-2026-09-24T11:39:11Z RECV  marker_hard_lockup=0
-2026-09-24T11:39:11Z RECV  marker_hung_task=0
-2026-09-24T11:39:11Z RECV  marker_rcu_stall=0
-2026-09-24T11:39:11Z RECV  marker_dpu_timeout=0
-2026-09-24T11:39:11Z RECV  marker_mmc_timeout=0
-2026-09-24T11:39:11Z RECV  pstore_records=
-2026-09-24T11:39:11Z RECV  pstore_panic_lines=0
-2026-09-24T11:39:11Z RECV  pstore_lockup_lines=0
-2026-09-24T11:39:11Z RECV  watchdog_enabled=1
-2026-09-24T11:39:11Z RECV  softlockup_panic=1
-2026-09-24T11:39:11Z RECV  hung_task_panic=1
-2026-09-24T11:39:11Z RECV  wq_panic_on_stall_time=45
-2026-09-24T11:39:11Z console run done (ready=True)
+2026-09-24T14:27:31Z console open on COM17
+2026-09-24T14:28:20Z RECV  
+2026-09-24T14:28:20Z RECV  Debian GNU/Linux 13 gts9 ttyGS0
+2026-09-24T14:28:20Z RECV  
+2026-09-24T14:28:20Z RECV  gts9 login: root (automatic login)
+2026-09-24T14:28:20Z RECV  
+2026-09-24T14:28:20Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #2 SMP PREEMPT Thu Sep 24 20:06:55 CST 2026 aarch64
+2026-09-24T14:28:20Z RECV  
+2026-09-24T14:28:20Z RECV  The programs included with the Debian GNU/Linux system are free software;
+2026-09-24T14:28:20Z RECV  the exact distribution terms for each program are described in the
+2026-09-24T14:28:20Z RECV  individual files in /usr/share/doc/*/copyright.
+2026-09-24T14:28:20Z RECV  
+2026-09-24T14:28:20Z RECV  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+2026-09-24T14:28:20Z RECV  permitted by applicable law.
+2026-09-24T14:28:21Z RECV  echo READY10
+2026-09-24T14:28:21Z shell answered after 10 poll(s)
+2026-09-24T14:28:21Z SENT  echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
+2026-09-24T14:28:42Z RECV  echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
+2026-09-24T14:28:42Z console run done (ready=True)

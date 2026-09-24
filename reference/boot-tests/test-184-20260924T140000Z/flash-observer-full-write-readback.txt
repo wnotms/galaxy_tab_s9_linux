@@ -1,0 +1,14 @@
+2026-09-24T14:13:34Z === test-184 full-observer command line flash ===
+2026-09-24T14:13:34Z adb state: recovery
+2026-09-24T14:13:35Z --- vendor_boot: host sha256 f1f4ccf76d91f8841cbb5f7752bf9ce19f01f8fdf95714ab35d6765a0615cc56 (expected current 123f35f29f27f7ddafe57f11015f9f0ba2da72ed2720e7567f38c0453170ffff) ---
+100663296 bytes (96 M) copied, 0.102503 s, 937 M/s
+/tmp/vendor_boot-before.img: 1 file pulled, 0 skipped. 22.8 MB/s (100663296 bytes in 4.217s)
+2026-09-24T14:13:39Z PASS vendor_boot backup matches the recorded current image (123f35f29f27f7ddafe57f11015f9f0ba2da72ed2720e7567f38c0453170ffff)
+D:\android\gts9-flash\vendor_boot-console.img: 1 file pushed, 0 skipped. 654.4 MB/s (100663296 bytes in 0.147s)
+f1f4ccf76d91f8841cbb5f7752bf9ce19f01f8fdf95714ab35d6765a0615cc56  /tmp/vendor_boot-new.img
+100663296 bytes (96 M) copied, 0.264655 s, 363 M/s
+100663296 bytes (96 M) copied, 0.041333 s, 2.2 G/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 25.1 MB/s (100663296 bytes in 3.822s)
+2026-09-24T14:13:45Z PASS vendor_boot readback verifies (f1f4ccf76d91f8841cbb5f7752bf9ce19f01f8fdf95714ab35d6765a0615cc56)
+2026-09-24T14:13:45Z --- clear BCB, reboot to system ---
+2026-09-24T14:13:50Z === flash done ===

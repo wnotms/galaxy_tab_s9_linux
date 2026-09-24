@@ -52,3 +52,21 @@
   2026-09-24T11:46:09Z RECV  running=running
 2026-09-24T11:46:09Z injected round 3: new boot_id -> the watchdog rebooted the tablet (3/3)
 2026-09-24T11:46:09Z controlled stalls done: recoveries=3/3
+2026-09-24T14:23:52Z test-183 controlled stalls: rounds=1 mode=spin seconds=30
+2026-09-24T14:24:25Z RECV  boot_id=10875d6b-6968-4b9c-94ed-e3411a5d7bd6
+2026-09-24T14:24:25Z RECV  174.96
+2026-09-24T14:24:25Z RECV  running=running
+2026-09-24T14:24:25Z preflight attempt 1: boot_id=10875d6b-6968-4b9c-94ed-e3411a5d7bd6
+2026-09-24T14:24:25Z start boot_id=10875d6b-6968-4b9c-94ed-e3411a5d7bd6
+2026-09-24T14:24:25Z === injected round 1 (spin 30s) ===
+2026-09-24T14:24:26.575Z PRESENCE usb0525:a4a7=True
+2026-09-24T14:24:36.507Z SENT  rmmod gts9_stall_test 2>/dev/null; insmod /root/gts9_stall_test.ko mode=1 seconds=30
+2026-09-24T14:25:14.298Z PRESENCE usb0525:a4a7=False
+2026-09-24T14:25:33.969Z PRESENCE usb0525:a4a7=True
+2026-09-24T14:27:25.678Z watch done: lines=1 com_disconnects=0 com_reconnects=0
+  marker_hung_report=1
+  marker_soft_lockup_allcpu=2
+  marker_usb_gap=9
+  hung_line=2026-09-24T11:14:47.157Z RECV  K kern  :err   : [Apr14 03:56] [     T69] INFO: task gts9-stall:3179 blocked for more than 45 seconds.
+2026-09-24T14:28:42Z injected round 1: boot_id unchanged
+2026-09-24T14:28:42Z controlled stalls done: recoveries=0/1

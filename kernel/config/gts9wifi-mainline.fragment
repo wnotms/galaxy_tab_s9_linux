@@ -90,6 +90,15 @@ CONFIG_PHY_QCOM_EUSB2_REPEATER=y
 CONFIG_PHY_NXP_PTN3222=y
 CONFIG_PHY_QCOM_QMP_COMBO=y
 
+# The USB ACM gadget doubles as a kernel console.  Without it the USB link
+# carries userspace output only, and a panic or soft-lockup report never
+# reaches the host - measured on 2026-09-24, when a sysrq panic left the host
+# capture completely empty.  With it, registering ttyGS0 attaches printk to the
+# same COM port the host already watches, and CON_PRINTBUFFER replays the boot
+# log at the same moment.  The console is registered when the gadget function
+# is bound (gserial_alloc_line -> gs_console_init), i.e. when gts9-usb-acm runs.
+CONFIG_U_SERIAL_CONSOLE=y
+
 # Input/I2C foundations. The stock X710 uses STM FTS1BA90A + Wacom WEZ01;
 # their device-specific drivers are intentionally not invented here.
 CONFIG_INPUT=y
