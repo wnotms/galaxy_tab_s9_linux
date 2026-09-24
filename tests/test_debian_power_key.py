@@ -118,6 +118,47 @@ class PowerKeyPolicy(unittest.TestCase):
             self.assertFalse((target / 'usr/libexec/gts9-power-key').exists())
             self.assertTrue((target / 'usr/libexec/gts9-panel-recover').is_file())
 
+    def test_daemon_separates_short_and_long_presses(self):
+        # A long hold belongs to the PMIC's forced power-off; the daemon must
+        # decide on release, not on press, or holding the key would blank the
+        # screen on the way down.
+        self.assertIn('#define LONG_PRESS_MICROSECONDS 1200000L', SOURCE_TEXT)
+        self.assertIn('press_seconds', SOURCE_CODE)
+        self.assertIn('event.value == 1', SOURCE_CODE)
+        self.assertIn('event.value != 0', SOURCE_CODE)
+        self.assertIn('long press ignored (PMIC owns it)', SOURCE_TEXT)
+
+    def test_daemon_finds_the_key_by_capability_not_by_event_number(self):
+        # The PMIC key must be found by capability: EVIOCGBIT plus the sysfs
+        # capabilities/key bitmap.  No hardcoded /dev/input/eventN.
+        self.assertIn('EVIOCGBIT', SOURCE_CODE)
+        self.assertIn('EVIOCGNAME', SOURCE_CODE)
+        self.assertIn('/device/capabilities/key', SOURCE_TEXT)
+        self.assertIn('#define KEY_BITMAP_BYTES', SOURCE_TEXT)
+        self.assertNotIn('/dev/input/event0', SOURCE_TEXT)
+        # Observing only: never grab the device away from logind/kernel.
+        self.assertNotIn('EVIOCGRAB', SOURCE_TEXT)
+
+    def test_daemon_keeps_its_state_in_run(self):
+        # State is RAM-only so the microSD is not written on every key press.
+        self.assertIn('#define STATE_DIR "/run/gts9-power-key"', SOURCE_TEXT)
+        self.assertIn('last-brightness', SOURCE_TEXT)
+        self.assertIn('display-off', SOURCE_TEXT)
+        self.assertNotIn('/var/', SOURCE_TEXT)
+
+    def test_daemon_reads_argv_from_the_stack(self):
+        # Regression: a freestanding _start gets nothing in x0 on arm64, so
+        # `--toggle` silently fell into the key-watch loop and blocked the
+        # calling shell (test 178 recorded that as a hang).
+        self.assertIn('ldr x0, [sp]', SOURCE_TEXT)
+        self.assertIn('add x1, sp, #8', SOURCE_TEXT)
+
+    def test_daemon_handles_a_missing_backlight_safely(self):
+        # No backlight: log and do nothing.  Never fall back to fb0/blank,
+        # never to suspend.
+        self.assertIn('no backlight node; key ignored', SOURCE_TEXT)
+        self.assertIn('O_CREAT', SOURCE_CODE)
+
     def test_docs_describe_the_new_behavior(self):
         text = (ROOT / 'docs' / 'DEBIAN_POWER_KEY.md').read_text()
         self.assertIn('blank', text.lower())
