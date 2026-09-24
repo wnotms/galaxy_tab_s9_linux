@@ -51,6 +51,11 @@ console() {
 	return 1
 }
 
+# A command whose OUTPUT we require. Echo without execution IS the stall state
+# (see on-device/STALL-SIGNATURE.md), so the probe must prove execution, not just
+# that the port opened and echoed.
+LIVENESS_CMDS='echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END'
+
 PROBE_CMDS='R=/tmp/gts9-probe.txt; { echo "REL=$(uname -r)"; echo "BID=$(cat /proc/sys/kernel/random/boot_id)"; echo "UP=$(cut -d" " -f1 /proc/uptime)"; echo "GPU=$(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | xargs -r basename)"; echo "DEF=$(wc -l < /sys/kernel/debug/devices_deferred)"; echo "SL=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "soft lockup")"; echo "HT=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "hung task")"; echo "RCU=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "rcu.*stall")"; echo "RPMH=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "rpmh_write_batch")"; echo "DPU=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "frame done timeout")"; echo "MMC=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "Timeout waiting for hardware cmd")"; echo "BURST=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "deferred probe pending")"; echo "ACD=$(dmesg 2>/dev/null | grep -c "Unable to send ACD")"; echo "DROP=$(dmesg 2>/dev/null | grep -c "Unable to drop a managed")"; echo "FAILED=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed")"; } > $R 2>&1; cat $R'
 
 extract() { sed -n 's/.*RECV  //p' "$1" | grep -aE '^(REL|BID|UP|GPU|DEF|SL|HT|RCU|RPMH|DPU|MMC|BURST|ACD|DROP|FAILED)='; }
@@ -101,13 +106,39 @@ fi
 for i in $(seq 1 "$ROUNDS"); do
 	say "=== round $i/$ROUNDS (warm reboot) ==="
 	console "reboot$i" 'systemctl reboot' "$DIR/reboot-$i-raw.txt" 3 || say "  reboot $i: could not issue"
-	sleep 150
+	sleep 240
 
 	# --- collect, then VALIDATE that collection actually happened -----------
 	# Three separate failures this session produced a round file with no metrics
 	# that was still classified "clean". The rule now: a round is only usable if
 	# the probe yielded at least BID and GPU. `console` returning 0 is NOT proof
 	# of capture - it only means the port opened.
+	# Liveness gate: the command must EXECUTE, not merely echo. Retry with a long
+	# settle because this board can take several minutes to reach a shell after a
+	# reset (panel-recovery ladder + slow microSD).
+	alive=0
+	for attempt in 1 2 3 4 5 6; do
+		console "live$i-$attempt" "$LIVENESS_CMDS" "$DIR/live-$i-$attempt-raw.txt" 2 || true
+		if grep -aq "GTS9_ALIVE_[0-9]" "$DIR/live-$i-$attempt-raw.txt" 2>/dev/null; then
+			alive=1
+			say "  liveness: shell executed a command on attempt $attempt"
+			break
+		fi
+		say "  liveness attempt $attempt: no command output yet (echo-only = stalled or still booting)"
+		sleep 60
+	done
+	if [ "$alive" != "1" ]; then
+		{
+			echo "profile=$PROFILE"
+			echo "round=$i"
+			echo "kind=warm-reboot"
+			echo "status=stalled-or-no-shell"
+			echo "note=no command ever EXECUTED; echo-only means the stall state, not a clean round"
+		} >"$DIR/round-$i.txt"
+		say "  round $i: STALLED OR NO SHELL - stopping (echo is not execution)"
+		break
+	fi
+
 	console "probe$i" "$PROBE_CMDS" "$DIR/probe-$i-raw.txt" 4 || true
 	extract "$DIR/probe-$i-raw.txt" >"$DIR/metrics-$i.txt" 2>/dev/null
 	console "evid$i" "$EVID_CMDS" "$DIR/evid-$i-raw.txt" 3 || true
