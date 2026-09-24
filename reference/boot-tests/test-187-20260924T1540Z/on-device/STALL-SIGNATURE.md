@@ -58,7 +58,13 @@ The kernel's only surviving record of that banner would be:
 * **pstore / ramoops** — ruled out; the DTS records that records do not survive a
   reboot on this device, and Samsung's own ramoops node ships `disabled`;
 * **the serial console** — requires a host to be listening, which an unattended
-  series does not have;
+  series does not have. **Corrected in round 7: it DOES carry kernel output.**
+  Round 6 tested this without controlling `/proc/sys/kernel/printk` (which is
+  `4.4.1.7`, so KERN_INFO is suppressed) and wrongly concluded the console was
+  userspace-only. With the level raised, a `/dev/kmsg` marker reached COM19 as
+  `[  345.478381][ T1011] GTS9_KERNEL_MARKER_B`. Since panic output is KERN_EMERG
+  and bypasses the loglevel, **a host capture spanning the reset will catch a
+  panic report** — see STALL-ROUND-7.md;
 * **journald** — which runs in **userspace**.
 
 So if the kernel panics *after* userspace has already stopped, the panic text has
