@@ -19,6 +19,19 @@ Sources (all read directly; nothing here is quoted from the brief):
 | X910 board DTS | `.work/x910/ubuntu-galaxy-tab-s9-ultra/kernel/dts/sm8550-samsung-gts9uwifi.dts` | `4ff9d4b` |
 | X910 config | `.work/x910/ubuntu-galaxy-tab-s9-ultra/kernel/config/config-mainline.aarch64` | `4ff9d4b` |
 
+The X910 tree is a throwaway clone under `.work/` (not committed). To reproduce
+this comparison:
+
+```sh
+git clone --depth 50 https://github.com/agcarbajo/ubuntu-galaxy-tab-s9-ultra \
+    .work/x910/ubuntu-galaxy-tab-s9-ultra
+git -C .work/x910/ubuntu-galaxy-tab-s9-ultra log -1 --format=%H
+# 4ff9d4b0ba1ae40e7605ad54c0ffe561c1e26a60
+```
+
+Every X910 row below was read at that revision. If the upstream branch moves,
+re-read the two files before trusting the quoted values.
+
 ---
 
 ## 0. Headline: the two ports compile the *same* SoC device tree
