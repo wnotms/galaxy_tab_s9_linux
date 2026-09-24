@@ -61,6 +61,20 @@ CONFIG_QCOM_LLCC=y
 # warning. The X910 port sets this symbol and does not show the failure; see
 # docs/GPU_GMU_RPMH_STALL_PLAN.md and docs/X710_X910_GPU_RPMH_DIFF.md.
 CONFIG_QCOM_AOSS_QMP=y
+# IPCC. aoss_qmp's device node takes its mailbox from the IPCC controller
+# (mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>), so
+# CONFIG_QCOM_AOSS_QMP alone is NOT enough: without this symbol the IPCC node
+# mailbox@408000 has no driver, the mailbox controller is never registered, and
+# qcom_aoss_qmp fails its own probe with
+#     qcom_aoss_qmp c300000.power-management: failed to acquire ipc mailbox
+# which leaves qmp_get() returning -EPROBE_DEFER exactly as if AOSS QMP were
+# still disabled. Measured on hardware: with only CONFIG_QCOM_AOSS_QMP=y the
+# GPU/GMU stayed unbound. X910 sets BOTH (config-mainline.aarch64:
+# CONFIG_QCOM_IPCC=y and CONFIG_QCOM_AOSS_QMP=y).
+#
+# IPCC is also an interrupt controller, hence the IRQ_DOMAIN* / GENERIC_IRQ_CHIP
+# dependencies, which this fragment already satisfies.
+CONFIG_QCOM_IPCC=y
 CONFIG_INTERCONNECT=y
 CONFIG_INTERCONNECT_QCOM=y
 CONFIG_INTERCONNECT_QCOM_SM8550=y
