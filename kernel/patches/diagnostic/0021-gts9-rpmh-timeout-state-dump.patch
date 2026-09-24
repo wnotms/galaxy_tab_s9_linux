@@ -21,10 +21,10 @@ index e3cf1beff..b82c6c9e8 100644
 +
  #endif /* __RPM_INTERNAL_H__ */
 diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index c6f7d5c9c..c9004a345 100644
+index c6f7d5c9c..85060a658 100644
 --- a/drivers/soc/qcom/rpmh-rsc.c
 +++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -489,6 +489,209 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
+@@ -489,6 +489,221 @@ static irqreturn_t tcs_tx_done(int irq, void *p)
   *
   * This is used for all types of transfers (active, sleep, and wake).
   */
@@ -45,8 +45,17 @@ index c6f7d5c9c..c9004a345 100644
 + * in-memory ring of the last send/completion events - so "was there a send
 + * without a matching completion?" is answered from data, not from inference.
 + *
-+ * Deliberately no continuous tracing and no per-event I/O: 128 events of 20
-+ * bytes live in RAM, and only a real timeout prints anything.
++ * Deliberately no continuous tracing and no per-event I/O: 128 small events
++ * live in RAM, and only a real timeout prints anything.
++ *
++ * This is not a second tracepoint: the existing rpmh:rpmh_send_msg and
++ * rpmh:rpmh_tx_done events stay exactly as they are, and this ring carries the
++ * same identity fields they do (RSC name/id, TCS id, address, data, state, wait)
++ * plus a monotonic timestamp, so a timeout dump can be correlated with those
++ * events field by field.  The difference is *when* it is read: tracepoints are
++ * consumed by a userspace reader, and by the time a stall panics the machine
++ * that reader may be gone - the ring is dumped by the kernel at the moment the
++ * timeout is detected, while the system still runs.
 + * ---------------------------------------------------------------------------
 + */
 +#define GTS9_RPMH_EV_RING	128
@@ -60,6 +69,7 @@ index c6f7d5c9c..c9004a345 100644
 +	u8 state;
 +	u8 kind;	/* 0 = send, 1 = completion */
 +	u8 cmd_idx;
++	u8 rsc_id;	/* which RSC controller, as trace-rpmh.h's events carry */
 +};
 +
 +static struct gts9_rpmh_ev gts9_rpmh_ev[GTS9_RPMH_EV_RING];
@@ -80,13 +90,14 @@ index c6f7d5c9c..c9004a345 100644
 +	return gts9_rpmh_debug;
 +}
 +
-+static void gts9_rpmh_ev_add(u8 kind, const struct tcs_request *msg,
-+			     int tcs_id, int cmd_idx)
++static void gts9_rpmh_ev_add(u8 kind, const struct rsc_drv *drv,
++			     const struct tcs_request *msg, int tcs_id, int cmd_idx)
 +{
 +	struct gts9_rpmh_ev ev = { 0 };
 +	int slot;
 +
 +	ev.ms = div_u64(ktime_get(), NSEC_PER_MSEC);
++	ev.rsc_id = drv ? drv->id : 0xff;
 +	ev.tcs_id = tcs_id;
 +	ev.state = msg ? msg->state : 0xff;
 +	ev.kind = kind;
@@ -118,7 +129,7 @@ index c6f7d5c9c..c9004a345 100644
 +			break;
 +		}
 +	}
-+	gts9_rpmh_ev_add(1, msg, -1, 0);
++	gts9_rpmh_ev_add(1, NULL, msg, -1, 0);
 +}
 +
 +static void gts9_rpmh_dump_tcs(const struct rsc_drv *drv, int tcs_id)
@@ -215,9 +226,10 @@ index c6f7d5c9c..c9004a345 100644
 +			matched_send++;
 +		if (match && ev.kind == 1)
 +			matched_done++;
-+		pr_err("gts9-rpmh:   +%ums kind=%s tcs=%d cmd=%d state=%u addr=0x%08x data=0x%08x%s\n",
-+		       ev.ms, ev.kind ? "done" : "send", ev.tcs_id, ev.cmd_idx,
-+		       ev.state, ev.addr, ev.data, match ? "  <-- matches" : "");
++		pr_err("gts9-rpmh:   +%ums kind=%s rsc=%d tcs=%d cmd=%d state=%u addr=0x%08x data=0x%08x%s\n",
++		       ev.ms, ev.kind ? "done" : "send", ev.rsc_id, ev.tcs_id,
++		       ev.cmd_idx, ev.state, ev.addr, ev.data,
++		       match ? "  <-- matches" : "");
 +	}
 +	pr_err("gts9-rpmh: ring_summary send=%d done=%d matched_send=%d matched_done=%d => %s\n",
 +	       send, done, matched_send, matched_done,
@@ -234,12 +246,12 @@ index c6f7d5c9c..c9004a345 100644
  static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
  			       const struct tcs_request *msg)
  {
-@@ -515,6 +718,8 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
+@@ -515,6 +730,8 @@ static void __tcs_buffer_write(struct rsc_drv *drv, int tcs_id, int cmd_id,
  		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_ADDR], tcs_id, j, cmd->addr);
  		write_tcs_cmd(drv, drv->regs[RSC_DRV_CMD_DATA], tcs_id, j, cmd->data);
  		trace_rpmh_send_msg(drv, tcs_id, msg->state, j, msgid, cmd);
 +		if (unlikely(gts9_rpmh_debug))
-+			gts9_rpmh_ev_add(0, msg, tcs_id, i);
++			gts9_rpmh_ev_add(0, drv, msg, tcs_id, i);
  	}
  
  	cmd_enable |= read_tcs_reg(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id);
