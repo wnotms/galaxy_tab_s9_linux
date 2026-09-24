@@ -102,57 +102,74 @@ for i in $(seq 1 "$ROUNDS"); do
 	say "=== round $i/$ROUNDS (warm reboot) ==="
 	console "reboot$i" 'systemctl reboot' "$DIR/reboot-$i-raw.txt" 3 || say "  reboot $i: could not issue"
 	sleep 150
-	if ! console "probe$i" "$PROBE_CMDS" "$DIR/probe-$i-raw.txt" 4; then
-		# An empty round reads exactly like a clean round in a summary table.
-		# Mark it no-data and STOP: a series of unprobed rounds is not evidence.
+
+	# --- collect, then VALIDATE that collection actually happened -----------
+	# Three separate failures this session produced a round file with no metrics
+	# that was still classified "clean". The rule now: a round is only usable if
+	# the probe yielded at least BID and GPU. `console` returning 0 is NOT proof
+	# of capture - it only means the port opened.
+	console "probe$i" "$PROBE_CMDS" "$DIR/probe-$i-raw.txt" 4 || true
+	extract "$DIR/probe-$i-raw.txt" >"$DIR/metrics-$i.txt" 2>/dev/null
+	console "evid$i" "$EVID_CMDS" "$DIR/evid-$i-raw.txt" 3 || true
+	extract_evid "$DIR/evid-$i-raw.txt" >"$DIR/evid-$i.txt" 2>/dev/null
+
+	bid=$(sed -n 's/^BID=//p' "$DIR/metrics-$i.txt" | head -1)
+	gpu=$(sed -n 's/^GPU=//p' "$DIR/metrics-$i.txt" | head -1)
+	if [ -z "$bid" ] || [ -z "$gpu" ]; then
 		{
 			echo "profile=$PROFILE"
 			echo "round=$i"
 			echo "kind=warm-reboot"
 			echo "status=no-data"
-			echo "note=console probe could not run; this round proves nothing"
+			echo "note=no metrics captured; this round proves NOTHING and must not be read as clean"
 		} >"$DIR/round-$i.txt"
-		say "  round $i: NO DATA - stopping the series (an unprobed round is not a clean round)"
+		say "  round $i: NO DATA (captured $(wc -c <"$DIR/probe-$i-raw.txt") bytes, no BID/GPU) - stopping"
 		break
 	fi
-	console "evid$i" "$EVID_CMDS" "$DIR/evid-$i-raw.txt" 3 || true
+
 	{
 		echo "profile=$PROFILE"
 		echo "round=$i"
 		echo "kind=warm-reboot"
 		echo "status=ok"
-		extract "$DIR/probe-$i-raw.txt" 2>/dev/null
-		extract_evid "$DIR/evid-$i-raw.txt" 2>/dev/null
+		cat "$DIR/metrics-$i.txt"
+		cat "$DIR/evid-$i.txt"
 	} >"$DIR/round-$i.txt"
 
-	# Classify the round from the device's own archive of the boot we just ended.
+	# Classify from the device's own archive of the boot we just ended.
 	prev_end=$(sed -n 's/^previous_boot_end=//p' "$DIR/round-$i.txt" | head -1)
 	markers=$(grep -aE '^marker_' "$DIR/round-$i.txt" | grep -avE '=0$' | tr '\n' ' ')
-	if [ -n "$markers" ]; then
+	if [ -z "$prev_end" ]; then
+		echo "verdict=unknown-evidence-missing" >>"$DIR/round-$i.txt"
+		say "  WARNING: no evidence verdict captured; treat this round as inspect-only"
+	elif [ -n "$markers" ]; then
 		echo "verdict=STALL-CAPTURED" >>"$DIR/round-$i.txt"
 		echo "stall_markers=$markers" >>"$DIR/round-$i.txt"
 		say "  *** STALL CAPTURED in round $i: $markers"
 	elif [ "$prev_end" = "hard-reset-or-incomplete" ]; then
 		echo "verdict=unattended-reboot" >>"$DIR/round-$i.txt"
-		say "  *** UNATTENDED REBOOT before round $i (no marker matched; inspect the archive)"
+		say "  *** UNATTENDED REBOOT before round $i (no marker; inspect, do not call it a stall)"
 	elif [ "$prev_end" = "panic" ]; then
 		echo "verdict=previous-boot-panicked" >>"$DIR/round-$i.txt"
 		say "  *** previous boot panicked (see the evidence directory)"
-	else
+	elif [ "$prev_end" = "clean-shutdown" ]; then
 		echo "verdict=clean" >>"$DIR/round-$i.txt"
+	else
+		echo "verdict=unclassified" >>"$DIR/round-$i.txt"
 	fi
-	say "  $(grep -aE '^(BID|UP|GPU|SL|RCU|RPMH|BURST|ACD|DROP)=' "$DIR/round-$i.txt" 2>/dev/null | tr '\n' ' ')"
+	say "  $(grep -aE '^(BID|UP|GPU|SL|RCU|RPMH|BURST|ACD|DROP|verdict)=' "$DIR/round-$i.txt" 2>/dev/null | tr '\n' ' ')"
 
 	# A boot_id we did not cause is potentially the stall itself. Detect it.
 	prevbid=$(sed -n 's/^BID=//p' "$DIR/preflight.txt" 2>/dev/null | head -1)
-	curbid=$(sed -n 's/^BID=//p' "$DIR/round-$i.txt" 2>/dev/null | head -1)
-	if [ -n "$prevbid" ] && [ -n "$curbid" ] && [ "$prevbid" = "$curbid" ]; then
+	curbid=$bid
+	if [ -n "$prevbid" ] && [ "$prevbid" = "$curbid" ]; then
 		# We asked for a reboot, so the id MUST change. If it did not, the
 		# reboot never happened and this round describes the previous boot.
 		echo "status=stale-boot" >>"$DIR/round-$i.txt"
 		say "  WARNING: boot_id unchanged ($curbid) - the reboot did not happen; round is stale"
 		break
 	fi
+	prevbid=$curbid
 done
 
 say "=== series complete: $PROFILE ==="

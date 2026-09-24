@@ -44,6 +44,35 @@ stall itself (the thing under investigation), an unrelated boot problem, or a
 consequence of the interrupted series. Deciding between those requires the
 device's own journal from the affected boot, which needs a working console.
 
+## Attempt 3 — false "clean" rounds again, and the fix
+
+A third attempt used the evidence-driven runner. Round 1 was written as
+`status=ok / verdict=clean` while its probe and evidence files contained **44
+bytes each** — just the "console open" line, no measurements at all. `console`
+had returned success because it *opened the port*; that says nothing about
+whether a reply was captured.
+
+This is the same defect as attempts 1 and 2 in a new disguise: "no data" being
+recorded as a result. The runner's check was on the wrong thing (did the port
+open) instead of the right thing (did we get numbers back).
+
+The rounds loop now gates every round on the captured metrics themselves:
+
+```sh
+bid=$(sed -n 's/^BID=//p' "$DIR/metrics-$i.txt" | head -1)
+gpu=$(sed -n 's/^GPU=//p' "$DIR/metrics-$i.txt" | head -1)
+if [ -z "$bid" ] || [ -z "$gpu" ]; then
+        ... status=no-data ... break
+fi
+```
+
+and a round whose evidence verdict is missing is `verdict=unknown-evidence-missing`
+rather than `clean`. A round can no longer be classified from nothing.
+
+The device hung again during this attempt (same symptom as attempt 2: ports
+enumerate, nothing transmits, adb sees no device), so no usable round was
+produced. The series is still outstanding.
+
 ## What the next attempt must do differently
 
 1. **Kill every leftover console holder before starting**, and verify the port is
