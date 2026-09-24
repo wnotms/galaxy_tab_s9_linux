@@ -1,0 +1,28 @@
+2026-09-24T16:35:28Z profile=baseline bundle=/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-test187-baseline
+2026-09-24T16:35:28Z host boot.img        12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c
+2026-09-24T16:35:29Z host vendor_boot.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+100663296 bytes (96 M) copied, 0.103074 s, 931 M/s
+/tmp/boot-current.img: 1 file pulled, 0 skipped. 19.2 MB/s (100663296 bytes in 5.011s)
+2026-09-24T16:35:35Z BACKUP boot -> /home/ms/Samsung/gts9-flash-tests/test-187-baseline/boot-before-baseline.img afd9371633cdc9f75c0a54c9a2f57bb865fb68736aa2996c3681503c072e3ee6
+100663296 bytes (96 M) copied, 0.042050 s, 2.2 G/s
+/tmp/vendor_boot-current.img: 1 file pulled, 0 skipped. 18.1 MB/s (100663296 bytes in 5.318s)
+2026-09-24T16:35:41Z BACKUP vendor_boot -> /home/ms/Samsung/gts9-flash-tests/test-187-baseline/vendor_boot-before-baseline.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+2026-09-24T16:35:41Z --- boot: writing host sha256 12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c ---
+D:\android\gts9-flash\test187-boot.img: 1 file pushed, 0 skipped. 74.3 MB/s (100663296 bytes in 1.292s)
+2026-09-24T16:35:43Z PASS boot push verified on device (12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c)
+100663296 bytes (96 M) copied, 0.197116 s, 487 M/s
+100663296 bytes (96 M) copied, 0.103257 s, 930 M/s
+/tmp/boot-after.img: 1 file pulled, 0 skipped. 20.6 MB/s (100663296 bytes in 4.659s)
+2026-09-24T16:35:48Z PASS boot readback verifies (12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c)
+2026-09-24T16:35:49Z --- vendor_boot: writing host sha256 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f ---
+D:\android\gts9-flash\test187-vendor_boot.img: 1 file pushed, 0 skipped. 758.7 MB/s (100663296 bytes in 0.127s)
+2026-09-24T16:35:49Z PASS vendor_boot push verified on device (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+100663296 bytes (96 M) copied, 0.202391 s, 474 M/s
+100663296 bytes (96 M) copied, 0.042146 s, 2.2 G/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 21.6 MB/s (100663296 bytes in 4.452s)
+2026-09-24T16:35:54Z PASS vendor_boot readback verifies (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+2026-09-24T16:35:54Z flash complete and verified: boot + vendor_boot now hold test-187 profile 'baseline'
+2026-09-24T16:35:54Z backup kept at /home/ms/Samsung/gts9-flash-tests/test-187-baseline/{boot,vendor_boot}-before-baseline.img
+2026-09-24T16:35:54Z NEXT: reboot the tablet.  The initramfs clears the BCB, so a plain reset is enough:
+2026-09-24T16:35:54Z   /mnt/d/android/platform-tools/adb.exe shell reboot system
+2026-09-24T16:35:54Z then run:  GTS9_ALLOW_POWER=1 /home/ms/Samsung/galaxy_tab_s9_linux/scripts/stall-ab.sh baseline 5
