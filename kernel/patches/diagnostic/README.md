@@ -50,6 +50,51 @@ report trace, kernel poweroff trace, and framebuffer console while keeping
 default environment resets the diagnostic changes and restores the ordinary
 patch queue.
 
+## `0021-gts9-rpmh-timeout-state-dump.patch` — DIAGNOSTIC ONLY
+
+Opt-in with `GTS9_RPMH_DEBUG=1` (the only diagnostic patch besides 0020 that
+`scripts/prepare-kernel.sh` will apply) and inert at runtime unless the command
+line carries `gts9_rpmh_debug=1`.
+
+Why it exists: the earliest anomaly captured in a real 13-14 s stall is an
+ACTIVE_ONLY RPMh transaction timing out in `rpmh_write_batch()`
+(`drivers/soc/qcom/rpmh.c`, the `WARN_ON(1)` after `RPMH_TIMEOUT_MS`). That
+warning says *that* it timed out, not *where* it stopped. This patch answers the
+next question — client, TCS claim, TCS programming, trigger, RSC, IRQ,
+`tcs_tx_done`, `rpmh_tx_done` or the completion — from captured state.
+
+Cost and scope:
+
+* the normal path gains one predictable branch on send and on completion
+  (`if (unlikely(gts9_rpmh_debug))`), nothing else;
+* a 128-entry, 20-byte ring of send/completion events lives in RAM (2.5 KiB,
+  no allocation, no I/O, no per-event print);
+* **only a real timeout prints**: one structured dump with the calling task,
+  RSC name, state, every command's addr/data/wait, `tcs_in_use`, the RSC IRQ
+  status, the per-TCS `CMD_ENABLE`/`CMD_MSGID`/`CMD_ADDR`/`CMD_DATA` registers,
+  whether the request is still stashed in a `tcs->req[]` slot, the ring tail and
+  a `ring_summary` line that states whether a matching completion was seen;
+* the request is remembered after the timeout, so a completion that arrives
+  later prints `LATE COMPLETION ... the rpmh_write_batch() lifetime hazard is
+  real`. This only *reports* the hazard the existing code comments warn about;
+  it does not change the lifetime or the semantics;
+* all output is prefixed `gts9-rpmh:` so a harness can extract it.
+
+Build and package:
+
+```sh
+GTS9_RPMH_DEBUG=1 \
+KERNEL_WORKTREE="$PWD/.work/build/linux-src-rpmh-debug" \
+KERNEL_BUILD_DIR="$PWD/.work/build/linux-out-rpmh-debug" \
+KERNEL_OUT_DIR="$PWD/out/kernel-rpmh-debug" \
+scripts/build-kernel.sh
+```
+
+Package with `boot/cmdline.rpmh-debug.example.txt` (watchdog detectors plus
+`console=ttyGS1` and `gts9_rpmh_debug=1`; the kmsg mirror and the DPU ftrace
+stream stay off). Re-running `prepare-kernel.sh` without `GTS9_RPMH_DEBUG=1`
+drops the patch again.
+
 ## `0010-pinctrl-report-pogo-pin-state-at-probe.patch` — DIAGNOSTIC ONLY
 
 This sampled TLMM registers for GPIO10, 12, 13, 62, 72, 75, and 106 at probe,
