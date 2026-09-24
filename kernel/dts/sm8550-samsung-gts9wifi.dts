@@ -127,8 +127,60 @@
 			no-map;
 		};
 
-		sec_pmsg_mem: sec-pmsg@880900000 {
+		/*
+		 * Mainline ramoops on Samsung's own pmsg carve-out.
+		 *
+		 * Evidence, not a guess: the live X710 tree (reference/stock,
+		 * decompiled live DTS sha256 7bf40be5...) reserves exactly this
+		 * 2 MiB at 0x8_80900000 as
+		 *
+		 *	sec_pmsg_region@880900000 {
+		 *		compatible = "samsung,carve-out";
+		 *		reg = <0x08 0x80900000 0x00 0x200000>;
+		 *	};
+		 *
+		 * and binds its durable-log consumer to that region:
+		 *
+		 *	samsung,pstore_pmsg { memory-region = <0x583>; };
+		 *
+		 * so it is the vendor's persistent-message store, not free memory.
+		 * Stock additionally ships a ramoops node with
+		 * pmsg-size = <0x200000>; this is the mainline equivalent.
+		 *
+		 * Why it is needed: on this port the USB ACM console carries userspace
+		 * output only (the command line is console=ttyMSM0 + console=tty0), so
+		 * a panic report never reaches the host, and /sys/fs/pstore had no
+		 * backend at all.  With console-size set, ramoops registers a pstore
+		 * console whose buffer is meant to survive the panic reboot.  The three
+		 * sizes split the 2 MiB exactly once.
+		 *
+		 * Measured 2026-09-24 (test-183), recorded because it changes what may
+		 * be claimed: the backend registers and the console attaches
+		 * ("pstore: Registered ramoops as persistent store backend",
+		 * "printk: legacy console [ramoops-1] enabled", "ramoops: using
+		 * 0x200000@0x880900000"), but records do NOT survive a reboot on this
+		 * device.  A userspace pmsg record written to /dev/pmsg0 and a real
+		 * sysrq panic both left /sys/fs/pstore empty on the next boot, the
+		 * latter after "pstore: zlib_inflate() failed, ret = -3!".  Stock
+		 * agrees: its own ramoops node is
+		 *
+		 *	ramoops_region { compatible = "ramoops"; ... status = "disabled"; };
+		 *
+		 * so Samsung's live persistent-log path is sec_log_buf plus the
+		 * bootloader-facing sec_pmsg carve-out, not mainline ramoops.  Until a
+		 * region that really survives is identified, the stall loop takes its
+		 * live kernel evidence from the kmsg mirror (gts9-kmsg-console) and its
+		 * per-round evidence from gts9-prev-boot-evidence; this node stays
+		 * because it is the correct mainline binding for the carve-out and the
+		 * natural place to re-test once persistence is understood.  Do not
+		 * treat /sys/fs/pstore as an evidence source yet.
+		 */
+		ramoops_mem: ramoops@880900000 {
+			compatible = "ramoops";
 			reg = <0x8 0x80900000 0x0 0x200000>;
+			record-size = <0x20000>;
+			console-size = <0xe0000>;
+			pmsg-size = <0x100000>;
 			no-map;
 		};
 
