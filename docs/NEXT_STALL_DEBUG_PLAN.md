@@ -66,7 +66,9 @@ holding a pointer to it. Concretely, in this tree:
 1. `rpmh_rsc_send_data()` → `claim_tcs_for_req()` programs a TCS and stashes
    `tcs->req[tcs_id - tcs->offset] = &rpm_msgs[i].msg`; the request itself is
    the `struct rpmh_request` that `rpmh_write_batch()` allocated as one `ptr`.
-2. If the RSC does not raise the completion interrupt inside `RPMH_TIMEOUT_MS`,
+2. If the RSC does not raise the completion interrupt inside `RPMH_TIMEOUT_MS` —
+   which is **10 seconds** in this tree
+   (`drivers/soc/qcom/rpmh.c: #define RPMH_TIMEOUT_MS msecs_to_jiffies(10000)`) —
    `rpmh_write_batch()` warns, sets `-ETIMEDOUT` and `kfree(ptr)` — freeing the
    request, its message array and the completion array.
 3. `tcs->req[...]` is **only** cleared by `tcs_tx_done()` → `get_req_from_tcs()`
@@ -78,6 +80,25 @@ holding a pointer to it. Concretely, in this tree:
    `rpmh_tx_done()` runs `container_of()` on freed memory, calls
    `complete()` on a freed `struct completion` and may `kfree()` the same
    object a second time.
+
+### 3b. What the 10 s timeout means for the 13-14 s window
+
+The recorded stall printed the `rpmh_write_batch()` warning at **+14.27 s**. With
+a 10 s timeout that warning is not a statement about 14 s — it says the batch
+was submitted at roughly **+4.3 s** and never completed. Two consequences:
+
+* the search window for the first bad actor is **~4-5 s**, i.e. early userspace
+  (`gts9-usb-acm` / panel recovery / the first Pogo poll after the MCU handshake)
+  — not the 13-14 s mark where the *symptom* becomes visible. The stall hunt has
+  been looking at the wrong end of the chain: +13-14 s is when the 10 s timeout
+  expires and the cascade starts, not when it began.
+* a "timeout then late completion" pair can be up to 10 seconds apart, which is
+  why §3a's hazard is not a narrow race at the timeout instant: any completion
+  in the following 10 s lands on freed memory.
+
+Both statements are source-derived and falsifiable by test-186: the dump prints
+the timeout instant and the ring's timestamps, and `LATE COMPLETION` prints the
+completion instant, so the gap is measurable rather than assumed.
 
 That is a use-after-free on a live interrupt path, and it is a *plausible
 mechanism* for a one-off RPMh timeout to become a system-wide wedge: a corrupted
