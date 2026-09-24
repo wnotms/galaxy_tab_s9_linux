@@ -28,8 +28,14 @@
 #
 # Usage: gts9-kmsg-console [device] [--force]      (default /dev/ttyGS0)
 #
-# Gated on the watchdog debug profile, exactly like gts9-watchdog-debug: an
-# ordinary boot must not have kernel messages sprayed over the login console.
+# Gated on its *own* command-line flag, not on the watchdog profile: mirroring
+# the whole kernel log onto the USB link is a second, much louder piece of
+# instrumentation, and it must be possible to measure the stall with the
+# watchdog detectors alone (observer-effect A/B).  Flags:
+#
+#	gts9_watchdog_debug=1   detectors only
+#	gts9_kmsg_mirror=1      the mirror below
+#	gts9_dpu_flight=1       the DPU ftrace stream (gts9-dpu-flight.service)
 
 set -u
 
@@ -38,7 +44,7 @@ case "${2:-}" in
 --force) FORCE=1 ;;
 *) FORCE=0 ;;
 esac
-FLAG=gts9_watchdog_debug=1
+FLAG=gts9_kmsg_mirror=1
 
 if [ "$FORCE" != 1 ]; then
 	case " $(cat /proc/cmdline 2>/dev/null) " in
@@ -48,6 +54,15 @@ if [ "$FORCE" != 1 ]; then
 		exit 0
 		;;
 	esac
+fi
+
+# If the kernel already has a console on the USB link (console=ttyGS1 in the
+# command line with CONFIG_U_SERIAL_CONSOLE), this mirror is redundant: printk
+# goes to the same port by itself, earlier and without a userspace reader in
+# the path.  Step aside rather than printing everything twice.
+if grep -qa 'ttyGS' /sys/class/tty/console/active 2>/dev/null; then
+	echo "gts9-kmsg-console: ttyGS is already a kernel console; not mirroring"
+	exit 0
 fi
 
 command -v dmesg >/dev/null 2>&1 || {

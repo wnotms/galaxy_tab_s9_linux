@@ -1,0 +1,22 @@
+[Unit]
+Description=X710 DPU trace stream (stall bait / flight recorder)
+Documentation=file:/usr/share/doc/gts9/DPU_TRACE.md
+After=local-fs.target
+Before=multi-user.target
+# Third, independent instrumentation switch.  The ftrace stream writes several
+# MB/s to the microSD, so it must never be switched on by the watchdog profile
+# or by the kmsg mirror:
+#   gts9_watchdog_debug=1  software lockup detectors
+#   gts9_kmsg_mirror=1     kernel log mirrored onto the USB console
+#   gts9_dpu_flight=1      this stream
+ConditionKernelCommandLine=gts9_dpu_flight=1
+
+[Service]
+Type=simple
+ExecStartPre=/usr/local/sbin/gts9-dpu-trace-arm
+ExecStart=/usr/local/sbin/gts9-dpu-stream /var/log/gts9-dpu-stream.txt 2
+Restart=no
+SuccessExitStatus=0
+
+[Install]
+WantedBy=multi-user.target

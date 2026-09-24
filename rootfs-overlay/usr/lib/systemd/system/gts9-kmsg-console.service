@@ -3,16 +3,21 @@ Description=X710 kernel-message mirror onto the USB console
 Documentation=file:/usr/share/doc/gts9/WATCHDOG_X710.md
 After=gts9-usb-acm.service local-fs.target
 Before=multi-user.target
+# Its own instrumentation switch, separate from gts9_watchdog_debug and from
+# gts9_dpu_flight: see the header of /usr/libexec/gts9-kmsg-console.
+ConditionKernelCommandLine=gts9_kmsg_mirror=1
 
 [Service]
 Type=simple
 # The mirror is a diagnostic tap: if it dies, the serial login must still work,
-# so it restarts instead of failing the boot.  on-failure, not always: without
-# the debug flag on the command line the helper exits 0 immediately, and that
-# clean exit must not become a restart loop.
+# so it restarts instead of failing the boot.  on-failure, not always: the
+# helper exits 0 by itself when the kernel already has a ttyGS console, and
+# that clean exit must not become a restart loop.
 Restart=on-failure
 RestartSec=3
-ExecStart=/usr/libexec/gts9-kmsg-console /dev/ttyGS0
+# The kernel console (console=ttyGS1) goes to the second ACM port: the mirror
+# must never write to the login shell's port.
+ExecStart=/usr/libexec/gts9-kmsg-console /dev/ttyGS1
 SuccessExitStatus=0 1
 
 [Install]
