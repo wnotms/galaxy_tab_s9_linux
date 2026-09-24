@@ -1,0 +1,20 @@
+2026-09-24T01:24:33Z console open on COM17
+2026-09-24T01:24:34Z RECV  echo READY1
+2026-09-24T01:24:34Z RECV  [?2004lREADY1
+2026-09-24T01:24:34Z shell answered after 1 poll(s)
+2026-09-24T01:24:34Z SENT  echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:24:42Z RECV  [?2004hroot@gts9:~# echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:24:42Z RECV  [?2004lRBL
+2026-09-24T01:24:42Z RECV  boot_id=42efa64f-ef35-484b-877b-2385a5fc4b48
+2026-09-24T01:24:42Z RECV  [?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T01:24:42Z console run done (ready=True)
+2026-09-24T01:47:44Z console open on COM17
+2026-09-24T01:47:46Z RECV  echo READY1
+2026-09-24T01:47:46Z RECV  [?2004lREADY1
+2026-09-24T01:47:46Z shell answered after 1 poll(s)
+2026-09-24T01:47:46Z SENT  echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:47:54Z RECV  [?2004hroot@gts9:~# echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:47:54Z RECV  [?2004lRBL
+2026-09-24T01:47:54Z RECV  boot_id=28fd1d02-79d2-4fdd-9767-144867bd581b
+2026-09-24T01:47:54Z RECV  [?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T01:47:54Z console run done (ready=True)

@@ -1,0 +1,79 @@
+2026-09-24T02:24:52Z console open on COM17
+2026-09-24T02:24:53Z RECV  echo READY1
+2026-09-24T02:24:53Z RECV  [?2004lREADY1
+2026-09-24T02:24:53Z shell answered after 1 poll(s)
+2026-09-24T02:24:53Z SENT  echo SW;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1100,1170p"
+2026-09-24T02:25:49Z RECV  [?2004hroot@gts9:~# echo SW;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1100,1170p"
+2026-09-24T02:25:49Z RECV  [?2004lSW
+2026-09-24T02:25:49Z RECV  [    4.330338] gts9 systemd-logind[529]: Watching system buttons on /dev/input/event0 (pmic_pwrkey)
+2026-09-24T02:25:49Z RECV  [    4.371938] gts9 systemd[1]: Finished gts9-usb-acm.service - X710 USB ACM debug console (configfs).
+2026-09-24T02:25:49Z RECV  [    4.420046] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T02:25:49Z RECV  [    4.539408] gts9 systemd[1]: Started systemd-logind.service - User Login Management.
+2026-09-24T02:25:49Z RECV  [    4.540284] gts9 systemd[1]: e2scrub_reap.service: Deactivated successfully.
+2026-09-24T02:25:49Z RECV  [    4.540470] gts9 systemd[1]: Finished e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots.
+2026-09-24T02:25:49Z RECV  [    4.544407] gts9 systemd[1]: Started serial-getty@ttyGS0.service - Serial Getty on ttyGS0.
+2026-09-24T02:25:49Z RECV  [    4.548320] gts9 gts9-panel-recover[653]: gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T02:25:49Z RECV  [    4.552062] gts9 gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T02:25:49Z RECV  [    4.575153] gts9 gts9-panel-recover[721]: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T02:25:49Z RECV  [    4.576018] gts9 gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+2026-09-24T02:25:49Z RECV  [    4.718285] gts9 systemd[1]: Finished gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery.
+2026-09-24T02:25:49Z RECV  [    4.720975] gts9 systemd[1]: Started getty@tty1.service - Getty on tty1.
+2026-09-24T02:25:49Z RECV  [    4.721791] gts9 systemd[1]: Reached target getty.target - Login Prompts.
+2026-09-24T02:25:49Z RECV  [    4.723460] gts9 systemd[1]: Starting gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started...
+2026-09-24T02:25:49Z RECV  [    4.724977] gts9 systemd[1]: Starting gts9-getty-stage.service - Record whether the Debian tty1 login getty started...
+2026-09-24T02:25:49Z RECV  [    4.812826] gts9 sh[755]: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T02:25:49Z RECV  [    4.816100] gts9 gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T02:25:49Z RECV  [    4.961334] gts9 systemd[1]: gts9-getty-stage.service: Deactivated successfully.
+2026-09-24T02:25:49Z RECV  [    4.961533] gts9 systemd[1]: Finished gts9-getty-stage.service - Record whether the Debian tty1 login getty started.
+2026-09-24T02:25:49Z RECV  [    5.015641] gts9 systemd[1]: Finished gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started.
+2026-09-24T02:25:49Z RECV  [    5.016728] gts9 systemd[1]: Reached target multi-user.target - Multi-User System.
+2026-09-24T02:25:49Z RECV  [    5.017683] gts9 systemd[1]: Reached target graphical.target - Graphical Interface.
+2026-09-24T02:25:49Z RECV  [    5.019735] gts9 systemd[1]: Starting gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target...
+2026-09-24T02:25:49Z RECV  [    5.093290] gts9 sh[802]: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T02:25:49Z RECV  [    5.096078] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T02:25:49Z RECV  [    5.259691] gts9 systemd[1]: Finished gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target.
+2026-09-24T02:25:49Z RECV  [    5.263190] gts9 systemd[1]: Startup finished in 1.734s (kernel) + 3.529s (userspace) = 5.263s.
+2026-09-24T02:25:49Z RECV  [   14.307609] gts9 kernel: platform 6800000.remoteproc: deferred probe pending: platform: wait for supplier /smp2p-adsp/slave-kernel
+2026-09-24T02:25:49Z RECV  [   14.307919] gts9 kernel: platform 81d00000.smem: deferred probe pending: qcom-smem: failed to retrieve hwlock
+2026-09-24T02:25:49Z RECV  [   14.308105] gts9 kernel: platform 17d91000.cpufreq: deferred probe pending: qcom-cpufreq-hw: Failed to find icc paths
+2026-09-24T02:25:49Z RECV  [   14.308262] gts9 kernel: auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+2026-09-24T02:25:49Z RECV  [   14.308413] gts9 kernel: platform smp2p-adsp: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-24T02:25:49Z RECV  [   14.308555] gts9 kernel: platform smp2p-cdsp: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-24T02:25:49Z RECV  [   14.308697] gts9 kernel: platform smp2p-modem: deferred probe pending: qcom_smp2p: IRQ index 0 not found
+2026-09-24T02:25:49Z RECV  [   14.308836] gts9 kernel: qnoc-sm8550 1500000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:25:49Z RECV  [   14.308984] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:25:49Z RECV  [   14.309134] gts9 kernel: qnoc-sm8550 16c0000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:25:49Z RECV  [   14.309269] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:25:49Z RECV  [   14.309400] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 1dfa000.crypto
+2026-09-24T02:25:49Z RECV  [   14.309514] gts9 kernel: qnoc-sm8550 1700000.interconnect: sync_state() pending due to 1dfa000.crypto
+2026-09-24T02:25:49Z RECV  [   14.309643] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 3d00000.gpu
+2026-09-24T02:25:49Z RECV  [   14.309755] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+2026-09-24T02:25:49Z RECV  [   14.309869] gts9 kernel: gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+2026-09-24T02:25:49Z RECV  [   14.309994] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.310102] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.310229] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.310352] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.310466] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-24T02:25:49Z RECV  [   14.310578] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to acb7000.isp
+2026-09-24T02:25:49Z RECV  [   14.310687] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:25:49Z RECV  [   14.310798] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:25:49Z RECV  [   14.310910] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to acb7000.isp
+2026-09-24T02:25:49Z RECV  [   14.311024] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T02:25:49Z RECV  [   14.311135] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+2026-09-24T02:25:49Z RECV  [   14.311267] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+2026-09-24T02:25:49Z RECV  [   14.311383] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.311498] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to 6800000.remoteproc
+2026-09-24T02:25:49Z RECV  [   14.311611] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d90000.interconnect
+2026-09-24T02:25:49Z RECV  [   14.311722] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+2026-09-24T02:25:49Z RECV  [   14.311833] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+2026-09-24T02:25:49Z RECV  [   14.311944] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+2026-09-24T02:25:49Z RECV  [   14.312086] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+2026-09-24T02:25:49Z RECV  [   14.312200] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+2026-09-24T02:25:49Z RECV  [   14.312310] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 3d00000.gpu
+2026-09-24T02:25:49Z RECV  [   14.312420] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+2026-09-24T02:25:49Z RECV  [   14.312532] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+2026-09-24T02:25:49Z RECV  [   14.312655] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+2026-09-24T02:25:49Z RECV  [   14.312765] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+2026-09-24T02:25:49Z RECV  [   14.312874] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+2026-09-24T02:25:49Z RECV  [   14.312985] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-24T02:25:49Z console run done (ready=True)

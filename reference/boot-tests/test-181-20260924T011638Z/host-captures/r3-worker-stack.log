@@ -1,0 +1,58 @@
+2026-09-24T02:26:00Z console open on COM17
+2026-09-24T02:26:01Z RECV  echo READY1
+2026-09-24T02:26:01Z RECV  [?2004lREADY1
+2026-09-24T02:26:01Z shell answered after 1 poll(s)
+2026-09-24T02:26:01Z SENT  echo WS;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1217,1266p"
+2026-09-24T02:26:56Z RECV  [?2004hroot@gts9:~# echo WS;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1217,1266p"
+2026-09-24T02:26:56Z RECV  [?2004lWS
+2026-09-24T02:26:56Z RECV  [   62.449098] gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 56s!
+2026-09-24T02:26:56Z RECV  [   62.449285] gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-24T02:26:56Z RECV  [   62.490919] gts9 kernel: workqueue events: flags=0x100
+2026-09-24T02:26:56Z RECV  [   62.490945] gts9 kernel:   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   62.490975] gts9 kernel:     pending: drm_fb_helper_damage_work
+2026-09-24T02:26:56Z RECV  [   62.491000] gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=11 refcnt=12
+2026-09-24T02:26:56Z RECV  [   62.491017] gts9 kernel:     in-flight: 27:fqdir_free_fn for 56s
+2026-09-24T02:26:56Z RECV  [   62.491043] gts9 kernel:     pending: 9*psi_avgs_work, pogo_watch_work
+2026-09-24T02:26:56Z RECV  [   62.491060] gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-24T02:26:56Z RECV  [   62.491087] gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   62.491103] gts9 kernel:     pending: vmstat_update
+2026-09-24T02:26:56Z RECV  [   62.491120] gts9 kernel: workqueue pm: flags=0x2
+2026-09-24T02:26:56Z RECV  [   62.491141] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   62.491158] gts9 kernel:     in-flight: 75:pm_runtime_work for 56s
+2026-09-24T02:26:56Z RECV  [   62.491175] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+2026-09-24T02:26:56Z RECV  [   62.491194] gts9 kernel:     in-flight: 12:pm_runtime_work for 56s ,174:pm_runtime_work for 56s
+2026-09-24T02:26:56Z RECV  [   62.491211] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   62.491224] gts9 kernel:     in-flight: 77:pm_runtime_work for 56s
+2026-09-24T02:26:56Z RECV  [   62.491237] gts9 kernel: pool 6: cpus=1 node=0 flags=0x0 nice=0 hung=56s workers=4 idle: 113 115 114
+2026-09-24T02:26:56Z RECV  [   62.491254] gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 90 93 13 92 175 91
+2026-09-24T02:26:56Z RECV  [   62.491273] gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-24T02:26:56Z RECV  [   62.491289] gts9 kernel: pool 6:
+2026-09-24T02:26:56Z RECV  [   62.491310] gts9 kernel: task:kworker/1:0     state:R  running task     stack:12544 pid:27    tgid:27    ppid:2      task_flags:0x4208060 flags:0x00000012
+2026-09-24T02:26:56Z RECV  [   62.491328] gts9 kernel: Workqueue: events fqdir_free_fn
+2026-09-24T02:26:56Z RECV  [   62.491344] gts9 kernel: Call trace:
+2026-09-24T02:26:56Z RECV  [   62.491405] gts9 kernel:  __switch_to+0x210/0x358 (T)
+2026-09-24T02:26:56Z RECV  [   62.491424] gts9 kernel:  0x7fffffff
+2026-09-24T02:26:56Z RECV  [   93.169108] gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 87s!
+2026-09-24T02:26:56Z RECV  [   93.169299] gts9 kernel: Showing busy workqueues and worker pools:
+2026-09-24T02:26:56Z RECV  [   93.203777] gts9 kernel: workqueue events: flags=0x100
+2026-09-24T02:26:56Z RECV  [   93.203802] gts9 kernel:   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   93.203821] gts9 kernel:     pending: drm_fb_helper_damage_work
+2026-09-24T02:26:56Z RECV  [   93.203843] gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=11 refcnt=12
+2026-09-24T02:26:56Z RECV  [   93.203860] gts9 kernel:     in-flight: 27:fqdir_free_fn for 87s
+2026-09-24T02:26:56Z RECV  [   93.203883] gts9 kernel:     pending: 9*psi_avgs_work, pogo_watch_work
+2026-09-24T02:26:56Z RECV  [   93.203907] gts9 kernel: workqueue mm_percpu_wq: flags=0x108
+2026-09-24T02:26:56Z RECV  [   93.203923] gts9 kernel:   pwq 6: cpus=1 node=0 flags=0x0 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   93.203939] gts9 kernel:     pending: vmstat_update
+2026-09-24T02:26:56Z RECV  [   93.203953] gts9 kernel: workqueue pm: flags=0x2
+2026-09-24T02:26:56Z RECV  [   93.203973] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   93.203991] gts9 kernel:     in-flight: 75:pm_runtime_work for 87s
+2026-09-24T02:26:56Z RECV  [   93.204012] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+2026-09-24T02:26:56Z RECV  [   93.204026] gts9 kernel:     in-flight: 12:pm_runtime_work for 87s ,174:pm_runtime_work for 87s
+2026-09-24T02:26:56Z RECV  [   93.204044] gts9 kernel:   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+2026-09-24T02:26:56Z RECV  [   93.204063] gts9 kernel:     in-flight: 77:pm_runtime_work for 87s
+2026-09-24T02:26:56Z RECV  [   93.204080] gts9 kernel: pool 6: cpus=1 node=0 flags=0x0 nice=0 hung=87s workers=4 idle: 113 115 114
+2026-09-24T02:26:56Z RECV  [   93.204098] gts9 kernel: pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: 90 93 13 92 175 91
+2026-09-24T02:26:56Z RECV  [   93.204115] gts9 kernel: Showing backtraces of busy workers in stalled worker pools:
+2026-09-24T02:26:56Z RECV  [   93.204136] gts9 kernel: pool 6:
+2026-09-24T02:26:56Z RECV  [   93.204154] gts9 kernel: task:kworker/1:0     state:R  running task     stack:12544 pid:27    tgid:27    ppid:2      task_flags:0x4208060 flags:0x00000012
+2026-09-24T02:26:56Z console run done (ready=True)

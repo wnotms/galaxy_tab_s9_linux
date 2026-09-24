@@ -18,7 +18,16 @@ TRACE=${GTS9_DPU_TRACE:-/sys/kernel/debug/tracing/trace}
 LINES=${GTS9_DPU_TRACE_LINES:-500}
 DMESG_LINES=${GTS9_DPU_DMESG_LINES:-80}
 FLAG=${GTS9_DPU_FLAG:-/run/gts9-dpu-flight.on}
+PREV=${GTS9_DPU_PREV:-$OUT.prev}
 COUNT=0
+
+# Keep the previous boot's last snapshot.  The failure this exists for ends
+# with the machine unable to run anything, so the snapshot that matters is the
+# one written *before* the stall; without this copy the next boot's recorder
+# would overwrite it before the evidence could be read.
+if [ -s "$OUT" ]; then
+	cp -a "$OUT" "$PREV" 2>/dev/null || true
+fi
 
 : > "$FLAG"
 while [ -f "$FLAG" ]; do

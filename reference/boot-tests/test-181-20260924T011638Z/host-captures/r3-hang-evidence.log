@@ -1,0 +1,25 @@
+2026-09-24T02:22:29Z console open on COM17
+2026-09-24T02:22:30Z RECV  echo READY1
+2026-09-24T02:22:30Z RECV  [?2004lREADY1
+2026-09-24T02:22:30Z shell answered after 1 poll(s)
+2026-09-24T02:22:30Z SENT  echo EV2;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -anE "frame done timeout|kickoff timeout|vblank wait timed out|workqueue lockup|rcu_preempt|dpu_encoder_helper|Workqueue:|BUG:" | head -30
+2026-09-24T02:23:21Z RECV  [?2004hroot@gts9:~# echo EV2;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | grep -anE "frame done timeout|kickoff timeout|vblank wait timed out|workqueue lockup|rcu_preempt|dpu_encoder_helper|Workqueue:|BUG:" | head -30
+2026-09-24T02:23:21Z RECV  [?2004lEV2
+2026-09-24T02:23:21Z RECV  651:[    2.173778] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T02:23:21Z RECV  711:[    2.174882] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T02:23:21Z RECV  1097:[    4.276050] gts9 kernel: [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T02:23:21Z RECV  1171:[   36.340021] gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-24T02:23:21Z RECV  1176:[   36.340241] gts9 kernel: rcu: rcu_preempt kthread starved for 2495 jiffies! g65 f0x0 RCU_GP_DOING_FQS(6) ->state=0x0 ->cpu=7
+2026-09-24T02:23:21Z RECV  1178:[   36.340279] gts9 kernel: rcu:         Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+2026-09-24T02:23:21Z RECV  1180:[   36.360014] gts9 kernel: task:rcu_preempt     state:I stack:14448 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+2026-09-24T02:23:21Z RECV  1217:[   62.449098] gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 56s!
+2026-09-24T02:23:21Z RECV  1240:[   62.491328] gts9 kernel: Workqueue: events fqdir_free_fn
+2026-09-24T02:23:21Z RECV  1244:[   93.169108] gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 87s!
+2026-09-24T02:23:21Z RECV  1267:[   93.204168] gts9 kernel: Workqueue: events fqdir_free_fn
+2026-09-24T02:23:21Z RECV  1271:[  100.224078] gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-24T02:23:21Z RECV  1281:[  109.440264] gts9 kernel: rcu: rcu_preempt kthread starved for 2495 jiffies! g65 f0x0 RCU_GP_DOING_FQS(6) ->state=0x0 ->cpu=7
+2026-09-24T02:23:21Z RECV  1282:[  109.440361] gts9 kernel: rcu:         Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+2026-09-24T02:23:21Z RECV  1284:[  109.440521] gts9 kernel: task:rcu_preempt     state:R  running task     stack:14448 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+2026-09-24T02:23:21Z RECV  1325:[  123.889185] gts9 kernel: BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0 nice=0 stuck for 118s!
+2026-09-24T02:23:21Z RECV  1351:[  123.923768] gts9 kernel: Workqueue: events fqdir_free_fn
+2026-09-24T02:23:21Z console run done (ready=True)

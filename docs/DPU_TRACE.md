@@ -111,16 +111,41 @@ it.
 | 20 framebuffer blank/unblank cycles | 275 kickoffs, 275 frame-done callbacks, 0 timeouts, all waits `rc>0` |
 | 80 cycles with a console write between them (racing a commit against the modeset) | 1104 kickoffs, 0 `pdone_timeout`, 0 `frame_done_timeout`, 0 kickoff resets |
 | 5 cycles with fbcon unbound | same per-cycle DRM message, 0 timeouts |
-| Cold boots with the recovery cycle executed (`panel id: 00 00 00` → cycle 1 → `80 00 04`) | no DPU error, no hang (see `bootloop*.txt` for the count reached) |
+| Cold boots with the recovery cycle executed (`panel id: 00 00 00` → cycle 1 → `80 00 04`) | no DRM error; **one stall reproduced** (see below) |
 | 30 backlight-only screen toggles (test 180) | 0 DPU/vblank/workqueue/RCU errors |
 
-The intermittent failure was **not** reproduced by any of these; test 178 caught
-it once in a comparable number of boots, so it is rare.  The instrumentation
-above is what will localise it when it happens: the first snapshot with
-`dpu_enc_phys_cmd_pdone_timeout` (or a `dpu_enc_kickoff` with no following
-`dpu_enc_frame_done_cb`) answers "where did the pipeline stop", and the same
-snapshot's `irq=186`/`irq=187` entries answer whether the interrupts were still
-arriving at all.
+## The one reproduction: a CPU wedge, not a frame-done timeout
+
+A cold boot during the hunt recovered the panel normally and then stalled: the
+console echoed but stopped executing, the panel kept a stuck cursor, the Pogo
+keyboard was dead, and only a ~15 s PMIC hold recovered the tablet (`nowatchdog`
+means nothing else will).  The kernel reported:
+
+```text
+rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+rcu:     5-...0: (0 ticks this GP) …
+After 10 seconds, these CPUS still haven't responded to the NMI: 5
+BUG: workqueue lockup - pool cpus=1 … stuck for 56s!
+    in-flight: 27:fqdir_free_fn for 56s
+workqueue pm: in-flight: 75:pm_runtime_work for 56s (and three more)
+workqueue events: pending: drm_fb_helper_damage_work
+```
+
+Two things follow for this investigation:
+
+- The primary event is a **CPU that stops answering NMIs**.  The stuck work
+  items span unrelated subsystems (`fqdir_free_fn`, `pm_runtime_work`, with the
+  DRM damage worker merely *pending*), which is what a global stall looks like.
+- In this instance there is **no** `frame done timeout` and **no** `vblank wait
+  timed out`, so the DPU path is not proven to be the trigger — it may be a
+  victim of the same wedge.  Test 178's `enc35 frame done timeout` and this
+  stall share the symptom, not necessarily the cause.
+
+The last normal log line before the wedge was deferred-probe completion (PCIe
+host bridge) at 14.3 s; the stall was detected at 36.3 s, so the trigger sits in
+that quiet interval.  The recorder now preserves the previous boot's snapshot as
+`/var/log/gts9-dpu-flight.txt.prev`, so the next occurrence keeps its trace
+instead of only its journal.
 
 ## Reading a snapshot
 

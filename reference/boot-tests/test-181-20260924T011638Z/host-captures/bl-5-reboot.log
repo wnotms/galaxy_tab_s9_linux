@@ -1,0 +1,10 @@
+2026-09-24T01:51:05Z console open on COM17
+2026-09-24T01:51:06Z RECV  echo READY1
+2026-09-24T01:51:06Z RECV  [?2004lREADY1
+2026-09-24T01:51:06Z shell answered after 1 poll(s)
+2026-09-24T01:51:06Z SENT  echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:51:14Z RECV  [?2004hroot@gts9:~# echo RBL;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);systemctl reboot
+2026-09-24T01:51:14Z RECV  [?2004lRBL
+2026-09-24T01:51:14Z RECV  boot_id=0cca8775-68e6-4ccc-b870-dfc1c42f72b2
+2026-09-24T01:51:14Z RECV  [?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T01:51:14Z console run done (ready=True)

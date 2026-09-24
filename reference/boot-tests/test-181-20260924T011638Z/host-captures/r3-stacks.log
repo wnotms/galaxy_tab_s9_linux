@@ -1,0 +1,38 @@
+2026-09-24T02:23:36Z console open on COM17
+2026-09-24T02:23:37Z RECV  echo READY1
+2026-09-24T02:23:37Z RECV  [?2004lREADY1
+2026-09-24T02:23:37Z shell answered after 1 poll(s)
+2026-09-24T02:23:37Z SENT  echo ST;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1171,1200p"
+2026-09-24T02:24:37Z RECV  [?2004hroot@gts9:~# echo ST;journalctl -b -2 -o short-monotonic --no-pager 2>/dev/null | sed -n "1171,1200p"
+2026-09-24T02:24:37Z RECV  [?2004lST
+2026-09-24T02:24:37Z RECV  [   36.340021] gts9 kernel: rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+2026-09-24T02:24:37Z RECV  [   36.340149] gts9 kernel: rcu:         5-...0: (0 ticks this GP) idle=af7c/1/0x4000000000000000 softirq=696/696 fqs=1058
+2026-09-24T02:24:37Z RECV  [   36.340179] gts9 kernel: rcu:         (detected by 4, t=5255 jiffies, g=65, q=2442 ncpus=8)
+2026-09-24T02:24:37Z RECV  [   36.340199] gts9 kernel: Sending NMI from CPU 4 to CPUs 5:
+2026-09-24T02:24:37Z RECV  [   36.340219] gts9 kernel: After 10 seconds, these CPUS still haven't responded to the NMI: 5
+2026-09-24T02:24:37Z RECV  [   36.340241] gts9 kernel: rcu: rcu_preempt kthread starved for 2495 jiffies! g65 f0x0 RCU_GP_DOING_FQS(6) ->state=0x0 ->cpu=7
+2026-09-24T02:24:37Z RECV  [   36.340260] gts9 kernel: regulator: Not disabling unused regulators
+2026-09-24T02:24:37Z RECV  [   36.340279] gts9 kernel: rcu:         Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+2026-09-24T02:24:37Z RECV  [   36.340297] gts9 kernel: rcu: RCU grace-period kthread stack dump:
+2026-09-24T02:24:37Z RECV  [   36.360014] gts9 kernel: task:rcu_preempt     state:I stack:14448 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+2026-09-24T02:24:37Z RECV  [   36.360067] gts9 kernel: Call trace:
+2026-09-24T02:24:37Z RECV  [   36.360092] gts9 kernel:  __switch_to+0x210/0x358 (T)
+2026-09-24T02:24:37Z RECV  [   36.360108] gts9 kernel:  __schedule+0x658/0xa80
+2026-09-24T02:24:37Z RECV  [   36.360129] gts9 kernel:  schedule+0x58/0xd4
+2026-09-24T02:24:37Z RECV  [   36.360148] gts9 kernel:  schedule_timeout+0x8c/0x110
+2026-09-24T02:24:38Z RECV  [   36.360165] gts9 kernel:  rcu_gp_fqs_loop+0x1c0/0x66c
+2026-09-24T02:24:38Z RECV  [   36.360181] gts9 kernel:  rcu_gp_kthread+0x64/0x124
+2026-09-24T02:24:38Z RECV  [   36.360199] gts9 kernel:  kthread+0x108/0x134
+2026-09-24T02:24:38Z RECV  [   36.360221] gts9 kernel:  ret_from_fork+0x10/0x20
+2026-09-24T02:24:38Z RECV  [   36.360233] gts9 kernel: rcu: Stack dump where RCU GP kthread last ran:
+2026-09-24T02:24:38Z RECV  [   36.360250] gts9 kernel: Sending NMI from CPU 4 to CPUs 7:
+2026-09-24T02:24:38Z RECV  [   36.360265] gts9 kernel: NMI backtrace for cpu 7
+2026-09-24T02:24:38Z RECV  [   36.360277] gts9 kernel: CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-24T02:24:38Z RECV  [   36.360291] gts9 kernel: Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+2026-09-24T02:24:38Z RECV  [   36.360305] gts9 kernel: Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+2026-09-24T02:24:38Z RECV  [   36.360319] gts9 kernel: pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+2026-09-24T02:24:38Z RECV  [   36.360334] gts9 kernel: pc : cpuidle_enter_state+0xec/0x24c
+2026-09-24T02:24:38Z RECV  [   36.360351] gts9 kernel: lr : cpuidle_enter_state+0xe0/0x24c
+2026-09-24T02:24:38Z RECV  [   36.360366] gts9 kernel: sp : ffffffc082fdbd60
+2026-09-24T02:24:38Z RECV  [   36.360381] gts9 kernel: x29: ffffffc082fdbd60 x28: 0000000000000001 x27: ffffffc082ba1000
+2026-09-24T02:24:38Z console run done (ready=True)

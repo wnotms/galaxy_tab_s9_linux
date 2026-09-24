@@ -1,0 +1,48 @@
+2026-09-24T02:20:39Z console open on COM17
+2026-09-24T02:20:40Z RECV  echo READY1
+2026-09-24T02:20:40Z RECV  [?2004lREADY1
+2026-09-24T02:20:40Z shell answered after 1 poll(s)
+2026-09-24T02:20:40Z SENT  echo EV1;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo ---PREV-JOURNAL-DPU---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "dpu|vblank|frame done|workqueue|rcu|panel id|watchdog" | tail -25;echo ---PREV-TAIL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -10
+2026-09-24T02:21:21Z RECV  [?2004hroot@gts9:~# echo EV1;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo ---PREV-JOURNAL-DPU---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | grep -aiE "dpu|vblank|frame done|workqueue|rcu|panel id|watchdog" | tail -25;echo ---PREV-TAIL---;journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -10
+2026-09-24T02:21:21Z RECV  [?2004lEV1
+2026-09-24T02:21:21Z RECV  boot_id=5cc619d3-176c-4738-8911-b3c12b3fda24
+2026-09-24T02:21:21Z RECV  19.91
+2026-09-24T02:21:21Z RECV  running
+2026-09-24T02:21:21Z RECV  ---PREV-JOURNAL-DPU---
+2026-09-24T02:21:21Z RECV  [    2.318949] gts9 kernel: rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+2026-09-24T02:21:21Z RECV  [    2.318955] gts9 kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+2026-09-24T02:21:21Z RECV  [    2.318962] gts9 kernel: RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+2026-09-24T02:21:21Z RECV  [    2.319097] gts9 kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+2026-09-24T02:21:21Z RECV  [    2.319216] gts9 kernel: rcu: Hierarchical SRCU implementation.
+2026-09-24T02:21:21Z RECV  [    2.319224] gts9 kernel: rcu:         Max phase no-delay instances is 1000.
+2026-09-24T02:21:21Z RECV  [    2.323002] gts9 kernel: watchdog: NMI not fully supported
+2026-09-24T02:21:21Z RECV  [    2.323009] gts9 kernel: watchdog: Hard watchdog permanently disabled
+2026-09-24T02:21:21Z RECV  [    2.330860] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T02:21:21Z RECV  [    2.332574] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+2026-09-24T02:21:21Z RECV  [    2.334184] gts9 kernel: msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+2026-09-24T02:21:21Z RECV  [    2.334300] gts9 kernel: [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+2026-09-24T02:21:21Z RECV  [    2.334630] gts9 kernel: msm_dpu ae01000.display-controller: no GPU device was found
+2026-09-24T02:21:21Z RECV  [    2.339958] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+2026-09-24T02:21:21Z RECV  [    2.340195] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+2026-09-24T02:21:21Z RECV  [    2.340316] gts9 kernel: msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+2026-09-24T02:21:21Z RECV  [    3.900830] gts9 systemd[1]: Starting gts9-dpu-flight.service - X710 DPU flight recorder (test-181 diagnostic)...
+2026-09-24T02:21:21Z RECV  [    4.198862] gts9 gts9-dpu-trace-arm[520]: gts9-dpu-trace: 25 events armed, tracing_on=1, buffer=1410 kB
+2026-09-24T02:21:21Z RECV  [    4.200368] gts9 systemd[1]: Started gts9-dpu-flight.service - X710 DPU flight recorder (test-181 diagnostic).
+2026-09-24T02:21:21Z RECV  [    4.254334] gts9 gts9-panel-recover[653]: gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+2026-09-24T02:21:21Z RECV  [    4.256016] gts9 gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+2026-09-24T02:21:21Z RECV  [    4.516041] gts9 kernel: [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+2026-09-24T02:21:21Z RECV  [    4.660036] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+2026-09-24T02:21:21Z RECV  [    4.789484] gts9 gts9-panel-recover[653]: gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T02:21:21Z RECV  [    4.792022] gts9 gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+2026-09-24T02:21:21Z RECV  ---PREV-TAIL---
+2026-09-24T02:21:21Z RECV  [   22.497433] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: confirmed detach (connect line 0)
+2026-09-24T02:21:21Z RECV  [   22.497578] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: DATA IRQ disabled
+2026-09-24T02:21:21Z RECV  [   22.497706] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: rail off, state=DETACHED
+2026-09-24T02:21:21Z RECV  [   23.273449] gts9 systemd-logind[529]: Power key pressed short.
+2026-09-24T02:21:21Z RECV  [   29.544361] gts9 gts9-power-key: long press ignored (PMIC owns it)
+2026-09-24T02:21:21Z RECV  [   29.657857] gts9 systemd-logind[529]: Power key pressed short.
+2026-09-24T02:21:21Z RECV  [   30.144025] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: connect line reads 1 (was 0) after the 250 ms check
+2026-09-24T02:21:21Z RECV  [   30.200055] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: hot reconnect: rail on, DATA armed, no reset (stock model)
+2026-09-24T02:21:21Z RECV  [   30.336893] gts9 kernel: samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-24T02:21:21Z RECV  [   31.712364] gts9 kernel: regulator: Not disabling unused regulators
+2026-09-24T02:21:21Z console run done (ready=True)

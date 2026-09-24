@@ -1,0 +1,42 @@
+2026-09-24T02:21:37Z console open on COM17
+2026-09-24T02:21:39Z RECV  echo READY1
+2026-09-24T02:21:39Z RECV  [?2004lREADY1
+2026-09-24T02:21:39Z shell answered after 1 poll(s)
+2026-09-24T02:21:39Z SENT  echo H1;journalctl --list-boots 2>/dev/null | tail -6;for b in -1 -2 -3 -4; do echo "== boot $b =="; echo "errs=$(journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt|kickoff.timeout")";echo "lines=$(journalctl -b $b --no-pager 2>/dev/null | wc -l)";journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | tail -4;done
+2026-09-24T02:22:24Z RECV  [?2004hroot@gts9:~# echo H1;journalctl --list-boots 2>/dev/null | tail -6;for b in -1 -2 -3 -4; do echo "== boot $b =="; echo "errs=$(journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt|kickoff.timeout")";echo "lines=$(journalctl -b $b --no-pager 2>/dev/null | wc -l)";journalctl -b $b -o short-monotonic --no-pager 2>/dev/null | tail -4;done
+2026-09-24T02:22:24Z RECV  [?2004lH1
+2026-09-24T02:22:24Z RECV   -5 c490f610ef0a46cd83fca4458b15ea57 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:39:18 CST
+2026-09-24T02:22:24Z RECV   -4 99bb1e40b7634d8c8e552c3daf3242e7 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:39:17 CST
+2026-09-24T02:22:24Z RECV   -3 d8dad94946af4ea2a32d100261b9d24c Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:11 CST
+2026-09-24T02:22:24Z RECV   -2 a4e5bd13abb64f7e9d39319755a7af89 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:40:15 CST
+2026-09-24T02:22:24Z RECV   -1 1bd94e6c0916415b9bfa118fdbaf38a5 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:34 CST
+2026-09-24T02:22:24Z RECV    0 5cc619d3176c47388911b3c12b3fda24 Tue 2026-04-14 03:38:05 CST Tue 2026-04-14 03:38:34 CST
+2026-09-24T02:22:24Z RECV  == boot -1 ==
+2026-09-24T02:22:24Z RECV  errs=0
+2026-09-24T02:22:24Z RECV  lines=1204
+2026-09-24T02:22:24Z RECV  [   30.144025] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: connect line reads 1 (was 0) after the 250 ms check
+2026-09-24T02:22:24Z RECV  [   30.200055] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: hot reconnect: rail on, DATA armed, no reset (stock model)
+2026-09-24T02:22:24Z RECV  [   30.336893] gts9 kernel: samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+2026-09-24T02:22:24Z RECV  [   31.712364] gts9 kernel: regulator: Not disabling unused regulators
+2026-09-24T02:22:24Z RECV  == boot -2 ==
+2026-09-24T02:22:24Z RECV  errs=11
+2026-09-24T02:22:24Z RECV  lines=1360
+2026-09-24T02:22:24Z RECV  [  132.384028] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: connect line reads 0 (was 1) after the 250 ms check
+2026-09-24T02:22:24Z RECV  [  132.384284] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: confirmed detach (connect line 0)
+2026-09-24T02:22:24Z RECV  [  132.384428] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: DATA IRQ disabled
+2026-09-24T02:22:24Z RECV  [  132.384588] gts9 kernel: samsung-pogo-keyboard 5-002a: pogo: rail off, state=DETACHED
+2026-09-24T02:22:24Z RECV  == boot -3 ==
+2026-09-24T02:22:24Z RECV  errs=0
+2026-09-24T02:22:24Z RECV  lines=1135
+2026-09-24T02:22:24Z RECV  [    4.976303] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T02:22:24Z RECV  [    5.100976] gts9 systemd[1]: Finished gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target.
+2026-09-24T02:22:24Z RECV  [    5.105015] gts9 systemd[1]: Startup finished in 1.625s (kernel) + 3.479s (userspace) = 5.104s.
+2026-09-24T02:22:24Z RECV  [    8.419282] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+2026-09-24T02:22:24Z RECV  == boot -4 ==
+2026-09-24T02:22:24Z RECV  errs=0
+2026-09-24T02:22:24Z RECV  lines=1353
+2026-09-24T02:22:24Z RECV  [   74.356166] gts9 systemd-shutdown[1]: Syncing filesystems and block devices.
+2026-09-24T02:22:24Z RECV  [   74.557490] gts9 systemd-shutdown[1]: Sending SIGTERM to remaining processes...
+2026-09-24T02:22:24Z RECV  [   74.557579] gts9 systemd-journald[276]: Received SIGTERM from PID 1 (systemd-shutdow).
+2026-09-24T02:22:24Z RECV  [   74.557642] gts9 systemd-journald[276]: Journal stopped
+2026-09-24T02:22:24Z console run done (ready=True)

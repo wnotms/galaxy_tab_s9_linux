@@ -1,0 +1,32 @@
+2026-09-24T01:49:46Z console open on COM17
+2026-09-24T01:49:48Z RECV  echo READY1
+2026-09-24T01:49:48Z shell answered after 1 poll(s)
+2026-09-24T01:49:48Z SENT  echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T01:50:14Z RECV  [!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n
+2026-09-24T01:50:14Z RECV  Debian GNU/Linux 13 gts9 ttyGS0
+2026-09-24T01:50:14Z RECV  
+2026-09-24T01:50:14Z RECV  gts9 login: root (automatic login)
+2026-09-24T01:50:14Z RECV  
+2026-09-24T01:50:14Z RECV  echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T01:50:14Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+2026-09-24T01:50:14Z RECV  
+2026-09-24T01:50:14Z RECV  The programs included with the Debian GNU/Linux system are free software;
+2026-09-24T01:50:14Z RECV  the exact distribution terms for each program are described in the
+2026-09-24T01:50:14Z RECV  individual files in /usr/share/doc/*/copyright.
+2026-09-24T01:50:14Z RECV  
+2026-09-24T01:50:14Z RECV  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+2026-09-24T01:50:14Z RECV  permitted by applicable law.
+2026-09-24T01:50:14Z RECV  [?2004hroot@gts9:~# echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T01:50:14Z RECV  [?2004lPOST
+2026-09-24T01:50:14Z RECV  boot_id=b113960e-a9eb-49dc-9e43-6ea9b1d8dfa2
+2026-09-24T01:50:14Z RECV  6.53
+2026-09-24T01:50:14Z RECV  running
+2026-09-24T01:50:14Z RECV  panel_bad=1
+2026-09-24T01:50:14Z RECV  panel_ok=1
+2026-09-24T01:50:14Z RECV  recovery=1
+2026-09-24T01:50:14Z RECV  dpu_err=0
+2026-09-24T01:50:14Z RECV  flight=active
+2026-09-24T01:50:14Z RECV  lines=154
+2026-09-24T01:50:14Z RECV  kickoff=2 fd=2 fdtimeout=0 rc0=0
+2026-09-24T01:50:14Z console run done (ready=True)
+2026-09-24T02:06:08Z could not open COM17

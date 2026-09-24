@@ -1,0 +1,14 @@
+2026-09-24T02:03:07.047Z watch start: port=COM17 seconds=60 command='systemctl reboot' at 10s
+2026-09-24T02:03:08.022Z PRESENCE com=True ports=[COM17]
+2026-09-24T02:03:08.025Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:03:08.049Z port open on COM17
+2026-09-24T02:03:17.847Z SENT  systemctl reboot
+2026-09-24T02:03:17.853Z RECV  systemctl reboot
+2026-09-24T02:03:17.864Z RECV  [?2004l[?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T02:03:20.164Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:03:20.173Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+2026-09-24T02:03:20.181Z port closed (read error)
+2026-09-24T02:03:38.750Z port open on COM17
+2026-09-24T02:03:40.056Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:05:07.070Z port closed (watch end)
+2026-09-24T02:05:07.072Z watch done: lines=2 com_disconnects=0 com_reconnects=0

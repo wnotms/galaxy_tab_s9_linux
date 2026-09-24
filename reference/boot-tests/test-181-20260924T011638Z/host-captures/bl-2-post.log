@@ -1,0 +1,36 @@
+2026-09-24T01:48:57Z console open on COM17
+2026-09-24T01:48:59Z RECV  echo READY1
+2026-09-24T01:48:59Z shell answered after 1 poll(s)
+2026-09-24T01:48:59Z SENT  echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T01:49:24Z RECV  [!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n
+2026-09-24T01:49:24Z RECV  Debian GNU/Linux 13 gts9 ttyGS0
+2026-09-24T01:49:24Z RECV  
+2026-09-24T01:49:24Z RECV  gts9 login: root (automatic login)
+2026-09-24T01:49:24Z RECV  
+2026-09-24T01:49:24Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+2026-09-24T01:49:24Z RECV  
+2026-09-24T01:49:24Z RECV  The programs included with the Debian GNU/Linux system are free software;
+2026-09-24T01:49:24Z RECV  the exact distribution terms for each program are described in the
+2026-09-24T01:49:24Z RECV  individual files in /usr/share/doc/*/copyright.
+2026-09-24T01:49:24Z RECV  
+2026-09-24T01:49:24Z RECV  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+2026-09-24T01:49:24Z RECV  permitted by applicable law.
+2026-09-24T01:49:24Z console run done (ready=True)
+2026-09-24T02:02:39Z console open on COM17
+2026-09-24T02:02:40Z RECV  echo READY1
+2026-09-24T02:02:40Z RECV  [?2004lREADY1
+2026-09-24T02:02:40Z shell answered after 1 poll(s)
+2026-09-24T02:02:40Z SENT  echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|kickoff.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) pdone=$(grep -ac dpu_enc_phys_cmd_pdone_timeout $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) reset=$(grep -ac dpu_enc_prepare_kickoff_reset $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T02:03:06Z RECV  [?2004hroot@gts9:~# echo POST;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);cut -d" " -f1 /proc/uptime;systemctl is-system-running;echo panel_bad=$(dmesg | grep -ac "panel id: 00 00 00");echo panel_ok=$(dmesg | grep -ac "panel id: 80 00 04");echo recovery=$(dmesg | grep -ac "cycle 1 recovered");echo dpu_err=$(dmesg | grep -acE "frame.done.timeout|kickoff.timeout|vblank.wait.timed.out|workqueue.lockup|rcu_preempt");echo flight=$(systemctl is-active gts9-dpu-flight.service);F=/var/log/gts9-dpu-flight.txt;echo lines=$(wc -l < $F);echo "kickoff=$(grep -ac dpu_enc_kickoff $F) fd=$(grep -ac dpu_enc_frame_done_cb $F) pdone=$(grep -ac dpu_enc_phys_cmd_pdone_timeout $F) fdtimeout=$(grep -ac dpu_enc_frame_done_timeout $F) reset=$(grep -ac dpu_enc_prepare_kickoff_reset $F) rc0=$(grep -a dpu_enc_wait_event_timeout $F | grep -ac "rc=0,")"
+2026-09-24T02:03:06Z RECV  [?2004lPOST
+2026-09-24T02:03:06Z RECV  boot_id=99bb1e40-b763-4d8c-8e55-2c3daf3242e7
+2026-09-24T02:03:06Z RECV  35.94
+2026-09-24T02:03:06Z RECV  running
+2026-09-24T02:03:06Z RECV  panel_bad=1
+2026-09-24T02:03:06Z RECV  panel_ok=1
+2026-09-24T02:03:06Z RECV  recovery=1
+2026-09-24T02:03:06Z RECV  dpu_err=0
+2026-09-24T02:03:06Z RECV  flight=active
+2026-09-24T02:03:06Z RECV  lines=7480
+2026-09-24T02:03:06Z RECV  kickoff=169 fd=169 pdone=0 fdtimeout=0 reset=0 rc0=0
+2026-09-24T02:03:06Z console run done (ready=True)

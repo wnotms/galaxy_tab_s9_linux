@@ -1,0 +1,27 @@
+2026-09-24T02:01:37.738Z watch start: port=COM17 seconds=60 command='systemctl reboot' at 10s
+2026-09-24T02:01:38.658Z PRESENCE com=True ports=[COM17]
+2026-09-24T02:01:38.661Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:01:38.690Z port open on COM17
+2026-09-24T02:01:48.645Z SENT  systemctl reboot
+2026-09-24T02:01:48.651Z RECV  systemctl reboot
+2026-09-24T02:01:48.675Z RECV  [?2004l[?2004hroot@gts9:~# [?2004l[?2004h[?2004l
+2026-09-24T02:01:50.987Z PRESENCE usb0525:a4a7=False
+2026-09-24T02:01:50.999Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+2026-09-24T02:01:51.006Z port closed (read error)
+2026-09-24T02:02:09.668Z port open on COM17
+2026-09-24T02:02:11.040Z PRESENCE usb0525:a4a7=True
+2026-09-24T02:02:12.062Z RECV  [!p]104[?7h[6n[32766;32766H[6n[!p]104[?7h[6n[32766;32766H[6n
+2026-09-24T02:02:12.065Z RECV  Debian GNU/Linux 13 gts9 ttyGS0
+2026-09-24T02:02:12.066Z RECV  
+2026-09-24T02:02:12.068Z RECV  gts9 login: root (automatic login)
+2026-09-24T02:02:12.070Z RECV  
+2026-09-24T02:02:12.074Z RECV  Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64
+2026-09-24T02:02:12.076Z RECV  
+2026-09-24T02:02:12.078Z RECV  The programs included with the Debian GNU/Linux system are free software;
+2026-09-24T02:02:12.080Z RECV  the exact distribution terms for each program are described in the
+2026-09-24T02:02:12.082Z RECV  individual files in /usr/share/doc/*/copyright.
+2026-09-24T02:02:12.084Z RECV  
+2026-09-24T02:02:12.086Z RECV  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+2026-09-24T02:02:12.087Z RECV  permitted by applicable law.
+2026-09-24T02:02:38.723Z port closed (watch end)
+2026-09-24T02:02:38.725Z watch done: lines=15 com_disconnects=0 com_reconnects=0
