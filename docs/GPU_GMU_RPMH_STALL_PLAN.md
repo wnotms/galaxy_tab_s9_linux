@@ -40,7 +40,7 @@ which gives the next experiment a much cheaper and sharper entry point than
 | 18 | `msm.disable_acd=1` short-circuits `a6xx_gmu_acd_probe()` *before* it ever touches QMP: `if (disable_acd) { DRM_DEV_ERROR(..., "Skipping GPU ACD probe\n"); return 0; }`. It therefore removes the QMP dependency from GMU init. | `a6xx_gmu.c:1983-1989` |
 | 19 | **`CONFIG_QCOM_AOSS_QMP` is not set in this build.** | `out/kernel-gts9wifi/config:6873` → `# CONFIG_QCOM_AOSS_QMP is not set`; the symbol appears nowhere in `kernel/config/gts9wifi-mainline.fragment` |
 | 20 | The X710 DT *does* wire the GMU to AOSS QMP: the rendered DTB has `qcom,qmp = <0xba>` in `gmu@3d6a000`, and `0xba` is `power-management@c300000` (`compatible = "qcom,sm8550-aoss-qmp", "qcom,aoss-qmp"`, no `status` override → enabled). | `dtc -I dtb -O dts out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb` |
-| 21 | Upstream `sm8550.dtsi` gives **all eight** GPU OPP nodes a `qcom,opp-acd-level`, and the X710 DTS does not remove them (its only `&gpu` override is `status = "okay"` + `zap-shader/firmware-name`). So `cmd->enable_by_level != 0` is guaranteed on this board. | `sm8550.dtsi:2879-2939` (8 × `qcom,opp-acd-level`); `kernel/dts/sm8550-samsung-gts9wifi.dts:1459-1466` |
+| 21 | Upstream `sm8550.dtsi` gives **all eight** GPU OPP nodes a `qcom,opp-acd-level`, and the X710 DTS does not remove them (its only `&gpu` override is `status = "okay"` + `zap-shader/firmware-name`). So `cmd->enable_by_level != 0` is guaranteed on this board. `a6xx_gmu_build_freq_table()` seeds index 0 with the "off" level, so `nr_gpu_freqs = 9` and the ACD loop sets `BIT(1)..BIT(8)` = **`0x1fe`**. | `sm8550.dtsi:2879-2939` (8 × `qcom,opp-acd-level`); `kernel/dts/sm8550-samsung-gts9wifi.dts:1459-1466`; `a6xx_gmu.c` `a6xx_gmu_build_freq_table()` |
 | 22 | The X910 port **does** enable AOSS QMP: `CONFIG_QCOM_AOSS_QMP=y` in its mainline config, and it carries a patch that pulls the provider in. | `.work/x910/ubuntu-galaxy-tab-s9-ultra/kernel/config/config-mainline.aarch64:9924`; `.../kernel/patches/build-wcn-pcie-providers-in.patch` |
 | 23 | `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10` is the resolved value. | `out/kernel-gts9wifi/config:1871` |
 | 24 | `RPMH_TIMEOUT_MS` is 10 s, so a +14.27 s `rpmh_write_batch()` warning means the batch was **submitted at ≈ +4.27 s**. | `drivers/soc/qcom/rpmh.c:25` |
@@ -64,9 +64,10 @@ gpu@3d00000  (status = "okay" on X710, fact 21)
             │     → ERR_PTR(-EPROBE_DEFER)                   qcom_aoss.c: qmp_get()
             ├─ a6xx_gmu_pwrlevels_probe()   → nr_gpu_freqs = 8
             └─ a6xx_gmu_acd_probe()
-                 ├─ loops i = 1..7 over gmu->gpu_freqs[]
+                 ├─ loops i = 1..(nr_gpu_freqs-1) over gmu->gpu_freqs[]
+                 │     nr_gpu_freqs = 1 + 8 = 9  (index 0 is the "off" level)
                  ├─ every OPP has qcom,opp-acd-level          (fact 21)
-                 │     → cmd->enable_by_level = 0xff  (non-zero)
+                 │     → cmd->enable_by_level = BIT(1)..BIT(8) = 0x1fe  (non-zero)
                  └─ if (cmd->enable_by_level && IS_ERR_OR_NULL(gmu->qmp)) {
                         DRM_DEV_ERROR(gmu->dev,
                             "Unable to send ACD state to AOSS\n");
