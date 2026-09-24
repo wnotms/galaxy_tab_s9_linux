@@ -86,13 +86,29 @@ class UsbAcmServiceTests(unittest.TestCase):
         self.assertTrue((self.gadget / 'configs' / 'c.1' / 'acm.usb0').resolve().is_dir())
         self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
 
-    def test_creates_only_the_acm_function(self):
+    def test_creates_the_two_acm_functions(self):
+        # Two ports since test-184: acm.usb0 is the login shell, acm.usb1 is the
+        # kernel console.  A gadget serial console takes its port's IN endpoint,
+        # so one port cannot be both.
         self.run_helper()
         functions = sorted(p.name for p in (self.gadget / 'functions').iterdir())
-        self.assertEqual(functions, ['acm.usb0'])
+        self.assertEqual(functions, ['acm.usb0', 'acm.usb1'])
         links = sorted(p.name for p in (self.gadget / 'configs' / 'c.1').iterdir()
                        if p.is_symlink())
-        self.assertEqual(links, ['acm.usb0'])
+        self.assertEqual(links, ['acm.usb0', 'acm.usb1'])
+
+    def test_console_split_is_requested_for_the_second_port(self):
+        # The configfs "console" attribute only exists when the kernel is built
+        # with CONFIG_U_SERIAL_CONSOLE, so a static fake tree cannot host it and
+        # the split is checked at the source level instead: 0 on the shell port,
+        # 1 on the console port, and both best-effort so the gadget still comes
+        # up on a kernel without a gadget console.
+        text = HELPER.read_text()
+        self.assertIn('echo 0 > "$GADGET/functions/acm.usb0/console"', text)
+        self.assertIn('echo 1 > "$GADGET/functions/acm.usb1/console"', text)
+        self.assertIn('[ -e "$GADGET/functions/acm.usb0/console" ]', text)
+        self.assertIn('[ -e "$GADGET/functions/acm.usb1/console" ]', text)
+        self.assertIn('split_consoles', text)
 
     def test_helper_never_mentions_other_usb_functions(self):
         for forbidden in ('mass_storage', 'ncm', 'rndis', 'mtp', 'adb',

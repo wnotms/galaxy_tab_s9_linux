@@ -1,0 +1,67 @@
+# test-186 candidate — built and verified, NOT flashed
+
+Built locally. Nothing was written to the tablet: the brief's safety rule is
+that flashing and power actions need explicit authorisation, and this round
+stopped at "candidate verified, ready for a physical run".
+
+## Run test-185 first
+
+test-185 needs no new image (it uses the currently flashed profile A) and
+answers whether the multi-minute shutdown persists with the ftrace stream off.
+Run it before flashing anything:
+
+    reference/boot-tests/test-185-*/shutdown-baseline.sh 3 reboot        # preflight only
+    GTS9_ALLOW_POWER=1 reference/boot-tests/test-185-*/shutdown-baseline.sh 3 reboot
+
+## Images this candidate would flash
+
+| partition | now (flashed) | candidate | note |
+|---|---|---|---|
+| boot | 2e8a693f6f208a74496631f82f82ac959d66b427acf22f7743cfdc48c47a4923 | 20de7d1ec15b8e2fef5fd2f75684f865df71d06c658654357b64b6b0528a4500 | kernel with the RPMh diagnostic (0021); still `CONFIG_U_SERIAL_CONSOLE=y` |
+| vendor_boot | f1f4ccf76d91f8841cbb5f7752bf9ce19f01f8fdf95714ab35d6765a0615cc56 | f5ff011ab0d78c0e4458e69a44bcaff6e35934571213cc3dc90416b5821a890d | built from `boot/cmdline.rpmh-debug.example.txt` |
+| init_boot | 7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c | unchanged | |
+| dtbo | c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3 | unchanged | |
+| vbmeta | b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4 | unchanged | |
+
+Kernel payload SHA256 `b0c169e7bc0bfda49e163c5c7528552be69bf59e6db9c4959583801da8301288`
+(Image.gz), board DTB `b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596`.
+
+Both partitions carry the board DTB, so the pair moves together. The flash must
+use the documented chain: backup → SHA256 → flash → readback → SHA256, e.g.
+`reference/boot-tests/test-183-*/flash-ramoops.sh` as the template.
+
+## Profile the candidate boots with
+
+    console=ttyMSM0,115200n8 ... panic=10 ... softlockup_panic=1
+    workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1 console=ttyGS1
+    gts9_rpmh_debug=1
+    (no gts9_kmsg_mirror, no gts9_dpu_flight, no gts9_poweroff_trace)
+
+## What to watch for, and what each outcome means
+
+Run `GTS9_ALLOW_POWER=1 reference/boot-tests/test-186-*/rpmh-stall-capture.sh 5`
+and read `rounds/round-N.txt`:
+
+* `verdict=rpmh-timeout-captured` with a `ring_summary` saying the request was
+  programmed but never completed → the TCS/RSC/IRQ layer is the next target;
+* `ring_summary` saying the completion was seen, but `rpmh_write_batch()` still
+  timed out → the completion/lifetime layer is the next target (and watch for
+  `LATE COMPLETION`, which would confirm the hazard the source comments warn
+  about);
+* `holder_tcs=-1` / no matching send → the request never reached programming;
+* any anomaly whose monotonic timestamp is earlier than `gts9-rpmh: TIMEOUT` →
+  RPMh is a **victim**: follow that anomaly instead;
+* `verdict=not-reproduced` → record it as such; do not change code, do not add
+  instrumentation, and do not claim a fix.
+
+## Rollback
+
+* Flashing back: `reference/boot-tests/test-183-*/rollback.sh` (known-good pair
+  `822ca9dc…` + `3c88b36b…`), or reflash the current profile pair
+  (`boot 2e8a693f…` + `vendor_boot f1f4ccf7…` for profile D, `123f35f2…` for
+  profile A). The pre-flash images are pulled back to
+  `/home/ms/Samsung/gts9-flash-tests/<test>-*/` by the flash script.
+* Kernel: rebuild without `GTS9_RPMH_DEBUG=1`; the default patch queue does not
+  contain patch 0021, so a plain `scripts/prepare-kernel.sh` + build reverts it.
+* The diagnostic is inert without `gts9_rpmh_debug=1` on the command line, so a
+  candidate kernel can also be left flashed while booting a profile without it.

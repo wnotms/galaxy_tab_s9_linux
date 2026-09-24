@@ -82,15 +82,25 @@ class DebianRootfsInstaller(unittest.TestCase):
                      'gts9-usb-acm.service', 'gts9-panel-recover.service'):
             self.assertTrue((self.target / 'usr/lib/systemd/system' / unit).is_file(),
                             unit)
-        autologin = (self.target / 'etc/systemd/system' /
-                     'serial-getty@ttyGS0.service.d' / 'autologin.conf')
-        self.assertTrue(autologin.is_file())
-        self.assertIn('--autologin root', autologin.read_text())
-        # The overlay ships no symlinks; the helper creates this one too.
+        # The USB console autologin lives in its own unit now: the generic
+        # serial-getty@ttyGS0.service waits for dev-ttyGS0.device, which the
+        # gadget creates too late, so it timed out (test-184).
+        acm_getty = (self.target / 'usr/lib/systemd/system/gts9-acm-getty.service')
+        self.assertTrue(acm_getty.is_file())
+        self.assertIn('--autologin root', acm_getty.read_text())
+        self.assertFalse((self.target / 'etc/systemd/system' /
+                          'serial-getty@ttyGS0.service.d').exists())
+        # The overlay ships no symlinks; the helper creates this one too - and
+        # it must be the dedicated unit, not the generic instance.
         self.assertEqual(
-            os.readlink(self.target / 'etc/systemd/system/getty.target.wants' /
-                        'serial-getty@ttyGS0.service'),
-            '../../../../usr/lib/systemd/system/serial-getty@.service')
+            os.readlink(self.target / 'etc/systemd/system/multi-user.target.wants' /
+                        'gts9-acm-getty.service'),
+            '../../../../usr/lib/systemd/system/gts9-acm-getty.service')
+        self.assertFalse((self.target / 'etc/systemd/system/getty.target.wants' /
+                          'serial-getty@ttyGS0.service').exists())
+        # ttyMSM0's generated getty is masked, the kernel console is untouched.
+        self.assertEqual(os.readlink(self.target / 'etc/systemd/system' /
+                                     'serial-getty@ttyMSM0.service'), '/dev/null')
 
     def test_enablement_symlinks_match_each_units_wantedby(self):
         self.install()
@@ -116,8 +126,18 @@ class DebianRootfsInstaller(unittest.TestCase):
         self.install()
         links = [p for p in self.target.rglob('*') if p.is_symlink()]
         self.assertTrue(links)
+        masks = []
         for path in links:
-            self.assertFalse(os.readlink(path).startswith('/'), str(path))
+            target = os.readlink(path)
+            if target == '/dev/null':
+                # A systemd *mask* is the one legitimate absolute link: only
+                # /dev/null may be used, and it is never extracted/overwritten
+                # from the tarball, so the busybox-tar restriction does not
+                # apply to it.
+                masks.append(path.name)
+                continue
+            self.assertFalse(target.startswith('/'), str(path))
+        self.assertEqual(sorted(masks), ['serial-getty@ttyMSM0.service'])
 
     def test_overlay_ships_no_symlinks_at_all(self):
         links = [p for p in OVERLAY.rglob('*') if p.is_symlink()]
@@ -146,7 +166,7 @@ class DebianRootfsInstaller(unittest.TestCase):
                                capture_output=True, check=False)
         self.assertEqual(again.returncode, 0, again.stderr)
         self.assertEqual(snapshot(self.target), before)
-        # Unrelated enablement links are never touched.
+        # The ttyMSM0 instance is never *enabled* (it is masked instead).
         self.assertFalse((self.target / 'etc/systemd/system/getty.target.wants' /
                           'serial-getty@ttyMSM0.service').exists())
 
