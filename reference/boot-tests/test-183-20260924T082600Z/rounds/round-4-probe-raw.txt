@@ -1,0 +1,40 @@
+2026-09-24T10:36:18Z console open on COM17
+2026-09-24T10:36:19Z RECV  echo READY1
+2026-09-24T10:36:19Z RECV  [?2004lREADY1
+2026-09-24T10:36:19Z shell answered after 1 poll(s)
+2026-09-24T10:36:19Z SENT  echo PROBE;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo chunk=$(date -u +%Y-%m-%dT%H:%M:%SZ);cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);echo flight=$(systemctl is-active gts9-dpu-flight.service);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo wq=$(cat /sys/module/workqueue/parameters/panic_on_stall_time);echo pstore=$(ls /sys/fs/pstore/ 2>/dev/null | tr "\n" " ");D=$(ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1);echo "--- $D";cat "$D/verdict.txt" 2>/dev/null | head -22;echo ---failed;systemctl --failed --no-pager --plain | head -4
+2026-09-24T10:36:45Z RECV  [?2004hroot@gts9:~# echo PROBE;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo chunk=$(date -u +%Y-%m-%dT%H:%M:%SZ);cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);echo flight=$(systemctl is-active gts9-dpu-flight.service);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo wq=$(cat /sys/module/workqueue/parameters/panic_on_stall_time);echo pstore=$(ls /sys/fs/pstore/ 2>/dev/null | tr "\n" " ");D=$(ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1);echo "--- $D";cat "$D/verdict.txt" 2>/dev/null | head -22;echo ---failed;systemctl --failed --no-pager --plain | head -4
+2026-09-24T10:36:45Z RECV  [?2004lPROBE
+2026-09-24T10:36:45Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+2026-09-24T10:36:45Z RECV  chunk=2026-04-13T19:39:21Z
+2026-09-24T10:36:45Z RECV  78.26
+2026-09-24T10:36:45Z RECV  running=running
+2026-09-24T10:36:45Z RECV  flight=active
+2026-09-24T10:36:45Z RECV  wd=1 slp=1 htp=1
+2026-09-24T10:36:45Z RECV  wq=45
+2026-09-24T10:36:45Z RECV  pstore=
+2026-09-24T10:36:45Z RECV  --- /var/log/gts9-boot-evidence/20260413T193807Z-4972f559/
+2026-09-24T10:36:45Z RECV  collected_utc=20260413T193807Z
+2026-09-24T10:36:45Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+2026-09-24T10:36:45Z RECV  previous_boot=present
+2026-09-24T10:36:45Z RECV  previous_boot_end=hard-reset-or-incomplete
+2026-09-24T10:36:45Z RECV  prev_kernel_lines=1042
+2026-09-24T10:36:45Z RECV  marker_panic=0
+2026-09-24T10:36:45Z RECV  marker_soft_lockup=0
+2026-09-24T10:36:45Z RECV  marker_hard_lockup=0
+2026-09-24T10:36:45Z RECV  marker_hung_task=0
+2026-09-24T10:36:45Z RECV  marker_rcu_stall=0
+2026-09-24T10:36:45Z RECV  marker_dpu_timeout=0
+2026-09-24T10:36:45Z RECV  marker_mmc_timeout=0
+2026-09-24T10:36:45Z RECV  pstore_records=
+2026-09-24T10:36:45Z RECV  pstore_panic_lines=0
+2026-09-24T10:36:45Z RECV  pstore_lockup_lines=0
+2026-09-24T10:36:45Z RECV  watchdog_enabled=1
+2026-09-24T10:36:45Z RECV  softlockup_panic=1
+2026-09-24T10:36:45Z RECV  hung_task_panic=1
+2026-09-24T10:36:45Z RECV  wq_panic_on_stall_time=45
+2026-09-24T10:36:45Z RECV  ---failed
+2026-09-24T10:36:45Z RECV  UNIT LOAD ACTIVE SUB DESCRIPTION
+2026-09-24T10:36:45Z RECV  
+2026-09-24T10:36:45Z RECV  0 loaded units listed.
+2026-09-24T10:36:45Z console run done (ready=True)

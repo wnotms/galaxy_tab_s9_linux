@@ -11,6 +11,8 @@ set -u
 
 T=${GTS9_TRACE_ROOT:-/sys/kernel/debug/tracing}
 EVENTS="
+sched:sched_switch
+sched:sched_wakeup
 workqueue:workqueue_queue_work
 workqueue:workqueue_execute_start
 power:device_pm_callback_start
@@ -67,6 +69,18 @@ if [ -w "$T/events/irq/irq_handler_entry/filter" ]; then
 	echo 'irq==186 || irq==187' > "$T/events/irq/irq_handler_entry/filter"
 	echo 1 > "$T/events/irq/irq_handler_entry/enable" 2>/dev/null
 fi
+
+# The frame-event workers are SCHED_FIFO kthreads named crtc_event:<id>; the
+# sched events are filtered to them so a stall shows when they stop running.
+if [ -w "$T/events/sched/sched_switch/filter" ]; then
+	echo 'prev_comm ~ "crtc_event*" || next_comm ~ "crtc_event*"' > "$T/events/sched/sched_switch/filter" 2>/dev/null
+	echo 'comm ~ "crtc_event*"' > "$T/events/sched/sched_wakeup/filter" 2>/dev/null
+fi
+
+# The lockup detectors are off because the vendor command line carries
+# nowatchdog; turn the soft one back on so a spinning CPU can still print a
+# stack before the machine becomes unreadable.
+[ -w /proc/sys/kernel/watchdog ] && echo 1 > /proc/sys/kernel/watchdog 2>/dev/null
 
 echo 1 > "$T/tracing_on"
 printf 'gts9-dpu-trace: %s events armed, tracing_on=%s, buffer=%s kB\n' \

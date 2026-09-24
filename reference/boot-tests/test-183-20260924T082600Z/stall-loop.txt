@@ -1,0 +1,169 @@
+2026-09-24T10:20:31Z test-183 stall loop: rounds=10 window=200s
+2026-09-24T10:21:05Z RECV  boot_id=b2864b0a-1a9c-4e65-8d43-c01532f321fa
+2026-09-24T10:21:05Z RECV  running=running
+2026-09-24T10:21:05Z RECV  wd=1 slp=1 htp=1
+2026-09-24T10:21:05Z RECV  boot_id=980d1135-c9b9-48af-8d71-b379778daa08
+2026-09-24T10:21:05Z preflight attempt 1: boot_id=b2864b0a-1a9c-4e65-8d43-c01532f321fa
+2026-09-24T10:21:05Z preflight armed: boot_id=b2864b0a-1a9c-4e65-8d43-c01532f321fa
+2026-09-24T10:21:05Z === round 1: boot + 200s observation ===
+2026-09-24T10:21:07.181Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:21:14.147Z SENT  systemctl reboot
+2026-09-24T10:21:17.552Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:21:36.273Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:24:26.249Z watch done: lines=979 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=9
+  2026-09-24T10:24:59Z RECV  boot_id=ee4fc763-bf13-4693-bac7-34fa9891fa8f
+  2026-09-24T10:24:59Z RECV  running=running
+  2026-09-24T10:24:59Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:24:59Z RECV  boot_id=980d1135-c9b9-48af-8d71-b379778daa08
+  2026-09-24T10:24:59Z RECV  previous_boot=present
+  2026-09-24T10:24:59Z RECV  marker_panic=0
+  2026-09-24T10:24:59Z RECV  marker_soft_lockup=0
+  2026-09-24T10:24:59Z RECV  pstore_panic_lines=0
+2026-09-24T10:25:00Z round 1: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:25:00Z === round 2: boot + 200s observation ===
+2026-09-24T10:25:01.821Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:25:09.548Z SENT  systemctl reboot
+2026-09-24T10:25:11.755Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:25:30.855Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:28:21.466Z watch done: lines=983 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=11
+  2026-09-24T10:28:55Z RECV  boot_id=766bae71-f6d4-415d-aaf1-c5bd81cc2b5b
+  2026-09-24T10:28:55Z RECV  running=running
+  2026-09-24T10:28:55Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:28:55Z RECV  boot_id=980d1135-c9b9-48af-8d71-b379778daa08
+  2026-09-24T10:28:55Z RECV  previous_boot=present
+  2026-09-24T10:28:55Z RECV  marker_panic=0
+  2026-09-24T10:28:55Z RECV  marker_soft_lockup=0
+  2026-09-24T10:28:55Z RECV  pstore_panic_lines=0
+2026-09-24T10:28:55Z round 2: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:28:55Z === round 3: boot + 200s observation ===
+2026-09-24T10:28:56.726Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:29:04.685Z SENT  systemctl reboot
+2026-09-24T10:29:08.009Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:29:26.207Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:32:16.575Z watch done: lines=980 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=7
+  2026-09-24T10:32:50Z RECV  boot_id=bd3f9c25-62e6-4294-b927-5bcafc68acab
+  2026-09-24T10:32:50Z RECV  running=running
+  2026-09-24T10:32:50Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:32:50Z RECV  boot_id=980d1135-c9b9-48af-8d71-b379778daa08
+  2026-09-24T10:32:50Z RECV  previous_boot=present
+  2026-09-24T10:32:50Z RECV  marker_panic=0
+  2026-09-24T10:32:50Z RECV  marker_soft_lockup=0
+  2026-09-24T10:32:50Z RECV  pstore_panic_lines=0
+2026-09-24T10:32:50Z round 3: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:32:50Z === round 4: boot + 200s observation ===
+2026-09-24T10:33:11.441Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:33:50.695Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:34:09.451Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:34:48.794Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:35:06.836Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:36:11.695Z watch done: lines=2934 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=10
+  2026-09-24T10:36:45Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:36:45Z RECV  running=running
+  2026-09-24T10:36:45Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:36:45Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:36:45Z RECV  previous_boot=present
+  2026-09-24T10:36:45Z RECV  marker_panic=0
+  2026-09-24T10:36:45Z RECV  marker_soft_lockup=0
+  2026-09-24T10:36:45Z RECV  pstore_panic_lines=0
+2026-09-24T10:36:45Z round 4: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:36:45Z === round 5: boot + 200s observation ===
+2026-09-24T10:36:47.278Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:36:54.489Z SENT  systemctl reboot
+2026-09-24T10:36:57.924Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:37:16.403Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:40:06.562Z watch done: lines=977 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=8
+  2026-09-24T10:40:40Z RECV  boot_id=bf786ee3-374e-4be9-9866-490d3c9e29dc
+  2026-09-24T10:40:40Z RECV  running=running
+  2026-09-24T10:40:40Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:40:40Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:40:40Z RECV  previous_boot=present
+  2026-09-24T10:40:40Z RECV  marker_panic=0
+  2026-09-24T10:40:40Z RECV  marker_soft_lockup=0
+  2026-09-24T10:40:40Z RECV  pstore_panic_lines=0
+2026-09-24T10:40:40Z round 5: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:40:40Z === round 6: boot + 200s observation ===
+2026-09-24T10:40:41.788Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:40:48.973Z SENT  systemctl reboot
+2026-09-24T10:40:52.597Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:41:10.784Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:44:01.168Z watch done: lines=995 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=3
+  2026-09-24T10:44:34Z RECV  boot_id=53889cde-46be-4718-82df-609364f59bb3
+  2026-09-24T10:44:34Z RECV  running=running
+  2026-09-24T10:44:34Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:44:34Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:44:34Z RECV  previous_boot=present
+  2026-09-24T10:44:34Z RECV  marker_panic=0
+  2026-09-24T10:44:34Z RECV  marker_soft_lockup=0
+  2026-09-24T10:44:34Z RECV  pstore_panic_lines=0
+2026-09-24T10:44:34Z round 6: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:44:34Z === round 7: boot + 200s observation ===
+2026-09-24T10:44:36.449Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:44:43.579Z SENT  systemctl reboot
+2026-09-24T10:44:46.800Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:45:04.465Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:47:56.481Z watch done: lines=1006 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=3
+  2026-09-24T10:48:30Z RECV  boot_id=627a0f25-d666-4c4c-ab12-c0906b3a5203
+  2026-09-24T10:48:30Z RECV  running=running
+  2026-09-24T10:48:30Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:48:30Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:48:30Z RECV  previous_boot=present
+  2026-09-24T10:48:30Z RECV  marker_panic=0
+  2026-09-24T10:48:30Z RECV  marker_soft_lockup=0
+  2026-09-24T10:48:30Z RECV  pstore_panic_lines=0
+2026-09-24T10:48:30Z round 7: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:48:30Z === round 8: boot + 200s observation ===
+2026-09-24T10:48:31.669Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:48:39.557Z SENT  systemctl reboot
+2026-09-24T10:48:42.765Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:49:00.902Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:51:50.836Z watch done: lines=991 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=3
+  2026-09-24T10:52:24Z RECV  boot_id=d8fad70b-0dab-4049-9178-56f3dbabdafb
+  2026-09-24T10:52:24Z RECV  running=running
+  2026-09-24T10:52:24Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:52:24Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:52:24Z RECV  previous_boot=present
+  2026-09-24T10:52:24Z RECV  marker_panic=0
+  2026-09-24T10:52:24Z RECV  marker_soft_lockup=0
+  2026-09-24T10:52:24Z RECV  pstore_panic_lines=0
+2026-09-24T10:52:24Z round 8: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:52:24Z === round 9: boot + 200s observation ===
+2026-09-24T10:52:26.131Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:52:33.878Z SENT  systemctl reboot
+2026-09-24T10:52:37.109Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:52:54.517Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:55:45.745Z watch done: lines=984 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=3
+  2026-09-24T10:56:19Z RECV  boot_id=07ebd029-1496-4037-bbd1-b5b946df294b
+  2026-09-24T10:56:19Z RECV  running=running
+  2026-09-24T10:56:19Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T10:56:19Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T10:56:19Z RECV  previous_boot=present
+  2026-09-24T10:56:19Z RECV  marker_panic=0
+  2026-09-24T10:56:19Z RECV  marker_soft_lockup=0
+  2026-09-24T10:56:19Z RECV  pstore_panic_lines=0
+2026-09-24T10:56:19Z round 9: the boot_id change is this round's own reboot (clean round)
+2026-09-24T10:56:19Z === round 10: boot + 200s observation ===
+2026-09-24T10:56:20.900Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:56:28.603Z SENT  systemctl reboot
+2026-09-24T10:56:31.944Z PRESENCE usb0525:a4a7=False
+2026-09-24T10:56:49.940Z PRESENCE usb0525:a4a7=True
+2026-09-24T10:59:40.839Z watch done: lines=977 com_disconnects=0 com_reconnects=0
+  marker_usb_gap=3
+  2026-09-24T11:00:14Z RECV  boot_id=b4c026e3-4dad-4d4f-a7ce-f5ae2fa44132
+  2026-09-24T11:00:14Z RECV  running=running
+  2026-09-24T11:00:14Z RECV  wd=1 slp=1 htp=1
+  2026-09-24T11:00:14Z RECV  boot_id=4972f559-8b03-4a57-ae89-2f1202b5b859
+  2026-09-24T11:00:14Z RECV  previous_boot=present
+  2026-09-24T11:00:14Z RECV  marker_panic=0
+  2026-09-24T11:00:14Z RECV  marker_soft_lockup=0
+  2026-09-24T11:00:14Z RECV  pstore_panic_lines=0
+2026-09-24T11:00:14Z round 10: the boot_id change is this round's own reboot (clean round)
+2026-09-24T11:00:14Z stall loop done: rounds=10 stalls_seen=0 auto_recoveries=0

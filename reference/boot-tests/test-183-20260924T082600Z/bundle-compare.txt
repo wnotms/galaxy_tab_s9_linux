@@ -1,0 +1,21 @@
+# test-183 bundle comparison
+# the watchdog-debug bundle differs from the known-good one only in vendor_boot (the cmdline)
+IDENTICAL boot.img 822ca9dcf404de83e79f085a5509ec761bf0234359a5fae166c5d1c849e1df86
+IDENTICAL dtbo.img c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3
+IDENTICAL init_boot.img 7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c
+IDENTICAL vbmeta.img b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4
+DIFFERS   vendor_boot old=09bd4bea84d5a0477652002f6e4cd66091b4536f1cd7eb3d5d1a5bf45b2eb61b new=3d65d076bcefdbac8df0bd9e5725616886bc55c92ce4316e67cd82abb13c6095
+
+# cmdline diff (old -> new)
+  11a12
+  > gts9_watchdog_debug=1
+  18a20,21
+  > softlockup_panic=1
+  > workqueue.panic_on_stall_time=45
+
+# authoritative check: cmdline strings extracted from the two vendor_boot images
+$ diff <(strings flashed-vendor_boot | cmdline) <(strings new-vendor_boot | cmdline)
+  18a19,21
+  > softlockup_panic=1
+  > workqueue.panic_on_stall_time=45
+  > gts9_watchdog_debug=1

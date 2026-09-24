@@ -379,18 +379,63 @@ cause; what makes the RSC stop answering is still open.
 
 ---
 
+### 7.6 A caveat about the observer
+
+The stall is a race, and the loop adds work inside the window it is watching:
+`gts9-kmsg-console` writes the kernel ring (about a thousand lines) to the USB
+console right when the boot reaches multi-user, which is exactly the 13-36 s
+window the stall lives in.  The first 5-round run produced five clean boots with
+zero stall signatures, while the stalls recorded earlier in the day all happened
+on boots that were instrumented differently.  That does not make the loop wrong
+- it records what happened, including the absence of a stall - but the
+reproduction rate measured *with* the mirror is not the rate without it, and the
+next session should try both.
+
+---
+
 ## 8. The unattended loop
 
 ```sh
 reference/boot-tests/test-183-20260924T082600Z/gts9-stall-loop.sh [rounds] [window-seconds]
 ```
 
-Each round listens on COM17 for `window` seconds (no command is ever sent, so a
-stalled tablet is not touched), classifies the capture, then reads the tablet's
-own evidence directory over the console and writes
-`rounds/round-N.txt` + `rounds/round-N-device.txt`. A round that never comes
-back is reported as `NO AUTO-REBOOT` and stops the loop, because that is the one
-condition only a human can clear.
+A round **is** a boot: the harness issues `systemctl reboot` over the console at
+t+8 s and then only listens for `window` seconds, so one capture covers the
+shutdown, the boot, the 13-36 s window in which every recorded stall began, and
+- with the profile armed - the panic reboot that follows a stall.  Nothing else
+is ever sent, so a stalled tablet is never touched while it recovers.
+Afterwards a probe reads the tablet's own evidence directory and compares
+boot_ids.
+
+A round counts as an **unattended recovery** only when the boot_id changed *and*
+the capture carries a stall signature *or* the previous boot did not end in a
+clean shutdown (`previous_boot_end=hard-reset-or-incomplete|panic`).  Anything
+else is a clean round that the harness rebooted itself
+(`auto_recovery=no-clean-kick`); a round that never comes back is reported as
+`NO AUTO-REBOOT` and stops the loop, because that is the one condition only a
+human can clear.
+
+Because the real stall is a race (10 instrumented boots produced none), the
+chain is also validated with stalls we control, injected by
+`stall-inject/gts9_stall_test.ko` (built against this kernel, loaded over the
+console, self-clearing):
+
+| injection | detector | result |
+|---|---|---|
+| 30 s with interrupts disabled | soft lockup | 3/3 rounds: panic, `panic=10`, new boot_id, USB gap - unattended |
+| 60 s uninterruptible block | hung task (45 s) | 1/3: the report `INFO: task gts9-stall:3179 blocked for more than 45 seconds.` reached the host, then panic and reboot. The misses are khungtaskd's global sweep interval, not a profile fault; 180 s makes it deterministic. |
+
+Measured distinction: a hung-task report *is* host-visible (khungtaskd is an
+ordinary kthread and the mirror forwards it before the panic), while a
+soft-lockup report is not - the detector prints it from the same path that then
+stops every other CPU, so only its outcome (the USB gap, the new boot_id) is
+observable from the host.  That is also why the real stall's soft-lockup report
+had to be photographed off the tablet's screen.
+
+Results, honestly counted, are in
+`reference/boot-tests/test-183-20260924T082600Z/stall-loop.txt` and
+`rounds/round-N*.txt`; `owner-observations.md` there records what the owner saw
+on the tablet during the rounds.
 
 ## 9. Still open
 
@@ -399,14 +444,18 @@ condition only a human can clear.
   `sec_log_buf` so recovery's `/proc/last_kmsg` mechanism can be used from Linux.
 * **Root cause**: the RPMh active-only timeout is the first symptom, not
   necessarily the cause. Next step is to find what leaves the RSC unresponsive
-  in the first 15 s — the pogo keyboard poll (5 s cadence, I2C runtime-PM) is
-  the visible trigger, and `pogo_watch_work` also appears in earlier stalls.
+  in the first 15 s - the pogo keyboard poll (5 s cadence, I2C runtime-PM) is
+  the visible caller, and `pogo_watch_work` also appears in earlier stalls.
 * **Phase 2 (hardware watchdog)**: needs a `qcom,gh-watchdog` (Gunyah) driver
-  and evidence for its device tree node; mainline `qcom_wdt` has no match for
-  it and SM8550's dtsi has no watchdog node.
+  and evidence for its device tree node; mainline `qcom_wdt` has no match for it
+  and SM8550's dtsi has no watchdog node.
 * **RCU stall panic**: `panic_on_rcu_stall=1` is in stock's bootargs and would
   turn the observed RCU stalls into a panic even earlier. It is not enabled in
-  this profile yet (it is a candidate for the next revision, not an untested
-  addition to this one).
+  this profile yet (a candidate for the next revision, not an untested addition
+  to this one).
+* **Cursor-only screen after a reboot**: the owner saw it once during the rounds;
+  the captures show the panel did come up (`panel id: 80 00 04`), so it is a
+  console-repaint symptom on the damage-worker path, not a DSI bring-up failure.
+  See `owner-observations.md`.
 * **`gts9-dpu-flight.service`**: still installed and enabled as the stall bait;
   it writes to the microSD whenever the tablet boots in this debug profile.

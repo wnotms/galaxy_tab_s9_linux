@@ -1,0 +1,14 @@
+# test-183 watchdog-debug vendor_boot flash (filtered)
+# The raw log also captured the post-flash console probe, whose kernel-message
+# mirror produced ~59 MB of repeated boot log; only the flash chain is kept here.
+
+2026-09-24T08:40:47Z === test-183 watchdog-debug vendor_boot flash ===
+2026-09-24T08:40:48Z host sha256: 3d65d076bcefdbac8df0bd9e5725616886bc55c92ce4316e67cd82abb13c6095
+2026-09-24T08:41:14Z adb state: recovery
+100663296 bytes (96 M) copied, 0.102676 s, 935 M/s
+2026-09-24T08:41:18Z PASS backup matches the recorded known-good image (3c88b36b7b3f1703ccd751b77522fa6d16596650e627893e3131848c96731dec)
+100663296 bytes (96 M) copied, 0.325959 s, 295 M/s
+100663296 bytes (96 M) copied, 0.097952 s, 980 M/s
+2026-09-24T08:41:22Z PASS vendor_boot readback verifies (3d65d076bcefdbac8df0bd9e5725616886bc55c92ce4316e67cd82abb13c6095)
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000015] [     T57] WARNING: ../linux-src-poweroff-trace/drivers/soc/qcom/rpmh.c:386 at rpmh_write_batch+0x1b4/0x25c, CPU#6: kworker/6:0/57
+2026-09-24T08:46:54Z === flash done ===

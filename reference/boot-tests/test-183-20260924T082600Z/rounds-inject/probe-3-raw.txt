@@ -1,0 +1,12 @@
+2026-09-24T11:45:47Z console open on COM17
+2026-09-24T11:45:48Z RECV  echo READY1
+2026-09-24T11:45:48Z RECV  [?2004lREADY1
+2026-09-24T11:45:48Z shell answered after 1 poll(s)
+2026-09-24T11:45:48Z SENT  echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
+2026-09-24T11:46:09Z RECV  [?2004hroot@gts9:~# echo IP;BID=$(cat /proc/sys/kernel/random/boot_id);echo boot_id=$BID;cut -d" " -f1 /proc/uptime;echo running=$(systemctl is-system-running);D=$(ls -1d /var/log/gts9-boot-evidence/*-$(echo $BID | cut -c1-8)/ 2>/dev/null | head -1);echo dir=$D;cat "$D/verdict.txt" 2>/dev/null | head -20
+2026-09-24T11:46:09Z RECV  [?2004lIP
+2026-09-24T11:46:09Z RECV  boot_id=b2ce9484-53fa-473d-a934-e8493c8843fb
+2026-09-24T11:46:09Z RECV  126.70
+2026-09-24T11:46:09Z RECV  running=running
+2026-09-24T11:46:09Z RECV  dir=
+2026-09-24T11:46:09Z console run done (ready=True)

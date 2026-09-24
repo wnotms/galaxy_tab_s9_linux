@@ -1,0 +1,23 @@
+# first unattended X710 stall recovery (raw host console capture)
+# source: C:\gts9-work\wd\post-flash-183.log (the post-flash probe that happened to be
+#         running when the stall started)
+
+## the stall onset and the RPMh warning
+2026-09-24T08:41:45Z RECV  K kern  :info  : [  +0.001510] [      C7] sh (903): highest shadow stack usage: 504 bytes
+2026-09-24T08:41:45Z RECV  K user  :warn  : [  +0.297375] [    T944] gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+2026-09-24T08:41:45Z RECV  K user  :warn  : [  +0.256877] [    T991] gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+2026-09-24T08:41:59Z RECV  [!p]104[?7h[6n[32766;32766H[6nK kern  :info  : [ +14.273790] [     T57] ------------[ cut here ]------------
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000015] [     T57] WARNING: ../linux-src-poweroff-trace/drivers/soc/qcom/rpmh.c:386 at rpmh_write_batch+0x1b4/0x25c, CPU#6: kworker/6:0/57
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000041] [     T57] Modules linked in:
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000020] [     T57] CPU: 6 UID: 0 PID: 57 Comm: kworker/6:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000032] [     T57] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000002] [     T57] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000003] [     T57] Workqueue: events pogo_watch_work
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000006] [     T57] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+2026-09-24T08:46:42Z shell never answered within 300 s
+2026-09-24T08:46:42Z send failed: Ê¹ÓÃ¡°1¡±¸ö²ÎÊýµ÷ÓÃ¡°WriteLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+
+## then silence until the probe gave up
+2026-09-24T08:46:42Z shell never answered within 300 s
+2026-09-24T08:46:42Z send failed: Ê¹ÓÃ¡°1¡±¸ö²ÎÊýµ÷ÓÃ¡°WriteLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+2026-09-24T08:46:54Z console run done (ready=False)
