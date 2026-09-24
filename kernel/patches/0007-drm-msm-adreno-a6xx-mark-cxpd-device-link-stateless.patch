@@ -1,0 +1,110 @@
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: [PATCH RFT 1/5] drm/msm/adreno/a6xx: Mark cxpd device_link as stateless
+
+Upstream status
+---------------
+This is patch 1/5 of the series "[PATCH RFT 0/5] drm/msm: Attach a driver
+to GMU" (change-id 20260511-gmu-sync-state-fix-bc6b2d809371):
+
+	https://lore.kernel.org/all/20260513-gmu-sync-state-fix-v1-1-6e33e6aa9b4f@oss.qualcomm.com/
+	https://patchew.org/linux/20260513-gmu-sync-state-fix-v1-0-6e33e6aa9b4f@oss.qualcomm.com/
+
+Review state at the time of this backport: the series is RFT (request for
+testing), v1, not merged into mainline and not in linux-next.  Patch 1/5 has
+"Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>" and the
+series has "Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455".
+The author stated after that test report that he will send a rev 2, so the
+revision to re-check later is v2 of 20260513-gmu-sync-state-fix.
+
+There is no upstream commit SHA to cite yet because the patch is not merged.
+It applies unmodified to the pinned v7.2-rc3 tree: the two hunks have
+identical context (the `index` lines differ only in the blob hashes the patch
+was generated against), so no backport adaptation was required.  The patch
+body below is byte-identical to the version posted to the list.
+
+Why the SM-X710 port needs it
+-----------------------------
+The X710 boots with this warning on every boot:
+
+	adreno 3d00000.gpu: supply vdd not found, using dummy regulator
+	adreno 3d00000.gpu: supply vddcx not found, using dummy regulator
+	platform 3d6a000.gmu: [drm:a6xx_gmu_acd_probe] *ERROR* Unable to send ACD state to AOSS
+	------------[ cut here ]------------
+	Unable to drop a managed device link reference
+	WARNING: drivers/base/core.c:1020 at device_link_put_kref+0x38/0x108
+	Workqueue: events_unbound deferred_probe_work_func
+	Call trace:
+	 device_link_put_kref+0x38/0x108 (P)
+	 device_link_del+0x30/0x4c
+	 a6xx_gmu_init+0x5e8/0x63c
+	 a6xx_gpu_init+0x4b4/0x5dc
+	 adreno_bind+0x160/0x1dc
+	 msm_drm_init+0xf8/0x1b0
+	 msm_gpu_probe+0x64/0x80
+	 adreno_probe+0x44/0x6c
+	 ...
+	 deferred_probe_work_func+0x80/0xe0
+
+Captured on real hardware in `reference/boot-tests/test-046-*` and
+`test-047-*`, and reproduced in test-179 and test-183.
+
+Root cause of the splat: `a6xx_gmu_init()` creates the GMU<->cxpd link with
+only `DL_FLAG_PM_RUNTIME`.  Without `DL_FLAG_STATELESS` the link is a
+*managed* link, so it is owned by the driver core and released automatically
+when the consumer device is unbound.  `a6xx_gmu_init()` nevertheless calls
+`device_link_del(link)` on its error path.  `device_link_put_kref()` then
+takes the `!device_is_registered(link->consumer)` branch, the consumer is
+still registered, and it warns instead of dropping the reference:
+
+	if (device_link_test(link, DL_FLAG_STATELESS))
+		kref_put(&link->kref, __device_link_del);
+	else if (!device_is_registered(link->consumer))
+		__device_link_del(&link->kref);
+	else
+		WARN(1, "Unable to drop a managed device link reference\n");
+
+The consumer is a driverless virtual power-domain device ("cx"), so the
+managed lifecycle does not map onto it, which is exactly the argument in the
+upstream commit message.  Passing `DL_FLAG_STATELESS` makes the link
+explicitly owned and deleted by the msm driver, which is what the code
+already assumes.
+
+This is an upstream bugfix that applies to any SoC reaching this error path,
+not an X710-specific hack.  It is being carried as a separate backport so the
+stall A/B stays attributable: it is the only kernel change in its commit.
+
+Fixes: ead5d3e5eb37 ("drm/msm/a6xx: Vote for cx gdsc from gpu driver")
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[ gts9wifi: backport to v7.2-rc3; no adaptation needed. ] 
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 1b44b9e21ad8..ec13b27feee7 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -2196,7 +2196,8 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 		goto err_mmio;
+ 	}
+ 
+-	if (!device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME)) {
++	if (!device_link_add(gmu->dev, gmu->cxpd,
++			     DL_FLAG_PM_RUNTIME | DL_FLAG_STATELESS)) {
+ 		ret = -ENODEV;
+ 		goto detach_cxpd;
+ 	}
+@@ -2377,7 +2378,8 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 		goto err_mmio;
+ 	}
+ 
+-	link = device_link_add(gmu->dev, gmu->cxpd, DL_FLAG_PM_RUNTIME);
++	link = device_link_add(gmu->dev, gmu->cxpd,
++			       DL_FLAG_PM_RUNTIME | DL_FLAG_STATELESS);
+ 	if (!link) {
+ 		ret = -ENODEV;
+ 		goto detach_cxpd;
+-- 
+2.51.0
+
