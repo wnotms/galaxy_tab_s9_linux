@@ -79,6 +79,29 @@ if [ "$ALLOW" != "1" ]; then
 	exit 0
 fi
 
+# --- durable per-boot marker -------------------------------------------------
+# `pmsg-size = 0x100000` is its own ramoops region and only userspace writes it,
+# so unlike the console ring it is not overwritten by the next boot's printk.
+# Writing one line per boot turns "which boot was that?" into a read.
+#
+# Timestamps inside the tablet are useless for this: the RTC reads 2026-04-13 on
+# every boot, so `journalctl --list-boots` shows nine boots that all start at
+# 03:38:05 and all end within 40 seconds of each other.  The marker carries the
+# boot_id and the harness's own cycle number instead.
+write_boot_marker() {
+	timeout 45 "$SSH" "printf 'GTS9_BOOT cycle=$1 boot_id=%s uptime=%s\n' \
+		\"\$(cut -c1-8 /proc/sys/kernel/random/boot_id)\" \
+		\"\$(cut -d' ' -f1 /proc/uptime)\" > /dev/pmsg0 2>/dev/null; echo MARKER_OK" \
+		2>/dev/null | grep -q MARKER_OK
+}
+# /dev/pmsg0 is WRITE-ONLY: reading it fails with EINVAL and, worse, opening it
+# with `>` truncates the record.  A read is of the pstore copy, which is where
+# the previous boot's messages live.
+read_boot_markers() {
+	timeout 45 "$SSH" 'cat /var/lib/systemd/pstore/pmsg-ramoops-0 \
+		/sys/fs/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\0"' 2>/dev/null | tail -20
+}
+
 # --- per-cycle marker probe --------------------------------------------------
 # Records what the boot that just ended had to say, so a marker seen in a failure
 # has a denominator.  Three records now disagree about which marker matters:
@@ -354,6 +377,16 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 				sleep 2
 			done
 		fi
+		if [ "$wedged" = "1" ]; then
+			# The second outage is the verdict and it needs no probe: nothing but
+			# the watchdog or a panic restarts a boot the harness already started.
+			# This branch used to fall through, leave CONSOLE_STATE at its initial
+			# `untried`, and then report the cycle as `unattributed` - which is the
+			# opposite of what happened.  A diagnosed wedge was being recorded as an
+			# open question, on the one path where the evidence is strongest.
+			alive_via=second-outage
+			WEDGE_ATTRIBUTION=attributed
+		fi
 		if [ "$wedged" = "0" ]; then
 			alive=$(probe_console_uptime_retry "$i" && printf '%s' "$CONSOLE_GOT")
 			alive_via=console
@@ -549,6 +582,14 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# than in the verdict block above because it costs a round trip and the
 	# verdict has to be written even if this fails.
 	probe_markers "$i" >>"$DIR/cycle-$i-verdict.txt"
+	# The durable witness, so a later reader can tell which boot this was even
+	# after the console ring has been overwritten.
+	if write_boot_marker "$i"; then
+		echo "boot_marker=written" >>"$DIR/cycle-$i-verdict.txt"
+	else
+		echo "boot_marker=failed" >>"$DIR/cycle-$i-verdict.txt"
+	fi
+	read_boot_markers >"$DIR/cycle-$i-pmsg.log" 2>/dev/null || true
 
 	cycles_done=$i
 done

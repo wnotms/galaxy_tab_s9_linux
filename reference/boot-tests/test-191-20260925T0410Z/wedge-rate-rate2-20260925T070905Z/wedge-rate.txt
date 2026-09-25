@@ -1,0 +1,58 @@
+2026-09-25T07:09:06Z === wedge rate: cycles=60 window=300s kind=warm-reboot dir=/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/wedge-rate-rate2-20260925T070905Z ===
+2026-09-25T07:09:06Z early exit: 1 (a boot that answers a command past 45s with no marker ends its cycle)
+2026-09-25T07:09:06Z measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot
+2026-09-25T07:09:06Z baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)
+2026-09-25T07:09:06Z --- cycle 1 ---
+2026-09-25T07:09:16Z   reboot issued at 2026-09-25T07:09:16Z
+2026-09-25T07:09:16Z   tablet gone at 2026-09-25T07:09:15.022Z
+2026-09-25T07:09:35Z   tablet back at 2026-09-25T07:09:35.524Z
+2026-09-25T07:10:38Z   early exit after 55s uptime: nothing to wait for
+2026-09-25T07:10:46Z   uptime=55s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:10:46Z --- cycle 2 ---
+2026-09-25T07:10:57Z   reboot issued at 2026-09-25T07:10:57Z
+2026-09-25T07:10:57Z   tablet gone at 2026-09-25T07:10:56.355Z
+2026-09-25T07:11:16Z   tablet back at 2026-09-25T07:11:15.525Z
+2026-09-25T07:12:19Z   early exit after 55s uptime: nothing to wait for
+2026-09-25T07:12:27Z   uptime=55s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:12:27Z --- cycle 3 ---
+2026-09-25T07:12:38Z   reboot issued at 2026-09-25T07:12:38Z
+2026-09-25T07:12:38Z   tablet gone at 2026-09-25T07:12:36.181Z
+2026-09-25T07:12:56Z   tablet back at 2026-09-25T07:12:55.797Z
+2026-09-25T07:13:59Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:14:07Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:14:07Z --- cycle 4 ---
+2026-09-25T07:14:18Z   reboot issued at 2026-09-25T07:14:18Z
+2026-09-25T07:14:18Z   tablet gone at 2026-09-25T07:14:16.313Z
+2026-09-25T07:14:36Z   tablet back at 2026-09-25T07:14:35.961Z
+2026-09-25T07:15:39Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:15:47Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:15:47Z --- cycle 5 ---
+2026-09-25T07:15:58Z   reboot issued at 2026-09-25T07:15:58Z
+2026-09-25T07:15:58Z   tablet gone at 2026-09-25T07:15:56.988Z
+2026-09-25T07:16:16Z   tablet back at 2026-09-25T07:16:15.778Z
+2026-09-25T07:17:18Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:17:26Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:17:27Z --- cycle 6 ---
+2026-09-25T07:17:36Z   reboot issued at 2026-09-25T07:17:36Z
+2026-09-25T07:17:36Z   tablet gone at 2026-09-25T07:17:35.412Z
+2026-09-25T07:17:55Z   tablet back at 2026-09-25T07:17:54.538Z
+2026-09-25T07:18:57Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:19:05Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:19:06Z --- cycle 7 ---
+2026-09-25T07:19:15Z   reboot issued at 2026-09-25T07:19:15Z
+2026-09-25T07:19:15Z   tablet gone at 2026-09-25T07:19:13.262Z
+2026-09-25T07:19:34Z   tablet back at 2026-09-25T07:19:33.094Z
+2026-09-25T07:20:36Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:20:44Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:20:44Z --- cycle 8 ---
+2026-09-25T07:20:53Z   reboot issued at 2026-09-25T07:20:53Z
+2026-09-25T07:20:53Z   tablet gone at 2026-09-25T07:20:50.908Z
+2026-09-25T07:21:11Z   tablet back at 2026-09-25T07:21:10.600Z
+2026-09-25T07:22:13Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:22:21Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:22:21Z --- cycle 9 ---
+2026-09-25T07:22:30Z   reboot issued at 2026-09-25T07:22:30Z
+2026-09-25T07:22:30Z   tablet gone at 2026-09-25T07:22:28.013Z
+2026-09-25T07:22:48Z   tablet back at 2026-09-25T07:22:48.200Z
+2026-09-25T07:24:54Z   no channel answered (untried, ssh unreachable); this cycle is
+2026-09-25T07:24:54Z   unattributed: the instrument failed, or the boot did, and they look alike

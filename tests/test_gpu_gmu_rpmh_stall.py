@@ -2143,9 +2143,9 @@ class WedgeRateAttributionTests(unittest.TestCase):
         self.text = read(self.HARNESS)
 
     def early_exit_body(self):
-        """Just the block that decides whether a cycle survived."""
+        """The block that decides whether a cycle survived, from its first test."""
         text = self.text
-        body = text[text.index('if [ "$wedged" = "0" ]; then'):]
+        body = text[text.index('if [ "$EARLY_EXIT" = "1" ] && [ -n "$on_at" ]; then'):]
         return body[:body.index('if [ "$early" = "1" ]; then')]
 
     def test_the_check_is_ps_not_tasks_current(self):
@@ -2284,8 +2284,20 @@ class WedgeRateAttributionTests(unittest.TestCase):
                     "FAILED-BOOT-20260925T0659.md")
         self.assertIn("marker_dpu_encoder_disabled=1", text)
         self.assertIn("4.798040", text)
-        self.assertIn("every marker this round proposed as a candidate also occurs "
-                      "on healthy boots", " ".join(text.split()))
+        self.assertIn("it means nothing", text)
+        # And the control must be a table, so the split is visible at a glance.
+        for row in ("| `encoder is disabled` | all 3 | **present** | **no**",
+                    "| `frame done timeout` | 15 / 14 / 1 | **0** |",
+                    "| `mmc1: Timeout` | 2 / 1 / 6 | **0** |"):
+            with self.subTest(row=row):
+                self.assertIn(row, text)
+
+    def test_the_dpu_noise_is_not_claimed_as_a_candidate(self):
+        """docs/DPU_TRACE.md already called it noise; the record must not re-propose it."""
+        text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
+                    "FAILED-BOOT-20260925T0659.md")
+        self.assertIn("docs/DPU_TRACE.md", text)
+        self.assertIn("is noise, not a timeout", text)
 
     def test_the_series_probes_markers_after_the_outcome_not_before(self):
         """Instrumentation that ran earlier could change what it measures."""
@@ -2316,6 +2328,43 @@ class WedgeRateAttributionTests(unittest.TestCase):
         self.assertIn("**Not established.**", text)
         self.assertIn("That the failing boot itself had cpufreq bound", text)
         self.assertIn("failed to update OPP for freq=3360000", text)
+
+    def test_a_diagnosed_wedge_is_not_reported_as_unattributed(self):
+        """The bug this round found: the strongest evidence read as a question.
+
+        When the second-outage check fires there is nothing left to ask - the
+        boot was restarted by something other than the harness - but the block
+        below it used to run anyway, leave CONSOLE_STATE at `untried`, and report
+        the cycle as unattributed.  Cycle 9 of rate2 was recorded that way.
+        """
+        body = self.early_exit_body()
+        self.assertIn('if [ "$wedged" = "1" ]; then', body)
+        self.assertIn("alive_via=second-outage", body)
+        # It must come BEFORE the probe block, or the probe runs first.
+        self.assertLess(
+            body.index('if [ "$wedged" = "1" ]; then'),
+            body.index('probe_console_uptime_retry'),
+        )
+
+    def test_the_durable_marker_is_written_and_read_correctly(self):
+        """/dev/pmsg0 is write-only; reading it truncates and fails."""
+        text = self.text
+        self.assertIn("write_boot_marker()", text)
+        self.assertIn("/dev/pmsg0", text)
+        # The read must come from pstore, never from /dev/pmsg0.
+        reader = text[text.index("read_boot_markers() {"):]
+        reader = reader[:reader.index("\n}")]
+        self.assertNotIn("cat /dev/pmsg0", reader)
+        self.assertIn("/var/lib/systemd/pstore/pmsg-ramoops-0", reader)
+        self.assertIn("sys/fs/pstore/pmsg-ramoops-0", reader)
+
+    def test_the_marker_carries_a_name_that_survives_the_rtc(self):
+        """The tablet's clock reads 2026-04-13 on every boot, so time is useless."""
+        reader = self.text[self.text.index("write_boot_marker() {"):]
+        reader = reader[:reader.index("\n}")]
+        self.assertIn("GTS9_BOOT cycle=", reader)
+        self.assertIn("boot_id=", reader)
+        self.assertIn("RTC reads 2026-04-13", " ".join(self.text.split()))
 
 
 if __name__ == "__main__":
