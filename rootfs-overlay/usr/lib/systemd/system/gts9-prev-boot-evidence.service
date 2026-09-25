@@ -7,7 +7,24 @@ Before=multi-user.target gts9-dpu-flight.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-StandardOutput=journal+console
+# Output goes to the journal ONLY - never to /dev/console.
+#
+# `journal+console` means every line is also written to /dev/console, which on this
+# board resolves to ttyGS1 (COM19).  The USB ACM gadget has a bounded number of OUT
+# requests, so when no host reader is draining COM19 those writes BLOCK, and this
+# unit then holds up `multi-user.target` for as long as nobody opens the port.
+#
+# Reproduced 2026-09-25 by writing 60 KiB to /dev/console with COM19 closed: the
+# write blocked for the full timeout, and completed the instant COM19 was opened
+# (`real 0m5.434s`, matching when the port was opened).  The kernel's own printk
+# path cannot do this - `gs_console_write()` writes into a bounded kfifo and only
+# counts what it drops - so this is a userspace write blocking, not printk.
+#
+# The cost of the change is nil: the same lines are already in the journal
+# (`journalctl -u gts9-prev-boot-evidence`), and the unit's real product is the
+# verdict.txt files it writes under /var/log/gts9-boot-evidence/, not its stdout.
+StandardOutput=journal
+StandardError=journal
 ExecStart=/usr/libexec/gts9-prev-boot-evidence
 TimeoutStartSec=180
 

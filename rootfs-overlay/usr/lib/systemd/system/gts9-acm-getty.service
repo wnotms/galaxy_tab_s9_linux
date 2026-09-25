@@ -16,6 +16,21 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=simple
+# Stop quickly at shutdown.  `agetty --autologin` spawns a login shell that agetty
+# does not reap on SIGTERM, so systemd waits out the default TimeoutStopSec (90 s)
+# and then SIGKILLs the whole cgroup.  On a poweroff the console prints
+# "The system will power off now!" and then sits on a blinking cursor for up to a
+# minute and a half before the rails actually drop - reported by the owner
+# 2026-09-25, and visible in this repo's own journal:
+#
+#   gts9-acm-getty.service: State 'stop-sigterm' timed out. Killing.
+#   gts9-acm-getty.service: Killing process 1456 (login) with signal SIGKILL.
+#
+# Nothing is lost by killing it sooner: ttyGS0 is a wired debug console, and any
+# shell on it is gone by the time the system stops.  3 s is enough for agetty to
+# exit cleanly when it can.  This directive belongs in [Service], not [Unit] -
+# systemd ignores unknown keys in [Unit], which is why placement matters.
+TimeoutStopSec=3
 # --autologin root: the port is the wired debug console, and the host side of
 # it is a cable the operator controls.
 ExecStart=-/usr/sbin/agetty --autologin root --noclear ttyGS0 115200 vt100

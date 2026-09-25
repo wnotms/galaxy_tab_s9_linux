@@ -1,0 +1,43 @@
+=== test-209 COLD BOOT: complete evidence ===
+boot_id=ee79757e-682a-42a8-b124-7bcf11fee588
+uptime_at_capture=210.66
+
+### 1. endpoint (no manual modprobe was needed)
+00:00.0 PCI bridge [0604]: Qualcomm Technologies, Inc SM8550/SM8650 PCIe Root Complex [Snapdragon 8 Gen 2/Gen 3] [17cb:0113]
+01:00.0 Network controller [0280]: Qualcomm Technologies, Inc QCNFA765 Wireless Network Adapter [17cb:1103] (rev 01)
+
+### 2. modules autoloaded
+  qrtr_mhi
+  ath11k_pci
+  ath11k
+  mac80211
+  cfg80211
+  pwrseq_qcom_wcn
+  pci_pwrctrl_pwrseq
+
+### 3. firmware
+[    5.849067] [    T424] ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+[    6.844454] [     T75] ath11k_pci 0000:01:00.0: fw_version 0x11021302 fw_build_timestamp 2026-02-04 08:10 fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+### 4. interface + phy
+/sys/class/ieee80211/phy0
+wlp1s0           UP             00:03:7f:12:ef:7f <BROADCAST,MULTICAST,UP,LOWER_UP> 
+driver: ath11k_pci
+version: 7.2.0-rc3-gts9wifi-dirty
+
+### 5. scan (both bands?)
+  bss_count=16
+  bands:
+    2.4 GHz
+    5 GHz
+
+### 6. association
+bssid=fa:cf:52:cd:be:9b
+freq=2437
+ssid=DESKTOP-S24EEHN 9670
+wifi_generation=6
+key_mgmt=WPA2-PSK
+wpa_state=COMPLETED
+	signal: -18 dBm
+	rx bitrate: 1.0 MBit/s
+	tx bitrate: 48.0 MBit/s
