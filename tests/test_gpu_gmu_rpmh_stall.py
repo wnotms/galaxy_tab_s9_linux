@@ -2277,6 +2277,39 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("downgraded from", flat)
         self.assertIn("does **not** retire profiles B and C", flat)
 
+    def test_the_profile_c_candidate_is_ready_and_gated(self):
+        """A candidate that cannot prove its own ablation is not a candidate."""
+        c = "reference/boot-tests/test-196-20260925T1100Z/candidate.txt"
+        if not (ROOT / c).exists():
+            self.skipTest("test-196 candidate not written yet")
+        text = read(c)
+        flat = " ".join(text.split())
+        # The corrected parameter, and why the old one was wrong.
+        self.assertIn("msm.skip_gpu=1", text)
+        self.assertIn("MODULE_PARM_DESC(no_gpu", text)
+        self.assertIn("false negative", flat)
+        # The gate must be present, and must be able to fail.
+        for check in ("/sys/module/msm/parameters/skip_gpu",
+                      "msm.skip_gpu=1$", "3d00000.gpu/driver",
+                      "card*-DSI-1/status"):
+            with self.subTest(check=check):
+                self.assertIn(check, text)
+        self.assertIn("the round is `unattributed`", flat)
+        # vendor_boot only, with the hashes that keep it one-variable.
+        self.assertIn("`vendor_boot` **only**", text)
+        self.assertIn("8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed", text)
+        self.assertIn("06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f", text)
+        self.assertIn("dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c", text)
+        # And it must not over-claim a clean result.
+        self.assertIn("not reproduced in N rounds", flat)
+        self.assertIn("It is *not* \"GPU excluded\"", flat)
+        # The bundle must actually exist and match.
+        vb = ROOT / "out/boot-bundle-stall-no-gpu/vendor_boot.img"
+        if vb.exists():
+            self.assertEqual(
+                sha256("out/boot-bundle-stall-no-gpu/vendor_boot.img"),
+                "8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed")
+
     def test_the_plan_carries_the_four_required_sections(self):
         """CONFIRMED / CORRECTED / OPEN / NEXT, and the rule they enforce."""
         text = read("docs/NEXT_STALL_DEBUG_PLAN.md")

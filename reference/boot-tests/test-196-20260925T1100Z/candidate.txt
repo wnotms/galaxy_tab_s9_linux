@@ -1,0 +1,102 @@
+# test-196 candidate — Profile C, `msm.skip_gpu=1`
+
+Status: **candidate ready for physical test.** Not flashed, awaiting explicit
+authorization.
+
+## Why this test, and what it does and does not decide
+
+Profile C is the strongest subsystem ablation available as a command-line token.
+It removes the Adreno driver registration entirely, and with it the GMU, the
+AOSS/ACD path, the GPU power domains and the GPU's RPMh and interconnect votes -
+while leaving DPU, DSI and the panel console working, because
+`adreno_register()` sits beside the display registrations in `msm_drm_register()`
+and `msm.separate_gpu_kms=1` already puts the GPU on its own DRM device.
+
+**The parameter is `msm.skip_gpu=1`, not `msm.no_gpu=1`.** `MODULE_PARM_DESC(no_gpu,
+...)` only attaches a description string; `module_param(skip_gpu, bool, 0400)`
+registers the name. The old profile used the description name, which the kernel
+ignores silently, so any earlier "no-gpu" result would have been a false negative.
+Verified on the device: `/sys/module/msm/parameters/skip_gpu` exists and
+`no_gpu` does not.
+
+**What a clean result means.** Record it as `not reproduced in N rounds` - and nothing more.
+Five, or even twenty, clean rounds cannot exclude a ~3-7 % event; 22 clean baseline
+cycles were already recorded this session. It is *not* "GPU excluded".
+
+**What a wedge means.** A genuine CPU-level wedge bound to the round - soft lockup,
+RCU stall, hung_task, workqueue lockup, unanswered NMI or panic, or an unrequested
+restart - downgrades the GPU/GMU/ACD path decisively. Stop, preserve, do not round
+on to fill a series.
+
+## Changed partitions
+
+`vendor_boot` **only**. `boot.img` and `init_boot.img` are byte-identical to what
+the tablet already runs, which is what keeps this a one-variable A/B.
+
+| partition | SHA256 |
+|---|---|
+| `vendor_boot` (C) | `8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed` |
+| `boot` (unchanged) | `dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c` |
+| `init_boot` (unchanged) | `7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c` |
+
+Rollback is `out/boot-bundle-stall-baseline/vendor_boot.img`,
+`06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f` - byte-identical
+to the image on the tablet, so rollback is a flash back to the current state.
+`BOOT BUNDLE VALIDATION PASSED` for both.
+
+## The gate: prove the ablation took, before trusting any round
+
+Run after the first C boot, and record the output in this directory:
+
+```
+# 1. the parameter exists under its REAL name
+cat /sys/module/msm/parameters/skip_gpu          # expect Y
+
+# 2. the command line actually carries it
+tr ' ' '\n' < /proc/cmdline | grep '^msm.skip_gpu=1$'
+
+# 3. the whole point: the GPU really is unbound
+basename "$(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver)"   # expect empty/NONE
+
+# 4. and the display survived the ablation
+cat /sys/class/drm/card*-DSI-1/status            # expect connected
+ls /sys/class/drm/                               # DPU/DSI devices still present
+```
+
+If (3) still shows `adreno`, the profile did not take and **the round is
+`unattributed`** - not a clean result.
+
+## Evidence each round must carry
+
+The harness now produces all of this per round, and `verdict=wedge` copies it into
+`wedge-round-N/` automatically:
+
+* `identity=GTS9_AB run/profile/round/boot_id`, stamped into `/dev/kmsg` and
+  `/dev/pmsg0` before the reboot and read back from the next boot - so console,
+  journal, pstore and USB trace are one round by construction;
+* `verdict` in `clean | wedge | suspect | unattributed`;
+* `wedge_markers` and `suspect_markers`, counted per kernel channel
+  (`_klog`, `_pstore`);
+* `presence_outages` / `automatic_reboot` / the second outage's timestamps, from
+  the USB presence trace - the detector that was silently broken until test-195;
+* the tablet's own `console-ramoops-0` and pmsg, copied verbatim.
+
+## Plan
+
+```sh
+# 1. flash (authorization required) — vendor_boot only
+GTS9_BUNDLE=out/boot-bundle-stall-no-gpu \
+  reference/boot-tests/test-191-*/flash-profile.sh
+# 2. reboot, then run the gate above and record it here
+# 3. rounds, with the parameter guard active
+GTS9_ALLOW_POWER=1 GTS9_RUN=c1 scripts/stall-ab.sh no-gpu 10
+# 4. rollback to baseline when done
+GTS9_BUNDLE=out/boot-bundle-stall-baseline \
+  reference/boot-tests/test-191-*/flash-profile.sh
+```
+
+## Failure criteria
+
+Stop the series immediately, and treat the run as a **finding** rather than a
+result to average, on any of: `verdict=wedge`; a second USB outage; or a `stall-ab`
+probe that reports the tablet never came back. Preserve, then report.
