@@ -43,6 +43,12 @@ CYCLES=${1:?usage: wedge-rate.sh <cycles|-1>}
 ALLOW=${GTS9_ALLOW_POWER:-0}
 WINDOW=${GTS9_WINDOW:-300}
 ONLINE_GRACE=${GTS9_ONLINE_GRACE:-40}
+# Cut a cycle short once the boot has provably survived the wedge window; see the
+# long comment in the cycle body.  GTS9_EARLY_EXIT=0 restores the full window.
+EARLY_EXIT=${GTS9_EARLY_EXIT:-1}
+EARLY_MIN_UPTIME=${GTS9_EARLY_MIN_UPTIME:-45}
+case "$EARLY_EXIT" in 0|1) ;; *) echo "GTS9_EARLY_EXIT must be 0 or 1" >&2; exit 2 ;; esac
+case "$EARLY_MIN_UPTIME" in ''|*[!0-9]*) echo "GTS9_EARLY_MIN_UPTIME must be a number" >&2; exit 2 ;; esac
 WINDIR=${GTS9_WINDIR:-'C:\Users\ms\AppData\Local\Temp\gts9-wedge'}
 LOCAL=${GTS9_LOCALDIR:-/mnt/c/Users/ms/AppData/Local/Temp/gts9-wedge}
 
@@ -59,13 +65,17 @@ now() { date -u +%s; }
 stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 
 if [ "$ALLOW" != "1" ]; then
-	say "dry run: would run ${CYCLES} warm-reboot cycles, holding COM19 for ${WINDOW}s"
-	say "each, in $DIR, following the tablet's own USB presence rather than a timer."
+	say "dry run: would run ${CYCLES} warm-reboot cycles in $DIR, following the"
+	say "tablet's own USB presence rather than a timer.  COM19 is held for up to"
+	say "${WINDOW}s, but a cycle ends as soon as the boot answers a command past"
+	say "${EARLY_MIN_UPTIME}s with no wedge marker (GTS9_EARLY_EXIT=${EARLY_EXIT})."
 	say "Set GTS9_ALLOW_POWER=1 to run."
 	exit 0
 fi
 
 say "=== wedge rate: cycles=${CYCLES} window=${WINDOW}s kind=warm-reboot dir=$DIR ==="
+say "early exit: ${EARLY_EXIT} (a boot that answers a command past ${EARLY_MIN_UPTIME}s with no marker ends its cycle)"
+say "measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot"
 say "baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)"
 
 wedges=0
@@ -114,7 +124,56 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		sleep 1
 	done
 
-	wait "$w" 2>/dev/null || true
+	# --- early exit ---------------------------------------------------------
+	# Measured on 18 cycles of this harness: the tablet is away for 19.4 s on
+	# average (18.6-20.2 s) and the cycle costs 209 s.  So 91% of every cycle is
+	# the fixed capture window, not the reboot - which is not what the window is
+	# for.  The window exists because the *panic that carries the stack* is
+	# printed ~180 s after a wedge, and a wedged boot looks healthy for its first
+	# ten seconds, so there is nothing to wait for on a boot that has already
+	# proved it survived.
+	#
+	# Every wedge on record struck between 5.4 s and 14.3 s into the boot
+	# (docs/CPU_WEDGE_EVIDENCE.md), so a shell that answers a command past
+	# EARLY_MIN_UPTIME with zero markers in the capture is a boot that survived.
+	# If the shell does not answer, or any marker is present, the full window is
+	# kept - that is precisely the case the window exists for.
+	#
+	# console-watch.ps1 writes with `Add-Content` per line, which flushes each
+	# line, so cutting the watcher short cannot lose what was already captured.
+	MARKERS='Kernel panic|BUG: soft lockup|watchdog: BUG|BUG: hard LOCKUP|BUG: workqueue lockup|rcu.*detected stall|havent responded to the NMI|haven.t responded to the NMI'
+	alive=""; early=0
+	if [ "$EARLY_EXIT" = "1" ]; then
+		alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
+			-WaitReadySeconds 90 -ReadSeconds 5 \
+			-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
+			| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+		while [ -n "$alive" ] && [ "$alive" -lt "$EARLY_MIN_UPTIME" ]; do
+			sleep $((EARLY_MIN_UPTIME - alive))
+			alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
+				-WaitReadySeconds 30 -ReadSeconds 5 \
+				-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
+				| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+		done
+		if [ -n "$alive" ] && [ "$alive" -ge "$EARLY_MIN_UPTIME" ] \
+			&& ! grep -qaE "$MARKERS" "$wlog" 2>/dev/null; then
+			early=1
+		fi
+	fi
+
+	if [ "$early" = "1" ]; then
+		# Stop the watcher and let it exit, so its log is complete on disk.
+		kill "$w" 2>/dev/null || true
+		wait "$w" 2>/dev/null || true
+		# Give the killed process a moment to release the port.
+		for _ in $(seq 1 10); do
+			pgrep -f "console-watch.ps1.*cycle-$i" >/dev/null 2>&1 || break
+			sleep 1
+		done
+		say "  early exit after ${alive}s uptime: nothing to wait for"
+	else
+		wait "$w" 2>/dev/null || true
+	fi
 	cp "$wlog" "$DIR/cycle-$i-console.log" 2>/dev/null || : >"$DIR/cycle-$i-console.log"
 	clog=$DIR/cycle-$i-console.log
 
@@ -124,6 +183,7 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		echo "triggered_at=$(date -u -d "@$trigger" +%Y-%m-%dT%H:%M:%SZ)"
 		echo "tablet_gone_at=${off_at:-never}"
 		echo "tablet_back_at=${on_at:-never}"
+		echo "early_exit=$early"
 		echo "console_bytes=$(wc -c <"$clog")"
 		echo "panic=$(grep -ac 'Kernel panic' "$clog" || true)"
 		echo "softlockup=$(grep -acE 'BUG: soft lockup|watchdog: BUG' "$clog" || true)"
@@ -133,10 +193,13 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		echo "nmi_unanswered=$(grep -acE "haven.t responded to the NMI" "$clog" || true)"
 	} >"$DIR/cycle-$i-verdict.txt"
 
-	# One health check, requiring a command RESULT rather than an echo.
-	alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" -WaitReadySeconds 90 \
-		-ReadSeconds 5 -Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
-		| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+	# One health check, requiring a command RESULT rather than an echo.  The early
+	# exit above already made this probe, so do not pay for it twice.
+	if [ -z "$alive" ]; then
+		alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" -WaitReadySeconds 90 \
+			-ReadSeconds 5 -Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
+			| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+	fi
 	echo "uptime_after=${alive:-none}" >>"$DIR/cycle-$i-verdict.txt"
 
 	# The new kernel's fingerprint, from the boot that just happened.  Without

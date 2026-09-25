@@ -110,8 +110,33 @@ lands on big and prime.
 |---|---|
 | `candidate.txt` | image hashes, bundle delta, flash order, result matrix, rollback |
 | `verify-osm-l3.sh` | Q1: one read-only console probe, prints PASS/FAIL per criterion |
-| `wedge-rate.sh` | Q2: presence-driven warm-reboot series; per-run output dir, NMI is a stop condition |
+| `wedge-rate.sh` | Q2: presence-driven warm-reboot series; per-run output dir, NMI is a stop condition, and a survived cycle is cut short |
 | `flash-profile.sh` | verified flash of `boot` + `vendor_boot` only, with backup and readback |
+
+## Cycle cost, measured
+
+test-190's hunt ran 18 cycles of the same shape, so the cost is known rather than
+guessed:
+
+| | |
+|---|---|
+| tablet away per cycle (USB presence, gone -> back) | **19.4 s** mean, 18.6-20.2 s |
+| cycle period | **208.9 s** |
+
+So **91% of every cycle was the fixed capture window, not the reboot.** The window
+is not waiting for the boot: a wedged boot reaches multi-user and *then* freezes, so
+it looks healthy for its first ten seconds. It is waiting for the panic, which
+`softlockup_panic=1` prints about 180 s after the wedge.
+
+`wedge-rate.sh` therefore ends a cycle as soon as the boot has **provably survived**:
+a shell that answers a command past `GTS9_EARLY_MIN_UPTIME` (45 s, well past the
+5.4-14.3 s in which every recorded wedge struck) with **zero** wedge markers in the
+capture. If the shell does not answer, or any marker is present, the full window is
+kept - which is exactly the case the window exists for. That turns a clean cycle
+from ~209 s into ~45-50 s. `GTS9_EARLY_EXIT=0` restores the old behaviour.
+
+It is safe to cut the watcher short because `console-watch.ps1` writes each line
+with `Add-Content`, which flushes per call, so nothing already captured is lost.
 
 ## Honest limits
 

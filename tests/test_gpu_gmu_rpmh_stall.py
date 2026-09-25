@@ -679,6 +679,26 @@ class Test191CandidateTests(unittest.TestCase):
         self.assertIn('"$nmi" != "0"', stop)
         self.assertIn('DIR=$D/wedge-rate-$RUN', text)
 
+    def test_the_rate_harness_cuts_a_survived_cycle_short(self):
+        """209 s per cycle, of which only 19.4 s is the reboot.
+
+        Measured on 18 cycles of test-190's hunt: the tablet is away 18.6-20.2 s
+        and the cycle costs 208-210 s.  So the window is paying for the panic
+        (~180 s after a wedge), not for the boot - and a boot that has answered a
+        command past the wedge window has nothing left to wait for.
+        """
+        text = read(f"{self.TESTDIR}/wedge-rate.sh")
+        self.assertIn("EARLY_EXIT=${GTS9_EARLY_EXIT:-1}", text)
+        self.assertIn("EARLY_MIN_UPTIME=${GTS9_EARLY_MIN_UPTIME:-45}", text)
+        self.assertIn("early exit after ${alive}s uptime: nothing to wait for", text)
+        # The safety property: never cut short when a marker is present.
+        guard = text[text.index("if [ -n \"$alive\" ]"):text.index("early=1")]
+        self.assertIn("! grep -qaE \"$MARKERS\"", guard)
+        self.assertIn('"$alive" -ge "$EARLY_MIN_UPTIME"', guard)
+        # And the window being full remains the default path when it cannot tell.
+        self.assertIn('if [ "$early" = "1" ]; then', text)
+        self.assertIn('else\n\t\twait "$w" 2>/dev/null || true', text)
+
     def test_the_rate_harness_quotes_the_baseline_it_compares_against(self):
         text = read(f"{self.TESTDIR}/wedge-rate.sh")
         self.assertIn("10 of 46", read(f"{self.TESTDIR}/README.md"))
