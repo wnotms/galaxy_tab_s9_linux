@@ -467,9 +467,13 @@ class HarnessContractTests(unittest.TestCase):
         for needle in ("gpu_driver", "aoss_driver", "gmu_node", "deferred"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, text)
-        # The paths that cannot work must be gone, not merely unused.
+        # The paths and metrics that cannot work must be gone, not merely
+        # unused.  Naming them in the comment that explains the defect is how the
+        # next reader learns it, so only the *use* is forbidden.
         self.assertNotIn("power-management@c300000", text)
-        self.assertNotIn("gmu_bound", text)
+        for dead in ("gmu_bound=", "aoss_bound=", "gpu_bound="):
+            with self.subTest(dead=dead):
+                self.assertNotIn(dead, text)
         # The AOSS path used must be the one sysfs really exposes.
         self.assertIn("/sys/bus/platform/devices/c300000.power-management/driver", text)
 
@@ -509,6 +513,44 @@ class HarnessContractTests(unittest.TestCase):
         # returns "37:" - the IRQ number - and not the count.
         self.assertIn('sed "s/^ //"', text)
         self.assertNotIn("usb_role=", text)
+
+    def test_the_anomaly_counts_come_from_a_channel_that_can_see_the_kernel(self):
+        """The A/B's primary readout was structurally zero.
+
+        Measured on round 1 of the baseline series: the COM19 capture holds 13577
+        bytes and **zero** kernel lines - no `Booting Linux`, no `Linux version`,
+        no `encoder is disabled`, no `supply vdd not found`.  The gadget console
+        only carries userspace output, so counting kernel anomalies there returns
+        0 for every profile including a wedged one, and a clean round looks
+        correct because a clean round really is 0.
+
+        The counts now come from the kernel's own log and from pstore, are
+        labelled with their channel, and the console capture's kernel-line count
+        is recorded so the blindness stays visible.
+        """
+        text = read(HARNESS)
+        self.assertIn("PREVBOOT_KLOG", text)
+        self.assertIn("PREVBOOT_PSTORE", text)
+        self.assertIn("console_kernel_lines=", text)
+        self.assertIn("klog_lines=", text)
+        self.assertIn("pstore_lines=", text)
+        # Per-channel suffixes, so a reader cannot mistake which saw what.
+        self.assertIn("${key}_klog=", text)
+        self.assertIn("${key}_pstore=", text)
+        for why in ("zero** kernel lines", "different blind spots"):
+            with self.subTest(why=why):
+                self.assertIn(why, " ".join(text.split()))
+
+    def test_the_channel_extraction_reads_the_unfiltered_probe(self):
+        """The summary grep drops the tagged lines, so the raw file is the source.
+
+        Measured: 966 KLOG lines in `probe-N-raw.txt`, 0 in the filtered
+        `probe-N.txt`, because the filter keeps lines whose text after `RECV  `
+        is a field or a bare `[time]` and these begin `KLOG [time]`.
+        """
+        text = read(HARNESS)
+        self.assertIn("klog_src=$DIR/probe-$i-raw.txt", text)
+        self.assertIn("the filter drops every one of them", " ".join(text.split()))
 
     def test_it_labels_the_reboot_kind_and_never_claims_cold(self):
         """A warm reboot must not be presented as a cold boot."""
@@ -2038,6 +2080,44 @@ class Test188SeriesTests(unittest.TestCase):
         self.assertIn('sed "s/^ //"', text)
         self.assertNotIn("usb_role=", text)
 
+    def test_the_anomaly_counts_come_from_a_channel_that_can_see_the_kernel(self):
+        """The A/B's primary readout was structurally zero.
+
+        Measured on round 1 of the baseline series: the COM19 capture holds 13577
+        bytes and **zero** kernel lines - no `Booting Linux`, no `Linux version`,
+        no `encoder is disabled`, no `supply vdd not found`.  The gadget console
+        only carries userspace output, so counting kernel anomalies there returns
+        0 for every profile including a wedged one, and a clean round looks
+        correct because a clean round really is 0.
+
+        The counts now come from the kernel's own log and from pstore, are
+        labelled with their channel, and the console capture's kernel-line count
+        is recorded so the blindness stays visible.
+        """
+        text = read(HARNESS)
+        self.assertIn("PREVBOOT_KLOG", text)
+        self.assertIn("PREVBOOT_PSTORE", text)
+        self.assertIn("console_kernel_lines=", text)
+        self.assertIn("klog_lines=", text)
+        self.assertIn("pstore_lines=", text)
+        # Per-channel suffixes, so a reader cannot mistake which saw what.
+        self.assertIn("${key}_klog=", text)
+        self.assertIn("${key}_pstore=", text)
+        for why in ("zero** kernel lines", "different blind spots"):
+            with self.subTest(why=why):
+                self.assertIn(why, " ".join(text.split()))
+
+    def test_the_channel_extraction_reads_the_unfiltered_probe(self):
+        """The summary grep drops the tagged lines, so the raw file is the source.
+
+        Measured: 966 KLOG lines in `probe-N-raw.txt`, 0 in the filtered
+        `probe-N.txt`, because the filter keeps lines whose text after `RECV  `
+        is a field or a bare `[time]` and these begin `KLOG [time]`.
+        """
+        text = read(HARNESS)
+        self.assertIn("klog_src=$DIR/probe-$i-raw.txt", text)
+        self.assertIn("the filter drops every one of them", " ".join(text.split()))
+
     def test_it_labels_the_reboot_kind_and_never_claims_cold(self):
         """A warm reboot must not be presented as a cold boot."""
         text = read(HARNESS)
@@ -2514,6 +2594,13 @@ class WedgeRateAttributionTests(unittest.TestCase):
         flat = " ".join(text.split())
         self.assertIn("a clean cycle's marker row is valid evidence", flat)
         self.assertIn("touched only how a silent cycle is *labelled*", flat)
+
+    def test_the_record_justifies_warm_reboots_as_a_reproduction_vehicle(self):
+        """Cold boots need an operator; all three records are warm anyway."""
+        flat = " ".join(read("docs/STALL_FIRST_EVENT_ORDERING.md").split())
+        self.assertIn("All three records are warm reboots", flat)
+        self.assertIn("reproducible with warm reboots alone", flat)
+        self.assertIn("reboot_kind=warm", flat)
 
     def test_the_record_states_what_is_not_established(self):
         """The one unclosed link is the whole strength of the claim."""

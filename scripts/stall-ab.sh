@@ -103,11 +103,11 @@ summary_table() {
 		printf '%-9s  %-5s  %-5s  %-4s  %-3s  %-2s  %-3s  %-3s  %-19s  %s\n' \
 			"${p:-?}" "${rn:-?}" \
 			"$(sed -n 's/^stall=//p' "$r" | head -1)" \
-			"$(sed -n 's/^rpmh_timeout=//p' "$r" | head -1)" \
-			"$(sed -n 's/^rcu_stall=//p' "$r" | head -1)" \
-			"$(sed -n 's/^workqueue_stall=//p' "$r" | head -1)" \
-			"$(sed -n 's/^dpu_frame_timeout=//p' "$r" | head -1)" \
-			"$(sed -n 's/^mmc_timeout=//p' "$r" | head -1)" \
+			"$(sed -n 's/^rpmh_timeout_klog=//p' "$r" | head -1)" \
+			"$(sed -n 's/^rcu_stall_klog=//p' "$r" | head -1)" \
+			"$(sed -n 's/^workqueue_stall_klog=//p' "$r" | head -1)" \
+			"$(sed -n 's/^dpu_frame_timeout_klog=//p' "$r" | head -1)" \
+			"$(sed -n 's/^mmc_timeout_klog=//p' "$r" | head -1)" \
 			"$(sed -n 's/^first_anomaly=//p' "$r" | head -1)" \
 			"$(sed -n 's/^boot_id_after=//p' "$r" | head -1 | cut -c1-8)"
 	done
@@ -120,7 +120,7 @@ run_probe() {
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -253,16 +253,44 @@ for i in $(seq 1 "$ROUNDS"); do
 	cp "$LOCALDIR/console-$i.log" "$klog" 2>/dev/null || say "WARNING: no console capture for round $i"
 
 	run_probe "$i" "$DIR/probe-$i-raw.txt" "$WINDIR\\probe-$i.log"
-	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|\[ *[0-9]+\.|--- )" \
+	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|KLOG |PSTORE |\[ *[0-9]+\.|--- )" \
 		"$DIR/probe-$i-raw.txt" >"$DIR/probe-$i.txt" 2>/dev/null
 
 	new_id=$(sed -n 's/.*boot_id=//p' "$DIR/probe-$i.txt" 2>/dev/null | head -1 | tr -d '\r')
 
-	# Per-round summary.  Counts come from the *kernel console capture* where it
-	# exists because that is the only channel that survives a panic; the journal
-	# probe is the cross-check.
-	src=$klog
-	[ -s "$src" ] || src=$DIR/probe-$i.txt
+	# --- where the anomaly counts may come from, and why ---------------------
+	# NOT from the COM19 capture.  Measured on round 1 of the baseline series,
+	# that file contains 13577 bytes and **zero** kernel lines: no `Booting
+	# Linux`, no `Linux version`, no `encoder is disabled`, no `supply vdd not
+	# found`.  The gadget console only carries userspace output once the host has
+	# enumerated it, so counting kernel anomalies there yields a structural 0 -
+	# the same defect as `gmu_bound`/`aoss_bound`, and invisible on a clean round
+	# because a clean round really is 0.
+	#
+	# Two channels do see kernel messages, and they have different blind spots:
+	#
+	#   KLOG    `journalctl -k -b -1` - the whole previous kernel ring, from
+	#           0.67 s onward, but journald stops when a boot wedges, so the
+	#           panic tail can be missing.
+	#   PSTORE  the ramoops console - survives the reboot and carries the panic,
+	#           which is how every complete failure record in this repo was
+	#           captured, but it is a ring and the next boot overwrites it.
+	#
+	# Counts are therefore recorded from both, with a `_klog` and `_pstore`
+	# suffix, and the COM19 capture's kernel-line count is recorded too so that
+	# its blindness is visible in the data rather than assumed away.
+	# From the RAW probe file, not the filtered `probe-$i.txt`: the summary grep
+	# keeps lines whose text after `RECV  ` is a field or a bare `[time]`, and the
+	# tagged lines begin `KLOG [time]`, so the filter drops every one of them.
+	# Measured: 966 KLOG lines in the raw file, 0 in the filtered one.
+	klog_src=$DIR/probe-$i-raw.txt
+	awk '/^[^ ]* *RECV  --- PREVBOOT_KLOG/ {on=1; next} /^[^ ]* *RECV  --- / {on=0} on' \
+		"$klog_src" 2>/dev/null | sed 's/^[^ ]* *RECV  //' >"$DIR/klog-$i.txt"
+	awk '/^[^ ]* *RECV  --- PREVBOOT_PSTORE/ {on=1; next} /^[^ ]* *RECV  --- / {on=0} on' \
+		"$klog_src" 2>/dev/null | sed 's/^[^ ]* *RECV  //' >"$DIR/pstore-$i.txt"
+	src=$DIR/klog-$i.txt
+	src2=$DIR/pstore-$i.txt
+	console_kernel_lines=$(grep -acE '^\[[ ]*[0-9]+\.[0-9]+\]' "$klog" 2>/dev/null || echo 0)
 
 	{
 		echo "profile=$PROFILE"
@@ -289,14 +317,19 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "console_active=$(sed -n 's/.*ctrl=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "failed_units=$(sed -n 's/.*failed=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
-		# Anomaly classes.
+		# Anomaly classes, from each kernel channel and labelled with it.
 		for spec in "${ANOMALIES[@]}"; do
 			key=${spec%%|*}; re=${spec#*|}
-			echo "$key=$(count_in "$src" "$re")"
+			echo "${key}_klog=$(count_in "$src" "$re")"
+			echo "${key}_pstore=$(count_in "$src2" "$re")"
 		done
-		echo "stall=$(( $(count_in "$src" 'soft lockup') + $(count_in "$src" 'hung task|task .* blocked for more than') + $(count_in "$src" 'rcu:.*stall') + $(count_in "$src" 'workqueue: .*stall') ))"
+		echo "console_kernel_lines=$console_kernel_lines"
+		echo "klog_lines=$(wc -l <"$src" 2>/dev/null || echo 0)"
+		echo "pstore_lines=$(wc -l <"$src2" 2>/dev/null || echo 0)"
+		echo "stall=$(( $(count_in "$src" 'soft lockup') + $(count_in "$src" 'hung task|task .* blocked for more than') + $(count_in "$src" 'rcu:.*stall') + $(count_in "$src" 'workqueue: .*stall') + $(count_in "$src2" 'soft lockup') + $(count_in "$src2" 'hung task|task .* blocked for more than') + $(count_in "$src2" 'rcu:.*stall') + $(count_in "$src2" 'workqueue: .*stall') ))"
 		echo "first_anomaly=$(first_ts "$src" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
-		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" 2>/dev/null | head -3 | tr '\n' ';')"
+		echo "first_anomaly_pstore=$(first_ts "$src2" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
+		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" "$src2" 2>/dev/null | head -3 | tr '\n' ';')"
 	} >"$DIR/round-$i.txt"
 
 	grep -aE "^(release|reboot_kind|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|apps_rsc_irq|aoss_qmp_irq|panel_status|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
