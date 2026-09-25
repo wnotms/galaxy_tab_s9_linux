@@ -123,7 +123,55 @@ enumerated throughout, but that alone does not prove the console path was alive.
 The inference is therefore offered as the best reading of the evidence, not as a
 measurement.
 
-## 5. Why it was missed for five rounds
+## 5. Where in the shutdown it stops
+
+The capture gives more than a duration: it says which stop jobs were outstanding
+when everything went quiet. Comparing the failing sequence with a clean one
+(`test-187/shutdown-1-console.log`, same profile) lines the two up exactly — the
+failing run's last line is a line the clean run also prints, one step before it
+carries on:
+
+```
+                       FAILING (A-5)                     CLEAN (test-187 r1)
+Stopping session-1.scope         13:48:08.503      Stopping session-1.scope
+Stopping cron.service            13:48:09.314      Stopping cron.service
+Stopping gts9-acm-getty.service  13:48:09.316      Stopping gts9-acm-getty.service
+Stopping getty@tty1.service      13:48:09.325      Stopping getty@tty1.service
+Stopping gts9-power-key.service  13:48:09.327      Stopping gts9-power-key.service
+Stopped  gts9-prev-boot-evidence 13:48:09.331      Stopped  gts9-prev-boot-evidence
+        <28.9 s of silence>                        Stopped  gts9-watchdog-debug
+        <reset>                                    Stopping ssh.service
+                                                   Stopping systemd-random-seed.service
+                                                   ... and on to systemd-shutdown
+```
+
+So the shutdown stalled with **five stop jobs outstanding, none of which ever
+reached `Stopped`**:
+
+* `session-1.scope`
+* `cron.service`
+* `gts9-acm-getty.service` — owns `ttyGS0`, the USB ACM console
+* `getty@tty1.service`
+* `gts9-power-key.service` — a daemon that only toggles the panel backlight
+
+That is the narrowest localisation of the failure obtained so far, and it is the
+list to inspect first if the stall recurs.
+
+It also explains why nothing in the kernel reported. A systemd stop job waiting on
+a process is invisible to `softlockup`, `hung_task` and the workqueue watchdog
+until their thresholds expire, and systemd's own escape hatch —
+`DefaultTimeoutStopSec`, 90 s — had not expired either. **The external reset at
+28.9 s arrived before systemd could give up on those jobs and continue.** That is
+consistent with never seeing a `job timed out` line, and it means the 28.9 s is a
+property of the reset source, not of the hang.
+
+Two cautions: the clean captures are from the **post-fix** kernel and this one is
+pre-fix, so the unit sets differ slightly; and the clean captures come from
+test-187's `shutdown-capture.sh`, which raises the console loglevel. What the
+argument uses is the *sequence of stop jobs*, which is userspace output and
+unaffected by the kernel loglevel.
+
+## 6. Why it was missed for five rounds
 
 `observer-ab.sh:93` scored this capture with:
 
@@ -143,7 +191,7 @@ is a captured failure, and no amount of banner-scanning will ever see it. Both
 `test-187/shutdown-capture.sh` and `test-188/shutdown-series.sh` classify that
 way; the earlier harnesses did not.
 
-## 6. What the archive name does and does not identify
+## 7. What the archive name does and does not identify
 
 Reading this capture required resolving which boot the archive describes, and the
 answer is not what the documents assume.
@@ -188,7 +236,7 @@ Two fixes follow, both applied:
    collector's own `KEEP=8` pruning already used `ls -1dt`, which is the
    acknowledgement that only mtime is trustworthy here.
 
-## 7. What is still open
+## 8. What is still open
 
 * **which out-of-kernel source resets the machine ~29 s in.** §4 shows it is not
   a kernel watchdog and not `panic=`, but it cannot name the platform watchdog or

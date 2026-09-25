@@ -1024,6 +1024,17 @@ class StallFailureShapeTests(unittest.TestCase):
         self.assertIn("remains", text)
         self.assertIn("undetermined", text)
 
+    def test_the_doc_localises_the_outstanding_stop_jobs(self):
+        """The failure's narrowest localisation must not drift."""
+        text = read(self.DOC)
+        for unit in ("session-1.scope", "cron.service", "gts9-acm-getty.service",
+                     "getty@tty1.service", "gts9-power-key.service"):
+            with self.subTest(unit=unit):
+                self.assertIn(unit, text)
+        self.assertIn("five stop jobs outstanding", text)
+        # And it must say why systemd never recovered on its own.
+        self.assertIn("DefaultTimeoutStopSec", text)
+
     def test_the_doc_refutes_the_two_eliminated_explanations(self):
         text = read(self.DOC)
         self.assertIn("refuted", text)
