@@ -64,9 +64,21 @@ association has a denominator instead of being read off failures alone. Over the
 | `rcu detected stall` | **0** |
 | `encoder is disabled` | **8** — once per boot, on every healthy boot |
 
+The rate3 series added 14 more cycles, all clean, with the same result:
+
+| marker | over 22 clean cycles (rate2 8 + rate3 14) |
+|---|---|
+| `frame done timeout` | **0** |
+| `mmc1: Timeout` | **0** |
+| `AMC RPMH` | **0** |
+| `rcu detected stall` | **0** |
+| `encoder is disabled` | **22** — exactly one per boot, on every healthy boot |
+
 So `frame done timeout`, `mmc1: Timeout` and `AMC RPMH` are present in 3 of 3
-failure records and absent from 8 of 8 clean controls. That is the strongest
-association this project has had for any of them, and it is still not causality.
+failure records and absent from 22 of 22 clean controls. As a 2x2 table that is
+`[[3,0],[0,22]]`, two-sided Fisher exact **p = 0.00043**. It is the strongest
+association this project has had for any marker by a wide margin, and it is
+still not causality - for the reason in the next section.
 
 ## What this does not say, and the counterexample is already on record
 
@@ -111,6 +123,17 @@ survives. This table says what a *removal* has to explain:
   pair of clean results from B and C would not by itself exonerate the display —
   it would only move the question to what the DPU and the SD controller have in
   common, which is power, clocks and RPMh.
+
+## Provenance of the control counts, including a defect in the collector
+
+The 22 clean cycles were counted by `probe_markers`, which reads the whole dmesg
+at the end of each cycle - after that cycle's outcome is already decided, so the
+instrument cannot influence what it measures. The counts are unaffected by the
+attribution defect fixed in the same round (`CONSOLE_STATE` being set inside a
+command substitution and therefore never reaching the parent shell), because that
+bug touched only how a silent cycle is *labelled*, not what the marker probe
+counts. The distinction is worth keeping: a clean cycle's marker row is valid
+evidence even from the series whose attribution was wrong.
 
 ## Corrected inputs to this analysis
 

@@ -2414,6 +2414,20 @@ class WedgeRateAttributionTests(unittest.TestCase):
         self.assertIn("1115 lines and stops at", " ".join(text.split()))
         self.assertIn('"the journal stops" is not "the system froze"', text)
 
+    def test_the_control_count_and_its_significance_are_pinned(self):
+        """3 of 3 against 22 of 22, and the p-value that goes with it."""
+        text = read("docs/STALL_FIRST_EVENT_ORDERING.md")
+        self.assertIn("22 of 22", text)
+        self.assertIn("p = 0.00043", text)
+        self.assertIn("rate2 8 + rate3 14", text)
+
+    def test_the_control_counts_are_attributed_to_the_probe_not_the_labels(self):
+        """A clean cycle's marker row stays valid even from a mislabelled series."""
+        text = read("docs/STALL_FIRST_EVENT_ORDERING.md")
+        flat = " ".join(text.split())
+        self.assertIn("a clean cycle's marker row is valid evidence", flat)
+        self.assertIn("touched only how a silent cycle is *labelled*", flat)
+
     def test_the_record_states_what_is_not_established(self):
         """The one unclosed link is the whole strength of the claim."""
         text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
