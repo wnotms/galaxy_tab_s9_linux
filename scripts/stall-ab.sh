@@ -9,7 +9,7 @@
 #
 #	baseline   profile A  no extra token
 #	no-acd     profile B  msm.disable_acd=1
-#	no-gpu     profile C  msm.no_gpu=1
+#	no-gpu     profile C  msm.skip_gpu=1
 #	late-deferred  profile G  deferred_probe_timeout=300
 #
 # Profile G moves the deferred-probe-timeout burst (~14.3 s) out of the stall
@@ -120,7 +120,7 @@ run_probe() {
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gmu_bound=$(ls /sys/bus/platform/devices/3d6a000.gmu/driver 2>/dev/null | wc -l);echo gpu_bound=$(ls /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | wc -l);echo aoss_bound=$(ls /sys/bus/platform/devices/power-management@c300000/driver 2>/dev/null | wc -l);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -145,19 +145,19 @@ CMDLINE=$REPO/boot/cmdline.stall-ab-$PROFILE.example.txt
 case "$PROFILE" in
 	baseline)
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "baseline must not carry msm.disable_acd"
-		grep -q 'msm.no_gpu' "$CMDLINE" && die "baseline must not carry msm.no_gpu"
+		grep -q 'msm.skip_gpu' "$CMDLINE" && die "baseline must not carry msm.skip_gpu"
 		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "baseline must not carry deferred_probe_timeout" ;;
 	no-acd)
 		grep -q 'msm.disable_acd=1' "$CMDLINE" || die "no-acd profile lacks msm.disable_acd=1"
-		grep -q 'msm.no_gpu' "$CMDLINE" && die "no-acd must not carry msm.no_gpu"
+		grep -q 'msm.skip_gpu' "$CMDLINE" && die "no-acd must not carry msm.skip_gpu"
 		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "no-acd must not carry deferred_probe_timeout" ;;
 	no-gpu)
-		grep -q 'msm.no_gpu=1' "$CMDLINE" || die "no-gpu profile lacks msm.no_gpu=1"
+		grep -q 'msm.skip_gpu=1' "$CMDLINE" || die "no-gpu profile lacks msm.skip_gpu=1"
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "no-gpu must not carry msm.disable_acd"
 		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "no-gpu must not carry deferred_probe_timeout" ;;
 	late-deferred)
 		grep -q 'deferred_probe_timeout=300' "$CMDLINE" || die "late-deferred profile lacks deferred_probe_timeout=300"
-		grep -q 'msm.no_gpu' "$CMDLINE" && die "late-deferred must not carry msm.no_gpu"
+		grep -q 'msm.skip_gpu' "$CMDLINE" && die "late-deferred must not carry msm.skip_gpu"
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "late-deferred must not carry msm.disable_acd" ;;
 esac
 grep -q 'msm.separate_gpu_kms=1' "$CMDLINE" || die "every profile keeps msm.separate_gpu_kms=1"
@@ -180,17 +180,48 @@ say "cmdline file: ${CMDLINE#$REPO/}" | tee -a "$OUT"
 # spending rounds on it.
 pre=$DIR/preflight.txt
 run_probe preflight "$DIR/preflight-raw.txt" "$WINDIR\\preflight.log"
-grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gmu_bound=|gpu_bound=|aoss_bound=|deferred=|wd=|ctrl=|failed=)" \
+grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|msm_params=)" \
 	"$DIR/preflight-raw.txt" >"$pre" 2>/dev/null
 cat "$pre" 2>/dev/null | tee -a "$OUT"
 
+# Every `msm.<name>=` token in the profile must be a parameter the kernel really
+# registered.  This is the check that was missing, and its absence is why the
+# no-gpu profile shipped for two rounds with `msm.no_gpu=1` - a name that appears
+# only in MODULE_PARM_DESC and is NOT settable.  The failure mode is silent: the
+# kernel ignores an unknown parameter, the boot looks identical to baseline, and
+# the A/B reports a false negative for the whole subsystem under test.
+#
+# Reading /sys/module/msm/parameters/ cannot be fooled by a wrong name, which is
+# exactly why it is the authority here rather than the source or modinfo.
 got_cmdline=$(grep -a -m1 'cmdline=' "$DIR/preflight-raw.txt" 2>/dev/null)
+got_params=$(sed -n 's/^.*RECV  msm_params=//p' "$DIR/preflight-raw.txt" 2>/dev/null | tail -1)
+if [ -n "$got_params" ]; then
+	bad=""
+	for tok in $(tr ' ' '\n' <"$CMDLINE" | grep -oE '^msm\.[a-z_]+=' | sort -u); do
+		name=${tok#msm.}
+		name=${name%=}
+		case ",$got_params," in
+		*",$name,"*) ;;
+		*) bad="$bad $tok" ;;
+		esac
+	done
+	if [ -n "$bad" ]; then
+		say "FATAL: the profile sets parameters this kernel does not have:$bad"
+		say "       the kernel would ignore them silently and this A/B would prove nothing."
+		say "       registered msm parameters: $got_params"
+		die "profile $PROFILE sets unknown msm parameters:$bad"
+	fi
+	say "preflight: every msm.* token in the profile is a registered parameter"
+else
+	say "WARNING: could not read /sys/module/msm/parameters/ - the unknown-parameter"
+	say "         guard did NOT run, and a typo in a profile would go unnoticed"
+fi
 case "$PROFILE" in
 	baseline)
 		grep -aq 'msm.disable_acd=1' <<<"$got_cmdline" && say "WARNING: tablet cmdline has disable_acd but profile is baseline"
-		grep -aq 'msm.no_gpu=1' <<<"$got_cmdline" && say "WARNING: tablet cmdline has no_gpu but profile is baseline" ;;
+		grep -aq 'msm.skip_gpu=1' <<<"$got_cmdline" && say "WARNING: tablet cmdline has skip_gpu but profile is baseline" ;;
 	no-acd) grep -aq 'msm.disable_acd=1' <<<"$got_cmdline" || say "WARNING: tablet cmdline lacks msm.disable_acd=1" ;;
-	no-gpu) grep -aq 'msm.no_gpu=1' <<<"$got_cmdline" || say "WARNING: tablet cmdline lacks msm.no_gpu=1" ;;
+	no-gpu) grep -aq 'msm.skip_gpu=1' <<<"$got_cmdline" || say "WARNING: tablet cmdline lacks msm.skip_gpu=1" ;;
 esac
 
 if [ "$ALLOW" != "1" ]; then
@@ -222,7 +253,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	cp "$LOCALDIR/console-$i.log" "$klog" 2>/dev/null || say "WARNING: no console capture for round $i"
 
 	run_probe "$i" "$DIR/probe-$i-raw.txt" "$WINDIR\\probe-$i.log"
-	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gmu_bound=|gpu_bound=|aoss_bound=|deferred=|wd=|ctrl=|failed=|\[ *[0-9]+\.|--- )" \
+	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|\[ *[0-9]+\.|--- )" \
 		"$DIR/probe-$i-raw.txt" >"$DIR/probe-$i.txt" 2>/dev/null
 
 	new_id=$(sed -n 's/.*boot_id=//p' "$DIR/probe-$i.txt" 2>/dev/null | head -1 | tr -d '\r')
@@ -243,7 +274,7 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "console_log=$klog"
 		echo "journal_probe=$DIR/probe-$i.txt"
 		# GPU/GMU/AOSS probe state (from the post-boot probe, not the capture).
-		for f in gpu gmu_bound gpu_bound aoss_bound deferred; do
+		for f in gpu gpu_driver aoss_driver gmu_node gpu_devfreq gpu_gov deferred; do
 			echo "$f=$(sed -n "s/.*$f=//p" "$DIR/probe-$i.txt" | head -1 | tr -d '\r' | cut -d' ' -f1)"
 		done
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
@@ -259,7 +290,7 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" 2>/dev/null | head -3 | tr '\n' ';')"
 	} >"$DIR/round-$i.txt"
 
-	grep -aE "^(release|gpu_bound|gmu_bound|aoss_bound|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
+	grep -aE "^(release|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
 		"$DIR/round-$i.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 	[ -n "$new_id" ] && boot_id=$new_id

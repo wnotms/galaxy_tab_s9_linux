@@ -74,7 +74,7 @@ class AbProfileTests(unittest.TestCase):
     def test_the_three_profiles_differ_by_exactly_one_token(self):
         base = tokens(BASELINE)
         self.assertEqual(tokens(NO_ACD), base[:2] + ["msm.disable_acd=1"] + base[2:])
-        self.assertEqual(tokens(NO_GPU), base[:2] + ["msm.no_gpu=1"] + base[2:])
+        self.assertEqual(tokens(NO_GPU), base[:2] + ["msm.skip_gpu=1"] + base[2:])
         # Profile G is the round-2 burst-decoupling axis: same kernel as A/B/C,
         # only the instant of the deferred-probe-timeout burst moves.
         self.assertEqual(
@@ -91,10 +91,10 @@ class AbProfileTests(unittest.TestCase):
 
     def test_the_one_added_token_is_the_documented_one(self):
         self.assertIn("msm.disable_acd=1", tokens(NO_ACD))
-        self.assertNotIn("msm.no_gpu=1", tokens(NO_ACD))
-        self.assertIn("msm.no_gpu=1", tokens(NO_GPU))
+        self.assertNotIn("msm.skip_gpu=1", tokens(NO_ACD))
+        self.assertIn("msm.skip_gpu=1", tokens(NO_GPU))
         self.assertNotIn("msm.disable_acd=1", tokens(NO_GPU))
-        for tok in ("msm.disable_acd", "msm.no_gpu", "deferred_probe_timeout"):
+        for tok in ("msm.disable_acd", "msm.skip_gpu", "deferred_probe_timeout"):
             self.assertFalse(
                 [t for t in tokens(BASELINE) if t.startswith(tok)],
                 f"the baseline profile must not carry {tok}",
@@ -153,10 +153,39 @@ class AbProfileTests(unittest.TestCase):
 class CmdlineLiteralTests(unittest.TestCase):
     """The literals in the profiles are the ones the kernel actually registers.
 
-    The C variables are `skip_gpu` and `disable_acd`, but the *parameter* names
-    come from MODULE_PARM_DESC, so the command line uses `no_gpu`.  Getting this
-    backwards would silently produce a profile that changes nothing, which is
-    the worst possible A/B result: a false negative.
+    **The parameter name comes from `module_param()`, NOT from
+    `MODULE_PARM_DESC()`.**  This class asserted the opposite for two rounds, and
+    the correction is the point of it now.
+
+    `adreno_device.c` contains a mismatched pair:
+
+        static bool skip_gpu;
+        MODULE_PARM_DESC(no_gpu, "Disable GPU driver register ...");   <- label
+        module_param(skip_gpu, bool, 0400);                            <- the name
+
+    `MODULE_PARM_DESC` only attaches a description string; it registers nothing.
+    So `no_gpu` is a name that exists nowhere a user can reach, and
+    `msm.no_gpu=1` is silently ignored by the kernel.  The build artifact carries
+    both names, which is what misled the earlier reading:
+
+        msm.parm=no_gpu:Disable GPU driver register ...   <- from the DESC
+        msm.parmtype=skip_gpu:bool                        <- the real parameter
+
+    The same file has the same bug for `separate_gpu_drm` /
+    `separate_gpu_kms`, and the project has always used the `parmtype` name
+    there.  Three independent checks agree on which one is real:
+
+      * `/sys/module/msm/parameters/skip_gpu` exists on the device;
+        `.../no_gpu` does not.  This cannot be fooled by a wrong name.
+      * `msm.parmtype=skip_gpu:bool` in `modules.builtin.modinfo`.
+      * `msm.separate_gpu_kms=1` demonstrably works (`separate_gpu_kms = Y` on
+        the tablet), and it is the `parmtype` name of its own mismatched pair.
+
+    The failure mode is the worst kind for an A/B: the kernel ignores an unknown
+    parameter, the boot is identical to baseline, and the run reports "disabling
+    the GPU changes nothing" - a false negative for the whole subsystem.
+    `stall-ab.sh` now refuses to run a profile whose `msm.*` tokens are not
+    registered parameters, which is the check that was missing.
     """
 
     def _declaration(self, param):
@@ -166,22 +195,48 @@ class CmdlineLiteralTests(unittest.TestCase):
             self.skipTest("upstream checkout not present")
         return src.read_text()
 
-    def test_no_gpu_is_the_literal_and_skip_gpu_is_the_variable(self):
-        src = self._declaration("no_gpu")
+    def test_the_parameter_name_comes_from_module_param_not_the_desc(self):
+        """The defect that made the no-gpu profile a no-op for two rounds."""
+        src = self._declaration("skip_gpu")
         self.assertRegex(
             src,
             re.compile(r"static\s+bool\s+skip_gpu\s*;"),
-            "skip_gpu must be the C variable",
+            "skip_gpu is the C variable",
         )
+        # The desc really does say no_gpu.  That is the trap, so pin it too: if
+        # upstream ever fixes the mismatch this test should be revisited rather
+        # than silently passing on a changed premise.
         self.assertRegex(
             src,
             re.compile(r'MODULE_PARM_DESC\(\s*no_gpu\s*,'),
-            "no_gpu must be the module parameter name",
+            "MODULE_PARM_DESC(no_gpu, ...) is the misleading half",
         )
+        # And the registered name is skip_gpu, because module_param() decides.
         self.assertRegex(
             src,
             re.compile(r"module_param\(\s*skip_gpu\s*,\s*bool\s*,"),
-            "skip_gpu must be registered via module_param",
+            "module_param(skip_gpu, ...) registers the parameter",
+        )
+
+    def test_the_same_mismatch_exists_twice_and_the_rule_is_consistent(self):
+        """The project's own working token proves the rule.
+
+        The second instance lives in msm_drv.c, not adreno_device.c, and the
+        project has always used the correct half of it.
+        """
+        drv = ROOT / ".work/linux-mainline/drivers/gpu/drm/msm/msm_drv.c"
+        if not drv.exists():
+            self.skipTest("upstream checkout not present")
+        src = drv.read_text()
+        self.assertRegex(
+            src,
+            re.compile(r'MODULE_PARM_DESC\(\s*separate_gpu_drm\s*,'),
+            "separate_gpu_drm is the desc name",
+        )
+        self.assertRegex(
+            src,
+            re.compile(r"module_param\(\s*separate_gpu_kms\s*,\s*bool\s*,"),
+            "separate_gpu_kms is the registered name - and what the profile uses",
         )
 
     def test_disable_acd_is_a_module_parameter(self):
@@ -196,9 +251,9 @@ class CmdlineLiteralTests(unittest.TestCase):
             re.compile(r"module_param_unsafe\(\s*disable_acd\s*,\s*bool\s*,"),
         )
 
-    def test_no_gpu_prevents_the_adreno_driver_from_registering(self):
+    def test_skip_gpu_prevents_the_adreno_driver_from_registering(self):
         """Profile C is only meaningful if the GPU driver truly never binds."""
-        src = self._declaration("no_gpu")
+        src = self._declaration("skip_gpu")
         # adreno_register() must bail out before registering the driver...
         self.assertRegex(
             src,
@@ -354,15 +409,15 @@ class HarnessContractTests(unittest.TestCase):
     def test_it_knows_the_three_profiles_and_refuses_others(self):
         text = read(HARNESS)
         self.assertIn("baseline|no-acd|no-gpu", text)
-        for name in ("msm.disable_acd=1", "msm.no_gpu=1"):
+        for name in ("msm.disable_acd=1", "msm.skip_gpu=1"):
             self.assertIn(name, text)
 
     def test_it_rejects_a_profile_carrying_the_wrong_token(self):
         text = read(HARNESS)
-        # baseline must reject both, no-acd must reject no_gpu, and vice versa.
+        # baseline must reject both, no-acd must reject skip_gpu, and vice versa.
         self.assertIn("baseline must not carry msm.disable_acd", text)
-        self.assertIn("baseline must not carry msm.no_gpu", text)
-        self.assertIn("no-acd must not carry msm.no_gpu", text)
+        self.assertIn("baseline must not carry msm.skip_gpu", text)
+        self.assertIn("no-acd must not carry msm.skip_gpu", text)
         self.assertIn("no-gpu must not carry msm.disable_acd", text)
 
     def test_it_requires_the_shared_invariants(self):
@@ -392,11 +447,49 @@ class HarnessContractTests(unittest.TestCase):
                 self.assertIn(key, text)
 
     def test_it_probes_the_gpu_binding_state(self):
-        """The whole hypothesis is 'the GPU never binds'; that must be measured."""
+        """The whole hypothesis is 'the GPU never binds'; that must be measured.
+
+        The metrics are bound-driver NAMES, not counts, and two of the three
+        originally used could not report anything but 0:
+
+          * `gmu_bound` checked `3d6a000.gmu/driver`.  The GMU has no platform
+            driver to bind by design - `a6xx_gmu_init()` takes the device with
+            `of_find_device_by_node()` - so the symlink never appears.  It was 0
+            on every boot, healthy or not.
+          * `aoss_bound` checked `power-management@c300000`, but sysfs derives the
+            name from the node and uses `.`, so the real path is
+            `c300000.power-management`.  The old path did not exist.
+
+        Both would have read as "the provider is not bound" in every A/B round.
+        A driver name cannot be mistaken for a count: it is empty when unbound.
+        """
         text = read(HARNESS)
-        for needle in ("gmu_bound", "gpu_bound", "aoss_bound", "deferred"):
+        for needle in ("gpu_driver", "aoss_driver", "gmu_node", "deferred"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, text)
+        # The paths that cannot work must be gone, not merely unused.
+        self.assertNotIn("power-management@c300000", text)
+        self.assertNotIn("gmu_bound", text)
+        # The AOSS path used must be the one sysfs really exposes.
+        self.assertIn("/sys/bus/platform/devices/c300000.power-management/driver", text)
+
+    def test_it_refuses_a_profile_token_this_kernel_does_not_have(self):
+        """The guard for the defect that made profile C a no-op.
+
+        `msm.no_gpu=1` is not a parameter; the kernel ignores unknown parameters
+        silently, so the profile would have been indistinguishable from baseline
+        and the run would have reported a false negative for the whole GPU
+        direction.  The harness must consult the kernel's own parameter list.
+        """
+        text = read(HARNESS)
+        self.assertIn("/sys/module/msm/parameters/", text)
+        self.assertIn("msm_params=", text)
+        self.assertIn("sets unknown msm parameters", text)
+        # And it must fail loudly, not warn: a warning in a long log is a
+        # false negative waiting to be read as a result.
+        guard = text[text.index("Every `msm.<name>=` token in the profile"):]
+        guard = guard[:guard.index("\nfi\n")]
+        self.assertIn("die ", guard)
 
     def test_it_never_flashes_or_writes_a_partition(self):
         text = read(HARNESS)
@@ -1683,7 +1776,7 @@ class DocumentationTests(unittest.TestCase):
 
     def test_the_plan_has_the_five_labelled_experiments(self):
         text = read(PLAN)
-        for token in ("msm.disable_acd=1", "msm.no_gpu=1",
+        for token in ("msm.disable_acd=1", "msm.skip_gpu=1",
                       "CONFIG_QCOM_AOSS_QMP=y", "gts9_rpmh_debug=1"):
             with self.subTest(token=token):
                 self.assertIn(token, text)
