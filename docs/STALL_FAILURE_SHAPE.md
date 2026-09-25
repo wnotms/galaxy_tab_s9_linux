@@ -80,7 +80,50 @@ candidates that would have to be checked — a hardware watchdog outside the ker
 and the kernel's own `panic=10` path — cannot be told apart from this file. It is
 recorded as unknown rather than guessed.
 
-## 4. Why it was missed for five rounds
+## 4. Who resets it — and what demonstrably did not
+
+The 28.9 s hang ends with a reset. The kernel's own reset paths can be excluded
+from source and config:
+
+* **No watchdog device exists on this board.** `CONFIG_WATCHDOG=y`,
+  `CONFIG_WATCHDOG_CORE=y` and `CONFIG_QCOM_WDT=y` are all set in
+  `out/kernel-gts9wifi/config`, but `arch/arm64/boot/dts/qcom/sm8550.dtsi` at the
+  pinned revision contains **no `wdt` or `watchdog` node at all** — a grep for
+  either word over the whole file returns nothing — and the driver's match table
+  (`drivers/watchdog/qcom-wdt.c:369-372`) lists only `qcom,apss-wdt-ipq5424`,
+  `qcom,kpss-timer`, `qcom,scss-timer` and `qcom,kpss-wdt`, none of which SM8550
+  uses. The driver therefore binds to nothing. The collector's own header records
+  the same fact from the device: `/dev/watchdog0` does not exist.
+* **`softdog` is not built.** `CONFIG_SOFTDOG` is unset, so the
+  `softdog.soft_panic=1` that ABL injects into the command line is inert.
+  `CONFIG_ARM_SMC_WATCHDOG` and `CONFIG_PMIC_WATCHDOG` are unset too.
+* **`panic=10` did not fire.** A panic prints at `KERN_EMERG`, which bypasses the
+  profile's `loglevel=4`; the console was silent for the whole 28.9 s.
+
+So nothing in mainline reset the machine, which means the reset came from outside
+its software stack — a watchdog or reset source armed by the bootloader or the
+PMIC that mainline neither owns nor pets. **Which source it is remains
+undetermined**; the point established here is the narrower and firmer one, that it
+was not a kernel watchdog and not `panic=`.
+
+What the armed detectors did *not* report also narrows the failure:
+
+| detector | threshold in this profile | could it have fired in 28.9 s? |
+|---|---|---|
+| soft lockup (`softlockup_panic=1`) | `watchdog_thresh` 10 ⇒ 20 s (`kernel/watchdog.c:50`, `get_softlockup_thresh()`) | **yes, and it did not** |
+| hung task (`hung_task_panic=1`) | 45 s, applied at runtime by `gts9-watchdog-debug` | no — 28.9 s is inside it, so its silence proves nothing |
+| workqueue stall (`panic_on_stall_time=45`) | 45 s | no — same |
+
+The soft-lockup row is the informative one: a CPU stuck in kernel mode for 20 s
+would have produced a report and, with `softlockup_panic=1`, a panic banner. There
+was neither. That supports the live signature — **kernel healthy, userspace
+stopped** — rather than a kernel lockup. It is an inference from silence, so it
+holds only if printk could still emit during the hang; the USB gadget stayed
+enumerated throughout, but that alone does not prove the console path was alive.
+The inference is therefore offered as the best reading of the evidence, not as a
+measurement.
+
+## 5. Why it was missed for five rounds
 
 `observer-ab.sh:93` scored this capture with:
 
@@ -100,7 +143,7 @@ is a captured failure, and no amount of banner-scanning will ever see it. Both
 `test-187/shutdown-capture.sh` and `test-188/shutdown-series.sh` classify that
 way; the earlier harnesses did not.
 
-## 5. What the archive name does and does not identify
+## 6. What the archive name does and does not identify
 
 Reading this capture required resolving which boot the archive describes, and the
 answer is not what the documents assume.
@@ -145,10 +188,11 @@ Two fixes follow, both applied:
    collector's own `KEEP=8` pruning already used `ls -1dt`, which is the
    acknowledgement that only mtime is trustworthy here.
 
-## 6. What is still open
+## 7. What is still open
 
-* **who resets the machine ~29 s in.** Needs a kernel that can still print at
-  that moment, or a watchdog that reports itself.
+* **which out-of-kernel source resets the machine ~29 s in.** §4 shows it is not
+  a kernel watchdog and not `panic=`, but it cannot name the platform watchdog or
+  PMIC path that did it.
 * **whether this failure is the one the current kernel no longer produces.** The
   capture is from the pre-fix kernel. 16 clean cycles on the AOSS-QMP + IPCC
   kernel and the test-188 series on the current one bound its rate; they do not

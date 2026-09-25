@@ -1014,6 +1014,16 @@ class StallFailureShapeTests(unittest.TestCase):
             with self.subTest(banner=banner):
                 self.assertNotIn(banner, text)
 
+    def test_the_doc_excludes_the_kernel_reset_paths(self):
+        """Who reset it must be argued from source, not assumed."""
+        text = read(self.DOC)
+        self.assertIn("no `wdt` or `watchdog` node at all", text)
+        self.assertIn("CONFIG_SOFTDOG", text)
+        self.assertIn("nothing in mainline reset the machine", text)
+        # The residual unknown must stay unknown.
+        self.assertIn("remains", text)
+        self.assertIn("undetermined", text)
+
     def test_the_doc_refutes_the_two_eliminated_explanations(self):
         text = read(self.DOC)
         self.assertIn("refuted", text)
