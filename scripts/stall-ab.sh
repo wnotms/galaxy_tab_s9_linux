@@ -205,7 +205,7 @@ run_probe() {
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(if [ -e /sys/bus/platform/devices/3d00000.gpu/driver ]; then basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null); else echo NONE; fi);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- IDENTITY (the binding this round claims)";journalctl -b -1 -k --no-pager 2>/dev/null | grep -a "GTS9_AB " | tail -3;echo "--- IDENTITY_PMSG";cat /var/lib/systemd/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\\0" | grep -a "GTS9_AB " | tail -3;echo "--- BUILDID";echo img_sha=$(sha256sum /boot/vmlinuz 2>/dev/null | cut -c1-16);echo cmdline_sha=$(sha256sum /proc/cmdline | cut -c1-16);echo "--- BOOT_UNDER_TEST";echo "under_test_boot_id=$(journalctl --list-boots --no-pager 2>/dev/null | grep -E \"^ *-1 \" | cut -d\" \" -f3)";echo "current_boot_id=$(cat /proc/sys/kernel/random/boot_id)";echo "boot_count=$(journalctl --list-boots --no-pager 2>/dev/null | wc -l)";echo "boot_list=$(journalctl --list-boots --no-pager 2>/dev/null | tail -4 | cut -c1-40 | tr \"\\n\" \"|\")";echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(if [ -e /sys/bus/platform/devices/3d00000.gpu/driver ]; then basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null); else echo NONE; fi);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- PARAM_CONSUMPTION (proves an early_param handler exists)";echo "unknown_params=$(journalctl -b 0 -k --no-pager 2>/dev/null | grep -a "Unknown kernel command line parameters" | tail -1)";echo "--- IDENTITY (the binding this round claims)";journalctl -b -1 -k --no-pager 2>/dev/null | grep -a "GTS9_AB " | tail -3;echo "--- IDENTITY_PMSG";cat /var/lib/systemd/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\\0" | grep -a "GTS9_AB " | tail -3;echo "--- BUILDID";echo img_sha=$(sha256sum /boot/vmlinuz 2>/dev/null | cut -c1-16);echo cmdline_sha=$(sha256sum /proc/cmdline | cut -c1-16);echo "--- BOOT_UNDER_TEST";echo "under_test_boot_id=$(journalctl --list-boots --no-pager 2>/dev/null | grep -E \"^ *-1 \" | cut -d\" \" -f3)";echo "current_boot_id=$(cat /proc/sys/kernel/random/boot_id)";echo "boot_count=$(journalctl --list-boots --no-pager 2>/dev/null | wc -l)";echo "boot_list=$(journalctl --list-boots --no-pager 2>/dev/null | tail -4 | cut -c1-40 | tr \"\\n\" \"|\")";echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -302,6 +302,40 @@ if [ -n "$got_params" ]; then
 		die "profile $PROFILE sets unknown msm parameters:$bad"
 	fi
 	say "preflight: every msm.* token in the profile is a registered parameter"
+
+	# A cmdline token is only evidence that the profile was WRITTEN, not that the
+	# kernel has code to read it - and a diagnostic switch that nothing consumes
+	# is indistinguishable from one that ran and found nothing.  `early_param`
+	# handlers consume their token, so a token that still appears in the kernel's
+	# own "Unknown kernel command line parameters" list has no handler and the
+	# switch is dead.  Checked for every `gts9_*` token the profile sets, with the
+	# list itself as the evidence.
+	unknown=$(sed -n 's/.*RECV  unknown_params=//p' "$DIR/preflight-raw.txt" 2>/dev/null | tail -1)
+	# Tokens that are DELIBERATELY unknown to the kernel and read from
+	# /proc/cmdline by the initramfs and the userspace stage reporters.  They must
+	# be excluded, or the gate fires on every profile - measured: it rejected
+	# `gts9_minimal_rootfs` on the first run, which is exactly what that token is
+	# for.
+	#   gts9_minimal_rootfs, gts9_rootfs, sapa  - read by the initramfs
+	#   gts9_watchdog_debug                     - read by
+	#       rootfs-overlay/usr/libexec/gts9-watchdog-debug, which is why the kernel
+	#       itself calls it unknown.  A userspace consumer is still a consumer; the
+	#       gate only rejects a token that NOTHING reads, which would make a round
+	#       unfalsifiable.
+	USERSPACE_TOKENS='gts9_minimal_rootfs gts9_rootfs sapa gts9_watchdog_debug'
+	for tok in $(tr ' ' '\n' <"$CMDLINE" | grep -oE '^gts9_[a-z_]+=' | tr -d '='); do
+		case " $USERSPACE_TOKENS " in
+		*" $tok "*) continue ;;
+		esac
+		case "$unknown" in
+		*"$tok="*)
+			say "FATAL: $tok has no consumer in this kernel - it is listed as an"
+			say "       unknown parameter, so the switch is dead and any round of this"
+			say "       profile would be unfalsifiable.  Unknown list: $unknown"
+			die "profile $PROFILE sets $tok, which nothing in this kernel consumes" ;;
+		*) say "preflight: $tok is consumed by a kernel handler" ;;
+		esac
+	done
 else
 	say "WARNING: could not read /sys/module/msm/parameters/ - the unknown-parameter"
 	say "         guard did NOT run, and a typo in a profile would go unnoticed"

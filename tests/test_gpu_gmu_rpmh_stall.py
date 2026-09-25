@@ -2398,6 +2398,57 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("c4 5c 5d 77", text)
         self.assertIn("zlib_inflate() failed, ret = -3!", text)
 
+    def test_a_switch_nothing_consumes_is_refused(self):
+        """A dead cmdline switch makes every round of its profile unfalsifiable.
+
+        `gts9_rpmh_debug=1` only prints when a timeout happens, so a round with no
+        dump cannot be distinguished from a kernel that has no such switch. The
+        kernel names every cmdline token it did NOT consume in
+        `Unknown kernel command line parameters`, so absence from that list is
+        proof a handler ran - and presence is proof none did.
+        """
+        text = read("scripts/stall-ab.sh")
+        self.assertIn("Unknown kernel command line parameters", text)
+        self.assertIn("under_test_boot_id", text)
+        self.assertIn("unknown_params=", text)
+        # It must have a userspace allowlist, or it fires on every profile.
+        self.assertIn("USERSPACE_TOKENS=", text)
+        for tok in ("gts9_minimal_rootfs", "gts9_watchdog_debug"):
+            with self.subTest(tok=tok):
+                self.assertIn(tok, text)
+        flat = " ".join(text.split())
+        self.assertIn("has no consumer in this kernel", flat)
+        self.assertIn("unfalsifiable", flat)
+
+    def test_the_rpmh_debug_run_is_single_variable(self):
+        """The decision rule forbids mixing it with the A/B tokens."""
+        rule = read("docs/RPMH_DEBUG_DECISION_RULE.md")
+        flat = " ".join(rule.split())
+        self.assertIn("It is not an A/B round.", flat)
+        self.assertIn("must not be enabled during an A/B round", flat)
+        # And the profile really is one token from baseline.
+        import subprocess
+        base = read("boot/cmdline.stall-ab-baseline.example.txt").split()
+        rpmh = read("boot/cmdline.rpmh-debug.example.txt").split()
+        self.assertEqual(sorted(set(rpmh) - set(base)), ["gts9_rpmh_debug=1"])
+        self.assertEqual(sorted(set(base) - set(rpmh)), [])
+
+    def test_the_flashed_kernel_carries_the_rpmh_diagnostic(self):
+        """The switch only works if the strings are in the flashed image."""
+        import gzip
+        img = ROOT / "out/kernel-gts9wifi/Image.gz"
+        if not img.exists():
+            self.skipTest("kernel image not built")
+        data = gzip.open(img, "rb").read()
+        for needle in (b"gts9-rpmh: TIMEOUT rsc=", b"gts9-rpmh: ring_summary",
+                       b"LATE COMPLETION"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, data)
+        # And that image is the one the flashed bundle was built from.
+        info = read("out/boot-bundle-test191-osm-l3/BUNDLE_INFO")
+        self.assertIn("df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f",
+                      info)
+
     def test_the_cmdline_check_reads_the_answer_not_the_echo(self):
         """`SENT` echoes the command text, which itself contains `cmdline=`.
 

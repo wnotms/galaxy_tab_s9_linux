@@ -19,6 +19,22 @@ send and completion paths, and on timeout it dumps registers. The three A/B
 profiles forbid `gts9_rpmh_debug` by name for exactly that reason. Its numbers
 cannot be compared against the A/B series, and must not be.
 
+**Expressed as a rule: `gts9_rpmh_debug=1` must not be enabled during an A/B
+round.** It runs alone or not at all - never alongside `msm.skip_gpu`,
+`msm.disable_acd`, `deferred_probe_timeout=300` or `cpuidle.off`. The profile is
+one token from baseline (`gts9_rpmh_debug=1` and nothing else), so the ablation is
+the switch itself and no comparison against an A/B series is possible or wanted.
+
+**And the switch has to be provably alive.** `0021` prints only when a timeout
+happens and exposes no sysfs or debugfs handle, so a round that captures no dump
+cannot be told from a kernel that has no such switch. The harness therefore reads
+the kernel's own `Unknown kernel command line parameters` list: a token with no
+consumer appears there, which means the switch is dead and every round of that
+profile would be unfalsifiable. Measured on this kernel, `gts9_rpmh_debug` does
+**not** appear in that list, while `gts9_watchdog_debug` does - and the latter is
+consumed by `rootfs-overlay/usr/libexec/gts9-watchdog-debug`, a userspace reader,
+which is why a userspace allowlist is part of the check.
+
 **It only speaks when something times out.** `0021` prints nothing on a healthy
 boot. So a run that captures no timeout is not a null result about the machine -
 it is a statement about the sample, and it needs the same denominator discipline
