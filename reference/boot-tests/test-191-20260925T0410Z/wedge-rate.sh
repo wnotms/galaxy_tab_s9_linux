@@ -97,13 +97,21 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	done
 
 	# CRLF, and the "True" that matters is the one AFTER the "False".
+	#
+	# EVERY transition is reported, not just the first pair.  The first version of
+	# this function returned only the first `False` and the first `True` after it,
+	# and that hid a real failure: the wedged boot of 2026-09-25T04:57Z shows up as
+	# `gone=2 back=3` here - the reboot the harness asked for, then the boot wedged,
+	# then the watchdog restarted the tablet - and the parser collapsed all of that
+	# into one ordinary 19-second outage.  A second outage IS the failure signature:
+	# nothing but the watchdog reboots a boot the harness has already started.
 	transitions() {
 		tr -d '\r' <"$wlog" 2>/dev/null | awk '
-			/PRESENCE usb0525:a4a7=False/ && !off { off = $1 }
-			/PRESENCE usb0525:a4a7=True/  && off && !on { on = $1 }
-			END { printf "%s %s", (off ? off : "-"), (on ? on : "-") }'
+			/PRESENCE usb0525:a4a7=False/ { n++; if (!off) off = $1 }
+			/PRESENCE usb0525:a4a7=True/  { if (off && !on) on = $1 }
+			END { printf "%s %s %d", (off ? off : "-"), (on ? on : "-"), n + 0 }'
 	}
-	off_at=""; on_at=""
+	off_at=""; on_at=""; outages=0; off2_at=""; on2_at=""
 	trigger=$(now)
 	"$CR" -Port COM17 -Out "$WINDIR\\test191-trigger-$i.log" -WaitReadySeconds 30 \
 		-ReadSeconds 5 -Commands 'systemctl reboot' >"$DIR/cycle-$i-trigger.txt" 2>&1
@@ -111,13 +119,14 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 
 	deadline=$(( $(now) + WINDOW + ONLINE_GRACE ))
 	while [ "$(now)" -lt "$deadline" ]; do
-		read -r seen_off seen_on <<<"$(transitions)"
+		read -r seen_off seen_on seen_n <<<"$(transitions)"
 		if [ "$seen_off" != "-" ] && [ -z "$off_at" ]; then
 			off_at=$seen_off
 			say "  tablet gone at $off_at"
 		fi
 		if [ "$seen_on" != "-" ]; then
 			on_at=$seen_on
+			outages=$seen_n
 			say "  tablet back at $on_at"
 			break
 		fi
@@ -148,13 +157,36 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# console-watch.ps1 writes with `Add-Content` per line, which flushes each
 	# line, so cutting the watcher short cannot lose what was already captured.
 	MARKERS='Kernel panic|BUG: soft lockup|watchdog: BUG|BUG: hard LOCKUP|BUG: workqueue lockup|rcu.*detected stall|havent responded to the NMI|haven.t responded to the NMI'
-	alive=""; early=0
+	alive=""; early=0; wedged=0
 	if [ "$EARLY_EXIT" = "1" ] && [ -n "$on_at" ]; then
 		back_epoch=$(date -u -d "$on_at" +%s 2>/dev/null) || back_epoch=""
 		if [ -n "$back_epoch" ]; then
 			# The kernel starts a second or two before USB presence returns.
 			target=$((back_epoch + EARLY_MIN_UPTIME))
-			while [ "$(now)" -lt "$target" ]; do sleep 2; done
+			# While waiting for the boot to be old enough, keep watching presence: a
+			# SECOND outage is the failure signature.  Nothing but the watchdog
+			# restarts a boot the harness has already started, so this is the one
+			# signal that cannot be explained by anything the harness itself did.
+			# The wedged boot of 2026-09-25T04:57Z shows up here as gone=2 - the
+			# reboot the harness asked for, then the boot wedged, then the watchdog
+			# restarted it - and the harness recorded it as one ordinary outage.
+			while [ "$(now)" -lt "$target" ]; do
+				read -r _ _ n2 <<<"$(transitions)"
+				if [ "${n2:-0}" -ge 2 ]; then
+					read -r off2_at on2_at <<<"$(tr -d '\r' <"$wlog" | awk '
+						/PRESENCE usb0525:a4a7=False/ { f++; if (f==2) off=$1 }
+						/PRESENCE usb0525:a4a7=True/  { t++; if (t==3) on=$1 }
+						END { printf "%s %s", (off?off:"-"), (on?on:"-") }')"
+					outages=$n2
+					wedged=1
+					say "  *** SECOND OUTAGE: the boot wedged and the watchdog restarted it"
+					say "      gone=$off2_at back=${on2_at:-pending}"
+					break
+				fi
+				sleep 2
+			done
+		fi
+		if [ "$wedged" = "0" ]; then
 			alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
 				-WaitReadySeconds 60 -ReadSeconds 8 \
 				-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
@@ -196,13 +228,23 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		echo "tablet_gone_at=${off_at:-never}"
 		echo "tablet_back_at=${on_at:-never}"
 		echo "early_exit=$early"
+		echo "wedged=$wedged"
+		echo "outages=${outages:-0}"
+		echo "second_outage_gone=${off2_at:--}"
+		echo "second_outage_back=${on2_at:--}"
 		echo "console_bytes=$(wc -c <"$clog")"
 		echo "panic=$(grep -ac 'Kernel panic' "$clog" || true)"
 		echo "softlockup=$(grep -acE 'BUG: soft lockup|watchdog: BUG' "$clog" || true)"
 		echo "hardlockup=$(grep -acE 'BUG: hard LOCKUP' "$clog" || true)"
 		echo "workqueue=$(grep -ac 'BUG: workqueue lockup' "$clog" || true)"
 		echo "rcu=$(grep -acE 'rcu.*detected stall' "$clog" || true)"
+		# STRUCTURALLY ZERO on this channel: the cmdline carries loglevel=4, which
+		# prints levels 0-3 only, and this line is pr_warn (4).  Kept because the
+		# column is meaningful if the profile ever raises loglevel.  The real health
+		# check is the shell answering, not this counter.
 		echo "nmi_unanswered=$(grep -acE "haven.t responded to the NMI" "$clog" || true)"
+		echo "frame_done_timeout=$(grep -ac 'frame done timeout' "$clog" || true)"
+		echo "mmc_timeout=$(grep -ac 'Timeout waiting for hardware' "$clog" || true)"
 	} >"$DIR/cycle-$i-verdict.txt"
 
 	# One health check, requiring a command RESULT rather than an echo.  The early
@@ -235,12 +277,23 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# Stop on a wedge only when it is worth stopping for.  The NMI marker alone is
 	# a real wedge and must be recorded, but the *stack* only exists if the panic
 	# landed inside the window, so the run stops for either and says which it got.
-	if [ -z "$on_at" ] || [ -z "$alive" ] || [ "$(get panic)" != "0" ] \
-		|| [ "$(get softlockup)" != "0" ] || [ "$(get workqueue)" != "0" ] \
-		|| [ "$(get rcu)" != "0" ] || [ "$nmi" != "0" ]; then
+	if [ "$wedged" = "1" ] || [ -z "$on_at" ] || [ -z "$alive" ] \
+		|| [ "$(get panic)" != "0" ] || [ "$(get softlockup)" != "0" ] \
+		|| [ "$(get workqueue)" != "0" ] || [ "$(get rcu)" != "0" ] \
+		|| [ "$nmi" != "0" ]; then
 		grep -aE -B4 -A60 'Kernel panic|BUG: soft lockup|BUG: workqueue lockup|rcu.*detected stall|haven.t responded to the NMI' "$clog" \
 			| sed 's/\x1b\[[0-9;]*m//g' >"$DIR/capture-cycle-$i.txt"
 		say "  extracted to capture-cycle-$i.txt ($(wc -l <"$DIR/capture-cycle-$i.txt") lines)"
+		if [ "$wedged" = "1" ]; then
+			# The whole watcher log, not a grep window: on the one capture of this
+			# kind so far, the console went silent at the wedge, so there is no
+			# panic block to extract - the *absence* of output is the evidence.
+			cp "$clog" "$DIR/wedged-cycle-$i-console.log" 2>/dev/null || true
+			say "  *** the boot wedged at ${off2_at} and the watchdog restarted it"
+			say "      full console preserved as wedged-cycle-$i-console.log"
+			say "      stopping: this is the failure, not a clean cycle"
+			break
+		fi
 		if [ "$(get panic)" != "0" ] || [ "$(get softlockup)" != "0" ]; then
 			say "  *** stopping: this capture carries a stack trace"
 			break

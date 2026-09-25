@@ -675,7 +675,8 @@ class Test191CandidateTests(unittest.TestCase):
         self.assertIn('haven.t responded to the NMI', text)
         # The NMI marker has to appear in the stop condition, not only in the
         # verdict file - that is the defect that let test-190 walk past a wedge.
-        stop = text[text.index("if [ -z \"$on_at\""):text.index("capture-cycle-")]
+        stop = text[text.index('if [ "$wedged" = "1" ] || [ -z "$on_at" ]'):
+                    text.index("capture-cycle-")]
         self.assertIn('"$nmi" != "0"', stop)
         self.assertIn('DIR=$D/wedge-rate-$RUN', text)
 
@@ -712,6 +713,112 @@ class Test191CandidateTests(unittest.TestCase):
             with self.subTest(script=name):
                 self.assertTrue(path.stat().st_mode & 0o111)
                 subprocess.run(["bash", "-n", str(path)], check=True)
+
+
+class FailedBootCaptureTests(unittest.TestCase):
+    """A real failure that the harness recorded as clean, and the fixes for it.
+
+    Cycle 6 of the round-21 fast hunt wedged: the tablet never reached the login
+    screen, sat on the console, and the watchdog restarted it.  The harness saw one
+    ordinary outage.  These tests pin both the evidence and the three reasons it was
+    missed, because each of them would hide the next one too.
+    """
+
+    RUNDIR = ("reference/boot-tests/test-191-20260925T0410Z/"
+              "wedge-rate-pre-test191-capture")
+    DOC = f"{RUNDIR}/FAILED-BOOT-20260925T0457.md"
+    PHOTO = f"{RUNDIR}/panel-20260925T0457-failed-boot.jpg"
+    WATCH = f"{RUNDIR}/cycle-6-watch.txt"
+    HARNESS = "reference/boot-tests/test-191-20260925T0410Z/wedge-rate.sh"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_evidence_is_preserved_with_its_hashes(self):
+        """The photo is the only record of 6.8-25.6 s; the boot left no journal."""
+        import hashlib
+        photo = ROOT / self.PHOTO
+        self.assertTrue(photo.is_file(), "the panel photo must be kept")
+        self.assertEqual(
+            hashlib.sha256(photo.read_bytes()).hexdigest(),
+            "9a65eb4f6772879d1a1b6a377cf8af73c9422d4ec8755894e008e143a0f8b414",
+        )
+        self.contains(self.DOC,
+                      "9a65eb4f6772879d1a1b6a377cf8af73c9422d4ec8755894e008e143a0f8b414",
+                      "9b9918e57200ebbb52c5f82d979e53a66096d6d03fecf4b76ee087dcfc84a99f")
+
+    def test_the_capture_really_contains_the_failed_boot(self):
+        """Re-derive it: two outages, and the DPU error COM19 did receive."""
+        text = (ROOT / self.WATCH).read_text(errors="replace")
+        self.assertEqual(text.count("PRESENCE usb0525:a4a7=False"), 2)
+        self.assertEqual(text.count("PRESENCE usb0525:a4a7=True"), 3)
+        self.assertIn("6.755336", text)
+        self.assertIn("enc35 frame done timeout", text)
+
+    def test_the_doc_labels_it_as_a_different_shape(self):
+        """It is not the CPU wedge the rate table counts, and must say so."""
+        self.contains(self.DOC,
+                      "the first capture that is not a CPU wedge",
+                      "None of that is visible",
+                      "it points at the same place",
+                      "That is a hypothesis, and a weaker one than it sounds")
+
+    def test_the_doc_records_the_timeline_and_the_two_peripherals(self):
+        self.contains(self.DOC,
+                      "04:57:25.145", "04:57:25.147", "04:58:03.414",
+                      "6.755336", "Int stat: 0x00000000",
+                      "AMC DPD/ADM Reset (-110)")
+
+    def test_the_doc_records_that_the_boot_left_no_journal(self):
+        self.contains(self.DOC,
+                      "absent from `journalctl --list-boots`",
+                      "no journal file contains either marker",
+                      "gts9-prev-boot-evidence",
+                      "invisible to every journal-based instrument")
+
+    def test_the_harness_now_counts_every_transition(self):
+        """The parser used to keep only the first gone/back pair."""
+        text = read(self.HARNESS)
+        self.assertIn("EVERY transition is reported", text)
+        self.assertIn("A second outage IS the failure signature", text)
+        # The awk must count, not just remember the first pair.
+        self.assertIn("n + 0", text)
+        self.assertIn("outages=${outages:-0}", text)
+
+    def test_the_harness_records_and_stops_on_a_second_outage(self):
+        text = read(self.HARNESS)
+        self.assertIn("SECOND OUTAGE", text)
+        self.assertIn("wedged=1", text)
+        self.assertIn('if [ "$wedged" = "0" ]; then', text)
+        stop = text[text.index('if [ "$wedged" = "1" ] || [ -z "$on_at" ]'):
+                   text.index("capture-cycle-")]
+        self.assertIn('"$wedged" = "1"', stop)
+        self.assertIn("stopping: this is the failure, not a clean cycle", text)
+        self.assertIn("wedged-cycle-$i-console.log", text)
+
+    def test_the_harness_admits_the_nmi_counter_cannot_fire_here(self):
+        """loglevel=4 prints levels 0-3; the unanswered-NMI line is pr_warn (4)."""
+        text = read(self.HARNESS)
+        self.assertIn("STRUCTURALLY ZERO on this channel", text)
+        self.assertIn("loglevel=4", text)
+        self.assertIn("is pr_warn (4)", text)
+        self.assertIn("frame_done_timeout=", text)
+        self.assertIn("mmc_timeout=", text)
+
+    def test_the_five_healthy_cycles_had_no_dpu_flood(self):
+        """The discriminator, stated with its sample size rather than claimed."""
+        rundir = ROOT / self.RUNDIR
+        healthy = sorted(rundir.glob("cycle-[1-5]-console.log"))
+        if not healthy:
+            self.skipTest("the healthy-cycle captures are not present")
+        for path in healthy:
+            with self.subTest(cycle=path.name):
+                self.assertEqual(
+                    path.read_text(errors="replace").count("frame done timeout"), 0)
+        self.contains(self.DOC, "five healthy", "cycles had **zero**",
+                      "far too few samples")
 
 
 class A6xxStaleRpmhVoteTests(unittest.TestCase):

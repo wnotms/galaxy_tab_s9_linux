@@ -156,6 +156,28 @@ asks the shell exactly once.
 It is safe to cut the watcher short because `console-watch.ps1` writes each line
 with `Add-Content`, which flushes per call, so nothing already captured is lost.
 
+### What the early exit does *not* cover, learned from a real failure
+
+Cycle 6 of the first fast run wedged and the operator saw it: no login screen, then
+the watchdog restarted the tablet. The harness recorded it as a clean cycle, for
+three separate reasons. All three are now fixed or written down, and the capture is
+kept as `wedge-rate-pre-test191-capture/FAILED-BOOT-20260925T0457.md`:
+
+* the presence parser kept only the **first** gone/back pair, so a wedge plus the
+  watchdog's restart looked like one ordinary outage. That cycle's log has
+  `gone=2 back=3`; every other cycle has `gone=1 back=2`. The parser now reports
+  every transition, a second outage is a **stop condition**, and the full console
+  is preserved as `wedged-cycle-N-console.log`;
+* `nmi_unanswered` is **structurally zero on this channel**: the cmdline carries
+  `loglevel=4`, which prints levels 0-3, and the unanswered-NMI line is `pr_warn`
+  (level 4). The early exit's marker guard therefore does not cover the marker it
+  was documented as covering - it does still cover panic, soft lockup, RCU stall and
+  workqueue lockup, which are level 3 or lower. **The shell answering a command is
+  the real health check**;
+* the probe fires at `EARLY_MIN_UPTIME` = 45 s, so a wedge that begins **after**
+  45 s is missed entirely. The failure above began at ~6.8 s, so it was caught by
+  the shell check - but the hole is real and is not closed.
+
 ## Honest limits
 
 * The kernel **builds**, the symbol is in the resolved config
