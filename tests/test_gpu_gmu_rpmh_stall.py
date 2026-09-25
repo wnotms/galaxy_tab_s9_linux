@@ -1017,12 +1017,16 @@ class StallFailureShapeTests(unittest.TestCase):
     def test_the_doc_excludes_the_kernel_reset_paths(self):
         """Who reset it must be argued from source, not assumed."""
         text = read(self.DOC)
-        self.assertIn("no `wdt` or `watchdog` node at all", text)
+        self.assertIn("no `wdt` or `watchdog` node at", text)
         self.assertIn("CONFIG_SOFTDOG", text)
-        self.assertIn("nothing in mainline reset the machine", text)
+        self.assertIn("Nothing in mainline reset it", text)
+        # It must cite the existing findings rather than re-derive them, and it
+        # must name the one concrete out-of-kernel candidate without claiming it.
+        self.assertIn("docs/WATCHDOG_X710.md", text)
+        self.assertIn("qcom,gh-watchdog", text)
         # The residual unknown must stay unknown.
-        self.assertIn("remains", text)
-        self.assertIn("undetermined", text)
+        self.assertIn("stays a candidate", text)
+        self.assertIn("no measurement in", text)
 
     def test_the_doc_localises_the_outstanding_stop_jobs(self):
         """The failure's narrowest localisation must not drift."""
@@ -1040,9 +1044,12 @@ class StallFailureShapeTests(unittest.TestCase):
         self.assertIn("refuted", text)
         self.assertIn("reboot -f", text)
 
-    def test_the_doc_does_not_name_a_reset_agent(self):
+    def test_the_doc_does_not_assert_a_reset_agent(self):
+        """It may name a candidate; it must not name a culprit."""
         text = read(self.DOC)
-        self.assertIn("The reset agent is not established", text)
+        self.assertIn("only partly established", text)
+        self.assertIn("stays a candidate", text)
+        self.assertIn("no measurement in", text)
 
     def test_the_doc_records_why_the_old_classifier_missed_it(self):
         text = read(self.DOC)

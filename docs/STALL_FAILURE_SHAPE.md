@@ -74,36 +74,48 @@ It also confirms the live signature in
 (`usb0525:a4a7` stayed on the bus for the whole 28.9 s — the gadget was never torn
 down), userspace stopped, then a reset.
 
-**The reset agent is not established.** Nothing in the capture says who reset the
-machine at ~monotonic 99 s. The console is silent, there is no panic, and the two
-candidates that would have to be checked — a hardware watchdog outside the kernel
-and the kernel's own `panic=10` path — cannot be told apart from this file. It is
-recorded as unknown rather than guessed.
+**Which agent resets the machine is only partly established.** The capture alone
+does not say who reset it at ~monotonic 99 s — the console is silent and there is
+no panic. §4 argues the kernel's own paths out of contention from source and
+config, which leaves an out-of-kernel source; naming *that* source is still open
+(§8).
 
 ## 4. Who resets it — and what demonstrably did not
 
-The 28.9 s hang ends with a reset. The kernel's own reset paths can be excluded
-from source and config:
+The 28.9 s hang ends with a reset. **Nothing in mainline reset it.** That is not a
+new finding — `docs/WATCHDOG_X710.md` §"layers" and
+`test-183/ANSWERS.md` §10-11 already established it from source, config and the
+device — but it had not been connected to the failure:
 
-* **No watchdog device exists on this board.** `CONFIG_WATCHDOG=y`,
-  `CONFIG_WATCHDOG_CORE=y` and `CONFIG_QCOM_WDT=y` are all set in
-  `out/kernel-gts9wifi/config`, but `arch/arm64/boot/dts/qcom/sm8550.dtsi` at the
-  pinned revision contains **no `wdt` or `watchdog` node at all** — a grep for
-  either word over the whole file returns nothing — and the driver's match table
-  (`drivers/watchdog/qcom-wdt.c:369-372`) lists only `qcom,apss-wdt-ipq5424`,
-  `qcom,kpss-timer`, `qcom,scss-timer` and `qcom,kpss-wdt`, none of which SM8550
-  uses. The driver therefore binds to nothing. The collector's own header records
-  the same fact from the device: `/dev/watchdog0` does not exist.
-* **`softdog` is not built.** `CONFIG_SOFTDOG` is unset, so the
-  `softdog.soft_panic=1` that ABL injects into the command line is inert.
-  `CONFIG_ARM_SMC_WATCHDOG` and `CONFIG_PMIC_WATCHDOG` are unset too.
-* **`panic=10` did not fire.** A panic prints at `KERN_EMERG`, which bypasses the
-  profile's `loglevel=4`; the console was silent for the whole 28.9 s.
+* **No watchdog device exists on this board.** `CONFIG_QCOM_WDT=y`, but
+  `arch/arm64/boot/dts/qcom/sm8550.dtsi` has **no `wdt` or `watchdog` node at
+  all** (a grep for either word over the whole file returns nothing at the pinned
+  revision), and `drivers/watchdog/qcom-wdt.c:369-372` matches only
+  `qcom,apss-wdt-ipq5424`, `qcom,kpss-timer`, `qcom,scss-timer` and
+  `qcom,kpss-wdt`. `/dev/watchdog0` does not exist and `/sys/class/watchdog/` is
+  empty.
+* **`softdog` is not built** (`CONFIG_SOFTDOG` unset), so the
+  `softdog.soft_panic=1` ABL injects is inert; `CONFIG_ARM_SMC_WATCHDOG` and
+  `CONFIG_PMIC_WATCHDOG` are unset, and systemd's runtime watchdog is not armable
+  (`RuntimeWatchdogUSec=0`).
+* **`panic=10` did not fire.** A panic prints at `KERN_EMERG`, bypassing the
+  profile's `loglevel=4`, and the console was silent for the whole 28.9 s.
 
-So nothing in mainline reset the machine, which means the reset came from outside
-its software stack — a watchdog or reset source armed by the bootloader or the
-PMIC that mainline neither owns nor pets. **Which source it is remains
-undetermined**; the point established here is the narrower and firmer one, that it
+So the reset came from outside mainline's software stack. The one concrete
+candidate the project already has on record is the vendor's own watchdog: the
+stock X710 DTS declares
+
+```
+sec,qcom_wdt_core_dev_name = "hypervisor:qcom,gh-watchdog";
+qcom,gh-watchdog { compatible = "qcom,gh-watchdog"; };
+```
+
+i.e. on stock firmware the watchdog is a **Gunyah hypervisor** device, chosen
+deliberately over the APSS one. Mainline has neither a node nor a driver for it,
+and this round's scope explicitly excludes writing one. It is therefore the
+leading candidate for the reset — and it stays a candidate: **no measurement in
+the capture identifies it**, and nothing here shows it is even armed during a
+mainline boot. What is established is the narrower, firmer claim that the reset
 was not a kernel watchdog and not `panic=`.
 
 What the armed detectors did *not* report also narrows the failure. The failing
@@ -246,9 +258,11 @@ Two fixes follow, both applied:
 
 ## 8. What is still open
 
-* **which out-of-kernel source resets the machine ~29 s in.** §4 shows it is not
-  a kernel watchdog and not `panic=`, but it cannot name the platform watchdog or
-  PMIC path that did it.
+* **whether the Gunyah hypervisor watchdog is what resets the machine ~29 s in.**
+  §4 shows the reset is not a kernel watchdog and not `panic=`, and identifies
+  `qcom,gh-watchdog` - the watchdog stock firmware deliberately uses - as the
+  leading candidate. Nothing measures it, and arming or driving it is out of scope
+  for this round.
 * **whether this failure is the one the current kernel no longer produces.** The
   capture is from the pre-fix kernel. 16 clean cycles on the AOSS-QMP + IPCC
   kernel and the test-188 series on the current one bound its rate; they do not
