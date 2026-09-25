@@ -48,7 +48,7 @@ Device tree, confirmed in the **flashed** DTB (`sm8550-samsung-gts9wifi.dtb`,
 `operating-points-v2` and `num-lanes` all resolved.
 
 **No Kconfig change was needed.** Every symbol above was already correct; the
-problem was that the modules were never built or installed (see §7). Per the
+problem was that the modules were never built or installed (see §4). Per the
 round's instruction, no meaningless Kconfig edit was made.
 
 ### The `wifi@0` node is the correct upstream idiom, not a bug
@@ -61,59 +61,86 @@ shows it is a required part of the ath11k PCI stack rather than an optional
 flourish. `validate_device()` additionally requires `vddaon-supply`, which this
 node declares.
 
-## 3. Runtime evidence (test-200, boot `037998b6`)
+## 3. Runtime evidence
 
-From `scripts/wifi-preflight.sh`, transcript in
-`reference/boot-tests/test-200-wifi-preflight/preflight.txt`:
+Read-only probes, all archived: `reference/boot-tests/test-200-wifi-preflight/`
+(transcript), `test-201-wifi-modules/`, `test-202-wifi-warm-reboot/`,
+`test-203-wifi-cold-boot/`.
+
+| question | answer |
+|---|---|
+| PCI enumeration | **one device: `0000:00:00.0` `17cb:0113`** — the SM8550 root complex, class `0x060400`, driver `pcieport` |
+| `17cb:1103` (the WCN6855 endpoint) | **absent.** Has never appeared in any log in this project's history |
+| link | `link_status=0x0142`, `DLLLA (bit13) = 0` — **down**; LTSSM stuck in `DETECT_QUIET`/`DETECT_ACT` |
+| driver bind | `1c00000.pcie`→`qcom-pcie`, `1c06000.phy`→`qcom-qmp-pcie-phy`, `wcn6855-pmu`→`pwrseq-qcom_wcn`, `wifi@0`→`pci-pwrctrl-pwrseq` |
+| `devices_deferred` | only `aux_bridge` — PCIe is no longer deferred |
+| firmware request | **none** — `ath11k` has never been loaded |
+| hw revision / board id | **unknown, and not guessed.** They are decided by what `ath11k` asks for once an endpoint exists |
+| second witness | `hci0: Reading QCA version information failed (-110)` ×4 over UART14 — the chip is silent there too |
+
+The driver's own words for the failure, now that it gets far enough to speak:
 
 ```
-pci devices on the bus : 0
-17cb:1103 present      : NO
-17cb:1103 bound driver : n/a
-cfg80211/mac80211/ath11k loaded : 0
-ieee80211 phy devices  : 0
-/lib/modules/$(uname -r) : NONE
-qcom-pcie deferred ('cannot initialize host') : YES
-STATE: A  no PCI devices at all
+qcom-pcie 1c00000.pcie: Device not found
 ```
 
-* **PCI enumeration: none.** `/sys/bus/pci` exists and `CONFIG_PCI=y`, so the bus
-  is present and empty. No config space has ever been read.
-* **driver bind: none** — for the same reason.
-* **firmware request: none.** ath11k was never reached, so nothing has been asked
-  for. There is therefore no authoritative `hw revision` or `board id` yet, and
-  this document does **not** guess `hw2.0`/`hw2.1`/`board-2.bin`.
-* `/sys/kernel/debug/devices_deferred`:
-  ```
-  1c00000.pcie   qcom-pcie: cannot initialize host
-  ```
-* PHY: `1c06000.phy` **bound** to `qcom-qmp-pcie-phy`. GDSCs `pcie_0_gdsc` and
-  `pcie_0_phy_gdsc` present.
-* The WCN PMU platform device exists (`/sys/bus/platform/devices/wcn6855-pmu`) but
-  is **unbound**, because its driver is also a module.
+which `pcie-designware.c:788` emits only when the LTSSM is in
+`DETECT_QUIET`/`DETECT_ACT` — no link partner was ever seen. This is not a
+signal-integrity or training failure; the neighbouring branch would have printed
+`Device found, but not active`.
 
 ## 4. Changes made
 
-* **`scripts/wifi-preflight.sh`** — new, read-only. It cannot modify hardware
-  state: no modprobe, no bind/unbind, no GPIO or regulator writes, no firmware
-  writes. Committed as `wifi: add read-only QCA6490 bring-up probe`.
-* **Nothing else.** No DTS change, no ath11k change, no Kconfig change, and no
-  flash. The board DTS, the `qcom,wlan-pdc-init` AOP votes and the PCIe node are
-  correct as they stand and were left untouched, as the round required.
+| change | why |
+|---|---|
+| `scripts/wifi-preflight.sh` | read-only probe; classifies the result into the plan's named states |
+| `scripts/stage-wifi-modules.sh` | installs built modules into the running tablet, refusing unless release **and** vermagic match |
+| `scripts/wifi-cold-boot-capture.sh` | snapshots the instant the tablet answers after a power-on, so a cold result is not a late reading |
+| `scripts/screenshot-tablet.sh` | screen capture over the console link (no X11/Wayland on this port) |
+| `build-kernel.sh`: `GTS9_DIAGNOSTIC_PATCHES`, image-replace guard | see below |
+| `docs/WIFI_QCA6490_BRINGUP.md` | this document |
+
+**No DTS change, no ath11k change, no Kconfig change, and nothing flashed for
+Wi-Fi.** The board DTS, the `qcom,wlan-pdc-init` block and the PCIe nodes are
+identical to upstream mainline's own `sm8550-samsung-gts9wifi.dts` apart from
+comments, so there is nothing to correct on this evidence.
+
+Two build-path defects were found and fixed while doing this, both recorded because
+they are the kind that surface much later:
+
+* **the modules had never been built.** The build whose `Image.gz` is flashed had no
+  `modules-root` at all (`BUILD_MODULES=0`), so `CONFIG_ATH11K=m` and
+  `CONFIG_PCI_PWRCTRL_PWRSEQ=m` were satisfied on paper only. Rebuilt: 167 modules,
+  vermagic matching the flashed kernel, and `modules.alias` carries
+  `alias of:N*T*Cpci17cb,1103 pci_pwrctrl_pwrseq`.
+* **`build-kernel.sh` silently reverted a diagnostic patch.** It calls
+  `prepare-kernel.sh`, which by design restores the pinned source and reapplies
+  only the default queue — dropping `0021-gts9-rpmh-timeout-state-dump.patch`,
+  which had been applied by hand. The result was a valid-looking `Image.gz` with no
+  `gts9_rpmh_debug` switch, overwriting the artifact named as flashed. Now
+  `GTS9_DIAGNOSTIC_PATCHES=<name>` applies it explicitly, and the build keeps an
+  `Image.gz.flashed-*` copy rather than silently replacing a flashed image. The
+  regenerated kernel is **byte-identical** to the one in the flashed boot image.
 
 ## 5. Firmware provenance
 
-**None yet, and that is the honest state.** No firmware has been staged, selected
-or downloaded. The path, the hardware revision and the board id must come from
-what `ath11k` actually requests at runtime once the PCIe host probes; deciding
-them now would be guessing, which the round forbids.
+**None staged, none selected, none downloaded — and that is the correct state.**
+`ath11k` has never been loaded because there is no PCI endpoint for it to bind to,
+so it has never requested a firmware path. The `hw` revision and board id must come
+from what it actually asks for at runtime; choosing them now would be guessing,
+which the round forbids.
 
-When it is time, the rules are already fixed: prefer upstream `linux-firmware` if
-it carries a matching WCN6855 revision, otherwise extract Samsung's own
+`scripts/stage-wifi-firmware.sh` does not exist yet on purpose: writing a tool whose
+whole job is to place files at a path decided by the driver, before the driver has
+said what that path is, would bake in exactly the assumption this round is meant to
+avoid. It gets written when there is a real request to satisfy.
+
+The rules are already fixed for when there is one: prefer upstream `linux-firmware`
+if it carries a matching WCN6855 revision, otherwise extract Samsung's own
 firmware/BDF from the legally-owned stock partitions, and record source, version,
-filename and SHA-256 for every file. Never a guessed BDF, never an X910 board
-file, never an internet `board-2.bin` as X710 calibration, and never an ath11k
-patch to bypass board matching.
+filename and SHA-256 for each file. Never a guessed BDF, never an X910 board file,
+never an internet `board-2.bin` as X710 calibration, and never an ath11k patch to
+bypass board matching or force an unmatched calibration fallback.
 
 ## 6. Current state
 
@@ -133,24 +160,44 @@ prerequisite for LEVEL 1, not LEVEL 1.
 
 ## 7. Cold/warm boot result
 
-**Warm reboot measured; cold boot not yet measured.** The two are never merged.
+**Both measured, and they are identical.** test-202 covers a warm reboot; test-203
+covers a full `systemctl poweroff` followed by power-on. Neither reaches the
+endpoint, and every field matches: modules autoload, controller and PHY bound,
+`devices_deferred` down to `aux_bridge`, one PCI device (`17cb:0113`),
+`link_status=0x0142` / `DLLLA=0`, `0000:01:00.0` absent, `WLAN_EN` high, `PERST`
+released, all six PMU inputs enabled. The cold-handoff hypothesis — that the PMU
+needs the PDC/AOP votes a cold start lacks — is **not supported**.
 
-| | warm reboot, modules installed |
-|---|---|
-| modules autoloaded at boot | **yes** (`pci-pwrctrl-pwrseq`, `pwrseq-qcom-wcn`) |
-| `wifi@0` bound during boot, no manual modprobe | **yes** |
-| `devices_deferred` | only `aux_bridge` |
-| PCI devices | 1 — `0000:00:00.0` `17cb:0113` (root complex) |
-| `17cb:1103` | **absent** |
-| Link Status `DLLLA` (bit 13) | **0 — link down**, unchanged by `rescan` |
+Scope, stated rather than assumed: the tablet was confirmed off (no ssh, no adb,
+console silent) and restarted when VBUS was present, but the pmsg region still
+named an older boot and `ramoops` lives in RAM that a true rail collapse would
+clear. So this is the closest to a cold start achieved so far, not a
+guaranteed-cold power cycle with the battery disconnected.
 
-Reading config space of `01:00.0` fails outright (`No devices selected`). So the
-warm path reaches "host ready, link down", and a cold power-on has **not** been
-tested. Per the round's rule, the warm result is not evidence about cold.
+## 8. The fault is below both host interfaces
 
-## 8. Remaining problems
+The strongest evidence in this round is not about PCIe at all. The pstore console
+of the preceding boot shows `hci_qca` reading the chip's version over **UART14** —
+a different bus — and getting no answer four times:
 
-### 8.1 The endpoint does not come up, and the fault is on its side of a link the host finished setting up
+```
+Bluetooth: hci0: command 0xfc00 tx timeout
+Bluetooth: hci0: Reading QCA version information failed (-110)
+```
+
+So PCIe0 reports LTSSM `DETECT_QUIET` (no link partner) while the BT ROM also fails
+to answer. **The WCN6855 is silent on both of its host interfaces.** That is one
+fault, below both, and it rules out the link-training, controller, PHY, iATU and
+pinctrl explanations individually — they cannot each be the cause of a UART
+timeout.
+
+Recorded as an observation about the shared chip, not as "Bluetooth caused it" or
+"Wi-Fi caused it". BT shares the PMU and is running; the version-read failure is
+evidence that the chip is unpowered or held, which is a statement about the chip.
+
+## 9. Remaining problems
+
+### 9.1 The endpoint does not come up, and the fault is on its side of a link the host finished setting up
 
 Everything the host owns has been verified working, live:
 
@@ -177,7 +224,7 @@ And the endpoint power sequence ran:
 So power, reset, clock and pinmux are all applied and the link is still down. The
 remaining fault is in the endpoint/PMU interaction, not in the host controller.
 
-### 8.2 The board DTS matches upstream mainline exactly — so this is not a DTS bug
+### 9.2 The board DTS matches upstream mainline exactly — so this is not a DTS bug
 
 `wcn6855_pmu`, `&pcie0`, `&pcieport0`/`wifi@0`, `&pcie0_phy`, `pcie0_default_state`
 and `pmk8550_sleep_clk` were diffed against
@@ -186,7 +233,7 @@ tree **already carries an upstream gts9wifi DTS** — and they are identical apa
 from comments. `wifi@0` is byte-identical. There is therefore no DTS change to make
 on this evidence, and making one would be guessing.
 
-### 8.3 Two properties in the DTS are inert on mainline
+### 9.3 Two properties in the DTS are inert on mainline
 
 * **`qcom,wlan-pdc-init` and `qcom,qmp`** — a search of the entire pinned tree finds
   them **only in the DTS**; no driver reads either. They are kept, because the
@@ -198,7 +245,7 @@ on this evidence, and making one would be guessing.
 * **`swctrl-gpios` (gpio82)** — consumed by no WLAN driver. Mainline's `hci_qca.c`
   reads a `swctrl` property, so this pin belongs to **Bluetooth**, not WLAN.
 
-### 8.4 Bluetooth shares the PMU and is running
+### 9.4 Bluetooth shares the PMU and is running
 
 `hci0` exists and `hci_qca` powers the shared chip through the **same**
 `pwrseq-qcom-wcn` device, via `devm_pwrseq_get(..., "bluetooth")` and
@@ -208,13 +255,13 @@ attribution and is exactly why the round forbids bringing up BT at the same time
 it has not been disabled, and doing so is a candidate experiment, not a change made
 here.
 
-### 8.5 The stale-boot artifact is gone
+### 9.5 The stale-boot artifact is gone
 
 test-200/201 ran on a boot that had probed PCIe eight times *before* the modules
 existed. The reboot in §7 clears that: the current state is what a normal boot
 produces.
 
-### 8.6 Explicitly out of scope and untouched
+### 9.6 Explicitly out of scope and untouched
 
 * **Bluetooth** — not developed this round.
 * **suspend/resume** — recorded only, no PM change.
@@ -222,29 +269,35 @@ produces.
   computed; no Wi-Fi reboot counted in any A/B series. Nothing in these results
   claims anything about it.
 
-## 9. Exact next physical test
+## 10. Exact next physical test
 
 The next test is chosen to discriminate between two hypotheses that the current
 evidence cannot separate, and it needs no code change and no build:
 
-1. **Cold power-on versus warm reboot.** The DTS comment (and upstream's) says a
-   cold handoff is where the PMU fails to complete power-up when the PDC/AOP votes
-   are absent — and mainline implements no such votes (§8.3). Warm boot is now
-   measured and fails; a **full poweroff then power-on** is the untested half. Do
-   not merge the two results.
-2. **Whether the endpoint needs the PMU's *internal* LDOs.** The nine
-   `vreg_pmu_*` rails are declared in the `regulators { }` child of `wcn6855-pmu`
-   and referenced by `wifi@0` and the BT node — but **no mainline driver registers
-   them**, so they appear as zero entries in `/sys/class/regulator`. If the
-   endpoint's `vddpcie0p9`/`vddpcie1p8` really come from those internal LDOs, they
-   are not being enabled. This is the strongest remaining structural hypothesis.
+Both hypotheses that this section used to list have been **tested and excluded**:
+the cold-handoff/PDC one by test-203 (§7), and the "PMU internal LDOs are not being
+enabled" one by inspection — those rails are the chip's own outputs, upstream's
+accepted board file declares the same 37 references, and no mainline board
+registers them, so a `vreg_pmu` count of 0 is normal upstream behaviour rather than
+a defect.
 
-Order: power off fully, power on, and immediately run
-`scripts/wifi-preflight.sh --save reference/boot-tests/test-<N>-wifi-cold/`. Read
-the same table as §8.1. Then, if the link is still down, test hypothesis 2 by
-checking whether the internal rails can be modelled as `regulator-fixed` from
-always-on parents — that is a DTS change and needs its own authorization, and it
-must be justified by evidence rather than tried as a guess.
+What remains is a hardware-side question, and the next test is a measurement rather
+than a code change: **measure the chip's rails directly.** Both host interfaces
+being silent with `WLAN_EN` high and `PERST` released is consistent with the chip
+having no power, being held in reset by something other than `PERST`, or having no
+reference clock — and software cannot distinguish those three from the host side.
+
+Concretely, on the next physical session:
+
+1. probe the WCN6855's supply rails at the test points (or read them through the
+   PMIC if the board exposes them) with the host asserting `WLAN_EN`, and confirm
+   whether they are actually up;
+2. check `XO` (gpio204) and the sleep-clock pin (`pmk8550` gpio3) at the chip, since
+   the driver only *claims* to pulse them;
+3. check whether any reset line other than `PERST` holds the chip.
+
+Until a rail is measured, no DTS, ath11k or pwrseq change is justified — and in
+particular **do not** add magic delays or retries to manufacture a `wlan0`.
 
 If `17cb:1103` ever appears, move immediately to `modprobe ath11k_pci` and capture
 the firmware paths **it** requests; that output, not this document, decides the
