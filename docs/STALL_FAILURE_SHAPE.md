@@ -106,7 +106,15 @@ PMIC that mainline neither owns nor pets. **Which source it is remains
 undetermined**; the point established here is the narrower and firmer one, that it
 was not a kernel watchdog and not `panic=`.
 
-What the armed detectors did *not* report also narrows the failure:
+What the armed detectors did *not* report also narrows the failure. The failing
+boot armed them itself, and said so at 4.76 s:
+
+```
+gts9-watchdog-debug: armed=1 softlockup=1 hung_task=1 wq=45 panic=10 pstore=ramoops-registered records=0
+```
+
+`armed` is `/proc/sys/kernel/watchdog`, which the helper sets to 1 at runtime to
+undo the ABL's `nowatchdog`, so the soft-lockup detector really was running.
 
 | detector | threshold in this profile | could it have fired in 28.9 s? |
 |---|---|---|
