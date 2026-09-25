@@ -2333,6 +2333,40 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("survives in the round record only", t195)
         self.assertIn("single-slot ring", t195)
 
+    def test_the_profile_c_result_is_recorded_without_over_claiming(self):
+        """The ablation passed; the single event is NOT classified as a GPU verdict."""
+        r = "reference/boot-tests/test-196-20260925T1100Z/RESULT.md"
+        if not (ROOT / r).exists():
+            self.skipTest("test-196 result not written yet")
+        text = read(r)
+        flat = " ".join(text.split())
+        # The gate, and that it can fail.
+        for check in ("`Y`", "absent — UNBOUND", "16", "connected"):
+            with self.subTest(check=check):
+                self.assertIn(check, text)
+        # The event must stay unclassified, with both readings named.
+        self.assertIn("not determined in 2 rounds", flat)
+        self.assertIn("host-side USB reset", flat)
+        self.assertIn("abrupt death of the guest at ~7.4 s", flat)
+        self.assertIn("The second reading is not excluded", flat)
+        # It must not downgrade the GPU on this evidence.
+        self.assertIn("does not downgrade the GPU/GMU/ACD path", flat)
+        self.assertIn("does not exonerate it either", flat)
+        # And the harness defect it exposed must be recorded.
+        self.assertIn("under_test_boot_id", text)
+        self.assertIn("none of them named the boot the kernel-log evidence came from",
+                      flat)
+        # The undecodable dump, with the verified magic.
+        self.assertIn("c4 5c 5d 77", text)
+        self.assertIn("zlib_inflate() failed, ret = -3!", text)
+
+    def test_the_boot_under_test_is_recorded_by_the_probe(self):
+        """Three boot ids per round, and the evidence describes a fourth thing."""
+        text = read("scripts/stall-ab.sh")
+        self.assertIn("under_test_boot_id=", text)
+        self.assertIn("boot_under_test=", text)
+        self.assertIn("boot_list=", text)
+
     def test_the_profile_c_candidate_is_ready_and_gated(self):
         """A candidate that cannot prove its own ablation is not a candidate."""
         c = "reference/boot-tests/test-196-20260925T1100Z/candidate.txt"
