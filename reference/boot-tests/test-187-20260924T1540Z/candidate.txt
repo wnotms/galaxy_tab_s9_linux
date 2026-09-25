@@ -8,7 +8,7 @@ and booted on hardware** with the owner's explicit authorisation, and the GPU no
 binds — see `on-device/README.md`. The stall-rate A/B is still outstanding, so
 there is no fix claim here.
 
-The bundles were rebuilt after the round-3 `CONFIG_QCOM_IPCC` fix; every hash
+The bundles were rebuilt after the round-15 `CONFIG_HWSPINLOCK_QCOM` fix; every hash
 below is from that single build.
 
 ## Why this candidate exists
@@ -22,7 +22,8 @@ this candidate:
 gpu_bound=0  gmu_bound=0  aoss_bound=0  deferred=8
 ```
 
-`3d00000.gpu` has never bound to a driver. See
+`3d00000.gpu` had never bound to a driver. It does now (`adreno`), and the deferred
+list is down to 3 entries after the round-15 provider fix. See
 `docs/GPU_GMU_RPMH_STALL_PLAN.md` and `docs/X710_X910_GPU_RPMH_DIFF.md`.
 
 ## The single kernel every profile uses
@@ -33,12 +34,12 @@ one-variable experiment.
 
 | image | sha256 | note |
 |---|---|---|
-| `boot.img` | `12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c` | identical in all five bundles; **flash-verified and booted, GPU binds** |
+| `boot.img` | `bf6a02bbe19e9561be2bae6d691cbaad0c3871ed4efc3878b8f689f2af00bd3e` | identical in all five bundles; **flash-verified and booted, GPU binds** |
 | `init_boot.img` | `7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c` | unchanged from the flashed image |
 | `dtbo.img` | `c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3` | unchanged |
 | `vbmeta.img` | `b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4` | unchanged |
 
-Kernel payload `Image.gz` `7e109e8f830440c774c04acc66685764a3ec3189d765898a8496489e22b1a491`,
+Kernel payload `Image.gz` `f1d8ccdb91877a16314941a9c43780bdc2f42b030f4dee8fd0d2aa6cb5f302fb`,
 board DTB `b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596`,
 initramfs `7064945c07c929d9ff0764f2f7c56b49d74ff90a0663588d3b3bf7cfce0131bf`.
 
@@ -52,7 +53,7 @@ verification rebuild produced `c825426b…`, and **all five bundles were then
 rebuilt from the single current build** so they are mutually consistent again.
 
 Each bundle's `BUNDLE_INFO` records the build it came from, and all five now read
-`image_gz_sha256=7e109e8f830440c774c04acc66685764a3ec3189d765898a8496489e22b1a491`,
+`image_gz_sha256=f1d8ccdb91877a16314941a9c43780bdc2f42b030f4dee8fd0d2aa6cb5f302fb`,
 which matches `out/kernel-gts9wifi/Image.gz`.
 
 **Operational consequence for the operator: do not rebuild between flashing
@@ -65,11 +66,17 @@ That kernel contains, in order:
 1. `0001`, `0002`, `0003`, `0004`, `0006`, `nxp-ptn3222-…` — the existing queue;
 2. **`0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch`** — new,
    the upstream GMU cxpd `DL_FLAG_STATELESS` fix;
-3. **`CONFIG_QCOM_AOSS_QMP=y` and `CONFIG_QCOM_IPCC=y`** — new, the config fix.
-   Both are required: AOSS QMP takes its mailbox from IPCC, and with only the
-   first one `qcom_aoss_qmp` fails with "failed to acquire ipc mailbox" and the
-   GPU stays unbound. Verified on hardware — see `on-device/README.md`;
-4. `diagnostic/0021-…` with the new `rsc_id` field — compiled in, inert unless
+3. **`CONFIG_QCOM_AOSS_QMP=y` and `CONFIG_QCOM_IPCC=y`** — the GPU fix. Both are
+   required: AOSS QMP takes its mailbox from IPCC, and with only the first one
+   `qcom_aoss_qmp` fails with "failed to acquire ipc mailbox" and the GPU stays
+   unbound. Verified on hardware — see `on-device/README.md`;
+4. **`CONFIG_HWSPINLOCK_QCOM=y`** — new in round 15. Upstream `sm8550.dtsi` gives the
+   SMEM node `hwlocks = <&tcsr_mutex 3>`, and without this provider
+   `qcom_smem_probe()` defers forever ("failed to retrieve hwlock"), which cascaded
+   into `smp2p-adsp/-cdsp/-modem` ("unable to allocate local smp2p item") and then
+   into the ADSP remoteproc. Verified on hardware: the deferred list went from 8
+   entries to 3 — see `on-device/HWSPINLOCK-FIX-RESULT.md`;
+5. `diagnostic/0021-…` with the new `rsc_id` field — compiled in, inert unless
    `gts9_rpmh_debug=1` is on the command line.
 
 ## The vendor_boot.img per profile
