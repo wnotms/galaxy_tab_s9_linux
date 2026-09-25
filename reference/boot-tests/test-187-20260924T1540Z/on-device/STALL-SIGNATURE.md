@@ -97,11 +97,23 @@ reports "shell answered"; what was missing was requiring a **command result**.
 
 ## What is still not established
 
+* **Correction (round 16): the archive id names the collector, not the failure.**
+  `…-8d7db274/` was created *by* boot `8d7db274`; its `prev-kernel.log` is the
+  boot before it. The log quoted above is therefore the failing boot's, as
+  treated here, but `8d7db274` is the survivor. `docs/STALL_FAILURE_SHAPE.md` §5
+  has the detail, and §1–§3 of that document show that a live host capture of this
+  same failure already existed in the repository: 23 shutdown lines in 0.83 s,
+  then **28.9 s of silence**, then a reset with no panic and no `systemd-shutdown`.
+  That settles the first bullet below — the "fast shutdown with an unflushed tail"
+  explanation is refuted.
 * Whether the two `hard-reset-or-incomplete` boots and the two live episodes are
   the same phenomenon. They share the observable signature (reset, no marker) but
   were not captured with a command-result detector, so the userspace-progress
   check was never applied to them.
+* Who resets the machine ~29 s after the shutdown begins. The console is silent
+  and there is no panic, so neither a hardware watchdog nor the `panic=10` path
+  can be confirmed or excluded from the existing evidence.
 * Whether a panic actually occurs. Without pstore and without a listening console,
   this cannot be settled from the archive — it needs a **host-attached console
-  capture spanning the reset**, which is the one experiment that would answer it
-  and which no round has yet run.
+  capture spanning the reset**, which `test-188/shutdown-series.sh` now runs on
+  every round.

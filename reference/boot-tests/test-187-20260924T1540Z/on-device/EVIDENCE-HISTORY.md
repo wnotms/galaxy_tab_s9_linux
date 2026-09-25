@@ -1,5 +1,17 @@
 # Evidence-archive history: 8 boots on the post-fix kernel
 
+> **Correction (round 16).** The ids in the first column are the **collecting**
+> boots, not the boots described. The collector names its directory after the boot
+> that runs it (`boot_id=$(cat /proc/sys/kernel/random/boot_id)`) while
+> `prev-kernel.log` and `previous_boot_end=` describe the boot *before* it — so
+> `…-8d7db274/` was created **by** `8d7db274` and holds its predecessor's journal.
+> `176925b2` and `8d7db274` are therefore the boots that *followed* the two
+> failures, whose own ids were never recorded. The quoted data is unaffected.
+> See `docs/STALL_FAILURE_SHAPE.md` §5, which also resolves the open question in
+> "What this does and does not establish" below: a live host capture of the
+> `…-8d7db274` failure exists in this repository and shows 28.9 s of silence
+> before the reset, refuting explanations (2) and (3).
+
 Read from the device's own `gts9-prev-boot-evidence` archive
 (`/var/log/gts9-boot-evidence/<utc>-<bootid8>/verdict.txt`). This is real,
 already-collected per-boot evidence — not a synthetic fixture, and not pstore
