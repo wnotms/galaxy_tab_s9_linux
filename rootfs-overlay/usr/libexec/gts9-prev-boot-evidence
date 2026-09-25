@@ -3,21 +3,36 @@
 #
 # The X710 stall wedges the microSD path (mmc1 timeouts in the stall reports),
 # so the journal of a stalled boot can stop within seconds of the wedge and the
-# trace recorder can be cut off mid-file.  Nothing on this device survives the
-# stall by itself: /sys/fs/pstore is empty (CONFIG_PSTORE_RAM=y but no ramoops
-# node) and /dev/watchdog0 does not exist.
+# trace recorder can be cut off mid-file.
 #
-# What does survive is the previous boot's journal *up to* the wedge, the trace
-# files the recorder already wrote to the microSD, and the serial console
-# capture on the host.  This helper collects the first two into one directory
-# per boot so the next round starts from a known place, and distils the stall
-# markers into a handful of lines that can be read back over a 115200 baud
-# console in seconds:
+# CORRECTION (round 22): pstore DOES survive the stall on this port, and the
+# comment that used to stand here - "/sys/fs/pstore is empty (CONFIG_PSTORE_RAM=y
+# but no ramoops node)" - was wrong twice over.  CONFIG_PSTORE_RAM=y and the
+# ramoops node is present (`ramoops@880900000`, 2 MiB), and dmesg shows
+# `pstore: Registered ramoops as persistent store backend` plus
+# `printk: legacy console [ramoops-1] enabled`.  On 2026-09-25 that record held
+# the complete post-mortem of a failed boot - the DPU flood, two SDHCI timeouts,
+# an RPMh timeout, an RCU stall, the soft-lockup panic - and this collector
+# archived none of it, because it looked in the wrong directory:
+#
+#   systemd-pstore.service runs BEFORE this unit, MOVES every record from
+#   /sys/fs/pstore to /var/lib/systemd/pstore, and deletes the originals.
+#
+# So the records were on disk the whole time, one directory away, and every
+# verdict this script has ever written said pstore_records= (empty).  Both
+# directories are searched now.
+#
+# What survives is the previous boot's journal *up to* the wedge, the pstore
+# records (which carry the panic), and the trace files the recorder already wrote
+# to the microSD.  This helper collects them into one directory per boot so the
+# next round starts from a known place, and distils the stall markers into a
+# handful of lines that can be read back over a 115200 baud console in seconds:
 #
 #	/var/log/gts9-boot-evidence/<utc>-<boot_id8>/
 #	    verdict.txt          key=value summary of the previous boot
 #	    prev-kernel.log      journalctl -b -1 -k -o short-monotonic
 #	    prev-all.log         journalctl -b -1 -o short-monotonic
+#	    pstore/              every record, from both directories
 #	    stream-prev-tail.txt last 80 lines of the trace recorder's .prev
 #	    stream-prev1-tail.txt last 80 lines of its .1.prev
 #	    watchdog.txt         watchdog state at this boot
@@ -81,16 +96,24 @@ fi
 # but the ramoops console buffer does keep it across the reset.  Copy it before
 # anything can delete or overwrite it: this is the only place the panic stack
 # survives on this port.
+#
+# BOTH directories, and /var/lib/systemd/pstore FIRST: systemd-pstore moves the
+# records there before this unit runs and deletes the originals, so
+# /sys/fs/pstore is normally empty by now.  Reading only /sys/fs/pstore is the
+# bug that lost the 2026-09-25 post-mortem.  First copy of a name wins, so the
+# archived (previous-boot) record is preferred over a same-named fresh one.
 mkdir -p "$dir/pstore" 2>/dev/null || true
 pstore_list=""
-if [ -d /sys/fs/pstore ]; then
-	for rec in /sys/fs/pstore/*; do
+for src in /var/lib/systemd/pstore /sys/fs/pstore; do
+	[ -d "$src" ] || continue
+	for rec in "$src"/*; do
 		[ -f "$rec" ] || continue
 		name=${rec##*/}
+		[ -e "$dir/pstore/$name" ] && continue
+		cp "$rec" "$dir/pstore/$name" 2>/dev/null || continue
 		pstore_list="$pstore_list$name "
-		cp "$rec" "$dir/pstore/$name" 2>/dev/null || true
 	done
-fi
+done
 echo "$pstore_list" >"$dir/pstore/list.txt" 2>/dev/null || true
 
 grep -a -n -E 'Kernel panic|BUG: soft lockup|BUG: hard LOCKUP|watchdog: BUG|watchdog: watch|unable to handle|hung_task|blocked for more than|rcu.*detected stall|rcu.*starved|frame done timeout|kickoff timeout|Timeout waiting for hardware cmd interrupt|sdhci: =|Call trace|task:|Workqueue:' \
@@ -120,13 +143,25 @@ rcu=$(count 'rcu.*detected stall|rcu.*starved')
 dpu=$(count 'frame done timeout|kickoff timeout')
 mmc=$(count 'Timeout waiting for hardware cmd interrupt|sdhci: =')
 
-# The pstore console record is the authoritative "did it panic" evidence.
+# The pstore console record is the authoritative "did it panic" evidence.  It is
+# also the only evidence at all when the failing boot left no journal - which is
+# what happened on 2026-09-25: the boot wedged at ~6.8 s, journald never flushed,
+# and every journal-derived counter below read 0 while the pstore record held the
+# whole story.  So the same markers are counted from pstore separately.
 pstore_panic=0
 pstore_lockup=0
-for rec in "$dir"/pstore/console* "$dir"/pstore/dmesg*; do
+pstore_rcu=0
+pstore_dpu=0
+pstore_mmc=0
+pstore_hung=0
+for rec in "$dir"/pstore/*; do
 	[ -f "$rec" ] || continue
 	pstore_panic=$((pstore_panic + $(count_in "$rec" 'Kernel panic')))
 	pstore_lockup=$((pstore_lockup + $(count_in "$rec" 'BUG: soft lockup|watchdog: BUG|workqueue: stall|hung_task: blocked')))
+	pstore_rcu=$((pstore_rcu + $(count_in "$rec" 'rcu.*detected stall|rcu.*starved')))
+	pstore_dpu=$((pstore_dpu + $(count_in "$rec" 'frame done timeout|kickoff timeout')))
+	pstore_mmc=$((pstore_mmc + $(count_in "$rec" 'Timeout waiting for hardware|sdhci: =')))
+	pstore_hung=$((pstore_hung + $(count_in "$rec" 'hung_task|blocked for more than')))
 done
 
 if [ "$pstore_panic" -gt 0 ]; then
@@ -158,6 +193,18 @@ fi
 	echo "pstore_records=$pstore_list"
 	echo "pstore_panic_lines=$pstore_panic"
 	echo "pstore_lockup_lines=$pstore_lockup"
+	echo "pstore_rcu_lines=$pstore_rcu"
+	echo "pstore_dpu_lines=$pstore_dpu"
+	echo "pstore_mmc_lines=$pstore_mmc"
+	echo "pstore_hung_lines=$pstore_hung"
+	# When the failing boot left no journal, every marker_ above is 0 by
+	# construction and the pstore_ markers are the real answer.  Say so, so a
+	# verdict of "all zero" cannot be read as "nothing happened".
+	if [ -s "$dir/prev-kernel.log" ]; then
+		echo "prev_journal=present"
+	else
+		echo "prev_journal=absent-pstore-is-authoritative"
+	fi
 	echo "watchdog_enabled=$(cat /proc/sys/kernel/watchdog 2>/dev/null || echo absent)"
 	echo "softlockup_panic=$(cat /proc/sys/kernel/softlockup_panic 2>/dev/null || echo absent)"
 	echo "hung_task_panic=$(cat /proc/sys/kernel/hung_task_panic 2>/dev/null || echo absent)"

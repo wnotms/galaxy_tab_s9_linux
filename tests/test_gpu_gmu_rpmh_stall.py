@@ -866,6 +866,93 @@ class FailedBootCaptureTests(unittest.TestCase):
                       "far too few samples")
 
 
+class PstoreRecoveryTests(unittest.TestCase):
+    """The failing boot's pstore record, and the directory bug that hid it.
+
+    For many rounds this project had no panic stack for the stall.  It was on disk
+    the whole time: systemd-pstore MOVES records from /sys/fs/pstore to
+    /var/lib/systemd/pstore before gts9-prev-boot-evidence runs, and the collector
+    only ever read the first directory.  These tests pin both the recovered
+    evidence and the fix, because every future failure depends on them.
+    """
+
+    RUNDIR = ("reference/boot-tests/test-191-20260925T0410Z/"
+              "wedge-rate-pre-test191-capture")
+    DOC = f"{RUNDIR}/FAILED-BOOT-20260925T0457.md"
+    PSTORE = f"{RUNDIR}/failed-boot-pstore"
+    COLLECTOR = "rootfs-overlay/usr/libexec/gts9-prev-boot-evidence"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_console_record_is_preserved_and_holds_the_panic(self):
+        path = ROOT / self.PSTORE / "console-ramoops-0"
+        self.assertTrue(path.is_file(), "the recovered console record must be kept")
+        text = path.read_text(errors="replace")
+        for needle in ("Kernel panic - not syncing: softlockup: hung tasks",
+                       "SMP: failed to stop secondary CPUs 0,3,6-7",
+                       "kick_all_cpus_sync",
+                       "toggle_allocation_gate",
+                       "Error sending AMC RPMH requests (-110)",
+                       "rcu_preempt detected stalls",
+                       "encoder is disabled id=35"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_the_first_abnormal_event_precedes_the_dpu_flood(self):
+        """4.436 s 'encoder is disabled' comes before the 6.755 s flood."""
+        text = (ROOT / self.PSTORE / "console-ramoops-0").read_text(errors="replace")
+        first = text.index("encoder is disabled id=35")
+        flood = text.index("enc35 frame done timeout")
+        self.assertLess(first, flood)
+        self.assertIn("[    4.435920]", text)
+        self.assertIn("[    6.755336]", text)
+
+    def test_the_panic_is_a_victim_not_a_cause(self):
+        """CPU 4 died inside a synchronous cross-CPU call after 27 s."""
+        self.contains(self.DOC,
+                      "The panic is a victim, by construction",
+                      "waiting 27 s for",
+                      "do not blame the worker that",
+                      "now demonstrated rather than asserted")
+
+    def test_the_doc_retracts_the_three_photo_errors(self):
+        """A photograph is a pointer, not a source."""
+        self.contains(self.DOC,
+                      "Int stat: 0x00000003",
+                      "Resp[0]: 0x00000900",
+                      "Error sending AMC RPMH requests",
+                      "is **withdrawn**",
+                      "a photograph of a screen is a pointer, not a source")
+
+    def test_the_doc_records_that_the_dmesg_record_is_undecodable(self):
+        self.contains(self.DOC, "cannot be decoded, and that is recorded rather than guessed",
+                      "incorrect header check", "Z_DATA_ERROR",
+                      "neither established")
+
+    def test_the_collector_reads_both_pstore_directories(self):
+        text = read(self.COLLECTOR)
+        self.assertIn("for src in /var/lib/systemd/pstore /sys/fs/pstore; do", text)
+        self.assertIn("systemd-pstore.service runs BEFORE this unit", text)
+        # The false claim that there is no ramoops node must be gone.
+        self.assertNotIn("but no ramoops\n# node)", text)
+        self.assertIn("was wrong twice over", text)
+
+    def test_the_collector_counts_markers_from_pstore(self):
+        text = read(self.COLLECTOR)
+        for field in ("pstore_rcu_lines", "pstore_dpu_lines", "pstore_mmc_lines",
+                      "pstore_hung_lines"):
+            with self.subTest(field=field):
+                self.assertIn(field, text)
+        self.assertIn("prev_journal=absent-pstore-is-authoritative", text)
+
+    def test_the_collector_is_valid_shell(self):
+        import subprocess
+        subprocess.run(["sh", "-n", str(ROOT / self.COLLECTOR)], check=True)
+
+
 class A6xxStaleRpmhVoteTests(unittest.TestCase):
     """An upstream bug that is live in this pin, on the RPMh-vote path.
 

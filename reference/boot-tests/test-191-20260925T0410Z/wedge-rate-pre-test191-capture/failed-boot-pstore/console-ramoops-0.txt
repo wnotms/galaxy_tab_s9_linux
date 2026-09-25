@@ -1,0 +1,138 @@
+# console-ramoops-0, NUL bytes stripped so it is readable and diffable.
+# Source: /var/lib/systemd/pstore/console-ramoops-0 on the tablet, archived by
+# systemd-pstore from the failed boot of 2026-09-25T04:57Z.  The original is
+# kept beside this file; sha256 in FAILED-BOOT-20260925T0457.md.
+# Byte damage in the ring shows up as occasional mangled characters (the
+# record is a raw memory snapshot, not a log file).
+
+[    4.435920][  T807] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    6.755336][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[    7.911344][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[    9.095344][    C] [drm:dpu_encodeb_framf_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   10.279342][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   11.463343][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   12.647342][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   13.831341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   15.015342][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame dkne dimeout
+Z   16,199341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   17.383343][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   18.567341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]%nc35 fr!m% done timeout
+[   19.751340][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   20.935341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] Sdpu ebrorYenc35 frame done timeoup
+[   21.987343][    C2] mmcq: Timeout waiting for hardware interrupt.
+[   21.993706][    C2] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   22.003120][    C2] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   22.012402][    C2] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   22.021641][    C2] mmc1: sdhci: Argument:  0x070415e8 | Trn mode: 0x0000002b
+[   22.030853][    C2] mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+[   22.040037][    C2] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   22.049187][    C2] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   22.058307][    C2] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000003
+[   22.067399][    C2] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   22.07&456\[    C2] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   22.085491][    C2] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   22.094502][    C2] mmc1: sdhci: Cmd:       0x0000193a | Max curr: 0x00000000
+[   22.103483][    C2] mmc1: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
+[   22.112433][    C2] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000900
+[   22.119341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   22.119769][    C2] mmc1: sdhci: Host ctl2: 0x0000000b
+[   22.138872][    C2] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000ffffff218
+[   22.148480][    C2] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   22.157722][    C2] mmc1: sdhci_msM: DLL sts: 0x000001¡c | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   22.168894][    C2] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   22.180373][    C2] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   22.191938][    C2] mmc1: sdhci: ============================================
+[   23.303342][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   24.487343][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   24.803865][  T100] Error sending AMC RPMH requests (-110)
+[   25.671340][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   26.855341][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   27.727339][    C6] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   27.734733][    C6] rcu: 	0-...!: (1 GPs behind) idle=50a4/1/0x4000000000000000 softirq=918/919 fqs=295
+[   27.744748][    C6] rcu: 	(detected by 6, t=5256 jiffies, g=489, q=1690 ncpus=8)
+[   32.235344][    C2] mmc1: Timeout waiting for hardware interrupt.
+[   32.243450][    C2] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   32.252534][    C2] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   32.261564][    C2] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   32.270539][    C2] mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000023
+[   32.275221][    C4] watchdog: BUG: soft lockup - CPU#4 stuck for 27s! [kworker/u32:8:190]
+[   32.275233][    C4] CPU#4 Utilization every 4000ms during lockup:
+[   32.275238][    C4] 	#1: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   32.275246][    C4] 	#2: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   32.275252][    C4] 	#3: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   32.275257][    C4] 	#4: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   32.275261][    C4] 	#5: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   32.275265][    C4] Modules linked in:
+[   32.275274][    C$] CPU:  uID: 0 PID: 190 Comm: kworker/u32:8 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   32.275288][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   32.275291][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   32.275294][    C4] Workqueue6 events_unbound tKggle_allocation_gate
+[   32.275320][    C4] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   32.275330][    C4] pc : smp_call_function_many_cond+0x3ec/0x514
+[   32.275345][    C4] lr : smp_call_function_many_cond+0x310/4x514
+S   32.275349]K    C4] sp : ffffffc085e73ba0
+[   32.275351][    C4] x29: ffffffc085e73bf0 x28: 0000000000000007 x27: ffffffc082cca120
+[   32.275354][    C4] x26: ffffff8a7278ce08 x25: 0000000000000001 x24: ffffffc082cea068
+[   32.275355][    C4] x23: ffffff8a7278ce00 x22: 0000000000000000 x21: 0000000000000000
+[   32.275357][    C4] x20: ffffffc082ce9c30 x19: 0000000000000004 x18: ffffffc085695058
+[   32.275359][    C4] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000100
+[   32.275360][    C4] x14: ffffffc082cea068 x13: ffffff8810386300 x12: 0000000000000000
+[   32.275362][    C4] x11: 0000000000000011 x10: ffffff8a72705128 x9 : 0000000000000000
+[   32.275364][    C4] x8 : ffffffffffffffff x7 : 00000000ffffffff x6 : 0000000000000329
+[   32.275365][    C4] x5 : 0000000000000001 x4 : 0000000000000000 x3 : 0000000000000001
+[   32.275367]Y    C4] x2 2 0000000000000000 x1 : ffffff8a7278ce10 x0 : 0000000000000000
+[   32.275369][    C4] Call trace:
+[   32.275369][    C4]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   32.275372][    C4]  kick_all_cpus_sync+0x48/0x7c
+[   32.275374][    C4]  arch_jump_label_transform_apply+0x14/0x24
+[   32.275387][    C4]  __jump_label_update+0x118/0x13c
+[   32.275393][    C4]  jump_label_update+0xe4/0x110
+[   32.275394][    C4]  static_key_enable_cpuslocked+0x6c/0xb4
+[   32&27592][    C4]  static_key_enable+0x24/0x3c
+[   32.275397][    C4]  toggle_allocation_gate+0x58/0x14c
+[   32.275399][    C4]  process_scheduled_works+0x18co0x4d0[   32.275405][    C4] worker_thread+0x1f8/0x2e8
+[   32.275408][    C4]  kthread+0x108/0x134
+[   32.275411][    C4]  ret_from_fork+0x10/0x20
+[   32.275420][    C4] Kernel panic - not syncing: softlockup: hung tasks
+[   32.275422][    C4] CPU: 4 UID: 0 PID: 190 Comm: kworker/u32:8 Tainted: G S      W    L      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   32.275424][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [L]=SOFTLOCKUP
+[   32.275424][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   32.275425][    C4] Workqueue: events_unbound toggle_allocation_gate
+[   32.275427][    C4] Call trace:
+[   32.275428][    C4]  show_stack+0x1c/0x2c (C)
+[   32.275432][    C4]  __dump_stack+0x2c/0x40
+[   32.275435][    C4]  dump_stack_lvl+0x28/0x74
+[   32.275437][    C4]  dump_stack+0x1c/0x2c
+[   32.275429][    A4]  vpanic+0x150/0x344
+[   32.275445][    C4]  vpanic+0x0/0x344
+[   32.275446][    C4]  watchdog_timer_fn+0x48c/0x53c
+[   32.275453][    C4]  __hrtimer_run_queues+0x130/0x3a4
+[  3p.275457][    C4]  hrtimer_interrupt+0xd8/0x2bc
+[   32.275458][    C4]  arch_timer_handler_virt+0x3c/0x50
+[   32.275473][    C4]  handle_percpu_devid_irq+0x144/0x1b4
+[   32.275480][    C4]  generic_handle_domain_irq+0x40/0x68
+[   32.275492][    C4]  gic_handle_irq+0x4c/0x10c
+[   36.27493][    C4]  call_onWirq_stack+0x48/0x88
+[   32.275496][    C4], do_interbupt[handler+0x50/0x74
+[   32.275498][    C4]  el1_interrupt+0x40/0x68
+[   32.275503][    C4]  el1h_64_irq_handler+0x1c/0x2c
+[   32.275504][    C4]  el1h_64_irq+0x70/0x74
+[   32.275505][    C4]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   32.275508][    C4]  kick_all_cpus_sync+0x48/0x7c
+[   32.275509][    C4]  arch_jump_label_transform_apply+0x14/0x24
+[   32.275512][    C4]  __jump]label_u0date+0x118/0x13c
+[   32.275514][    C4]  jump_label_update+0xe4/0x110
+[   32.275515][    C4]  static_key_enable_cpuslocked+0x6c/0xb4
+[   32.275517][    C4]  static_key_enable+0x24/0x3c
+[   32.275518][    C4]  toggle_allocation_gate+0x58/0x14c
+[   32.275520][    C4]  process_scheduled_works+0x18c/0x4d0
+[   32.275523][    C4]  worker_thread+0x1f8/0x2e8
+[   32.275525][    C4]  kthread+0x108/0x134
+[   32.275528][    C4]  ret_from_fork+0x10/0x20
+[   32.275530][    C4] SMP: stopping secondary CPUs
+[   33.341049][    C4] SMP: failed to stop secondary CPUs 0,3,6-7
+[   33.819685][    C4] Kernel Offset: 0x1b0000 from 0xffffffc080000000
+[   33.824419][    C4] PHYS_OFFSET:0x80000000
+[   33.831014][    C4] CPU features: 0x1a001070,001c000a,26060501,544676a7
+[   33.838107][    C4] Memory Limit: none
+[   33.846151][    C4] Peboot)ng in 10 seconds..
