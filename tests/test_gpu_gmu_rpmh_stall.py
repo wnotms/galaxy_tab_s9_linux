@@ -495,6 +495,68 @@ class HarnessContractTests(unittest.TestCase):
         guard = guard[:guard.index("\nfi\n")]
         self.assertIn("die ", guard)
 
+    def test_a_round_record_says_which_run_it_belongs_to(self):
+        """Two runs into one directory were indistinguishable, and one was lost.
+
+        On 2026-09-25 a 20-round run was started into the directory a 5-round run
+        had just filled.  Round records carried `profile=` and `round=` but no run
+        identity, so the only reason the overlap was detectable at all was that
+        the earlier five had been archived elsewhere.  Same class as the
+        overwritten test-190 capture, and the same fix: give the run a name.
+        """
+        text = read(HARNESS)
+        self.assertIn('RUN=${GTS9_RUN:-$(date -u +%Y%m%dT%H%M%SZ)}', text)
+        self.assertIn('echo "run=$RUN"', text)
+        self.assertIn("run=$RUN profile=$PROFILE rounds=$ROUNDS", text)
+        # And it must refuse to mix rather than silently overwrite.
+        self.assertIn("refusing to mix runs", text)
+        self.assertIn("GTS9_APPEND_RUNS", text)
+        # The summary table must show it, or a mixed table stays invisible.
+        self.assertIn('sed -n \'s/^run=//p\' "$r"', text)
+
+    def test_the_run_mixing_guard_refuses_and_allows_the_right_cases(self):
+        """Four cases, extracted from the harness and run in isolation."""
+        import re
+        import subprocess
+        text = read(HARNESS)
+        start = text.index("# Refuse to write a new run on top of an old one")
+        end = text.index("\nfi\n", text.index("GTS9_APPEND_RUNS", start)) + len("\nfi\n")
+        guard = text[start:end]
+        self.assertIn("refusing to mix runs", guard)
+
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            script = pathlib.Path(tmp) / "t.sh"
+            script.write_text(
+                'set -uo pipefail\n'
+                'say() { echo "say: $*"; }\n'
+                'die() { echo "DIED: $*"; exit 1; }\n'
+                f'OUT={tmp}/out.txt\n' + guard
+            )
+            d = pathlib.Path(tmp) / "d"
+            d.mkdir()
+            (d / "round-1.txt").write_text("run=20260101T000000Z\n")
+
+            def run(run_id, extra=""):
+                env = {"DIR": str(d), "RUN": run_id, "PATH": "/usr/bin:/bin"}
+                if extra:
+                    env[extra] = "1"
+                return subprocess.run(["bash", str(script)], env=env,
+                                      capture_output=True, text=True)
+
+            self.assertNotEqual(run("20260925T085000Z").returncode, 0,
+                                "a different run must be refused")
+            self.assertEqual(run("20260101T000000Z").returncode, 0,
+                             "continuing the same run must be allowed")
+            mixed = run("20260925T085000Z", "GTS9_APPEND_RUNS")
+            self.assertEqual(mixed.returncode, 0, "APPEND_RUNS must proceed")
+            self.assertIn("the summary table will mix both", mixed.stdout)
+            # An empty directory passes silently.
+            (d / "round-1.txt").unlink()
+            empty = run("20260925T085000Z")
+            self.assertEqual(empty.returncode, 0)
+            self.assertEqual(empty.stdout.strip(), "")
+
     def test_the_a_b_has_a_wedge_detector_not_just_a_rate(self):
         """`boot_id_after` differs on every round, so it cannot detect a wedge.
 

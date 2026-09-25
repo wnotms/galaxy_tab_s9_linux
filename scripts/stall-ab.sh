@@ -43,6 +43,13 @@ ALLOW=${GTS9_ALLOW_POWER:-0}
 WINDOW=${GTS9_WINDOW:-150}
 READY=${GTS9_READY:-240}
 RESULTS=${GTS9_AB_RESULTS:-$REPO/out/stall-ab}
+# One identity per invocation.  Round records carry it, so records from two runs
+# can never be mistaken for one series - which is exactly what happened on
+# 2026-09-25: a 20-round run was started into the directory a 5-round run had
+# just filled, and the only reason it was detectable at all was that the earlier
+# five had been archived elsewhere.  Nothing in a round record said which run it
+# came from.  Same class as the overwritten test-190 capture.
+RUN=${GTS9_RUN:-$(date -u +%Y%m%dT%H%M%SZ)}
 
 say() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*"; }
 die() { say "FATAL: $*" >&2; exit 1; }
@@ -93,15 +100,15 @@ summary_table() {
 		echo "no rounds recorded under $RESULTS"
 		return 0
 	fi
-	local keys="profile round boot_id kernel_release stall rpmh rcu wq dpu mmc"
-	echo "profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id"
-	echo "---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------"
+	local keys="run profile round boot_id kernel_release stall rpmh rcu wq dpu mmc"
+	echo "run               profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id"
+	echo "----------------  ---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------"
 	for r in $(printf '%s\n' "${rows[@]}" | sort); do
 		local p rn
 		p=$(sed -n 's/^profile=//p' "$r" | head -1)
 		rn=$(sed -n 's/^round=//p' "$r" | head -1)
-		printf '%-9s  %-5s  %-5s  %-4s  %-3s  %-2s  %-3s  %-3s  %-19s  %s\n' \
-			"${p:-?}" "${rn:-?}" \
+		printf '%-16s  %-9s  %-5s  %-5s  %-4s  %-3s  %-2s  %-3s  %-3s  %-19s  %s\n' \
+			"$(sed -n 's/^run=//p' "$r" | head -1)" "${p:-?}" "${rn:-?}" \
 			"$(sed -n 's/^stall=//p' "$r" | head -1)" \
 			"$(sed -n 's/^rpmh_timeout_klog=//p' "$r" | head -1)" \
 			"$(sed -n 's/^rcu_stall_klog=//p' "$r" | head -1)" \
@@ -173,7 +180,7 @@ DIR=$RESULTS/$PROFILE
 mkdir -p "$DIR" "$LOCALDIR" 2>/dev/null || true
 
 OUT=$DIR/ab-$PROFILE.txt
-say "stall A/B profile=$PROFILE rounds=$ROUNDS allow_power=$ALLOW window=${WINDOW}s" | tee -a "$OUT"
+say "stall A/B run=$RUN profile=$PROFILE rounds=$ROUNDS allow_power=$ALLOW window=${WINDOW}s" | tee -a "$OUT"
 say "cmdline file: ${CMDLINE#$REPO/}" | tee -a "$OUT"
 
 # Preflight: confirm which profile the tablet actually booted with, before
@@ -233,6 +240,25 @@ fi
 
 boot_id=$(sed -n 's/.*boot_id=//p' "$pre" | head -1 | tr -d '\r')
 [ -n "$boot_id" ] || die "no shell on $SHELL_PORT"
+
+# Refuse to write a new run on top of an old one.  The summary table globs
+# `round-*.txt`, so a mixed directory produces a table that looks like one series
+# and is two - and when the earlier run is shorter, its stale tail survives the
+# overwrite and is counted as if it were new.
+shopt -s nullglob
+existing=("$DIR"/round-*.txt)
+shopt -u nullglob
+if [ ${#existing[@]} -gt 0 ]; then
+	other=$(sed -n 's/^run=//p' "${existing[@]}" 2>/dev/null | sort -u | grep -v "^${RUN}$" | head -1)
+	if [ -n "$other" ]; then
+		if [ "${GTS9_APPEND_RUNS:-0}" = "1" ]; then
+			say "WARNING: $DIR already holds run $other; appending run $RUN to it" | tee -a "$OUT"
+			say "         the summary table will mix both - run-id is recorded per round" | tee -a "$OUT"
+		else
+			die "$DIR already holds rounds from run ${other:-<unstamped>}; refusing to mix runs. Move them, or set GTS9_RUN=$other to continue that run, or GTS9_APPEND_RUNS=1 to mix deliberately"
+		fi
+	fi
+fi
 
 for i in $(seq 1 "$ROUNDS"); do
 	say "=== $PROFILE round $i/$ROUNDS (boot_id before=$boot_id) ===" | tee -a "$OUT"
@@ -294,6 +320,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	console_kernel_lines=$(grep -acE '^\[[ ]*[0-9]+\.[0-9]+\]' "$klog" 2>/dev/null || echo 0)
 
 	{
+		echo "run=$RUN"
 		echo "profile=$PROFILE"
 		echo "round=$i"
 		echo "boot_id_before=$boot_id"
