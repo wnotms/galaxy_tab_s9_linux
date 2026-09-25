@@ -953,6 +953,54 @@ class PstoreRecoveryTests(unittest.TestCase):
         subprocess.run(["sh", "-n", str(ROOT / self.COLLECTOR)], check=True)
 
 
+class FlashAttemptTests(unittest.TestCase):
+    """The 2026-09-25T06:0xZ wedge: same failure, no watchdog recovery.
+
+    The brief, AGENT.md and the plan all assume `stall -> panic -> panic=10 ->
+    automatic restart`.  That boot did not restart; it sat wedged until the operator
+    forced a power cycle.  The plan lists the watchdog guarantee as a precondition
+    for the RPMh debug backport, so this has to be pinned rather than remembered.
+    """
+
+    DOC = "reference/boot-tests/test-191-20260925T0410Z/FLASH-ATTEMPT-1.md"
+
+    def contains(self, *needles):
+        text = read(self.DOC)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{self.DOC} is missing {missing}")
+
+    def test_it_records_that_nothing_was_flashed(self):
+        self.contains("**Nothing was flashed. No partition was written.**",
+                      "the bundle is untouched and still verifies",
+                      "other than the 2048-byte BCB")
+
+    def test_it_records_the_signature_with_host_timestamps(self):
+        self.contains("06:07:10Z", "06:07:24Z", "06:08:17Z",
+                      "serial **write itself timed out**",
+                      "echoed, not",
+                      "Onset is not measured")
+
+    def test_it_separates_the_two_severities(self):
+        """One variant panics and restarts; the other never does."""
+        self.contains("the recovery guarantee is not reliable",
+                      "**This boot did not restart.**",
+                      "| 2026-09-25T04:57Z | yes, on CPU 4 |",
+                      "wedged indefinitely; only a forced power cycle recovers it")
+
+    def test_it_falsifies_a_plan_precondition(self):
+        self.contains("that precondition is now falsified",
+                      "docs/GPU_GMU_RPMH_STALL_PLAN.md",
+                      "must be attended")
+
+    def test_it_does_not_claim_an_onset_it_cannot_measure(self):
+        self.contains("it is not claimed",
+                      "a wedge at ~7 s would leave COM17/COM19 enumerated exactly as observed")
+
+    def test_the_previously_recovered_record_is_safe(self):
+        self.contains("committed to this",
+                      "repository and archived on the tablet's rootfs")
+
+
 class A6xxStaleRpmhVoteTests(unittest.TestCase):
     """An upstream bug that is live in this pin, on the RPMh-vote path.
 

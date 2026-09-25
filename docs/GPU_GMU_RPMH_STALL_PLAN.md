@@ -825,6 +825,37 @@ particular this does not re-open the DPU, PCIe or Pogo directions.
 
 ---
 
+## 11b. Round-22: the watchdog recovery guarantee is falsified
+
+§14 of the round-20 brief, item 6 of its retained conclusions and `AGENT.md` all
+assume a stall ends as `stall -> panic -> panic=10 -> automatic restart`. Two
+instances of the same failure on 2026-09-25 show that is **not reliable**:
+
+| instance | watchdog | outcome |
+|---|---|---|
+| 04:57Z | fired on CPU 4 | panic at 32.3 s, restart at ~45 s |
+| 06:0xZ | **never fired** | wedged indefinitely; only a forced power cycle recovered it |
+
+In the first, the panic path then **failed to stop CPUs 0, 3, 6 and 7**. In the
+second, nothing fired at all - so if the wedge takes the CPU whose hrtimer would
+run `watchdog_timer_fn`, there is no panic, no `panic=10`, and no restart.
+
+Consequences that change how work is done here:
+
+* **`§14`'s precondition 4 for the RPMh debug backport ("watchdog guarantees
+  automatic recovery") is falsified.** That backport's whole purpose is a rarer,
+  harder failure, and it would be tested on a device that can stop and stay stopped;
+* **an unattended A/B series is no longer acceptable.** A series that assumes
+  recovery will silently stop on the first no-watchdog instance and report nothing.
+  Any further series must be attended, or must have a host-side rule for "the
+  tablet has not come back in N minutes";
+* it also explains why the 88-boot survey contains boots with no orderly shutdown
+  and no panic record at all: they may be this variant, ended by a human.
+
+Evidence: `reference/boot-tests/test-191-20260925T0410Z/FLASH-ATTEMPT-1.md`.
+
+---
+
 ## 12. Safety boundaries
 
 * No flashing, no partition writes, no BCB writes, no `dd` to any device node
