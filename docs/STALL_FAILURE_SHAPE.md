@@ -259,6 +259,21 @@ did not, over comparable capture windows covering the same 6.2–7.1 s of kernel
 time. That is one observation, not a correlation, but it makes
 `enc35 frame done timeout` a message to count per boot rather than to skip.
 
+`classify-captures.py` now counts it (`dpu_to`), and over every capture kept in the
+repository the association is exact:
+
+| capture | `enc35 frame done timeout` | outcome |
+|---|---|---|
+| test-187 round 1, boot A | **2** | 36.8 s silence, unattended reset |
+| test-187 rounds 2–8 | 0 | clean |
+| test-187 series' other boots | 0 | clean |
+| test-184 A-5 (the §1 failure) | 0 | silent shutdown, external reset |
+
+So the message appears in exactly one of the ten captured boots, and that boot is
+the one that died unasked. It is still one boot: this is a lead to carry forward,
+not a finding, and the A-5 failure proves the message is not necessary for the
+failure.
+
 Two things this does *not* say. It does not make the frame-done timeout the cause:
 it is the last line printed, which is exactly the reasoning the brief forbids, and
 at `loglevel=4` any number of earlier messages were suppressed. And it does not

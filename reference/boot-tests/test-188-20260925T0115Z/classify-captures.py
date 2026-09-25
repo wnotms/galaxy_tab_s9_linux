@@ -56,6 +56,12 @@ PREV_END = re.compile(r"gts9-prev-boot-evidence:.*\bend=(?P<end>[a-z-]+)")
 # same capture (console.log); both are accepted so the two series can be compared.
 ROUND_FILE = re.compile(r"^shutdown-(?P<n>\d+)-(?:w19\.txt|console\.log)$")
 
+# Counted, but not by itself a stall: `enc35 frame done timeout` is the first link
+# of a chain the project already recorded (docs/DPU_TRACE.md, docs/WATCHDOG_X710.md,
+# gts9-power-key.c), and it is the last line boot 7f02df57 printed before it was
+# reset unasked.  Counting it per capture is what makes that visible.
+DPU_FRAME_TIMEOUT = r"dpu_encoder_frame_done_timeout|frame done timeout"
+
 BANNERS = {
     "panic": r"Kernel panic",
     "softlockup": r"BUG: soft lockup|watchdog: BUG",
@@ -100,6 +106,7 @@ def classify(events: list[tuple[str, str, str]]) -> dict:
     result["reset_times"] = resets
     result["unattended_resets"] = max(0, len(resets) - 1)
 
+    result["dpu_frame_timeout"] = len(re.findall(DPU_FRAME_TIMEOUT, text))
     result["shutdown_started"] = bool(re.search(r"\bStopping\s", text))
     result["reboot_target_seen"] = text.count("reboot.target")
     result["systemd_shutdown_seen"] = text.count("systemd-shutdown")
@@ -213,13 +220,15 @@ def main(argv: list[str]) -> int:
         return 0
 
     print(f"{'round':>5}  {'verdict':<34} {'prev_boot_end':<26} "
-          f"{'reboot.target':>13} {'sysd-shutdown':>13} {'gap_s':>8} {'open_silence_s':>15}")
+          f"{'reboot.target':>13} {'sysd-shutdown':>13} {'gap_s':>8} "
+          f"{'open_silence_s':>15} {'dpu_to':>7}")
     for n in sorted(rounds):
         r = rounds[n]
         flag = " *** UNATTENDED RESET" if r["unattended_resets"] else ""
         print(f"{n:>5}  {r['verdict']:<34} {str(r['prev_boot_end']):<26} "
               f"{r['reboot_target_seen']:>13} {r['systemd_shutdown_seen']:>13} "
-              f"{r['longest_gap_s']:>8.3f} {r['longest_open_silence_s']:>15.3f}{flag}")
+              f"{r['longest_gap_s']:>8.3f} {r['longest_open_silence_s']:>15.3f} "
+              f"{r['dpu_frame_timeout']:>7}{flag}")
     total = len(rounds)
     stalls = [n for n, r in rounds.items() if r["verdict"] == "STALL"]
     clean = [n for n, r in rounds.items() if r["verdict"] == "clean"]

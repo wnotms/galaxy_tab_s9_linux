@@ -1085,7 +1085,7 @@ class StallFailureShapeTests(unittest.TestCase):
         text = read("reference/boot-tests/test-188-20260925T0115Z/"
                     "classify-captures.py")
         for needle in ("unattended_resets", "longest_open_silence_s",
-                       "reboot.target", "prev_boot_end"):
+                       "reboot.target", "prev_boot_end", "dpu_frame_timeout"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, text)
 
