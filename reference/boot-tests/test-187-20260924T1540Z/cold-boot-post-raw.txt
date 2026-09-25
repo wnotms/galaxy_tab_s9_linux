@@ -1,28 +1,5 @@
-2026-09-25T00:03:20Z console open on COM17
-2026-09-25T00:03:21Z RECV  echo READY1
-2026-09-25T00:03:21Z RECV  [?2004lREADY1
-2026-09-25T00:03:21Z shell answered after 1 poll(s)
-2026-09-25T00:03:21Z SENT  R=/tmp/cold-post.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R
-2026-09-25T00:04:52Z RECV  [?2004hroot@gts9:~# R=/tmp/cold-post.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R
-2026-09-25T00:04:52Z RECV  [?2004lEVIDDIR=/var/log/gts9-boot-evidence/20260413T193808Z-cd04c0ef/
-2026-09-25T00:04:52Z RECV  collected_utc=20260413T193808Z
-2026-09-25T00:04:52Z RECV  boot_id=cd04c0ef-99a6-4da4-be64-ba73cd7a8744
-2026-09-25T00:04:52Z RECV  previous_boot=present
-2026-09-25T00:04:52Z RECV  previous_boot_end=clean-shutdown
-2026-09-25T00:04:52Z RECV  prev_kernel_lines=942
-2026-09-25T00:04:52Z RECV  marker_panic=0
-2026-09-25T00:04:52Z RECV  marker_soft_lockup=0
-2026-09-25T00:04:52Z RECV  marker_hard_lockup=0
-2026-09-25T00:04:52Z RECV  marker_hung_task=0
-2026-09-25T00:04:52Z RECV  marker_rcu_stall=0
-2026-09-25T00:04:52Z RECV  marker_dpu_timeout=0
-2026-09-25T00:04:52Z RECV  marker_mmc_timeout=0
-2026-09-25T00:04:52Z RECV  pstore_records=
-2026-09-25T00:04:52Z RECV  pstore_panic_lines=0
-2026-09-25T00:04:52Z RECV  pstore_lockup_lines=0
-2026-09-25T00:04:52Z RECV  watchdog_enabled=1
-2026-09-25T00:04:52Z RECV  softlockup_panic=1
-2026-09-25T00:04:52Z RECV  hung_task_panic=1
-2026-09-25T00:04:52Z RECV  wq_panic_on_stall_time=45
-2026-09-25T00:04:52Z RECV  UP=802.92
-2026-09-25T00:04:52Z console run done (ready=True)
+2026-09-25T00:35:05Z console open on COM17
+2026-09-25T00:35:07Z RECV  echo READY1
+2026-09-25T00:35:07Z RECV  [?2004lREADY1
+2026-09-25T00:35:07Z shell answered after 1 poll(s)
+2026-09-25T00:35:07Z SENT  R=/tmp/cold-post.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R

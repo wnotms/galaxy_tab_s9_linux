@@ -44,3 +44,24 @@
 2026-09-25T00:14:01Z capture starts NOW; power-cycle the tablet after the GO line
 2026-09-25T00:15:04Z loglevel: after=8
 2026-09-25T00:15:04Z GO - power-cycle the tablet now
+  kind=cold-boot (operator power-cycle)
+  window_s=1200
+  console_bytes=9635
+  console_lines=90
+  panic_lines=0
+  0
+  softlockup_lines=0
+  0
+  hardlockup_lines=0
+  0
+  hungtask_lines=0
+  0
+  rcu_lines=0
+  0
+  panel_recovery_lines=0
+  0
+  deferred_burst_lines=0
+  0
+2026-09-25T00:35:32Z === post-boot device verdict ===
+2026-09-25T00:35:32Z done; compare against the warm baseline: burst 14.304 s, panel recovery ~4.7 s,
+2026-09-25T00:35:32Z clean shutdown ~61 s, systemd-shutdown present, sync_state 29-31 lines
