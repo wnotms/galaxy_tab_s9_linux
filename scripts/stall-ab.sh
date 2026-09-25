@@ -544,9 +544,59 @@ for i in $(seq 1 "$ROUNDS"); do
 		"$DIR/round-$i.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 	[ -n "$new_id" ] && boot_id=$new_id
+	if [ "$verdict" = wedge ]; then
+		# Preserve before anything else can overwrite it.  pstore is the only
+		# instrument that survives a wedge, the next boot overwrites the console
+		# ring, and only one of the four records so far was captured before that
+		# happened.  This copies the wedge round's own artifacts - including the
+		# raw, untagged pstore - into a `wedge-round-N/` directory so a later
+		# round cannot touch them.
+		pres=$DIR/wedge-round-$i
+		mkdir -p "$pres" 2>/dev/null
+		for f in round-$i.txt klog-$i.txt pstore-$i.txt console-$i-watch.txt \
+			probe-$i-raw.txt mark-$i.txt; do
+			cp "$DIR/$f" "$pres/" 2>/dev/null || true
+		done
+		# The device's own copy, read once more and stored verbatim.  This goes
+		# through console-run on the shell port like everything else here - the
+		# harness has no ssh channel, and inventing one would be a second transport
+		# to keep alive on a device that has just wedged.
+		timeout 180 "$CR" -Port "$SHELL_PORT" \
+			-Out "$WINDIR\\wedge-$i-pstore.log" -WaitReadySeconds 120 -ReadSeconds 10 \
+			-Commands 'cat /var/lib/systemd/pstore/console-ramoops-0' \
+			>"$pres/on-device-console-raw.txt" 2>&1 || true
+		sed -n 's/^[^ ]* *RECV  //p' "$pres/on-device-console-raw.txt" 2>/dev/null \
+			>"$pres/on-device-console-ramoops.txt"
+		timeout 90 "$CR" -Port "$SHELL_PORT" \
+			-Out "$WINDIR\\wedge-$i-pmsg.log" -WaitReadySeconds 120 -ReadSeconds 8 \
+			-Commands 'cat /var/lib/systemd/pstore/pmsg-ramoops-0' \
+			>"$pres/on-device-pmsg-raw.txt" 2>&1 || true
+		sed -n 's/^[^ ]* *RECV  //p' "$pres/on-device-pmsg-raw.txt" 2>/dev/null \
+			| tr -d '\000' >"$pres/on-device-pmsg.txt"
+		{
+			echo "run=$RUN"
+			echo "profile=$PROFILE"
+			echo "round=$i"
+			echo "verdict=$verdict"
+			echo "identity=$(get identity)"
+			echo "wedge_markers=$(get wedge_markers)"
+			echo "suspect_markers=$(get suspect_markers)"
+			echo "presence_outages=$(get presence_outages)"
+			echo "second_outage_gone=$(get second_outage_gone)"
+			echo "second_outage_back=$(get second_outage_back)"
+			echo "on_device_console_bytes=$(wc -c <"$pres/on-device-console-ramoops.txt" 2>/dev/null || echo 0)"
+			echo "on_device_pmsg=$(cat "$pres/on-device-pmsg.txt" 2>/dev/null | tail -1)"
+		} >"$pres/MANIFEST.txt"
+		say "round $i: *** WEDGE - evidence preserved in ${pres#$REPO/}" | tee -a "$OUT"
+		say "           $(grep -c . "$pres/MANIFEST.txt" 2>/dev/null) manifest fields; pstore copied verbatim" | tee -a "$OUT"
+	fi
 	if [ "${p_n:-0}" -ge 2 ]; then
 		say "round $i: *** the tablet restarted itself (${p_n} outages, second at ${p_off:-?})" | tee -a "$OUT"
 		say "round $i: that is the failure signature, not a clean round - stopping" | tee -a "$OUT"
+		break
+	fi
+	if [ "$verdict" = wedge ]; then
+		say "round $i: stopping on the wedge verdict" | tee -a "$OUT"
 		break
 	fi
 	if grep -aq "shell never answered\|could not open" "$DIR/probe-$i-raw.txt" 2>/dev/null; then

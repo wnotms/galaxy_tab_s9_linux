@@ -61,6 +61,10 @@ pstore_lines=88
 first_anomaly_pstore=28.839360
 rpmh_callers=
 identity=GTS9_AB run=verify1 profile=baseline round=1 boot_id=6d8b975c
+# STALE: this 0 is the `klog-watch` typo, not a measurement.  The capture for
+# this round holds TWO outages (10:23:33 and the panic's restart at 10:24:32), so
+# the correct values are presence_outages=2 / automatic_reboot=yes, annotated here
+# rather than rewritten because the file is what the harness actually wrote.
 presence_outages=0
 automatic_reboot=no
 second_outage_gone=-
