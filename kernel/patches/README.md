@@ -80,3 +80,11 @@ while investigating GPIO ownership. The Pogo driver's GPIO and IRQ paths do not
 consume those samples; the patch only read and logged MMIO state. To reproduce
 that measurement, manually apply it to a disposable prepared worktree as shown
 in `diagnostic/README.md`.
+- `0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch` — sends the
+  `qcom,wlan-pdc-init` AOP votes through the QMP mailbox and cold-resets
+  `wlan-enable` on WCN6855/WCN7850, so the chip's PMU completes its power
+  handshake and its PCIe receivers are detected on the SM-X710. Adapted from
+  `gts9wifi-fedora-linux` (`kernel/patches/wcn7850-pwrseq-cold-reset-aop.patch`,
+  commit `ab123e7`), a downstream port for this same device; not upstream, and its
+  on-device verification is recorded under `reference/boot-tests/`. The helper is
+  chip-generic and is a candidate for upstream submission once measured.

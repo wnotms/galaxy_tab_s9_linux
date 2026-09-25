@@ -1,0 +1,50 @@
+From: gts9wifi mainline port <gts9-mainline@localhost>
+Subject: [PATCH] phy: qcom-qmp-pcie: select the PHY source on PCIe0's PIPE mux
+
+On the SM-X710 the PCIe0 link never trains and the controller reports
+"Device not found", which drivers/pci/controller/dwc/pcie-designware.c emits only
+when the LTSSM sits in DETECT_QUIET/DETECT_ACT -- no link partner is ever seen.
+
+The cause is the GCC PIPE source mux. It powers up selecting the XO reference
+rather than the PHY output, and no mainline code ever switches it, so the MAC-PHY
+PIPE interface is dead and the LTSSM never performs receiver detection.
+
+Measured on the device before this change:
+
+  pcie0_pipe_clk          125000000   <- what the PHY believes it drives
+  gcc_pcie_0_pipe_clk_src  19200000   <- the mux, parked on the 19.2 MHz XO
+
+ULONG_MAX is the clk-regmap-phy-mux sentinel for "select the PHY source", and the
+branch's CLK_SET_RATE_PARENT propagates it to the parent mux.
+
+Provenance: adapted from kernel/patches/unpark-pcie0-pipe-mux.patch in the
+gts9wifi-fedora-linux port for this same device (commit ab123e7). Downstream, not
+upstream; the on-device verification is recorded under reference/boot-tests/. The
+fix is not Samsung-specific in substance -- any board whose boot chain parks this
+mux needs it -- and belongs upstream once measured.
+
+Not verified on hardware at the time of writing.
+
+---
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index d3effad7a..b66468bf7 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -4981,6 +4981,17 @@ static int qmp_pcie_power_on(struct phy *phy)
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * The GCC PIPE source muxes power up selecting the PHY output and no
++	 * mainline code switches them, but Samsung's X710 boot chain parks
++	 * PCIe0's mux on the XO reference (the register reads PHY_MUX_REF_SRC,
++	 * 19.2 MHz).  With the mux parked the MAC-PHY PIPE interface is dead and
++	 * the LTSSM never performs receiver detection, so the WCN endpoint
++	 * is never found.  ULONG_MAX is the clk-regmap-phy-mux sentinel for
++	 * "select the PHY source", propagated by the branch's CLK_SET_RATE_PARENT.
++	 */
++	clk_set_rate(qmp->pipe_clks[0].clk, ULONG_MAX);
++
+ 	ret = reset_control_deassert(qmp->nocsr_reset);
+ 	if (ret) {
+ 		dev_err(qmp->dev, "no-csr reset deassert failed\n");
