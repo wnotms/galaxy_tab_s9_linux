@@ -1989,6 +1989,23 @@ class EvidenceProvenanceTests(unittest.TestCase):
         # It must not upgrade the correlation into a cause.
         self.assertIn("It does not make the timeout the cause of the stall", flat)
 
+    def test_the_two_ten_second_timers_are_separated_by_the_arithmetic(self):
+        """Both land at ~14 s; only the arithmetic tells them apart."""
+        text = read("docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md")
+        flat = " ".join(text.split())
+        self.assertIn("## 6b.", text)
+        self.assertIn("RPMH_TIMEOUT_MS = msecs_to_jiffies(10000)", text)
+        self.assertIn("14.3076", text)
+        # The table, and the honest verdict on it.
+        for row in ("| 04:57Z | 24.804 s | **14.804 s** |", "| 06:00Z | 61.667 s | 51.667 s |",
+                    "| 06:59Z | 39.654 s | 29.654 s |"):
+            with self.subTest(row=row):
+                self.assertIn(row, text)
+        self.assertIn("**One of three.**", flat)
+        # And the two bounds from real captures.
+        self.assertIn("is **not necessary** for a stall", flat)
+        self.assertIn("test-183's stall is the reverse", flat)
+
     def test_the_real_rpmh_instance_exists_in_the_archive(self):
         """If test-183's capture disappears the analysis above loses its basis."""
         f = ("reference/boot-tests/test-183-20260924T082600Z/"

@@ -200,6 +200,45 @@ measured here. `0021` prints `LATE COMPLETION` with the millisecond gap, and
 `docs/RPMH_RSC_DEBUG_PATCH_STATUS.md` §5a records that the switch is already in
 the flashed kernel - so this is a cmdline-only run away.
 
+## 6b. The two ten-second timers, and which records separate them
+
+There are **two** independent 10 s timers on this boot path, and both land at
+~13–14 s if both start at ~3–4 s:
+
+* `RPMH_TIMEOUT_MS = msecs_to_jiffies(10000)` in `drivers/soc/qcom/rpmh.c`, whose
+  expiry prints the `WARN_ON(1)` at `rpmh.c:386`; and
+* `CONFIG_DRIVER_DEFERRED_PROBE_TIMEOUT=10`, whose
+  `deferred_probe_timeout_work_func()` re-probes every deferred device and walks
+  `sync_state` - measured firing at **14.3076 s** in a real capture
+  (`test-181-*/host-captures/r3-shutdown-window.log`).
+
+They are easy to conflate, and the arithmetic separates them: an RPMh `WARN` at
+time *T* means a vote was issued at *T* − 10 s. Applied to the three complete
+failure records, using each one's `AMC RPMH` `-110` line (the BCM voter reporting
+the same timeout) to infer when its vote was issued:
+
+| record | `AMC RPMH` at | implied vote at | consistent with the 14.31 s burst? |
+|---|---|---|---|
+| 04:57Z | 24.804 s | **14.804 s** | **yes** — ~0.5 s after the burst |
+| 06:00Z | 61.667 s | 51.667 s | no |
+| 06:59Z | 39.654 s | 29.654 s | no |
+
+**One of three.** So "the deferred-probe burst issues a vote, and that vote hangs
+for 10 s" is a live explanation for the 04:57Z record and is *not* a general
+mechanism — the other two imply votes at times nothing in this file accounts for.
+
+Two further bounds, both from real captures:
+
+* **test-181's stall carries no `rpmh_write_batch` warning at all**, so an RPMh
+  timeout is **not necessary** for a stall;
+* **test-183's stall is the reverse**: the WARN is the last line before five
+  minutes of silence, so in that instance the timeout is immediately followed by
+  the failure. Necessary: no. Present and adjacent in two of the records: yes.
+
+That is the honest state of the RPMh direction, and it is why
+`docs/RPMH_DEBUG_DECISION_RULE.md` pre-commits to reading a *no-dump* outcome as
+evidence against this branch rather than as a failed run.
+
 ## 7. Candidate repairs (NOT implemented, NOT endorsed yet)
 
 Recorded so the option space is written down before the data arrives. Each has
