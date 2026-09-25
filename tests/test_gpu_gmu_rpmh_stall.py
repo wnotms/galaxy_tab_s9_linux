@@ -2361,6 +2361,42 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("c4 5c 5d 77", text)
         self.assertIn("zlib_inflate() failed, ret = -3!", text)
 
+    def test_the_cmdline_check_reads_the_answer_not_the_echo(self):
+        """`SENT` echoes the command text, which itself contains `cmdline=`.
+
+        A bare `grep -m1 'cmdline='` therefore matches the probe's own echo, so
+        the profile check compared a command string against the profile and
+        reported "tablet cmdline lacks msm.skip_gpu=1" on a boot that had it.
+        Measured on the Profile C preflight, 2026-09-25T12:22Z.
+        """
+        text = read("scripts/stall-ab.sh")
+        self.assertIn("RECV  cmdline=", text)
+        self.assertNotIn("grep -a -m1 'cmdline='", text)
+        # The `RECV  ` requirement must be explained where it is used.
+        flat = " ".join(text.split())
+        self.assertIn("matches the echo and never the tablet's answer", flat)
+
+    def test_the_probe_emits_no_shell_syntax_errors(self):
+        """The boot-under-test fragment must survive the remote shell.
+
+        Its first form nested escaped quotes inside an awk program and the
+        tablet answered `-bash: syntax error near unexpected token `('`, which
+        killed the whole probe and silently disabled the parameter guard.
+        """
+        text = read("scripts/stall-ab.sh")
+        start = text.index("BOOT_UNDER_TEST")
+        frag = text[start:text.index("PREVBOOT_KLOG", start)]
+        # No awk, and no nested double quotes inside the command substitution.
+        self.assertNotIn("awk", frag)
+        # The selector it does use must be the boot-list line for -1, and it must
+        # reach the remote shell escaped for the nested `-Commands` context.
+        self.assertIn("-1", frag)
+        self.assertIn("journalctl --list-boots", frag)
+        self.assertIn("cut -d", frag)
+        # Escaped quotes only - a bare `"` inside would terminate the remote string.
+        import re
+        self.assertNotIn('"" -1""', frag)
+
     def test_the_boot_under_test_is_recorded_by_the_probe(self):
         """Three boot ids per round, and the evidence describes a fourth thing."""
         text = read("scripts/stall-ab.sh")
