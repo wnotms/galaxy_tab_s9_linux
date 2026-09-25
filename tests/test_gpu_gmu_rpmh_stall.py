@@ -1885,6 +1885,29 @@ class EvidenceProvenanceTests(unittest.TestCase):
             with self.subTest(doc=doc):
                 self.assertIn(doc, text)
 
+    def test_the_rpmh_debug_run_has_a_pre_registered_reading(self):
+        """Written before the run, like the wedge-rate rule, and for the same reason."""
+        text = read("docs/RPMH_DEBUG_DECISION_RULE.md")
+        flat = " ".join(text.split())
+        self.assertIn("decided in advance", flat)
+        # Every verdict string in the table must be the patch's own wording, so
+        # the mapping cannot drift from what 0021 actually prints.
+        patch = read("kernel/patches/diagnostic/0021-gts9-rpmh-timeout-state-dump.patch")
+        for verdict in (
+            "this request was programmed but never completed: look at RSC/TCS/IRQ",
+            "completion was seen: look at completion/lifetime handling",
+            "no matching send in the ring: it did not reach TCS programming",
+            "LATE COMPLETION for a request that already timed out",
+        ):
+            with self.subTest(verdict=verdict):
+                self.assertIn(verdict, patch, "the patch does not print this")
+                self.assertIn(verdict, text, "the rule does not cover this verdict")
+        # It must carry the stop rule and the falsifiers.
+        self.assertIn("stop at the first RPMh dump", flat)
+        self.assertIn("What would falsify the hazard", text)
+        # And it must say the run is NOT an A/B round.
+        self.assertIn("It is not an A/B round.", flat)
+
     def test_the_lifetime_doc_cites_the_real_capture_not_the_fixture(self):
         """The real instance is test-183, and it is stronger than the fixture.
 
