@@ -79,6 +79,51 @@ if [ "$ALLOW" != "1" ]; then
 	exit 0
 fi
 
+# --- per-cycle marker probe --------------------------------------------------
+# Records what the boot that just ended had to say, so a marker seen in a failure
+# has a denominator.  Three records now disagree about which marker matters:
+#
+#   record    encoder-disabled   frame-done   mmc1-timeout   panic
+#   04:57Z    1 @4.436 s         15           2              1
+#   06:00Z    1 @5.284 s         14           1              1
+#   06:59Z    1 @4.656 s          1           6              1
+#
+# The frame-done flood is 15, 14 and 1 - not the common factor.  mmc1 timeouts
+# dominate the newest record and are absent from the oldest.  The only event
+# identical in all three is the DPU's `encoder is disabled`, first, at 4.4-5.3 s.
+#
+# None of that can be read without a control, and every clean boot of this series
+# is one.  So this probe runs after a cycle's outcome is already decided - it
+# cannot influence anything - and counts the same markers on boots that survived.
+# That is the whole point: an mmc1 timeout on a healthy boot would prove nothing,
+# and until this existed there was no way to know whether it happened.
+probe_markers() {
+	local out
+	# The whole dmesg, not a grep window: the counts are what get compared, and a
+	# pre-filtered stream cannot be re-counted later.
+	out=$(timeout 60 "$SSH" 'dmesg 2>/dev/null || journalctl -k -b 0 --no-pager 2>/dev/null' 2>/dev/null)
+	if [ -z "$out" ]; then
+		echo "markers=unavailable"
+		return 0
+	fi
+	printf '%s\n' "$out" >"$DIR/cycle-$1-dmesg.log"
+	local pat
+	for name_pat in \
+		"dpu_encoder_disabled:encoder is disabled" \
+		"dpu_frame_timeout:frame done timeout" \
+		"mmc_timeout:Timeout waiting for hardware" \
+		"amc_rpmh:AMC RPMH" \
+		"rcu_stall:detected stall" \
+		"soft_lockup:soft lockup" \
+		"hung_task:blocked for more than" \
+		"nmi_unanswered:responded to the NMI"; do
+		name=${name_pat%%:*}
+		pat=${name_pat#*:}
+		printf 'marker_%s=%s\n' "$name" "$(grep -acF "$pat" <<<"$out")"
+	done
+	printf 'dmesg_lines=%s\n' "$(wc -l <<<"$out")"
+}
+
 # --- console shell guard -----------------------------------------------------
 # A silent console has two causes and they look identical: a boot that wedged, and
 # a getty that is "active (running)" with no reachable shell on ttyGS0.  Measured on
@@ -125,16 +170,63 @@ ensure_console_shell() {
 	return 1
 }
 
-# Ask the console how long the boot has been up.  /proc/uptime is "889.01", so the
-# pattern needs the decimal point: a pattern without it matches nothing and reports
-# a false stall, which this project has already shipped twice.
+# Ask the console how long the boot has been up, and say WHY when it will not.
+#
+# The two failures are not the same thing and must not be scored alike:
+#
+#   console-port-failed   the host could not open COM17 at all.  Nothing was asked,
+#                         so this is a defect in the instrument - and it has been
+#                         observed, at 06:59:17Z, after the earlier liveness probe
+#                         had used the same port.  Retried once.
+#   console-no-result     the port opened and a shell did not answer.  This is the
+#                         reading that needs attributing against ssh.
+#
+# /proc/uptime is "889.01", so the pattern needs the decimal point: a pattern
+# without it matches nothing and reports a false stall, which this project has
+# already shipped twice.
 probe_console_uptime() {
-	timeout $((CONSOLE_PROBE_TIMEOUT + 30)) "$CR" -Port COM17 \
+	local raw rc
+	raw=$(timeout $((CONSOLE_PROBE_TIMEOUT + 30)) "$CR" -Port COM17 \
 		-Out "$WINDIR\\test191-alive-$1.log" -WaitReadySeconds "$CONSOLE_PROBE_TIMEOUT" \
 		-ReadSeconds 15 \
-		-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
-		| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1
+		-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>&1)
+	rc=$?
+	CONSOLE_GOT=$(sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' <<<"$raw" | tail -1)
+	if [ -n "$CONSOLE_GOT" ]; then
+		CONSOLE_STATE=ok
+		return 0
+	fi
+	if [ "$rc" -eq 124 ]; then
+		CONSOLE_STATE=console-timeout
+	elif grep -qa 'could not open' <<<"$raw"; then
+		# Write the reason down.  A harness that records only "the shell did not
+		# answer" sends the next reader looking for a wedge that is not there.
+		CONSOLE_STATE=console-port-failed
+		say "    COM17 could not be opened: $(grep -a 'could not open' <<<"$raw" | tail -1)"
+	elif grep -qa 'shell answered' <<<"$raw"; then
+		CONSOLE_STATE=console-no-result
+	else
+		CONSOLE_STATE=console-no-shell
+	fi
+	return 1
 }
+
+# The port failure above is transient by nature - something else held COM17 for a
+# moment - so it gets exactly one retry, and the retry is recorded.
+probe_console_uptime_retry() {
+	if probe_console_uptime "$1"; then
+		return 0
+	fi
+	if [ "$CONSOLE_STATE" = "console-port-failed" ]; then
+		sleep 5
+		if probe_console_uptime "$1"; then
+			CONSOLE_STATE=ok-after-port-retry
+			return 0
+		fi
+	fi
+	return 1
+}
+
 # The same question over the other channel.  A console that will not answer is not
 # by itself a dead kernel, and on a boot where ssh works it is not a dead kernel at
 # all - so this decides between "instrument" and "stall", and it is recorded.
@@ -159,6 +251,8 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	rm -f "$wlog"
 	GETTY_RESTARTED=0
 	WEDGE_ATTRIBUTION=attributed
+	CONSOLE_STATE=untried
+	CONSOLE_GOT=""
 	say "--- cycle $i ---"
 
 	timeout $((WINDOW + 60)) "$CW" -Out "$WINDIR\\test191-cycle-$i.log" -Seconds "$WINDOW" \
@@ -261,36 +355,48 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 			done
 		fi
 		if [ "$wedged" = "0" ]; then
-			alive=$(probe_console_uptime "$i")
+			alive=$(probe_console_uptime_retry "$i" && printf '%s' "$CONSOLE_GOT")
 			alive_via=console
-			if [ -z "$alive" ]; then
-				# The console went quiet.  Which of the two readings applies is
-				# decided by the other channel, not by the console.
-				if ssh_answers; then
-					if ensure_console_shell; then
-						say "  console shell absent; restarted the getty, re-probing"
-						alive=$(probe_console_uptime "$i")
-						if [ -n "$alive" ]; then
-							alive_via=console-after-getty-restart
-						fi
-					else
-						say "  console shell absent and a getty restart did not restore it"
-					fi
-					if [ -z "$alive" ]; then
-						# ssh answers, so the kernel is running even though its
-						# console is not.  This is the instrument, not a stall.
-						alive=$(probe_ssh_uptime)
-						if [ -n "$alive" ]; then
-							alive_via=ssh
-						fi
+			# Attribute before believing, and attribute REGARDLESS of how the
+			# console failed.  The first version of this only asked ssh when the
+			# console had reported a missing shell, so a console that could not be
+			# opened at all - a pure instrument failure, measured at 06:59:17Z -
+			# was recorded as "console silent and ssh unreachable" without ssh ever
+			# being asked.  That is a false stall of exactly the kind this guard
+			# exists to prevent.
+			if [ -z "$alive" ] && ssh_answers; then
+				if ensure_console_shell; then
+					say "  console was unusable (${CONSOLE_STATE}); getty restarted, re-probing"
+					alive=$(probe_console_uptime "$i" && printf '%s' "$CONSOLE_GOT")
+					if [ -n "$alive" ]; then
+						alive_via=console-after-getty-restart
 					fi
 				else
-					# No other channel.  Console silence stands, and nothing is
-					# restarted on a boot that may simply be failing.
-					alive_via=console-silent-ssh-unreachable
-					WEDGE_ATTRIBUTION=unattributed
-					say "  console silent and ssh unreachable: treating it as a stall"
+					say "  no shell on ttyGS0 and a getty restart did not restore it"
 				fi
+				if [ -z "$alive" ]; then
+					# ssh answers, so the kernel is running even though its console
+					# is not.  This is the instrument, not a stall.
+					alive=$(probe_ssh_uptime)
+					if [ -n "$alive" ]; then
+						alive_via=ssh
+					fi
+				fi
+			fi
+			if [ -z "$alive" ]; then
+				# No channel answered.  Console silence stands, and nothing is
+				# restarted on a boot that may simply be failing.
+				if [ "$CONSOLE_STATE" = "console-port-failed" ] \
+					|| [ "$CONSOLE_STATE" = "console-timeout" ]; then
+					# The console was never asked, so this cycle carries no
+					# information about the boot at all.
+					alive_via="$CONSOLE_STATE"
+				else
+					alive_via="console-silent-ssh-unreachable"
+				fi
+				WEDGE_ATTRIBUTION=unattributed
+				say "  no channel answered (${CONSOLE_STATE}, ssh unreachable); this cycle is"
+				say "  unattributed: the instrument failed, or the boot did, and they look alike"
 			fi
 			# A boot that answered on EITHER channel past EARLY_MIN_UPTIME with no
 			# wedge marker in the capture has proved it survived.  Attribution is
@@ -336,6 +442,7 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		echo "wedged=$wedged"
 		echo "getty_restarted=$GETTY_RESTARTED"
 		echo "wedge_attribution=$WEDGE_ATTRIBUTION"
+		echo "console_state=${CONSOLE_STATE:-untried}"
 		echo "outages=${outages:-0}"
 		echo "second_outage_gone=${off2_at:--}"
 		echo "second_outage_back=${on2_at:--}"
@@ -357,13 +464,27 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# One health check, requiring a command RESULT rather than an echo.  The early
 	# exit above already made this probe, so do not pay for it twice.
 	if [ -z "$alive" ]; then
-		alive=$(probe_console_uptime "$i")
-		alive_via=console
+		alive=$(probe_console_uptime_retry "$i" && printf '%s' "$CONSOLE_GOT")
+		if [ -n "$alive" ]; then
+			alive_via=console
+		fi
 		if [ -z "$alive" ] && ssh_answers; then
+			# ssh answers, so the kernel is running even though its console is
+			# not.  That is the instrument, and it is not a stall.
 			alive=$(probe_ssh_uptime)
 			if [ -n "$alive" ]; then
 				alive_via=ssh
 			fi
+		fi
+		if [ -n "$alive" ]; then
+			:
+		elif [ "$CONSOLE_STATE" = "console-port-failed" ] \
+			|| [ "$CONSOLE_STATE" = "console-timeout" ]; then
+			alive_via="$CONSOLE_STATE"
+			WEDGE_ATTRIBUTION=unattributed
+		else
+			alive_via=console-silent-ssh-unreachable
+			WEDGE_ATTRIBUTION=unattributed
 		fi
 	fi
 	echo "uptime_after=${alive:-none}" >>"$DIR/cycle-$i-verdict.txt"
@@ -423,6 +544,12 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		fi
 		say "  *** continuing: NMI marker only, no stack in this window"
 	fi
+	# After the outcome, never before it: this probe reads the boot that just
+	# ended, so it cannot change whether that boot wedged.  It runs here rather
+	# than in the verdict block above because it costs a round trip and the
+	# verdict has to be written even if this fails.
+	probe_markers "$i" >>"$DIR/cycle-$i-verdict.txt"
+
 	cycles_done=$i
 done
 

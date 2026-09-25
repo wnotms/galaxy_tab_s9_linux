@@ -1,0 +1,9 @@
+2026-09-25T06:57:28Z === wedge rate: cycles=60 window=300s kind=warm-reboot dir=/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/wedge-rate-20260925T065728Z ===
+2026-09-25T06:57:28Z early exit: 1 (a boot that answers a command past 45s with no marker ends its cycle)
+2026-09-25T06:57:28Z measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot
+2026-09-25T06:57:28Z baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)
+2026-09-25T06:57:28Z --- cycle 1 ---
+2026-09-25T06:57:40Z   reboot issued at 2026-09-25T06:57:40Z
+2026-09-25T06:57:40Z   tablet gone at 2026-09-25T06:57:38.565Z
+2026-09-25T06:58:00Z   tablet back at 2026-09-25T06:57:59.484Z
+2026-09-25T06:59:28Z   console silent and ssh unreachable: treating it as a stall

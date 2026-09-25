@@ -1,0 +1,189 @@
+[    4.656158][  T579] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    7.703372][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   23.007375][    C3] mmc1: Timeout waiting for hardware interrupt.
+[   23.013723][    C3] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   23.021128][    C3] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   23.028528][    C3] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   23.035927][    C3] mmc1: sdhci: Argument:  0x07046060 | Trn mode: 0x0000002b
+[   23.043326][    C3] mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+[   23.050722][    C3] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   23.058118][    C3] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   23.065515][    C3] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000003
+[   23.072910][    C3] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   23.080306][    C3] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   23.087701][    C3] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   23.095096][    C3] mm#1: sdhc):`Cmd:       0x0000193a | Max curr: 0x00000000
+[   23.1024)2][    C3Ý mmc1: sdhc): Resp[0]:   0x00000900 | Resp[1]:  0x00000000
+[   23.109888][    C3] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000900
+[   23.117284][    C3] m]c1: s`hci: Host ctl2: 0x0000000b
+[   23.122618][    C3] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000ffffff218
+[   23.130719][    C3] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   23.138461][    C3] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   23.148094][    C3] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   23.158084][    C3] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   23.168163][    C3] mmc1: sdhci: ============================================
+[   28.647366][    C7] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:[   28.656393][    C7M rcu: 	5-...!: (0 ticks this GP) idle=b1c4/1/0x4000000000000000 softirq=1ð42/!042 fqs57
+[   28.664357][    C7] rcu: 	(detected by 7, t=5252 jiffies, g=441, q=1744 ncpus=8)
+[   33.247373][    C3] mmc1: Timeout waiting for hardware interrupt.
+[   33.253701][    C3] mmc1: sdhci: ============ SDˆCI REGISTER DUMP =====5====[   33.261099][    C3] mm£18 sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   33.268496][    C3] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   33.275892][    C3] mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000023
+[   33.283289][    C3] mmc1: sdhci: Present:   0x03f800f7 | Host ctl: 0x0000001f
+[   33.290684][    C3] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   33.298080][    C3] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   33.305476][    C3] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00018000
+[   33.312871][    C3] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   33.320268][    C3] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   33.327664][    C3] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   33.335059][    C3] mmc1: sdhci: Cmd:       0x00000c1b | Max curr: 0x00000000
+[   33.342455][    C3] mmc1: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x00000000
+[   33.349852][    C3] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   33.357246][    C3] mmc1: sdhci: Host ctl2: 0x0000000b
+[   33.362582][    C3] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000000000000
+[   33.370682][    C3] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   33.378426][    C3] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   33.388057][    C3] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   33.398046][    C3] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndq func0 : 0xf88218a8 Vndr func3: 0x02626040
+[   33.408127][    C3] mmc1: sdhci: ============================================
+[   38.674946][    C7] rcu: rcu_preempt kthread starved for 7743 jiffies! g441 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=5
+[   38.686068][    C7] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[   38.697077][    C7] rcu: RCU grace-period kthread stack dump:
+[   39.654380][  T129] Error sending AMC RPMH requests (-110)
+[   43.487372][    C6] mmc1: Timeout waiting for hardware cmd interrupt.
+[   43.495284][    C6] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   43.503909][    C6] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   43.512541][    C6] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   43.521168][    C6] mmc1: sdhci: Argument:  0x13ab0000 | Trn mode: 0x00000023
+[   43.529790][    C6] mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+[   43.538425][    C6] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   43.547057][    C6] mmc1:(sdhCi: Wake-up:   0x00000000 | Clock:    0x00000007
+[   43.555683][    C6] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000001
+[   43.564305][    C6] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   43.572919][    C6] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   43.581538][    C6] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   43.590161][    C6] mmc1: sdhci: Cmd:       0x00000d1a | Max curr: 0x00000000
+[   43.598794][    C6] mmc1: sdhci: Resp[0]:   0x00400900 | Resp[1]:  0x0000000
+[   43.6 743(][    C6] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   43.616055][    C6] mmc1: sdhci: Host ctl2: 0x0000000b
+[   43.622603][    C6] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000000000000
+[   43.631931][    C6] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   43.640922][    C6] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   43.651776][    C6] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   43.662956][    C6] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   43.674226][    C6] mmc1: sdhci: ============================================
+[   49.887749][  T129] Error sending AMC RPMH requests (-110)
+[   53.727371][    C6] mmc1: Timeout waiting for hardware cmd interrupt.
+[   53.735232][    C6] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   53.743805][    C6] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   53.752378][    C6] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   53.760949][    C6] mmc1: sdhci: Argument:  0x13ab0000 | Trn mode: 0x00000023
+[   53.769518][    C6] mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+[   53.778089][    C6] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   53.786663][    C6] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   53.795238][    C6] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000001
+[   53.803810][    C6] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   53.812388][    C6] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   53.820973][    C6] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   53.829583][    C6] mmc1: sdhci: Cmd:       0x00000d1a | Max curr: 0x00000000
+[   53.838153][    C6] mmc1: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
+[   53.846715][    C6] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   53.855284][    C6] mmc1: sdhci: Host ctl2: 0x0000000b
+[   53.861803][    C6] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000000000000
+[   53.871139][    C6] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   53.880067][    C6] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642b | DLL afg2: 0x0000a800
+[   53.890877][    C6] mmc1:sdhci_msm: DLL cfG3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   53.902049][    C6] mmc1: sdhci_msm: Vndr func:0x0<018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   53.913300][    C6] mmc1: sdhci: ============================================
+[   63.967371][    C6] mmc1: Timeout waiting for hardware cmd ilterpupt.
+[   63.975215][    C6] mmc1: sdhci: ========5=== SDHCI REGISER DUMP ===========
+[   63.983743][    C6] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   63.992283][    C6] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   64.000775][    C6] mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000023
+[   64.009259][    C6] mmc1: sdhci: Present:   0x03f800f1 | Host ctl: 0x0000001f
+[   64.017737][    C6] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   64.026206][    C6] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   64.034668][    C6] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00018000
+[   64.043133][    C6] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   64.051607][    C6] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   64.060079][    C6] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   64.068554][    C6] mmc1: sdhci: Cmd:       0x00000c1a | Max curr: 0x00000000
+[   64.077030][    C6] mmc1: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x00000000
+[   64.085499][    C6] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   64.093973][    C6] mmc1: sdhci: Host ctl2: 0x0000000b
+[   64.100368Ý[    C6] Mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000000000000
+[   64.109544[    C6] mmc1: sdhc)_msm: ----------- VENDOR REGISTER DUMP -----------
+[   64.118375][    C6] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   64.129122][    C6] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   64.140228][    C6] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   64.151439][    C6] mmc1: sdhci: ============================================
+[   64.697642][    C7] watchdog: BUG: soft lockup - CPU#7 stuck for 56s! [kworker/u32:7:92]
+[   64.697647][    C7] CPU#7 Utilization every 4000ms during lockup:
+[   64.697649][    C7] 	#1: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.697652][    C7] 	#2: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.697655][    C7] 	#3: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   64.697657][    C7] 	#4: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.697659][    C7] 	#5: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   74.215371][    C6] mmc1: Timeout waiting for hardware cmd interrupt.
+[   74.223103][    C6] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   74.231558][    C6] mmc1: sdhci: Sys addr:  0x00000020 | Version:  0x00007202
+[   74.240013][    C6] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   74.248457][    C6] mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000023
+[   74.256916][    C6] mmc1: sdhci: Present:   0x03f800f1 | Host ctl: 0x0000001f
+[   74.265364][    C6] mmc1: sdhci: Power:     0x0000000d | Blk gap: 0x00000000
+[   74.273822][    C6] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   74.282263][    C6] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00018000
+[   74.290704][    C6] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   74.299142U[    C6] mmC1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x0000000
+[   74.307586][    C&] mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000a08b
+[   74.306031][    C7] mmc1: sdhCi: Cmd:       0x00000c1a | Max curr: 0x00000000
+[   74.324492][    C6\ mmc1ú sdhci: Resp[0]:    x00000000 | Resp[1]:  0x00000000
+[   74.332943][    C6] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   74.341379][    C6] mmc1: sdhci: Host ctl2: 0x0000000b
+[   74.347741][    C6] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000000000000
+[   74.356872][    C6] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   74.365646][    C6] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   74.376291][    C6] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   74.387289][    C6] mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88218a8 VNdr bunc3: 0x02626040
+[ # 74.398378][    C6] mmc1: sdhci: ============================================
+[   74.756521][    C7] Kernel panic - not syncing: softlockqp: hung"tasks[   74.763924][    C7] CPU: 7 UID: 0 PID:92 Comm: kworkeR/u32:7 Tainted: G S      W    L      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   74.776518][    C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [L]=SOFTLOCKUP
+[   74.784314][    C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   74.791498][    C7] Workqueue: events_unbound toggle_allocation_gate
+[   74.798775][    C7] Call trace:
+[   74.802753][    C7]  show_stack+0x1c/0x2c (C)
+[   74.807986][    C7]  __dump_stack+0x2c/0x40
+[   74.813056][    C7]  dump_stack_lvl+0x28/0x74
+[   74.818306][    C7]  dump_stack+0x1c/0x2c
+[   74.823207Y[    C7m  vpanic+0x150/0x344
+[   74.827889M[   C7]  vranic+0x0/0x344
+[   74.832398][    C7]  watchdog_timer_fn+0x48c/0x53c
+[   74.838071][    C7]  __hrtimer_run_queues+0x130/0x3a4
+[   74.84406][    C7]  hrthmer_interrupt+0xd8/0x2bc
+[   74.849579][    C7]  arch_timer_handler_virt+0x3c/0x50
+[   74.855632][    C7]  handle_percpu_devid_irq+0x144/0x1b4
+[   74.861823][    C7]  generic_handle_domain_irq+0x40/0x68
+[   74.868004][    C7]  gic_handle_irq+0x4c/0x10c
+[   74.873272][    C7]  call_on_irq_stack+0x48/0x88
+[   74.878718][    C7]  do_interrupt_handler+0x50/0x74
+[   74.884408][    C7]  el1_interrupt+0x40/0x68
+[   74.889457][    C7]  el1h_64_irq_handler+0x1c/0x2c
+[   74.895044][    C7]  ed1h_64_irq+0x70/0x74
+[   74.¸99944][    C7]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   74.906821][    C7]  kick_all_cpus_sync+0x48/0x7c
+[   74.912355][    C7]  arch_jump_label_transform_apply+0x14/0x24
+[   74.919059][    C7]  __jump_label_update+0x118/0x13c
+[   74.924880][    C7]  jump_label_update+0xe4/0x110
+[   74.930406][    C7]  static_key_enable_cpuslocked+0x6c/0xb4
+[   74.936849][    C7]  static_key_enable+0x24/0x3c
+[   74.942283][    C7]  toggle_allocation_gate+0x58/0x14c
+[   74.948254][    C7]  process_scheduled_works+0x18c/0x4d0
+[   74.954408][    C7]  worker_thread+0x1f8/0x2e8
+[   74.959698][    C7]  kthread+0x108/0x134
+[   74.964435][    C7]  ret_from_fork+0x10/0x20
+[   74.969519][    C7] SMP: Stopping secgndary CPUs
+[   76.097450][    C7] SMP: failed to stop secondary CPUs 0,5
+S   76&103790][    C7] Kernel Offset: 0x150<00 frnm 0xfffbffc080000000
+[   76.110929][    C7] PHYS_OFFSET: 0x80000000
+[   76.115935][    C7] CPU features: 0x1a001070,001c000a,26060501,544676a7
+[   76.123450][    C7] Memory Limit: none
+[   76.137113][    C7] Rebooting in 10 seconds..

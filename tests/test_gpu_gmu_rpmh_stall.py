@@ -2136,10 +2136,17 @@ class WedgeRateAttributionTests(unittest.TestCase):
     outcome written down.
     """
 
-    HARNESS = ("reference/boot-tests/test-191-20260925T0410Z/wedge-rate.sh")
+    TESTDIR = "reference/boot-tests/test-191-20260925T0410Z"
+    HARNESS = f"{TESTDIR}/wedge-rate.sh"
 
     def setUp(self):
         self.text = read(self.HARNESS)
+
+    def early_exit_body(self):
+        """Just the block that decides whether a cycle survived."""
+        text = self.text
+        body = text[text.index('if [ "$wedged" = "0" ]; then'):]
+        return body[:body.index('if [ "$early" = "1" ]; then')]
 
     def test_the_check_is_ps_not_tasks_current(self):
         """TasksCurrent=0 is not a missing shell: logind moves the session out.
@@ -2171,9 +2178,10 @@ class WedgeRateAttributionTests(unittest.TestCase):
         """Console silent + ssh alive is the instrument; ssh dead is a stall."""
         text = self.text
         self.assertIn("ssh_answers", text)
+        body = self.early_exit_body()
         self.assertLess(
-            text.index("if ssh_answers; then"),
-            text.index("if ensure_console_shell; then"),
+            body.index("ssh_answers"),
+            body.index("ensure_console_shell"),
             "ssh must be consulted BEFORE anything is restarted",
         )
         self.assertIn("console-silent-ssh-unreachable", text)
@@ -2181,13 +2189,13 @@ class WedgeRateAttributionTests(unittest.TestCase):
 
     def test_nothing_is_restarted_on_a_boot_that_may_be_dying(self):
         """The getty restart lives inside the ssh-answered branch only."""
-        start = self.text.index("if ssh_answers; then")
-        end = self.text.index("WEDGE_ATTRIBUTION=unattributed")
-        self.assertIn("ensure_console_shell", self.text[start:end])
-        # Nothing between the unattributed verdict and the end of the branch may
-        # restart a unit: on a boot that may be dying, that is interference.
-        tail = self.text[end:]
-        self.assertNotIn("systemctl restart", tail[:tail.index("\n\t\tfi")])
+        body = self.early_exit_body()
+        start = body.index("ssh_answers")
+        end = body.index("No channel answered")
+        self.assertIn("ensure_console_shell", body[start:end])
+        # Nothing in the no-channel-answered branch may restart a unit: on a boot
+        # that may be dying, that is interference.
+        self.assertNotIn("systemctl restart", body[end:])
 
     def test_both_channels_are_asked_the_uptime_question(self):
         self.assertIn("probe_console_uptime", self.text)
@@ -2220,6 +2228,94 @@ class WedgeRateAttributionTests(unittest.TestCase):
         self.assertIn("logind moves", flat)
         self.assertIn("ssh was *refused* while ICMP still answered", flat)
         self.assertIn("unattributed rather than counted as a clean run", flat)
+
+    def test_the_console_failure_classifier_is_tested_offline(self):
+        """The classifier is a pure function; test it without the tablet.
+
+        Cycle 1 of the series it guards was scored wrong because the console
+        could not be opened at all and the harness called that a silent console.
+        The strings that decide it are text, so they can be replayed here.
+        """
+        import subprocess
+        script = ROOT / self.TESTDIR / "test-console-failure-classifier.sh"
+        self.assertTrue(script.exists(), f"{script} is missing")
+        proc = subprocess.run(
+            ["bash", str(script)], capture_output=True, text=True, check=False,
+        )
+        self.assertEqual(
+            proc.returncode, 0,
+            f"classifier regression test failed:\n{proc.stdout}\n{proc.stderr}",
+        )
+        self.assertIn("6 passed, 0 failed", proc.stdout)
+        # The failure that motivated it must be one of the cases.
+        self.assertIn("port could not be opened", proc.stdout)
+
+    def test_a_console_that_was_never_asked_is_not_a_stall(self):
+        """Attribution must not depend on how the console failed."""
+        text = self.text
+        body = text[text.index('if [ "$wedged" = "0" ]; then'):]
+        body = body[:body.index('if [ "$early" = "1" ]; then')]
+        # ssh is consulted regardless of the console state...
+        self.assertIn("if [ -z \"$alive\" ] && ssh_answers; then", body)
+        # ...and a port that never opened is recorded as an instrument fault.
+        self.assertIn("console-port-failed", body)
+        self.assertIn("console-timeout", body)
+        self.assertIn("attributed", body)
+
+    def test_the_port_failure_is_named_in_the_log_not_just_counted(self):
+        """The next reader must not have to guess which failure this was."""
+        self.assertIn("COM17 could not be opened:", self.text)
+        self.assertIn("console_state=${CONSOLE_STATE:-untried}", self.text)
+
+    def test_the_failure_record_names_all_three_marker_counts(self):
+        """Three records disagree, so the table has to be in the record."""
+        text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
+                    "FAILED-BOOT-20260925T0659.md")
+        for needle in ("| 04:57Z |", "| 06:00Z |", "| this one |"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+        self.assertIn("15", text)
+        self.assertIn("14", text)
+        self.assertIn("frame-done flood is not the common factor", text)
+
+    def test_the_record_does_not_claim_the_dpu_marker_separates_anything(self):
+        """It fires on healthy boots too, and that was measured, not assumed."""
+        text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
+                    "FAILED-BOOT-20260925T0659.md")
+        self.assertIn("marker_dpu_encoder_disabled=1", text)
+        self.assertIn("4.798040", text)
+        self.assertIn("every marker this round proposed as a candidate also occurs "
+                      "on healthy boots", " ".join(text.split()))
+
+    def test_the_series_probes_markers_after_the_outcome_not_before(self):
+        """Instrumentation that ran earlier could change what it measures."""
+        text = self.text
+        self.assertIn("probe_markers()", text)
+        # The call site must come after the verdict and after the stop decisions.
+        call = text.index('probe_markers "$i" >>"$DIR/cycle-$i-verdict.txt"')
+        self.assertGreater(call, text.index("nmi=$(get nmi_unanswered)"))
+        self.assertGreater(call, text.index("*** WEDGE:"))
+        # And it must record the same markers the failure records use.
+        for marker in ("encoder is disabled", "frame done timeout",
+                       "Timeout waiting for hardware", "AMC RPMH",
+                       "responded to the NMI"):
+            with self.subTest(marker=marker):
+                self.assertIn(marker, text)
+
+    def test_the_wedged_boot_journal_and_console_disagree_on_purpose(self):
+        """The record has to carry the two-clock lesson, not just the panic."""
+        text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
+                    "FAILED-BOOT-20260925T0659.md")
+        self.assertIn("1115 lines and stops at", " ".join(text.split()))
+        self.assertIn('"the journal stops" is not "the system froze"', text)
+
+    def test_the_record_states_what_is_not_established(self):
+        """The one unclosed link is the whole strength of the claim."""
+        text = read(f"{self.TESTDIR}/wedge-rate-20260925T065728Z/"
+                    "FAILED-BOOT-20260925T0659.md")
+        self.assertIn("**Not established.**", text)
+        self.assertIn("That the failing boot itself had cpufreq bound", text)
+        self.assertIn("failed to update OPP for freq=3360000", text)
 
 
 if __name__ == "__main__":
