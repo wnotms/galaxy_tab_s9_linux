@@ -80,8 +80,33 @@ ANOMALIES=(
 	'gpu_dummy_reg|supply vdd(cx)? not found, using dummy regulator'
 	'disp_rcg_stale|rcg didn.t update its configuration'
 	'panic|Kernel panic'
+	# The strongest CPU-level signature the three complete wedge records share.
+	# `nmi_backtrace.c` prints "After N seconds, these CPUS still haven't
+	# responded to the NMI: ..." at pr_warn, so it needs loglevel>=4 to reach a
+	# console - but it is `KERN_WARNING` in the ring regardless, which is why the
+	# KLOG channel can see it on this build.
+	'nmi_unresponsive|haven.t responded to the NMI|still haven.t responded'
 	'watchdog_reboot|watchdog: .*reboot|gts9-watchdog-debug'
 )
+
+# Anomaly classes that are evidence of a **CPU-level wedge** on their own.  A
+# lone DPU, MMC or RPMh timeout is not one of these: test-194's boot printed a
+# frame-done timeout and then ran normally for 170 s to a clean restart.  The
+# distinction is the whole point of the verdict field below.
+# Space-separated: these are iterated as names, so a pipe-joined string would
+# loop once over the whole thing and every count would silently read 0.
+WEDGE_CLASSES='soft_lockup hung_task rcu_stall workqueue_stall nmi_unresponsive panic'
+# Classes that are real signals but not sufficient for a wedge verdict.
+#
+# `disp_rcg_stale` is deliberately NOT here even though it is a real message:
+# it fires exactly once per boot on every boot measured, healthy and wedged alike
+# (`docs/X710_EARLY_BOOT_WARNINGS.md` §4), so counting it would make `clean`
+# unreachable and turn every round into `suspect`.  A marker that cannot
+# discriminate does not belong in a classifier.  It is still counted per channel
+# by the ANOMALIES loop, just not scored.
+#
+# `gpu_dummy_reg` is the same case and is likewise counted but not scored.
+SUSPECT_CLASSES='rpmh_timeout rpmh_active_only dpu_frame_timeout mmc_timeout gpu_acd_aoss gpu_device_link'
 
 usage() {
 	cat >&2 <<'EOF'
@@ -101,25 +126,23 @@ summary_table() {
 		return 0
 	fi
 	local keys="run profile round boot_id kernel_release stall rpmh rcu wq dpu mmc"
-	echo "run               profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id"
-	echo "----------------  ---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------"
+	echo "run               profile    round  verdict       wedge  susp  boot_id"
+	echo "----------------  ---------  -----  ------------  -----  ----  --------"
 	for r in $(printf '%s\n' "${rows[@]}" | sort); do
 		local p rn
 		p=$(sed -n 's/^profile=//p' "$r" | head -1)
 		rn=$(sed -n 's/^round=//p' "$r" | head -1)
-		printf '%-16s  %-9s  %-5s  %-5s  %-4s  %-3s  %-2s  %-3s  %-3s  %-19s  %s\n' \
+		printf '%-16s  %-9s  %-5s  %-12s  %-5s  %-4s  %s\n' \
 			"$(sed -n 's/^run=//p' "$r" | head -1)" "${p:-?}" "${rn:-?}" \
-			"$(sed -n 's/^stall=//p' "$r" | head -1)" \
-			"$(sed -n 's/^rpmh_timeout_klog=//p' "$r" | head -1)" \
-			"$(sed -n 's/^rcu_stall_klog=//p' "$r" | head -1)" \
-			"$(sed -n 's/^workqueue_stall_klog=//p' "$r" | head -1)" \
-			"$(sed -n 's/^dpu_frame_timeout_klog=//p' "$r" | head -1)" \
-			"$(sed -n 's/^mmc_timeout_klog=//p' "$r" | head -1)" \
-			"$(sed -n 's/^first_anomaly=//p' "$r" | head -1)" \
+			"$(sed -n 's/^verdict=//p' "$r" | head -1)" \
+			"$(sed -n 's/^wedge_markers=//p' "$r" | head -1)" \
+			"$(sed -n 's/^suspect_markers=//p' "$r" | head -1)" \
 			"$(sed -n 's/^boot_id_after=//p' "$r" | head -1 | cut -c1-8)"
 	done
 	echo
-	echo "stall = soft_lockup + hung_task + rcu_stall + workqueue_stall (any watchdog-visible wedge)"
+	echo "verdict: clean | wedge | suspect | unattributed (see the verdict block)"
+	echo "wedge_markers = soft_lockup + hung_task + rcu_stall + workqueue_stall + nmi_unresponsive + panic"
+	echo "  a lone DPU/MMC/RPMh timeout is a *suspect* marker and does NOT make a wedge"
 }
 
 # --- durable round identity --------------------------------------------------
@@ -325,6 +348,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	IDENTITY=missing
 	mark_round "$i"
 	mark_bid=$(sed -n 's/^MARK_msg=.*boot_id=//p' "$DIR/mark-$i.txt" 2>/dev/null | tail -1)
+	say "  marked run=$RUN round=$i on boot ${mark_bid:-?} (kmsg + pmsg)" | tee -a "$OUT"
 
 	# Console capture spans shutdown, boot and the 13-14 s window.
 	timeout $((WINDOW + 200)) "$CW" \
@@ -339,7 +363,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	wait "$conpid" 2>/dev/null || true
 
 	klog=$DIR/console-$i.log
-	klog-watch=$DIR/console-$i-watch.txt
+	watch_log=$DIR/console-$i-watch.txt
 	cp "$LOCALDIR/console-$i.log" "$klog" 2>/dev/null || say "WARNING: no console capture for round $i"
 
 	run_probe "$i" "$DIR/probe-$i-raw.txt" "$WINDIR\\probe-$i.log"
@@ -415,9 +439,6 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "console_active=$(sed -n 's/.*ctrl=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "failed_units=$(sed -n 's/.*failed=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
-		# The binding, read back from the boot that just ended.
-		ident_ring=$(sed -n 's/.*RECV  \(GTS9_AB .*\)/\1/p' "$DIR/probe-$i-raw.txt" 2>/dev/null | tail -1)
-		echo "identity=$ident_ring"
 		# Anomaly classes, from each kernel channel and labelled with it.
 		for spec in "${ANOMALIES[@]}"; do
 			key=${spec%%|*}; re=${spec#*|}
@@ -427,33 +448,99 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "console_kernel_lines=$console_kernel_lines"
 		echo "klog_lines=$(wc -l <"$src" 2>/dev/null || echo 0)"
 		echo "pstore_lines=$(wc -l <"$src2" 2>/dev/null || echo 0)"
-		echo "stall=$(( $(count_in "$src" 'soft lockup') + $(count_in "$src" 'hung task|task .* blocked for more than') + $(count_in "$src" 'rcu:.*stall') + $(count_in "$src" 'workqueue: .*stall') + $(count_in "$src2" 'soft lockup') + $(count_in "$src2" 'hung task|task .* blocked for more than') + $(count_in "$src2" 'rcu:.*stall') + $(count_in "$src2" 'workqueue: .*stall') ))"
-		# --- the automatic-reboot field, and the A/B's wedge detector --------
-		# The console capture carries no kernel text (see the channel note above)
-		# but it DOES carry the USB presence transitions, and that is the one
-		# signal nothing but a second restart can produce: the harness issues
-		# exactly one `systemctl reboot` per round, so a second outage means
-		# something else restarted the tablet - the watchdog, or a panic.
-		#
-		# Without this a wedged round is recognisable only through the kernel
-		# logs of the boot that died, which is indirect; and `boot_id_after`
-		# cannot help, because it differs on every round by construction.
-		# Measured on the five clean test-193 rounds: exactly 1 False / 2 True
-		# each.  A wedge shows 2 False / 3 True or more.
-		read -r p_off p_on p_n <<<"$(tr -d '\r' <"$klog-watch.txt" 2>/dev/null | awk '
-			/PRESENCE usb0525:a4a7=False/ { n++; if (n==1) f=$1; if (n==2) s=$1 }
-			/PRESENCE usb0525:a4a7=True/  { t++; if (t==3) b=$1 }
-			END { printf "%s %s %d", (s?s:"-"), (b?b:"-"), n+0 }')"
-		echo "presence_outages=${p_n:-0}"
-		echo "automatic_reboot=$([ "${p_n:-0}" -ge 2 ] && echo yes || echo no)"
-		echo "second_outage_gone=${p_off:--}"
-		echo "second_outage_back=${p_on:--}"
-		echo "first_anomaly=$(first_ts "$src" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
 		echo "first_anomaly_pstore=$(first_ts "$src2" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
 		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" "$src2" 2>/dev/null | head -3 | tr '\n' ';')"
 	} >"$DIR/round-$i.txt"
 
-	grep -aE "^(release|reboot_kind|automatic_reboot|presence_outages|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|apps_rsc_irq|aoss_qmp_irq|panel_status|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
+	# --- the verdict ---------------------------------------------------------
+	# Four outcomes, and the names are load-bearing: test-194 showed that a
+	# console-silence episode with a lone frame-done timeout is NOT a wedge, so
+	# `wedge` requires CPU-level or persistent evidence and nothing weaker may
+	# reach that name.
+	#
+	#   clean         new boot_id, shell answered, identity verified, no automatic
+	#                 reboot (the round's own reboot is the one the harness
+	#                 requested, so it does not count), and no wedge-class marker
+	#                 in either kernel channel
+	#   wedge         a wedge-class marker, or an unrequested automatic reboot,
+	#                 bound to this round's boot id
+	#   suspect       real signals - a lone DPU/MMC/RPMh timeout, console silence,
+	#                 ssh/ping failure, a stale panel - with no CPU-level or
+	#                 persistent evidence
+	#   unattributed  the boot or the capture cannot be bound to this round, or
+	#                 the probe itself failed; nothing may be concluded from it
+	# The binding, read from the boot that just ended.  `identity_ring` is the
+	# copy the kernel ring kept, which is what ties the round to the boot that
+	# wrote it; `identity_pmsg` is the copy that survived into this boot's pstore.
+	ident_ring=$(sed -n 's/.*RECV  \(GTS9_AB .*\)/\1/p' "$DIR/probe-$i-raw.txt" 2>/dev/null | tail -1)
+	echo "identity=$ident_ring" >>"$DIR/round-$i.txt"
+	case "$ident_ring" in
+	*"run=$RUN profile=$PROFILE round=$i"*) IDENTITY=verified ;;
+	"") IDENTITY=missing ;;
+	*) IDENTITY=mismatch ;;
+	esac
+
+	# Read one field back out of the round record that was just written.  This is
+	# the seam between "collect the numbers" and "decide what they mean", and it
+	# is deliberately a re-read: the verdict then consumes the same text a reader
+	# will, so the two cannot drift apart.
+	get() { sed -n "s/^$1=//p" "$DIR/round-$i.txt" | head -1; }
+	# A missing field must read as 0.  An empty expansion makes the arithmetic
+	# below an error rather than a count, and a round that silently fails to
+	# classify is worse than one that classifies as clean-but-empty.
+	getn() { local v; v=$(get "$1"); case "$v" in ''|*[!0-9]*) echo 0 ;; *) echo "$v" ;; esac; }
+
+	# --- the automatic-reboot field, and the wedge detector ------------------
+	# The console capture carries no kernel text *before USB enumeration* (see
+	# the channel note above) but it DOES carry the USB presence transitions, and
+	# a second outage is the one signal nothing but another restart can produce:
+	# the harness issues exactly one `systemctl reboot` per round, so a second
+	# outage means something else restarted the tablet - the watchdog, or a
+	# panic.  `boot_id_after` cannot serve here, because it differs every round
+	# by construction.
+	#
+	# Measured on the five clean test-193 rounds: exactly 1 False / 2 True each.
+	# A wedge shows 2 False / 3 True or more.
+	# The console watcher is still running while the probe waits for the shell, so
+	# a wedge's own panic-restart lands in this file AFTER the probe returns.
+	# Counting before the watcher exits misses exactly the event being looked for:
+	# measured on test-195, where the count read 0 while the file already held two
+	# outages - the harness's reboot and the panic's restart.  Wait for it first.
+	wait "$conpid" 2>/dev/null || true
+	read -r p_off p_on p_n <<<"$(tr -d '\r' <"$watch_log" 2>/dev/null | awk '
+		/PRESENCE usb0525:a4a7=False/ { n++; if (n==1) f=$1; if (n==2) s=$1 }
+		/PRESENCE usb0525:a4a7=True/  { t++; if (t==3) b=$1 }
+		END { printf "%s %s %d", (s?s:"-"), (b?b:"-"), n+0 }')"
+	echo "presence_outages=${p_n:-0}" >>"$DIR/round-$i.txt"
+	echo "automatic_reboot=$(if [ "${p_n:-0}" -ge 2 ]; then echo yes; else echo no; fi)" >>"$DIR/round-$i.txt"
+	echo "second_outage_gone=${p_off:--}" >>"$DIR/round-$i.txt"
+	echo "second_outage_back=${p_on:--}" >>"$DIR/round-$i.txt"
+
+	wedge_n=0
+	for cls in $WEDGE_CLASSES; do
+		wedge_n=$((wedge_n + $(getn "${cls}_klog") + $(getn "${cls}_pstore")))
+	done
+	suspect_n=0
+	for cls in $SUSPECT_CLASSES; do
+		suspect_n=$((suspect_n + $(getn "${cls}_klog") + $(getn "${cls}_pstore")))
+	done
+	echo "wedge_markers=$wedge_n" >>"$DIR/round-$i.txt"
+	echo "suspect_markers=$suspect_n" >>"$DIR/round-$i.txt"
+	echo "stall=$wedge_n" >>"$DIR/round-$i.txt"
+
+	verdict=clean
+	[ "${suspect_n:-0}" -gt 0 ] && verdict=suspect
+	[ "${p_n:-0}" -ge 2 ] && verdict=wedge
+	[ "${wedge_n:-0}" -gt 0 ] && verdict=wedge
+	# unattributed outranks everything: an unbound boot makes the rest of the
+	# record unreadable, and saying so is more useful than a confident label.
+	[ "${IDENTITY:-missing}" != verified ] && verdict=unattributed
+	[ -z "$new_id" ] && verdict=unattributed
+	[ "$(get probe_after_reboot)" = failed ] && verdict=unattributed
+	echo "wedge_class_evidence=$wedge_n" >>"$DIR/round-$i.txt"
+	echo "verdict=$verdict" >>"$DIR/round-$i.txt"
+
+	grep -aE "^(release|reboot_kind|verdict|identity|presence_outages|automatic_reboot|wedge_markers|suspect_markers|gpu_driver|aoss_driver|gmu_node|apps_rsc_irq|panel_status|deferred|stall|first_anomaly|boot_id_after|failed_units)=" \
 		"$DIR/round-$i.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 	[ -n "$new_id" ] && boot_id=$new_id
