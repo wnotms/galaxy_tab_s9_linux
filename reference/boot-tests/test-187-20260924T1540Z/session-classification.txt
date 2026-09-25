@@ -1,0 +1,32 @@
+# Per-session classification of test-187's 16 warm cycles
+# 2026-09-25T02:04:36Z
+#
+# console-watch.ps1 APPENDS to its -Out file, so these three series (2 + 6 + 8
+# rounds) share filenames and each shutdown-N-console.log holds 1-3 sessions.
+# Splitting them recovers every cycle, not just the 8 whose watcher stdout (w19)
+# survived.  Two of the 16 sessions show an UNATTENDED RESET.
+
+--- shutdown-1-console.log
+session 1: clean                        resets=2 reboot.target=1 sysd-shutdown=9 open_silence=37.435s dpu_to=2 *** UNATTENDED RESET
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=4 open_silence=0.699s dpu_to=0
+session 3: clean                        resets=2 reboot.target=1 sysd-shutdown=4 open_silence=36.832s dpu_to=2 *** UNATTENDED RESET
+--- shutdown-2-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=3 open_silence=546.716s dpu_to=0
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=2 open_silence=0.668s dpu_to=0
+session 3: clean                        resets=1 reboot.target=1 sysd-shutdown=4 open_silence=0.695s dpu_to=0
+--- shutdown-3-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=2 open_silence=0.906s dpu_to=0
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=4 open_silence=0.690s dpu_to=0
+--- shutdown-4-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=3 open_silence=0.676s dpu_to=0
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=4 open_silence=0.682s dpu_to=0
+--- shutdown-5-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=3 open_silence=0.666s dpu_to=0
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=4 open_silence=0.691s dpu_to=0
+--- shutdown-6-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=7 open_silence=0.699s dpu_to=0
+session 2: clean                        resets=1 reboot.target=1 sysd-shutdown=3 open_silence=0.696s dpu_to=0
+--- shutdown-7-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=2 open_silence=0.915s dpu_to=0
+--- shutdown-8-console.log
+session 1: clean                        resets=1 reboot.target=1 sysd-shutdown=2 open_silence=0.666s dpu_to=0

@@ -705,7 +705,7 @@ class DocumentationTests(unittest.TestCase):
         text = read(PLAN)
         self.assertIn("4.5 AMENDMENT (round 16)", text)
         self.assertIn("not supported by any captured failure", text)
-        self.assertIn("20 warm cycles with one unattended reset", text)
+        self.assertIn("22 warm cycles, 2 containing an unattended reset", text)
         self.assertIn("28.903 s", text)
         # And it must keep the matrix as un-retired rather than deleting it.
         self.assertIn("is **not** retired", text)
@@ -1139,7 +1139,7 @@ class StallFailureShapeTests(unittest.TestCase):
         text = read("reference/boot-tests/test-187-20260924T1540Z/"
                     "on-device/SHUTDOWN-SERIES-RESULT.md")
         self.assertIn("Correction (round 16)", text)
-        self.assertIn("15 clean cycles", text)
+        self.assertIn("14 clean cycles plus 2", text)
 
     def test_the_classifier_counters_are_pinned(self):
         """The tool that found the second episode must keep counting resets."""

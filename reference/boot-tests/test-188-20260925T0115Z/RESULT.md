@@ -62,9 +62,10 @@ flags the unattended reset that series never noticed, which is
 
 **Supports:** the current kernel has now completed six more consecutive warm
 shutdown cycles with no stall signature, on the provider set that round 15
-changed. Combined with `test-187`'s record — with its one correction — that is 20
-cycles with one unattended reset, none of them showing the shutdown-path failure
-`docs/STALL_FAILURE_SHAPE.md` §1 describes.
+changed. Combined with `test-187`'s record — with its correction — that is **22
+warm cycles, 2 containing an unattended reset, 0 shutdown-path stalls**. Neither
+unattended reset is a shutdown-path failure: both were mid-run, at kernel ~6.5 s,
+each preceded by `enc35 frame done timeout` (`docs/STALL_FAILURE_SHAPE.md` §6).
 
 **Does not establish a fix.** There is still **no pre-fix rate**: the two archived
 failures were found by reading archives, not by counting attempts, so "N clean"

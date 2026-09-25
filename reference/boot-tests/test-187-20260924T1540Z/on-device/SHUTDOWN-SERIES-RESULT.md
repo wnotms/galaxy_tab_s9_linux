@@ -1,20 +1,29 @@
 # Shutdown series result: 16 observed cycles, zero failures
 
-> **Correction (round 16): one of the 16 cycles contained a failure.**
-> Re-scoring every raw capture with `test-188/classify-captures.py` shows that
-> round 1 of the 8-round series had **two** resets in its watch session, not one.
-> After the round's own reboot, boot `7f02df57` reached `graphical.target`
-> normally, printed one `[drm:dpu_encoder_frame_done_timeout] enc35 frame done
-> timeout` 0.9 s later, then went silent for **36.8 s with the port still open**
-> and was reset by something nothing had asked for. The series never noticed,
-> because `shutdown-capture.sh` scores a round from banners and this failure emits
-> none — the same blind spot that hid the A-5 failure for five rounds.
+> **Correction (round 16): two of the 16 cycles contained a failure.**
+> `console-watch.ps1` appends to its `-Out` file, so these three series share
+> filenames and each `shutdown-N-console.log` holds one to three sessions.
+> Splitting them (`test-188/classify-captures.py --sessions`) recovers all 16
+> cycles — and **two** of them contain a second, unrequested reset:
 >
-> The tally below is therefore correct about what each round *checked* and wrong
-> as a statement that nothing failed. The honest count is **15 clean cycles, plus
-> one cycle that contained an unattended reset**, and that reset is the first
-> failure observed on the post-fix kernel. See `docs/STALL_FAILURE_SHAPE.md` §6.
-> Rounds 2–8 each show exactly one reset, their own; the check is now automatic.
+> | episode | failing boot | last console line | open-port silence |
+> |---|---|---|---|
+> | 2-round series, round 1 | `1f85d97b` | `enc35 frame done timeout` at 6.483 s | 37.435 s |
+> | 8-round series, round 1 | `7f02df57` | `enc35 frame done timeout` at 6.739 s | 36.832 s |
+>
+> In each, the boot after the round's own reboot reached `graphical.target`
+> normally, printed one `[drm:dpu_encoder_frame_done_timeout] enc35 frame done
+> timeout` ~0.9 s later, went silent for ~37 s **with the port still open**, and
+> was reset by something nothing had asked for. The series never noticed because
+> `shutdown-capture.sh` scores a round from banners and this failure emits none —
+> the same blind spot that hid the A-5 failure for five rounds.
+>
+> The tally below is therefore correct about what each round *checked* and wrong as
+> a statement that nothing failed. The honest count is **14 clean cycles plus 2
+> containing an unattended reset**, and those resets are the first failures
+> observed on the post-fix kernel. See `docs/STALL_FAILURE_SHAPE.md` §6. The
+> per-session scoring is kept in `../session-classification.txt`, and the check is
+> now automatic.
 
 Consolidated from every shutdown cycle run on the post-fix kernel. Each cycle was
 issued with `systemctl reboot` over COM17 while a COM19 capture held the port across
@@ -23,12 +32,18 @@ sample.
 
 ## The tally
 
-| series | date/round | cycles | clean | stalled | file |
-|---|---|---|---|---|---|
-| initial | round 9 | 2 | 2 | 0 | `shutdown-*-verdict.txt` |
-| 6-round | round 10 | 6 | 6 | 0 | `shutdown-series-6round.txt` |
-| 8-round | round 11 | 8 | 8 | 0 | `shutdown-series-8round.txt` |
-| **total** | | **16** | **16** | **0** | |
+| series | date/round | cycles | clean | unattended reset | stalls | file |
+|---|---|---|---|---|---|---|
+| initial | round 9 | 2 | 1 | **1** (boot `1f85d97b`) | 0 | `session-classification.txt` |
+| 6-round | round 10 | 6 | 6 | 0 | 0 | `session-classification.txt` |
+| 8-round | round 11 | 8 | 7 | **1** (boot `7f02df57`) | 0 | `session-classification.txt` |
+| **total** | | **16** | **14** | **2** | **0** | |
+
+The counts are per *cycle*, not per verdict line: the two cycles above each
+recorded a clean shutdown for the reboot the harness issued, and each additionally
+lost the boot that followed to a reset nothing requested. `stalls` is the column
+that stays at zero — no cycle showed the shutdown-path failure §1 of
+`docs/STALL_FAILURE_SHAPE.md` describes.
 
 Every cycle in the 8-round series reported `panic_lines=0`, `softlockup_lines=0`,
 `hardlockup_lines=0`, `hungtask_lines=0`, `rcu_lines=0`, `calltrace_lines=0`, and a
@@ -37,10 +52,10 @@ precisely the marker whose absence defines the failure found in round 7.
 
 ## What the number means, and what it does not
 
-**Supports:** the failure has not recurred in 16 consecutive observed shutdown
-cycles, on a kernel where the opportunity for it was present every time — round 11
-showed each of the 8 retained boots reaching the 13-14 s deferred-probe burst with
-the full `sync_state` load and surviving it.
+**Supports:** no shutdown-path stall has occurred in 16 observed cycles, on a
+kernel where the opportunity for it was present every time — round 11 showed each
+of the 8 retained boots reaching the 13-14 s deferred-probe burst with the full
+`sync_state` load and surviving it.
 
 **Does not support a fix claim**, for a reason independent of sample size: **there is
 no pre-fix rate.** The two archived failures (`176925b2`, `8d7db274`) were found by
@@ -50,9 +65,10 @@ and the first half of that does not exist.
 
 The strongest statement the data supports is:
 
-> On the post-fix kernel, 16 consecutive observed shutdown cycles completed with no
-> panic, no lockup and no stall marker, and 8 consecutive boots reached and passed
-> the 13-14 s window in which the pre-fix failures occurred.
+> On the post-fix kernel, 16 observed shutdown cycles completed with no panic, no
+> lockup and no stall marker; two of them additionally lost the following boot to
+> an unrequested reset, which is a different failure (see
+> `docs/STALL_FAILURE_SHAPE.md` §6).
 
 ## The confound that must be stated
 

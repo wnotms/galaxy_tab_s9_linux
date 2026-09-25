@@ -191,11 +191,20 @@ test-187's `shutdown-capture.sh`, which raises the console loglevel. What the
 argument uses is the *sequence of stop jobs*, which is userspace output and
 unaffected by the kernel loglevel.
 
-## 6. A second episode, inside a series that was reported as 16/16 clean
+## 6. Two more episodes, inside a series that was reported as 16/16 clean
 
 Scoring every capture in the test-187 series with `classify-captures.py` turned up
-a reset that the series never noticed. Round 1 of the 8-round series had **two**
-resets in one watch session, not one:
+resets the series never noticed. `console-watch.ps1` appends to its `-Out` file, so
+the three series (2 + 6 + 8 rounds) share filenames and each
+`shutdown-N-console.log` holds one to three sessions. Splitting them recovers
+**all 16 cycles**, and **two** of the 16 contain a second, unrequested reset:
+
+| episode | failing boot | last console line | open-port silence |
+|---|---|---|---|
+| 2-round series, round 1 | `1f85d97b` | `enc35 frame done timeout` at kernel 6.483 s | **37.435 s** |
+| 8-round series, round 1 | `7f02df57` | `enc35 frame done timeout` at kernel 6.739 s | **36.832 s** |
+
+Both are the same shape. The 8-round one, in full:
 
 ```
 21:35:55  the round's `systemctl reboot` is issued
@@ -208,26 +217,35 @@ resets in one watch session, not one:
 ```
 
 Nothing issued that second reboot: the series' next action was round 2's loglevel
-step at 21:41:58, five minutes later. The exception text is also different from a
+step at 21:41:58, five minutes later. The exception text also differs from a
 locally closed port — `The I/O operation has been aborted because of either a
 thread exit or an application request` rather than `port is closed` — which is what
 a device physically disappearing looks like.
 
-So the episode is: **boot A ran normally to `graphical.target`, printed one DPU
-encoder frame-done timeout 0.9 s later, went completely silent for 36.8 s while the
-port stayed open, and was reset by something nothing asked for.** Same three
-properties as §1 — no panic, no marker, an external reset — but the last line is a
-DPU error rather than a shutdown stop job, and it happened during normal running
+So each episode is: **the boot after an issued reboot ran normally to
+`graphical.target`, printed one DPU encoder frame-done timeout ~0.9 s later, went
+completely silent for ~37 s while the port stayed open, and was reset by something
+nothing asked for.** Same three properties as §1 — no panic, no marker, an external
+reset — but a DPU error rather than a shutdown stop job, and during normal running
 rather than during shutdown.
 
-This is the **first failure observation on the post-fix (AOSS-QMP + IPCC) kernel**,
-and it is inside the 8-round series whose result is recorded as "16 observed
+**Two independent occurrences also make it the only reproducible failure on
+record.** The two silences agree to within 0.6 s, both boots printed the same
+message within 0.26 s of each other in kernel time, and both were reset without
+being asked.
+
+These are the **first failure observations on the post-fix (AOSS-QMP + IPCC)
+kernel**, and they sit inside the series whose result is recorded as "16 observed
 shutdown cycles, zero failures". That tally is not wrong about what each round
 checked; it is wrong as a statement that nothing failed during those cycles. The
 correction is recorded in
-`test-187/on-device/SHUTDOWN-SERIES-RESULT.md`, and both current runners now count
-resets per session so a second one cannot pass unnoticed again
+`test-187/on-device/SHUTDOWN-SERIES-RESULT.md`, and the scoring now counts resets
+per session so a second one cannot pass unnoticed again
 (`classify-captures.py` prints `*** UNATTENDED RESET`).
+
+**Corrected tally.** Across test-187 (16 cycles) and test-188 (6 cycles): **22 warm
+cycles, 2 containing an unattended reset, 0 shutdown-path stalls.** The 16/16
+figure becomes 14 clean plus 2 with an unrecognised reset.
 
 ### The message is a known one, and it has a known trigger
 
@@ -247,12 +265,13 @@ the chain it belongs to:
   `gts9-panel-recover` guards every `fb0/blank` cycle with a timeout and treats
   failure as non-fatal.
 
-On boot A the sequence is the same shape: `gts9-panel-recover.service` finished at
-21:35:56.374, and the timeout arrived **2.17 s later**. What the capture does *not*
-show is whether that service actually cycled the framebuffer or left the panel
-alone — its outcome line goes to `/dev/kmsg` at a level `loglevel=4` suppresses —
-so the trigger is not identified, only made plausible by proximity to the one
-service that performs it.
+On boot `7f02df57` the ordering is the same shape: `gts9-panel-recover.service`
+finished at 21:35:56.374, and the timeout arrived **2.17 s later**. What the capture
+does *not* show is whether that service actually cycled the framebuffer or left the
+panel alone — its outcome line goes to `/dev/kmsg` at a level `loglevel=4`
+suppresses — so the trigger is not identified, only made plausible by proximity to
+the one service that performs it. In the 2-round episode the service had already
+finished before the capture window opened, so nothing can be said about it there.
 
 Worth recording for the next series: boot A printed this error and rounds 2 and 3
 did not, over comparable capture windows covering the same 6.2–7.1 s of kernel
@@ -264,15 +283,17 @@ repository the association is exact:
 
 | capture | `enc35 frame done timeout` | outcome |
 |---|---|---|
-| test-187 round 1, boot A | **2** | 36.8 s silence, unattended reset |
-| test-187 rounds 2–8 | 0 | clean |
-| test-187 series' other boots | 0 | clean |
+| test-187 2-round r1, boot `1f85d97b` | **yes** (6.483 s) | 37.4 s silence, unattended reset |
+| test-187 8-round r1, boot `7f02df57` | **yes** (6.739 s) | 36.8 s silence, unattended reset |
+| the other 14 test-187 cycles | 0 | clean |
+| all 6 test-188 cycles | 0 | clean |
 | test-184 A-5 (the §1 failure) | 0 | silent shutdown, external reset |
 
-So the message appears in exactly one of the ten captured boots, and that boot is
-the one that died unasked. It is still one boot: this is a lead to carry forward,
-not a finding, and the A-5 failure proves the message is not necessary for the
-failure.
+Two for two: every boot on record that printed this message died unasked, and no
+boot that died unasked during normal running failed to print it. That is a real
+association and it is still small — **the A-5 failure proves the message is not
+necessary for the failure**, so it identifies the mid-run episode, not the failure
+class.
 
 Two things this does *not* say. It does not make the frame-done timeout the cause:
 it is the last line printed, which is exactly the reasoning the brief forbids, and

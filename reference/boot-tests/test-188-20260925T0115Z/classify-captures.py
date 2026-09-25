@@ -32,6 +32,7 @@ Two better signals are available, and this script uses both:
 Usage:
     classify-captures.py [DIR] [--json]
     classify-captures.py --file SOMECAPTURE.txt
+    classify-captures.py --sessions SOMECAPTURE.txt
 
 DIR defaults to this script's directory.  --file classifies one capture, which is
 how the pre-fix failure (test-184's console-A-5-watch.txt) is checked against the
@@ -192,9 +193,14 @@ def classify(events: list[tuple[str, str, str]]) -> dict:
     elif result["prev_boot_end"] in ("hard-reset-or-incomplete", "panic"):
         result["verdict"] = "STALL"
     elif (result["shutdown_started"] and not result["reboot_target_seen"]
-          and result["longest_open_silence_s"] >= STALL_SILENCE_S):
+          and result["longest_open_silence_s"] >= STALL_SILENCE_S
+          and result["resets"] >= 1):
         # A shutdown began, went quiet for far longer than any healthy round does
-        # while the port was still open, and never reached the reboot target.
+        # while the port was still open, and never reached the reboot target - and
+        # the silence ended with the device disappearing.  The reset requirement
+        # matters: a session can also go quiet for hundreds of seconds simply
+        # because an idle console had nothing to print (test-187 shutdown-2
+        # session 1 shows 546.7 s of that), and that is not a stall.
         result["verdict"] = "STALL"
     elif result["shutdown_started"]:
         # The shutdown began, the port dropped promptly, and there was no stall
@@ -208,7 +214,41 @@ def classify(events: list[tuple[str, str, str]]) -> dict:
     return result
 
 
+def split_sessions(events: list[tuple[str, str, str]]) -> list[list[tuple[str, str, str]]]:
+    """Split a capture into one list per `watch start`.
+
+    console-watch.ps1 APPENDS to its -Out file, so a filename reused across three
+    series holds three sessions concatenated.  test-187's shutdown-N-console.log
+    files are like that, and splitting them is what recovers all 16 of that
+    series' cycles rather than only the 8 whose watcher stdout survived.
+    """
+    sessions: list[list[tuple[str, str, str]]] = []
+    cur: list[tuple[str, str, str]] | None = None
+    for e in events:
+        if e[1] == "watch start":
+            if cur:
+                sessions.append(cur)
+            cur = []
+        if cur is not None:
+            cur.append(e)
+    if cur:
+        sessions.append(cur)
+    return sessions
+
+
 def main(argv: list[str]) -> int:
+    if "--sessions" in argv:
+        path = pathlib.Path(argv[argv.index("--sessions") + 1])
+        rows = [classify(s) for s in split_sessions(parse(path))]
+        for i, r in enumerate(rows, 1):
+            flag = " *** UNATTENDED RESET" if r["unattended_resets"] else ""
+            print(f"session {i}: {r['verdict']:<28} resets={r['resets']} "
+                  f"reboot.target={r['reboot_target_seen']} "
+                  f"sysd-shutdown={r['systemd_shutdown_seen']} "
+                  f"open_silence={r['longest_open_silence_s']:.3f}s "
+                  f"dpu_to={r['dpu_frame_timeout']}{flag}")
+        return 0
+
     if "--file" in argv:
         path = pathlib.Path(argv[argv.index("--file") + 1])
         print(json.dumps(classify(parse(path)), indent=2, sort_keys=True))
