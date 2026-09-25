@@ -286,26 +286,28 @@ for i in $(seq 1 "$ROUNDS"); do
 	new_id=$(sed -n 's/.*boot_id=//p' "$DIR/probe-$i.txt" 2>/dev/null | head -1 | tr -d '\r')
 
 	# --- where the anomaly counts may come from, and why ---------------------
-	# NOT from the COM19 capture.  Measured on round 1 of the baseline series,
-	# that file contains 13577 bytes and **zero** kernel lines: no `Booting
-	# Linux`, no `Linux version`, no `encoder is disabled`, no `supply vdd not
-	# found`.  The gadget console only carries userspace output once the host has
-	# enumerated it, so counting kernel anomalies there yields a structural 0 -
-	# the same defect as `gmu_bound`/`aoss_bound`, and invisible on a clean round
-	# because a clean round really is 0.
+	# CORRECTED.  This note first said the COM19 capture holds "zero kernel
+	# lines" and that anomaly counts taken from it were structurally 0.  The
+	# measurement behind that was a bad regex (`^\[` against lines prefixed with
+	# `<host timestamp> RECV  `), and test-194 disproved the conclusion: that
+	# capture holds kernel lines, and it carried the `frame done timeout` that
+	# opened the episode.  What is true is narrower and still worth acting on:
+	# the gadget console only starts delivering once the host has enumerated it,
+	# so **early** kernel output (the 0.67 s dummy regulators, the `rcg` message)
+	# never appears there, while later messages do.
 	#
-	# Two channels do see kernel messages, and they have different blind spots:
+	# Three channels, three blind spots, so counts come from the two that see the
+	# kernel's own log and the third is recorded as coverage:
 	#
-	#   KLOG    `journalctl -k -b -1` - the whole previous kernel ring, from
-	#           0.67 s onward, but journald stops when a boot wedges, so the
-	#           panic tail can be missing.
-	#   PSTORE  the ramoops console - survives the reboot and carries the panic,
+	#   KLOG    `journalctl -k -b -1` - the whole previous ring, every level,
+	#           because `loglevel` filters the consoles and not the ring.  Blind
+	#           only if journald itself stops.
+	#   PSTORE  the ramoops console - survives the reboot and carries a panic,
 	#           which is how every complete failure record in this repo was
-	#           captured, but it is a ring and the next boot overwrites it.
-	#
-	# Counts are therefore recorded from both, with a `_klog` and `_pstore`
-	# suffix, and the COM19 capture's kernel-line count is recorded too so that
-	# its blindness is visible in the data rather than assumed away.
+	#           captured, but it is a ring the next boot overwrites.
+	#   CONSOLE the COM19 capture - userspace and post-enumeration kernel output
+	#           only; recorded as `console_kernel_lines` so its coverage is
+	#           visible instead of assumed.
 	# From the RAW probe file, not the filtered `probe-$i.txt`: the summary grep
 	# keeps lines whose text after `RECV  ` is a field or a bare `[time]`, and the
 	# tagged lines begin `KLOG [time]`, so the filter drops every one of them.
@@ -317,7 +319,12 @@ for i in $(seq 1 "$ROUNDS"); do
 		"$klog_src" 2>/dev/null | sed 's/^[^ ]* *RECV  //' >"$DIR/pstore-$i.txt"
 	src=$DIR/klog-$i.txt
 	src2=$DIR/pstore-$i.txt
-	console_kernel_lines=$(grep -acE '^\[[ ]*[0-9]+\.[0-9]+\]' "$klog" 2>/dev/null || echo 0)
+	# Kernel-prefixed lines in the console capture.  The pattern must allow for
+	# the `<host timestamp> RECV  ` prefix that console-watch.ps1 writes, or it
+	# counts nothing: an earlier version anchored on `^\[`, reported 0 while the
+	# capture held 85 kernel lines, and was read as "this channel never carries
+	# kernel text" - the opposite of the truth.  Measured on test-194's capture.
+	console_kernel_lines=$(grep -acE 'RECV  \[[ ]*[0-9]+\.[0-9]+\]' "$klog" 2>/dev/null || echo 0)
 
 	{
 		echo "run=$RUN"

@@ -557,6 +557,63 @@ class HarnessContractTests(unittest.TestCase):
             self.assertEqual(empty.returncode, 0)
             self.assertEqual(empty.stdout.strip(), "")
 
+    def test_a_quiet_boot_is_not_recorded_as_a_stall(self):
+        """test-194 is a false positive, kept as the control that disproves it.
+
+        Console silence plus one `frame done timeout` looked exactly like the
+        recorded stalls.  The boot's own journal says it was healthy: 970 kernel
+        messages, the normal 14.56 s deferred-probe burst, exactly one kernel
+        message in the following 155 s, userspace logging to 168.8 s, and a
+        reboot that logind *requested*.
+        """
+        d = "reference/boot-tests/test-194-20260925T0906Z"
+        if not (ROOT / d).exists():
+            self.skipTest("test-194 record not present")
+        facts = read(f"{d}/boot-846e17b8-journal-facts.txt")
+        self.assertIn("kernel_lines_total=970", facts)
+        self.assertIn("kernel_lines_after_14.6s_before_169s=1", facts)
+        self.assertIn("deferred_probe_burst_first=14.561105", facts)
+        self.assertIn("will reboot now", facts)
+        for zero in ("soft_lockup_=0", "hung_task_=0", "Kernel_panic_=0",
+                     "frame_done_timeout_=0"):
+            with self.subTest(zero=zero):
+                self.assertIn(zero, facts)
+        text = read(f"{d}/README.md")
+        flat = " ".join(text.split())
+        self.assertIn("false positive", flat)
+        self.assertIn("Because the system went quiet", flat)
+        # It must say what makes it different from the real records.
+        self.assertIn("are **necessary**, not merely sufficient", flat)
+
+    def test_the_console_coverage_metric_counts_the_real_prefix(self):
+        """An anchored `^\[` reported 0 while the capture held kernel lines."""
+        text = read(HARNESS)
+        self.assertIn(r"grep -acE 'RECV  \[[ ]*[0-9]+\.[0-9]+\]'", text)
+        self.assertNotIn(r"grep -acE '^\[[ ]*[0-9]+\.[0-9]+\]'", text)
+        # And the note must no longer claim the console carries no kernel text.
+        flat = " ".join(text.split())
+        self.assertIn("CORRECTED", flat)
+        self.assertIn("gadget console only starts delivering once the host has "
+                      "enumerated it", flat)
+
+    def test_the_sysrq_avenue_is_recorded_as_closed(self):
+        """Two independent reasons, so nobody retries it on a wedged device."""
+        text = read("reference/boot-tests/test-194-20260925T0906Z/README.md")
+        flat = " ".join(text.split())
+        self.assertIn("SysRq over this console is not possible", flat)
+        self.assertIn("BreakState", text)
+        self.assertIn("uart_port", text)
+        self.assertIn("compile-time Kconfig string", flat)
+        # The probe itself is kept, with the reason it fails.
+        self.assertTrue((ROOT / "scripts/sysrq-over-console.sh").exists())
+        self.assertTrue((ROOT / "scripts/sysrq-over-console.ps1").exists())
+
+    def test_the_awk_filter_lesson_is_recorded(self):
+        """The wrong answer was the one being looked for."""
+        flat = " ".join(read("reference/boot-tests/test-194-20260925T0906Z/README.md").split())
+        self.assertIn("A broken `awk` filter nearly produced the opposite conclusion", flat)
+        self.assertIn("the first field is `[`", flat)
+
     def test_the_a_b_has_a_wedge_detector_not_just_a_rate(self):
         """`boot_id_after` differs on every round, so it cannot detect a wedge.
 
@@ -662,19 +719,17 @@ class HarnessContractTests(unittest.TestCase):
         self.assertIn('sed "s/^ //"', text)
         self.assertNotIn("usb_role=", text)
 
-    def test_the_anomaly_counts_come_from_a_channel_that_can_see_the_kernel(self):
-        """The A/B's primary readout was structurally zero.
+    def test_the_anomaly_counts_come_from_a_channel_that_sees_the_whole_boot(self):
+        """The counts need a channel that covers the boot, not just the tail.
 
-        Measured on round 1 of the baseline series: the COM19 capture holds 13577
-        bytes and **zero** kernel lines - no `Booting Linux`, no `Linux version`,
-        no `encoder is disabled`, no `supply vdd not found`.  The gadget console
-        only carries userspace output, so counting kernel anomalies there returns
-        0 for every profile including a wedged one, and a clean round looks
-        correct because a clean round really is 0.
-
-        The counts now come from the kernel's own log and from pstore, are
-        labelled with their channel, and the console capture's kernel-line count
-        is recorded so the blindness stays visible.
+        The first version of this note claimed the COM19 capture holds *zero*
+        kernel lines and that counts taken from it were structurally 0.  That was
+        a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+        test-194 disproved the conclusion - the capture does carry kernel lines.
+        The narrower truth still matters: the gadget console only delivers after
+        the host enumerates it, so the 0.67 s dummy-regulator and `rcg` messages
+        never appear there.  Counts therefore come from the kernel's own log and
+        pstore, labelled per channel, with the console recorded as coverage.
         """
         text = read(HARNESS)
         self.assertIn("PREVBOOT_KLOG", text)
@@ -682,12 +737,11 @@ class HarnessContractTests(unittest.TestCase):
         self.assertIn("console_kernel_lines=", text)
         self.assertIn("klog_lines=", text)
         self.assertIn("pstore_lines=", text)
-        # Per-channel suffixes, so a reader cannot mistake which saw what.
         self.assertIn("${key}_klog=", text)
         self.assertIn("${key}_pstore=", text)
-        for why in ("zero** kernel lines", "different blind spots"):
-            with self.subTest(why=why):
-                self.assertIn(why, " ".join(text.split()))
+        flat = " ".join(text.split())
+        self.assertIn("CORRECTED", flat)
+        self.assertIn("early** kernel output", flat.replace("**early**", "**early**"))
 
     def test_the_channel_extraction_reads_the_unfiltered_probe(self):
         """The summary grep drops the tagged lines, so the raw file is the source.
