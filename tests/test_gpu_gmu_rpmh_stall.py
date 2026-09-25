@@ -544,6 +544,124 @@ class Test187CandidateTests(unittest.TestCase):
                 self.assertIn("0007", read(f"{self.TESTDIR}/{name}"))
 
 
+class Test191CandidateTests(unittest.TestCase):
+    """test-191 must stay a one-variable delta against what is flashed.
+
+    The whole value of 191 is that four of its five images are byte-identical to
+    the flashed test-187-baseline bundle, so the only difference on the tablet is
+    the `CONFIG_INTERCONNECT_QCOM_OSM_L3` symbol.  A rebuild that also moved the
+    DTB, the cmdline or the initramfs would quietly destroy that.
+    """
+
+    TESTDIR = "reference/boot-tests/test-191-20260925T0410Z"
+    BUNDLE = "out/boot-bundle-test191-osm-l3"
+    BASELINE = "out/boot-bundle-test187-baseline"
+    FLASHED_BOOT = "bf6a02bbe19e9561be2bae6d691cbaad0c3871ed4efc3878b8f689f2af00bd3e"
+
+    def setUp(self):
+        if not (ROOT / self.BUNDLE / "boot.img").exists():
+            self.skipTest("test-191 bundle not built")
+
+    def contains(self, rel, *needles):
+        """assertIn dumps the whole file; these documents are long."""
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_only_boot_img_differs_from_the_flashed_baseline(self):
+        for part in ("vendor_boot.img", "init_boot.img", "dtbo.img", "vbmeta.img"):
+            with self.subTest(partition=part):
+                self.assertEqual(
+                    sha256(f"{self.BUNDLE}/{part}"),
+                    sha256(f"{self.BASELINE}/{part}"),
+                    f"{part} must be byte-identical to the flashed baseline",
+                )
+        self.assertNotEqual(
+            sha256(f"{self.BUNDLE}/boot.img"),
+            sha256(f"{self.BASELINE}/boot.img"),
+            "the kernel is supposed to change",
+        )
+
+    def test_the_cmdline_is_unchanged(self):
+        """A cmdline change would make this a two-variable test."""
+        self.contains(f"{self.BUNDLE}/BUNDLE_INFO", "initramfs_location=init_boot")
+        # vendor_boot.img is the cmdline carrier and the check above pins its
+        # digest; this pins the file it was built from.
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "cmdline.stall-ab-baseline.example.txt")
+
+    def test_the_candidate_records_the_real_hashes(self):
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      sha256(f"{self.BUNDLE}/boot.img"),
+                      sha256(f"{self.BUNDLE}/vendor_boot.img"),
+                      self.FLASHED_BOOT)
+
+    def test_it_states_that_it_has_not_been_flashed(self):
+        self.contains(f"{self.TESTDIR}/README.md", "NOT flashed")
+
+    def test_it_does_not_claim_the_wedge_is_fixed(self):
+        """The bug fix and the wedge are separate questions, and must stay so."""
+        for name in ("README.md", "candidate.txt"):
+            with self.subTest(doc=name):
+                self.contains(f"{self.TESTDIR}/{name}",
+                              "does not change the wedge rate")
+
+    def test_it_promises_the_x910_frequencies_as_an_expectation_not_a_result(self):
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "307–2016 MHz", "499–2803 MHz", "595–2956 MHz")
+
+    def test_it_records_the_rpmh_debug_build_flag_requirement(self):
+        """Omitting GTS9_RPMH_DEBUG would have added a second variable."""
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "GTS9_RPMH_DEBUG=1",
+                      "0021-gts9-rpmh-timeout-state-dump.patch")
+
+    def test_the_flash_script_writes_only_boot_and_vendor_boot(self):
+        text = read(f"{self.TESTDIR}/flash-profile.sh")
+        self.assertIn("for part in boot vendor_boot; do", text)
+        for part in ("dtbo", "init_boot", "vbmeta", "userdata", "misc", "recovery"):
+            with self.subTest(partition=part):
+                self.assertNotIn("of=/dev/block/by-name/%s" % part, text)
+
+    def test_the_verify_script_cannot_change_the_tablet(self):
+        """Q1 is a one-boot, read-only question.
+
+        Checks for the dangerous *operations*, not for the words: the header
+        legitimately says "nothing is rebooted, nothing is flashed".
+        """
+        text = read(f"{self.TESTDIR}/verify-osm-l3.sh")
+        for forbidden in ("systemctl reboot", "adb", "dd if=", "dd of=",
+                          "of=/dev/block", "mkfs"):
+            with self.subTest(action=forbidden):
+                self.assertNotIn(forbidden, text,
+                                 "verify-osm-l3.sh must stay read-only")
+
+    def test_the_rate_harness_fixes_test_190s_three_defects(self):
+        """NMI is a stop condition, the window is 300, each run owns its dir."""
+        text = read(f"{self.TESTDIR}/wedge-rate.sh")
+        self.assertIn("WINDOW=${GTS9_WINDOW:-300}", text)
+        self.assertIn('haven.t responded to the NMI', text)
+        # The NMI marker has to appear in the stop condition, not only in the
+        # verdict file - that is the defect that let test-190 walk past a wedge.
+        stop = text[text.index("if [ -z \"$on_at\""):text.index("capture-cycle-")]
+        self.assertIn('"$nmi" != "0"', stop)
+        self.assertIn('DIR=$D/wedge-rate-$RUN', text)
+
+    def test_the_rate_harness_quotes_the_baseline_it_compares_against(self):
+        text = read(f"{self.TESTDIR}/wedge-rate.sh")
+        self.assertIn("10 of 46", read(f"{self.TESTDIR}/README.md"))
+        self.assertIn("1 of 29", read(f"{self.TESTDIR}/README.md"))
+        self.assertIn("21.7%", text)
+
+    def test_the_two_scripts_are_executable_and_syntax_clean(self):
+        import subprocess
+        for name in ("verify-osm-l3.sh", "wedge-rate.sh", "flash-profile.sh"):
+            path = ROOT / self.TESTDIR / name
+            with self.subTest(script=name):
+                self.assertTrue(path.stat().st_mode & 0o111)
+                subprocess.run(["bash", "-n", str(path)], check=True)
+
+
 class BuildReproducibilityTests(unittest.TestCase):
     """Pins the *cause* of the kernel-build non-determinism.
 
