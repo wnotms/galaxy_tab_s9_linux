@@ -128,6 +128,9 @@ else
   echo "gpio debugfs-unavailable"
 fi
 echo
+echo "### pcie_link_status"
+pcie_link_status 00:00.0 2>/dev/null || echo "pcie_link_status=unavailable"
+echo
 echo "### dmesg_pcie"
 dmesg 2>/dev/null | grep -aiE "pcie|qcom-pcie|qmp-pcie|17cb|1103|ath11k|wcn|qca|mhi|qrtr" | tail -40 | sed 's/^/dmesg /'
 REMOTE_EOF
@@ -137,6 +140,42 @@ OUT=$("$SSH" "$REMOTE" 2>&1)
 rc=$?
 printf '%s\n' "$OUT"
 [ $rc -eq 0 ] || { say "FATAL: the remote probe failed (rc=$rc)"; exit 1; }
+
+# PCIe Link Status must be read at the right offset.  The PCI Express capability
+# is not at a fixed address: walk the capability list from 0x34 until cap ID 0x10,
+# then read Link Status at that base + 0x12 (bit 13 = Data Link Layer Link Active).
+# Hardcoding 0x72 read the wrong register and produced a confident-looking number,
+# which is worse than no number at all.
+pcie_link_status() {
+	local bdf=$1 off w id nxt base=""
+	off=$(setpci -s "$bdf" 0x34.b 2>/dev/null)
+	[ -n "$off" ] || return 1
+	off=$((0x$off))
+	local i=0
+	while [ $i -lt 8 ] && [ $off -ne 0 ]; do
+		w=$(setpci -s "$bdf" $(printf '0x%x.w' $off) 2>/dev/null) || return 1
+		id=$(( 0x$w & 0xff )); nxt=$(( (0x$w >> 8) & 0xff ))
+		if [ "$id" -eq 16 ]; then base=$off; break; fi
+		off=$nxt; i=$((i+1))
+	done
+	[ -n "$base" ] || return 1
+	local ls lc
+	ls=$(setpci -s "$bdf" $(printf '0x%x.w' $((base+0x12))) 2>/dev/null)
+	lc=$(setpci -s "$bdf" $(printf '0x%x.l' $((base+0x0c))) 2>/dev/null)
+	[ -n "$ls" ] || return 1
+	echo "pcie_cap_offset=0x$(printf '%x' $base)"
+	echo "link_status=0x$ls"
+	echo "link_speed_bit0_3=$(( 0x$ls & 0xf ))"
+	echo "link_width_bit4_9=$(( (0x$ls >> 4) & 0x3f ))"
+	# Bit map per PCIe base spec, Link Status register (cap base + 0x12):
+	#   bit0-3 negotiated speed, bit4-9 negotiated width, bit10 undefined,
+	#   bit11 Link Training, bit12 Slot Clock Configuration,
+	#   bit13 Data Link Layer Link Active (the one that says "link is up").
+	echo "dllla_bit13=$(( (0x$ls >> 13) & 1 ))"
+	echo "link_training_bit11=$(( (0x$ls >> 11) & 1 ))"
+	echo "slot_clk_cfg_bit12=$(( (0x$ls >> 12) & 1 ))"
+	[ -n "$lc" ] && echo "link_cap=0x$lc max_speed_bit0_3=$(( 0x$lc & 0xf ))"
+}
 
 # ---- classify, from the captured text only ---------------------------------
 get() { printf '%s\n' "$OUT" | sed -n "s/^$1//p" | tail -1; }

@@ -1,0 +1,30 @@
+=== test-204: does a REAL chip power cycle bring the link up? ===
+recorded=2026-04-13T19:48:19Z
+boot_id=a4354040-541a-4640-b662-e01d8329213c
+uptime=616.81
+
+--- current GPIO state (restored by reboot) ---
+ gpio80  : out high func0 16mA pull up
+ gpio81  : out low  func0 16mA no pull
+ gpio82  : in  high func0 2mA pull down
+ gpio94  : out high func0 2mA pull down
+ gpio95  : in  low  func1 2mA pull up
+ gpio96  : in  high func0 2mA pull up
+ gpio204 : out low  func0 2mA pull down
+
+--- PCI state ---
+pci_count=1
+pci_dev 0000:00:00.0 0x17cb:0x0113
+pcie_cap_offset=0x70
+link_status=0x1011
+dllla_bit13=0
+dl_active_bit12=1
+endpoint_present=NO
+
+--- what the driver said this boot ---
+[    4.342797] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    4.342807] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    4.342813] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.524909] [     T93] qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[    5.495251] [     T93] qcom-pcie 1c00000.pcie: Device not found
+[    5.495423] [     T93] qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
