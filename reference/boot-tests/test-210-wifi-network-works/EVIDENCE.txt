@@ -1,0 +1,51 @@
+=== test-210: LEVEL 7 + 8 EVIDENCE ===
+recorded=2026-04-13T19:46:34Z
+boot_id=3cba35b7-e51e-4231-88b8-16976f2854cf
+kernel=7.2.0-rc3-gts9wifi-dirty
+
+### LEVEL 1-3
+01:00.0 Network controller [0280]: Qualcomm Technologies, Inc QCNFA765 Wireless Network Adapter [17cb:1103] (rev 01)
+[    5.333754] [    T432] ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+[    6.425131] [     T12] ath11k_pci 0000:01:00.0: fw_version 0x11021302 fw_build_timestamp 2026-02-04 08:10 fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+### LEVEL 4
+/sys/class/ieee80211/phy0
+wlp1s0           UP             00:03:7f:12:23:8e <BROADCAST,MULTICAST,UP,LOWER_UP> 
+driver: ath11k_pci
+version: 7.2.0-rc3-gts9wifi-dirty
+1: phy0: Wireless LAN
+	Soft blocked: no
+	Hard blocked: no
+
+### LEVEL 5-6: 5 GHz association
+bssid=da:4d:3d:c0:32:d5
+freq=5180
+ssid=OnePlus 15
+wifi_generation=6
+key_mgmt=WPA2-PSK
+wpa_state=COMPLETED
+Connected to da:4d:3d:c0:32:d5 (on wlp1s0)
+	SSID: OnePlus 15
+	signal: -80 dBm
+	rx bitrate: 34.4 MBit/s 40MHz HE-MCS 0 HE-NSS 2 HE-GI 0 HE-DCM 0
+	tx bitrate: 288.2 MBit/s 80MHz HE-MCS 3 HE-NSS 2 HE-GI 0 HE-DCM 0
+
+### LEVEL 7: DHCP
+wlp1s0           UP             10.221.200.69/24 
+default via 10.221.200.10 dev wlp1s0 proto dhcp src 10.221.200.69 metric 3015 
+10.221.200.0/24 dev wlp1s0 proto dhcp scope link src 10.221.200.69 metric 3015 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+
+### LEVEL 8: traffic
+--- ping gateway ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 25.309/28.527/34.373/4.140 ms
+--- ping public IP ---
+3 packets transmitted, 3 received, 0% packet loss, time 2005ms
+rtt min/avg/max/mdev = 35.198/53.934/77.625/17.671 ms
+--- DNS ---
+2606:4700:4700::1111 one.one.one.one
+2606:4700:4700::1001 one.one.one.one
+--- HTTP download ---
+  code=200 bytes=138612 speed=692685B/s
+  sha256=ed56aac47e7911e65ee63aae8d67e29f

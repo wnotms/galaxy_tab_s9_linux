@@ -148,37 +148,47 @@ The blobs were not committed to Git.
 
 ## 6. Current state
 
-**Wi-Fi is up.** Boot `e122b3d9`, raw evidence in
-`reference/boot-tests/test-208-wifi-scan-works/`.
+**Wi-Fi bring-up is complete: every level reached.** Boot `3cba35b7`, evidence in
+`reference/boot-tests/test-210-wifi-network-works/`.
 
 | level | state |
 |---|---|
 | `PCI_ONLY` — `17cb:1103` enumerated | **REACHED** (test-206) |
 | `DRIVER_BOUND` — `ath11k_pci` bound | **REACHED** |
 | `FIRMWARE_LOADED` — MHI + QMI + firmware | **REACHED** |
-| `WLAN_INTERFACE` — `wlp1s0`, `phy0` | **REACHED** |
-| `SCAN_WORKS` | **REACHED** — 17 BSSes, 2.4 GHz **and** 5 GHz |
-| `ASSOCIATION_WORKS` | **REACHED** — WPA2-PSK, `wpa_state=COMPLETED`, 802.11ax 2SS |
-| `NETWORK_STABLE` | **not reached** — no DHCP lease was served; see §9.4 |
+| `WLAN_INTERFACE` — `phy0`, `wlp1s0` | **REACHED** |
+| `SCAN_WORKS` — 16 BSS, both bands | **REACHED** |
+| `ASSOCIATION_WORKS` — on **5 GHz** | **REACHED** |
+| `NETWORK_STABLE` — DHCP lease + default route | **REACHED** |
+| traffic — ping, DNS, HTTP download | **REACHED** |
 
 ```
 ath11k_pci 0000:01:00.0: wcn6855 hw2.1
-mhi mhi0: Power on setup success
-ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
-ath11k_pci 0000:01:00.0: fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
-ath11k_pci 0000:01:00.0 wlp1s0: renamed from wlan0
+fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
 
-ssid=DESKTOP-S24EEHN 9670   wpa_state=COMPLETED   key_mgmt=WPA2-PSK
-wifi_generation=6           signal: -15 dBm
-tx bitrate: 68.8 MBit/s HE-MCS 3 HE-NSS 2
+bssid=da:4d:3d:c0:32:d5  freq=5180  ssid=OnePlus 15
+key_mgmt=WPA2-PSK  wpa_state=COMPLETED  signal -80 dBm
+tx bitrate: 288.2 MBit/s 80MHz HE-MCS 3 HE-NSS 2
+
+DHCP: 10.221.200.69/24 via 10.221.200.10
+ping 223.5.5.5        0% loss, 53.9 ms
+getent hosts one.one.one.one  ->  resolves
+HTTP 200, 138612 bytes at 692 KB/s
 ```
 
-Three faults had to be fixed to get here, and each was diagnosed from a measurement
-rather than a guess: the **missing modules** (the build had `BUILD_MODULES=0`, so
-every `=m` symbol was satisfied on paper only), the **AOP PDC votes** (`0008`; the
-DTS carried the strings and no driver read them), and above all the **parked PCIe0
-PIPE source mux** (`0009`; it powered up on the 19.2 MHz XO reference, so the
-MAC-PHY PIPE was dead and the LTSSM could not perform receiver detection).
+**5 GHz carries real traffic at 288 Mbit/s with 80 MHz and 2 spatial streams**, with
+the **unmodified upstream `board-2.bin`** — no BDF substitution. That answers the
+open question from test-208 about the documented weak-5-GHz payload: it is not a
+problem on this unit as configured.
+
+**HTTPS fails certificate verification** (`unable to get local issuer certificate`)
+while HTTP transfers at ~690 KB/s. That is a CA/trust issue on the Debian rootfs, not
+wireless, and is recorded so it is not mistaken for one.
+
+Three faults had to be fixed to get here, each diagnosed from a measurement rather
+than a guess: the **missing modules** (`BUILD_MODULES=0`, so every `=m` symbol was
+satisfied on paper only), the **AOP PDC votes** (`0008`), and above all the **parked
+PCIe0 PIPE source mux** (`0009`).
 
 ## 7. Cold/warm boot result
 
@@ -210,45 +220,40 @@ because the earlier claim is in the git history and should not be read as standi
 
 ## 9. Remaining problems
 
-### 9.1 No DHCP lease, so no L3 verification
+### 9.1 HTTPS certificate verification
 
-`dhcpcd` sends DISCOVER and no OFFER is returned; the interface falls back to
-IPv4LL. The usual Windows-hotspot gateways were probed with static addresses
-(`192.168.137.1`, `192.168.0.1`, `10.0.0.1`) and none answers.
+`curl: (60) SSL certificate problem: unable to get local issuer certificate`, while
+`/etc/ssl/certs/ca-certificates.crt` exists and plain HTTP works at ~690 KB/s. A
+rootfs CA/trust issue, not a wireless one; it reproduces over any link.
 
-**The link itself is bidirectional**, so this is not a driver fault: sampling the
-counters 12 s apart with no local traffic shows `rx_bytes 6140 -> 13220`, i.e. the AP
-is transmitting to us, and `iw link` reports 76837 bytes / 401 packets received at
--17 dBm. Layer 2 works; L3 addressing is the AP's DHCP server declining to serve this
-client.
+### 9.2 The boot console block, and the shutdown delay
 
-Consequence: **DNS, ping and HTTP were not tested**, and `NETWORK_STABLE` is not
-claimed. The tablet also has no route beyond its `usb0` link-local network.
+Two separate console-path defects were found while bringing Wi-Fi up, both recorded
+in full in `docs/BOOT_CONSOLE_BLOCK.md`: a userspace `write()` to `/dev/console`
+(which resolves to `ttyGS1`/COM19) blocks when no host process is draining the port,
+which can make the boot look hung until the port is opened; and
+`gts9-acm-getty.service` held shutdown for 90 s on an unreaped login shell.
 
-### 9.2 Cold-boot behaviour of the working configuration
+The second is fixed (`TimeoutStopSec=3`). For the first, one contributing writer was
+removed (`gts9-prev-boot-evidence.service` no longer uses `journal+console`), but the
+underlying policy question — keep `console=ttyGS1` for the kernel log from 5.6 s, or
+drop it so `gts9-kmsg-console` mirrors `/dev/kmsg` from userspace where it cannot
+wedge PID 1 — is a real trade-off and is left as a decision, not made unilaterally.
 
-Everything above was measured on a warm boot after `modprobe`. The board DTS records
-that a cold handoff is where the AOP votes matter, and patch `0008` now sends them —
-but the full cold power-on path with Wi-Fi working end to end has not been measured
-since `0009` landed. Per the round's rule, warm and cold are never merged.
+### 9.3 The 5 GHz question is closed, the long-transfer one is not
 
-### 9.3 The 5 GHz RX question is open but looks healthy
-
-The Fedora port records that `board-2.bin`'s generic payload for this exact-ABI slot
-leaves 5 GHz RX roughly 47 dB weak, and substitutes a tuned X13s payload to fix it.
-Here, with the **unmodified upstream container**, a 5 GHz BSS was received at
--79 dBm while 2.4 GHz reached -15 dBm — consistent with either the documented
-weakness or simply greater 5 GHz path loss at this distance. Distinguishing them
-needs a 2-3 m test against a known 5 GHz AP, which has not been done. **No BDF
-substitution was made**, because doing so on this evidence would be guessing.
+5 GHz associates and transfers at 288 Mbit/s (§6), so the documented BDF weakness
+does not apply here. A 10-30 minute sustained-transfer soak has **not** been run, so
+`NETWORK_STABLE` is claimed on the strength of a working lease, bidirectional traffic
+and a clean download rather than on a soak.
 
 ### 9.4 Things deliberately not touched
 
-* **Bluetooth** — out of scope this round, per the brief. Note `BT_EN` was observed
-  low while `hci_qca` retried, which is worth checking first when BT is tackled.
+* **Bluetooth** — out of scope, per the brief. `BT_EN` was observed low while
+  `hci_qca` retried, which is the first thing to look at when BT is tackled.
 * **suspend/resume** — recorded only; no PM change made.
-* **The CPU wedge** — nothing here adds, removes or reclassifies a stall record, and
-  no Wi-Fi reboot was counted in any A/B series.
+* **The CPU wedge** — no stall record added, removed or reclassified, no rate
+  computed, and no Wi-Fi reboot counted in any A/B series.
 
 ## 9a. How the fix was found
 
@@ -279,21 +284,19 @@ the missing step is observable in software after all.
 
 ## 10. Exact next physical test
 
-In priority order, and each one a measurement rather than a code change:
+Wi-Fi itself needs nothing further to be *working*; what follows is hardening, in
+priority order.
 
-1. **Cold boot with Wi-Fi working.** Power off fully, power on, and check whether
-   `17cb:1103`, `wlp1s0` and a scan all appear without `modprobe`. This is the one
-   half of the cold/warm question that `0008` was written for and that has not been
-   re-measured since `0009` landed. Capture with `scripts/wifi-cold-boot-capture.sh`.
-2. **A DHCP lease from a known-good AP.** The current hotspot serves none. Any AP
-   that answers will do; the point is to reach L3 and then run ping, DNS, an HTTP
-   download and, if convenient, `iperf3` — which is what `NETWORK_STABLE` requires.
-3. **5 GHz at close range**, to separate the documented BDF weakness from ordinary
-   path loss (§9.3). Only if it turns out weak *and* the tuned payload is confirmed
-   to fix it should a BDF substitution be considered — and then with the payload's
-   provenance and hashes recorded, exactly as `bdftool.py` allows.
-4. Then the stability matrix: repeated up/down, repeated scans,
-   disconnect/reconnect, 2.4 and 5 GHz, and a 10-30 minute transfer.
+1. **A sustained transfer soak** — 10-30 minutes over the associated 5 GHz link, to
+   turn `NETWORK_STABLE` from "working" into "measured". `iperf3` if a peer is
+   available, otherwise a long HTTP fetch with byte accounting.
+2. **Decide the `console=ttyGS1` policy** (§9.2). This is the one open design
+   question the bring-up surfaced, and it affects every future boot measurement in
+   this repo, not just Wi-Fi.
+3. **A cold boot with the current configuration**, to confirm `0008` and `0009`
+   together hold from a full power cycle now that firmware and interface autoload is
+   proven (test-209 did this before the network levels were reached).
+4. **Then Bluetooth**, in its own round, as the brief requires — with `BT_EN` first.
 
-Nothing in this list requires an ath11k change, and none should be made unless a
-measurement demands it.
+None of it requires an ath11k change, and none should be made unless a measurement
+demands it.

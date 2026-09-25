@@ -2586,6 +2586,91 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("boot_under_test=", text)
         self.assertIn("boot_list=", text)
 
+    def test_the_boot_console_block_is_recorded_with_both_paths(self):
+        """printk drops; a userspace write() blocks. Conflating them cost real time."""
+        d = "docs/BOOT_CONSOLE_BLOCK.md"
+        if not (ROOT / d).exists():
+            self.skipTest("console-block doc not written yet")
+        text = read(d)
+        flat = " ".join(text.split())
+        # The two paths, and which one blocks.
+        self.assertIn("kernel printk", flat)
+        self.assertIn("gs_console_write()", text)
+        self.assertIn("kfifo_in()", text)
+        self.assertIn("discarded", flat)
+        self.assertIn("n_tty_write()", text)
+        self.assertIn("wait_woken()", text)
+        # The measurement that separates them.
+        self.assertIn("0.048 s", flat)
+        # The cause: /dev/console resolves to ttyGS1, i.e. COM19.
+        self.assertIn("/dev/console", text)
+        self.assertIn("last one that registers successfully", flat)
+        self.assertIn("ttyGS1", text)
+        # And it must own the three wrong hypotheses rather than hide them.
+        self.assertIn("hypotheses that were wrong", flat)
+        self.assertIn("839 MB journal", flat)
+
+    def test_the_console_writers_do_not_block_the_boot(self):
+        """Two units were found writing to the console during boot; both fixed."""
+        # prev-boot-evidence must not write to /dev/console: its output is in the
+        # journal, and writing to the console can block on an un-drained ttyGS1.
+        unit = read("rootfs-overlay/usr/lib/systemd/system/gts9-prev-boot-evidence.service")
+        self.assertNotIn("StandardOutput=journal+console", unit)
+        self.assertIn("StandardOutput=journal", unit)
+        # The getty must not hold shutdown for the 90 s default while agetty's
+        # login shell is unreaped.
+        getty = read("rootfs-overlay/usr/lib/systemd/system/gts9-acm-getty.service")
+        self.assertIn("TimeoutStopSec=3", getty)
+        # And it must be in [Service], not [Unit] - systemd ignores it in [Unit],
+        # which is exactly the mistake made first.
+        svc_at = getty.index("[Service]")
+        unit_at = getty.index("[Unit]")
+        ts_at = getty.index("TimeoutStopSec=3")
+        self.assertGreater(ts_at, svc_at, "TimeoutStopSec belongs in [Service]")
+        self.assertLess(unit_at, svc_at)
+
+    def test_wifi_reached_every_level_with_no_ath11k_change(self):
+        """The bring-up is complete, and the record must say how."""
+        d = "reference/boot-tests/test-210-wifi-network-works"
+        if not (ROOT / d).exists():
+            self.skipTest("test-210 not recorded yet")
+        rec = read(f"{d}/README.md")
+        flat = " ".join(rec.split())
+        for level in ("PCI_ONLY", "DRIVER_BOUND", "FIRMWARE_LOADED", "WLAN_INTERFACE",
+                      "SCAN_WORKS", "ASSOCIATION_WORKS", "NETWORK_STABLE"):
+            with self.subTest(level=level):
+                self.assertIn(level, rec)
+        # 5 GHz is the part that was in doubt.
+        self.assertIn("freq=5180", rec)
+        self.assertIn("5 GHz", rec)
+        self.assertIn("288.2 MBit/s", rec)
+        # The three faults, and the guarantee that ath11k was not modified.
+        for cause in ("modules had never been built", "AOP PDC votes",
+                      "PIPE source mux"):
+            with self.subTest(cause=cause):
+                self.assertIn(cause, flat)
+        self.assertIn("No ath11k source was modified", flat)
+        self.assertIn("no magic delay", flat)
+        # The HTTPS failure must not be mistaken for a wireless fault.
+        self.assertIn("not a wireless fault", flat)
+        # And it must not over-claim a soak that was never run - the bring-up doc
+        # carries that limitation, since test-210 lists stability results.
+        bringup = " ".join(read("docs/WIFI_QCA6490_BRINGUP.md").split())
+        self.assertIn("soak has **not** been run", bringup)
+
+    def test_the_firmware_is_staged_at_the_drivers_own_path(self):
+        """The path comes from dmesg, not from a convention."""
+        text = read("scripts/stage-wifi-firmware.sh")
+        self.assertIn("FWREL=ath11k/WCN6855/hw2.1", text)
+        # Every blob is hash-checked, and a mismatch is fatal rather than a warning.
+        self.assertIn("hash mismatch", text)
+        # It must not touch the network unless asked.
+        self.assertIn("no networking unless --fetch is given explicitly", text)
+        # And it must install with post-copy verification.
+        self.assertIn("hash differs after copy", text)
+        # The blobs are proprietary and must not be committed.
+        self.assertIn("NOT committed to Git", text)
+
     def test_the_profile_c_candidate_is_ready_and_gated(self):
         """A candidate that cannot prove its own ablation is not a candidate."""
         c = "reference/boot-tests/test-196-20260925T1100Z/candidate.txt"
