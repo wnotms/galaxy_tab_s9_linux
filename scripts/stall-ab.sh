@@ -250,6 +250,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	wait "$conpid" 2>/dev/null || true
 
 	klog=$DIR/console-$i.log
+	klog-watch=$DIR/console-$i-watch.txt
 	cp "$LOCALDIR/console-$i.log" "$klog" 2>/dev/null || say "WARNING: no console capture for round $i"
 
 	run_probe "$i" "$DIR/probe-$i-raw.txt" "$WINDIR\\probe-$i.log"
@@ -327,15 +328,40 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "klog_lines=$(wc -l <"$src" 2>/dev/null || echo 0)"
 		echo "pstore_lines=$(wc -l <"$src2" 2>/dev/null || echo 0)"
 		echo "stall=$(( $(count_in "$src" 'soft lockup') + $(count_in "$src" 'hung task|task .* blocked for more than') + $(count_in "$src" 'rcu:.*stall') + $(count_in "$src" 'workqueue: .*stall') + $(count_in "$src2" 'soft lockup') + $(count_in "$src2" 'hung task|task .* blocked for more than') + $(count_in "$src2" 'rcu:.*stall') + $(count_in "$src2" 'workqueue: .*stall') ))"
+		# --- the automatic-reboot field, and the A/B's wedge detector --------
+		# The console capture carries no kernel text (see the channel note above)
+		# but it DOES carry the USB presence transitions, and that is the one
+		# signal nothing but a second restart can produce: the harness issues
+		# exactly one `systemctl reboot` per round, so a second outage means
+		# something else restarted the tablet - the watchdog, or a panic.
+		#
+		# Without this a wedged round is recognisable only through the kernel
+		# logs of the boot that died, which is indirect; and `boot_id_after`
+		# cannot help, because it differs on every round by construction.
+		# Measured on the five clean test-193 rounds: exactly 1 False / 2 True
+		# each.  A wedge shows 2 False / 3 True or more.
+		read -r p_off p_on p_n <<<"$(tr -d '\r' <"$klog-watch.txt" 2>/dev/null | awk '
+			/PRESENCE usb0525:a4a7=False/ { n++; if (n==1) f=$1; if (n==2) s=$1 }
+			/PRESENCE usb0525:a4a7=True/  { t++; if (t==3) b=$1 }
+			END { printf "%s %s %d", (s?s:"-"), (b?b:"-"), n+0 }')"
+		echo "presence_outages=${p_n:-0}"
+		echo "automatic_reboot=$([ "${p_n:-0}" -ge 2 ] && echo yes || echo no)"
+		echo "second_outage_gone=${p_off:--}"
+		echo "second_outage_back=${p_on:--}"
 		echo "first_anomaly=$(first_ts "$src" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
 		echo "first_anomaly_pstore=$(first_ts "$src2" 'soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|frame done timeout|mmc.*[Tt]imeout|Kernel panic|Unable to send ACD|Unable to drop a managed')"
 		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" "$src2" 2>/dev/null | head -3 | tr '\n' ';')"
 	} >"$DIR/round-$i.txt"
 
-	grep -aE "^(release|reboot_kind|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|apps_rsc_irq|aoss_qmp_irq|panel_status|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
+	grep -aE "^(release|reboot_kind|automatic_reboot|presence_outages|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|apps_rsc_irq|aoss_qmp_irq|panel_status|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
 		"$DIR/round-$i.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 	[ -n "$new_id" ] && boot_id=$new_id
+	if [ "${p_n:-0}" -ge 2 ]; then
+		say "round $i: *** the tablet restarted itself (${p_n} outages, second at ${p_off:-?})" | tee -a "$OUT"
+		say "round $i: that is the failure signature, not a clean round - stopping" | tee -a "$OUT"
+		break
+	fi
 	if grep -aq "shell never answered\|could not open" "$DIR/probe-$i-raw.txt" 2>/dev/null; then
 		say "round $i: the tablet did not come back; stopping (operator action needed)" | tee -a "$OUT"
 		break

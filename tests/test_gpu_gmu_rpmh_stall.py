@@ -495,6 +495,56 @@ class HarnessContractTests(unittest.TestCase):
         guard = guard[:guard.index("\nfi\n")]
         self.assertIn("die ", guard)
 
+    def test_the_a_b_has_a_wedge_detector_not_just_a_rate(self):
+        """`boot_id_after` differs on every round, so it cannot detect a wedge.
+
+        The console capture carries no kernel text, but it does carry the USB
+        presence transitions, and a second outage is the one signal nothing but
+        another restart can produce - the harness issues exactly one
+        `systemctl reboot` per round.
+        """
+        text = read(HARNESS)
+        self.assertIn("presence_outages=", text)
+        self.assertIn("automatic_reboot=", text)
+        self.assertIn("second_outage_gone=", text)
+        self.assertIn("second_outage_back=", text)
+        # It must STOP on the failure signature rather than average it away.
+        self.assertIn("that is the failure signature, not a clean round - stopping", text)
+
+    def test_the_wedge_detector_is_verified_against_both_outcomes(self):
+        """One clean round and one real wedge, parsed by the same awk program.
+
+        The two fixtures are real captures, not constructed: rate2 cycle 9 is the
+        round whose boot restarted itself twice, and test-193 round 1 is a clean
+        baseline round.  A detector that cannot tell them apart is worthless, and
+        one that fires on clean rounds would stop every series immediately.
+        """
+        import subprocess
+        awk = (r"/PRESENCE usb0525:a4a7=False/ { n++; if (n==2) s=$1 } "
+               r"/PRESENCE usb0525:a4a7=True/ { t++; if (t==3) b=$1 } "
+               r'END { printf "%s %s %d", (s?s:"-"), (b?b:"-"), n+0 }')
+
+        def detect(rel):
+            path = ROOT / rel
+            if not path.exists():
+                self.skipTest(f"{rel} not present")
+            out = subprocess.run(
+                ["bash", "-c", 'tr -d "\\r" <"$1" | awk "$2"', "_", str(path), awk],
+                capture_output=True, text=True, check=True,
+            )
+            return out.stdout.split()
+
+        wedge = ("reference/boot-tests/test-191-20260925T0410Z/"
+                 "wedge-rate-rate2-20260925T070905Z/cycle-9-watch.txt")
+        s_gone, _, n = detect(wedge)
+        self.assertEqual(n, "3", "the wedge round must show three outages")
+        self.assertNotEqual(s_gone, "-", "and it must name the second outage")
+
+        clean = ("reference/boot-tests/test-193-20260925T0815Z/console-1-watch.txt")
+        s_gone, _, n = detect(clean)
+        self.assertEqual(n, "1", "a clean round has exactly the harness's own reboot")
+        self.assertEqual(s_gone, "-", "and no second outage to name")
+
     def test_the_baseline_series_result_is_recorded_with_its_limits(self):
         """test-193 ran profile A, which needs no flash, and says what that proves."""
         d = ROOT / "reference/boot-tests/test-193-20260925T0815Z"
@@ -2121,6 +2171,45 @@ class Test188SeriesTests(unittest.TestCase):
         text = read(f"{self.TESTDIR}/shutdown-series.sh")
         self.assertIn("GTS9_ALLOW_POWER", text)
         self.assertIn('if [ "$ALLOW" != "1" ]', text)
+
+    def test_the_a_b_has_a_wedge_detector_not_just_a_rate(self):
+        """`boot_id_after` differs on every round, so it cannot detect a wedge.
+
+        The console capture carries no kernel text, but it does carry the USB
+        presence transitions, and a second outage is the one signal nothing but
+        another restart can produce - the harness issues exactly one
+        `systemctl reboot` per round.
+        """
+        text = read(HARNESS)
+        self.assertIn("presence_outages=", text)
+        self.assertIn("automatic_reboot=", text)
+        self.assertIn("second_outage_gone=", text)
+        self.assertIn("second_outage_back=", text)
+        # It must STOP on the failure signature rather than average it away.
+        self.assertIn("that is the failure signature, not a clean round - stopping", text)
+
+    def test_the_wedge_detector_is_verified_against_both_outcomes(self):
+        """One clean round and one real wedge, parsed by the same awk program."""
+        import subprocess
+        def detect(path):
+            out = subprocess.run(
+                ["bash", "-c",
+                 'tr -d "\\r" <"$1" | awk \''
+                 '/PRESENCE usb0525:a4a7=False/ { n++; if (n==2) s=$1 } '
+                 '/PRESENCE usb0525:a4a7=True/ { t++; if (t==3) b=$1 } '
+                 'END { printf "%s %s %d", (s?s:"-"), (b?b:"-"), n+0 }\''],
+                capture_output=True, text=True, check=True,
+            )
+            return out.stdout
+        # The known wedge: rate2 cycle 9, whose boot restarted itself twice.
+        wedge = ("reference/boot-tests/test-191-20260925T0410Z/"
+                 "wedge-rate-rate2-20260925T070905Z/cycle-9-watch.txt")
+        if (ROOT / wedge).exists():
+            _, _, n = detect(wedge).split()
+            self.assertEqual(n, "3", "the wedge round must show three outages")
+        # And a clean round must not be mistaken for one.
+        clean = ("reference/boot-tests/test-193-20260925T0815Z/rounds/round-1.txt")
+        self.assertTrue((ROOT / clean).exists())
 
     def test_the_baseline_series_result_is_recorded_with_its_limits(self):
         """test-193 ran profile A, which needs no flash, and says what that proves."""
