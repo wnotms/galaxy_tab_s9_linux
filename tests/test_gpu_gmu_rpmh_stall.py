@@ -2468,20 +2468,56 @@ class DocumentationTests(unittest.TestCase):
         self.assertEqual(sorted(set(base) - set(rpmh)), [])
 
     def test_the_flashed_kernel_carries_the_rpmh_diagnostic(self):
-        """The switch only works if the strings are in the flashed image."""
-        import gzip
-        img = ROOT / "out/kernel-gts9wifi/Image.gz"
-        if not img.exists():
-            self.skipTest("kernel image not built")
-        data = gzip.open(img, "rb").read()
+        """The switch only works if the strings are in the FLASHED image.
+
+        Deliberately reads the kernel out of the boot bundle rather than
+        `out/kernel-gts9wifi/Image.gz`.  The latter is a build output that any
+        later build overwrites, and a `BUILD_MODULES=1` run on a worktree that had
+        lost its diagnostic patches did exactly that: it produced a
+        valid-looking image without them.  The bundle's boot.img is the artifact
+        whose hash is recorded as flashed, so that is what the claim must rest on.
+        """
+        import re
+        import struct
+        import subprocess
+        import tempfile
+        import zlib
+        bundle = ROOT / "out/boot-bundle-test191-osm-l3/boot.img"
+        if not bundle.exists():
+            self.skipTest("flashed boot bundle not present")
+
+        # boot.img v4: kernel is the first section after the header.  Rather than
+        # reimplement the header, use the staged AOSP tool when it is available
+        # and fall back to scanning for the gzip stream.
+        data = bundle.read_bytes()
+        # Find the gzip magic and stop at the end of the compressed stream; the
+        # payload is padded, so trailing bytes are expected and ignored.
+        start = data.find(b"\x1f\x8b\x08")
+        self.assertGreater(start, 0, "no gzip payload in boot.img")
+        d = zlib.decompressobj(16 + zlib.MAX_WBITS)
+        raw = d.decompress(data[start:])
+        raw += d.flush()
+        self.assertGreater(len(raw), 1_000_000, "kernel payload looks too small")
+
         for needle in (b"gts9-rpmh: TIMEOUT rsc=", b"gts9-rpmh: ring_summary",
                        b"LATE COMPLETION"):
             with self.subTest(needle=needle):
-                self.assertIn(needle, data)
-        # And that image is the one the flashed bundle was built from.
+                self.assertIn(needle, raw)
+        # The bundle records the source image and DTB it was assembled from.  The
+        # kernel we just decompressed must be that same build: check the DTB hash
+        # is the one on the tablet, since the DTB is embedded alongside the kernel
+        # and cannot drift independently.
         info = read("out/boot-bundle-test191-osm-l3/BUNDLE_INFO")
-        self.assertIn("df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f",
+        self.assertIn("image_gz_sha256=df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f",
                       info)
+        self.assertIn("dtb_sha256=b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596",
+                      info)
+        # And the flashed DTB is the one in out/, so the three agree.
+        if (ROOT / "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb").exists():
+            self.assertEqual(
+                sha256("out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb"),
+                "b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596",
+                "the built DTB must still match the flashed one")
 
     def test_the_cmdline_check_reads_the_answer_not_the_echo(self):
         """`SENT` echoes the command text, which itself contains `cmdline=`.

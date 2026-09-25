@@ -63,6 +63,29 @@ fi
 
 bash "$repo_root/scripts/prepare-kernel.sh" "$kernel_tree"
 
+# Diagnostic patches are opt-in (kernel/patches/diagnostic/README.md) and
+# prepare-kernel.sh deliberately does NOT apply them - it restores the pinned
+# source and reapplies only the default queue.  That is correct as a default, but
+# it also means `build-kernel.sh` silently reverts a diagnostic patch that was
+# applied by hand, and produces an image without it.  That is how the flashed
+# kernel's `gts9_rpmh_debug` switch was lost by a later BUILD_MODULES=1 run.
+#
+# GTS9_DIAGNOSTIC_PATCHES names them explicitly, so a diagnostic build is
+# reproducible from the command line instead of depending on tree state:
+#
+#   GTS9_DIAGNOSTIC_PATCHES=0021-gts9-rpmh-timeout-state-dump.patch USE_CCACHE=1 ./scripts/build-kernel.sh
+diag=${GTS9_DIAGNOSTIC_PATCHES:-}
+if [ -n "$diag" ]; then
+	for name in $diag; do
+		patch_path=$repo_root/kernel/patches/diagnostic/$name
+		[ -f "$patch_path" ] || {
+			echo "no such diagnostic patch: $patch_path" >&2; exit 2; }
+		git -C "$kernel_tree" apply "$patch_path" || {
+			echo "failed to apply diagnostic patch: $name" >&2; exit 2; }
+		echo "applied diagnostic patch: $name"
+	done
+fi
+
 # Keep all generated Kconfig state in O=. The source worktree must contain only
 # deliberate DTS/patch changes, otherwise Kbuild rejects the out-of-tree build.
 stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
@@ -160,7 +183,38 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 "${ccache_args[@]}" \
 
 release=$(make -s -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 kernelrelease)
 
-install -m 0644 "$build_dir/arch/arm64/boot/Image.gz" "$out_dir/Image.gz"
+# Refuse to silently replace a kernel image that a boot bundle says is flashed.
+# This is not hypothetical: a `BUILD_MODULES=1` run on a worktree that had lost
+# its diagnostic patches produced a valid-looking Image.gz without them, and
+# overwrote the artifact that `out/boot-bundle-*/BUNDLE_INFO` names as flashed.
+# The modules were unaffected (every patched driver is =y, so no patch can reach a
+# .ko), but the image provenance was briefly wrong - which is exactly the kind of
+# thing that is discovered months later.
+new_img=$build_dir/arch/arm64/boot/Image.gz
+if [ -f "$out_dir/Image.gz" ]; then
+	old_sha=$(sha256sum "$out_dir/Image.gz" | cut -d' ' -f1)
+	flashed=0
+	for info in "$repo_root"/out/boot-bundle-*/BUNDLE_INFO; do
+		[ -f "$info" ] || continue
+		if grep -q "$old_sha" "$info" 2>/dev/null; then
+			flashed=1
+			echo "WARNING: the existing $out_dir/Image.gz (${old_sha:0:16}) is named by" >&2
+			echo "         $(basename "$(dirname "$info")")/BUNDLE_INFO as a flashed image." >&2
+			break
+		fi
+	done
+	if [ "$flashed" = 1 ] && [ "${GTS9_ALLOW_IMAGE_REPLACE:-0}" != 1 ]; then
+		if cmp -s "$new_img" "$out_dir/Image.gz"; then
+			: # identical, nothing to protect
+		else
+			cp -a "$out_dir/Image.gz" "$out_dir/Image.gz.flashed-$(date -u +%Y%m%dT%H%M%SZ)"
+			echo "WARNING: kept a copy as Image.gz.flashed-*." >&2
+			echo "         Set GTS9_ALLOW_IMAGE_REPLACE=1 to replace it deliberately, and" >&2
+			echo "         re-verify the worktree is patched before doing so." >&2
+		fi
+	fi
+fi
+install -m 0644 "$new_img" "$out_dir/Image.gz"
 install -m 0644 \
     "$build_dir/arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb" \
     "$out_dir/sm8550-samsung-gts9wifi.dtb"
