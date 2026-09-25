@@ -376,3 +376,68 @@ distinction is recorded in advance so the result cannot be over-read later.
    plan), not a DT change and not a driver patch. The `vdd`/`vddcx` messages are
    noise, and the `device_link_del` WARN is a real but *separate* upstream
    bugfix.
+
+---
+
+## 11. The CPU path: `epss_l3`, the second config defect X910 had already fixed
+
+Sections 1–10 compare the GPU chain. This section extends the same comparison to
+the **CPU** path, because round 19 narrowed the wedge to the big and prime clusters
+(`docs/CPU_WEDGE_EVIDENCE.md`) and the CPU path had not been diffed at all.
+
+Summary: the two ports instantiate the **same** upstream `sm8550.dtsi` CPU nodes,
+but they resolve them with **different kernels**, and the X710 kernel is missing a
+provider that the X910 kernel builds.
+
+| item | X710 | X910 | class |
+|---|---|---|---|
+| `sm8550.dtsi` `cpu0` `interconnects` | `gem_noc`, `mc_virt`, **`epss_l3`** (3 paths) | identical (same upstream file) | **same hardware** |
+| `interconnects` phandle targets decoded | `gem-noc` (0x7), `mc-virt` (0x8), `epss-l3` (**0x9**) | `gem-noc` (0x7), `mc-virt` (0x8), `epss-l3` (**0x9**) | **same hardware** |
+| `epss_l3` provider driver | **none** — `17d90000.interconnect` unbound | `osm-l3` bound | **possibly relevant** ← the difference |
+| `CONFIG_INTERCONNECT_QCOM_OSM_L3` | **unset** (`out/kernel-gts9wifi/config:7817`) | `=y` (`kernel/config/config-ubuntu-desktop.fragment:136`) | causal |
+| `CONFIG_INTERCONNECT_QCOM_SM8550` | `=y` | `=y` | same hardware |
+| `cpufreq@17d91000` driver state | **never probes** — permanent `-EPROBE_DEFER` | probes | causal |
+| cpufreq policies / governor | **none**; fixed firmware-left OPP | `307–2016` / `499–2803` / `595–2956 MHz`, `schedutil` | causal |
+| `gcc-sm8550` `sync_state()` | blocked by `17d91000.cpufreq` **and** `3d6a000.gmu` | blocked by neither | causal |
+| CPU OPP tables (`cpu0/3/7_opp_table`) | upstream, with `opp-peak-kBps` | identical | same hardware |
+| `qcom,opp-acd-level` in CPU OPP | absent (GPU OPP only) | absent | same hardware |
+| `domain-idle-states` / `cpu-sleep-*-0` | upstream rail power collapse | identical | same hardware |
+
+### 11.1 Mechanism
+
+`qcom-cpufreq-hw` calls `dev_pm_opp_of_find_icc_paths(cpu_dev, NULL)` before it
+registers anything, and that helper walks **every** `interconnects` phandle on
+`cpu0`. Path 2 resolves to `&epss_l3`, `epss_l3` is
+`compatible = "qcom,sm8550-epss-l3", "qcom,epss-l3"` driven only by `osm-l3`, and
+upstream `arch/arm64/configs/defconfig` asks for that driver as `=m`. This port
+builds no module tree, so `=m` yields nothing, `of_icc_get_provider()` finds no
+registered provider for that node and returns `-EPROBE_DEFER`, and the probe defers
+for the life of the boot.
+
+The message is misleading in exactly one way, and it is worth stating because it
+cost a round: `dev_err_probe()` logs `-EPROBE_DEFER` at debug level, so the inner
+`_of_find_icc_paths: Unable to get path2` never reached the console and only the
+outer `Failed to find icc paths` was recorded. The missing inner message was *not*
+evidence that `_bandwidth_supported()` was responsible.
+
+### 11.2 Why the earlier provider audit missed it
+
+The round-19 audit enumerated the interconnect providers that *were bound* and
+concluded all of them were. `mc_virt` was in that list under the name
+`interconnect-1`, because a virtual provider has no unit address. A provider with
+**no driver has no entry at all** — it is absent, not misnamed — so a
+provider-enumeration audit cannot see it. The correct check is per-consumer-path:
+for each `interconnects` phandle of the consumer, does that node have a bound
+driver? That is what was done here for `cpu0`, `cpu3` and `cpu7`.
+
+### 11.3 What is still *not* claimed
+
+The cluster asymmetry is **not** explained by this: the defect removes frequency
+scaling from all three clusters equally, and the wedge lands on big and prime. The
+`epss_l3` L3 vote is shared (`SLAVE_EPSS_L3_SHARED`) and is voted from the CPU OPP
+bandwidth values, so the *value* of the vote differs per cluster, but no evidence
+yet connects a bootloader-left L3 vote to a CPU that stops answering NMIs.
+
+Classification of the whole item: **possibly relevant** to the stall, **certain** as
+a port defect. The measurement that separates the two is the wedge rate before and
+after, against the baseline in `docs/CPU_WEDGE_EVIDENCE.md`.

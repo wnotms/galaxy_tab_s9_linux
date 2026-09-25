@@ -152,11 +152,11 @@ why this note stops short of proposing the backport as a fix.
   is before `systemd-analyze`'s window (initramfs) or in panel bring-up, and was
   not measured this round.
 
-## 4. `17d91000.cpufreq` is permanently deferred, and it blocks `gcc`'s sync_state
+## 4. `17d91000.cpufreq` was permanently deferred: a fifth provider, `epss_l3`
 
 Found in round 19 while chasing why the wedge favours the big and prime CPU
-clusters (`docs/CPU_WEDGE_EVIDENCE.md`). It is the same shape as the four provider
-defects already fixed, and it is on the CPU path.
+clusters (`docs/CPU_WEDGE_EVIDENCE.md`). Round 20 resolved the mechanism. It is the
+same shape as the four provider defects already fixed, and it is on the CPU path.
 
 Measured on the device:
 
@@ -175,31 +175,111 @@ Two things at once:
   that entirely to `3d6a000.gmu`; there is a second, independent blocker, and this
   one is not upstream-correct behaviour but a probe failure.
 
-What is *not* established is which call defers. The obvious candidates are ruled
-out:
+### 4.1 The answer: `of_icc_get_by_index(cpu_dev, 2)` has no provider
 
-* the CPU OPP tables do carry bandwidth — `cpu0_opp_table`'s first entry is
-  `opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>`, and
-  `sm8550.dtsi` has 94 `opp-peak-kBps` occurrences — so `_bandwidth_supported()`
-  does not return the `-ENODEV` that would make this a plain probe failure;
-* every interconnect provider is bound: `1500000.interconnect` (gem_noc),
-  `24100000.interconnect`, `1600000`/`1680000`/`16c0000`/`16e0000`/`1700000`/
-  `1780000`/`320c0000`, and the two virtual ones as `interconnect-0` and
-  `interconnect-1`, all on `qnoc-sm8550`. `mc_virt` is a virtual provider with no
-  unit address, which is why it appears under that name.
+`qcom-cpufreq-hw` resolves the interconnect paths named by the **CPU** nodes before
+it registers anything (`drivers/cpufreq/qcom-cpufreq-hw.c`, the
+`dev_pm_opp_of_find_icc_paths(cpu_dev, NULL)` call), and `cpu0` names **three**
+providers, not two:
 
-So the deferral is inside `dev_pm_opp_of_find_icc_paths()` — either
-`of_icc_get_by_index()` or `_bandwidth_supported()` — and the outer
-`dev_err_probe(dev, ret, "Failed to find icc paths")` is what names the deferred
-reason. **Establishing which needs the error code, and `dev_err_probe` records only
-the outermost message.** That is the next step, and it is cheap: the driver's
-`/sys/kernel/debug/devices_deferred` entry plus a boot with `initcall_debug` would
-separate them, or the inner message (`Unable to get path0`) would appear in `dmesg`
-if `of_icc_get_by_index()` failed rather than deferred.
+```dts
+interconnects = <&gem_noc  MASTER_APPSS_PROC    QCOM_ICC_TAG_ACTIVE_ONLY
+                 &gem_noc  SLAVE_LLCC           QCOM_ICC_TAG_ACTIVE_ONLY>,
+                <&mc_virt  MASTER_LLCC          QCOM_ICC_TAG_ACTIVE_ONLY
+                 &mc_virt  SLAVE_EBI1           QCOM_ICC_TAG_ACTIVE_ONLY>,
+                <&epss_l3 MASTER_EPSS_L3_APPS
+                 &epss_l3  SLAVE_EPSS_L3_SHARED>;
+```
 
-The X910 port has been through this area: it carries
-`cpufreq-recompute-software-boost-limit.patch` and
-`arm-topology-use-boost-frequency-reference.patch`. Neither obviously addresses the
-probe, and X910 uses the same upstream `sm8550.dtsi`, so this is probably a shared
-upstream gap rather than an X710-specific one — which is exactly why it is recorded
-here rather than acted on this round.
+| phandle target | node | driver | built in? |
+|---|---|---|---|
+| `gem_noc` | `1500000.interconnect` | `qnoc-sm8550` | yes, `CONFIG_INTERCONNECT_QCOM_SM8550=y` |
+| `mc_virt` | `interconnect-1` (no unit address) | `qnoc-sm8550` | yes, same symbol |
+| **`epss_l3`** | **`17d90000.interconnect`** | **`osm-l3`** | **no — `CONFIG_INTERCONNECT_QCOM_OSM_L3` was unset** |
+
+`epss_l3` is `compatible = "qcom,sm8550-epss-l3", "qcom,epss-l3"` and is driven by
+`drivers/interconnect/qcom/osm-l3.c`. Upstream `arch/arm64/configs/defconfig` sets
+`CONFIG_INTERCONNECT_QCOM_OSM_L3=m`; this port builds no module tree, so `=m`
+produces **no driver at all**. `17d90000.interconnect` therefore kept no driver,
+`of_icc_get_provider()` found no registered `icc_provider` for path 2 and returned
+`-EPROBE_DEFER`, and the probe deferred forever.
+
+Why the earlier audit missed it, and this is the trap worth remembering. The
+round-19 version of this section listed the providers that *were* bound and
+concluded:
+
+> every interconnect provider is bound: `1500000.interconnect` (gem_noc),
+> `24100000.interconnect`, `1600000`/`1680000`/`16c0000`/`16e0000`/`1700000`/
+> `1780000`/`320c0000`, and the two virtual ones as `interconnect-0` and
+> `interconnect-1`, all on `qnoc-sm8550`.
+
+That list is accurate and the conclusion is still wrong, for a structural reason:
+`mc_virt` appears in it as `interconnect-1` **because it is a virtual provider with
+no unit address**, so a provider *with* a driver can appear under a name that does
+not match its label. And a provider with **no driver at all has no entry in such a
+list** — it is absent, not misnamed. `17d90000.interconnect` was never going to show
+up in an enumeration of bound providers. The check that would have caught it is
+per-path, not per-provider: for each `interconnects` phandle of the consumer, does
+that specific node have a driver built in?
+
+### 4.2 Why only the outer message is visible
+
+`dev_err_probe()` prints at `dev_err` only when the error is not `-EPROBE_DEFER`; for
+`-EPROBE_DEFER` it stores the reason and logs at `dev_dbg`. So the inner
+`_of_find_icc_paths: Unable to get path2` from `dev_pm_opp_of_find_icc_paths()` was
+recorded at debug level and never appeared, and the outer
+`dev_err_probe(dev, ret, "Failed to find icc paths")` became the deferred reason.
+The absence of an inner message was therefore **not** evidence that
+`_bandwidth_supported()` was the failing call — that inference in the round-19 note
+was wrong, and the fix removes the ambiguity instead of instrumenting for it.
+
+The other ruled-out candidate stays ruled out: the CPU OPP tables do carry
+bandwidth — `cpu0_opp_table`'s first entry is
+`opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>`, and `sm8550.dtsi` has
+94 `opp-peak-kBps` occurrences — so `_bandwidth_supported()` returns the positive
+count and the code proceeds to `of_icc_get_by_index()`, whose failures are
+`-EPROBE_DEFER` or `-ENODEV`, never the `-EINVAL` that would have been treated as an
+empty table.
+
+### 4.3 X910 found this first, on the same SoC
+
+This is the first *identified, named* difference between the two ports on the CPU
+path, and it is an X710 regression against X910 rather than a hardware difference.
+The X910 port's `docs/development-notes.md`, section "There was no frequency scaling
+at all", decodes the same property to the same three providers — `gem-noc` (0x7),
+`mc-virt` (0x8), `epss-l3` (0x9, driver "**none**") — reports the same
+`deferred probe pending: qcom-cpufreq-hw: Failed to find icc paths`, and gives the
+same cause: the inherited config left `INTERCONNECT_QCOM_OSM_L3` at `=m` in a port
+that installs no module tree. `kernel/config/config-ubuntu-desktop.fragment`
+(their line 136) fixes it the same way, and their measured result with `=y` is
+three policies — `307–2016` / `499–2803` / `595–2956 MHz` — `schedutil`, and a
+kernel-built energy model.
+
+Their two extra patches in this area (`cpufreq-recompute-software-boost-limit.patch`,
+`arm-topology-use-boost-frequency-reference.patch`) are *not* needed for the probe
+and are not carried here.
+
+### 4.4 What changes, and what is not yet claimed
+
+Enabled in `kernel/config/gts9wifi-mainline.fragment` as a one-line change. With
+`=y` the expected consequences are:
+
+* all eight CPUs get a cpufreq policy and a governor, so frequency and voltage are
+  OS-controlled for the first time on this port;
+* the L3 vote (`EPSS_REG_L3_VOTE`, `epss_l3_l3_vote`) is driven from the CPU OPP
+  bandwidth values instead of being left at the bootloader's setting;
+* `gcc-sm8550`'s `sync_state()` loses one of its two blockers.
+
+**Not claimed:** that this removes the CPU wedge. The mechanism by which a
+firmware-left fixed OPP could produce a CPU that stops answering NMIs is not
+established, and the cluster asymmetry (big + prime wedge, little does not) is not
+explained by a defect that affects all three clusters equally. This is a genuine
+port defect fixed on its own merits; whether the wedge rate moves is a measurement,
+and `docs/CPU_WEDGE_EVIDENCE.md` records the confound-free baseline it must be
+compared against.
+
+Also unverified until the first boot: `qcom_osm_l3_probe()` refuses to register if
+the EPSS block is not enabled, with `error hardware not enabled` and `-ENODEV` from
+a `readl()` of `REG_ENABLE` at `0x17d90000`. If ABL does not enable it, the provider
+will still not register and the cpufreq deferral will persist — but the boot log will
+then say so explicitly, which it never has.

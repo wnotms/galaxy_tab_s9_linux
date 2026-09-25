@@ -97,6 +97,41 @@ CONFIG_HWSPINLOCK_QCOM=y
 CONFIG_INTERCONNECT=y
 CONFIG_INTERCONNECT_QCOM=y
 CONFIG_INTERCONNECT_QCOM_SM8550=y
+# EPSS L3, the third interconnect provider on the CPU path. Measured on hardware
+# (860 s uptime, post-AOSS/IPCC-fix image):
+#   platform 17d91000.cpufreq: deferred probe pending:
+#       qcom-cpufreq-hw: Failed to find icc paths
+#   gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+# qcom-cpufreq-hw resolves the interconnect paths its CPU nodes name before it
+# registers anything, and cpu0 names THREE providers:
+#   interconnects = <&gem_noc MASTER_APPSS_PROC ... &gem_noc SLAVE_LLCC ...>,
+#                   <&mc_virt MASTER_LLCC ... &mc_virt SLAVE_EBI1 ...>,
+#                   <&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+# The first two bind to qnoc-sm8550 via CONFIG_INTERCONNECT_QCOM_SM8550, which is
+# why every "all providers are bound" audit missed this: the missing one has no
+# unit address in that list. The third is 17d90000.interconnect,
+# compatible = "qcom,sm8550-epss-l3", "qcom,epss-l3", driven only by
+# INTERCONNECT_QCOM_OSM_L3. Upstream arch/arm64/configs/defconfig sets it to =m;
+# this port builds no module tree, so =m produces no driver at all,
+# of_icc_get_by_index(cpu_dev, 2) returns -EPROBE_DEFER forever, and because
+# dev_err_probe() logs -EPROBE_DEFER at debug level the outer
+# "Failed to find icc paths" is the ONLY message - "Unable to get path2" never
+# appears. Result: no cpufreq policy on any cluster, no schedutil, a fixed
+# firmware-left OPP on all eight cores, and gcc's sync_state() blocked for the
+# life of the boot.
+#
+# X910 hit exactly this and diagnosed it: docs/development-notes.md "There was no
+# frequency scaling at all" names the same phandles (gem-noc 0x7, mc-virt 0x8,
+# epss-l3 0x9, "none" driver) and the same =m trap; kernel/config/
+# config-ubuntu-desktop.fragment fixes it the same way, and with =y X910 reports
+# three policies (307-2016 / 499-2803 / 595-2956 MHz), schedutil and an energy
+# model. This is the CPU-path instance of the same defect class as the four
+# providers above.
+#
+# The generic "qcom,epss-l3" match is the one that applies: osm-l3's
+# osm_l3_of_match[] has no sm8550-specific entry, so the fallback selects
+# epss_l3_l3_vote (EPSS_REG_L3_VOTE = 0x90), which is what SM8550 wants.
+CONFIG_INTERCONNECT_QCOM_OSM_L3=y
 CONFIG_COMMON_CLK_QCOM=y
 CONFIG_SM_GCC_8550=y
 CONFIG_SM_GPUCC_8550=y

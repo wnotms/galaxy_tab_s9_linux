@@ -17,6 +17,7 @@ import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
+FRAGMENT = "kernel/config/gts9wifi-mainline.fragment"
 GADGET = "rootfs-overlay/usr/libexec/gts9-usb-acm"
 ADBD_UNIT = "rootfs-overlay/usr/lib/systemd/system/gts9-adbd.service"
 FETCH = "scripts/fetch-adbd-packages.sh"
@@ -331,13 +332,72 @@ class DeferredCpufreqTests(unittest.TestCase):
     def test_it_rules_out_the_obvious_candidates(self):
         text = read(self.DOC)
         self.assertIn("opp-peak-kBps", text)
-        self.assertIn("1500000.interconnect", text)
+        # The round-19 audit listed the providers that WERE bound and concluded
+        # "all of them are".  That audit is now recorded as the reason the bug was
+        # missed, so the doc must keep both the old claim and its refutation.
         self.assertIn("every interconnect provider is bound", text)
+        self.assertIn("no unit address", text)
 
-    def test_it_says_which_call_defers_is_not_established(self):
+    def test_it_names_the_third_path_and_its_provider(self):
+        """The resolved mechanism: cpu0's path 2 has no provider."""
         text = read(self.DOC)
-        self.assertIn("not* established is which call defers", text)
-        self.assertIn("records only\nthe outermost message", text)
+        for needle in (
+            "of_icc_get_by_index(cpu_dev, 2)",
+            "17d90000.interconnect",
+            "qcom,sm8550-epss-l3",
+            "osm-l3",
+            "CONFIG_INTERCONNECT_QCOM_OSM_L3",
+            "MASTER_EPSS_L3_APPS",
+            "SLAVE_EPSS_L3_SHARED",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_it_records_why_only_the_outer_message_appeared(self):
+        text = read(self.DOC)
+        self.assertIn("logs at `dev_dbg`", text)
+        self.assertIn("Unable to get path2", text)
+        # And it must retract the round-19 inference rather than leave it standing.
+        self.assertIn("was wrong", text)
+
+    def test_it_names_the_x910_evidence(self):
+        """The differentiator is that X910 fixed this first, on the same SoC."""
+        text = read(self.DOC)
+        self.assertIn("config-ubuntu-desktop.fragment", text)
+        self.assertIn("There was no frequency scaling", text)
+        self.assertIn("schedutil", text)
+
+    def test_it_does_not_claim_the_wedge_is_fixed(self):
+        text = read(self.DOC)
+        self.assertIn("**Not claimed:**", text)
+        self.assertIn("explained by a defect that affects all three clusters", text)
+
+    def test_the_fragment_builds_the_provider_in(self):
+        self.assertIn("CONFIG_INTERCONNECT_QCOM_OSM_L3=y", read(FRAGMENT))
+
+    def test_the_fragment_explains_the_trap(self):
+        text = read(FRAGMENT)
+        for needle in (
+            "17d90000.interconnect",
+            "Failed to find icc paths",
+            "Unable to get path2",
+            "epss_l3_l3_vote",
+            "EPSS_REG_L3_VOTE",
+            "osm_l3_of_match",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_the_resolved_config_builds_it_in(self):
+        """=m would be as good as absent: this port installs no module tree."""
+        cfg = ROOT / "out/kernel-gts9wifi/config"
+        if not cfg.exists():
+            self.skipTest("no resolved config yet")
+        text = cfg.read_text()
+        if "CONFIG_INTERCONNECT_QCOM_OSM_L3=y" not in text:
+            self.skipTest("resolved config predates the fragment change; rebuild")
+        self.assertNotIn("CONFIG_INTERCONNECT_QCOM_OSM_L3=m", text)
+        self.assertIn("CONFIG_INTERCONNECT_QCOM_SM8550=y", text)
 
     def test_the_dtsi_still_carries_the_bandwidth_it_claims(self):
         """Re-derive it: if upstream ever drops opp-peak-kBps this doc is wrong."""
@@ -351,6 +411,117 @@ class DeferredCpufreqTests(unittest.TestCase):
         # 11, not 8: three non-CPU nodes use the same master.
         self.assertGreaterEqual(
             text.count("interconnects = <&gem_noc MASTER_APPSS_PROC"), 8)
+
+
+# Every interconnect provider a CPU's `interconnects` property may name, and the
+# Kconfig symbol that has to be built in for that node to get a driver at all.
+# A provider reachable only as a module counts as absent: the port installs no
+# module tree.
+ICC_PROVIDER_SYMBOLS = {
+    "qcom,sm8550-gem-noc": "CONFIG_INTERCONNECT_QCOM_SM8550",
+    "qcom,sm8550-mc-virt": "CONFIG_INTERCONNECT_QCOM_SM8550",
+    "qcom,sm8550-epss-l3": "CONFIG_INTERCONNECT_QCOM_OSM_L3",
+    "qcom,epss-l3": "CONFIG_INTERCONNECT_QCOM_OSM_L3",
+}
+
+
+def dts_node_body(text, label):
+    """Return the braced body of `label: ... { ... }` in a DTS source file."""
+    match = re.search(r"^\s*%s:\s*[^\s{]+\s*\{" % re.escape(label), text, re.M)
+    if not match:
+        return None
+    depth = 0
+    for index in range(match.end() - 1, len(text)):
+        if text[index] == "{":
+            depth += 1
+        elif text[index] == "}":
+            depth -= 1
+            if depth == 0:
+                return text[match.end():index]
+    return None
+
+
+class CpuIccPathTests(unittest.TestCase):
+    """Per-path, not per-provider: this is the check that would have caught it.
+
+    The round-19 audit enumerated the interconnect providers that had bound and
+    concluded all of them had.  A provider with *no* driver has no entry in that
+    list at all - it is absent, not misnamed - so no such audit could ever have
+    found `epss_l3`.  This test walks the consumer's own property instead and asks,
+    for each phandle, whether the target node has a driver built in.
+    """
+
+    DTSI = ".work/build/linux-src-gts9wifi/arch/arm64/boot/dts/qcom/sm8550.dtsi"
+
+    def setUp(self):
+        path = ROOT / self.DTSI
+        if not path.is_file():
+            self.skipTest("kernel worktree is not present")
+        self.text = path.read_text()
+        self.fragment = read(FRAGMENT)
+
+    def cpu_interconnect_labels(self, cpu):
+        body = dts_node_body(self.text, cpu)
+        self.assertIsNotNone(body, "no node for %s" % cpu)
+        match = re.search(r"interconnects\s*=\s*(.*?);", body, re.S)
+        self.assertIsNotNone(match, "no interconnects property on %s" % cpu)
+        # A phandle appears twice per path (master and slave); dedupe in order.
+        seen = []
+        for label in re.findall(r"&([A-Za-z0-9_]+)", match.group(1)):
+            if label not in seen:
+                seen.append(label)
+        return seen
+
+    def test_every_cpu_cluster_has_the_same_three_paths(self):
+        for cpu in ("cpu0", "cpu3", "cpu7"):
+            with self.subTest(cpu=cpu):
+                self.assertEqual(
+                    self.cpu_interconnect_labels(cpu),
+                    ["gem_noc", "mc_virt", "epss_l3"],
+                )
+
+    def test_every_named_provider_has_a_driver_built_in(self):
+        for cpu in ("cpu0", "cpu3", "cpu7"):
+            for label in self.cpu_interconnect_labels(cpu):
+                with self.subTest(cpu=cpu, provider=label):
+                    body = dts_node_body(self.text, label)
+                    self.assertIsNotNone(body, "no node for provider %s" % label)
+                    compat = re.findall(r'compatible\s*=\s*"([^"]+)"', body)
+                    self.assertTrue(compat)
+                    # A node lists its specific compatible first and a generic
+                    # fallback second; the driver matches either.
+                    symbols = {
+                        ICC_PROVIDER_SYMBOLS[c] for c in compat
+                        if c in ICC_PROVIDER_SYMBOLS
+                    }
+                    self.assertTrue(
+                        symbols,
+                        "provider %s (%s) is not in ICC_PROVIDER_SYMBOLS; a human "
+                        "has to decide which symbol builds its driver"
+                        % (label, ", ".join(compat)),
+                    )
+                    for symbol in symbols:
+                        self.assertIn(
+                            "%s=y" % symbol,
+                            self.fragment,
+                            "%s is named by %s but %s is not built in"
+                            % (label, cpu, symbol),
+                        )
+
+    def test_the_missing_one_is_the_l3_vote_not_a_perf_state(self):
+        """SM8550 has no specific osm-l3 match, so the fallback's vote applies."""
+        body = dts_node_body(self.text, "epss_l3")
+        self.assertIn('"qcom,sm8550-epss-l3"', body)
+        self.assertIn('"qcom,epss-l3"', body)
+        # The generic entry is the one that matches, and it uses the L3 vote.
+        driver = ROOT / (".work/build/linux-src-gts9wifi/drivers/interconnect/"
+                         "qcom/osm-l3.c")
+        if not driver.is_file():
+            self.skipTest("kernel worktree is not present")
+        osm = driver.read_text()
+        self.assertIn('{ .compatible = "qcom,epss-l3", .data = &epss_l3_l3_vote }',
+                      osm)
+        self.assertNotIn('compatible = "qcom,sm8550-epss-l3"', osm)
 
 
 class WedgeClusterTests(unittest.TestCase):
