@@ -2653,10 +2653,16 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("no magic delay", flat)
         # The HTTPS failure must not be mistaken for a wireless fault.
         self.assertIn("not a wireless fault", flat)
-        # And it must not over-claim a soak that was never run - the bring-up doc
-        # carries that limitation, since test-210 lists stability results.
-        bringup = " ".join(read("docs/WIFI_QCA6490_BRINGUP.md").split())
-        self.assertIn("soak has **not** been run", bringup)
+        # The soak result must be reported precisely: DNS timeouts at a weak signal
+        # margin, not link loss, and the untested combinations named.
+        self.assertIn("56 of 60 HTTP transfers succeeded", flat)
+        self.assertIn("Could not resolve host", flat)
+        self.assertIn("DNS, not the link", flat)
+        bringup = read("docs/WIFI_QCA6490_BRINGUP.md")
+        flatb = " ".join(bringup.split())
+        self.assertIn("56 of 60", flatb)
+        self.assertIn("Not run:", flatb)
+        self.assertIn("2.4 GHz", flatb)
 
     def test_the_firmware_is_staged_at_the_drivers_own_path(self):
         """The path comes from dmesg, not from a convention."""

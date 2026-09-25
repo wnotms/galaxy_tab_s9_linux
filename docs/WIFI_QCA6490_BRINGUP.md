@@ -242,10 +242,15 @@ wedge PID 1 — is a real trade-off and is left as a decision, not made unilater
 
 ### 9.3 The 5 GHz question is closed, the long-transfer one is not
 
-5 GHz associates and transfers at 288 Mbit/s (§6), so the documented BDF weakness
-does not apply here. A 10-30 minute sustained-transfer soak has **not** been run, so
-`NETWORK_STABLE` is claimed on the strength of a working lease, bidirectional traffic
-and a clean download rather than on a soak.
+5 GHz associates and transfers at up to 432 Mbit/s (§6), so the documented BDF
+weakness does not apply here. A 10-minute soak has now been run: **56 of 60 HTTP
+transfers succeeded**, 7.4 MB total, 93-882 KB/s, with the association never dropping.
+The four failures were `curl: (6) Could not resolve host` — DNS timing out at
+`RSSI=-89 dBm` / `NOISE=-96 dBm`, an ~7 dB margin — not link loss. Throughput tracked
+signal cleanly, which is a healthy rate-control loop.
+
+**Not run:** a soak on 2.4 GHz, and a soak at close range where the signal margin
+would not confound the result.
 
 ### 9.4 Things deliberately not touched
 

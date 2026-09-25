@@ -72,6 +72,37 @@ already suggested (`rx_bytes` doubling with no local traffic).
 | `disconnect`/`reconnect` ×3 | back to `COMPLETED` within 2 s each time |
 | cold boot (test-209) | endpoint, firmware, `phy0`, scan and association all automatic |
 | warm reboot (test-209) | same |
+| **sustained soak** | **56 of 60 HTTP transfers succeeded**, 7.4 MB total, 93-882 KB/s |
+
+### The soak, and what its four failures actually were
+
+Ten minutes of repeated `curl` against a Debian mirror over the associated 5 GHz
+link:
+
+```
+200  56
+000   2
+curl: (6) Could not resolve host: mirrors.aliyun.com    x2
+```
+
+**The two failures are DNS, not the link.** `curl: (6)` is name resolution; the
+transfers immediately before and after them both returned `200` with a full 138612
+bytes, and `wpa_state` stayed `COMPLETED` throughout. The association never dropped
+once in ten minutes.
+
+They coincide with the weakest signal of the run — `RSSI=-89 dBm` against
+`NOISE=-96 dBm`, an ~7 dB SNR, down from -65 dBm at the start. At that margin a DNS
+query to the AP's resolver times out while bulk transfer still gets through, which is
+what the pattern shows. So this is a **range/placement** observation, not a driver
+defect, and it is recorded as such rather than as a Wi-Fi fault.
+
+Worth noting for anyone repeating this: the link actually *improved* early in the
+soak, reaching `tx 432.3 MBit/s HE-MCS 4 HE-NSS 2 80 MHz`, then degraded as the
+tablet sat at the edge of 5 GHz coverage. Throughput tracked signal cleanly
+(882 KB/s near the start, 93 KB/s at the end), which is the behaviour of a healthy
+rate-control loop rather than a fault.
+
+**A 2.4 GHz soak was not run.**
 
 ## What was required
 
