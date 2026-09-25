@@ -10,6 +10,11 @@
 #   gpu      did the adreno driver initialise (post-fix GPU chain)
 #   sd       did systemd-shutdown run (i.e. the boot ended cleanly)
 #   multi    did the boot reach multi-user.target
+#   rcu      rcu detected stalls          - the wedge shape boot 1c082657 shows
+#   nmi      a CPU did not answer an NMI  - direct evidence of a CPU-level wedge
+#   wq       BUG: workqueue lockup
+#   hung     hung_task / blocked for more than
+#   sl       soft lockup
 #   lines    how many journal lines the boot produced
 #   last     the last short-monotonic timestamp it reached
 #
@@ -34,7 +39,7 @@ TMP=/tmp/gts9-journal-survey.tmp
 	echo "# gts9-journal-survey"
 	echo "# generated_utc=$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo notime)"
 	echo "# boot_id=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)"
-	echo "# columns: boot_index boot_id lines dpu acd msm sd multi last_monotonic"
+	echo "# columns: boot_index boot_id lines dpu acd msm sd multi rcu nmi wq hung sl last_monotonic"
 } >"$OUT" 2>/dev/null
 
 {
@@ -46,22 +51,32 @@ TMP=/tmp/gts9-journal-survey.tmp
 journalctl --list-boots --no-pager 2>/dev/null | awk '{print $1, $2}' | sort -n | while read -r idx bid; do
 	journalctl -b "$idx" -o short-monotonic --no-pager >"$TMP" 2>/dev/null || continue
 	[ -s "$TMP" ] || continue
-	awk -v idx="$idx" -v bid="$bid" '
+	# The Kernel command line: line is excluded first.  It carries
+	# hung_task_panic=1 on this board, so a bare /hung_task/ pattern matches the
+	# command line itself and reports a hung task on every boot - measured before
+	# the exclusion, 55 of 89 boots "had" one.
+	grep -av "Kernel command line" "$TMP" | awk -v idx="$idx" -v bid="$bid" '
 		/frame done timeout/            { dpu++ }
 		/Unable to send ACD/            { acd++ }
 		/Initialized msm/              { gpu++ }
 		/systemd-shutdown/             { sd++ }
 		/Reached target multi-user/    { multi++ }
+		/rcu.*detected stall/          { rcu++ }
+		/haven.t responded to the NMI/ { nmi++ }
+		/BUG: workqueue lockup/        { wq++ }
+		/hung_task|blocked for more than/ { hung++ }
+		/BUG: soft lockup|watchdog: BUG/  { sl++ }
 		{ last = $0; n++ }
 		END {
 			ts = "none"
 			if (match(last, /^\[ *[0-9]+\.[0-9]+\]/))
 				ts = substr(last, RSTART + 1, RLENGTH - 2)
-			printf "%s %s %d %d %d %d %d %d %s\n",
+			printf "%s %s %d %d %d %d %d %d %d %d %d %d %d %s\n",
 				idx, substr(bid, 1, 8), n, dpu + 0, acd + 0, gpu + 0,
-				sd + 0, multi + 0, ts
+				sd + 0, multi + 0, rcu + 0, nmi + 0, wq + 0, hung + 0,
+				sl + 0, ts
 		}
-	' "$TMP" >>"$OUT" 2>/dev/null
+	' >>"$OUT" 2>/dev/null
 	{
 		echo "== $idx $(echo "$bid" | cut -c1-8)"
 		tail -2 "$TMP" 2>/dev/null | cut -c1-110

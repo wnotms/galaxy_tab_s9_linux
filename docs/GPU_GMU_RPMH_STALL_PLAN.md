@@ -545,6 +545,28 @@ flashed and power-cycled constantly. The third row is the honest one and it is
 distinguish the two eras. What the table does establish is that the fingerprint is
 recognisable in the journal alone, and that `1c082657` is not a one-off shape.
 
+**The rate, and why it is the first usable one.**  Round 17-18 counted the wedge
+signature across every boot the journal retains — an unanswered NMI, an RCU stall,
+a workqueue lockup or a soft lockup.  None of those four can be produced by
+flashing, by entering recovery or by pulling the power, so unlike the "ended without
+a shutdown" count this one measures the failure and not the operator's activity
+around it:
+
+| era | boots | with the wedge signature |
+|---|---|---|
+| pre-fix (`Unable to send ACD` present, GPU never binds) | 46 | **10 (21.7%)** |
+| post-fix (no ACD error, `Initialized msm … for 3d00000.gpu`) | 29 | **1 (3.4%)** |
+
+Two-sided Fisher exact **p = 0.043**, and **all 11 carry the unanswered-NMI line** —
+not one is a software stall that merely tripped a detector.  The single post-fix
+one is `fa0f2151`, which is the *first* boot carrying the AOSS QMP + IPCC fix: the
+boot before it, `f7b1e8de`, still prints the ACD error and never binds the GPU.
+
+On that boot the profile's own recovery worked: `softlockup_panic=1` fired at
+104.3 s (`CPU#7 stuck for 53s`) and rebooted.  `workqueue.panic_on_stall_time=45`
+was armed too and the pool was stuck for 42 s when the 93 s report came out — three
+seconds short.  `docs/CPU_WEDGE_EVIDENCE.md` has the full analysis.
+
 **Where this leaves the chain.** The candidate chain in §3 puts GPU/GMU at the top
 and RPMh/RSC near the bottom. This trace puts a **CPU-level wedge** at the top and
 everything this project has been arguing about — DPU, workqueue, RCU, and by

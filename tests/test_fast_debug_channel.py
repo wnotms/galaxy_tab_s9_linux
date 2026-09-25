@@ -231,3 +231,74 @@ class SlowShutdownDocTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CpuWedgeEvidenceTests(unittest.TestCase):
+    """The wedge rate is the one confound-free measurement in this repository."""
+
+    DOC = "docs/CPU_WEDGE_EVIDENCE.md"
+    SURVEY = "rootfs-overlay/usr/libexec/gts9-journal-survey"
+    DATA = "reference/boot-tests/test-189-20260925T0210Z/journal-survey-wedge.txt"
+
+    def test_the_document_records_the_rate_and_the_test(self):
+        text = read(self.DOC)
+        for needle in ("10 (21.7%", "1 (3.4%", "p = 0.043"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_it_explains_why_the_marker_is_not_confounded(self):
+        """sd=0 is produced by flashing too; an unanswered NMI is not."""
+        text = read(self.DOC)
+        self.assertIn("confound-freedom", text)
+        self.assertIn("pulling the power", text)
+        self.assertIn("unanswered NMI", text)
+
+    def test_it_uses_boot_ids_not_journal_indices(self):
+        """Indices shift as boots age out; an earlier draft cited them."""
+        text = read(self.DOC)
+        self.assertIn("Boot ids, not journal indices", text)
+        self.assertIn("fa0f2151", text)
+        self.assertIn("f7b1e8de", text)
+
+    def test_the_survey_excludes_the_command_line_before_counting(self):
+        """hung_task_panic=1 in the cmdline matched a bare hung_task pattern."""
+        text = read(self.SURVEY)
+        self.assertIn('grep -av "Kernel command line"', text)
+        # And awk must not also be handed the file, or every line counts twice.
+        self.assertNotIn("""\t' "$TMP" >>"$OUT\"""", text)
+
+    def test_the_survey_counts_the_four_wedge_markers(self):
+        text = read(self.SURVEY)
+        for pattern in ("rcu.*detected stall", "haven.t responded to the NMI",
+                        "BUG: workqueue lockup", "BUG: soft lockup"):
+            with self.subTest(pattern=pattern):
+                self.assertIn(pattern, text)
+
+    def test_the_recorded_data_still_supports_the_rate(self):
+        """Re-derive the counts from the survey output rather than trusting prose."""
+        rows = []
+        for line in read(self.DATA).splitlines():
+            p = line.split()
+            if len(p) < 14:
+                continue
+            rows.append(dict(bid=p[1], lines=int(p[2]), acd=int(p[4]), sd=int(p[6]),
+                             multi=int(p[7]), rcu=int(p[8]), nmi=int(p[9]),
+                             wq=int(p[10]), sl=int(p[12])))
+        wedge = [r for r in rows if r["rcu"] or r["nmi"] or r["wq"] or r["sl"]]
+        self.assertEqual(len(rows), 88)
+        self.assertEqual(len(wedge), 11)
+        # Every one of them must show the CPU-level marker.
+        self.assertTrue(all(r["nmi"] for r in wedge),
+                        "a wedge boot without an unanswered NMI")
+        valid = [r for r in rows if r["multi"] > 0 and r["lines"] >= 900]
+        pre = [r for r in valid if r["acd"] > 0]
+        post = [r for r in valid if r["acd"] == 0]
+        self.assertEqual(len(pre), 46)
+        self.assertEqual(len([r for r in pre if r["rcu"] or r["nmi"] or r["wq"] or r["sl"]]), 10)
+        # The one post-fix wedge never reached multi-user, so it is outside the
+        # valid set on purpose and must be counted separately.
+        self.assertEqual(len([r for r in post if r["rcu"] or r["nmi"] or r["wq"] or r["sl"]]), 0)
+        fao = [r for r in rows if r["bid"] == "fa0f2151"]
+        self.assertEqual(len(fao), 1)
+        self.assertEqual(fao[0]["acd"], 0)
+        self.assertTrue(fao[0]["nmi"] or fao[0]["rcu"] or fao[0]["wq"] or fao[0]["sl"])
