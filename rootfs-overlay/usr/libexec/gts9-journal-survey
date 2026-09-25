@@ -1,0 +1,71 @@
+#!/bin/sh
+# gts9-journal-survey - one line of outcome per boot, over the whole journal.
+#
+# Why: every stall assessment so far has rested on console captures, and those
+# only exist for the ~22 cycles a host was watching.  journald keeps far more,
+# and a per-boot outcome is derivable from it without any host at all:
+#
+#   dpu      did the boot print "frame done timeout" (the enc35 hazard)
+#   acd      did it print "Unable to send ACD state to AOSS" (pre-fix GPU chain)
+#   gpu      did the adreno driver initialise (post-fix GPU chain)
+#   sd       did systemd-shutdown run (i.e. the boot ended cleanly)
+#   multi    did the boot reach multi-user.target
+#   lines    how many journal lines the boot produced
+#   last     the last short-monotonic timestamp it reached
+#
+# and, to a second file, the last two journal lines of each boot.  Those are the
+# fingerprint: a boot whose journal stops just after multi-user stopped because
+# the machine froze there, which is what the mid-run failure looks like, whereas a
+# boot stopped by a harness reset stops wherever the harness happened to be.
+#
+# sd=0 with a substantial line count is an unclean end: the journal stopped
+# without a shutdown, which is what a stall or an unrequested reset looks like.
+# That is the same signal the on-device evidence collector uses, computed for
+# every boot instead of only the last one.
+#
+# Read-only.  Writes only its own report file.
+set -u
+
+OUT=${1:-/var/log/gts9-journal-survey.txt}
+TAIL=${2:-/var/log/gts9-journal-survey-tails.txt}
+TMP=/tmp/gts9-journal-survey.tmp
+
+{
+	echo "# gts9-journal-survey"
+	echo "# generated_utc=$(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo notime)"
+	echo "# boot_id=$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)"
+	echo "# columns: boot_index boot_id lines dpu acd msm sd multi last_monotonic"
+} >"$OUT" 2>/dev/null
+
+{
+	echo "# gts9-journal-survey-tails"
+	echo "# the last two journal lines of each boot, oldest boot first"
+} >"$TAIL" 2>/dev/null
+
+# Oldest first, so the file reads as a history.
+journalctl --list-boots --no-pager 2>/dev/null | awk '{print $1, $2}' | sort -n | while read -r idx bid; do
+	journalctl -b "$idx" -o short-monotonic --no-pager >"$TMP" 2>/dev/null || continue
+	[ -s "$TMP" ] || continue
+	awk -v idx="$idx" -v bid="$bid" '
+		/frame done timeout/            { dpu++ }
+		/Unable to send ACD/            { acd++ }
+		/Initialized msm/              { gpu++ }
+		/systemd-shutdown/             { sd++ }
+		/Reached target multi-user/    { multi++ }
+		{ last = $0; n++ }
+		END {
+			ts = "none"
+			if (match(last, /^\[ *[0-9]+\.[0-9]+\]/))
+				ts = substr(last, RSTART + 1, RLENGTH - 2)
+			printf "%s %s %d %d %d %d %d %d %s\n",
+				idx, substr(bid, 1, 8), n, dpu + 0, acd + 0, gpu + 0,
+				sd + 0, multi + 0, ts
+		}
+	' "$TMP" >>"$OUT" 2>/dev/null
+	{
+		echo "== $idx $(echo "$bid" | cut -c1-8)"
+		tail -2 "$TMP" 2>/dev/null | cut -c1-110
+	} >>"$TAIL" 2>/dev/null
+done
+rm -f "$TMP" 2>/dev/null
+echo "# done $(date -u +%Y%m%dT%H%M%SZ 2>/dev/null || echo notime)" >>"$OUT" 2>/dev/null

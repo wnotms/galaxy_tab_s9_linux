@@ -1,0 +1,233 @@
+"""Host checks for the X710 fast debug channel and the slow-shutdown analysis.
+
+Pins the two things this work established so neither can quietly regress:
+
+* the serial console's rate is not a baud-rate problem - COM17/COM19 are USB
+  CDC-ACM gadget ports and the host's line coding is nominal - so the answer is a
+  network function on the same gadget, plus ssh and adb over it;
+* the network function is opt-in and cannot cost the ACM console, which is the
+  only way in before userspace is up and the only thing that survives a userspace
+  that has stopped.
+"""
+import hashlib
+import pathlib
+import re
+import unittest
+
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+
+GADGET = "rootfs-overlay/usr/libexec/gts9-usb-acm"
+ADBD_UNIT = "rootfs-overlay/usr/lib/systemd/system/gts9-adbd.service"
+FETCH = "scripts/fetch-adbd-packages.sh"
+SSH_WRAPPER = "scripts/gts9-ssh.sh"
+CHANNEL = "scripts/gts9-debug-channel.sh"
+CHANNEL_DOC = "docs/FAST_DEBUG_CHANNEL.md"
+SHUTDOWN_DOC = "docs/SLOW_SHUTDOWN_ANALYSIS.md"
+CONSOLE_SH = "scripts/console-run.sh"
+CONSOLE_PS = "scripts/console-run.ps1"
+
+
+def read(rel):
+    return (ROOT / rel).read_text()
+
+
+class GadgetNetworkFunctionTests(unittest.TestCase):
+    """The NCM function must be additive, opt-in, and unable to cost the console."""
+
+    def test_it_is_off_unless_the_flag_file_exists(self):
+        text = read(GADGET)
+        self.assertIn("/etc/gts9-usb-net", text)
+        # No flag file -> read_net_conf leaves both empty -> setup_network and
+        # configure_network return immediately.
+        self.assertIn("read_net_conf", text)
+        for fn in ("setup_network", "configure_network"):
+            with self.subTest(fn=fn):
+                self.assertRegex(text, rf"{fn}\(\) \{{\n\t\[ -n \"\$net_kind\" \] \|\| return 0")
+
+    def test_only_ncm_and_ecm_are_accepted(self):
+        """Both are built into this kernel; anything else is a typo, not a feature."""
+        text = read(GADGET)
+        self.assertIn("ncm | ecm)", text)
+        self.assertIn("unknown network function", text)
+
+    def test_a_missing_function_does_not_fail_the_service(self):
+        """A kernel without CONFIG_USB_CONFIGFS_NCM must still bring up the console."""
+        text = read(GADGET)
+        self.assertIn("want CONFIG_USB_CONFIGFS_${net_kind}", text)
+        # The mkdir failure branch clears net_kind and returns 0; it must not fail().
+        m = re.search(r"if ! mkdir -p \"\$GADGET/functions/\$net_kind\.usb0\"[\s\S]{0,300}?\n\t\tfi",
+                      text)
+        self.assertIsNotNone(m, "the network mkdir block is missing")
+        self.assertNotIn("fail ", m.group(0))
+
+    def test_a_failed_bind_retries_without_the_network_function(self):
+        """Losing the console to an optional function would be unrecoverable."""
+        text = read(GADGET)
+        self.assertIn("cannot bind the gadget to $udc", text)
+        self.assertIn("net_drop", text)
+        # The retry must be inside the bind-failure branch.
+        m = re.search(r"if ! echo \"\$udc\" > \"\$GADGET/UDC\".*?\nfi", text, re.S)
+        self.assertIsNotNone(m, "the UDC bind block is missing")
+        self.assertIn("net_drop", m.group(0))
+        self.assertIn("retry", m.group(0).lower())
+
+    def test_the_function_goes_into_the_existing_gadget(self):
+        """A second gadget cannot bind: one UDC, one gadget, and the console owns it."""
+        text = read(GADGET)
+        self.assertNotIn("usb_gadget/g1", text)
+        self.assertIn("$GADGET/functions/$net_kind.usb0", text)
+        self.assertIn("$GADGET/configs/c.1/$net_kind.usb0", text)
+
+
+class AdbdUnitTests(unittest.TestCase):
+    def test_the_unit_runs_adbd_and_is_enableable(self):
+        text = read(ADBD_UNIT)
+        self.assertIn("ExecStart=/usr/lib/android-sdk/platform-tools/adbd", text)
+        self.assertIn("WantedBy=multi-user.target", text)
+
+    def test_it_does_not_use_the_packaged_gadget_helper(self):
+        """Debian's helper creates its own gadget and would fail while gts9 owns the UDC."""
+        text = read(ADBD_UNIT)
+        self.assertNotIn("ExecStartPre", text)
+        # The helper may only be NAMED, in the comment that explains why it is not
+        # used; no directive may invoke it.
+        for line in text.splitlines():
+            if "adbd-usb-gadget" in line:
+                self.assertTrue(line.lstrip().startswith("#"),
+                                f"adbd-usb-gadget appears in a directive: {line!r}")
+        # It must say why, so nobody "fixes" it back.
+        self.assertIn("gadget at a time", text)
+
+    def test_it_explains_the_expected_non_android_errors(self):
+        text = read(ADBD_UNIT)
+        self.assertIn("Failed to get adbd socket", text)
+        self.assertIn("not an error", text)
+
+    def test_it_is_picked_up_by_the_enablement_helper(self):
+        """gts9-enable-units links every gts9-*.service with a WantedBy= line."""
+        helper = read("rootfs-overlay/usr/libexec/gts9-enable-units")
+        self.assertIn('"$unit_dir"/gts9-*.service', helper)
+        self.assertTrue((ROOT / ADBD_UNIT).name.startswith("gts9-"))
+        self.assertIn("WantedBy=", read(ADBD_UNIT))
+
+
+class AdbdPackagingTests(unittest.TestCase):
+    """adbd is a real Debian package; pin the exact build and its hashes."""
+
+    def test_it_fetches_adbd_and_its_missing_dependencies(self):
+        text = read(FETCH)
+        for pkg in ("adbd_34.0.5-12_arm64.deb", "android-libbase", "android-libcutils",
+                    "android-liblog", "android-libboringssl", "libprotobuf32t64"):
+            with self.subTest(pkg=pkg):
+                self.assertIn(pkg, text)
+
+    def test_every_package_carries_a_sha256(self):
+        text = read(FETCH)
+        # Each entry is two lines: the pool path + ".deb", then the sha256 (the
+        # line may end with the closing quote of the array element).
+        hashes = re.findall(r"^([0-9a-f]{64})\"?$", text, re.M)
+        entries = re.findall(r'^[\t ]*"?[ap]/[a-z0-9+._/-]+\.deb$', text, re.M)
+        self.assertEqual(len(hashes), len(entries))
+        self.assertGreaterEqual(len(hashes), 6)
+
+    def test_it_verifies_rather_than_trusting_the_download(self):
+        text = read(FETCH)
+        self.assertIn("SHA256 MISMATCH", text)
+        self.assertIn("sha256sum", text)
+        # The hash is checked before the file is moved into place.
+        self.assertIn(".part", text)
+
+    def test_it_targets_the_release_the_tablet_runs(self):
+        text = read(FETCH)
+        # Debian 13 trixie -> the build without a ~bpo suffix.
+        self.assertIn("34.0.5-12_arm64.deb", text)
+        self.assertNotIn("~bpo", text)
+
+    def test_the_binaries_are_not_committed(self):
+        text = read(FETCH)
+        self.assertIn(".work/downloads", text)
+        # .work/ is gitignored, so a downloaded binary there is fine; a .deb
+        # anywhere else would be committed.
+        stray = [p for p in ROOT.glob("**/*.deb") if ".work/" not in str(p)]
+        self.assertEqual(stray, [], f".deb files outside .work/: {stray}")
+
+
+class DebugChannelScriptTests(unittest.TestCase):
+    def test_the_wrappers_exist_and_are_executable(self):
+        for rel in (SSH_WRAPPER, CHANNEL, FETCH):
+            with self.subTest(rel=rel):
+                path = ROOT / rel
+                self.assertTrue(path.is_file(), rel)
+                self.assertTrue(path.stat().st_mode & 0o111, f"{rel} not executable")
+
+    def test_the_ssh_wrapper_defaults_to_the_apipa_address(self):
+        """169.254.0.0/16 is what needs no host-side configuration or elevation."""
+        text = read(SSH_WRAPPER)
+        self.assertIn("169.254.42.1", text)
+        self.assertIn("GTS9_DEVICE", text)
+        self.assertIn("gts9_ed25519", text)
+
+    def test_the_shutdown_capture_waits_for_the_reproducing_uptime(self):
+        text = read("reference/boot-tests/test-189-20260925T0210Z/"
+                    "long-uptime-reboot-capture.sh")
+        self.assertIn("GTS9_MIN_UPTIME", text)
+        self.assertIn("2700", text)
+        self.assertIn("GTS9_ALLOW_POWER", text)
+
+
+class BaudIsNominalTests(unittest.TestCase):
+    """The console's rate is not a baud-rate problem; the code must say so."""
+
+    def test_the_host_baud_is_a_parameter_so_it_can_be_measured(self):
+        for rel, needle in ((CONSOLE_PS, "[int]$Baud = 115200"),
+                            (CONSOLE_SH, "-Baud")):
+            with self.subTest(rel=rel):
+                self.assertIn(needle, read(rel))
+
+    def test_the_ps1_explains_that_the_line_coding_is_nominal(self):
+        text = read(CONSOLE_PS)
+        self.assertIn("CDC-ACM", text)
+        self.assertIn("USB bulk", text)
+
+    def test_the_document_records_the_measurement(self):
+        text = read(CHANNEL_DOC)
+        self.assertIn("115200", text)
+        self.assertIn("921600", text)
+        self.assertIn("40 s", text)
+        # The rates actually achieved over the network function.
+        self.assertIn("31.8 MB/s", text)
+        self.assertIn("70.5 MB/s", text)
+
+    def test_the_document_says_the_console_is_not_replaced(self):
+        text = read(CHANNEL_DOC)
+        self.assertIn("What this does not replace", text)
+        self.assertIn("Keep it.", text)
+
+
+class SlowShutdownDocTests(unittest.TestCase):
+    def test_it_records_the_three_timings(self):
+        text = read(SHUTDOWN_DOC)
+        for needle in ("41 s", "194 s", "1.07 s", "2936 s"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_it_records_what_was_ruled_out(self):
+        text = read(SHUTDOWN_DOC)
+        for needle in ("32 ms", "0.51 s", "0.49 s", "41.0 MB/s", "848 kB",
+                       "hung_task_panic", "softlockup_panic"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_it_does_not_blame_the_debug_channel(self):
+        text = read(SHUTDOWN_DOC)
+        self.assertIn("does not implicate the debug-channel work", text)
+
+    def test_it_states_that_the_mechanism_is_not_established(self):
+        text = read(SHUTDOWN_DOC)
+        self.assertIn("does not establish the mechanism", text)
+        self.assertIn("n=2", text)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,90 @@
+# boot `1c082657` — the only boot in 89 with a full wedge trace
+
+Extracted 2026-09-25 from the device's own journal (`journalctl -b -67`) on
+request; nothing here was produced by a host capture. `1c082657` is a **pre-fix**
+boot (it carries `Unable to send ACD state to AOSS`, so the AOSS-QMP/IPCC fix was
+not yet in), it is one of the 89 boots the survey covers, and it is the **only**
+one of the 89 that printed `frame done timeout` at all.
+
+## What the boot did, in monotonic order
+
+```
+  ~6.5 s   reaches multi-user (the boot is normal up to here)
+  ~7.0 s   the journal STOPS.  No further entry until 37.2 s.
+   37.228  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   47.261  rcu:  4-...!: (1 ticks this GP) ... fqs=12
+   47.261  rcu:  5-...!: (1 GPs behind)   ... fqs=12
+   47.261  rcu:  (detected by 1, t=5252 jiffies, g=221, q=0 ncpus=8)
+   47.261  Sending NMI from CPU 1 to CPUs 4:
+   47.261  After 10 seconds, these CPUS still haven't responded to the NMI: 4
+   47.261  Sending NMI from CPU 1 to CPUs 5:
+   47.262  After 10 seconds, these CPUS still haven't responded to the NMI: 5
+   47.262  rcu: rcu_preempt kthread starved for 2381 jiffies!
+   47.262  [drm:dpu_encoder_frame_done_timeout] [dpu error]enc35 frame done timeout   <- FIRST
+   47.274  rcu: RCU grace-period kthread stack dump (rcu_preempt, state:R)
+   47.274  NMI backtrace for cpu 7: cpuidle_enter_state <- do_idle   (CPU 7 is fine)
+   62.437  BUG: workqueue lockup - pool cpus=4 node=0 nice=0 stuck for 55s!   <- since ~7.4 s
+   62.543  pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=10 idle: ...
+  111.456  [drm] vblank wait timed out on crtc 0
+  111.456  WARNING: drm_vblank.c:1329 at drm_crtc_wait_one_vblank, CPU#2: kworker/2:2/110
+   ...     the vblank/frame-done pair then repeats roughly every 1.14 s
+  357.395  BUG: workqueue lockup - pool cpus=4 node=0 stuck for 350s!   <- last line
+```
+
+## The message histogram for the whole boot
+
+```
+  15  Workqueue: events drm_fb_helper_damage_work
+  15  kworker/2:2  stuck in  drm_crtc_wait_one_vblank+0x390/0x3a4
+  15  [drm:dpu_encoder_frame_done_timeout] [dpu error]enc35 frame done timeout
+  15  msm_dpu ae01000.display-controller: [drm] vblank wait timed out on crtc 0
+  18     pending: vmstat_update
+   9     pending: blk_mq_timeout_work
+   9  pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1     <- stalled pool
+   9  pwq  7: cpus=1 node=0 flags=0x0 nice=-20 active=1   <- stalled pool
+   9  pwq  6: cpus=1 node=0 flags=0x0 nice=0 active=1     <- stalled pool
+  19  ------------[ cut here ]------------
+```
+
+## What this establishes
+
+**1. Two CPUs stop executing.** `After 10 seconds, these CPUS still haven't
+responded to the NMI: 4` and `: 5` is direct evidence at the CPU level, not an
+inference from a stalled task. CPU 7, by contrast, answers with an idle
+backtrace — so this is not a global freeze.
+
+**2. The stall begins at roughly 7 s, not at 47 s.** Three independent numbers
+agree: the journal has no entry between ~7.0 s and 37.2 s; the workqueue pool
+reports itself `stuck for 55s` at 62.437 s, i.e. since ~7.4 s; and the RCU grace
+period had been failing long enough to be reported at 37.2 s.
+
+**3. The DPU error is a consequence, not the cause — the documented chain is
+inverted here.** `docs/DPU_TRACE.md`, `docs/WATCHDOG_X710.md:22` and
+`rootfs-overlay/usr/libexec/gts9-power-key.c` all record the order as
+"`enc35 frame done timeout` → vblank wait timeout → workqueue lockup". In this
+boot the first `enc35 frame done timeout` is at **47.262 s**, roughly **40 s
+after** the wedge began. The DPU is doing what a victim does: `kworker/2:2` is
+parked in `drm_crtc_wait_one_vblank`, called from `drm_fb_helper_damage_work`, on
+a machine whose CPUs 4 and 5 are gone. This is exactly the trap the brief warns
+about — the worker that logs last is not the cause — and here it can be shown
+rather than asserted.
+
+It does **not** follow that the DPU has no bugs. It follows that in this boot the
+DPU messages cannot be read as the origin.
+
+**4. `drm_fb_helper_damage_work` and `vmstat_update` are victims too.** A per-CPU
+work item on a CPU that no longer runs anything sits `pending` forever; that is
+what `pending: vmstat_update` and the `pwq 18: cpus=4` / `pwq 6,7: cpus=1` stalls
+are.
+
+## What this does not establish
+
+* **Why CPUs 4 and 5 stop.** Nothing in this trace names a cause. There is no
+  panic, no SError, no PSCI error, no interrupt storm visible in it.
+* **That this is the same failure as the 6.2-6.5 s freezes** in the survey. Those
+  share the start time and the journal-stops-dead shape, but they reset ~37 s
+  later under the external watchdog, before an RCU stall could be reported, so
+  their journals contain no equivalent trace.
+* **That it still happens.** This boot is pre-fix. Across the 29 post-fix boots
+  that reached multi-user, none shows a `frame done timeout`, an RCU stall or a
+  workqueue lockup.

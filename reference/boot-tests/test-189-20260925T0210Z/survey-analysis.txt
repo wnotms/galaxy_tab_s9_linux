@@ -1,0 +1,26 @@
+boots in the journal: 89   reached multi-user: 75   too short to judge: 14
+  pre-fix  (reached multi-user and printed the ACD error): 46
+  post-fix (reached multi-user and did not):               29
+
+group       boots  orderly  no shutdown  freeze fingerprint
+pre-fix        46        1           45                   8
+post-fix       29       23            6                   2
+
+freeze-fingerprint boots (journal stops 5.5-8.0 s in, no shutdown):
+  pre-fix   idx= -54 9cc696d2 last=  6.432s  [    6.432061] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  pre-fix   idx= -53 fea80961 last=  6.340s  [    6.340127] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  pre-fix   idx= -52 207c18fa last=  6.548s  [    6.548021] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  pre-fix   idx= -51 980d1135 last=  6.951s  [    6.951116] gts9 systemd[1]: Startup finished in 1.565s (kernel) + 5.385s (
+  pre-fix   idx= -50 678f303a last=  7.001s  [    7.001178] gts9 systemd[1]: Startup finished in 1.562s (kernel) + 5.438s (
+  pre-fix   idx= -37 fd4589fa last=  6.056s  [    6.056051] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  pre-fix   idx= -35 8d7db274 last=  6.480s  [    6.480152] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  pre-fix   idx= -33 1084b57a last=  6.472s  [    6.472036] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  post-fix  idx= -29 1f85d97b last=  6.196s  [    6.196020] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+  post-fix  idx= -20 7f02df57 last=  6.476s  [    6.476015] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+
+every boot that printed a frame done timeout:
+  idx=-67 1c082657 dpu=15 acd=1 sd=0 last=357.395s
+
+orderly-ended boots, to show the contrast:
+  pre-fix: 1/46
+  post-fix: 23/29
