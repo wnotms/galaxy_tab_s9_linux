@@ -75,6 +75,25 @@ CONFIG_QCOM_AOSS_QMP=y
 # IPCC is also an interrupt controller, hence the IRQ_DOMAIN* / GENERIC_IRQ_CHIP
 # dependencies, which this fragment already satisfies.
 CONFIG_QCOM_IPCC=y
+# Qualcomm hardware mutex (TCSR). Upstream sm8550.dtsi gives the SMEM node a
+# hwlock from this provider:
+#     smem: smem@81d00000 { hwlocks = <&tcsr_mutex 3>; };
+# and the node itself is in the DTB (hwlock@1f40000, "qcom,tcsr-mutex"). Without
+# this symbol no driver binds to it, of_hwspin_lock_get_id() returns
+# -EPROBE_DEFER, and qcom_smem_probe() fails its own probe with
+#     platform 81d00000.smem: deferred probe pending: qcom-smem: failed to retrieve hwlock
+# That blocked four devices permanently on hardware (measured, 860 s uptime):
+#   81d00000.smem.qcom-smem: failed to retrieve hwlock
+#   smp2p-adsp.qcom_smp2p: unable to allocate local smp2p item
+#   smp2p-cdsp.qcom_smp2p: unable to allocate local smp2p item
+#   smp2p-modem.qcom_smp2p: unable to allocate local smp2p item
+#   -> 6800000.remoteproc.platform: wait for supplier /smp2p-adsp/slave-kernel
+# i.e. an uninitialised SMEM cascades into the smp2p devices and then into the
+# ADSP remoteproc. X910 sets this (config-mainline.aarch64: CONFIG_HWSPINLOCK_QCOM=y);
+# X710 had neither it nor CONFIG_HWSPINLOCK_OMAP. CONFIG_HWSPINLOCK alone is not
+# enough - it is the provider that must bind.
+CONFIG_HWSPINLOCK=y
+CONFIG_HWSPINLOCK_QCOM=y
 CONFIG_INTERCONNECT=y
 CONFIG_INTERCONNECT_QCOM=y
 CONFIG_INTERCONNECT_QCOM_SM8550=y

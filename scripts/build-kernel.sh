@@ -89,6 +89,13 @@ required=(
     # PMIC at all on this board (card detect, RTC, ADC), and usb@a600000 cannot
     # resolve its phy interrupts either.
     CONFIG_QCOM_PDC
+    # The SMEM node takes its hwlock from the Qualcomm TCSR mutex provider. With
+    # the provider missing, qcom_smem_probe() defers forever ("failed to retrieve
+    # hwlock") and that cascades into the smp2p devices ("unable to allocate
+    # local smp2p item") and then into the ADSP remoteproc, which waits on
+    # /smp2p-adsp/slave-kernel. CONFIG_HWSPINLOCK alone is not enough: it is the
+    # provider that must bind to hwlock@1f40000.
+    CONFIG_HWSPINLOCK_QCOM
     # Reboot-mode support: the SDAM cell comes from SPMI and the driver turns
     # the reboot command string into the value ABL reads.
     CONFIG_NVMEM_SPMI_SDAM CONFIG_NVMEM_REBOOT_MODE
