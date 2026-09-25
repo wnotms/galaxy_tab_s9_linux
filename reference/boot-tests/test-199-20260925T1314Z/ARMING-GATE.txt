@@ -1,0 +1,17 @@
+run=test-199-rpmh-debug
+gate_run_at=2026-09-25T13:22:47Z
+boot_id=1013c7f9
+flashed_vendor_boot=f5ff011ab0d78c0e4458e69a44bcaff6e35934571213cc3dc90416b5821a890d
+unchanged_boot=dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+--- single variable: one token from baseline ---
+cmdline_rpmh_debug=1
+cmdline_skip_gpu=0
+--- the switch is LIVE (consumed, absent from the unknown list) ---
+unknown_list= gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_watchdog_debug=1 sapa=0
+rpmh_debug_in_unknown_list=0
+--- so this is NOT an ablation: the GPU is present ---
+gpu_driver=adreno
+--- and the A/B tokens are absent, as the rule requires ---
+msm_disable_acd=0
+deferred_probe_timeout_300=0
+cpuidle_off=0

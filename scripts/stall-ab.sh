@@ -112,7 +112,7 @@ usage() {
 	cat >&2 <<'EOF'
 usage: stall-ab.sh PROFILE ROUNDS
        stall-ab.sh --summary
-PROFILE is one of: baseline, no-acd, no-gpu, late-deferred
+PROFILE is one of: baseline, no-acd, no-gpu, late-deferred, rpmh-debug
 EOF
 	exit 2
 }
@@ -218,11 +218,18 @@ if [ "${1:-}" = "--summary" ]; then
 fi
 
 PROFILE=${1:-}; ROUNDS=${2:-5}
-case "$PROFILE" in baseline|no-acd|no-gpu|late-deferred) ;; *) usage ;; esac
+case "$PROFILE" in baseline|no-acd|no-gpu|late-deferred|rpmh-debug) ;; *) usage ;; esac
 case "$ROUNDS" in ''|*[!0-9]*) usage ;; esac
 [ "$ROUNDS" -ge 1 ] || usage
 
-CMDLINE=$REPO/boot/cmdline.stall-ab-$PROFILE.example.txt
+# Most profiles are named `cmdline.stall-ab-<profile>.example.txt`, but the RPMh
+# one predates this harness and two documents already reference
+# `cmdline.rpmh-debug.example.txt`.  Resolve the exception rather than renaming a
+# file other records point at.
+case "$PROFILE" in
+rpmh-debug) CMDLINE=$REPO/boot/cmdline.rpmh-debug.example.txt ;;
+*)          CMDLINE=$REPO/boot/cmdline.stall-ab-$PROFILE.example.txt ;;
+esac
 [ -f "$CMDLINE" ] || die "missing profile file: $CMDLINE"
 
 # The A/B must not silently run the wrong profile: the token that distinguishes
@@ -240,6 +247,14 @@ case "$PROFILE" in
 		grep -q 'msm.skip_gpu=1' "$CMDLINE" || die "no-gpu profile lacks msm.skip_gpu=1"
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "no-gpu must not carry msm.disable_acd"
 		grep -q 'deferred_probe_timeout' "$CMDLINE" && die "no-gpu must not carry deferred_probe_timeout" ;;
+	rpmh-debug)
+		# A diagnostic profile, not an ablation: it must carry the switch and must
+		# NOT carry any A/B token, because the decision rule forbids mixing them
+		# and its numbers are not comparable to the A/B series.
+		grep -q 'gts9_rpmh_debug=1' "$CMDLINE" || die "rpmh-debug profile lacks gts9_rpmh_debug=1"
+		for forbidden in msm.skip_gpu msm.disable_acd deferred_probe_timeout cpuidle.off; do
+			grep -q "$forbidden" "$CMDLINE" && die "rpmh-debug must run alone: it carries $forbidden"
+		done ;;
 	late-deferred)
 		grep -q 'deferred_probe_timeout=300' "$CMDLINE" || die "late-deferred profile lacks deferred_probe_timeout=300"
 		grep -q 'msm.skip_gpu' "$CMDLINE" && die "late-deferred must not carry msm.skip_gpu"
@@ -248,7 +263,15 @@ esac
 grep -q 'msm.separate_gpu_kms=1' "$CMDLINE" || die "every profile keeps msm.separate_gpu_kms=1"
 grep -q 'gts9_watchdog_debug=1' "$CMDLINE" || die "every profile keeps the watchdog detectors"
 grep -q 'console=ttyGS1' "$CMDLINE" || die "every profile keeps the ttyGS1 kernel console"
-for forbidden in gts9_kmsg_mirror gts9_dpu_flight gts9_rpmh_debug gts9_poweroff_trace; do
+# The observer-effect rule: an A/B profile must not carry instrumentation that
+# changes what it measures.  `rpmh-debug` is not an A/B profile - it *is* the
+# instrumentation - so the switch is allowed there and nowhere else, which is
+# exactly what makes its numbers non-comparable to the A/B series.
+observer_forbidden='gts9_kmsg_mirror gts9_dpu_flight gts9_rpmh_debug gts9_poweroff_trace'
+if [ "$PROFILE" = rpmh-debug ]; then
+	observer_forbidden='gts9_kmsg_mirror gts9_dpu_flight gts9_poweroff_trace'
+fi
+for forbidden in $observer_forbidden; do
 	grep -q "$forbidden" "$CMDLINE" && die "$forbidden must be absent from an A/B profile (observer effect)"
 done
 
