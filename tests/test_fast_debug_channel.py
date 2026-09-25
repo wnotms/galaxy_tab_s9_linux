@@ -397,6 +397,18 @@ class LiveWedgeTests(unittest.TestCase):
         self.assertIn("must not reuse capture filenames", text)
         self.assertIn("wedge-capture-20260925T0337-wedged-boot.log", text)
 
+    def test_the_account_excludes_adbd_as_the_primary_cause(self):
+        """10 of 11 wedge boots predate adbd entirely; say so before the result."""
+        text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
+        self.assertIn("cannot be the *primary* cause", text)
+        self.assertIn("pre-fix boots, from long before `adbd` was installed", text)
+        self.assertIn("would not show that `adbd` explains the pre-fix 22%", text)
+
+    def test_the_account_records_the_window_margin(self):
+        text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
+        self.assertIn("marginal, not comfortable", text)
+        self.assertIn("**300 s is the honest number", text)
+
     def test_the_hunt_window_is_settable_and_the_run_uses_200(self):
         """60 s missed the panic; the window has to be raisable without editing."""
         text = read("reference/boot-tests/test-190-20260925T0400Z/wedge-hunt.sh")
