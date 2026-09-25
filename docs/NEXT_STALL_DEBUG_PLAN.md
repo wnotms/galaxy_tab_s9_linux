@@ -330,10 +330,21 @@ device's pmsg holds the same string.
   instrument — including the 88-boot survey the rate table is computed from.
 * **Is the panel photo's boot the same as any recorded failure?** Its boot id is
   unrecoverable; the sequence is real but nothing binds it to a round or kernel.
-* **What is a real wedge's earliest invisible event?** test-195's first abnormal
-  line is the handled DPU early-return at 4.787 s, which fires on every boot; the
-  RCU stall at 28.839 s is the first *discriminating* event, ~20 s later. The gap
-  is unobserved. test-192's `loglevel=7` profile exists, unflashed.
+* **What is a real wedge's earliest invisible event, now bracketed to ~1.3 s?**
+  The onset is **~6.5-7.8 s** by two independent timers (test-195 and test-197,
+  subtracting the 26 s soft-lockup duration and the 21.02 s RCU stall timeout),
+  and **nothing is logged there**. test-197's kernel ring holds exactly two
+  messages between 4.6 s and 29 s - both userspace stage markers at 6.52 s and
+  6.88 s - and a clean round's window is equally quiet, so the window's contents
+  do not discriminate. test-192's `loglevel=7` profile exists, unflashed, and it
+  is now the cheapest way to see whether anything is printed between those two
+  stage markers and the RCU stall.
+* **Do the three old markers matter at all on this kernel?** `frame done timeout`,
+  `mmc1: Timeout` and `AMC RPMH` are absent from both wedges captured on the
+  flashed kernel, after being present in 3 of 3 older records. Either the older
+  association belonged to the pre-`epss_l3` kernel, or it was an artefact of
+  reading a flood of DPU messages as a sequence. `PHOTO-EVIDENCE-TABLE.md` shows
+  the old records had a 15-event frame-done *flood*; the new ones have none.
 * **Is the RPMh timeout a cause or a victim?** §6b of the lifetime analysis: the
   10 s arithmetic fits 04:57Z (implied vote 14.804 s, consistent with the 14.31 s
   deferred-probe burst) and **does not** fit 06:00Z or 06:59Z — one of three. And
@@ -345,9 +356,12 @@ device's pmsg holds the same string.
 
 ## NEXT PHYSICAL TEST
 
-**1. Baseline sanity run with the fixed harness.** No flash needed. Confirm the
-identity marker, the verdict field and the repaired restart detector over several
-consecutive rounds. Stop and preserve on the first `verdict=wedge`.
+**1. Baseline sanity run with the fixed harness — DONE (test-197).** No flash
+needed. The identity marker, the verdict field and the repaired restart detector
+all worked: 3 rounds `verdict=clean` with `presence_outages=1`, then round 4
+`verdict=wedge` with `presence_outages=2`, evidence preserved automatically and the
+series stopped itself. Two wedges are now on record from this harness
+(test-195, test-197) plus test-193's five clean rounds.
 
 **2. Profile C: `msm.skip_gpu=1`** — the strongest available subsystem ablation,
 one `vendor_boot` flash. Before trusting any round, confirm on the device:
