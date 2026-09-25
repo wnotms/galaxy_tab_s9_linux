@@ -760,5 +760,180 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("not applied", text.lower())
 
 
+class ConsoleHostTests(unittest.TestCase):
+    """The console helpers must run from the checkout's own host.
+
+    Every harness used to call `powershell -File scripts/console-*.ps1`, which
+    cannot work here: the checkout lives inside WSL and PowerShell refuses to run
+    a script by UNC path.  A helper that cannot be invoked from this host is a
+    harness that can only be driven by hand, so this is pinned.
+    """
+
+    SHIMS = ("scripts/console-run.sh", "scripts/console-watch.sh")
+    LIB = "scripts/ps-host.sh"
+
+    def test_the_front_ends_exist_and_are_executable(self):
+        for rel in self.SHIMS:
+            with self.subTest(rel=rel):
+                path = ROOT / rel
+                self.assertTrue(path.is_file(), rel)
+                self.assertTrue(path.stat().st_mode & 0o111, f"{rel} not executable")
+
+    def test_the_library_handles_both_host_quirks(self):
+        text = read(self.LIB)
+        # -File cannot take a UNC path, so the .ps1 is staged.
+        self.assertIn("gts9_ps_stage", text)
+        # -File binds an array parameter to one value, so -Command is used.
+        self.assertIn("-Command", text)
+        self.assertIn("gts9_ps_array", text)
+        # Windows proper must keep working.
+        self.assertIn("gts9_ps_in_wsl", text)
+
+    # The live harnesses.  Retired test directories (test-181..test-184) are
+    # historical records of runs that already happened and are deliberately not
+    # rewritten - they are evidence, not tooling.
+    LIVE = (
+        "scripts/stall-ab.sh",
+        "scripts/flash-boot.sh",
+        "reference/boot-tests/test-187-20260924T1540Z/reboot-rounds.sh",
+        "reference/boot-tests/test-187-20260924T1540Z/warm-rounds.sh",
+        "reference/boot-tests/test-187-20260924T1540Z/shutdown-capture.sh",
+        "reference/boot-tests/test-187-20260924T1540Z/cold-boot-capture.sh",
+        "reference/boot-tests/test-188-20260925T0115Z/shutdown-series.sh",
+    )
+
+    def test_no_live_script_calls_powershell_at_the_ps1_directly(self):
+        """Only the library may name the .ps1 files as -File targets."""
+        offenders = []
+        for rel in self.LIVE:
+            for i, line in enumerate(read(rel).splitlines(), 1):
+                if "-File" in line and ".ps1" in line:
+                    offenders.append(f"{rel}:{i}")
+        self.assertEqual(offenders, [], f"direct -File .ps1 calls: {offenders}")
+
+    def test_the_harnesses_use_the_front_ends(self):
+        for rel in self.LIVE:
+            with self.subTest(rel=rel):
+                self.assertIn("scripts/console-run.sh", read(rel))
+
+
+class WorkqueueMetricTests(unittest.TestCase):
+    """A stall metric that can never read 0 is not a metric.
+
+    `journalctl -b -k` prints the `Kernel command line:` line, and this board's
+    command line carries `workqueue.panic_on_stall_time=45`.  A `grep -c
+    "workqueue.*stall"` therefore matched the command line itself and returned 1
+    on every boot, clean or not.  Verified on the device: OLDWQ=1, NEWWQ=0.
+    """
+
+    RUNNERS = (
+        "reference/boot-tests/test-187-20260924T1540Z/warm-rounds.sh",
+        "reference/boot-tests/test-188-20260925T0115Z/shutdown-series.sh",
+    )
+
+    def test_no_runner_still_uses_the_false_positive_pattern(self):
+        for rel in self.RUNNERS:
+            with self.subTest(rel=rel):
+                self.assertNotIn('grep -c "workqueue.*stall"', read(rel))
+
+    def test_the_runners_match_the_real_stall_banner(self):
+        # drivers/..; kernel/workqueue.c prints this from wq_watchdog_timer_fn().
+        for rel in self.RUNNERS:
+            with self.subTest(rel=rel):
+                self.assertIn("BUG: workqueue lockup", read(rel))
+
+    def test_the_journal_counts_exclude_the_command_line(self):
+        for rel in self.RUNNERS:
+            with self.subTest(rel=rel):
+                text = read(rel)
+                self.assertIn('grep -v "Kernel command line"', text)
+
+
+class SMMUFaultAttributionTests(unittest.TestCase):
+    """The earliest abnormal event must be attributed by SID, not by timing."""
+
+    DOC = "docs/EARLY_SMMU_CONTEXT_FAULTS.md"
+
+    def test_the_doc_names_the_stream_and_its_owner(self):
+        text = read(self.DOC)
+        self.assertIn("SID=0x1c00", text)
+        self.assertIn("mdss: display-subsystem@ae00000", text)
+        self.assertIn("qcom,sm8550-mdss", text)
+
+    def test_it_corrects_the_adsp_attribution(self):
+        text = read(self.DOC)
+        self.assertIn("HWSPINLOCK-FIX-RESULT.md", text)
+        self.assertIn("the attribution is wrong", text)
+        self.assertIn("not the ADSP", text)
+
+    def test_it_does_not_claim_the_failing_boots_had_them(self):
+        """The two failure archives were rotated out; no claim may be made."""
+        text = read(self.DOC)
+        self.assertIn("no claim is made", text.lower())
+        self.assertIn("rotated out", text)
+
+    def test_the_retained_archive_counts_are_recorded(self):
+        text = read(self.DOC)
+        # The measured per-boot counts, so the variability claim is checkable.
+        for count in ("`1084b57a`", "`9e3bde71`", "`cd04c0ef`"):
+            with self.subTest(count=count):
+                self.assertIn(count, text)
+
+
+class Test188SeriesTests(unittest.TestCase):
+    """test-188 repeats the shutdown series on the post-hwspinlock kernel."""
+
+    TESTDIR = "reference/boot-tests/test-188-20260925T0115Z"
+
+    def test_the_runner_exists_and_is_executable(self):
+        path = ROOT / f"{self.TESTDIR}/shutdown-series.sh"
+        self.assertTrue(path.is_file())
+        self.assertTrue(path.stat().st_mode & 0o111)
+
+    def test_it_requires_explicit_permission_to_reboot(self):
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        self.assertIn("GTS9_ALLOW_POWER", text)
+        self.assertIn('if [ "$ALLOW" != "1" ]', text)
+
+    def test_it_never_flashes_or_writes_a_partition(self):
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        for forbidden in ("fastboot", "dd if=", "flash ", "avbtool", "mkbootimg"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, text)
+
+    def test_it_requires_a_command_result_not_an_echo(self):
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        self.assertIn("GTS9_ALIVE_", text)
+        self.assertIn("echo-only", text)
+
+    def test_it_records_the_new_per_boot_facts(self):
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        for key in ("CTXFAULTS", "CTXSID", "ADSP"):
+            with self.subTest(key=key):
+                self.assertIn(key, text)
+
+    def test_it_labels_every_cycle_as_a_warm_reboot(self):
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        self.assertIn("kind=warm-reboot", text)
+        self.assertNotIn("kind=cold-boot", text)
+
+    def test_it_does_not_overwrite_the_test_187_series(self):
+        """A second series must not clobber the 16 cycles it is extending."""
+        text = read(f"{self.TESTDIR}/shutdown-series.sh")
+        self.assertIn("$D/shutdown-$i-verdict.txt", text)
+        self.assertNotIn("test-187-20260924T1540Z", text)
+
+    def test_the_readme_records_the_adsp_shutdown_audit(self):
+        text = read(f"{self.TESTDIR}/README.md")
+        self.assertIn("RPROC_RUNNING", text)
+        self.assertIn("reboot notifier", text)
+        self.assertIn("state=offline", text)
+
+    def test_the_readme_keeps_the_no_prefix_rate_caveat(self):
+        text = read(f"{self.TESTDIR}/README.md")
+        self.assertIn("no pre-fix rate", text)
+        self.assertIn("warm reboot", text)
+
+
 if __name__ == "__main__":
     unittest.main()
