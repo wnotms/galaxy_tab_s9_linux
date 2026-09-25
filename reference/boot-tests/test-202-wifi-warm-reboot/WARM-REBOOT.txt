@@ -1,0 +1,68 @@
+=== test-202: WARM REBOOT with modules installed, no manual modprobe ===
+recorded=2026-04-13T19:54:46Z
+boot_id=b6d53197-c756-4196-bc92-9779a7bf1d0f
+uptime=1002.95
+kernel=7.2.0-rc3-gts9wifi-dirty
+
+--- modules: autoloaded, or did anything need modprobe? ---
+modules_installed=167
+pci_pwrctrl_pwrseq=1
+pwrseq_qcom_wcn=1
+ath11k=0
+
+--- binding ---
+wifi0_driver=pci-pwrctrl-pwrseq
+pmu_driver=pwrseq-qcom_wcn
+pcie_driver=qcom-pcie
+phy_driver=qcom-qmp-pcie-phy
+
+--- deferred ---
+aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+
+--- PCI ---
+pci_count=1
+pci_dev 0000:00:00.0 0x17cb:0x0113 class=0x060400
+link_status=0x0142
+dllla_bit13=0
+current_link_speed=2.5 GT/s PCIe
+current_link_width=1
+max_link_speed=8.0 GT/s PCIe
+endpoint_0100_present=NO
+
+--- GPIO (TLMM gpiochip3) ---
+ gpio80  : out high func0 16mA pull up
+ gpio81  : out low  func0 16mA no pull
+ gpio82  : in  high func0 2mA pull down
+ gpio94  : out high func0 2mA pull down
+ gpio95  : in  low  func1 2mA pull up
+ gpio96  : in  high func0 2mA pull up
+ gpio204 : out low  func0 2mA pull down
+
+--- PMU input rails ---
+rail vreg_l15b_1p8 state=enabled
+rail vreg_s2g_1p012 state=enabled
+rail vreg_s5g_0p966 state=enabled
+rail vreg_s4e_0p952 state=enabled
+rail vreg_s4g_1p352 state=enabled
+rail vreg_s6g_1p904 state=enabled
+pmu_internal_rails_registered=0
+
+--- wireless ---
+ath11k_loaded=0
+wireless_phys=0
+wlans=0
+bluetooth=hci0,
+
+--- pcie dmesg ---
+[    1.474628] [     T91] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.385642] [     T92] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    4.385686] [     T92] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    4.385739] [     T92] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    4.385745] [     T92] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    4.385749] [     T92] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.577226] [     T92] qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[    5.535313] [     T92] qcom-pcie 1c00000.pcie: Device not found
+[    5.535483] [     T92] qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
+[    5.535574] [     T92] pci 0000:00:00.0: [17cb:0113] type 01 class 0x060400 PCIe Root Port
+[    5.539016] [     T92] pcieport 0000:00:00.0: PME: Signaling with IRQ 205
+[    5.539199] [     T92] pcieport 0000:00:00.0: AER: enabled with IRQ 205

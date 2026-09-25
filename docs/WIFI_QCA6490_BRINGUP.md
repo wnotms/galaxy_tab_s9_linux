@@ -117,9 +117,6 @@ patch to bypass board matching.
 
 ## 6. Current state
 
-**`PCI_ONLY` is not yet reached.** The scale below is the only one that counts as
-progress; "module loaded" is not on it.
-
 | level | state |
 |---|---|
 | `PCI_ONLY` — `17cb:1103` visible in `lspci` | **NOT REACHED** |
@@ -130,106 +127,126 @@ progress; "module loaded" is not on it.
 | `ASSOCIATION_WORKS` | not reached |
 | `NETWORK_STABLE` | not reached |
 
-## 7. Remaining problems
+What *was* reached is not on that scale and must not be confused with it: the PCIe
+**host** now probes successfully and a root complex enumerates. That is a
+prerequisite for LEVEL 1, not LEVEL 1.
 
-### 7.1 No kernel modules are installed on the tablet — the blocking defect
+## 7. Cold/warm boot result
 
-This is the single cause of the `STATE A` result, and it is a build/packaging
-defect rather than a driver or device-tree problem.
+**Warm reboot measured; cold boot not yet measured.** The two are never merged.
 
-* `/lib/modules/$(uname -r)` does not exist on the tablet. **Zero** `.ko` files.
-* `out/kernel-gts9wifi/` — the build whose `Image.gz` (`df00c53c…`) is the flashed
-  one — had **no `modules-root` at all**: the last build ran with
-  `BUILD_MODULES=0`.
-* The only module tree in the repository belonged to
-  `out/kernel-poweroff-trace/`, a *different* kernel (`2cfe9793…`) built two days
-  earlier. It could not have been used even if someone had tried.
-* So `CONFIG_ATH11K=m`, `CONFIG_PCI_PWRCTRL_PWRSEQ=m` and
-  `CONFIG_POWER_SEQUENCING_QCOM_WCN=m` were satisfied **on paper only**: the
-  symbols resolve, the `.ko` files did not exist anywhere.
+| | warm reboot, modules installed |
+|---|---|
+| modules autoloaded at boot | **yes** (`pci-pwrctrl-pwrseq`, `pwrseq-qcom-wcn`) |
+| `wifi@0` bound during boot, no manual modprobe | **yes** |
+| `devices_deferred` | only `aux_bridge` |
+| PCI devices | 1 — `0000:00:00.0` `17cb:0113` (root complex) |
+| `17cb:1103` | **absent** |
+| Link Status `DLLLA` (bit 13) | **0 — link down**, unchanged by `rescan` |
 
-Rebuilt with `USE_CCACHE=1 ARCH=arm64 LLVM=1 BUILD_MODULES=1 ./scripts/build-kernel.sh`.
-167 modules now exist under `out/kernel-gts9wifi/modules-root/`, including
-`ath11k_pci.ko`, `pci-pwrctrl-pwrseq.ko`, `pwrseq-qcom-wcn.ko`, `cfg80211.ko`,
-`mac80211.ko`, `ath.ko` and `qrtr-mhi.ko`. Their vermagic is
-`7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64`, matching
-the flashed kernel exactly, and `modules.alias` contains
+Reading config space of `01:00.0` fails outright (`No devices selected`). So the
+warm path reaches "host ready, link down", and a cold power-on has **not** been
+tested. Per the round's rule, the warm result is not evidence about cold.
 
-```
-alias of:N*T*Cpci17cb,1103 pci_pwrctrl_pwrseq
-```
+## 8. Remaining problems
 
-which is precisely the modalias the tablet reports for the unbound device
-(`of:NwifiT(null)Cpci17cb,1103`).
+### 8.1 The endpoint does not come up, and the fault is on its side of a link the host finished setting up
 
-**No new kernel image is needed.** The DTB is byte-identical to the flashed one
-(`b3e068e7…`). The freshly built `Image.gz` differs only by the build timestamp,
-and must **not** be flashed: staging the modules into the existing kernel is the
-whole fix.
+Everything the host owns has been verified working, live:
 
-### 7.2 The exact deferral, for the record
+| item | measured |
+|---|---|
+| PCIe controller `1c00000.pcie` | probed successfully, bound, no longer deferred |
+| PHY `1c06000.phy` | bound to `qcom-qmp-pcie-phy` |
+| GDSCs | `pcie_0_gdsc`, `pcie_0_phy_gdsc` present |
+| pinmux | `gpio94` out high (PERST released), `gpio95` func1 (`pcie0_clk_req_n`), `gpio96` in high (WAKE) |
+| root port | `17cb:0113`, class `0x060400`, windows + BAR0 assigned, PME/AER IRQ 205 |
 
-Because it is easy to mistake for a link-training failure, the chain is:
+And the endpoint power sequence ran:
 
-1. `pci_pwrctrl_is_required()` accepts any child whose compatible starts with
-   `"pci"` and which declares a `-supply`, so `wifi@0` becomes a platform device.
-2. The driver for it is `pci-pwrctrl-pwrseq`, matched on `pci17cb,1103`.
-3. `pci_pwrctrl_power_on_device()`:
-   ```c
-   } else {
-           /* FIXME: Use blocking wait instead of probe deferral */
-           ret = -EPROBE_DEFER;
-   }
-   ```
-4. `qcom_pcie_host_init()` propagates, `dw_pcie_host_init()` fails, and
-   `dev_err_probe()` prints nothing for `-EPROBE_DEFER`.
+| item | measured |
+|---|---|
+| `wifi@0` driver | `pci-pwrctrl-pwrseq` |
+| `wcn6855-pmu` driver | `pwrseq-qcom_wcn` |
+| `WLAN_EN` `gpio80` | **out high** |
+| `PERST` `gpio94` | **out high** (active-low, so out of reset) |
+| `XO_CLK` `gpio204` | out low, i.e. deasserted *after* enable — matches the driver's `post_enable` hook |
+| PMU input rails | `vreg_s2g_1p012`, `vreg_s5g_0p966`, `vreg_s4e_0p952`, `vreg_s4g_1p352`, `vreg_s6g_1p904` all **enabled** |
+| pwrseq wiring | consumer `platform:1c00000.pcie:pcie@0:wifi@0`, supplier `platform:17a00000.rsc:regulators-0` |
 
-Hence dmesg shows the controller starting five times and stopping after
-`host bridge ... ranges:` with no error, and the device lands in
-`devices_deferred` instead. It is a **missing module**, not a broken link.
+So power, reset, clock and pinmux are all applied and the link is still down. The
+remaining fault is in the endpoint/PMU interaction, not in the host controller.
 
-### 7.3 What must still be verified after the modules load
+### 8.2 The board DTS matches upstream mainline exactly — so this is not a DTS bug
 
-Cold-boot versus warm-boot bring-up. The board DTS records that after a cold
-handoff the QCA6490 PMU may not complete power-up without correct PDC/AOP votes,
-and those votes are present but have never been exercised on this port. A warm
-boot succeeding will not be reported as "cold boot fixed"; both will be measured
-separately.
+`wcn6855_pmu`, `&pcie0`, `&pcieport0`/`wifi@0`, `&pcie0_phy`, `pcie0_default_state`
+and `pmk8550_sleep_clk` were diffed against
+`.work/linux-mainline/arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dts` — the
+tree **already carries an upstream gts9wifi DTS** — and they are identical apart
+from comments. `wifi@0` is byte-identical. There is therefore no DTS change to make
+on this evidence, and making one would be guessing.
 
-### 7.4 Explicitly out of scope this round
+### 8.3 Two properties in the DTS are inert on mainline
 
-* **Bluetooth.** `uart14` / `qcom,wcn6855-bt` shares the PMU with WLAN, so
-  bringing up `hci_qca` at the same time would make a PMU or shared-rail fault
-  impossible to attribute. Wi-Fi first, BT in its own round.
-* **suspend/resume.** Recorded only; no PM change is being made for it.
-* **The CPU wedge.** Untouched. No stall record was added, removed or
-  reclassified, no stall rate is computed here, and no Wi-Fi reboot is counted in
-  any A/B series. If a wedge appears during Wi-Fi work it is filed as
-  `wifi-bringup incidental wedge` with its evidence preserved, and the co-occurrence
-  of a PCIe probe or a firmware load is **not** treated as causation — the baseline
-  wedges on its own, so only a single-variable A/B could speak to it, and this
-  round does not run one.
+* **`qcom,wlan-pdc-init` and `qcom,qmp`** — a search of the entire pinned tree finds
+  them **only in the DTS**; no driver reads either. They are kept, because the
+  comment explains they are what a cold handoff needs and upstream's own comment
+  says the same, but on mainline those AOP votes must come from the boot chain or
+  not at all. Upstream's comment records the exact symptom seen here: *"the PMU
+  never completes power-up without these votes: PCIe trains only after the bus scan,
+  so ath11k never sees the endpoint"*.
+* **`swctrl-gpios` (gpio82)** — consumed by no WLAN driver. Mainline's `hci_qca.c`
+  reads a `swctrl` property, so this pin belongs to **Bluetooth**, not WLAN.
 
-## 8. Exact next physical test
+### 8.4 Bluetooth shares the PMU and is running
 
-**Stage the modules into the running Debian and re-probe. No flash, no reboot
-required to start.**
+`hci0` exists and `hci_qca` powers the shared chip through the **same**
+`pwrseq-qcom-wcn` device, via `devm_pwrseq_get(..., "bluetooth")` and
+`pwrseq_power_on()`. Both targets share the `vregs` + `clk` + `xo-clk-assert`
+dependencies and differ only in the final enable GPIO. This is a real confound for
+attribution and is exactly why the round forbids bringing up BT at the same time;
+it has not been disabled, and doing so is a candidate experiment, not a change made
+here.
 
-1. Install `out/kernel-gts9wifi/modules-root/lib/modules/7.2.0-rc3-gts9wifi-dirty/`
-   to `/lib/modules/7.2.0-rc3-gts9wifi-dirty/` on the tablet, then `depmod -a`.
-2. `modprobe pci-pwrctrl-pwrseq` (the specific missing link), then
-   `modprobe pwrseq-qcom-wcn`, then re-read
-   `/sys/bus/pci/devices/` and `lspci -nn`.
-3. If `17cb:1103` appears: `modprobe ath11k_pci`, then capture `dmesg -T` and the
-   firmware paths it actually requests — that output, not this document, is what
-   decides `hw` revision and board file.
-4. If it does not appear, read `devices_deferred` and the PHY/GDSC state before
-   touching anything else, and treat it as a power-sequencing problem (§5 of the
-   round plan), not an ath11k problem.
+### 8.5 The stale-boot artifact is gone
 
-The expected outcome is that the pwrctrl device binds, PCIe finishes probing, and
-the endpoint enumerates — reaching `PCI_ONLY`. Whether the endpoint then needs
-`vddpe-3v3`/`vdda` supplies that this board does not declare is the first thing to
-watch: the driver currently logs `supply vdda not found, using dummy regulator`
-and `vddpe-3v3 not found`, and a dummy regulator is adequate for enumeration but
-would not be for a real power-on.
+test-200/201 ran on a boot that had probed PCIe eight times *before* the modules
+existed. The reboot in §7 clears that: the current state is what a normal boot
+produces.
+
+### 8.6 Explicitly out of scope and untouched
+
+* **Bluetooth** — not developed this round.
+* **suspend/resume** — recorded only, no PM change.
+* **The CPU wedge** — no stall record added, removed or reclassified; no rate
+  computed; no Wi-Fi reboot counted in any A/B series. Nothing in these results
+  claims anything about it.
+
+## 9. Exact next physical test
+
+The next test is chosen to discriminate between two hypotheses that the current
+evidence cannot separate, and it needs no code change and no build:
+
+1. **Cold power-on versus warm reboot.** The DTS comment (and upstream's) says a
+   cold handoff is where the PMU fails to complete power-up when the PDC/AOP votes
+   are absent — and mainline implements no such votes (§8.3). Warm boot is now
+   measured and fails; a **full poweroff then power-on** is the untested half. Do
+   not merge the two results.
+2. **Whether the endpoint needs the PMU's *internal* LDOs.** The nine
+   `vreg_pmu_*` rails are declared in the `regulators { }` child of `wcn6855-pmu`
+   and referenced by `wifi@0` and the BT node — but **no mainline driver registers
+   them**, so they appear as zero entries in `/sys/class/regulator`. If the
+   endpoint's `vddpcie0p9`/`vddpcie1p8` really come from those internal LDOs, they
+   are not being enabled. This is the strongest remaining structural hypothesis.
+
+Order: power off fully, power on, and immediately run
+`scripts/wifi-preflight.sh --save reference/boot-tests/test-<N>-wifi-cold/`. Read
+the same table as §8.1. Then, if the link is still down, test hypothesis 2 by
+checking whether the internal rails can be modelled as `regulator-fixed` from
+always-on parents — that is a DTS change and needs its own authorization, and it
+must be justified by evidence rather than tried as a guess.
+
+If `17cb:1103` ever appears, move immediately to `modprobe ath11k_pci` and capture
+the firmware paths **it** requests; that output, not this document, decides the
+`hw` revision and board file.
+
