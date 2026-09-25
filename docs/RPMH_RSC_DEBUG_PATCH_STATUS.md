@@ -125,6 +125,56 @@ applied this round.
    `panic_on_warn` semantics are identical to the A/B baseline.
 5. Build, then run profile E with the detector set unchanged.
 
+## 5a. The local switch is already compiled into the running kernel (round 28)
+
+This changes the cost of getting timeout-state evidence, so it is worth stating
+plainly: **no backport is needed to ask the §15 questions.** `0021` is an opt-in
+`early_param`, and it is present in the kernel the tablet is running right now.
+
+Verified three ways, none of which depends on reading the patch:
+
+```
+$ zcat out/kernel-gts9wifi/Image.gz | strings -a | grep -E 'gts9_rpmh_debug'
+gts9_rpmh_debug_enabled
+gts9_rpmh_debug_setup
+gts9_rpmh_dump_timeout
+gts9_rpmh_debug
+
+$ sha256sum out/kernel-gts9wifi/Image.gz
+df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f
+$ grep image_gz_sha256 out/boot-bundle-test191-osm-l3/BUNDLE_INFO
+image_gz_sha256=df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f
+```
+
+The image that carries the strings is byte-for-byte the image in the flashed
+bundle. The switch is registered as
+
+```c
+early_param("gts9_rpmh_debug", gts9_rpmh_debug_setup);
+```
+
+so it is **command-line only** - there is deliberately no
+`/sys/module/*/parameters/gts9_rpmh_debug` on the device, and its absence is not
+a missing feature.
+
+`boot/cmdline.rpmh-debug.example.txt` already carries `gts9_rpmh_debug=1`, and
+`out/boot-bundle-rpmh-debug/vendor_boot.img` already embeds it, so a
+timeout-state run is a cmdline-only flash of `vendor_boot`.
+
+**Where this sits in the brief's priority order.** The brief ranks *existing
+kernel diagnostic switch* above *official Qualcomm debug patch* and puts
+self-designed instrumentation last. `0021` is self-designed - but it is already
+compiled into the running kernel, inert without the flag, and costs nothing to
+use. That is not designing new instrumentation; it is using an asset that
+exists. The Qualcomm v4 series stays the fallback for the fields §6 lists as
+missing from 0021 (resource name, TCS command-status bits, AMC mode, GIC pending
+state) - and those are exactly the fields that separate class A from class B.
+
+**It must not be enabled during an A/B round.** The three cmdline profiles forbid
+`gts9_rpmh_debug` by name because of the observer effect, and the ring plus the
+branch are a behaviour change. It belongs in a dedicated run, aimed at capturing
+a timeout, not in the rate comparison.
+
 ## 6. Relationship to patch 0021 (already in this repo)
 
 Patch `0021-gts9-rpmh-timeout-state-dump.patch` is a **local, narrower**
@@ -136,9 +186,22 @@ programmed and whether it ever completed.
 
 Overlap and difference:
 
-* **Overlap**: both answer "was it programmed, and did it complete?". 0021
-  already produced the §4.2 table of `docs/GPU_GMU_RPMH_STALL_PLAN.md`
-  (`programmed-no-completion.log`, `victim.log`).
+* **Overlap**: both answer "was it programmed, and did it complete?".
+* **CORRECTION (round 28).** An earlier revision of this section said 0021 "already
+  produced the §4.2 table ... (`programmed-no-completion.log`, `victim.log`)".
+  **It did not.** Those two files are synthetic fixtures under
+  `reference/boot-tests/test-186-*/fixtures/`, written to pin `classify-round.sh`'s
+  branches; test-186 has no `rounds/` directory because it was never run on the
+  device, and the `13.400000` / `14.270000` timestamps in them appear nowhere
+  outside that fixture and its README. `GPU_GMU_RPMH_STALL_PLAN.md` §4 already
+  carries this correction for its own citation; this file was still making the
+  same claim about the same two files.
+
+  The consequence is not academic. "Was the request programmed and did it ever
+  complete?" is the first question of the timeout-state analysis, and crediting
+  0021 with a hardware answer to it invites the conclusion that the run which
+  would actually answer it can be skipped. **Patch 0021 has never produced a
+  hardware result on this device.**
 * **What 0021 does not do**: decode the resource **name** from the address (it
   prints `addr=0x00017004`), decode the TCS command status bits, print the AMC
   mode, or test whether the **GIC** has the IRQ pending. Those are precisely the

@@ -1842,6 +1842,31 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("HYPOTHESIS", text)
         self.assertIn("not a proven root cause", text)
 
+    def test_the_rpmh_status_doc_does_not_credit_0021_with_a_hardware_result(self):
+        """The withdrawn fixture must not be re-cited as device evidence.
+
+        `programmed-no-completion.log` and `victim.log` are synthetic fixtures
+        under test-186, which has no `rounds/` directory because it was never run
+        on the device.  GPU_GMU_RPMH_STALL_PLAN.md section 4 already carries this
+        correction; the RPMh status doc was still making the same claim, and the
+        claim invites skipping the run that would answer the question.
+        """
+        text = read(RSC_STATUS)
+        flat = " ".join(text.split())
+        self.assertIn("CORRECTION (round 28)", text)
+        self.assertIn("**Patch 0021 has never produced a hardware result on this device.**", flat)
+        self.assertIn("synthetic fixtures", flat)
+
+    def test_the_rpmh_status_doc_records_that_the_switch_is_already_flashed(self):
+        """No backport is needed to ask the timeout-state questions."""
+        text = read(RSC_STATUS)
+        self.assertIn("## 5a.", text)
+        self.assertIn("early_param(\"gts9_rpmh_debug\", gts9_rpmh_debug_setup)", text)
+        self.assertIn("df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f", text)
+        self.assertIn("command-line only", text)
+        flat = " ".join(text.split())
+        self.assertIn("It must not be enabled during an A/B round", flat)
+
     def test_the_plan_keeps_the_rpmh_work_as_a_fallback(self):
         self.assertIn("NEXT_STALL_DEBUG_PLAN.md", read(PLAN))
 
