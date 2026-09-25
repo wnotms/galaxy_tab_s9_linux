@@ -935,5 +935,109 @@ class Test188SeriesTests(unittest.TestCase):
         self.assertIn("warm reboot", text)
 
 
+class EvidenceArchiveIdentityTests(unittest.TestCase):
+    """An archive must be able to name the boot it describes.
+
+    The collector names its directory after the boot that runs it, while
+    prev-kernel.log and previous_boot_end= describe the boot before it.  That made
+    two archived failures get cited by the id of the boots that recovered from
+    them, so both the naming and the missing previous id are pinned here.
+    """
+
+    COLLECTOR = "rootfs-overlay/usr/libexec/gts9-prev-boot-evidence"
+
+    def test_the_directory_is_named_after_the_collecting_boot(self):
+        text = read(self.COLLECTOR)
+        self.assertIn("boot_id=$(cat /proc/sys/kernel/random/boot_id", text)
+        self.assertIn("dir=$DEST_ROOT/$stamp-$short_id", text)
+
+    def test_the_collector_now_records_the_previous_boot_id(self):
+        text = read(self.COLLECTOR)
+        self.assertIn("previous_boot_id=$prev_boot_id", text)
+        # It must come from the same -b -1 selection as prev-kernel.log, so the
+        # id cannot name a different boot than the log does.
+        self.assertIn("journalctl -b -1 -o verbose", text)
+        # And it must be empty rather than wrong when there is no previous journal.
+        self.assertIn('if [ "$prev_state" = present ]', text)
+
+    def test_the_harnesses_pick_the_newest_archive_by_mtime(self):
+        """The device has no RTC, so name order is not age order."""
+        for rel in ("reference/boot-tests/test-187-20260924T1540Z/reboot-rounds.sh",
+                    "reference/boot-tests/test-187-20260924T1540Z/cold-boot-capture.sh"):
+            with self.subTest(rel=rel):
+                text = read(rel)
+                self.assertIn("ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1", text)
+                # The name-ordered selection must be gone.  Counting the
+                # directories with `ls -1d ... | wc -l` is fine and still used.
+                self.assertNotIn("gts9-boot-evidence/*/ 2>/dev/null | tail -1", text)
+
+    def test_the_affected_documents_carry_the_correction(self):
+        for rel, needle in (
+            ("reference/boot-tests/test-187-20260924T1540Z/on-device/EVIDENCE-HISTORY.md",
+             "Correction (round 16)"),
+            ("reference/boot-tests/test-187-20260924T1540Z/on-device/STALL-SIGNATURE.md",
+             "names the collector, not the failure"),
+        ):
+            with self.subTest(rel=rel):
+                self.assertIn(needle, read(rel))
+
+
+class StallFailureShapeTests(unittest.TestCase):
+    """The failure's real signature is an ABSENCE, and that must stay recorded."""
+
+    DOC = "docs/STALL_FAILURE_SHAPE.md"
+    A5 = "reference/boot-tests/test-184-20260924T140000Z/rounds/console-A-5-watch.txt"
+
+    def test_the_doc_quotes_the_measured_timeline(self):
+        text = read(self.DOC)
+        for needle in ("13:48:08.503", "13:48:09.331", "13:48:39.677",
+                       "28.903 s", "0.828 s", "31.174 s"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_the_quoted_capture_still_supports_the_claims(self):
+        """Re-derive the numbers from the capture rather than trusting the doc."""
+        # This capture carries Windows-console error text in a legacy codepage,
+        # so it is not valid UTF-8; decode leniently rather than skip the check.
+        text = (ROOT / self.A5).read_text(errors="replace")
+        self.assertIn("Stopping", text)
+        self.assertIn("session-1.scope", text)
+        self.assertIn("Stopped", text)
+        # The console truncates long unit names to "name.se???", so only the
+        # unambiguous prefix is guaranteed to appear.
+        self.assertIn("gts9-prev-boot-evidence.s", text)
+        self.assertIn("13:48:38.234Z read failed", text)
+        self.assertIn("13:48:39.677Z PRESENCE usb0525:a4a7=False", text)
+        # The failure emits no banner at all - that is the whole point.
+        for banner in ("Kernel panic", "BUG: soft lockup", "hung_task",
+                       "systemd-shutdown"):
+            with self.subTest(banner=banner):
+                self.assertNotIn(banner, text)
+
+    def test_the_doc_refutes_the_two_eliminated_explanations(self):
+        text = read(self.DOC)
+        self.assertIn("refuted", text)
+        self.assertIn("reboot -f", text)
+
+    def test_the_doc_does_not_name_a_reset_agent(self):
+        text = read(self.DOC)
+        self.assertIn("The reset agent is not established", text)
+
+    def test_the_doc_records_why_the_old_classifier_missed_it(self):
+        text = read(self.DOC)
+        self.assertIn("observer-ab.sh:93", text)
+        # Markdown wraps, so match the phrase in fragments rather than across a
+        # line break.
+        lowered = text.lower()
+        self.assertIn("absence of a line", lowered)
+        self.assertIn("no amount of banner-scanning will ever see it", lowered)
+
+    def test_the_old_classifier_really_did_miss_it(self):
+        """Pin the defect itself, not just the description of it."""
+        text = read("reference/boot-tests/test-184-20260924T140000Z/observer-ab.sh")
+        self.assertIn("console_stall_markers=", text)
+        self.assertNotIn("systemd-shutdown", text)
+
+
 if __name__ == "__main__":
     unittest.main()
