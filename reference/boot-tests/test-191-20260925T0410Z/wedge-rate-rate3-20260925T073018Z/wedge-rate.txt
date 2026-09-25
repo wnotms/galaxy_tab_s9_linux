@@ -1,0 +1,86 @@
+2026-09-25T07:30:18Z === wedge rate: cycles=30 window=300s kind=warm-reboot dir=/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/wedge-rate-rate3-20260925T073018Z ===
+2026-09-25T07:30:18Z early exit: 1 (a boot that answers a command past 45s with no marker ends its cycle)
+2026-09-25T07:30:18Z measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot
+2026-09-25T07:30:18Z baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)
+2026-09-25T07:30:18Z --- cycle 1 ---
+2026-09-25T07:30:27Z   reboot issued at 2026-09-25T07:30:27Z
+2026-09-25T07:30:27Z   tablet gone at 2026-09-25T07:30:24.913Z
+2026-09-25T07:30:45Z   tablet back at 2026-09-25T07:30:44.934Z
+2026-09-25T07:31:47Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:31:55Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:31:56Z --- cycle 2 ---
+2026-09-25T07:32:05Z   reboot issued at 2026-09-25T07:32:05Z
+2026-09-25T07:32:05Z   tablet gone at 2026-09-25T07:32:02.177Z
+2026-09-25T07:32:22Z   tablet back at 2026-09-25T07:32:21.676Z
+2026-09-25T07:33:24Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:33:32Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:33:33Z --- cycle 3 ---
+2026-09-25T07:33:42Z   reboot issued at 2026-09-25T07:33:42Z
+2026-09-25T07:33:42Z   tablet gone at 2026-09-25T07:33:39.194Z
+2026-09-25T07:33:59Z   tablet back at 2026-09-25T07:33:58.638Z
+2026-09-25T07:35:01Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:35:09Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:35:10Z --- cycle 4 ---
+2026-09-25T07:35:19Z   reboot issued at 2026-09-25T07:35:19Z
+2026-09-25T07:35:19Z   tablet gone at 2026-09-25T07:35:16.285Z
+2026-09-25T07:35:36Z   tablet back at 2026-09-25T07:35:35.844Z
+2026-09-25T07:36:38Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:36:46Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:36:47Z --- cycle 5 ---
+2026-09-25T07:36:56Z   reboot issued at 2026-09-25T07:36:56Z
+2026-09-25T07:36:56Z   tablet gone at 2026-09-25T07:36:53.938Z
+2026-09-25T07:37:12Z   tablet back at 2026-09-25T07:37:12.947Z
+2026-09-25T07:38:15Z   early exit after 52s uptime: nothing to wait for
+2026-09-25T07:38:23Z   uptime=52s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:38:23Z --- cycle 6 ---
+2026-09-25T07:38:32Z   reboot issued at 2026-09-25T07:38:32Z
+2026-09-25T07:38:32Z   tablet gone at 2026-09-25T07:38:30.245Z
+2026-09-25T07:38:50Z   tablet back at 2026-09-25T07:38:49.656Z
+2026-09-25T07:39:52Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:40:00Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:40:01Z --- cycle 7 ---
+2026-09-25T07:40:10Z   reboot issued at 2026-09-25T07:40:10Z
+2026-09-25T07:40:10Z   tablet gone at 2026-09-25T07:40:07.211Z
+2026-09-25T07:40:27Z   tablet back at 2026-09-25T07:40:26.961Z
+2026-09-25T07:41:29Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:41:37Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:41:38Z --- cycle 8 ---
+2026-09-25T07:41:47Z   reboot issued at 2026-09-25T07:41:47Z
+2026-09-25T07:41:47Z   tablet gone at 2026-09-25T07:41:44.738Z
+2026-09-25T07:42:05Z   tablet back at 2026-09-25T07:42:04.506Z
+2026-09-25T07:43:07Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:43:15Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:43:16Z --- cycle 9 ---
+2026-09-25T07:43:25Z   reboot issued at 2026-09-25T07:43:25Z
+2026-09-25T07:43:25Z   tablet gone at 2026-09-25T07:43:22.610Z
+2026-09-25T07:43:42Z   tablet back at 2026-09-25T07:43:42.290Z
+2026-09-25T07:44:45Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:44:53Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:44:54Z --- cycle 10 ---
+2026-09-25T07:45:03Z   reboot issued at 2026-09-25T07:45:03Z
+2026-09-25T07:45:03Z   tablet gone at 2026-09-25T07:45:01.250Z
+2026-09-25T07:45:21Z   tablet back at 2026-09-25T07:45:21.263Z
+2026-09-25T07:46:24Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T07:46:32Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:46:33Z --- cycle 11 ---
+2026-09-25T07:46:42Z   reboot issued at 2026-09-25T07:46:42Z
+2026-09-25T07:46:42Z   tablet gone at 2026-09-25T07:46:40.769Z
+2026-09-25T07:47:01Z   tablet back at 2026-09-25T07:47:00.398Z
+2026-09-25T07:48:03Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T07:48:11Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:48:12Z --- cycle 12 ---
+2026-09-25T07:48:50Z   reboot issued at 2026-09-25T07:48:50Z
+2026-09-25T07:48:50Z   tablet gone at 2026-09-25T07:48:48.212Z
+2026-09-25T07:49:07Z   tablet back at 2026-09-25T07:49:07.640Z
+2026-09-25T07:50:29Z   early exit after 72s uptime: nothing to wait for
+2026-09-25T07:50:36Z   uptime=72s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:50:37Z --- cycle 13 ---
+2026-09-25T07:50:46Z   reboot issued at 2026-09-25T07:50:46Z
+2026-09-25T07:50:46Z   tablet gone at 2026-09-25T07:50:44.472Z
+2026-09-25T07:51:04Z   tablet back at 2026-09-25T07:51:03.739Z
+2026-09-25T07:52:18Z   early exit after 65s uptime: nothing to wait for
+2026-09-25T07:52:26Z   uptime=65s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=3
+2026-09-25T07:52:27Z --- cycle 14 ---
+2026-09-25T07:52:36Z   reboot issued at 2026-09-25T07:52:36Z
+2026-09-25T07:52:36Z   tablet gone at 2026-09-25T07:52:34.148Z
+2026-09-25T07:52:54Z   tablet back at 2026-09-25T07:52:53.504Z

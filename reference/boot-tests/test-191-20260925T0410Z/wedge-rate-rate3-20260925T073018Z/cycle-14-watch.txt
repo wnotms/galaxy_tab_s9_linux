@@ -1,0 +1,121 @@
+2026-09-25T07:52:28.120Z watch start: port=COM19 seconds=300 command='' at 10s
+2026-09-25T07:52:29.305Z PRESENCE com=True ports=[COM17,COM19]
+2026-09-25T07:52:29.308Z PRESENCE usb0525:a4a7=True
+2026-09-25T07:52:29.330Z port open on COM19
+2026-09-25T07:52:31.650Z RECV           Stopping [0;1;39msession-1.scope[0m - Session 1 of User root...
+2026-09-25T07:52:31.664Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39msystem-modprobe.slice[0m - Slice /system/modprobe.
+2026-09-25T07:52:31.667Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mgraphical.target[0m - Graphical Interface.
+2026-09-25T07:52:31.670Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mtimers.target[0m - Timer Units.
+2026-09-25T07:52:31.672Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mapt-daily-upgrade.timer[0m - ???y apt upgrade and clean activities.
+2026-09-25T07:52:31.674Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mapt-daily.timer[0m - Daily apt download activities.
+2026-09-25T07:52:31.674Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mdpkg-db-backup.timer[0m - Daily dpkg database backup timer.
+2026-09-25T07:52:31.679Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39me2scrub_all.timer[0m - Period???Metadata Check for All Filesystems.
+2026-09-25T07:52:31.681Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mfstrim.timer[0m - Discard unused filesystem blocks once a week.
+2026-09-25T07:52:31.681Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mlogrotate.timer[0m - Daily rotation of log files.
+2026-09-25T07:52:31.685Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-tmpfiles-clean.tim???[0my Cleanup of Temporary Directories.
+2026-09-25T07:52:31.688Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39musb-gadget.target[0m - Hardware activated USB gadget.
+2026-09-25T07:52:31.690Z RECV  [[0;32m  OK  [0m] Closed [0;1;39msystemd-rfkill.socket[0m - Loa???ll Switch Status /dev/rfkill Watch.
+2026-09-25T07:52:31.692Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-multi-user-sta???[0mt Debian reached multi-user.target.
+2026-09-25T07:52:31.692Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mmulti-user.target[0m - Multi-User System.
+2026-09-25T07:52:31.696Z RECV           Stopping [0;1;39mcron.service[0m - Regular ba???ground program processing daemon...
+2026-09-25T07:52:31.699Z RECV           Stopping [0;1;39mgts9-acm-getty.service[0m - ???console (ttyGS0, autologin root)...
+2026-09-25T07:52:31.701Z RECV           Stopping [0;1;39mgts9-adbd.service[0m - Andro???daemon (gts9 fast debug channel)...
+2026-09-25T07:52:31.703Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-basic-stage.se???[0md that Debian reached basic.target.
+2026-09-25T07:52:31.706Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-debian-getty-stage.se???[0mhe Debian tty1 login getty started.
+2026-09-25T07:52:31.710Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mgetty.target[0m - Login Prompts.
+2026-09-25T07:52:31.712Z RECV           Stopping [0;1;39mgetty@tty1.service[0m - Getty on tty1...
+2026-09-25T07:52:31.714Z RECV           Stopping [0;1;39mgts9-power-key.service[0m - ??? power key: blank the panel only...
+2026-09-25T07:52:31.716Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-prev-boot-evidence.se???[0m0 previous-boot evidence collector.
+2026-09-25T07:52:31.716Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-watchdog-debug.servic???[0mrofile (software lockup detectors).
+2026-09-25T07:52:31.720Z RECV           Stopping [0;1;39mssh.service[0m - OpenBSD Secure Shell server...
+2026-09-25T07:52:31.722Z RECV           Stopping [0;1;39msystemd-random-seed.service[0m - Load/Save OS Random Seed...
+2026-09-25T07:52:31.723Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-udev-load-credenti???[0m- Load udev Rules from Credentials.
+2026-09-25T07:52:31.727Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mcron.service[0m - Regular background program processing daemon.
+2026-09-25T07:52:31.729Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mssh.service[0m - OpenBSD Secure Shell server.
+2026-09-25T07:52:31.734Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-acm-getty.service[0m - X???l console (ttyGS0, autologin root).
+2026-09-25T07:52:31.736Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-adbd.service[0m - Androi???e daemon (gts9 fast debug channel).
+2026-09-25T07:52:31.739Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgetty@tty1.service[0m - Getty on tty1.
+2026-09-25T07:52:31.742Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-power-key.service[0m - X710 power key: blank the panel only.
+2026-09-25T07:52:31.745Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msession-1.scope[0m - Session 1 of User root.
+2026-09-25T07:52:31.748Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39msystem-getty.slice[0m - Slice /system/getty.
+2026-09-25T07:52:31.748Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-panel-recover.service[0m??? ANA38407 cold-boot panel recovery.
+2026-09-25T07:52:31.753Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mgts9-usb-acm.service[0m - X710 USB ACM debug console (configfs).
+2026-09-25T07:52:31.755Z RECV           Stopping [0;1;39msystemd-user-sessions.service[0m - Permit User Sessions...
+2026-09-25T07:52:31.758Z RECV           Stopping [0;1;39muser@0.service[0m - User Manager for UID 0...
+2026-09-25T07:52:31.759Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-user-sessions.service[0m - Permit User Sessions.
+2026-09-25T07:52:31.763Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mnetwork.target[0m - Network.
+2026-09-25T07:52:31.766Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mremote-fs.target[0m - Remote File Systems.
+2026-09-25T07:52:31.769Z RECV           Stopping [0;1;39mnetworking.service[0m - Raise network interfaces...
+2026-09-25T07:52:31.812Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39muser@0.service[0m - User Manager for UID 0.
+2026-09-25T07:52:32.498Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-random-seed.service[0m - Load/Save OS Random Seed.
+2026-09-25T07:52:32.502Z RECV           Stopping [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
+2026-09-25T07:52:32.504Z RECV  [[0;32m  OK  [0m] Unmounted [0;1;39mrun-user-0.mount[0m - /run/user/0.
+2026-09-25T07:52:32.504Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mnetworking.service[0m - Raise network interfaces.
+2026-09-25T07:52:32.504Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39muser-runtime-dir@0.service[0m???User Runtime Directory /run/user/0.
+2026-09-25T07:52:32.509Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
+2026-09-25T07:52:32.510Z RECV           Stopping [0;1;39mdbus.service[0m - D-Bus System Message Bus...
+2026-09-25T07:52:32.513Z RECV           Stopping [0;1;39msystemd-logind.service[0m - User Login Management...
+2026-09-25T07:52:32.515Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39mdbus.service[0m - D-Bus System Message Bus.
+2026-09-25T07:52:32.516Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-logind.service[0m - User Login Management.
+2026-09-25T07:52:32.516Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mbasic.target[0m - Basic System.
+2026-09-25T07:52:32.522Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mpaths.target[0m - Path Units.
+2026-09-25T07:52:32.523Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-ask-password-conso???[0mequests to Console Directory Watch.
+2026-09-25T07:52:32.526Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-ask-password-wall.???[0md Requests to Wall Directory Watch.
+2026-09-25T07:52:32.528Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mslices.target[0m - Slice Units.
+2026-09-25T07:52:32.528Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39muser.slice[0m - User and Session Slice.
+2026-09-25T07:52:32.528Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39msockets.target[0m - Socket Units.
+2026-09-25T07:52:32.534Z RECV  [[0;32m  OK  [0m] Closed [0;1;39mdbus.socket[0m - D-Bus System Message Bus Socket.
+2026-09-25T07:52:32.535Z RECV  [[0;32m  OK  [0m] Closed [0;1;39msshd-unix-local.socket[0m - Op???temd-ssh-generator, AF_UNIX Local).
+2026-09-25T07:52:32.535Z RECV  [[0;32m  OK  [0m] Closed [0;1;39msystemd-hostnamed.socket[0m - Hostname Service Socket.
+2026-09-25T07:52:32.539Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39msysinit.target[0m - System Initialization.
+2026-09-25T07:52:32.541Z RECV           Stopping [0;1;39msystemd-backlight@backlig???[0mtness of backlight:ae94000.dsi.0...
+2026-09-25T07:52:32.543Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-pstore.service[0m - Platform Persistent Storage Archival.
+2026-09-25T07:52:32.544Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-sysctl.service[0m - Apply Kernel Variables.
+2026-09-25T07:52:32.547Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-modules-load.service[0m - Load Kernel Modules.
+2026-09-25T07:52:32.549Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-tmpfiles-setup.ser???[0mreate System Files and Directories.
+2026-09-25T07:52:32.551Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mlocal-fs.target[0m - Local File Systems.
+2026-09-25T07:52:32.553Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mlocal-fs-pre.target[0m???Preparation for Local File Systems.
+2026-09-25T07:52:32.553Z RECV           Unmounting [0;1;39mrun-lock.mount[0m - Legacy Locks Directory /run/lock...
+2026-09-25T07:52:32.555Z RECV           Unmounting [0;1;39mtmp.mount[0m - Temporary Directory /tmp...
+2026-09-25T07:52:32.558Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-tmpfiles-setup-dev???[0mCreate Static Device Nodes in /dev.
+2026-09-25T07:52:32.559Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-tmpfiles-setup-dev???[0mic Device Nodes in /dev gracefully.
+2026-09-25T07:52:32.559Z RECV  [[0;32m  OK  [0m] Unmounted [0;1;39mrun-lock.mount[0m - Legacy Locks Directory /run/lock.
+2026-09-25T07:52:32.564Z RECV  [[0;32m  OK  [0m] Unmounted [0;1;39mtmp.mount[0m - Temporary Directory /tmp.
+2026-09-25T07:52:32.566Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-backlight@backligh???[0mghtness of backlight:ae94000.dsi.0.
+2026-09-25T07:52:32.566Z RECV  [[0;32m  OK  [0m] Removed slice [0;1;39msystem-systemd\x2dba???[0m - Slice /system/systemd-backlight.
+2026-09-25T07:52:32.569Z RECV  [[0;32m  OK  [0m] Stopped target [0;1;39mswap.target[0m - Swaps.
+2026-09-25T07:52:32.571Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mumount.target[0m - Unmount All Filesystems.
+2026-09-25T07:52:32.571Z RECV  [[0;32m  OK  [0m] Stopped [0;1;39msystemd-remount-fs.service[0m???mount Root and Kernel File Systems.
+2026-09-25T07:52:32.576Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mshutdown.target[0m - System Shutdown.
+2026-09-25T07:52:32.577Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mfinal.target[0m - Late Shutdown Services.
+2026-09-25T07:52:32.577Z RECV  [[0;32m  OK  [0m] Finished [0;1;39msystemd-reboot.service[0m - System Reboot.
+2026-09-25T07:52:32.582Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mreboot.target[0m - System Reboot.
+2026-09-25T07:52:32.672Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°ÓÉÓÚÏß³ÌÍË³ö»òÓ¦ÓÃ³ÌÐòÇëÇó£¬ÒÑÖÐÖ¹ I/O ²Ù×÷¡£
+¡±
+2026-09-25T07:52:32.728Z port closed (read error)
+2026-09-25T07:52:34.148Z PRESENCE usb0525:a4a7=False
+2026-09-25T07:52:53.504Z PRESENCE usb0525:a4a7=True
+2026-09-25T07:52:53.514Z port open on COM19
+2026-09-25T07:52:53.542Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39msystem-systemd\x2dba???[0m - Slice /system/systemd-backlight.
+2026-09-25T07:52:54.446Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39musb-gadget.target[0m - Hardware activated USB gadget.
+2026-09-25T07:52:54.449Z RECV  [[0;32m  OK  [0m] Listening on [0;1;39msystemd-rfkill.socket[0m???ll Switch Status /dev/rfkill Watch.
+2026-09-25T07:52:54.451Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgetty@tty1.service[0m - Getty on tty1.
+2026-09-25T07:52:54.454Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgetty.target[0m - Login Prompts.
+2026-09-25T07:52:54.456Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgts9-acm-getty.service[0m - X???l console (ttyGS0, autologin root).
+2026-09-25T07:52:54.458Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgts9-adbd.service[0m - Androi???e daemon (gts9 fast debug channel).
+2026-09-25T07:52:54.462Z RECV           Starting [0;1;39mgts9-debian-getty-stage.s???[0m Debian tty1 login getty started...
+2026-09-25T07:52:54.464Z RECV           Starting [0;1;39mgts9-getty-stage.service[0m ??? Debian tty1 login getty started...
+2026-09-25T07:52:54.466Z RECV           Starting [0;1;39msystemd-backlight@backlig???[0mtness of backlight:ae94000.dsi.0...
+2026-09-25T07:52:54.468Z RECV  [[0;32m  OK  [0m] Finished [0;1;39msystemd-backlight@backlig???[0mghtness of backlight:ae94000.dsi.0.
+2026-09-25T07:52:54.470Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-getty-stage.service[0m ???he Debian tty1 login getty started.
+2026-09-25T07:52:54.472Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-getty-stage.s???[0mhe Debian tty1 login getty started.
+2026-09-25T07:52:54.474Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mmulti-user.target[0m - Multi-User System.
+2026-09-25T07:52:54.476Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgraphical.target[0m - Graphical Interface.
+2026-09-25T07:52:54.478Z RECV           Starting [0;1;39mgts9-debian-multi-user-st???[0mDebian reached multi-user.target...
+2026-09-25T07:52:54.480Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
+2026-09-25T07:52:54.480Z RECV           Starting [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
+2026-09-25T07:52:54.484Z RECV  [[0;32m  OK  [0m] Finished [0;1;39muser-runtime-dir@0.servic???[0mUser Runtime Directory /run/user/0.
+2026-09-25T07:52:54.485Z RECV           Starting [0;1;39muser@0.service[0m - User Manager for UID 0...
+2026-09-25T07:52:54.486Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-multi-user-st???[0mt Debian reached multi-user.target.
+2026-09-25T07:52:54.775Z RECV  [[0;32m  OK  [0m] Started [0;1;39muser@0.service[0m - User Manager for UID 0.
+2026-09-25T07:52:55.455Z RECV  [[0;32m  OK  [0m] Started [0;1;39msession-1.scope[0m - Session 1 of User root.

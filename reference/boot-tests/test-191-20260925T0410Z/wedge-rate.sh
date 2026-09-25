@@ -388,7 +388,9 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 			WEDGE_ATTRIBUTION=attributed
 		fi
 		if [ "$wedged" = "0" ]; then
-			alive=$(probe_console_uptime_retry "$i" && printf '%s' "$CONSOLE_GOT")
+			# Called PLAINLY, never in $( ) - see the note on the call above.
+			probe_console_uptime_retry "$i" || true
+			alive=$CONSOLE_GOT
 			alive_via=console
 			# Attribute before believing, and attribute REGARDLESS of how the
 			# console failed.  The first version of this only asked ssh when the
@@ -400,7 +402,8 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 			if [ -z "$alive" ] && ssh_answers; then
 				if ensure_console_shell; then
 					say "  console was unusable (${CONSOLE_STATE}); getty restarted, re-probing"
-					alive=$(probe_console_uptime "$i" && printf '%s' "$CONSOLE_GOT")
+					probe_console_uptime "$i" || true
+					alive=$CONSOLE_GOT
 					if [ -n "$alive" ]; then
 						alive_via=console-after-getty-restart
 					fi
@@ -497,7 +500,15 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# One health check, requiring a command RESULT rather than an echo.  The early
 	# exit above already made this probe, so do not pay for it twice.
 	if [ -z "$alive" ]; then
-		alive=$(probe_console_uptime_retry "$i" && printf '%s' "$CONSOLE_GOT")
+		# Called PLAINLY, never in $( ): command substitution is a subshell and
+		# would throw away CONSOLE_STATE along with it.  The uptime would still
+		# arrive - it is echoed inside that same subshell - so the bug hides
+		# behind a value that looks correct.  Measured: with $( ) the state stays
+		# `untried` for ever, the console-port-failed branch below can never be
+		# reached, and every silent cycle is recorded as a silent console rather
+		# than as an instrument failure.
+		probe_console_uptime_retry "$i" || true
+		alive=$CONSOLE_GOT
 		if [ -n "$alive" ]; then
 			alive_via=console
 		fi
@@ -520,6 +531,26 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 			WEDGE_ATTRIBUTION=unattributed
 		fi
 	fi
+	# Re-read presence now that the cycle is over.  The second-outage watch above
+	# stops at `back + EARLY_MIN_UPTIME` (45 s by default), and the wedge onset is
+	# NOT fixed - the three complete records struck at 6.8 s, ~52.5 s and ~76 s.
+	# On cycle 9 of the rate2 series the tablet restarted itself at back+76 s,
+	# after the watch had closed, so the harness never saw it: it recorded a boot
+	# with no channel answering instead of a boot that had died unasked.  Reading
+	# the whole watcher log at verdict time costs nothing and cannot miss it,
+	# because console-watch.ps1 flushes every line as it is written.
+	read -r fin_off fin_on fin_n <<<"$(transitions)"
+	if [ "${fin_n:-0}" -ge 2 ] && [ "$wedged" = "0" ]; then
+		wedged=1
+		outages=$fin_n
+		read -r off2_at on2_at <<<"$(tr -d '\r' <"$wlog" | awk '
+			/PRESENCE usb0525:a4a7=False/ { f++; if (f==2) off=$1 }
+			/PRESENCE usb0525:a4a7=True/  { t++; if (t==3) on=$1 }
+			END { printf "%s %s", (off?off:"-"), (on?on:"-") }')"
+		say "  *** SECOND OUTAGE seen at verdict time: the boot died unasked"
+		say "      gone=$off2_at back=${on2_at:-pending} (after the early-exit watch closed)"
+	fi
+
 	echo "uptime_after=${alive:-none}" >>"$DIR/cycle-$i-verdict.txt"
 	echo "uptime_via=${alive_via:-none}" >>"$DIR/cycle-$i-verdict.txt"
 
@@ -543,6 +574,15 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		say "  *** UNATTRIBUTED: console silent and ssh unreachable - getty defect and"
 		say "      wedge are indistinguishable on the channels available, so this"
 		say "      cycle is not evidence either way"
+	fi
+
+	# The verdict block above ran before the verdict-time presence re-read, so
+	# bring its two outage fields up to date rather than leaving them stale.
+	if [ "$wedged" = "1" ]; then
+		sed -i "s/^wedged=.*/wedged=1/; s/^outages=.*/outages=${outages:-$fin_n}/; \
+			s/^second_outage_gone=.*/second_outage_gone=${off2_at:--}/; \
+			s/^second_outage_back=.*/second_outage_back=${on2_at:--}/" \
+			"$DIR/cycle-$i-verdict.txt"
 	fi
 
 	nmi=$(get nmi_unanswered); [ -n "$nmi" ] || nmi=0

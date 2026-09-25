@@ -2459,6 +2459,53 @@ class WedgeRateAttributionTests(unittest.TestCase):
         self.assertIn("boot_id=", reader)
         self.assertIn("RTC reads 2026-04-13", " ".join(self.text.split()))
 
+    def test_the_console_probe_is_never_called_inside_command_substitution(self):
+        """The bug that defeated the whole classifier, found from the evidence.
+
+        `CONSOLE_STATE` is how a cycle tells "the port never opened" from "the
+        console was silent".  `$(...)` is a subshell, so a state set inside it is
+        discarded - while the uptime still arrives, because it is echoed inside
+        that same subshell.  The bug therefore hides behind a value that looks
+        correct, and the port-failed branch becomes unreachable.
+
+        Cycle 9 of the rate2 series is the observed instance: its log says
+        "no channel answered (untried, ...)" - `untried` being the initial value,
+        which is only possible if the assignment never reached the parent shell.
+        """
+        for line in self.text.splitlines():
+            if "probe_console_uptime" not in line:
+                continue
+            if line.lstrip().startswith("#"):
+                continue
+            with self.subTest(line=line.strip()):
+                self.assertNotIn(
+                    "$(probe_console_uptime", line,
+                    "the probe must be called plainly: $( ) is a subshell and "
+                    "CONSOLE_STATE would be lost",
+                )
+
+    def test_the_presence_watch_is_re_read_when_the_cycle_ends(self):
+        """A self-reboot after the early-exit watch closed must still count.
+
+        The onset is not fixed - 6.8 s, ~52.5 s and ~76 s in the three complete
+        records - so a watch that stops at back+EARLY_MIN_UPTIME can miss one
+        entirely, which is what happened to cycle 9.
+        """
+        text = self.text
+        self.assertIn("SECOND OUTAGE seen at verdict time", text)
+        self.assertIn("Re-read presence now that the cycle is over", " ".join(text.split()))
+        # And the verdict written earlier must be corrected, not left stale.
+        self.assertIn("second_outage_gone=", text)
+        self.assertIn("bring its two outage fields up to date", " ".join(text.split()))
+
+    def test_the_classifier_test_exercises_the_real_call_path(self):
+        """A unit test that calls the function plainly cannot catch the above."""
+        script = (ROOT / self.TESTDIR / "test-console-failure-classifier.sh").read_text()
+        self.assertIn("probe_console_uptime sample", script)
+        harness = self.text
+        # The harness must call it the same way the test does - plainly.
+        self.assertIn('probe_console_uptime_retry "$i" || true', harness)
+
 
 if __name__ == "__main__":
     unittest.main()
