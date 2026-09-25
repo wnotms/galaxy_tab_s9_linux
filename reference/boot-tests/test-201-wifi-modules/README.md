@@ -83,3 +83,80 @@ powered rather than with a signal-integrity problem.
 |---|---|
 | `RESULT.txt` | the state table before and after, and the full PCI result |
 | `dmesg.txt` | the kernel log for the enumeration, captured after loading the modules |
+
+---
+
+## Follow-up: the link is DOWN, and the GPIO states say power was applied
+
+Reading the PCIe capability's Link Status register on the root port settles it:
+
+```
+link status = 0x0142
+  bit13 Data Link Layer Link Active (DLLLA) = 0   <- the link is DOWN
+```
+
+and reading config space of `01:00.0` fails outright (`No devices selected`), which
+is what "nothing on bus 01" looks like from userspace. The `2.5 GT/s x1` reported by
+sysfs is therefore only the *negotiated-so-far* / floor value of a link that has not
+reached the data-link-active state — `max_link_speed` is `8.0 GT/s`, so this is not a
+speed-capability limit.
+
+### The power sequence did run
+
+From `/sys/kernel/debug/gpio` (TLMM is `gpiochip3`, 211 lines, `f100000.pinctrl`):
+
+| line | state | meaning |
+|---|---|---|
+| `gpio80` | **out high** | `WLAN_EN` asserted — the pwrseq `wlan-enable` unit ran |
+| `gpio94` | **out high** | `PERST` deasserted (declared `GPIO_ACTIVE_LOW`), so the endpoint is out of reset |
+| `gpio81` | out low | `BT_EN` low — correct, Bluetooth is out of scope this round |
+| `gpio82` | in high | `SWCTRL` |
+| `gpio204` | out low | `XO_CLK`, deasserted *after* the enable, which matches the driver's `post_enable` hook (`pwrseq_qcom_wcn6855_xo_clk_deassert`) |
+
+So the sequencing chain completed and the driver-side ordering is right:
+`qcom_pcie_host_init()` asserts PERST, powers the PHY, calls
+`pci_pwrctrl_power_on_devices()`, then deasserts PERST. The endpoint still does not
+answer.
+
+### A DTS claim that mainline does not implement
+
+`qcom,wlan-pdc-init` and `qcom,qmp` are present in the board DTS, and the comment
+above them explains they are the AOP PDC votes a **cold handoff** needs. They are
+worth keeping. But a search of the entire pinned tree finds them **only in that
+DTS** — no mainline driver reads either property. They are inert: nothing in
+`pwrseq-qcom-wcn.c`, `pci-pwrctrl-pwrseq.c` or `pcie-qcom.c` consumes them, so on
+mainline those votes must already have been applied by the boot chain or not at
+all. That is a real difference from downstream `cnss2`, and it matters for the
+cold-boot case below.
+
+### Where that leaves the fault
+
+The fault is now isolated to the endpoint side of a link that the host has finished
+setting up, with power and reset applied. In order of likelihood:
+
+1. **The endpoint needs more than `WLAN_EN`.** The `wcn6855-pmu` regulators are
+   modelled but the endpoint's own rails (`vddpcie0p9`, `vddpcie1p8`, and the RF
+   rails) are only declared on `wifi@0`; whether the pwrseq provider actually
+   enabled them is not yet evidenced. Note the driver has logged
+   `supply vdda not found, using dummy regulator` since the first probe.
+2. **Cold handoff.** This boot was a warm one and the board DTS records that after a
+   full poweroff the PMU may not complete power-up without correct PDC/AOP votes.
+   Since mainline does not implement those votes, a cold boot is now a *specific and
+   testable* hypothesis rather than a general worry — and it is the first thing the
+   next test should separate.
+3. **A missing board-specific step** that downstream `cnss2` performs, which no
+   mainline driver currently does.
+
+### Next physical test, revised
+
+The stale-boot ordering also has to be cleared first: `1c00000.pcie` probed eight
+times on this boot **before** the modules existed, and only the last attempt
+succeeded. A clean reboot with the modules already installed is the honest baseline,
+and it is needed before any of the three hypotheses above can be compared.
+
+1. Reboot (warm), then run `scripts/wifi-preflight.sh` with the modules present from
+   boot. Confirm the pwrctrl binds during the boot probe, without a manual
+   `modprobe`.
+2. Read the link status again — `DLLLA` must go to 1 for `17cb:1103` to appear.
+3. If it is still down, compare a **cold** power-on against the warm reboot, per the
+   brief's rule that the two are never merged into one claim.
