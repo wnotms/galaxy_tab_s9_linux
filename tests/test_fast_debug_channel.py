@@ -314,6 +314,45 @@ class CpuWedgeEvidenceTests(unittest.TestCase):
         self.assertTrue(fao[0]["nmi"] or fao[0]["rcu"] or fao[0]["wq"] or fao[0]["sl"])
 
 
+class DeferredCpufreqTests(unittest.TestCase):
+    """The fifth permanently-deferred provider, and it is on the CPU path."""
+
+    DOC = "docs/PROVIDER_FOLLOWUPS.md"
+
+    def test_it_records_the_two_consequences(self):
+        text = read(self.DOC)
+        self.assertIn("Failed to find icc paths", text)
+        # No cluster has OS-controlled frequency scaling...
+        self.assertIn("freq-domain0/1/2", text)
+        # ...and gcc is blocked by it as well as by the GMU.
+        self.assertIn("sync_state() pending due to 17d91000.cpufreq", text)
+        self.assertIn("second, independent blocker", text)
+
+    def test_it_rules_out_the_obvious_candidates(self):
+        text = read(self.DOC)
+        self.assertIn("opp-peak-kBps", text)
+        self.assertIn("1500000.interconnect", text)
+        self.assertIn("every interconnect provider is bound", text)
+
+    def test_it_says_which_call_defers_is_not_established(self):
+        text = read(self.DOC)
+        self.assertIn("not* established is which call defers", text)
+        self.assertIn("records only\nthe outermost message", text)
+
+    def test_the_dtsi_still_carries_the_bandwidth_it_claims(self):
+        """Re-derive it: if upstream ever drops opp-peak-kBps this doc is wrong."""
+        dtsi = ROOT / ".work/build/linux-src-gts9wifi/arch/arm64/boot/dts/qcom/sm8550.dtsi"
+        if not dtsi.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = dtsi.read_text()
+        self.assertIn("opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>", text)
+        self.assertGreaterEqual(text.count("opp-peak-kBps"), 90)
+        # And every CPU node declares the icc path the lookup needs.  The count is
+        # 11, not 8: three non-CPU nodes use the same master.
+        self.assertGreaterEqual(
+            text.count("interconnects = <&gem_noc MASTER_APPSS_PROC"), 8)
+
+
 class WedgeClusterTests(unittest.TestCase):
     """13 of 14 wedged CPUs are big or prime; that asymmetry is the finding."""
 

@@ -151,3 +151,55 @@ why this note stops short of proposing the backport as a fix.
   userspace, so kernel init and systemd are both fast; the extra wall-clock time
   is before `systemd-analyze`'s window (initramfs) or in panel bring-up, and was
   not measured this round.
+
+## 4. `17d91000.cpufreq` is permanently deferred, and it blocks `gcc`'s sync_state
+
+Found in round 19 while chasing why the wedge favours the big and prime CPU
+clusters (`docs/CPU_WEDGE_EVIDENCE.md`). It is the same shape as the four provider
+defects already fixed, and it is on the CPU path.
+
+Measured on the device:
+
+```
+[   14.820796] platform 17d91000.cpufreq: deferred probe pending: qcom-cpufreq-hw: Failed to find icc paths
+[   14.820860] gcc-sm8550 100000.clock-controller: sync_state() pending due to 17d91000.cpufreq
+```
+
+Two things at once:
+
+* **the CPU frequency driver never probes.** `cpufreq@17d91000` is
+  `qcom,sm8550-cpufreq-epss` with three frequency domains — `freq-domain0/1/2`, one
+  per cluster — so *no* cluster has OS-controlled frequency or voltage scaling. All
+  eight CPUs run at whatever OPP the bootloader left them at;
+* **`gcc-sm8550` cannot finish `sync_state()` because of it.** Round 11 attributed
+  that entirely to `3d6a000.gmu`; there is a second, independent blocker, and this
+  one is not upstream-correct behaviour but a probe failure.
+
+What is *not* established is which call defers. The obvious candidates are ruled
+out:
+
+* the CPU OPP tables do carry bandwidth — `cpu0_opp_table`'s first entry is
+  `opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>`, and
+  `sm8550.dtsi` has 94 `opp-peak-kBps` occurrences — so `_bandwidth_supported()`
+  does not return the `-ENODEV` that would make this a plain probe failure;
+* every interconnect provider is bound: `1500000.interconnect` (gem_noc),
+  `24100000.interconnect`, `1600000`/`1680000`/`16c0000`/`16e0000`/`1700000`/
+  `1780000`/`320c0000`, and the two virtual ones as `interconnect-0` and
+  `interconnect-1`, all on `qnoc-sm8550`. `mc_virt` is a virtual provider with no
+  unit address, which is why it appears under that name.
+
+So the deferral is inside `dev_pm_opp_of_find_icc_paths()` — either
+`of_icc_get_by_index()` or `_bandwidth_supported()` — and the outer
+`dev_err_probe(dev, ret, "Failed to find icc paths")` is what names the deferred
+reason. **Establishing which needs the error code, and `dev_err_probe` records only
+the outermost message.** That is the next step, and it is cheap: the driver's
+`/sys/kernel/debug/devices_deferred` entry plus a boot with `initcall_debug` would
+separate them, or the inner message (`Unable to get path0`) would appear in `dmesg`
+if `of_icc_get_by_index()` failed rather than deferred.
+
+The X910 port has been through this area: it carries
+`cpufreq-recompute-software-boost-limit.patch` and
+`arm-topology-use-boost-frequency-reference.patch`. Neither obviously addresses the
+probe, and X910 uses the same upstream `sm8550.dtsi`, so this is probably a shared
+upstream gap rather than an X710-specific one — which is exactly why it is recorded
+here rather than acted on this round.
