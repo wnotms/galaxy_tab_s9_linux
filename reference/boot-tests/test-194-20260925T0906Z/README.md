@@ -24,21 +24,42 @@ so I reported a live stall capture.
 
 ## What the evidence says
 
-The boot was **healthy**. Read from its own journal after it was over:
+Read from the two boots' own journals after the fact. The numbers below are
+**both** boots, labelled, because the earlier version of this file mixed them:
+
+**Boot `846e17b8` — round 4's result, healthy, and it is what round 5 rebooted**
 
 | check | value |
 |---|---|
-| kernel messages in the boot | **970** |
-| deferred-probe burst | at **14.561–14.571 s**, normal, same as every boot |
-| kernel messages between 14.6 s and 169 s | **1** |
-| last kernel message | `169.796735 … systemd-journald: Received SIGTERM` |
-| userspace journal | ran to **168.83 s** |
-| `soft lockup` / `hung task` / `rcu stall` / `Kernel panic` | **0 / 0 / 0 / 0** |
-| `frame done timeout` in the kernel log | **0** (the one on the console never reached the ring) |
-| how the boot ended | `systemd-logind: The system will reboot now!` — **requested**, i.e. the harness's next round |
+| userspace journal (846e17b8) | ran to **168.83 s** |
+| how it ended | `systemd-logind: The system will reboot now!` at monotonic **168.829708** |
+| what that is | a **requested** reboot — and its host time, 09:06:23.8, matches the COM19 `USB False` of round 5's own reboot at 09:06:23.768 |
 
-So the kernel ran normally for 169 seconds, userspace logged throughout, and the
-boot ended in an orderly reboot that my own harness asked for.
+That match is worth noting on its own: it confirms the round-substitution chain
+independently of the boot list.
+
+**Boot `0f056455` — round 5's result, the boot that printed `[8.623097]`**
+
+| check | value |
+|---|---|
+| journal span | monotonic **2.474737 … 6.763559** and then it **stops** |
+| journal lines | 1111 total; 934 kernel |
+| last journal line | `Starting user@0.service` |
+| `soft lockup` / `hung task` / `rcu stall` / `Kernel panic` | **0 / 0 / 0 / 0** |
+| `frame done timeout` / `mmc1 Timeout` / `AMC RPMH` / `haven't responded to the NMI` | **0 / 0 / 0 / 0** in the journal |
+| pstore console | 296 B, ends `[  170.255984] reboot: Restarting system` |
+| how it ended | a **clean** restart at 170.26 s — no panic text |
+
+So the kernel of `0f056455` was still running at 170 s when something restarted
+it cleanly, while its **journal stops at 6.76 s**. The `[8.623097]` line falls in
+that gap, which is why the journal does not contain it — see
+`PROVENANCE-AUDIT.md`, which is where the "never reached the ring" sentence is
+retracted.
+
+The operator's report (boot screen held, dead keyboard, then the login screen) is
+consistent with a quiet machine whose console had nothing more to say. It is not
+consistent with a CPU wedge: there is no lockup, no RCU stall, no unanswered NMI
+and no panic anywhere in either boot.
 
 ## Why the console went silent
 
@@ -104,7 +125,17 @@ priority.
 | file | what it is |
 |---|---|
 | `live-console-capture.txt` | the raw COM19 capture, taken while the episode was happening |
-| `boot-846e17b8-journal-facts.txt` | the checks above, as extracted from the wedged boot's journal |
+| `boot-0f056455-journal-facts.txt` | the checks above, extracted from the boot that actually printed the line |
+| `PROVENANCE-AUDIT.md` | **read this first**: it corrects which boot this round is about |
+
+> **Correction, round 30.** This file originally analysed boot `846e17b8`. That is
+> round **4**'s result boot, not round 5's: the round log's `boot_id before` is
+> the boot running when the round *starts*. The boot that printed `[8.623097]` is
+> **`0f056455`**, bound to the COM19 capture by a two-clock offset check rather
+> than by time order. The correction also retracts the sentence "(the one on the
+> console never reached the ring)": the journal for `0f056455` stops at
+> **6.763559 s**, so the line had no journal to appear in — which is a statement
+> about capture coverage, not about the printk ring. See `PROVENANCE-AUDIT.md`.
 
 The harness was stopped before it wrote `round-5.txt`, so this round has no
 per-round record; the series' other rounds are unaffected.

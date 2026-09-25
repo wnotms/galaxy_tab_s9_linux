@@ -1,0 +1,24 @@
+# Boot 0f056455 journal facts, extracted 2026-09-25T09:2xZ
+#
+# CORRECTION (round 30): this file was named boot-846e17b8- and labelled as the
+# boot of the episode. 846e17b8 is round 4's result boot; the episode's boot is
+# 0f056455, which is round 5's result.  The numbers below were always 0f056455's
+# - only the label was wrong.  See PROVENANCE-AUDIT.md for the binding proof.
+#
+# NOTE: "journal_lines_after_14.6s_before_169s=1" was produced by a broken awk
+# filter ($1 is "[" under short-monotonic, so it matches nothing).  Treat it as
+# unreliable; the journal for this boot ends at 6.763559 s, so any "after 14.6 s"
+# count is meaningless for this boot.
+kernel_lines_total=970
+kernel_lines_after_14.6s_before_169s=1
+userspace_journal_lines=1322
+soft_lockup_=0
+hung_task_=0
+rcu__stall_=0
+Kernel_panic_=0
+frame_done_timeout_=0
+mmc___Tt_imeout_=0
+rpmh_write_batch_=0
+deferred_probe_burst_first=14.561105
+reboot_trigger=168.829708] gts9 systemd-logind[893]: The system will reboot now!
+last_kernel_line=169.796735] gts9 systemd-journald[279]: Received SIGTERM from PID 1 (systemd-shutdow).
