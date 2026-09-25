@@ -807,6 +807,51 @@ class FailedBootCaptureTests(unittest.TestCase):
         self.assertIn("frame_done_timeout=", text)
         self.assertIn("mmc_timeout=", text)
 
+    def test_the_doc_reinterprets_the_journal_stop(self):
+        """The load-bearing claim: journal stopping is not the system freezing."""
+        self.contains(self.DOC,
+                      "still running and printing for at",
+                      "journald stopped being able to write",
+                      "/dev/mmcblk1p1",
+                      "two different failures pooled under one fingerprint",
+                      "overlap has never been computed")
+
+    def test_the_survey_really_shows_one_dpu_boot_and_ten_fingerprint_boots(self):
+        """Re-derive both numbers the doc leans on, from the archived survey."""
+        analysis = ROOT / "reference/boot-tests/test-189-20260925T0210Z/survey-analysis.txt"
+        if not analysis.is_file():
+            self.skipTest("the survey analysis is not present")
+        text = analysis.read_text()
+        self.assertIn("every boot that printed a frame done timeout:", text)
+        self.assertIn("idx=-67 1c082657 dpu=15", text)
+        # One line under that heading means one boot.
+        block = text.split("every boot that printed a frame done timeout:")[1]
+        listed = [l for l in block.splitlines()[1:] if l.strip().startswith("idx=")]
+        self.assertEqual(len(listed), 1, "the survey lists exactly one DPU boot")
+        # And the fingerprint set is ten boots.
+        self.assertIn("freeze-fingerprint boots", text)
+        fp = text.split("freeze-fingerprint boots")[1].split("every boot")[0]
+        self.assertEqual(len([l for l in fp.splitlines() if l.strip().startswith(("pre-fix", "post-fix"))]), 10)
+
+    def test_the_doc_promotes_the_storage_path_with_a_reason(self):
+        self.contains(self.DOC,
+                      "deserves promotion from",
+                      "MMC timeout",
+                      "It has now been seen, twice in the same",
+                      "nothing here says the microSD card is faulty")
+
+    def test_the_doc_names_the_instrument_fix(self):
+        """loglevel=4 is exactly what hides the post-break period."""
+        self.contains(self.DOC, "loglevel=7", "prints only levels 0-3",
+                      "**second instrument with different failure",
+                      "modes**, and on this boot it was the better one")
+
+    def test_the_wedge_doc_carries_the_caution(self):
+        self.contains("docs/CPU_WEDGE_EVIDENCE.md",
+                      "is not the same claim as \"the system froze\"",
+                      "the freeze-fingerprint count must not",
+                      "FAILED-BOOT-20260925T0457.md")
+
     def test_the_five_healthy_cycles_had_no_dpu_flood(self):
         """The discriminator, stated with its sample size rather than claimed."""
         rundir = ROOT / self.RUNDIR

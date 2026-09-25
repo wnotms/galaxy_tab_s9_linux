@@ -387,6 +387,29 @@ done
 which is the cheap form of the experiment. `cpuidle.off=1` on the command line is
 the blunt form.
 
+## A caution added in round 21: "the journal stops at ~7 s" is not the same claim as "the system froze"
+
+The fingerprint above is that the journal stops 5.5-8.0 s in with no orderly
+shutdown, and it has been read as *the system froze at about 7 seconds*. A live
+capture on 2026-09-25 showed the kernel **still running and printing for at least
+19 s after its journal and its serial console had both gone quiet** — the root
+filesystem is on `mmc1`, and 15 s later that controller reported
+`Int stat: 0x00000000` with `Resp[0..3] = 0`, i.e. a command that completed nothing.
+journald cannot write to a rootfs whose controller has stopped answering, so for
+that boot the journal stopped because **storage** stopped, not because the CPU did.
+
+The two sets are not the same list either: ten boots show the freeze fingerprint and
+eleven show an unanswered-backtrace line. The overlap has never been computed.
+
+What this does **not** do is weaken the eleven: that marker is emitted by the
+console as well as the journal, and the archived trace with RCU stalls alongside it
+is a genuine wedge. What it does mean is that the freeze-fingerprint count must not
+be read as a second, independent measurement of the same thing.
+
+Full account, with the raw capture and the operator's photograph of the panel:
+`reference/boot-tests/test-191-*/wedge-rate-pre-test191-capture/
+FAILED-BOOT-20260925T0457.md`.
+
 ## What it does not establish
 
 * **Why a CPU stops.** Nothing in any of the 11 traces names a cause. There is no
