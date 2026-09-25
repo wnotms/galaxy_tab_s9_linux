@@ -2464,26 +2464,50 @@ class DocumentationTests(unittest.TestCase):
         flat = " ".join(text.split())
         self.assertIn("matches the echo and never the tablet's answer", flat)
 
+    def test_the_probe_payload_has_no_unescaped_single_quote(self):
+        """The `-Commands` argument is single-quoted, so a literal quote ends it.
+
+        Three attempts at `under_test_boot_id` failed this way and each failed
+        *silently*: the selector reached the remote shell as a glob (`grep *-1`),
+        as an unclosed awk program (`missing } near end of file`), or with the
+        harness's own `$DIR/probe-$i-raw.txt` interpolated into the remote command.
+        The field simply came back empty. Verified by running the real dry run and
+        reading the value out of `preflight-raw.txt`, which is the only test that
+        exercises the actual layering.
+        """
+        text = read("scripts/stall-ab.sh")
+        marker = "-Commands " + chr(39)
+        start = text.index(marker) + len(marker)
+        terminator = chr(39) + ' ' + chr(92)
+        payload = text[start:text.index(terminator, start)]
+        stray = payload.replace(chr(39) + chr(92) + chr(39) + chr(39), '')
+        self.assertNotIn(chr(39), stray,
+                         "every single quote in the -Commands payload must be escaped")
+        self.assertIn("under_test_boot_id=", text)
+        self.assertIn(chr(39) + chr(92) + chr(39) + chr(39) + "{print $2}", text)
+
     def test_the_probe_emits_no_shell_syntax_errors(self):
         """The boot-under-test fragment must survive the remote shell.
 
-        Its first form nested escaped quotes inside an awk program and the
-        tablet answered `-bash: syntax error near unexpected token `('`, which
-        killed the whole probe and silently disabled the parameter guard.
+        Its first form used `grep -E "^ *-1 "`, which reached the remote shell as
+        the glob `*-1`; its second escaped `awk`'s `$2`, which printed an empty
+        field; its third left unescaped single quotes inside the single-quoted
+        `-Commands` argument, which closed it early and let the harness's own
+        `$DIR/probe-$i-raw.txt` be interpolated into the remote command. All three
+        failed silently with the field empty. The form that works was verified
+        through a real dry run: `awk '{print $2}'` on the second-from-last boot
+        line, with the quotes shell-escaped.
         """
         text = read("scripts/stall-ab.sh")
         start = text.index("BOOT_UNDER_TEST")
         frag = text[start:text.index("PREVBOOT_KLOG", start)]
-        # No awk, and no nested double quotes inside the command substitution.
-        self.assertNotIn("awk", frag)
-        # The selector it does use must be the boot-list line for -1, and it must
-        # reach the remote shell escaped for the nested `-Commands` context.
-        self.assertIn("-1", frag)
+        # No leading-dash regex - the shell globs it.
+        self.assertNotIn("grep -E", frag)
+        # The selector reads the boot list and names the -1 boot.
         self.assertIn("journalctl --list-boots", frag)
-        self.assertIn("cut -d", frag)
-        # Escaped quotes only - a bare `"` inside would terminate the remote string.
-        import re
-        self.assertNotIn('"" -1""', frag)
+        self.assertIn("tail -2 | head -1", frag)
+        # The awk program must be shell-escaped, not bare.
+        self.assertIn(chr(39) + chr(92) + chr(39) + chr(39) + "{print $2}", frag)
 
     def test_the_boot_under_test_is_recorded_by_the_probe(self):
         """Three boot ids per round, and the evidence describes a fourth thing."""
