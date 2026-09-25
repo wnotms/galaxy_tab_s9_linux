@@ -104,10 +104,31 @@ one needs at least one of:
 * a crash signature consistent with a freed-waitqueue `complete()` or a double
   free.
 
-Test-186's captured rounds show `matched_done=0` for the timed-out address, i.e.
-**no late completion was observed** in those runs. That weakens the hazard as an
-explanation for *those specific* stalls and is the reason the hazard is carried
-as a separate open item rather than being folded into the primary hypothesis.
+**CORRECTION (round 29): that observation does not exist.** An earlier revision
+of this section said "test-186's captured rounds show `matched_done=0` ... no late
+completion was observed in those runs". **There are no such rounds.** test-186 has
+no `rounds/` directory because it was never run on the device, and the only
+`matched_done=0` in this repository is inside
+`test-186-*/fixtures/programmed-no-completion.log`, which is a synthetic fixture
+written to pin `classify-round.sh`'s branches - as test-186's own README says in a
+banner.
+
+The consequence runs the other way from what the sentence claimed. The hazard is
+not "weakened by observation"; it is **entirely untested on hardware**. Nothing in
+this repository has ever looked for a `LATE COMPLETION` on this device, so:
+
+* `matched_done` has no measured value, in either direction;
+* the hazard stays open because it has never been probed, not because a probe came
+  back negative;
+* the first thing that would test it is a `rpmh-debug` run, because patch `0021`
+  prints `LATE COMPLETION` with the millisecond gap between the timeout and the
+  late completion. That run is now the cheapest way to move this item, and it
+  needs no backport - the switch is already in the flashed kernel
+  (`docs/RPMH_RSC_DEBUG_PATCH_STATUS.md` section 5a).
+
+This is the third document found citing those same synthetic fixtures as device
+evidence (the plan section 4, the RPMh status doc section 6, and here), which is
+why `EvidenceProvenanceTests` now scans every document rather than one.
 
 ## 6. Timeout arithmetic (why the search window moved)
 

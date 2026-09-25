@@ -1840,6 +1840,64 @@ class EvidenceProvenanceTests(unittest.TestCase):
         self.assertIn("synthetic", text)
         self.assertIn("test-186", text)
 
+    def test_no_document_cites_a_fixture_observation_without_a_qualifier(self):
+        """The guard, generalised: three documents made the same mistake.
+
+        Each cited the synthetic fixtures as a hardware measurement, and in each
+        case the correction changed the *conclusion* - a result read as "observed
+        and negative" had never been measured at all.  Guarding one document (the
+        plan) is what let the other two through, so this scans every markdown
+        file for a fixture-only string and requires a qualifier in the same file.
+        """
+        # Strings that exist only inside the synthetic fixtures.
+        markers = ("matched_done", "13.400000", "14.270000")
+        qualifiers = (
+            "synthetic", "never run", "never been run", "NOT-DEVICE-EVIDENCE",
+            "CORRECTION", "not hardware evidence", "not device evidence",
+            "untested",
+        )
+        roots = [ROOT / "docs", ROOT / "reference/boot-tests", ROOT / "kernel"]
+        offenders = []
+        for root in roots:
+            for path in sorted(root.rglob("*.md")):
+                try:
+                    text = path.read_text(errors="replace")
+                except OSError:
+                    continue
+                if not any(m in text for m in markers):
+                    continue
+                low = text.lower()
+                if not any(q.lower() in low for q in qualifiers):
+                    offenders.append(str(path.relative_to(ROOT)))
+        self.assertEqual(
+            offenders, [],
+            "these documents quote a synthetic-fixture observation with no "
+            f"qualifier: {offenders}",
+        )
+
+    def test_the_fixtures_directory_warns_against_citing_it(self):
+        banner = ROOT / (self.FIXTURES + "/NOT-DEVICE-EVIDENCE.md")
+        self.assertTrue(banner.exists(), "the fixtures banner is missing")
+        text = banner.read_text()
+        self.assertIn("NOT device evidence", text)
+        for doc in ("GPU_GMU_RPMH_STALL_PLAN.md", "RPMH_RSC_DEBUG_PATCH_STATUS.md",
+                    "RPMH_TIMEOUT_LIFETIME_ANALYSIS.md"):
+            with self.subTest(doc=doc):
+                self.assertIn(doc, text)
+
+    def test_the_lifetime_doc_records_that_the_hazard_is_untested(self):
+        """0021 prints LATE COMPLETION; nobody has ever looked for one here."""
+        text = read("docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md")
+        flat = " ".join(text.split())
+        self.assertIn("CORRECTION (round 29)", text)
+        self.assertIn("entirely untested on hardware", flat)
+        self.assertIn("matched_done", text)
+        # It must not keep the old, unfounded "weakened by observation" reading.
+        self.assertNotIn(
+            "That weakens the hazard as an", flat,
+            "the withdrawn reading is still present",
+        )
+
     def test_the_fixture_only_timestamp_is_not_quoted_as_real(self):
         """13.400000 appears only in the fixture; it must not be a plan fact."""
         # It may appear inside the correction note (which names it as fixture
