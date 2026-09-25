@@ -1,0 +1,29 @@
+[Unit]
+Description=Android Debug Bridge daemon (gts9 fast debug channel)
+Documentation=file:/usr/share/doc/adbd/README.adbd
+After=network.target gts9-usb-acm.service
+Wants=gts9-usb-acm.service
+
+# This deliberately does NOT use the gadget helper Debian's adbd package ships.
+# `adbd-usb-gadget setup` creates its own gadget at
+# /sys/kernel/config/usb_gadget/g1 and binds it to the UDC, but a UDC binds one
+# gadget at a time - and the gts9 gadget already owns this controller for the two
+# ACM console ports.  That bind fails, and the console is the only way back in.
+#
+# So the ADB *function* is not used at all here.  adbd is started on its own and
+# serves the TCP transport on 0.0.0.0:5555; the network path it is reached over
+# comes from the gts9 gadget's NCM function (see /etc/gts9-usb-net and
+# gts9-usb-acm).  Measured 2026-09-25 over that link: `adb push` at 70.5 MB/s.
+#
+# adbd logs "Failed to get adbd socket" and "socket unavailable, disabling user
+# prompts" on a non-Android system.  Both are expected: there is no Android
+# framework to ask, so no key prompt is ever shown.  It is not an error.
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/android-sdk/platform-tools/adbd
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -12,9 +12,15 @@
 # (gs_console_connect() -> cons->req), so a port that is both the kernel
 # console and the getty can only ever send kernel messages - measured on
 # 2026-09-24, when adding console=ttyGS0 to the command line silently killed the
-# remote shell.  No mass storage, NCM, RNDIS, MTP or adb, and no block device is
-# touched: the gadget must never be able to disturb the root filesystem it runs
-# from.
+# remote shell.  No mass storage, RNDIS, MTP or adb FUNCTION, and no block device
+# is touched: the gadget must never be able to disturb the root filesystem it runs
+# from, and the ADB function is not used because it would need a second gadget.
+#
+# It may add exactly one optional thing - an NCM or ECM network function, and only
+# when /etc/gts9-usb-net asks for it (see the network section below and
+# docs/FAST_DEBUG_CHANNEL.md).  That is what turns the same cable into the ssh and
+# adb transport, and it is opt-in precisely so the console-only gadget stays the
+# default.
 #
 # Every wait is bounded.  A failure exits non-zero so `systemctl --failed`
 # shows it, but nothing here reboots, panics or blocks the boot targets; the
@@ -83,6 +89,90 @@ split_consoles() {
 	fi
 }
 
+# --- optional USB network function -------------------------------------------
+#
+# Off unless /etc/gts9-usb-net exists, in which case the file names the function
+# and the address for the device side:
+#
+#	ncm 192.168.42.1/24
+#
+# Why: the serial console moves about 3 KB/s.  Measured 2026-09-25, 131072 bytes
+# took the same 40 s at a host baud of 115200 and at 921600 - the line coding is
+# nominal, because COM17/COM19 are USB CDC-ACM and the bytes really travel in USB
+# bulk transfers.  Raising the baud cannot help; adding a network function turns
+# the same cable into a link fast enough for ssh, scp and dmesg.
+#
+# The function goes into THIS gadget rather than a second one: a UDC binds one
+# gadget at a time, so a separate gadget - which is what Debian's adbd package
+# creates - cannot bind while the console owns the controller.  Every step is
+# best-effort: on any failure the function is dropped and the ACM console comes
+# up exactly as before, so this cannot cost the console.
+NET_CONF=${GTS9_USB_NET_CONF:-/etc/gts9-usb-net}
+NET_IFACE=${GTS9_USB_NET_IFACE:-usb0}
+net_kind=""
+net_addr=""
+
+read_net_conf() {
+	[ -r "$NET_CONF" ] || return 0
+	read -r net_kind net_addr <"$NET_CONF" || true
+	case "$net_kind" in
+	"") return 0 ;;
+	ncm | ecm) ;;
+	*)
+		echo "gts9-usb-acm: unknown network function '$net_kind' in $NET_CONF" >&2
+		net_kind=""
+		net_addr=""
+		;;
+	esac
+}
+
+net_drop() {
+	[ -n "$net_kind" ] || return 0
+	rm -f "$GADGET/configs/c.1/$net_kind.usb0" 2>/dev/null || true
+	rmdir "$GADGET/functions/$net_kind.usb0" 2>/dev/null || true
+	echo "gts9-usb-acm: dropped $net_kind.usb0; the ACM console is unaffected" >&2
+	net_kind=""
+}
+
+setup_network() {
+	[ -n "$net_kind" ] || return 0
+	if [ ! -d "$GADGET/functions/$net_kind.usb0" ]; then
+		if ! mkdir -p "$GADGET/functions/$net_kind.usb0" 2>/dev/null; then
+			echo "gts9-usb-acm: no $net_kind function in this kernel; want CONFIG_USB_CONFIGFS_${net_kind}" >&2
+			net_kind=""
+			return 0
+		fi
+	fi
+	if [ ! -e "$GADGET/configs/c.1/$net_kind.usb0" ]; then
+		if ! ln -s "$GADGET/functions/$net_kind.usb0" "$GADGET/configs/c.1/$net_kind.usb0" 2>/dev/null; then
+			net_drop
+			return 0
+		fi
+	fi
+	echo "gts9-usb-acm: $net_kind.usb0 linked into the configuration"
+}
+
+configure_network() {
+	[ -n "$net_kind" ] || return 0
+	waited=0
+	while [ "$waited" -lt "$TTY_WAIT_SECONDS" ] && [ ! -d "/sys/class/net/$NET_IFACE" ]; do
+		sleep 1
+		waited=$((waited + 1))
+	done
+	if [ ! -d "/sys/class/net/$NET_IFACE" ]; then
+		echo "gts9-usb-acm: $NET_IFACE did not appear after ${TTY_WAIT_SECONDS}s" >&2
+		return 0
+	fi
+	if [ -n "$net_addr" ]; then
+		ip link set "$NET_IFACE" up 2>/dev/null || true
+		ip addr replace "$net_addr" dev "$NET_IFACE" 2>/dev/null ||
+			echo "gts9-usb-acm: could not put $net_addr on $NET_IFACE" >&2
+	fi
+	echo "gts9-usb-acm: $NET_IFACE up with $(ip -4 -o addr show dev "$NET_IFACE" 2>/dev/null | awk '{print $4}')"
+}
+
+read_net_conf
+
 # A gadget left over from an earlier userspace and still bound is already the
 # console this service exists to provide; do not tear it down and rebuild it.
 if [ -d "$GADGET" ] && [ -d "$GADGET/functions/acm.usb0" ]; then
@@ -90,6 +180,7 @@ if [ -d "$GADGET" ] && [ -d "$GADGET/functions/acm.usb0" ]; then
 	if [ -n "$bound_udc" ]; then
 		echo "gts9-usb-acm: gadget already bound to $bound_udc"
 		split_consoles
+		configure_network
 		record_stage usb-acm-ready
 		exit 0
 	fi
@@ -126,6 +217,8 @@ if [ ! -e "$GADGET/configs/c.1/acm.usb1" ]; then
 		fail 'cannot link the console ACM function into the configuration'
 fi
 
+setup_network
+
 waited=0
 while [ "$waited" -lt "$UDC_WAIT_SECONDS" ] && \
       [ -z "$(ls -A "$UDC_DIR" 2>/dev/null)" ]; do
@@ -138,7 +231,14 @@ if [ -z "$udc" ]; then
 fi
 
 if ! echo "$udc" > "$GADGET/UDC" 2>/dev/null; then
-	fail "cannot bind the gadget to $udc"
+	# A bind failure must never cost the console: drop the optional network
+	# function and retry once with the ACM ports alone.
+	if [ -n "$net_kind" ]; then
+		net_drop
+		echo "$udc" > "$GADGET/UDC" 2>/dev/null || fail "cannot bind the gadget to $udc"
+	else
+		fail "cannot bind the gadget to $udc"
+	fi
 fi
 
 waited=0
@@ -153,6 +253,7 @@ else
 fi
 
 split_consoles
+configure_network
 
 record_stage usb-acm-ready
 exit 0

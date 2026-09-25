@@ -1,5 +1,6 @@
 """Host checks for the Debian-side X710 USB ACM debug console."""
 import os
+import re
 import subprocess
 import tempfile
 import time
@@ -110,10 +111,37 @@ class UsbAcmServiceTests(unittest.TestCase):
         self.assertIn('[ -e "$GADGET/functions/acm.usb1/console" ]', text)
         self.assertIn('split_consoles', text)
 
-    def test_helper_never_mentions_other_usb_functions(self):
-        for forbidden in ('mass_storage', 'ncm', 'rndis', 'mtp', 'adb',
-                          'uvc', 'hid'):
+    def test_helper_never_mentions_dangerous_usb_functions(self):
+        # Mass storage would expose the root filesystem, RNDIS/MTP/UVC/HID are
+        # not needed, and the ADB *function* would need a second gadget - which
+        # cannot bind while this one owns the UDC.  None of them may appear.
+        for forbidden in ('mass_storage', 'rndis', 'mtp', 'adb', 'uvc', 'hid'):
             self.assertNotIn(forbidden, HELPER_CODE.lower(), forbidden)
+
+    def test_the_network_function_is_the_one_deliberate_exception(self):
+        # Narrowed on 2026-09-25: NCM/ECM is allowed, because it is the transport
+        # ssh and adb are reached over, but ONLY behind all of these conditions.
+        text = HELPER_CODE
+        self.assertIn('ncm | ecm', text, 'only ncm and ecm are accepted')
+
+        # (a) off unless the flag file exists
+        self.assertIn("NET_CONF=${GTS9_USB_NET_CONF:-/etc/gts9-usb-net}", text)
+        for fn in ('setup_network', 'configure_network'):
+            self.assertRegex(
+                text, rf"{fn}\(\) \{{\n\t\[ -n \"\$net_kind\" \] \|\| return 0",
+                f'{fn} must be a no-op with no flag file')
+
+        # (b) any failure drops the function and keeps the console
+        self.assertIn('net_drop', text)
+        bind = re.search(r'if ! echo "\$udc" > "\$GADGET/UDC".*?\nfi', text, re.S)
+        self.assertIsNotNone(bind, 'the UDC bind block is missing')
+        self.assertIn('net_drop', bind.group(0),
+                      'a failed bind must retry without the network function')
+
+        # (c) no second gadget, and no block device
+        self.assertNotIn('usb_gadget/g1', text)
+        for forbidden in ('/dev/mmcblk', 'mkfs', 'fsck', 'dd '):
+            self.assertNotIn(forbidden, text, forbidden)
 
     def test_helper_cannot_touch_the_root_filesystem(self):
         # The console must never depend on - or be able to disturb - the TF
