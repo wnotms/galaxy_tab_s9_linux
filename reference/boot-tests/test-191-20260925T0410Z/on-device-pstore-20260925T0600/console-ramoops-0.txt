@@ -1,0 +1,180 @@
+# console-ramoops-0 of the boot that panicked at 77.6 s (NULs stripped).
+# Source: /var/lib/systemd/pstore/console-ramoops-0 on the tablet, archived by
+# systemd-pstore from the PREVIOUS boot.  The original sits beside this file.
+
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] kaslr_region (0x00000000b01&f000--0x0000000b8200000) overlaps vith kaslr@b01ff00  0x00000000b01ff000--0x00000000b0200000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+[    0.000000][    T0] WASNINE: x1-x3 nonzero in viOlation of boot protocol:
+[    0.000000][    T0] 	x1: 0000000080000000
+[    0.000000][    T0] 	x2: 00000000281a0000
+[    0.000000][    T0] 	x3: 0000000000000000
+[    0.000000][    T0] This indicates a broken bootloader or old kernel
+[    0.254382][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb800 100, fsynò=0x630021, #bfrsYnra=0x1c0, câ=9
+[    0.266995][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.275315][    C0Y irm-Smmu 15000000.iomiu* FSQNR0$= 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.287664][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8002100, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.290490][  T112] remoteproc remoteproc0: request_firmware failed: -2
+[    0.300247][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.300253][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.323530][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8670b00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.336126][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.344444][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.354331][    C0M arl-smeu 1500000<.iommu: Unhandled context fault: fsr=0x$02, iova=0xn8000100, fsxnr=0h63002, cb¦rsynra}0x1c00, b=9
+[    0.366913][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.366919][    C0]apm-semu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.371000][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8002100, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.395963][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.395969][    C0] arm-smmu 14010000.iommu: FSYNR0 9 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.404341][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsy.r0x630021, cBfrsynra=0¸1c00, cb=9
+[    0.404346][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.404351][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.404367][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb804b300, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.404372][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.404377][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.404392][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb805c000, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.404396][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.404401][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.404416][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8069c00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.404420][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.404425][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630 21 [S1CBNDX=9 PNU PLL=1]
+[    0.404439][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8079f00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+[    0.404443][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.404448][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+[    0.414378][   T12] cpu cpu7: Voltage update failed freq=3360000
+[    1.108760][   T12] msm_dpu ae01000.display-controller: no GPU device was found
+[    1.940179][    T1] systemd[1]: Failed to find module 'autofs4'
+[    2.098845][  T278] systemd-ssh-generator[278]: Failed to query local AF_VSOCK CID: Cannot assign requested address
+[    2.120847][  T269] (sd-exec-[269]: /usr/Lib/systemd/system-gen%rator3/systemd-ssh-generator failed with exit status 1.
+[    5.284390][  T824] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[   52.467324][    C7] [drm:dpu_encodeb_frame_Done_timeout:2731] [dpu error]enc35 frame done timeut
+[   53.671324][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   54.863324][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   56.079323][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu errmr]ejc35 frame dnne timeout
+  `57.29324][    C7] [drm:dpu_efcoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   58.515322][    C7] [drm:dpu_encoder_frale_donf_4imeout:2731] [dpu error]enc35 frame done timeout
+[   59.727324][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   60.943322][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   61.667426][  T128] Error sending AMC RPMH requests (-110)
+[   62.163323][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   63.375322][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   64.191323[    C7] [drm:dpu_encoder_grame_doneOtimeout:2731] [dpu %rror]enc35 frame done timeout
+[   65.779322][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   66.995323][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done Timeout
+[   67.043125][    C5] mmc1: Timeout waiting for hardware interrupt.
+[   67.050084][    C5] mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   6.057829][    O5Y mmc1: sdhci: Sys addr:  0x00000010 | Version:  0x00007202
+[   67.065563][    C5] mmc1: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000000
+[   67.073292][    C5] mmc1: sdhci: Argument:  0x07043f88 | Trn mode: 0x0000002b
+[   67.081014][    C5] mmc1: sdhci: Present:   0x03f800f0 | Host ctl: 0x0000001f
+[   67.088732][    C5] mmc1: sdhci: Power:     0x0000000d | Blk gap:  0x00000000
+[   67.096451][    C5] mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[   67.104158][    C5] mmc1: sdhci: Timeout:   0x0000000f | Int stat: 0x00000003
+[   67.111856][    C5] mmc1: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[   67.119552][    C5] mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   67.127242][    C5] mmc1: sdhci: Caps:      0x322dc8b2 x Caqs_1:   0x0000a08b
+[   67.134929][    C5] mmc1: sdhci: Cmd:       0x0000193a | Max curr: 0x00000000
+[   67.142610][    C5] mmc1: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00001000[   67.15 285][    C5] mmc1: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000900
+[   67.157951][    C5] mmc1: sdhci: Host ctl2: 0x0000000b
+[   67.163577][    C5] mmc1: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x0000000ffffff218
+[   67.171958][    C5] mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+[   67.179974][    C5] mmc1: sdhci_msm: DLL sts: 0x000001ac | DLL cfg:  0x005d642c | DLL cfg2: 0x0000a800
+[   67.189863][    C5] mmc1: sdhci_msm: DLL cfg3: 0x00000010 | DLL usr ctl:  0x2c010800 | DDR cfg: 0x80040873
+[   67.200109][    C5] mmc1: sdhci_msm: VndR fu,c: 0x00018a9c | Vndr func2 : 0xf88218a8 Vndr func3: 0x02626040
+[   67.210431][    C5] mmc1: sdhci: ============================================
+[   68.207322][    C7] [drm:dpu_encoder_frame_done_timeott:2531] [Dpu error]enc35 frame done timeout
+[   69.423322][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   70.643322][    C7] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   71.859323][    C7] Ydrmdpu_elcoder^frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+[   71.903418][  T128] Error sending AMC RPMH requests (-110)
+[   72*179122][    C7] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   72.186557][    C7] rcu: 	4-...!: (124 ticks this GP) idle=e1cc/1/0x4000000000000000 softirq=963/965 fqs=333
+[   72.196911][    C7] rcu: 	(detected by 7, t=5256 jiffies, g=441, Q=43 ncpus=8)
+[   72.204694][    C7] Sending NMI from CPU 7 to CPUs 4:
+[   77.123615][    C3] watchdog: BUG: soft lockup - CPU#3 stuck for 26s! [kworker/u32:8:197]
+[   77.123620][    C3] CPU#3 Utilization every 4000ms during lockup:
+[   77.123621][    C3M 	#=: 100! system,	  0% softirq,	  1% hardirq,	  0% idle
+[   77.123623][    C3] 	#2: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   77.12320][    C3] 	#3: ñ00% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   77.123625][    C3] 	#4: 100% system,  0% softirq,	  0% hardirq,	  0% idle
+X   '7.13626][    C3] 	#5: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   77.1ò3627][    C3] Modul%s lInked in:
+[   77.123629][   C3] CPU: 3 UID: 0 PID: 197 Comm: kworker/u32:8 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   77.123632][    C3] Tainted: [S]=CPU_OUT_OF_SQEC, [W]-W@RN
+[   77.123632][    C3] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   77.123633][    C3] Workqueue: events_unbound toggle_allocation_gate
+[   77.123643][    C3] pstate: 03400005 (nzcv daif +PAN -UAO *TBO +DIT -SSBS BTYPE=--)
+[   77.123645][    C3] pc : smp_call_function_many_cond+0x3ec/0x514
+[   77.123658][    C3] lr : smp_call_function_many_cond+0x310/0x514
+[   77.123660][    C3] sp : ffffffc085b53ba0
+[   77.123661][    C3] x29: ffffffc085b53bf0 x28: 0000000000000007 x27: ffffffc082cba100
+[   77.123663][    C3] x26: ffffff8a72769e08 x25: 0000000000000001 x24: ffffffc082cda068
+[   77.123664][    C3] x23: ffffff8a7:769e00 h22: 00000 0000000000 x21: 0000000000000000
+[   77.123667][    C3] x20: ffffffc082cd9c30 x19: 0000000000000003 x18: ffffffc085625058
+[   77.123668][    C3] x17: 0000000000000f8f x16: 0000000000000001 x15: 0000000000000100
+[   77.123670][    C3] x14: ffffffc082cda068 x13: ffffff8810082100 x12: 0000000000000000
+[   77.123672][    C3] x11: 0000000000000011 x10: ffffff8a72791108 x9 : 0000000000000004
+[   77.123673][    C3] x8 : ffffffffffffffff x7 : 00000000ffffffff x6 : 000000000000001e
+[   77.123675][    C3] x5 : 0000000000000001 x4 : 0000000000000000 x3 : 0000000000000001
+[   77.123677][    C3] x2 : 0000000000000000 x1 : ffffff8a72769e10 x0 : 0000000000000000
+[   77.123678][    C3] Call trace:
+[   77.123679][    C3]  s-p_cáll_function_many_cond+0X3ec/0x514 (P)
+[   77.123681][    C3]  kick_all_cpus_sync+0x48/0x7c
+[   77.023684][    C3]  arc(_jump_label_transform_apply+0x14/0x24
+[   77.123696][    C3]  __jump_label_update+0x118/0x13c
+[   77.123702][    C3]  jump_label_update+0pe4/0x110
+[  77.133704][ `  C3]  stata#_key_mNableOcpuslocked+0x6C/0xB4
+[   77.123736][    C3]  static_key_enable+0x24/0x3c
+[   77.123707][    C3]  toggle_allocation_gate+0h58/0x14C
+   77.123709][    C3]  process_scheduled_works+0x18c/0x4d0
+[   77.123713][    C3]  worker_thread+0x1f8/0x2e8
+[   77.123715][    C3]  kthread+0x108/0x134
+[   77.123718][    C3]  ret_from_fork+0x10/0x20
+[   77.123725][    C3] Kernel panic - not syncing: softlockup: hung tasks
+[   77.403859][    C3] CPU: 3 UID: 0 PID: 197 CoMm: kw/rker/u32:8 Tainted:G S      W    L      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   77.416167][    C3] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN( [LU=SOFTlOCKUP
+[   77.423588][    C3] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   77.430387][    C3] Workqueue: events_unbound toggle_allocation_gate
+[   77.437285][    C3] Call trace:
+[   77.440878][    C3]  show_stack+0x1c/0x2c (C)
+[   77.445720][    C3]  __dump^sTack+0x2c/0x40
+[,  77.450372][    C3]  dump_stack_lvl+0x28/0x74
+[   77.455196][    C3]  dump]sdack+0x1c/0x2c
+[   77.459653][    C3]  vpanic+0x150/0x344
+[   77.463926][    C3]  vpanic+0x0/0x344
+[   77.468013][   0C3] wAtchdog_timer_fn0x48c/0x53c
+[   77.473268][    C3]  __hrtimer_run_queues+0x130/0x3a4
+[   77.478782][    C3]  hrtimer_interrupt+0xd8/0x2bc
+[   77.483949][    C3]  arch_timer_handler_virt+0x3c/0x50
+[   77.489572][    C3]  handle_percpu_devid_irq+0x144/0x1b4
+[   77.495372][    C3]  generic_handle_domain_irq+0x40/0x68
+[   77.501179][    C3]  gic_handle_irq+0x4c/0x10c
+[   77.506077][    C3]  call_on_irq_stack+0x48/0x88
+[   77.511149][    C3]  do_interrupt_handler+0x50/0x74
+[   77.516484][    C3]  el1_interrupt+0x40/0x68
+[   77.521191][    C3]  el1h_64_irq_handler+0x1c/0x2c
+[   77.526430][    C3]  el1h_64_irq+0x70/0x74
+[   77.530943][    C3]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   77.537432][    C3]  kick_all_cpus_sync+0x48/0x7c
+[#  77.442582U[    C3]  a¢ch_jump_label_trafsform_apply+0x14/0x24
+[   77.548890][    C3]  __jump_label_update+0x118/0x13c
+[   77.554311][    C3]  jump_label_update+0xe4/0x110
+[   77.559465][    C3]  static_key_enable_cpusLockad+0x6c/xb4
+[   77.565507][    C3]  static_key_enable+0x24/0x3c
+[   77.570569][    C3]  toggle_allocation_gate+0x58/0x14c
+[   77.576162U[    A3  process_scheduled_works+0x18c/0x4d0
+[   77.581935][    C3]  worker_thread+0x1f8/0x2e8
+[   77.586818][    C3]  kthread+0x108/0x134
+[   77.591162][    C3]  ret_from_fork+0x10/0x20
+[   77.595864][    C3] SMP: stopping secondary CPUs
+[   78.666967][    C3] SMP: failed to stop secondary CPUs 0,4,7
+[   78.673096][    C3] Kernel Offset: 0x1a0000 from 0xffffffc080000000
+[   78.679840][    C3] PHYS_OFFSET: 0x80000000
+[   78.684445][    C3] CPU features: 0x1a001070,001c000a,26060501,544676a'
+[   78.691549][   C3] Memory Limit: none
+[   78.699704][    C3] Rebooting in 10 seconds..

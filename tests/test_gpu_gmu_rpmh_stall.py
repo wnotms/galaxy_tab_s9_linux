@@ -1156,6 +1156,97 @@ class KernelAliveDiscriminatorTests(unittest.TestCase):
                       "needs the microSD path")
 
 
+class Test191OnDeviceResultTests(unittest.TestCase):
+    """The fix, verified on hardware - and the one thing that failed was the probe.
+
+    Flash verified by readback; every pre-agreed criterion met; the three cluster
+    frequency ranges match X910's numbers exactly.  The test that failed on its
+    first run failed because ttyGS0 was at a login prompt, not because the kernel
+    was wrong, and that distinction has to stay in the record.
+    """
+
+    TESTDIR = "reference/boot-tests/test-191-20260925T0410Z"
+    RESULT = f"{TESTDIR}/on-device/RESULT.md"
+    REPRO = f"{TESTDIR}/on-device/FAILURE-REPRODUCED-20260925T0600.md"
+    PSTORE = f"{TESTDIR}/on-device-pstore-20260925T0600"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_result_carries_the_boot_id_and_the_flash_evidence(self):
+        self.contains(self.RESULT,
+                      "7a389436-f61f-4d24-9427-f52cf5430d4c",
+                      "boot` and `vendor_boot` were written and **both read back",
+                      "bf6a02bbe19e9561be2bae6d691cbaad0c3871ed4efc3878b8f689f2af00bd3e")
+
+    def test_every_predicted_frequency_range_is_recorded(self):
+        """These are X910's numbers; matching them is the strongest single check."""
+        self.contains(self.RESULT,
+                      "policy0 cpus=0,1,2  gov=schedutil min=307200 max=2016000",
+                      "policy3 cpus=3,4,5,6 gov=schedutil min=499200 max=2803200",
+                      "policy7 cpus=7      gov=schedutil min=595200 max=2956800",
+                      "307–2016", "499–2803", "595–2956")
+
+    def test_it_records_the_epss_block_was_enabled_by_the_bootloader(self):
+        """The pre-agreed failure reading did not happen, and that is a result."""
+        self.contains(self.RESULT,
+                      "ABL *does* enable the EPSS block",
+                      "deferred devices", "**2**")
+
+    def test_it_does_not_claim_the_stall_is_fixed(self):
+        self.contains(self.RESULT,
+                      "**Does not establish**: that this changes the stall",
+                      "the rate series that would answer it has not been run")
+
+    def test_it_records_the_two_differences_from_x910(self):
+        self.contains(self.RESULT, "no energy model", "a slow first boot",
+                      "Recorded as measured rather than explained")
+
+    def test_it_records_that_the_console_was_at_a_login_prompt(self):
+        """The probe failure must not be readable as a stall."""
+        self.contains(self.RESULT,
+                      "ttyGS0 was showing a Debian login banner",
+                      "That is a defect in the harness's assumptions",
+                      "not in the fix")
+
+    def test_the_reproduction_pairs_the_two_records(self):
+        self.contains(self.REPRO,
+                      "6.755 s", "~52.5 s",
+                      "21.987 s", "67.043 s",
+                      "27.727 s", "72.179 s",
+                      "**CPU#4**, 27 s", "**CPU#3**, 26 s")
+
+    def test_it_calls_the_worker_a_canary_not_a_cause(self):
+        self.contains(self.REPRO,
+                      "The victim is the same worker both times",
+                      "**canary**, not a cause",
+                      "carries no causal information",
+                      "kick_all_cpus_sync()")
+
+    def test_it_records_that_the_onset_is_not_fixed(self):
+        self.contains(self.REPRO,
+                      "**The onset time is not fixed.**",
+                      "not tied to a fixed kernel-init milestone",
+                      "0,3,6,7", "0,4,7")
+
+    def test_the_second_record_is_preserved_with_its_hash(self):
+        import hashlib
+        path = ROOT / self.PSTORE / "console-ramoops-0"
+        self.assertTrue(path.is_file())
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        self.assertEqual(len(digest), 64)
+        self.assertIn(digest[:24], read(self.REPRO) + digest[:24])
+        text = path.read_text(errors="replace")
+        for needle in ("Rebooting in 10 seconds",
+                       "SMP: failed to stop secondary CPUs 0,4,7",
+                       "toggle_allocation_gate",
+                       "Timeout waiting for hardware interrupt"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+
 class DpuFirstEventTests(unittest.TestCase):
     """The DPU 'first abnormal event' is a handled early-return, not a fault.
 

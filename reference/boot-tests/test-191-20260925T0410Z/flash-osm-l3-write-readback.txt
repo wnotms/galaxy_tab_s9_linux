@@ -1,0 +1,29 @@
+2026-09-25T06:30:55Z profile=osm-l3 bundle=/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-test191-osm-l3
+2026-09-25T06:30:55Z host boot.img        dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+2026-09-25T06:30:55Z host vendor_boot.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+100663296 bytes (96 M) copied, 0.099162 s, 968 M/s
+/tmp/boot-current.img: 1 file pulled, 0 skipped. 35.5 MB/s (100663296 bytes in 2.701s)
+2026-09-25T06:30:58Z BACKUP boot -> /home/ms/Samsung/gts9-flash-tests/test-191-osm-l3/boot-before-osm-l3.img bf6a02bbe19e9561be2bae6d691cbaad0c3871ed4efc3878b8f689f2af00bd3e
+100663296 bytes (96 M) copied, 0.043180 s, 2.1 G/s
+/tmp/vendor_boot-current.img: 1 file pulled, 0 skipped. 35.2 MB/s (100663296 bytes in 2.727s)
+2026-09-25T06:31:02Z BACKUP vendor_boot -> /home/ms/Samsung/gts9-flash-tests/test-191-osm-l3/vendor_boot-before-osm-l3.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+2026-09-25T06:31:02Z PASS the tablet is running the expected test-187-baseline kernel (bf6a02bbe19e9561be2bae6d691cbaad0c3871ed4efc3878b8f689f2af00bd3e)
+2026-09-25T06:31:02Z --- boot: writing host sha256 dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c ---
+D:\android\gts9-flash\test191-boot.img: 1 file pushed, 0 skipped. 71.1 MB/s (100663296 bytes in 1.350s)
+2026-09-25T06:31:04Z PASS boot push verified on device (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+100663296 bytes (96 M) copied, 0.357540 s, 269 M/s
+100663296 bytes (96 M) copied, 0.041193 s, 2.2 G/s
+/tmp/boot-after.img: 1 file pulled, 0 skipped. 35.3 MB/s (100663296 bytes in 2.720s)
+2026-09-25T06:31:08Z PASS boot readback verifies (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+2026-09-25T06:31:08Z --- vendor_boot: writing host sha256 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f ---
+D:\android\gts9-flash\test191-vendor_boot.img: 1 file pushed, 0 skipped. 721.4 MB/s (100663296 bytes in 0.133s)
+2026-09-25T06:31:09Z PASS vendor_boot push verified on device (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+100663296 bytes (96 M) copied, 0.264940 s, 362 M/s
+100663296 bytes (96 M) copied, 0.097823 s, 981 M/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 35.3 MB/s (100663296 bytes in 2.721s)
+2026-09-25T06:31:12Z PASS vendor_boot readback verifies (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+2026-09-25T06:31:12Z flash complete and verified: boot + vendor_boot now hold test-191 'osm-l3'
+2026-09-25T06:31:12Z backup kept at /home/ms/Samsung/gts9-flash-tests/test-191-osm-l3/{boot,vendor_boot}-before-osm-l3.img
+2026-09-25T06:31:12Z NEXT: reboot the tablet.  The initramfs clears the BCB, so a plain reset is enough:
+2026-09-25T06:31:12Z   /mnt/d/android/platform-tools/adb.exe shell reboot system
+2026-09-25T06:31:12Z then run:  /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/verify-osm-l3.sh
