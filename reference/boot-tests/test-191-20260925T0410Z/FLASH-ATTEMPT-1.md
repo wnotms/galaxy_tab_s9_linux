@@ -161,3 +161,79 @@ A power cycle is still the only way back, because with the console blocked there
 no shell to type into and no sshd to connect to. But "the tablet is dead" is no
 longer an acceptable shorthand, and `gts9-kernel-alive.sh` should be run before any
 future forced reset so the state is recorded rather than assumed.
+
+## 9. Correction: "echoed, not executed" has a second cause, and it is not a stall
+
+Section 7 leaned on the console signature - the heartbeat echo came back and the
+command's result never did - as evidence that the tablet was wedged. That inference
+was too strong, and the reason is a defect in this project's own console plumbing.
+
+On the healthy test-191 boot the console did exactly the same thing:
+
+```
+06:40:38  RECV  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, ...
+06:40:52  RECV  echo READY1
+06:40:52  RECV  ls -d /sys/devices/system/cpu/cpufreq/policy* 2>/dev/null | wc -l
+          (no result, ever)
+```
+
+while the unit looked perfectly healthy - `gts9-acm-getty.service`, `active
+(running)`, `Main PID: 1139 (login)`. The tty echoed every character the host sent
+and executed none of it, which is byte-for-byte what a wedged kernel looks like on
+this instrument.
+
+`systemctl restart gts9-acm-getty.service` over ssh fixed it outright:
+
+```
+06:46:25  RECV  [?2004hroot@gts9:~# echo READY1
+06:46:25  RECV  READY1
+06:46:35  RECV  GTS9_OK_781.35_END
+```
+
+so **a login prompt with no reachable shell is a real, independent failure of this
+console, and the first response to a silent console is now a getty restart, not a
+power cycle.**
+
+### What is *not* claimed about it
+
+The mechanism is **not** established, and one plausible-sounding one was already
+ruled out. `systemctl show -p TasksCurrent gts9-acm-getty.service` reads `0` - before
+*and after* the fix, on a console that demonstrably executes commands - because
+logind moves the session into `session-N.scope` and the unit's own cgroup empties.
+It is not an indicator of anything, and an earlier draft of this section read it as
+"no shell child". What is observed is only: the console echoed without executing,
+a restart fixed it, and `ps -t ttyGS0 -o args=` is the check that actually
+distinguishes the two (`-bash` present on a working console).
+
+### What this does and does not take back
+
+* **taken back**: the console half of the 06:0x evidence. "The console echoed but did
+  not execute" no longer distinguishes a stall from this getty failure, and it cannot
+  be re-adjudicated after the fact;
+* **not taken back**: the 04:57Z failure, which never rested on the console - it has
+  two independent CPU measurements (`SMP: failed to stop secondary CPUs 0,3,6-7`,
+  an RCU stall naming CPU 0) and a recorded panic in pstore;
+* **not taken back**: the kernel-alive measurement of the 06:0x tablet. ICMP answered
+  3/3 at 2 ms while `ssh` refused, and a refused TCP connection is not something a
+  stuck getty can produce - so userspace really was impaired. What is no longer
+  claimed is that the *console* was blocked by the kernel rather than by this;
+* **the boot was still abnormal** - it took minutes to reach a login screen, which is
+  the operator's report - but "wedged" is a stronger word than the evidence supports
+  for that instance.
+
+### The probe bug this exposed, which is the same class as one already in this project
+
+The first version of `scripts/gts9-kernel-alive.sh` reported `console=blocked` on a
+console that was working, and it did so three times. Its result pattern was
+`GTS9_ALIVE_[0-9]+_END`, and `/proc/uptime` is `889.01`, so **the decimal point meant
+the pattern could never match**. That is the same class of bug as the hunt's
+`wait_ready` regex, which had to be corrected to allow a fractional uptime earlier in
+this project's history. Both were found by comparing the probe against a manual
+command, and neither would have been caught by reading the probe.
+
+After the fix, on the same tablet:
+
+```
+link=up  arp=reachable  icmp=1  ssh=up  console=live  console_shell=present
+kernel=alive  userspace=up
+```

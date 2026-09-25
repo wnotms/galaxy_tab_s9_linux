@@ -62,16 +62,41 @@ if timeout 45 "$repo_root/scripts/gts9-ssh.sh" 'true' >/dev/null 2>&1; then
 	ssh=up
 fi
 
+# A silent console has TWO causes and they look identical: a kernel that is not
+# running, and a getty whose interactive shell never came up.  Measured on the
+# healthy test-191 boot: the unit was "active (running)", the tty echoed every
+# character the host sent and executed none of it, and restarting the getty fixed it
+# outright - byte-for-byte what a wedged kernel looks like on this instrument.
+#
+# The check is `ps -t ttyGS0` for a shell, NOT `systemctl show -p TasksCurrent`:
+# logind moves the session into session-N.scope, so TasksCurrent is 0 for a getty
+# that is working perfectly.  That mistake was made once already.
+console_shell=unknown
+if [ "$ssh" = up ]; then
+	console_shell=$(timeout 45 "$repo_root/scripts/gts9-ssh.sh" \
+		'ps -t ttyGS0 -o args= 2>/dev/null | grep -cE "(^|/|-)(bash|sh|ash)( |$)"' 2>/dev/null \
+		| tr -d '\r' | tail -1)
+	case "$console_shell" in
+	0) console_shell=absent ;;
+	''|*[!0-9]*) console_shell=unknown ;;
+	*) console_shell=present ;;
+	esac
+fi
+
 console=blocked
 console_note="skipped (GTS9_SKIP_CONSOLE=1)"
 if [ "$skip_console" != "1" ]; then
 	out=$(timeout 150 "$repo_root/scripts/console-run.sh" -Port "$shell_port" \
 		-Out 'C:\Users\ms\AppData\Local\Temp\gts9-wedge\kernel-alive.log' \
-		-WaitReadySeconds 20 -ReadSeconds 8 \
+		-WaitReadySeconds 30 -ReadSeconds 15 \
 		-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>&1)
-	if grep -aqE 'GTS9_ALIVE_[0-9]+_END' <<<"$out"; then
+	# Fractional uptime: /proc/uptime is "889.01", so the pattern has to allow the
+	# decimal point.  Without it every probe reported console=blocked, which is the
+	# same class of bug the hunt's wait_ready regex had, and it produced a false
+	# diagnosis of the getty before it was caught.
+	if grep -aqE 'GTS9_ALIVE_[0-9][0-9]*\.[0-9]*_END' <<<"$out"; then
 		console=live
-		console_note="$(sed -n 's/.*GTS9_ALIVE_\([0-9]*\)_END.*/\1/p' <<<"$out" | tail -1)s uptime"
+		console_note="$(sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' <<<"$out" | tail -1)s uptime"
 	elif grep -aq 'WriteLine' <<<"$out"; then
 		console=blocked
 		console_note="the host could not write to the port at all"
@@ -100,11 +125,23 @@ echo "arp=$arp"
 echo "icmp=$icmp"
 echo "ssh=$ssh"
 echo "console=$console"
+echo "console_shell=$console_shell"
 echo "console_note=$console_note"
 echo "kernel=$kernel"
 echo "userspace=$userspace"
 
-if [ "$icmp" = 1 ] && [ "$ssh" != up ]; then
+if [ "$console" = blocked ] && [ "$console_shell" = present ]; then
+	# A shell exists on ttyGS0, so the port is not the problem: either the probe's
+	# read window was too short for this slow CDC-ACM console, or the getty is
+	# sitting at a login prompt with a shell that cannot be reached.  Neither is a
+	# stall, and one probe is not enough to say which.
+	echo "reading=a shell exists on ttyGS0 but the probe got no result"
+	echo "         re-probe with a longer read before calling this a stall"
+elif [ "$console" = blocked ] && [ "$console_shell" = absent ]; then
+	echo "reading=there is no shell on ttyGS0, so the console echoes and executes"
+	echo "         nothing.  This is not a stall.  Fix it with:"
+	echo "         systemctl restart gts9-acm-getty.service"
+elif [ "$icmp" = 1 ] && [ "$ssh" != up ]; then
 	echo "reading=the kernel is running and userspace is not usable"
 	echo "         console and ssh cannot see this state; they are not liveness tests"
 elif [ "$icmp" = 0 ] && [ "$link" = up ] && [ "$arp" = reachable ]; then

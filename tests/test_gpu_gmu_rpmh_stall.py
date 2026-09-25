@@ -1095,6 +1095,74 @@ class FlashAttemptTests(unittest.TestCase):
                       "repository and archived on the tablet's rootfs")
 
 
+class ConsolePlumbingTests(unittest.TestCase):
+    """A silent console has two causes, and one of them is this project's own.
+
+    The getty can sit at a login prompt with no reachable shell, so the tty echoes
+    and executes nothing - byte-for-byte what a wedged kernel looks like.  And the
+    first liveness probe reported console=blocked on a working console because its
+    result pattern could not match a fractional uptime, the same class of bug the
+    hunt's wait_ready regex had.
+    """
+
+    SCRIPT = "scripts/gts9-kernel-alive.sh"
+    DOC = "reference/boot-tests/test-191-20260925T0410Z/FLASH-ATTEMPT-1.md"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_probe_allows_a_fractional_uptime(self):
+        """`GTS9_ALIVE_[0-9]+_END` cannot match 889.01 - and silently did not."""
+        text = read(self.SCRIPT)
+        self.assertIn(r"GTS9_ALIVE_[0-9][0-9]*\.[0-9]*_END", text)
+        self.assertIn("decimal point", text)
+        # The doc keeps the same lesson.
+        self.assertIn("the decimal point meant",
+                      read("reference/boot-tests/test-191-20260925T0410Z/FLASH-ATTEMPT-1.md"))
+
+    def test_it_checks_for_a_shell_with_ps_not_with_TasksCurrent(self):
+        text = read(self.SCRIPT)
+        self.assertIn("ps -t ttyGS0 -o args=", text)
+        self.assertIn("TasksCurrent is 0 for a getty", text)
+        # The check must be a `ps` call, not a `systemctl show` call.
+        call = text.split("console_shell=$(")[1].split("esac")[0]
+        self.assertIn("ps -t ttyGS0", call)
+        self.assertNotIn("systemctl", call)
+
+    def test_it_names_the_remedy_rather_than_a_power_cycle(self):
+        self.contains(self.SCRIPT,
+                      "systemctl restart gts9-acm-getty.service",
+                      "This is not a stall")
+
+    def test_the_doc_records_the_observation_and_the_remedy(self):
+        self.contains(self.DOC,
+                      "systemctl restart gts9-acm-getty.service` over ssh fixed it",
+                      "the first response to a silent console is now a getty restart, not a",
+                      "06:46:35  RECV  GTS9_OK_781.35_END")
+
+    def test_the_doc_refuses_the_unsupported_mechanism(self):
+        self.contains(self.DOC,
+                      "The mechanism is **not** established",
+                      "It is not an indicator of anything",
+                      "an earlier draft of this section read it as",
+                      "logind moves the session into `session-N.scope`")
+
+    def test_the_doc_says_what_it_takes_back_and_what_it_does_not(self):
+        self.contains(self.DOC,
+                      "**taken back**: the console half of the 06:0x evidence",
+                      "**not taken back**: the 04:57Z failure",
+                      "a refused TCP connection is not something a",
+                      "stronger word than the evidence supports")
+
+    def test_it_records_the_probe_bug_as_a_repeat_of_an_earlier_class(self):
+        self.contains(self.DOC,
+                      "the same class of bug as the hunt's",
+                      "wait_ready` regex",
+                      "neither would have been caught by reading the probe")
+
+
 class KernelAliveDiscriminatorTests(unittest.TestCase):
     """Console, journal and ssh are not liveness tests.
 

@@ -1,3 +1,12 @@
+# INVALID RUN - do not read the FAIL lines below as kernel results.
+#
+# ttyGS0 was showing a Debian login banner, not the autologin root shell, so the
+# 1963-character probe was echoed back in fragments and never executed.  The FAIL
+# lines are the probe's fallback text echoing itself, not measurements.  The real
+# verification was done over ssh and is in on-device/RESULT.md.
+#
+# Kept because it is the evidence for that harness defect.
+#
 probe_rc=0
 raw=/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/verify-20260925T063857Z-raw.txt
 boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo --_icc_providers;for d in 1500000 24100000 17d90000 1600000 1680000 16c0000 16e0000 1700000 1780000 320c0000; do printf "icc_%s=%s\n" "$d" "$(ls -d /sys/bus/platform/devices/$d.interconnect/driver 2>/dev/null | wc -l)"; done;echo --_cpufreq;echo cpufreq_driver=$(ls -d /sys/bus/platform/devices/17d91000.cpufreq/driver 2>/dev/null | wc -l);echo policies=$(ls -d /sys/devices/system/cpu/cpufreq/policy* 2>/dev/null | wc -l);for p in /sys/devices/system/cpu/cpufreq/policy*; do if [ -d "$p" ]; then printf "policy_%s cpus=%s gov=%s min=%s max=%s cur=%s\n" "$(basename "$p")" "$(cat "$p/related_cpus" 2>/dev/null | tr " " ",")" "$(cat "$p/scaling_governor" 2>/dev/null)" "$(cat "$p/cpuinfo_min_freq" 2>/dev/null)" "$(cat "$p/cpuinfo_max_freq" 2>/dev/null)" "$(cat "$p/scaling_cur_freq" 2>/dev/null)"; fi; done;echo --_energy_model;for p in /sys/devices/system/cpu/cpufreq/policy*; do if [ -d "$p/energy_model" ]; then echo "em_$(basename "$p")=present"; fi; done;echo --_deferred;echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo deferred_list=$(tr "\n" "|" < /sys/kernel/debug/devices_deferred 2>/dev/null);echo --_counters;echo icc_paths_msg=$(dmesg 2>/dev/null | grep -ac "Failed to find icc paths");echo osm_hw_disabled=$(dmesg 2>/dev/null | grep -ac "error hardware not enabled");echo gcc_pending_cpufreq=$(dmesg 2>/dev/null | grep -ac "sync_state() pending due to 17d91000.cpufreq");echo defer_pending_cpufreq=$(dmesg 2>/dev/null | grep -ac "17d91000.cpufreq: deferred probe pending");echo --_dmesg;dmesg 2>/dev/null | grep -aE "osm-l3|epss|cpufreq|energy_model|OPP|opp" | head -40;echo --_dt;echo icc_of=$(tr -d "\0" < /proc/device-tree/interconnect@17d90000/compatible 2>/dev/null | tr "\n" ",");echo icc_status=$(tr -d "\0" < /proc/device-tree/interconnect@17d90000/status 2>/dev/null);echo END
