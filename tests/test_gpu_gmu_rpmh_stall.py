@@ -1810,6 +1810,35 @@ class DocumentationTests(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, text)
 
+    def test_the_early_warning_audit_answers_the_dummy_regulator_question(self):
+        """The brief asks five specific questions; the audit must answer them.
+
+        The tempting 'fix' for `supply vdd not found` is to add the regulator,
+        and the brief forbids it without evidence.  The evidence is that the
+        property is absent on X710, on X910 and upstream, and that SM8550 powers
+        the GPU through gpucc GDSCs and OPP levels instead.
+        """
+        text = read("docs/X710_EARLY_BOOT_WARNINGS.md")
+        flat = " ".join(text.split())
+        self.assertIn("msm_gpu.c:955-964", text)
+        self.assertIn("devm_regulator_get", text)
+        self.assertIn("GPU_CC_CX_GDSC", text)
+        self.assertIn("ABSENT on both", text)
+        self.assertIn("do not add a regulator", flat)
+        # And it must not claim the message is a fault signature.
+        self.assertIn("none of them is a marker", flat)
+
+    def test_the_early_warning_audit_does_not_inflate_the_chain(self):
+        """Two of the four are already gone; the doc must say so."""
+        text = read("docs/X710_EARLY_BOOT_WARNINGS.md")
+        self.assertIn("Unable to send ACD state to AOSS", text)
+        self.assertIn("Unable to drop a managed device link reference", text)
+        self.assertIn("CONFIG_QCOM_IPCC=y", text)
+        self.assertIn("DL_FLAG_STATELESS", text)
+        flat = " ".join(text.split())
+        self.assertIn("downgraded from", flat)
+        self.assertIn("does **not** retire profiles B and C", flat)
+
     def test_the_plan_forbids_once_more_what_must_not_be_done(self):
         text = read(PLAN)
         for forbidden in ("regulator-always-on", "Gunyah", "PSCI"):
