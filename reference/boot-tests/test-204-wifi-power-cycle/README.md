@@ -126,3 +126,82 @@ forced-calibration fallback will be added to manufacture a `wlan0`.
 No stall record was added, removed or reclassified; no rate was computed; no Wi-Fi
 reboot was counted in any A/B series. The one reboot in this test was to restore the
 chip's power state after the experiment, and it is not a stall observation.
+
+
+---
+
+## 7. Forcing the low→high transition, and what the pin claims show
+
+The hypothesis from §2 was tested directly: unbind `wifi@0` (which pulls `WLAN_EN`
+low through the pwrctrl's `power_off`), then **reboot with the line still low**, so
+that boot-time `qcom_pcie_host_init()` has to drive a genuine low→high transition
+rather than preserving a value the bootloader set.
+
+Result, boot `c8a36349`: the transition happened — `gpio80` is `out high` — and the
+link is **still down**. `link=0x1011`, `dllla=0`, `endpoint=NO`, and the driver
+repeats `qcom-pcie 1c00000.pcie: Device not found`. So "the boot chain left the line
+low and nothing ever raised it" is **excluded**: raising it does not bring the link
+up.
+
+### The pin claims are the useful part
+
+`/sys/kernel/debug/pinctrl/f100000.pinctrl/pinmux-pins` says exactly which driver
+owns each pin:
+
+| pin | owner | meaning |
+|---|---|---|
+| 80 `WLAN_EN` | `device wcn6855-pmu` | claimed by the pwrseq driver |
+| 81 `BT_EN` | `device wcn6855-pmu` | claimed — **but stuck low**, see below |
+| **82 `SWCTRL`** | **UNCLAIMED** | no driver has it at all |
+| 94 `PERST` | `device 1c00000.pcie` | claimed by the controller |
+| 96 `WAKE` | `device 1c00000.pcie` | claimed by the controller |
+| **204 `XO_CLK`** | **`GPIO f100000.pinctrl:740`** | **a raw reference, not a device claim** |
+
+**Pin 204 is the finding.** Every other line the driver touches shows a `device`
+claim; `XO_CLK` shows a bare gpio number, which means the pinctrl framework never
+saw a device request it — and there is **no pinctrl state covering gpio204** in the
+board DTS at all. `pinctrl-0` on `wcn6855-pmu` is
+`<&wlan_en>, <&bt_default>, <&pmk8550_sleep_clk>`: `wlan_en` covers gpio80,
+`bt_default` covers gpio81, and nothing covers 204. The property
+`xo-clk-gpios = <&tlmm 204 ...>` exists, so `devm_gpiod_get_optional(dev, "xo-clk")`
+should resolve — but the pin is never muxed to the GPIO function for that consumer.
+
+**Important scoping:** upstream mainline's own accepted
+`sm8550-samsung-gts9wifi.dts` has the **same** gap — one mention of `204` and no
+pinctrl state for it. So this is not something this port got wrong; it is a
+pre-existing upstream-wide omission on this board, and any fix belongs upstream as a
+generic addition rather than as a Samsung-only workaround.
+
+### `BT_EN` stuck low, and the honest reading of the UART witness
+
+`gpio81` is claimed by `wcn6855-pmu` but sits **low**, while `hci_qca` retries
+`Retry BT power ON:1` / `:2` and then fails:
+
+```
+Bluetooth: hci0: Reading QCA version information failed (-110)   x4, with retries
+```
+
+That forces a correction to how §"two witnesses" should be read. The BT version read
+fails with `BT_EN` **low**, so "the chip is silent on both buses" is weaker than it
+first appeared: on the UART side the chip is not being enabled, so its silence there
+is expected and is **not** independent evidence about the chip's power state. The
+two observations are consistent but not independent, and the earlier framing
+overstated that.
+
+What survives is narrower and still useful: `BT_EN` being claimed-but-low is a
+**second instance of the same pattern** as `XO_CLK` — a line the pwrseq driver is
+supposed to drive that is not in the state it should be — which points at the pwrseq
+power path rather than at PCIe specifically.
+
+### Where that leaves the fault
+
+Excluded so far: the DTS WLAN content (identical to upstream), the controller, PHY,
+iATU, GDSCs, pinctrl for 80/81/94/96, the PMU input rails (enabled), the boot chain
+leaving `WLAN_EN` low (a real low→high transition does not help), cold vs warm, the
+missing internal-LDO driver (normal upstream), and the optional reference clock
+(normal upstream).
+
+Still open, and now the specific targets: **`XO_CLK` (gpio204) is not claimed or
+muxed by any state**, and **`BT_EN` (gpio81) is claimed but low**. Both are lines the
+WCN pwrseq driver is responsible for. The next physical test is to measure those two
+pins at the chip while the driver asserts them, rather than to change more software.

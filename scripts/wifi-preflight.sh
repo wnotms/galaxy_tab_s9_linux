@@ -131,6 +131,18 @@ echo
 echo "### pcie_link_status"
 pcie_link_status 00:00.0 2>/dev/null || echo "pcie_link_status=unavailable"
 echo
+echo "### pin_claims"
+# Which driver actually OWNS each WLAN/BT control pin.  Stronger than reading the
+# gpio debugfs value: a pin can show the right level while no device has claimed
+# it, which is how gpio204 (XO_CLK) was found sitting as a raw "GPIO
+# f100000.pinctrl:740" reference while every other line showed a `device` claim.
+PD=$(ls -d /sys/kernel/debug/pinctrl/*f100000* 2>/dev/null | head -1)
+if [ -n "$PD" ] && [ -f "$PD/pinmux-pins" ]; then
+	grep -E "^pin (80|81|82|94|95|96|204) " "$PD/pinmux-pins" | sed 's/^/pinclaim /'
+else
+	echo "pinclaim pinmux-pins-unavailable"
+fi
+echo
 echo "### dmesg_pcie"
 dmesg 2>/dev/null | grep -aiE "pcie|qcom-pcie|qmp-pcie|17cb|1103|ath11k|wcn|qca|mhi|qrtr" | tail -40 | sed 's/^/dmesg /'
 REMOTE_EOF
@@ -197,6 +209,12 @@ say "  cfg80211/mac80211/ath11k loaded : ${ath:-?}"
 say "  ieee80211 phy devices  : ${iwl:-?}"
 say "  /lib/modules/\$(uname -r) : ${moddir:-?}"
 say "  qcom-pcie deferred ('cannot initialize host') : $([ "$defer" -gt 0 ] && echo YES || echo no)"
+# An unclaimed control pin is worth saying out loud: the level can look right while
+# nothing owns the line.
+unclaimed=$(printf '%s\n' "$OUT" | sed -n 's/^pinclaim pin \([0-9]*\) .*UNCLAIMED.*/\1/p' | tr '\n' ' ')
+raw=$(printf '%s\n' "$OUT" | grep -E '^pinclaim pin (80|81|82|94|95|96|204) ' | grep -c 'GPIO f100000' || true)
+say "  control pins UNCLAIMED (82/204 expected 0)  : ${unclaimed:-none}"
+say "  control pins held as a raw GPIO ref         : ${raw:-0}"
 
 if [ "$qca" -gt 0 ]; then
 	if [ -n "$qca_drv" ] && [ "$qca_drv" != "NONE" ]; then
