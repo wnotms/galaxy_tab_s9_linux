@@ -636,6 +636,38 @@ class Test191CandidateTests(unittest.TestCase):
                 self.assertNotIn(forbidden, text,
                                  "verify-osm-l3.sh must stay read-only")
 
+    def test_the_probe_is_one_line_and_valid_shell(self):
+        """Every proven harness here sends one line; this one must too.
+
+        console-run.ps1 forwards -Commands through $sp.WriteLine(), so embedded
+        newlines survive only if the bash -> PowerShell quoting also survives.
+        Rather than rely on that, the probe is built as one `;`-separated line,
+        and this checks both halves: no newline in the value, and the value is
+        something bash accepts.
+        """
+        import subprocess
+        script = ROOT / self.TESTDIR / "verify-osm-l3.sh"
+        out = subprocess.run(
+            ["bash", "-c",
+             'source <(sed -n "/^PROBE=/,/^PROBE+=.;echo END.$/p" %s); printf %%s "$PROBE"'
+             % str(script)],
+            check=True, capture_output=True, text=True,
+        ).stdout
+        self.assertNotIn("\n", out, "the probe must be a single line")
+        self.assertIn(";echo END", out)
+        # And bash must be able to parse it.
+        subprocess.run(["bash", "-n", "-c", out], check=True)
+
+    def test_the_probe_reports_the_failure_case_unambiguously(self):
+        """A failed fix has to say *which* way it failed."""
+        text = read(f"{self.TESTDIR}/verify-osm-l3.sh")
+        self.assertIn("osm_hw_disabled", text)
+        self.assertIn("error hardware not enabled", text)
+        self.assertIn("ABL does not enable the EPSS block", text)
+        # The policy loop must not emit a line when there are no policies: the
+        # fix failing is exactly the case where the glob does not match.
+        self.assertIn('[ -d "$p" ]', text)
+
     def test_the_rate_harness_fixes_test_190s_three_defects(self):
         """NMI is a stop condition, the window is 300, each run owns its dir."""
         text = read(f"{self.TESTDIR}/wedge-rate.sh")
