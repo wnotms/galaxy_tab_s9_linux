@@ -41,12 +41,36 @@ journal simply stops. There is **no** soft lockup, **no** RCU stall, **no** hung
 task, **no** panic and **no** unanswered-NMI line, so `wedge_markers=0`.
 
 That makes this a **different shape from the two baseline wedges** (test-195,
-test-197), which both carried the full CPU-level set. Two readings remain, and
-this record does not choose between them:
+test-197), which both carried the full CPU-level set.
 
-* **an abrupt death of the guest at ~7.4 s** — the journal stopping mid-boot is
-  what a hard reset looks like, and it is the same stopping point
-  `FAILED-BOOT-20260925T0457.md` §4 records for a boot that dies at ~7 s;
+**And the stopping journal is not itself proof of death.** test-194 established
+exactly that: its boot's journal stopped at 6.763559 s while the kernel ran on to
+170 s and shut down cleanly. So "the journal ends at 7.4 s" must not be read as
+"the guest died at 7.4 s" — which removes the strongest argument for the
+abrupt-death reading below.
+
+What *is* discriminating is an observation about the pstore, stated as an
+observation and not as a mechanism: **at probe time the readable console record
+described `83807280`, not `621c88a4`.** Its three lines are the DPU early-return at
+5.064611 s, a `dwc3-qcom … ep3in` message at 186.323646 s and
+`reboot: Restarting system` at 186.559062 s — i.e. the 186-second boot, ending in
+the clean requested restart, and nothing from the 7.5-second boot that came after
+it.
+
+So the boot that the round is about left no readable console record, while the
+boot before it did. Why the region still held the earlier record is not
+established here — whether a record is only sealed at a clean shutdown, at a
+panic, or by the console driver's own write path is a pstore-internals question
+this record does not answer. What it does support is the weaker and still useful
+statement: **`621c88a4` did not seal a record of its own**, which is not what a
+normal next-round reboot does.
+
+Two readings nonetheless remain, and this record does not choose between them:
+
+* **an abrupt end of the guest** — it completed no clean reboot, and its journal
+  stops mid-boot at the same ~7 s point `FAILED-BOOT-20260925T0457.md` §4 records.
+  The stopping point alone proves nothing (see above), so this reading rests on
+  the missing pstore record, not on the journal;
 * **a host-side USB reset** — the COM19 capture's last two lines before the
   presence drop are `read failed … ReadLine … I/O …` and `port closed (read
   error)`, one second earlier at 11:49:41. A host controller reset would drop

@@ -2347,7 +2347,8 @@ class DocumentationTests(unittest.TestCase):
         # The event must stay unclassified, with both readings named.
         self.assertIn("not determined in 2 rounds", flat)
         self.assertIn("host-side USB reset", flat)
-        self.assertIn("abrupt death of the guest at ~7.4 s", flat)
+        self.assertIn("abrupt end of the guest", flat)
+        self.assertIn("stopping journal is not itself proof of death", flat)
         self.assertIn("The second reading is not excluded", flat)
         # It must not downgrade the GPU on this evidence.
         self.assertIn("does not downgrade the GPU/GMU/ACD path", flat)
