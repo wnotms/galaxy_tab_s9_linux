@@ -1156,6 +1156,76 @@ class KernelAliveDiscriminatorTests(unittest.TestCase):
                       "needs the microSD path")
 
 
+class DpuFirstEventTests(unittest.TestCase):
+    """The DPU 'first abnormal event' is a handled early-return, not a fault.
+
+    Reading dpu_encoder.c says the 4.436 s line is printed on a path whose own
+    comment says the wait is not necessary, and that its only reachable caller is
+    the COMMIT path - so the frame-done flood is frames committed against a
+    disabled encoder, not late interrupts.  That kills the IRQ-delivery reading.
+    """
+
+    DOC = ("reference/boot-tests/test-191-20260925T0410Z/"
+           "wedge-rate-pre-test191-capture/FAILED-BOOT-20260925T0457.md")
+    ENC = ".work/build/linux-src-gts9wifi/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c"
+    CMD = (".work/build/linux-src-gts9wifi/drivers/gpu/drm/msm/disp/dpu1/"
+           "dpu_encoder_phys_cmd.c")
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_message_is_a_handled_early_return_in_the_source(self):
+        import pathlib
+        path = ROOT / self.ENC
+        if not path.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = path.read_text()
+        self.assertIn("return EWOULDBLOCK since we know the wait isn't necessary", text)
+        self.assertIn("encoder is disabled id=%u, callback=%ps", text)
+        self.assertIn("return -EWOULDBLOCK;", text)
+
+    def test_its_only_caller_is_the_commit_path(self):
+        """That is what makes the flood a consequence, not a late interrupt."""
+        import pathlib
+        path = ROOT / self.CMD
+        if not path.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = path.read_text()
+        self.assertIn("_dpu_encoder_phys_cmd_wait_for_ctl_start", text)
+        self.assertIn("dpu_encoder_phys_cmd_wait_for_commit_done", text)
+        # The wait helper is called from wait_for_commit_done, not from enable.
+        tail = text.split("static int dpu_encoder_phys_cmd_wait_for_commit_done")[1]
+        self.assertIn("_dpu_encoder_phys_cmd_wait_for_ctl_start", tail[:400])
+
+    def test_the_doc_records_the_correction_and_kills_the_irq_reading(self):
+        self.contains(self.DOC,
+                      "it is a *handled* early-return",
+                      "kills the hypothesis this document was about to adopt",
+                      "It is not that.",
+                      "no matter how healthy interrupts were")
+
+    def test_the_doc_names_the_two_boot_time_actors(self):
+        self.contains(self.DOC,
+                      "gts9-panel-recover.service",
+                      "systemd-backlight@backlight:ae94000.dsi.0.service",
+                      "fb **blank/unblank cycle**",
+                      "04:58:23.759")
+
+    def test_the_doc_says_it_is_a_race_not_a_sequence(self):
+        self.contains(self.DOC,
+                      "They cannot be sufficient, and that is the useful part",
+                      "Cycles 1-5 of the hunt",
+                      "trigger is a **race**")
+
+    def test_the_doc_orders_the_next_steps_and_forbids_dpu_changes(self):
+        self.contains(self.DOC,
+                      "**do not change the DPU.**",
+                      "a userspace A/B is the cheap test",
+                      "One at a time")
+
+
 class A6xxStaleRpmhVoteTests(unittest.TestCase):
     """An upstream bug that is live in this pin, on the RPMh-vote path.
 
