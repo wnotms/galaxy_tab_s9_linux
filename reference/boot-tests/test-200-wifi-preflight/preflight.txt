@@ -1,0 +1,137 @@
+### identity
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+uptime=1244.00
+boot_id=037998b6-719a-4694-b2b4-ee506914cd3e
+cmdline=console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32 console=tty0 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1 console=ttyGS1 gts9_rpmh_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+
+### pci_bus_present
+pci_bus=yes
+pci_device_count=0
+
+### pci_devices
+
+### pcie_controller
+controller 1c00000.pcie driver=UNBOUND
+pcie_child_nodes=1
+pcie_child /sys/bus/platform/devices/1c00000.pcie:pcie@0:wifi@0
+
+### pcie_phy
+phy 1c06000.phy driver=qcom-qmp-pcie-phy
+
+### pwrseq_and_pmu
+pwrseq_devices=1
+pwrseq_dev /sys/bus/platform/devices/wcn6855-pmu
+wcn6855_pmu_driver=UNBOUND_OR_ABSENT
+
+### deferred_probe
+deferred aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+deferred 1c00000.pcie	qcom-pcie: cannot initialize host
+deferred_count=2
+
+### modules
+release=7.2.0-rc3-gts9wifi-dirty
+modules_dir=NONE
+module ath.ko ABSENT
+module ath11k.ko ABSENT
+module ath11k_pci.ko ABSENT
+module cfg80211.ko ABSENT
+module mac80211.ko ABSENT
+module pwrseq-qcom-wcn.ko ABSENT
+module qrtr-mhi.ko ABSENT
+module mhi.ko ABSENT
+lsmod_wlan=0
+
+### interfaces
+--- ip link ---
+iplink 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+iplink     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+iplink 2: dummy0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/ether 0e:ae:2b:78:7a:f2 brd ff:ff:ff:ff:ff:ff
+iplink 3: ifb0: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 32
+iplink     link/ether 06:15:ac:97:2e:07 brd ff:ff:ff:ff:ff:ff
+iplink 4: ifb1: <BROADCAST,NOARP> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 32
+iplink     link/ether aa:27:08:c3:c0:06 brd ff:ff:ff:ff:ff:ff
+iplink 5: tunl0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/ipip 0.0.0.0 brd 0.0.0.0
+iplink 6: gre0@NONE: <NOARP> mtu 1476 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/gre 0.0.0.0 brd 0.0.0.0
+iplink 7: gretap0@NONE: <BROADCAST,MULTICAST> mtu 1462 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+iplink 8: erspan0@NONE: <BROADCAST,MULTICAST> mtu 1450 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+iplink 9: ip_vti0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/ipip 0.0.0.0 brd 0.0.0.0
+iplink 10: ip6_vti0@NONE: <NOARP> mtu 1364 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/tunnel6 :: brd :: permaddr 1686:b191:dc05::
+iplink 11: sit0@NONE: <NOARP> mtu 1480 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/sit 0.0.0.0 brd 0.0.0.0
+iplink 12: ip6tnl0@NONE: <NOARP> mtu 1452 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/tunnel6 :: brd :: permaddr ae67:8495:5056::
+iplink 13: ip6gre0@NONE: <NOARP> mtu 1448 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+iplink     link/gre6 :: brd :: permaddr 3acd:4931:2be9::
+iplink 14: usb0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+iplink     link/ether 1a:98:27:23:ae:cb brd ff:ff:ff:ff:ff:ff
+--- iw dev (if present) ---
+iwdev iw-not-installed
+--- wireless sysfs ---
+wireless_phys=0
+rfkill=0
+
+### regulator_and_gpio_state
+--- regulators named vreg_pmu (WCN PMU outputs) ---
+--- gpio 80/81/82/94/96/204 (WLAN_EN, BT_EN, SWCTRL, PERST, WAKE, XO) ---
+gpio debugfs-unavailable
+
+### dmesg_pcie
+dmesg [    0.331714] [     T12] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    0.331746] [     T12] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    0.331793] [     T12] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    0.331810] [     T12] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    0.331817] [     T12] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [    0.886882] [     T80] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    0.905675] [     T80] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    0.922149] [     T80] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    0.969930] [     T80] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    1.102457] [     T80] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [    1.427599] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    1.427661] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    1.427780] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    1.427790] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    1.427795] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [    1.460520] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    1.460652] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    1.460807] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    1.460847] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    1.460864] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [    1.468726] [     T81] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    1.468748] [     T81] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    1.468780] [     T81] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    1.468786] [     T81] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    1.468789] [     T81] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [    5.367344] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [    5.367519] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [    5.368036] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [    5.368083] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [    5.368108] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+dmesg [   15.587001] [    T202] qnoc-sm8550 1500000.interconnect: sync_state() pending due to 1c00000.pcie
+dmesg [   15.587012] [    T202] qnoc-sm8550 interconnect-1: sync_state() pending due to 1c00000.pcie
+dmesg [   15.587020] [    T202] qnoc-sm8550 16c0000.interconnect: sync_state() pending due to 1c00000.pcie
+dmesg [   15.587029] [    T202] gcc-sm8550 100000.clock-controller: sync_state() pending due to 1c00000.pcie
+dmesg [   15.587199] [    T202] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+dmesg [   15.591977] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+dmesg [   15.592041] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+dmesg [   15.592108] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+dmesg [   15.592118] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+dmesg [   15.592123] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+2026-09-25T15:00:42Z ---------------------------------------------------------------
+2026-09-25T15:00:42Z RESULT
+2026-09-25T15:00:42Z   pci devices on the bus : 0
+2026-09-25T15:00:42Z   17cb:1103 present      : NO
+2026-09-25T15:00:42Z   17cb:1103 bound driver : n/a
+2026-09-25T15:00:42Z   cfg80211/mac80211/ath11k loaded : 0
+2026-09-25T15:00:42Z   ieee80211 phy devices  : 0
+2026-09-25T15:00:42Z   /lib/modules/$(uname -r) : NONE
+2026-09-25T15:00:42Z   qcom-pcie deferred ('cannot initialize host') : YES
+2026-09-25T15:00:42Z STATE: A  no PCI devices at all - fix PCIe0/PMU/power sequencing
+2026-09-25T15:00:42Z          host controller state is the place to look, not ath11k
+2026-09-25T15:00:42Z ---------------------------------------------------------------
