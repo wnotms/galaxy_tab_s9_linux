@@ -1,0 +1,60 @@
+[    1.460847] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.460864] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.468726] [     T81] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.468748] [     T81] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.468780] [     T81] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.468786] [     T81] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.468789] [     T81] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    5.367344] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    5.367519] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    5.368036] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    5.368083] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    5.368108] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[   15.587001] [    T202] qnoc-sm8550 1500000.interconnect: sync_state() pending due to 1c00000.pcie
+[   15.587012] [    T202] qnoc-sm8550 interconnect-1: sync_state() pending due to 1c00000.pcie
+[   15.587020] [    T202] qnoc-sm8550 16c0000.interconnect: sync_state() pending due to 1c00000.pcie
+[   15.587029] [    T202] gcc-sm8550 100000.clock-controller: sync_state() pending due to 1c00000.pcie
+[   15.587199] [    T202] qnoc-sm8550 24100000.interconnect: sync_state() pending due to 1c00000.pcie
+[   15.591977] [     T93] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[   15.592041] [     T93] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[   15.592108] [     T93] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[   15.592118] [     T93] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[   15.592123] [     T93] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[ 1789.982164] [     T81] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[ 1789.982204] [     T81] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[ 1789.982263] [     T81] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[ 1789.982271] [     T81] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[ 1789.982276] [     T81] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[ 1790.161364] [     T81] qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[ 1791.121182] [     T81] qcom-pcie 1c00000.pcie: Device not found
+[ 1791.121879] [     T81] qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
+[ 1791.121901] [     T81] pci_bus 0000:00: root bus resource [bus 00-ff]
+[ 1791.121921] [     T81] pci_bus 0000:00: root bus resource [io  0x0000-0xfffff]
+[ 1791.121936] [     T81] pci_bus 0000:00: root bus resource [mem 0x60300000-0x63ffffff]
+[ 1791.122088] [     T81] pci 0000:00:00.0: [17cb:0113] type 01 class 0x060400 PCIe Root Port
+[ 1791.122140] [     T81] pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+[ 1791.122159] [     T81] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[ 1791.122184] [     T81] pci 0000:00:00.0:   bridge window [io  0x0000-0x0fff]
+[ 1791.122201] [     T81] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff]
+[ 1791.122226] [     T81] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
+[ 1791.122351] [     T81] pci 0000:00:00.0: PME# supported from D0 D3hot D3cold
+[ 1791.122768] [     T81] OF: /soc@0/pcie@1c00000: iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+[ 1791.122868] [     T81] pci 0000:00:00.0: Adding to iommu group 13
+[ 1791.124578] [     T81] pci 0000:00:00.0: bridge window [io  0x1000-0x0fff] to [bus 01-ff] add_size 1000
+[ 1791.124582] [     T81] pci 0000:00:00.0: bridge window [mem 0x00100000-0x000fffff 64bit pref] to [bus 01-ff] add_size 200000 add_align 100000
+[ 1791.124585] [     T81] pci 0000:00:00.0: bridge window [mem 0x00100000-0x000fffff] to [bus 01-ff] add_size 200000 add_align 100000
+[ 1791.124591] [     T81] pci 0000:00:00.0: bridge window [mem 0x60300000-0x604fffff]: assigned
+[ 1791.124594] [     T81] pci 0000:00:00.0: bridge window [mem 0x60500000-0x606fffff 64bit pref]: assigned
+[ 1791.124596] [     T81] pci 0000:00:00.0: BAR 0 [mem 0x60700000-0x60700fff]: assigned
+[ 1791.124600] [     T81] pci 0000:00:00.0: bridge window [io  0x1000-0x1fff]: assigned
+[ 1791.124604] [     T81] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[ 1791.124607] [     T81] pci 0000:00:00.0:   bridge window [io  0x1000-0x1fff]
+[ 1791.124611] [     T81] pci 0000:00:00.0:   bridge window [mem 0x60300000-0x604fffff]
+[ 1791.124615] [     T81] pci 0000:00:00.0:   bridge window [mem 0x60500000-0x606fffff 64bit pref]
+[ 1791.124621] [     T81] pci_bus 0000:00: resource 4 [io  0x0000-0xfffff]
+[ 1791.124623] [     T81] pci_bus 0000:00: resource 5 [mem 0x60300000-0x63ffffff]
+[ 1791.124625] [     T81] pci_bus 0000:01: resource 0 [io  0x1000-0x1fff]
+[ 1791.124626] [     T81] pci_bus 0000:01: resource 1 [mem 0x60300000-0x604fffff]
+[ 1791.124628] [     T81] pci_bus 0000:01: resource 2 [mem 0x60500000-0x606fffff 64bit pref]
+[ 1791.126785] [     T81] pcieport 0000:00:00.0: PME: Signaling with IRQ 205
+[ 1791.127386] [     T81] pcieport 0000:00:00.0: AER: enabled with IRQ 205
