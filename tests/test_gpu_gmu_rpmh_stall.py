@@ -710,6 +710,20 @@ class DocumentationTests(unittest.TestCase):
         # And it must keep the matrix as un-retired rather than deleting it.
         self.assertIn("is **not** retired", text)
 
+    def test_the_plan_carries_the_round_17_amendment(self):
+        """The only detailed trace on record puts a CPU wedge first."""
+        text = read(PLAN)
+        self.assertIn("4.6 AMENDMENT (round 17)", text)
+        self.assertIn("still haven't responded to the NMI: 4", text)
+        self.assertIn("inverted here", text)
+        # It must say the DPU messages are victims, not the origin, without
+        # claiming the DPU is bug-free.
+        self.assertIn("cannot be read as the origin", text)
+        self.assertIn("does not follow that the DPU has no bugs", text)
+        # And it must not present the 1/46 against 23/29 as a stall rate.
+        self.assertIn("a stall rate", text)
+        self.assertIn("p = 0.30", text)
+
     def test_the_plan_states_the_hypothesis_is_a_hypothesis(self):
         text = read(PLAN)
         self.assertIn("HYPOTHESIS", text)

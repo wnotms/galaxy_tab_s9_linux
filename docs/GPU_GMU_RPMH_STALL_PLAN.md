@@ -470,6 +470,90 @@ the ones §4.5 opens:
 
 ---
 
+### 4.6 AMENDMENT (round 17): the machine wedges at ~7 s, and the DPU is downstream
+
+Round 17 stopped guessing from 22 host-watched cycles and read the device's own
+journal instead.  journald keeps **89 boots** on this tablet, and a per-boot
+outcome is derivable from it with no host at all
+(`rootfs-overlay/usr/libexec/gts9-journal-survey`, analysis in
+`reference/boot-tests/test-189-*/`).
+
+**One of those 89 boots contains the trace this investigation has been missing.**
+Boot `1c082657` (pre-fix) is the only one of the 89 that printed
+`frame done timeout` at all, and it printed it 15 times — after this:
+
+```
+  ~6.5 s   reaches multi-user normally
+  ~7.0 s   the journal STOPS.  No entry again until 37.2 s.
+   37.228  rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   47.261  Sending NMI from CPU 1 to CPUs 4:
+   47.261  After 10 seconds, these CPUS still haven't responded to the NMI: 4
+   47.261  Sending NMI from CPU 1 to CPUs 5:
+   47.262  After 10 seconds, these CPUS still haven't responded to the NMI: 5
+   47.262  [drm:dpu_encoder_frame_done_timeout] enc35 frame done timeout   <- FIRST
+   62.437  BUG: workqueue lockup - pool cpus=4 ... stuck for 55s!          <- since ~7.4 s
+  357.395  BUG: workqueue lockup - pool cpus=4 ... stuck for 350s!         <- last line
+```
+
+Three things follow, and the third changes a claim this project has been repeating.
+
+**1. It is a CPU-level wedge, not a slow subsystem.** `After 10 seconds, these CPUS
+still haven't responded to the NMI: 4` and `: 5` is direct evidence. CPU 7 answers
+the same NMI with an idle backtrace, so this is not a global freeze — two CPUs
+stop and the rest keep running.
+
+**2. It starts at ~7 s.** Three independent numbers agree: the journal has no entry
+between ~7.0 s and 37.2 s; the workqueue pool reports `stuck for 55s` at 62.437 s,
+i.e. since ~7.4 s; and RCU had been failing long enough to report at 37.2 s. The
+boot had just reached multi-user.
+
+**3. The documented chain is inverted here.** `docs/DPU_TRACE.md`,
+`docs/WATCHDOG_X710.md:22` and `gts9-power-key.c` all record
+"`enc35 frame done timeout` → vblank wait timeout → workqueue lockup". In this boot
+the **first** `enc35 frame done timeout` is at **47.262 s — about 40 s after the
+wedge began**, and the message histogram is a list of victims:
+
+```
+  15  Workqueue: events drm_fb_helper_damage_work
+  15  kworker/2:2 stuck in drm_crtc_wait_one_vblank
+  18     pending: vmstat_update
+   9  pwq 18: cpus=4 ... active=1     <- stalled pools
+   9  pwq  7: cpus=1 ... active=1
+```
+
+`drm_fb_helper_damage_work` is parked in a vblank wait on a machine whose CPUs 4
+and 5 are gone, and a per-CPU work item on a CPU that no longer runs anything sits
+`pending` forever. **The DPU messages cannot be read as the origin** — which is
+exactly the trap the brief warns about, and here it can be shown rather than
+asserted.  It does not follow that the DPU has no bugs; it follows that these
+messages are not its fault in this boot.
+
+**What the 89-boot table adds.** Splitting on whether a boot printed the ACD error,
+and keeping only boots that reached multi-user with a full journal (46 pre-fix, 29
+post-fix):
+
+| | pre-fix | post-fix |
+|---|---|---|
+| ended with an orderly shutdown | **1 / 46** | **23 / 29** |
+| journal stopped with no shutdown | 45 / 46 | 6 / 29 |
+| stopped in the 5.5-8.0 s band (freeze fingerprint) | 8 / 46 | 2 / 29 |
+
+The first row is the largest effect in this whole investigation, but it is **not**
+a stall rate: the pre-fix era is the bring-up era, when the device was being
+flashed and power-cycled constantly. The third row is the honest one and it is
+**not significant** (Fisher exact p = 0.30) — 8/46 against 2/29 does not
+distinguish the two eras. What the table does establish is that the fingerprint is
+recognisable in the journal alone, and that `1c082657` is not a one-off shape.
+
+**Where this leaves the chain.** The candidate chain in §3 puts GPU/GMU at the top
+and RPMh/RSC near the bottom. This trace puts a **CPU-level wedge** at the top and
+everything this project has been arguing about — DPU, workqueue, RCU, and by
+extension the GPU chain — downstream of it. That is not a refutation of §4.2-4.5;
+it is a warning that the first abnormal event in the only detailed trace on record
+is "two CPUs stop", and no mechanism proposed so far explains that.
+
+---
+
 ## 5. Excluded directions (do not re-investigate)
 
 * **PCIe0 / its PHY** — disabled in DTS for a full A/B, stall reproduced (fact 7).
