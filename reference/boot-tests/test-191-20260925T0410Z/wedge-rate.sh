@@ -126,12 +126,12 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 
 	# --- early exit ---------------------------------------------------------
 	# Measured on 18 cycles of this harness: the tablet is away for 19.4 s on
-	# average (18.6-20.2 s) and the cycle costs 209 s.  So 91% of every cycle is
+	# average (18.6-20.2 s) and the cycle costs 209 s.  So 91% of every cycle was
 	# the fixed capture window, not the reboot - which is not what the window is
-	# for.  The window exists because the *panic that carries the stack* is
-	# printed ~180 s after a wedge, and a wedged boot looks healthy for its first
-	# ten seconds, so there is nothing to wait for on a boot that has already
-	# proved it survived.
+	# for.  The window exists because the *panic that carries the stack* is printed
+	# ~180 s after a wedge, and a wedged boot looks healthy for its first ten
+	# seconds, so there is nothing to wait for on a boot that has already proved it
+	# survived.
 	#
 	# Every wedge on record struck between 5.4 s and 14.3 s into the boot
 	# (docs/CPU_WEDGE_EVIDENCE.md), so a shell that answers a command past
@@ -139,37 +139,49 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# If the shell does not answer, or any marker is present, the full window is
 	# kept - that is precisely the case the window exists for.
 	#
+	# The wait to reach EARLY_MIN_UPTIME is taken on the host's clock, from the
+	# watcher's own `tablet back` timestamp, and only then is the shell asked once.
+	# Asking the shell in a loop instead cost 112 s a cycle on the first attempt:
+	# each console-run round trip is tens of seconds, so the number of them, not
+	# the waiting, is what has to be minimised.
+	#
 	# console-watch.ps1 writes with `Add-Content` per line, which flushes each
 	# line, so cutting the watcher short cannot lose what was already captured.
 	MARKERS='Kernel panic|BUG: soft lockup|watchdog: BUG|BUG: hard LOCKUP|BUG: workqueue lockup|rcu.*detected stall|havent responded to the NMI|haven.t responded to the NMI'
 	alive=""; early=0
-	if [ "$EARLY_EXIT" = "1" ]; then
-		alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
-			-WaitReadySeconds 90 -ReadSeconds 5 \
-			-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
-			| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
-		while [ -n "$alive" ] && [ "$alive" -lt "$EARLY_MIN_UPTIME" ]; do
-			sleep $((EARLY_MIN_UPTIME - alive))
+	if [ "$EARLY_EXIT" = "1" ] && [ -n "$on_at" ]; then
+		back_epoch=$(date -u -d "$on_at" +%s 2>/dev/null) || back_epoch=""
+		if [ -n "$back_epoch" ]; then
+			# The kernel starts a second or two before USB presence returns.
+			target=$((back_epoch + EARLY_MIN_UPTIME))
+			while [ "$(now)" -lt "$target" ]; do sleep 2; done
 			alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
-				-WaitReadySeconds 30 -ReadSeconds 5 \
+				-WaitReadySeconds 60 -ReadSeconds 8 \
 				-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
 				| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
-		done
-		if [ -n "$alive" ] && [ "$alive" -ge "$EARLY_MIN_UPTIME" ] \
-			&& ! grep -qaE "$MARKERS" "$wlog" 2>/dev/null; then
-			early=1
+			if [ -n "$alive" ] && [ "$alive" -ge "$EARLY_MIN_UPTIME" ] \
+				&& ! grep -qaE "$MARKERS" "$wlog" 2>/dev/null; then
+				early=1
+			fi
 		fi
 	fi
 
 	if [ "$early" = "1" ]; then
 		# Stop the watcher and let it exit, so its log is complete on disk.
+		# `kill $w` alone is NOT enough: $w is the `timeout` wrapper, and killing it
+		# leaves the PowerShell child alive still holding COM19 - observed when the
+		# previous run was stopped by hand, and it would break the NEXT cycle's port
+		# open.  Kill the child by pattern too, then wait for the port to be free.
 		kill "$w" 2>/dev/null || true
 		wait "$w" 2>/dev/null || true
-		# Give the killed process a moment to release the port.
-		for _ in $(seq 1 10); do
-			pgrep -f "console-watch.ps1.*cycle-$i" >/dev/null 2>&1 || break
+		for _ in $(seq 1 15); do
+			pgrep -f "console-watch.ps1.*test191-cycle-$i" >/dev/null 2>&1 || break
+			pkill -f "console-watch.ps1.*test191-cycle-$i" 2>/dev/null || true
 			sleep 1
 		done
+		if pgrep -f "console-watch.ps1.*test191-cycle-$i" >/dev/null 2>&1; then
+			say "  WARNING: a watcher for cycle $i is still alive; the next cycle may not open COM19"
+		fi
 		say "  early exit after ${alive}s uptime: nothing to wait for"
 	else
 		wait "$w" 2>/dev/null || true

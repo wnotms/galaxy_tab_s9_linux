@@ -132,8 +132,26 @@ it looks healthy for its first ten seconds. It is waiting for the panic, which
 a shell that answers a command past `GTS9_EARLY_MIN_UPTIME` (45 s, well past the
 5.4-14.3 s in which every recorded wedge struck) with **zero** wedge markers in the
 capture. If the shell does not answer, or any marker is present, the full window is
-kept - which is exactly the case the window exists for. That turns a clean cycle
-from ~209 s into ~45-50 s. `GTS9_EARLY_EXIT=0` restores the old behaviour.
+kept - which is exactly the case the window exists for. `GTS9_EARLY_EXIT=0`
+restores the old behaviour.
+
+Measured on the first cycles after the change: **90 s a cycle**, down from 209 s,
+and the composition is now honest rather than accidental:
+
+| | |
+|---|---|
+| port-open lead before the trigger | 9 s |
+| tablet away (the reboot) | 18.5 s |
+| waiting for the boot to pass `EARLY_MIN_UPTIME` | ~45 s |
+| one shell probe round trip to confirm it answers | ~17 s |
+
+The floor is outage + `EARLY_MIN_UPTIME` = ~64 s, so 90 s is close to it.
+
+The first attempt at this cost 112 s a cycle instead, because it asked the shell in
+a loop until the uptime was high enough - and each console round trip is tens of
+seconds, so it is the *number* of probes that has to be minimised, not the waiting.
+It now waits on the host's own clock from the watcher's `tablet back` timestamp and
+asks the shell exactly once.
 
 It is safe to cut the watcher short because `console-watch.ps1` writes each line
 with `Add-Content`, which flushes per call, so nothing already captured is lost.

@@ -1,0 +1,26 @@
+2026-09-25T04:49:28Z === wedge rate: cycles=20 window=300s kind=warm-reboot dir=/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/wedge-rate-pre-test191-capture ===
+2026-09-25T04:49:28Z early exit: 1 (a boot that answers a command past 45s with no marker ends its cycle)
+2026-09-25T04:49:28Z measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot
+2026-09-25T04:49:28Z baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)
+2026-09-25T04:49:28Z --- cycle 1 ---
+2026-09-25T04:49:37Z   reboot issued at 2026-09-25T04:49:37Z
+2026-09-25T04:49:37Z   tablet gone at 2026-09-25T04:49:35.036Z
+2026-09-25T04:49:55Z   tablet back at 2026-09-25T04:49:54.283Z
+2026-09-25T04:50:50Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T04:50:57Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=0
+2026-09-25T04:50:57Z --- cycle 2 ---
+2026-09-25T04:51:06Z   reboot issued at 2026-09-25T04:51:06Z
+2026-09-25T04:51:06Z   tablet gone at 2026-09-25T04:51:04.308Z
+2026-09-25T04:51:24Z   tablet back at 2026-09-25T04:51:23.481Z
+2026-09-25T04:52:19Z   early exit after 53s uptime: nothing to wait for
+2026-09-25T04:52:27Z   uptime=53s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=0
+2026-09-25T04:52:27Z --- cycle 3 ---
+2026-09-25T04:52:36Z   reboot issued at 2026-09-25T04:52:36Z
+2026-09-25T04:52:36Z   tablet gone at 2026-09-25T04:52:33.511Z
+2026-09-25T04:52:52Z   tablet back at 2026-09-25T04:52:52.587Z
+2026-09-25T04:53:49Z   early exit after 54s uptime: nothing to wait for
+2026-09-25T04:53:57Z   uptime=54s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0 policies=0
+2026-09-25T04:53:57Z --- cycle 4 ---
+2026-09-25T04:54:06Z   reboot issued at 2026-09-25T04:54:06Z
+2026-09-25T04:54:06Z   tablet gone at 2026-09-25T04:54:03.939Z
+2026-09-25T04:54:24Z   tablet back at 2026-09-25T04:54:23.633Z
