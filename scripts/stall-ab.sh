@@ -120,7 +120,7 @@ run_probe() {
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -180,7 +180,7 @@ say "cmdline file: ${CMDLINE#$REPO/}" | tee -a "$OUT"
 # spending rounds on it.
 pre=$DIR/preflight.txt
 run_probe preflight "$DIR/preflight-raw.txt" "$WINDIR\\preflight.log"
-grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|msm_params=)" \
+grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|msm_params=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=)" \
 	"$DIR/preflight-raw.txt" >"$pre" 2>/dev/null
 cat "$pre" 2>/dev/null | tee -a "$OUT"
 
@@ -253,7 +253,7 @@ for i in $(seq 1 "$ROUNDS"); do
 	cp "$LOCALDIR/console-$i.log" "$klog" 2>/dev/null || say "WARNING: no console capture for round $i"
 
 	run_probe "$i" "$DIR/probe-$i-raw.txt" "$WINDIR\\probe-$i.log"
-	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|\[ *[0-9]+\.|--- )" \
+	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|\[ *[0-9]+\.|--- )" \
 		"$DIR/probe-$i-raw.txt" >"$DIR/probe-$i.txt" 2>/dev/null
 
 	new_id=$(sed -n 's/.*boot_id=//p' "$DIR/probe-$i.txt" 2>/dev/null | head -1 | tr -d '\r')
@@ -269,12 +269,21 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "round=$i"
 		echo "boot_id_before=$boot_id"
 		echo "boot_id_after=${new_id:-none}"
+		# The brief is explicit that a warm reboot must never be presented as a
+		# cold boot.  This harness only ever issues `systemctl reboot`, so every
+		# round it records is a warm reboot, and it says so in the record rather
+		# than leaving the reader to infer it.  A panic reboot is a *different*
+		# event and is counted separately, by `stall` and by whether the tablet
+		# came back twice.
+		echo "reboot_kind=warm"
+		echo "probe_after_reboot=$([ -n "$new_id" ] && echo ok || echo failed)"
 		echo "cmdline_file=boot/cmdline.stall-ab-$PROFILE.example.txt"
 		echo "release=$(sed -n 's/.*release=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "console_log=$klog"
 		echo "journal_probe=$DIR/probe-$i.txt"
 		# GPU/GMU/AOSS probe state (from the post-boot probe, not the capture).
-		for f in gpu gpu_driver aoss_driver gmu_node gpu_devfreq gpu_gov deferred; do
+		for f in gpu gpu_driver aoss_driver gmu_node gpu_devfreq gpu_gov deferred \
+			apps_rsc_irq aoss_qmp_irq panel_status usb_state; do
 			echo "$f=$(sed -n "s/.*$f=//p" "$DIR/probe-$i.txt" | head -1 | tr -d '\r' | cut -d' ' -f1)"
 		done
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
@@ -290,7 +299,7 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "rpmh_callers=$(grep -a -o -E 'rpmh_write_batch.*' "$src" 2>/dev/null | head -3 | tr '\n' ';')"
 	} >"$DIR/round-$i.txt"
 
-	grep -aE "^(release|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
+	grep -aE "^(release|reboot_kind|gpu_driver|aoss_driver|gmu_node|gpu_devfreq|gpu_gov|apps_rsc_irq|aoss_qmp_irq|panel_status|deferred|stall|rpmh_timeout|soft_lockup|first_anomaly|boot_id_after|failed_units)=" \
 		"$DIR/round-$i.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 	[ -n "$new_id" ] && boot_id=$new_id

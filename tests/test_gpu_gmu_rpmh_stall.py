@@ -491,6 +491,35 @@ class HarnessContractTests(unittest.TestCase):
         guard = guard[:guard.index("\nfi\n")]
         self.assertIn("die ", guard)
 
+    def test_it_records_every_metric_the_brief_asks_for(self):
+        """The brief lists the fields; a missing one is a silent hole.
+
+        Three were absent and are now recorded: the RSC IRQ count (the line the
+        RPMh debug series would interrogate), the panel status, and the USB
+        gadget state.  `usb_role` was tried first and is empty on this port - the
+        role-switch class has no devices here - so the UDC state is used, which
+        reports `configured` when the host has enumerated the tablet.
+        """
+        text = read(HARNESS)
+        for needle in ("apps_rsc_irq=", "aoss_qmp_irq=", "panel_status=", "usb_state="):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+        # The IRQ extraction must skip the IRQ-number column.  `/proc/interrupts`
+        # lines start with leading spaces, so a bare `cut -f2` on a squeezed line
+        # returns "37:" - the IRQ number - and not the count.
+        self.assertIn('sed "s/^ //"', text)
+        self.assertNotIn("usb_role=", text)
+
+    def test_it_labels_the_reboot_kind_and_never_claims_cold(self):
+        """A warm reboot must not be presented as a cold boot."""
+        text = read(HARNESS)
+        self.assertIn("reboot_kind=warm", text)
+        self.assertIn("probe_after_reboot=", text)
+        # It must still be a warm reboot that it issues, and it must not flash.
+        self.assertIn("systemctl reboot", text)
+        for forbidden in ("fastboot", "avbtool", "dd if="):
+            self.assertNotIn(forbidden, text)
+
     def test_it_never_flashes_or_writes_a_partition(self):
         text = read(HARNESS)
         for forbidden in ("fastboot", "dd if=", "flash ", "avbtool", "mkbootimg"):
@@ -1960,6 +1989,35 @@ class Test188SeriesTests(unittest.TestCase):
         text = read(f"{self.TESTDIR}/shutdown-series.sh")
         self.assertIn("GTS9_ALLOW_POWER", text)
         self.assertIn('if [ "$ALLOW" != "1" ]', text)
+
+    def test_it_records_every_metric_the_brief_asks_for(self):
+        """The brief lists the fields; a missing one is a silent hole.
+
+        Three were absent and are now recorded: the RSC IRQ count (the line the
+        RPMh debug series would interrogate), the panel status, and the USB
+        gadget state.  `usb_role` was tried first and is empty on this port - the
+        role-switch class has no devices here - so the UDC state is used, which
+        reports `configured` when the host has enumerated the tablet.
+        """
+        text = read(HARNESS)
+        for needle in ("apps_rsc_irq=", "aoss_qmp_irq=", "panel_status=", "usb_state="):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+        # The IRQ extraction must skip the IRQ-number column.  `/proc/interrupts`
+        # lines start with leading spaces, so a bare `cut -f2` on a squeezed line
+        # returns "37:" - the IRQ number - and not the count.
+        self.assertIn('sed "s/^ //"', text)
+        self.assertNotIn("usb_role=", text)
+
+    def test_it_labels_the_reboot_kind_and_never_claims_cold(self):
+        """A warm reboot must not be presented as a cold boot."""
+        text = read(HARNESS)
+        self.assertIn("reboot_kind=warm", text)
+        self.assertIn("probe_after_reboot=", text)
+        # It must still be a warm reboot that it issues, and it must not flash.
+        self.assertIn("systemctl reboot", text)
+        for forbidden in ("fastboot", "avbtool", "dd if="):
+            self.assertNotIn(forbidden, text)
 
     def test_it_never_flashes_or_writes_a_partition(self):
         text = read(f"{self.TESTDIR}/shutdown-series.sh")
