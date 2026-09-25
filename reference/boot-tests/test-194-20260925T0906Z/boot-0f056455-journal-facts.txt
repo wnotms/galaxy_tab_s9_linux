@@ -19,6 +19,15 @@ Kernel_panic_=0
 frame_done_timeout_=0
 mmc___Tt_imeout_=0
 rpmh_write_batch_=0
+# the CPU-level markers the three real wedge records all carry - all zero here,
+# which is what makes this boot a false positive rather than a wedge
+nmi_=0
+AMC_RPMH_=0
+journal_span_first=2.474737
+journal_span_last=6.763559
+pstore_console_bytes=296
+pstore_last_line=170.255984] reboot: Restarting system
+ended=clean-restart-unattributed
 deferred_probe_burst_first=14.561105
 reboot_trigger=168.829708] gts9 systemd-logind[893]: The system will reboot now!
 last_kernel_line=169.796735] gts9 systemd-journald[279]: Received SIGTERM from PID 1 (systemd-shutdow).

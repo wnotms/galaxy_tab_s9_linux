@@ -48,7 +48,7 @@ test-194/README.md said:
 
 > `frame done timeout` in the kernel log | **0** (the one on the console never reached the ring)
 
-**That is not established and must not be stated.** "Not in the journal", "not in
+**That claim is withdrawn.** It is not established and must not be stated. "Not in the journal", "not in
 `/dev/kmsg`" and "not in the printk ring" are three different claims, and the
 evidence supports only the first.
 

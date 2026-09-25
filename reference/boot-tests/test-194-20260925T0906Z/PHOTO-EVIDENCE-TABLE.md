@@ -77,9 +77,11 @@ absence was *verified*, `0f056455`'s was *not checked*.
 ## The forbidden inference, and the conditional form that is allowed
 
 The review forbade using `17.887 - 10 = 7.887 s` as test-194 fault evidence.
-Agreed, and the table shows why it was wrong twice over: `17.887` is not in this
-photo at all, and test-194 is a different boot. **Nothing in this repository
-establishes that number.**
+Agreed: that inference is **withdrawn**, and the table shows why it was wrong
+twice over - `17.887` is not in this photo at all, and test-194 is a different
+boot. **Nothing in this repository establishes that number.** Since the
+inference is withdrawn, only the conditional form below is permitted, and only
+for the photo's own boot.
 
 What may be said is the conditional form the review allows, about the photo's own
 boot only:
