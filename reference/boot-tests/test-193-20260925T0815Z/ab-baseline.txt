@@ -1,0 +1,299 @@
+2026-09-25T07:49:38Z stall A/B profile=baseline rounds=5 allow_power=0 window=150s
+2026-09-25T07:49:38Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T07:50:11Z RECV  boot_id=684257cd-a08f-44c7-8559-509398d83234
+2026-09-25T07:50:11Z RECV  uptime=39.60
+2026-09-25T07:50:11Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T07:50:11Z RECV  gpu=1
+2026-09-25T07:50:11Z RECV  gpu_driver=adreno
+2026-09-25T07:50:11Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T07:50:11Z RECV  gmu_node=1
+2026-09-25T07:50:11Z RECV  gpu_devfreq=0
+2026-09-25T07:50:11Z RECV  gpu_gov=simple_ondemand
+2026-09-25T07:50:11Z RECV  deferred=2
+2026-09-25T07:50:11Z RECV  wd=1 slp=1 htp=1
+2026-09-25T07:50:11Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T07:50:11Z RECV  failed=0
+2026-09-25T07:50:11Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T07:59:42Z stall A/B profile=baseline rounds=5 allow_power=1 window=150s
+2026-09-25T07:59:42Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T08:00:14Z RECV  boot_id=c86687ab-e588-4f2f-8332-4cc37e1ce5b9
+2026-09-25T08:00:14Z RECV  uptime=319.09
+2026-09-25T08:00:14Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T08:00:14Z RECV  gpu=1
+2026-09-25T08:00:14Z RECV  gpu_driver=adreno
+2026-09-25T08:00:14Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T08:00:14Z RECV  gmu_node=1
+2026-09-25T08:00:14Z RECV  gpu_devfreq=0
+2026-09-25T08:00:14Z RECV  gpu_gov=simple_ondemand
+2026-09-25T08:00:14Z RECV  deferred=2
+2026-09-25T08:00:14Z RECV  wd=1 slp=1 htp=1
+2026-09-25T08:00:14Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T08:00:14Z RECV  failed=0
+2026-09-25T08:00:14Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T08:00:14Z RECV  apps_rsc_irq=16148
+2026-09-25T08:00:14Z RECV  aoss_qmp_irq=3
+2026-09-25T08:00:14Z RECV  panel_status=2:connected
+2026-09-25T08:00:14Z RECV  usb_state=configured
+2026-09-25T08:00:15Z === baseline round 1/5 (boot_id before=c86687ab-e588-4f2f-8332-4cc37e1ce5b9) ===
+2026-09-25T08:00:23.738Z SENT  systemctl reboot
+2026-09-25T08:00:26.086Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:00:45.504Z PRESENCE usb0525:a4a7=True
+  boot_id_after=b6605715-35ab-41ec-81be-07d9ab88e9a9
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10990
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  soft_lockup=0
+  rpmh_timeout=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:03:19Z === baseline round 2/5 (boot_id before=b6605715-35ab-41ec-81be-07d9ab88e9a9) ===
+2026-09-25T08:03:28.750Z SENT  systemctl reboot
+2026-09-25T08:03:30.904Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:03:50.015Z PRESENCE usb0525:a4a7=True
+2026-09-25T08:05:22Z stall A/B profile=baseline rounds=1 allow_power=0 window=150s
+2026-09-25T08:05:22Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T08:05:54Z RECV  boot_id=665287c7-3956-4756-93ba-b287f51ebe44
+2026-09-25T08:05:54Z RECV  uptime=99.98
+2026-09-25T08:05:54Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T08:05:54Z RECV  gpu=1
+2026-09-25T08:05:54Z RECV  gpu_driver=adreno
+2026-09-25T08:05:54Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T08:05:54Z RECV  gmu_node=1
+2026-09-25T08:05:54Z RECV  gpu_devfreq=0
+2026-09-25T08:05:54Z RECV  gpu_gov=simple_ondemand
+2026-09-25T08:05:54Z RECV  deferred=2
+2026-09-25T08:05:54Z RECV  wd=1 slp=1 htp=1
+2026-09-25T08:05:54Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T08:05:54Z RECV  failed=0
+2026-09-25T08:05:54Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T08:05:54Z RECV  apps_rsc_irq=10173
+2026-09-25T08:05:54Z RECV  aoss_qmp_irq=3
+2026-09-25T08:05:54Z RECV  panel_status=2:connected
+2026-09-25T08:05:54Z RECV  usb_state=configured
+2026-09-25T08:06:03Z stall A/B profile=baseline rounds=1 allow_power=1 window=150s
+2026-09-25T08:06:03Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T08:06:36Z RECV  boot_id=665287c7-3956-4756-93ba-b287f51ebe44
+2026-09-25T08:06:36Z RECV  uptime=141.19
+2026-09-25T08:06:36Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T08:06:36Z RECV  gpu=1
+2026-09-25T08:06:36Z RECV  gpu_driver=adreno
+2026-09-25T08:06:36Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T08:06:36Z RECV  gmu_node=1
+2026-09-25T08:06:36Z RECV  gpu_devfreq=0
+2026-09-25T08:06:36Z RECV  gpu_gov=simple_ondemand
+2026-09-25T08:06:36Z RECV  deferred=2
+2026-09-25T08:06:36Z RECV  wd=1 slp=1 htp=1
+2026-09-25T08:06:36Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T08:06:36Z RECV  failed=0
+2026-09-25T08:06:36Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T08:06:36Z RECV  apps_rsc_irq=11369
+2026-09-25T08:06:36Z RECV  aoss_qmp_irq=3
+2026-09-25T08:06:36Z RECV  panel_status=2:connected
+2026-09-25T08:06:36Z RECV  usb_state=configured
+2026-09-25T08:06:37Z === baseline round 1/1 (boot_id before=665287c7-3956-4756-93ba-b287f51ebe44) ===
+2026-09-25T08:06:46.902Z SENT  systemctl reboot
+2026-09-25T08:06:48.955Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:07:09.318Z PRESENCE usb0525:a4a7=True
+  boot_id_after=fdefb92d-48d8-4f22-9e9f-3f0a0843b4c0
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10470
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:09:43Z stall A/B done: profile=baseline rounds=1
+2026-09-25T08:09:43Z summarise with: scripts/stall-ab.sh --summary
+profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id
+---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------
+baseline   1      0      0     0    0   0    0                         fdefb92d
+
+stall = soft_lockup + hung_task + rcu_stall + workqueue_stall (any watchdog-visible wedge)
+2026-09-25T08:09:53Z stall A/B profile=baseline rounds=1 allow_power=1 window=150s
+2026-09-25T08:09:53Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T08:10:26Z RECV  boot_id=fdefb92d-48d8-4f22-9e9f-3f0a0843b4c0
+2026-09-25T08:10:26Z RECV  uptime=173.14
+2026-09-25T08:10:26Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T08:10:26Z RECV  gpu=1
+2026-09-25T08:10:26Z RECV  gpu_driver=adreno
+2026-09-25T08:10:26Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T08:10:26Z RECV  gmu_node=1
+2026-09-25T08:10:26Z RECV  gpu_devfreq=0
+2026-09-25T08:10:26Z RECV  gpu_gov=simple_ondemand
+2026-09-25T08:10:26Z RECV  deferred=2
+2026-09-25T08:10:26Z RECV  wd=1 slp=1 htp=1
+2026-09-25T08:10:26Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T08:10:26Z RECV  failed=0
+2026-09-25T08:10:26Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T08:10:26Z RECV  apps_rsc_irq=11664
+2026-09-25T08:10:26Z RECV  aoss_qmp_irq=3
+2026-09-25T08:10:26Z RECV  panel_status=2:connected
+2026-09-25T08:10:26Z RECV  usb_state=configured
+2026-09-25T08:10:27Z === baseline round 1/1 (boot_id before=fdefb92d-48d8-4f22-9e9f-3f0a0843b4c0) ===
+2026-09-25T08:10:36.277Z SENT  systemctl reboot
+2026-09-25T08:10:38.398Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:10:58.151Z PRESENCE usb0525:a4a7=True
+  boot_id_after=a6014182-b65f-43e1-9803-253b3da425c6
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10756
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:13:32Z stall A/B done: profile=baseline rounds=1
+2026-09-25T08:13:32Z summarise with: scripts/stall-ab.sh --summary
+profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id
+---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------
+baseline   1      0      0     0    0   0    0                         a6014182
+
+stall = soft_lockup + hung_task + rcu_stall + workqueue_stall (any watchdog-visible wedge)
+2026-09-25T08:15:29Z stall A/B profile=baseline rounds=5 allow_power=1 window=150s
+2026-09-25T08:15:29Z cmdline file: boot/cmdline.stall-ab-baseline.example.txt
+2026-09-25T08:16:01Z RECV  boot_id=a6014182-b65f-43e1-9803-253b3da425c6
+2026-09-25T08:16:01Z RECV  uptime=279.24
+2026-09-25T08:16:01Z RECV  release=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T08:16:01Z RECV  gpu=1
+2026-09-25T08:16:01Z RECV  gpu_driver=adreno
+2026-09-25T08:16:01Z RECV  aoss_driver=qcom_aoss_qmp
+2026-09-25T08:16:01Z RECV  gmu_node=1
+2026-09-25T08:16:01Z RECV  gpu_devfreq=0
+2026-09-25T08:16:01Z RECV  gpu_gov=simple_ondemand
+2026-09-25T08:16:01Z RECV  deferred=2
+2026-09-25T08:16:01Z RECV  wd=1 slp=1 htp=1
+2026-09-25T08:16:01Z RECV  ctrl=tty0 ttyMSM0 ttyGS1
+2026-09-25T08:16:01Z RECV  failed=0
+2026-09-25T08:16:01Z RECV  msm_params=address_space_size,disable_acd,dumpstate,enable_eviction,enable_preemption,fbdev,hang_debug,modeset,num_hw_submissions,prefer_mdp5,rd_full,separate_gpu_kms,skip_gpu,snapshot_debugbus,vm_log_shift,
+2026-09-25T08:16:01Z RECV  apps_rsc_irq=14303
+2026-09-25T08:16:01Z RECV  aoss_qmp_irq=3
+2026-09-25T08:16:01Z RECV  panel_status=2:connected
+2026-09-25T08:16:01Z RECV  usb_state=configured
+2026-09-25T08:16:03Z === baseline round 1/5 (boot_id before=a6014182-b65f-43e1-9803-253b3da425c6) ===
+2026-09-25T08:16:11.577Z SENT  systemctl reboot
+2026-09-25T08:16:13.835Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:16:34.753Z PRESENCE usb0525:a4a7=True
+  boot_id_after=18c44523-d04f-4cd5-b999-82276bdeaf3d
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10961
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:19:07Z === baseline round 2/5 (boot_id before=18c44523-d04f-4cd5-b999-82276bdeaf3d) ===
+2026-09-25T08:19:17.285Z SENT  systemctl reboot
+2026-09-25T08:19:19.479Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:19:39.691Z PRESENCE usb0525:a4a7=True
+  boot_id_after=33a07e1d-2a32-43a8-b89f-7b8b98dc9b22
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10928
+  aoss_qmp_irq=2
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:22:13Z === baseline round 3/5 (boot_id before=33a07e1d-2a32-43a8-b89f-7b8b98dc9b22) ===
+2026-09-25T08:22:22.199Z SENT  systemctl reboot
+2026-09-25T08:22:24.613Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:22:44.210Z PRESENCE usb0525:a4a7=True
+  boot_id_after=0d518f6e-64a0-4c9e-a827-842c99be4d4d
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10926
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:25:18Z === baseline round 4/5 (boot_id before=0d518f6e-64a0-4c9e-a827-842c99be4d4d) ===
+2026-09-25T08:25:27.607Z SENT  systemctl reboot
+2026-09-25T08:25:29.961Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:25:49.447Z PRESENCE usb0525:a4a7=True
+  boot_id_after=700dbc7e-5a8a-48e5-a568-7a4e575d3f44
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=10910
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:28:24Z === baseline round 5/5 (boot_id before=700dbc7e-5a8a-48e5-a568-7a4e575d3f44) ===
+2026-09-25T08:28:32.890Z SENT  systemctl reboot
+2026-09-25T08:28:35.235Z PRESENCE usb0525:a4a7=False
+2026-09-25T08:28:54.943Z PRESENCE usb0525:a4a7=True
+  boot_id_after=853c61a5-554e-425b-8479-ba3028475a99
+  reboot_kind=warm
+  release=7.2.0-rc3-gts9wifi-dirty
+  gpu_driver=adreno
+  aoss_driver=qcom_aoss_qmp
+  gmu_node=1
+  gpu_devfreq=0
+  gpu_gov=simple_ondemand
+  deferred=2
+  apps_rsc_irq=11144
+  aoss_qmp_irq=3
+  panel_status=2:connected
+  failed_units=0
+  stall=0
+  first_anomaly=
+2026-09-25T08:31:29Z stall A/B done: profile=baseline rounds=5
+2026-09-25T08:31:29Z summarise with: scripts/stall-ab.sh --summary
+profile    round  stall  rpmh  rcu  wq  dpu  mmc  first_anomaly        boot_id
+---------  -----  -----  ----  ---  --  ---  ---  -------------------  --------
+baseline   1      0      0     0    0   0    0                         18c44523
+baseline   2      0      0     0    0   0    0                         33a07e1d
+baseline   3      0      0     0    0   0    0                         0d518f6e
+baseline   4      0      0     0    0   0    0                         700dbc7e
+baseline   5      0      0     0    0   0    0                         853c61a5
+
+stall = soft_lockup + hung_task + rcu_stall + workqueue_stall (any watchdog-visible wedge)

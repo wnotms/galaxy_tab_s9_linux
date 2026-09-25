@@ -495,6 +495,42 @@ class HarnessContractTests(unittest.TestCase):
         guard = guard[:guard.index("\nfi\n")]
         self.assertIn("die ", guard)
 
+    def test_the_baseline_series_result_is_recorded_with_its_limits(self):
+        """test-193 ran profile A, which needs no flash, and says what that proves."""
+        d = ROOT / "reference/boot-tests/test-193-20260925T0815Z"
+        if not d.exists():
+            self.skipTest("test-193 evidence not present")
+        text = read("reference/boot-tests/test-193-20260925T0815Z/README.md")
+        flat = " ".join(text.split())
+        # It must not claim five clean rounds is evidence of absence.
+        self.assertIn("cannot reproduce a ~3-7 % event", flat.replace("~3–7", "~3-7"))
+        self.assertIn("nothing was flashed", flat.lower())
+        # The reproduction claim must come from the accumulated series instead.
+        self.assertIn("2 wedge cycles in 29 warm reboots", flat)
+        # And the channel defect must be recorded with the run.
+        self.assertIn("zero kernel lines", flat)
+        self.assertIn("console_kernel_lines=0", text)
+        for n in range(1, 6):
+            self.assertTrue((d / f"rounds/round-{n}.txt").exists())
+
+    def test_the_baseline_rounds_are_all_clean_and_from_the_kernel_channel(self):
+        """The counts must come from a channel that can see the kernel at all."""
+        d = ROOT / "reference/boot-tests/test-193-20260925T0815Z/rounds"
+        if not d.exists():
+            self.skipTest("test-193 evidence not present")
+        for n in range(1, 6):
+            rec = read(f"reference/boot-tests/test-193-20260925T0815Z/rounds/round-{n}.txt")
+            with self.subTest(round=n):
+                self.assertIn("stall=0", rec)
+                self.assertIn("reboot_kind=warm", rec)
+                self.assertIn("console_kernel_lines=0", rec)
+                # The two dummy-regulator messages are the proof that this channel
+                # is not blind: the broken version counted them as 0 too.
+                self.assertIn("gpu_dummy_reg_klog=2", rec)
+                self.assertIn("disp_rcg_stale_klog=1", rec)
+                self.assertIn("dpu_frame_timeout_klog=0", rec)
+                self.assertIn("mmc_timeout_klog=0", rec)
+
     def test_it_records_every_metric_the_brief_asks_for(self):
         """The brief lists the fields; a missing one is a silent hole.
 
@@ -2086,6 +2122,42 @@ class Test188SeriesTests(unittest.TestCase):
         self.assertIn("GTS9_ALLOW_POWER", text)
         self.assertIn('if [ "$ALLOW" != "1" ]', text)
 
+    def test_the_baseline_series_result_is_recorded_with_its_limits(self):
+        """test-193 ran profile A, which needs no flash, and says what that proves."""
+        d = ROOT / "reference/boot-tests/test-193-20260925T0815Z"
+        if not d.exists():
+            self.skipTest("test-193 evidence not present")
+        text = read("reference/boot-tests/test-193-20260925T0815Z/README.md")
+        flat = " ".join(text.split())
+        # It must not claim five clean rounds is evidence of absence.
+        self.assertIn("cannot reproduce a ~3-7 % event", flat.replace("~3–7", "~3-7"))
+        self.assertIn("nothing was flashed", flat.lower())
+        # The reproduction claim must come from the accumulated series instead.
+        self.assertIn("2 wedge cycles in 29 warm reboots", flat)
+        # And the channel defect must be recorded with the run.
+        self.assertIn("zero kernel lines", flat)
+        self.assertIn("console_kernel_lines=0", text)
+        for n in range(1, 6):
+            self.assertTrue((d / f"rounds/round-{n}.txt").exists())
+
+    def test_the_baseline_rounds_are_all_clean_and_from_the_kernel_channel(self):
+        """The counts must come from a channel that can see the kernel at all."""
+        d = ROOT / "reference/boot-tests/test-193-20260925T0815Z/rounds"
+        if not d.exists():
+            self.skipTest("test-193 evidence not present")
+        for n in range(1, 6):
+            rec = read(f"reference/boot-tests/test-193-20260925T0815Z/rounds/round-{n}.txt")
+            with self.subTest(round=n):
+                self.assertIn("stall=0", rec)
+                self.assertIn("reboot_kind=warm", rec)
+                self.assertIn("console_kernel_lines=0", rec)
+                # The two dummy-regulator messages are the proof that this channel
+                # is not blind: the broken version counted them as 0 too.
+                self.assertIn("gpu_dummy_reg_klog=2", rec)
+                self.assertIn("disp_rcg_stale_klog=1", rec)
+                self.assertIn("dpu_frame_timeout_klog=0", rec)
+                self.assertIn("mmc_timeout_klog=0", rec)
+
     def test_it_records_every_metric_the_brief_asks_for(self):
         """The brief lists the fields; a missing one is a silent hole.
 
@@ -2619,6 +2691,20 @@ class WedgeRateAttributionTests(unittest.TestCase):
         flat = " ".join(text.split())
         self.assertIn("a clean cycle's marker row is valid evidence", flat)
         self.assertIn("touched only how a silent cycle is *labelled*", flat)
+
+    def test_the_decision_rule_was_filled_in_against_its_own_rule(self):
+        """The pre-registered thresholds must be read, not quietly replaced."""
+        text = read("docs/WEDGE_RATE_DECISION_RULE.md")
+        flat = " ".join(text.split())
+        self.assertIn("written while the series was still running", flat)
+        # The result, and the number it must not hide.
+        self.assertIn("p = 1.0", text)
+        self.assertIn("The CPU-path fix did not change the wedge rate", flat)
+        # It must not upgrade the ACD improvement into an established fact.
+        self.assertIn("p = 0.113", text)
+        self.assertIn("remains unconfirmed rather than established", flat)
+        # And it must say what to do instead of running more cycles.
+        self.assertIn("not more rate series", flat)
 
     def test_the_record_justifies_warm_reboots_as_a_reproduction_vehicle(self):
         """Cold boots need an operator; all three records are warm anyway."""

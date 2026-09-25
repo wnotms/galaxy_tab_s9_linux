@@ -22,6 +22,21 @@ The 06:59Z record is the only one taken on a kernel with the CPU path fixed
 (`docs/PROVIDER_FOLLOWUPS.md` §4), so it is also the record that shows the wedge
 survives that fix.
 
+## All three records are warm reboots, and that matters for the A/B design
+
+Every one of the three came from a harness-issued `systemctl reboot`, never from a
+cold power-on: 04:57Z is cycle 6 of the wedge hunt (`FAILED-BOOT-20260925T0457.md`
+says so in as many words), and 06:00Z and 06:59Z are series cycles in the same
+way. The stall is therefore reproducible with warm reboots alone.
+
+That is worth stating because the round brief prefers 5-10 **cold** boots per
+profile, and a cold boot needs a hand on the power key. Since warm reboots are
+what produced all three complete records - and the two panic-reboot restarts in
+between - a warm-reboot A/B is a valid reproduction vehicle and not a weaker
+substitute for one. `stall-ab.sh` records `reboot_kind=warm` on every round so
+the distinction is never blurred, and a panic reboot stays a separate event that
+is counted rather than assumed.
+
 ## First occurrence and count of every marker
 
 | marker | 04:57Z | 06:00Z | 06:59Z |

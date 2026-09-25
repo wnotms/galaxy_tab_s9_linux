@@ -1,0 +1,11 @@
+Per-round channel coverage, from the round records.
+The COM19 capture is recorded to make its blindness visible: it holds zero
+kernel lines on every round, so any kernel anomaly count taken from it would
+be structurally 0.  The counts in this table come from the kernel's own log.
+
+round  klog     pstore   console_kernel   dummy_reg    rcg    dpu_to    mmc_to    stall 
+1      974      3        0                2            1      0         0         0     
+2      981      3        0                2            1      0         0         0     
+3      977      3        0                2            1      0         0         0     
+4      966      3        0                2            1      0         0         0     
+5      981      3        0                2            1      0         0         0     

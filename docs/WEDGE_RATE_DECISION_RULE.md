@@ -94,3 +94,72 @@ Stated before the result, so it cannot be quietly dropped:
 * `docs/PROVIDER_FOLLOWUPS.md` §4 — the `epss_l3` root cause
 * `reference/boot-tests/test-191-20260925T0410Z/on-device/RESULT.md` — the fix
   verified on hardware
+
+---
+
+# The result, filled in (round 28)
+
+The rule above was committed while cycle 1 was still in its probe, with zero
+verdicts on disk. This is what the count came to, read against it.
+
+## What the series produced
+
+| era | kernel | warm reboots | wedge cycles | rate |
+|---|---|---|---|---|
+| pre-fix ACD only (no cpufreq) | `7a389436` era | 29 | 1 | 3.4% |
+| **test-191 (cpufreq fixed)** | flashed now | **29** | **2** | **6.9%** |
+
+The two test-191 wedge cycles are `wedge-rate.sh` rate1 cycle 1 (the pstore
+record in `wedge-rate-20260925T065728Z/FAILED-BOOT-20260925T0659.md`, 74.757 s
+panic) and rate2 cycle 9 (whose boot restarted itself twice, at back+76 s and
+back+135 s, after the early-exit watch had closed).
+
+Two-sided Fisher exact on `[[2,27],[1,28]]`: **p = 1.0**.
+
+## The conclusion the rule forces, which is not the one the round wanted
+
+**The CPU-path fix did not change the wedge rate.** 2/29 against 1/29 is not a
+result in either direction — it is the same number. `CONFIG_INTERCONNECT_QCOM_OSM_L3=y`
+is still upstream-correct and still the reason the tablet has three scaling
+policies instead of none, and it is still worth keeping. It is simply **orthogonal
+to the stall**.
+
+That is a stronger statement than the one made when the first failure record was
+found, because it now has a denominator on both sides. The earlier claim was "the
+wedge survives the fix" from a single record; the claim now is "the wedge rate is
+unchanged by the fix", from 29 boots on each side.
+
+The pre-fix 3.4% row is itself 1 in 29, so neither era is measured well: the
+95% CI on 1/29 is 0.6-17.2% and on 2/29 is 0.8-22.8%. What the comparison *can*
+say is bounded, and it says it clearly:
+
+* the rate is **not** near zero on the fixed kernel — two wedges in 29 boots;
+* it is **not** obviously different from the pre-fix rate either.
+
+Against the older pre-ACD era (10/46 = 21.7%) the difference is still not
+significant at this sample size (p = 0.113), so the ACD fix's apparent 6×
+improvement remains unconfirmed rather than established. That matters: it is the
+number the whole "ACD era" narrative rests on, and 29 boots cannot carry it.
+
+## What follows for the plan
+
+The rule's situation table does not have a row for "no change", so this is the
+reading that applies: **the marker analysis and the A/B, not more rate series,
+are what can still move this.** Running sixty more cycles would tighten a CI
+around a number that no longer discriminates between the hypotheses on the table.
+
+The two hypotheses the A/B separates are still open, and the CPU path is now
+excluded from both:
+
+* **the display commit path is the trigger** (frame-done timeout is the earliest
+  observable event, 3/3 records, 0/22 controls); or
+* **an invisible upstream failure, most likely RPMh/RSC completion**, where the
+  display is merely the first subsystem to notice because a frame has a 1.184 s
+  deadline and polls.
+
+Profiles B and C do not separate those two directly — neither removes the display
+or the SD controller — but they do remove the GPU, GMU, ACD/AOSS and the GPU's
+RPMh and interconnect votes, which is the largest single block that can be
+removed with a command-line token. If the stall survives C, both hypotheses above
+survive with the GPU direction eliminated, and the RPMh timeout-state run becomes
+the next instrument rather than the next guess.
