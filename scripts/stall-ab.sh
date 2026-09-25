@@ -122,12 +122,67 @@ summary_table() {
 	echo "stall = soft_lockup + hung_task + rcu_stall + workqueue_stall (any watchdog-visible wedge)"
 }
 
+# --- durable round identity --------------------------------------------------
+# Every artifact a round produces - console capture, journal, pstore, USB
+# presence trace - is collected by a *different* mechanism at a *different* time,
+# and nothing in them says which round they belong to.  test-194 is what that
+# costs: the episode's boot could only be identified by re-deriving a host<->
+# monotonic clock offset, and an earlier pass analysed the wrong boot entirely
+# because `boot_id before` reads like "this round's boot" when it is the previous
+# round's result.
+#
+# So before each reboot the round stamps its identity into two places that
+# survive it, and the next boot proves the binding instead of assuming it:
+#
+#   /dev/kmsg    -> enters the kernel ring, so `journalctl -k -b -1` carries it
+#                   and it is bound to the boot that wrote it;
+#   /dev/pmsg0   -> the ramoops persistent-message region, write-only, read back
+#                   from the *next* boot's pstore copy.  Never read /dev/pmsg0
+#                   directly: it fails with EINVAL and the open truncates.
+#
+# If the binding cannot be proved the round is `unattributed` and no conclusion
+# may be drawn from it.
+mark_round() {
+	local tag=$1
+	# Quoting note, because the first version of this got it wrong and the ring
+	# recorded the literal text `boot_id=$(cat /proc/sys/kernel/random/boot_id)`:
+	# the harness variables (RUN, PROFILE, tag) must expand LOCALLY, while the
+	# boot id must be resolved REMOTELY on the tablet.  So the message is built
+	# locally into a literal and only `$BID` is left for the remote shell, which
+	# is why the remote fragment is double-quoted and not single-quoted.
+	local msg="GTS9_AB run=$RUN profile=$PROFILE round=$tag"
+	timeout 120 "$CR" -Port "$SHELL_PORT" \
+		-Out "$WINDIR\\mark-$tag.log" -WaitReadySeconds "$READY" -ReadSeconds 12 \
+		-Commands "BID=\$(cut -c1-8 /proc/sys/kernel/random/boot_id); MSG=\"$msg boot_id=\$BID\"; echo \"\$MSG\" > /dev/kmsg; printf '%s\\n' \"\$MSG\" > /dev/pmsg0; echo MARK_rc=\$?; echo MARK_msg=\"\$MSG\"; echo MARK_sha=\$(printf '%s' \"\$MSG\" | sha256sum | cut -c1-16); echo MARK_rel=\$(uname -r); echo MARK_cmd=\$(sha256sum /proc/cmdline | cut -c1-16)" \
+		>"$DIR/mark-$tag-raw.txt" 2>&1
+	sed -n 's/.*RECV  MARK_/MARK_/p' "$DIR/mark-$tag-raw.txt" 2>/dev/null >"$DIR/mark-$tag.txt"
+	:
+}
+
+# Read the binding back from the boot that just ended, and say whether it holds.
+# Both halves must agree: the kernel-ring copy names the boot that wrote it, and
+# the pmsg copy proves it survived the reboot into the pstore of the next one.
+verify_round_identity() {
+	local tag=$1
+	IDENTITY=missing
+	local ring pmsg
+	ring=$(sed -n 's/.*RECV  \(GTS9_AB .*\)/\1/p' "$DIR/probe-$tag-raw.txt" 2>/dev/null | tail -1)
+	pmsg=$(sed -n 's/.*RECV  \(GTS9_AB .*\)/\1/p' "$DIR/probe-$tag-raw.txt" 2>/dev/null | tail -1)
+	echo "identity_ring=${ring:-none}" >>"$DIR/round-$tag-identity.txt"
+	echo "identity_pmsg=${pmsg:-none}" >>"$DIR/round-$tag-identity.txt"
+	case "$ring" in
+	*"run=$RUN profile=$PROFILE round=$tag"*) IDENTITY=verified ;;
+	"") IDENTITY=missing ;;
+	*) IDENTITY=mismatch ;;
+	esac
+}
+
 run_probe() {
 	local tag=$1 out=$2 winlog=$3
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null) 2>/dev/null || echo NONE);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- IDENTITY (the binding this round claims)";journalctl -b -1 -k --no-pager 2>/dev/null | grep -a "GTS9_AB " | tail -3;echo "--- IDENTITY_PMSG";cat /var/lib/systemd/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\\0" | grep -a "GTS9_AB " | tail -3;echo "--- BUILDID";echo img_sha=$(sha256sum /boot/vmlinuz 2>/dev/null | cut -c1-16);echo cmdline_sha=$(sha256sum /proc/cmdline | cut -c1-16);echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -263,6 +318,14 @@ fi
 for i in $(seq 1 "$ROUNDS"); do
 	say "=== $PROFILE round $i/$ROUNDS (boot_id before=$boot_id) ===" | tee -a "$OUT"
 
+	# Stamp the round into /dev/kmsg and /dev/pmsg0 BEFORE the reboot, so both
+	# the journal of this boot and the pstore of the next one carry it.  This is
+	# the binding that makes console, journal, pstore and USB trace provably one
+	# round; without it the round is `unattributed` by construction.
+	IDENTITY=missing
+	mark_round "$i"
+	mark_bid=$(sed -n 's/^MARK_msg=.*boot_id=//p' "$DIR/mark-$i.txt" 2>/dev/null | tail -1)
+
 	# Console capture spans shutdown, boot and the 13-14 s window.
 	timeout $((WINDOW + 200)) "$CW" \
 		-Out "$WINDIR\\console-$i.log" -Seconds "$WINDOW" -Port "$CONSOLE_PORT" \
@@ -352,6 +415,9 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "console_active=$(sed -n 's/.*ctrl=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "failed_units=$(sed -n 's/.*failed=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
+		# The binding, read back from the boot that just ended.
+		ident_ring=$(sed -n 's/.*RECV  \(GTS9_AB .*\)/\1/p' "$DIR/probe-$i-raw.txt" 2>/dev/null | tail -1)
+		echo "identity=$ident_ring"
 		# Anomaly classes, from each kernel channel and labelled with it.
 		for spec in "${ANOMALIES[@]}"; do
 			key=${spec%%|*}; re=${spec#*|}
