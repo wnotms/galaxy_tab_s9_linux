@@ -1,0 +1,65 @@
+snapshot=cold-1-immediate
+captured_utc=2026-04-13T19:39:55Z
+boot_id=a214feda-1c83-43a2-9668-f50e43d46399
+uptime=113.01
+kernel=7.2.0-rc3-gts9wifi-dirty
+cmdline=console=ttyMSM0,115200n8 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 ignore_console_null earlycon nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32 console=tty0 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1 console=ttyGS1 gts9_rpmh_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=1 nfc_sec.nfc_param_lpcharge=1 flicker_sensor.flicker_param_lpcharge=1 cpufreq_limit.lpcharge=1 sec-battery.lpcharge=1 max77705_charger.lpcharge=1 max77705-fuelgauge.lpcharge=1 p9320_charger.lpcharge=1 s2miw04_charger.lpcharge=1 cps4038_charger.lpcharge=1 nu1668_charger.lpcharge=1 msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+--- modules ---
+modules_installed=167
+loaded_pci_pwrctrl_pwrseq=1
+loaded_pwrseq_qcom_wcn=1
+loaded_ath11k=0
+--- binding ---
+drv_1c00000.pcie=qcom-pcie
+drv_1c06000.phy=qcom-qmp-pcie-phy
+drv_wcn6855-pmu=pwrseq-qcom_wcn
+drv_1c00000.pcie:pcie@0:wifi@0=pci-pwrctrl-pwrseq
+--- deferred ---
+aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+--- pci ---
+pci_count=1
+pci_dev 0000:00:00.0 0x17cb:0x0113 class=0x060400
+link_status=0x0142
+dllla_bit13=0
+cur_speed=2.5 GT/s PCIe
+endpoint_present=NO
+--- gpio ---
+ gpio80  : out high func0 16mA pull up
+ gpio81  : out low  func0 16mA no pull
+ gpio82  : in  high func0 2mA pull down
+ gpio94  : out high func0 2mA pull down
+ gpio95  : in  low  func1 2mA pull up
+ gpio96  : in  high func0 2mA pull up
+ gpio204 : out low  func0 2mA pull down
+--- pmu rails ---
+rail vreg_l15b_1p8=enabled
+rail vreg_s2g_1p012=enabled
+rail vreg_s5g_0p966=enabled
+rail vreg_s4e_0p952=enabled
+rail vreg_s4g_1p352=enabled
+rail vreg_s6g_1p904=enabled
+pmu_internal_rails=0
+--- wireless ---
+wireless_phys=0
+wlans=0
+--- pcie dmesg ---
+[    1.567994] [     T77] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.568262] [     T77] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.568321] [     T77] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.568356] [     T77] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.533504] [     T92] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    4.533557] [     T92] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    4.533620] [     T92] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    4.533629] [     T92] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    4.533634] [     T92] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.554838] [     T77] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    4.554908] [     T77] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    4.554971] [     T77] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    4.554980] [     T77] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    4.554985] [     T77] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    4.737088] [     T77] qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[    5.719446] [     T77] qcom-pcie 1c00000.pcie: Device not found
+[    5.719623] [     T77] qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
+[    5.719714] [     T77] pci 0000:00:00.0: [17cb:0113] type 01 class 0x060400 PCIe Root Port
+[    5.723118] [     T77] pcieport 0000:00:00.0: PME: Signaling with IRQ 205
+[    5.723297] [     T77] pcieport 0000:00:00.0: AER: enabled with IRQ 205
