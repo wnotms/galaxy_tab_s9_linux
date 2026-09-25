@@ -388,6 +388,41 @@ and the only remaining command-line-scale candidate is the display: there is no
 `msm.no_dpu`-style token, so that would need a DTS or config change rather than a
 profile, which puts it beyond this round's boundary.
 
+## RESOLVED IN ROUND 32: the RPMh timeout branch is out too
+
+**The `gts9_rpmh_debug=1` run produced the pre-registered last row**: a wedge with
+`wedge_markers=7` and **zero** RPMh output in every channel
+(`reference/boot-tests/test-199-20260925T1314Z/`). Per the rule written before the
+run, *no RPMh output at all, and the stall still happened* means **the stall did
+not go through an RPMh timeout** - the RPMh direction is downgraded for this
+failure mode.
+
+This rests on the switch having been proven live first, because `0021` prints only
+on a timeout and has no runtime handle, so a quiet run is otherwise
+indistinguishable from a dead switch. The arming gate shows the token on the
+cmdline, every A/B token absent (it ran alone), and the token **absent from the
+kernel's own unknown-parameter list** - proof an `early_param` handler consumed it.
+All 14 dump strings are `pr_err`, so the ring would have kept them at `loglevel=4`.
+
+The victim's stack carries no RPMh path either: `toggle_allocation_gate ->
+static_key_enable -> arch_jump_label_transform_apply -> kick_all_cpus_sync ->
+smp_call_function_many_cond`, with no rsc, rpmh, bcm or interconnect frame. That
+does not falsify `0021`'s hazard - it never fired, so it was never tested - but the
+timeout branch is out as an explanation for this failure mode.
+
+Two things this closes and one it opens:
+
+* **the RPMh/RSC direction is downgraded**, alongside the GPU;
+* **the canary is confirmed as reporter, not cause** - fourth record, and here it
+  is the *entire* trace;
+* **but the cause is still not identified.** Four wedges, four victim CPUs
+  (5, 2, 2, 4), one repeated canary, and the onset is consistently **~7-8 s** by
+  the RCU timer (7.13 / 7.74 / 7.29 / 7.58 s). Nothing is logged there on any boot.
+
+Note the soft-lockup timer is the less reliable of the two now: test-199 reported
+`stuck for 56s` rather than 26 s, i.e. on its *second* pass, so its onset figure
+reads 8.75 s while the RCU figure reads 7.58 s. **Use the RCU timer.**
+
 ## NEXT PHYSICAL TEST
 
 **1. Baseline sanity run with the fixed harness — DONE (test-197).** No flash
