@@ -69,23 +69,28 @@ kick_all_cpus_sync -> smp_call_function_many_cond` chain, and
   **two** kernel/daemon messages, both userspace stage markers at 6.52 s and
   6.88 s. A clean round's same window is equally quiet, so the window contents do
   not discriminate; only the silence *after* 6.9 s does.
-* Whether the 3 clean rounds before it mean anything. They do not: the session's
-  rate on this kernel is now 3 wedges in 13 rounds, and no small series
-  discriminates at that rate.
+* Whether the 3 clean rounds before it mean anything. They do not: see the rate
+  below, and no small series discriminates at that rate.
 
 ## The rate, honestly
 
-| source | rounds | wedges |
-|---|---|---|
-| test-193 | 5 | 0 |
-| test-195 | 1 | 1 |
-| test-197 | 4 (stopped on the wedge) | 1 |
-| this session, total | **10** | **2** |
+Rounds on the **flashed test-191 kernel**, which is what all of these share:
 
-Plus the rate2/rate3 series earlier in the session. The point worth keeping is not
-the number but that **wedges are frequent enough to catch within a handful of
-rounds when the detector works** - which is the opposite of what the broken
-detector implied.
+| source | rounds | wedges | detector |
+|---|---|---|---|
+| test-193 | 5 | 0 | pre-fix, `presence_outages` always 0 |
+| test-195 | 1 | **1** | pre-fix |
+| test-197 (this) | 4, stopped on the wedge | **1** | fixed |
+| **total** | **10** | **2** | |
+
+The earlier rate2/rate3 series adds 22 clean rounds and one wedge (rate2 cycle 9),
+for **32 rounds and 3 wedges on this kernel, ~9 %**.
+
+The point worth keeping is not the percentage but that **wedges appear within a
+handful of rounds**, against a detector that had been reporting zero for its whole
+existence. The pre-fix rows are also why `verdict` did not exist for them: test-193
+reported `verdict=clean` five times with the restart check silently disabled, so
+those five are clean only in the sense that nothing else objected.
 
 ## Files
 

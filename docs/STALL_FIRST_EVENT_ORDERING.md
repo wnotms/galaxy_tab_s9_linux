@@ -164,3 +164,83 @@ both are recorded in `docs/GPU_GMU_RPMH_STALL_PLAN.md` §1.1 (facts 15 and 19):
   `3d6a000.gmu` has no platform driver to bind by design (`a6xx_gmu_init()` takes
   it with `of_find_device_by_node()`), and the AOSS path used `@` where sysfs uses
   `.`. Both now report driver *names*.
+
+
+---
+
+# Round 30: the onset is ~6.5-7.8 s, and the marker table does not survive
+
+Two further wedges were captured with a working two-channel instrument, and they
+contradict the central table above. Both changes are corrections, not additions.
+
+## The three markers this file is built on are absent from both new records
+
+In the pstore console of **both** new wedges:
+
+| marker | test-195 | test-197 |
+|---|---|---|
+| `frame done timeout` | **0** | **0** |
+| `mmc1: Timeout` | **0** | **0** |
+| `AMC RPMH` | **0** | **0** |
+| `encoder is disabled` | 1 @4.787 s | 1 @4.615 s |
+| `rcu detected stall` | 1 @28.839 s | 1 @28.763 s |
+| `Sending NMI` | @28.844 s | — |
+| `soft lockup` | @33.127 s | @32.546 s |
+| `Kernel panic` | @33.127 s | @32.546 s |
+
+The "present in 3 of 3 failure records, absent from 22 of 22 clean controls"
+association above was built from the three earlier pstore records, which were
+captured on a kernel that also lacked `epss_l3` and the cxpd fix. On the kernel now
+flashed, neither wedge carries any of the three. The association does not
+generalise from that era to this one.
+
+## The onset, from two independent timers
+
+`CONFIG_SOFTLOCKUP_DETECTOR` reports a stuck duration, and
+`CONFIG_RCU_CPU_STALL_TIMEOUT=21` with `CONFIG_HZ=250` gives `t=5255 jiffies` =
+21.02 s - both read out of `out/kernel-gts9wifi/config`, not assumed. Subtracting
+each from its report time:
+
+| record | soft lockup | minus 26 s | RCU stall | minus 21.02 s | victim |
+|---|---|---|---|---|---|
+| test-195 | 33.127 s | **7.13 s** | 28.839 s | **7.82 s** | CPU 5 |
+| test-197 | 32.546 s | **6.55 s** | 28.763 s | **7.74 s** | CPU 2 |
+
+**Both point at ~6.5-7.8 s.** The two records agree to ~1.2 s across different
+victim CPUs (5 and 2) and different kworkers (`u32:7`, `u32:8`). The RCU stall at
+~28.8 s is therefore **21 s of silence after the onset**, not the onset, and the
+`soft lockup`/panic at ~33 s is 26 s after it.
+
+That is earlier than every marker this file treats as "first":
+
+* `frame done timeout` in the older records: 6.7-7.7 s - comparable, and now known
+  not to be necessary;
+* the DPU `encoder is disabled`: 4.4-4.8 s, and it fires on every healthy boot.
+
+**And it retires the 13.0-14.3 s window as an onset.** That window is where a
+*different* detector - the deferred-probe timeout, or an RPMh timeout - happened
+to fire, not where the failure began.
+
+## What survives from above
+
+* the strict ordering *within* a record - RCU stall before soft lockup before
+  panic - holds in both new records;
+* the victim chain is identical in all four:
+  `toggle_allocation_gate -> static_key_enable -> jump_label_update ->
+  arch_jump_label_transform_apply -> kick_all_cpus_sync ->
+  smp_call_function_many_cond`, with `SMP: failed to stop secondary CPUs`;
+* `encoder is disabled` is still noise, now confirmed on two more boots;
+* `toggle_allocation_gate` is still the canary, not the cause: it needs every CPU
+  to ACK an IPI, so it reports the wedge.
+
+## What is still not known
+
+The onset is bracketed to ~1.3 s by two timers, but **nothing is logged there**.
+In test-197's kernel ring, the window 4.6 s → 29 s contains exactly two messages,
+both userspace stage markers (`GTS9_DEBIAN_STAGE=tty1-getty-active` at 6.52 s and
+`=multi-user` at 6.88 s), and a clean round's window is equally quiet. So the
+contents of the window do not discriminate - only the fact that a CPU stops
+ACKing IPIs inside it does.
+
+Why that CPU stops is the open question, and the answer is not in any channel the
+project currently records at `loglevel=4`.

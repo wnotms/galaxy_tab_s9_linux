@@ -2277,6 +2277,62 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("downgraded from", flat)
         self.assertIn("does **not** retire profiles B and C", flat)
 
+    def test_the_onset_arithmetic_is_pinned_to_the_built_config(self):
+        """26 s and 21 s are read from the config, not assumed."""
+        text = read("docs/STALL_FIRST_EVENT_ORDERING.md")
+        flat = " ".join(text.split())
+        self.assertIn("Round 30: the onset is ~6.5-7.8 s", flat)
+        self.assertIn("6.55", text)
+        self.assertIn("7.74", text)
+        # The two timeout sources, named with their config symbols.
+        self.assertIn("CONFIG_SOFTLOCKUP_DETECTOR", text)
+        self.assertIn("CONFIG_RCU_CPU_STALL_TIMEOUT=21", text)
+        # And the config really says so.
+        cfg = read("out/kernel-gts9wifi/config")
+        self.assertIn("CONFIG_RCU_CPU_STALL_TIMEOUT=21", cfg)
+        self.assertIn("CONFIG_HZ=250", cfg)
+
+    def test_the_ordering_table_records_that_it_did_not_survive(self):
+        """The 3-of-3 association must be withdrawn on this kernel's evidence."""
+        text = read("docs/STALL_FIRST_EVENT_ORDERING.md")
+        flat = " ".join(text.split())
+        self.assertIn("the marker table does not survive", flat)
+        self.assertIn("The association does not generalise", flat)
+        # Both new wedges must be shown as lacking the three markers.
+        self.assertIn("| `frame done timeout` | **0** | **0** |", text)
+        self.assertIn("| `mmc1: Timeout` | **0** | **0** |", text)
+        self.assertIn("| `AMC RPMH` | **0** | **0** |", text)
+
+    def test_the_two_wedges_are_archived_with_their_binding(self):
+        """test-197 has the device-side marker; test-195's was overwritten.
+
+        The pmsg region is a single slot, so only the most recent marker survives.
+        test-197's is archived and proves the mechanism end to end; test-195
+        predates preservation and says so in its README rather than leaving a
+        reader to guess whether the marker was lost or never written.
+        """
+        for d, boot in (("test-195-20260925T1023Z", "6d8b975c"),
+                        ("test-197-20260925T1103Z", "aad07f8d")):
+            with self.subTest(record=d):
+                base = ROOT / "reference/boot-tests" / d
+                self.assertTrue(base.exists(), f"{d} missing")
+                # Both must carry the CPU-level evidence.
+                console = (base / "on-device-console-ramoops.txt").read_text(
+                    errors="replace")
+                for needle in ("soft lockup", "Kernel panic",
+                               "toggle_allocation_gate"):
+                    self.assertIn(needle, console)
+                # And both must name the wedged boot somewhere.
+                self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+        # test-197 additionally has the device-side copy.
+        pmsg = read("reference/boot-tests/test-197-20260925T1103Z/on-device-pmsg.txt")
+        self.assertIn("aad07f8d", pmsg)
+        self.assertIn("round=4", pmsg)
+        # test-195 must explain its absence rather than hide it.
+        t195 = " ".join(read("reference/boot-tests/test-195-20260925T1023Z/README.md").split())
+        self.assertIn("survives in the round record only", t195)
+        self.assertIn("single-slot ring", t195)
+
     def test_the_profile_c_candidate_is_ready_and_gated(self):
         """A candidate that cannot prove its own ablation is not a candidate."""
         c = "reference/boot-tests/test-196-20260925T1100Z/candidate.txt"

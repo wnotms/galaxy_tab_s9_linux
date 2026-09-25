@@ -114,6 +114,21 @@ early-return that fires on every boot.
 
 ## Files
 
+**The binding for this round survives in the round record only.** The pmsg region
+is a single-slot ring: test-195's marker was overwritten by test-197's before
+anyone read it back a second time, so this directory has no `on-device-pmsg.txt`
+and cannot prove the binding from device state. What it does have is the round
+record's own `identity=` line, read from the kernel ring while the boot was live:
+
+```
+identity=GTS9_AB run=verify1 profile=baseline round=1 boot_id=6d8b975c
+```
+
+test-197 completed the loop - its pmsg survived and is archived - so the mechanism
+is proven; this record simply predates the preservation step. Recorded rather than
+papered over, because "the marker is gone" and "the marker never existed" look
+identical in an archive.
+
 | file | what it is |
 |---|---|
 | `on-device-console-ramoops.txt` | the tablet's own ramoops console for the wedged boot, 5819 B |
