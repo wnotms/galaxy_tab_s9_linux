@@ -302,3 +302,51 @@ class CpuWedgeEvidenceTests(unittest.TestCase):
         self.assertEqual(len(fao), 1)
         self.assertEqual(fao[0]["acd"], 0)
         self.assertTrue(fao[0]["nmi"] or fao[0]["rcu"] or fao[0]["wq"] or fao[0]["sl"])
+
+
+class CpuIdleLeadTests(unittest.TestCase):
+    """The X710-only idle options, and the harness that would capture a wedge."""
+
+    DOC = "docs/CPU_WEDGE_EVIDENCE.md"
+    HUNT = "reference/boot-tests/test-190-20260925T0400Z/wedge-hunt.sh"
+    FRAGMENT = "kernel/config/gts9wifi-mainline.fragment"
+
+    def test_the_doc_names_the_x710_only_idle_options(self):
+        text = read(self.DOC)
+        self.assertIn("CONFIG_CPU_IDLE_THERMAL=y", text)
+        self.assertIn("CONFIG_CPU_IDLE_GOV_TEO=y", text)
+        # And that they are inherited, not chosen - so nobody hunts for a commit.
+        self.assertIn("inherited from the stock", text)
+
+    def test_they_really_are_absent_from_the_fragment(self):
+        """The doc claims they are stock-seed leftovers; verify it."""
+        fragment = read(self.FRAGMENT)
+        self.assertNotIn("CPU_IDLE_THERMAL", fragment)
+        self.assertNotIn("CPU_IDLE_GOV_TEO", fragment)
+
+    def test_the_doc_records_the_measured_idle_usage(self):
+        text = read(self.DOC)
+        self.assertIn("psci_idle", text)
+        self.assertIn("usage=91839", text)
+        self.assertIn("92%", text)
+        # And that no suspend failure is reported.
+        self.assertIn("no failed suspends", text)
+
+    def test_the_doc_does_not_claim_idle_is_the_cause(self):
+        text = read(self.DOC)
+        self.assertIn("a lead, not a conclusion", text)
+        self.assertIn("cannot rule out and cannot confirm", text)
+
+    def test_the_hunt_is_a_warm_reboot_harness_that_stops_on_a_capture(self):
+        text = read(self.HUNT)
+        self.assertIn("kind=warm-reboot", text)
+        self.assertIn("GTS9_ALLOW_POWER", text)
+        # It must stop the moment it catches something, or the capture rotates away.
+        self.assertIn("WEDGE CAPTURED", text)
+        self.assertIn("break", text)
+        # And it must require execution, not an echo.
+        self.assertIn("GTS9_ALIVE_", text)
+        # Nothing may be flashed.
+        for forbidden in ("fastboot", "dd if=", "flash ", "avbtool"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, text)

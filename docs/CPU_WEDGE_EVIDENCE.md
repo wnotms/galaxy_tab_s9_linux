@@ -130,6 +130,58 @@ unspecified later times (`last` ranges from 36.7 s to 496.8 s), and the two
 freeze-shaped post-fix episodes stop at 6.2–6.5 s. The window was always a
 property of when a host happened to be watching.
 
+## What the CPU was doing, and what that points at
+
+The wedge dumps report `100% system, 0% idle` on the affected CPUs, so they are
+executing kernel code rather than asleep — and the RCU expedited grace-period
+kthread is itself the task the soft-lockup detector names on `fa0f2151`
+(`CPU#7 stuck for 53s! [rcu_exp_gp_kthr:19]`). `smp_call_function`'s
+`csd_lock_wait()` and RCU's expedited handler both spin exactly like that while
+waiting for a CPU that will never answer, so those are **victims of the same
+missing CPU**, not a second fault.
+
+What can make a CPU stop answering an NMI altogether? On arm64 the short list is a
+CPU parked with interrupts masked, an SError, or a PSCI `CPU_SUSPEND` that never
+returns. The last is worth stating because the platform evidence points at it:
+
+```
+$ cat /sys/devices/system/cpu/cpuidle/current_driver
+psci_idle
+$ for s in /sys/devices/system/cpu/cpu0/cpuidle/state*; do ...; done
+state0 WFI                usage=50609   time=86 s
+state1 cpu-sleep-0-0      usage=91839   time=1196 s     <- silver-rail-power-collapse
+```
+
+The CPUs spend about **92%** of their time in a rail power collapse, at roughly 70
+entries per second, and the kernel reports no failed suspends at all — so the deep
+idle path works overwhelmingly often. A wedge once per boot would be a failure rate
+of order one in a million entries, which this cannot rule out and cannot confirm.
+
+Two X710-specific findings from the X910 comparison the brief asks for, both in
+this path:
+
+* **`CONFIG_CPU_IDLE_THERMAL=y` and `CONFIG_CPU_IDLE_GOV_TEO=y` are X710-only**
+  (`.work/x910/.../config-mainline.aarch64` has neither), and neither appears in
+  `kernel/config/gts9wifi-mainline.fragment` — they are inherited from the stock
+  Samsung config seed rather than chosen. The active governor on the device is
+  `menu`, with `teo` available;
+* the idle states themselves are upstream `sm8550.dtsi` and the board DTS does not
+  touch them, so both boards describe the same hardware here.
+
+That is a lead, not a conclusion: `CONFIG_CPU_IDLE_THERMAL` adds a cooling-device
+path to idle-state selection and TEO is a different selection algorithm, and either
+could in principle choose a state whose wakeup source is not up yet on this port.
+Disabling the deep state at runtime needs no flash and no rebuild:
+
+```sh
+for c in /sys/devices/system/cpu/cpu[0-9]*; do
+    echo 1 > "$c/cpuidle/state1/disable" 2>/dev/null
+done
+```
+
+which is the cheap form of the experiment. `cpuidle.off=1` on the command line is
+the blunt form.
+
 ## What it does not establish
 
 * **Why a CPU stops.** Nothing in any of the 11 traces names a cause. There is no
