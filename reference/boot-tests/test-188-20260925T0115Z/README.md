@@ -155,3 +155,36 @@ GTS9_ALLOW_POWER=1 GTS9_ROUNDS=6 reference/boot-tests/test-188-*/shutdown-series
 
 Environment: `GTS9_ROUNDS` (default 6), `GTS9_WINDOW` seconds of COM19 capture per
 round (default 300), `GTS9_SHELL_PORT` (COM17), `GTS9_CONSOLE_PORT` (COM19).
+
+## The updated collector was deployed to the device
+
+`rootfs-overlay/usr/libexec/gts9-prev-boot-evidence` was copied to the running
+tablet so that future archives record `previous_boot_id=`. This is a userspace
+file in `/usr/libexec` — **no partition was written, nothing was flashed.**
+
+| | sha256 |
+|---|---|
+| host file | `b2a4e9c2abc90eb17daad08ed693738dc2b427c43dc28351a1547b134aad99d4` |
+| on the device, after install | `b2a4e9c2abc90eb17daad08ed693738dc2b427c43dc28351a1547b134aad99d4` |
+| on the device, before | `82d29a6934fda30ee4af9ef328447892617cb130333548efd07a077cefb8d94b` (190 lines) |
+
+Uploaded as base64 to `/tmp/newcollector`, hash-verified there, then
+`install -m 0755`, hash-verified again, `sh -n` clean, `/tmp` copy removed.
+
+Tested in place rather than assumed:
+
+```
+$ BID=$(cut -c1-8 /proc/sys/kernel/random/boot_id); /usr/libexec/gts9-prev-boot-evidence
+gts9-prev-boot-evidence: /var/log/gts9-boot-evidence/20260413T194953Z-fd68fa9c previous_boot=present end=clean-shutdown panic=0 lockup=0 hung=0 rcu=0 dpu=0 mmc=0
+
+$ grep -aE '^(boot_id|previous_boot|previous_boot_id|previous_boot_end)=' .../verdict.txt
+boot_id=fd68fa9c-78e2-4b8f-abc8-b07de6287e45
+previous_boot=present
+previous_boot_id=300173a42fb943ba8f1348b0cdb36f4f
+previous_boot_end=clean-shutdown
+```
+
+`previous_boot_id=300173a4…` is round 5's boot, which is exactly right — that is
+the boot this archive describes — and it independently confirms the classifier's
+`clean` verdict for round 5 from the device's own journal. `dpu=0` for that boot
+confirms it printed no frame-done timeout.

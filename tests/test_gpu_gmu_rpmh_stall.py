@@ -956,6 +956,14 @@ class Test188SeriesTests(unittest.TestCase):
                 # The evidence that the trigger was sent must survive.
                 self.assertIn("systemctl reboot", text)
 
+    def test_the_collector_deployment_is_recorded_with_hashes(self):
+        text = read(f"{self.TESTDIR}/README.md")
+        self.assertIn("b2a4e9c2abc90eb17daad08ed693738dc2b427c43dc28351a1547b134aad99d4", text)
+        self.assertIn("82d29a6934fda30ee4af9ef328447892617cb130333548efd07a077cefb8d94b", text)
+        self.assertIn("previous_boot_id=300173a42fb943ba8f1348b0cdb36f4f", text)
+        # It must say plainly that this was not a flash.
+        self.assertIn("no partition was written, nothing was flashed", text)
+
     def test_the_readme_records_the_adsp_shutdown_audit(self):
         text = read(f"{self.TESTDIR}/README.md")
         self.assertIn("RPROC_RUNNING", text)
