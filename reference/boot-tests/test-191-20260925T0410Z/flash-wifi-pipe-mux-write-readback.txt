@@ -1,0 +1,29 @@
+2026-09-25T17:16:25Z profile=wifi-pipe-mux bundle=/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-wifi-pipe-mux
+2026-09-25T17:16:26Z host boot.img        0cafa99a868f000a54b9d19a05250f5845aa4f7dc21b51b59a6cd077b2a76b9b
+2026-09-25T17:16:27Z host vendor_boot.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+100663296 bytes (96 M) copied, 0.099436 s, 965 M/s
+/tmp/boot-current.img: 1 file pulled, 0 skipped. 31.4 MB/s (100663296 bytes in 3.061s)
+2026-09-25T17:16:30Z BACKUP boot -> /home/ms/Samsung/gts9-flash-tests/test-191-wifi-pipe-mux/boot-before-wifi-pipe-mux.img dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+100663296 bytes (96 M) copied, 0.041885 s, 2.2 G/s
+/tmp/vendor_boot-current.img: 1 file pulled, 0 skipped. 23.0 MB/s (100663296 bytes in 4.168s)
+2026-09-25T17:16:35Z BACKUP vendor_boot -> /home/ms/Samsung/gts9-flash-tests/test-191-wifi-pipe-mux/vendor_boot-before-wifi-pipe-mux.img f5ff011ab0d78c0e4458e69a44bcaff6e35934571213cc3dc90416b5821a890d
+2026-09-25T17:16:35Z PASS the tablet is running the expected test-187-baseline kernel (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+2026-09-25T17:16:36Z --- boot: writing host sha256 0cafa99a868f000a54b9d19a05250f5845aa4f7dc21b51b59a6cd077b2a76b9b ---
+D:\android\gts9-flash\test191-boot.img: 1 file pushed, 0 skipped. 74.7 MB/s (100663296 bytes in 1.285s)
+2026-09-25T17:16:37Z PASS boot push verified on device (0cafa99a868f000a54b9d19a05250f5845aa4f7dc21b51b59a6cd077b2a76b9b)
+100663296 bytes (96 M) copied, 0.224655 s, 427 M/s
+100663296 bytes (96 M) copied, 0.103283 s, 929 M/s
+/tmp/boot-after.img: 1 file pulled, 0 skipped. 24.9 MB/s (100663296 bytes in 3.848s)
+2026-09-25T17:16:42Z PASS boot readback verifies (0cafa99a868f000a54b9d19a05250f5845aa4f7dc21b51b59a6cd077b2a76b9b)
+2026-09-25T17:16:43Z --- vendor_boot: writing host sha256 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f ---
+D:\android\gts9-flash\test191-vendor_boot.img: 1 file pushed, 0 skipped. 712.3 MB/s (100663296 bytes in 0.135s)
+2026-09-25T17:16:43Z PASS vendor_boot push verified on device (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+100663296 bytes (96 M) copied, 0.226517 s, 424 M/s
+100663296 bytes (96 M) copied, 0.104016 s, 923 M/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 19.3 MB/s (100663296 bytes in 4.967s)
+2026-09-25T17:16:49Z PASS vendor_boot readback verifies (06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f)
+2026-09-25T17:16:49Z flash complete and verified: boot + vendor_boot now hold test-191 'wifi-pipe-mux'
+2026-09-25T17:16:49Z backup kept at /home/ms/Samsung/gts9-flash-tests/test-191-wifi-pipe-mux/{boot,vendor_boot}-before-wifi-pipe-mux.img
+2026-09-25T17:16:49Z NEXT: reboot the tablet.  The initramfs clears the BCB, so a plain reset is enough:
+2026-09-25T17:16:49Z   /mnt/d/android/platform-tools/adb.exe shell reboot system
+2026-09-25T17:16:49Z then run:  /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/verify-osm-l3.sh

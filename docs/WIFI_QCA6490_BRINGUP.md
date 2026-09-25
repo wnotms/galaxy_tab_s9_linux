@@ -63,31 +63,24 @@ node declares.
 
 ## 3. Runtime evidence
 
-Read-only probes, all archived: `reference/boot-tests/test-200-wifi-preflight/`
-(transcript), `test-201-wifi-modules/`, `test-202-wifi-warm-reboot/`,
-`test-203-wifi-cold-boot/`.
+Read-only probes and boot records, all archived: `test-200-wifi-preflight/`,
+`test-201-wifi-modules/`, `test-202-wifi-warm-reboot/`, `test-203-wifi-cold-boot/`,
+`test-204-wifi-power-cycle/`, `test-205-wifi-pdc-aop/`, **`test-206-wifi-enumerated/`**.
 
 | question | answer |
 |---|---|
-| PCI enumeration | **one device: `0000:00:00.0` `17cb:0113`** — the SM8550 root complex, class `0x060400`, driver `pcieport` |
-| `17cb:1103` (the WCN6855 endpoint) | **absent.** Has never appeared in any log in this project's history |
-| link | `link_status=0x0142`, `DLLLA (bit13) = 0` — **down**; LTSSM stuck in `DETECT_QUIET`/`DETECT_ACT` |
-| driver bind | `1c00000.pcie`→`qcom-pcie`, `1c06000.phy`→`qcom-qmp-pcie-phy`, `wcn6855-pmu`→`pwrseq-qcom_wcn`, `wifi@0`→`pci-pwrctrl-pwrseq` |
-| `devices_deferred` | only `aux_bridge` — PCIe is no longer deferred |
-| firmware request | **none** — `ath11k` has never been loaded |
-| hw revision / board id | **unknown, and not guessed.** They are decided by what `ath11k` asks for once an endpoint exists |
-| second witness | `hci0: Reading QCA version information failed (-110)` ×4 over UART14 — the chip is silent there too |
+| PCI enumeration | **`0000:01:00.0` = `17cb:1103`**, class `0x028000`, revision `0x01`, subsystem `17cb:0108` |
+| link | **up**: `link_status=0x3013`, `DLLLA(bit13)=1`, 8.0 GT/s x1, BAR0 assigned |
+| controller | `0000:00:00.0` = `17cb:0113` root port (the SM8550 root complex) |
+| driver bind | **`ath11k_pci` bound**; also `1c00000.pcie`→`qcom-pcie`, `1c06000.phy`→`qcom-qmp-pcie-phy`, `wcn6855-pmu`→`pwrseq-qcom_wcn`, `wifi@0`→`pci-pwrctrl-pwrseq` |
+| **hardware revision** | **`hw2.1`** — reported by the driver (`ath11k_pci 0000:01:00.0: wcn6855 hw2.1`), not assumed |
+| **firmware request** | `ath11k/WCN6855/hw2.1/amss.bin`, then `board-2.bin`; `amss.bin` currently absent (`-ENOENT`) |
+| board id | not yet reached — it comes from `board-2.bin` once present |
+| MHI | `mhi mhi0: Power on setup success` |
 
-The driver's own words for the failure, now that it gets far enough to speak:
-
-```
-qcom-pcie 1c00000.pcie: Device not found
-```
-
-which `pcie-designware.c:788` emits only when the LTSSM is in
-`DETECT_QUIET`/`DETECT_ACT` — no link partner was ever seen. This is not a
-signal-integrity or training failure; the neighbouring branch would have printed
-`Device found, but not active`.
+Every earlier failure in the chain is now explained and closed: the PCIe host probe
+(modules), the AOP PDC votes (patch `0008`), and above all the parked PIPE mux
+(patch `0009`).
 
 ## 4. Changes made
 
@@ -146,17 +139,24 @@ bypass board matching or force an unmatched calibration fallback.
 
 | level | state |
 |---|---|
-| `PCI_ONLY` — `17cb:1103` visible in `lspci` | **NOT REACHED** |
-| `DRIVER_BOUND` — `ath11k_pci` bound | not reached |
-| `FIRMWARE_LOADED` — MHI/QMI/firmware up | not reached |
-| `WLAN_INTERFACE` — `wlan0` in `ip link` | not reached |
+| `PCI_ONLY` — `17cb:1103` visible | **REACHED** (test-206) |
+| `DRIVER_BOUND` — `ath11k_pci` bound | **REACHED** |
+| `FIRMWARE_LOADED` — MHI/QMI/firmware up | **pending: `amss.bin` absent (`-ENOENT`)** |
+| `WLAN_INTERFACE` | not reached |
 | `SCAN_WORKS` | not reached |
 | `ASSOCIATION_WORKS` | not reached |
 | `NETWORK_STABLE` | not reached |
 
-What *was* reached is not on that scale and must not be confused with it: the PCIe
-**host** now probes successfully and a root complex enumerates. That is a
-prerequisite for LEVEL 1, not LEVEL 1.
+The blocking fault was the PCIe0 PIPE source mux, fixed by
+`0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch`. It powers up selecting
+the XO reference and no mainline code switched it, so the MAC-PHY PIPE interface was
+dead and the LTSSM could not perform receiver detection. Measured before the fix,
+`gcc_pcie_0_pipe_clk_src = 19200000` (parked on the 19.2 MHz XO); after, the
+`ULONG_MAX` sentinel is in place and the link is up at 8.0 GT/s.
+
+`ath11k_pci` then bound, identified the part as **`wcn6855 hw2.1`**, brought MHI up
+(`Power on setup success`) and requested exactly one firmware path. The remaining
+failure is `-ENOENT` on that file, not a driver or bus fault.
 
 ## 7. Cold/warm boot result
 

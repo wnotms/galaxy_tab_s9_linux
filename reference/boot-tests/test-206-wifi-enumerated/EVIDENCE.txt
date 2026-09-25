@@ -1,0 +1,48 @@
+=== test-206: THE ENDPOINT ENUMERATED ===
+recorded=2026-04-13T19:48:58Z
+boot_id=e122b3d9-d189-4b7a-b616-ae02e8f79fc6
+uptime=655.79
+kernel=7.2.0-rc3-gts9wifi-dirty
+
+=== LEVEL 1: PCI enumeration ===
+vendor=0x17cb device=0x1103 class=0x028000
+revision=0x01 subsystem=0x17cb:0x0108
+link_speed=8.0 GT/s PCIe link_width=1
+modalias=pci:v000017CBd00001103sv000017CBsd00000108bc02sc80i00
+bar0=0x0000000060400000 0x00000000605fffff 0x0000000000140204
+
+=== the mux (the root cause, now fixed) ===
+    gcc_pcie_0_pipe_clk_src          1       1        0        18446744073709551615 0          0     50000      Y      deviceless                      no_connection_id         
+  rate=18446744073709551615 = ULONG_MAX sentinel = PHY source selected
+
+=== LEVEL 3: what ath11k asked for (AUTHORITATIVE hw rev/board) ===
+[    1.147807] [     T76] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+[    1.147837] [     T76] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+[    1.288158] [    T129] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+[    2.644366] [      T1] systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+[    5.036439] [     T90] bluetooth hci0: Direct firmware load for qca/wcnhpbtfw21.tlv failed with error -2
+[    5.036581] [     T90] bluetooth hci0: Direct firmware load for qca/hpbtfw21.tlv failed with error -2
+[    5.820206] [    T392] ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x605fffff 64bit]: assigned
+[    5.820342] [    T392] ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
+[    5.821478] [    T392] ath11k_pci 0000:01:00.0: MSI vectors: 32
+[    5.821520] [    T392] ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+[    5.977986] [    T392] mhi mhi0: Requested to power ON
+[    5.978005] [    T392] mhi mhi0: Power on setup success
+[    5.978040] [     T90] mhi mhi0: Direct firmware load for ath11k/WCN6855/hw2.1/amss.bin failed with error -2
+[    5.978048] [     T90] mhi mhi0: Error loading firmware: -2
+[    5.983733] [    T392] ath11k_pci 0000:01:00.0: failed to power up mhi: -110
+[    5.983737] [    T392] ath11k_pci 0000:01:00.0: failed to start mhi: -110
+[    5.990488] [    T392] ath11k_pci 0000:01:00.0: failed to power up :-110
+[    6.011810] [    T392] ath11k_pci 0000:01:00.0: failed to create soc core: -110
+[    6.019073] [    T392] ath11k_pci 0000:01:00.0: failed to init core: -110
+[    6.304548] [    T392] ath11k_pci 0000:01:00.0: probe with driver ath11k_pci failed with error -110
+
+=== what firmware files does it want? ===
+ath11k/WCN6855/hw2.1/amss.bin
+
+=== is any ath11k firmware present? ===
+keyboard_stm
+regulatory.db
+regulatory.db-debian
+regulatory.db-upstream
+regulatory.db.p7s
