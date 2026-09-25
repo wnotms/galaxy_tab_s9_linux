@@ -1,56 +1,32 @@
-2026-09-24T23:48:19.634Z watch start: port=COM19 seconds=900 command='' at 10s
-2026-09-24T23:48:20.777Z PRESENCE com=True ports=[COM17,COM19]
-2026-09-24T23:48:20.779Z PRESENCE usb0525:a4a7=True
-2026-09-24T23:48:20.800Z port open on COM19
-2026-09-24T23:48:40.029Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°ÓÉÓÚÏß³ÌÍË³ö»òÓ¦ÓÃ³ÌÐòÇëÇó£¬ÒÑÖÐÖ¹ I/O ²Ù×÷¡£
-¡±
-2026-09-24T23:48:40.038Z port closed (read error)
-2026-09-24T23:48:40.849Z PRESENCE usb0525:a4a7=False
-2026-09-24T23:48:52.021Z PRESENCE usb0525:a4a7=True
-2026-09-24T23:48:52.030Z port open on COM19
-2026-09-24T23:48:52.176Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39msystem-systemd\x2dba???[0m - Slice /system/systemd-backlight.
-2026-09-24T23:48:52.180Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39musb-gadget.target[0m - Hardware activated USB gadget.
-2026-09-24T23:48:52.182Z RECV  [[0;32m  OK  [0m] Listening on [0;1;39msystemd-rfkill.socket[0m???ll Switch Status /dev/rfkill Watch.
-2026-09-24T23:48:52.184Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgetty@tty1.service[0m - Getty on tty1.
-2026-09-24T23:48:52.187Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgetty.target[0m - Login Prompts.
-2026-09-24T23:48:52.190Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgts9-acm-getty.service[0m - X???l console (ttyGS0, autologin root).
-2026-09-24T23:48:52.193Z RECV           Starting [0;1;39mgts9-debian-getty-stage.s???[0m Debian tty1 login getty started...
-2026-09-24T23:48:52.196Z RECV           Starting [0;1;39mgts9-getty-stage.service[0m ??? Debian tty1 login getty started...
-2026-09-24T23:48:52.199Z RECV           Starting [0;1;39msystemd-backlight@backlig???[0mtness of backlight:ae94000.dsi.0...
-2026-09-24T23:48:52.213Z RECV  [[0;32m  OK  [0m] Finished [0;1;39msystemd-backlight@backlig???[0mghtness of backlight:ae94000.dsi.0.
-2026-09-24T23:48:52.422Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-getty-stage.service[0m ???he Debian tty1 login getty started.
-2026-09-24T23:48:53.090Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-getty-stage.s???[0mhe Debian tty1 login getty started.
-2026-09-24T23:48:53.093Z RECV  [    5.839821] gts9-prev-boot-evidence[547]: gts9-prev-boot-evidence: /var/log/gts9-boot-evidence/20260413T193807Z-2742cd70 previous_boot=present end=hard-reset-or-incomplete panic=0 lockup=0 hung=0 rcu=0 dpu=0 mmc=0
-2026-09-24T23:48:53.096Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
-2026-09-24T23:48:53.098Z RECV           Starting [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
-2026-09-24T23:48:53.100Z RECV  [[0;32m  OK  [0m] Finished [0;1;39me2scrub_reap.service[0m - Re???line ext4 Metadata Check Snapshots.
-2026-09-24T23:48:53.102Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-prev-boot-evidence.s???[0m0 previous-boot evidence collector.
-2026-09-24T23:48:53.104Z RECV  [[0;32m  OK  [0m] Finished [0;1;39muser-runtime-dir@0.servic???[0mUser Runtime Directory /run/user/0.
-2026-09-24T23:48:53.107Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mmulti-user.target[0m - Multi-User System.
-2026-09-24T23:48:53.109Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgraphical.target[0m - Graphical Interface.
-2026-09-24T23:48:53.111Z RECV           Starting [0;1;39mgts9-debian-multi-user-st???[0mDebian reached multi-user.target...
-2026-09-24T23:48:53.113Z RECV           Starting [0;1;39muser@0.service[0m - User Manager for UID 0...
-2026-09-24T23:48:53.115Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-multi-user-st???[0mt Debian reached multi-user.target.
-2026-09-24T23:48:53.257Z RECV  [[0;32m  OK  [0m] Started [0;1;39muser@0.service[0m - User Manager for UID 0.
-2026-09-24T23:48:53.261Z RECV  [[0;32m  OK  [0m] Started [0;1;39msession-1.scope[0m - Session 1 of User root.
-2026-09-24T23:49:43.902Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°ÓÉÓÚÏß³ÌÍË³ö»òÓ¦ÓÃ³ÌÐòÇëÇó£¬ÒÑÖÐÖ¹ I/O ²Ù×÷¡£
-¡±
-2026-09-24T23:49:43.904Z port closed (read error)
-2026-09-24T23:49:45.229Z PRESENCE usb0525:a4a7=False
-2026-09-24T23:50:05.093Z PRESENCE usb0525:a4a7=True
-2026-09-24T23:50:05.101Z port open on COM19
-2026-09-24T23:50:05.139Z RECV  [[0;32m  OK  [0m] Finished [0;1;39msystemd-backlight@backlig???[0mghtness of backlight:ae94000.dsi.0.
-2026-09-24T23:50:05.338Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-getty-stage.service[0m ???he Debian tty1 login getty started.
-2026-09-24T23:50:05.402Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-getty-stage.s???[0mhe Debian tty1 login getty started.
-2026-09-24T23:50:06.072Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mmulti-user.target[0m - Multi-User System.
-2026-09-24T23:50:06.077Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgraphical.target[0m - Graphical Interface.
-2026-09-24T23:50:06.077Z RECV           Starting [0;1;39mgts9-debian-multi-user-st???[0mDebian reached multi-user.target...
-2026-09-24T23:50:06.077Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
-2026-09-24T23:50:06.085Z RECV           Starting [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
-2026-09-24T23:50:06.088Z RECV  [[0;32m  OK  [0m] Finished [0;1;39muser-runtime-dir@0.servic???[0mUser Runtime Directory /run/user/0.
-2026-09-24T23:50:06.089Z RECV           Starting [0;1;39muser@0.service[0m - User Manager for UID 0...
-2026-09-24T23:50:06.091Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-multi-user-st???[0mt Debian reached multi-user.target.
-2026-09-24T23:50:06.170Z RECV  [[0;32m  OK  [0m] Started [0;1;39muser@0.service[0m - User Manager for UID 0.
-2026-09-24T23:50:06.172Z RECV  [[0;32m  OK  [0m] Started [0;1;39msession-1.scope[0m - Session 1 of User root.
-2026-09-25T00:03:19.813Z port closed (watch end)
-2026-09-25T00:03:19.815Z watch done: lines=38 com_disconnects=0 com_reconnects=0
+2026-09-25T00:15:04.585Z watch start: port=COM19 seconds=1200 command='' at 10s
+2026-09-25T00:15:05.638Z PRESENCE com=True ports=[COM17,COM19]
+2026-09-25T00:15:05.638Z PRESENCE usb0525:a4a7=True
+2026-09-25T00:15:05.665Z port open on COM19
+2026-09-25T00:16:52.144Z RECV  [  627.745982][   T13] kworker/u32:1 (13) used greatest stack depth: 9168 bytes left
+2026-09-25T00:16:52.144Z RECV  [  627.795170][    C0] kworker/u32:1 (13): highest shadow stack usage: 768 bytes
+2026-09-25T00:17:57.828Z PRESENCE usb0525:a4a7=False
+2026-09-25T00:17:57.840Z read failed: Ê¹ÓÃ¡°0¡±¸ö²ÎÊýµ÷ÓÃ¡°ReadLine¡±Ê±·¢ÉúÒì³£:¡°¶Ë¿Ú±»¹Ø±Õ¡£¡±
+2026-09-25T00:17:57.848Z port closed (read error)
+2026-09-25T00:18:08.600Z PRESENCE usb0525:a4a7=True
+2026-09-25T00:18:08.607Z port open on COM19
+2026-09-25T00:18:08.617Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-panel-recover.servic???[0m ANA38407 cold-boot panel recovery.
+2026-09-25T00:18:08.626Z RECV  [[0;32m  OK  [0m] Started [0;1;39mgetty@tty1.service[0m - Getty on tty1.
+2026-09-25T00:18:08.629Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgetty.target[0m - Login Prompts.
+2026-09-25T00:18:08.630Z RECV           Starting [0;1;39mgts9-debian-getty-stage.s???[0m Debian tty1 login getty started...
+2026-09-25T00:18:08.633Z RECV           Starting [0;1;39mgts9-getty-stage.service[0m ??? Debian tty1 login getty started...
+2026-09-25T00:18:08.645Z RECV  [[0;32m  OK  [0m] Started [0;1;39mssh.service[0m - OpenBSD Secure Shell server.
+2026-09-25T00:18:08.841Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-getty-stage.service[0m ???he Debian tty1 login getty started.
+2026-09-25T00:18:08.930Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-getty-stage.s???[0mhe Debian tty1 login getty started.
+2026-09-25T00:18:09.635Z RECV  [[0;32m  OK  [0m] Created slice [0;1;39muser-0.slice[0m - User Slice of UID 0.
+2026-09-25T00:18:09.637Z RECV           Starting [0;1;39muser-runtime-dir@0.servic???[0mer Runtime Directory /run/user/0...
+2026-09-25T00:18:09.642Z RECV  [[0;32m  OK  [0m] Finished [0;1;39muser-runtime-dir@0.servic???[0mUser Runtime Directory /run/user/0.
+2026-09-25T00:18:09.644Z RECV           Starting [0;1;39muser@0.service[0m - User Manager for UID 0...
+2026-09-25T00:18:09.646Z RECV  [[0;32m  OK  [0m] Finished [0;1;39me2scrub_reap.service[0m - Re???line ext4 Metadata Check Snapshots.
+2026-09-25T00:18:09.649Z RECV  [    6.470539] gts9-prev-boot-evidence[543]: gts9-prev-boot-evidence: /var/log/gts9-boot-evidence/20260413T193807Z-b0cd2e21 previous_boot=present end=hard-reset-or-incomplete panic=0 lockup=0 hung=0 rcu=0 dpu=0 mmc=0
+2026-09-25T00:18:09.652Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-prev-boot-evidence.s???[0m0 previous-boot evidence collector.
+2026-09-25T00:18:09.654Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mmulti-user.target[0m - Multi-User System.
+2026-09-25T00:18:09.656Z RECV  [[0;32m  OK  [0m] Reached target [0;1;39mgraphical.target[0m - Graphical Interface.
+2026-09-25T00:18:09.658Z RECV           Starting [0;1;39mgts9-debian-multi-user-st???[0mDebian reached multi-user.target...
+2026-09-25T00:18:09.845Z RECV  [[0;32m  OK  [0m] Finished [0;1;39mgts9-debian-multi-user-st???[0mt Debian reached multi-user.target.
+2026-09-25T00:18:09.885Z RECV  [[0;32m  OK  [0m] Started [0;1;39muser@0.service[0m - User Manager for UID 0.
+2026-09-25T00:18:09.888Z RECV  [[0;32m  OK  [0m] Started [0;1;39msession-1.scope[0m - Session 1 of User root.
