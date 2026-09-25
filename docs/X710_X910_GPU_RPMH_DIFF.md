@@ -441,3 +441,129 @@ yet connects a bootloader-left L3 vote to a CPU that stops answering NMIs.
 Classification of the whole item: **possibly relevant** to the stall, **certain** as
 a port defect. The measurement that separates the two is the wedge rate before and
 after, against the baseline in `docs/CPU_WEDGE_EVIDENCE.md`.
+
+
+---
+
+## 12. `apps_rsc`, AOSS and reserved memory (round 29)
+
+The brief's comparison list names `apps_rsc` (regulators, child layout, interrupts,
+RPMh providers), AOSS (`qmp`, mailbox, related reserved memory) and the clocks.
+This section closes those, and the answer for the first two is **identical**.
+
+### 12.1 `apps_rsc`: identical, and that is a result
+
+Neither board DTS touches the RSC's own properties. Both `grep` to **zero**
+occurrences of `tcs-config`, of the RSC interrupt specifiers, and of `bcm-voter`.
+The node body therefore comes from the shared upstream `sm8550.dtsi` in both
+ports, unmodified:
+
+```dts
+apps_rsc: rsc@17a00000 {
+	compatible = "qcom,rpmh-rsc";
+	reg = <0 0x17a00000 0 0x10000>, ... <0 0x17a30000 0 0x10000>;
+	interrupts = <GIC_SPI 3 ...>, <GIC_SPI 4 ...>, <GIC_SPI 5 ...>;
+	qcom,tcs-offset = <0xd00>;
+	qcom,drv-id = <2>;
+	qcom,tcs-config = <ACTIVE_TCS 3>, <SLEEP_TCS 2>, <WAKE_TCS 2>, <CONTROL_TCS 0>;
+	power-domains = <&cluster_pd>;
+	apps_bcm_voter: bcm-voter { compatible = "qcom,bcm-voter"; };
+	rpmhcc: clock-controller { ... };
+	rpmhpd: power-controller { ... };
+};
+```
+
+Both boards then extend `&apps_rsc` with **five** `regulators-N` blocks and
+**three** `regulator-always-on` rails, and they are the *same three*:
+
+| | X710 | X910 |
+|---|---|---|
+| `regulators-N` blocks under `&apps_rsc` | 5 | 5 |
+| `regulator-always-on` rails | 3 | 3 |
+| which rails | `vreg_l1b_1p8`, `vreg_l10b_1p8`, `vreg_l16b_3p0` | **the same three** |
+| `tcs-config` / RSC interrupts / `bcm-voter` overridden | no | no |
+
+**Class: same hardware, definitely unrelated.** The RSC's static description
+cannot explain why one port stalls and the other does not. That matters because
+the RSC is where the timeout-state run will be looking: the *node* is not the
+difference, so any difference must be in what the two systems **ask of** it at
+runtime - which is exactly what a TCS/IRQ snapshot measures.
+
+### 12.2 AOSS: identical wiring on both
+
+Both GMU nodes carry `qcom,qmp = <&aoss_qmp>` (X710 line 237, X910 line 242), and
+the provider comes from the shared `sm8550.dtsi`. `CONFIG_QCOM_AOSS_QMP=y` and
+`CONFIG_QCOM_IPCC=y` are now set on X710 as they always were on X910
+(`docs/GPU_GMU_RPMH_STALL_PLAN.md` fact 19). **Class: same hardware.** The AOSS
+path is no longer a differentiator, and the historical
+`Unable to send ACD state to AOSS` is gone on X710 (`docs/X710_EARLY_BOOT_WARNINGS.md` §2).
+
+### 12.3 Reserved memory: the ports are not equally observable
+
+| | X710 | X910 |
+|---|---|---|
+| `ramoops` mentions in the board DTS | **10** | **0** |
+| `sec_log` mentions | 3 | 2 |
+| board overrides total | 64 | 63 |
+
+X710 declares a `ramoops` region and X910 does not. That is why **every complete
+failure record in this repository is an X710 pstore capture** - it is not
+evidence that X910 has no failures, and the two ports are not equally
+instrumented. **Class: different board config, diagnostic not causal.** It belongs
+in the record because "X910 does not show these early anomalies" is a claim the
+evidence cannot fully support while one port is being watched through a persistent
+console and the other is not.
+
+### 12.4 The Prime OPP X910 declares and X710 does not
+
+The board-override lists differ in two OPP tables. The GPU one is §2's 8-vs-9
+difference. The CPU one is new here:
+
+```dts
+/* X910 only */
+&cpu7_opp_table {
+	opp-3360000000 {
+		opp-hz = /bits/ 64 <3360000000>;
+		opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
+	};
+};
+```
+
+Upstream `sm8550.dtsi` has **no** 3.36 GHz entry (`grep -c 3360000000` → 0), and
+X710 adds none. Meanwhile X710's hardware advertises exactly that frequency, and
+the driver says so on every boot:
+
+```
+cpu cpu7: Voltage update failed freq=3360000
+cpu cpu7: failed to update OPP for freq=3360000
+```
+
+**Mechanism** (`drivers/cpufreq/qcom-cpufreq-hw.c`). In
+`qcom_cpufreq_hw_read_lut()` the driver walks the *hardware* LUT - programmed by
+ABL, not by DT - and for each entry calls `qcom_cpufreq_update_opp()`, which on
+this path is:
+
+```c
+	ret = dev_pm_opp_adjust_voltage(cpu_dev, freq_hz, volt, volt, volt);
+	if (ret) {
+		dev_err(cpu_dev, "Voltage update failed freq=%ld\n", freq_khz);
+		return ret;
+	}
+	return dev_pm_opp_enable(cpu_dev, freq_hz);
+```
+
+`dev_pm_opp_adjust_voltage()` needs the OPP to **exist**. X710's `cpu7_opp_table`
+tops out at 2.9568 GHz, so the 3.36 GHz lookup returns `-ENOENT`, the `dev_err`
+fires, the caller's `dev_warn` follows, and that LUT entry is dropped. On X910 the
+OPP is declared, so the same call finds it.
+
+**This is not caused by the `epss_l3` fix.** `icc_scaling_enabled` is set simply
+by `dev_pm_opp_of_add_table()` succeeding, i.e. by the CPU having a DT OPP table
+at all, which X710 has had throughout - the interconnect path is not involved in
+that branch. Checked because it was the first thing worth ruling out.
+
+**It is also not a stall marker:** measured once per boot on **every** boot,
+healthy and wedged alike, exactly like the dummy-regulator and `rcg` messages.
+**Class: different board config, possibly relevant, needs stock X710 evidence** -
+specifically whether the stock Samsung firmware advertises and uses 3.36 GHz on
+this exact model, which `cpu7: failed to update OPP` suggests it does.

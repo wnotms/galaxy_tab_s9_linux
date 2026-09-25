@@ -2145,6 +2145,43 @@ class DocumentationTests(unittest.TestCase):
         flat = " ".join(text.split())
         self.assertIn("It must not be enabled during an A/B round", flat)
 
+    def test_the_diff_covers_apps_rsc_and_aoss_and_shows_them_identical(self):
+        """The brief names these areas; the answer is that they do not differ."""
+        text = read(DIFF_DOC)
+        flat = " ".join(text.split())
+        self.assertIn("## 12.", text)
+        # The RSC node itself is shared and untouched by either board.
+        self.assertIn("apps_rsc: rsc@17a00000", text)
+        self.assertIn("ACTIVE_TCS 3", text)
+        # Same five regulator blocks, same three always-on rails, on both.
+        self.assertIn("vreg_l1b_1p8", text)
+        self.assertIn("vreg_l10b_1p8", text)
+        self.assertIn("vreg_l16b_3p0", text)
+        self.assertIn("the same three", flat)
+        self.assertIn("same hardware, definitely unrelated", flat)
+        # AOSS wiring identical on both.
+        self.assertIn("qcom,qmp = <&aoss_qmp>", text)
+        # And the observability asymmetry must be stated, not glossed.
+        self.assertIn("the ports are not equally observable", flat)
+        self.assertIn("ramoops", text)
+
+    def test_the_prime_opp_gap_is_recorded_with_its_mechanism(self):
+        """X910 declares the 3.36 GHz OPP; X710 does not, and the LUT has it."""
+        text = read(DIFF_DOC)
+        flat = " ".join(text.split())
+        self.assertIn("opp-3360000000", text)
+        self.assertIn("Voltage update failed freq=3360000", text)
+        self.assertIn("failed to update OPP for freq=3360000", text)
+        self.assertIn("dev_pm_opp_adjust_voltage", text)
+        # It must rule out the CPU-path fix as the cause, having checked.
+        self.assertIn("This is not caused by the `epss_l3` fix", flat)
+        # And it must not promote a once-per-boot message to a marker.
+        self.assertIn("It is also not a stall marker", flat)
+        for cls in ("different board config, possibly relevant",
+                    "needs stock X710 evidence"):
+            with self.subTest(cls=cls):
+                self.assertIn(cls, text)
+
     def test_the_plan_keeps_the_rpmh_work_as_a_fallback(self):
         self.assertIn("NEXT_STALL_DEBUG_PLAN.md", read(PLAN))
 
