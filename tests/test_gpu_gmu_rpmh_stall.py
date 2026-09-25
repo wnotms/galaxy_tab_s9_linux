@@ -2364,6 +2364,40 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("6.80", rec)
         self.assertIn("7.29", rec)
 
+    def test_the_rpmh_run_result_is_the_pre_registered_last_row(self):
+        """A wedge with no RPMh output is its own pre-registered outcome."""
+        d = "reference/boot-tests/test-199-20260925T1314Z"
+        if not (ROOT / d).exists():
+            self.skipTest("test-199 not recorded yet")
+        rec = read(f"{d}/README.md")
+        flat = " ".join(rec.split())
+        # The decision rule's last row, quoted in the record.
+        self.assertIn("no RPMh output at all, and the stall still happened", flat)
+        self.assertIn("through an RPMh timeout", flat)
+        self.assertIn("the RPMh direction is downgraded", flat)
+        self.assertIn("the victim's stack contains no RPMh path", flat)
+        # The dump must genuinely be absent from every channel.
+        for f in ("wedge-round9/on-device-console-ramoops.txt",
+                  "wedge-round9/klog-9.txt", "wedge-round9/pstore-9.txt"):
+            with self.subTest(channel=f):
+                self.assertNotIn("gts9-rpmh:", read(f"{d}/{f}"))
+        # And the switch must have been proven armed, or absence proves nothing.
+        self.assertIn("ARMING-GATE.txt", rec)
+        gate = read(f"{d}/ARMING-GATE.txt")
+        self.assertIn("rpmh_debug_in_unknown_list=0", gate)
+        self.assertIn("gpu_driver=adreno", gate)
+        # The victim stack must carry no RPMh path.
+        console = read(f"{d}/wedge-round9/on-device-console-ramoops.txt")
+        self.assertIn("toggle_allocation_gate", console)
+        self.assertIn("failed to stop secondary CPUs", console)
+        for frame in ("rpmh", "rpmh_write_batch", "bcm-voter", "rsc_drv"):
+            with self.subTest(frame=frame):
+                self.assertNotIn(frame, console.lower().replace("qcom-rpmhpd", ""))
+        # The new wrinkle: a second-firing soft lockup at 56 s.
+        self.assertIn("stuck for 56s", console)
+        self.assertIn("8.75", rec)
+        self.assertIn("7.58", rec)
+
     def test_the_plan_records_the_gpu_direction_as_closed(self):
         flat = " ".join(read("docs/NEXT_STALL_DEBUG_PLAN.md").split())
         self.assertIn("RESOLVED IN ROUND 31: the GPU direction is out", flat)

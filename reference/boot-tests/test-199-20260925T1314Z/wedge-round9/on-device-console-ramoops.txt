@@ -1,0 +1,62 @@
+echo READY1
+[?2004lREADY1
+[?2004hroot@gts9:~# cat /var/lib/systemd/pstore/console-ramoops-0
+[?2004l[    4.920691][  T830] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[   28.598973][    C4] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   28.605984][    C4] rcu: 	5-...0: (1 GPs behind) idle=bedc/1/0x4000000000000000 softirq=982/983 fqs=2626
+[   28.615746][    C4] rcu: 	(detected by 4, t=5254 jiffies, g=549, q=1935 ncpus=8)
+[   38.625140][    C4]!rcu: rcu_preempt Kt`read starved for 2498 jiffies! g549 f0x0 RCU_GP_DOING_FQS(6) ->state=0x0 ->cpu=7
+[   38.636297][    C4] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[   38.636299][    C4] rcu: RCU grace-period kthread stack dump:
+[   38.652429][    C4] rcu: Stack dump where RCU GP kthread last ran:
+[   64.754506][    C4] watchdog: BUG: soft lockup - CPU#4 stuck for 56s! [kworker/u32:7:93]
+[   64.754511][    C4] CPU#4 Utilization every 4000ms during lockup:
+[   64.754512][    C4] 	#1: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.754513][    C4] 	#2: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.754515][    C4] 	#3: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.754516][    C4] 	#4: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   64.754517][    C4] 	#5: 100% sxsdem,	  0% softirq,	  0% hardirq,	  0% idle
+[   74.806927][    C4] Kernel panic - not syncing: softlockup: hung tasks
+[   74.813646][    C4] CPU: 4 UID: 0 PID: 93 Comm: kworker/u32:7 Tainted: G S      W    L      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+[   74.825539][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [L]=SOFTLOCKUP
+[   74.832618][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   74.839068][    C4] Workqueue: events_unbound toggle_allocation_gate
+[   74.845610][    C4] Call trace:
+[   74.848854][    C4]  show_stack+0x1c/0x2c (C)
+[   74.853356][    C4]  __dump_stack+0x2c/0x40
+[   74.857671][    C4]  dump_stack_lvl+0x28/0x74
+[   74.862165][    C4]  dump_stack+0x1c/0x2c
+[   74.866300][    C4]  vpanic+0x150/0x344
+[   74.870257][    C4]  vpanic+0x0/0x344
+[   74.874042][    C4]  watchdog_timer_fn+0x48c/0x53c
+[   74.878989][    C4]  __hrtimer_run_queues+0x130/0x3a4
+[   74.884194][    C4]  hrtimer_interrupt+0xd8/0x2bc
+[   74.889048][    C4]  arch_timer_handler_virt+0x3c/0x50
+[   74.894352][    C4]  handle_percpu_devid_irq+0x144/0x1b4
+[   74.899828][    C4]  generic_handle_domain_irq+0x40/0x68
+[   74.905317][    C4]  gic_handle_irq+0x4c/0x10c
+[   74.9099?1][    C4]  call_On_irqWstack+0x48/0x88
+[   74.914667][    C4]  do_interrupt_handler+0x50/0x74
+[   74.919700][    C4]  el1_interrupt+0x40/0x68
+[   74.924105][    C4]  el1h_64_irq_handler+0x1c/0x2c
+[   74.929048][    C4]  el1h_64_irq+0x70/0x74
+[   74.933272][    C4]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   74.939465][    C4]  kick_all_cpus_sxnb+0x48/0x7c
+[   74.904318][    C4]  arch_jump_label_transform_apply+0x14/0x24
+[   74.950332][    C4]  __jump_label_update+0x118/0x13c
+[   74.955444][    C4] #b5mplabel_updaTe+0xe4/0{110
+[   74.960297][    C4]  static_key_enable_cpuslocked+0x6c/0xb4
+[   74.966037][    C4]  static_key_enable+0x24/0x3c
+[   74.970801][    C4]  toggle_allocation_gate+0x58/0x14c
+[   74.976093][    C4]  process_scheduled_works+0x18c/0x4d0
+[   74.981566][    C4]  worker_thread+0x1f8/0x2e8
+[   74.986151][    C0]  kthread+0x008/0x134
+[   74.990197][    C4]  ret_from_fork+0x10/0x20
+[   74.994925][    C4] fb0: sys_fillrect: framebuffer is not in virtual address space.
+[   75.003136][    C4] SMP: stopping reco.dary CPUs
+[   76.074152][    C4] SMP: failed to stop secondary CPUs 3,5
+[   76.080119][    C4] Kernel Offset: 0x30000 from 0xffffffc080000000
+[   76.086794][    C4] PHYS_OFFSET: 0x80000000
+[   76.091407][    C4] CPU features: 0x1a001070,001c000a,26060501,544676a7
+[   76.098517][    C4] Memory Limit: none
+[   76.105951][    C4] Rebooting in 10 seconds..
