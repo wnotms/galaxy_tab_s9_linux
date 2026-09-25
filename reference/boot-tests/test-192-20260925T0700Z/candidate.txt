@@ -1,0 +1,98 @@
+# test-192 candidate — `loglevel=7` diagnostic command line
+
+**Bundle assembled and validated. NOT flashed.** No partition has been written.
+
+## Why: the console cannot see the marker it is hunting
+
+`After 10 seconds, these CPUS still haven't responded to the NMI: N` is `pr_warn`
+(level 4). Every profile here carries `loglevel=4`, which prints levels 0-3. The
+failure recovered in round 22 proves the consequence: its pstore console record has
+**0** occurrences of that marker, while a journal capture of a wedged boot has 4.
+A boot that wedges early leaves no journal, so the console record is the only
+evidence - and it was blind by construction.
+
+## The delta
+
+One token, one image. `boot/cmdline.diag-loglevel.example.txt` versus
+`boot/cmdline.stall-ab-baseline.example.txt`:
+
+```
+- loglevel=4
++ loglevel=7
+```
+
+| image | sha256 | vs the test-191 bundle |
+|---|---|---|
+| `boot.img` | `dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c` | **identical** (same kernel) |
+| `vendor_boot.img` | `c40d3659a88d13dcc7c37f64b44ca7b2b20c65866710f830970b5359a2cf4d4e` | **CHANGED** — the cmdline |
+| `init_boot.img` | `7d934eac278f9818132764215110b7c58226a31831ca7a7f86ffdc0a7244b24c` | identical |
+| `dtbo.img` | `c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3` | identical |
+| `vbmeta.img` | `b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4` | identical |
+
+Kernel payload unchanged: `Image.gz`
+`df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f`, board DTB
+`b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596`.
+
+`scripts/validate-boot-bundle.sh --cmdline boot/cmdline.diag-loglevel.example.txt`
+-> **44 PASS, 0 FAIL**.
+
+### Why level 7 rather than 5
+
+5 already captures the `pr_warn` marker and the `NMI backtrace for cpu N` headers.
+7 adds the `pr_info` `Sending NMI from CPU x to CPUs y:` line, which names the
+*target* CPU - and the target is what the cluster asymmetry is measured from. The
+usual objection is a `pr_debug` flood and it does not apply: `CONFIG_DYNAMIC_DEBUG`
+is not set, so `pr_debug` compiles away.
+
+## Flash plan
+
+**Flash test-191 first.** This bundle's `boot.img` is test-191's kernel, so flashing
+it onto the currently-flashed kernel would be two changes at once.
+
+```sh
+# 1. test-191: kernel changes by epss_l3 only, cmdline untouched
+reference/boot-tests/test-191-*/flash-profile.sh
+# 2. reboot, verify, then test-192: cmdline changes by loglevel only
+GTS9_BUNDLE=out/boot-bundle-test192-loglevel \
+  reference/boot-tests/test-191-*/flash-profile.sh
+# 3. reboot and check
+reference/boot-tests/test-192-*/verify-loglevel.sh
+```
+
+Changed partitions, both times: `boot` and `vendor_boot` only. Never `dtbo`,
+`init_boot`, `vbmeta`, `misc`, `recovery`, `userdata` or the partition table.
+
+## Success criteria
+
+* `verify-loglevel.sh` reports `console_loglevel=7`;
+* the console record's first line moves from monotonic ~4.4 s to near 0, and
+  level-6 lines appear that were previously absent - the sec-log driver's own
+  `gts9wifi-sec-log: persistent console at …` and `Calibrating delay loop …`;
+* on the next failure, `gts9-prev-boot-evidence`'s `pstore_*_lines` counters see
+  the marker, and `prev_journal=absent-pstore-is-authoritative` is set when the
+  failing boot left no journal.
+
+## Failure criteria
+
+* `console_loglevel` is still 4 -> the token did not take; a command-line problem,
+  not a kernel one;
+* the record still begins mid-boot with only level 0-3 lines -> same;
+* a boot that no longer reaches multi-user -> revert `vendor_boot` immediately.
+
+## Observer effect, and the one thing this profile must not be used for
+
+More console output is not free: test-184 showed `/dev/console -> tty0 -> fbcon ->
+DRM` backlog can itself make a boot look stalled. **Do not use this profile for
+stall-rate counting.** It is a capture profile. `gts9_kmsg_mirror` and
+`gts9_dpu_flight` remain off.
+
+## Rollback
+
+`flash-profile.sh` backs up both partitions before writing and verifies by readback,
+into `/home/ms/Samsung/gts9-flash-tests/test-191-<profile>/`. The pre-test-187 pair
+remains at `/home/ms/Samsung/gts9-flash-tests/test-187-baseline/`:
+
+* `boot-before-baseline.img`
+  `12f65577e9731d98a359b8d9ace854c06bd1007e6d3a822a78913041d57b212c`
+* `vendor_boot-before-baseline.img`
+  `06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f`

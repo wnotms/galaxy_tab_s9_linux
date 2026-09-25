@@ -866,6 +866,100 @@ class FailedBootCaptureTests(unittest.TestCase):
                       "far too few samples")
 
 
+class Test192LoglevelTests(unittest.TestCase):
+    """The console could not see the marker it was hunting.
+
+    `After 10 seconds, these CPUS still haven't responded to the NMI: N` is pr_warn
+    (level 4) and every profile carries loglevel=4, which prints levels 0-3.  The
+    failure recovered in round 22 proves the consequence: 0 occurrences of the marker
+    in its pstore console record against 4 in a journal capture of a wedged boot.
+    """
+
+    TESTDIR = "reference/boot-tests/test-192-20260925T0700Z"
+    BUNDLE = "out/boot-bundle-test192-loglevel"
+    BASELINE_BUNDLE = "out/boot-bundle-test191-osm-l3"
+    PROFILE = "boot/cmdline.diag-loglevel.example.txt"
+    BASE_PROFILE = "boot/cmdline.stall-ab-baseline.example.txt"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_profile_differs_from_the_baseline_by_one_token(self):
+        def tokens(rel):
+            return sorted(t for t in read(rel).split() if t)
+        base, diag = tokens(self.BASE_PROFILE), tokens(self.PROFILE)
+        self.assertEqual([t for t in base if t not in diag], ["loglevel=4"])
+        self.assertEqual([t for t in diag if t not in base], ["loglevel=7"])
+        self.assertEqual(len(base), len(diag))
+
+    def test_only_vendor_boot_differs_from_the_test_191_bundle(self):
+        if not (ROOT / self.BUNDLE / "boot.img").exists():
+            self.skipTest("test-192 bundle not built")
+        for part in ("boot.img", "init_boot.img", "dtbo.img", "vbmeta.img"):
+            with self.subTest(partition=part):
+                self.assertEqual(sha256(f"{self.BUNDLE}/{part}"),
+                                 sha256(f"{self.BASELINE_BUNDLE}/{part}"))
+        self.assertNotEqual(sha256(f"{self.BUNDLE}/vendor_boot.img"),
+                            sha256(f"{self.BASELINE_BUNDLE}/vendor_boot.img"))
+
+    def test_the_candidate_records_the_measured_blind_spot(self):
+        self.contains(f"{self.TESTDIR}/README.md",
+                      "**0**", "pr_warn", "loglevel=4",
+                      "unable to see the thing it was hunting")
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "occurrences of that marker", "has 4")
+
+    def test_the_candidate_justifies_level_seven_over_five(self):
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "Why level 7 rather than 5", "names the",
+                      "CONFIG_DYNAMIC_DEBUG", "is not set")
+
+    def test_the_candidate_orders_the_flash_correctly(self):
+        """Flashed onto today's kernel this would be two changes at once."""
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "**Flash test-191 first.**",
+                      "would be two changes at once")
+
+    def test_the_candidate_forbids_using_it_for_rate_counting(self):
+        """test-184 showed console backlog can itself look like a stall."""
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "Do not use this profile for",
+                      "stall-rate counting", "It is a capture profile")
+
+    def test_the_success_criterion_does_not_need_a_failure(self):
+        # The heading and the criterion live in the README; the candidate carries
+        # the hashes and the flash plan.
+        self.contains(f"{self.TESTDIR}/README.md",
+                      "A success criterion that does not need a failure",
+                      "begins near monotonic 0",
+                      "gts9wifi-sec-log: persistent console at")
+        self.contains(f"{self.TESTDIR}/candidate.txt",
+                      "Success criteria", "Calibrating delay loop")
+
+    def test_the_verify_script_is_read_only_and_one_line(self):
+        import subprocess
+        path = ROOT / self.TESTDIR / "verify-loglevel.sh"
+        self.assertTrue(path.stat().st_mode & 0o111)
+        text = path.read_text()
+        for forbidden in ("systemctl reboot", "adb", "dd if=", "of=/dev/block",
+                          "mkfs"):
+            with self.subTest(action=forbidden):
+                self.assertNotIn(forbidden, text)
+        out = subprocess.run(
+            ["bash", "-c",
+             'source <(sed -n "/^PROBE=/,/^PROBE+=.;echo END.$/p" %s); printf %%s "$PROBE"'
+             % str(path)], check=True, capture_output=True, text=True).stdout
+        self.assertNotIn("\n", out)
+        subprocess.run(["bash", "-n", "-c", out], check=True)
+
+    def test_the_verify_script_checks_console_loglevel_itself(self):
+        self.contains(f"{self.TESTDIR}/verify-loglevel.sh",
+                      "console_loglevel=$(cut -d\" \" -f1 /proc/sys/kernel/printk)",
+                      "expected 7 - the token did not take")
+
+
 class PstoreRecoveryTests(unittest.TestCase):
     """The failing boot's pstore record, and the directory bug that hid it.
 
