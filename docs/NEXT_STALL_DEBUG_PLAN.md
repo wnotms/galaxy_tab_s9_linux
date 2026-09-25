@@ -354,6 +354,40 @@ device's pmsg holds the same string.
   no-op. Profile, parameter guard and run identity are now in place; the flash has
   not happened.
 
+## RESOLVED IN ROUND 31: the GPU direction is out
+
+**Profile C ran and wedged identically with the Adreno driver never registered**
+(`reference/boot-tests/test-198-20260925T1235Z/`). Same canary, same victim chain,
+same `SMP: failed to stop secondary CPUs 0,3,6-7`, on a boot whose own kernel ring
+has **zero** GPU init lines - against a baseline wedge that has one. The four-gate
+ablation check passed before the run and the wedged boot confirms it independently.
+
+By this plan's own rule, **the GPU / GMU / AOSS / ACD path is downgraded**: it is
+not necessary for the wedge. Three clean rounds then a wedge, the same shape and
+apparently the same rate as baseline - removing the GPU changed neither the failure
+nor its frequency.
+
+That also closes two open questions above:
+
+* "Do the three old markers matter on this kernel?" - **yes, and they are not
+  GPU-dependent.** This is the first record since the old era carrying all three:
+  `AMC RPMH` x2 (first 17.65 s), the frame-done flood x7 at a 1.22 s cadence
+  (18.73 s) and `mmc1` (23.27 s, with the SDHCI dump). The two baseline wedges had
+  none of them, so the kernel's marker set is broader than either record showed.
+* "Is the GPU involved?" - **no**, in the only sense that matters here.
+
+**The onset check holds a third time**: soft lockup 32.804 - 26 = **6.80 s**, RCU
+stall 28.307 - 21.02 = **7.29 s**, landing in the same ~6.5-7.8 s band as both
+baseline wedges. And `AMC RPMH` at 17.65 s is ~11 s *after* that onset, so it is
+not the trigger either - it is a consequence, like every other marker so far.
+
+**What is left, and it is what the cluster has in common:** the RPMh/RSC path, the
+SD controller (`mmc1`), the display commit path, and whatever those three share -
+power, clocks, and the RSC itself. The next ablation should remove one of *those*,
+and the only remaining command-line-scale candidate is the display: there is no
+`msm.no_dpu`-style token, so that would need a DTS or config change rather than a
+profile, which puts it beyond this round's boundary.
+
 ## NEXT PHYSICAL TEST
 
 **1. Baseline sanity run with the fixed harness — DONE (test-197).** No flash
@@ -363,16 +397,16 @@ all worked: 3 rounds `verdict=clean` with `presence_outages=1`, then round 4
 series stopped itself. Two wedges are now on record from this harness
 (test-195, test-197) plus test-193's five clean rounds.
 
-**2. Profile C: `msm.skip_gpu=1`** — the strongest available subsystem ablation,
-one `vendor_boot` flash. Before trusting any round, confirm on the device:
-`/sys/module/msm/parameters/skip_gpu` exists (not `no_gpu`), `/proc/cmdline`
-carries `msm.skip_gpu=1`, `gpu_driver=NONE`, and `panel_status=connected` with
-DPU/DSI working.
+**2. Profile C: `msm.skip_gpu=1` — DONE, and the GPU is out.** See the section
+above and `reference/boot-tests/test-198-20260925T1235Z/`. A genuine CPU-level
+wedge occurred with the GPU never registered, so the path is **downgraded**: it is
+not necessary for the wedge.
 
-* Genuine CPU-level wedge, bound to the round → **stop, preserve, downgrade the
-  GPU/GMU/ACD path.** Do not keep rounding to fill a series.
-* No wedge → record **"not reproduced in N rounds"**. Five clean rounds must never
-  be written as "GPU excluded".
+The rule for any future ablation still stands, and it cuts both ways: a genuine
+CPU-level wedge bound to the round downgrades that subsystem, while a clean series
+records `not reproduced in N rounds` and must never be written as "GPU excluded".
+Five clean rounds would not have excluded the GPU, and this run is the reason the
+rule exists - it is the wedge, not the clean rounds, that settled it.
 
 **3. Preserve pstore the moment a wedge appears.** Only one of the records so far
 was captured before the ring was overwritten.

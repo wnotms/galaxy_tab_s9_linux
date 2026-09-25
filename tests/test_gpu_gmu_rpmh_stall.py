@@ -2333,6 +2333,43 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("survives in the round record only", t195)
         self.assertIn("single-slot ring", t195)
 
+    def test_profile_c_wedged_with_the_gpu_absent(self):
+        """The decisive ablation: same wedge, GPU never registered."""
+        d = "reference/boot-tests/test-198-20260925T1235Z"
+        if not (ROOT / d).exists():
+            self.skipTest("test-198 not recorded yet")
+        rec = read(f"{d}/README.md")
+        flat = " ".join(rec.split())
+        # The claim, and the two independent confirmations of the ablation.
+        self.assertIn("the GPU never registered", flat)
+        self.assertIn("decisively downgraded", flat)
+        # The evidence: zero GPU init on the wedged boot vs one on baseline.
+        klog = read(f"{d}/klog-4.txt")
+        self.assertEqual(klog.count("Initialized msm 1.13.0 for 3d00000.gpu"), 0,
+                         "the wedged Profile C boot must have no GPU init")
+        base = read("reference/boot-tests/test-197-20260925T1103Z/klog-4.txt")
+        self.assertGreater(base.count("Initialized msm 1.13.0 for 3d00000.gpu"), 0,
+                           "the baseline wedge must have bound the GPU, for contrast")
+        # The identical CPU-level chain.
+        console = (ROOT / f"{d}/on-device-console-ramoops.txt").read_text(errors="replace")
+        for needle in ("soft lockup", "Kernel panic", "toggle_allocation_gate",
+                       "kick_all_cpus_sync", "FAILED" if False else "failed to stop secondary CPUs"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, console)
+        # And the three markers neither baseline wedge carried.
+        self.assertIn("AMC RPMH", console)
+        self.assertIn("frame done timeout", console)
+        self.assertIn("Timeout waiting for hardware", console)
+        # The onset, third independent agreement.
+        self.assertIn("6.80", rec)
+        self.assertIn("7.29", rec)
+
+    def test_the_plan_records_the_gpu_direction_as_closed(self):
+        flat = " ".join(read("docs/NEXT_STALL_DEBUG_PLAN.md").split())
+        self.assertIn("RESOLVED IN ROUND 31: the GPU direction is out", flat)
+        self.assertIn("it is not necessary for the wedge", flat)
+        self.assertIn("DONE, and the GPU is out", flat)
+
     def test_the_profile_c_result_is_recorded_without_over_claiming(self):
         """The ablation passed; the single event is NOT classified as a GPU verdict."""
         r = "reference/boot-tests/test-196-20260925T1100Z/RESULT.md"
