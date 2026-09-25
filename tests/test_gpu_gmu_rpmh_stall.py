@@ -923,6 +923,39 @@ class Test188SeriesTests(unittest.TestCase):
         self.assertIn("$D/shutdown-$i-verdict.txt", text)
         self.assertNotIn("test-187-20260924T1540Z", text)
 
+    def test_the_result_is_recorded(self):
+        text = read(f"{self.TESTDIR}/RESULT.md")
+        for needle in ("Zero stalls", "no-stall-signature", "no pre-fix rate",
+                       "warm reboot", "SID=0x1c00", "28.903 s"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+        # It must not turn six clean cycles into a fix claim.
+        self.assertIn("Does not establish a fix", text)
+
+    def test_the_classifier_output_is_kept(self):
+        text = read(f"{self.TESTDIR}/classify-captures.txt")
+        self.assertIn("6 round(s): 5 clean, 0 STALL", text)
+        self.assertIn("UNATTENDED RESET", text)
+        self.assertIn('"verdict": "STALL"', text)
+
+    def test_the_console_helper_cannot_flood_the_capture(self):
+        """A closed port must not turn a capture into megabytes of stack traces."""
+        text = read("scripts/console-run.ps1")
+        self.assertIn("readErrorLogged", text)
+        self.assertIn("further read errors suppressed", text)
+        # Only TimeoutException may be treated as the normal case.
+        self.assertIn("catch [TimeoutException]", text)
+
+    def test_the_pruned_captures_say_what_was_pruned(self):
+        for n in range(1, 7):
+            rel = f"{self.TESTDIR}/shutdown-{n}-trigger.txt"
+            with self.subTest(rel=rel):
+                text = read(rel)
+                self.assertIn("The original file was", text)
+                self.assertIn("Nothing else was altered", text)
+                # The evidence that the trigger was sent must survive.
+                self.assertIn("systemctl reboot", text)
+
     def test_the_readme_records_the_adsp_shutdown_audit(self):
         text = read(f"{self.TESTDIR}/README.md")
         self.assertIn("RPROC_RUNNING", text)

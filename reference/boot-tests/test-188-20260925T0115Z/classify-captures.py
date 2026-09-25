@@ -62,6 +62,13 @@ ROUND_FILE = re.compile(r"^shutdown-(?P<n>\d+)-(?:w19\.txt|console\.log)$")
 # reset unasked.  Counting it per capture is what makes that visible.
 DPU_FRAME_TIMEOUT = r"dpu_encoder_frame_done_timeout|frame done timeout"
 
+# Calibrated, not guessed.  Longest open-port silence is 0.597-1.085 s across the
+# 15 clean rounds measured in test-187 and test-188, and 28.903 s in the test-184
+# A-5 failure.  5 s sits far outside the former and far inside the latter, so a
+# shutdown that shows 5 s of silence with the port still open is the failure
+# regardless of whether the completion marker happened to be captured.
+STALL_SILENCE_S = 5.0
+
 BANNERS = {
     "panic": r"Kernel panic",
     "softlockup": r"BUG: soft lockup|watchdog: BUG",
@@ -185,11 +192,17 @@ def classify(events: list[tuple[str, str, str]]) -> dict:
     elif result["prev_boot_end"] in ("hard-reset-or-incomplete", "panic"):
         result["verdict"] = "STALL"
     elif (result["shutdown_started"] and not result["reboot_target_seen"]
-          and result["longest_open_silence_s"] >= 5.0):
-        # A shutdown began and never reached the reboot target on the console.
-        # Without a device verdict this is suspicious, not proven - the gadget
-        # can drop before the marker is printed.
-        result["verdict"] = "shutdown-unfinished-no-device-verdict"
+          and result["longest_open_silence_s"] >= STALL_SILENCE_S):
+        # A shutdown began, went quiet for far longer than any healthy round does
+        # while the port was still open, and never reached the reboot target.
+        result["verdict"] = "STALL"
+    elif result["shutdown_started"]:
+        # The shutdown began, the port dropped promptly, and there was no stall
+        # silence - but the marker that proves completion was not captured.  This
+        # is NOT "clean"; it is "no stall signature".  Round 6 of test-188 is the
+        # case: the gadget dropped 1.24 s after the first stop line, before
+        # systemd printed reboot.target.
+        result["verdict"] = "no-stall-signature"
     else:
         result["verdict"] = "inconclusive"
     return result
@@ -232,9 +245,13 @@ def main(argv: list[str]) -> int:
     total = len(rounds)
     stalls = [n for n, r in rounds.items() if r["verdict"] == "STALL"]
     clean = [n for n, r in rounds.items() if r["verdict"] == "clean"]
+    nostall = [n for n, r in rounds.items() if r["verdict"] == "no-stall-signature"]
     un = [n for n, r in rounds.items() if r["unattended_resets"]]
     print(f"\n{total} round(s): {len(clean)} clean, {len(stalls)} STALL"
           + (f" {stalls}" if stalls else ""))
+    if nostall:
+        print(f"{len(nostall)} round(s) show no stall signature but no completion "
+              f"marker either (the gadget dropped first): {nostall}")
     if un:
         print(f"{len(un)} round(s) contain an UNATTENDED reset (the tablet rebooted "
               f"without being asked): {un}")

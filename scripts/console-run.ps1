@@ -34,11 +34,30 @@ while ((Get-Date) -lt $openDeadline) {
 }
 if (-not $sp -or -not $sp.IsOpen) { Log "could not open $Port"; exit 1 }
 
+# When the tablet resets, the port closes and every ReadLine() then throws.  Only
+# TimeoutException used to be caught, so each iteration wrote a full PowerShell
+# error record and the capture became mostly stack traces: test-184's
+# probe-A-5-raw.txt is 24 608 lines of them, and this round's shutdown-N-trigger.txt
+# files reached ~2 MB each.  The failure is worth recording - it is the moment the
+# device disappeared - but once.  Reading continues so a port that comes back still
+# produces output, and the message is re-armed by the next line that arrives.
+$script:readErrorLogged = $false
 function ReadFor([int]$seconds) {
     $got = @()
     $until = (Get-Date).AddSeconds($seconds)
     while ((Get-Date) -lt $until) {
-        try { $line = $sp.ReadLine(); if ($line) { $got += $line.TrimEnd() } } catch [TimeoutException] { }
+        try {
+            $line = $sp.ReadLine()
+            if ($line) { $got += $line.TrimEnd(); $script:readErrorLogged = $false }
+        } catch [TimeoutException] {
+            # Normal: no complete line arrived within ReadTimeout.
+        } catch {
+            if (-not $script:readErrorLogged) {
+                Log ("read failed: " + $_.Exception.Message + " (further read errors suppressed until a line arrives)")
+                $script:readErrorLogged = $true
+            }
+            Start-Sleep -Milliseconds 100
+        }
     }
     return $got
 }

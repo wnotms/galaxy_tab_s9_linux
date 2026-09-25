@@ -1,7 +1,8 @@
 # test-188 — the shutdown series repeated on the post-hwspinlock kernel
 
-Status: **run started.** This file is the record for the round-16 series. Round
-results are appended to `shutdown-series.txt`.
+Status: **run complete.** Six cycles, zero stalls, zero unattended resets. The
+result is in `RESULT.md`; the raw round records are `shutdown-N-*.txt`, the
+classifier's output is `classify-captures.txt`.
 
 ## Why this series exists
 
@@ -61,7 +62,7 @@ that hangs. Checked in the pinned source; it does not:
 So the ADSP registration is measurable but inert at shutdown, and this series
 tests it rather than assuming it.
 
-## Two harness defects this round found and fixed
+## Three harness defects this round found and fixed
 
 ### The workqueue-stall metric could never read 0
 
@@ -85,6 +86,29 @@ a same-named kernel parameter in future.
 
 Fixed separately — see the `tests: run the console harness from the WSL host`
 commit. Both `console-run.sh` and `console-watch.sh` are host-agnostic now.
+
+### `systemd-shutdown` is not a reliable completion marker
+
+The runner classifies a round on that one marker, and the USB gadget disappears at
+exactly the moment systemd-shutdown starts printing: its count fell 3, 0, 2, 1, 1, 0
+across this series, so rounds 2 and 6 came out `unknown-capture-empty` even though
+round 2's device verdict says `clean-shutdown`. `classify-captures.py` classifies
+from the device's own `previous_boot_end`, from `reboot.target` (printed before the
+handover), and from a calibrated open-port-silence measure. See `RESULT.md`.
+
+## One more defect: the capture was ~99% PowerShell stack traces
+
+`console-run.ps1` caught only `TimeoutException` around `ReadLine()`. When the
+tablet reset, the port closed and every iteration wrote a full PowerShell error
+record, so each round's trigger capture reached ~2 MB — 41 649 lines for round 1,
+of which 9 were console output. The same defect is why test-184's
+`probe-A-5-raw.txt` is 24 608 lines of noise, and it is part of why nobody read
+that file for five rounds.
+
+The script now logs the failure once, keeps reading in case the port returns, and
+re-arms the message on the next line that arrives. The already-captured trigger
+files were pruned to the console-run lines only, with the original size recorded
+in each file's header; 15 MB became 472 KB. Nothing else was altered.
 
 ## What each round records
 

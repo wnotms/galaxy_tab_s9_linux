@@ -1,0 +1,10 @@
+2026-09-25T01:20:19Z console open on COM17
+2026-09-25T01:20:20Z RECV  echo READY1
+2026-09-25T01:20:20Z RECV  [?2004lREADY1
+2026-09-25T01:20:20Z shell answered after 1 poll(s)
+2026-09-25T01:20:20Z SENT  echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
+2026-09-25T01:21:06Z RECV  [?2004hroot@gts9:~# echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET
+2026-09-25T01:21:06Z RECV  [?2004lbefore=4	4	1	7
+2026-09-25T01:21:06Z RECV  after=8	4	1	7
+2026-09-25T01:21:06Z RECV  LVL_SET
+2026-09-25T01:21:06Z console run done (ready=True)

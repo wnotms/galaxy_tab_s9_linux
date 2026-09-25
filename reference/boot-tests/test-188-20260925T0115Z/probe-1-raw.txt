@@ -1,0 +1,28 @@
+2026-09-25T01:19:36Z console open on COM17
+2026-09-25T01:19:37Z RECV  echo READY1
+2026-09-25T01:19:37Z RECV  [?2004lREADY1
+2026-09-25T01:19:37Z shell answered after 1 poll(s)
+2026-09-25T01:19:37Z SENT  R=/tmp/gts9-t188.txt; { echo "REL=$(uname -r)"; echo "BID=$(cat /proc/sys/kernel/random/boot_id)"; echo "UP=$(cut -d" " -f1 /proc/uptime)"; echo "GPU=$(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | xargs -r basename)"; echo "DEF=$(wc -l < /sys/kernel/debug/devices_deferred)"; echo "CTXFAULTS=$(dmesg 2>/dev/null | grep -ac "Unhandled context fault")"; echo "CTXSID=$(dmesg 2>/dev/null | grep -ao "SID=0x[0-9a-f]*" | sort -u | tr "\n" ",")"; echo "ADSP=$(cat /sys/class/remoteproc/remoteproc0/state 2>/dev/null || echo none)"; echo "PFW=$(dmesg 2>/dev/null | grep -ac "request_firmware failed")"; echo "ACD=$(dmesg 2>/dev/null | grep -ac "Unable to send ACD")"; echo "DROP=$(dmesg 2>/dev/null | grep -ac "Unable to drop a managed")"; echo "RCGWARN=$(dmesg 2>/dev/null | grep -ac "rcg didn.t update")"; echo "SL=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "soft lockup")"; echo "HT=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "hung task")"; echo "RCU=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "rcu.*stall")"; echo "WQ=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "BUG: workqueue lockup")"; echo "RPMH=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "rpmh_write_batch")"; echo "DPU=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "frame done timeout")"; echo "MMC=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "Timeout waiting for hardware cmd")"; echo "BURST=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "deferred probe pending")"; echo "FAILED=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed")"; } > $R 2>&1; cat $R
+2026-09-25T01:20:18Z RECV  [?2004hroot@gts9:~# R=/tmp/gts9-t188.txt; { echo "REL=$(uname -r)"; echo "BID=$(cat /proc/sys/kernel/random/boot_id)"; echo "UP=$(cut -d" " -f1 /proc/uptime)"; echo "GPU=$(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | xargs -r basename)"; echo "DEF=$(wc -l < /sys/kernel/debug/devices_deferred)"; echo "CTXFAULTS=$(dmesg 2>/dev/null | grep -ac "Unhandled context fault")"; echo "CTXSID=$(dmesg 2>/dev/null | grep -ao "SID=0x[0-9a-f]*" | sort -u | tr "\n" ",")"; echo "ADSP=$(cat /sys/class/remoteproc/remoteproc0/state 2>/dev/null || echo none)"; echo "PFW=$(dmesg 2>/dev/null | grep -ac "request_firmware failed")"; echo "ACD=$(dmesg 2>/dev/null | grep -ac "Unable to send ACD")"; echo "DROP=$(dmesg 2>/dev/null | grep -ac "Unable to drop a managed")"; echo "RCGWARN=$(dmesg 2>/dev/null | grep -ac "rcg didn.t update")"; echo "SL=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "soft lockup")"; echo "HT=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "hung task")"; echo "RCU=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "rcu.*stall")"; echo "WQ=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "BUG: workqueue lockup")"; echo "RPMH=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "rpmh_write_batch")"; echo "DPU=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "frame done timeout")"; echo "MMC=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "Timeout waiting for hardware cmd")"; echo "BURST=$(journalctl -b -k --no-pager 2>/dev/null | grep -v "Kernel command line" | grep -c "deferred probe pending")"; echo "FAILED=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed")"; } > $R 2>&1; cat $R
+2026-09-25T01:20:18Z RECV  [?2004lREL=7.2.0-rc3-gts9wifi-dirty
+2026-09-25T01:20:18Z RECV  BID=cfd83b6a-3cc9-4413-8a27-b719a66700d0
+2026-09-25T01:20:18Z RECV  UP=299.85
+2026-09-25T01:20:18Z RECV  GPU=adreno
+2026-09-25T01:20:18Z RECV  DEF=3
+2026-09-25T01:20:18Z RECV  CTXFAULTS=3
+2026-09-25T01:20:18Z RECV  CTXSID=SID=0x1c00,
+2026-09-25T01:20:18Z RECV  ADSP=offline
+2026-09-25T01:20:18Z RECV  PFW=1
+2026-09-25T01:20:18Z RECV  ACD=0
+2026-09-25T01:20:18Z RECV  DROP=0
+2026-09-25T01:20:18Z RECV  RCGWARN=1
+2026-09-25T01:20:18Z RECV  SL=0
+2026-09-25T01:20:18Z RECV  HT=0
+2026-09-25T01:20:18Z RECV  RCU=0
+2026-09-25T01:20:18Z RECV  WQ=0
+2026-09-25T01:20:18Z RECV  RPMH=0
+2026-09-25T01:20:18Z RECV  DPU=0
+2026-09-25T01:20:18Z RECV  MMC=0
+2026-09-25T01:20:18Z RECV  BURST=2
+2026-09-25T01:20:18Z RECV  FAILED=0
+2026-09-25T01:20:18Z console run done (ready=True)

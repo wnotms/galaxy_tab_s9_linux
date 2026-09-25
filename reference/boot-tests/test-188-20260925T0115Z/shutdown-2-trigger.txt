@@ -1,0 +1,15 @@
+# The original file was 1873924 bytes / 34614 lines and was ~99% PowerShell error
+# records: when the tablet reset, every ReadLine() threw and each iteration wrote a
+# full stack trace.  Only console-run.ps1's own output lines are kept here; the
+# script now logs that failure once instead (scripts/console-run.ps1, ReadFor).
+# Nothing else was altered.
+
+2026-09-25T01:21:14Z console open on COM17
+2026-09-25T01:21:16Z RECV  echo READY1
+2026-09-25T01:21:16Z RECV  [?2004l
+2026-09-25T01:21:16Z shell answered after 1 poll(s)
+2026-09-25T01:21:16Z SENT  echo TRIGGER_SHUTDOWN; systemctl reboot
+2026-09-25T01:21:31Z RECV  [?2004hroot@gts9:~# echo TRIGGER_SHUTDOWN; systemctl reboot
+2026-09-25T01:21:31Z RECV  [?2004l
+2026-09-25T01:21:31Z RECV  [?2004hroot@gts9:~# [?2004l
+2026-09-25T01:21:31Z console run done (ready=True)

@@ -1,0 +1,8 @@
+2026-09-25T01:19:13Z console open on COM17
+2026-09-25T01:19:15Z RECV  echo READY1
+2026-09-25T01:19:15Z RECV  [?2004lREADY1
+2026-09-25T01:19:15Z shell answered after 1 poll(s)
+2026-09-25T01:19:15Z SENT  echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END
+2026-09-25T01:19:35Z RECV  [?2004hroot@gts9:~# echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END
+2026-09-25T01:19:35Z RECV  [?2004lGTS9_ALIVE_277.20_END
+2026-09-25T01:19:35Z console run done (ready=True)
