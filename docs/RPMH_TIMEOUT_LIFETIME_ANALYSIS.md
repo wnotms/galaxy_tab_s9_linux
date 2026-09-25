@@ -133,7 +133,9 @@ why `EvidenceProvenanceTests` now scans every document rather than one.
 ## 6. Timeout arithmetic (why the search window moved)
 
 `RPMH_TIMEOUT_MS` is 10 s. A warning printed at `+14.27 s` therefore says the
-batch was **submitted at ≈ +4.27 s**. Two consequences that shaped
+batch was **submitted at ≈ +4.27 s**. (This arithmetic was first written from the
+synthetic fixture's timestamp; §6a confirms it against the real capture at
+`+14.273790 s`.) Two consequences that shaped
 `docs/GPU_GMU_RPMH_STALL_PLAN.md`:
 
 * the interesting window for the *first* bad actor is ~4–5 s, not 13–14 s; the
@@ -145,6 +147,58 @@ batch was **submitted at ≈ +4.27 s**. Two consequences that shaped
 
 This is consistent with `docs/X710_X910_GPU_RPMH_DIFF.md`, where the GPU probe
 and the `device_link_del` warning both fall at ~4.1–4.2 s.
+
+## 6a. The real instance, which was in the repository all along
+
+§6's arithmetic was written from the synthetic fixture's timestamp. **There is a
+real capture of the same event**, and it says almost exactly the same thing:
+`reference/boot-tests/test-183-20260924T082600Z/first-unattended-recovery.txt`, a
+raw host console capture from the stall of 2026-09-24T08:41Z.
+
+```
+2026-09-24T08:41:59Z RECV  K kern  :info  : [ +14.273790] [     T57] ------------[ cut here ]------------
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000015] [     T57] WARNING: ../linux-src-poweroff-trace/drivers/soc/qcom/rpmh.c:386 at rpmh_write_batch+0x1b4/0x25c, CPU#6: kworker/6:0/57
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000020] [     T57] CPU: 6 UID: 0 PID: 57 Comm: kworker/6:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000003] [     T57] Workqueue: events pogo_watch_work
+2026-09-24T08:41:59Z RECV  K kern  :warn  : [  +0.000006] [     T57] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+2026-09-24T08:46:42Z shell never answered within 300 s
+```
+
+Four things this establishes, none of which the fixture could:
+
+1. **`rpmh.c:386` is the `WARN_ON(1)` of the timeout path** (§3), verified against
+   the pinned source at that line number - so this really is the 10 s timeout
+   firing, not some other warning in the same function.
+2. **The timestamp is `+14.273790 s`**, so by §6 the batch was submitted at
+   **≈ +4.274 s**. The fixture's `14.270000` is within 4 ms of it, which is why
+   the arithmetic survived being cited from the wrong source - but surviving by
+   accident is not the same as being right for the right reason.
+3. **`Workqueue: events pogo_watch_work`.** `rpmh_write_batch()` has exactly three
+   direct in-tree call sites, all in `drivers/interconnect/qcom/bcm-voter.c`
+   (`RPMH_ACTIVE_ONLY_STATE` at :315, `WAKE_ONLY` at :347, `SLEEP` at :355). So the
+   request that timed out was an **interconnect bandwidth vote**, reached from the
+   pogo watchdog worker. `rpmh_write()` does *not* funnel here - it uses
+   `DECLARE_COMPLETION_ONSTACK` - so this is specifically the batch API.
+   The intermediate frames are absent because the console went silent at
+   `pstate:`, immediately after the WARN.
+4. **The WARN is the last line before a five-minute silence.** That is a
+   correlation and is recorded as one: the WARN is *printed by* the timeout path,
+   so "last thing printed" is exactly what this code does when it gives up. It
+   does not make the timeout the cause of the stall that follows - but it does
+   make the hazard in §4 the immediate next thing in the sequence.
+
+**What this changes.** The §11 item in the round brief ("a real failure showed
+`rpmh_write_batch()` `ACTIVE_ONLY` transaction timeout") is this capture, and it
+has been in the repository the whole time while three documents cited the
+synthetic fixture instead. The real one is stronger evidence in every respect:
+real timestamp, real taint, real caller, real silence after.
+
+**What it still does not show.** `matched_done` - whether a *late* completion
+arrived and wrote through the freed completion array. That is the §4 hazard's
+direct test, it exists only in the synthetic fixture, and it has never been
+measured here. `0021` prints `LATE COMPLETION` with the millisecond gap, and
+`docs/RPMH_RSC_DEBUG_PATCH_STATUS.md` §5a records that the switch is already in
+the flashed kernel - so this is a cmdline-only run away.
 
 ## 7. Candidate repairs (NOT implemented, NOT endorsed yet)
 

@@ -1885,6 +1885,38 @@ class EvidenceProvenanceTests(unittest.TestCase):
             with self.subTest(doc=doc):
                 self.assertIn(doc, text)
 
+    def test_the_lifetime_doc_cites_the_real_capture_not_the_fixture(self):
+        """The real instance is test-183, and it is stronger than the fixture.
+
+        `first-unattended-recovery.txt` has the real `+14.273790 s` timestamp, the
+        real taint, the real caller (`Workqueue: events pogo_watch_work`) and the
+        five-minute silence after it.  The fixture has none of that.
+        """
+        text = read("docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md")
+        flat = " ".join(text.split())
+        self.assertIn("## 6a.", text)
+        self.assertIn("first-unattended-recovery.txt", text)
+        self.assertIn("+14.273790", text)
+        self.assertIn("Workqueue: events pogo_watch_work", text)
+        # The caller chain must name the only direct callers, with the file.
+        self.assertIn("bcm-voter.c", text)
+        self.assertIn("RPMH_ACTIVE_ONLY_STATE", text)
+        # It must not upgrade the correlation into a cause.
+        self.assertIn("It does not make the timeout the cause of the stall", flat)
+
+    def test_the_real_rpmh_instance_exists_in_the_archive(self):
+        """If test-183's capture disappears the analysis above loses its basis."""
+        f = ("reference/boot-tests/test-183-20260924T082600Z/"
+             "first-unattended-recovery.txt")
+        self.assertTrue((ROOT / f).exists(), f"{f} is missing")
+        # The PowerShell error text in this capture is GBK, not UTF-8, so read it
+        # leniently - the kernel lines this test checks are ASCII.
+        text = (ROOT / f).read_text(errors="replace")
+        self.assertIn("at rpmh_write_batch", text)
+        self.assertIn("+14.273790", text)
+        self.assertIn("Workqueue: events pogo_watch_work", text)
+        self.assertIn("shell never answered", text)
+
     def test_the_lifetime_doc_records_that_the_hazard_is_untested(self):
         """0021 prints LATE COMPLETION; nobody has ever looked for one here."""
         text = read("docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md")
