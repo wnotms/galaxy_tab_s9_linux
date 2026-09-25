@@ -565,6 +565,87 @@ class WedgeClusterTests(unittest.TestCase):
         self.assertIn("a narrowing and not a mechanism", text)
 
 
+class WedgeMarkerReadingTests(unittest.TestCase):
+    """Two corrections to the central marker, both re-derived here.
+
+    The whole rate table in docs/CPU_WEDGE_EVIDENCE.md counts boots by the
+    unanswered-backtrace line, so how that line may be *read* is load-bearing.
+    These tests pin the corrections to the source and to the resolved config, so
+    the doc cannot drift back into claiming a 10-second observation window or
+    attributing kcpustat numbers to the wedged CPUs.
+    """
+
+    DOC = "docs/CPU_WEDGE_EVIDENCE.md"
+    CONFIG = "out/kernel-gts9wifi/config"
+    SMP = ".work/build/linux-src-gts9wifi/arch/arm64/kernel/smp.c"
+    NMI_BT = ".work/build/linux-src-gts9wifi/lib/nmi_backtrace.c"
+    WATCHDOG = ".work/build/linux-src-gts9wifi/kernel/watchdog.c"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_pseudo_nmi_really_is_off_so_it_is_a_regular_ipi(self):
+        """The doc says so; the resolved config has to agree."""
+        cfg = ROOT / self.CONFIG
+        if not cfg.exists():
+            self.skipTest("no resolved config yet")
+        self.assertIn("# CONFIG_ARM64_PSEUDO_NMI is not set", cfg.read_text())
+        smp = ROOT / self.SMP
+        if not smp.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = smp.read_text()
+        # The source says it itself, which is why the doc can quote it.
+        self.assertIn("our backtrace attempt will just use a regular IPI", text)
+        self.assertIn("arm64_backtrace_ipi", text)
+
+    def test_the_timeout_loop_really_is_a_bounded_mdelay_loop(self):
+        """The doc's quote of lib/nmi_backtrace.c has to match the tree."""
+        path = ROOT / self.NMI_BT
+        if not path.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = path.read_text()
+        self.assertIn("#define NMI_BT_TIMEOUT_SEC	10", text)
+        self.assertIn("for (i = 0; i < NMI_BT_TIMEOUT_SEC * 1000; i++)", text)
+        self.assertIn("mdelay(1);", text)
+        self.assertIn("still haven't responded to the NMI", text)
+
+    def test_the_doc_records_that_the_interval_is_microseconds(self):
+        self.contains(self.DOC,
+                      "36.340199", "36.340219", "20 µs",
+                      "36.360250", "36.360265", "15 µs",
+                      "did not answer the backtrace request")
+
+    def test_the_doc_does_not_read_the_ten_seconds_literally(self):
+        self.contains(self.DOC, "is **not**\n10 seconds of observation")
+
+    def test_the_doc_retracts_the_old_100_percent_reading(self):
+        self.contains(self.DOC,
+                      "`100% system, 0% idle` is the reporting CPU",
+                      "report_cpu_status()",
+                      "that was wrong")
+
+    def test_the_mdelay_arithmetic_in_the_doc_matches_the_config(self):
+        """It is the reason the doc refuses to blame mdelay; keep it honest."""
+        cfg = ROOT / self.CONFIG
+        if not cfg.exists():
+            self.skipTest("no resolved config yet")
+        self.assertIn("CONFIG_HZ=250", cfg.read_text())
+        # arm64 computes cycles as (xloops * loops_per_jiffy * HZ) >> 32 with
+        # xloops = 1000 * 0x10C7 for a one-millisecond udelay().
+        xloops = 1000 * 0x10C7
+        lpj = 76800          # from dmesg: "38.40 BogoMIPS (lpj=76800)"
+        cycles = (xloops * lpj * 250) >> 32
+        self.assertEqual(cycles, 19200)
+        self.assertEqual(cycles * 1000 // 19200000, 1)   # 19.2 MHz arch timer
+        self.contains(self.DOC, "lpj=76800", "19200 cycles", "1.000 ms")
+
+    def test_the_doc_keeps_the_independent_evidence(self):
+        """The corrections must not have removed what still proves the wedge."""
+        self.contains(self.DOC, "q=2442", "starved for 2495 jiffies")
+
+
 class CpuIdleLeadTests(unittest.TestCase):
     """The X710-only idle options, and the harness that would capture a wedge."""
 

@@ -18,10 +18,130 @@ flashed can produce:
 
 | message | what it means |
 |---|---|
-| `After 10 seconds, these CPUS still haven't responded to the NMI: N` | a CPU is not executing at all — this is CPU-level, not a slow driver |
+| `After 10 seconds, these CPUS still haven't responded to the NMI: N` | a CPU did not answer the backtrace request — see §"How much the 10 seconds is worth" before reading the timeout literally |
 | `rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:` | an RCU grace period cannot complete |
 | `BUG: workqueue lockup - pool cpus=N ... stuck for Ns!` | a per-CPU worker pool has made no progress |
 | `watchdog: BUG: soft lockup - CPU#N stuck for Ns!` | a CPU has not scheduled for longer than the soft-lockup threshold |
+
+**Two corrections to how the first message must be read, both established by reading
+the pinned source and the raw captures rather than the summaries.** They are in the
+next two sections and neither weakens the conclusion, but both change what may be
+claimed from it.
+
+### It is a regular IPI on this build, not an NMI
+
+`CONFIG_ARM64_PSEUDO_NMI` is **not set** (`out/kernel-gts9wifi/config:587`), and
+arm64 says so itself (`arch/arm64/kernel/smp.c`):
+
+```c
+void arch_trigger_cpumask_backtrace(const cpumask_t *mask, int exclude_cpu)
+{
+	/*
+	 * NOTE: though nmi_trigger_cpumask_backtrace() has "nmi_" in the name,
+	 * nothing about it truly needs to be implemented using an NMI, it's
+	 * just that it's _allowed_ to work with NMIs. If ipi_should_be_nmi()
+	 * returned false our backtrace attempt will just use a regular IPI.
+	 */
+	nmi_trigger_cpumask_backtrace(mask, exclude_cpu, arm64_backtrace_ipi);
+}
+```
+
+So the message means "did not take an ordinary interrupt", which is a *stronger*
+statement than "did not take an NMI" and rules out "the NMI path specifically is
+broken on this board". It also means the failure is not something an NMI-only
+mechanism could have caught.
+
+### How much the `10 seconds` is worth: less than the wording says
+
+`lib/nmi_backtrace.c` waits for the backtrace mask to empty before it prints the
+warning:
+
+```c
+	/* Wait for up to NMI_BT_TIMEOUT_SEC seconds for all CPUs to do the backtrace */
+	for (i = 0; i < NMI_BT_TIMEOUT_SEC * 1000; i++) {
+		if (cpumask_empty(to_cpumask(backtrace_mask)))
+			break;
+		mdelay(1);
+		touch_softlockup_watchdog();
+	}
+
+	if (!cpumask_empty(to_cpumask(backtrace_mask)))
+		pr_warn("After " __stringify(NMI_BT_TIMEOUT_SEC) " seconds, these CPUS still haven't responded to the NMI: %*pbl\n", ...);
+```
+
+`NMI_BT_TIMEOUT_SEC` is `10`, so the loop is meant to burn 10 s of `mdelay(1)`. In
+**every** raw capture in this repository it does not:
+
+| capture | interval between the two records |
+|---|---|
+| `test-181/host-captures/r3-stacks.log` (`-o short-monotonic`, raw) | `[36.340199] Sending NMI from CPU 4 to CPUs 5:` → `[36.340219] After 10 seconds … 5` = **20 µs** |
+| same file, and the target answered | `[36.360250] Sending NMI from CPU 4 to CPUs 7:` → `[36.360265] NMI backtrace for cpu 7` = **15 µs** |
+| `test-178/rcu-stall-backtrace.log` (raw) | three rounds — CPUs 4, 5 and 7 — all inside the single journal second `Apr 14 03:38:50` |
+| `test-189/boot-1c082657-trace.txt` | `Sending NMI … 4` / `After 10 seconds … 4` / `Sending NMI … 5` / `After 10 seconds … 5` all at `47.261`–`47.262` |
+
+A responsive CPU answers in ~15 µs, so the *ordering* is meaningful: a CPU that does
+not answer inside even that short window is not answering. But the timeout is **not**
+10 seconds of observation, and the marker must therefore be described as "did not
+answer the backtrace request", never as "took no interrupt for 10 seconds".
+
+**Why the loop finishes early is not established, and is not asserted here.** The
+obvious candidate — `mdelay(1)` not being 1 ms on this board — does not survive
+arithmetic: `dmesg` reports `Calibrating delay loop (skipped), value calculated
+using timer frequency .. 38.40 BogoMIPS (lpj=76800)`, and with
+`CONFIG_HZ=250` (and a 19.2 MHz arch timer, which is what `76800 = 19200000/250`
+implies) arm64's `xloops_to_cycles()` gives
+
+```
+(1000 * 0x10C7 * 76800 * 250) >> 32 = 19200 cycles = 1.000 ms
+```
+
+i.e. exactly the millisecond it should be. So the two candidate explanations are
+"`mdelay()` is short here after all" and "the displayed timestamps are not the
+records' creation times", and this document does not choose between them. The
+measurement that settles it is a console capture with **host** timestamps spanning
+the pair — the captures above are journal reads, whose 1-second `short` format and
+whose dependence on the (unset) RTC make them weaker than they look.
+`reference/boot-tests/test-191-*/wedge-rate.sh` holds COM19 open for 300 s for
+exactly this, because the panic that carries the NMI lines arrives ~180 s after the
+wedge.
+
+**What is unaffected.** CPUs 4 and 5 are wedged on evidence that does not involve
+the backtrace at all. Same capture:
+
+```
+[   36.340179] rcu: (detected by 4, t=5255 jiffies, g=65, q=2442 ncpus=8)
+[   36.340241] rcu: rcu_preempt kthread starved for 2495 jiffies! g65 f0x0 RCU_GP_DOING_FQS(6) ->state=0x0 ->cpu=7
+```
+
+`q=2442` is 2442 callbacks queued that the grace period cannot retire, and the
+grace-period kthread has had no CPU for 2495 jiffies. Add the workqueue pool
+reporting itself stuck for 55 s and the per-CPU items `pending` forever, and the
+wedge stands on its own. The rate table below counts boots by this whole signature,
+not by the backtrace line alone.
+
+### `100% system, 0% idle` is the reporting CPU, not the wedged ones
+
+`print_cpustat()` prints `smp_processor_id()`'s own `kcpustat` deltas, and it is
+reached from the **soft-lockup** report path, not from the backtrace path:
+
+```c
+/* kernel/watchdog.c, watchdog_timer_fn() */
+		pr_emerg("BUG: soft lockup - CPU#%d stuck for %us! [%s:%d]\n", smp_processor_id(), duration, current->comm, task_pid_nr(current));
+		report_cpu_status();          /* -> print_cpustat() + print_irq_counts() */
+```
+
+and `report_cpu_status()` only exists because
+`CONFIG_SOFTLOCKUP_DETECTOR_INTR_STORM=y`, whose purpose is to catch interrupt
+storms. So the `CPU#N Utilization every Nms during lockup:` block describes **the
+CPU that reported the soft lockup** — on the archived failure that is CPU 7, itself
+spinning in `rcu_exp_gp_kthr` — and its `0% hardirq` says there was no interrupt
+storm there. It is not a measurement of CPUs 4 and 5.
+
+That matters because the earlier reading in this document ("the wedge dumps report
+`100% system, 0% idle` on the affected CPUs, so they are executing kernel code
+rather than asleep") used that line as evidence about the wedged CPUs. It is not.
+What is known about CPUs 4 and 5 is the narrower and still-sufficient fact that they
+did not answer an ordinary IPI.
 
 **That confound-freedom is the point.** The earlier comparison in this repository —
 "45 of 46 pre-fix boots ended without an orderly shutdown against 6 of 29 post-fix"
@@ -211,17 +331,23 @@ property of when a host happened to be watching.
 
 ## What the CPU was doing, and what that points at
 
-The wedge dumps report `100% system, 0% idle` on the affected CPUs, so they are
-executing kernel code rather than asleep — and the RCU expedited grace-period
-kthread is itself the task the soft-lockup detector names on `fa0f2151`
-(`CPU#7 stuck for 53s! [rcu_exp_gp_kthr:19]`). `smp_call_function`'s
-`csd_lock_wait()` and RCU's expedited handler both spin exactly like that while
-waiting for a CPU that will never answer, so those are **victims of the same
-missing CPU**, not a second fault.
+The `#N: 100% system, 0% softirq, 0% hardirq, 0% idle` block that accompanies a
+soft-lockup report is the **reporting** CPU's own utilization — CPU 7 on the
+archived failure, which is itself spinning in `rcu_exp_gp_kthr` — and not a
+measurement of the wedged CPUs. See §"`100% system, 0% idle` is the reporting CPU,
+not the wedged ones" above; the earlier version of this section read it as evidence
+about CPUs 4 and 5 and that was wrong.
 
-What can make a CPU stop answering an NMI altogether? On arm64 the short list is a
-CPU parked with interrupts masked, an SError, or a PSCI `CPU_SUSPEND` that never
-returns. The last is worth stating because the platform evidence points at it:
+What *is* established about the wedged CPUs is narrower: they did not answer an
+ordinary backtrace IPI, and the RCU grace period cannot retire 2442 queued
+callbacks because of them. `smp_call_function`'s `csd_lock_wait()` and RCU's
+expedited handler both spin exactly like that while waiting for a CPU that will
+never answer, so those are **victims of the same missing CPU**, not a second fault.
+
+What can make a CPU stop answering an ordinary IPI altogether? On arm64 the short
+list is a CPU parked with interrupts masked, an SError, or a PSCI `CPU_SUSPEND`
+that never returns. The last is worth stating because the platform evidence points
+at it:
 
 ```
 $ cat /sys/devices/system/cpu/cpuidle/current_driver
