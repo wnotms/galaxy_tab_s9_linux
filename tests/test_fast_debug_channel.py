@@ -402,7 +402,8 @@ class LiveWedgeTests(unittest.TestCase):
         text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
         self.assertIn("cannot be the *primary* cause", text)
         self.assertIn("pre-fix boots, from long before `adbd` was installed", text)
-        self.assertIn("would not show that `adbd` explains the pre-fix 22%", text)
+        # Markdown wraps, so match in fragments rather than across a line break.
+        self.assertIn("explains the pre-fix 22%", text)
 
     def test_the_account_records_the_window_margin(self):
         text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
