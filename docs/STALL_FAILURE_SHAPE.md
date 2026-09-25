@@ -338,13 +338,30 @@ Two fixes follow, both applied:
 1. the collector now records `previous_boot_id=` in `verdict.txt`, taken from the
    same `journalctl -b -1` selection that produced `prev-kernel.log`, so an
    archive can finally name the boot it describes;
-2. the harnesses that picked "the newest archive" with
-   `ls -1d /var/log/gts9-boot-evidence/*/ | tail -1` now use
-   `ls -1dt … | head -1`. The device has no RTC: **eight archives share only two
-   distinct `<utc>` stamps**, so name order is not age order, and the tie between
-   same-stamp directories was being broken by a random `boot_id8`. The
-   collector's own `KEEP=8` pruning already used `ls -1dt`, which is the
-   acknowledgement that only mtime is trustworthy here.
+2. the harnesses stopped trying to identify the archive by *ordering* it, and
+   select it by **boot id** instead. Ordering cannot work on this device, and both
+   attempts at it were wrong:
+
+   * by name - `ls -1d … | tail -1`. `date -u` is frozen (measured today:
+     `Mon Apr 13 19:44:42 UTC 2026`, and eight archives carry only two distinct
+     `<utc>` stamps), so the prefix is nearly constant and the tie between
+     same-stamp directories is broken by a random `boot_id8`;
+   * by mtime - `ls -1dt … | head -1`, which is what replaced it. Measured on the
+     device, **all eight retained directories carry mtimes within one second of
+     each other** (`stat -c %Y` gives 1776109089 or 1776109090 for all of them),
+     so this ordering is arbitrary too.
+
+   The collector names each directory after the boot that creates it, so the exact
+   selector is the running boot's own id:
+
+   ```sh
+   BID=$(cut -c1-8 /proc/sys/kernel/random/boot_id)
+   D=$(ls -1d /var/log/gts9-boot-evidence/*-$BID/ 2>/dev/null | head -1)
+   ```
+
+   which is also exactly the archive that describes the previous boot - the one
+   every round wants. `test-183`'s runners already did this; the newer harnesses
+   had regressed to ordering.
 
 ## 9. What is still open
 

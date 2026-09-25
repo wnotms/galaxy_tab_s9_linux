@@ -64,7 +64,7 @@ extract() { sed -n 's/.*RECV  //p' "$1" | grep -aE '^(REL|BID|UP|GPU|DEF|SL|HT|R
 # That is how an unattended reboot is detected without the console surviving the
 # round - see docs/BOOT_TIMING_AND_STALL_EVIDENCE.md.  pstore does NOT survive on
 # this port, so this archive is the only per-boot evidence channel that does.
-EVID_CMDS='R=/tmp/gts9-evid.txt; D=$(ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1); { echo "EVIDDIR=$D"; [ -n "$D" ] && grep -aE "^(previous_boot_end|marker_panic|marker_soft_lockup|marker_hard_lockup|marker_hung_task|marker_rcu_stall|marker_dpu_timeout|marker_mmc_timeout|boot_id)=" "$D/verdict.txt" 2>/dev/null; echo "EVIDCOUNT=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | wc -l)"; } > $R 2>&1; cat $R'
+EVID_CMDS='R=/tmp/gts9-evid.txt; BID=$(cut -c1-8 /proc/sys/kernel/random/boot_id); D=$(ls -1d /var/log/gts9-boot-evidence/*-$BID/ 2>/dev/null | head -1); { echo "EVIDDIR=$D"; [ -n "$D" ] && grep -aE "^(previous_boot_id|previous_boot_end|marker_panic|marker_soft_lockup|marker_hard_lockup|marker_hung_task|marker_rcu_stall|marker_dpu_timeout|marker_mmc_timeout|boot_id)=" "$D/verdict.txt" 2>/dev/null; echo "EVIDCOUNT=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | wc -l)"; } > $R 2>&1; cat $R'
 
 extract_evid() { sed -n 's/.*RECV  //p' "$1" | grep -aE '^(EVIDDIR|EVIDCOUNT|previous_boot_end|marker_|boot_id)='; }
 

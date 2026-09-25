@@ -960,16 +960,26 @@ class EvidenceArchiveIdentityTests(unittest.TestCase):
         # And it must be empty rather than wrong when there is no previous journal.
         self.assertIn('if [ "$prev_state" = present ]', text)
 
-    def test_the_harnesses_pick_the_newest_archive_by_mtime(self):
-        """The device has no RTC, so name order is not age order."""
+    def test_the_harnesses_select_the_archive_by_boot_id(self):
+        """Ordering cannot identify the archive: this device has no RTC.
+
+        `date -u` is frozen near 2026-04-13T19:38Z, so the <utc> prefix in every
+        directory name is nearly constant and the tie breaks on a random boot_id8;
+        and measured on the device, all eight retained directories carry mtimes
+        within one second of each other.  Neither `ls -1d | tail -1` nor
+        `ls -1dt | head -1` is therefore a "newest" test.  The collector names each
+        directory after the boot that creates it, so the exact selector is the
+        running boot's own id - which is also the archive that describes the
+        previous boot, the one every round wants.
+        """
         for rel in ("reference/boot-tests/test-187-20260924T1540Z/reboot-rounds.sh",
                     "reference/boot-tests/test-187-20260924T1540Z/cold-boot-capture.sh"):
             with self.subTest(rel=rel):
                 text = read(rel)
-                self.assertIn("ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1", text)
-                # The name-ordered selection must be gone.  Counting the
-                # directories with `ls -1d ... | wc -l` is fine and still used.
+                self.assertIn("cut -c1-8 /proc/sys/kernel/random/boot_id", text)
+                self.assertIn("ls -1d /var/log/gts9-boot-evidence/*-$BID/", text)
                 self.assertNotIn("gts9-boot-evidence/*/ 2>/dev/null | tail -1", text)
+                self.assertNotIn("ls -1dt /var/log/gts9-boot-evidence/*/", text)
 
     def test_the_affected_documents_carry_the_correction(self):
         for rel, needle in (
