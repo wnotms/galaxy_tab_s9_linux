@@ -2120,5 +2120,107 @@ class StallFailureShapeTests(unittest.TestCase):
         self.assertNotIn("systemd-shutdown", text)
 
 
+class WedgeRateAttributionTests(unittest.TestCase):
+    """A silent console is not evidence until it has been attributed.
+
+    The rate series counts stalls, and the instrument it counts them with is the
+    console.  On the healthy test-191 boot that instrument lied: the tty echoed
+    every character and executed none of them, because `gts9-acm-getty.service`
+    was sitting at a login prompt with no reachable shell, and
+    `systemctl restart gts9-acm-getty.service` fixed it outright.  A series that
+    scored that as a stall would have invented a failure.
+
+    The guard must not overcorrect either.  On three recorded boots ssh was
+    *refused* while ICMP answered; a guard that demanded ssh would have called
+    those boots stalls, so the two channels have to be read as a pair and every
+    outcome written down.
+    """
+
+    HARNESS = ("reference/boot-tests/test-191-20260925T0410Z/wedge-rate.sh")
+
+    def setUp(self):
+        self.text = read(self.HARNESS)
+
+    def test_the_check_is_ps_not_tasks_current(self):
+        """TasksCurrent=0 is not a missing shell: logind moves the session out.
+
+        The name may appear - the comment has to say why it is the wrong test -
+        but it must never be what the harness reads.
+        """
+        self.assertIn("ps -t ttyGS0", self.text)
+        # Naming it in a comment is how the next reader learns why it is wrong;
+        # reading it is what the check must never do.  Only the code counts.
+        code = "\n".join(
+            line for line in self.text.splitlines()
+            if not line.lstrip().startswith("#")
+        )
+        self.assertNotIn("systemctl show", code)
+        self.assertNotIn("TasksCurrent", code)
+
+    def test_a_silent_console_is_attributed_before_it_is_believed(self):
+        for needle in (
+            "ensure_console_shell",
+            "gts9-acm-getty.service",
+            "GETTY_RESTARTED",
+            "WEDGE_ATTRIBUTION",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, self.text)
+
+    def test_the_other_channel_decides_which_reading_applies(self):
+        """Console silent + ssh alive is the instrument; ssh dead is a stall."""
+        text = self.text
+        self.assertIn("ssh_answers", text)
+        self.assertLess(
+            text.index("if ssh_answers; then"),
+            text.index("if ensure_console_shell; then"),
+            "ssh must be consulted BEFORE anything is restarted",
+        )
+        self.assertIn("console-silent-ssh-unreachable", text)
+        self.assertIn("unattributed", text)
+
+    def test_nothing_is_restarted_on_a_boot_that_may_be_dying(self):
+        """The getty restart lives inside the ssh-answered branch only."""
+        start = self.text.index("if ssh_answers; then")
+        end = self.text.index("WEDGE_ATTRIBUTION=unattributed")
+        self.assertIn("ensure_console_shell", self.text[start:end])
+        # Nothing between the unattributed verdict and the end of the branch may
+        # restart a unit: on a boot that may be dying, that is interference.
+        tail = self.text[end:]
+        self.assertNotIn("systemctl restart", tail[:tail.index("\n\t\tfi")])
+
+    def test_both_channels_are_asked_the_uptime_question(self):
+        self.assertIn("probe_console_uptime", self.text)
+        self.assertIn("probe_ssh_uptime", self.text)
+        self.assertIn("uptime_via=", self.text)
+
+    def test_the_fractional_uptime_pattern_keeps_its_decimal_point(self):
+        """The bug this project has now shipped twice."""
+        for pat in (r"GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END",
+                    r"^\([0-9][0-9]*\)\..*"):
+            with self.subTest(pattern=pat):
+                self.assertIn(pat, self.text)
+
+    def test_the_summary_reports_the_unresolved_cycles(self):
+        self.assertIn("unattributed=$unattributed", self.text)
+        self.assertIn("getty_restarts=$getty_restarts", self.text)
+
+    def test_per_cycle_state_is_reset_at_the_top_of_every_cycle(self):
+        """A restart or an attribution must not leak into the next cycle."""
+        body = self.text[self.text.index("while [ \"$CYCLES\" = \"-1\" ]"):]
+        reset = body[:body.index('say "--- cycle $i ---"')]
+        for needle in ("GETTY_RESTARTED=0", "WEDGE_ATTRIBUTION=attributed"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, reset)
+
+    def test_the_reason_is_written_down_beside_the_code(self):
+        """The next reader has to know why ssh gates the guard."""
+        flat = " ".join(self.text.split())
+        self.assertIn("two causes and they look identical", flat)
+        self.assertIn("logind moves", flat)
+        self.assertIn("ssh was *refused* while ICMP still answered", flat)
+        self.assertIn("unattributed rather than counted as a clean run", flat)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -38,6 +38,9 @@ D=$(cd "$(dirname "$0")" && pwd)
 REPO=$(cd "$D/../../.." && pwd)
 CR=$REPO/scripts/console-run.sh
 CW=$REPO/scripts/console-watch.sh
+# The USB network function, not the console: the getty check below runs over ssh
+# because a console that cannot execute a command cannot be asked this question.
+SSH=$REPO/scripts/gts9-ssh.sh
 
 CYCLES=${1:?usage: wedge-rate.sh <cycles|-1>}
 ALLOW=${GTS9_ALLOW_POWER:-0}
@@ -49,6 +52,9 @@ EARLY_EXIT=${GTS9_EARLY_EXIT:-1}
 EARLY_MIN_UPTIME=${GTS9_EARLY_MIN_UPTIME:-45}
 case "$EARLY_EXIT" in 0|1) ;; *) echo "GTS9_EARLY_EXIT must be 0 or 1" >&2; exit 2 ;; esac
 case "$EARLY_MIN_UPTIME" in ''|*[!0-9]*) echo "GTS9_EARLY_MIN_UPTIME must be a number" >&2; exit 2 ;; esac
+# How long one console round trip is allowed to take.  The getty restart below
+# doubles the number of probes for a cycle whose console went quiet.
+CONSOLE_PROBE_TIMEOUT=${GTS9_CONSOLE_PROBE_TIMEOUT:-60}
 WINDIR=${GTS9_WINDIR:-'C:\Users\ms\AppData\Local\Temp\gts9-wedge'}
 LOCAL=${GTS9_LOCALDIR:-/mnt/c/Users/ms/AppData/Local/Temp/gts9-wedge}
 
@@ -73,18 +79,86 @@ if [ "$ALLOW" != "1" ]; then
 	exit 0
 fi
 
+# --- console shell guard -----------------------------------------------------
+# A silent console has two causes and they look identical: a boot that wedged, and
+# a getty that is "active (running)" with no reachable shell on ttyGS0.  Measured on
+# the healthy test-191 boot: the tty echoed every character and executed none of it,
+# and `systemctl restart gts9-acm-getty.service` fixed it outright.  A series that
+# could not tell those apart would report the getty defect as a stall, so before a
+# silent console is believed, the getty is checked and restarted once.
+#
+# The check is `ps -t ttyGS0`, NOT `systemctl show -p TasksCurrent`: logind moves the
+# session into session-N.scope, so TasksCurrent is 0 for a getty that works.
+#
+# The guard only applies where ssh can answer, and that is deliberate.  "Console
+# silent" has two very different readings depending on the channel that carries it:
+#
+#   console silent, ssh alive    -> instrument defect; fix the getty and re-probe
+#   console silent, ssh dead too -> a real failure; never restart anything
+#
+# and ssh itself answers only after userspace is up.  On the three boots on record
+# where ssh was *refused* while ICMP still answered, the console was the only
+# channel - so a guard that demanded ssh would have declared those boots stalls.
+# Every outcome is recorded, so a cycle that could not be attributed is visible as
+# unattributed rather than counted as a clean run.
+GETTY_RESTARTED=0
+WEDGE_ATTRIBUTION=attributed
+ssh_answers() {
+	timeout 20 "$SSH" 'echo GTS9_SSH_OK' 2>/dev/null | grep -q GTS9_SSH_OK
+}
+ssh_shell_present() {
+	timeout 45 "$SSH" 'ps -t ttyGS0 -o args= 2>/dev/null | grep -qE "(^|/|-)(bash|sh|ash)( |$)"' \
+		>/dev/null 2>&1
+}
+# Returns 0 only when a shell is present, restarting the getty once if needed.
+# Sets GETTY_RESTARTED=1 when it had to intervene.
+ensure_console_shell() {
+	if ssh_shell_present; then
+		return 0
+	fi
+	timeout 60 "$SSH" 'systemctl restart gts9-acm-getty.service' >/dev/null 2>&1
+	sleep 6
+	if ssh_shell_present; then
+		GETTY_RESTARTED=1
+		return 0
+	fi
+	return 1
+}
+
+# Ask the console how long the boot has been up.  /proc/uptime is "889.01", so the
+# pattern needs the decimal point: a pattern without it matches nothing and reports
+# a false stall, which this project has already shipped twice.
+probe_console_uptime() {
+	timeout $((CONSOLE_PROBE_TIMEOUT + 30)) "$CR" -Port COM17 \
+		-Out "$WINDIR\\test191-alive-$1.log" -WaitReadySeconds "$CONSOLE_PROBE_TIMEOUT" \
+		-ReadSeconds 15 \
+		-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
+		| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1
+}
+# The same question over the other channel.  A console that will not answer is not
+# by itself a dead kernel, and on a boot where ssh works it is not a dead kernel at
+# all - so this decides between "instrument" and "stall", and it is recorded.
+probe_ssh_uptime() {
+	timeout 45 "$SSH" 'cut -d" " -f1 /proc/uptime' 2>/dev/null \
+		| sed -n 's/^\([0-9][0-9]*\)\..*/\1/p' | tail -1
+}
+
 say "=== wedge rate: cycles=${CYCLES} window=${WINDOW}s kind=warm-reboot dir=$DIR ==="
 say "early exit: ${EARLY_EXIT} (a boot that answers a command past ${EARLY_MIN_UPTIME}s with no marker ends its cycle)"
 say "measured: the tablet is away 19.4 s per cycle on average; the window is for the panic, not the boot"
 say "baseline to compare against: pre-fix 10/46 (21.7%), post-fix 1/29 (3.4%)"
 
 wedges=0
+unattributed=0
+getty_restarts=0
 cycles_done=0
 i=0
 while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	i=$((i + 1))
 	wlog=$LOCAL/test191-cycle-$i.log
 	rm -f "$wlog"
+	GETTY_RESTARTED=0
+	WEDGE_ATTRIBUTION=attributed
 	say "--- cycle $i ---"
 
 	timeout $((WINDOW + 60)) "$CW" -Out "$WINDIR\\test191-cycle-$i.log" -Seconds "$WINDOW" \
@@ -157,7 +231,7 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# console-watch.ps1 writes with `Add-Content` per line, which flushes each
 	# line, so cutting the watcher short cannot lose what was already captured.
 	MARKERS='Kernel panic|BUG: soft lockup|watchdog: BUG|BUG: hard LOCKUP|BUG: workqueue lockup|rcu.*detected stall|havent responded to the NMI|haven.t responded to the NMI'
-	alive=""; early=0; wedged=0
+	alive=""; alive_via=""; early=0; wedged=0
 	if [ "$EARLY_EXIT" = "1" ] && [ -n "$on_at" ]; then
 		back_epoch=$(date -u -d "$on_at" +%s 2>/dev/null) || back_epoch=""
 		if [ -n "$back_epoch" ]; then
@@ -187,10 +261,41 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 			done
 		fi
 		if [ "$wedged" = "0" ]; then
-			alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" \
-				-WaitReadySeconds 60 -ReadSeconds 8 \
-				-Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
-				| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+			alive=$(probe_console_uptime "$i")
+			alive_via=console
+			if [ -z "$alive" ]; then
+				# The console went quiet.  Which of the two readings applies is
+				# decided by the other channel, not by the console.
+				if ssh_answers; then
+					if ensure_console_shell; then
+						say "  console shell absent; restarted the getty, re-probing"
+						alive=$(probe_console_uptime "$i")
+						if [ -n "$alive" ]; then
+							alive_via=console-after-getty-restart
+						fi
+					else
+						say "  console shell absent and a getty restart did not restore it"
+					fi
+					if [ -z "$alive" ]; then
+						# ssh answers, so the kernel is running even though its
+						# console is not.  This is the instrument, not a stall.
+						alive=$(probe_ssh_uptime)
+						if [ -n "$alive" ]; then
+							alive_via=ssh
+						fi
+					fi
+				else
+					# No other channel.  Console silence stands, and nothing is
+					# restarted on a boot that may simply be failing.
+					alive_via=console-silent-ssh-unreachable
+					WEDGE_ATTRIBUTION=unattributed
+					say "  console silent and ssh unreachable: treating it as a stall"
+				fi
+			fi
+			# A boot that answered on EITHER channel past EARLY_MIN_UPTIME with no
+			# wedge marker in the capture has proved it survived.  Attribution is
+			# recorded separately: an ssh-only answer means the boot was healthy,
+			# not that its console was.
 			if [ -n "$alive" ] && [ "$alive" -ge "$EARLY_MIN_UPTIME" ] \
 				&& ! grep -qaE "$MARKERS" "$wlog" 2>/dev/null; then
 				early=1
@@ -229,6 +334,8 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 		echo "tablet_back_at=${on_at:-never}"
 		echo "early_exit=$early"
 		echo "wedged=$wedged"
+		echo "getty_restarted=$GETTY_RESTARTED"
+		echo "wedge_attribution=$WEDGE_ATTRIBUTION"
 		echo "outages=${outages:-0}"
 		echo "second_outage_gone=${off2_at:--}"
 		echo "second_outage_back=${on2_at:--}"
@@ -250,11 +357,17 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 	# One health check, requiring a command RESULT rather than an echo.  The early
 	# exit above already made this probe, so do not pay for it twice.
 	if [ -z "$alive" ]; then
-		alive=$("$CR" -Port COM17 -Out "$WINDIR\\test191-alive-$i.log" -WaitReadySeconds 90 \
-			-ReadSeconds 5 -Commands 'echo GTS9_ALIVE_$(cut -d" " -f1 /proc/uptime)_END' 2>/dev/null \
-			| sed -n 's/.*GTS9_ALIVE_\([0-9][0-9]*\)\.[0-9]*_END.*/\1/p' | tail -1)
+		alive=$(probe_console_uptime "$i")
+		alive_via=console
+		if [ -z "$alive" ] && ssh_answers; then
+			alive=$(probe_ssh_uptime)
+			if [ -n "$alive" ]; then
+				alive_via=ssh
+			fi
+		fi
 	fi
 	echo "uptime_after=${alive:-none}" >>"$DIR/cycle-$i-verdict.txt"
+	echo "uptime_via=${alive_via:-none}" >>"$DIR/cycle-$i-verdict.txt"
 
 	# The new kernel's fingerprint, from the boot that just happened.  Without
 	# this a run could quietly measure the old kernel.
@@ -267,6 +380,16 @@ while [ "$CYCLES" = "-1" ] || [ "$i" -lt "$CYCLES" ]; do
 
 	get() { sed -n "s/^$1=//p" "$DIR/cycle-$i-verdict.txt"; }
 	say "  uptime=${alive:-?}s  panic=$(get panic) softlockup=$(get softlockup) workqueue=$(get workqueue) rcu=$(get rcu) nmi=$(get nmi_unanswered) policies=$(get policies)"
+
+	if [ "$GETTY_RESTARTED" = "1" ]; then
+		getty_restarts=$((getty_restarts + 1))
+	fi
+	if [ "$WEDGE_ATTRIBUTION" = "unattributed" ]; then
+		unattributed=$((unattributed + 1))
+		say "  *** UNATTRIBUTED: console silent and ssh unreachable - getty defect and"
+		say "      wedge are indistinguishable on the channels available, so this"
+		say "      cycle is not evidence either way"
+	fi
 
 	nmi=$(get nmi_unanswered); [ -n "$nmi" ] || nmi=0
 	if [ "$nmi" != "0" ]; then
@@ -306,6 +429,8 @@ done
 {
 	echo "cycles_run=$cycles_done"
 	echo "wedges=$wedges"
+	echo "unattributed=$unattributed"
+	echo "getty_restarts=$getty_restarts"
 	echo "window=$WINDOW"
 	echo "dir=$DIR"
 } >"$DIR/wedge-rate-summary.txt"
