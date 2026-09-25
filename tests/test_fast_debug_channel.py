@@ -314,6 +314,47 @@ class CpuWedgeEvidenceTests(unittest.TestCase):
         self.assertTrue(fao[0]["nmi"] or fao[0]["rcu"] or fao[0]["wq"] or fao[0]["sl"])
 
 
+class WedgeClusterTests(unittest.TestCase):
+    """13 of 14 wedged CPUs are big or prime; that asymmetry is the finding."""
+
+    DOC = "docs/CPU_WEDGE_EVIDENCE.md"
+
+    def test_the_doc_maps_cpus_to_clusters_and_rails(self):
+        text = read(self.DOC)
+        for needle in ("silver-rail-power-collapse", "gold-rail-power-collapse",
+                       "goldplus-rail-power-collapse", "capacity-dmips-mhz"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_it_records_both_statistics(self):
+        text = read(self.DOC)
+        self.assertIn("P = 0.013", text)
+        self.assertIn("P = 0.043", text)
+        self.assertIn("10 of 11", text)
+
+    def test_the_cpu_mapping_matches_the_pinned_dtsi(self):
+        """Re-derive the clusters from sm8550.dtsi rather than trusting prose."""
+        dtsi_path = (ROOT / ".work/build/linux-src-gts9wifi/arch/arm64/boot/dts/"
+                            "qcom/sm8550.dtsi")
+        if not dtsi_path.is_file():
+            self.skipTest("kernel worktree is not present")
+        caps = [int(m) for m in
+                re.findall(r"capacity-dmips-mhz = <(\d+)>;", dtsi_path.read_text())]
+        self.assertEqual(len(caps), 8)
+        self.assertEqual(caps[:3], [326, 326, 326])      # little, cpu0-2
+        self.assertEqual(caps[3:7], [693] * 4)           # big, cpu3-6
+        self.assertEqual(caps[7], 1024)                  # prime, cpu7
+
+    def test_the_doc_admits_the_samples_are_correlated(self):
+        text = read(self.DOC)
+        self.assertIn("not eleven independent draws", text)
+        self.assertIn("the NMI target is chosen by the stall detector", text)
+
+    def test_the_account_says_it_is_a_narrowing_not_a_mechanism(self):
+        text = read(self.DOC)
+        self.assertIn("a narrowing and not a mechanism", text)
+
+
 class CpuIdleLeadTests(unittest.TestCase):
     """The X710-only idle options, and the harness that would capture a wedge."""
 

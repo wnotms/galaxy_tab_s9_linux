@@ -107,6 +107,47 @@ Three things there are worth keeping:
   panic got there first. Had the wedge been reported once more, the workqueue
   panic would have fired instead.
 
+## Which CPU wedges: the big and prime clusters, not the little one
+
+Every one of the 11 carries the unanswered-NMI line, and that line names its target.
+On SM8550 the CPUs are three clusters with three separate rails
+(`sm8550.dtsi`: `capacity-dmips-mhz` 326 / 693 / 1024, and idle states
+`cpu-sleep-0-0`, `cpu-sleep-1-0`, `cpu-sleep-2-0`):
+
+| cluster | CPUs | rail | wedged |
+|---|---|---|---|
+| little (A510) | 0-2 | `silver-rail-power-collapse` | **1** |
+| big (A715) | 3-6 | `gold-rail-power-collapse` | **10** |
+| prime (X3) | 7 | `goldplus-rail-power-collapse` | **3** |
+
+```
+6a4ca9be  4          9cc7a79a  5          a4e5bd13  5
+2e735128  4, 6       8eee6da9  5, 7       18b79721  5
+6255990d  7          e0deedf7  2          d5adf27e  7
+1c082657  4, 5       fa0f2151  4
+```
+
+**13 of the 14 (boot, CPU) pairs are in the big or prime cluster.** Under the null
+that a wedge lands on any of the eight CPUs alike, big+prime are five of the eight
+and that gives **P = 0.013**. Taking one sample per boot instead — the first CPU it
+wedged — it is 10 of 11, **P = 0.043**.
+
+Two caveats, because this is a narrowing and not a mechanism:
+
+* the samples are correlates of each other. Eleven boots of one kernel on one board
+  are not eleven independent draws, and a per-boot statistic was computed precisely
+  because of that;
+* the NMI target is chosen by the stall detector, not by the fault. What the
+  histogram really measures is "CPUs that failed to answer", which is the right
+  question, but it inherits whatever bias the detector's choice of target has.
+
+What it is worth is direction. The little cluster — the one whose rail the kernel
+spends ~92% of its idle time in — wedged **once**. The two clusters whose rails are
+entered far less often wedged thirteen times. That does not fit "deep idle is simply
+unreliable here"; it fits something specific to the big and prime clusters, and it is
+the first time this investigation has had a hardware-shaped asymmetry rather than a
+message.
+
 ## One of them was caught live, with the operator watching
 
 On 2026-09-25 at 03:37Z the wedge happened while a console capture was running and
