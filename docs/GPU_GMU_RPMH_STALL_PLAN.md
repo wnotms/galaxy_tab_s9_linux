@@ -566,9 +566,14 @@ regulators:
 These are **recorded and not yet explained**. None of them is on a proven path to
 the 13–14 s wedge, and none of them is acted on this round:
 
-1. `disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration` — display clock
-   RCG not locking. Display is known-working afterwards, so this is either a
-   benign re-configuration or a real timing issue in `dispcc`.
+1. `disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration` — **resolved as a
+   separate investigation in round 14; see `docs/DISPCC_RCG_WARNING.md`.** It is
+   `clk_rcg2_shared_init()` failing to park the RCG (`CMD_UPDATE` never clears within
+   500 us), it is a known upstream issue class with a posted fix for the `eliza`
+   platform, it fires at 0.374 s on every boot including all clean ones, and it is
+   therefore **not** the stall. Whether it is harmless was not established: the
+   `-EBUSY` does not stop the panel working, but the clock's post-failure state was
+   not checked.
 2. The `-ENOMEM` from a pstore `memcpy`-through-`copy_from` path seen on some
    stalls (a witness of memory corruption *if* real; not reproduced under control).
 3. `deferred_probe_timeout` expiry with a non-empty pending list — **promoted in
