@@ -13,13 +13,46 @@
 #
 # Nothing here is a reboot unless the SysRq command is one.  Callers pass 'l'
 # (backtrace every CPU), 'w' (blocked tasks) or 't' (all tasks); 'b' reboots.
+# ============================================================================
+# UNSUPPORTED ON GTS9 TTYGS.  DO NOT USE THIS AS A WEDGE DEBUGGER.
+#
+# Measured on 2026-09-25 (test-194).  Serial SysRq cannot work on this port, for
+# two independent reasons, either of which is sufficient:
+#
+#   1. the USB serial adapter refuses to assert BREAK - setting BreakState raises
+#      "the device does not have permission to send a break" - and serial SysRq
+#      requires a BREAK;
+#   2. even with a BREAK, the kernel's serial SysRq lives in
+#      drivers/tty/serial/serial_core.c and applies to **uart_port** consoles.
+#      ttyGS1 is a USB gadget tty, not a uart_port, so that path never runs for
+#      it.  `sysrq_serial_sequence` (lib/Kconfig.debug) is a compile-time string
+#      whose documented job is characters that FOLLOW a break, so no command-line
+#      profile can open this path either.
+#
+# The consequence is recorded rather than hidden: when a gts9 boot goes silent,
+# there is no way to ask the kernel anything over this console, and pstore is the
+# only instrument that survives.  This script is kept as a **negative test** so the
+# claim stays reproducible; it exits immediately unless you pass
+# -ProbeUnsupportedPath, which is how the failure above was measured.
+# ============================================================================
 param(
     [string]$Port = "COM19",
     [int]$Baud = 115200,
     [string]$SysRq = "l",
     [int]$ReadSeconds = 20,
-    [string]$Out = "C:\Users\ms\AppData\Local\Temp\gts9-sysrq.log"
+    [string]$Out = "C:\Users\ms\AppData\Local\Temp\gts9-sysrq.log",
+    # Only a deliberate attempt at the known-broken path may proceed.
+    [switch]$ProbeUnsupportedPath
 )
+
+if (-not $ProbeUnsupportedPath) {
+    Write-Host "UNSUPPORTED ON GTS9 TTYGS: serial SysRq cannot work on this port."
+    Write-Host "  the USB adapter refuses BREAK, and ttyGS1 is a gadget tty rather"
+    Write-Host "  than a uart_port, so serial_core's SysRq path never runs for it."
+    Write-Host "  See the banner in this file and test-194's README."
+    Write-Host "  Re-run with -ProbeUnsupportedPath to reproduce the failure."
+    exit 3
+}
 
 $ErrorActionPreference = "Continue"
 $log = New-Object System.Collections.Generic.List[string]
