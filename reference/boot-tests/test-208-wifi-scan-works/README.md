@@ -72,12 +72,30 @@ Connected to fa:cf:52:cd:be:9b
 That is **802.11ax (HE)** with 2 spatial streams — the chip is running at Wi-Fi 6,
 not falling back to legacy rates.
 
-## LEVEL 7: not yet — and it is the AP, not the driver
+## LEVEL 7: not yet — and the evidence points at the AP, not the driver
 
-`dhcpcd` solicited a lease and the hotspot did not answer, so the interface fell
-back to IPv4LL (`169.254.175.120`). The association itself is fine — frames flow —
-so this is a DHCP-server-side condition on the Windows Mobile Hotspot, not an
-ath11k fault. Worth noting honestly rather than reporting "network works".
+`dhcpcd` sends DISCOVER and no OFFER comes back, so the interface falls back to
+IPv4LL (`169.254.175.120`). Probed for the usual Windows-hotspot gateways
+(`192.168.137.1`, `192.168.0.1`, `10.0.0.1`) with a static address in each subnet:
+none answers, and the neighbour entry stays `INCOMPLETE`.
+
+**But the link itself is demonstrably bidirectional.** Sampling the interface
+counters 12 seconds apart with no traffic generated locally:
+
+```
+rx_bytes  6140 -> 13220     <- the AP is transmitting to us
+tx_bytes  7012 ->  7322
+```
+
+RX roughly doubled from beacons and AP traffic alone, and `iw link` shows
+76837 bytes / 401 packets received against 7607 / 62 sent, at -17 dBm. So layer 2
+works in both directions and the receive path is healthy; what is missing is an
+L3 address, which is the AP's DHCP server declining to serve this client — a
+Windows Mobile Hotspot condition, not an ath11k fault.
+
+Stated plainly rather than as "network works": **there is no IPv4 lease, so DNS and
+HTTP were not tested.** The tablet also has no route off its `usb0` link-local
+network, so those tests would not have been possible regardless of the lease.
 
 Also relevant: the tablet has **no route to the internet** (only the `usb0`
 link-local network), so DNS and HTTP could not be tested even with a lease.
