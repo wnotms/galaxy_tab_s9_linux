@@ -229,6 +229,36 @@ correction is recorded in
 resets per session so a second one cannot pass unnoticed again
 (`classify-captures.py` prints `*** UNATTENDED RESET`).
 
+### The message is a known one, and it has a known trigger
+
+`enc35 frame done timeout` is not a new symptom. The repository already records
+the chain it belongs to:
+
+* `docs/WATCHDOG_X710.md:22` — "`enc35 frame done timeout` repeats, then the panel
+  keeps the last frame";
+* `docs/DPU_TRACE.md:75` — the message is
+  `DPU_ERROR_ENC_RATELIMITED("frame done timeout")`, the one test 178 caught;
+* `docs/DEBIAN_POWER_KEY.md:44` and `rootfs-overlay/usr/libexec/gts9-power-key.c`
+  — test 178 caught the path "hanging the tablet twice (`enc35 frame done timeout`
+  → vblank wait timeout → workqueue lockup, with two CPUs that stop answering
+  NMIs)";
+* the known trigger is a **full modeset**, which is why `gts9-power-key` toggles
+  the backlight instead of `/sys/class/graphics/fb0/blank`, and why
+  `gts9-panel-recover` guards every `fb0/blank` cycle with a timeout and treats
+  failure as non-fatal.
+
+On boot A the sequence is the same shape: `gts9-panel-recover.service` finished at
+21:35:56.374, and the timeout arrived **2.17 s later**. What the capture does *not*
+show is whether that service actually cycled the framebuffer or left the panel
+alone — its outcome line goes to `/dev/kmsg` at a level `loglevel=4` suppresses —
+so the trigger is not identified, only made plausible by proximity to the one
+service that performs it.
+
+Worth recording for the next series: boot A printed this error and rounds 2 and 3
+did not, over comparable capture windows covering the same 6.2–7.1 s of kernel
+time. That is one observation, not a correlation, but it makes
+`enc35 frame done timeout` a message to count per boot rather than to skip.
+
 Two things this does *not* say. It does not make the frame-done timeout the cause:
 it is the last line printed, which is exactly the reasoning the brief forbids, and
 at `loglevel=4` any number of earlier messages were suppressed. And it does not

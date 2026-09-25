@@ -1069,6 +1069,10 @@ class StallFailureShapeTests(unittest.TestCase):
         # It must refuse to make the last line the cause.
         self.assertIn("not make the frame-done timeout the cause", text)
         self.assertIn("SHUTDOWN-SERIES-RESULT.md", text)
+        # And it must tie the message to the chain the project already recorded.
+        self.assertIn("docs/WATCHDOG_X710.md", text)
+        self.assertIn("docs/DPU_TRACE.md", text)
+        self.assertIn("actually cycled the framebuffer", text)
 
     def test_the_old_series_result_carries_the_correction(self):
         text = read("reference/boot-tests/test-187-20260924T1540Z/"
