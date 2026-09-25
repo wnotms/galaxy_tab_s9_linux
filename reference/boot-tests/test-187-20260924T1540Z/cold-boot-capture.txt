@@ -1,0 +1,42 @@
+2026-09-24T22:28:48Z dry run: would open a 900s capture on COM19 and wait for YOU to
+2026-09-24T22:28:49Z power-cycle the tablet. Set GTS9_ALLOW_POWER=1 to actually start it.
+2026-09-24T22:28:49Z 
+2026-09-24T22:28:49Z protocol:
+2026-09-24T22:28:49Z   1. this script starts the capture and prints GO
+2026-09-24T22:28:49Z   2. you hold power until the screen goes off, then power on
+2026-09-24T22:28:49Z   3. the capture runs for 900s; the script then reads the device's
+2026-09-24T22:28:49Z      own previous-boot verdict if the tablet came back
+2026-09-24T23:47:16Z === cold-boot capture (900 s) on COM19 ===
+2026-09-24T23:47:16Z capture starts NOW; power-cycle the tablet after the GO line
+2026-09-24T23:48:19Z loglevel: after=8
+2026-09-24T23:48:19Z GO - power-cycle the tablet now
+  kind=cold-boot (operator power-cycle)
+  window_s=900
+  console_bytes=5982
+  console_lines=56
+  panic_lines=0
+  0
+  softlockup_lines=0
+  0
+  hardlockup_lines=0
+  0
+  hungtask_lines=0
+  0
+  rcu_lines=0
+  0
+  panel_recovery_lines=0
+  0
+  deferred_burst_lines=0
+  0
+2026-09-25T00:04:52Z === post-boot device verdict ===
+  previous_boot_end=clean-shutdown
+  marker_panic=0
+  marker_soft_lockup=0
+  marker_hard_lockup=0
+  marker_hung_task=0
+  marker_rcu_stall=0
+  marker_dpu_timeout=0
+  marker_mmc_timeout=0
+  UP=802.92
+2026-09-25T00:04:52Z done; compare against the warm baseline: burst 14.304 s, panel recovery ~4.7 s,
+2026-09-25T00:04:52Z clean shutdown ~61 s, systemd-shutdown present, sync_state 29-31 lines
