@@ -700,6 +700,16 @@ class EvidenceProvenanceTests(unittest.TestCase):
 class DocumentationTests(unittest.TestCase):
     """The phase's claims stay tied to their evidence."""
 
+    def test_the_plan_carries_the_round_16_amendment(self):
+        """The plan must stop claiming the failures sit in the 13-14 s window."""
+        text = read(PLAN)
+        self.assertIn("4.5 AMENDMENT (round 16)", text)
+        self.assertIn("not supported by any captured failure", text)
+        self.assertIn("20 warm cycles with one unattended reset", text)
+        self.assertIn("28.903 s", text)
+        # And it must keep the matrix as un-retired rather than deleting it.
+        self.assertIn("is **not** retired", text)
+
     def test_the_plan_states_the_hypothesis_is_a_hypothesis(self):
         text = read(PLAN)
         self.assertIn("HYPOTHESIS", text)

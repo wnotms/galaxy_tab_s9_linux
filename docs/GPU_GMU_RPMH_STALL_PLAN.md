@@ -415,6 +415,57 @@ failures were found by inspection rather than by counting attempts, so there is 
 pre-fix rate to compare against. The supportable statement is "the window is reached
 on every boot and no longer wedges", not "the failure is eliminated".
 
+### 4.5 AMENDMENT (round 16): the failure is not in the 13-14 s window
+
+Round 16 stopped adding instrumentation and re-read the captures this project
+already had, with a classifier that scores a round on the device's own
+`previous_boot_end` and on `reboot.target` rather than on `systemd-shutdown`
+(which the USB gadget regularly outruns). Three things came out of that, and the
+first one changes the framing of this whole document.
+
+**1. Neither captured failure happened in the 13-14 s window.**
+
+| failure | when it actually happened |
+|---|---|
+| test-184 A-5 | during **shutdown**: services stopped from monotonic 70.5 s, then 28.9 s of total silence, then an external reset |
+| test-187 round 1, boot `7f02df57` | during **normal running**: `graphical.target` reached, one `enc35 frame done timeout` 0.9 s later, then 36.8 s of silence, then an external reset |
+
+Both were captured live on the host console; both left no panic, no lockup banner
+and no watchdog report. Neither sat at 13-14 s. The 13-14 s window is where the
+**deferred-probe burst** is (§4.2), and §4.4 already showed that reaching it does
+not wedge anything — but the two failures on record are somewhere else entirely.
+The premise in the brief, "an intermittent system-level stall in the 13-14 s window
+after boot", is therefore **not supported by any captured failure**, and §4.2's
+mechanism should be read as "the window's one deterministic event" rather than as
+the failure's address.
+
+**2. One of the failures was inside the series recorded as 16/16 clean.** Boot
+`7f02df57` was reset by nothing the harness asked for, 58 s after the round's own
+reboot, and `shutdown-capture.sh` never noticed because it scored the round with a
+banner scan and this failure emits no banner. The honest post-fix tally across
+test-187 and test-188 is **20 warm cycles with one unattended reset and no
+shutdown-path stall**, not 22 clean cycles.
+
+**3. The failure has a shape, and it is an absence.** It is not a message to grep
+for: it is a console that goes quiet while the port is still open, followed by a
+reset nobody requested. Measured, the longest open-port silence is **0.597-1.085 s
+across 15 clean rounds** and **28.903 s** in the A-5 failure. `docs/STALL_FAILURE_SHAPE.md`
+has the analysis; `test-188/classify-captures.py` implements the scoring.
+
+**Consequences for the plan.** The §7 matrix (A/B/C/G, `msm.no_gpu`,
+`msm.disable_acd`, `deferred_probe_timeout`) is **not** retired — but it was built
+to attack a stall in a window the failures do not occupy, so running it now would
+test the wrong hypothesis with a low-rate event. The higher-value directions are
+the ones §4.5 opens:
+
+* **who resets the machine.** §4 shows it is not a kernel watchdog and not
+  `panic=`; the stock DTS points at a Gunyah hypervisor watchdog mainline does not
+  drive, and arming it is explicitly out of scope this round;
+* **the five outstanding stop jobs** (§5 of the shape document) — the list to
+  inspect first if the shutdown stall recurs;
+* **`enc35 frame done timeout`**, which is the only message that tracks the one
+  mid-run failure and which the project already knows is a full-modeset hazard.
+
 ---
 
 ## 5. Excluded directions (do not re-investigate)
