@@ -1,0 +1,29 @@
+2026-09-25T11:36:31Z profile=no-gpu bundle=/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-stall-no-gpu
+2026-09-25T11:36:32Z host boot.img        dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+2026-09-25T11:36:32Z host vendor_boot.img 8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed
+100663296 bytes (96 M) copied, 0.103511 s, 927 M/s
+/tmp/boot-current.img: 1 file pulled, 0 skipped. 34.1 MB/s (100663296 bytes in 2.819s)
+2026-09-25T11:36:36Z BACKUP boot -> /home/ms/Samsung/gts9-flash-tests/test-191-no-gpu/boot-before-no-gpu.img dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+100663296 bytes (96 M) copied, 0.041299 s, 2.2 G/s
+/tmp/vendor_boot-current.img: 1 file pulled, 0 skipped. 35.0 MB/s (100663296 bytes in 2.743s)
+2026-09-25T11:36:39Z BACKUP vendor_boot -> /home/ms/Samsung/gts9-flash-tests/test-191-no-gpu/vendor_boot-before-no-gpu.img 06902f993f6fe9b682686ab36ad956032a8f6a250e595a85e1d7ac82092f211f
+2026-09-25T11:36:39Z PASS the tablet is running the expected test-187-baseline kernel (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+2026-09-25T11:36:40Z --- boot: writing host sha256 dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c ---
+D:\android\gts9-flash\test191-boot.img: 1 file pushed, 0 skipped. 78.3 MB/s (100663296 bytes in 1.226s)
+2026-09-25T11:36:41Z PASS boot push verified on device (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+100663296 bytes (96 M) copied, 0.248108 s, 387 M/s
+100663296 bytes (96 M) copied, 0.103242 s, 930 M/s
+/tmp/boot-after.img: 1 file pulled, 0 skipped. 32.5 MB/s (100663296 bytes in 2.950s)
+2026-09-25T11:36:45Z PASS boot readback verifies (dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c)
+2026-09-25T11:36:46Z --- vendor_boot: writing host sha256 8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed ---
+D:\android\gts9-flash\test191-vendor_boot.img: 1 file pushed, 0 skipped. 707.3 MB/s (100663296 bytes in 0.136s)
+2026-09-25T11:36:46Z PASS vendor_boot push verified on device (8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed)
+100663296 bytes (96 M) copied, 0.254684 s, 377 M/s
+100663296 bytes (96 M) copied, 0.099798 s, 962 M/s
+/tmp/vendor_boot-after.img: 1 file pulled, 0 skipped. 34.5 MB/s (100663296 bytes in 2.782s)
+2026-09-25T11:36:50Z PASS vendor_boot readback verifies (8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed)
+2026-09-25T11:36:50Z flash complete and verified: boot + vendor_boot now hold test-191 'no-gpu'
+2026-09-25T11:36:50Z backup kept at /home/ms/Samsung/gts9-flash-tests/test-191-no-gpu/{boot,vendor_boot}-before-no-gpu.img
+2026-09-25T11:36:50Z NEXT: reboot the tablet.  The initramfs clears the BCB, so a plain reset is enough:
+2026-09-25T11:36:50Z   /mnt/d/android/platform-tools/adb.exe shell reboot system
+2026-09-25T11:36:50Z then run:  /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-191-20260925T0410Z/verify-osm-l3.sh

@@ -1,0 +1,24 @@
+run=test-196-profile-c
+gate_run_at=2026-09-25T11:44:22Z
+boot_id=8495ed74
+flashed_vendor_boot=8072e6c8e3a95e95fba03086a582f9cada3fde5a89e13f29db8ca147b074e8ed
+unchanged_boot=dc78ddf19ce4e83f49c4656e927f048a1717e684b3251b3e7c5d764f793c602c
+--- gate 1: parameter under its real name ---
+skip_gpu=Y
+no_gpu_exists=0
+--- gate 2: cmdline ---
+cmdline_skip_gpu=1
+cmdline_no_gpu=0
+--- gate 3: GPU unbound ---
+gpu_driver_symlink=0
+gpu_driver_state=UNBOUND
+adreno_registered=0
+--- gate 4: display survived ---
+dsi_status=connected
+panel_id_80_00_04=1
+display_drivers_bound=16
+udc_state=configured
+--- side effects that should be gone ---
+adreno_bound_count=0
+acd_err_count=0
+cpufreq_policies=3
