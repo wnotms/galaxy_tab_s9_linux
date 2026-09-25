@@ -2277,6 +2277,38 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("downgraded from", flat)
         self.assertIn("does **not** retire profiles B and C", flat)
 
+    def test_the_plan_carries_the_four_required_sections(self):
+        """CONFIRMED / CORRECTED / OPEN / NEXT, and the rule they enforce."""
+        text = read("docs/NEXT_STALL_DEBUG_PLAN.md")
+        for section in ("## CONFIRMED", "## CORRECTED", "## OPEN",
+                        "## NEXT PHYSICAL TEST", "## NOT THIS ROUND"):
+            with self.subTest(section=section):
+                self.assertIn(section, text)
+        flat = " ".join(text.split())
+        # The rule, verbatim, because everything else follows from it.
+        self.assertIn("First prove this is the same boot and that it really is a wedge",
+                      flat)
+        # And the corrections that matter most.
+        self.assertIn("presence_outages=0", text)
+        self.assertIn("means the check did not run", flat)
+        self.assertNotIn("no record survives a reboot", flat)
+
+    def test_the_plan_does_not_authorise_a_kernel_fix_from_test_194(self):
+        """It is a measurement correction; the forbidden list must say so."""
+        text = read("docs/NEXT_STALL_DEBUG_PLAN.md")
+        flat = " ".join(text.split())
+        self.assertIn("No kernel change follows from test-194", flat)
+        for forbidden in ("DPU timeout", "MMC driver", "RPMh timeout",
+                          "regulator", "clocks", "IRQ", "cpuidle",
+                          "watchdog threshold"):
+            with self.subTest(forbidden=forbidden):
+                self.assertIn(forbidden, text)
+        # C must not be over-claimed if it is clean.
+        self.assertIn("not reproduced in N rounds", flat)
+        self.assertIn("must never be written as \"GPU excluded\"", flat)
+        # And the RPMh run stays single-variable.
+        self.assertIn("Run it **alone**", flat)
+
     def test_the_plan_forbids_once_more_what_must_not_be_done(self):
         text = read(PLAN)
         for forbidden in ("regulator-always-on", "Gunyah", "PSCI"):

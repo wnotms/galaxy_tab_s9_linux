@@ -1,7 +1,9 @@
 # Next stall-debug plan: from "13-14 s stall" to a layer in the RPMh chain
 
-Status: **plan of record for test-185 / test-186.** Written before any code of
-this phase, so the decision points below cannot be re-interpreted afterwards.
+Status: **plan of record, revised in round 30.** Sections 1-3 are the original
+test-185/186 plan with its stale facts corrected in place; the round-30 rewrite at
+the end supersedes its reasoning, because test-194 changed the evidence base - a
+console-silence episode that looked exactly like a wedge was a quiet healthy boot.
 
 ## 1. Confirmed facts (do not re-derive)
 
@@ -16,10 +18,10 @@ this phase, so the decision points below cannot be re-interpreted afterwards.
 | 7 | PCIe0 is **not** the stall cause | test-182 A/B with `pcie0` + PHY disabled still stalled |
 | 8 | the 4.7 s → 125 s "pause" was `/dev/console → tty0 → fbcon → DRM` output backlog | test-184: all 28 report lines journal-timestamped `[4.646574]`, `ExecMainExit` at 155.87 s |
 | 9 | the DPU really does fail later in a stall, but that is not proof it is the common cause | `docs/DPU_TRACE.md` §"failure chain" |
-| 10 | real stalls cluster at **13.3-14.3 s** after boot | four/five recorded stalls, `docs/DPU_TRACE.md` |
-| 11 | the earliest known anomaly in one real failure is an **ACTIVE_ONLY RPMh transaction timeout** | `rpmh_write_batch()` `WARN_ON(1)` at `rpmh.c:386`, 14.27 s into that boot |
+| 10 | **CORRECTED (round 30).** real stalls do *not* cluster at 13.3-14.3 s. The three complete records that now exist struck at **6.8 s, ~52.5 s and ~76 s**, and test-195's wedge ran to 28.8 s before the RCU stall. The window is one instance, not a law | test-194/195; `docs/STALL_FIRST_EVENT_ORDERING.md` |
+| 11 | an **ACTIVE_ONLY RPMh transaction timeout** is the last line before a five-minute silence in **one** real failure (test-183), and it is not necessary: test-181's stall carries no such warning. `rpmh_write_batch()`'s only in-tree direct callers are `bcm-voter.c`, so the request was an interconnect bandwidth vote | `reference/boot-tests/test-183-*/first-unattended-recovery.txt`; `docs/RPMH_TIMEOUT_LIFETIME_ANALYSIS.md` §6a |
 | 12 | `pogo_watch_work` was the *caller* of that transaction | same log; the keyboard is docked and healthy in clean boots too |
-| 13 | ramoops is registered but no record survives a reboot | test-183/184: `pstore_backend=ramoops-registered`, `pstore_records=0` |
+| 13 | **CORRECTED (round 30).** ramoops **does** survive a reboot and is the project's only surviving instrument for a real wedge. Every complete failure record since test-191 was read out of `/var/lib/systemd/pstore/`, and test-195's wedge was captured that way | test-191/194/195 pstore records; the old `pstore_records=0` was a *directory* bug (`systemd-pstore` moves records to `/var/lib/systemd/pstore`) |
 | 14 | no Gunyah/`qcom,gh-watchdog` driver exists in this tree | test-183 audit |
 
 ## 2. Hypotheses already excluded
@@ -236,3 +238,142 @@ If no stall occurs: record **"not reproduced this round"**. No claim of a fix.
   `123f35f2…`, profile D `f1f4ccf7…`, dtb `b3e068e7…`.
 * Device-side services: each new unit is inert without its flag; `systemctl
   disable --now` removes it.
+
+---
+
+# Round 30 rewrite: CONFIRMED / CORRECTED / OPEN / NEXT
+
+test-194 changed the evidence base. A console-silence episode that looked exactly
+like a wedge turned out to be a quiet healthy boot, so nothing may be concluded
+from console silence, a stale panel, a failed ssh or a lone `frame done timeout`.
+The rule this section enforces:
+
+> First prove this is the same boot and that it really is a wedge. Only then ask
+> which driver caused it.
+
+## CONFIRMED
+
+**test-194 is a false-positive console-silence episode.** Boot `0f056455` printed
+one `frame done timeout` at 8.623 s, went silent on COM19 for 160 s, held a stale
+panel and refused ssh. Its journal ran 1111 lines to 6.76 s, its pstore console
+shows the kernel alive at 170.26 s ending in a clean restart, and
+`soft lockup` / `hung task` / `rcu stall` / `Kernel panic` / `nmi_unresponsive`
+are all **0**. A quiet kernel with `consoleblank=0` looks frozen because it has
+nothing to print. `reference/boot-tests/test-194-20260925T0906Z/`
+
+**Console silence is not a stall.** Nor is a stale framebuffer, a failed ssh, a
+transient ICMP loss, or a lone `frame done timeout`. All five were present in
+test-194 together and the boot was healthy. Each is `SUSPECT`, never `WEDGE`.
+
+**The ttyGS console does carry kernel text, after enumeration.** test-194's own
+capture carried the frame-done line; `console_kernel_lines` reported 0 only
+because the pattern was anchored on `^\[` against lines prefixed
+`<host ts> RECV  [`. Early output never appears there, later lines do.
+
+**ttyGS serial BREAK SysRq is unavailable, settled.** The adapter refuses
+`BreakState`, and `serial_core.c`'s SysRq path applies to `uart_port` consoles,
+not a gadget tty. `sysrq_serial_sequence` is a compile-time Kconfig string. **So
+pstore is the only instrument that survives a stall.**
+`scripts/sysrq-over-console.*` now refuses by default with exit 3.
+
+**A real CPU-level wedge exists and is reproducible (test-195).** One baseline
+round produced, in its own pstore: `rcu_preempt detected stalls` at 28.839 s,
+`Sending NMI from CPU 7 to CPUs 6` at 28.844 s,
+`soft lockup - CPU#5 stuck for 26s` at 33.127 s,
+`Kernel panic - not syncing: softlockup: hung tasks`, and
+`SMP: failed to stop secondary CPUs 3,6-7`, with the victim chain
+`toggle_allocation_gate -> jump_label_update -> kick_all_cpus_sync ->
+smp_call_function_many_cond`. `reference/boot-tests/test-195-20260925T1023Z/`
+
+**And it is provably one round.** The harness writes
+`GTS9_AB run/profile/round/boot_id` into `/dev/kmsg` and `/dev/pmsg0` before each
+reboot; the next boot reads both back. test-195 carries
+`identity=GTS9_AB run=verify1 profile=baseline round=1 boot_id=6d8b975c` and the
+device's pmsg holds the same string.
+
+## CORRECTED
+
+* **"COM19 carries zero kernel lines"** — withdrawn. It carries them after USB
+  enumeration; the claim came from a broken regex.
+* **"frame timeout + console silence = stall"** — withdrawn. That is `SUSPECT`.
+  `WEDGE` requires a wedge-class marker or an unrequested restart, bound to the
+  round's boot.
+* **"The console line never entered the printk ring"** — withdrawn. *Not in the
+  journal*, *not in `/dev/kmsg`* and *not in the printk ring* are three different
+  claims and only the first is supported: `0f056455`'s journal stops at
+  6.763559 s, so the line had no journal to appear in. Level is not the
+  explanation either — `DPU_ERROR_ENC_RATELIMITED` is `pr_err_ratelimited`.
+* **test-194's own boot identity** — the first pass analysed `846e17b8` (round
+  **4**'s result), not `0f056455` (round 5's). Bound by a two-clock offset.
+* **The panel photo is a different boot.** Every line in it binds to the 04:57Z
+  pstore record: 15 frame-done events at a 1.184 s cadence from 6.755 s, `mmc1`
+  at 21.987 s, `AMC RPMH` at 24.487 s. A **flood**, not test-194's single event.
+  Its boot id is unrecoverable, because a boot that dies at ~7 s leaves no
+  journal. The `17.887 - 10 = 7.887 s` inference is **withdrawn**.
+* **The harness's automatic-restart detector had never worked.** `klog-watch` is
+  not a valid bash identifier, so the assignment was a command-not-found and
+  `"$klog-watch.txt"` expanded to a nonexistent path. **`presence_outages=0` in
+  the test-193 records means the check did not run**, not that no restart
+  happened.
+* **Necessary vs sufficient.** Panic, RCU stall and NMI non-response are strong
+  discriminators in every *completely captured* CPU-level wedge on record. They
+  are **not** necessary conditions: a detector may not get to run, pstore can be
+  lost, an external reset can land before a threshold — and test-195 is a genuine
+  wedge that carries `Sending NMI` but **not** the `haven't responded` line,
+  because the state came out through the RCU stall instead.
+
+## OPEN
+
+* **Why does test-194's journal stop at 6.76 s** while the kernel runs to 170 s?
+  This is the same stoppage `FAILED-BOOT-20260925T0457.md` §4 records for a boot
+  that wedges at ~7 s, and it makes such a boot invisible to every journal-based
+  instrument — including the 88-boot survey the rate table is computed from.
+* **Is the panel photo's boot the same as any recorded failure?** Its boot id is
+  unrecoverable; the sequence is real but nothing binds it to a round or kernel.
+* **What is a real wedge's earliest invisible event?** test-195's first abnormal
+  line is the handled DPU early-return at 4.787 s, which fires on every boot; the
+  RCU stall at 28.839 s is the first *discriminating* event, ~20 s later. The gap
+  is unobserved. test-192's `loglevel=7` profile exists, unflashed.
+* **Is the RPMh timeout a cause or a victim?** §6b of the lifetime analysis: the
+  10 s arithmetic fits 04:57Z (implied vote 14.804 s, consistent with the 14.31 s
+  deferred-probe burst) and **does not** fit 06:00Z or 06:59Z — one of three. And
+  `matched_done` has **no real value anywhere in the repository**.
+* **Is the GPU involved?** Untested. Profile C has never been run correctly: the
+  old profile named a parameter that does not exist, so it would have been a
+  no-op. Profile, parameter guard and run identity are now in place; the flash has
+  not happened.
+
+## NEXT PHYSICAL TEST
+
+**1. Baseline sanity run with the fixed harness.** No flash needed. Confirm the
+identity marker, the verdict field and the repaired restart detector over several
+consecutive rounds. Stop and preserve on the first `verdict=wedge`.
+
+**2. Profile C: `msm.skip_gpu=1`** — the strongest available subsystem ablation,
+one `vendor_boot` flash. Before trusting any round, confirm on the device:
+`/sys/module/msm/parameters/skip_gpu` exists (not `no_gpu`), `/proc/cmdline`
+carries `msm.skip_gpu=1`, `gpu_driver=NONE`, and `panel_status=connected` with
+DPU/DSI working.
+
+* Genuine CPU-level wedge, bound to the round → **stop, preserve, downgrade the
+  GPU/GMU/ACD path.** Do not keep rounding to fill a series.
+* No wedge → record **"not reproduced in N rounds"**. Five clean rounds must never
+  be written as "GPU excluded".
+
+**3. Preserve pstore the moment a wedge appears.** Only one of the records so far
+was captured before the ring was overwritten.
+
+**4. `gts9_rpmh_debug=1` as a separate diagnostic run, only if warranted.** The
+switch is already in the flashed kernel (`early_param`, cmdline only), so this is
+one `vendor_boot` flash and no backport. Run it **alone** — never alongside
+`msm.skip_gpu`, `msm.disable_acd`, `deferred_probe_timeout=300` or
+`cpuidle.off` — and read it against the pre-committed
+`RPMH_DEBUG_DECISION_RULE.md`.
+
+## NOT THIS ROUND
+
+No kernel change follows from test-194; it is a measurement correction, not a root
+cause. Specifically not: DPU timeout, MMC driver, RPMh timeout, regulator, clocks,
+IRQ, cpuidle, watchdog threshold. Any of those would be a driver fix built on a
+console line, which is the reasoning this document exists to stop.
+
