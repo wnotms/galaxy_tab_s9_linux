@@ -1,0 +1,70 @@
+=== test-208: LEVEL 3/4/5/6 EVIDENCE ===
+recorded=2026-04-14T00:43:20Z
+boot_id=e122b3d9-d189-4b7a-b616-ae02e8f79fc6
+kernel=7.2.0-rc3-gts9wifi-dirty
+uptime=18317.14
+
+### LEVEL 1-2: PCI endpoint + driver
+00:00.0 PCI bridge [0604]: Qualcomm Technologies, Inc SM8550/SM8650 PCIe Root Complex [Snapdragon 8 Gen 2/Gen 3] [17cb:0113]
+01:00.0 Network controller [0280]: Qualcomm Technologies, Inc QCNFA765 Wireless Network Adapter [17cb:1103] (rev 01)
+driver: ath11k_pci
+
+### LEVEL 3: firmware loaded
+[17974.004310] [     T90] mhi mhi0: Wait for device to enter SBL or Mission mode
+[17974.665637] [   T1998] ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+[17974.665646] [   T1998] ath11k_pci 0000:01:00.0: fw_version 0x11021302 fw_build_timestamp 2026-02-04 08:10 fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+
+### LEVEL 4: interface + phy
+/sys/class/ieee80211/phy0
+wlp1s0           UP             00:03:7f:12:ce:0c <BROADCAST,MULTICAST,UP,LOWER_UP> 
+driver: ath11k_pci
+version: 7.2.0-rc3-gts9wifi-dirty
+firmware-version: N/A
+1: phy0: Wireless LAN
+	Soft blocked: no
+	Hard blocked: no
+
+### LEVEL 5: scan
+bss_count=17
+ssids:
+	SSID: DESKTOP-S24EEHN 9670
+	SSID: NNU-WIFI6-8021X
+	SSID: NNU-WiFi6
+bands seen:
+  2.4 GHz
+  5 GHz
+
+### LEVEL 6: association
+bssid=fa:cf:52:cd:be:9b
+freq=2437
+ssid=DESKTOP-S24EEHN 9670
+id=0
+mode=station
+wifi_generation=6
+pairwise_cipher=CCMP
+group_cipher=CCMP
+key_mgmt=WPA2-PSK
+wpa_state=COMPLETED
+ip_address=169.254.175.120
+p2p_device_address=02:03:7f:12:ce:0c
+address=00:03:7f:12:ce:0c
+uuid=b02e88c3-79ab-549b-a4c5-e814122effe4
+
+### link detail
+Connected to fa:cf:52:cd:be:9b (on wlp1s0)
+	SSID: DESKTOP-S24EEHN 9670
+	freq: 2437.0
+	RX: 34259 bytes (193 packets)
+	TX: 2875 bytes (22 packets)
+	signal: -17 dBm
+	rx bitrate: 1.0 MBit/s
+	tx bitrate: 1.0 MBit/s
+	bss flags: short-preamble short-slot-time
+	dtim period: 3
+	beacon int: 100
+
+### LEVEL 7: DHCP attempt
+wlp1s0           UP             169.254.175.120/16 fe80::203:7fff:fe12:ce0c/64 
+default dev wlp1s0 scope link src 169.254.175.120 metric 1003015 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+169.254.0.0/16 dev wlp1s0 scope link src 169.254.175.120 metric 3015 
