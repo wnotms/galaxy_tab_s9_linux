@@ -1,2 +1,122 @@
 2026-09-25T03:02:33Z dry run: would run 5 warm-reboot cycles, holding COM19 for 240s each,
 2026-09-25T03:02:33Z and stop at the first captured panic or lockup. Set GTS9_ALLOW_POWER=1 to run.
+2026-09-25T03:18:58Z dry run: would run 30 warm-reboot cycles, holding COM19 for 90s
+2026-09-25T03:18:58Z each, polling for the device to come back rather than sleeping, and stop at
+2026-09-25T03:18:58Z the first captured panic or lockup. Set GTS9_ALLOW_POWER=1 to run.
+2026-09-25T03:19:09Z === wedge hunt: cycles=30 window=90s kind=warm-reboot ===
+2026-09-25T03:22:09Z FATAL: no executing shell on the device before the series
+2026-09-25T03:24:53Z === wedge hunt: cycles=30 window=90s kind=warm-reboot ===
+2026-09-25T03:27:53Z FATAL: no executing shell on the device before the series
+2026-09-25T03:28:32Z === wedge hunt: cycles=30 window=90s kind=warm-reboot ===
+2026-09-25T03:31:32Z FATAL: no executing shell on the device before the series
+2026-09-25T03:34:11Z dry run: would run 30 warm-reboot cycles, holding COM19 for 60s
+2026-09-25T03:34:11Z each and following the tablet's own USB presence rather than a timer.
+2026-09-25T03:34:11Z Set GTS9_ALLOW_POWER=1 to run.
+2026-09-25T03:34:15Z === wedge hunt: cycles=2 window=60s kind=warm-reboot ===
+2026-09-25T03:34:15Z --- cycle 1 ---
+2026-09-25T03:34:24Z   reboot issued at 2026-09-25T03:34:24Z
+2026-09-25T03:34:24Z   tablet gone at 
+2026-09-25T03:34:25Z   tablet gone at 
+2026-09-25T03:34:26Z   tablet gone at 
+2026-09-25T03:34:27Z   tablet gone at 
+2026-09-25T03:34:28Z   tablet gone at 
+2026-09-25T03:34:29Z   tablet gone at 
+2026-09-25T03:34:30Z   tablet gone at 
+2026-09-25T03:34:31Z   tablet gone at 
+2026-09-25T03:34:32Z   tablet gone at 
+2026-09-25T03:34:33Z   tablet gone at 
+2026-09-25T03:34:34Z   tablet gone at 
+2026-09-25T03:34:36Z   tablet gone at 
+2026-09-25T03:34:37Z   tablet gone at 
+2026-09-25T03:34:38Z   tablet gone at 
+2026-09-25T03:34:39Z   tablet gone at 
+2026-09-25T03:34:40Z   tablet gone at 
+2026-09-25T03:34:41Z   tablet gone at 
+2026-09-25T03:34:42Z   tablet gone at 
+2026-09-25T03:34:43Z   tablet gone at 
+2026-09-25T03:34:44Z   tablet gone at 
+2026-09-25T03:34:45Z   tablet gone at 
+2026-09-25T03:34:46Z   tablet gone at 
+2026-09-25T03:34:47Z   tablet gone at 
+2026-09-25T03:34:48Z   tablet gone at 
+2026-09-25T03:34:49Z   tablet gone at 
+2026-09-25T03:34:50Z   tablet gone at 
+2026-09-25T03:34:51Z   tablet gone at 
+2026-09-25T03:34:52Z   tablet gone at 
+2026-09-25T03:34:53Z   tablet gone at 
+2026-09-25T03:34:54Z   tablet gone at 
+2026-09-25T03:34:55Z   tablet gone at 
+2026-09-25T03:34:56Z   tablet gone at 
+2026-09-25T03:34:57Z   tablet gone at 
+2026-09-25T03:34:58Z   tablet gone at 
+2026-09-25T03:34:59Z   tablet gone at 
+2026-09-25T03:35:00Z   tablet gone at 
+2026-09-25T03:35:01Z   tablet gone at 
+2026-09-25T03:35:02Z   tablet gone at 
+2026-09-25T03:35:03Z   tablet gone at 
+2026-09-25T03:35:05Z   tablet gone at 
+2026-09-25T03:35:06Z   tablet gone at 
+2026-09-25T03:35:07Z   tablet gone at 
+2026-09-25T03:35:08Z   tablet gone at 
+2026-09-25T03:35:09Z   tablet gone at 
+2026-09-25T03:35:10Z   tablet gone at 
+2026-09-25T03:35:11Z   tablet gone at 
+2026-09-25T03:35:12Z   tablet gone at 
+2026-09-25T03:35:13Z   tablet gone at 
+2026-09-25T03:35:14Z   tablet gone at 
+2026-09-25T03:35:15Z   tablet gone at 
+2026-09-25T03:35:16Z   tablet gone at 
+2026-09-25T03:35:17Z   tablet gone at 
+2026-09-25T03:35:18Z   tablet gone at 
+2026-09-25T03:35:19Z   tablet gone at 
+2026-09-25T03:35:20Z   tablet gone at 
+2026-09-25T03:35:21Z   tablet gone at 
+2026-09-25T03:35:22Z   tablet gone at 
+2026-09-25T03:35:23Z   tablet gone at 
+2026-09-25T03:35:24Z   tablet gone at 
+2026-09-25T03:35:25Z   tablet gone at 
+2026-09-25T03:35:26Z   tablet gone at 
+2026-09-25T03:35:27Z   tablet gone at 
+2026-09-25T03:35:28Z   tablet gone at 
+2026-09-25T03:35:29Z   tablet gone at 
+2026-09-25T03:35:30Z   tablet gone at 
+2026-09-25T03:35:31Z   tablet gone at 
+2026-09-25T03:35:32Z   tablet gone at 
+2026-09-25T03:35:33Z   tablet gone at 
+2026-09-25T03:35:34Z   tablet gone at 
+2026-09-25T03:35:36Z   tablet gone at 
+2026-09-25T03:35:37Z   tablet gone at 
+2026-09-25T03:35:38Z   tablet gone at 
+2026-09-25T03:35:39Z   tablet gone at 
+2026-09-25T03:35:40Z   tablet gone at 
+2026-09-25T03:35:41Z   tablet gone at 
+2026-09-25T03:35:42Z   tablet gone at 
+2026-09-25T03:35:43Z   tablet gone at 
+2026-09-25T03:35:44Z   tablet gone at 
+2026-09-25T03:35:45Z   tablet gone at 
+2026-09-25T03:35:46Z   tablet gone at 
+2026-09-25T03:35:47Z   tablet gone at 
+2026-09-25T03:35:48Z   tablet gone at 
+2026-09-25T03:35:57Z   uptime=76s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0
+2026-09-25T03:35:57Z   *** WEDGE CAPTURED in cycle 1 - stopping so the capture is preserved
+2026-09-25T03:35:57Z       extracted to wedge-hunt-capture.txt (0 lines)
+2026-09-25T03:35:57Z === done: 1 cycle(s), wedge_captured=1 ===
+2026-09-25T03:36:09Z === wedge hunt: cycles=2 window=60s kind=warm-reboot ===
+2026-09-25T03:36:09Z --- cycle 1 ---
+2026-09-25T03:36:18Z   reboot issued at 2026-09-25T03:36:18Z
+2026-09-25T03:36:18Z   tablet gone at 2026-09-25T03:36:15.970Z
+2026-09-25T03:36:34Z   tablet back at 2026-09-25T03:36:34.632Z
+2026-09-25T03:37:17Z   uptime=42s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0
+2026-09-25T03:37:17Z --- cycle 2 ---
+2026-09-25T03:37:27Z   reboot issued at 2026-09-25T03:37:27Z
+2026-09-25T03:37:27Z   tablet gone at 2026-09-25T03:37:24.107Z
+2026-09-25T03:37:43Z   tablet back at 2026-09-25T03:37:43.352Z
+2026-09-25T03:39:56Z   uptime=?s  panic=0 softlockup=0 workqueue=0 rcu=0 nmi=0
+2026-09-25T03:39:56Z   *** WEDGE CAPTURED in cycle 2 - stopping so the capture is preserved
+2026-09-25T03:39:56Z       extracted to wedge-hunt-capture.txt (0 lines)
+2026-09-25T03:39:56Z === done: 2 cycle(s), wedge_captured=1 ===
+2026-09-25T03:42:21Z === wedge hunt: cycles=30 window=200s kind=warm-reboot ===
+2026-09-25T03:42:21Z --- cycle 1 ---
+2026-09-25T03:42:31Z   reboot issued at 2026-09-25T03:42:31Z
+2026-09-25T03:42:31Z   tablet gone at 2026-09-25T03:42:28.571Z
+2026-09-25T03:42:48Z   tablet back at 2026-09-25T03:42:47.876Z

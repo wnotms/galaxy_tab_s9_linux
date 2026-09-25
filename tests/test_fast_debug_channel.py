@@ -99,6 +99,16 @@ class AdbdUnitTests(unittest.TestCase):
         # It must say why, so nobody "fixes" it back.
         self.assertIn("gadget at a time", text)
 
+    def test_the_doc_says_to_mask_the_packaged_unit(self):
+        """Installing adbd leaves Debian's adbd.service enabled, and it wedges USB."""
+        text = read(CHANNEL_DOC)
+        self.assertIn("systemctl disable adbd.service", text)
+        self.assertIn("ln -sf /dev/null /etc/systemd/system/adbd.service", text)
+        self.assertIn("usb_gadget/g1", text)
+        # It must say why the packaged one cannot work, not just that it fails.
+        self.assertIn("activate", text)
+        self.assertIn("one gadget at a time", text)
+
     def test_it_explains_the_expected_non_android_errors(self):
         text = read(ADBD_UNIT)
         self.assertIn("Failed to get adbd socket", text)

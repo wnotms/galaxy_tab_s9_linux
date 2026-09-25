@@ -107,6 +107,48 @@ $ adb push 64MiB.bin /tmp/
 prompts` on a non-Android system. Both are expected — there is no Android framework
 to ask — and neither stops it working.
 
+### Mask Debian's own `adbd.service` — installing the package enables it
+
+This is not optional, and getting it wrong cost a device wedge. Installing `adbd`
+leaves Debian's `adbd.service` **enabled**, and it is not the unit above:
+
+```
+$ systemctl status adbd.service
+   Active: failed
+   Process: ExecStartPre=.../adbd-usb-gadget setup     (code=exited, status=0/SUCCESS)
+   Process: ExecStart=.../adbd                         (code=killed, signal=TERM)
+   Process: ExecStartPost=.../adbd-usb-gadget activate (code=exited, status=1/FAILURE)
+   Process: ExecStopPost=.../adbd-usb-gadget reset     (code=exited, status=32)
+```
+
+`setup` succeeds, and that is the problem: it creates a **second** gadget at
+`/sys/kernel/config/usb_gadget/g1`, mounts FunctionFS at `/dev/usb-ffs/adb`, and
+runs a second `adbd`. `activate` then fails, because the UDC binds one gadget at a
+time and `gts9` owns it — and `reset` cannot fully undo the work, so a stray `g1`
+gadget is left in configfs. Every boot therefore churned the USB gadget and left
+`systemctl --failed` non-empty.
+
+So:
+
+```sh
+systemctl disable adbd.service          # remove the multi-user.target.wants link
+ln -sf /dev/null /etc/systemd/system/adbd.service   # and mask it
+systemctl daemon-reload
+```
+
+`gts9-adbd.service` is unaffected — it does not use the gadget helper at all, which
+is exactly why it works while the packaged one cannot.
+
+If a stray gadget is already there:
+
+```sh
+G=/sys/kernel/config/usb_gadget/g1
+echo "" > $G/UDC; umount /dev/usb-ffs/adb; rmdir /dev/usb-ffs/adb
+rm -f $G/configs/c.1/ffs.adb
+rmdir $G/configs/c.1/strings/0x409 $G/configs/c.1 $G/functions/ffs.adb \
+      $G/strings/0x409 $G
+```
+
 ## Bringing it up on a fresh rootfs
 
 ```sh
@@ -125,8 +167,10 @@ ssh root@169.254.42.1 'dpkg -i /tmp/libprotobuf32t64_*.deb /tmp/android-lib*.deb
 # 3. the key
 scripts/gts9-debug-channel.sh install-key
 
-# 4. start
-ssh root@169.254.42.1 'systemctl enable --now gts9-adbd.service'
+# 4. mask the unit the package enabled, then start ours
+ssh root@169.254.42.1 'systemctl disable adbd.service; \
+    ln -sf /dev/null /etc/systemd/system/adbd.service; systemctl daemon-reload; \
+    systemctl enable --now gts9-adbd.service'
 ```
 
 Verified end to end across a reboot on 2026-09-25: the gadget came back with NCM,

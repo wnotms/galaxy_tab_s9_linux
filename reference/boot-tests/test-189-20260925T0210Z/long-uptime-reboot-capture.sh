@@ -23,7 +23,7 @@
 set -uo pipefail
 
 D=$(cd "$(dirname "$0")" && pwd)
-REPO=$(cd "$D/../.." && pwd)
+REPO=$(cd "$D/../../.." && pwd)
 CW=$REPO/scripts/console-watch.sh
 ALLOW=${GTS9_ALLOW_POWER:-0}
 MIN_UPTIME=${GTS9_MIN_UPTIME:-2700}
