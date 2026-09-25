@@ -191,7 +191,52 @@ test-187's `shutdown-capture.sh`, which raises the console loglevel. What the
 argument uses is the *sequence of stop jobs*, which is userspace output and
 unaffected by the kernel loglevel.
 
-## 6. Why it was missed for five rounds
+## 6. A second episode, inside a series that was reported as 16/16 clean
+
+Scoring every capture in the test-187 series with `classify-captures.py` turned up
+a reset that the series never noticed. Round 1 of the 8-round series had **two**
+resets in one watch session, not one:
+
+```
+21:35:55  the round's `systemctl reboot` is issued
+21:35:57  boot A reaches multi-user.target and graphical.target   (7f02df57)
+21:35:58  [    6.739434][ C4] [drm:dpu_encoder_frame_done_timeout:2731] [dpu error]enc35 frame done timeout
+          <36.8 s of silence, port still open>
+21:36:35  read failed: "the I/O operation has been aborted ..."   <- device gone
+21:36:36  PRESENCE usb0525:a4a7=False
+21:36:55  PRESENCE usb0525:a4a7=True, new boot B (adc745a0)
+```
+
+Nothing issued that second reboot: the series' next action was round 2's loglevel
+step at 21:41:58, five minutes later. The exception text is also different from a
+locally closed port — `The I/O operation has been aborted because of either a
+thread exit or an application request` rather than `port is closed` — which is what
+a device physically disappearing looks like.
+
+So the episode is: **boot A ran normally to `graphical.target`, printed one DPU
+encoder frame-done timeout 0.9 s later, went completely silent for 36.8 s while the
+port stayed open, and was reset by something nothing asked for.** Same three
+properties as §1 — no panic, no marker, an external reset — but the last line is a
+DPU error rather than a shutdown stop job, and it happened during normal running
+rather than during shutdown.
+
+This is the **first failure observation on the post-fix (AOSS-QMP + IPCC) kernel**,
+and it is inside the 8-round series whose result is recorded as "16 observed
+shutdown cycles, zero failures". That tally is not wrong about what each round
+checked; it is wrong as a statement that nothing failed during those cycles. The
+correction is recorded in
+`test-187/on-device/SHUTDOWN-SERIES-RESULT.md`, and both current runners now count
+resets per session so a second one cannot pass unnoticed again
+(`classify-captures.py` prints `*** UNATTENDED RESET`).
+
+Two things this does *not* say. It does not make the frame-done timeout the cause:
+it is the last line printed, which is exactly the reasoning the brief forbids, and
+at `loglevel=4` any number of earlier messages were suppressed. And it does not
+merge this episode with §1's: the two have different last lines, one during
+shutdown and one during normal running, and whether they are one phenomenon or two
+is not established.
+
+## 7. Why it was missed for five rounds
 
 `observer-ab.sh:93` scored this capture with:
 
@@ -211,7 +256,7 @@ is a captured failure, and no amount of banner-scanning will ever see it. Both
 `test-187/shutdown-capture.sh` and `test-188/shutdown-series.sh` classify that
 way; the earlier harnesses did not.
 
-## 7. What the archive name does and does not identify
+## 8. What the archive name does and does not identify
 
 Reading this capture required resolving which boot the archive describes, and the
 answer is not what the documents assume.
@@ -256,7 +301,7 @@ Two fixes follow, both applied:
    collector's own `KEEP=8` pruning already used `ls -1dt`, which is the
    acknowledgement that only mtime is trustworthy here.
 
-## 8. What is still open
+## 9. What is still open
 
 * **whether the Gunyah hypervisor watchdog is what resets the machine ~29 s in.**
   §4 shows the reset is not a kernel watchdog and not `panic=`, and identifies
@@ -267,6 +312,9 @@ Two fixes follow, both applied:
   capture is from the pre-fix kernel. 16 clean cycles on the AOSS-QMP + IPCC
   kernel and the test-188 series on the current one bound its rate; they do not
   identify it.
+* **whether §1's and §6's episodes are the same phenomenon.** One failed during
+  shutdown with five stop jobs outstanding; the other failed while running, 0.9 s
+  after a DPU encoder frame-done timeout. Both ended in a silent external reset.
 * **whether the two archived failures are the same phenomenon as each other.**
   `…-176925b2`'s predecessor ended at 344.7 s with a root login on ttyGS0 and no
   shutdown at all, which is a different last line from this one. Only one of the

@@ -1,5 +1,21 @@
 # Shutdown series result: 16 observed cycles, zero failures
 
+> **Correction (round 16): one of the 16 cycles contained a failure.**
+> Re-scoring every raw capture with `test-188/classify-captures.py` shows that
+> round 1 of the 8-round series had **two** resets in its watch session, not one.
+> After the round's own reboot, boot `7f02df57` reached `graphical.target`
+> normally, printed one `[drm:dpu_encoder_frame_done_timeout] enc35 frame done
+> timeout` 0.9 s later, then went silent for **36.8 s with the port still open**
+> and was reset by something nothing had asked for. The series never noticed,
+> because `shutdown-capture.sh` scores a round from banners and this failure emits
+> none — the same blind spot that hid the A-5 failure for five rounds.
+>
+> The tally below is therefore correct about what each round *checked* and wrong
+> as a statement that nothing failed. The honest count is **15 clean cycles, plus
+> one cycle that contained an unattended reset**, and that reset is the first
+> failure observed on the post-fix kernel. See `docs/STALL_FAILURE_SHAPE.md` §6.
+> Rounds 2–8 each show exactly one reset, their own; the check is now automatic.
+
 Consolidated from every shutdown cycle run on the post-fix kernel. Each cycle was
 issued with `systemctl reboot` over COM17 while a COM19 capture held the port across
 the whole shutdown→boot transition, so each is a complete observation rather than a

@@ -7,7 +7,7 @@
 > `…-8d7db274/` was created **by** `8d7db274` and holds its predecessor's journal.
 > `176925b2` and `8d7db274` are therefore the boots that *followed* the two
 > failures, whose own ids were never recorded. The quoted data is unaffected.
-> See `docs/STALL_FAILURE_SHAPE.md` §7, which also resolves the open question in
+> See `docs/STALL_FAILURE_SHAPE.md` §8, which also resolves the open question in
 > "What this does and does not establish" below: a live host capture of the
 > `…-8d7db274` failure exists in this repository and shows 28.9 s of silence
 > before the reset, refuting explanations (2) and (3).

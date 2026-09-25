@@ -1060,6 +1060,31 @@ class StallFailureShapeTests(unittest.TestCase):
         self.assertIn("absence of a line", lowered)
         self.assertIn("no amount of banner-scanning will ever see it", lowered)
 
+    def test_the_doc_records_the_second_episode(self):
+        """A failure inside a series reported as clean must stay recorded."""
+        text = read(self.DOC)
+        self.assertIn("dpu_encoder_frame_done_timeout", text)
+        self.assertIn("7f02df57", text)
+        self.assertIn("UNATTENDED RESET", text)
+        # It must refuse to make the last line the cause.
+        self.assertIn("not make the frame-done timeout the cause", text)
+        self.assertIn("SHUTDOWN-SERIES-RESULT.md", text)
+
+    def test_the_old_series_result_carries_the_correction(self):
+        text = read("reference/boot-tests/test-187-20260924T1540Z/"
+                    "on-device/SHUTDOWN-SERIES-RESULT.md")
+        self.assertIn("Correction (round 16)", text)
+        self.assertIn("15 clean cycles", text)
+
+    def test_the_classifier_counters_are_pinned(self):
+        """The tool that found the second episode must keep counting resets."""
+        text = read("reference/boot-tests/test-188-20260925T0115Z/"
+                    "classify-captures.py")
+        for needle in ("unattended_resets", "longest_open_silence_s",
+                       "reboot.target", "prev_boot_end"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
     def test_the_old_classifier_really_did_miss_it(self):
         """Pin the defect itself, not just the description of it."""
         text = read("reference/boot-tests/test-184-20260924T140000Z/observer-ab.sh")

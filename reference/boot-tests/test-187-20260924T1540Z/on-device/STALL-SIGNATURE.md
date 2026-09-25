@@ -100,7 +100,7 @@ reports "shell answered"; what was missing was requiring a **command result**.
 * **Correction (round 16): the archive id names the collector, not the failure.**
   `…-8d7db274/` was created *by* boot `8d7db274`; its `prev-kernel.log` is the
   boot before it. The log quoted above is therefore the failing boot's, as
-  treated here, but `8d7db274` is the survivor. `docs/STALL_FAILURE_SHAPE.md` §7
+  treated here, but `8d7db274` is the survivor. `docs/STALL_FAILURE_SHAPE.md` §8
   has the detail, and §1–§3 of that document show that a live host capture of this
   same failure already existed in the repository: 23 shutdown lines in 0.83 s,
   then **28.9 s of silence**, then a reset with no panic and no `systemd-shutdown`.
