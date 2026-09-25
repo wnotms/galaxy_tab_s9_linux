@@ -43,7 +43,7 @@ phase "device state: ${state:-none}"
 
 if [ "$state" != "recovery" ]; then
 	phase "asking the tablet for recovery over the console (BCB, no sleep, no polling)"
-	powershell.exe -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+	"$REPO/scripts/console-run.sh" \
 		-Out "$WIN_LOG" -Commands 'gts9-to-recovery' -WaitReadySeconds 10 -ReadSeconds 3 >/dev/null
 fi
 mark trigger
@@ -76,7 +76,7 @@ phase "clearing the BCB and rebooting to system"
 mark reboot
 
 phase "waiting for the mainline shell (console heartbeat)"
-powershell.exe -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+"$REPO/scripts/console-run.sh" \
 	-Out "$WIN_LOG" -Commands 'uname -a' -WaitReadySeconds "$SHELL_TIMEOUT" -ReadSeconds 4 \
 	| grep -aE "shell answered|Linux \(none\)" | tail -2 || true
 mark shell

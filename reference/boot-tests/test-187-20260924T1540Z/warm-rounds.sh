@@ -25,8 +25,7 @@ PROFILE=${1:?usage: warm-rounds.sh <baseline|no-acd|no-gpu|late-deferred> <round
 ROUNDS=${2:-5}
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
 D=$(cd "$(dirname "$0")" && pwd)
-PS=powershell.exe
-CR=$REPO/scripts/console-run.ps1
+CR=$REPO/scripts/console-run.sh
 PORT=${GTS9_SHELL_PORT:-COM17}
 ALLOW=${GTS9_ALLOW_POWER:-0}
 OUT=$D/warm-rounds-$PROFILE.txt
@@ -42,7 +41,7 @@ say() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" | tee -a "$OUT"; 
 probe() {
 	local tag=$1
 	local log="$WINDIR\\probe-$tag.log"
-	timeout 420 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
+	timeout 420 "$CR" \
 		-Out "$log" -Port "$PORT" -WaitReadySeconds 240 -ReadSeconds 90 \
 		-Commands 'R=/tmp/gts9-r.txt; { echo "REL=$(uname -r)"; echo "BID=$(cat /proc/sys/kernel/random/boot_id)"; echo "UP=$(cut -d" " -f1 /proc/uptime)"; echo "GPU=$(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | xargs -r basename)"; echo "DEF=$(wc -l < /sys/kernel/debug/devices_deferred)"; echo "SL=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "soft lockup")"; echo "HT=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "hung task")"; echo "RCU=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "rcu.*stall")"; echo "WQ=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "workqueue.*stall")"; echo "RPMH=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "rpmh_write_batch")"; echo "DPU=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "frame done timeout")"; echo "MMC=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "Timeout waiting for hardware cmd")"; echo "BURST=$(journalctl -b -k --no-pager 2>/dev/null | grep -c "deferred probe pending")"; echo "ACD=$(dmesg 2>/dev/null | grep -c "Unable to send ACD")"; echo "DROP=$(dmesg 2>/dev/null | grep -c "Unable to drop a managed")"; echo "FIRST=$(journalctl -b -k --no-pager 2>/dev/null | grep -oE "^\[ *[0-9]+\.[0-9]+\]" | tail -1 | tr -d "[] ")"; echo "FAILED=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed")"; } > $R 2>&1; cat $R' \
 		>"$DIR/probe-$tag-raw.txt" 2>&1
@@ -70,7 +69,7 @@ fi
 
 for i in $(seq 1 "$ROUNDS"); do
 	say "=== $PROFILE warm round $i/$ROUNDS ==="
-	timeout 300 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
+	timeout 300 "$CR" \
 		-Out "$WINDIR\\reboot-$i.log" -Port "$PORT" -WaitReadySeconds 120 -ReadSeconds 25 \
 		-Commands 'systemctl reboot' >"$DIR/reboot-$i-raw.txt" 2>&1
 	sleep 75

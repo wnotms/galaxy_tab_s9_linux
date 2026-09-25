@@ -35,9 +35,8 @@
 set -uo pipefail
 
 REPO=$(cd "$(dirname "$0")/.." && pwd)
-PS=${GTS9_POWERSHELL:-powershell.exe}
-CR=$REPO/scripts/console-run.ps1
-CW=$REPO/scripts/console-watch.ps1
+CR=$REPO/scripts/console-run.sh
+CW=$REPO/scripts/console-watch.sh
 SHELL_PORT=${GTS9_SHELL_PORT:-COM17}
 CONSOLE_PORT=${GTS9_CONSOLE_PORT:-COM19}
 ALLOW=${GTS9_ALLOW_POWER:-0}
@@ -118,7 +117,7 @@ summary_table() {
 
 run_probe() {
 	local tag=$1 out=$2 winlog=$3
-	timeout 500 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
+	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
 		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gmu_bound=$(ls /sys/bus/platform/devices/3d6a000.gmu/driver 2>/dev/null | wc -l);echo gpu_bound=$(ls /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null | wc -l);echo aoss_bound=$(ls /sys/bus/platform/devices/power-management@c300000/driver 2>/dev/null | wc -l);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo "--- prev boot anomaly lines";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | grep -a -E "soft lockup|hung task|rcu:.*stall|workqueue: .*stall|rpmh_write_batch|ACTIVE_ONLY|frame done timeout|mmc.*[Tt]imeout|Unable to send ACD|Unable to drop a managed|Skipping GPU ACD|rcg didn|Kernel panic" | head -80;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
@@ -208,12 +207,12 @@ for i in $(seq 1 "$ROUNDS"); do
 	say "=== $PROFILE round $i/$ROUNDS (boot_id before=$boot_id) ===" | tee -a "$OUT"
 
 	# Console capture spans shutdown, boot and the 13-14 s window.
-	timeout $((WINDOW + 200)) "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CW" \
+	timeout $((WINDOW + 200)) "$CW" \
 		-Out "$WINDIR\\console-$i.log" -Seconds "$WINDOW" -Port "$CONSOLE_PORT" \
 		>"$DIR/console-$i-watch.txt" 2>&1 &
 	conpid=$!
 	sleep 2
-	timeout 300 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CW" \
+	timeout 300 "$CW" \
 		-Out "$WINDIR\\shell-$i.log" -Seconds 60 -Port "$SHELL_PORT" \
 		-Command 'systemctl reboot' -CommandAtSeconds 6 \
 		2>&1 | grep -aE "SENT|PRESENCE usb" | tail -3 | tee -a "$OUT"

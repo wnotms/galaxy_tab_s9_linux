@@ -21,8 +21,7 @@ PROFILE=${1:?usage: reboot-rounds.sh <profile> <rounds>}
 ROUNDS=${2:-5}
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
 D=$(cd "$(dirname "$0")" && pwd)
-CR=$REPO/scripts/console-run.ps1
-PS=${GTS9_POWERSHELL:-powershell.exe}
+CR=$REPO/scripts/console-run.sh
 PORT=${GTS9_SHELL_PORT:-COM17}
 ALLOW=${GTS9_ALLOW_POWER:-0}
 DIR=$D/rounds-$PROFILE
@@ -37,7 +36,7 @@ say() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*" | tee -a "$OUT"; 
 console() {
 	local tag=$1 cmds=$2 raw=$3 tries=${4:-3} n=1
 	while [ "$n" -le "$tries" ]; do
-		timeout 420 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
+		timeout 420 "$CR" \
 			-Out "$WIN\\$tag-$n.log" -Port "$PORT" \
 			-WaitReadySeconds 420 -ReadSeconds 90 \
 			-Commands "$cmds" >"$raw" 2>&1
@@ -85,7 +84,7 @@ case "$PROFILE" in
 esac
 
 # Confirm the device is actually running this profile's command line.
-gotcmd=$(timeout 300 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$CR" \
+gotcmd=$(timeout 300 "$CR" \
 	-Out "$WIN\\cmdline.log" -Port "$PORT" -WaitReadySeconds 300 -ReadSeconds 40 \
 	-Commands 'cat /proc/cmdline' 2>/dev/null | grep -a "console=ttyMSM0" | tail -1 || true)
 case "$PROFILE" in

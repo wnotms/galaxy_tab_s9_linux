@@ -21,7 +21,8 @@ set -uo pipefail
 
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
 D=$(cd "$(dirname "$0")" && pwd)
-PS=${GTS9_POWERSHELL:-powershell.exe}
+CR=$REPO/scripts/console-run.sh
+CW=$REPO/scripts/console-watch.sh
 ALLOW=${GTS9_ALLOW_POWER:-0}
 WINDOW=${GTS9_COLD_WINDOW:-900}
 WINDIR='C:\gts9-work\cold-boot'
@@ -49,7 +50,7 @@ say "capture starts NOW; power-cycle the tablet after the GO line"
 
 # Raise kernel verbosity first, while the tablet is still up and reachable, so the
 # shutdown side of the cold boot is as visible as the warm boots were.
-timeout 200 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+timeout 200 "$CR" \
 	-Out "$WINDIR\\pre.log" -Port "${GTS9_SHELL_PORT:-COM17}" -WaitReadySeconds 200 -ReadSeconds 60 \
 	-Commands 'echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo COLD_PREP_DONE' \
 	>"$D/cold-boot-pre.txt" 2>&1
@@ -57,8 +58,8 @@ say "loglevel: $(grep -aoE 'after=[0-9. ]+' "$D/cold-boot-pre.txt" | tail -1)"
 
 # Capture BEFORE the power cycle. 10 s of lead so the port is definitely open.
 say "GO - power-cycle the tablet now"
-timeout $((WINDOW + 60)) "$PS" -NoProfile -ExecutionPolicy Bypass \
-	-File "$REPO/scripts/console-watch.ps1" -Out "$WINDIR\\cold.log" \
+timeout $((WINDOW + 60)) "$CW" \
+	-Out "$WINDIR\\cold.log" \
 	-Seconds "$WINDOW" -Port "$CONSOLE_PORT" >"$D/cold-boot-watch.txt" 2>&1
 
 cp "$LOCAL/cold.log" "$D/cold-boot-console.log" 2>/dev/null || say "WARNING: no capture file"
@@ -79,7 +80,7 @@ cp "$LOCAL/cold.log" "$D/cold-boot-console.log" 2>/dev/null || say "WARNING: no 
 cat "$D/cold-boot-verdict.txt" | sed 's/^/  /' | tee -a "$OUT"
 
 # Read the tablet's own verdict for the boot that just ended, if it came back.
-timeout 400 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+timeout 400 "$CR" \
 	-Out "$WINDIR\\post.log" -Port "${GTS9_SHELL_PORT:-COM17}" -WaitReadySeconds 300 -ReadSeconds 90 \
 	-Commands 'R=/tmp/cold-post.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R' \
 	>"$D/cold-boot-post-raw.txt" 2>&1

@@ -28,7 +28,8 @@ set -uo pipefail
 
 REPO=$(cd "$(dirname "$0")/../../.." && pwd)
 D=$(cd "$(dirname "$0")" && pwd)
-PS=${GTS9_POWERSHELL:-powershell.exe}
+CR=$REPO/scripts/console-run.sh
+CW=$REPO/scripts/console-watch.sh
 ALLOW=${GTS9_ALLOW_POWER:-0}
 WINDIR='C:\gts9-work\shutdown-cap'
 LOCAL=/mnt/c/gts9-work/shutdown-cap
@@ -50,7 +51,7 @@ for r in $(seq 1 "$ROUNDS"); do
 	say "=== shutdown round $r/$ROUNDS ==="
 
 	# 1. Full kernel verbosity on the console for this round.
-	timeout 200 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+	timeout 200 "$CR" \
 		-Out "$WINDIR\\pre-$r.log" -Port COM17 -WaitReadySeconds 200 -ReadSeconds 60 \
 		-Commands 'echo "before=$(cat /proc/sys/kernel/printk)"; echo 8 > /proc/sys/kernel/printk; echo "after=$(cat /proc/sys/kernel/printk)"; echo LVL_SET' \
 		>"$D/shutdown-$r-pre.txt" 2>&1
@@ -60,14 +61,14 @@ for r in $(seq 1 "$ROUNDS"); do
 	# Holding COM17 for a capture blocks the very trigger this script needs -
 	# that is what made round 8 produce 373-byte empty captures. COM19 is the
 	# port that carries kernel output, so it is the only one worth watching here.
-	timeout $((SECONDS_PER_ROUND + 120)) "$PS" -NoProfile -ExecutionPolicy Bypass \
-		-File "$REPO/scripts/console-watch.ps1" -Out "$WINDIR\\console-$r.log" \
+	timeout $((SECONDS_PER_ROUND + 120)) "$CW" \
+		-Out "$WINDIR\\console-$r.log" \
 		-Seconds "$SECONDS_PER_ROUND" -Port COM19 >"$D/shutdown-$r-w19.txt" 2>&1 &
 	w19=$!
 	sleep 8
 
 	# 3. The suspect action, over the shell port, before anything watches it.
-	timeout 200 "$PS" -NoProfile -ExecutionPolicy Bypass -File "$REPO/scripts/console-run.ps1" \
+	timeout 200 "$CR" \
 		-Out "$WINDIR\\trigger-$r.log" -Port COM17 -WaitReadySeconds 120 -ReadSeconds 20 \
 		-Commands 'echo TRIGGER_SHUTDOWN; systemctl reboot' >"$D/shutdown-$r-trigger.txt" 2>&1
 	say "  shutdown triggered at $(date -u +%H:%M:%S); COM19 capture running"
