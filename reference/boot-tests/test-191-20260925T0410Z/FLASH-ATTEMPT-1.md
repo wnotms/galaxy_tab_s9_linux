@@ -95,3 +95,69 @@ stopped, and must be attended.
    Up during power-on**, which `docs/REBOOT_MODES.md` records as the manual path;
 3. before any further automated reboot series, decide how to handle the "no
    watchdog" variant, because a series that assumes recovery will silently stop.
+
+## 8. Addendum: the kernel is alive. Only userspace and the console are blocked.
+
+Everything in section 7 said the tablet was wedged and needed a forced power cycle.
+That is still true operationally, but the *reason* was wrong, and the correction
+matters for every conclusion this project has drawn from console or journal silence.
+
+Host-side probes against the same tablet while it sat there with a stuck cursor and
+a dead keyboard:
+
+| probe | result |
+|---|---|
+| NCM adapter | **Up, 426 Mbps** |
+| ARP for `169.254.42.1` | **Reachable**, MAC `1A-98-27-23-AE-CB` |
+| ICMP echo | **3/3 replies, 2 ms, TTL 64** |
+| TCP 22 | refused |
+| console write | `WriteLine` timeout - the host cannot write to the port |
+| console command result | none |
+
+**The kernel is running.** Its USB gadget is enumerated, its network stack answers
+ARP and ICMP, at 2 ms, repeatedly. What is dead is userspace (no sshd) and the
+console path (host writes to the CDC-ACM endpoint time out).
+
+### Why this had to be nailed down before anything else
+
+Console, journal and ssh are the only three instruments this project uses, and the
+failure breaks all three *by construction*:
+
+* **ssh** needs userspace, which is exactly what stops;
+* **the console** needs `/dev/console -> tty0 -> fbcon -> DRM` and the gadget, which
+  test-184 already showed can back up;
+* **the journal** needs the microSD path, which the recovered 04:57Z record shows
+  timing out.
+
+None of them is a liveness test, and all three failing together looks identical to a
+death. `scripts/gts9-kernel-alive.sh` now separates them: link, ARP, ICMP, ssh and a
+console command that must *execute*, reported as a pair rather than one state.
+
+```
+link=up  arp=reachable  icmp=1  ssh=down  console=blocked
+kernel=alive  userspace=blocked
+```
+
+### What it does and does not invalidate
+
+* **does not invalidate the 04:57Z CPU wedge.** That boot had two independent
+  measurements of unreachable CPUs - `SMP: failed to stop secondary CPUs 0,3,6-7`
+  and an RCU stall naming CPU 0 - and its panic was recorded. That was a real CPU
+  event;
+* **does invalidate the inference from silence alone.** "The console stopped and the
+  journal stopped" has been read as "the machine stopped executing" in several
+  rounds, including in this document's own section 1. The two are now known to be
+  different, because a live kernel was measured presenting exactly that way;
+* **it reframes the 06:0xZ episode** as a third variant: kernel alive, userspace and
+  console blocked, screen showing a reboot message, no restart. It is not the
+  04:57Z wedge and it is not a normal boot;
+* **it is a warning about the survey.** A boot in this state leaves no journal and
+  no panic, and if a human power-cycles it, the survey records only "no orderly
+  shutdown". Those boots may never have had a CPU wedge at all.
+
+### Operational consequence
+
+A power cycle is still the only way back, because with the console blocked there is
+no shell to type into and no sshd to connect to. But "the tablet is dead" is no
+longer an acceptable shorthand, and `gts9-kernel-alive.sh` should be run before any
+future forced reset so the state is recorded rather than assumed.

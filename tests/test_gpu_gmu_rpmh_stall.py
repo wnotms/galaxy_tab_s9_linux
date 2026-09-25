@@ -1095,6 +1095,67 @@ class FlashAttemptTests(unittest.TestCase):
                       "repository and archived on the tablet's rootfs")
 
 
+class KernelAliveDiscriminatorTests(unittest.TestCase):
+    """Console, journal and ssh are not liveness tests.
+
+    On 2026-09-25T06:0xZ the tablet showed a stuck cursor and a dead keyboard, the
+    console refused writes and ssh refused connections - and ICMP answered 3/3 at
+    2 ms.  A live kernel presents exactly like a dead one on every instrument this
+    project had, and several rounds have read that silence as a system-wide freeze.
+    """
+
+    SCRIPT = "scripts/gts9-kernel-alive.sh"
+    DOC = "reference/boot-tests/test-191-20260925T0410Z/FLASH-ATTEMPT-1.md"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_probe_is_read_only_and_valid_shell(self):
+        import subprocess
+        path = ROOT / self.SCRIPT
+        self.assertTrue(path.stat().st_mode & 0o111)
+        subprocess.run(["bash", "-n", str(path)], check=True)
+        text = path.read_text()
+        # It may connect, ping and read; it must not write to the tablet.
+        for forbidden in ("systemctl reboot", "dd if=", "of=/dev/block", "mkfs",
+                          "fastboot", "adb shell reboot"):
+            with self.subTest(action=forbidden):
+                self.assertNotIn(forbidden, text)
+
+    def test_it_reports_a_pair_not_a_single_state(self):
+        """The whole point is that kernel liveness and userspace liveness differ."""
+        self.contains(self.SCRIPT, 'echo "kernel=$kernel"', 'echo "userspace=$userspace"',
+                      "reading=the kernel is running and userspace is not usable",
+                      "they are not liveness tests")
+
+    def test_it_probes_in_independent_layers(self):
+        self.contains(self.SCRIPT, "arp=", "icmp=", "ssh=", "console=",
+                      "the ttyGS0 shell EXECUTES a command, not merely echoes it")
+
+    def test_the_record_has_the_measured_evidence(self):
+        self.contains(self.DOC,
+                      "3/3 replies, 2 ms, TTL 64",
+                      "1A-98-27-23-AE-CB",
+                      "**The kernel is running.**",
+                      "gts9-kernel-alive.sh",
+                      "kernel=alive  userspace=blocked")
+
+    def test_it_says_what_it_does_not_invalidate(self):
+        """The 04:57Z CPU wedge stands on its own measurements."""
+        self.contains(self.DOC,
+                      "does not invalidate the 04:57Z CPU wedge",
+                      "SMP: failed to stop secondary CPUs 0,3,6-7",
+                      "does invalidate the inference from silence alone",
+                      "may never have had a CPU wedge at all")
+
+    def test_it_names_all_three_broken_instruments(self):
+        self.contains(self.DOC, "None of them is a liveness test",
+                      "needs userspace", "test-184 already showed can back up",
+                      "needs the microSD path")
+
+
 class A6xxStaleRpmhVoteTests(unittest.TestCase):
     """An upstream bug that is live in this pin, on the RPMh-vote path.
 
