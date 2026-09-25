@@ -269,6 +269,33 @@ produces.
   computed; no Wi-Fi reboot counted in any A/B series. Nothing in these results
   claims anything about it.
 
+## 9a. The missing step, identified in a Fedora port for this same board
+
+Read-only analysis of `~/gts9wifi-fedora-linux` (a Fedora port for the **same
+SM-X710**, seen at commit `ab123e7`) found
+`kernel/patches/wcn7850-pwrseq-cold-reset-aop.patch`, whose comment describes this
+board's failure:
+
+> Samsung's cnss2 programs the AOP WLAN PDC resources through the QMP mailbox before
+> the first WCN power-on. … without them **the WCN PMU never completes its power
+> handshake and the PCIe receivers stay undetected.**
+
+That is exactly what we measured — `Device not found`, LTSSM `DETECT_QUIET`. The
+patch sets `cold_reset_wlan = true` for `wcn6855` (changing `wlan_gpio` from
+`GPIOD_ASIS` to `GPIOD_OUT_LOW` with a settle delay) and adds
+`pwrseq_qcom_wcn_program_wlan_pdc()`, which sends the `qcom,wlan-pdc-init` strings
+through the AOP QMP mailbox.
+
+Everything it needs is already here and working: the `qcom_aoss.h` API with
+`qmp_send`, `CONFIG_QCOM_AOSS_QMP=y`, `c300000.power-management` **bound to
+`qcom_aoss_qmp`**, and both `qcom,qmp` and the 11 `qcom,wlan-pdc-init` strings in
+our DTS. Our WLAN DTS section is otherwise identical to that tree's, and the patch
+**applies cleanly** to our pinned source. It is a downstream port patch, not
+upstream — recorded as such — and it is **not yet verified on our hardware**.
+
+This supersedes the "measure the rails" advice that used to sit in §10:
+the missing step is observable in software after all.
+
 ## 10. Exact next physical test
 
 The next test is chosen to discriminate between two hypotheses that the current

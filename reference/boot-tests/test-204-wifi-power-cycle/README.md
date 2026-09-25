@@ -157,20 +157,35 @@ owns each pin:
 | 96 `WAKE` | `device 1c00000.pcie` | claimed by the controller |
 | **204 `XO_CLK`** | **`GPIO f100000.pinctrl:740`** | **a raw reference, not a device claim** |
 
-**Pin 204 is the finding.** Every other line the driver touches shows a `device`
-claim; `XO_CLK` shows a bare gpio number, which means the pinctrl framework never
-saw a device request it — and there is **no pinctrl state covering gpio204** in the
-board DTS at all. `pinctrl-0` on `wcn6855-pmu` is
-`<&wlan_en>, <&bt_default>, <&pmk8550_sleep_clk>`: `wlan_en` covers gpio80,
-`bt_default` covers gpio81, and nothing covers 204. The property
-`xo-clk-gpios = <&tlmm 204 ...>` exists, so `devm_gpiod_get_optional(dev, "xo-clk")`
-should resolve — but the pin is never muxed to the GPIO function for that consumer.
+**Pin 204: first read as an anomaly, then corrected — it is fine.**
 
-**Important scoping:** upstream mainline's own accepted
-`sm8550-samsung-gts9wifi.dts` has the **same** gap — one mention of `204` and no
-pinctrl state for it. So this is not something this port got wrong; it is a
-pre-existing upstream-wide omission on this board, and any fix belongs upstream as a
-generic addition rather than as a Samsung-only workaround.
+The header of `pinmux-pins` is the thing I initially missed:
+
+```
+Format: pin (name): mux_owner|gpio_owner (strict) hog?
+```
+
+So the two fields are *different owners*, not one. `device wcn6855-pmu` on pins
+80/81 is the **mux_owner** (a pinctrl state was applied), while
+`GPIO f100000.pinctrl:740` on pin 204 is the **gpio_owner** — a GPIO request with no
+pinmux state. Pin 204 is therefore **claimed**, not unclaimed, and its function is
+`func0`, i.e. GPIO, which is what the driver needs.
+
+The level is right too. The driver's sequence is `assert` = drive **1** as a
+dependency of the enable unit, then `post_enable` = drive **0**:
+
+```c
+pwrseq_qcom_wcn6855_clk_assert:    gpiod_set_value_cansleep(xo_clk_gpio, 1);
+pwrseq_qcom_wcn6855_xo_clk_deassert: gpiod_set_value_cansleep(xo_clk_gpio, 0);
+```
+
+and the observed final state is `gpio204: out low func0` — exactly as specified.
+
+The narrower true statement is that gpio204 has **no pinctrl state** while gpio80 and
+gpio81 do (`pinctrl-0` is `<&wlan_en>, <&bt_default>, <&pmk8550_sleep_clk>`, covering
+80, 81 and the PMIC sleep clock). That is a cosmetic difference in how the pin is
+claimed, not a defect: the function and the level are both correct, and upstream's
+own accepted `sm8550-samsung-gts9wifi.dts` has the same shape. Nothing to fix.
 
 ### `BT_EN` stuck low, and the honest reading of the UART witness
 
@@ -201,7 +216,19 @@ leaving `WLAN_EN` low (a real low→high transition does not help), cold vs warm
 missing internal-LDO driver (normal upstream), and the optional reference clock
 (normal upstream).
 
-Still open, and now the specific targets: **`XO_CLK` (gpio204) is not claimed or
-muxed by any state**, and **`BT_EN` (gpio81) is claimed but low**. Both are lines the
-WCN pwrseq driver is responsible for. The next physical test is to measure those two
-pins at the chip while the driver asserts them, rather than to change more software.
+With the gpio204 reading corrected, the record is: **every line the pwrseq driver
+owns is in the state the driver specifies.** `WLAN_EN` high, `PERST` released,
+`XO_CLK` low after its assert/deassert pulse, `gpio95` in `pcie0_clk_req_n`, PMU
+inputs enabled. The one line that is *not* in its expected state is `BT_EN` low
+while `hci_qca` retries — and BT is explicitly out of scope this round.
+
+That removes the last software-side discrepancy I could find **in this tree**.
+
+**Superseded by test-205.** This section concluded that the next test had to be a
+physical measurement of the rails, on the assumption that the fault was physical and
+unobservable from software. It is not: the Fedora port for this same board carries a
+patch whose own comment says that without the AOP PDC votes "the WCN PMU never
+completes its power handshake and the PCIe receivers stay undetected" — our exact
+symptom — and our DTS already carries those vote strings while **no driver reads
+them**. So the missing step is a mailbox write the kernel never performs. See
+`reference/boot-tests/test-205-wifi-pdc-aop/`.
