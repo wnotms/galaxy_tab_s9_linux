@@ -795,6 +795,36 @@ timing.
 
 ---
 
+## 11a. Round-21 addendum: a live upstream bug on the vote path
+
+Everything above was written before round 21. Two things since then change the
+picture, and both are recorded in full elsewhere rather than restated here:
+
+1. **The fifth deferred provider was `epss_l3`, and it is fixed on the CPU path.**
+   `qcom-cpufreq-hw` never probed because `cpu0`'s third `interconnects` phandle
+   points at `17d90000.interconnect`, whose driver
+   (`CONFIG_INTERCONNECT_QCOM_OSM_L3`) was not built; `dev_err_probe()` logs
+   `-EPROBE_DEFER` at debug level, so only the outer "Failed to find icc paths"
+   ever appeared. X910 fixed the same thing the same way.
+   `docs/PROVIDER_FOLLOWUPS.md` §4, `docs/X710_X910_GPU_RPMH_DIFF.md` §11,
+   candidate in `reference/boot-tests/test-191-*`.
+
+2. **The GPU never retracts its RPMh votes, and it is upstream's bug.**
+   `a6xx_rpmh_stop()` has an inverted `test_and_clear_bit(GMU_STATUS_FW_START)`
+   in the pinned tree, so every GPU runtime suspend skips the whole RSCC power-off
+   handshake and PDC sleep is never armed. Upstream's fix says the consequence is
+   exactly *stale RPMH (BCM) votes after GMU suspend*.
+   `docs/A6XX_STALE_RPMH_VOTES.md`, candidate (not applied) in
+   `kernel/patches/pending/0008-…`.
+
+Item 2 is the first candidate on this chain that is an upstream-acknowledged
+defect with a `Fixes:` tag rather than an inference from a symptom, and it is a
+one-line change. It is deliberately **not** folded into test-191 or into patch
+0007: one variable per experiment. §5's excluded directions are unchanged — in
+particular this does not re-open the DPU, PCIe or Pogo directions.
+
+---
+
 ## 12. Safety boundaries
 
 * No flashing, no partition writes, no BCB writes, no `dd` to any device node

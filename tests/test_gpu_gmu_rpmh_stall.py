@@ -714,6 +714,114 @@ class Test191CandidateTests(unittest.TestCase):
                 subprocess.run(["bash", "-n", str(path)], check=True)
 
 
+class A6xxStaleRpmhVoteTests(unittest.TestCase):
+    """An upstream bug that is live in this pin, on the RPMh-vote path.
+
+    `a6xx_rpmh_stop()` returns early when the GMU firmware HAD started, which is
+    the normal case, so the whole RSCC power-off handshake is skipped on every GPU
+    runtime suspend.  Upstream inverts it and says the consequence is stale RPMH
+    (BCM) votes.  These checks re-derive all of that from the pinned tree rather
+    than trusting the prose, and they pin the candidate as *not applied*.
+    """
+
+    DOC = "docs/A6XX_STALE_RPMH_VOTES.md"
+    PENDING = ("kernel/patches/pending/"
+               "0008-drm-msm-a6xx-fix-stale-rpmh-votes-after-suspend.patch")
+    GMU = ".work/build/linux-src-gts9wifi/drivers/gpu/drm/msm/adreno/a6xx_gmu.c"
+    PATCH7 = "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch"
+
+    BUGGY = "\tif (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))"
+    FIXED = "\tif (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))"
+
+    def contains(self, rel, *needles):
+        text = read(rel)
+        missing = [n for n in needles if n not in text]
+        self.assertEqual(missing, [], f"{rel} is missing {missing}")
+
+    def test_the_pinned_tree_still_has_the_inverted_condition(self):
+        """If a future rebase fixes this, the doc and the candidate must notice."""
+        path = ROOT / self.GMU
+        if not path.is_file():
+            self.skipTest("kernel worktree is not present")
+        text = path.read_text()
+        self.assertIn(self.BUGGY, text)
+        self.assertNotIn(self.FIXED, text)
+
+    def test_it_is_upstream_code_and_not_ours(self):
+        """Patch 0007 touches device_link_add, nowhere near a6xx_rpmh_stop."""
+        text = read(self.PATCH7)
+        self.assertIn("device_link_add", text)
+        self.assertNotIn("GMU_STATUS_FW_START", text)
+        self.assertNotIn("a6xx_rpmh_stop", text)
+
+    def test_the_candidate_is_pending_and_definitely_not_applied(self):
+        """`pending/` is ignored by prepare-kernel.sh; the default queue is not."""
+        self.assertTrue((ROOT / self.PENDING).is_file())
+        self.assertFalse(
+            (ROOT / "kernel/patches" / pathlib.Path(self.PENDING).name).exists(),
+            "the candidate must not be in the default patch queue",
+        )
+        text = read(self.PENDING)
+        self.assertIn("PENDING, NOT APPLIED", text)
+
+    def test_the_candidate_carries_one_line_and_full_provenance(self):
+        text = read(self.PENDING)
+        self.assertIn("-" + self.BUGGY, text)
+        self.assertIn("+" + self.FIXED, text)
+        # One line of fix, and the header has to say where it came from.
+        for needle in (
+            "20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com",
+            "Shivam Rawat",
+            "Akhil P Oommen",
+            "Fixes: f248d5d5159a",
+            "Assorted fixes - June/26",
+            "latest   v1",
+            "lore.kernel.org",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, text)
+
+    def test_the_candidate_records_the_backport_adaptation(self):
+        """Hunk 2 is already present in a later upstream form."""
+        self.contains(self.PENDING, "Hunk 2", "ALREADY has that write",
+                      "a6xx_gmu.c:1158", "one line")
+
+    def test_the_candidate_applies_cleanly_and_changes_nothing(self):
+        import subprocess
+        tree = ROOT / ".work/build/linux-src-gts9wifi"
+        if not (tree / "drivers/gpu/drm/msm/adreno/a6xx_gmu.c").is_file():
+            self.skipTest("kernel worktree is not present")
+        proc = subprocess.run(["git", "apply", "--check", str(ROOT / self.PENDING)],
+                              cwd=tree, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+
+    def test_the_doc_records_the_caller_path(self):
+        self.contains(self.DOC,
+                      "a6xx_gmu_pm_suspend()", "a6xx_gmu_stop()",
+                      "a6xx_gmu_force_off()", "a6xx_gmu_shutdown()",
+                      "REG_A6XX_GMU_RSCC_CONTROL_REQ", "GMU_STATUS_PDC_SLEEP")
+
+    def test_the_doc_names_the_decoy(self):
+        """a6xx_gmu_rpmh_off polls but retracts nothing, and ignores failures."""
+        self.contains(self.DOC, "a6xx_gmu_rpmh_off",
+                      "ignores every return", "cannot retract a vote")
+
+    def test_the_doc_does_not_claim_the_wedge(self):
+        self.contains(self.DOC,
+                      "Not established: that this causes the CPU wedge",
+                      "not a fix claim")
+
+    def test_the_doc_requires_the_read_only_checks_first(self):
+        """If the GPU never autosuspends, the defect cannot bite."""
+        self.contains(self.DOC, "runtime_suspended_time", "runtime_status",
+                      "the whole lead is dead", "before any rebuild")
+
+    def test_the_plan_doc_links_it_without_reopening_closed_directions(self):
+        self.contains("docs/GPU_GMU_RPMH_STALL_PLAN.md",
+                      "## 11a.", "0008-", "one variable per experiment",
+                      "excluded directions are unchanged")
+
+
 class BuildReproducibilityTests(unittest.TestCase):
     """Pins the *cause* of the kernel-build non-determinism.
 

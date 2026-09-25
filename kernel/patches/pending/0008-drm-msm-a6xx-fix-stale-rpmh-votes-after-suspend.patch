@@ -1,0 +1,65 @@
+From: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Subject: [PATCH 1/6] drm/msm/a6xx: Fix stale rpmh votes after suspend
+Date: Fri, 05 Jun 2026 01:38:17 +0530
+Message-ID: <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
+Signed-off-by: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Fixes: f248d5d5159a ("drm/msm/a6xx: Fix PDC sleep sequence")
+
+PENDING, NOT APPLIED.  This file lives in kernel/patches/pending/, which
+scripts/prepare-kernel.sh ignores, so no build carries it today.  It is kept here
+so the candidate is frozen, reviewable and hashable rather than living in a chat.
+
+Upstream status (checked 2026-09-25):
+  series   [PATCH 0/6] drm/msm: Assorted fixes - June/26, v1
+  patch    1/6
+  latest   v1 - no v2 exists; replies from Neil Armstrong, Dmitry Baryshkov,
+           Konrad Dybcio
+  base     ef8274b9c19a4b614e10ce95553d0d363dc1c1f8
+  lore     https://lore.kernel.org/lkml/20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com/
+  patchew  https://patchew.org/linux/20260605-assorted-fixes-june-v1-0-2caa04f7287c@oss.qualcomm.com/
+
+Why X710 needs it:
+  The condition is inverted in the pinned v7.2-rc3, so a6xx_rpmh_stop() returns
+  early whenever GMU_STATUS_FW_START was set - the normal case - and the whole
+  RSCC power-off handshake is skipped:
+    REG_A6XX_GMU_RSCC_CONTROL_REQ=1, the RSCC status poll, the request clear, and
+    set_bit(GMU_STATUS_PDC_SLEEP).
+  It is reached from every GPU runtime suspend:
+    a6xx_gmu_pm_suspend() -> a6xx_gmu_stop() -> {a6xx_gmu_shutdown() |
+    a6xx_gmu_force_off()} -> a6xx_rpmh_stop().
+  The GPU binds on X710 only since the round-15 AOSS QMP + IPCC fix, so this path
+  was dead code on this board until then.  Upstream's own words for the effect:
+  "There are stale RPMH votes (BCM votes) observed after GMU suspend. This is
+  because the rpmh stop sequences are skipped during gmu suspend."
+
+  This is an upstream bugfix, not an X710-specific hack.  The inverted line is in
+  the committed v7.2-rc3 tree (`git show HEAD:drivers/gpu/drm/msm/adreno/
+  a6xx_gmu.c`); this repository's only other change to that file is 0007, which
+  touches the two device_link_add() calls at lines 2238 and 2425.
+
+Backport adaptation (recorded because the series is one revision ahead of nothing
+but its own base commit):
+  Hunk 2 of the upstream patch writes REG_A6XX_GMU_CM3_SYSRESET before
+  a6xx_rpmh_stop() in a6xx_gmu_shutdown().  The pinned tree ALREADY has that write
+  at a6xx_gmu.c:1158, in a later upstream form (with bus_halt and
+  a6xx_gpu_sw_reset in between).  So only hunk 1 is carried: one line.
+  Nothing else is adapted; the hunk-1 context matches the pinned tree exactly.
+
+Not a fix claim: the upstream commit reports stale votes, not hangs.  Nothing yet
+connects a stale BCM vote to a CPU that stops answering an ordinary IPI.  See
+docs/A6XX_STALE_RPMH_VOTES.md sections 5 and 6, including the read-only on-device
+checks that must be done BEFORE a rebuild - if the GPU never autosuspends on this
+board, the defect cannot bite and this lead closes.
+
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -642,7 +642,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
+ 	int ret;
+ 	u32 val;
+ 
+-	if (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
++	if (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
+ 		return;
+ 
+ 	if (adreno_is_a840(adreno_gpu))
