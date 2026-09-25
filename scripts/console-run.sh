@@ -20,6 +20,7 @@ out='C:\Users\Public\gts9-console-run.log'
 wait=120
 read_s=4
 poll=1000
+baud=115200
 cmds=()
 
 while [ "$#" -gt 0 ]; do
@@ -29,6 +30,7 @@ while [ "$#" -gt 0 ]; do
 	-WaitReadySeconds) wait="$2"; shift 2 ;;
 	-ReadSeconds) read_s="$2"; shift 2 ;;
 	-PollMs) poll="$2"; shift 2 ;;
+	-Baud) baud="$2"; shift 2 ;;
 	-Commands)
 		shift
 		while [ "$#" -gt 0 ]; do cmds+=("$1"); shift; done
@@ -46,7 +48,7 @@ if [ "${#cmds[@]}" -eq 0 ]; then
 fi
 
 args="-Port $(gts9_ps_quote "$port") -Out $(gts9_ps_quote "$out")"
-args+=" -WaitReadySeconds $wait -ReadSeconds $read_s -PollMs $poll"
+args+=" -WaitReadySeconds $wait -ReadSeconds $read_s -PollMs $poll -Baud $baud"
 args+=" -Commands $(gts9_ps_array "${cmds[@]}")"
 
 gts9_ps_exec "$here/console-run.ps1" "$args"

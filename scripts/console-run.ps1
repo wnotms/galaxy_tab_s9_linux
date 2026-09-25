@@ -15,7 +15,11 @@ param(
     [string[]]$Commands = @("uname -a"),
     [int]$WaitReadySeconds = 120,
     [int]$PollMs = 1000,
-    [int]$ReadSeconds = 4
+    [int]$ReadSeconds = 4,
+    # Nominal only on this console: COM17/COM19 are USB CDC-ACM gadget ports, so
+    # the host's line coding is not what clocks the data - the USB bulk pipe is.
+    # Exposed as a parameter so that claim can be measured rather than believed.
+    [int]$Baud = 115200
 )
 function Log([string]$m) {
     $l = "{0} {1}" -f (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ"), $m
@@ -26,7 +30,7 @@ $sp = $null
 $openDeadline = (Get-Date).AddSeconds(30)
 while ((Get-Date) -lt $openDeadline) {
     try {
-        $sp = New-Object System.IO.Ports.SerialPort $Port, 115200, 'None', 8, 'One'
+        $sp = New-Object System.IO.Ports.SerialPort $Port, $Baud, 'None', 8, 'One'
         $sp.ReadTimeout = 700; $sp.WriteTimeout = 4000
         $sp.DtrEnable = $true; $sp.RtsEnable = $true; $sp.NewLine = "`n"
         $sp.Open(); Log "console open on $Port"; break
