@@ -360,3 +360,49 @@ class CpuIdleLeadTests(unittest.TestCase):
         for forbidden in ("fastboot", "dd if=", "flash ", "avbtool"):
             with self.subTest(forbidden=forbidden):
                 self.assertNotIn(forbidden, text)
+
+
+class LiveWedgeTests(unittest.TestCase):
+    """The live wedge of 2026-09-25, and the two harness faults it exposed."""
+
+    TESTDIR = "reference/boot-tests/test-190-20260925T0400Z"
+    DOC = "docs/CPU_WEDGE_EVIDENCE.md"
+
+    def test_the_capture_was_preserved_under_its_own_name(self):
+        """A second hunt run overwrote cycle-2; the copy must stay."""
+        path = ROOT / f"{self.TESTDIR}/wedge-capture-20260925T0337-wedged-boot.log"
+        self.assertTrue(path.is_file(), "the wedged boot's capture is gone")
+        # systemd colours the unit name, so the escape is between the two words
+        # and a plain assertIn on "start adbd.service" would never match.
+        text = re.sub(r"\x1b\[[0-9;]*m", "", path.read_text(errors="replace"))
+        self.assertIn("Failed to start adbd.service", text)
+        self.assertIn("Reached target multi-user", text)
+        self.assertIn("Started gts9-adbd.service", text)
+
+    def test_the_account_records_the_recovery_time(self):
+        text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
+        self.assertIn("03:37:45.185", text)
+        self.assertIn("three minutes", text)
+        self.assertIn("echo without execution", text)
+
+    def test_the_account_names_adbd_service_as_a_suspect_not_a_verdict(self):
+        text = read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md")
+        self.assertIn("new suspect, not a conclusion", text)
+        # And it must say why it is not sufficient on its own.
+        self.assertIn("not sufficient on its own", text)
+
+    def test_the_evidence_doc_carries_the_window_and_overwrite_lessons(self):
+        text = read(self.DOC)
+        self.assertIn("a capture window of 60 s is too short", text)
+        self.assertIn("must not reuse capture filenames", text)
+        self.assertIn("wedge-capture-20260925T0337-wedged-boot.log", text)
+
+    def test_the_hunt_window_is_settable_and_the_run_uses_200(self):
+        """60 s missed the panic; the window has to be raisable without editing."""
+        text = read("reference/boot-tests/test-190-20260925T0400Z/wedge-hunt.sh")
+        self.assertIn("WINDOW=${GTS9_WINDOW:-", text)
+        # The window actually used for the post-mask run, and the reason.
+        run = read("reference/boot-tests/test-190-20260925T0400Z/wedge-hunt.txt")
+        self.assertIn("window=200s", run)
+        self.assertIn("window is now 200 s",
+                      read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md"))

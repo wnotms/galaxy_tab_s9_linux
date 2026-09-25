@@ -107,6 +107,44 @@ Three things there are worth keeping:
   panic got there first. Had the wedge been reported once more, the workqueue
   panic would have fired instead.
 
+## One of them was caught live, with the operator watching
+
+On 2026-09-25 at 03:37Z the wedge happened while a console capture was running and
+the operator was looking at the tablet. It confirms the signature rather than adding
+one, and it puts a number on the recovery:
+
+| | |
+|---|---|
+| boot reaches multi-user | 03:37:44.251 |
+| **last thing logged** | **03:37:45.185** (`Started session-1.scope`) |
+| operator sees | screen stuck on the log, cursor blinking, keyboard dead |
+| console probe | gets the **echo** of a command and no result — echoed, not executed |
+| login screen back | ~03:40:5x |
+| fresh boot caught on COM19 | 03:40:52 |
+
+So the wedge began within a second of the boot completing and the machine was back
+about **three minutes** later, `softlockup_panic=1` and `panic=10` having restarted
+it. The USB gadget stayed up throughout and ssh was dead — kernel alive, userspace
+not progressing, exactly as before.
+
+Two operational consequences, both now in the harness:
+
+* **a capture window of 60 s is too short.** The panic that ends the wedge comes
+  about three minutes after it starts, so the stack trace was printed to a port
+  nobody was holding. `test-190/wedge-hunt.sh` now holds COM19 for 200 s;
+* **a run must not reuse capture filenames.** A second run overwrote the first run's
+  files, and the live wedge's capture was only saved because the overlap was noticed
+  and it was copied out. It is kept as
+  `test-190-*/wedge-capture-20260925T0337-wedged-boot.log`.
+
+The boot that wedged also carried a failure this project had introduced itself:
+Debian's packaged `adbd.service` was still enabled alongside `gts9-adbd.service`, and
+it fails on every boot because `adbd-usb-gadget setup` creates a second USB gadget
+and then cannot bind a UDC that `gts9` already owns. That is a new suspect and not a
+conclusion — the same unit failed on the preceding boot, which was fine — and the
+hunt running since then has it masked. `test-190-*/LIVE-WEDGE-20260925T0337.md` has
+the whole account.
+
 ## What this changes
 
 **It gives the investigation a rate for the real thing.** The supportable statement
