@@ -82,7 +82,7 @@ cat "$D/cold-boot-verdict.txt" | sed 's/^/  /' | tee -a "$OUT"
 # Read the tablet's own verdict for the boot that just ended, if it came back.
 timeout 400 "$CR" \
 	-Out "$WINDIR\\post.log" -Port "${GTS9_SHELL_PORT:-COM17}" -WaitReadySeconds 300 -ReadSeconds 90 \
-	-Commands 'R=/tmp/cold-post.txt; D=$(ls -1d /var/log/gts9-boot-evidence/*/ 2>/dev/null | tail -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R' \
+	-Commands 'R=/tmp/cold-post.txt; D=$(ls -1dt /var/log/gts9-boot-evidence/*/ 2>/dev/null | head -1); { echo "EVIDDIR=$D"; cat "$D/verdict.txt" 2>/dev/null; echo "UP=$(cut -d" " -f1 /proc/uptime)"; } > $R 2>&1; cat $R' \
 	>"$D/cold-boot-post-raw.txt" 2>&1
 sed -n 's/.*RECV  //p' "$D/cold-boot-post-raw.txt" \
 	| grep -aE '^(EVIDDIR|previous_boot_end|marker_|UP=)' \

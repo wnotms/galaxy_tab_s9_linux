@@ -54,6 +54,28 @@ if journalctl -b -1 -k -o short-monotonic --no-pager >"$dir/prev-kernel.log" 2>/
 fi
 journalctl -b -1 -o short-monotonic --no-pager >"$dir/prev-all.log" 2>/dev/null || true
 
+# --- which boot does that journal actually describe? --------------------------
+# The directory name and boot_id= below both identify the boot that is RUNNING
+# NOW, because that is the boot that can do the collecting.  Everything the
+# archive is really about - prev-kernel.log, prev-all.log, and every marker_ and
+# previous_boot_end= field - describes the boot BEFORE this one, whose id was
+# otherwise recorded nowhere.  That gap let two archived failures get cited by
+# the id of the boots that recovered from them.
+#
+# Taken from the same `-b -1` selection that produced prev-kernel.log, so the id
+# cannot name a different boot than the log does.  `-n 1` keeps it cheap: any
+# single record of that boot carries the same _BOOT_ID.
+prev_boot_id=""
+if [ "$prev_state" = present ]; then
+	prev_boot_id=$(journalctl -b -1 -o verbose --no-pager -n 1 2>/dev/null \
+		| sed -n 's/^ *_BOOT_ID=//p' | head -1)
+	if [ -z "$prev_boot_id" ]; then
+		# -o verbose is not guaranteed; fall back to the boot table.
+		prev_boot_id=$(journalctl --list-boots --no-pager 2>/dev/null \
+			| awk '$1 == -1 { print $2; exit }')
+	fi
+fi
+
 # --- previous boot, from pstore ----------------------------------------------
 # A panic report never reaches the journal (journald does not run at panic time)
 # but the ramoops console buffer does keep it across the reset.  Copy it before
@@ -123,6 +145,7 @@ fi
 	echo "collected_utc=$stamp"
 	echo "boot_id=$boot_id"
 	echo "previous_boot=$prev_state"
+	echo "previous_boot_id=$prev_boot_id"
 	echo "previous_boot_end=$prev_end"
 	echo "prev_kernel_lines=$(wc -l <"$dir/prev-kernel.log" 2>/dev/null || echo 0)"
 	echo "marker_panic=$panic"
