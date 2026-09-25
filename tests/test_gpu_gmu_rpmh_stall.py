@@ -561,29 +561,31 @@ class HarnessContractTests(unittest.TestCase):
         """test-194 is a false positive, kept as the control that disproves it.
 
         Console silence plus one `frame done timeout` looked exactly like the
-        recorded stalls.  The boot's own journal says it was healthy: 970 kernel
-        messages, the normal 14.56 s deferred-probe burst, exactly one kernel
-        message in the following 155 s, userspace logging to 168.8 s, and a
-        reboot that logind *requested*.
+        recorded stalls.  The correct boot is `0f056455` - not `846e17b8`, which
+        is round 4's result and what an earlier pass analysed.  See
+        PROVENANCE-AUDIT.md; StallClassificationTests carries the general rule.
         """
         d = "reference/boot-tests/test-194-20260925T0906Z"
         if not (ROOT / d).exists():
             self.skipTest("test-194 record not present")
-        facts = read(f"{d}/boot-846e17b8-journal-facts.txt")
-        self.assertIn("kernel_lines_total=970", facts)
-        self.assertIn("kernel_lines_after_14.6s_before_169s=1", facts)
-        self.assertIn("deferred_probe_burst_first=14.561105", facts)
-        self.assertIn("will reboot now", facts)
+        facts = read(f"{d}/boot-0f056455-journal-facts.txt")
         for zero in ("soft_lockup_=0", "hung_task_=0", "Kernel_panic_=0",
-                     "frame_done_timeout_=0"):
+                     "frame_done_timeout_=0", "nmi_=0"):
             with self.subTest(zero=zero):
                 self.assertIn(zero, facts)
+        # The facts file must carry its own correction notice.
+        self.assertIn("CORRECTION (round 30)", facts)
         text = read(f"{d}/README.md")
         flat = " ".join(text.split())
         self.assertIn("false positive", flat)
         self.assertIn("Because the system went quiet", flat)
-        # It must say what makes it different from the real records.
-        self.assertIn("are **necessary**, not merely sufficient", flat)
+        # The retracted ring claim may appear only inside the correction notice,
+        # which is where the record keeps it on purpose; the replacement wording
+        # lives in the audit that does the retracting.
+        self.assertIn("Correction, round 30", text)
+        self.assertIn("retracts the sentence", flat)
+        audit = " ".join(read(f"{d}/PROVENANCE-AUDIT.md").split())
+        self.assertIn("absent from that boot's journal capture", audit)
 
     def test_the_console_coverage_metric_counts_the_real_prefix(self):
         """An anchored `^\[` reported 0 while the capture held kernel lines."""
@@ -3028,6 +3030,264 @@ class WedgeRateAttributionTests(unittest.TestCase):
         harness = self.text
         # The harness must call it the same way the test does - plainly.
         self.assertIn('probe_console_uptime_retry "$i" || true', harness)
+
+
+class StallClassificationTests(unittest.TestCase):
+    """A quiet console is not a wedge, and the verdict names must say so.
+
+    test-194 is the reason this class exists: a boot printed one `frame done
+    timeout`, went silent on COM19, showed a stale panel and refused ssh - and
+    then ran normally for 170 s to a clean restart, with zero lockup, RCU, NMI or
+    panic markers.  Every one of those signals had been treated as sufficient for
+    "stall" up to that point.  The four verdicts below replace that.
+    """
+
+    HARNESS = "scripts/stall-ab.sh"
+    T194 = "reference/boot-tests/test-194-20260925T0906Z"
+
+    def setUp(self):
+        self.text = read(self.HARNESS)
+
+    # 1. kernel console lines in a watch file -------------------------------
+    def test_kernel_console_lines_are_recognised_through_the_host_prefix(self):
+        """A watch line is `<host ts> RECV  [<kernel ts>] ...`.
+
+        The metric anchored on `^\[` reported 0 while the capture held kernel
+        lines, and that was then read as "this channel carries no kernel text".
+        """
+        self.assertIn(r"grep -acE 'RECV  \[[ ]*[0-9]+\.[0-9]+\]'", self.text)
+        self.assertNotIn(r"grep -acE '^\[[ ]*[0-9]+\.[0-9]+\]'", self.text)
+        import re
+        pat = re.compile(r"RECV  \[ *[0-9]+\.[0-9]+\]")
+        # The capture carries GBK PowerShell error text, so read it leniently;
+        # the kernel lines this checks are ASCII.
+        live = (ROOT / f"{self.T194}/live-console-capture.txt").read_text(
+            errors="replace")
+        self.assertTrue(pat.search(live), "the real capture must match")
+
+    # 2. the early blind spot must not be written as "zero kernel text" -----
+    def test_the_early_console_blind_spot_is_not_described_as_zero_kernel_text(self):
+        flat = " ".join(self.text.split())
+        self.assertIn("CORRECTED", flat)
+        self.assertIn("gadget console only starts delivering once the host has "
+                      "enumerated it", flat)
+        self.assertNotIn("contains 13577 bytes and **zero** kernel lines", flat)
+
+    # 4. a stopped harness must not leave a readable-as-complete round ------
+    def test_a_round_record_is_only_trusted_once_the_identity_is_verified(self):
+        flat = " ".join(self.text.split())
+        self.assertIn("mark_round()", self.text)
+        self.assertIn("GTS9_AB run=$RUN profile=$PROFILE round=$tag", self.text)
+        self.assertIn("/dev/kmsg", self.text)
+        self.assertIn("/dev/pmsg0", self.text)
+        # unattributed must outrank a confident label
+        self.assertIn("unattributed outranks everything", flat)
+        # and an unverified identity must force it
+        self.assertIn('[ "${IDENTITY:-missing}" != verified ] && verdict=unattributed',
+                      self.text)
+
+    # 3. boot identity binds the channels to one round ---------------------
+    def test_the_boot_marker_binds_console_journal_and_pstore_to_a_round(self):
+        """Proved on hardware, not asserted.
+
+        `mark_round` writes run/profile/round/boot_id into /dev/kmsg and
+        /dev/pmsg0 before the reboot; the next boot's probe reads both.  Measured
+        end to end: the marker reported `boot_id=4955f1f1` and the round record's
+        own `identity=` line carried the same id, so console, journal, pstore and
+        the USB trace are provably one round.
+        """
+        text = self.text
+        self.assertIn("mark_round()", text)
+        self.assertIn("GTS9_AB run=$RUN profile=$PROFILE round=$tag", text)
+        self.assertIn("/dev/kmsg", text)
+        self.assertIn("/dev/pmsg0", text)
+        # the marker must reach the probe's two channel reads
+        self.assertIn("IDENTITY_PMSG", text)
+        self.assertIn("identity_ring", text)
+        # and the boot id must be resolved REMOTELY, not locally
+        flat = " ".join(text.split())
+        self.assertIn("resolved REMOTELY on the tablet", flat)
+        self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+
+    def test_a_missing_field_counts_as_zero_not_an_arithmetic_error(self):
+        """An empty expansion must not make the classifier fail open or closed."""
+        self.assertIn("getn()", self.text)
+        self.assertIn("A missing field must read as 0", " ".join(self.text.split()))
+        # the classes are iterated as names, so they must be space-separated
+        wedge = self.text.split("WEDGE_CLASSES=")[1].split("\n")[0]
+        self.assertNotIn("|", wedge, "a pipe-joined list iterates once")
+
+    def test_a_non_discriminating_marker_is_not_scored(self):
+        """`rcg didn't update` fires on every boot, so it cannot classify."""
+        suspect = self.text.split("SUSPECT_CLASSES=")[1].split("\n")[0]
+        self.assertNotIn("disp_rcg_stale", suspect)
+        self.assertNotIn("gpu_dummy_reg", suspect)
+        # but it must still be counted, just not scored
+        self.assertIn("'disp_rcg_stale|rcg didn.t update its configuration'", self.text)
+        flat = " ".join(self.text.replace("#", " ").split())
+        self.assertIn("cannot discriminate does not belong in a classifier", flat)
+
+    # 5. nmi_unresponsive is counted ---------------------------------------
+    def test_unanswered_nmi_is_counted_as_a_wedge_class_marker(self):
+        self.assertIn("nmi_unresponsive|haven.t responded to the NMI", self.text)
+        self.assertIn("nmi_unresponsive", self.text.split("WEDGE_CLASSES=")[1].split("\n")[0])
+        # per channel
+        self.assertIn('echo "${key}_klog=', self.text)
+        self.assertIn('echo "${key}_pstore=', self.text)
+
+    # 6/7. neither console silence nor a lone frame timeout is a wedge ------
+    def test_console_silence_alone_cannot_produce_a_wedge_verdict(self):
+        flat = " ".join(self.text.split())
+        self.assertIn("verdict=clean", self.text)
+        self.assertIn("verdict=suspect", self.text)
+        # wedge requires presence_outages>=2 or a wedge-class marker
+        self.assertIn('[ "${p_n:-0}" -ge 2 ] && verdict=wedge', self.text)
+        self.assertIn('[ "${wedge_n:-0}" -gt 0 ] && verdict=wedge', self.text)
+
+    def test_a_lone_frame_done_timeout_cannot_produce_a_wedge_verdict(self):
+        """It is a `suspect` marker, not a wedge marker."""
+        wedge = self.text.split("WEDGE_CLASSES=")[1].split("\n")[0]
+        suspect = self.text.split("SUSPECT_CLASSES=")[1].split("\n")[0]
+        self.assertNotIn("dpu_frame_timeout", wedge)
+        self.assertNotIn("mmc_timeout", wedge)
+        self.assertNotIn("rpmh_timeout", wedge)
+        for cls in ("dpu_frame_timeout", "mmc_timeout", "rpmh_timeout",
+                    "rpmh_active_only"):
+            with self.subTest(cls=cls):
+                self.assertIn(cls, suspect)
+        self.assertIn("verdict=suspect", self.text)
+
+    # 8. an automatic second reboot is strong evidence ---------------------
+    def test_no_harness_variable_name_contains_a_hyphen(self):
+        """A hyphenated name is a silent no-op, and this one hid a whole signal.
+
+        `klog-watch=$path` parses as the command `klog-watch=...` (command not
+        found), and `"$klog-watch.txt"` expands as `${klog}` + `-watch.txt`, a
+        path that does not exist.  The presence read therefore got nothing and
+        every automatic-restart count came back 0 - from the commit that added
+        the detector until test-195 exposed it.  `presence_outages=0` in the
+        test-193 records means "the check did not run", not "no restart".
+        """
+        import re
+        bad = []
+        for line in self.text.splitlines():
+            s = line.strip()
+            if s.startswith("#"):
+                continue
+            m = re.match(r"\s*([A-Za-z_][A-Za-z0-9_]*-[A-Za-z0-9_-]*)\s*=", line)
+            if m:
+                bad.append(m.group(1))
+        self.assertEqual(bad, [], f"invalid shell variable names assigned: {bad}")
+        self.assertIn("watch_log=", self.text)
+        self.assertNotIn("klog-watch", self.text)
+
+    def test_the_restart_detector_reads_a_real_capture(self):
+        """Verified against the test-195 watch log, which has two outages."""
+        import subprocess
+        log = ("reference/boot-tests/test-195-20260925T1023Z/"
+               "console-1-watch.txt")
+        if not (ROOT / log).exists():
+            self.skipTest("test-195 capture not present")
+        out = subprocess.run(
+            ["bash", "-c",
+             'tr -d "\\r" <"$1" | awk \'/PRESENCE usb0525:a4a7=False/ { n++ } '
+             'END { print n+0 }\'', "_", str(ROOT / log)],
+            capture_output=True, text=True, check=True).stdout.strip()
+        self.assertEqual(out, "2", "the wedge round has two outages")
+        rec = read("reference/boot-tests/test-195-20260925T1023Z/README.md")
+        self.assertIn("never worked in this harness", " ".join(rec.split()))
+
+    def test_an_unrequested_second_reboot_is_a_wedge(self):
+        self.assertIn("presence_outages=", self.text)
+        self.assertIn("automatic_reboot=", self.text)
+        self.assertIn('[ "${p_n:-0}" -ge 2 ] && verdict=wedge', self.text)
+        self.assertIn("that is the failure signature, not a clean round - stopping",
+                      self.text)
+
+    # 9. a requested reboot is not an automatic one -------------------------
+    def test_a_requested_reboot_is_not_classified_as_automatic(self):
+        """The harness issues exactly one reboot per round, by design."""
+        self.assertIn("-Command 'systemctl reboot' -CommandAtSeconds 6", self.text)
+        # Cleanliness is defined partly by the reboot being the harness's own.
+        # The comment wraps, so match on the flattened text without the comment
+        # markers rather than on any one physical line.
+        flat = " ".join(self.text.replace("#", " ").split())
+        self.assertIn("clean", flat)
+        self.assertIn("no automatic reboot", flat)
+        # And the requested reboot's own text must not be counted as automatic.
+        self.assertNotIn("will reboot now", self.text)
+
+    # 10. SysRq gadget path is unsupported ---------------------------------
+    def test_the_ttygs_sysrq_path_is_marked_unsupported_everywhere(self):
+        sh = read("scripts/sysrq-over-console.sh")
+        ps1 = read("scripts/sysrq-over-console.ps1")
+        for name, text in (("sh", sh), ("ps1", ps1)):
+            with self.subTest(file=name):
+                self.assertIn("UNSUPPORTED ON GTS9 TTYGS", text)
+                self.assertIn("BreakState", text)
+                self.assertIn("uart_port", text)
+        # It must refuse by default in both layers.
+        self.assertIn("--probe-unsupported-path", sh)
+        self.assertIn("$ProbeUnsupportedPath", ps1)
+        self.assertIn("exit 3", sh)
+        self.assertIn("exit 3", ps1)
+
+    def test_the_sysrq_refusal_is_the_default_on_this_host(self):
+        import subprocess
+        proc = subprocess.run(["bash", "scripts/sysrq-over-console.sh"],
+                              capture_output=True, text=True, check=False)
+        self.assertEqual(proc.returncode, 3, "must refuse without the explicit flag")
+        self.assertIn("UNSUPPORTED ON GTS9 TTYGS", proc.stderr + proc.stdout)
+
+    # 11. fixtures stay separate from hardware evidence --------------------
+    def test_fixture_and_hardware_evidence_stay_separate(self):
+        """test-194 is hardware; test-186's fixtures are not, and never mix."""
+        banner = ROOT / ("reference/boot-tests/test-186-20260924T230000Z/"
+                         "fixtures/NOT-DEVICE-EVIDENCE.md")
+        self.assertTrue(banner.exists(), "the fixtures banner must exist")
+        # The provenance audit is hardware evidence and must not cite a fixture
+        # as its source.
+        audit = read(f"{self.T194}/PROVENANCE-AUDIT.md")
+        self.assertIn("0f056455", audit)
+        self.assertNotIn("programmed-no-completion.log", audit)
+        self.assertNotIn("victim.log", audit)
+
+    # 12. no mixing of ROUND files across RUNs -----------------------------
+    def test_round_files_from_different_runs_cannot_mix(self):
+        self.assertIn("refusing to mix runs", self.text)
+        self.assertIn("GTS9_APPEND_RUNS", self.text)
+        self.assertIn('echo "run=$RUN"', self.text)
+
+    # the correction itself -------------------------------------------------
+    def test_the_provenance_audit_states_what_was_retracted(self):
+        audit = read(f"{self.T194}/PROVENANCE-AUDIT.md")
+        flat = " ".join(audit.split())
+        # The wrong boot, and the right one.
+        self.assertIn("846e17b8", audit)
+        self.assertIn("0f056455", audit)
+        self.assertIn("the round analysed the wrong boot", flat)
+        # The three-claims distinction.
+        self.assertIn("three different claims", flat)
+        self.assertIn("never reached the ring", audit)   # quoted as retracted
+        self.assertIn("absent from that boot's journal capture", flat)
+        # Level is not the explanation, and the source says why.
+        self.assertIn("pr_err_ratelimited", audit)
+        # The 7.887 s inference is withdrawn.
+        self.assertIn("withdrawn", flat)
+
+    def test_the_photo_is_bound_to_a_different_boot(self):
+        tbl = read(f"{self.T194}/PHOTO-EVIDENCE-TABLE.md")
+        flat = " ".join(tbl.split())
+        self.assertIn("6.755336", tbl)
+        self.assertIn("21.987343", tbl)
+        self.assertIn("24.487343", tbl)
+        # It must not claim a boot id it cannot prove.
+        self.assertNotIn("| a2997452 |", tbl)
+        self.assertIn("not named in any journal", tbl)
+        # And the forbidden inference must be scoped, not used.
+        self.assertIn("17.887 - 10 = 7.887 s", flat)
+        self.assertIn("withdrawn", flat)
+        self.assertIn("conditional form", flat)
 
 
 if __name__ == "__main__":
