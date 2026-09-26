@@ -95,7 +95,7 @@ Each of these is now the Debian root filesystem's job, or the debug image's.
 | UFS/mmc diagnostics, hardware report, `regulator_summary`, `devices_deferred`, dmesg dump | All diagnostic. They belong to a bring-up image or to a Debian service, and they are the reason the old script carried `dd`, `od`, `sha256sum`, `awk` and `sed`. |
 | kernel modules | Live on the rootfs in `/usr/lib/modules/<release>`. The production builder now *refuses* `--modules`. |
 | firmware | Lives on the rootfs in `/usr/lib/firmware`; Wi-Fi works from there (test-208/210). The production builder has no firmware option at all. |
-| `gts9-exec-default` | **Dead code.** It resets the SIGINT/SIGQUIT dispositions a shell cannot reset, for the panel shell; the panel shell switched to `set -m`, and nothing has invoked the binary since. The audit found it shipped in every image with no caller. |
+| `gts9-exec-default` | **Dead code, and now removed from both images.** It resets the SIGINT/SIGQUIT dispositions a shell cannot reset, for the panel shell; the panel shell switched to `set -m`, and nothing has invoked the binary since. The audit found it shipped in every image with no caller at all, and the debug builder was still compiling it - 2040 bytes per boot for a program nothing runs. The source is kept because it records how the problem was solved before job control replaced it. |
 | the `gts9_minimal_rootfs=1` branch | The production image *is* the minimal path, so there is nothing to branch on. The token is still accepted for compatibility; see below. |
 
 ## KEPT
@@ -184,12 +184,21 @@ The token that *does* matter on every Debian-bound profile is
 
 | metric | before (one image) | production | debug |
 |---|---|---|---|
-| compressed bytes | 1222311 | **1152170** | 1181696 |
-| unpacked bytes | 2067157 | 1936011 | 2018059 |
-| regular files | 9 | **3** | 8 |
-| symlinks | 60 | **23** | 60 |
+| compressed bytes | 1222311 | **1157526** | 1184726 |
+| unpacked bytes | 2067157 | 1947135 | 2018059 |
+| regular files | 9 | **3** | 7 |
+| symlinks | 60 | **29** | 60 |
 | firmware bytes | 52012 | **0** | 0 (allowlist, unused) |
-| `/init` size | 69669 (`bringup-init.sh`) | **12689** (the handoff) | 69669 |
+| `/init` size | 69669 (`bringup-init.sh`) | **23757** (the handoff) | 67610 |
+
+The production `/init` is larger than the handoff source it started as, because it
+gained the bootloader-control-block recovery (a partition write, so it carries the
+safety checks that make it safe) and the gated record. Both are load-bearing; the
+byte count is not the metric that matters here.
+
+Reproducibility, confirmed by building twice rather than by reading the packer:
+both production builds produced
+`375f479c2ec9d99d20bbe704bcab1ea4943c99a4b36f8d42cf6882a84db6abe8`.
 
 The production image is **2.5 % smaller compressed** (29526 bytes). **That is not
 the point** and should not be read as the result: BusyBox dominates both images, so

@@ -1,22 +1,22 @@
 profile=minimal
 tree=out/minimal-initramfs
 image=out/boot-bundle/initramfs-minimal.img
-compressed_bytes=1152170
-unpacked_bytes=1936011
+compressed_bytes=1157526
+unpacked_bytes=1948802
 regular_files=3
-symlinks=23
+symlinks=29
 directories=9
 firmware_bytes=0
 modules_bytes=0
 
 largest_files:
     1914704  bin/busybox
-      12689  init
-       8436  minimal-rootfs-state.sh
+      24292  init
+       9568  minimal-rootfs-state.sh
 
 classified:
-  /init                          12689  production_required
-  /minimal-rootfs-state.sh        8436  production_required
+  /init                          24292  production_required
+  /minimal-rootfs-state.sh        9568  production_required
   /bin/busybox                 1914704  production_required
 
 classification_summary:
@@ -31,8 +31,8 @@ capabilities:
   contains_msc_setup         no
   contains_gpt_parser        no
   contains_rtc_telemetry     no
-  contains_bcb_write         no
-  contains_display_recovery  no
+  contains_bcb_write         yes
+  contains_display_recovery  yes
   contains_hardware_report   no
   init_source                minimal-rootfs-init.sh
   init_creates_usb_gadget    no
