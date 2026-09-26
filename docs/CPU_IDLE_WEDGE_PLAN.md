@@ -1,5 +1,12 @@
 # The CPU-wedge plan: is PSCI cpuidle necessary for the wedge?
 
+**STATUS (updated after test-227): profile 1 has run, and it produced this
+plan's first-row outcome — the wedge survived `cpuidle.off=1`, so the PSCI-idle
+direction is `downgraded` and §7 is the active branch. Profiles 2 and 3 are NOT
+to be run: their entire subject is the cluster suspend parameter, which firmware
+never received on the wedged boots. The rule below is unchanged and is quoted in
+the result document exactly as it was written here first.**
+
 Round 33. The hypothesis under test, stated before any data:
 
 > Some CPU or CPU cluster enters a PSCI deep-idle state and, at a low rate, does
@@ -598,7 +605,7 @@ CPU wedge  (onset ~6.5-7.8 s, a CPU stops answering an ordinary IPI)
 
 | # | question | status after this round's reading |
 |---|---|---|
-| 1 | is CPU idle **necessary** for the wedge? | **open** — this is what profile 1 tests |
+| 1 | is CPU idle **necessary** for the wedge? | **ANSWERED — NO.** `cpuidle.off=1` wedged twice on consecutive boots with the framework provably absent and every cluster state showing usage 0 / rejected 0. `docs/CPU_IDLE_WEDGE_PLAN.md` §5's first row, read against the rule committed before the data. See `reference/boot-tests/test-227-cpuidle-off-run/` |
 | 2 | CPU-local state or cluster state? | **partially answerable, and constrained**: on this kernel only the cluster layer is separately removable (`docs/SM8550_IDLE_STATE_ANALYSIS.md` §5) |
 | 3 | only big/prime? | **correlated** — 13 of 14 (boot, CPU) pairs are big/prime, P = 0.013; but the profile that would test it is **unbuildable** (§3.1) |
 | 4 | X710 firmware/board specific? | **open** — the device tree and PSCI config are *identical* to X910 (`docs/X710_X910_CPUIDLE_DIFF.md`), so a difference must be in firmware behaviour, which Linux cannot read |
