@@ -506,6 +506,70 @@ class PlanDocumentTests(unittest.TestCase):
         self.assertIn("does **not** change the active governor", text)
 
 
+class TestRecordTests(unittest.TestCase):
+    """The on-device test record: a plan, not a result."""
+
+    RECORD = "reference/boot-tests/test-226-cpuidle-off-gate"
+
+    def test_it_is_recorded_as_prepared_and_not_as_a_result(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("Status: prepared, not flashed", text)
+        self.assertIn("contains no result", text)
+        # It must not claim any observation was made on hardware.  The one
+        # legitimate "PASSED" is the validator's own read-only bundle verdict,
+        # which is a statement about the images and not about the tablet, so the
+        # check is anchored on the phrases that would assert a device result.
+        for forbidden in ("**Result:", "we observed", "the tablet showed",
+                          "physically verified", "the run showed"):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, text)
+        # A bundle-validation PASS is expected and must be the only PASS.
+        self.assertEqual(text.count("PASS"), 1, "only the bundle verdict may say PASS")
+
+    def test_the_identity_artifacts_are_present_and_match_the_bundle(self):
+        import json  # noqa: F401  (kept for clarity of intent; not needed)
+        for name in ("BUNDLE_INFO", "bundle-SHA256SUMS", "kernel-SHA256SUMS",
+                     "kernel.release", "source-commit.txt"):
+            with self.subTest(artifact=name):
+                self.assertTrue((ROOT / self.RECORD / name).is_file(),
+                                f"missing {name}")
+        # The recorded bundle sums must be the built bundle's own sums.
+        self.assertEqual(
+            read(f"{self.RECORD}/bundle-SHA256SUMS"),
+            read("out/boot-bundle-cpuidle-off/SHA256SUMS"),
+        )
+        # And the source commit must be the current HEAD, so the record cannot
+        # describe a different tree than the one that produced the bundle.
+        import subprocess
+        head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+                              capture_output=True, text=True, check=True).stdout
+        self.assertEqual(read(f"{self.RECORD}/source-commit.txt"), head)
+
+    def test_it_states_the_one_partition_delta_and_the_current_device_state(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("`vendor_boot` only", text)
+        self.assertIn("1245bb39be1a6cfd65e381e44d19ce4ab29ca295f976f0c78067e4bfecc5b18a", text)
+        self.assertIn("49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9", text)
+        # The trap that was found while preparing this: the device's init_boot is
+        # NEWER than the one in the older opp bundle, so reusing that one would
+        # have added a second variable.
+        self.assertIn("newer** than the one inside the older", text)
+        self.assertIn("1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0", text)
+
+    def test_it_warns_that_the_arming_check_is_by_absence(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("does not exist", text)
+        self.assertIn("absence* is the positive signal", text)
+
+    def test_it_carries_the_recovery_and_no_fix_language(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("## 7. Recovery", text)
+        self.assertIn("Hold the power key", text)
+        self.assertIn("Forbidden at every sample size", text)
+        # and it defers to the pre-registered rule rather than restating a new one
+        self.assertIn("do not re-derive it", text)
+
+
 class HarnessTests(unittest.TestCase):
     """The harness accepts the profile and gates it before counting rounds."""
 
