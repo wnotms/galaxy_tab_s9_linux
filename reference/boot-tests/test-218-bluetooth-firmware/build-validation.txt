@@ -1,0 +1,57 @@
+=== build validation for the Bluetooth round ===
+
+This round changed no kernel source, no DTS, no kernel config and no boot image.
+It follows that the usual dtbs_check / kernel-build gates have nothing new to
+check, and that the running kernel and DTB are the ones already proven on
+hardware. Both statements are verified below rather than asserted.
+
+--- the tree is untouched ------------------------------------------------------
+
+$ git diff --exit-code 24dd156 HEAD -- kernel/ boot/
+(no output)
+
+kernel/ and boot/ are byte-identical to 24dd156, the state verified on the
+tablet by test 216 (RTC) and used for tests 217/218 (Bluetooth). Every change in
+this round is host tooling, a userspace shell helper, a systemd unit or a
+document:
+
+  docs/BLUETOOTH_QCA6490_BRINGUP.md
+  reference/boot-tests/test-217-*, test-218-*, test-219-*
+  rootfs-overlay/etc/systemd/system/bluetooth.service.d/gts9-bdaddr.conf
+  rootfs-overlay/usr/lib/systemd/system/gts9-bluetooth-address.service
+  rootfs-overlay/usr/libexec/gts9-bluetooth-address
+  scripts/bluetooth-preflight.sh
+  scripts/lib/btfw-name.py
+  scripts/stage-bluetooth-firmware.sh
+  tests/test_bluetooth_qca6490.py
+
+--- and the DTB matches what is flashed ----------------------------------------
+
+The bundle's own record of the image the tablet is running:
+
+  $ grep dtb_sha256 out/boot-bundle/BUNDLE_INFO
+  dtb_sha256=eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0
+
+The DTB produced from the current tree:
+
+  $ sha256sum .work/build/linux-out/arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb
+  eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0
+
+Identical, so the device tree on the tablet is the one this tree builds. No
+dtbs_check or dtbs rebuild is required because no DTS byte changed.
+
+--- what was checked instead ---------------------------------------------------
+
+  * scripts/bluetooth-preflight.sh   sh -n clean, and --local mode run end to end
+  * scripts/stage-bluetooth-firmware.sh  --fetch / --check / --nvm / --install all
+    exercised, with hashes re-verified on the tablet after each install
+  * scripts/lib/btfw-name.py         reproduces the driver's own request, parses a
+    saved dmesg trace, and fails loudly on a trace without the version lines
+  * rootfs-overlay/usr/libexec/gts9-bluetooth-address  syntax-checked with both
+    `sh -n` and `dash -n` (Debian's /bin/sh is dash), then run under dash with a
+    simulated environment - see helper-host-verification.txt
+  * the unit and drop-in are loaded by systemd on the tablet: `systemctl show
+    bluetooth.service -p After` lists gts9-bluetooth-address.service, confirming
+    the drop-in is applied
+  * the full host suite: 806 tests, with only the two pre-existing failures that
+    also fail at the round's starting commit

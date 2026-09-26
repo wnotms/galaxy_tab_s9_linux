@@ -232,6 +232,20 @@ probe afterwards is best-effort.
 | is it in firmware? | **no** — the upstream NVM carries the `00:00:00:00:5A:AD` placeholder |
 | written anywhere? | **no** — the partition is mounted `ro,noload` and unmounted; nothing is written back |
 
+Where it was looked for, on the device, before this file was found — all read-only:
+
+| candidate | result |
+|---|---|
+| `/efs/bluetooth/bt_addr` | **the address is here**, 17 bytes of ASCII |
+| `btd` partition (2 MiB, `sde24`) | no address; only an `SM-X710`/`CUSTOM` metadata trailer |
+| `param` partition (`sda7`) | no address; empty apart from an `SHDN` marker |
+| `/persist` (mounted `ro,noload`) | no bluetooth path at all |
+| the upstream NVM `wcnhpnv21g.bin` | holds the `00:00:00:00:5A:AD` placeholder, not this unit's address |
+| the DTS | no `local-bd-address`; adding one would be wrong for every other unit |
+
+The X910's `/efs/bluetooth/bt_addr` was **not** assumed: this file was read from
+this tablet, and its OUI was checked against the IEEE registry.
+
 ## 8. The CPU wedge that interrupted the round
 
 The cold-boot test rebooted the tablet into the repository's **pre-existing CPU
@@ -300,7 +314,10 @@ mismatch.
 
 ## 11. Risks and unknowns
 
-1. **The automatic address path is unverified** (§6). Highest priority.
+1. **The automatic address path is unverified** (§6). Highest priority. The
+   test that would settle it is Test 1 of `reference/bluetooth-test-plan.md`,
+   which insists on a **cold boot**, because an address applied by hand would
+   look identical to one applied by the unit.
 2. **Pairing, reconnect, coexistence and cold boot are untested** — levels 10–13.
    No physical peer device has been attached.
 3. **The NVM is upstream's generic one.** It boots the controller and scan works,
