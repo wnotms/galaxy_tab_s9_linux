@@ -1,0 +1,50 @@
+=== How the production applet list was derived ===
+=== 2026-09-26.  Companion to scripts/build-minimal-initramfs.sh.
+
+The production image installs only the BusyBox applets its two scripts actually
+invoke.  The list was produced by scanning boot/minimal-rootfs-init.sh and
+boot/minimal-rootfs-state.sh for words in command position - start of line after
+any assignment prefix, after a pipe or `;`, and inside $( ) - then dropping shell
+keywords and the scripts' own function names, then checking each survivor against
+the pinned BusyBox.
+
+Commands found, with what they are for:
+
+  mount umount     the pseudo filesystems, the root, and unmounting on failure
+  switch_root      the handoff itself
+  cat              /proc/cmdline, /proc/mounts, /proc/uptime, /proc/sys/kernel/*
+  cut              /proc/uptime's first field
+  date             the record's UTC timestamp
+  uname            the kernel release in the record
+  mkdir            /proc /sys /dev /run, /newroot/*
+  rm mv            the record's atomic replace (write temp, rename)
+  chmod            the record's mode, and the staged helper (opt-in path)
+  cp               staging the trampoline (opt-in path only)
+  printf echo      the record contents and the console messages
+  ls               /sys/class/block diagnostics in the rescue shell
+  sleep            the bounded root-device wait and the rescue loop's backoff
+  sync             the record's durability flushes
+  grep             "already mounted" checks, and the stage-history dedup
+  timeout          the bounded trampoline selftest (opt-in path only)
+  head             reading the first line of a file
+  test [           every condition in both scripts
+  sh               the rescue shell and the exec
+
+Deliberately NOT in the production image, although the debug image has them:
+
+  dd od            raw block reads and GPT header parsing
+  sha256sum        checksummed raw-block reports
+  awk sed tr wc    report formatting
+  dmesg            the hardware report
+  hwclock          RTC telemetry
+  find basename    report scaffolding
+  setsid chvt      the panel shell
+  reboot poweroff  the bring-up proof-of-life and power-cycle helpers
+  insmod modprobe  module handling - modules live on the Debian root
+  ln               no symlink creation is needed
+
+So the separation is not "fewer symlinks": every omitted applet corresponds to a
+capability that has moved to the debug image or to Debian.  tests/
+test_initramfs_profiles.py asserts that the production scripts invoke nothing
+outside this list, which is the check that keeps the two sets from drifting back
+together.

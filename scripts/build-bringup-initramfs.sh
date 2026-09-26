@@ -35,121 +35,56 @@ minimal_state_src="$repo_root/boot/minimal-rootfs-state.sh"
 minimal_pid1_src="$repo_root/boot/gts9-minimal-pid1.c"
 download_dir=${BRINGUP_DOWNLOAD_DIR:-$workdir/downloads}
 
-# Ubuntu 24.04 arm64 busybox-static (1.36.1-6ubuntu3.1).  Pinned by URL and by
-# the SHA-256 of both the .deb and the extracted /bin/busybox inside it.
-busybox_url=https://ports.ubuntu.com/ubuntu-ports/pool/main/b/busybox/busybox-static_1.36.1-6ubuntu3.1_arm64.deb
-busybox_deb_sha256=d96535e0402c011e0ee43449799df2f4504d44b842e4f2b3a6cbc845508eaafc
-busybox_bin_sha256=52151e7f322f926b64049cdaa1410dc3ea6485525e0624b05813791c219ae933
-
-busybox_arg=
-modules=
-while [ $# -gt 0 ]; do
-    case "$1" in
-        --busybox) busybox_arg=$2; shift 2 ;;
-        --tree) tree=$2; shift 2 ;;
-        --out) out=$2; shift 2 ;;
-        --modules) modules=$2; shift 2 ;;
-        -h|--help)
-            sed -n '2,25p' "$0"
-            exit 0
-            ;;
-        *) echo "unknown argument: $1" >&2; exit 2 ;;
-    esac
-done
+# The shared library owns the pinned BusyBox, the static-ELF checks, the applet
+# symlink logic and the manifest writer, so this debug builder and the production
+# one cannot drift apart in how they are built.
+# shellcheck source=lib/initramfs-common.sh
+. "$repo_root/scripts/lib/initramfs-common.sh"
 
 # Applets the bring-up shell must have.  Anything missing here is a build
-# failure, because the first boot test depends on it.
+# failure, because this image's whole purpose is the diagnostic shell and report.
+#
+# This list is the DEBUG image's, and it is deliberately much longer than the
+# production one in scripts/build-minimal-initramfs.sh: everything here exists for
+# a bring-up capability (raw block reads, GPT parsing, checksummed reports, RTC
+# telemetry, module handling) that the production handoff must not be able to
+# reach.  Keep the two lists separate; sharing one would drag the debug set back
+# into production.
 required_applets='sh mount umount switch_root cat echo dmesg uname ls mkdir ln cp mv rm chmod sync sleep reboot poweroff grep tail'
 # Applets the report channel needs on top of that: it parses GPT headers off a
 # raw disk, and then persists the report either through a filesystem or as a
 # raw, checksummed block.  A missing applet would silently disable the only
-# evidence channel this board has, so these are required as well.
+# evidence channel a boot without network has, so these are required as well.
 report_applets='dd od awk sha256sum basename wc cut tr head printf date hwclock timeout'
 # Convenience applets; missing ones are reported and skipped, not fatal.
 optional_applets='lsmod insmod modprobe rmmod mdev switch_root head tail grep cut tr wc sort sed awk find printf test [ true false date uptime free ps kill sync hexdump od gunzip tar modinfo nproc clear vi less more halt'
 # Applets that belong in /sbin rather than /bin.
 sbin_applets='mount umount reboot poweroff halt switch_root insmod modprobe rmmod lsmod mdev modinfo'
 
-fail() { echo "error: $*" >&2; exit 1; }
-
-[ -f "$init_src" ] || fail "missing /init source: $init_src"
-[ -f "$minimal_init_src" ] || fail "missing minimal rootfs init source: $minimal_init_src"
-[ -f "$minimal_state_src" ] || fail "missing minimal rootfs state source: $minimal_state_src"
-[ -f "$minimal_pid1_src" ] || fail "missing minimal PID 1 helper source: $minimal_pid1_src"
-command -v readelf >/dev/null || fail 'readelf is required (apt install binutils)'
-command -v strings >/dev/null || fail 'strings is required (apt install binutils)'
-command -v sha256sum >/dev/null || fail 'sha256sum is required'
-command -v clang >/dev/null || fail 'clang is required to build the minimal PID 1 helper'
-command -v ld.lld >/dev/null || fail 'ld.lld is required to build the minimal PID 1 helper'
-
-verify_busybox() {
-    # verify_busybox <path> <expected-sha256|-> [<label>]
-    local bin=$1 expected=$2 label=${3:-$1}
-
-    [ -f "$bin" ] || fail "busybox not found: $bin"
-    if [ "$expected" != - ]; then
-        local actual
-        actual=$(sha256sum "$bin" | cut -d' ' -f1)
-        [ "$actual" = "$expected" ] || {
-            fail "$label SHA-256 mismatch (expected $expected, got $actual)"
-        }
-    fi
-    readelf -h "$bin" | grep -q 'Machine:.*AArch64' || \
-        fail "$label is not an aarch64 ELF"
-    if readelf -l "$bin" 2>/dev/null | grep -q 'INTERP'; then
-        fail "$label is dynamically linked; a static BusyBox is required"
-    fi
-    # BusyBox keeps its applet names in a packed string table, so this is a
-    # static presence check that works even though aarch64 cannot be executed
-    # on the build host.
-    strings -a -n 1 "$bin" > "$tmp/applets.txt"
-    local applet
-    for applet in $required_applets $report_applets; do
-        grep -Fqx -- "$applet" "$tmp/applets.txt" || \
-            fail "$label does not provide the required applet '$applet'"
-    done
-}
+busybox_arg=
+modules=
+keyboard_firmware=
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --busybox) busybox_arg=$2; shift 2 ;;
+        --tree) tree=$2; shift 2 ;;
+        --out) out=$2; shift 2 ;;
+        --modules) modules=$2; shift 2 ;;
+        --keyboard-firmware) keyboard_firmware=$2; shift 2 ;;
+        -h|--help)
+            sed -n '2,30p' "$0"
+            exit 0
+            ;;
+        *) echo "unknown argument: $1" >&2; exit 2 ;;
+    esac
+done
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
-
-if [ -n "$busybox_arg" ]; then
-    echo "using local busybox: $busybox_arg"
-    verify_busybox "$busybox_arg" - "$busybox_arg"
-    bb_bin=$busybox_arg
-else
-    deb=$download_dir/$(basename "$busybox_url")
-    mkdir -p "$download_dir"
-    if [ -f "$deb" ] && \
-       [ "$(sha256sum "$deb" | cut -d' ' -f1)" = "$busybox_deb_sha256" ]; then
-        echo "using cached $(basename "$deb")"
-    else
-        command -v curl >/dev/null || fail 'curl is required to download BusyBox'
-        echo "downloading $(basename "$busybox_url")"
-        curl -fsSL -o "$deb.tmp" "$busybox_url" || \
-            fail "cannot download $busybox_url (failing closed)"
-        actual=$(sha256sum "$deb.tmp" | cut -d' ' -f1)
-        [ "$actual" = "$busybox_deb_sha256" ] || {
-            rm -f "$deb.tmp"
-            fail "downloaded BusyBox archive has SHA-256 $actual, expected $busybox_deb_sha256"
-        }
-        mv "$deb.tmp" "$deb"
-    fi
-
-    mkdir -p "$tmp/deb"
-    if command -v dpkg-deb >/dev/null 2>&1; then
-        dpkg-deb -x "$deb" "$tmp/deb"
-    else
-        command -v ar >/dev/null || fail 'need dpkg-deb or ar to unpack the BusyBox archive'
-        member=$(ar t "$deb" | grep '^data\.tar' | head -1)
-        [ -n "$member" ] || fail "no data.tar member in $deb"
-        ar p "$deb" "$member" | tar -x -C "$tmp/deb"
-    fi
-
-    bb_bin=$(find "$tmp/deb" -type f -path '*/bin/busybox' | head -1)
-    [ -n "$bb_bin" ] || fail "no */bin/busybox inside $deb"
-    verify_busybox "$bb_bin" "$busybox_bin_sha256" "packaged busybox"
-fi
+bb_bin=
+gts9_obtain_busybox "${busybox_arg:-}"
+gts9_busybox_applets "$bb_bin" "$tmp/applets.txt"
+gts9_require_applets "$tmp/applets.txt" "$required_applets $report_applets" "the pinned BusyBox"
 
 echo "assembling initramfs tree: $tree"
 rm -rf "$tree"
@@ -198,23 +133,8 @@ else
     echo "initramfs: WARNING clang/ld.lld missing; the panel shell falls back" >&2
 fi
 
-link_applet() {
-    # link_applet <applet>
-    local applet=$1 dir=bin target=busybox
-    case " $sbin_applets " in
-        *" $applet "*) dir=sbin; target=../bin/busybox ;;
-    esac
-    ln -sf "$target" "$tree/$dir/$applet"
-}
-
-missing_optional=
-for applet in $required_applets $report_applets $optional_applets; do
-    if grep -Fqx -- "$applet" "$tmp/applets.txt"; then
-        link_applet "$applet"
-    else
-        missing_optional="$missing_optional $applet"
-    fi
-done
+missing_optional=$(gts9_link_applets "$tree" \
+    "$required_applets $report_applets $optional_applets" "$sbin_applets")
 if [ -n "$missing_optional" ]; then
     echo "note: this BusyBox build does not provide:$missing_optional"
 fi
@@ -237,21 +157,39 @@ for mode in recovery; do
     echo "built reboot helper: $out_bin ($(stat -c %s "$out_bin") bytes)"
 done
 
-# The pogo keyboard's firmware, when it is available.  The STM32 application is
-# only reached by the vendor driver's firmware path, which returns early when
-# request_firmware() fails, so a test that wants that path has to carry the file
-# the stock ramdisk carries.  It is Samsung's proprietary blob and deliberately
-# not tracked in this repository: copy it from the TWRP device tree, e.g.
+# The pogo keyboard's firmware, when it is explicitly pointed at.
+#
+# This used to be `cp -a .work/firmware/.` - an arbitrary directory copied whole
+# into init_boot.  That is the biggest footgun the old builder had: .work/firmware
+# is where the bring-up work stages whatever blob a test needed, so on a host that
+# had ever staged Wi-Fi or GPU firmware, every subsequent debug image silently
+# carried it into init_boot.  Wi-Fi works from the Debian root now
+# (/usr/lib/firmware/ath11k/WCN6855/...), and none of that belongs in an
+# initramfs.
+#
+# It is now an allowlist of exactly one blob, named explicitly, with its
+# destination path fixed rather than mirrored.  To include it:
+#
+#   ./scripts/build-bringup-initramfs.sh \
+#       --keyboard-firmware .work/firmware/keyboard_stm/stm32_gts9family.bin
+#
+# The STM32 application is only reached by the vendor driver's firmware path,
+# which returns early when request_firmware() fails, so a test that wants that
+# path has to carry the file the stock ramdisk carries.  It is Samsung's
+# proprietary blob and deliberately not tracked in this repository; copy it from
+# the TWRP device tree, e.g.
 #   recovery/root/vendor/firmware_mnt/image/keyboard_stm/stm32_gts9family.bin
-# into .work/firmware/keyboard_stm/ and it is picked up here.
-fw_src="$repo_root/.work/firmware"
-if [ -d "$fw_src" ] && [ -n "$(find "$fw_src" -type f 2>/dev/null | head -1)" ]; then
-    mkdir -p "$tree/lib/firmware"
-    cp -a "$fw_src"/. "$tree/lib/firmware/"
-    echo "including firmware from $fw_src:"
+firmware_allowlist_dest=keyboard_stm/stm32_gts9family.bin
+if [ -n "$keyboard_firmware" ]; then
+    [ -f "$keyboard_firmware" ] || \
+        fail "--keyboard-firmware does not exist: $keyboard_firmware"
+    mkdir -p "$tree/lib/firmware/$(dirname "$firmware_allowlist_dest")"
+    install -m 0644 "$keyboard_firmware" "$tree/lib/firmware/$firmware_allowlist_dest"
+    echo "included the allowlisted pogo firmware blob:"
     find "$tree/lib/firmware" -type f -printf '  %p (%s bytes)\n'
 else
-    echo "no firmware under $fw_src; the vendor driver's firmware path will abort"
+    echo "no firmware staged (use --keyboard-firmware PATH for the pogo blob);"
+    echo "firmware for Wi-Fi, GPU and the rest lives on the Debian rootfs"
 fi
 
 if [ -n "$modules" ]; then
@@ -262,6 +200,10 @@ else
 fi
 
 "$repo_root/scripts/make-initramfs.sh" --root "$tree" --out "$out" "${exec_args[@]}"
+
+# Same manifest key set as the production builder, so the two images can be
+# compared mechanically rather than by inferring a profile from a filename.
+gts9_write_manifest "$out" bringup "$tree" "$bb_bin" "${modules:-}" "${keyboard_firmware:-}"
 
 cat <<EOF
 
