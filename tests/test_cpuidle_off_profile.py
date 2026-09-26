@@ -668,6 +668,77 @@ class TestRecordTests(unittest.TestCase):
                 else:
                     self.assertIn(f"dtb_sha256={digest}", info)
 
+    def test_the_candidate_manifest_matches_the_real_bundles(self):
+        """A manifest is only useful if its hashes are the bundles' own.
+
+        It is written by hand from measured output, so it can drift the moment
+        anyone rebuilds.  Every hash in it is checked against the artifact it
+        claims to describe, and the bundle that is missing is skipped rather
+        than silently accepted.
+        """
+        text = read(f"{self.RECORD}/CANDIDATE-MANIFEST.md")
+        bundles = {
+            "cpuidle-off": "out/boot-bundle-cpuidle-off",
+            "abl-no-llcc-off": "out/boot-bundle-abl-no-llcc-off",
+            "abl-no-cluster-idle": "out/boot-bundle-abl-no-cluster-idle",
+        }
+        checked = 0
+        for key, path in bundles.items():
+            if not (ROOT / path / "SHA256SUMS").exists():
+                continue
+            checked += 1
+            sums = read(f"{path}/SHA256SUMS")
+            for line in sums.splitlines():
+                if not line.strip():
+                    continue
+                digest, name = line.split()
+                with self.subTest(bundle=key, image=name):
+                    self.assertIn(
+                        f"{digest}  {name}", text,
+                        f"{path}/{name} hash is not the one the manifest records",
+                    )
+            for field in ("image_gz_sha256", "dtb_sha256"):
+                value = [
+                    ln.split("=", 1)[1] for ln in read(f"{path}/BUNDLE_INFO").splitlines()
+                    if ln.startswith(field + "=")
+                ][0]
+                with self.subTest(bundle=key, field=field):
+                    self.assertIn(value, text)
+        if checked == 0:
+            self.skipTest("no candidate bundles are present to check against")
+
+    def test_the_manifest_warns_that_the_two_ablations_write_two_partitions(self):
+        """The trap that produced a wrong table once already."""
+        text = read(f"{self.RECORD}/CANDIDATE-MANIFEST.md")
+        # `write` is the table's COLUMN HEADER, not part of the cell - an
+        # earlier version of this assertion included it and failed on a manifest
+        # that was correct.
+        self.assertIn("| profile | write |", text)
+        self.assertIn("| **`vendor_boot` only** |", text)
+        self.assertIn("| **`boot` + `vendor_boot`** |", text)
+        # and it must say why, with the measured hashes
+        self.assertIn("An idle ablation changes **two** partitions", text)
+        self.assertIn("71e194a5", text)
+        self.assertIn("80aa010f", text)
+
+    def test_the_manifest_gets_the_fdt_byte_order_right(self):
+        """`od -tx4` on a little-endian host byte-reverses the big-endian FDT.
+
+        The manifest first stated these as spaced bytes ('44 00 00 41'), which is
+        not what the command prints and would have sent a reader chasing a
+        mismatch that does not exist.  Pinned against the value the tool actually
+        produces.
+        """
+        import struct
+        text = read(f"{self.RECORD}/CANDIDATE-MANIFEST.md")
+        raw = struct.pack(">I", 0x41000044)
+        word = raw[::-1].hex()          # what `od -An -tx4` prints
+        self.assertEqual(word, "44000041")
+        self.assertIn(word, text)
+        # the endian-independent check must be presented as the primary one
+        self.assertIn("The **count** is the check to trust first", text)
+        self.assertNotIn("44 00 00 41", text)
+
     def test_the_absent_physical_run_is_recorded_as_absent(self):
         """A prepared bundle must not read as a completed test.
 
