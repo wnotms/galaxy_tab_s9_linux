@@ -1,0 +1,21 @@
+=== psci capabilities ===
+OSI is supported
+Extended StateID format is used
+=== cpuidle framework state (should be absent) ===
+ABSENT
+=== THE KEY MEASUREMENT: did the cluster domain ever power off? ===
+State  Time(ms)       Usage      Rejected   Above      Below      S2idle
+S0     0              0          0          0          0          0
+S1     0              0          0          0          0          0
+--- current state ---
+on
+--- cpu-level domains (sample) ---
+  power-domain-cpu0: off-0
+    State  Time(ms)       Usage      Rejected   Above      Below      S2idle
+    S0     219102         1          0          0          0          0
+  power-domain-cpu4: off-0
+    State  Time(ms)       Usage      Rejected   Above      Below      S2idle
+    S0     219107         1          0          0          0          0
+  power-domain-cpu7: off-0
+    State  Time(ms)       Usage      Rejected   Above      Below      S2idle
+    S0     219113         1          0          0          0          0

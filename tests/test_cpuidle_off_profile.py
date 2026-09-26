@@ -60,6 +60,19 @@ def read(rel):
     return (ROOT / rel).read_text()
 
 
+def prose(rel):
+    """File text with wrapping removed, for matching wrapped prose.
+
+    Three assertions in this file failed on their first run purely because the
+    phrase they looked for was split across a line break - by the markdown
+    wrapping, by a shell comment's leading `#`, or by a blockquote's `>`.  This
+    normalises all three away and is still an exact-substring check, so it does
+    not loosen what is being asserted.
+    """
+    text = re.sub(r"(?m)^\s*(#|>)\s?", " ", read(rel))
+    return " ".join(text.split())
+
+
 def code_only(rel):
     """A DTS with its comments removed.
 
@@ -820,6 +833,164 @@ class TestRecordTests(unittest.TestCase):
         self.assertIn("Forbidden at every sample size", text)
         # and it defers to the pre-registered rule rather than restating a new one
         self.assertIn("do not re-derive it", text)
+
+
+class WedgeSshRunnerTests(unittest.TestCase):
+    """scripts/wedge-ssh.sh: the same experiment over the one transport present."""
+
+    RUNNER = "scripts/wedge-ssh.sh"
+
+    def test_it_exists_and_is_not_a_replacement_for_the_harness(self):
+        text = read(self.RUNNER)
+        flat = prose(self.RUNNER)
+        self.assertIn("deliberately NOT a rewrite of that", flat)
+        self.assertIn("borrows the harness's definitions rather than restating them", flat)
+
+    def test_it_borrows_the_wedge_classification_verbatim(self):
+        text = read(self.RUNNER)
+        # The same classes stall-ab.sh uses, so "wedge" means one thing.
+        self.assertIn("haven.t responded to the NMI", text)
+        self.assertIn("BUG: workqueue lockup", text)
+        self.assertIn("frame done timeout", text)
+        # and the test-194 rule that a lone timeout is not a wedge
+        self.assertIn("a lone DPU/MMC/RPMh timeout is SUSPECT, never WEDGE", text)
+
+    def test_the_journal_boot_index_is_computed_not_assumed(self):
+        """The off-by-one that would hide every wedge.
+
+        A round's boot is the one the runner rebooted INTO: index 0 immediately
+        after, and only -1 if the kernel rebooted itself again during the window.
+        Hardcoding `-b -1` reads the boot BEFORE the round - which is exactly
+        where a wedged round's markers are NOT - and would classify a wedged
+        round as clean.
+        """
+        text = read(self.RUNNER)
+        self.assertIn("idx=0              # still on the round's boot", text)
+        self.assertIn("idx=-1             # the round's boot is now the previous one", text)
+        self.assertIn('count "$idx"', text)
+        self.assertNotIn('count -1 "$WEDGE_CLASSES"', text)
+        self.assertIn("log_boot_index=$idx", text)
+
+    def test_it_records_which_detector_it_used(self):
+        """The COM19 presence-outage detector does not exist here.
+
+        Silently losing it and saying nothing would make a panic-restart look
+        like an ordinary clean boot.  The runner substitutes boot-id change plus
+        journal boot count, and names the substitution in every round record.
+        """
+        text = read(self.RUNNER)
+        self.assertIn("detector=boot_id_change+journal_boot_count", text)
+        self.assertIn("WHAT IT CANNOT SEE, AND SAYS SO", text)
+        self.assertIn("extra_boots=$extra_boots", text)
+
+    def test_it_refuses_to_run_unless_the_profile_is_armed(self):
+        text = read(self.RUNNER)
+        self.assertIn("NOT armed", text)
+        self.assertIn("arming gate PASSED", text)
+        # the cpuidle-off gate decides on the sysfs group, per the plan
+        self.assertIn("test -d /sys/devices/system/cpu/cpuidle", text)
+
+    def test_it_stops_on_the_first_wedge(self):
+        """The plan's first row: one wedge stops the direction."""
+        text = read(self.RUNNER)
+        self.assertIn("STOPPING: a wedge is a fact", text)
+        self.assertIn("break", text)
+
+    def test_it_never_writes_a_partition(self):
+        text = read(self.RUNNER)
+        for forbidden in ("dd if=", "of=/dev/", "fastboot", "mkbootimg", "avbtool"):
+            with self.subTest(token=forbidden):
+                self.assertNotIn(forbidden, text)
+        self.assertIn("never flashes and never writes a partition", text)
+
+
+class WedgeResultRecordTests(unittest.TestCase):
+    """The test-227 record: a decided result, with its corrections kept."""
+
+    RECORD = "reference/boot-tests/test-227-cpuidle-off-run"
+
+    def test_it_records_the_pre_registered_first_row_outcome(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("the plan's pre-registered first-row outcome", text)
+        flat = prose(f"{self.RECORD}/README.md").replace("**", "")
+        # The rule is quoted verbatim from the plan; with the blockquote marker
+        # stripped the phrase is contiguous again.
+        self.assertIn("full cpuidle framework is not necessary for the wedge", flat)
+        self.assertIn("go to §7", flat)
+
+    def test_it_does_not_claim_a_fix_or_a_cause(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("Nothing here is a fix", text)
+        self.assertIn("Any cause.", text)          # listed under "Does not establish"
+        self.assertIn("PSCI-idle hypothesis is `downgraded`", text)
+        # The words themselves appear - but only as negations ("nothing here is
+        # `solved'"), which is the opposite of claiming them.  Assert the
+        # negations are present and that no POSITIVE claim is made.
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("Nothing here is a fix, and nothing here is `solved`", flat)
+        for claim in ("is solved", "has been solved", "the wedge is fixed",
+                      "root cause is confirmed", "the cause is"):
+            with self.subTest(claim=claim):
+                self.assertNotIn(claim, flat)
+
+    def test_the_three_cpu_roles_are_stated_correctly(self):
+        """Victim, detector and reporter are three different CPUs.
+
+        An earlier draft called CPU 1 a victim. It is the `events_unbound`
+        reporter whose stack is the documented canary, and conflating the two is
+        the mistake this project already corrected once
+        (docs/CPU_WEDGE_EVIDENCE.md, "the reporting CPU, not the wedged ones").
+        """
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("the stalled CPU", text)
+        self.assertIn("the **detector**", text)
+        self.assertIn("the **reporter**", text)
+        self.assertIn("the canary, not the\n  cause", text.replace("**", ""))
+        self.assertIn("An earlier draft of this section called CPU 1 a victim", text)
+
+    def test_it_archives_the_evidence_it_cites(self):
+        for name in ("PRE-WRITE-STATE.txt", "FLASH-TRANSCRIPT.md",
+                     "evidence/pstore-raw.txt",
+                     "evidence/wedged-boot-minus1-klog.txt",
+                     "evidence/wedged-boot-minus2-klog.txt",
+                     "evidence/boot-list.txt",
+                     "evidence/arming-during-wedges.txt",
+                     "evidence/genpd-with-cpuidle-off.txt"):
+            with self.subTest(artifact=name):
+                self.assertTrue((ROOT / self.RECORD / name).is_file(),
+                                f"missing evidence: {name}")
+
+    def test_the_cited_wedge_markers_are_actually_in_the_pstore(self):
+        """Every line the README quotes must exist in the archived record.
+
+        Read as bytes: the file is the device's ramoops console verbatim and
+        contains NULs and occasional corruption, which is exactly why it is kept
+        raw instead of being cleaned up.
+        """
+        path = ROOT / self.RECORD / "evidence/pstore-raw.txt"
+        raw = path.read_bytes().decode("utf-8", "replace")
+        for needle in (
+            "rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:",
+            "4-...!: (0 ticks this GP)",
+            "softirq=1391/1391",
+            "watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [kworker/u32:9",
+            "Kernel panic - not syncing: softlockup: hung tasks",
+            "SMP: failed to stop secondary CPUs 4,6-7",
+            "toggle_allocation_gate+0x58/0x14c",
+            "smp_call_function_many_cond+0x3ec/0x514",
+        ):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, raw)
+
+    def test_it_marks_what_was_not_captured(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("Not captured, and marked absent rather than implied", text)
+        self.assertIn("/proc/interrupts", text)
+
+    def test_it_names_the_rollback_and_its_hash(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9", text)
+        self.assertIn("/dev/sda24", text)
 
 
 class HarnessTests(unittest.TestCase):

@@ -1,0 +1,66 @@
+total 48
+drwxr-xr-x  2 root root  4096 Sep 27 01:25 .
+drwxr-xr-x 13 root root  4096 Apr 14 03:44 ..
+-rw-------  1 root root  9334 Sep 27 01:25 console-ramoops-0
+-rw-------  1 root root 25390 Sep 27 01:25 dmesg-ramoops-0.enc.z
+=== content ===
+[    3.290613][  T913] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    8.464794][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.481491][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.498125][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.514793][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.531460][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.548126][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.564792][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.581460][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.598126][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[    8.614793][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.639823][    C0] [drm:dpu_crtc_frame_eventcb]0*EROR* crtc103 event 1 overflow
+[   13.656477][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.673143][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.689811][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.706477][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.723145][    C0Y [drmdpuüartc_frameOerent_cb] *ERROR* crtc103 event 1 overflow
+[   13.739811][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.756477][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.773144][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.789810][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.698175][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 even4 1 over&lgw
+[   18.514828][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.731494][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.74861][    C0] [dre:dpu_"rpc_frame]event_cb] *ERSOR* crtc103 event 1 overflow
+[   18.764832][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.781495][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.798161][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.814828][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   18.831495][    C0] [dpm:dpu_crtc_frame_Tvent_cb] *ERROR* crtc103 event 1 overflow
+[   18.848161][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.756525][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.773178][    C0] [dr-:dpu_crtc_frame[event_cb] *ERROR* crtc103 event 1 overflow
+[   23.789845][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.806511][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.823179][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.839848][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.856512][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.873178][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.889845][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   23.90651:][    C0] [$re:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   28.659200][    C6] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   28.659227][    C6] rcu: 	4-...!: (0 ticks this GP) idle=1244/1/0x4000000000000000 softirq=1391/1391 fqs=3
+[   28.659251][    C6] rcu: 	(detected by 6, t=5256 jiffies, g=709, q=1727 ncpus=8)
+[   35.114152][    C1] watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [kworker/u32:9:179]
+[   35.114169][    C1] CPU#1 Utilization every 4000ms during lockup:
+[   35.114177][    C1] 	#1: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   35.114190][    C1] 	#2: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   35.114202][    C1] 	#3: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   35.114214][    C1] 	#4: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   35.114225][    C1] 	#5: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   35.114238][    C1] Modules linked in: qrtr_mhi ath11k_pci ath11k mac80211 cfg80211 hci_uart btqca btbcm bluetooth pwrseq_qcom_wcn gpio_shared_proxy pci_pwrctrl_pwrseq
+[   35.114325][    C1] CPU: 1 UID: 0 PID: 179 Comm: kworker/u32:9 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   35.114349][    C1] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   35.114356][    C1] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   35.114364][    C1] WorkquEue: events_unbound to'gle_a,location_gate
+[   35.114387][    C1] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   35.114402][    C1] pc : smp_call_function_many_cond+0x3ec/0x514
+[   35.114423][    C1] lr : sjp]call_function_many_cond+0x310/0x514
+[   35.114439][    C1] sp : ffffffc085bfbba0
