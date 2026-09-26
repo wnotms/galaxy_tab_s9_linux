@@ -544,6 +544,70 @@ class TheProductionImageShipsItAndTheDebugImageDoesNotNeedTo(unittest.TestCase):
             'production /init runs a command that is not in the applet list')
 
 
+class TheCorrectedClockSurvivesSystemdsEpoch(unittest.TestCase):
+    """The fix must land where systemd leaves it alone.
+
+    There are TWO clock bugs on this device, and the second hides the first.
+    Besides the raw 1970 RTC, systemd advances any clock below its "built-in
+    epoch" - the highest of systemd's build time and the mtimes of
+    /usr/lib/clock-epoch and /var/lib/systemd/timesync/clock. Measured on the
+    tablet, that epoch is the rootfs build time:
+
+        systemd[1]: System time advanced to built-in epoch: Tue 2026-04-14 03:38:05 CST
+
+    So with no fix at all Debian still reads 2026-04-13, which looks plausible and
+    is not. These tests pin the arithmetic that makes the real fix work, and would
+    catch a change that moved the applied time below the epoch - which would
+    silently hand the clock straight back to systemd.
+    """
+
+    # Observed on the device: "Tue 2026-04-14 03:38:05 CST" == 2026-04-13T19:38:05Z.
+    SYSTEMD_EPOCH = 1776109085
+    # systemd's default horizon before it assumes the RTC is broken: 15 years.
+    FUTURE_LIMIT = 15 * 365 * 24 * 3600
+
+    def test_the_real_device_values_land_above_the_epoch(self):
+        self.assertGreater(
+            DEVICE_EXPECTED_EPOCH, self.SYSTEMD_EPOCH,
+            "the corrected clock must be above systemd's epoch, or systemd would "
+            'advance it straight back to the rootfs build time')
+
+    def test_it_is_not_so_far_ahead_that_systemd_rewinds_it(self):
+        """Above the epoch, but inside the 15-year sanity horizon."""
+        self.assertLess(DEVICE_EXPECTED_EPOCH,
+                        self.SYSTEMD_EPOCH + self.FUTURE_LIMIT)
+
+    def test_the_raw_rtc_is_below_the_epoch_which_is_the_whole_bug(self):
+        """This is why `date` alone cannot verify the fix.
+
+        Without the offset the clock sits ~56 years below the epoch, so systemd
+        advances it to 2026-04-13 and the result looks like a date rather than a
+        fault. The initramfs record - written before systemd runs - is the only
+        reading that tells the two states apart.
+        """
+        self.assertLess(DEVICE_RAW_SECONDS, self.SYSTEMD_EPOCH)
+
+    def test_the_plausibility_window_accepts_both_the_epoch_and_the_fix(self):
+        """The helper's own bounds must not reject a valid corrected time."""
+        source = SOURCE.read_text()
+        lower = re.search(r'#define MIN_REALTIME\s+(\d+)LL', source)
+        upper = re.search(r'#define MAX_REALTIME\s+(\d+)LL', source)
+        self.assertIsNotNone(lower, 'MIN_REALTIME must be defined')
+        self.assertIsNotNone(upper, 'MAX_REALTIME must be defined')
+        self.assertLess(int(lower.group(1)), self.SYSTEMD_EPOCH)
+        self.assertGreater(int(upper.group(1)), DEVICE_EXPECTED_EPOCH)
+
+    def test_the_documents_record_the_second_bug(self):
+        """A future reader must not have to re-derive the 2026-04-13 confusion."""
+        doc = (ROOT / 'docs' / 'RTC_OFFSET.md').read_text()
+        self.assertIn('built-in epoch', doc)
+        self.assertIn('2026-04-13', doc)
+        # ... and the test plan must warn against judging by Debian's date.
+        plan = (ROOT / 'reference' / 'rtc-offset-test-plan.md').read_text()
+        self.assertIn('built-in epoch', plan)
+        self.assertIn('NOT judge this test by Debian', plan)
+
+
 class TheHelperIsDocumentedWhereItsEvidenceLives(unittest.TestCase):
     def test_the_report_document_exists_and_states_the_mechanism(self):
         doc = ROOT / 'docs' / 'RTC_OFFSET.md'

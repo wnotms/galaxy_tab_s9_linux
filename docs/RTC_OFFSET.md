@@ -300,20 +300,75 @@ Failure is never fatal, and each failure has its own status and exit code:
 
 Setting the clock in the initramfs rather than in Debian is deliberate: the wall
 clock is **kernel** state and survives `switch_root`, so Debian's first process
-already sees the correct time and no service has to run first. A userspace-only
-fix in Debian would leave every kernel and early-userspace timestamp wrong — which
-is the report this project already had, one boot record reading `2026-04-13` on a
-tablet whose real date was `2026-09-26`.
+already sees the correct time and no service has to run first.
+
+### There were TWO clock bugs, and only one of them was the RTC
+
+This is worth stating plainly, because the second one masks the first and would
+make a partial fix look like a working one.
+
+**Bug 1 — the raw RTC.** Mainline reads the 1970 counter directly, so the kernel
+and the initramfs run ~56 years slow. Fixed by this change.
+
+**Bug 2 — systemd's "built-in epoch".** systemd deliberately rewinds or advances a
+clock it considers nonsense ([`systemd(1)`, SYSTEM CLOCK EPOCH](https://michaelkerrisk.com/linux/man-pages/man1/systemd.1.html)):
+
+> The epoch is set to the highest of: the build time of systemd, the modification
+> time ("mtime") of `/usr/lib/clock-epoch`, and the modification time of
+> `/var/lib/systemd/timesync/clock`. [...] the local clock is *advanced* to the
+> epoch if it was set to a lower value. As a special case, if the local clock is
+> sufficiently far in the future (by default 15 years), the hardware clock is
+> assumed to be broken, and the system clock is *rewound* to the epoch.
+
+On this tablet the epoch is the **rootfs image build time**, because neither
+`/usr/lib/clock-epoch` nor `/var/lib/systemd/timesync/clock` exists in the Debian
+tree. It is measured on the device:
+
+```
+systemd[1]: System time advanced to built-in epoch: Tue 2026-04-14 03:38:05 CST
+```
+
+`2026-04-14 03:38:05 CST` is `2026-04-13T19:38:05Z` — and the rootfs files carry
+exactly that mtime (`reference/boot-tests/test-178-20260923T165658Z/debian-side-evidence.txt`).
+That single constant explains every `2026-04-13`/`2026-04-14` timestamp in this
+project's history, including the one this document used to attribute to the RTC.
+
+**One boot shows both stages** (`reference/boot-tests/test-172-20260923T131339Z/com17-diagnostics.txt`):
+
+```
+boot_stage_file=timestamp=1970-09-18T01:22:38Z     <- /init, before systemd: the raw RTC
+stage_timestamp=2026-04-13T19:38:06Z               <- Debian, after systemd: the epoch
+```
+
+and the initramfs record's own mtime is still `1970-09-18`, proving `/init` wrote
+it before systemd touched anything.
+
+**Why this matters for this fix.** The corrected time is *later* than the epoch, so
+systemd leaves it alone:
+
+| clock when systemd starts | vs epoch (2026-04-13) | systemd action |
+| --- | --- | --- |
+| raw RTC, `1970-09-18` (no fix) | far **below** | advances to 2026-04-13 |
+| **with this fix**, `2026-09-25`+ | **above**, and < 15 years above | **leaves it alone** |
+
+So the fix works *with* systemd's policy rather than against it — but the corollary
+is a trap for anyone testing it: **a boot whose `date` reads `2026-04-13` is not
+evidence that the RTC fix failed.** It means systemd found the clock below the
+epoch, which is exactly what happens without the fix. The discriminating reading is
+the *initramfs* record's `timestamp=`, written before systemd runs — which is why
+the ordering below is the proof and a Debian-side `date` is not.
 
 ### Ordering is the proof
 
 `minimal_apply_rtc_offset` runs before `minimal_state_init`, so the record's
 `timestamp=` field is stamped with the corrected clock. That makes the fix
-verifiable from a TWRP session with no network:
+verifiable from a TWRP session with no network, and it is the only timestamp that
+distinguishes this fix from systemd's epoch:
 
 ```
-timestamp=2026-09-26T...      correct
-timestamp=2026-04-13T...      the bug is back
+timestamp=2026-09-26T...      the RTC offset was read and applied
+timestamp=1970-09-18T...      the offset was not applied (raw RTC)
+timestamp=2026-04-13T...      systemd's epoch, not an initramfs-stage record
 ```
 
 Two tests assert this ordering, because it is the difference between evidence and
@@ -368,6 +423,12 @@ reveal.
 The honest summary: the residual error is roughly the first **2.8 seconds** of
 kernel boot rather than 56 years. Every timestamp a user can observe — journal,
 `date`, ssh, TLS, package management, and the boot record itself — is correct.
+
+**Observed through `date` alone, though, the improvement is invisible**, because
+systemd already papered over the raw RTC by advancing the clock to its epoch
+(§7). Before this change Debian read `2026-04-13`; after it, the real date. Both
+look like dates; only one is right. That is why the evidence for this fix is the
+initramfs record's `timestamp=` rather than `date`.
 
 ### Debian does not fight it
 
@@ -444,6 +505,12 @@ Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched.
    (no `hwclock`/`adjtime` state is recorded in `reference/device-state/`), and
    §5's `-ENODEV` path means the *driver* cannot write the counter even then; the
    hazard would be a userspace `hwclock`, which is worth watching for.
+7. **systemd's epoch moves when the rootfs is rebuilt.** The epoch is the rootfs
+   build time (§7), so a rebuilt card carries a *newer* epoch. That is harmless
+   for this fix — the corrected time tracks the real date and stays above it — but
+   it means the `2026-04-13` figure quoted throughout this document is a property
+   of one particular image, not a constant. Only the raw-RTC value `1970-09-18` is
+   a stable pre-fix signature, and even that advances one second per second.
 
 ---
 

@@ -59,8 +59,34 @@ from TWRP with no network and no working panel.
    ```
 
 **Pass:** the timestamp is within a few minutes of step 1.
-**Fail:** `2026-04-13…`-style past date (the measured pre-fix value), or any 1970
-date.
+**Fail:** a 1970 date — that means the offset was not applied at all.
+
+> **Do NOT judge this test by Debian's `date`.** There are two independent clock
+> bugs on this device, and the second hides the first:
+>
+> * the raw RTC, which this change fixes;
+> * **systemd's built-in epoch**, which advances any clock below it. On this tablet
+>   the epoch is the rootfs build time, measured on the device as
+>   `Tue 2026-04-14 03:38:05 CST` = `2026-04-13T19:38:05Z`. systemd says so itself:
+>   `systemd[1]: System time advanced to built-in epoch: ...`
+>
+> So with **no fix at all** Debian still shows `2026-04-13` — 56 years better than
+> the truth, and therefore easy to mistake for "roughly right". A `date` of
+> `2026-04-13` means systemd advanced a broken clock; it does **not** mean the
+> offset was read.
+>
+> The discriminating reading is the **initramfs** record's `timestamp=`, written by
+> `/init` *before* systemd starts. Both stages are visible in one older boot
+> (`reference/boot-tests/test-172-20260923T131339Z/com17-diagnostics.txt`):
+>
+> ```
+> boot_stage_file=timestamp=1970-09-18T01:22:38Z   <- /init, pre-systemd
+> stage_timestamp=2026-04-13T19:38:06Z             <- Debian, post-systemd
+> ```
+>
+> The corrected time lands *above* the epoch, so systemd leaves it alone — which is
+> why the fix holds, and why the initramfs record is the only honest witness to it.
+> `docs/RTC_OFFSET.md` §7 has the full analysis.
 
 **Also capture the same record with `grep '^stage='` and `grep '^failure='`**, to
 prove the boot reached `switch-root` and did not take a rescue branch.
