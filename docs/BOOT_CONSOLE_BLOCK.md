@@ -1,4 +1,12 @@
-# Why the boot appears to hang, and why opening COM19 fixes it
+# Why the boot appeared to hang, and why opening COM19 fixed it
+
+**Resolved 2026-09-26.** Both serial debug consoles were removed and the tablet
+is now reached over ssh; the reproduction below returns in 0.006 s instead of
+blocking, and `poweroff` completes in 0.82 s with zero stop timeouts. See
+[test-211](../reference/boot-tests/test-211-no-serial-consoles/README.md) for the
+physical verification, and the "Resolution" section at the end of this file for
+what changed. Everything above that section is the original investigation, kept
+because it is the evidence the fix is based on.
 
 Reported by the operator on 2026-09-25/26, and reproduced here. The symptom is
 consistent and the correlation with the console port is absolute:
@@ -114,7 +122,48 @@ nothing in the system can report it.
 Item 3 is a real trade-off rather than an obvious fix, so it is recorded as a
 decision to make rather than made unilaterally.
 
-## Workaround until then
+## Resolution (2026-09-26)
+
+The decision above was made: **both serial debug consoles are removed** and the
+tablet is reached over ssh on the USB network link. The owner asked for exactly
+this — remove the two serial consoles and use ssh, so that boot and shutdown
+cannot stall.
+
+What was done, and why each half was necessary:
+
+| change | mechanism it closes |
+|---|---|
+| `console=ttyGS1` dropped; `CONFIG_U_SERIAL_CONSOLE` **unset** | the userspace `write()` block. `gserial_alloc_line()` can no longer call `gs_console_init()`, so no ttyGS port can become a kernel console at all — the failure mode is removed, not avoided. |
+| `console=ttyMSM0,115200n8` and `earlycon` dropped; `CONFIG_SERIAL_QCOM_GENI_CONSOLE` **unset** | the second debug console, plus the getty-generator unit and `dev-ttyMSM0.device` dependency that every `console=` argument costs. `CONFIG_SERIAL_QCOM_GENI` stays `=y` (shared SE IP). |
+| `gts9-acm-getty.service` **deleted**, and masked by `gts9-enable-units` | the 90 s poweroff, which is a *different* mechanism — see [shutdown delay](SHUTDOWN_DELAY.md). |
+| `CONFIG_NULL_TTY=y`; patch `0003` (`ignore_console_null`) retired to `pending/` | ABL's appended `console=null`, which the patch used to delete outright. `ttynull` now absorbs it, so the argument resolves to a real non-blocking tty and `kernel/printk/printk.c` returns to unmodified upstream. |
+| PID 1's fallback shell moved off `/dev/console` to `/dev/tty1`, with a bounded fallback | the same blocking-writer shape in the rescue paths (`boot/bringup-init.sh`, `boot/minimal-rootfs-init.sh`, `boot/gts9-minimal-pid1.c`). |
+| `/etc/gts9-usb-net` ships in the overlay | the ssh transport. It used to be created by hand, so once the console was gone a freshly installed rootfs would have had no way in at all. |
+
+`/dev/console` now resolves to `tty0` (and to `ttynull` for ABL's appended
+argument), and `ttynull_write()` returns `count` without waiting for anything — so
+a write to `/dev/console` can no longer block. Measured: the 60 KB reproduction
+below, which used to hang for the full timeout, returns in **0.006 s**. Shutdown
+completes in **0.82 s** with zero stop timeouts.
+
+### Path 2 (`tty0` → fbcon → DRM) is now the only console, and is bounded
+
+The investigation above only treats the gadget port as the blocker, and correctly
+so: **path 2 does not share the property that makes path 1 unbounded.** `fbcon`
+writes into the DRM framebuffer, which cannot "fill up" — there is no
+`write_wait` to sleep on and no host that has to drain it, so it always makes
+progress.
+
+The ~151 s episode in [watchdog X710](WATCHDOG_X710.md) was the same *class* of
+problem (a console backlog) but a different cause: it was `journal+console`
+duplication over a display path that was itself under investigation. That unit has
+been journal-only since, and this change does not alter it.
+
+Removing the gadget console therefore removes the unbounded case. The panel
+console is kept deliberately: it is the only console left, and it is what makes a
+boot visible on the tablet itself with no cable attached.
+
+## Workaround until then (historical)
 
 **Keep COM19 open across the boot.** Every clean boot-time measurement in this repo
 was taken that way, which is exactly why the unheld boots looked so different.

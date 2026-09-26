@@ -1,5 +1,10 @@
 # The 90-second delay before poweroff completes
 
+**Resolved 2026-09-26.** The unit below is deleted rather than shortened, and the
+delay is gone: shutdown now completes in **0.82 s** with zero stop timeouts, down
+from 90 s. See [test-211](../reference/boot-tests/test-211-no-serial-consoles/README.md).
+The investigation is kept as the evidence for why the unit had to go.
+
 ## Symptom
 
 On `poweroff` the console prints:
@@ -56,37 +61,70 @@ and the waiting period is indistinguishable from a hang to anyone watching the
 screen. It also delays every cold-boot test in this repo by up to a minute and a
 half, which is exactly the kind of thing that gets mistaken for a hardware fault.
 
-## Fix
+## Fix (2026-09-26): the unit is removed, not shortened
 
-`TimeoutStopSec=3` in `[Service]` of `gts9-acm-getty.service`. The console is a wired
-debug port and any shell on it is gone by the time the system stops, so shortening
-the wait loses nothing; 3 s is still enough for agetty to exit cleanly when it can.
+The interim fix was `TimeoutStopSec=3` in `[Service]`. That is superseded: **the
+unit is deleted**, because shortening the wait still cost a visible pause on every
+poweroff and the console it served is gone anyway.
 
-**Placement matters and was got wrong first:** the directive was initially added
-under `[Unit]`, where systemd silently ignores unknown keys, so
-`systemctl show -p TimeoutStopUSec` kept reporting `1min 30s`. It must be in
-`[Service]`. Verified after the move:
+Both serial debug consoles were removed on the owner's instruction (see
+[the boot console block](BOOT_CONSOLE_BLOCK.md)) and the tablet is reached over
+ssh, so an autologin getty on ttyGS0 has no reason to exist. Three things had to
+change together, and leaving any one of them out would have kept the delay:
+
+1. `rootfs-overlay/usr/lib/systemd/system/gts9-acm-getty.service` — **deleted**.
+2. `rootfs-overlay/usr/libexec/gts9-enable-units` — removes the enable link *and*
+   masks the name, so an upgraded rootfs cannot resurrect it. This matters more
+   than it looks: `/etc/systemd/system/` wins over `/usr/lib/`, and the section
+   below records the two copies having diverged once. That is not hypothetical —
+   during the physical test a 2142-byte `/etc/systemd/system/gts9-acm-getty.service`
+   was *still running the getty* after the overlay had been replaced, which is why
+   the first shutdown measurement after the change was still ~90 s. The helper now
+   uses `ln -sfn /dev/null` unconditionally (what `systemctl mask` does) instead of
+   a `[ ! -e … ]`-guarded `ln -s`.
+3. The unit's enable link is removed, since a dangling link in
+   `multi-user.target.wants` is a boot-time failure rather than a no-op.
+
+`getty@tty1.service` is deliberately untouched: tty1 is the panel VT, the only
+console left, and the local login on it is how the tablet is used with no cable.
+
+### Measured
 
 ```
-$ systemctl show gts9-acm-getty.service -p TimeoutStopUSec
-TimeoutStopUSec=3s
+# before: the 90 s wait is TimeoutStopSec
+[   89.403289] systemd[1]: Stopping session-1.scope - Session 1 of User root...
+[  179.543765] systemd[1032]: Reached target shutdown.target - Shutdown.
+gts9-acm-getty.service: State 'stop-sigterm' timed out. Killing.
+gts9-acm-getty.service: Failed with result 'timeout'.
+
+# after: 0.82 s, verified with a one-shot probe on shutdown.target
+shutdown_requested_uptime=118.56     (/var/log/gts9-shutdown-probe)
+uptime_seconds=119.04                (/var/log/gts9-last-poweroff-stage)
+journalctl -b -1 | grep -c 'Stopping timed out'  ->  0
 ```
+
+### `poweroff` restarts when USB is attached — expected, not a regression
+
+On this board, with the USB cable connected to a host, the tablet powers itself
+back on after a `poweroff`. The owner confirmed this is **stock behaviour**; the
+original system does the same.
+
+It has to be recorded here because it changes how the fix must be measured:
+**"the tablet stayed off" is not a success criterion while the cable is
+attached.** Both readings above come from the tablet's own journal timestamps
+rather than from watching the USB link, because the gadget is torn down during
+shutdown either way — a hung shutdown and a completed-then-restarted one look
+identical from the host.
 
 ## Provenance of the fix
 
-The unit exists in two places on the tablet, and `/etc/systemd/system/` wins:
+The unit existed in two places on the tablet, and `/etc/systemd/system/` wins:
 
 ```
 FragmentPath=/etc/systemd/system/gts9-acm-getty.service
 ```
 
 while the repo's `rootfs-overlay/` installs to `/usr/lib/systemd/system/`. They had
-**diverged** (the `/etc/` copy was an older, larger file). The fix was applied to the
-repo's overlay copy and pushed to `/etc/`, so both now carry it; the divergence is
-worth remembering when changing this unit again.
-
-## Not investigated
-
-Whether `Restart=always` also contributes, by scheduling a restart during shutdown.
-The unit stops cleanly enough with the shorter timeout that it was not pursued, and
-the observed 90 s matches `TimeoutStopSec` exactly, which is the simpler explanation.
+**diverged** (the `/etc/` copy was an older, larger file). That divergence is why
+`gts9-enable-units` now masks the name outright instead of only removing the enable
+link, and it is worth remembering when changing any unit here again.

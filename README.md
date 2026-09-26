@@ -94,14 +94,53 @@ default cmdline is unchanged; see
 [minimal rootfs boot](docs/MINIMAL_ROOTFS_BOOT.md) and
 `boot/cmdline.minimal-rootfs.example.txt` for the controlled A/B profile.
 
-Debian now owns the userspace bring-up that used to live in the initramfs -
-the USB ACM console, the ttyGS0 root console, the X710 panel cold-boot recovery
-and the boot-stage units - under `rootfs-overlay/`. Install them with:
+Debian owns the userspace bring-up that used to live in the initramfs - the USB
+debug link, the X710 panel cold-boot recovery and the boot-stage units - under
+`rootfs-overlay/`. Install them with:
 
 ```bash
 sudo ./scripts/install-debian-rootfs.sh /mnt/debian      # mounted rootfs
 ./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar  # for TWRP
 ```
+
+## Reaching the tablet: ssh, not a serial console
+
+**Both serial debug consoles were removed on 2026-09-26 and the tablet is
+reached over ssh.** They were the measured cause of two hangs the owner
+reported, and neither is worked around - the mechanisms are gone:
+
+* the USB ACM kernel console (`console=ttyGS1`, host COM19) was the **boot**
+  stall. `n_tty_write()` to a gadget port sleeps in `wait_woken()` once its 8 KiB
+  buffer fills with nobody draining the host side, so any userspace `write()` to
+  `/dev/console` stopped the boot. `printk` was never the blocker - it is lossy
+  by design. See [the boot console block](docs/BOOT_CONSOLE_BLOCK.md).
+* `gts9-acm-getty.service` (`agetty --autologin root ttyGS0`) was the **90 s
+  poweroff**: `--autologin` spawns a login shell agetty does not reap, so systemd
+  waited out `TimeoutStopSec`. See [shutdown delay](docs/SHUTDOWN_DELAY.md).
+
+The command line now carries one console, `console=tty0` on the panel, and the
+kernel is built without `CONFIG_U_SERIAL_CONSOLE` and without
+`CONFIG_SERIAL_QCOM_GENI_CONSOLE`, so no serial port can become a console again.
+`CONFIG_NULL_TTY=y` absorbs the `console=null` Samsung's ABL appends, which lets
+the `ignore_console_null` patch be retired and `kernel/printk/printk.c` return to
+unmodified upstream.
+
+The interactive channel is the USB network function:
+
+```bash
+scripts/gts9-ssh.sh                            # root shell over the cable
+scripts/gts9-ssh.sh 'dmesg | tail -20'
+scripts/gts9-ssh.sh --pull /var/log/x ./x
+```
+
+Measured: **31.8 MB/s**, against the serial console's ~3 KB/s. The device address
+is `169.254.42.1/16` and it comes from `rootfs-overlay/etc/gts9-usb-net`, which
+ships in the overlay because a rootfs without it would have no way in at all.
+[verify the channel](docs/FAST_DEBUG_CHANNEL.md) with
+`scripts/gts9-debug-channel.sh check`.
+
+Physical verification, including the before/after numbers and what is *not*
+proven: [test-211](reference/boot-tests/test-211-no-serial-consoles/README.md).
 
 The tarball contains regular files with relative paths only, so TWRP deploys it
 with `cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar`, followed by
@@ -140,7 +179,7 @@ boot/bringup-init.sh         the /init of the bring-up initramfs
 boot/minimal-rootfs-init.sh opt-in minimal rootfs handoff profile
 boot/minimal-rootfs-state.sh  persistent minimal boot-stage record
 boot/gts9-minimal-pid1.c     static PID 1 exec-failure rescue helper
-rootfs-overlay/              Debian userspace: units, helpers, getty config
+rootfs-overlay/              Debian userspace: units, helpers, the ssh link config
 scripts/prepare-kernel.sh    stages DTS/patches into a disposable tree
 kernel/PROVENANCE.md         source/pin/licensing notes
 scripts/fetch-mainline.sh    obtains and verifies the upstream kernel
