@@ -608,6 +608,25 @@ class TestRecordTests(unittest.TestCase):
                 else:
                     self.assertIn(f"dtb_sha256={digest}", info)
 
+    def test_the_absent_physical_run_is_recorded_as_absent(self):
+        """A prepared bundle must not read as a completed test.
+
+        The tablet was not connected when this candidate was prepared, so no
+        on-device run happened.  That has to be written down: a bundle with a
+        README full of hashes and commands looks exactly like the aftermath of a
+        successful run to anyone reading the directory later.
+        """
+        text = read(f"{self.RECORD}/STATUS-no-physical-run.md")
+        self.assertIn("Nothing has been flashed", text)
+        self.assertIn("not connected", text)
+        # the evidence for that claim, so it is checkable rather than asserted
+        for probe in ("adb devices", "packet loss", "COM19", "04e8"):
+            with self.subTest(probe=probe):
+                self.assertIn(probe, text)
+        # and the correction it produced
+        self.assertIn("71e194a5 -> 80aa010f", text)
+        self.assertIn("1245bb39 -> e237a98e", text)
+
     def test_it_states_the_one_partition_delta_and_the_current_device_state(self):
         text = read(f"{self.RECORD}/README.md")
         self.assertIn("`vendor_boot` only", text)
@@ -804,6 +823,27 @@ class ClusterAblationTests(unittest.TestCase):
             with self.subTest(cmdline=name):
                 self.assertEqual((ROOT / name).read_bytes(), base)
 
+    def test_the_build_script_embeds_the_dtb_in_both_partitions(self):
+        """An ablation changes TWO images, and the plan said one until measured.
+
+        `build-boot-bundle.sh` appends the DTB to boot.img's payload and also
+        passes the same file as `--dtb` to vendor_boot.img.  So a DTB-only
+        profile cannot be flashed by writing one partition: the two copies would
+        disagree about the cluster idle states and the round would be
+        uninterpretable.  Asserted against the script, so a future edit that
+        drops one of the two copies is caught here rather than on the tablet.
+        """
+        bundle = read("scripts/build-boot-bundle.sh")
+        # appends to the boot.img payload
+        self.assertIn('cat "$image" "$dtb" > "$tmp/boot-kernel"', bundle)
+        # and passes the same file to vendor_boot
+        self.assertIn('--dtb "$dtb" --vendor_cmdline "$cmdline"', bundle)
+        # and the plan records the measured two-partition delta
+        plan = read(PLAN)
+        self.assertIn("Both DTB-carrying partitions must be written", plan)
+        self.assertIn("71e194a5 -> 80aa010f", plan)
+        self.assertIn("1245bb39 -> e237a98e", plan)
+
     def test_the_plan_documents_the_build_and_arm_recipe(self):
         """A profile that cannot be built and armed is not a profile.
 
@@ -943,6 +983,88 @@ class AblationVerifierTests(unittest.TestCase):
         r = self._run(dtb, "no-such-profile")
         self.assertEqual(r.returncode, 2)
         self.assertIn("unknown profile", r.stderr)
+
+    def test_it_verifies_the_dtb_inside_the_bundle_that_would_be_flashed(self):
+        """The artifact that matters is the one in the bundle, not out/.
+
+        Everything else in this file verifies out/kernel-gts9wifi/*.dtb or an
+        ablation build in .work/.  Neither is what a flash writes: the flashed
+        DTB is the one appended to boot.img (and mirrored into vendor_boot), and
+        nothing was checking it.  A bundle assembled from a stale build would
+        have passed every other test here.
+
+        This closes the gap end to end: extract the DTB from the candidate
+        bundle's own boot.img payload, verify it, and require boot.img and
+        vendor_boot to agree - they are two independent copies of the same tree
+        and a mismatch means the bootloader and the kernel would disagree about
+        the idle states.
+        """
+        import struct
+        import subprocess
+        import zlib
+
+        bundle = ROOT / "out/boot-bundle-cpuidle-off"
+        boot_img = bundle / "boot.img"
+        vendor_boot = bundle / "vendor_boot.img"
+        if not boot_img.exists():
+            self.skipTest("the cpuidle-off bundle has not been built")
+
+        payload = boot_img.read_bytes()
+        start = payload.find(b"\x1f\x8b\x08")
+        self.assertGreater(start, 0, "no gzip payload in the candidate boot.img")
+        d = zlib.decompressobj(16 + zlib.MAX_WBITS)
+        d.decompress(payload[start:])
+        unused = d.unused_data
+        self.assertEqual(unused[:4], b"\xd0\x0d\xfe\xed", "no appended DTB")
+        # The partition is padded, so the DTB length comes from the FDT header's
+        # totalsize field rather than from len(unused).
+        dtb_size = struct.unpack(">I", unused[4:8])[0]
+        appended = unused[:dtb_size]
+
+        # It must be the DTB the bundle's own manifest names.
+        info = read("out/boot-bundle-cpuidle-off/BUNDLE_INFO")
+        want = [
+            line.split("=", 1)[1] for line in info.splitlines()
+            if line.startswith("dtb_sha256=")
+        ][0]
+        self.assertEqual(hashlib.sha256(appended).hexdigest(), want,
+                         "the bundle's boot.img DTB is not the one BUNDLE_INFO names")
+
+        # Write it out and run the real verifier on it.
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            path = pathlib.Path(td) / "candidate.dtb"
+            path.write_bytes(appended)
+            r = self._run(str(path), "baseline")
+            self.assertEqual(r.returncode, 0,
+                             "the candidate bundle's own DTB failed verification:\n"
+                             + r.stdout + r.stderr)
+            # and it must be rejected as each ablation, or the gate is toothless
+            for profile in ("no-llcc-off", "no-cluster-idle"):
+                with self.subTest(profile=profile):
+                    r = self._run(str(path), profile)
+                    self.assertNotEqual(
+                        r.returncode, 0,
+                        f"the candidate bundle's DTB passed as {profile}")
+
+        # boot.img and vendor_boot carry independent copies of the same tree.
+        if not vendor_boot.exists():
+            self.skipTest("no vendor_boot.img in the candidate bundle")
+        with tempfile.TemporaryDirectory() as td:
+            subprocess.run(
+                ["python3", str(ROOT / ".work/tools/unpack_bootimg.py"),
+                 "--boot_img", str(vendor_boot), "--out", td],
+                capture_output=True, check=False,
+            )
+            vendor_dtb = pathlib.Path(td) / "dtb"
+            if not vendor_dtb.exists():
+                self.skipTest("could not extract the vendor_boot DTB")
+            self.assertEqual(
+                hashlib.sha256(vendor_dtb.read_bytes()).hexdigest(),
+                hashlib.sha256(appended).hexdigest(),
+                "boot.img and vendor_boot.img carry DIFFERENT device trees; the "
+                "bootloader and the kernel would disagree about the idle states",
+            )
 
     def test_a_missing_dtb_is_refused(self):
         r = self._run("/nonexistent.dtb", "baseline")

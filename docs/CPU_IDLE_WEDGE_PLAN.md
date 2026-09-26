@@ -186,11 +186,30 @@ discrimination is itself tested: the unablated DTB fails both ablation profiles.
 opposite of the other profiles, and getting it wrong would put two variables in
 one round:
 
-| profile | `boot.img` | `vendor_boot.img` | `init_boot.img` |
-|---|---|---|---|
-| `cpuidle-off` | same | **differs** (cmdline) | same |
-| `no-llcc-off` | **differs** (DTB) | same | same |
-| `no-cluster-idle` | **differs** (DTB) | same | same |
+| profile | `boot.img` | `vendor_boot.img` | `init_boot.img` | `dtbo.img` |
+|---|---|---|---|---|
+| `cpuidle-off` | same | **differs** (cmdline) | same | same |
+| `no-llcc-off` | **differs** (DTB) | **differs** (DTB) | same | same |
+| `no-cluster-idle` | **differs** (DTB) | **differs** (DTB) | same | same |
+
+**Both DTB-carrying partitions must be written, and this table said otherwise
+until it was measured.** `scripts/build-boot-bundle.sh` appends the DTB to
+`boot.img`'s payload *and* passes the same file as `--dtb` to `vendor_boot.img`,
+so an ablation changes two images, not one. Measured on a real
+`GTS9_IDLE_ABLATION=no-llcc-off` build:
+
+```
+boot.img         71e194a5 -> 80aa010f
+vendor_boot.img  1245bb39 -> e237a98e
+dtbo.img / init_boot.img / vbmeta.img   unchanged
+```
+
+Writing only `boot.img` would flash a tablet whose two device trees disagree
+about the cluster idle states — the kernel would boot one tree and the
+bootloader would hand over the other, and the round would be uninterpretable
+rather than merely wrong. The earlier draft of this table claimed
+`vendor_boot.img` was unchanged for these profiles, which is exactly the mistake
+this paragraph exists to prevent.
 
 The two DTB profiles keep the *kernel* identical — `Image.gz` is byte-identical
 across all three, verified on a real build — so the A/B still isolates one
