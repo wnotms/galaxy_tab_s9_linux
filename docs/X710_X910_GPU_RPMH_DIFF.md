@@ -553,9 +553,22 @@ this path is:
 ```
 
 `dev_pm_opp_adjust_voltage()` needs the OPP to **exist**. X710's `cpu7_opp_table`
-tops out at 2.9568 GHz, so the 3.36 GHz lookup returns `-ENOENT`, the `dev_err`
-fires, the caller's `dev_warn` follows, and that LUT entry is dropped. On X910 the
-OPP is declared, so the same call finds it.
+tops out at **3.1872 GHz**, so the 3.36 GHz lookup returns `-ENOENT`, the
+`dev_err` fires, the caller's `dev_warn` follows, and that LUT entry is dropped.
+On X910 the OPP is declared, so the same call finds it.
+
+*(This paragraph said 2.9568 GHz when it was written. The pinned
+`arch/arm64/boot/dts/qcom/sm8550.dtsi` ends at `opp-3187200000`, verified with
+`grep -oE 'opp-hz = /bits/ 64 <[0-9]+>'` against the pinned source; 2.9568 GHz is
+the second-highest entry, not the top. The error made the gap look smaller than it
+is and is corrected rather than left in place.)*
+
+**Fixed on 2026-09-26** by declaring the node X910 has, on X710. See
+[GALAXY_PRIME_OPP.md](GALAXY_PRIME_OPP.md) for the full account, the compiled-DTB
+verification and the scope boundaries. The "needs stock X710 evidence" line at the
+end of this section still stands for the question of whether *stock* uses the bin;
+what the fix rests on is only that this board's own hardware LUT advertises it and
+the driver says so on every boot.
 
 **This is not caused by the `epss_l3` fix.** `icc_scaling_enabled` is set simply
 by `dev_pm_opp_of_add_table()` succeeding, i.e. by the CPU having a DT OPP table
