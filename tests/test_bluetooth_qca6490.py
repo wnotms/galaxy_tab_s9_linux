@@ -597,23 +597,28 @@ class TheDocumentKeepsTheLayersHonest(unittest.TestCase):
         """These passed in test 222. The doc must record that with its evidence,
         not quietly leave them at NOT_TESTED now that they work."""
         text = read(DOC)
-        for prefix in ("| 10 | pair / connect", "| 11 | reboot reconnect"):
+        for prefix, evidence in (("| 10 | pair / connect", "Tests 222, 224"),
+                                 ("| 11 | reboot reconnect", "Test 222")):
             row = [l for l in text.splitlines() if l.startswith(prefix)][0]
             self.assertIn("PHYSICALLY_VERIFIED", row)
-            self.assertIn("Test 222", row)
+            self.assertIn(evidence, row)
 
-    def test_it_still_refuses_to_claim_a_working_data_path(self):
-        """The distinction that must survive: a bond is not a working link.
+    def test_it_records_the_data_path_as_working(self):
+        """Test 224 closed this: a HID keyboard delivered real keypresses.
 
-        Levels 10 and 11 pass, but no HID device has been attached, so nothing has
-        carried actual input over the bond. A Windows peer only offers audio and
-        PAN, neither of which this build can complete, so the doc must say a HID
-        peer is still required rather than implying end-to-end success.
+        The doc must show the evidence that distinguishes a working input path
+        from a mere bond, and must keep the reason the earlier Windows peer could
+        not demonstrate it - so the profile limitation is not mistaken later for a
+        tablet fault.
         """
         text = read(DOC)
-        self.assertIn("No functional data path has been exercised", text)
-        self.assertIn("HID", text)
+        self.assertIn("MCHOSE G87 V2-1 Keyboard", text)
+        self.assertIn("/dev/input/event4", text)
+        self.assertIn("Handlers=sysrq kbd leds", text)
+        # And the peer-side explanation stays, attributed to the peer.
         self.assertIn("br-connection-profile-unavailable", text)
+        self.assertIn("The Windows peer used in test 222 could not have shown this",
+                      text)
 
 
 if __name__ == "__main__":

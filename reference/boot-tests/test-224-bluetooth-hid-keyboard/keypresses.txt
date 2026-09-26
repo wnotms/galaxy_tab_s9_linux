@@ -1,0 +1,74 @@
+=== evtest /dev/input/event4 -- the owner typed on the MCHOSE G87 V2-1 ===
+=== captured 2026-09-26T14:58Z, tablet boot 0fea34b2 ===
+
+Both press (value 1) and release (value 0) are present, and each EV_KEY is
+preceded by an EV_MSC MSC_SCAN carrying the HID usage code, so the whole report
+path is working rather than a single stray event. The eight consecutive
+KEY_BACKSPACE pairs are the keyboard's own auto-repeat while the key was held.
+
+Event: time 1790434745.319672, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000d
+Event: time 1790434745.319672, type 1 (EV_KEY), code 36 (KEY_J), value 1
+Event: time 1790434745.319672, -------------- SYN_REPORT ------------
+Event: time 1790434745.484922, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000d
+Event: time 1790434745.484922, type 1 (EV_KEY), code 36 (KEY_J), value 0
+Event: time 1790434745.484922, -------------- SYN_REPORT ------------
+Event: time 1790434745.671267, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000d
+Event: time 1790434745.671267, type 1 (EV_KEY), code 36 (KEY_J), value 1
+Event: time 1790434745.813818, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000c
+Event: time 1790434745.813818, type 1 (EV_KEY), code 23 (KEY_I), value 1
+Event: time 1790434745.842722, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000d
+Event: time 1790434745.842722, type 1 (EV_KEY), code 36 (KEY_J), value 0
+Event: time 1790434745.887446, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70007
+Event: time 1790434745.887446, type 1 (EV_KEY), code 32 (KEY_D), value 1
+Event: time 1790434745.957118, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70016
+Event: time 1790434745.957118, type 1 (EV_KEY), code 31 (KEY_S), value 1
+Event: time 1790434746.000217, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70004
+Event: time 1790434746.000217, type 1 (EV_KEY), code 30 (KEY_A), value 1
+Event: time 1790434746.015686, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000c
+Event: time 1790434746.015686, type 1 (EV_KEY), code 23 (KEY_I), value 0
+Event: time 1790434746.084701, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70007
+Event: time 1790434746.084701, type 1 (EV_KEY), code 32 (KEY_D), value 0
+Event: time 1790434746.180311, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70004
+Event: time 1790434746.180311, type 1 (EV_KEY), code 30 (KEY_A), value 0
+Event: time 1790434746.180473, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70016
+Event: time 1790434746.180473, type 1 (EV_KEY), code 31 (KEY_S), value 0
+Event: time 1790434746.354155, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.354155, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434746.474879, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.474879, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434746.543504, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.543504, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434746.632717, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.632717, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434746.706285, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.706285, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434746.788655, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.788655, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434746.842402, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434746.842402, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434747.052081, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.052081, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434747.126483, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.126483, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434747.171934, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.171934, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434747.248153, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.248153, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434747.328967, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.328967, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434747.373451, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.373451, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 1
+Event: time 1790434747.472104, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7002a
+Event: time 1790434747.472104, type 1 (EV_KEY), code 14 (KEY_BACKSPACE), value 0
+Event: time 1790434747.981188, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1790434747.981188, type 1 (EV_KEY), code 38 (KEY_L), value 1
+Event: time 1790434748.050266, type 4 (EV_MSC), code 4 (MSC_SCAN), value 7000f
+Event: time 1790434748.050266, type 1 (EV_KEY), code 38 (KEY_L), value 0
+Event: time 1790434748.130401, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70016
+Event: time 1790434748.130401, type 1 (EV_KEY), code 31 (KEY_S), value 1
+Event: time 1790434748.251298, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70016
+Event: time 1790434748.251298, type 1 (EV_KEY), code 31 (KEY_S), value 0
+Event: time 1790434748.304707, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70028
+Event: time 1790434748.304707, type 1 (EV_KEY), code 28 (KEY_ENTER), value 1
+Event: time 1790434748.371800, type 4 (EV_MSC), code 4 (MSC_SCAN), value 70028
+Event: time 1790434748.371800, type 1 (EV_KEY), code 28 (KEY_ENTER), value 0

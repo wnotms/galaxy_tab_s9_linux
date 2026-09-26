@@ -1,0 +1,34 @@
+=== LEVEL 10 fully verified: a Bluetooth HID keyboard, end to end ===
+
+peer: MCHOSE G87 V2-1, address DC:05:5A:41:97:3E (LE Random)
+date: 2026-09-26T14:57:20Z
+
+--- 1. bond, over BLE, with the keyboard advertising in pairing mode ---
+Device DC:05:5A:41:97:3E (random)
+	Name: MCHOSE G87 V2-1
+	Alias: MCHOSE G87 V2-1
+	Appearance: 0x03c1 (961)
+	Icon: input-keyboard
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Blocked: no
+	Connected: yes
+	WakeAllowed: yes
+	LegacyPairing: no
+	UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+	UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+	UUID: Battery Service           (0000180f-0000-1000-8000-00805f9b34fb)
+
+--- 2. the kernel created INPUT devices for it (the decisive step) ---
+N: Name="pmic_pwrkey"
+N: Name="pmic_resin"
+N: Name="Book Cover Keyboard Slim (EF-DX710)"
+N: Name="gpio-keys"
+N: Name="MCHOSE G87 V2-1 Keyboard"
+N: Name="MCHOSE G87 V2-1 Mouse"
+
+--- 3. the keyboard is bound to the HID/input stack, not merely connected ---
+S: Sysfs=/devices/virtual/misc/uhid/0005:07D7:EFFF.0001/input/input4
+H: Handlers=sysrq kbd leds event4 
