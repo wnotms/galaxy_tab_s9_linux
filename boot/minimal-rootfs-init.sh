@@ -1,28 +1,42 @@
 #!/bin/sh
-# Minimal PID 1 path for the gts9_minimal_rootfs=1 boot profile.
+# Minimal PID 1: hand PID 1 to the Debian root filesystem on the microSD card.
 #
-# /proc is mounted by bringup-init.sh so this script can inspect cmdline and
-# mount the remaining pseudo filesystems without entering the full bring-up.
+# This script is a complete /init on its own.  It does NOT need bringup-init.sh
+# to have run first, and the production initramfs installs it as /init directly.
 #
-# Every stage is reported on /dev/kmsg and /dev/console, and - once the Debian
-# root filesystem is mounted - persisted to
+# Order matters, and getting it wrong is silent rather than loud: /proc must be
+# mounted BEFORE /proc/cmdline is read, or the read fails and every gts9_* option
+# is dropped without a message.  This script used to rely on bringup-init.sh
+# having mounted procfs already, which was true as a branch of that script and
+# false the moment it became /init.  The sequence below is therefore:
+#
+#   1. PATH
+#   2. mount /proc                      <- so the next step can work
+#   3. parse /proc/cmdline
+#   4. mount /sys, /dev, /run
+#   5. state library
+#   6. root wait / mount / switch_root
+#
+# Every stage is reported on /dev/kmsg and the console, and - once the Debian root
+# filesystem is mounted - persisted to
 #
 #	/newroot/var/log/gts9-minimal-last-boot
 #
 # by boot/minimal-rootfs-state.sh.  That file is the evidence a later TWRP
-# session reads when the panel stays black and no USB console appears; losing
-# it would make a failed boot indistinguishable from a boot that never ran.
+# session reads when the panel stays black and there is no network yet; losing it
+# would make a failed boot indistinguishable from a boot that never ran.
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 export PATH
 
 ROOTFS_DEVICE=/dev/mmcblk1p1
 ROOTFS_WAIT_SECONDS=30
+MINIMAL_INIT=/sbin/init
 MINIMAL_STATE_LIB=${GTS9_MINIMAL_STATE_LIB:-/minimal-rootfs-state.sh}
 
 # Fallbacks, replaced by the state library below.  A hand-built initramfs that
-# forgot the library still boots and still talks on the console; it only loses
-# the persistent record.
+# forgot the library still boots and still reports; it only loses the persistent
+# record.
 minimal_emit() {
     printf '%s\n' "$*"
     if [ -w /dev/kmsg ]; then
@@ -47,12 +61,6 @@ minimal_state_fail() {
     minimal_emit "GTS9_MINIMAL_FAIL=$GTS9_MINIMAL_FAILURE"
 }
 
-if [ -r "$MINIMAL_STATE_LIB" ]; then
-    . "$MINIMAL_STATE_LIB"
-else
-    minimal_emit "GTS9_MINIMAL_WARN=state-library-missing:$MINIMAL_STATE_LIB"
-fi
-
 mount_pseudo_if_missing() {
     pseudo_type=$1
     pseudo_source=$2
@@ -63,6 +71,35 @@ mount_pseudo_if_missing() {
     fi
     mount -t "$pseudo_type" "$pseudo_source" "$pseudo_target"
 }
+
+# ---------------------------------------------------------------------------
+# 1 and 2.  /proc first, unconditionally and before anything reads cmdline.
+#
+# This cannot itself depend on /proc/mounts (the mount may not be there yet), so
+# it is a plain mount with the "already mounted" case inferred from the mount's
+# own failure.  A kernel always provides procfs, so a failure here means the
+# kernel is not what we think it is and the rescue shell is the right answer.
+# ---------------------------------------------------------------------------
+mkdir -p /proc 2>/dev/null || true
+if ! grep -q ' /proc ' /proc/mounts 2>/dev/null; then
+    mount -t proc proc /proc 2>/dev/null || true
+fi
+if [ ! -r /proc/cmdline ]; then
+    minimal_emit 'GTS9_MINIMAL_FAIL=proc-mount'
+    minimal_emit 'ERROR: /proc/cmdline is unreadable after mounting procfs'
+    minimal_emit 'gts9_* options cannot be read; the built-in defaults apply'
+fi
+
+# ---------------------------------------------------------------------------
+# 3. cmdline, now that it can actually be read.
+# ---------------------------------------------------------------------------
+for arg in $(cat /proc/cmdline 2>/dev/null); do
+    case "$arg" in
+        gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;
+        gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=} ;;
+    esac
+done
+GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
 
 minimal_rescue_shell() {
     minimal_emit 'GTS9_MINIMAL_RESCUE=BusyBox shell'
@@ -105,26 +142,9 @@ minimal_fail() {
     minimal_rescue_shell
 }
 
-# The handoff init defaults to the direct /sbin/init path that the full
-# bring-up profile has already proven on this device.  The static trampoline
-# (with its post-switch_root watchdog) is opt-in through
-# gts9_minimal_init=/run/gts9-minimal-pid1 while it is still being validated:
-# test 178 boot #3 hung the tablet hard enough that no key combination reached
-# TWRP, so the default path must be the one with a working history.
-MINIMAL_INIT=/sbin/init
-for arg in $(cat /proc/cmdline 2>/dev/null); do
-    case "$arg" in
-        gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;
-        gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=} ;;
-    esac
-done
-GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
-
-if ! mount_pseudo_if_missing proc proc /proc; then
-    minimal_emit 'GTS9_MINIMAL_FAIL=pseudo-mount'
-    minimal_emit 'ERROR: could not mount procfs'
-    minimal_rescue_shell
-fi
+# ---------------------------------------------------------------------------
+# 4. the remaining pseudo filesystems.  /proc is already mounted above.
+# ---------------------------------------------------------------------------
 if ! mount_pseudo_if_missing sysfs sysfs /sys; then
     minimal_emit 'GTS9_MINIMAL_FAIL=pseudo-mount'
     minimal_emit 'ERROR: could not mount sysfs'
@@ -141,6 +161,20 @@ if ! mount_pseudo_if_missing tmpfs tmpfs /run; then
     minimal_rescue_shell
 fi
 
+# ---------------------------------------------------------------------------
+# 5. the state library.  It is sourced after /proc and /run exist because it
+#    writes its first record into /run and reads /proc/uptime; sourcing it
+#    earlier would leave those readings empty rather than failing.
+# ---------------------------------------------------------------------------
+if [ -r "$MINIMAL_STATE_LIB" ]; then
+    . "$MINIMAL_STATE_LIB"
+else
+    minimal_emit "GTS9_MINIMAL_WARN=state-library-missing:$MINIMAL_STATE_LIB"
+fi
+
+# ---------------------------------------------------------------------------
+# 6. root handoff.
+# ---------------------------------------------------------------------------
 minimal_state_init
 minimal_state_stage kernel-userspace
 minimal_state_stage waiting-root
@@ -182,11 +216,28 @@ fi
 minimal_state_stage init-found
 mkdir -p /newroot/dev /newroot/proc /newroot/sys /newroot/run || \
     minimal_fail root-mount
-if ! cp /sbin/gts9-minimal-pid1 /run/gts9-minimal-pid1 ||
-   ! cp /bin/busybox /run/busybox ||
-   ! chmod 0755 /run/gts9-minimal-pid1 /run/busybox; then
-    minimal_emit 'could not stage the minimal PID 1 rescue helper'
-    minimal_fail switch-root-returned
+
+# The static trampoline (boot/gts9-minimal-pid1.c) is OPT-IN and defaults to off.
+# It exists to leave a post-switch_root watchdog trace, and test 178 boot #3 showed
+# it can hang the tablet hard enough that no key combination reaches TWRP, so the
+# direct /sbin/init path is the proven default.
+#
+# Staging it is therefore conditional, and that is a reliability fix rather than a
+# size one.  This block used to run unconditionally: with MINIMAL_INIT=/sbin/init
+# the helper and BusyBox were still copied into /run, and - worse - if either copy
+# or the chmod failed, the boot was aborted with `minimal_fail
+# switch-root-returned`.  So a normal, otherwise perfectly healthy boot could fail
+# because a helper it was never going to execute could not be staged.  Now the
+# default path skips all of it: no copy, no BusyBox copy, no selftest, no
+# existence check later on.
+if [ "$MINIMAL_INIT" = /run/gts9-minimal-pid1 ]; then
+    if ! cp /sbin/gts9-minimal-pid1 /run/gts9-minimal-pid1 ||
+       ! cp /bin/busybox /run/busybox ||
+       ! chmod 0755 /run/gts9-minimal-pid1 /run/busybox; then
+        minimal_emit 'could not stage the minimal PID 1 rescue helper'
+        minimal_emit 'falling back to the direct /sbin/init handoff'
+        MINIMAL_INIT=/sbin/init
+    fi
 fi
 
 # Run the staged trampoline once, normally, before the handoff.  If it cannot

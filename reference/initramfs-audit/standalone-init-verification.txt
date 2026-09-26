@@ -1,0 +1,53 @@
+=== Proof that boot/minimal-rootfs-init.sh works as a standalone /init ===
+=== Measured on the host, 2026-09-26, with the real initramfs BusyBox.
+
+WHY THIS MATTERS
+The script used to assume bringup-init.sh had already mounted /proc, and it read
+/proc/cmdline BEFORE mounting procfs itself.  As a branch of bringup-init.sh that
+was fine; as /init it means every gts9_* option is silently dropped, because
+`cat /proc/cmdline` on an unmounted /proc fails and a `for arg in $(...)` over an
+empty result is not an error.
+
+STRUCTURAL PROOF (line numbers, which need no emulation to be trustworthy)
+  OLD  (git show HEAD:boot/minimal-rootfs-init.sh)
+    114: MINIMAL_INIT=/sbin/init
+    115: for arg in $(cat /proc/cmdline ...)      <- reads before mounting
+    123: if ! mount_pseudo_if_missing proc proc /proc
+  NEW  (boot/minimal-rootfs-init.sh)
+     34: MINIMAL_INIT=/sbin/init
+     85: mount -t proc proc /proc                 <- mounts first
+     96: for arg in $(cat /proc/cmdline ...)      <- then reads
+
+FUNCTIONAL PROOF (the real aarch64 BusyBox, executed under a user namespace)
+A scratch root was assembled with /bin/busybox plus the 17 applet symlinks the
+production image ships, the script installed as /init, a /proc directory that is
+EMPTY until the script mounts procfs, and a cmdline naming a device that does not
+exist:
+
+  /proc/cmdline = "console=tty0 gts9_rootfs=/dev/FAKE-FROM-CMDLINE"
+
+Run standalone, with the parsed value echoed by an instrumented copy:
+
+  $ chroot <tree> /bin/sh -c 'timeout 10 /init-instrumented'
+  PARSED-ROOTFS=/dev/FAKE-FROM-CMDLINE
+
+So the option was parsed, which can only happen after a working /proc exists. The
+un-instrumented run behaves as designed for a device that never appears:
+
+  GTS9_MINIMAL_STAGE=kernel-userspace
+  GTS9_MINIMAL_STAGE=waiting-root
+  root device missing: /dev/mmcblk1p1 (waited 30s)
+  GTS9_MINIMAL_FAIL=root-timeout
+  GTS9_MINIMAL_RESCUE=BusyBox shell
+  exit=124   (timeout killed it; PID 1 had NOT exited or panicked)
+
+The 30 s wait, the failure record and the rescue shell all fired, and PID 1 was
+still alive at the end - which is requirement 24's failure test performed on the
+host rather than by breaking a real rootfs.
+
+WHAT THIS HARNESS CANNOT DO
+Mounting real procfs and sysfs needs privileges a user namespace does not grant,
+so the run above reports "mount: permission denied" for sysfs and stops at
+pseudo-mount when /proc is genuinely absent. That is a limitation of the harness,
+not of the script: the ordering claim is therefore also stated structurally by
+line number, which does not depend on the emulation.
