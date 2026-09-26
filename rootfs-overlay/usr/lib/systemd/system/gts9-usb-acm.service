@@ -1,16 +1,22 @@
 [Unit]
-Description=X710 USB debug link (NCM network for ssh + one serial port)
+Description=X710 USB debug link (NCM network for ssh; no serial port)
 Documentation=file:/usr/share/doc/gts9/FAST_DEBUG_CHANNEL.md
 After=local-fs.target
 # The unit name keeps the historical "acm" because scripts, test records and the
-# boot-stage history all refer to it.  What it provides changed on 2026-09-26: the
-# gadget is now the NCM network ssh is reached over plus a single plain serial
-# port (acm.usb0).  The second serial port (acm.usb1) is gone - it existed only to
-# carry the kernel printk console, which was removed.
+# boot-stage history (`usb-acm-ready`) all refer to it; renaming would invalidate
+# that audit trail for no functional gain.  Read the name as a label.
 #
-# The ordering is kept even though no getty runs on ttyGS0 any more: it costs
-# nothing and it documents that the node appears from this unit rather than from
-# dev-ttyGS0.device, which is what used to time out.
+# What it provides changed on 2026-09-26: the gadget is now the NCM network ssh is
+# reached over and NOTHING else.  The two serial ports went in two steps - acm.usb1
+# was the kernel printk console, acm.usb0 the last plain serial port - and the
+# kernel is built without CONFIG_USB_CONFIGFS_ACM, so no serial function can be
+# created even by hand.  See docs/BOOT_CONSOLE_BLOCK.md and docs/SHUTDOWN_DELAY.md
+# for why the consoles had to go, and install-debian-rootfs.sh --ssh-key for how a
+# rootfs gets its login now.
+#
+# The ordering below is kept even though nothing runs on ttyGS0 any more: it costs
+# nothing and it documents that the node used to appear from this unit rather than
+# from dev-ttyGS0.device, which is what used to time out.
 Before=serial-getty@ttyGS0.service
 
 [Service]

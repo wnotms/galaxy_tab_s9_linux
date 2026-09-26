@@ -62,16 +62,29 @@ class GadgetNetworkFunctionTests(unittest.TestCase):
         self.assertIsNotNone(m, "the network mkdir block is missing")
         self.assertNotIn("fail ", m.group(0))
 
-    def test_a_failed_bind_retries_without_the_network_function(self):
-        """Losing the console to an optional function would be unrecoverable."""
+    def test_a_failed_bind_is_fatal_now_that_no_serial_port_remains(self):
+        """This was the reverse until 2026-09-26, and the reversal is the point.
+
+        When the network function was an optional extra alongside a serial
+        console, a failed bind had to *retry without it*: losing the console to an
+        optional function would have been unrecoverable.  That reasoning depended
+        entirely on the console being there to fall back to.
+
+        There is no serial port any more, so the network function is not optional
+        and there is nothing to fall back to.  A bind failure is now fatal,
+        because a gadget that binds without NCM is a device with no channel at
+        all - and failing loudly makes that visible instead of leaving an
+        unreachable tablet that looks like it booted fine.
+        """
         text = read(GADGET)
         self.assertIn("cannot bind the gadget to $udc", text)
-        self.assertIn("net_drop", text)
-        # The retry must be inside the bind-failure branch.
         m = re.search(r"if ! echo \"\$udc\" > \"\$GADGET/UDC\".*?\nfi", text, re.S)
         self.assertIsNotNone(m, "the UDC bind block is missing")
-        self.assertIn("net_drop", m.group(0))
-        self.assertIn("retry", m.group(0).lower())
+        self.assertIn("fail", m.group(0), "a failed bind must be fatal")
+        self.assertNotIn("net_drop", m.group(0),
+                         "there is no fallback function to drop back to")
+        # And an unbuildable network function must fail before the bind is tried.
+        self.assertIn('fail "no network function', text)
 
     def test_the_function_goes_into_the_existing_gadget(self):
         """A second gadget cannot bind: one UDC, one gadget, and the console owns it."""

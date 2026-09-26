@@ -51,6 +51,15 @@ class UsbAcmServiceTests(unittest.TestCase):
         self.udc_dir.mkdir()
         self.record = self.root / 'gts9-minimal-last-boot'
         self.record.write_text(INITRAMFS_RECORD)
+        # The network function's config.  It is the ONLY function now, and the
+        # helper refuses to bind a gadget that provides no way into the tablet, so
+        # a harness without it would exercise a failure path rather than the
+        # normal one.
+        self.net_conf = self.root / 'gts9-usb-net'
+        self.write_net_conf('ncm 169.254.42.1/16')
+
+    def write_net_conf(self, text):
+        self.net_conf.write_text(text + '\n')
 
     def run_helper(self, *args, udc='a600000.usb', wait='2', env=None):
         if udc is not None:
@@ -59,9 +68,9 @@ class UsbAcmServiceTests(unittest.TestCase):
                            GTS9_USB_CONFIGFS=str(self.configfs),
                            GTS9_USB_GADGET_DIR=str(self.gadget),
                            GTS9_USB_UDC_DIR=str(self.udc_dir),
-                           GTS9_USB_TTY=str(self.root / 'ttyGS0'),
+                           GTS9_USB_NET_CONF=str(self.net_conf),
                            GTS9_USB_UDC_WAIT_SECONDS=wait,
-                           GTS9_USB_TTY_WAIT_SECONDS='1',
+                           GTS9_USB_IFACE_WAIT_SECONDS='1',
                            GTS9_STAGE_HELPER=str(STAGE_HELPER),
                            GTS9_MINIMAL_BOOT_RECORD=str(self.record))
         if env:
@@ -77,94 +86,102 @@ class UsbAcmServiceTests(unittest.TestCase):
                 fields[key] = value
         return fields
 
-    def test_creates_the_verified_acm_gadget(self):
+    def test_creates_the_verified_gadget_with_no_serial_function(self):
         result = self.run_helper()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((self.gadget / 'idVendor').read_text().strip(), '0x0525')
         self.assertEqual((self.gadget / 'idProduct').read_text().strip(), '0xa4a7')
-        self.assertTrue((self.gadget / 'functions' / 'acm.usb0').is_dir())
-        self.assertTrue((self.gadget / 'configs' / 'c.1' / 'acm.usb0').is_symlink())
-        self.assertTrue((self.gadget / 'configs' / 'c.1' / 'acm.usb0').resolve().is_dir())
         self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
+        # The gadget exists and is bound, and provides the network function that
+        # ssh is reached over - and nothing serial.
+        self.assertTrue((self.gadget / 'functions' / 'ncm.usb0').is_dir())
+        self.assertTrue((self.gadget / 'configs' / 'c.1' / 'ncm.usb0').is_symlink())
 
-    def test_creates_exactly_one_acm_function(self):
-        """One serial port, not two.
+    def test_no_serial_function_is_created_at_all(self):
+        """The gadget is exactly one function: NCM.
 
-        Until 2026-09-26 there were two because their roles were split: acm.usb0
-        was the login shell and acm.usb1 the kernel printk console, since a gadget
-        serial console takes its port's IN endpoint and one port cannot be both.
+        Three steps got here, and each exposed the next.  The serial *consoles*
+        went first (acm.usb1 was the kernel printk console, acm.usb0 carried an
+        autologin shell); then acm.usb1, whose only purpose was to be the port
+        printk registered on; then acm.usb0, because nothing ever wrote to it,
+        nothing held it open, the kernel log did not come out of it, and a login
+        is now delivered as an ssh key at install time instead.
 
-        Both consoles are gone, so the second port had no purpose left - it
-        existed only to be the port printk registered on (it was created second so
-        u_serial handed it line 1).  It is removed, and exactly one serial port
-        remains so a terminal program still has a wired endpoint that does not
-        depend on the network function having bound.
-
-        This must stay a single port: a second serial port appearing again means
-        something is trying to put a console back on the gadget.
+        The kernel is built without USB_CONFIGFS_ACM and USB_CONFIGFS_SERIAL, so
+        this is not merely a convention: no configfs serial function can be
+        created even by hand.  A serial function appearing again would mean a
+        capability had returned to a device that deliberately has none.
         """
         self.run_helper()
         functions = sorted(p.name for p in (self.gadget / 'functions').iterdir())
-        self.assertEqual(functions, ['acm.usb0'])
+        self.assertEqual(functions, ['ncm.usb0'])
         links = sorted(p.name for p in (self.gadget / 'configs' / 'c.1').iterdir()
                        if p.is_symlink())
-        self.assertEqual(links, ['acm.usb0'])
-        # The node it lands on is /dev/ttyGS0: gserial_alloc_line() hands out the
-        # lowest free line, so acm.usb0 must be the first serial function created
-        # and the only one.  Compare against the *call* to setup_network, not its
-        # definition, which appears earlier in the file.
+        self.assertEqual(links, ['ncm.usb0'])
         text = HELPER.read_text()
-        create0 = text.index('mkdir -p "$GADGET/functions/acm.usb0"')
-        self.assertNotIn('mkdir -p "$GADGET/functions/acm.usb1"', text)
-        call = text.index('\nsetup_network\n')
-        self.assertLess(create0, call,
-                        'acm.usb0 must be created before the network function, so '
-                        'it keeps /dev/ttyGS0')
+        # No serial function may be CREATED.  acm.usb0/acm.usb1 appear only in the
+        # migration that removes them from an older install, so the check is for a
+        # creation command, not for the string.
+        self.assertNotIn('mkdir -p "$GADGET/functions/acm', text)
+        self.assertNotIn('mkdir -p "$GADGET/functions/gser', text)
+        self.assertIn('retire_serial_ports', text)
 
-    def test_an_upgraded_gadget_drops_the_retired_port(self):
+    def test_a_missing_network_function_is_fatal(self):
+        """Without NCM the gadget provides no way into the tablet at all.
+
+        A serial port used to be the consolation prize; there is none now, so an
+        unbuildable network function has to fail loudly rather than bind a gadget
+        that nothing can reach.
+        """
+        text = HELPER.read_text()
+        self.assertIn('if [ -z "$net_kind" ]; then', text)
+        self.assertIn('fail "no network function', text)
+
+    def test_an_upgraded_gadget_drops_the_serial_ports(self):
         """The live gadget is rebuilt, because configfs cannot edit a bound one.
 
         An upgraded rootfs keeps the gadget the previous install built, and that
-        gadget has acm.usb1 in its configuration.  configfs refuses to remove a
-        function from a bound gadget, so the helper has to unbind, remove the
-        function and let the normal path rebuild - otherwise the second port
-        survives the upgrade forever and the removal is only true for new installs.
+        gadget has acm.usb0 (and possibly acm.usb1) in its configuration.  configfs
+        refuses to remove a function from a bound gadget, so the helper has to
+        unbind, remove them and let the normal path rebuild - otherwise the serial
+        ports survive the upgrade forever and the removal is only true for new
+        installs.
         """
         self.run_helper()  # builds the gadget
-        # Simulate the old layout: put acm.usb1 back and leave the gadget bound.
-        (self.gadget / 'functions' / 'acm.usb1').mkdir()
-        (self.gadget / 'configs' / 'c.1' / 'acm.usb1').symlink_to(
-            self.gadget / 'functions' / 'acm.usb1')
+        # Simulate the old layout: put both serial ports back, bound.
+        for fn in ('acm.usb0', 'acm.usb1'):
+            (self.gadget / 'functions' / fn).mkdir()
+            (self.gadget / 'configs' / 'c.1' / fn).symlink_to(
+                self.gadget / 'functions' / fn)
         result = self.run_helper()
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertFalse((self.gadget / 'functions' / 'acm.usb1').exists(),
-                         'the retired port must not survive an upgrade')
-        self.assertFalse((self.gadget / 'configs' / 'c.1' / 'acm.usb1').exists())
-        # ... and the remaining port still came back and bound.
-        self.assertTrue((self.gadget / 'functions' / 'acm.usb0').is_dir())
+        for fn in ('acm.usb0', 'acm.usb1'):
+            self.assertFalse((self.gadget / 'functions' / fn).exists(),
+                             f'{fn} must not survive an upgrade')
+            self.assertFalse((self.gadget / 'configs' / 'c.1' / fn).exists())
+        # ... and the network function came back and bound, which is what the ssh
+        # transport needs.
+        self.assertTrue((self.gadget / 'functions' / 'ncm.usb0').is_dir())
         self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
 
-    def test_the_remaining_port_is_not_made_a_console(self):
-        """The one surviving port is forced OFF, never on.
+    def test_no_configfs_console_attribute_is_written(self):
+        """Nothing may touch a gadget console attribute any more.
 
-        This used to assert 0 on the shell port and 1 on the console port.  The
-        gadget kernel console is the measured cause of the boot stall - a userspace
-        write() to /dev/console blocks in n_tty_write() while nothing drains the
-        port (docs/BOOT_CONSOLE_BLOCK.md) - and the kernel is now built without
-        CONFIG_U_SERIAL_CONSOLE, so the configfs attribute does not exist on a
-        current kernel.
+        This used to assert the split: 0 on the shell port, 1 on the console port.
+        Then it asserted 0 on the one surviving port.  Now there is no serial port
+        at all, so there is no console attribute either, and the kernel is built
+        without CONFIG_U_SERIAL_CONSOLE - the attribute is compiled out of f_acm.
 
-        The write is kept, and forces 0, so that running this script against an
-        OLDER kernel (a recovery image, a rollback) also leaves no console on the
-        gadget.  Nothing may set 1 again.
+        Asserting the absence is the point: any write to a gadget console
+        attribute would mean a serial function exists to host it.
         """
         text = HELPER.read_text()
-        self.assertIn('echo 0 > "$GADGET/functions/acm.usb0/console"', text)
+        self.assertNotIn('/console"', text)
+        self.assertNotIn('clear_console', text)
         self.assertNotIn('echo 1 >', text)
-        self.assertIn('[ -e "$GADGET/functions/acm.usb0/console" ]', text)
-        self.assertIn('clear_console', text)
-        # No function may be addressed that no longer exists.
-        self.assertNotIn('$GADGET/functions/acm.usb1/console', text)
+        # The only functions named anywhere are the network one and the two the
+        # migration removes.
+        self.assertIn('retire_serial_ports', text)
 
     def test_the_network_transport_ships_in_the_overlay(self):
         # /etc/gts9-usb-net used to be created by hand on the tablet.  With the
@@ -190,9 +207,19 @@ class UsbAcmServiceTests(unittest.TestCase):
         for forbidden in ('mass_storage', 'rndis', 'mtp', 'adb', 'uvc', 'hid'):
             self.assertNotIn(forbidden, HELPER_CODE.lower(), forbidden)
 
-    def test_the_network_function_is_the_one_deliberate_exception(self):
-        # Narrowed on 2026-09-25: NCM/ECM is allowed, because it is the transport
-        # ssh and adb are reached over, but ONLY behind all of these conditions.
+    def test_the_network_function_is_the_only_function(self):
+        """NCM is not an "exception" any more - it is the entire gadget.
+
+        This test used to be called "the one deliberate exception" and assert that
+        a failed bind *retried without* the network function, keeping the serial
+        console as the consolation prize.  There is no console now, so a gadget
+        without the network function provides no way into the tablet at all and
+        must fail instead.
+
+        What is still forbidden is everything else: mass storage would expose the
+        root filesystem, and RNDIS/MTP/UVC/HID/ADB are not needed and are not
+        wanted on a device whose only external link is a debug cable.
+        """
         text = HELPER_CODE
         self.assertIn('ncm | ecm', text, 'only ncm and ecm are accepted')
 
@@ -203,12 +230,15 @@ class UsbAcmServiceTests(unittest.TestCase):
                 text, rf"{fn}\(\) \{{\n\t\[ -n \"\$net_kind\" \] \|\| return 0",
                 f'{fn} must be a no-op with no flag file')
 
-        # (b) any failure drops the function and keeps the console
-        self.assertIn('net_drop', text)
+        # (b) no network function is fatal, because nothing else provides a login
+        self.assertIn('fail "no network function', text)
+        # ... and a failed bind must NOT silently continue without it
         bind = re.search(r'if ! echo "\$udc" > "\$GADGET/UDC".*?\nfi', text, re.S)
         self.assertIsNotNone(bind, 'the UDC bind block is missing')
-        self.assertIn('net_drop', bind.group(0),
-                      'a failed bind must retry without the network function')
+        self.assertIn('fail', bind.group(0),
+                      'a failed bind must be fatal now that no serial port is left')
+        self.assertNotIn('net_drop', bind.group(0),
+                         'there is no fallback function to drop back to')
 
         # (c) no second gadget, and no block device
         self.assertNotIn('usb_gadget/g1', text)
