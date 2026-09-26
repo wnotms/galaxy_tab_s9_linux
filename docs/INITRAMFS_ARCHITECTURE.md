@@ -227,8 +227,21 @@ Everything else in the file is a failure branch that does not run, a function
 definition, or a comment. The trampoline blocks are two `if` statements that are
 false by default, and the rescue path is only reached through `minimal_fail`.
 
-Measured, not counted: the whole handoff occupies **~100 µs** of monotonic time on
-the tablet, with `/init` entered and the root filesystem mounted 66 µs apart.
+Measured, not counted. On the final image (boot `8cac4aba`), the tablet's own
+monotonic clock:
+
+| event | monotonic |
+|---|---|
+| `kernel-userspace` (`/init` running) | 1.799849 |
+| `root-mounted` | 1.799942 |
+| `init-found` | 1.799969 |
+| `systemd-entered` (Debian) | 2.918680 |
+| `usb-acm-ready` (ncm.usb0 + usb0) | 3.522571 |
+
+The handoff itself is **93 µs** from `/init` to the root filesystem being mounted,
+and Debian's systemd is running 1.12 s after that. Everything the old single image
+did before the `exec` - display recovery, the gadget, the GPT scan, the RTC, the
+hardware report - is simply absent from the path.
 
 ### The boot record is gated, not verbose
 
