@@ -1,0 +1,58 @@
+=== gts9-bluetooth-address: behaviour verified off-device ===
+
+The helper is #!/bin/sh and Debian's /bin/sh is dash, so it was exercised under
+dash on the host with a simulated environment (a fake btmgmt that records its
+argv, and a fake hci0 path). This is what could be checked without the tablet,
+which is currently wedged (test-219).
+
+--- the happy path, and the exact address passed -------------------------------
+
+$ dash ... sh helper-dash.sh
+gts9-bt-addr: set public address 38:8A:06:59:04:E7 (from /tmp/btsim/mnt/efs/bluetooth/bt_addr)
+gts9-bt-addr: address set; the BlueZ index was not readable yet (bluetoothd may be down)
+rc=0
+
+calls made to btmgmt:
+  CALLED: public-addr 38:8A:06:59:04:E7
+  CALLED: public-addr 38:8A:06:59:04:E7      <- a second run, idempotent
+  CALLED: info
+
+The address handed to btmgmt is the one read from the file, not a literal: the
+host tests assert that no MAC-shaped literal other than the all-zero refusal
+appears in the code, and that the assignment is fed by BT_ADDR_FILE.
+
+--- every malformed input is refused, with NO btmgmt call ---------------------
+
+  input                  result                                                    calls
+  ---------------------  ------------------------------------------------------  -----
+  <empty>                bt_addr missing or malformed (empty)                         0
+  00:00:00:00:00:00      bt_addr is all zero; refusing to use it                      0
+  not-a-mac              bt_addr missing or malformed (not-a-mac)                     0
+  38:8A:06:59:04         bt_addr missing or malformed (38:8A:06:59:04)                0
+  38:8A:06:59:04:E7:99   bt_addr missing or malformed (38:8A:06:59:04:E7:99)           0
+
+"calls=0" is the point: a bad file is rejected before anything is passed to the
+controller, so a damaged efs entry cannot put a wrong or invented address on the
+air.
+
+--- the stdin form, which is the bug that hung the unit -----------------------
+
+$ : | timeout 10 btmgmt public-addr 38:8A:06:59:04:E7
+hci0 Set Public Address complete, options:
+rc=0
+
+This is the exact form the helper uses. Measured on the tablet, the same command
+with `</dev/null` - which is what systemd supplies on a unit's stdin - never
+returned and had to be killed by TimeoutStartSec. The helper therefore pipes
+stdin from the shell builtin `:` and wraps every btmgmt call in `timeout`.
+
+--- what this does NOT cover --------------------------------------------------
+
+* The sysfs wait for /sys/class/bluetooth/hci0 was exercised only for its
+  negative case here (the host has no Bluetooth adapter). On the tablet it was
+  observed to find hci0 and proceed.
+* The real mount of /dev/disk/by-partlabel/efs: tested on the host only through a
+  stubbed `mount`. On the tablet the same `-o ro,noload` mount was used
+  interactively and read the address correctly.
+* The systemd unit's automatic execution at boot is UNVERIFIED. That is the
+  reboot which hit the CPU wedge; see test-219.

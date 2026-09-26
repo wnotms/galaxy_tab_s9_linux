@@ -184,4 +184,8 @@ q "bluetooth.service active" 'systemctl is-active bluetooth.service 2>/dev/null 
 q "bluez version" 'bluetoothd --version 2>/dev/null || dpkg-query -W -f="\${Version}" bluez 2>/dev/null || echo unknown'
 
 hdr "done"
-say "preflight complete - nothing was written to the tablet"
+if [ "$MODE" = "--local" ]; then
+	say "preflight complete - collected from this host (--local); nothing was written"
+else
+	say "preflight complete - nothing was written to the tablet"
+fi
