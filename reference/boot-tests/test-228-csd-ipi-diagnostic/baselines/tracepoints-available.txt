@@ -1,0 +1,46 @@
+=== trace_clock options (global required, brief §11) ===
+nop
+--- current clock ---
+[local] global counter uptime perf mono mono_raw boot tai
+--- available clocks ---
+trace_clock
+=== our candidate event families ===
+--- csd
+csd:csd_function_entry
+csd:csd_function_exit
+csd:csd_queue_cpu
+--- ipi
+ipi:ipi_entry
+ipi:ipi_exit
+ipi:ipi_raise
+ipi:ipi_send_cpu
+ipi:ipi_send_cpumask
+--- irq
+irq:irq_handler_entry
+irq:irq_handler_exit
+irq:softirq_entry
+irq:softirq_exit
+irq:softirq_raise
+irq:tasklet_entry
+irq:tasklet_exit
+--- rcu
+rcu:rcu_barrier
+rcu:rcu_batch_end
+rcu:rcu_batch_start
+rcu:rcu_callback
+rcu:rcu_exp_funnel_lock
+rcu:rcu_exp_grace_period
+rcu:rcu_fqs
+rcu:rcu_future_grace_period
+rcu:rcu_grace_period
+rcu:rcu_grace_period_init
+rcu:rcu_invoke_callback
+rcu:rcu_invoke_kfree_bulk_callback
+rcu:rcu_invoke_kvfree_callback
+rcu:rcu_nocb_wake
+rcu:rcu_preempt_task
+rcu:rcu_quiescent_state_report
+rcu:rcu_segcb_stats
+rcu:rcu_sr_normal
+rcu:rcu_stall_warning
+rcu:rcu_torture_read

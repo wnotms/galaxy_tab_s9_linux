@@ -1,0 +1,12 @@
+[   14.312026] gts9 kernel: smp: csd: Detected non-responsive CSD lock (#1) on CPU#4, waiting 5000000050 ns for CPU#03 do_nothing+0x0/0x8(0x0).
+[   14.312217] gts9 kernel: smp:         csd: CSD lock (#1) unresponsive.
+[   15.240221] gts9 kernel: smp: csd: Detected non-responsive CSD lock (#2) on CPU#1, waiting 5000000102 ns for CPU#07 rcu_barrier_handler+0x0/0x8c(0x7).
+[   15.240346] gts9 kernel: smp:         csd: CSD lock (#2) unresponsive.
+[   15.290308] gts9 kernel: smp: csd: Re-sending CSD lock (#2) IPI from CPU#01 to CPU#07
+[   24.312436] gts9 kernel: smp: csd: Re-sending CSD lock (#1) IPI from CPU#04 to CPU#03
+[   34.312311] gts9 kernel: smp: csd: Continued non-responsive CSD lock (#1) on CPU#4, waiting 25000000095 ns for CPU#03 do_nothing+0x0/0x8(0x0).
+[   34.312433] gts9 kernel: smp:         csd: CSD lock (#1) unresponsive.
+[   34.424531] gts9 kernel: smp: csd: Re-sending CSD lock (#1) IPI from CPU#04 to CPU#03
+[   35.240090] gts9 kernel: smp: csd: Continued non-responsive CSD lock (#2) on CPU#1, waiting 25000000250 ns for CPU#07 rcu_barrier_handler+0x0/0x8c(0x7).
+[   35.245503] gts9 kernel: smp:         csd: CSD lock (#2) unresponsive.
+[   35.264069] gts9 kernel: smp: csd: Re-sending CSD lock (#2) IPI from CPU#01 to CPU#07

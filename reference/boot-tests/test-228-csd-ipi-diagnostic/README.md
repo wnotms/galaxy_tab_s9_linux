@@ -1,8 +1,16 @@
 # Test 228 — the CSD/IPI diagnostic: candidate, arming gate, and the on-device plan
 
-**Status: prepared and built, NOT flashed.** The tablet is at its pre-test state
-and no write has been made. This is the round-34 hand-off: everything a physical
-run needs is fixed here in advance.
+**Status: RUN. See `RESULT.md` for what happened and what it established.**
+
+This file was written before the flash and is kept as the pre-registered run
+plan: the candidate identity, the write scope, the arming gate and the expected
+output shapes. It is not edited to match the outcome — the outcome is in
+`RESULT.md`, and the value of this file is that it says what was expected before
+anything was known.
+
+Two things it got wrong are corrected in `RESULT.md` §5 and were fixed in the
+harness: the arming gate and the expected CSD shapes were right, but the runner
+mis-classified the wedge it was built to catch.
 
 The decision rule is pre-registered in `docs/CSD_IPI_WEDGE_PLAN.md` §4 and was
 committed before this candidate existed. It is not re-derived here.

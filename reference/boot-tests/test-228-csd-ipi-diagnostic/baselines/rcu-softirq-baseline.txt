@@ -1,0 +1,8 @@
+=== observer-effect note: is CSD debug a pure printk, or does it change the hot path? ===
+  csd params present (production should be EMPTY): 
+=== RCU stall timeout and tick (for onset arithmetic) ===
+  HZ: 100
+=== softirq baseline (the field that stayed frozen at 1391/1391 in test-227) ===
+                    CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+          HI:          0          0          0          0          0          0          0          1
+       TIMER:     226088      40704      41642     210960     102265      43417      79085     277607
