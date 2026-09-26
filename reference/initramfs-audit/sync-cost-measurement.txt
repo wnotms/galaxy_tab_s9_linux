@@ -1,0 +1,59 @@
+=== Cost of the global sync calls on the production handoff path ===
+=== Measured on the tablet, 2026-09-26, root on /dev/mmcblk1p1 (ext4, microSD).
+
+WHY THIS WAS MEASURED
+boot/minimal-rootfs-state.sh calls sync twice per minimal_state_write(), and the
+handoff path writes the record at every stage. The brief for this round asks
+whether that is worth changing, and explicitly says not to remove syncs on
+principle: the record's whole value is that it survives a failure at the next
+step. So the question is a measurement, not a preference.
+
+HOW MANY SYNCS A NORMAL BOOT ACTUALLY DOES
+minimal_state_write() is called once per stage and once by persist_enable. The
+success path stages are kernel-userspace, waiting-root, root-found, mounting-root,
+root-mounted, init-found, switch-root, switch-root-synced - 8 writes, two syncs
+each - plus the standalone sync before the irreversible switch_root. So roughly
+17 global syncs, not the 23 a naive count of every branch suggests (the
+switch-root-selftest-ok/-failed pair is mutually exclusive and is skipped entirely
+on the default path, which no longer stages the trampoline at all).
+
+MEASURED COST
+Idle system, nothing dirty:
+  global sync: 150 ms (first, which also flushed the boot's own dirty pages)
+  global sync:   0 ms / 0 / 0 / 0
+
+With dirty data actually queued, which is the case that matters:
+  after 4 MiB dirty: 260 ms / 130 ms / 120 ms
+  after 4 KiB dirty:  10 ms /  10 ms /  20 ms
+
+The record is a few hundred bytes, so the realistic per-write cost is ~10-20 ms:
+the flush is proportional to dirty data, not to the number of sync calls. Across
+~17 calls that is on the order of 0.2-0.3 s of the boot.
+
+DECISION: KEEP THE SYNCS, RECORD THE NUMBERS
+The measured cost is small next to the boot it protects (the Debian handoff is
+tens of seconds), and the durability is load-bearing: the record is what makes a
+failed switch_root diagnosable from TWRP offline. Removing a sync to save ~10 ms
+per stage would trade the project's only offline evidence channel for well under
+1% of boot time, which is the wrong trade - and the brief says so explicitly.
+
+WHAT A FUTURE CHANGE WOULD NEED
+If this ever does need reducing, the right shape is now known and cheap to reach:
+`sync -f FILE` targets one file's backing filesystem instead of every mount, and
+the BusyBox the initramfs ships supports it
+(`sync [-df] [FILE]...` - "-f  Sync filesystems underlying FILEs", verified
+working). Note that the *tablet's* userland has no busybox at all, so this is a
+property of the initramfs BusyBox, which is pinned and checked by the builder.
+
+Two things would have to be true first, and neither is established:
+  * the second sync (after the rename) is what makes the rename durable; the
+    first only makes the temporary file's contents durable. A single
+    `sync -f` on the directory would cover both, but that is a claim to test,
+    not to assume;
+  * the standalone sync before switch_root is deliberately a whole-system flush,
+    because /newroot is a *different* filesystem from the record's at that point
+    for everything systemd is about to mount. It should not become a targeted
+    flush without evidence that nothing else needs the flush.
+
+Recorded so the measurement does not have to be repeated, and so the next person
+can see that keeping the syncs was a decision rather than an oversight.
