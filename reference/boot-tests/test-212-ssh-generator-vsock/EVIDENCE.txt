@@ -38,3 +38,44 @@ usb0_addr=169.254.42.1/16
 failed_units=0
 ### boot_id
 65958aa0-bc46-4e99-9337-37cdad52020f
+
+### Wi-Fi verification, completed 2026-09-26 after the owner switched the hotspot
+### to 2.4 GHz.  All of the following was read over an SSH session to the
+### tablet's Wi-Fi address (10.191.121.213, wlp1s0), NOT over the USB cable, so
+### it independently exercises the second management transport.
+
+### link
+wlp1s0           UP             10.191.121.213/24
+	SSID: OnePlus 13s
+	freq: 2412.0
+	signal: -19 dBm
+	rx bitrate: 39.0 MBit/s MCS 10
+	tx bitrate: 52.0 MBit/s MCS 11
+
+### host -> tablet, over Wi-Fi
+$ ssh -i ~/.ssh/gts9_ed25519 root@10.191.121.213 'echo WIFI_SSH_OK; hostname; uname -r'
+WIFI_SSH_OK
+gts9
+7.2.0-rc3-gts9wifi-dirty
+
+### the fix, read over that Wi-Fi session
+AF_VSOCK occurrences this boot      = 0
+generated sshd-* units              = 0
+ssh.service                         = active
+failed units                        = 0
+/dev/ttyGS* devices                 = 0
+gadget functions                    = ncm.usb0
+systemd.ssh_auto=no in cmdline      = 1
+
+### Why the first attempts failed, recorded so it is not mistaken for a defect
+### in this change:
+###   The hotspot was on 5 GHz (channel 157, 5785 MHz) and the tablet saw it at
+###   -85 dBm, against -40 dBm for nearby APs.  Association could not complete:
+###   dmesg showed "send auth ... try 3/3" then "authentication with
+###   62:eb:71:10:8d:fc timed out", and the BSS was visible in only 0-1 of 10
+###   consecutive scans.  At 5785 MHz with WPA2/WPA3 mixed mode it also
+###   advertised SAE, which ath11k handles less readily.
+###   With the hotspot moved to 2.4 GHz (2412 MHz) the same tablet associated on
+###   the first attempt at -27 dBm, and -19 dBm once associated.
+###   Nothing in this test changed: the radio, driver and firmware were healthy
+###   throughout - the tablet was scanning 27 BSS, the strongest at -40 dBm.

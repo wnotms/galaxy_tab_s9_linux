@@ -140,16 +140,63 @@ printed it no longer runs, not because anything was silenced.
 * **No USB serial port recreated, no COM port used.** The no-serial architecture is
   unchanged and asserted by the tests.
 
+## Wi-Fi SSH verified
+
+The tablet has no saved Wi-Fi credentials — `/etc/network/interfaces` is empty
+except for the `interfaces.d` source, there is no `wpa_supplicant` config and no
+NetworkManager profile, because the earlier Wi-Fi tests (208-210) associated with
+an ad-hoc `wpa_supplicant` rather than a persistent one. So association was set up
+by hand for this test, with the owner providing the hotspot.
+
+**It associated, got a lease, and the whole verification below was performed over
+an SSH session to the tablet's Wi-Fi address rather than the USB cable:**
+
+```
+wlp1s0           UP   10.191.121.213/24
+	SSID: OnePlus 13s
+	freq: 2412.0
+	signal: -19 dBm
+	rx bitrate: 39.0 MBit/s MCS 10
+
+$ ssh -i ~/.ssh/gts9_ed25519 root@10.191.121.213 'echo WIFI_SSH_OK; hostname'
+WIFI_SSH_OK
+gts9
+```
+
+Read back over that Wi-Fi session: `AF_VSOCK` occurrences **0**, generated
+`sshd-*` units **0**, `ssh.service` **active**, failed units **0**, `/dev/ttyGS*`
+**0**, gadget functions **`ncm.usb0`**.
+
+So both management transports are confirmed working after the change: USB NCM
+(`169.254.42.1`) and Wi-Fi (`10.191.121.213`), each with a real key-based login.
+
+### The first attempts failed, and it was the access point
+
+Worth recording so it is not read as a defect in this change. The hotspot was
+originally on **5 GHz (5785 MHz)**, where the tablet saw it at **-85 dBm** against
+**-40 dBm** for the nearest APs. Association could not complete:
+
+```
+[  213.790395] wlp1s0: send auth to 62:eb:71:10:8d:fc (try 1/3)
+[  213.803131] wlp1s0: send auth to 62:eb:71:10:8d:fc (try 3/3)
+[  213.807155] wlp1s0: authentication with 62:eb:71:10:8d:fc timed out
+```
+
+and the BSS was visible in only 0–1 of 10 consecutive scans. It also advertised
+WPA2/WPA3 mixed mode (SAE) while on 5 GHz.
+
+Moving the hotspot to **2.4 GHz (2412 MHz)** made the same tablet associate on the
+first attempt at **-27 dBm**. Nothing changed on the tablet: its radio, driver and
+firmware were healthy throughout — it was scanning **27 BSS** with the strongest at
+**-40 dBm**.
+
 ## Still not proven here
 
-* **Wi-Fi SSH.** `wlp1s0` is up and scans **18 BSS**, so the driver and firmware
-  are intact, but this tablet has **no saved Wi-Fi credentials** —
-  `/etc/network/interfaces` is empty except for the `interfaces.d` source, there is
-  no `wpa_supplicant` config and no NetworkManager profile. Earlier Wi-Fi tests
-  (208-210) associated with an ad-hoc `wpa_supplicant`, deliberately not the
-  distro's unit, so nothing persisted. Association was therefore not repeated here;
-  the USB NCM path is the one exercised end to end.
 * **The panel itself.** The evidence that the two lines are gone is the journal
   (`AF_VSOCK` count 0, `systemd-ssh-generator` count 0), which is the same channel
   the message was emitted on. Nobody has re-read the tty1 screen with their eyes
   after this change.
+* **Wi-Fi persistence.** The association above was an ad-hoc `wpa_supplicant` and a
+  `dhcpcd` run started for this test; it is not configured to survive a reboot, and
+  this change did not add such configuration (`wlp1s0` is a spare transport, not a
+  managed one). The USB NCM link remains the transport that comes up by itself.

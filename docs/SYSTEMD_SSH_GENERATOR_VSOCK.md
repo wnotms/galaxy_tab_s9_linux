@@ -265,10 +265,25 @@ socket explicitly without re-enabling the automatic set.
 | `ssh.service` | active | **active** |
 | TCP `:22` listening | yes | **yes** |
 | ssh over USB NCM (169.254.42.1) | works | **works** |
+| ssh over Wi-Fi (10.191.121.213) | works | **works** |
 | `/dev/ttyGS*` | absent | **absent** |
 | gadget functions | `ncm.usb0` | **`ncm.usb0`** |
 | `systemctl --failed` | 0 | **0** |
 | kernel cmdline | no `systemd.ssh_auto=` | `systemd.ssh_auto=no` on every profile |
+
+Both management transports were exercised with a real key-based login after the
+change: USB NCM at `169.254.42.1`, and Wi-Fi at `10.191.121.213` (associated
+WPA2-PSK on 2412 MHz, -19 dBm) — the second read entirely over the Wi-Fi session,
+so it independently proves `sshd` still serves that interface and not just the
+cable.
+
+One note for anyone repeating the Wi-Fi half, because it cost time here and is not
+a property of this change: the hotspot first had to be moved from 5 GHz to 2.4 GHz.
+At 5785 MHz the tablet saw it at -85 dBm against -40 dBm for nearby APs and
+authentication timed out (`send auth ... try 3/3`, then `authentication ... timed
+out`), with the BSS visible in 0-1 of 10 scans. On 2412 MHz the same tablet
+associated on the first attempt at -27 dBm. The tablet's own radio was healthy
+throughout, scanning 27 BSS.
 
 The full report with the commands and their output is in
 [test-212](../reference/boot-tests/test-212-ssh-generator-vsock/README.md).
