@@ -518,6 +518,54 @@ class ClosedDirectionProtectionTests(unittest.TestCase):
                     self.assertNotIn(phrase, flat.lower())
 
 
+class SshRunnerGateTests(unittest.TestCase):
+    """The csd-lock arming gate in scripts/wedge-ssh.sh.
+
+    It must be a POSITIVE capability test.  Both CSD module_params live inside
+    `#ifdef CONFIG_CSD_LOCK_WAIT_DEBUG`, so their sysfs files exist only in a
+    kernel built with the option - which is what lets the plan's Case D
+    distinguish "the instrument was not running" from "CSD is not involved".
+    """
+
+    RUNNER = "scripts/wedge-ssh.sh"
+
+    def test_the_harness_knows_the_profile(self):
+        text = read(self.RUNNER)
+        self.assertRegex(text, r"case \"\$PROFILE\" in baseline\|cpuidle-off\|csd-lock\)")
+
+    def test_the_gate_keys_on_the_parameter_files_existing(self):
+        text = read(self.RUNNER)
+        self.assertIn("/sys/module/smp/parameters/", text)
+        self.assertIn("csd_lock_timeout is absent, so this kernel was NOT built with", text)
+        self.assertIn("a profile failure, not a result (plan Case D)", text)
+        self.assertIn("panic_on_ipistall parameter absent", text)
+
+    def test_the_gate_requires_the_token_to_have_been_consumed(self):
+        """A token nothing reads stays in the kernel's unknown-parameter list."""
+        text = read(self.RUNNER)
+        self.assertIn("unknown-parameter list, so no __setup handler consumed it", text)
+        self.assertIn("the switch is dead", text)
+
+    def test_the_gate_requires_the_self_recovery_chain(self):
+        text = read(self.RUNNER)
+        self.assertIn("the tablet would not recover by itself", text)
+        self.assertIn("softlockup_panic=1 panic=10", text)
+
+    def test_it_records_the_instrument_state_with_every_round(self):
+        """A wedge with no CSD output is only interpretable if the instrument's
+        liveness and timeout are on the record for that round."""
+        text = read(self.RUNNER)
+        for field in ("csd_timeout_ms=", "csd_panic_on_ipistall=",
+                      "csd_report_lines=", "csd_target_cpu="):
+            with self.subTest(field=field):
+                self.assertIn(field, text)
+
+    def test_it_extracts_the_target_cpu_from_the_report(self):
+        """`waiting N ns for CPU#X` is the field the whole round is for."""
+        text = read(self.RUNNER)
+        self.assertIn("waiting [0-9]+ ns for CPU#[0-9]+", text)
+
+
 class TestRecordTests(unittest.TestCase):
     """The test-228 hand-off: a plan with verifiable identity, not a result."""
 

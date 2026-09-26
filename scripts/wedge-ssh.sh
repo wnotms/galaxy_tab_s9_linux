@@ -34,7 +34,7 @@
 # carries, so an unattended round cannot strand the tablet.
 #
 # Usage:
-#   scripts/wedge-ssh.sh PROFILE ROUNDS          # PROFILE: cpuidle-off|baseline
+#   scripts/wedge-ssh.sh PROFILE ROUNDS      # PROFILE: baseline|cpuidle-off|csd-lock
 #   GTS9_ALLOW_POWER=1 scripts/wedge-ssh.sh cpuidle-off 10
 
 set -uo pipefail
@@ -55,13 +55,13 @@ RESULTS=${GTS9_SSH_RESULTS:-$REPO/out/wedge-ssh}
 usage() {
 	cat >&2 <<'EOF'
 usage: wedge-ssh.sh PROFILE ROUNDS
-PROFILE is one of: cpuidle-off, baseline
+PROFILE is one of: baseline, cpuidle-off, csd-lock
 Set GTS9_ALLOW_POWER=1 to actually reboot; without it, only the arming gate runs.
 EOF
 	exit 2
 }
 
-case "$PROFILE" in cpuidle-off|baseline) ;; *) usage ;; esac
+case "$PROFILE" in baseline|cpuidle-off|csd-lock) ;; *) usage ;; esac
 case "$ROUNDS" in ''|*[!0-9]*) usage ;; esac
 [ "$ROUNDS" -ge 1 ] || usage
 
@@ -106,6 +106,44 @@ baseline)
 	driver=$(rsh 'cat /sys/devices/system/cpu/cpuidle/current_driver 2>/dev/null || echo NONE')
 	[ "$driver" = "psci_idle" ] || die "baseline: current_driver is '$driver', expected psci_idle - NOT armed"
 	say "arming gate PASSED: psci_idle active" | tee -a "$OUT"
+	;;
+csd-lock)
+	# --- a POSITIVE capability test --------------------------------------
+	# docs/CSD_IPI_WEDGE_PLAN.md section 2.5.  Both CSD module_params live
+	# inside `#ifdef CONFIG_CSD_LOCK_WAIT_DEBUG`, so their sysfs files exist
+	# ONLY in a kernel built with the option.  That file appearing cannot be
+	# produced by a stale image or by a cmdline that failed to take - which is
+	# what makes this a real gate rather than an absence test, and what the
+	# plan's Case D needs in order to tell "the instrument was not running"
+	# apart from "CSD is not involved".
+	grep -q 'csdlock_debug=1' <<<"$cmdline" || \
+		die "csd-lock: the cmdline lacks csdlock_debug=1 - NOT armed"
+	params=$(rsh 'ls /sys/module/smp/parameters/ 2>/dev/null | tr "\n" " "')
+	case " $params " in
+	*" csd_lock_timeout "*) ;;
+	*) die "csd-lock: /sys/module/smp/parameters/csd_lock_timeout is absent, so this kernel was NOT built with CONFIG_CSD_LOCK_WAIT_DEBUG. The instrument would never run and a wedge would produce no CSD output - this is a profile failure, not a result (plan Case D). Parameters seen: '${params:-<none>}'" ;;
+	esac
+	case " $params " in
+	*" panic_on_ipistall "*) ;;
+	*) die "csd-lock: panic_on_ipistall parameter absent - CONFIG_CSD_LOCK_WAIT_DEBUG is not fully built in" ;;
+	esac
+	# The __setup handler must have CONSUMED the token: a token nothing reads
+	# stays in the kernel's own unknown-parameter list.  Same gate the project
+	# already applies to gts9_rpmh_debug.
+	unknown=$(rsh 'journalctl -b 0 -k --no-pager 2>/dev/null | grep -a "Unknown kernel command line parameters" | tail -1')
+	case "$unknown" in
+	*csdlock_debug*)
+		die "csd-lock: csdlock_debug is in the kernel's unknown-parameter list, so no __setup handler consumed it - the switch is dead" ;;
+	esac
+	tmo=$(rsh 'cat /sys/module/smp/parameters/csd_lock_timeout 2>/dev/null')
+	stop=$(rsh 'cat /sys/module/smp/parameters/panic_on_ipistall 2>/dev/null')
+	[ "$tmo" = "5000" ] || say "WARNING: csd_lock_timeout is '$tmo', expected the 5000 ms default"
+	[ "$stop" = "0" ] || say "WARNING: panic_on_ipistall is '$stop', expected 0 (round one collects, it does not panic)"
+	# The recovery chain must still be armed, or an unattended round strands it.
+	for tok in softlockup_panic=1 panic=10; do
+		grep -q "$tok" <<<"$cmdline" || die "csd-lock: the cmdline lacks $tok - the tablet would not recover by itself"
+	done
+	say "arming gate PASSED: CSD instrument live (csd_lock_timeout=${tmo}ms panic_on_ipistall=${stop}), token consumed, recovery chain armed" | tee -a "$OUT"
 	;;
 esac
 
@@ -216,6 +254,15 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "extra_boots=$extra_boots"
 		echo "self_recovery=$recovery"
 		echo "detector=boot_id_change+journal_boot_count"
+		# For a csd-lock round, record the instrument's live parameters with the
+		# round: a wedge with no CSD output is only interpretable if it is known
+		# that the instrument was enabled and at what timeout.
+		if [ "$PROFILE" = csd-lock ]; then
+			echo "csd_timeout_ms=$(rsh 'cat /sys/module/smp/parameters/csd_lock_timeout 2>/dev/null')"
+			echo "csd_panic_on_ipistall=$(rsh 'cat /sys/module/smp/parameters/panic_on_ipistall 2>/dev/null')"
+			echo "csd_report_lines=$(grep -acE 'csd: (Detected|Continued) non-responsive' "$RESULTS/$PROFILE/round-$i-klog.txt" 2>/dev/null || echo 0)"
+			echo "csd_target_cpu=$(grep -aoE 'waiting [0-9]+ ns for CPU#[0-9]+' "$RESULTS/$PROFILE/round-$i-klog.txt" 2>/dev/null | head -1)"
+		fi
 		echo "log_boot_index=$idx"
 		echo "wedge_markers=$w"
 		echo "suspect_markers=$s"
