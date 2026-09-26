@@ -502,9 +502,15 @@ log ''
 # Failure is reported and does not stop the rest of the bring-up.
 # ---------------------------------------------------------------------------
 USB_GADGET=${GTS9_USB_GADGET:-1}
-# acm (default), msc (mass storage), both - settable from the command line so a
+# msc (mass storage, the default), acm, both - settable from the command line so a
 # boot can switch the gadget without rebuilding the initramfs.
-USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-acm}
+#
+# `acm` is retained as an accepted value for older command lines and for the
+# mode-remap below, but it no longer creates anything: the kernel is built without
+# CONFIG_USB_CONFIGFS_ACM, so the initramfs has no serial function to offer.  The
+# default is `msc` because that is now the only mode with an effect - it is how the
+# bring-up report leaves the tablet on a boot that has no network.
+USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-msc}
 # What /init does with /dev/ttyGS0:
 #   shell  - stream the kernel log and hand the port to a shell (the console)
 #   marker - write a few known lines once and record everything the host sends
@@ -570,7 +576,14 @@ if [ -n "$ROOTFS_DEVICE" ]; then
     case "$USB_GADGET_MODE" in
         msc|both)
             log "gts9-rootfs: root device is $ROOTFS_DEVICE; USB mass storage disabled"
-            USB_GADGET_MODE=acm
+            # `none`, not `acm`.  This used to fall back to the serial console
+            # function, which was the useful thing to have when mass storage was
+            # refused.  There is no serial function any more, so falling back to
+            # it would bind a gadget with no functions at all - worse than not
+            # binding, because the host would enumerate a composite device that
+            # does nothing.  `none` leaves the gadget down and the panel keeps the
+            # rescue shell.
+            USB_GADGET_MODE=none
             ;;
     esac
 fi
@@ -606,12 +619,16 @@ setup_usb_gadget() {
     echo 'bringup' > "$G/configs/c.1/strings/0x409/configuration" 2>/dev/null
     echo 250 > "$G/configs/c.1/MaxPower" 2>/dev/null
 
-    case "$USB_GADGET_MODE" in
-        acm|both)
-            mkdir -p "$G/functions/acm.usb0" 2>/dev/null
-            ln -sf "$G/functions/acm.usb0" "$G/configs/c.1/acm.usb0" 2>/dev/null
-            ;;
-    esac
+    # No serial function.  The initramfs gadget used to create acm.usb0 (mode
+    # `acm`) so PID 1 could hand out a rescue shell on /dev/ttyGS0, and that is
+    # now impossible as well as unwanted: the kernel is built without
+    # CONFIG_USB_CONFIGFS_ACM, so the configfs directory cannot be created at all.
+    # Attempting it is harmless (the mkdir just fails) but it would be misleading,
+    # so the serial branch is gone and the remaining modes are the mass-storage
+    # export the rescue profile uses.
+    #
+    # The rescue shell itself is unaffected: it runs on /dev/tty1, the panel VT.
+    # See USB_CONSOLE_MODE above for why the ttyGS0 shell is opt-in now.
     case "$USB_GADGET_MODE" in
         msc|both)
             # Mass storage, read-only, with no medium to start with: the card is
@@ -623,6 +640,23 @@ setup_usb_gadget() {
             echo 0 > "$G/functions/mass_storage.usb0/lun.0/cdrom" 2>/dev/null
             echo 1 > "$G/functions/mass_storage.usb0/lun.0/removable" 2>/dev/null
             ln -sf "$G/functions/mass_storage.usb0" "$G/configs/c.1/mass_storage.usb0" 2>/dev/null
+            ;;
+    esac
+
+    # `none` means "do not bring the gadget up at all", and so does `acm` now:
+    # an older command line may still ask for it, but the serial function it named
+    # no longer exists in the kernel.  Binding the gadget with an empty
+    # configuration would be worse than leaving it down, because the host
+    # enumerates a composite device that does nothing and that reads as a driver
+    # problem rather than a deliberate choice.
+    case "$USB_GADGET_MODE" in
+        none)
+            log 'USB gadget not created (mode=none)'
+            return 0
+            ;;
+        acm)
+            log 'USB gadget not created: the acm serial function was removed (see gts9_usb_gadget); use msc for the card export'
+            return 0
             ;;
     esac
 

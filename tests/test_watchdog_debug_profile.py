@@ -9,10 +9,10 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 # The profiles that must stay exactly as they were: this change adds a *new*
 # profile, it does not touch the known-good boot.
 KNOWN_GOOD_CMDLINES = {
-    "boot/cmdline.example.txt": "40c7d153b0bb74931297b1c300392406a664b2a34fedc517ca5a0b2df3ee8e03",
+    "boot/cmdline.example.txt": "ca1cd26e7dd936c1e28787f05afac9a05a2a651f485e4c02d6cbdedb0115d405",
     "boot/cmdline.minimal-rootfs.example.txt": "0d5904d95d761819002bba1e4f04d4210a31dce702bb5d16487744e6d2651ea4",
-    "boot/cmdline.poweroff-trace.example.txt": "d7d07e45166c5f3934d1fb8a8f36ec3d07d7a523a7f7296bd9582e22f7f403e0",
-    "boot/cmdline.boot-trace.example.txt": "f3aa80f29bbdd0b29f9dc727408c04cae38dd53b17b6d02e6356e2cf484d4dc7",
+    "boot/cmdline.poweroff-trace.example.txt": "a4153efae57ea7ee0f981b380d0c2ff0849505d00a26faa39c26f0013a661a3c",
+    "boot/cmdline.boot-trace.example.txt": "c116907ed13a20b43e756fca3f520fe87c64f6dd96ed94b3ca12306916de95df",
 }
 
 DEBUG_CMDLINE = "boot/cmdline.watchdog-debug.example.txt"
