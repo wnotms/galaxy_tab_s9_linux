@@ -350,7 +350,17 @@ each is the kind of thing that would otherwise be rediscovered later.
    `minimal_rescue_shell()` in the file. The first version compared the framebuffer
    write against the rescue function's start and failed its own correct code. It
    now checks the call site.
-9. **The applet scanner reported variables as missing programs.** Lowercase
+9. **`code_of()` stripped comments the wrong way, hiding a real regression.**
+   It split each line on the first `#`, which is not what a shell does:
+   `${arg#gts9_usb_console=}` contains a `#` that opens a parameter expansion, so
+   the helper truncated the line to `USB_CONSOLE_MODE=${arg`. A test looking for
+   the old option-storing line therefore could not see it even when it was injected
+   back into the script, and passed. It now strips a comment only at the start of a
+   word and only outside quotes. The same naive pattern still exists in four other
+   test files; each was checked against the files it inspects, and none of them
+   asserts on a line containing `${x#y}` after a `#`, so none is currently hiding
+   anything - but the corrected implementation is the one to copy.
+10. **The applet scanner reported variables as missing programs.** Lowercase
    locals put in command position by a line-based scan (`panel_fb=/sys/...` then
    `while [ ! -w "$panel_fb" ]`) were reported as missing applets, and a `;` inside
    a quoted message split the string and produced `cannot` as a command. Both are
