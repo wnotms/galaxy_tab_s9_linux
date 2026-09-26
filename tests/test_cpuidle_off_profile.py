@@ -987,6 +987,37 @@ class WedgeResultRecordTests(unittest.TestCase):
         self.assertIn("Not captured, and marked absent rather than implied", text)
         self.assertIn("/proc/interrupts", text)
 
+    def test_it_records_the_elevated_clustered_rate_without_claiming_it(self):
+        """2 of 4 is above both fixed-era baselines, and it must say so.
+
+        The registered conclusion stands on its own evidence - a wedge with the
+        framework absent means cpuidle is not necessary.  But presenting the
+        profile as merely neutral would hide that the count is unlikely under the
+        measured rate, and that the two failures were CONSECUTIVE.  The record
+        must state both, name the two readings, and refuse to pick one.
+        """
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("two of them wedged", flat)
+        self.assertIn("0.0068", flat)          # P(>=2 in 4) vs 3.4%
+        self.assertIn("0.16–0.84", flat)       # the CI, so no rate is claimed
+        self.assertIn("the two failures are consecutive", flat)
+        self.assertIn("this is a different shape", flat)
+        # both readings named, and neither chosen
+        self.assertIn("does `cpuidle.off=1` change the rate?", flat)
+        self.assertIn("this is a signal to test, not a finding", flat)
+        # and the forbidden over-claim is explicitly forbidden
+        self.assertIn("must not be written as", flat)
+        self.assertIn("cpuidle.off=1 makes the wedge worse", flat)
+
+    def test_the_profile_was_reverted_and_the_revert_is_recorded(self):
+        """An unexplained elevated rate must not be left on the tablet."""
+        flat = prose(f"{self.RECORD}/ROLLBACK.md")
+        self.assertIn("restored to the pre-test image", flat)
+        self.assertIn("49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9", flat)
+        self.assertIn("read-back", flat)
+        # and the reason it was done
+        self.assertIn("elevated-rate observation", flat)
+
     def test_it_names_the_rollback_and_its_hash(self):
         text = read(f"{self.RECORD}/README.md")
         self.assertIn("49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9", text)

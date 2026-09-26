@@ -168,6 +168,63 @@ interrupts disabled rather than one executing normally.
 * **Anything about a fix.** No workaround is proposed. `docs/CPU_IDLE_WEDGE_PLAN.md`
   §7 is the next branch, and it is now the active one.
 
+## 5a. A second, unexpected observation: the rate here was HIGH, and clustered
+
+This does not change the registered conclusion — a wedge with the framework
+provably absent means cpuidle is not *necessary*, and that stands on its own
+evidence. But the count is not what "no change" would predict, and it would be
+wrong to present this profile as merely neutral.
+
+Four boots carried `cpuidle.off=1`, and **two of them wedged**:
+
+| boot | start | what it was | outcome |
+|---|---|---|---|
+| `125c2350` | 01:21:14 | the boot right after the flash | survived 113 s |
+| `658adbd0` | 01:23:23 | the runner's first reboot | **WEDGED at +7 s** |
+| `9e5fca86` | 01:24:24 | the reboot after that wedge's panic | **WEDGED at +6 s** |
+| `b0122aca` | 01:25:25 | the reboot after the second panic | healthy, 700+ s |
+
+Against the project's own measured baselines:
+
+| baseline | rate | P(≥2 wedges in 4) | expected count |
+|---|---|---|---|
+| post-ACD fix | 3.4 % (1/29) | **0.0068** | 0.14 |
+| test-191 kernel | 6.9 % (2/29) | **0.0260** | 0.28 |
+| pre-fix | 21.7 % (10/46) | 0.2081 | 0.87 |
+
+So 2 of 4 is unlikely under both fixed-era baselines, and the exact 95 % CI on
+2/4 is **0.16–0.84** — wide enough that no rate can be claimed from it.
+
+**And the two failures are consecutive.** Boots 2 and 3 wedged, bracketed by
+healthy boots 1 and 4, 61 s apart. That pattern is worth more than the raw
+fraction: independent per-boot failures at a constant low rate do not usually
+arrive back to back, whereas a *persistent* condition — thermal, a latched
+hardware or firmware state, something that survives one reset — produces exactly
+this clustering. The historical wedges this project has recorded were sporadic
+(single events separated by many clean boots), so **this is a different shape**,
+not simply more of the same.
+
+**Two readings, and this round cannot separate them:**
+
+* **A — `cpuidle.off=1` raises the rate.** Removing the framework changes what
+  the CPUs do at idle in ways beyond "no suspend": with `cpuidle.off=1` the idle
+  loop takes `default_idle_call()` and the tick behaviour differs
+  (`idle_call_stop_or_retain_tick()` with `stop_tick` false), so the comparison is
+  not "the same system minus suspend".
+* **B — the flash/reboot sequence itself provoked it.** Two of the four boots
+  immediately followed a `systemctl reboot` issued by the runner, and both wedges
+  are early-boot events at the documented onset. The pre-existing rate was
+  measured on the same kind of warm reboot, so this does not by itself explain
+  the count — but the clustering is also exactly what a warm-reboot-sensitive
+  condition would look like.
+
+**What must happen about it, and it is not a third conclusion:** this is a signal
+to test, not a finding, and it must not be written as "cpuidle.off=1 makes the
+wedge worse". The correct handling is to **revert the profile** (one partition,
+hash below) so the tablet is not left on a configuration with an unexplained
+elevated rate, and to treat "does `cpuidle.off=1` change the rate?" as its own
+hypothesis with its own pre-registered rule if anyone wants to pursue it.
+
 ## 6. Where this sends the investigation — §7 of the plan
 
 The idle direction is out, so the plan's §7 list becomes the working order:
