@@ -104,6 +104,12 @@ GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
 minimal_rescue_shell() {
     minimal_emit 'GTS9_MINIMAL_RESCUE=BusyBox shell'
     minimal_emit 'root device missing or handoff failed; inspect the block state below'
+    # Lead with the practical consequence.  There is no USB serial port any more
+    # and this initramfs has no network at all, so an owner who lands in this shell
+    # and then looks for an ssh session or a COM port on their host will find
+    # neither - and the message must say so before they spend time looking.
+    minimal_emit 'network may not be available before Debian starts;'
+    minimal_emit 'use tty1 or offline TWRP inspection'
     minimal_emit 'last stage: '
     minimal_emit "  $GTS9_MINIMAL_STAGE"
     minimal_emit "last failure: $GTS9_MINIMAL_FAILURE"
@@ -114,7 +120,12 @@ minimal_rescue_shell() {
     ls -l /sys/class/block 2>&1
     minimal_emit 'check with: ls -l /dev/mmcblk*'
     ls -l /dev/mmcblk* 2>&1
+    # No network and no serial port here, so the only ways on are the shell below
+    # and the two escape hatches.  Say so, because someone staring at a tablet that
+    # will not boot needs to know what their options actually are.
     minimal_emit 'rescue shell: /bin/sh -i (type exit to restart it)'
+    minimal_emit 'to leave: reboot   (or: poweroff)'
+    minimal_emit 'to fix the root device: reboot into TWRP and check gts9_rootfs='
 
     # Keep PID 1 alive if an owner exits the interactive shell.  This path does
     # not depend on USB: it uses the panel VT, with /dev/console only as a
@@ -123,6 +134,11 @@ minimal_rescue_shell() {
     # gadget port, and writing to it from PID 1 blocks once nobody drains it.
     # With the serial consoles removed it can no longer resolve to ttyGS, but the
     # rescue shell is the last line of defence and must not depend on that.
+    #
+    # Bounded, not busy: each branch either runs an interactive shell (which blocks
+    # until the owner exits it) or sleeps, and the no-console fallback emits one
+    # heartbeat line per iteration rather than spinning.  It never waits for a
+    # ttyGS - that device cannot appear - and never tries to create a gadget shell.
     while :; do
         if [ -c /dev/tty1 ]; then
             /bin/sh -i </dev/tty1 >/dev/tty1 2>&1

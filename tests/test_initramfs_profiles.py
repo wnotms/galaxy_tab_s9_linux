@@ -349,10 +349,45 @@ class ProductionAppletsMatchWhatItRuns(unittest.TestCase):
         m = re.search(r"required_applets='([^']*)'", text)
         declared = m.group(1).split()
         for tool in ('dd', 'od', 'awk', 'sed', 'sha256sum', 'dmesg', 'hwclock',
-                     'find', 'setsid', 'chvt', 'insmod', 'modprobe', 'reboot',
-                     'poweroff'):
+                     'find', 'setsid', 'chvt', 'insmod', 'modprobe'):
             with self.subTest(tool=tool):
                 self.assertNotIn(tool, declared)
+
+    def test_the_rescue_shell_can_be_left(self):
+        """A rescue shell with no way out is a trap.
+
+        Found on the device, not by reading the script: with
+        gts9_rootfs=/dev/does-not-exist the handoff stops in the rescue shell, and
+        the first production image had no `reboot` applet - so leaving it needed a
+        physical key combination, while the image has no network and no serial
+        port to use instead. The escape hatch is now part of the applet list, and
+        it is deliberately the ONLY thing from the debug escape set that is.
+        """
+        text = read(str(PROD_BUILDER))
+        declared = re.search(r"required_applets='([^']*)'", text).group(1).split()
+        self.assertIn('reboot', declared)
+        self.assertIn('poweroff', declared)
+        # ... and they must be reachable as commands, not just declared: /sbin is
+        # on the handoff's PATH.
+        sbin = re.search(r"sbin_applets='([^']*)'", text).group(1).split()
+        self.assertIn('reboot', sbin)
+        self.assertIn('poweroff', sbin)
+        self.assertIn('/sbin', read(str(INIT)).split('PATH=')[1].split('\n')[0])
+
+    def test_the_rescue_message_says_there_is_no_network(self):
+        """An owner must not go looking for ssh or a COM port that cannot exist."""
+        text = read(str(INIT))
+        self.assertIn('network may not be available before Debian starts', text)
+        self.assertIn('tty1 or offline TWRP inspection', text)
+
+    def test_the_rescue_shell_never_waits_for_a_serial_port(self):
+        code = code_of(str(INIT))
+        self.assertNotIn('ttyGS', code)
+        # It waits only on an interactive shell (which blocks) or a sleep.
+        rescue = code[code.index('minimal_rescue_shell()'):]
+        rescue = rescue[:rescue.index('\n}')]
+        self.assertIn('sleep 5', rescue)
+        self.assertNotIn('while [ ! -c /dev/ttyGS', rescue)
 
 
 class TheDebugImageKeepsItsCapabilities(unittest.TestCase):

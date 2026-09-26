@@ -82,14 +82,24 @@ fail() { echo "error: $*" >&2; exit 1; }
 #   timeout        the bounded trampoline selftest (opt-in path only)
 #   sh             the rescue shell and the handoff exec
 #   test [         every condition in both scripts
+#   reboot poweroff  THE RESCUE ESCAPE HATCH
 #
-# Anything NOT here is a debug capability that must not be reachable from the
-# production boot: no dd/od (raw block and GPT work), no dmesg, no hwclock or
-# date-driven RTC state, no awk/sed for report formatting, no sha256sum, no
-# find, no setsid/chvt, no dd.
-required_applets='sh mount umount switch_root cat echo mkdir cp chmod sync sleep grep ls mv rm timeout cut date uname printf head test ['
+# reboot and poweroff are a fix found by running the failure test on the device
+# rather than by reading this script.  With gts9_rootfs=/dev/does-not-exist the
+# handoff correctly stops in the rescue shell - and then nothing inside it could
+# leave: this image has no network (no gadget, no Wi-Fi), there is no serial port,
+# and there was no `reboot` applet, so recovering the tablet required a physical
+# key combination that the owner could not perform.  A rescue shell that cannot be
+# left is a trap, not a rescue.
+#
+# They are escape hatches rather than diagnostics - two symlinks that let an owner
+# get out of a failed handoff without hardware keys.  Everything else on the debug
+# list stays out, because those are the capabilities that made the old image
+# risky: no dd/od (raw block and GPT work), no dmesg, no hwclock or date-driven RTC
+# state, no awk/sed for report formatting, no sha256sum, no find, no setsid/chvt.
+required_applets='sh mount umount switch_root cat echo mkdir cp chmod sync sleep grep ls mv rm timeout cut date uname printf head test [ reboot poweroff'
 # Applets that belong in /sbin rather than /bin.
-sbin_applets='mount umount switch_root'
+sbin_applets='mount umount switch_root reboot poweroff'
 
 while [ $# -gt 0 ]; do
     case "$1" in
