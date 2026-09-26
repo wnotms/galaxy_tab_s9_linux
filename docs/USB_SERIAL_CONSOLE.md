@@ -6,14 +6,15 @@
 > [test-211](../reference/boot-tests/test-211-no-serial-consoles/README.md).
 >
 > The mapping below is kept because it is the hardware-verified record the removal
-> was based on, and because `ttyMSM0` and the two ACM ports still exist as devices —
-> they are simply no longer consoles and no longer have a login on them. Read the
-> table as "what these ports are", not as "what this port runs today":
+> was based on, and because `ttyMSM0` and `ttyGS0` still exist as devices — they
+> are simply no longer consoles and no longer have a login on them. Read the table
+> as "what these ports were", not as "what this port runs today":
 >
 > | device | today |
 > |---|---|
 > | `/dev/tty1` | **the only console** (`console=tty0`), panel VT + `getty@tty1` |
-> | `/dev/ttyGS0`, `/dev/ttyGS1` | ACM ports, created by `gts9-usb-acm`, **no console and no getty**; `CONFIG_U_SERIAL_CONSOLE` is unset, so the configfs `console` attribute does not exist |
+> | `/dev/ttyGS0` | **one plain serial port** from `gts9-usb-acm`: no console, no getty, nothing holds it open. `CONFIG_U_SERIAL_CONSOLE` is unset, so `gs_console_init()` compiles to `-ENOSYS` and it cannot become a console |
+> | `/dev/ttyGS1` | **gone.** It existed only to be the port printk registered on; `acm.usb1` is removed from the gadget |
 > | `/dev/ttyMSM0` | the SoC UART is still registered, but `CONFIG_SERIAL_QCOM_GENI_CONSOLE` is unset and no `console=` names it |
 >
 > `gts9-acm-getty.service` is deleted and masked. Do not re-add a getty or a
@@ -21,6 +22,9 @@
 > fills with nobody draining the host side, which is the boot stall
 > [documented here](BOOT_CONSOLE_BLOCK.md), and the autologin getty was the 90 s
 > poweroff ([shutdown delay](SHUTDOWN_DELAY.md)).
+>
+> The interactive channel is **ssh over the NCM network function** on the same
+> cable — see [the fast debug channel](FAST_DEBUG_CHANNEL.md).
 
 This note records the verified console mapping for the SM-X710 mainline boot so later
 bring-up work does not confuse the physical Qualcomm UART with the USB gadget serial port.
