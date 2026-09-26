@@ -250,8 +250,12 @@ class RootfsBoot(unittest.TestCase):
         self.assertGreater(call_at, rescue_at)
         self.assertLess(call_at, MINIMAL_INIT.index('\n}\n', rescue_at))
         # And not on the success path between the root mount and switch_root.
-        success = MINIMAL_INIT[MINIMAL_INIT.index('mount -t ext4'):
-                               MINIMAL_INIT.index('exec switch_root')]
+        # The window starts at the ROOT-DEVICE mount, identified by its own text:
+        # the RTC offset step also mounts a filesystem (read-only, and earlier in
+        # the boot), and matching that one would pull an unrelated step in here.
+        success = MINIMAL_INIT[
+            MINIMAL_INIT.index('mount -t ext4 -o rw "$ROOTFS_DEVICE" /newroot'):
+            MINIMAL_INIT.index('exec switch_root')]
         self.assertNotIn('minimal_panel_rescue', success)
         self.assertNotIn('fb0/blank', success)
         # The old debug-only capability names must still be absent.

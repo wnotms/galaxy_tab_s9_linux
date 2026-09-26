@@ -583,7 +583,15 @@ RULES
                 fi
                 # And independently: no framebuffer work between the root mount
                 # and switch_root, which is the healthy path.
-                mount_line=$(grep -n 'mount -t ext4' "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                #
+                # The window starts at the ROOT-DEVICE mount, matched by its own
+                # text rather than by a bare `mount -t ext4`.  The RTC offset step
+                # also mounts a filesystem - read-only, and earlier in the boot -
+                # so a bare match would start the window in the wrong place and
+                # report that unrelated step as framebuffer work on the success
+                # path.
+                mount_line=$(grep -n 'mount -t ext4 -o rw "\$ROOTFS_DEVICE" /newroot' \
+                    "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
                 switch_line=$(grep -n 'switch_root' "$tmp/initcheck/init.code" | tail -1 | cut -d: -f1)
                 if [ -n "$mount_line" ] && [ -n "$switch_line" ] && [ "$switch_line" -gt "$mount_line" ]; then
                     if sed -n "${mount_line},${switch_line}p" "$tmp/initcheck/init.code" |
@@ -595,6 +603,56 @@ RULES
                 fi
             else
                 pass 'initramfs: production /init does no display recovery at all'
+            fi
+
+            # The RTC offset helper: without it Debian boots ~56 years in the past
+            # and, with no network, stays there - which breaks TLS, ssh and apt in
+            # ways that read as network faults.  Three things must hold, and the
+            # second is the one that matters most:
+            #
+            #   * the helper is IN the image (a builder that stopped shipping it
+            #     would otherwise be noticed only on the tablet);
+            #   * it is an aarch64 static ELF, or it cannot run as PID 1's child;
+            #   * /init never writes an RTC device node.  An SPMI write blocks this
+            #     kernel uninterruptibly (docs/RTC_REPORT.md, tests 021-027), so a
+            #     `/dev/rtc`, `hwclock` or `RTC_SET_TIME` anywhere in this path is a
+            #     boot hang, not a style problem.
+            if grep -qE '(^|/)sbin/gts9-rtc-offset$' "$list"; then
+                pass 'initramfs: RTC offset helper is present'
+                mkdir -p "$tmp/rtccheck/sbin"
+                (cd "$tmp/rtccheck" &&
+                    cpio -i --quiet sbin/gts9-rtc-offset \
+                        < "$tmp/initramfs.cpio" >/dev/null 2>&1) || true
+                if [ -s "$tmp/rtccheck/sbin/gts9-rtc-offset" ]; then
+                    if readelf -h "$tmp/rtccheck/sbin/gts9-rtc-offset" 2>/dev/null |
+                       grep -q 'Machine:.*AArch64'; then
+                        pass 'initramfs: RTC offset helper is aarch64'
+                    else
+                        fail 'initramfs: RTC offset helper is not an aarch64 ELF'
+                    fi
+                    if readelf -l "$tmp/rtccheck/sbin/gts9-rtc-offset" 2>/dev/null |
+                       grep -q INTERP; then
+                        fail 'initramfs: RTC offset helper is dynamically linked'
+                    else
+                        pass 'initramfs: RTC offset helper is static'
+                    fi
+                    # It may only ever read the clock, never set the hardware one.
+                    if strings -a "$tmp/rtccheck/sbin/gts9-rtc-offset" |
+                       grep -qE '/dev/rtc'; then
+                        fail 'initramfs: RTC offset helper references an RTC device node'
+                    else
+                        pass 'initramfs: RTC offset helper cannot reach an RTC device node'
+                    fi
+                else
+                    fail 'initramfs: RTC offset helper is listed but could not be extracted'
+                fi
+                if grep -qE '/dev/rtc|hwclock|RTC_SET_TIME' "$tmp/initcheck/init.code"; then
+                    fail 'initramfs: production /init touches the RTC hardware (an SPMI write blocks this kernel)'
+                else
+                    pass 'initramfs: production /init never writes the RTC'
+                fi
+            else
+                fail 'initramfs: no sbin/gts9-rtc-offset (the clock would boot ~56 years wrong)'
             fi
         fi
         ;;

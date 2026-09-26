@@ -5,6 +5,7 @@
 #
 #	mount /proc, /sys, /dev, /run
 #	read gts9_rootfs= from the command line
+#	set the clock from Samsung's own RTC offset   (see below)
 #	wait for that block device
 #	mount it as ext4
 #	check /newroot/sbin/init exists and is executable
@@ -26,7 +27,7 @@
 #                             bind/unbind and a USB re-enumeration on every boot,
 #                             and the serial functions no longer exist in the
 #                             kernel at all.
-#   display recovery, RTC,    debug capabilities, kept in the bring-up image.
+#   display recovery,        debug capabilities, kept in the bring-up image.
 #   GPT/BCB, hardware report,
 #   UFS/mmc diagnostics
 #   kernel modules            live on the rootfs in /usr/lib/modules/<release>.
@@ -42,7 +43,11 @@
 # BusyBox is pinned and verified exactly as the debug image does it, via
 # scripts/lib/initramfs-common.sh, so the two cannot drift.
 #
-# Nothing here writes to a device.
+# The one thing this image gained is the correct clock: see the RTC offset helper
+# below.  It reads a file off the UFS persist partition and sets CLOCK_REALTIME.
+# It does not write to any device - the partition is mounted `ro,noload` and the
+# PMIC RTC is never touched, which is what keeps it away from the SPMI write that
+# hangs this board (docs/RTC_REPORT.md).
 set -euo pipefail
 
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
@@ -162,6 +167,38 @@ install -m 0755 "$init_src" "$tree/init"
 # Sourced by /init.  A separate file so host tests can exercise the record format
 # without an initramfs.
 install -m 0644 "$state_src" "$tree/minimal-rootfs-state.sh"
+
+# ---------------------------------------------------------------------------
+# The RTC offset helper.  Not opt-in and not a debug tool: without it Debian
+# boots ~56 years in the past and stays there until the network comes up, which
+# breaks TLS, ssh and apt in ways that read as network faults.  See
+# docs/RTC_OFFSET.md.
+#
+# It is a freestanding aarch64 binary rather than a shell fragment because the
+# offset is a signed 64-bit little-endian value and the production image has no
+# `od` (and must not grow one - tests/test_initramfs_profiles.py forbids it, since
+# `od` is the debug image's raw-GPT tool).  Parsing it in the shell would mean
+# hand-rolling 64-bit arithmetic on eight decimal bytes.
+#
+# The same strictness the trampoline gets: it must be aarch64 and it must be
+# static, checked at build time rather than discovered on a tablet that will not
+# boot.
+# ---------------------------------------------------------------------------
+rtc_src="$repo_root/boot/gts9-rtc-offset.c"
+[ -f "$rtc_src" ] || fail "missing RTC offset source: $rtc_src"
+command -v clang >/dev/null || fail 'clang is required to build the RTC offset helper'
+rtc_helper="$tree/sbin/gts9-rtc-offset"
+clang --target=aarch64-linux-gnu -nostdlib -static -ffreestanding \
+      -fno-stack-protector -fno-builtin -fuse-ld=lld \
+      -Wl,--build-id=none -Wl,-n \
+      -o "$rtc_helper" "$rtc_src" || fail 'cannot build the RTC offset helper'
+readelf -h "$rtc_helper" | grep -q 'Machine:.*AArch64' || \
+    fail 'the RTC offset helper is not an aarch64 ELF'
+if readelf -l "$rtc_helper" 2>/dev/null | grep -q INTERP; then
+    fail 'the RTC offset helper is dynamically linked'
+fi
+chmod 0755 "$rtc_helper"
+echo "including the RTC offset helper: $rtc_helper ($(stat -c %s "$rtc_helper") bytes)"
 
 missing=$(gts9_link_applets "$tree" "$required_applets" "$sbin_applets")
 if [ -n "$missing" ]; then

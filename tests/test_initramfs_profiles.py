@@ -514,23 +514,46 @@ class BootloaderControlBlockRecovery(unittest.TestCase):
         uevent - the label the kernel's own EFI partition parser published. A
         hardcoded /dev/sda10 would write a bootloader control block into somebody
         else's partition on any other layout.
+
+        The lookup lives in minimal_label_device(), which minimal_misc_device()
+        delegates to: the RTC offset reader needs the same lookup for `persist`,
+        and two implementations of "find the partition by its label" is exactly
+        how one of them drifts into a device number. The assertions therefore run
+        against the shared helper, and one more checks that misc still delegates
+        to it rather than growing its own copy.
         """
         text = read(str(INIT))
-        start = text.index('minimal_misc_device()')
+        start = text.index('minimal_label_device()')
         fn = text[start:text.index('\n}\n', start)]
         self.assertIn('uevent', fn)
         self.assertIn('PARTNAME=', fn)
-        self.assertIn('= "$misc_want"', fn)
+        self.assertIn('= "$label_want"', fn)
         self.assertIn('basename', fn)
         self.assertNotIn('sda10', fn)
         self.assertNotIn('/dev/block/by-name', fn)
 
+        # ... and the misc path must actually go through it.
+        misc_start = text.index('minimal_misc_device()')
+        misc_fn = text[misc_start:text.index('\n}\n', misc_start)]
+        self.assertIn('minimal_label_device', misc_fn)
+
     def test_it_refuses_the_microsd(self):
-        """misc is on the UFS; an mmcblk partition must never be selected."""
+        """misc is on the UFS; an mmcblk partition must never be selected.
+
+        The refusal is a parameter of the shared helper, not a property of the
+        caller, so that a partition lookup cannot get it wrong by forgetting it.
+        It must also remain the DEFAULT: a caller that passes nothing still
+        refuses the card.
+        """
         text = read(str(INIT))
-        start = text.index('minimal_misc_device()')
+        start = text.index('minimal_label_device()')
         fn = text[start:text.index('\n}\n', start)]
         self.assertIn('mmcblk*) continue', fn)
+        self.assertIn('label_skip_mmc=${2:-1}', fn)
+        # misc must ask for the refusal explicitly and by that name.
+        misc_start = text.index('minimal_misc_device()')
+        misc_fn = text[misc_start:text.index('\n}\n', misc_start)]
+        self.assertIn('1', misc_fn)
 
     def test_it_is_one_shot_so_it_cannot_boot_loop(self):
         """If misc already asks for recovery, the bootloader ignored it once."""
@@ -642,6 +665,11 @@ class PanelRecoveryRunsOnlyOnFailure(unittest.TestCase):
         (root timeout, missing device, failed mount, missing /sbin/init, failed
         VFS move, failed switch_root).  This asserts both halves - the call is
         inside the rescue body, and the healthy path never calls the rescue body.
+
+        The window runs from the ROOT-DEVICE mount to switch_root, and is found by
+        that mount's own text rather than by a bare `mount -t ext4`: the RTC offset
+        step also mounts a filesystem (a read-only one) earlier in the boot, and
+        matching it would drag that step into a window it is not part of.
         """
         text = read(str(INIT))
         rescue_at = text.index('minimal_rescue_shell()')
@@ -651,7 +679,7 @@ class PanelRecoveryRunsOnlyOnFailure(unittest.TestCase):
 
         # The success path: from the root mount to switch_root there must be no
         # reference to the panel helper at all.
-        mount_at = text.index('mount -t ext4')
+        mount_at = text.index('mount -t ext4 -o rw "$ROOTFS_DEVICE" /newroot')
         switch_at = text.index('exec switch_root')
         success = text[mount_at:switch_at]
         self.assertNotIn('minimal_panel_rescue', success)

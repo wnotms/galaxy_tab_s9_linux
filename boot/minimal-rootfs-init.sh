@@ -102,9 +102,16 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
         # person in TWRP and the cmdline alone is over half its size; on when
         # diagnosing a handoff that ignored an option.
         gts9_initramfs_debug=*) GTS9_INITRAMFS_DEBUG=${arg#gts9_initramfs_debug=} ;;
+        # Turn OFF the RTC offset for one boot.  It defaults ON because a wrong
+        # clock is a real fault and not a preference, but an option that can only
+        # be reached by rebuilding the initramfs is not a diagnostic - and if this
+        # fix is ever suspected of a boot problem, being able to boot without it is
+        # how that gets settled.  Same shape as gts9_rtc_report= in the debug image.
+        gts9_rtc_offset=*) GTS9_RTC_OFFSET=${arg#gts9_rtc_offset=} ;;
     esac
 done
 GTS9_INITRAMFS_DEBUG=${GTS9_INITRAMFS_DEBUG:-0}
+GTS9_RTC_OFFSET=${GTS9_RTC_OFFSET:-1}
 # The state library reads this, so it has to be exported rather than merely set.
 export GTS9_INITRAMFS_DEBUG
 GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
@@ -190,27 +197,44 @@ minimal_panel_rescue() {
 #     shell still runs.  A shell on a dark tablet beats a tablet that rebooted
 #     into nothing.
 # ---------------------------------------------------------------------------
-minimal_misc_device() {
-    misc_want=${1:-misc}
-    for misc_dir in /sys/class/block/sd* /sys/class/block/mmcblk*p*; do
-        [ -r "$misc_dir/uevent" ] || continue
+# Find a partition by the GPT label the kernel itself published.
+#
+# Nothing is guessed from a device number, which is what keeps a write from
+# landing in somebody else's partition - and what lets the same helper serve the
+# read-only lookup for the RTC offset below, instead of a second and subtly
+# different implementation of the same idea.
+#
+# PARTNAME comes from sysfs, so this consumes the kernel's own parse of the GPT
+# rather than parsing one here.  That is why the production image needs no `od`.
+# ---------------------------------------------------------------------------
+minimal_label_device() {
+    label_want=$1
+    # 1 (the default) refuses an mmcblk partition, so a card with a coincidental
+    # label cannot be selected for a partition that lives on the UFS.
+    label_skip_mmc=${2:-1}
+    for label_dir in /sys/class/block/sd* /sys/class/block/mmcblk*p*; do
+        [ -r "$label_dir/uevent" ] || continue
         # PARTNAME is the GPT volume label as the kernel parsed it.  The
         # comparison is exact and an empty label cannot match.
-        misc_label=$(sed -n 's/^PARTNAME=//p' "$misc_dir/uevent" 2>/dev/null | head -1)
-        [ -n "$misc_label" ] || continue
-        [ "$misc_label" = "$misc_want" ] || continue
-        misc_name=$(basename "$misc_dir")
-        # Never the microSD: misc lives on the UFS, and an mmcblk partition with a
-        # coincidental label would put the BCB on the card instead.
-        case "$misc_name" in mmcblk*) continue ;; esac
-        for misc_dev in "/dev/$misc_name" "/dev/block/$misc_name"; do
-            if [ -b "$misc_dev" ]; then
-                printf '%s\n' "$misc_dev"
+        label_name=$(sed -n 's/^PARTNAME=//p' "$label_dir/uevent" 2>/dev/null | head -1)
+        [ -n "$label_name" ] || continue
+        [ "$label_name" = "$label_want" ] || continue
+        label_dev_name=$(basename "$label_dir")
+        if [ "$label_skip_mmc" = 1 ]; then
+            case "$label_dev_name" in mmcblk*) continue ;; esac
+        fi
+        for label_dev in "/dev/$label_dev_name" "/dev/block/$label_dev_name"; do
+            if [ -b "$label_dev" ]; then
+                printf '%s\n' "$label_dev"
                 return 0
             fi
         done
     done
     return 1
+}
+
+minimal_misc_device() {
+    minimal_label_device "${1:-misc}" 1
 }
 
 minimal_bcb_asks_recovery() {
@@ -287,6 +311,101 @@ minimal_reboot_to_recovery() {
     reboot -f 2>/dev/null || poweroff -f 2>/dev/null || true
     return 0
 }
+
+# ---------------------------------------------------------------------------
+# Give the system the correct time, from Samsung's own RTC offset.
+#
+# The problem this solves: the PMK8550 RTC on this tablet counts from 1970 and is
+# never set, so Debian used to start ~56 years in the past - and with no network
+# it stayed there. The wrong clock is not cosmetic: TLS and ssh fail in ways that
+# read as a network fault, `apt` refuses to work, and every file written before
+# the network comes up is stamped with the wrong year.
+#
+# Where the correct time comes from: Android and TWRP both add an offset to the
+# raw counter that Samsung's time daemon keeps in
+#
+#	/persist/time/ats_2     8-byte signed little-endian milliseconds
+#
+# on the UFS `persist` partition. That file is the ONLY place the offset lives -
+# it is not a PMIC SDAM cell, not an NVMEM cell and not a UEFI variable - which is
+# why mainline's rtc-pm8xxx offset support cannot reach it. docs/RTC_OFFSET.md has
+# the evidence, including why adding an NVMEM offset cell to the DTS would be
+# actively dangerous on this board.
+#
+# Why this is safe, and why it is in the initramfs rather than in Debian:
+#
+#   * it does NOT write the PMIC RTC. The raw counter is left exactly as Android
+#     and TWRP expect to find it. This matters beyond tidiness: an SPMI *write*
+#     blocks this kernel uninterruptibly (docs/RTC_REPORT.md, tests 021-027), and
+#     that is the same hang `reboot recovery` runs into. So the offset is applied
+#     to the system clock instead of to the counter, which needs no SPMI write at
+#     all - /sbin/gts9-rtc-offset can only reach CLOCK_REALTIME.
+#   * the partition is mounted `ro,noload`. `noload` is the load-bearing part: a
+#     plain `-o ro` still REPLAYS THE JOURNAL when the filesystem needs recovery
+#     (ext4 says "write access will be enabled during recovery"), which would
+#     write to the owner's persist partition to read one file. With `noload` the
+#     journal is never loaded, so not a byte is written.
+#   * it is found by the kernel's own GPT label, never by a device number.
+#   * it is applied BEFORE the state library takes its first timestamp, so the
+#     boot record in /var/log/gts9-minimal-last-boot is stamped with the real
+#     date. That is the on-device proof this worked: before this change the record
+#     read 2026-04-13 on a tablet whose real date was 2026-09-26.
+#   * it never fails the boot. A missing partition, an unreadable file, a corrupt
+#     value or a helper that cannot run all report one line and carry on with the
+#     raw clock - which is exactly what the board did before.
+# ---------------------------------------------------------------------------
+PERSIST_MOUNT=/persist-ro
+RTC_OFFSET_HELPER=/sbin/gts9-rtc-offset
+
+minimal_apply_rtc_offset() {
+    if [ "${GTS9_RTC_OFFSET:-1}" != 1 ]; then
+        minimal_emit 'rtc-offset: status=disabled-by-cmdline'
+        return 0
+    fi
+    if [ ! -x "$RTC_OFFSET_HELPER" ]; then
+        minimal_emit "rtc-offset: status=helper-missing path=$RTC_OFFSET_HELPER"
+        return 0
+    fi
+
+    # The kernel enumerates the UFS very early - `sda` and all of its partitions
+    # are present before /init runs - so this normally costs nothing at all and
+    # exits on the first test. It exists because "normally" is not "always", and a
+    # boot that quietly skipped the fix would hand Debian the 1970 clock again.
+    rtc_offset_waited=0
+    while [ ! -e /sys/class/block/sda ] && [ "$rtc_offset_waited" -lt 5 ]; do
+        sleep 1
+        rtc_offset_waited=$((rtc_offset_waited + 1))
+    done
+
+    persist_dev=$(minimal_label_device persist 1) || {
+        minimal_emit "rtc-offset: status=partition-missing label=persist (UFS up after ${rtc_offset_waited}s)"
+        return 0
+    }
+
+    mkdir -p "$PERSIST_MOUNT" 2>/dev/null || {
+        minimal_emit "rtc-offset: status=mountpoint-failed path=$PERSIST_MOUNT"
+        return 0
+    }
+    # Bounded, because a mount that never returns is a device that never boots.
+    if ! timeout 10 mount -t ext4 -o ro,noload "$persist_dev" "$PERSIST_MOUNT" 2>/dev/null; then
+        minimal_emit "rtc-offset: status=mount-failed device=$persist_dev"
+        return 0
+    fi
+
+    rtc_offset_line=$(timeout 10 "$RTC_OFFSET_HELPER" 2>/dev/null)
+    rtc_offset_rc=$?
+    # Left mounted, this would still be holding a superblock when switch_root
+    # discards the initramfs root.
+    umount "$PERSIST_MOUNT" 2>/dev/null || true
+
+    # The helper's own one-line report is passed through verbatim rather than
+    # reworded here, so what a reader sees in the boot log and in the persistent
+    # record is exactly what the program decided.
+    minimal_emit "${rtc_offset_line:-rtc-offset: status=no-output}"
+    minimal_emit "rtc-offset: helper_rc=$rtc_offset_rc"
+    return 0
+}
+
 
 minimal_rescue_shell() {
     minimal_emit 'GTS9_MINIMAL_RESCUE=BusyBox shell'
@@ -393,7 +512,17 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# 6. root handoff.
+# 6. the correct time, before anything records a timestamp.
+#
+# This sits here - after /sys and /dev exist, before the state library's first
+# timestamp - and the position is the whole point. The boot record's timestamp is
+# the on-device proof that the fix worked, so the clock has to be right before
+# that timestamp is taken rather than a moment after.
+# ---------------------------------------------------------------------------
+minimal_apply_rtc_offset
+
+# ---------------------------------------------------------------------------
+# 7. root handoff.
 # ---------------------------------------------------------------------------
 minimal_state_init
 minimal_state_stage kernel-userspace
