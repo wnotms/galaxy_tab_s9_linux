@@ -598,7 +598,7 @@ class TheDocumentKeepsTheLayersHonest(unittest.TestCase):
         not quietly leave them at NOT_TESTED now that they work."""
         text = read(DOC)
         for prefix, evidence in (("| 10 | pair / connect", "Tests 222, 224"),
-                                 ("| 11 | reboot reconnect", "Test 222")):
+                                 ("| 11 | reboot reconnect", "Tests 222, 225")):
             row = [l for l in text.splitlines() if l.startswith(prefix)][0]
             self.assertIn("PHYSICALLY_VERIFIED", row)
             self.assertIn(evidence, row)

@@ -38,7 +38,7 @@ round's brief specifies. Every level below carries one of
 | 8 | BlueZ power on | **PHYSICALLY_VERIFIED** | `bluetoothctl show` reports the controller; `power off`/`power on` both work |
 | 9 | scan | **PHYSICALLY_VERIFIED** | `btmgmt find` discovers named LE devices; BR/EDR inquiry runs clean |
 | 10 | pair / connect | **PHYSICALLY_VERIFIED** | a Bluetooth **HID keyboard** paired and delivered real keypresses to `/dev/input/event4`. Tests 222, 224 |
-| 11 | reboot reconnect | **PHYSICALLY_VERIFIED** | the bond survived a full reboot with the address re-applied automatically. Test 222 |
+| 11 | reboot reconnect | **PHYSICALLY_VERIFIED** | the HID keyboard's bond survived a reboot, resolved its services and re-created `/dev/input/event4` with no re-pairing. Tests 222, 225 |
 | 12 | Wi-Fi + BT coexistence | **PHYSICALLY_VERIFIED** | Wi-Fi state and PCI endpoint unchanged across BT off/on and during scanning; 0% loss |
 | 13 | cold boot | **PHYSICALLY_VERIFIED** (of the address unit) | the unit applied the address on a real cold boot, no manual step; a second cold boot wedged |
 

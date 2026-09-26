@@ -1,0 +1,29 @@
+=== LEVEL 11 with a real HID keyboard: reconnect after a full reboot ===
+
+peer: MCHOSE G87 V2-1, DC:05:5A:41:97:3E
+date: 2026-09-26T15:07:06Z
+boot: 3260f9d5-f759-48ec-928a-a3cb4da81742  (a fresh boot - up 0 min at first check)
+
+--- 1. the address unit ran automatically again, no manual step ---
+Sep 26 23:03:43 gts9 systemd[1]: Starting gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs...
+Sep 26 23:03:46 gts9 gts9-bluetooth-address[670]: gts9-bt-addr: set public address 38:8A:06:59:04:E7 (from /run/gts9-bt-efs/bluetooth/bt_addr)
+Sep 26 23:03:46 gts9 gts9-bluetooth-address[896]: GTS9_DEBIAN_STAGE=bluetooth-address-set
+Sep 26 23:03:47 gts9 systemd[1]: Finished gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs.
+
+--- 2. the bond survived the reboot, WITHOUT re-pairing ---
+	Name: MCHOSE G87 V2-1
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Connected: yes
+
+--- 3. the kernel re-created the input node ---
+S: Sysfs=/devices/virtual/misc/uhid/0005:07D7:EFFF.0001/input/input4
+H: Handlers=sysrq kbd leds event4 
+
+--- 4. what the reconnect looked like on the wire ---
+15:04:51 watching for DC:05:5A:41:97:3E to wake
+15:06:49 CONNECTED after 4 cycles
+         Device DC:05:5A:41:97:3E ServicesResolved: yes
+         Device DC:05:5A:41:97:3E Paired: yes      <- the EXISTING bond, reused
+15:06:49 input nodes for the keyboard: 1
