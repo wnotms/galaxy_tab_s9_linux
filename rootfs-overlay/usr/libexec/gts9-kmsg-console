@@ -1,24 +1,30 @@
 #!/bin/sh
-# gts9-kmsg-console - mirror kernel messages onto the USB serial link.
+# gts9-kmsg-console - mirror kernel messages onto the USB link.
 #
 # Why this exists
 # ---------------
-# The USB cable is the only machine-readable channel off this tablet, but it is
-# a *userspace* channel: the kernel command line is
+# The USB cable is the only channel off this tablet that survives a userspace
+# that has stopped, and it is a *userspace* channel: the kernel command line is
 #
-#	console=ttyMSM0,115200n8 ... console=tty0
+#	console=tty0
 #
-# so printk goes to the SoC UART and to the local VT, and never to the ACM
-# gadget.  Every console capture taken on the host so far proves it: a panic
-# test on 2026-09-24 lost the panic report completely, because the gadget only
-# came back after the reboot and the kernel log of the dead boot was gone with
-# it (/sys/fs/pstore is empty on this port).
+# and nothing else.  printk goes to the panel VT alone, so nothing from the
+# kernel reaches the host by itself - a panic test on 2026-09-24 lost the panic
+# report completely, because the gadget only came back after the reboot and the
+# kernel log of the dead boot was gone with it.
 #
 # The stall evidence we do have - the soft-lockup report, the enc35 frame-done
 # timeouts, the RCU stalls - reached us as photographs of the tablet's screen,
 # which is not something an unattended loop can use.  This helper copies
 # /dev/kmsg to /dev/ttyGS0 as it is written, so the same messages land in the
 # host's serial capture with correct ordering.
+#
+# Update 2026-09-26: the serial *consoles* were removed (docs/BOOT_CONSOLE_BLOCK.md,
+# docs/SHUTDOWN_DELAY.md) but this mirror is not a console and is not one of them.
+# It writes to an opened tty from an ordinary userspace process, which is bounded
+# and reopenable, rather than being wired into printk and /dev/console.  It stays
+# opt-in behind gts9_kmsg_mirror=1: it is a loud piece of instrumentation, and on
+# a normal boot `dmesg` over ssh is the better tool.
 #
 # It cannot capture the panic message itself: panic() runs on one CPU with the
 # others stopped and schedules nothing, so a userspace reader never gets to see
