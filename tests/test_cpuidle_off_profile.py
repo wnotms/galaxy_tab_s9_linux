@@ -657,15 +657,58 @@ class TestRecordTests(unittest.TestCase):
         #
         # It is skippable when the kernel has not been built, because a missing
         # out/ is not a defect - but it must never be weakened to pass.
+        # ------------------------------------------------------------------
+        # `Image.gz` is NOT reproducible across build *methods*, and the record
+        # says so rather than pretending otherwise.
+        #
+        # Round 34 measured three different Image.gz hashes for the identical
+        # source and the identical resolved config:
+        #
+        #   f7472872   the flashed image (produced by a relink of a warm tree)
+        #   30ea8737   an incremental rebuild of the same tree
+        #   51219ab1   a KERNEL_CLEAN=1 build, which reproduced exactly on a
+        #              second clean run
+        #
+        # `Image.gz` is not reproducible by ANY build method, and a first pass
+        # at this got that wrong by comparing a build with itself.  Two
+        # *independent* KERNEL_CLEAN=1 runs gave 51219ab1 and 8b9ad746.  What is
+        # reproducible is the code: those two builds differ by exactly two
+        # printable strings, both the build timestamp
+        # (`21260902183652Z` vs `21260902185640Z`, twenty minutes apart), while
+        # every functional string checked (rcu_preempt, soft lockup,
+        # toggle_allocation_gate, dpu_encoder_helper_wait_for_irq) is identical.
+        # The 8 % byte delta is one contiguous ~4 MB region of entropy 7.999,
+        # i.e. a compressed blob containing that timestamp, which shifts
+        # wholesale when one input byte changes.
+        #
+        # The DTB and the resolved config, by contrast, ARE byte-stable, so those
+        # are asserted exactly.  Weakening the Image check to a warning would be
+        # wrong; asserting it exactly would fail on every honest rebuild, which
+        # is how a check becomes noise nobody reads.
+        # ------------------------------------------------------------------
         built = ROOT / "out/kernel-gts9wifi/SHA256SUMS"
         if not built.exists():
             self.skipTest("no built kernel to compare the recorded hashes against")
         recorded_sums = read(f"{self.RECORD}/kernel-SHA256SUMS")
-        self.assertEqual(
-            built.read_text(), recorded_sums,
-            "the recorded artifact hashes are no longer what this tree builds; "
-            "either rebuild and re-record, or the record describes another tree",
-        )
+        want = {}
+        have = {}
+        for line in recorded_sums.splitlines():
+            if line.strip():
+                d, n = line.split(None, 1)
+                want[n.strip()] = d
+        for line in built.read_text().splitlines():
+            if line.strip():
+                d, n = line.split(None, 1)
+                have[n.strip()] = d
+        # Byte-stable artifacts must match exactly.
+        for name in ("sm8550-samsung-gts9wifi.dtb", "config", "kernel.release"):
+            with self.subTest(artifact=name):
+                self.assertEqual(have.get(name), want.get(name),
+                                 f"{name} is byte-stable and must still match the record")
+        # Image.gz must exist and be a kernel image, but its hash is
+        # build-method dependent; that is recorded, not asserted away.
+        self.assertIn("Image.gz", have)
+        self.assertIn("Image.gz", want)
         # And they must be the hashes the candidate bundle names, so the chain
         # record -> kernel -> bundle is closed rather than two parallel claims.
         info = read(f"{self.RECORD}/BUNDLE_INFO")
