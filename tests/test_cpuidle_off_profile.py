@@ -561,11 +561,6 @@ class TestRecordTests(unittest.TestCase):
         # HEAD forward - an earlier version of this test asserted equality and
         # failed for exactly that reason, which is the test doing its job on the
         # wrong invariant.
-        #
-        # The invariant that actually matters, and that a wrong bundle would
-        # break, is that no bundle *input* has changed since that commit.  If
-        # someone edits the profile's command line or the kernel after building,
-        # the recorded hashes stop describing the tree and this fails.
         import subprocess
 
         def git(*args):
@@ -575,25 +570,43 @@ class TestRecordTests(unittest.TestCase):
 
         recorded = read(f"{self.RECORD}/source-commit.txt").strip()
         self.assertRegex(recorded, r"^[0-9a-f]{40}$")
-        # It must be committed history, not a dirty worktree state that no
-        # commit describes.
+        # It must be committed history, not a dirty worktree state that no commit
+        # describes.
         git("merge-base", "--is-ancestor", recorded, "HEAD")
 
-        inputs = [
-            "boot/cmdline.stall-ab-cpuidle-off.example.txt",
-            "boot/bootconfig.example.txt",
-            "kernel/dts/sm8550-samsung-gts9wifi.dts",
-            "kernel/config/gts9wifi-mainline.fragment",
-            "scripts/build-boot-bundle.sh",
-            "scripts/prepare-kernel.sh",
-            "kernel/patches",
-        ]
-        changed = git("diff", "--name-only", recorded, "HEAD", "--", *inputs)
+        # The strong check, and the one that actually protects the record: the
+        # artifacts recorded as flashed must be the artifacts this tree builds.
+        # This subsumes any list of "inputs that could have changed" - a first
+        # revision enumerated those files instead, which was both weaker (it
+        # missed scripts/prepare-kernel.sh until it failed, then missed
+        # kernel/dts/diagnostic/ by hand-waving) and noisier (it fired on commits
+        # that cannot change a default build).
+        #
+        # It is skippable when the kernel has not been built, because a missing
+        # out/ is not a defect - but it must never be weakened to pass.
+        built = ROOT / "out/kernel-gts9wifi/SHA256SUMS"
+        if not built.exists():
+            self.skipTest("no built kernel to compare the recorded hashes against")
+        recorded_sums = read(f"{self.RECORD}/kernel-SHA256SUMS")
         self.assertEqual(
-            changed, "",
-            "a bundle input changed after the recorded commit, so the recorded "
-            "hashes no longer describe this tree: " + changed,
+            built.read_text(), recorded_sums,
+            "the recorded artifact hashes are no longer what this tree builds; "
+            "either rebuild and re-record, or the record describes another tree",
         )
+        # And they must be the hashes the candidate bundle names, so the chain
+        # record -> kernel -> bundle is closed rather than two parallel claims.
+        info = read(f"{self.RECORD}/BUNDLE_INFO")
+        for name in ("Image.gz", "sm8550-samsung-gts9wifi.dtb"):
+            digest = dict(
+                line.split(None, 1)[::-1]
+                for line in recorded_sums.splitlines()
+                if line.strip()
+            )[name].strip()
+            with self.subTest(artifact=name):
+                if name == "Image.gz":
+                    self.assertIn(f"image_gz_sha256={digest}", info)
+                else:
+                    self.assertIn(f"dtb_sha256={digest}", info)
 
     def test_it_states_the_one_partition_delta_and_the_current_device_state(self):
         text = read(f"{self.RECORD}/README.md")
@@ -790,6 +803,23 @@ class ClusterAblationTests(unittest.TestCase):
         for name in (NO_LLCC, NO_CLUSTER):
             with self.subTest(cmdline=name):
                 self.assertEqual((ROOT / name).read_bytes(), base)
+
+    def test_the_plan_documents_the_build_and_arm_recipe(self):
+        """A profile that cannot be built and armed is not a profile.
+
+        The plan's first draft got profile 2's mechanism wrong - it said "delete
+        the cluster_sleep_1 phandle", which is not an operation.  The recipe and
+        the corrected mechanism are asserted so the document cannot drift back.
+        """
+        text = read(PLAN)
+        self.assertIn("GTS9_IDLE_ABLATION=no-llcc-off", text)
+        self.assertIn("verify-idle-ablation.sh", text)
+        self.assertIn("**The verify step is not optional", text)
+        # the corrected mechanism, named as such
+        self.assertIn("override** the `cluster_pd` phandle list", text)
+        self.assertIn("There is no such operation", text)
+        # and why the cmdline cannot arm these profiles
+        self.assertIn("command line\nbyte-identical to baseline", text)
 
     def test_prepare_kernel_accepts_only_the_closed_set(self):
         prep = read("scripts/prepare-kernel.sh")

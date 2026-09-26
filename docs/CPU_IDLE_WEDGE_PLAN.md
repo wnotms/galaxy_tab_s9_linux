@@ -141,13 +141,53 @@ So the ablation ladder is:
 | order | profile | removes | how | cost |
 |---|---|---|---|---|
 | **1** | `cpuidle-off` | **everything above WFI** | `cpuidle.off=1` | cmdline only |
-| **2** | `no-llcc-off` | the deeper cluster state only | `/delete-property/` on the `cluster_sleep_1` phandle | DTB |
-| **3** | `no-cluster-idle` | **both** cluster states | delete both phandles | DTB |
+| **2** | `no-llcc-off` | the deeper cluster state only | **override** the `cluster_pd` phandle list | DTB |
+| **3** | `no-cluster-idle` | **both** cluster states | **delete** the `domain-idle-states` property | DTB |
 
 **Profile 1 first, because it is one command-line token and no DTB change**, and
 because the brief itself makes it the gate: if the wedge survives with the whole
 framework off, the PSCI-idle hypothesis drops in priority and the plan moves to
 §7 instead of grinding through idle patches.
+
+**The two mechanisms in the table are not interchangeable**, and the first draft
+of this plan had profile 2 wrong by writing "delete the `cluster_sleep_1`
+phandle". There is no such operation: a phandle is a value inside a property, so
+dropping one state while keeping the other means *overriding the list*, whereas
+dropping both means *deleting the property*. They are different edits with
+different kernel paths, and both are in the tree now:
+
+```
+kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-llcc-off.dts
+kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-cluster-idle.dts
+```
+
+They are opt-in and default-off; the default build is byte-identical to the
+shipped `eecc98b8`, checked rather than assumed.
+
+### 3.0 Building and arming profiles 2 and 3
+
+```sh
+GTS9_IDLE_ABLATION=no-llcc-off ./scripts/prepare-kernel.sh .work/build/linux-src-gts9wifi
+./scripts/build-kernel.sh                       # as usual
+./scripts/verify-idle-ablation.sh \
+    out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb no-llcc-off
+```
+
+**The verify step is not optional and must run before the bundle is built.** It
+is the check the brief asks for — the compiled DTB, not the source — and it is
+the only thing standing between a silently-no-op ablation and a clean boot series
+that appears to prove the wrong thing. It asserts the cluster state set the
+profile claims, that the state *definitions* survived, that all eight per-CPU
+domains still reference exactly one state, and that the ABL identity is intact.
+A tree that passes the wrong profile's check is a bug in the verifier, and the
+discrimination is itself tested: the unablated DTB fails both ablation profiles.
+
+Unlike every other profile in the harness, these two have a **command line
+byte-identical to baseline** — a test asserts it — so the harness cannot arm them
+from the cmdline. Its gate reads `/proc/device-tree` instead and additionally
+requires the per-CPU states to be intact, because a build that cost the CPUs
+their states would silently be `cpuidle.off=1` and the result would be
+misattributed to the cluster layer.
 
 ### 3.1 Why there is no `IDLE-LITTLE-ONLY` profile
 
@@ -157,6 +197,10 @@ a preference: **it cannot be built.** §5.1 of
 is profile 2/3, which separates the *cluster* layers — the only separation the
 kernel actually supports. Recorded here so the omission is a decision with a
 reason rather than an oversight.
+
+The verifier enforces that these overlays stay inside that boundary: a test
+asserts neither file names a `cpu_pd` node or any of the three CPU state labels,
+so the unbuildable profile cannot be attempted by accident.
 
 ### 3.2 Why there is no `BIG-PRIME-RESTORED` profile yet
 
