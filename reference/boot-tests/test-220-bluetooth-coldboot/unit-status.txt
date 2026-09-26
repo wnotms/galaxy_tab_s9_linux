@@ -1,0 +1,21 @@
+=== boot identity: this is a real cold boot, no manual step ===
+up 0 minutes
+dd0336cd-7569-4006-b378-4a06594ddb64
+Sat Sep 26 13:15:31 UTC 2026
+
+=== the unit ran automatically and applied the address ===
+Sep 26 21:14:45 gts9 systemd[1]: Starting gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs...
+Sep 26 21:14:47 gts9 gts9-bluetooth-address[676]: gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+Sep 26 21:14:47 gts9 gts9-bluetooth-address[894]: GTS9_DEBIAN_STAGE=bluetooth-address-set
+Sep 26 21:14:47 gts9 gts9-bluetooth-address[676]: gts9-bt-addr: address set; the BlueZ index was not readable yet (bluetoothd may be down)
+Sep 26 21:14:48 gts9 systemd[1]: Finished gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs.
+
+=== systemd's view ===
+● gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs
+     Loaded: loaded (/etc/systemd/system/gts9-bluetooth-address.service; enabled; preset: enabled)
+     Active: active (exited) since Sat 2026-09-26 21:14:48 CST; 44s ago
+ Invocation: 8ba8ce74afe54a16884004738c36c892
+       Docs: file:/usr/libexec/gts9-bluetooth-address
+    Process: 676 ExecStart=/usr/libexec/gts9-bluetooth-address (code=exited, status=0/SUCCESS)
+   Main PID: 676 (code=exited, status=0/SUCCESS)
+   Mem peak: 4.3M

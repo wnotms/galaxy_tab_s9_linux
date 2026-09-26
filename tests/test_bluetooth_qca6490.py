@@ -408,6 +408,81 @@ class TheTwoHardwareOrderingTrapsStayFixed(unittest.TestCase):
         self.assertIn("TimeoutStartSec=", text)
 
 
+class TheAddressStateMachineMatchesTheHardware(unittest.TestCase):
+    """The three replies btmgmt gives, and what each really means.
+
+    All three were measured on the tablet (test 220), and the first version of
+    the helper got two of them wrong:
+
+      not configured      "... complete"                accepted
+      mid-transition      "... 0x11 (Invalid Index)"    retry - it raced the
+                                                        controller, which is
+                                                        registered in sysfs at
+                                                        +0s but only accepts the
+                                                        request at +1s
+      already configured  "... 0x0b (Rejected)"         already done, NOT a
+                                                        failure
+
+    Reporting the third as a failure is the mistake worth pinning: the
+    controller was never disturbed, but the stage would have read as a
+    regression.
+    """
+
+    def test_it_retries_invalid_index(self):
+        """Checked on the CODE, not the comment.
+
+        The comment above the loop names the reply, so a naive `assertIn` passes
+        even with the retry deleted - which is exactly what a negative control
+        showed. The case arm itself is what must be present.
+        """
+        text = code_only(read(HELPER))
+        self.assertRegex(
+            text, r'\*"Invalid [Ii]ndex"\*\s*\)',
+            "the Invalid Index reply must be handled in a case arm, not just "
+            "mentioned in a comment")
+        # The retry is bounded by a named constant, not an unbounded loop.
+        self.assertIn('while [ "$tries" -lt "$ADDR_WAIT_SECONDS" ]', text)
+
+    def test_it_judges_by_the_address_not_by_the_reply(self):
+        """`Rejected` and `complete` are both resolved by re-reading."""
+        text = code_only(read(HELPER))
+        self.assertIn("wait_for_ctrl_addr", text)
+        self.assertIn("read_ctrl_addr", text)
+        # The outcome must hinge on the address comparison.
+        self.assertIn('wait_for_ctrl_addr "$addr" "$ADDR_WAIT_SECONDS"', text)
+
+    def test_it_checks_before_it_acts(self):
+        """An already-correct controller gets no management call at all."""
+        text = code_only(read(HELPER))
+        check = text.index('"$(read_ctrl_addr)" = "$addr"')
+        call = text.index("public-addr")
+        self.assertLess(check, call,
+                        "the address must be checked before any management call")
+
+    def test_it_does_not_rely_on_the_daemon_to_read_the_address(self):
+        """bluetoothd may not be up yet at boot, and btmgmt needs its socket."""
+        text = read(HELPER)
+        self.assertIn("hciconfig", text)
+        # And the reason is recorded, so nobody swaps it for a btmgmt read.
+        self.assertIn("no address attribute", text)
+
+    def test_the_retry_is_not_an_excuse_to_ignore_failure(self):
+        """A genuinely unexpected reply must still surface as a failure."""
+        text = read(HELPER)
+        self.assertIn("bluetooth-address-failed", text)
+        self.assertIn("bluetooth-address-unconfirmed", text)
+
+    def test_no_arbitrary_long_sleep_was_added(self):
+        """The brief forbids hiding races with sleeps. This waits for a
+        documented prerequisite, bounded and retried."""
+        text = code_only(read(HELPER))
+        for m in re.finditer(r"sleep\s+(\d+)", text):
+            self.assertLessEqual(
+                int(m.group(1)), 1,
+                "a sleep longer than 1s would be masking a race, not waiting")
+        self.assertIn("ADDR_WAIT_SECONDS", text)
+
+
 class NothingHereTouchesWifi(unittest.TestCase):
     """Bluetooth shares the combo chip and the PMU with Wi-Fi."""
 
@@ -478,9 +553,23 @@ class TheDocumentKeepsTheLayersHonest(unittest.TestCase):
         self.assertIn("coincident", text)
         self.assertIn("CPU_WEDGE_EVIDENCE.md", text)
 
-    def test_it_says_the_automatic_path_is_unverified(self):
+    def test_it_records_the_automatic_path_as_verified(self):
+        """It was unverified until test 220 ran; the doc must not still say so."""
         text = read(DOC)
-        self.assertIn("NOT verified: the automatic boot path", text)
+        self.assertIn("The automatic boot path is now verified", text)
+        # ... and the two bugs that verifying it exposed must be recorded,
+        # because both are invisible when reading the helper.
+        self.assertIn("sysfs node is not the readiness signal", text)
+        self.assertIn("does not mean failure", text)
+
+    def test_it_still_refuses_to_claim_pairing(self):
+        """The point of the layered document: scan working must not be read as
+        pairing working. Level 10/11 need a peer device and remain unproven."""
+        text = read(DOC)
+        row = [l for l in text.splitlines() if l.startswith("| 10 | pair / connect")][0]
+        self.assertIn("NOT_TESTED", row)
+        row = [l for l in text.splitlines() if l.startswith("| 11 | reboot reconnect")][0]
+        self.assertIn("NOT_TESTED", row)
 
 
 if __name__ == "__main__":

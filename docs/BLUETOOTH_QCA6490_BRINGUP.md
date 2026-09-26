@@ -1,8 +1,9 @@
 # QCA6490 / WCN6855 Bluetooth bring-up on the X710
 
-State: **levels 0–6 pass, level 7 is fixed but its automatic path is unverified,
-levels 8–13 are not reached.** Nothing was flashed for Bluetooth; the round's
-changes are host tooling plus a userspace helper and a systemd unit.
+State: **levels 0–9 and 12 pass, verified on the tablet; level 13 passes for the
+address unit; levels 10–11 (pairing, reconnect) are NOT TESTED.** Nothing was
+flashed for Bluetooth; the round's changes are host tooling plus a userspace
+helper and a systemd unit.
 
 This document keeps "the driver compiled", "the firmware loaded", "the controller
 is usable" and "verified on hardware" as separate claims, in the layered order the
@@ -33,13 +34,13 @@ round's brief specifies. Every level below carries one of
 | 4 | QCA ROM read | **PHYSICALLY_VERIFIED** | ROM `0x00000201`, SOC `0x400c1211`, patch `0x000038e6` |
 | 5 | rampatch request/load | **PHYSICALLY_VERIFIED** | `qca/wcnhpbtfw21.tlv` downloaded, FW build `BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6` |
 | 6 | NVM request/load | **PHYSICALLY_VERIFIED** | `qca/wcnhpnv21g.bin` downloaded, `QCA setup on UART is completed` |
-| 7 | hci0 usable | **REACHED**, automatic path unverified | manual: `UP RUNNING`, `BD Address: 38:8A:06:59:04:E7`; see §6 |
-| 8 | BlueZ power on | **REACHED** | `bluetoothctl show` reports the controller, `Powered: yes` |
-| 9 | scan | **REACHED** (with firmware + address) | `btmgmt find` discovers LE devices, incl. a named one |
+| 7 | hci0 usable | **PHYSICALLY_VERIFIED** | on a cold boot with no manual step: `UP RUNNING`, `BD Address: 38:8A:06:59:04:E7`, `ACL MTU: 1024:7` |
+| 8 | BlueZ power on | **PHYSICALLY_VERIFIED** | `bluetoothctl show` reports the controller; `power off`/`power on` both work |
+| 9 | scan | **PHYSICALLY_VERIFIED** | `btmgmt find` discovers named LE devices; BR/EDR inquiry runs clean |
 | 10 | pair / connect | **NOT_TESTED** | needs a physical peer device |
-| 11 | reboot reconnect | **NOT_TESTED** | blocked by the wedge in §8 |
-| 12 | Wi-Fi + BT coexistence | **NOT_TESTED** | not yet attempted |
-| 13 | cold boot | **NOT_TESTED** | the one attempt ended in the pre-existing CPU wedge |
+| 11 | reboot reconnect | **NOT_TESTED** | needs a paired peer device (level 10) |
+| 12 | Wi-Fi + BT coexistence | **PHYSICALLY_VERIFIED** | Wi-Fi state and PCI endpoint unchanged across BT off/on and during scanning; 0% loss |
+| 13 | cold boot | **PHYSICALLY_VERIFIED** (of the address unit) | the unit applied the address on a real cold boot, no manual step; a second cold boot wedged |
 
 ## 3. The problem the round expected did not exist
 
@@ -200,10 +201,37 @@ Also exercised: the already-configured path and the missing-partition path, both
 which exit 0 and record a distinct stage. `efs` is left unmounted and the mountpoint
 removed in every path.
 
-**NOT verified: the automatic boot path.** The reboot intended to test it ended in
-the CPU wedge described in §8, so the unit has not been observed applying the
-address on a clean boot. That is the single most important outstanding item, and it
-is a wiring question, not a controller question.
+**The automatic boot path is now verified** (test 220), on a real cold boot with
+no manual step:
+
+```
+Sep 26 21:14:47 gts9-bluetooth-address[676]: gts9-bt-addr: set public address
+    38:8A:06:59:04:E7 after 1s (controller was still registering)
+```
+
+Getting there needed **two more fixes that only hardware testing could reveal**.
+Both are in the helper, and both are pinned by tests:
+
+**The sysfs node is not the readiness signal.** Measured on the tablet, `hci0`
+appears in `/sys/class/bluetooth` at **+0 s**, while `btmgmt public-addr` is only
+accepted at **+1 s** - the controller is still in `HCI_SETUP` and the management
+layer answers `Invalid Index`. The first version checked the node and acted once,
+so it failed on a real boot. It now treats `Invalid Index` as a retry condition.
+
+**`Rejected` does not mean failure.** Against an already-configured controller,
+`public-addr` answers `Set Public Address ... failed with status 0x0b (Rejected)`.
+That is the controller declining a redundant change, not an error: the address and
+MTU are identical before and after. The first version reported
+`bluetooth-address-failed`, which would have read as a regression.
+
+The helper therefore no longer judges by the reply text at all. It reads the
+controller's current address with `hciconfig` (which needs no daemon; sysfs
+exposes no address attribute) and decides on that, and it checks *before* acting,
+so an already-correct controller receives no management call:
+
+```
+gts9-bt-addr: controller already reports 38:8A:06:59:04:E7; leaving it alone
+```
 
 ### Two bugs in the first version, found only by testing on the tablet
 
@@ -291,10 +319,11 @@ running tablet after the firmware install and after the address fix:
 | USB serial console | **not re-added** |
 | `/persist`, `/efs`, `btd`, `param` | read-only mounts only; nothing written |
 
-The shared-PMU question the brief raises (§25) is still open in one specific
-respect: `btmgmt power off` / `power on` cycling has not been tested, so whether the
-upstream pwrseq lifecycle can drop the WLAN rail when Bluetooth is turned off is
-**NOT_TESTED**, not "fine".
+The shared-PMU question the brief raises (§25) is now answered for the case that
+matters: with Wi-Fi associated, `bluetoothctl power off` left `wlp1s0` up, latency
+unchanged, the PCI endpoint present, and `power on` brought the controller back
+cleanly (test 220). Pinging while scanning held 0% loss, and no `ath11k` reset,
+MHI RDDM or controller reset appeared during a simultaneous transfer.
 
 ## 10. Reproducing
 
@@ -314,12 +343,13 @@ mismatch.
 
 ## 11. Risks and unknowns
 
-1. **The automatic address path is unverified** (§6). Highest priority. The
-   test that would settle it is Test 1 of `reference/bluetooth-test-plan.md`,
-   which insists on a **cold boot**, because an address applied by hand would
-   look identical to one applied by the unit.
-2. **Pairing, reconnect, coexistence and cold boot are untested** — levels 10–13.
-   No physical peer device has been attached.
+1. ~~The automatic address path is unverified.~~ **Resolved by test 220**: the
+   unit applied the address on a real cold boot with no manual step, and doing so
+   exposed two further bugs (§6) that are now fixed and pinned by tests. What
+   remains is the peer-device work below.
+2. **Pairing and reconnect are untested** - levels 10-11, and scan working does
+   **not** imply them. No physical peer device has been attached. Coexistence (12)
+   and the address unit's cold boot (13) now pass; see test 220.
 3. **The NVM is upstream's generic one.** It boots the controller and scan works,
    but board-specific RF calibration has not been compared against Samsung's own
    NVM, which has not been located. `btmgmt info` reports the real address and the

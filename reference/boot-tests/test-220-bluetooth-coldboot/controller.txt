@@ -1,0 +1,22 @@
+=== controller identity, reached with no manual step ===
+hci0:	Type: Primary  Bus: UART
+	BD Address: 38:8A:06:59:04:E7  ACL MTU: 1024:7  SCO MTU: 240:4
+	UP RUNNING 
+	RX bytes:1751 acl:0 sco:0 events:152 errors:0
+	TX bytes:329828 acl:0 sco:0 commands:1406 errors:0
+
+
+=== BlueZ ===
+Controller 38:8A:06:59:04:E7 (public)
+	Manufacturer: 0x001d (29)
+	Version: 0x0c (12)
+	Name: gts9
+	Alias: gts9
+	Class: 0x00000000 (0)
+
+=== btmgmt info ===
+Index list with 1 item
+hci0:	Primary controller
+	addr 38:8A:06:59:04:E7 version 12 manufacturer 29 class 0x000000
+	supported settings: powered connectable fast-connectable discoverable bondable link-security ssp br/edr le advertising secure-conn debug-keys privacy configuration static-addr phy-configuration wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 
+	current settings: powered ssp br/edr le secure-conn wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 

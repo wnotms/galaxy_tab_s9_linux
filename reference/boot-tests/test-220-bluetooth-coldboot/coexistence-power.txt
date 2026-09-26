@@ -1,0 +1,12 @@
+--- before ---
+wlp1s0           UP             10.191.121.48/24 2409:8924:a15:eab:7185:14fb:98ca:da06/64 fe80::d1c5:7130:e42a:3842/64 
+gw=10.191.121.92
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 18.844/19.171/19.355/0.232 ms
+--- after bluetooth power off ---
+wlp1s0           UP             10.191.121.48/24 2409:8924:a15:eab:7185:14fb:98ca:da06/64 fe80::d1c5:7130:e42a:3842/64 
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 16.509/31.740/59.143/19.416 ms
+pci endpoint: /sys/bus/pci/devices/0000:01:00.0
+--- after power on ---
+	BD Address: 38:8A:06:59:04:E7  ACL MTU: 1024:7  SCO MTU: 240:4

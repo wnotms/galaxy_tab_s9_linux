@@ -116,9 +116,20 @@ esac
 # ---------------------------------------------------------------------------
 # 2. Wait for the controller to register, then give it the address.
 # ---------------------------------------------------------------------------
-# hci_qca registers hci0 from the DT serdev during boot; the firmware download
-# takes a second or two. The management index only appears for an UNCONFIGURED
-# controller after the address is set, so poll for the node and then act.
+# hci_qca registers hci0 from the DT serdev during boot, and the firmware
+# download takes a second or two. Measured on the tablet, the two readiness
+# points are NOT the same instant:
+#
+#   hci0 present in /sys/class/bluetooth:  +0 s
+#   btmgmt public-addr accepted:           +1 s   (controller still in HCI_SETUP)
+#
+# so a single attempt made as soon as the sysfs node exists fails with
+# "Set Public Address for hci0 failed with status 0x11 (Invalid Index)". That is
+# exactly what happened on a real cold boot. The node is therefore only a hint to
+# start trying; the address is applied by retrying until the controller accepts
+# it. This is not a sleep used to hide a fault - it is waiting for a documented
+# prerequisite, and it is bounded and measured, so a genuine failure still shows
+# up as a failure rather than as a longer boot.
 waited=0
 while [ "$waited" -lt "$ADDR_WAIT_SECONDS" ]; do
 	[ -e /sys/class/bluetooth/hci0 ] && break
@@ -157,22 +168,84 @@ run_btmgmt() { # run_btmgmt SECONDS ARGS...
 	: | timeout "$secs" "$BTMGM" "$@" 2>&1
 }
 
-out=$(run_btmgmt 20 public-addr "$addr")
-if printf '%s' "$out" | grep -qi 'complete'; then
-	log "set public address $addr (from $BT_ADDR_FILE)"
-	stage bluetooth-address-set
-	# Report whether the controller is usable now, but never let this probe
-	# change the outcome - the address is already set either way.
-	if run_btmgmt 10 info | grep -q 'Index list with 1 item'; then
-		log "controller is configured and visible to BlueZ"
-	else
-		log "address set; the BlueZ index was not readable yet (bluetoothd may be down)"
-	fi
-elif printf '%s' "$out" | grep -qiE 'already|busy|in progress'; then
-	log "controller already configured; leaving it alone"
+# The controller's CURRENT address, read without needing bluetoothd and without
+# going through the management interface. This is the ground truth for every
+# decision below: the management replies are ambiguous (see the table further
+# down) but the address itself is not. `hciconfig` is deprecated but it is the
+# only reader available here - sysfs exposes no address attribute (checked:
+# /sys/class/bluetooth/hci0/ has only device, power, reset, rfkill0, subsystem,
+# uevent), and btmgmt needs the management socket.
+read_ctrl_addr() {
+	command -v hciconfig >/dev/null 2>&1 || return 1
+	hciconfig hci0 2>/dev/null |
+		sed -n 's/.*BD Address: *\([0-9A-Fa-f:]\{17\}\).*/\1/p' | head -1
+}
+
+# Wait, bounded, for the controller to report the address we just set. After a
+# successful `public-addr` the re-initialisation is asynchronous: measured on the
+# tablet, hciconfig still showed the OLD placeholder immediately afterwards.
+wait_for_ctrl_addr() { # wait_for_ctrl_addr WANT SECONDS
+	want=$1
+	limit=$2
+	n=0
+	while [ "$n" -lt "$limit" ]; do
+		[ "$(read_ctrl_addr)" = "$want" ] && return 0
+		sleep 1
+		n=$((n + 1))
+	done
+	return 1
+}
+
+# Already done? Leave it completely alone: no management call at all, so there is
+# no chance of disturbing a controller that is working.
+if [ "$(read_ctrl_addr)" = "$addr" ]; then
+	log "controller already reports $addr; leaving it alone"
 	stage bluetooth-address-present
+	exit 0
+fi
+
+# Ask for the address. The three replies mean different things, and two of them
+# are not failures - all three were measured on the tablet:
+#
+#   "Set Public Address ... complete"       accepted; the controller then
+#                                           re-initialises asynchronously
+#   "... failed with status 0x11 (Invalid   the controller is mid-transition and
+#    Index)"                                not registered yet -> retry
+#   "... failed with status 0x0b            already configured, so the request is
+#    (Rejected)"                            refused -> not an error if the address
+#                                           is in fact already what we want
+#
+# Because the last two are ambiguous from the message alone, the OUTCOME is
+# decided by re-reading the address, never by the text.
+out=
+tries=0
+while [ "$tries" -lt "$ADDR_WAIT_SECONDS" ]; do
+	out=$(run_btmgmt 10 public-addr "$addr")
+	case "$out" in
+	*complete*) break ;;
+	*"Invalid Index"* | *"Invalid index"*)
+		tries=$((tries + 1))
+		sleep 1
+		;;
+	*) break ;;
+	esac
+done
+
+# Judge by the address, not by the reply.
+if wait_for_ctrl_addr "$addr" "$ADDR_WAIT_SECONDS"; then
+	if [ "$tries" -gt 0 ]; then
+		log "set public address $addr after ${tries}s (controller was still registering)"
+	else
+		log "set public address $addr (from $BT_ADDR_FILE)"
+	fi
+	stage bluetooth-address-set
+elif printf '%s' "$out" | grep -qiE 'complete|already|rejected|busy|in progress'; then
+	# The controller refused or acknowledged but does not report the address yet.
+	# Report what is actually on the controller rather than guessing.
+	log "address request returned '$(printf '%s' "$out" | tr -d '\033' | sed 's/\[[0-9;]*m//g' | tr -s ' ' | head -c 120)', but the controller reports $(read_ctrl_addr)"
+	stage bluetooth-address-unconfirmed
 else
-	log "could not set the public address: $out"
+	log "could not set the public address: $(printf '%s' "$out" | tr -d '\033' | sed 's/\[[0-9;]*m//g' | tr -s ' ' | head -c 120)"
 	stage bluetooth-address-failed
 fi
 
