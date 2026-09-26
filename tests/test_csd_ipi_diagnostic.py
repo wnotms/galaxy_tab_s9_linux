@@ -606,6 +606,49 @@ class WedgeResultTests(unittest.TestCase):
         self.assertIn("Not something to fix by touching supplies", flat)
         self.assertIn("a correlation and a direction", flat)
 
+    def test_the_dpu_correlation_is_recorded_as_a_correlation_only(self):
+        """The crtc103 burst appears on the wedge - and on clean boots too.
+
+        Recording it without that caveat would re-introduce exactly the mistake
+        the brief forbids: attributing the failure to whichever subsystem
+        complained.  The marker's counts across boots and its position RELATIVE
+        to onset are both in the record, and neither reading is chosen.
+        """
+        flat = prose(self.RESULT)
+        self.assertIn("crtc103 event 1 overflow", flat)
+        # it is explicitly not promoted
+        self.assertIn("not a wedge discriminator", flat)
+        self.assertIn("this round separates neither", flat)
+        # the clean-boot counterexample is named
+        self.assertIn("test-047", flat)
+        # and the ordering versus onset is stated
+        self.assertIn("~9.31 s", flat)
+        self.assertIn("10.101 s", flat)
+        # the two readings, and the refusal to pick
+        self.assertIn("the DPU is a victim", flat)
+        self.assertIn("the DPU is a contributor", flat)
+        # the brief's rule, applied
+        self.assertIn("do not attribute the failure to the", flat)
+
+    def test_the_correlation_evidence_file_exists(self):
+        p = ROOT / self.EVID / "dpu-overflow-correlation.txt"
+        self.assertTrue(p.is_file())
+        text = p.read_text()
+        self.assertIn("NOT a wedge discriminator", text)
+        self.assertIn("victim", text)
+
+    def test_the_restore_is_recorded_and_confirmed_in_behaviour(self):
+        """Leaving a diagnostic kernel running would be unacceptable."""
+        flat = prose(f"{self.RECORD}/RESTORE.md")
+        self.assertIn("confirmed in behaviour", flat)
+        self.assertIn("71e194a5", flat)
+        self.assertIn("49ae21b3", flat)
+        # the capability test, now showing the diagnostic is gone
+        self.assertIn("/sys/module/smp/parameters/", flat)
+        self.assertIn("empty", flat)
+        # and the tmpfs lesson, which cost one attempt
+        self.assertIn("tmpfs", flat)
+
     def test_the_plan_records_the_case_b_outcome(self):
         flat = prose(PLAN)
         self.assertIn("Case B, unambiguously", flat)

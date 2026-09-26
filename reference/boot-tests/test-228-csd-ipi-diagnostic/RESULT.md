@@ -167,6 +167,42 @@ The lesson is recorded because it is the failure mode this project keeps
 re-encountering: **a detector that runs, reports, and is then not consulted is
 worse than no detector**, because its output looks like a measurement.
 
+## 5a. A timing correlation, recorded but not claimed as a cause
+
+The wedged boot carries ten `[drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1
+overflow` lines, and **none of the three clean rounds of the same profile carry
+any**. That is worth writing down — and it is deliberately *not* being promoted to
+a finding, because the marker is not a wedge discriminator:
+
+| boot | outcome | count |
+|---|---|---|
+| test-228 wedged (`9f9d7592`) | **wedge** | 10 |
+| test-228 clean rounds ×3 | clean | 0, 0, 0 |
+| test-047 (clean bring-up) | clean | 2 |
+| test-182 (PCIe A/B) | not a wedge | present |
+
+It appears on clean boots too, so "the DPU overflowed" does not imply "the CPU
+wedged". And its timing sits *after* the failure rather than before it:
+
+```
+~9.31 s   CSD-derived loss of CPU 3   (report at 14.312 s minus the 5.000 s wait)
+10.101 s  first crtc103 overflow      <- ~0.8 s LATER
+10.251 s  last crtc103 overflow       (10 lines, 16.7 ms apart = one 60 Hz frame)
+14.312 s  first CSD report
+```
+
+Two readings are compatible with that ordering, and this round separates neither:
+
+* **the DPU is a victim** — with CPUs failing to take interrupts, the crtc
+  frame-event work is not drained and the event ring overruns;
+* **the DPU is a contributor** — the burst loads the very CPUs that then stop
+  responding.
+
+The brief's rule applies directly here: do not attribute the failure to the
+subsystem that printed last, or to the first subsystem that complained. The
+marker is recorded as a **timing correlation with an unknown direction**, and the
+`crtc103` path stays out of the candidate list until an instrument shows cause.
+
 ## 6. What this does *not* establish
 
 * **Not a cause.** It localises the failure to interrupt delivery on specific
@@ -248,6 +284,7 @@ The wedge recovered itself through the profile's own chain — `softlockup_panic
 | `evidence/rcu-and-nmi.txt` | the independent RCU stall and unanswered-NMI lines |
 | `evidence/wedged-boot-klog-full.txt` | the entire journal of the wedged boot, 1159 lines |
 | `evidence/pstore-console-ramoops.txt` | pstore as it now stands — **overwritten by later boots**, recorded rather than hidden |
+| `evidence/dpu-overflow-correlation.txt` | the `crtc103` marker's counts across wedged and clean boots, and its timing relative to onset |
 | `baselines/hotplug-baseline.txt` | `online`/`present`/`possible`, all 8 CPUs, nothing isolated |
 | `baselines/proc-interrupts.txt` | per-CPU SGI/PPI counts on a healthy boot |
 | `baselines/proc-softirqs.txt` | the softirq baseline the frozen `613/613` is read against |

@@ -1,0 +1,16 @@
+DPU 'crtc103 event 1 overflow' correlation (see RESULT.md section 5a)
+
+count per boot:
+  WEDGED test-228 9f9d7592           10
+  clean round-1-klog.txt             0
+  clean round-2-klog.txt             0
+  clean round-3-klog.txt             0
+  clean test-047 bring-up            2
+
+timing within the wedged boot:
+[   10.101086] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *E
+[   10.250946] gts9 kernel: [drm:dpu_crtc_frame_event_cb] *E
+  ~9.31 s = CSD-derived loss of CPU 3 (first report 14.312 minus 5.000 s wait)
+
+NOT a wedge discriminator: it also appears on clean boots.
+Direction unknown: victim (undrained frame events) or contributor (load).
