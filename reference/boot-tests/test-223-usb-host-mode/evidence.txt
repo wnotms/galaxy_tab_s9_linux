@@ -1,0 +1,29 @@
+=== Why a 2.4 GHz USB dongle cannot work on the X710 (read-only survey) ===
+date: 2026-09-26T14:43:51Z   device boot: 0fea34b2-2ab6-4817-a756-247f2685dc93
+
+--- 1. the only USB controller is forced to the peripheral role ---
+peripheral <- live DT dr_mode
+
+--- 2. no role switch, no Type-C port manager ---
+/sys/class/usb_role/ :  0 entries
+/sys/class/typec/    :  0 entries
+/sys/class/extcon/   :  0 entries
+
+--- 3. the apparent USB bus is a software stub, not hardware ---
+usb1 -> /sys/devices/platform/dummy_hcd.0/usb1
+product: Dummy host controller
+
+--- 4. the SM5714 PD node exists but NO driver binds to it ---
+compatible: siliconmitus,sm5714-usbpd 
+driver symlink: []   exists: NO-DANGLING
+
+--- 5. kernel HAS host support compiled in; only the role decision is missing ---
+CONFIG_USB_HID=y
+CONFIG_USB_XHCI_HCD=y
+CONFIG_USB_DWC3_DUAL_ROLE=y
+CONFIG_TYPEC=y
+CONFIG_USB_ROLE_SWITCH=y
+
+--- 6. the SoC has exactly ONE USB controller, so no second path exists ---
+sm8550.dtsi usb@ nodes: 1
+4521:		usb_1: usb@a600000 {
