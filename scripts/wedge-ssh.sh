@@ -193,7 +193,10 @@ for i in $(seq 1 "$ROUNDS"); do
 	sleep "$WINDOW"
 
 	boots_after=$(rsh 'journalctl --list-boots --no-pager 2>/dev/null | wc -l')
-	extra_boots=$((boots_after - boots_before - 1))
+	case "${boots_after:-x}${boots_before:-x}" in
+	*[!0-9]*) extra_boots=0 ;;   # unreadable counts must not become arithmetic
+	*)        extra_boots=$((boots_after - boots_before - 1)) ;;
+	esac
 	now_id=$(rsh 'cat /proc/sys/kernel/random/boot_id')
 
 	# The round's own boot is the one we rebooted into; if something rebooted it
@@ -202,30 +205,40 @@ for i in $(seq 1 "$ROUNDS"); do
 	recovery=no
 	[ "$now_id" != "$after" ] && recovery=yes
 
-	# WHICH BOOT IS THE ROUND'S BOOT - and this is not always -1.
+	# WHICH BOOT IS THE ROUND'S BOOT.
 	#
-	# The round's boot is the one the harness rebooted INTO.  Immediately after
-	# that reboot it is boot 0, and `-b -1` would be the boot BEFORE the round,
-	# which is exactly the off-by-one that would make a wedged round look clean:
-	# the markers are in the round's boot, not in the one before it.
+	# The round's boot is the FIRST boot after our reboot.  Every reboot after
+	# that moves it further back, so it is `-extra_boots`, NOT "0 when the ids
+	# still match".
 	#
-	# It is only `-1` when the kernel rebooted itself again during the window -
-	# the panic chain - because then the round's boot has become the previous
-	# one.  That is the same condition the recovery detector tests, so it is
-	# computed once and used for both.
-	if [ "$now_id" = "$after" ]; then
-		idx=0              # still on the round's boot
-	else
-		idx=-1             # the round's boot is now the previous one
-	fi
+	# This was wrong, and it cost a real wedge: rounds 1-10 of test-228's
+	# csd-lock series all reported clean, and round 10 had in fact wedged with
+	# the CSD instrument firing twice.  The old logic compared `now_id` to
+	# `after` and chose index 0 when they were equal - but they are equal
+	# precisely BECAUSE the wedged boot panicked and rebooted, so index 0 was the
+	# boot AFTER the wedge.  `extra_boots` had already counted the extra boot and
+	# was only being recorded, not used.  The result: the wedge's own journal,
+	# which contained the entire point of the round, was never read.
+	#
+	# Derived from the count rather than from the id comparison, so it cannot
+	# disagree with the `extra_boots` field in the same record.
+	idx=$(( -extra_boots ))
 
 	w=$(count "$idx" "$WEDGE_CLASSES")
 	s=$(count "$idx" "$SUSPECT_CLASSES")
 
+	# An extra boot means something restarted the round's boot - the panic chain
+	# or a watchdog.  The harness's original detector for that was a second
+	# USB-presence outage; this runner substitutes the journal boot count, so the
+	# count has to actually reach the verdict.  It previously did not, which is
+	# how a wedged round could be recorded as clean even after the index bug was
+	# known: the markers were read from the wrong boot AND the one signal that
+	# was correct was thrown away.
 	verdict=clean
 	[ "${s:-0}" -gt 0 ] && verdict=suspect
 	[ "${w:-0}" -gt 0 ] && verdict=wedge
 	[ "$recovery" = yes ] && verdict=wedge
+	[ "${extra_boots:-0}" -gt 0 ] && verdict=wedge
 
 	rsh "journalctl -b $idx -k -o short-monotonic --no-pager 2>/dev/null" \
 		>"$RESULTS/$PROFILE/round-$i-klog.txt"
@@ -260,8 +273,23 @@ for i in $(seq 1 "$ROUNDS"); do
 		if [ "$PROFILE" = csd-lock ]; then
 			echo "csd_timeout_ms=$(rsh 'cat /sys/module/smp/parameters/csd_lock_timeout 2>/dev/null')"
 			echo "csd_panic_on_ipistall=$(rsh 'cat /sys/module/smp/parameters/panic_on_ipistall 2>/dev/null')"
-			echo "csd_report_lines=$(grep -acE 'csd: (Detected|Continued) non-responsive' "$RESULTS/$PROFILE/round-$i-klog.txt" 2>/dev/null || echo 0)"
-			echo "csd_target_cpu=$(grep -aoE 'waiting [0-9]+ ns for CPU#[0-9]+' "$RESULTS/$PROFILE/round-$i-klog.txt" 2>/dev/null | head -1)"
+			# `grep -c` exits 1 when it finds nothing, so `|| echo 0` appended a
+			# SECOND line and the field read as "0\n0".  grep -c already prints
+			# the count, so it needs no fallback - only a guard against the file
+			# not existing.
+			kf="$RESULTS/$PROFILE/round-$i-klog.txt"
+			if [ -f "$kf" ]; then
+				echo "csd_report_lines=$(grep -acE 'csd: (Detected|Continued) non-responsive' "$kf")"
+				# The three fields this round exists for: who waits, whom for,
+				# and what work.  A `Detected` line carries all three.
+				echo "csd_first_report=$(grep -aE 'csd: (Detected|Continued) non-responsive' "$kf" | head -1 | sed 's/^.*csd: /csd: /')"
+				echo "csd_targets=$(grep -aoE 'for CPU#[0-9]+ [^ ]+' "$kf" | sort -u | tr '\n' ';')"
+				echo "csd_disposition=$(grep -aoE 'CSD lock \(#[0-9]+\) (unresponsive|handling this request|handling prior[^.]*)' "$kf" | sed 's/^.*) //' | sort -u | tr '\n' ';')"
+				echo "csd_resends=$(grep -acE 'Re-sending CSD lock' "$kf")"
+				echo "csd_unstuck=$(grep -acE 'got unstuck' "$kf")"
+			else
+				echo "csd_report_lines=0"
+			fi
 		fi
 		echo "log_boot_index=$idx"
 		echo "wedge_markers=$w"
