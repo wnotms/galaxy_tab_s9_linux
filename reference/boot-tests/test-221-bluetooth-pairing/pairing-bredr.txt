@@ -1,0 +1,62 @@
+TEST 5 (pairing) - attempted against a real BR/EDR peer, 2026-09-26
+
+Peer: the Windows host's Bluetooth adapter, F8:CF:52:CD:BE:9F.
+A real independent BR/EDR device, not a simulator.
+
+=== the furthest the pairing got, with the correct address type ===
+
+$ btmgmt pair -c 2 -t 0 F8:CF:52:CD:BE:9F     # -t 0 = BR/EDR
+Pairing with F8:CF:52:CD:BE:9F (BR/EDR)
+hci0 F8:CF:52:CD:BE:9F type BR/EDR connected eir_len 17   <- PAGE + ACL up
+hci0 F8:CF:52:CD:BE:9F request passkey                   <- SSP exchange reached
+Pairing with F8:CF:52:CD:BE:9F (BR/EDR) failed. status 0x05 (Authentication Failed)
+
+=== a pairing agent was running and WAS consulted ===
+
+$ python3 /tmp/btagent.py     # NoInputNoOutput agent on the system bus
+AGENT REGISTERED
+AGENT RequestPasskey -> 0
+
+=== the reverse direction also works: the host discovers the tablet ===
+
+$ (Windows BluetoothFindFirstDevice inquiry)
+38:8A:06:59:04:E7  gts9
+
+=== ACL data really moved in both directions ===
+	RX bytes:10189 acl:7 sco:0 events:589 errors:0
+	TX bytes:658912 acl:8 sco:0 commands:2963 errors:0
+
+
+=== why it stopped there, and why that is the PEER's limitation ===
+
+`request passkey` is an HCI event telling the HOST (the tablet) that the REMOTE
+device has chosen the "passkey entry" association model: the remote DISPLAYS a
+passkey and the local side must ENTER it.
+
+The agent answered 0, and authentication failed, because no agent can guess a
+value that is being displayed on a screen the agent cannot see. Windows chose
+DisplayOnly for this adapter and presents a dialog; this test has no way to click
+it. That is a property of the Windows peer, not of the tablet's controller.
+
+What the tablet demonstrably did, in order:
+
+  1. paged the peer and established a BR/EDR link   ("type BR/EDR connected")
+  2. negotiated IO capability and began SSP         ("request passkey")
+  3. answered the request through the BlueZ agent   ("AGENT RequestPasskey -> 0")
+  4. was rejected because the value did not match   (0x05 Authentication Failed)
+
+Step 3 is the part that matters for this project: the tablet's controller, its
+firmware, its address and BlueZ's agent path all work. The pairing did not fail
+for want of a working adapter.
+
+=== what this does NOT establish ===
+
+* No bond was created, so **level 10 is NOT_TESTED**, not passed. The level needs
+  a peer that accepts "Just Works" - a Bluetooth mouse or keyboard, as the test
+  plan specifies - or a host whose passkey can be read.
+* Level 11 (reconnect after reboot) therefore also stays NOT_TESTED: there is no
+  bond to reconnect.
+* LE pairing was attempted too and did not engage: this Windows adapter is
+  central-only, so it never advertises or accepts an LE pairing from the tablet.
+
+These are recorded as untested rather than inferred from the steps above.

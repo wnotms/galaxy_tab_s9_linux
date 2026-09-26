@@ -37,7 +37,7 @@ round's brief specifies. Every level below carries one of
 | 7 | hci0 usable | **PHYSICALLY_VERIFIED** | on a cold boot with no manual step: `UP RUNNING`, `BD Address: 38:8A:06:59:04:E7`, `ACL MTU: 1024:7` |
 | 8 | BlueZ power on | **PHYSICALLY_VERIFIED** | `bluetoothctl show` reports the controller; `power off`/`power on` both work |
 | 9 | scan | **PHYSICALLY_VERIFIED** | `btmgmt find` discovers named LE devices; BR/EDR inquiry runs clean |
-| 10 | pair / connect | **NOT_TESTED** | needs a physical peer device |
+| 10 | pair / connect | **NOT_TESTED** (attempted) | reached the SSP passkey exchange against a real BR/EDR peer, then the peer refused: Windows chose passkey-entry, which needs a value shown on its screen. A HID device using "Just Works" is still the right peer. Test 221 |
 | 11 | reboot reconnect | **NOT_TESTED** | needs a paired peer device (level 10) |
 | 12 | Wi-Fi + BT coexistence | **PHYSICALLY_VERIFIED** | Wi-Fi state and PCI endpoint unchanged across BT off/on and during scanning; 0% loss |
 | 13 | cold boot | **PHYSICALLY_VERIFIED** (of the address unit) | the unit applied the address on a real cold boot, no manual step; a second cold boot wedged |
@@ -348,8 +348,11 @@ mismatch.
    exposed two further bugs (§6) that are now fixed and pinned by tests. What
    remains is the peer-device work below.
 2. **Pairing and reconnect are untested** - levels 10-11, and scan working does
-   **not** imply them. No physical peer device has been attached. Coexistence (12)
-   and the address unit's cold boot (13) now pass; see test 220.
+   **not** imply them. A real BR/EDR peer was found (test 221) and the tablet
+   paged it, negotiated SSP and answered through a BlueZ agent, but the peer chose
+   passkey-entry and displays the value on a screen this test cannot read, so no
+   bond formed. The right peer remains a Bluetooth mouse or keyboard, which uses
+   "Just Works". Coexistence (12) and the address unit's cold boot (13) pass.
 3. **The NVM is upstream's generic one.** It boots the controller and scan works,
    but board-specific RF calibration has not been compared against Samsung's own
    NVM, which has not been located. `btmgmt info` reports the real address and the
