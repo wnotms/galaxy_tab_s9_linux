@@ -111,11 +111,33 @@ b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4  vbmeta.img
 | check | result |
 |---|---|
 | `BOOT BUNDLE VALIDATION PASSED` for all three | yes, each with its own `--cmdline` |
+| each parked bundle verified against **itself** | `scripts/verify-parked-bundle.sh`, all three exit 0 |
 | the ablation DTB verified **before** bundling | `no-llcc-off` and `no-cluster-idle` both PASSED |
 | the DTB **inside each bundle** re-extracted and verified | all three pass as their own profile |
 | `boot.img` DTB vs `vendor_boot` DTB, per bundle | **identical** in all three |
 | the kernel is the same in all three | `Image.gz = f7472872` throughout |
 | the device's ramdisk carried forward | `init_boot.img = 1a8c7148` in all three |
+
+**Check a parked bundle with `scripts/verify-parked-bundle.sh`, not with
+`validate-boot-bundle.sh`.** The validator compares a bundle against whatever is
+currently in `out/`, so it can only pass for the profile built most recently —
+with three parked candidates, two of them always look broken, which is how a set
+like this rots unnoticed. The parked-bundle verifier instead checks what must
+hold for *any* candidate:
+
+```sh
+scripts/verify-parked-bundle.sh out/boot-bundle-cpuidle-off       cpuidle-off
+scripts/verify-parked-bundle.sh out/boot-bundle-abl-no-llcc-off   no-llcc-off
+scripts/verify-parked-bundle.sh out/boot-bundle-abl-no-cluster-idle no-cluster-idle
+```
+
+It confirms the bundle's own `SHA256SUMS`, that `BUNDLE_INFO` describes the
+images present, that `boot.img` and `vendor_boot` carry the **same** device tree,
+and that the tree verifies as the intended profile.
+
+Note that `cpuidle-off` changes only the command line, so its device tree **is**
+the unablated baseline — a tool that asked it for an idle ablation would fail a
+correct bundle.
 
 The ablation was verified on the **compiled DTB** at two points — after the
 kernel build and again after extraction from the bundle — because the brief

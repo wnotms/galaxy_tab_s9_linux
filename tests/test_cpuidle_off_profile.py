@@ -707,6 +707,45 @@ class TestRecordTests(unittest.TestCase):
         if checked == 0:
             self.skipTest("no candidate bundles are present to check against")
 
+    def test_each_parked_bundle_verifies_against_itself(self):
+        """The parked set must be checkable without rebuilding anything.
+
+        scripts/validate-boot-bundle.sh compares a bundle against the built tree,
+        so it passes only for whichever profile was built most recently - with
+        three parked candidates, two always look broken. That is how a bundle
+        set rots unnoticed.  verify-parked-bundle.sh checks the properties that
+        must hold for any candidate, against the bundle alone.
+        """
+        import subprocess
+        parked = {
+            "cpuidle-off": "out/boot-bundle-cpuidle-off",
+            "abl-no-llcc-off": "out/boot-bundle-abl-no-llcc-off",
+            "abl-no-cluster-idle": "out/boot-bundle-abl-no-cluster-idle",
+        }
+        present = [(k, v) for k, v in parked.items() if (ROOT / v).is_dir()]
+        if not present:
+            self.skipTest("no parked bundles to verify")
+        for profile, path in present:
+            with self.subTest(bundle=profile):
+                r = subprocess.run(
+                    ["bash", str(ROOT / "scripts/verify-parked-bundle.sh"),
+                     str(ROOT / path), profile.replace("abl-", "")],
+                    capture_output=True, text=True,
+                )
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertIn("PARKED BUNDLE VERIFIED", r.stdout)
+
+    def test_a_cmdline_only_profile_is_verified_against_the_baseline_dtb(self):
+        """`cpuidle-off` has no ablation in its device tree at all.
+
+        Asking the DTB verifier for an ablation it does not have would fail a
+        perfectly good bundle - which it did, until the mapping was fixed.
+        """
+        text = read("scripts/verify-parked-bundle.sh")
+        self.assertIn("dtb_profile=baseline", text)
+        self.assertIn("The DTB profile is not always the bundle profile", text)
+        self.assertIn("no-llcc-off|no-cluster-idle) dtb_profile=$profile", text)
+
     def test_the_manifest_warns_that_the_two_ablations_write_two_partitions(self):
         """The trap that produced a wrong table once already."""
         text = read(f"{self.RECORD}/CANDIDATE-MANIFEST.md")
