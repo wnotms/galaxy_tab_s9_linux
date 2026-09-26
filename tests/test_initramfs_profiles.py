@@ -258,9 +258,14 @@ class ProductionInitExecutesNothingDebugOnly(unittest.TestCase):
     FORBIDDEN = [
         (r'usb_gadget', 'create a configfs USB gadget'),
         (r'mass_storage', 'set up USB mass storage'),
-        (r'/dev/disk/by-partlabel|PARTNAME', 'parse the GPT partition table'),
+        # PARTNAME is deliberately NOT forbidden: reading the label the kernel
+        # already published in sysfs is how the misc partition is found for the
+        # bootloader-control-block request, and it is the safest possible method -
+        # nothing is guessed from a device number.  What must stay out is parsing
+        # a GPT by hand off the raw disk, which is what the debug image does and
+        # what needs `od`.  See BootloaderControlBlockRecovery below.
+        (r'efi_partition|EFI PART|\x45\x46\x49', 'parse a GPT header by hand'),
         (r'/dev/rtc|hwclock', 'read RTC telemetry'),
-        (r'boot-recovery', 'write the bootloader control block'),
         (r'regulator_summary|devices_deferred', 'dump hardware state'),
         (r'dmesg', 'read the kernel log'),
         (r'ttyGS', 'use a USB serial port'),
@@ -363,7 +368,11 @@ class ProductionAppletsMatchWhatItRuns(unittest.TestCase):
         text = read(str(PROD_BUILDER))
         m = re.search(r"required_applets='([^']*)'", text)
         declared = m.group(1).split()
-        for tool in ('dd', 'od', 'awk', 'sed', 'sha256sum', 'dmesg', 'hwclock',
+        # od stays out: the debug image uses it to parse a GPT by hand, and the
+        # production BCB path needs no GPT parser because it reads the label the
+        # kernel already published.  dd/sed/tr/basename ARE present now - they are
+        # the bootloader-control-block write and its partition lookup.
+        for tool in ('od', 'awk', 'sha256sum', 'dmesg', 'hwclock',
                      'find', 'setsid', 'chvt', 'insmod', 'modprobe'):
             with self.subTest(tool=tool):
                 self.assertNotIn(tool, declared)
@@ -403,6 +412,127 @@ class ProductionAppletsMatchWhatItRuns(unittest.TestCase):
         rescue = rescue[:rescue.index('\n}')]
         self.assertIn('sleep 5', rescue)
         self.assertNotIn('while [ ! -c /dev/ttyGS', rescue)
+
+
+class BootloaderControlBlockRecovery(unittest.TestCase):
+    """A failed handoff must end in TWRP, not in a dead end.
+
+    This came out of the physical failure test: with
+    gts9_rootfs=/dev/does-not-exist the handoff landed correctly in the tty1
+    rescue shell - and stranded the tablet there. No network (the production image
+    has no gadget and no Wi-Fi), no serial port, and at the time no reboot applet,
+    so recovery needed a physical key combination.
+
+    The rescue path now writes the Android bootloader control block and asks for a
+    plain restart; ABL reads "boot-recovery" from the first bytes of `misc` and
+    starts TWRP. The request was already confirmed end to end on this board by test
+    028 - 33 s from `adb reboot` to TWRP, unattended - and docs/REBOOT_MODES.md
+    records why `reboot recovery` cannot be used instead: it reaches
+    nvmem-reboot-mode and an SPMI write blocks this kernel uninterruptibly (tests
+    024/025).
+
+    Three properties are asserted here, because this writes to a partition and each
+    is the difference between a recovery feature and a way to brick a tablet.
+    """
+
+    def test_it_is_wired_into_the_rescue_path(self):
+        text = read(str(INIT))
+        rescue_at = text.index('minimal_rescue_shell()')
+        rescue_end = text.index('\n}\n', rescue_at)
+        call_at = text.index('minimal_reboot_to_recovery', rescue_at)
+        self.assertLess(call_at, rescue_end,
+                        'the recovery request must be inside the rescue path')
+
+    def test_the_device_is_found_by_the_kernels_own_gpt_label(self):
+        """Nothing may be guessed from a device number.
+
+        The partition is found by matching PARTNAME in the block device's sysfs
+        uevent - the label the kernel's own EFI partition parser published. A
+        hardcoded /dev/sda10 would write a bootloader control block into somebody
+        else's partition on any other layout.
+        """
+        text = read(str(INIT))
+        start = text.index('minimal_misc_device()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('uevent', fn)
+        self.assertIn('PARTNAME=', fn)
+        self.assertIn('= "$misc_want"', fn)
+        self.assertIn('basename', fn)
+        self.assertNotIn('sda10', fn)
+        self.assertNotIn('/dev/block/by-name', fn)
+
+    def test_it_refuses_the_microsd(self):
+        """misc is on the UFS; an mmcblk partition must never be selected."""
+        text = read(str(INIT))
+        start = text.index('minimal_misc_device()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('mmcblk*) continue', fn)
+
+    def test_it_is_one_shot_so_it_cannot_boot_loop(self):
+        """If misc already asks for recovery, the bootloader ignored it once."""
+        text = read(str(INIT))
+        start = text.index('minimal_reboot_to_recovery()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('minimal_bcb_asks_recovery', fn)
+        self.assertIn('powering off instead of looping', fn)
+        self.assertLess(fn.index('minimal_bcb_asks_recovery'),
+                        fn.index('head -c 2048'))
+
+    def test_it_fails_open_rather_than_stranding_the_device(self):
+        """Every failure path must report and return, never abort the boot."""
+        text = read(str(INIT))
+        start = text.index('minimal_reboot_to_recovery()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertNotIn('minimal_fail', fn)
+        for warn in ("no 'misc' partition", 'could not clear the BCB',
+                     'could not write the BCB', 'read-back does not match'):
+            with self.subTest(warning=warn):
+                self.assertIn(warn, fn)
+
+    def test_it_verifies_the_write_before_rebooting(self):
+        """A request that did not land is worse than none: it looks like a loop."""
+        text = read(str(INIT))
+        start = text.index('minimal_reboot_to_recovery()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('misc_check', fn)
+        self.assertIn('not rebooting', fn)
+        self.assertLess(fn.index('misc_check'), fn.index('rebooting into recovery'))
+
+    def test_the_bcb_layout_matches_the_proven_implementation(self):
+        """2048 bytes, zeroed, with 'boot-recovery' at offset 0.
+
+        The same block boot/bringup-init.sh and boot/gts9-debian-to-recovery.sh
+        write, so all three produce byte-identical requests. Offset 0 matters: the
+        command goes where ABL looks, so there is no seek.
+        """
+        text = read(str(INIT))
+        start = text.index('minimal_reboot_to_recovery()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('head -c 2048 /dev/zero', fn)
+        self.assertIn("printf 'boot-recovery'", fn)
+        self.assertIn('bs=1 conv=notrunc', fn)
+        self.assertNotIn('seek=', fn)
+
+    def test_it_asks_for_a_plain_restart(self):
+        """No mode string: the request is already in the BCB."""
+        text = read(str(INIT))
+        start = text.index('minimal_reboot_to_recovery()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertIn('reboot -f', fn)
+        self.assertNotRegex(fn, r'reboot\s+"?recovery')
+
+    def test_the_rescue_path_can_still_stay_in_the_shell(self):
+        """An escape for debugging: GTS9_MINIMAL_RESCUE_ACTION=shell."""
+        text = read(str(INIT))
+        self.assertIn('GTS9_MINIMAL_RESCUE_ACTION', text)
+        self.assertIn('staying in the shell', text)
+
+    def test_the_applets_it_needs_are_declared(self):
+        builder = read(str(PROD_BUILDER))
+        declared = re.search(r"required_applets='([^']*)'", builder).group(1).split()
+        for applet in ('dd', 'tr', 'sed', 'basename', 'head', 'reboot', 'poweroff'):
+            with self.subTest(applet=applet):
+                self.assertIn(applet, declared)
 
 
 class PanelRecoveryRunsOnlyOnFailure(unittest.TestCase):
@@ -577,12 +707,30 @@ class TheValidatorEnforcesTheBoundary(unittest.TestCase):
 
     def test_it_forbids_the_production_capabilities(self):
         text = read(str(VALIDATOR))
-        for label in ('create a configfs USB gadget', 'parse the GPT partition table',
-                      'read RTC telemetry', 'write the bootloader control block',
+        # NOTE: GPT parsing and the bootloader control block are deliberately
+        # absent from this list.  Both are now handled by NAME checks further down,
+        # because each is one of the two capabilities allowed back on a condition:
+        # PARTNAME-based lookup needs no GPT parser at all, and the BCB write is
+        # how a failed handoff reaches TWRP instead of stranding the device.
+        for label in ('create a configfs USB gadget',
+                      'read RTC telemetry',
                       'use a USB serial port',
                       'load a kernel module'):
             with self.subTest(label=label):
                 self.assertIn(label, text)
+
+    def test_it_checks_the_bcb_safety_properties_rather_than_forbidding_it(self):
+        """The BCB is allowed, but only with its guards.
+
+        The validator must test the GUARD rather than a message: an earlier version
+        grepped for the warning text, so replacing the one-shot condition with
+        `if false` still passed, because the string it looked for was in the branch
+        that had just become unreachable.
+        """
+        text = read(str(VALIDATOR))
+        self.assertIn('one-shot guard', text)
+        self.assertIn('if[[:space:]]+minimal_bcb_asks_recovery', text)
+        self.assertIn('BCB recovery is called only from the rescue path', text)
 
     def test_it_position_checks_display_recovery_rather_than_forbidding_it(self):
         """Display recovery is allowed, but only inside the rescue path.
@@ -593,8 +741,11 @@ class TheValidatorEnforcesTheBoundary(unittest.TestCase):
         the rule is where the framebuffer write sits, not whether it exists.
         """
         text = read(str(VALIDATOR))
-        self.assertIn('display recovery is confined to the rescue path', text)
+        self.assertIn('display recovery is called only from the rescue path', text)
         self.assertIn('minimal_rescue_shell()', text)
+        # And it must check the CALL SITE rather than the definition, because a
+        # shell function is defined before it is called.
+        self.assertIn('minimal_panel_rescue', text)
 
     def test_it_allows_them_in_the_debug_profile(self):
         text = read(str(VALIDATOR))

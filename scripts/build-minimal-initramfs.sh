@@ -86,18 +86,33 @@ fail() { echo "error: $*" >&2; exit 1; }
 #
 # reboot and poweroff are a fix found by running the failure test on the device
 # rather than by reading this script.  With gts9_rootfs=/dev/does-not-exist the
-# handoff correctly stops in the rescue shell - and then nothing inside it could
+# handoff correctly stopped in the rescue shell - and then nothing inside it could
 # leave: this image has no network (no gadget, no Wi-Fi), there is no serial port,
 # and there was no `reboot` applet, so recovering the tablet required a physical
 # key combination that the owner could not perform.  A rescue shell that cannot be
 # left is a trap, not a rescue.
 #
-# They are escape hatches rather than diagnostics - two symlinks that let an owner
-# get out of a failed handoff without hardware keys.  Everything else on the debug
-# list stays out, because those are the capabilities that made the old image
-# risky: no dd/od (raw block and GPT work), no dmesg, no hwclock or date-driven RTC
-# state, no awk/sed for report formatting, no sha256sum, no find, no setsid/chvt.
-required_applets='sh mount umount switch_root cat echo mkdir cp chmod sync sleep grep ls mv rm timeout cut date uname printf head test [ reboot poweroff'
+# The BCB recovery path then needs five more, and each is there because the
+# bootloader-control-block write cannot be done without it:
+#
+#   head tr        read back the first bytes of misc to see whether it already
+#                  asks for recovery, and whether the write landed
+#   dd             write the 13-byte command into misc at offset 0
+#   sed            extract PARTNAME= from the partition's sysfs uevent, which is
+#                  how the misc partition is identified
+#   basename       turn /sys/class/block/sda10 into sda10 and then /dev/sda10
+#
+# They are small and they are the whole safety story: identifying the partition by
+# the kernel's own GPT label is what keeps this from writing a BCB into somebody
+# else's partition.  `od` is deliberately still absent - the debug image uses it
+# for raw GPT parsing, and this path needs no GPT parser because the kernel has
+# already parsed one.
+#
+# Everything else on the debug list stays out, because those are the capabilities
+# that made the old image risky: no od (raw GPT work), no dmesg, no hwclock or
+# date-driven RTC state, no awk for report formatting, no sha256sum, no find, no
+# setsid/chvt.
+required_applets='sh mount umount switch_root cat echo mkdir cp chmod sync sleep grep ls mv rm timeout cut date uname printf head test [ reboot poweroff dd tr sed basename'
 # Applets that belong in /sbin rather than /bin.
 sbin_applets='mount umount switch_root reboot poweroff'
 

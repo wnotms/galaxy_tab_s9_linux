@@ -465,11 +465,8 @@ check_initramfs_profile() {
             done <<'RULES'
 mkdir.*usb_gadget|create a configfs USB gadget
 mass_storage\.usb0|set up USB mass storage
-/dev/disk/by-partlabel|parse the GPT partition table
-PARTNAME|parse the GPT partition table
 /dev/rtc|read RTC telemetry
 hwclock|read RTC telemetry
-boot-recovery|write the bootloader control block
 regulator_summary|dump regulator state
 devices_deferred|dump deferred devices
 dmesg|dump the kernel log
@@ -478,6 +475,83 @@ insmod|load a kernel module
 modprobe|load a kernel module
 RULES
             pass 'initramfs: production /init executes none of the debug capabilities'
+
+            # The bootloader control block IS allowed - it is how a failed handoff
+            # asks ABL for TWRP instead of stranding the tablet - but only with the
+            # safety properties that make it safe to have in a production image.
+            # Each of these is the difference between a recovery feature and a way
+            # to write a BCB into somebody else's partition:
+            #
+            #   * the partition must be found by the label the KERNEL published
+            #     (PARTNAME in sysfs), never by a device number;
+            #   * the microSD must be excluded by name, because misc is on the UFS;
+            #   * it must be one-shot: if misc already asks for recovery, power off
+            #     rather than reset into a loop;
+            #   * the write must be read back before rebooting, because a request
+            #     that did not land looks exactly like a boot loop;
+            #   * the restart must be plain - no mode string, since `reboot
+            #     recovery` goes through an SPMI write that hangs this board.
+            #
+            # Each probe below tests the GUARD rather than a message. An earlier
+            # version grepped for the warning text, so replacing the one-shot
+            # condition with `if false` still passed: the string it looked for was
+            # in the branch that had just become unreachable. A check that a
+            # comment or a dead branch can satisfy is not a check.
+            if grep -qE 'boot-recovery' "$tmp/initcheck/init.code"; then
+                bcb_fail=
+                # The lookup must use the kernel's label, and derive the node.
+                grep -qE 'PARTNAME=' "$tmp/initcheck/init.code" || bcb_fail='1'
+                grep -qE 'basename' "$tmp/initcheck/init.code" || bcb_fail='1'
+                grep -qE 'mmcblk\*\) continue' "$tmp/initcheck/init.code" || bcb_fail='1'
+                # One-shot: the ask-for-recovery guard must be the CONDITION of an
+                # if, not merely mentioned somewhere.
+                grep -qE '^[[:space:]]*if[[:space:]]+minimal_bcb_asks_recovery' \
+                    "$tmp/initcheck/init.code" || bcb_fail='1'
+                # Read-back: the comparison against the expected command must be a
+                # real test, and it must precede the reboot.
+                grep -qE '"\$misc_check"[[:space:]]*!=[[:space:]]*boot-recovery' \
+                    "$tmp/initcheck/init.code" || bcb_fail='1'
+                # Plain restart only.
+                if grep -qE 'reboot +"?recovery' "$tmp/initcheck/init.code"; then
+                    bcb_fail='1'
+                fi
+                # And the reboot must come after the read-back within the function.
+                bcb_fn_start=$(grep -n '^minimal_reboot_to_recovery()' "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                bcb_fn_end=$(awk -v start="$bcb_fn_start" 'NR > start && /^}/ {print NR; exit}' "$tmp/initcheck/init.code")
+                if [ -n "$bcb_fn_start" ] && [ -n "$bcb_fn_end" ]; then
+                    check_line=$(sed -n "${bcb_fn_start},${bcb_fn_end}p" "$tmp/initcheck/init.code" |
+                        grep -n 'misc_check' | head -1 | cut -d: -f1)
+                    reboot_line=$(sed -n "${bcb_fn_start},${bcb_fn_end}p" "$tmp/initcheck/init.code" |
+                        grep -n 'rebooting into recovery' | head -1 | cut -d: -f1)
+                    if [ -z "$check_line" ] || [ -z "$reboot_line" ] ||
+                       [ "$check_line" -ge "$reboot_line" ]; then
+                        bcb_fail='1'
+                    fi
+                fi
+                if [ -n "$bcb_fail" ]; then
+                    fail 'initramfs: the BCB recovery path is missing a safety property (label lookup, mmc exclusion, one-shot guard, read-back, plain restart)'
+                else
+                    pass 'initramfs: BCB recovery is label-addressed, one-shot, verified and plain'
+                fi
+                # And it must be reachable only from the rescue path.
+                #
+                # The definition line must be excluded when looking for the call:
+                # the first version of this matched `minimal_reboot_to_recovery()`
+                # on its own definition line and reported the (correct) file as a
+                # failure. Require something other than `()` to follow.
+                bcb_rescue=$(grep -n '^minimal_rescue_shell()' "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                bcb_end=$(awk -v start="$bcb_rescue" 'NR > start && /^}/ {print NR; exit}' "$tmp/initcheck/init.code")
+                bcb_call=$(grep -nE '^[[:space:]]*[a-z_]+[[:space:]]+minimal_reboot_to_recovery[[:space:];]|^[[:space:]]*minimal_reboot_to_recovery[[:space:]]*[;&]' \
+                    "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                if [ -n "$bcb_call" ] && [ -n "$bcb_end" ] &&
+                   [ "$bcb_call" -gt "$bcb_rescue" ] && [ "$bcb_call" -lt "$bcb_end" ]; then
+                    pass 'initramfs: BCB recovery is called only from the rescue path'
+                else
+                    fail 'initramfs: the BCB recovery request is not confined to the rescue path'
+                fi
+            else
+                pass 'initramfs: production /init does not write a BCB'
+            fi
 
             # Display recovery is the one capability that is allowed back, on a
             # condition rather than unconditionally: it may run only from the

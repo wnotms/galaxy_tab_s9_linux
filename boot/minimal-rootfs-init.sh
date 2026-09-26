@@ -145,6 +145,109 @@ minimal_panel_rescue() {
     return 0
 }
 
+# ---------------------------------------------------------------------------
+# Ask the bootloader for TWRP, so a failed handoff ends somewhere useful.
+#
+# This is the answer to the hole the failure test on 2026-09-26 exposed.  The
+# rescue shell was a dead end: no network (no gadget, no Wi-Fi), no serial port,
+# and at first not even a reboot applet - the tablet had to be recovered with a
+# physical key combination.  A rescue shell that strands the device is not a
+# rescue.
+#
+# The mechanism is the Android bootloader control block, and it is the one this
+# board is known to honour.  ABL reads the first bytes of the `misc` partition on
+# every boot and starts recovery when it finds the ASCII command "boot-recovery":
+#
+#     gts9_proof_action=recovery-bcb
+#
+# was confirmed end to end by test 028 - 33 s from `adb reboot` to TWRP,
+# unattended.  `reboot recovery` cannot be used instead: it goes through
+# nvmem-reboot-mode into the PMK8550's SPMI SDAM, and an SPMI write blocks this
+# kernel uninterruptibly (tests 024/025).  So the BCB is written and then a PLAIN
+# restart is requested - docs/REBOOT_MODES.md has the full reasoning.
+#
+# Three properties keep it safe, and all three matter because this writes to a
+# partition:
+#
+#   * the device is found by the kernel's OWN GPT label, through the PARTNAME the
+#     EFI partition parser publishes in sysfs.  Nothing is guessed from a device
+#     number, so this cannot land in somebody else's partition.  The debug image
+#     cross-checks start/size against a GPT it parses itself; here the kernel has
+#     already done that, which is why this needs no GPT parser and no `od`.
+#   * it is ONE SHOT.  If `misc` already asks for recovery, the bootloader has
+#     ignored the request once already, so this powers off instead of resetting
+#     into a loop - the same rule boot/bringup-init.sh uses.
+#   * it fails open.  Any problem - no misc partition, an unreadable header, a
+#     failed write, a read-back that does not match - is reported and the rescue
+#     shell still runs.  A shell on a dark tablet beats a tablet that rebooted
+#     into nothing.
+# ---------------------------------------------------------------------------
+minimal_misc_device() {
+    misc_want=${1:-misc}
+    for misc_dir in /sys/class/block/sd* /sys/class/block/mmcblk*p*; do
+        [ -r "$misc_dir/uevent" ] || continue
+        # PARTNAME is the GPT volume label as the kernel parsed it.  The
+        # comparison is exact and an empty label cannot match.
+        misc_label=$(sed -n 's/^PARTNAME=//p' "$misc_dir/uevent" 2>/dev/null | head -1)
+        [ -n "$misc_label" ] || continue
+        [ "$misc_label" = "$misc_want" ] || continue
+        misc_name=$(basename "$misc_dir")
+        # Never the microSD: misc lives on the UFS, and an mmcblk partition with a
+        # coincidental label would put the BCB on the card instead.
+        case "$misc_name" in mmcblk*) continue ;; esac
+        for misc_dev in "/dev/$misc_name" "/dev/block/$misc_name"; do
+            if [ -b "$misc_dev" ]; then
+                printf '%s\n' "$misc_dev"
+                return 0
+            fi
+        done
+    done
+    return 1
+}
+
+minimal_bcb_asks_recovery() {
+    misc_dev=$(minimal_misc_device) || return 1
+    misc_head=$(timeout 5 head -c 16 "$misc_dev" 2>/dev/null | tr -d '\0')
+    [ "$misc_head" = boot-recovery ]
+}
+
+minimal_reboot_to_recovery() {
+    if minimal_bcb_asks_recovery; then
+        minimal_emit 'WARN: misc already asks for recovery and the bootloader did not act; powering off instead of looping'
+        poweroff -f 2>/dev/null || reboot -f 2>/dev/null || true
+        return 1
+    fi
+    misc_dev=$(minimal_misc_device) || {
+        minimal_emit "WARN: no 'misc' partition; cannot ask for recovery"
+        return 1
+    }
+    # One zeroed 2048-byte block with the command at offset 0, written the same way
+    # the debug image and boot/gts9-debian-to-recovery.sh write it, so all three
+    # are byte-identical requests.
+    if ! timeout 5 head -c 2048 /dev/zero > "$misc_dev" 2>/dev/null; then
+        minimal_emit "WARN: could not clear the BCB in $misc_dev"
+        return 1
+    fi
+    if ! printf 'boot-recovery' | timeout 5 dd of="$misc_dev" bs=1 conv=notrunc 2>/dev/null; then
+        minimal_emit "WARN: could not write the BCB to $misc_dev"
+        return 1
+    fi
+    sync
+    minimal_emit "BCB written to $misc_dev: command=boot-recovery"
+    # Read back through the same path the bootloader will use.  A request that did
+    # not land is worse than no request: the reset would look like a boot loop.
+    misc_check=$(timeout 5 head -c 13 "$misc_dev" 2>/dev/null)
+    if [ "$misc_check" != boot-recovery ]; then
+        minimal_emit 'WARN: the BCB read-back does not match; not rebooting'
+        return 1
+    fi
+    minimal_emit 'rebooting into recovery (TWRP)'
+    sync
+    # A PLAIN restart: no mode string, because the request is already in the BCB.
+    reboot -f 2>/dev/null || poweroff -f 2>/dev/null || true
+    return 0
+}
+
 minimal_rescue_shell() {
     minimal_emit 'GTS9_MINIMAL_RESCUE=BusyBox shell'
     minimal_emit 'root device missing or handoff failed; inspect the block state below'
@@ -165,14 +268,28 @@ minimal_rescue_shell() {
     minimal_emit 'check with: ls -l /dev/mmcblk*'
     ls -l /dev/mmcblk* 2>&1
     # No network and no serial port here, so the only ways on are the shell below
-    # and the two escape hatches.  Say so, because someone staring at a tablet that
+    # and the escape hatches.  Say so, because someone staring at a tablet that
     # will not boot needs to know what their options actually are.
     minimal_emit 'rescue shell: /bin/sh -i (type exit to restart it)'
     minimal_emit 'to leave: reboot   (or: poweroff)'
     minimal_emit 'to fix the root device: reboot into TWRP and check gts9_rootfs='
-    # Last thing before handing the console over: this is the only boot where the
-    # panel might be dark, so try to light it now.
+    # This is the only boot where the panel might be dark, so try to light it
+    # before anything reads the screen.
     minimal_panel_rescue
+    # Then hand the device somewhere it can actually be repaired.  Clear the BCB
+    # first so the request is exactly one boot: if this loop is ever re-entered
+    # with a stale request, minimal_reboot_to_recovery() sees it and powers off
+    # rather than looping.
+    if [ "${GTS9_MINIMAL_RESCUE_ACTION:-reboot-recovery}" = reboot-recovery ]; then
+        minimal_emit 'rescue: asking the bootloader for recovery so this is fixable'
+        if minimal_reboot_to_recovery; then
+            # Only reached if the reset did not happen; fall through to the shell
+            # rather than spin.
+            minimal_emit 'WARN: recovery reboot returned; continuing in the shell'
+        fi
+    else
+        minimal_emit "rescue: GTS9_MINIMAL_RESCUE_ACTION=${GTS9_MINIMAL_RESCUE_ACTION}; staying in the shell"
+    fi
 
     # Keep PID 1 alive if an owner exits the interactive shell.  This path does
     # not depend on USB: it uses the panel VT, with /dev/console only as a
