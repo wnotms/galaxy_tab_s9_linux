@@ -505,38 +505,47 @@ USB_GADGET=${GTS9_USB_GADGET:-1}
 # msc (mass storage, the default), acm, both - settable from the command line so a
 # boot can switch the gadget without rebuilding the initramfs.
 #
-# `acm` is retained as an accepted value for older command lines and for the
-# mode-remap below, but it no longer creates anything: the kernel is built without
-# CONFIG_USB_CONFIGFS_ACM, so the initramfs has no serial function to offer.  The
-# default is `msc` because that is now the only mode with an effect - it is how the
-# bring-up report leaves the tablet on a boot that has no network.
+# `acm` is accepted so an older command line is not an error, but it no longer
+# creates anything and the script says so when it sees it: the kernel is built
+# without CONFIG_USB_CONFIGFS_ACM, so the initramfs has no serial function to
+# offer.  `msc` is the default because it is the only mode with an effect - it is
+# how the bring-up report leaves the tablet on a boot that has no network.
 USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-msc}
-# What /init does with /dev/ttyGS0:
-#   shell  - stream the kernel log and hand the port to a shell (the console)
-#   marker - write a few known lines once and record everything the host sends
-#            into gts9-serial-in.txt on the card, which makes both directions of
-#            the link measurable through the mass-storage channel
-#   none   - leave the port alone (the default since 2026-09-26)
+# ---------------------------------------------------------------------------
+# The USB serial console is GONE.  Read this before adding anything back.
 #
-# "none" is the default because the interactive shell is a *blocking writer* on
-# this port, not because the port is useless.  It is the same mechanism
-# docs/BOOT_CONSOLE_BLOCK.md measures: gs_write() only moves bytes into an 8 KiB
-# kfifo and gs_write_room() reports the room left, so n_tty_write() sleeps in
-# wait_woken() on tty->write_wait as soon as that kfifo is full and nothing is
-# draining the host's side.  The shell also has to stay the port's only reader -
-# a host write only completes while something here is reading - so the port
-# cannot simply be left unattended either.
+# There is no /dev/ttyGS*, and there cannot be one: the kernel has no ACM
+# function (CONFIG_USB_CONFIGFS_ACM off), no serial gadget at all
+# (CONFIG_USB_U_SERIAL, CONFIG_USB_F_ACM, CONFIG_USB_F_SERIAL all absent), and no
+# serial console (no console=ttyGS* on the command line, CONFIG_U_SERIAL_CONSOLE
+# absent).  Removed in three stages on 2026-09-26; docs/USB_SERIAL_CONSOLE.md
+# records each one and the measurements behind them.
 #
-# The serial consoles are gone from the kernel command line (there is no
-# console=ttyGS and no ttyMSM0), and the tablet is reached over the NCM network
-# with ssh.  This shell remains reachable deliberately: set gts9_usb_console=shell
-# on the command line when the initramfs is the only thing running and there is
-# no network to ssh over - a hand-built rescue image, or a boot whose userspace
-# never came up.  It is opt-in so that an ordinary boot cannot hang on it, which
-# is exactly the failure the operator reported.
+# So this script no longer offers anything on that port, and `gts9_usb_console=`
+# is accepted but ignored, with a message saying so.  It USED to select a rescue
+# shell or a marker probe on /dev/ttyGS0, and leaving the parser in place without
+# that message would let someone set the option, wait for a shell that can never
+# appear, and conclude the tablet was broken.
+#
+# The mechanism that made the option dangerous is worth keeping in mind anyway,
+# because it is why the serial console was removed rather than merely disabled:
+# docs/BOOT_CONSOLE_BLOCK.md measures it.  gs_write() only moves bytes into an
+# 8 KiB kfifo and gs_write_room() reports the room left, so n_tty_write() sleeps
+# in wait_woken() on tty->write_wait as soon as that kfifo is full and nothing on
+# the host is draining it.  A shell on that port is therefore a *blocking writer*
+# inside PID 1 - the boot stall the owner reported.
+#
+# Where the rescue shell lives now, in order:
+#   1. tty1 on the panel (the panel shell below), and
+#   2. for a FAILED Debian handoff, the production initramfs writes the BCB and
+#      reboots into TWRP by itself (boot/minimal-rootfs-init.sh).
+# Neither needs USB serial and neither can block on a full kfifo.
+# ---------------------------------------------------------------------------
+# Retained for the compatibility parser at the cmdline loop; always ends up
+# `none`, because there is nothing left for it to act on.
 USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-none}
 # Seconds to leave the gadget alone before collecting the report, so a host can
-# talk to it first (used by the serial probe).
+# talk to it first.
 USB_WAIT=${GTS9_USB_WAIT:-0}
 # 1 = try to recover the panel's cold-boot state (see display_recover below).
 DISPLAY_RECOVER=${GTS9_DISPLAY_RECOVER:-0}
@@ -562,11 +571,20 @@ done
 for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_usb_gadget=*) USB_GADGET_MODE=${arg#gts9_usb_gadget=} ;;
-        gts9_usb_console=*) USB_CONSOLE_MODE=${arg#gts9_usb_console=} ;;
+        # Compatibility only.  The serial gadget does not exist, so there is
+        # nothing this could act on; the value is deliberately NOT stored, and the
+        # message below tells the operator rather than letting them wait for a
+        # shell that can never appear.  See the USB serial note near the top.
+        gts9_usb_console=*)
+            usb_console_ignored=${arg#gts9_usb_console=}
+            ;;
         gts9_usb_wait=*) USB_WAIT=${arg#gts9_usb_wait=} ;;
         gts9_card_mount=*) CARD_MOUNT=${arg#gts9_card_mount=} ;;
     esac
 done
+if [ -n "${usb_console_ignored:-}" ]; then
+    log "gts9_usb_console=$usb_console_ignored ignored: the USB serial gadget was removed from the kernel, so /dev/ttyGS0 does not exist; use tty1 on the panel, or ssh over NCM"
+fi
 gadget_setup=0
 # Exported read-only to the host when the mass-storage function is in use.
 USB_MSC_BACKING=${GTS9_USB_MSC_BACKING:-/dev/mmcblk1p1}
@@ -627,8 +645,9 @@ setup_usb_gadget() {
     # so the serial branch is gone and the remaining modes are the mass-storage
     # export the rescue profile uses.
     #
-    # The rescue shell itself is unaffected: it runs on /dev/tty1, the panel VT.
-    # See USB_CONSOLE_MODE above for why the ttyGS0 shell is opt-in now.
+    # The rescue shell itself is unaffected: it runs on /dev/tty1, the panel VT
+    # (start_panel_shell below), and a FAILED Debian handoff reboots into TWRP
+    # rather than waiting for a console.  Neither needs a serial function.
     case "$USB_GADGET_MODE" in
         msc|both)
             # Mass storage, read-only, with no medium to start with: the card is
@@ -1244,9 +1263,13 @@ fi
 # Until now the tablet's own screen was a kernel printk console, so it showed a
 # scrolling log that nothing could be typed into.  This starts an interactive
 # BusyBox shell on tty1 *in the background*, so PID 1 keeps running its own
-# sequence and the USB ACM shell on ttyGS0 is untouched.  It is a bring-up /
-# rescue shell by design: when a future gts9_rootfs= boot takes over the panel,
-# this is not started at all and the rootfs's own getty owns tty1.
+# sequence.  It is a bring-up / rescue shell by design: when a gts9_rootfs= boot
+# takes over the panel, this is not started at all and the rootfs's own getty owns
+# tty1.
+#
+# This is the ONLY interactive rescue shell the debug image has, now that the USB
+# serial gadget is gone - which is why it is started by default here and pinned to
+# /dev/tty1 rather than /dev/console (see the note at the end of this file).
 # ---------------------------------------------------------------------------
 start_panel_shell()
 {
@@ -1300,7 +1323,7 @@ start_panel_shell()
                 printf 'Linux %s\r\n' "$(uname -r 2>/dev/null)"
                 printf '\r\nLocal shell: tty1\r\n'
                 printf 'Kernel log: dmesg\r\n'
-                printf 'USB shell: /dev/ttyGS0\r\n\r\n'
+                printf 'Recovery: writes the BCB and reboots to TWRP\r\n\r\n'
             } > /dev/tty1 2>/dev/null
 
             # setsid makes this a session leader with no controlling terminal,
@@ -1427,83 +1450,18 @@ fi
 start_panel_shell
 
 if [ "$gadget_setup" = 1 ]; then
-    # Wait for the ACM port to appear, then mirror the kernel log onto it and
-    # hand the same port to a shell.  The host side gets live evidence either
-    # way: a port that stays silent means this script never ran.
-    i=0
-    while [ "$i" -lt 20 ] && [ ! -c /dev/ttyGS0 ]; do
-        sleep 1
-        i=$((i + 1))
-    done
-    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" = marker ]; then
-        # Whatever the host sends is kept for the report: this is what makes the
-        # host->device direction of the link measurable through the card.
-        ( timeout 900 cat /dev/ttyGS0 >> /tmp/gts9-serial-in.txt 2>/dev/null ) &
-        log 'recording usb serial input to /tmp/gts9-serial-in.txt'
-    fi
-    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" = marker ]; then
-        # Diagnostic mode: prove both directions of the link through the card.
-        # The host should see the marker lines, and whatever it types is recorded
-        # into gts9-serial-in.txt next to the report.
-        log 'usb console in marker mode: writing a marker and recording host input'
-        printf 'GTS9-SERIAL-MARKER ready\n' > /dev/ttyGS0 2>/dev/null
-        printf 'GTS9-SERIAL-MARKER uname=%s\n' "$(uname -r 2>/dev/null)" > /dev/ttyGS0 2>/dev/null
-        printf 'GTS9-SERIAL-MARKER uptime=%s\n' "$(cat /proc/uptime 2>/dev/null | cut -d' ' -f1)" > /dev/ttyGS0 2>/dev/null
-        printf 'GTS9-SERIAL-MARKER end\n' > /dev/ttyGS0 2>/dev/null
-        # Record the host->device direction where the mass-storage export can
-        # reach it: the report's directory on the card.
-        if [ -n "$report_mount" ]; then
-            ( timeout 600 cat /dev/ttyGS0 >> "$report_mount/gts9-serial-in.txt" 2>/dev/null ) &
-            log "recording serial input to $report_mount/gts9-serial-in.txt"
-        else
-            log 'WARN: no mounted medium; serial input cannot be recorded'
-        fi
-    fi
-    # The interactive shell.  Strictly opt-in: the test is for `shell`/`shell+kmsg`
-    # and NOT `!= marker`, because the mode may also be `none`, and a default that
-    # matched every value except `marker` would run the shell on an ordinary boot -
-    # which is the blocking writer this change exists to remove.  See the
-    # USB_CONSOLE_MODE comment near the top for the mechanism.
-    case "$USB_CONSOLE_MODE" in
-        shell | shell+kmsg) usb_shell_wanted=1 ;;
-        *) usb_shell_wanted=0 ;;
-    esac
-    if [ -c /dev/ttyGS0 ] && [ "$usb_shell_wanted" = 1 ]; then
-        # The shell is the console.  It is also the only reader of the port, and
-        # it has to stay the only one: a host write only completes while
-        # something on this side is reading, which is exactly why the earlier
-        # boots looked like "sending data hangs" - /init had never reached this
-        # block, and between shell attempts nothing was reading at all.
-        #
-        # The kernel log is *not* streamed here by default: `cat /dev/kmsg` on a
-        # port nobody is draining fills the tty buffer and then blocks the
-        # shell's own output.  The full log travels on the card instead, and
-        # `dmesg` works from the shell.
-        case "$USB_CONSOLE_MODE" in
-            shell+kmsg)
-                log 'streaming the kernel log to /dev/ttyGS0 as well'
-                ( cat /dev/kmsg > /dev/ttyGS0 2>/dev/null ) &
-                ;;
-        esac
-        log 'handing /dev/ttyGS0 to an interactive shell'
-        printf '\nGTS9 bring-up console.  Log: cat /tmp/bringup-report.txt\n' > /dev/ttyGS0 2>/dev/null
-        printf 'Type gts9-to-recovery to reboot into TWRP.\n\n' > /dev/ttyGS0 2>/dev/null
-        while :; do
-            PS1='gts9# ' /bin/sh -i </dev/ttyGS0 >/dev/ttyGS0 2>&1
-            log 'usb shell ended (host closed the port); reopening'
-        done
-    fi
-    # Say what happened rather than claiming a failure: `none` is the default and
-    # reaching this line with it is completely normal.
-    case "$USB_CONSOLE_MODE" in
-        none)
-            log 'usb console: /dev/ttyGS0 left alone (gts9_usb_console=none)'
-            ;;
-        *)
-            [ -c /dev/ttyGS0 ] || \
-                log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
-            ;;
-    esac
+    # The gadget is up for its mass-storage function and nothing else.
+    #
+    # There is no serial console to set up here any more.  This block used to wait
+    # up to 20 s for /dev/ttyGS0 and then either write a marker probe or hand the
+    # port to an interactive shell; none of that can run now, because the kernel
+    # has no ACM function and the device node never appears.  A wait for a device
+    # that cannot exist is worse than no wait: it delays every bring-up boot by its
+    # full timeout and then logs a warning that reads like a hardware fault.
+    #
+    # The report still records whether a ttyGS device exists (see the 'ttyGS' entry
+    # in the report below), which is the useful half: it is evidence, not a wait.
+    log "USB gadget up (mode=$USB_GADGET_MODE); no serial function to configure"
 fi
 
 # PID 1 must survive EOF, an unavailable UART and a user's "exit". Replacing

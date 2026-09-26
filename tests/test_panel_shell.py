@@ -26,11 +26,22 @@ class PanelShell(unittest.TestCase):
             self.assertFalse(line.startswith('exec /bin/sh'),
                              'the panel shell must never replace init')
 
-    def test_called_before_the_usb_console_loop(self):
+    def test_called_before_anything_that_can_block(self):
+        """The panel shell must be started before the boot can wait on anything.
+
+        This used to compare against the USB console loop, which waited up to 20 s
+        for /dev/ttyGS0 and then handed the port to a shell that never returned.
+        That loop is gone - the kernel has no serial function, so the node cannot
+        appear - but the ordering requirement is exactly the same and is what this
+        now checks: the launch has to precede every blocking section that remains.
+        """
         call = INIT.index('\nstart_panel_shell\n')
-        # the USB console section is the one that waits for ttyGS0
-        usb = INIT.index('while [ "$i" -lt 20 ] && [ ! -c /dev/ttyGS0 ]')
-        self.assertLess(call, usb, 'the USB section ends in a loop that never returns')
+        # The gadget section follows the launch and is the only remaining section
+        # that can wait on hardware.
+        self.assertLess(call, INIT.index('if [ "$gadget_setup" = 1 ]', call),
+                        'the panel shell must be launched before the gadget section')
+        # And nothing may wait for a ttyGS device any more.
+        self.assertNotIn('while [ "$i" -lt 20 ] && [ ! -c /dev/ttyGS0 ]', INIT)
 
     def test_job_control_is_on_for_the_launch(self):
         # Without it the child inherits SIGINT as SIG_IGN and Ctrl-C does nothing.

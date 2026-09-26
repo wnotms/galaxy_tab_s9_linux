@@ -50,10 +50,35 @@ def code_of(path):
 
     Comment stripping is the whole point: these files document the mistakes they
     are guarding against, so prose must not be able to satisfy or defeat a check.
+
+    Splitting on the first `#` is WRONG in shell, and it was wrong here in a way
+    that hid a real regression.  `${arg#gts9_usb_console=}` contains a `#` that
+    starts a parameter expansion, not a comment, so the naive version truncated
+    the line to `USB_CONSOLE_MODE=${arg` - meaning a test that looked for the old
+    option-storing line could not see it even when it was present, and passed.
+
+    This strips comments the way the shell actually does: a `#` begins a comment
+    only at the start of a word (preceded by whitespace or nothing) and only when
+    it is not inside single or double quotes.
     """
     lines = []
     for line in read(str(path)).splitlines():
-        stripped = line.split('#', 1)[0]
+        out = []
+        quote = None
+        i = 0
+        while i < len(line):
+            ch = line[i]
+            if quote is None:
+                if ch in ("'", '"'):
+                    quote = ch
+                elif ch == '#' and (i == 0 or line[i - 1] in ' \t'):
+                    # A comment starts here; drop the rest of the line.
+                    break
+            elif ch == quote:
+                quote = None
+            out.append(ch)
+            i += 1
+        stripped = ''.join(out)
         if stripped.strip():
             lines.append(stripped)
     return '\n'.join(lines)
@@ -657,6 +682,78 @@ class PanelRecoveryRunsOnlyOnFailure(unittest.TestCase):
         start = text.index('minimal_panel_rescue()')
         panel = text[start:text.index('\n}\n', start)]
         self.assertNotIn('dmesg', panel)
+
+
+class TheRemovedSerialConsoleIsNotAdvertised(unittest.TestCase):
+    """`gts9_usb_console=shell` must not look like a working option.
+
+    The kernel has no ACM function, no serial gadget and no serial console, so
+    /dev/ttyGS* cannot exist and there is nothing the option could act on. The
+    danger is not the dead code - it is the *promise*: someone sets the option,
+    waits for a rescue shell that can never appear, and concludes the tablet is
+    broken. So the parser stays (an old command line should not be an error) and
+    says out loud that it is ignoring the value.
+
+    The measurement behind the removal is in docs/USB_SERIAL_CONSOLE.md and
+    docs/BOOT_CONSOLE_BLOCK.md: a shell on that port is a blocking writer inside
+    PID 1, because n_tty_write() sleeps once the gadget's 8 KiB kfifo is full and
+    nothing on the host is draining it. That is the boot stall this replaced.
+    """
+
+    def test_the_option_is_parsed_but_not_stored(self):
+        code = code_of(str(BRINGUP))
+        # The value must not be assigned to the mode variable any more.
+        self.assertNotIn('USB_CONSOLE_MODE=${arg#gts9_usb_console=}', code)
+        # It must still be recognised, so an old command line is not an error.
+        self.assertIn('gts9_usb_console=*)', code)
+
+    def test_it_says_it_is_ignoring_the_value(self):
+        text = read(str(BRINGUP))
+        self.assertIn('ignored: the USB serial gadget was removed', text)
+        # The message must name a channel that DOES work, or the operator is left
+        # with no next step.
+        self.assertIn('use tty1 on the panel, or ssh over NCM', text)
+
+    def test_nothing_waits_for_a_ttygs_device(self):
+        """A wait for a device that cannot exist delays every boot by its timeout."""
+        code = code_of(str(BRINGUP))
+        # No loop that polls for the node.
+        self.assertNotRegex(code, r'while[^\n]*ttyGS')
+        # No branch that treats the node as something to configure.
+        self.assertNotRegex(code, r'if \[ -c /dev/ttyGS')
+        # And no gadget function is created for it.
+        self.assertNotRegex(code, r'mkdir[^\n]*functions/(acm|gser)')
+
+    def test_the_remaining_ttygs_mentions_are_not_runtime_logic(self):
+        """Mentions are allowed in comments and in one report probe.
+
+        The probe is deliberate: whether a ttyGS device exists is evidence about
+        the kernel, and recording it is the useful half of what the removed code
+        did. Everything else must be prose.
+        """
+        for line in read(str(BRINGUP)).splitlines():
+            if 'ttyGS' not in line:
+                continue
+            stripped = line.strip()
+            with self.subTest(line=stripped[:70]):
+                is_comment = stripped.startswith('#')
+                is_report = stripped.startswith("report 'ttyGS'")
+                is_the_ignore_message = 'ignored: the USB serial gadget' in stripped
+                self.assertTrue(is_comment or is_report or is_the_ignore_message,
+                                f'ttyGS appears in logic: {stripped[:90]}')
+
+    def test_the_panel_shell_is_the_rescue_path_now(self):
+        """With no serial console, tty1 is the only interactive shell."""
+        text = read(str(BRINGUP))
+        self.assertIn('start_panel_shell', text)
+        # The banner must not advertise a USB shell that does not exist.
+        self.assertNotIn('USB shell: /dev/ttyGS0', text)
+
+    def test_the_console_block_rationale_is_kept(self):
+        """The next reader must find out WHY it was removed, not just that it was."""
+        text = read(str(BRINGUP))
+        self.assertIn('blocking writer', text)
+        self.assertIn('BOOT_CONSOLE_BLOCK.md', text)
 
 
 class TheDebugImageKeepsItsCapabilities(unittest.TestCase):
