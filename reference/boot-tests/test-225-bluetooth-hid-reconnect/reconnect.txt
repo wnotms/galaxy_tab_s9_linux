@@ -27,3 +27,15 @@ H: Handlers=sysrq kbd leds event4
          Device DC:05:5A:41:97:3E ServicesResolved: yes
          Device DC:05:5A:41:97:3E Paired: yes      <- the EXISTING bond, reused
 15:06:49 input nodes for the keyboard: 1
+
+--- 5. the reconnected node is live, not a leftover shell ---
+
+evtest was opened on /dev/input/event4 AFTER the reconnect and it enumerated the
+device successfully, which it can only do by opening the live node:
+
+  Input device ID: bus 0x5 vendor 0x7d7 product 0xefff version 0x120
+  Input device name: "MCHOSE G87 V2-1 Keyboard"
+  Event type 1 (EV_KEY) ... Event type 4 (EV_MSC) ... Event type 17 (EV_LED)
+
+Keypresses over the reconnected bond were exercised separately in test 224; this
+confirms the node exists and is openable after the reboot-and-reconnect cycle.
