@@ -1,0 +1,66 @@
+format_version=1
+recorded_at=2026-04-13T19:42:12Z
+boot_id=f028e675-0a57-4212-9c46-1df56244083e
+kernel_release=7.2.0-rc3-gts9wifi-dirty
+kernel_build=#1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026
+cmdline=console=tty0 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=1 nfc_sec.nfc_param_lpcharge=1 flicker_sensor.flicker_param_lpcharge=1 cpufreq_limit.lpcharge=1 sec-battery.lpcharge=1 max77705_charger.lpcharge=1 max77705-fuelgauge.lpcharge=1 p9320_charger.lpcharge=1 s2miw04_charger.lpcharge=1 cps4038_charger.lpcharge=1 nu1668_charger.lpcharge=1 msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+uptime_seconds=248.72
+root_device=/dev/mmcblk1p1
+console_active=tty0
+console_cmdline_tokens=2
+console_ttygs_in_cmdline=0
+console_ttymsm_in_cmdline=0
+earlycon_in_cmdline=0
+unit_serial_getty_ttyGS0_service_enabled=masked
+unit_serial_getty_ttyGS0_service_active=inactive
+unit_serial_getty_ttyGS1_service_enabled=disabled
+unit_serial_getty_ttyGS1_service_active=inactive
+unit_serial_getty_ttyMSM0_service_enabled=masked
+unit_serial_getty_ttyMSM0_service_active=inactive
+unit_gts9_acm_getty_service_enabled=masked
+unit_gts9_acm_getty_service_active=inactive
+unit_getty_tty1_service_enabled=enabled
+unit_getty_tty1_service_active=active
+ttygs_open_fds=0
+ttygs_devices=
+gadget_present=yes
+gadget_udc=a600000.usb
+gadget_functions=ncm.usb0
+gadget_config_links=ncm.usb0
+gadget_idvendor=0x0525
+gadget_idproduct=0xa4a7
+usb_net_conf=ncm 169.254.42.1/16
+usb0_addr=169.254.42.1/16
+etc_adbd.service=symlink->/dev/null
+etc_basic.target.wants=dir:gts9-boot-stage.service,gts9-debian-entered.service
+etc_getty.target.wants=dir:getty@tty1.service
+etc_gts9-acm-getty.service=symlink->/dev/null
+etc_gts9-prev-boot-evidence.service=file:e8f9ead9e4822af4
+etc_multi-user.target.wants=dir:cron.service,e2scrub_reap.service,gts9-adbd.service,gts9-debian-basic-stage.service,gts9-debian-getty-stage.service,gts9-debian-multi-user-stage.service,gts9-dpu-flight.service,gts9-getty-stage.service,gts9-kmsg-console.service,gts9-panel-recover.service,gts9-power-key.service,gts9-prev-boot-evidence.service,gts9-usb-acm.service,gts9-watchdog-debug.service,networking.service,remote-fs.target,ssh.service
+etc_network-online.target.wants=dir:networking.service
+etc_serial-getty@ttyGS0.service=symlink->/dev/null
+etc_serial-getty@ttyMSM0.service=symlink->/dev/null
+etc_ssh.service.wants=dir:sshd-keygen.service
+etc_ssh.socket.wants=dir:sshd-keygen.service
+etc_sshd.service=symlink->/usr/lib/systemd/system/ssh.service
+etc_sshd.service.wants=dir:sshd-keygen.service
+etc_sshd@.service.wants=dir:sshd-keygen.service
+etc_sysinit.target.wants=dir:systemd-pstore.service
+etc_systemd-poweroff.service.wants=dir:gts9-poweroff-stage.service
+etc_timers.target.wants=dir:apt-daily-upgrade.timer,apt-daily.timer,dpkg-db-backup.timer,e2scrub_all.timer,fstrim.timer,logrotate.timer
+autologin_files=none
+helper_gts9-enable-units=mode=755 sha256=658277e4c53b6644
+helper_gts9-usb-acm=mode=755 sha256=41db928eb89a6411
+helper_gts9-record-debian-stage=mode=755 sha256=6a647da7584a8fb4
+helper_gts9-kmsg-console=mode=755 sha256=d0a55d0acfd7cf7e
+helper_gts9-prev-boot-evidence=mode=755 sha256=7c03fcd1b9c20b24
+helper_gts9-watchdog-debug=mode=755 sha256=029a624780f5f056
+helper_gts9-panel-recover=mode=755 sha256=f89a8ee21b329b9a
+part_boot_sha256=943b086b38cc96f2eb0cd96d1bade9789a6c2711bf0d3b4981fb77f4cf9e8e0f
+part_init_boot_sha256=c6088c8b165fe65df4a6805f5375ef021a16b82c42a013083a0efda1b60377ca
+part_vendor_boot_sha256=25dfc4f609d6480aa8c87e0892e7386763aaaa02781da535cddb2d5fc6a59ad3
+part_dtbo_sha256=c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3
+failed_units=0
+mmc_root=1
+wifi_ifaces=1
+pci_wifi=1

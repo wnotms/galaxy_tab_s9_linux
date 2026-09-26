@@ -91,6 +91,8 @@ done
 
 # Any process holding a serial gadget port open is the blocking-writer condition
 # the console removal exists to prevent, so it is counted rather than assumed.
+# Since 2026-09-26 no ttyGS device exists at all, so a non-zero count here means a
+# serial function has come back - which is why the device list is recorded too.
 held=0
 for p in /proc/[0-9]*; do
 	for fd in "$p"/fd/*; do
@@ -101,6 +103,9 @@ for p in /proc/[0-9]*; do
 	done
 done
 emit ttygs_open_fds "$held"
+# The nodes themselves.  `none` is the expected value: the kernel is built without
+# CONFIG_USB_CONFIGFS_ACM, so no gadget serial port can be created.
+emit ttygs_devices "$(ls /dev/ttyGS* 2>/dev/null | tr '\n' ' ' | sed 's/ $//' || true)"
 
 # ---------------------------------------------------------------------------
 # The USB gadget: what the host actually enumerates, and how the ssh transport is
