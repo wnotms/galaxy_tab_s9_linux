@@ -1,13 +1,26 @@
 # Test plan: the X710 RTC offset on real hardware
 
-**Status: NOT RUN.** No physical test has been performed for this change. Nothing
-in this file is a result — it is the plan that would produce one, written before
-the work so the evidence cannot be selected after the fact.
+**Status: PARTLY RUN.** Tests 1–3 and 7 have been executed and passed; see
+`reference/boot-tests/test-216-rtc-offset-flash/` for the results and
+`test-215-rtc-offset-verify/` for the read-only input verification that preceded
+them. Tests 4, 5 and 6 are **still outstanding**, and the sections below keep
+their original wording so the plan is not rewritten to match the outcome.
 
-Flashing was not authorised for this round and no tablet is currently connected
-(`adb devices` is empty). Everything already established is source analysis plus
-arithmetic checked against device logs recorded in `reference/boot-tests/`;
-`docs/RTC_OFFSET.md` §11 says exactly which claims remain unverified.
+Which is which:
+
+| # | claim | status |
+| --- | --- | --- |
+| 1 | Debian starts with the correct date, offline | **passed** (test 216) |
+| 2 | the fix is what moved the clock, not NTP | **passed** — Wi-Fi was disabled first |
+| 3 | the raw counter is untouched | **passed** — 95 s of counter over 95 s |
+| 4 | `/persist` was not written | **passed** — `ro without journal`, no ext4 error |
+| 5 | it survives reboot | **passed** (2 boots; 3 not run) |
+| 6 | it survives a long power-off | **not run** |
+| 7 | Android/TWRP still work | **not run** — neither has been booted since |
+| 8 | nothing else regressed | **passed** — USB NCM, ssh, Wi-Fi, panel, OPP, 0 failed units |
+
+The plan was written before the work so the evidence could not be selected after
+the fact; it is kept that way deliberately.
 
 ---
 

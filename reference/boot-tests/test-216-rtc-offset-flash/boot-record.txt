@@ -1,0 +1,19 @@
+=== persisted record: both halves ===
+origin=initramfs
+stage=switch-root-synced
+failure=none
+timestamp=2026-09-26T11:34:33Z
+uptime_seconds=0.87
+debian_stage=multi-user
+debian_failure=none
+debian_updated_timestamp=2026-09-26T11:34:39Z
+
+=== helper line + boot stages from the kernel log ===
+[    0.878340] [      T1] gts9-minimal: rtc-offset: status=applied source=persist/time/ats_2 offset_ms=1790396967618 raw_ms=25506000 realtime_epoch=1790422473
+[    0.878732] [      T1] gts9-minimal: rtc-offset: helper_rc=0
+[    0.880512] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=kernel-userspace
+[    0.885831] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=waiting-root
+[    0.885994] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=root-found
+[    0.886520] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=mounting-root
+[    1.013654] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=root-mounted
+[    1.075217] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=init-found

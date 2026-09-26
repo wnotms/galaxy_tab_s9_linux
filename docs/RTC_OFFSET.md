@@ -466,7 +466,10 @@ occurs, and the raw counter is left untouched for Android and TWRP.
 ## 10. Do Android and TWRP still work?
 
 **Yes, and they are unaffected by construction, because nothing they read is
-changed.**
+changed.** This is now measured rather than only argued: on the two hardware boots
+of test 216 the raw counter advanced at exactly one second per second (95 s of
+counter across 95 s of real time), where a write would have jumped it to ~1.79e9,
+and `timedatectl` still reported `RTC time: Thu 1970-01-01`.
 
 | what they read | changed? |
 | --- | --- |
@@ -481,7 +484,8 @@ result. If Samsung's daemon rewrites the offset, the next mainline boot picks up
 the new value automatically, because it is read at runtime and never cached in the
 kernel, the DTB or the initramfs.
 
-Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched.
+Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched, and
+all were re-checked on the tablet after the flash (§9).
 
 ---
 
@@ -490,10 +494,22 @@ Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched.
 **Knowns, with evidence:**
 
 - the offset file, its format and its arithmetic are confirmed against three
-  independent on-device data points (§3);
-- the value is machine-specific and can change, so it is read at runtime;
-- no SPMI write is reachable from the new code, and the DTS/driver are unchanged;
-- the helper cannot fail the boot, and every failure has a distinct status.
+  independent recorded data points (§3) **and against the live tablet** — bytes,
+  partition and arithmetic all matching TWRP's own clock to the second;
+- the fix is verified **on hardware**: Debian boots with the correct UTC time while
+  **offline** (`System clock synchronized: no`, `NTP service: n/a`, Wi-Fi down),
+  which is what rules out NTP as the explanation
+  (`reference/boot-tests/test-216-rtc-offset-flash/`);
+- the raw RTC is provably untouched: the counter advanced 95 s over 95 s and reads
+  25 541 (1970) after two boots, because the offset is applied to `CLOCK_REALTIME`
+  and never to the counter;
+- the mount behaves exactly as designed on the device —
+  `EXT4-fs (sda5): mounted filesystem ... ro without journal`, then `unmounting`,
+  with no ext4 error and nothing left mounted;
+- the helper cannot fail the boot, and every failure has a distinct status;
+- no regression: USB NCM, ssh, Wi-Fi, panel getty, the 3.36 GHz OPP, and a
+  `switch-root-synced` / `multi-user` handoff all confirmed after the flash, with
+  zero failed systemd units.
 
 **Unknowns, stated so they are not mistaken for settled:**
 
@@ -504,22 +520,35 @@ Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched.
    established on this device. This fix reads the same file TWRP reads, so it
    cannot be worse than the current recovery behaviour, but it is one file of
    several in that directory.
-2. **The fix itself has not been booted.** Its *inputs*, however, are now verified
-   on the real tablet — see `reference/boot-tests/test-215-rtc-offset-verify/`,
-   which is read-only evidence taken from a live recovery session:
+2. **The fix is verified on hardware (test 216).** `init_boot.img` was flashed —
+   and nothing else, so the kernel and DTB remain byte-identical to test 214 — and
+   the tablet then booted with the correct time. The evidence is in
+   `reference/boot-tests/test-216-rtc-offset-flash/`; the load-bearing parts:
 
-   * `persist` really is `/dev/block/sda5`, and `/persist/time/ats_2` exists;
-   * every `ats_*` file is exactly 8 bytes, as the format says;
-   * the bytes `c2 aa f9 db a0 01 00 00` decode to `1790396967618` ms;
-   * `23153 + 1790396967 = 1790420120` = `2026-09-26T10:55:20Z`, which is
-     **exactly** what TWRP's own `date -u` displayed in the same session;
-   * the shipped helper, fed those exact bytes, prints the same `1790420120`;
-   * `mount -t ext4 -o ro,noload` works on that partition, and the kernel reports
-     `mounted filesystem without journal` — read-only in fact, not only in intent.
+   * **offline.** Wi-Fi was disabled first, so only the USB link existed
+     (`wlp1s0 DOWN`, no external route). After the reboot `date -u` read
+     `11:36:46` against a host time of `11:36:47`, with
+     `System clock synchronized: no` and `NTP service: n/a`. NTP cannot explain
+     that; the offset can.
+   * **the counter was not written.** The helper reports the raw counter it read,
+     so two boots compare directly: `25 506 000 ms` → `25 601 000 ms` across
+     `95 s` of real time. One second per second, from the 1970 origin;
+     `timedatectl` still shows `RTC time: Thu 1970-01-01`.
+   * **the mount is read-only in fact.** `EXT4-fs (sda5): mounted filesystem ...
+     ro without journal`, then `unmounting`, with no ext4 error and nothing left
+     mounted — observed on the device, not inferred.
+   * **ordering.** `rtc-offset: status=applied` at `0.812 s`, before the first
+     recorded stage at `0.880 s`, so the record's `timestamp=` carries the real
+     date.
+   * **no regression.** USB NCM, ssh, Wi-Fi, panel getty, the 3.36 GHz OPP and a
+     `switch-root-synced` / `multi-user` handoff, with zero failed units.
 
-   What remains unproven is the *execution path*: `/init` has not run this on the
-   tablet, so the end-to-end boot is still a plan
-   (`reference/rtc-offset-test-plan.md`) rather than a result.
+   The inputs had already been verified separately, read-only, in
+   `reference/boot-tests/test-215-rtc-offset-verify/`: `persist` is
+   `/dev/block/sda5`, every `ats_*` file is exactly 8 bytes, the bytes
+   `c2 aa f9 db a0 01 00 00` decode to `1790396967618` ms, and
+   `23153 + 1790396967 = 1790420120` = `2026-09-26T10:55:20Z` — exactly what
+   TWRP's own `date -u` displayed in that same session.
 
    That session also showed the offset is a **live delta**: the raw counter had
    been reset since the previous recording, and `ats_2` had grown by exactly the
