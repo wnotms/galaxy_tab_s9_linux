@@ -106,6 +106,17 @@ if [ -d "$etc_dir" ]; then
 	ln -sfn /dev/null "$etc_dir/serial-getty@ttyMSM0.service" 2>/dev/null || true
 fi
 
+# 4. The autologin drop-in for the ttyGS0 instance.
+#    An even earlier install shipped
+#    /etc/systemd/system/serial-getty@ttyGS0.service.d/autologin.conf, whose whole
+#    content is an `agetty --autologin root` override.  It was found still on the
+#    tablet on 2026-09-26, inert only because the instance it decorates is masked
+#    two lines above - so it is a live configuration file waiting for anyone who
+#    unmasks the name, which is exactly how this class of leftover comes back.
+#    Remove it, and its directory if that leaves it empty.
+rm -f "$etc_dir/serial-getty@ttyGS0.service.d/autologin.conf" 2>/dev/null || true
+rmdir "$etc_dir/serial-getty@ttyGS0.service.d" 2>/dev/null || true
+
 # tty1 is deliberately untouched: it is the panel VT, the only console left, and
 # the local getty on it is how the tablet is used without a cable.
 
