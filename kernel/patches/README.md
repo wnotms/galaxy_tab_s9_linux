@@ -33,10 +33,6 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
   `kernel/drivers/samsung-gts9wifi-sec-log.c` and is installed next to the
   board DTS by `scripts/prepare-kernel.sh`. Drop both once an equivalent
   console exists upstream.
-- `0003-printk-allow-ignoring-samsung-console-null.patch` — the reference
-  X910 port's opt-in `ignore_console_null` early parameter. The X710 ABL logs
-  also show `console=null`; use it to retain the requested bring-up consoles.
-
 - `0004-drm-panel-add-samsung-ana38407.patch` — Kconfig/Makefile integration
   for the SM-X710 panel overlay driver.
 - `0006-input-add-samsung-pogo-keyboard.patch` — Kconfig/Makefile integration
@@ -88,3 +84,23 @@ in `diagnostic/README.md`.
   commit `ab123e7`), a downstream port for this same device; not upstream, and its
   on-device verification is recorded under `reference/boot-tests/`. The helper is
   chip-generic and is a candidate for upstream submission once measured.
+- `0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch` — one line:
+  `dev_err()` → `dev_dbg()` for the already-issued branch of the ADSP handover
+  interrupt. The interrupt is level-triggered and the ADSP keeps it asserted, so
+  the message repeats ~5.4 times a second; on the Fedora port for this same board
+  it was measured at 37,402 of 37,411 dmesg lines (99.98 %), which evicts every
+  real diagnostic from the ring. Taken from `gts9wifi-fedora-linux`
+  (`kernel/patches/quiet-adsp-handover-already-happened.patch`), where it is
+  issue 19; the port enables the same `&remoteproc_adsp`, so it hits the same
+  repeat. No behaviour change — the interrupt is handled identically.
+
+## Retired from the default queue
+
+`0003-printk-allow-ignoring-samsung-console-null.patch` moved to `pending/` on
+2026-09-26. It existed so the X710 bring-up consoles could survive the
+`console=null` that Samsung's ABL appends; with the serial debug consoles removed
+from the command line there is nothing left for that argument to displace, and
+the appended request is now absorbed by an upstream `CONFIG_NULL_TTY=y` instead.
+Dropping it also returns `kernel/printk/printk.c` to unmodified upstream, which
+is one less local change to core printk. See
+[the boot console block](../../docs/BOOT_CONSOLE_BLOCK.md).
