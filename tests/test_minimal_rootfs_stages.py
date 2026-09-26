@@ -17,11 +17,17 @@ INIT = (ROOT / 'boot' / 'minimal-rootfs-init.sh').read_text()
 STATE = (ROOT / 'boot' / 'minimal-rootfs-state.sh')
 BUILDER = (ROOT / 'scripts' / 'build-bringup-initramfs.sh').read_text()
 
+# The fields the record ALWAYS carries: enough to answer "how far did the last
+# boot get" from TWRP on a tablet whose panel may be dark.
 REQUIRED_KEYS = (
-    'format_version', 'origin', 'boot_id', 'kernel_release', 'cmdline',
+    'format_version', 'origin', 'boot_id', 'kernel_release',
     'timestamp', 'uptime_seconds', 'root_device', 'stage', 'stage_history',
-    'failure', 'mmc_devices',
+    'failure',
 )
+# Diagnostic detail, written only with gts9_initramfs_debug=1.  `cmdline` alone was
+# 1163 of the record's 1994 bytes on the 2026-09-26 boot, because the vendor_boot
+# command line carries the entire Samsung option string.
+DEBUG_KEYS = ('cmdline', 'mmc_devices')
 INITRAMFS_STAGES = ('kernel-userspace', 'waiting-root', 'root-found',
                     'mounting-root', 'root-mounted', 'init-found', 'switch-root')
 
@@ -141,7 +147,14 @@ class MinimalRootfsStateTests(unittest.TestCase):
             record = f'{tmp}/gts9-minimal-last-boot'
             self.assertTrue(os.path.exists(record))
             fields = parse_record(record)
+            # The default record is exactly the required set: the debug keys are a
+            # gate, and a leak here means somebody removed the condition rather
+            # than that a field is merely present.
             self.assertEqual(set(fields), set(REQUIRED_KEYS))
+            for key in DEBUG_KEYS:
+                with self.subTest(key=key):
+                    self.assertNotIn(key, fields,
+                                     f'{key} must be gated behind gts9_initramfs_debug=1')
             self.assertEqual(fields['format_version'], '1')
             self.assertEqual(fields['origin'], 'initramfs')
             self.assertEqual(fields['stage'], 'switch-root')
@@ -251,8 +264,12 @@ class MinimalRootfsStateTests(unittest.TestCase):
         """After /dev /proc /sys /run move, the old paths are empty.
 
         The switch-root write happens after that move, so the facts must be
-        captured while they are still readable - otherwise the record that
-        TWRP reads says cmdline=unavailable and boot_id=unknown.
+        captured while they are still readable - otherwise the record that TWRP
+        reads says boot_id=unknown and kernel_release=unknown.
+
+        Run with the debug gate ON, because cmdline and mmc_devices only exist in
+        that mode; the always-present fields are asserted here too so the freeze
+        is covered either way.
         """
         with tempfile.TemporaryDirectory() as tmp:
             result = run_library(tmp, (
@@ -265,14 +282,45 @@ class MinimalRootfsStateTests(unittest.TestCase):
                 'minimal_state_cmdline() { echo unavailable; }\n'
                 'minimal_state_mmc_devices() { echo none; }\n'
                 'minimal_state_stage switch-root\n'
-            ))
+            ), extra_env={'GTS9_INITRAMFS_DEBUG': '1'})
             self.assertEqual(result.returncode, 0, result.stderr)
             fields = parse_record(f'{tmp}/gts9-minimal-last-boot')
             self.assertEqual(fields['stage'], 'switch-root')
-            self.assertNotEqual(fields['cmdline'], 'unavailable')
             self.assertNotEqual(fields['boot_id'], 'unknown')
             self.assertNotEqual(fields['kernel_release'], 'unknown')
+            # These two only exist with the gate on, which is why it is on here.
+            self.assertNotEqual(fields['cmdline'], 'unavailable')
             self.assertNotEqual(fields['mmc_devices'], 'none')
+
+    def test_the_debug_gate_adds_the_diagnostic_fields(self):
+        """gts9_initramfs_debug=1 is the only way cmdline/mmc_devices appear.
+
+        Measured before the gate existed: the record was 1994 bytes and `cmdline`
+        was 1163 of them, because the vendor_boot command line carries the whole
+        Samsung option string. The record exists so someone in TWRP can see how far
+        a boot got; the command line is worth reading exactly when a handoff
+        appears to have ignored an option, and not otherwise.
+        """
+        for gate, expect_debug in (('0', False), ('1', True)):
+            with self.subTest(GTS9_INITRAMFS_DEBUG=gate):
+                with tempfile.TemporaryDirectory() as tmp:
+                    result = run_library(tmp, (
+                        'minimal_state_init\n'
+                        'minimal_state_persist_enable "$GTS9_MINIMAL_LOG_DIR"\n'
+                    ), extra_env={'GTS9_INITRAMFS_DEBUG': gate})
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    fields = parse_record(f'{tmp}/gts9-minimal-last-boot')
+                    for key in REQUIRED_KEYS:
+                        with self.subTest(key=key):
+                            self.assertIn(key, fields)
+                    for key in DEBUG_KEYS:
+                        with self.subTest(key=key):
+                            if expect_debug:
+                                self.assertIn(key, fields)
+                            else:
+                                self.assertNotIn(key, fields)
+                    if expect_debug:
+                        self.assertEqual(fields['debug_detail'], '1')
 
     def test_the_builder_links_every_applet_the_minimal_path_calls(self):
         """A missing applet only fails on the tablet; catch it at build time.

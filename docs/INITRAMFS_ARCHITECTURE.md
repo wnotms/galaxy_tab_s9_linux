@@ -37,7 +37,7 @@ branch on a command-line token, and no second stage.
 /init
   1. set PATH
   2. mount /proc                      <- before anything reads cmdline
-  3. parse gts9_rootfs=, gts9_minimal_init=
+  3. parse gts9_rootfs=, gts9_minimal_init=, gts9_initramfs_debug=
   4. mount /sys, /dev, /run
   5. source the state library
   6. wait for the root device (bounded)
@@ -107,7 +107,7 @@ Each of these is now the Debian root filesystem's job, or the debug image's.
 | bounded root-device wait (30 s) | A card that is slow to enumerate must not be a hang, and a card that never appears must be a diagnosable failure. |
 | ext4 root mount | The handoff itself. |
 | `/newroot/sbin/init` check | Failing before `switch_root` leaves a rescue shell and a record; failing after it leaves nothing. |
-| stage record on the Debian root | `/var/log/gts9-minimal-last-boot`. This is the project's only offline evidence channel: a later TWRP session reads it when the panel is dark and there is no network yet. |
+| stage record on the Debian root | `/var/log/gts9-minimal-last-boot`. This is the project's only offline evidence channel: a later TWRP session reads it when the panel is dark and there is no network yet. Ten fields by default; `gts9_initramfs_debug=1` adds `cmdline` and `mmc_devices`. |
 | the durability syncs | Measured rather than assumed — see [sync cost](#sync-cost). ~10-20 ms per stage for a record of a few hundred bytes, against a handoff that takes tens of seconds. |
 | `switch_root` and the four `mount --move`s | The handoff. |
 | tty1 rescue shell | The only console left, and the only thing that can explain a failed handoff on the device itself. |
@@ -194,6 +194,24 @@ false by default, and the rescue path is only reached through `minimal_fail`.
 
 Measured, not counted: the whole handoff occupies **~100 µs** of monotonic time on
 the tablet, with `/init` entered and the root filesystem mounted 66 µs apart.
+
+### The boot record is gated, not verbose
+
+Measured on the tablet before this change: the record was **1994 bytes**, of which
+`cmdline` was **1163** - the vendor_boot command line carries the whole Samsung
+option string, and it was being copied into a file whose purpose is to let someone
+in TWRP see how far a boot got.
+
+It is now ten fields (~256 bytes): `format_version`, `origin`, `boot_id`,
+`kernel_release`, `root_device`, `stage`, `stage_history`, `failure`, `timestamp`,
+`uptime_seconds`. `gts9_initramfs_debug=1` adds `cmdline` and `mmc_devices`, which
+is exactly when they are worth reading - a handoff that appears to have ignored an
+option.
+
+The Debian helper appends only `debian_*` keys and rewrites the rest verbatim, so a
+gated record round-trips unchanged; verified by running it against a record written
+with the gate off (initramfs block preserved, 11 `debian_*` keys added, `cmdline`
+still absent).
 
 ### Audits
 

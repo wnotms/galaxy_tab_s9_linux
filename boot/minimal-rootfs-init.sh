@@ -97,8 +97,16 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
     case "$arg" in
         gts9_rootfs=*) ROOTFS_DEVICE=${arg#gts9_rootfs=} ;;
         gts9_minimal_init=*) MINIMAL_INIT=${arg#gts9_minimal_init=} ;;
+        # Ask for the verbose boot record: the full kernel command line and the
+        # mmc device inventory.  Off by default because the record is read by a
+        # person in TWRP and the cmdline alone is over half its size; on when
+        # diagnosing a handoff that ignored an option.
+        gts9_initramfs_debug=*) GTS9_INITRAMFS_DEBUG=${arg#gts9_initramfs_debug=} ;;
     esac
 done
+GTS9_INITRAMFS_DEBUG=${GTS9_INITRAMFS_DEBUG:-0}
+# The state library reads this, so it has to be exported rather than merely set.
+export GTS9_INITRAMFS_DEBUG
 GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
 
 # Bring the panel back, but ONLY when the handoff has already failed.

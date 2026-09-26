@@ -174,18 +174,38 @@ minimal_state_write() {
             minimal_state_cmdline_value=$(minimal_state_cmdline)
             minimal_state_mmc_value=$(minimal_state_mmc_devices)
         fi
+        # The fields that answer "how far did the last boot get".  A person reads
+        # this in TWRP on a tablet whose panel may be dark, so the shorter it is
+        # the more useful it is.
         printf 'format_version=%s\n' "$GTS9_MINIMAL_FORMAT_VERSION"
         printf 'origin=initramfs\n'
         printf 'boot_id=%s\n' "$minimal_state_boot_id_value"
         printf 'kernel_release=%s\n' "$minimal_state_kernel_value"
-        printf 'cmdline=%s\n' "$minimal_state_cmdline_value"
-        printf 'timestamp=%s\n' "${GTS9_MINIMAL_FIRST_TIMESTAMP:-unknown}"
-        printf 'uptime_seconds=%s\n' "${GTS9_MINIMAL_FIRST_UPTIME:-unknown}"
         printf 'root_device=%s\n' "$GTS9_MINIMAL_ROOT_DEVICE"
         printf 'stage=%s\n' "$GTS9_MINIMAL_STAGE"
         printf 'stage_history=%s\n' "${GTS9_MINIMAL_STAGE_HISTORY:-$GTS9_MINIMAL_STAGE}"
         printf 'failure=%s\n' "$GTS9_MINIMAL_FAILURE"
-        printf 'mmc_devices=%s\n' "$minimal_state_mmc_value"
+        printf 'timestamp=%s\n' "${GTS9_MINIMAL_FIRST_TIMESTAMP:-unknown}"
+        printf 'uptime_seconds=%s\n' "${GTS9_MINIMAL_FIRST_UPTIME:-unknown}"
+
+        # Diagnostic detail, written only with gts9_initramfs_debug=1.
+        #
+        # `cmdline` alone was 1163 of the record's 1994 bytes on the 2026-09-26
+        # boot, because the vendor_boot command line carries the entire Samsung
+        # option string.  It is genuinely useful when diagnosing a handoff that
+        # ignored an option, and dead weight the rest of the time.
+        # `mmc_devices` is hardware inventory, which belongs to the debug image.
+        #
+        # Readers must tolerate their absence, and they do: the record is a
+        # sequence of key=value lines and consumers use `sed -n 's/^key=//p'`,
+        # which yields an empty string rather than failing.  The Debian helper
+        # appends only debian_* keys and rewrites the rest verbatim, so gating
+        # these does not disturb it.
+        if [ "$GTS9_INITRAMFS_DEBUG" = 1 ]; then
+            printf 'cmdline=%s\n' "$minimal_state_cmdline_value"
+            printf 'mmc_devices=%s\n' "$minimal_state_mmc_value"
+            printf 'debug_detail=1\n'
+        fi
     } > "$minimal_state_tmp" 2>/dev/null || {
         rm -f "$minimal_state_tmp" 2>/dev/null || true
         minimal_emit 'GTS9_MINIMAL_WARN=state-write-failed'
