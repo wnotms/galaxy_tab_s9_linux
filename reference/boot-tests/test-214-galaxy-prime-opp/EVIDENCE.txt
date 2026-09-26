@@ -1,0 +1,96 @@
+=== CPU7 3.36 GHz prime OPP: on-device verification, 2026-09-26 ===
+
+FLASHED
+  boot.img         71e194a528d373580ee354bea1c0e68c2ff146d014ae34679955577b261d038d
+  vendor_boot.img  49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9
+  (init_boot and dtbo left untouched: 1e98bea2… and c17418be…)
+
+BEFORE — boot 375b6442-2a3c-46f0-9cfb-09239283f84a (pre-fix)
+
+  $ dmesg | grep -E 'Voltage update failed|failed to update OPP'
+  [    0.381943] cpu cpu7: Voltage update failed freq=3360000
+  [    0.381963] cpu cpu7: failed to update OPP for freq=3360000
+
+  $ ls /proc/device-tree/opp-table-cpu7/
+  compatible name opp-1132800000 … opp-2956800000 opp-3187200000 opp-595200000 … opp-shared phandle
+  (no opp-3360000000)
+
+  $ cat /sys/devices/system/cpu/cpufreq/policy7/scaling_available_frequencies
+  595200 … 2841600 2956800          (top = 2956800)
+  $ cat .../scaling_boost_frequencies
+  (empty)
+
+AFTER — boot a7b9ef68-9e67-4c84-a029-2919801a6894, reached in 36 s
+
+  1. THE WARNING IS GONE
+     $ dmesg | grep -E 'Voltage update failed|failed to update OPP'
+     (no output)
+
+  2. THE LIVE DEVICE TREE HAS THE NODE
+     $ ls /proc/device-tree/opp-table-cpu7/ | grep 3360000000
+     opp-3360000000
+
+  3. CPUFREQ REGISTERS THE FREQUENCY
+     $ cat /sys/devices/system/cpu/cpufreq/policy7/scaling_boost_frequencies
+     3360000
+     $ cat .../affected_cpus            -> 7
+     $ cat .../scaling_available_frequencies
+     595200 … 2841600 2956800
+     $ cat .../cpuinfo_max_freq         -> 2956800
+     $ cat .../scaling_max_freq         -> 2956800
+
+  $ cat /proc/device-tree/model
+  Samsung Galaxy Tab S9 Wi-Fi
+
+  $ cat /sys/devices/system/cpu/cpufreq/policy7/scaling_driver   -> qcom-cpufreq-hw
+  $ cat /sys/devices/system/cpu/cpufreq/policy7/scaling_governor -> schedutil
+
+WHY IT APPEARS AS A BOOST FREQUENCY
+
+  qcom_cpufreq_hw_read_lut() sets CPUFREQ_BOOST_FREQ for the last LUT_TURBO_IND
+  entry itself, which is why 3360000 lands in scaling_boost_frequencies rather
+  than scaling_available_frequencies, and why the non-boost ceiling
+  (cpuinfo_max_freq = scaling_max_freq) stays at 2956800. That is the driver's
+  own classification from the hardware LUT, and it is exactly what this change
+  left alone: the board node declares no turbo-mode.
+
+  The global boost switch reads 0 and was NOT changed:
+  $ cat /sys/devices/system/cpu/cpufreq/boost   -> 0
+
+FREQUENCY OBSERVATION — reported, but explicitly NOT a success criterion
+
+  A brief single-thread load on cpu7 with the frequency left unpinned:
+
+  $ cat /sys/devices/system/cpu/cpufreq/policy7/scaling_cur_freq
+  1977600, then 2956800 six times over ~10 s while a cpu7-bound loop ran
+
+  It did not reach 3360000, and that is not a failure. The prime bin is a boost
+  state, boost is off (0), and thermal, current-limit and scheduler state can all
+  legitimately keep a short test below the top bin. The change was NOT validated
+  by observing the frequency, and the frequency was NOT forced:
+
+    * no `echo 3360000 > scaling_min_freq`
+    * no `echo 1 > /sys/devices/system/cpu/cpufreq/boost`
+    * no governor change, no affinity pinning beyond a single temporary loop
+
+  The three hard criteria are 1, 2 and 3 above, and all three are met.
+
+NO REGRESSIONS
+
+  console:      tty0
+  /dev/ttyGS*:  0
+  gadget:       ncm.usb0
+  ssh.service:  active
+  failed units: 0
+  AF_VSOCK:     0
+  usb0:         169.254.42.1/16
+  stage record: stage=switch-root-synced, failure=none
+  ssh over USB NCM: working (this evidence was collected over it)
+
+WHAT THIS DOES NOT SHOW
+
+  It does NOT show the CPU wedge is fixed. That stall is a separate,
+  pre-existing failure with its own evidence in docs/CPU_WEDGE_EVIDENCE.md and a
+  measured rate of 1 in 29 boots. A single clean boot says nothing about it, and
+  establishing any link between this OPP and that stall would need a
+  pre-registered A/B experiment of its own.

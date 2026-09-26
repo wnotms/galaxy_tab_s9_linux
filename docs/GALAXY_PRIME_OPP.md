@@ -229,6 +229,32 @@ short test below the top bin. The hard criteria are the three below.
 2. the cpufreq policy registers the frequency;
 3. `cpu cpu7: Voltage update failed freq=3360000` no longer appears.
 
+## Verified on the tablet, 2026-09-26
+
+All three are met on boot `a7b9ef68-9e67-4c84-a029-2919801a6894`, reached in 36 s
+after flashing `boot.img` and `vendor_boot.img`:
+
+| | before (`375b6442`) | after (`a7b9ef68`) |
+|---|---|---|
+| the two warning lines | present at 0.381943 | **absent** |
+| live DT `/opp-table-cpu7/opp-3360000000` | absent | **present** |
+| `policy7/scaling_boost_frequencies` | empty | **`3360000`** |
+| `policy7/cpuinfo_max_freq` | 2956800 | 2956800 (unchanged) |
+
+It registers in `scaling_boost_frequencies` rather than
+`scaling_available_frequencies`, because `qcom_cpufreq_hw_read_lut()` marks the
+last `LUT_TURBO_IND` entry as a boost bin itself - the driver's own
+classification from the hardware LUT, and exactly what this node left alone.
+
+A brief single-thread load on cpu7 did **not** reach 3360000, and that is
+reported rather than hidden: boost reads 0, and thermal, current-limit and
+scheduler state can all legitimately hold a short test below the top bin. Nothing
+was forced to make the clock appear - no `scaling_min_freq` write, no boost
+enable, no governor change - because that would have tested the hardware's
+acceptance of a value, not the mismatch that was wrong.
+
+Full capture: [test-214](../reference/boot-tests/test-214-galaxy-prime-opp/README.md).
+
 ## What this does NOT claim
 
 **This does not fix the CPU wedge, and no number of successful boots would make
