@@ -182,6 +182,22 @@ domains still reference exactly one state, and that the ABL identity is intact.
 A tree that passes the wrong profile's check is a bug in the verifier, and the
 discrimination is itself tested: the unablated DTB fails both ablation profiles.
 
+**Which artifact each profile changes** — worth stating because it is the
+opposite of the other profiles, and getting it wrong would put two variables in
+one round:
+
+| profile | `boot.img` | `vendor_boot.img` | `init_boot.img` |
+|---|---|---|---|
+| `cpuidle-off` | same | **differs** (cmdline) | same |
+| `no-llcc-off` | **differs** (DTB) | same | same |
+| `no-cluster-idle` | **differs** (DTB) | same | same |
+
+The two DTB profiles keep the *kernel* identical — `Image.gz` is byte-identical
+across all three, verified on a real build — so the A/B still isolates one
+variable; it is the device tree rather than the command line. The ablation is
+therefore also invisible to `/proc/cmdline`, which is why the arming gate in
+§3.0 reads the device tree.
+
 Unlike every other profile in the harness, these two have a **command line
 byte-identical to baseline** — a test asserts it — so the harness cannot arm them
 from the cmdline. Its gate reads `/proc/device-tree` instead and additionally
