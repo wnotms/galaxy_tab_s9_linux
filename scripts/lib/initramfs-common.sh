@@ -178,16 +178,44 @@ gts9_write_manifest() {
     # Capability probes.  Each looks for the OPERATION rather than the noun, so
     # the comments that explain why a capability is gone do not read as evidence
     # that it is present.
+    #
+    # Two of these were WRONG when first written, and both were wrong in the
+    # direction that flatters the production image, which is the direction worth
+    # checking hardest:
+    #
+    #   * contains_gpt_parser matched '/dev/disk/by-partlabel|PARTNAME'.  The debug
+    #     image parses the GPT itself out of the raw header with dd+od and never
+    #     mentions either string, so it reported "no" for an image that plainly has
+    #     a parser; and production reported "yes" for reading a label the KERNEL
+    #     published, which is the opposite of parsing.
+    #   * contains_rtc_telemetry matched '/dev/rtc|rtc-state' - a device node and a
+    #     filename - which is again about where a value comes from, not about
+    #     whether telemetry is collected.
+    #
+    # So the GPT probe now requires the actual header parse, and the probes are
+    # checked against both profiles by tests/test_initramfs_profiles.py.
     local init_file=$tree/init
     local gadget=no msc=no gpt=no rtc=no bcb=no display=no report=no
+
     # Creating a configfs gadget means creating the directory or writing the UDC.
     if grep -qE 'mkdir.*usb_gadget' "$init_file" 2>/dev/null ||
        grep -qE '> *"\$(G|GADGET)/UDC"' "$init_file" 2>/dev/null; then
         gadget=yes
     fi
     grep -q 'mass_storage\.usb0' "$init_file" 2>/dev/null && msc=yes
-    grep -qE '/dev/disk/by-partlabel|PARTNAME' "$init_file" 2>/dev/null && gpt=yes
-    grep -qE '/dev/rtc|rtc-state' "$init_file" 2>/dev/null && rtc=yes
+
+    # A GPT parser reads the partition table off the raw device: LBA 1, the
+    # "EFI PART" signature, the entry array.  Reading PARTNAME from sysfs is the
+    # kernel's parse being consumed, so it is explicitly NOT this.
+    if grep -qE 'EFI PART|gpt_entries|PartitionEntryLBA|by-partlabel' "$init_file" 2>/dev/null; then
+        gpt=yes
+    fi
+
+    # RTC telemetry is reading or encoding the clock, not naming a device node.
+    if grep -qE 'rtc_write_state|rtc_state|hwclock|GTS9_RTC' "$init_file" 2>/dev/null; then
+        rtc=yes
+    fi
+
     grep -qiE 'boot-recovery' "$init_file" 2>/dev/null && bcb=yes
     grep -qE 'fb0/blank|display_recover' "$init_file" 2>/dev/null && display=yes
     grep -qE 'regulator_summary|devices_deferred|bringup-report' "$init_file" 2>/dev/null && report=yes

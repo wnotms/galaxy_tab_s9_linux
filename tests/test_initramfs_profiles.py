@@ -703,6 +703,28 @@ class TheAuditScriptIsUsable(unittest.TestCase):
         self.assertTrue(AUDIT.is_file())
         self.assertTrue(AUDIT.stat().st_mode & 0o111)
 
+    def test_the_manifest_probes_describe_the_right_profile(self):
+        """The capability probes must not be satisfiable by the wrong thing.
+
+        Both the shared library and the audit script had these wrong, in the
+        direction that flatters production - which is the direction worth checking
+        hardest. contains_gpt_parser matched a sysfs label path rather than a
+        header parse, so it said "no" for the debug image (which parses the GPT
+        itself with dd+od) and "yes" for production (which only reads what the
+        kernel already parsed).
+        """
+        for path in (COMMON_LIB, AUDIT):
+            with self.subTest(script=path.name):
+                text = read(str(path))
+                # The GPT probe must look for a real parse, not the sysfs label.
+                self.assertRegex(text, r'EFI PART|gpt_entries|PartitionEntryLBA')
+                # ... and it must not be satisfied by PARTNAME alone.
+                for line in text.splitlines():
+                    if 'gpt' in line.lower() and 'grep' in line:
+                        self.assertNotRegex(
+                            line, r"^\s*has_gpt_parser=.*'[^']*PARTNAME[^']*'",
+                            'PARTNAME is the kernel parsing the GPT, not us')
+
     def test_it_reports_the_three_classifications(self):
         text = read(str(AUDIT))
         for kind in ('production_required', 'debug_only', 'currently_unreferenced'):

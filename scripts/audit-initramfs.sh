@@ -200,9 +200,18 @@ done < <(find "$tree" -maxdepth 2 -type f \( -name 'init' -o -name '*.sh' \) 2>/
 creates_msc=no
 grep -qE 'mass_storage\.usb0' "$tree/init" 2>/dev/null && creates_msc=yes
 
-has_gpt_parser=$(grep -qE '/dev/disk/by-partlabel|PARTNAME|by-name' "$tree/init" 2>/dev/null && echo yes || echo no)
-has_rtc=$(grep -qE '/dev/rtc|rtc-state|hwclock' "$tree/init" 2>/dev/null && echo yes || echo no)
-has_bcb=$(grep -qE 'boot-recovery|BCB|/dev/block/by-name' "$tree/init" 2>/dev/null && echo yes || echo no)
+# These must match the probes in scripts/lib/initramfs-common.sh, because the
+# manifest and this audit are cross-checked against each other and a disagreement
+# is worse than either being absent.
+#
+# Both were wrong here in the same way the library's were: contains_gpt_parser
+# matched a sysfs label path rather than a header parse, so it reported "no" for
+# the debug image (which parses the GPT itself with dd+od) and "yes" for
+# production (which only reads what the kernel already parsed). The RTC probe
+# matched a device node rather than the act of collecting telemetry.
+has_gpt_parser=$(grep -qE 'EFI PART|gpt_entries|PartitionEntryLBA|by-partlabel' "$tree/init" 2>/dev/null && echo yes || echo no)
+has_rtc=$(grep -qE 'rtc_write_state|rtc_state|hwclock|GTS9_RTC' "$tree/init" 2>/dev/null && echo yes || echo no)
+has_bcb=$(grep -qiE 'boot-recovery' "$tree/init" 2>/dev/null && echo yes || echo no)
 has_display=$(grep -qE 'fb0/blank|fb0|display_recover' "$tree/init" 2>/dev/null && echo yes || echo no)
 has_report=$(grep -qE 'regulator_summary|devices_deferred|bringup-report' "$tree/init" 2>/dev/null && echo yes || echo no)
 
