@@ -518,6 +518,91 @@ class ClosedDirectionProtectionTests(unittest.TestCase):
                     self.assertNotIn(phrase, flat.lower())
 
 
+class TestRecordTests(unittest.TestCase):
+    """The test-228 hand-off: a plan with verifiable identity, not a result."""
+
+    RECORD = "reference/boot-tests/test-228-csd-ipi-diagnostic"
+
+    def test_it_is_recorded_as_prepared_and_not_as_a_result(self):
+        text = read(f"{self.RECORD}/README.md")
+        self.assertIn("prepared and built, NOT flashed", text)
+        self.assertIn("no write has been made", text)
+        for phrase in ("we observed", "physically verified", "the run showed"):
+            with self.subTest(phrase=phrase):
+                self.assertNotIn(phrase, text)
+
+    def test_the_identity_artifacts_are_present(self):
+        for name in ("BUNDLE_INFO", "bundle-SHA256SUMS", "kernel-SHA256SUMS",
+                     "diagnostic-config.txt", "source-commit.txt",
+                     "PRE-WRITE-STATE.txt"):
+            with self.subTest(artifact=name):
+                self.assertTrue((ROOT / self.RECORD / name).is_file(),
+                                f"missing {name}")
+
+    def test_the_recorded_hashes_are_the_built_ones(self):
+        """A manifest that drifts is worse than none."""
+        for pair in (("bundle-SHA256SUMS", f"{DIAG_BUNDLE}/SHA256SUMS"),
+                     ("BUNDLE_INFO", f"{DIAG_BUNDLE}/BUNDLE_INFO"),
+                     ("kernel-SHA256SUMS", f"{DIAG_OUT}/SHA256SUMS"),
+                     ("diagnostic-config.txt", f"{DIAG_OUT}/config")):
+            rec, live = pair
+            if not (ROOT / live).exists():
+                continue
+            with self.subTest(artifact=rec):
+                self.assertEqual(read(f"{self.RECORD}/{rec}"), read(live))
+
+    def test_it_says_both_kernel_partitions_must_be_written(self):
+        """The trap that produced a wrong table once already."""
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("Both kernel-carrying partitions must be written", flat)
+        self.assertIn("71e194a5", flat)
+        self.assertIn("f0f893c7", flat)
+        # and the ones that must NOT be written
+        self.assertIn("never written by this repository's tests", flat)
+
+    def test_the_arming_gate_is_a_positive_capability_test(self):
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("ls /sys/module/smp/parameters/", flat)
+        self.assertIn("production today: EMPTY", flat)
+        self.assertIn("only the diagnostic kernel has", flat)
+        # and it says what to do when it fails
+        self.assertIn("stop", flat.lower())
+        self.assertIn("Case D", flat)
+
+    def test_it_explains_every_csd_report_shape(self):
+        flat = prose(f"{self.RECORD}/README.md")
+        for shape in ("handling prior", "handling this request", "unresponsive",
+                      "Re-sending CSD lock"):
+            with self.subTest(shape=shape):
+                self.assertIn(shape, flat)
+        # the re-send is the never-started discriminator
+        self.assertIn("never *started*", flat)
+
+    def test_it_warns_that_a_missing_target_stack_proves_nothing(self):
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("best-effort", flat)
+        self.assertIn("A missing target stack is not evidence of anything", flat)
+
+    def test_it_records_the_success_condition_as_information(self):
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn('Not "no wedge"', flat)
+        self.assertIn("more target-CPU / CSD / IPI state information than", flat)
+
+    def test_it_notes_that_image_gz_is_not_reproducible(self):
+        """So a hash mismatch on a rebuild is not read as a moved source."""
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("not reproducible", flat)
+        # prose() also strips backticks.
+        self.assertIn("Compare config and the DTB first", flat)
+
+    def test_it_carries_the_rollback(self):
+        flat = prose(f"{self.RECORD}/README.md")
+        # prose() strips a heading's leading `#`, so this is the heading text.
+        self.assertIn("10. Rollback", flat)
+        self.assertIn("49ae21b3", flat)
+        self.assertIn("no recovery boot", flat)
+
+
 class BuiltArtifactTests(unittest.TestCase):
     """If the candidate is built, check the artifacts rather than the sources."""
 
