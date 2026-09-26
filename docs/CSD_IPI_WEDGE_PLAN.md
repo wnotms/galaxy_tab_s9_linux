@@ -1,8 +1,11 @@
 # Round 34 — the CSD/IPI plan: why the wedged CPU stops answering
 
-**Status: prepared, not flashed.** The candidate is built and its config verified;
-no on-device run has happened. The pre-registered decision rule is §4 and it was
-written before the candidate existed.
+**Status: the first CSD run has happened, and it returned Case B.**
+`reference/boot-tests/test-228-csd-ipi-diagnostic/RESULT.md` has the evidence: two
+CPUs (3 and 7) went unresponsive to SGIs while inside no IPI handler, each asked
+to run a function that cannot block, and each re-sent to repeatedly. The
+pre-registered rule below is unchanged text and was written before the candidate
+existed; §7 is now the specific round-2 design.
 
 ## 1. Where the investigation is, after test-227
 
@@ -435,3 +438,80 @@ CPU wedge
 * `docs/CPU_WEDGE_EVIDENCE.md` — the signature, the rate, the wedged CPUs
 * `docs/SM8550_IDLE_STATE_ANALYSIS.md` — the states that were never entered
 * `kernel/config/gts9wifi-csd-lock.fragment` — the diagnostic configuration
+
+
+---
+
+# 9. Outcome of the first run (test-228) — Case B, and what it fixes in place
+
+Full evidence in `reference/boot-tests/test-228-csd-ipi-diagnostic/RESULT.md`.
+Summarised here because it changes what round 2 must do.
+
+## What the instrument returned
+
+```
+csd: Detected non-responsive CSD lock (#1) on CPU#4, waiting 5000000050 ns
+     for CPU#03 do_nothing+0x0/0x8(0x0).
+        csd: CSD lock (#1) unresponsive.
+csd: Detected non-responsive CSD lock (#2) on CPU#1, waiting 5000000102 ns
+     for CPU#07 rcu_barrier_handler+0x0/0x8c(0x7).
+        csd: CSD lock (#2) unresponsive.
+```
+
+**Case B, unambiguously.** Both targets report `unresponsive`, which the kernel
+prints only when `cpu_cur_csd` is NULL on the target - so neither was inside any
+IPI handler - and `Re-sending CSD lock` fired four times, which appears only under
+the same test. `do_nothing` and `rcu_barrier_handler` cannot block, spin or take a
+lock, so "the handler is slow" is not available as an explanation either.
+
+Two CPUs failed within ~1 s of each other, both big/prime (CPU 3 = A715,
+CPU 7 = X3), and CPU 7's RCU `softirq=` counter froze at 613/613 across the whole
+stall - RCU's own documented signature of a CPU spinning with interrupts disabled.
+
+## What that rules out, permanently
+
+* **Case A** (nested/circular CSD, blocked handler) - no current CSD on either
+  target, and neither function can block.
+* **the handler-is-slow family** - both handlers are trivial.
+* **a single-CPU fault** - two CPUs, independently.
+* any lock or workqueue dependency in the IPI path.
+
+## What it does not settle, and the one gap to close first
+
+`unresponsive` plus `Re-sending` proves the handler had not started **at the
+moment of each report**. For a 5-to-25-second interval that is close to proof of
+"never started", but the direct statement comes from
+`csd:csd_function_entry` / `csd:csd_function_exit`, which bracket the handler call
+itself and are **not** gated on `CONFIG_CSD_LOCK_WAIT_DEBUG`. Round 2 must arm
+them first, because "no entry at all" versus "entry without exit" splits the
+remaining tree in two.
+
+## Round 2, made specific by this result
+
+| question | events | reading |
+|---|---|---|
+| does the SGI reach CPU 3/7 at all? | `ipi:ipi_raise`, `ipi:ipi_entry` | raise present, **entry absent** -> GIC / DAIF / firmware |
+| did the handler start and not finish? | `csd:csd_function_entry` / `_exit` | entry present, exit absent -> handler fault |
+| are all local IRQs stopped, or only SGIs? | `irq:softirq_*` + the arch-timer PPI counter | timer silent too -> local interrupt / exception state |
+
+Both event families are confirmed present on the device, and the buffer sizing was
+measured rather than guessed: **1545 events/s and 144 KiB/s** for the proposed
+set, so 4 MiB holds 29 s (too short for the ~28 s requirement), **8 MiB holds
+57 s** and 16 MiB holds 114 s. `trace_clock=global` remains mandatory, the dump
+trigger remains `rcupdate.rcu_cpu_stall_ftrace_dump` as primary with at most one
+backstop, and `timer:*` stays out of the first pass.
+
+## A harness defect this run exposed, recorded so it is not repeated
+
+The wedge above was **first classified as `clean`** and was found only by reading
+the device's journal by hand. `scripts/wedge-ssh.sh` chose the boot to read by
+comparing boot ids, so a wedged boot - which panics and restarts - made index 0
+the boot *after* the wedge; and `extra_boots`, which had correctly counted the
+restart, was recorded but never consulted by the verdict. Both are fixed
+(`idx=$(( -extra_boots ))`, and `extra_boots > 0` forces `verdict=wedge`), and the
+fix is verified against this wedge: boot `-1` holds 4 CSD reports, boot `0` holds
+none.
+
+The general lesson is the one this project keeps meeting: **a detector whose
+output is not consulted is worse than no detector, because its output looks like
+a measurement.**

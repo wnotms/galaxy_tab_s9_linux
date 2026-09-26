@@ -67,6 +67,15 @@ def prose(rel):
     """
     text = re.sub(r"(?m)^\s*(#|>)\s?", " ", read(rel))
     text = text.replace("**", "").replace("`", "")
+    # Paired single-asterisk emphasis (`*not*`), but NOT the `*` in a glob-like
+    # name such as `timer:*` or `ipi:*`.
+    #
+    # Two earlier attempts at this were wrong in opposite directions: stripping
+    # every asterisk turned `timer:*` into `timer:` and broke three unrelated
+    # tests, and a word-boundary regex still ate it because `r` is a word
+    # character.  The rule that works is simply: an asterisk followed by a colon
+    # is part of a name, anything else paired is emphasis.
+    text = re.sub(r"\*(?=\S)([^*\n]*?)\*(?!:)", r"\1", text)
     return " ".join(text.split())
 
 
@@ -453,6 +462,7 @@ class PlanDocumentTests(unittest.TestCase):
         self.assertIn("tp_printk is not used", flat)
         self.assertIn("Buffer sizing is measured, not guessed", flat)
         self.assertIn("timer:* is not enabled in the first pass", flat)
+        self.assertIn("timer:* stays out of the first pass", flat)
 
     def test_it_records_that_evidence_must_be_armed_before_the_wedge(self):
         flat = prose(PLAN)
@@ -518,6 +528,99 @@ class ClosedDirectionProtectionTests(unittest.TestCase):
                     self.assertNotIn(phrase, flat.lower())
 
 
+class WedgeResultTests(unittest.TestCase):
+    """test-228's outcome: Case B, and the harness bug that nearly hid it."""
+
+    RECORD = "reference/boot-tests/test-228-csd-ipi-diagnostic"
+    EVID = f"{RECORD}/evidence"
+    RESULT = f"{RECORD}/RESULT.md"
+
+    def test_the_evidence_files_are_archived(self):
+        for name in ("csd-reports.txt", "rcu-and-nmi.txt",
+                     "wedged-boot-klog-full.txt", "pstore-console-ramoops.txt"):
+            with self.subTest(artifact=name):
+                self.assertTrue((ROOT / self.EVID / name).is_file(),
+                                f"missing evidence: {name}")
+
+    def test_the_quoted_csd_lines_are_in_the_archive(self):
+        """Every line the result quotes must exist in the archived evidence."""
+        raw = (ROOT / self.EVID / "csd-reports.txt").read_bytes().decode("utf-8", "replace")
+        for needle in (
+            "on CPU#4, waiting 5000000050 ns for CPU#03 do_nothing",
+            "on CPU#1, waiting 5000000102 ns for CPU#07 rcu_barrier_handler",
+            "csd: CSD lock (#1) unresponsive.",
+            "csd: CSD lock (#2) unresponsive.",
+            "Re-sending CSD lock (#2) IPI from CPU#01 to CPU#07",
+            "Re-sending CSD lock (#1) IPI from CPU#04 to CPU#03",
+            "Continued non-responsive CSD lock (#1)",
+        ):
+            with self.subTest(needle=needle[:44]):
+                self.assertIn(needle, raw)
+
+    def test_the_two_target_cpus_and_functions_are_recorded(self):
+        raw = read(f"{self.EVID}/csd-reports.txt")
+        self.assertIn("for CPU#03 do_nothing", raw)
+        self.assertIn("for CPU#07 rcu_barrier_handler", raw)
+        # and the independent confirmation
+        nm = read(f"{self.EVID}/rcu-and-nmi.txt")
+        self.assertIn("still haven't responded to the NMI: 3", nm)
+        self.assertIn("7-...!", nm)
+        self.assertIn("softirq=613/613", nm)
+
+    def test_the_result_is_classified_as_case_b_with_its_reasoning(self):
+        flat = prose(self.RESULT)
+        self.assertIn("Case B", flat)
+        # why 'unresponsive' rules Case A out
+        self.assertIn("cpu_cur_csd", flat)
+        self.assertIn("neither target was inside any IPI handler", flat)
+        # and why 'handler is slow' is unavailable
+        self.assertIn("cannot block", flat)
+
+    def test_it_does_not_claim_a_cause_or_a_fix(self):
+        flat = prose(self.RESULT)
+        self.assertIn("Not a cause.", flat)
+        self.assertIn("Not a fix, and no fix is proposed.", flat)
+        self.assertIn("Not a rate.", flat)
+        for overclaim in ("the root cause is", "we fixed", "this fixes the"):
+            with self.subTest(overclaim=overclaim):
+                self.assertNotIn(overclaim, flat)
+
+    def test_it_records_the_onset_correction(self):
+        """The first pass said 13.30 s was inside the band; it is not."""
+        flat = prose(self.RESULT)
+        self.assertIn("13.30 s", flat)
+        self.assertIn("Correction to my own first pass", flat)
+        self.assertIn("It is not", flat)
+
+    def test_it_records_the_harness_defect_and_its_fix(self):
+        """The wedge was first classified clean; that must stay on the record."""
+        flat = prose(self.RESULT)
+        self.assertIn("first recorded as verdict=clean", flat)
+        self.assertIn("idx=$(( -extra_boots ))", flat)
+        self.assertIn("extra_boots > 0", flat)
+        self.assertIn("a detector that runs, reports, and is then not consulted", flat)
+
+    def test_it_does_not_propose_supply_changes(self):
+        flat = prose(self.RESULT)
+        self.assertIn("not authorization to touch big-core voltage", flat)
+        self.assertIn("Not something to fix by touching supplies", flat)
+        self.assertIn("a correlation and a direction", flat)
+
+    def test_the_plan_records_the_case_b_outcome(self):
+        flat = prose(PLAN)
+        self.assertIn("Case B, unambiguously", flat)
+        self.assertIn("do_nothing", flat)
+        self.assertIn("rcu_barrier_handler", flat)
+        # and the round-2 table it produces
+        self.assertIn("Round 2, made specific by this result", flat)
+
+    def test_the_pre_run_plan_is_not_rewritten_to_match(self):
+        """The pre-registered plan must keep saying what was expected first."""
+        flat = prose(f"{self.RECORD}/README.md")
+        self.assertIn("RUN. See RESULT.md", flat)
+        self.assertIn("It is not edited to match the outcome", flat)
+
+
 class SshRunnerGateTests(unittest.TestCase):
     """The csd-lock arming gate in scripts/wedge-ssh.sh.
 
@@ -556,14 +659,19 @@ class SshRunnerGateTests(unittest.TestCase):
         liveness and timeout are on the record for that round."""
         text = read(self.RUNNER)
         for field in ("csd_timeout_ms=", "csd_panic_on_ipistall=",
-                      "csd_report_lines=", "csd_target_cpu="):
+                      "csd_report_lines=", "csd_first_report=",
+                      "csd_targets=", "csd_disposition=",
+                      "csd_resends=", "csd_unstuck="):
             with self.subTest(field=field):
                 self.assertIn(field, text)
 
     def test_it_extracts_the_target_cpu_from_the_report(self):
         """`waiting N ns for CPU#X` is the field the whole round is for."""
         text = read(self.RUNNER)
-        self.assertIn("waiting [0-9]+ ns for CPU#[0-9]+", text)
+        # the report is parsed for its target and function, and for the
+        # disposition that decides Case A versus Case B
+        self.assertIn("for CPU#[0-9]+ [^ ]+", text)
+        self.assertIn("unresponsive|handling this request|handling prior", text)
 
 
 class TestRecordTests(unittest.TestCase):
@@ -571,13 +679,20 @@ class TestRecordTests(unittest.TestCase):
 
     RECORD = "reference/boot-tests/test-228-csd-ipi-diagnostic"
 
-    def test_it_is_recorded_as_prepared_and_not_as_a_result(self):
+    def test_the_pre_run_plan_is_marked_as_run_without_being_rewritten(self):
+        """The plan was written before the flash; it must stay that way.
+
+        It now points at RESULT.md, but its identity, write scope, arming gate and
+        expected output shapes are still the pre-registered ones - that is what
+        makes it evidence of what was expected rather than a description written
+        after the fact.
+        """
         text = read(f"{self.RECORD}/README.md")
-        self.assertIn("prepared and built, NOT flashed", text)
-        self.assertIn("no write has been made", text)
-        for phrase in ("we observed", "physically verified", "the run showed"):
-            with self.subTest(phrase=phrase):
-                self.assertNotIn(phrase, text)
+        self.assertIn("RUN. See", text)
+        self.assertIn("It is not edited to match the outcome", text)
+        # the pre-registered content is still present
+        self.assertIn("Arming gate", text)
+        self.assertIn("Expected CSD output", text)
 
     def test_the_identity_artifacts_are_present(self):
         for name in ("BUNDLE_INFO", "bundle-SHA256SUMS", "kernel-SHA256SUMS",
@@ -623,8 +738,10 @@ class TestRecordTests(unittest.TestCase):
                       "Re-sending CSD lock"):
             with self.subTest(shape=shape):
                 self.assertIn(shape, flat)
-        # the re-send is the never-started discriminator
-        self.assertIn("never *started*", flat)
+        # the re-send is the never-started discriminator.  prose() strips the
+        # paired emphasis, so the plain words are what match.
+        self.assertIn("the target never started the handler", flat)
+        self.assertIn("from \"never started\"", flat)
 
     def test_it_warns_that_a_missing_target_stack_proves_nothing(self):
         flat = prose(f"{self.RECORD}/README.md")

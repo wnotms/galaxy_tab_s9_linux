@@ -908,11 +908,19 @@ class WedgeSshRunnerTests(unittest.TestCase):
         round as clean.
         """
         text = read(self.RUNNER)
-        self.assertIn("idx=0              # still on the round's boot", text)
-        self.assertIn("idx=-1             # the round's boot is now the previous one", text)
+        # The index is derived from the boot COUNT, not from comparing boot ids.
+        # An earlier version compared ids and chose index 0 when they matched -
+        # but they match precisely because a wedged boot panicked and restarted,
+        # so index 0 was the boot AFTER the wedge.  That bug made test-228's real
+        # wedge read as clean; see reference/boot-tests/test-228-*/RESULT.md.
+        self.assertIn("idx=$(( -extra_boots ))", text)
         self.assertIn('count "$idx"', text)
-        self.assertNotIn('count -1 "$WEDGE_CLASSES"', text)
         self.assertIn("log_boot_index=$idx", text)
+        # the buggy forms must not come back
+        self.assertNotIn("idx=0              # still on the round's boot", text)
+        self.assertNotIn('count -1 "$WEDGE_CLASSES"', text)
+        # and an extra boot must reach the verdict, not just the record
+        self.assertIn('"${extra_boots:-0}" -gt 0 ] && verdict=wedge', text)
 
     def test_it_records_which_detector_it_used(self):
         """The COM19 presence-outage detector does not exist here.
