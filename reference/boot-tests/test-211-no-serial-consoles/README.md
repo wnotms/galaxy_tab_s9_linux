@@ -107,6 +107,72 @@ during shutdown either way.
   `kernel/printk/printk.c` is unmodified upstream again; `CONFIG_NULL_TTY=y`
   absorbs the appended `console=null` instead.
 
+## Follow-up, same day: one serial port instead of two
+
+The owner then asked for the two virtual COM ports to be removed, and - asked
+whether either could still affect boot or shutdown - the answer measured on the
+tablet was **no**, so one port was kept.
+
+Why neither could still stall anything, checked rather than argued:
+
+| path that caused the hangs | state |
+|---|---|
+| printk → ttyGS | `console=ttyGS` tokens in cmdline: **0**; `console_active=tty0` |
+| userspace `write()` → ttyGS | `ttygs_open_fds=0` — nothing has either port open |
+| login → ttyGS | both getty names **masked**, `inactive` |
+
+The source-level reason is stronger than the runtime check: with
+`CONFIG_U_SERIAL_CONSOLE` unset, `gs_console_init()` in
+`drivers/usb/gadget/function/u_serial.c` is compiled to `return -ENOSYS`, so no
+ttyGS port can *become* a console on this kernel — the capability is gone, not
+merely unused.
+
+So `acm.usb1` was removed and `acm.usb0` kept:
+
+* `acm.usb1` existed for exactly one purpose — to be the port printk registered on
+  (it was created second so u_serial handed it line 1). With the gadget console
+  gone it was a dead port.
+* `acm.usb0` stays as one plain serial port: not a console, no getty, so nothing
+  writes to it and nothing can block on it. It is a wired endpoint that does not
+  depend on the network function having bound.
+
+Measured after the change: `gadget_functions=acm.usb0 ncm.usb0`, `/dev/ttyGS1`
+absent, `/dev/ttyGS0` present, warm reboot → ssh in **45 s**, and
+**poweroff 48.02 → 48.69 s = 0.67 s with zero stop timeouts** — unchanged from the
+0.82 s measured before, which is the point: removing the port cost nothing and
+bought nothing either way.
+
+The migration is not a manual step: `configfs` cannot edit a bound gadget's
+function set, so `gts9-usb-acm` unbinds, drops `acm.usb1` and rebuilds. It is a
+no-op once the port is gone, so it costs one service restart exactly once.
+
+### A stale autologin drop-in was found and removed
+
+The device-state recorder (below) reported
+`autologin_files=/etc/systemd/system/serial-getty@ttyGS0.service.d/autologin.conf`.
+That file's entire content is an `agetty --autologin root` override, left by an
+earlier install. It was inert only because the instance it decorates is masked —
+a live configuration file waiting for anyone who unmasks the name, which is
+precisely how this class of leftover returns. `gts9-enable-units` now removes it,
+and reports the directory gone:
+
+```
+before: autologin_files=/etc/systemd/system/serial-getty@ttyGS0.service.d/autologin.conf
+after : autologin_files=none
+```
+
+## On-device changes are recorded
+
+Because flashed partitions and hand-written device configuration are invisible to
+`git status` on the host and to `git log` on the tablet, the repository now ships
+`gts9-device-changes`, which prints what a device actually has. It is read-only
+unless asked to write, so a before/after pair can be diffed.
+
+Its value was immediate rather than theoretical: on its first run against the
+tablet it reported the stale autologin drop-in and `acm.usb1` in one line each.
+Before/after records for this deployment are kept in
+[`reference/device-state/`](../../device-state/README.md).
+
 ## Also fixed here, found while deploying
 
 Two pre-existing bugs surfaced during the physical test and are fixed:
