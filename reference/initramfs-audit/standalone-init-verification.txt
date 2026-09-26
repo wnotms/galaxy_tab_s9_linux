@@ -51,3 +51,26 @@ so the run above reports "mount: permission denied" for sysfs and stops at
 pseudo-mount when /proc is genuinely absent. That is a limitation of the harness,
 not of the script: the ordering claim is therefore also stated structurally by
 line number, which does not depend on the emulation.
+
+=== Proof that the default handoff never touches the trampoline ===
+=== Same harness, 2026-09-26.
+
+The staging block used to run unconditionally. With MINIMAL_INIT=/sbin/init the
+helper and BusyBox were still copied into /run, and if either copy or the chmod
+failed the boot was aborted with `minimal_fail switch-root-returned`. A normal
+boot could therefore fail because a helper it was never going to execute could not
+be staged.
+
+Test: remove the helper from the scratch root entirely, so any attempt to stage it
+must fail, then run as /init with the default MINIMAL_INIT:
+
+  $ rm -f <tree>/sbin/gts9-minimal-pid1
+  $ chroot <tree> /bin/sh -c 'timeout 8 /init'
+  ... grep -iE 'helper|switch-root-returned'
+  NO mention - the default path never references the trampoline (correct)
+
+Before the change this same run reached `cp /sbin/gts9-minimal-pid1` and failed
+with "could not stage the minimal PID 1 rescue helper" followed by
+GTS9_MINIMAL_FAIL=switch-root-returned. Now the default path contains no reference
+to the helper at all: no copy, no BusyBox copy, no selftest, and no later
+existence check.
