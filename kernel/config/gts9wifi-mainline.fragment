@@ -6,8 +6,15 @@
 CONFIG_BLK_DEV_INITRD=y
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
+# The GENI serial port itself stays built in: the SE block is shared IP, the port
+# is still registered and /dev/ttyMSM0 still exists.  Only its *console* is off.
 CONFIG_SERIAL_QCOM_GENI=y
-CONFIG_SERIAL_QCOM_GENI_CONSOLE=y
+# Deliberately off, and stated here rather than only in the console section below,
+# because this line used to read `=y`.  merge_config.sh resolves duplicates
+# last-wins, so the old `=y` here and the `is not set` further down disagreed and
+# the winner depended on file order - exactly the kind of thing that silently
+# reverts a setting.  build-kernel.sh asserts the resolved value either way.
+# CONFIG_SERIAL_QCOM_GENI_CONSOLE is not set
 CONFIG_PRINTK_TIME=y
 CONFIG_PSTORE=y
 CONFIG_PSTORE_RAM=y
@@ -159,6 +166,34 @@ CONFIG_USB_DWC3_QCOM=y
 CONFIG_USB_ROLE_SWITCH=y
 CONFIG_USB_GADGET=y
 CONFIG_USB_CONFIGFS=y
+# --- No serial function on the gadget (2026-09-26) --------------------------
+#
+# The gadget is exactly one function: NCM, the network ssh is reached over.  The
+# serial functions are removed from the *build*, not merely left unused, so that
+# no configfs `acm.usb0` can be created even by hand:
+#
+#   USB_CONFIGFS_ACM    -> "acm.usb0", the last port.  It was reached only by
+#                          opening a terminal on the host AND starting a reader on
+#                          the tablet, nothing on the tablet ever wrote to it, and
+#                          the kernel log did not come out of it.  The login is now
+#                          the ssh key written into the rootfs at install time
+#                          (install-debian-rootfs.sh --ssh-key).
+#   USB_CONFIGFS_SERIAL -> "gser.usb0", the generic u_serial function.  Never used
+#                          by this port, but it selects CONFIG_USB_U_SERIAL and is
+#                          the other way to get a ttyGS port, so it goes with it.
+#
+# CONFIG_USB_U_SERIAL is the shared u_serial core.  It is *selected* by the two
+# symbols above rather than requested directly, so with both off it disappears on
+# its own - and that is what makes CONFIG_U_SERIAL_CONSOLE unsatisfiable, which is
+# the property the console removal depends on (see the console section below).
+#
+# CONFIG_USB_F_ACM / CONFIG_USB_F_SERIAL likewise drop out via their selects.
+#
+# CONFIG_USB_ACM is NOT this.  It is the *host*-side cdc_acm driver, it is a
+# different symbol, and it stays: it is what lets the tablet talk to a USB-serial
+# adapter (the pogo keyboard's debug link, for instance).
+# CONFIG_USB_CONFIGFS_ACM is not set
+# CONFIG_USB_CONFIGFS_SERIAL is not set
 CONFIG_USB_CONFIGFS_NCM=y
 CONFIG_USB_F_NCM=y
 CONFIG_USB_USBNET=y

@@ -165,12 +165,33 @@ grep -qx 'CONFIG_PANIC_TIMEOUT=0' "$build_dir/.config" || {
 # (docs/SHUTDOWN_DELAY.md).  CONFIG_NULL_TTY is asserted as well, because without
 # it the console=null that ABL appends resolves to nothing at all and the panel
 # console loses the argument to an unresolved entry.
+#
+# Two forms are accepted for "off": `# X is not set` when the symbol is still
+# visible but disabled, and NO LINE AT ALL when it has become unexpressible
+# because its dependency was removed.  The second is the stronger outcome and is
+# what U_SERIAL_CONSOLE now hits - with USB_U_SERIAL gone, Kconfig no longer
+# offers that option to any configuration, so there is nothing left for the
+# Android seed to re-enable.  Requiring the `is not set` line would fail on the
+# very state this change exists to reach.
+symbol_state() {
+    # symbol_state SYMBOL -> on | off | absent
+    if grep -qx "$1=y" "$build_dir/.config"; then
+        echo on
+    elif grep -qx "# $1 is not set" "$build_dir/.config"; then
+        echo off
+    else
+        echo absent
+    fi
+}
+
 for off in CONFIG_U_SERIAL_CONSOLE CONFIG_SERIAL_QCOM_GENI_CONSOLE; do
-    if ! grep -qx "# $off is not set" "$build_dir/.config"; then
+    state=$(symbol_state "$off")
+    if [ "$state" = on ]; then
         echo "a serial debug console is still enabled: $off" >&2
         echo "  the tablet must reach userspace over ssh, not a serial console" >&2
         exit 1
     fi
+    echo "console check: $off=$state"
 done
 for on in CONFIG_NULL_TTY CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE; do
     if ! grep -qx "$on=y" "$build_dir/.config"; then
@@ -182,6 +203,37 @@ done
 # still exists so this change cannot quietly disable the SE block as well.
 grep -qx 'CONFIG_SERIAL_QCOM_GENI=y' "$build_dir/.config" || {
     echo 'CONFIG_SERIAL_QCOM_GENI must stay built-in (the GENI SE block is shared IP)' >&2
+    exit 1
+}
+
+# The gadget has no serial function at all (2026-09-26), and this is the layer
+# that makes it true rather than merely intended.  With USB_CONFIGFS_ACM and
+# USB_CONFIGFS_SERIAL off, the shared u_serial core has no selector left, so it
+# disappears - and that is what makes any gadget ttyGS port impossible, which in
+# turn makes the console removal structural rather than merely conventional.
+#
+# The seed is what makes this worth asserting: it is a 5.15 Android config that
+# enabled both, so they come back on their own unless they are pinned off, and a
+# serial port reappearing is a capability returning to a device that deliberately
+# has none.
+for off in CONFIG_USB_CONFIGFS_ACM CONFIG_USB_CONFIGFS_SERIAL \
+           CONFIG_USB_U_SERIAL CONFIG_USB_F_ACM CONFIG_USB_F_SERIAL; do
+    state=$(symbol_state "$off")
+    if [ "$state" = on ]; then
+        echo "the gadget must not provide a serial function, but $off is enabled" >&2
+        echo "  the ssh transport is the only channel; see docs/FAST_DEBUG_CHANNEL.md" >&2
+        exit 1
+    fi
+    echo "gadget check: $off=$state"
+done
+# ... while the *host*-side cdc_acm driver stays: it is a different symbol, and it
+# is what lets the tablet talk to a USB-serial adapter.
+if grep -qx '# CONFIG_USB_ACM is not set' "$build_dir/.config"; then
+    echo 'CONFIG_USB_ACM (host-side cdc_acm) must stay enabled' >&2
+    exit 1
+fi
+grep -qx 'CONFIG_USB_CONFIGFS_NCM=y' "$build_dir/.config" || {
+    echo 'CONFIG_USB_CONFIGFS_NCM is the ssh transport and must be built-in' >&2
     exit 1
 }
 
