@@ -148,3 +148,40 @@ rather than a cleanup:
 * **Poweroff timing was not re-measured**, because the tablet could not be reached
   to run it. The previous rounds measured 0.38-0.82 s with zero stop timeouts and
   nothing in this change touches that path.
+
+## BCB lifecycle verified on the device, 2026-09-26
+
+Run against the live Debian system with `reboot`/`poweroff` stubbed, so nothing
+restarted and the only thing touched was the `misc` partition - exactly what the
+initramfs would do:
+
+```
+1. misc resolved to: /dev/sda10
+2. clear a CLEAN bcb (must do nothing):
+   -> []
+3. plant a stale request, then clear it:
+   planted: [boot-recovery]
+   EMIT: cleared a stale recovery BCB in /dev/sda10 (one request, one boot)
+   after clear: []
+4. the rescue request writes it back:
+   EMIT: BCB written to /dev/sda10: command=boot-recovery
+   EMIT: rebooting into recovery (TWRP)
+   after request: [boot-recovery]
+5. the clear removes it again:
+   EMIT: cleared a stale recovery BCB in /dev/sda10 (one request, one boot)
+   final: []
+```
+
+Every step did what it should, and the "one request, one boot" property holds:
+the request is written, consumed, and removed on the next boot regardless of
+whether TWRP clears it itself.
+
+The lookup resolved by the kernel's own GPT label (`PARTNAME=misc` in
+`/sys/class/block/sda10/uevent`), with no device number hardcoded anywhere - which
+is the property that keeps this from writing a bootloader control block into
+somebody else's partition.
+
+Also confirmed: the same kernel that boots Debian exposes `PARTNAME=misc` for
+`/dev/sda10`, so the initramfs lookup works for the same reason it works in TWRP.
+And `devtmpfs` creates `/dev/sda10` in the initramfs as it does here, so the
+function has both halves of what it needs.
