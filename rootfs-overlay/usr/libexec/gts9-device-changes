@@ -1,0 +1,217 @@
+#!/bin/sh
+# gts9-device-changes - record every change this repository makes to the tablet.
+#
+# Why this exists
+# ---------------
+# Some of what this project needs cannot be expressed as a file in the repository:
+# the two boot-chain partitions are flashed images, and the tablet carries
+# configuration written by hand over ssh during bring-up.  Those changes are
+# invisible to `git status` on the host and to `git log` on the tablet, so without
+# a deliberate record the only way to know what a device is running is to
+# interrogate it - and the answer drifts the moment somebody edits a file.
+#
+# This helper produces that record.  It is read-only: it inspects the tablet and
+# prints a report, so it can be run before and after a deployment and the two
+# compared, and it can be run by a later reviewer to see what a device actually
+# has rather than what the repository hopes it has.
+#
+# Usage:
+#	gts9-device-changes            print the report
+#	gts9-device-changes --write    also write it to /var/log/gts9-device-state
+#
+# The report is deliberately in the same `key=value` shape as
+# /var/log/gts9-minimal-last-boot and friends, so it can be diffed with plain
+# tools and parsed by the host scripts.
+
+set -u
+
+RECORD=/var/log/gts9-device-state
+WRITE=0
+case "${1:-}" in
+--write) WRITE=1 ;;
+--help | -h)
+	sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'
+	exit 0
+	;;
+"") ;;
+*)
+	echo "usage: ${0##*/} [--write]" >&2
+	exit 2
+	;;
+esac
+
+# emit KEY VALUE - one line, values never contain a newline.
+emit() {
+	printf '%s=%s\n' "$1" "$2"
+}
+
+# unit_state is-enabled|is-active UNIT - exactly one word, never two lines.
+#
+# `systemctl is-enabled` PRINTS its answer ("masked", "disabled") and ALSO exits
+# non-zero for those states, so the obvious
+#     $(systemctl is-enabled u || echo n/a)
+# captures the answer and then appends a second line - corrupting the record for
+# precisely the units this report exists to check.  Read the output once and
+# discard the exit status deliberately.
+unit_state() {
+	state=$(systemctl "$1" "$2" 2>/dev/null | head -1)
+	printf '%s\n' "${state:-n/a}"
+}
+
+# ---------------------------------------------------------------------------
+# Identity.  The kernel release alone is not enough: a rebuilt kernel keeps the
+# same release string, so the command line, the DTB and the boot partitions are
+# recorded too.
+# ---------------------------------------------------------------------------
+emit format_version 1
+emit recorded_at "$(date -u '+%Y-%m-%dT%H:%M:%SZ' 2>/dev/null || echo unknown)"
+emit boot_id "$(cat /proc/sys/kernel/random/boot_id 2>/dev/null || echo unknown)"
+emit kernel_release "$(uname -r 2>/dev/null || echo unknown)"
+emit kernel_build "$(uname -v 2>/dev/null || echo unknown)"
+emit cmdline "$(cat /proc/cmdline 2>/dev/null || echo unknown)"
+emit uptime_seconds "$(cut -d' ' -f1 /proc/uptime 2>/dev/null || echo unknown)"
+emit root_device "$(findmnt -no SOURCE / 2>/dev/null || echo unknown)"
+
+# ---------------------------------------------------------------------------
+# The console state.  This is the set of facts the 2026-09-26 change turns on,
+# and the four lines a future reader should check first: exactly one console,
+# no serial getty, and the two kernel symbols' runtime consequences.
+# ---------------------------------------------------------------------------
+emit console_active "$(cat /sys/class/tty/console/active 2>/dev/null | tr '\n' ' ' | sed 's/ $//')"
+emit console_cmdline_tokens "$(tr ' ' '\n' < /proc/cmdline 2>/dev/null | grep -c '^console=' || true)"
+emit console_ttygs_in_cmdline "$(tr ' ' '\n' < /proc/cmdline 2>/dev/null | grep -c '^console=ttyGS' || true)"
+emit console_ttymsm_in_cmdline "$(tr ' ' '\n' < /proc/cmdline 2>/dev/null | grep -c '^console=ttyMSM' || true)"
+emit earlycon_in_cmdline "$(tr ' ' '\n' < /proc/cmdline 2>/dev/null | grep -c '^earlycon' || true)"
+for unit in serial-getty@ttyGS0.service serial-getty@ttyGS1.service \
+            serial-getty@ttyMSM0.service gts9-acm-getty.service getty@tty1.service; do
+	key=$(printf '%s' "$unit" | tr -c 'A-Za-z0-9' '_')
+	emit "unit_${key}_enabled" "$(unit_state is-enabled "$unit")"
+	emit "unit_${key}_active" "$(unit_state is-active "$unit")"
+done
+
+# Any process holding a serial gadget port open is the blocking-writer condition
+# the console removal exists to prevent, so it is counted rather than assumed.
+held=0
+for p in /proc/[0-9]*; do
+	for fd in "$p"/fd/*; do
+		target=$(readlink "$fd" 2>/dev/null) || continue
+		case "$target" in
+		*/dev/ttyGS*) held=$((held + 1)) ;;
+		esac
+	done
+done
+emit ttygs_open_fds "$held"
+
+# ---------------------------------------------------------------------------
+# The USB gadget: what the host actually enumerates, and how the ssh transport is
+# configured.
+# ---------------------------------------------------------------------------
+G=/sys/kernel/config/usb_gadget/gts9
+if [ -d "$G" ]; then
+	emit gadget_present yes
+	emit gadget_udc "$(cat "$G/UDC" 2>/dev/null || echo none)"
+	emit gadget_functions "$(ls "$G/functions" 2>/dev/null | tr '\n' ' ' | sed 's/ $//')"
+	emit gadget_config_links "$(ls "$G/configs/c.1" 2>/dev/null | grep -v '^strings$\|^MaxPower$\|^bmAttributes$' | tr '\n' ' ' | sed 's/ $//')"
+	emit gadget_idvendor "$(cat "$G/idVendor" 2>/dev/null || echo unknown)"
+	emit gadget_idproduct "$(cat "$G/idProduct" 2>/dev/null || echo unknown)"
+else
+	emit gadget_present no
+fi
+if [ -r /etc/gts9-usb-net ]; then
+	emit usb_net_conf "$(grep -v '^#' /etc/gts9-usb-net 2>/dev/null | grep -v '^$' | head -1)"
+else
+	emit usb_net_conf missing
+fi
+emit usb0_addr "$(ip -4 -o addr show usb0 2>/dev/null | awk '{print $4}' | head -1)"
+
+# ---------------------------------------------------------------------------
+# Every /etc/systemd/system entry that shadows /usr/lib.  This is where hand-made
+# changes live, and it is where the stale files that caused the 90 s poweroff and
+# the 203/EXEC failures were found.  Recorded with a content hash so a later
+# reader can tell "same file" from "same name".
+# ---------------------------------------------------------------------------
+etc_system=/etc/systemd/system
+if [ -d "$etc_system" ]; then
+	for entry in "$etc_system"/*; do
+		[ -e "$entry" ] || [ -L "$entry" ] || continue
+		name=${entry##*/}
+		if [ -L "$entry" ]; then
+			emit "etc_${name}" "symlink->$(readlink "$entry" 2>/dev/null)"
+		elif [ -f "$entry" ]; then
+			emit "etc_${name}" "file:$(sha256sum "$entry" 2>/dev/null | cut -c1-16)"
+		elif [ -d "$entry" ]; then
+			emit "etc_${name}" "dir:$(ls "$entry" 2>/dev/null | tr '\n' ',' | sed 's/,$//')"
+		fi
+	done
+fi
+
+# A drop-in that injects a login onto a serial port is the exact leftover this
+# project has already been bitten by twice, so it is called out by name.
+logins=$(grep -rl 'agetty' /etc/systemd/ 2>/dev/null | tr '\n' ' ' | sed 's/ $//')
+emit autologin_files "${logins:-none}"
+
+# ---------------------------------------------------------------------------
+# The repository-provided userspace, by content hash.  A deployed helper that
+# differs from the repository copy is the difference between "the change is in
+# git" and "the change is on the tablet".
+# ---------------------------------------------------------------------------
+for helper in /usr/libexec/gts9-enable-units /usr/libexec/gts9-usb-acm \
+              /usr/libexec/gts9-record-debian-stage /usr/libexec/gts9-kmsg-console \
+              /usr/libexec/gts9-prev-boot-evidence /usr/libexec/gts9-watchdog-debug \
+              /usr/libexec/gts9-panel-recover; do
+	[ -f "$helper" ] || continue
+	name=${helper##*/}
+	mode=$(stat -c %a "$helper" 2>/dev/null || echo unknown)
+	emit "helper_${name}" "mode=${mode} sha256=$(sha256sum "$helper" 2>/dev/null | cut -c1-16)"
+done
+
+# The overlay's own version marker, written by install-debian-rootfs.sh.
+if [ -r /etc/gts9-overlay-version ]; then
+	emit overlay_version "$(cat /etc/gts9-overlay-version 2>/dev/null)"
+fi
+
+# ---------------------------------------------------------------------------
+# Boot-chain partitions, identified the same way the flashing path identifies
+# them: by GPT label on the UFS disk.  Their hashes are what make "which kernel
+# is actually running" answerable without trusting uname.
+# ---------------------------------------------------------------------------
+for part in boot init_boot vendor_boot dtbo; do
+	dev=/dev/disk/by-partlabel/$part
+	if [ -b "$dev" ]; then
+		emit "part_${part}_sha256" "$(sha256sum "$dev" 2>/dev/null | cut -d' ' -f1)"
+	else
+		emit "part_${part}_sha256" absent
+	fi
+done
+
+# ---------------------------------------------------------------------------
+# Health, as a single summary a reviewer can read at a glance.
+# ---------------------------------------------------------------------------
+# count_lines - how many lines a command produced, as one number.
+#
+# `grep -c` prints 0 AND exits 1 when nothing matched, so
+#     $(... | grep -c x || echo 0)
+# yields the two-line string "0\n0" and emits a bare 0 that is not key=value -
+# which is how this report was corrupted the first time it was written.  The `|| true`
+# below discards grep's status and keeps its single printed answer.
+#
+# `--plain --no-legend` is what makes the failed-unit count exact: the default
+# output's summary line reads "0 loaded units listed.", which contains the string
+# " loaded " and made an earlier version of this line report 1 failure on a
+# perfectly healthy boot.
+emit failed_units "$(systemctl --failed --plain --no-legend --no-pager 2>/dev/null | grep -c . || true)"
+emit mmc_root "$(lsblk -no NAME,LABEL 2>/dev/null | grep -c debian-root || true)"
+emit wifi_ifaces "$(ls /sys/class/net 2>/dev/null | grep -c '^wlp' || true)"
+emit pci_wifi "$(lspci -nn 2>/dev/null | grep -c '17cb:1103' || true)"
+
+if [ "$WRITE" = 1 ]; then
+	# Same atomic-replace discipline as the boot-stage recorders: never leave a
+	# half-written record where a reader can find it.
+	tmp="${RECORD}.tmp.$$"
+	"$0" >"$tmp" 2>/dev/null || true
+	chmod 0644 "$tmp" 2>/dev/null || true
+	mv -f "$tmp" "$RECORD" 2>/dev/null || true
+	echo "gts9-device-changes: wrote $RECORD" >&2
+fi
+
+exit 0

@@ -405,5 +405,110 @@ class MinimalInitramfsHasNoModules(unittest.TestCase):
         self.assertIn('exec_args=()', text)
 
 
+class DeviceStateRecorder(unittest.TestCase):
+    """The on-device change record must be machine-readable, or it is not a record.
+
+    Some of what this project needs cannot live in the repository - flashed
+    partitions and hand-written device configuration - so gts9-device-changes
+    prints what a tablet actually has.  Two bugs were found by running it while it
+    was being written, and both produced a technically-successful script whose
+    output was corrupt; these checks exist because neither is obvious by reading.
+    """
+
+    HELPER = OVERLAY / 'usr/libexec/gts9-device-changes'
+
+    def run_helper(self):
+        # It is pure inspection: on a host it simply reports host facts, which is
+        # enough to check the output contract.
+        return subprocess.run(['sh', str(self.HELPER)], text=True,
+                              capture_output=True, check=False)
+
+    def test_it_is_executable_and_posix(self):
+        self.assertTrue(os.access(self.HELPER, os.X_OK))
+        code = '\n'.join(line for line in self.HELPER.read_text().splitlines()
+                         if not line.lstrip().startswith('#'))
+        for bashism in ('[[', 'declare ', 'local ', 'function '):
+            self.assertNotIn(bashism, code, bashism)
+
+    def test_every_line_is_key_value(self):
+        """A bare value is unparseable and breaks every diff of two records."""
+        result = self.run_helper()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue(result.stdout.strip(), 'the report must not be empty')
+        for number, line in enumerate(result.stdout.splitlines(), 1):
+            if not line.strip():
+                continue
+            with self.subTest(line=number):
+                self.assertRegex(line, r'^[^ =]+=',
+                                 f'line {number} is not key=value: {line!r}')
+        # An empty value is legitimate (`usb0_addr=` when the link is down), but a
+        # bare word with no '=' at all is the corruption the two bugs produced.
+        for line in result.stdout.splitlines():
+            if line.strip():
+                with self.subTest(bare=line):
+                    self.assertIn('=', line)
+
+    def test_masked_units_report_one_word(self):
+        """`systemctl is-enabled` prints "masked" AND exits non-zero.
+
+        The obvious `$(systemctl is-enabled u || echo n/a)` therefore captures the
+        answer and appends a second line, corrupting the record for exactly the
+        units this report exists to check.  Assert the helper does not do that.
+        """
+        code = self.HELPER.read_text()
+        self.assertNotIn('is-enabled "$unit") 2>/dev/null || echo', code)
+        # The fix is a reader that discards the exit status on purpose.
+        self.assertIn('unit_state()', code)
+        self.assertIn('systemctl "$1" "$2"', code)
+        # ... and the same trap for `grep -c`, which prints 0 and exits 1.
+        self.assertNotIn('grep -c debian-root || echo 0', code)
+        for line in code.splitlines():
+            if 'grep -c' in line and 'emit ' in line:
+                with self.subTest(line=line.strip()):
+                    self.assertIn('|| true', line,
+                                  'grep -c exits 1 on no match; use `|| true`')
+
+    def test_it_records_what_the_console_change_turns_on(self):
+        """The four facts a reviewer checks first after this change."""
+        out = self.run_helper().stdout
+        for key in ('console_active=', 'console_ttygs_in_cmdline=',
+                    'console_ttymsm_in_cmdline=', 'ttygs_open_fds=',
+                    'unit_serial_getty_ttyGS0_service_enabled=',
+                    'unit_gts9_acm_getty_service_enabled='):
+            with self.subTest(key=key):
+                self.assertIn(key, out)
+
+    def test_it_records_the_overrides_that_shadow_usr_lib(self):
+        """/etc/systemd/system is where the hand-made changes live.
+
+        The stale file that caused the 90 s poweroff and the stale drop-in that
+        injected a serial autologin were both found here, so the record must cover
+        this directory rather than assume /usr/lib is what runs.
+        """
+        code = self.HELPER.read_text()
+        self.assertIn('etc_system=/etc/systemd/system', code)
+        self.assertIn('autologin_files', code)
+        self.assertIn('sha256sum', code)
+
+    def test_it_records_the_boot_chain_partitions(self):
+        """`uname -r` cannot distinguish two builds of the same release."""
+        code = self.HELPER.read_text()
+        # The key is built by interpolation inside a loop, so look for the loop and
+        # its format string rather than for a literal key that never appears.
+        self.assertIn('for part in boot init_boot vendor_boot dtbo; do', code)
+        self.assertIn('emit "part_${part}_sha256"', code)
+        self.assertIn('/dev/disk/by-partlabel/', code)
+
+    def test_write_mode_is_atomic_and_opt_in(self):
+        code = self.HELPER.read_text()
+        # Read-only unless asked: this runs on a live device.
+        self.assertIn('--write) WRITE=1', code)
+        self.assertIn('if [ "$WRITE" = 1 ]; then', code)
+        # Atomic replace, like the other recorders, so a reader never sees a
+        # half-written record.
+        self.assertIn('mv -f "$tmp" "$RECORD"', code)
+        self.assertIn('RECORD=/var/log/gts9-device-state', code)
+
+
 if __name__ == '__main__':
     unittest.main()
