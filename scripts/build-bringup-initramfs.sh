@@ -117,21 +117,18 @@ fi
 chmod 0755 "$minimal_pid1"
 echo "built minimal rootfs PID 1 helper: $minimal_pid1 ($(stat -c %s "$minimal_pid1") bytes)"
 
-# A freestanding aarch64 helper that clears the SIGINT/SIGQUIT dispositions a shell
-# cannot clear itself (see boot/gts9-exec-default.c).  Without it the background
-# panel shell inherits SIG_IGN and Ctrl-C does nothing.
-if command -v clang >/dev/null 2>&1 && command -v ld.lld >/dev/null 2>&1; then
-    if clang --target=aarch64-linux-gnu -nostdlib -static -ffreestanding \
-             -fno-stack-protector -fno-builtin -fuse-ld=lld -Wl,--build-id=none -Wl,-n \
-             -o "$tree/sbin/gts9-exec-default" "$repo_root/boot/gts9-exec-default.c" 2>/dev/null; then
-        chmod 0755 "$tree/sbin/gts9-exec-default"
-        echo "initramfs: installed gts9-exec-default ($(stat -c %s "$tree/sbin/gts9-exec-default") bytes)"
-    else
-        echo "initramfs: WARNING could not build gts9-exec-default; the panel shell falls back" >&2
-    fi
-else
-    echo "initramfs: WARNING clang/ld.lld missing; the panel shell falls back" >&2
-fi
+# gts9-exec-default is NOT built or shipped any more.
+#
+# It is a freestanding aarch64 helper that clears the SIGINT/SIGQUIT dispositions a
+# shell cannot clear itself, written for the background panel shell. The panel shell
+# now uses `set -m` for that (see start_panel_shell in boot/bringup-init.sh), and the
+# 2026-09-26 audit found nothing had invoked the binary since: it was 2040 bytes
+# shipped in every image with no caller in either script.
+#
+# The SOURCE is kept (boot/gts9-exec-default.c) because it records what the problem
+# was and how it was solved before job control replaced it. Building it would be
+# building something nothing runs, and the production builder never did - so this
+# keeps the two images honest about what they contain.
 
 missing_optional=$(gts9_link_applets "$tree" \
     "$required_applets $report_applets $optional_applets" "$sbin_applets")

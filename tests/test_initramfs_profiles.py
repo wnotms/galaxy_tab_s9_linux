@@ -918,6 +918,91 @@ class TheValidatorEnforcesTheBoundary(unittest.TestCase):
         self.assertIn('initramfs.manifest', text)
 
 
+class TheProductionImageIsReproducibleAndBounded(unittest.TestCase):
+    """Two properties a flashed artifact needs: same bytes, known ceiling.
+
+    Both are checked from the SOURCE rather than by building, because these tests
+    run on every host in seconds and a build takes minutes. The end-to-end
+    verification - two builds, same SHA-256 - is recorded in
+    reference/boot-tests/test-213-production-initramfs/README.md.
+    """
+
+    def test_the_packer_normalises_timestamps(self):
+        """cpio --reproducible normalises inodes but NOT mtimes.
+
+        Without the explicit touch, the archive changes hash on every run and a
+        flashed image can never be matched back to a build.
+        """
+        text = read('scripts/make-initramfs.sh')
+        self.assertIn('cpio --reproducible', text)
+        self.assertIn("touch -h -d '@0'", text,
+                      'mtimes must be normalised or the image is not reproducible')
+        # And the file list must be sorted, so directory order cannot vary.
+        self.assertIn('LC_ALL=C sort', text)
+
+    def test_the_legacy_lz4_format_is_used(self):
+        """Samsung ABL and the kernel expect the legacy stream, not modern LZ4."""
+        text = read('scripts/make-initramfs.sh')
+        self.assertIn('magic', text)
+        self.assertIn('02214c18', text)
+
+    def test_the_size_gate_is_below_the_init_boot_budget(self):
+        """7 MiB, and init_boot is 8 MiB minus the AVB header.
+
+        Enforced at build time, so an image that would not fit fails the build
+        rather than the flash.
+        """
+        text = read('scripts/make-initramfs.sh')
+        self.assertIn('max_size=7340032', text)
+        # 7 MiB is 7340032; the partition is 8388608.
+        part = 8388608
+        self.assertLess(7340032, part)
+        # And the builder must actually fail, not warn.
+        gate = text[text.index('max_size'):]
+        self.assertIn('exit 1', gate)
+
+    def test_the_builders_pass_no_larger_budget(self):
+        for script in (PROD_BUILDER, DEBUG_BUILDER):
+            with self.subTest(script=script.name):
+                text = read(str(script))
+                # --max-size may not be raised by a caller either.
+                m = re.findall(r'--max-size\s+(\d+)', text)
+                for value in m:
+                    self.assertLessEqual(int(value), 7340032)
+
+
+class TheDeadPanelShellHelperIsExcluded(unittest.TestCase):
+    """gts9-exec-default is dead code and must not reach either image.
+
+    It was written to reset the signal dispositions a shell cannot reset itself,
+    for the panel shell. The panel shell now uses `set -m` instead, and nothing has
+    invoked the binary since - the audit found it shipped in every image with no
+    caller at all. The source is kept because deleting it would lose that history;
+    shipping it would be shipping something nothing runs.
+    """
+
+    def test_the_source_is_kept(self):
+        self.assertTrue((ROOT / 'boot/gts9-exec-default.c').is_file())
+
+    def test_neither_builder_installs_it(self):
+        for script in (PROD_BUILDER, DEBUG_BUILDER):
+            with self.subTest(script=script.name):
+                text = read(str(script))
+                self.assertNotIn('install -m 0755 "$tree/sbin/gts9-exec-default"', text)
+                # Nor builds it into the tree.
+                self.assertNotRegex(text, r'-o\s+"\$tree/sbin/gts9-exec-default"')
+
+    def test_the_panel_shell_no_longer_needs_it(self):
+        """It must use job control rather than a helper binary."""
+        text = read(str(BRINGUP))
+        body = text[text.index('start_panel_shell()'):]
+        body = body[:body.index('\n}\n')]
+        self.assertIn('set -m', body)
+
+    def test_the_validator_refuses_it_in_a_production_image(self):
+        self.assertIn('gts9-exec-default', read(str(VALIDATOR)))
+
+
 class TheExistingInvariantsAreUntouched(unittest.TestCase):
     """This work must not disturb what earlier rounds established."""
 
