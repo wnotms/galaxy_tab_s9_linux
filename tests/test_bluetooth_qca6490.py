@@ -400,6 +400,37 @@ class TheTwoHardwareOrderingTrapsStayFixed(unittest.TestCase):
         self.assertIn("Wants=gts9-bluetooth-address.service", text)
         self.assertIn("After=gts9-bluetooth-address.service", text)
 
+    def test_the_modes_match_the_rest_of_the_overlay(self):
+        """The installer only chmods the compiled C helpers, so a shell helper's
+        mode in the repository is the mode it gets on the tablet. An odd mode
+        here would ship as an odd mode there."""
+        helper = ROOT / HELPER
+        self.assertTrue(helper.stat().st_mode & 0o111, "helper must be executable")
+        self.assertEqual(
+            oct(helper.stat().st_mode & 0o777), oct(0o755),
+            "every other shell helper in usr/libexec is 0755")
+        unit = ROOT / HELPER_UNIT
+        self.assertTrue(
+            unit.stat().st_mode & 0o444, "the unit must be readable by systemd")
+
+    def test_the_installer_would_enable_it(self):
+        """The unit must be enabled by the project's own helper, not by hand.
+
+        On the tablet the files were copied manually while iterating, so this
+        checks the deployment path that a fresh rootfs install would take:
+        gts9-enable-units links every gts9-*.service per its WantedBy.
+        """
+        helper = read("rootfs-overlay/usr/libexec/gts9-enable-units")
+        self.assertIn('for unit in "$unit_dir"/gts9-*.service', helper)
+        self.assertIn("multi-user.target", read(HELPER_UNIT))
+
+    def test_the_dropin_lives_where_the_overlay_copies_it(self):
+        """install-debian-rootfs.sh does `cp -a overlay/. dest/`, so the file's
+        path in the repository is its path on the tablet. Both the unit and the
+        drop-in must therefore keep their systemd-standard locations."""
+        self.assertTrue((ROOT / HELPER_UNIT).is_file())
+        self.assertIn("/etc/systemd/system/bluetooth.service.d/", DROPIN)
+
     def test_the_unit_is_oneshot_and_enableable(self):
         text = read(HELPER_UNIT)
         self.assertIn("Type=oneshot", text)
