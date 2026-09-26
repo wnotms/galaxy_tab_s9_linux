@@ -751,3 +751,69 @@ class LiveWedgeTests(unittest.TestCase):
         self.assertIn("window=200s", run)
         self.assertIn("window is now 200 s",
                       read(f"{self.TESTDIR}/LIVE-WEDGE-20260925T0337.md"))
+
+
+class SerialKeyBootstrapIsGone(unittest.TestCase):
+    """A fresh rootfs has no way to receive an ssh key, and that must be loud.
+
+    `install-key` wrote the public key over the COM17 serial console. That shell is
+    gone - the autologin getty was deleted and the ttyGS kernel console removed,
+    both because they caused the boot and shutdown stalls. The port itself still
+    works (verified: writes return in 0-3 ms and reach a reader), so the command
+    would have kept "succeeding" while doing nothing, and the operator's next
+    question would be why ssh still asks for a password.
+
+    A silent no-op is the failure this guards against, so the assertion is that the
+    script refuses rather than that the feature works.
+    """
+
+    HELPER = "scripts/gts9-debug-channel.sh"
+
+    def test_install_key_refuses_instead_of_failing_silently(self):
+        text = read(self.HELPER)
+        self.assertIn("install-key cannot work any more", text)
+        self.assertIn("GTS9_ALLOW_SERIAL_KEY_INSTALL", text)
+        # It must exit non-zero: a caller in a pipeline has to be able to notice.
+        self.assertIn("exit 3", text)
+        # ... and it must still explain the replacement, not just refuse.
+        self.assertIn("--ssh-key", text)
+        self.assertIn("FAST_DEBUG_CHANNEL.md", text)
+
+    def test_the_escape_hatch_keeps_the_original_command(self):
+        """The port works, so a boot that really has a serial shell can still use it."""
+        text = read(self.HELPER)
+        self.assertIn("GTS9_ALLOW_SERIAL_KEY_INSTALL:-0", text)
+        self.assertIn("authorized_keys", text)
+        self.assertIn("console-run.sh", text)
+
+    def test_it_actually_refuses_when_run(self):
+        """Run it, with a key present, and require failure rather than a no-op."""
+        import os as _os
+        import subprocess as _sp
+        import tempfile as _tf
+        with _tf.TemporaryDirectory() as tmp:
+            key = pathlib.Path(tmp) / "k"
+            key.write_text("PRIVATE")
+            (pathlib.Path(tmp) / "k.pub").write_text("ssh-ed25519 AAAA test@host\n")
+            env = dict(_os.environ, GTS9_SSH_KEY=str(key))
+            env.pop("GTS9_ALLOW_SERIAL_KEY_INSTALL", None)
+            result = _sp.run(["bash", str(ROOT / self.HELPER), "install-key"],
+                             text=True, capture_output=True, check=False, env=env)
+            self.assertNotEqual(result.returncode, 0,
+                                "install-key must not report success")
+            self.assertIn("cannot work any more", result.stderr)
+
+    def test_the_doc_records_the_gap_and_the_two_routes(self):
+        text = read("docs/FAST_DEBUG_CHANNEL.md")
+        self.assertIn("install-key` no longer works", text)
+        # Both candidate replacements, so the gap is actionable.
+        self.assertIn("--ssh-key", text)
+        self.assertIn("ssh-copy-id", text)
+        # The evidence that the port is unused rather than broken.
+        self.assertIn("HELLO-GTS9-WITH-NEWLINE", read("docs/USB_SERIAL_CONSOLE.md"))
+
+    def test_the_serial_doc_records_the_measurement_traps(self):
+        """Both traps produced a wrong '0 bytes' answer while writing this."""
+        text = read("docs/USB_SERIAL_CONSOLE.md")
+        self.assertIn("canonical mode", text)   # a write needs a newline
+        self.assertIn("readers compete", text)  # two cats split the stream

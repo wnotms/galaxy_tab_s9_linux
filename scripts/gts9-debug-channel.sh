@@ -32,7 +32,39 @@ install_key() {
 	}
 	local pub
 	pub=$(cat "$KEY.pub")
-	echo "debug-channel: installing $KEY.pub over $SHELL_PORT"
+
+	# This used to send the key to a shell on the COM17 serial console.  That
+	# shell is gone - the autologin getty was deleted and the ttyGS kernel console
+	# removed, both because they caused the boot and shutdown stalls
+	# (docs/BOOT_CONSOLE_BLOCK.md, docs/SHUTDOWN_DELAY.md).  COM17 is still a
+	# working serial port, but nothing reads it and nothing answers on it, so the
+	# old command would fail silently: console-run.sh would simply find no shell.
+	#
+	# Refuse loudly rather than pretend.  A silent failure here is worse than an
+	# error, because the operator's next step is to wonder why ssh still asks for
+	# a password - and the real answer is that the key never left this host.
+	if [ "${GTS9_ALLOW_SERIAL_KEY_INSTALL:-0}" != 1 ]; then
+		echo "debug-channel: install-key cannot work any more" >&2
+		echo "  The key was written over the COM17 serial console, and no shell runs" >&2
+		echo "  on that port now: the autologin getty was deleted and the ttyGS kernel" >&2
+		echo "  console removed, because both caused the boot and shutdown stalls." >&2
+		echo >&2
+		echo "  The port itself still works - it is simply unused - so this path can be" >&2
+		echo "  revived deliberately, with a shell on it:" >&2
+		echo "    initramfs: add gts9_usb_console=shell to the vendor_boot command line" >&2
+		echo "    Debian:    put a getty back on ttyGS0 (not recommended - see" >&2
+		echo "               docs/SHUTDOWN_DELAY.md for why it was removed)" >&2
+		echo >&2
+		echo "  What a fresh rootfs should use instead: install the public key into the" >&2
+		echo "  rootfs at install time (install-debian-rootfs.sh --ssh-key), which needs" >&2
+		echo "  no channel on the device at all.  See docs/FAST_DEBUG_CHANNEL.md." >&2
+		echo >&2
+		echo "  To override anyway for a boot that really does have a serial shell:" >&2
+		echo "    GTS9_ALLOW_SERIAL_KEY_INSTALL=1 $0 install-key" >&2
+		exit 3
+	fi
+
+	echo "debug-channel: installing $KEY.pub over $SHELL_PORT (serial, overridden)"
 	# shellcheck disable=SC2016
 	"$repo_root/scripts/console-run.sh" -Port "$SHELL_PORT" -ReadSeconds 20 \
 		-Commands "mkdir -p /root/.ssh && chmod 700 /root/.ssh && touch /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys && grep -qF '$pub' /root/.ssh/authorized_keys || echo '$pub' >> /root/.ssh/authorized_keys; echo INSTALLED=\$(wc -l < /root/.ssh/authorized_keys)" \
