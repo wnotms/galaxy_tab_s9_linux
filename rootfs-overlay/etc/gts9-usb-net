@@ -1,0 +1,23 @@
+# The transport the tablet is reached over.
+#
+# Both serial debug consoles were removed on 2026-09-26 (docs/BOOT_CONSOLE_BLOCK.md,
+# docs/SHUTDOWN_DELAY.md), so the USB link is no longer a console - it is a
+# *network*, and ssh is the only interactive channel.
+#
+# Format: "<function> <device-address>"
+#   function      ncm or ecm; ncm is the faster of the two and Windows binds its
+#                 own in-box driver for it, so no INF and no admin rights
+#   device-address the address the TABLET takes on the link
+#
+# The address is in 169.254.0.0/16 on purpose.  Windows gives its own adapter an
+# APIPA address in that range by itself, so the host needs no static IPv4
+# configuration and no elevation, and WSL2 reaches the tablet through the Windows
+# host.  scripts/gts9-ssh.sh defaults to 169.254.42.1 for the same reason.
+#
+# This file ships in the overlay rather than being created by hand, because it is
+# what makes a freshly installed rootfs reachable at all.  Without it the gadget
+# comes up with no network function and the tablet has no way in - it used to be
+# acceptable to rely on the serial console as the fallback, and that fallback is
+# gone.  gts9-usb-acm drops the network function and still binds the gadget if
+# anything here fails, so a bad line cannot cost the USB link entirely.
+ncm 169.254.42.1/16

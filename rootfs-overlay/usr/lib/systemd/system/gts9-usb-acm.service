@@ -1,5 +1,6 @@
 [Unit]
-Description=X710 USB ACM debug console (configfs)
+Description=X710 USB debug link (configfs gadget: ECM network + ACM ports)
+Documentation=file:/usr/share/doc/gts9/FAST_DEBUG_CHANNEL.md
 After=local-fs.target
 Before=serial-getty@ttyGS0.service
 

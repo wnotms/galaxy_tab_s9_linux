@@ -1,23 +1,39 @@
 [Unit]
-Description=X710 kernel-message mirror onto the USB console
+Description=X710 kernel-message mirror onto the USB link (opt-in)
 Documentation=file:/usr/share/doc/gts9/WATCHDOG_X710.md
 After=gts9-usb-acm.service local-fs.target
 Before=multi-user.target
 # Its own instrumentation switch, separate from gts9_watchdog_debug and from
 # gts9_dpu_flight: see the header of /usr/libexec/gts9-kmsg-console.
+#
+# Off by default, and now genuinely optional rather than a fallback for a kernel
+# console: since 2026-09-26 the kernel log is NOT on the USB link at all
+# (console=ttyGS1 is gone and CONFIG_U_SERIAL_CONSOLE is unset), so this mirror is
+# the only way to see it live over the cable.  It stays behind its flag because
+# it is a second console-like writer on the same link the ssh session uses, and
+# because dmesg over ssh already serves the normal case.
 ConditionKernelCommandLine=gts9_kmsg_mirror=1
 
 [Service]
 Type=simple
-# The mirror is a diagnostic tap: if it dies, the serial login must still work,
-# so it restarts instead of failing the boot.  on-failure, not always: the
-# helper exits 0 by itself when the kernel already has a ttyGS console, and
-# that clean exit must not become a restart loop.
+# It is a diagnostic tap, not a boot dependency: if it dies, ssh must still work,
+# so it restarts instead of failing the boot.  on-failure, not always: the helper
+# exits 0 by itself when a ttyGS port is already a kernel console, and that clean
+# exit must not become a restart loop.
 Restart=on-failure
 RestartSec=3
-# The kernel console (console=ttyGS1) goes to the second ACM port: the mirror
-# must never write to the login shell's port.
-ExecStart=/usr/libexec/gts9-kmsg-console /dev/ttyGS1
+# acm.usb0.  This used to be /dev/ttyGS1 "the second ACM port, so the mirror never
+# writes to the login shell's port" - but there is no login shell on the gadget any
+# more, and after CONFIG_U_SERIAL_CONSOLE was unset no ttyGS port is a kernel
+# console either, so the port choice is no longer about protecting a shell from
+# printk.  acm.usb0 is used because it is the port the host's first COM handle
+# maps to.
+#
+# The write path is bounded by design: the helper reopens the tty on every write
+# error and never lets a stuck port stall anything else, and nothing schedules it
+# on the boot's critical path.  Do NOT redirect this unit to /dev/console - that
+# is the blocking writer docs/BOOT_CONSOLE_BLOCK.md describes.
+ExecStart=/usr/libexec/gts9-kmsg-console /dev/ttyGS0
 SuccessExitStatus=0 1
 
 [Install]

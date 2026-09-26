@@ -60,24 +60,54 @@ for unit in "$unit_dir"/gts9-*.service; do
 	done
 done
 
-# The USB debug console used to be the generic serial-getty@ttyGS0 instance.
-# It is now gts9-acm-getty.service, which is a gts9 unit and is enabled by the
-# loop above: the generic instance depends on dev-ttyGS0.device and times out
-# when the gadget is created a moment later.  Remove the old link if a previous
-# install made one, so the port is not opened twice.
+# --- serial debug getties: all removed 2026-09-26 ---------------------------
+#
+# The tablet is reached over ssh now (docs/FAST_DEBUG_CHANNEL.md) and every
+# serial console is gone from the kernel command line, so no serial getty should
+# ever run.  Three separate things have to be cleaned up, because an upgraded
+# rootfs keeps whatever the previous install left behind.
+#
+# 1. The old generic serial-getty@ttyGS0 instance.  It is created by systemd from
+#    the console= argument, it depends on dev-ttyGS0.device, and that device unit
+#    times out when the gadget is created a moment later.  No console= argument
+#    names ttyGS any more, so the generator no longer creates it - but a previous
+#    install enabled it, so drop the link and mask the name for the same reason as
+#    the two below.
 rm -f "$etc_dir/getty.target.wants/serial-getty@ttyGS0.service" 2>/dev/null || true
-
-# ttyMSM0: the SoC UART is a *kernel* console (console=ttyMSM0,115200n8 and
-# earlycon stay on the command line) with nothing attached to it, and the device
-# node only appears when the GENI driver finishes probing.  systemd's
-# getty-generator creates serial-getty@ttyMSM0.service from the console=
-# argument, and a previous install enabled it too; both made boot wait for
-# dev-ttyMSM0.device, which timed out on 2026-09-24.  Mask that one instance
-# only - tty1 and the ACM console are untouched - and drop the enable link.
-rm -f "$etc_dir/getty.target.wants/serial-getty@ttyMSM0.service" 2>/dev/null || true
-if [ -d "$etc_dir" ] && [ ! -e "$etc_dir/serial-getty@ttyMSM0.service" ]; then
-	ln -s /dev/null "$etc_dir/serial-getty@ttyMSM0.service" 2>/dev/null || true
+if [ -d "$etc_dir" ]; then
+	ln -sfn /dev/null "$etc_dir/serial-getty@ttyGS0.service" 2>/dev/null || true
 fi
+
+# 2. gts9-acm-getty.service, the autologin root shell this repository used to
+#    ship for ttyGS0.  This is the 90 s poweroff: `agetty --autologin` spawns a
+#    login shell that agetty does not reap on SIGTERM, so the unit's cgroup stays
+#    populated and systemd waits out TimeoutStopSec before escalating.  The unit
+#    file is gone from the overlay, so the ENABLE LINK must go too - a dangling
+#    link in multi-user.target.wants is a boot-time failure, not a no-op.
+rm -f "$etc_dir/multi-user.target.wants/gts9-acm-getty.service" 2>/dev/null || true
+#    An operator may also have a copy in /etc/systemd/system/, and /etc wins over
+#    /usr/lib - this repository's own notes record the two copies having diverged
+#    once, so a stale one is an observed condition rather than a hypothetical.
+#    Mask the name outright with `ln -sfn`: it replaces whatever is there
+#    (including a regular file) with /dev/null, which is what `systemctl mask`
+#    does and is the only thing that reliably stops the unit starting.  A
+#    guard like `[ ! -e ... ]` would leave the stale copy in charge.
+if [ -d "$etc_dir" ]; then
+	ln -sfn /dev/null "$etc_dir/gts9-acm-getty.service" 2>/dev/null || true
+fi
+
+# 3. ttyMSM0.  The SoC UART is no longer a console either; with no console=
+#    argument naming it, systemd's getty-generator no longer creates the unit,
+#    but a previous install enabled it and it made boot wait for
+#    dev-ttyMSM0.device, which timed out on 2026-09-24.  Drop the link and mask
+#    the name for the same reason as above.
+rm -f "$etc_dir/getty.target.wants/serial-getty@ttyMSM0.service" 2>/dev/null || true
+if [ -d "$etc_dir" ]; then
+	ln -sfn /dev/null "$etc_dir/serial-getty@ttyMSM0.service" 2>/dev/null || true
+fi
+
+# tty1 is deliberately untouched: it is the panel VT, the only console left, and
+# the local getty on it is how the tablet is used without a cable.
 
 echo "gts9-enable-units: $created link(s) in $etc_dir"
 exit 0

@@ -1,26 +1,31 @@
 #!/bin/sh
-# X710 USB ACM debug console, created from Debian userspace.
+# X710 USB debug link: the ECM/NCM network that ssh is reached over.
 #
-# This is the configfs sequence that boot/bringup-init.sh proved on the tablet
-# (idVendor 0x0525 / idProduct 0xa4a7, ACM only), moved out of the initramfs:
-# USB is not allowed to be a root-filesystem dependency, so the initramfs hands
-# PID 1 to Debian first and Debian brings the console up afterwards.
+# History, because it explains the shape of this file.  Until 2026-09-26 this
+# gadget was the *console*: acm.usb0 carried an autologin root shell and acm.usb1
+# carried the kernel printk console, split across two interfaces because a gadget
+# serial console takes its port's IN endpoint for printk (gs_console_connect() ->
+# cons->req), so a port that is both the kernel console and a getty can only ever
+# send kernel messages.
 #
-# Two functions, deliberately, and nothing else: acm.usb0 carries the login
-# shell, acm.usb1 carries the kernel console.  They must be separate because a
-# gadget serial console takes the port's IN endpoint for printk
-# (gs_console_connect() -> cons->req), so a port that is both the kernel
-# console and the getty can only ever send kernel messages - measured on
-# 2026-09-24, when adding console=ttyGS0 to the command line silently killed the
-# remote shell.  No mass storage, RNDIS, MTP or adb FUNCTION, and no block device
-# is touched: the gadget must never be able to disturb the root filesystem it runs
-# from, and the ADB function is not used because it would need a second gadget.
+# Both serial consoles were then removed - they are the measured cause of the
+# boot stall (docs/BOOT_CONSOLE_BLOCK.md: a userspace write() to /dev/console
+# blocks in n_tty_write() while nothing drains the gadget port) and of the ~90 s
+# poweroff (docs/SHUTDOWN_DELAY.md: agetty --autologin spawns a login shell it
+# does not reap, so systemd waits out TimeoutStopSec).  With
+# CONFIG_U_SERIAL_CONSOLE unset the kernel no longer offers the configfs
+# `console` attribute at all, so the split_consoles() dance below is now a no-op
+# that is kept only so this script still runs unchanged against an older kernel.
 #
-# It may add exactly one optional thing - an NCM or ECM network function, and only
-# when /etc/gts9-usb-net asks for it (see the network section below and
-# docs/FAST_DEBUG_CHANNEL.md).  That is what turns the same cable into the ssh and
-# adb transport, and it is opt-in precisely so the console-only gadget stays the
-# default.
+# What is left is the transport: acm.usb0/acm.usb1 still exist so the host sees
+# the same two COM ports (an interface renumbering would move the COM numbers),
+# but nothing logs in on them.  The interactive channel is ssh over the NCM/ECM
+# network function, which /etc/gts9-usb-net asks for; that file ships in the
+# overlay because it is what makes a fresh rootfs reachable at all.
+#
+# No mass storage, RNDIS, MTP or adb FUNCTION, and no block device is touched:
+# the gadget must never be able to disturb the root filesystem it runs from, and
+# the ADB function is not used because it would need a second gadget.
 #
 # Every wait is bounded.  A failure exits non-zero so `systemctl --failed`
 # shows it, but nothing here reboots, panics or blocks the boot targets; the
@@ -65,48 +70,61 @@ if [ ! -d "$CONFIGFS/usb_gadget" ]; then
 	fail 'configfs is not available'
 fi
 
-# split_consoles - give ttyGS0 to the getty and ttyGS1 to printk.
+# split_consoles - keep the gadget ports out of printk.
 #
-# u_serial gives the *first* allocated port a console automatically
-# (gserial_alloc_line() -> gs_console_init()), so acm.usb0 starts out owning the
-# IN endpoint and the login shell cannot send a byte.  The configfs "console"
-# attribute is the switch: 0 unregisters the console and releases the endpoint,
-# 1 registers printk on the port named by console=ttyGS1.
+# This was the console handover: u_serial gives the *first* allocated port a
+# console automatically (gserial_alloc_line() -> gs_console_init()), so acm.usb0
+# used to start out owning its IN endpoint for the kernel log and the login shell
+# could not send a byte.  The configfs "console" attribute was the switch - 0 on
+# the shell port, 1 on the port named by console=ttyGS1.
 #
-# Both writes are best-effort: without CONFIG_U_SERIAL_CONSOLE the attribute
-# does not exist, and the gadget must still come up on a kernel that has no
-# gadget console (the known-good image does not).
+# With CONFIG_U_SERIAL_CONSOLE unset the attribute does not exist at all and no
+# ttyGS port can ever become a console, which is the state this port now builds
+# deliberately: `console=ttyGS1` is gone from the command line and printk must
+# never reach the gadget again (docs/BOOT_CONSOLE_BLOCK.md).
+#
+# The function is kept, and still forces 0 rather than 1, so that running this
+# script against an older kernel - a recovery image, or a rollback - leaves the
+# gadget with no console on it either.  Every write stays best-effort.
 split_consoles() {
 	if [ -e "$GADGET/functions/acm.usb0/console" ]; then
 		echo 0 > "$GADGET/functions/acm.usb0/console" 2>/dev/null &&
-			echo "gts9-usb-acm: released ttyGS0 for the login shell" ||
-			echo "gts9-usb-acm: could not release the ttyGS0 console" >&2
+			echo "gts9-usb-acm: acm.usb0 is not a console" ||
+			echo "gts9-usb-acm: could not clear the acm.usb0 console" >&2
 	fi
 	if [ -e "$GADGET/functions/acm.usb1/console" ]; then
-		echo 1 > "$GADGET/functions/acm.usb1/console" 2>/dev/null &&
-			echo "gts9-usb-acm: ttyGS1 is the kernel console (console=ttyGS1)" ||
-			echo "gts9-usb-acm: could not enable the ttyGS1 console" >&2
+		echo 0 > "$GADGET/functions/acm.usb1/console" 2>/dev/null &&
+			echo "gts9-usb-acm: acm.usb1 is not a console (printk must not reach the gadget)" ||
+			echo "gts9-usb-acm: could not clear the acm.usb1 console" >&2
 	fi
 }
 
 # --- optional USB network function -------------------------------------------
 #
+# --- USB network function: the ssh transport --------------------------------
+#
 # Off unless /etc/gts9-usb-net exists, in which case the file names the function
 # and the address for the device side:
 #
-#	ncm 192.168.42.1/24
+#	ncm 169.254.42.1/16
 #
-# Why: the serial console moves about 3 KB/s.  Measured 2026-09-25, 131072 bytes
-# took the same 40 s at a host baud of 115200 and at 921600 - the line coding is
-# nominal, because COM17/COM19 are USB CDC-ACM and the bytes really travel in USB
-# bulk transfers.  Raising the baud cannot help; adding a network function turns
-# the same cable into a link fast enough for ssh, scp and dmesg.
+# Why a network and not a console: ssh over this link measures 31.8 MB/s against
+# the serial console's ~3 KB/s.  Measured 2026-09-25, 131072 bytes took the same
+# 40 s at a host baud of 115200 and at 921600 - the line coding is nominal,
+# because the COM ports are USB CDC-ACM and the bytes really travel in USB bulk
+# transfers, so raising the baud cannot help.
+#
+# Since 2026-09-26 this is not merely the faster option, it is the ONLY one:
+# both serial debug consoles were removed (docs/BOOT_CONSOLE_BLOCK.md,
+# docs/SHUTDOWN_DELAY.md) and /etc/gts9-usb-net now ships in the overlay rather
+# than being created by hand, because a rootfs without it would have no way in
+# at all.
 #
 # The function goes into THIS gadget rather than a second one: a UDC binds one
 # gadget at a time, so a separate gadget - which is what Debian's adbd package
-# creates - cannot bind while the console owns the controller.  Every step is
-# best-effort: on any failure the function is dropped and the ACM console comes
-# up exactly as before, so this cannot cost the console.
+# creates - cannot bind while this one owns the controller.  Every step stays
+# best-effort: on any failure the function is dropped and the gadget binds with
+# its ACM ports alone, so a bad line in the file cannot cost the USB link.
 NET_CONF=${GTS9_USB_NET_CONF:-/etc/gts9-usb-net}
 NET_IFACE=${GTS9_USB_NET_IFACE:-usb0}
 net_kind=""
@@ -114,7 +132,20 @@ net_addr=""
 
 read_net_conf() {
 	[ -r "$NET_CONF" ] || return 0
-	read -r net_kind net_addr <"$NET_CONF" || true
+	# Skip blank lines and '#' comments.  The file ships in the overlay, so it
+	# carries a header explaining the format and the address choice; a plain
+	# `read < file` would take the first comment line as the function name and
+	# fail the whole file as unknown.
+	while IFS= read -r line || [ -n "$line" ]; do
+		case "$line" in
+		'' | '#'*) continue ;;
+		esac
+		# shellcheck disable=SC2086
+		set -- $line
+		net_kind=${1:-}
+		net_addr=${2:-}
+		break
+	done <"$NET_CONF"
 	case "$net_kind" in
 	"") return 0 ;;
 	ncm | ecm) ;;
