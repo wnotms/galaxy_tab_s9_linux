@@ -1,0 +1,46 @@
+From: SM-X710 postmarketOS port <gts9wifi@example.com>
+Date: Sun, 20 Sep 2026 04:00:00 +0300
+Subject: [PATCH] remoteproc: qcom_q6v5: stop logging a repeated handover interrupt
+
+The ADSP handover interrupt is level-triggered: the remote processor keeps it
+asserted after the first handover, so q6v5_handover_interrupt() takes the
+already-issued branch again for the rest of the session.  On the SM-X710 it
+repeats about 5.4 times a second.
+
+Measured on this port's own tablet (2026-09-26, Fedora issue 19): 37,402 of
+37,411 lines in the dmesg ring were this one message - 99.98 % - so every real
+diagnostic was evicted from the ring within seconds of being logged.  That
+includes the lines the stall investigation needs, and it makes `dmesg` useless
+as an evidence source without an out-of-band filter.
+
+The repeat is expected and harmless: the handover has already been performed by
+the time it arrives.  Log it at debug level so it cannot flood the log.  The
+interrupt is still handled exactly as before, so there is no behaviour change.
+
+Origin: troikoss/gts9wifi-fedora, kernel/patches/
+quiet-adsp-handover-already-happened.patch.  Taken here because this port
+enables the same ADSP remoteproc (CONFIG_QCOM_Q6V5_PAS=y, `&remoteproc_adsp`
+status = "okay") and hits the same level-triggered repeat.
+
+Signed-off-by: SM-X710 mainline port <gts9wifi@example.com>
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 58d5b85e5..9c189428b 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -165,7 +165,15 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
+ 	struct qcom_q6v5 *q6v5 = data;
+ 
+ 	if (q6v5->handover_issued) {
+-		dev_err(q6v5->dev, "Handover signaled, but it already happened\n");
++		/*
++		 * The handover interrupt is level-triggered and the remote keeps
++		 * it asserted after the first handover, so this branch is taken
++		 * again and again (about five times a second on the SM-X710) and
++		 * buries the rest of the kernel log.  The handover itself has
++		 * already happened, so log the repeat at debug level instead of
++		 * at error level.
++		 */
++		dev_dbg(q6v5->dev, "Handover signaled, but it already happened\n");
+ 		return IRQ_HANDLED;
+ 	}
+ 
