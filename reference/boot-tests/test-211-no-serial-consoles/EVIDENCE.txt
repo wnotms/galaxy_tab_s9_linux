@@ -1,0 +1,40 @@
+### cmdline
+console=tty0 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware fbcon=font:TER16x32 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=1 nfc_sec.nfc_param_lpcharge=1 flicker_sensor.flicker_param_lpcharge=1 cpufreq_limit.lpcharge=1 sec-battery.lpcharge=1 max77705_charger.lpcharge=1 max77705-fuelgauge.lpcharge=1 p9320_charger.lpcharge=1 s2miw04_charger.lpcharge=1 cps4038_charger.lpcharge=1 nu1668_charger.lpcharge=1 msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+### console active
+tty0
+### consoles enabled
+[    0.000467] [      T0] printk: legacy console [tty0] enabled
+[    0.103773] [      T1] printk: legacy console [sec_log-1] enabled
+[    0.138494] [      T1] printk: legacy console [ramoops-1] enabled
+[    0.279733] [      T1] printk: legacy console [ttynull0] enabled
+### getty state
+gts9-acm-getty.service enabled=masked active=inactive
+serial-getty@ttyMSM0.service enabled=masked active=inactive
+serial-getty@ttyGS0.service enabled=masked active=inactive
+getty@tty1.service enabled=enabled active=active
+### failed units
+
+0 loaded units listed.
+### dmesg lines
+1077
+### handover flood
+0
+### boot record
+stage=switch-root-synced
+failure=none
+debian_stage=multi-user
+### poweroff record
+stage=systemd-poweroff-service
+timestamp=2026-04-13T19:40:02Z
+uptime_seconds=119.04
+boot_id=df83c3f7-186b-488b-ac71-ad3c6a9cf30d
+### kernel
+7.2.0-rc3-gts9wifi-dirty
+### gadget
+acm.usb0 acm.usb1 ncm.usb0 
+a600000.usb
+### usb0
+usb0             UP             169.254.42.1/16 
+### wifi
+wlp1s0           DOWN           00:03:7f:12:54:54 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+20
