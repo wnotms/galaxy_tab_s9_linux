@@ -173,6 +173,28 @@ audit reports `contains_usb_gadget=no`, `contains_msc=no`,
 `contains_display_recovery=no`, `contains_hardware_report=no` for production, and
 `yes` for the capabilities the debug image exists to provide.
 
+### What actually executes on a healthy boot
+
+The distinction that matters is not the size of the script but the number of
+statements the Debian boot actually runs. `/init` is 521 lines; the healthy path is
+**54 statements**, and every one of them is either the handoff or a record of it:
+
+| what | statements |
+|---|---|
+| stage markers and the state library | `minimal_state_init`, 6 stage writes, `persist_enable` |
+| consume a stale recovery request | `minimal_clear_stale_bcb` (one sysfs read when clear) |
+| find the root | one bounded `while` with `sleep 1` |
+| mount it | `mkdir /newroot`, `mount -t ext4`, the `/newroot/sbin/init` check |
+| hand over | `mkdir` the four mountpoints, one `mount --move` per vfs, `switch_root` |
+| durability | `sync` before the irreversible step |
+
+Everything else in the file is a failure branch that does not run, a function
+definition, or a comment. The trampoline blocks are two `if` statements that are
+false by default, and the rescue path is only reached through `minimal_fail`.
+
+Measured, not counted: the whole handoff occupies **~100 µs** of monotonic time on
+the tablet, with `/init` entered and the root filesystem mounted 66 µs apart.
+
 ### Audits
 
 `scripts/audit-initramfs.sh` prints the contents, the call-graph classification
