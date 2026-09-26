@@ -185,3 +185,89 @@ Also confirmed: the same kernel that boots Debian exposes `PARTNAME=misc` for
 `/dev/sda10`, so the initramfs lookup works for the same reason it works in TWRP.
 And `devtmpfs` creates `/dev/sda10` in the initramfs as it does here, so the
 function has both halves of what it needs.
+
+## The automatic recovery works, measured 2026-09-26
+
+The owner's requirement was that no initramfs may leave the tablet somewhere only
+a key combination can get out of, because the button combination does not reliably
+reach TWRP on this unit. Asked directly: if the initramfs can reboot into TWRP by
+itself, do it.
+
+It can. One bad-root boot, fully unattended:
+
+```
+gs9_rootfs=/dev/does-not-exist
+  -> 30 s bounded root wait
+  -> tty1 rescue banner
+  -> framebuffer cycle so the banner is visible
+  -> BCB written: "boot-recovery" in misc
+  -> plain restart
+  -> ABL reads the block
+  -> TWRP 3.7.1_12-gts9wifi          at +77 s, no hands
+```
+
+`adb` reported `R52X10045LT recovery` at **+77 s**, and `getprop ro.twrp.version`
+returned `3.7.1_12-gts9wifi`. The BCB was still set at that point, which is the
+correct intermediate state: ABL has consumed the request, the destination boot has
+not yet cleared it.
+
+### The stale-BCB loop was reproduced on hardware, then fixed
+
+Before the fix landed, the loop this feature could have created was reproduced
+deliberately, because a prediction about a boot loop is worth confirming rather
+than assuming:
+
+1. BCB written from Linux, tablet rebooted -> **TWRP**, 25 s (mechanism confirmed);
+2. from TWRP, reboot to system -> the BCB was still `boot-recovery`, so ABL read it
+   again and went **straight back to TWRP**;
+3. Debian was not reachable at all, so TWRP was the only way out.
+
+That is exactly the trap the feature exists to remove, which is why the clear had
+to land in the same round as the write. With `minimal_clear_stale_bcb` on the
+healthy path, the same sequence consumes the request and boots Debian normally.
+
+### The whole lifecycle, run with the INITRAMFS BusyBox on the device
+
+The functions were exercised on the real tablet through the initramfs's own
+`/bin/busybox` (extracted from the built image and given only the applets the
+production image ships), with `reboot`/`poweroff` stubbed so nothing restarted:
+
+```
+1. misc lookup: [/dev/sda10]
+2. planted: [boot-recovery]
+   EMIT: cleared a stale recovery BCB in /dev/sda10 (one request, one boot)
+3. after clear: []
+   EMIT: BCB written to /dev/sda10: command=boot-recovery
+   EMIT: rebooting into recovery (TWRP)
+4. after request: [boot-recovery]
+   EMIT: cleared a stale recovery BCB in /dev/sda10 (one request, one boot)
+5. final: []
+```
+
+This matters because the initramfs runs before Debian: the lookup, the `dd` write,
+the read-back and the clear all had to work under BusyBox, not under the host's
+userspace. They do.
+
+### State left on the tablet
+
+| partition | sha256 |
+|---|---|
+| `init_boot` | `6a0d9e336573e391d8cf72248dc1b75fa63e9cb63457b18756f2e514b019a7dc` (production, with the clear) |
+| `vendor_boot` | `86088a80a14b205baac1aa708c5a02017badce1abce97c7cc668b0432dd43aec` (good cmdline, restored) |
+| BCB | clear |
+
+A copy of the good `vendor_boot` is left at `/var/tmp/gts9-restore/vendor_boot.GOOD.img`
+on the Debian root, which is the partition TWRP cannot mount - so it is a
+convenience for Debian, not a recovery path. The recovery path that works is adb
+from TWRP, which is how the restore above was done.
+
+### What this does and does not change
+
+* It does **not** make a bad `vendor_boot` self-healing: the initramfs cannot fix a
+  command line it was given. It makes the failure *reachable and diagnosable* -
+  TWRP starts by itself, with adb, so the owner can repair the real cause without
+  a key combination.
+* It does **not** touch the healthy path beyond one sysfs read: the clear finds an
+  empty block and returns.
+* The recovery request is still one-shot, still label-addressed, still read back
+  before rebooting.
