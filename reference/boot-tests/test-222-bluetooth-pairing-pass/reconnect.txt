@@ -1,0 +1,24 @@
+=== the address unit ran automatically on the post-pairing reboot ===
+Sep 26 21:54:43 gts9 systemd[1]: Starting gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs...
+Sep 26 21:54:47 gts9 gts9-bluetooth-address[660]: gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+Sep 26 21:54:47 gts9 gts9-bluetooth-address[948]: GTS9_DEBIAN_STAGE=bluetooth-address-set
+Sep 26 21:54:47 gts9 systemd[1]: Finished gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs.
+
+=== the bond survived it ===
+	Name: DESKTOP-EAS21AS
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Connected: no
+
+=== why a profile-level connect cannot complete against a Windows PC ===
+Sep 26 21:57:51 gts9 bluetoothd[998]: src/service.c:btd_service_connect() a2dp-sink profile connect failed for F8:CF:52:CD:BE:9F: Protocol not available
+Sep 26 21:57:51 gts9 bluetoothd[998]: src/service.c:btd_service_connect() a2dp-source profile connect failed for F8:CF:52:CD:BE:9F: Protocol not available
+Sep 26 21:57:54 gts9 bluetoothd[998]: src/service.c:btd_service_connect() a2dp-sink profile connect failed for F8:CF:52:CD:BE:9F: Protocol not available
+Sep 26 21:57:54 gts9 bluetoothd[998]: src/service.c:btd_service_connect() a2dp-source profile connect failed for F8:CF:52:CD:BE:9F: Protocol not available
+
+available profiles in this build:
+CONFIG_BT_BREDR=y
+CONFIG_BT_RFCOMM=y
+CONFIG_BT_HIDP=y
+CONFIG_BT_BNEP: not set

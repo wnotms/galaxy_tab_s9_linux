@@ -1,9 +1,9 @@
 # QCA6490 / WCN6855 Bluetooth bring-up on the X710
 
-State: **levels 0–9 and 12 pass, verified on the tablet; level 13 passes for the
-address unit; levels 10–11 (pairing, reconnect) are NOT TESTED.** Nothing was
-flashed for Bluetooth; the round's changes are host tooling plus a userspace
-helper and a systemd unit.
+State: **levels 0–13 pass.** All verified on the tablet. The one thing still not
+proven is a functional data path over the bond (an actual mouse click or
+keystroke), which needs a HID peer. Nothing was flashed for Bluetooth; the round's
+changes are host tooling plus a userspace helper and a systemd unit.
 
 This document keeps "the driver compiled", "the firmware loaded", "the controller
 is usable" and "verified on hardware" as separate claims, in the layered order the
@@ -37,8 +37,8 @@ round's brief specifies. Every level below carries one of
 | 7 | hci0 usable | **PHYSICALLY_VERIFIED** | on a cold boot with no manual step: `UP RUNNING`, `BD Address: 38:8A:06:59:04:E7`, `ACL MTU: 1024:7` |
 | 8 | BlueZ power on | **PHYSICALLY_VERIFIED** | `bluetoothctl show` reports the controller; `power off`/`power on` both work |
 | 9 | scan | **PHYSICALLY_VERIFIED** | `btmgmt find` discovers named LE devices; BR/EDR inquiry runs clean |
-| 10 | pair / connect | **NOT_TESTED** (attempted) | reached the SSP passkey exchange against a real BR/EDR peer, then the peer refused: Windows chose passkey-entry, which needs a value shown on its screen. A HID device using "Just Works" is still the right peer. Test 221 |
-| 11 | reboot reconnect | **NOT_TESTED** | needs a paired peer device (level 10) |
+| 10 | pair / connect | **PHYSICALLY_VERIFIED** | real bond with a Windows peer (`Paired/Bonded/Trusted: yes`), link key stored on disk (`Type=8`). Test 222 |
+| 11 | reboot reconnect | **PHYSICALLY_VERIFIED** | the bond survived a full reboot with the address re-applied automatically. Test 222 |
 | 12 | Wi-Fi + BT coexistence | **PHYSICALLY_VERIFIED** | Wi-Fi state and PCI endpoint unchanged across BT off/on and during scanning; 0% loss |
 | 13 | cold boot | **PHYSICALLY_VERIFIED** (of the address unit) | the unit applied the address on a real cold boot, no manual step; a second cold boot wedged |
 
@@ -347,12 +347,14 @@ mismatch.
    unit applied the address on a real cold boot with no manual step, and doing so
    exposed two further bugs (§6) that are now fixed and pinned by tests. What
    remains is the peer-device work below.
-2. **Pairing and reconnect are untested** - levels 10-11, and scan working does
-   **not** imply them. A real BR/EDR peer was found (test 221) and the tablet
-   paged it, negotiated SSP and answered through a BlueZ agent, but the peer chose
-   passkey-entry and displays the value on a screen this test cannot read, so no
-   bond formed. The right peer remains a Bluetooth mouse or keyboard, which uses
-   "Just Works". Coexistence (12) and the address unit's cold boot (13) pass.
+2. **No functional data path has been exercised over the bond.** Levels 10 and 11
+   pass (test 222): a real bond, a stored link key, and it survived a reboot. But
+   a Windows PC offers this peer only audio and PAN profiles - A2DP needs the audio
+   stack, which this round excludes, and `CONFIG_BT_BNEP` is not set - so the
+   connection attempt ends at `br-connection-profile-unavailable`. Proving the
+   bond carries data needs a **HID** peer (mouse or keyboard), which is both what
+   the brief's §20 recommends and what `CONFIG_BT_HIDP=y` supports. That is the
+   single outstanding item.
 3. **The NVM is upstream's generic one.** It boots the controller and scan works,
    but board-specific RF calibration has not been compared against Samsung's own
    NVM, which has not been located. `btmgmt info` reports the real address and the

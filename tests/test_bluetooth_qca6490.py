@@ -593,14 +593,27 @@ class TheDocumentKeepsTheLayersHonest(unittest.TestCase):
         self.assertIn("sysfs node is not the readiness signal", text)
         self.assertIn("does not mean failure", text)
 
-    def test_it_still_refuses_to_claim_pairing(self):
-        """The point of the layered document: scan working must not be read as
-        pairing working. Level 10/11 need a peer device and remain unproven."""
+    def test_pairing_and_reconnect_are_recorded_as_verified(self):
+        """These passed in test 222. The doc must record that with its evidence,
+        not quietly leave them at NOT_TESTED now that they work."""
         text = read(DOC)
-        row = [l for l in text.splitlines() if l.startswith("| 10 | pair / connect")][0]
-        self.assertIn("NOT_TESTED", row)
-        row = [l for l in text.splitlines() if l.startswith("| 11 | reboot reconnect")][0]
-        self.assertIn("NOT_TESTED", row)
+        for prefix in ("| 10 | pair / connect", "| 11 | reboot reconnect"):
+            row = [l for l in text.splitlines() if l.startswith(prefix)][0]
+            self.assertIn("PHYSICALLY_VERIFIED", row)
+            self.assertIn("Test 222", row)
+
+    def test_it_still_refuses_to_claim_a_working_data_path(self):
+        """The distinction that must survive: a bond is not a working link.
+
+        Levels 10 and 11 pass, but no HID device has been attached, so nothing has
+        carried actual input over the bond. A Windows peer only offers audio and
+        PAN, neither of which this build can complete, so the doc must say a HID
+        peer is still required rather than implying end-to-end success.
+        """
+        text = read(DOC)
+        self.assertIn("No functional data path has been exercised", text)
+        self.assertIn("HID", text)
+        self.assertIn("br-connection-profile-unavailable", text)
 
 
 if __name__ == "__main__":
