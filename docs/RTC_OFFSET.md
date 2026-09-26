@@ -133,7 +133,29 @@ date is right.
 **Point 3 — mainline hctosys arithmetic.** The two mainline readings in §1 give
 `22635839 + 1767701103 = 2026-09-25 11:49:02` and
 `22638758 + 1767701103 = 2026-09-25 12:37:41`, both matching the capture date of
-their own logs. The offset is time-invariant, which is what makes it safe to add.
+their own logs.
+
+**Point 4 — the live tablet, read directly.** A read-only recovery session on
+2026-09-26 (`reference/boot-tests/test-215-rtc-offset-verify/`) read both values
+off the hardware and compared them with TWRP's own clock in the same session:
+
+```
+raw since_epoch   = 23153
+ats_2             = 1790396967618 ms   (bytes c2 aa f9 db a0 01 00 00)
+raw + ats_2/1000  = 1790420120  =  2026-09-26T10:55:20Z
+TWRP date -u      = Sat Sep 26 10:55:20 UTC 2026
+```
+
+Exact match, to the second. Every `ats_*` file on the partition was exactly 8
+bytes, which is the format's only structural property; and the shipped helper,
+given those exact bytes, prints the same `1790420120`.
+
+That session also settled a question the earlier readings could not: **the offset
+is a live delta, not an absolute epoch.** The raw counter had been *reset* since
+the previous recording, and `ats_2` had grown by the compensating amount —
+`+262.7` days of offset against `-259.5` days of counter, leaving a sum that
+tracked the real 3 days elapsed. Only the sum is meaningful, which is why the
+value must be read at runtime and never baked into a kernel or a DTS.
 
 ### The 2022 red herring
 
@@ -482,15 +504,31 @@ Bootloader control block, USB, Wi-Fi, panel and rootfs handoff are untouched.
    established on this device. This fix reads the same file TWRP reads, so it
    cannot be worse than the current recovery behaviour, but it is one file of
    several in that directory.
-2. **No physical verification yet.** The on-device boot has not been run: no
-   tablet is currently connected, and flashing was not authorised for this round.
-   Everything above is source analysis plus arithmetic against recorded device
-   logs. The host tests execute the real helper, but they cannot prove the mount
-   works against a real Samsung-formatted `persist` partition; that is what the
-   test plan in `reference/rtc-offset-test-plan.md` is for.
-3. **Whether `persist` is encrypted or wrapped on a stock device.** It is ext4 per
-   stock fstab and TWRP mounts it as such, so this is expected to be fine, but it
-   has not been observed under this kernel. A failed mount is reported, not fatal.
+2. **The fix itself has not been booted.** Its *inputs*, however, are now verified
+   on the real tablet — see `reference/boot-tests/test-215-rtc-offset-verify/`,
+   which is read-only evidence taken from a live recovery session:
+
+   * `persist` really is `/dev/block/sda5`, and `/persist/time/ats_2` exists;
+   * every `ats_*` file is exactly 8 bytes, as the format says;
+   * the bytes `c2 aa f9 db a0 01 00 00` decode to `1790396967618` ms;
+   * `23153 + 1790396967 = 1790420120` = `2026-09-26T10:55:20Z`, which is
+     **exactly** what TWRP's own `date -u` displayed in the same session;
+   * the shipped helper, fed those exact bytes, prints the same `1790420120`;
+   * `mount -t ext4 -o ro,noload` works on that partition, and the kernel reports
+     `mounted filesystem without journal` — read-only in fact, not only in intent.
+
+   What remains unproven is the *execution path*: `/init` has not run this on the
+   tablet, so the end-to-end boot is still a plan
+   (`reference/rtc-offset-test-plan.md`) rather than a result.
+
+   That session also showed the offset is a **live delta**: the raw counter had
+   been reset since the previous recording, and `ats_2` had grown by exactly the
+   compensating amount — `+262.7` days against `-259.5` days of counter, leaving
+   a sum that tracked the real 3 days elapsed. A value baked into the kernel or
+   the DTS would have been wrong by 259 days on that very boot.
+3. **Whether `persist` is encrypted or wrapped on a stock device.** Now answered
+   for this unit: it is plain ext4, and the offset file was read directly through
+   a `ro,noload` mount. No encryption was encountered.
 4. **The first ~2.8 s of kernel time stays wrong** (§9), which is inherent to
    doing this in userspace.
 5. **Clock monotonicity.** Setting `CLOCK_REALTIME` forward by ~56 years is a

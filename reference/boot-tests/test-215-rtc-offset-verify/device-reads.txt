@@ -1,0 +1,93 @@
+=== partition lookup (the kernel's own labels) ===
+lrwxrwxrwx 1 root root 16 misc     -> /dev/block/sda10
+lrwxrwxrwx 1 root root 15 persist   -> /dev/block/sda5
+   /dev/block/by-name/persist -> /dev/block/sda5, as docs/RTC_OFFSET.md predicted
+
+=== the offset file ===
+$ mount -t ext4 -o ro /dev/block/by-name/persist /tmp/pmnt
+$ ls -l /tmp/pmnt/time/
+total 20
+-rw------- 1 system system 8 2026-09-26 12:42 ats_1
+-rw------- 1 system system 8 2022-01-12 00:24 ats_12
+-rw------- 1 system system 8 2026-09-26 12:42 ats_16
+-rw------- 1 system system 8 2022-01-12 00:24 ats_18
+-rw------- 1 system system 8 2026-09-26 12:42 ats_2
+
+Every candidate file is EXACTLY 8 bytes - the format's only structural property.
+
+=== ats_2, the file TWRP uses ===
+$ od -An -tx1 -N8 /tmp/pmnt/time/ats_2
+ c2 aa f9 db a0 01 00 00      <- little-endian
+$ od -An -tu8 -N8 /tmp/pmnt/time/ats_2
+           1790396967618       <- ms
+
+=== all five ats files, as u64 ===
+ats_1    1790396967618
+ats_2    1790396967618
+ats_12   686372858
+ats_16   1790396967618
+ats_18   686372861
+
+ats_1, ats_2 and ats_16 agree; ats_12/ats_18 hold a different (2022) base.
+
+=== the arithmetic, checked against TWRP's own clock ===
+
+  raw since_epoch           = 23153
+  ats_2                     = 1790396967618 ms = 1790396967 s
+  raw + ats_2/1000          = 1790420120
+  1790420120 as UTC         = 2026-09-26T10:55:20Z
+  TWRP's `date -u`          = Sat Sep 26 10:55:20 UTC 2026
+
+Exact match, to the second. The formula in docs/RTC_OFFSET.md section 3 is
+therefore confirmed on hardware, not just against recorded logs.
+
+=== the helper, fed the real bytes ===
+
+boot/gts9-rtc-offset.c compiled for the host and pointed at the exact eight bytes
+read from the tablet above:
+
+  $ ./gts9-rtc-offset-host
+  rtc-offset: status=applied source=persist/time/ats_2 \
+      offset_ms=1790396967618 raw_ms=23153000 realtime_epoch=1790420120
+  exit=0
+
+1790420120 is the same second TWRP displays. The shipped parser, bounds and
+arithmetic reproduce the platform's own answer from the platform's own data.
+
+=== the offset is a live delta, and this boot proves it ===
+
+The raw counter had been RESET since the last recording (test 165, 2026-09-23),
+and ats_2 had grown by the compensating amount:
+
+  ats_2 : 1767701103844 -> 1790396967618   (+22695863774 ms = +262.7 days)
+  raw   : 22442889      -> 23153           (-22419736 s    = -259.5 days)
+  sum   : 1790143992    -> 1790420120      (+276128 s      = +3.2 days)
+
+Real elapsed time between the two readings was 3 days. The sum tracks it.
+
+That is the strongest available evidence that ats_2 is a DELTA rather than an
+absolute epoch: it moved opposite to the raw counter, by the same amount, and
+only their sum is meaningful. It also re-confirms the design decision to read
+the file at runtime - a value baked into a kernel or DTB would have been wrong
+by 259 days on this very boot.
+
+=== the exact mount options the fix uses, on the real partition ===
+
+  $ mount -t ext4 -o ro,noload /dev/block/by-name/persist /tmp/nl
+  MOUNT ro,noload OK
+  $ od -An -tu8 -N8 /tmp/nl/time/ats_2
+             1790396967618
+
+and the kernel's own verdict on what it did:
+
+  EXT4-fs (sda5): mounted filesystem without journal. Opts: noload.
+
+"without journal" is the load-bearing phrase. A plain `-o ro` mount of a
+filesystem needing recovery prints "write access will be enabled during
+recovery" and re-enables writes; `noload` skips loading the journal entirely, so
+the partition is read-only in fact and not only in intent. The file was read
+correctly through it, and the unmount was clean.
+
+Only TWRP's busybox and the recovery kernel were exercised here, not this
+repository's initramfs; the option string is identical, which is what this
+verifies.
