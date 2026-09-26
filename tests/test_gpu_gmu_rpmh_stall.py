@@ -2638,13 +2638,26 @@ class DocumentationTests(unittest.TestCase):
             "the ttyGS0 autologin getty is the 90 s poweroff")
         enable = read("rootfs-overlay/usr/libexec/gts9-enable-units")
         self.assertIn('ln -sfn /dev/null "$etc_dir/gts9-acm-getty.service"', enable)
-        # And nothing in the overlay may start a serial login at all.
+        # And nothing in the overlay may START a serial login.
+        #
+        # The check is for execution, not for the word: gts9-device-changes legitimately
+        # greps for 'agetty' to *report* a leftover autologin drop-in, which is the
+        # opposite of running one.  What must not exist is a command that runs agetty.
         for path in sorted((ROOT / "rootfs-overlay").rglob("*")):
             if not path.is_file():
                 continue
-            code = "\n".join(line for line in path.read_text(errors="replace").splitlines()
-                             if not line.lstrip().startswith("#"))
-            self.assertNotIn("agetty", code, str(path))
+            for line in path.read_text(errors="replace").splitlines():
+                code = line.split("#", 1)[0]
+                if not code.strip():
+                    continue
+                with self.subTest(file=str(path), line=line.strip()):
+                    # A mention inside a command substitution or a grep pattern is
+                    # inspection; `ExecStart=... agetty`, `--autologin`, or a bare
+                    # invocation is execution.
+                    self.assertNotIn("--autologin", code)
+                    self.assertNotRegex(
+                        code, r'(^|[|;&(`]|\$\(|\s)(/usr/sbin/|/sbin/)?agetty\s',
+                        f'{path} appears to run agetty')
 
     def test_wifi_reached_every_level_with_no_ath11k_change(self):
         """The bring-up is complete, and the record must say how."""

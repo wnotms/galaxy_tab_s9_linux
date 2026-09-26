@@ -87,38 +87,84 @@ class UsbAcmServiceTests(unittest.TestCase):
         self.assertTrue((self.gadget / 'configs' / 'c.1' / 'acm.usb0').resolve().is_dir())
         self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
 
-    def test_creates_the_two_acm_functions(self):
-        # Two ports since test-184: acm.usb0 is the login shell, acm.usb1 is the
-        # kernel console.  A gadget serial console takes its port's IN endpoint,
-        # so one port cannot be both.
+    def test_creates_exactly_one_acm_function(self):
+        """One serial port, not two.
+
+        Until 2026-09-26 there were two because their roles were split: acm.usb0
+        was the login shell and acm.usb1 the kernel printk console, since a gadget
+        serial console takes its port's IN endpoint and one port cannot be both.
+
+        Both consoles are gone, so the second port had no purpose left - it
+        existed only to be the port printk registered on (it was created second so
+        u_serial handed it line 1).  It is removed, and exactly one serial port
+        remains so a terminal program still has a wired endpoint that does not
+        depend on the network function having bound.
+
+        This must stay a single port: a second serial port appearing again means
+        something is trying to put a console back on the gadget.
+        """
         self.run_helper()
         functions = sorted(p.name for p in (self.gadget / 'functions').iterdir())
-        self.assertEqual(functions, ['acm.usb0', 'acm.usb1'])
+        self.assertEqual(functions, ['acm.usb0'])
         links = sorted(p.name for p in (self.gadget / 'configs' / 'c.1').iterdir()
                        if p.is_symlink())
-        self.assertEqual(links, ['acm.usb0', 'acm.usb1'])
+        self.assertEqual(links, ['acm.usb0'])
+        # The node it lands on is /dev/ttyGS0: gserial_alloc_line() hands out the
+        # lowest free line, so acm.usb0 must be the first serial function created
+        # and the only one.  Compare against the *call* to setup_network, not its
+        # definition, which appears earlier in the file.
+        text = HELPER.read_text()
+        create0 = text.index('mkdir -p "$GADGET/functions/acm.usb0"')
+        self.assertNotIn('mkdir -p "$GADGET/functions/acm.usb1"', text)
+        call = text.index('\nsetup_network\n')
+        self.assertLess(create0, call,
+                        'acm.usb0 must be created before the network function, so '
+                        'it keeps /dev/ttyGS0')
 
-    def test_no_gadget_port_is_made_a_console(self):
-        """Inverted on 2026-09-26: both ports are forced OFF, not split.
+    def test_an_upgraded_gadget_drops_the_retired_port(self):
+        """The live gadget is rebuilt, because configfs cannot edit a bound one.
+
+        An upgraded rootfs keeps the gadget the previous install built, and that
+        gadget has acm.usb1 in its configuration.  configfs refuses to remove a
+        function from a bound gadget, so the helper has to unbind, remove the
+        function and let the normal path rebuild - otherwise the second port
+        survives the upgrade forever and the removal is only true for new installs.
+        """
+        self.run_helper()  # builds the gadget
+        # Simulate the old layout: put acm.usb1 back and leave the gadget bound.
+        (self.gadget / 'functions' / 'acm.usb1').mkdir()
+        (self.gadget / 'configs' / 'c.1' / 'acm.usb1').symlink_to(
+            self.gadget / 'functions' / 'acm.usb1')
+        result = self.run_helper()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse((self.gadget / 'functions' / 'acm.usb1').exists(),
+                         'the retired port must not survive an upgrade')
+        self.assertFalse((self.gadget / 'configs' / 'c.1' / 'acm.usb1').exists())
+        # ... and the remaining port still came back and bound.
+        self.assertTrue((self.gadget / 'functions' / 'acm.usb0').is_dir())
+        self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
+
+    def test_the_remaining_port_is_not_made_a_console(self):
+        """The one surviving port is forced OFF, never on.
 
         This used to assert 0 on the shell port and 1 on the console port.  The
         gadget kernel console is the measured cause of the boot stall - a userspace
         write() to /dev/console blocks in n_tty_write() while nothing drains the
         port (docs/BOOT_CONSOLE_BLOCK.md) - and the kernel is now built without
-        CONFIG_U_SERIAL_CONSOLE at all, so the configfs attribute does not exist on
-        a current kernel.
+        CONFIG_U_SERIAL_CONSOLE, so the configfs attribute does not exist on a
+        current kernel.
 
-        The writes are kept, and both force 0, so that running this script against
-        an OLDER kernel (a recovery image, a rollback) also leaves no console on
-        the gadget.  Nothing may set 1 again.
+        The write is kept, and forces 0, so that running this script against an
+        OLDER kernel (a recovery image, a rollback) also leaves no console on the
+        gadget.  Nothing may set 1 again.
         """
         text = HELPER.read_text()
         self.assertIn('echo 0 > "$GADGET/functions/acm.usb0/console"', text)
-        self.assertIn('echo 0 > "$GADGET/functions/acm.usb1/console"', text)
-        self.assertNotIn('echo 1 > "$GADGET/functions/acm.usb1/console"', text)
+        self.assertNotIn('echo 1 >', text)
         self.assertIn('[ -e "$GADGET/functions/acm.usb0/console" ]', text)
-        self.assertIn('[ -e "$GADGET/functions/acm.usb1/console" ]', text)
-        self.assertIn('split_consoles', text)
+        self.assertIn('clear_console', text)
+        # No function may be addressed that no longer exists.
+        self.assertNotIn('$GADGET/functions/acm.usb1/console', text)
 
     def test_the_network_transport_ships_in_the_overlay(self):
         # /etc/gts9-usb-net used to be created by hand on the tablet.  With the

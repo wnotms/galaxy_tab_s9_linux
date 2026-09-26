@@ -56,16 +56,25 @@ class NoSerialLoginConsole(unittest.TestCase):
         # Comments are stripped first.  These files explain the very mistake
         # these tests check for - gts9-enable-units documents the autologin shell
         # it removes - so prose must not be able to satisfy or defeat a check.
+        #
+        # What is forbidden is EXECUTION, not the word: gts9-device-changes greps
+        # for 'agetty' on purpose, to report a leftover autologin drop-in, which is
+        # the opposite of running one.  A test that failed on the mention would be
+        # forcing the detector to be less useful than it should be.
         for path in sorted(OVERLAY.rglob('*')):
             if not path.is_file():
                 continue
-            code = '\n'.join(
-                line for line in path.read_text(errors='replace').splitlines()
-                if not line.lstrip().startswith('#'))
-            self.assertNotIn('autologin', code, str(path))
-            self.assertNotIn('agetty', code, str(path))
-            for dev in ('ttyGS0', 'ttyGS1', 'ttyMSM0'):
-                self.assertNotIn(f'getty {dev}', code, str(path))
+            for line in path.read_text(errors='replace').splitlines():
+                code = line.split('#', 1)[0]
+                if not code.strip():
+                    continue
+                with self.subTest(file=str(path), line=line.strip()):
+                    self.assertNotIn('--autologin', code)
+                    self.assertNotRegex(
+                        code, r'(^|[|;&(`]|\$\(|\s)(/usr/sbin/|/sbin/)?agetty\s',
+                        f'{path} appears to run agetty')
+                    for dev in ('ttyGS0', 'ttyGS1', 'ttyMSM0'):
+                        self.assertNotIn(f'getty {dev}', code)
 
     def test_no_global_getty_or_autologin_override(self):
         system_dir = ETC / 'systemd' / 'system'
