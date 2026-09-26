@@ -1,0 +1,47 @@
+=== what firmware loaded, and the resulting controller ===
+[    4.285328] [     T90] Bluetooth: hci0: setting up wcn6855
+[    4.352559] [     T90] Bluetooth: hci0: QCA Product ID   :0x00000013
+[    4.352589] [     T90] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    4.352604] [     T90] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    4.352618] [     T90] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    4.363947] [     T90] Bluetooth: hci0: QCA controller version 0x12110201
+[    4.363970] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    5.007667] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[    5.174410] [     T90] Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[    5.174733] [     T90] Bluetooth: hci0: QCA setup on UART is completed
+[  695.739731] [     T90] Bluetooth: hci0: setting up wcn6855
+[  695.806039] [     T90] Bluetooth: hci0: QCA Product ID   :0x00000013
+[  695.806043] [     T90] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[  695.806045] [     T90] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[  695.806046] [     T90] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[  695.816766] [     T90] Bluetooth: hci0: QCA controller version 0x12110201
+[  695.816772] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[  696.456546] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[  696.655167] [     T90] Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[  696.656400] [     T90] Bluetooth: hci0: QCA setup on UART is completed
+[ 1024.017043] [     T90] Bluetooth: hci0: setting up wcn6855
+[ 1024.084410] [     T90] Bluetooth: hci0: QCA Product ID   :0x00000013
+[ 1024.084414] [     T90] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[ 1024.084416] [     T90] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[ 1024.084417] [     T90] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[ 1024.091644] [     T90] Bluetooth: hci0: QCA controller version 0x12110201
+[ 1024.091650] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[ 1024.730890] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[ 1024.929589] [     T90] Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[ 1024.929613] [     T90] Bluetooth: hci0: QCA setup on UART is completed
+
+=== controller identity ===
+Index list with 1 item
+hci0:	Primary controller
+	addr 38:8A:06:59:04:E7 version 12 manufacturer 29 class 0x000000
+	supported settings: powered connectable fast-connectable discoverable bondable link-security ssp br/edr le advertising secure-conn debug-keys privacy configuration static-addr phy-configuration wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 
+	current settings: powered ssp br/edr le secure-conn wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 
+	name gts9
+
+=== hciconfig ===
+hci0:	Type: Primary  Bus: UART
+	BD Address: 38:8A:06:59:04:E7  ACL MTU: 1024:7  SCO MTU: 240:4
+	UP RUNNING 
+	RX bytes:2105 acl:0 sco:0 events:163 errors:0
+	TX bytes:329403 acl:0 sco:0 commands:1410 errors:0
+

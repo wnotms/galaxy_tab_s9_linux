@@ -1,0 +1,13 @@
+=== hciconfig hci0: the failing state ===
+hci0:	Type: Primary  Bus: UART
+	BD Address: 00:00:00:00:5A:AD  ACL MTU: 0:0  SCO MTU: 0:0
+	DOWN RAW 
+	RX bytes:381 acl:0 sco:0 events:40 errors:0
+	TX bytes:163221 acl:0 sco:0 commands:667 errors:0
+
+
+=== btmgmt info ===
+Index list with 0 items
+
+=== is local-bd-address in the live DT? ===
+(no local-bd-address above means the property is absent)
