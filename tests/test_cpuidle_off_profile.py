@@ -30,6 +30,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 BASELINE = "boot/cmdline.stall-ab-baseline.example.txt"
 CPUIDLE_OFF = "boot/cmdline.stall-ab-cpuidle-off.example.txt"
+NO_LLCC = "boot/cmdline.stall-ab-no-llcc-off.example.txt"
+NO_CLUSTER = "boot/cmdline.stall-ab-no-cluster-idle.example.txt"
+DTS_BASE = "kernel/dts/sm8550-samsung-gts9wifi.dts"
+DTS_DIAG_DIR = "kernel/dts/diagnostic"
+VERIFY = "scripts/verify-idle-ablation.sh"
+PARSER = "scripts/lib/dtb-idle-states.py"
 HARNESS = "scripts/stall-ab.sh"
 PLAN = "docs/CPU_IDLE_WEDGE_PLAN.md"
 IDLE_ANALYSIS = "docs/SM8550_IDLE_STATE_ANALYSIS.md"
@@ -52,6 +58,19 @@ PINNED_GOVERNOR = ".work/linux-mainline/drivers/cpuidle/governor.c"
 
 def read(rel):
     return (ROOT / rel).read_text()
+
+
+def code_only(rel):
+    """A DTS with its comments removed.
+
+    The diagnostic overlays document *why* they avoid a construct - the
+    no-llcc-off file explains at length that it is not a `/delete-property/`,
+    and both cite the `cpu_pd` index-0 trap.  Asserting on the raw text would
+    therefore flag the documentation as the violation it warns about, so the
+    code checks below look at the code.
+    """
+    text = read(rel)
+    return re.sub(r"/\*.*?\*/", "", text, flags=re.S)
 
 
 def sha256(rel):
@@ -637,7 +656,8 @@ class HarnessTests(unittest.TestCase):
         # the accepted-profile case list
         self.assertRegex(
             self.src,
-            r"case \"\$PROFILE\" in baseline\|no-acd\|no-gpu\|late-deferred\|rpmh-debug\|cpuidle-off\)",
+            r"case \"\$PROFILE\" in baseline\|no-acd\|no-gpu\|late-deferred"
+            r"\|rpmh-debug\|cpuidle-off\|no-llcc-off\|no-cluster-idle\)",
         )
         self.assertIn("cpuidle-off", usage_names(self.src))
 
@@ -709,9 +729,259 @@ class HarnessTests(unittest.TestCase):
         self.assertIn("never flashes", self.src)
 
 
+class ClusterAblationTests(unittest.TestCase):
+    """Profiles I and J: the variable is the DTB, not the command line."""
+
+    VARIANTS = {
+        "no-llcc-off": f"{DTS_DIAG_DIR}/sm8550-samsung-gts9wifi-no-llcc-off.dts",
+        "no-cluster-idle": f"{DTS_DIAG_DIR}/sm8550-samsung-gts9wifi-no-cluster-idle.dts",
+    }
+
+    def test_both_variants_exist_and_are_diagnostic_only(self):
+        for name, path in self.VARIANTS.items():
+            with self.subTest(variant=name):
+                text = read(path)
+                self.assertIn("DIAGNOSTIC OVERLAY", text)
+                self.assertIn("not a fix", text)
+                self.assertIn("not part of the default build", text)
+
+    def test_the_overlay_includes_the_board_tree_by_a_non_conflicting_name(self):
+        """The overlay is copied ONTO the name it would otherwise include.
+
+        That is self-inclusion: a first revision did exactly that and would have
+        looped or produced an empty tree.  The include must therefore name a
+        different file, and prepare-kernel.sh must install the real board tree
+        under that name.
+        """
+        for name, path in self.VARIANTS.items():
+            with self.subTest(variant=name):
+                text = read(path)
+                self.assertIn('#include "sm8550-samsung-gts9wifi-board.dts"', text)
+                self.assertNotIn('#include "sm8550-samsung-gts9wifi.dts"', text)
+        prep = read("scripts/prepare-kernel.sh")
+        self.assertIn('"$qcom_dts/sm8550-samsung-gts9wifi-board.dts"', prep)
+
+    def test_no_llcc_off_overrides_the_list_and_keeps_the_shallow_state(self):
+        text = code_only(self.VARIANTS["no-llcc-off"])
+        self.assertIn("domain-idle-states = <&cluster_sleep_0>;", text)
+        # It must NOT delete the property: that would be the other profile.
+        self.assertNotIn("/delete-property/", text)
+
+    def test_no_cluster_idle_deletes_the_property(self):
+        text = code_only(self.VARIANTS["no-cluster-idle"])
+        self.assertIn("/delete-property/ domain-idle-states", text)
+
+    def test_neither_variant_touches_the_per_cpu_states(self):
+        """The index-0 trap: touching a cpu_pd would cost all eight CPUs cpuidle."""
+        for name, path in self.VARIANTS.items():
+            with self.subTest(variant=name):
+                text = code_only(path)
+                self.assertNotIn("cpu_pd", text)
+                self.assertNotIn("little_cpu_sleep_0", text)
+                self.assertNotIn("big_cpu_sleep_0", text)
+                self.assertNotIn("prime_cpu_sleep_0", text)
+                # And only one override block, so a later edit cannot quietly add
+                # a second one that the verifier would not notice.
+                self.assertEqual(text.count("&cluster_pd {"), 1)
+
+    def test_the_command_lines_are_byte_identical_to_baseline(self):
+        """The whole point: no token distinguishes these profiles."""
+        base = (ROOT / BASELINE).read_bytes()
+        for name in (NO_LLCC, NO_CLUSTER):
+            with self.subTest(cmdline=name):
+                self.assertEqual((ROOT / name).read_bytes(), base)
+
+    def test_prepare_kernel_accepts_only_the_closed_set(self):
+        prep = read("scripts/prepare-kernel.sh")
+        self.assertIn("GTS9_IDLE_ABLATION", prep)
+        self.assertRegex(prep, r"''\|no-llcc-off\|no-cluster-idle\) ;;")
+        self.assertIn("must be empty, no-llcc-off or no-cluster-idle", prep)
+
+
+class DtbParserTests(unittest.TestCase):
+    """The verifier's parse, which is the only thing standing between a silent
+    no-op ablation and a clean boot series."""
+
+    def test_the_parser_exists_and_is_executable(self):
+        p = ROOT / PARSER
+        self.assertTrue(p.is_file())
+        self.assertTrue(p.stat().st_mode & 0o100, "parser must be executable")
+
+    def test_it_parses_the_baseline_dtb_correctly(self):
+        """Run the real parser on the real built DTB, if it is present."""
+        dtb = ROOT / "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb"
+        if not dtb.exists():
+            self.skipTest("no built DTB to parse")
+        import subprocess
+        r = subprocess.run(["python3", str(ROOT / PARSER), str(dtb)],
+                           capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        out = r.stdout
+
+        def get(key):
+            for line in out.splitlines():
+                if line.startswith(key + "="):
+                    return line[len(key) + 1:]
+            return None
+
+        self.assertEqual(get("cluster_pd_node"), "/psci/power-domain-cluster")
+        self.assertEqual(get("cluster_states"), "0x41000044 0x4100c344")
+        self.assertEqual(get("cpu_pd_count"), "8")
+        self.assertEqual(get("cpu_states_with_shared_param"), "3")
+        self.assertEqual(get("cluster_state_definitions"), "2")
+        self.assertEqual(get("model"), "Samsung Galaxy Tab S9 Wi-Fi")
+        self.assertEqual(get("board_id"), "present")
+        for n in range(8):
+            self.assertEqual(get(f"cpu_pd_state_count:power-domain-cpu{n}"), "1")
+        for name in ("silver", "gold", "goldplus"):
+            self.assertEqual(
+                get(f"cpu_state_name:{name}-rail-power-collapse"), "present")
+
+    def test_the_parser_does_not_count_lines_where_it_must_count_phandles(self):
+        """The bug the first awk revision had.
+
+        `domain-idle-states = <0x30 0x31>` is two phandles on ONE line, so a
+        line-counting parser returns 1 and silently mis-reports an unablated
+        tree as ablated.  Asserted here on a synthetic tree so the test does not
+        depend on which DTB happens to be built.
+        """
+        import subprocess
+        import tempfile
+        dts = """
+/dts-v1/;
+/ {
+	model = "synthetic";
+	psci {
+		cluster_pd: power-domain-cluster {
+			#power-domain-cells = <0x00>;
+			domain-idle-states = <0x30 0x31>;
+		};
+	};
+	cpus {
+		idle-states {
+			cluster-sleep-0 { compatible = "domain-idle-state";
+				arm,psci-suspend-param = <0x41000044>; phandle = <0x30>; };
+			cluster-sleep-1 { compatible = "domain-idle-state";
+				arm,psci-suspend-param = <0x4100c344>; phandle = <0x31>; };
+		};
+	};
+};
+"""
+        with tempfile.TemporaryDirectory() as td:
+            src = pathlib.Path(td) / "t.dts"
+            dtb = pathlib.Path(td) / "t.dtb"
+            src.write_text(dts)
+            c = subprocess.run(["dtc", "-I", "dts", "-O", "dtb",
+                                "-o", str(dtb), str(src)],
+                               capture_output=True, text=True)
+            if c.returncode != 0:
+                self.skipTest("dtc unavailable")
+            r = subprocess.run(["python3", str(ROOT / PARSER), str(dtb)],
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("cluster_states=0x41000044 0x4100c344", r.stdout)
+
+
+class AblationVerifierTests(unittest.TestCase):
+    """The verifier must accept the right DTB and reject every wrong one."""
+
+    def _run(self, dtb, profile):
+        import subprocess
+        return subprocess.run(
+            ["bash", str(ROOT / VERIFY), str(dtb), profile],
+            capture_output=True, text=True,
+        )
+
+    def test_a_wrong_profile_is_rejected(self):
+        dtb = ROOT / "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb"
+        if not dtb.exists():
+            self.skipTest("no built DTB")
+        r = self._run(dtb, "baseline")
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        # The unablated tree must NOT pass as either ablation.
+        for profile in ("no-llcc-off", "no-cluster-idle"):
+            with self.subTest(profile=profile):
+                r = self._run(dtb, profile)
+                self.assertNotEqual(r.returncode, 0,
+                                    f"unablated DTB passed as {profile}")
+                self.assertIn("cluster_pd references", r.stdout)
+
+    def test_an_unknown_profile_is_refused(self):
+        dtb = ROOT / "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb"
+        if not dtb.exists():
+            self.skipTest("no built DTB")
+        r = self._run(dtb, "no-such-profile")
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("unknown profile", r.stderr)
+
+    def test_a_missing_dtb_is_refused(self):
+        r = self._run("/nonexistent.dtb", "baseline")
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("no such DTB", r.stderr)
+
+
+class ClusterHarnessGateTests(unittest.TestCase):
+    """The DTB-driven arming gate: the only way to identify these profiles."""
+
+    def setUp(self):
+        self.src = read(HARNESS)
+
+    def test_the_harness_knows_both_profiles(self):
+        self.assertRegex(self.src, r"no-llcc-off\|no-cluster-idle")
+        self.assertIn("no-llcc-off", usage_names(self.src))
+
+    def test_it_asserts_the_cmdline_is_byte_identical_to_baseline(self):
+        self.assertIn("byte-identical cmdline to baseline", self.src)
+        self.assertIn("cmp -s", self.src)
+
+    def test_the_probe_reads_the_device_tree_not_just_the_cmdline(self):
+        for field in ("dt_cluster_states=", "dt_cluster_param=",
+                      "dt_cpu_state_params=", "dt_cpu_state_names=", "dt_model="):
+            with self.subTest(field=field):
+                self.assertIn(field, self.src)
+        self.assertIn("/proc/device-tree/psci/power-domain-cluster", self.src)
+
+    def test_the_gate_requires_the_per_cpu_states_to_be_intact(self):
+        """The guard against the index-0 trap reaching the tablet."""
+        self.assertIn("per-CPU states are intact", self.src)
+        self.assertIn("expected 3 per-CPU idle states", self.src)
+        self.assertIn("0x40000004", self.src)
+
+    def test_the_gate_reads_the_dt_big_endian(self):
+        """The FDT is big-endian and /proc/device-tree exposes raw bytes.
+
+        Verified in drivers/of/kobj.c: `memory_read_from_buffer(..., pp->value,
+        ...)` copies without conversion, so every 32-bit read on a little-endian
+        host must be byte-swapped.  The cluster param did this from the start and
+        the per-CPU one did not - a latent gate that would have rejected a
+        correct DTB and looked like an ablated build failing to arm.
+        """
+        # Both 32-bit readers must byte-swap.
+        self.assertEqual(self.src.count(r"s/\(..\)\(..\)\(..\)\(..\)/\4\3\2\1/"), 2)
+        # And the per-CPU reader must not use a native-endian 32-bit read.
+        self.assertNotIn('printf "0x%x " $(od -An -tu4 "$s")', self.src)
+
+    def test_the_dt_identity_reaches_the_round_record(self):
+        self.assertIn("for f in dt_cluster_states dt_cluster_param "
+                      "dt_cpu_state_names dt_cpu_state_params dt_model; do",
+                      self.src)
+
+    def test_both_dt_fields_reach_both_probe_filters(self):
+        self.assertGreaterEqual(self.src.count("dt_cluster_states=|"), 2)
+
+
 def usage_names(src):
-    m = re.search(r"PROFILE is one of: ([^\n]+)", src)
-    return m.group(1) if m else ""
+    """The profile list from the harness's usage text.
+
+    The list is wrapped across lines once it grows past the width the file uses,
+    so this reads to the end of the usage block rather than to the end of the
+    line - an earlier one-line version silently truncated and reported the
+    last profile as missing.
+    """
+    m = re.search(r"PROFILE is one of: (.*?)\nEOF", src, re.S)
+    if not m:
+        m = re.search(r"PROFILE is one of: ([^\n]+)", src)
+    return " ".join(m.group(1).split()) if m else ""
 
 
 if __name__ == "__main__":
