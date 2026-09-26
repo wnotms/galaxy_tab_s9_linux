@@ -1,0 +1,27 @@
+2026-09-26T19:19:37Z wedge-ssh profile=csd-lock rounds=10 allow_power=1 window=150s
+2026-09-26T19:19:37Z starting boot_id=e9c36e03-174c-4791-b088-d36f6d3d06fe
+2026-09-26T19:19:38Z cmdline=console=tty0 msm.separate_gpu_kms=1 csdlock_debug=1 panic=10 consoleblank=0 gts9_minimal_r...
+2026-09-26T19:19:39Z arming gate PASSED: CSD instrument live (csd_lock_timeout=5000ms panic_on_ipistall=0), token consumed, recovery chain armed
+2026-09-26T19:19:39Z === csd-lock round 1/10 (boot_id before=e9c36e03-174c-4791-b088-d36f6d3d06fe) ===
+2026-09-26T19:23:04Z   round 1: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:23:04Z === csd-lock round 2/10 (boot_id before=047006fd-e4e7-43ef-92d9-9eba02f848dd) ===
+2026-09-26T19:26:24Z   round 2: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:26:24Z === csd-lock round 3/10 (boot_id before=69a4e75a-2973-401b-a26e-c77ce060a4e7) ===
+2026-09-26T19:29:45Z   round 3: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:29:45Z === csd-lock round 4/10 (boot_id before=212b4af8-60de-460a-b91a-ce886be60683) ===
+2026-09-26T19:33:05Z   round 4: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:33:05Z === csd-lock round 5/10 (boot_id before=ef582ba9-cd71-4ca6-8e68-d79e01470bc5) ===
+2026-09-26T19:36:26Z   round 5: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:36:26Z === csd-lock round 6/10 (boot_id before=5770fc99-be3f-468b-aed9-de07bd35b404) ===
+2026-09-26T19:39:46Z   round 6: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:39:46Z === csd-lock round 7/10 (boot_id before=61cdc5ab-9010-4338-869b-b9728eee9de6) ===
+2026-09-26T19:43:06Z   round 7: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:43:06Z === csd-lock round 8/10 (boot_id before=a81793a7-873f-4e32-83b3-47d615f0839f) ===
+2026-09-26T19:46:27Z   round 8: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:46:27Z === csd-lock round 9/10 (boot_id before=da5c65b3-254e-40c2-9886-c7e5a6ba6eda) ===
+2026-09-26T19:49:47Z   round 9: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:49:47Z === csd-lock round 10/10 (boot_id before=bcacb91a-b6c8-4b20-a344-378c5275b775) ===
+2026-09-26T19:54:08Z   round 10: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=1
+2026-09-26T19:54:08Z series complete: n=10 wedge=0
+2026-09-26T19:54:08Z not reproduced in 10 boots (this is a bound, not a fix)
+2026-09-26T19:54:08Z raw evidence: /home/ms/Samsung/galaxy_tab_s9_linux/out/wedge-ssh/csd-lock/

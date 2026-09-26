@@ -630,6 +630,20 @@ class WedgeResultTests(unittest.TestCase):
         # the brief's rule, applied
         self.assertIn("do not attribute the failure to the", flat)
 
+    def test_the_runner_output_preserving_the_bug_is_archived(self):
+        """The mis-classification must stay on the record, not be tidied away.
+
+        series-1-runner-output.txt is the run in which the wedge was recorded as
+        `verdict=clean`. Keeping it is the point: a result document that showed
+        only the corrected re-run would hide that the harness could miss a wedge,
+        which is the more useful lesson.
+        """
+        p = ROOT / self.EVID / "series-1-runner-output.txt"
+        self.assertTrue(p.is_file(), "the pre-fix runner output must be archived")
+        text = p.read_text()
+        self.assertIn("round 10: verdict=clean", text)
+        self.assertIn("series complete: n=10 wedge=0", text)
+
     def test_the_correlation_evidence_file_exists(self):
         p = ROOT / self.EVID / "dpu-overflow-correlation.txt"
         self.assertTrue(p.is_file())

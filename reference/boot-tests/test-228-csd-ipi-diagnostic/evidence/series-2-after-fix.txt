@@ -1,0 +1,13 @@
+2026-09-26T19:55:42Z wedge-ssh profile=csd-lock rounds=3 allow_power=1 window=150s
+2026-09-26T19:55:42Z starting boot_id=a94bad66-298a-4754-951e-df4f67a3403d
+2026-09-26T19:55:42Z cmdline=console=tty0 msm.separate_gpu_kms=1 csdlock_debug=1 panic=10 consoleblank=0 gts9_minimal_r...
+2026-09-26T19:55:43Z arming gate PASSED: CSD instrument live (csd_lock_timeout=5000ms panic_on_ipistall=0), token consumed, recovery chain armed
+2026-09-26T19:55:43Z === csd-lock round 1/3 (boot_id before=a94bad66-298a-4754-951e-df4f67a3403d) ===
+2026-09-26T19:59:04Z   round 1: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T19:59:04Z === csd-lock round 2/3 (boot_id before=862fb019-9db2-413b-8101-9f0c15606979) ===
+2026-09-26T20:03:51Z   round 2: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T20:03:51Z === csd-lock round 3/3 (boot_id before=58a1f728-252d-4137-94ce-136c5159e05a) ===
+2026-09-26T20:07:12Z   round 3: verdict=clean wedge_markers=0 suspect_markers=0 self_recovery=no extra_boots=0
+2026-09-26T20:07:12Z series complete: n=3 wedge=0
+2026-09-26T20:07:12Z not reproduced in 3 boots (this is a bound, not a fix)
+2026-09-26T20:07:12Z raw evidence: /home/ms/Samsung/galaxy_tab_s9_linux/out/wedge-ssh/csd-lock/
