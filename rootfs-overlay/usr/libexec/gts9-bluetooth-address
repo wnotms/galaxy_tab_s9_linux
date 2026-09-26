@@ -1,0 +1,179 @@
+#!/bin/sh
+# Provide the X710's own Bluetooth public address, which the controller cannot
+# supply for itself.
+#
+# Why this exists
+# ---------------
+# The WCN6855 on this board reports a placeholder public address and the upstream
+# NVM (qca/wcnhpnv21g.bin) contains the *same* placeholder, so btqca cannot tell
+# a real address from a default one:
+#
+#   drivers/bluetooth/btqca.c:702  qca_check_bdaddr()
+#       if (!bacmp(&bda->bdaddr, &config->bdaddr))
+#               hci_set_quirk(hdev, HCI_QUIRK_USE_BDADDR_PROPERTY);
+#
+# With that quirk set and no address supplied, hci_sync deliberately leaves the
+# controller unconfigured and closes it:
+#
+#   net/bluetooth/hci_sync.c:5501-5504
+#       if (hci_dev_test_flag(hdev, HCI_RFKILLED) ||
+#           hci_dev_test_flag(hdev, HCI_UNCONFIGURED) || ...)
+#               hci_dev_close_sync(hdev);
+#
+# so the controller sits in "DOWN RAW" and BlueZ sees no usable index at all.
+# The kernel can only take this address from the Device Tree
+# (hci_dev_get_bd_addr_from_property(), net/bluetooth/hci_sync.c:3612), and the
+# address is unique per unit - it is provisioning data, not a board constant - so
+# a DTS property would be wrong for every tablet but one. The kernel offers the
+# standard management interface instead, and BlueZ exposes it as
+# `btmgmt public-addr`; that is what this helper uses.
+#
+# Root cause evidence: reference/boot-tests/test-218-bluetooth-firmware/
+#
+# The address comes from Samsung's own provisioning file, read-only:
+#   /efs/bluetooth/bt_addr      17 bytes of ASCII "XX:XX:XX:XX:XX:XX"
+# efs is mounted read-only with noload and unmounted again in every path. This
+# helper never writes to efs, persist or any other Android partition.
+#
+# Deliberately harmless when it cannot help: every step is bounded, every failure
+# is recorded and then ignored, and the exit status is always 0. It never reboots,
+# never writes an address it did not read from the device, and never invents one.
+
+set -u
+
+EFS_DEVICE=${GTS9_BT_EFS_DEVICE:-/dev/disk/by-partlabel/efs}
+EFS_MOUNT=${GTS9_BT_EFS_MOUNT:-/run/gts9-bt-efs}
+BT_ADDR_FILE=${GTS9_BT_ADDR_FILE:-$EFS_MOUNT/bluetooth/bt_addr}
+BTMGM=${GTS9_BTMGMT:-/usr/bin/btmgmt}
+KMSG=${GTS9_BT_KMSG:-/dev/kmsg}
+STAGE_HELPER=${GTS9_BT_STAGE_HELPER:-/usr/libexec/gts9-record-debian-stage}
+ADDR_WAIT_SECONDS=${GTS9_BT_ADDR_WAIT_SECONDS:-10}
+
+log() {
+	printf 'gts9-bt-addr: %s\n' "$*"
+	printf 'gts9-bt-addr: %s\n' "$*" > "$KMSG" 2>/dev/null || true
+}
+
+stage() {
+	[ -x "$STAGE_HELPER" ] || return 0
+	"$STAGE_HELPER" "$1" 2>/dev/null || true
+}
+
+cleanup() {
+	umount "$EFS_MOUNT" 2>/dev/null || true
+	rmdir "$EFS_MOUNT" 2>/dev/null || true
+}
+trap cleanup EXIT INT TERM
+
+# ---------------------------------------------------------------------------
+# 1. Read this unit's address from Samsung's provisioning file.
+# ---------------------------------------------------------------------------
+addr=
+waited=0
+while [ "$waited" -lt "$ADDR_WAIT_SECONDS" ]; do
+	[ -b "$EFS_DEVICE" ] && break
+	sleep 1
+	waited=$((waited + 1))
+done
+
+if [ ! -b "$EFS_DEVICE" ]; then
+	log "no $EFS_DEVICE after ${ADDR_WAIT_SECONDS}s; the controller will stay unconfigured"
+	stage bluetooth-address-unavailable
+	exit 0
+fi
+
+mkdir -p "$EFS_MOUNT" 2>/dev/null || true
+# ro,noload matters: a plain `ro` mount of a filesystem needing recovery prints
+# "write access will be enabled during recovery" and replays the journal, which
+# writes to the owner's efs partition. noload skips the journal entirely.
+if mount -t ext4 -o ro,noload "$EFS_DEVICE" "$EFS_MOUNT" 2>/dev/null; then
+	if [ -r "$BT_ADDR_FILE" ]; then
+		addr=$(tr -d ' \t\r\n' < "$BT_ADDR_FILE" 2>/dev/null | head -c 32)
+	fi
+	cleanup
+else
+	log "could not mount efs read-only; leaving the controller alone"
+	stage bluetooth-address-unavailable
+	exit 0
+fi
+
+# Validate strictly: six hex pairs. A malformed or empty file must never be
+# passed on, or we would be writing an address we did not verify.
+if ! printf '%s' "$addr" | grep -qiE '^([0-9a-f]{2}:){5}[0-9a-f]{2}$'; then
+	log "bt_addr missing or malformed (${addr:-empty}); the controller will stay unconfigured"
+	stage bluetooth-address-unavailable
+	exit 0
+fi
+
+# An all-zero address is explicitly rejected by the kernel as "not provisioned".
+case "$addr" in
+00:00:00:00:00:00|00:00:00:00:00:00:00) log "bt_addr is all zero; refusing to use it"
+	stage bluetooth-address-unavailable
+	exit 0
+	;;
+esac
+
+# ---------------------------------------------------------------------------
+# 2. Wait for the controller to register, then give it the address.
+# ---------------------------------------------------------------------------
+# hci_qca registers hci0 from the DT serdev during boot; the firmware download
+# takes a second or two. The management index only appears for an UNCONFIGURED
+# controller after the address is set, so poll for the node and then act.
+waited=0
+while [ "$waited" -lt "$ADDR_WAIT_SECONDS" ]; do
+	[ -e /sys/class/bluetooth/hci0 ] && break
+	sleep 1
+	waited=$((waited + 1))
+done
+
+if [ ! -e /sys/class/bluetooth/hci0 ]; then
+	log "no hci0 after ${ADDR_WAIT_SECONDS}s; nothing to configure"
+	stage bluetooth-address-unavailable
+	exit 0
+fi
+
+if [ ! -x "$BTMGM" ]; then
+	log "$BTMGM not installed; cannot set the public address"
+	stage bluetooth-address-unavailable
+	exit 0
+fi
+
+# Every btmgmt call is wrapped in `timeout`, and stdin is fed from the shell
+# builtin `:` rather than /dev/null. Both details were forced by measurement on
+# the tablet, not chosen:
+#
+#   * `btmgmt ... </dev/null` HANGS. systemd gives a unit /dev/null on stdin, and
+#     with it `btmgmt public-addr` never returned; the unit had to be killed by
+#     TimeoutStartSec. Piped stdin (or a tty) works and returns in milliseconds.
+#   * `btmgmt info` BLOCKS when it runs before bluetoothd has opened the
+#     management socket, which is exactly the cold-boot case. So the address is
+#     set first and the probe afterwards is best-effort.
+#
+# Neither is a workaround for a broken controller: the address is accepted in
+# both forms, and the operation is idempotent.
+run_btmgmt() { # run_btmgmt SECONDS ARGS...
+	secs=$1
+	shift
+	: | timeout "$secs" "$BTMGM" "$@" 2>&1
+}
+
+out=$(run_btmgmt 20 public-addr "$addr")
+if printf '%s' "$out" | grep -qi 'complete'; then
+	log "set public address $addr (from $BT_ADDR_FILE)"
+	stage bluetooth-address-set
+	# Report whether the controller is usable now, but never let this probe
+	# change the outcome - the address is already set either way.
+	if run_btmgmt 10 info | grep -q 'Index list with 1 item'; then
+		log "controller is configured and visible to BlueZ"
+	else
+		log "address set; the BlueZ index was not readable yet (bluetoothd may be down)"
+	fi
+elif printf '%s' "$out" | grep -qiE 'already|busy|in progress'; then
+	log "controller already configured; leaving it alone"
+	stage bluetooth-address-present
+else
+	log "could not set the public address: $out"
+	stage bluetooth-address-failed
+fi
+
+exit 0
