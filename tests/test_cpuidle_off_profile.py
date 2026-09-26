@@ -527,7 +527,6 @@ class TestRecordTests(unittest.TestCase):
         self.assertEqual(text.count("PASS"), 1, "only the bundle verdict may say PASS")
 
     def test_the_identity_artifacts_are_present_and_match_the_bundle(self):
-        import json  # noqa: F401  (kept for clarity of intent; not needed)
         for name in ("BUNDLE_INFO", "bundle-SHA256SUMS", "kernel-SHA256SUMS",
                      "kernel.release", "source-commit.txt"):
             with self.subTest(artifact=name):
@@ -538,12 +537,44 @@ class TestRecordTests(unittest.TestCase):
             read(f"{self.RECORD}/bundle-SHA256SUMS"),
             read("out/boot-bundle-cpuidle-off/SHA256SUMS"),
         )
-        # And the source commit must be the current HEAD, so the record cannot
-        # describe a different tree than the one that produced the bundle.
+        # The recorded source commit is the commit whose tree the bundle was
+        # built from.  It cannot be HEAD, because committing this record moves
+        # HEAD forward - an earlier version of this test asserted equality and
+        # failed for exactly that reason, which is the test doing its job on the
+        # wrong invariant.
+        #
+        # The invariant that actually matters, and that a wrong bundle would
+        # break, is that no bundle *input* has changed since that commit.  If
+        # someone edits the profile's command line or the kernel after building,
+        # the recorded hashes stop describing the tree and this fails.
         import subprocess
-        head = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"],
-                              capture_output=True, text=True, check=True).stdout
-        self.assertEqual(read(f"{self.RECORD}/source-commit.txt"), head)
+
+        def git(*args):
+            return subprocess.run(["git", "-C", str(ROOT), *args],
+                                  capture_output=True, text=True,
+                                  check=True).stdout.strip()
+
+        recorded = read(f"{self.RECORD}/source-commit.txt").strip()
+        self.assertRegex(recorded, r"^[0-9a-f]{40}$")
+        # It must be committed history, not a dirty worktree state that no
+        # commit describes.
+        git("merge-base", "--is-ancestor", recorded, "HEAD")
+
+        inputs = [
+            "boot/cmdline.stall-ab-cpuidle-off.example.txt",
+            "boot/bootconfig.example.txt",
+            "kernel/dts/sm8550-samsung-gts9wifi.dts",
+            "kernel/config/gts9wifi-mainline.fragment",
+            "scripts/build-boot-bundle.sh",
+            "scripts/prepare-kernel.sh",
+            "kernel/patches",
+        ]
+        changed = git("diff", "--name-only", recorded, "HEAD", "--", *inputs)
+        self.assertEqual(
+            changed, "",
+            "a bundle input changed after the recorded commit, so the recorded "
+            "hashes no longer describe this tree: " + changed,
+        )
 
     def test_it_states_the_one_partition_delta_and_the_current_device_state(self):
         text = read(f"{self.RECORD}/README.md")
