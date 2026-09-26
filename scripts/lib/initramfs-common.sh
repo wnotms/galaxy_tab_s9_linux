@@ -181,7 +181,7 @@ gts9_write_manifest() {
     local init_file=$tree/init
     local gadget=no msc=no gpt=no rtc=no bcb=no display=no report=no
     # Creating a configfs gadget means creating the directory or writing the UDC.
-    if grep -qE 'mkdir[^\n]*usb_gadget' "$init_file" 2>/dev/null ||
+    if grep -qE 'mkdir.*usb_gadget' "$init_file" 2>/dev/null ||
        grep -qE '> *"\$(G|GADGET)/UDC"' "$init_file" 2>/dev/null; then
         gadget=yes
     fi

@@ -139,6 +139,22 @@ done
     printf 'initramfs_sha256=%s\n' "$(sha256sum "$initramfs" | cut -d' ' -f1)"
     printf 'kernel_release=%s\n' "$(cat "$kernel_out/kernel.release" 2>/dev/null || echo unknown)"
 } > "$out/BUNDLE_INFO"
+
+# Carry the initramfs manifest into the bundle as initramfs.manifest.
+#
+# The validator has to know which profile is inside init_boot, and inside a bundle
+# both profiles are called init_boot.img - so the filename cannot answer it.  The
+# manifest is written by whichever builder produced the image and states the
+# profile explicitly; the validator then cross-checks that statement against the
+# content of the extracted /init rather than trusting either one alone.
+if [ -f "$initramfs.manifest" ]; then
+    cp "$initramfs.manifest" "$out/initramfs.manifest"
+    echo "initramfs profile: $(sed -n 's/^profile=//p' "$out/initramfs.manifest" | head -1)"
+else
+    echo 'WARNING: no manifest beside the initramfs; the validator cannot check its profile' >&2
+    rm -f "$out/initramfs.manifest"
+fi
+
 cat "$out/BUNDLE_INFO"
 
 cat "$out/SHA256SUMS"

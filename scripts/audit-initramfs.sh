@@ -191,7 +191,7 @@ has() {
 # directory-creation and UDC-binding commands that actually do it.
 creates_gadget=no
 while IFS= read -r f; do
-	if grep -qE 'mkdir[^\n]*usb_gadget|>\s*\$?\{?G\}?/UDC|> "\$GADGET/UDC"' "$f" 2>/dev/null; then
+	if grep -qE 'mkdir.*usb_gadget|> *"\$(G|GADGET)/UDC"' "$f" 2>/dev/null; then
 		creates_gadget=yes
 	fi
 done < <(find "$tree" -maxdepth 2 -type f \( -name 'init' -o -name '*.sh' \) 2>/dev/null)
@@ -238,7 +238,7 @@ printf '  %-26s %s\n' "init_source" "$init_source"
 
 # Does /init create a USB gadget, by operation rather than by noun?
 init_gadget=no
-grep -qE 'mkdir[^\n]*usb_gadget|> "\$G/UDC"|> "\$GADGET/UDC"' "$tree/init" 2>/dev/null && init_gadget=yes
+grep -qE 'mkdir.*usb_gadget|> *"\$(G|GADGET)/UDC"' "$tree/init" 2>/dev/null && init_gadget=yes
 printf '  %-26s %s\n' "init_creates_usb_gadget" "$init_gadget"
 
 exit 0

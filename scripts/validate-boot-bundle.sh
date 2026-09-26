@@ -314,6 +314,12 @@ if [ "$vendor_boot_ok" = 1 ]; then
 fi
 
 # Check the actual generic ramdisk, not just the presence of its filename.
+#
+# The profile is decided by the CONTENT of /init and cross-checked against the
+# .manifest built next to the source image - never by the filename.  A production
+# image and a debug image both end up as `init_boot.img` inside a bundle, so the
+# name says nothing about which one is being validated, and applying the wrong
+# rule set would produce a confident wrong verdict.
 check_initramfs() {
     local ramdisk=$1 magic entries init_line
     if [ -n "$ramdisk" ] && [ -s "$ramdisk" ]; then
@@ -325,6 +331,7 @@ check_initramfs() {
                     entries=$(wc -l < "$tmp/cpio.list")
                     pass "initramfs: cpio archive with $entries entries"
 
+                    mkdir -p "$tmp/initcheck"
                     if grep -qxE '\.?/?init' "$tmp/cpio.list"; then
                         pass 'initramfs: /init present'
                         init_line=$(cpio -tv --quiet < "$tmp/initramfs.cpio" 2>/dev/null \
@@ -334,15 +341,70 @@ check_initramfs() {
                             '') fail 'initramfs: cannot read the /init entry' ;;
                             *) fail "initramfs: /init is not executable ($init_line)" ;;
                         esac
+
+                        # Which script is /init?  The builders copy a source to
+                        # /init, so the name in the archive is always exactly
+                        # "init" and only the content distinguishes the profiles.
+                        (cd "$tmp/initcheck" &&
+                            cpio -i --quiet init < "$tmp/initramfs.cpio" >/dev/null 2>&1) || true
+                        init_profile=unknown
+                        if [ -s "$tmp/initcheck/init" ]; then
+                            if grep -q 'MINIMAL_ROOTFS=' "$tmp/initcheck/init" &&
+                               grep -qE 'setup_usb_gadget|display_recover' "$tmp/initcheck/init"; then
+                                init_profile=bringup
+                            elif grep -q 'ROOTFS_DEVICE=' "$tmp/initcheck/init" &&
+                                 grep -q 'minimal_state_stage' "$tmp/initcheck/init"; then
+                                init_profile=minimal
+                            fi
+                        fi
+                        pass "initramfs: /init is the $init_profile profile"
+
+                        # The manifest built beside the source image states the
+                        # intent; the content check above states what was packed.
+                        # They must agree, or something built the wrong tree.
+                        manifest="$bundle_dir/initramfs.manifest"
+                        if [ -f "$manifest" ]; then
+                            declared=$(sed -n 's/^profile=//p' "$manifest" | head -1)
+                            if [ "$declared" = "$init_profile" ]; then
+                                pass "initramfs: manifest declares profile=$declared"
+                            else
+                                fail "initramfs: manifest declares profile=$declared but /init is $init_profile"
+                            fi
+                        else
+                            note 'initramfs: no initramfs.manifest in the bundle; profile rules still apply'
+                        fi
                     else
                         fail 'initramfs: no /init (a placeholder tree must never be flashed)'
                     fi
 
                     if grep -qE '(^|/)bin/busybox$' "$tmp/cpio.list"; then
                         pass 'initramfs: /bin/busybox present'
+                        # Extract it to check the ELF itself.  cpio -i will not
+                        # create the parent directory, so it has to exist first -
+                        # without this the extraction failed silently and the two
+                        # checks below never ran, which looked like a pass.
+                        mkdir -p "$tmp/bbcheck/bin"
+                        (cd "$tmp/bbcheck" &&
+                            cpio -i --quiet bin/busybox < "$tmp/initramfs.cpio" >/dev/null 2>&1) || true
+                        if [ -s "$tmp/bbcheck/bin/busybox" ]; then
+                            if readelf -h "$tmp/bbcheck/bin/busybox" 2>/dev/null | grep -q 'Machine:.*AArch64'; then
+                                pass 'initramfs: /bin/busybox is aarch64'
+                            else
+                                fail 'initramfs: /bin/busybox is not an aarch64 ELF'
+                            fi
+                            if readelf -l "$tmp/bbcheck/bin/busybox" 2>/dev/null | grep -q INTERP; then
+                                fail 'initramfs: /bin/busybox is dynamically linked'
+                            else
+                                pass 'initramfs: /bin/busybox is static'
+                            fi
+                        else
+                            fail 'initramfs: /bin/busybox is listed but could not be extracted'
+                        fi
                     else
                         fail 'initramfs: no /bin/busybox'
                     fi
+
+                    check_initramfs_profile "$tmp/cpio.list" "$init_profile"
                 else
                     fail 'initramfs: cpio archive is not readable'
                 fi
@@ -354,6 +416,91 @@ check_initramfs() {
             fail "initramfs: magic is $magic, expected 02214c18 (legacy LZ4)"
         fi
     fi
+}
+
+# check_initramfs_profile CPIO_LIST PROFILE
+#
+# A production image must not carry what the Debian boot does not need; a debug
+# image may.
+#
+# Two disciplines make these verdicts trustworthy rather than noisy:
+#
+#   * inventory rules run on the file LIST, so a comment cannot satisfy or defeat
+#     them;
+#   * execution rules run on the extracted /init with COMMENTS STRIPPED.  A plain
+#     `grep ttyGS` would flag the debug script's long explanation of why it no
+#     longer creates a serial function - a false positive that would get the
+#     validator ignored, which is worse than not having it.
+check_initramfs_profile() {
+    local list=$1 profile=$2
+
+    # Neither profile may carry a kernel module tree: modules belong on the Debian
+    # root in /usr/lib/modules/<release>, and a module tree in init_boot is how a
+    # 150 MiB mistake reaches a device.
+    if grep -qE '(^|/)lib/modules/' "$list"; then
+        fail 'initramfs: carries a kernel module tree (modules belong on the Debian root)'
+    else
+        pass 'initramfs: no kernel module tree'
+    fi
+
+    case "$profile" in
+    minimal)
+        local forbidden
+        for forbidden in 'lib/firmware/' 'gts9-exec-default' 'gts9-to-recovery' \
+                         'gts9-reboot-' 'bringup-init' 'gts9-minimal-pid1' \
+                         'minimal-rootfs-init'; do
+            if grep -qE "$forbidden" "$list"; then
+                fail "initramfs: production image contains $forbidden"
+            fi
+        done
+        pass 'initramfs: production image has no firmware, no debug helper, no trampoline'
+
+        if [ -s "$tmp/initcheck/init" ]; then
+            sed 's/#.*//' "$tmp/initcheck/init" > "$tmp/initcheck/init.code"
+            while IFS='|' read -r pattern label; do
+                [ -n "$pattern" ] || continue
+                if grep -qE "$pattern" "$tmp/initcheck/init.code"; then
+                    fail "initramfs: production /init can $label"
+                fi
+            done <<'RULES'
+mkdir.*usb_gadget|create a configfs USB gadget
+mass_storage\.usb0|set up USB mass storage
+/dev/disk/by-partlabel|parse the GPT partition table
+PARTNAME|parse the GPT partition table
+/dev/rtc|read RTC telemetry
+hwclock|read RTC telemetry
+boot-recovery|write the bootloader control block
+fb0/blank|do display recovery
+display_recover|do display recovery
+regulator_summary|dump regulator state
+devices_deferred|dump deferred devices
+dmesg|dump the kernel log
+ttyGS|use a USB serial port
+insmod|load a kernel module
+modprobe|load a kernel module
+RULES
+            pass 'initramfs: production /init executes none of the debug capabilities'
+        fi
+        ;;
+    bringup)
+        # The debug image keeps every diagnostic.  What it must still satisfy is
+        # the no-serial invariant, because that is a kernel-level fact rather than
+        # a diagnostic: the kernel has no ACM function at all, so creating one
+        # could only fail.
+        if [ -s "$tmp/initcheck/init" ]; then
+            sed 's/#.*//' "$tmp/initcheck/init" > "$tmp/initcheck/init.code"
+            if grep -qE 'mkdir.*functions/acm|mkdir.*functions/gser' "$tmp/initcheck/init.code"; then
+                fail 'initramfs: debug /init creates a serial gadget function (the kernel provides none)'
+            else
+                pass 'initramfs: debug /init creates no serial gadget function'
+            fi
+        fi
+        pass 'initramfs: debug image keeps its diagnostics by design'
+        ;;
+    *)
+        note 'initramfs: profile undetermined; skipping profile-specific rules'
+        ;;
+    esac
 }
 
 # --------------------------------------------------------------------------
