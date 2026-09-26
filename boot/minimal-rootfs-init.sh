@@ -80,12 +80,21 @@ minimal_rescue_shell() {
     minimal_emit 'rescue shell: /bin/sh -i (type exit to restart it)'
 
     # Keep PID 1 alive if an owner exits the interactive shell.  This path does
-    # not depend on tty1 or USB ACM; /dev/console is the only shell endpoint.
+    # not depend on USB: it uses the panel VT, with /dev/console only as a
+    # fallback.  Preferring tty1 over /dev/console is deliberate - see the long
+    # note at the end of boot/bringup-init.sh: /dev/console used to be the USB ACM
+    # gadget port, and writing to it from PID 1 blocks once nobody drains it.
+    # With the serial consoles removed it can no longer resolve to ttyGS, but the
+    # rescue shell is the last line of defence and must not depend on that.
     while :; do
-        if [ -c /dev/console ]; then
+        if [ -c /dev/tty1 ]; then
+            /bin/sh -i </dev/tty1 >/dev/tty1 2>&1
+        elif [ -c /dev/console ]; then
             /bin/sh -i </dev/console >/dev/console 2>&1
         else
-            /bin/sh -i
+            minimal_emit 'no usable console for the rescue shell; waiting'
+            sleep 5
+            continue
         fi
         sleep 1
     done

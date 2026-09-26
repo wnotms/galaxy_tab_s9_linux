@@ -510,7 +510,25 @@ USB_GADGET_MODE=${GTS9_USB_GADGET_MODE:-acm}
 #   marker - write a few known lines once and record everything the host sends
 #            into gts9-serial-in.txt on the card, which makes both directions of
 #            the link measurable through the mass-storage channel
-USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-shell}
+#   none   - leave the port alone (the default since 2026-09-26)
+#
+# "none" is the default because the interactive shell is a *blocking writer* on
+# this port, not because the port is useless.  It is the same mechanism
+# docs/BOOT_CONSOLE_BLOCK.md measures: gs_write() only moves bytes into an 8 KiB
+# kfifo and gs_write_room() reports the room left, so n_tty_write() sleeps in
+# wait_woken() on tty->write_wait as soon as that kfifo is full and nothing is
+# draining the host's side.  The shell also has to stay the port's only reader -
+# a host write only completes while something here is reading - so the port
+# cannot simply be left unattended either.
+#
+# The serial consoles are gone from the kernel command line (there is no
+# console=ttyGS and no ttyMSM0), and the tablet is reached over the NCM network
+# with ssh.  This shell remains reachable deliberately: set gts9_usb_console=shell
+# on the command line when the initramfs is the only thing running and there is
+# no network to ssh over - a hand-built rescue image, or a boot whose userspace
+# never came up.  It is opt-in so that an ordinary boot cannot hang on it, which
+# is exactly the failure the operator reported.
+USB_CONSOLE_MODE=${GTS9_USB_CONSOLE_MODE:-none}
 # Seconds to leave the gadget alone before collecting the report, so a host can
 # talk to it first (used by the serial probe).
 USB_WAIT=${GTS9_USB_WAIT:-0}
@@ -1407,7 +1425,16 @@ if [ "$gadget_setup" = 1 ]; then
             log 'WARN: no mounted medium; serial input cannot be recorded'
         fi
     fi
-    if [ -c /dev/ttyGS0 ] && [ "$USB_CONSOLE_MODE" != marker ]; then
+    # The interactive shell.  Strictly opt-in: the test is for `shell`/`shell+kmsg`
+    # and NOT `!= marker`, because the mode may also be `none`, and a default that
+    # matched every value except `marker` would run the shell on an ordinary boot -
+    # which is the blocking writer this change exists to remove.  See the
+    # USB_CONSOLE_MODE comment near the top for the mechanism.
+    case "$USB_CONSOLE_MODE" in
+        shell | shell+kmsg) usb_shell_wanted=1 ;;
+        *) usb_shell_wanted=0 ;;
+    esac
+    if [ -c /dev/ttyGS0 ] && [ "$usb_shell_wanted" = 1 ]; then
         # The shell is the console.  It is also the only reader of the port, and
         # it has to stay the only one: a host write only completes while
         # something on this side is reading, which is exactly why the earlier
@@ -1432,15 +1459,49 @@ if [ "$gadget_setup" = 1 ]; then
             log 'usb shell ended (host closed the port); reopening'
         done
     fi
-    log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
+    # Say what happened rather than claiming a failure: `none` is the default and
+    # reaching this line with it is completely normal.
+    case "$USB_CONSOLE_MODE" in
+        none)
+            log 'usb console: /dev/ttyGS0 left alone (gts9_usb_console=none)'
+            ;;
+        *)
+            [ -c /dev/ttyGS0 ] || \
+                log 'WARN: /dev/ttyGS0 did not appear; staying on the console shell'
+            ;;
+    esac
 fi
 
 # PID 1 must survive EOF, an unavailable UART and a user's "exit". Replacing
 # init with a shell makes all of those cases panic (Attempted to kill init!).
-# Reopen the console after devtmpfs has been mounted; /dev/console may not
-# have existed when the kernel opened init's standard descriptors.
+#
+# This used to reopen /dev/console, which is the writer docs/BOOT_CONSOLE_BLOCK.md
+# describes: with console=ttyGS1 on the command line /dev/console was the USB ACM
+# port, and n_tty_write() to a gadget serial port blocks in wait_woken() until
+# that port has room - so a PID 1 shell whose output nobody drained stopped the
+# whole boot.  Since 2026-09-26 there is no ttyGS console at all
+# (CONFIG_U_SERIAL_CONSOLE is unset) and the remaining console is the panel VT, so
+# /dev/console can only resolve to tty0 or to ttynull, and ttynull_write() returns
+# without waiting.
+#
+# It is pinned to /dev/tty1 anyway rather than left on /dev/console, because the
+# shell must never depend on which console the kernel happened to prefer - that
+# preference is exactly what the removed `console=` arguments used to change
+# underneath it.
+#
+# /dev/tty1 may legitimately be absent (no DRM, no fbcon), and a rescue path that
+# blocks on a missing device is the same failure in a new place, so the shell
+# falls back to /dev/console and finally to a bounded sleep if nothing is usable.
 while :; do
-    /bin/sh -i </dev/console >/dev/console 2>&1
+    if [ -c /dev/tty1 ]; then
+        /bin/sh -i </dev/tty1 >/dev/tty1 2>&1
+    elif [ -c /dev/console ]; then
+        /bin/sh -i </dev/console >/dev/console 2>&1
+    else
+        log 'no usable console for the PID 1 shell; waiting'
+        sleep 5
+        continue
+    fi
     log 'console shell ended or unavailable; PID 1 remains alive, retrying in 5s'
     sleep 5
 done

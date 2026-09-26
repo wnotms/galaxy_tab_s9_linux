@@ -198,6 +198,41 @@ static void number_to_text(long value, char *out)
 	out[i] = '\0';
 }
 
+/*
+ * Open the rescue shell's tty, preferring the panel VT and *never* blocking on a
+ * port nobody is draining.
+ *
+ * This is the last-resort path - Debian's /sbin/init could not be executed - so
+ * it has to work when almost nothing else does, and it must not become a new
+ * place to hang.  /dev/console used to be the only endpoint here, and on this
+ * board that resolved to the USB ACM gadget port: n_tty_write() there waits on
+ * tty->write_wait until the port has room, so a rescue shell whose output nobody
+ * read stopped dead - the same failure docs/BOOT_CONSOLE_BLOCK.md measures for
+ * PID 1's own shell.  With the serial consoles removed (2026-09-26) it cannot
+ * resolve to ttyGS any more, but tty1 is still the better endpoint and is tried
+ * first.
+ *
+ * O_NONBLOCK is passed as well, so that even the /dev/console fallback returns
+ * -EAGAIN from n_tty_write() instead of sleeping forever.  Both candidates are
+ * only used if the open actually succeeded.
+ */
+static long open_rescue_tty(void)
+{
+	static const char *const candidates[] = { "/dev/tty1", "/dev/console", 0 };
+	int index;
+
+	for (index = 0; candidates[index]; index++) {
+		long fd = sys_call6(SYS_openat, AT_FDCWD,
+				    (long)candidates[index],
+				    O_RDWR | O_NONBLOCK, 0, 0, 0);
+
+		if (fd >= 0)
+			return fd;
+	}
+
+	return -1;
+}
+
 __attribute__((noreturn)) static void rescue_loop(void)
 {
 	static const char command[] =
@@ -220,11 +255,9 @@ __attribute__((noreturn)) static void rescue_loop(void)
 		long pid = sys_call6(SYS_clone, SIGCHLD, 0, 0, 0, 0, 0);
 
 		if (pid == 0) {
-			long console;
+			long console = open_rescue_tty();
 
 			sys_call6(SYS_setsid, 0, 0, 0, 0, 0, 0);
-			console = sys_call6(SYS_openat, AT_FDCWD,
-					    (long)"/dev/console", O_RDWR, 0, 0, 0);
 			if (console >= 0) {
 				sys_call6(SYS_ioctl, console, TIOCSCTTY, 0, 0, 0, 0);
 				sys_call6(SYS_dup3, console, 0, 0, 0, 0, 0);

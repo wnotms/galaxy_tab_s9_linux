@@ -33,8 +33,13 @@ GTS9_MINIMAL_CMDLINE=${GTS9_MINIMAL_CMDLINE:-}
 GTS9_MINIMAL_MMC_DEVICES=${GTS9_MINIMAL_MMC_DEVICES:-}
 
 # Emit one line on every channel that can be reached without DRM, fbcon, tty1
-# or USB: stdout (serial console), the kernel log, and /dev/console.  tty1 is
-# opportunistic only.
+# or USB: stdout, the kernel log, /dev/console and (opportunistically) tty1.
+#
+# stdout is the panel VT now, not a serial console: the command line has carried
+# nothing but `console=tty0` since 2026-09-26.  /dev/console is kept because this
+# runs in the initramfs on failure paths where it is the most likely endpoint to
+# exist at all, and it can no longer be a port that blocks - with no ttyGS
+# console it resolves to tty0 or ttynull.
 minimal_emit() {
     minimal_message=$*
     printf '%s\n' "$minimal_message"
