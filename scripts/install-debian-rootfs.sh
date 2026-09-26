@@ -2,13 +2,17 @@
 # Install the gts9 Debian userspace on a mounted Debian root filesystem, or
 # build the same tree as a tarball that TWRP can extract offline.
 #
-# Direct install (host, with the card mounted):
+# Direct install (host, with the card mounted).  --ssh-key is how a rootfs gets
+# its login now that the serial console is gone:
 #
-#	sudo ./scripts/install-debian-rootfs.sh /mnt/debian
+#	sudo ./scripts/install-debian-rootfs.sh --ssh-key ~/.ssh/id_ed25519.pub /mnt/debian
 #
-# Offline deploy through TWRP (recommended: the tablet's recovery has no repo):
+# Offline deploy through TWRP (recommended: the tablet's recovery has no repo).
+# A key can be delivered this way too, because the tarball is written --owner=0
+# and root is who this project connects as:
 #
-#	./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar
+#	./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar \
+#	    --ssh-key ~/.ssh/id_ed25519.pub
 #	adb push out/gts9-debian-overlay.tar /tmp/
 #	# in TWRP:
 #	cd /mnt/debian && tar -xpf /tmp/gts9-debian-overlay.tar && sync
@@ -27,6 +31,7 @@
 #     unit's own WantedBy= (no systemctl needed, works in TWRP)
 #   * kernel modules under lib/modules/<release> plus a basedir depmod
 #   * firmware under lib/firmware/
+#   * optionally an ssh public key for root, with --ssh-key
 #
 # It never formats, never runs fsck, never writes outside the target and
 # refuses to operate on /.
@@ -41,6 +46,15 @@ tar_file=
 do_modules=1
 do_firmware=1
 depmod=${GTS9_DEPMOD:-depmod}
+# root's ssh public key, installed into the target's authorized_keys.  This is
+# the only way to give a fresh rootfs a key now: the serial console that
+# `gts9-debug-channel.sh install-key` used is gone (see
+# docs/FAST_DEBUG_CHANNEL.md), so without this option a newly installed rootfs
+# can only be reached through TWRP or a password login.
+ssh_key=${GTS9_SSH_KEY_FILE:-}
+# Which account on the target receives it.  Root, because that is who the rest of
+# this project connects as (scripts/gts9-ssh.sh defaults to GTS9_SSH_USER=root).
+ssh_key_user=${GTS9_SSH_KEY_USER:-root}
 # Toolchain used for the freestanding overlay helpers; overridable so tests
 # (and hosts without clang) can exercise the "no toolchain" path.
 cc=${GTS9_CC:-clang}
@@ -58,6 +72,8 @@ while [ $# -gt 0 ]; do
 	--tar) tar_file=${2:?--tar needs a path}; shift 2 ;;
 	--modules) modules_root=${2:?--modules needs a directory}; shift 2 ;;
 	--firmware) firmware_root=${2:?--firmware needs a directory}; shift 2 ;;
+	--ssh-key) ssh_key=${2:?--ssh-key needs a .pub file}; shift 2 ;;
+	--ssh-key-user) ssh_key_user=${2:?--ssh-key-user needs a name}; shift 2 ;;
 	--skip-modules) do_modules=0; shift ;;
 	--skip-firmware) do_firmware=0; shift ;;
 	-h | --help) usage; exit 0 ;;
@@ -225,6 +241,109 @@ verify_usr_merge() {
 		fail "$dest/usr/lib/systemd/systemd is missing or not executable"
 }
 
+install_ssh_key() {
+	# install_ssh_key DEST
+	#
+	# Put an ssh public key into the target's authorized_keys for $ssh_key_user.
+	#
+	# Why this exists at all: `scripts/gts9-debug-channel.sh install-key` used to
+	# write the key over the COM17 serial console, and that console is gone -
+	# the autologin getty was deleted and the ttyGS kernel console removed, both
+	# because they caused the boot and shutdown stalls (docs/BOOT_CONSOLE_BLOCK.md,
+	# docs/SHUTDOWN_DELAY.md).  Writing the key into the rootfs before it ever
+	# boots needs no channel on the device at all, which is the whole point: it
+	# is the route the Fedora port for this board takes too
+	# (rootfs/build-rootfs.sh: `install -Dm600 -o 1000 -g 1000 …authorized_keys`).
+	#
+	# Every failure here is fatal rather than a warning.  A rootfs that boots
+	# without its key is reachable only through TWRP, and that is exactly the
+	# situation this option exists to prevent - so a silent skip would be worse
+	# than refusing to install.
+	local dest=$1
+	[ -n "$ssh_key" ] || return 0
+
+	[ -f "$ssh_key" ] || fail "no such public key: $ssh_key"
+
+	# Validate before writing anything.  A private key pasted by mistake, or a
+	# truncated download, would otherwise be installed as an authorized key and
+	# silently never authenticate, which is indistinguishable from "ssh is
+	# broken" on the device.
+	if ! grep -qE '^(ssh-(rsa|ed25519|dss)|ecdsa-sha2-[^ ]+|sk-(ssh-ed25519|ecdsa-sha2-[^ ]+)@openssh\.com)[[:space:]]+[A-Za-z0-9+/=]+' "$ssh_key"; then
+		fail "$ssh_key is not an OpenSSH public key (expected 'ssh-ed25519 AAAA…' or similar)"
+	fi
+	if grep -q 'PRIVATE KEY' "$ssh_key"; then
+		fail "$ssh_key contains a PRIVATE KEY: install the .pub file, never the private one"
+	fi
+	# One key per line, and no line that is not a key: an authorized_keys file
+	# with a stray line is a file sshd reads partially or refuses.
+	local line bad=0
+	while IFS= read -r line || [ -n "$line" ]; do
+		case "$line" in
+		'' | '#'*) continue ;;
+		esac
+		printf '%s\n' "$line" | grep -qE '^(ssh-(rsa|ed25519|dss)|ecdsa-sha2-[^ ]+|sk-(ssh-ed25519|ecdsa-sha2-[^ ]+)@openssh\.com)[[:space:]]+[A-Za-z0-9+/=]+' || bad=1
+	done <"$ssh_key"
+	[ "$bad" = 0 ] || fail "$ssh_key has a line that is not an ssh public key"
+
+	local home
+	case "$ssh_key_user" in
+	root) home=$dest/root ;;
+	*) home=$dest/home/$ssh_key_user ;;
+	esac
+	[ -d "$(dirname "$home")" ] || fail "no home directory for '$ssh_key_user' in the target ($home)"
+
+	local ssh_dir=$home/.ssh
+	local auth=$ssh_dir/authorized_keys
+	mkdir -p "$ssh_dir" || fail "cannot create $ssh_dir"
+
+	# Idempotent, and it merges rather than replaces: this script is re-run over
+	# an existing rootfs, and clobbering the file would drop keys an operator had
+	# added deliberately.  `install -m` sets the mode on the new file; the
+	# existing content is preserved by appending only keys that are not present.
+	touch "$auth" || fail "cannot create $auth"
+	while IFS= read -r line || [ -n "$line" ]; do
+		case "$line" in
+		'' | '#'*) continue ;;
+		esac
+		if ! grep -qxF "$line" "$auth" 2>/dev/null; then
+			printf '%s\n' "$line" >>"$auth" || fail "cannot append to $auth"
+			note "added a public key to $auth"
+		fi
+	done <"$ssh_key"
+
+	# sshd refuses to use authorized_keys that is group- or world-writable, and
+	# requires the directory to be private too.  Ownership matters for the same
+	# reason: with StrictModes on (the default) a file owned by another user is
+	# ignored.
+	chmod 0700 "$ssh_dir" || fail "cannot chmod 0700 $ssh_dir"
+	chmod 0600 "$auth" || fail "cannot chmod 0600 $auth"
+	if [ "$(id -u)" = 0 ]; then
+		local uid gid
+		case "$ssh_key_user" in
+		root) uid=0; gid=0 ;;
+		*)
+			uid=$(awk -F: -v u="$ssh_key_user" '$1 == u {print $3}' "$dest/etc/passwd" 2>/dev/null)
+			gid=$(awk -F: -v u="$ssh_key_user" '$1 == u {print $4}' "$dest/etc/passwd" 2>/dev/null)
+			;;
+		esac
+		if [ -n "${uid:-}" ] && [ -n "${gid:-}" ]; then
+			chown "$uid:$gid" "$ssh_dir" "$auth" 2>/dev/null || \
+				note "WARNING: could not chown $auth to $uid:$gid"
+		else
+			note "WARNING: no passwd entry for '$ssh_key_user'; left ownership as-is"
+		fi
+	else
+		# Not root: the files may come out owned by the invoking user, which
+		# sshd's StrictModes will reject.  Say so rather than let it fail on the
+		# device with no explanation.
+		note "WARNING: not running as root; $auth may not be owned by $ssh_key_user, which sshd rejects (StrictModes)"
+	fi
+
+	note "installed $(grep -c . "$auth" 2>/dev/null || echo 0) key(s) in $auth"
+	[ "$(grep -c . "$auth" 2>/dev/null || echo 0)" -gt 0 ] || \
+		fail "$auth is empty after installing $ssh_key"
+}
+
 install_tree() {
 	# install_tree DEST [enablement]
 	# The tarball is built without the enablement symlinks: TWRP creates them
@@ -241,10 +360,19 @@ install_tree() {
 	install_firmware "$dest"
 	run_depmod "$dest"
 	verify_usr_merge "$dest"
+	install_ssh_key "$dest"
 }
 
 if [ -n "$tar_file" ]; then
 	command -v tar >/dev/null 2>&1 || fail 'tar is required'
+	# The tarball is written with --owner=0 --group=0, so everything it contains
+	# becomes root:root on extraction.  sshd's StrictModes ignores an
+	# authorized_keys owned by anyone but the account it belongs to, so a key for
+	# a non-root user cannot be delivered this way - refuse rather than ship a
+	# tarball whose key silently will not authenticate.
+	if [ -n "$ssh_key" ] && [ "$ssh_key_user" != root ]; then
+		fail "--ssh-key-user $ssh_key_user cannot be used with --tar: the tarball is written --owner=0, so the key would be owned by root and rejected by sshd (StrictModes). Install directly to the mounted rootfs instead, or use root."
+	fi
 	staging=$(mktemp -d)
 	trap 'rm -rf "$staging"' EXIT
 	install_tree "$staging" no

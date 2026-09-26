@@ -64,6 +64,111 @@ class DebianRootfsInstaller(unittest.TestCase):
         return run_installer('--skip-modules', '--skip-firmware',
                              str(self.target), *args, **kwargs)
 
+    def write_key(self, text, name='id.pub'):
+        path = self.root / name
+        path.write_text(text)
+        return path
+
+    def test_ssh_key_is_installed_for_root_by_default(self):
+        """--ssh-key is the login now that no serial console exists.
+
+        `gts9-debug-channel.sh install-key` wrote the key over the COM17 console,
+        and that console is gone.  Installing it into the rootfs before first boot
+        needs no channel on the device at all, so this option is the only way a
+        freshly installed system can be reached.
+        """
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEXAMPLEKEY root@host\n')
+        result = self.install('--ssh-key', str(key))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        auth = self.target / 'root/.ssh/authorized_keys'
+        self.assertTrue(auth.is_file())
+        self.assertIn('EXAMPLEKEY', auth.read_text())
+        # sshd refuses group- or world-writable keys, and StrictModes wants the
+        # directory private too, so the modes are part of the contract.
+        self.assertEqual(stat.S_IMODE(auth.stat().st_mode), 0o600)
+        self.assertEqual(stat.S_IMODE((self.target / 'root/.ssh').stat().st_mode), 0o700)
+
+    def test_a_private_key_is_refused(self):
+        """Installing the private half would be silent and useless."""
+        key = self.write_key('-----BEGIN OPENSSH PRIVATE KEY-----\nabc\n'
+                             '-----END OPENSSH PRIVATE KEY-----\n')
+        result = self.install('--ssh-key', str(key))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('not an OpenSSH public key', result.stderr)
+
+    def test_a_file_that_is_not_a_key_is_refused(self):
+        key = self.write_key('this is not a key\n')
+        result = self.install('--ssh-key', str(key))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('not an OpenSSH public key', result.stderr)
+
+    def test_a_mixed_file_is_refused_rather_than_partly_installed(self):
+        """A partly-valid file would authenticate for some lines and not others."""
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOK root@host\n'
+                             'garbage line\n')
+        result = self.install('--ssh-key', str(key))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('not an ssh public key', result.stderr)
+        # Nothing may have been written: refusing after a partial write would
+        # leave the rootfs in a state neither the operator nor this script chose.
+        self.assertFalse((self.target / 'root/.ssh/authorized_keys').exists())
+
+    def test_a_missing_key_file_is_refused(self):
+        result = self.install('--ssh-key', str(self.root / 'absent.pub'))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('no such public key', result.stderr)
+
+    def test_installing_twice_does_not_duplicate_the_key(self):
+        """The installer is re-run over an existing rootfs; it must be idempotent."""
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIONE root@host\n')
+        self.assertEqual(self.install('--ssh-key', str(key)).returncode, 0)
+        self.assertEqual(self.install('--ssh-key', str(key)).returncode, 0)
+        auth = self.target / 'root/.ssh/authorized_keys'
+        self.assertEqual(auth.read_text().count('IONE'), 1)
+
+    def test_an_existing_key_is_merged_not_clobbered(self):
+        """An operator's own key must survive a re-install."""
+        ssh_dir = self.target / 'root/.ssh'
+        ssh_dir.mkdir(parents=True)
+        auth = ssh_dir / 'authorized_keys'
+        auth.write_text('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEXISTING other@host\n')
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEW new@host\n')
+        self.assertEqual(self.install('--ssh-key', str(key)).returncode, 0)
+        text = auth.read_text()
+        self.assertIn('EXISTING', text)
+        self.assertIn('NEW', text)
+
+    def test_tarball_carries_the_key_for_root(self):
+        tar_file = self.root / 'o.tar'
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAITAR tar@host\n')
+        result = run_installer('--tar', str(tar_file), '--ssh-key', str(key),
+                              '--skip-modules', '--skip-firmware')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        listing = subprocess.run(['tar', '-tvf', str(tar_file)], text=True,
+                                 capture_output=True, check=True).stdout
+        self.assertIn('./root/.ssh/authorized_keys', listing)
+
+    def test_tarball_refuses_a_non_root_key_user(self):
+        """The tarball is written --owner=0, so a non-root key would be rejected.
+
+        sshd's StrictModes ignores an authorized_keys owned by anyone but its own
+        account, so shipping one for another user would produce a tarball whose
+        key silently never authenticates - the exact failure this option exists to
+        prevent.
+        """
+        tar_file = self.root / 'o.tar'
+        key = self.write_key('ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIUSER u@host\n')
+        result = run_installer('--tar', str(tar_file), '--ssh-key', str(key),
+                              '--ssh-key-user', 'fedora',
+                              '--skip-modules', '--skip-firmware')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('cannot be used with --tar', result.stderr)
+
+    def test_no_key_option_writes_nothing(self):
+        """The option is opt-in: a plain install must not invent a key."""
+        self.assertEqual(self.install().returncode, 0)
+        self.assertFalse((self.target / 'root/.ssh').exists())
+
     def test_installs_the_userspace_and_enables_every_unit(self):
         result = self.install()
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -473,6 +578,7 @@ class DeviceStateRecorder(unittest.TestCase):
         out = self.run_helper().stdout
         for key in ('console_active=', 'console_ttygs_in_cmdline=',
                     'console_ttymsm_in_cmdline=', 'ttygs_open_fds=',
+                    'ttygs_devices=',
                     'unit_serial_getty_ttyGS0_service_enabled=',
                     'unit_gts9_acm_getty_service_enabled='):
             with self.subTest(key=key):
