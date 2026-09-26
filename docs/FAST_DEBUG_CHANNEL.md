@@ -68,14 +68,41 @@ $ ping -c1 169.254.42.1
 
 ## ssh
 
-`sshd` was already running; only key auth was missing. `scripts/gts9-debug-channel.sh
-install-key` installs the operator's public key into `/root/.ssh/authorized_keys`
-over the console, and `scripts/gts9-ssh.sh` is the wrapper:
+`sshd` was already running; only key auth was missing, and
+`scripts/gts9-ssh.sh` is the wrapper:
 
 ```sh
 scripts/gts9-ssh.sh 'dmesg | tail -20'
 scripts/gts9-ssh.sh -- scp file.bin /tmp/          # any ssh-family command
 ```
+
+### Installing the key — `install-key` no longer works, and this is the gap to close
+
+`scripts/gts9-debug-channel.sh install-key` used to write the public key into
+`/root/.ssh/authorized_keys` **over the COM17 serial console**, by sending a
+`mkdir -p /root/.ssh && echo '<pubkey>' >> …` line to the shell there.
+
+That path is dead. COM17 is a working serial port but nothing runs a shell on it
+any more — the autologin getty was deleted and the kernel console was removed
+(both were the cause of the boot and shutdown stalls; see
+[the boot console block](BOOT_CONSOLE_BLOCK.md) and
+[shutdown delay](SHUTDOWN_DELAY.md)). The command still runs and still fails
+silently, because `console-run.sh` finds no shell to answer its heartbeat.
+
+So **a freshly installed rootfs has no way to receive a key**, and since the
+serial console used to be the fallback, this is the one capability the removal
+actually took away. It needs replacing, and there are two candidate routes:
+
+* **write the key into the rootfs at install time** — `install-debian-rootfs.sh`
+  gains an `--ssh-key` option that installs it to `/root/.ssh/authorized_keys` in
+  the target tree. This is what the Fedora port for this board does
+  (`rootfs/build-rootfs.sh`: `install -Dm600 -o 1000 -g 1000 …authorized_keys`),
+  and it needs no channel on the device at all.
+* **allow a password login for the first boot** and use `ssh-copy-id`. Simpler,
+  but it requires a known root password on a device that ships with none.
+
+Until one of them is implemented, a rootfs deployed by this repository can only be
+reached by an operator who already had a key on it, or through TWRP.
 
 Measured: `dd if=/dev/zero bs=1M count=128 | ssh … 'cat > /dev/null'` →
 **31.8 MB/s**.
@@ -156,7 +183,7 @@ rmdir $G/configs/c.1/strings/0x409 $G/configs/c.1 $G/functions/ffs.adb \
 install -m 0755 rootfs-overlay/usr/libexec/gts9-usb-acm   /usr/libexec/
 install -m 0644 rootfs-overlay/usr/lib/systemd/system/gts9-adbd.service \
                                                           /usr/lib/systemd/system/
-printf 'ncm 169.254.42.1/16\n' > /etc/gts9-usb-net
+install -m 0644 rootfs-overlay/etc/gts9-usb-net           /etc/gts9-usb-net
 /usr/libexec/gts9-enable-units && systemctl daemon-reload
 
 # 2. the packages
@@ -164,8 +191,10 @@ scripts/fetch-adbd-packages.sh
 scp .work/downloads/adbd-trixie/*.deb root@169.254.42.1:/tmp/
 ssh root@169.254.42.1 'dpkg -i /tmp/libprotobuf32t64_*.deb /tmp/android-lib*.deb /tmp/adbd_*.deb'
 
-# 3. the key
-scripts/gts9-debug-channel.sh install-key
+# 3. the key - NOT `install-key`, which relied on the serial console that no
+#    longer has a shell on it.  Put the key into the rootfs before first boot:
+#      ./scripts/install-debian-rootfs.sh --ssh-key ~/.ssh/id_ed25519.pub /mnt/debian
+#    (or, once implemented, use that option's device-side equivalent)
 
 # 4. mask the unit the package enabled, then start ours
 ssh root@169.254.42.1 'systemctl disable adbd.service; \
@@ -173,12 +202,32 @@ ssh root@169.254.42.1 'systemctl disable adbd.service; \
     systemctl enable --now gts9-adbd.service'
 ```
 
+Step 3 is the one that changed with the console removal, and it is the step to get
+right: a rootfs deployed without a key can only be reached by an operator who
+already had one on it, or through TWRP.
+
 Verified end to end across a reboot on 2026-09-25: the gadget came back with NCM,
 `usb0` came back with its address, `gts9-adbd.service` came back active, and both
 ssh and `adb connect` worked again without any host-side change.
 
 ## What this does not replace
 
-The serial console is still the only channel that exists **before** `gts9-usb-acm`
-runs, and the only one that survives a userspace that has stopped. Everything in
-`docs/STALL_FAILURE_SHAPE.md` was found through it. Keep it.
+Nothing, any more. This section used to say "the serial console is still the only
+channel that exists before `gts9-usb-acm` runs, and the only one that survives a
+userspace that has stopped. Keep it." That is no longer true, by decision: both
+serial consoles were removed because they caused the boot and shutdown stalls
+([why](BOOT_CONSOLE_BLOCK.md)), and the USB network function is now the only
+channel off a running system.
+
+What that costs, stated plainly so it is not rediscovered the hard way:
+
+* **Before `gts9-usb-acm` runs there is no channel at all.** The initramfs has no
+  network, so a boot that dies before Debian's userspace is only observable on the
+  panel. The persistent record `/var/log/gts9-minimal-last-boot` and the Samsung
+  `sec_log` ring are what cover that window, and TWRP is the recovery path.
+* **A userspace that has stopped cannot be interrogated.** There is no port to
+  attach a terminal to. `docs/STALL_FAILURE_SHAPE.md`'s evidence was all gathered
+  through the serial console and cannot be gathered the same way again.
+* `gts9-kmsg-console` remains as an opt-in userspace mirror of `/dev/kmsg` for the
+  live case (`gts9_kmsg_mirror=1`), but it is a userspace process: it is gone the
+  moment userspace stops, which is exactly when it would be most useful.

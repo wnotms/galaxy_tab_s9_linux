@@ -26,6 +26,59 @@
 > The interactive channel is **ssh over the NCM network function** on the same
 > cable — see [the fast debug channel](FAST_DEBUG_CHANNEL.md).
 
+## `/dev/ttyGS0` (COM17) still works as a plain serial port
+
+It is worth being exact about this, because "the consoles are gone" is easy to
+misread as "the port is dead". Measured on the tablet 2026-09-26:
+
+| | state |
+|---|---|
+| enumerates on the host | **yes** — `USB\VID_0525&PID_A4A7&MI_00`, `Status OK` |
+| anything holding it open | **no** — 0 open fds on `/dev/ttyGS0` |
+| is it a kernel console | **no** — `gs_console_init()` compiles to `-ENOSYS` |
+| is there a getty / shell on it | **no** — masked, and the unit is deleted |
+| does the kernel log come out of it | **no** — 0 bytes readable in 11 s |
+| can the host `write()` to it | **yes** — 5/5 writes returned in 0–3 ms |
+| does that data reach the tablet | **yes**, if something reads the tty: a `cat /dev/ttyGS0` on the tablet received `HELLO-GTS9-WITH-NEWLINE` byte-for-byte |
+| if nothing reads it | the write still succeeds (the gadget queues OUT requests), the data is simply **discarded** |
+
+So COM17 is a working general-purpose serial port that this project has stopped
+using for anything. It is not a console channel in either direction, and nothing
+on the tablet writes to it, so it cannot reintroduce the stall
+([why](BOOT_CONSOLE_BLOCK.md)).
+
+Two measurement traps, recorded because both produced a wrong "0 bytes" answer
+here before they were understood:
+
+* **A newline is required.** The tty is in canonical mode, so a write without
+  `\n` sits in the line discipline and never reaches a reader. The first test
+  wrote `HELLO-GTS9` with no newline and read back 0 bytes; with `\r\n` the same
+  write delivered 25 bytes.
+* **Two readers compete.** Two `cat /dev/ttyGS0` processes split the stream, so a
+  test that starts a reader while an earlier one is still alive can see nothing
+  arrive even though the write succeeded. Check the fd count, not `ps | grep -c`.
+
+### Consequence for this repository's host tooling
+
+`scripts/console-run.sh` and the PowerShell helpers behind it
+(`console-session`, `console-watch`, `console-send-lines`, `serial-link-test`)
+still default to `COM17`, and four scripts build on them:
+
+| script | what it uses COM17 for | state |
+|---|---|---|
+| `scripts/flash-boot.sh` | triggers `gts9-to-recovery` | **broken** — no shell on the port |
+| `scripts/gts9-debug-channel.sh install-key` | writes the ssh public key | **broken** — this was the bootstrap path |
+| `scripts/gts9-kernel-alive.sh` | runs a liveness command | **broken** |
+| `scripts/stall-ab.sh` | drives an A/B round | **broken**; it also still defaults `CONSOLE_PORT=COM19`, which no longer exists at all |
+
+They are left in place rather than deleted because the port itself works: if a
+shell is ever deliberately put back on it (`gts9_usb_console=shell` for the
+initramfs, or a getty), these scripts become usable again unchanged. Until then
+the working equivalent is `scripts/gts9-ssh.sh`. `scripts/gts9-debug-channel.sh
+install-key` in particular needs replacing — see the note in
+[the fast debug channel](FAST_DEBUG_CHANNEL.md) about bootstrapping the key
+without a serial console.
+
 This note records the verified console mapping for the SM-X710 mainline boot so later
 bring-up work does not confuse the physical Qualcomm UART with the USB gadget serial port.
 
