@@ -1017,6 +1017,14 @@ class WedgeResultRecordTests(unittest.TestCase):
         self.assertIn("read-back", flat)
         # and the reason it was done
         self.assertIn("elevated-rate observation", flat)
+        # The revert must be CONFIRMED in behaviour, not just in bytes: the
+        # running kernel's /proc/cmdline still showed the token right after the
+        # write, because it comes from RAM. Only a reboot proves the revert, and
+        # the record has to say so or a reader will think the write was enough.
+        self.assertIn("Confirmed in effect after a reboot", flat)
+        self.assertIn("psci_idle", flat)
+        self.assertIn("449 / 1246", flat)
+        self.assertIn("reports the **running** kernel's command line", flat)
 
     def test_it_names_the_rollback_and_its_hash(self):
         text = read(f"{self.RECORD}/README.md")

@@ -34,3 +34,24 @@ vbmeta      9844859b45716a2a  (never written)
 The tablet is byte-for-byte in the configuration it was in before test-227.
 Nothing was repartitioned, no bootloader/recovery/userdata was touched, and no
 rollback required a recovery boot.
+
+## Confirmed in effect after a reboot
+
+A reboot was issued so the revert could be proven rather than assumed, and the
+running kernel was re-checked. This matters because `/proc/cmdline` still showed
+`cpuidle.off=1` immediately after the write — correctly, since it reports the
+**running** kernel's command line, which came from RAM and predates the write.
+The partition content is what the *next* boot uses, and that is what changed.
+
+| check | during the test | after the revert |
+|---|---|---|
+| `cpuidle.off=1` on `/proc/cmdline` | present | **absent** |
+| `current_driver` | absent (framework off) | **`psci_idle`** |
+| `cpuidle: using governor` | 0 | **1** |
+| cluster state usage | 0 / 0 | **449 / 1246** |
+| failed units | 0 | 0 |
+| panel | connected | connected |
+
+The last row is the substantive one: the deep cluster idle states are being
+entered again, at a rate of roughly 1 700 entries in 40 s. The tablet is back on
+the pre-test configuration in behaviour as well as in bytes.
