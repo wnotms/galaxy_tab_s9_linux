@@ -44,13 +44,19 @@ class RpmhDebugPatchTests(unittest.TestCase):
         cmdline = CMDLINE.read_text()
         self.assertIn("gts9_rpmh_debug=1", cmdline)
         self.assertIn("gts9_watchdog_debug=1", cmdline)
-        self.assertIn("console=ttyGS1", cmdline)
         self.assertNotIn("gts9_kmsg_mirror", cmdline)
         self.assertNotIn("gts9_dpu_flight", cmdline)
         self.assertNotIn("gts9_poweroff_trace", cmdline)
-        # bring-up consoles stay
-        self.assertIn("console=ttyMSM0,115200n8", cmdline)
-        self.assertIn("earlycon", cmdline)
+        # Only the panel console, as in every other profile since 2026-09-26.
+        # This one used to require console=ttyGS1 + console=ttyMSM0 + earlycon;
+        # all three are gone because a serial console is a blocking writer under
+        # measurement (docs/BOOT_CONSOLE_BLOCK.md).  The dump still reaches the
+        # host - over ssh, and through the persistent sec_log ring when the system
+        # is wedged badly enough that ssh does not answer.
+        consoles = [t for t in cmdline.split() if t.startswith("console=")]
+        self.assertEqual(consoles, ["console=tty0"])
+        for gone in ("console=ttyGS1", "console=ttyMSM0,115200n8", "earlycon"):
+            self.assertNotIn(gone, cmdline)
 
     def test_dump_captures_the_fields_the_investigation_needs(self):
         text = patch_text()

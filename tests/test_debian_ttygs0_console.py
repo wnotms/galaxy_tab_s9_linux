@@ -1,11 +1,21 @@
-"""Host checks for the bring-up root console on the USB ACM ttyGS0.
+"""Host checks for the removal of the USB ACM login console (ttyGS0).
 
-The console moved on 2026-09-24 (test-184): the generic
-serial-getty@ttyGS0.service waits for dev-ttyGS0.device, which the gadget
-creates only a moment later, so it timed out and failed - and with nobody
-holding the tty open the gadget had no OUT requests, so host writes timed out
-too.  The port is now served by gts9-acm-getty.service, ordered after
-gts9-usb-acm.service, with autologin in the unit itself rather than a drop-in.
+History, because it is what these checks are the inverse of.  Until 2026-09-24
+the port was served by the generic `serial-getty@ttyGS0.service`, which waits for
+`dev-ttyGS0.device`; the gadget creates that device only a moment later, so the
+unit timed out and failed.  It was replaced by `gts9-acm-getty.service`, ordered
+after `gts9-usb-acm.service`, with autologin in the unit itself.
+
+That unit is now GONE, and deliberately.  `agetty --autologin` spawns a login
+shell that agetty does not reap on SIGTERM, so the unit's cgroup stayed populated
+and systemd waited out `TimeoutStopSec` - the ~90 s poweroff documented in
+docs/SHUTDOWN_DELAY.md.  Both serial debug consoles were removed on 2026-09-26
+and the tablet is reached over ssh instead (docs/FAST_DEBUG_CHANNEL.md).
+
+These tests therefore assert the ABSENCE of the getty, of any autologin, and of
+the enablement link that would start it - plus the two masks the enablement
+helper must keep installing so an upgraded rootfs cannot resurrect a serial
+getty.  They replace the previous file, which asserted the getty's presence.
 """
 import os
 import subprocess
@@ -17,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OVERLAY = ROOT / 'rootfs-overlay'
 ETC = OVERLAY / 'etc'
 LIBEXEC = OVERLAY / 'usr' / 'libexec'
-ACM_GETTY = OVERLAY / 'usr' / 'lib' / 'systemd' / 'system' / 'gts9-acm-getty.service'
+UNIT_DIR = OVERLAY / 'usr' / 'lib' / 'systemd' / 'system'
 ENABLE_HELPER = LIBEXEC / 'gts9-enable-units'
 
 
@@ -25,27 +35,37 @@ def enable_units_in(root):
     """Run the shipped enablement helper against a temporary Debian root."""
     system = Path(root) / 'usr' / 'lib' / 'systemd' / 'system'
     system.mkdir(parents=True, exist_ok=True)
-    # The template the ttyGS0 instance is created from.
+    # The template a serial getty instance would be created from.
     (system / 'serial-getty@.service').write_text('[Unit]\nDescription=Serial Getty on %I\n')
-    for unit in (OVERLAY / 'usr/lib/systemd/system').glob('gts9-*.service'):
+    for unit in UNIT_DIR.glob('gts9-*.service'):
         (system / unit.name).write_text(unit.read_text())
     return subprocess.run(['sh', str(ENABLE_HELPER), str(root)],
                           text=True, capture_output=True, check=False)
 
 
-class TtyGs0Console(unittest.TestCase):
-    def test_autologin_is_in_the_dedicated_unit(self):
-        text = ACM_GETTY.read_text()
-        self.assertIn('ExecStart=-/usr/sbin/agetty --autologin root --noclear ttyGS0 115200 vt100',
-                      text)
-        self.assertIn('After=gts9-usb-acm.service', text)
-        self.assertIn('Wants=gts9-usb-acm.service', text)
+class NoSerialLoginConsole(unittest.TestCase):
+    def test_the_acm_getty_unit_is_gone(self):
+        self.assertFalse((UNIT_DIR / 'gts9-acm-getty.service').exists(),
+                         'the ttyGS0 autologin getty is the 90 s poweroff')
 
-    def test_no_getty_drop_in_remains(self):
-        # Autologin lives in the unit now; a leftover drop-in would be a second
-        # source of truth for the same console.
-        leftovers = sorted(str(p.relative_to(ETC)) for p in ETC.rglob('*.conf'))
-        self.assertEqual(leftovers, ['systemd/logind.conf.d/60-gts9-power-key.conf'])
+    def test_no_unit_anywhere_logs_anyone_in(self):
+        # A getty on a serial device is what must never come back.  Check the
+        # whole overlay, not just the unit directory: a drop-in or an /etc copy
+        # would win over /usr/lib at runtime.
+        #
+        # Comments are stripped first.  These files explain the very mistake
+        # these tests check for - gts9-enable-units documents the autologin shell
+        # it removes - so prose must not be able to satisfy or defeat a check.
+        for path in sorted(OVERLAY.rglob('*')):
+            if not path.is_file():
+                continue
+            code = '\n'.join(
+                line for line in path.read_text(errors='replace').splitlines()
+                if not line.lstrip().startswith('#'))
+            self.assertNotIn('autologin', code, str(path))
+            self.assertNotIn('agetty', code, str(path))
+            for dev in ('ttyGS0', 'ttyGS1', 'ttyMSM0'):
+                self.assertNotIn(f'getty {dev}', code, str(path))
 
     def test_no_global_getty_or_autologin_override(self):
         system_dir = ETC / 'systemd' / 'system'
@@ -53,34 +73,40 @@ class TtyGs0Console(unittest.TestCase):
                           'serial-getty@.service', 'getty.target'):
             self.assertFalse((system_dir / forbidden).exists(), forbidden)
         self.assertFalse((ETC / 'securetty').exists())
-        for path in system_dir.rglob('*'):
-            if path.is_file():
-                self.assertNotIn('autologin', path.read_text(), str(path))
 
-    def test_dedicated_getty_is_enabled_and_the_generic_instance_is_not(self):
+    def test_the_removed_getty_link_is_not_enabled(self):
         with tempfile.TemporaryDirectory() as tmp:
             result = enable_units_in(tmp)
             self.assertEqual(result.returncode, 0, result.stderr)
             wants = Path(tmp) / 'etc/systemd/system/multi-user.target.wants'
-            link = wants / 'gts9-acm-getty.service'
-            self.assertTrue(link.is_symlink(), 'the ACM console getty must be enabled')
-            # Relative, because TWRP's busybox tar refuses absolute symlink
-            # targets that live outside the extraction root.
-            self.assertEqual(link.readlink().as_posix(),
-                             '../../../../usr/lib/systemd/system/gts9-acm-getty.service')
-            self.assertTrue(link.resolve().is_file())
-            self.assertFalse((Path(tmp) / 'etc/systemd/system/getty.target.wants' /
-                              'serial-getty@ttyGS0.service').exists())
+            self.assertFalse((wants / 'gts9-acm-getty.service').exists(),
+                             'a dangling enable link is a boot-time failure')
 
-    def test_ttymsm0_getty_is_masked_and_no_other_getty_is_enabled(self):
+    def test_both_serial_getties_are_masked_and_none_is_enabled(self):
         with tempfile.TemporaryDirectory() as tmp:
             self.assertEqual(enable_units_in(tmp).returncode, 0)
             getty_wants = Path(tmp) / 'etc/systemd/system/getty.target.wants'
             entries = sorted(p.name for p in getty_wants.iterdir()) if getty_wants.is_dir() else []
             self.assertEqual(entries, [])
-            mask = Path(tmp) / 'etc/systemd/system/serial-getty@ttyMSM0.service'
-            self.assertTrue(mask.is_symlink())
-            self.assertEqual(os.readlink(mask), '/dev/null')
+            for dev in ('ttyMSM0', 'ttyGS0'):
+                mask = Path(tmp) / f'etc/systemd/system/serial-getty@{dev}.service'
+                self.assertTrue(mask.is_symlink(), dev)
+                self.assertEqual(os.readlink(mask), '/dev/null')
+
+    def test_the_removed_getty_cannot_survive_in_etc(self):
+        # /etc/systemd/system/ wins over /usr/lib, and this repository's own
+        # notes record the two copies having diverged once.  The helper must mask
+        # the name outright, so a stale copy there cannot start.
+        with tempfile.TemporaryDirectory() as tmp:
+            etc_system = Path(tmp) / 'etc/systemd/system'
+            etc_system.mkdir(parents=True)
+            stale = etc_system / 'gts9-acm-getty.service'
+            stale.write_text('[Service]\nExecStart=/usr/sbin/agetty ttyGS0\n')
+            self.assertEqual(enable_units_in(tmp).returncode, 0)
+            # The name is replaced by a /dev/null mask, which is what systemctl
+            # mask does and the only thing that reliably stops it starting.
+            self.assertTrue(stale.is_symlink(), 'the stale unit must be masked')
+            self.assertEqual(os.readlink(stale), '/dev/null')
 
     def test_helper_never_touches_other_enablement_links(self):
         with tempfile.TemporaryDirectory() as tmp:

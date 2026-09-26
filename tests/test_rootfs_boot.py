@@ -170,10 +170,16 @@ class RootfsBoot(unittest.TestCase):
         tokens = CMDLINE.split()
         self.assertIn('gts9_rootfs=/dev/mmcblk1p1', tokens)
         for gone in ('gts9_proof_code', 'gts9_proof_action', 'gts9_reboot_after',
-                     'console=tty0', 'ignore_loglevel'):
+                     'ignore_loglevel'):
             self.assertFalse(any(t.startswith(gone) for t in tokens), gone)
-        self.assertIn('console=ttyMSM0,115200n8', tokens)
-        self.assertIn('earlycon', tokens)
+        # `console=tty0` moved from the forbidden list to the required one on
+        # 2026-09-26: both serial debug consoles were removed, so the panel is the
+        # only console left.  See tests/test_panel_shell.py for the full rule.
+        self.assertIn('console=tty0', tokens)
+        self.assertEqual([t for t in tokens if t.startswith('console=')],
+                         ['console=tty0'])
+        for gone in ('console=ttyMSM0,115200n8', 'console=ttyGS1', 'earlycon'):
+            self.assertNotIn(gone, tokens)
         self.assertIn('fbcon=font:TER16x32', tokens)
 
     def test_minimal_profile_is_opt_in_and_branches_before_bringup(self):

@@ -98,18 +98,44 @@ class UsbAcmServiceTests(unittest.TestCase):
                        if p.is_symlink())
         self.assertEqual(links, ['acm.usb0', 'acm.usb1'])
 
-    def test_console_split_is_requested_for_the_second_port(self):
-        # The configfs "console" attribute only exists when the kernel is built
-        # with CONFIG_U_SERIAL_CONSOLE, so a static fake tree cannot host it and
-        # the split is checked at the source level instead: 0 on the shell port,
-        # 1 on the console port, and both best-effort so the gadget still comes
-        # up on a kernel without a gadget console.
+    def test_no_gadget_port_is_made_a_console(self):
+        """Inverted on 2026-09-26: both ports are forced OFF, not split.
+
+        This used to assert 0 on the shell port and 1 on the console port.  The
+        gadget kernel console is the measured cause of the boot stall - a userspace
+        write() to /dev/console blocks in n_tty_write() while nothing drains the
+        port (docs/BOOT_CONSOLE_BLOCK.md) - and the kernel is now built without
+        CONFIG_U_SERIAL_CONSOLE at all, so the configfs attribute does not exist on
+        a current kernel.
+
+        The writes are kept, and both force 0, so that running this script against
+        an OLDER kernel (a recovery image, a rollback) also leaves no console on
+        the gadget.  Nothing may set 1 again.
+        """
         text = HELPER.read_text()
         self.assertIn('echo 0 > "$GADGET/functions/acm.usb0/console"', text)
-        self.assertIn('echo 1 > "$GADGET/functions/acm.usb1/console"', text)
+        self.assertIn('echo 0 > "$GADGET/functions/acm.usb1/console"', text)
+        self.assertNotIn('echo 1 > "$GADGET/functions/acm.usb1/console"', text)
         self.assertIn('[ -e "$GADGET/functions/acm.usb0/console" ]', text)
         self.assertIn('[ -e "$GADGET/functions/acm.usb1/console" ]', text)
         self.assertIn('split_consoles', text)
+
+    def test_the_network_transport_ships_in_the_overlay(self):
+        # /etc/gts9-usb-net used to be created by hand on the tablet.  With the
+        # serial consoles gone it is the only way in, so a rootfs that lacks it is
+        # unreachable - it must come from the overlay.
+        net_conf = ROOT / 'rootfs-overlay' / 'etc' / 'gts9-usb-net'
+        self.assertTrue(net_conf.is_file(), 'the ssh transport config must ship')
+        # Comments and blanks are allowed; the first real line is the directive.
+        line = next(ln for ln in net_conf.read_text().splitlines()
+                    if ln.strip() and not ln.lstrip().startswith('#'))
+        kind, addr = line.split()
+        self.assertIn(kind, ('ncm', 'ecm'))
+        # The host reaches this address with no configuration of its own.
+        self.assertTrue(addr.startswith('169.254.'), addr)
+        # ... and the helper must actually skip the comment header.
+        helper = HELPER.read_text()
+        self.assertIn("'#'*", helper)
 
     def test_helper_never_mentions_dangerous_usb_functions(self):
         # Mass storage would expose the root filesystem, RNDIS/MTP/UVC/HID are

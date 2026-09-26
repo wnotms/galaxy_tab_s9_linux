@@ -90,8 +90,16 @@ class WatchdogObserverEffectTests(unittest.TestCase):
         self.assertIn(MIRROR_FLAG, mirror)
         self.assertNotIn(WATCHDOG_FLAG, mirror)
         self.assertIn(f"ConditionKernelCommandLine={MIRROR_FLAG}", read(MIRROR_UNIT))
-        # The mirror must never write to the login shell's port.
-        self.assertIn("gts9-kmsg-console /dev/ttyGS1", code_only(read(MIRROR_UNIT)))
+        # The mirror must never write to /dev/console: that is the blocking
+        # writer docs/BOOT_CONSOLE_BLOCK.md describes.  Since 2026-09-26 there is
+        # no login shell on the gadget and no ttyGS kernel console either, so the
+        # port is now chosen for the host's first COM handle rather than to keep
+        # printk off a shell's port - but /dev/console must stay out of it, and
+        # the mirror itself must stay off the USB console path entirely.
+        mirror_unit = code_only(read(MIRROR_UNIT))
+        self.assertIn("gts9-kmsg-console /dev/ttyGS0", mirror_unit)
+        self.assertNotIn("/dev/console", mirror_unit)
+        self.assertNotIn("/dev/console", mirror)
 
         self.assertIn(f"ConditionKernelCommandLine={FLIGHT_FLAG}", flight)
 
@@ -108,28 +116,51 @@ class WatchdogObserverEffectTests(unittest.TestCase):
         self.assertNotIn("getty@tty1", helper)
         self.assertIn("serial-getty@ttyMSM0.service", helper)
 
-    def test_ttygs0_is_handed_to_a_dedicated_unit_not_masked(self):
-        helper = read(ENABLE_UNITS)
-        unit = read(ACM_GETTY_UNIT)
-        # The generic instance's enable link goes away...
-        self.assertIn("rm -f \"$etc_dir/getty.target.wants/serial-getty@ttyGS0.service\"", helper)
-        # ... but nothing masks ttyGS0, and only ttyMSM0 is masked.
-        self.assertNotIn("serial-getty@ttyGS0.service\" ]", helper)
-        masks = re.findall(r"ln -s /dev/null \"\$etc_dir/([^\"]+)\"", helper)
-        self.assertEqual(masks, ["serial-getty@ttyMSM0.service"])
-        # The replacement starts after the gadget exists, with autologin, and
-        # carries no device dependency of its own.
-        self.assertIn("After=gts9-usb-acm.service", unit)
-        self.assertIn("--autologin root", unit)
-        self.assertNotIn("dev-ttyGS0.device", code_only(unit))
+    def test_every_serial_getty_is_masked_and_none_is_enabled(self):
+        """The policy changed on 2026-09-26: everything serial is masked.
 
-    def test_ttymsm0_stays_a_kernel_console(self):
-        """Suppressing the userspace getty must not touch the kernel console."""
+        It used to hand ttyGS0 to a dedicated gts9-acm-getty.service and mask only
+        ttyMSM0.  Both are gone now - the tablet is reached over ssh - so the
+        helper must mask all three names and enable no serial login at all.
+        """
+        helper = read(ENABLE_UNITS)
+        # The removed unit's enable link goes away, and its name is masked so a
+        # stale copy in /etc (which wins over /usr/lib) cannot start it.
+        self.assertIn(
+            'rm -f "$etc_dir/multi-user.target.wants/gts9-acm-getty.service"', helper)
+        self.assertIn('ln -sfn /dev/null "$etc_dir/gts9-acm-getty.service"', helper)
+        # No serial getty instance is enabled, and every one is masked.
+        for dev in ("ttyGS0", "ttyMSM0"):
+            self.assertIn(
+                f'rm -f "$etc_dir/getty.target.wants/serial-getty@{dev}.service"', helper)
+            self.assertIn(f'ln -sfn /dev/null "$etc_dir/serial-getty@{dev}.service"', helper)
+        masks = sorted(re.findall(r'ln -sfn /dev/null "\$etc_dir/([^"]+)"', helper))
+        self.assertEqual(masks, ["gts9-acm-getty.service",
+                                 "serial-getty@ttyGS0.service",
+                                 "serial-getty@ttyMSM0.service"])
+        # The unit that used to carry the autologin is gone from the overlay.
+        self.assertFalse((ROOT / ACM_GETTY_UNIT).exists(),
+                         "the ttyGS0 autologin getty is the 90 s poweroff")
+
+    def test_no_serial_console_survives_on_a_known_good_cmdline(self):
+        """Suppressing the userspace getty is not enough: the kernel console went too.
+
+        This test used to assert the opposite - that ttyMSM0 plus earlycon stayed
+        on the command line.  Both serial debug consoles were removed on
+        2026-09-26 (docs/BOOT_CONSOLE_BLOCK.md, docs/SHUTDOWN_DELAY.md), so the
+        assertion is inverted: exactly one console, and it is the panel.
+        """
         helper = code_only(read(ENABLE_UNITS))
         self.assertNotIn("console=ttyMSM0", helper)
-        for name in ("boot/cmdline.minimal-rootfs.example.txt",):
-            self.assertIn("console=ttyMSM0,115200n8", read(name))
-            self.assertIn("earlycon", read(name))
+        for name in ("boot/cmdline.minimal-rootfs.example.txt",
+                     "boot/cmdline.example.txt"):
+            with self.subTest(cmdline=name):
+                toks = read(name).split()
+                self.assertIn("console=tty0", toks)
+                self.assertEqual([t for t in toks if t.startswith("console=")],
+                                 ["console=tty0"])
+                for gone in ("console=ttyMSM0,115200n8", "console=ttyGS1", "earlycon"):
+                    self.assertNotIn(gone, toks)
 
     def test_pstore_backend_and_records_are_reported_separately(self):
         applier = read(APPLIER)

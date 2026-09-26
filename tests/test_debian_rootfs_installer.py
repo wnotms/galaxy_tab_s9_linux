@@ -82,25 +82,30 @@ class DebianRootfsInstaller(unittest.TestCase):
                      'gts9-usb-acm.service', 'gts9-panel-recover.service'):
             self.assertTrue((self.target / 'usr/lib/systemd/system' / unit).is_file(),
                             unit)
-        # The USB console autologin lives in its own unit now: the generic
-        # serial-getty@ttyGS0.service waits for dev-ttyGS0.device, which the
-        # gadget creates too late, so it timed out (test-184).
-        acm_getty = (self.target / 'usr/lib/systemd/system/gts9-acm-getty.service')
-        self.assertTrue(acm_getty.is_file())
-        self.assertIn('--autologin root', acm_getty.read_text())
+        # The ttyGS0 autologin console is GONE (2026-09-26).  It was the ~90 s
+        # poweroff - `agetty --autologin` spawns a login shell it does not reap,
+        # so systemd waited out TimeoutStopSec - and the tablet is reached over
+        # ssh now.  The unit file must not be installed, and neither the generic
+        # serial getty nor an enable link for the removed one may appear.
+        self.assertFalse(
+            (self.target / 'usr/lib/systemd/system/gts9-acm-getty.service').exists(),
+            'the ttyGS0 autologin getty is the 90 s poweroff')
         self.assertFalse((self.target / 'etc/systemd/system' /
                           'serial-getty@ttyGS0.service.d').exists())
-        # The overlay ships no symlinks; the helper creates this one too - and
-        # it must be the dedicated unit, not the generic instance.
-        self.assertEqual(
-            os.readlink(self.target / 'etc/systemd/system/multi-user.target.wants' /
-                        'gts9-acm-getty.service'),
-            '../../../../usr/lib/systemd/system/gts9-acm-getty.service')
+        self.assertFalse((self.target / 'etc/systemd/system/multi-user.target.wants' /
+                          'gts9-acm-getty.service').exists(),
+                         'a dangling enable link is a boot-time failure')
         self.assertFalse((self.target / 'etc/systemd/system/getty.target.wants' /
                           'serial-getty@ttyGS0.service').exists())
-        # ttyMSM0's generated getty is masked, the kernel console is untouched.
-        self.assertEqual(os.readlink(self.target / 'etc/systemd/system' /
-                                     'serial-getty@ttyMSM0.service'), '/dev/null')
+        # Both serial getty names are masked: ttyMSM0's generated instance and
+        # the removed ACM one, so an upgraded rootfs cannot resurrect either.
+        for dev in ('ttyMSM0', 'ttyGS0'):
+            self.assertEqual(
+                os.readlink(self.target / 'etc/systemd/system' /
+                            f'serial-getty@{dev}.service'), '/dev/null', dev)
+        self.assertEqual(
+            os.readlink(self.target / 'etc/systemd/system' /
+                        'gts9-acm-getty.service'), '/dev/null')
 
     def test_enablement_symlinks_match_each_units_wantedby(self):
         self.install()
@@ -137,12 +142,47 @@ class DebianRootfsInstaller(unittest.TestCase):
                 masks.append(path.name)
                 continue
             self.assertFalse(target.startswith('/'), str(path))
-        self.assertEqual(sorted(masks), ['serial-getty@ttyMSM0.service'])
+        self.assertEqual(sorted(masks), ['gts9-acm-getty.service',
+                                         'serial-getty@ttyGS0.service',
+                                         'serial-getty@ttyMSM0.service'])
 
     def test_overlay_ships_no_symlinks_at_all(self):
         links = [p for p in OVERLAY.rglob('*') if p.is_symlink()]
         self.assertEqual(links, [],
                          'enablement links belong to gts9-enable-units')
+
+    def test_every_libexec_helper_is_executable_in_git(self):
+        """A mode 0644 helper is a unit that fails with status 203/EXEC.
+
+        Measured on the tablet 2026-09-26: after deploying the overlay tarball,
+        `gts9-prev-boot-evidence.service` and `gts9-watchdog-debug.service` both
+        failed with "Permission denied ... Failed at step EXEC spawning", because
+        `tar` preserves the stored mode and those two files were committed 0644.
+
+        The direct-install path was never affected - `install_tree` and
+        `install -D -m 0755` set the mode - so this only broke the TWRP/tarball
+        route, which is the one used on the tablet.  The mode has to be right in
+        git, not fixed up at packaging time, because the tarball is built with
+        `tar -cpf` from a copy of the overlay.
+        """
+        import subprocess as sp
+        listed = sp.run(['git', 'ls-files', '-s', 'rootfs-overlay/usr/libexec/'],
+                        cwd=ROOT, text=True, capture_output=True, check=True).stdout
+        mode_by_path = {}
+        for line in listed.splitlines():
+            fields = line.split()
+            if len(fields) >= 4:
+                mode_by_path[fields[3]] = fields[0]
+        self.assertTrue(mode_by_path, 'git ls-files returned nothing')
+        # Every file that is not a C source is a helper the tablet executes.
+        executables = {p: m for p, m in mode_by_path.items()
+                       if not p.endswith('.c')}
+        self.assertTrue(executables)
+        for path, mode in sorted(executables.items()):
+            with self.subTest(helper=path):
+                self.assertEqual(mode, '100755',
+                                 f'{path} must be committed executable (git '
+                                 f'update-index --chmod=+x {path})')
 
     def test_tarball_contains_no_symlink_entries(self):
         tar_file = self.root / 'gts9-debian-overlay.tar'

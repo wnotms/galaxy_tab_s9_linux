@@ -262,7 +262,20 @@ case "$PROFILE" in
 esac
 grep -q 'msm.separate_gpu_kms=1' "$CMDLINE" || die "every profile keeps msm.separate_gpu_kms=1"
 grep -q 'gts9_watchdog_debug=1' "$CMDLINE" || die "every profile keeps the watchdog detectors"
-grep -q 'console=ttyGS1' "$CMDLINE" || die "every profile keeps the ttyGS1 kernel console"
+# The panel console is the only console left (2026-09-26).  This gate used to
+# require console=ttyGS1; both serial debug consoles were removed because the
+# gadget one is the measured cause of the boot stall - a userspace write() to
+# /dev/console blocks in n_tty_write() while nothing drains the port
+# (docs/BOOT_CONSOLE_BLOCK.md) - and a stall A/B run must not carry a blocking
+# writer into the thing it is measuring.  Assert the inverse instead, so a serial
+# console cannot be reintroduced into a measured profile.
+grep -q 'console=tty0' "$CMDLINE" || die "every profile keeps the panel console console=tty0"
+for gone in console=ttyGS1 console=ttyMSM0 earlycon; do
+	grep -q "$gone" "$CMDLINE" && \
+		die "a serial debug console is a blocking writer under measurement: $gone"
+done
+[ "$(grep -o 'console=' "$CMDLINE" | wc -l)" = 1 ] || \
+	die "a measured profile must carry exactly one console= (the panel)"
 # The observer-effect rule: an A/B profile must not carry instrumentation that
 # changes what it measures.  `rpmh-debug` is not an A/B profile - it *is* the
 # instrumentation - so the switch is allowed there and nowhere else, which is

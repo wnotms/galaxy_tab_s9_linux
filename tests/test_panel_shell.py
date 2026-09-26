@@ -62,21 +62,45 @@ class PanelShell(unittest.TestCase):
 
 
 class Cmdline(unittest.TestCase):
-    def test_printk_has_no_panel_console(self):
+    """The command line carries exactly one console, and it is the panel.
+
+    Inverted on 2026-09-26.  This class used to assert the opposite - that the
+    panel had NO `console=tty0` and that the only console was `ttyMSM0,115200n8`
+    plus `earlycon`.  Both serial debug consoles were then removed: the USB ACM
+    one (`console=ttyGS1`) is the measured cause of the boot stall, and the SoC
+    UART is the second of the two the removal covers.  The tests are kept, and
+    keep the same purpose, so that a later edit cannot quietly put a serial
+    console back on this command line.
+    """
+
+    def test_the_panel_is_the_console(self):
         tokens = CMDLINE.split()
-        self.assertNotIn('console=tty0', tokens)
+        self.assertIn('console=tty0', tokens)
+        # ... and it is the ONLY console, so /dev/console cannot resolve to a
+        # port whose writer blocks when nobody drains it.
+        consoles = [t for t in tokens if t.startswith('console=')]
+        self.assertEqual(consoles, ['console=tty0'])
         self.assertNotIn('ignore_loglevel', tokens)
 
-    def test_debug_channels_survive(self):
+    def test_no_serial_debug_console_survives(self):
         tokens = CMDLINE.split()
-        self.assertIn('console=ttyMSM0,115200n8', tokens)
-        self.assertIn('earlycon', tokens)
+        for gone in ('console=ttyMSM0,115200n8', 'console=ttyGS1', 'earlycon'):
+            self.assertNotIn(gone, tokens, f'{gone} is a removed debug console')
+        # `ignore_console_null` belonged to the retired patch 0003; the appended
+        # `console=null` is absorbed by CONFIG_NULL_TTY instead.
+        self.assertNotIn('ignore_console_null', tokens)
+        # No other token may name a serial device either.
+        for token in tokens:
+            self.assertFalse(token.startswith(('console=ttyGS', 'console=ttyMSM')),
+                             f'unexpected serial console: {token}')
+
+    def test_remaining_channels_survive(self):
+        tokens = CMDLINE.split()
         self.assertIn('fbcon=font:TER16x32', tokens)
         self.assertIn('loglevel=4', tokens)
-
-    def test_no_console_token_other_than_uart(self):
-        consoles = [t for t in CMDLINE.split() if t.startswith('console=')]
-        self.assertEqual(consoles, ['console=ttyMSM0,115200n8'])
+        # The persistent Samsung ring is the evidence path that replaces the
+        # serial console, so it must stay.
+        self.assertTrue(any(t.startswith('gts9_sec_log=') for t in tokens))
 
 
 if __name__ == '__main__':

@@ -41,10 +41,10 @@ ADRENO_DEVICE = "adreno_device.c"
 # The profiles that must stay byte-identical: this phase adds new profiles, it
 # does not touch the known-good boots.
 KNOWN_GOOD_CMDLINES = {
-    "boot/cmdline.example.txt": "77855e1e97c6edc039c2055d2e8902b53ea7f68941daf3788eec90c4a81a4ac7",
-    "boot/cmdline.minimal-rootfs.example.txt": "c65593c01dc3e6fd29137f9f7ad8005c41765399d9fd2d7ea97755c1f0868dd0",
-    "boot/cmdline.poweroff-trace.example.txt": "addcbdedafc0bd610590e3ab877f00d6f75deff90b45a145e0e28a6218f81d91",
-    "boot/cmdline.boot-trace.example.txt": "07b5d7b282b3f2be21f62a771bcf8f9f5568f37d02849cb442422bc74eb81053",
+    "boot/cmdline.example.txt": "40c7d153b0bb74931297b1c300392406a664b2a34fedc517ca5a0b2df3ee8e03",
+    "boot/cmdline.minimal-rootfs.example.txt": "0d5904d95d761819002bba1e4f04d4210a31dce702bb5d16487744e6d2651ea4",
+    "boot/cmdline.poweroff-trace.example.txt": "d7d07e45166c5f3934d1fb8a8f36ec3d07d7a523a7f7296bd9582e22f7f403e0",
+    "boot/cmdline.boot-trace.example.txt": "f3aa80f29bbdd0b29f9dc727408c04cae38dd53b17b6d02e6356e2cf484d4dc7",
     "boot/cmdline.watchdog-debug.example.txt": None,  # hashed below, mode 0600
     "boot/cmdline.rpmh-debug.example.txt": None,
 }
@@ -118,13 +118,22 @@ class AbProfileTests(unittest.TestCase):
                 # Display and GPU are separate DRM devices, and profile C relies
                 # on this being true while the GPU driver is not registered.
                 self.assertIn("msm.separate_gpu_kms=1", toks)
-                # ttyGS1 is the USB kernel console (docs/USB_SERIAL_CONSOLE.md).
-                self.assertIn("console=ttyGS1", toks)
-                # The physical UART stays a kernel console.
-                self.assertTrue(any(t.startswith("console=ttyMSM0") for t in toks))
-                self.assertIn("earlycon", toks)
-                # The panel console.
+                # The panel console, and the ONLY console.  Inverted 2026-09-26:
+                # these profiles used to require console=ttyGS1 (the USB kernel
+                # console) and console=ttyMSM0 + earlycon (the physical UART).
+                # Both serial debug consoles were removed because the gadget one
+                # is the measured cause of the boot stall - a userspace write() to
+                # /dev/console blocks while nothing drains the port
+                # (docs/BOOT_CONSOLE_BLOCK.md) - and the stall is exactly what
+                # these profiles exist to measure.
                 self.assertIn("console=tty0", toks)
+                self.assertEqual([t for t in toks if t.startswith("console=")],
+                                 ["console=tty0"],
+                                 "a serial console in an A/B profile is a "
+                                 "blocking writer under measurement")
+                for gone in ("console=ttyGS1", "earlycon", "ignore_console_null"):
+                    self.assertNotIn(gone, toks)
+                self.assertFalse([t for t in toks if t.startswith("console=ttyMSM0")])
                 # Recovery must survive an unattended stall.
                 self.assertIn("softlockup_panic=1", toks)
                 self.assertIn("panic=10", toks)
@@ -2617,17 +2626,25 @@ class DocumentationTests(unittest.TestCase):
         unit = read("rootfs-overlay/usr/lib/systemd/system/gts9-prev-boot-evidence.service")
         self.assertNotIn("StandardOutput=journal+console", unit)
         self.assertIn("StandardOutput=journal", unit)
-        # The getty must not hold shutdown for the 90 s default while agetty's
-        # login shell is unreaped.
-        getty = read("rootfs-overlay/usr/lib/systemd/system/gts9-acm-getty.service")
-        self.assertIn("TimeoutStopSec=3", getty)
-        # And it must be in [Service], not [Unit] - systemd ignores it in [Unit],
-        # which is exactly the mistake made first.
-        svc_at = getty.index("[Service]")
-        unit_at = getty.index("[Unit]")
-        ts_at = getty.index("TimeoutStopSec=3")
-        self.assertGreater(ts_at, svc_at, "TimeoutStopSec belongs in [Service]")
-        self.assertLess(unit_at, svc_at)
+        # The getty used to be the second of the two blocking writers, fixed with
+        # TimeoutStopSec=3.  It is now removed outright (2026-09-26): 3 s still
+        # cost a visible pause on every poweroff, and the tablet is reached over
+        # ssh instead.  Assert the unit is gone rather than shortening a wait it
+        # no longer has - and assert the reason it is gone cannot be undone by a
+        # leftover file in /etc, which wins over /usr/lib.
+        self.assertFalse(
+            (ROOT / "rootfs-overlay/usr/lib/systemd/system/"
+                   "gts9-acm-getty.service").exists(),
+            "the ttyGS0 autologin getty is the 90 s poweroff")
+        enable = read("rootfs-overlay/usr/libexec/gts9-enable-units")
+        self.assertIn('ln -sfn /dev/null "$etc_dir/gts9-acm-getty.service"', enable)
+        # And nothing in the overlay may start a serial login at all.
+        for path in sorted((ROOT / "rootfs-overlay").rglob("*")):
+            if not path.is_file():
+                continue
+            code = "\n".join(line for line in path.read_text(errors="replace").splitlines()
+                             if not line.lstrip().startswith("#"))
+            self.assertNotIn("agetty", code, str(path))
 
     def test_wifi_reached_every_level_with_no_ath11k_change(self):
         """The bring-up is complete, and the record must say how."""
