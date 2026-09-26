@@ -11,10 +11,21 @@
 #	no-acd     profile B  msm.disable_acd=1
 #	no-gpu     profile C  msm.skip_gpu=1
 #	late-deferred  profile G  deferred_probe_timeout=300
+#	cpuidle-off    profile H  cpuidle.off=1
 #
 # Profile G moves the deferred-probe-timeout burst (~14.3 s) out of the stall
 # window without changing which devices are deferred, separating "the
 # whole-system re-probe + sync_state burst" from "the GPU specifically".
+#
+# Profile H (round 33) is the CPU-idle gate of docs/CPU_IDLE_WEDGE_PLAN.md.  It
+# turns the whole cpuidle framework off, so every CPU reaches architectural WFI
+# only and no PSCI CPU_SUSPEND is issued at all.  It is the only profile that
+# removes the CPU-local *and* the cluster idle layers at once, and it is a
+# one-token change to the command line - which is why it runs first.
+#
+# Unlike rpmh-debug, profile H IS comparable to the A/B series: it adds no
+# logging and changes no counters, so it does not fall under the observer-effect
+# gate below.  It changes behaviour, and that behaviour is the single variable.
 #
 # Profiles only change vendor_boot.img: boot.img (kernel + DTB) and
 # init_boot.img (initramfs) must be identical across them, or the A/B is not an
@@ -29,6 +40,7 @@
 #	scripts/stall-ab.sh no-acd 5
 #	scripts/stall-ab.sh no-gpu 5
 #	scripts/stall-ab.sh late-deferred 5
+#	scripts/stall-ab.sh cpuidle-off 10
 #	GTS9_ALLOW_POWER=1 scripts/stall-ab.sh baseline 5
 #
 #	scripts/stall-ab.sh --summary              # table over whatever was run
@@ -112,7 +124,7 @@ usage() {
 	cat >&2 <<'EOF'
 usage: stall-ab.sh PROFILE ROUNDS
        stall-ab.sh --summary
-PROFILE is one of: baseline, no-acd, no-gpu, late-deferred, rpmh-debug
+PROFILE is one of: baseline, no-acd, no-gpu, late-deferred, rpmh-debug, cpuidle-off
 EOF
 	exit 2
 }
@@ -126,23 +138,29 @@ summary_table() {
 		return 0
 	fi
 	local keys="run profile round boot_id kernel_release stall rpmh rcu wq dpu mmc"
-	echo "run               profile    round  verdict       wedge  susp  boot_id"
-	echo "----------------  ---------  -----  ------------  -----  ----  --------"
+	echo "run               profile      round  verdict       wedge  susp  cpu  sysfs     gov  boot_id"
+	echo "----------------  -----------  -----  ------------  -----  ----  ---  --------  ---  --------"
 	for r in $(printf '%s\n' "${rows[@]}" | sort); do
 		local p rn
 		p=$(sed -n 's/^profile=//p' "$r" | head -1)
 		rn=$(sed -n 's/^round=//p' "$r" | head -1)
-		printf '%-16s  %-9s  %-5s  %-12s  %-5s  %-4s  %s\n' \
+		printf '%-16s  %-11s  %-5s  %-12s  %-5s  %-4s  %-3s  %-8s  %-3s  %s\n' \
 			"$(sed -n 's/^run=//p' "$r" | head -1)" "${p:-?}" "${rn:-?}" \
 			"$(sed -n 's/^verdict=//p' "$r" | head -1)" \
 			"$(sed -n 's/^wedge_markers=//p' "$r" | head -1)" \
 			"$(sed -n 's/^suspect_markers=//p' "$r" | head -1)" \
+			"$(sed -n 's/^cpuidle_driver=//p' "$r" | head -1 | cut -c1-3)" \
+			"$(sed -n 's/^cpuidle_sysfs=//p' "$r" | head -1)" \
+			"$(sed -n 's/^cpuidle_gov_boot=//p' "$r" | head -1)" \
 			"$(sed -n 's/^boot_id_after=//p' "$r" | head -1 | cut -c1-8)"
 	done
 	echo
 	echo "verdict: clean | wedge | suspect | unattributed (see the verdict block)"
 	echo "wedge_markers = soft_lockup + hung_task + rcu_stall + workqueue_stall + nmi_unresponsive + panic"
 	echo "  a lone DPU/MMC/RPMh timeout is a *suspect* marker and does NOT make a wedge"
+	echo "cpu/sysfs/gov are the cpuidle columns: under cpuidle.off=1 the driver and the"
+	echo "  sysfs group are ABSENT and gov_boot is 0, which is what proves the profile armed;"
+	echo "  on every other profile the driver is psci_idle and gov_boot is 1."
 }
 
 # --- durable round identity --------------------------------------------------
@@ -205,7 +223,7 @@ run_probe() {
 	timeout 500 "$CR" \
 		-Out "$winlog" -Port "$SHELL_PORT" \
 		-WaitReadySeconds "$READY" -ReadSeconds 30 \
-		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(if [ -e /sys/bus/platform/devices/3d00000.gpu/driver ]; then basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null); else echo NONE; fi);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- PARAM_CONSUMPTION (proves an early_param handler exists)";echo "unknown_params=$(journalctl -b 0 -k --no-pager 2>/dev/null | grep -a "Unknown kernel command line parameters" | tail -1)";echo "--- IDENTITY (the binding this round claims)";journalctl -b -1 -k --no-pager 2>/dev/null | grep -a "GTS9_AB " | tail -3;echo "--- IDENTITY_PMSG";cat /var/lib/systemd/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\\0" | grep -a "GTS9_AB " | tail -3;echo "--- BUILDID";echo img_sha=$(sha256sum /boot/vmlinuz 2>/dev/null | cut -c1-16);echo cmdline_sha=$(sha256sum /proc/cmdline | cut -c1-16);echo "--- BOOT_UNDER_TEST";echo "under_test_boot_id=$(journalctl --list-boots --no-pager 2>/dev/null | tail -2 | head -1 | awk '\''{print $2}'\'')";echo "current_boot_id=$(cat /proc/sys/kernel/random/boot_id)";echo "boot_count=$(journalctl --list-boots --no-pager 2>/dev/null | wc -l)";echo "boot_list=$(journalctl --list-boots --no-pager 2>/dev/null | tail -4 | cut -c1-40 | tr \"\\n\" \"|\")";echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
+		-Commands 'echo PB;echo boot_id=$(cat /proc/sys/kernel/random/boot_id);echo uptime=$(cut -d" " -f1 /proc/uptime);echo release=$(uname -r);echo cmdline=$(cat /proc/cmdline);echo gpu=$(ls -d /sys/bus/platform/devices/3d00000.gpu 2>/dev/null | wc -l);echo gpu_driver=$(if [ -e /sys/bus/platform/devices/3d00000.gpu/driver ]; then basename $(readlink -f /sys/bus/platform/devices/3d00000.gpu/driver 2>/dev/null); else echo NONE; fi);echo aoss_driver=$(basename $(readlink -f /sys/bus/platform/devices/c300000.power-management/driver 2>/dev/null) 2>/dev/null || echo NONE);echo gmu_node=$(ls -d /sys/bus/platform/devices/3d6a000.gmu 2>/dev/null | wc -l);echo gpu_devfreq=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/cur_freq 2>/dev/null || echo none);echo gpu_gov=$(cat /sys/bus/platform/devices/3d00000.gpu/devfreq/3d00000.gpu/governor 2>/dev/null || echo none);echo deferred=$(cat /sys/kernel/debug/devices_deferred 2>/dev/null | wc -l);echo wd=$(cat /proc/sys/kernel/watchdog) slp=$(cat /proc/sys/kernel/softlockup_panic) htp=$(cat /proc/sys/kernel/hung_task_panic);echo ctrl=$(cat /sys/class/tty/console/active);echo failed=$(systemctl --failed --no-pager --plain 2>/dev/null | grep -c "loaded failed");echo msm_params=$(ls /sys/module/msm/parameters/ 2>/dev/null | tr "\n" ",");echo apps_rsc_irq=$(grep -E apps_rsc /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo aoss_qmp_irq=$(grep -E aoss-qmp /proc/interrupts 2>/dev/null | tr -s " " | sed "s/^ //" | cut -d" " -f2);echo panel_status=$(ls /sys/class/drm/*/status 2>/dev/null | wc -l):$(cat /sys/class/drm/card*-DSI-1/status 2>/dev/null | head -1);echo "--- CPUIDLE (the round-33 profile gate: cpuidle.off=1 removes this path entirely)";echo cpuidle_sysfs=$(test -d /sys/devices/system/cpu/cpuidle && echo present || echo ABSENT);echo cpuidle_driver=$(cat /sys/devices/system/cpu/cpuidle/current_driver 2>/dev/null || echo NONE);echo cpuidle_gov=$(cat /sys/devices/system/cpu/cpuidle/current_governor 2>/dev/null || echo NONE);echo cpuidle_gov_boot=$(journalctl -b -1 -k --no-pager 2>/dev/null | grep -ac "cpuidle: using governor");echo cpuidle_states=$(for c in /sys/devices/system/cpu/cpu[0-7]; do n=$(basename $c); for st in $c/cpuidle/state*; do [ -d "$st" ] || continue; printf "%s:%s:%s/%s/%s " "$n" "$(basename $st)" "$(cat $st/name 2>/dev/null)" "$(cat $st/usage 2>/dev/null)" "$(cat $st/rejected 2>/dev/null)"; done; done);echo genpd_cluster=$(cat /sys/kernel/debug/pm_genpd/power-domain-cluster/idle_states 2>/dev/null | tr "\n" ";");echo psci_caps=$(cat /sys/kernel/debug/psci 2>/dev/null | grep -aE "OSI|StateID" | tr "\n" ";");echo usb_state=$(cat /sys/class/udc/a600000.usb/state 2>/dev/null);echo "--- PARAM_CONSUMPTION (proves an early_param handler exists)";echo "unknown_params=$(journalctl -b 0 -k --no-pager 2>/dev/null | grep -a "Unknown kernel command line parameters" | tail -1)";echo "--- IDENTITY (the binding this round claims)";journalctl -b -1 -k --no-pager 2>/dev/null | grep -a "GTS9_AB " | tail -3;echo "--- IDENTITY_PMSG";cat /var/lib/systemd/pstore/pmsg-ramoops-0 2>/dev/null | tr -d "\\0" | grep -a "GTS9_AB " | tail -3;echo "--- BUILDID";echo img_sha=$(sha256sum /boot/vmlinuz 2>/dev/null | cut -c1-16);echo cmdline_sha=$(sha256sum /proc/cmdline | cut -c1-16);echo "--- BOOT_UNDER_TEST";echo "under_test_boot_id=$(journalctl --list-boots --no-pager 2>/dev/null | tail -2 | head -1 | awk '\''{print $2}'\'')";echo "current_boot_id=$(cat /proc/sys/kernel/random/boot_id)";echo "boot_count=$(journalctl --list-boots --no-pager 2>/dev/null | wc -l)";echo "boot_list=$(journalctl --list-boots --no-pager 2>/dev/null | tail -4 | cut -c1-40 | tr \"\\n\" \"|\")";echo "--- PREVBOOT_KLOG (every line, tagged)";journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | sed "s/^/KLOG /" | head -3000;echo "--- PREVBOOT_PSTORE (tagged)";cat /var/lib/systemd/pstore/console-ramoops-0 /sys/fs/pstore/console-ramoops-0 2>/dev/null | sed "s/^/PSTORE /" | head -3000;echo "--- prev boot tail";journalctl -b -1 -o short-monotonic --no-pager 2>/dev/null | tail -5' \
 		>"$out" 2>&1
 	:
 }
@@ -218,7 +236,7 @@ if [ "${1:-}" = "--summary" ]; then
 fi
 
 PROFILE=${1:-}; ROUNDS=${2:-5}
-case "$PROFILE" in baseline|no-acd|no-gpu|late-deferred|rpmh-debug) ;; *) usage ;; esac
+case "$PROFILE" in baseline|no-acd|no-gpu|late-deferred|rpmh-debug|cpuidle-off) ;; *) usage ;; esac
 case "$ROUNDS" in ''|*[!0-9]*) usage ;; esac
 [ "$ROUNDS" -ge 1 ] || usage
 
@@ -259,6 +277,16 @@ case "$PROFILE" in
 		grep -q 'deferred_probe_timeout=300' "$CMDLINE" || die "late-deferred profile lacks deferred_probe_timeout=300"
 		grep -q 'msm.skip_gpu' "$CMDLINE" && die "late-deferred must not carry msm.skip_gpu"
 		grep -q 'msm.disable_acd' "$CMDLINE" && die "late-deferred must not carry msm.disable_acd" ;;
+	cpuidle-off)
+		# One variable only: the framework off, and no other ablation or
+		# diagnostic token alongside it.  A stray token here would make the
+		# result unattributable in exactly the way docs/CPU_IDLE_WEDGE_PLAN.md
+		# forbids.
+		grep -q 'cpuidle\.off=1' "$CMDLINE" || die "cpuidle-off profile lacks cpuidle.off=1"
+		for forbidden in msm.skip_gpu msm.disable_acd deferred_probe_timeout gts9_rpmh_debug \
+		                 gts9_kmsg_mirror gts9_dpu_flight gts9_poweroff_trace; do
+			grep -q "$forbidden" "$CMDLINE" && die "cpuidle-off must change one thing: it carries $forbidden"
+		done ;;
 esac
 grep -q 'msm.separate_gpu_kms=1' "$CMDLINE" || die "every profile keeps msm.separate_gpu_kms=1"
 grep -q 'gts9_watchdog_debug=1' "$CMDLINE" || die "every profile keeps the watchdog detectors"
@@ -301,7 +329,7 @@ say "cmdline file: ${CMDLINE#$REPO/}" | tee -a "$OUT"
 # spending rounds on it.
 pre=$DIR/preflight.txt
 run_probe preflight "$DIR/preflight-raw.txt" "$WINDIR\\preflight.log"
-grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|msm_params=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=)" \
+grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|msm_params=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|cpuidle_sysfs=|cpuidle_driver=|cpuidle_gov=|cpuidle_gov_boot=|cpuidle_states=|genpd_cluster=|psci_caps=)" \
 	"$DIR/preflight-raw.txt" >"$pre" 2>/dev/null
 cat "$pre" 2>/dev/null | tee -a "$OUT"
 
@@ -382,6 +410,42 @@ case "$PROFILE" in
 		grep -aq 'msm.skip_gpu=1' <<<"$got_cmdline" && say "WARNING: tablet cmdline has skip_gpu but profile is baseline" ;;
 	no-acd) grep -aq 'msm.disable_acd=1' <<<"$got_cmdline" || say "WARNING: tablet cmdline lacks msm.disable_acd=1" ;;
 	no-gpu) grep -aq 'msm.skip_gpu=1' <<<"$got_cmdline" || say "WARNING: tablet cmdline lacks msm.skip_gpu=1" ;;
+	cpuidle-off)
+		# --- the arming gate, and why it is not the obvious check ------------
+		# docs/CPU_IDLE_WEDGE_PLAN.md §4.1.  `cat .../cpuidle/current_driver`
+		# CANNOT be the check here: cpuidle.off=1 makes cpuidle_init()
+		# (core_initcall) return -ENODEV before cpuidle_add_interface() runs, so
+		# the whole cpuidle sysfs group is absent and that file does not exist.
+		# Using it would make a correctly-armed profile look broken.
+		#
+		# The authoritative signals, in order of strength:
+		#   1. `cpuidle_gov_boot` > 0 means the framework is UP.  The governor
+		#      registers from a postcore_initcall reached only through the cpuidle
+		#      core, so with the framework off the line cannot be printed.  This is
+		#      measured from the PREVIOUS boot's ring, which is the boot under test.
+		#   2. `cpuidle_sysfs=ABSENT` is the structural consequence.
+		#
+		# Both must agree.  A profile that is silently NOT armed looks exactly
+		# like a healthy boot and would make the whole series a no-op - the same
+		# failure mode that cost `msm.no_gpu=1` two rounds (see
+		# docs/STALL_FIRST_EVENT_ORDERING.md §"Corrected inputs").
+		armed_cmdline=no
+		grep -aq 'cpuidle\.off=1' <<<"$got_cmdline" && armed_cmdline=yes
+		armed_sysfs=$(sed -n 's/.*RECV  cpuidle_sysfs=//p' "$DIR/preflight-raw.txt" 2>/dev/null | tail -1 | tr -d '\r')
+		armed_gov=$(sed -n 's/.*RECV  cpuidle_gov_boot=//p' "$DIR/preflight-raw.txt" 2>/dev/null | tail -1 | tr -d '\r')
+		say "arming gate: cmdline=$armed_cmdline sysfs=${armed_sysfs:-?} governor_boot_lines=${armed_gov:-?}"
+		[ "$armed_cmdline" = yes ] || die "cpuidle-off: the tablet's cmdline lacks cpuidle.off=1 - the profile is NOT armed, and no round may be counted"
+		case "$armed_sysfs" in
+		ABSENT) ;;
+		present) die "cpuidle-off: the tablet's cmdline has cpuidle.off=1 but /sys/devices/system/cpu/cpuidle EXISTS, so the framework is running - the parameter did not take effect" ;;
+		*) die "cpuidle-off: could not read the cpuidle sysfs state, so arming cannot be verified (docs/CPU_IDLE_WEDGE_PLAN.md §4.1)" ;;
+		esac
+		case "$armed_gov" in
+		''|*[!0-9]*) die "cpuidle-off: could not count 'cpuidle: using governor' in the previous boot's ring - arming cannot be verified" ;;
+		0) ;;
+		*) die "cpuidle-off: the previous boot's ring carries 'cpuidle: using governor' $armed_gov time(s), so the framework registered - cpuidle.off=1 did NOT take effect" ;;
+		esac
+		say "arming gate PASSED: framework off (sysfs absent, governor never registered)" ;;
 esac
 
 if [ "$ALLOW" != "1" ]; then
@@ -467,7 +531,7 @@ for i in $(seq 1 "$ROUNDS"); do
 			say "  the retry also produced no result - this round will be unattributed" | tee -a "$OUT"
 		fi
 	fi
-	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|KLOG |PSTORE |\[ *[0-9]+\.|--- )" \
+	grep -aE "RECV  (PB|boot_id=|uptime=|release=|gpu=|gpu_driver=|aoss_driver=|gmu_node=|gpu_devfreq=|gpu_gov=|deferred=|wd=|ctrl=|failed=|apps_rsc_irq=|aoss_qmp_irq=|panel_status=|usb_state=|cpuidle_sysfs=|cpuidle_driver=|cpuidle_gov=|cpuidle_gov_boot=|cpuidle_states=|genpd_cluster=|psci_caps=|KLOG |PSTORE |\[ *[0-9]+\.|--- )" \
 		"$DIR/probe-$i-raw.txt" >"$DIR/probe-$i.txt" 2>/dev/null
 
 	new_id=$(sed -n 's/.*boot_id=//p' "$DIR/probe-$i.txt" 2>/dev/null | head -1 | tr -d '\r')
@@ -539,6 +603,24 @@ for i in $(seq 1 "$ROUNDS"); do
 		echo "watchdog=$(sed -n 's/.*wd=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "console_active=$(sed -n 's/.*ctrl=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		echo "failed_units=$(sed -n 's/.*failed=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
+		# --- the cpuidle evidence, which docs/CPU_IDLE_WEDGE_PLAN.md §9 makes
+		# mandatory for every profile, not only for cpuidle-off ---------------
+		# `rejected` is the ONLY signal a failed PSCI CPU_SUSPEND produces: the
+		# cpuidle-psci error path calls pm_genpd_inc_rejected() and prints
+		# nothing.  The genpd `Rejected` column is a *different* counter, for the
+		# cluster domain states, and it is the precondition for the cluster
+		# ablations: if cluster_sleep_1 is already essentially never entered,
+		# removing it is a no-op and a clean result from that profile would be
+		# uninformative.  Both are recorded so that is known before boots are
+		# spent, not after.
+		for f in cpuidle_sysfs cpuidle_driver cpuidle_gov cpuidle_gov_boot psci_caps; do
+			echo "$f=$(sed -n "s/.*$f=//p" "$DIR/probe-$i.txt" | head -1 | tr -d '\r' | cut -d' ' -f1)"
+		done
+		# The per-CPU state list keeps its spaces: `cpu0:state1:name/usage/rejected`
+		# triples are separated by spaces, and reading only the first token would
+		# discard every CPU but CPU0.
+		echo "cpuidle_states=$(sed -n 's/.*cpuidle_states=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
+		echo "genpd_cluster=$(sed -n 's/.*genpd_cluster=//p' "$DIR/probe-$i.txt" | head -1 | tr -d '\r')"
 		# Anomaly classes, from each kernel channel and labelled with it.
 		for spec in "${ANOMALIES[@]}"; do
 			key=${spec%%|*}; re=${spec#*|}
