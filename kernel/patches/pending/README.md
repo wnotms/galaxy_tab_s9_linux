@@ -19,6 +19,23 @@ It is not the SE re-arm patch `0007` documented below.
 | `0005-drm-msm-dsi-quiesce-x710-phy-before-enable.patch` | RETIRED |
 | `0005-drm-msm-dsi-cycle-x710-link-before-panel.patch` | RETIRED |
 | `0007-i2c-qcom-geni-rearm-se-before-transfers.patch` | NOT NEEDED |
+| `0003-printk-allow-ignoring-samsung-console-null.patch` | RETIRED - the consoles it protected are gone |
+
+## `ignore_console_null` - RETIRED (2026-09-26)
+
+The patch adds an opt-in early parameter that turns a later `console=null` into a
+no-op, so the requested bring-up consoles survive the argument Samsung's ABL
+appends after our own.
+
+It is retired with the serial debug consoles it existed to protect. The command
+line now carries exactly one console, `console=tty0` on the panel, and the
+appended `console=null` is absorbed by an upstream `CONFIG_NULL_TTY=y` whose
+`ttynull_write()` returns `count` without waiting for anything. There is nothing
+left for `console=null` to displace, and `kernel/printk/printk.c` returns to
+unmodified upstream. Do not re-apply it to "restore" a serial console: the
+console set it protected is itself the measured cause of the boot and shutdown
+stalls. See [the boot console block](../../docs/BOOT_CONSOLE_BLOCK.md) and
+[shutdown delay](../../docs/SHUTDOWN_DELAY.md).
 
 ## UFS TX pull-down - NOT NEEDED FOR NORMAL BOOT, suspend angle UNRESOLVED
 
