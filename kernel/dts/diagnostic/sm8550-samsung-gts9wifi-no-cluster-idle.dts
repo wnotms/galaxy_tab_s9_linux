@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * DIAGNOSTIC OVERLAY — not a fix, and not part of the default build.
+ *
+ * Profile CLUSTER-NO-DEEP of docs/CPU_IDLE_WEDGE_PLAN.md.
+ *
+ * Removes BOTH cluster domain idle states from `cluster_pd`:
+ *
+ *   cluster-sleep-0  arm,psci-suspend-param = <0x41000044>   removed
+ *   cluster-sleep-1  arm,psci-suspend-param = <0x4100c344>   removed
+ *
+ * This is the coarser of the two cluster axes and it exists to separate
+ * "the cluster layer as a whole" from "the deeper of the two cluster states".
+ * Run it only after CLUSTER-NO-LLCC-OFF, and never alongside it — one layer per
+ * profile, or the result cannot be attributed.
+ *
+ * The per-CPU deepest state is deliberately still present, so the difference
+ * between this profile and the baseline is exactly the cluster layer.
+ *
+ * WHY THIS ONE *IS* A `/delete-property/`:
+ * with both states gone there is no list to keep, and deleting the property is
+ * the honest expression of "this domain has no idle states".  The kernel
+ * tolerates it by design — `of_genpd_parse_idle_states()` returns 0 with
+ * `*states = NULL, *n = 0` for a domain with no phandles, and `psci_pd_init()`
+ * then passes `NULL` as the governor:
+ *
+ *     pd_gov = pd->states ? &pm_domain_cpu_gov : NULL;
+ *
+ * so the domain still exists and still has its `power_off` hook; it simply has
+ * nothing to select.  This is the opposite of the per-CPU case, where an empty
+ * list is fatal to the whole driver.  See docs/SM8550_IDLE_STATE_ANALYSIS.md §5.
+ *
+ * APPLY: GTS9_IDLE_ABLATION=no-cluster-idle scripts/prepare-kernel.sh <worktree>
+ * VERIFY: scripts/verify-idle-ablation.sh <dtb> no-cluster-idle
+ */
+
+#include "sm8550-samsung-gts9wifi-board.dts"
+
+&cluster_pd {
+	/delete-property/ domain-idle-states;
+};

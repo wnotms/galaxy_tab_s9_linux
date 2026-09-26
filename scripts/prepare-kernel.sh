@@ -4,10 +4,14 @@ set -euo pipefail
 tree=${1:?usage: prepare-kernel.sh LINUX_WORKTREE}
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 dts_src="$repo_root/kernel/dts/sm8550-samsung-gts9wifi.dts"
+dts_diag_dir="$repo_root/kernel/dts/diagnostic"
 patch_dir="$repo_root/kernel/patches"
 install_vendor_pogo=${GTS9_INSTALL_VENDOR_POGO:-0}
 poweroff_trace=${GTS9_POWEROFF_TRACE:-0}
 rpmh_debug=${GTS9_RPMH_DEBUG:-0}
+# CPU-idle ablation profiles (docs/CPU_IDLE_WEDGE_PLAN.md).  Empty = the normal
+# board DTS, which is what every default build and every A/B profile uses.
+idle_ablation=${GTS9_IDLE_ABLATION:-}
 
 case "$install_vendor_pogo" in
     0|1) ;;
@@ -20,6 +24,13 @@ esac
 case "$rpmh_debug" in
     0|1) ;;
     *) echo "GTS9_RPMH_DEBUG must be 0 or 1" >&2; exit 2 ;;
+esac
+# The ablation is a closed set of named diagnostic device trees, each of which
+# removes exactly one layer of the idle path.  A free-form value would let a
+# typo produce a build that looks ablated and is not.
+case "$idle_ablation" in
+    ''|no-llcc-off|no-cluster-idle) ;;
+    *) echo "GTS9_IDLE_ABLATION must be empty, no-llcc-off or no-cluster-idle" >&2; exit 2 ;;
 esac
 
 git -C "$tree" rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
@@ -118,7 +129,35 @@ if [ -n "$unaccounted" ]; then
 fi
 
 qcom_dts="$tree/arch/arm64/boot/dts/qcom"
-install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
+
+# Install the board DTS, or the diagnostic ablation overlay in its place.
+#
+# The overlay is a `.dts` that `#include`s the real board file, so what lands in
+# the kernel tree is a single self-contained device tree either way.  The overlay
+# is *copied* to the canonical filename rather than added as a second target, so
+# the DTB path, the bundle script, the validator and every hash in this
+# repository keep naming the same artifact - an ablation must not be able to
+# change the shape of the build.
+if [ -n "$idle_ablation" ]; then
+    dts_diag="$dts_diag_dir/sm8550-samsung-gts9wifi-$idle_ablation.dts"
+    [ -f "$dts_diag" ] || {
+        echo "missing idle ablation device tree: $dts_diag" >&2
+        exit 1
+    }
+    # The overlay `#include`s the board file under this base name, so the real
+    # device tree is installed BESIDE it rather than under the name the overlay
+    # is copied to.  Installing the overlay at its own include target would be
+    # self-inclusion, and the build would either loop or silently produce an
+    # empty tree.
+    install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi-board.dts"
+    install -m 0644 "$dts_diag" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
+    echo "idle ablation ACTIVE: $idle_ablation (from ${dts_diag#$repo_root/})"
+    echo "  includes the real board tree as sm8550-samsung-gts9wifi-board.dts"
+    echo "  this is a DIAGNOSTIC build; verify the DTB before flashing:"
+    echo "  scripts/verify-idle-ablation.sh <dtb> $idle_ablation"
+else
+    install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi.dts"
+fi
 
 makefile="$qcom_dts/Makefile"
 if ! grep -q 'sm8550-samsung-gts9wifi\.dtb' "$makefile"; then

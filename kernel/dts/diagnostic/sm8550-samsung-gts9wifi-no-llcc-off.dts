@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * DIAGNOSTIC OVERLAY — not a fix, and not part of the default build.
+ *
+ * Profile CLUSTER-NO-LLCC-OFF of docs/CPU_IDLE_WEDGE_PLAN.md.
+ *
+ * Removes the DEEPER of the two cluster domain idle states from `cluster_pd`,
+ * keeping the shallower one.  On SM8550 those are:
+ *
+ *   cluster-sleep-0  arm,psci-suspend-param = <0x41000044>   kept
+ *   cluster-sleep-1  arm,psci-suspend-param = <0x4100c344>   removed
+ *
+ * The second is the structural analogue of Hamoa's `cluster_cl5`, which an RFC
+ * from Jens Glathe (Suggested-by: Marc Zyngier, 2026-06-04) dropped to stop
+ * spontaneous resets on X1-class consumer hardware.  That RFC is unmerged and
+ * is about a different SoC family; it is a reason to *test* this axis, not
+ * evidence about SM8550.
+ *
+ * WHY THIS IS EXPRESSED AS A PROPERTY OVERRIDE AND NOT AS A
+ * `/delete-property/ domain-idle-states`:
+ *
+ * deleting the whole property would remove BOTH cluster states, which is the
+ * different profile (CLUSTER-NO-DEEP).  Overriding the list is the only way to
+ * drop one state and keep the other, and it is a supported operation:
+ * `of_genpd_parse_idle_states()` walks the phandles that are listed, and
+ * `genpd_iterate_idle_states()` simply skips nodes that are not available.
+ *
+ * WHAT IT DOES NOT DO: it does not touch the per-CPU states, and it cannot.
+ * See docs/SM8550_IDLE_STATE_ANALYSIS.md §5 — removing `domain-idle-states`
+ * from a `cpu_pdN` makes `dt_init_idle_driver()` return 0, which makes
+ * `psci_idle_init_cpu()` return -ENODEV, which makes `psci_cpuidle_probe()`
+ * roll back EVERY CPU.  The brief's `IDLE-LITTLE-ONLY` profile is therefore
+ * unbuildable, and this file deliberately does not attempt it.
+ *
+ * APPLY: GTS9_IDLE_ABLATION=no-llcc-off scripts/prepare-kernel.sh <worktree>
+ * VERIFY: scripts/verify-idle-ablation.sh <dtb> no-llcc-off
+ *   must pass BEFORE flashing.  Assuming a `/delete-property/` worked is the
+ *   mistake this repository has already made once with the cmdline profiles.
+ */
+
+#include "sm8550-samsung-gts9wifi-board.dts"
+
+&cluster_pd {
+	/* cluster-sleep-0 only; cluster-sleep-1 is left defined but unreferenced */
+	domain-idle-states = <&cluster_sleep_0>;
+};
