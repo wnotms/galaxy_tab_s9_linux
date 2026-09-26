@@ -1,5 +1,5 @@
 #!/bin/sh
-# X710 USB debug link: the ECM/NCM network that ssh is reached over.
+# X710 USB debug link: the NCM network that ssh is reached over.
 #
 # History, because it explains the shape of this file.  Until 2026-09-26 this
 # gadget was the *console*: acm.usb0 carried an autologin root shell and acm.usb1
@@ -12,16 +12,24 @@
 # boot stall (docs/BOOT_CONSOLE_BLOCK.md: a userspace write() to /dev/console
 # blocks in n_tty_write() while nothing drains the gadget port) and of the ~90 s
 # poweroff (docs/SHUTDOWN_DELAY.md: agetty --autologin spawns a login shell it
-# does not reap, so systemd waits out TimeoutStopSec).  With
-# CONFIG_U_SERIAL_CONSOLE unset the kernel no longer offers the configfs
-# `console` attribute at all, so the split_consoles() dance below is now a no-op
-# that is kept only so this script still runs unchanged against an older kernel.
+# does not reap, so systemd waits out TimeoutStopSec).
 #
-# What is left is the transport: acm.usb0/acm.usb1 still exist so the host sees
-# the same two COM ports (an interface renumbering would move the COM numbers),
-# but nothing logs in on them.  The interactive channel is ssh over the NCM/ECM
-# network function, which /etc/gts9-usb-net asks for; that file ships in the
-# overlay because it is what makes a fresh rootfs reachable at all.
+# acm.usb1 is therefore GONE: it existed for exactly one purpose, to be the port
+# that printk registered on (it was created second so u_serial handed it line 1),
+# and that purpose no longer exists.  The kernel builds without
+# CONFIG_U_SERIAL_CONSOLE, so gs_console_init() is compiled to `return -ENOSYS`
+# and no ttyGS port can become a console at all - checked in the pinned source,
+# drivers/usb/gadget/function/u_serial.c.
+#
+# acm.usb0 is kept as one plain serial port.  It is NOT a console and has no
+# getty, so nothing writes to it and nothing can block on it; it is there so a
+# human with a terminal program still has a wired endpoint that does not depend on
+# the network function having bound.  Keeping exactly one, rather than two, is
+# what the owner asked for once the console role was gone.
+#
+# The interactive channel is ssh over the NCM network function, which
+# /etc/gts9-usb-net asks for; that file ships in the overlay because it is what
+# makes a fresh rootfs reachable at all.
 #
 # No mass storage, RNDIS, MTP or adb FUNCTION, and no block device is touched:
 # the gadget must never be able to disturb the root filesystem it runs from, and
@@ -70,32 +78,24 @@ if [ ! -d "$CONFIGFS/usb_gadget" ]; then
 	fail 'configfs is not available'
 fi
 
-# split_consoles - keep the gadget ports out of printk.
+# clear_console - keep the one remaining serial port out of printk.
 #
 # This was the console handover: u_serial gives the *first* allocated port a
 # console automatically (gserial_alloc_line() -> gs_console_init()), so acm.usb0
-# used to start out owning its IN endpoint for the kernel log and the login shell
+# used to start out owning its IN endpoint for the kernel log and a login shell
 # could not send a byte.  The configfs "console" attribute was the switch - 0 on
 # the shell port, 1 on the port named by console=ttyGS1.
 #
-# With CONFIG_U_SERIAL_CONSOLE unset the attribute does not exist at all and no
-# ttyGS port can ever become a console, which is the state this port now builds
-# deliberately: `console=ttyGS1` is gone from the command line and printk must
-# never reach the gadget again (docs/BOOT_CONSOLE_BLOCK.md).
-#
-# The function is kept, and still forces 0 rather than 1, so that running this
-# script against an older kernel - a recovery image, or a rollback - leaves the
-# gadget with no console on it either.  Every write stays best-effort.
-split_consoles() {
+# On a current kernel the attribute does not exist at all: CONFIG_U_SERIAL_CONSOLE
+# is unset, so gserial_set_console()/f_acm_console_store() are compiled out.  This
+# write is kept, and still forces 0, so that running this script against an OLDER
+# kernel - a recovery image, or a rollback - also leaves the gadget with no
+# console on it.  It is best-effort.
+clear_console() {
 	if [ -e "$GADGET/functions/acm.usb0/console" ]; then
 		echo 0 > "$GADGET/functions/acm.usb0/console" 2>/dev/null &&
 			echo "gts9-usb-acm: acm.usb0 is not a console" ||
 			echo "gts9-usb-acm: could not clear the acm.usb0 console" >&2
-	fi
-	if [ -e "$GADGET/functions/acm.usb1/console" ]; then
-		echo 0 > "$GADGET/functions/acm.usb1/console" 2>/dev/null &&
-			echo "gts9-usb-acm: acm.usb1 is not a console (printk must not reach the gadget)" ||
-			echo "gts9-usb-acm: could not clear the acm.usb1 console" >&2
 	fi
 }
 
@@ -204,13 +204,58 @@ configure_network() {
 
 read_net_conf
 
-# A gadget left over from an earlier userspace and still bound is already the
-# console this service exists to provide; do not tear it down and rebuild it.
+# retire_second_serial - remove acm.usb1 from a gadget built by an older install.
+#
+# An upgraded rootfs keeps the gadget the previous install built, and that gadget
+# has acm.usb1 in its configuration.  configfs has no way to change a bound
+# gadget's function set in place, so the whole gadget is torn down and rebuilt
+# without it.  This runs before the "already bound" fast path below, so the
+# migration happens exactly once and a reboot is not required.
+#
+# It is deliberately narrow: it only acts when acm.usb1 is actually linked into
+# the configuration, and it only ever removes that one function.
+retire_second_serial() {
+	[ -e "$GADGET/configs/c.1/acm.usb1" ] || return 0
+
+	echo "gts9-usb-acm: removing the retired acm.usb1 port; rebuilding the gadget"
+
+	# Unbind first: configfs refuses to remove a function from a live gadget.
+	echo "" > "$GADGET/UDC" 2>/dev/null || true
+
+	# The network function must be re-linked after the rebuild, so only the
+	# serial one is dropped here.
+	rm -f "$GADGET/configs/c.1/acm.usb1" 2>/dev/null || true
+	rmdir "$GADGET/functions/acm.usb1" 2>/dev/null || true
+
+	# Nothing left to rebuild onto: the main path creates acm.usb0 and the
+	# network function again.
+	if [ -d "$GADGET/functions/acm.usb0" ]; then
+		rm -f "$GADGET/configs/c.1/acm.usb0" 2>/dev/null || true
+		rmdir "$GADGET/functions/acm.usb0" 2>/dev/null || true
+	fi
+	if [ -n "$net_kind" ]; then
+		rm -f "$GADGET/configs/c.1/$net_kind.usb0" 2>/dev/null || true
+		rmdir "$GADGET/functions/$net_kind.usb0" 2>/dev/null || true
+	fi
+	# The UDC needs a moment to notice the unbind before it can accept the new
+	# gadget; without this the rebind below can fail with EBUSY.
+	waited=0
+	while [ "$waited" -lt "$TTY_WAIT_SECONDS" ] && [ -n "$(cat "$GADGET/UDC" 2>/dev/null)" ]; do
+		sleep 1
+		waited=$((waited + 1))
+	done
+	return 0
+}
+
+retire_second_serial
+
+# A gadget left over from an earlier userspace and still bound already provides
+# the link this service exists for; do not tear it down and rebuild it.
 if [ -d "$GADGET" ] && [ -d "$GADGET/functions/acm.usb0" ]; then
 	bound_udc=$(cat "$GADGET/UDC" 2>/dev/null || true)
 	if [ -n "$bound_udc" ]; then
 		echo "gts9-usb-acm: gadget already bound to $bound_udc"
-		split_consoles
+		clear_console
 		configure_network
 		record_stage usb-acm-ready
 		exit 0
@@ -219,8 +264,6 @@ fi
 
 mkdir -p "$GADGET" 2>/dev/null || fail "cannot create $GADGET"
 
-# Same verified identifiers as the initramfs gadget: Windows already maps
-# these to the COM port the bring-up logs were captured from.
 mkdir -p "$GADGET/strings/0x409" 2>/dev/null || fail 'cannot create gadget strings'
 mkdir -p "$GADGET/configs/c.1/strings/0x409" 2>/dev/null || fail 'cannot create the gadget configuration'
 
@@ -229,23 +272,17 @@ write_value "$GADGET/idProduct" 0xa4a7
 write_value "$GADGET/bcdDevice" 0x0100
 write_value "$GADGET/bcdUSB" 0x0200
 write_value "$GADGET/strings/0x409/manufacturer" Samsung
-write_value "$GADGET/strings/0x409/product" 'GTS9 mainline Debian debug console'
+write_value "$GADGET/strings/0x409/product" 'GTS9 mainline debug link'
 write_value "$GADGET/strings/0x409/serialnumber" gts9wifi-0001
-write_value "$GADGET/configs/c.1/strings/0x409/configuration" bringup
+write_value "$GADGET/configs/c.1/strings/0x409/configuration" debug
 write_value "$GADGET/configs/c.1/MaxPower" 250
 
+# One serial port, and only one.  It is the first function created, which is what
+# keeps it on /dev/ttyGS0: gserial_alloc_line() hands out the lowest free line.
 mkdir -p "$GADGET/functions/acm.usb0" 2>/dev/null || fail 'cannot create the ACM function'
 if [ ! -e "$GADGET/configs/c.1/acm.usb0" ]; then
 	ln -s "$GADGET/functions/acm.usb0" "$GADGET/configs/c.1/acm.usb0" 2>/dev/null || \
 		fail 'cannot link the ACM function into the configuration'
-fi
-
-# Second ACM port: the kernel console.  Created after acm.usb0 so u_serial hands
-# it line 1 (gserial_alloc_line() picks the first free port).
-mkdir -p "$GADGET/functions/acm.usb1" 2>/dev/null || fail 'cannot create the console ACM function'
-if [ ! -e "$GADGET/configs/c.1/acm.usb1" ]; then
-	ln -s "$GADGET/functions/acm.usb1" "$GADGET/configs/c.1/acm.usb1" 2>/dev/null || \
-		fail 'cannot link the console ACM function into the configuration'
 fi
 
 setup_network
@@ -283,7 +320,7 @@ else
 	echo "gts9-usb-acm: bound to $udc; $TTY_DEVICE has not appeared yet" >&2
 fi
 
-split_consoles
+clear_console
 configure_network
 
 record_stage usb-acm-ready
