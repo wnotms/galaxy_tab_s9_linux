@@ -1,0 +1,50 @@
+profile=bringup
+tree=/home/ms/Samsung/galaxy_tab_s9_linux/out/bringup-initramfs
+image=/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle/initramfs-bringup.img
+compressed_bytes=1222311
+unpacked_bytes=2067157
+regular_files=9
+symlinks=60
+directories=12
+firmware_bytes=52012
+modules_bytes=0
+
+largest_files:
+    1914704  bin/busybox
+      69669  init
+      52012  lib/firmware/keyboard_stm/stm32_gts9family.bin
+       9775  minimal-rootfs-init
+       8436  minimal-rootfs-state.sh
+       7576  sbin/gts9-minimal-pid1
+       2040  sbin/gts9-exec-default
+       1608  bin/gts9-reboot-recovery
+        833  sbin/gts9-to-recovery
+
+classified:
+  /init                          69669  production_required
+  /minimal-rootfs-init            9775  production_required
+  /minimal-rootfs-state.sh        8436  production_required
+  /sbin/gts9-minimal-pid1         7576  production_required
+  /sbin/gts9-exec-default         2040  currently_unreferenced
+  /sbin/gts9-to-recovery           833  debug_only
+  /bin/gts9-reboot-recovery       1608  debug_only
+  /bin/busybox                 1914704  production_required
+  /lib/firmware/keyboard_stm/stm32_gts9family.bin     52012  debug_only
+
+classification_summary:
+  production_required      5
+  debug_only               2
+  currently_unreferenced   1
+
+capabilities:
+  contains_modules           no
+  contains_firmware          yes
+  contains_usb_gadget_creator no
+  contains_msc_setup         yes
+  contains_gpt_parser        no
+  contains_rtc_telemetry     yes
+  contains_bcb_write         yes
+  contains_display_recovery  yes
+  contains_hardware_report   yes
+  init_source                bringup-init.sh
+  init_creates_usb_gadget    yes
