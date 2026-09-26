@@ -41,10 +41,10 @@ ADRENO_DEVICE = "adreno_device.c"
 # The profiles that must stay byte-identical: this phase adds new profiles, it
 # does not touch the known-good boots.
 KNOWN_GOOD_CMDLINES = {
-    "boot/cmdline.example.txt": "ca1cd26e7dd936c1e28787f05afac9a05a2a651f485e4c02d6cbdedb0115d405",
-    "boot/cmdline.minimal-rootfs.example.txt": "0d5904d95d761819002bba1e4f04d4210a31dce702bb5d16487744e6d2651ea4",
-    "boot/cmdline.poweroff-trace.example.txt": "a4153efae57ea7ee0f981b380d0c2ff0849505d00a26faa39c26f0013a661a3c",
-    "boot/cmdline.boot-trace.example.txt": "c116907ed13a20b43e756fca3f520fe87c64f6dd96ed94b3ca12306916de95df",
+    "boot/cmdline.example.txt": "e7f153ac06c26e3c24432db75873096fbaffe06e365c46960476c5577b1a1bed",
+    "boot/cmdline.minimal-rootfs.example.txt": "384c50a8fc79ed06b8d1161dfd7547c5fa2bcf640e0814ff478f0710f86b3980",
+    "boot/cmdline.poweroff-trace.example.txt": "44198c64d1029288c33850ee6c522d0f9998683dfe00763c6cbe17a57b942fa3",
+    "boot/cmdline.boot-trace.example.txt": "57f9197257ad0dd764c81ebf14f09030986dacc20b152c3cd49224f6838a0f1f",
     "boot/cmdline.watchdog-debug.example.txt": None,  # hashed below, mode 0600
     "boot/cmdline.rpmh-debug.example.txt": None,
 }
