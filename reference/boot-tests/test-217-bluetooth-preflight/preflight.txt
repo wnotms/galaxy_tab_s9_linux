@@ -1,0 +1,211 @@
+
+===== identity =====
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+cmdline: console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+uptime: up 17 minutes
+boot_id: 136df623-1bc6-4d13-b300-93bd6b25137d
+
+===== LEVEL 0 - modules and vermagic =====
+hci_uart               73728  0
+btqca                  16384  1 hci_uart
+btbcm                  20480  1 hci_uart
+bluetooth             618496  22 btqca,hci_uart,btbcm
+pwrseq_qcom_wcn        16384  2
+pci_pwrctrl_pwrseq     12288  0
+
+bluetooth          vermagic=7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64
+                   filename=/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/bluetooth/bluetooth.ko
+btqca              vermagic=7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64
+                   filename=/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btqca.ko
+hci_uart           vermagic=7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64
+                   filename=/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/hci_uart.ko
+pwrseq_qcom_wcn    vermagic=7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64
+                   filename=/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko
+
+running kernel release             7.2.0-rc3-gts9wifi-dirty
+
+===== LEVEL 0 - kernel config symbols (from the running kernel) =====
+CONFIG_BT=m
+CONFIG_BT_QCA=m
+CONFIG_BT_HCIUART=m
+CONFIG_BT_HCIUART_SERDEV=y
+CONFIG_BT_HCIUART_QCA=y
+CONFIG_SERIAL_DEV_BUS=y
+CONFIG_POWER_SEQUENCING=y
+CONFIG_POWER_SEQUENCING_QCOM_WCN=m
+CONFIG_BT_HCIUART_H4=y
+
+===== LEVEL 1 - serdev and uart14 (QUP SE14, 0x898000) =====
+--- /sys/bus/serial/devices ---
+total 0
+lrwxrwxrwx 1 root root 0 Sep 26 19:36 serial0 -> ../../../devices/platform/soc@0/8c0000.geniqup/898000.serial/898000.serial:0/898000.serial:0.0/serial0
+lrwxrwxrwx 1 root root 0 Sep 26 19:36 serial0-0 -> ../../../devices/platform/soc@0/8c0000.geniqup/898000.serial/898000.serial:0/898000.serial:0.0/serial0/serial0-0
+
+serial0
+  driver   : driver
+  modalias : 
+serial0-0
+  driver   : hci_uart_qca
+  modalias : of:NbluetoothT(null)Cqcom,wcn6855-bt
+
+--- platform devices matching 898000 / uart ---
+  898000.serial -> qcom_geni_serial
+  a9c000.serial -> driver
+
+===== LEVEL 2 - pwrseq provider (wcn6855_pmu -> pwrseq-qcom-wcn) =====
+--- /sys/bus/pwrseq/devices ---
+total 0
+lrwxrwxrwx 1 root root 0 Sep 26 19:50 pwrseq.0 -> ../../../devices/platform/wcn6855-pmu/pwrseq.0
+
+--- pwrseq driver bound ---
+  /sys/devices/platform/pmu-a510
+    driver: armv8-pmu
+    of:     arm,cortex-a510-pmu 
+  /sys/devices/platform/pmu-a710
+    driver: armv8-pmu
+    of:     arm,cortex-a710-pmu 
+  /sys/devices/platform/pmu-a715
+    driver: armv8-pmu
+    of:     arm,cortex-a715-pmu 
+  /sys/devices/platform/pmu-x3
+    driver: armv8-pmu
+    of:     arm,cortex-x3-pmu 
+  /sys/devices/platform/wcn6855-pmu
+    driver: pwrseq-qcom_wcn
+    of:     qcom,wcn6855-pmu 
+
+--- module refcounts (a held pwrseq means a consumer exists) ---
+hci_uart 73728 0 - Live 0xffffffc07b02e000
+btqca 16384 1 hci_uart, Live 0xffffffc07b027000
+btbcm 20480 1 hci_uart, Live 0xffffffc07af7d000
+bluetooth 618496 22 hci_uart,btqca,btbcm, Live 0xffffffc07af8c000
+pwrseq_qcom_wcn 16384 2 - Live 0xffffffc07af76000
+
+===== LEVEL 3 - control GPIOs (owner / direction / value) =====
+ gpio80  : out high func0 16mA pull up
+ gpio81  : out high func0 16mA no pull
+ gpio82  : in  high func0 2mA pull down
+ gpio204 : out low  func0 2mA pull down
+
+--- gpio debugfs header (shows the chip layout) ---
+gpiochip0: 12 GPIOs, parent: platform/c400000.spmi:pmic@1:gpio@8800, c400000.spmi:pmic@1:gpio@8800:
+ gpio1 : out  high normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+ gpio2 : in   low  normal  vin-0 pull-down 10uA              push-pull  low     atest-1 dtest-0
+
+===== LEVEL 4-7 - hci_qca / btqca trace =====
+[    0.353145] [     T12] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 182, base_baud = 0) is a MSM
+[    3.679298] [    T544] Bluetooth: Core ver 2.22
+[    3.679325] [    T544] NET: Registered PF_BLUETOOTH protocol family
+[    3.679327] [    T544] Bluetooth: HCI device and connection manager initialized
+[    3.679331] [    T544] Bluetooth: HCI socket layer initialized
+[    3.679333] [    T544] Bluetooth: L2CAP socket layer initialized
+[    3.679336] [    T544] Bluetooth: SCO socket layer initialized
+[    4.166417] [    T544] Bluetooth: HCI UART driver ver 2.3
+[    4.166424] [    T544] Bluetooth: HCI UART protocol H4 registered
+[    4.166470] [    T544] Bluetooth: HCI UART protocol LL registered
+[    4.166602] [    T544] Bluetooth: HCI UART protocol Broadcom registered
+[    4.166663] [    T544] Bluetooth: HCI UART protocol QCA registered
+[    4.167520] [     T90] Bluetooth: hci0: setting up wcn6855
+[    4.235645] [     T90] Bluetooth: hci0: QCA Product ID   :0x00000013
+[    4.235654] [     T90] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    4.235657] [     T90] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    4.235660] [     T90] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    4.243219] [     T90] Bluetooth: hci0: QCA controller version 0x12110201
+[    4.243222] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    4.257017] [     T90] bluetooth hci0: Direct firmware load for qca/wcnhpbtfw21.tlv failed with error -2
+[    4.257022] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/wcnhpbtfw21.tlv (-2)
+[    4.257064] [     T90] Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+[    4.257075] [     T90] bluetooth hci0: Direct firmware load for qca/hpbtfw21.tlv failed with error -2
+[    4.257077] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/hpbtfw21.tlv (-2)
+[    4.257098] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/hpbtfw21.tlv (-2)
+[    4.257118] [     T90] Bluetooth: hci0: HFP non-HCI data transport is supported
+[    5.454486] [    T770] Bluetooth: MGMT ver 1.23
+[    5.553505] [    T539] ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+
+--- /sys/class/bluetooth ---
+total 0
+lrwxrwxrwx 1 root root 0 Sep 26 19:36 hci0 -> ../../devices/platform/soc@0/8c0000.geniqup/898000.serial/898000.serial:0/898000.serial:0.0/serial0/serial0-0/bluetooth/hci0
+
+--- deferred probes (a deferred hci_qca means provider ordering) ---
+aux_bridge.aux_bridge.0	aux_bridge.aux_bridge: failed to acquire drm_bridge
+
+===== LEVEL 5-6 - firmware requests and what exists =====
+--- files the driver requested ---
+[    0.336660] [    T117] remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    0.336674] [    T117] remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    4.243222] [     T90] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    4.257017] [     T90] bluetooth hci0: Direct firmware load for qca/wcnhpbtfw21.tlv failed with error -2
+[    4.257022] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/wcnhpbtfw21.tlv (-2)
+[    4.257064] [     T90] Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+[    4.257075] [     T90] bluetooth hci0: Direct firmware load for qca/hpbtfw21.tlv failed with error -2
+[    4.257077] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/hpbtfw21.tlv (-2)
+[    4.257098] [     T90] Bluetooth: hci0: QCA Failed to request file: qca/hpbtfw21.tlv (-2)
+
+--- what is actually installed ---
+
+--- firmware search path ---
+  firmware_class.path = /lib/firmware
+
+===== LEVEL 7-8 - controller as BlueZ sees it =====
+Index list with 1 item
+hci0:	Primary controller
+	addr 00:00:00:00:5A:AD version 11 manufacturer 29 class 0x000000
+	supported settings: powered connectable fast-connectable discoverable bondable link-security ssp br/edr le advertising secure-conn debug-keys privacy configuration static-addr phy-configuration wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 
+	current settings: powered ssp br/edr le secure-conn wide-band-speech cis-central cis-peripheral iso-broadcaster sync-receiver 
+	name gts9
+	short name 
+hci0:	Configuration options
+	supported options: public-address 
+	missing options: 
+
+0: hci0: Bluetooth
+	Soft blocked: no
+	Hard blocked: no
+1: phy0: Wireless LAN
+	Soft blocked: no
+	Hard blocked: no
+
+Controller 00:00:00:00:5A:AD (public)
+	Manufacturer: 0x001d (29)
+	Version: 0x0b (11)
+	Name: gts9
+	Alias: gts9
+	Class: 0x00000000 (0)
+	Powered: yes
+	PowerState: on
+	Discoverable: no
+	DiscoverableTimeout: 0x000000b4 (180)
+	Pairable: no
+	UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+	UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+	UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+	Modalias: usb:v1D6Bp0246d0552
+	Discovering: no
+	Roles: central
+
+hci0:	Type: Primary  Bus: UART
+	BD Address: 00:00:00:00:5A:AD  ACL MTU: 1024:8  SCO MTU: 240:4
+	UP RUNNING 
+	RX bytes:1250 acl:0 sco:0 events:82 errors:0
+	TX bytes:3356 acl:0 sco:0 commands:74 errors:0
+	Features: 0xff 0xfe 0x8f 0xfe 0xd8 0x3f 0x5b 0x87
+	Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+	Link policy: RSWITCH HOLD SNIFF 
+	Link mode: PERIPHERAL ACCEPT 
+	Name: 'gts9'
+	Class: 0x000000
+	Service Classes: Unspecified
+	Device Class: Miscellaneous, 
+	HCI Version: 5.2 (0xb)  Revision: 0x0
+	LMP Version: 5.2 (0xb)  Subversion: 0x38e6
+	Manufacturer: Qualcomm (29)
+
+
+bluetooth.service active           active
+bluez version                      5.82
+
+===== done =====
+2026-09-26T11:53:28Z preflight complete - nothing was written to the tablet

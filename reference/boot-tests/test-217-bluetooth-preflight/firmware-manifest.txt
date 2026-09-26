@@ -1,0 +1,26 @@
+# WCN6855 Bluetooth firmware staged for the SM-X710 (QCA6490) bring-up
+# generated 2026-09-26T11:54:43Z
+# destination on device: /lib/firmware/qca/   (= /usr/lib/firmware/qca)
+# names chosen by the DRIVER's own request, not by convention:
+#   Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+#   Bluetooth: hci0: QCA Downloading qca/hpbtfw21.tlv
+
+hardware: qcom,wcn6855-bt on 898000.serial (QUP SE14), X710
+controller: QCA Product ID 0x00000013, SOC 0x400c1211, ROM 0x00000201,
+            patch 0x000038e6, controller version 0x12110201 -> rom_ver 0x21
+modalias: of:NbluetoothT(null)Cqcom,wcn6855-bt
+
+file: wcnhpbtfw21.tlv
+  sha256: 77d8979da5c613c85550549dcef8fb8ec6fe2e5576942855ea03179a11597c1f
+  size:   152784
+file: hpbtfw21.tlv
+  sha256: a911f66a137ec8b9e65f90942e1c21ea2604734a88e486519b77e750d0fc20d2
+  size:   160124
+
+source:
+  https://kernel.googlesource.com/pub/scm/linux/kernel/git/firmware/linux-firmware/+/refs/heads/main/qca/<name>
+  upstream project: linux-firmware @ main (kernel.org / googlesource mirror)
+  chosen because it is the canonical upstream project for these blobs;
+  no forum, no random fork, and Samsung's stock partition was not needed.
+
+NOT committed to Git: these are proprietary blobs; out/ is ignored.
