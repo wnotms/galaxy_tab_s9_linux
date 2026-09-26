@@ -220,7 +220,59 @@ which debug tools it deliberately excludes.
 See [test-213](../reference/boot-tests/test-213-production-initramfs/README.md) for
 the boot, the timings, the failure test and the hashes.
 
+The production handoff booted Debian with SSH back 45 s after reboot (same as the
+baseline), the whole initramfs path taking ~100 µs of monotonic time, and all
+acceptance checks passing: `console=tty0`, zero `/dev/ttyGS*`, `ncm.usb0` only,
+`ssh.service` active, 0 failed units, 0 AF_VSOCK warnings, and the gadget created
+once at 4.5 s by Debian rather than twice.
+
+**Read the two gaps above before treating this as finished.** The failure test
+succeeded and left the tablet needing physical recovery, which is a real cost of an
+initramfs with no network.
+
 ---
+
+## Two gaps the physical failure test found
+
+The brief asked for a deliberate failure test - boot with
+`gts9_rootfs=/dev/does-not-exist`, confirm the handoff reaches a tty1 rescue shell
+after ~30 s without PID 1 exiting or panicking. The rescue path behaved exactly as
+designed. Both of these were found by running it, not by reading the script, and
+neither would have been visible from the host.
+
+### 1. The rescue shell was not escapable
+
+This image has no USB gadget and no Wi-Fi, so no network; there is no serial port;
+and the applet list had no `reboot` or `poweroff`. Nothing inside the shell could
+leave it, so recovering the tablet needed a physical key combination - which cost
+the owner a recovery trip. A rescue shell that cannot be left is a trap, not a
+rescue.
+
+`reboot` and `poweroff` are now in the applet list (in `/sbin`, already on the
+handoff's `PATH`) and the banner says so. They are escape hatches, not diagnostics;
+everything that made the old image risky stays out.
+
+### 2. The rescue banner could be invisible
+
+`gts9-panel-recover.service` is a **Debian** service, and it is what cycles the
+framebuffer when the panel's cold-boot enable reads a dead DDIC
+(`ana38407 panel id: 00 00 00`). It runs at ~3.7 s on a healthy boot. In the
+rescue path Debian never starts, so that recovery never runs - and on a cold boot
+that hit the zero-ID case the rescue banner would go to a screen nobody can see,
+with no network and no serial port to fall back on.
+
+Restoring display recovery unconditionally was rejected for the same reason it was
+removed (a DPU modeset on the critical path, where test 178 caught an intermittent
+hang). Instead the framebuffer cycle now runs **at the end of the rescue path
+only**: a healthy boot pays nothing, and the one boot that needs it is the one with
+nothing left to lose. Every wait is bounded, a missing framebuffer is reported and
+ignored, and it does not parse dmesg because production has no dmesg applet.
+
+This is the one place where the boundary is a *position* rather than a
+prohibition, so it is enforced that way - the validator checks that the call sits
+inside `minimal_rescue_shell()`'s body and that nothing between the root mount and
+`switch_root` touches the framebuffer. Writing that check had its own bug, listed
+below.
 
 ## Bugs this work found in its own tooling
 
@@ -251,6 +303,17 @@ each is the kind of thing that would otherwise be rediscovered later.
 7. **Two of the new tests matched comments rather than code** — the same mistake as
    the validator's `grep ttyGS` false positive — and failed on files that were
    correct. The whole test file now strips comments before checking anything.
+8. **The panel-placement check compared the wrong line.** A shell function must be
+   defined before it is called, so the helper's body necessarily sits *above*
+   `minimal_rescue_shell()` in the file. The first version compared the framebuffer
+   write against the rescue function's start and failed its own correct code. It
+   now checks the call site.
+9. **The applet scanner reported variables as missing programs.** Lowercase
+   locals put in command position by a line-based scan (`panel_fb=/sys/...` then
+   `while [ ! -w "$panel_fb" ]`) were reported as missing applets, and a `;` inside
+   a quoted message split the string and produced `cannot` as a command. Both are
+   fixed by collecting assigned names and stripping quoted strings; the scanner is
+   re-verified by injecting `fsck.ext4` and confirming it is caught.
 
 ## Invariants this change did not touch
 
