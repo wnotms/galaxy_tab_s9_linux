@@ -1,0 +1,33 @@
+=== A/B control: the real generator, run under a mount namespace with a
+=== substitute /proc/cmdline, on the tablet, 2026-09-26.
+===
+=== This is the measurement the fix rests on: the same binary, the same
+=== device tree, the same /dev/vsock - only the cmdline token differs.
+
+===== systemd.ssh_auto=yes =====
+  generator exit=1
+  stderr: [Failed to query local AF_VSOCK CID: Cannot assign requested address]
+  generated files:
+    /tmp/genc-yes/sockets.target.wants/sshd-unix-local.socket
+    /tmp/genc-yes/sshd-unix-local.socket
+    /tmp/genc-yes/sshd-unix-local@.service
+===== systemd.ssh_auto=no =====
+  generator exit=0
+  stderr: []
+  generated files:
+
+=== Command, for reproduction on the device:
+===
+===   mkdir -p /tmp/fakeproc
+===   unshare -m sh -c '
+===     for v in yes no; do
+===       printf "console=tty0 systemd.ssh_auto=%s\n" "$v" > /tmp/fakeproc/cmdline
+===       mount --bind /tmp/fakeproc/cmdline /proc/cmdline
+===       rm -rf /tmp/genc-$v; mkdir -p /tmp/genc-$v
+===       echo "===== systemd.ssh_auto=$v ====="
+===       /usr/lib/systemd/system-generators/systemd-ssh-generator \
+===           /tmp/genc-$v /tmp/genc-$v /tmp/genc-$v 2>/tmp/err-$v
+===       echo "  generator exit=$?"
+===       echo "  stderr: [$(cat /tmp/err-$v)]"
+===       find /tmp/genc-$v -iname "*ssh*" | sort | sed "s|^|    |"
+===     done'

@@ -1,0 +1,40 @@
+### cmdline
+console=tty0 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+### systemd
+systemd 257 (257.13-1~deb13u1)
+### detect-virt
+vm-other
+vm-other
+none
+### device-tree hypervisor
+qcom,gunyah-hypervisor-1.0
+qcom,gunyah-hypervisor
+simple-bus
+### /dev/vsock
+crw-rw-rw- 1 root root 10, 257 Apr 14 03:38 /dev/vsock
+### AF_VSOCK occurrences this boot
+0
+### ssh-generator lines this boot
+0
+### generated ssh units
+0
+### ssh.service
+active
+### TCP :22
+2
+### sshd-unix-local.socket
+inactive
+### failed units
+0
+### ttyGS devices
+0
+### gadget functions
+ncm.usb0
+### device-state
+console_active=tty0
+ttygs_devices=
+gadget_functions=ncm.usb0
+usb0_addr=169.254.42.1/16
+failed_units=0
+### boot_id
+65958aa0-bc46-4e99-9337-37cdad52020f
