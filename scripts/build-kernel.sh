@@ -95,7 +95,9 @@ stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
 make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 
 required=(
-    CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI CONFIG_SERIAL_QCOM_GENI_CONSOLE
+    # SERIAL_QCOM_GENI stays built-in but its *console* is deliberately off; the
+    # console assertions are below, where they can be stated as "off" too.
+    CONFIG_ARCH_QCOM CONFIG_SERIAL_QCOM_GENI
     CONFIG_BLK_DEV_INITRD CONFIG_RD_LZ4 CONFIG_DEVTMPFS CONFIG_SCSI_UFS_QCOM
     CONFIG_MMC_SDHCI_MSM CONFIG_EXT4_FS CONFIG_PSTORE CONFIG_PSTORE_RAM
     # The first boot test depends on the Samsung sec_log_buf console being
@@ -151,6 +153,35 @@ done
 # Do not silently inherit the Android seed's immediate panic reboot.
 grep -qx 'CONFIG_PANIC_TIMEOUT=0' "$build_dir/.config" || {
     echo 'bring-up requires CONFIG_PANIC_TIMEOUT=0' >&2
+    exit 1
+}
+
+# The serial debug consoles are removed (2026-09-26) and that has to be enforced
+# here rather than trusted to the fragment.  Two of these are *silent* reverts:
+# olddefconfig re-enables U_SERIAL_CONSOLE and SERIAL_QCOM_GENI_CONSOLE from the
+# 5.15 Android seed whenever their dependencies are satisfied, and a single one
+# of them back puts a blocking console on /dev/console again - the measured cause
+# of both the boot stall (docs/BOOT_CONSOLE_BLOCK.md) and the 90 s poweroff
+# (docs/SHUTDOWN_DELAY.md).  CONFIG_NULL_TTY is asserted as well, because without
+# it the console=null that ABL appends resolves to nothing at all and the panel
+# console loses the argument to an unresolved entry.
+for off in CONFIG_U_SERIAL_CONSOLE CONFIG_SERIAL_QCOM_GENI_CONSOLE; do
+    if ! grep -qx "# $off is not set" "$build_dir/.config"; then
+        echo "a serial debug console is still enabled: $off" >&2
+        echo "  the tablet must reach userspace over ssh, not a serial console" >&2
+        exit 1
+    fi
+done
+for on in CONFIG_NULL_TTY CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE; do
+    if ! grep -qx "$on=y" "$build_dir/.config"; then
+        echo "the console plumbing is incomplete: $on is not built-in" >&2
+        exit 1
+    fi
+done
+# CONFIG_VT_CONSOLE is what the panel console is; assert the GENI port itself
+# still exists so this change cannot quietly disable the SE block as well.
+grep -qx 'CONFIG_SERIAL_QCOM_GENI=y' "$build_dir/.config" || {
+    echo 'CONFIG_SERIAL_QCOM_GENI must stay built-in (the GENI SE block is shared IP)' >&2
     exit 1
 }
 

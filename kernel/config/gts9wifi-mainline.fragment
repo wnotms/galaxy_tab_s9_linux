@@ -172,14 +172,61 @@ CONFIG_PHY_QCOM_EUSB2_REPEATER=y
 CONFIG_PHY_NXP_PTN3222=y
 CONFIG_PHY_QCOM_QMP_COMBO=y
 
-# The USB ACM gadget doubles as a kernel console.  Without it the USB link
-# carries userspace output only, and a panic or soft-lockup report never
-# reaches the host - measured on 2026-09-24, when a sysrq panic left the host
-# capture completely empty.  With it, registering ttyGS0 attaches printk to the
-# same COM port the host already watches, and CON_PRINTBUFFER replays the boot
-# log at the same moment.  The console is registered when the gadget function
-# is bound (gserial_alloc_line -> gs_console_init), i.e. when gts9-usb-acm runs.
-CONFIG_U_SERIAL_CONSOLE=y
+# --- Serial debug consoles: removed 2026-09-26 -----------------------------
+#
+# The debug role of both UARTs is retired, and removing it at the source is what
+# takes the console stalls out of boot and shutdown.  The measurements behind
+# each half are in docs/BOOT_CONSOLE_BLOCK.md and docs/SHUTDOWN_DELAY.md; the
+# two mechanisms differ and both are closed here rather than worked around in
+# userspace.
+#
+# 1. The USB gadget console (ttyGS1, host COM19).
+#    `console=ttyGS1` makes the kernel give /dev/console to the *last*
+#    successfully registering console, and n_tty_write() to a gadget serial
+#    port waits on tty->write_wait until that port has room.  Nothing drains
+#    COM19 on an unattended boot, so any userspace write() to /dev/console
+#    blocks indefinitely - measured: 60 KB took the full timeout and completed
+#    the instant COM19 was opened.  printk is lossy by design (8 KiB kfifo,
+#    overflow counted and discarded) and measured 0.048 s for 5000 lines with
+#    COM19 closed, so the blocking writer is always a userspace write(), never
+#    printk.
+#    CONFIG_U_SERIAL_CONSOLE is the switch that lets gserial_alloc_line() call
+#    gs_console_init() for the first ACM port at all.  With it unset the
+#    configfs `console` attribute does not exist, no ttyGS port can become a
+#    kernel console, and printk cannot be attached to the gadget - which
+#    removes the failure mode instead of relying on userspace never writing to
+#    /dev/console.
+#
+# 2. The SoC UART (ttyMSM0).
+#    Nothing is wired to it on this tablet and the debug link is the USB
+#    network (ssh at 31.8 MB/s, docs/FAST_DEBUG_CHANNEL.md).  It has no
+#    userspace writer and so does not stall a boot on its own; it is removed
+#    because it is the second of the two serial debug consoles, and because
+#    every `console=` argument also costs a systemd-getty-generator unit and a
+#    dev-ttyMSM0.device dependency that had to be masked by hand.
+#    CONFIG_SERIAL_QCOM_GENI itself stays =y: the GENI SE block is shared IP and
+#    the port is still registered, only its *console* is gone.  `earlycon` is
+#    dropped from the command line with it - see boot/cmdline.example.txt.
+# CONFIG_U_SERIAL_CONSOLE is not set
+# CONFIG_SERIAL_QCOM_GENI_CONSOLE is not set
+
+# With both of those gone the command line carries a single real console,
+# `console=tty0` on the panel.  Samsung's ABL appends `console=null` after our
+# own arguments; without CONFIG_NULL_TTY that request compiles to
+# __add_preferred_console("ttynull", ...) which no driver ever satisfies, so it
+# stays unresolved even though it is still the last entry in console_cmdline.
+# Keeping NULL_TTY registered makes the appended argument resolve to a real,
+# non-blocking tty that discards what it is given - ttynull_write() returns
+# count without waiting for anything - so the panel console keeps working and
+# /dev/console can never be a port that blocks.
+#
+# The alternative carried until 2026-09-26 was kernel patch 0003
+# (`ignore_console_null`), which deleted the appended argument outright.  That
+# patch retires with the gadget console it existed to protect: with no ttyMSM0
+# and no ttyGS console on the command line there is nothing left for
+# `console=null` to displace, so the patch is dropped from the queue and core
+# printk goes back to unmodified upstream.  NULL_TTY is upstream and small.
+CONFIG_NULL_TTY=y
 
 # Input/I2C foundations. The stock X710 uses STM FTS1BA90A + Wacom WEZ01;
 # their device-specific drivers are intentionally not invented here.
