@@ -1,5 +1,13 @@
 # Reporting bring-up state through the RTC
 
+> **Two different uses of this RTC, do not confuse them.**
+> This document describes a **debug channel**: `gts9_rtc_report=1` deliberately
+> *writes* the clock as a 16-bit state word, and it is opt-in for that reason.
+> Telling the correct time is a separate problem with a separate fix that writes
+> **nothing** — the offset lives in `/persist/time/ats_2` and is applied to
+> `CLOCK_REALTIME`. See [`RTC_OFFSET.md`](RTC_OFFSET.md). The SPMI-write hazard
+> documented below is why that fix is careful never to write the counter.
+
 ## The problem
 
 Every channel this board has for getting evidence out is broken:
