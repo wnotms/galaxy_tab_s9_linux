@@ -364,7 +364,59 @@ the profiles are built the way they are: the reachable layers are
 | CPU-local deep | `0x40000004` | **no** — see §5.1 | only by removing *all* cpuidle (DT trap makes it all-or-nothing) |
 | cluster shallow (`l3-pc`) | `0x41000044` | **yes** | delete its phandle from `cluster_pd` |
 | cluster deep (`llcc-off`) | `0x4100c344` | **yes** | delete its phandle from `cluster_pd` |
-| both cluster states | — | **yes** | delete both phandles |
+| both cluster states | — | **yes** | delete the whole `domain-idle-states` property |
+
+### 5.4 What deleting the whole property actually does — traced, not assumed
+
+The table above says the cluster layer is removable, which is true, but the
+*mechanism* of the `no-cluster-idle` variant is not the obvious one and the
+difference matters for reading its result. Traced through the pinned source:
+
+```
+1. of_genpd_parse_idle_states()  -> 0 states, SUCCESS, *states = NULL
+2. dt_idle_pd_alloc()            -> pd->states = NULL, pd->state_count = 0
+3. psci_pd_init():
+     pd_gov = pd->states ? &pm_domain_cpu_gov : NULL     => NULL
+     pm_genpd_init(pd, NULL, false)
+4. genpd_alloc_data():
+     if (genpd->gov) { gd = kzalloc(...) }               => gd stays NULL
+     if (genpd->state_count == 0) genpd_set_default_power_state()
+        => states = kzalloc(1), state_count = 1, data = NULL
+5. genpd_power_off():
+     if (!genpd->gov) genpd->state_idx = 0
+     _genpd_power_off(genpd, true):
+       timed = timed && genpd->gd && ...                 => gd NULL => timed = FALSE
+       => genpd->power_off(genpd)  ==  psci_pd_power_off()
+6. psci_pd_power_off():
+     if (!state->data) return 0;                        => data NULL
+     => returns WITHOUT calling psci_set_domain_state()
+7. __psci_enter_domain_idle_state():
+     if (ds->state) state = ds->state;                  => NOT taken
+     => the CPU's own 0x40000004 is what firmware receives
+```
+
+**So the domain is not "left always-on", and the cluster is not "never powered
+down".** `genpd_set_default_power_state()` synthesises a single state at
+`genpd_alloc_data()` time, so the domain still has a state and still calls its
+`power_off` hook — it simply has no `data` attached, and `psci_pd_power_off()`
+returns early on exactly that. The observable effect is narrower and cleaner than
+"the cluster layer is gone":
+
+> firmware never receives a cluster suspend-param (`0x41000044` / `0x4100c344`)
+> from this domain again; the CPU-local `0x40000004` is what is sent.
+
+That is still a valid ablation of the cluster layer — it removes the cluster's
+contribution to every suspend request, which is the thing under test — but a
+result from it must be described that way and not as "the cluster no longer
+powers down". The distinction is recorded here because the tempting shorthand is
+wrong, and because a reader comparing this profile against `no-llcc-off` would
+otherwise expect the two to differ only in *which* domain state is skipped.
+
+It also means the two cluster profiles are **not** nested in the way they look:
+`no-llcc-off` sends `0x41000044` (the shallow cluster state), while
+`no-cluster-idle` sends no cluster param at all. Neither is strictly "deeper"
+than the other, so a difference between their results is evidence about the
+cluster param rather than about a depth ordering.
 
 ## 6. X710 vs X910: identical, and identical to upstream
 

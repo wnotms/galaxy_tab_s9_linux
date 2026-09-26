@@ -402,6 +402,66 @@ class AblationConstraintTests(unittest.TestCase):
         self.assertIn("goto out_fail;", m.group(1))
         self.assertIn("cpuidle_unregister(drv);", psci)
 
+    def test_deleting_the_property_yields_a_synthetic_state_not_zero_states(self):
+        """The no-cluster-idle mechanism, traced in the pinned source.
+
+        The obvious reading of "delete domain-idle-states" is "the domain has no
+        states and never powers down".  That is wrong: genpd synthesises a single
+        state whose `data` is NULL, so `psci_pd_power_off()` returns early and no
+        cluster suspend-param is ever handed to firmware - while the CPU's own
+        0x40000004 still is.
+
+        The distinction changes how the profile's result must be described, so it
+        is pinned here against the three functions that produce it.  Without this
+        test the documentation could drift back to the tempting shorthand and a
+        reader would compare the two cluster profiles expecting a depth ordering
+        that does not exist.
+        """
+        core = pinned(".work/linux-mainline/drivers/pmdomain/core.c")
+        domain = pinned(".work/linux-mainline/drivers/cpuidle/cpuidle-psci-domain.c")
+        psci = pinned(PINNED_PSCI_IDLE)
+        for name, src in (("core.c", core), ("cpuidle-psci-domain.c", domain),
+                          ("cpuidle-psci.c", psci)):
+            if src is None:
+                self.skipTest(f"{name} is not checked out")
+
+        # 1. zero states is success and yields a NULL states array
+        self.assertRegex(core, r"if \(!ret\) \{\s*\n\s*\*states = NULL;")
+        # 2. the governor is NULL when there are no states, decided BEFORE
+        #    pm_genpd_init() can synthesise one
+        self.assertIn("pd_gov = pd->states ? &pm_domain_cpu_gov : NULL;", domain)
+        self.assertIn("ret = pm_genpd_init(pd, pd_gov, false);", domain)
+        # 3. gd is allocated only when there IS a governor, which is what makes
+        #    the timed path in _genpd_power_off() false
+        self.assertRegex(core, r"if \(genpd->gov\) \{\n\t\tgd = kzalloc_obj")
+        # 4. one synthetic state is created for a domain with none.
+        #    Sliced to the closing brace rather than matched with `.*?`: a
+        #    non-greedy dot does not cross newlines without re.S, and enabling
+        #    re.S would let the match run from this function into an unrelated
+        #    one.
+        def block(src, header):
+            start = src.index(header)
+            end = src.index("\n}", start)
+            return src[start:end]
+
+        synth = block(core, "static int genpd_set_default_power_state(")
+        self.assertIn("kzalloc_obj(*state)", synth)
+        self.assertIn("genpd->state_count = 1;", synth)
+        self.assertIn("genpd_set_default_power_state(genpd)", core)
+
+        # 5. the PSCI power-off hook bails on the missing data
+        poff = block(domain, "static int psci_pd_power_off(")
+        self.assertIn("if (!state->data)", poff)
+        self.assertIn("return 0;", poff)
+        # 6. so ds->state is never set, and the CPU param is what is sent
+        self.assertIn("if (ds->state)\n\t\tstate = ds->state;", psci)
+
+        # and the document says so, in these terms
+        text = read(IDLE_ANALYSIS)
+        self.assertIn("### 5.4 What deleting the whole property actually does", text)
+        self.assertIn("the CPU-local `0x40000004` is what is sent", text)
+        self.assertIn("not** nested in the way they look", text)
+
     def test_a_cluster_state_can_be_removed_cleanly(self):
         """The ablation that IS supported, asserted at its two tolerances.
 
