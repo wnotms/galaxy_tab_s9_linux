@@ -486,6 +486,48 @@
 	status = "disabled";
 };
 
+/*
+ * The prime CPU's 3.36 GHz operating point.
+ *
+ * SM8550-AC ("Snapdragon 8 Gen 2 for Galaxy") exposes a 3.36 GHz CPU7 entry in
+ * the hardware frequency LUT that ABL programs, and this X710's LUT has it.
+ * Generic sm8550.dtsi stops at 3.1872 GHz, so without a matching board OPP
+ * there is nothing for qcom-cpufreq-hw to attach that LUT entry to, and every
+ * boot reports:
+ *
+ *   cpu cpu7: Voltage update failed freq=3360000
+ *   cpu cpu7: failed to update OPP for freq=3360000
+ *
+ * Mechanism (drivers/cpufreq/qcom-cpufreq-hw.c): qcom_cpufreq_hw_read_lut()
+ * walks the hardware LUT and calls qcom_cpufreq_update_opp() for each distinct
+ * frequency. With interconnect scaling in use that becomes
+ * dev_pm_opp_adjust_voltage(), which needs the OPP to EXIST - it looks the
+ * frequency up and returns -ENOENT when it is absent. The node below supplies
+ * the missing description, so the LUT entry can be enabled instead of dropped.
+ *
+ * The node deliberately carries neither opp-microvolt nor turbo-mode:
+ *
+ *   * Voltage still comes from the hardware LUT. The driver reads the per-entry
+ *     voltage out of the LUT and writes it into the OPP it finds, so declaring a
+ *     voltage here would state a rail value this port has not measured and would
+ *     be overwritten at probe anyway.
+ *   * Boost classification still comes from the hardware LUT's core-count
+ *     field: qcom_cpufreq_hw_read_lut() sets CPUFREQ_BOOST_FREQ for the last
+ *     LUT_TURBO_IND entry itself. The driver never reads turbo-mode.
+ *
+ * The interconnect votes are the same top-end values the highest generic prime
+ * OPPs (2.8416/2.9568/3.1872 GHz) already use. They are continued here rather
+ * than measured: this port has no independent bandwidth measurement for
+ * 3.36 GHz, and the S8 Gen 2 for Galaxy prime rail is the same LLCC/DDR/L3
+ * client at the top of its range.
+ */
+&cpu7_opp_table {
+	opp-3360000000 {
+		opp-hz = /bits/ 64 <3360000000>;
+		opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
+	};
+};
+
 &scm {
 	/*
 	 * SM8550's GIC is #interrupt-cells = <4> (the fourth cell selects the
