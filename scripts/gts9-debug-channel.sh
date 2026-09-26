@@ -40,27 +40,34 @@ install_key() {
 	# working serial port, but nothing reads it and nothing answers on it, so the
 	# old command would fail silently: console-run.sh would simply find no shell.
 	#
+	# The ttyGS kernel console and the autologin getty are gone, and so is the
+	# serial function itself: the kernel is built without CONFIG_USB_CONFIGFS_ACM,
+	# so COM17 no longer exists on the host at all.
+	#
 	# Refuse loudly rather than pretend.  A silent failure here is worse than an
 	# error, because the operator's next step is to wonder why ssh still asks for
 	# a password - and the real answer is that the key never left this host.
 	if [ "${GTS9_ALLOW_SERIAL_KEY_INSTALL:-0}" != 1 ]; then
 		echo "debug-channel: install-key cannot work any more" >&2
-		echo "  The key was written over the COM17 serial console, and no shell runs" >&2
-		echo "  on that port now: the autologin getty was deleted and the ttyGS kernel" >&2
-		echo "  console removed, because both caused the boot and shutdown stalls." >&2
+		echo "  The key was written over the COM17 serial console, and that port no" >&2
+		echo "  longer exists: the autologin getty was deleted, the ttyGS kernel" >&2
+		echo "  console removed (both caused the boot and shutdown stalls), and the" >&2
+		echo "  gadget's serial function was removed from the kernel build entirely." >&2
 		echo >&2
-		echo "  The port itself still works - it is simply unused - so this path can be" >&2
-		echo "  revived deliberately, with a shell on it:" >&2
-		echo "    initramfs: add gts9_usb_console=shell to the vendor_boot command line" >&2
-		echo "    Debian:    put a getty back on ttyGS0 (not recommended - see" >&2
-		echo "               docs/SHUTDOWN_DELAY.md for why it was removed)" >&2
+		echo "  Restoring it would take a kernel rebuild with CONFIG_USB_CONFIGFS_ACM" >&2
+		echo "  re-enabled, plus a shell on the port - not a command-line flag.  See" >&2
+		echo "  docs/USB_SERIAL_CONSOLE.md for why each step was taken." >&2
 		echo >&2
-		echo "  What a fresh rootfs should use instead: install the public key into the" >&2
-		echo "  rootfs at install time (install-debian-rootfs.sh --ssh-key), which needs" >&2
-		echo "  no channel on the device at all.  See docs/FAST_DEBUG_CHANNEL.md." >&2
+		echo "  What a rootfs should use instead: install the public key into the rootfs" >&2
+		echo "  at install time, which needs no channel on the device at all:" >&2
+		echo "    ./scripts/install-debian-rootfs.sh --ssh-key ~/.ssh/id_ed25519.pub /mnt/debian" >&2
+		echo "    ./scripts/install-debian-rootfs.sh --tar out/gts9-debian-overlay.tar \\" >&2
+		echo "        --ssh-key ~/.ssh/id_ed25519.pub" >&2
+		echo "  See docs/FAST_DEBUG_CHANNEL.md." >&2
 		echo >&2
-		echo "  To override anyway for a boot that really does have a serial shell:" >&2
-		echo "    GTS9_ALLOW_SERIAL_KEY_INSTALL=1 $0 install-key" >&2
+		echo "  GTS9_ALLOW_SERIAL_KEY_INSTALL=1 no longer helps: there is no port to" >&2
+		echo "  send it to.  It is honoured only for a host-side serial device that is" >&2
+		echo "  genuinely a shell, e.g. GTS9_SHELL_PORT=/dev/ttyUSB0 on another board." >&2
 		exit 3
 	fi
 

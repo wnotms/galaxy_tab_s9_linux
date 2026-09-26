@@ -792,12 +792,21 @@ class SerialKeyBootstrapIsGone(unittest.TestCase):
         self.assertIn("--ssh-key", text)
         self.assertIn("FAST_DEBUG_CHANNEL.md", text)
 
-    def test_the_escape_hatch_keeps_the_original_command(self):
-        """The port works, so a boot that really has a serial shell can still use it."""
+    def test_the_escape_hatch_now_needs_a_real_serial_shell(self):
+        """The override is kept, but its meaning changed with the port.
+
+        It used to mean "I know the ttyGS0 shell is gone, send it anyway to the
+        COM port".  There is no COM port now, so it only means anything for a
+        host-side serial device that genuinely is a shell - another board, a USB
+        adapter.  The command is kept intact so that case still works.
+        """
         text = read(self.HELPER)
         self.assertIn("GTS9_ALLOW_SERIAL_KEY_INSTALL:-0", text)
         self.assertIn("authorized_keys", text)
         self.assertIn("console-run.sh", text)
+        # It must say the override no longer helps for this tablet, rather than
+        # letting an operator believe flipping it will bring COM17 back.
+        self.assertIn("no longer helps: there is no port to", text)
 
     def test_it_actually_refuses_when_run(self):
         """Run it, with a key present, and require failure rather than a no-op."""

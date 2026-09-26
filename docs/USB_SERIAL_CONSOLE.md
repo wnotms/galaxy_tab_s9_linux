@@ -13,8 +13,8 @@
 > | device | today |
 > |---|---|
 > | `/dev/tty1` | **the only console** (`console=tty0`), panel VT + `getty@tty1` |
-> | `/dev/ttyGS0` | **one plain serial port** from `gts9-usb-acm`: no console, no getty, nothing holds it open. `CONFIG_U_SERIAL_CONSOLE` is unset, so `gs_console_init()` compiles to `-ENOSYS` and it cannot become a console |
-> | `/dev/ttyGS1` | **gone.** It existed only to be the port printk registered on; `acm.usb1` is removed from the gadget |
+> | `/dev/ttyGS0` | **gone.** It was the last serial port; the kernel is now built without `CONFIG_USB_CONFIGFS_ACM`, so no configfs serial function can be created at all |
+> | `/dev/ttyGS1` | **gone.** It existed only to be the port printk registered on |
 > | `/dev/ttyMSM0` | the SoC UART is still registered, but `CONFIG_SERIAL_QCOM_GENI_CONSOLE` is unset and no `console=` names it |
 >
 > `gts9-acm-getty.service` is deleted and masked. Do not re-add a getty or a
@@ -24,12 +24,41 @@
 > poweroff ([shutdown delay](SHUTDOWN_DELAY.md)).
 >
 > The interactive channel is **ssh over the NCM network function** on the same
-> cable — see [the fast debug channel](FAST_DEBUG_CHANNEL.md).
+> cable — see [the fast debug channel](FAST_DEBUG_CHANNEL.md). A new rootfs gets
+> its login from `install-debian-rootfs.sh --ssh-key`.
 
-## `/dev/ttyGS0` (COM17) still works as a plain serial port
+## The serial ports were removed in three steps
 
-It is worth being exact about this, because "the consoles are gone" is easy to
-misread as "the port is dead". Measured on the tablet 2026-09-26:
+Each step exposed the next, and the order is why the end state is what it is:
+
+1. **The serial *consoles* went.** `console=ttyGS1` made `/dev/console` the USB
+   ACM port, and `n_tty_write()` to a gadget port sleeps until the host drains it,
+   so any userspace `write()` to `/dev/console` stalled the boot; the autologin
+   getty on `ttyGS0` held its cgroup open and cost 90 s on every poweroff. Both
+   are documented above.
+2. **`acm.usb1` went**, because its only purpose was to be the port printk
+   registered on. That left `acm.usb0` as one plain serial port that still worked
+   (measured: the host could write to it and a reader on the tablet received the
+   bytes) but that nothing used — no console, no getty, no writer, not the kernel
+   log.
+3. **`acm.usb0` went too**, at the owner's request, and the capability went with
+   it: `CONFIG_USB_CONFIGFS_ACM` and `CONFIG_USB_CONFIGFS_SERIAL` are off, so
+   `CONFIG_USB_U_SERIAL` has no selector left and disappears — and that is what
+   makes the gadget console (`CONFIG_U_SERIAL_CONSOLE`) permanently unsatisfiable.
+   These symbols are **absent** from the resolved config rather than "off", which
+   means Kconfig no longer offers them to any configuration and there is nothing
+   for the 5.15 Android seed to re-enable.
+
+Verified on the tablet after step 3: `/dev/ttyGS*` does not exist,
+`gadget_functions=ncm.usb0`, and Windows' Ports class lists **nothing** for
+`VID_0525` — both COM ports are gone from the host — while the device still
+enumerates as a USB network adapter.
+
+### Why this was measured rather than assumed
+
+Step 2's decisions were made from measurements, not from the fact that the
+consoles had gone, because "the consoles are gone" is easy to misread as "the port
+is dead". While `acm.usb0` still existed, the tablet showed:
 
 | | state |
 |---|---|
@@ -42,10 +71,9 @@ misread as "the port is dead". Measured on the tablet 2026-09-26:
 | does that data reach the tablet | **yes**, if something reads the tty: a `cat /dev/ttyGS0` on the tablet received `HELLO-GTS9-WITH-NEWLINE` byte-for-byte |
 | if nothing reads it | the write still succeeds (the gadget queues OUT requests), the data is simply **discarded** |
 
-So COM17 is a working general-purpose serial port that this project has stopped
-using for anything. It is not a console channel in either direction, and nothing
-on the tablet writes to it, so it cannot reintroduce the stall
-([why](BOOT_CONSOLE_BLOCK.md)).
+So it was a working general-purpose serial port that this project had stopped
+using, not a dead one. That is what made step 3 a decision about *whether the
+capability should exist*, rather than a bug fix.
 
 Two measurement traps, recorded because both produced a wrong "0 bytes" answer
 here before they were understood:
@@ -62,22 +90,22 @@ here before they were understood:
 
 `scripts/console-run.sh` and the PowerShell helpers behind it
 (`console-session`, `console-watch`, `console-send-lines`, `serial-link-test`)
-still default to `COM17`, and four scripts build on them:
+default to `COM17`, and four scripts build on them:
 
-| script | what it uses COM17 for | state |
+| script | what it used COM17 for | state |
 |---|---|---|
-| `scripts/flash-boot.sh` | triggers `gts9-to-recovery` | **broken** — no shell on the port |
-| `scripts/gts9-debug-channel.sh install-key` | writes the ssh public key | **broken** — this was the bootstrap path |
-| `scripts/gts9-kernel-alive.sh` | runs a liveness command | **broken** |
-| `scripts/stall-ab.sh` | drives an A/B round | **broken**; it also still defaults `CONSOLE_PORT=COM19`, which no longer exists at all |
+| `scripts/flash-boot.sh` | triggers `gts9-to-recovery` | **non-functional** — no shell on the port |
+| `scripts/gts9-debug-channel.sh install-key` | wrote the ssh public key | **non-functional**, and now refuses loudly; replaced by `install-debian-rootfs.sh --ssh-key` |
+| `scripts/gts9-kernel-alive.sh` | runs a liveness command | **non-functional** |
+| `scripts/stall-ab.sh` | drives an A/B round | **non-functional**; it also defaults `CONSOLE_PORT=COM19`, a port that no longer exists at all |
 
-They are left in place rather than deleted because the port itself works: if a
-shell is ever deliberately put back on it (`gts9_usb_console=shell` for the
-initramfs, or a getty), these scripts become usable again unchanged. Until then
-the working equivalent is `scripts/gts9-ssh.sh`. `scripts/gts9-debug-channel.sh
-install-key` in particular needs replacing — see the note in
-[the fast debug channel](FAST_DEBUG_CHANNEL.md) about bootstrapping the key
-without a serial console.
+They are left in place rather than deleted, and they are not silently patched to
+do something else: the COM ports no longer exist, so there is nothing for them to
+talk to, and a script that quietly stopped doing its job would be worse than one
+that visibly does not run. The working equivalents are `scripts/gts9-ssh.sh` for
+shell access and `scripts/install-debian-rootfs.sh --ssh-key` for the key. If a
+serial port is ever deliberately restored (it would take re-enabling
+`CONFIG_USB_CONFIGFS_ACM`), these scripts become usable again unchanged.
 
 This note records the verified console mapping for the SM-X710 mainline boot so later
 bring-up work does not confuse the physical Qualcomm UART with the USB gadget serial port.
