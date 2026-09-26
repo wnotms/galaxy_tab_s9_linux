@@ -2505,8 +2505,18 @@ class DocumentationTests(unittest.TestCase):
         self.assertGreater(start, 0, "no gzip payload in boot.img")
         d = zlib.decompressobj(16 + zlib.MAX_WBITS)
         raw = d.decompress(data[start:])
+        # The DTB is appended after the gzip stream, then the partition is padded
+        # to its full size - so unused_data is 78 MB of DTB followed by zeros, not
+        # the DTB alone.  Its length comes from the FDT header's totalsize field
+        # (big-endian u32 at offset 4), which is why the magic is checked first.
+        unused = d.unused_data
         raw += d.flush()
         self.assertGreater(len(raw), 1_000_000, "kernel payload looks too small")
+        self.assertEqual(unused[:4], b"\xd0\x0d\xfe\xed", "no appended DTB")
+        dtb_size = struct.unpack(">I", unused[4:8])[0]
+        appended_dtb = unused[:dtb_size]
+        self.assertGreater(dtb_size, 1_000, "appended DTB looks too small")
+        self.assertEqual(appended_dtb[4:8], unused[4:8])
 
         for needle in (b"gts9-rpmh: TIMEOUT rsc=", b"gts9-rpmh: ring_summary",
                        b"LATE COMPLETION"):
@@ -2521,12 +2531,24 @@ class DocumentationTests(unittest.TestCase):
                       info)
         self.assertIn("dtb_sha256=b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596",
                       info)
-        # And the flashed DTB is the one in out/, so the three agree.
-        if (ROOT / "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb").exists():
-            self.assertEqual(
-                sha256("out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb"),
-                "b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596",
-                "the built DTB must still match the flashed one")
+        # And the DTB embedded in THAT bundle is the one its BUNDLE_INFO names.
+        #
+        # This used to compare the historical bundle's DTB hash against
+        # out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb, which only holds while
+        # nothing else changes the device tree.  Adding the Galaxy 3.36 GHz prime
+        # OPP changed it legitimately, and the assertion then failed for a reason
+        # that had nothing to do with what it is for.
+        #
+        # What it is for, from 9782925: a build must never silently lose a flashed
+        # image, so the DTB recorded as flashed must still be the DTB the bundle
+        # carries.  That is a statement about the BUNDLE, and it is checked here by
+        # reading the DTB out of this boot.img and hashing it - which is stronger
+        # than comparing against a possibly-rebuilt out/, because it cannot be
+        # satisfied by rebuilding the same mistake.
+        self.assertEqual(
+            hashlib.sha256(appended_dtb).hexdigest(),
+            "b3e068e7af401a06c81e8dcae250c2a49d653179e1cb3412eba1e050e6d6d596",
+            "the DTB embedded in the flashed bundle must be the one BUNDLE_INFO names")
 
     def test_the_cmdline_check_reads_the_answer_not_the_echo(self):
         """`SENT` echoes the command text, which itself contains `cmdline=`.
