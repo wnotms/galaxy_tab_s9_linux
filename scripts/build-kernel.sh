@@ -8,6 +8,15 @@ kernel_tree=${KERNEL_WORKTREE:-$workdir/build/linux-src-gts9wifi}
 build_dir=${KERNEL_BUILD_DIR:-$workdir/build/linux-out}
 out_dir=${KERNEL_OUT_DIR:-$repo_root/out/kernel-gts9wifi}
 fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
+# Optional extra fragment for a *diagnostic* build, merged after the mainline
+# one.  Empty (the default) means the production configuration, and the
+# assertions at the end of this script enforce that the production build can
+# never acquire a diagnostic symbol - including by this variable being set in
+# the environment of a build someone believed was production.
+#
+#   GTS9_DIAG_FRAGMENT=kernel/config/gts9wifi-csd-lock.fragment \
+#       BUILD_MODULES=0 ./scripts/build-kernel.sh
+diag_fragment=${GTS9_DIAG_FRAGMENT:-}
 jobs=${JOBS:-$(nproc)}
 build_modules=${BUILD_MODULES:-1}
 # ccache turns a KERNEL_CLEAN=1 rebuild from a full recompile into a cache
@@ -15,6 +24,22 @@ build_modules=${BUILD_MODULES:-1}
 use_ccache=${USE_CCACHE:-auto}
 
 case "$build_modules" in 0|1) ;; *) echo "BUILD_MODULES must be 0 or 1" >&2; exit 2 ;; esac
+# A diagnostic fragment is named as a path relative to the repository root and
+# must exist: a typo that silently produced a production kernel would be the
+# worst possible outcome of a diagnostic run, because the profile would look
+# armed and the instrument would be absent.
+if [ -n "$diag_fragment" ]; then
+    case "$diag_fragment" in
+        /*) diag_path=$diag_fragment ;;
+        *)  diag_path=$repo_root/$diag_fragment ;;
+    esac
+    [ -f "$diag_path" ] || {
+        echo "GTS9_DIAG_FRAGMENT does not exist: $diag_fragment" >&2
+        exit 2
+    }
+else
+    diag_path=
+fi
 case "$use_ccache" in auto|0|1) ;; *) echo "USE_CCACHE must be auto, 0 or 1" >&2; exit 2 ;; esac
 if [ "$use_ccache" = 1 ] && ! command -v ccache >/dev/null 2>&1; then
     echo 'USE_CCACHE=1 requires ccache; refusing an uncached build' >&2
@@ -90,8 +115,17 @@ fi
 # deliberate DTS/patch changes, otherwise Kbuild rejects the out-of-tree build.
 stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
 "$repo_root/scripts/materialize-stock-config.sh" "$stock_cfg"
+# The merge order is load-bearing: seed, then the mainline fragment, then the
+# diagnostic fragment.  merge_config.sh resolves duplicates last-wins, so the
+# diagnostic layer can only ever *add to* or *override* the production one, and
+# can never be silently overridden by it.
+merge_cfgs=("$stock_cfg" "$fragment")
+if [ -n "$diag_path" ]; then
+    merge_cfgs+=("$diag_path")
+    echo "diagnostic config fragment: ${diag_fragment}"
+fi
 "$kernel_tree/scripts/kconfig/merge_config.sh" -m -O "$build_dir" \
-    "$stock_cfg" "$fragment"
+    "${merge_cfgs[@]}"
 make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 
 required=(
@@ -149,6 +183,79 @@ for sym in "${required[@]}"; do
         exit 1
     fi
 done
+
+# ---------------------------------------------------------------------------
+# The CSD/IPI diagnostic split, asserted in BOTH directions.
+#
+# This is the one config symbol in the tree that must be *off* in production and
+# *on* only in a named diagnostic build, and getting it wrong is silent in the
+# worst way: a run that believes it is instrumented but is not would produce a
+# wedge with no CSD output, and the plan's Case D exists precisely to stop that
+# being read as "CSD is not involved".  So the assertion is symmetric - the
+# diagnostic build fails if the symbol did not take, and the production build
+# fails if it did.
+#
+# CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT is asserted alongside it because
+# CSD_LOCK_WAIT_DEBUG alone does not enable anything at runtime: the static key
+# is DEFINE_STATIC_KEY_MAYBE(CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT, ...) and
+# defaults to off.  A build with only the first symbol is a build whose
+# instrument never runs, which is the same silent failure by another route.
+# ---------------------------------------------------------------------------
+csd_is_diag=no
+if [ -n "$diag_path" ]; then
+    case "$diag_fragment" in
+        *csd-lock*) csd_is_diag=yes ;;
+    esac
+fi
+if [ "$csd_is_diag" = yes ]; then
+    for sym in CONFIG_CSD_LOCK_WAIT_DEBUG CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT; do
+        grep -qx "$sym=y" "$build_dir/.config" || {
+            echo "CSD diagnostic build is missing $sym=y" >&2
+            echo "  the instrument would never run and a wedge would produce no output" >&2
+            exit 1
+        }
+    done
+    # The instrument depends on 64BIT for csd->node.dst, which is how the
+    # target CPU is named in every report.  Without it csd_lock_wait_getcpu()
+    # returns -1 and the reports are useless.
+    grep -qx 'CONFIG_64BIT=y' "$build_dir/.config" || {
+        echo "CSD diagnostic build requires CONFIG_64BIT=y (csd->node.dst)" >&2
+        exit 1
+    }
+    echo "CSD diagnostic config verified: CSD_LOCK_WAIT_DEBUG=y, _DEFAULT=y, 64BIT=y"
+else
+    if grep -qx 'CONFIG_CSD_LOCK_WAIT_DEBUG=y' "$build_dir/.config"; then
+        echo "the production build must not enable CONFIG_CSD_LOCK_WAIT_DEBUG" >&2
+        exit 1
+    fi
+fi
+
+# The diagnostic fragment must not smuggle in the instruments this round
+# deliberately excludes.  Asserted rather than trusted to the fragment's
+# comments, because "one instrument at a time" is what makes a result
+# attributable and a stray tracer would silently break that.
+if [ "$csd_is_diag" = yes ]; then
+    for sym in CONFIG_IRQSOFF_TRACER CONFIG_PREEMPT_TRACER CONFIG_FUNCTION_TRACER \
+               CONFIG_FUNCTION_GRAPH_TRACER CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT; do
+        case "$sym" in
+        CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT) continue ;;
+        esac
+        if grep -qx "$sym=y" "$build_dir/.config"; then
+            echo "the CSD diagnostic build must not enable $sym (one instrument at a time)" >&2
+            exit 1
+        fi
+    done
+    # The recovery chain must be unchanged: a wedge has to reboot the tablet by
+    # itself or an unattended round strands it.
+    grep -qx 'CONFIG_PANIC_TIMEOUT=0' "$build_dir/.config" || {
+        echo 'the CSD diagnostic build must keep CONFIG_PANIC_TIMEOUT=0' >&2
+        exit 1
+    }
+    grep -qx 'CONFIG_SOFTLOCKUP_DETECTOR=y' "$build_dir/.config" || {
+        echo 'the CSD diagnostic build must keep CONFIG_SOFTLOCKUP_DETECTOR=y' >&2
+        exit 1
+    }
+fi
 
 # Do not silently inherit the Android seed's immediate panic reboot.
 grep -qx 'CONFIG_PANIC_TIMEOUT=0' "$build_dir/.config" || {

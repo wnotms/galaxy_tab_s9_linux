@@ -1,0 +1,90 @@
+# X710 CSD / IPI wedge diagnostic fragment — NOT part of the default build.
+#
+# Round 34 of the CPU-wedge investigation. Selected with
+# `GTS9_DIAG_FRAGMENT=kernel/config/gts9wifi-csd-lock.fragment`, which merges
+# this on top of the stock seed and the mainline fragment. The default build
+# does not read this file at all, so a production kernel cannot acquire
+# CONFIG_CSD_LOCK_WAIT_DEBUG by accident.
+#
+# WHAT THIS ADDS, AND WHY IT IS THE RIGHT INSTRUMENT
+#
+# docs/CSD_IPI_WEDGE_PLAN.md has the full argument. In one paragraph: the wedge
+# is a CPU that stops answering an ordinary IPI, and the reported stack
+# (toggle_allocation_gate -> kick_all_cpus_sync -> smp_call_function_many_cond)
+# is the *canary* - a CPU waiting inside smp_call_function_many_cond() for
+# another CPU that never completes. CONFIG_CSD_LOCK_WAIT_DEBUG instruments
+# exactly that wait:
+#
+#   kernel/smp.c: smp_call_function_many_cond() calls csd_lock_wait(csd) for
+#   every target CPU when SCF_WAIT is set, and with this option csd_lock_wait()
+#   becomes __csd_lock_wait() -> csd_lock_wait_toolong(), which after
+#   csd_lock_timeout milliseconds reports:
+#
+#     which CPU is waiting (raw_smp_processor_id)
+#     which CPU it is waiting for (csd_lock_wait_getcpu -> csd->node.dst)
+#     the CSD function and its argument (csd->func, csd->info)
+#     whether the target is handling THIS request, a PRIOR one, or nothing
+#     a stack of the sender, and dump_cpu_task() of the target
+#
+# That is a strictly earlier and more specific signal than anything the project
+# has captured. RCU notices at onset+21 s; the first CSD report fires at
+# csd_lock_timeout, which is 5 s by default - i.e. BEFORE the RCU stall, while
+# the target CPU is still wedged and its state is still readable.
+#
+# THE PARAMETERS, READ OUT OF THE PINNED TREE RATHER THAN ASSUMED
+#
+#   csdlock_debug=       __setup, boolean-ish (kernel/smp.c:168). Enables the
+#                        static branch. `=1` turns it on. CSD_LOCK_WAIT_DEBUG
+#                        alone does NOT enable it at runtime - the static key
+#                        defaults to CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT, which
+#                        is itself default n. Both are set below, so the
+#                        diagnostic is live without depending on a cmdline
+#                        token; the token is still passed as a belt-and-braces
+#                        identity marker and its presence is checked on device.
+#   csd_lock_timeout=    module_param, ulong, MILLISECONDS, default 5000
+#                        (kernel/smp.c:174). Deliberately left at the default:
+#                        a shorter value reports sooner but also re-reports more
+#                        often, and the first report is what carries the state.
+#   panic_on_ipistall=   module_param, int, MILLISECONDS, default 0 = disabled
+#                        (kernel/smp.c:176). DELIBERATELY LEFT AT 0. The brief is
+#                        explicit that round one collects information rather
+#                        than making the instrument panic earlier, and the
+#                        existing softlockup_panic=1 -> panic=10 chain already
+#                        guarantees automatic recovery.
+#
+# Note for whoever wires the cmdline: csd_lock_timeout and panic_on_ipistall are
+# module_param, so they are reachable as `csd_lock_timeout=` /
+# `panic_on_ipistall=` only because smp.c is built in - and, unlike __setup
+# parameters, they are also writable at runtime under
+# /sys/module/smp/parameters/. csdlock_debug= is an __setup parameter and is
+# NOT writable after boot.
+
+# The instrument itself. depends on DEBUG_KERNEL (y) and SMP (y) and 64BIT (y),
+# and the 64BIT dependency is load-bearing rather than incidental: csd->node.dst
+# exists only `#ifdef CONFIG_64BIT` (include/linux/smp_types.h), and
+# csd_lock_wait_getcpu() returns it as the target CPU. Without it every report
+# would name cpu = -1 and the whole exercise would be pointless.
+CONFIG_CSD_LOCK_WAIT_DEBUG=y
+# Turn it on at boot without needing a cmdline token that ABL could drop. This
+# is the switch that makes the static branch default-enabled; it exists for
+# exactly this purpose and is `default n` so nothing else acquires it.
+CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT=y
+
+# --- what is deliberately NOT added -----------------------------------------
+#
+# No ftrace/tracer options. Round one is CSD only, so that a result is
+# attributable to one instrument; the targeted-trace profile is round two's
+# business (docs/CSD_IPI_WEDGE_PLAN.md section 5) and gets its own fragment.
+#
+# No CONFIG_IRQSOFF_TRACER / PREEMPT_TRACER. They are the third layer in the
+# brief's priority order and are explicitly not to be enabled alongside CSD
+# debug on a first run.
+#
+# No CONFIG_FUNCTION_TRACER. It is n today, and turning it on would add
+# mcount call sites across the whole kernel - a large observer effect for an
+# instrument this round does not need.
+#
+# No printk/loglevel change, no debug in any driver, and no change to
+# CONFIG_PANIC_TIMEOUT, the softlockup detector or the workqueue stall panic.
+# The recovery chain is the one already verified on hardware:
+# softlockup_panic=1 -> panic=10 -> automatic reboot.
