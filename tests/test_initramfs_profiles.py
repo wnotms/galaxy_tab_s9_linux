@@ -435,6 +435,45 @@ class BootloaderControlBlockRecovery(unittest.TestCase):
     is the difference between a recovery feature and a way to brick a tablet.
     """
 
+    def test_a_stale_request_is_cleared_on_every_boot(self):
+        """One request, one boot - and without this the image does not have it.
+
+        Found by reviewing the feature against the debug image, which has always
+        cleared a stale BCB (clear_stale_bcb in boot/bringup-init.sh). The failure
+        it prevents: the handoff fails and asks for recovery, TWRP starts, the
+        owner fixes the card and reboots to system - and if nothing cleared the
+        block, ABL reads boot-recovery again and goes back to TWRP, leaving TWRP as
+        the only way out.
+        """
+        text = read(str(INIT))
+        # The clear must exist ...
+        self.assertIn('minimal_clear_stale_bcb()', text)
+        # ... be called exactly once (definition plus one call) ...
+        self.assertEqual(text.count('minimal_clear_stale_bcb'), 2)
+        # ... and be on the HEALTHY path, before the root wait, so every boot
+        # consumes a stale request rather than only failed ones.
+        call_at = text.index('minimal_clear_stale_bcb\n')
+        wait_at = text.index('minimal_state_stage waiting-root')
+        self.assertLess(call_at, wait_at)
+        # It must NOT be inside the rescue function: the clear belongs to every
+        # boot, the recovery request only to a failed one.  Checked by position
+        # relative to the rescue function's BODY, not its definition - the
+        # definition sits earlier in the file and comparing against it would
+        # invert the meaning.
+        rescue_at = text.index('minimal_rescue_shell()')
+        rescue_end = text.index('\n}\n', rescue_at)
+        self.assertFalse(rescue_at < call_at < rescue_end,
+                         'the stale-BCB clear must not live in the rescue path')
+
+    def test_clearing_a_stale_request_is_not_fatal(self):
+        """A failed clear must not break an otherwise healthy boot."""
+        text = read(str(INIT))
+        start = text.index('minimal_clear_stale_bcb()')
+        fn = text[start:text.index('\n}\n', start)]
+        self.assertNotIn('minimal_fail', fn)
+        self.assertIn('could not clear the stale recovery BCB', fn)
+        self.assertIn('return 0', fn)
+
     def test_it_is_wired_into_the_rescue_path(self):
         text = read(str(INIT))
         rescue_at = text.index('minimal_rescue_shell()')

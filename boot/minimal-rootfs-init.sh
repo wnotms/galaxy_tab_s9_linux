@@ -211,6 +211,38 @@ minimal_bcb_asks_recovery() {
     [ "$misc_head" = boot-recovery ]
 }
 
+# Clear a recovery request left over from an earlier boot.
+#
+# "One request, one boot" is the property that makes the recovery path safe, and
+# without this the production image does NOT have it.  The sequence it prevents:
+#
+#   1. the handoff fails, writes the BCB, and reboots;
+#   2. ABL reads it and starts TWRP - the goal;
+#   3. the owner fixes the card in TWRP and reboots to system;
+#   4. if nothing cleared the block, ABL reads boot-recovery AGAIN and goes back
+#      to TWRP, and the only way out is from TWRP.
+#
+# TWRP may or may not clear it - that is somebody else's implementation and not
+# something to depend on - so this clears it itself.  The debug image has always
+# done this (clear_stale_bcb in boot/bringup-init.sh, before boot_rootfs); this is
+# the same rule, and it runs BEFORE the root handoff so a normal boot always
+# consumes any stale request.
+#
+# A failure here is not fatal and must not be: the boot is otherwise healthy, and
+# the worst case of leaving the block set is one extra trip through TWRP.
+minimal_clear_stale_bcb() {
+    misc_dev=$(minimal_misc_device) || return 0
+    misc_head=$(timeout 5 head -c 16 "$misc_dev" 2>/dev/null | tr -d '\0')
+    [ "$misc_head" = boot-recovery ] || return 0
+    if timeout 5 head -c 2048 /dev/zero > "$misc_dev" 2>/dev/null; then
+        sync
+        minimal_emit "cleared a stale recovery BCB in $misc_dev (one request, one boot)"
+    else
+        minimal_emit "WARN: could not clear the stale recovery BCB in $misc_dev"
+    fi
+    return 0
+}
+
 minimal_reboot_to_recovery() {
     if minimal_bcb_asks_recovery; then
         minimal_emit 'WARN: misc already asks for recovery and the bootloader did not act; powering off instead of looping'
@@ -357,6 +389,14 @@ fi
 # ---------------------------------------------------------------------------
 minimal_state_init
 minimal_state_stage kernel-userspace
+
+# Consume any recovery request left over from an earlier failed boot, so that a
+# normal boot is never sent back to TWRP by a stale block.  This sits on the
+# healthy path on purpose: it is the only place that runs on every boot, and the
+# request must be consumed by exactly one boot.  It costs one sysfs read and, in
+# the overwhelmingly common case where the block is already clear, nothing else.
+minimal_clear_stale_bcb
+
 minimal_state_stage waiting-root
 waited=0
 while [ ! -b "$ROOTFS_DEVICE" ] && [ "$waited" -lt "$ROOTFS_WAIT_SECONDS" ]; do
