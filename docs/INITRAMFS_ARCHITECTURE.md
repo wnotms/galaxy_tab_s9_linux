@@ -102,6 +102,8 @@ Each of these is now the Debian root filesystem's job, or the debug image's.
 
 | kept | why |
 |---|---|
+| auto-reboot to TWRP on failure | A failed handoff must not need a key combination. Label-addressed, one-shot, read back, plain restart. Measured: TWRP unattended in 77 s. |
+| stale-BCB clear on every boot | "One request, one boot". Without it the tablet loops back into TWRP; reproduced on hardware before the fix. |
 | bounded root-device wait (30 s) | A card that is slow to enumerate must not be a hang, and a card that never appears must be a diagnosable failure. |
 | ext4 root mount | The handoff itself. |
 | `/newroot/sbin/init` check | Failing before `switch_root` leaves a rescue shell and a record; failing after it leaves nothing. |
