@@ -470,8 +470,6 @@ PARTNAME|parse the GPT partition table
 /dev/rtc|read RTC telemetry
 hwclock|read RTC telemetry
 boot-recovery|write the bootloader control block
-fb0/blank|do display recovery
-display_recover|do display recovery
 regulator_summary|dump regulator state
 devices_deferred|dump deferred devices
 dmesg|dump the kernel log
@@ -480,6 +478,50 @@ insmod|load a kernel module
 modprobe|load a kernel module
 RULES
             pass 'initramfs: production /init executes none of the debug capabilities'
+
+            # Display recovery is the one capability that is allowed back, on a
+            # condition rather than unconditionally: it may run only from the
+            # rescue path, because the rescue banner is printed to a panel that
+            # Debian's gts9-panel-recover.service would otherwise have been the one
+            # to fix - and in the rescue path Debian never starts.  On a healthy
+            # boot it must not run at all.
+            #
+            # This checks the CALL SITE, not the definition.  A shell function has
+            # to be defined before it is called, so the helper's body necessarily
+            # sits above minimal_rescue_shell() in the file; an earlier version of
+            # this rule compared the framebuffer write against the rescue
+            # function's start and failed its own correct code.  What matters is
+            # which function body the call is inside.
+            if grep -qE 'fb0/blank' "$tmp/initcheck/init.code"; then
+                rescue_line=$(grep -n '^minimal_rescue_shell()' "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                # The first line after the rescue function's body ends.
+                rescue_end=$(awk -v start="$rescue_line" \
+                    'NR > start && /^}/ {print NR; exit}' "$tmp/initcheck/init.code")
+                call_line=$(grep -n '^[[:space:]]*minimal_panel_rescue[[:space:]]*$' \
+                    "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                if [ -n "$call_line" ] && [ -n "$rescue_end" ] &&
+                   [ "$call_line" -gt "$rescue_line" ] && [ "$call_line" -lt "$rescue_end" ]; then
+                    pass 'initramfs: display recovery is called only from the rescue path'
+                elif [ -z "$call_line" ]; then
+                    fail 'initramfs: /init writes the framebuffer but never calls the panel helper'
+                else
+                    fail 'initramfs: production /init calls the panel helper outside the rescue path'
+                fi
+                # And independently: no framebuffer work between the root mount
+                # and switch_root, which is the healthy path.
+                mount_line=$(grep -n 'mount -t ext4' "$tmp/initcheck/init.code" | head -1 | cut -d: -f1)
+                switch_line=$(grep -n 'switch_root' "$tmp/initcheck/init.code" | tail -1 | cut -d: -f1)
+                if [ -n "$mount_line" ] && [ -n "$switch_line" ] && [ "$switch_line" -gt "$mount_line" ]; then
+                    if sed -n "${mount_line},${switch_line}p" "$tmp/initcheck/init.code" |
+                       grep -qE 'fb0/blank|minimal_panel_rescue'; then
+                        fail 'initramfs: the success path touches the framebuffer before switch_root'
+                    else
+                        pass 'initramfs: the success path does no framebuffer work'
+                    fi
+                fi
+            else
+                pass 'initramfs: production /init does no display recovery at all'
+            fi
         fi
         ;;
     bringup)

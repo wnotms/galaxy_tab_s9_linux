@@ -214,11 +214,49 @@ class RootfsBoot(unittest.TestCase):
         self.assertIn('ls -l /sys/class/block', MINIMAL_INIT)
         self.assertIn('ls -l /dev/mmcblk*', MINIMAL_INIT)
         self.assertIn('/bin/sh -i </dev/console >/dev/console 2>&1', MINIMAL_INIT)
-        for noncritical in ('display_recover', 'setup_usb_gadget', 'gpt_entries',
+        for noncritical in ('setup_usb_gadget', 'gpt_entries',
                             'rtc_write_state', 'regulator_summary', 'clk_summary'):
             self.assertNotIn(noncritical, MINIMAL_INIT)
-        self.assertNotIn('reboot', MINIMAL_INIT)
-        self.assertNotIn('poweroff', MINIMAL_INIT)
+
+    def test_minimal_profile_rescue_is_visible_and_escapable(self):
+        """Two things this handoff must do that the first version did not.
+
+        Both were found by running the failure test on the device - boot with
+        gts9_rootfs=/dev/does-not-exist - rather than by reading the script.
+
+        1. ESCAPABLE. The rescue shell had no `reboot` or `poweroff`, so nothing
+           inside it could leave: this image has no USB gadget and no Wi-Fi, and
+           there is no serial port. Recovering the tablet needed a physical key
+           combination. The escape hatch is now shipped.
+
+        2. VISIBLE. Display recovery lives in Debian's
+           gts9-panel-recover.service, which cycles the framebuffer when the
+           panel's cold-boot enable reads a dead DDIC. In the rescue path Debian
+           never starts, so a cold boot that hit that case printed the banner to a
+           screen nobody could see. The cycle is therefore allowed back, but ONLY
+           behind the rescue path - a healthy boot must not pay for a DPU modeset.
+        """
+        # Escapable: the applets are declared by the production builder and the
+        # banner tells the owner they exist.
+        builder = (ROOT / 'scripts' / 'build-minimal-initramfs.sh').read_text()
+        for applet in ('reboot', 'poweroff'):
+            with self.subTest(applet=applet):
+                self.assertIn(applet, builder)
+        self.assertIn('to leave: reboot', MINIMAL_INIT)
+        # Visible, and confined to the rescue path.
+        self.assertIn('fb0/blank', MINIMAL_INIT)
+        rescue_at = MINIMAL_INIT.index('minimal_rescue_shell()')
+        call_at = MINIMAL_INIT.index('minimal_panel_rescue\n')
+        self.assertGreater(call_at, rescue_at)
+        self.assertLess(call_at, MINIMAL_INIT.index('\n}\n', rescue_at))
+        # And not on the success path between the root mount and switch_root.
+        success = MINIMAL_INIT[MINIMAL_INIT.index('mount -t ext4'):
+                               MINIMAL_INIT.index('exec switch_root')]
+        self.assertNotIn('minimal_panel_rescue', success)
+        self.assertNotIn('fb0/blank', success)
+        # The old debug-only capability names must still be absent.
+        self.assertNotIn('display_recover', MINIMAL_INIT)
+        self.assertNotIn('setup_usb_gadget', MINIMAL_INIT)
 
     def test_minimal_initramfs_requires_switch_root_and_installs_profile(self):
         builder = (ROOT / 'scripts' / 'build-bringup-initramfs.sh').read_text()

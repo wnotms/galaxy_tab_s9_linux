@@ -85,6 +85,12 @@ def commands_in(path):
     keywords = set('''if then else elif fi for while until do done case esac in
         return break continue local export readonly set unset shift trap eval exec
         time true false'''.split())
+    # Every name this script ever assigns to, anywhere.  Without this, a lowercase
+    # local like `panel_fb=/sys/...` followed by `while [ ! -w "$panel_fb" ]` puts
+    # panel_fb in command position for a line-based scan, and the test reports a
+    # missing applet that is really just a variable.  Collecting assignments is the
+    # principled fix: it does not depend on the ALL-CAPS convention.
+    assigned = set(re.findall(r'(?:^|[;\s])([A-Za-z_][A-Za-z0-9_]*)=', text))
 
     found = set()
 
@@ -99,7 +105,7 @@ def commands_in(path):
         if not m:
             return
         name = m.group(1)
-        if name in funcs or name in keywords:
+        if name in funcs or name in keywords or name in assigned:
             return
         if name.isupper():
             # A surviving all-caps token is a variable, not a program.
@@ -107,10 +113,15 @@ def commands_in(path):
         found.add(name)
 
     for line in text.splitlines():
-        consider(line)
-        for sub in re.split(r'[|;]|&&|\|\|', line):
+        # Remove quoted strings before splitting on separators.  Otherwise a
+        # message like 'panel: no framebuffer; cannot try to recover it' splits at
+        # the semicolon INSIDE the quotes and reports "cannot" as a command - which
+        # is what happened the first time this ran against the panel-recovery code.
+        unquoted = re.sub(r"'[^']*'|\"[^\"]*\"", "''", line)
+        consider(unquoted)
+        for sub in re.split(r'[|;]|&&|\|\|', unquoted):
             consider(sub)
-        for sub in re.findall(r'\$\(([^()]*)\)', line):
+        for sub in re.findall(r'\$\(([^()]*)\)', unquoted):
             consider(sub)
     return found
 
@@ -237,7 +248,12 @@ class TheTrampolineIsOptIn(unittest.TestCase):
 
 
 class ProductionInitExecutesNothingDebugOnly(unittest.TestCase):
-    """Every capability the production handoff must not have."""
+    """Every capability the production handoff must not have.
+
+    Display recovery is deliberately absent from the list below, because it is the
+    one capability that was allowed back on a condition.  See
+    PanelRecoveryRunsOnlyOnFailure for where it may live and why.
+    """
 
     FORBIDDEN = [
         (r'usb_gadget', 'create a configfs USB gadget'),
@@ -245,7 +261,6 @@ class ProductionInitExecutesNothingDebugOnly(unittest.TestCase):
         (r'/dev/disk/by-partlabel|PARTNAME', 'parse the GPT partition table'),
         (r'/dev/rtc|hwclock', 'read RTC telemetry'),
         (r'boot-recovery', 'write the bootloader control block'),
-        (r'fb0/blank|display_recover', 'do display recovery'),
         (r'regulator_summary|devices_deferred', 'dump hardware state'),
         (r'dmesg', 'read the kernel log'),
         (r'ttyGS', 'use a USB serial port'),
@@ -390,6 +405,91 @@ class ProductionAppletsMatchWhatItRuns(unittest.TestCase):
         self.assertNotIn('while [ ! -c /dev/ttyGS', rescue)
 
 
+class PanelRecoveryRunsOnlyOnFailure(unittest.TestCase):
+    """The one debug capability allowed back, and the condition on which it is.
+
+    Found on the device by the failure test, not by reading the script. Display
+    recovery lives in Debian's gts9-panel-recover.service, which cycles the
+    framebuffer when the panel's cold-boot enable reads a dead DDIC
+    (`ana38407 panel id: 00 00 00`); it runs at ~3.7 s on a healthy boot. In the
+    rescue path Debian never starts, so on a cold boot that hit the zero-ID case
+    the rescue banner would be printed to a screen nobody can see.
+
+    Restoring display recovery unconditionally was rejected: it is a diagnostic
+    capability and it puts a full DPU modeset on the critical path, where test 178
+    once caught an intermittent hang. So it runs only after the handoff has
+    already failed - a healthy boot pays nothing.
+    """
+
+    def test_the_only_call_site_is_the_rescue_path(self):
+        """Position is about where it is CALLED, not where it is defined.
+
+        The helper is defined before minimal_rescue_shell() so the rescue function
+        can call it; what matters is that the sole call sits inside the rescue
+        path and therefore cannot execute on a successful boot.
+        """
+        text = read(str(INIT))
+        # One definition and exactly one call.
+        self.assertEqual(text.count('minimal_panel_rescue()'), 1,
+                         'expected a single call to the panel helper')
+        call_at = text.index('minimal_panel_rescue\n')
+        rescue_at = text.index('minimal_rescue_shell()')
+        # The call must be textually inside the rescue function body.
+        rescue_body_end = text.index('\n}\n', rescue_at)
+        self.assertGreater(call_at, rescue_at)
+        self.assertLess(call_at, rescue_body_end,
+                        'the panel cycle must be called from inside minimal_rescue_shell')
+
+    def test_it_is_not_on_the_success_path(self):
+        """The root mount, the init check and switch_root must not touch it.
+
+        The functional argument: the helper is reachable only through
+        minimal_rescue_shell, and every route into that function is a failure
+        (root timeout, missing device, failed mount, missing /sbin/init, failed
+        VFS move, failed switch_root).  This asserts both halves - the call is
+        inside the rescue body, and the healthy path never calls the rescue body.
+        """
+        text = read(str(INIT))
+        rescue_at = text.index('minimal_rescue_shell()')
+        rescue_body_end = text.index('\n}\n', rescue_at)
+        call_at = text.index('minimal_panel_rescue\n')
+        self.assertTrue(rescue_at < call_at < rescue_body_end)
+
+        # The success path: from the root mount to switch_root there must be no
+        # reference to the panel helper at all.
+        mount_at = text.index('mount -t ext4')
+        switch_at = text.index('exec switch_root')
+        success = text[mount_at:switch_at]
+        self.assertNotIn('minimal_panel_rescue', success)
+        self.assertNotIn('fb0/blank', success)
+
+    def test_every_wait_is_bounded(self):
+        """A rescue path that blocks forever is worse than a dark screen."""
+        text = read(str(INIT))
+        start = text.index('minimal_panel_rescue()')
+        panel = text[start:text.index('\n}\n', start)]
+        # Quoted in the source, so match what is actually written.
+        self.assertIn('"$panel_waited" -lt 5', panel)
+        self.assertIn('"$panel_cycle" -lt 3', panel)
+
+    def test_it_gives_up_instead_of_failing_the_rescue(self):
+        """A panel that cannot be recovered must not cost the shell."""
+        text = read(str(INIT))
+        start = text.index('minimal_panel_rescue()')
+        panel = text[start:text.index('\n}\n', start)]
+        self.assertIn('cannot try to recover it', panel)
+        self.assertIn('return 0', panel)
+        # It must not abort the handoff or call minimal_fail.
+        self.assertNotIn('minimal_fail', panel)
+
+    def test_it_does_not_parse_dmesg_because_production_has_no_dmesg(self):
+        """The debug version greps dmesg for the zero-ID line; this one cannot."""
+        text = read(str(INIT))
+        start = text.index('minimal_panel_rescue()')
+        panel = text[start:text.index('\n}\n', start)]
+        self.assertNotIn('dmesg', panel)
+
+
 class TheDebugImageKeepsItsCapabilities(unittest.TestCase):
     def test_the_debug_builder_still_installs_the_bringup_init(self):
         text = read(str(DEBUG_BUILDER))
@@ -479,10 +579,22 @@ class TheValidatorEnforcesTheBoundary(unittest.TestCase):
         text = read(str(VALIDATOR))
         for label in ('create a configfs USB gadget', 'parse the GPT partition table',
                       'read RTC telemetry', 'write the bootloader control block',
-                      'do display recovery', 'use a USB serial port',
+                      'use a USB serial port',
                       'load a kernel module'):
             with self.subTest(label=label):
                 self.assertIn(label, text)
+
+    def test_it_position_checks_display_recovery_rather_than_forbidding_it(self):
+        """Display recovery is allowed, but only inside the rescue path.
+
+        Forbidding the string outright would have been simpler and wrong: the
+        rescue banner goes to a panel that Debian's gts9-panel-recover.service
+        would normally have fixed, and in the rescue path Debian never runs.  So
+        the rule is where the framebuffer write sits, not whether it exists.
+        """
+        text = read(str(VALIDATOR))
+        self.assertIn('display recovery is confined to the rescue path', text)
+        self.assertIn('minimal_rescue_shell()', text)
 
     def test_it_allows_them_in_the_debug_profile(self):
         text = read(str(VALIDATOR))

@@ -101,6 +101,50 @@ for arg in $(cat /proc/cmdline 2>/dev/null); do
 done
 GTS9_MINIMAL_ROOT_DEVICE=$ROOTFS_DEVICE
 
+# Bring the panel back, but ONLY when the handoff has already failed.
+#
+# Why this exists at all: Debian's gts9-panel-recover.service is what cycles the
+# framebuffer when the panel's cold-boot enable reads a dead DDIC
+# (`ana38407 panel id: 00 00 00`), and it runs at ~3.7 s on a healthy boot.  In the
+# rescue path Debian never starts, so that service never runs - and on a cold boot
+# that hit the zero-ID case the rescue shell would be printed to a screen nobody
+# can see.  The failure test on 2026-09-26 walked into exactly that hole.
+#
+# Why it is gated rather than simply restored: display recovery is a diagnostic
+# capability and it puts a full DPU modeset on the critical path, where test 178
+# once caught an intermittent hang (enc35 frame done timeout -> vblank wait
+# timeout -> workqueue lockup -> RCU stall).  Running it only after the root mount
+# has already failed means a healthy boot pays nothing - not a byte of I/O, not a
+# millisecond - and the one boot that needs it is the one that has nothing left to
+# lose.
+#
+# Deliberately minimal, and deliberately quieter than the debug version: it waits
+# for fb0, cycles blank/unblank a few times, and gives up.  It does not parse
+# dmesg (the production image has no dmesg applet), so it cannot check for the
+# driver's zero-ID line and does not try to.
+minimal_panel_rescue() {
+    panel_fb=/sys/class/graphics/fb0/blank
+    panel_waited=0
+    while [ ! -w "$panel_fb" ] && [ "$panel_waited" -lt 5 ]; do
+        sleep 1
+        panel_waited=$((panel_waited + 1))
+    done
+    if [ ! -w "$panel_fb" ]; then
+        minimal_emit 'panel: no writable framebuffer; cannot try to recover it'
+        return 0
+    fi
+    minimal_emit 'panel: cycling the framebuffer so the rescue shell can be seen'
+    panel_cycle=0
+    while [ "$panel_cycle" -lt 3 ]; do
+        printf '1' > "$panel_fb" 2>/dev/null || true
+        sleep 1
+        printf '0' > "$panel_fb" 2>/dev/null || true
+        sleep 1
+        panel_cycle=$((panel_cycle + 1))
+    done
+    return 0
+}
+
 minimal_rescue_shell() {
     minimal_emit 'GTS9_MINIMAL_RESCUE=BusyBox shell'
     minimal_emit 'root device missing or handoff failed; inspect the block state below'
@@ -126,6 +170,9 @@ minimal_rescue_shell() {
     minimal_emit 'rescue shell: /bin/sh -i (type exit to restart it)'
     minimal_emit 'to leave: reboot   (or: poweroff)'
     minimal_emit 'to fix the root device: reboot into TWRP and check gts9_rootfs='
+    # Last thing before handing the console over: this is the only boot where the
+    # panel might be dark, so try to light it now.
+    minimal_panel_rescue
 
     # Keep PID 1 alive if an owner exits the interactive shell.  This path does
     # not depend on USB: it uses the panel VT, with /dev/console only as a
