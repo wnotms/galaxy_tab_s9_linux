@@ -169,7 +169,7 @@ it can be built the moment it is needed, without re-deriving it.
 
 ## 4. The `cpuidle.off=1` diagnostic profile
 
-New file: `boot/cmdline.cpuidle-off.example.txt`, derived from
+New file: `boot/cmdline.stall-ab-cpuidle-off.example.txt`, derived from
 `boot/cmdline.stall-ab-baseline.example.txt` with **exactly one token added**.
 
 **What it does, from the source:** `drivers/cpuidle/cpuidle.c` declares

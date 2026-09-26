@@ -29,7 +29,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 BASELINE = "boot/cmdline.stall-ab-baseline.example.txt"
-CPUIDLE_OFF = "boot/cmdline.cpuidle-off.example.txt"
+CPUIDLE_OFF = "boot/cmdline.stall-ab-cpuidle-off.example.txt"
 HARNESS = "scripts/stall-ab.sh"
 PLAN = "docs/CPU_IDLE_WEDGE_PLAN.md"
 IDLE_ANALYSIS = "docs/SM8550_IDLE_STATE_ANALYSIS.md"
@@ -123,6 +123,26 @@ class ProfileShapeTests(unittest.TestCase):
         self.assertTrue(text.endswith("\n"))
         for tok in tokens(CPUIDLE_OFF):
             self.assertNotIn("\n", tok)
+
+    def test_the_filename_follows_the_harness_convention(self):
+        """stall-ab.sh resolves most profiles by name, so the name is load-bearing.
+
+        The RPMh profile is the one documented exception (it predates the
+        harness and two docs point at it).  A new profile must follow the
+        convention, or the harness reports "missing profile file" and the
+        profile is unusable even though every test above passes.
+        """
+        self.assertTrue(
+            CPUIDLE_OFF.endswith("boot/cmdline.stall-ab-cpuidle-off.example.txt"),
+            "a new profile must be named cmdline.stall-ab-<profile>.example.txt",
+        )
+        # And the harness must not have grown a special case for it.
+        harness = read(HARNESS)
+        self.assertNotIn("cpuidle-off) CMDLINE=", harness)
+        self.assertIn(
+            '*)          CMDLINE=$REPO/boot/cmdline.stall-ab-$PROFILE.example.txt ;;',
+            harness,
+        )
 
     def test_the_existing_profiles_are_untouched(self):
         for name, digest in KNOWN_GOOD.items():
