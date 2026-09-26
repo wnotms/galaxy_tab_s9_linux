@@ -1,16 +1,27 @@
 # Minimal Debian rootfs boot profile
 
-`gts9_minimal_rootfs=1` selects an isolated path for measuring whether the
-microSD root filesystem can boot without the initramfs bring-up work. The
-default `boot/cmdline.example.txt` does not enable it. Use
-`boot/cmdline.minimal-rootfs.example.txt` for both sides of the Type-C versus
-battery-only comparison.
+> **The `gts9_minimal_rootfs=1` token is DEPRECATED.** It has no effect on the
+> production image, whose `/init` is the handoff unconditionally, and it is kept
+> only so the *debug* image can still reproduce an old bring-up test. See
+> [INITRAMFS_ARCHITECTURE.md](INITRAMFS_ARCHITECTURE.md#the-gts9_minimal_rootfs1-token-deprecated-compatibility-only).
+> The two images are built separately now
+> (`scripts/build-minimal-initramfs.sh`, `scripts/build-bringup-initramfs.sh`);
+> choose the image, not the token.
+
+The token used to select an isolated path inside one shared image, for measuring
+whether the microSD root filesystem could boot without the initramfs bring-up
+work. Use `boot/cmdline.minimal-rootfs.example.txt` for both sides of the Type-C
+versus battery-only comparison.
 
 ## Execution path
 
-`bringup-init.sh` mounts procfs so it can read `/proc/cmdline`. When the
-minimal flag is set, it immediately execs `minimal-rootfs-init`; it does not
-mount debugfs or run the normal bring-up path. The minimal script then:
+On the **production** image, `minimal-rootfs-init` is `/init` itself and this
+whole section describes it directly - there is no selecting script and no token
+to read. On the **debug** image, `bringup-init.sh` mounts procfs so it can read
+`/proc/cmdline`, and when the flag is set it immediately execs
+`minimal-rootfs-init` instead of running the normal bring-up path.
+
+Either way the minimal script then:
 
 1. Mounts sysfs, devtmpfs and tmpfs on `/run` if they are not already mounted.
 2. Prints `GTS9_MINIMAL_STAGE=kernel-userspace` and

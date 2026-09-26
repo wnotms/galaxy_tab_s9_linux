@@ -136,19 +136,45 @@ network. A boot that dies before Debian's userspace is observable only on the
 panel and through the stage record; TWRP is the recovery path. This is the cost of
 the serial removal, and it is the reason the stage record is kept.
 
-## The `gts9_minimal_rootfs=1` token
+## The `gts9_minimal_rootfs=1` token: DEPRECATED, compatibility only
 
-It no longer controls anything in the production image: that image's `/init` is
-the handoff unconditionally. The token is still **accepted** and still **honoured
-by the debug image**, which keeps the legacy path for reproducing an old test.
+**Status: deprecated.** Do not use it in a new profile, and do not treat its
+presence or absence as meaningful on the production image.
 
-- Phase 1 (this change): production does not depend on it; the debug image still
-  supports it.
-- Phase 2 (future): mark it deprecated/compatibility-only in the profiles.
+It no longer controls anything there: the production image's `/init` *is* the
+handoff, unconditionally, so there is no branch for the token to select. Verified
+by grep - `boot/minimal-rootfs-init.sh` does not mention it at all.
 
-It was not removed from the historical profiles in this round, because those
-profiles are test fixtures and rewriting them would invalidate stored bundle
-hashes for no functional gain.
+Where it still has an effect:
+
+| image | behaviour |
+|---|---|
+| production (`initramfs-minimal.img`) | **ignored.** The handoff runs regardless. |
+| debug (`initramfs-bringup.img`) | **honoured.** Still execs the minimal path, so an old bring-up test can be reproduced. |
+
+Migration, as the brief set it out:
+
+- **Phase 1 (done):** production does not depend on it. The debug image keeps it.
+- **Phase 2 (done, this document):** marked deprecated / compatibility-only, here
+  and in `docs/MINIMAL_ROOTFS_BOOT.md`.
+
+It was deliberately **not** removed from the eight historical profiles that still
+carry it:
+
+```
+cmdline.diag-loglevel  cmdline.minimal-rootfs   cmdline.rpmh-debug
+cmdline.stall-ab-baseline  cmdline.stall-ab-late-deferred
+cmdline.stall-ab-no-acd    cmdline.stall-ab-no-gpu    cmdline.watchdog-debug
+```
+
+Those files are test fixtures and their bytes are pinned by hash in the test suite
+(`test_gpu_gmu_rpmh_stall.py`, `test_watchdog_debug_profile.py`). Deleting a token
+that nothing reads would invalidate stored bundle hashes for no functional gain -
+and the A/B profiles would have to be re-measured to prove nothing changed, which is
+exactly the kind of churn this round is trying to avoid.
+
+The token that *does* matter on every Debian-bound profile is
+`systemd.ssh_auto=no`, and it is pinned by its own test.
 
 ---
 
