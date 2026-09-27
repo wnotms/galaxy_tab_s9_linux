@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; cat /proc/sys/vm/mmap_min_addr; sed -n '/^CapEff:/p' /proc/self/status; cat /sys/kernel/mm/transparent_hugepage/enabled; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:47:07.730221+00:00",
+  "scope": "read-only capability check; no workload or stability verdict"
+}

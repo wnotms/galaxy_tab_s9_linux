@@ -1,5 +1,17 @@
 # Stall investigation: direction review and offline-first workflow
 
+2026-09-28 budget correction: 300 seconds is not a prerequisite for confirming
+startup. Test229 raw dmesg detects RCU trouble at29.33 s and CPU6 non-response
+at39.33 s; test235 source timestamps confirm CPU2/5 reports by48.41 s. These
+examples do not bound every failure's onset. New focused test245 uses120 s
+total uptime, immediate full startup capture and stop-on-first-failure, with
+only20 s additional backtrace collection after a positive failure. Its tiny
+workload runs after60 s with >=30 s afterward; readiness must pass by90 s.
+Production check is120 s too. This scoped exception supersedes older150 s
+minimums for245 only. Longer observation needs a separate late-failure/stability
+question; no more automatic300 s waits or identical healthy-boot loops.
+See test245 README and offline-reviews/20260928-bbm-low-address/README.md.
+
 Updated 2026-09-27 after test-231. This is the current work queue. Historical
 test records remain evidence of what was observed and concluded at the time;
 the corrections here take precedence over their causal interpretations.

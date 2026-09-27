@@ -2,6 +2,17 @@
 
 ## Current review (2026-09-28)
 
+Test245 is pre-registered for one low-address coverage boot using exact test240
+corrected-BBM artifacts. Offline helper review is in
+reference/offline-reviews/20260928-bbm-low-address/. It maps one page at0x1000
+with NOREPLACE, verifies old valid/executable PTEs and performs16 permission
+changes; no deliberate instruction abort or global mmap setting change.
+The owner questioned the repeated300 s wait. For this focused trial use120 s
+total uptime, profile ready by90 s, workload after60 s and >=30 s afterward;
+early failure stops immediately plus bounded20 s backtrace collection.
+Production restoration also gets120 s. This is a shorter startup check, not
+long-run health or CPU-repair proof; older completed results stay unchanged.
+
 Tests243/244 completed a shared minimal-observer session. Exact test241 kernel,
 lastactivity=0 and calibration=0; pseudo-NMI/ECC64 and 1/1/1/10 remained active.
 TWRP-entry target 2094eeee-8fe2-48e5-aea6-abbc1788ea92 passed 306.92 seconds
