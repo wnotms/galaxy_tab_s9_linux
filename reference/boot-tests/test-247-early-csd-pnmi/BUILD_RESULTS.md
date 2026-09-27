@@ -1,5 +1,8 @@
 # Test247 build and rollback preparation complete
 
+This preparation record is now followed by [RESULTS.md](RESULTS.md): a natural
+DCC target stall was captured and the original pair restored.
+
 NOT flashed at this checkpoint. CPU repair remains OPEN. Full kernel/modules
 build completed in1123.0 s with ccache and12 workers. The two-option
 CSD config change required broad recompilation; no full host regression was

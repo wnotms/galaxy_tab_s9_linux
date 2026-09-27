@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl --no-block start reboot.target --job-mode=replace-irreversibly"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T20:15:05.103840+00:00"
+}

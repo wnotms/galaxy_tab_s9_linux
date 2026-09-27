@@ -1,0 +1,27 @@
+{
+  "verdict": "natural_failure_target_stack_captured",
+  "boot_id": "e432f1a0-f6ab-4e82-be70-4c9ba7ab80cb",
+  "capture_id": "49aded33-4369-49a8-8da6-2adf06809e75",
+  "runtime_minus_link": "0x88000",
+  "immediate_retained_observer": "ca2235aee5c94129858c9cea934a2c52",
+  "first_csd_source_seconds": 13.83169,
+  "target_backtrace_seconds": [
+    13.832136,
+    29.746246,
+    35.664604
+  ],
+  "failed_cpu": 4,
+  "failed_task_pid": 1251,
+  "failed_task_comm": "(agetty)",
+  "target_pc": "hvc_dcc0_put_chars+0x34/0x48",
+  "saved_pmr": "0xc0",
+  "saved_mdccsr_el0_last_read_x9": "0x20000000",
+  "instruction": "yield in loop polling MDCCSR_EL0 bit29 (DCC TX busy)",
+  "ordinary_irq_masked": true,
+  "pseudo_nmi_response_observed": true,
+  "panic_seconds": 35.689645,
+  "root_cause_scope": "This boot: DCC transmit busy wait under hvc_write IRQ-disabled spinlock prevents ordinary IPI progress; getty on hvc0 was started. No fix has been applied and earlier failures need their own attribution.",
+  "failed_process_proc_inspection_available": false,
+  "proc_inspection_limitation": "failure-live/identity-process belongs to recovered observer ca2235ae; its PID1251 is a NetworkManager thread, not the failed agetty. Do not use observer proc data as target evidence.",
+  "cpu_stall_repair_established": false
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "find /var/lib/systemd/pstore /sys/fs/pstore -maxdepth 1 -type f -printf \"%p %s %T@\\n\"; find /var/lib/systemd/pstore /sys/fs/pstore -maxdepth 1 -type f -exec sha256sum {} +"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T20:13:39.555125+00:00"
+}

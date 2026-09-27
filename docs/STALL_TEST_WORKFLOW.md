@@ -1,5 +1,13 @@
 # Stall investigation: direction review and offline-first workflow
 
+Test247 now provides the target PC: CPU4 agetty is stuck in the HVC DCC
+transmit-busy loop with normal IRQs masked. CSD-triggered pseudo-NMI succeeds
+at13.83 s; two later target stacks agree. The target journal identifies the
+hvc0 getty startup. This supersedes the missing-target-PC work queue for this
+failure. Next repair the inherited HVC_DCC config, then verify driver absence
+and retained ADB/SSH functionality on hardware. Originals restored and checked;
+247 budget closed. See its RESULTS.md for evidence and scope limits.
+
 Test246 is now closed: matched PSEUDO_NMI kernel plus181 module files, one
 120.08 s diagnostic boot without a detected fault. Runtime identity/GIC/module
 checks pass, but no failed CPU2 PC was captured and no repair is established.

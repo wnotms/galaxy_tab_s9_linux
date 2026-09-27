@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/1251/cmdline; echo; cat /proc/1251/status; cat /proc/1251/wchan; echo; readlink /proc/1251/fd/0 /proc/1251/fd/1 /proc/1251/fd/2; cat /proc/consoles; cat /sys/class/tty/console/active; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T20:12:53.550795+00:00"
+}

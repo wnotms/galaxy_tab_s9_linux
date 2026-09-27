@@ -1,0 +1,131 @@
+
+out/test247/vmlinux:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+ffffffc080a32738 <hvc_dcc0_put_chars>:
+ffffffc080a32738:      	bti	c
+ffffffc080a3273c:      	mov	x0, x2
+ffffffc080a32740:      	cbz	x2, 0xffffffc080a3277c <hvc_dcc0_put_chars+0x44>
+ffffffc080a32744:      	mov	x8, xzr
+ffffffc080a32748:      	b	0xffffffc080a32764 <hvc_dcc0_put_chars+0x2c>
+ffffffc080a3274c:      	ldrb	w9, [x1, x8]
+ffffffc080a32750:      	add	x8, x8, #0x1
+ffffffc080a32754:      	msr	DBGDTRTX_EL0, x9
+ffffffc080a32758:      	isb
+ffffffc080a3275c:      	cmp	x8, x0
+ffffffc080a32760:      	b.eq	0xffffffc080a3277c <hvc_dcc0_put_chars+0x44>
+ffffffc080a32764:      	mrs	x9, MDCCSR_EL0
+ffffffc080a32768:      	tbz	w9, #0x1d, 0xffffffc080a3274c <hvc_dcc0_put_chars+0x14>
+ffffffc080a3276c:      	yield
+ffffffc080a32770:      	mrs	x9, MDCCSR_EL0
+ffffffc080a32774:      	tbnz	w9, #0x1d, 0xffffffc080a3276c <hvc_dcc0_put_chars+0x34>
+ffffffc080a32778:      	b	0xffffffc080a3274c <hvc_dcc0_put_chars+0x14>
+ffffffc080a3277c:      	ret
+
+ffffffc080a33a00 <hvc_write>:
+ffffffc080a33a00:      	paciasp
+ffffffc080a33a04:      	str	x30, [x18], #0x8
+ffffffc080a33a08:      	stp	x29, x30, [sp, #-0x50]!
+ffffffc080a33a0c:      	stp	x26, x25, [sp, #0x10]
+ffffffc080a33a10:      	stp	x24, x23, [sp, #0x20]
+ffffffc080a33a14:      	stp	x22, x21, [sp, #0x30]
+ffffffc080a33a18:      	stp	x20, x19, [sp, #0x40]
+ffffffc080a33a1c:      	mov	x29, sp
+ffffffc080a33a20:      	ldr	x25, [x0, #0x220]
+ffffffc080a33a24:      	cbz	x25, 0xffffffc080a33b3c <hvc_write+0x13c>
+ffffffc080a33a28:      	ldr	w8, [x25, #0xb0]
+ffffffc080a33a2c:      	cmp	w8, #0x1
+ffffffc080a33a30:      	b.lt	0xffffffc080a33b44 <hvc_write+0x144>
+ffffffc080a33a34:      	mov	x20, x2
+ffffffc080a33a38:      	cbz	x2, 0xffffffc080a33b4c <hvc_write+0x14c>
+ffffffc080a33a3c:      	mov	x21, x1
+ffffffc080a33a40:      	mov	x19, xzr
+ffffffc080a33a44:      	add	x22, x25, #0x1d0
+ffffffc080a33a48:      	mov	w26, #0x1       // =1
+ffffffc080a33a4c:      	add	x0, x25, #0x168
+ffffffc080a33a50:      	bl	0xffffffc081451988 <_raw_spin_lock_irqsave>
+ffffffc080a33a54:      	ldr	w8, [x25, #0x174]
+ffffffc080a33a58:      	ldrsw	x9, [x25, #0x178]
+ffffffc080a33a5c:      	mov	x23, x0
+ffffffc080a33a60:      	cmp	w8, w9
+ffffffc080a33a64:      	b.eq	0xffffffc080a33aa0 <hvc_write+0xa0>
+ffffffc080a33a68:      	sub	w8, w8, w9
+ffffffc080a33a6c:      	add	x0, x22, x9
+ffffffc080a33a70:      	mov	x1, x21
+ffffffc080a33a74:      	sxtw	x8, w8
+ffffffc080a33a78:      	cmp	x20, x8
+ffffffc080a33a7c:      	csel	x24, x20, x8, lo
+ffffffc080a33a80:      	mov	x2, x24
+ffffffc080a33a84:      	bl	0xffffffc08141667c <memmove>
+ffffffc080a33a88:      	ldr	w8, [x25, #0x178]
+ffffffc080a33a8c:      	sub	x20, x20, x24
+ffffffc080a33a90:      	add	x21, x21, x24
+ffffffc080a33a94:      	add	x19, x24, x19
+ffffffc080a33a98:      	add	w8, w8, w24
+ffffffc080a33a9c:      	str	w8, [x25, #0x178]
+ffffffc080a33aa0:      	cmp	w8, #0x1
+ffffffc080a33aa4:      	b.lt	0xffffffc080a33b5c <hvc_write+0x15c>
+ffffffc080a33aa8:      	ldr	x9, [x25, #0x180]
+ffffffc080a33aac:      	ldr	w0, [x25, #0x17c]
+ffffffc080a33ab0:      	mov	w2, w8
+ffffffc080a33ab4:      	mov	x1, x22
+ffffffc080a33ab8:      	ldr	x9, [x9, #0x8]
+ffffffc080a33abc:      	blr	x9
+ffffffc080a33ac0:      	cmp	w0, #0x0
+ffffffc080a33ac4:      	b.le	0xffffffc080a33af0 <hvc_write+0xf0>
+ffffffc080a33ac8:      	ldr	w8, [x25, #0x178]
+ffffffc080a33acc:      	sub	w2, w8, w0
+ffffffc080a33ad0:      	cmp	w2, #0x1
+ffffffc080a33ad4:      	str	w2, [x25, #0x178]
+ffffffc080a33ad8:      	b.lt	0xffffffc080a33b00 <hvc_write+0x100>
+ffffffc080a33adc:      	and	x8, x0, #0x7fffffff
+ffffffc080a33ae0:      	mov	x0, x22
+ffffffc080a33ae4:      	add	x1, x22, x8
+ffffffc080a33ae8:      	bl	0xffffffc08141667c <memmove>
+ffffffc080a33aec:      	b	0xffffffc080a33b04 <hvc_write+0x104>
+ffffffc080a33af0:      	cmn	w0, #0xb
+ffffffc080a33af4:      	b.eq	0xffffffc080a33b54 <hvc_write+0x154>
+ffffffc080a33af8:      	cbz	w0, 0xffffffc080a33b54 <hvc_write+0x154>
+ffffffc080a33afc:      	str	wzr, [x25, #0x178]
+ffffffc080a33b00:      	str	w26, [x25, #0x170]
+ffffffc080a33b04:      	add	x0, x25, #0x168
+ffffffc080a33b08:      	mov	x1, x23
+ffffffc080a33b0c:      	bl	0xffffffc081451b6c <_raw_spin_unlock_irqrestore>
+ffffffc080a33b10:      	cbz	x20, 0xffffffc080a33b68 <hvc_write+0x168>
+ffffffc080a33b14:      	ldr	w8, [x25, #0x178]
+ffffffc080a33b18:      	cmp	w8, #0x1
+ffffffc080a33b1c:      	b.lt	0xffffffc080a33a4c <hvc_write+0x4c>
+ffffffc080a33b20:      	ldr	x8, [x25, #0x180]
+ffffffc080a33b24:      	ldr	x8, [x8, #0x10]
+ffffffc080a33b28:      	cbz	x8, 0xffffffc080a33a4c <hvc_write+0x4c>
+ffffffc080a33b2c:      	ldr	w0, [x25, #0x17c]
+ffffffc080a33b30:      	mov	w1, #0x1        // =1
+ffffffc080a33b34:      	blr	x8
+ffffffc080a33b38:      	b	0xffffffc080a33a4c <hvc_write+0x4c>
+ffffffc080a33b3c:      	mov	x19, #-0x20     // =-32
+ffffffc080a33b40:      	b	0xffffffc080a33b80 <hvc_write+0x180>
+ffffffc080a33b44:      	mov	x19, #-0x5      // =-5
+ffffffc080a33b48:      	b	0xffffffc080a33b80 <hvc_write+0x180>
+ffffffc080a33b4c:      	mov	x19, xzr
+ffffffc080a33b50:      	b	0xffffffc080a33b68 <hvc_write+0x168>
+ffffffc080a33b54:      	mov	w8, #0x1        // =1
+ffffffc080a33b58:      	str	w8, [x25, #0x170]
+ffffffc080a33b5c:      	add	x0, x25, #0x168
+ffffffc080a33b60:      	mov	x1, x23
+ffffffc080a33b64:      	bl	0xffffffc081451b6c <_raw_spin_unlock_irqrestore>
+ffffffc080a33b68:      	adrp	x8, 0xffffffc082e6e000 <vc_cons+0x5a0>
+ffffffc080a33b6c:      	adrp	x9, 0xffffffc082e6e000 <vc_cons+0x5a0>
+ffffffc080a33b70:      	mov	w10, #0x1       // =1
+ffffffc080a33b74:      	ldr	x0, [x8, #0xb38]
+ffffffc080a33b78:      	strb	w10, [x9, #0xb30]
+ffffffc080a33b7c:      	bl	0xffffffc080131084 <wake_up_process>
+ffffffc080a33b80:      	mov	x0, x19
+ffffffc080a33b84:      	ldp	x20, x19, [sp, #0x40]
+ffffffc080a33b88:      	ldp	x22, x21, [sp, #0x30]
+ffffffc080a33b8c:      	ldp	x24, x23, [sp, #0x20]
+ffffffc080a33b90:      	ldp	x26, x25, [sp, #0x10]
+ffffffc080a33b94:      	ldp	x29, x30, [sp], #0x50
+ffffffc080a33b98:      	ldr	x30, [x18, #-0x8]!
+ffffffc080a33b9c:      	autiasp
+ffffffc080a33ba0:      	ret

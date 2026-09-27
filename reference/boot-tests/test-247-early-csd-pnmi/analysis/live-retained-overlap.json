@@ -1,0 +1,90 @@
+{
+  "scope": "Selected failure/backtrace messages from the first CSD report at exact source times, not the entire crash payload",
+  "initial_broad_selection_note": "An initial exploratory comparison also selected unrelated early-boot register-warning lines at0.296954/0.297480 s; they are in panic but not the retained console. They are outside this explicitly bounded failure comparison, not claimed corrupt.",
+  "records": [
+    {
+      "source_us": 13831690,
+      "message": "smp: csd: Detected non-responsive CSD lock (#1) on CPU#1, waiting 5000000102 ns for CPU#04 do_nothing+0x0/0x8(0x0).",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 13832136,
+      "message": "NMI backtrace for cpu 4",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 13832149,
+      "message": "pc : hvc_dcc0_put_chars+0x34/0x48",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 13832159,
+      "message": "pmr: 000000c0",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 13832172,
+      "message": "x8 : 0000000000000001 x7 : 68373f5b1b073430 x6 : 30315d1b70215b1b",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 13832178,
+      "message": " hvc_dcc0_put_chars+0x34/0x48 (P)",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 14055159,
+      "message": "smp: csd: Detected non-responsive CSD lock (#2) on CPU#7, waiting 5000000050 ns for CPU#04 rcu_barrier_handler+0x0/0x8c(0x4).",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29746246,
+      "message": "NMI backtrace for cpu 4",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29746252,
+      "message": "pc : hvc_dcc0_put_chars+0x34/0x48",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29746256,
+      "message": "pmr: 000000c0",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29746267,
+      "message": "x8 : 0000000000000001 x7 : 68373f5b1b073430 x6 : 30315d1b70215b1b",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29746272,
+      "message": " hvc_dcc0_put_chars+0x34/0x48 (P)",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29764969,
+      "message": "pmr: 000000e0",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    },
+    {
+      "source_us": 29764978,
+      "message": "x8 : ffffffc083a9bb90 x7 : 7f7f7f7f7f7f7f7f x6 : 000000000000000a",
+      "panic_matches_live": true,
+      "console_matches_live": true
+    }
+  ]
+}

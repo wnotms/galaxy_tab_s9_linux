@@ -1,0 +1,7 @@
+CONFIG_HVC_DRIVER=y
+CONFIG_HVC_DCC=y
+# CONFIG_HVC_DCC_SERIALIZE_SMP is not set
+/etc/systemd/system/getty.target.wants:
+total 0
+lrwxrwxrwx 1 root root 38 Sep 22 23:04 getty@tty1.service -> /usr/lib/systemd/system/getty@.service
+ca2235ae-e5c9-4129-858c-9cea934a2c52

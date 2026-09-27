@@ -2,18 +2,21 @@
 
 ## Current review (2026-09-28)
 
-Test247 preparation: existing CSD timeout can request the target backtrace
-at5 s from a stuck wait, through dump_cpu_task and the standard pseudo-NMI
-route. Test246 had CSD debug disabled; no custom early-capture patch is needed.
-The new opt-in pnmi-csd-lock fragment adds CSD debug/default only relative246;
-cmdline adds csdlock_debug=1. Read actual runtime timeout5000/panic_on_ipistall0.
-Source review and19 focused tests pass. Matched kernel/modules are BUILT and
-packaged, NOT flashed at this checkpoint. Exact compiled CSD call path/defaults,
-config diff,167 module imports,181-file manifests and offline rollback pass.
-See247 BUILD_RESULTS.md. Fresh TWRP/mounted-root/partition gates remain required.
-See offline-reviews/20260928-early-csd-pnmi and test247 prospective scope.
-The NMI wait touches the waiter's soft watchdog; observer timing can change.
-One120 s natural target, no injection or identical-repeat budget; CPU repair OPEN.
+Test247 CLOSED with the first natural failed-target PC: CPU4 `(agetty)`
+PID1251 in hvc_dcc0_put_chars+0x34, saved PMR0xc0 and MDCCSR_EL0 x9=0x20000000.
+The exact instruction is yield in TX-busy bit29 polling. hvc_write holds its
+IRQ-saving spinlock across that unbounded loop. Target e432f1a0-f6ab-4e82-be70-
+4c9ba7ab80cb, cap49aded33-4369-49a8-8da6-2adf06809e75, notes/six anchors/panic
+agree+0x88000. CSD requested CPU4 at13.83 s; target stacks at13.83/29.75/35.66 s
+agree. Target journal records serial-getty@hvc0 starting6.50 s. CPU7 panics35.69 s;
+immediate observer ca2235ae-e5c9-4129-858c-9cea934a2c52. Observer /proc PID1251
+is NetworkManager, not failed agetty.14 selected live messages match both
+retained areas exactly by source time; full crash-byte integrity not implied.
+Original181 modules and images restored, all-five hashes match. Production
+6c51a304-186e-41bd-a38c-e6040ddeeaba passed120.08 s, no failed units, ADB/NCM SSH
+banner responsive. See247 RESULTS.md. No fix yet, no more247 boots. Next disable
+inherited HVC_DCC in mainline config and validate the resulting repair while
+preserving panel/USB rescue. Earlier failures need their own causal attribution.
 
 Test246 is CLOSED after its one matched-kernel/module target. Boot
 2de14bb7-4cd7-4b76-a78c-ad3766d187fa, cap882ba36f-60e6-4c52-a1a0-0e2167ffb530,

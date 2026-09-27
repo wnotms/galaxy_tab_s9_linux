@@ -1,5 +1,8 @@
 # Test247 prospective scope: early CSD request over pseudo-NMI
 
+This preparation record is now followed by [RESULTS.md](RESULTS.md): a natural
+DCC target stall was captured and the original pair restored.
+
 One candidate startup target; total observation120 s with full source-time JSON
 from first response. Stop at first failure/suspect/transport loss; at most20 s
 extra collection, no target retry or intentional stall/workload. Source review:

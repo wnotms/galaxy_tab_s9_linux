@@ -1,0 +1,406 @@
+[    2.379805][  T437] gts9-debian: GTS9_DEBIAN_STAGE=systemd-entered
+[    2.380641][  T437] gts9-debian: GTS9_DEBIAN_STAGE=local-fs
+[    3.407566][   T78] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    3.413225][   T78] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    3.622111][  T657] gts9-power-key: service mode (no arguments)
+[    3.623243][  T657] gts9-power-key: found the PMIC power key by capability
+[    3.624081][  T657] gts9-power-key: watching the power key; short press turns the backlight off
+[    3.640373][  T656] gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+[    3.646775][  T655] gts9-debian: GTS9_DEBIAN_STAGE=basic
+[    3.799689][   T78] OF: /soc@0/pcie@1c00000: iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+[    3.833149][  T954] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    4.151556][  T656] gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+[    4.178316][ T1007] gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+[    5.297605][ T1163] bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.298522][ T1163] bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.356035][ T1043] bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.360779][ T1043] bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.514548][ T1188] gts9-debian: GTS9_DEBIAN_STAGE=usb-acm-ready
+[    5.964185][ T1231] Bluetooth: hci0: unexpected event for opcode 0xfc48
+[    6.563933][ T1252] gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+[    6.900004][  T654] gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+[    6.933612][ T1305] gts9-debian: GTS9_DEBIAN_STAGE=bluetooth-address-set
+[    8.222138][ T1522] gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+[   10.003677][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.020341][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.037008][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.053675][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.070342][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.087008][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.103675][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.120341][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.137008][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   10.153675][    C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[   13.831690][   T14] smp: csd: Detected non-responsive CSD lock (#1) on CPU#1, waiting 5000000102 ns for CPU#04 do_nothing+0x0/0x8(0x0).
+[   13.831983][   T14] smp: 	csd: CSD lock (#1) unresponsive.
+[   13.832136][    C4] NMI backtrace for cpu 4
+[   13.832140][    C4] CPU: 4 UID: 0 PID: 1251 Comm: (agetty) Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   13.832145][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   13.832146][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   13.832147][    C4] pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   13.832149][    C4] pc : hvc_dcc0_put_chars+0x34/0x48
+[   13.832155][    C4] lr : hvc_write+0xc0/0x1a4
+[   13.832158][    C4] sp : ffffffc08427bbc0
+[   13.832159][    C4] pmr: 000000c0
+[   13.832160][    C4] x29: ffffffc08427bbc0 x28: ffffffc0903dc000 x27: ffffffc081db642c
+[   13.832163][    C4] x26: 0000000000000001 x25: ffffff880ead0800 x24: 000000000000000f
+[   13.832164][    C4] x23: 00000000000000e0 x22: ffffff880ead09d0 x21: ffffff881987b40f
+[   13.832166][    C4] x20: 0000000000000000 x19: 000000000000000f x18: ffffffc0843d3060
+[   13.832167][    C4] x17: 0000000000000000 x16: 0000000000000000 x15: 0000007f96213340
+[   13.832169][    C4] x14: 000000088b900000 x13: ffffffc082ed4de0 x12: 0000000000000005
+[   13.832171][    C4] x11: 000000000000000b x10: 000000000000000f x9 : 0000000020000000
+[   13.832172][    C4] x8 : 0000000000000001 x7 : 68373f5b1b073430 x6 : 30315d1b70215b1b
+[   13.832174][    C4] x5 : ffffff880ead09df x4 : ffffff881987b40f x3 : 000000000000000f
+[   13.832175][    C4] x2 : 000000000000000f x1 : ffffff880ead09d0 x0 : 000000000000000f
+[   13.832177][    C4] Call trace:
+[   13.832178][    C4]  hvc_dcc0_put_chars+0x34/0x48 (P)
+[   13.832181][    C4]  n_tty_write+0x2c0/0x450
+[   13.832187][    C4]  file_tty_write+0x140/0x2cc
+[   13.832189][    C4]  tty_write+0x18/0x28
+[   13.832190][    C4]  vfs_write+0x2ac/0x4b8
+[   13.832202][    C4]  ksys_write+0x7c/0xf4
+[   13.832204][    C4]  __arm64_sys_write+0x20/0x30
+[   13.832206][    C4]  invoke_syscall+0x4c/0xfc
+[   13.832217][    C4]  el0_svc_common+0x90/0xe0
+[   13.832218][    C4]  do_el0_svc+0x20/0x30
+[   13.832220][    C4]  el0_svc+0x44/0xd0
+[   13.832230][    C4]  el0t_64_sync_handler+0x88/0x134
+[   13.832232][    C4]  el0t_64_sync+0x1b8/0x1bc
+[   13.839118][   T14] smp: csd: Re-sending CSD lock (#1) IPI from CPU#01 to CPU#04
+[   13.839373][   T14] CPU: 1 UID: 0 PID: 14 Comm: kworker/u32:1 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   13.839378][   T14] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   13.839380][   T14] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   13.839382][   T14] Workqueue: events_unbound toggle_allocation_gate
+[   13.839391][   T14] Call trace:
+[   13.839392][   T14]  show_stack+0x1c/0x2c (C)
+[   13.839399][   T14]  __dump_stack+0x2c/0x40
+[   13.839405][   T14]  dump_stack_lvl+0x80/0xb0
+[   13.839410][   T14]  dump_stack+0x1c/0x38
+[   13.839415][   T14]  __csd_lock_wait+0x2e8/0x588
+[   13.839419][   T14]  smp_call_function_many_cond+0x3d0/0x578
+[   13.839424][   T14]  kick_all_cpus_sync+0x48/0x7c
+[   13.839429][   T14]  arch_jump_label_transform_apply+0x14/0x24
+[   13.839435][   T14]  __jump_label_update+0x118/0x13c
+[   13.839441][   T14]  jump_label_update+0xe4/0x110
+[   13.839447][   T14]  static_key_enable_cpuslocked+0x6c/0xb4
+[   13.839451][   T14]  static_key_enable+0x24/0x3c
+[   13.839454][   T14]  toggle_allocation_gate+0x58/0x14c
+[   13.839459][   T14]  process_scheduled_works+0x18c/0x4d0
+[   13.839467][   T14]  worker_thread+0x1f8/0x2e8
+[   13.839471][   T14]  kthread+0x108/0x134
+[   13.839476][   T14]  ret_from_fork+0x10/0x20
+[   14.055159][   T79] smp: csd: Detected non-responsive CSD lock (#2) on CPU#7, waiting 5000000050 ns for CPU#04 rcu_barrier_handler+0x0/0x8c(0x4).
+[   14.055517][   T79] smp: 	csd: CSD lock (#2) unresponsive.
+[   14.055802][   T79] smp: csd: Re-sending CSD lock (#2) IPI from CPU#07 to CPU#04
+[   14.056117][   T79] CPU: 7 UID: 0 PID: 79 Comm: kworker/7:2 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   14.056119][   T79] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   14.056120][   T79] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   14.056120][   T79] Workqueue: events fqdir_free_fn
+[   14.056125][   T79] Call trace:
+[   14.056126][   T79]  show_stack+0x1c/0x2c (C)
+[   14.056128][   T79]  __dump_stack+0x2c/0x40
+[   14.056131][   T79]  dump_stack_lvl+0x80/0xb0
+[   14.056134][   T79]  dump_stack+0x1c/0x38
+[   14.056136][   T79]  __csd_lock_wait+0x2e8/0x588
+[   14.056138][   T79]  smp_call_function_single+0x1f0/0x22c
+[   14.056140][   T79]  rcu_barrier+0x204/0x368
+[   14.056142][   T79]  fqdir_free_fn+0x3c/0x114
+[   14.056144][   T79]  process_scheduled_works+0x18c/0x4d0
+[   14.056146][   T79]  worker_thread+0x1f8/0x2e8
+[   14.056148][   T79]  kthread+0x108/0x134
+[   14.056150][   T79]  ret_from_fork+0x10/0x20
+[   16.867362][  T175] auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+[   29.715127][    C6] GTS9_LA_BEGIN id=49aded33-4369-49a8-8da6-2adf06809e75 trigger=rcu ns=29712004778 schema=1 cpus=8 events=6 complete_history=0
+[   29.715615][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=0 valid=1 seq=102458 nested_dropped=4
+[   29.716078][    C6] GTS9_LA_EVENT cpu=0 kind=0 count=17905 ns=29148031185 a=0000000000000003 b=ffffffc0801bb758 c=ffffff880c9590d8
+[   29.716552][    C6] GTS9_LA_EVENT cpu=0 kind=1 count=2434 ns=24032013010 a=ffffffc0801bb758 b=ffffff880cd590d8 c=0000000000000000
+[   29.717031][    C6] GTS9_LA_EVENT cpu=0 kind=2 count=2434 ns=24032016604 a=ffffffc0801bb758 b=ffffff880cd590d8 c=0000000000000000
+[   29.717508][    C6] GTS9_LA_EVENT cpu=0 kind=3 count=20926 ns=29148031966 a=0000000000000008 b=ffffffc082213caf c=0000000000000000
+[   29.717982][    C6] GTS9_LA_EVENT cpu=0 kind=4 count=3765 ns=24032012176 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.718452][    C6] GTS9_LA_EVENT cpu=0 kind=5 count=3765 ns=24032016968 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.718910][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=1 valid=1 seq=24784 nested_dropped=0
+[   29.719373][    C6] GTS9_LA_EVENT cpu=1 kind=0 count=1549 ns=24626045041 a=0000000000000002 b=ffffffc0801bb758 c=ffffff880f95e358
+[   29.719845][    C6] GTS9_LA_EVENT cpu=1 kind=1 count=1800 ns=8828262182 a=ffffffc0801bb758 b=ffffff880c4b10d8 c=0000000000000000
+[   29.720320][    C6] GTS9_LA_EVENT cpu=1 kind=2 count=1800 ns=8828273589 a=ffffffc0801bb758 b=ffffff880c4b10d8 c=0000000000000000
+[   29.720794][    C6] GTS9_LA_EVENT cpu=1 kind=3 count=2273 ns=24626045666 a=0000000000000004 b=ffffffc082213caf c=0000000000000000
+[   29.721275][    C6] GTS9_LA_EVENT cpu=1 kind=4 count=2485 ns=8868014422 a=ffffffc08216fdfa b=0000000000000000 c=0000000000000000
+[   29.721760][    C6] GTS9_LA_EVENT cpu=1 kind=5 count=2485 ns=8868017182 a=ffffffc08216fdfa b=0000000000000000 c=0000000000000000
+[   29.722243][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=2 valid=1 seq=43042 nested_dropped=0
+[   29.722733][    C6] GTS9_LA_EVENT cpu=2 kind=0 count=1134 ns=16883443169 a=0000000000000000 b=ffffffc0801bb758 c=ffffff8816ae8058
+[   29.723234][    C6] GTS9_LA_EVENT cpu=2 kind=1 count=4383 ns=29704008008 a=ffffffc0801bf710 b=ffffff8a72745ba0 c=0000000000000000
+[   29.723740][    C6] GTS9_LA_EVENT cpu=2 kind=2 count=4383 ns=29704008268 a=ffffffc0801bf710 b=ffffff8a72745ba0 c=0000000000000000
+[   29.724242][    C6] GTS9_LA_EVENT cpu=2 kind=3 count=1697 ns=16883443533 a=0000000000000001 b=ffffffc082213caf c=0000000000000000
+[   29.724747][    C6] GTS9_LA_EVENT cpu=2 kind=4 count=4962 ns=29704007643 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.725256][    C6] GTS9_LA_EVENT cpu=2 kind=5 count=4962 ns=29704008528 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.725757][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=3 valid=1 seq=92980 nested_dropped=0
+[   29.726267][    C6] GTS9_LA_EVENT cpu=3 kind=0 count=2660 ns=24032008218 a=0000000000000000 b=ffffffc0801bb758 c=ffffff880cd590d8
+[   29.726791][    C6] GTS9_LA_EVENT cpu=3 kind=1 count=9164 ns=29148035664 a=ffffffc0801bb758 b=ffffff880c9590d8 c=0000000000000000
+[   29.727328][    C6] GTS9_LA_EVENT cpu=3 kind=2 count=9164 ns=29148036966 a=ffffffc0801bb758 b=ffffff880c9590d8 c=0000000000000000
+[   29.727854][    C6] GTS9_LA_EVENT cpu=3 kind=3 count=3276 ns=24032008687 a=0000000000000001 b=ffffffc082213caf c=0000000000000000
+[   29.728383][    C6] GTS9_LA_EVENT cpu=3 kind=4 count=11113 ns=29148035195 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.728919][    C6] GTS9_LA_EVENT cpu=3 kind=5 count=11113 ns=29148037122 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.729438][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=4 valid=1 seq=53540 nested_dropped=0
+[   29.729952][    C6] GTS9_LA_EVENT cpu=4 kind=0 count=3554 ns=8699868328 a=0000000000000003 b=ffffffc0801bb758 c=ffffff88198910d8
+[   29.730473][    C6] GTS9_LA_EVENT cpu=4 kind=1 count=4349 ns=8703677911 a=ffffffc0801bb758 b=ffffff8814bfb1d8 c=0000000000000000
+[   29.730986][    C6] GTS9_LA_EVENT cpu=4 kind=2 count=4349 ns=8703681609 a=ffffffc0801bb758 b=ffffff8814bfb1d8 c=0000000000000000
+[   29.731489][    C6] GTS9_LA_EVENT cpu=4 kind=3 count=3938 ns=8703686141 a=0000000000000008 b=ffffffc08215939e c=0000000000000000
+[   29.731993][    C6] GTS9_LA_EVENT cpu=4 kind=4 count=5290 ns=8703683068 a=ffffffc08216fdfa b=0000000000000000 c=0000000000000000
+[   29.732495][    C6] GTS9_LA_EVENT cpu=4 kind=5 count=5290 ns=8703687391 a=ffffffc08216fdfa b=0000000000000000 c=0000000000000000
+[   29.732997][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=5 valid=1 seq=67454 nested_dropped=0
+[   29.733506][    C6] GTS9_LA_EVENT cpu=5 kind=0 count=3709 ns=19424005355 a=0000000000000000 b=ffffffc0801bb758 c=ffffff880cd590d8
+[   29.734026][    C6] GTS9_LA_EVENT cpu=5 kind=1 count=5862 ns=16882435617 a=ffffffc0801bb758 b=ffffff881ca9c258 c=0000000000000000
+[   29.734552][    C6] GTS9_LA_EVENT cpu=5 kind=2 count=5862 ns=16882436085 a=ffffffc0801bb758 b=ffffff881ca9c258 c=0000000000000000
+[   29.735077][    C6] GTS9_LA_EVENT cpu=5 kind=3 count=4328 ns=19424005616 a=0000000000000001 b=ffffffc082213caf c=0000000000000000
+[   29.735606][    C6] GTS9_LA_EVENT cpu=5 kind=4 count=6983 ns=16882435460 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.736140][    C6] GTS9_LA_EVENT cpu=5 kind=5 count=6983 ns=16882436190 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.736669][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=6 valid=1 seq=64638 nested_dropped=0
+[   29.737206][    C6] GTS9_LA_EVENT cpu=6 kind=0 count=3149 ns=16530013065 a=0000000000000000 b=ffffffc0801bb758 c=ffffff88150c31d8
+[   29.737755][    C6] GTS9_LA_EVENT cpu=6 kind=1 count=5676 ns=19935864366 a=ffffffc0801bb758 b=ffffff8814318058 c=0000000000000000
+[   29.738309][    C6] GTS9_LA_EVENT cpu=6 kind=2 count=5676 ns=19935865095 a=ffffffc0801bb758 b=ffffff8814318058 c=0000000000000000
+[   29.738894][    C6] GTS9_LA_EVENT cpu=6 kind=3 count=4166 ns=16530013586 a=0000000000000001 b=ffffffc082213caf c=0000000000000000
+[   29.739448][    C6] GTS9_LA_EVENT cpu=6 kind=4 count=6826 ns=19935864209 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.739992][    C6] GTS9_LA_EVENT cpu=6 kind=5 count=6826 ns=19935865147 a=ffffffc082213caf b=0000000000000000 c=0000000000000000
+[   29.740520][    C6] GTS9_LA_CPU id=49aded33-4369-49a8-8da6-2adf06809e75 cpu=7 valid=1 seq=71976 nested_dropped=0
+[   29.741044][    C6] GTS9_LA_EVENT cpu=7 kind=0 count=5257 ns=29712003112 a=0000000000000002 b=ffffffc0801bf710 c=ffffff8a72745ba0
+[   29.741571][    C6] GTS9_LA_EVENT cpu=7 kind=1 count=4893 ns=9048814526 a=ffffffc0801bb758 b=ffffff8816ae8058 c=0000000000000000
+[   29.742097][    C6] GTS9_LA_EVENT cpu=7 kind=2 count=4893 ns=9048815724 a=ffffffc0801bb758 b=ffffff8816ae8058 c=0000000000000000
+[   29.742619][    C6] GTS9_LA_EVENT cpu=7 kind=3 count=6381 ns=29712003216 a=0000000000000004 b=ffffffc082213caf c=0000000000000000
+[   29.743144][    C6] GTS9_LA_EVENT cpu=7 kind=4 count=7282 ns=9052062234 a=ffffffc08215939e b=0000000000000000 c=0000000000000000
+[   29.743669][    C6] GTS9_LA_EVENT cpu=7 kind=5 count=7282 ns=9052062338 a=ffffffc08215939e b=0000000000000000 c=0000000000000000
+[   29.744193][    C6] GTS9_LA_END id=49aded33-4369-49a8-8da6-2adf06809e75 records=48 complete_history=0
+[   29.744715][    C6] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   29.745195][    C6] rcu: 	4-...!: (1 GPs behind) idle=068c/1/0x4000000000000000 softirq=1374/1390 fqs=35
+[   29.745717][    C6] rcu: 	(detected by 6, t=5257 jiffies, g=981, q=1649 ncpus=8)
+[   29.746246][    C4] NMI backtrace for cpu 4
+[   29.746247][    C4] CPU: 4 UID: 0 PID: 1251 Comm: (agetty) Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   29.746250][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   29.746250][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   29.746251][    C4] pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   29.746252][    C4] pc : hvc_dcc0_put_chars+0x34/0x48
+[   29.746254][    C4] lr : hvc_write+0xc0/0x1a4
+[   29.746256][    C4] sp : ffffffc08427bbc0
+[   29.746256][    C4] pmr: 000000c0
+[   29.746256][    C4] x29: ffffffc08427bbc0 x28: ffffffc0903dc000 x27: ffffffc081db642c
+[   29.746258][    C4] x26: 0000000000000001 x25: ffffff880ead0800 x24: 000000000000000f
+[   29.746260][    C4] x23: 00000000000000e0 x22: ffffff880ead09d0 x21: ffffff881987b40f
+[   29.746261][    C4] x20: 0000000000000000 x19: 000000000000000f x18: ffffffc0843d3060
+[   29.746263][    C4] x17: 0000000000000000 x16: 0000000000000000 x15: 0000007f96213340
+[   29.746264][    C4] x14: 000000088b900000 x13: ffffffc082ed4de0 x12: 0000000000000005
+[   29.746266][    C4] x11: 000000000000000b x10: 000000000000000f x9 : 0000000020000000
+[   29.746267][    C4] x8 : 0000000000000001 x7 : 68373f5b1b073430 x6 : 30315d1b70215b1b
+[   29.746269][    C4] x5 : ffffff880ead09df x4 : ffffff881987b40f x3 : 000000000000000f
+[   29.746270][    C4] x2 : 000000000000000f x1 : ffffff880ead09d0 x0 : 000000000000000f
+[   29.746272][    C4] Call trace:
+[   29.746272][    C4]  hvc_dcc0_put_chars+0x34/0x48 (P)
+[   29.746274][    C4]  n_tty_write+0x2c0/0x450
+[   29.746276][    C4]  file_tty_write+0x140/0x2cc
+[   29.746277][    C4]  tty_write+0x18/0x28
+[   29.746279][    C4]  vfs_write+0x2ac/0x4b8
+[   29.746282][    C4]  ksys_write+0x7c/0xf4
+[   29.746284][    C4]  __arm64_sys_write+0x20/0x30
+[   29.746286][    C4]  invoke_syscall+0x4c/0xfc
+[   29.746288][    C4]  el0_svc_common+0x90/0xe0
+[   29.746290][    C4]  do_el0_svc+0x20/0x30
+[   29.746292][    C4]  el0_svc+0x44/0xd0
+[   29.746294][    C4]  el0t_64_sync_handler+0x88/0x134
+[   29.746296][    C4]  el0t_64_sync+0x1b8/0x1bc
+[   29.747246][    C6] rcu: rcu_preempt kthread starved for 5170 jiffies! g981 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=7
+[   29.763557][    C6] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[   29.764020][    C6] rcu: RCU grace-period kthread stack dump:
+[   29.764524][    C6] rcu: Stack dump where RCU GP kthread last ran:
+[   29.764957][    C7] NMI backtrace for cpu 7
+[   29.764958][    C7] CPU: 7 UID: 0 PID: 79 Comm: kworker/7:2 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   29.764960][    C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   29.764960][    C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   29.764961][    C7] Workqueue: events fqdir_free_fn
+[   29.764963][    C7] pstate: 43400005 (nZcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   29.764964][    C7] pc : arch_counter_get_cntvct+0x20/0x30
+[   29.764967][    C7] lr : arch_counter_get_cntvct+0x14/0x30
+[   29.764969][    C7] sp : ffffffc083a9bb90
+[   29.764969][    C7] pmr: 000000e0
+[   29.764969][    C7] x29: ffffffc083a9bb90 x28: 0000000000000001 x27: 000000000000001f
+[   29.764971][    C7] x26: ffffffc082c01000 x25: 00000003459111d4 x24: 00000006b4a0add3
+[   29.764972][    C7] x23: 0000000000003986 x22: ffffffc082cad000 x21: 0000000000000038
+[   29.764974][    C7] x20: ffffffc082cadf80 x19: ffffffc082cadf88 x18: ffffffc083a05050
+[   29.764975][    C7] x17: 000000000000006b x16: 0000000000000000 x15: 0000000000000003
+[   29.764976][    C7] x14: ffffffc082c498f0 x13: 0000000000000fff x12: 0000000000000003
+[   29.764977][    C7] x11: 0000000000003fe8 x10: 00000003a8607b72 x9 : 000000012a05f200
+[   29.764978][    C7] x8 : ffffffc083a9bb90 x7 : 7f7f7f7f7f7f7f7f x6 : 000000000000000a
+[   29.764980][    C7] x5 : ffffffc082eba2f1 x4 : ffffffc082192d84 x3 : 0000000000000000
+[   29.764981][    C7] x2 : 0000000000000018 x1 : 000000000003fc1b x0 : 00000000322e2ebf
+[   29.764982][    C7] Call trace:
+[   29.764982][    C7]  arch_counter_get_cntvct+0x20/0x30 (P)
+[   29.764985][    C7]  arch_counter_read+0x1c/0x2c
+[   29.764988][    C7]  ktime_get_mono_fast_ns+0x48/0xcc
+[   29.764990][    C7]  __csd_lock_wait+0x68/0x588
+[   29.764993][    C7]  smp_call_function_single+0x1f0/0x22c
+[   29.764995][    C7]  rcu_barrier+0x204/0x368
+[   29.764996][    C7]  fqdir_free_fn+0x3c/0x114
+[   29.764998][    C7]  process_scheduled_works+0x18c/0x4d0
+[   29.765000][    C7]  worker_thread+0x1f8/0x2e8
+[   29.765002][    C7]  kthread+0x108/0x134
+[   29.765004][    C7]  ret_from_fork+0x10/0x20
+[   33.831689][   T14] smp: csd: Continued non-responsive CSD lock (#1) on CPU#1, waiting 25000000147 ns for CPU#04 do_nothing+0x0/0x8(0x0).
+[   33.833271][   T14] smp: 	csd: CSD lock (#1) unresponsive.
+[   33.834784][   T14] smp: csd: Re-sending CSD lock (#1) IPI from CPU#01 to CPU#04
+[   34.055159][   T79] smp: csd: Continued non-responsive CSD lock (#2) on CPU#7, waiting 25000000095 ns for CPU#04 rcu_barrier_handler+0x0/0x8c(0x4).
+[   34.055569][   T79] smp: 	csd: CSD lock (#2) unresponsive.
+[   34.055906][   T79] smp: csd: Re-sending CSD lock (#2) IPI from CPU#07 to CPU#04
+[   35.649702][    C7] watchdog: BUG: soft lockup - CPU#7 stuck for 26s! [kworker/7:2:79]
+[   35.649704][    C7] CPU#7 Utilization every 4000ms during lockup:
+[   35.649705][    C7] 	#1: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   35.649706][    C7] 	#2: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   35.649707][    C7] 	#3: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   35.649707][    C7] 	#4: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   35.649708][    C7] 	#5: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   35.649709][    C7] Modules linked in: qrtr_mhi ath11k_pci ath11k mac80211 cfg80211 hci_uart btqca btbcm bluetooth gpio_shared_proxy pwrseq_qcom_wcn pci_pwrctrl_pwrseq
+[   35.649717][    C7] CPU: 7 UID: 0 PID: 79 Comm: kworker/7:2 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   35.649718][    C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   35.649719][    C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   35.649719][    C7] Workqueue: events fqdir_free_fn
+[   35.649720][    C7] pstate: 43400005 (nZcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   35.649722][    C7] pc : arch_counter_get_cntvct+0x20/0x30
+[   35.649724][    C7] lr : arch_counter_get_cntvct+0x14/0x30
+[   35.649726][    C7] sp : ffffffc083a9bb90
+[   35.649726][    C7] pmr: 000000e0
+[   35.649727][    C7] x29: ffffffc083a9bb90 x28: 0000000000000002 x27: 000000000000001f
+[   35.649728][    C7] x26: ffffffc082c01000 x25: 00000007eda8da01 x24: 000000081a4169d3
+[   35.649729][    C7] x23: 00000000000044fe x22: ffffffc082cad000 x21: 0000000000000038
+[   35.649730][    C7] x20: ffffffc082cadf80 x19: ffffffc082cadf88 x18: ffffffc083a05050
+[   35.649732][    C7] x17: 7266204950492029 x16: 322328206b636f6c x15: 0000000000000003
+[   35.649733][    C7] x14: ffffffc082c498f0 x13: 0000000000000fff x12: 0000000000000003
+[   35.649734][    C7] x11: 0000000000000004 x10: 000000005f0ac5c5 x9 : 000000012a05f200
+[   35.649735][    C7] x8 : ffffffc083a9bb90 x7 : 205b5d3630393535 x6 : 302e34332020205b
+[   35.649736][    C7] x5 : ffffff88003ffb7b x4 : ffffffc082ec3c05 x3 : 0000000000000000
+[   35.649738][    C7] x2 : ffffffc082213caf x1 : 000000000001dbee x0 : 0000000038ea3a92
+[   35.649739][    C7] Call trace:
+[   35.649739][    C7]  arch_counter_get_cntvct+0x20/0x30 (P)
+[   35.649742][    C7]  arch_counter_read+0x1c/0x2c
+[   35.649744][    C7]  ktime_get_mono_fast_ns+0x48/0xcc
+[   35.649746][    C7]  __csd_lock_wait+0x68/0x588
+[   35.649748][    C7]  smp_call_function_single+0x1f0/0x22c
+[   35.649750][    C7]  rcu_barrier+0x204/0x368
+[   35.649751][    C7]  fqdir_free_fn+0x3c/0x114
+[   35.649752][    C7]  process_scheduled_works+0x18c/0x4d0
+[   35.649754][    C7]  worker_thread+0x1f8/0x2e8
+[   35.649756][    C7]  kthread+0x108/0x134
+[   35.649758][    C7]  ret_from_fork+0x10/0x20
+[   35.664401][    C0] NMI backtrace for cpu 0 skipped: idling at cpu_do_idle+0x6c/0x70
+[   35.664412][    C1] NMI backtrace for cpu 1
+[   35.664418][    C1] CPU: 1 UID: 0 PID: 14 Comm: kworker/u32:1 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   35.664424][    C1] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   35.664425][    C1] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   35.664428][    C1] Workqueue: events_unbound toggle_allocation_gate
+[   35.664437][    C1] pstate: 41400005 (nZcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   35.664441][    C1] pc : arch_counter_get_cntvct+0x14/0x30
+[   35.664447][    C1] lr : arch_counter_get_cntvct+0x14/0x30
+[   35.664451][    C1] sp : ffffffc082fabab0
+[   35.664453][    C1] pmr: 000000e0
+[   35.664454][    C1] x29: ffffffc082fabab0 x28: 0000000000000002 x27: 000000000000001f
+[   35.664460][    C1] x26: ffffffc082c01000 x25: 00000007e056f67c x24: 000000081a4169d3
+[   35.664466][    C1] x23: 0000000000004506 x22: ffffffc082cad000 x21: 0000000000000038
+[   35.664470][    C1] x20: ffffffc082cadf80 x19: ffffffc082cadf88 x18: ffffffc082f55078
+[   35.664475][    C1] x17: 7266204950492029 x16: 312328206b636f6c x15: 0000000000000003
+[   35.664481][    C1] x14: ffffffc082c498f0 x13: ffffff8a7271c840 x12: 0000000000000000
+[   35.664486][    C1] x11: 0000000000000004 x10: 000000006d3cf5be x9 : 000000012a05f200
+[   35.664491][    C1] x8 : ffffffc0814ced5c x7 : 205b5d3438373433 x6 : 382e33332020205b
+[   35.664495][    C1] x5 : ffffff88003ffa52 x4 : ffffffc082ec3c05 x3 : 0000000000000000
+[   35.664500][    C1] x2 : ffffffc082213caf x1 : 0000000000017a67 x0 : 0000000038ee890c
+[   35.664506][    C1] Call trace:
+[   35.664508][    C1]  arch_counter_get_cntvct+0x14/0x30 (P)
+[   35.664513][    C1]  arch_counter_read+0x1c/0x2c
+[   35.664518][    C1]  ktime_get_mono_fast_ns+0x48/0xcc
+[   35.664523][    C1]  __csd_lock_wait+0x68/0x588
+[   35.664528][    C1]  smp_call_function_many_cond+0x3d0/0x578
+[   35.664532][    C1]  kick_all_cpus_sync+0x48/0x7c
+[   35.664537][    C1]  arch_jump_label_transform_apply+0x14/0x24
+[   35.664543][    C1]  __jump_label_update+0x118/0x13c
+[   35.664550][    C1]  jump_label_update+0xe4/0x110
+[   35.664554][    C1]  static_key_enable_cpuslocked+0x6c/0xb4
+[   35.664558][    C1]  static_key_enable+0x24/0x3c
+[   35.664562][    C1]  toggle_allocation_gate+0x58/0x14c
+[   35.664567][    C1]  process_scheduled_works+0x18c/0x4d0
+[   35.664572][    C1]  worker_thread+0x1f8/0x2e8
+[   35.664578][    C1]  kthread+0x108/0x134
+[   35.664582][    C1]  ret_from_fork+0x10/0x20
+[   35.664588][    C2] NMI backtrace for cpu 2 skipped: idling at cpu_do_idle+0x6c/0x70
+[   35.664596][    C5] NMI backtrace for cpu 5 skipped: idling at cpu_do_idle+0x6c/0x70
+[   35.664604][    C4] NMI backtrace for cpu 4
+[   35.664605][    C4] CPU: 4 UID: 0 PID: 1251 Comm: (agetty) Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   35.664607][    C4] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   35.664607][    C4] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   35.664608][    C4] pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   35.664610][    C4] pc : hvc_dcc0_put_chars+0x34/0x48
+[   35.664611][    C4] lr : hvc_write+0xc0/0x1a4
+[   35.664613][    C4] sp : ffffffc08427bbc0
+[   35.664613][    C4] pmr: 000000c0
+[   35.664613][    C4] x29: ffffffc08427bbc0 x28: ffffffc0903dc000 x27: ffffffc081db642c
+[   35.664615][    C4] x26: 0000000000000001 x25: ffffff880ead0800 x24: 000000000000000f
+[   35.664617][    C4] x23: 00000000000000e0 x22: ffffff880ead09d0 x21: ffffff881987b40f
+[   35.664618][    C4] x20: 0000000000000000 x19: 000000000000000f x18: ffffffc0843d3060
+[   35.664620][    C4] x17: 0000000000000000 x16: 0000000000000000 x15: 0000007f96213340
+[   35.664621][    C4] x14: 000000088b900000 x13: ffffffc082ed4de0 x12: 0000000000000005
+[   35.664623][    C4] x11: 000000000000000b x10: 000000000000000f x9 : 0000000020000000
+[   35.664625][    C4] x8 : 0000000000000001 x7 : 68373f5b1b073430 x6 : 30315d1b70215b1b
+[   35.664626][    C4] x5 : ffffff880ead09df x4 : ffffff881987b40f x3 : 000000000000000f
+[   35.664628][    C4] x2 : 000000000000000f x1 : ffffff880ead09d0 x0 : 000000000000000f
+[   35.664630][    C4] Call trace:
+[   35.664630][    C4]  hvc_dcc0_put_chars+0x34/0x48 (P)
+[   35.664631][    C4]  n_tty_write+0x2c0/0x450
+[   35.664633][    C4]  file_tty_write+0x140/0x2cc
+[   35.664634][    C4]  tty_write+0x18/0x28
+[   35.664636][    C4]  vfs_write+0x2ac/0x4b8
+[   35.664638][    C4]  ksys_write+0x7c/0xf4
+[   35.664640][    C4]  __arm64_sys_write+0x20/0x30
+[   35.664642][    C4]  invoke_syscall+0x4c/0xfc
+[   35.664644][    C4]  el0_svc_common+0x90/0xe0
+[   35.664646][    C4]  do_el0_svc+0x20/0x30
+[   35.664648][    C4]  el0_svc+0x44/0xd0
+[   35.664650][    C4]  el0t_64_sync_handler+0x88/0x134
+[   35.664652][    C4]  el0t_64_sync+0x1b8/0x1bc
+[   35.664654][    C6] NMI backtrace for cpu 6 skipped: idling at cpu_do_idle+0x6c/0x70
+[   35.664663][    C3] NMI backtrace for cpu 3 skipped: idling at cpu_do_idle+0x6c/0x70
+[   35.689645][    C7] Kernel panic - not syncing: softlockup: hung tasks
+[   35.689878][    C7] CPU: 7 UID: 0 PID: 79 Comm: kworker/7:2 Tainted: G S      W    L      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   35.690151][    C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [L]=SOFTLOCKUP
+[   35.690421][    C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   35.690661][    C7] Workqueue: events fqdir_free_fn
+[   35.690930][    C7] Call trace:
+[   35.691168][    C7]  show_stack+0x1c/0x2c (C)
+[   35.691409][    C7]  __dump_stack+0x2c/0x40
+[   35.691678][    C7]  dump_stack_lvl+0x2c/0xb0
+[   35.691919][    C7]  dump_stack+0x1c/0x38
+[   35.692186][    C7]  vpanic+0x154/0x368
+[   35.692423][    C7]  vpanic+0x0/0x368
+[   35.692659][    C7]  watchdog_timer_fn+0x51c/0x580
+[   35.692924][    C7]  __hrtimer_run_queues+0x130/0x3a4
+[   35.693161][    C7]  hrtimer_interrupt+0xd8/0x2bc
+[   35.693395][    C7]  arch_timer_handler_virt+0x3c/0x50
+[   35.693656][    C7]  handle_percpu_devid_irq+0x144/0x1b4
+[   35.693884][    C7]  generic_handle_domain_irq+0x40/0x68
+[   35.694140][    C7]  gic_handle_irq+0x1b4/0x318
+[   35.694364][    C7]  call_on_irq_stack+0x48/0x88
+[   35.694615][    C7]  do_interrupt_handler+0x50/0x74
+[   35.694837][    C7]  el1_interrupt+0x4c/0xa8
+[   35.695058][    C7]  el1h_64_irq_handler+0x1c/0x2c
+[   35.695309][    C7]  el1h_64_irq+0x84/0x88
+[   35.695525][    C7]  arch_counter_get_cntvct+0x20/0x30 (P)
+[   35.695772][    C7]  arch_counter_read+0x1c/0x2c
+[   35.695990][    C7]  ktime_get_mono_fast_ns+0x48/0xcc
+[   35.696236][    C7]  __csd_lock_wait+0x68/0x588
+[   35.696454][    C7]  smp_call_function_single+0x1f0/0x22c
+[   35.696673][    C7]  rcu_barrier+0x204/0x368
+[   35.696919][    C7]  fqdir_free_fn+0x3c/0x114
+[   35.697138][    C7]  process_scheduled_works+0x18c/0x4d0
+[   35.697384][    C7]  worker_thread+0x1f8/0x2e8
+[   35.697601][    C7]  kthread+0x108/0x134
+[   35.697814][    C7]  ret_from_fork+0x10/0x20
+[   35.698056][    C7] SMP: stopping secondary CPUs
+[   36.737582][    C7] SMP: retry stop with NMI for CPUs 4
+[   36.737831][    C7] Kernel Offset: 0x88000 from 0xffffffc080000000
+[   36.738049][    C7] PHYS_OFFSET: 0x80000000
+[   36.738297][    C7] CPU features: 0x1a001070,001c000a,26060519,544676a7
+[   36.738521][    C7] Memory Limit: none
+[   36.748814][    C7] Rebooting in 10 seconds..
+
+ECC: 2227 Corrected bytes, 0 unrecoverable blocks

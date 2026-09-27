@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic; cat /sys/module/ramoops/parameters/ecc; test ! -e /sys/module/gts9_pnmi_test/parameters/enable; echo helper_absent=$?"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T20:16:03.852609+00:00"
+}
