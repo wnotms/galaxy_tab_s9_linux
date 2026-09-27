@@ -26,10 +26,10 @@
 #     whether the target is handling THIS request, a PRIOR one, or nothing
 #     a stack of the sender, and dump_cpu_task() of the target
 #
-# That is a strictly earlier and more specific signal than anything the project
-# has captured. RCU notices at onset+21 s; the first CSD report fires at
-# csd_lock_timeout, which is 5 s by default - i.e. BEFORE the RCU stall, while
-# the target CPU is still wedged and its state is still readable.
+# This can request a target backtrace earlier than the later RCU report:
+# the default threshold is5 s measured from this CSD wait, not from unknown
+# fault onset. The waiter must still execute, and a live target stack requires
+# successful backtrace delivery. Earlier reports do not guarantee target access.
 #
 # THE PARAMETERS, READ OUT OF THE PINNED TREE RATHER THAN ASSUMED
 #
@@ -49,15 +49,14 @@
 #                        (kernel/smp.c:176). DELIBERATELY LEFT AT 0. The brief is
 #                        explicit that round one collects information rather
 #                        than making the instrument panic earlier, and the
-#                        existing softlockup_panic=1 -> panic=10 chain already
-#                        guarantees automatic recovery.
+#                        existing softlockup_panic=1 -> panic=10 chain remains.
+#                        It has recovered observed failures, but cannot guarantee
+#                        recovery if the detector/restart path itself cannot run.
 #
-# Note for whoever wires the cmdline: csd_lock_timeout and panic_on_ipistall are
-# module_param, so they are reachable as `csd_lock_timeout=` /
-# `panic_on_ipistall=` only because smp.c is built in - and, unlike __setup
-# parameters, they are also writable at runtime under
-# /sys/module/smp/parameters/. csdlock_debug= is an __setup parameter and is
-# NOT writable after boot.
+# Built-in module_param arguments are namespaced: use smp.csd_lock_timeout=
+# and smp.panic_on_ipistall=, not bare names. Their runtime files are under
+# /sys/module/smp/parameters/. csdlock_debug= is a separate __setup parameter
+# and is NOT writable after boot. The diagnostic uses verified default timing.
 
 # The instrument itself. depends on DEBUG_KERNEL (y) and SMP (y) and 64BIT (y),
 # and the 64BIT dependency is load-bearing rather than incidental: csd->node.dst

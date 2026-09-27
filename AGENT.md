@@ -2,6 +2,17 @@
 
 ## Current review (2026-09-28)
 
+Test247 preparation: existing CSD timeout can request the target backtrace
+at5 s from a stuck wait, through dump_cpu_task and the standard pseudo-NMI
+route. Test246 had CSD debug disabled; no custom early-capture patch is needed.
+The new opt-in pnmi-csd-lock fragment adds CSD debug/default only relative246;
+cmdline adds csdlock_debug=1. Read actual runtime timeout5000/panic_on_ipistall0.
+Source review and19 focused tests pass. Matched kernel/modules are BUILDING,
+NOT flashed; do not proceed without exact artifact/config/paired rollback gates.
+See offline-reviews/20260928-early-csd-pnmi and test247 prospective scope.
+The NMI wait touches the waiter's soft watchdog; observer timing can change.
+One120 s natural target, no injection or identical-repeat budget; CPU repair OPEN.
+
 Test246 is CLOSED after its one matched-kernel/module target. Boot
 2de14bb7-4cd7-4b76-a78c-ad3766d187fa, cap882ba36f-60e6-4c52-a1a0-0e2167ffb530,
 exact notes/six anchors +0x40000, pseudo-NMI/LA1/ECC64/1-1-1-10 all verified.

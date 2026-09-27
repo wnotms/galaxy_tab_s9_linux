@@ -1,0 +1,224 @@
+145:  * Parse the csdlock_debug= kernel boot parameter.
+146:  *
+147:  * If you need to restore the old "ext" value that once provided
+148:  * additional debugging information, reapply the following commits:
+149:  *
+150:  * de7b09ef658d ("locking/csd_lock: Prepare more CSD lock debugging")
+151:  * a5aabace5fb8 ("locking/csd_lock: Add more data to CSD lock debugging")
+152:  */
+153: static int __init csdlock_debug(char *str)
+154: {
+155: 	int ret;
+156: 	unsigned int val = 0;
+157: 
+158: 	ret = get_option(&str, &val);
+159: 	if (ret) {
+160: 		if (val)
+161: 			static_branch_enable(&csdlock_debug_enabled);
+162: 		else
+163: 			static_branch_disable(&csdlock_debug_enabled);
+164: 	}
+165: 
+166: 	return 1;
+167: }
+168: __setup("csdlock_debug=", csdlock_debug);
+169: 
+170: static DEFINE_PER_CPU(call_single_data_t *, cur_csd);
+171: static DEFINE_PER_CPU(smp_call_func_t, cur_csd_func);
+172: static DEFINE_PER_CPU(void *, cur_csd_info);
+173: 
+174: static ulong csd_lock_timeout = 5000;  /* CSD lock timeout in milliseconds. */
+175: module_param(csd_lock_timeout, ulong, 0644);
+176: static int panic_on_ipistall;  /* CSD panic timeout in milliseconds, 300000 for five minutes. */
+177: module_param(panic_on_ipistall, int, 0644);
+
+231: static bool csd_lock_wait_toolong(call_single_data_t *csd, u64 ts0, u64 *ts1, int *bug_id, unsigned long *nmessages)
+232: {
+233: 	int cpu = -1;
+234: 	int cpux;
+235: 	bool firsttime;
+236: 	u64 ts2, ts_delta;
+237: 	call_single_data_t *cpu_cur_csd;
+238: 	unsigned int flags = READ_ONCE(csd->node.u_flags);
+239: 	unsigned long long csd_lock_timeout_ns = csd_lock_timeout * NSEC_PER_MSEC;
+240: 
+241: 	if (!(flags & CSD_FLAG_LOCK)) {
+242: 		if (!unlikely(*bug_id))
+243: 			return true;
+244: 		cpu = csd_lock_wait_getcpu(csd);
+245: 		pr_alert("csd: CSD lock (#%d) got unstuck on CPU#%02d, CPU#%02d released the lock.\n",
+246: 			 *bug_id, raw_smp_processor_id(), cpu);
+247: 		atomic_dec(&n_csd_lock_stuck);
+248: 		return true;
+249: 	}
+250: 
+251: 	ts2 = ktime_get_mono_fast_ns();
+252: 	/* How long since we last checked for a stuck CSD lock.*/
+253: 	ts_delta = ts2 - *ts1;
+254: 	if (likely(ts_delta <= csd_lock_timeout_ns * (*nmessages + 1) *
+255: 			       (!*nmessages ? 1 : (ilog2(num_online_cpus()) / 2 + 1)) ||
+256: 		   csd_lock_timeout_ns == 0))
+257: 		return false;
+258: 
+259: 	if (ts0 > ts2) {
+260: 		/* Our own sched_clock went backward; don't blame another CPU. */
+261: 		ts_delta = ts0 - ts2;
+262: 		pr_alert("sched_clock on CPU %d went backward by %llu ns\n", raw_smp_processor_id(), ts_delta);
+263: 		*ts1 = ts2;
+264: 		return false;
+265: 	}
+266: 
+267: 	firsttime = !*bug_id;
+268: 	if (firsttime)
+269: 		*bug_id = atomic_inc_return(&csd_bug_count);
+270: 	cpu = csd_lock_wait_getcpu(csd);
+271: 	if (WARN_ONCE(cpu < 0 || cpu >= nr_cpu_ids, "%s: cpu = %d\n", __func__, cpu))
+272: 		cpux = 0;
+273: 	else
+274: 		cpux = cpu;
+275: 	cpu_cur_csd = smp_load_acquire(&per_cpu(cur_csd, cpux)); /* Before func and info. */
+276: 	/* How long since this CSD lock was stuck. */
+277: 	ts_delta = ts2 - ts0;
+278: 	pr_alert("csd: %s non-responsive CSD lock (#%d) on CPU#%d, waiting %lld ns for CPU#%02d %pS(%ps).\n",
+279: 		 firsttime ? "Detected" : "Continued", *bug_id, raw_smp_processor_id(), (s64)ts_delta,
+280: 		 cpu, csd->func, csd->info);
+281: 	(*nmessages)++;
+282: 	if (firsttime)
+283: 		atomic_inc(&n_csd_lock_stuck);
+284: 	/*
+285: 	 * If the CSD lock is still stuck after 5 minutes, it is unlikely
+286: 	 * to become unstuck. Use a signed comparison to avoid triggering
+287: 	 * on underflows when the TSC is out of sync between sockets.
+288: 	 */
+289: 	BUG_ON(panic_on_ipistall > 0 && (s64)ts_delta > ((s64)panic_on_ipistall * NSEC_PER_MSEC));
+290: 	if (cpu_cur_csd && csd != cpu_cur_csd) {
+291: 		pr_alert("\tcsd: CSD lock (#%d) handling prior %pS(%ps) request.\n",
+292: 			 *bug_id, READ_ONCE(per_cpu(cur_csd_func, cpux)),
+293: 			 READ_ONCE(per_cpu(cur_csd_info, cpux)));
+294: 	} else {
+295: 		pr_alert("\tcsd: CSD lock (#%d) %s.\n",
+296: 			 *bug_id, !cpu_cur_csd ? "unresponsive" : "handling this request");
+297: 	}
+298: 	if (cpu >= 0) {
+299: 		if (atomic_cmpxchg_acquire(&per_cpu(trigger_backtrace, cpu), 1, 0))
+300: 			dump_cpu_task(cpu);
+301: 		if (!cpu_cur_csd) {
+302: 			pr_alert("csd: Re-sending CSD lock (#%d) IPI from CPU#%02d to CPU#%02d\n", *bug_id, raw_smp_processor_id(), cpu);
+303: 			arch_send_call_function_single_ipi(cpu);
+304: 		}
+305: 	}
+306: 	if (firsttime)
+307: 		dump_stack();
+308: 	*ts1 = ts2;
+309: 
+310: 	return false;
+311: }
+312: 
+313: /*
+314:  * csd_lock/csd_unlock used to serialize access to per-cpu csd resources
+315:  *
+316:  * For non-synchronous ipi calls the csd can still be in use by the
+317:  * previous function call. For multi-cpu calls its even more interesting
+318:  * as we'll have to ensure no other cpu is observing our csd.
+319:  */
+320: static void __csd_lock_wait(call_single_data_t *csd)
+321: {
+322: 	unsigned long nmessages = 0;
+323: 	int bug_id = 0;
+324: 	u64 ts0, ts1;
+325: 
+326: 	ts1 = ts0 = ktime_get_mono_fast_ns();
+327: 	for (;;) {
+328: 		if (csd_lock_wait_toolong(csd, ts0, &ts1, &bug_id, &nmessages))
+329: 			break;
+330: 		cpu_relax();
+331: 	}
+332: 	smp_acquire__after_ctrl_dep();
+333: }
+334: 
+335: static __always_inline void csd_lock_wait(call_single_data_t *csd)
+336: {
+337: 	if (static_branch_unlikely(&csdlock_debug_enabled)) {
+338: 		__csd_lock_wait(csd);
+339: 		return;
+340: 	}
+341: 
+342: 	smp_cond_load_acquire(&csd->node.u_flags, !(VAL & CSD_FLAG_LOCK));
+343: }
+344: #else
+
+825: 
+826: 	/* Check if we need remote execution, i.e., any CPU excluding this one. */
+827: 	if (cpumask_any_and_but(mask, cpu_online_mask, this_cpu) < nr_cpu_ids) {
+828: 		cfd = this_cpu_ptr(&cfd_data);
+829: 		cpumask_and(cfd->cpumask, mask, cpu_online_mask);
+830: 		__cpumask_clear_cpu(this_cpu, cfd->cpumask);
+831: 
+832: 		cpumask_clear(cfd->cpumask_ipi);
+833: 		for_each_cpu(cpu, cfd->cpumask) {
+834: 			call_single_data_t *csd = per_cpu_ptr(cfd->csd, cpu);
+835: 
+836: 			if (cond_func && !cond_func(cpu, info)) {
+837: 				__cpumask_clear_cpu(cpu, cfd->cpumask);
+838: 				continue;
+839: 			}
+840: 
+841: 			/* Work is enqueued on a remote CPU. */
+842: 			run_remote = true;
+843: 
+844: 			csd_lock(csd);
+845: 			if (wait)
+846: 				csd->node.u_flags |= CSD_TYPE_SYNC;
+847: 			csd->func = func;
+848: 			csd->info = info;
+849: #ifdef CONFIG_CSD_LOCK_WAIT_DEBUG
+850: 			csd->node.src = this_cpu;
+851: 			csd->node.dst = cpu;
+852: #endif
+853: 			trace_csd_queue_cpu(cpu, _RET_IP_, func, csd);
+854: 
+855: 			/*
+856: 			 * Kick the remote CPU if this is the first work
+857: 			 * item enqueued.
+858: 			 */
+859: 			if (llist_add(&csd->node.llist, &per_cpu(call_single_queue, cpu))) {
+860: 				__cpumask_set_cpu(cpu, cfd->cpumask_ipi);
+861: 				nr_cpus++;
+862: 				last_cpu = cpu;
+863: 			}
+864: 		}
+865: 
+866: 		/*
+867: 		 * Choose the most efficient way to send an IPI. Note that the
+868: 		 * number of CPUs might be zero due to concurrent changes to the
+869: 		 * provided mask.
+870: 		 */
+871: 		if (nr_cpus == 1)
+872: 			send_call_function_single_ipi(last_cpu);
+873: 		else if (likely(nr_cpus > 1))
+874: 			send_call_function_ipi_mask(cfd->cpumask_ipi);
+875: 	}
+876: 
+877: 	/* Check if we need local execution. */
+878: 	if ((scf_flags & SCF_RUN_LOCAL) && cpumask_test_cpu(this_cpu, mask) &&
+879: 	    (!cond_func || cond_func(this_cpu, info))) {
+880: 		unsigned long flags;
+881: 
+882: 		local_irq_save(flags);
+883: 		csd_do_func(func, info, NULL);
+884: 		local_irq_restore(flags);
+885: 	}
+886: 
+887: 	if (run_remote && wait) {
+888: 		for_each_cpu(cpu, cfd->cpumask) {
+889: 			call_single_data_t *csd;
+890: 
+891: 			csd = per_cpu_ptr(cfd->csd, cpu);
+892: 			csd_lock_wait(csd);
+893: 		}
+894: 	}
+895: }
+896: 
+897: /**
+898:  * smp_call_function_many() - Run a function on a set of CPUs.
+899:  * @mask: The set of cpus to run on (only runs on online subset).

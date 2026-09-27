@@ -1,0 +1,34 @@
+test_it_carries_none_of_the_forbidden_cmdline_profiles (test_csd_ipi_diagnostic.FragmentTests.test_it_carries_none_of_the_forbidden_cmdline_profiles)
+The diagnostic is the CSD instrument and nothing else. ... ok
+test_it_does_not_enable_the_deferred_instruments (test_csd_ipi_diagnostic.FragmentTests.test_it_does_not_enable_the_deferred_instruments)
+One instrument at a time makes a result attributable. ... ok
+test_it_exists_and_is_not_in_the_default_path (test_csd_ipi_diagnostic.FragmentTests.test_it_exists_and_is_not_in_the_default_path) ... ok
+test_it_leaves_the_recovery_chain_alone (test_csd_ipi_diagnostic.FragmentTests.test_it_leaves_the_recovery_chain_alone)
+panic_on_ipistall must stay 0: round one collects, it does not panic. ... ok
+test_it_requests_both_symbols_the_instrument_needs (test_csd_ipi_diagnostic.FragmentTests.test_it_requests_both_symbols_the_instrument_needs) ... ok
+test_a_builtin_module_param_is_namespaced_on_the_cmdline (test_csd_ipi_diagnostic.PinnedSourceTests.test_a_builtin_module_param_is_namespaced_on_the_cmdline)
+`smp.csd_lock_timeout=`, not `csd_lock_timeout=`. ... ok
+test_it_reports_the_waiter_the_target_and_the_work (test_csd_ipi_diagnostic.PinnedSourceTests.test_it_reports_the_waiter_the_target_and_the_work) ... ok
+test_the_arming_gate_is_a_capability_only_the_diagnostic_has (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_arming_gate_is_a_capability_only_the_diagnostic_has)
+A positive test, because 'no output' must not read as 'not involved'. ... ok
+test_the_function_entry_exit_pair_brackets_the_handler (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_function_entry_exit_pair_brackets_the_handler)
+The round-two instrument, verified now so round two need not re-derive it. ... ok
+test_the_instrument_is_on_the_canary_s_own_wait (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_instrument_is_on_the_canary_s_own_wait)
+The whole argument: our canary spins in csd_lock_wait(). ... ok
+test_the_kconfig_symbols_and_their_dependencies (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_kconfig_symbols_and_their_dependencies) ... ok
+test_the_static_key_defaults_off_so_both_symbols_are_needed (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_static_key_defaults_off_so_both_symbols_are_needed) ... ok
+test_the_target_cpu_comes_from_dst_which_needs_64bit (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_target_cpu_comes_from_dst_which_needs_64bit)
+Without CONFIG_64BIT every report would name cpu = -1. ... ok
+test_the_timeout_is_five_seconds_and_earlier_than_rcu (test_csd_ipi_diagnostic.PinnedSourceTests.test_the_timeout_is_five_seconds_and_earlier_than_rcu)
+Why this fires before anything the project has used. ... ok
+test_a_diagnostic_build_may_not_smuggle_in_other_instruments (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_may_not_smuggle_in_other_instruments) ... ok
+test_a_diagnostic_build_must_have_both_symbols_and_64bit (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_must_have_both_symbols_and_64bit) ... ok
+test_a_diagnostic_build_must_keep_the_recovery_chain (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_must_keep_the_recovery_chain) ... ok
+test_a_production_build_may_not_acquire_the_symbol (test_csd_ipi_diagnostic.BuildWiringTests.test_a_production_build_may_not_acquire_the_symbol) ... ok
+test_the_merge_order_lets_the_diagnostic_layer_win (test_csd_ipi_diagnostic.BuildWiringTests.test_the_merge_order_lets_the_diagnostic_layer_win)
+merge_config.sh is last-wins, so the diagnostic must come last. ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.475s
+
+OK

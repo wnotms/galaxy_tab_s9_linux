@@ -1,0 +1,106 @@
+25: /* For reliability, we're prepared to waste bits here. */
+26: static DECLARE_BITMAP(backtrace_mask, NR_CPUS) __read_mostly;
+27: 
+28: /* "in progress" flag of arch_trigger_cpumask_backtrace */
+29: static unsigned long backtrace_flag;
+30: 
+31: #define NMI_BT_TIMEOUT_SEC	10
+32: 
+33: /*
+34:  * When raise() is called it will be passed a pointer to the
+35:  * backtrace_mask. Architectures that call nmi_cpu_backtrace()
+36:  * directly from their raise() functions may rely on the mask
+37:  * they are passed being updated as a side effect of this call.
+38:  */
+39: void nmi_trigger_cpumask_backtrace(const cpumask_t *mask,
+40: 				   int exclude_cpu,
+41: 				   void (*raise)(cpumask_t *mask))
+42: {
+43: 	int i, this_cpu = get_cpu();
+44: 
+45: 	if (test_and_set_bit(0, &backtrace_flag)) {
+46: 		/*
+47: 		 * If there is already a trigger_all_cpu_backtrace() in progress
+48: 		 * (backtrace_flag == 1), don't output double cpu dump infos.
+49: 		 */
+50: 		put_cpu();
+51: 		return;
+52: 	}
+53: 
+54: 	cpumask_copy(to_cpumask(backtrace_mask), mask);
+55: 	if (exclude_cpu != -1)
+56: 		cpumask_clear_cpu(exclude_cpu, to_cpumask(backtrace_mask));
+57: 
+58: 	/*
+59: 	 * Don't try to send an NMI to this cpu; it may work on some
+60: 	 * architectures, but on others it may not, and we'll get
+61: 	 * information at least as useful just by doing a dump_stack() here.
+62: 	 * Note that nmi_cpu_backtrace(NULL) will clear the cpu bit.
+63: 	 */
+64: 	if (cpumask_test_cpu(this_cpu, to_cpumask(backtrace_mask)))
+65: 		nmi_cpu_backtrace(NULL);
+66: 
+67: 	if (!cpumask_empty(to_cpumask(backtrace_mask))) {
+68: 		pr_info("Sending NMI from CPU %d to CPUs %*pbl:\n",
+69: 			this_cpu, nr_cpumask_bits, to_cpumask(backtrace_mask));
+70: 		nmi_backtrace_stall_snap(to_cpumask(backtrace_mask));
+71: 		raise(to_cpumask(backtrace_mask));
+72: 	}
+73: 
+74: 	/* Wait for up to NMI_BT_TIMEOUT_SEC seconds for all CPUs to do the backtrace */
+75: 	for (i = 0; i < NMI_BT_TIMEOUT_SEC * 1000; i++) {
+76: 		if (cpumask_empty(to_cpumask(backtrace_mask)))
+77: 			break;
+78: 		mdelay(1);
+79: 		touch_softlockup_watchdog();
+80: 	}
+81: 
+82: 	if (!cpumask_empty(to_cpumask(backtrace_mask))) {
+83: 		pr_warn("After " __stringify(NMI_BT_TIMEOUT_SEC) " seconds, these CPUS still haven't responded to the NMI: %*pbl\n",
+84: 			cpumask_pr_args(to_cpumask(backtrace_mask)));
+85: 
+86: 		nmi_backtrace_stall_check(to_cpumask(backtrace_mask));
+87: 	}
+88: 
+89: 	/*
+90: 	 * Force flush any remote buffers that might be stuck in IRQ context
+91: 	 * and therefore could not run their irq_work.
+92: 	 */
+93: 	printk_trigger_flush();
+94: 
+95: 	clear_bit_unlock(0, &backtrace_flag);
+96: 	put_cpu();
+97: }
+98: 
+99: // Dump stacks even for idle CPUs.
+100: static bool backtrace_idle;
+101: module_param(backtrace_idle, bool, 0644);
+102: 
+103: bool nmi_cpu_backtrace(struct pt_regs *regs)
+104: {
+105: 	int cpu = smp_processor_id();
+106: 	unsigned long flags;
+107: 
+108: 	if (cpumask_test_cpu(cpu, to_cpumask(backtrace_mask))) {
+109: 		/*
+110: 		 * Allow nested NMI backtraces while serializing
+111: 		 * against other CPUs.
+112: 		 */
+113: 		printk_cpu_sync_get_irqsave(flags);
+114: 		if (!READ_ONCE(backtrace_idle) && regs && cpu_in_idle(instruction_pointer(regs))) {
+115: 			pr_warn("NMI backtrace for cpu %d skipped: idling at %pS\n",
+116: 				cpu, (void *)instruction_pointer(regs));
+117: 		} else {
+118: 			pr_warn("NMI backtrace for cpu %d\n", cpu);
+119: 			if (regs)
+120: 				show_regs(regs);
+121: 			else
+122: 				dump_stack();
+123: 		}
+124: 		printk_cpu_sync_put_irqrestore(flags);
+125: 		cpumask_clear_cpu(cpu, to_cpumask(backtrace_mask));
+126: 		return true;
+127: 	}
+128: 
+129: 	return false;
+130: }

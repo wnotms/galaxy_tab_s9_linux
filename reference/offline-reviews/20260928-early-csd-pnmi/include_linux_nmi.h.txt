@@ -1,0 +1,30 @@
+155:  * Create trigger_all_cpu_backtrace() out of the arch-provided
+156:  * base function. Return whether such support was available,
+157:  * to allow calling code to fall back to some other mechanism:
+158:  */
+159: #ifdef arch_trigger_cpumask_backtrace
+160: static inline bool trigger_all_cpu_backtrace(void)
+161: {
+162: 	arch_trigger_cpumask_backtrace(cpu_online_mask, -1);
+163: 	return true;
+164: }
+165: 
+166: static inline bool trigger_allbutcpu_cpu_backtrace(int exclude_cpu)
+167: {
+168: 	arch_trigger_cpumask_backtrace(cpu_online_mask, exclude_cpu);
+169: 	return true;
+170: }
+171: 
+172: static inline bool trigger_cpumask_backtrace(struct cpumask *mask)
+173: {
+174: 	arch_trigger_cpumask_backtrace(mask, -1);
+175: 	return true;
+176: }
+177: 
+178: static inline bool trigger_single_cpu_backtrace(int cpu)
+179: {
+180: 	arch_trigger_cpumask_backtrace(cpumask_of(cpu), -1);
+181: 	return true;
+182: }
+183: 
+184: /* generic implementation */

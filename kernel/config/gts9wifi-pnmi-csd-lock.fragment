@@ -1,0 +1,10 @@
+# Opt-in early CSD target capture; never merged by a default build.
+# Test247 retains test246 PSEUDO_NMI/BBM/recorder and adds the existing CSD
+# timeout path. No new kernel patch or deliberate stall is required.
+# Default CSD timeout is5000 ms; panic_on_ipistall remains0. The existing
+# dump_cpu_task path uses the arm64 backtrace IPI, including pseudo-NMI when
+# its independent boot/runtime gates pass. Neither delivery nor recovery is
+# guaranteed for hard-DAIF masking, firmware entry or genuine CPU non-progress.
+CONFIG_ARM64_PSEUDO_NMI=y
+CONFIG_CSD_LOCK_WAIT_DEBUG=y
+CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT=y

@@ -1,0 +1,20 @@
+10575: void dump_cpu_task(int cpu)
+10576: {
+10577: 	if (in_hardirq() && cpu == smp_processor_id()) {
+10578: 		struct pt_regs *regs;
+10579: 
+10580: 		regs = get_irq_regs();
+10581: 		if (regs) {
+10582: 			show_regs(regs);
+10583: 			return;
+10584: 		}
+10585: 	}
+10586: 
+10587: 	if (trigger_single_cpu_backtrace(cpu))
+10588: 		return;
+10589: 
+10590: 	pr_info("Task dump for CPU %d:\n", cpu);
+10591: 	sched_show_task(cpu_curr(cpu));
+10592: }
+10593: 
+10594: /*

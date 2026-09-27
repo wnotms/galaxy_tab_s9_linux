@@ -1,0 +1,15 @@
+929: {
+930: 	arm64_send_ipi(mask, IPI_CPU_BACKTRACE);
+931: }
+932: 
+933: void arch_trigger_cpumask_backtrace(const cpumask_t *mask, int exclude_cpu)
+934: {
+935: 	/*
+936: 	 * NOTE: though nmi_trigger_cpumask_backtrace() has "nmi_" in the name,
+937: 	 * nothing about it truly needs to be implemented using an NMI, it's
+938: 	 * just that it's _allowed_ to work with NMIs. If ipi_should_be_nmi()
+939: 	 * returned false our backtrace attempt will just use a regular IPI.
+940: 	 */
+941: 	nmi_trigger_cpumask_backtrace(mask, exclude_cpu, arm64_backtrace_ipi);
+942: }
+943: 

@@ -137,3 +137,15 @@ this does not retrospectively identify historical module bytes or a CPU cause.
 246 kernel/modules are built and packaged together, originals backed up and
 the swap/restore checked offline. See test246 BUILD_RESULTS.md. Hardware scope
 remains one120 s startup and rollback of BOTH images and any replaced modules.
+
+## Test246 closed; earlier CSD capture preparation
+
+Test246's matched kernel/modules ran one120.08 s window with no detected fault,
+then both modules and images were restored. It did not supply CPU2's missing PC.
+Test247 now targets the existing5 s CSD timeout instead of waiting for RCU.
+The pinned path already calls dump_cpu_task -> arm64 backtrace -> pseudo-NMI;
+no new local handler is required. The additional CSD debug/default config is
+opt-in and its compile/module/runtime gates remain required. This changes
+observer timing, including the sender's watchdog touches during NMI collection;
+it is not a fix or an automatic-recovery guarantee. See the early-csd-pnmi
+source review and test247 registration before hardware.
