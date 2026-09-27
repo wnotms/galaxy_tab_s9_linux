@@ -128,13 +128,15 @@ There are two independent capacity gates:
   Cover onset minus 20 seconds through the actual dump trigger. With a nominal
   21-second RCU detector, the planned interval is **at least 41 seconds**, not
   28 seconds, and needs additional margin for delayed detection.
-* **Persistent coverage:** the DTS allocates `console-size = <0xe0000>` =
-  **896 KiB**. The archived text rate is 146,945.7 B/s; allowing 128 KiB for other
-  printk leaves an optimistic **5.35 seconds** at that rate. Even without that
-  reserve it holds only about 6.24 seconds. A 41-second text dump at the historical
-  rate needs about 5.75 MiB before overhead. Enlarging a per-CPU ring does not
-  enlarge this sink. This estimate is a warning about the old broad event set,
-  not a measurement of the newly proposed reduced set.
+* **Persistent coverage (corrected after test-229):** the DTS requests
+  `console-size = <0xe0000>` = 896 KiB, but pinned `fs/pstore/ram.c` rounds it
+  **down to 512 KiB**. `ram_core.c` subtracts a 12-byte ARM64 ring header;
+  this board has ECC disabled. Reserving 128 KiB for other printk leaves
+  **393,204 bytes**, not the previously assumed 786,432 bytes. At the old
+  146,945.7 B/s rate this holds only **2.68 seconds** before prefix overhead.
+  A 41-second dump at that historical rate needs about 5.75 MiB. Enlarging a
+  per-CPU trace ring does not enlarge this sink. The old broad event rate is
+  distinct from test-229's measured reduced event set.
 
 After hardware testing is explicitly resumed, first calibrate the reduced event
 set on a healthy boot and archive per-CPU statistics and the actual textual dump
@@ -160,17 +162,31 @@ After an unarmed production boot showed CPU 6 non-response, the owner rebooted
 to Debian. On that recovered boot the reduced seven-event set retained all
 CPU markers over 60 seconds with no overruns, but produced 3,249,434 bytes of
 text. The busiest 41-second window alone was 2,213,931 bytes, exceeding the
-786,432-byte trace budget before printk overhead. Memory coverage passed for
+then-assumed 786,432-byte trace budget before printk overhead. The corrected
+budget is 393,204 bytes, making that measured window **5.63 times** too large.
+Memory coverage passed for
 that healthy workload; persistent capacity failed. Reboot persistence and
 early-boot coverage remain untested. No new wedge series is ready.
 
-The next step is an offline bounded per-CPU serialization prototype using the
-complete test-229 trace as a fixture. Account for all serialized bytes, metadata,
-CPU imbalance and cross-CPU sender evidence. Truncated coverage must remain
-inconclusive for missing-event claims. `orig_cpu` selects the dumping CPU, not
-necessarily the stalled target. If the required coverage cannot fit, validate
-another sink or narrow the diagnostic question before another physical trial.
-See the test record for the concrete design constraints.
+The offline bounded serialization test is complete:
+[replay results](../reference/offline-reviews/20260927-bounded-trace/README.md).
+`scripts/bounded-trace-replay.py` verifies the source capture, applies equal
+per-CPU byte limits, preserves raw record identities and reports truncation.
+With a modeled 32-byte prefix per line and 16 KiB metadata reserve, it emits
+382,128 bytes; CPU 0/7 retain only about **2 seconds** of event span. Every CPU
+loses part of the requested window. Zero-prefix and 64-byte sensitivity cases
+also fail complete coverage. The prefix is a model, not a measured printk bound.
+This prototype is host-only and does not establish kernel or reboot behavior.
+
+Do not implement this short tail as though it answers the original 41-second
+question. The next diagnostic design must either preserve that interval in a
+separately validated sink, or explicitly narrow the question to positive last
+observed activity with no missing-event inference. Before a physical trial,
+select and implement that design, prove serialization under its byte limit,
+then perform a healthy persistence calibration. `orig_cpu` selects the dumping
+CPU, not necessarily the stalled target. Ordinary pstore console writes do not
+gain the compression available to DMESG records, so enabling a compressor alone
+does not solve this console-capacity problem.
 
 The live production image has watchdog, soft_watchdog, softlockup_panic and panic
 all zero. Verify runtime arming independently of partition restoration hashes;

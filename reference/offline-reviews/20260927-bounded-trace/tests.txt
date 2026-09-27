@@ -1,0 +1,12 @@
+test_actual_ramoops_rounding_header_and_reserve (test_bounded_trace_replay.BoundedTraceTests.test_actual_ramoops_rounding_header_and_reserve) ... ok
+test_corrupt_or_incomplete_capture_is_rejected (test_bounded_trace_replay.BoundedTraceTests.test_corrupt_or_incomplete_capture_is_rejected) ... ok
+test_cpu_fairness_and_truncation_even_with_identical_timestamps (test_bounded_trace_replay.BoundedTraceTests.test_cpu_fairness_and_truncation_even_with_identical_timestamps) ... ok
+test_invalid_capacity_and_missing_source_interval_fail_closed (test_bounded_trace_replay.BoundedTraceTests.test_invalid_capacity_and_missing_source_interval_fail_closed) ... ok
+test_oversized_newest_record_does_not_substitute_an_older_tail (test_bounded_trace_replay.BoundedTraceTests.test_oversized_newest_record_does_not_substitute_an_older_tail) ... ok
+test_real_capture_fits_budget_but_never_claims_complete_or_ready (test_bounded_trace_replay.BoundedTraceTests.test_real_capture_fits_budget_but_never_claims_complete_or_ready) ... ok
+test_sufficient_space_preserves_all_window_records_but_not_hardware_readiness (test_bounded_trace_replay.BoundedTraceTests.test_sufficient_space_preserves_all_window_records_but_not_hardware_readiness) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.369s
+
+OK

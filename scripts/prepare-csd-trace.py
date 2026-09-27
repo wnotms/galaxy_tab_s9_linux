@@ -14,15 +14,21 @@ EVENTS = ["csd:csd_queue_cpu", "csd:csd_function_entry", "csd:csd_function_exit"
 
 
 def retention_budget(text_bytes, duration_s, console_bytes, reserve_bytes=128 * 1024):
-    """Text throughput bounds console retention, NOT binary trace ring capacity."""
-    if duration_s <= 0 or text_bytes <= 0 or console_bytes <= reserve_bytes:
+    """Pinned ramoops rounds down; ARM64 ring header is 12 bytes, ECC disabled."""
+    if duration_s <= 0 or text_bytes <= 0 or console_bytes <= 0 or reserve_bytes < 0:
         raise ValueError("invalid retention budget")
+    zone_bytes = 1 << (console_bytes.bit_length() - 1)
+    payload_bytes = zone_bytes - 12
+    if payload_bytes <= reserve_bytes:
+        raise ValueError("effective console cannot hold reserve")
     rate = text_bytes / duration_s
     return {"historical_text_bytes_per_s": rate,
-            "console_bytes": console_bytes, "reserved_for_other_printk_bytes": reserve_bytes,
-            "optimistic_text_retention_s": (console_bytes - reserve_bytes) / rate,
+            "requested_console_bytes": console_bytes, "console_zone_bytes": zone_bytes,
+            "console_bytes": payload_bytes, "persistent_ring_header_bytes": 12,
+            "ecc_bytes": 0, "trace_budget_bytes": payload_bytes - reserve_bytes, "reserved_for_other_printk_bytes": reserve_bytes,
+            "optimistic_text_retention_s": (payload_bytes - reserve_bytes) / rate,
             "required_history_s": 41,
-            "fits_historical_text_rate": rate * 41 <= console_bytes - reserve_bytes}
+            "fits_historical_text_rate": rate * 41 <= payload_bytes - reserve_bytes}
 
 
 def prepare(source, config):
@@ -32,6 +38,8 @@ def prepare(source, config):
         "trace": source / "kernel/trace/trace.c",
         "rcu_dump": source / "kernel/rcu/rcu.h",
         "arm64_ipi": source / "arch/arm64/kernel/smp.c",
+        "ramoops": source / "fs/pstore/ram.c",
+        "persistent_ram": source / "fs/pstore/ram_core.c",
         "dts": ROOT / "kernel/dts/sm8550-samsung-gts9wifi.dts",
         "config": config,
         "available_events": RECORD / "baselines/tracepoints-available.txt",
@@ -41,6 +49,9 @@ def prepare(source, config):
     handler = text["rcu"].split("static void rcu_barrier_handler(", 1)[1].split("\n}", 1)[0]
     dump = text["trace"].split("void ftrace_dump(enum", 1)[1].split("EXPORT_SYMBOL", 1)[0]
     checks = {
+        "ramoops_rounds_console_down": "pdata->console_size = rounddown_pow_of_two(pdata->console_size);" in text["ramoops"],
+        "persistent_ram_subtracts_header": "prz->buffer_size = size - sizeof(struct persistent_ram_buffer);" in text["persistent_ram"],
+        "board_has_no_ecc_property": "ecc-size" not in text["dts"],
         "rcu_barrier_handler_takes_raw_spinlock": "raw_spin_lock(&rcu_state.barrier_lock)" in handler,
         "ftrace_dump_releases_concurrency_guard": "atomic_dec(&dump_running);\n}" in dump,
         "rcu_dump_once_per_callsite": "static atomic_t ___rfd_beenhere" in text["rcu_dump"],
@@ -65,7 +76,7 @@ def prepare(source, config):
         "blockers": [
             "Historical measurement has no exact enabled event set or per-CPU binary stats.",
             "41 seconds = 20 seconds pre-onset + nominal 21 seconds to RCU report; allow trigger delay too.",
-            "896 KiB ramoops console cannot retain the historical multi-MiB text dump; reduce/filter or provide a proven sink.",
+            "Requested 896 KiB console rounds down to 512 KiB, minus a 12-byte header (ECC=0); full trace does not fit.",
             "Validate start/end and per-CPU coverage in recovered dump before interpreting missing events.",
             "An early-boot trace must be enabled before the earliest observed failure; SSH arming is too late.",
         ],

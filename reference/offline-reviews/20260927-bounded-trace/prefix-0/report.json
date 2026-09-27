@@ -1,0 +1,309 @@
+{
+  "format": "gts9-offline-tail-v1",
+  "source_sha256": "430d09d99cead1dd58f75d6826b36eccb099bad3415c28a1b4265f4dfd07e145",
+  "boot_id": "a50ba330-96cb-446f-bccf-a09e8270f0df",
+  "enabled_events": [
+    "csd:csd_function_entry",
+    "csd:csd_function_exit",
+    "csd:csd_queue_cpu",
+    "ipi:ipi_entry",
+    "ipi:ipi_exit",
+    "ipi:ipi_raise",
+    "rcu:rcu_stall_warning"
+  ],
+  "filters": "none",
+  "clock": "global",
+  "common_start_us": 124997,
+  "trigger_us": 60131587,
+  "source_loss_counters": "zero_on_every_cpu",
+  "source_stats": {
+    "0": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.899700",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 7541",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 281448",
+        "oldest event ts": "   196.910023",
+        "now ts": "   256.943082",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "1": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.900842",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 2759",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 69516",
+        "oldest event ts": "   196.915734",
+        "now ts": "   256.943749",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "2": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.901756",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 986",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 25736",
+        "oldest event ts": "   196.917611",
+        "now ts": "   256.944180",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "3": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.902674",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 6221",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 180296",
+        "oldest event ts": "   196.916999",
+        "now ts": "   256.944759",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "4": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.903493",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 1753",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 48316",
+        "oldest event ts": "   196.915181",
+        "now ts": "   256.945304",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "5": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.906881",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 1416",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 38324",
+        "oldest event ts": "   196.921520",
+        "now ts": "   256.945826",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "6": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.908015",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 1198",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 31744",
+        "oldest event ts": "   196.921018",
+        "now ts": "   256.946375",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    },
+    "7": {
+      "before": {
+        "entries": " 0",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 0",
+        "oldest event ts": "     0.000000",
+        "now ts": "   196.909668",
+        "dropped events": " 0",
+        "read events": " 0"
+      },
+      "after": {
+        "entries": " 10856",
+        "overrun": " 0",
+        "commit overrun": " 0",
+        "bytes": " 276224",
+        "oldest event ts": "   196.910030",
+        "now ts": "   256.946921",
+        "dropped events": " 0",
+        "read events": " 0"
+      }
+    }
+  },
+  "cutoff_us": 19131587,
+  "window_seconds": 41,
+  "trace_budget_bytes": 393204,
+  "metadata_reserve_bytes": 16384,
+  "per_cpu_record_budget_bytes": 47102,
+  "modeled_prefix_bytes_per_line": 0,
+  "per_cpu": [
+    {
+      "cpu": 0,
+      "input_records": 5115,
+      "kept_records": 399,
+      "dropped_records": 4716,
+      "truncated": true,
+      "serialized_record_bytes": 47075,
+      "first_kept_us": 57540427,
+      "last_kept_us": 60131587,
+      "retained_event_span_seconds": 2.59116,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 1,
+      "input_records": 1867,
+      "kept_records": 519,
+      "dropped_records": 1348,
+      "truncated": true,
+      "serialized_record_bytes": 47102,
+      "first_kept_us": 50083100,
+      "last_kept_us": 60131359,
+      "retained_event_span_seconds": 10.048259,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 2,
+      "input_records": 653,
+      "kept_records": 530,
+      "dropped_records": 123,
+      "truncated": true,
+      "serialized_record_bytes": 47081,
+      "first_kept_us": 27524120,
+      "last_kept_us": 60128042,
+      "retained_event_span_seconds": 32.603922,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 3,
+      "input_records": 4034,
+      "kept_records": 487,
+      "dropped_records": 3547,
+      "truncated": true,
+      "serialized_record_bytes": 47066,
+      "first_kept_us": 52014216,
+      "last_kept_us": 60048793,
+      "retained_event_span_seconds": 8.034577,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 4,
+      "input_records": 1218,
+      "kept_records": 460,
+      "dropped_records": 758,
+      "truncated": true,
+      "serialized_record_bytes": 47026,
+      "first_kept_us": 56192993,
+      "last_kept_us": 60129649,
+      "retained_event_span_seconds": 3.936656,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 5,
+      "input_records": 939,
+      "kept_records": 506,
+      "dropped_records": 433,
+      "truncated": true,
+      "serialized_record_bytes": 47056,
+      "first_kept_us": 38339338,
+      "last_kept_us": 60131579,
+      "retained_event_span_seconds": 21.792241,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 6,
+      "input_records": 775,
+      "kept_records": 526,
+      "dropped_records": 249,
+      "truncated": true,
+      "serialized_record_bytes": 47052,
+      "first_kept_us": 29984423,
+      "last_kept_us": 59951116,
+      "retained_event_span_seconds": 29.966693,
+      "complete_requested_window": false
+    },
+    {
+      "cpu": 7,
+      "input_records": 7194,
+      "kept_records": 518,
+      "dropped_records": 6676,
+      "truncated": true,
+      "serialized_record_bytes": 47098,
+      "first_kept_us": 57336598,
+      "last_kept_us": 60130795,
+      "retained_event_span_seconds": 2.794197,
+      "complete_requested_window": false
+    }
+  ],
+  "complete_all_cpu_window": false,
+  "cross_cpu_missing_event_inference": "inconclusive",
+  "ready_for_wedge_series": false,
+  "persistent_recovery": "not_tested",
+  "early_boot_coverage": "not_tested",
+  "metadata_actual_bytes": 5695,
+  "serialized_bytes": 382251,
+  "serialized_sha256": "a5b563a20d53a2543a2360bbee61837d67d9c135e64564386230f3b42cb59a2e"
+}
