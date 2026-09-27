@@ -54,8 +54,11 @@ init_boot/dtbo/vbmeta matched production. The standard BCB helper successfully
 requested TWRP after collection. Original boot/vendor_boot were restored with
 full readbacks; all five partition hashes match production. Restored boot
 `d5fd2f74-0854-41f4-b8f2-94874d63340f` is responsive with ECC=0, SSH/adbd
-services active and the same USB NCM address. Final 150-second observation
-is in progress; service state alone is not a healthy CPU verdict.
+services active and the same USB NCM address. The same boot stayed responsive
+beyond 151 seconds with zero failed units and no detected CPU non-response,
+RCU stall or workqueue lockup in its final journal. USB ADB worked; a Windows
+TCP check received the SSH protocol banner over NCM (no authenticated-shell
+claim). This closes the observation and rollback, not long-term stability.
 
 ## Next gate
 

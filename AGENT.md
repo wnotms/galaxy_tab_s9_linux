@@ -10,7 +10,9 @@ Source runtime arming was 1/1/1/10; level-0 output passed console threshold 4.
 This clears manual-snapshot normal-reboot retention only, not automatic RCU
 capture/crash retention, CPU causality or readiness for a wedge series.
 Original boot/vendor_boot and all five production hashes were restored.
-Final boot d5fd2f74-0854-41f4-b8f2-94874d63340f health validation is in progress.
+Final boot d5fd2f74-0854-41f4-b8f2-94874d63340f stayed responsive beyond
+151 seconds without detected CPU non-response/workqueue stalls. USB ADB and
+SSH protocol over NCM responded; no long-term stability claim.
 See test-236/RESULTS.md. The combined diagnostic is opt-in; defaults unchanged.
 
 Test-235 completed retrieval: ECC=64 recovered the exact 33,005-byte PMSG,
