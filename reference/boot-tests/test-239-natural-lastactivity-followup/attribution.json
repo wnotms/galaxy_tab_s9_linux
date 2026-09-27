@@ -1,0 +1,34 @@
+[
+  {
+    "round": "round1",
+    "boot_id": "46133f14-b880-49f8-9ace-4b44fd5791b9",
+    "previous_boot": "2271ea0e37e74e738ea58ff34497b868",
+    "adjacent_in_retained_history": true,
+    "runtime_minus_link": 1048576,
+    "anchors": {
+      "_text": 1048576,
+      "_stext": 1048576,
+      "rcu_barrier_handler": 1048576,
+      "do_nothing": 1048576,
+      "irq_work_run": 1048576,
+      "ipi_types": 1048576
+    },
+    "notes_match_saved_vmlinux": true
+  },
+  {
+    "round": "round2",
+    "boot_id": "13b10508-4691-4cd9-ba4e-d9a8144550df",
+    "previous_boot": "46133f14b88049f89ace4b44fd5791b9",
+    "adjacent_in_retained_history": true,
+    "runtime_minus_link": 884736,
+    "anchors": {
+      "_text": 884736,
+      "_stext": 884736,
+      "rcu_barrier_handler": 884736,
+      "do_nothing": 884736,
+      "irq_work_run": 884736,
+      "ipi_types": 884736
+    },
+    "notes_match_saved_vmlinux": true
+  }
+]

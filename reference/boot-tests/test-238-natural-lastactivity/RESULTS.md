@@ -21,3 +21,7 @@ at most two additional natural boots of the same current candidate. Original
 image restoration is deferred to that session's end to avoid redundant
 rollback/reflash writes, and is recorded there. The initial single-boot plan
 and its clean result are retained unchanged. CPU cause and repair remain open.
+
+Test-239 subsequently completed the shared-session rollback: all five hashes
+match production and final boot 0893538f-26ac-4965-9d76-f57b3b7886c5 passed
+a 162.65-second observation. See its RESULTS.md and production/verdict.json.

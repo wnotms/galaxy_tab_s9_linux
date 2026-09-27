@@ -27,6 +27,9 @@ with f.open('rb') as handle:
     except UnicodeDecodeError:return None
   return None
  snap=json.loads(Path(sys.argv[1]).read_text());rows=[]
+ identity=json.loads((P/'target/identity.json').read_text())
+ assert identity['boot_id']==relocation['target_boot_id'], 'relocation belongs to another boot'
+ assert snap['capture_id']==identity['capture_id'], 'capture belongs to another boot'
  for r in snap['records']:
   q=dict(r);k=r['kind']
   if k<=2:

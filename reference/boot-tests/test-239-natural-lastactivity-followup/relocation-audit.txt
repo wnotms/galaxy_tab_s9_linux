@@ -1,0 +1,1 @@
+Initial check rejected the assumption that the test-238 offset 0x8000 applies to these boots. No fault snapshot was decoded with it. Per-boot six-anchor validation establishes round1=0x100000 and round2=0xd8000. Always require the actual target offset.

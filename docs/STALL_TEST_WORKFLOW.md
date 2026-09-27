@@ -358,3 +358,24 @@ CPU root-cause claim follows from the calibration. A future capture without
 a live reference still lacks that end-to-end comparison; reject unsupported
 integrity/attribution rather than silently extrapolating this pass. Restore
 production images after the trial and check the final boot independently.
+
+
+## Tests 238/239: three natural windows clean; offsets vary by boot
+
+One 304.96-second and two 184-second windows with the unchanged calibrated
+0022+0024 recorder did not reproduce the CPU fault. No spontaneous snapshot
+was available; this is not a repair or failure-rate result. The fixed attempt
+budget ended and originals were restored with full hashes and a separate
+162.65-second production observation. See test-238/239 RESULTS.md.
+
+Actual runtime-minus-link offsets were 0x8000, 0x100000 and 0xd8000 despite
+nokaslr. Kernel notes matched the saved vmlinux on each target. Require the
+failed target's own symbol anchors; no constant offset, unrelated boot or
+post-reboot observer substitution is valid. The archived decoder rejects a
+capture ID not belonging to its validated target.
+
+Separate review identified the pinned A715 erratum-2645198 BBM range-end bug.
+Opt-in patch 0026 is the verified arm64-maintainer fix 1fef81669147d63eb8c5d3627d54eadc21173a0b.
+Extracted-function regression and compile/package pass; hardware validation
+and any CPU-stall causal connection remain open. Do not count its 120 host
+cases as physical stability tests or silently adopt it into production.

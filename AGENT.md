@@ -2,6 +2,28 @@
 
 ## Current review (2026-09-27)
 
+Tests 238/239 reused calibrated 0022+0024 without injection: one 304.96-second
+and two 184-second natural boot windows did not reproduce the CPU failure.
+This is not a repair/rate estimate; no spontaneous snapshot was available.
+Per-boot runtime symbol relocation differs despite nokaslr: +0x8000,
++0x100000, +0xd8000. Verify the actual target's anchors/kernel notes; never
+reuse an observer's offset. Original boot/vendor_boot and all five hashes
+were restored; final production 0893538f-26ac-4965-9d76-f57b3b7886c5 passed
+162.65 seconds, USB ADB and NCM SSH banner responsive. See test-239/RESULTS.md.
+
+A separate source review verified A715 BBM TLB end-address bug in the pin.
+Exact arm64 maintainer commit 1fef81669147d63eb8c5d3627d54eadc21173a0b is opt-in
+patch 0026, not a production change or established CPU-stall cause. The actual
+function harness fails 12/120 cases before and 0/120 after; clean ccache build
+and out/boot-bundle-bbm-range packaging passed. Config/DTB/release equal test236;
+new symbols are out/test240/vmlinux and System.map. Candidate is NOT flashed.
+Mainline-master compare diverged at check time; do not call it mainline-merged.
+Next assess a separately registered candidate validation, including a bounded
+permission-change workload to exercise the corrected path, and preserve the
+CPU-failure goal rather than treating range correctness as stall resolution.
+See reference/offline-reviews/20260927-a715-tlb-range/.
+
+
 Test-237 passed actual RCU-triggered capture and later controlled-panic retention.
 An explicitly injected 35-second PREEMPT_RCU reader triggered the unchanged
 RCU callback after ~21 seconds; thread and callback both completed. All 58
