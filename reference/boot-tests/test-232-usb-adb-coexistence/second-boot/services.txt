@@ -1,0 +1,35 @@
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+ActiveState=active
+SubState=exited
+
+ActiveState=active
+SubState=running
+
+ActiveState=active
+SubState=running
+
+ActiveState=active
+SubState=exited
+
+ActiveState=active
+SubState=running
+94
+803
+total 0
+lr-x------ 1 root root 64 Sep 27 14:33 0 -> /dev/null
+lrwx------ 1 root root 64 Sep 27 14:33 1 -> socket:[4507]
+lrwx------ 1 root root 64 Sep 27 14:33 2 -> socket:[4507]
+lrwx------ 1 root root 64 Sep 27 14:33 3 -> /dev/usb-ffs/adb/ep0
+a600000.usb
+total 0
+-rw-r--r-- 1 root root 4096 Sep 27 14:33 MaxPower
+-rw-r--r-- 1 root root 4096 Sep 27 14:33 bmAttributes
+lrwxrwxrwx 1 root root    0 Sep 27 14:33 ffs.adb -> ../../../../usb_gadget/gts9/functions/ffs.adb
+lrwxrwxrwx 1 root root    0 Sep 27 14:33 ncm.usb0 -> ../../../../usb_gadget/gts9/functions/ncm.usb0
+drwxr-xr-x 3 root root    0 Sep 27 14:33 strings
+State  Recv-Q Send-Q Local Address:Port Peer Address:Port
+LISTEN 0      128          0.0.0.0:22        0.0.0.0:*   
+LISTEN 0      4                  *:5555            *:*   
+LISTEN 0      128             [::]:22           [::]:*   

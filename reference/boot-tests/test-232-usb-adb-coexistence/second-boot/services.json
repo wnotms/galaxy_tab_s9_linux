@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl --failed --no-pager; systemctl show -p ActiveState -p SubState gts9-usb-adb-prepare gts9-usb-adb-hold gts9-adbd gts9-usb-acm ssh; cat /run/gts9-usb-adb.mount-id /run/gts9-usb-adb.holder; ls -l /proc/$(cat /run/gts9-usb-adb.holder)/fd; cat /sys/kernel/config/usb_gadget/gts9/UDC; ls -l /sys/kernel/config/usb_gadget/gts9/configs/c.1; ss -ltn"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:33:48.494313+00:00"
+}
