@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; cat /proc/cmdline; systemctl --failed --no-pager; cat /sys/devices/system/cpu/online; cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:58:07.764262+00:00"
+}

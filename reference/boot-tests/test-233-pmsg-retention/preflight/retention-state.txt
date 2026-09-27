@@ -1,0 +1,150 @@
+c-w--w---- 1 root root 252, 0 Sep 27 14:42 /dev/pmsg0
+/sys/module/ramoops/parameters/console_size=524288
+/sys/module/ramoops/parameters/dump_oops=-1
+/sys/module/ramoops/parameters/ecc=0
+/sys/module/ramoops/parameters/ftrace_size=0
+/sys/module/ramoops/parameters/max_reason=2
+/sys/module/ramoops/parameters/mem_address=36516659200
+/sys/module/ramoops/parameters/mem_name=(null)
+/sys/module/ramoops/parameters/mem_size=2097152
+/sys/module/ramoops/parameters/mem_type=0
+/sys/module/ramoops/parameters/pmsg_size=1048576
+/sys/module/ramoops/parameters/record_size=131072
+/sys/fs/pstore:
+total 0
+
+/var/lib/systemd/pstore:
+total 32
+-rw------- 1 root root  8818 Sep 27 13:15 console-ramoops-0
+-rw------- 1 root root 18053 Sep 27 04:00 dmesg-ramoops-0.enc.z
+00100000-002f41ff : 100000.clock-controller clock-controller@100000
+00408000-00408fff : 408000.mailbox mailbox@408000
+00800000-0085ffff : 800000.dma-controller dma-controller@800000
+00890000-00893fff : 890000.i2c i2c@890000
+00898000-0089bfff : 898000.serial serial@898000
+0089c000-0089ffff : 89c000.i2c i2c@89c000
+008c0000-008c1fff : 8c0000.geniqup geniqup@8c0000
+0098c000-0098ffff : 98c000.i2c i2c@98c000
+00998000-0099bfff : 998000.i2c i2c@998000
+009a0000-009a3fff : 9a0000.i2c i2c@9a0000
+009a4000-009a7fff : 9a4000.i2c i2c@9a4000
+009c0000-009c1fff : 9c0000.geniqup geniqup@9c0000
+00a00000-00a5ffff : a00000.dma-controller dma-controller@a00000
+00a8c000-00a8ffff : a8c000.i2c i2c@a8c000
+00a90000-00a93fff : a90000.i2c i2c@a90000
+00a98000-00a9bfff : a98000.i2c i2c@a98000
+00ac0000-00ac1fff : ac0000.geniqup geniqup@ac0000
+01c00000-01c02fff : 1c00000.pcie parf
+01c06000-01c07fff : 1c06000.phy phy@1c06000
+01d80000-01d81fff : 1d80000.phy phy@1d80000
+01d84000-01d86fff : 1d84000.ufshc ufshc@1d84000
+01d88000-01d9ffff : 1d88000.crypto crypto@1d88000
+01f40000-01f5ffff : 1f40000.hwlock hwlock@1f40000
+01fc0000-01feffff : 1fc0000.clock-controller clock-controller@1fc0000
+03d50000-03d5ffff : 3d6a000.gmu rscc
+03d90000-03d99fff : 3d90000.clock-controller clock-controller@3d90000
+03da0000-03ddffff : 3da0000.iommu iommu@3da0000
+08804000-08804fff : 8804000.mmc mmc@8804000
+088e3000-088e3153 : 88e3000.phy phy@88e3000
+088e8000-088eafff : 88e8000.phy phy@88e8000
+0a60c100-0a6f8800 : a600000.usb usb@a600000
+0ae00000-0ae00fff : ae00000.display-subsystem mdss
+0af00000-0af1ffff : af00000.clock-controller clock-controller@af00000
+0b280000-0b28ffff : 3d6a000.gmu gmu_pdc
+0c222000-0c222fff : c271000.thermal-sensor thermal-sensor@c271000
+0c223000-0c223fff : c272000.thermal-sensor thermal-sensor@c272000
+0c224000-0c224fff : c273000.thermal-sensor thermal-sensor@c273000
+0c271000-0c271fff : c271000.thermal-sensor thermal-sensor@c271000
+0c272000-0c272fff : c272000.thermal-sensor thermal-sensor@c272000
+0c273000-0c273fff : c273000.thermal-sensor thermal-sensor@c273000
+0c300000-0c3003ff : c300000.power-management power-management@c300000
+0c42d000-0c430fff : c400000.spmi cnfg
+0c440000-0c4bffff : c400000.spmi obsrvr
+0c4c0000-0c4dffff : c400000.spmi intr
+0c500000-0c8fffff : c400000.spmi chnls
+0f100000-0f3fffff : f100000.pinctrl pinctrl@f100000
+15000000-150fffff : 15000000.iommu iommu@15000000
+17100000-1710ffff : GICD
+17180000-1737ffff : GICR
+17421000-17421fff : arch_mem_timer
+17a20000-17a2ffff : 17a00000.rsc drv-2
+17d90000-17d90fff : 17d90000.interconnect interconnect@17d90000
+17d91000-17d91fff : 17d91000.cpufreq freq-domain0
+17d92000-17d92fff : 17d91000.cpufreq freq-domain1
+17d93000-17d93fff : 17d91000.cpufreq freq-domain2
+25000000-251fffff : 25000000.system-cache-controller llcc0_base
+25200000-253fffff : 25000000.system-cache-controller llcc1_base
+25400000-255fffff : 25000000.system-cache-controller llcc2_base
+25600000-257fffff : 25000000.system-cache-controller llcc3_base
+25800000-259fffff : 25000000.system-cache-controller llcc_broadcast_base
+25a00000-25bfffff : 25000000.system-cache-controller llcc_broadcast_and_base
+60000000-60000f1c : 1c00000.pcie dbi
+60000f20-60000fc7 : 1c00000.pcie elbi
+60001000-60001fff : 1c00000.pcie atu
+60100000-601fffff : 1c00000.pcie config
+60300000-63ffffff : pcie@1c00000
+  60300000-60300fff : 0000:00:00.0
+  60400000-605fffff : PCI Bus 0000:01
+    60400000-605fffff : 0000:01:00.0
+      60400000-605fffff : ath11k_pci
+  60600000-607fffff : PCI Bus 0000:01
+80000000-80dfffff : reserved
+811d0000-811fffff : reserved
+81200000-819fffff : System RAM
+81a00000-81cf4fff : reserved
+81cf5000-81cfffff : System RAM
+81d00000-81f1ffff : reserved
+81f20000-825fffff : System RAM
+82600000-86dfffff : reserved
+86e00000-8a7fffff : System RAM
+8a800000-9b09bfff : reserved
+9b09c000-9b0fffff : System RAM
+9b100000-a43b3fff : reserved
+  9e980000-9e9fffff : 6800000.remoteproc q6-adsp-dtb-region@9e980000
+  9ea00000-a43b3fff : 6800000.remoteproc adspslpi@9ea00000
+a43b4000-a7cfffff : System RAM
+a7d00000-a7ffffff : reserved
+a8000000-b01fefff : System RAM
+  a8098000-aaa57fff : Kernel code
+  aaa58000-aabc7fff : reserved
+  aabc8000-aaf07fff : Kernel data
+b01ff000-b01fffff : reserved
+b0200000-b7ffffff : System RAM
+  b0200000-b023ffff : reserved
+  b1000000-b45fffff : reserved
+  b7be1000-b7c0dfff : reserved
+  b7ee2000-b7ffefff : reserved
+b8000000-baafffff : reserved
+bab00000-d4a7ffff : System RAM
+d4a80000-d7ffffff : reserved
+d8140000-d815ffff : reserved
+e11f0000-e393ffff : reserved
+e3940000-e643ffff : System RAM
+e6440000-e671cfff : reserved
+e671d000-f35fffff : System RAM
+  ee600000-f35fffff : reserved
+f3600000-f81fffff : reserved
+f8200000-f83fffff : System RAM
+f8400000-fcd03fff : reserved
+fcd04000-fcdfffff : System RAM
+fce00000-ffdfffff : reserved
+ffe00000-ffffffff : System RAM
+880000000-8800fffff : System RAM
+880100000-8801fffff : reserved
+880200000-8803fffff : System RAM
+  880200000-8803fffff : reserved
+880400000-880b01fff : reserved
+880b02000-880bfffff : System RAM
+880c00000-88b8fffff : reserved
+88b900000-8b77fffff : System RAM
+8b7a00000-8b97fffff : System RAM
+8c0000000-affffffff : System RAM
+  af0ee8000-afe7fffff : reserved
+  afe808000-afe8d9fff : reserved
+  afe8da000-afe8dafff : reserved
+  afe8dd000-afe8ddfff : reserved
+  afe8de000-afe8defff : reserved
+  afe8df000-afe8dffff : reserved
+  afe8e0000-afe903fff : reserved
+  afe904000-afe9e9fff : reserved
+  afe9ea000-affffffff : reserved

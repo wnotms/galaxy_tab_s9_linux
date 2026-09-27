@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ls -l /dev/pmsg0; for x in /sys/module/ramoops/parameters/*; do echo \"$x=$(cat \"$x\")\"; done; ls -l /sys/fs/pstore /var/lib/systemd/pstore; cat /proc/iomem"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:58:07.871189+00:00"
+}
