@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "ls -la /sys/fs/pstore; for f in /sys/fs/pstore/*; do [ -f \"$f\" ] || continue; echo FILE=$f; cat \"$f\"; done"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:26:34.778901+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "blockdev --getsize64 /dev/block/by-name/boot; sha256sum /dev/block/by-name/boot"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:26:35.325839+00:00"
+}
