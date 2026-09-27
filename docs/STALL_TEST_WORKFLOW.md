@@ -313,3 +313,26 @@ validation. No repeated wedge series before those gates. For offline journal
 retrieval include .journal~ files; system.journal alone can contain only the
 latest recovery boot. Save the original raw FILE field, not a rendered or
 repaired substitute, and compare its original device hash when available.
+
+
+## Test-236: actual lastactivity console bytes survive with ECC
+
+The combined existing lastactivity/ECC64 diagnostic produced a manually
+triggered snapshot after at least 150 responsive seconds: eight valid CPU
+records, 48 event cells, 58 marker lines / 6,294 canonical bytes. After a
+normal direct reboot, the immediately next retained boot yielded identical
+canonical source bytes. Two raw pulls and the device hash agree; ECC reports
+135 corrected bytes and zero unrecoverable blocks. Runtime watchdog arming
+was independently checked; pr_emerg level 0 is admitted by console threshold 4.
+See [test-236 results](../reference/boot-tests/test-236-lastactivity-ecc/RESULTS.md).
+
+Journal ingestion can lag a successful dump write. Preserve incomplete initial
+fetches, then retrieve the same snapshot until a bounded completeness check
+passes; never trigger it again to fill a partial host capture. In this trial,
+the later complete journal copy and rejected second dump are both archived.
+
+Normal-reboot integrity for the actual console snapshot is demonstrated.
+Automatic RCU-triggered capture and crash-path retention remain separate gates;
+there was no forced panic or wedge series. Keep source/capture IDs independent
+from observer IDs and never turn this manual-snapshot result into a CPU fix or
+missing-event conclusion. Original images were restored after this trial.

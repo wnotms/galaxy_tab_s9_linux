@@ -2,11 +2,16 @@
 
 ## Current review (2026-09-27)
 
-Active test-236: clean-built lastactivity (0022) + ECC64 (0024) candidate was
-flashed with complete boot/vendor_boot readbacks; other three hashes match
-production. Uses the existing test-230/231 diagnostic cmdline, runtime arming
-must be verified. No new kernel/power fix is claimed. Source calibration and
-rollback remain pending; see test-236/README.md. Default images are unchanged.
+Test-236 passed exact lastactivity console retention on a normal warm reboot.
+Source 10f7f83a-d669-4855-8f24-87b5c6568aa6 produced 58 lines / 48 event cells /
+6,294 canonical bytes; observer 95089f53-9cd4-41d3-a799-85a648485731 recovered
+identical markers after ECC corrected 135 bytes, zero unrecoverable blocks.
+Source runtime arming was 1/1/1/10; level-0 output passed console threshold 4.
+This clears manual-snapshot normal-reboot retention only, not automatic RCU
+capture/crash retention, CPU causality or readiness for a wedge series.
+Original boot/vendor_boot and all five production hashes were restored.
+Final boot d5fd2f74-0854-41f4-b8f2-94874d63340f health validation is in progress.
+See test-236/RESULTS.md. The combined diagnostic is opt-in; defaults unchanged.
 
 Test-235 completed retrieval: ECC=64 recovered the exact 33,005-byte PMSG,
 correcting 246 bytes with zero unrecoverable blocks. Device hash, two TWRP
