@@ -1,0 +1,26 @@
+{
+  "command": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j12",
+    "Image.gz",
+    "qcom/sm8550-samsung-gts9wifi.dtb"
+  ],
+  "reason": "add missing forward prototype; no behavior/config/DTB change; reuse initial complete build",
+  "utc": "2026-09-27T14:46:21.415524+00:00",
+  "source_sha256": "ec3b4dad6013361e6d18d3229a7dc389752ff9b436a0a92af74a3a4bb1499283",
+  "reproducible_environment": {
+    "KBUILD_BUILD_USER": "gts9-mainline",
+    "KBUILD_BUILD_HOST": "reproducible",
+    "SOURCE_DATE_EPOCH": "1783890999",
+    "KBUILD_BUILD_TIMESTAMP": "Sun Jul 12 21:16:39 UTC 2026",
+    "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+    "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+    "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime"
+  }
+}

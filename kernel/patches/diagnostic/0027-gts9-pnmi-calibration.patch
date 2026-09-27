@@ -37,7 +37,7 @@ to the production build, raw DAIF masking, power settings or forced panic.
  
 --- /dev/null
 +++ b/arch/arm64/kernel/gts9_pnmi_test.c
-@@ -0,0 +1,177 @@
+@@ -0,0 +1,179 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/* Opt-in calibration only. No raw DAIF masking, hotplug or forced panic. */
 +#include <linux/atomic.h>
@@ -66,6 +66,8 @@ to the production build, raw DAIF masking, power settings or forced panic.
 +static u32 seen_pmr;
 +static u64 start_ns, end_ns, seen_ns;
 +static int setup_error;
++
++void gts9_pnmi_test_observe(struct pt_regs *regs);
 +
 +/* Called only on the backtrace IPI path; never prints/waits/allocates. */
 +void gts9_pnmi_test_observe(struct pt_regs *regs)

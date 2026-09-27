@@ -55,3 +55,11 @@ through BCB helper + plain reboot/TWRP, never reboot recovery or shared-gadget
 changes. Verify all-five hashes and a separate >=150-second production boot.
 Stop on unexpected failure and collect evidence; hardware/firmware can still
 prevent even pseudo-NMI delivery or automatic reset.
+
+Build checkpoint (before flashing): complete kernel build and final incremental
+prototype-only cleanup passed; final build has no compiler warnings. The six
+receiver/observer host scenarios pass. Config differs only by PSEUDO_NMI and
+its dependent capability symbols; hardlockup detector remains disabled. DTB
+and release match the ECC64 baseline. Boot bundle validation passed. Exact
+symbols, notes and hashes are recorded in validation/build-artifacts.json.
+Only boot/vendor_boot will be flashed; generated vbmeta is not installed.
