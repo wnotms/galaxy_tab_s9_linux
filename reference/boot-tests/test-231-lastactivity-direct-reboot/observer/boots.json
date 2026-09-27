@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "LC_ALL=C journalctl --list-boots --no-pager"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:16:39.343168+00:00"
+}

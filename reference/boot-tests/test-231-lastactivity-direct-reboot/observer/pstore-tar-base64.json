@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "tar -C / -cf - sys/fs/pstore var/lib/systemd/pstore | base64"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:16:39.145285+00:00"
+}

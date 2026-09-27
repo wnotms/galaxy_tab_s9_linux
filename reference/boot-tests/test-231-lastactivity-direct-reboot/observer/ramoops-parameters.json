@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "for n in console_size record_size pmsg_size ftrace_size mem_size mem_address ecc; do echo $n; cat /sys/module/ramoops/parameters/$n; done"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:16:44.550517+00:00"
+}
