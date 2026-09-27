@@ -2,6 +2,18 @@
 
 ## Current review (2026-09-27)
 
+Test-240 physically validated the opt-in 0022+0024+0026 BBM candidate. Target
+fe1196f2-4464-4c82-b63e-7f875c88223b passed 169 seconds before an A715 CPU3/4
+permission workload, 6,049,962 sustained mprotect calls and 75.75 seconds
+post-workload. Six preliminary kprobe hits prove high-address nr=1 path
+coverage; no natural failure or CPU-stall repair is established. The initial
+tracefs text-append setup failed before workload and was fixed with raw
+non-truncating writes; preserve both attempts. All owned tracing was removed.
+Original images/five hashes restored. Final production c333bb1b-d09b-4b32-
+ac4f-d8e166d4cac7 passed 153.52 seconds with ADB/NCM SSH banner responsive.
+See test-240/RESULTS.md; defaults stay unchanged, 0026 remains opt-in.
+
+
 Tests 238/239 reused calibrated 0022+0024 without injection: one 304.96-second
 and two 184-second natural boot windows did not reproduce the CPU failure.
 This is not a repair/rate estimate; no spontaneous snapshot was available.

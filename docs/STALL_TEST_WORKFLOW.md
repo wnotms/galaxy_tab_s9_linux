@@ -379,3 +379,16 @@ Opt-in patch 0026 is the verified arm64-maintainer fix 1fef81669147d63eb8c5d3627
 Extracted-function regression and compile/package pass; hardware validation
 and any CPU-stall causal connection remain open. Do not count its 120 host
 cases as physical stability tests or silently adopt it into production.
+
+
+## Test-240: BBM candidate functional hardware validation, no causal result
+
+The isolated 0022+0024+0026 candidate passed a healthy startup, 6,049,962
+sustained executable-permission transitions on A715 CPUs 3/4 and 75.75 seconds
+afterward. Six preliminary kprobe hits confirm the actual high-address nr=1
+path; no low-address or multi-PTE erratum reproduction is claimed. A first
+tracefs text-append setup error occurred before workload and is archived;
+raw non-truncating writes fixed it without a reboot or kernel change. Original
+images were restored with all-five hashes and a separate 153.52-second
+production observation. See test-240/RESULTS.md. CPU-stall repair remains open;
+no failure occurred in either this workload or the recent unchanged controls.
