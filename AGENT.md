@@ -2,6 +2,15 @@
 
 ## Current review (2026-09-28)
 
+Test249 production repair build is IN PROGRESS (out/kernel-no-dcc-production),
+with both diagnostic environment variables explicitly empty. Original config
+was extracted from the hash-verified230 boot backup; use it for the comparison.
+Two future production startup targets are registered: TWRP entry and one normal
+warm reboot,120 s each, stop on first non-clean result. No249 hardware run yet.
+Device remains passing248 diagnostic repair1707f656-b262-45be-8473-982ae5ffefa8.
+Final controller must handle paired transition from that candidate; preserve
+its rollback pair plus original backups. See249 README before any new writes.
+
 Test248 initial repair target PASSED120.08 s. Target1707f656-b262-45be-8473-
 982ae5ffefa8, cap4ff0340a-587e-4c23-9f4c-db78a329ee37, exact notes/six anchors
 +0x80000. Runtime HVC_DCC=n, no hvc0 device/sysfs node, getty inactive; existing
