@@ -1,0 +1,32 @@
+[
+  {
+    "name": "identity",
+    "command": "getprop ro.product.device; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a",
+    "status": 0,
+    "utc": "2026-09-27T05:04:51.173378+00:00"
+  },
+  {
+    "name": "pstore",
+    "command": "ls -la /sys/fs/pstore; for f in /sys/fs/pstore/*; do [ -f \"$f\" ] || continue; echo FILE=$f; cat \"$f\"; done",
+    "status": 0,
+    "utc": "2026-09-27T05:04:51.265016+00:00"
+  },
+  {
+    "name": "dmesg",
+    "command": "dmesg",
+    "status": 0,
+    "utc": "2026-09-27T05:04:51.360206+00:00"
+  },
+  {
+    "name": "last_kmsg",
+    "command": "cat /proc/last_kmsg",
+    "status": 0,
+    "utc": "2026-09-27T05:04:51.499383+00:00"
+  },
+  {
+    "name": "partition-hashes",
+    "command": "for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/block/by-name/$n; done",
+    "status": 0,
+    "utc": "2026-09-27T05:04:51.841923+00:00"
+  }
+]
