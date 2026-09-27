@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/module/gts9_lastactivity/parameters/capture_id; cat /sys/module/ramoops/parameters/ecc; cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic; cat /proc/sys/kernel/printk; cat /proc/sys/kernel/panic_on_rcu_stall; cat /sys/module/rcupdate/parameters/rcu_cpu_stall_timeout /sys/module/rcupdate/parameters/rcu_cpu_stall_suppress; cat /sys/module/gts9_lastactivity/parameters/test_enable /sys/module/gts9_lastactivity/parameters/test_status; timeout 5 systemctl --failed --no-pager; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T13:40:14.345330+00:00"
+}
