@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/sys/kernel/panic_on_rcu_stall; cat /sys/module/rcupdate/parameters/rcu_cpu_stall_timeout /sys/module/rcupdate/parameters/rcu_cpu_stall_suppress; cat /sys/class/power_supply/battery/capacity"
+  ],
+  "status": 1,
+  "utc": "2026-09-27T13:33:10.680658+00:00"
+}

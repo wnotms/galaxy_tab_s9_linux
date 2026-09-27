@@ -167,3 +167,18 @@ source reference and require identical recovered markers plus zero
 unrecoverable blocks. Test-235's information-level markers never qualified
 for loglevel=4 console delivery; their journal presence was not a sink check.
 This combination still needs independent crash-triggered validation.
+
+## `0025-gts9-lastactivity-rcu-test.patch` — DIAGNOSTIC ONLY
+
+Test-237 calibration only; requires 0022 and PREEMPT_RCU, combined with 0024
+for same-layout ECC64 crash retention. The dedicated cmdline
+`boot/cmdline.lastactivity-rcu-test.example.txt` enables the otherwise dormant
+`test_enable` gate. Root may write 1 once to the `test_run` parameter after
+healthy preflight. A normal CPU-0 kthread requests a grace period and holds an
+RCU reader until a 35-second monotonic deadline; interrupts and preemption
+remain enabled. `test_status` reports started/finished/gp_done. It never invokes
+the snapshot directly: the real RCU detector must call the existing tracepoint.
+A broken machine can delay the thread; this is not a hard reset guarantee.
+Keep TEST markers distinct from spontaneous CPU stalls. See test-237 README
+for the host-saved snapshot gate before the separate controlled panic and
+mandatory original-image restoration. Do not enable in normal diagnostic runs.

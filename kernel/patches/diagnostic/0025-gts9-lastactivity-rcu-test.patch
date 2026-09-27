@@ -1,0 +1,99 @@
+From: gts9 mainline diagnostics
+Subject: [DIAGNOSTIC ONLY] bounded opt-in RCU capture calibration
+
+Requires 0022. Does not change the RCU trigger or production defaults.
+The 35-second reader deliberately stalls a grace period with IRQs and
+preemption enabled; use only for one identified retention calibration.
+
+--- a/kernel/trace/gts9_lastactivity.c
++++ b/kernel/trace/gts9_lastactivity.c
+@@ -3,6 +3,9 @@
+ #include <linux/atomic.h>
+ #include <linux/init.h>
+ #include <linux/ktime.h>
++#include <linux/kthread.h>
++#include <linux/cpu.h>
++#include <linux/rcupdate.h>
+ #include <linux/moduleparam.h>
+ #include <linux/of.h>
+ #include <linux/percpu.h>
+@@ -153,6 +156,79 @@
+ static const struct kernel_param_ops la_dump_ops = { .set = la_manual };
+ module_param_cb(dump, &la_dump_ops, NULL, 0200);
+ 
++
++/* Calibration only: opt-in, root-triggered, one bounded PREEMPT_RCU reader.
++ * Scheduling/interrupts stay enabled. A broken system can still delay exit;
++ * this is not a hardware watchdog or a model of the unexplained CPU failure.
++ */
++static bool test_enable;
++module_param(test_enable, bool, 0444);
++static atomic_t test_started = ATOMIC_INIT(0);
++static bool test_finished, test_gp_done;
++static struct rcu_head test_rcu;
++
++static void la_test_callback(struct rcu_head *head)
++{
++	WRITE_ONCE(test_gp_done, true);
++}
++
++static int la_test_thread(void *unused)
++{
++	u64 deadline;
++
++	pr_emerg("GTS9_LA_TEST_BEGIN id=%s type=bounded_rcu_reader duration_s=35\n",
++		 capture_id);
++	rcu_read_lock();
++	deadline = ktime_get_ns() + 35ULL * NSEC_PER_SEC;
++	/* Demand a grace period after entering the read-side critical section. */
++	call_rcu(&test_rcu, la_test_callback);
++	while (ktime_get_ns() < deadline)
++		cpu_relax();
++	rcu_read_unlock();
++	pr_emerg("GTS9_LA_TEST_END id=%s type=bounded_rcu_reader\n", capture_id);
++	WRITE_ONCE(test_finished, true);
++	return 0;
++}
++
++static int la_test_run(const char *val, const struct kernel_param *kp)
++{
++	struct task_struct *task;
++
++	if (!sysfs_streq(val, "1"))
++		return -EINVAL;
++	if (!IS_ENABLED(CONFIG_PREEMPT_RCU) || system_state != SYSTEM_RUNNING ||
++	    !test_enable || !READ_ONCE(active))
++		return -EPERM;
++	if (atomic_cmpxchg(&test_started, 0, 1))
++		return -EALREADY;
++	/* Never reuse the static callback, even if thread creation fails. */
++	cpus_read_lock();
++	if (!cpu_online(0)) {
++		cpus_read_unlock();
++		return -ENODEV;
++	}
++	task = kthread_create(la_test_thread, NULL, "gts9-rcu-test");
++	if (IS_ERR(task)) {
++		cpus_read_unlock();
++		return PTR_ERR(task);
++	}
++	kthread_bind(task, 0);
++	wake_up_process(task);
++	cpus_read_unlock();
++	return 0;
++}
++
++static int la_test_status(char *buf, const struct kernel_param *kp)
++{
++	return scnprintf(buf, PAGE_SIZE, "started=%d finished=%d gp_done=%d\n",
++		atomic_read(&test_started), READ_ONCE(test_finished),
++		READ_ONCE(test_gp_done));
++}
++static const struct kernel_param_ops la_test_run_ops = { .set = la_test_run };
++static const struct kernel_param_ops la_test_status_ops = { .get = la_test_status };
++module_param_cb(test_run, &la_test_run_ops, NULL, 0200);
++module_param_cb(test_status, &la_test_status_ops, NULL, 0444);
++
+ static int __init la_init(void)
+ {
+ 	u8 uuid[16];

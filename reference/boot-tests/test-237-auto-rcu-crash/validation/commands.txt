@@ -1,0 +1,18 @@
+KERNEL_CLEAN=1 GTS9_DIAGNOSTIC_PATCHES='0022-gts9-lastactivity.patch 0024-gts9-ramoops-ecc64.patch 0025-gts9-lastactivity-rcu-test.patch' BUILD_MODULES=0 USE_CCACHE=1 ARCH=arm64 LLVM=1 KERNEL_OUT_DIR=out/kernel-auto-rcu-crash ./scripts/build-kernel.sh
+KERNEL_OUT_DIR=out/kernel-auto-rcu-crash MKBOOTIMG=.work/tools/mkbootimg.py AVBTOOL=.work/tools/avbtool.py bash scripts/build-boot-bundle.sh --initramfs out/lastactivity-validation/init-unpack/ramdisk --cmdline boot/cmdline.lastactivity-rcu-test.example.txt --bootconfig boot/bootconfig.example.txt --out out/boot-bundle-auto-rcu-crash
+python3 -m unittest discover -s tests -p test_lastactivity_evidence.py -v
+
+Review: the existing la_stall callback is unchanged. The test runs only on
+PREEMPT_RCU with interrupts/preemption enabled and a monotonic exit condition;
+no scheduling call occurs inside the reader. kthread creation/binding is under
+cpus_read_lock; no CPU hotplug operation is performed during the trial. Static
+callback lifetime is the built-in kernel's lifetime, protected by the once guard.
+The root trigger is disabled until SYSTEM_RUNNING and an active X710 recorder.
+Both test_enable and test_status are read-only; test_run is root-write-only.
+
+Pinned tree_stall.h emits the real RCU warning tracepoint before stall backtrace
+printing. sysrq.c write_sysrq_trigger calls __handle_sysrq(c, false), so root's
+/proc/sysrq-trigger bypasses keyboard SysRq mask; 'c' invokes panic("sysrq triggered crash").
+Official stall documentation: https://docs.kernel.org/RCU/stallwarn.html
+These checks plus compilation are offline validation; hardware behavior must
+be measured separately. Build and packaging logs determine completed commands.
