@@ -194,3 +194,25 @@ and passes 120/120 after applying the patch. That establishes range semantics,
 not a CPU-stall cause or hardware fix. Mainline merge is not established;
 keep opt-in and separately validated. No production default changes.
 See reference/offline-reviews/20260927-a715-tlb-range/ for provenance/checks.
+
+## `0027-gts9-pnmi-calibration.patch` — DIAGNOSTIC ONLY
+
+Requires the separate `gts9wifi-pnmi.fragment` and
+`boot/cmdline.pnmi-calibration.example.txt`; defaults are unchanged. Do not
+combine with BBM patch 0026 in its first calibration. The profile enables
+runtime priority masking and console loglevel 5 (warning/default backtraces
+were filtered at level 4). Use existing 0022+0024 for bounded activity/ECC64.
+
+A root-only one-shot `gts9_pnmi_test.run` creates CPU0/CPU1 workers, with bounded
+setup and a 200 ms normal-local-IRQ-masked loop. The standard backtrace request
+must interrupt during that region. CPU_BACKTRACE is outside NR_IPI and is not
+visible to ordinary IPI tracepoints; an explicit nonprinting observation hook
+records in_nmi, interrupted PC/PMR/PSTATE and timestamp only while the test's
+holding flag is set. No raw DAIF masking, power changes, hotplug or panic.
+Runtime support and the actual in-window saved state must pass; late delivery
+is rejected. NMI printing may extend elapsed time beyond the loop deadline.
+
+Test 241 requires the saved target stack and per-boot symbol identity as well
+as metadata, then restoration. See its README and the pseudo-NMI review. This
+is calibration, not evidence that pseudo-NMI can bypass firmware or real CPU
+non-progress, and not a CPU-stall fix.

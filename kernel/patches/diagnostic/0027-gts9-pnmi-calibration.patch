@@ -1,0 +1,217 @@
+From: gts9 mainline diagnostics
+Subject: [DIAGNOSTIC ONLY] bounded pseudo-NMI IRQ-masked calibration
+
+Requires ARM64_PSEUDO_NMI and separate boot enable. Adds an observation hook
+only to CPU_BACKTRACE (excluded from ordinary IPI tracepoints). No changes
+to the production build, raw DAIF masking, power settings or forced panic.
+
+--- a/arch/arm64/kernel/Makefile
++++ b/arch/arm64/kernel/Makefile
+@@ -87,3 +87,5 @@
+ 
+ # for cleaning
+ subdir- += vdso vdso32
++
++obj-$(CONFIG_ARM64_PSEUDO_NMI) += gts9_pnmi_test.o
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -78,6 +78,9 @@
+ static bool percpu_ipi_descs __ro_after_init;
+ 
+ static bool crash_stop;
++#ifdef CONFIG_ARM64_PSEUDO_NMI
++void gts9_pnmi_test_observe(struct pt_regs *regs);
++#endif
+ 
+ static void ipi_setup(int cpu);
+ 
+@@ -1003,6 +1006,9 @@
+ 		 * NOTE: in some cases this _won't_ be NMI context. See the
+ 		 * comment in arch_trigger_cpumask_backtrace().
+ 		 */
++#ifdef CONFIG_ARM64_PSEUDO_NMI
++		gts9_pnmi_test_observe(get_irq_regs());
++#endif
+ 		nmi_cpu_backtrace(get_irq_regs());
+ 		break;
+ 
+--- /dev/null
++++ b/arch/arm64/kernel/gts9_pnmi_test.c
+@@ -0,0 +1,177 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Opt-in calibration only. No raw DAIF masking, hotplug or forced panic. */
++#include <linux/atomic.h>
++#include <linux/cpu.h>
++#include <linux/delay.h>
++#include <linux/init.h>
++#include <linux/irqflags.h>
++#include <linux/ktime.h>
++#include <linux/kthread.h>
++#include <linux/moduleparam.h>
++#include <linux/nmi.h>
++#include <linux/of.h>
++#include <linux/random.h>
++#include <linux/smp.h>
++#include <asm/ptrace.h>
++
++static bool enable;
++module_param(enable, bool, 0444);
++static bool board_ready;
++static char capture_id[37];
++module_param_string(capture_id, capture_id, sizeof(capture_id), 0444);
++static atomic_t started = ATOMIC_INIT(0);
++static bool sender_ready, holding, receiver_done, sender_done, observed;
++static bool seen_nmi, seen_irq_disabled;
++static unsigned long seen_pc, seen_pstate;
++static u32 seen_pmr;
++static u64 start_ns, end_ns, seen_ns;
++static int setup_error;
++
++/* Called only on the backtrace IPI path; never prints/waits/allocates. */
++void gts9_pnmi_test_observe(struct pt_regs *regs)
++{
++	if (!READ_ONCE(enable) || raw_smp_processor_id() != 0 ||
++	    !smp_load_acquire(&holding) || READ_ONCE(observed))
++		return;
++	WRITE_ONCE(seen_nmi, in_nmi());
++	WRITE_ONCE(seen_irq_disabled, regs && arch_irqs_disabled_flags(regs->pmr));
++	WRITE_ONCE(seen_pc, regs ? instruction_pointer(regs) : 0);
++	WRITE_ONCE(seen_pstate, regs ? regs->pstate : 0);
++	WRITE_ONCE(seen_pmr, regs ? regs->pmr : 0);
++	WRITE_ONCE(seen_ns, ktime_get_mono_fast_ns());
++	smp_store_release(&observed, true);
++}
++
++static bool wait_flag(bool *flag)
++{
++	u64 deadline = ktime_get_mono_fast_ns() + 5ULL * NSEC_PER_SEC;
++
++	while (!smp_load_acquire(flag)) {
++		if (kthread_should_stop() || ktime_get_mono_fast_ns() >= deadline)
++			return false;
++		usleep_range(100, 200);
++	}
++	return !kthread_should_stop();
++}
++
++static noinline int gts9_pnmi_masked_region(void *unused)
++{
++	unsigned long flags;
++	u64 deadline;
++
++	if (!wait_flag(&sender_ready)) {
++		WRITE_ONCE(setup_error, -ETIMEDOUT);
++		goto done;
++	}
++	pr_emerg("GTS9_PNMI_TEST_BEGIN id=%s cpu=%u budget_ns=200000000\n",
++		 capture_id, raw_smp_processor_id());
++	preempt_disable();
++	local_irq_save(flags);
++	WRITE_ONCE(start_ns, ktime_get_mono_fast_ns());
++	deadline = READ_ONCE(start_ns) + 200000000ULL;
++	smp_store_release(&holding, true);
++	while (ktime_get_mono_fast_ns() < deadline)
++		cpu_relax();
++	/* Clear before restoring IRQs: a delayed ordinary IPI is not a pass. */
++	smp_store_release(&holding, false);
++	WRITE_ONCE(end_ns, ktime_get_mono_fast_ns());
++	local_irq_restore(flags);
++	preempt_enable();
++	pr_emerg("GTS9_PNMI_TEST_END id=%s start_ns=%llu end_ns=%llu observed=%u nmi=%u saved_irq_disabled=%u pc=%016lx pmr=%08x pstate=%016lx seen_ns=%llu\n",
++		 capture_id, READ_ONCE(start_ns), READ_ONCE(end_ns),
++		 smp_load_acquire(&observed), READ_ONCE(seen_nmi),
++		 READ_ONCE(seen_irq_disabled), READ_ONCE(seen_pc),
++		 READ_ONCE(seen_pmr), READ_ONCE(seen_pstate), READ_ONCE(seen_ns));
++done:
++	smp_store_release(&receiver_done, true);
++	return 0;
++}
++
++static int gts9_pnmi_sender(void *unused)
++{
++	smp_store_release(&sender_ready, true);
++	if (!wait_flag(&holding)) {
++		WRITE_ONCE(setup_error, -ETIMEDOUT);
++		goto done;
++	}
++	/* Standard backtrace request; pinned implementation has a 10s wait bound. */
++	arch_trigger_cpumask_backtrace(cpumask_of(0), -1);
++done:
++	smp_store_release(&sender_done, true);
++	return 0;
++}
++
++static int test_run(const char *value, const struct kernel_param *kp)
++{
++	struct task_struct *receiver, *sender;
++	int ret = 0;
++
++	if (!sysfs_streq(value, "1"))
++		return -EINVAL;
++	if (!enable || !board_ready || system_state != SYSTEM_RUNNING ||
++	    !system_uses_irq_prio_masking())
++		return -EPERM;
++	if (atomic_cmpxchg(&started, 0, 1))
++		return -EALREADY;
++	cpus_read_lock();
++	if (!cpu_online(0) || !cpu_online(1)) {
++		ret = -ENODEV;
++		goto unlock;
++	}
++	receiver = kthread_create(gts9_pnmi_masked_region, NULL, "gts9-pnmi-hold");
++	if (IS_ERR(receiver)) {
++		ret = PTR_ERR(receiver);
++		goto unlock;
++	}
++	sender = kthread_create(gts9_pnmi_sender, NULL, "gts9-pnmi-send");
++	if (IS_ERR(sender)) {
++		ret = PTR_ERR(sender);
++		kthread_stop(receiver);
++		goto unlock;
++	}
++	kthread_bind(receiver, 0);
++	kthread_bind(sender, 1);
++	wake_up_process(sender);
++	wake_up_process(receiver);
++unlock:
++	cpus_read_unlock();
++	if (ret)
++		WRITE_ONCE(setup_error, ret);
++	return ret;
++}
++
++static int test_status(char *buf, const struct kernel_param *kp)
++{
++	bool rd = smp_load_acquire(&receiver_done);
++	bool sd = smp_load_acquire(&sender_done);
++	bool obs = smp_load_acquire(&observed);
++
++	return scnprintf(buf, PAGE_SIZE,
++		"started=%d receiver_done=%u sender_done=%u holding=%u observed=%u nmi=%u saved_irq_disabled=%u error=%d prio_masking=%u start_ns=%llu end_ns=%llu seen_ns=%llu pc=%016lx pmr=%08x pstate=%016lx\n",
++		atomic_read(&started), rd, sd, READ_ONCE(holding), obs,
++		READ_ONCE(seen_nmi), READ_ONCE(seen_irq_disabled),
++		READ_ONCE(setup_error), system_uses_irq_prio_masking(),
++		READ_ONCE(start_ns), READ_ONCE(end_ns), READ_ONCE(seen_ns),
++		READ_ONCE(seen_pc), READ_ONCE(seen_pmr), READ_ONCE(seen_pstate));
++}
++static const struct kernel_param_ops run_ops = { .set = test_run };
++static const struct kernel_param_ops status_ops = { .get = test_status };
++module_param_cb(run, &run_ops, NULL, 0200);
++module_param_cb(status, &status_ops, NULL, 0444);
++
++static int __init gts9_pnmi_init(void)
++{
++	u8 uuid[16];
++
++	if (!enable)
++		return 0;
++	if (!of_machine_is_compatible("samsung,gts9wifi") || nr_cpu_ids != 8)
++		return -ENODEV;
++	generate_random_uuid(uuid);
++	snprintf(capture_id, sizeof(capture_id), "%pUb", uuid);
++	board_ready = true;
++	pr_emerg("GTS9_PNMI_TEST_READY id=%s prio_masking=%u\n",
++		 capture_id, system_uses_irq_prio_masking());
++	return 0;
++}
++late_initcall(gts9_pnmi_init);
