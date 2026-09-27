@@ -1,0 +1,111 @@
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] kaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+[    0.000000][    T0] WARNING: x1-x3 nonzero in violation of boot protocol:
+[    0.000000][    T0] 	x1: 0000000080000000
+[    0.000000][    T0] 	x2: 0000000028248000
+[    0.000000][    T0] 	x3: 0000000000000000
+[    0.000000][    T0] This indicates a broken bootloader or old kernel
+[    0.103747][    T1] GTS9_LA_READY id=c8ba1a85-3aef-476c-9498-d3734617f9ee ns=100000000 schema=1 events=6 complete_history=0
+[    0.338722][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.338961][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.339183][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.339327][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81b5400, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.339646][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.339768][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.340007][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8361000, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.340228][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.340447][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.340594][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb84d7800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.340912][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.341038][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.341279][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb868aa00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.341503][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.341723][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.341963][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb883ce00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.342185][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.342309][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.342550][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb89b1900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.342772][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.342991][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.343233][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8b62900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.343459][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.343585][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.343827][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8cdc200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.344050][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.344268][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.344510][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8e8cb00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.344733][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.344856][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.347415][   T45] remoteproc remoteproc0: request_firmware failed: -2
+[    0.497502][   T77] msm_dpu ae01000.display-controller: no GPU device was found
+[    1.387164][    T1] systemd[1]: Failed to find module 'autofs4'
+[    3.872416][  T953] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    5.877347][ T1224] Bluetooth: hci0: unexpected event for opcode 0xfc48
+[  164.907551][ T1564] GTS9_LA_BEGIN id=c8ba1a85-3aef-476c-9498-d3734617f9ee trigger=manual ns=164904490301 schema=1 cpus=8 events=6 complete_history=0
+[  164.907696][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=0 valid=1 seq=130182 nested_dropped=0
+[  164.907798][ T1564] GTS9_LA_EVENT cpu=0 kind=0 count=23638 ns=164902980717 a=0000000000000004 b=ffffffc080171558 c=ffffff880e8531d8
+[  164.907898][ T1564] GTS9_LA_EVENT cpu=0 kind=1 count=2974 ns=164904145717 a=ffffffc080175328 b=ffffff8a726ffba0 c=0000000000000000
+[  164.907997][ T1564] GTS9_LA_EVENT cpu=0 kind=2 count=2974 ns=164904146551 a=ffffffc080175328 b=ffffff8a726ffba0 c=0000000000000000
+[  164.908097][ T1564] GTS9_LA_EVENT cpu=0 kind=3 count=26663 ns=164904199780 a=0000000000000040 b=ffffffc0820f727b c=0000000000000000
+[  164.908196][ T1564] GTS9_LA_EVENT cpu=0 kind=4 count=4421 ns=164904144936 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.908316][ T1564] GTS9_LA_EVENT cpu=0 kind=5 count=4421 ns=164904146915 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.908429][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=1 valid=1 seq=24980 nested_dropped=0
+[  164.908540][ T1564] GTS9_LA_EVENT cpu=1 kind=0 count=1130 ns=164904421915 a=0000000000000000 b=ffffffc080171558 c=ffffff880e866358
+[  164.908934][ T1564] GTS9_LA_EVENT cpu=1 kind=1 count=2153 ns=164904404519 a=ffffffc080171558 b=ffffff881c7952d8 c=0000000000000000
+[  164.909051][ T1564] GTS9_LA_EVENT cpu=1 kind=2 count=2153 ns=164904415926 a=ffffffc080171558 b=ffffff881c7952d8 c=0000000000000000
+[  164.909161][ T1564] GTS9_LA_EVENT cpu=1 kind=3 count=1652 ns=164904422280 a=0000000000000001 b=ffffffc0821b19ae c=0000000000000000
+[  164.909273][ T1564] GTS9_LA_EVENT cpu=1 kind=4 count=2701 ns=164904419311 a=ffffffc08210dc95 b=0000000000000000 c=0000000000000000
+[  164.909387][ T1564] GTS9_LA_EVENT cpu=1 kind=5 count=2701 ns=164904423634 a=ffffffc08210dc95 b=0000000000000000 c=0000000000000000
+[  164.909498][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=2 valid=1 seq=24574 nested_dropped=0
+[  164.909603][ T1564] GTS9_LA_EVENT cpu=2 kind=0 count=1164 ns=164831842905 a=0000000000000001 b=ffffffc080171558 c=ffffff881c7952d8
+[  164.909712][ T1564] GTS9_LA_EVENT cpu=2 kind=1 count=2055 ns=164837635040 a=ffffffc080171558 b=ffffff88149f8058 c=0000000000000000
+[  164.909824][ T1564] GTS9_LA_EVENT cpu=2 kind=2 count=2055 ns=164837641134 a=ffffffc080171558 b=ffffff88149f8058 c=0000000000000000
+[  164.909935][ T1564] GTS9_LA_EVENT cpu=2 kind=3 count=1665 ns=164831843842 a=0000000000000002 b=ffffffc0821b19ae c=0000000000000000
+[  164.910045][ T1564] GTS9_LA_EVENT cpu=2 kind=4 count=2674 ns=164837633894 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.910155][ T1564] GTS9_LA_EVENT cpu=2 kind=5 count=2674 ns=164837642019 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.910266][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=3 valid=1 seq=69506 nested_dropped=0
+[  164.910373][ T1564] GTS9_LA_EVENT cpu=3 kind=0 count=4897 ns=164824710561 a=0000000000000001 b=ffffffc080171558 c=ffffff881c7952d8
+[  164.910482][ T1564] GTS9_LA_EVENT cpu=3 kind=1 count=5648 ns=164832011915 a=ffffffc080175328 b=ffffff8a72768ba0 c=0000000000000000
+[  164.910589][ T1564] GTS9_LA_EVENT cpu=3 kind=2 count=5648 ns=164832012072 a=ffffffc080175328 b=ffffff8a72768ba0 c=0000000000000000
+[  164.910699][ T1564] GTS9_LA_EVENT cpu=3 kind=3 count=4652 ns=164824711082 a=0000000000000002 b=ffffffc0821b19ae c=0000000000000000
+[  164.910808][ T1564] GTS9_LA_EVENT cpu=3 kind=4 count=6954 ns=164832011655 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.910918][ T1564] GTS9_LA_EVENT cpu=3 kind=5 count=6954 ns=164832012176 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.911031][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=4 valid=1 seq=73522 nested_dropped=0
+[  164.911140][ T1564] GTS9_LA_EVENT cpu=4 kind=0 count=5207 ns=164903122176 a=0000000000000005 b=ffffffc080171558 c=ffffff88149f8058
+[  164.911261][ T1564] GTS9_LA_EVENT cpu=4 kind=1 count=6425 ns=164903504415 a=ffffffc080171558 b=ffffff881c7952d8 c=0000000000000000
+[  164.911375][ T1564] GTS9_LA_EVENT cpu=4 kind=2 count=6425 ns=164903509728 a=ffffffc080171558 b=ffffff881c7952d8 c=0000000000000000
+[  164.911491][ T1564] GTS9_LA_EVENT cpu=4 kind=3 count=4102 ns=164903808374 a=0000000000000040 b=ffffffc0820f727b c=0000000000000000
+[  164.911593][ T1564] GTS9_LA_EVENT cpu=4 kind=4 count=7301 ns=164903802332 a=ffffffc08210dc95 b=0000000000000000 c=0000000000000000
+[  164.911696][ T1564] GTS9_LA_EVENT cpu=4 kind=5 count=7301 ns=164903809780 a=ffffffc08210dc95 b=0000000000000000 c=0000000000000000
+[  164.911799][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=5 valid=1 seq=57322 nested_dropped=0
+[  164.911900][ T1564] GTS9_LA_EVENT cpu=5 kind=0 count=3734 ns=164903374155 a=0000000000000004 b=ffffffc080171558 c=ffffff881c7952d8
+[  164.912006][ T1564] GTS9_LA_EVENT cpu=5 kind=1 count=4707 ns=164903311342 a=ffffffc080171558 b=ffffff88149f8058 c=0000000000000000
+[  164.912107][ T1564] GTS9_LA_EVENT cpu=5 kind=2 count=4707 ns=164903317019 a=ffffffc080171558 b=ffffff88149f8058 c=0000000000000000
+[  164.912209][ T1564] GTS9_LA_EVENT cpu=5 kind=3 count=4023 ns=164903374572 a=0000000000000010 b=ffffffc0821b19ae c=0000000000000000
+[  164.912311][ T1564] GTS9_LA_EVENT cpu=5 kind=4 count=5745 ns=164903310353 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.912414][ T1564] GTS9_LA_EVENT cpu=5 kind=5 count=5745 ns=164903317176 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.912516][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=6 valid=1 seq=125668 nested_dropped=0
+[  164.912615][ T1564] GTS9_LA_EVENT cpu=6 kind=0 count=3722 ns=164904217332 a=0000000000000001 b=ffffffc080171558 c=ffffff881c7952d8
+[  164.912718][ T1564] GTS9_LA_EVENT cpu=6 kind=1 count=12444 ns=164852166290 a=ffffffc080171558 b=ffffff880e87d2d8 c=0000000000000000
+[  164.913323][ T1564] GTS9_LA_EVENT cpu=6 kind=2 count=12444 ns=164852167384 a=ffffffc080171558 b=ffffff880e87d2d8 c=0000000000000000
+[  164.913912][ T1564] GTS9_LA_EVENT cpu=6 kind=3 count=4730 ns=164904217697 a=0000000000000002 b=ffffffc0821b19ae c=0000000000000000
+[  164.914506][ T1564] GTS9_LA_EVENT cpu=6 kind=4 count=14747 ns=164904202332 a=ffffffc0820f727b b=0000000000000000 c=0000000000000000
+[  164.915106][ T1564] GTS9_LA_EVENT cpu=6 kind=5 count=14747 ns=164904202436 a=ffffffc0820f727b b=0000000000000000 c=0000000000000000
+[  164.915653][ T1564] GTS9_LA_CPU id=c8ba1a85-3aef-476c-9498-d3734617f9ee cpu=7 valid=1 seq=108860 nested_dropped=5
+[  164.916174][ T1564] GTS9_LA_EVENT cpu=7 kind=0 count=2864 ns=164852163582 a=0000000000000006 b=ffffffc080171558 c=ffffff880e87d2d8
+[  164.916690][ T1564] GTS9_LA_EVENT cpu=7 kind=1 count=9674 ns=164900007124 a=ffffffc080171558 b=ffffff880c4aa158 c=0000000000000000
+[  164.917327][ T1564] GTS9_LA_EVENT cpu=7 kind=2 count=9674 ns=164900007644 a=ffffffc080171558 b=ffffff880c4aa158 c=0000000000000000
+[  164.917835][ T1564] GTS9_LA_EVENT cpu=7 kind=3 count=5552 ns=164864017124 a=0000000000000080 b=ffffffc08210dc95 c=0000000000000000
+[  164.918339][ T1564] GTS9_LA_EVENT cpu=7 kind=4 count=13333 ns=164900006915 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.918844][ T1564] GTS9_LA_EVENT cpu=7 kind=5 count=13333 ns=164900007697 a=ffffffc0821b19ae b=0000000000000000 c=0000000000000000
+[  164.919374][ T1564] GTS9_LA_END id=c8ba1a85-3aef-476c-9498-d3734617f9ee records=48 complete_history=0
+[  217.773834][    T1] dwc3-qcom a600000.usb: request 000000008baa490a was not queued to ep0out
+[  217.999379][    T1] reboot: Restarting system
+
+ECC: 135 Corrected bytes, 0 unrecoverable blocks
