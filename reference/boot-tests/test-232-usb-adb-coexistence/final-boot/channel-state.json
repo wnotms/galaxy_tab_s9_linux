@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/mnt/c/Windows/System32/OpenSSH/ssh.exe",
+    "-i",
+    "C:\\Users\\ms\\.ssh\\gts9-test232\\key",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=NUL",
+    "-o",
+    "ConnectTimeout=8",
+    "root@169.254.42.1",
+    "systemctl show -p ActiveState -p SubState -p Result gts9-adbd gts9-usb-adb-hold; ls -l /proc/$(cat /run/gts9-usb-adb.holder)/fd/3; cat /sys/kernel/config/usb_gadget/gts9/UDC; ip -br addr show usb0; journalctl -b -u gts9-adbd --no-pager -o short-monotonic"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:38:47.036741+00:00"
+}

@@ -1,0 +1,1807 @@
+a1eb9541-aff7-4269-b739-c0dd371b01af
+155.56 1218.99
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+[    1.762057] gts9 kernel: Booting Linux on physical CPU 0x0000000000 [0x411fd461]
+[    1.762094] gts9 kernel: Linux version 7.2.0-rc3-gts9wifi-dirty (gts9-mainline@reproducible) (Ubuntu clang version 21.1.8 (6ubuntu1), Ubuntu LLD 21.1.8) #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026
+[    1.762108] gts9 kernel: KASLR disabled on command line
+[    1.762117] gts9 kernel: random: crng init done
+[    1.762127] gts9 kernel: Machine model: Samsung Galaxy Tab S9 Wi-Fi
+[    1.762136] gts9 kernel: efi: UEFI not found.
+[    1.762148] gts9 kernel: [Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+[    1.762157] gts9 kernel: OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+[    1.762167] gts9 kernel: OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+[    1.762176] gts9 kernel: OF: reserved mem: 0x00000000b01ff000..0x00000000b01fffff (4 KiB) nomap non-reusable kaslr_region
+[    1.762188] gts9 kernel: OF: reserved mem: 0x00000000b1000000..0x00000000b45fffff (55296 KiB) map non-reusable uh_guest_region
+[    1.762198] gts9 kernel: OF: reserved mem: 0x00000000b0200000..0x00000000b023ffff (256 KiB) map non-reusable uh_heap_region
+[    1.762207] gts9 kernel: OF: reserved mem: 0x0000000080000000..0x00000000809fffff (10240 KiB) nomap non-reusable hyp-region@80000000
+[    1.762216] gts9 kernel: OF: reserved mem: 0x0000000080a00000..0x0000000080dfffff (4096 KiB) nomap non-reusable cpusys-vm-region@80a00000
+[    1.762227] gts9 kernel: OF: reserved mem: 0x0000000080e00000..0x00000000811cffff (3904 KiB) nomap non-reusable hyp-tags-region@80e00000
+[    1.762236] gts9 kernel: OF: reserved mem: 0x00000000d8100000..0x00000000d813ffff (256 KiB) nomap non-reusable xbl-sc-region@d8100000
+[    1.762245] gts9 kernel: OF: reserved mem: 0x00000000811d0000..0x00000000811fffff (192 KiB) nomap non-reusable hyp-tags-reserved-region@811d0000
+[    1.762254] gts9 kernel: OF: reserved mem: 0x0000000081a00000..0x0000000081c5ffff (2432 KiB) nomap non-reusable xbl-dt-log-merged-region@81a00000
+[    1.762263] gts9 kernel: OF: reserved mem: 0x0000000081c60000..0x0000000081c7ffff (128 KiB) nomap non-reusable aop-cmd-db-region@81c60000
+[    1.762274] gts9 kernel: OF: reserved mem: 0x0000000081c80000..0x0000000081cf3fff (464 KiB) nomap non-reusable aop-config-merged-region@81c80000
+[    1.762283] gts9 kernel: OF: reserved mem: 0x0000000081d00000..0x0000000081efffff (2048 KiB) nomap non-reusable smem@81d00000
+[    1.762292] gts9 kernel: OF: reserved mem: 0x0000000081f00000..0x0000000081f1ffff (128 KiB) nomap non-reusable adsp-mhi-region@81f00000
+[    1.762303] gts9 kernel: OF: reserved mem: 0x0000000082600000..0x00000000826fffff (1024 KiB) nomap non-reusable global-sync-region@82600000
+[    1.762311] gts9 kernel: OF: reserved mem: 0x0000000082700000..0x00000000827fffff (1024 KiB) nomap non-reusable tz-stat-region@82700000
+[    1.762320] gts9 kernel: OF: reserved mem: 0x0000000082800000..0x0000000086dfffff (71680 KiB) nomap non-reusable cdsp-secure-heap-region@82800000
+[    1.762329] gts9 kernel: OF: reserved mem: 0x000000008a800000..0x000000009affffff (270336 KiB) nomap non-reusable mpss-region@8a800000
+[    1.762338] gts9 kernel: OF: reserved mem: 0x000000009b000000..0x000000009b07ffff (512 KiB) nomap non-reusable q6-mpss-dtb-region@9b000000
+[    1.762347] gts9 kernel: OF: reserved mem: 0x000000009b080000..0x000000009b08ffff (64 KiB) nomap non-reusable ipa-fw-region@9b080000
+[    1.762356] gts9 kernel: OF: reserved mem: 0x000000009b090000..0x000000009b099fff (40 KiB) nomap non-reusable ipa-gsi-region@9b090000
+[    1.762364] gts9 kernel: OF: reserved mem: 0x000000009b09a000..0x000000009b09bfff (8 KiB) nomap non-reusable gpu-micro-code-region@9b09a000
+[    1.762374] gts9 kernel: OF: reserved mem: 0x000000009b100000..0x000000009b27ffff (1536 KiB) nomap non-reusable spss-region@9b100000
+[    1.762383] gts9 kernel: OF: reserved mem: 0x000000009b280000..0x000000009b2dffff (384 KiB) nomap non-reusable spu-tz-shared-region@9b280000
+[    1.762393] gts9 kernel: OF: reserved mem: 0x000000009b2e0000..0x000000009b2fffff (128 KiB) nomap non-reusable spu-modem-shared-region@9b2e0000
+[    1.762402] gts9 kernel: OF: reserved mem: 0x000000009b300000..0x000000009bafffff (8192 KiB) nomap non-reusable camera-region@9b300000
+[    1.762411] gts9 kernel: OF: reserved mem: 0x000000009bb00000..0x000000009c1fffff (7168 KiB) nomap non-reusable video-region@9bb00000
+[    1.762420] gts9 kernel: OF: reserved mem: 0x000000009c200000..0x000000009c8fffff (7168 KiB) nomap non-reusable cvp-region@9c200000
+[    1.762433] gts9 kernel: OF: reserved mem: 0x000000009c900000..0x000000009e8fffff (32768 KiB) nomap non-reusable cdsp-region@9c900000
+[    1.762442] gts9 kernel: OF: reserved mem: 0x000000009e900000..0x000000009e97ffff (512 KiB) nomap non-reusable q6-cdsp-dtb-region@9e900000
+[    1.762451] gts9 kernel: OF: reserved mem: 0x000000009e980000..0x000000009e9fffff (512 KiB) nomap non-reusable q6-adsp-dtb-region@9e980000
+[    1.762460] gts9 kernel: OF: reserved mem: 0x00000000d4a80000..0x00000000d4cfffff (2560 KiB) nomap non-reusable rmtfs-region@d4a80000
+[    1.762473] gts9 kernel: OF: reserved mem: 0x00000000d4d00000..0x00000000d7ffffff (52224 KiB) nomap non-reusable mpss-dsm-region@d4d00000
+[    1.762482] gts9 kernel: OF: reserved mem: 0x00000000d8000000..0x00000000d80fffff (1024 KiB) nomap non-reusable tz-reserved-region@d8000000
+[    1.762491] gts9 kernel: OF: reserved mem: 0x00000000d8140000..0x00000000d82fffff (1792 KiB) nomap non-reusable cpucp-fw-region@d8140000
+[    1.762500] gts9 kernel: OF: reserved mem: 0x00000000d8300000..0x00000000d87fffff (5120 KiB) nomap non-reusable qtee-region@d8300000
+[    1.762509] gts9 kernel: OF: reserved mem: 0x00000000d8800000..0x00000000e11fffff (141312 KiB) nomap non-reusable ta-region@d8800000
+[    1.762518] gts9 kernel: OF: reserved mem: 0x00000000e1200000..0x00000000e393ffff (40192 KiB) nomap non-reusable tz-tags-region@e1200000
+[    1.762526] gts9 kernel: OF: reserved mem: 0x00000000e6440000..0x00000000e671cfff (2932 KiB) nomap non-reusable hwfence-shbuf-region@e6440000
+[    1.762536] gts9 kernel: OF: reserved mem: 0x00000000f3600000..0x00000000f80edfff (76728 KiB) nomap non-reusable trust-ui-vm-region@f3600000
+[    1.762545] gts9 kernel: OF: reserved mem: 0x00000000f80ee000..0x00000000f80eefff (4 KiB) nomap non-reusable trust-ui-vm-dump-region@f80ee000
+[    1.762555] gts9 kernel: OF: reserved mem: 0x00000000f80ef000..0x00000000f80f7fff (36 KiB) nomap non-reusable trust-ui-vm-qrt-region@f80ef000
+[    1.762564] gts9 kernel: OF: reserved mem: 0x00000000f80f8000..0x00000000f80fbfff (16 KiB) nomap non-reusable trust-ui-vm-vblk0-ring-region@f80f8000
+[    1.762573] gts9 kernel: OF: reserved mem: 0x00000000f80fc000..0x00000000f80fffff (16 KiB) nomap non-reusable trust-ui-vm-vblk1-ring-region@f80fc000
+[    1.762582] gts9 kernel: OF: reserved mem: 0x00000000f8100000..0x00000000f81fffff (1024 KiB) nomap non-reusable trust-ui-vm-swiotlb-region@f8100000
+[    1.762591] gts9 kernel: OF: reserved mem: 0x00000000f8400000..0x00000000fcbfffff (73728 KiB) nomap non-reusable oem-vm-region@f8400000
+[    1.762600] gts9 kernel: OF: reserved mem: 0x00000000fcc00000..0x00000000fcc03fff (16 KiB) nomap non-reusable oem-vm-vblk0-ring-region@fcc00000
+[    1.762610] gts9 kernel: OF: reserved mem: 0x00000000fcc04000..0x00000000fcd03fff (1024 KiB) nomap non-reusable oem-vm-swiotlb-region@fcc04000
+[    1.762619] gts9 kernel: OF: reserved mem: 0x00000000fce00000..0x00000000ff6fffff (41984 KiB) nomap non-reusable hyp-ext-tags-region@fce00000
+[    1.762628] gts9 kernel: OF: reserved mem: 0x00000000ff700000..0x00000000ff7fffff (1024 KiB) nomap non-reusable hyp-ext-reserved-region@ff700000
+[    1.762637] gts9 kernel: OF: reserved mem: 0x00000000b01ff000..0x00000000b01fffff (4 KiB) nomap non-reusable kaslr@b01ff000
+[    1.762646] gts9 kernel: OF: reserved mem: 0x00000000b0200000..0x00000000b023ffff (256 KiB) nomap non-reusable uh-heap@b0200000
+[    1.762657] gts9 kernel: OF: reserved mem: 0x00000000b1000000..0x00000000b3ffffff (49152 KiB) nomap non-reusable uh-guest@b1000000
+[    1.762666] gts9 kernel: OF: reserved mem: 0x0000000081cf4000..0x0000000081cf4fff (4 KiB) nomap non-reusable chipinfo@81cf4000
+[    1.762675] gts9 kernel: OF: reserved mem: 0x00000000a7d00000..0x00000000a7ffffff (3072 KiB) nomap non-reusable sec-xbl-ramdump@a7d00000
+[    1.762684] gts9 kernel: OF: reserved mem: 0x000000009ea00000..0x00000000a43b3fff (91856 KiB) nomap non-reusable adspslpi@9ea00000
+[    1.762692] gts9 kernel: OF: reserved mem: 0x00000000ff800000..0x00000000ffdfffff (6144 KiB) nomap non-reusable llcc-lpi@ff800000
+[    1.762701] gts9 kernel: OF: reserved mem: 0x00000000b8000000..0x00000000baafffff (44032 KiB) nomap non-reusable splash_region
+[    1.762710] gts9 kernel: OF: reserved mem: 0x0000000880100000..0x00000008801fefff (1020 KiB) nomap non-reusable sec-debug-pool@880100000
+[    1.762719] gts9 kernel: OF: reserved mem: 0x00000008801ff000..0x00000008801fffff (4 KiB) nomap non-reusable sec-reset-info@8801ff000
+[    1.762728] gts9 kernel: OF: reserved mem: 0x0000000880200000..0x00000008803fffff (2048 KiB) map non-reusable sec-log@880200000
+[    1.762737] gts9 kernel: OF: reserved mem: 0x0000000880400000..0x00000008808fffff (5120 KiB) nomap non-reusable sec-debug-bl@880400000
+[    1.762746] gts9 kernel: OF: reserved mem: 0x0000000880900000..0x0000000880afffff (2048 KiB) nomap non-reusable ramoops@880900000
+[    1.762755] gts9 kernel: OF: reserved mem: 0x0000000880b00000..0x0000000880b00fff (4 KiB) nomap non-reusable google-debug-kinfo@880b00000
+[    1.762764] gts9 kernel: OF: reserved mem: 0x0000000880b01000..0x0000000880b01fff (4 KiB) nomap non-reusable hdm@880b01000
+[    1.762775] gts9 kernel: OF: reserved mem: 0x0000000880c00000..0x000000088b8fffff (177152 KiB) nomap non-reusable sec-qcom-rdx@880c00000
+[    1.762785] gts9 kernel: OF: reserved mem: OVERLAP DETECTED!
+                            kaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)
+[    1.762795] gts9 kernel: OF: reserved mem: OVERLAP DETECTED!
+                            uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+[    1.762804] gts9 kernel: OF: reserved mem: OVERLAP DETECTED!
+                            uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+[    1.762813] gts9 kernel: cma: Reserved 16 MiB at 0x00000000f2600000
+[    1.762822] gts9 kernel: psci: probing for conduit method from DT.
+[    1.762830] gts9 kernel: psci: PSCIv1.1 detected in firmware.
+[    1.762839] gts9 kernel: psci: Using standard PSCI v0.2 function IDs
+[    1.762848] gts9 kernel: psci: MIGRATE_INFO_TYPE not supported.
+[    1.762858] gts9 kernel: psci: SMC Calling Convention v1.3
+[    1.762867] gts9 kernel: psci: OSI mode supported.
+[    1.762877] gts9 kernel: WARNING: x1-x3 nonzero in violation of boot protocol:
+                                    x1: 0000000080000000
+                                    x2: 0000000028088000
+                                    x3: 0000000000000000
+                            This indicates a broken bootloader or old kernel
+[    1.762886] gts9 kernel: Zone ranges:
+[    1.762895] gts9 kernel:   DMA32    [mem 0x0000000080000000-0x00000000ffffffff]
+[    1.762905] gts9 kernel:   Normal   [mem 0x0000000100000000-0x0000000affffffff]
+[    1.762916] gts9 kernel: Movable zone start for each node
+[    1.762924] gts9 kernel: Early memory node ranges
+[    1.762933] gts9 kernel:   node   0: [mem 0x0000000080000000-0x0000000080dfffff]
+[    1.762942] gts9 kernel:   node   0: [mem 0x00000000811d0000-0x00000000811fffff]
+[    1.762951] gts9 kernel:   node   0: [mem 0x0000000081200000-0x00000000819fffff]
+[    1.762960] gts9 kernel:   node   0: [mem 0x0000000081a00000-0x0000000081cf4fff]
+[    1.762969] gts9 kernel:   node   0: [mem 0x0000000081cf5000-0x0000000081cfffff]
+[    1.762978] gts9 kernel:   node   0: [mem 0x0000000081d00000-0x0000000081f1ffff]
+[    1.762989] gts9 kernel:   node   0: [mem 0x0000000081f20000-0x00000000825fffff]
+[    1.762998] gts9 kernel:   node   0: [mem 0x0000000082600000-0x0000000086dfffff]
+[    1.763007] gts9 kernel:   node   0: [mem 0x0000000086e00000-0x000000008a7fffff]
+[    1.763015] gts9 kernel:   node   0: [mem 0x000000008a800000-0x000000009b09bfff]
+[    1.763024] gts9 kernel:   node   0: [mem 0x000000009b09c000-0x000000009b0fffff]
+[    1.763032] gts9 kernel:   node   0: [mem 0x000000009b100000-0x00000000a43b3fff]
+[    1.763041] gts9 kernel:   node   0: [mem 0x00000000a43b4000-0x00000000a7cfffff]
+[    1.763049] gts9 kernel:   node   0: [mem 0x00000000a7d00000-0x00000000a7ffffff]
+[    1.763058] gts9 kernel:   node   0: [mem 0x00000000a8000000-0x00000000b01fefff]
+[    1.763067] gts9 kernel:   node   0: [mem 0x00000000b01ff000-0x00000000b01fffff]
+[    1.763076] gts9 kernel:   node   0: [mem 0x00000000b0200000-0x00000000b7ffffff]
+[    1.763085] gts9 kernel:   node   0: [mem 0x00000000b8000000-0x00000000baafffff]
+[    1.763094] gts9 kernel:   node   0: [mem 0x00000000bab00000-0x00000000d4a7ffff]
+[    1.763102] gts9 kernel:   node   0: [mem 0x00000000d4a80000-0x00000000d7ffffff]
+[    1.763111] gts9 kernel:   node   0: [mem 0x00000000d8140000-0x00000000d815ffff]
+[    1.763119] gts9 kernel:   node   0: [mem 0x00000000e11f0000-0x00000000e393ffff]
+[    1.763128] gts9 kernel:   node   0: [mem 0x00000000e3940000-0x00000000e643ffff]
+[    1.763137] gts9 kernel:   node   0: [mem 0x00000000e6440000-0x00000000e671cfff]
+[    1.763145] gts9 kernel:   node   0: [mem 0x00000000e671d000-0x00000000f35fffff]
+[    1.763154] gts9 kernel:   node   0: [mem 0x00000000f3600000-0x00000000f81fffff]
+[    1.763162] gts9 kernel:   node   0: [mem 0x00000000f8200000-0x00000000f83fffff]
+[    1.763171] gts9 kernel:   node   0: [mem 0x00000000f8400000-0x00000000fcd03fff]
+[    1.763186] gts9 kernel:   node   0: [mem 0x00000000fcd04000-0x00000000fcdfffff]
+[    1.763195] gts9 kernel:   node   0: [mem 0x00000000fce00000-0x00000000ffdfffff]
+[    1.763204] gts9 kernel:   node   0: [mem 0x00000000ffe00000-0x00000000ffffffff]
+[    1.763213] gts9 kernel:   node   0: [mem 0x0000000880000000-0x00000008800fffff]
+[    1.763222] gts9 kernel:   node   0: [mem 0x0000000880100000-0x00000008801fffff]
+[    1.763230] gts9 kernel:   node   0: [mem 0x0000000880200000-0x00000008803fffff]
+[    1.763239] gts9 kernel:   node   0: [mem 0x0000000880400000-0x0000000880b01fff]
+[    1.763247] gts9 kernel:   node   0: [mem 0x0000000880b02000-0x0000000880bfffff]
+[    1.763256] gts9 kernel:   node   0: [mem 0x0000000880c00000-0x000000088b8fffff]
+[    1.763265] gts9 kernel:   node   0: [mem 0x000000088b900000-0x00000008b77fffff]
+[    1.763275] gts9 kernel:   node   0: [mem 0x00000008b7a00000-0x00000008b97fffff]
+[    1.763284] gts9 kernel:   node   0: [mem 0x00000008c0000000-0x0000000affffffff]
+[    1.763292] gts9 kernel: Initmem setup node 0 [mem 0x0000000080000000-0x0000000affffffff]
+[    1.763301] gts9 kernel: On node 0, zone DMA32: 976 pages in unavailable ranges
+[    1.763309] gts9 kernel: On node 0, zone DMA32: 320 pages in unavailable ranges
+[    1.763318] gts9 kernel: On node 0, zone DMA32: 37008 pages in unavailable ranges
+[    1.763327] gts9 kernel: On node 0, zone Normal: 512 pages in unavailable ranges
+[    1.763336] gts9 kernel: On node 0, zone Normal: 26624 pages in unavailable ranges
+[    1.763345] gts9 kernel: percpu: Embedded 35 pages/cpu s103832 r8192 d31336 u143360
+[    1.763354] gts9 kernel: pcpu-alloc: s103832 r8192 d31336 u143360 alloc=35*4096
+[    1.763363] gts9 kernel: pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 [0] 4 [0] 5 [0] 6 [0] 7 
+[    1.763372] gts9 kernel: Detected PIPT I-cache on CPU0
+[    1.763380] gts9 kernel: CPU features: detected: Branch Target Identification
+[    1.763389] gts9 kernel: CPU features: detected: Address authentication (architected QARMA5 algorithm)
+[    1.763397] gts9 kernel: CPU features: detected: GICv3 CPU interface
+[    1.763406] gts9 kernel: CPU features: detected: Spectre-v4
+[    1.763416] gts9 kernel: CPU features: detected: ARM erratum 2457168
+[    1.763424] gts9 kernel: CPU features: detected: ARM erratum 2658417
+[    1.763433] gts9 kernel: CPU features: detected: Broken broadcast TLBI completion
+[    1.763442] gts9 kernel: CPU features: detected: ARM errata 2966298, 3117295
+[    1.763451] gts9 kernel: alternatives: applying boot alternatives
+[    1.763463] gts9 kernel: Kernel command line: console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 \
+[    1.767377] gts9 kernel: Kernel command line: nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+[    1.767389] gts9 kernel: Unknown kernel command line parameters "gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 sapa=0", will be passed to user space.
+[    1.767398] gts9 kernel: printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+[    1.767405] gts9 kernel: Dentry cache hash table entries: 2097152 (order: 12, 16777216 bytes, linear)
+[    1.767413] gts9 kernel: Inode-cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+[    1.767420] gts9 kernel: software IO TLB: area num 8.
+[    1.767431] gts9 kernel: software IO TLB: mapped [mem 0x00000000ee600000-0x00000000f2600000] (64MB)
+[    1.767438] gts9 kernel: Built 1 zonelists, mobility grouping on.  Total pages: 3080288
+[    1.767448] gts9 kernel: mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    1.767455] gts9 kernel: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+[    1.767462] gts9 kernel: rcu: Preemptible hierarchical RCU implementation.
+[    1.767470] gts9 kernel: rcu:         RCU event tracing is enabled.
+[    1.767478] gts9 kernel: rcu:         RCU restricting CPUs from NR_CPUS=32 to nr_cpu_ids=8.
+[    1.767485] gts9 kernel: rcu:         RCU priority boosting: priority 1 delay 500 ms.
+[    1.767493] gts9 kernel:         Trampoline variant of Tasks RCU enabled.
+[    1.767500] gts9 kernel:         Tracing variant of Tasks RCU enabled.
+[    1.767507] gts9 kernel: rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+[    1.767515] gts9 kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+[    1.767522] gts9 kernel: RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=8.
+[    1.767529] gts9 kernel: NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    1.767536] gts9 kernel: GICv3: 988 SPIs implemented
+[    1.767544] gts9 kernel: GICv3: 0 Extended SPIs implemented
+[    1.767552] gts9 kernel: Root IRQ handler: gic_handle_irq
+[    1.767559] gts9 kernel: GICv3: GICv3 features: 16 PPIs, DirectLPI
+[    1.767566] gts9 kernel: GICv3: GICD_CTLR.DS=1, SCR_EL3.FIQ=0
+[    1.767575] gts9 kernel: GICv3: Enabling SGIs without active state
+[    1.767582] gts9 kernel: GICv3: CPU0: found redistributor 0 region 0:0x0000000017180000
+[    1.767590] gts9 kernel: ITS [mem 0x17140000-0x1717ffff]
+[    1.767598] gts9 kernel: ITS@0x0000000017140000: Devices Table too large, reduce ids 32->19
+[    1.767605] gts9 kernel: ITS@0x0000000017140000: Devices too large, reduce ITS pages 1024->256
+[    1.767613] gts9 kernel: ITS@0x0000000017140000: allocated 131072 Devices @88be00000 (indirect, esz 8, psz 4K, shr 1)
+[    1.767620] gts9 kernel: ITS@0x0000000017140000: allocated 4096 Interrupt Collections @88bd47000 (flat, esz 1, psz 4K, shr 1)
+[    1.767627] gts9 kernel: GICv3: using LPI property table @0x000000088bd60000
+[    1.767635] gts9 kernel: GICv3: CPU0: using allocated LPI pending table @0x000000088bd70000
+[    1.767642] gts9 kernel: GICv3: GIC: PPI partition interrupt-partition-0[0] { /cpus/cpu@0[0] /cpus/cpu@100[1] /cpus/cpu@200[2] }
+[    1.767649] gts9 kernel: GICv3: GIC: PPI partition interrupt-partition-1[1] { /cpus/cpu@300[3] /cpus/cpu@400[4] }
+[    1.767657] gts9 kernel: GICv3: GIC: PPI partition interrupt-partition-2[2] { /cpus/cpu@500[5] /cpus/cpu@600[6] }
+[    1.767664] gts9 kernel: GICv3: GIC: PPI partition interrupt-partition-3[3] { /cpus/cpu@700[7] }
+[    1.767671] gts9 kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    1.767678] gts9 kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    1.767687] gts9 kernel: arch_timer: cp15 timer running at 19.20MHz (virt).
+[    1.767694] gts9 kernel: clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    1.767701] gts9 kernel: sched_clock: 56 bits at 19MHz, resolution 52ns, wraps every 4398046511078ns
+[    1.767709] gts9 kernel: arm-pv: using stolen time PV
+[    1.767717] gts9 kernel: kfence: initialized - using 524288 bytes for 63 objects at 0x(____ptrval____)-0x(____ptrval____)
+[    1.767725] gts9 kernel: Console: colour dummy device 80x25
+[    1.767733] gts9 kernel: printk: legacy console [tty0] enabled
+[    1.767741] gts9 kernel: Calibrating delay loop (skipped), value calculated using timer frequency.. 38.40 BogoMIPS (lpj=76800)
+[    1.767750] gts9 kernel: pid_max: default: 32768 minimum: 301
+[    1.767758] gts9 kernel: SELinux:  Initializing.
+[    1.767767] gts9 kernel: Mount-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    1.767775] gts9 kernel: Mountpoint-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    1.767783] gts9 kernel: VFS: Finished mounting rootfs on nullfs
+[    1.767791] gts9 kernel: rcu: Hierarchical SRCU implementation.
+[    1.767799] gts9 kernel: rcu:         Max phase no-delay instances is 1000.
+[    1.767808] gts9 kernel: Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+[    1.767816] gts9 kernel: dyndbg: Ignore empty _ddebug table in a CONFIG_DYNAMIC_DEBUG_CORE build
+[    1.767824] gts9 kernel: printk: legacy console [sec_log-1] enabled
+[    1.767832] gts9 kernel: gts9wifi-sec-log: persistent console at 0x0000000880200000 (2097152 bytes, boot 2367, early_initcall)
+[    1.767841] gts9 kernel: EFI services will not be available.
+[    1.767849] gts9 kernel: smp: Bringing up secondary CPUs ...
+[    1.767857] gts9 kernel: Detected PIPT I-cache on CPU1
+[    1.767865] gts9 kernel: GICv3: CPU1: found redistributor 100 region 0:0x00000000171c0000
+[    1.767873] gts9 kernel: GICv3: CPU1: using allocated LPI pending table @0x000000088bd80000
+[    1.767881] gts9 kernel: CPU1: Booted secondary processor 0x0000000100 [0x411fd461]
+[    1.767889] gts9 kernel: Detected PIPT I-cache on CPU2
+[    1.767900] gts9 kernel: GICv3: CPU2: found redistributor 200 region 0:0x0000000017200000
+[    1.767908] gts9 kernel: GICv3: CPU2: using allocated LPI pending table @0x000000088bd90000
+[    1.767917] gts9 kernel: CPU2: Booted secondary processor 0x0000000200 [0x411fd461]
+[    1.767925] gts9 kernel: CPU features: detected: Spectre-BHB
+[    1.767934] gts9 kernel: CPU features: detected: ARM erratum 2645198
+[    1.767942] gts9 kernel: CPU features: detected: SSBS not fully self-synchronizing
+[    1.767950] gts9 kernel: Detected PIPT I-cache on CPU3
+[    1.767958] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU3: 0x00000010212122
+[    1.767966] gts9 kernel: CPU features: Unsupported CPU feature variation detected.
+[    1.767975] gts9 kernel: GICv3: CPU3: found redistributor 300 region 0:0x0000000017240000
+[    1.767984] gts9 kernel: GICv3: CPU3: using allocated LPI pending table @0x000000088bda0000
+[    1.767992] gts9 kernel: CPU3: Booted secondary processor 0x0000000300 [0x411fd4d0]
+[    1.768000] gts9 kernel: Detected PIPT I-cache on CPU4
+[    1.768065] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU4: 0x00000010212122
+[    1.768074] gts9 kernel: GICv3: CPU4: found redistributor 400 region 0:0x0000000017280000
+[    1.768082] gts9 kernel: GICv3: CPU4: using allocated LPI pending table @0x000000088bdb0000
+[    1.768090] gts9 kernel: CPU4: Booted secondary processor 0x0000000400 [0x411fd4d0]
+[    1.768098] gts9 kernel: CPU features: detected: ARM erratum 2067961 or 2054223
+[    1.768107] gts9 kernel: Detected PIPT I-cache on CPU5
+[    1.768115] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU5: 0x00000010212122
+[    1.768123] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU5: 0x00000001021110
+[    1.768131] gts9 kernel: GICv3: CPU5: found redistributor 500 region 0:0x00000000172c0000
+[    1.768138] gts9 kernel: GICv3: CPU5: using allocated LPI pending table @0x000000088bdc0000
+[    1.768146] gts9 kernel: CPU5: Booted secondary processor 0x0000000500 [0x412fd470]
+[    1.768154] gts9 kernel: Detected PIPT I-cache on CPU6
+[    1.768162] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU6: 0x00000010212122
+[    1.768169] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU6: 0x00000001021110
+[    1.768179] gts9 kernel: GICv3: CPU6: found redistributor 600 region 0:0x0000000017300000
+[    1.768186] gts9 kernel: GICv3: CPU6: using allocated LPI pending table @0x000000088bdd0000
+[    1.768194] gts9 kernel: CPU6: Booted secondary processor 0x0000000600 [0x412fd470]
+[    1.768202] gts9 kernel: Detected PIPT I-cache on CPU7
+[    1.768210] gts9 kernel: CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU7: 0x00000010212122
+[    1.768217] gts9 kernel: GICv3: CPU7: found redistributor 700 region 0:0x0000000017340000
+[    1.768225] gts9 kernel: GICv3: CPU7: using allocated LPI pending table @0x000000088bde0000
+[    1.768233] gts9 kernel: CPU7: Booted secondary processor 0x0000000700 [0x411fd4e0]
+[    1.768241] gts9 kernel: smp: Brought up 1 node, 8 CPUs
+[    1.768249] gts9 kernel: SMP: Total of 8 processors activated.
+[    1.768257] gts9 kernel: CPU: All CPU(s) started at EL1
+[    1.768265] gts9 kernel: CPU features: detected: ARMv8.4 Translation Table Level
+[    1.768272] gts9 kernel: CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[    1.768280] gts9 kernel: CPU features: detected: Common not Private translations
+[    1.768288] gts9 kernel: CPU features: detected: CRC32 instructions
+[    1.768295] gts9 kernel: CPU features: detected: Data independent timing control (DIT)
+[    1.768303] gts9 kernel: CPU features: detected: E0PD
+[    1.768312] gts9 kernel: CPU features: detected: Enhanced Virtualization Traps
+[    1.768320] gts9 kernel: CPU features: detected: Generic authentication (architected QARMA5 algorithm)
+[    1.768327] gts9 kernel: CPU features: detected: RCpc load-acquire (LDAPR)
+[    1.768335] gts9 kernel: CPU features: detected: LSE atomic instructions
+[    1.768343] gts9 kernel: CPU features: detected: Privileged Access Never
+[    1.768350] gts9 kernel: CPU features: detected: PMUv3
+[    1.768358] gts9 kernel: CPU features: detected: Speculation barrier (SB)
+[    1.768366] gts9 kernel: CPU features: detected: Stage-2 Force Write-Back
+[    1.768374] gts9 kernel: CPU features: detected: TLB range maintenance instructions
+[    1.768383] gts9 kernel: CPU features: detected: XNX
+[    1.768391] gts9 kernel: CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    1.768399] gts9 kernel: alternatives: applying system-wide alternatives
+[    1.768406] gts9 kernel: CPU features: detected: Activity Monitors Unit (AMU) on CPU0-7
+[    1.768414] gts9 kernel: CPU features: detected: Hardware dirty bit management on CPU0-7
+[    1.768422] gts9 kernel: Memory: 10827140K/12321152K available (20800K kernel code, 2698K rwdata, 21780K rodata, 1472K init, 512K bss, 1465796K reserved, 16384K cma-reserved)
+[    1.768430] gts9 kernel: devtmpfs: initialized
+[    1.768438] gts9 kernel: posixtimers hash table entries: 4096 (order: 4, 65536 bytes, linear)
+[    1.768448] gts9 kernel: futex hash table entries: 2048 (131072 bytes on 1 NUMA nodes, total 128 KiB, linear).
+[    1.768456] gts9 kernel: 20880 pages in range for non-PLT usage
+[    1.768469] gts9 kernel: 512400 pages in range for PLT usage
+[    1.768477] gts9 kernel: NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    1.768484] gts9 kernel: DMA: preallocated 2048 KiB GFP_KERNEL pool for atomic allocations
+[    1.768492] gts9 kernel: DMA: preallocated 2048 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    1.768500] gts9 kernel: audit: initializing netlink subsys (disabled)
+[    1.768507] gts9 kernel: audit: type=2000 audit(0.120:1): state=initialized audit_enabled=0 res=1
+[    1.768515] gts9 kernel: thermal_sys: Registered thermal governor 'step_wise'
+[    1.768525] gts9 kernel: thermal_sys: Registered thermal governor 'user_space'
+[    1.768533] gts9 kernel: thermal_sys: Registered thermal governor 'power_allocator'
+[    1.768540] gts9 kernel: cpuidle: using governor menu
+[    1.768548] gts9 kernel: NET: Registered PF_QIPCRTR protocol family
+[    1.768556] gts9 kernel: hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    1.768563] gts9 kernel: ASID allocator initialised with 65536 entries
+[    1.768571] gts9 kernel: Serial: AMBA PL011 UART driver
+[    1.768579] gts9 kernel: pstore: Using crash dump compression: deflate
+[    1.768587] gts9 kernel: printk: legacy console [ramoops-1] enabled
+[    1.768595] gts9 kernel: pstore: Registered ramoops as persistent store backend
+[    1.768602] gts9 kernel: ramoops: using 0x200000@0x880900000, ecc: 0
+[    1.768610] gts9 kernel: CPUidle PSCI: Initialized CPU PM domain topology using OSI mode
+[    1.768618] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.768626] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+[    1.768634] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+[    1.768642] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.768650] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.768659] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.768666] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.768674] gts9 kernel: /soc@0/interconnect@16e0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768682] gts9 kernel: /soc@0/phy@1c06000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768690] gts9 kernel: /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+[    1.768698] gts9 kernel: /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768705] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+[    1.768713] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768722] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+[    1.768730] gts9 kernel: /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.768737] gts9 kernel: /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.768746] gts9 kernel: /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac16000/i2c-bus@1/camera@21
+[    1.768754] gts9 kernel: /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac15000/i2c-bus@1/camera@21
+[    1.768761] gts9 kernel: /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.768769] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    1.768777] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    1.768786] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.768794] gts9 kernel: /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    1.768802] gts9 kernel: /soc@0/clock-controller@af00000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/phy@ae95000
+[    1.768810] gts9 kernel: /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768818] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.768825] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.768833] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768841] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.768849] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.768857] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e3000
+[    1.768865] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+[    1.768872] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768881] gts9 kernel: /soc@0/interrupt-controller@17100000: Fixed dependency cycle(s) with /soc@0/interrupt-controller@17100000
+[    1.768888] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.768897] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+[    1.768904] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+[    1.768913] gts9 kernel: /soc@0/geniqup@8c0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768921] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.768928] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.768936] gts9 kernel: /soc@0/geniqup@9c0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768946] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.768954] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.768962] gts9 kernel: /soc@0/geniqup@ac0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768970] gts9 kernel: /soc@0/interconnect@16e0000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768977] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1c06000
+[    1.768985] gts9 kernel: /soc@0/phy@1c06000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.768994] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+[    1.769002] gts9 kernel: /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+[    1.769009] gts9 kernel: /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.769017] gts9 kernel: /soc@0/phy@1d80000: Fixed dependency cycle(s) with /soc@0/ufshc@1d84000
+[    1.769024] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+[    1.769032] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.769041] gts9 kernel: /soc@0/ufshc@1d84000: Fixed dependency cycle(s) with /soc@0/phy@1d80000
+[    1.769055] gts9 kernel: /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.769063] gts9 kernel: /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.769071] gts9 kernel: /soc@0/cci@ac16000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.769078] gts9 kernel: /soc@0/cci@ac15000/i2c-bus@1/camera@21: Fixed dependency cycle(s) with /soc@0/isp@acb7000
+[    1.769086] gts9 kernel: /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac16000/i2c-bus@1/camera@21
+[    1.769093] gts9 kernel: /soc@0/isp@acb7000: Fixed dependency cycle(s) with /soc@0/cci@ac15000/i2c-bus@1/camera@21
+[    1.769101] gts9 kernel: /soc@0/display-subsystem@ae00000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    1.769109] gts9 kernel: /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.769116] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    1.769125] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    1.769133] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.769140] gts9 kernel: /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    1.769148] gts9 kernel: /soc@0/display-subsystem@ae00000/phy@ae95000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    1.769156] gts9 kernel: /soc@0/display-subsystem@ae00000: Fixed dependency cycle(s) with /soc@0/clock-controller@af00000
+[    1.769163] gts9 kernel: /soc@0/clock-controller@af00000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/phy@ae95000
+[    1.769171] gts9 kernel: /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/geniqup@ac0000/i2c@a98000/redriver@4f
+[    1.769178] gts9 kernel: /soc@0/phy@88e3000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.769186] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.769193] gts9 kernel: /soc@0/clock-controller@100000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.769200] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.769209] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.769217] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.769224] gts9 kernel: /soc@0/phy@88e8000: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.769232] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.769239] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.769248] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.769255] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/phy@88e3000
+[    1.769263] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/interconnect@16e0000
+[    1.769270] gts9 kernel: /soc@0/usb@a600000: Fixed dependency cycle(s) with /soc@0/clock-controller@100000
+[    1.769278] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+[    1.769285] gts9 kernel: /usb-c-sbu-mux: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.769293] gts9 kernel: iommu: Default domain type: Translated
+[    1.769301] gts9 kernel: iommu: DMA domain TLB invalidation policy: strict mode
+[    1.769310] gts9 kernel: SCSI subsystem initialized
+[    1.769317] gts9 kernel: usbcore: registered new interface driver usbfs
+[    1.769325] gts9 kernel: usbcore: registered new interface driver hub
+[    1.769333] gts9 kernel: usbcore: registered new device driver usb
+[    1.769340] gts9 kernel: mc: Linux media interface: v0.10
+[    1.769348] gts9 kernel: videodev: Linux video capture interface: v2.00
+[    1.769356] gts9 kernel: pps_core: LinuxPPS API ver. 1 registered
+[    1.769363] gts9 kernel: pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    1.769371] gts9 kernel: PTP clock support registered
+[    1.769380] gts9 kernel: EDAC MC: Ver: 3.0.0
+[    1.769387] gts9 kernel: scmi_core: SCMI protocol bus registered
+[    1.769395] gts9 kernel: Advanced Linux Sound Architecture Driver Initialized.
+[    1.769403] gts9 kernel: nfc: nfc_init: NFC Core ver 0.1
+[    1.769411] gts9 kernel: NET: Registered PF_NFC protocol family
+[    1.769421] gts9 kernel: clocksource: Switched to clocksource arch_sys_counter
+[    1.769429] gts9 kernel: VFS: Disk quotas dquot_6.6.0
+[    1.769436] gts9 kernel: VFS: Dquot-cache hash table entries: 512 (4096 bytes)
+[    1.769444] gts9 kernel: NET: Registered PF_INET protocol family
+[    1.769453] gts9 kernel: IP idents hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    1.769461] gts9 kernel: tcp_listen_portaddr_hash hash table entries: 8192 (order: 5, 131072 bytes, linear)
+[    1.769468] gts9 kernel: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    1.769476] gts9 kernel: TCP established hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    1.769484] gts9 kernel: TCP bind hash table entries: 65536 (order: 9, 2097152 bytes, linear)
+[    1.769491] gts9 kernel: TCP: Hash tables configured (established 131072 bind 65536)
+[    1.769499] gts9 kernel: UDP hash table entries: 8192 (order: 7, 524288 bytes, linear)
+[    1.769507] gts9 kernel: NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    1.769515] gts9 kernel: NET: Registered PF_XDP protocol family
+[    1.769524] gts9 kernel: PCI: CLS 0 bytes, default 64
+[    1.769531] gts9 kernel: Trying to unpack rootfs image as initramfs...
+[    1.769540] gts9 kernel: Freeing initrd memory: 1136K
+[    1.769547] gts9 kernel: kvm [1]: HYP mode not available
+[    1.769555] gts9 kernel: Initialise system trusted keyrings
+[    1.769563] gts9 kernel: workingset: timestamp_bits=46 (anon: 41) max_order=22 bucket_order=0 (anon: 0)
+[    1.769570] gts9 kernel: fuse: init (API version 7.45)
+[    1.769578] gts9 kernel: Key type asymmetric registered
+[    1.769585] gts9 kernel: Asymmetric key parser 'x509' registered
+[    1.769594] gts9 kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 237)
+[    1.769602] gts9 kernel: io scheduler mq-deadline registered
+[    1.769609] gts9 kernel: io scheduler kyber registered
+[    1.769616] gts9 kernel: io scheduler bfq registered
+[    1.769624] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+[    1.769632] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.769639] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.769834] gts9 kernel: gts9wifi-sec-kernel-log sec-kernel-log: ring already owned by the early console; leaving it alone
+[    1.769849] gts9 kernel: vreg_l1c_1p1: Setting 1104000-1104000uV
+[    1.769857] gts9 kernel: vreg_l1b_1p8: Setting 1800000-1800000uV
+[    1.769865] gts9 kernel: vreg_s4e_0p952: Setting 952000-952000uV
+[    1.769873] gts9 kernel: vreg_s2g_1p012: Setting 1016000-1016000uV
+[    1.769880] gts9 kernel: vreg_l1e_0p88: Setting 880000-880000uV
+[    1.769888] gts9 kernel: vreg_l3e_1p2: Setting 1200000-1200000uV
+[    1.769896] gts9 kernel: vreg_l4b_1p8: Setting 1800000-1800000uV
+[    1.769903] gts9 kernel: vreg_l5b_3p104: Setting 3104000-3104000uV
+[    1.769911] gts9 kernel: vreg_s4g_1p352: Setting 1352000-1352000uV
+[    1.769920] gts9 kernel: vreg_l8b_1p8: Setting 1800000-3000000uV
+[    1.769928] gts9 kernel: vreg_l9b_2p9: Setting 2960000-3000000uV
+[    1.769935] gts9 kernel: vreg_s5g_0p966: Setting 968000-968000uV
+[    1.769944] gts9 kernel: vreg_l10b_1p8: Setting 1800000-1800000uV
+[    1.769951] gts9 kernel: vreg_s6g_1p904: Setting 1904000-1904000uV
+[    1.769959] gts9 kernel: vreg_l11b_1p1: Setting 1104000-1104000uV
+[    1.769966] gts9 kernel: vreg_l3g_1p2: Setting 1200000-1200000uV
+[    1.769974] gts9 kernel: vreg_l12b_1p8: Setting 1800000-1800000uV
+[    1.769982] gts9 kernel: vreg_l13b_3p0: Setting 3000000-3000000uV
+[    1.769990] gts9 kernel: vreg_l14b_3p3: Setting 3304000-3304000uV
+[    1.769999] gts9 kernel: vreg_l15b_1p8: Setting 1800000-1800000uV
+[    1.770006] gts9 kernel: vreg_l1g_1p2: Setting 1200000-1200000uV
+[    1.770014] gts9 kernel: vreg_l16b_3p0: Setting 3000000-3000000uV
+[    1.770023] gts9 kernel: vreg_l17b_2p5: Setting 2504000-2504000uV
+[    1.770030] gts9 kernel: printk: legacy console [ttynull0] enabled
+[    1.770038] gts9 kernel: brd: module loaded
+[    1.770046] gts9 kernel: loop: module loaded
+[    1.770181] gts9 kernel: spmi_pmic_arb c400000.spmi: PMIC arbiter version v7 (0x70000001)
+[    1.770194] gts9 kernel: wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+[    1.770202] gts9 kernel: wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+[    1.770210] gts9 kernel: MACsec IEEE 802.1AE
+[    1.770218] gts9 kernel: tun: Universal TUN/TAP device driver, 1.6
+[    1.770225] gts9 kernel: CAN device driver interface
+[    1.770232] gts9 kernel: PPP generic driver version 2.4.2
+[    1.770240] gts9 kernel: PPP BSD Compression module registered
+[    1.770248] gts9 kernel: PPP Deflate Compression module registered
+[    1.770257] gts9 kernel: PPP MPPE Compression module registered
+[    1.770265] gts9 kernel: NET: Registered PF_PPPOX protocol family
+[    1.770272] gts9 kernel: PPTP driver version 0.8.5
+[    1.770280] gts9 kernel: usbcore: registered new interface driver rtl8150
+[    1.770288] gts9 kernel: usbcore: registered new device driver r8152-cfgselector
+[    1.770297] gts9 kernel: usbcore: registered new interface driver r8152
+[    1.770304] gts9 kernel: usbcore: registered new interface driver asix
+[    1.770312] gts9 kernel: usbcore: registered new interface driver ax88179_178a
+[    1.770320] gts9 kernel: usbcore: registered new interface driver cdc_ether
+[    1.770329] gts9 kernel: usbcore: registered new interface driver cdc_eem
+[    1.770337] gts9 kernel: usbcore: registered new interface driver cdc_ncm
+[    1.770344] gts9 kernel: usbcore: registered new interface driver aqc111
+[    1.770352] gts9 kernel: usbcore: registered new interface driver r8153_ecm
+[    1.770359] gts9 kernel: usbcore: registered new interface driver cdc_acm
+[    1.770367] gts9 kernel: cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    1.770375] gts9 kernel: usbcore: registered new interface driver uas
+[    1.770383] gts9 kernel: usbcore: registered new interface driver usb-storage
+[    1.770490] gts9 kernel: dummy_hcd dummy_hcd.0: USB Host+Gadget Emulator, driver 02 May 2005
+[    1.770589] gts9 kernel: dummy_hcd dummy_hcd.0: Dummy host controller
+[    1.770689] gts9 kernel: dummy_hcd dummy_hcd.0: new USB bus registered, assigned bus number 1
+[    1.770790] gts9 kernel: usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.02
+[    1.770869] gts9 kernel: usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.770942] gts9 kernel: usb usb1: Product: Dummy host controller
+[    1.771017] gts9 kernel: usb usb1: Manufacturer: Linux 7.2.0-rc3-gts9wifi-dirty dummy_hcd
+[    1.771093] gts9 kernel: usb usb1: SerialNumber: dummy_hcd.0
+[    1.771211] gts9 kernel: hub 1-0:1.0: USB hub found
+[    1.771317] gts9 kernel: hub 1-0:1.0: 1 port detected
+[    1.771327] gts9 kernel: usbcore: registered new interface driver xpad
+[    1.771454] gts9 kernel: rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: registered as rtc0
+[    1.771574] gts9 kernel: rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: setting system clock to 1970-01-02T02:08:12 UTC (94092)
+[    1.771585] gts9 kernel: i2c_dev: i2c /dev entries driver
+[    1.771595] gts9 kernel: usbcore: registered new interface driver uvcvideo
+[    1.771604] gts9 kernel: input: pmic_pwrkey as /devices/platform/soc@0/c400000.spmi/spmi-0/0-00/c400000.spmi:pmic@0:pon@1300/c400000.spmi:pmic@0:pon@1300:pwrkey/input/input0
+[    1.771616] gts9 kernel: input: pmic_resin as /devices/platform/soc@0/c400000.spmi/spmi-0/0-00/c400000.spmi:pmic@0:pon@1300/c400000.spmi:pmic@0:pon@1300:resin/input/input1
+[    1.771624] gts9 kernel: device-mapper: uevent: version 1.0.3
+[    1.771631] gts9 kernel: device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+[    1.771639] gts9 kernel: SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+[    1.771648] gts9 kernel: clocksource: arch_mmio_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    1.771766] gts9 kernel: arch-timer-mmio 17420000.timer: mmio timer running at 19.20MHz (virt)
+[    1.771778] gts9 kernel: hid: raw HID events driver (C) Jiri Kosina
+[    1.771786] gts9 kernel: usbcore: registered new interface driver usbhid
+[    1.771794] gts9 kernel: usbhid: USB HID core driver
+[    1.771802] gts9 kernel: hw perfevents: enabled with armv9_cortex_a510 PMU driver, 7 (0,8000003f) counters available
+[    1.771810] gts9 kernel: hw perfevents: enabled with armv9_cortex_a710 PMU driver, 7 (0,8000003f) counters available
+[    1.771818] gts9 kernel: hw perfevents: enabled with armv9_cortex_a715 PMU driver, 7 (0,8000003f) counters available
+[    1.771826] gts9 kernel: hw perfevents: enabled with armv9_cortex_x3 PMU driver, 7 (0,8000003f) counters available
+[    1.771834] gts9 kernel: watchdog: NMI not fully supported
+[    1.771843] gts9 kernel: watchdog: Hard watchdog permanently disabled
+[    1.771851] gts9 kernel: gnss: GNSS driver registered with major 507
+[    1.771859] gts9 kernel: usbcore: registered new interface driver snd-usb-audio
+[    1.771866] gts9 kernel: GACT probability NOT on
+[    1.771875] gts9 kernel: Mirror/redirect action on
+[    1.771882] gts9 kernel: u32 classifier
+[    1.771890] gts9 kernel:     input device check on
+[    1.771898] gts9 kernel:     Actions configured
+[    1.771907] gts9 kernel: nf_conntrack_irc: The irc conntrack helper is scheduled for removal.
+                            Please contact the netfilter-devel mailing list if you still need this.
+[    1.771917] gts9 kernel: The pptp conntrack helper is scheduled for removal.
+                            Please contact the netfilter-devel mailing list if you still need this.
+[    1.771925] gts9 kernel: xt_time: kernel timezone is -0000
+[    1.771933] gts9 kernel: ipip: IPv4 and MPLS over IPv4 tunneling driver
+[    1.771942] gts9 kernel: gre: GRE over IPv4 demultiplexer driver
+[    1.771949] gts9 kernel: ip_gre: GRE over IPv4 tunneling driver
+[    1.771957] gts9 kernel: IPv4 over IPsec tunneling driver
+[    1.771965] gts9 kernel: Initializing XFRM netlink socket
+[    1.771973] gts9 kernel: IPsec XFRM device driver
+[    1.771980] gts9 kernel: NET: Registered PF_INET6 protocol family
+[    1.771989] gts9 kernel: Segment Routing with IPv6
+[    1.771996] gts9 kernel: In-situ OAM (IOAM) with IPv6
+[    1.772033] gts9 kernel: mip6: Mobile IPv6
+[    1.772043] gts9 kernel: sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.772053] gts9 kernel: ip6_gre: GRE over IPv6 tunneling driver
+[    1.772061] gts9 kernel: NET: Registered PF_PACKET protocol family
+[    1.772068] gts9 kernel: PFKEY is deprecated and scheduled to be removed in 2027, please contact the netdev mailing list
+[    1.772077] gts9 kernel: NET: Registered PF_KEY protocol family
+[    1.772085] gts9 kernel: Bridge firewalling registered
+[    1.772095] gts9 kernel: can: controller area network core
+[    1.772102] gts9 kernel: NET: Registered PF_CAN protocol family
+[    1.772109] gts9 kernel: can: raw protocol
+[    1.772117] gts9 kernel: can: broadcast manager protocol
+[    1.772128] gts9 kernel: can: netlink gateway - max_hops=1
+[    1.772135] gts9 kernel: l2tp_core: L2TP core driver, V2.0
+[    1.772143] gts9 kernel: l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    1.772151] gts9 kernel: 8021q: 802.1Q VLAN Support v1.8
+[    1.772158] gts9 kernel: tipc: Activated (version 2.0.0)
+[    1.772167] gts9 kernel: NET: Registered PF_TIPC protocol family
+[    1.772174] gts9 kernel: tipc: Started in single node mode
+[    1.772181] gts9 kernel: 9pnet: Installing 9P2000 support
+[    1.772188] gts9 kernel: NET: Registered PF_IEEE802154 protocol family
+[    1.772196] gts9 kernel: NET: Registered PF_VSOCK protocol family
+[    1.772204] gts9 kernel: registered taskstats version 1
+[    1.772211] gts9 kernel: Loading compiled-in X.509 certificates
+[    1.772219] gts9 kernel: cryptomgr_probe (107) used greatest stack depth: 15288 bytes left
+[    1.772226] gts9 kernel: Loaded X.509 cert 'Build time autogenerated kernel key: cf4518ccc550b6eb3be867cad0e0dc77350d7c5e'
+[    1.772236] gts9 kernel: page_owner is disabled
+[    1.772244] gts9 kernel: Key type .fscrypt registered
+[    1.772251] gts9 kernel: Key type fscrypt-provisioning registered
+[    1.772259] gts9 kernel: qcom_scm: convention: smc arm 64
+[    1.772380] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.772486] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.772587] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.772688] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.772789] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.772899] gts9 kernel: qcom-ice 1d88000.crypto: Found QC Inline Crypto Engine (ICE) v4.0.1
+[    1.773004] gts9 kernel: qcom-ice 1d88000.crypto: QC Hardware Key Manager (HWKM) version v2
+[    1.773105] gts9 kernel: qcom-ice 1d88000.crypto: A supported HWKM is not present. Supporting raw keys only.
+[    1.773115] gts9 kernel: vreg_l3f_0p88: Setting 880000-912000uV
+[    1.773230] gts9 kernel: arm-smmu 3da0000.iommu: probing hardware configuration...
+[    1.773335] gts9 kernel: arm-smmu 3da0000.iommu: SMMUv2 with:
+[    1.773440] gts9 kernel: arm-smmu 3da0000.iommu:         stage 1 translation
+[    1.773544] gts9 kernel: arm-smmu 3da0000.iommu:         coherent table walk
+[    1.773649] gts9 kernel: arm-smmu 3da0000.iommu:         stream matching with 24 register groups
+[    1.773752] gts9 kernel: arm-smmu 3da0000.iommu:         22 context banks (0 stage-2 only)
+[    1.773855] gts9 kernel: arm-smmu 3da0000.iommu:         Supported page sizes: 0x61311000
+[    1.773958] gts9 kernel: arm-smmu 3da0000.iommu:         Stage-1: 48-bit VA -> 36-bit IPA
+[    1.774061] gts9 kernel: arm-smmu 3da0000.iommu:         preserved 0 boot mappings
+[    1.774172] gts9 kernel: platform 3d00000.gpu: Adding to iommu group 0
+[    1.774285] gts9 kernel: platform 3d6a000.gmu: Adding to iommu group 1
+[    1.774387] gts9 kernel: arm-smmu 15000000.iommu: probing hardware configuration...
+[    1.774488] gts9 kernel: arm-smmu 15000000.iommu: SMMUv2 with:
+[    1.774590] gts9 kernel: arm-smmu 15000000.iommu:         stage 1 translation
+[    1.774695] gts9 kernel: arm-smmu 15000000.iommu:         coherent table walk
+[    1.774796] gts9 kernel: arm-smmu 15000000.iommu:         stream matching with 105 register groups
+[    1.774899] gts9 kernel: arm-smmu 15000000.iommu:         70 context banks (0 stage-2 only)
+[    1.775004] gts9 kernel: arm-smmu 15000000.iommu:         Supported page sizes: 0x61311000
+[    1.775104] gts9 kernel: arm-smmu 15000000.iommu:         Stage-1: 36-bit VA -> 36-bit IPA
+[    1.775207] gts9 kernel: arm-smmu 15000000.iommu:         preserved 0 boot mappings
+[    1.775320] gts9 kernel: platform 800000.dma-controller: Adding to iommu group 2
+[    1.775428] gts9 kernel: platform 8c0000.geniqup: Adding to iommu group 3
+[    1.775540] gts9 kernel: platform a00000.dma-controller: Adding to iommu group 4
+[    1.775650] gts9 kernel: platform ac0000.geniqup: Adding to iommu group 5
+[    1.775763] gts9 kernel: platform 1dc4000.dma-controller: Adding to iommu group 6
+[    1.775873] gts9 kernel: platform 1dfa000.crypto: Adding to iommu group 6
+[    1.775981] gts9 kernel: platform 1d84000.ufshc: Adding to iommu group 7
+[    1.776103] gts9 kernel: platform 8804000.mmc: Adding to iommu group 8
+[    1.776211] gts9 kernel: platform aa00000.video-codec: Adding to iommu group 9
+[    1.776323] gts9 kernel: platform acb7000.isp: Adding to iommu group 10
+[    1.776429] gts9 kernel: platform ae00000.display-subsystem: Adding to iommu group 11
+[    1.776536] gts9 kernel: platform a600000.usb: Adding to iommu group 12
+[    1.776547] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+[    1.776554] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.776562] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    1.776650] gts9 kernel: remoteproc remoteproc0: adsp is available
+[    1.776760] gts9 kernel: sdhci_msm 8804000.mmc: Got CD GPIO
+[    1.776832] gts9 kernel: remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    1.776904] gts9 kernel: remoteproc remoteproc0: powering up adsp
+[    1.776976] gts9 kernel: remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    1.777045] gts9 kernel: remoteproc remoteproc0: request_firmware failed: -2
+[    1.777161] gts9 kernel: cpu cpu0: EM: created perf domain
+[    1.777276] gts9 kernel: cpu cpu3: EM: created perf domain
+[    1.777384] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.777487] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.777589] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.777690] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8066d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.777793] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.777897] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.777999] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb808ea00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.778102] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.778206] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.778305] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80b5200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.778404] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.778506] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.778605] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80daa00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.778706] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.778804] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.778904] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8100200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.779002] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.779101] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.779204] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8125700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.779304] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.779403] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.779502] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb814c500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.779604] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.779703] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.779802] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8170600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.779902] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.780043] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.780165] gts9 kernel: arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8195c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    1.780273] gts9 kernel: arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    1.780375] gts9 kernel: arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    1.780485] gts9 kernel: cpu cpu7: EM: created perf domain
+[    1.780497] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    1.780505] gts9 kernel: ------------[ cut here ]------------
+[    1.780512] gts9 kernel: disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
+[    1.780521] gts9 kernel: WARNING: ../linux-src-gts9wifi/drivers/clk/qcom/clk-rcg2.c:136 at update_config+0xdc/0xf0, CPU#3: kworker/u32:0/12
+[    1.780529] gts9 kernel: Modules linked in:
+[    1.780537] gts9 kernel: CPU: 3 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S                  7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[    1.780547] gts9 kernel: Tainted: [S]=CPU_OUT_OF_SPEC
+[    1.780555] gts9 kernel: Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[    1.780563] gts9 kernel: Workqueue: events_unbound deferred_probe_work_func
+[    1.780571] gts9 kernel: pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    1.780579] gts9 kernel: pc : update_config+0xdc/0xf0
+[    1.780586] gts9 kernel: lr : update_config+0xd8/0xf0
+[    1.780594] gts9 kernel: sp : ffffffc082f5b990
+[    1.780602] gts9 kernel: x29: ffffffc082f5b9a0 x28: 0000000061c88647 x27: ffffff880c832a00
+[    1.780610] gts9 kernel: x26: ffffffc082eb5000 x25: ffffffc082eb5000 x24: ffffff880cd90810
+[    1.780619] gts9 kernel: x23: ffffffc0821c80a0 x22: ffffffc081c2f638 x21: 0000000000000001
+[    1.780627] gts9 kernel: x20: ffffffc0821c80a0 x19: ffffffc082d54658 x18: ffffffc082f110a0
+[    1.780637] gts9 kernel: x17: 00000000b57533eb x16: 69665f666f00746e x15: 0000000000000003
+[    1.780644] gts9 kernel: x14: ffffffc082c098f0 x13: 0000000000000fff x12: 0000000000000003
+[    1.780652] gts9 kernel: x11: 0000000000000003 x10: 0000000000000002 x9 : a1ab17f599a35600
+[    1.780660] gts9 kernel: x8 : a1ab17f599a35600 x7 : 6470752074276e64 x6 : 696420676372203a
+[    1.780668] gts9 kernel: x5 : ffffffc082e70bc6 x4 : ffffffc0821df1b3 x3 : 0000000000000000
+[    1.780675] gts9 kernel: x2 : 0000000000000000 x1 : ffffffc082f5b760 x0 : 00000000fffffff0
+[    1.780684] gts9 kernel: Call trace:
+[    1.780692] gts9 kernel:  update_config+0xdc/0xf0 (P)
+[    1.780699] gts9 kernel:  clk_rcg2_shared_init+0x58/0x90
+[    1.780708] gts9 kernel:  __clk_register+0x418/0xacc
+[    1.780716] gts9 kernel:  devm_clk_hw_register+0x7c/0xc8
+[    1.780723] gts9 kernel:  devm_clk_register_regmap+0x58/0x6c
+[    1.780732] gts9 kernel:  qcom_cc_really_probe+0x334/0x3dc
+[    1.780739] gts9 kernel:  disp_cc_sm8550_probe+0x1d4/0x204
+[    1.780749] gts9 kernel:  platform_probe+0x60/0xa4
+[    1.780756] gts9 kernel:  really_probe+0x14c/0x2f0
+[    1.780763] gts9 kernel:  __driver_probe_device+0xd4/0x134
+[    1.780775] gts9 kernel:  driver_probe_device+0x48/0x218
+[    1.780782] gts9 kernel:  __device_attach_driver+0x144/0x194
+[    1.780790] gts9 kernel:  bus_for_each_drv+0xf8/0x154
+[    1.780798] gts9 kernel:  __device_attach+0x104/0x194
+[    1.780805] gts9 kernel:  device_initial_probe+0x3c/0x5c
+[    1.780813] gts9 kernel:  bus_probe_device+0x90/0x100
+[    1.780822] gts9 kernel:  deferred_probe_work_func+0x80/0xe0
+[    1.780830] gts9 kernel:  process_scheduled_works+0x18c/0x4d0
+[    1.780837] gts9 kernel:  worker_thread+0x1f8/0x2e8
+[    1.780844] gts9 kernel:  kthread+0x108/0x134
+[    1.780852] gts9 kernel:  ret_from_fork+0x10/0x20
+[    1.780860] gts9 kernel: ---[ end trace 0000000000000000 ]---
+[    1.780868] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.780876] gts9 kernel: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    1.780884] gts9 kernel: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    1.780892] gts9 kernel: 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 182, base_baud = 0) is a MSM
+[    1.781026] gts9 kernel: serial serial0: tty port ttyHS1 registered
+[    1.781037] gts9 kernel: input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input2
+[    1.781163] gts9 kernel: ptn3222 8-004f: repeater redriver: 10 override cells
+[    1.781265] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.781365] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.781462] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.781560] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.781656] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.781761] gts9 kernel: adreno 3d00000.gpu: supply vdd not found, using dummy regulator
+[    1.781861] gts9 kernel: adreno 3d00000.gpu: supply vddcx not found, using dummy regulator
+[    1.781871] gts9 kernel: mmc1: SDHCI controller on 8804000.mmc [8804000.mmc] using ADMA 64-bit
+[    1.781878] gts9 kernel: cryptomgr_probe (107): highest shadow stack usage: 112 bytes
+[    1.781886] gts9 kernel: [drm] Initialized msm 1.13.0 for 3d00000.gpu on minor 0
+[    1.781895] gts9 kernel: /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.781902] gts9 kernel: /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.781910] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    1.781918] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    1.781926] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.781936] gts9 kernel: irq/196-ss_phy_ (161) used greatest stack depth: 14864 bytes left
+[    1.781944] gts9 kernel: irq/194-dp_hs_p (157) used greatest stack depth: 14768 bytes left
+[    1.782045] gts9 kernel: ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+[    1.782149] gts9 kernel: ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find vccq2-supply regulator, assuming enabled
+[    1.782259] gts9 kernel: scsi host0: ufshcd
+[    1.782269] gts9 kernel: irq/196-ss_phy_ (161): highest shadow stack usage: 120 bytes
+[    1.782278] gts9 kernel: irq/194-dp_hs_p (157): highest shadow stack usage: 128 bytes
+[    1.782392] gts9 kernel: scsi 0:0:0:49488: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.782497] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.782594] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.782690] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.782788] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.782888] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.782897] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    1.782905] gts9 kernel: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    1.783022] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+[    1.783136] gts9 kernel: msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+[    1.783146] gts9 kernel: [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+[    1.783252] gts9 kernel: scsi 0:0:0:49476: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.783262] gts9 kernel: [drm] Initialized msm-kms 1.13.0 for ae01000.display-controller on minor 1
+[    1.783366] gts9 kernel: msm_dpu ae01000.display-controller: no GPU device was found
+[    1.783475] gts9 kernel: scsi 0:0:0:49456: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.783585] gts9 kernel: scsi 0:0:0:0: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.783693] gts9 kernel: sd 0:0:0:0: [sda] 62275584 4096-byte logical blocks: (255 GB/238 GiB)
+[    1.783796] gts9 kernel: sd 0:0:0:0: [sda] Write Protect is off
+[    1.783899] gts9 kernel: sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
+[    1.784024] gts9 kernel: scsi 0:0:0:1: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.784132] gts9 kernel: sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    1.784237] gts9 kernel: sd 0:0:0:0: [sda] Preferred minimum I/O size 4096 bytes
+[    1.784341] gts9 kernel: sd 0:0:0:0: [sda] Optimal transfer size 524288 bytes
+[    1.784456] gts9 kernel: scsi 0:0:0:2: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.784561] gts9 kernel: sd 0:0:0:1: [sdb] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+[    1.784664] gts9 kernel: sd 0:0:0:1: [sdb] Write Protect is on
+[    1.784768] gts9 kernel: sd 0:0:0:1: [sdb] Mode Sense: 00 32 00 90
+[    1.784872] gts9 kernel: sd 0:0:0:1: [sdb] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    1.784977] gts9 kernel: sd 0:0:0:1: [sdb] Preferred minimum I/O size 4096 bytes
+[    1.785081] gts9 kernel: sd 0:0:0:1: [sdb] Optimal transfer size 524288 bytes
+[    1.785191] gts9 kernel: scsi 0:0:0:3: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.785298] gts9 kernel: sd 0:0:0:2: [sdc] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+[    1.785404] gts9 kernel: sd 0:0:0:2: [sdc] Write Protect is off
+[    1.785510] gts9 kernel: sd 0:0:0:2: [sdc] Mode Sense: 00 32 00 10
+[    1.785612] gts9 kernel: sd 0:0:0:2: [sdc] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    1.785716] gts9 kernel: sd 0:0:0:2: [sdc] Preferred minimum I/O size 4096 bytes
+[    1.785821] gts9 kernel: sd 0:0:0:2: [sdc] Optimal transfer size 524288 bytes
+[    1.785928] gts9 kernel: sd 0:0:0:3: [sdd] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+[    1.786031] gts9 kernel: sd 0:0:0:3: [sdd] Write Protect is off
+[    1.786134] gts9 kernel: sd 0:0:0:3: [sdd] Mode Sense: 00 32 00 10
+[    1.786239] gts9 kernel: sd 0:0:0:3: [sdd] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    1.786342] gts9 kernel: sd 0:0:0:3: [sdd] Preferred minimum I/O size 4096 bytes
+[    1.786445] gts9 kernel: sd 0:0:0:3: [sdd] Optimal transfer size 524288 bytes
+[    1.786553] gts9 kernel: scsi 0:0:0:4: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.786662] gts9 kernel: scsi 0:0:0:5: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    1.786769] gts9 kernel: sd 0:0:0:4: [sde] 163840 4096-byte logical blocks: (671 MB/640 MiB)
+[    1.786876] gts9 kernel: sd 0:0:0:4: [sde] Write Protect is on
+[    1.786981] gts9 kernel: sd 0:0:0:4: [sde] Mode Sense: 00 32 00 90
+[    1.787082] gts9 kernel: sd 0:0:0:4: [sde] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    1.787185] gts9 kernel: sd 0:0:0:5: [sdf] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+[    1.787286] gts9 kernel: sd 0:0:0:5: [sdf] Write Protect is off
+[    1.787387] gts9 kernel: sd 0:0:0:5: [sdf] Mode Sense: 00 32 00 10
+[    1.787492] gts9 kernel: sd 0:0:0:4: [sde] Preferred minimum I/O size 4096 bytes
+[    1.787595] gts9 kernel: sd 0:0:0:5: [sdf] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    1.787697] gts9 kernel: sd 0:0:0:4: [sde] Optimal transfer size 524288 bytes
+[    1.787798] gts9 kernel: sd 0:0:0:5: [sdf] Preferred minimum I/O size 4096 bytes
+[    1.787904] gts9 kernel: sd 0:0:0:5: [sdf] Optimal transfer size 524288 bytes
+[    1.787913] gts9 kernel:  sdb: sdb1 sdb2 sdb3 sdb4
+[    1.788028] gts9 kernel: sd 0:0:0:1: [sdb] Attached SCSI disk
+[    1.788038] gts9 kernel:  sda: sda1 sda2 sda3 sda4 sda5 sda6 sda7 sda8 sda9 sda10 sda11 sda12 sda13 sda14 sda15 sda16 sda17 sda18 sda19 sda20 sda21 sda22 sda23 sda24 sda25 sda26 sda27 sda28 sda29 sda30 sda31 sda32 sda33 sda34
+[    1.788156] gts9 kernel: sd 0:0:0:0: [sda] Attached SCSI disk
+[    1.788166] gts9 kernel:  sdc: sdc1 sdc2 sdc3
+[    1.788273] gts9 kernel: sd 0:0:0:2: [sdc] Attached SCSI disk
+[    1.788288] gts9 kernel:  sdd: sdd1 sdd2 sdd3 sdd4
+[    1.788296] gts9 kernel:  sdf: sdf1 sdf2
+[    1.788403] gts9 kernel: sd 0:0:0:5: [sdf] Attached SCSI disk
+[    1.788509] gts9 kernel: sd 0:0:0:3: [sdd] Attached SCSI disk
+[    1.788520] gts9 kernel:  sde: sde1 sde2 sde3 sde4 sde5 sde6 sde7 sde8 sde9 sde10 sde11 sde12 sde13 sde14 sde15 sde16 sde17 sde18 sde19 sde20 sde21 sde22 sde23 sde24 sde25 sde26 sde27 sde28 sde29 sde30 sde31 sde32 sde33 sde34 sde35 sde36 sde37 sde38
+[    1.788624] gts9 kernel: sd 0:0:0:4: [sde] Attached SCSI disk
+[    1.788636] gts9 kernel: mmc1: new UHS-I speed SDR104 SDXC card at address 13ab
+[    1.788644] gts9 kernel: mmcblk1: mmc1:13ab SE128 115 GiB
+[    1.788652] gts9 kernel:  mmcblk1: p1
+[    1.788779] gts9 kernel: samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+[    1.788894] gts9 kernel: samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+[    1.788904] gts9 kernel: msm_dsi_host_cmd_rx:Invalid response cmd
+[    1.788912] gts9 kernel: msm_dsi_host_cmd_rx:Invalid response cmd
+[    1.788921] gts9 kernel: msm_dsi_host_cmd_rx:Invalid response cmd
+[    1.789035] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+[    1.789046] gts9 kernel: msm_dsi_host_cmd_rx:Invalid response cmd
+[    1.789152] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+[    1.789261] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+[    1.789270] gts9 kernel: Console: switching to colour frame buffer device 160x50
+[    1.789278] gts9 kernel: fb0: sys_imageblit: framebuffer is not in virtual address space.
+[    1.789385] gts9 kernel: msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+[    1.789504] gts9 kernel: samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+[    1.789624] gts9 kernel: ptn3222 8-004f: applied 5 register overrides
+[    1.789730] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.789830] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.789931] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.790030] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.790130] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.790139] gts9 kernel: input: gpio-keys as /devices/platform/gpio-keys/input/input3
+[    1.790147] gts9 kernel: clk: Not disabling unused clocks
+[    1.790155] gts9 kernel: PM: genpd: Not disabling unused power domains
+[    1.790163] gts9 kernel: ALSA device list:
+[    1.790173] gts9 kernel:   No soundcards found.
+[    1.790180] gts9 kernel: Freeing unused kernel memory: 1472K
+[    1.790188] gts9 kernel: Run /init as init process
+[    1.790196] gts9 kernel:   with arguments:
+[    1.790203] gts9 kernel:     /init
+[    1.790211] gts9 kernel:   with environment:
+[    1.790219] gts9 kernel:     HOME=/
+[    1.790227] gts9 kernel:     TERM=linux
+[    1.790235] gts9 kernel:     gts9_display_recover=1
+[    1.790243] gts9 kernel:     gts9_rootfs=/dev/mmcblk1p1
+[    1.790252] gts9 kernel:     sapa=0
+[    1.790359] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    1.790461] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    1.790560] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    1.790660] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    1.790760] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    1.790769] gts9 kernel: mkdir (206) used greatest stack depth: 13904 bytes left
+[    1.790777] gts9 kernel: grep (207) used greatest stack depth: 13008 bytes left
+[    1.790785] gts9 kernel: mount (216) used greatest stack depth: 12896 bytes left
+[    1.790795] gts9 kernel: mount (208): highest shadow stack usage: 208 bytes
+[    1.790803] gts9 kernel: grep (207): highest shadow stack usage: 216 bytes
+[    1.790810] gts9 kernel: cat (209): highest shadow stack usage: 232 bytes
+[    1.790819] gts9 kernel: EXT4-fs (sda5): mounted filesystem 5872535b-2e01-5cb9-9bfe-bbd5ddcedf82 ro without journal. Quota mode: none.
+[    1.790826] gts9 kernel: mount (318) used greatest stack depth: 12000 bytes left
+[    1.790834] gts9 kernel: EXT4-fs (sda5): unmounting filesystem 5872535b-2e01-5cb9-9bfe-bbd5ddcedf82.
+[    1.790844] gts9 gts9-minimal: rtc-offset: status=applied source=persist/time/ats_2 offset_ms=1790396967618 raw_ms=94092000 realtime_epoch=1790491059
+[    1.790853] gts9 gts9-minimal: rtc-offset: helper_rc=0
+[    1.790864] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=kernel-userspace
+[    1.790871] gts9 kernel: head (343) used greatest stack depth: 11616 bytes left
+[    1.790879] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=waiting-root
+[    1.790887] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=root-found
+[    1.790895] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=mounting-root
+[    1.790904] gts9 kernel: init (274): highest shadow stack usage: 256 bytes
+[    1.790912] gts9 kernel: gts9-rtc-offset (323): highest shadow stack usage: 312 bytes
+[    1.790919] gts9 kernel: mount (318): highest shadow stack usage: 328 bytes
+[    1.790928] gts9 kernel: EXT4-fs (mmcblk1p1): mounted filesystem 851819a7-0d96-4217-b64a-aeeee5d8be61 r/w with ordered data mode. Quota mode: none.
+[    1.790937] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=root-mounted
+[    1.790945] gts9 gts9-minimal: GTS9_MINIMAL_RECORD=/newroot/var/log/gts9-minimal-last-boot
+[    1.790953] gts9 kernel: mount (348): highest shadow stack usage: 384 bytes
+[    1.790961] gts9 gts9-minimal: GTS9_MINIMAL_STAGE=init-found
+[    1.790970] gts9 systemd[1]: Failed to find module 'autofs4'
+[    1.790981] gts9 systemd[1]: systemd 257.13-1~deb13u1 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE)
+[    1.790991] gts9 systemd[1]: Detected virtualization vm-other.
+[    1.791000] gts9 systemd[1]: Detected architecture arm64.
+[    1.791009] gts9 systemd[1]: Hostname set to <gts9>.
+[    1.791017] gts9 systemd[1]: bpf-restrict-fs: BPF LSM hook not enabled in the kernel, BPF LSM not supported.
+[    1.791027] gts9 kernel: systemd-getty-g (389) used greatest stack depth: 11536 bytes left
+[    1.791034] gts9 kernel: systemd-sysv-ge (396) used greatest stack depth: 11504 bytes left
+[    1.791043] gts9 systemd[1]: Configuration file /usr/lib/systemd/system/gts9-watchdog-debug.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.791053] gts9 systemd[1]: Configuration file /etc/systemd/system/gts9-prev-boot-evidence.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.791062] gts9 systemd[1]: Configuration file /usr/lib/systemd/system/gts9-kmsg-console.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.791072] gts9 systemd[1]: Configuration file /usr/lib/systemd/system/gts9-dpu-flight.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.791081] gts9 systemd[1]: Configuration file /usr/lib/systemd/system/gts9-adbd.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.791089] gts9 kernel: systemd-debug-g (387): highest shadow stack usage: 432 bytes
+[    1.791097] gts9 systemd[1]: Queued start job for default target graphical.target.
+[    1.791106] gts9 systemd[1]: Created slice system-getty.slice - Slice /system/getty.
+[    1.791114] gts9 systemd[1]: Created slice system-modprobe.slice - Slice /system/modprobe.
+[    1.791124] gts9 systemd[1]: Created slice user.slice - User and Session Slice.
+[    1.791135] gts9 systemd[1]: Started systemd-ask-password-console.path - Dispatch Password Requests to Console Directory Watch.
+[    1.791143] gts9 systemd[1]: Started systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+[    1.791152] gts9 systemd[1]: Starting of proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point unsupported.
+[    1.791160] gts9 systemd[1]: Reached target paths.target - Path Units.
+[    1.791169] gts9 systemd[1]: Reached target remote-fs.target - Remote File Systems.
+[    1.791178] gts9 systemd[1]: Reached target slices.target - Slice Units.
+[    1.791186] gts9 systemd[1]: Reached target swap.target - Swaps.
+[    1.791196] gts9 systemd[1]: Listening on systemd-creds.socket - Credential Encryption/Decryption.
+[    1.791206] gts9 systemd[1]: Listening on systemd-initctl.socket - initctl Compatibility Named Pipe.
+[    1.791217] gts9 systemd[1]: Listening on systemd-journald-dev-log.socket - Journal Socket (/dev/log).
+[    1.791226] gts9 systemd[1]: Listening on systemd-journald.socket - Journal Sockets.
+[    1.791234] gts9 systemd[1]: systemd-pcrextend.socket - TPM PCR Measurements skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.791243] gts9 systemd[1]: systemd-pcrlock.socket - Make TPM PCR Policy skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.791251] gts9 systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[    1.791259] gts9 systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+[    1.791268] gts9 systemd[1]: dev-hugepages.mount - Huge Pages File System skipped, unmet condition check ConditionPathExists=/sys/kernel/mm/hugepages
+[    1.791279] gts9 systemd[1]: dev-mqueue.mount - POSIX Message Queue File System skipped, unmet condition check ConditionPathExists=/proc/sys/fs/mqueue
+[    1.791288] gts9 systemd[1]: Mounting run-lock.mount - Legacy Locks Directory /run/lock...
+[    1.791296] gts9 systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+[    1.791304] gts9 systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+[    1.791313] gts9 systemd[1]: Mounting tmp.mount - Temporary Directory /tmp...
+[    1.791322] gts9 systemd[1]: kmod-static-nodes.service - Create List of Static Device Nodes skipped, unmet condition check ConditionFileNotEmpty=/lib/modules/7.2.0-rc3-gts9wifi-dirty/modules.devname
+[    1.791331] gts9 systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+[    1.791339] gts9 systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+[    1.791349] gts9 systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+[    1.791358] gts9 systemd[1]: Starting modprobe@fuse.service - Load Kernel Module fuse...
+[    1.791367] gts9 systemd[1]: systemd-fsck-root.service - File System Check on Root Device skipped, unmet condition check ConditionPathIsReadWrite=!/
+[    1.791375] gts9 systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+[    1.791384] gts9 systemd[1]: Starting systemd-journald.service - Journal Service...
+[    1.791393] gts9 systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+[    1.791404] gts9 systemd[1]: systemd-pcrmachine.service - TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.791412] gts9 systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+[    1.791421] gts9 systemd[1]: Starting systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully...
+[    1.791430] gts9 systemd[1]: systemd-tpm2-setup-early.service - Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.791438] gts9 systemd[1]: Starting systemd-udev-load-credentials.service - Load udev Rules from Credentials...
+[    1.791447] gts9 systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+[    1.791455] gts9 systemd[1]: modprobe@drm.service: Deactivated successfully.
+[    1.791464] gts9 systemd[1]: Finished modprobe@drm.service - Load Kernel Module drm.
+[    1.791473] gts9 systemd[1]: modprobe@efi_pstore.service: Deactivated successfully.
+[    1.791481] gts9 systemd[1]: Finished modprobe@efi_pstore.service - Load Kernel Module efi_pstore.
+[    1.791490] gts9 systemd[1]: modprobe@fuse.service: Deactivated successfully.
+[    1.791498] gts9 systemd[1]: Finished modprobe@fuse.service - Load Kernel Module fuse.
+[    1.791506] gts9 systemd[1]: Mounting sys-fs-fuse-connections.mount - FUSE Control File System...
+[    1.791515] gts9 systemd[1]: modprobe@configfs.service: Deactivated successfully.
+[    1.791524] gts9 systemd[1]: Finished modprobe@configfs.service - Load Kernel Module configfs.
+[    1.791532] gts9 systemd[1]: Mounting sys-kernel-config.mount - Kernel Configuration File System...
+[    1.791540] gts9 systemd[1]: Finished systemd-modules-load.service - Load Kernel Modules.
+[    1.791550] gts9 systemd[1]: Starting systemd-sysctl.service - Apply Kernel Variables...
+[    1.791558] gts9 systemd[1]: Mounted sys-kernel-debug.mount - Kernel Debug File System.
+[    1.791566] gts9 systemd[1]: Mounted run-lock.mount - Legacy Locks Directory /run/lock.
+[    1.791574] gts9 systemd[1]: Mounted sys-kernel-tracing.mount - Kernel Trace File System.
+[    1.791583] gts9 systemd[1]: Mounted tmp.mount - Temporary Directory /tmp.
+[    1.791591] gts9 systemd[1]: Finished systemd-udev-load-credentials.service - Load udev Rules from Credentials.
+[    1.791599] gts9 systemd[1]: Mounted sys-fs-fuse-connections.mount - FUSE Control File System.
+[    1.791608] gts9 systemd[1]: Mounted sys-kernel-config.mount - Kernel Configuration File System.
+[    1.791616] gts9 systemd[1]: Finished systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully.
+[    1.791625] gts9 kernel: systemd-sysctl (420) used greatest stack depth: 11264 bytes left
+[    1.791633] gts9 systemd[1]: Finished systemd-sysctl.service - Apply Kernel Variables.
+[    1.791660] gts9 systemd-journald[408]: Collecting audit messages is disabled.
+[    1.791684] gts9 systemd-journald[408]: Journal started
+[    1.791704] gts9 systemd-journald[408]: Runtime Journal (/run/log/journal/3c2a1b8f2d624db4b5ffdc836050fcf6) is 8M, max 530.1M, 522.1M free.
+[    1.713435] gts9 systemd-modules-load[410]: Module 'libcomposite' is built in
+[    1.792024] gts9 systemd[1]: Started systemd-journald.service - Journal Service.
+[    1.875785] gts9 systemd[1]: Finished systemd-udev-trigger.service - Coldplug All udev Devices.
+[    1.878690] gts9 systemd[1]: Starting ifupdown-pre.service - Helper to synchronize boot up for ifupdown...
+[    1.926010] gts9 systemd[1]: Finished ifupdown-pre.service - Helper to synchronize boot up for ifupdown.
+[    2.197217] gts9 systemd[1]: Finished systemd-remount-fs.service - Remount Root and Kernel File Systems.
+[    2.199447] gts9 systemd[1]: systemd-hwdb-update.service - Rebuild Hardware Database skipped, unmet condition check ConditionNeedsUpdate=/etc
+[    2.200017] gts9 kernel: EXT4-fs (mmcblk1p1): re-mounted 851819a7-0d96-4217-b64a-aeeee5d8be61.
+[    2.204822] gts9 systemd[1]: Starting systemd-journal-flush.service - Flush Journal to Persistent Storage...
+[    2.204908] gts9 systemd[1]: systemd-pstore.service - Platform Persistent Storage Archival skipped, unmet condition check ConditionDirectoryNotEmpty=/sys/fs/pstore
+[    2.205718] gts9 systemd[1]: Starting systemd-random-seed.service - Load/Save OS Random Seed...
+[    2.205823] gts9 systemd[1]: systemd-sysusers.service - Create System Users skipped, no trigger condition checks were met.
+[    2.206614] gts9 systemd[1]: Starting systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev...
+[    2.206723] gts9 systemd[1]: systemd-tpm2-setup.service - TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+[    2.251641] gts9 systemd-journald[408]: Time spent on flushing to /var/log/journal/3c2a1b8f2d624db4b5ffdc836050fcf6 is 216.732ms for 946 entries.
+[    2.251641] gts9 systemd-journald[408]: System Journal (/var/log/journal/3c2a1b8f2d624db4b5ffdc836050fcf6) is 716.4M, max 4G, 3.2G free.
+[    2.975168] gts9 systemd-journald[408]: Received client request to flush runtime journal.
+[    2.975211] gts9 gts9-debian: GTS9_DEBIAN_STAGE=systemd-entered
+[    2.975235] gts9 gts9-debian: GTS9_DEBIAN_STAGE=local-fs
+[    2.975245] gts9 kernel: resolved (512): highest shadow stack usage: 440 bytes
+[    2.254181] gts9 systemd[1]: Finished systemd-tmpfiles-setup-dev.service - Create Static Device Nodes in /dev.
+[    2.254662] gts9 systemd[1]: Reached target local-fs-pre.target - Preparation for Local File Systems.
+[    2.975634] gts9 sh[451]: GTS9_DEBIAN_STAGE=systemd-entered
+[    2.975634] gts9 sh[451]: GTS9_DEBIAN_STAGE=local-fs
+[    2.254732] gts9 systemd[1]: Reached target local-fs.target - Local File Systems.
+[    2.257594] gts9 systemd[1]: Listening on systemd-sysext.socket - System Extension Image Management.
+[    2.259812] gts9 systemd[1]: Starting gts9-boot-stage.service - Record Debian boot progress after the initramfs handoff...
+[    2.262367] gts9 systemd[1]: Starting gts9-debian-entered.service - Record entry into Debian after the minimal rootfs handoff...
+[    2.264966] gts9 systemd[1]: Starting networking.service - Raise network interfaces...
+[    2.266688] gts9 systemd[1]: systemd-binfmt.service - Set Up Additional Binary Formats skipped, unmet condition check ConditionPathIsMountPoint=/proc/sys/fs/binfmt_misc
+[    2.267843] gts9 systemd[1]: Starting systemd-udevd.service - Rule-based Manager for Device Events and Files...
+[    2.268593] gts9 systemd[1]: Finished systemd-random-seed.service - Load/Save OS Random Seed.
+[    2.337127] gts9 systemd-udevd[454]: Using default interface naming scheme 'v257'.
+[    2.390906] gts9 systemd[1]: Finished gts9-boot-stage.service - Record Debian boot progress after the initramfs handoff.
+[    2.445206] gts9 systemd[1]: Finished gts9-debian-entered.service - Record entry into Debian after the minimal rootfs handoff.
+[    2.527083] gts9 systemd[1]: Finished networking.service - Raise network interfaces.
+[    2.906873] gts9 systemd[1]: Started systemd-udevd.service - Rule-based Manager for Device Events and Files.
+[    2.977274] gts9 systemd[1]: Finished systemd-journal-flush.service - Flush Journal to Persistent Storage.
+[    2.981360] gts9 systemd[1]: Starting systemd-tmpfiles-setup.service - Create System Files and Directories...
+[    2.983371] gts9 (udev-worker)[566]: ifb1: Could not set Alias=, MACAddress=/MACAddressPolicy=, TransmitQueues=, ReceiveQueues=, TransmitQueueLength=, MTUBytes=, GenericSegmentOffloadMaxBytes= or GenericSegmentOffloadMaxSegments=, ignoring: Operation not supported
+[    2.987427] gts9 (udev-worker)[543]: ifb0: Could not set Alias=, MACAddress=/MACAddressPolicy=, TransmitQueues=, ReceiveQueues=, TransmitQueueLength=, MTUBytes=, GenericSegmentOffloadMaxBytes= or GenericSegmentOffloadMaxSegments=, ignoring: Operation not supported
+[    3.021648] gts9 systemd-tmpfiles[580]: /usr/lib/tmpfiles.d/legacy.conf:14: Duplicate line for path "/run/lock", ignoring.
+[    3.048430] gts9 systemd[1]: Finished systemd-tmpfiles-setup.service - Create System Files and Directories.
+[    3.052875] gts9 systemd[1]: ldconfig.service - Rebuild Dynamic Linker Cache skipped, no trigger condition checks were met.
+[    3.052899] gts9 systemd[1]: systemd-firstboot.service - First Boot Wizard skipped, unmet condition check ConditionFirstBoot=yes
+[    3.052910] gts9 systemd[1]: first-boot-complete.target - First Boot Complete skipped, unmet condition check ConditionFirstBoot=yes
+[    3.052958] gts9 systemd[1]: systemd-journal-catalog-update.service - Rebuild Journal Catalog skipped, unmet condition check ConditionNeedsUpdate=/var
+[    3.052984] gts9 systemd[1]: systemd-machine-id-commit.service - Save Transient machine-id to Disk skipped, unmet condition check ConditionPathIsMountPoint=/etc/machine-id
+[    3.053030] gts9 systemd[1]: systemd-update-done.service - Update is Completed skipped, no trigger condition checks were met.
+[    3.053046] gts9 systemd[1]: Reached target sysinit.target - System Initialization.
+[    3.054134] gts9 systemd[1]: Started apt-daily.timer - Daily apt download activities.
+[    3.054214] gts9 systemd[1]: Started apt-daily-upgrade.timer - Daily apt upgrade and clean activities.
+[    3.054274] gts9 systemd[1]: Started dpkg-db-backup.timer - Daily dpkg database backup timer.
+[    3.054357] gts9 systemd[1]: Started e2scrub_all.timer - Periodic ext4 Online Metadata Check for All Filesystems.
+[    3.054410] gts9 systemd[1]: Started fstrim.timer - Discard unused filesystem blocks once a week.
+[    3.054456] gts9 systemd[1]: Started logrotate.timer - Daily rotation of log files.
+[    3.054483] gts9 systemd[1]: Started systemd-tmpfiles-clean.timer - Daily Cleanup of Temporary Directories.
+[    3.054508] gts9 systemd[1]: Reached target timers.target - Timer Units.
+[    3.054594] gts9 systemd[1]: Listening on dbus.socket - D-Bus System Message Bus Socket.
+[    3.054649] gts9 systemd[1]: Listening on systemd-hostnamed.socket - Hostname Service Socket.
+[    3.054672] gts9 systemd[1]: Reached target sockets.target - Socket Units.
+[    3.054756] gts9 systemd[1]: systemd-pcrphase-sysinit.service - TPM PCR Barrier (Initialization) skipped, unmet condition check ConditionSecurity=measured-uki
+[    3.054765] gts9 systemd[1]: Reached target basic.target - Basic System.
+[    3.054885] gts9 systemd[1]: System is tainted: unmerged-bin
+[    3.055934] gts9 systemd[1]: Started cron.service - Regular background program processing daemon.
+[    3.056561] gts9 systemd[1]: Starting dbus.service - D-Bus System Message Bus...
+[    3.057846] gts9 systemd[1]: Starting e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots...
+[    3.057907] gts9 systemd[1]: getty-static.service - getty on tty2-tty6 if dbus and logind are not available skipped, unmet condition check ConditionPathExists=!/usr/bin/dbus-daemon
+[    3.057927] gts9 systemd[1]: gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs skipped, unmet condition check ConditionPathExists=/dev/disk/by-partlabel/efs
+[    3.058346] gts9 systemd[1]: Starting gts9-debian-basic-stage.service - Record that Debian reached basic.target...
+[    3.058890] gts9 systemd[1]: Starting gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery...
+[    3.059417] gts9 systemd[1]: Started gts9-power-key.service - X710 power key: backlight toggle, system keeps running.
+[    3.064322] gts9 systemd[1]: Starting gts9-prev-boot-evidence.service - X710 previous-boot evidence collector...
+[    3.085000] gts9 systemd[1]: Starting gts9-usb-adb-prepare.service - Prepare optional USB ADB alongside the NCM network...
+[    3.088769] gts9 systemd[1]: Starting gts9-watchdog-debug.service - X710 watchdog stall-test profile (software lockup detectors)...
+[    3.089835] gts9 systemd[1]: Starting polkit.service - Authorization Manager...
+[    3.090008] gts9 systemd[1]: sshd-keygen.service - Generate sshd host keys on first boot skipped, unmet condition check ConditionFirstBoot=yes
+[    3.091792] gts9 cron[660]: (CRON) INFO (pidfile fd = 3)
+[    3.092353] gts9 gts9-power-key: service mode (no arguments)
+[    3.092425] gts9 gts9-power-key: found the PMIC power key by capability
+[    3.092483] gts9 gts9-power-key: watching the power key; short press turns the backlight off
+[    3.096062] gts9 systemd[1]: Starting systemd-logind.service - User Login Management...
+[    3.096243] gts9 systemd[1]: systemd-pcrphase.service - TPM PCR Barrier (User) skipped, unmet condition check ConditionSecurity=measured-uki
+[    3.102004] gts9 cron[660]: (CRON) INFO (Running @reboot jobs)
+[    3.115497] gts9 gts9-watchdog-debug[675]: gts9-watchdog-debug: gts9_watchdog_debug=1 not on the command line; nothing to do
+[    3.119058] gts9 sh[663]: GTS9_DEBIAN_STAGE=basic
+[    3.120040] gts9 gts9-debian: GTS9_DEBIAN_STAGE=basic
+[    3.121179] gts9 systemd[1]: Finished gts9-watchdog-debug.service - X710 watchdog stall-test profile (software lockup detectors).
+[    3.139579] gts9 gts9-panel-recover[664]: gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+[    3.146383] gts9 gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+[    3.356033] gts9 kernel: [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    3.446659] gts9 systemd[1]: Finished gts9-debian-basic-stage.service - Record that Debian reached basic.target.
+[    3.458828] gts9 kernel: file system registered
+[    3.479623] gts9 gts9-usb-adb-prepare[667]: gts9-usb-adb: FunctionFS prepared with no_disconnect
+[    3.503440] gts9 kernel: panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+[    3.590404] gts9 (udev-worker)[541]: renderD128: Failed to apply ACL: Operation not supported
+[    3.591653] gts9 (udev-worker)[569]: card0: Failed to apply ACL: Operation not supported
+[    3.603648] gts9 systemd-logind[687]: New seat seat0.
+[    3.606479] gts9 systemd[1]: Started dbus.service - D-Bus System Message Bus.
+[    3.612329] gts9 gts9-panel-recover[664]: gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+[    3.616029] gts9 gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+[    3.624083] gts9 systemd[1]: Finished gts9-usb-adb-prepare.service - Prepare optional USB ADB alongside the NCM network.
+[    3.624218] gts9 systemd[1]: Started systemd-logind.service - User Login Management.
+[    3.624387] gts9 systemd-logind[687]: Watching system buttons on /dev/input/event3 (gpio-keys)
+[    3.624715] gts9 (udev-worker)[568]: card1: Failed to apply ACL: Operation not supported
+[    3.625274] gts9 systemd-logind[687]: Watching system buttons on /dev/input/event0 (pmic_pwrkey)
+[    3.625688] gts9 systemd-logind[687]: Watching system buttons on /dev/input/event2 (Book Cover Keyboard Slim (EF-DX710))
+[    3.636699] gts9 dbus-daemon[661]: [system] Successfully activated service 'org.freedesktop.systemd1'
+[    3.637749] gts9 gts9-panel-recover[751]: GTS9_DEBIAN_STAGE=panel-recovered
+[    3.640060] gts9 gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+[    3.651887] gts9 polkitd[678]: Started polkitd version 126
+[    3.652369] gts9 kernel: sh (730): highest shadow stack usage: 488 bytes
+[    3.688056] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    3.689335] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    3.689476] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    3.689606] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    3.689729] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    3.692394] gts9 (udev-worker)[573]: rfkill: Failed to apply ACL: Operation not supported
+[    3.695530] gts9 (udev-worker)[540]: timer: Failed to apply ACL: Operation not supported
+[    3.708017] gts9 kernel: qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    3.708276] gts9 kernel: qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    3.708410] gts9 kernel: qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    3.708543] gts9 kernel: qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    3.708668] gts9 kernel: qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    3.888220] gts9 kernel: qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[    3.907897] gts9 systemd[1]: Created slice system-systemd\x2dbacklight.slice - Slice /system/systemd-backlight.
+[    3.908095] gts9 systemd[1]: Reached target usb-gadget.target - Hardware activated USB gadget.
+[    3.908205] gts9 systemd[1]: Listening on systemd-rfkill.socket - Load/Save RF Kill Switch Status /dev/rfkill Watch.
+[    3.909445] gts9 systemd[1]: Starting NetworkManager.service - Network Manager...
+[    3.910419] gts9 systemd[1]: Starting gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel)...
+[    3.911234] gts9 systemd[1]: Starting systemd-backlight@backlight:ae94000.dsi.0.service - Load/Save Screen Backlight Brightness of backlight:ae94000.dsi.0...
+[    3.941903] gts9 systemd[1]: Started gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel).
+[    3.943816] gts9 systemd[1]: Started gts9-usb-adb-hold.service - Keep USB ADB endpoint lifetime independent of daemon reconnects.
+[    3.944941] gts9 systemd[1]: Starting gts9-usb-acm.service - X710 USB debug link (NCM network for ssh; no serial port)...
+[    4.009153] gts9 systemd[1]: Finished systemd-backlight@backlight:ae94000.dsi.0.service - Load/Save Screen Backlight Brightness of backlight:ae94000.dsi.0.
+[    4.022074] gts9 polkitd[678]: Loading rules from directory /etc/polkit-1/rules.d
+[    4.024265] gts9 polkitd[678]: Loading rules from directory /run/polkit-1/rules.d
+[    4.024594] gts9 polkitd[678]: Error opening rules directory: Error opening directory “/run/polkit-1/rules.d”: No such file or directory (g-file-error-quark, 4)
+[    4.029704] gts9 polkitd[678]: Loading rules from directory /usr/local/share/polkit-1/rules.d
+[    4.029772] gts9 polkitd[678]: Error opening rules directory: Error opening directory “/usr/local/share/polkit-1/rules.d”: No such file or directory (g-file-error-quark, 4)
+[    4.029850] gts9 polkitd[678]: Loading rules from directory /usr/share/polkit-1/rules.d
+[    4.064018] gts9 kernel: Bluetooth: Core ver 2.22
+[    4.064104] gts9 kernel: NET: Registered PF_BLUETOOTH protocol family
+[    4.064141] gts9 kernel: Bluetooth: HCI device and connection manager initialized
+[    4.064167] gts9 kernel: Bluetooth: HCI socket layer initialized
+[    4.064195] gts9 kernel: Bluetooth: L2CAP socket layer initialized
+[    4.064221] gts9 kernel: Bluetooth: SCO socket layer initialized
+[    4.088020] gts9 kernel: qcom-pcie 1c00000.pcie: PCIe Gen.3 x1 link up
+[    4.088700] gts9 kernel: qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
+[    4.088845] gts9 kernel: pci_bus 0000:00: root bus resource [bus 00-ff]
+[    4.089088] gts9 kernel: pci_bus 0000:00: root bus resource [io  0x0000-0xfffff]
+[    4.089226] gts9 kernel: pci_bus 0000:00: root bus resource [mem 0x60300000-0x63ffffff]
+[    4.089353] gts9 kernel: pci 0000:00:00.0: [17cb:0113] type 01 class 0x060400 PCIe Root Port
+[    4.089509] gts9 kernel: pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+[    4.089636] gts9 kernel: pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[    4.089760] gts9 kernel: pci 0000:00:00.0:   bridge window [io  0x0000-0x0fff]
+[    4.089880] gts9 kernel: pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff]
+[    4.090013] gts9 kernel: pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
+[    4.090140] gts9 kernel: pci 0000:00:00.0: PME# supported from D0 D3hot D3cold
+[    4.090263] gts9 kernel: OF: /soc@0/pcie@1c00000: iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+[    4.090281] gts9 kernel: pci 0000:00:00.0: Adding to iommu group 13
+[    4.090403] gts9 kernel: pci 0000:01:00.0: [17cb:1103] type 00 class 0x028000 PCIe Endpoint
+[    4.090553] gts9 kernel: pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x001fffff 64bit]
+[    4.090675] gts9 kernel: pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+[    4.090796] gts9 kernel: pci 0000:01:00.0: Adding to iommu group 13
+[    4.100038] gts9 kernel: pci 0000:01:00.0: ASPM: default states L0s L1
+[    4.100321] gts9 kernel: pci 0000:00:00.0: bridge window [io  0x1000-0x0fff] to [bus 01-ff] add_size 1000
+[    4.100890] gts9 kernel: pci 0000:00:00.0: bridge window [mem 0x00100000-0x000fffff 64bit pref] to [bus 01-ff] add_size 200000 add_align 100000
+[    4.101450] gts9 kernel: pci 0000:00:00.0: bridge window [mem 0x60400000-0x605fffff]: assigned
+[    4.101995] gts9 kernel: pci 0000:00:00.0: bridge window [mem 0x60600000-0x607fffff 64bit pref]: assigned
+[    4.102517] gts9 kernel: pci 0000:00:00.0: BAR 0 [mem 0x60300000-0x60300fff]: assigned
+[    4.103137] gts9 kernel: pci 0000:00:00.0: bridge window [io  0x1000-0x1fff]: assigned
+[    4.103320] gts9 kernel: pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x605fffff 64bit]: assigned
+[    4.103476] gts9 kernel: pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[    4.103655] gts9 kernel: pci 0000:00:00.0:   bridge window [io  0x1000-0x1fff]
+[    4.103841] gts9 kernel: pci 0000:00:00.0:   bridge window [mem 0x60400000-0x605fffff]
+[    4.103966] gts9 kernel: pci 0000:00:00.0:   bridge window [mem 0x60600000-0x607fffff 64bit pref]
+[    4.104107] gts9 kernel: pci_bus 0000:00: resource 4 [io  0x0000-0xfffff]
+[    4.104329] gts9 kernel: pci_bus 0000:00: resource 5 [mem 0x60300000-0x63ffffff]
+[    4.104448] gts9 kernel: pci_bus 0000:01: resource 0 [io  0x1000-0x1fff]
+[    4.104588] gts9 kernel: pci_bus 0000:01: resource 1 [mem 0x60400000-0x605fffff]
+[    4.104703] gts9 kernel: pci_bus 0000:01: resource 2 [mem 0x60600000-0x607fffff 64bit pref]
+[    4.104817] gts9 kernel: pcieport 0000:00:00.0: PME: Signaling with IRQ 204
+[    4.104938] gts9 kernel: pcieport 0000:00:00.0: AER: enabled with IRQ 204
+[    4.120485] gts9 polkitd[678]: Finished loading, compiling and executing 3 rules
+[    4.120864] gts9 systemd[1]: Started polkit.service - Authorization Manager.
+[    4.121430] gts9 polkitd[678]: Acquired the name org.freedesktop.PolicyKit1 on the system bus
+[    4.124717] gts9 systemd[1]: Starting ModemManager.service - Modem Manager...
+[    4.128428] gts9 gts9-usb-acm[792]: gts9-usb-acm: ncm.usb0 linked into the configuration
+[    4.251821] gts9 systemd[1]: Finished gts9-panel-recover.service - X710 ANA38407 cold-boot panel recovery.
+[    4.418182] gts9 kernel: Bluetooth: HCI UART driver ver 2.3
+[    4.418267] gts9 kernel: Bluetooth: HCI UART protocol H4 registered
+[    4.418284] gts9 kernel: Bluetooth: HCI UART protocol LL registered
+[    4.418299] gts9 kernel: Bluetooth: HCI UART protocol Broadcom registered
+[    4.418310] gts9 kernel: Bluetooth: HCI UART protocol QCA registered
+[    4.424017] gts9 kernel: Bluetooth: hci0: setting up wcn6855
+[    4.424580] gts9 systemd[1]: Starting systemd-rfkill.service - Load/Save RF Kill Switch Status...
+[    4.465023] gts9 systemd[1]: Starting gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs...
+[    4.488020] gts9 kernel: Bluetooth: hci0: QCA Product ID   :0x00000013
+[    4.488074] gts9 kernel: Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    4.488153] gts9 kernel: Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    4.488217] gts9 kernel: Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    4.496037] gts9 kernel: Bluetooth: hci0: QCA controller version 0x12110201
+[    4.496119] gts9 kernel: Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    4.504158] gts9 kernel: EXT4-fs (sda6): mounted filesystem 48c8414c-1b62-58ce-8e64-64f4c9172034 ro without journal. Quota mode: none.
+[    4.523258] gts9 systemd[1]: Started systemd-rfkill.service - Load/Save RF Kill Switch Status.
+[    4.569322] gts9 systemd[1]: run-gts9\x2dbt\x2defs.mount: Deactivated successfully.
+[    4.570922] gts9 kernel: EXT4-fs (sda6): unmounting filesystem 48c8414c-1b62-58ce-8e64-64f4c9172034.
+[    4.614678] gts9 ModemManager[817]: <msg> ModemManager (version 1.24.0) starting in system bus...
+[    4.660036] gts9 kernel: cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    4.660138] gts9 kernel: Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    4.660172] gts9 kernel: Loaded X.509 cert 'wens: 61c038651aabdcf94bd0ac7ff06c7248db18c600'
+[    4.676034] gts9 kernel: cfg80211: loaded regulatory.db is malformed or signature is missing/invalid
+[    5.086988] gts9 adbd[790]: 09-27 14:37:43.265   790   790 E adbd    : auth.cpp:204 Failed to get adbd socket: Success
+[    5.086988] gts9 adbd[790]: 09-27 14:37:43.266   790   790 E adbd    : adbd_auth.cpp:98 adbd_auth: failed to get adbd authentication socket: Success
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.266   790   790 I adbd    : main.cpp:195 adbd listening on tcp:5555
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   854 E adbd    : adbd_auth.cpp:300 adbd_auth: socket unavailable, disabling user prompts
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   790 I adbd    : main.cpp:195 adbd listening on vsock:5555
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   790 I adbd    : main.cpp:306 adbd started
+[    5.089705] gts9 adbd[790]: 09-27 14:37:43.268   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    5.089705] gts9 adbd[790]: 09-27 14:37:43.269   790   855 I adbd    : usb.cpp:154 UsbFfsConnection constructed
+[    5.089946] gts9 adbd[790]: 09-27 14:37:43.269   790   859 I adbd    : usb.cpp:261 UsbFfs-monitor thread spawned
+[    5.092050] gts9 kernel: read descriptors
+[    5.092158] gts9 kernel: bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.092222] gts9 kernel: bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    5.092285] gts9 kernel: read strings
+[    5.196053] gts9 kernel: Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[    5.245960] gts9 NetworkManager[786]: <info>  [1790491063.4254] NetworkManager (version 1.52.1) is starting... (boot:a1eb9541-aff7-4269-b739-c0dd371b01af)
+[    5.245979] gts9 NetworkManager[786]: <info>  [1790491063.4255] Read config: /etc/NetworkManager/NetworkManager.conf, /usr/lib/NetworkManager/conf.d/no-mac-addr-change.conf
+[    5.303259] gts9 NetworkManager[786]: <info>  [1790491063.4828] manager[0x557a0afc40]: monitoring kernel firmware directory '/lib/firmware'.
+[    5.303315] gts9 NetworkManager[786]: <info>  [1790491063.4828] monitoring ifupdown state file '/run/network/ifstate'.
+[    5.314194] gts9 dbus-daemon[661]: [system] Activating via systemd: service name='org.freedesktop.hostname1' unit='dbus-org.freedesktop.hostname1.service' requested by ':1.4' (uid=0 pid=786 comm="/usr/sbin/NetworkManager --no-daemon" label="kernel")
+[    5.319676] gts9 systemd[1]: Starting systemd-hostnamed.service - Hostname Service...
+[    5.364059] gts9 kernel: Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[    5.364249] gts9 kernel: Bluetooth: hci0: QCA setup on UART is completed
+[    5.364368] gts9 kernel: Bluetooth: hci0: HFP non-HCI data transport is supported
+[    5.495361] gts9 systemd[1]: Started systemd-hostnamed.service - Hostname Service.
+[    5.498017] gts9 dbus-daemon[661]: [system] Successfully activated service 'org.freedesktop.hostname1'
+[    5.507970] gts9 NetworkManager[786]: <info>  [1790491063.6874] hostname: hostname: using hostnamed
+[    5.508136] gts9 NetworkManager[786]: <info>  [1790491063.6876] hostname: static hostname changed from (none) to "gts9"
+[    5.510490] gts9 NetworkManager[786]: <info>  [1790491063.6899] dns-mgr: init: dns=default,systemd-resolved rc-manager=symlink (auto)
+[    5.520818] gts9 NetworkManager[786]: <info>  [1790491063.7003] manager[0x557a0afc40]: rfkill: Wi-Fi hardware radio set enabled
+[    5.520950] gts9 NetworkManager[786]: <info>  [1790491063.7004] manager[0x557a0afc40]: rfkill: WWAN hardware radio set enabled
+[    5.553481] gts9 NetworkManager[786]: <info>  [1790491063.7329] Loaded device plugin: NMWifiFactory (/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-device-plugin-wifi.so)
+[    5.560097] gts9 systemd[1]: Started ModemManager.service - Modem Manager.
+[    5.564170] gts9 NetworkManager[786]: <info>  [1790491063.7436] Loaded device plugin: NMAtmManager (/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-device-plugin-adsl.so)
+[    5.592252] gts9 NetworkManager[786]: <info>  [1790491063.7718] Loaded device plugin: NMBluezManager (/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-device-plugin-bluetooth.so)
+[    5.608474] gts9 NetworkManager[786]: <info>  [1790491063.7880] Loaded device plugin: NMWwanFactory (/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-device-plugin-wwan.so)
+[    5.616255] gts9 kernel: ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x605fffff 64bit]: assigned
+[    5.617273] gts9 kernel: ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
+[    5.618171] gts9 kernel: ath11k_pci 0000:01:00.0: MSI vectors: 32
+[    5.618992] gts9 kernel: ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+[    5.634589] gts9 NetworkManager[786]: <info>  [1790491063.8141] Loaded device plugin: NMTeamFactory (/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-device-plugin-team.so)
+[    5.634846] gts9 NetworkManager[786]: <info>  [1790491063.8144] manager: rfkill: Wi-Fi enabled by radio killswitch; enabled by state file
+[    5.634885] gts9 NetworkManager[786]: <info>  [1790491063.8144] manager: rfkill: WWAN enabled by radio killswitch; enabled by state file
+[    5.634904] gts9 NetworkManager[786]: <info>  [1790491063.8144] manager: Networking is enabled by state file
+[    5.635355] gts9 dbus-daemon[661]: [system] Activating via systemd: service name='org.freedesktop.nm_dispatcher' unit='dbus-org.freedesktop.nm-dispatcher.service' requested by ':1.4' (uid=0 pid=786 comm="/usr/sbin/NetworkManager --no-daemon" label="kernel")
+[    5.639896] gts9 NetworkManager[786]: <info>  [1790491063.8194] settings: Loaded settings plugin: ifupdown ("/usr/lib/aarch64-linux-gnu/NetworkManager/1.52.1/libnm-settings-plugin-ifupdown.so")
+[    5.639921] gts9 NetworkManager[786]: <info>  [1790491063.8195] settings: Loaded settings plugin: keyfile (internal)
+[    5.639934] gts9 NetworkManager[786]: <info>  [1790491063.8195] ifupdown: management mode: unmanaged
+[    5.639946] gts9 NetworkManager[786]: <info>  [1790491063.8195] ifupdown:       interface-parser: parsing file /etc/network/interfaces
+[    5.639959] gts9 NetworkManager[786]: <info>  [1790491063.8195] ifupdown:       interface-parser: source line includes interfaces file(s) /etc/network/interfaces.d/*
+[    5.639985] gts9 NetworkManager[786]: <info>  [1790491063.8195] ifupdown: interfaces file /etc/network/interfaces.d/* doesn't exist
+[    5.639993] gts9 NetworkManager[786]: <info>  [1790491063.8195] ifupdown:       interface-parser: finished parsing file /etc/network/interfaces
+[    5.643371] gts9 systemd[1]: Starting NetworkManager-dispatcher.service - Network Manager Script Dispatcher Service...
+[    5.661701] gts9 kernel: Bluetooth: MGMT ver 1.23
+[    5.661865] gts9 kernel: Bluetooth: hci0: setting up wcn6855
+[    5.670343] gts9 NetworkManager[786]: <info>  [1790491063.8499] dhcp: init: Using DHCP client 'internal'
+[    5.670505] gts9 NetworkManager[786]: <info>  [1790491063.8500] manager: (lo): new Loopback device (/org/freedesktop/NetworkManager/Devices/1)
+[    5.671261] gts9 NetworkManager[786]: <info>  [1790491063.8508] device (lo): state change: unmanaged -> unavailable (reason 'connection-assumed', managed-type: 'external')
+[    5.671679] gts9 NetworkManager[786]: <info>  [1790491063.8512] device (lo): state change: unavailable -> disconnected (reason 'connection-assumed', managed-type: 'external')
+[    5.672105] gts9 NetworkManager[786]: <info>  [1790491063.8516] device (lo): Activation: starting connection 'lo' (92ae369b-13da-41ce-a012-d3d950821d06)
+[    5.672721] gts9 NetworkManager[786]: <info>  [1790491063.8522] manager: (dummy0): new Dummy device (/org/freedesktop/NetworkManager/Devices/2)
+[    5.673873] gts9 NetworkManager[786]: <info>  [1790491063.8533] manager: (erspan0): new Generic device (/org/freedesktop/NetworkManager/Devices/3)
+[    5.674623] gts9 NetworkManager[786]: <info>  [1790491063.8541] manager: (gre0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/4)
+[    5.675453] gts9 NetworkManager[786]: <info>  [1790491063.8550] manager: (gretap0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/5)
+[    5.676020] gts9 NetworkManager[786]: <info>  [1790491063.8555] manager: (ifb0): new Generic device (/org/freedesktop/NetworkManager/Devices/6)
+[    5.676741] gts9 NetworkManager[786]: <info>  [1790491063.8563] manager: (ifb1): new Generic device (/org/freedesktop/NetworkManager/Devices/7)
+[    5.677278] gts9 NetworkManager[786]: <info>  [1790491063.8568] manager: (ip6_vti0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/8)
+[    5.677771] gts9 NetworkManager[786]: <info>  [1790491063.8573] manager: (ip6gre0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/9)
+[    5.678258] gts9 NetworkManager[786]: <info>  [1790491063.8578] manager: (ip6tnl0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/10)
+[    5.678759] gts9 NetworkManager[786]: <info>  [1790491063.8583] manager: (ip_vti0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/11)
+[    5.679253] gts9 NetworkManager[786]: <info>  [1790491063.8588] manager: (sit0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/12)
+[    5.679782] gts9 NetworkManager[786]: <info>  [1790491063.8593] manager: (tunl0): new IPTunnel device (/org/freedesktop/NetworkManager/Devices/13)
+[    5.682299] gts9 NetworkManager[786]: <info>  [1790491063.8618] bus-manager: acquired D-Bus service "org.freedesktop.NetworkManager"
+[    5.682410] gts9 systemd[1]: Started NetworkManager.service - Network Manager.
+[    5.683131] gts9 systemd[1]: Reached target network.target - Network.
+[    5.688445] gts9 NetworkManager[786]: <info>  [1790491063.8680] device (lo): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
+[    5.688576] gts9 NetworkManager[786]: <info>  [1790491063.8681] device (lo): state change: prepare -> config (reason 'none', managed-type: 'external')
+[    5.688729] gts9 NetworkManager[786]: <info>  [1790491063.8683] device (lo): state change: config -> ip-config (reason 'none', managed-type: 'external')
+[    5.688849] gts9 NetworkManager[786]: <info>  [1790491063.8684] modem-manager: oFono is not available
+[    5.689017] gts9 NetworkManager[786]: <info>  [1790491063.8685] device (lo): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+[    5.689742] gts9 NetworkManager[786]: <info>  [1790491063.8693] modem-manager: ModemManager available
+[    5.697831] gts9 systemd[1]: Starting ssh.service - OpenBSD Secure Shell server...
+[    5.699165] gts9 systemd[1]: Starting systemd-user-sessions.service - Permit User Sessions...
+[    5.728018] gts9 kernel: Bluetooth: hci0: QCA Product ID   :0x00000013
+[    5.728075] gts9 kernel: Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    5.728092] gts9 kernel: Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    5.728106] gts9 kernel: Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    5.732512] gts9 kernel: Bluetooth: hci0: QCA controller version 0x12110201
+[    5.732552] gts9 kernel: Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    5.736680] gts9 dbus-daemon[661]: [system] Successfully activated service 'org.freedesktop.nm_dispatcher'
+[    5.737333] gts9 systemd[1]: Started NetworkManager-dispatcher.service - Network Manager Script Dispatcher Service.
+[    5.743668] gts9 systemd[1]: Finished systemd-user-sessions.service - Permit User Sessions.
+[    5.750601] gts9 systemd[1]: Started getty@tty1.service - Getty on tty1.
+[    5.750800] gts9 systemd[1]: Reached target getty.target - Login Prompts.
+[    5.751842] gts9 systemd[1]: Starting gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started...
+[    5.753067] gts9 systemd[1]: Starting gts9-getty-stage.service - Record whether the Debian tty1 login getty started...
+[    5.753521] gts9 NetworkManager[786]: <info>  [1790491063.9330] device (lo): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+[    5.753663] gts9 NetworkManager[786]: <info>  [1790491063.9332] device (lo): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+[    5.753979] gts9 NetworkManager[786]: <info>  [1790491063.9335] device (lo): Activation: successful, device activated.
+[    5.754372] gts9 NetworkManager[786]: <info>  [1790491063.9339] manager: startup complete
+[    5.780022] gts9 kernel: mhi mhi0: Requested to power ON
+[    5.780302] gts9 kernel: mhi mhi0: Power on setup success
+[    5.818609] gts9 sh[891]: GTS9_DEBIAN_STAGE=tty1-getty-active
+[    6.303839] gts9 gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+[    6.304099] gts9 kernel: mhi mhi0: Wait for device to enter SBL or Mission mode
+[    6.304734] gts9 kernel: configfs-gadget.gts9 gadget.1: HOST MAC 42:37:d8:70:4f:4d
+[    6.304871] gts9 kernel: configfs-gadget.gts9 gadget.1: MAC 86:52:02:b6:8b:6b
+[    6.305207] gts9 kernel: bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    6.305315] gts9 kernel: bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+[    6.305502] gts9 gts9-usb-acm[792]: gts9-usb-acm: bound to a600000.usb
+[    6.161337] gts9 NetworkManager[786]: <info>  [1790491064.3408] manager: (usb0): new Ethernet device (/org/freedesktop/NetworkManager/Devices/14)
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   859 W adbd    : usb.cpp:279 timed out while waiting for FUNCTIONFS_BIND, trying again
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   859 I adbd    : transport.cpp:1253 UsbFfs: connection terminated: monitor thread finished
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : adb.cpp:173 UsbFfs: already offline
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : transport.cpp:936 destroying transport UsbFfs
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : usb.cpp:169 UsbFfsConnection being destroyed
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.327   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.327   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    6.324380] gts9 gts9-usb-acm[792]: gts9-usb-acm: usb0 up with 169.254.42.1/16
+[    6.349503] gts9 systemd[1]: gts9-getty-stage.service: Deactivated successfully.
+[    6.350119] gts9 systemd[1]: Finished gts9-getty-stage.service - Record whether the Debian tty1 login getty started.
+[    6.357715] gts9 gts9-usb-acm[958]: GTS9_DEBIAN_STAGE=usb-acm-ready
+[    6.358671] gts9 gts9-debian: GTS9_DEBIAN_STAGE=usb-acm-ready
+[    6.372044] gts9 kernel: Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[    6.442835] gts9 sshd[993]: Server listening on 0.0.0.0 port 22.
+[    6.442876] gts9 sshd[993]: Server listening on :: port 22.
+[    6.444508] gts9 systemd[1]: Started ssh.service - OpenBSD Secure Shell server.
+[    6.532553] gts9 NetworkManager[786]: <info>  [1790491064.7121] device (usb0): carrier: link connected
+[    6.552535] gts9 kernel: Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[    6.552575] gts9 kernel: Bluetooth: hci0: QCA setup on UART is completed
+[    6.552591] gts9 kernel: Bluetooth: hci0: HFP non-HCI data transport is supported
+[    6.555195] gts9 systemd[1]: Finished gts9-debian-getty-stage.service - Record whether the Debian tty1 login getty started.
+[    6.588018] gts9 kernel: ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+[    6.588389] gts9 kernel: ath11k_pci 0000:01:00.0: fw_version 0x11021302 fw_build_timestamp 2026-02-04 08:10 fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+[    6.671162] gts9 gts9-bluetooth-address[825]: gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+[    6.672049] gts9 gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+[    6.697438] gts9 gts9-bluetooth-address[1001]: GTS9_DEBIAN_STAGE=bluetooth-address-set
+[    6.699893] gts9 gts9-debian: GTS9_DEBIAN_STAGE=bluetooth-address-set
+[    6.755444] gts9 systemd[1]: Finished gts9-usb-acm.service - X710 USB debug link (NCM network for ssh; no serial port).
+[    6.756902] gts9 systemd[1]: gts9-kmsg-console.service - X710 kernel-message mirror onto the USB link (opt-in) skipped, unmet condition check ConditionKernelCommandLine=gts9_kmsg_mirror=1
+[    6.941117] gts9 systemd[1]: Finished gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs.
+[    6.943407] gts9 systemd[1]: Starting bluetooth.service - Bluetooth service...
+[    6.982295] gts9 (uetoothd)[1037]: bluetooth.service: ConfigurationDirectory 'bluetooth' already exists but the mode is different. (File system: 755 ConfigurationDirectoryMode: 555)
+[    7.058867] gts9 bluetoothd[1037]: Bluetooth daemon 5.82
+[    7.070442] gts9 systemd[1]: Started bluetooth.service - Bluetooth service.
+[    7.071221] gts9 systemd[1]: Reached target bluetooth.target - Bluetooth Support.
+[    7.072662] gts9 bluetoothd[1037]: Starting SDP server
+[    7.092646] gts9 bluetoothd[1037]: profiles/network/bnep.c:bnep_init() kernel lacks bnep-protocol support
+[    7.101916] gts9 bluetoothd[1037]: Bluetooth management interface 1.23 initialized
+[    7.103383] gts9 bluetoothd[1037]: Battery Provider Manager created
+[    7.117044] gts9 bluetoothd[1037]: profiles/sap/server.c:sap_server_register() Can't listen at channel 8.
+[    7.117089] gts9 bluetoothd[1037]: sap-server: Operation not permitted (1)
+[    7.120771] gts9 NetworkManager[786]: <info>  [1790491065.3003] device (wlan0): driver supports Access Point (AP) mode
+[    7.121336] gts9 NetworkManager[786]: <info>  [1790491065.3009] manager: (wlan0): new 802.11 Wi-Fi device (/org/freedesktop/NetworkManager/Devices/15)
+[    7.126262] gts9 bluetoothd[1037]: src/device.c:device_set_wake_support() Unable to set wake_support without RPA resolution
+[    7.136370] gts9 NetworkManager[786]: <info>  [1790491065.3159] rfkill1: found Wi-Fi radio killswitch (at /sys/devices/platform/soc@0/1c00000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0/ieee80211/phy0/rfkill1) (driver ath11k_pci)
+[    7.136839] gts9 NetworkManager[786]: <info>  [1790491065.3164] device (wlan0): interface index 15 renamed iface from 'wlan0' to 'wlp1s0'
+[    7.140028] gts9 kernel: ath11k_pci 0000:01:00.0 wlp1s0: renamed from wlan0
+[    7.148401] gts9 adbd[790]: 09-27 14:37:45.327   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    7.148477] gts9 adbd[790]: 09-27 14:37:45.327   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    7.163104] gts9 NetworkManager[786]: <info>  [1790491065.3426] device (wlp1s0): state change: unmanaged -> unavailable (reason 'managed', managed-type: 'external')
+[    7.218152] gts9 ModemManager[817]: <wrn> [plugin-manager] task 1: port context already scheduled
+[    7.274381] gts9 NetworkManager[786]: <info>  [1790491065.4539] device (wlp1s0): set-hw-addr: set MAC address to 0A:B9:7E:EB:DC:FC (scanning)
+[    7.341735] gts9 dbus-daemon[661]: [system] Activating via systemd: service name='fi.w1.wpa_supplicant1' unit='wpa_supplicant.service' requested by ':1.4' (uid=0 pid=786 comm="/usr/sbin/NetworkManager --no-daemon" label="kernel")
+[    7.346076] gts9 systemd[1]: Starting wpa_supplicant.service - WPA supplicant...
+[    7.445739] gts9 dbus-daemon[661]: [system] Successfully activated service 'fi.w1.wpa_supplicant1'
+[    7.446086] gts9 systemd[1]: Started wpa_supplicant.service - WPA supplicant.
+[    7.447379] gts9 wpa_supplicant[1044]: Successfully initialized wpa_supplicant
+[    7.477528] gts9 systemd[1]: e2scrub_reap.service: Deactivated successfully.
+[    7.478030] gts9 systemd[1]: Finished e2scrub_reap.service - Remove Stale Online ext4 Metadata Check Snapshots.
+[    7.561605] gts9 NetworkManager[786]: <info>  [1790491065.7411] device (wlp1s0): supplicant interface state: internal-starting -> disconnected
+[    7.561800] gts9 NetworkManager[786]: <info>  [1790491065.7413] Wi-Fi P2P device controlled by interface wlp1s0 created
+[    7.562452] gts9 NetworkManager[786]: <info>  [1790491065.7420] manager: (p2p-dev-wlp1s0): new 802.11 Wi-Fi P2P device (/org/freedesktop/NetworkManager/Devices/16)
+[    7.563145] gts9 NetworkManager[786]: <info>  [1790491065.7426] device (p2p-dev-wlp1s0): state change: unmanaged -> unavailable (reason 'managed', managed-type: 'external')
+[    7.566552] gts9 NetworkManager[786]: <info>  [1790491065.7460] device (wlp1s0): state change: unavailable -> disconnected (reason 'supplicant-available', managed-type: 'full')
+[    7.567713] gts9 NetworkManager[786]: <info>  [1790491065.7472] device (p2p-dev-wlp1s0): state change: unavailable -> disconnected (reason 'none', managed-type: 'full')
+[    7.638370] gts9 gts9-prev-boot-evidence[666]: gts9-prev-boot-evidence: /var/log/gts9-boot-evidence/20260927T063741Z-a1eb9541 previous_boot=present end=clean-shutdown panic=0 lockup=0 hung=0 rcu=0 dpu=0 mmc=0
+[    7.640131] gts9 systemd[1]: Finished gts9-prev-boot-evidence.service - X710 previous-boot evidence collector.
+[    7.641181] gts9 systemd[1]: gts9-dpu-flight.service - X710 DPU trace stream (stall bait / flight recorder) skipped, unmet condition check ConditionKernelCommandLine=gts9_dpu_flight=1
+[    7.641593] gts9 systemd[1]: Reached target multi-user.target - Multi-User System.
+[    7.641974] gts9 systemd[1]: Reached target graphical.target - Graphical Interface.
+[    7.644930] gts9 systemd[1]: Starting gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target...
+[    7.695277] gts9 sh[1159]: GTS9_DEBIAN_STAGE=multi-user
+[    7.696244] gts9 gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+[    8.041371] gts9 systemd[1]: Finished gts9-debian-multi-user-stage.service - Record that Debian reached multi-user.target.
+[    8.041780] gts9 systemd[1]: Startup finished in 1.298s (kernel) + 6.742s (userspace) = 8.041s.
+[    8.148650] gts9 adbd[790]: 09-27 14:37:46.328   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    8.149461] gts9 adbd[790]: 09-27 14:37:46.328   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    9.149726] gts9 adbd[790]: 09-27 14:37:47.328   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    9.149726] gts9 adbd[790]: 09-27 14:37:47.329   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   10.150096] gts9 adbd[790]: 09-27 14:37:48.329   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   10.150096] gts9 adbd[790]: 09-27 14:37:48.329   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   10.174702] gts9 ModemManager[817]: <msg> [base-manager] couldn't check support for device '/sys/devices/platform/soc@0/a600000.usb': not supported by any plugin
+[   11.151532] gts9 adbd[790]: 09-27 14:37:49.330   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   11.151532] gts9 adbd[790]: 09-27 14:37:49.330   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   11.163121] gts9 ModemManager[817]: <msg> [base-manager] couldn't check support for device '/sys/devices/platform/soc@0/1c00000.pcie/pci0000:00/0000:00:00.0/0000:01:00.0': not supported by any plugin
+[   11.232115] gts9 kernel: (udev-worker) (555) used greatest stack depth: 10512 bytes left
+[   12.149966] gts9 systemd[1]: systemd-rfkill.service: Deactivated successfully.
+[   12.151418] gts9 adbd[790]: 09-27 14:37:50.330   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   12.151464] gts9 adbd[790]: 09-27 14:37:50.331   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   13.152246] gts9 adbd[790]: 09-27 14:37:51.331   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   13.152246] gts9 adbd[790]: 09-27 14:37:51.331   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   14.153549] gts9 adbd[790]: 09-27 14:37:52.332   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   14.153549] gts9 adbd[790]: 09-27 14:37:52.332   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   14.420798] gts9 wpa_supplicant[1044]: wlp1s0: CTRL-EVENT-REGDOM-CHANGE init=DRIVER type=WORLD
+[   14.422890] gts9 wpa_supplicant[1044]: wlp1s0: CTRL-EVENT-REGDOM-CHANGE init=DRIVER type=COUNTRY alpha2=CN
+[   15.155128] gts9 adbd[790]: 09-27 14:37:53.334   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   15.155128] gts9 adbd[790]: 09-27 14:37:53.334   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   15.754940] gts9 systemd[1]: NetworkManager-dispatcher.service: Deactivated successfully.
+[   16.155201] gts9 adbd[790]: 09-27 14:37:54.334   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   16.156383] gts9 adbd[790]: 09-27 14:37:54.334   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   16.608343] gts9 kernel: auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+[   16.609224] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 1dfa000.crypto
+[   16.609401] gts9 kernel: qnoc-sm8550 1700000.interconnect: sync_state() pending due to 1dfa000.crypto
+[   16.610077] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to 3d6a000.gmu
+[   16.610943] gts9 kernel: gpu_cc-sm8550 3d90000.clock-controller: sync_state() pending due to 3d6a000.gmu
+[   16.611738] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to aa00000.video-codec
+[   16.612574] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to aa00000.video-codec
+[   16.613408] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to aa00000.video-codec
+[   16.614214] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aa00000.video-codec
+[   16.614984] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to aaf0000.clock-controller
+[   16.615748] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to acb7000.isp
+[   16.616315] gts9 kernel: qnoc-sm8550 1780000.interconnect: sync_state() pending due to acb7000.isp
+[   16.616434] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to acb7000.isp
+[   16.616555] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to acb7000.isp
+[   16.617217] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to ade0000.clock-controller
+[   16.617800] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to ade0000.clock-controller
+[   16.618449] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aaf0000.clock-controller
+[   16.619054] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to aa00000.video-codec
+[   16.619652] gts9 kernel: qnoc-sm8550 interconnect-1: sync_state() pending due to 24091000.pmu
+[   16.620270] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to 240b6400.pmu
+[   16.620885] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to acb7000.isp
+[   16.621467] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to aa00000.video-codec
+[   16.622034] gts9 kernel: qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to a9c000.serial
+[   16.622828] gts9 kernel: qnoc-sm8550 1600000.interconnect: sync_state() pending due to a9c000.serial
+[   16.623619] gts9 kernel: qnoc-sm8550 24100000.interconnect: sync_state() pending due to a9c000.serial
+[   16.624296] gts9 kernel: qnoc-sm8550 interconnect-0: sync_state() pending due to a9c000.serial
+[   16.624419] gts9 kernel: gcc-sm8550 100000.clock-controller: sync_state() pending due to a9c000.serial
+[   17.156844] gts9 adbd[790]: 09-27 14:37:55.335   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   17.156844] gts9 adbd[790]: 09-27 14:37:55.336   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   18.158187] gts9 adbd[790]: 09-27 14:37:56.337   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   18.158187] gts9 adbd[790]: 09-27 14:37:56.337   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   19.158542] gts9 adbd[790]: 09-27 14:37:57.337   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   19.158542] gts9 adbd[790]: 09-27 14:37:57.337   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   20.158842] gts9 adbd[790]: 09-27 14:37:58.338   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   20.158842] gts9 adbd[790]: 09-27 14:37:58.338   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   21.159197] gts9 adbd[790]: 09-27 14:37:59.338   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   21.160266] gts9 adbd[790]: 09-27 14:37:59.338   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   22.161535] gts9 adbd[790]: 09-27 14:38:00.339   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   22.161535] gts9 adbd[790]: 09-27 14:38:00.340   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   23.161449] gts9 adbd[790]: 09-27 14:38:01.340   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   23.161449] gts9 adbd[790]: 09-27 14:38:01.341   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   24.162929] gts9 adbd[790]: 09-27 14:38:02.342   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   24.162929] gts9 adbd[790]: 09-27 14:38:02.342   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   25.164273] gts9 adbd[790]: 09-27 14:38:03.343   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   25.164273] gts9 adbd[790]: 09-27 14:38:03.343   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   26.164412] gts9 adbd[790]: 09-27 14:38:04.343   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   26.165455] gts9 adbd[790]: 09-27 14:38:04.344   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   27.166138] gts9 adbd[790]: 09-27 14:38:05.345   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   27.166138] gts9 adbd[790]: 09-27 14:38:05.345   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   28.166583] gts9 adbd[790]: 09-27 14:38:06.345   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   28.166583] gts9 adbd[790]: 09-27 14:38:06.346   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   29.168075] gts9 adbd[790]: 09-27 14:38:07.347   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   29.168075] gts9 adbd[790]: 09-27 14:38:07.347   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   30.169416] gts9 adbd[790]: 09-27 14:38:08.348   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   30.169416] gts9 adbd[790]: 09-27 14:38:08.348   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   31.170100] gts9 adbd[790]: 09-27 14:38:09.349   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   31.170100] gts9 adbd[790]: 09-27 14:38:09.349   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   31.712483] gts9 kernel: regulator: Not disabling unused regulators
+[   32.171317] gts9 adbd[790]: 09-27 14:38:10.350   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   32.171317] gts9 adbd[790]: 09-27 14:38:10.350   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   33.172254] gts9 adbd[790]: 09-27 14:38:11.350   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   33.172254] gts9 adbd[790]: 09-27 14:38:11.351   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   34.173129] gts9 adbd[790]: 09-27 14:38:12.352   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   34.173129] gts9 adbd[790]: 09-27 14:38:12.352   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   35.174608] gts9 adbd[790]: 09-27 14:38:13.353   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   35.174608] gts9 adbd[790]: 09-27 14:38:13.353   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   36.174917] gts9 adbd[790]: 09-27 14:38:14.354   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   36.174917] gts9 adbd[790]: 09-27 14:38:14.354   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   37.144671] gts9 systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+[   37.174994] gts9 adbd[790]: 09-27 14:38:15.354   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   37.175987] gts9 adbd[790]: 09-27 14:38:15.354   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   38.177402] gts9 adbd[790]: 09-27 14:38:16.356   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   38.177402] gts9 adbd[790]: 09-27 14:38:16.356   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   39.177911] gts9 adbd[790]: 09-27 14:38:17.357   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   39.179407] gts9 adbd[790]: 09-27 14:38:17.357   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   40.179587] gts9 adbd[790]: 09-27 14:38:18.358   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   40.179587] gts9 adbd[790]: 09-27 14:38:18.358   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   41.180617] gts9 adbd[790]: 09-27 14:38:19.359   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   41.180617] gts9 adbd[790]: 09-27 14:38:19.359   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   42.180848] gts9 adbd[790]: 09-27 14:38:20.360   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   42.180848] gts9 adbd[790]: 09-27 14:38:20.360   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   43.181303] gts9 adbd[790]: 09-27 14:38:21.360   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   43.181303] gts9 adbd[790]: 09-27 14:38:21.360   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   44.182832] gts9 adbd[790]: 09-27 14:38:22.361   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   44.182832] gts9 adbd[790]: 09-27 14:38:22.361   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   45.183869] gts9 adbd[790]: 09-27 14:38:23.362   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   45.183869] gts9 adbd[790]: 09-27 14:38:23.363   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   46.185293] gts9 adbd[790]: 09-27 14:38:24.364   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   46.185293] gts9 adbd[790]: 09-27 14:38:24.364   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   47.188335] gts9 adbd[790]: 09-27 14:38:25.366   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   47.188335] gts9 adbd[790]: 09-27 14:38:25.366   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   48.188947] gts9 adbd[790]: 09-27 14:38:26.368   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   48.188947] gts9 adbd[790]: 09-27 14:38:26.368   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   49.189821] gts9 adbd[790]: 09-27 14:38:27.369   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   49.189821] gts9 adbd[790]: 09-27 14:38:27.369   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   50.191573] gts9 adbd[790]: 09-27 14:38:28.370   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   50.191573] gts9 adbd[790]: 09-27 14:38:28.370   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   51.191711] gts9 adbd[790]: 09-27 14:38:29.371   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   51.191711] gts9 adbd[790]: 09-27 14:38:29.371   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   52.192547] gts9 adbd[790]: 09-27 14:38:30.371   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   52.192547] gts9 adbd[790]: 09-27 14:38:30.371   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   53.193976] gts9 adbd[790]: 09-27 14:38:31.373   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   53.193976] gts9 adbd[790]: 09-27 14:38:31.373   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   54.194492] gts9 adbd[790]: 09-27 14:38:32.373   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   54.195883] gts9 adbd[790]: 09-27 14:38:32.374   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   55.196055] gts9 adbd[790]: 09-27 14:38:33.375   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   55.196055] gts9 adbd[790]: 09-27 14:38:33.375   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   56.196951] gts9 adbd[790]: 09-27 14:38:34.376   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   56.196951] gts9 adbd[790]: 09-27 14:38:34.376   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   56.311227] gts9 sshd-session[1207]: Accepted publickey for root from 169.254.18.183 port 8639 ssh2: ED25519 SHA256:uQWR+5fowDvqsRHrpk9X+RNVJ/EW+OpZ+IJAhmolUDY
+[   56.321177] gts9 sshd-session[1207]: pam_unix(sshd:session): session opened for user root(uid=0) by root(uid=0)
+[   56.361209] gts9 systemd[1]: Created slice user-0.slice - User Slice of UID 0.
+[   56.362352] gts9 systemd[1]: Starting user-runtime-dir@0.service - User Runtime Directory /run/user/0...
+[   56.374664] gts9 systemd-logind[687]: New session 1 of user root.
+[   56.378614] gts9 systemd[1]: Finished user-runtime-dir@0.service - User Runtime Directory /run/user/0.
+[   56.381058] gts9 systemd[1]: Starting user@0.service - User Manager for UID 0...
+[   56.404987] gts9 (systemd)[1213]: pam_unix(systemd-user:session): session opened for user root(uid=0) by root(uid=0)
+[   56.407136] gts9 systemd-logind[687]: New session 2 of user root.
+[   56.901559] gts9 systemd[1213]: Queued start job for default target default.target.
+[   56.912756] gts9 systemd[1213]: Created slice app.slice - User Application Slice.
+[   56.912772] gts9 systemd[1213]: Reached target paths.target - Paths.
+[   56.912794] gts9 systemd[1213]: Reached target timers.target - Timers.
+[   56.913763] gts9 systemd[1213]: Starting dbus.socket - D-Bus User Message Bus Socket...
+[   56.914467] gts9 systemd[1213]: Starting ssh-agent.socket - OpenSSH Agent socket...
+[   56.933087] gts9 systemd[1213]: Listening on ssh-agent.socket - OpenSSH Agent socket.
+[   56.940114] gts9 systemd[1213]: Listening on dbus.socket - D-Bus User Message Bus Socket.
+[   56.940199] gts9 systemd[1213]: Reached target sockets.target - Sockets.
+[   56.940241] gts9 systemd[1213]: Reached target basic.target - Basic System.
+[   56.940269] gts9 systemd[1213]: mpris-proxy.service - Bluetooth mpris proxy skipped, unmet condition check ConditionUser=!@system
+[   56.940278] gts9 systemd[1213]: Reached target default.target - Main User Target.
+[   56.940303] gts9 systemd[1213]: Startup finished in 526ms.
+[   56.940972] gts9 systemd[1]: Started user@0.service - User Manager for UID 0.
+[   56.942843] gts9 systemd[1]: Started session-1.scope - Session 1 of User root.
+[   56.979805] gts9 sshd-session[1229]: Received disconnect from 169.254.18.183 port 8639:11: disconnected by user
+[   56.979891] gts9 sshd-session[1229]: Disconnected from user root 169.254.18.183 port 8639
+[   56.980293] gts9 sshd-session[1207]: pam_unix(sshd:session): session closed for user root
+[   56.981900] gts9 systemd[1]: session-1.scope: Deactivated successfully.
+[   56.982890] gts9 systemd-logind[687]: Session 1 logged out. Waiting for processes to exit.
+[   56.983483] gts9 systemd-logind[687]: Removed session 1.
+[   57.199038] gts9 adbd[790]: 09-27 14:38:35.377   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   57.199038] gts9 adbd[790]: 09-27 14:38:35.377   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   58.199473] gts9 adbd[790]: 09-27 14:38:36.378   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   58.199473] gts9 adbd[790]: 09-27 14:38:36.378   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   59.200789] gts9 adbd[790]: 09-27 14:38:37.379   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   59.200789] gts9 adbd[790]: 09-27 14:38:37.380   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   60.202719] gts9 adbd[790]: 09-27 14:38:38.381   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   60.202719] gts9 adbd[790]: 09-27 14:38:38.381   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   61.203275] gts9 adbd[790]: 09-27 14:38:39.382   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   61.203275] gts9 adbd[790]: 09-27 14:38:39.382   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   62.204648] gts9 adbd[790]: 09-27 14:38:40.383   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   62.204648] gts9 adbd[790]: 09-27 14:38:40.383   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   63.205438] gts9 adbd[790]: 09-27 14:38:41.384   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   63.205438] gts9 adbd[790]: 09-27 14:38:41.384   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   64.206587] gts9 adbd[790]: 09-27 14:38:42.385   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   64.206587] gts9 adbd[790]: 09-27 14:38:42.385   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   65.207947] gts9 adbd[790]: 09-27 14:38:43.386   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   65.207947] gts9 adbd[790]: 09-27 14:38:43.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   66.208517] gts9 adbd[790]: 09-27 14:38:44.387   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   66.208517] gts9 adbd[790]: 09-27 14:38:44.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   67.157194] gts9 systemd[1]: Stopping user@0.service - User Manager for UID 0...
+[   67.160107] gts9 systemd[1213]: Activating special unit exit.target...
+[   67.160186] gts9 systemd[1213]: Stopped target default.target - Main User Target.
+[   67.160221] gts9 systemd[1213]: Stopped target basic.target - Basic System.
+[   67.160244] gts9 systemd[1213]: Stopped target paths.target - Paths.
+[   67.160267] gts9 systemd[1213]: Stopped target sockets.target - Sockets.
+[   67.160287] gts9 systemd[1213]: Stopped target timers.target - Timers.
+[   67.160665] gts9 systemd[1213]: Closed dbus.socket - D-Bus User Message Bus Socket.
+[   67.161327] gts9 systemd[1213]: Stopping ssh-agent.socket - OpenSSH Agent socket...
+[   67.198844] gts9 systemd[1213]: Closed ssh-agent.socket - OpenSSH Agent socket.
+[   67.199650] gts9 systemd[1213]: Removed slice app.slice - User Application Slice.
+[   67.199681] gts9 systemd[1213]: Reached target shutdown.target - Shutdown.
+[   67.199837] gts9 systemd[1213]: Finished systemd-exit.service - Exit the Session.
+[   67.199869] gts9 systemd[1213]: Reached target exit.target - Exit the Session.
+[   67.208587] gts9 adbd[790]: 09-27 14:38:45.387   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   67.208587] gts9 adbd[790]: 09-27 14:38:45.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   67.239530] gts9 (sd-pam)[1215]: pam_unix(systemd-user:session): session closed for user root
+[   67.239564] gts9 systemd-logind[687]: Removed session 2.
+[   67.243381] gts9 systemd[1]: user@0.service: Deactivated successfully.
+[   67.245174] gts9 systemd[1]: Stopped user@0.service - User Manager for UID 0.
+[   67.407596] gts9 systemd[1]: Stopping user-runtime-dir@0.service - User Runtime Directory /run/user/0...
+[   67.440777] gts9 systemd[1]: run-user-0.mount: Deactivated successfully.
+[   67.445926] gts9 systemd[1]: user-runtime-dir@0.service: Deactivated successfully.
+[   67.447403] gts9 systemd[1]: Stopped user-runtime-dir@0.service - User Runtime Directory /run/user/0.
+[   67.457723] gts9 systemd[1]: Removed slice user-0.slice - User Slice of UID 0.
+[   68.209624] gts9 adbd[790]: 09-27 14:38:46.388   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   68.209624] gts9 adbd[790]: 09-27 14:38:46.388   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   68.265152] gts9 sshd-session[1241]: Accepted publickey for root from 169.254.18.183 port 5383 ssh2: ED25519 SHA256:uQWR+5fowDvqsRHrpk9X+RNVJ/EW+OpZ+IJAhmolUDY
+[   68.267044] gts9 sshd-session[1241]: pam_unix(sshd:session): session opened for user root(uid=0) by root(uid=0)
+[   68.278539] gts9 systemd[1]: Created slice user-0.slice - User Slice of UID 0.
+[   68.281591] gts9 systemd[1]: Starting user-runtime-dir@0.service - User Runtime Directory /run/user/0...
+[   68.287464] gts9 systemd-logind[687]: New session 3 of user root.
+[   68.330359] gts9 systemd[1]: Finished user-runtime-dir@0.service - User Runtime Directory /run/user/0.
+[   68.344249] gts9 systemd[1]: Starting user@0.service - User Manager for UID 0...
+[   68.369152] gts9 (systemd)[1246]: pam_unix(systemd-user:session): session opened for user root(uid=0) by root(uid=0)
+[   68.370831] gts9 systemd-logind[687]: New session 4 of user root.
+[   68.816861] gts9 systemd[1246]: Queued start job for default target default.target.
+[   68.833152] gts9 systemd[1246]: Created slice app.slice - User Application Slice.
+[   68.833168] gts9 systemd[1246]: Reached target paths.target - Paths.
+[   68.833191] gts9 systemd[1246]: Reached target timers.target - Timers.
+[   68.833976] gts9 systemd[1246]: Starting dbus.socket - D-Bus User Message Bus Socket...
+[   68.834688] gts9 systemd[1246]: Starting ssh-agent.socket - OpenSSH Agent socket...
+[   68.857950] gts9 systemd[1246]: Listening on dbus.socket - D-Bus User Message Bus Socket.
+[   68.864674] gts9 systemd[1246]: Listening on ssh-agent.socket - OpenSSH Agent socket.
+[   68.864742] gts9 systemd[1246]: Reached target sockets.target - Sockets.
+[   68.864770] gts9 systemd[1246]: Reached target basic.target - Basic System.
+[   68.864792] gts9 systemd[1246]: mpris-proxy.service - Bluetooth mpris proxy skipped, unmet condition check ConditionUser=!@system
+[   68.864799] gts9 systemd[1246]: Reached target default.target - Main User Target.
+[   68.864820] gts9 systemd[1246]: Startup finished in 489ms.
+[   68.864961] gts9 systemd[1]: Started user@0.service - User Manager for UID 0.
+[   68.866253] gts9 systemd[1]: Started session-3.scope - Session 3 of User root.
+[   68.902327] gts9 systemd[1]: Configuration file /usr/lib/systemd/system/gts9-adbd.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[   69.210445] gts9 adbd[790]: 09-27 14:38:47.389   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   69.210445] gts9 adbd[790]: 09-27 14:38:47.389   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   69.746470] gts9 sshd-session[1263]: Received disconnect from 169.254.18.183 port 5383:11: disconnected by user
+[   69.746569] gts9 sshd-session[1263]: Disconnected from user root 169.254.18.183 port 5383
+[   69.747924] gts9 sshd-session[1241]: pam_unix(sshd:session): session closed for user root
+[   69.753268] gts9 systemd[1]: session-3.scope: Deactivated successfully.
+[   69.754542] gts9 systemd-logind[687]: Session 3 logged out. Waiting for processes to exit.
+[   69.755537] gts9 systemd-logind[687]: Removed session 3.
+[   70.210863] gts9 adbd[790]: 09-27 14:38:48.390   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   70.210863] gts9 adbd[790]: 09-27 14:38:48.390   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   71.211170] gts9 adbd[790]: 09-27 14:38:49.390   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   71.211170] gts9 adbd[790]: 09-27 14:38:49.390   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   72.212487] gts9 adbd[790]: 09-27 14:38:50.391   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   72.212487] gts9 adbd[790]: 09-27 14:38:50.391   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   73.213572] gts9 adbd[790]: 09-27 14:38:51.392   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   73.213572] gts9 adbd[790]: 09-27 14:38:51.392   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   74.213906] gts9 adbd[790]: 09-27 14:38:52.393   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   74.213906] gts9 adbd[790]: 09-27 14:38:52.393   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   75.214283] gts9 adbd[790]: 09-27 14:38:53.393   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   75.214283] gts9 adbd[790]: 09-27 14:38:53.393   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   76.215502] gts9 adbd[790]: 09-27 14:38:54.394   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   76.215502] gts9 adbd[790]: 09-27 14:38:54.394   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   77.216731] gts9 adbd[790]: 09-27 14:38:55.395   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   77.216731] gts9 adbd[790]: 09-27 14:38:55.396   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   78.217909] gts9 adbd[790]: 09-27 14:38:56.397   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   78.217909] gts9 adbd[790]: 09-27 14:38:56.397   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   79.220169] gts9 adbd[790]: 09-27 14:38:57.399   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   79.220169] gts9 adbd[790]: 09-27 14:38:57.399   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   79.905423] gts9 systemd[1]: Stopping user@0.service - User Manager for UID 0...
+[   79.905909] gts9 systemd[1246]: Activating special unit exit.target...
+[   79.905969] gts9 systemd[1246]: Stopped target default.target - Main User Target.
+[   79.905991] gts9 systemd[1246]: Stopped target basic.target - Basic System.
+[   79.906004] gts9 systemd[1246]: Stopped target paths.target - Paths.
+[   79.906018] gts9 systemd[1246]: Stopped target sockets.target - Sockets.
+[   79.906029] gts9 systemd[1246]: Stopped target timers.target - Timers.
+[   79.906293] gts9 systemd[1246]: Closed dbus.socket - D-Bus User Message Bus Socket.
+[   79.907744] gts9 systemd[1246]: Stopping ssh-agent.socket - OpenSSH Agent socket...
+[   79.961668] gts9 systemd[1246]: Closed ssh-agent.socket - OpenSSH Agent socket.
+[   79.962244] gts9 systemd[1246]: Removed slice app.slice - User Application Slice.
+[   79.962268] gts9 systemd[1246]: Reached target shutdown.target - Shutdown.
+[   79.962371] gts9 systemd[1246]: Finished systemd-exit.service - Exit the Session.
+[   79.962391] gts9 systemd[1246]: Reached target exit.target - Exit the Session.
+[   79.989125] gts9 (sd-pam)[1249]: pam_unix(systemd-user:session): session closed for user root
+[   79.989763] gts9 systemd-logind[687]: Removed session 4.
+[   79.996290] gts9 systemd[1]: user@0.service: Deactivated successfully.
+[   79.998994] gts9 systemd[1]: Stopped user@0.service - User Manager for UID 0.
+[   80.186532] gts9 systemd[1]: Stopping user-runtime-dir@0.service - User Runtime Directory /run/user/0...
+[   80.220103] gts9 adbd[790]: 09-27 14:38:58.399   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   80.220238] gts9 adbd[790]: 09-27 14:38:58.399   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   80.225994] gts9 systemd[1]: run-user-0.mount: Deactivated successfully.
+[   80.227869] gts9 systemd[1]: user-runtime-dir@0.service: Deactivated successfully.
+[   80.228153] gts9 systemd[1]: Stopped user-runtime-dir@0.service - User Runtime Directory /run/user/0.
+[   80.231306] gts9 systemd[1]: Removed slice user-0.slice - User Slice of UID 0.
+[   81.222581] gts9 adbd[790]: 09-27 14:38:59.401   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   81.222581] gts9 adbd[790]: 09-27 14:38:59.401   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   82.223853] gts9 adbd[790]: 09-27 14:39:00.402   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   82.223853] gts9 adbd[790]: 09-27 14:39:00.403   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   83.224656] gts9 adbd[790]: 09-27 14:39:01.403   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   83.224656] gts9 adbd[790]: 09-27 14:39:01.403   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   84.225885] gts9 adbd[790]: 09-27 14:39:02.404   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   84.225885] gts9 adbd[790]: 09-27 14:39:02.405   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   85.227116] gts9 adbd[790]: 09-27 14:39:03.406   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   85.227116] gts9 adbd[790]: 09-27 14:39:03.406   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   86.227427] gts9 adbd[790]: 09-27 14:39:04.406   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   86.227427] gts9 adbd[790]: 09-27 14:39:04.406   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   87.227920] gts9 adbd[790]: 09-27 14:39:05.406   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   87.227920] gts9 adbd[790]: 09-27 14:39:05.407   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   88.228228] gts9 adbd[790]: 09-27 14:39:06.407   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   88.228228] gts9 adbd[790]: 09-27 14:39:06.407   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   89.229706] gts9 adbd[790]: 09-27 14:39:07.408   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   89.229706] gts9 adbd[790]: 09-27 14:39:07.408   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   90.230954] gts9 adbd[790]: 09-27 14:39:08.410   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   90.230954] gts9 adbd[790]: 09-27 14:39:08.410   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   91.232351] gts9 adbd[790]: 09-27 14:39:09.411   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   91.232351] gts9 adbd[790]: 09-27 14:39:09.411   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   92.233095] gts9 adbd[790]: 09-27 14:39:10.411   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   92.233095] gts9 adbd[790]: 09-27 14:39:10.412   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   93.233991] gts9 adbd[790]: 09-27 14:39:11.413   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   93.233991] gts9 adbd[790]: 09-27 14:39:11.413   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   94.235248] gts9 adbd[790]: 09-27 14:39:12.414   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   94.235248] gts9 adbd[790]: 09-27 14:39:12.414   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   95.236580] gts9 adbd[790]: 09-27 14:39:13.415   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   95.236580] gts9 adbd[790]: 09-27 14:39:13.415   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   96.236900] gts9 adbd[790]: 09-27 14:39:14.415   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   96.236900] gts9 adbd[790]: 09-27 14:39:14.416   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   97.239146] gts9 adbd[790]: 09-27 14:39:15.418   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   97.239146] gts9 adbd[790]: 09-27 14:39:15.418   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   98.240286] gts9 adbd[790]: 09-27 14:39:16.419   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   98.240286] gts9 adbd[790]: 09-27 14:39:16.419   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   99.242431] gts9 adbd[790]: 09-27 14:39:17.421   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   99.242431] gts9 adbd[790]: 09-27 14:39:17.421   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  100.243726] gts9 adbd[790]: 09-27 14:39:18.422   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  100.243726] gts9 adbd[790]: 09-27 14:39:18.422   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  101.245059] gts9 adbd[790]: 09-27 14:39:19.424   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  101.245059] gts9 adbd[790]: 09-27 14:39:19.424   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  102.246172] gts9 adbd[790]: 09-27 14:39:20.425   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  102.246172] gts9 adbd[790]: 09-27 14:39:20.425   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  103.246485] gts9 adbd[790]: 09-27 14:39:21.425   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  103.246485] gts9 adbd[790]: 09-27 14:39:21.425   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  104.247681] gts9 adbd[790]: 09-27 14:39:22.426   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  104.247681] gts9 adbd[790]: 09-27 14:39:22.426   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  105.248970] gts9 adbd[790]: 09-27 14:39:23.427   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  105.248970] gts9 adbd[790]: 09-27 14:39:23.428   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  106.249528] gts9 adbd[790]: 09-27 14:39:24.428   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  106.249528] gts9 adbd[790]: 09-27 14:39:24.428   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  107.249967] gts9 adbd[790]: 09-27 14:39:25.429   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  107.249967] gts9 adbd[790]: 09-27 14:39:25.429   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  108.250362] gts9 adbd[790]: 09-27 14:39:26.429   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  108.250362] gts9 adbd[790]: 09-27 14:39:26.429   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  109.251707] gts9 adbd[790]: 09-27 14:39:27.430   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  109.251707] gts9 adbd[790]: 09-27 14:39:27.430   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  110.252073] gts9 adbd[790]: 09-27 14:39:28.431   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  110.252073] gts9 adbd[790]: 09-27 14:39:28.431   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  111.254341] gts9 adbd[790]: 09-27 14:39:29.433   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  111.254341] gts9 adbd[790]: 09-27 14:39:29.433   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  112.254744] gts9 adbd[790]: 09-27 14:39:30.433   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  112.254744] gts9 adbd[790]: 09-27 14:39:30.433   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  113.256827] gts9 adbd[790]: 09-27 14:39:31.435   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  113.256827] gts9 adbd[790]: 09-27 14:39:31.436   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  114.257570] gts9 adbd[790]: 09-27 14:39:32.436   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  114.257570] gts9 adbd[790]: 09-27 14:39:32.436   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  115.258815] gts9 adbd[790]: 09-27 14:39:33.437   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  115.258815] gts9 adbd[790]: 09-27 14:39:33.438   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  116.259932] gts9 adbd[790]: 09-27 14:39:34.439   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  116.259932] gts9 adbd[790]: 09-27 14:39:34.439   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  117.260289] gts9 adbd[790]: 09-27 14:39:35.439   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  117.260289] gts9 adbd[790]: 09-27 14:39:35.439   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  118.260996] gts9 adbd[790]: 09-27 14:39:36.440   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  118.260996] gts9 adbd[790]: 09-27 14:39:36.440   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  119.263247] gts9 adbd[790]: 09-27 14:39:37.442   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  119.263247] gts9 adbd[790]: 09-27 14:39:37.442   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  120.264632] gts9 adbd[790]: 09-27 14:39:38.443   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  120.264632] gts9 adbd[790]: 09-27 14:39:38.443   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  121.266427] gts9 adbd[790]: 09-27 14:39:39.445   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  121.266427] gts9 adbd[790]: 09-27 14:39:39.445   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  122.267859] gts9 adbd[790]: 09-27 14:39:40.446   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  122.267859] gts9 adbd[790]: 09-27 14:39:40.447   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  123.269141] gts9 adbd[790]: 09-27 14:39:41.448   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  123.269141] gts9 adbd[790]: 09-27 14:39:41.448   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  124.271376] gts9 adbd[790]: 09-27 14:39:42.450   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  124.271376] gts9 adbd[790]: 09-27 14:39:42.450   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  125.272507] gts9 adbd[790]: 09-27 14:39:43.451   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  125.272507] gts9 adbd[790]: 09-27 14:39:43.451   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  126.273641] gts9 adbd[790]: 09-27 14:39:44.452   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  126.273641] gts9 adbd[790]: 09-27 14:39:44.452   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  127.274923] gts9 adbd[790]: 09-27 14:39:45.453   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  127.274923] gts9 adbd[790]: 09-27 14:39:45.454   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  128.275325] gts9 adbd[790]: 09-27 14:39:46.454   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  128.275325] gts9 adbd[790]: 09-27 14:39:46.454   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  129.275870] gts9 adbd[790]: 09-27 14:39:47.454   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  129.275870] gts9 adbd[790]: 09-27 14:39:47.455   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  130.276319] gts9 adbd[790]: 09-27 14:39:48.455   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  130.276319] gts9 adbd[790]: 09-27 14:39:48.455   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  131.277448] gts9 adbd[790]: 09-27 14:39:49.456   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  131.277448] gts9 adbd[790]: 09-27 14:39:49.456   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  132.277773] gts9 adbd[790]: 09-27 14:39:50.456   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  132.277773] gts9 adbd[790]: 09-27 14:39:50.457   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  133.278552] gts9 adbd[790]: 09-27 14:39:51.457   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  133.278552] gts9 adbd[790]: 09-27 14:39:51.457   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  134.279849] gts9 adbd[790]: 09-27 14:39:52.458   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  134.279849] gts9 adbd[790]: 09-27 14:39:52.459   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  135.282045] gts9 adbd[790]: 09-27 14:39:53.461   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  135.282045] gts9 adbd[790]: 09-27 14:39:53.461   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  136.282679] gts9 adbd[790]: 09-27 14:39:54.461   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  136.282679] gts9 adbd[790]: 09-27 14:39:54.461   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  137.284063] gts9 adbd[790]: 09-27 14:39:55.463   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  137.284063] gts9 adbd[790]: 09-27 14:39:55.463   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  138.284266] gts9 adbd[790]: 09-27 14:39:56.463   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  138.284266] gts9 adbd[790]: 09-27 14:39:56.463   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  139.284713] gts9 adbd[790]: 09-27 14:39:57.463   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  139.284713] gts9 adbd[790]: 09-27 14:39:57.463   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  140.285551] gts9 adbd[790]: 09-27 14:39:58.464   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  140.285551] gts9 adbd[790]: 09-27 14:39:58.464   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  141.286891] gts9 adbd[790]: 09-27 14:39:59.465   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  141.286891] gts9 adbd[790]: 09-27 14:39:59.466   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  142.288222] gts9 adbd[790]: 09-27 14:40:00.467   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  142.288222] gts9 adbd[790]: 09-27 14:40:00.467   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  143.288684] gts9 adbd[790]: 09-27 14:40:01.467   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  143.288684] gts9 adbd[790]: 09-27 14:40:01.467   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  144.290809] gts9 adbd[790]: 09-27 14:40:02.469   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  144.290809] gts9 adbd[790]: 09-27 14:40:02.469   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  145.291058] gts9 adbd[790]: 09-27 14:40:03.470   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  145.291058] gts9 adbd[790]: 09-27 14:40:03.470   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  146.291417] gts9 adbd[790]: 09-27 14:40:04.470   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  146.291417] gts9 adbd[790]: 09-27 14:40:04.470   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  147.292729] gts9 adbd[790]: 09-27 14:40:05.471   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  147.292729] gts9 adbd[790]: 09-27 14:40:05.471   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  148.293933] gts9 adbd[790]: 09-27 14:40:06.472   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  148.293933] gts9 adbd[790]: 09-27 14:40:06.473   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  149.294325] gts9 adbd[790]: 09-27 14:40:07.473   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  149.294325] gts9 adbd[790]: 09-27 14:40:07.473   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  150.294994] gts9 adbd[790]: 09-27 14:40:08.474   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  150.294994] gts9 adbd[790]: 09-27 14:40:08.474   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  151.296390] gts9 adbd[790]: 09-27 14:40:09.475   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  151.296390] gts9 adbd[790]: 09-27 14:40:09.475   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  152.298637] gts9 adbd[790]: 09-27 14:40:10.477   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  152.298637] gts9 adbd[790]: 09-27 14:40:10.477   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  153.299976] gts9 adbd[790]: 09-27 14:40:11.479   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  153.299976] gts9 adbd[790]: 09-27 14:40:11.479   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  154.301317] gts9 adbd[790]: 09-27 14:40:12.480   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  154.301317] gts9 adbd[790]: 09-27 14:40:12.480   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  154.934712] gts9 sshd-session[1278]: Accepted publickey for root from 169.254.18.183 port 5336 ssh2: ED25519 SHA256:uQWR+5fowDvqsRHrpk9X+RNVJ/EW+OpZ+IJAhmolUDY
+[  154.936706] gts9 sshd-session[1278]: pam_unix(sshd:session): session opened for user root(uid=0) by root(uid=0)
+[  154.951788] gts9 systemd[1]: Created slice user-0.slice - User Slice of UID 0.
+[  154.955602] gts9 systemd[1]: Starting user-runtime-dir@0.service - User Runtime Directory /run/user/0...
+[  154.966718] gts9 systemd-logind[687]: New session 5 of user root.
+[  154.995609] gts9 systemd[1]: Finished user-runtime-dir@0.service - User Runtime Directory /run/user/0.
+[  155.003692] gts9 systemd[1]: Starting user@0.service - User Manager for UID 0...
+[  155.025560] gts9 (systemd)[1283]: pam_unix(systemd-user:session): session opened for user root(uid=0) by root(uid=0)
+[  155.039457] gts9 systemd-logind[687]: New session 6 of user root.
+[  155.301456] gts9 adbd[790]: 09-27 14:40:13.480   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[  155.301456] gts9 adbd[790]: 09-27 14:40:13.480   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[  155.496919] gts9 systemd[1283]: Queued start job for default target default.target.
+[  155.516736] gts9 systemd[1283]: Created slice app.slice - User Application Slice.
+[  155.516753] gts9 systemd[1283]: Reached target paths.target - Paths.
+[  155.516777] gts9 systemd[1283]: Reached target timers.target - Timers.
+[  155.518033] gts9 systemd[1283]: Starting dbus.socket - D-Bus User Message Bus Socket...
+[  155.518801] gts9 systemd[1283]: Starting ssh-agent.socket - OpenSSH Agent socket...
+[  155.531205] gts9 systemd[1283]: Listening on ssh-agent.socket - OpenSSH Agent socket.
+[  155.549184] gts9 systemd[1283]: Listening on dbus.socket - D-Bus User Message Bus Socket.
+[  155.549257] gts9 systemd[1283]: Reached target sockets.target - Sockets.
+[  155.549282] gts9 systemd[1283]: Reached target basic.target - Basic System.
+[  155.549305] gts9 systemd[1283]: mpris-proxy.service - Bluetooth mpris proxy skipped, unmet condition check ConditionUser=!@system
+[  155.549313] gts9 systemd[1283]: Reached target default.target - Main User Target.
+[  155.549334] gts9 systemd[1283]: Startup finished in 504ms.
+[  155.550044] gts9 systemd[1]: Started user@0.service - User Manager for UID 0.
+[  155.551382] gts9 systemd[1]: Started session-5.scope - Session 5 of User root.

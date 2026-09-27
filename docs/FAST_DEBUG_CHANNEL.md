@@ -13,8 +13,10 @@ VID/PID, serial, device address 169.254.42.1/16 and SSH keys/settings.
 `/etc/gts9-usb-adb` containing `1` enables an additional `ffs.adb` function in
 that same gts9 gadget. Set it to `0` for NCM-only on the next boot.
 
-Startup order is prepare FunctionFS → start gts9-adbd → wait at most five
-seconds for descriptors → bind NCM plus ADB. Missing adbd, mount failures,
+Startup order is prepare NCM/descriptors/UDC and FunctionFS → start gts9-adbd
+→ acquire the ep0 holder → wait at most five
+seconds for readiness (50 ms polling) → bind NCM plus ADB.
+The preparation runs before adbd because its initial bind deadline is one second. Missing adbd, mount failures,
 readiness timeout or a failed composite bind fall back to NCM-only. The packaged
 adbd.service stays masked; never run its competing g1 gadget helper.
 ADBD_PORT=5555 preserves TCP ADB even when USB is enabled.

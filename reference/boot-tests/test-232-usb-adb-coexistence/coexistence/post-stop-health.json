@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/mnt/c/Windows/System32/OpenSSH/ssh.exe",
+    "-i",
+    "C:\\Users\\ms\\.ssh\\gts9-test232\\key",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=NUL",
+    "-o",
+    "ConnectTimeout=8",
+    "root@169.254.42.1",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; systemctl --failed --no-pager; journalctl -b --no-pager -o short-monotonic"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:36:06.081890+00:00"
+}

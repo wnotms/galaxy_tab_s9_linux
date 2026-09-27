@@ -41,3 +41,5 @@ else
 	(umask 077; echo "$mount_id" > "$STATE") || fallback 'cannot record safe mount'
 fi
 echo 'gts9-usb-adb: FunctionFS prepared with no_disconnect'
+# Complete descriptors/NCM/UDC discovery before adbd's one-second bind timer.
+"${GTS9_USB_BIND_HELPER:-/usr/libexec/gts9-usb-acm}" --prepare

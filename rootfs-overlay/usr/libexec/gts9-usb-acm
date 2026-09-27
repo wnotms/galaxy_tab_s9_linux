@@ -281,6 +281,20 @@ if [ -z "$net_kind" ]; then
 	fail "no network function: check $NET_CONF and CONFIG_USB_CONFIGFS_NCM (without it this gadget provides no way into the tablet)"
 fi
 
+waited=0
+while [ "$waited" -lt "$UDC_WAIT_SECONDS" ] && \
+      [ -z "$(ls -A "$UDC_DIR" 2>/dev/null)" ]; do
+	sleep 1
+	waited=$((waited + 1))
+done
+udc=$(ls "$UDC_DIR" 2>/dev/null | head -n 1)
+if [ -z "$udc" ]; then
+	fail "no USB device controller after ${UDC_WAIT_SECONDS}s"
+fi
+
+# Prepare before starting adbd: its FunctionFS bind deadline is only one second.
+[ "${1:-}" != --prepare ] || exit 0
+
 # USB ADB is optional. Never unbind an already-running gadget to add it.
 adb_linked=0
 adb_conf=${GTS9_USB_ADB_CONF:-/etc/gts9-usb-adb}
@@ -297,8 +311,8 @@ if [ "$(cat "$adb_conf" 2>/dev/null)" = 1 ] &&
 		[ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" = 1 ] &&
 		kill -0 "$(cat "$adb_hold" 2>/dev/null)" 2>/dev/null
 	}
-	while ! adb_ready && [ "$waited" -lt "$adb_wait" ]; do
-		sleep 1
+	while ! adb_ready && [ "$waited" -lt "$((adb_wait * 20))" ]; do
+		sleep 0.05
 		waited=$((waited + 1))
 	done
 	if adb_ready; then
@@ -319,16 +333,6 @@ if [ "$(cat "$adb_conf" 2>/dev/null)" = 1 ] &&
 	fi
 fi
 
-waited=0
-while [ "$waited" -lt "$UDC_WAIT_SECONDS" ] && \
-      [ -z "$(ls -A "$UDC_DIR" 2>/dev/null)" ]; do
-	sleep 1
-	waited=$((waited + 1))
-done
-udc=$(ls "$UDC_DIR" 2>/dev/null | head -n 1)
-if [ -z "$udc" ]; then
-	fail "no USB device controller after ${UDC_WAIT_SECONDS}s"
-fi
 
 if ! echo "$udc" > "$GADGET/UDC" 2>/dev/null; then
 	# ADB must never cost the NCM login path. Retry with only NCM.

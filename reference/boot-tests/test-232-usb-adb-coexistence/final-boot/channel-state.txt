@@ -1,0 +1,154 @@
+Result=success
+ActiveState=active
+SubState=running
+
+Result=success
+ActiveState=active
+SubState=running
+lrwx------ 1 root root 64 Sep 27 14:37 /proc/791/fd/3 -> /dev/usb-ffs/adb/ep0
+a600000.usb
+usb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 
+[    3.910419] gts9 systemd[1]: Starting gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel)...
+[    3.941903] gts9 systemd[1]: Started gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel).
+[    5.086988] gts9 adbd[790]: 09-27 14:37:43.265   790   790 E adbd    : auth.cpp:204 Failed to get adbd socket: Success
+[    5.086988] gts9 adbd[790]: 09-27 14:37:43.266   790   790 E adbd    : adbd_auth.cpp:98 adbd_auth: failed to get adbd authentication socket: Success
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.266   790   790 I adbd    : main.cpp:195 adbd listening on tcp:5555
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   854 E adbd    : adbd_auth.cpp:300 adbd_auth: socket unavailable, disabling user prompts
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   790 I adbd    : main.cpp:195 adbd listening on vsock:5555
+[    5.088815] gts9 adbd[790]: 09-27 14:37:43.267   790   790 I adbd    : main.cpp:306 adbd started
+[    5.089705] gts9 adbd[790]: 09-27 14:37:43.268   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    5.089705] gts9 adbd[790]: 09-27 14:37:43.269   790   855 I adbd    : usb.cpp:154 UsbFfsConnection constructed
+[    5.089946] gts9 adbd[790]: 09-27 14:37:43.269   790   859 I adbd    : usb.cpp:261 UsbFfs-monitor thread spawned
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   859 W adbd    : usb.cpp:279 timed out while waiting for FUNCTIONFS_BIND, trying again
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   859 I adbd    : transport.cpp:1253 UsbFfs: connection terminated: monitor thread finished
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : adb.cpp:173 UsbFfs: already offline
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : transport.cpp:936 destroying transport UsbFfs
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.270   790   790 I adbd    : usb.cpp:169 UsbFfsConnection being destroyed
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.327   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    6.305899] gts9 adbd[790]: 09-27 14:37:44.327   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    7.148401] gts9 adbd[790]: 09-27 14:37:45.327   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    7.148477] gts9 adbd[790]: 09-27 14:37:45.327   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    8.148650] gts9 adbd[790]: 09-27 14:37:46.328   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    8.149461] gts9 adbd[790]: 09-27 14:37:46.328   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[    9.149726] gts9 adbd[790]: 09-27 14:37:47.328   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    9.149726] gts9 adbd[790]: 09-27 14:37:47.329   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   10.150096] gts9 adbd[790]: 09-27 14:37:48.329   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   10.150096] gts9 adbd[790]: 09-27 14:37:48.329   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   11.151532] gts9 adbd[790]: 09-27 14:37:49.330   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   11.151532] gts9 adbd[790]: 09-27 14:37:49.330   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   12.151418] gts9 adbd[790]: 09-27 14:37:50.330   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   12.151464] gts9 adbd[790]: 09-27 14:37:50.331   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   13.152246] gts9 adbd[790]: 09-27 14:37:51.331   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   13.152246] gts9 adbd[790]: 09-27 14:37:51.331   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   14.153549] gts9 adbd[790]: 09-27 14:37:52.332   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   14.153549] gts9 adbd[790]: 09-27 14:37:52.332   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   15.155128] gts9 adbd[790]: 09-27 14:37:53.334   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   15.155128] gts9 adbd[790]: 09-27 14:37:53.334   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   16.155201] gts9 adbd[790]: 09-27 14:37:54.334   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   16.156383] gts9 adbd[790]: 09-27 14:37:54.334   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   17.156844] gts9 adbd[790]: 09-27 14:37:55.335   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   17.156844] gts9 adbd[790]: 09-27 14:37:55.336   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   18.158187] gts9 adbd[790]: 09-27 14:37:56.337   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   18.158187] gts9 adbd[790]: 09-27 14:37:56.337   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   19.158542] gts9 adbd[790]: 09-27 14:37:57.337   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   19.158542] gts9 adbd[790]: 09-27 14:37:57.337   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   20.158842] gts9 adbd[790]: 09-27 14:37:58.338   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   20.158842] gts9 adbd[790]: 09-27 14:37:58.338   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   21.159197] gts9 adbd[790]: 09-27 14:37:59.338   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   21.160266] gts9 adbd[790]: 09-27 14:37:59.338   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   22.161535] gts9 adbd[790]: 09-27 14:38:00.339   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   22.161535] gts9 adbd[790]: 09-27 14:38:00.340   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   23.161449] gts9 adbd[790]: 09-27 14:38:01.340   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   23.161449] gts9 adbd[790]: 09-27 14:38:01.341   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   24.162929] gts9 adbd[790]: 09-27 14:38:02.342   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   24.162929] gts9 adbd[790]: 09-27 14:38:02.342   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   25.164273] gts9 adbd[790]: 09-27 14:38:03.343   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   25.164273] gts9 adbd[790]: 09-27 14:38:03.343   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   26.164412] gts9 adbd[790]: 09-27 14:38:04.343   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   26.165455] gts9 adbd[790]: 09-27 14:38:04.344   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   27.166138] gts9 adbd[790]: 09-27 14:38:05.345   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   27.166138] gts9 adbd[790]: 09-27 14:38:05.345   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   28.166583] gts9 adbd[790]: 09-27 14:38:06.345   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   28.166583] gts9 adbd[790]: 09-27 14:38:06.346   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   29.168075] gts9 adbd[790]: 09-27 14:38:07.347   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   29.168075] gts9 adbd[790]: 09-27 14:38:07.347   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   30.169416] gts9 adbd[790]: 09-27 14:38:08.348   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   30.169416] gts9 adbd[790]: 09-27 14:38:08.348   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   31.170100] gts9 adbd[790]: 09-27 14:38:09.349   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   31.170100] gts9 adbd[790]: 09-27 14:38:09.349   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   32.171317] gts9 adbd[790]: 09-27 14:38:10.350   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   32.171317] gts9 adbd[790]: 09-27 14:38:10.350   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   33.172254] gts9 adbd[790]: 09-27 14:38:11.350   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   33.172254] gts9 adbd[790]: 09-27 14:38:11.351   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   34.173129] gts9 adbd[790]: 09-27 14:38:12.352   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   34.173129] gts9 adbd[790]: 09-27 14:38:12.352   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   35.174608] gts9 adbd[790]: 09-27 14:38:13.353   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   35.174608] gts9 adbd[790]: 09-27 14:38:13.353   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   36.174917] gts9 adbd[790]: 09-27 14:38:14.354   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   36.174917] gts9 adbd[790]: 09-27 14:38:14.354   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   37.174994] gts9 adbd[790]: 09-27 14:38:15.354   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   37.175987] gts9 adbd[790]: 09-27 14:38:15.354   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   38.177402] gts9 adbd[790]: 09-27 14:38:16.356   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   38.177402] gts9 adbd[790]: 09-27 14:38:16.356   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   39.177911] gts9 adbd[790]: 09-27 14:38:17.357   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   39.179407] gts9 adbd[790]: 09-27 14:38:17.357   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   40.179587] gts9 adbd[790]: 09-27 14:38:18.358   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   40.179587] gts9 adbd[790]: 09-27 14:38:18.358   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   41.180617] gts9 adbd[790]: 09-27 14:38:19.359   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   41.180617] gts9 adbd[790]: 09-27 14:38:19.359   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   42.180848] gts9 adbd[790]: 09-27 14:38:20.360   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   42.180848] gts9 adbd[790]: 09-27 14:38:20.360   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   43.181303] gts9 adbd[790]: 09-27 14:38:21.360   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   43.181303] gts9 adbd[790]: 09-27 14:38:21.360   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   44.182832] gts9 adbd[790]: 09-27 14:38:22.361   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   44.182832] gts9 adbd[790]: 09-27 14:38:22.361   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   45.183869] gts9 adbd[790]: 09-27 14:38:23.362   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   45.183869] gts9 adbd[790]: 09-27 14:38:23.363   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   46.185293] gts9 adbd[790]: 09-27 14:38:24.364   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   46.185293] gts9 adbd[790]: 09-27 14:38:24.364   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   47.188335] gts9 adbd[790]: 09-27 14:38:25.366   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   47.188335] gts9 adbd[790]: 09-27 14:38:25.366   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   48.188947] gts9 adbd[790]: 09-27 14:38:26.368   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   48.188947] gts9 adbd[790]: 09-27 14:38:26.368   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   49.189821] gts9 adbd[790]: 09-27 14:38:27.369   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   49.189821] gts9 adbd[790]: 09-27 14:38:27.369   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   50.191573] gts9 adbd[790]: 09-27 14:38:28.370   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   50.191573] gts9 adbd[790]: 09-27 14:38:28.370   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   51.191711] gts9 adbd[790]: 09-27 14:38:29.371   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   51.191711] gts9 adbd[790]: 09-27 14:38:29.371   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   52.192547] gts9 adbd[790]: 09-27 14:38:30.371   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   52.192547] gts9 adbd[790]: 09-27 14:38:30.371   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   53.193976] gts9 adbd[790]: 09-27 14:38:31.373   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   53.193976] gts9 adbd[790]: 09-27 14:38:31.373   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   54.194492] gts9 adbd[790]: 09-27 14:38:32.373   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   54.195883] gts9 adbd[790]: 09-27 14:38:32.374   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   55.196055] gts9 adbd[790]: 09-27 14:38:33.375   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   55.196055] gts9 adbd[790]: 09-27 14:38:33.375   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   56.196951] gts9 adbd[790]: 09-27 14:38:34.376   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   56.196951] gts9 adbd[790]: 09-27 14:38:34.376   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   57.199038] gts9 adbd[790]: 09-27 14:38:35.377   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   57.199038] gts9 adbd[790]: 09-27 14:38:35.377   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   58.199473] gts9 adbd[790]: 09-27 14:38:36.378   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   58.199473] gts9 adbd[790]: 09-27 14:38:36.378   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   59.200789] gts9 adbd[790]: 09-27 14:38:37.379   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   59.200789] gts9 adbd[790]: 09-27 14:38:37.380   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   60.202719] gts9 adbd[790]: 09-27 14:38:38.381   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   60.202719] gts9 adbd[790]: 09-27 14:38:38.381   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   61.203275] gts9 adbd[790]: 09-27 14:38:39.382   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   61.203275] gts9 adbd[790]: 09-27 14:38:39.382   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   62.204648] gts9 adbd[790]: 09-27 14:38:40.383   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   62.204648] gts9 adbd[790]: 09-27 14:38:40.383   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   63.205438] gts9 adbd[790]: 09-27 14:38:41.384   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   63.205438] gts9 adbd[790]: 09-27 14:38:41.384   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   64.206587] gts9 adbd[790]: 09-27 14:38:42.385   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   64.206587] gts9 adbd[790]: 09-27 14:38:42.385   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   65.207947] gts9 adbd[790]: 09-27 14:38:43.386   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   65.207947] gts9 adbd[790]: 09-27 14:38:43.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   66.208517] gts9 adbd[790]: 09-27 14:38:44.387   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   66.208517] gts9 adbd[790]: 09-27 14:38:44.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   67.208587] gts9 adbd[790]: 09-27 14:38:45.387   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   67.208587] gts9 adbd[790]: 09-27 14:38:45.387   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   68.209624] gts9 adbd[790]: 09-27 14:38:46.388   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   68.209624] gts9 adbd[790]: 09-27 14:38:46.388   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process
+[   69.210445] gts9 adbd[790]: 09-27 14:38:47.389   790   855 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[   69.210445] gts9 adbd[790]: 09-27 14:38:47.389   790   855 E adbd    : usb_ffs.cpp:292 failed to write USB descriptors: No such process

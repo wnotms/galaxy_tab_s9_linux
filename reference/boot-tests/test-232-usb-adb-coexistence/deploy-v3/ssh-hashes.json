@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "sha256sum /etc/gts9-usb-net /etc/ssh/sshd_config /root/.ssh/authorized_keys; find /etc/ssh/sshd_config.d -type f -exec sha256sum {} \\;"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:40:38.146452+00:00"
+}

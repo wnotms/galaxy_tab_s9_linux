@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/mnt/c/Windows/System32/OpenSSH/ssh.exe",
+    "-i",
+    "C:\\Users\\ms\\.ssh\\gts9-test232\\key",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=NUL",
+    "-o",
+    "ConnectTimeout=8",
+    "root@169.254.42.1",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; systemctl stop gts9-adbd.service && systemctl start gts9-adbd.service && systemctl show -p ActiveState -p SubState -p Result -p ConditionResult gts9-adbd.service; cat /sys/kernel/config/usb_gadget/gts9/UDC; ip -br addr show usb0; ls -l /proc/$(cat /run/gts9-usb-adb.holder)/fd/3; cat /proc/uptime"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:35:13.375346+00:00"
+}

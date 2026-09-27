@@ -1,0 +1,36 @@
+test_a_missing_network_function_is_fatal (test_debian_usb_acm.UsbAcmServiceTests.test_a_missing_network_function_is_fatal)
+Without NCM the gadget provides no way into the tablet at all. ... ok
+test_adb_timeout_preserves_network (test_debian_usb_acm.UsbAcmServiceTests.test_adb_timeout_preserves_network) ... ok
+test_adbd_starts_between_prepare_and_bind_and_keeps_tcp (test_debian_usb_acm.UsbAcmServiceTests.test_adbd_starts_between_prepare_and_bind_and_keeps_tcp) ... ok
+test_an_already_bound_gadget_is_not_rebuilt (test_debian_usb_acm.UsbAcmServiceTests.test_an_already_bound_gadget_is_not_rebuilt) ... ok
+test_an_upgraded_gadget_drops_the_serial_ports (test_debian_usb_acm.UsbAcmServiceTests.test_an_upgraded_gadget_drops_the_serial_ports)
+The live gadget is rebuilt, because configfs cannot edit a bound one. ... ok
+test_bound_ncm_is_never_reenumerated_for_adb (test_debian_usb_acm.UsbAcmServiceTests.test_bound_ncm_is_never_reenumerated_for_adb) ... ok
+test_creates_the_verified_gadget_with_no_serial_function (test_debian_usb_acm.UsbAcmServiceTests.test_creates_the_verified_gadget_with_no_serial_function) ... ok
+test_daemon_restart_cannot_reset_an_active_composite (test_debian_usb_acm.UsbAcmServiceTests.test_daemon_restart_cannot_reset_an_active_composite) ... ok
+test_failed_composite_bind_retries_with_ncm (test_debian_usb_acm.UsbAcmServiceTests.test_failed_composite_bind_retries_with_ncm) ... ok
+test_failure_is_reported_and_does_not_block_boot (test_debian_usb_acm.UsbAcmServiceTests.test_failure_is_reported_and_does_not_block_boot) ... ok
+test_helper_cannot_touch_the_root_filesystem (test_debian_usb_acm.UsbAcmServiceTests.test_helper_cannot_touch_the_root_filesystem) ... ok
+test_helper_has_no_bash_only_features (test_debian_usb_acm.UsbAcmServiceTests.test_helper_has_no_bash_only_features) ... ok
+test_helper_never_mentions_dangerous_usb_functions (test_debian_usb_acm.UsbAcmServiceTests.test_helper_never_mentions_dangerous_usb_functions) ... ok
+test_holder_keeps_ep0_open_without_writing (test_debian_usb_acm.UsbAcmServiceTests.test_holder_keeps_ep0_open_without_writing) ... ok
+test_missing_holder_keeps_ncm_only (test_debian_usb_acm.UsbAcmServiceTests.test_missing_holder_keeps_ncm_only) ... ok
+test_no_configfs_console_attribute_is_written (test_debian_usb_acm.UsbAcmServiceTests.test_no_configfs_console_attribute_is_written)
+Nothing may touch a gadget console attribute any more. ... ok
+test_no_serial_function_is_created_at_all (test_debian_usb_acm.UsbAcmServiceTests.test_no_serial_function_is_created_at_all)
+The gadget is exactly one function: NCM. ... ok
+test_panel_independence_of_the_usb_path (test_debian_usb_acm.UsbAcmServiceTests.test_panel_independence_of_the_usb_path) ... ok
+test_prepare_mode_finishes_network_before_daemon_without_binding (test_debian_usb_acm.UsbAcmServiceTests.test_prepare_mode_finishes_network_before_daemon_without_binding) ... ok
+test_prepare_mounts_safely_and_does_not_reuse_unknown_mount (test_debian_usb_acm.UsbAcmServiceTests.test_prepare_mounts_safely_and_does_not_reuse_unknown_mount) ... ok
+test_ready_adb_shares_ncm_gadget (test_debian_usb_acm.UsbAcmServiceTests.test_ready_adb_shares_ncm_gadget) ... ok
+test_service_is_oneshot_and_never_required_by_the_boot_target (test_debian_usb_acm.UsbAcmServiceTests.test_service_is_oneshot_and_never_required_by_the_boot_target) ... ok
+test_success_is_recorded_in_the_boot_record (test_debian_usb_acm.UsbAcmServiceTests.test_success_is_recorded_in_the_boot_record) ... ok
+test_the_network_function_is_the_only_function (test_debian_usb_acm.UsbAcmServiceTests.test_the_network_function_is_the_only_function)
+NCM is not an "exception" any more - it is the entire gadget. ... ok
+test_the_network_transport_ships_in_the_overlay (test_debian_usb_acm.UsbAcmServiceTests.test_the_network_transport_ships_in_the_overlay) ... ok
+test_unsafe_mount_is_not_added (test_debian_usb_acm.UsbAcmServiceTests.test_unsafe_mount_is_not_added) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 27.452s
+
+OK

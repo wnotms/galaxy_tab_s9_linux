@@ -7,4 +7,4 @@ Before=gts9-adbd.service gts9-usb-acm.service
 Type=oneshot
 ExecStart=/usr/libexec/gts9-usb-adb-prepare
 RemainAfterExit=yes
-TimeoutStartSec=10
+TimeoutStartSec=25

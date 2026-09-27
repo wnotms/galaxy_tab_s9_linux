@@ -44,6 +44,13 @@ class UsbAcmServiceTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        # Fixture tests check records, not persistence of the host's disks.
+        # A real global sync can block on unrelated WSL/Windows filesystems.
+        self.mockbin = self.root / 'tools'
+        self.mockbin.mkdir()
+        sync = self.mockbin / 'sync'
+        sync.write_text('#!/bin/sh\nexit 0\n')
+        sync.chmod(0o755)
         self.configfs = self.root / 'configfs'
         self.gadget = self.configfs / 'usb_gadget' / 'gts9'
         self.udc_dir = self.root / 'udc'
@@ -65,6 +72,7 @@ class UsbAcmServiceTests(unittest.TestCase):
         if udc is not None:
             (self.udc_dir / udc).write_text('')
         environment = dict(os.environ,
+                           PATH=str(self.mockbin) + ":" + os.environ["PATH"],
                            GTS9_USB_CONFIGFS=str(self.configfs),
                            GTS9_USB_GADGET_DIR=str(self.gadget),
                            GTS9_USB_UDC_DIR=str(self.udc_dir),
@@ -305,7 +313,7 @@ class UsbAcmServiceTests(unittest.TestCase):
         findmnt = bindir / 'findmnt'
         findmnt.write_text('#!/bin/sh\necho 177\n')
         findmnt.chmod(0o755)
-        return dict(PATH=str(bindir) + ':' + os.environ['PATH'],
+        return dict(PATH=str(bindir) + ':' + str(self.mockbin) + ':' + os.environ['PATH'],
                     GTS9_USB_ADB_CONF=str(conf),
                     GTS9_USB_ADB_STATE=str(state),
                     GTS9_USB_ADB_HOLD=str(holder),
@@ -371,7 +379,7 @@ class UsbAcmServiceTests(unittest.TestCase):
         env.update(GTS9_USB_CONFIGFS=str(self.configfs),
                    GTS9_USB_GADGET_DIR=str(self.gadget),
                    GTS9_USB_ADB_FFS=str(self.root / 'ffs'),
-                   GTS9_ADBD_BINARY='/bin/true')
+                   GTS9_ADBD_BINARY='/bin/true', GTS9_USB_BIND_HELPER='/bin/true')
         bindir = self.root / 'bin'
         mounted = self.root / 'mounted'
         mountpoint = bindir / 'mountpoint'
@@ -444,6 +452,15 @@ class UsbAcmServiceTests(unittest.TestCase):
         finally:
             holder.terminate()
             holder.wait(timeout=3)
+
+    def test_prepare_mode_finishes_network_before_daemon_without_binding(self):
+        result = self.run_helper('--prepare')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.gadget / 'configs/c.1/ncm.usb0').is_symlink())
+        self.assertFalse((self.gadget / 'UDC').exists())
+        result = self.run_helper()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
 
     def test_service_is_oneshot_and_never_required_by_the_boot_target(self):
         self.assertIn('Type=oneshot', UNIT)

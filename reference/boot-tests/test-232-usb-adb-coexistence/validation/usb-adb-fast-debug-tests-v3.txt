@@ -1,0 +1,108 @@
+test_every_package_carries_a_sha256 (test_fast_debug_channel.AdbdPackagingTests.test_every_package_carries_a_sha256) ... ok
+test_it_fetches_adbd_and_its_missing_dependencies (test_fast_debug_channel.AdbdPackagingTests.test_it_fetches_adbd_and_its_missing_dependencies) ... ok
+test_it_targets_the_release_the_tablet_runs (test_fast_debug_channel.AdbdPackagingTests.test_it_targets_the_release_the_tablet_runs) ... ok
+test_it_verifies_rather_than_trusting_the_download (test_fast_debug_channel.AdbdPackagingTests.test_it_verifies_rather_than_trusting_the_download) ... ok
+test_the_binaries_are_not_committed (test_fast_debug_channel.AdbdPackagingTests.test_the_binaries_are_not_committed) ... ok
+test_it_does_not_use_the_packaged_gadget_helper (test_fast_debug_channel.AdbdUnitTests.test_it_does_not_use_the_packaged_gadget_helper)
+Debian's helper creates its own gadget and would fail while gts9 owns the UDC. ... ok
+test_it_explains_the_expected_non_android_errors (test_fast_debug_channel.AdbdUnitTests.test_it_explains_the_expected_non_android_errors) ... ok
+test_it_is_picked_up_by_the_enablement_helper (test_fast_debug_channel.AdbdUnitTests.test_it_is_picked_up_by_the_enablement_helper)
+gts9-enable-units links every gts9-*.service with a WantedBy= line. ... ok
+test_the_doc_says_to_mask_the_packaged_unit (test_fast_debug_channel.AdbdUnitTests.test_the_doc_says_to_mask_the_packaged_unit)
+Installing adbd leaves Debian's adbd.service enabled, and it wedges USB. ... ok
+test_the_unit_runs_adbd_and_is_enableable (test_fast_debug_channel.AdbdUnitTests.test_the_unit_runs_adbd_and_is_enableable) ... ok
+test_the_document_records_the_measurement (test_fast_debug_channel.BaudIsNominalTests.test_the_document_records_the_measurement) ... ok
+test_the_document_says_the_console_is_not_replaced (test_fast_debug_channel.BaudIsNominalTests.test_the_document_says_the_console_is_not_replaced) ... ok
+test_the_host_baud_is_a_parameter_so_it_can_be_measured (test_fast_debug_channel.BaudIsNominalTests.test_the_host_baud_is_a_parameter_so_it_can_be_measured) ... ok
+test_the_ps1_explains_that_the_line_coding_is_nominal (test_fast_debug_channel.BaudIsNominalTests.test_the_ps1_explains_that_the_line_coding_is_nominal) ... ok
+test_every_cpu_cluster_has_the_same_three_paths (test_fast_debug_channel.CpuIccPathTests.test_every_cpu_cluster_has_the_same_three_paths) ... ok
+test_every_named_provider_has_a_driver_built_in (test_fast_debug_channel.CpuIccPathTests.test_every_named_provider_has_a_driver_built_in) ... ok
+test_the_missing_one_is_the_l3_vote_not_a_perf_state (test_fast_debug_channel.CpuIccPathTests.test_the_missing_one_is_the_l3_vote_not_a_perf_state)
+SM8550 has no specific osm-l3 match, so the fallback's vote applies. ... ok
+test_the_doc_does_not_claim_idle_is_the_cause (test_fast_debug_channel.CpuIdleLeadTests.test_the_doc_does_not_claim_idle_is_the_cause) ... ok
+test_the_doc_names_the_x710_only_idle_options (test_fast_debug_channel.CpuIdleLeadTests.test_the_doc_names_the_x710_only_idle_options) ... ok
+test_the_doc_records_the_measured_idle_usage (test_fast_debug_channel.CpuIdleLeadTests.test_the_doc_records_the_measured_idle_usage) ... ok
+test_the_hunt_is_a_warm_reboot_harness_that_stops_on_a_capture (test_fast_debug_channel.CpuIdleLeadTests.test_the_hunt_is_a_warm_reboot_harness_that_stops_on_a_capture) ... ok
+test_they_really_are_absent_from_the_fragment (test_fast_debug_channel.CpuIdleLeadTests.test_they_really_are_absent_from_the_fragment)
+The doc claims they are stock-seed leftovers; verify it. ... ok
+test_it_explains_why_the_marker_is_not_confounded (test_fast_debug_channel.CpuWedgeEvidenceTests.test_it_explains_why_the_marker_is_not_confounded)
+sd=0 is produced by flashing too; an unanswered NMI is not. ... ok
+test_it_uses_boot_ids_not_journal_indices (test_fast_debug_channel.CpuWedgeEvidenceTests.test_it_uses_boot_ids_not_journal_indices)
+Indices shift as boots age out; an earlier draft cited them. ... ok
+test_the_document_records_the_rate_and_the_test (test_fast_debug_channel.CpuWedgeEvidenceTests.test_the_document_records_the_rate_and_the_test) ... ok
+test_the_recorded_data_still_supports_the_rate (test_fast_debug_channel.CpuWedgeEvidenceTests.test_the_recorded_data_still_supports_the_rate)
+Re-derive the counts from the survey output rather than trusting prose. ... ok
+test_the_survey_counts_the_four_wedge_markers (test_fast_debug_channel.CpuWedgeEvidenceTests.test_the_survey_counts_the_four_wedge_markers) ... ok
+test_the_survey_excludes_the_command_line_before_counting (test_fast_debug_channel.CpuWedgeEvidenceTests.test_the_survey_excludes_the_command_line_before_counting)
+hung_task_panic=1 in the cmdline matched a bare hung_task pattern. ... ok
+test_the_shutdown_capture_waits_for_the_reproducing_uptime (test_fast_debug_channel.DebugChannelScriptTests.test_the_shutdown_capture_waits_for_the_reproducing_uptime) ... ok
+test_the_ssh_wrapper_defaults_to_the_apipa_address (test_fast_debug_channel.DebugChannelScriptTests.test_the_ssh_wrapper_defaults_to_the_apipa_address)
+169.254.0.0/16 is what needs no host-side configuration or elevation. ... ok
+test_the_wrappers_exist_and_are_executable (test_fast_debug_channel.DebugChannelScriptTests.test_the_wrappers_exist_and_are_executable) ... ok
+test_it_does_not_claim_the_wedge_is_fixed (test_fast_debug_channel.DeferredCpufreqTests.test_it_does_not_claim_the_wedge_is_fixed) ... ok
+test_it_names_the_third_path_and_its_provider (test_fast_debug_channel.DeferredCpufreqTests.test_it_names_the_third_path_and_its_provider)
+The resolved mechanism: cpu0's path 2 has no provider. ... ok
+test_it_names_the_x910_evidence (test_fast_debug_channel.DeferredCpufreqTests.test_it_names_the_x910_evidence)
+The differentiator is that X910 fixed this first, on the same SoC. ... ok
+test_it_records_the_two_consequences (test_fast_debug_channel.DeferredCpufreqTests.test_it_records_the_two_consequences) ... ok
+test_it_records_why_only_the_outer_message_appeared (test_fast_debug_channel.DeferredCpufreqTests.test_it_records_why_only_the_outer_message_appeared) ... ok
+test_it_rules_out_the_obvious_candidates (test_fast_debug_channel.DeferredCpufreqTests.test_it_rules_out_the_obvious_candidates) ... ok
+test_the_dtsi_still_carries_the_bandwidth_it_claims (test_fast_debug_channel.DeferredCpufreqTests.test_the_dtsi_still_carries_the_bandwidth_it_claims)
+Re-derive it: if upstream ever drops opp-peak-kBps this doc is wrong. ... ok
+test_the_fragment_builds_the_provider_in (test_fast_debug_channel.DeferredCpufreqTests.test_the_fragment_builds_the_provider_in) ... ok
+test_the_fragment_explains_the_trap (test_fast_debug_channel.DeferredCpufreqTests.test_the_fragment_explains_the_trap) ... ok
+test_the_resolved_config_builds_it_in (test_fast_debug_channel.DeferredCpufreqTests.test_the_resolved_config_builds_it_in)
+=m would be as good as absent: this port installs no module tree. ... ok
+test_a_failed_bind_is_fatal_now_that_no_serial_port_remains (test_fast_debug_channel.GadgetNetworkFunctionTests.test_a_failed_bind_is_fatal_now_that_no_serial_port_remains)
+This was the reverse until 2026-09-26, and the reversal is the point. ... ok
+test_a_missing_function_does_not_fail_the_service (test_fast_debug_channel.GadgetNetworkFunctionTests.test_a_missing_function_does_not_fail_the_service)
+A kernel without CONFIG_USB_CONFIGFS_NCM must still bring up the console. ... ok
+test_it_is_off_unless_the_flag_file_exists (test_fast_debug_channel.GadgetNetworkFunctionTests.test_it_is_off_unless_the_flag_file_exists) ... ok
+test_only_ncm_and_ecm_are_accepted (test_fast_debug_channel.GadgetNetworkFunctionTests.test_only_ncm_and_ecm_are_accepted)
+Both are built into this kernel; anything else is a typo, not a feature. ... ok
+test_the_function_goes_into_the_existing_gadget (test_fast_debug_channel.GadgetNetworkFunctionTests.test_the_function_goes_into_the_existing_gadget)
+A second gadget cannot bind: one UDC, one gadget, and the console owns it. ... ok
+test_the_account_excludes_adbd_as_the_primary_cause (test_fast_debug_channel.LiveWedgeTests.test_the_account_excludes_adbd_as_the_primary_cause)
+10 of 11 wedge boots predate adbd entirely; say so before the result. ... ok
+test_the_account_names_adbd_service_as_a_suspect_not_a_verdict (test_fast_debug_channel.LiveWedgeTests.test_the_account_names_adbd_service_as_a_suspect_not_a_verdict) ... ok
+test_the_account_records_the_recovery_time (test_fast_debug_channel.LiveWedgeTests.test_the_account_records_the_recovery_time) ... ok
+test_the_account_records_the_window_margin (test_fast_debug_channel.LiveWedgeTests.test_the_account_records_the_window_margin) ... ok
+test_the_capture_was_preserved_under_its_own_name (test_fast_debug_channel.LiveWedgeTests.test_the_capture_was_preserved_under_its_own_name)
+A second hunt run overwrote cycle-2; the copy must stay. ... ok
+test_the_evidence_doc_carries_the_window_and_overwrite_lessons (test_fast_debug_channel.LiveWedgeTests.test_the_evidence_doc_carries_the_window_and_overwrite_lessons) ... ok
+test_the_hunt_window_is_settable_and_the_run_uses_200 (test_fast_debug_channel.LiveWedgeTests.test_the_hunt_window_is_settable_and_the_run_uses_200)
+60 s missed the panic; the window has to be raisable without editing. ... ok
+test_install_key_refuses_instead_of_failing_silently (test_fast_debug_channel.SerialKeyBootstrapIsGone.test_install_key_refuses_instead_of_failing_silently) ... ok
+test_it_actually_refuses_when_run (test_fast_debug_channel.SerialKeyBootstrapIsGone.test_it_actually_refuses_when_run)
+Run it, with a key present, and require failure rather than a no-op. ... ok
+test_the_doc_records_the_gap_and_the_two_routes (test_fast_debug_channel.SerialKeyBootstrapIsGone.test_the_doc_records_the_gap_and_the_two_routes) ... ok
+test_the_escape_hatch_now_needs_a_real_serial_shell (test_fast_debug_channel.SerialKeyBootstrapIsGone.test_the_escape_hatch_now_needs_a_real_serial_shell)
+The override is kept, but its meaning changed with the port. ... ok
+test_the_serial_doc_records_the_measurement_traps (test_fast_debug_channel.SerialKeyBootstrapIsGone.test_the_serial_doc_records_the_measurement_traps)
+Both traps produced a wrong '0 bytes' answer while writing this. ... ok
+test_it_does_not_blame_the_debug_channel (test_fast_debug_channel.SlowShutdownDocTests.test_it_does_not_blame_the_debug_channel) ... ok
+test_it_records_the_three_timings (test_fast_debug_channel.SlowShutdownDocTests.test_it_records_the_three_timings) ... ok
+test_it_records_what_was_ruled_out (test_fast_debug_channel.SlowShutdownDocTests.test_it_records_what_was_ruled_out) ... ok
+test_it_states_that_the_mechanism_is_not_established (test_fast_debug_channel.SlowShutdownDocTests.test_it_states_that_the_mechanism_is_not_established) ... ok
+test_it_records_both_statistics (test_fast_debug_channel.WedgeClusterTests.test_it_records_both_statistics) ... ok
+test_the_account_says_it_is_a_narrowing_not_a_mechanism (test_fast_debug_channel.WedgeClusterTests.test_the_account_says_it_is_a_narrowing_not_a_mechanism) ... ok
+test_the_cpu_mapping_matches_the_pinned_dtsi (test_fast_debug_channel.WedgeClusterTests.test_the_cpu_mapping_matches_the_pinned_dtsi)
+Re-derive the clusters from sm8550.dtsi rather than trusting prose. ... ok
+test_the_doc_admits_the_samples_are_correlated (test_fast_debug_channel.WedgeClusterTests.test_the_doc_admits_the_samples_are_correlated) ... ok
+test_the_doc_maps_cpus_to_clusters_and_rails (test_fast_debug_channel.WedgeClusterTests.test_the_doc_maps_cpus_to_clusters_and_rails) ... ok
+test_pseudo_nmi_really_is_off_so_it_is_a_regular_ipi (test_fast_debug_channel.WedgeMarkerReadingTests.test_pseudo_nmi_really_is_off_so_it_is_a_regular_ipi)
+The doc says so; the resolved config has to agree. ... ok
+test_the_doc_does_not_read_the_ten_seconds_literally (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_doc_does_not_read_the_ten_seconds_literally) ... ok
+test_the_doc_keeps_the_independent_evidence (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_doc_keeps_the_independent_evidence)
+The corrections must not have removed what still proves the wedge. ... ok
+test_the_doc_records_that_the_interval_is_microseconds (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_doc_records_that_the_interval_is_microseconds) ... ok
+test_the_doc_retracts_the_old_100_percent_reading (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_doc_retracts_the_old_100_percent_reading) ... ok
+test_the_mdelay_arithmetic_in_the_doc_matches_the_config (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_mdelay_arithmetic_in_the_doc_matches_the_config)
+It is the reason the doc refuses to blame mdelay; keep it honest. ... ok
+test_the_timeout_loop_really_is_a_bounded_mdelay_loop (test_fast_debug_channel.WedgeMarkerReadingTests.test_the_timeout_loop_really_is_a_bounded_mdelay_loop)
+The doc's quote of lib/nmi_backtrace.c has to match the tree. ... ok
+
+----------------------------------------------------------------------
+Ran 74 tests in 1.161s
+
+OK
