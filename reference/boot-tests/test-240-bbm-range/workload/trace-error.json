@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /sys/kernel/tracing/error_log; cat /sys/kernel/tracing/kprobe_events; ls /sys/kernel/tracing/instances; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:16:21.446652+00:00"
+}
