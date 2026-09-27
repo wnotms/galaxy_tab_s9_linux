@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "pull",
+    "/var/lib/systemd/pstore/console-ramoops-0",
+    "D:\\android\\gts9-test235\\console-rescue.bin"
+  ],
+  "status": "timeout",
+  "utc": "2026-09-27T07:30:37.700814+00:00"
+}

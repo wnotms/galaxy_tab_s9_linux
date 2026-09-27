@@ -2,6 +2,16 @@
 
 ## Current review (2026-09-27)
 
+Active test-235: isolated ECC=64 candidate is installed; rollback pending.
+Source 059c1400-1ccf-4861-9590-1fe2592611b7 passed 151 seconds and wrote known
+PMSG/console probes. Direct reboot observer bd682a9a-82c5-4955-8f5e-b5777f67b559
+answered at 6.53 seconds with new pstore metadata, then journalctl/ADB timed
+out before raw bytes were retrieved. No CPU signature yet; ECC verdict unknown.
+Manual TWRP was requested: read disk pstore/journal, then restore production
+backups with full hashes. See test-235/RESULTS.md. Do not repeat diagnostics
+before closing this failure and rollback.
+
+
 Latest: tests 233/234 isolated corrupt retention further. Test-233 recovered a
 known 33,005-byte PMSG with 464 changed bytes / 542 bits. Test-234's opt-in
 read-only live RAM view proved exact bytes in three reads before reboot, but

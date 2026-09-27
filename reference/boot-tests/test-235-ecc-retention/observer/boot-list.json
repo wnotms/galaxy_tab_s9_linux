@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl --list-boots --no-pager"
+  ],
+  "status": "timeout",
+  "utc": "2026-09-27T07:29:58.949819+00:00"
+}
