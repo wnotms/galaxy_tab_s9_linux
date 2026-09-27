@@ -1,5 +1,9 @@
 # AGENT.md — SM-X710 mainline port working rules
 
+## Current review (2026-09-27)
+
+Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and the trace sizing assumptions. Test-228 completed; the next gate is trace retention, with offline replay of runner verdicts. The owner currently requests no physical tests: do not contact, reboot or flash the tablet. Local tests/builds remain authorized.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
@@ -333,7 +337,9 @@ Audit stock evidence supplied locally:
 Before committing a script change, at minimum run:
 
 ```bash
-bash -n scripts/*.sh
+for script in scripts/*.sh scripts/lib/*.sh boot/*.sh; do
+    bash -n "$script"
+done
 ```
 
 If the build environment is available, also perform `BUILD_MODULES=0 ./scripts/build-kernel.sh`. For config/DTS/patch changes, a clean build is preferred.

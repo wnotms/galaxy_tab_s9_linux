@@ -1,11 +1,12 @@
 # Round 34 — the CSD/IPI plan: why the wedged CPU stops answering
 
+**2026-09-27 correction:** [STALL_TEST_WORKFLOW.md](STALL_TEST_WORKFLOW.md) supersedes the causal exclusions and trace sizing below. NULL `cur_csd` describes recorded CSD work, not all IPI execution; `rcu_barrier_handler()` takes a raw spinlock. Test-228 remains Case B; it does not establish a GIC/DAIF/firmware cause. The next gate is retained trace coverage.
+
 **Status: the first CSD run has happened, and it returned Case B.**
 `reference/boot-tests/test-228-csd-ipi-diagnostic/RESULT.md` has the evidence: two
-CPUs (3 and 7) went unresponsive to SGIs while inside no IPI handler, each asked
-to run a function that cannot block, and each re-sent to repeatedly. The
-pre-registered rule below is unchanged text and was written before the candidate
-existed; §7 is now the specific round-2 design.
+CPUs (3 and 7) had pending CSD requests and repeatedly reported no recorded
+current CSD work. The original pre-run plan is archived with test-228;
+`STALL_TEST_WORKFLOW.md` holds the corrected interpretation and next steps.
 
 ## 1. Where the investigation is, after test-227
 
@@ -27,7 +28,7 @@ happened anyway.
 |---|---|---|
 | GPU / GMU / ACD / AOSS | **downgraded** | `msm.skip_gpu=1` wedged with the Adreno driver never registered (test-198) |
 | RPMh `rpmh_write()` timeout | **downgraded** | `gts9_rpmh_debug=1` wedged with zero RPMh output (test-199) |
-| cpufreq / EPSS / OSM L3 | **orthogonal** | 2/29 against 1/29, Fisher p = 1.0; the fix is correct and stays |
+| cpufreq / EPSS / OSM L3 | **no demonstrated rate effect** | 2/29 against 1/29 is inconclusive, not equivalence; retain the independently justified fix |
 | **PSCI / cpuidle** | **not necessary** | test-227, above |
 | **active branch** | **IPI / CSD / IRQ delivery** | this document |
 
@@ -215,8 +216,8 @@ where `softlockup_panic` and `workqueue.panic_on_stall_time` are both absent
 from that list.
 * **`panic_on_ipistall` stays 0.** The brief is explicit that round one collects
   information rather than making the instrument panic earlier, and the existing
-  `softlockup_panic=1` → `panic=10` chain already guarantees the tablet recovers
-  by itself. Enabling it would also *shorten* the window in which the target's
+  `softlockup_panic=1` → `panic=10` chain provides best-effort recovery
+  when a detector and the reboot path still execute. Enabling it would also *shorten* the window in which the target's
   state can be observed.
 
 ### 2.6 The 64BIT dependency is load-bearing, not incidental
@@ -294,15 +295,15 @@ csd: Detected non-responsive CSD lock (#N) on CPU#W, waiting T ns for CPU#X f(i)
 csd: Re-sending CSD lock (#N) IPI from CPU#W to CPU#X
 ```
 
-The target is not in an IPI handler at all. This is the case that moves the
-question off the CSD path and onto delivery. **Next**, in this order: IRQ masking
+The target has no recorded current CSD work at the sampled instant. This
+prioritises tracing the path into CSD dispatch without establishing where it stopped. **Next**, in this order: IRQ masking
 (`DAIF`), GIC/SGI delivery (redistributor state), CPU exception state, the arch
 timer, and firmware. A `dump_cpu_task()` stack appearing here would name the
 target's last-known code and takes priority over that list.
 
-Note carefully: `Re-sending CSD lock` appearing means the target has not even
-**started** the handler, which is a different fact from "started and did not
-finish" — and it is the discriminator the brief's §38 decision tree keys on.
+The resend uses that same NULL sample; it is not an independent measurement
+of SGI delivery. Entry/exit tracing with complete retained coverage is needed
+to distinguish an unentered callback from other execution paths.
 
 ### Case C — the instrument names a specific long-running function
 
@@ -358,11 +359,11 @@ Design constraints, fixed now so round two does not drift:
 * **`rcupdate.rcu_cpu_stall_ftrace_dump` is the primary trigger.** At
   `kernel/rcu/tree_stall.h` the stall path calls `rcu_ftrace_dump(DUMP_ALL)`,
   which fires at onset+21 s — earlier than any panic.
-* **`ftrace_dump()` is single-shot.** It is guarded by a `dump_running` atomic,
-  so `rcu_cpu_stall_ftrace_dump`, `ftrace_dump_on_oops` and
-  `panic_sys_info=ftrace` **contend rather than add**. The design is therefore
-  one primary plus at most one backstop, and which one actually fired must be
-  verified from the output rather than assumed.
+* **`ftrace_dump()` is not globally single-shot.** Its `dump_running` atomic
+  prevents simultaneous calls and is released at return. The RCU wrapper is
+  once per callsite per boot; dumping stops tracing and consumes the ring.
+  Concurrent triggers contend rather than add; a later backstop may find an
+  empty buffer. Use one primary trigger and validate retained coverage.
 * **`tp_printk` is not used.** It carries a documented live-lock risk on
   high-frequency events and adds nothing here, because `ftrace_dump()` reaches
   the console independently.
@@ -394,7 +395,8 @@ after the fact**, so every instrument must already be running:
 | an ftrace dump | only via `rcu_cpu_stall_ftrace_dump` / panic, round two |
 
 The profile keeps `softlockup_panic=1` and `panic=10`, so a wedge reboots the
-tablet by itself and an unattended series cannot strand it.
+tablet when the detector and reboot path still execute; a total CPU failure
+can still prevent recovery.
 
 ## 7. What this round does **not** do
 
@@ -442,76 +444,42 @@ CPU wedge
 
 ---
 
-# 9. Outcome of the first run (test-228) — Case B, and what it fixes in place
+# 9. Outcome of the first run (test-228) — Case B
 
-Full evidence in `reference/boot-tests/test-228-csd-ipi-diagnostic/RESULT.md`.
-Summarised here because it changes what round 2 must do.
+The raw evidence is in
+`reference/boot-tests/test-228-csd-ipi-diagnostic/evidence/`.
+The recorded target CPUs are 3 and 7, with pending `do_nothing` and
+`rcu_barrier_handler` work. Both report `unresponsive` and both receive resends
+(two each in the archived CSD excerpt). This matches **Case B** as an observation.
+It does not establish the cause or prove the targets were outside all IPI paths.
 
-## What the instrument returned
-
-```
-csd: Detected non-responsive CSD lock (#1) on CPU#4, waiting 5000000050 ns
-     for CPU#03 do_nothing+0x0/0x8(0x0).
-        csd: CSD lock (#1) unresponsive.
-csd: Detected non-responsive CSD lock (#2) on CPU#1, waiting 5000000102 ns
-     for CPU#07 rcu_barrier_handler+0x0/0x8c(0x7).
-        csd: CSD lock (#2) unresponsive.
-```
-
-**Case B, unambiguously.** Both targets report `unresponsive`, which the kernel
-prints only when `cpu_cur_csd` is NULL on the target - so neither was inside any
-IPI handler - and `Re-sending CSD lock` fired four times, which appears only under
-the same test. `do_nothing` and `rcu_barrier_handler` cannot block, spin or take a
-lock, so "the handler is slow" is not available as an explanation either.
-
-Two CPUs failed within ~1 s of each other, both big/prime (CPU 3 = A715,
-CPU 7 = X3), and CPU 7's RCU `softirq=` counter froze at 613/613 across the whole
-stall - RCU's own documented signature of a CPU spinning with interrupts disabled.
-
-## What that rules out, permanently
-
-* **Case A** (nested/circular CSD, blocked handler) - no current CSD on either
-  target, and neither function can block.
-* **the handler-is-slow family** - both handlers are trivial.
-* **a single-CPU fault** - two CPUs, independently.
-* any lock or workqueue dependency in the IPI path.
-
-## What it does not settle, and the one gap to close first
-
-`unresponsive` plus `Re-sending` proves the handler had not started **at the
-moment of each report**. For a 5-to-25-second interval that is close to proof of
-"never started", but the direct statement comes from
-`csd:csd_function_entry` / `csd:csd_function_exit`, which bracket the handler call
-itself and are **not** gated on `CONFIG_CSD_LOCK_WAIT_DEBUG`. Round 2 must arm
-them first, because "no entry at all" versus "entry without exit" splits the
-remaining tree in two.
+`cur_csd` records selected CSD callback execution. A NULL sample does not exclude
+execution before that recording point, other kinds of IPI, other IRQ handlers,
+or prior corruption. Also, `rcu_barrier_handler()` takes
+`raw_spin_lock(&rcu_state.barrier_lock)` in the pinned kernel. Earlier claims that
+both handlers are lock-free and every dependency was permanently excluded were
+incorrect. The unchanged RCU softirq counter establishes no RCU softirq progress,
+not a direct observation of DAIF or all local interrupts.
 
 ## Round 2, made specific by this result
 
-| question | events | reading |
-|---|---|---|
-| does the SGI reach CPU 3/7 at all? | `ipi:ipi_raise`, `ipi:ipi_entry` | raise present, **entry absent** -> GIC / DAIF / firmware |
-| did the handler start and not finish? | `csd:csd_function_entry` / `_exit` | entry present, exit absent -> handler fault |
-| are all local IRQs stopped, or only SGIs? | `irq:softirq_*` + the arch-timer PPI counter | timer silent too -> local interrupt / exception state |
+The next question remains whether the relevant target reaches `ipi_entry` and
+then `csd_function_entry/exit`. A missing event is interpretable only after
+proving the relevant interval survived both the per-CPU ring and the persistent
+sink. `trace_clock=global` remains mandatory and `timer:*` stays out of the first pass.
 
-Both event families are confirmed present on the device, and the buffer sizing was
-measured rather than guessed: **1545 events/s and 144 KiB/s** for the proposed
-set, so 4 MiB holds 29 s (too short for the ~28 s requirement), **8 MiB holds
-57 s** and 16 MiB holds 114 s. `trace_clock=global` remains mandatory, the dump
-trigger remains `rcupdate.rcu_cpu_stall_ftrace_dump` as primary with at most one
-backstop, and `timer:*` stays out of the first pass.
+The prior 8 MiB / 57 s sizing claim is withdrawn: the measurement was text output,
+not binary per-CPU ring use. The 896 KiB ramoops console cannot hold that proposed
+multi-MiB dump. Run `scripts/prepare-csd-trace.py` for the offline capacity audit;
+`docs/STALL_TEST_WORKFLOW.md` defines calibration and persistence gates. No new
+flash candidate is ready until they pass.
 
-## A harness defect this run exposed, recorded so it is not repeated
+## Runner follow-up
 
-The wedge above was **first classified as `clean`** and was found only by reading
-the device's journal by hand. `scripts/wedge-ssh.sh` chose the boot to read by
-comparing boot ids, so a wedged boot - which panics and restarts - made index 0
-the boot *after* the wedge; and `extra_boots`, which had correctly counted the
-restart, was recorded but never consulted by the verdict. Both are fixed
-(`idx=$(( -extra_boots ))`, and `extra_boots > 0` forces `verdict=wedge`), and the
-fix is verified against this wedge: boot `-1` holds 4 CSD reports, boot `0` holds
-none.
-
-The general lesson is the one this project keeps meeting: **a detector whose
-output is not consulted is worse than no detector, because its output looks like
-a measurement.**
+The original count/index correction fixed the observed test-228 error, but
+journal vacuuming and failed collection can still invalidate total-count
+arithmetic. The current runner selects the first boot after a retained boot-ID
+anchor and fetches by immutable ID. It archives the raw input for offline replay,
+counts CSD non-response directly, and treats an unexpected restart without a
+positive failure signature as unattributed. See the current workflow for stop
+rules and transport limitations.

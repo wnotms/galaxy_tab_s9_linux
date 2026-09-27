@@ -1,5 +1,7 @@
 # Test 228 — the CSD/IPI diagnostic: **first-hand evidence of why the target CPU stops answering**
 
+> Interpretation correction (2026-09-27): see [the direction review](../../../docs/STALL_TEST_WORKFLOW.md). The historical analysis below overstates what NULL `cur_csd` proves, incorrectly calls `rcu_barrier_handler()` lock-free, and treats text throughput as ring capacity. Those claims are withdrawn; raw evidence and the pre-run plan are preserved. The count/index runner fix described here is also superseded by boot-ID attribution and offline replay.
+
 **Result: the instrument fired, and it answers the question the round was asked.**
 A real CPU wedge was captured with `CONFIG_CSD_LOCK_WAIT_DEBUG` live, and the CSD
 reports name the unresponsive CPUs, the exact IPI handler each was asked to run,

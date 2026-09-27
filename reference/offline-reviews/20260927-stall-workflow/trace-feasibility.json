@@ -1,0 +1,51 @@
+{
+  "blockers": [
+    "Historical measurement has no exact enabled event set or per-CPU binary stats.",
+    "41 seconds = 20 seconds pre-onset + nominal 21 seconds to RCU report; allow trigger delay too.",
+    "896 KiB ramoops console cannot retain the historical multi-MiB text dump; reduce/filter or provide a proven sink.",
+    "Validate start/end and per-CPU coverage in recovered dump before interpreting missing events.",
+    "An early-boot trace must be enabled before the earliest observed failure; SSH arming is too late."
+  ],
+  "budget": {
+    "console_bytes": 917504,
+    "fits_historical_text_rate": false,
+    "historical_text_bytes_per_s": 146945.7,
+    "optimistic_text_retention_s": 5.351854460525214,
+    "required_history_s": 41,
+    "reserved_for_other_printk_bytes": 131072
+  },
+  "buffer_size_kb": "UNSET: size each CPU from binary stats and retained timestamps",
+  "checks": {
+    "config_supports_event_tracing": true,
+    "cur_csd_tracks_csd_work": true,
+    "events_available_in_archived_boot": true,
+    "ftrace_dump_releases_concurrency_guard": true,
+    "ipi_entry_precedes_csd_dispatch": true,
+    "rcu_barrier_handler_takes_raw_spinlock": true,
+    "rcu_dump_once_per_callsite": true
+  },
+  "hardware_actions": [],
+  "input_sha256": {
+    ".work/linux-mainline/arch/arm64/kernel/smp.c": "97a7a9241bac0a71a360180e8e6fb96de70786bbe3f9ff2a5dda0a1f614fe6de",
+    ".work/linux-mainline/kernel/rcu/rcu.h": "dffcc23cacbd2d8d1c2749f7f71650b5aed304bfbdf067b5ab3a8be38de47cb7",
+    ".work/linux-mainline/kernel/rcu/tree.c": "05a8a47cae35c07c7edcd66290bf6009a336e240dac5c39c1af852005c5041b0",
+    ".work/linux-mainline/kernel/smp.c": "9c699ceac6b53a912ee14e3ef6f3d7c5ac5def613260b49f0b0a38551937afb6",
+    ".work/linux-mainline/kernel/trace/trace.c": "ebd3fd6618d39af3bd6de1cd1c9183044c3d2bbd3c5616fd757489a22cc64ed1",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "b0dfc6f6947bff0249546109ff4fc05797dcd75be26b0b11fe27893d5d4c7cd2",
+    "reference/boot-tests/test-228-csd-ipi-diagnostic/baselines/event-rate-measurement.txt": "a27af3eee2cf8d2c8585295f74283e4a8ea5b1107f3cba6581d0bac414439a82",
+    "reference/boot-tests/test-228-csd-ipi-diagnostic/baselines/tracepoints-available.txt": "5f7ff754d5208e2e451befafa2178891e1849cb121c2f6ce391936d8bf243682",
+    "reference/boot-tests/test-228-csd-ipi-diagnostic/diagnostic-config.txt": "1ea31ba89a2c8829fb5b4016becb7648572bd47ca39af51adbe339b1b7a19832"
+  },
+  "primary_trigger": "rcupdate.rcu_cpu_stall_ftrace_dump=1",
+  "proposed_events": [
+    "csd:csd_queue_cpu",
+    "csd:csd_function_entry",
+    "csd:csd_function_exit",
+    "ipi:ipi_raise",
+    "ipi:ipi_entry",
+    "ipi:ipi_exit",
+    "rcu:rcu_stall_warning"
+  ],
+  "status": "offline-prepared; capture-readiness-unproven",
+  "trace_clock": "global"
+}

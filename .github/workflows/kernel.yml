@@ -28,7 +28,10 @@ jobs:
             python3 rsync kmod
 
       - name: Validate shell scripts
-        run: bash -n scripts/*.sh
+        run: |
+          for script in scripts/*.sh scripts/lib/*.sh boot/*.sh; do
+            bash -n "$script"
+          done
 
       - name: Report host dependencies
         run: ./scripts/check-build-deps.sh || true
@@ -84,7 +87,10 @@ jobs:
           path: out/kernel-gts9wifi
 
       - name: Validate shell scripts
-        run: bash -n scripts/*.sh
+        run: |
+          for script in scripts/*.sh scripts/lib/*.sh boot/*.sh; do
+            bash -n "$script"
+          done
 
       - name: Stage the pinned AOSP tools
         run: ./scripts/stage-android-tools.sh

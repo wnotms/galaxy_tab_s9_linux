@@ -1,0 +1,22 @@
+Offline report: out/csd-trace-next/offline-report.json
+Source checks passed: True; capture readiness: UNPROVEN
+Historical text fits console for at most 5.35s with reserve, need >=41s
+test_clean_boot (test_wedge_evidence.AttributionTests.test_clean_boot) ... ok
+test_cli_replay_uses_no_transport_and_recomputes_verdict (test_wedge_evidence.AttributionTests.test_cli_replay_uses_no_transport_and_recomputes_verdict) ... ok
+test_conflicting_or_substring_cmdline_is_not_profile_proof (test_wedge_evidence.AttributionTests.test_conflicting_or_substring_cmdline_is_not_profile_proof) ... ok
+test_csd_alone_is_a_positive_signature (test_wedge_evidence.AttributionTests.test_csd_alone_is_a_positive_signature) ... ok
+test_missing_anchor_is_not_guessed_from_count (test_wedge_evidence.AttributionTests.test_missing_anchor_is_not_guessed_from_count) ... ok
+test_missing_failed_or_wrong_boot_capture_never_clean (test_wedge_evidence.AttributionTests.test_missing_failed_or_wrong_boot_capture_never_clean) ... ok
+test_no_reboot_or_unreadable_counts_are_not_clean (test_wedge_evidence.AttributionTests.test_no_reboot_or_unreadable_counts_are_not_clean) ... ok
+test_panic_before_first_ssh_answer_selects_failed_boot (test_wedge_evidence.AttributionTests.test_panic_before_first_ssh_answer_selects_failed_boot) ... ok
+test_rotation_of_older_history_does_not_change_target (test_wedge_evidence.AttributionTests.test_rotation_of_older_history_does_not_change_target) ... ok
+test_timeout_alone_is_suspect_and_encoder_noise_is_clean (test_wedge_evidence.AttributionTests.test_timeout_alone_is_suspect_and_encoder_noise_is_clean) ... ok
+test_unexpected_reboot_is_not_proof_of_cpu_wedge (test_wedge_evidence.AttributionTests.test_unexpected_reboot_is_not_proof_of_cpu_wedge) ... ok
+test_mock_transport_archives_then_replays_without_device (test_wedge_evidence.RunnerIntegrationTests.test_mock_transport_archives_then_replays_without_device)
+Exercise shell orchestration, transport failures and run isolation. ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 10.862s
+
+OK
+Offline checks passed; this does not establish physical capture readiness.

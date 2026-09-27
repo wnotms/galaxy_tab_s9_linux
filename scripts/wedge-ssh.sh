@@ -1,46 +1,18 @@
 #!/usr/bin/env bash
-# Run cpuidle-off rounds over the USB-NCM ssh channel, and classify each one.
-#
-# WHY THIS EXISTS, AND WHAT IT IS NOT
-#
-# scripts/stall-ab.sh drives rounds over the Windows COM ports: COM17 for the
-# shell and COM19 for the console capture.  Neither is present on this host, and
-# the harness says so explicitly - it "has no ssh channel, and inventing one
-# would be a second transport".  So this is deliberately NOT a rewrite of that
-# harness and NOT a replacement for it.  It is the same experiment carried over
-# the one transport this host actually has, and it borrows the harness's
-# definitions rather than restating them:
-#
-#   * the wedge/suspect/unattributed classes are the harness's own
-#     (docs/CPU_WEDGE_EVIDENCE.md, and the verdict block in stall-ab.sh)
-#   * `ENCODER_NOISE` fires once on every healthy boot and is never an anomaly
-#   * a lone DPU/MMC/RPMh timeout is SUSPECT, never WEDGE (test-194)
-#   * an unattributed round counts in neither direction
-#
-# WHAT IT CANNOT SEE, AND SAYS SO
-#
-# The COM19 console capture caught USB-presence outages, which was the harness's
-# independent detector for "something other than the harness restarted this
-# boot".  There is no such capture here.  This runner detects that condition a
-# different way - by comparing the boot id it asked for a reboot on against the
-# boot id it finds afterwards, and by counting the boots journald gained - and it
-# records which detector it used so a reader is never misled about the channel.
-# A panic-and-reboot therefore shows up as "the round's boot id is not the boot
-# that answered", which is the same fact the presence outage encoded.
-#
-# SAFETY: this script never flashes and never writes a partition.  It issues
-# `systemctl reboot` over ssh.  Recovery from a wedge is the kernel's own
-# panic chain (softlockup_panic=1 -> panic=10 -> reboot), which the profile
-# carries, so an unattended round cannot strand the tablet.
-#
-# Usage:
-#   scripts/wedge-ssh.sh PROFILE ROUNDS      # PROFILE: baseline|cpuidle-off|csd-lock
-#   GTS9_ALLOW_POWER=1 scripts/wedge-ssh.sh cpuidle-off 10
+# Run explicitly authorized warm-reboot rounds over SSH.
+# Verdicts are replayed locally from immutable boot IDs and archived journals.
+# No power flag means a LIVE read-only arming gate, not an offline dry run.
+# Offline usage: scripts/wedge-ssh.sh --replay OUT/PROFILE/RUN/round-N
+# See docs/STALL_TEST_WORKFLOW.md for evidence and stop rules.
 
 set -uo pipefail
 
 REPO=$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)
-SSH=$REPO/scripts/gts9-ssh.sh
+SSH=${GTS9_SSH:-$REPO/scripts/gts9-ssh.sh}
+EVIDENCE=$REPO/scripts/wedge-evidence.py
+if [ "${1:-}" = --replay ]; then
+    exec python3 "$EVIDENCE" replay "${2:?round directory required}"
+fi
 PROFILE=${1:-}
 ROUNDS=${2:-}
 ALLOW=${GTS9_ALLOW_POWER:-0}
@@ -64,22 +36,18 @@ EOF
 case "$PROFILE" in baseline|cpuidle-off|csd-lock) ;; *) usage ;; esac
 case "$ROUNDS" in ''|*[!0-9]*) usage ;; esac
 [ "$ROUNDS" -ge 1 ] || usage
+case "$WINDOW" in ''|*[!0-9]*) usage ;; esac
+[ "$WINDOW" -ge 150 ] || { echo 'GTS9_WINDOW must be at least 150 seconds' >&2; exit 2; }
 
 say() { printf '%s %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*"; }
 die() { say "FATAL: $*" >&2; exit 1; }
 
-rsh() { timeout 180 "$SSH" "$@" 2>/dev/null | tr -d '\r'; }
-
-# --- anomaly classes, from the harness ---------------------------------------
-# Kept identical to stall-ab.sh's split so "wedge" means the same thing here.
-WEDGE_CLASSES='rcu:.*(detected stall|self-detected stall)|soft lockup|BUG: workqueue lockup|haven.t responded to the NMI|Kernel panic'
-SUSPECT_CLASSES='frame done timeout|mmc[0-9]+: .*[Tt]imeout|ACTIVE_ONLY|rpmh_write_batch'
-
-count() { printf '%s' "$(rsh "journalctl -b $1 -k --no-pager 2>/dev/null | grep -acE '$2' || true")"; }
+rsh() { timeout 180 "$SSH" "$@" | tr -d '\r'; }
 
 # --- identity, read once before anything --------------------------------------
 mkdir -p "$RESULTS/$PROFILE"
-OUT=$RESULTS/$PROFILE/run-$(date -u +%Y%m%dT%H%M%SZ).txt
+RUN=$(mktemp -d "$RESULTS/$PROFILE/run-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXX") || exit 1
+OUT=$RUN/run.txt
 say "wedge-ssh profile=$PROFILE rounds=$ROUNDS allow_power=$ALLOW window=${WINDOW}s" | tee -a "$OUT"
 
 ver=$(rsh 'cat /proc/sys/kernel/random/boot_id')
@@ -87,22 +55,30 @@ ver=$(rsh 'cat /proc/sys/kernel/random/boot_id')
 say "starting boot_id=$ver" | tee -a "$OUT"
 say "cmdline=$(rsh 'cat /proc/cmdline' | cut -c1-90)..." | tee -a "$OUT"
 
+arming_gate() {
 # --- the arming gate, before any round is counted -----------------------------
 # Same logic as stall-ab.sh's: a profile that is silently NOT armed looks exactly
 # like a healthy boot, and would make the whole series a no-op.
-cmdline=$(rsh 'cat /proc/cmdline')
+cmdline=$(rsh 'cat /proc/cmdline') || die "cannot read command line"
+gate_log=$(rsh 'journalctl -b 0 -k --no-pager') || die "cannot read arming journal"
+[ -n "$gate_log" ] || die "empty arming journal"
+# Samsung appends nowatchdog. Cmdline panic tokens alone cannot prove that
+# Debian's gts9-watchdog-debug helper actually re-enabled the detector.
+recovery_runtime=$(rsh 'set -e; for node in watchdog soft_watchdog softlockup_panic panic; do cat "/proc/sys/kernel/$node"; done') || die "cannot read runtime recovery state"
+[ "$recovery_runtime" = $'1\n1\n1\n10' ] || die "runtime watchdog/recovery gate failed: $recovery_runtime"
+say "runtime recovery gate PASSED: watchdog=1 soft_watchdog=1 softlockup_panic=1 panic=10" | tee -a "$OUT"
 case "$PROFILE" in
 cpuidle-off)
-	grep -q 'cpuidle\.off=1' <<<"$cmdline" || die "cpuidle-off: the cmdline lacks cpuidle.off=1 - NOT armed"
+	grep -qE '(^| )cpuidle\.off=1( |$)' <<<"$cmdline" || die "cpuidle-off: the cmdline lacks cpuidle.off=1 - NOT armed"
 	sysfs=$(rsh 'test -d /sys/devices/system/cpu/cpuidle && echo present || echo ABSENT')
 	[ "$sysfs" = "ABSENT" ] || die "cpuidle-off: /sys/devices/system/cpu/cpuidle EXISTS - the framework is running, NOT armed"
-	gov=$(rsh 'journalctl -b 0 -k --no-pager 2>/dev/null | grep -ac "cpuidle: using governor" || true')
+	gov=$(grep -ac "cpuidle: using governor" <<<"$gate_log")
 	[ "${gov:-x}" = "0" ] || die "cpuidle-off: 'cpuidle: using governor' appeared $gov time(s) on this boot - NOT armed"
 	driver=$(rsh 'cat /sys/devices/system/cpu/cpuidle/current_driver 2>/dev/null || echo NONE')
 	say "arming gate PASSED: framework off (sysfs ABSENT, governor never registered, driver=$driver)" | tee -a "$OUT"
 	;;
 baseline)
-	grep -q 'cpuidle\.off=1' <<<"$cmdline" && die "baseline: the cmdline carries cpuidle.off=1 - this is not the baseline profile"
+	grep -qE '(^| )cpuidle\.off=1( |$)' <<<"$cmdline" && die "baseline: the cmdline carries cpuidle.off=1 - this is not the baseline profile"
 	driver=$(rsh 'cat /sys/devices/system/cpu/cpuidle/current_driver 2>/dev/null || echo NONE')
 	[ "$driver" = "psci_idle" ] || die "baseline: current_driver is '$driver', expected psci_idle - NOT armed"
 	say "arming gate PASSED: psci_idle active" | tee -a "$OUT"
@@ -116,7 +92,7 @@ csd-lock)
 	# what makes this a real gate rather than an absence test, and what the
 	# plan's Case D needs in order to tell "the instrument was not running"
 	# apart from "CSD is not involved".
-	grep -q 'csdlock_debug=1' <<<"$cmdline" || \
+	grep -qE '(^| )csdlock_debug=1( |$)' <<<"$cmdline" || \
 		die "csd-lock: the cmdline lacks csdlock_debug=1 - NOT armed"
 	params=$(rsh 'ls /sys/module/smp/parameters/ 2>/dev/null | tr "\n" " "')
 	case " $params " in
@@ -130,190 +106,131 @@ csd-lock)
 	# The __setup handler must have CONSUMED the token: a token nothing reads
 	# stays in the kernel's own unknown-parameter list.  Same gate the project
 	# already applies to gts9_rpmh_debug.
-	unknown=$(rsh 'journalctl -b 0 -k --no-pager 2>/dev/null | grep -a "Unknown kernel command line parameters" | tail -1')
+	unknown=$(grep -a "Unknown kernel command line parameters" <<<"$gate_log")
 	case "$unknown" in
 	*csdlock_debug*)
 		die "csd-lock: csdlock_debug is in the kernel's unknown-parameter list, so no __setup handler consumed it - the switch is dead" ;;
 	esac
 	tmo=$(rsh 'cat /sys/module/smp/parameters/csd_lock_timeout 2>/dev/null')
 	stop=$(rsh 'cat /sys/module/smp/parameters/panic_on_ipistall 2>/dev/null')
-	[ "$tmo" = "5000" ] || say "WARNING: csd_lock_timeout is '$tmo', expected the 5000 ms default"
-	[ "$stop" = "0" ] || say "WARNING: panic_on_ipistall is '$stop', expected 0 (round one collects, it does not panic)"
+	[ "$tmo" = "5000" ] || die "csd_lock_timeout is '$tmo', expected the 5000 ms default"
+	[ "$stop" = "0" ] || die "panic_on_ipistall is '$stop', expected 0 (round one collects, it does not panic)"
 	# The recovery chain must still be armed, or an unattended round strands it.
 	for tok in softlockup_panic=1 panic=10; do
-		grep -q "$tok" <<<"$cmdline" || die "csd-lock: the cmdline lacks $tok - the tablet would not recover by itself"
+		grep -qE "(^| )$tok( |$)" <<<"$cmdline" || die "csd-lock: the cmdline lacks $tok - the tablet would not recover by itself"
 	done
 	say "arming gate PASSED: CSD instrument live (csd_lock_timeout=${tmo}ms panic_on_ipistall=${stop}), token consumed, recovery chain armed" | tee -a "$OUT"
 	;;
 esac
 
+printf '%s\n' "$gate_log" | python3 -c 'import runpy,sys; m=runpy.run_path(sys.argv[1]); sys.exit(0 if m["profile_matches"](sys.argv[2], sys.stdin.read()) else 1)' "$EVIDENCE" "$PROFILE" || die "profile command line is missing, conflicting or unrecognized"
+}
+arming_gate
+
 if [ "$ALLOW" != "1" ]; then
-	say "dry run: arming gate passed; set GTS9_ALLOW_POWER=1 to run $ROUNDS rounds"
+	say "live read-only preflight: arming gate passed; set GTS9_ALLOW_POWER=1 to run $ROUNDS rounds"
 	exit 0
 fi
 
-# --- rounds -------------------------------------------------------------------
-k=0   # rounds carrying the wedge signature
-n=0   # rounds with a usable verdict
+# Capture the raw input once, then derive every verdict on the host. Failed
+# commands keep stderr/status and are never converted to zero anomaly counts.
+capture_file() {
+    local path=$1
+    shift
+    rsh "$@" >"$path" 2>"$path.stderr"
+    local status=$?
+    echo "$status" >"$path.status"
+    return "$status"
+}
+json_field() {
+    python3 -c 'import json,sys; v=json.load(open(sys.argv[1])).get(sys.argv[2]); print("" if v is None else v)' "$1" "$2"
+}
 
+k=0
+n=0
 for i in $(seq 1 "$ROUNDS"); do
-	before=$ver
-	say "=== $PROFILE round $i/$ROUNDS (boot_id before=$before) ===" | tee -a "$OUT"
-
-	# Count the boots journald knows, so an extra boot between the reboot and the
-	# probe is visible as a number rather than inferred.
-	boots_before=$(rsh 'journalctl --list-boots --no-pager 2>/dev/null | wc -l')
-
-	rsh 'systemctl reboot' >/dev/null 2>&1
-	sleep 40
-
-	# Wait for the tablet to answer again.  A wedge that panics reboots itself
-	# (softlockup_panic=1, panic=10), so this also waits out a recovery.
-	after=""
-	for _ in $(seq 1 40); do
-		after=$(rsh 'cat /proc/sys/kernel/random/boot_id')
-		[ -n "$after" ] && [ "$after" != "$before" ] && break
-		sleep 5
-	done
-	if [ -z "$after" ] || [ "$after" = "$before" ]; then
-		say "  round $i UNATTRIBUTED: the tablet did not return with a new boot id" | tee -a "$OUT"
-		# Still try to bind whatever it left behind, and keep the raw evidence.
-		# The round's boot may or may not be the current one here, so the
-		# previous boot is the safest single guess AND the current boot is
-		# captured too - an unattributed round must not also lose its evidence.
-		rsh "journalctl -b -1 -k -o short-monotonic --no-pager 2>/dev/null | tail -400" \
-			>"$RESULTS/$PROFILE/round-$i-last-klog.txt"
-		rsh "journalctl -b 0 -k -o short-monotonic --no-pager 2>/dev/null | tail -400" \
-			>"$RESULTS/$PROFILE/round-$i-current-klog.txt"
-		continue
-	fi
-
-	# Watch the window.  A wedge is usually visible well inside it, but the
-	# documented onset spread means the window is not shortened.
-	sleep "$WINDOW"
-
-	boots_after=$(rsh 'journalctl --list-boots --no-pager 2>/dev/null | wc -l')
-	case "${boots_after:-x}${boots_before:-x}" in
-	*[!0-9]*) extra_boots=0 ;;   # unreadable counts must not become arithmetic
-	*)        extra_boots=$((boots_after - boots_before - 1)) ;;
-	esac
-	now_id=$(rsh 'cat /proc/sys/kernel/random/boot_id')
-
-	# The round's own boot is the one we rebooted into; if something rebooted it
-	# again, `now_id` differs and `extra_boots` is positive.  That is the
-	# reinvention of the harness's second-presence-outage detector.
-	recovery=no
-	[ "$now_id" != "$after" ] && recovery=yes
-
-	# WHICH BOOT IS THE ROUND'S BOOT.
-	#
-	# The round's boot is the FIRST boot after our reboot.  Every reboot after
-	# that moves it further back, so it is `-extra_boots`, NOT "0 when the ids
-	# still match".
-	#
-	# This was wrong, and it cost a real wedge: rounds 1-10 of test-228's
-	# csd-lock series all reported clean, and round 10 had in fact wedged with
-	# the CSD instrument firing twice.  The old logic compared `now_id` to
-	# `after` and chose index 0 when they were equal - but they are equal
-	# precisely BECAUSE the wedged boot panicked and rebooted, so index 0 was the
-	# boot AFTER the wedge.  `extra_boots` had already counted the extra boot and
-	# was only being recorded, not used.  The result: the wedge's own journal,
-	# which contained the entire point of the round, was never read.
-	#
-	# Derived from the count rather than from the id comparison, so it cannot
-	# disagree with the `extra_boots` field in the same record.
-	idx=$(( -extra_boots ))
-
-	w=$(count "$idx" "$WEDGE_CLASSES")
-	s=$(count "$idx" "$SUSPECT_CLASSES")
-
-	# An extra boot means something restarted the round's boot - the panic chain
-	# or a watchdog.  The harness's original detector for that was a second
-	# USB-presence outage; this runner substitutes the journal boot count, so the
-	# count has to actually reach the verdict.  It previously did not, which is
-	# how a wedged round could be recorded as clean even after the index bug was
-	# known: the markers were read from the wrong boot AND the one signal that
-	# was correct was thrown away.
-	verdict=clean
-	[ "${s:-0}" -gt 0 ] && verdict=suspect
-	[ "${w:-0}" -gt 0 ] && verdict=wedge
-	[ "$recovery" = yes ] && verdict=wedge
-	[ "${extra_boots:-0}" -gt 0 ] && verdict=wedge
-
-	rsh "journalctl -b $idx -k -o short-monotonic --no-pager 2>/dev/null" \
-		>"$RESULTS/$PROFILE/round-$i-klog.txt"
-	rsh "cat /var/lib/systemd/pstore/console-ramoops-0 2>/dev/null" \
-		>"$RESULTS/$PROFILE/round-$i-pstore.txt"
-	rsh "cat /proc/interrupts 2>/dev/null" >"$RESULTS/$PROFILE/round-$i-interrupts.txt"
-	rsh "cat /proc/softirqs 2>/dev/null" >"$RESULTS/$PROFILE/round-$i-softirqs.txt"
-	rsh 'for c in /sys/devices/system/cpu/cpu[0-7]; do n=$(basename $c); for st in $c/cpuidle/state*; do [ -d "$st" ] && printf "%s:%s:%s/%s/%s " "$n" "$(basename $st)" "$(cat $st/name 2>/dev/null)" "$(cat $st/usage 2>/dev/null)" "$(cat $st/rejected 2>/dev/null)"; done; done' \
-		>"$RESULTS/$PROFILE/round-$i-cpuidle.txt"
-	rsh "cat /sys/kernel/debug/pm_genpd/power-domain-cluster/idle_states 2>/dev/null" \
-		>"$RESULTS/$PROFILE/round-$i-genpd.txt"
-
-	# The first wedge-class line, with its monotonic timestamp - the onset
-	# evidence, and the only thing that identifies WHICH CPU stopped answering.
-	first=$(grep -aoE '^\[ *[0-9]+\.[0-9]+\].*(rcu:.*stall|soft lockup|workqueue lockup|haven.t responded|Kernel panic)' \
-		"$RESULTS/$PROFILE/round-$i-klog.txt" 2>/dev/null | head -1)
-
-	{
-		echo "run_profile=$PROFILE"
-		echo "round=$i"
-		echo "boot_id_before=$before"
-		echo "boot_id_after=$after"
-		echo "boot_id_at_probe=$now_id"
-		echo "reboot_kind=warm"
-		echo "window_s=$WINDOW"
-		echo "extra_boots=$extra_boots"
-		echo "self_recovery=$recovery"
-		echo "detector=boot_id_change+journal_boot_count"
-		# For a csd-lock round, record the instrument's live parameters with the
-		# round: a wedge with no CSD output is only interpretable if it is known
-		# that the instrument was enabled and at what timeout.
-		if [ "$PROFILE" = csd-lock ]; then
-			echo "csd_timeout_ms=$(rsh 'cat /sys/module/smp/parameters/csd_lock_timeout 2>/dev/null')"
-			echo "csd_panic_on_ipistall=$(rsh 'cat /sys/module/smp/parameters/panic_on_ipistall 2>/dev/null')"
-			# `grep -c` exits 1 when it finds nothing, so `|| echo 0` appended a
-			# SECOND line and the field read as "0\n0".  grep -c already prints
-			# the count, so it needs no fallback - only a guard against the file
-			# not existing.
-			kf="$RESULTS/$PROFILE/round-$i-klog.txt"
-			if [ -f "$kf" ]; then
-				echo "csd_report_lines=$(grep -acE 'csd: (Detected|Continued) non-responsive' "$kf")"
-				# The three fields this round exists for: who waits, whom for,
-				# and what work.  A `Detected` line carries all three.
-				echo "csd_first_report=$(grep -aE 'csd: (Detected|Continued) non-responsive' "$kf" | head -1 | sed 's/^.*csd: /csd: /')"
-				echo "csd_targets=$(grep -aoE 'for CPU#[0-9]+ [^ ]+' "$kf" | sort -u | tr '\n' ';')"
-				echo "csd_disposition=$(grep -aoE 'CSD lock \(#[0-9]+\) (unresponsive|handling this request|handling prior[^.]*)' "$kf" | sed 's/^.*) //' | sort -u | tr '\n' ';')"
-				echo "csd_resends=$(grep -acE 'Re-sending CSD lock' "$kf")"
-				echo "csd_unstuck=$(grep -acE 'got unstuck' "$kf")"
-			else
-				echo "csd_report_lines=0"
-			fi
-		fi
-		echo "log_boot_index=$idx"
-		echo "wedge_markers=$w"
-		echo "suspect_markers=$s"
-		echo "verdict=$verdict"
-		echo "first_wedge_line=$first"
-	} >"$RESULTS/$PROFILE/round-$i.txt"
-
-	[ "$verdict" != unattributed ] && n=$((n + 1))
-	[ "$verdict" = wedge ] && k=$((k + 1))
-
-	say "  round $i: verdict=$verdict wedge_markers=$w suspect_markers=$s self_recovery=$recovery extra_boots=$extra_boots" | tee -a "$OUT"
-	[ -n "$first" ] && say "    first: $first" | tee -a "$OUT"
-
-	# The rule's first row: one genuine wedge stops the direction.  Do not grind
-	# on - the plan says so before the data existed.
-	if [ "$verdict" = wedge ]; then
-		say "STOPPING: a wedge is a fact; the remaining rounds cannot change it" | tee -a "$OUT"
-		break
-	fi
-
-	ver=$after
+    ROUND=$RUN/round-$i
+    mkdir "$ROUND" || die "cannot create round directory"
+    # Recheck at each round, so the gate on the initial boot cannot silently
+    # stand in for a different kernel recovered into midway through a series.
+    arming_gate >"$ROUND/preflight.txt" 2>&1 || die "round preflight failed"
+    capture_file "$ROUND/before-id.txt" 'cat /proc/sys/kernel/random/boot_id' || die "no boot anchor"
+    before=$(cat "$ROUND/before-id.txt")
+    capture_file "$ROUND/boots-before.txt" 'journalctl --list-boots --no-pager --no-legend' || die "no journal history"
+    # Save the identity/profile consulted by the preflight for review.
+    capture_file "$ROUND/preflight-identity.txt" 'uname -a; cat /proc/cmdline' || die "no kernel identity"
+    say "round $i/$ROUNDS: requesting warm reboot from $before" | tee -a "$OUT"
+    # SSH may disconnect on an accepted reboot; the subsequent boot ID is the
+    # evidence that it happened, not this command's exit status.
+    capture_file "$ROUND/reboot-request.txt" 'systemctl reboot' || true
+    sleep 40
+    after=""
+    for _ in $(seq 1 40); do
+        after=$(rsh 'cat /proc/sys/kernel/random/boot_id' 2>>"$ROUND/poll.stderr")
+        [ -n "$after" ] && [ "$after" != "$before" ] && break
+        sleep 5
+    done
+    # A failed return still goes through the same archive/replay path and stops
+    # the series. It never silently disappears from the denominator.
+    if [ -n "$after" ] && [ "$after" != "$before" ]; then
+        sleep "$WINDOW"
+    fi
+    capture_file "$ROUND/boots-after.txt" 'journalctl --list-boots --no-pager --no-legend' || true
+    python3 "$EVIDENCE" select "$ROUND" >"$ROUND/selection.json" || die "cannot select target boot"
+    target=$(json_field "$ROUND/selection.json" target_boot_id)
+    log_ok=0
+    : >"$ROUND/klog.txt"
+    if [ -n "$target" ]; then
+        # Stable journal ID: later reboots cannot move this query to another boot.
+        capture_file "$ROUND/klog.txt" "journalctl -b $target -k -o short-monotonic --no-pager" && log_ok=1
+    fi
+    sample_ok=0
+    capture_file "$ROUND/sample.txt" 'set -e; cat /proc/sys/kernel/random/boot_id; cut -d " " -f 1 /proc/uptime; cat /proc/sys/kernel/random/boot_id' && sample_ok=1
+    # These are recovery-boot observations, never target-CPU state at the wedge.
+    # pstore can be stale; preserve it, but do not use it for automatic verdicts.
+    capture_file "$ROUND/pstore-unattributed.txt" 'cat /var/lib/systemd/pstore/console-ramoops-0' || true
+    capture_file "$ROUND/observer-state.txt" 'cat /proc/sys/kernel/random/boot_id; cat /proc/interrupts; cat /proc/softirqs; cat /proc/sys/kernel/random/boot_id' || true
+    python3 - "$ROUND" "$PROFILE" "$WINDOW" "$target" "$log_ok" "$sample_ok" <<'PYMETA' || die "cannot save capture metadata"
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1])
+lines = (path / 'sample.txt').read_text().splitlines()
+capture = dict(profile=sys.argv[2], window_s=int(sys.argv[3]),
+               log_boot_id=sys.argv[4], log_ok=sys.argv[5] == '1',
+               sample_ok=sys.argv[6] == '1' and len(lines) == 3)
+if len(lines) == 3:
+    capture.update(sample_start_boot_id=lines[0], uptime_s=lines[1],
+                   sample_end_boot_id=lines[2])
+(path / 'capture.json').write_text(json.dumps(capture, indent=2) + '\n')
+PYMETA
+    python3 "$EVIDENCE" replay "$ROUND" >"$ROUND/verdict.json" || die "invalid round evidence"
+    verdict=$(json_field "$ROUND/verdict.json" verdict)
+    reason=$(json_field "$ROUND/verdict.json" reason)
+    # CSD fields remain convenient for human review; the classifier reads the
+    # archived journal directly and includes CSD non-response as a signature.
+    if [ "$PROFILE" = csd-lock ]; then
+        kf=$ROUND/klog.txt
+        {
+            echo "csd_timeout_ms=$tmo"
+            echo "csd_panic_on_ipistall=$stop"
+            echo 'parameter_scope=preflight_boot_only'
+            echo "csd_report_lines=$(grep -acE 'csd: (Detected|Continued) non-responsive' "$kf")"
+            echo "csd_first_report=$(grep -aE 'csd: (Detected|Continued) non-responsive' "$kf" | head -1)"
+            echo "csd_targets=$(grep -aoE 'for CPU#[0-9]+ [^ ]+' "$kf" | sort -u | tr '\n' ';')"
+            echo "csd_disposition=$(grep -aoE 'CSD lock \(#[0-9]+\) (unresponsive|handling this request|handling prior[^.]*)' "$kf" | sort -u | tr '\n' ';')"
+            echo "csd_resends=$(grep -ac 'Re-sending CSD lock' "$kf")"
+            echo "csd_unstuck=$(grep -ac 'got unstuck' "$kf")"
+        } >"$ROUND/csd-summary.txt"
+    fi
+    [ "$verdict" = clean ] && n=$((n + 1))
+    [ "$verdict" = wedge ] && k=$((k + 1))
+    say "round $i: verdict=$verdict reason=$reason evidence=$ROUND" | tee -a "$OUT"
+    # Forensics stops at the first failure; ambiguous capture stops for repair.
+    # Neither suspect nor unattributed rounds belong in a clean denominator.
+    if [ "$verdict" != clean ]; then
+        say "STOPPING: review $verdict evidence before another round" | tee -a "$OUT"
+        break
+    fi
 done
-
-say "series complete: n=$n wedge=$k" | tee -a "$OUT"
-[ "$k" -eq 0 ] && say "not reproduced in $n boots (this is a bound, not a fix)" | tee -a "$OUT"
-say "raw evidence: $RESULTS/$PROFILE/" | tee -a "$OUT"
+say "series complete: clean=$n wedge=$k; this is not a rate estimate" | tee -a "$OUT"
+say "raw evidence: $RUN" | tee -a "$OUT"
+case "$verdict" in clean) exit 0 ;; wedge) exit 10 ;; suspect) exit 11 ;; *) exit 12 ;; esac

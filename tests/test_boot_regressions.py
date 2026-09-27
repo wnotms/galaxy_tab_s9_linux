@@ -24,16 +24,28 @@ class BootRegressions(unittest.TestCase):
         handoff = source[source.index(marker):]
         for console in ('/dev/null', '/nonexistent-gts9-console'):
             with self.subTest(console=console), tempfile.TemporaryFile(mode='w+') as output:
-                script = 'log() { printf "%s\\n" "$*"; }\n' + handoff.replace('/dev/console', console)
+                # Keep the host's real VT out of this test; the production loop
+                # now prefers tty1 before its console fallback.
+                script = ('log() { printf "%s\\n" "$*"; }\n'
+                          + handoff.replace('/dev/tty1', '/nonexistent-gts9-vt')
+                          .replace('/dev/console', console))
                 proc = subprocess.Popen(
                     ['/bin/sh', '-c', script], stdin=subprocess.DEVNULL,
                     stdout=output, stderr=output, start_new_session=True,
                 )
                 try:
-                    time.sleep(0.3)
+                    expected = ('PID 1 remains alive' if console == '/dev/null'
+                                else 'no usable console for the PID 1 shell; waiting')
+                    deadline = time.monotonic() + 3
+                    text = ''
+                    while time.monotonic() < deadline:
+                        output.seek(0)
+                        text = output.read()
+                        if expected in text or proc.poll() is not None:
+                            break
+                        time.sleep(0.02)
                     self.assertIsNone(proc.poll(), 'init must survive shell exit/redirection failure')
-                    output.seek(0)
-                    self.assertIn('PID 1 remains alive', output.read())
+                    self.assertIn(expected, text)
                 finally:
                     if proc.poll() is None:
                         os.killpg(proc.pid, signal.SIGKILL)

@@ -1,5 +1,7 @@
 # Next stall-debug plan: from "13-14 s stall" to a layer in the RPMh chain
 
+**2026-09-27 update:** current queue and corrected interpretation are in [STALL_TEST_WORKFLOW.md](STALL_TEST_WORKFLOW.md). Test-228 already ran; any “prepared but not flashed” wording below is historical. Next: offline replay and trace retention gates.
+
 Status: **superseded as a work queue by `docs/CSD_IPI_WEDGE_PLAN.md` (round 34),
 retained in full as history.** Sections 1-3 are the original test-185/186 plan
 with its stale facts corrected in place; the round-30 rewrite at the end
@@ -21,7 +23,7 @@ result in `reference/boot-tests/`, and each closed direction says what closed it
 |---|---|---|
 | GPU / GMU / ACD / AOSS | **downgraded** | `msm.skip_gpu=1` wedged with the Adreno driver never registered — test-198 |
 | RPMh `rpmh_write()` timeout | **downgraded** | `gts9_rpmh_debug=1` wedged with zero RPMh output — test-199 |
-| cpufreq / EPSS / OSM L3 | **orthogonal** | 2/29 vs 1/29, Fisher p = 1.0; the fix is correct and stays |
+| cpufreq / EPSS / OSM L3 | **no demonstrated rate effect** | 2/29 vs 1/29 is inconclusive, not equivalence; retain the independently justified fix |
 | **PSCI / cpuidle / deep idle** | **not necessary** | `cpuidle.off=1` wedged twice with the framework provably absent and every cluster state at usage 0 / rejected 0 — test-227 |
 | PCIe0 / its PHY | downgraded | disabled in DTS, stall reproduced — test-182 |
 | pogo keyboard, DPU, `ttyMSM0` | downgraded | each has its own section below |
@@ -37,15 +39,10 @@ kick_all_cpus_sync → smp_call_function_many_cond` — is the **canary**: a CPU
 spinning inside `smp_call_function_many_cond()` waiting for another CPU that
 never completes. It names what is waited for, not why the target stopped.
 
-**Next item, prepared and built but not flashed:**
-`CONFIG_CSD_LOCK_WAIT_DEBUG` as a diagnostic-only profile. It instruments
-`csd_lock_wait()`, which is the exact instruction the canary is stuck at, and its
-first report fires at `csd_lock_timeout` = 5 s — *earlier* than the RCU stall at
-onset+21 s, while the target CPU is still wedged. It reports the waiting CPU, the
-target CPU, the CSD function and argument, whether the target is handling this
-request or a prior one or nothing, and (best effort) the target's stack. See
-`docs/CSD_IPI_WEDGE_PLAN.md` for the pre-registered decision rule and
-`kernel/config/gts9wifi-csd-lock.fragment` for the configuration.
+**Next item:** test-228 completed the CSD diagnostic and recorded Case B.
+Continue with the offline boot-ID replay and trace-retention gates in
+`docs/STALL_TEST_WORKFLOW.md`. The next trace must prove that its evidence
+survives reboot before a new wedge series is run.
 
 **Two things round 34 must not do**, both learned the hard way: do not treat the
 CPU that *prints* the soft-lockup stack as the wedged CPU (test-227's record has

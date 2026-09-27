@@ -438,7 +438,7 @@ class PlanDocumentTests(unittest.TestCase):
         # Table cells, with the inline emphasis stripped by prose().
         for cell in ("| GPU / GMU / ACD / AOSS | downgraded |",
                      "| RPMh rpmh_write() timeout | downgraded |",
-                     "| cpufreq / EPSS / OSM L3 | orthogonal |",
+                     "| cpufreq / EPSS / OSM L3 | no demonstrated rate effect |",
                      "| PSCI / cpuidle | not necessary |"):
             with self.subTest(cell=cell):
                 self.assertIn(cell, flat)
@@ -457,7 +457,8 @@ class PlanDocumentTests(unittest.TestCase):
     def test_the_ftrace_design_is_constrained_now_not_later(self):
         flat = prose(PLAN)
         self.assertIn("trace_clock=global is mandatory", flat)
-        self.assertIn("single-shot", flat)
+        self.assertIn("not globally single-shot", flat)
+        self.assertIn("once per callsite per boot", flat)
         self.assertIn("contend rather than add", flat)
         self.assertIn("tp_printk is not used", flat)
         self.assertIn("Buffer sizing is measured, not guessed", flat)
@@ -570,11 +571,10 @@ class WedgeResultTests(unittest.TestCase):
     def test_the_result_is_classified_as_case_b_with_its_reasoning(self):
         flat = prose(self.RESULT)
         self.assertIn("Case B", flat)
-        # why 'unresponsive' rules Case A out
+        # The original interpretation is archived, but must carry its correction.
         self.assertIn("cpu_cur_csd", flat)
-        self.assertIn("neither target was inside any IPI handler", flat)
-        # and why 'handler is slow' is unavailable
-        self.assertIn("cannot block", flat)
+        self.assertIn("Interpretation correction (2026-09-27)", flat)
+        self.assertIn("Those claims are withdrawn", flat)
 
     def test_it_does_not_claim_a_cause_or_a_fix(self):
         flat = prose(self.RESULT)
@@ -665,7 +665,7 @@ class WedgeResultTests(unittest.TestCase):
 
     def test_the_plan_records_the_case_b_outcome(self):
         flat = prose(PLAN)
-        self.assertIn("Case B, unambiguously", flat)
+        self.assertIn("Case B", flat)
         self.assertIn("do_nothing", flat)
         self.assertIn("rcu_barrier_handler", flat)
         # and the round-2 table it produces

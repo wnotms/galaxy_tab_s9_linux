@@ -883,56 +883,10 @@ class WedgeSshRunnerTests(unittest.TestCase):
 
     RUNNER = "scripts/wedge-ssh.sh"
 
-    def test_it_exists_and_is_not_a_replacement_for_the_harness(self):
-        text = read(self.RUNNER)
-        flat = prose(self.RUNNER)
-        self.assertIn("deliberately NOT a rewrite of that", flat)
-        self.assertIn("borrows the harness's definitions rather than restating them", flat)
-
-    def test_it_borrows_the_wedge_classification_verbatim(self):
-        text = read(self.RUNNER)
-        # The same classes stall-ab.sh uses, so "wedge" means one thing.
-        self.assertIn("haven.t responded to the NMI", text)
-        self.assertIn("BUG: workqueue lockup", text)
-        self.assertIn("frame done timeout", text)
-        # and the test-194 rule that a lone timeout is not a wedge
-        self.assertIn("a lone DPU/MMC/RPMh timeout is SUSPECT, never WEDGE", text)
-
-    def test_the_journal_boot_index_is_computed_not_assumed(self):
-        """The off-by-one that would hide every wedge.
-
-        A round's boot is the one the runner rebooted INTO: index 0 immediately
-        after, and only -1 if the kernel rebooted itself again during the window.
-        Hardcoding `-b -1` reads the boot BEFORE the round - which is exactly
-        where a wedged round's markers are NOT - and would classify a wedged
-        round as clean.
-        """
-        text = read(self.RUNNER)
-        # The index is derived from the boot COUNT, not from comparing boot ids.
-        # An earlier version compared ids and chose index 0 when they matched -
-        # but they match precisely because a wedged boot panicked and restarted,
-        # so index 0 was the boot AFTER the wedge.  That bug made test-228's real
-        # wedge read as clean; see reference/boot-tests/test-228-*/RESULT.md.
-        self.assertIn("idx=$(( -extra_boots ))", text)
-        self.assertIn('count "$idx"', text)
-        self.assertIn("log_boot_index=$idx", text)
-        # the buggy forms must not come back
-        self.assertNotIn("idx=0              # still on the round's boot", text)
-        self.assertNotIn('count -1 "$WEDGE_CLASSES"', text)
-        # and an extra boot must reach the verdict, not just the record
-        self.assertIn('"${extra_boots:-0}" -gt 0 ] && verdict=wedge', text)
-
-    def test_it_records_which_detector_it_used(self):
-        """The COM19 presence-outage detector does not exist here.
-
-        Silently losing it and saying nothing would make a panic-restart look
-        like an ordinary clean boot.  The runner substitutes boot-id change plus
-        journal boot count, and names the substitution in every round record.
-        """
-        text = read(self.RUNNER)
-        self.assertIn("detector=boot_id_change+journal_boot_count", text)
-        self.assertIn("WHAT IT CANNOT SEE, AND SAYS SO", text)
-        self.assertIn("extra_boots=$extra_boots", text)
+    # Attribution, failure classes, unexpected restart handling and stopping
+    # are exercised with archived logs and a mock transport in
+    # test_wedge_evidence.py. Do not pin the old count/index implementation or
+    # introductory prose here: those assertions passed with a broken verdict.
 
     def test_it_refuses_to_run_unless_the_profile_is_armed(self):
         text = read(self.RUNNER)
@@ -941,18 +895,11 @@ class WedgeSshRunnerTests(unittest.TestCase):
         # the cpuidle-off gate decides on the sysfs group, per the plan
         self.assertIn("test -d /sys/devices/system/cpu/cpuidle", text)
 
-    def test_it_stops_on_the_first_wedge(self):
-        """The plan's first row: one wedge stops the direction."""
-        text = read(self.RUNNER)
-        self.assertIn("STOPPING: a wedge is a fact", text)
-        self.assertIn("break", text)
-
     def test_it_never_writes_a_partition(self):
         text = read(self.RUNNER)
         for forbidden in ("dd if=", "of=/dev/", "fastboot", "mkbootimg", "avbtool"):
             with self.subTest(token=forbidden):
                 self.assertNotIn(forbidden, text)
-        self.assertIn("never flashes and never writes a partition", text)
 
 
 class WedgeResultRecordTests(unittest.TestCase):
