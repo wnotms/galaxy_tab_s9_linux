@@ -1,0 +1,17 @@
+boot.img payload: Image.gz + appended board DTB
+  payload size: 22013061 bytes
+Read : 0 MiB   ==> inf%                                                                                  Compressed 512 bytes into 82 bytes ==> 16.02% 
+WARNING: no manifest beside the initramfs; the validator cannot check its profile
+initramfs_location=init_boot
+append_dtb=1
+boot_payload=image.gz+dtb
+image_gz_sha256=5f2c3c9b19707af947ed46bf5d6a22e3b685fdbe67cfc68cf769622a35188652
+dtb_sha256=5709be3ff6467d0d5fdb0e925f367d73352c9828b7aedf92634ae66a39d94074
+initramfs_sha256=7d524dbcaef4c91fb82a58b794f3a2afa099f1827c1bd0391b65cbcdf2e176fe
+kernel_release=7.2.0-rc3-gts9wifi-dirty
+76a8d9b78fa5a3520b91470863f25e69a5415392f17169835ea968e61fb7c468  boot.img
+c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3  dtbo.img
+1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0  init_boot.img
+b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4  vbmeta.img
+d72d0cbdbaf53c2fc57ee026e9c649e183a78dcbf89808f8b07577f7c9154242  vendor_boot.img
+bundle assembled only; nothing was flashed
