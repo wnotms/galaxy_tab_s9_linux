@@ -132,3 +132,17 @@ stops recording. No complete history or missing-event inference is supported.
 See test-230's preregistration and scripts/lastactivity-evidence.py. This changes
 tracepoint static keys during initialization and adds callback overhead, so it
 is a diagnostic instrument, not a production fix for CPU non-response.
+
+## `0023-gts9-ramoops-live-readback.patch` — DIAGNOSTIC ONLY
+
+Test-233 retained a known binary pmsg record with 464 changed bytes. This patch
+adds a root-only, read-only `gts9_pmsg_live` bin attribute on the existing
+ramoops device, only on X710 and only with `ramoops.gts9_live_read=1`.
+It maps no new RAM and changes no writer, geometry, ECC or reset behavior.
+Stop PMSG writers and require two equal reads; it is not an atomic snapshot.
+`scripts/pstore-probe.py check --raw-ring` decodes the pinned ARM64 ECC=0 ring
+and requires the exact expected payload. Never use that decoder for an ECC
+layout without updating the capacity calculation. The attribute is removed
+before freeing the backing mapping. Build with
+`GTS9_DIAGNOSTIC_PATCHES=0023-gts9-ramoops-live-readback.patch` and use
+`boot/cmdline.ramoops-live.example.txt`. Test-234 preregisters the trial.

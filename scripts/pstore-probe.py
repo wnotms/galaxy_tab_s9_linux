@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import struct
 from pathlib import Path
 import uuid
 
@@ -16,6 +17,19 @@ def make_probe(boot_id, capture_id):
                         for i in range(512))
     header = f'GTS9_PMSG_BEGIN id={capture_id} boot={boot_id} bytes={len(pattern)} sha256={hashlib.sha256(pattern).hexdigest()}\n'.encode()
     return header + pattern + f'\nGTS9_PMSG_END id={capture_id}\n'.encode()
+
+
+def decode_live_ring(raw):
+    """Pinned ARM64 ECC=0 ring, including its 12-byte LE header. No repair."""
+    if len(raw) < 12:
+        raise ValueError('truncated live ring header')
+    magic, start, size = struct.unpack_from('<III', raw)
+    capacity = len(raw) - 12
+    if magic != 0x43474244 or not (0 <= start <= size <= capacity):
+        raise ValueError('invalid live ring header or geometry')
+    data = raw[12:12 + size]
+    return data[start:] + data[:start], {'magic': magic, 'start': start,
+                                       'size': size, 'capacity': capacity}
 
 
 def compare(expected, recovered):
@@ -56,6 +70,7 @@ def main():
     make.add_argument('--capture-id', required=True)
     make.add_argument('--output', type=Path, required=True)
     check = sub.add_parser('check')
+    check.add_argument('--raw-ring', action='store_true', help='ARM64 raw live ring; ECC must be zero')
     check.add_argument('expected', type=Path)
     check.add_argument('recovered', type=Path)
     args = parser.parse_args()
@@ -69,7 +84,13 @@ def main():
                               'bytes': len(payload),
                               'sha256': hashlib.sha256(payload).hexdigest()}, indent=2))
             return 0
-        result = compare(args.expected.read_bytes(), args.recovered.read_bytes())
+        recovered = args.recovered.read_bytes()
+        extra = {}
+        if args.raw_ring:
+            extra['raw_ring_sha256'] = hashlib.sha256(recovered).hexdigest()
+            recovered, extra['ring_header'] = decode_live_ring(recovered)
+        result = compare(args.expected.read_bytes(), recovered)
+        result.update(extra)
         print(json.dumps(result, indent=2))
         return 0 if result['verdict'] == 'exact' else 2
     except (OSError, ValueError) as exc:

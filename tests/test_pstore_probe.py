@@ -1,6 +1,7 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import struct
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('probe', ROOT / 'scripts/pstore-probe.py')
@@ -41,3 +42,21 @@ class ProbeTests(unittest.TestCase):
         for bad in (b'', b'abc', probe.make_probe(BOOT, ID)[:-1]):
             with self.assertRaises(ValueError):
                 probe.compare(bad, bad)
+
+    def test_live_ring_linear_and_wrapped(self):
+        data = probe.make_probe(BOOT, ID)
+        raw = struct.pack('<III', 0x43474244, len(data), len(data)) + data + bytes(99)
+        decoded, info = probe.decode_live_ring(raw)
+        self.assertEqual(decoded, data)
+        self.assertEqual(info['capacity'], len(data) + 99)
+        start = 123
+        rotated = data[-start:] + data[:-start]
+        raw = struct.pack('<III', 0x43474244, start, len(data)) + rotated
+        self.assertEqual(probe.decode_live_ring(raw)[0], data)
+
+    def test_live_ring_rejects_invalid_header(self):
+        for raw in (b'', struct.pack('<III', 0, 0, 0),
+                    struct.pack('<III', 0x43474244, 9, 1) + b'x',
+                    struct.pack('<III', 0x43474244, 0, 99) + b'x'):
+            with self.assertRaises(ValueError):
+                probe.decode_live_ring(raw)

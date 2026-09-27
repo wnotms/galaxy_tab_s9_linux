@@ -1,0 +1,81 @@
+From: gts9 mainline diagnostics
+Subject: [DIAGNOSTIC ONLY] pstore: gated X710 live PMSG readback
+
+Test-233 recovered a complete but corrupt binary pmsg record. A successful
+userspace write does not prove the mapped RAM was correct before reset.
+Expose only this existing PMSG mapping read-only to root, opt-in through
+ramoops.gts9_live_read=1. No extra mapping, write, reset, ECC or memory-layout
+change. Quiesce writers and require two equal reads; not an atomic snapshot.
+The attribute is removed before the backing region is freed.
+
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -80,6 +80,24 @@
+ module_param_named(dump_oops, ramoops_dump_oops, int, 0400);
+ MODULE_PARM_DESC(dump_oops,
+ 		 "(deprecated: use max_reason instead) set to 1 to dump oopses & panics, 0 to only dump panics");
++
++/* Diagnostic only: expose mapped PMSG RAM for quiescent live readback. */
++static bool gts9_live_read;
++module_param(gts9_live_read, bool, 0400);
++MODULE_PARM_DESC(gts9_live_read, "X710 diagnostic read-only live PMSG RAM view");
++
++static ssize_t gts9_pmsg_live_read(struct file *file, struct kobject *kobj,
++				 const struct bin_attribute *attr,
++				 char *buf, loff_t pos, size_t count)
++{
++	if (pos < 0)
++		return -EINVAL;
++	if (pos >= attr->size)
++		return 0;
++	count = min_t(size_t, count, attr->size - pos);
++	memcpy_fromio(buf, (void __iomem *)attr->private + pos, count);
++	return count;
++}
+ 
+ struct ramoops_context {
+ 	struct persistent_ram_zone **dprzs;	/* Oops dump zones */
+@@ -104,6 +122,8 @@
+ 	unsigned int ftrace_read_cnt;
+ 	unsigned int pmsg_read_cnt;
+ 	struct pstore_info pstore;
++	struct bin_attribute pmsg_live;
++	bool pmsg_live_added;
+ };
+ 
+ static struct platform_device *dummy;
+@@ -852,6 +872,25 @@
+ 		goto fail_buf;
+ 	}
+ 
++	/* No coherent snapshot guarantee: stop PMSG writers, then compare two
++	 * full reads. This view neither resets nor writes the reserved region.
++	 * sysfs removal drains active readers before the mapping is freed.
++	 */
++	if (gts9_live_read && of_machine_is_compatible("samsung,gts9wifi") &&
++	    cxt->mprz) {
++		sysfs_bin_attr_init(&cxt->pmsg_live);
++		cxt->pmsg_live.attr.name = "gts9_pmsg_live";
++		cxt->pmsg_live.attr.mode = 0400;
++		cxt->pmsg_live.size = cxt->mprz->size;
++		cxt->pmsg_live.private = cxt->mprz->vaddr;
++		cxt->pmsg_live.read = gts9_pmsg_live_read;
++		err = device_create_bin_file(dev, &cxt->pmsg_live);
++		if (err)
++			dev_warn(dev, "cannot create diagnostic PMSG readback: %d\n", err);
++		else
++			cxt->pmsg_live_added = true;
++	}
++
+ 	/*
+ 	 * Update the module parameter variables as well so they are visible
+ 	 * through /sys/module/ramoops/parameters/
+@@ -886,6 +925,8 @@
+ {
+ 	struct ramoops_context *cxt = &oops_cxt;
+ 
++	if (cxt->pmsg_live_added)
++		device_remove_bin_file(&pdev->dev, &cxt->pmsg_live);
+ 	pstore_unregister(&cxt->pstore);
+ 
+ 	kvfree(cxt->pstore.buf);
