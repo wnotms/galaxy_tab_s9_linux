@@ -1,0 +1,32 @@
+[
+  {
+    "name": "identity",
+    "command": "getprop ro.product.model; getprop ro.product.device; getprop ro.twrp.version; cat /proc/sys/kernel/random/boot_id; uname -a; cat /sys/class/power_supply/battery/capacity",
+    "exit_code": 0,
+    "utc": "2026-09-27T05:00:45.028506+00:00"
+  },
+  {
+    "name": "partition-hashes",
+    "command": "for n in boot vendor_boot init_boot dtbo vbmeta; do blockdev --getsize64 /dev/block/by-name/$n; sha256sum /dev/block/by-name/$n; done",
+    "exit_code": 0,
+    "utc": "2026-09-27T05:00:45.419408+00:00"
+  },
+  {
+    "name": "pstore-inventory",
+    "command": "ls -la /sys/fs/pstore; cat /proc/mounts; ls -l /dev/mem 2>/dev/null",
+    "exit_code": 1,
+    "utc": "2026-09-27T05:00:45.513382+00:00"
+  },
+  {
+    "name": "dmesg",
+    "command": "dmesg",
+    "exit_code": 0,
+    "utc": "2026-09-27T05:00:45.595638+00:00"
+  },
+  {
+    "name": "last_kmsg",
+    "command": "cat /proc/last_kmsg",
+    "exit_code": 0,
+    "utc": "2026-09-27T05:00:45.741524+00:00"
+  }
+]
