@@ -1,5 +1,8 @@
 # Test248 repair candidate: remove the observed DCC transmit stall path
 
+Historical preparation record. See [RESULTS.md](RESULTS.md) for the completed
+initial target and the explicit temporary device state pending production.
+
 Test247 directly captured CPU4 agetty looping on DCC TX-busy under hvc_write's
 IRQ-saving lock. This repair explicitly disables inherited CONFIG_HVC_DCC and
 makes the build reject its reintroduction. No stock evidence is edited.

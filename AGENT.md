@@ -2,14 +2,20 @@
 
 ## Current review (2026-09-28)
 
-Test248 repair candidate BUILT/PACKAGED, not yet flashed at this checkpoint.
-Mainline fragment explicitly disables inherited HVC_DCC; build rejects its
-reintroduction. Only HVC_DCC/HVC_DRIVER turn off relative247; actual symbols
-for DCC/HVC write are absent. PNMI/CSD/LA/ECC/BBM kept for comparison.15 scoped
-checks, full module/CRC audit, paired rollback rehearsal and bundle validator
-pass. Fresh original181-file manifest and staged hashes match. See248 scope
-and BUILD_RESULTS.md; one120 s target must prove no hvc0/getty path and retain
-ADB/NCM SSH. Final production repair deployment remains outstanding.
+Test248 initial repair target PASSED120.08 s. Target1707f656-b262-45be-8473-
+982ae5ffefa8, cap4ff0340a-587e-4c23-9f4c-db78a329ee37, exact notes/six anchors
++0x80000. Runtime HVC_DCC=n, no hvc0 device/sysfs node, getty inactive; existing
+PNMI/CSD/LA/ECC/BBM diagnostics remain verified.181 module hashes/three loaded
+notes match;1101 source-time kernel rows, no failed unit, ADB/NCM SSH banner pass.
+Tablet STILL runs the diagnostic repair candidate by explicit result review;
+keep it while preparing the final production fix instead of booting the known
+DCC-fault configuration. Original modules remain .gts9-test248-original; local/
+Windows tar and original230 image backups verified.248 budget closed, no repeat.
+Next build/deploy production HVC_DCC-off with temporary diagnostics removed,
+then bounded startup/reboot regression and owned-directory cleanup. This final
+production rollout remains REQUIRED before the CPU repair goal is complete.
+See248 RESULTS.md for pending device state/rollback. Initial reboot ADB255 was
+an observed transport closure; TWRP was independently verified before resuming.
 
 Test247 CLOSED with the first natural failed-target PC: CPU4 `(agetty)`
 PID1251 in hvc_dcc0_put_chars+0x34, saved PMR0xc0 and MDCCSR_EL0 x9=0x20000000.

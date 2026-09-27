@@ -1,5 +1,8 @@
 # DCC repair candidate built and packaged
 
+Historical preparation record. See [RESULTS.md](RESULTS.md) for the completed
+initial target and the explicit temporary device state pending production.
+
 NOT yet flashed. Kernel and all modules build in71.1 s using ccache.
 Relative to the observed-failing247 config, only HVC_DCC and its sole-selected
 HVC_DRIVER change fromy ton. The new production fragment overrides the immutable
