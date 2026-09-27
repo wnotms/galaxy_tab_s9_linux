@@ -156,7 +156,7 @@ for i in $(seq 1 "$ROUNDS"); do
     arming_gate >"$ROUND/preflight.txt" 2>&1 || die "round preflight failed"
     capture_file "$ROUND/before-id.txt" 'cat /proc/sys/kernel/random/boot_id' || die "no boot anchor"
     before=$(cat "$ROUND/before-id.txt")
-    capture_file "$ROUND/boots-before.txt" 'journalctl --list-boots --no-pager --no-legend' || die "no journal history"
+    capture_file "$ROUND/boots-before.txt" 'LC_ALL=C journalctl --list-boots --no-pager' || die "no journal history"
     # Save the identity/profile consulted by the preflight for review.
     capture_file "$ROUND/preflight-identity.txt" 'uname -a; cat /proc/cmdline' || die "no kernel identity"
     say "round $i/$ROUNDS: requesting warm reboot from $before" | tee -a "$OUT"
@@ -175,7 +175,7 @@ for i in $(seq 1 "$ROUNDS"); do
     if [ -n "$after" ] && [ "$after" != "$before" ]; then
         sleep "$WINDOW"
     fi
-    capture_file "$ROUND/boots-after.txt" 'journalctl --list-boots --no-pager --no-legend' || true
+    capture_file "$ROUND/boots-after.txt" 'LC_ALL=C journalctl --list-boots --no-pager' || true
     python3 "$EVIDENCE" select "$ROUND" >"$ROUND/selection.json" || die "cannot select target boot"
     target=$(json_field "$ROUND/selection.json" target_boot_id)
     log_ok=0

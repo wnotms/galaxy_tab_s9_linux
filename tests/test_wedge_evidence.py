@@ -32,6 +32,16 @@ def capture(**overrides):
 
 
 class AttributionTests(unittest.TestCase):
+    def test_journalctl_257_heading_and_archived_output(self):
+        heading = "IDX BOOT ID FIRST ENTRY LAST ENTRY\n"
+        self.assertEqual(evidence.boot_list(heading + listing(A, B)), [A, B])
+        archived = (ROOT / "reference/boot-tests/test-229-trace-retention-calibration/blocked-boot/journal-boots-compatible.txt").read_text()
+        self.assertEqual(evidence.boot_list(archived)[-1], "6258e141034544f08f690f5d75498747")
+        for malformed in (heading, heading + heading + listing(A), listing(A) + "\n" + heading,
+                          "unrecognized option\n" + listing(A), heading + listing(A) + "\npartial failure"):
+            with self.subTest(malformed=malformed), self.assertRaises(ValueError):
+                evidence.boot_list(malformed)
+
     def test_clean_boot(self):
         selected = evidence.select(A, listing(A), listing(A, B))
         result = evidence.classify(selected, capture(), clean_log())
@@ -164,6 +174,7 @@ state = root / 'rebooted'
 cmd = sys.argv[1]
 with (root / 'commands').open('a') as stream:
     stream.write(cmd + '\\n')
+if '--no-legend' in cmd: sys.exit('journalctl: unrecognized option --no-legend')
 a, b, c = (str(i) * 32 for i in (1, 2, 3))
 mode = os.environ['MOCK_MODE']
 now = (c if mode == 'wedge' else b) if state.exists() else a
@@ -175,6 +186,7 @@ elif cmd == 'cat /proc/sys/kernel/random/boot_id': print(now)
 elif cmd == 'cat /proc/cmdline': print('panic=10 softlockup_panic=1')
 elif 'current_driver' in cmd: print('psci_idle')
 elif '--list-boots' in cmd:
+    print('IDX BOOT ID FIRST ENTRY LAST ENTRY')
     ids = ([a,b,c] if mode == 'wedge' else [a,b]) if state.exists() else [a]
     for i, value in enumerate(ids): print(i+1-len(ids), value, 'dates')
     if state.exists() and mode == 'failed_list': sys.exit(255)

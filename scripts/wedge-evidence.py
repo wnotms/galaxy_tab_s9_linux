@@ -27,9 +27,15 @@ def boot_id(value):
 def boot_list(text):
     """Parse journalctl --list-boots, rejecting empty/partial/error output."""
     rows = []
+    header_seen = False
     for line in text.splitlines():
         fields = line.split()
         if not fields:
+            continue
+        # journalctl 257 has no --no-legend option. Accept its exact C-locale
+        # heading once, before the first row; all other non-row text is an error.
+        if not rows and not header_seen and fields == ["IDX", "BOOT", "ID", "FIRST", "ENTRY", "LAST", "ENTRY"]:
+            header_seen = True
             continue
         if len(fields) < 2 or not re.fullmatch(r"-?\d+", fields[0]):
             raise ValueError("malformed journal boot list")

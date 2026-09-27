@@ -1,0 +1,69 @@
+{
+  "suite": "changed",
+  "counts": {
+    "core": 851,
+    "artifacts": 18,
+    "archive": 87
+  },
+  "selected": [
+    "test_cpuidle_off_profile.WedgeSshRunnerTests.test_it_never_writes_a_partition",
+    "test_cpuidle_off_profile.WedgeSshRunnerTests.test_it_refuses_to_run_unless_the_profile_is_armed",
+    "test_csd_ipi_diagnostic.SshRunnerGateTests.test_it_extracts_the_target_cpu_from_the_report",
+    "test_csd_ipi_diagnostic.SshRunnerGateTests.test_it_records_the_instrument_state_with_every_round",
+    "test_wedge_evidence.AttributionTests.test_clean_boot",
+    "test_wedge_evidence.AttributionTests.test_cli_replay_uses_no_transport_and_recomputes_verdict",
+    "test_wedge_evidence.AttributionTests.test_conflicting_or_substring_cmdline_is_not_profile_proof",
+    "test_wedge_evidence.AttributionTests.test_csd_alone_is_a_positive_signature",
+    "test_wedge_evidence.AttributionTests.test_journalctl_257_heading_and_archived_output",
+    "test_wedge_evidence.AttributionTests.test_missing_anchor_is_not_guessed_from_count",
+    "test_wedge_evidence.AttributionTests.test_missing_failed_or_wrong_boot_capture_never_clean",
+    "test_wedge_evidence.AttributionTests.test_no_reboot_or_unreadable_counts_are_not_clean",
+    "test_wedge_evidence.AttributionTests.test_panic_before_first_ssh_answer_selects_failed_boot",
+    "test_wedge_evidence.AttributionTests.test_rotation_of_older_history_does_not_change_target",
+    "test_wedge_evidence.AttributionTests.test_timeout_alone_is_suspect_and_encoder_noise_is_clean",
+    "test_wedge_evidence.AttributionTests.test_unexpected_reboot_is_not_proof_of_cpu_wedge",
+    "test_wedge_evidence.CsdPreflightTests.test_gate_uses_runtime_capability_and_consumed_profile",
+    "test_wedge_evidence.RunnerIntegrationTests.test_mock_transport_archives_then_replays_without_device"
+  ],
+  "executed": false,
+  "change_selection": {
+    "paths": [
+      "scripts/wedge-evidence.py",
+      "scripts/wedge-ssh.sh",
+      "tests/test_wedge_evidence.py"
+    ],
+    "fallback_all": false,
+    "selectors": [
+      "test_cpuidle_off_profile.WedgeSshRunnerTests",
+      "test_csd_ipi_diagnostic.SshRunnerGateTests",
+      "test_wedge_evidence"
+    ],
+    "reasons": [
+      {
+        "path": "scripts/wedge-evidence.py",
+        "reason": "Replay/classification, mocked SSH orchestration and both profile gate contracts.",
+        "selectors": [
+          "test_wedge_evidence",
+          "test_cpuidle_off_profile.WedgeSshRunnerTests",
+          "test_csd_ipi_diagnostic.SshRunnerGateTests"
+        ]
+      },
+      {
+        "path": "scripts/wedge-ssh.sh",
+        "reason": "Replay/classification, mocked SSH orchestration and both profile gate contracts.",
+        "selectors": [
+          "test_wedge_evidence",
+          "test_cpuidle_off_profile.WedgeSshRunnerTests",
+          "test_csd_ipi_diagnostic.SshRunnerGateTests"
+        ]
+      },
+      {
+        "path": "tests/test_wedge_evidence.py",
+        "reason": "Changed test module and its static import consumers."
+      }
+    ],
+    "base": "07bc79f9a8d5dd086cff4a3a898331cf16ed1b7e"
+  },
+  "elapsed_s": 0.262,
+  "exit_code": 0
+}
