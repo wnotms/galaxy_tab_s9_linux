@@ -1,0 +1,118 @@
+<!-- MHonArc v2.6.19 -->
+<!--X-Subject: Re: [PATCH] arm64: mm: Fix the break&#45;before&#45;make flush range for erratum 2645198 -->
+<!--X-From-R13: Ivyy Rrnpba &#60;jvyyNxreary.bet> -->
+<!--X-Date: Thu, 24 Sep 2026 06:31:48 &#45;0400 (EDT) -->
+<!--X-Message-Id: 179023970437.1597741.12909890449648716020.b4&#45;ty@kernel.org -->
+<!--X-Content-Type: text/plain -->
+<!--X-Reference: 20260923143636.89480&#45;1&#45;parri.andrea@gmail.com -->
+<!--X-Head-End-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux-Kernel Archive: Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198</title>
+<meta name="author" content="Will Deacon &lt;will@xxxxxxxxxx&gt;">
+<meta name="description" content="Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198">
+<style>
+  body { background-color: #fff; color: #000; }
+  h1 { text-align: center; }
+  hr { border: none; border-top: 1px solid #ccc; }
+  .skip-link { position: absolute; left: -9999px; }
+  .skip-link:focus { left: 0; background: #fff; padding: 0.5em; z-index: 1; }
+  nav { margin: 1em 0; }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<main id="main-content">
+<h1>Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198</h1>
+<p><strong>From: </strong>Will Deacon</p>
+<p><strong>Date: </strong> Thu Sep 24 2026 - 06:31:48 EST</p>
+<nav aria-label="Message navigation">
+<ul>
+<li><strong>Next message: </strong> <a href="00847.html"> Cai Xinchen: "[PATCH RFC -next 03/12] fs: pass struct path to xattr helpers"</a>
+
+<li><strong>Previous message: </strong> <a href="00845.html"> Nutty.Liu: "Re: [PATCH] RISC-V: KVM: Fix IPI delivery for out-of-order vcpu_id"</a>
+
+<li><strong>In reply to: </strong> <a href="00737.html"> Catalin Marinas: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+
+
+<li><strong>Messages sorted by: </strong><a href="date.html#00846" aria-label="Sort by date">[ date ]</a> <a href="index.html#00846" aria-label="Sort by thread">[ thread ]</a> <a href="subject.html#00846" aria-label="Sort by subject">[ subject ]</a> <a href="author.html#00846" aria-label="Sort by author">[ author ]</a>
+</ul>
+</nav>
+
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+On Wed, 23 Sep 2026 16:36:32 +0200, Andrea Parri wrote:<br>
+&gt;<i> modify_prot_start_ptes() performs the break-before-make TLB invalidation</i><br>
+&gt;<i> required by erratum 2645198 with __flush_tlb_range(), whose third</i><br>
+&gt;<i> argument is the end address of the range.  It passes nr * PAGE_SIZE</i><br>
+&gt;<i> instead of addr + nr * PAGE_SIZE, so __do_flush_tlb_range() computes the</i><br>
+&gt;<i> page count as (nr * PAGE_SIZE - addr) &gt;&gt; PAGE_SHIFT.</i><br>
+&gt;<i> </i><br>
+&gt;<i> For addr &gt; nr * PAGE_SIZE that subtraction underflows, the page count</i><br>
+&gt;<i> exceeds the batching limit and the flush degenerates to flush_tlb_mm(),</i><br>
+&gt;<i> so a single-page mprotect broadcasts an ASID-wide invalidation and a</i><br>
+&gt;<i> full-range mmu notifier call.</i><br>
+&gt;<i> </i><br>
+&gt;<i> [...]</i><br>
+<br>
+Applied to arm64 (for-next/fixes), thanks!<br>
+<br>
+[1/1] arm64: mm: Fix the break-before-make flush range for erratum 2645198<br>
+      <a  rel="nofollow" href="https://git.kernel.org/arm64/c/1fef81669147">https://git.kernel.org/arm64/c/1fef81669147</a><br>
+<br>
+Cheers,<br>
+-- <br>
+Will<br>
+<br>
+<a  rel="nofollow" href="https://fixes.arm64.dev">https://fixes.arm64.dev</a><br>
+<a  rel="nofollow" href="https://next.arm64.dev">https://next.arm64.dev</a><br>
+<a  rel="nofollow" href="https://will.arm64.dev">https://will.arm64.dev</a><br>
+<br>
+<br>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<nav aria-label="Message navigation">
+<ul>
+<li><strong>Next message: </strong> <a href="00847.html"> Cai Xinchen: "[PATCH RFC -next 03/12] fs: pass struct path to xattr helpers"</a>
+
+<li><strong>Previous message: </strong> <a href="00845.html"> Nutty.Liu: "Re: [PATCH] RISC-V: KVM: Fix IPI delivery for out-of-order vcpu_id"</a>
+
+<li><strong>In reply to: </strong> <a href="00737.html"> Catalin Marinas: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+
+
+<li><strong>Messages sorted by: </strong><a href="date.html#00846" aria-label="Sort by date">[ date ]</a> <a href="index.html#00846" aria-label="Sort by thread">[ thread ]</a> <a href="subject.html#00846" aria-label="Sort by subject">[ subject ]</a> <a href="author.html#00846" aria-label="Sort by author">[ author ]</a>
+</ul>
+</nav>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</body>
+</html>

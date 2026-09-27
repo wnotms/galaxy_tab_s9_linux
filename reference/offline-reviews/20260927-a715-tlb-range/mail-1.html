@@ -1,0 +1,135 @@
+<!-- MHonArc v2.6.19 -->
+<!--X-Subject: Re: [PATCH] arm64: mm: Fix the break&#45;before&#45;make flush range for erratum 2645198 -->
+<!--X-From-R13: Qngnyva [nevanf &#60;pngnyva.znevanfNnez.pbz> -->
+<!--X-Date: Thu, 24 Sep 2026 05:47:21 &#45;0400 (EDT) -->
+<!--X-Message-Id: arTwVXOGRSI8MtAM@arm.com -->
+<!--X-Content-Type: text/plain -->
+<!--X-Reference: 20260923143636.89480&#45;1&#45;parri.andrea@gmail.com -->
+<!--X-Head-End-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linux-Kernel Archive: Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198</title>
+<meta name="author" content="Catalin Marinas &lt;catalin.marinas@xxxxxxx&gt;">
+<meta name="description" content="Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198">
+<style>
+  body { background-color: #fff; color: #000; }
+  h1 { text-align: center; }
+  hr { border: none; border-top: 1px solid #ccc; }
+  .skip-link { position: absolute; left: -9999px; }
+  .skip-link:focus { left: 0; background: #fff; padding: 0.5em; z-index: 1; }
+  nav { margin: 1em 0; }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!--X-Body-Begin-->
+<!--X-User-Header-->
+<!--X-User-Header-End-->
+<!--X-TopPNI-->
+
+
+<!--X-TopPNI-End-->
+<!--X-MsgBody-->
+<!--X-Subject-Header-Begin-->
+<main id="main-content">
+<h1>Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198</h1>
+<p><strong>From: </strong>Catalin Marinas</p>
+<p><strong>Date: </strong> Thu Sep 24 2026 - 05:47:21 EST</p>
+<nav aria-label="Message navigation">
+<ul>
+<li><strong>Next message: </strong> <a href="00738.html"> Xiao Lu: "[PATCH v3 1/2] drm/i915/dp: fix PBN in ALLOCATE_PAYLOAD request to use actual video bandwidth"</a>
+
+<li><strong>Previous message: </strong> <a href="00736.html"> Ben Horgan: "Re: Resctrl and I/O"</a>
+
+<li><strong>In reply to: </strong> <a href="00058.html"> Dev Jain: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+<li><strong>Next in thread: </strong> <a href="00846.html"> Will Deacon: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+<li><strong>Messages sorted by: </strong><a href="date.html#00737" aria-label="Sort by date">[ date ]</a> <a href="index.html#00737" aria-label="Sort by thread">[ thread ]</a> <a href="subject.html#00737" aria-label="Sort by subject">[ subject ]</a> <a href="author.html#00737" aria-label="Sort by author">[ author ]</a>
+</ul>
+</nav>
+
+<!--X-Subject-Header-End-->
+<!--X-Head-of-Message-->
+<!--X-Head-of-Message-End-->
+<!--X-Head-Body-Sep-Begin-->
+<hr>
+<!--X-Head-Body-Sep-End-->
+<!--X-Body-of-Message-->
+On Wed, Sep 23, 2026 at 04:36:32PM +0200, Andrea Parri wrote:<br>
+&gt;<i> modify_prot_start_ptes() performs the break-before-make TLB invalidation</i><br>
+&gt;<i> required by erratum 2645198 with __flush_tlb_range(), whose third</i><br>
+&gt;<i> argument is the end address of the range.  It passes nr * PAGE_SIZE</i><br>
+&gt;<i> instead of addr + nr * PAGE_SIZE, so __do_flush_tlb_range() computes the</i><br>
+&gt;<i> page count as (nr * PAGE_SIZE - addr) &gt;&gt; PAGE_SHIFT.</i><br>
+&gt;<i> </i><br>
+&gt;<i> For addr &gt; nr * PAGE_SIZE that subtraction underflows, the page count</i><br>
+&gt;<i> exceeds the batching limit and the flush degenerates to flush_tlb_mm(),</i><br>
+&gt;<i> so a single-page mprotect broadcasts an ASID-wide invalidation and a</i><br>
+&gt;<i> full-range mmu notifier call.</i><br>
+&gt;<i> </i><br>
+&gt;<i> For addr &lt;= nr * PAGE_SIZE only [addr, nr * PAGE_SIZE) is invalidated,</i><br>
+&gt;<i> and when the cleared batch starts below nr * PAGE_SIZE the tail is left</i><br>
+&gt;<i> in the TLB.  The workaround then no longer covers the whole batch, and</i><br>
+&gt;<i> for addr == nr * PAGE_SIZE the flush is empty.</i><br>
+&gt;<i> </i><br>
+&gt;<i> On affected Cortex-A715 CPUs, this can corrupt ESR_ELx and FAR_ELx on the</i><br>
+&gt;<i> next instruction abort caused by a permission fault.</i><br>
+&gt;<i> </i><br>
+&gt;<i> Pass addr + nr * PAGE_SIZE as the end address.</i><br>
+&gt;<i> </i><br>
+&gt;<i> Fixes: 7efa1cd5f89b5 (&quot;arm64: add batched versions of ptep_modify_prot_start/commit&quot;)</i><br>
+&gt;<i> Cc: stable@xxxxxxxxxxxxxxx</i><br>
+&gt;<i> Assisted-by: LLM</i><br>
+&gt;<i> Signed-off-by: Andrea Parri &lt;parri.andrea@xxxxxxxxx&gt;</i><br>
+&gt;<i> ---</i><br>
+&gt;<i>  arch/arm64/mm/mmu.c | 2 +-</i><br>
+&gt;<i>  1 file changed, 1 insertion(+), 1 deletion(-)</i><br>
+&gt;<i> </i><br>
+&gt;<i> diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c</i><br>
+&gt;<i> index 79d90226fd5dc..d4384131e10d8 100644</i><br>
+&gt;<i> --- a/arch/arm64/mm/mmu.c</i><br>
+&gt;<i> +++ b/arch/arm64/mm/mmu.c</i><br>
+&gt;<i> @@ -2295,7 +2295,7 @@ pte_t modify_prot_start_ptes(struct vm_area_struct *vma, unsigned long addr,</i><br>
+&gt;<i>  		 * in cases where cpu is affected with errata #2645198.</i><br>
+&gt;<i>  		 */</i><br>
+&gt;<i>  		if (pte_accessible(vma-&gt;vm_mm, pte) &amp;&amp; pte_user_exec(pte))</i><br>
+&gt;<i> -			__flush_tlb_range(vma, addr, nr * PAGE_SIZE,</i><br>
+&gt;<i> +			__flush_tlb_range(vma, addr, addr + nr * PAGE_SIZE,</i><br>
+&gt;<i>  					  PAGE_SIZE, 3, TLBF_NOWALKCACHE);</i><br>
+<br>
+Reviewed-by: Catalin Marinas &lt;catalin.marinas@xxxxxxx&gt;<br>
+<br>
+<br>
+
+<!--X-Body-of-Message-End-->
+<!--X-MsgBody-End-->
+<!--X-Follow-Ups-->
+<hr>
+<!--X-Follow-Ups-End-->
+<!--X-References-->
+<!--X-References-End-->
+<!--X-BotPNI-->
+<nav aria-label="Message navigation">
+<ul>
+<li><strong>Next message: </strong> <a href="00738.html"> Xiao Lu: "[PATCH v3 1/2] drm/i915/dp: fix PBN in ALLOCATE_PAYLOAD request to use actual video bandwidth"</a>
+
+<li><strong>Previous message: </strong> <a href="00736.html"> Ben Horgan: "Re: Resctrl and I/O"</a>
+
+<li><strong>In reply to: </strong> <a href="00058.html"> Dev Jain: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+<li><strong>Next in thread: </strong> <a href="00846.html"> Will Deacon: "Re: [PATCH] arm64: mm: Fix the break-before-make flush range for erratum 2645198"</a>
+
+<li><strong>Messages sorted by: </strong><a href="date.html#00737" aria-label="Sort by date">[ date ]</a> <a href="index.html#00737" aria-label="Sort by thread">[ thread ]</a> <a href="subject.html#00737" aria-label="Sort by subject">[ subject ]</a> <a href="author.html#00737" aria-label="Sort by author">[ author ]</a>
+</ul>
+</nav>
+
+<!--X-BotPNI-End-->
+<!--X-User-Footer-->
+<!--X-User-Footer-End-->
+</body>
+</html>
