@@ -46,10 +46,17 @@ void arch_trigger_cpumask_backtrace(const cpumask_t *mask, int exclude_cpu)
 }
 ```
 
-So the message means "did not take an ordinary interrupt", which is a *stronger*
-statement than "did not take an NMI" and rules out "the NMI path specifically is
-broken on this board". It also means the failure is not something an NMI-only
-mechanism could have caught.
+Correction (2026-09-27): the message means "did not answer the ordinary
+backtrace IPI". This is **not stronger** than failing an NMI request and does
+not establish whether a higher-priority path could interrupt the target.
+The tested build never enabled pseudo-NMI backtraces, so their ability to
+capture a masked-IRQ loop remains untested. `arch_local_irq_disable()` uses
+DAIF on this build; with verified pseudo-NMI support it uses GIC PMR, and
+`ipi_should_be_nmi(IPI_CPU_BACKTRACE)` selects the higher-priority route.
+That route still cannot guarantee progress through firmware, hard DAIF masking
+or actual CPU failure. See `docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md` before making
+any hardware claim. The earlier statement that NMI-only capture was excluded
+is withdrawn; raw fault observations are unchanged.
 
 ### How much the `10 seconds` is worth: less than the wording says
 

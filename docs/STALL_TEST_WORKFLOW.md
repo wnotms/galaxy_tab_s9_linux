@@ -28,6 +28,7 @@ planning a trace without proving that its useful portion survives reboot.
 
 | Previous interpretation | Supported statement |
 |---|---|
+| Ordinary-IPI non-response excludes NMI-only capture | It does not. Existing builds disable ARM64_PSEUDO_NMI; the higher-priority route is untested. With runtime priority masking, backtrace IPIs can use the NMI route while ordinary local IRQs are PMR-masked. This still cannot bypass arbitrary hard DAIF masking, firmware or true CPU non-progress. |
 | `cur_csd == NULL` means outside every IPI handler | `kernel/smp.c::__csd_lock_record()` records current CSD work only. ARM64 `do_handle_IPI()` also handles reschedule, timer, irq_work and backtrace IPIs, and has code before CSD dispatch. NULL does not inspect DAIF or GIC state. |
 | Both callbacks are lock-free and cannot spin | `do_nothing()` is trivial, but `kernel/rcu/tree.c::rcu_barrier_handler()` explicitly takes `raw_spin_lock(&rcu_state.barrier_lock)`. That fact alone does not prove it caused this wedge. |
 | Case A and every lock dependency are permanently excluded | Repeated NULL observations make a continuously recorded CSD callback less likely at those instants. They do not exclude every execution path, another IRQ, earlier corruption or a shared cause. |
@@ -392,3 +393,11 @@ raw non-truncating writes fixed it without a reboot or kernel change. Original
 images were restored with all-five hashes and a separate 153.52-second
 production observation. See test-240/RESULTS.md. CPU-stall repair remains open;
 no failure occurred in either this workload or the recent unchanged controls.
+
+
+Next discriminating diagnostic: review and calibrate the untested pseudo-NMI
+backtrace route before asking it to capture a natural failure. The old
+ordinary-IPI versus NMI inference was reversed and has been corrected; the raw
+non-response evidence stands. See [pseudo-NMI review](PSEUDO_NMI_DIAGNOSTIC_REVIEW.md)
+for pinned-source capability gates, a bounded normal-IRQ-masked calibration
+and the limits of any non-response. No pseudo-NMI candidate exists yet.

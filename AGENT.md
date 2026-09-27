@@ -13,6 +13,14 @@ Original images/five hashes restored. Final production c333bb1b-d09b-4b32-
 ac4f-d8e166d4cac7 passed 153.52 seconds with ADB/NCM SSH banner responsive.
 See test-240/RESULTS.md; defaults stay unchanged, 0026 remains opt-in.
 
+Next investigate the missing target stack via the untested pseudo-NMI path.
+The old inference that ordinary-IPI non-response excludes NMI-only capture
+was incorrect and is withdrawn. Pinned sources show PMR-based IRQ masking and
+per-CPU NMI backtrace routing only with CONFIG_ARM64_PSEUDO_NMI plus the boot
+flag and successful runtime setup. No such candidate has been built/flashed.
+See docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md for the bounded IRQ-masked calibration
+design and limits before using it. Keep BBM and NMI causal variables separate.
+
 
 Tests 238/239 reused calibrated 0022+0024 without injection: one 304.96-second
 and two 184-second natural boot windows did not reproduce the CPU failure.

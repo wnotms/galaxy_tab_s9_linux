@@ -853,7 +853,9 @@ Fisher exact **p = 0.043** — explicitly *not* proof of attribution, because th
 and the era boundary coincide by construction and the user declined putting a pre-fix
 kernel back. (iii) The "10 seconds" wording overstates the timeout:
 `CONFIG_ARM64_PSEUDO_NMI` is unset on this build, so it is a **regular IPI**
-backtrace, which is a *stronger* statement than "NMI broken". (iv) Not window-bound:
+backtrace. This does not test whether higher-priority pseudo-NMI capture would
+work; the earlier stronger-than-NMI inference is withdrawn (see
+`PSEUDO_NMI_DIAGNOSTIC_REVIEW.md`). (iv) Not window-bound:
 wedges at 7 s, 50 s and later (`last` 36.7–496.8 s); the "13–14 s window" was an
 artefact of when a host was watching. (v) **What it does not establish**: why a CPU
 stops. The arm64 short list is a CPU parked with interrupts masked, an SError, or a
