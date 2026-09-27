@@ -1,0 +1,203 @@
+[Firmware Bug]: Kernel image misaligned at boot, please fix your bootloader!
+OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+OF: reserved mem: OVERLAP DETECTED!
+kaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)
+OF: reserved mem: OVERLAP DETECTED!
+uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+OF: reserved mem: OVERLAP DETECTED!
+uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+WARNING: x1-x3 nonzero in violation of boot protocol:
+	x1: 0000000080000000
+	x2: 0000000028220000
+	x3: 0000000000000000
+This indicates a broken bootloader or old kernel
+ITS@0x0000000017140000: Devices Table too large, reduce ids 32->19
+ITS@0x0000000017140000: Devices too large, reduce ITS pages 1024->256
+GTS9_LA_READY id=88779911-973b-4fde-9470-2ba7c753feab ns=100000000 schema=1 events=6 complete_history=0
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU3: 0x00000010212122
+CPU features: Unsupported CPU feature variation detected.
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU4: 0x00000010212122
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU5: 0x00000010212122
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU5: 0x00000001021110
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU6: 0x00000010212122
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_MMFR4_EL1. Boot CPU: 0x00000001021111, CPU6: 0x00000001021110
+CPU features: SANITY CHECK: Unexpected variation in SYS_ID_AA64MMFR1_EL1. Boot CPU: 0x00000011212122, CPU7: 0x00000010212122
+nf_conntrack_irc: The irc conntrack helper is scheduled for removal.
+Please contact the netfilter-devel mailing list if you still need this.
+The pptp conntrack helper is scheduled for removal.
+Please contact the netfilter-devel mailing list if you still need this.
+PFKEY is deprecated and scheduled to be removed in 2027, please contact the netdev mailing list
+GTS9_PNMI_TEST_READY id=1f1240e7-165f-4f07-8e77-1bb5ac2f566a prio_masking=1
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81b3800, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb836d100, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb84e2700, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb869d700, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb881b200, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb89e7f00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8b68200, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8d23c00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8e9fb00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9
+arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]
+remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+remoteproc remoteproc0: request_firmware failed: -2
+------------[ cut here ]------------
+disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
+WARNING: ../linux-src-gts9wifi/drivers/clk/qcom/clk-rcg2.c:136 at update_config+0xdc/0xf0, CPU#5: kworker/u32:0/12
+Modules linked in:
+CPU: 5 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S                  7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+Tainted: [S]=CPU_OUT_OF_SPEC
+Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+Workqueue: events_unbound deferred_probe_work_func
+pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+pc : update_config+0xdc/0xf0
+lr : update_config+0xd8/0xf0
+sp : ffffffc082fa3990
+pmr: 000000e0
+x29: ffffffc082fa39a0 x28: 0000000061c88647 x27: ffffff880cd92600
+x26: ffffffc082e8d000 x25: ffffffc082e8c250 x24: ffffff880cde0010
+x23: ffffffc0821825aa x22: ffffffc081be8638 x21: 0000000000000001
+x20: ffffffc0821825aa x19: ffffffc082d2c658 x18: ffffffc082f330a0
+x17: 00ad0087006f00fb x16: 0041007c00c3000d x15: 0000000000000003
+x14: ffffffc082be18f0 x13: 0000000000000fff x12: 0000000000000003
+x11: 0000000000000003 x10: 0000000000000002 x9 : e87313277aac7200
+x8 : e87313277aac7200 x7 : 6470752074276e64 x6 : 696420676372203a
+x5 : ffffffc082e48fae x4 : ffffffc0821996fb x3 : 0000000000000000
+x2 : 0000000000000000 x1 : ffffffc082fa3760 x0 : 00000000fffffff0
+Call trace:
+ update_config+0xdc/0xf0 (P)
+ clk_rcg2_shared_init+0x58/0x90
+ __clk_register+0x418/0xb28
+ devm_clk_hw_register+0x7c/0xc8
+ devm_clk_register_regmap+0x58/0x6c
+ qcom_cc_really_probe+0x334/0x3dc
+ disp_cc_sm8550_probe+0x1d4/0x204
+ platform_probe+0x60/0xa4
+ really_probe+0x14c/0x2f0
+ __driver_probe_device+0xd4/0x134
+ driver_probe_device+0x48/0x218
+ __device_attach_driver+0x144/0x194
+ bus_for_each_drv+0xf8/0x154
+ __device_attach+0x104/0x194
+ device_initial_probe+0x3c/0x5c
+ bus_probe_device+0x90/0x100
+ deferred_probe_work_func+0x80/0xe0
+ process_scheduled_works+0x18c/0x4d0
+ worker_thread+0x1f8/0x2e8
+ kthread+0x108/0x134
+ ret_from_fork+0x10/0x20
+---[ end trace 0000000000000000 ]---
+adreno 3d00000.gpu: supply vdd not found, using dummy regulator
+adreno 3d00000.gpu: supply vddcx not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+msm_dpu ae01000.display-controller: no GPU device was found
+msm_dsi_host_cmd_rx:Invalid response cmd
+msm_dsi_host_cmd_rx:Invalid response cmd
+msm_dsi_host_cmd_rx:Invalid response cmd
+msm_dsi_host_cmd_rx:Invalid response cmd
+panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+fb0: sys_imageblit: framebuffer is not in virtual address space.
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+clk: Not disabling unused clocks
+PM: genpd: Not disabling unused power domains
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+rtc-offset: status=applied source=persist/time/ats_2 offset_ms=1790396967618 raw_ms=123542000 realtime_epoch=1790520509
+rtc-offset: helper_rc=0
+GTS9_MINIMAL_STAGE=kernel-userspace
+GTS9_MINIMAL_STAGE=waiting-root
+GTS9_MINIMAL_STAGE=root-found
+GTS9_MINIMAL_STAGE=mounting-root
+fb0: sys_fillrect: framebuffer is not in virtual address space.
+GTS9_MINIMAL_STAGE=root-mounted
+GTS9_MINIMAL_RECORD=/newroot/var/log/gts9-minimal-last-boot
+GTS9_MINIMAL_STAGE=init-found
+Failed to find module 'autofs4'
+Configuration file /usr/lib/systemd/system/gts9-watchdog-debug.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Configuration file /etc/systemd/system/gts9-prev-boot-evidence.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Configuration file /usr/lib/systemd/system/gts9-kmsg-console.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Configuration file /usr/lib/systemd/system/gts9-dpu-flight.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Configuration file /usr/lib/systemd/system/gts9-adbd.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+Starting of proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point unsupported.
+GTS9_DEBIAN_STAGE=systemd-entered
+GTS9_DEBIAN_STAGE=local-fs
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+Kernel module BTF mismatch detected, BTF debug info may be unavailable for some modules
+qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+OF: /soc@0/pcie@1c00000: iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+service mode (no arguments)
+found the PMIC power key by capability
+watching the power key; short press turns the backlight off
+GTS9_DEBIAN_STAGE=basic
+first-enable zero panel ID recorded; cycling the framebuffer
+[drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+cycle 1 recovered panel ID 80 00 04
+GTS9_DEBIAN_STAGE=panel-recovered
+Bluetooth: hci0: unexpected event for opcode 0xfc48
+bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+bcdVersion must be 0x0100, stored in Little Endian order. Userspace driver should be fixed, accepting 0x0001 for compatibility.
+GTS9_DEBIAN_STAGE=usb-acm-ready
+set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+GTS9_DEBIAN_STAGE=bluetooth-address-set
+GTS9_DEBIAN_STAGE=tty1-getty-active
+GTS9_DEBIAN_STAGE=multi-user
+auxiliary aux_bridge.aux_bridge.0: deferred probe pending: aux_bridge.aux_bridge: failed to acquire drm_bridge
+regulator: Not disabling unused regulators
+GTS9_PNMI_TEST_BEGIN id=1f1240e7-165f-4f07-8e77-1bb5ac2f566a cpu=0 budget_ns=200000000
+NMI backtrace for cpu 0
+CPU: 0 UID: 0 PID: 1606 Comm: gts9-pnmi-hold Tainted: G S      W   E       7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [E]=UNSIGNED_MODULE
+Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : arch_counter_get_cntvct+0x14/0x30
+lr : arch_counter_get_cntvct+0x14/0x30
+sp : ffffffc09358bdd0
+pmr: 000000c0
+x29: ffffffc09358bdd0 x28: 0000000000000000 x27: 0000000000000000
+x26: 0000000000000000 x25: 0000000000000000 x24: 0000002a5a2728df
+x23: 000000000000bd72 x22: ffffffc082c45000 x21: 0000000000000038
+x20: ffffffc082c45f80 x19: ffffffc082c45f88 x18: ffffffc093583028
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000100
+x14: ffffffc082b9a068 x13: ffffff8a726f9840 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000018 x9 : 001b6b0abac74c00
+x8 : ffffffc081466ec4 x7 : 00000000000022de x6 : 0000000000000003
+x5 : 0000000000000001 x4 : 0000002a7621c00e x3 : 0000000000000000
+x2 : 00000000000000c0 x1 : 000000000001dfbd x0 : 00000000e0d1c352
+Call trace:
+ arch_counter_get_cntvct+0x14/0x30 (P)
+ arch_counter_read+0x1c/0x2c
+ ktime_get_mono_fast_ns+0x48/0xcc
+ gts9_pnmi_masked_region+0x11c/0x204
+ kthread+0x108/0x134
+ ret_from_fork+0x10/0x20
+GTS9_PNMI_TEST_END id=1f1240e7-165f-4f07-8e77-1bb5ac2f566a start_ns=182367481023 end_ns=182567481180 observed=1 nmi=1 saved_irq_disabled=1 pc=ffffffc081466ed8 pmr=000000c0 pstate=0000000083400005 seen_ns=182367542430

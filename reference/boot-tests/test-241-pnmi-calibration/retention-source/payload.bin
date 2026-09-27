@@ -1,0 +1,28 @@
+GTS9_PNMI_TEST_BEGIN id=1f1240e7-165f-4f07-8e77-1bb5ac2f566a cpu=0 budget_ns=200000000
+NMI backtrace for cpu 0
+CPU: 0 UID: 0 PID: 1606 Comm: gts9-pnmi-hold Tainted: G S      W   E       7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [E]=UNSIGNED_MODULE
+Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+pc : arch_counter_get_cntvct+0x14/0x30
+lr : arch_counter_get_cntvct+0x14/0x30
+sp : ffffffc09358bdd0
+pmr: 000000c0
+x29: ffffffc09358bdd0 x28: 0000000000000000 x27: 0000000000000000
+x26: 0000000000000000 x25: 0000000000000000 x24: 0000002a5a2728df
+x23: 000000000000bd72 x22: ffffffc082c45000 x21: 0000000000000038
+x20: ffffffc082c45f80 x19: ffffffc082c45f88 x18: ffffffc093583028
+x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000100
+x14: ffffffc082b9a068 x13: ffffff8a726f9840 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000018 x9 : 001b6b0abac74c00
+x8 : ffffffc081466ec4 x7 : 00000000000022de x6 : 0000000000000003
+x5 : 0000000000000001 x4 : 0000002a7621c00e x3 : 0000000000000000
+x2 : 00000000000000c0 x1 : 000000000001dfbd x0 : 00000000e0d1c352
+Call trace:
+ arch_counter_get_cntvct+0x14/0x30 (P)
+ arch_counter_read+0x1c/0x2c
+ ktime_get_mono_fast_ns+0x48/0xcc
+ gts9_pnmi_masked_region+0x11c/0x204
+ kthread+0x108/0x134
+ ret_from_fork+0x10/0x20
+GTS9_PNMI_TEST_END id=1f1240e7-165f-4f07-8e77-1bb5ac2f566a start_ns=182367481023 end_ns=182567481180 observed=1 nmi=1 saved_irq_disabled=1 pc=ffffffc081466ed8 pmr=000000c0 pstate=0000000083400005 seen_ns=182367542430

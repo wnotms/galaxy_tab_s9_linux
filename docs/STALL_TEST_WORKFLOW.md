@@ -400,4 +400,26 @@ backtrace route before asking it to capture a natural failure. The old
 ordinary-IPI versus NMI inference was reversed and has been corrected; the raw
 non-response evidence stands. See [pseudo-NMI review](PSEUDO_NMI_DIAGNOSTIC_REVIEW.md)
 for pinned-source capability gates, a bounded normal-IRQ-masked calibration
-and the limits of any non-response. No pseudo-NMI candidate exists yet.
+and the limits of any non-response. Test 241 below supersedes the pre-build
+status of that review.
+
+
+## Test 241: masked-IRQ pseudo-NMI capture and warm retention verified
+
+An isolated PSEUDO_NMI candidate (0022+0024+0027; no BBM) passed runtime
+capability/identity gates and a 158-second startup observation. During CPU0's
+200,000,157 ns normal-IRQ-masked interval, the actual callback arrived after
+61,407 ns with NMI context and saved masked PMR. The live target stack includes
+the counter-read loop and calibration function; workers completed normally.
+A 73-second post-observation passed. The immediate ordinary-reboot observer
+recovered all 28 lines / 1,583 payload bytes exactly; two pulls/device hash
+agree, ECC corrected 61 bytes with zero unrecoverable blocks. See
+[test-241 results](../reference/boot-tests/test-241-pnmi-calibration/RESULTS.md).
+
+This calibrates healthy CPU0 normal-IRQ masking and the new warning/default
+level stack's warm retention (console threshold 5). Natural CPU failure, every
+CPU, hard DAIF masking, firmware delivery and this stack's crash-path retention
+remain unproven. No CPU repair is established. Next register one bounded
+natural capture with pseudo-NMI enabled and the synthetic trigger disabled;
+retain target-specific offsets/ECC attribution and stop on the first failure.
+Keep the BBM candidate separate. No need to repeat the successful calibration.

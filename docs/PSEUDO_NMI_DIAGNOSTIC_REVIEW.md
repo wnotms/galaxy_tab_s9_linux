@@ -1,4 +1,4 @@
-# Pseudo-NMI: untested route to the missing CPU stack
+# Pseudo-NMI: calibrated route to the missing CPU stack
 
 The CPU repair goal is unresolved after test 240. The BBM range candidate
 passed a bounded permission workload, but no natural failure occurred and no
@@ -30,8 +30,9 @@ Pinned a13c140cc289c0b7b3770bce5b3ad42ab35074aa source establishes:
 
 Test 240 positively reports GICv3, SGIs without active state,
 GICD_CTLR.DS=1 / SCR_EL3.FIQ=0. These identify the observed integration; they
-are not a demonstrated pseudo-NMI capability. No pseudo-NMI kernel has been
-built or flashed by this review. No production/default change is made.
+are not a demonstrated pseudo-NMI capability. This was the pre-test capability review. Test 241 subsequently built and
+flashed the isolated candidate; see the measured result below. No production
+or default change is made.
 
 ## Next discriminating calibration
 
@@ -49,11 +50,40 @@ and only run when runtime priority masking is positively active. Give both
 worker setup and the masked interval explicit deadlines and once-only/root
 controls. Confirm the target stack and NMI context while the region is still
 active; a delayed ordinary backtrace after restoration is not a pass. Preserve
-all output and stop on any unexpected stall. This design is not implemented
-yet and its exact helper must be reviewed before use.
+all output and stop on any unexpected stall. This design was implemented as opt-in patch 0027 and tested in test 241;
+its exact helper, build and host behavior checks are archived there.
 
 A successful calibration would justify a bounded natural-capture trial aimed
 at obtaining the actual target PC/stack. Failure to deliver still does not
 separate firmware, hard masking, GIC state and CPU non-progress. Retained
 markers need the same ECC/integrity/boot attribution and per-boot relocation
 checks. Restore originals and independently verify final boot after testing.
+
+## Test 241: bounded IRQ-masked capture and warm retention passed
+
+On source boot `3bfa876b-be6e-49d3-8029-79e65d0f7ba6`, GICv3 positively
+enabled pseudo-NMIs. Kernel notes and six runtime symbol anchors matched the
+saved vmlinux; this boot's offset was `+0x20000`. After 158 seconds without
+detected CPU failure, CPU0 held normal local IRQs masked for 200,000,157 ns.
+The real backtrace callback arrived 61,407 ns after the recorded start, with
+`in_nmi=1`, saved PMR `0xc0` indicating IRQ masking, and PSTATE.I clear. The
+interrupted PC resolves to `arch_counter_get_cntvct+0x14/0x30`, beneath
+`ktime_get_mono_fast_ns` and `gts9_pnmi_masked_region` in the target stack. Both
+workers completed, setup_error=0, IRQs were restored, and a second trigger
+was rejected. Another 73.01 seconds passed without a detected CPU failure.
+
+The immediate ordinary-reboot observer `e72b6d0c-fbf6-4348-bccb-93db1c14e98b`
+recovered the same 28 lines / 1,583 payload bytes, including registers and
+stack, exactly. Two raw pulls and the device hash agree; ECC corrected 61
+bytes with zero unrecoverable blocks. Console level 5 admitted priorities
+0..4; source comparison used those priorities and preserved payload spaces.
+See [test-241 evidence](../reference/boot-tests/test-241-pnmi-calibration/RESULTS.md).
+
+This proves the defined healthy CPU0 PMR-masked calibration and warm retention.
+It does not prove delivery to a naturally stuck CPU, all eight CPUs, raw DAIF
+masking or firmware execution, nor crash-path retention of this new backtrace.
+No CPU-failure cause or repair was found. Next pre-register one bounded natural
+failure capture with pseudo-NMI enabled and the calibration trigger disabled,
+keeping exact symbols, per-boot offsets, ECC and positive-evidence limitations.
+No need to repeat this synthetic calibration or combine the independent BBM
+fix merely because the natural fault has not yet appeared.

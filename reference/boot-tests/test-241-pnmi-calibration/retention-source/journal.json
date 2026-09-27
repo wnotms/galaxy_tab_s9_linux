@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b 3bfa876bbe6e49d3802979e65d0f7ba6 -k -p warning --no-pager -o cat"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:52:57.852284+00:00"
+}

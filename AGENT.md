@@ -2,6 +2,27 @@
 
 ## Current review (2026-09-27)
 
+Test-241 calibrated the isolated pseudo-NMI route (0022+0024+0027, no BBM).
+CPU0's actual backtrace arrived 61,407 ns into a 200,000,157 ns PMR-masked
+interval with NMI context and saved IRQ-disabled PMR; both workers completed.
+The stack is the expected calibration counter-read loop, not a clocksource
+fault. After a clean 73-second post-observation, the immediate normal-reboot
+observer recovered all 28 lines / 1,583 payload bytes exactly (two pulls/device
+hash agree; ECC corrected 61 bytes, zero unrecoverable blocks). Source boot
+3bfa876b-be6e-49d3-8029-79e65d0f7ba6, offset +0x20000 with matching notes/anchors;
+observer e72b6d0c-fbf6-4348-bccb-93db1c14e98b. CPU repair remains OPEN. Only the
+healthy CPU0 masking and warm-retention cases were measured.
+
+Original boot/vendor_boot and all five hashes restored. Final production
+6a9e0303-fc8c-4c7f-a18a-0a26727a49cd passed 215.02 seconds; USB ADB
+and NCM SSH banner respond (no authenticated SSH session claim). Watchdog/
+panic/ECC are back to production zeros and the calibration helper is absent.
+Next pre-register one bounded natural failure capture with pseudo-NMI active
+and the synthetic trigger disabled; keep BBM separate, preserve exact target
+symbols/offsets and stop at first failure for review. Do not repeat a successful
+calibration or treat absent failure as repair. See test-241/RESULTS.md and
+docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md.
+
 Test-240 physically validated the opt-in 0022+0024+0026 BBM candidate. Target
 fe1196f2-4464-4c82-b63e-7f875c88223b passed 169 seconds before an A715 CPU3/4
 permission workload, 6,049,962 sustained mprotect calls and 75.75 seconds
@@ -13,11 +34,12 @@ Original images/five hashes restored. Final production c333bb1b-d09b-4b32-
 ac4f-d8e166d4cac7 passed 153.52 seconds with ADB/NCM SSH banner responsive.
 See test-240/RESULTS.md; defaults stay unchanged, 0026 remains opt-in.
 
-Next investigate the missing target stack via the untested pseudo-NMI path.
+The pre-test240 follow-up investigated the missing stack via pseudo-NMI;
+test241 above now supersedes its untested status.
 The old inference that ordinary-IPI non-response excludes NMI-only capture
 was incorrect and is withdrawn. Pinned sources show PMR-based IRQ masking and
 per-CPU NMI backtrace routing only with CONFIG_ARM64_PSEUDO_NMI plus the boot
-flag and successful runtime setup. No such candidate has been built/flashed.
+flag and successful runtime setup. Test241 has now built/flashed and calibrated the isolated candidate.
 See docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md for the bounded IRQ-masked calibration
 design and limits before using it. Keep BBM and NMI causal variables separate.
 

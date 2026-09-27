@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic; cat /sys/module/ramoops/parameters/ecc; cat /proc/sys/kernel/printk; test ! -e /sys/module/gts9_pnmi_test/parameters/status && echo calibration_helper_absent; timeout 5 systemctl --failed --no-pager; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:58:28.840292+00:00"
+}

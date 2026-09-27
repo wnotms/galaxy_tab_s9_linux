@@ -63,3 +63,6 @@ its dependent capability symbols; hardlockup detector remains disabled. DTB
 and release match the ECC64 baseline. Boot bundle validation passed. Exact
 symbols, notes and hashes are recorded in validation/build-artifacts.json.
 Only boot/vendor_boot will be flashed; generated vbmeta is not installed.
+
+Completed: capture and exact normal-reboot retention passed; originals restored.
+See [RESULTS.md](RESULTS.md) for measurements, final device state and limits.

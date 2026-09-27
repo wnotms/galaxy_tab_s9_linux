@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf 1 > /sys/module/gts9_pnmi_test/parameters/run"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:51:30.747160+00:00"
+}

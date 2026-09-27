@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /sys/module/gts9_pnmi_test/parameters/capture_id; cat /proc/sys/kernel/printk; cat /sys/module/ramoops/parameters/ecc; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:52:57.768615+00:00"
+}
