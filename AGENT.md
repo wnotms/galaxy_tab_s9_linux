@@ -2,6 +2,22 @@
 
 ## Current review (2026-09-27)
 
+Test-237 passed actual RCU-triggered capture and later controlled-panic retention.
+An explicitly injected 35-second PREEMPT_RCU reader triggered the unchanged
+RCU callback after ~21 seconds; thread and callback both completed. All 58
+marker lines / 6,293 bytes survived SysRq panic and automatic reboot exactly;
+ECC corrected 189 bytes, zero unrecoverable blocks. Source 1926858e-37b8-40be-
+a38c-689ef86583c3, observer 2856e9cd-3cac-452b-8a05-354e6792a125. This is synthetic
+calibration, not spontaneous CPU failure or a root-cause fix. Test-only patch
+0025/flag must be omitted from future natural-failure trials. Next register one
+natural-failure capture using 0022+0024 with explicit integrity/attribution
+limits, not an unbounded reboot series. See test-237/RESULTS.md. Original
+boot/vendor_boot and all five partition hashes were restored after collection.
+Final production boot 6d4e3bae-b772-4ae8-91e2-3034b6205b96 passed 161.11 seconds
+without detected CPU stalls; USB ADB and SSH protocol over NCM responded.
+This is a bounded observation, not long-term stability.
+
+
 Test-236 passed exact lastactivity console retention on a normal warm reboot.
 Source 10f7f83a-d669-4855-8f24-87b5c6568aa6 produced 58 lines / 48 event cells /
 6,294 canonical bytes; observer 95089f53-9cd4-41d3-a799-85a648485731 recovered

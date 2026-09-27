@@ -336,3 +336,25 @@ Automatic RCU-triggered capture and crash-path retention remain separate gates;
 there was no forced panic or wedge series. Keep source/capture IDs independent
 from observer IDs and never turn this manual-snapshot result into a CPU fix or
 missing-event conclusion. Original images were restored after this trial.
+
+
+## Test-237: real RCU trigger and controlled-panic retention verified
+
+The opt-in bounded PREEMPT_RCU reader calibration triggered the real RCU
+warning callback at about 21 seconds. It exited at 35 seconds and its queued
+callback completed; all eight CPU records were valid. The host saved the
+complete 58-line / 6,293-byte source snapshot before issuing one SysRq panic.
+The immediate retained observer recovered exactly the same canonical bytes;
+two raw pulls match the device hash, with 189 corrected bytes and zero
+unrecoverable blocks. Pstore positively records the SysRq panic and ten-second
+automatic reboot. See [test-237 results](../reference/boot-tests/test-237-auto-rcu-crash/RESULTS.md).
+
+This completes the defined automatic-trigger and controlled-crash calibration
+gates, separately from total CPU failure. Omit injection patch 0025 and its
+flag from natural-failure diagnostics. Pre-register a single capture using
+0022+0024, stop at first failure for review, and retain source/observer IDs,
+arming, ECC status and all independent copies. No missing-event inference or
+CPU root-cause claim follows from the calibration. A future capture without
+a live reference still lacks that end-to-end comparison; reject unsupported
+integrity/attribution rather than silently extrapolating this pass. Restore
+production images after the trial and check the final boot independently.
