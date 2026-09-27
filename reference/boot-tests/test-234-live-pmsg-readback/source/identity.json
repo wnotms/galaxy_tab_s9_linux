@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; systemctl --failed --no-pager; cat /sys/module/ramoops/parameters/gts9_live_read /sys/module/ramoops/parameters/ecc; ls -l /sys/bus/platform/devices/*ramoops*/gts9_pmsg_live; ls -l /dev/pmsg0; fuser /dev/pmsg0 || true"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:10:52.020828+00:00"
+}
