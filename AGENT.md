@@ -2,7 +2,7 @@
 
 ## Current review (2026-09-27)
 
-Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and the trace sizing assumptions. Test-228 completed; the next gate is trace retention, with offline replay of runner verdicts. The owner currently requests no physical tests: do not contact, reboot or flash the tablet. Local tests/builds remain authorized.
+Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and the trace sizing assumptions. Test-228 completed; the next gate is trace retention, with offline replay of runner verdicts. On 2026-09-27 the owner reconnected the tablet in TWRP and requested continuation, resuming hardware work. Test-229 starts with recovery evidence, verified production partition identity and healthy-boot trace capacity calibration. Preserve the production kernel/configuration while establishing retention; no new wedge series before that gate passes.
 
 ## Mission
 

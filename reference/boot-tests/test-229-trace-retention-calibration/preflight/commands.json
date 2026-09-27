@@ -1,0 +1,44 @@
+[
+  {
+    "name": "identity",
+    "command": "getprop ro.product.model; getprop ro.product.device; getprop ro.twrp.version; uname -a; cat /proc/sys/kernel/random/boot_id; cat /proc/cmdline; cat /sys/class/power_supply/battery/capacity",
+    "started_utc": "2026-09-27T04:21:53.160586+00:00",
+    "exit_code": 0,
+    "bytes": 4339
+  },
+  {
+    "name": "mounts",
+    "command": "cat /proc/mounts; cat /proc/partitions; blkid /dev/block/mmcblk*p*",
+    "started_utc": "2026-09-27T04:21:53.267731+00:00",
+    "exit_code": 127,
+    "bytes": 6413
+  },
+  {
+    "name": "partition-hashes",
+    "command": "for p in boot vendor_boot init_boot dtbo vbmeta; do echo \"$p\"; blockdev --getsize64 /dev/block/by-name/$p; sha256sum /dev/block/by-name/$p; done",
+    "started_utc": "2026-09-27T04:21:53.370270+00:00",
+    "exit_code": 0,
+    "bytes": 562
+  },
+  {
+    "name": "pstore-inventory",
+    "command": "ls -la /sys/fs/pstore; ls -la /proc/last_kmsg",
+    "started_utc": "2026-09-27T04:21:53.744388+00:00",
+    "exit_code": 0,
+    "bytes": 167
+  },
+  {
+    "name": "recovery-dmesg",
+    "command": "dmesg",
+    "started_utc": "2026-09-27T04:21:53.830336+00:00",
+    "exit_code": 0,
+    "bytes": 264618
+  },
+  {
+    "name": "last-kmsg",
+    "command": "cat /proc/last_kmsg",
+    "started_utc": "2026-09-27T04:21:53.920249+00:00",
+    "exit_code": 0,
+    "bytes": 2133613
+  }
+]
