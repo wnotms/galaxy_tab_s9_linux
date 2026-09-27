@@ -3,6 +3,7 @@
   "kernel_release_unchanged": true,
   "only_dtb_change": "ramoops ecc-size=64",
   "flashable_candidate": true,
-  "physically_tested": false,
-  "CPU_fix": false
+  "physically_tested": "ECC=64 source boot observed; reboot retention pending",
+  "CPU_fix": false,
+  "kernel_Image_matches_unmodified_production_rebuild": true
 }
