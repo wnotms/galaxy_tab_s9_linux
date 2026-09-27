@@ -95,3 +95,11 @@ zero unrecoverable blocks, then separately validate crash-triggered capture.
 Only after those gates pass should automatic CPU last-activity evidence guide
 a causal change. Broad trace dumping, voltage guesses and repeated blind warm
 boots remain unsupported.
+
+
+Closing recovery completed after owner restart
+`aad74b03-7579-49dc-ba8e-d50b6e8269bd` (32.48-second sample): BCB check/write
+and plain systemctl reboot succeeded. TWRP identity, recovery logs and all five
+production partition hashes were collected again. Device is parked in TWRP
+for the next pre-registered diagnostic. No healthy closing Debian boot is
+claimed; recovery and original-image restoration are established separately.

@@ -14,7 +14,9 @@ A subsequent owner-started production boot f4d0de47-11eb-4aa5-a19e-9263ed385a31
 has CPU 5 non-response despite ADB/systemctl answering at 200 seconds; firmware
 appended lpcharge=1. Do not label it healthy or attribute the failure to that
 flag. The recovery helper's read-only BCB check timed out without a write;
-manual recovery is pending. Test-236 prepares existing lastactivity pr_emerg
+owner restart aad74b03-7579-49dc-ba8e-d50b6e8269bd then allowed the normal
+BCB helper to reach TWRP, where all production hashes were verified again.
+Device is parked in TWRP while Test-236 prepares existing lastactivity pr_emerg
 (level 0) plus ECC=64 for console retention calibration; no wedge series.
 See test-235/RESULTS.md and test-236/README.md.
 
