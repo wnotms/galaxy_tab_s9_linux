@@ -1,0 +1,212 @@
+--- a/kernel/trace/Makefile
++++ b/kernel/trace/Makefile
+@@ -164,3 +164,5 @@
+ always-$(CONFIG_SIMPLE_RING_BUFFER) += simple_ring_buffer.o.checked
+ 
+ libftrace-y := ftrace.o
++
++obj-$(CONFIG_ARM64) += gts9_lastactivity.o
+--- /dev/null
++++ b/kernel/trace/gts9_lastactivity.c
+@@ -0,0 +1,201 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Diagnostic only: last positive activity, never a complete history. */
++#include <linux/atomic.h>
++#include <linux/init.h>
++#include <linux/ktime.h>
++#include <linux/moduleparam.h>
++#include <linux/of.h>
++#include <linux/percpu.h>
++#include <linux/printk.h>
++#include <linux/random.h>
++#include <linux/smp.h>
++#include <trace/events/csd.h>
++#include <trace/events/ipi.h>
++#include <trace/events/rcu.h>
++
++#define LA_CPUS 8
++#define LA_EVENTS 6
++struct la_event {
++	u64 count, ns, a, b, c;
++};
++struct la_cpu {
++	int busy;
++	u32 seq;
++	atomic_t nested_dropped;
++	struct la_event event[LA_EVENTS];
++};
++static DEFINE_PER_CPU(struct la_cpu, la_state);
++static bool requested, active;
++static atomic_t dumped = ATOMIC_INIT(0);
++static char capture_id[37];
++module_param_string(capture_id, capture_id, sizeof(capture_id), 0444);
++
++static int __init la_setup(char *arg)
++{
++	requested = !strcmp(arg, "1");
++	return 1;
++}
++__setup("gts9_lastactivity=", la_setup);
++
++static void notrace la_record(unsigned int kind, u64 a, u64 b, u64 c)
++{
++	struct la_cpu *s;
++	struct la_event *e;
++	u32 seq;
++
++	if (!READ_ONCE(active))
++		return;
++	preempt_disable_notrace();
++	s = this_cpu_ptr(&la_state);
++	/* Never wait, including an interrupt nested in a writer on this CPU. */
++	if (cmpxchg(&s->busy, 0, 1)) {
++		atomic_inc(&s->nested_dropped);
++		goto out;
++	}
++	if (!READ_ONCE(active))
++		goto unlock;
++	seq = READ_ONCE(s->seq);
++	WRITE_ONCE(s->seq, seq + 1);
++	smp_wmb();
++	e = &s->event[kind];
++	WRITE_ONCE(e->ns, ktime_get_mono_fast_ns());
++	WRITE_ONCE(e->a, a);
++	WRITE_ONCE(e->b, b);
++	WRITE_ONCE(e->c, c);
++	WRITE_ONCE(e->count, READ_ONCE(e->count) + 1);
++	smp_wmb();
++	WRITE_ONCE(s->seq, seq + 2);
++unlock:
++	smp_store_release(&s->busy, 0);
++out:
++	preempt_enable_notrace();
++}
++
++static void la_queue(void *unused, unsigned int cpu, unsigned long callsite,
++		     smp_call_func_t func, call_single_data_t *csd)
++{
++	/* a=target, b=function, c=CSD; callsite deliberately not retained. */
++	la_record(0, cpu, (unsigned long)func, (unsigned long)csd);
++}
++static void la_csd_entry(void *unused, smp_call_func_t func, call_single_data_t *csd)
++{
++	la_record(1, (unsigned long)func, (unsigned long)csd, 0);
++}
++static void la_csd_exit(void *unused, smp_call_func_t func, call_single_data_t *csd)
++{
++	la_record(2, (unsigned long)func, (unsigned long)csd, 0);
++}
++static void la_raise(void *unused, const struct cpumask *mask, const char *reason)
++{
++	la_record(3, cpumask_bits(mask)[0], (unsigned long)reason, 0);
++}
++static void la_entry(void *unused, const char *reason)
++{
++	la_record(4, (unsigned long)reason, 0, 0);
++}
++static void la_exit(void *unused, const char *reason)
++{
++	la_record(5, (unsigned long)reason, 0, 0);
++}
++
++static int la_dump(const char *trigger)
++{
++	struct la_event copy[LA_EVENTS];
++	unsigned int cpu, kind, valid, records = 0;
++	u32 before, after;
++	struct la_cpu *s;
++
++	if (!READ_ONCE(active) || atomic_cmpxchg(&dumped, 0, 1))
++		return -EALREADY;
++	WRITE_ONCE(active, false);
++	smp_mb();
++	/* No rendezvous, target IPI, allocation or waiting on a target lock. */
++	pr_emerg("GTS9_LA_BEGIN id=%s trigger=%s ns=%llu schema=1 cpus=8 events=6 complete_history=0\n",
++		 capture_id, trigger, ktime_get_mono_fast_ns());
++	for (cpu = 0; cpu < LA_CPUS; cpu++) {
++		s = per_cpu_ptr(&la_state, cpu);
++		before = READ_ONCE(s->seq);
++		smp_rmb();
++		for (kind = 0; kind < LA_EVENTS; kind++) {
++			copy[kind].count = READ_ONCE(s->event[kind].count);
++			copy[kind].ns = READ_ONCE(s->event[kind].ns);
++			copy[kind].a = READ_ONCE(s->event[kind].a);
++			copy[kind].b = READ_ONCE(s->event[kind].b);
++			copy[kind].c = READ_ONCE(s->event[kind].c);
++		}
++		smp_rmb();
++		after = READ_ONCE(s->seq);
++		valid = !(before & 1) && before == after;
++		pr_emerg("GTS9_LA_CPU id=%s cpu=%u valid=%u seq=%u nested_dropped=%d\n",
++			 capture_id, cpu, valid, after, atomic_read(&s->nested_dropped));
++		if (!valid)
++			continue;
++		for (kind = 0; kind < LA_EVENTS; kind++) {
++			pr_emerg("GTS9_LA_EVENT cpu=%u kind=%u count=%llu ns=%llu a=%016llx b=%016llx c=%016llx\n",
++				 cpu, kind, copy[kind].count, copy[kind].ns,
++				 copy[kind].a, copy[kind].b, copy[kind].c);
++			records++;
++		}
++	}
++	pr_emerg("GTS9_LA_END id=%s records=%u complete_history=0\n", capture_id, records);
++	return 0;
++}
++static void la_stall(void *unused, const char *rcuname, const char *msg)
++{
++	la_dump("rcu");
++}
++static int la_manual(const char *val, const struct kernel_param *kp)
++{
++	if (!sysfs_streq(val, "1"))
++		return -EINVAL;
++	return la_dump("manual");
++}
++static const struct kernel_param_ops la_dump_ops = { .set = la_manual };
++module_param_cb(dump, &la_dump_ops, NULL, 0200);
++
++static int __init la_init(void)
++{
++	u8 uuid[16];
++	int ret;
++
++	if (!requested)
++		return 0;
++	if (!of_machine_is_compatible("samsung,gts9wifi") || nr_cpu_ids != LA_CPUS)
++		return -ENODEV;
++	generate_random_uuid(uuid);
++	snprintf(capture_id, sizeof(capture_id), "%pUb", uuid);
++	/* Registration can update static keys; do it once, before claiming ready. */
++	ret = register_trace_csd_queue_cpu(la_queue, NULL);
++	if (ret) return ret;
++	ret = register_trace_csd_function_entry(la_csd_entry, NULL);
++	if (ret) goto undo_queue;
++	ret = register_trace_csd_function_exit(la_csd_exit, NULL);
++	if (ret) goto undo_csd_entry;
++	ret = register_trace_ipi_raise(la_raise, NULL);
++	if (ret) goto undo_csd_exit;
++	ret = register_trace_ipi_entry(la_entry, NULL);
++	if (ret) goto undo_raise;
++	ret = register_trace_ipi_exit(la_exit, NULL);
++	if (ret) goto undo_entry;
++	ret = register_trace_rcu_stall_warning(la_stall, NULL);
++	if (ret) goto undo_exit;
++	WRITE_ONCE(active, true);
++	pr_emerg("GTS9_LA_READY id=%s ns=%llu schema=1 events=6 complete_history=0\n",
++		 capture_id, ktime_get_mono_fast_ns());
++	return 0;
++undo_exit:
++	unregister_trace_ipi_exit(la_exit, NULL);
++undo_entry:
++	unregister_trace_ipi_entry(la_entry, NULL);
++undo_raise:
++	unregister_trace_ipi_raise(la_raise, NULL);
++undo_csd_exit:
++	unregister_trace_csd_function_exit(la_csd_exit, NULL);
++undo_csd_entry:
++	unregister_trace_csd_function_entry(la_csd_entry, NULL);
++undo_queue:
++	unregister_trace_csd_queue_cpu(la_queue, NULL);
++	tracepoint_synchronize_unregister();
++	return ret;
++}
++early_initcall(la_init);

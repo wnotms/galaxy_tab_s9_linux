@@ -118,3 +118,17 @@ git -C <worktree> apply <repo>/kernel/patches/diagnostic/0010-pinctrl-report-pog
 
 Running `prepare-kernel.sh` again restores the pinned source and reapplies only
 the default queue.
+
+## `0022-gts9-lastactivity.patch` — DIAGNOSTIC ONLY
+
+Opt in with `GTS9_DIAGNOSTIC_PATCHES=0022-gts9-lastactivity.patch` and
+`gts9_lastactivity=1`; package with boot/cmdline.lastactivity.example.txt.
+The early-init, X710-only observer stores last positive IPI/CSD activity in
+six cells per CPU, with counts, timestamps and raw addresses. Nested writers
+are counted and skipped; a frozen snapshot marks racing CPUs invalid without
+waiting on them. The first RCU stall or root write of 1 to
+`/sys/module/gts9_lastactivity/parameters/dump` emits one bounded snapshot and
+stops recording. No complete history or missing-event inference is supported.
+See test-230's preregistration and scripts/lastactivity-evidence.py. This changes
+tracepoint static keys during initialization and adds callback overhead, so it
+is a diagnostic instrument, not a production fix for CPU non-response.

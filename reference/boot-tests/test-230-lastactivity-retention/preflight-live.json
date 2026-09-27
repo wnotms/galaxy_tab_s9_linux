@@ -1,0 +1,5 @@
+{
+  "utc": "2026-09-27T04:55:01.318803+00:00",
+  "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; cat /proc/cmdline; timeout 5 systemctl --failed --no-pager; command -v gts9-to-recovery; cat /usr/sbin/gts9-to-recovery 2>/dev/null; cat /usr/local/sbin/gts9-to-recovery 2>/dev/null",
+  "status": 1
+}
