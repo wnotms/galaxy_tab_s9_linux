@@ -1,0 +1,172 @@
+{
+  "url": "https://api.github.com/repos/torvalds/linux/compare/1fef81669147d63eb8c5d3627d54eadc21173a0b...master",
+  "html_url": "https://github.com/torvalds/linux/compare/1fef81669147d63eb8c5d3627d54eadc21173a0b...master",
+  "status": "diverged",
+  "ahead_by": 2601,
+  "behind_by": 1,
+  "total_commits": 2601,
+  "base_commit": {
+    "sha": "1fef81669147d63eb8c5d3627d54eadc21173a0b",
+    "node_id": "C_kwDOACN7MtoAKDFmZWY4MTY2OTE0N2Q2M2ViOGM1ZDM2MjdkNTRlYWRjMjExNzNhMGI",
+    "commit": {
+      "author": {
+        "name": "Andrea Parri",
+        "email": "parri.andrea@gmail.com",
+        "date": "2026-09-23T14:36:32Z"
+      },
+      "committer": {
+        "name": "Will Deacon",
+        "email": "will@kernel.org",
+        "date": "2026-09-24T08:48:23Z"
+      },
+      "message": "arm64: mm: Fix the break-before-make flush range for erratum 2645198\n\nmodify_prot_start_ptes() performs the break-before-make TLB invalidation\nrequired by erratum 2645198 with __flush_tlb_range(), whose third\nargument is the end address of the range.  It passes nr * PAGE_SIZE\ninstead of addr + nr * PAGE_SIZE, so __do_flush_tlb_range() computes the\npage count as (nr * PAGE_SIZE - addr) >> PAGE_SHIFT.\n\nFor addr > nr * PAGE_SIZE that subtraction underflows, the page count\nexceeds the batching limit and the flush degenerates to flush_tlb_mm(),\nso a single-page mprotect broadcasts an ASID-wide invalidation and a\nfull-range mmu notifier call.\n\nFor addr <= nr * PAGE_SIZE only [addr, nr * PAGE_SIZE) is invalidated,\nand when the cleared batch starts below nr * PAGE_SIZE the tail is left\nin the TLB.  The workaround then no longer covers the whole batch, and\nfor addr == nr * PAGE_SIZE the flush is empty.\n\nOn affected Cortex-A715 CPUs, this can corrupt ESR_ELx and FAR_ELx on the\nnext instruction abort caused by a permission fault.\n\nPass addr + nr * PAGE_SIZE as the end address.\n\nFixes: 7efa1cd5f89b5 (\"arm64: add batched versions of ptep_modify_prot_start/commit\")\nCc: stable@vger.kernel.org\nAssisted-by: LLM\nSigned-off-by: Andrea Parri <parri.andrea@gmail.com>\nReviewed-by: Dev Jain <dev.jain@arm.com>\nSigned-off-by: Will Deacon <will@kernel.org>",
+      "tree": {
+        "sha": "0766d5b8f4efd6e74f5bb8394f04544327ea5ce0",
+        "url": "https://api.github.com/repos/torvalds/linux/git/trees/0766d5b8f4efd6e74f5bb8394f04544327ea5ce0"
+      },
+      "url": "https://api.github.com/repos/torvalds/linux/git/commits/1fef81669147d63eb8c5d3627d54eadc21173a0b",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/torvalds/linux/commits/1fef81669147d63eb8c5d3627d54eadc21173a0b",
+    "html_url": "https://github.com/torvalds/linux/commit/1fef81669147d63eb8c5d3627d54eadc21173a0b",
+    "comments_url": "https://api.github.com/repos/torvalds/linux/commits/1fef81669147d63eb8c5d3627d54eadc21173a0b/comments",
+    "author": {
+      "login": "andrea-parri",
+      "id": 210469911,
+      "node_id": "U_kgDODIuEFw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/210469911?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/andrea-parri",
+      "html_url": "https://github.com/andrea-parri",
+      "followers_url": "https://api.github.com/users/andrea-parri/followers",
+      "following_url": "https://api.github.com/users/andrea-parri/following{/other_user}",
+      "gists_url": "https://api.github.com/users/andrea-parri/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/andrea-parri/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/andrea-parri/subscriptions",
+      "organizations_url": "https://api.github.com/users/andrea-parri/orgs",
+      "repos_url": "https://api.github.com/users/andrea-parri/repos",
+      "events_url": "https://api.github.com/users/andrea-parri/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/andrea-parri/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "willdeacon",
+      "id": 58689320,
+      "node_id": "MDQ6VXNlcjU4Njg5MzIw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58689320?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/willdeacon",
+      "html_url": "https://github.com/willdeacon",
+      "followers_url": "https://api.github.com/users/willdeacon/followers",
+      "following_url": "https://api.github.com/users/willdeacon/following{/other_user}",
+      "gists_url": "https://api.github.com/users/willdeacon/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/willdeacon/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/willdeacon/subscriptions",
+      "organizations_url": "https://api.github.com/users/willdeacon/orgs",
+      "repos_url": "https://api.github.com/users/willdeacon/repos",
+      "events_url": "https://api.github.com/users/willdeacon/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/willdeacon/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "2bc6b218717b9d08f466f88209251d54bc09b207",
+        "url": "https://api.github.com/repos/torvalds/linux/commits/2bc6b218717b9d08f466f88209251d54bc09b207",
+        "html_url": "https://github.com/torvalds/linux/commit/2bc6b218717b9d08f466f88209251d54bc09b207"
+      }
+    ]
+  },
+  "merge_base_commit": {
+    "sha": "2bc6b218717b9d08f466f88209251d54bc09b207",
+    "node_id": "C_kwDOACN7MtoAKDJiYzZiMjE4NzE3YjlkMDhmNDY2Zjg4MjA5MjUxZDU0YmMwOWIyMDc",
+    "commit": {
+      "author": {
+        "name": "Fuad Tabba",
+        "email": "fuad.tabba@linux.dev",
+        "date": "2026-09-22T18:14:30Z"
+      },
+      "committer": {
+        "name": "Will Deacon",
+        "email": "will@kernel.org",
+        "date": "2026-09-23T12:34:30Z"
+      },
+      "message": "arm64/boot: Disable trapping of PMZR_EL0 writes to EL2\n\n__init_el2_fgt2() writes one mask to both HDFGRTR2_EL2 and HDFGWTR2_EL2.\nPMZR_EL0 is write-only, so its trap bit, nPMZR_EL0, exists only in\nHDFGWTR2_EL2 and is therefore never set: a PMZR_EL0 write from the host\ntraps to EL2, where the nVHE hypervisor has no handler and BUG()s. The\nkernel never writes PMZR_EL0, but kernel.perf_user_access=1 has the PMU\ndriver set PMUSERENR_EL0.UEN for a task with a user-read event, so a\nwrite from EL0 reaches the trap and takes the host down without a panic\nmessage.\n\nAccumulate the HDFGWTR2_EL2 bits separately, as __init_el2_fgt() already\ndoes for HDFGWTR_EL2, and set nPMZR_EL0 with the other FEAT_PMUv3p9\nbits.\n\nFixes: 858c7bfcb35e1 (\"arm64/boot: Enable EL2 requirements for FEAT_PMUv3p9\")\nCc: stable@vger.kernel.org\nSigned-off-by: Fuad Tabba <fuad.tabba@linux.dev>\nReviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>\nReviewed-by: Oliver Upton <oupton@kernel.org>\nSigned-off-by: Will Deacon <will@kernel.org>",
+      "tree": {
+        "sha": "cb91c941eccb15f94cbec4e96aa3a9c8736b5d66",
+        "url": "https://api.github.com/repos/torvalds/linux/git/trees/cb91c941eccb15f94cbec4e96aa3a9c8736b5d66"
+      },
+      "url": "https://api.github.com/repos/torvalds/linux/git/commits/2bc6b218717b9d08f466f88209251d54bc09b207",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/torvalds/linux/commits/2bc6b218717b9d08f466f88209251d54bc09b207",
+    "html_url": "https://github.com/torvalds/linux/commit/2bc6b218717b9d08f466f88209251d54bc09b207",
+    "comments_url": "https://api.github.com/repos/torvalds/linux/commits/2bc6b218717b9d08f466f88209251d54bc09b207/comments",
+    "author": {
+      "login": "ftabba",
+      "id": 52743744,
+      "node_id": "MDQ6VXNlcjUyNzQzNzQ0",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52743744?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/ftabba",
+      "html_url": "https://github.com/ftabba",
+      "followers_url": "https://api.github.com/users/ftabba/followers",
+      "following_url": "https://api.github.com/users/ftabba/following{/other_user}",
+      "gists_url": "https://api.github.com/users/ftabba/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/ftabba/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/ftabba/subscriptions",
+      "organizations_url": "https://api.github.com/users/ftabba/orgs",
+      "repos_url": "https://api.github.com/users/ftabba/repos",
+      "events_url": "https://api.github.com/users/ftabba/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/ftabba/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "willdeacon",
+      "id": 58689320,
+      "node_id": "MDQ6VXNlcjU4Njg5MzIw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58689320?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/willdeacon",
+      "html_url": "https://github.com/willdeacon",
+      "followers_url": "https://api.github.com/users/willdeacon/followers",
+      "following_url": "https://api.github.com/users/willdeacon/following{/other_user}",
+      "gists_url": "https://api.github.com/users/willdeacon/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/willdeacon/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/willdeacon/subscriptions",
+      "organizations_url": "https://api.github.com/users/willdeacon/orgs",
+      "repos_url": "https://api.github.com/users/willdeacon/repos",
+      "events_url": "https://api.github.com/users/willdeacon/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/willdeacon/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b7403afb7a5f85073243df10238b3483958ad69e",
+        "url": "https://api.github.com/repos/torvalds/linux/commits/b7403afb7a5f85073243df10238b3483958ad69e",
+        "html_url": "https://github.com/torvalds/linux/commit/b7403afb7a5f85073243df10238b3483958ad69e"
+      }
+    ]
+  }
+}

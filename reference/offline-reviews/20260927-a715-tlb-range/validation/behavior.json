@@ -1,0 +1,17 @@
+{
+  "scope": "actual extracted modify_prot_start_ptes with mocked TLB sink, not hardware erratum or stall reproduction",
+  "results": [
+    {
+      "variant": "pinned",
+      "status": 1,
+      "stdout": "cases=120 failures=12\n",
+      "stderr": ""
+    },
+    {
+      "variant": "backport",
+      "status": 0,
+      "stdout": "cases=120 failures=0\n",
+      "stderr": ""
+    }
+  ]
+}

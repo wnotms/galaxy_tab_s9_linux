@@ -12,15 +12,18 @@ reviewed it and Will Deacon reported applying it to arm64 for-next/fixes as
 1fef81669147 on 2026-09-24. Primary maintainer mail mirrors:
 https://lkml.iu.edu/2609.3/00737.html
 https://lkml.iu.edu/2609.3/00846.html
-The commit URL could not be fetched in this session; a mainline merge/full
-commit object is not verified. Do not label it a pinned/upstream-merged fix.
+A later direct fetch recovered the full kernel.org patch and matching commit
+1fef81669147d63eb8c5d3627d54eadc21173a0b. GitHub compare against master reports
+diverged, behind_by=1: this fix is not a master ancestor at this check. The
+original web-tool fetch failure is not evidence that the commit is absent.
+Do not label it merged into the pinned/mainline tree.
 
 For usual high user addresses the unsigned size calculation overflows and
 falls back to an ASID-wide flush; some low-address cases underflush. The
 reported A715 consequence is corrupted fault-address/syndrome registers after
 an execute-permission fault, not demonstrated CPU lockup. The actual primary
-failure reports involve several CPU types. A future independent backport
-candidate needs a verified commit and a range-behavior regression test; keep
-it separate from the unchanged natural-capture trial. No candidate is flashed
-or production change made based on this review. This is a concrete kernel
+failure reports involve several CPU types. An opt-in diagnostic backport is now prepared as patch 0026, with a
+range-behavior regression harness using the actual extracted function. Keep
+it separate from the unchanged natural-capture trial. No candidate has been
+flashed and production defaults remain unchanged. This is a concrete kernel
 correctness lead, not proof of the requested CPU-stall repair.

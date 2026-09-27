@@ -182,3 +182,15 @@ A broken machine can delay the thread; this is not a hard reset guarantee.
 Keep TEST markers distinct from spontaneous CPU stalls. See test-237 README
 for the host-saved snapshot gate before the separate controlled panic and
 mandatory original-image restoration. Do not enable in normal diagnostic runs.
+
+## `0026-arm64-bbm-flush-range.patch` — OPT-IN BACKPORT CANDIDATE
+
+Exact upstream arm64 for-next/fixes commit
+`1fef81669147d63eb8c5d3627d54eadc21173a0b`, correcting the end address passed
+by modify_prot_start_ptes() for A715 erratum 2645198. The pinned source has the
+incorrect range; test-238's CPU features confirm the workaround is active.
+An extracted-function host harness fails 12/120 cases on the pinned version
+and passes 120/120 after applying the patch. That establishes range semantics,
+not a CPU-stall cause or hardware fix. Mainline merge is not established;
+keep opt-in and separately validated. No production default changes.
+See reference/offline-reviews/20260927-a715-tlb-range/ for provenance/checks.
