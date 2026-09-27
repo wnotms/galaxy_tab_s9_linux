@@ -35,3 +35,9 @@ reboot recovery. Manual TWRP is needed only if software recovery actually fails.
 
 This file registers preparation/scope; it is not a build, deployment or capture
 result. No further boot beyond this one is authorized by the trial budget.
+
+Deployment runner refinement before the target: transport loss preserves the
+already running source follower for up to20 s for late panic evidence, without
+restarting the follower or a workload. A recovered observer is never labelled
+the target. Module+image verification records are required before the separate
+system-reboot action; the flash helper itself no longer reboots automatically.
