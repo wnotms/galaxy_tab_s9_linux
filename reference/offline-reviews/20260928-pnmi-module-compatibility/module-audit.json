@@ -1,0 +1,50 @@
+{
+  "utc": "2026-09-27T19:12:20.132318+00:00",
+  "capability_id": 35,
+  "capability_definitions": ".work/build/linux-out/arch/arm64/include/generated/asm/cpucap-defs.h",
+  "capability_definitions_sha256": "eac521999fe2381410f9ed660d210dad5e11c86ecdccd2da113ade20af6fe6c3",
+  "modules": [
+    {
+      "device_path": "/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko",
+      "sha256": "55713f7c4a68f14726a0f4c3862b7ec2371af24dc9bcb4b476a1d2848898557f",
+      "bytes": 1323073,
+      "local_pulled_path": "/mnt/d/android/gts9-pnmi-module-review/ath11k_pci.ko",
+      "gic_priority_masking_alternatives": 0,
+      "all_capability_counts": {
+        "116": 5,
+        "32810": 10
+      },
+      "interrupt_mask_instruction_count": 0,
+      "same_as_available_poweroff_trace_artifact": false,
+      "pull_status": 0,
+      "pull_command": [
+        "/mnt/d/android/platform-tools/adb.exe",
+        "-s",
+        "gts9wifi-0001",
+        "pull",
+        "/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko",
+        "D:\\android\\gts9-pnmi-module-review\\ath11k_pci.ko"
+      ]
+    },
+    {
+      "device_path": "/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/gpio/gpio-shared-proxy.ko",
+      "sha256": "b2e8cc7c8553cb36340aaa38cfc572685c977317a80cc665b587ac7a7608d8d2",
+      "bytes": 313169,
+      "local_pulled_path": "/mnt/d/android/gts9-pnmi-module-review/gpio-shared-proxy.ko",
+      "gic_priority_masking_alternatives": 0,
+      "all_capability_counts": {},
+      "interrupt_mask_instruction_count": 0,
+      "same_as_available_poweroff_trace_artifact": false,
+      "pull_status": 0,
+      "pull_command": [
+        "/mnt/d/android/platform-tools/adb.exe",
+        "-s",
+        "gts9wifi-0001",
+        "pull",
+        "/lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/gpio/gpio-shared-proxy.ko",
+        "D:\\android\\gts9-pnmi-module-review\\gpio-shared-proxy.ko"
+      ]
+    }
+  ],
+  "scope": "Two current files inspected; historical loaded bytes/build configs not independently proven. gpio proxy has no alternatives section. Earlier objcopy dump rewrote local working copies; fresh pulls and read-only ELF parsing now match device hashes before/after."
+}

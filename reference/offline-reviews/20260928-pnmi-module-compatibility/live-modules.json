@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/modules; for n in $(awk '{print $1}' /proc/modules); do f=$(modinfo -n \"$n\") || exit; sha256sum \"$f\"; done; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:09:52.253906+00:00",
+  "read_only": true
+}

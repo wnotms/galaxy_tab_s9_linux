@@ -1,0 +1,27 @@
+bd20438b-cea6-4172-8e5f-de83a6b69a51
+526.64 4175.78
+qrtr_mhi 12288 0 - Live 0xffffffc07b3db000
+ath11k_pci 32768 0 - Live 0xffffffc07b3cf000
+ath11k 421888 1 ath11k_pci, Live 0xffffffc07b364000
+mac80211 1114112 1 ath11k, Live 0xffffffc07b250000
+cfg80211 1122304 2 ath11k,mac80211, Live 0xffffffc07b13a000
+hci_uart 73728 0 - Live 0xffffffc07b125000
+btqca 16384 1 hci_uart, Live 0xffffffc07b120000
+btbcm 20480 1 hci_uart, Live 0xffffffc07b079000
+bluetooth 618496 22 hci_uart,btqca,btbcm, Live 0xffffffc07b084000
+pci_pwrctrl_pwrseq 12288 0 - Live 0xffffffc07b07e000
+pwrseq_qcom_wcn 16384 2 - Live 0xffffffc07b072000
+gpio_shared_proxy 12288 0 - Live 0xffffffc07b068000
+b971b88fc66eda0f2c743acff9a7ce38f2df9e46655b3765e8990ded6fc79317  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/qrtr/qrtr-mhi.ko
+55713f7c4a68f14726a0f4c3862b7ec2371af24dc9bcb4b476a1d2848898557f  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko
+e1abbf01f8b8c7f95767c2de7c43498655c4b5038f02355e7cf733f5259dc423  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/net/wireless/ath/ath11k/ath11k.ko
+ec13725c9573651c5879bf232c33555f7a5d220448806066398b2846190e861e  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/mac80211/mac80211.ko
+03baa65cd56d574f28c448e8f76844489b35806ccec58c06760e541053b7666b  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/wireless/cfg80211.ko
+d6770fccdd65414e5e40e24adfb1a2934591fd22b49aba42dd8fd7ea940c1cef  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/hci_uart.ko
+d17c0aa46144ee7c7512c65488365c2d1217495a6e38020641c892b73b03e4db  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btqca.ko
+7854d700a6bd722e96d580af3732321478d19929ac16e6e00d6c51322a4a70db  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/bluetooth/btbcm.ko
+95bf4df2d61dc6b4a6ff636bd7d17e2a1a171c069192f7d28fde10ba678ca281  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/net/bluetooth/bluetooth.ko
+9c56d01abfe526f1f4ac52c6a246284d8d771b7f5465d2d33656df10dcf4306a  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko
+3bcc774ae7860352d0c1b1e1d5e66b380fd2647a4054b11c2aab4788f1fc346f  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko
+b2e8cc7c8553cb36340aaa38cfc572685c977317a80cc665b587ac7a7608d8d2  /lib/modules/7.2.0-rc3-gts9wifi-dirty/kernel/drivers/gpio/gpio-shared-proxy.ko
+bd20438b-cea6-4172-8e5f-de83a6b69a51
