@@ -1,0 +1,32 @@
+[
+  {
+    "name": "identity",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T05:06:31.470361+00:00"
+  },
+  {
+    "name": "kernel-journal",
+    "command": "journalctl -k -b --no-pager -o short-monotonic",
+    "status": 0,
+    "utc": "2026-09-27T05:06:31.572788+00:00"
+  },
+  {
+    "name": "pstore-service",
+    "command": "journalctl -b -u systemd-pstore --no-pager; ls -la /sys/fs/pstore /var/lib/systemd/pstore; sha256sum /var/lib/systemd/pstore/*",
+    "status": 0,
+    "utc": "2026-09-27T05:06:32.500235+00:00"
+  },
+  {
+    "name": "boots",
+    "command": "LC_ALL=C journalctl --list-boots --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T05:06:37.454595+00:00"
+  },
+  {
+    "name": "archived-pstore",
+    "command": "tar -C /var/lib/systemd/pstore -cf - . | base64",
+    "status": 0,
+    "bytes": 30720
+  }
+]

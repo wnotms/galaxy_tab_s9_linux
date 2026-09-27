@@ -1,6 +1,6 @@
 # Stall investigation: direction review and offline-first workflow
 
-Updated 2026-09-27 after test-229. This is the current work queue. Historical
+Updated 2026-09-27 after test-230. This is the current work queue. Historical
 test records remain evidence of what was observed and concluded at the time;
 the corrections here take precedence over their causal interpretations.
 
@@ -192,3 +192,28 @@ The live production image has watchdog, soft_watchdog, softlockup_panic and pani
 all zero. Verify runtime arming independently of partition restoration hashes;
 the parked stall-baseline bundle has outdated console tokens. Build any future
 armed candidate from the current profile and retain its independent identity.
+
+## Test-230: bounded positive-activity instrument
+
+The owner explicitly requested flashing after preparation. The opt-in
+`0022-gts9-lastactivity.patch` and `boot/cmdline.lastactivity.example.txt` were
+built, validated and physically tested. The question was deliberately narrowed
+to last observed IPI/CSD activity, with overwrite/nested-drop limitations; no
+41-second or missing-event claim is supported. A manual snapshot retained 48
+cells across eight valid CPUs, 58 lines and 6,245 marker bytes. READY appeared
+at 0.103705 s; the runtime watchdog state was verified as 1/1/1/10. Automatic
+RCU-triggered capture was not exercised. The host decoder validates identity,
+completeness of the snapshot format and invalid writer states separately.
+
+[The trial result](../reference/boot-tests/test-230-lastactivity-retention/RESULTS.md)
+records a failed persistence gate through Debian → TWRP → restored Debian:
+no matching pstore was exposed, and disk archives were demonstrably old.
+Production partitions were restored with matching hashes. The failure does
+not establish which boot stage lost or failed to expose the data.
+
+Next use the same candidate for one healthy **direct Debian → Debian** warm
+reboot, with no TWRP between the snapshot and retrieval. This tests the ordinary
+reboot path separately. Attribute the saved snapshot by its capture ID and
+record the new observer boot independently. Do not induce/repeat wedges before
+that persistence gate passes, and do not replace missing pstore with a healthy
+journal copy as proof of crash retention.

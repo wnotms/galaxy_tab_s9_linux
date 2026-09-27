@@ -1,0 +1,76 @@
+[
+  {
+    "name": "restore-push-boot",
+    "args": [
+      "push",
+      "D:\\android\\gts9-test230\\backup-boot.img",
+      "/tmp/gts9-test230-restore-boot.img"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:15.038097+00:00"
+  },
+  {
+    "name": "restore-stage-boot",
+    "args": [
+      "shell",
+      "sha256sum /tmp/gts9-test230-restore-boot.img"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:15.203079+00:00"
+  },
+  {
+    "name": "restore-readback-boot",
+    "args": [
+      "shell",
+      "dd if=/tmp/gts9-test230-restore-boot.img of=/dev/block/by-name/boot bs=1048576 && sync && sha256sum /dev/block/by-name/boot"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:15.696133+00:00"
+  },
+  {
+    "name": "restore-push-vendor_boot",
+    "args": [
+      "push",
+      "D:\\android\\gts9-test230\\backup-vendor_boot.img",
+      "/tmp/gts9-test230-restore-vendor_boot.img"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:16.525872+00:00"
+  },
+  {
+    "name": "restore-stage-vendor_boot",
+    "args": [
+      "shell",
+      "sha256sum /tmp/gts9-test230-restore-vendor_boot.img"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:16.674643+00:00"
+  },
+  {
+    "name": "restore-readback-vendor_boot",
+    "args": [
+      "shell",
+      "dd if=/tmp/gts9-test230-restore-vendor_boot.img of=/dev/block/by-name/vendor_boot bs=1048576 && sync && sha256sum /dev/block/by-name/vendor_boot"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:17.054765+00:00"
+  },
+  {
+    "name": "restored-all-partitions",
+    "args": [
+      "shell",
+      "for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/block/by-name/$n; done"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:17.351804+00:00"
+  },
+  {
+    "name": "restore-reboot",
+    "args": [
+      "reboot",
+      "system"
+    ],
+    "status": 0,
+    "utc": "2026-09-27T05:05:17.721743+00:00"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/devices/system/cpu/online; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager; for n in watchdog soft_watchdog softlockup_panic panic; do echo $n; cat /proc/sys/kernel/$n; done",
+  "status": 0,
+  "utc": "2026-09-27T05:09:08.859667+00:00"
+}

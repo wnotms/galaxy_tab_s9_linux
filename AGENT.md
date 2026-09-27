@@ -4,6 +4,16 @@
 
 Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and trace sizing assumptions. The owner resumed hardware work on 2026-09-27. Test-229 captured another CPU 6 non-response, followed by owner recovery to Debian and a healthy 60-second calibration. Memory coverage passed for that observation, but the reduced seven-event set still exceeds the persistent text budget (2,213,931 bytes in 41 seconds versus 786,432 available). Offline bounded replay is now complete: corrected ramoops budget is 393,204 bytes because the 896 KiB request rounds down to 512 KiB, with a 12-byte header and 128 KiB crash reserve. Equal per-CPU text tails keep only about 2 seconds on CPUs 0/7 with modeled 32-byte prefixes. This fails the original 41-second question; select a separately validated sink or explicitly narrower positive-evidence question before preparing a hardware candidate. No new wedge series before retention passes. The unchanged production profile has watchdog/panic disabled, so matching production partition hashes does not establish the armed stall baseline. Do not reuse the outdated parked baseline bundle. Preserve the production kernel/configuration while establishing retention.
 
+Test-230 subsequently built and physically tested the opt-in last-activity
+instrument (diagnostic patch 0022). Live capture passed: READY at 0.103705 s,
+48 event cells / eight valid CPUs, 6,245 marker bytes. The source trial used
+watchdog/panic state 1/1/1/10. Persistence through Debian → TWRP → restored
+Debian failed to yield matching pstore; only old archives remained. Production
+boot/vendor_boot were restored and all five partition hashes verified. Next
+perform one healthy direct Debian → Debian persistence calibration with the
+same bounded candidate, keeping the source capture ID distinct from later
+boots. No wedge series before retention passes. See test-230/RESULTS.md.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
