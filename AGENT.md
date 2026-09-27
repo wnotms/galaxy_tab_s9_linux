@@ -1,6 +1,36 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current review (2026-09-27)
+## Current review (2026-09-28)
+
+Tests243/244 completed a shared minimal-observer session. Exact test241 kernel,
+lastactivity=0 and calibration=0; pseudo-NMI/ECC64 and 1/1/1/10 remained active.
+TWRP-entry target 2094eeee-8fe2-48e5-aea6-abbc1788ea92 passed 306.92 seconds
+(offset +0x188000). Separately pre-registered direct normal-reboot target
+fd1a8ab6-85e9-40fb-b321-207faeaaa525 passed 304.07 seconds (+0xc8000), with
+automatic full capture starting by 17.45 seconds. Notes/six anchors were
+independent per boot. No natural fault or failed-target stack was captured.
+All 1,103 / 1,099 live JSON records respectively have target identity/source
+time; each boot has one priority-0 userspace attribution marker. No claim
+that recorder removal, NMI, or a reboot path changes the failure rate.
+
+Paired rollback restored originals/all-five hashes. Final production
+1aaffb9a-3a07-4415-91a8-7bf40d14328e passed 179.21 seconds; original
+watchdog/panic/ECC zeros, helper absent, ADB/NCM SSH protocol responsive.
+No authenticated SSH session or CPU-stall repair claim. See test243/244
+RESULTS.md; both fixed attempt budgets are closed, no more identical boots.
+
+The seven feature-variation warnings in test244 are only SpecSEI differences
+in AA64MMFR1/MMFR4. Pinned strict/higher-safe policy conservatively retains 1;
+this explains the taint, not CPU failure. No policy was changed; do not mask
+the warning as a repair. See reference/offline-reviews/20260928-specsei-variation/.
+
+Next return to the concrete opt-in A715 BBM defect: test240 physically covered
+high-address nr=1, not the low-address underflush/empty-range branch. Prepare
+and review a bounded missing-branch reproducer offline first, including
+mapping permission/fault handling/path-proof gates and recovery. Keep BBM
+validation separate from proof it caused the multi-CPU stall, and register
+any later fault-generating hardware scope before use. No blind power changes,
+further identical clean-window trials or completion claim.
 
 Test-242 reused the exact test241 kernel with calibration enable=0. Target
 c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08 passed 308.48 seconds without detected

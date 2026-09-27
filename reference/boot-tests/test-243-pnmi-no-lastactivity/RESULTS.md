@@ -29,3 +29,10 @@ not an extension of this window or a rate estimate. Original restoration is
 deferred to the end of that shared session, avoiding needless restore/reflash
 writes. Test244 must stop on its first non-clean result and restore originals;
 its five-hash and independent production result will close both trials.
+
+
+Shared rollback completed in test244: all five original partition hashes
+match and production `1aaffb9a-3a07-4415-91a8-7bf40d14328e` passed 179.21
+seconds without detected CPU failure. ADB/NCM SSH protocol respond. See
+[paired result](../test-244-pnmi-direct-reboot/RESULTS.md) and its raw restore/
+and production/ evidence. No healthy window establishes CPU-stall repair.

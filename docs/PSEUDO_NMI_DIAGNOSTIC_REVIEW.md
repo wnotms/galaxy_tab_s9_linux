@@ -106,3 +106,14 @@ race or recorder causality. Test235's recorder-free failures remain relevant
 positive evidence, not a controlled comparison. Pre-register any new capture
 and preserve source timestamp fields; do not infer kernel-event durations
 from rendered journal receipt-time spacing.
+
+
+## Tests243/244: recorder disabled, standard route retained
+
+Runtime gates confirmed that both optional recorder/calibration were inactive
+with unchanged compiled kernel bytes. One TWRP-entry window (306.92 seconds)
+and one separately registered direct-reboot window (304.07 seconds) yielded
+no natural fault. Exact source-clock JSON, per-boot notes/anchors and unique
+priority-0 userspace markers were preserved. Test244 completed the shared
+rollback and independent production check. This completes those attempt budgets,
+not the CPU repair goal or a rate/observer-effect comparison. See their results.

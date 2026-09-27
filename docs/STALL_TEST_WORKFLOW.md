@@ -451,3 +451,23 @@ remains available. This removes observer-side atomic/barrier/clock/preemption
 work and sacrifices lastactivity cells. It does not establish an observer
 effect or a rate difference. Register a separate fixed-budget profile before
 using it; keep kernel bytes, ECC64, pseudo-NMI and power settings unchanged.
+
+
+## Tests243/244: minimal observer and direct reboot did not reproduce the fault
+
+Disabling the optional lastactivity registrations while retaining calibrated
+pseudo-NMI/ECC64 gave a 306.92-second TWRP-entry target. A separately registered
+single normal-reboot target, motivated by test234's observed failure path,
+passed 304.07 seconds; its automatic collector started by 17.45 seconds.
+Both have exact notes and independent six-anchor relocation; full JSON/source
+clock capture and one attribution marker replace the disabled recorder's ID.
+No failed-target stack was produced; no rate or observer-effect conclusion.
+Original restoration and final production/transport checks are in test244 and
+close both trials. Neither budget permits another target.
+
+The source review of seven CPU-feature warnings finds only strict SpecSEI
+variation and conservative higher-safe handling; taint is not a CPU-root-cause
+proof. Next prepare a concrete missing-branch reproducer for known BBM range
+defect 0026, since test240 tested high-address nr=1 only. Review mapping/fault
+handling and actual path coverage offline before registering new hardware.
+Fixing that real range bug would still not by itself establish CPU-stall repair.

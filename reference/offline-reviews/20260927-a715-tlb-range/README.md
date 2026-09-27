@@ -36,3 +36,20 @@ Hardware is currently restored to production, not this candidate. The next
 candidate test must register a bounded permission-change workload and its
 interpretation before flashing; neither compilation nor 120 host cases proves
 CPU-stall repair. No full unrelated regression suite or CI was run.
+
+
+## Subsequent hardware scope and remaining branch (2026-09-28)
+
+Test240 did flash/validate the candidate after this original offline review.
+Its bounded workload completed 6,049,962 mprotect calls on A715 CPUs3/4; six
+kprobe hits confirmed the high-address nr=1 path. See test240 RESULTS.md.
+The underflushing/empty-range low-address cases were not physically covered.
+No CPU-failure cause or repair followed from that functional pass.
+
+Tests241–244 subsequently calibrated pseudo-NMI capture and observed bounded
+natural boots without finding a failed-target stack. Do not conflate these
+with testing the BBM defect: they omitted 0026. Before more hardware work on
+BBM, prepare an isolated bounded missing-branch reproducer, prove its mappings
+and path/fault checks on the host, and register its exact before/after scope.
+Keep the explicit fault-generation risk and recovery path in that review;
+a correct code fix is still separate from proof of the CPU-stall objective.

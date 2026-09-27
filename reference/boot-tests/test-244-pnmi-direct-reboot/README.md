@@ -37,3 +37,6 @@ shared session and verify all five hashes, then a separate >=150-second
 production boot and ADB/NCM SSH banner. That restoration also closes test243.
 Deferring rollback avoids unrelated boots and four redundant partition writes;
 all original backups/hash identities remain those already verified in test243.
+
+Completed: the one direct target passed 304.07 seconds without reproduction.
+Shared original-image restoration and production checks passed; see RESULTS.md.
