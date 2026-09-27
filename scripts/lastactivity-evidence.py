@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate bounded last-activity snapshots, without inferring missing events."""
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -72,6 +73,7 @@ def parse(text, capture_id):
     return {"capture_id": capture_id, "trigger": trigger, "cpus": cpus,
             "records": records, "snapshot_lines": len(lines),
             "snapshot_text_bytes": sum(len(line.encode()) + 1 for line in lines),
+            "snapshot_sha256": hashlib.sha256(("\n".join(lines) + "\n").encode()).hexdigest(),
             "complete_history": False, "missing_event_inference": "inconclusive",
             "root_cause": "not_established"}
 
@@ -80,8 +82,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("log", type=Path)
     parser.add_argument("--capture-id", required=True)
+    parser.add_argument("--reference", type=Path,
+                        help="require byte-identical canonical marker lines to this live snapshot")
     args = parser.parse_args()
-    print(json.dumps(parse(args.log.read_text(), args.capture_id), indent=2))
+    try:
+        # A pstore console may contain non-UTF8 bytes. Unrelated console noise
+        # may be ignored; malformed snapshot fields still fail strict parsing.
+        result = parse(args.log.read_bytes().decode("utf-8", errors="replace"), args.capture_id)
+        if args.reference:
+            original = parse(args.reference.read_bytes().decode("utf-8", errors="replace"), args.capture_id)
+            if result["snapshot_sha256"] != original["snapshot_sha256"]:
+                raise ValueError("recovered snapshot differs from reference")
+    except (ValueError, OSError) as error:
+        parser.exit(2, f"Snapshot rejected: {error}\n")
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,7 @@
 import importlib.util
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
 import unittest
 
@@ -22,6 +25,32 @@ def snapshot(invalid=None):
 
 
 class LastActivityEvidenceTests(unittest.TestCase):
+    def test_cli_rejects_real_corruption_and_valid_looking_bit_flip(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "source.txt"
+            recovered = Path(tmp) / "recovered.txt"
+            source.write_text(snapshot())
+            command = [sys.executable, str(ROOT / "scripts/lastactivity-evidence.py"),
+                       str(recovered), "--capture-id", ID, "--reference", str(source)]
+            recovered.write_text(snapshot())
+            self.assertEqual(subprocess.run(command, capture_output=True).returncode, 0)
+            # Still structurally valid hex: only exact reference comparison
+            # catches this address corruption.
+            recovered.write_text(snapshot().replace("a=ffffffffffffffff", "a=fffffffffffffffe", 1))
+            result = subprocess.run(command, capture_output=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn(b"differs from reference", result.stderr)
+            base = ROOT / "reference/boot-tests/test-231-lastactivity-direct-reboot"
+            result = subprocess.run([
+                sys.executable, str(ROOT / "scripts/lastactivity-evidence.py"),
+                str(base / "observer/pstore-files/var/lib/systemd/pstore/console-ramoops-0"),
+                "--capture-id", "0127f2c4-c55e-4a3a-99c3-52deffd56059",
+                "--reference", str(base / "source-live/snapshot-markers.txt"),
+            ], capture_output=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn(b"Snapshot rejected:", result.stderr)
+            self.assertNotIn(b"Traceback", result.stderr)
+
     def test_full_snapshot_and_maximum_value_byte_budget(self):
         text = snapshot()
         result = evidence.parse(text, ID)
