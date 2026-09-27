@@ -1,0 +1,29 @@
+{
+  "actual_archives": [
+    {
+      "path": "reference/boot-tests/test-235-ecc-retention/closing-current/final-health.txt",
+      "sha256": "2fa37ba87fc86e7f2aa1a5e5b4fb8dd4e5354d8313c205917c21f0baf2e20545",
+      "classification": "failure_observed",
+      "markers": [
+        "CPUS still haven't responded",
+        "BUG: workqueue lockup",
+        "detected stalls"
+      ]
+    },
+    {
+      "path": "reference/boot-tests/test-241-pnmi-calibration/calibration/journal-0.txt",
+      "sha256": "37369e2ad4c89d4c6c461297d60eb338f65046cab843280e512b72b663ae2d93",
+      "classification": null,
+      "markers": []
+    },
+    {
+      "path": "reference/boot-tests/test-241-pnmi-calibration/production/final-journal.txt",
+      "sha256": "f4329c292bd4a6864953bf4042e3d56fdbe82f2f2d5ac34a05185f55ef42d613",
+      "classification": null,
+      "markers": []
+    }
+  ],
+  "self_stall_mmc_timeout_and_failure_precedence_checks": true,
+  "scope": "failure/suspect detection only; transport/boot attribution remain live gates",
+  "source_sha256": "9d1575c7ba5eb4a00abdb0a78dd8f6e2d0d536926d43f06e23a7f4f9e718e21b"
+}
