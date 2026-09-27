@@ -1,0 +1,94 @@
+[
+  {
+    "name": "flash-identity",
+    "args": [
+      "shell",
+      "getprop ro.product.device; getprop ro.twrp.version"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:01:58.757995+00:00"
+  },
+  {
+    "name": "flash-before-boot",
+    "args": [
+      "shell",
+      "sha256sum /dev/block/by-name/boot"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:01:58.982527+00:00"
+  },
+  {
+    "name": "push-boot",
+    "args": [
+      "push",
+      "D:\\android\\gts9-test230\\boot.img",
+      "/tmp/gts9-test230-boot.img"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:00.403458+00:00"
+  },
+  {
+    "name": "stage-hash-boot",
+    "args": [
+      "shell",
+      "sha256sum /tmp/gts9-test230-boot.img"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:00.545878+00:00"
+  },
+  {
+    "name": "write-readback-boot",
+    "args": [
+      "shell",
+      "dd if=/tmp/gts9-test230-boot.img of=/dev/block/by-name/boot bs=1048576 && sync && sha256sum /dev/block/by-name/boot"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:01.065955+00:00"
+  },
+  {
+    "name": "flash-before-vendor_boot",
+    "args": [
+      "shell",
+      "sha256sum /dev/block/by-name/vendor_boot"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:01.224078+00:00"
+  },
+  {
+    "name": "push-vendor_boot",
+    "args": [
+      "push",
+      "D:\\android\\gts9-test230\\vendor_boot.img",
+      "/tmp/gts9-test230-vendor_boot.img"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:01.419959+00:00"
+  },
+  {
+    "name": "stage-hash-vendor_boot",
+    "args": [
+      "shell",
+      "sha256sum /tmp/gts9-test230-vendor_boot.img"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:01.562541+00:00"
+  },
+  {
+    "name": "write-readback-vendor_boot",
+    "args": [
+      "shell",
+      "dd if=/tmp/gts9-test230-vendor_boot.img of=/dev/block/by-name/vendor_boot bs=1048576 && sync && sha256sum /dev/block/by-name/vendor_boot"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:01.952157+00:00"
+  },
+  {
+    "name": "candidate-reboot",
+    "args": [
+      "reboot",
+      "system"
+    ],
+    "exit_code": 0,
+    "utc": "2026-09-27T05:02:02.094591+00:00"
+  }
+]

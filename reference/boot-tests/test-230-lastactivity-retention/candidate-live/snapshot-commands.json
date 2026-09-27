@@ -1,0 +1,20 @@
+[
+  {
+    "name": "second-dump",
+    "command": "echo 1 > /sys/module/gts9_lastactivity/parameters/dump",
+    "status": 1,
+    "utc": "2026-09-27T05:03:45.070908+00:00"
+  },
+  {
+    "name": "snapshot-journal",
+    "command": "journalctl -k -b --no-pager -o short-monotonic",
+    "status": 0,
+    "utc": "2026-09-27T05:03:45.192066+00:00"
+  },
+  {
+    "name": "snapshot-after-identity",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; timeout 5 systemctl --failed --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T05:03:45.279982+00:00"
+  }
+]

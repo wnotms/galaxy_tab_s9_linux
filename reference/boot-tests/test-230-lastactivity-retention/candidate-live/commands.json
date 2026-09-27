@@ -1,0 +1,32 @@
+[
+  {
+    "name": "identity",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; cat /sys/module/gts9_lastactivity/parameters/capture_id; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T05:02:50.688147+00:00"
+  },
+  {
+    "name": "watchdog",
+    "command": "for n in watchdog soft_watchdog softlockup_panic panic; do echo $n; cat /proc/sys/kernel/$n; done; cat /var/log/gts9-watchdog-debug.txt",
+    "status": 0,
+    "utc": "2026-09-27T05:02:50.780184+00:00"
+  },
+  {
+    "name": "journal",
+    "command": "journalctl -k -b --no-pager -o short-monotonic",
+    "status": 0,
+    "utc": "2026-09-27T05:02:50.892076+00:00"
+  },
+  {
+    "name": "dmesg",
+    "command": "dmesg",
+    "status": 0,
+    "utc": "2026-09-27T05:02:50.995335+00:00"
+  },
+  {
+    "name": "boots",
+    "command": "LC_ALL=C journalctl --list-boots --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T05:02:56.698924+00:00"
+  }
+]
