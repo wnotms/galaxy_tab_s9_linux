@@ -38,6 +38,17 @@ Record actual masked duration. Preserve console/journal output, then observe
 >=60 seconds without unexplained CPU/RCU/workqueue failure. No natural-failure
 series under this calibration plan; broader CPU repair is not established.
 
+Before flashing, extend this plan with one direct normal Debian reboot after
+the successful calibration/post-observation. Keep the identical ECC64 kernel
+for the immediate observer and do not trigger calibration again. Save the
+source kernel journal at priorities 0..4 (the messages admitted by console
+threshold 5), then compare the unique BEGIN-to-END region against two raw
+pstore pulls and their device hash. Strip only timestamp/task prefixes from
+pstore and transport CRLF from journal; require exact payload bytes, the same
+calibration ID, zero unrecoverable ECC blocks and retained adjacent boot IDs.
+This validates the newly admitted backtrace's warm-reboot retention, not
+delivery during a natural CPU failure or retention through every crash path.
+
 Build and validate before flashing. Verify backups/device/five partition
 hashes; flash only boot/vendor_boot with full readbacks. Restore originals
 through BCB helper + plain reboot/TWRP, never reboot recovery or shared-gadget
