@@ -160,3 +160,10 @@ incompatible; do not treat first-boot correction errors as this trial's result.
 Select only `GTS9_DIAGNOSTIC_PATCHES=0024-gts9-ramoops-ecc64.patch`, retain the
 production cmdline/config, and require exact identified bytes after reboot.
 See test-235's preregistration. This is not a CPU fix or crash-retention proof.
+
+For test-236 only, combine 0022 and 0024 with the existing lastactivity cmdline
+to calibrate the actual level-0 snapshot in the ECC-enabled console. Keep its
+source reference and require identical recovered markers plus zero
+unrecoverable blocks. Test-235's information-level markers never qualified
+for loglevel=4 console delivery; their journal presence was not a sink check.
+This combination still needs independent crash-triggered validation.
