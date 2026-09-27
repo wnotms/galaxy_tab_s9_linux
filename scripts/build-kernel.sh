@@ -291,7 +291,10 @@ symbol_state() {
     fi
 }
 
-for off in CONFIG_U_SERIAL_CONSOLE CONFIG_SERIAL_QCOM_GENI_CONSOLE; do
+# Test247 captured agetty in the inherited ARM DCC driver's unbounded TX wait
+# with normal IRQs masked. A plain hvc0 getty can reach it without console=hvc0.
+# Keep DCC absent in production and diagnostic builds; USB rescue is unrelated.
+for off in CONFIG_U_SERIAL_CONSOLE CONFIG_SERIAL_QCOM_GENI_CONSOLE CONFIG_HVC_DCC; do
     state=$(symbol_state "$off")
     if [ "$state" = on ]; then
         echo "a serial debug console is still enabled: $off" >&2

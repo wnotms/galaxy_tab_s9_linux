@@ -245,6 +245,16 @@ CONFIG_PHY_QCOM_QMP_COMBO=y
 # CONFIG_U_SERIAL_CONSOLE is not set
 # CONFIG_SERIAL_QCOM_GENI_CONSOLE is not set
 
+# 3. ARM JTAG DCC (hvc0), removed after test247's natural CPU4 failure.
+#    Inherited HVC_DCC creates a terminal independently of console= arguments.
+#    The target boot starts serial-getty@hvc0, and agetty writes into the DCC
+#    TX-busy loop while hvc_write holds spin_lock_irqsave. Three pseudo-NMI
+#    snapshots show the same PC, saved PMR0xc0 and MDCCSR_EL0 TX-busy bit29.
+#    This tablet uses panel/USB ADB/NCM SSH, not a JTAG DCC terminal. Remove
+#    the driver so getty cannot enter that unbounded IRQ-masked write path.
+#    Do not merely serialize it onto CPU0 or move the waiter to a worker.
+# CONFIG_HVC_DCC is not set
+
 # With both of those gone the command line carries a single real console,
 # `console=tty0` on the panel.  Samsung's ABL appends `console=null` after our
 # own arguments; without CONFIG_NULL_TTY that request compiles to

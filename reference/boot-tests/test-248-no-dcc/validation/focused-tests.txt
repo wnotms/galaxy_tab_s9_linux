@@ -1,0 +1,23 @@
+test_a_diagnostic_build_may_not_smuggle_in_other_instruments (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_may_not_smuggle_in_other_instruments) ... ok
+test_a_diagnostic_build_must_have_both_symbols_and_64bit (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_must_have_both_symbols_and_64bit) ... ok
+test_a_diagnostic_build_must_keep_the_recovery_chain (test_csd_ipi_diagnostic.BuildWiringTests.test_a_diagnostic_build_must_keep_the_recovery_chain) ... ok
+test_a_production_build_may_not_acquire_the_symbol (test_csd_ipi_diagnostic.BuildWiringTests.test_a_production_build_may_not_acquire_the_symbol) ... ok
+test_the_merge_order_lets_the_diagnostic_layer_win (test_csd_ipi_diagnostic.BuildWiringTests.test_the_merge_order_lets_the_diagnostic_layer_win)
+merge_config.sh is last-wins, so the diagnostic must come last. ... ok
+test_no_unit_or_helper_recreates_a_serial_getty (test_systemd_ssh_generator.NoVsockOrSerialCapabilityIsReintroduced.test_no_unit_or_helper_recreates_a_serial_getty) ... ok
+test_the_build_still_asserts_the_no_serial_state (test_systemd_ssh_generator.NoVsockOrSerialCapabilityIsReintroduced.test_the_build_still_asserts_the_no_serial_state)
+A cmdline change is not allowed to weaken the build-time gate. ... ok
+test_the_fragment_asks_for_no_vsock_driver (test_systemd_ssh_generator.NoVsockOrSerialCapabilityIsReintroduced.test_the_fragment_asks_for_no_vsock_driver) ... ok
+test_the_fragment_keeps_the_serial_gadget_off (test_systemd_ssh_generator.NoVsockOrSerialCapabilityIsReintroduced.test_the_fragment_keeps_the_serial_gadget_off) ... ok
+test_the_ssh_management_path_is_still_present (test_systemd_ssh_generator.NoVsockOrSerialCapabilityIsReintroduced.test_the_ssh_management_path_is_still_present)
+The fix must not have been bought by weakening the way in. ... ok
+test_every_profile_still_disables_systemd_automatic_ssh (test_initramfs_profiles.TheExistingInvariantsAreUntouched.test_every_profile_still_disables_systemd_automatic_ssh) ... ok
+test_no_serial_console_came_back (test_initramfs_profiles.TheExistingInvariantsAreUntouched.test_no_serial_console_came_back) ... ok
+test_the_console_is_still_only_tty0 (test_initramfs_profiles.TheExistingInvariantsAreUntouched.test_the_console_is_still_only_tty0) ... ok
+test_the_kernel_fragment_still_pins_the_serial_gadget_off (test_initramfs_profiles.TheExistingInvariantsAreUntouched.test_the_kernel_fragment_still_pins_the_serial_gadget_off) ... ok
+test_the_ssh_management_path_is_intact (test_initramfs_profiles.TheExistingInvariantsAreUntouched.test_the_ssh_management_path_is_intact) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.038s
+
+OK

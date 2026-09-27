@@ -1,0 +1,30 @@
+{
+  "utc": "2026-09-27T19:18:00.644514+00:00",
+  "boot_id": "bd20438b-cea6-4172-8e5f-de83a6b69a51",
+  "backup_path": "out/test246/original-modules.tar",
+  "windows_backup": "/mnt/d/android/gts9-test246/original-modules.tar",
+  "backup_bytes": 157757440,
+  "backup_sha256": "d2f1a6052da02f7c65b7bbc44b9f5dda92b619af06345d8efaf35deb2e7009bb",
+  "file_count": 181,
+  "all_files_match_device_before_and_after": true,
+  "symlinks": {
+    "7.2.0-rc3-gts9wifi-dirty/build": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out"
+  },
+  "archive_command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "test ! -e /tmp/gts9-module-backup-246.tar && tar -C /usr/lib/modules -cf /tmp/gts9-module-backup-246.tar 7.2.0-rc3-gts9wifi-dirty && sha256sum /tmp/gts9-module-backup-246.tar"
+  ],
+  "pull_command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "pull",
+    "/tmp/gts9-module-backup-246.tar",
+    "D:\\android\\gts9-test246\\original-modules.tar"
+  ],
+  "original_module_files_changed": false,
+  "earlier_exec_out_attempt": "tar refused terminal stdout; 116-byte error retained, not mistaken for backup"
+}

@@ -2,6 +2,15 @@
 
 ## Current review (2026-09-28)
 
+Test248 repair candidate BUILT/PACKAGED, not yet flashed at this checkpoint.
+Mainline fragment explicitly disables inherited HVC_DCC; build rejects its
+reintroduction. Only HVC_DCC/HVC_DRIVER turn off relative247; actual symbols
+for DCC/HVC write are absent. PNMI/CSD/LA/ECC/BBM kept for comparison.15 scoped
+checks, full module/CRC audit, paired rollback rehearsal and bundle validator
+pass. Fresh original181-file manifest and staged hashes match. See248 scope
+and BUILD_RESULTS.md; one120 s target must prove no hvc0/getty path and retain
+ADB/NCM SSH. Final production repair deployment remains outstanding.
+
 Test247 CLOSED with the first natural failed-target PC: CPU4 `(agetty)`
 PID1251 in hvc_dcc0_put_chars+0x34, saved PMR0xc0 and MDCCSR_EL0 x9=0x20000000.
 The exact instruction is yield in TX-busy bit29 polling. hvc_write holds its

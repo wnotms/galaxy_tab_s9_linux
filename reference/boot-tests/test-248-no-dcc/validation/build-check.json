@@ -1,0 +1,47 @@
+{
+  "config_differences": {
+    "CONFIG_HVC_DCC": [
+      "y",
+      "n"
+    ],
+    "CONFIG_HVC_DRIVER": [
+      "y",
+      "n"
+    ]
+  },
+  "config_explanation": "HVC_DCC is explicitly disabled; HVC_DRIVER loses its only enabled selector. PNMI/CSD diagnostics stay enabled.",
+  "dtb_equal_test247": true,
+  "release_equal_test247": true,
+  "bbm_patch_present": true,
+  "calibration_helper_absent": true,
+  "artifacts": {
+    "out/kernel-no-dcc/Image.gz": {
+      "bytes": 21926513,
+      "sha256": "e0f98e924261b8bd516600f5086b7a6454f93ec432d69ba29753e787209913c9"
+    },
+    "out/kernel-no-dcc/config": {
+      "bytes": 240990,
+      "sha256": "409c74edb29c8fad30ba2293fc6074d45b38fb0df6229f356ce3a3bc295b90d3"
+    },
+    "out/kernel-no-dcc/sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 177620,
+      "sha256": "5709be3ff6467d0d5fdb0e925f367d73352c9828b7aedf92634ae66a39d94074"
+    },
+    "out/kernel-no-dcc/kernel.release": {
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "out/test248/vmlinux": {
+      "bytes": 476551472,
+      "sha256": "b9d89795956db44d7ec2166428fec9e1f2273bc0837880d7ffb87b543e4783cd"
+    },
+    "out/test248/System.map": {
+      "bytes": 7702737,
+      "sha256": "093f5d7a6e3880a8f0ee73f850da9b92857c0760742fc5bdc8116af6675b7c25"
+    },
+    "out/test248/Module.symvers": {
+      "bytes": 911112,
+      "sha256": "9996b180790fdd030ea8638e78a55930c326710db287e41850eeb33729a19861"
+    }
+  }
+}

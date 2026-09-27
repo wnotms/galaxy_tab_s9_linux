@@ -1,0 +1,33 @@
+{
+  "utc_start": "2026-09-27T20:22:10.241235+00:00",
+  "source_commit": "2188e9d2b3cbf5b28eb397dd69a2c8f7d0811fc1",
+  "command": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "USE_CCACHE": "1",
+    "ARCH": "arm64",
+    "LLVM": "1",
+    "JOBS": "12",
+    "BUILD_MODULES": "1",
+    "KERNEL_CLEAN": "0",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-no-dcc",
+    "GTS9_DIAG_FRAGMENT": "kernel/config/gts9wifi-pnmi-csd-lock.fragment",
+    "GTS9_DIAGNOSTIC_PATCHES": "0022-gts9-lastactivity.patch 0024-gts9-ramoops-ecc64.patch 0026-arm64-bbm-flush-range.patch"
+  },
+  "preparation": [
+    "git",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi",
+    "apply",
+    "--reverse",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/kernel/patches/diagnostic/0022-gts9-lastactivity.patch"
+  ],
+  "changed_input_hashes": {
+    "kernel/config/gts9wifi-mainline.fragment": "127bd6061772bae49a10b02a1de9aaf9691b2063818257e0d64e130ac4e16cda",
+    "scripts/build-kernel.sh": "50482a818b8f7b96112188b9fdcc4bba62928c81d22e9cf0f493d021e842cdfe"
+  },
+  "status": 0,
+  "utc_end": "2026-09-27T20:23:21.369180+00:00"
+}

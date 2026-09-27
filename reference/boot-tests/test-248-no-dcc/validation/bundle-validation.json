@@ -1,0 +1,15 @@
+{
+  "command": [
+    "bash",
+    "scripts/validate-boot-bundle.sh",
+    "--dir",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc",
+    "--kernel-out",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-no-dcc",
+    "--cmdline",
+    "boot/cmdline.pnmi-csd-capture.example.txt",
+    "--bootconfig",
+    "boot/bootconfig.example.txt"
+  ],
+  "status": 0
+}
