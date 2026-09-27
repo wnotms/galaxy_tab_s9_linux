@@ -2,6 +2,12 @@
 
 ## Current review (2026-09-27)
 
+Active test-236: clean-built lastactivity (0022) + ECC64 (0024) candidate was
+flashed with complete boot/vendor_boot readbacks; other three hashes match
+production. Uses the existing test-230/231 diagnostic cmdline, runtime arming
+must be verified. No new kernel/power fix is claimed. Source calibration and
+rollback remain pending; see test-236/README.md. Default images are unchanged.
+
 Test-235 completed retrieval: ECC=64 recovered the exact 33,005-byte PMSG,
 correcting 246 bytes with zero unrecoverable blocks. Device hash, two TWRP
 pulls and the original observer journal's FILE field match. Its level-6
