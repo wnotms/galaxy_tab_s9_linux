@@ -2,6 +2,9 @@
 
 Current investigation and offline test commands: [stall workflow and direction review](docs/STALL_TEST_WORKFLOW.md) (2026-09-27). The active task is reliable CPU non-response evidence and trace retention; test-228 is complete.
 
+Daily host regression: `bash scripts/check-stall-offline.sh`. Add `--full` for all
+retained checks; see [test tiers and retirement policy](docs/HOST_TEST_WORKFLOW.md).
+
 This repository is a reproducible bring-up workspace for running an upstream Linux kernel on the Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, `gts9wifi`, Qualcomm SM8550 / Snapdragon 8 Gen 2).
 
 The project deliberately separates three things:

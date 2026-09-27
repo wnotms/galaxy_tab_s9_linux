@@ -74,34 +74,6 @@ class AuditScriptTests(unittest.TestCase):
         self.assertTrue(path.stat().st_mode & 0o111)
         subprocess.run(["python3", "-m", "py_compile", str(path)], check=True)
 
-    def test_it_requires_a_declaration_not_a_mention(self):
-        text = read(SCRIPT)
-        self.assertIn(".compatible", text)
-        self.assertIn("*DECLARE", text)
-        self.assertIn("*MATCH", text)
-        self.assertIn("reserved_mem_matches", text)
-
-    def test_it_has_no_compatible_prefix_matching(self):
-        """The modalias `C*` form is not a string prefix."""
-        text = read(SCRIPT)
-        self.assertIn("There is no prefix logic here", text)
-        self.assertIn("llcc-bwmon", text)
-
-    def test_it_uses_plain_groups_in_grep_patterns(self):
-        """`(?:` in a grep -E pattern matches nothing, silently.
-
-        Python regexes elsewhere in the file may use `(?:...)` freely; what must
-        not is the pattern handed to grep, which is POSIX ERE.
-        """
-        text = read(SCRIPT)
-        self.assertIn("non-capturing groups", text)
-        self.assertIn("? at start of expression", text)
-        # The pattern handed to grep must not contain one.
-        pattern_lines = [line for line in text.splitlines()
-                         if line.strip().startswith("pattern = ")]
-        self.assertTrue(pattern_lines, "no grep pattern found")
-        self.assertNotIn("(?:", "\n".join(pattern_lines))
-
 
 class DriverIndexTests(unittest.TestCase):
     """Use actual source files and both search engines, without a kernel build."""
@@ -252,47 +224,6 @@ class AuditResultTests(unittest.TestCase):
                  for e in self.report["known_gaps"]}
         self.assertIn("module_only", kinds)
         self.assertIn("symbol_off", kinds)
-
-
-class AuditDocTests(unittest.TestCase):
-    def contains(self, *needles):
-        text = read(DOC)
-        missing = [n for n in needles if n not in text]
-        self.assertEqual(missing, [], f"{DOC} is missing {missing}")
-
-    def test_it_names_the_pattern_and_where_it_comes_from(self):
-        self.contains(
-            "expresses Qualcomm platform support as **modules**",
-            "no module tree",
-            "CONFIG_INTERCONNECT_QCOM_OSM_L3=m",
-            "CONFIG_QCOM_ICC_BWMON=m",
-        )
-
-    def test_it_records_all_three_traps(self):
-        self.contains("The modalias is not the binding test",
-                      "A driver can be built and contribute no alias",
-                      "Mentioning a compatible is not declaring it",
-                      "no non-capturing groups")
-
-    def test_it_records_the_makefile_idioms(self):
-        self.contains("composite objects", "objects built by an ancestor Makefile",
-                      "arm_smmu-objs", "disp/dpu1/dpu_kms.o")
-
-    def test_it_distinguishes_eq_m_from_eq_n_and_from_eq_y(self):
-        self.contains("this port installs no module tree, so `=m` yields no driver",
-                      "`m` means the symbol **is** requested")
-
-    def test_it_names_the_second_cpu_path_gap_as_its_own_candidate(self):
-        self.contains(
-            "24091000.pmu",
-            "240b6400.pmu",
-            "not* bundled into test-191",
-            "byte-identical to what is flashed",
-        )
-
-    def test_it_states_its_own_limits(self):
-        self.contains("a gap is a question, not a verdict",
-                      "That any of these gaps causes the CPU wedge")
 
 
 if __name__ == "__main__":

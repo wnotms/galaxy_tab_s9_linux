@@ -103,6 +103,54 @@ class AttributionTests(unittest.TestCase):
             self.assertEqual(len(parsed["evidence_sha256"]), 5)
 
 
+class CsdPreflightTests(unittest.TestCase):
+    def test_gate_uses_runtime_capability_and_consumed_profile(self):
+        """All remote reads are fixture responses; even rejected cases request power."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            mock = path / "ssh-mock"
+            mock.write_text('''#!/usr/bin/python3
+import os, pathlib, sys
+root = pathlib.Path(os.environ['MOCK_ROOT'])
+mode = os.environ['MOCK_MODE']
+cmd = sys.argv[1]
+with (root / 'commands').open('a') as stream: stream.write(cmd + '\\n')
+line = 'csdlock_debug=1 panic=10 softlockup_panic=1'
+if mode == 'missing_token': line = line.replace('csdlock_debug=1', '')
+if mode == 'conflict': line += ' csdlock_debug=0'
+if mode == 'missing_recovery': line = line.replace('panic=10', '')
+if cmd == 'cat /proc/sys/kernel/random/boot_id': print('1' * 32)
+elif cmd == 'cat /proc/cmdline': print(line)
+elif cmd.startswith('journalctl -b 0'):
+    print('Kernel command line: ' + line)
+    if mode == 'unconsumed': print('Unknown kernel command line parameters "csdlock_debug=1"')
+elif 'for node in watchdog' in cmd:
+    print('0\\n0\\n1\\n10' if mode == 'disarmed' else '1\\n1\\n1\\n10')
+elif cmd.startswith('ls /sys/module/smp/parameters/'):
+    print('panic_on_ipistall' if mode == 'no_timeout' else 'csd_lock_timeout' if mode == 'no_panic' else 'csd_lock_timeout panic_on_ipistall')
+elif cmd.startswith('cat /sys/module/smp/parameters/csd_lock_timeout'): print('1' if mode == 'wrong_timeout' else '5000')
+elif cmd.startswith('cat /sys/module/smp/parameters/panic_on_ipistall'): print('1' if mode == 'early_panic' else '0')
+else: sys.exit('unexpected mock command: ' + cmd)
+''')
+            mock.chmod(0o755)
+            for mode in ("valid", "missing_token", "conflict", "missing_recovery", "unconsumed",
+                         "disarmed", "no_timeout", "no_panic", "wrong_timeout", "early_panic"):
+                with self.subTest(mode=mode):
+                    (path / "commands").write_text("")
+                    env = dict(os.environ, GTS9_SSH=str(mock), MOCK_ROOT=tmp, MOCK_MODE=mode,
+                               GTS9_ALLOW_POWER="0" if mode == "valid" else "1",
+                               GTS9_SSH_RESULTS=str(path / "results"))
+                    result = subprocess.run(["bash", str(ROOT / "scripts/wedge-ssh.sh"), "csd-lock", "1"],
+                                            env=env, capture_output=True, text=True, timeout=10)
+                    self.assertEqual(result.returncode, 0 if mode == "valid" else 1,
+                                     result.stdout + result.stderr)
+                    commands = (path / "commands").read_text()
+                    self.assertNotIn("systemctl reboot", commands)
+                    self.assertNotIn("unexpected mock command", result.stderr)
+                    if mode == "valid":
+                        self.assertIn("/sys/module/smp/parameters/panic_on_ipistall", commands)
+
+
 class RunnerIntegrationTests(unittest.TestCase):
     def test_mock_transport_archives_then_replays_without_device(self):
         """Exercise shell orchestration, transport failures and run isolation."""

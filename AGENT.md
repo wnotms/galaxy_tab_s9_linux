@@ -309,6 +309,13 @@ separately and keep pre-existing test-087 logs distinct from new tests.
 
 ## Build commands
 
+Host regression uses `bash scripts/check-stall-offline.sh` (core by default).
+See `docs/HOST_TEST_WORKFLOW.md` for artifact/archive triggers and exact suite
+selection. `--full` remains exhaustive; run it after changing suite routing or
+retiring tests. New tests default to core. Do not interpret skipped prerequisites
+as successful artifact validation; use `--fail-on-skip` on the Python runner when
+complete validation is required. These commands do not contact the device.
+
 Normal build:
 
 ```bash

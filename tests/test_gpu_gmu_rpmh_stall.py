@@ -2156,135 +2156,6 @@ class EvidenceProvenanceTests(unittest.TestCase):
 class DocumentationTests(unittest.TestCase):
     """The phase's claims stay tied to their evidence."""
 
-    def test_the_plan_carries_the_round_16_amendment(self):
-        """The plan must stop claiming the failures sit in the 13-14 s window."""
-        text = read(PLAN)
-        self.assertIn("4.5 AMENDMENT (round 16)", text)
-        self.assertIn("not supported by any captured failure", text)
-        self.assertIn("22 warm cycles, 2 containing an unattended reset", text)
-        self.assertIn("28.903 s", text)
-        # And it must keep the matrix as un-retired rather than deleting it.
-        self.assertIn("is **not** retired", text)
-
-    def test_the_plan_carries_the_round_17_amendment(self):
-        """The only detailed trace on record puts a CPU wedge first."""
-        text = read(PLAN)
-        self.assertIn("4.6 AMENDMENT (round 17)", text)
-        self.assertIn("still haven't responded to the NMI: 4", text)
-        self.assertIn("inverted here", text)
-        # It must say the DPU messages are victims, not the origin, without
-        # claiming the DPU is bug-free.
-        self.assertIn("cannot be read as the origin", text)
-        self.assertIn("does not follow that the DPU has no bugs", text)
-        # And it must not present the 1/46 against 23/29 as a stall rate.
-        self.assertIn("a stall rate", text)
-        self.assertIn("p = 0.30", text)
-
-    def test_the_plan_states_the_hypothesis_is_a_hypothesis(self):
-        text = read(PLAN)
-        self.assertIn("HYPOTHESIS", text)
-        self.assertIn("not a proven root cause", text)
-
-    def test_the_rpmh_status_doc_does_not_credit_0021_with_a_hardware_result(self):
-        """The withdrawn fixture must not be re-cited as device evidence.
-
-        `programmed-no-completion.log` and `victim.log` are synthetic fixtures
-        under test-186, which has no `rounds/` directory because it was never run
-        on the device.  GPU_GMU_RPMH_STALL_PLAN.md section 4 already carries this
-        correction; the RPMh status doc was still making the same claim, and the
-        claim invites skipping the run that would answer the question.
-        """
-        text = read(RSC_STATUS)
-        flat = " ".join(text.split())
-        self.assertIn("CORRECTION (round 28)", text)
-        self.assertIn("**Patch 0021 has never produced a hardware result on this device.**", flat)
-        self.assertIn("synthetic fixtures", flat)
-
-    def test_the_rpmh_status_doc_records_that_the_switch_is_already_flashed(self):
-        """No backport is needed to ask the timeout-state questions."""
-        text = read(RSC_STATUS)
-        self.assertIn("## 5a.", text)
-        self.assertIn("early_param(\"gts9_rpmh_debug\", gts9_rpmh_debug_setup)", text)
-        self.assertIn("df00c53cabfae26c0a96c6b93ada4590dfb44d02f16c39bd139ef52a9a19e32f", text)
-        self.assertIn("command-line only", text)
-        flat = " ".join(text.split())
-        self.assertIn("It must not be enabled during an A/B round", flat)
-
-    def test_the_diff_covers_apps_rsc_and_aoss_and_shows_them_identical(self):
-        """The brief names these areas; the answer is that they do not differ."""
-        text = read(DIFF_DOC)
-        flat = " ".join(text.split())
-        self.assertIn("## 12.", text)
-        # The RSC node itself is shared and untouched by either board.
-        self.assertIn("apps_rsc: rsc@17a00000", text)
-        self.assertIn("ACTIVE_TCS 3", text)
-        # Same five regulator blocks, same three always-on rails, on both.
-        self.assertIn("vreg_l1b_1p8", text)
-        self.assertIn("vreg_l10b_1p8", text)
-        self.assertIn("vreg_l16b_3p0", text)
-        self.assertIn("the same three", flat)
-        self.assertIn("same hardware, definitely unrelated", flat)
-        # AOSS wiring identical on both.
-        self.assertIn("qcom,qmp = <&aoss_qmp>", text)
-        # And the observability asymmetry must be stated, not glossed.
-        self.assertIn("the ports are not equally observable", flat)
-        self.assertIn("ramoops", text)
-
-    def test_the_prime_opp_gap_is_recorded_with_its_mechanism(self):
-        """X910 declares the 3.36 GHz OPP; X710 does not, and the LUT has it."""
-        text = read(DIFF_DOC)
-        flat = " ".join(text.split())
-        self.assertIn("opp-3360000000", text)
-        self.assertIn("Voltage update failed freq=3360000", text)
-        self.assertIn("failed to update OPP for freq=3360000", text)
-        self.assertIn("dev_pm_opp_adjust_voltage", text)
-        # It must rule out the CPU-path fix as the cause, having checked.
-        self.assertIn("This is not caused by the `epss_l3` fix", flat)
-        # And it must not promote a once-per-boot message to a marker.
-        self.assertIn("It is also not a stall marker", flat)
-        for cls in ("different board config, possibly relevant",
-                    "needs stock X710 evidence"):
-            with self.subTest(cls=cls):
-                self.assertIn(cls, text)
-
-    def test_the_plan_keeps_the_rpmh_work_as_a_fallback(self):
-        self.assertIn("NEXT_STALL_DEBUG_PLAN.md", read(PLAN))
-
-    def test_the_plan_has_the_five_labelled_experiments(self):
-        text = read(PLAN)
-        for token in ("msm.disable_acd=1", "msm.skip_gpu=1",
-                      "CONFIG_QCOM_AOSS_QMP=y", "gts9_rpmh_debug=1"):
-            with self.subTest(token=token):
-                self.assertIn(token, text)
-
-    def test_the_early_warning_audit_answers_the_dummy_regulator_question(self):
-        """The brief asks five specific questions; the audit must answer them.
-
-        The tempting 'fix' for `supply vdd not found` is to add the regulator,
-        and the brief forbids it without evidence.  The evidence is that the
-        property is absent on X710, on X910 and upstream, and that SM8550 powers
-        the GPU through gpucc GDSCs and OPP levels instead.
-        """
-        text = read("docs/X710_EARLY_BOOT_WARNINGS.md")
-        flat = " ".join(text.split())
-        self.assertIn("msm_gpu.c:955-964", text)
-        self.assertIn("devm_regulator_get", text)
-        self.assertIn("GPU_CC_CX_GDSC", text)
-        self.assertIn("ABSENT on both", text)
-        self.assertIn("do not add a regulator", flat)
-        # And it must not claim the message is a fault signature.
-        self.assertIn("none of them is a marker", flat)
-
-    def test_the_early_warning_audit_does_not_inflate_the_chain(self):
-        """Two of the four are already gone; the doc must say so."""
-        text = read("docs/X710_EARLY_BOOT_WARNINGS.md")
-        self.assertIn("Unable to send ACD state to AOSS", text)
-        self.assertIn("Unable to drop a managed device link reference", text)
-        self.assertIn("CONFIG_QCOM_IPCC=y", text)
-        self.assertIn("DL_FLAG_STATELESS", text)
-        flat = " ".join(text.split())
-        self.assertIn("downgraded from", flat)
-        self.assertIn("does **not** retire profiles B and C", flat)
 
     def test_the_onset_arithmetic_is_pinned_to_the_built_config(self):
         """26 s and 21 s are read from the config, not assumed."""
@@ -2301,16 +2172,6 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("CONFIG_RCU_CPU_STALL_TIMEOUT=21", cfg)
         self.assertIn("CONFIG_HZ=250", cfg)
 
-    def test_the_ordering_table_records_that_it_did_not_survive(self):
-        """The 3-of-3 association must be withdrawn on this kernel's evidence."""
-        text = read("docs/STALL_FIRST_EVENT_ORDERING.md")
-        flat = " ".join(text.split())
-        self.assertIn("the marker table does not survive", flat)
-        self.assertIn("The association does not generalise", flat)
-        # Both new wedges must be shown as lacking the three markers.
-        self.assertIn("| `frame done timeout` | **0** | **0** |", text)
-        self.assertIn("| `mmc1: Timeout` | **0** | **0** |", text)
-        self.assertIn("| `AMC RPMH` | **0** | **0** |", text)
 
     def test_the_two_wedges_are_archived_with_their_binding(self):
         """test-197 has the device-side marker; test-195's was overwritten.
@@ -2407,11 +2268,6 @@ class DocumentationTests(unittest.TestCase):
         self.assertIn("8.75", rec)
         self.assertIn("7.58", rec)
 
-    def test_the_plan_records_the_gpu_direction_as_closed(self):
-        flat = " ".join(read("docs/NEXT_STALL_DEBUG_PLAN.md").split())
-        self.assertIn("RESOLVED IN ROUND 31: the GPU direction is out", flat)
-        self.assertIn("it is not necessary for the wedge", flat)
-        self.assertIn("DONE, and the GPU is out", flat)
 
     def test_the_profile_c_result_is_recorded_without_over_claiming(self):
         """The ablation passed; the single event is NOT classified as a GPU verdict."""

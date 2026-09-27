@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "f02bd15e77c7c4177501aee2d4657e83ff489ca7",
+  "baseline_tests": 999,
+  "retained_baseline_tests": 939,
+  "retired_tests": 60,
+  "new_tests": [
+    "test_host_test_suites.SuiteSelectionTests.test_discovery_import_failure_cannot_be_hidden",
+    "test_host_test_suites.SuiteSelectionTests.test_disjoint_complete_and_new_tests_default_to_core",
+    "test_host_test_suites.SuiteSelectionTests.test_failed_test_propagates_to_exit_and_report",
+    "test_host_test_suites.SuiteSelectionTests.test_list_does_not_execute_failure_fixture",
+    "test_host_test_suites.SuiteSelectionTests.test_skip_is_reported_and_strict_mode_fails",
+    "test_host_test_suites.SuiteSelectionTests.test_stale_selector_invalid_tier_and_duplicate_ids_fail",
+    "test_wedge_evidence.CsdPreflightTests.test_gate_uses_runtime_capability_and_consumed_profile"
+  ],
+  "counts": {
+    "core": 841,
+    "artifacts": 18,
+    "archive": 87
+  },
+  "core_elapsed_s": 64.254,
+  "all_elapsed_s": 84.792,
+  "core_skips": 0,
+  "all_skips": 0,
+  "python": "3.14.4",
+  "physical_device_access": false
+}

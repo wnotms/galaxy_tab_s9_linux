@@ -89,6 +89,8 @@ tablet. During a no-hardware session use only the offline commands below.
 
 ```sh
 bash scripts/check-stall-offline.sh --focused
+# Daily host regression (core tier plus shell syntax):
+bash scripts/check-stall-offline.sh
 # Full host suite, when broader regression coverage is needed:
 bash scripts/check-stall-offline.sh --full
 bash scripts/wedge-ssh.sh --replay out/wedge-ssh/PROFILE/RUN/round-N
@@ -98,7 +100,10 @@ python3 scripts/prepare-csd-trace.py --output out/csd-trace-next/offline-report.
 The check command validates shell files individually: `bash -n scripts/*.sh`
 passes the remaining filenames as arguments to the first file and does not
 validate every script. Use the focused pass while editing verdict logic, then
-the full suite once for the completed change. Sanitizer-based host tests need
+core for routine changes. Add artifact/archive checks for their affected inputs;
+use the full suite for broad changes and final candidate review. The exact tier
+rules and retirement policy are in [HOST_TEST_WORKFLOW.md](HOST_TEST_WORKFLOW.md).
+Sanitizer-based host tests need
 an environment that permits LeakSanitizer's process inspection; a sandbox denial
 is an environment failure, not a driver regression or permission to skip it.
 
