@@ -1,0 +1,30 @@
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.323477347, "phase": "cpu_identity", "cpu": 3, "midr": "0x411fd4d0"}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.323572764, "phase": "cpu_identity", "cpu": 4, "midr": "0x411fd4d0"}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.323641149, "phase": "mapping", "address": "0x7fae62b000", "length": 4096}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.323678232, "phase": "mapping", "address": "0x7fae629000", "length": 8192}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.323718909, "phase": "mapping", "address": "0x7fae200000", "length": 65536}
+GTS9_BBM_TRACE_BEGIN
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 6/6   #P:8
+#
+#                                _-----=> irqs-off/BH-disabled
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+           <...>-1659    [003] d..1.   261.354762: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548386549760 nr=1
+           <...>-1659    [003] d..1.   261.354804: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548386549760 nr=1
+           <...>-1659    [003] d..1.   261.354844: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548386541568 nr=1
+           <...>-1659    [003] d..1.   261.354863: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548386541568 nr=1
+           <...>-1659    [003] d..1.   261.354888: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548382179328 nr=1
+           <...>-1659    [003] d..1.   261.354903: gts9_bbm_240: (modify_prot_start_ptes+0x0/0x2c4) addr=548382179328 nr=1
+
+GTS9_BBM_TRACE_END
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 261.354325003, "phase": "trace_verified", "pid": 1659}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 269.354360729, "phase": "cpu_complete", "cpu": 3, "iterations": 502608, "mprotect_calls": 3015648, "seconds": 8.000006195000026}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 277.354554216, "phase": "cpu_complete", "cpu": 4, "iterations": 505719, "mprotect_calls": 3034314, "seconds": 8.000016716000005}
+{"boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b", "monotonic": 277.354737601, "phase": "complete", "result": "permission_workload_passed", "cpu_stall_fix_established": false}

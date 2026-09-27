@@ -1,0 +1,81 @@
+{
+  "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+  "process_script_sha256": "d64d7037cfc03111405f25d5eb81b1f3f65e6d6c0ff712af726e3dd4ca2ecb40",
+  "rows": [
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.323477347,
+      "phase": "cpu_identity",
+      "cpu": 3,
+      "midr": "0x411fd4d0"
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.323572764,
+      "phase": "cpu_identity",
+      "cpu": 4,
+      "midr": "0x411fd4d0"
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.323641149,
+      "phase": "mapping",
+      "address": "0x7fae62b000",
+      "length": 4096
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.323678232,
+      "phase": "mapping",
+      "address": "0x7fae629000",
+      "length": 8192
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.323718909,
+      "phase": "mapping",
+      "address": "0x7fae200000",
+      "length": 65536
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 261.354325003,
+      "phase": "trace_verified",
+      "pid": 1659
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 269.354360729,
+      "phase": "cpu_complete",
+      "cpu": 3,
+      "iterations": 502608,
+      "mprotect_calls": 3015648,
+      "seconds": 8.000006195000026
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 277.354554216,
+      "phase": "cpu_complete",
+      "cpu": 4,
+      "iterations": 505719,
+      "mprotect_calls": 3034314,
+      "seconds": 8.000016716000005
+    },
+    {
+      "boot_id": "fe1196f2-4464-4c82-b63e-7f875c88223b",
+      "monotonic": 277.354737601,
+      "phase": "complete",
+      "result": "permission_workload_passed",
+      "cpu_stall_fix_established": false
+    }
+  ],
+  "cpu_stall_fix_established": false,
+  "preliminary_trace_hits": 6,
+  "trace_addresses_match_private_mappings": true,
+  "observed_batch_sizes": [
+    1
+  ],
+  "sustained_mprotect_calls": 6049962,
+  "trace_probe_and_instance_removed": true,
+  "high_address_single_present_PTE_scope": true
+}
