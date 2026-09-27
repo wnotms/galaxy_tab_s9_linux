@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; command -v cc; command -v python3; command -v timeout; cat /proc/sys/vm/mmap_min_addr; cat /sys/devices/system/cpu/online; cat /sys/kernel/tracing/current_tracer; cat /sys/kernel/tracing/kprobe_events"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T14:09:55.651525+00:00"
+}
