@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "dd if=/tmp/gts9-pmsg-probe.bin of=/dev/pmsg0 bs=65536 count=1 && echo \"GTS9_PMSG_PROBE id=0a09ff25-7436-4162-9194-230fd9bffc54 sha256=10e2928aea9b2b0f7e924501a0fada746dc6b6298a46e241076914e4548ff625 bytes=33005\" > /dev/kmsg"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:01:41.952076+00:00"
+}

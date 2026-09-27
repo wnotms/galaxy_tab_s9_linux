@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "tar -cf - /sys/fs/pstore /var/lib/systemd/pstore 2>/tmp/gts9-pstore-tar.err | base64"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:02:28.336447+00:00"
+}

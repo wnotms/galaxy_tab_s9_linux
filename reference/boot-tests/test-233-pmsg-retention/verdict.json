@@ -1,0 +1,2799 @@
+{
+  "expected_bytes": 33005,
+  "recovered_bytes": 33005,
+  "expected_sha256": "10e2928aea9b2b0f7e924501a0fada746dc6b6298a46e241076914e4548ff625",
+  "recovered_sha256": "69547878f8547d8c96ae97e69670ff2b0951234fbf6ec9f06ffbd493e2d705f5",
+  "verdict": "absent_or_corrupt",
+  "exact_offsets": [],
+  "ready_for_wedge_series": false,
+  "aligned_offset": 0,
+  "truncated": false,
+  "changed_bytes": 464,
+  "changed_bits": 542,
+  "changes": [
+    {
+      "offset": 4312,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4322,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4326,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 4354,
+      "expected": 255,
+      "observed": 243,
+      "xor": 12
+    },
+    {
+      "offset": 4356,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 4364,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 4384,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 4394,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 4396,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4408,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4413,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4417,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 4423,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4428,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4434,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 4437,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4439,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 4455,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4463,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 4465,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 4476,
+      "expected": 255,
+      "observed": 249,
+      "xor": 6
+    },
+    {
+      "offset": 4507,
+      "expected": 255,
+      "observed": 243,
+      "xor": 12
+    },
+    {
+      "offset": 4509,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 4527,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4534,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 4554,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 4569,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 4585,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4695,
+      "expected": 255,
+      "observed": 63,
+      "xor": 192
+    },
+    {
+      "offset": 4699,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4703,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4735,
+      "expected": 255,
+      "observed": 245,
+      "xor": 10
+    },
+    {
+      "offset": 4738,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4742,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 4750,
+      "expected": 255,
+      "observed": 63,
+      "xor": 192
+    },
+    {
+      "offset": 4854,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 4864,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4954,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4958,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 4964,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 4966,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 4971,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 4975,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 4979,
+      "expected": 255,
+      "observed": 243,
+      "xor": 12
+    },
+    {
+      "offset": 5029,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 5031,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 5046,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5050,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 5062,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 5074,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5336,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 5338,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 5342,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 5358,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 5377,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5381,
+      "expected": 255,
+      "observed": 252,
+      "xor": 3
+    },
+    {
+      "offset": 5387,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 5428,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 5429,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 5430,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 5435,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5436,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5441,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 5449,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 5451,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 5454,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 5469,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 5477,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 5483,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 5533,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 5541,
+      "expected": 255,
+      "observed": 207,
+      "xor": 48
+    },
+    {
+      "offset": 5551,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 5589,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 5593,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 5598,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 5609,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 5613,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 5614,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 5617,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 5619,
+      "expected": 255,
+      "observed": 243,
+      "xor": 12
+    },
+    {
+      "offset": 5654,
+      "expected": 255,
+      "observed": 124,
+      "xor": 131
+    },
+    {
+      "offset": 5660,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 5662,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 5974,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6002,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6014,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6016,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6022,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6103,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 6104,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 6111,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6112,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6124,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6129,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6154,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6160,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6234,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6236,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6244,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6405,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6411,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 6415,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6421,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6445,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 6451,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6469,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6473,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6481,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 6486,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6493,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6495,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6500,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6505,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6506,
+      "expected": 255,
+      "observed": 245,
+      "xor": 10
+    },
+    {
+      "offset": 6553,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6559,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6567,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 6569,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6588,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6600,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 6606,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 6610,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 6613,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6621,
+      "expected": 255,
+      "observed": 243,
+      "xor": 12
+    },
+    {
+      "offset": 6625,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 6714,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6720,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6726,
+      "expected": 255,
+      "observed": 246,
+      "xor": 9
+    },
+    {
+      "offset": 6743,
+      "expected": 255,
+      "observed": 221,
+      "xor": 34
+    },
+    {
+      "offset": 6759,
+      "expected": 255,
+      "observed": 119,
+      "xor": 136
+    },
+    {
+      "offset": 6777,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 6783,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 6789,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 6883,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6885,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 6893,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 6902,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6905,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6909,
+      "expected": 255,
+      "observed": 63,
+      "xor": 192
+    },
+    {
+      "offset": 6912,
+      "expected": 255,
+      "observed": 237,
+      "xor": 18
+    },
+    {
+      "offset": 6915,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6924,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6934,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 6940,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 6952,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 6967,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 6972,
+      "expected": 255,
+      "observed": 251,
+      "xor": 4
+    },
+    {
+      "offset": 6974,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 6982,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 6987,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 7094,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 7102,
+      "expected": 255,
+      "observed": 127,
+      "xor": 128
+    },
+    {
+      "offset": 7104,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 7105,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 7109,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 7126,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 7132,
+      "expected": 255,
+      "observed": 249,
+      "xor": 6
+    },
+    {
+      "offset": 7150,
+      "expected": 255,
+      "observed": 254,
+      "xor": 1
+    },
+    {
+      "offset": 7284,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 7288,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 7312,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 7578,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 7602,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 7957,
+      "expected": 255,
+      "observed": 220,
+      "xor": 35
+    },
+    {
+      "offset": 7975,
+      "expected": 255,
+      "observed": 239,
+      "xor": 16
+    },
+    {
+      "offset": 8100,
+      "expected": 255,
+      "observed": 191,
+      "xor": 64
+    },
+    {
+      "offset": 8108,
+      "expected": 255,
+      "observed": 223,
+      "xor": 32
+    },
+    {
+      "offset": 8112,
+      "expected": 255,
+      "observed": 63,
+      "xor": 192
+    },
+    {
+      "offset": 8128,
+      "expected": 255,
+      "observed": 253,
+      "xor": 2
+    },
+    {
+      "offset": 8146,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 8160,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 8164,
+      "expected": 255,
+      "observed": 247,
+      "xor": 8
+    },
+    {
+      "offset": 9207,
+      "expected": 85,
+      "observed": 117,
+      "xor": 32
+    },
+    {
+      "offset": 9229,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 9233,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 9398,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 9408,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 9461,
+      "expected": 85,
+      "observed": 149,
+      "xor": 192
+    },
+    {
+      "offset": 9481,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 9491,
+      "expected": 85,
+      "observed": 84,
+      "xor": 1
+    },
+    {
+      "offset": 9557,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 9583,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 9585,
+      "expected": 85,
+      "observed": 21,
+      "xor": 64
+    },
+    {
+      "offset": 10585,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 10595,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 10597,
+      "expected": 85,
+      "observed": 101,
+      "xor": 48
+    },
+    {
+      "offset": 10712,
+      "expected": 85,
+      "observed": 84,
+      "xor": 1
+    },
+    {
+      "offset": 10729,
+      "expected": 85,
+      "observed": 213,
+      "xor": 128
+    },
+    {
+      "offset": 10730,
+      "expected": 85,
+      "observed": 84,
+      "xor": 1
+    },
+    {
+      "offset": 10735,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 11075,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 11077,
+      "expected": 85,
+      "observed": 213,
+      "xor": 128
+    },
+    {
+      "offset": 11085,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 11576,
+      "expected": 85,
+      "observed": 21,
+      "xor": 64
+    },
+    {
+      "offset": 11582,
+      "expected": 85,
+      "observed": 20,
+      "xor": 65
+    },
+    {
+      "offset": 11596,
+      "expected": 85,
+      "observed": 213,
+      "xor": 128
+    },
+    {
+      "offset": 11700,
+      "expected": 85,
+      "observed": 149,
+      "xor": 192
+    },
+    {
+      "offset": 11706,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 11730,
+      "expected": 85,
+      "observed": 81,
+      "xor": 4
+    },
+    {
+      "offset": 12500,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 12518,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 12526,
+      "expected": 170,
+      "observed": 10,
+      "xor": 160
+    },
+    {
+      "offset": 12603,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 12621,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 12627,
+      "expected": 170,
+      "observed": 234,
+      "xor": 64
+    },
+    {
+      "offset": 12792,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 12806,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 12982,
+      "expected": 170,
+      "observed": 234,
+      "xor": 64
+    },
+    {
+      "offset": 12986,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13008,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13246,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13252,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13261,
+      "expected": 170,
+      "observed": 171,
+      "xor": 1
+    },
+    {
+      "offset": 13263,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 13266,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 13267,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 13268,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 13290,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13292,
+      "expected": 170,
+      "observed": 154,
+      "xor": 48
+    },
+    {
+      "offset": 13308,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13318,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13330,
+      "expected": 170,
+      "observed": 186,
+      "xor": 16
+    },
+    {
+      "offset": 13407,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13423,
+      "expected": 170,
+      "observed": 43,
+      "xor": 129
+    },
+    {
+      "offset": 13470,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 13472,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13476,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 13590,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13602,
+      "expected": 170,
+      "observed": 136,
+      "xor": 34
+    },
+    {
+      "offset": 13606,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 13630,
+      "expected": 170,
+      "observed": 171,
+      "xor": 1
+    },
+    {
+      "offset": 13638,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 13644,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 14420,
+      "expected": 170,
+      "observed": 186,
+      "xor": 16
+    },
+    {
+      "offset": 14432,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 14440,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 14517,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 14527,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 14529,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 14661,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 14663,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 14669,
+      "expected": 170,
+      "observed": 43,
+      "xor": 129
+    },
+    {
+      "offset": 14740,
+      "expected": 170,
+      "observed": 106,
+      "xor": 192
+    },
+    {
+      "offset": 14762,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 14778,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 14798,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 14800,
+      "expected": 170,
+      "observed": 169,
+      "xor": 3
+    },
+    {
+      "offset": 15102,
+      "expected": 170,
+      "observed": 160,
+      "xor": 10
+    },
+    {
+      "offset": 15120,
+      "expected": 170,
+      "observed": 160,
+      "xor": 10
+    },
+    {
+      "offset": 15130,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 15134,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 15142,
+      "expected": 170,
+      "observed": 106,
+      "xor": 192
+    },
+    {
+      "offset": 15423,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 15429,
+      "expected": 170,
+      "observed": 186,
+      "xor": 16
+    },
+    {
+      "offset": 15431,
+      "expected": 170,
+      "observed": 162,
+      "xor": 8
+    },
+    {
+      "offset": 15435,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 15649,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 15667,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 15675,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 15691,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 15770,
+      "expected": 170,
+      "observed": 138,
+      "xor": 32
+    },
+    {
+      "offset": 15780,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 16214,
+      "expected": 170,
+      "observed": 42,
+      "xor": 128
+    },
+    {
+      "offset": 16238,
+      "expected": 170,
+      "observed": 154,
+      "xor": 48
+    },
+    {
+      "offset": 16242,
+      "expected": 170,
+      "observed": 168,
+      "xor": 2
+    },
+    {
+      "offset": 16733,
+      "expected": 218,
+      "observed": 90,
+      "xor": 128
+    },
+    {
+      "offset": 16745,
+      "expected": 93,
+      "observed": 109,
+      "xor": 48
+    },
+    {
+      "offset": 16753,
+      "expected": 43,
+      "observed": 41,
+      "xor": 2
+    },
+    {
+      "offset": 16822,
+      "expected": 191,
+      "observed": 159,
+      "xor": 32
+    },
+    {
+      "offset": 16846,
+      "expected": 103,
+      "observed": 87,
+      "xor": 48
+    },
+    {
+      "offset": 16848,
+      "expected": 240,
+      "observed": 112,
+      "xor": 128
+    },
+    {
+      "offset": 17154,
+      "expected": 222,
+      "observed": 220,
+      "xor": 2
+    },
+    {
+      "offset": 17156,
+      "expected": 226,
+      "observed": 98,
+      "xor": 128
+    },
+    {
+      "offset": 17695,
+      "expected": 218,
+      "observed": 214,
+      "xor": 12
+    },
+    {
+      "offset": 17697,
+      "expected": 45,
+      "observed": 37,
+      "xor": 8
+    },
+    {
+      "offset": 17707,
+      "expected": 113,
+      "observed": 112,
+      "xor": 1
+    },
+    {
+      "offset": 17757,
+      "expected": 167,
+      "observed": 39,
+      "xor": 128
+    },
+    {
+      "offset": 17773,
+      "expected": 125,
+      "observed": 61,
+      "xor": 64
+    },
+    {
+      "offset": 18007,
+      "expected": 233,
+      "observed": 169,
+      "xor": 64
+    },
+    {
+      "offset": 18010,
+      "expected": 232,
+      "observed": 200,
+      "xor": 32
+    },
+    {
+      "offset": 18011,
+      "expected": 117,
+      "observed": 116,
+      "xor": 1
+    },
+    {
+      "offset": 18026,
+      "expected": 60,
+      "observed": 48,
+      "xor": 12
+    },
+    {
+      "offset": 18029,
+      "expected": 75,
+      "observed": 91,
+      "xor": 16
+    },
+    {
+      "offset": 18032,
+      "expected": 45,
+      "observed": 37,
+      "xor": 8
+    },
+    {
+      "offset": 18037,
+      "expected": 192,
+      "observed": 64,
+      "xor": 128
+    },
+    {
+      "offset": 18043,
+      "expected": 16,
+      "observed": 0,
+      "xor": 16
+    },
+    {
+      "offset": 18063,
+      "expected": 37,
+      "observed": 165,
+      "xor": 128
+    },
+    {
+      "offset": 18804,
+      "expected": 80,
+      "observed": 64,
+      "xor": 16
+    },
+    {
+      "offset": 18822,
+      "expected": 240,
+      "observed": 176,
+      "xor": 64
+    },
+    {
+      "offset": 18828,
+      "expected": 248,
+      "observed": 168,
+      "xor": 80
+    },
+    {
+      "offset": 18872,
+      "expected": 223,
+      "observed": 219,
+      "xor": 4
+    },
+    {
+      "offset": 18874,
+      "expected": 206,
+      "observed": 14,
+      "xor": 192
+    },
+    {
+      "offset": 18890,
+      "expected": 131,
+      "observed": 3,
+      "xor": 128
+    },
+    {
+      "offset": 18920,
+      "expected": 248,
+      "observed": 184,
+      "xor": 64
+    },
+    {
+      "offset": 18926,
+      "expected": 227,
+      "observed": 163,
+      "xor": 64
+    },
+    {
+      "offset": 18928,
+      "expected": 235,
+      "observed": 233,
+      "xor": 2
+    },
+    {
+      "offset": 19240,
+      "expected": 42,
+      "observed": 226,
+      "xor": 200
+    },
+    {
+      "offset": 19242,
+      "expected": 87,
+      "observed": 71,
+      "xor": 16
+    },
+    {
+      "offset": 19393,
+      "expected": 245,
+      "observed": 244,
+      "xor": 1
+    },
+    {
+      "offset": 19399,
+      "expected": 47,
+      "observed": 44,
+      "xor": 3
+    },
+    {
+      "offset": 19401,
+      "expected": 86,
+      "observed": 22,
+      "xor": 64
+    },
+    {
+      "offset": 19412,
+      "expected": 174,
+      "observed": 166,
+      "xor": 8
+    },
+    {
+      "offset": 19418,
+      "expected": 65,
+      "observed": 1,
+      "xor": 64
+    },
+    {
+      "offset": 19438,
+      "expected": 181,
+      "observed": 177,
+      "xor": 4
+    },
+    {
+      "offset": 19572,
+      "expected": 148,
+      "observed": 20,
+      "xor": 128
+    },
+    {
+      "offset": 19582,
+      "expected": 148,
+      "observed": 20,
+      "xor": 128
+    },
+    {
+      "offset": 19602,
+      "expected": 221,
+      "observed": 93,
+      "xor": 128
+    },
+    {
+      "offset": 19612,
+      "expected": 179,
+      "observed": 183,
+      "xor": 4
+    },
+    {
+      "offset": 19630,
+      "expected": 119,
+      "observed": 55,
+      "xor": 64
+    },
+    {
+      "offset": 19634,
+      "expected": 246,
+      "observed": 182,
+      "xor": 64
+    },
+    {
+      "offset": 19733,
+      "expected": 217,
+      "observed": 209,
+      "xor": 8
+    },
+    {
+      "offset": 19743,
+      "expected": 72,
+      "observed": 200,
+      "xor": 128
+    },
+    {
+      "offset": 19745,
+      "expected": 124,
+      "observed": 116,
+      "xor": 8
+    },
+    {
+      "offset": 19774,
+      "expected": 103,
+      "observed": 101,
+      "xor": 2
+    },
+    {
+      "offset": 19784,
+      "expected": 37,
+      "observed": 36,
+      "xor": 1
+    },
+    {
+      "offset": 20225,
+      "expected": 151,
+      "observed": 135,
+      "xor": 16
+    },
+    {
+      "offset": 20229,
+      "expected": 159,
+      "observed": 31,
+      "xor": 128
+    },
+    {
+      "offset": 20237,
+      "expected": 180,
+      "observed": 244,
+      "xor": 64
+    },
+    {
+      "offset": 20309,
+      "expected": 198,
+      "observed": 6,
+      "xor": 192
+    },
+    {
+      "offset": 20313,
+      "expected": 190,
+      "observed": 158,
+      "xor": 32
+    },
+    {
+      "offset": 20319,
+      "expected": 199,
+      "observed": 197,
+      "xor": 2
+    },
+    {
+      "offset": 20342,
+      "expected": 74,
+      "observed": 66,
+      "xor": 8
+    },
+    {
+      "offset": 20356,
+      "expected": 24,
+      "observed": 8,
+      "xor": 16
+    },
+    {
+      "offset": 20360,
+      "expected": 250,
+      "observed": 242,
+      "xor": 8
+    },
+    {
+      "offset": 20366,
+      "expected": 252,
+      "observed": 244,
+      "xor": 8
+    },
+    {
+      "offset": 20522,
+      "expected": 225,
+      "observed": 193,
+      "xor": 32
+    },
+    {
+      "offset": 20528,
+      "expected": 207,
+      "observed": 206,
+      "xor": 1
+    },
+    {
+      "offset": 22272,
+      "expected": 28,
+      "observed": 20,
+      "xor": 8
+    },
+    {
+      "offset": 22278,
+      "expected": 235,
+      "observed": 203,
+      "xor": 32
+    },
+    {
+      "offset": 22422,
+      "expected": 231,
+      "observed": 199,
+      "xor": 32
+    },
+    {
+      "offset": 22428,
+      "expected": 169,
+      "observed": 168,
+      "xor": 1
+    },
+    {
+      "offset": 22440,
+      "expected": 36,
+      "observed": 44,
+      "xor": 8
+    },
+    {
+      "offset": 22646,
+      "expected": 150,
+      "observed": 86,
+      "xor": 192
+    },
+    {
+      "offset": 22652,
+      "expected": 251,
+      "observed": 219,
+      "xor": 32
+    },
+    {
+      "offset": 22658,
+      "expected": 59,
+      "observed": 43,
+      "xor": 16
+    },
+    {
+      "offset": 22670,
+      "expected": 142,
+      "observed": 140,
+      "xor": 2
+    },
+    {
+      "offset": 24041,
+      "expected": 114,
+      "observed": 66,
+      "xor": 48
+    },
+    {
+      "offset": 24043,
+      "expected": 58,
+      "observed": 40,
+      "xor": 18
+    },
+    {
+      "offset": 24319,
+      "expected": 90,
+      "observed": 82,
+      "xor": 8
+    },
+    {
+      "offset": 24323,
+      "expected": 173,
+      "observed": 45,
+      "xor": 128
+    },
+    {
+      "offset": 24327,
+      "expected": 191,
+      "observed": 63,
+      "xor": 128
+    },
+    {
+      "offset": 24383,
+      "expected": 1,
+      "observed": 49,
+      "xor": 48
+    },
+    {
+      "offset": 24393,
+      "expected": 63,
+      "observed": 55,
+      "xor": 8
+    },
+    {
+      "offset": 24397,
+      "expected": 67,
+      "observed": 3,
+      "xor": 64
+    },
+    {
+      "offset": 24796,
+      "expected": 204,
+      "observed": 200,
+      "xor": 4
+    },
+    {
+      "offset": 24802,
+      "expected": 233,
+      "observed": 234,
+      "xor": 3
+    },
+    {
+      "offset": 24810,
+      "expected": 119,
+      "observed": 118,
+      "xor": 1
+    },
+    {
+      "offset": 24869,
+      "expected": 188,
+      "observed": 160,
+      "xor": 28
+    },
+    {
+      "offset": 24875,
+      "expected": 238,
+      "observed": 230,
+      "xor": 8
+    },
+    {
+      "offset": 24879,
+      "expected": 43,
+      "observed": 42,
+      "xor": 1
+    },
+    {
+      "offset": 24883,
+      "expected": 29,
+      "observed": 25,
+      "xor": 4
+    },
+    {
+      "offset": 25012,
+      "expected": 175,
+      "observed": 143,
+      "xor": 32
+    },
+    {
+      "offset": 25024,
+      "expected": 0,
+      "observed": 32,
+      "xor": 32
+    },
+    {
+      "offset": 25752,
+      "expected": 52,
+      "observed": 244,
+      "xor": 192
+    },
+    {
+      "offset": 25756,
+      "expected": 243,
+      "observed": 115,
+      "xor": 128
+    },
+    {
+      "offset": 25778,
+      "expected": 230,
+      "observed": 198,
+      "xor": 32
+    },
+    {
+      "offset": 25884,
+      "expected": 85,
+      "observed": 69,
+      "xor": 16
+    },
+    {
+      "offset": 25886,
+      "expected": 234,
+      "observed": 106,
+      "xor": 128
+    },
+    {
+      "offset": 25906,
+      "expected": 130,
+      "observed": 142,
+      "xor": 12
+    },
+    {
+      "offset": 26461,
+      "expected": 148,
+      "observed": 144,
+      "xor": 4
+    },
+    {
+      "offset": 26480,
+      "expected": 89,
+      "observed": 88,
+      "xor": 1
+    },
+    {
+      "offset": 26482,
+      "expected": 219,
+      "observed": 25,
+      "xor": 194
+    },
+    {
+      "offset": 26621,
+      "expected": 134,
+      "observed": 132,
+      "xor": 2
+    },
+    {
+      "offset": 26635,
+      "expected": 45,
+      "observed": 37,
+      "xor": 8
+    },
+    {
+      "offset": 26645,
+      "expected": 115,
+      "observed": 51,
+      "xor": 64
+    },
+    {
+      "offset": 26671,
+      "expected": 253,
+      "observed": 254,
+      "xor": 3
+    },
+    {
+      "offset": 26673,
+      "expected": 192,
+      "observed": 128,
+      "xor": 64
+    },
+    {
+      "offset": 26710,
+      "expected": 253,
+      "observed": 249,
+      "xor": 4
+    },
+    {
+      "offset": 26718,
+      "expected": 58,
+      "observed": 42,
+      "xor": 16
+    },
+    {
+      "offset": 26738,
+      "expected": 240,
+      "observed": 224,
+      "xor": 16
+    },
+    {
+      "offset": 26969,
+      "expected": 127,
+      "observed": 117,
+      "xor": 10
+    },
+    {
+      "offset": 27198,
+      "expected": 30,
+      "observed": 26,
+      "xor": 4
+    },
+    {
+      "offset": 27204,
+      "expected": 241,
+      "observed": 225,
+      "xor": 16
+    },
+    {
+      "offset": 27216,
+      "expected": 73,
+      "observed": 72,
+      "xor": 1
+    },
+    {
+      "offset": 27444,
+      "expected": 86,
+      "observed": 82,
+      "xor": 4
+    },
+    {
+      "offset": 27452,
+      "expected": 27,
+      "observed": 26,
+      "xor": 1
+    },
+    {
+      "offset": 27470,
+      "expected": 44,
+      "observed": 36,
+      "xor": 8
+    },
+    {
+      "offset": 27572,
+      "expected": 2,
+      "observed": 14,
+      "xor": 12
+    },
+    {
+      "offset": 27578,
+      "expected": 238,
+      "observed": 174,
+      "xor": 64
+    },
+    {
+      "offset": 27586,
+      "expected": 148,
+      "observed": 132,
+      "xor": 16
+    },
+    {
+      "offset": 27680,
+      "expected": 165,
+      "observed": 37,
+      "xor": 128
+    },
+    {
+      "offset": 27696,
+      "expected": 150,
+      "observed": 22,
+      "xor": 128
+    },
+    {
+      "offset": 27709,
+      "expected": 50,
+      "observed": 242,
+      "xor": 192
+    },
+    {
+      "offset": 27711,
+      "expected": 48,
+      "observed": 32,
+      "xor": 16
+    },
+    {
+      "offset": 27729,
+      "expected": 46,
+      "observed": 38,
+      "xor": 8
+    },
+    {
+      "offset": 28117,
+      "expected": 104,
+      "observed": 72,
+      "xor": 32
+    },
+    {
+      "offset": 28141,
+      "expected": 90,
+      "observed": 74,
+      "xor": 16
+    },
+    {
+      "offset": 28147,
+      "expected": 162,
+      "observed": 163,
+      "xor": 1
+    },
+    {
+      "offset": 28180,
+      "expected": 172,
+      "observed": 44,
+      "xor": 128
+    },
+    {
+      "offset": 28184,
+      "expected": 189,
+      "observed": 185,
+      "xor": 4
+    },
+    {
+      "offset": 28206,
+      "expected": 90,
+      "observed": 89,
+      "xor": 3
+    },
+    {
+      "offset": 28517,
+      "expected": 203,
+      "observed": 11,
+      "xor": 192
+    },
+    {
+      "offset": 28519,
+      "expected": 31,
+      "observed": 30,
+      "xor": 1
+    },
+    {
+      "offset": 28525,
+      "expected": 244,
+      "observed": 180,
+      "xor": 64
+    },
+    {
+      "offset": 28529,
+      "expected": 112,
+      "observed": 96,
+      "xor": 16
+    },
+    {
+      "offset": 28542,
+      "expected": 13,
+      "observed": 5,
+      "xor": 8
+    },
+    {
+      "offset": 28548,
+      "expected": 165,
+      "observed": 133,
+      "xor": 32
+    },
+    {
+      "offset": 28560,
+      "expected": 132,
+      "observed": 4,
+      "xor": 128
+    },
+    {
+      "offset": 28635,
+      "expected": 56,
+      "observed": 40,
+      "xor": 16
+    },
+    {
+      "offset": 28639,
+      "expected": 104,
+      "observed": 120,
+      "xor": 16
+    },
+    {
+      "offset": 28645,
+      "expected": 185,
+      "observed": 177,
+      "xor": 8
+    },
+    {
+      "offset": 28964,
+      "expected": 80,
+      "observed": 64,
+      "xor": 16
+    },
+    {
+      "offset": 28968,
+      "expected": 59,
+      "observed": 56,
+      "xor": 3
+    },
+    {
+      "offset": 28974,
+      "expected": 190,
+      "observed": 174,
+      "xor": 16
+    },
+    {
+      "offset": 29017,
+      "expected": 222,
+      "observed": 218,
+      "xor": 4
+    },
+    {
+      "offset": 29025,
+      "expected": 248,
+      "observed": 56,
+      "xor": 192
+    },
+    {
+      "offset": 29027,
+      "expected": 216,
+      "observed": 208,
+      "xor": 8
+    },
+    {
+      "offset": 29035,
+      "expected": 91,
+      "observed": 27,
+      "xor": 64
+    },
+    {
+      "offset": 29041,
+      "expected": 75,
+      "observed": 11,
+      "xor": 64
+    },
+    {
+      "offset": 29244,
+      "expected": 111,
+      "observed": 39,
+      "xor": 72
+    },
+    {
+      "offset": 29256,
+      "expected": 122,
+      "observed": 98,
+      "xor": 24
+    },
+    {
+      "offset": 29266,
+      "expected": 143,
+      "observed": 175,
+      "xor": 32
+    },
+    {
+      "offset": 29277,
+      "expected": 138,
+      "observed": 10,
+      "xor": 128
+    },
+    {
+      "offset": 29497,
+      "expected": 238,
+      "observed": 237,
+      "xor": 3
+    },
+    {
+      "offset": 29507,
+      "expected": 210,
+      "observed": 194,
+      "xor": 16
+    },
+    {
+      "offset": 29749,
+      "expected": 122,
+      "observed": 120,
+      "xor": 2
+    },
+    {
+      "offset": 29759,
+      "expected": 138,
+      "observed": 10,
+      "xor": 128
+    },
+    {
+      "offset": 29763,
+      "expected": 109,
+      "observed": 111,
+      "xor": 2
+    },
+    {
+      "offset": 29796,
+      "expected": 178,
+      "observed": 146,
+      "xor": 32
+    },
+    {
+      "offset": 29800,
+      "expected": 137,
+      "observed": 9,
+      "xor": 128
+    },
+    {
+      "offset": 29804,
+      "expected": 219,
+      "observed": 217,
+      "xor": 2
+    },
+    {
+      "offset": 29960,
+      "expected": 238,
+      "observed": 110,
+      "xor": 128
+    },
+    {
+      "offset": 29964,
+      "expected": 107,
+      "observed": 106,
+      "xor": 1
+    },
+    {
+      "offset": 29970,
+      "expected": 193,
+      "observed": 192,
+      "xor": 1
+    },
+    {
+      "offset": 29974,
+      "expected": 102,
+      "observed": 70,
+      "xor": 32
+    },
+    {
+      "offset": 30002,
+      "expected": 217,
+      "observed": 89,
+      "xor": 128
+    },
+    {
+      "offset": 30040,
+      "expected": 19,
+      "observed": 31,
+      "xor": 12
+    },
+    {
+      "offset": 30044,
+      "expected": 46,
+      "observed": 42,
+      "xor": 4
+    },
+    {
+      "offset": 30328,
+      "expected": 231,
+      "observed": 229,
+      "xor": 2
+    },
+    {
+      "offset": 30342,
+      "expected": 159,
+      "observed": 151,
+      "xor": 8
+    },
+    {
+      "offset": 30344,
+      "expected": 94,
+      "observed": 30,
+      "xor": 64
+    },
+    {
+      "offset": 30352,
+      "expected": 237,
+      "observed": 221,
+      "xor": 48
+    },
+    {
+      "offset": 30420,
+      "expected": 153,
+      "observed": 25,
+      "xor": 128
+    },
+    {
+      "offset": 30440,
+      "expected": 218,
+      "observed": 216,
+      "xor": 2
+    },
+    {
+      "offset": 30466,
+      "expected": 246,
+      "observed": 50,
+      "xor": 196
+    },
+    {
+      "offset": 30480,
+      "expected": 166,
+      "observed": 38,
+      "xor": 128
+    },
+    {
+      "offset": 30499,
+      "expected": 169,
+      "observed": 168,
+      "xor": 1
+    },
+    {
+      "offset": 30515,
+      "expected": 80,
+      "observed": 64,
+      "xor": 16
+    },
+    {
+      "offset": 30552,
+      "expected": 237,
+      "observed": 205,
+      "xor": 32
+    },
+    {
+      "offset": 30567,
+      "expected": 56,
+      "observed": 40,
+      "xor": 16
+    },
+    {
+      "offset": 30569,
+      "expected": 180,
+      "observed": 52,
+      "xor": 128
+    },
+    {
+      "offset": 30570,
+      "expected": 205,
+      "observed": 197,
+      "xor": 8
+    },
+    {
+      "offset": 30579,
+      "expected": 154,
+      "observed": 146,
+      "xor": 8
+    },
+    {
+      "offset": 30936,
+      "expected": 90,
+      "observed": 74,
+      "xor": 16
+    },
+    {
+      "offset": 30950,
+      "expected": 125,
+      "observed": 127,
+      "xor": 2
+    },
+    {
+      "offset": 30956,
+      "expected": 204,
+      "observed": 76,
+      "xor": 128
+    },
+    {
+      "offset": 30960,
+      "expected": 44,
+      "observed": 36,
+      "xor": 8
+    },
+    {
+      "offset": 31065,
+      "expected": 191,
+      "observed": 190,
+      "xor": 1
+    },
+    {
+      "offset": 31077,
+      "expected": 233,
+      "observed": 201,
+      "xor": 32
+    },
+    {
+      "offset": 31288,
+      "expected": 151,
+      "observed": 147,
+      "xor": 4
+    },
+    {
+      "offset": 31294,
+      "expected": 55,
+      "observed": 51,
+      "xor": 4
+    },
+    {
+      "offset": 31300,
+      "expected": 122,
+      "observed": 106,
+      "xor": 16
+    },
+    {
+      "offset": 31308,
+      "expected": 79,
+      "observed": 71,
+      "xor": 8
+    },
+    {
+      "offset": 31312,
+      "expected": 146,
+      "observed": 130,
+      "xor": 16
+    },
+    {
+      "offset": 31454,
+      "expected": 185,
+      "observed": 181,
+      "xor": 12
+    },
+    {
+      "offset": 31458,
+      "expected": 183,
+      "observed": 55,
+      "xor": 128
+    },
+    {
+      "offset": 31460,
+      "expected": 135,
+      "observed": 133,
+      "xor": 2
+    },
+    {
+      "offset": 32066,
+      "expected": 119,
+      "observed": 55,
+      "xor": 64
+    },
+    {
+      "offset": 32080,
+      "expected": 96,
+      "observed": 128,
+      "xor": 224
+    },
+    {
+      "offset": 32504,
+      "expected": 25,
+      "observed": 17,
+      "xor": 8
+    },
+    {
+      "offset": 32516,
+      "expected": 249,
+      "observed": 241,
+      "xor": 8
+    },
+    {
+      "offset": 32564,
+      "expected": 239,
+      "observed": 111,
+      "xor": 128
+    },
+    {
+      "offset": 32588,
+      "expected": 234,
+      "observed": 106,
+      "xor": 128
+    },
+    {
+      "offset": 32590,
+      "expected": 37,
+      "observed": 41,
+      "xor": 12
+    }
+  ]
+}

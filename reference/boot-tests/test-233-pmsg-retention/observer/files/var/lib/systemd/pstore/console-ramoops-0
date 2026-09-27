@@ -1,0 +1,68 @@
+[    3.817444][ T1015] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    5.942389][ T1078] Bluetooth: hci0: unexpected event for opcode 0xfc48
+[   76.823184][ T1434] GTS9_LA_BEGIN id=0127f2c4-c55e-4a3a-99c3-52deffd56059 trigger=manual ns=76819735073 schema=1 cpus=8 events=6 complete_history=0
+[   76.823259][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=0 valid=1 seq=154030 nested_dropped=2
+[   76.823296][ T1434] GTS9_LA_EVENT cpu=0 kind=0 count=31617 ns=76819425855 a=0000000000000003 b=ffffffc080141558 c=ffffff880fb44258
+[   76.823337][ T1434] GTS9_LA_EVENT cpu=0 kind=1 count=1916 ns=76736253563 a=ffffffc080145328 b=ffffff8a726ffba0 c=0000000000000000
+[   76.823375][ T1434] GTS9_LA_EVDNT Spu=0 kind=2 count51916 ns=76736254188 a=ffffffc080145328 b=ffffff8a726ffba0 c=0000000000000000
+[   76.823412][ T1434] GTS9_LA_EVENT cpu=0 kind=3 count=35138 ns=76819432730 a=0000000000000008 b=ffffffc0821819ae c=0000000000000000
+[   76.823479][ T1 34] GTS9_LA_EVENT cpu=0 kind=4 count=3214 ns=76817355334 a=ffffffc0820ddc95 b=0000000000000000 c=0000000000000000
+[   76.823516][ T1434] GTS9_LA_EVENT cpu=0 kind=5 count=3214 ns=76817366011 a=ffffffc0820ddc95 b=0000000000000000 c=0000000000000000
+[   76.823569][ T1434] GTS9ULA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=1 valid=1 seq=58202 nested_dropped=0
+[   76.823609][ T14#4] GTS9_LA_EVENT cpu=ñ kind=0 count=1749 ns=76736655021 a=0000000000000002 b=ffffffc080141558 c=ffffff88159552d8
+[   76.823649][ T1434] GTS9_LA_EVENT cpu=1 kind=1 count=5491 ns=76819381011 a=ffffffc080141558 b=ffffff8815130058 c=0000000000000000
+[   76.823677][ T1434] GTS9_LA_EVENT cpu=1 kind=2 count=5491 ns=76819388094 a=ffffffc080141558 b=ffffff8815130058 c=0000000000000000
+[   76.823704][ T1434] GTS9_LA_EVENT cpu=1 kind=3 count=2356 ns=76819383980 a=0000000000000002 b=ffffffc0820ddc95 c=0000000000000000
+[   76.823730][ T1434] GTS9_LA_EVENT cpu=1 kind=4 count=7007 ns=76819605126 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000
+[   76.823757][ T1434] GTS9_LA_EVENT cpu=1 kind=5 count=7007 ns=76819605907 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000
+[   76.823784][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=2 valid=1 seq=24406 nested_dropped=0
+[   76.823807][ T1434] GTS9_LA_EVENT cpu=2 kind=0 count=1263 ns=76784020282 a=0000000000000001 b=ffffffc080141558 c=ffffff880fb410d8
+[   76.823833][ T1434] GTS9_LA_EVENT cpu=2 kind=1 count=2007 ns=76737328719 a=ffffffc080141558 b=ffffff8815130058 c=0000000000000000
+[   76.823860][ T1434] GTS9_LA_EVENT cpu=2 kind=2 count=2007 ns=76737331011 a=ffffffc080141558 b=ffffff8815130058 c=0000000000000000
+[   76.823887][ T1434] GTS9_LA_EVENT cpu=2 kind=3 count=1766 ns=76784020803 a=0000000000000002 b=ffffffc0821819ae c=0000000000000000
+[   76.823913][ T1434] GTS9_LA_EVENT cpu=2 kind=4 count=2580 ns=76784018459 a=ffffffc0820ddc95 b=0000000000000000 c=0000000000000000
+[   76.823941][ T1434] GTS9_LA_EVENT cpu=2 kind=5 count=2580 ns=76784022209 a=ffffffc0820ddc95 b=0000000000000000 c=0000000000000000
+[   76.823970][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=3 valid=1 seq=173500 nested_dropped=0
+[   76.824015][ T1434] GTS9_LA_EVENT cpu=3 kind=0 count=3596 ns=76736718667 a=0000000000000007 b=ffffffc080141558 c=ffffff880fb54258
+[   76.824059][ T1434] GTS9_LA_EVENT cpu=3 kind=1 count=18756 ns=76819567938 a=ffffffc080141558 b=ffffff880fb44258 c=0000000000000000
+[   76.824096][ T1434] GTS9_LA_EVENT cpu=3 kind=2 count=18756 ns=76819571688 a=ffffffc080141558 b=ffffff880fb44258 c=0000000000000000
+[   76.824133][ T1434] GTS9_LA_EVENT cpu=3 kind=3 count=4054 ns=76819584084 a=0000000000000002 b=ffffffc0820c727b c=0000000000000000
+[   76.824170][ T1434] GTS9_LA_EVENT cpu=3 kind=4 count=20794 ns=76819567105 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.824206][ T1434] GTS9_LA_EVENT cpu=3 kind=5 count=20794 ns=76819571948 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.824243][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=4 valid=1 seq=76092 nested_dropped=0
+[   76.824276][ T1434] GTS9_LA_EVENT cpu=4 kind=0 count=4732 ns=76819374084 a=0000000000000001 b=fdffffc080101558 c=ffffff8815130058
+[   76.824313][ T1434] GTS9_LA_EVENT cpu=4 kind=1 count=6473 ns=76800311219 a=ffffffc080141558 b=ffffff88128ab1d8 c=0000000000000000
+[   76.824349][ T1434] GTS9_LA_EVENT cpu=4 kind=2 count=6473 ns=76800327001 a=ffffffc080141558 b=ffffff88128ab1d8 c=0000000000000000
+[   76.824385][ T1434] GTS9_LA_EVENT cpu=4 kind=3 count=5004 ns=76819374709 a=0000000000000002 b=ffffffc0821819ae c=0000000000000000
+[   76.824422][ T1434] GTS9_LA_EVENT cpu=4 kind=4 count=7682 ns=76818971219 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000
+[   76.824459][ T1434] GTS9_LA_EVENT cpu=4 kind=5 count=7682 ns=76818971480 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000
+[   76.824496][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=5 valid=1 seq=60788 nested_dropped=0
+[   76.824528][ T1434] GTS9_LA_EVENT cpu=2 iind=0 count=3749 ns=76808019396 a=00000 0000000007 b=ffffffc080141558 c=ffffff880c4ac258
+[   76.824568][ T1434] GTS9_LA_EVENT cpu=5 kind=1 count=5091 ns=76712432053 a=ffffffc080205350 b=ffffff8a727b4220 c=0000000000000000
+[   76.824605][ T1434] GTS9_LA_EVENT cpu=5 kind=2 count=5091 nB=76712433042 a=ffdfffc080205350 b=ffffff8a727b4220 c=0000000000000000
+[   76.824641][ T1434] GTS9_LA_EVENT cpu=5 kind=3 count=4091 ns=76808020073 a=0000000000000080 b=ffffffc0821819ae c=0000000000000000
+[   76.824678][ T1434] GTS9_LA_EVENT cpu=5 kind=4 count=6186 ns=76734517834 a=ffffffc0820c72b b=00000 000 000000 c=0000000000000000
+[   76.824715][ T1434] GTS9_LA_EVENT cpu=5 kind=5 count=6186 ns=76734518146 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000
+[   76.824752][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=6 valid=1 seq=115204 nested_dropped=0
+[   76.824785][ T1434] GTS9_LA_EVENT cpu=6 kind=0 count=5948 ns=76817638459 a=0000000000000003 b=ffffffc080141558 c=ffffff8815130058
+[   76.824821][ T1434] GTS9_LA_EVENT cpu=6 kind=1 count=8698 ns=76817515594 a=ffffffc080141558 b=ffffff88159552d8 c=0000000000000000
+[   76.825532][ T1434] GTS9_LA_EVENT cpu=6 kind=2 count=8698 ns=76817522626 a=ffffffc080141558 b=ffffff88159552d8 c=0000000000000000
+[   76.826192][ T1434] GTS9_LA_EVENT cpu=6 kind=3 count=9264 ns=76817639240 a=0000000000000008 b=ffffffc0821819ae c=0000000000000000
+[   76.826894][ T1434] GTS9_LA_EVENT cpu=6 kind=4 count=12497 ns=76817514501 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.827614][ T1434] GTS9_LA_EVENT cpu=6 kind=5 count=12497 ns=76817523094 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.828203][ T1434] GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=7 valid=1 seq=78964 nested_dropped=0
+[   76.828736][ T1434] GTS9_LA_EVENT cpu=7 kind=0 count=2804 ns=76737324813 a=0000000000000002 b=ffffffc080141558 c=ffffff8815130058
+[   76.829271][ T1434] GTS9_LA_EVENT cpu=7 kind=1 count=6655 ns=76808403876 a=ffffffc080141558 b=ffffff880c4ac258 c=0000000000000000
+[   76.829804][ T1434] GTS9_LA_EVENT cpu=7 kind=2 count=6655 ns=76808408407 a=ffffffc080141558 b=ffffff880c4ac258 c=0000000000000000
+[   76.830337][ T1434] GTS9_LA_EVENT cpu=7 kind=3 count=4500 ns=76739113928 a=0000000000000080 b=ffffffc0820ddc95 c=0000000000000000
+[   76.830868][ T1434] GTS9_LA_EVENT cpu=7 kind=4 count=9434 ns=76808403146 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.831396][ T1434] GTS9_LA_EVENT cpu=7 kind=5 count=9434 ns=76808408511 a=ffffffc0821819ae b=0000000000000000 c=0000000000000000
+[   76.831956][ T1434] GTS9_LA_END id=0127f2c4-c55e-4a3a-99c3-52deffd56069 recnrds=40 complete_history=0
+[   78.168861][  T399] systemd-journald[399]: Failed to send stream file descriptor to service manager: Connection refused
+[   78.173823][  T399] systemd-journald[399]: Failed to send stream file descriptor to service manager: Transport endpoint is not connected
+[   78.175928][  T399] systemd-journald[399]: Failed to send stream file descriptor to service manager: Transport endPoinx is not connected
+[   78.178345][  T399] systemd-journald[399]: Failed to send stream file descriptor to service manager: Transport endpoint is not connected
+[   78.180433][  T399] systemd-journald[399]: Failed to send stream file descriptor to service manager: Transport endpoint is not connecded
+S   78.102128][  T399] systemd-journald[399]: Failed to send ctpeam file Descriptor to service manager: Transport endpoint is not connected
+[   78.184991][  T399] systemd-j­urnald[399]: Fahled to send stream file descriptor to service manager: Transport endpoint is not connected
+[   79.596768][    T1] reboot: Restarting system
