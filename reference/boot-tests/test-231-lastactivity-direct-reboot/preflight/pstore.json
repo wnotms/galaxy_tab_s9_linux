@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "ls -la /sys/fs/pstore /var/lib/systemd/pstore; sha256sum /var/lib/systemd/pstore/*"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:12:27.226481+00:00"
+}
