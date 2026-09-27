@@ -1,0 +1,51 @@
+{
+  "config_differences": {
+    "CONFIG_ARM64_PSEUDO_NMI": [
+      "n",
+      "y"
+    ],
+    "CONFIG_HAVE_HARDLOCKUP_DETECTOR_PERF": [
+      "n",
+      "y"
+    ],
+    "CONFIG_HAVE_PERF_EVENTS_NMI": [
+      "n",
+      "y"
+    ]
+  },
+  "config_explanation": "arm64 Kconfig selects the two HAVE_* capabilities when PSEUDO_NMI=y; HARDLOCKUP_DETECTOR remains unset in both",
+  "dtb_equal_test245": true,
+  "release_equal_test245": true,
+  "bbm_patch_present": true,
+  "calibration_helper_absent": true,
+  "artifacts": {
+    "out/kernel-pnmi-bbm/Image.gz": {
+      "bytes": 21931782,
+      "sha256": "f991c6a3f87925f4277ccb6687cf5f9ad76618de078becd23def99d1f79c6e4d"
+    },
+    "out/kernel-pnmi-bbm/config": {
+      "bytes": 241015,
+      "sha256": "25998deccfb6a1988e5720f47e08829a5807fcd42f8f3d0cd4fd06c9ac1781c5"
+    },
+    "out/kernel-pnmi-bbm/sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 177620,
+      "sha256": "5709be3ff6467d0d5fdb0e925f367d73352c9828b7aedf92634ae66a39d94074"
+    },
+    "out/kernel-pnmi-bbm/kernel.release": {
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "out/test246/vmlinux": {
+      "bytes": 476693512,
+      "sha256": "b6ce23dcc0e7c71bff9f61befda58d3b4dca0ed3ab1c8f46cd80a9aeb1a92b39"
+    },
+    "out/test246/System.map": {
+      "bytes": 7704239,
+      "sha256": "5d0ea6a11eba87511480a7f65a41227dd439ea2f074ec0c550b56cbd248aa1dc"
+    },
+    "out/test246/Module.symvers": {
+      "bytes": 911408,
+      "sha256": "28e8c9b9fa9d2324ed468a248f808d7cedcf9f62b9d783930195b4d7ee877daf"
+    }
+  }
+}

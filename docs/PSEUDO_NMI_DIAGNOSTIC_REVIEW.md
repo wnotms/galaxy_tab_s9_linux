@@ -117,3 +117,23 @@ no natural fault. Exact source-clock JSON, per-boot notes/anchors and unique
 priority-0 userspace markers were preserved. Test244 completed the shared
 rollback and independent production check. This completes those attempt budgets,
 not the CPU repair goal or a rate/observer-effect comparison. See their results.
+
+## Test245 failure and module gate for the next capture
+
+The fixed-BBM ordinary-IRQ target245 naturally stalled: RCU requested CPU2's
+backtrace at30.68 s, then CPU1's synchronization waiter panicked at36.54 s,
+before the10 s backtrace wait ended. Attributed retained records give the waiter
+and last activity but not CPU2's PC. This new positive evidence motivates one
+explicit combined246 profile: retain245's BBM/recorder/ECC and add the calibrated
+priority-mask route plus warning-level console output, with no injection helper.
+Standard show_regs includes saved PMR when runtime priority masking is active.
+
+Do not silently carry unknown modules into that config. Pinned cpucap_is_possible
+folds priority masking to false when PSEUDO_NMI was disabled at compile time.
+A full167-module comparison now finds affected allocated code/alternative sites
+in bluetooth, mac80211 and ath11k, despite equal imported-symbol CRC mappings.
+The previous built-in CPU0 calibration did not establish module compatibility;
+this does not retrospectively identify historical module bytes or a CPU cause.
+246 kernel/modules are built and packaged together, originals backed up and
+the swap/restore checked offline. See test246 BUILD_RESULTS.md. Hardware scope
+remains one120 s startup and rollback of BOTH images and any replaced modules.

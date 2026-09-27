@@ -40,3 +40,16 @@ explanation: its PrivateUsers=yes requires user namespaces, while both existing
 kernel configs explicitly have CONFIG_USER_NS unset. This is not evidence of
 CPU failure. Keep its health failure visible; do not change namespace settings
 or service isolation within the CPU capture experiment.
+
+## Completed full comparison
+
+Test246's kernel and all modules have now built successfully. A verified tar
+of the current device supplied167 .ko files for read-only ELF comparison.
+Three do contain a relevant difference against the matching new build:
+bluetooth adds62 priority-mask alternatives, mac80211 adds19 and ath11k adds8.
+Their allocated code/alternative sections change while every common imported
+symbol CRC and the import sets remain equal across all167 modules. Two raw
+version-table byte differences are ordering changes, not CRC mismatches.
+This establishes why loader version checks alone are inadequate for this
+capture. It is not proof of an earlier CPU-stall cause or every historical
+module's identity. See test246 BUILD_RESULTS.md and module-comparison.json.

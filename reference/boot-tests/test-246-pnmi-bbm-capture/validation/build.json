@@ -1,0 +1,30 @@
+{
+  "utc_start": "2026-09-27T19:14:24.665002+00:00",
+  "source_commit": "20a04745c46c3efe8ecc50b0860d6aadddc07b01",
+  "command": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "USE_CCACHE": "1",
+    "ARCH": "arm64",
+    "LLVM": "1",
+    "JOBS": "12",
+    "BUILD_MODULES": "1",
+    "KERNEL_CLEAN": "0",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-pnmi-bbm",
+    "GTS9_DIAG_FRAGMENT": "kernel/config/gts9wifi-pnmi.fragment",
+    "GTS9_DIAGNOSTIC_PATCHES": "0022-gts9-lastactivity.patch 0024-gts9-ramoops-ecc64.patch 0026-arm64-bbm-flush-range.patch"
+  },
+  "preparation": [
+    "git",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi",
+    "apply",
+    "--reverse",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/kernel/patches/diagnostic/0022-gts9-lastactivity.patch"
+  ],
+  "preparation_reason": "Remove only the verified generated recorder patch before prepare-kernel re-applies it; preserve cache and all upstream/user state",
+  "status": 0,
+  "utc_end": "2026-09-27T19:17:52.240357+00:00"
+}

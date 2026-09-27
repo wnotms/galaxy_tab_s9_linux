@@ -1,0 +1,8 @@
+{
+  "repository_shell_count": 41,
+  "commands": [
+    "sh -n out/test246/module-swap.sh",
+    "for f in scripts/*.sh; do bash -n \"$f\" || exit; done"
+  ],
+  "status": 0
+}
