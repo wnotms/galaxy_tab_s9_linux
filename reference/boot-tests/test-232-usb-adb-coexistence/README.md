@@ -8,7 +8,7 @@ transport test, not a wedge series or a pstore/ECC experiment.
 Start state: test-231 production hashes restored; subsequent CPU5 wedge was
 captured and owner recovered to TWRP. No boot partition writes planned here.
 
-Deploy only the seven changed USB config/unit/helper files from the reproducible
+Deploy only the nine changed USB config/unit/helper files from the reproducible
 overlay tar, after backing up the existing files. Preserve NCM config, SSH
 keys/config, VID/PID/serial and NCM interface ordering. Keep packaged adbd.service
 masked. New FunctionFS mount uses no_disconnect=1. Mount/daemon/readiness/bind
@@ -26,3 +26,6 @@ archived separately; a USB endpoint does not fix an unresponsive CPU.
 
 No driver installation or kernel image change is part of this trial. If Windows
 does not bind native ADB, preserve NCM and record the enumeration limitation.
+
+The second deployment adds an idle endpoint holder to cover daemon-internal
+reopen paths; it must be present before linking ADB. See FIRST_BOOT.md.

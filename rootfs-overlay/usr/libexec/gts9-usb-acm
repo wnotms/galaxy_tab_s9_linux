@@ -287,17 +287,21 @@ adb_conf=${GTS9_USB_ADB_CONF:-/etc/gts9-usb-adb}
 adb_ffs=${GTS9_USB_ADB_FFS:-/dev/usb-ffs/adb}
 adb_wait=${GTS9_USB_ADB_WAIT_SECONDS:-5}
 adb_state=${GTS9_USB_ADB_STATE:-/run/gts9-usb-adb.mount-id}
+adb_hold=${GTS9_USB_ADB_HOLD:-/run/gts9-usb-adb.holder}
 adb_mount=$(findmnt -rn -t functionfs -o ID --mountpoint "$adb_ffs" 2>/dev/null)
 if [ "$(cat "$adb_conf" 2>/dev/null)" = 1 ] &&
    [ -d "$GADGET/functions/ffs.adb" ] &&
    [ -n "$adb_mount" ] && [ "$adb_mount" = "$(cat "$adb_state" 2>/dev/null)" ]; then
 	waited=0
-	while [ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" != 1 ] &&
-	      [ "$waited" -lt "$adb_wait" ]; do
+	adb_ready() {
+		[ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" = 1 ] &&
+		kill -0 "$(cat "$adb_hold" 2>/dev/null)" 2>/dev/null
+	}
+	while ! adb_ready && [ "$waited" -lt "$adb_wait" ]; do
 		sleep 1
 		waited=$((waited + 1))
 	done
-	if [ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" = 1 ]; then
+	if adb_ready; then
 		# adbd supplies the WINUSB compatible-ID descriptor through FunctionFS.
 		# Enable Microsoft's descriptor request on this existing configuration.
 		if echo MSFT100 > "$GADGET/os_desc/qw_sign" &&

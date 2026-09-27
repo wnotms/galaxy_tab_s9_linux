@@ -298,6 +298,8 @@ class UsbAcmServiceTests(unittest.TestCase):
         conf.write_text('1')
         state = self.root / 'adb.mount-id'
         state.write_text('177')
+        holder = self.root / 'holder'
+        holder.write_text(str(os.getpid()))
         bindir = self.root / 'bin'
         bindir.mkdir()
         findmnt = bindir / 'findmnt'
@@ -306,6 +308,7 @@ class UsbAcmServiceTests(unittest.TestCase):
         return dict(PATH=str(bindir) + ':' + os.environ['PATH'],
                     GTS9_USB_ADB_CONF=str(conf),
                     GTS9_USB_ADB_STATE=str(state),
+                    GTS9_USB_ADB_HOLD=str(holder),
                     GTS9_USB_ADB_WAIT_SECONDS='0')
 
     def test_ready_adb_shares_ncm_gadget(self):
@@ -414,6 +417,33 @@ class UsbAcmServiceTests(unittest.TestCase):
         (self.gadget / 'configs/c.1/ffs.adb').unlink()
         (self.gadget / 'UDC').write_text('ncm-only')
         self.assertTrue(allowed())
+
+    def test_missing_holder_keeps_ncm_only(self):
+        env = self.adb_fixture()
+        Path(env['GTS9_USB_ADB_HOLD']).unlink()
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse((self.gadget / 'configs/c.1/ffs.adb').exists())
+
+    def test_holder_keeps_ep0_open_without_writing(self):
+        env = self.adb_fixture()
+        ffs = self.root / 'ffs'
+        ffs.mkdir()
+        ep0 = ffs / 'ep0'
+        ep0.write_text('descriptors-unchanged')
+        holder = subprocess.Popen(['sh', str(OVERLAY / 'libexec/gts9-usb-adb-hold')],
+            env=dict(os.environ, **env, GTS9_USB_GADGET_DIR=str(self.gadget),
+                     GTS9_USB_ADB_FFS=str(ffs)))
+        try:
+            for _ in range(100):
+                if Path(f'/proc/{holder.pid}/fd/3').resolve() == ep0:
+                    break
+                time.sleep(.01)
+            self.assertEqual(Path(f'/proc/{holder.pid}/fd/3').resolve(), ep0)
+            self.assertEqual(ep0.read_text(), 'descriptors-unchanged')
+        finally:
+            holder.terminate()
+            holder.wait(timeout=3)
 
     def test_service_is_oneshot_and_never_required_by_the_boot_target(self):
         self.assertIn('Type=oneshot', UNIT)

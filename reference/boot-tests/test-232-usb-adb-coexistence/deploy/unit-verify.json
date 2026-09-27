@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/systemd-analyze verify gts9-usb-adb-prepare.service gts9-adbd.service gts9-usb-acm.service"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:27:05.711952+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "sha256sum /mnt/debian/etc/gts9-usb-adb /mnt/debian/usr/libexec/gts9-usb-adb-prepare /mnt/debian/usr/libexec/gts9-usb-acm /mnt/debian/usr/libexec/gts9-adbd-can-start /mnt/debian/usr/lib/systemd/system/gts9-usb-adb-prepare.service /mnt/debian/usr/lib/systemd/system/gts9-adbd.service /mnt/debian/usr/lib/systemd/system/gts9-usb-acm.service /mnt/debian/usr/libexec/gts9-usb-adb-hold /mnt/debian/usr/lib/systemd/system/gts9-usb-adb-hold.service"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:32:19.008326+00:00"
+}

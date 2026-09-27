@@ -24,7 +24,11 @@ files for the next normal boot. The already-bound path leaves the gadget
 unchanged. FunctionFS is mounted with `no_disconnect=1`, supported by the
 pinned kernel, to avoid unregistering NCM when adbd closes its endpoints.
 Reopening ep0 after all endpoints close would still reset the shared gadget.
-An ExecCondition therefore refuses daemon restart while ADB is linked to a
+A separate idle holder keeps ep0 open because adbd can also reopen endpoints
+internally after transport errors. The gadget only links ADB after this holder
+is present. A failed USB transport may need the next normal boot to recover;
+this prioritizes preserving SSH over automatically reconnecting USB ADB.
+An ExecCondition also refuses daemon restart while ADB is linked to a
 bound gadget: after adbd exits, SSH remains, and USB ADB returns next boot.
 Do not bypass that guard for a live restart.
 FunctionFS does not expose this option in mountinfo; the prepare helper records

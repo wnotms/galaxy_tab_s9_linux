@@ -1,0 +1,320 @@
+ccache enabled: CCACHE_DIR=/home/ms/.cache/ccache
+Cache directory:                          /home/ms/.cache/ccache
+Config file:                              /home/ms/.cache/ccache/ccache.conf
+System config file:                       /etc/ccache.conf
+Stats updated:                            Sun Sep 27 14:23:56 2026
+Cacheable calls:                           796364 / 865970 (91.96%)
+  Hits:                                    722389 / 796364 (90.71%)
+using existing upstream checkout: /home/ms/Samsung/galaxy_tab_s9_linux/.work/linux-mainline
+verified upstream Linux: v7.2-rc3 @ a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+applying 0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch
+applying 0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch
+applying 0004-drm-panel-add-samsung-ana38407.patch
+applying 0006-input-add-samsung-pogo-keyboard.patch
+applying 0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch
+applying 0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch
+applying 0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch
+applying 0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch
+applying nxp-ptn3222-apply-dt-register-overrides.patch
+installing keyboard-samsung-pogo.c -> keyboard/
+installing panel-samsung-ana38407.c -> panel/
+installing samsung-gts9wifi-sec-log.c -> qcom/
+prepared SM-X710 source overlay: /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi
+materialized verified stock config: /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/SM-X710-stock-5.15.153.config
+Using /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/SM-X710-stock-5.15.153.config as base
+Merging /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment
+Value of CONFIG_WERROR is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_WERROR=y
+New value: # CONFIG_WERROR is not set
+
+Value of CONFIG_LOCALVERSION is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LOCALVERSION=""
+New value: CONFIG_LOCALVERSION="-gts9wifi"
+
+Value of CONFIG_LOCALVERSION_AUTO is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LOCALVERSION_AUTO=y
+New value: # CONFIG_LOCALVERSION_AUTO is not set
+
+Value of CONFIG_CMDLINE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_CMDLINE="stack_depot_disable=on kasan.stacktrace=off kvm-arm.mode=protected cgroup_disable=pressure"
+New value: CONFIG_CMDLINE=""
+
+Value of CONFIG_ARM_QCOM_CPUFREQ_HW is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_ARM_QCOM_CPUFREQ_HW is not set
+New value: CONFIG_ARM_QCOM_CPUFREQ_HW=y
+
+Value of CONFIG_LTO_NONE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_LTO_NONE is not set
+New value: CONFIG_LTO_NONE=y
+
+Value of CONFIG_LTO_CLANG_FULL is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_LTO_CLANG_FULL=y
+New value: # CONFIG_LTO_CLANG_FULL is not set
+
+Value of CONFIG_QRTR is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QRTR is not set
+New value: CONFIG_QRTR=y
+
+Value of CONFIG_BT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT=y
+New value: CONFIG_BT=m
+
+Value of CONFIG_BT_QCA is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT_QCA=y
+New value: CONFIG_BT_QCA=m
+
+Value of CONFIG_BT_HCIUART is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_BT_HCIUART=y
+New value: CONFIG_BT_HCIUART=m
+
+Value of CONFIG_CFG80211 is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_CFG80211 is not set
+New value: CONFIG_CFG80211=m
+
+Value of CONFIG_DEVTMPFS_MOUNT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DEVTMPFS_MOUNT is not set
+New value: CONFIG_DEVTMPFS_MOUNT=y
+
+Value of CONFIG_MHI_BUS is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MHI_BUS is not set
+New value: CONFIG_MHI_BUS=y
+
+Value of CONFIG_QCOM_FASTRPC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_FASTRPC is not set
+New value: CONFIG_QCOM_FASTRPC=y
+
+Value of CONFIG_SCSI_UFS_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_SCSI_UFS_QCOM is not set
+New value: CONFIG_SCSI_UFS_QCOM=y
+
+Value of CONFIG_WLAN_VENDOR_ATH is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_WLAN_VENDOR_ATH is not set
+New value: CONFIG_WLAN_VENDOR_ATH=y
+
+Value of CONFIG_VT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_VT is not set
+New value: CONFIG_VT=y
+
+Value of CONFIG_SERIAL_QCOM_GENI_CONSOLE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_SERIAL_QCOM_GENI_CONSOLE=y
+New value: # CONFIG_SERIAL_QCOM_GENI_CONSOLE is not set
+
+Value of CONFIG_NULL_TTY is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_NULL_TTY is not set
+New value: CONFIG_NULL_TTY=y
+
+Value of CONFIG_I2C_CHARDEV is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_I2C_CHARDEV is not set
+New value: CONFIG_I2C_CHARDEV=y
+
+Value of CONFIG_I2C_QCOM_GENI is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_I2C_QCOM_GENI is not set
+New value: CONFIG_I2C_QCOM_GENI=y
+
+Value of CONFIG_SPMI_MSM_PMIC_ARB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_SPMI_MSM_PMIC_ARB is not set
+New value: CONFIG_SPMI_MSM_PMIC_ARB=y
+
+Value of CONFIG_PINCTRL_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PINCTRL_MSM is not set
+New value: CONFIG_PINCTRL_MSM=y
+
+Value of CONFIG_PINCTRL_QCOM_SPMI_PMIC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PINCTRL_QCOM_SPMI_PMIC is not set
+New value: CONFIG_PINCTRL_QCOM_SPMI_PMIC=y
+
+Value of CONFIG_NVMEM_REBOOT_MODE is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_NVMEM_REBOOT_MODE is not set
+New value: CONFIG_NVMEM_REBOOT_MODE=y
+
+Value of CONFIG_QCOM_WDT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_WDT is not set
+New value: CONFIG_QCOM_WDT=y
+
+Value of CONFIG_MFD_SPMI_PMIC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MFD_SPMI_PMIC is not set
+New value: CONFIG_MFD_SPMI_PMIC=y
+
+Value of CONFIG_DRM_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DRM_MSM is not set
+New value: CONFIG_DRM_MSM=y
+
+Value of CONFIG_DRM_SIMPLEDRM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_DRM_SIMPLEDRM is not set
+New value: CONFIG_DRM_SIMPLEDRM=y
+
+Value of CONFIG_FB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_FB is not set
+New value: CONFIG_FB=y
+
+Value of CONFIG_USB_CONFIGFS_SERIAL is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_USB_CONFIGFS_SERIAL=y
+New value: # CONFIG_USB_CONFIGFS_SERIAL is not set
+
+Value of CONFIG_USB_CONFIGFS_ACM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_USB_CONFIGFS_ACM=y
+New value: # CONFIG_USB_CONFIGFS_ACM is not set
+
+Value of CONFIG_MMC_SDHCI_MSM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_MMC_SDHCI_MSM is not set
+New value: CONFIG_MMC_SDHCI_MSM=y
+
+Value of CONFIG_QCOM_GPI_DMA is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_GPI_DMA is not set
+New value: CONFIG_QCOM_GPI_DMA=y
+
+Value of CONFIG_COMMON_CLK_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_COMMON_CLK_QCOM is not set
+New value: CONFIG_COMMON_CLK_QCOM=y
+
+Value of CONFIG_HWSPINLOCK_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_HWSPINLOCK_QCOM is not set
+New value: CONFIG_HWSPINLOCK_QCOM=y
+
+Value of CONFIG_QCOM_IPCC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_IPCC is not set
+New value: CONFIG_QCOM_IPCC=y
+
+Value of CONFIG_ARM_SMMU is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_ARM_SMMU is not set
+New value: CONFIG_ARM_SMMU=y
+
+Value of CONFIG_QCOM_SYSMON is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SYSMON is not set
+New value: CONFIG_QCOM_SYSMON=y
+
+Value of CONFIG_QCOM_AOSS_QMP is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_AOSS_QMP is not set
+New value: CONFIG_QCOM_AOSS_QMP=y
+
+Value of CONFIG_QCOM_COMMAND_DB is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_COMMAND_DB is not set
+New value: CONFIG_QCOM_COMMAND_DB=y
+
+Value of CONFIG_QCOM_LLCC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_LLCC is not set
+New value: CONFIG_QCOM_LLCC=y
+
+Value of CONFIG_QCOM_RPMH is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_RPMH is not set
+New value: CONFIG_QCOM_RPMH=y
+
+Value of CONFIG_QCOM_SMEM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SMEM is not set
+New value: CONFIG_QCOM_SMEM=y
+
+Value of CONFIG_QCOM_SPMI_ADC5 is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_SPMI_ADC5 is not set
+New value: CONFIG_QCOM_SPMI_ADC5=y
+
+Value of CONFIG_QCOM_PDC is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_QCOM_PDC is not set
+New value: CONFIG_QCOM_PDC=y
+
+Value of CONFIG_PHY_QCOM_QMP is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_PHY_QCOM_QMP is not set
+New value: CONFIG_PHY_QCOM_QMP=y
+
+Value of CONFIG_NVMEM_SPMI_SDAM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_NVMEM_SPMI_SDAM is not set
+New value: CONFIG_NVMEM_SPMI_SDAM=y
+
+Value of CONFIG_INTERCONNECT_QCOM is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: # CONFIG_INTERCONNECT_QCOM is not set
+New value: CONFIG_INTERCONNECT_QCOM=y
+
+Value of CONFIG_UBSAN is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_UBSAN=y
+New value: # CONFIG_UBSAN is not set
+
+Value of CONFIG_KASAN is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_KASAN=y
+New value: # CONFIG_KASAN is not set
+
+Value of CONFIG_PANIC_TIMEOUT is redefined by fragment /home/ms/Samsung/galaxy_tab_s9_linux/kernel/config/gts9wifi-mainline.fragment:
+Previous value: CONFIG_PANIC_TIMEOUT=-1
+New value: CONFIG_PANIC_TIMEOUT=0
+
+#
+# merged configuration written to /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out/.config (needs make)
+#
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+.config:767:warning: symbol value '0' invalid for BASE_SMALL
+.config:6832:warning: symbol value 'n' invalid for BOOTPARAM_SOFTLOCKUP_PANIC
+.config:6836:warning: symbol value 'n' invalid for BOOTPARAM_HUNG_TASK_PANIC
+.config:7227:warning: override: reassigning to symbol SERIAL_QCOM_GENI_CONSOLE
+#
+# configuration written to .config
+#
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+console check: CONFIG_U_SERIAL_CONSOLE=absent
+console check: CONFIG_SERIAL_QCOM_GENI_CONSOLE=off
+gadget check: CONFIG_USB_CONFIGFS_ACM=off
+gadget check: CONFIG_USB_CONFIGFS_SERIAL=off
+gadget check: CONFIG_USB_U_SERIAL=absent
+gadget check: CONFIG_USB_F_ACM=absent
+gadget check: CONFIG_USB_F_SERIAL=absent
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+  SYNC    include/config/auto.conf
+  DESCEND bpf/resolve_btfids
+  DTC     arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb
+  INSTALL libsubcmd_headers
+  CC      drivers/phy/phy-nxp-ptn3222.o
+  CC      drivers/phy/qualcomm/phy-qcom-qmp-pcie.o
+  AR      drivers/phy/qualcomm/built-in.a
+  AR      drivers/phy/built-in.a
+  CC      drivers/soc/qcom/samsung-gts9wifi-sec-log.o
+  AR      drivers/soc/qcom/built-in.a
+  AR      drivers/soc/built-in.a
+  CC      drivers/input/keyboard/keyboard-samsung-pogo.o
+  AR      drivers/input/keyboard/built-in.a
+  AR      drivers/input/built-in.a
+  CC      drivers/gpu/drm/panel/panel-samsung-ana38407.o
+  AR      drivers/gpu/drm/panel/built-in.a
+  CC      drivers/remoteproc/qcom_q6v5.o
+  CC      drivers/gpu/drm/msm/adreno/a6xx_gmu.o
+  AR      drivers/remoteproc/built-in.a
+  AR      drivers/gpu/drm/msm/built-in.a
+  AR      drivers/gpu/drm/built-in.a
+  AR      drivers/gpu/built-in.a
+  AR      drivers/built-in.a
+  AR      built-in.a
+  AR      built-in-fixup.a
+  COPY    vmlinux.a
+  LD      vmlinux.o
+  GEN     .vmlinux.objs
+  MODPOST vmlinux.symvers
+  KSYMS   .tmp_vmlinux0.kallsyms.S
+  AS      .tmp_vmlinux0.kallsyms.o
+  LD      .tmp_vmlinux1
+  BTF     .tmp_vmlinux1
+  NM      .tmp_vmlinux1.syms
+  KSYMS   .tmp_vmlinux1.kallsyms.S
+  AS      .tmp_vmlinux1.kallsyms.o
+  LD      .tmp_vmlinux2
+  NM      .tmp_vmlinux2.syms
+  KSYMS   .tmp_vmlinux2.kallsyms.S
+  AS      .tmp_vmlinux2.kallsyms.o
+  LD      vmlinux.unstripped
+  BTFIDS  vmlinux.unstripped
+  NM      System.map
+  SORTTAB vmlinux.unstripped
+  OBJCOPY vmlinux
+  GEN     modules.builtin.modinfo
+  GEN     modules.builtin
+  OBJCOPY arch/arm64/boot/Image
+  GZIP    arch/arm64/boot/Image.gz
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+
+Build complete
+  release: 7.2.0-rc3-gts9wifi-dirty
+  output : out/kernel-usb-adb
+
+a2427e3f8fbecde650f8ecd19797f5e822d4b7e81120df1eba5030c9011d4e16  Image.gz
+eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0  sm8550-samsung-gts9wifi.dtb
+42e37409887a1614467454f3a47c17a586b9fb67ef7f0d5003943803627889e9  config
+b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658  kernel.release

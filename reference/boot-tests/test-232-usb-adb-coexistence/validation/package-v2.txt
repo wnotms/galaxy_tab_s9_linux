@@ -1,0 +1,6 @@
+install-debian-rootfs: built 1 native helper(s) for the tablet
+install-debian-rootfs: kernel modules skipped
+install-debian-rootfs: firmware skipped
+install-debian-rootfs: overlay tarball: out/test232/overlay-v2.tar
+install-debian-rootfs: deploy with: adb push out/test232/overlay-v2.tar /tmp/ && cd /mnt/debian && tar -xpf /tmp/overlay-v2.tar && sync
+install-debian-rootfs: then enable the units: sh /mnt/debian/usr/libexec/gts9-enable-units /mnt/debian

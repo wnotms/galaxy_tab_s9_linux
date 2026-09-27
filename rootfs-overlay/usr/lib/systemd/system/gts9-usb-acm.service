@@ -1,8 +1,8 @@
 [Unit]
 Description=X710 USB debug link (NCM network for ssh; no serial port)
 Documentation=file:/usr/share/doc/gts9/FAST_DEBUG_CHANNEL.md
-After=local-fs.target gts9-usb-adb-prepare.service gts9-adbd.service
-Wants=gts9-usb-adb-prepare.service gts9-adbd.service
+After=local-fs.target gts9-usb-adb-prepare.service gts9-adbd.service gts9-usb-adb-hold.service
+Wants=gts9-usb-adb-prepare.service gts9-adbd.service gts9-usb-adb-hold.service
 # The unit name keeps the historical "acm" because scripts, test records and the
 # boot-stage history (`usb-acm-ready`) all refer to it; renaming would invalidate
 # that audit trail for no functional gain.  Read the name as a label.

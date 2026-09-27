@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/journalctl -b acb16bf466d243cb9fa85d35154ef586 --no-pager -o short-monotonic"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:31:11.022611+00:00"
+}

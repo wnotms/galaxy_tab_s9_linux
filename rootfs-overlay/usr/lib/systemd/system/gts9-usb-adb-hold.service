@@ -1,0 +1,10 @@
+[Unit]
+Description=Keep USB ADB endpoint lifetime independent of daemon reconnects
+After=gts9-usb-adb-prepare.service gts9-adbd.service
+Before=gts9-usb-acm.service
+
+[Service]
+Type=simple
+ExecStart=/usr/libexec/gts9-usb-adb-hold
+Restart=on-failure
+RestartSec=1

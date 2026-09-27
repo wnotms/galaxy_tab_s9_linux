@@ -1,0 +1,25 @@
+#!/bin/sh
+# Keep one ep0 reference while the shared gadget is active. Debian adbd also
+# reopens endpoints internally after transport errors; a service restart guard
+# alone cannot prevent that reopen from resetting NCM. This holder prevents
+# the last-close transition even in that path. A failed USB ADB transport then
+# waits for a normal reboot to recover, while NCM can remain available.
+set -u
+GADGET=${GTS9_USB_GADGET_DIR:-/sys/kernel/config/usb_gadget/gts9}
+FFS=${GTS9_USB_ADB_FFS:-/dev/usb-ffs/adb}
+STATE=${GTS9_USB_ADB_STATE:-/run/gts9-usb-adb.mount-id}
+HOLD=${GTS9_USB_ADB_HOLD:-/run/gts9-usb-adb.holder}
+WAIT=${GTS9_USB_ADB_WAIT_SECONDS:-5}
+[ -z "$(cat "$GADGET/UDC" 2>/dev/null)" ] || exit 0
+mount_id=$(findmnt -rn -t functionfs -o ID --mountpoint "$FFS" 2>/dev/null)
+[ -n "$mount_id" ] && [ "$mount_id" = "$(cat "$STATE" 2>/dev/null)" ] || exit 0
+waited=0
+while [ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" != 1 ]; do
+	[ "$waited" -lt "$WAIT" ] || exit 0
+	sleep 1
+	waited=$((waited + 1))
+done
+exec 3<>"$FFS/ep0" || exit 0
+(umask 077; echo "$$" > "$HOLD") || exit 0
+# The fd stays open across exec. No endpoint writes or busy polling.
+exec sleep infinity
