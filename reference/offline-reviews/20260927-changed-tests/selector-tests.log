@@ -1,0 +1,14 @@
+test_cli_clean_and_reviewed_docs_report_no_tests_not_a_passed_suite (test_changed_tests.ChangedTests.test_cli_clean_and_reviewed_docs_report_no_tests_not_a_passed_suite) ... ok
+test_cli_executes_only_mapped_tests_and_propagates_failures (test_changed_tests.ChangedTests.test_cli_executes_only_mapped_tests_and_propagates_failures) ... ok
+test_empty_discovery_is_an_error_even_in_changed_mode (test_changed_tests.ChangedTests.test_empty_discovery_is_an_error_even_in_changed_mode) ... ok
+test_explicit_base_includes_committed_changes_and_invalid_base_fails (test_changed_tests.ChangedTests.test_explicit_base_includes_committed_changes_and_invalid_base_fails) ... ok
+test_git_collects_staged_unstaged_untracked_and_cancelled_edits (test_changed_tests.ChangedTests.test_git_collects_staged_unstaged_untracked_and_cancelled_edits) ... ok
+test_import_failure_cannot_hide_behind_unrelated_mapping (test_changed_tests.ChangedTests.test_import_failure_cannot_hide_behind_unrelated_mapping) ... ok
+test_rename_keeps_both_paths_and_deletion_forces_all (test_changed_tests.ChangedTests.test_rename_keeps_both_paths_and_deletion_forces_all) ... ok
+test_test_helper_changes_include_transitive_consumers (test_changed_tests.ChangedTests.test_test_helper_changes_include_transitive_consumers) ... ok
+test_unknown_path_selects_all_and_stale_map_is_an_error (test_changed_tests.ChangedTests.test_unknown_path_selects_all_and_stale_map_is_an_error) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.092s
+
+OK

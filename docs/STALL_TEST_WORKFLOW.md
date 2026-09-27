@@ -89,7 +89,7 @@ tablet. During a no-hardware session use only the offline commands below.
 
 ```sh
 bash scripts/check-stall-offline.sh --focused
-# Daily host regression (core tier plus shell syntax):
+# Daily host regression (changed files plus shell syntax):
 bash scripts/check-stall-offline.sh
 # Full host suite, when broader regression coverage is needed:
 bash scripts/check-stall-offline.sh --full
@@ -100,7 +100,8 @@ python3 scripts/prepare-csd-trace.py --output out/csd-trace-next/offline-report.
 The check command validates shell files individually: `bash -n scripts/*.sh`
 passes the remaining filenames as arguments to the first file and does not
 validate every script. Use the focused pass while editing verdict logic, then
-core for routine changes. Add artifact/archive checks for their affected inputs;
+changed-file selection for routine changes, or `--core` for broad host regression.
+Add artifact/archive checks for their affected inputs;
 use the full suite for broad changes and final candidate review. The exact tier
 rules and retirement policy are in [HOST_TEST_WORKFLOW.md](HOST_TEST_WORKFLOW.md).
 Sanitizer-based host tests need

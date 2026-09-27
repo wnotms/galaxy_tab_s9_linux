@@ -3,12 +3,24 @@
 set -euo pipefail
 repo=$(cd "$(dirname "$0")/.." && pwd)
 cd "$repo"
-scope=${1:---core}
+scope=${1:---changed}
 case "$scope" in
-    --focused|--core|--artifacts|--archive|--full) ;;
-    *) echo 'usage: bash scripts/check-stall-offline.sh [--core|--focused|--artifacts|--archive|--full]' >&2; exit 2 ;;
+    --changed|--focused|--core|--artifacts|--archive|--full) ;;
+    *) echo 'usage: bash scripts/check-stall-offline.sh [--changed [--base REV]|--core|--focused|--artifacts|--archive|--full]' >&2; exit 2 ;;
 esac
-[ "$#" -le 1 ] || { echo 'expected at most one scope' >&2; exit 2; }
+if [ "$scope" = --changed ]; then
+    [ "$#" -eq 0 ] || shift
+    if [ "$#" -eq 0 ]; then
+        args=()
+    elif [ "$#" -eq 2 ] && [ "$1" = --base ]; then
+        args=(--base "$2")
+    else
+        echo 'usage: bash scripts/check-stall-offline.sh --changed [--base REV]' >&2; exit 2
+    fi
+else
+    [ "$#" -le 1 ] || { echo 'expected at most one scope' >&2; exit 2; }
+    args=()
+fi
 
 # bash -n scripts/*.sh only parses the FIRST file; pass each file separately.
 for script in scripts/*.sh scripts/lib/*.sh boot/*.sh; do
@@ -24,6 +36,6 @@ if [ "$scope" = --focused ]; then
 else
     suite=${scope#--}
     [ "$suite" != full ] || suite=all
-    python3 scripts/run-host-tests.py "$suite"
+    python3 scripts/run-host-tests.py "$suite" "${args[@]}"
 fi
-echo 'Offline checks passed; this does not establish physical capture readiness.'
+echo 'Offline checks completed for the reported scope; this does not establish physical capture readiness.'

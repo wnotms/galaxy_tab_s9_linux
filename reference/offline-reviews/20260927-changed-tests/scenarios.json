@@ -1,0 +1,124 @@
+[
+  {
+    "simulated_changed_path": "scripts/audit-dt-providers.py",
+    "selection": {
+      "paths": [
+        "scripts/audit-dt-providers.py"
+      ],
+      "fallback_all": false,
+      "selectors": [
+        "test_dt_provider_audit"
+      ],
+      "reasons": [
+        {
+          "path": "scripts/audit-dt-providers.py",
+          "reason": "Driver scanner fixtures plus the actual built-DTB provider audit, across all tiers.",
+          "selectors": [
+            "test_dt_provider_audit"
+          ]
+        }
+      ]
+    },
+    "selected": [
+      "test_dt_provider_audit.AuditResultTests.test_llcc_bwmon_is_not_hidden_by_the_llcc_controller",
+      "test_dt_provider_audit.AuditResultTests.test_nothing_is_unclassified",
+      "test_dt_provider_audit.AuditResultTests.test_pcie_is_not_reported_as_a_gap",
+      "test_dt_provider_audit.AuditResultTests.test_rmtfs_mem_is_reported_as_a_real_gap",
+      "test_dt_provider_audit.AuditResultTests.test_the_cpu_path_bandwidth_monitors_are_reported",
+      "test_dt_provider_audit.AuditResultTests.test_the_module_only_trap_is_distinguished_from_n",
+      "test_dt_provider_audit.AuditScriptTests.test_it_is_executable_and_compiles",
+      "test_dt_provider_audit.DriverIndexTests.test_both_engines_preserve_exact_declarations_and_exclusions",
+      "test_dt_provider_audit.DriverIndexTests.test_empty_result_is_valid_but_scan_errors_are_not",
+      "test_dt_provider_audit.DriverIndexTests.test_fallback_compatible_and_config_classification_still_work",
+      "test_dt_provider_audit.DriverIndexTests.test_one_scan_per_audit_and_new_invocations_see_source_edits"
+    ],
+    "elapsed_s": 0.746,
+    "tests_run": 11,
+    "passed": true,
+    "skipped": 0
+  },
+  {
+    "simulated_changed_path": "scripts/wedge-evidence.py",
+    "selection": {
+      "paths": [
+        "scripts/wedge-evidence.py"
+      ],
+      "fallback_all": false,
+      "selectors": [
+        "test_cpuidle_off_profile.WedgeSshRunnerTests",
+        "test_csd_ipi_diagnostic.SshRunnerGateTests",
+        "test_wedge_evidence"
+      ],
+      "reasons": [
+        {
+          "path": "scripts/wedge-evidence.py",
+          "reason": "Replay/classification, mocked SSH orchestration and both profile gate contracts.",
+          "selectors": [
+            "test_wedge_evidence",
+            "test_cpuidle_off_profile.WedgeSshRunnerTests",
+            "test_csd_ipi_diagnostic.SshRunnerGateTests"
+          ]
+        }
+      ]
+    },
+    "selected": [
+      "test_cpuidle_off_profile.WedgeSshRunnerTests.test_it_never_writes_a_partition",
+      "test_cpuidle_off_profile.WedgeSshRunnerTests.test_it_refuses_to_run_unless_the_profile_is_armed",
+      "test_csd_ipi_diagnostic.SshRunnerGateTests.test_it_extracts_the_target_cpu_from_the_report",
+      "test_csd_ipi_diagnostic.SshRunnerGateTests.test_it_records_the_instrument_state_with_every_round",
+      "test_wedge_evidence.AttributionTests.test_clean_boot",
+      "test_wedge_evidence.AttributionTests.test_cli_replay_uses_no_transport_and_recomputes_verdict",
+      "test_wedge_evidence.AttributionTests.test_conflicting_or_substring_cmdline_is_not_profile_proof",
+      "test_wedge_evidence.AttributionTests.test_csd_alone_is_a_positive_signature",
+      "test_wedge_evidence.AttributionTests.test_missing_anchor_is_not_guessed_from_count",
+      "test_wedge_evidence.AttributionTests.test_missing_failed_or_wrong_boot_capture_never_clean",
+      "test_wedge_evidence.AttributionTests.test_no_reboot_or_unreadable_counts_are_not_clean",
+      "test_wedge_evidence.AttributionTests.test_panic_before_first_ssh_answer_selects_failed_boot",
+      "test_wedge_evidence.AttributionTests.test_rotation_of_older_history_does_not_change_target",
+      "test_wedge_evidence.AttributionTests.test_timeout_alone_is_suspect_and_encoder_noise_is_clean",
+      "test_wedge_evidence.AttributionTests.test_unexpected_reboot_is_not_proof_of_cpu_wedge",
+      "test_wedge_evidence.CsdPreflightTests.test_gate_uses_runtime_capability_and_consumed_profile",
+      "test_wedge_evidence.RunnerIntegrationTests.test_mock_transport_archives_then_replays_without_device"
+    ],
+    "elapsed_s": 18.784,
+    "tests_run": 17,
+    "passed": true,
+    "skipped": 0
+  },
+  {
+    "simulated_changed_path": "tests/test_panel_x710.py",
+    "selection": {
+      "paths": [
+        "tests/test_panel_x710.py"
+      ],
+      "fallback_all": false,
+      "selectors": [
+        "test_panel_x710",
+        "test_pogo_keyboard",
+        "test_pogo_startup",
+        "test_pogo_suspend"
+      ],
+      "reasons": [
+        {
+          "path": "tests/test_panel_x710.py",
+          "reason": "Changed test module and its static import consumers."
+        }
+      ]
+    },
+    "selected": [
+      "test_panel_x710.PanelX710.test_official_power_and_sync_sequence",
+      "test_panel_x710.PanelX710.test_pps_matches_official_payload",
+      "test_panel_x710.PanelX710.test_write_errors_stop_initialisation",
+      "test_pogo_keyboard.PogoPackets.test_irq_packets",
+      "test_pogo_keyboard.PogoPackets.test_irq_path_is_quiet_by_default",
+      "test_pogo_startup.PogoStartup.test_boot_entry_clears_probe_before_commands",
+      "test_pogo_startup.PogoStartup.test_startup",
+      "test_pogo_startup.PogoStartup.test_watch_work_leaves_the_bootloader_alone",
+      "test_pogo_suspend.PogoSuspend.test_suspend_resume_lifecycle"
+    ],
+    "elapsed_s": 1.524,
+    "tests_run": 9,
+    "passed": true,
+    "skipped": 0
+  }
+]

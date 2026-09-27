@@ -1,0 +1,22 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'AGENT.md': No reviewed dependency rule: run all tests.
+'README.md': Reviewed workflow prose with no executable test dependency; documentation review only.
+'docs/HOST_TEST_WORKFLOW.md': Reviewed workflow prose with no executable test dependency; documentation review only.
+'docs/STALL_TEST_WORKFLOW.md': No reviewed dependency rule: run all tests.
+'reference/offline-reviews/20260927-changed-tests/README.md': No reviewed dependency rule: run all tests.
+'reference/offline-reviews/20260927-changed-tests/benchmark.py': No reviewed dependency rule: run all tests.
+'scripts/check-stall-offline.sh': No reviewed dependency rule: run all tests.
+'scripts/run-host-tests.py': No reviewed dependency rule: run all tests.
+'scripts/test-impact.py': No reviewed dependency rule: run all tests.
+'tests/change-impact.json': No reviewed dependency rule: run all tests.
+'tests/test_changed_tests.py': Changed test module and its static import consumers.
+Host suite=changed: selected=955, tiers={'core': 850, 'artifacts': 18, 'archive': 87}

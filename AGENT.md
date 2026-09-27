@@ -309,7 +309,10 @@ separately and keep pre-existing test-087 logs distinct from new tests.
 
 ## Build commands
 
-Host regression uses `bash scripts/check-stall-offline.sh` (core by default).
+Host regression uses `bash scripts/check-stall-offline.sh` (changed files by default).
+Use `--changed --base REV` for committed changes, `--core` for unconditional core
+regression, or `--full` for all tests. A clean worktree against HEAD runs no tests;
+it does not establish a regression pass. Unknown dependencies select all tests.
 See `docs/HOST_TEST_WORKFLOW.md` for artifact/archive triggers and exact suite
 selection. `--full` remains exhaustive; run it after changing suite routing or
 retiring tests. New tests default to core. Do not interpret skipped prerequisites

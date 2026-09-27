@@ -1,0 +1,19 @@
+{
+  "rules": [
+    {
+      "paths": ["scripts/wedge-evidence.py", "scripts/wedge-ssh.sh"],
+      "selectors": ["test_wedge_evidence", "test_cpuidle_off_profile.WedgeSshRunnerTests", "test_csd_ipi_diagnostic.SshRunnerGateTests"],
+      "reason": "Replay/classification, mocked SSH orchestration and both profile gate contracts."
+    },
+    {
+      "paths": ["scripts/audit-dt-providers.py"],
+      "selectors": ["test_dt_provider_audit"],
+      "reason": "Driver scanner fixtures plus the actual built-DTB provider audit, across all tiers."
+    },
+    {
+      "paths": ["README.md", "docs/HOST_TEST_WORKFLOW.md"],
+      "selectors": [],
+      "reason": "Reviewed workflow prose with no executable test dependency; documentation review only."
+    }
+  ]
+}

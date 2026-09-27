@@ -5,6 +5,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import runpy
 import sys
 import time
 import unittest
@@ -59,12 +60,15 @@ def partition(suite, manifest):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("suite", nargs="?", choices=(*TIERS, "all"), default="core")
+    parser.add_argument("suite", nargs="?", choices=(*TIERS, "all", "changed"), default="core")
+    parser.add_argument("--base", help="changed mode: compare index with this commit, plus unstaged/untracked files (default HEAD)")
     parser.add_argument("--list", action="store_true", help="list IDs without executing tests")
     parser.add_argument("--report", type=Path, help="write selection, results and wall time as JSON")
     parser.add_argument("--fail-on-skip", action="store_true", help="require all selected prerequisites")
     parser.add_argument("-v", "--verbose", action="store_true")
     args = parser.parse_args(argv)
+    if args.base is not None and args.suite != "changed":
+        parser.error("--base requires the changed suite")
     os.chdir(ROOT)
     started = time.perf_counter()
     try:
@@ -72,14 +76,32 @@ def main(argv=None):
         groups = partition(suite, json.loads((ROOT / "tests/suites.json").read_text()))
     except (ValueError, OSError, TypeError) as error:
         parser.error(str(error))
-    selected = [test for tier in TIERS for test in groups[tier]] if args.suite == "all" else groups[args.suite]
-    if not selected:
+    all_tests = [test for tier in TIERS for test in groups[tier]]
+    if not all_tests:
+        parser.error("no tests discovered")
+    change_report = None
+    if args.suite == "changed":
+        try:
+            impact = runpy.run_path(str(ROOT / "scripts/test-impact.py"))
+            selected, change_report = impact["from_git"](ROOT, all_tests, args.base or "HEAD")
+        except (ValueError, OSError, SyntaxError) as error:
+            parser.error(str(error))
+    else:
+        selected = all_tests if args.suite == "all" else groups[args.suite]
+    if not selected and args.suite != "changed":
         parser.error("empty test selection")
     report = {"suite": args.suite, "counts": {tier: len(group) for tier, group in groups.items()},
               "selected": [test.id() for test in selected], "executed": False}
+    if change_report is not None:
+        report["change_selection"] = change_report
+        for reason in change_report["reasons"]:
+            print(f"{reason['path']!r}: {reason['reason']}", file=sys.stderr)
     print(f"Host suite={args.suite}: selected={len(selected)}, tiers={report['counts']}", file=sys.stderr)
     code = 0
-    if args.list:
+    if not selected:
+        report["no_tests_reason"] = "No changed paths." if not change_report["paths"] else "Reviewed documentation changes only."
+        print(f"No tests executed: {report['no_tests_reason']}", file=sys.stderr)
+    elif args.list:
         print("\n".join(report["selected"]))
     else:
         result = unittest.TextTestRunner(verbosity=2 if args.verbose else 1).run(unittest.TestSuite(selected))
