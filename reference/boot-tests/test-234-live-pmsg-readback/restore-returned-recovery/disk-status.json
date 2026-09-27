@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cat /mnt/debian/var/log/gts9-minimal-last-boot; ls -lt /mnt/debian/var/log/gts9-boot-evidence | head -6; ls -l /mnt/debian/var/log/journal/*"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:22:32.960034+00:00"
+}

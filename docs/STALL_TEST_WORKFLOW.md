@@ -267,10 +267,12 @@ unchanged to an ECC-enabled ring. A healthy reboot integrity pass alone would
 not prove crash-triggered capture or retention, and does not open a wedge series.
 
 Test-234 observer `4c78d2cc-7ed8-4a33-be1c-05c2345f77c5` subsequently stopped
-answering systemctl and ADB. Its last returned uptime was 54.35 seconds; the
-saved early journal does not establish a CPU failure signature. Manual TWRP
-recovery and original boot/vendor_boot restoration remain pending. Retrieve
-that boot's disk journal first. See
+answering systemctl and ADB. After owner manual reboot into Debian, its journal
+fetched by immutable boot ID confirms CPU 5 non-response and RCU/workqueue
+stalls. The responsive CPU 7 idle stack is not CPU 5's missing stack. Recovery
+via BCB then reached TWRP; original boot/vendor_boot restoration and all five
+hashes passed. Production boot e1ae1723-f52f-4493-9088-6df9a58a46cc stayed
+responsive beyond 151 seconds without a detected CPU stall. See
 [test-234 results](../reference/boot-tests/test-234-live-pmsg-readback/RESULTS.md).
 
 After recovery, assess an isolated ECC diagnostic within the existing reserved

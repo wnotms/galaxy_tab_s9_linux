@@ -1,0 +1,57 @@
+unknown
+
+
+5ff16d7d-261f-4aa8-a04c-eb45f19c82df
+112.67 889.33
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+[   21.592631][eT-A][6oo1] Pressed(1): key_code=[114], key_last_down=[-1], key_long_press=[0]
+[   21.712040][eT-A][6oo1] Released(0): key_code=[114], key_last_down=[114], key_long_press=[0]
+[   21.712851][eT-A][6oo1] Usb Connect state : CONFIGURED
+[   21.712898][eT-A][6oo1]
+[   21.835797][eT-A][6oo1] Pressed(1): key_code=[114], key_last_down=[-1], key_long_press=[0]
+[   21.940703][eT-A][6oo1] Released(0): key_code=[114], key_last_down=[114], key_long_press=[0]
+[   21.941499][eT-A][6oo1] Usb Connect state : CONFIGURED
+[   21.941535][eT-A][6oo1]
+[   22.058662][eT-A][6oo1] Pressed(1): key_code=[114], key_last_down=[-1], key_long_press=[0]
+[   22.162439][eT-A][6oo1] Released(0): key_code=[114], key_last_down=[114], key_long_press=[0]
+[   22.163240][eT-A][6oo1] Usb Connect state : CONFIGURED
+[   22.163275][eT-A][6oo1]
+[   22.443753][eT-A][6oo1] Pressed(1): key_code=[114], key_last_down=[-1], key_long_press=[0]
+[   22.576606][eT-A][6oo1] Released(0): key_code=[114], key_last_down=[114], key_long_press=[0]
+[   22.577486][eT-A][6oo1] Usb Connect state : CONFIGURED
+[   22.577548][eT-A][6oo1]
+[   28.493251][eT-A][6oo1] Pressed(1): key_code=[116], key_last_down=[-1], key_long_press=[0]
+[   28.795433][eT-A][6oo1] Released(0): key_code=[116], key_last_down=[116], key_long_press=[0]
+[   28.795909][eT-A][6oo1] Usb Connect state : CONFIGURED
+[   28.795943][eT-A][6oo1]
+[   28.804824][eT-A][6oo1] menu: Reboot system now
+[   28.812984][eT-A][6oo1]
+[   28.812996][eT-A][6oo1] [out-recovery]
+[   28.813037][eT-A][6oo1] copy_avc_msg_to_data
+[   28.814420][eT-A][6oo1] I:[libfs_mgr]superblock s_max_mnt_count:37,/dev/block/bootdevice/by-name/cache
+[   28.815336][eT-A][6oo1] I:[libfs_mgr]__mount(source=/dev/block/bootdevice/by-name/cache,target=/cache,type=ext4)=0: Success
+[   28.815347][eT-A][6oo1] I:[libfs_mgr]__mount return 0(source=cache,target=/cache,type=ext4,flags=0,options=): Success
+[   28.815474][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 1
+[   28.815558][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 2
+[   28.815686][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 3
+[   28.815697][eT-A][6oo1] copy_file '/proc/avc_msg' '/cache/recovery/last_avc_msg_recovery'
+[   28.819707][eT-A][6oo1] Rebooting...
+[   28.821070][eT-A][6oo1] SecReboot(userrequested,recovery)
+[   28.821081][eT-A][6oo1] ## FinishRecovery(delcmd=1, clearBCB=1, check_unlink=1)
+[   28.821087][eT-A][6oo1] I:Saving locale "en_US"
+[   28.821277][eT-A][6oo1] I:[libfs_mgr]superblock s_max_mnt_count:37,/dev/block/bootdevice/by-name/cache
+[   28.822307][eT-A][6oo1] I:[libfs_mgr]__mount(source=/dev/block/bootdevice/by-name/cache,target=/cache,type=ext4)=0: Success
+[   28.822318][eT-A][6oo1] I:[libfs_mgr]__mount return 0(source=cache,target=/cache,type=ext4,flags=0,options=): Success
+[   28.822442][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 1
+[   28.822522][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 2
+[   28.822618][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 3
+[   28.823914][eT-A][6oo1] I:## clear BCB message
+[   28.823927][eT-A][6oo1] I:## unlink /cache/recovery/command
+[   28.825880][eT-A][6oo1] save_current_log true, has_cashe true.
+[   28.826084][eT-A][6oo1] I:[libfs_mgr]superblock s_max_mnt_count:37,/dev/block/bootdevice/by-name/cache
+[   28.826880][eT-A][6oo1] I:[libfs_mgr]__mount(source=/dev/block/bootdevice/by-name/cache,target=/cache,type=ext4)=0: Success
+[   28.826893][eT-A][6oo1] I:[libfs_mgr]__mount return 0(source=cache,target=/cache,type=ext4,flags=0,options=): Success
+[   28.827250][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 1
+[   28.827346][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 2
+[   28.827584][eT-A][6oo1] libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb, try count : 3

@@ -25,20 +25,33 @@ a shared cause with CPU non-response. ECC remained zero; reserved memory,
 DTB, config, power/frequency settings and production watchdog profile unchanged.
 No wedge series is ready.
 
-## Observer failure and pending rollback
+## Observer CPU 5 failure and rollback
 
 At uptime 54.35 seconds the observer answered boot ID/uptime, then the command
 stalled at `systemctl --failed`. It timed out after 25 seconds. Subsequent USB
 exec-out, USB journal pull and TCP ADB connection attempts also failed/timed out.
-The early journal already captured on the host has no positive CPU non-response
-signature. Classify this observation as **unattributed loss of responsiveness**,
-not a clean boot or a demonstrated CPU-number-specific wedge.
+The early journal captured before failure had no positive CPU signature. After
+the owner manually restarted into Debian boot
+`1c601e81-0724-4f1e-8aa7-6971e179e5c2`, the journal fetched by the failed boot
+ID establishes **CPU 5 non-response**: RCU stall and unanswered backtrace IPI
+reported at 39.95 seconds, with workqueue lockups. Classification is now wedge,
+not clean or unattributed. The log calls the request an NMI, but pseudo-NMI is
+disabled; this is not evidence of a nonmaskable interrupt failing. CPU 7 did
+answer, with an idle stack that is not CPU 5's missing stack. No lastactivity
+instrument was installed in this candidate; the exact CPU 5 path is unknown.
 
-Manual TWRP recovery was requested. **Original boot/vendor_boot have not yet
-been restored**; the live-read diagnostic candidate remains installed. Next
-save the failed boot's persistent journal from TWRP and restore the verified
-test-230 production backups with full partition readbacks. USB/NCM rootfs
-configuration was not changed. Keep this rollback status current.
+From that responsive manual Debian boot, the BCB helper and normal reboot
+reached TWRP. Original boot/vendor_boot were restored from the verified
+test-230 backups; complete readbacks and all five partition hashes match
+production (`restore/all-partitions.txt`). USB/NCM rootfs configuration was
+unchanged. The first requested system reboot returned to another TWRP boot;
+its BCB was empty and available disk status showed no newer Debian evidence.
+This unexpected transition is preserved and is not labeled a CPU wedge.
+After TWRP CLI `twrp reboot system`, production boot
+`e1ae1723-f52f-4493-9088-6df9a58a46cc` remained responsive beyond 151 seconds,
+with no failed units or detected CPU stall in its final journal, SSH/adbd
+services active and usb0 retaining 169.254.42.1/16. This closes rollback; it
+does not establish long-term CPU stability.
 
 Six focused probe tests, shell syntax checks, the ccache diagnostic build and
 bundle validation passed before flashing. No full host suite was needed for

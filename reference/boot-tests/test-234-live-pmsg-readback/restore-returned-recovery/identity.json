@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.bootmode; getprop ro.boot.bootreason; getprop sys.boot.reason; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; dd if=/dev/block/by-name/misc bs=1 count=64 2>/dev/null | od -An -tx1; cat /cache/recovery/last_log | tail -50"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:22:08.638115+00:00"
+}
