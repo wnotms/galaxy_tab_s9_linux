@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "ps -eo pid,ppid,psr,stat,wchan:40,comm,args"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:13:25.054252+00:00"
+}

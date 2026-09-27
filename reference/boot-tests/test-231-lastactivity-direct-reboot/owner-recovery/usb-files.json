@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cat /mnt/debian/usr/bin/adbd-usb-gadget /mnt/debian/usr/share/doc/adbd/README.adbd; ls -l /mnt/debian/etc/systemd/system/adbd.service; cat /mnt/debian/etc/gts9-usb-net"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:18:55.210698+00:00"
+}

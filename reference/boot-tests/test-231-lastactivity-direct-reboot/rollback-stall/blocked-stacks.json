@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "for n in 1 13 39 63 91; do echo PID=$n; cat /proc/$n/comm; cat /proc/$n/stack; done"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:14:38.687044+00:00"
+}

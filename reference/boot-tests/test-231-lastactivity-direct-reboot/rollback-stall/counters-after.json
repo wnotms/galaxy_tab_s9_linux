@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "cat /proc/uptime; cat /proc/interrupts; cat /proc/softirqs; cat /proc/stat"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:14:38.608544+00:00"
+}

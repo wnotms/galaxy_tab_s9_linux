@@ -1,0 +1,73 @@
+79815bbb-a96b-40c3-a152-ab958fd57d5d
+125.02 515.93
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+Name:	systemd
+Umask:	0000
+State:	D (disk sleep)
+Tgid:	1
+Ngid:	0
+Pid:	1
+PPid:	0
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	256
+Groups:	 
+NStgid:	1
+NSpid:	1
+NSpgid:	1
+NSsid:	1
+Kthread:	0
+VmPeak:	   25372 kB
+VmSize:	   25336 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	   14732 kB
+VmRSS:	   14732 kB
+RssAnon:	    4548 kB
+RssFile:	   10184 kB
+RssShmem:	       0 kB
+VmData:	    4020 kB
+VmStk:	     132 kB
+VmExe:	     120 kB
+VmLib:	   18032 kB
+VmPTE:	      80 kB
+VmSwap:	       0 kB
+CoreDumping:	0
+THP_enabled:	1
+untag_mask:	0xffffffffffffff
+Threads:	1
+SigQ:	20/46845
+SigPnd:	0000000000000000
+ShdPnd:	0000000000010000
+SigBlk:	7fefc1fe28014a03
+SigIgn:	0000000000001000
+SigCgt:	00000000000004ec
+CapInh:	0000000000000000
+CapPrm:	000001ffffffffff
+CapEff:	000001ffffffffff
+CapBnd:	000001ffffffffff
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	0
+Seccomp_filters:	0
+Speculation_Store_Bypass:	thread vulnerable
+SpeculationIndirectBranch:	unknown
+Cpus_allowed:	ff
+Cpus_allowed_list:	0-7
+Mems_allowed:	1
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	1255
+nonvoluntary_ctxt_switches:	825
+[<0>] cgroup_kn_lock_live+0xc8/0x154
+[<0>] cgroup_rmdir+0x2c/0x1a4
+[<0>] kernfs_iop_rmdir+0xc0/0x14c
+[<0>] vfs_rmdir+0xbc/0x1f4
+[<0>] filename_rmdir+0x140/0x230
+[<0>] __arm64_sys_unlinkat+0x54/0xe4
+[<0>] invoke_syscall+0x4c/0xfc
+[<0>] el0_svc_common+0x90/0xe0
+[<0>] do_el0_svc+0x20/0x30
+[<0>] el0_svc+0x40/0x9c
+[<0>] el0t_64_sync_handler+0x88/0x134
+[<0>] el0t_64_sync+0x1a4/0x1a8

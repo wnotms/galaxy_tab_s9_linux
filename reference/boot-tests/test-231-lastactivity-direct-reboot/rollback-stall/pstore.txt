@@ -1,0 +1,13 @@
+/sys/fs/pstore:
+total 0
+drwxr-x---  2 root root 0 Sep 27 14:11 .
+drwxr-xr-x 12 root root 0 Sep 27 14:11 ..
+
+/var/lib/systemd/pstore:
+total 40
+drwxr-xr-x  2 root root  4096 Sep 27 13:15 .
+drwxr-xr-x 13 root root  4096 Apr 14 03:44 ..
+-rw-------  1 root root  8818 Sep 27 13:15 console-ramoops-0
+-rw-------  1 root root 18053 Sep 27 04:00 dmesg-ramoops-0.enc.z
+e858555240f5cfb08ff12494e117e4e6c671138f52d807061ae647729004a010  /var/lib/systemd/pstore/console-ramoops-0
+c72ec79e202d355295c88541d0327487b3e7f75e8c56a0ea902a33745407b9d8  /var/lib/systemd/pstore/dmesg-ramoops-0.enc.z

@@ -1,6 +1,6 @@
 # Stall investigation: direction review and offline-first workflow
 
-Updated 2026-09-27 after test-230. This is the current work queue. Historical
+Updated 2026-09-27 after test-231. This is the current work queue. Historical
 test records remain evidence of what was observed and concluded at the time;
 the corrections here take precedence over their causal interpretations.
 
@@ -217,3 +217,30 @@ reboot path separately. Attribute the saved snapshot by its capture ID and
 record the new observer boot independently. Do not induce/repeat wedges before
 that persistence gate passes, and do not replace missing pstore with a healthy
 journal copy as proof of crash retention.
+
+## Test-231: direct warm reboot exposed data corruption
+
+The same candidate's healthy snapshot reached pstore after a direct Debian
+warm reboot, but failed exact integrity checks: 50 of 58 marker lines match;
+eight contain 18 changed bytes / 26 changed bits. The END capture ID/count and
+some event/CPU fields changed. Two repeat reads match the device-side file hash;
+the original boot's journal still matches the live snapshot exactly. Actual
+console_size=524288 and ecc=0 were confirmed. See
+[test-231 results](../reference/boot-tests/test-231-lastactivity-direct-reboot/RESULTS.md).
+
+Finding a capture ID or passing a format parser is insufficient. Use
+`lastactivity-evidence.py RECOVERED --capture-id ID --reference LIVE` to require
+identical canonical marker bytes; corrupted fields that remain valid hex also
+must fail. Non-UTF8 raw pstore data stays preserved, not silently repaired.
+
+The integrity gate remains closed. A TWRP boot is not required for this failure,
+but the responsible component and any connection to the CPU wedge are unknown.
+Next test known payload/checksum retention and assess a separate ramoops ECC
+candidate within the existing reservation. Do not enlarge/move memory, adjust
+voltages, or start wedge series based on a corrupted snapshot.
+
+Test-231 rollback restored all production partition hashes, but boot
+79815bbb-a96b-40c3-a152-ab958fd57d5d then wedged on CPU 5 with PID 1 blocked
+and systemctl timing out. The owner returned to TWRP; recovery evidence is
+archived. Image integrity passed; healthy rollback boot did not. USB ADB is
+now being prepared at the owner's request while preserving the NCM/SSH path.

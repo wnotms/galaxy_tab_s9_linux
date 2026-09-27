@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; cat /proc/1/status; cat /proc/1/stack"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:13:24.723150+00:00"
+}

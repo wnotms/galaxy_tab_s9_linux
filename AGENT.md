@@ -14,6 +14,21 @@ perform one healthy direct Debian → Debian persistence calibration with the
 same bounded candidate, keeping the source capture ID distinct from later
 boots. No wedge series before retention passes. See test-230/RESULTS.md.
 
+Test-231 tested that same candidate through a direct Debian → Debian warm
+reboot. Pstore retained the source capture but corrupted 8 of 58 marker lines
+(18 bytes / 26 bits); two repeat reads matched device-side hashes while the
+source journal remained exact. Retention integrity therefore still fails,
+with ECC=0 confirmed at runtime. This does not locate the corruption or prove
+a shared cause with CPU wedges. Next validate known payload/checksum retention
+and consider a separate ECC diagnostic within the existing reserved region;
+no wedge series yet. See test-231/RESULTS.md for source/observer IDs and rollback.
+
+Test-231 rollback restored all production partition hashes, but boot
+79815bbb-a96b-40c3-a152-ab958fd57d5d then wedged on CPU 5 with PID 1 blocked
+and systemctl timing out. The owner returned to TWRP; recovery evidence is
+archived. Image integrity passed; healthy rollback boot did not. USB ADB is
+now being prepared at the owner's request while preserving the NCM/SSH path.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

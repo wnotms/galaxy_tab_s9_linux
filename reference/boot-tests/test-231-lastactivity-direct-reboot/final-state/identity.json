@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; cat /sys/devices/system/cpu/online; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager; for n in watchdog soft_watchdog softlockup_panic panic; do echo $n; cat /proc/sys/kernel/$n; done"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:12:47.251575+00:00"
+}
