@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "sha256sum /mnt/debian/var/lib/systemd/pstore/*; ls /mnt/debian/var/log/journal/*/system.journal"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:35:10.283808+00:00"
+}

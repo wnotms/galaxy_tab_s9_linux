@@ -1,0 +1,52 @@
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB
+[    0.000000][    T0] OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] kaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)
+[    0.000000][    T0] OF: reserved mem: OVERLAP DETECTED!
+[    0.000000][    T0] uh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)
+[    0.000000][    T0] WARNING: x1-x3 nonzero in violation of boot protocol:
+[    0.000000][    T0] 	x1: 0000000080000000
+[    0.000000][    T0] 	x2: 0000000028190000
+[    0.000000][    T0] 	x3: 0000000000000000
+[    0.000000][    T0] This indicates a broken bootloader or old kernel
+[    0.337884][  T116] remoteproc remoteproc0: request_firmware failed: -2
+[    0.338879][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.339108][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.339231][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.339478][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81aa000, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.339671][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.339858][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.340064][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8325f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.340254][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.340360][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.340560][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8465d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.340750][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.340937][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.341137][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb85d4700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.341325][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.341432][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.341629][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb870d200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.341819][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.342004][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.342203][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8879800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.342391][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.342496][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.342691][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb89ae800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.342881][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.343068][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.343275][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8b1d000, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.343467][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.343572][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.343776][    C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8c5ae00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.343965][    C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.344154][    C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.498214][   T12] msm_dpu ae01000.display-controller: no GPU device was found
+[    1.391011][    T1] systemd[1]: Failed to find module 'autofs4'
+[    3.697647][  T728] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    5.988272][  T736] Bluetooth: hci0: unexpected event for opcode 0xfc48
+[  159.435084][    T1] dwc3-qcom a600000.usb: request 00000000bd1e9965 was not queued to ep0out
+[  159.661068][    T1] reboot: Restarting system
+
+ECC: 36 Corrected bytes, 0 unrecoverable blocks

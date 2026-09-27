@@ -1,0 +1,11 @@
+{
+  "command": [
+    "journalctl",
+    "--file=/home/ms/Samsung/galaxy_tab_s9_linux/out/test235/manual.journal",
+    "--no-pager",
+    "-o",
+    "short-monotonic",
+    "--list-boots"
+  ],
+  "status": 0
+}

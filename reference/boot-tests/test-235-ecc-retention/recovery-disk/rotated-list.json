@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "ls -lt /mnt/debian/var/log/journal/3c2a1b8f2d624db4b5ffdc836050fcf6/system*.journal | head -8"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:35:29.662493+00:00"
+}

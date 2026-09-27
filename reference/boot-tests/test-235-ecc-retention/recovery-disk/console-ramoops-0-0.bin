@@ -1,0 +1,18 @@
+[    3.109407][  T753] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    5.206593][  T194] Bluetooth: hci0: unexpected event for opcode 0xfc48
+[   28.403280][    C7] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   28.403378][    C7] rcu: 	2-...0: (3 GPs behind) idle=cbbc/1/0x4000000000000000 softirq=887/888 fqs=1927
+[   28.403461][    C7] rcu: 	5-...0: (1 GPs behind) idle=cb4c/1/0x4000000000000000 softirq=1016/1017 fqs=1927
+[   28.403543][    C7] rcu: 	(detected by 7, t=5252 jiffies, g=713, q=1775 ncpus=8)
+[   48.405996][    C7] rcu: rcu_preempt kthread timer wakeup didn't happen for 5002 jiffies! g713 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
+[   48.406079][    C7] rcu: 	Possible timer handling issue on cpu=7 timer-softirq=2550
+[   48.406156][    C7] rcu: rcu_preempt kthread starved for 5003 jiffies! g713 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=7
+[   48.406236][    C7] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[   48.406312][    C7] rcu: RCU grace-period kthread stack dump:
+[   48.406396][    C7] rcu: Stack dump where RCU GP kthread last ran:
+[   62.431309][    C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 54s!
+[   62.432156][    C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=-20 stuck for 49s!
+[   62.432734][    C0] BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=0 stuck for 54s!
+[   62.433553][    C0] BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0 nice=-20 stuck for 54s!
+
+ECC: 14 Corrected bytes, 0 unrecoverable blocks

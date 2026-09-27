@@ -1,0 +1,12 @@
+{
+  "command": [
+    "journalctl",
+    "--file=out/test235/system.journal",
+    "--no-pager",
+    "-o",
+    "short-monotonic",
+    "--list-boots"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:35:11.458574+00:00"
+}

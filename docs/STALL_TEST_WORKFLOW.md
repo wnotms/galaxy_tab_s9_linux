@@ -284,3 +284,32 @@ actual corrected bytes/unrecoverable blocks and require exact recovered source
 bytes. Keep source/observer ECC layout identical; first boot after a layout
 change may report errors for incompatible old data. Do not resize/move memory,
 adjust voltages or accept corrected-looking CPU fields without integrity proof.
+
+
+## Test-235: PMSG ECC success, console eligibility still needs validation
+
+The same reserved region with ECC=64 recovered an exact identified 33,005-byte
+PMSG after a direct warm reboot: 246 corrected bytes, zero unrecoverable
+blocks. Device hashes, repeated TWRP reads and the original observer journal's
+binary FILE field agree. The original console file was also recovered from
+that journal after later boots replaced its disk copy; its raw hash matches.
+The level-6 markers were filtered by loglevel=4 before console delivery, so
+that console probe is invalid. Use level 0 (the existing lastactivity pr_emerg
+format), not another information-level marker. Do not replace an integrity
+comparison with a correction notice or a matching format parser alone.
+
+PMSG success does not prove console or crash-triggered retention, and ECC did
+not fix CPU stalls. One manual recovery boot showed CPUs 2/5 failing backtrace
+IPIs. Following verified original-image restoration, a later production boot
+showed CPU 5 non-response while ADB and systemctl still answered. A responsive
+shell or zero failed systemd units is insufficient for a healthy verdict.
+See [test-235 results](../reference/boot-tests/test-235-ecc-retention/RESULTS.md).
+
+Test-236 combines the existing lastactivity and ECC patches using the previously
+tested diagnostic profile. First calibrate a manual source snapshot against
+recovered bytes, including source identity, all CPU validity records and ECC
+status. If that passes, automatic crash-triggered capture still needs separate
+validation. No repeated wedge series before those gates. For offline journal
+retrieval include .journal~ files; system.journal alone can contain only the
+latest recovery boot. Save the original raw FILE field, not a rendered or
+repaired substitute, and compare its original device hash when available.

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "journalctl",
+    "--file=out/test235/system.journal",
+    "--no-pager",
+    "-o",
+    "short-monotonic",
+    "-b",
+    "bd682a9a82c549558f5eb5777f67b559"
+  ],
+  "status": 1,
+  "utc": "2026-09-27T07:35:11.463962+00:00"
+}

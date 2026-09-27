@@ -2,15 +2,21 @@
 
 ## Current review (2026-09-27)
 
-Active test-235: isolated ECC=64 candidate is installed; rollback pending.
-Source 059c1400-1ccf-4861-9590-1fe2592611b7 passed 151 seconds and wrote known
-PMSG/console probes. Direct reboot observer bd682a9a-82c5-4955-8f5e-b5777f67b559
-answered at 6.53 seconds with new pstore metadata, then journalctl/ADB timed
-out before raw bytes were retrieved. No CPU signature yet; ECC verdict unknown.
-Manual TWRP was requested: read disk pstore/journal, then restore production
-backups with full hashes. See test-235/RESULTS.md. Do not repeat diagnostics
-before closing this failure and rollback.
+Test-235 completed retrieval: ECC=64 recovered the exact 33,005-byte PMSG,
+correcting 246 bytes with zero unrecoverable blocks. Device hash, two TWRP
+pulls and the original observer journal's FILE field match. Its level-6
+console probe was filtered by loglevel=4: invalid console test, not a pass.
+CPU failures remain (manual boot c1027ef1-e680-425b-b6fc-6d7819800639: CPUs 2/5).
+Original boot/vendor_boot and all five partition hashes were restored.
 
+Restored boot 2d1619e1-3130-418c-b5d3-af51b14e9280 later powered off normally.
+A subsequent owner-started production boot f4d0de47-11eb-4aa5-a19e-9263ed385a31
+has CPU 5 non-response despite ADB/systemctl answering at 200 seconds; firmware
+appended lpcharge=1. Do not label it healthy or attribute the failure to that
+flag. The recovery helper's read-only BCB check timed out without a write;
+manual recovery is pending. Test-236 prepares existing lastactivity pr_emerg
+(level 0) plus ECC=64 for console retention calibration; no wedge series.
+See test-235/RESULTS.md and test-236/README.md.
 
 Latest: tests 233/234 isolated corrupt retention further. Test-233 recovered a
 known 33,005-byte PMSG with 464 changed bytes / 542 bits. Test-234's opt-in

@@ -1,0 +1,14 @@
+{
+  "verdict": "absent_or_corrupt",
+  "expected_lines": 16,
+  "recovered_lines": 0,
+  "expected_sha256": "8e0386a992c9f5e5b404f11f298e07bdb5108f15755b948eab4ee1831f837bad",
+  "recovered_sha256": "7fd0a63545d7a7e74672980685e8b5191733c1c895fe5449585c600f68ccd55f",
+  "ecc_notice": "36 Corrected bytes, 0 unrecoverable blocks",
+  "original_observer_device_hash_matches": true,
+  "raw_source": "journal FILE field from original observer boot",
+  "ready_for_wedge_series": false,
+  "trial_classification": "invalid_console_probe",
+  "limitation": "Harness wrote level 6 markers while cmdline loglevel=4 filters them before console sinks. Absence cannot measure reboot retention.",
+  "next_probe_requirement": "Use level 0 markers or existing pr_emerg lastactivity format and verify source console eligibility."
+}

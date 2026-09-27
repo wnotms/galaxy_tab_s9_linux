@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/module/ramoops/parameters/ecc; timeout 5 systemctl --failed --no-pager; timeout 5 systemctl is-active ssh gts9-adbd; ip -brief addr show usb0; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:37:11.607626+00:00"
+}
