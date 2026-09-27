@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; sha256sum /var/lib/systemd/pstore/console-ramoops-0; cat /sys/module/ramoops/parameters/ecc; cat /proc/cmdline"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T13:41:36.312431+00:00"
+}

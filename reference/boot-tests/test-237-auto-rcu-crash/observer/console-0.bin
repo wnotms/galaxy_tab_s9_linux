@@ -1,0 +1,97 @@
+[    3.894396][  T963] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[  176.126036][ T1587] GTS9_LA_TEST_BEGIN id=597e2daf-1b06-488f-9d91-09f3544a5723 type=bounded_rcu_reader duration_s=35
+[  197.127708][    C1] GTS9_LA_BEGIN id=597e2daf-1b06-488f-9d91-09f3544a5723 trigger=rcu ns=197124006486 schema=1 cpus=8 events=6 complete_history=0
+[  197.128036][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=0 valid=1 seq=151654 nested_dropped=9
+[  197.128302][    C1] GTS9_LA_EVENT cpu=0 kind=0 count=29557 ns=197123908726 a=0000000000000007 b=ffffffc080169558 c=ffffff880e8a10d8
+[  197.128584][    C1] GTS9_LA_EVENT cpu=0 kind=1 count=2488 ns=196896066017 a=ffffffc08022d350 b=ffffff8a72705280 c=0000000000000000
+[  197.128852][    C1] GTS9_LA_EVENT cpu=0 kind=2 count=2488 ns=196896066278 a=ffffffc08022d350 b=ffffff8a72705280 c=0000000000000000
+[  197.129117][    C1] GTS9_LA_EVENT cpu=0 kind=3 count=33690 ns=197123909090 a=0000000000000080 b=ffffffc0821aaacb c=0000000000000000
+[  197.129380][    C1] GTS9_LA_EVENT cpu=0 kind=4 count=3802 ns=196896065705 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.129644][    C1] GTS9_LA_EVENT cpu=0 kind=5 count=3802 ns=196896066642 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.129905][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=1 valid=1 seq=70814 nested_dropped=0
+[  197.130157][    C1] GTS9_LA_EVENT cpu=1 kind=0 count=1979 ns=186270100240 a=0000000000000005 b=ffffffc080169558 c=ffffff88128252d8
+[  197.130422][    C1] GTS9_LA_EVENT cpu=1 kind=1 count=6773 ns=197092008517 a=ffffffc08016d328 b=ffffff8a72722ba0 c=0000000000000000
+[  197.130689][    C1] GTS9_LA_EVENT cpu=1 kind=2 count=6773 ns=197092008778 a=ffffffc08016d328 b=ffffff8a72722ba0 c=0000000000000000
+[  197.130954][    C1] GTS9_LA_EVENT cpu=1 kind=3 count=2630 ns=186270101282 a=0000000000000020 b=ffffffc0821aaacb c=0000000000000000
+[  197.131218][    C1] GTS9_LA_EVENT cpu=1 kind=4 count=8626 ns=197092008153 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.131484][    C1] GTS9_LA_EVENT cpu=1 kind=5 count=8626 ns=197092008986 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.131746][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=2 valid=1 seq=29922 nested_dropped=0
+[  197.131997][    C1] GTS9_LA_EVENT cpu=2 kind=0 count=1823 ns=196413006330 a=0000000000000004 b=ffffffc080169558 c=ffffff88128231d8
+[  197.132262][    C1] GTS9_LA_EVENT cpu=2 kind=1 count=2385 ns=196896065653 a=ffffffc08022d350 b=ffffff8a7274b280 c=0000000000000000
+[  197.132527][    C1] GTS9_LA_EVENT cpu=2 kind=2 count=2385 ns=196896065861 a=ffffffc08022d350 b=ffffff8a7274b280 c=0000000000000000
+[  197.132792][    C1] GTS9_LA_EVENT cpu=2 kind=3 count=2312 ns=196413007164 a=0000000000000010 b=ffffffc0821aaacb c=0000000000000000
+[  197.133091][    C1] GTS9_LA_EVENT cpu=2 kind=4 count=3028 ns=196896065288 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.133355][    C1] GTS9_LA_EVENT cpu=2 kind=5 count=3028 ns=196896066122 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.133620][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=3 valid=1 seq=120688 nested_dropped=0
+[  197.133875][    C1] GTS9_LA_EVENT cpu=3 kind=0 count=4464 ns=196796020653 a=0000000000000007 b=ffffffc08022d350 c=ffffff8a727fa200
+[  197.134138][    C1] GTS9_LA_EVENT cpu=3 kind=1 count=11815 ns=197117261069 a=ffffffc080169558 b=ffffff880e8b4258 c=0000000000000000
+[  197.134401][    C1] GTS9_LA_EVENT cpu=3 kind=2 count=11815 ns=197117261903 a=ffffffc080169558 b=ffffff880e8b4258 c=0000000000000000
+[  197.134665][    C1] GTS9_LA_EVENT cpu=3 kind=3 count=4396 ns=196796020913 a=00000000000000f7 b=ffffffc0821aaacb c=0000000000000000
+[  197.134930][    C1] GTS9_LA_EVENT cpu=3 kind=4 count=13927 ns=197117260809 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.135277][    C1] GTS9_LA_EVENT cpu=3 kind=5 count=13927 ns=197117262007 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.135540][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=4 valid=1 seq=82594 nested_dropped=0
+[  197.135793][    C1] GTS9_LA_EVENT cpu=4 kind=0 count=5703 ns=196920010705 a=0000000000000003 b=ffffffc080169558 c=ffffff880f378058
+[  197.136057][    C1] GTS9_LA_EVENT cpu=4 kind=1 count=7223 ns=196896067476 a=ffffffc08022d350 b=ffffff8a72791280 c=0000000000000000
+[  197.136319][    C1] GTS9_LA_EVENT cpu=4 kind=2 count=7223 ns=196896067580 a=ffffffc08022d350 b=ffffff8a72791280 c=0000000000000000
+[  197.136584][    C1] GTS9_LA_EVENT cpu=4 kind=3 count=4612 ns=196920010913 a=0000000000000008 b=ffffffc0821aaacb c=0000000000000000
+[  197.136850][    C1] GTS9_LA_EVENT cpu=4 kind=4 count=8268 ns=196920009351 a=ffffffc082106d62 b=0000000000000000 c=0000000000000000
+[  197.137114][    C1] GTS9_LA_EVENT cpu=4 kind=5 count=8268 ns=196920011851 a=ffffffc082106d62 b=0000000000000000 c=0000000000000000
+[  197.137378][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=5 valid=1 seq=82204 nested_dropped=0
+[  197.137630][    C1] GTS9_LA_EVENT cpu=5 kind=0 count=4988 ns=196410723674 a=0000000000000004 b=ffffffc080169558 c=ffffff88128231d8
+[  197.137893][    C1] GTS9_LA_EVENT cpu=5 kind=1 count=7302 ns=196896067788 a=ffffffc08022d350 b=ffffff8a727b4280 c=0000000000000000
+[  197.138156][    C1] GTS9_LA_EVENT cpu=5 kind=2 count=7302 ns=196896067892 a=ffffffc08022d350 b=ffffff8a727b4280 c=0000000000000000
+[  197.138418][    C1] GTS9_LA_EVENT cpu=5 kind=3 count=4774 ns=196410724039 a=0000000000000010 b=ffffffc0821aaacb c=0000000000000000
+[  197.138684][    C1] GTS9_LA_EVENT cpu=5 kind=4 count=8368 ns=196896067528 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.138950][    C1] GTS9_LA_EVENT cpu=5 kind=5 count=8368 ns=196896068049 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.139214][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=6 valid=1 seq=60894 nested_dropped=0
+[  197.139467][    C1] GTS9_LA_EVENT cpu=6 kind=0 count=3954 ns=197104010236 a=0000000000000003 b=ffffffc080169558 c=ffffff880e8b4258
+[  197.139730][    C1] GTS9_LA_EVENT cpu=6 kind=1 count=4979 ns=197109100601 a=ffffffc080169558 b=ffffff880c6410d8 c=0000000000000000
+[  197.141721][    C1] GTS9_LA_EVENT cpu=6 kind=2 count=4979 ns=197109101069 a=ffffffc080169558 b=ffffff880c6410d8 c=0000000000000000
+[  197.143682][    C1] GTS9_LA_EVENT cpu=6 kind=3 count=4505 ns=197104010392 a=0000000000000008 b=ffffffc0821aaacb c=0000000000000000
+[  197.145655][    C1] GTS9_LA_EVENT cpu=6 kind=4 count=6015 ns=197109100444 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.147591][    C1] GTS9_LA_EVENT cpu=6 kind=5 count=6015 ns=197109101174 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.149449][    C1] GTS9_LA_CPU id=597e2daf-1b06-488f-9d91-09f3544a5723 cpu=7 valid=1 seq=146060 nested_dropped=2
+[  197.151291][    C1] GTS9_LA_EVENT cpu=7 kind=0 count=4028 ns=196896061382 a=0000000000000006 b=ffffffc08022d350 c=ffffff8a727d7280
+[  197.153144][    C1] GTS9_LA_EVENT cpu=7 kind=1 count=13034 ns=197123911382 a=ffffffc080169558 b=ffffff880e8a10d8 c=0000000000000000
+[  197.154995][    C1] GTS9_LA_EVENT cpu=7 kind=2 count=13034 ns=197123911799 a=ffffffc080169558 b=ffffff880e8a10d8 c=0000000000000000
+[  197.156851][    C1] GTS9_LA_EVENT cpu=7 kind=3 count=7394 ns=197012014351 a=0000000000000080 b=ffffffc082106d62 c=0000000000000000
+[  197.158707][    C1] GTS9_LA_EVENT cpu=7 kind=4 count=17770 ns=197123911226 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.160556][    C1] GTS9_LA_EVENT cpu=7 kind=5 count=17770 ns=197123911903 a=ffffffc0821aaacb b=0000000000000000 c=0000000000000000
+[  197.162407][    C1] GTS9_LA_END id=597e2daf-1b06-488f-9d91-09f3544a5723 records=48 complete_history=0
+[  197.164246][    C1] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[  197.166056][    C1] rcu: 	Tasks blocked on level-0 rcu_node (CPUs 0-7): P1587
+[  197.167794][    C1] rcu: 	(detected by 1, t=5262 jiffies, g=2085, q=278 ncpus=8)
+[  211.126633][ T1587] GTS9_LA_TEST_END id=597e2daf-1b06-488f-9d91-09f3544a5723 type=bounded_rcu_reader
+[  224.640434][ T1698] sysrq: Trigger a crash
+[  224.641089][ T1698] Kernel panic - not syncing: sysrq triggered crash
+[  224.641793][ T1698] CPU: 5 UID: 0 PID: 1698 Comm: sh Tainted: G S      W   E       7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[  224.642501][ T1698] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [E]=UNSIGNED_MODULE
+[  224.643149][ T1698] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[  224.643839][ T1698] Call trace:
+[  224.644484][ T1698]  show_stack+0x1c/0x2c (C)
+[  224.645179][ T1698]  __dump_stack+0x2c/0x40
+[  224.645826][ T1698]  dump_stack_lvl+0x28/0x74
+[  224.646473][ T1698]  dump_stack+0x1c/0x2c
+[  224.647145][ T1698]  vpanic+0x150/0x344
+[  224.647764][ T1698]  vpanic+0x0/0x344
+[  224.648228][ T1698]  k_lowercase+0x0/0x2c
+[  224.648688][ T1698]  __handle_sysrq+0x148/0x14c
+[  224.649111][ T1698]  write_sysrq_trigger+0x1ac/0x218
+[  224.649563][ T1698]  proc_reg_write+0x94/0x10c
+[  224.649985][ T1698]  vfs_write+0x174/0x4b8
+[  224.650394][ T1698]  ksys_write+0x7c/0xf4
+[  224.650825][ T1698]  __arm64_sys_write+0x20/0x30
+[  224.651220][ T1698]  invoke_syscall+0x4c/0xfc
+[  224.651618][ T1698]  el0_svc_common+0x90/0xe0
+[  224.652013][ T1698]  do_el0_svc+0x20/0x30
+[  224.652405][ T1698]  el0_svc+0x40/0x9c
+[  224.652834][ T1698]  el0t_64_sync_handler+0x88/0x134
+[  224.653219][ T1698]  el0t_64_sync+0x1a4/0x1a8
+[  224.653592][ T1698] SMP: stopping secondary CPUs
+[  224.654226][ T1698] Kernel Offset: 0x40000 from 0xffffffc080000000
+[  224.654605][ T1698] PHYS_OFFSET: 0x80000000
+[  224.655014][ T1698] CPU features: 0x1a001070,001c000a,26060501,544676a7
+[  224.655394][ T1698] Memory Limit: none
+[  224.666592][ T1698] Rebooting in 10 seconds..
+
+ECC: 189 Corrected bytes, 0 unrecoverable blocks
