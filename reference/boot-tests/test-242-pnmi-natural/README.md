@@ -40,3 +40,6 @@ observe the original system >=150 seconds with ADB/NCM SSH protocol checks.
 Keep recovery, init_boot, dtbo, vbmeta, rootfs and the USB gadget unchanged.
 All artifacts/backups and the exact bundle must validate before flashing;
 only packaging validation is needed for unchanged compiled kernel bytes.
+
+Completed: one 308.48-second window did not reproduce CPU failure. Original
+images restored and final production boot checked. See [RESULTS.md](RESULTS.md).

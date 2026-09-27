@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "dd if=/tmp/gts9-test242-restore-boot.img of=/dev/block/by-name/boot bs=1048576 && sync && sha256sum /dev/block/by-name/boot"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T15:11:43.564739+00:00"
+}

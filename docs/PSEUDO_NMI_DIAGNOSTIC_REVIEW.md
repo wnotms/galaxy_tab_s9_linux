@@ -87,3 +87,22 @@ failure capture with pseudo-NMI enabled and the calibration trigger disabled,
 keeping exact symbols, per-boot offsets, ECC and positive-evidence limitations.
 No need to repeat this synthetic calibration or combine the independent BBM
 fix merely because the natural fault has not yet appeared.
+
+
+## Test 242: no natural fault in the registered single boot
+
+With the exact test241 kernel and only calibration enable=0, target
+c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08 passed 308.48 seconds without detected
+CPU failure. It supplied no natural-fault stack. Its six-anchor offset was
++0xb0000; notes matched. Helper enable=N/started=0, GIC priority masking,
+ECC64 and 1/1/1/10 were verified. See test242 RESULTS.md; no repair/rate claim.
+
+A next diagnostic can reduce perturbation by disabling the optional
+lastactivity callbacks while keeping standard pseudo-NMI backtrace delivery.
+la_init returns before probe registration if gts9_lastactivity is not 1; the
+active probes add preemption/atomic/barrier/clock work to IPI/CSD paths. This
+is a source-based reason to simplify the observer, not proof of a hidden
+race or recorder causality. Test235's recorder-free failures remain relevant
+positive evidence, not a controlled comparison. Pre-register any new capture
+and preserve source timestamp fields; do not infer kernel-event durations
+from rendered journal receipt-time spacing.

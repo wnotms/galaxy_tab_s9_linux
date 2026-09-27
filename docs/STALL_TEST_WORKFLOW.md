@@ -432,3 +432,22 @@ source fields show ~10 seconds; journal receipt fields show ~20 microseconds.
 Do not pursue a delay-loop fault based on that rendering artifact. Future
 failure capture should include raw journal JSON/export source times as well
 as rendered text, without assuming every historical record has those fields.
+
+
+## Test 242: single pseudo-NMI natural window did not reproduce failure
+
+The exact test241 kernel with calibration enable=0 passed 308.48 seconds on
+c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08. GIC priority masking, notes/six anchors
+(offset +0xb0000), ECC64 and arming were verified; helper remained inactive.
+No natural snapshot exists. Full kernel JSON (1,104 records, source times
+present) supplements rendered text/live capture. Follow defaults to ten
+initial records; future collectors should use -n all, while this trial kept
+a separate complete startup catch-up without restarting. Original hashes and
+final production/transport checks passed; see test242 RESULTS.md. No repair.
+
+Consider reducing optional instrumentation next: lastactivity=0 returns before
+all seven IPI/CSD/RCU probe registrations, while standard pseudo-NMI backtrace
+remains available. This removes observer-side atomic/barrier/clock/preemption
+work and sacrifices lastactivity cells. It does not establish an observer
+effect or a rate difference. Register a separate fixed-budget profile before
+using it; keep kernel bytes, ECC64, pseudo-NMI and power settings unchanged.

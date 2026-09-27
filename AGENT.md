@@ -2,6 +2,34 @@
 
 ## Current review (2026-09-27)
 
+Test-242 reused the exact test241 kernel with calibration enable=0. Target
+c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08 passed 308.48 seconds without detected
+CPU failure; no natural snapshot or failed-target stack exists. GIC pseudo-NMI,
+notes/six anchors (+0xb0000), ECC64, 1/1/1/10 and inactive helper were verified.
+Full source-time JSON (1,104 kernel records) supplements the rendered journal
+and live stream; the initial default-ten-line follow view was supplemented
+without restarting the process or device. All five original hashes restored.
+Final production d95f41a4-ca6e-4bd5-8a35-207126620d14 passed 214.07 seconds;
+USB ADB and NCM SSH banner respond, no authenticated SSH session claim.
+CPU repair remains OPEN; see test-242/RESULTS.md.
+
+Separate binary-journal review corrected an old timing error: test235 CPU2/5
+backtrace waits span 10.001179/10.001217 seconds on kernel source timestamps,
+while journal receipt deltas are only 21/20 microseconds. Do not investigate
+mdelay failure based on that rendering artifact or infer simultaneous onset.
+See reference/offline-reviews/20260927-journal-source-time/ and corrected
+docs/CPU_WEDGE_EVIDENCE.md. Preserve raw JSON/export source fields for timing.
+
+Next reduce optional observer perturbation before another capture: keep the
+calibrated standard pseudo-NMI/ECC64 path but consider lastactivity=0, whose
+verified la_init branch returns before all seven tracepoint registrations.
+The active recorder adds preemption/atomic/barrier/clock work to IPI/CSD paths.
+This is a reason to simplify diagnostics, not proof it hides or causes faults.
+Test235 had real failures without it, but no controlled rate comparison exists.
+Pre-register one variable and a fixed attempt budget; keep BBM/power settings
+separate. Use -n all at journal follow startup and retain source-time fields.
+Do not repeat the same clean window or treat synthetic passes as CPU repair.
+
 Test-241 calibrated the isolated pseudo-NMI route (0022+0024+0027, no BBM).
 CPU0's actual backtrace arrived 61,407 ns into a 200,000,157 ns PMR-masked
 interval with NMI context and saved IRQ-disabled PMR; both workers completed.

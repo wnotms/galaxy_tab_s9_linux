@@ -1,0 +1,20 @@
+c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08
+25.12 169.53
+c748cbd4-d315-473d-950f-78ae50ca00f0
+64
+1
+1
+1
+10
+5	4	1	7
+N
+started=0 receiver_done=0 sender_done=0 holding=0 observed=0 nmi=0 saved_irq_disabled=0 error=0 prio_masking=1 start_ns=0 end_ns=0 seen_ns=0 pc=0000000000000000 pmr=00000000 pstate=0000000000000000
+console=tty0 gts9_lastactivity=1 irqchip.gicv3_pseudo_nmi=1 gts9_pnmi_test.enable=0 msm.separate_gpu_kms=1 panic=10 consoleblank=0 gts9_minimal_rootfs=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=5 nokaslr clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32 softlockup_panic=1 workqueue.panic_on_stall_time=45 gts9_watchdog_debug=1  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+4ece2fa04ea7b7dd19438671e24ff079bcb56114517664bc419ee016fc490373  -
+ffffffc0800b0000 T _text
+ffffffc0800c0000 T _stext
+ffffffc0802568d8 t rcu_barrier_handler
+ffffffc0802aaab8 t do_nothing
+ffffffc080340db4 T irq_work_run
+ffffffc082e8fce0 d ipi_types
+c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08
