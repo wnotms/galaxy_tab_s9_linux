@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "while IFS= read -r line; do printf '<6>%s\\n' \"$line\" > /dev/kmsg; done < /tmp/gts9-ecc-console.bin"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:29:30.106373+00:00"
+}

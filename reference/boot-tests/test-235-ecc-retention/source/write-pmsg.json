@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "dd if=/tmp/gts9-ecc-pmsg.bin of=/dev/pmsg0 bs=65536 count=1"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:29:30.021488+00:00"
+}
