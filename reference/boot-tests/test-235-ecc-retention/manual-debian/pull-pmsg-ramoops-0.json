@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "pull",
+    "/var/lib/systemd/pstore/pmsg-ramoops-0",
+    "D:\\android\\gts9-test235\\manual-pmsg-ramoops-0.bin"
+  ],
+  "status": "timeout",
+  "utc": "2026-09-27T07:32:25.468742+00:00"
+}

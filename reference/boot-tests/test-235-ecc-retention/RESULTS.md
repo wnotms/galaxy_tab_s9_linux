@@ -31,3 +31,10 @@ Manual TWRP was requested to read disk pstore/journal and restore production.
 vendor_boot were flashed; complete readbacks passed and init_boot/dtbo/vbmeta
 matched production. No rootfs/USB configuration changed. Do not start another
 diagnostic boot or wedge series while this observation is unresolved.
+
+
+The owner manually rebooted to Debian again. New boot
+`c1027ef1-e680-425b-b6fc-6d7819800639` returned its identity/uptime 36.11 seconds,
+then dmesg stalled; file pull also timed out. The boot change is verified, but
+this boot's CPU failure signature is not yet known either. Direct manual TWRP
+was requested again; no further Debian diagnostic boots should be attempted.
