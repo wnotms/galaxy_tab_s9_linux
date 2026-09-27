@@ -28,6 +28,7 @@ planning a trace without proving that its useful portion survives reboot.
 
 | Previous interpretation | Supported statement |
 |---|---|
+| A 20 µs rendered journal gap proves the backtrace timeout was short | It does not. Test235's binary source fields measure two real waits of 10.001179 s and 10.001217 s while journal receipt deltas are 21/20 µs. Preserve kernel source timestamp fields for timing; see the source-time audit. |
 | Ordinary-IPI non-response excludes NMI-only capture | It does not. Existing builds disable ARM64_PSEUDO_NMI; the higher-priority route is untested. With runtime priority masking, backtrace IPIs can use the NMI route while ordinary local IRQs are PMR-masked. This still cannot bypass arbitrary hard DAIF masking, firmware or true CPU non-progress. |
 | `cur_csd == NULL` means outside every IPI handler | `kernel/smp.c::__csd_lock_record()` records current CSD work only. ARM64 `do_handle_IPI()` also handles reschedule, timer, irq_work and backtrace IPIs, and has code before CSD dispatch. NULL does not inspect DAIF or GIC state. |
 | Both callbacks are lock-free and cannot spin | `do_nothing()` is trivial, but `kernel/rcu/tree.c::rcu_barrier_handler()` explicitly takes `raw_spin_lock(&rcu_state.barrier_lock)`. That fact alone does not prove it caused this wedge. |
@@ -423,3 +424,11 @@ remain unproven. No CPU repair is established. Next register one bounded
 natural capture with pseudo-NMI enabled and the synthetic trigger disabled;
 retain target-specific offsets/ECC attribution and stop on the first failure.
 Keep the BBM candidate separate. No need to repeat the successful calibration.
+
+
+Timing correction: [binary journal source-time audit](../reference/offline-reviews/20260927-journal-source-time/README.md)
+resolves the apparent microsecond timeout for two test235 requests. Kernel
+source fields show ~10 seconds; journal receipt fields show ~20 microseconds.
+Do not pursue a delay-loop fault based on that rendering artifact. Future
+failure capture should include raw journal JSON/export source times as well
+as rendered text, without assuming every historical record has those fields.

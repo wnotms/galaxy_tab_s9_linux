@@ -49,8 +49,9 @@ void arch_trigger_cpumask_backtrace(const cpumask_t *mask, int exclude_cpu)
 Correction (2026-09-27): the message means "did not answer the ordinary
 backtrace IPI". This is **not stronger** than failing an NMI request and does
 not establish whether a higher-priority path could interrupt the target.
-The tested build never enabled pseudo-NMI backtraces, so their ability to
-capture a masked-IRQ loop remains untested. `arch_local_irq_disable()` uses
+Those historical builds never enabled pseudo-NMI backtraces. Test241 later
+calibrated that separate path on a healthy IRQ-masked CPU0; natural-failure
+capture remains unproven. `arch_local_irq_disable()` uses
 DAIF on this build; with verified pseudo-NMI support it uses GIC PMR, and
 `ipi_should_be_nmi(IPI_CPU_BACKTRACE)` selects the higher-priority route.
 That route still cannot guarantee progress through firmware, hard DAIF masking
@@ -58,59 +59,33 @@ or actual CPU failure. See `docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md` before making
 any hardware claim. The earlier statement that NMI-only capture was excluded
 is withdrawn; raw fault observations are unchanged.
 
-### How much the `10 seconds` is worth: less than the wording says
+### Kernel source timestamps, not journal receipt time, measure the timeout
 
-`lib/nmi_backtrace.c` waits for the backtrace mask to empty before it prints the
-warning:
+Correction (2026-09-27): the previous inference that the actual timeout was
+only 20 microseconds is withdrawn. Archived binary journal entries from
+failure boot `c1027ef1-e680-425b-b6fc-6d7819800639` retain both kernel source
+and journal header timestamps:
 
-```c
-	/* Wait for up to NMI_BT_TIMEOUT_SEC seconds for all CPUs to do the backtrace */
-	for (i = 0; i < NMI_BT_TIMEOUT_SEC * 1000; i++) {
-		if (cpumask_empty(to_cpumask(backtrace_mask)))
-			break;
-		mdelay(1);
-		touch_softlockup_watchdog();
-	}
+| Target | Kernel source delta | Journal header delta |
+|---|---|---|
+| CPU 2 | 10.001179 s | 21 µs |
+| CPU 5 | 10.001217 s | 20 µs |
 
-	if (!cpumask_empty(to_cpumask(backtrace_mask)))
-		pr_warn("After " __stringify(NMI_BT_TIMEOUT_SEC) " seconds, these CPUS still haven't responded to the NMI: %*pbl\n", ...);
-```
+For these two requests the nominal ten-second wait is supported by actual
+kernel source-clock intervals. The old examples' rendered short-monotonic
+intervals alone do not measure the wait. Systemd v257 stores the /dev/kmsg
+boottime in _SOURCE_BOOTTIME_TIMESTAMP and a compatibility monotonic field;
+its short renderer deliberately ignores that compatibility field and uses
+journal header time. Raw JSON entries, source links, exact reproduction and
+hashes are in [the source-time audit](../reference/offline-reviews/20260927-journal-source-time/README.md).
+No mdelay or timer fault follows from the rendered 20-microsecond spacing.
 
-`NMI_BT_TIMEOUT_SEC` is `10`, so the loop is meant to burn 10 s of `mdelay(1)`. In
-**every** raw capture in this repository it does not:
-
-| capture | interval between the two records |
-|---|---|
-| `test-181/host-captures/r3-stacks.log` (`-o short-monotonic`, raw) | `[36.340199] Sending NMI from CPU 4 to CPUs 5:` → `[36.340219] After 10 seconds … 5` = **20 µs** |
-| same file, and the target answered | `[36.360250] Sending NMI from CPU 4 to CPUs 7:` → `[36.360265] NMI backtrace for cpu 7` = **15 µs** |
-| `test-178/rcu-stall-backtrace.log` (raw) | three rounds — CPUs 4, 5 and 7 — all inside the single journal second `Apr 14 03:38:50` |
-| `test-189/boot-1c082657-trace.txt` | `Sending NMI … 4` / `After 10 seconds … 4` / `Sending NMI … 5` / `After 10 seconds … 5` all at `47.261`–`47.262` |
-
-A responsive CPU answers in ~15 µs, so the *ordering* is meaningful: a CPU that does
-not answer inside even that short window is not answering. But the timeout is **not**
-10 seconds of observation, and the marker must therefore be described as "did not
-answer the backtrace request", never as "took no interrupt for 10 seconds".
-
-**Why the loop finishes early is not established, and is not asserted here.** The
-obvious candidate — `mdelay(1)` not being 1 ms on this board — does not survive
-arithmetic: `dmesg` reports `Calibrating delay loop (skipped), value calculated
-using timer frequency .. 38.40 BogoMIPS (lpj=76800)`, and with
-`CONFIG_HZ=250` (and a 19.2 MHz arch timer, which is what `76800 = 19200000/250`
-implies) arm64's `xloops_to_cycles()` gives
-
-```
-(1000 * 0x10C7 * 76800 * 250) >> 32 = 19200 cycles = 1.000 ms
-```
-
-i.e. exactly the millisecond it should be. So the two candidate explanations are
-"`mdelay()` is short here after all" and "the displayed timestamps are not the
-records' creation times", and this document does not choose between them. The
-measurement that settles it is a console capture with **host** timestamps spanning
-the pair — the captures above are journal reads, whose 1-second `short` format and
-whose dependence on the (unset) RTC make them weaker than they look.
-`reference/boot-tests/test-191-*/wedge-rate.sh` holds COM19 open for 300 s for
-exactly this, because the panic that carries the NMI lines arrives ~180 s after the
-wedge.
+Do not extend this measurement to unexamined boots, infer simultaneous CPU
+failure from receipt-time adjacency, or describe it as taking no interrupt
+or executing no instruction. It proves the measured request remained
+unanswered over that interval; the mechanism still needs the target's stack
+and interrupt state. Preserve source timestamp fields for future timing
+analysis rather than substituting host receipt time or rounded text output.
 
 **What is unaffected.** CPUs 4 and 5 are wedged on evidence that does not involve
 the backtrace at all. Same capture:
@@ -171,9 +146,9 @@ before it did and would otherwise be dropped by the "reached a full journal" fil
 - dropping it would be the wrong way round, since wedging early is exactly the
 thing being counted.
 
-**All 11 of the 11 carry the unanswered-NMI line.** Not one of them is a software
-stall that happens to have tripped a detector: in every case at least one CPU
-stopped executing.
+**All 11 of the 11 carry the unanswered-NMI line.** They establish target backtrace non-response alongside stall symptoms,
+not proof that a core executed no instructions or a distinction between
+software, firmware and hardware causes.
 
 The 11, oldest first, with the marker counts. `rcu`, `nmi` and `wq` are counts of
 `rcu detected stall`, `haven't responded to the NMI` and `BUG: workqueue lockup`;

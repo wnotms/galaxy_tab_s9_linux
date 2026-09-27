@@ -1,0 +1,50 @@
+{
+  "boot_id": "c1027ef1e680425bb6fc6d7819800639",
+  "source_archive": "reference/boot-tests/test-235-ecc-retention/recovery-disk/manual.journal.gz",
+  "source_archive_sha256": "beaa8d21636ae92cb3bc701616384fb648b2e93c76ae687bfa85f7e27418d6cd",
+  "decoded_journal_sha256": "6a2d06425d9d9cffba15f7d9dbd438134f7c37bcb21cb5f54815fbede3451022",
+  "query": [
+    "journalctl",
+    "--file=DECOMPRESSED_MANUAL_JOURNAL",
+    "-b",
+    "c1027ef1e680425bb6fc6d7819800639",
+    "--no-pager",
+    "-o",
+    "json",
+    "--grep=Sending NMI|CPUS still"
+  ],
+  "entries_sha256": "04c0cd3154ded5d35a38c3a3c6ceda22e475ddd598b344bd023d2a99378a014a",
+  "pairs": [
+    {
+      "cpu": 2,
+      "kernel_start_us": 28403594,
+      "kernel_end_us": 38404773,
+      "kernel_delta_us": 10001179,
+      "journal_start_us": 48405957,
+      "journal_end_us": 48405978,
+      "journal_delta_us": 21
+    },
+    {
+      "cpu": 5,
+      "kernel_start_us": 38404776,
+      "kernel_end_us": 48405993,
+      "kernel_delta_us": 10001217,
+      "journal_start_us": 48405998,
+      "journal_end_us": 48406018,
+      "journal_delta_us": 20
+    }
+  ],
+  "primary_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/src/journal/journald-kmsg.c",
+      "sha256": "a1f74906307a13a3050183319c879cd119c532b4170f8706866ce21d31a09d48",
+      "bytes": 14772
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/src/shared/logs-show.c",
+      "sha256": "cbb9e93636d4d67291b642ff895c31bbb3099f2f836da3b1ed69965ac3be3204",
+      "bytes": 83918
+    }
+  ],
+  "conclusion": "Two actual request timeouts lasted about 10 seconds on kernel source clock, not 20 microseconds. Journal receipt deltas cannot measure target response time. No universal claim for unexamined boots or CPU root-cause proof."
+}
