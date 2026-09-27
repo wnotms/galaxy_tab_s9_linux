@@ -1,0 +1,12 @@
+{
+  "clean_ccache_build": true,
+  "patches": [
+    "0022-gts9-lastactivity.patch",
+    "0024-gts9-ramoops-ecc64.patch",
+    "0026-arm64-bbm-flush-range.patch"
+  ],
+  "config_DTB_release_match_test236": true,
+  "packaged": true,
+  "flashed": false,
+  "cpu_stall_fix_established": false
+}

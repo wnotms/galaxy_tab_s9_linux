@@ -27,3 +27,12 @@ range-behavior regression harness using the actual extracted function. Keep
 it separate from the unchanged natural-capture trial. No candidate has been
 flashed and production defaults remain unchanged. This is a concrete kernel
 correctness lead, not proof of the requested CPU-stall repair.
+
+Clean ccache compile and isolated bundle packaging completed. Config, DTB and
+release match the existing recorder/ECC64 candidate; only the kernel changes.
+The bundle is `out/boot-bundle-bbm-range`; symbols are `out/test240/vmlinux`
+and `System.map`. Artifact hashes and build/package logs are under validation.
+Hardware is currently restored to production, not this candidate. The next
+candidate test must register a bounded permission-change workload and its
+interpretation before flashing; neither compilation nor 120 host cases proves
+CPU-stall repair. No full unrelated regression suite or CI was run.

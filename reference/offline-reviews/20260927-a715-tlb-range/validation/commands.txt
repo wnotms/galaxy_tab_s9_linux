@@ -1,0 +1,3 @@
+python3 out/test240/check_bbm.py
+KERNEL_CLEAN=1 GTS9_DIAGNOSTIC_PATCHES='0022-gts9-lastactivity.patch 0024-gts9-ramoops-ecc64.patch 0026-arm64-bbm-flush-range.patch' BUILD_MODULES=0 USE_CCACHE=1 ARCH=arm64 LLVM=1 KERNEL_OUT_DIR=out/kernel-bbm-range ./scripts/build-kernel.sh
+KERNEL_OUT_DIR=out/kernel-bbm-range MKBOOTIMG=.work/tools/mkbootimg.py AVBTOOL=.work/tools/avbtool.py bash scripts/build-boot-bundle.sh --initramfs out/lastactivity-validation/init-unpack/ramdisk --cmdline boot/cmdline.lastactivity.example.txt --bootconfig boot/bootconfig.example.txt --out out/boot-bundle-bbm-range
