@@ -1,5 +1,16 @@
 # Stall investigation: direction review and offline-first workflow
 
+Test245 outcome: positive natural startup failure at30.68 s (RCU CPU2), then
+36.54 s (CPU1 soft lockup/panic), before any low-address workload. The corrected
+BBM kernel did not prevent this fault. Attributed retained console/panic provide
+matching48-cell snapshots; exact registers/code show CPU1 waits for CPU2 in
+KFENCE static-key synchronization, with CPU2's own PC still missing. Preserve
+the distinction between waiter and failed target. Original images are restored;
+production120 s CPU observation is clear but the full health gate is inconclusive
+due to UPower217/USER. No repeat of the closed245 budget. Prioritize review of
+CPU2 capture from this new evidence, not more independent BBM functional boots.
+See test245 RESULTS.md for attribution/integrity limits and recovery details.
+
 2026-09-28 budget correction: 300 seconds is not a prerequisite for confirming
 startup. Test229 raw dmesg detects RCU trouble at29.33 s and CPU6 non-response
 at39.33 s; test235 source timestamps confirm CPU2/5 reports by48.41 s. These

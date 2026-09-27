@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl cat upower.service; systemctl show upower.service -p PrivateUsers -p User -p DynamicUser; cat /proc/sys/user/max_user_namespaces; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:06:12.168164+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "sha256sum /var/lib/systemd/pstore/dmesg-ramoops-0.enc.z; stat -c \"%s %Y\" /var/lib/systemd/pstore/dmesg-ramoops-0.enc.z"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:59:32.970845+00:00"
+}

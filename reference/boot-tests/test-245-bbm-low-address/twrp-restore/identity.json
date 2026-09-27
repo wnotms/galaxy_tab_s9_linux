@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.device; getprop ro.product.model; getprop ro.twrp.version; cat /proc/sys/kernel/random/boot_id; uname -a; cat /sys/class/power_supply/battery/capacity"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:00:42.592089+00:00"
+}

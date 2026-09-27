@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "for f in /sys/fs/pstore/*; do [ -f \"$f\" ] || continue; echo FILE=$f; sha256sum \"$f\"; cat \"$f\"; done"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:59:08.132010+00:00"
+}

@@ -1,0 +1,147 @@
+[    4.732566][  T975] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[   30.655377][    C3] GTS9_LA_BEGIN id=9343ce3b-8159-47ad-a4be-5cb28d453aad trigger=rcu ns=30652004362 schema=1 cpus=8 events=6 complete_history=0
+[   30.655515][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=0 valid=1 seq=147016 nested_dropped=3
+[   30.655619][    C3] GTS9_LA_EVENT cpu=0 kind=0 count=30330 ns=30644047278 a=0000000000000007 b=ffffffc0802a1558 c=ffffff880f0331d8
+[   30.655725][    C3] GTS9_LA_EVENT cpu=0 kind=1 count=1778 ns=26443461290 a=ffffffc0802a1558 b=ffffff880db44258 c=0000000000000000
+[   30.655828][    C3] GTS9_LA_EVENT cpu=0 kind=2 count=1778 ns=26443464936 a=ffffffc0802a1558 b=ffffff880db44258 c=0000000000000000
+[   30.655932][    C3] GTS9_LA_EVENT cpu=0 kind=3 count=33764 ns=30644047643 a=0000000000000080 b=ffffffc0822e19ae c=0000000000000000
+[   30.656035][    C3] GTS9_LA_EVENT cpu=0 kind=4 count=2929 ns=26443460405 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.656137][    C3] GTS9_LA_EVENT cpu=0 kind=5 count=2929 ns=26443465353 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.656237][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=1 valid=1 seq=55822 nested_dropped=0
+[   30.656337][    C3] GTS9_LA_EVENT cpu=1 kind=0 count=1957 ns=13532012076 a=0000000000000003 b=ffffffc0802a1558 c=ffffff880ea790d8
+[   30.656437][    C3] GTS9_LA_EVENT cpu=1 kind=1 count=5024 ns=9884174057 a=ffffffc0802a1558 b=ffffff880da590d8 c=0000000000000000
+[   30.656538][    C3] GTS9_LA_EVENT cpu=1 kind=2 count=5024 ns=9884179474 a=ffffffc0802a1558 b=ffffff880da590d8 c=0000000000000000
+[   30.656641][    C3] GTS9_LA_EVENT cpu=1 kind=3 count=2630 ns=13532012545 a=0000000000000008 b=ffffffc0822e19ae c=0000000000000000
+[   30.656744][    C3] GTS9_LA_EVENT cpu=1 kind=4 count=6638 ns=10716051765 a=ffffffc08222727b b=0000000000000000 c=0000000000000000
+[   30.656842][    C3] GTS9_LA_EVENT cpu=1 kind=5 count=6638 ns=10716052078 a=ffffffc08222727b b=0000000000000000 c=0000000000000000
+[   30.657481][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=2 valid=1 seq=21732 nested_dropped=0
+[   30.658075][    C3] GTS9_LA_EVENT cpu=2 kind=0 count=1291 ns=9623834890 a=0000000000000001 b=ffffffc0802a1558 c=ffffff880db310d8
+[   30.658674][    C3] GTS9_LA_EVENT cpu=2 kind=1 count=1628 ns=9652329890 a=ffffffc0802a1558 b=ffffff880da5a158 c=0000000000000000
+[   30.659271][    C3] GTS9_LA_EVENT cpu=2 kind=2 count=1628 ns=9652354682 a=ffffffc0802a1558 b=ffffff880da5a158 c=0000000000000000
+[   30.659860][    C3] GTS9_LA_EVENT cpu=2 kind=3 count=1819 ns=9652393432 a=0000000000000004 b=ffffffc08223dc95 c=0000000000000000
+[   30.660446][    C3] GTS9_LA_EVENT cpu=2 kind=4 count=2250 ns=9652400880 a=ffffffc08223dc95 b=0000000000000000 c=0000000000000000
+[   30.661027][    C3] GTS9_LA_EVENT cpu=2 kind=5 count=2250 ns=9652418328 a=ffffffc08223dc95 b=0000000000000000 c=0000000000000000
+[   30.661597][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=3 valid=1 seq=114570 nested_dropped=2
+[   30.662169][    C3] GTS9_LA_EVENT cpu=3 kind=0 count=3095 ns=30172013112 a=0000000000000006 b=ffffffc0802a1558 c=ffffff880da4a158
+[   30.662748][    C3] GTS9_LA_EVENT cpu=3 kind=1 count=11653 ns=30172008164 a=ffffffc0802a1558 b=ffffff880c4ac258 c=0000000000000000
+[   30.663328][    C3] GTS9_LA_EVENT cpu=3 kind=2 count=11653 ns=30172009883 a=ffffffc0802a1558 b=ffffff880c4ac258 c=0000000000000000
+[   30.663898][    C3] GTS9_LA_EVENT cpu=3 kind=3 count=3854 ns=30172013633 a=0000000000000040 b=ffffffc0822e19ae c=0000000000000000
+[   30.664466][    C3] GTS9_LA_EVENT cpu=3 kind=4 count=13515 ns=30172007851 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.665035][    C3] GTS9_LA_EVENT cpu=3 kind=5 count=13515 ns=30172010039 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.665594][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=4 valid=1 seq=58526 nested_dropped=0
+[   30.666152][    C3] GTS9_LA_EVENT cpu=4 kind=0 count=3439 ns=9652105620 a=0000000000000002 b=ffffffc0802a1558 c=ffffff880ea4d2d8
+[   30.666718][    C3] GTS9_LA_EVENT cpu=4 kind=1 count=4936 ns=9652036557 a=ffffffc0802a1558 b=ffffff882131e358 c=0000000000000000
+[   30.667282][    C3] GTS9_LA_EVENT cpu=4 kind=2 count=4936 ns=9652040672 a=ffffffc0802a1558 b=ffffff882131e358 c=0000000000000000
+[   30.667836][    C3] GTS9_LA_EVENT cpu=4 kind=3 count=4016 ns=9651074318 a=0000000000000020 b=ffffffc0822e19ae c=0000000000000000
+[   30.668389][    C3] GTS9_LA_EVENT cpu=4 kind=4 count=5968 ns=9652036140 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.668937][    C3] GTS9_LA_EVENT cpu=4 kind=5 count=5968 ns=9652040776 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.669477][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=5 valid=1 seq=74588 nested_dropped=0
+[   30.669984][    C3] GTS9_LA_EVENT cpu=5 kind=0 count=4727 ns=22690557333 a=0000000000000003 b=ffffffc0802a1558 c=ffffff881c9b52d8
+[   30.670531][    C3] GTS9_LA_EVENT cpu=5 kind=1 count=6353 ns=9884214422 a=ffffffc080365350 b=ffffff8a727b41c0 c=0000000000000000
+[   30.671072][    C3] GTS9_LA_EVENT cpu=5 kind=2 count=6353 ns=9884214578 a=ffffffc080365350 b=ffffff8a727b41c0 c=0000000000000000
+[   30.671637][    C3] GTS9_LA_EVENT cpu=5 kind=3 count=5207 ns=22690557594 a=0000000000000008 b=ffffffc0822e19ae c=0000000000000000
+[   30.672171][    C3] GTS9_LA_EVENT cpu=5 kind=4 count=7327 ns=10718209838 a=ffffffc08222727b b=0000000000000000 c=0000000000000000
+[   30.672711][    C3] GTS9_LA_EVENT cpu=5 kind=5 count=7327 ns=10718209994 a=ffffffc08222727b b=0000000000000000 c=0000000000000000
+[   30.673252][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=6 valid=1 seq=71184 nested_dropped=0
+[   30.673802][    C3] GTS9_LA_EVENT cpu=6 kind=0 count=2616 ns=30172005716 a=0000000000000003 b=ffffffc0802a1558 c=ffffff880c4ac258
+[   30.674365][    C3] GTS9_LA_EVENT cpu=6 kind=1 count=6938 ns=30172016028 a=ffffffc0802a1558 b=ffffff880da4a158 c=0000000000000000
+[   30.674932][    C3] GTS9_LA_EVENT cpu=6 kind=2 count=6938 ns=30172016810 a=ffffffc0802a1558 b=ffffff880da4a158 c=0000000000000000
+[   30.675493][    C3] GTS9_LA_EVENT cpu=6 kind=3 count=3380 ns=30172005872 a=0000000000000008 b=ffffffc0822e19ae c=0000000000000000
+[   30.676054][    C3] GTS9_LA_EVENT cpu=6 kind=4 count=7860 ns=30172015664 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.676602][    C3] GTS9_LA_EVENT cpu=6 kind=5 count=7860 ns=30172016914 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.677130][    C3] GTS9_LA_CPU id=9343ce3b-8159-47ad-a4be-5cb28d453aad cpu=7 valid=1 seq=128426 nested_dropped=0
+[   30.677655][    C3] GTS9_LA_EVENT cpu=7 kind=0 count=2455 ns=26443791238 a=0000000000000003 b=ffffffc0802a1558 c=ffffff880db44258
+[   30.678182][    C3] GTS9_LA_EVENT cpu=7 kind=1 count=11325 ns=30644049674 a=ffffffc0802a1558 b=ffffff880f0331d8 c=0000000000000000
+[   30.678706][    C3] GTS9_LA_EVENT cpu=7 kind=2 count=11325 ns=30644050091 a=ffffffc0802a1558 b=ffffff880f0331d8 c=0000000000000000
+[   30.679232][    C3] GTS9_LA_EVENT cpu=7 kind=3 count=6420 ns=30644003997 a=0000000000000080 b=ffffffc08223dc95 c=0000000000000000
+[   30.679758][    C3] GTS9_LA_EVENT cpu=7 kind=4 count=16344 ns=30644049518 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.680284][    C3] GTS9_LA_EVENT cpu=7 kind=5 count=16344 ns=30644050143 a=ffffffc0822e19ae b=0000000000000000 c=0000000000000000
+[   30.680810][    C3] GTS9_LA_END id=9343ce3b-8159-47ad-a4be-5cb28d453aad records=48 complete_history=0
+[   30.681332][    C3] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   30.681817][    C3] rcu: 	2-...0: (4 GPs behind) idle=83a4/1/0x4000000000000000 softirq=997/997 fqs=2584
+[   30.682343][    C3] rcu: 	(detected by 3, t=5258 jiffies, g=1037, q=2171 ncpus=8)
+[   30.682872][    C3] Sending NMI from CPU 3 to CPUs 2:
+[   36.543182][    C1] watchdog: BUG: soft lockup - CPU#1 stuck for 27s! [kworker/u32:5:91]
+[   36.543189][    C1] CPU#1 Utilization every 4000ms during lockup:
+[   36.543191][    C1] 	#1: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   36.543195][    C1] 	#2: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   36.543197][    C1] 	#3: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   36.543200][    C1] 	#4: 100% system,	  0% softirq,	  1% hardirq,	  0% idle
+[   36.543203][    C1] 	#5: 100% system,	  0% softirq,	  0% hardirq,	  0% idle
+[   36.543206][    C1] Modules linked in: qrtr_mhi(E) ath11k_pci(E) ath11k(E) mac80211(E) cfg80211(E) hci_uart(E) btqca(E) btbcm(E) bluetooth(E) pci_pwrctrl_pwrseq(E) pwrseq_qcom_wcn(E) gpio_shared_proxy(E)
+[   36.543233][    C1] CPU: 1 UID: 0 PID: 91 Comm: kworker/u32:5 Tainted: G S      W   E       7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   36.543240][    C1] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [E]=UNSIGNED_MODULE
+[   36.543243][    C1] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   36.543246][    C1] Workqueue: events_unbound toggle_allocation_gate
+[   36.543259][    C1] pstate: 01400005 (nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   36.543263][    C1] pc : smp_call_function_many_cond+0x3ec/0x514
+[   36.543270][    C1] lr : smp_call_function_many_cond+0x310/0x514
+[   36.543275][    C1] sp : ffffffc083d0bba0
+[   36.543277][    C1] x29: ffffffc083d0bbf0 x28: 0000000000000007 x27: ffffffc082c921c0
+[   36.543283][    C1] x26: ffffff8a72723f08 x25: 0000000000000001 x24: ffffffc082cb2068
+[   36.543288][    C1] x23: ffffff8a72723f00 x22: 0000000000000000 x21: 0000000000000000
+[   36.543293][    C1] x20: ffffffc082cb1c30 x19: 0000000000000001 x18: ffffffc083a55058
+[   36.543299][    C1] x17: 000000040044ffff x16: 00000000410fd460 x15: 0000000000000100
+[   36.543305][    C1] x14: ffffffc082cb2068 x13: ffffff880da59080 x12: 0000000000000000
+[   36.543309][    C1] x11: 0000000000000011 x10: ffffff8a7274b1c8 x9 : 0000000000000002
+[   36.543314][    C1] x8 : ffffffffffffffff x7 : 045000f2b5593510 x6 : 0000000000300000
+[   36.543319][    C1] x5 : 0000000000000001 x4 : ffffff8a727fa1c0 x3 : 0000000000000000
+[   36.543325][    C1] x2 : ffffffc0822e19ae x1 : ffffff8a72723f10 x0 : 0000000000000000
+[   36.543330][    C1] Call trace:
+[   36.543333][    C1]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   36.543339][    C1]  kick_all_cpus_sync+0x48/0x7c
+[   36.543344][    C1]  arch_jump_label_transform_apply+0x14/0x24
+[   36.543351][    C1]  __jump_label_update+0x118/0x13c
+[   36.543357][    C1]  jump_label_update+0xe4/0x110
+[   36.543361][    C1]  static_key_enable_cpuslocked+0x6c/0xb4
+[   36.543365][    C1]  static_key_enable+0x24/0x3c
+[   36.543369][    C1]  toggle_allocation_gate+0x58/0x14c
+[   36.543373][    C1]  process_scheduled_works+0x18c/0x4d0
+[   36.543380][    C1]  worker_thread+0x1f8/0x2e8
+[   36.543385][    C1]  kthread+0x108/0x134
+[   36.543390][    C1]  ret_from_fork+0x10/0x20
+[   36.543400][    C1] Kernel panic - not syncing: softlockup: hung tasks
+[   36.616887][    C1] CPU: 1 UID: 0 PID: 91 Comm: kworker/u32:5 Tainted: G S      W   EL      7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   36.618566][    C1] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [E]=UNSIGNED_MODULE, [L]=SOFTLOCKUP
+[   36.620242][    C1] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   36.621940][    C1] Workqueue: events_unbound toggle_allocation_gate
+[   36.623533][    C1] Call trace:
+[   36.625080][    C1]  show_stack+0x1c/0x2c (C)
+[   36.626696][    C1]  __dump_stack+0x2c/0x40
+[   36.628200][    C1]  dump_stack_lvl+0x28/0x74
+[   36.629765][    C1]  dump_stack+0x1c/0x2c
+[   36.631218][    C1]  vpanic+0x150/0x344
+[   36.632649][    C1]  vpanic+0x0/0x344
+[   36.634134][    C1]  watchdog_timer_fn+0x48c/0x53c
+[   36.635565][    C1]  __hrtimer_run_queues+0x130/0x3a4
+[   36.637019][    C1]  hrtimer_interrupt+0xd8/0x2bc
+[   36.638566][    C1]  arch_timer_handler_virt+0x3c/0x50
+[   36.640056][    C1]  handle_percpu_devid_irq+0x144/0x1b4
+[   36.641575][    C1]  generic_handle_domain_irq+0x40/0x68
+[   36.642942][    C1]  gic_handle_irq+0x4c/0x10c
+[   36.644346][    C1]  call_on_irq_stack+0x48/0x88
+[   36.645633][    C1]  do_interrupt_handler+0x50/0x74
+[   36.646909][    C1]  el1_interrupt+0x40/0x68
+[   36.648261][    C1]  el1h_64_irq_handler+0x1c/0x2c
+[   36.649511][    C1]  el1h_64_irq+0x70/0x74
+[   36.650821][    C1]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   36.652080][    C1]  kick_all_cpus_sync+0x48/0x7c
+[   36.653413][    C1]  arch_jump_label_transform_apply+0x14/0x24
+[   36.654672][    C1]  __jump_label_update+0x118/0x13c
+[   36.656013][    C1]  jump_label_update+0xe4/0x110
+[   36.657275][    C1]  static_key_enable_cpuslocked+0x6c/0xb4
+[   36.658548][    C1]  static_key_enable+0x24/0x3c
+[   36.659881][    C1]  toggle_allocation_gate+0x58/0x14c
+[   36.661134][    C1]  process_scheduled_works+0x18c/0x4d0
+[   36.662471][    C1]  worker_thread+0x1f8/0x2e8
+[   36.663721][    C1]  kthread+0x108/0x134
+[   36.664960][    C1]  ret_from_fork+0x10/0x20
+[   36.666283][    C1] SMP: stopping secondary CPUs
+[   37.764258][    C1] SMP: failed to stop secondary CPUs 0,2-4,7
+[   37.765613][    C1] Kernel Offset: 0x178000 from 0xffffffc080000000
+[   37.766883][    C1] PHYS_OFFSET: 0x80000000
+[   37.768223][    C1] CPU features: 0x1a001070,001c000a,26060501,544676a7
+[   37.769504][    C1] Memory Limit: none
+[   37.796634][    C1] Rebooting in 10 seconds..
+
+ECC: 1004 Corrected bytes, 0 unrecoverable blocks

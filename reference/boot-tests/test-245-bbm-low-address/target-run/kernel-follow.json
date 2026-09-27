@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b 9c9d553e86c94b80b6d79c29447f7125 -k -f -n all --no-pager -o json"
+  ],
+  "utc": "2026-09-27T18:57:39.935295+00:00",
+  "status": -15,
+  "host_stopped_at_observation_end": true,
+  "elapsed_host_seconds": 29.759229762999894
+}

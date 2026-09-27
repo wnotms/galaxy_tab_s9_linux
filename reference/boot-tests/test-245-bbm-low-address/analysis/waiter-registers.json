@@ -1,0 +1,20 @@
+{
+  "source": "retained/console-ramoops-0-copy1.bin",
+  "vmlinux_sha256": "f502b50130a750d3cd692abecaf32d27a3f0b4c2f6d082fd82303aaa2269f3af",
+  "runtime_minus_link": "0x178000",
+  "pc": "smp_call_function_many_cond+0x3ec",
+  "instruction": "ldar w11, [x10]",
+  "x9_target_cpu": 2,
+  "x10_flags_address": "ffffff8a7274b1c8",
+  "x11_last_observed_flags": "0x11",
+  "flags_meaning": "CSD_FLAG_LOCK (0x01) | CSD_TYPE_SYNC (0x10)",
+  "caller_chain": [
+    "toggle_allocation_gate",
+    "static_key_enable",
+    "arch_jump_label_transform_apply",
+    "kick_all_cpus_sync",
+    "smp_call_function_many_cond"
+  ],
+  "conclusion": "CPU1 is the synchronous waiter for CPU2 at the saved interrupt frame; CPU2 PC/DAIF/GIC state is not captured",
+  "causal_limit": "KFENCE generated the synchronization request; this does not prove it caused CPU2 non-progress"
+}

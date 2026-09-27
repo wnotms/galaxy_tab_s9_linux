@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl status upower --no-pager; journalctl -b -u upower --no-pager -n 80; systemctl show upower -p Result -p ExecMainCode -p ExecMainStatus -p NRestarts; journalctl --list-boots --no-pager"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:03:58.383978+00:00"
+}

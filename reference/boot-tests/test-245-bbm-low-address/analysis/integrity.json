@@ -1,0 +1,29 @@
+{
+  "target_identity": {
+    "boot_id": "9c9d553e-86c9-4b80-b6d7-9c29447f7125",
+    "capture_id": "9343ce3b-8159-47ad-a4be-5cb28d453aad",
+    "runtime_arming_verified": true,
+    "notes_match_vmlinux": true,
+    "runtime_minus_link": 1540096,
+    "anchors": {
+      "_text": 1540096,
+      "_stext": 1540096,
+      "rcu_barrier_handler": 1540096,
+      "do_nothing": 1540096,
+      "irq_work_run": 1540096,
+      "ipi_types": 1540096
+    }
+  },
+  "canonical_snapshot_equal_across_console_and_panic": true,
+  "snapshot_sha256": "60959c1e8624fbf71900cc86b17e7cd51d2f7051c85a6b6a47fb0d46fb8b8aa1",
+  "live_pre_reboot_snapshot_available": false,
+  "limit": "ECC zero bad blocks and agreeing retained records are not an independent live end-to-end reference",
+  "compressed": {
+    "attribution": "stale/unattributed supplementary file, not used for target verdict",
+    "device_mtime_epoch": 1790452825,
+    "current_target_panic_text_mtime_epoch": 1790535490,
+    "wrapper_decode": "incorrect header check",
+    "raw_deflate_decode": "invalid distance too far back",
+    "limit": "do not infer corruption of this target from an older .enc.z file"
+  }
+}

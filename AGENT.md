@@ -2,6 +2,26 @@
 
 ## Current review (2026-09-28)
 
+Test245 now CLOSED with a real natural startup failure before its workload.
+Fixed-BBM target9c9d553e-86c9-4b80-b6d7-9c29447f7125, cap9343ce3b-8159-47ad-
+a4be-5cb28d453aad, exact notes/six anchors +0x178000. Retained console/panic
+agree on48 last-activity cells: RCU CPU2 at30.68 s, CPU1 soft lockup/panic at
+36.54 s. Exact binary/registers show CPU1 waiting for CPU2 synchronous CSD
+inside KFENCE static-key synchronization; CPU2's own stack is missing.
+Two pulls/device hashes agree, ECC1004/1814 corrected/zero bad; no independent
+live reference, so do not overstate integrity. Older .enc.z is unattributed.
+BBM0026 did not prevent this failure; no helper execution/low-address coverage
+or failure-rate/causal claim. Defer that independent branch and prioritize the
+new natural CPU2 evidence; no more test245 boots. See test245 RESULTS.md.
+
+Original images/all-five hashes restored. Production bd20438b-cea6-4172-8e5f-
+de83a6b69a51 has no CPU signature in120.08 s and working ADB/NCM SSH banner,
+but full health is INCONCLUSIVE: UPower fails217/USER (user namespace EINVAL).
+This issue is archived, not hidden/reset. Recovery observer's systemctl reboot
+returned Access denied; ordinary reboot.target transaction worked. No rootfs
+or USB change. Next review CPU2 capture before panic; KFENCE waiter is not proof
+of the target's root cause. CPU repair remains OPEN.
+
 Test245 is pre-registered for one low-address coverage boot using exact test240
 corrected-BBM artifacts. Offline helper review is in
 reference/offline-reviews/20260928-bbm-low-address/. It maps one page at0x1000

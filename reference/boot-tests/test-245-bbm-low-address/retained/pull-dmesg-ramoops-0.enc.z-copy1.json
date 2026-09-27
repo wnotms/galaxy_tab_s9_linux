@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "pull",
+    "/var/lib/systemd/pstore/dmesg-ramoops-0.enc.z",
+    "D:\\android\\gts9-test245\\dmesg-ramoops-0.enc.z-copy1"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:59:33.048938+00:00"
+}

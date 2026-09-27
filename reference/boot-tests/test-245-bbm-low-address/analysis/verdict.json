@@ -1,0 +1,18 @@
+{
+  "verdict": "natural_startup_failure",
+  "source_boot_id": "9c9d553e-86c9-4b80-b6d7-9c29447f7125",
+  "observer_boot_id": "2545579b-f7a5-4123-9439-5c0218de7cee",
+  "target_capture_id": "9343ce3b-8159-47ad-a4be-5cb28d453aad",
+  "workload_started": false,
+  "bbm_low_address_coverage": "not_executed",
+  "rcu_report_seconds": 30.681332,
+  "rcu_target_cpu": 2,
+  "softlockup_seconds": 36.543182,
+  "softlockup_cpu": 1,
+  "panic_seconds": 36.5434,
+  "panic_reason": "softlockup: hung tasks",
+  "automatic_reboot_observed": true,
+  "owner_confirmed_screen_freeze_then_recovery": true,
+  "cpu_stall_repair_established": false,
+  "scope": "0026 did not prevent this natural failure; neither caused-by-0026 nor an effect on failure rate is established"
+}
