@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.device; getprop ro.twrp.version; cat /proc/mounts | grep /mnt/debian; cat /mnt/debian/etc/debian_version; ls -l /mnt/debian/etc/systemd/system/adbd.service; ls -ld /mnt/debian/lib /mnt/debian/bin /mnt/debian/sbin"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:25:03.274908+00:00"
+}

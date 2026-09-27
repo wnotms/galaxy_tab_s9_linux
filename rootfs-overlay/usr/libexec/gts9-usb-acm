@@ -24,7 +24,7 @@
 #      (scripts/install-debian-rootfs.sh --ssh-key), which needs no channel on
 #      the device at all.
 #
-# So the gadget is exactly one function: NCM.  The kernel is built without
+# NCM is mandatory; optional FunctionFS ADB shares this same gadget.  The kernel is built without
 # CONFIG_USB_CONFIGFS_ACM and CONFIG_USB_CONFIGFS_SERIAL, so no configfs
 # "acm.usb0" can be created even by hand - the capability is gone, not just
 # unused.  (CONFIG_USB_ACM, the *host*-side cdc_acm driver, is a different symbol
@@ -39,9 +39,8 @@
 # it; renaming would invalidate that audit trail for no functional gain.  Read the
 # name as a label, not as a description of what is created.
 #
-# No mass storage, RNDIS, MTP or adb FUNCTION, and no block device is touched:
-# the gadget must never be able to disturb the root filesystem it runs from, and
-# the ADB function is not used because it would need a second gadget.
+# No mass storage, RNDIS or MTP; no block device is touched. USB ADB is
+# prepared separately before adbd starts, and joined only when ready.
 #
 # Every wait is bounded.  A failure exits non-zero so `systemctl --failed`
 # shows it, but nothing here reboots, panics or blocks the boot targets; the
@@ -275,10 +274,45 @@ write_value "$GADGET/strings/0x409/serialnumber" gts9wifi-0001
 write_value "$GADGET/configs/c.1/strings/0x409/configuration" debug
 write_value "$GADGET/configs/c.1/MaxPower" 250
 
-# The only function.  No serial port is created, deliberately and permanently.
+# The mandatory network function stays first, preserving its interface numbers.
+# No serial port is created, deliberately and permanently.
 setup_network
 if [ -z "$net_kind" ]; then
 	fail "no network function: check $NET_CONF and CONFIG_USB_CONFIGFS_NCM (without it this gadget provides no way into the tablet)"
+fi
+
+# USB ADB is optional. Never unbind an already-running gadget to add it.
+adb_linked=0
+adb_conf=${GTS9_USB_ADB_CONF:-/etc/gts9-usb-adb}
+adb_ffs=${GTS9_USB_ADB_FFS:-/dev/usb-ffs/adb}
+adb_wait=${GTS9_USB_ADB_WAIT_SECONDS:-5}
+adb_state=${GTS9_USB_ADB_STATE:-/run/gts9-usb-adb.mount-id}
+adb_mount=$(findmnt -rn -t functionfs -o ID --mountpoint "$adb_ffs" 2>/dev/null)
+if [ "$(cat "$adb_conf" 2>/dev/null)" = 1 ] &&
+   [ -d "$GADGET/functions/ffs.adb" ] &&
+   [ -n "$adb_mount" ] && [ "$adb_mount" = "$(cat "$adb_state" 2>/dev/null)" ]; then
+	waited=0
+	while [ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" != 1 ] &&
+	      [ "$waited" -lt "$adb_wait" ]; do
+		sleep 1
+		waited=$((waited + 1))
+	done
+	if [ "$(cat "$GADGET/functions/ffs.adb/ready" 2>/dev/null)" = 1 ]; then
+		# adbd supplies the WINUSB compatible-ID descriptor through FunctionFS.
+		# Enable Microsoft's descriptor request on this existing configuration.
+		if echo MSFT100 > "$GADGET/os_desc/qw_sign" &&
+		   echo 1 > "$GADGET/os_desc/b_vendor_code" &&
+		   echo 1 > "$GADGET/os_desc/use" &&
+		   ln -s "$GADGET/configs/c.1" "$GADGET/os_desc/c.1" &&
+		   ln -s "$GADGET/functions/ffs.adb" "$GADGET/configs/c.1/ffs.adb"; then
+			adb_linked=1
+		else
+			rm -f "$GADGET/os_desc/c.1"
+			echo 'gts9-usb-acm: ADB setup failed; binding NCM only' >&2
+		fi
+	else
+		echo 'gts9-usb-acm: ADB readiness timed out; binding NCM only' >&2
+	fi
 fi
 
 waited=0
@@ -293,7 +327,15 @@ if [ -z "$udc" ]; then
 fi
 
 if ! echo "$udc" > "$GADGET/UDC" 2>/dev/null; then
-	fail "cannot bind the gadget to $udc"
+	# ADB must never cost the NCM login path. Retry with only NCM.
+	if [ "$adb_linked" = 1 ]; then
+		rm -f "$GADGET/configs/c.1/ffs.adb" "$GADGET/os_desc/c.1"
+		echo 0 > "$GADGET/os_desc/use"
+		echo 'gts9-usb-acm: composite bind failed; retrying NCM only' >&2
+	fi
+	if [ "$adb_linked" != 1 ] || ! echo "$udc" > "$GADGET/UDC"; then
+		fail "cannot bind the gadget to $udc"
+	fi
 fi
 echo "gts9-usb-acm: bound to $udc"
 

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cd /mnt/debian && tar -cf /tmp/gts9-usb-before.tar usr/libexec/gts9-usb-acm usr/lib/systemd/system/gts9-adbd.service usr/lib/systemd/system/gts9-usb-acm.service && sha256sum /tmp/gts9-usb-before.tar"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:25:03.494856+00:00"
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+# Reopening a deactivated FunctionFS ep0 resets the shared gadget even with
+# no_disconnect. Leave NCM online and wait for the next boot instead.
+GADGET=${GTS9_USB_GADGET_DIR:-/sys/kernel/config/usb_gadget/gts9}
+if [ -L "$GADGET/configs/c.1/ffs.adb" ] &&
+   [ -n "$(cat "$GADGET/UDC" 2>/dev/null)" ]; then
+	echo 'gts9-adbd: preserving active NCM; USB ADB restart deferred until reboot' >&2
+	exit 1
+fi
+exit 0

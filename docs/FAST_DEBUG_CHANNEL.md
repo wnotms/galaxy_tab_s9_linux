@@ -5,6 +5,51 @@ moves about **3 KB/s**. That is not a baud-rate problem — see below — and it
 every investigation slow. The same USB cable now carries a network link, and over
 it **ssh at 31.8 MB/s** and **adb at 70.5 MB/s**.
 
+## Current layout: NCM plus optional native USB ADB (2026-09-27)
+
+The older ACM layouts and timings below are historical. Both serial functions
+remain retired. NCM is mandatory, first in the configuration, with the same
+VID/PID, serial, device address 169.254.42.1/16 and SSH keys/settings.
+`/etc/gts9-usb-adb` containing `1` enables an additional `ffs.adb` function in
+that same gts9 gadget. Set it to `0` for NCM-only on the next boot.
+
+Startup order is prepare FunctionFS → start gts9-adbd → wait at most five
+seconds for descriptors → bind NCM plus ADB. Missing adbd, mount failures,
+readiness timeout or a failed composite bind fall back to NCM-only. The packaged
+adbd.service stays masked; never run its competing g1 gadget helper.
+ADBD_PORT=5555 preserves TCP ADB even when USB is enabled.
+
+Do not restart the live gadget or daemon to deploy this change: install the
+files for the next normal boot. The already-bound path leaves the gadget
+unchanged. FunctionFS is mounted with `no_disconnect=1`, supported by the
+pinned kernel, to avoid unregistering NCM when adbd closes its endpoints.
+Reopening ep0 after all endpoints close would still reset the shared gadget.
+An ExecCondition therefore refuses daemon restart while ADB is linked to a
+bound gadget: after adbd exits, SSH remains, and USB ADB returns next boot.
+Do not bypass that guard for a live restart.
+FunctionFS does not expose this option in mountinfo; the prepare helper records
+the successful mount's ID under /run and the bind helper requires that same ID.
+Unknown existing mounts are not used. Unmounting FunctionFS or unbinding the
+UDC still disconnects the shared cable; USB ADB cannot survive a controller or
+kernel-wide hang and is not a CPU-stall fix.
+
+The daemon supplies Microsoft OS WINUSB descriptors and the gadget enables
+their request handling. Windows driver binding must still be physically
+verified. Native USB use, once enumerated:
+
+```sh
+adb devices -l
+adb -s gts9wifi-0001 shell
+# The existing network channels remain:
+ssh root@169.254.42.1
+adb connect 169.254.42.1:5555
+```
+
+Source: [FunctionFS lifecycle](https://docs.kernel.org/usb/functionfs.html),
+pinned kernel drivers/usb/gadget/function/f_fs.c (no_disconnect and mount-ID
+provenance), Debian adbd 34.0.5-12 and its Linux USB patch. Physical results
+are recorded separately in test-232; host mocks alone prove no enumeration.
+
 ## Raising the console baud does nothing, and that was measured
 
 `COM17`/`COM19` are USB **CDC-ACM gadget** ports, not a UART. The gadget

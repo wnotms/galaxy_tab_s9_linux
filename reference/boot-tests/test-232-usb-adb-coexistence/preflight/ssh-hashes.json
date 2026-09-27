@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "sha256sum /mnt/debian/etc/gts9-usb-net /mnt/debian/etc/ssh/sshd_config /mnt/debian/root/.ssh/authorized_keys; find /mnt/debian/etc/ssh/sshd_config.d -type f -exec sha256sum {} \\;"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:25:03.391569+00:00"
+}

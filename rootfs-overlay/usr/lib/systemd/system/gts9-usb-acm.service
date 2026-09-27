@@ -1,13 +1,14 @@
 [Unit]
 Description=X710 USB debug link (NCM network for ssh; no serial port)
 Documentation=file:/usr/share/doc/gts9/FAST_DEBUG_CHANNEL.md
-After=local-fs.target
+After=local-fs.target gts9-usb-adb-prepare.service gts9-adbd.service
+Wants=gts9-usb-adb-prepare.service gts9-adbd.service
 # The unit name keeps the historical "acm" because scripts, test records and the
 # boot-stage history (`usb-acm-ready`) all refer to it; renaming would invalidate
 # that audit trail for no functional gain.  Read the name as a label.
 #
 # What it provides changed on 2026-09-26: the gadget is now the NCM network ssh is
-# reached over and NOTHING else.  The two serial ports went in two steps - acm.usb1
+# reached over plus optional USB ADB.  The two serial ports went in two steps - acm.usb1
 # was the kernel printk console, acm.usb0 the last plain serial port - and the
 # kernel is built without CONFIG_USB_CONFIGFS_ACM, so no serial function can be
 # created even by hand.  See docs/BOOT_CONSOLE_BLOCK.md and docs/SHUTDOWN_DELAY.md

@@ -1,0 +1,43 @@
+#!/bin/sh
+# Prepare FunctionFS in the existing gadget, before adbd and before UDC bind.
+# Never change a bound gadget. Failure leaves the NCM-only path available.
+set -u
+CONFIGFS=${GTS9_USB_CONFIGFS:-/sys/kernel/config}
+GADGET=${GTS9_USB_GADGET_DIR:-$CONFIGFS/usb_gadget/gts9}
+CONF=${GTS9_USB_ADB_CONF:-/etc/gts9-usb-adb}
+FFS=${GTS9_USB_ADB_FFS:-/dev/usb-ffs/adb}
+STATE=${GTS9_USB_ADB_STATE:-/run/gts9-usb-adb.mount-id}
+ADBD=${GTS9_ADBD_BINARY:-/usr/lib/android-sdk/platform-tools/adbd}
+
+[ "$(cat "$CONF" 2>/dev/null)" = 1 ] || exit 0
+[ -x "$ADBD" ] || exit 0
+if [ -n "$(cat "$GADGET/UDC" 2>/dev/null)" ]; then
+	echo 'gts9-usb-adb: bound gadget unchanged; USB ADB applies next boot'
+	exit 0
+fi
+
+fallback() {
+	echo "gts9-usb-adb: $*; keeping NCM-only startup" >&2
+	exit 0
+}
+
+if [ ! -d "$CONFIGFS/usb_gadget" ]; then
+	mkdir -p "$CONFIGFS" || fallback 'configfs directory unavailable'
+	mount -t configfs none "$CONFIGFS" || fallback 'configfs unavailable'
+fi
+mkdir -p "$GADGET/functions/ffs.adb" "$FFS" || fallback 'FunctionFS unavailable'
+# no_disconnect is essential: closing adbd endpoints must not unregister NCM.
+# FunctionFS has no show_options callback. Record the mount ID only after a
+# successful safe mount, and refuse existing mounts without that provenance.
+if mountpoint -q "$FFS"; then
+	mount_id=$(findmnt -rn -t functionfs -o ID --mountpoint "$FFS")
+	[ -n "$mount_id" ] && [ "$mount_id" = "$(cat "$STATE" 2>/dev/null)" ] ||
+		fallback 'existing mount was not prepared safely by this helper'
+else
+	rm -f "$STATE"
+	mount -t functionfs -o no_disconnect=1 adb "$FFS" || fallback 'safe FunctionFS mount failed'
+	mount_id=$(findmnt -rn -t functionfs -o ID --mountpoint "$FFS")
+	[ -n "$mount_id" ] || fallback 'cannot identify safe mount'
+	(umask 077; echo "$mount_id" > "$STATE") || fallback 'cannot record safe mount'
+fi
+echo 'gts9-usb-adb: FunctionFS prepared with no_disconnect'

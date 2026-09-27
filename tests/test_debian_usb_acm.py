@@ -178,7 +178,6 @@ class UsbAcmServiceTests(unittest.TestCase):
         text = HELPER.read_text()
         self.assertNotIn('/console"', text)
         self.assertNotIn('clear_console', text)
-        self.assertNotIn('echo 1 >', text)
         # The only functions named anywhere are the network one and the two the
         # migration removes.
         self.assertIn('retire_serial_ports', text)
@@ -204,7 +203,7 @@ class UsbAcmServiceTests(unittest.TestCase):
         # Mass storage would expose the root filesystem, RNDIS/MTP/UVC/HID are
         # not needed, and the ADB *function* would need a second gadget - which
         # cannot bind while this one owns the UDC.  None of them may appear.
-        for forbidden in ('mass_storage', 'rndis', 'mtp', 'adb', 'uvc', 'hid'):
+        for forbidden in ('mass_storage', 'rndis', 'mtp', 'uvc', 'hid'):
             self.assertNotIn(forbidden, HELPER_CODE.lower(), forbidden)
 
     def test_the_network_function_is_the_only_function(self):
@@ -288,6 +287,133 @@ class UsbAcmServiceTests(unittest.TestCase):
         # The existing gadget was left exactly as it was.
         self.assertEqual(marker.read_text(), 'changed-by-test\n')
         self.assertEqual(original, 'gts9wifi-0001\n')
+
+    def adb_fixture(self, ready='1'):
+        self.run_helper()
+        (self.gadget / 'UDC').write_text('')
+        (self.gadget / 'functions/ffs.adb').mkdir()
+        (self.gadget / 'functions/ffs.adb/ready').write_text(ready)
+        (self.gadget / 'os_desc').mkdir()
+        conf = self.root / 'adb.conf'
+        conf.write_text('1')
+        state = self.root / 'adb.mount-id'
+        state.write_text('177')
+        bindir = self.root / 'bin'
+        bindir.mkdir()
+        findmnt = bindir / 'findmnt'
+        findmnt.write_text('#!/bin/sh\necho 177\n')
+        findmnt.chmod(0o755)
+        return dict(PATH=str(bindir) + ':' + os.environ['PATH'],
+                    GTS9_USB_ADB_CONF=str(conf),
+                    GTS9_USB_ADB_STATE=str(state),
+                    GTS9_USB_ADB_WAIT_SECONDS='0')
+
+    def test_ready_adb_shares_ncm_gadget(self):
+        env = self.adb_fixture()
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.gadget / 'configs/c.1/ffs.adb').is_symlink())
+        self.assertTrue((self.gadget / 'configs/c.1/ncm.usb0').is_symlink())
+        self.assertEqual((self.gadget / 'os_desc/qw_sign').read_text().strip(), 'MSFT100')
+
+    def test_adb_timeout_preserves_network(self):
+        env = self.adb_fixture(ready='0')
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('readiness timed out', result.stderr)
+        self.assertFalse((self.gadget / 'configs/c.1/ffs.adb').exists())
+        self.assertTrue((self.gadget / 'configs/c.1/ncm.usb0').is_symlink())
+        self.assertEqual((self.gadget / 'UDC').read_text().strip(), 'a600000.usb')
+
+    def test_unsafe_mount_is_not_added(self):
+        env = self.adb_fixture()
+        Path(env['GTS9_USB_ADB_STATE']).write_text('different-mount')
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse((self.gadget / 'configs/c.1/ffs.adb').exists())
+
+    def test_bound_ncm_is_never_reenumerated_for_adb(self):
+        env = self.adb_fixture()
+        (self.gadget / 'UDC').write_text('existing-udc')
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((self.gadget / 'UDC').read_text(), 'existing-udc')
+        self.assertFalse((self.gadget / 'configs/c.1/ffs.adb').exists())
+
+    def test_failed_composite_bind_retries_with_ncm(self):
+        env = self.adb_fixture()
+        udc = self.gadget / 'UDC'
+        udc.unlink()
+        udc.symlink_to('/dev/full')
+        rm = self.root / 'bin/rm'
+        # Model a controller that refuses the composite, but accepts NCM.
+        rm.write_text('#!/bin/sh\n/bin/rm "$@"\n'
+                      'case "$*" in *configs/c.1/ffs.adb*)\n'
+                      '/bin/rm "$GTS9_USB_GADGET_DIR/UDC"\n'
+                      ': > "$GTS9_USB_GADGET_DIR/UDC";; esac\n')
+        rm.chmod(0o755)
+        # Avoid cat on /dev/full in the already-bound probe.
+        cat = self.root / 'bin/cat'
+        cat.write_text('#!/bin/sh\n[ "$1" = "$GTS9_USB_GADGET_DIR/UDC" ] && exit 0\nexec /bin/cat "$@"\n')
+        cat.chmod(0o755)
+        result = self.run_helper(env=env)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('retrying NCM only', result.stderr)
+        self.assertFalse((self.gadget / 'configs/c.1/ffs.adb').exists())
+        self.assertTrue((self.gadget / 'configs/c.1/ncm.usb0').is_symlink())
+        self.assertEqual(udc.read_text().strip(), 'a600000.usb')
+
+    def test_prepare_mounts_safely_and_does_not_reuse_unknown_mount(self):
+        env = self.adb_fixture()
+        env.update(GTS9_USB_CONFIGFS=str(self.configfs),
+                   GTS9_USB_GADGET_DIR=str(self.gadget),
+                   GTS9_USB_ADB_FFS=str(self.root / 'ffs'),
+                   GTS9_ADBD_BINARY='/bin/true')
+        bindir = self.root / 'bin'
+        mounted = self.root / 'mounted'
+        mountpoint = bindir / 'mountpoint'
+        mountpoint.write_text(f'#!/bin/sh\ntest -f "{mounted}"\n')
+        mountpoint.chmod(0o755)
+        mount = bindir / 'mount'
+        mount.write_text(f'#!/bin/sh\necho "$*" > "{mounted}"\n')
+        mount.chmod(0o755)
+        prepare = OVERLAY / 'libexec/gts9-usb-adb-prepare'
+        def run():
+            return subprocess.run(['sh', str(prepare)], env=dict(os.environ, **env),
+                                  text=True, capture_output=True)
+        self.assertEqual(run().returncode, 0)
+        self.assertIn('-o no_disconnect=1 adb', mounted.read_text())
+        self.assertEqual(Path(env['GTS9_USB_ADB_STATE']).read_text().strip(), '177')
+        Path(env['GTS9_USB_ADB_STATE']).unlink()
+        self.assertIn('existing mount was not prepared safely', run().stderr)
+        self.assertFalse(Path(env['GTS9_USB_ADB_STATE']).exists())
+        (self.gadget / 'UDC').write_text('live-udc')
+        self.assertIn('bound gadget unchanged', run().stdout)
+        self.assertEqual((self.gadget / 'UDC').read_text(), 'live-udc')
+
+    def test_adbd_starts_between_prepare_and_bind_and_keeps_tcp(self):
+        unit = (OVERLAY / 'lib/systemd/system/gts9-adbd.service').read_text()
+        directives = code_only(unit)
+        self.assertIn('After=local-fs.target gts9-usb-adb-prepare.service', directives)
+        self.assertNotIn('gts9-usb-acm.service', directives)
+        self.assertNotIn('network.target', directives)
+        self.assertIn('Environment=ADBD_PORT=5555', directives)
+        self.assertIn('After=local-fs.target gts9-usb-adb-prepare.service gts9-adbd.service', UNIT)
+
+    def test_daemon_restart_cannot_reset_an_active_composite(self):
+        env = self.adb_fixture()
+        guard = OVERLAY / 'libexec/gts9-adbd-can-start'
+        def allowed():
+            return subprocess.run(['sh', str(guard)], capture_output=True,
+                env=dict(os.environ, GTS9_USB_GADGET_DIR=str(self.gadget))).returncode == 0
+        self.assertTrue(allowed())
+        self.assertEqual(self.run_helper(env=env).returncode, 0)
+        self.assertFalse(allowed())
+        (self.gadget / 'UDC').write_text('')
+        self.assertTrue(allowed())
+        (self.gadget / 'configs/c.1/ffs.adb').unlink()
+        (self.gadget / 'UDC').write_text('ncm-only')
+        self.assertTrue(allowed())
 
     def test_service_is_oneshot_and_never_required_by_the_boot_target(self):
         self.assertIn('Type=oneshot', UNIT)

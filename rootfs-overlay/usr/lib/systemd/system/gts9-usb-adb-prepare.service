@@ -1,0 +1,10 @@
+[Unit]
+Description=Prepare optional USB ADB alongside the NCM network
+After=local-fs.target
+Before=gts9-adbd.service gts9-usb-acm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-usb-adb-prepare
+RemainAfterExit=yes
+TimeoutStartSec=10
