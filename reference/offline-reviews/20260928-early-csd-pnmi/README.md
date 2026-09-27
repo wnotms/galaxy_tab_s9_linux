@@ -52,3 +52,10 @@ and its own relocation. Restore the original pair and check production120 s.
 
 Archived source excerpts and full-file hashes document the inspected code;
 no compile, deployment, or natural-fault result is implied by this review.
+
+Follow-up gate: kernel/rcu/tree_stall.h defaults csd_lock_suppress_rcu_stall to
+false. When true plus csd_lock_is_stuck(), it suppresses the detailed RCU report
+and its tracepoint-triggered last-activity snapshot. Keep this parameter false
+and verify /sys/module/rcutree/parameters/csd_lock_suppress_rcu_stall=N on the
+candidate. Original production also reads N. This is a read-only gate, not an
+extra RCU-behaviour setting or a change to timeout timing.

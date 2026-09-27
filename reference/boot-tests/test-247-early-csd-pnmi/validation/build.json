@@ -1,0 +1,33 @@
+{
+  "utc_start": "2026-09-27T19:48:41.903709+00:00",
+  "source_commit": "807bc59576eb5d36580a36c0fc9ec266a33038ab",
+  "command": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "USE_CCACHE": "1",
+    "ARCH": "arm64",
+    "LLVM": "1",
+    "JOBS": "12",
+    "BUILD_MODULES": "1",
+    "KERNEL_CLEAN": "0",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-pnmi-csd",
+    "GTS9_DIAG_FRAGMENT": "kernel/config/gts9wifi-pnmi-csd-lock.fragment",
+    "GTS9_DIAGNOSTIC_PATCHES": "0022-gts9-lastactivity.patch 0024-gts9-ramoops-ecc64.patch 0026-arm64-bbm-flush-range.patch"
+  },
+  "preparation": [
+    "git",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi",
+    "apply",
+    "--reverse",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/kernel/patches/diagnostic/0022-gts9-lastactivity.patch"
+  ],
+  "new_inputs": {
+    "kernel/config/gts9wifi-pnmi-csd-lock.fragment": "6beba5bc56208f05275e744ba6fe8ff12763e10724340dc5e9596cbe71e57743",
+    "boot/cmdline.pnmi-csd-capture.example.txt": "1e5913c43aa4e487251a3bd6ab9f7ec0cb7f6e0c17a9ea939598fa08bfab25d2"
+  },
+  "status": 0,
+  "utc_end": "2026-09-27T20:07:24.905590+00:00"
+}

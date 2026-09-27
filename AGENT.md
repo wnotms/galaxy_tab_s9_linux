@@ -7,8 +7,10 @@ at5 s from a stuck wait, through dump_cpu_task and the standard pseudo-NMI
 route. Test246 had CSD debug disabled; no custom early-capture patch is needed.
 The new opt-in pnmi-csd-lock fragment adds CSD debug/default only relative246;
 cmdline adds csdlock_debug=1. Read actual runtime timeout5000/panic_on_ipistall0.
-Source review and19 focused tests pass. Matched kernel/modules are BUILDING,
-NOT flashed; do not proceed without exact artifact/config/paired rollback gates.
+Source review and19 focused tests pass. Matched kernel/modules are BUILT and
+packaged, NOT flashed at this checkpoint. Exact compiled CSD call path/defaults,
+config diff,167 module imports,181-file manifests and offline rollback pass.
+See247 BUILD_RESULTS.md. Fresh TWRP/mounted-root/partition gates remain required.
 See offline-reviews/20260928-early-csd-pnmi and test247 prospective scope.
 The NMI wait touches the waiter's soft watchdog; observer timing can change.
 One120 s natural target, no injection or identical-repeat budget; CPU repair OPEN.

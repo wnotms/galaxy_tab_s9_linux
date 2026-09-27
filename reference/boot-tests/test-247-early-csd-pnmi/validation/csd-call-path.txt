@@ -1,0 +1,880 @@
+
+/home/ms/Samsung/galaxy_tab_s9_linux/out/test247/vmlinux:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+ffffffc08004ed28 <arch_trigger_cpumask_backtrace>:
+ffffffc08004ed28:      	paciasp
+ffffffc08004ed2c:      	str	x30, [x18], #0x8
+ffffffc08004ed30:      	stp	x29, x30, [sp, #-0x10]!
+ffffffc08004ed34:      	mov	x29, sp
+ffffffc08004ed38:      	adrp	x2, 0xffffffc08004e000 <detect_cache_level+0x44>
+ffffffc08004ed3c:      	add	x2, x2, #0xd54
+ffffffc08004ed40:      	bl	0xffffffc08143030c <nmi_trigger_cpumask_backtrace>
+ffffffc08004ed44:      	ldp	x29, x30, [sp], #0x10
+ffffffc08004ed48:      	ldr	x30, [x18, #-0x8]!
+ffffffc08004ed4c:      	autiasp
+ffffffc08004ed50:      	ret
+
+ffffffc080138030 <dump_cpu_task>:
+ffffffc080138030:      	paciasp
+ffffffc080138034:      	str	x30, [x18], #0x8
+ffffffc080138038:      	stp	x29, x30, [sp, #-0x10]!
+ffffffc08013803c:      	mov	x29, sp
+ffffffc080138040:      	mrs	x8, SP_EL0
+ffffffc080138044:      	ldr	w9, [x8, #0x10]
+ffffffc080138048:      	tst	w9, #0xf0000
+ffffffc08013804c:      	b.eq	0xffffffc08013807c <dump_cpu_task+0x4c>
+ffffffc080138050:      	ldr	w8, [x8, #0x30]
+ffffffc080138054:      	cmp	w0, w8
+ffffffc080138058:      	b.ne	0xffffffc08013807c <dump_cpu_task+0x4c>
+ffffffc08013805c:      	mrs	x8, TPIDR_EL1
+ffffffc080138060:      	adrp	x9, 0xffffffc082b53000 <vclock_srcu_srcu_data+0x80>
+ffffffc080138064:      	add	x9, x9, #0xdc0
+ffffffc080138068:      	ldr	x8, [x8, x9]
+ffffffc08013806c:      	cbz	x8, 0xffffffc08013807c <dump_cpu_task+0x4c>
+ffffffc080138070:      	mov	x0, x8
+ffffffc080138074:      	bl	0xffffffc080014a50 <show_regs>
+ffffffc080138078:      	b	0xffffffc0801380a0 <dump_cpu_task+0x70>
+ffffffc08013807c:      	and	w8, w0, #0x3f
+ffffffc080138080:      	adrp	x9, 0xffffffc0814a7000 <clear_warn_once_fops+0xd0>
+ffffffc080138084:      	add	x9, x9, #0x68
+ffffffc080138088:      	add	w8, w8, #0x1
+ffffffc08013808c:      	mov	w1, #-0x1       // =-1
+ffffffc080138090:      	add	x8, x9, w8, uxtw #3
+ffffffc080138094:      	lsr	w9, w0, #6
+ffffffc080138098:      	sub	x0, x8, w9, uxtw #3
+ffffffc08013809c:      	bl	0xffffffc08004ed28 <arch_trigger_cpumask_backtrace>
+ffffffc0801380a0:      	ldp	x29, x30, [sp], #0x10
+ffffffc0801380a4:      	ldr	x30, [x18, #-0x8]!
+ffffffc0801380a8:      	autiasp
+ffffffc0801380ac:      	ret
+
+ffffffc0801f9de4 <smp_call_function_many_cond>:
+ffffffc0801f9de4:      	paciasp
+ffffffc0801f9de8:      	str	x30, [x18], #0x8
+ffffffc0801f9dec:      	sub	sp, sp, #0xb0
+ffffffc0801f9df0:      	stp	x29, x30, [sp, #0x50]
+ffffffc0801f9df4:      	stp	x28, x27, [sp, #0x60]
+ffffffc0801f9df8:      	stp	x26, x25, [sp, #0x70]
+ffffffc0801f9dfc:      	stp	x24, x23, [sp, #0x80]
+ffffffc0801f9e00:      	stp	x22, x21, [sp, #0x90]
+ffffffc0801f9e04:      	stp	x20, x19, [sp, #0xa0]
+ffffffc0801f9e08:      	add	x29, sp, #0x50
+ffffffc0801f9e0c:      	mrs	x14, SP_EL0
+ffffffc0801f9e10:      	ldr	w13, [x14, #0x30]
+ffffffc0801f9e14:      	stur	w3, [x29, #-0x4]
+ffffffc0801f9e18:      	stur	x1, [x29, #-0x10]
+ffffffc0801f9e1c:      	adrp	x8, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801f9e20:      	add	x8, x8, #0xc30
+ffffffc0801f9e24:      	lsr	x20, x13, #6
+ffffffc0801f9e28:      	mov	w9, #0x100      // =256
+ffffffc0801f9e2c:      	mov	x22, x4
+ffffffc0801f9e30:      	movk	w9, #0xff, lsl #16
+ffffffc0801f9e34:      	mov	x21, x2
+ffffffc0801f9e38:      	mov	x19, x0
+ffffffc0801f9e3c:      	ldr	xzr, [x8, x20, lsl #3]
+ffffffc0801f9e40:      	ldr	w8, [x14, #0x10]
+ffffffc0801f9e44:      	tst	w8, w9
+ffffffc0801f9e48:      	mov	w9, #0x1        // =1
+ffffffc0801f9e4c:      	b.ne	0xffffffc0801fa1a8 <smp_call_function_many_cond+0x3c4>
+ffffffc0801f9e50:      	adrp	x8, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801f9e54:      	ldr	x10, [x19]
+ffffffc0801f9e58:      	mov	w12, #0x20      // =32
+ffffffc0801f9e5c:      	ldr	x8, [x8, #0xc30]
+ffffffc0801f9e60:      	and	x11, x8, x10
+ffffffc0801f9e64:      	ands	x8, x11, #0xffffffff
+ffffffc0801f9e68:      	rbit	x10, x8
+ffffffc0801f9e6c:      	clz	x10, x10
+ffffffc0801f9e70:      	csel	w10, w12, w10, eq
+ffffffc0801f9e74:      	cmp	w10, w13
+ffffffc0801f9e78:      	b.ne	0xffffffc0801f9eac <smp_call_function_many_cond+0xc8>
+ffffffc0801f9e7c:      	cmp	w13, #0x1e
+ffffffc0801f9e80:      	b.hi	0xffffffc0801f9ea8 <smp_call_function_many_cond+0xc4>
+ffffffc0801f9e84:      	add	x10, x13, #0x1
+ffffffc0801f9e88:      	mov	x12, #-0x1      // =-1
+ffffffc0801f9e8c:      	lsl	x10, x12, x10
+ffffffc0801f9e90:      	and	w10, w10, w11
+ffffffc0801f9e94:      	ands	x10, x10, #0xfffffffe
+ffffffc0801f9e98:      	b.eq	0xffffffc0801f9ea8 <smp_call_function_many_cond+0xc4>
+ffffffc0801f9e9c:      	rbit	x10, x10
+ffffffc0801f9ea0:      	clz	x10, x10
+ffffffc0801f9ea4:      	b	0xffffffc0801f9eac <smp_call_function_many_cond+0xc8>
+ffffffc0801f9ea8:      	mov	w10, #0x20      // =32
+ffffffc0801f9eac:      	adrp	x11, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801f9eb0:      	lsl	x23, x9, x13
+ffffffc0801f9eb4:      	ldr	w11, [x11, #0xe28]
+ffffffc0801f9eb8:      	cmp	w10, w11
+ffffffc0801f9ebc:      	b.hs	0xffffffc0801fa0a4 <smp_call_function_many_cond+0x2c0>
+ffffffc0801f9ec0:      	stp	x14, x30, [sp]
+ffffffc0801f9ec4:      	adrp	x11, 0xffffffc082b55000 <runqueues+0x4c0>
+ffffffc0801f9ec8:      	add	x11, x11, #0xf00
+ffffffc0801f9ecc:      	str	x19, [sp, #0x20]
+ffffffc0801f9ed0:      	mov	x9, xzr
+ffffffc0801f9ed4:      	mov	w25, wzr
+ffffffc0801f9ed8:      	stur	xzr, [x29, #-0x20]
+ffffffc0801f9edc:      	adrp	x19, 0xffffffc082b7a000 <lru_gen_min_ttl>
+ffffffc0801f9ee0:      	add	x19, x19, #0x68
+ffffffc0801f9ee4:      	mrs	x10, TPIDR_EL1
+ffffffc0801f9ee8:      	add	x24, x10, x11
+ffffffc0801f9eec:      	stp	x23, x20, [sp, #0x10]
+ffffffc0801f9ef0:      	mov	x26, x24
+ffffffc0801f9ef4:      	mov	x10, x24
+ffffffc0801f9ef8:      	stur	x13, [x29, #-0x18]
+ffffffc0801f9efc:      	str	x8, [x26, #0x8]!
+ffffffc0801f9f00:      	ldr	x8, [x26, x20, lsl #3]
+ffffffc0801f9f04:      	bic	x8, x8, x23
+ffffffc0801f9f08:      	adrp	x23, 0xffffffc082b55000 <runqueues+0x4c0>
+ffffffc0801f9f0c:      	add	x23, x23, #0xf40
+ffffffc0801f9f10:      	str	x8, [x26, x20, lsl #3]
+ffffffc0801f9f14:      	str	xzr, [x10, #0x10]!
+ffffffc0801f9f18:      	str	x10, [sp, #0x28]
+ffffffc0801f9f1c:      	b	0xffffffc0801f9f40 <smp_call_function_many_cond+0x15c>
+ffffffc0801f9f20:      	mov	w8, #0x1        // =1
+ffffffc0801f9f24:      	ldr	x9, [x26]
+ffffffc0801f9f28:      	lsl	x8, x8, x28
+ffffffc0801f9f2c:      	bic	x8, x9, x8
+ffffffc0801f9f30:      	str	x8, [x26]
+ffffffc0801f9f34:      	cmp	x28, #0x1f
+ffffffc0801f9f38:      	add	x9, x28, #0x1
+ffffffc0801f9f3c:      	b.hs	0xffffffc0801fa0b0 <smp_call_function_many_cond+0x2cc>
+ffffffc0801f9f40:      	mov	x10, #-0x1      // =-1
+ffffffc0801f9f44:      	ldr	w8, [x26]
+ffffffc0801f9f48:      	lsl	x9, x10, x9
+ffffffc0801f9f4c:      	ands	w8, w9, w8
+ffffffc0801f9f50:      	b.eq	0xffffffc0801fa0b0 <smp_call_function_many_cond+0x2cc>
+ffffffc0801f9f54:      	rbit	x8, x8
+ffffffc0801f9f58:      	ldr	x27, [x24]
+ffffffc0801f9f5c:      	clz	x28, x8
+ffffffc0801f9f60:      	ldr	x20, [x19, x28, lsl #3]
+ffffffc0801f9f64:      	cbz	x22, 0xffffffc0801f9f7c <smp_call_function_many_cond+0x198>
+ffffffc0801f9f68:      	mov	w0, w28
+ffffffc0801f9f6c:      	mov	x1, x21
+ffffffc0801f9f70:      	blr	x22
+ffffffc0801f9f74:      	ldur	x13, [x29, #-0x18]
+ffffffc0801f9f78:      	tbz	w0, #0x0, 0xffffffc0801f9f20 <smp_call_function_many_cond+0x13c>
+ffffffc0801f9f7c:      	add	x25, x20, x27
+ffffffc0801f9f80:      	b	0xffffffc0801fa070 <smp_call_function_many_cond+0x28c>
+ffffffc0801f9f84:      	add	x8, x25, #0x8
+ffffffc0801f9f88:      	ldar	w8, [x8]
+ffffffc0801f9f8c:      	tbz	w8, #0x0, 0xffffffc0801f9fb8 <smp_call_function_many_cond+0x1d4>
+ffffffc0801f9f90:      	mov	w8, w8
+ffffffc0801f9f94:      	add	x9, x25, #0x8
+ffffffc0801f9f98:      	sevl
+ffffffc0801f9f9c:      	wfe
+ffffffc0801f9fa0:      	ldxr	w10, [x9]
+ffffffc0801f9fa4:      	eor	w10, w10, w8
+ffffffc0801f9fa8:      	cbnz	w10, 0xffffffc0801f9fb0 <smp_call_function_many_cond+0x1cc>
+ffffffc0801f9fac:      	wfe
+ffffffc0801f9fb0:      	ldar	w8, [x9]
+ffffffc0801f9fb4:      	tbnz	w8, #0x0, 0xffffffc0801f9f90 <smp_call_function_many_cond+0x1ac>
+ffffffc0801f9fb8:      	ldr	w8, [x25, #0x8]
+ffffffc0801f9fbc:      	orr	w8, w8, #0x1
+ffffffc0801f9fc0:      	str	w8, [x25, #0x8]
+ffffffc0801f9fc4:      	dmb	ishst
+ffffffc0801f9fc8:      	ldur	w8, [x29, #-0x4]
+ffffffc0801f9fcc:      	tbz	w8, #0x0, 0xffffffc0801f9fdc <smp_call_function_many_cond+0x1f8>
+ffffffc0801f9fd0:      	ldr	w8, [x25, #0x8]
+ffffffc0801f9fd4:      	orr	w8, w8, #0x10
+ffffffc0801f9fd8:      	str	w8, [x25, #0x8]
+ffffffc0801f9fdc:      	ldur	x8, [x29, #-0x10]
+ffffffc0801f9fe0:      	strh	w13, [x25, #0xc]
+ffffffc0801f9fe4:      	strh	w28, [x25, #0xe]
+ffffffc0801f9fe8:      	stp	x8, x21, [x25, #0x10]
+ffffffc0801f9fec:      	nop
+ffffffc0801f9ff0:      	ldr	x8, [x19, x28, lsl #3]
+ffffffc0801f9ff4:      	ldr	x10, [x8, x23]
+ffffffc0801f9ff8:      	mov	x9, x10
+ffffffc0801f9ffc:      	str	x10, [x25]
+ffffffc0801fa000:      	b	0xffffffc0801fa01c <smp_call_function_many_cond+0x238>
+ffffffc0801fa004:      	mov	x10, x9
+ffffffc0801fa008:      	add	x11, x23, x8
+ffffffc0801fa00c:      	casal	x10, x25, [x11]
+ffffffc0801fa010:      	cmp	x9, x10
+ffffffc0801fa014:      	b.eq	0xffffffc0801fa044 <smp_call_function_many_cond+0x260>
+ffffffc0801fa018:      	b	0xffffffc0801f9ff8 <smp_call_function_many_cond+0x214>
+ffffffc0801fa01c:      	add	x11, x23, x8
+ffffffc0801fa020:      	prfm	pstl1strm, [x11]
+ffffffc0801fa024:      	ldxr	x10, [x11]
+ffffffc0801fa028:      	eor	x12, x10, x9
+ffffffc0801fa02c:      	cbnz	x12, 0xffffffc0801fa03c <smp_call_function_many_cond+0x258>
+ffffffc0801fa030:      	stlxr	w12, x25, [x11]
+ffffffc0801fa034:      	cbnz	w12, 0xffffffc0801fa024 <smp_call_function_many_cond+0x240>
+ffffffc0801fa038:      	dmb	ish
+ffffffc0801fa03c:      	cmp	x9, x10
+ffffffc0801fa040:      	b.ne	0xffffffc0801f9ff8 <smp_call_function_many_cond+0x214>
+ffffffc0801fa044:      	mov	w25, #0x1       // =1
+ffffffc0801fa048:      	cbnz	x9, 0xffffffc0801f9f34 <smp_call_function_many_cond+0x150>
+ffffffc0801fa04c:      	ldr	x10, [sp, #0x28]
+ffffffc0801fa050:      	lsl	x8, x25, x28
+ffffffc0801fa054:      	ldr	x9, [x10]
+ffffffc0801fa058:      	orr	x8, x9, x8
+ffffffc0801fa05c:      	str	x8, [x10]
+ffffffc0801fa060:      	ldur	w8, [x29, #-0x1c]
+ffffffc0801fa064:      	add	w8, w8, #0x1
+ffffffc0801fa068:      	stp	w28, w8, [x29, #-0x20]
+ffffffc0801fa06c:      	b	0xffffffc0801f9f34 <smp_call_function_many_cond+0x150>
+ffffffc0801fa070:      	mov	x0, x25
+ffffffc0801fa074:      	bl	0xffffffc0801facbc <__csd_lock_wait>
+ffffffc0801fa078:      	ldur	x13, [x29, #-0x18]
+ffffffc0801fa07c:      	b	0xffffffc0801f9fb8 <smp_call_function_many_cond+0x1d4>
+ffffffc0801fa080:      	ldr	x30, [sp, #0x8]
+ffffffc0801fa084:      	mov	w0, w28
+ffffffc0801fa088:      	mov	x3, x25
+ffffffc0801fa08c:      	xpaclri
+ffffffc0801fa090:      	ldur	x2, [x29, #-0x10]
+ffffffc0801fa094:      	mov	x1, x30
+ffffffc0801fa098:      	bl	0xffffffc0801fa820 <__do_trace_csd_queue_cpu>
+ffffffc0801fa09c:      	ldur	x13, [x29, #-0x18]
+ffffffc0801fa0a0:      	b	0xffffffc0801f9ff0 <smp_call_function_many_cond+0x20c>
+ffffffc0801fa0a4:      	mov	w25, wzr
+ffffffc0801fa0a8:      	mov	x24, xzr
+ffffffc0801fa0ac:      	b	0xffffffc0801fa11c <smp_call_function_many_cond+0x338>
+ffffffc0801fa0b0:      	ldur	w8, [x29, #-0x1c]
+ffffffc0801fa0b4:      	cmp	w8, #0x1
+ffffffc0801fa0b8:      	b.ne	0xffffffc0801fa0f4 <smp_call_function_many_cond+0x310>
+ffffffc0801fa0bc:      	ldur	w26, [x29, #-0x20]
+ffffffc0801fa0c0:      	mov	w0, w26
+ffffffc0801fa0c4:      	bl	0xffffffc080133ac0 <call_function_single_prep_ipi>
+ffffffc0801fa0c8:      	ldp	x20, x19, [sp, #0x18]
+ffffffc0801fa0cc:      	ldr	x23, [sp, #0x10]
+ffffffc0801fa0d0:      	tbz	w0, #0x0, 0xffffffc0801fa118 <smp_call_function_many_cond+0x334>
+ffffffc0801fa0d4:      	ldr	x30, [sp, #0x8]
+ffffffc0801fa0d8:      	mov	w0, w26
+ffffffc0801fa0dc:      	xpaclri
+ffffffc0801fa0e0:      	mov	x1, x30
+ffffffc0801fa0e4:      	bl	0xffffffc0801fa95c <trace_ipi_send_cpu>
+ffffffc0801fa0e8:      	mov	w0, w26
+ffffffc0801fa0ec:      	bl	0xffffffc08004ec40 <arch_send_call_function_single_ipi>
+ffffffc0801fa0f0:      	b	0xffffffc0801fa118 <smp_call_function_many_cond+0x334>
+ffffffc0801fa0f4:      	ldp	x20, x19, [sp, #0x18]
+ffffffc0801fa0f8:      	cmp	w8, #0x2
+ffffffc0801fa0fc:      	ldr	x23, [sp, #0x10]
+ffffffc0801fa100:      	b.lt	0xffffffc0801fa11c <smp_call_function_many_cond+0x338>
+ffffffc0801fa104:      	ldr	x30, [sp, #0x8]
+ffffffc0801fa108:      	xpaclri
+ffffffc0801fa10c:      	nop
+ffffffc0801fa110:      	ldr	x0, [sp, #0x28]
+ffffffc0801fa114:      	bl	0xffffffc08004ea6c <arch_send_call_function_ipi_mask>
+ffffffc0801fa118:      	ldur	x13, [x29, #-0x18]
+ffffffc0801fa11c:      	ldur	w8, [x29, #-0x4]
+ffffffc0801fa120:      	cmp	w8, #0x2
+ffffffc0801fa124:      	b.lo	0xffffffc0801fa180 <smp_call_function_many_cond+0x39c>
+ffffffc0801fa128:      	ldr	x8, [x19, x20, lsl #3]
+ffffffc0801fa12c:      	tst	x8, x23
+ffffffc0801fa130:      	b.eq	0xffffffc0801fa180 <smp_call_function_many_cond+0x39c>
+ffffffc0801fa134:      	cbz	x22, 0xffffffc0801fa148 <smp_call_function_many_cond+0x364>
+ffffffc0801fa138:      	mov	w0, w13
+ffffffc0801fa13c:      	mov	x1, x21
+ffffffc0801fa140:      	blr	x22
+ffffffc0801fa144:      	tbz	w0, #0x0, 0xffffffc0801fa180 <smp_call_function_many_cond+0x39c>
+ffffffc0801fa148:      	nop
+ffffffc0801fa14c:      	mrs	x19, DAIF
+ffffffc0801fa150:      	msr	DAIFSet, #0x3
+ffffffc0801fa154:      	ldur	x20, [x29, #-0x10]
+ffffffc0801fa158:      	mov	x1, xzr
+ffffffc0801fa15c:      	mov	x0, x20
+ffffffc0801fa160:      	bl	0xffffffc0801faa6c <trace_csd_function_entry>
+ffffffc0801fa164:      	mov	x0, x21
+ffffffc0801fa168:      	blr	x20
+ffffffc0801fa16c:      	mov	x0, x20
+ffffffc0801fa170:      	mov	x1, xzr
+ffffffc0801fa174:      	bl	0xffffffc0801fab94 <trace_csd_function_exit>
+ffffffc0801fa178:      	nop
+ffffffc0801fa17c:      	msr	DAIF, x19
+ffffffc0801fa180:      	ldur	w8, [x29, #-0x4]
+ffffffc0801fa184:      	tst	w8, #0x1
+ffffffc0801fa188:      	cset	w8, eq
+ffffffc0801fa18c:      	orn	w8, w8, w25
+ffffffc0801fa190:      	tbnz	w8, #0x0, 0xffffffc0801fa220 <smp_call_function_many_cond+0x43c>
+ffffffc0801fa194:      	mov	x8, xzr
+ffffffc0801fa198:      	mov	x19, #-0x1      // =-1
+ffffffc0801fa19c:      	adrp	x20, 0xffffffc082b7a000 <lru_gen_min_ttl>
+ffffffc0801fa1a0:      	add	x20, x20, #0x68
+ffffffc0801fa1a4:      	b	0xffffffc0801fa1c0 <smp_call_function_many_cond+0x3dc>
+ffffffc0801fa1a8:      	brk	#0x800
+ffffffc0801fa1ac:      	b	0xffffffc0801f9e50 <smp_call_function_many_cond+0x6c>
+ffffffc0801fa1b0:      	bl	0xffffffc0801facbc <__csd_lock_wait>
+ffffffc0801fa1b4:      	cmp	x21, #0x1f
+ffffffc0801fa1b8:      	add	x8, x21, #0x1
+ffffffc0801fa1bc:      	b.hs	0xffffffc0801fa220 <smp_call_function_many_cond+0x43c>
+ffffffc0801fa1c0:      	ldr	w9, [x24, #0x8]
+ffffffc0801fa1c4:      	lsl	x8, x19, x8
+ffffffc0801fa1c8:      	ands	w8, w8, w9
+ffffffc0801fa1cc:      	b.eq	0xffffffc0801fa220 <smp_call_function_many_cond+0x43c>
+ffffffc0801fa1d0:      	rbit	x8, x8
+ffffffc0801fa1d4:      	clz	x21, x8
+ffffffc0801fa1d8:      	ldr	x8, [x24]
+ffffffc0801fa1dc:      	ldr	x9, [x20, x21, lsl #3]
+ffffffc0801fa1e0:      	add	x0, x9, x8
+ffffffc0801fa1e4:      	b	0xffffffc0801fa1b0 <smp_call_function_many_cond+0x3cc>
+ffffffc0801fa1e8:      	add	x8, x0, #0x8
+ffffffc0801fa1ec:      	ldar	w8, [x8]
+ffffffc0801fa1f0:      	tbz	w8, #0x0, 0xffffffc0801fa1b4 <smp_call_function_many_cond+0x3d0>
+ffffffc0801fa1f4:      	mov	w8, w8
+ffffffc0801fa1f8:      	add	x9, x0, #0x8
+ffffffc0801fa1fc:      	sevl
+ffffffc0801fa200:      	wfe
+ffffffc0801fa204:      	ldxr	w10, [x9]
+ffffffc0801fa208:      	eor	w10, w10, w8
+ffffffc0801fa20c:      	cbnz	w10, 0xffffffc0801fa214 <smp_call_function_many_cond+0x430>
+ffffffc0801fa210:      	wfe
+ffffffc0801fa214:      	ldar	w8, [x9]
+ffffffc0801fa218:      	tbnz	w8, #0x0, 0xffffffc0801fa1f4 <smp_call_function_many_cond+0x410>
+ffffffc0801fa21c:      	b	0xffffffc0801fa1b4 <smp_call_function_many_cond+0x3d0>
+ffffffc0801fa220:      	ldp	x20, x19, [sp, #0xa0]
+ffffffc0801fa224:      	ldp	x22, x21, [sp, #0x90]
+ffffffc0801fa228:      	ldp	x24, x23, [sp, #0x80]
+ffffffc0801fa22c:      	ldp	x26, x25, [sp, #0x70]
+ffffffc0801fa230:      	ldp	x28, x27, [sp, #0x60]
+ffffffc0801fa234:      	ldp	x29, x30, [sp, #0x50]
+ffffffc0801fa238:      	add	sp, sp, #0xb0
+ffffffc0801fa23c:      	ldr	x30, [x18, #-0x8]!
+ffffffc0801fa240:      	autiasp
+ffffffc0801fa244:      	ret
+ffffffc0801fa248:      	ldr	x8, [sp]
+ffffffc0801fa24c:      	adrp	x10, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801fa250:      	add	x10, x10, #0xc30
+ffffffc0801fa254:      	ldr	w8, [x8, #0x30]
+ffffffc0801fa258:      	lsr	x9, x8, #6
+ffffffc0801fa25c:      	ldr	x9, [x10, x9, lsl #3]
+ffffffc0801fa260:      	lsr	x8, x9, x8
+ffffffc0801fa264:      	tbz	w8, #0x0, 0xffffffc0801fa110 <smp_call_function_many_cond+0x32c>
+ffffffc0801fa268:      	adrp	x8, 0xffffffc082c2f000 <kprobe_exceptions_nb>
+ffffffc0801fa26c:      	mov	w9, #0x1        // =1
+ffffffc0801fa270:      	mov	x27, x30
+ffffffc0801fa274:      	ldr	x19, [x8, #0xe0]
+ffffffc0801fa278:      	ldr	x12, [sp]
+ffffffc0801fa27c:      	ldr	w8, [x12, #0x10]
+ffffffc0801fa280:      	add	w8, w8, #0x1
+ffffffc0801fa284:      	str	w8, [x12, #0x10]
+ffffffc0801fa288:      	mrs	x8, TPIDR_EL1
+ffffffc0801fa28c:      	add	x8, x8, x19
+ffffffc0801fa290:      	ldxr	x11, [x8]
+ffffffc0801fa294:      	add	x11, x11, x9
+ffffffc0801fa298:      	stxr	w10, x11, [x8]
+ffffffc0801fa29c:      	cbnz	w10, 0xffffffc0801fa290 <smp_call_function_many_cond+0x4ac>
+ffffffc0801fa2a0:      	ldr	x8, [x12, #0x10]
+ffffffc0801fa2a4:      	subs	x8, x8, #0x1
+ffffffc0801fa2a8:      	str	w8, [x12, #0x10]
+ffffffc0801fa2ac:      	b.eq	0xffffffc0801fa354 <smp_call_function_many_cond+0x570>
+ffffffc0801fa2b0:      	ldr	x8, [sp]
+ffffffc0801fa2b4:      	ldr	x8, [x8, #0x10]
+ffffffc0801fa2b8:      	cbz	x8, 0xffffffc0801fa354 <smp_call_function_many_cond+0x570>
+ffffffc0801fa2bc:      	nop
+ffffffc0801fa2c0:      	adr	x3, 0xffffffc0801f981c <generic_smp_call_function_single_interrupt>
+ffffffc0801fa2c4:      	ldr	x1, [sp, #0x28]
+ffffffc0801fa2c8:      	mov	x0, xzr
+ffffffc0801fa2cc:      	mov	x2, x27
+ffffffc0801fa2d0:      	bl	0xffffffc08012fb54 <__traceiter_ipi_send_cpumask>
+ffffffc0801fa2d4:      	mov	w9, #0x1        // =1
+ffffffc0801fa2d8:      	ldr	x12, [sp]
+ffffffc0801fa2dc:      	ldr	w8, [x12, #0x10]
+ffffffc0801fa2e0:      	add	w8, w8, #0x1
+ffffffc0801fa2e4:      	str	w8, [x12, #0x10]
+ffffffc0801fa2e8:      	mrs	x8, TPIDR_EL1
+ffffffc0801fa2ec:      	add	x8, x19, x8
+ffffffc0801fa2f0:      	add	x8, x8, #0x8
+ffffffc0801fa2f4:      	ldxr	x11, [x8]
+ffffffc0801fa2f8:      	add	x11, x11, x9
+ffffffc0801fa2fc:      	stxr	w10, x11, [x8]
+ffffffc0801fa300:      	cbnz	w10, 0xffffffc0801fa2f4 <smp_call_function_many_cond+0x510>
+ffffffc0801fa304:      	ldr	x8, [x12, #0x10]
+ffffffc0801fa308:      	subs	x8, x8, #0x1
+ffffffc0801fa30c:      	str	w8, [x12, #0x10]
+ffffffc0801fa310:      	ldp	x20, x19, [sp, #0x18]
+ffffffc0801fa314:      	ldr	x23, [sp, #0x10]
+ffffffc0801fa318:      	b.eq	0xffffffc0801fa328 <smp_call_function_many_cond+0x544>
+ffffffc0801fa31c:      	ldr	x8, [sp]
+ffffffc0801fa320:      	ldr	x8, [x8, #0x10]
+ffffffc0801fa324:      	cbnz	x8, 0xffffffc0801fa110 <smp_call_function_many_cond+0x32c>
+ffffffc0801fa328:      	bl	0xffffffc081449c74 <preempt_schedule_notrace>
+ffffffc0801fa32c:      	b	0xffffffc0801fa110 <smp_call_function_many_cond+0x32c>
+ffffffc0801fa330:      	mrs	x19, ICC_PMR_EL1
+ffffffc0801fa334:      	cmp	x19, #0xe0
+ffffffc0801fa338:      	b.ne	0xffffffc0801fa154 <smp_call_function_many_cond+0x370>
+ffffffc0801fa33c:      	mov	w8, #0xc0       // =192
+ffffffc0801fa340:      	msr	ICC_PMR_EL1, x8
+ffffffc0801fa344:      	b	0xffffffc0801fa154 <smp_call_function_many_cond+0x370>
+ffffffc0801fa348:      	msr	ICC_PMR_EL1, x19
+ffffffc0801fa34c:      	dsb	sy
+ffffffc0801fa350:      	b	0xffffffc0801fa180 <smp_call_function_many_cond+0x39c>
+ffffffc0801fa354:      	bl	0xffffffc081449c74 <preempt_schedule_notrace>
+ffffffc0801fa358:      	b	0xffffffc0801fa2bc <smp_call_function_many_cond+0x4d8>
+
+ffffffc0801facbc <__csd_lock_wait>:
+ffffffc0801facbc:      	paciasp
+ffffffc0801facc0:      	str	x30, [x18], #0x8
+ffffffc0801facc4:      	sub	sp, sp, #0x90
+ffffffc0801facc8:      	stp	x29, x30, [sp, #0x30]
+ffffffc0801faccc:      	stp	x28, x27, [sp, #0x40]
+ffffffc0801facd0:      	stp	x26, x25, [sp, #0x50]
+ffffffc0801facd4:      	stp	x24, x23, [sp, #0x60]
+ffffffc0801facd8:      	stp	x22, x21, [sp, #0x70]
+ffffffc0801facdc:      	stp	x20, x19, [sp, #0x80]
+ffffffc0801face0:      	add	x29, sp, #0x30
+ffffffc0801face4:      	mov	x19, x0
+ffffffc0801face8:      	bl	0xffffffc0801d521c <ktime_get_mono_fast_ns>
+ffffffc0801facec:      	ldr	w8, [x19, #0x8]
+ffffffc0801facf0:      	tbz	w8, #0x0, 0xffffffc0801fb058 <__csd_lock_wait+0x39c>
+ffffffc0801facf4:      	mov	w23, #0x4240    // =16960
+ffffffc0801facf8:      	mov	w20, wzr
+ffffffc0801facfc:      	mov	x28, xzr
+ffffffc0801fad00:      	movk	w23, #0xf, lsl #16
+ffffffc0801fad04:      	adrp	x24, 0xffffffc082c28000 <trace_event_fields_tmigr_connect_child_parent+0x80>
+ffffffc0801fad08:      	adrp	x26, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801fad0c:      	mov	w27, #0x1f      // =31
+ffffffc0801fad10:      	mov	x21, x0
+ffffffc0801fad14:      	stur	x0, [x29, #-0x8]
+ffffffc0801fad18:      	stur	wzr, [x29, #-0xc]
+ffffffc0801fad1c:      	ldr	x22, [x24, #0xaa0]
+ffffffc0801fad20:      	bl	0xffffffc0801d521c <ktime_get_mono_fast_ns>
+ffffffc0801fad24:      	mov	x25, x0
+ffffffc0801fad28:      	cbz	x28, 0xffffffc0801fad54 <__csd_lock_wait+0x98>
+ffffffc0801fad2c:      	ldr	w8, [x26, #0xc58]
+ffffffc0801fad30:      	clz	w8, w8
+ffffffc0801fad34:      	sub	w8, w27, w8
+ffffffc0801fad38:      	and	w9, w8, #0x80
+ffffffc0801fad3c:      	add	w8, w8, w9, lsr #7
+ffffffc0801fad40:      	sxtb	w8, w8
+ffffffc0801fad44:      	lsr	w8, w8, #1
+ffffffc0801fad48:      	add	w8, w8, #0x1
+ffffffc0801fad4c:      	and	x8, x8, #0xff
+ffffffc0801fad50:      	b	0xffffffc0801fad58 <__csd_lock_wait+0x9c>
+ffffffc0801fad54:      	mov	w8, #0x1        // =1
+ffffffc0801fad58:      	mul	x9, x22, x23
+ffffffc0801fad5c:      	add	x22, x28, #0x1
+ffffffc0801fad60:      	mul	x10, x9, x22
+ffffffc0801fad64:      	mul	x8, x10, x8
+ffffffc0801fad68:      	sub	x10, x25, x21
+ffffffc0801fad6c:      	cmp	x10, x8
+ffffffc0801fad70:      	ccmp	x9, #0x0, #0x4, hi
+ffffffc0801fad74:      	b.ne	0xffffffc0801fad90 <__csd_lock_wait+0xd4>
+ffffffc0801fad78:      	mov	x25, x21
+ffffffc0801fad7c:      	yield
+ffffffc0801fad80:      	mov	x21, x25
+ffffffc0801fad84:      	ldr	w8, [x19, #0x8]
+ffffffc0801fad88:      	tbnz	w8, #0x0, 0xffffffc0801fad1c <__csd_lock_wait+0x60>
+ffffffc0801fad8c:      	b	0xffffffc0801fb054 <__csd_lock_wait+0x398>
+ffffffc0801fad90:      	ldur	x21, [x29, #-0x8]
+ffffffc0801fad94:      	subs	x2, x21, x25
+ffffffc0801fad98:      	b.ls	0xffffffc0801fadb4 <__csd_lock_wait+0xf8>
+ffffffc0801fad9c:      	mrs	x8, SP_EL0
+ffffffc0801fada0:      	ldr	w1, [x8, #0x30]
+ffffffc0801fada4:      	adrp	x0, 0xffffffc0820d1000 <kallsyms_seqs_of_names+0xa6ba8>
+ffffffc0801fada8:      	add	x0, x0, #0xe86
+ffffffc0801fadac:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801fadb0:      	b	0xffffffc0801fad7c <__csd_lock_wait+0xc0>
+ffffffc0801fadb4:      	mov	w28, w20
+ffffffc0801fadb8:      	cbnz	w20, 0xffffffc0801fadd4 <__csd_lock_wait+0x118>
+ffffffc0801fadbc:      	b	0xffffffc0801fb010 <__csd_lock_wait+0x354>
+ffffffc0801fadc0:      	adrp	x8, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fadc4:      	add	x8, x8, #0x834
+ffffffc0801fadc8:      	mov	w9, #0x1        // =1
+ffffffc0801fadcc:      	ldaddal	w9, w8, [x8]
+ffffffc0801fadd0:      	add	w28, w8, #0x1
+ffffffc0801fadd4:      	ldrb	w8, [x19, #0x8]
+ffffffc0801fadd8:      	tst	w8, #0xe0
+ffffffc0801faddc:      	b.ne	0xffffffc0801fadfc <__csd_lock_wait+0x140>
+ffffffc0801fade0:      	adrp	x8, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0801fade4:      	ldrh	w10, [x19, #0xe]
+ffffffc0801fade8:      	ldr	w8, [x8, #0xe28]
+ffffffc0801fadec:      	cmp	w8, w10
+ffffffc0801fadf0:      	b.ls	0xffffffc0801fae00 <__csd_lock_wait+0x144>
+ffffffc0801fadf4:      	mov	x9, x10
+ffffffc0801fadf8:      	b	0xffffffc0801fae10 <__csd_lock_wait+0x154>
+ffffffc0801fadfc:      	mov	w10, #-0x1      // =-1
+ffffffc0801fae00:      	adrp	x8, 0xffffffc082dbc000 <event_class_802154_drv_set_max_frame_retries+0x8>
+ffffffc0801fae04:      	ldrb	w8, [x8, #0x3c3]
+ffffffc0801fae08:      	tbz	w8, #0x0, 0xffffffc0801fafa8 <__csd_lock_wait+0x2ec>
+ffffffc0801fae0c:      	mov	x9, xzr
+ffffffc0801fae10:      	adrp	x8, 0xffffffc082b7a000 <lru_gen_min_ttl>
+ffffffc0801fae14:      	add	x8, x8, #0x68
+ffffffc0801fae18:      	str	x9, [sp, #0x8]
+ffffffc0801fae1c:      	ldr	x8, [x8, x9, lsl #3]
+ffffffc0801fae20:      	adrp	x9, 0xffffffc082b45000 <hrtimer_bases+0x240>
+ffffffc0801fae24:      	add	x9, x9, #0x4e0
+ffffffc0801fae28:      	cmp	w20, #0x0
+ffffffc0801fae2c:      	sub	x4, x25, x21
+ffffffc0801fae30:      	adrp	x0, 0xffffffc08218c000 <max_tt_usecs+0x6db14>
+ffffffc0801fae34:      	add	x0, x0, #0x90f
+ffffffc0801fae38:      	add	x8, x8, x9
+ffffffc0801fae3c:      	adrp	x9, 0xffffffc08210b000 <task_index_to_char.state_char+0x16b1d>
+ffffffc0801fae40:      	add	x9, x9, #0xba0
+ffffffc0801fae44:      	ldar	x8, [x8]
+ffffffc0801fae48:      	stp	x10, x8, [sp, #0x10]
+ffffffc0801fae4c:      	mrs	x8, SP_EL0
+ffffffc0801fae50:      	ldp	x6, x7, [x19, #0x10]
+ffffffc0801fae54:      	str	x8, [sp]
+ffffffc0801fae58:      	ldr	w3, [x8, #0x30]
+ffffffc0801fae5c:      	adrp	x8, 0xffffffc082200000 <k_cur.cur_chars+0x4bc15>
+ffffffc0801fae60:      	add	x8, x8, #0x9b7
+ffffffc0801fae64:      	mov	w2, w28
+ffffffc0801fae68:      	mov	w5, w10
+ffffffc0801fae6c:      	csel	x1, x9, x8, eq
+ffffffc0801fae70:      	mov	w21, w28
+ffffffc0801fae74:      	mov	x28, x4
+ffffffc0801fae78:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801fae7c:      	cbnz	w20, 0xffffffc0801fae94 <__csd_lock_wait+0x1d8>
+ffffffc0801fae80:      	b	0xffffffc0801fb034 <__csd_lock_wait+0x378>
+ffffffc0801fae84:      	adrp	x8, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fae88:      	add	x8, x8, #0x82c
+ffffffc0801fae8c:      	mov	w9, #0x1        // =1
+ffffffc0801fae90:      	stadd	w9, [x8]
+ffffffc0801fae94:      	adrp	x8, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fae98:      	ldrsw	x8, [x8, #0x828]
+ffffffc0801fae9c:      	cmp	w8, #0x1
+ffffffc0801faea0:      	b.lt	0xffffffc0801faeb0 <__csd_lock_wait+0x1f4>
+ffffffc0801faea4:      	smull	x8, w8, w23
+ffffffc0801faea8:      	cmp	x28, x8
+ffffffc0801faeac:      	b.gt	0xffffffc0801fb0c8 <__csd_lock_wait+0x40c>
+ffffffc0801faeb0:      	ldr	x8, [sp, #0x18]
+ffffffc0801faeb4:      	adrp	x2, 0xffffffc082100000 <task_index_to_char.state_char+0xbb1d>
+ffffffc0801faeb8:      	add	x2, x2, #0x6f7
+ffffffc0801faebc:      	cbz	x8, 0xffffffc0801faed4 <__csd_lock_wait+0x218>
+ffffffc0801faec0:      	ldr	x8, [sp, #0x18]
+ffffffc0801faec4:      	adrp	x2, 0xffffffc0821bb000 <k_cur.cur_chars+0x6c15>
+ffffffc0801faec8:      	add	x2, x2, #0x572
+ffffffc0801faecc:      	cmp	x19, x8
+ffffffc0801faed0:      	b.ne	0xffffffc0801faee8 <__csd_lock_wait+0x22c>
+ffffffc0801faed4:      	adrp	x0, 0xffffffc0820ae000 <kallsyms_seqs_of_names+0x83ba8>
+ffffffc0801faed8:      	add	x0, x0, #0xe8c
+ffffffc0801faedc:      	mov	w1, w21
+ffffffc0801faee0:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801faee4:      	b	0xffffffc0801faf20 <__csd_lock_wait+0x264>
+ffffffc0801faee8:      	ldr	x9, [sp, #0x8]
+ffffffc0801faeec:      	adrp	x8, 0xffffffc082b7a000 <lru_gen_min_ttl>
+ffffffc0801faef0:      	add	x8, x8, #0x68
+ffffffc0801faef4:      	adrp	x0, 0xffffffc08220b000 <k_cur.cur_chars+0x56c15>
+ffffffc0801faef8:      	add	x0, x0, #0xd88
+ffffffc0801faefc:      	mov	w1, w21
+ffffffc0801faf00:      	ldr	x8, [x8, x9, lsl #3]
+ffffffc0801faf04:      	adrp	x9, 0xffffffc082b45000 <hrtimer_bases+0x240>
+ffffffc0801faf08:      	add	x9, x9, #0x4e8
+ffffffc0801faf0c:      	ldr	x2, [x8, x9]
+ffffffc0801faf10:      	adrp	x9, 0xffffffc082b45000 <hrtimer_bases+0x240>
+ffffffc0801faf14:      	add	x9, x9, #0x4f0
+ffffffc0801faf18:      	ldr	x3, [x8, x9]
+ffffffc0801faf1c:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801faf20:      	ldr	x28, [sp, #0x10]
+ffffffc0801faf24:      	tbnz	w28, #0x1f, 0xffffffc0801faf68 <__csd_lock_wait+0x2ac>
+ffffffc0801faf28:      	adrp	x8, 0xffffffc082b7a000 <lru_gen_min_ttl>
+ffffffc0801faf2c:      	add	x8, x8, #0x68
+ffffffc0801faf30:      	ldr	x8, [x8, w28, uxtw #3]
+ffffffc0801faf34:      	b	0xffffffc0801fafe0 <__csd_lock_wait+0x324>
+ffffffc0801faf38:      	adrp	x9, 0xffffffc082b45000 <hrtimer_bases+0x240>
+ffffffc0801faf3c:      	add	x9, x9, #0x4d8
+ffffffc0801faf40:      	ldur	w10, [x29, #-0xc]
+ffffffc0801faf44:      	add	x9, x9, x8
+ffffffc0801faf48:      	mov	w8, #0x1        // =1
+ffffffc0801faf4c:      	casa	w8, w10, [x9]
+ffffffc0801faf50:      	cbz	w8, 0xffffffc0801faf60 <__csd_lock_wait+0x2a4>
+ffffffc0801faf54:      	mov	w0, w28
+ffffffc0801faf58:      	bl	0xffffffc080138030 <dump_cpu_task>
+ffffffc0801faf5c:      	ldr	x28, [sp, #0x10]
+ffffffc0801faf60:      	ldr	x8, [sp, #0x18]
+ffffffc0801faf64:      	cbz	x8, 0xffffffc0801faf78 <__csd_lock_wait+0x2bc>
+ffffffc0801faf68:      	cbz	w20, 0xffffffc0801fafa0 <__csd_lock_wait+0x2e4>
+ffffffc0801faf6c:      	mov	x28, x22
+ffffffc0801faf70:      	mov	w20, w21
+ffffffc0801faf74:      	b	0xffffffc0801fad7c <__csd_lock_wait+0xc0>
+ffffffc0801faf78:      	ldr	x8, [sp]
+ffffffc0801faf7c:      	adrp	x0, 0xffffffc082100000 <task_index_to_char.state_char+0xbb1d>
+ffffffc0801faf80:      	add	x0, x0, #0x704
+ffffffc0801faf84:      	mov	w1, w21
+ffffffc0801faf88:      	mov	w3, w28
+ffffffc0801faf8c:      	ldr	w2, [x8, #0x30]
+ffffffc0801faf90:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801faf94:      	mov	w0, w28
+ffffffc0801faf98:      	bl	0xffffffc08004ec40 <arch_send_call_function_single_ipi>
+ffffffc0801faf9c:      	cbnz	w20, 0xffffffc0801faf6c <__csd_lock_wait+0x2b0>
+ffffffc0801fafa0:      	bl	0xffffffc080030590 <dump_stack>
+ffffffc0801fafa4:      	b	0xffffffc0801faf6c <__csd_lock_wait+0x2b0>
+ffffffc0801fafa8:      	mov	w8, #0x1        // =1
+ffffffc0801fafac:      	adrp	x9, 0xffffffc082dbc000 <event_class_802154_drv_set_max_frame_retries+0x8>
+ffffffc0801fafb0:      	adrp	x0, 0xffffffc0821af000 <max_tt_usecs+0x90b14>
+ffffffc0801fafb4:      	add	x0, x0, #0x8ef
+ffffffc0801fafb8:      	adrp	x1, 0xffffffc082100000 <task_index_to_char.state_char+0xbb1d>
+ffffffc0801fafbc:      	add	x1, x1, #0x6e1
+ffffffc0801fafc0:      	mov	w2, w10
+ffffffc0801fafc4:      	strb	w8, [x9, #0x3c3]
+ffffffc0801fafc8:      	str	x10, [sp, #0x10]
+ffffffc0801fafcc:      	bl	0xffffffc080015e64 <__warn_printk>
+ffffffc0801fafd0:      	ldr	x10, [sp, #0x10]
+ffffffc0801fafd4:      	mov	x9, xzr
+ffffffc0801fafd8:      	brk	#0x800
+ffffffc0801fafdc:      	b	0xffffffc0801fae10 <__csd_lock_wait+0x154>
+ffffffc0801fafe0:      	adrp	x9, 0xffffffc082b45000 <hrtimer_bases+0x240>
+ffffffc0801fafe4:      	add	x9, x9, #0x4d8
+ffffffc0801fafe8:      	ldur	w11, [x29, #-0xc]
+ffffffc0801fafec:      	add	x9, x9, x8
+ffffffc0801faff0:      	prfm	pstl1strm, [x9]
+ffffffc0801faff4:      	ldaxr	w8, [x9]
+ffffffc0801faff8:      	eor	w10, w8, #0x1
+ffffffc0801faffc:      	cbnz	w10, 0xffffffc0801fb008 <__csd_lock_wait+0x34c>
+ffffffc0801fb000:      	stxr	w10, w11, [x9]
+ffffffc0801fb004:      	cbnz	w10, 0xffffffc0801faff4 <__csd_lock_wait+0x338>
+ffffffc0801fb008:      	cbnz	w8, 0xffffffc0801faf54 <__csd_lock_wait+0x298>
+ffffffc0801fb00c:      	b	0xffffffc0801faf60 <__csd_lock_wait+0x2a4>
+ffffffc0801fb010:      	adrp	x9, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fb014:      	add	x9, x9, #0x834
+ffffffc0801fb018:      	prfm	pstl1strm, [x9]
+ffffffc0801fb01c:      	ldxr	w28, [x9]
+ffffffc0801fb020:      	add	w28, w28, #0x1
+ffffffc0801fb024:      	stlxr	w8, w28, [x9]
+ffffffc0801fb028:      	cbnz	w8, 0xffffffc0801fb01c <__csd_lock_wait+0x360>
+ffffffc0801fb02c:      	dmb	ish
+ffffffc0801fb030:      	b	0xffffffc0801fadd4 <__csd_lock_wait+0x118>
+ffffffc0801fb034:      	adrp	x10, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fb038:      	add	x10, x10, #0x82c
+ffffffc0801fb03c:      	prfm	pstl1strm, [x10]
+ffffffc0801fb040:      	ldxr	w8, [x10]
+ffffffc0801fb044:      	add	w8, w8, #0x1
+ffffffc0801fb048:      	stxr	w9, w8, [x10]
+ffffffc0801fb04c:      	cbnz	w9, 0xffffffc0801fb040 <__csd_lock_wait+0x384>
+ffffffc0801fb050:      	b	0xffffffc0801fae94 <__csd_lock_wait+0x1d8>
+ffffffc0801fb054:      	cbnz	w20, 0xffffffc0801fb084 <__csd_lock_wait+0x3c8>
+ffffffc0801fb058:      	dmb	ishld
+ffffffc0801fb05c:      	ldp	x20, x19, [sp, #0x80]
+ffffffc0801fb060:      	ldp	x22, x21, [sp, #0x70]
+ffffffc0801fb064:      	ldp	x24, x23, [sp, #0x60]
+ffffffc0801fb068:      	ldp	x26, x25, [sp, #0x50]
+ffffffc0801fb06c:      	ldp	x28, x27, [sp, #0x40]
+ffffffc0801fb070:      	ldp	x29, x30, [sp, #0x30]
+ffffffc0801fb074:      	add	sp, sp, #0x90
+ffffffc0801fb078:      	ldr	x30, [x18, #-0x8]!
+ffffffc0801fb07c:      	autiasp
+ffffffc0801fb080:      	ret
+ffffffc0801fb084:      	tst	w8, #0xe0
+ffffffc0801fb088:      	b.ne	0xffffffc0801fb094 <__csd_lock_wait+0x3d8>
+ffffffc0801fb08c:      	ldrh	w3, [x19, #0xe]
+ffffffc0801fb090:      	b	0xffffffc0801fb098 <__csd_lock_wait+0x3dc>
+ffffffc0801fb094:      	mov	w3, #-0x1       // =-1
+ffffffc0801fb098:      	mrs	x8, SP_EL0
+ffffffc0801fb09c:      	ldr	w2, [x8, #0x30]
+ffffffc0801fb0a0:      	adrp	x0, 0xffffffc082180000 <max_tt_usecs+0x61b14>
+ffffffc0801fb0a4:      	add	x0, x0, #0xe47
+ffffffc0801fb0a8:      	mov	w1, w20
+ffffffc0801fb0ac:      	bl	0xffffffc080018780 <_printk>
+ffffffc0801fb0b0:      	b	0xffffffc0801fb0cc <__csd_lock_wait+0x410>
+ffffffc0801fb0b4:      	mov	w8, #-0x1       // =-1
+ffffffc0801fb0b8:      	adrp	x9, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fb0bc:      	add	x9, x9, #0x82c
+ffffffc0801fb0c0:      	stadd	w8, [x9]
+ffffffc0801fb0c4:      	b	0xffffffc0801fb058 <__csd_lock_wait+0x39c>
+ffffffc0801fb0c8:      	brk	#0x800
+ffffffc0801fb0cc:      	mov	w8, #0x1        // =1
+ffffffc0801fb0d0:      	adrp	x9, 0xffffffc082e3e000 <idem_hash+0x7f8>
+ffffffc0801fb0d4:      	add	x9, x9, #0x82c
+ffffffc0801fb0d8:      	prfm	pstl1strm, [x9]
+ffffffc0801fb0dc:      	ldxr	w10, [x9]
+ffffffc0801fb0e0:      	sub	w10, w10, w8
+ffffffc0801fb0e4:      	stxr	w11, w10, [x9]
+ffffffc0801fb0e8:      	cbnz	w11, 0xffffffc0801fb0dc <__csd_lock_wait+0x420>
+ffffffc0801fb0ec:      	b	0xffffffc0801fb058 <__csd_lock_wait+0x39c>
+ffffffc0801fb0f0:      	mrs	x27, TPIDR_EL2
+ffffffc0801fb0f4:      	mrs	x25, TPIDR_EL2
+ffffffc0801fb0f8:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb0fc:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb100:      	swpal	x9, x8, [x10]
+ffffffc0801fb104:      	nop
+ffffffc0801fb108:      	nop
+ffffffc0801fb10c:      	nop
+ffffffc0801fb110:      	nop
+ffffffc0801fb114:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb118:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb11c:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb120:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb124:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb128:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb12c:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb130:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb134:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb138:      	b	0xffffffc0801f98b8 <flush_smp_call_function_queue+0x74>
+ffffffc0801fb13c:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb140:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb144:      	b	0xffffffc0801f98d0 <flush_smp_call_function_queue+0x8c>
+ffffffc0801fb148:      	b	0xffffffc0801f9aa8 <smp_call_function_single+0x1cc>
+ffffffc0801fb14c:      	b	0xffffffc0801f9ab0 <smp_call_function_single+0x1d4>
+ffffffc0801fb150:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb154:      	b	0xffffffc0801f9c48 <generic_exec_single+0x140>
+ffffffc0801fb158:      	b	0xffffffc0801f9c78 <generic_exec_single+0x170>
+ffffffc0801fb15c:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb160:      	mrs	x9, TPIDR_EL2
+ffffffc0801fb164:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb168:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb16c:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb170:      	mrs	x10, TPIDR_EL2
+ffffffc0801fb174:      	b	0xffffffc0801fa330 <smp_call_function_many_cond+0x54c>
+ffffffc0801fb178:      	b	0xffffffc0801fa348 <smp_call_function_many_cond+0x564>
+ffffffc0801fb17c:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb180:      	ldadd	x9, x11, [x8]
+ffffffc0801fb184:      	nop
+ffffffc0801fb188:      	nop
+ffffffc0801fb18c:      	nop
+ffffffc0801fb190:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb194:      	ldadd	x9, x11, [x8]
+ffffffc0801fb198:      	nop
+ffffffc0801fb19c:      	nop
+ffffffc0801fb1a0:      	nop
+ffffffc0801fb1a4:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb1a8:      	ldadd	x9, x11, [x8]
+ffffffc0801fb1ac:      	nop
+ffffffc0801fb1b0:      	nop
+ffffffc0801fb1b4:      	nop
+ffffffc0801fb1b8:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb1bc:      	ldadd	x9, x11, [x8]
+ffffffc0801fb1c0:      	nop
+ffffffc0801fb1c4:      	nop
+ffffffc0801fb1c8:      	nop
+ffffffc0801fb1cc:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb1d0:      	ldadd	x9, x11, [x8]
+ffffffc0801fb1d4:      	nop
+ffffffc0801fb1d8:      	nop
+ffffffc0801fb1dc:      	nop
+ffffffc0801fb1e0:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb1e4:      	ldadd	x9, x11, [x8]
+ffffffc0801fb1e8:      	nop
+ffffffc0801fb1ec:      	nop
+ffffffc0801fb1f0:      	nop
+ffffffc0801fb1f4:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb1f8:      	ldadd	x9, x11, [x8]
+ffffffc0801fb1fc:      	nop
+ffffffc0801fb200:      	nop
+ffffffc0801fb204:      	nop
+ffffffc0801fb208:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb20c:      	ldadd	x9, x11, [x8]
+ffffffc0801fb210:      	nop
+ffffffc0801fb214:      	nop
+ffffffc0801fb218:      	nop
+ffffffc0801fb21c:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb220:      	ldadd	x9, x11, [x8]
+ffffffc0801fb224:      	nop
+ffffffc0801fb228:      	nop
+ffffffc0801fb22c:      	nop
+ffffffc0801fb230:      	mrs	x8, TPIDR_EL2
+ffffffc0801fb234:      	ldadd	x9, x11, [x8]
+ffffffc0801fb238:      	nop
+ffffffc0801fb23c:      	nop
+ffffffc0801fb240:      	nop
+
+ffffffc08143030c <nmi_trigger_cpumask_backtrace>:
+ffffffc08143030c:      	paciasp
+ffffffc081430310:      	str	x30, [x18], #0x8
+ffffffc081430314:      	stp	x29, x30, [sp, #-0x30]!
+ffffffc081430318:      	stp	x22, x21, [sp, #0x10]
+ffffffc08143031c:      	stp	x20, x19, [sp, #0x20]
+ffffffc081430320:      	mov	x29, sp
+ffffffc081430324:      	mrs	x21, SP_EL0
+ffffffc081430328:      	ldr	w8, [x21, #0x10]
+ffffffc08143032c:      	add	w8, w8, #0x1
+ffffffc081430330:      	str	w8, [x21, #0x10]
+ffffffc081430334:      	ldr	w19, [x21, #0x30]
+ffffffc081430338:      	b	0xffffffc08143044c <nmi_trigger_cpumask_backtrace+0x140>
+ffffffc08143033c:      	mov	w8, #0x1        // =1
+ffffffc081430340:      	adrp	x9, 0xffffffc082e92000 <vsock_bpf_prot+0x110>
+ffffffc081430344:      	add	x9, x9, #0x2b0
+ffffffc081430348:      	ldsetal	x8, x8, [x9]
+ffffffc08143034c:      	tbnz	w8, #0x0, 0xffffffc081430470 <nmi_trigger_cpumask_backtrace+0x164>
+ffffffc081430350:      	ldr	x8, [x0]
+ffffffc081430354:      	adrp	x22, 0xffffffc082b8e000 <bcm_proto+0x178>
+ffffffc081430358:      	cmn	w1, #0x1
+ffffffc08143035c:      	str	x8, [x22, #0x320]
+ffffffc081430360:      	adrp	x8, 0xffffffc082b8e000 <bcm_proto+0x178>
+ffffffc081430364:      	add	x8, x8, #0x320
+ffffffc081430368:      	b.eq	0xffffffc081430384 <nmi_trigger_cpumask_backtrace+0x78>
+ffffffc08143036c:      	mov	w9, #0x1        // =1
+ffffffc081430370:      	lsr	w10, w1, #6
+ffffffc081430374:      	lsl	x9, x9, x1
+ffffffc081430378:      	b	0xffffffc0814304cc <nmi_trigger_cpumask_backtrace+0x1c0>
+ffffffc08143037c:      	add	x10, x8, x10, lsl #3
+ffffffc081430380:      	stclr	x9, [x10]
+ffffffc081430384:      	lsr	x9, x19, #6
+ffffffc081430388:      	ldr	x8, [x8, x9, lsl #3]
+ffffffc08143038c:      	lsr	x8, x8, x19
+ffffffc081430390:      	tbz	w8, #0x0, 0xffffffc0814303a4 <nmi_trigger_cpumask_backtrace+0x98>
+ffffffc081430394:      	mov	x0, xzr
+ffffffc081430398:      	mov	x20, x2
+ffffffc08143039c:      	bl	0xffffffc0814304e8 <nmi_cpu_backtrace>
+ffffffc0814303a0:      	mov	x2, x20
+ffffffc0814303a4:      	ldr	w8, [x22, #0x320]
+ffffffc0814303a8:      	cbnz	w8, 0xffffffc0814303f4 <nmi_trigger_cpumask_backtrace+0xe8>
+ffffffc0814303ac:      	mov	w19, #0x2710    // =10000
+ffffffc0814303b0:      	ldr	w8, [x22, #0x320]
+ffffffc0814303b4:      	cbz	w8, 0xffffffc0814303d8 <nmi_trigger_cpumask_backtrace+0xcc>
+ffffffc0814303b8:      	mov	w0, #0x8958     // =35160
+ffffffc0814303bc:      	movk	w0, #0x41, lsl #16
+ffffffc0814303c0:      	bl	0xffffffc0814144b8 <__const_udelay>
+ffffffc0814303c4:      	bl	0xffffffc08022f3c8 <touch_softlockup_watchdog>
+ffffffc0814303c8:      	subs	w19, w19, #0x1
+ffffffc0814303cc:      	b.ne	0xffffffc0814303b0 <nmi_trigger_cpumask_backtrace+0xa4>
+ffffffc0814303d0:      	ldr	w8, [x22, #0x320]
+ffffffc0814303d4:      	cbnz	w8, 0xffffffc08143042c <nmi_trigger_cpumask_backtrace+0x120>
+ffffffc0814303d8:      	bl	0xffffffc080181c64 <printk_trigger_flush>
+ffffffc0814303dc:      	b	0xffffffc0814304a8 <nmi_trigger_cpumask_backtrace+0x19c>
+ffffffc0814303e0:      	mov	w8, #0x1        // =1
+ffffffc0814303e4:      	adrp	x9, 0xffffffc082e92000 <vsock_bpf_prot+0x110>
+ffffffc0814303e8:      	add	x9, x9, #0x2b0
+ffffffc0814303ec:      	ldclrl	x8, x8, [x9]
+ffffffc0814303f0:      	b	0xffffffc081430470 <nmi_trigger_cpumask_backtrace+0x164>
+ffffffc0814303f4:      	adrp	x8, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc0814303f8:      	adrp	x20, 0xffffffc082b8e000 <bcm_proto+0x178>
+ffffffc0814303fc:      	add	x20, x20, #0x320
+ffffffc081430400:      	ldr	w8, [x8, #0xe28]
+ffffffc081430404:      	adrp	x0, 0xffffffc08218b000 <max_tt_usecs+0x6cb14>
+ffffffc081430408:      	add	x0, x0, #0xa0a
+ffffffc08143040c:      	mov	w1, w19
+ffffffc081430410:      	mov	x19, x2
+ffffffc081430414:      	mov	x3, x20
+ffffffc081430418:      	mov	w2, w8
+ffffffc08143041c:      	bl	0xffffffc080018780 <_printk>
+ffffffc081430420:      	mov	x0, x20
+ffffffc081430424:      	blr	x19
+ffffffc081430428:      	b	0xffffffc0814303ac <nmi_trigger_cpumask_backtrace+0xa0>
+ffffffc08143042c:      	adrp	x8, 0xffffffc082b79000 <nf_conntrack_locks+0x580>
+ffffffc081430430:      	adrp	x0, 0xffffffc08210a000 <task_index_to_char.state_char+0x15b1d>
+ffffffc081430434:      	add	x0, x0, #0xbde
+ffffffc081430438:      	ldr	w1, [x8, #0xe28]
+ffffffc08143043c:      	adrp	x2, 0xffffffc082b8e000 <bcm_proto+0x178>
+ffffffc081430440:      	add	x2, x2, #0x320
+ffffffc081430444:      	bl	0xffffffc080018780 <_printk>
+ffffffc081430448:      	b	0xffffffc0814303d8 <nmi_trigger_cpumask_backtrace+0xcc>
+ffffffc08143044c:      	adrp	x9, 0xffffffc082e92000 <vsock_bpf_prot+0x110>
+ffffffc081430450:      	add	x9, x9, #0x2b0
+ffffffc081430454:      	prfm	pstl1strm, [x9]
+ffffffc081430458:      	ldxr	x8, [x9]
+ffffffc08143045c:      	orr	x10, x8, #0x1
+ffffffc081430460:      	stlxr	w11, x10, [x9]
+ffffffc081430464:      	cbnz	w11, 0xffffffc081430458 <nmi_trigger_cpumask_backtrace+0x14c>
+ffffffc081430468:      	dmb	ish
+ffffffc08143046c:      	tbz	w8, #0x0, 0xffffffc081430350 <nmi_trigger_cpumask_backtrace+0x44>
+ffffffc081430470:      	ldr	x8, [x21, #0x10]
+ffffffc081430474:      	subs	x8, x8, #0x1
+ffffffc081430478:      	str	w8, [x21, #0x10]
+ffffffc08143047c:      	b.eq	0xffffffc0814304a0 <nmi_trigger_cpumask_backtrace+0x194>
+ffffffc081430480:      	ldr	x8, [x21, #0x10]
+ffffffc081430484:      	cbz	x8, 0xffffffc0814304a0 <nmi_trigger_cpumask_backtrace+0x194>
+ffffffc081430488:      	ldp	x20, x19, [sp, #0x20]
+ffffffc08143048c:      	ldp	x22, x21, [sp, #0x10]
+ffffffc081430490:      	ldp	x29, x30, [sp], #0x30
+ffffffc081430494:      	ldr	x30, [x18, #-0x8]!
+ffffffc081430498:      	autiasp
+ffffffc08143049c:      	ret
+ffffffc0814304a0:      	bl	0xffffffc081448fd8 <preempt_schedule>
+ffffffc0814304a4:      	b	0xffffffc081430488 <nmi_trigger_cpumask_backtrace+0x17c>
+ffffffc0814304a8:      	mov	w8, #0x1        // =1
+ffffffc0814304ac:      	adrp	x9, 0xffffffc082e92000 <vsock_bpf_prot+0x110>
+ffffffc0814304b0:      	add	x9, x9, #0x2b0
+ffffffc0814304b4:      	prfm	pstl1strm, [x9]
+ffffffc0814304b8:      	ldxr	x10, [x9]
+ffffffc0814304bc:      	bic	x11, x10, x8
+ffffffc0814304c0:      	stlxr	w12, x11, [x9]
+ffffffc0814304c4:      	cbnz	w12, 0xffffffc0814304b8 <nmi_trigger_cpumask_backtrace+0x1ac>
+ffffffc0814304c8:      	b	0xffffffc0814303f0 <nmi_trigger_cpumask_backtrace+0xe4>
+ffffffc0814304cc:      	add	x10, x8, x10, lsl #3
+ffffffc0814304d0:      	prfm	pstl1strm, [x10]
+ffffffc0814304d4:      	ldxr	x11, [x10]
+ffffffc0814304d8:      	bic	x11, x11, x9
+ffffffc0814304dc:      	stxr	w12, x11, [x10]
+ffffffc0814304e0:      	cbnz	w12, 0xffffffc0814304d4 <nmi_trigger_cpumask_backtrace+0x1c8>
+ffffffc0814304e4:      	b	0xffffffc081430384 <nmi_trigger_cpumask_backtrace+0x78>

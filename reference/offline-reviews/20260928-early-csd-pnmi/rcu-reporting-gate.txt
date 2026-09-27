@@ -1,0 +1,27 @@
+766: }
+767: 
+768: static bool csd_lock_suppress_rcu_stall;
+769: module_param(csd_lock_suppress_rcu_stall, bool, 0644);
+770: 
+838: 		 * stopped the vm.
+839: 		 */
+840: 		if (kvm_check_and_clear_guest_paused())
+841: 			return;
+842: 
+843: #ifdef CONFIG_SYSFS
+844: 		++rcu_stall_count;
+845: #endif
+846: 
+847: 		rcu_stall_notifier_call_chain(RCU_STALL_NOTIFY_NORM, (void *)j - gps);
+848: 		if (READ_ONCE(csd_lock_suppress_rcu_stall) && csd_lock_is_stuck()) {
+849: 			pr_err("INFO: %s detected stall, but suppressed full report due to a stuck CSD-lock.\n", rcu_state.name);
+850: 		} else if (self_detected) {
+851: 			/* We haven't checked in, so go dump stack. */
+852: 			print_cpu_stall(gs2, gps);
+853: 		} else {
+854: 			/* They had a few time units to dump stack, so complain. */
+855: 			print_other_cpu_stall(gs2, gps);
+856: 		}
+857: 
+858: 		if (READ_ONCE(rcu_cpu_stall_ftrace_dump))
+859: 			rcu_ftrace_dump(DUMP_ALL);

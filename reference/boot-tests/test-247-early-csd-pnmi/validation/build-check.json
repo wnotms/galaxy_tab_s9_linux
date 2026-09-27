@@ -1,0 +1,47 @@
+{
+  "config_differences": {
+    "CONFIG_CSD_LOCK_WAIT_DEBUG": [
+      "n",
+      "y"
+    ],
+    "CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT": [
+      "n",
+      "y"
+    ]
+  },
+  "config_explanation": "Only the existing CSD debug and default static key are newly enabled; PSEUDO_NMI stays enabled and HARDLOCKUP_DETECTOR stays unset",
+  "dtb_equal_test246": true,
+  "release_equal_test246": true,
+  "bbm_patch_present": true,
+  "calibration_helper_absent": true,
+  "artifacts": {
+    "out/kernel-pnmi-csd/Image.gz": {
+      "bytes": 21933395,
+      "sha256": "2bd55d6b70248d3ceee2ae63d3a6d7901a735ef1177b3d0b85d7b3413e47ce7a"
+    },
+    "out/kernel-pnmi-csd/config": {
+      "bytes": 241041,
+      "sha256": "35070ccea94a25cd27b6aba7cefabbfa044720b3b3fd7a210e8092b6096b2d34"
+    },
+    "out/kernel-pnmi-csd/sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 177620,
+      "sha256": "5709be3ff6467d0d5fdb0e925f367d73352c9828b7aedf92634ae66a39d94074"
+    },
+    "out/kernel-pnmi-csd/kernel.release": {
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "out/test247/vmlinux": {
+      "bytes": 476710760,
+      "sha256": "b33ecb2aa19f84dbcbe6d37bd6fc1addf2a2e14db7cce1b1b24cd59bfe19eb2b"
+    },
+    "out/test247/System.map": {
+      "bytes": 7705194,
+      "sha256": "8f953cd7397129a6f7ff751075fdbaac2aa6e30086bd3efb9e8704be6bfe6bb8"
+    },
+    "out/test247/Module.symvers": {
+      "bytes": 911408,
+      "sha256": "28e8c9b9fa9d2324ed468a248f808d7cedcf9f62b9d783930195b4d7ee877daf"
+    }
+  }
+}
