@@ -26,8 +26,17 @@ no wedge series yet. See test-231/RESULTS.md for source/observer IDs and rollbac
 Test-231 rollback restored all production partition hashes, but boot
 79815bbb-a96b-40c3-a152-ab958fd57d5d then wedged on CPU 5 with PID 1 blocked
 and systemctl timing out. The owner returned to TWRP; recovery evidence is
-archived. Image integrity passed; healthy rollback boot did not. USB ADB is
-now being prepared at the owner's request while preserving the NCM/SSH path.
+archived. Image integrity passed; healthy rollback boot did not. USB ADB work followed at the owner's request while preserving NCM/SSH.
+
+Test-232 added native USB ADB to the existing NCM gadget. Final boot
+ a80804be-229c-46f7-aae8-bd797fb22883 has USB/TCP ADB and SSH responsive after
+more than 150 seconds. Existing SSH survived stopping adbd (100 heartbeats,
+max gap 2.01 s). Preserve no_disconnect, the independent ep0 holder, and the
+adbd restart guard: FunctionFS reopening can reset the shared gadget. Prepare
+NCM/UDC before adbd's one-second bind deadline, then use bounded 50 ms polls.
+Changes apply next boot; never unbind a live gadget to add ADB. ADB transport
+failure can require reboot to recover while SSH stays available. This does not
+resolve CPU non-response or corrupt pstore. See test-232/RESULTS.md.
 
 ## Mission
 

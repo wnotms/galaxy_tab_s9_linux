@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/mnt/c/Windows/System32/OpenSSH/ssh.exe",
+    "-i",
+    "C:\\Users\\ms\\.ssh\\gts9-test232\\key",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=NUL",
+    "-o",
+    "ConnectTimeout=8",
+    "-o",
+    "ServerAliveInterval=5",
+    "-o",
+    "ServerAliveCountMax=2",
+    "root@169.254.42.1",
+    "cat /proc/sys/kernel/random/boot_id; i=0; while [ \"$i\" -lt 22 ]; do printf \"OBSERVE \"; cat /proc/uptime; i=$((i+1)); sleep 5; done; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; systemctl --failed --no-pager; journalctl -b --no-pager -o short-monotonic"
+  ],
+  "utc": "2026-09-27T06:44:00.817354+00:00",
+  "status": 0
+}

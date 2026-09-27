@@ -1,0 +1,35 @@
+a80804be-229c-46f7-aae8-bd797fb22883
+35.77 261.37
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+
+0 loaded units listed.
+[    3.583622] gts9 systemd[1]: Starting gts9-usb-adb-prepare.service - Prepare optional USB ADB alongside the NCM network...
+[    3.631341] gts9 gts9-usb-adb-prepare[673]: gts9-usb-adb: FunctionFS prepared with no_disconnect
+[    3.705232] gts9 gts9-usb-adb-prepare[735]: gts9-usb-acm: ncm.usb0 linked into the configuration
+[    3.708945] gts9 systemd[1]: Finished gts9-usb-adb-prepare.service - Prepare optional USB ADB alongside the NCM network.
+[    4.075121] gts9 systemd[1]: Starting gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel)...
+[    4.208431] gts9 systemd[1]: Started gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel).
+[    4.210986] gts9 systemd[1]: Starting gts9-usb-acm.service - X710 USB debug link (NCM network for ssh; no serial port)...
+[    4.320571] gts9 gts9-usb-acm[807]: gts9-usb-acm: ncm.usb0 linked into the configuration
+[    5.625197] gts9 adbd[805]: 09-27 14:42:57.644   805   805 E adbd    : auth.cpp:204 Failed to get adbd socket: Success
+[    5.625197] gts9 adbd[805]: 09-27 14:42:57.645   805   805 E adbd    : adbd_auth.cpp:98 adbd_auth: failed to get adbd authentication socket: Success
+[    5.632238] gts9 adbd[805]: 09-27 14:42:57.652   805   805 I adbd    : main.cpp:195 adbd listening on tcp:5555
+[    5.632238] gts9 adbd[805]: 09-27 14:42:57.652   805   968 I adbd    : usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    5.632238] gts9 adbd[805]: 09-27 14:42:57.652   805   964 E adbd    : adbd_auth.cpp:300 adbd_auth: socket unavailable, disabling user prompts
+[    5.632702] gts9 adbd[805]: 09-27 14:42:57.652   805   968 I adbd    : usb.cpp:154 UsbFfsConnection constructed
+[    5.632702] gts9 adbd[805]: 09-27 14:42:57.652   805   805 I adbd    : main.cpp:195 adbd listening on vsock:5555
+[    5.632702] gts9 adbd[805]: 09-27 14:42:57.652   805   805 I adbd    : main.cpp:306 adbd started
+[    5.633093] gts9 adbd[805]: 09-27 14:42:57.652   805   972 I adbd    : usb.cpp:261 UsbFfs-monitor thread spawned
+[    5.743727] gts9 adbd[805]: 09-27 14:42:57.763   805   972 I adbd    : usb.cpp:300 USB event: FUNCTIONFS_BIND
+[    5.771219] gts9 gts9-usb-acm[807]: gts9-usb-acm: bound to a600000.usb
+[    5.804625] gts9 gts9-usb-acm[807]: gts9-usb-acm: usb0 up with 169.254.42.1/16
+[    5.843704] gts9 gts9-usb-acm[1010]: GTS9_DEBIAN_STAGE=usb-acm-ready
+[    6.079922] gts9 adbd[805]: 09-27 14:42:58.100   805   972 I adbd    : usb.cpp:300 USB event: FUNCTIONFS_ENABLE
+[    6.080351] gts9 adbd[805]: 09-27 14:42:58.100   805  1042 I adbd    : usb.cpp:407 UsbFfs-worker thread spawned
+[    6.330271] gts9 adbd[805]: 09-27 14:42:58.348   805   805 I adbd    : adb.cpp:173 UsbFfs: already offline
+[    6.330271] gts9 adbd[805]: 09-27 14:42:58.348   805   805 I adbd    : adb.cpp:395 authentication not required
+[    6.638469] gts9 systemd[1]: Finished gts9-usb-acm.service - X710 USB debug link (NCM network for ssh; no serial port).
+[   18.654786] gts9 adbd[805]: 09-27 14:43:10.674   805  1313 I adbd    : transport.cpp:335 host-16: read thread spawning
+[   18.654786] gts9 adbd[805]: 09-27 14:43:10.674   805  1314 I adbd    : transport.cpp:307 host-16: write thread spawning
+[   18.656287] gts9 adbd[805]: 09-27 14:43:10.676   805   805 I adbd    : adb.cpp:173 host-16: already offline
+[   18.656287] gts9 adbd[805]: 09-27 14:43:10.676   805   805 I adbd    : adb.cpp:395 authentication not required

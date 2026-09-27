@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/mnt/c/Windows/System32/OpenSSH/ssh.exe",
+    "-i",
+    "C:\\Users\\ms\\.ssh\\gts9-test232\\key",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=NUL",
+    "-o",
+    "ConnectTimeout=8",
+    "root@169.254.42.1",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; journalctl -b -u gts9-adbd -u gts9-usb-acm -u gts9-usb-adb-prepare --no-pager -o short-monotonic"
+  ],
+  "status": 255,
+  "utc": "2026-09-27T06:43:07.035829+00:00"
+}

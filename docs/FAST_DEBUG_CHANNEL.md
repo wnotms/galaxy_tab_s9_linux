@@ -40,8 +40,10 @@ UDC still disconnects the shared cable; USB ADB cannot survive a controller or
 kernel-wide hang and is not a CPU-stall fix.
 
 The daemon supplies Microsoft OS WINUSB descriptors and the gadget enables
-their request handling. Windows driver binding must still be physically
-verified. Native USB use, once enumerated:
+their request handling. Windows driver binding, native USB shell/file transfer, and preservation of
+an existing SSH session when adbd stops are physically verified in
+[test-232](../reference/boot-tests/test-232-usb-adb-coexistence/RESULTS.md).
+Native USB use:
 
 ```sh
 adb devices -l
