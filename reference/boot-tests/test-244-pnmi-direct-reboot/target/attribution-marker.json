@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf '<0>GTS9_PNMI_TARGET boot_id=fd1a8ab6-85e9-40fb-b321-207faeaaa525 notes_sha256=4ece2fa04ea7b7dd19438671e24ff079bcb56114517664bc419ee016fc490373 la=0 cal=0\n' > /dev/kmsg"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:26:37.538875+00:00"
+}

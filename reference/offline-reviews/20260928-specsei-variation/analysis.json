@@ -1,0 +1,100 @@
+{
+  "target_boot_id": "fd1a8ab6-85e9-40fb-b321-207faeaaa525",
+  "upstream_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "inputs": {
+    "reference/boot-tests/test-244-pnmi-direct-reboot/target/journal.txt": "acb0c50c5dbc67de2a90bf4266715b5b9d05a0b36be7af62ea9161fc46bc4dd7",
+    ".work/build/linux-src-gts9wifi/arch/arm64/kernel/cpufeature.c": "de68ef6379339d37b29c5b512b2b12e3a98d80d70fef34b3f3b5ea47ffac4eb1",
+    ".work/build/linux-src-gts9wifi/arch/arm64/tools/sysreg": "4a447db8b707c956db56430298e2e7ddfbdd23dec6d3991c1fa8affd9ede6058"
+  },
+  "rows": [
+    {
+      "register": "ID_AA64MMFR1_EL1",
+      "cpu": 3,
+      "boot_value": "0x11212122",
+      "secondary_value": "0x10212122",
+      "xor": "0x1000000",
+      "only_field": "SpecSEI",
+      "shift": 24,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_AA64MMFR1_EL1",
+      "cpu": 4,
+      "boot_value": "0x11212122",
+      "secondary_value": "0x10212122",
+      "xor": "0x1000000",
+      "only_field": "SpecSEI",
+      "shift": 24,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_AA64MMFR1_EL1",
+      "cpu": 5,
+      "boot_value": "0x11212122",
+      "secondary_value": "0x10212122",
+      "xor": "0x1000000",
+      "only_field": "SpecSEI",
+      "shift": 24,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_MMFR4_EL1",
+      "cpu": 5,
+      "boot_value": "0x1021111",
+      "secondary_value": "0x1021110",
+      "xor": "0x1",
+      "only_field": "SpecSEI",
+      "shift": 0,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_AA64MMFR1_EL1",
+      "cpu": 6,
+      "boot_value": "0x11212122",
+      "secondary_value": "0x10212122",
+      "xor": "0x1000000",
+      "only_field": "SpecSEI",
+      "shift": 24,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_MMFR4_EL1",
+      "cpu": 6,
+      "boot_value": "0x1021111",
+      "secondary_value": "0x1021110",
+      "xor": "0x1",
+      "only_field": "SpecSEI",
+      "shift": 0,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    },
+    {
+      "register": "ID_AA64MMFR1_EL1",
+      "cpu": 7,
+      "boot_value": "0x11212122",
+      "secondary_value": "0x10212122",
+      "xor": "0x1000000",
+      "only_field": "SpecSEI",
+      "shift": 24,
+      "boot_field": 1,
+      "secondary_field": 0,
+      "sanitized_field": 1
+    }
+  ],
+  "policy": "FTR_HIDDEN, FTR_STRICT, FTR_HIGHER_SAFE",
+  "causal_link_to_cpu_failure": "not established",
+  "register_feature_policy_modified": false,
+  "field_bounds_checked_in_each_register_block": true,
+  "sanitized_value_is_source_policy_inference_not_direct_runtime_read": true
+}
