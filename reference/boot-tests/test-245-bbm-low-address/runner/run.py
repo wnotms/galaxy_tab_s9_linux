@@ -43,6 +43,7 @@ def run(production=False):
     with stream.open('wb') as out, (p / 'kernel-follow.stderr').open('wb') as err:
         proc = subprocess.Popen(cmd, stdout=out, stderr=err)
         try:
+            time.sleep(1)  # Let the full JSON follower deliver its initial records.
             if not production:
                 subprocess.run([sys.executable, 'out/test245/target_preflight.py'], check=True, timeout=25)
                 identity = json.loads((control.P / 'target/identity.json').read_text())
