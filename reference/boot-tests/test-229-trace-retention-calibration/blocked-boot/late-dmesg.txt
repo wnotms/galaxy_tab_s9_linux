@@ -1,0 +1,1938 @@
+[    0.166232] [      T1] workingset: timestamp_bits=46 (anon: 41) max_order=22 bucket_order=0 (anon: 0)
+[    0.166468] [      T1] fuse: init (API version 7.45)
+[    0.176563] [      T1] Key type asymmetric registered
+[    0.176566] [      T1] Asymmetric key parser 'x509' registered
+[    0.176582] [      T1] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 237)
+[    0.176594] [      T1] io scheduler mq-deadline registered
+[    0.176596] [      T1] io scheduler kyber registered
+[    0.176601] [      T1] io scheduler bfq registered
+[    0.179742] [      T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+[    0.179763] [      T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    0.179770] [      T1] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    0.180548] [      T1] gts9wifi-sec-kernel-log sec-kernel-log: ring already owned by the early console; leaving it alone
+[    0.180958] [     T75] vreg_l1b_1p8: Setting 1800000-1800000uV
+[    0.180978] [     T13] vreg_l1c_1p1: Setting 1104000-1104000uV
+[    0.181051] [     T90] vreg_s2g_1p012: Setting 1016000-1016000uV
+[    0.181064] [     T89] vreg_s4e_0p952: Setting 952000-952000uV
+[    0.181256] [     T90] vreg_s4g_1p352: Setting 1352000-1352000uV
+[    0.181256] [     T89] vreg_l1e_0p88: Setting 880000-880000uV
+[    0.181345] [     T89] vreg_l3e_1p2: Setting 1200000-1200000uV
+[    0.181358] [     T90] vreg_s5g_0p966: Setting 968000-968000uV
+[    0.181369] [     T75] vreg_l4b_1p8: Setting 1800000-1800000uV
+[    0.181452] [     T90] vreg_s6g_1p904: Setting 1904000-1904000uV
+[    0.181473] [     T75] vreg_l5b_3p104: Setting 3104000-3104000uV
+[    0.181567] [     T90] vreg_l3g_1p2: Setting 1200000-1200000uV
+[    0.181582] [     T75] vreg_l8b_1p8: Setting 1800000-3000000uV
+[    0.181710] [     T75] vreg_l9b_2p9: Setting 2960000-3000000uV
+[    0.181725] [     T90] vreg_l1g_1p2: Setting 1200000-1200000uV
+[    0.181802] [     T75] vreg_l10b_1p8: Setting 1800000-1800000uV
+[    0.181865] [      T1] printk: legacy console [ttynull0] enabled
+[    0.182272] [     T75] vreg_l11b_1p1: Setting 1104000-1104000uV
+[    0.182384] [     T75] vreg_l12b_1p8: Setting 1800000-1800000uV
+[    0.182483] [     T75] vreg_l13b_3p0: Setting 3000000-3000000uV
+[    0.182589] [     T75] vreg_l14b_3p3: Setting 3304000-3304000uV
+[    0.182708] [     T75] vreg_l15b_1p8: Setting 1800000-1800000uV
+[    0.182800] [     T75] vreg_l16b_3p0: Setting 3000000-3000000uV
+[    0.182915] [     T75] vreg_l17b_2p5: Setting 2504000-2504000uV
+[    0.184519] [      T1] brd: module loaded
+[    0.189844] [      T1] loop: module loaded
+[    0.190023] [      T1] spmi_pmic_arb c400000.spmi: PMIC arbiter version v7 (0x70000001)
+[    0.196510] [      T1] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+[    0.196511] [      T1] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+[    0.196599] [      T1] MACsec IEEE 802.1AE
+[    0.196677] [      T1] tun: Universal TUN/TAP device driver, 1.6
+[    0.196742] [      T1] CAN device driver interface
+[    0.196744] [      T1] PPP generic driver version 2.4.2
+[    0.196784] [      T1] PPP BSD Compression module registered
+[    0.196786] [      T1] PPP Deflate Compression module registered
+[    0.196787] [      T1] PPP MPPE Compression module registered
+[    0.196790] [      T1] NET: Registered PF_PPPOX protocol family
+[    0.196791] [      T1] PPTP driver version 0.8.5
+[    0.196820] [      T1] usbcore: registered new interface driver rtl8150
+[    0.196825] [      T1] usbcore: registered new device driver r8152-cfgselector
+[    0.196832] [      T1] usbcore: registered new interface driver r8152
+[    0.196838] [      T1] usbcore: registered new interface driver asix
+[    0.196844] [      T1] usbcore: registered new interface driver ax88179_178a
+[    0.196854] [      T1] usbcore: registered new interface driver cdc_ether
+[    0.196860] [      T1] usbcore: registered new interface driver cdc_eem
+[    0.196869] [      T1] usbcore: registered new interface driver cdc_ncm
+[    0.196875] [      T1] usbcore: registered new interface driver aqc111
+[    0.196880] [      T1] usbcore: registered new interface driver r8153_ecm
+[    0.197138] [      T1] usbcore: registered new interface driver cdc_acm
+[    0.197140] [      T1] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    0.197202] [      T1] usbcore: registered new interface driver uas
+[    0.197210] [      T1] usbcore: registered new interface driver usb-storage
+[    0.197275] [      T1] dummy_hcd dummy_hcd.0: USB Host+Gadget Emulator, driver 02 May 2005
+[    0.197279] [      T1] dummy_hcd dummy_hcd.0: Dummy host controller
+[    0.197282] [      T1] dummy_hcd dummy_hcd.0: new USB bus registered, assigned bus number 1
+[    0.197313] [      T1] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 7.02
+[    0.197315] [      T1] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.197316] [      T1] usb usb1: Product: Dummy host controller
+[    0.197318] [      T1] usb usb1: Manufacturer: Linux 7.2.0-rc3-gts9wifi-dirty dummy_hcd
+[    0.197319] [      T1] usb usb1: SerialNumber: dummy_hcd.0
+[    0.197451] [      T1] hub 1-0:1.0: USB hub found
+[    0.197455] [      T1] hub 1-0:1.0: 1 port detected
+[    0.197588] [      T1] usbcore: registered new interface driver xpad
+[    0.197967] [      T1] rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: registered as rtc0
+[    0.197998] [      T1] rtc-pm8xxx c400000.spmi:pmic@0:rtc@6100: setting system clock to 1970-01-01T23:54:45 UTC (86085)
+[    0.198011] [      T1] i2c_dev: i2c /dev entries driver
+[    0.198060] [      T1] usbcore: registered new interface driver uvcvideo
+[    0.198389] [      T1] input: pmic_pwrkey as /devices/platform/soc@0/c400000.spmi/spmi-0/0-00/c400000.spmi:pmic@0:pon@1300/c400000.spmi:pmic@0:pon@1300:pwrkey/input/input0
+[    0.198698] [      T1] input: pmic_resin as /devices/platform/soc@0/c400000.spmi/spmi-0/0-00/c400000.spmi:pmic@0:pon@1300/c400000.spmi:pmic@0:pon@1300:resin/input/input1
+[    0.202117] [      T1] device-mapper: uevent: version 1.0.3
+[    0.202191] [      T1] device-mapper: ioctl: 4.50.0-ioctl (2025-04-28) initialised: dm-devel@lists.linux.dev
+[    0.202804] [      T1] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+[    0.202855] [      T1] clocksource: arch_mmio_counter: mask: 0xffffffffffffff max_cycles: 0x46d987e47, max_idle_ns: 440795202767 ns
+[    0.202858] [      T1] arch-timer-mmio 17420000.timer: mmio timer running at 19.20MHz (virt)
+[    0.202916] [      T1] hid: raw HID events driver (C) Jiri Kosina
+[    0.203186] [      T1] usbcore: registered new interface driver usbhid
+[    0.203187] [      T1] usbhid: USB HID core driver
+[    0.205216] [      T1] hw perfevents: enabled with armv9_cortex_a510 PMU driver, 7 (0,8000003f) counters available
+[    0.208390] [      T1] hw perfevents: enabled with armv9_cortex_a710 PMU driver, 7 (0,8000003f) counters available
+[    0.210181] [      T1] hw perfevents: enabled with armv9_cortex_a715 PMU driver, 7 (0,8000003f) counters available
+[    0.211739] [      T1] hw perfevents: enabled with armv9_cortex_x3 PMU driver, 7 (0,8000003f) counters available
+[    0.211904] [     T76] watchdog: NMI not fully supported
+[    0.211905] [     T76] watchdog: Hard watchdog permanently disabled
+[    0.212030] [      T1] gnss: GNSS driver registered with major 507
+[    0.212390] [      T1] usbcore: registered new interface driver snd-usb-audio
+[    0.212454] [      T1] GACT probability NOT on
+[    0.212457] [      T1] Mirror/redirect action on
+[    0.212469] [      T1] u32 classifier
+[    0.212470] [      T1]     input device check on
+[    0.212471] [      T1]     Actions configured
+[    0.212635] [      T1] nf_conntrack_irc: The irc conntrack helper is scheduled for removal.
+                          Please contact the netfilter-devel mailing list if you still need this.
+[    0.212641] [      T1] The pptp conntrack helper is scheduled for removal.
+                          Please contact the netfilter-devel mailing list if you still need this.
+[    0.212748] [      T1] xt_time: kernel timezone is -0000
+[    0.212777] [      T1] ipip: IPv4 and MPLS over IPv4 tunneling driver
+[    0.212846] [      T1] gre: GRE over IPv4 demultiplexer driver
+[    0.212847] [      T1] ip_gre: GRE over IPv4 tunneling driver
+[    0.212947] [      T1] IPv4 over IPsec tunneling driver
+[    0.212982] [      T1] Initializing XFRM netlink socket
+[    0.212985] [      T1] IPsec XFRM device driver
+[    0.213004] [      T1] NET: Registered PF_INET6 protocol family
+[    0.214652] [      T1] Segment Routing with IPv6
+[    0.214656] [      T1] In-situ OAM (IOAM) with IPv6
+[    0.214671] [      T1] mip6: Mobile IPv6
+[    0.214719] [      T1] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    0.214809] [      T1] ip6_gre: GRE over IPv6 tunneling driver
+[    0.214850] [      T1] NET: Registered PF_PACKET protocol family
+[    0.214851] [      T1] PFKEY is deprecated and scheduled to be removed in 2027, please contact the netdev mailing list
+[    0.214853] [      T1] NET: Registered PF_KEY protocol family
+[    0.214861] [      T1] Bridge firewalling registered
+[    0.214862] [      T1] can: controller area network core
+[    0.214872] [      T1] NET: Registered PF_CAN protocol family
+[    0.214873] [      T1] can: raw protocol
+[    0.214874] [      T1] can: broadcast manager protocol
+[    0.214876] [      T1] can: netlink gateway - max_hops=1
+[    0.214883] [      T1] l2tp_core: L2TP core driver, V2.0
+[    0.214885] [      T1] l2tp_ppp: PPPoL2TP kernel driver, V2.0
+[    0.214886] [      T1] 8021q: 802.1Q VLAN Support v1.8
+[    0.214889] [      T1] tipc: Activated (version 2.0.0)
+[    0.214899] [      T1] NET: Registered PF_TIPC protocol family
+[    0.214913] [      T1] tipc: Started in single node mode
+[    0.214924] [      T1] 9pnet: Installing 9P2000 support
+[    0.214941] [      T1] NET: Registered PF_IEEE802154 protocol family
+[    0.214985] [      T1] NET: Registered PF_VSOCK protocol family
+[    0.217158] [      T1] registered taskstats version 1
+[    0.217300] [      T1] Loading compiled-in X.509 certificates
+[    0.218586] [    T112] cryptomgr_probe (112) used greatest stack depth: 15312 bytes left
+[    0.218799] [      T1] Loaded X.509 cert 'Build time autogenerated kernel key: cf4518ccc550b6eb3be867cad0e0dc77350d7c5e'
+[    0.220672] [      T1] page_owner is disabled
+[    0.220700] [      T1] Key type .fscrypt registered
+[    0.220702] [      T1] Key type fscrypt-provisioning registered
+[    0.229082] [     T77] qcom_scm: convention: smc arm 64
+[    0.231706] [     T75] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    0.231739] [     T75] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    0.231783] [     T75] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    0.231790] [     T75] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    0.231795] [     T75] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    0.232755] [     T77] qcom-ice 1d88000.crypto: Found QC Inline Crypto Engine (ICE) v4.0.1
+[    0.232760] [     T77] qcom-ice 1d88000.crypto: QC Hardware Key Manager (HWKM) version v2
+[    0.232793] [     T77] qcom-ice 1d88000.crypto: A supported HWKM is not present. Supporting raw keys only.
+[    0.233024] [     T90] vreg_l3f_0p88: Setting 880000-912000uV
+[    0.233294] [     T77] arm-smmu 3da0000.iommu: probing hardware configuration...
+[    0.233297] [     T77] arm-smmu 3da0000.iommu: SMMUv2 with:
+[    0.233322] [     T77] arm-smmu 3da0000.iommu: 	stage 1 translation
+[    0.233324] [     T77] arm-smmu 3da0000.iommu: 	coherent table walk
+[    0.233325] [     T77] arm-smmu 3da0000.iommu: 	stream matching with 24 register groups
+[    0.233340] [     T77] arm-smmu 3da0000.iommu: 	22 context banks (0 stage-2 only)
+[    0.233357] [     T77] arm-smmu 3da0000.iommu: 	Supported page sizes: 0x61311000
+[    0.233358] [     T77] arm-smmu 3da0000.iommu: 	Stage-1: 48-bit VA -> 36-bit IPA
+[    0.233402] [     T77] arm-smmu 3da0000.iommu: 	preserved 0 boot mappings
+[    0.234642] [     T77] platform 3d00000.gpu: Adding to iommu group 0
+[    0.234702] [     T77] platform 3d6a000.gmu: Adding to iommu group 1
+[    0.236135] [     T77] arm-smmu 15000000.iommu: probing hardware configuration...
+[    0.236138] [     T77] arm-smmu 15000000.iommu: SMMUv2 with:
+[    0.236148] [     T77] arm-smmu 15000000.iommu: 	stage 1 translation
+[    0.236149] [     T77] arm-smmu 15000000.iommu: 	coherent table walk
+[    0.236152] [     T77] arm-smmu 15000000.iommu: 	stream matching with 105 register groups
+[    0.236158] [     T77] arm-smmu 15000000.iommu: 	70 context banks (0 stage-2 only)
+[    0.236789] [     T77] arm-smmu 15000000.iommu: 	Supported page sizes: 0x61311000
+[    0.236791] [     T77] arm-smmu 15000000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
+[    0.236813] [     T77] arm-smmu 15000000.iommu: 	preserved 0 boot mappings
+[    0.238287] [     T77] platform 800000.dma-controller: Adding to iommu group 2
+[    0.238325] [     T77] platform 8c0000.geniqup: Adding to iommu group 3
+[    0.238360] [     T77] platform a00000.dma-controller: Adding to iommu group 4
+[    0.238396] [     T77] platform ac0000.geniqup: Adding to iommu group 5
+[    0.238444] [     T77] platform 1dc4000.dma-controller: Adding to iommu group 6
+[    0.238484] [     T77] platform 1dfa000.crypto: Adding to iommu group 6
+[    0.238513] [     T77] platform 1d84000.ufshc: Adding to iommu group 7
+[    0.238553] [     T77] platform 8804000.mmc: Adding to iommu group 8
+[    0.238602] [     T77] platform aa00000.video-codec: Adding to iommu group 9
+[    0.238638] [     T77] platform acb7000.isp: Adding to iommu group 10
+[    0.238672] [     T77] platform ae00000.display-subsystem: Adding to iommu group 11
+[    0.238706] [     T77] platform a600000.usb: Adding to iommu group 12
+[    0.239900] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb819eb00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.239937] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.239960] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.239995] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81ddc00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240019] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240038] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240070] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb820fb00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240092] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240113] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240155] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8240c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240178] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240199] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240245] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8277a00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240268] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240290] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240327] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82b1200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240350] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240371] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240408] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82e2a00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240432] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240452] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240489] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8316a00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240512] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240533] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240571] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb834aa00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240593] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240613] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.240653] [      C0] arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb837e100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9
+[    0.240675] [      C0] arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00
+[    0.240695] [      C0] arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]
+[    0.247012] [     T77] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /usb-c-sbu-mux
+[    0.247031] [     T77] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    0.247038] [     T77] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/usb@a600000
+[    0.247855] [     T75] sdhci_msm 8804000.mmc: Got CD GPIO
+[    0.248145] [     T77] remoteproc remoteproc0: adsp is available
+[    0.248189] [    T124] remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    0.248192] [    T124] remoteproc remoteproc0: powering up adsp
+[    0.248203] [    T124] remoteproc remoteproc0: Direct firmware load for qcom/sm8550/adsp.mdt failed with error -2
+[    0.248205] [    T124] remoteproc remoteproc0: request_firmware failed: -2
+[    0.249152] [     T77] cpu cpu0: EM: created perf domain
+[    0.252816] [     T77] cpu cpu3: EM: created perf domain
+[    0.262871] [     T77] cpu cpu7: EM: created perf domain
+[    0.267973] [     T77] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/phy@88e8000
+[    0.270321] [     T77] ------------[ cut here ]------------
+[    0.270324] [     T77] disp_cc_mdss_mdp_clk_src: rcg didn't update its configuration.
+[    0.270337] [     T77] WARNING: ../linux-src-gts9wifi/drivers/clk/qcom/clk-rcg2.c:136 at update_config+0xdc/0xf0, CPU#3: kworker/u32:3/77
+[    0.270347] [     T77] Modules linked in:
+[    0.270352] [     T77] CPU: 3 UID: 0 PID: 77 Comm: kworker/u32:3 Tainted: G S                  7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[    0.270356] [     T77] Tainted: [S]=CPU_OUT_OF_SPEC
+[    0.270357] [     T77] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[    0.270359] [     T77] Workqueue: events_unbound deferred_probe_work_func
+[    0.270365] [     T77] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    0.270368] [     T77] pc : update_config+0xdc/0xf0
+[    0.270371] [     T77] lr : update_config+0xd8/0xf0
+[    0.270375] [     T77] sp : ffffffc083a4b990
+[    0.270376] [     T77] x29: ffffffc083a4b9a0 x28: 0000000061c88647 x27: ffffff880c81e800
+[    0.270380] [     T77] x26: ffffffc082f6d000 x25: ffffffc082f6d000 x24: ffffff880cde1810
+[    0.270384] [     T77] x23: ffffffc0822800a0 x22: ffffffc081ce7638 x21: 0000000000000001
+[    0.270387] [     T77] x20: ffffffc0822800a0 x19: ffffffc082e0c658 x18: ffffffc0839c10a0
+[    0.270390] [     T77] x17: 00000000c5bb3f91 x16: 69665f666f00746e x15: 0000000000000003
+[    0.270394] [     T77] x14: ffffffc082cc18f0 x13: 0000000000000fff x12: 0000000000000003
+[    0.270397] [     T77] x11: 0000000000000003 x10: 0000000000000002 x9 : 965dfd9329424900
+[    0.270401] [     T77] x8 : 965dfd9329424900 x7 : 6470752074276e64 x6 : 696420676372203a
+[    0.270404] [     T77] x5 : ffffffc082f28bc6 x4 : ffffffc0822971b3 x3 : 0000000000000000
+[    0.270408] [     T77] x2 : 0000000000000000 x1 : ffffffc083a4b760 x0 : 00000000fffffff0
+[    0.270411] [     T77] Call trace:
+[    0.270413] [     T77]  update_config+0xdc/0xf0 (P)
+[    0.270417] [     T77]  clk_rcg2_shared_init+0x58/0x90
+[    0.270421] [     T77]  __clk_register+0x418/0xacc
+[    0.270425] [     T77]  devm_clk_hw_register+0x7c/0xc8
+[    0.270430] [     T77]  devm_clk_register_regmap+0x58/0x6c
+[    0.270432] [     T77]  qcom_cc_really_probe+0x334/0x3dc
+[    0.270434] [     T77]  disp_cc_sm8550_probe+0x1d4/0x204
+[    0.270436] [     T77]  platform_probe+0x60/0xa4
+[    0.270438] [     T77]  really_probe+0x14c/0x2f0
+[    0.270441] [     T77]  __driver_probe_device+0xd4/0x134
+[    0.270445] [     T77]  driver_probe_device+0x48/0x218
+[    0.270448] [     T77]  __device_attach_driver+0x144/0x194
+[    0.270451] [     T77]  bus_for_each_drv+0xf8/0x154
+[    0.270453] [     T77]  __device_attach+0x104/0x194
+[    0.270456] [     T77]  device_initial_probe+0x3c/0x5c
+[    0.270459] [     T77]  bus_probe_device+0x90/0x100
+[    0.270462] [     T77]  deferred_probe_work_func+0x80/0xe0
+[    0.270465] [     T77]  process_scheduled_works+0x18c/0x4d0
+[    0.270470] [     T77]  worker_thread+0x1f8/0x2e8
+[    0.270473] [     T77]  kthread+0x108/0x134
+[    0.270475] [     T77]  ret_from_fork+0x10/0x20
+[    0.270480] [     T77] ---[ end trace 0000000000000000 ]---
+[    0.271003] [     T77] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    0.271849] [     T77] /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector: Fixed dependency cycle(s) with /soc@0/geniqup@8c0000/i2c@890000/redriver@28
+[    0.271889] [     T77] /soc@0/geniqup@8c0000/i2c@890000/redriver@28: Fixed dependency cycle(s) with /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector
+[    0.272650] [     T77] 898000.serial: ttyHS1 at MMIO 0x898000 (irq = 182, base_baud = 0) is a MSM
+[    0.272688] [     T77] serial serial0: tty port ttyHS1 registered
+[    0.273737] [     T77] input: Book Cover Keyboard Slim (EF-DX710) as /devices/platform/soc@0/8c0000.geniqup/89c000.i2c/i2c-5/5-002a/input/input2
+[    0.278305] [     T77] ptn3222 8-004f: repeater redriver: 10 override cells
+[    0.279195] [      C2] cryptomgr_probe (112): highest shadow stack usage: 112 bytes
+[    0.279889] [     T75] mmc1: SDHCI controller on 8804000.mmc [8804000.mmc] using ADMA 64-bit
+[    0.280741] [     T89] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    0.280815] [     T89] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    0.280935] [     T89] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    0.280957] [     T89] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    0.280969] [     T89] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    0.281093] [     T77] adreno 3d00000.gpu: supply vdd not found, using dummy regulator
+[    0.281157] [     T77] adreno 3d00000.gpu: supply vddcx not found, using dummy regulator
+[    0.305129] [     T77] [drm] Initialized msm 1.13.0 for 3d00000.gpu on minor 0
+[    0.332876] [     T77] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    0.334074] [     T77] /soc@0/display-subsystem@ae00000/display-controller@ae01000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    0.334117] [     T77] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    0.334127] [     T77] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/display-controller@ae01000
+[    0.334255] [     T77] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    0.340933] [    T154] irq/196-ss_phy_ (154) used greatest stack depth: 15144 bytes left
+[    0.340945] [    T153] irq/195-dm_hs_p (153) used greatest stack depth: 14848 bytes left
+[    0.341172] [    T151] irq/194-dp_hs_p (151) used greatest stack depth: 14832 bytes left
+[    0.341888] [     T77] ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+[    0.341920] [     T77] ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find vccq2-supply regulator, assuming enabled
+[    0.356611] [     T77] scsi host0: ufshcd
+[    0.399224] [     T77] /soc@0/display-subsystem@ae00000/dsi@ae94000: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0
+[    0.399251] [     T77] /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: Fixed dependency cycle(s) with /soc@0/display-subsystem@ae00000/dsi@ae94000
+[    0.399379] [     T75] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    0.399422] [     T75] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    0.399514] [     T75] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    0.399523] [     T75] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    0.399525] [     T77] panel-samsung-ana38407 ae94000.dsi.0: X710 revision-D init, fixed 120 Hz, DSC 8 bpp
+[    0.399528] [     T75] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    0.399569] [     T77] msm_dpu ae01000.display-controller: bound ae94000.dsi (ops dsi_ops)
+[    0.399645] [     T89] scsi 0:0:0:49488: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.401302] [     T89] scsi 0:0:0:49476: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.402079] [     T77] [drm:dpu_kms_hw_init:1168] dpu hardware revision:0x90000000
+[    0.402877] [     T89] scsi 0:0:0:49456: Well-known LUN    SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.404561] [     T77] [drm] Initialized msm-kms 1.13.0 for ae01000.display-controller on minor 1
+[    0.404571] [     T77] msm_dpu ae01000.display-controller: no GPU device was found
+[    0.404796] [     T89] scsi 0:0:0:0: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.406621] [     T90] sd 0:0:0:0: [sda] 62275584 4096-byte logical blocks: (255 GB/238 GiB)
+[    0.406626] [     T89] scsi 0:0:0:1: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.406692] [     T90] sd 0:0:0:0: [sda] Write Protect is off
+[    0.406698] [     T90] sd 0:0:0:0: [sda] Mode Sense: 00 32 00 10
+[    0.407384] [     T90] sd 0:0:0:0: [sda] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    0.407502] [     T90] sd 0:0:0:0: [sda] Preferred minimum I/O size 4096 bytes
+[    0.407504] [     T90] sd 0:0:0:0: [sda] Optimal transfer size 524288 bytes
+[    0.408624] [     T89] scsi 0:0:0:2: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.408686] [     T12] sd 0:0:0:1: [sdb] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+[    0.408735] [     T12] sd 0:0:0:1: [sdb] Write Protect is on
+[    0.408737] [     T12] sd 0:0:0:1: [sdb] Mode Sense: 00 32 00 90
+[    0.408824] [     T12] sd 0:0:0:1: [sdb] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    0.408863] [     T12] sd 0:0:0:1: [sdb] Preferred minimum I/O size 4096 bytes
+[    0.408865] [     T12] sd 0:0:0:1: [sdb] Optimal transfer size 524288 bytes
+[    0.410375] [     T89] scsi 0:0:0:3: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.410419] [     T13] sd 0:0:0:2: [sdc] 5120 4096-byte logical blocks: (21.0 MB/20.0 MiB)
+[    0.410486] [     T13] sd 0:0:0:2: [sdc] Write Protect is off
+[    0.410489] [     T13] sd 0:0:0:2: [sdc] Mode Sense: 00 32 00 10
+[    0.410600] [     T13] sd 0:0:0:2: [sdc] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    0.410650] [     T13] sd 0:0:0:2: [sdc] Preferred minimum I/O size 4096 bytes
+[    0.410651] [     T13] sd 0:0:0:2: [sdc] Optimal transfer size 524288 bytes
+[    0.411809] [     T89] scsi 0:0:0:4: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.411869] [     T75] sd 0:0:0:3: [sdd] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+[    0.411939] [     T75] sd 0:0:0:3: [sdd] Write Protect is off
+[    0.411941] [     T75] sd 0:0:0:3: [sdd] Mode Sense: 00 32 00 10
+[    0.412079] [     T75] sd 0:0:0:3: [sdd] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    0.412148] [     T75] sd 0:0:0:3: [sdd] Preferred minimum I/O size 4096 bytes
+[    0.412150] [     T75] sd 0:0:0:3: [sdd] Optimal transfer size 524288 bytes
+[    0.413255] [     T89] scsi 0:0:0:5: Direct-Access     SAMSUNG  KLUEG4RHHD-B0G1  0011 PQ: 0 ANSI: 6
+[    0.413986] [    T183] sd 0:0:0:4: [sde] 163840 4096-byte logical blocks: (671 MB/640 MiB)
+[    0.414155] [    T183] sd 0:0:0:4: [sde] Write Protect is on
+[    0.414166] [    T183] sd 0:0:0:4: [sde] Mode Sense: 00 32 00 90
+[    0.414495] [    T183] sd 0:0:0:4: [sde] Write cache: disabled, read cache: enabled, supports DPO and FUA
+[    0.414567] [    T183] sd 0:0:0:4: [sde] Preferred minimum I/O size 4096 bytes
+[    0.414571] [    T183] sd 0:0:0:4: [sde] Optimal transfer size 524288 bytes
+[    0.415088] [     T89] sd 0:0:0:5: [sdf] 8192 4096-byte logical blocks: (33.6 MB/32.0 MiB)
+[    0.415137] [     T89] sd 0:0:0:5: [sdf] Write Protect is off
+[    0.415138] [     T89] sd 0:0:0:5: [sdf] Mode Sense: 00 32 00 10
+[    0.415260] [     T89] sd 0:0:0:5: [sdf] Write cache: enabled, read cache: enabled, supports DPO and FUA
+[    0.415312] [     T89] sd 0:0:0:5: [sdf] Preferred minimum I/O size 4096 bytes
+[    0.415313] [     T89] sd 0:0:0:5: [sdf] Optimal transfer size 524288 bytes
+[    0.442798] [     T12]  sdb: sdb1 sdb2 sdb3 sdb4
+[    0.443099] [     T12] sd 0:0:0:1: [sdb] Attached SCSI disk
+[    0.449417] [     T33] mmc1: new UHS-I speed SDR104 SDXC card at address 13ab
+[    0.450278] [     T33] mmcblk1: mmc1:13ab SE128 115 GiB
+[    0.456683] [     T13]  sdc: sdc1 sdc2 sdc3
+[    0.456795] [     T89]  sdf: sdf1 sdf2
+[    0.456851] [     T75]  sdd: sdd1 sdd2 sdd3 sdd4
+[    0.456864] [    T183]  sde: sde1 sde2 sde3 sde4 sde5 sde6 sde7 sde8 sde9 sde10 sde11 sde12 sde13 sde14 sde15 sde16 sde17 sde18 sde19 sde20 sde21 sde22 sde23 sde24 sde25 sde26 sde27 sde28 sde29 sde30 sde31 sde32 sde33 sde34 sde35 sde36 sde37 sde38
+[    0.456892] [     T89] sd 0:0:0:5: [sdf] Attached SCSI disk
+[    0.456912] [     T13] sd 0:0:0:2: [sdc] Attached SCSI disk
+[    0.457069] [     T75] sd 0:0:0:3: [sdd] Attached SCSI disk
+[    0.457104] [     T90]  sda: sda1 sda2 sda3 sda4 sda5 sda6 sda7 sda8 sda9 sda10 sda11 sda12 sda13 sda14 sda15 sda16 sda17 sda18 sda19 sda20 sda21 sda22 sda23 sda24 sda25 sda26 sda27 sda28 sda29 sda30 sda31 sda32 sda33 sda34
+[    0.457295] [     T33]  mmcblk1: p1
+[    0.458098] [    T183] sd 0:0:0:4: [sde] Attached SCSI disk
+[    0.458172] [     T90] sd 0:0:0:0: [sda] Attached SCSI disk
+[    0.491160] [     T39] samsung-pogo-keyboard 5-002a: application-entry reset: BOOT0 low, NRST 2 ms low then high, 150 ms settle, rail on
+[    0.491183] [     T39] samsung-pogo-keyboard 5-002a: keyboard powered; DATA IRQ armed, waiting for model packet
+[    0.547359] [     T77] msm_dsi_host_cmd_rx:Invalid response cmd
+[    0.547666] [     T77] msm_dsi_host_cmd_rx:Invalid response cmd
+[    0.548012] [     T77] msm_dsi_host_cmd_rx:Invalid response cmd
+[    0.548030] [     T77] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 00 00 00
+[    0.548781] [     T77] msm_dsi_host_cmd_rx:Invalid response cmd
+[    0.549087] [     T77] panel-samsung-ana38407 ae94000.dsi.0: failed to read panel cell id: 0
+[    0.589888] [     T77] panel-samsung-ana38407 ae94000.dsi.0: panel id 00 00 00, expected 80 00 04: the panel will stay dark until a suspend/resume re-initialises the DSI host
+[    0.611762] [     T77] Console: switching to colour frame buffer device 160x50
+[    0.611787] [     T77] fb0: sys_imageblit: framebuffer is not in virtual address space.
+[    0.629127] [    T136] samsung-pogo-keyboard 5-002a: MCU model 0x1 hw 0 firmware 1.4 mode 1
+[    0.655805] [     T77] msm_dpu ae01000.display-controller: [drm] fb0: msm-kmsdrmfb frame buffer device
+[    0.665609] [     T77] ptn3222 8-004f: applied 5 register overrides
+[    0.694155] [    T183] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    0.694197] [    T183] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    0.694259] [    T183] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    0.694270] [    T183] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    0.694277] [    T183] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    0.694365] [      T1] input: gpio-keys as /devices/platform/gpio-keys/input/input3
+[    0.694735] [      T1] clk: Not disabling unused clocks
+[    0.694737] [      T1] PM: genpd: Not disabling unused power domains
+[    0.694757] [      T1] ALSA device list:
+[    0.694759] [      T1]   No soundcards found.
+[    0.702560] [      T1] Freeing unused kernel memory: 1472K
+[    0.702655] [      T1] Run /init as init process
+[    0.702658] [      T1]   with arguments:
+[    0.702660] [      T1]     /init
+[    0.702662] [      T1]   with environment:
+[    0.702664] [      T1]     HOME=/
+[    0.702667] [      T1]     TERM=linux
+[    0.702669] [      T1]     gts9_display_recover=1
+[    0.702671] [      T1]     gts9_rootfs=/dev/mmcblk1p1
+[    0.702673] [      T1]     sapa=0
+[    0.703309] [     T77] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    0.703397] [     T77] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    0.703531] [     T77] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    0.703558] [     T77] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    0.703573] [     T77] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    0.704477] [    T200] mkdir (200) used greatest stack depth: 13904 bytes left
+[    0.705359] [    T201] grep (201) used greatest stack depth: 13088 bytes left
+[    0.712623] [    T206] mount (206) used greatest stack depth: 12864 bytes left
+[    0.751171] [      C7] mkdir (200): highest shadow stack usage: 168 bytes
+[    0.751179] [      C0] mount (202): highest shadow stack usage: 192 bytes
+[    0.751193] [      C5] grep (205): highest shadow stack usage: 232 bytes
+[    0.763171] [      C2] mount (206): highest shadow stack usage: 256 bytes
+[    0.778293] [    T309] EXT4-fs (sda5): mounted filesystem 5872535b-2e01-5cb9-9bfe-bbd5ddcedf82 ro without journal. Quota mode: none.
+[    0.778392] [    T309] mount (309) used greatest stack depth: 12000 bytes left
+[    0.781498] [    T316] EXT4-fs (sda5): unmounting filesystem 5872535b-2e01-5cb9-9bfe-bbd5ddcedf82.
+[    0.781753] [      T1] gts9-minimal: rtc-offset: status=applied source=persist/time/ats_2 offset_ms=1790396967618 raw_ms=86086000 realtime_epoch=1790483053
+[    0.781891] [      T1] gts9-minimal: rtc-offset: helper_rc=0
+[    0.783252] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=kernel-userspace
+[    0.790432] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=waiting-root
+[    0.790614] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=root-found
+[    0.791075] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=mounting-root
+[    0.831170] [      C7] mount (309): highest shadow stack usage: 328 bytes
+[    0.912543] [    T338] EXT4-fs (mmcblk1p1): mounted filesystem 851819a7-0d96-4217-b64a-aeeee5d8be61 r/w with ordered data mode. Quota mode: none.
+[    0.912882] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=root-mounted
+[    0.916943] [      T1] gts9-minimal: GTS9_MINIMAL_RECORD=/newroot/var/log/gts9-minimal-last-boot
+[    0.963578] [      T1] gts9-minimal: GTS9_MINIMAL_STAGE=init-found
+[    0.983175] [      C4] mount (338): highest shadow stack usage: 384 bytes
+[    1.304945] [      T1] systemd[1]: Failed to find module 'autofs4'
+[    1.335281] [      T1] systemd[1]: systemd 257.13-1~deb13u1 running in system mode (+PAM +AUDIT +SELINUX +APPARMOR +IMA +IPE +SMACK +SECCOMP +GCRYPT -GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF -XKBCOMMON -UTMP +SYSVINIT +LIBARCHIVE)
+[    1.335289] [      T1] systemd[1]: Detected virtualization vm-other.
+[    1.335296] [      T1] systemd[1]: Detected architecture arm64.
+[    1.340472] [      T1] systemd[1]: Hostname set to <gts9>.
+[    1.465513] [      T1] systemd[1]: bpf-restrict-fs: BPF LSM hook not enabled in the kernel, BPF LSM not supported.
+[    1.492221] [    T380] systemd-rc-loca (380) used greatest stack depth: 11648 bytes left
+[    1.495769] [    T377] systemd-getty-g (377) used greatest stack depth: 11504 bytes left
+[    1.555162] [      C7] systemd-debug-g (375): highest shadow stack usage: 392 bytes
+[    1.555168] [      C7] systemd-gpt-aut (378): highest shadow stack usage: 408 bytes
+[    1.579337] [      T1] systemd[1]: Configuration file /usr/lib/systemd/system/gts9-watchdog-debug.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.580356] [      T1] systemd[1]: Configuration file /etc/systemd/system/gts9-prev-boot-evidence.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.584001] [      T1] systemd[1]: Configuration file /usr/lib/systemd/system/gts9-kmsg-console.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.584932] [      T1] systemd[1]: Configuration file /usr/lib/systemd/system/gts9-dpu-flight.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.588462] [      T1] systemd[1]: Configuration file /usr/lib/systemd/system/gts9-adbd.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway.
+[    1.631040] [      T1] systemd[1]: Queued start job for default target graphical.target.
+[    1.653630] [      T1] systemd[1]: Created slice system-getty.slice - Slice /system/getty.
+[    1.654218] [      T1] systemd[1]: Created slice system-modprobe.slice - Slice /system/modprobe.
+[    1.654686] [      T1] systemd[1]: Created slice system-serial\x2dgetty.slice - Slice /system/serial-getty.
+[    1.655038] [      T1] systemd[1]: Created slice user.slice - User and Session Slice.
+[    1.655179] [      T1] systemd[1]: Started systemd-ask-password-console.path - Dispatch Password Requests to Console Directory Watch.
+[    1.655271] [      T1] systemd[1]: Started systemd-ask-password-wall.path - Forward Password Requests to Wall Directory Watch.
+[    1.655354] [      T1] systemd[1]: Starting of proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point unsupported.
+[    1.655395] [      T1] systemd[1]: Expecting device dev-hvc0.device - /dev/hvc0...
+[    1.655434] [      T1] systemd[1]: Reached target paths.target - Path Units.
+[    1.655459] [      T1] systemd[1]: Reached target remote-fs.target - Remote File Systems.
+[    1.655486] [      T1] systemd[1]: Reached target slices.target - Slice Units.
+[    1.655512] [      T1] systemd[1]: Reached target swap.target - Swaps.
+[    1.657246] [      T1] systemd[1]: Listening on systemd-creds.socket - Credential Encryption/Decryption.
+[    1.657353] [      T1] systemd[1]: Listening on systemd-initctl.socket - initctl Compatibility Named Pipe.
+[    1.657452] [      T1] systemd[1]: Listening on systemd-journald-dev-log.socket - Journal Socket (/dev/log).
+[    1.657546] [      T1] systemd[1]: Listening on systemd-journald.socket - Journal Sockets.
+[    1.657593] [      T1] systemd[1]: systemd-pcrextend.socket - TPM PCR Measurements skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.657605] [      T1] systemd[1]: systemd-pcrlock.socket - Make TPM PCR Policy skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.657666] [      T1] systemd[1]: Listening on systemd-udevd-control.socket - udev Control Socket.
+[    1.657740] [      T1] systemd[1]: Listening on systemd-udevd-kernel.socket - udev Kernel Socket.
+[    1.657853] [      T1] systemd[1]: dev-hugepages.mount - Huge Pages File System skipped, unmet condition check ConditionPathExists=/sys/kernel/mm/hugepages
+[    1.657911] [      T1] systemd[1]: dev-mqueue.mount - POSIX Message Queue File System skipped, unmet condition check ConditionPathExists=/proc/sys/fs/mqueue
+[    1.659483] [      T1] systemd[1]: Mounting run-lock.mount - Legacy Locks Directory /run/lock...
+[    1.660085] [      T1] systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+[    1.661005] [      T1] systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+[    1.662840] [      T1] systemd[1]: Mounting tmp.mount - Temporary Directory /tmp...
+[    1.663894] [      T1] systemd[1]: kmod-static-nodes.service - Create List of Static Device Nodes skipped, unmet condition check ConditionFileNotEmpty=/lib/modules/7.2.0-rc3-gts9wifi-dirty/modules.devname
+[    1.664709] [      T1] systemd[1]: Starting modprobe@configfs.service - Load Kernel Module configfs...
+[    1.665925] [      T1] systemd[1]: Starting modprobe@drm.service - Load Kernel Module drm...
+[    1.667006] [      T1] systemd[1]: Starting modprobe@efi_pstore.service - Load Kernel Module efi_pstore...
+[    1.667755] [      T1] systemd[1]: Starting modprobe@fuse.service - Load Kernel Module fuse...
+[    1.667838] [      T1] systemd[1]: systemd-fsck-root.service - File System Check on Root Device skipped, unmet condition check ConditionPathIsReadWrite=!/
+[    1.667861] [      T1] systemd[1]: systemd-hibernate-clear.service - Clear Stale Hibernate Storage Info skipped, unmet condition check ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67
+[    1.671369] [      T1] systemd[1]: Starting systemd-journald.service - Journal Service...
+[    1.676435] [      T1] systemd[1]: Starting systemd-modules-load.service - Load Kernel Modules...
+[    1.676490] [      T1] systemd[1]: systemd-pcrmachine.service - TPM PCR Machine ID Measurement skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.677266] [      T1] systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+[    1.678016] [      T1] systemd[1]: Starting systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully...
+[    1.678073] [      T1] systemd[1]: systemd-tpm2-setup-early.service - Early TPM SRK Setup skipped, unmet condition check ConditionSecurity=measured-uki
+[    1.678683] [      T1] systemd[1]: Starting systemd-udev-load-credentials.service - Load udev Rules from Credentials...
+[    1.679400] [      T1] systemd[1]: Starting systemd-udev-trigger.service - Coldplug All udev Devices...
+[    1.686948] [      T1] systemd[1]: modprobe@fuse.service: Deactivated successfully.
+[    1.687220] [      T1] systemd[1]: Finished modprobe@fuse.service - Load Kernel Module fuse.
+[    1.687700] [      T1] systemd[1]: modprobe@efi_pstore.service: Deactivated successfully.
+[    1.687878] [      T1] systemd[1]: Finished modprobe@efi_pstore.service - Load Kernel Module efi_pstore.
+[    1.688156] [      T1] systemd[1]: modprobe@configfs.service: Deactivated successfully.
+[    1.688316] [      T1] systemd[1]: Finished modprobe@configfs.service - Load Kernel Module configfs.
+[    1.689355] [      T1] systemd[1]: Mounting sys-fs-fuse-connections.mount - FUSE Control File System...
+[    1.690024] [      T1] systemd[1]: Mounting sys-kernel-config.mount - Kernel Configuration File System...
+[    1.701441] [      T1] systemd[1]: Mounted sys-kernel-debug.mount - Kernel Debug File System.
+[    1.702027] [      T1] systemd[1]: Mounted run-lock.mount - Legacy Locks Directory /run/lock.
+[    1.702526] [      T1] systemd[1]: Mounted sys-kernel-tracing.mount - Kernel Trace File System.
+[    1.702692] [      T1] systemd[1]: Mounted tmp.mount - Temporary Directory /tmp.
+[    1.702955] [      T1] systemd[1]: modprobe@drm.service: Deactivated successfully.
+[    1.703227] [      T1] systemd[1]: Finished modprobe@drm.service - Load Kernel Module drm.
+[    1.703549] [      T1] systemd[1]: Mounted sys-kernel-config.mount - Kernel Configuration File System.
+[    1.706704] [      T1] systemd[1]: Finished systemd-modules-load.service - Load Kernel Modules.
+[    1.708188] [      T1] systemd[1]: Starting systemd-sysctl.service - Apply Kernel Variables...
+[    1.708728] [      T1] systemd[1]: Mounted sys-fs-fuse-connections.mount - FUSE Control File System.
+[    1.709026] [    T399] systemd-journald[399]: Collecting audit messages is disabled.
+[    1.710327] [      T1] systemd[1]: Finished systemd-udev-load-credentials.service - Load udev Rules from Credentials.
+[    1.730364] [      T1] systemd[1]: Finished systemd-tmpfiles-setup-dev-early.service - Create Static Device Nodes in /dev gracefully.
+[    1.732407] [      T1] systemd[1]: Finished systemd-sysctl.service - Apply Kernel Variables.
+[    1.742638] [      T1] systemd[1]: Started systemd-journald.service - Journal Service.
+[    1.755162] [      C3] modprobe (398): highest shadow stack usage: 424 bytes
+[    1.855451] [    T406] udevadm (406) used greatest stack depth: 11408 bytes left
+[    2.155190] [    T408] EXT4-fs (mmcblk1p1): re-mounted 851819a7-0d96-4217-b64a-aeeee5d8be61.
+[    2.193796] [    T399] systemd-journald[399]: Received client request to flush runtime journal.
+[    2.294834] [    T439] gts9-debian: GTS9_DEBIAN_STAGE=systemd-entered
+[    2.294863] [    T439] gts9-debian: GTS9_DEBIAN_STAGE=local-fs
+[    2.307174] [      C3] systemd-random- (434): highest shadow stack usage: 432 bytes
+[    2.849218] [    T523] journal-offline (523) used greatest stack depth: 10976 bytes left
+[    3.195584] [     T91] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    3.198487] [     T91] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    3.198589] [     T91] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    3.198598] [     T91] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    3.198606] [     T91] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    3.219342] [     T91] qcom-pcie 1c00000.pcie: supply vdda not found, using dummy regulator
+[    3.219386] [     T91] qcom-pcie 1c00000.pcie: supply vddpe-3v3 not found, using dummy regulator
+[    3.219454] [     T91] qcom-pcie 1c00000.pcie: host bridge /soc@0/pcie@1c00000 ranges:
+[    3.219464] [     T91] qcom-pcie 1c00000.pcie:       IO 0x0060200000..0x00602fffff -> 0x0000000000
+[    3.219469] [     T91] qcom-pcie 1c00000.pcie:      MEM 0x0060300000..0x0063ffffff -> 0x0060300000
+[    3.382264] [    T543] Bluetooth: Core ver 2.22
+[    3.382288] [    T543] NET: Registered PF_BLUETOOTH protocol family
+[    3.382289] [    T543] Bluetooth: HCI device and connection manager initialized
+[    3.382294] [    T543] Bluetooth: HCI socket layer initialized
+[    3.382296] [    T543] Bluetooth: L2CAP socket layer initialized
+[    3.382299] [    T543] Bluetooth: SCO socket layer initialized
+[    3.400960] [     T91] qcom-pcie 1c00000.pcie: iATU: unroll T, 8 ob, 8 ib, align 4K, limit 1024G
+[    3.405425] [    T659] gts9-power-key: service mode (no arguments)
+[    3.405484] [    T659] gts9-power-key: found the PMIC power key by capability
+[    3.405488] [    T659] gts9-power-key: watching the power key; short press turns the backlight off
+[    3.427557] [    T657] gts9-debian: GTS9_DEBIAN_STAGE=basic
+[    3.446183] [    T658] gts9-panel-recover: first-enable zero panel ID recorded; cycling the framebuffer
+[    3.599165] [     T91] qcom-pcie 1c00000.pcie: PCIe Gen.3 x1 link up
+[    3.599341] [     T91] qcom-pcie 1c00000.pcie: PCI host bridge to bus 0000:00
+[    3.599344] [     T91] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    3.599347] [     T91] pci_bus 0000:00: root bus resource [io  0x0000-0xfffff]
+[    3.599349] [     T91] pci_bus 0000:00: root bus resource [mem 0x60300000-0x63ffffff]
+[    3.599414] [     T91] pci 0000:00:00.0: [17cb:0113] type 01 class 0x060400 PCIe Root Port
+[    3.599430] [     T91] pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x00000fff]
+[    3.599433] [     T91] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[    3.599438] [     T91] pci 0000:00:00.0:   bridge window [io  0x0000-0x0fff]
+[    3.599441] [     T91] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff]
+[    3.599447] [     T91] pci 0000:00:00.0:   bridge window [mem 0x00000000-0x000fffff 64bit pref]
+[    3.599492] [     T91] pci 0000:00:00.0: PME# supported from D0 D3hot D3cold
+[    3.599661] [     T91] OF: /soc@0/pcie@1c00000: iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+[    3.599747] [     T91] pci 0000:00:00.0: Adding to iommu group 13
+[    3.601306] [     T91] pci 0000:01:00.0: [17cb:1103] type 00 class 0x028000 PCIe Endpoint
+[    3.601625] [     T91] pci 0000:01:00.0: BAR 0 [mem 0x00000000-0x001fffff 64bit]
+[    3.602300] [     T91] pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+[    3.602878] [     T91] pci 0000:01:00.0: Adding to iommu group 13
+[    3.607245] [     T91] pci 0000:01:00.0: ASPM: default states L0s L1
+[    3.607398] [     T91] pci 0000:00:00.0: bridge window [io  0x1000-0x0fff] to [bus 01-ff] add_size 1000
+[    3.607401] [     T91] pci 0000:00:00.0: bridge window [mem 0x00100000-0x000fffff 64bit pref] to [bus 01-ff] add_size 200000 add_align 100000
+[    3.607407] [     T91] pci 0000:00:00.0: bridge window [mem 0x60400000-0x605fffff]: assigned
+[    3.607409] [     T91] pci 0000:00:00.0: bridge window [mem 0x60600000-0x607fffff 64bit pref]: assigned
+[    3.607410] [     T91] pci 0000:00:00.0: BAR 0 [mem 0x60300000-0x60300fff]: assigned
+[    3.607413] [     T91] pci 0000:00:00.0: bridge window [io  0x1000-0x1fff]: assigned
+[    3.607416] [     T91] pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x605fffff 64bit]: assigned
+[    3.607507] [     T91] pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+[    3.607515] [     T91] pci 0000:00:00.0:   bridge window [io  0x1000-0x1fff]
+[    3.607517] [     T91] pci 0000:00:00.0:   bridge window [mem 0x60400000-0x605fffff]
+[    3.607519] [     T91] pci 0000:00:00.0:   bridge window [mem 0x60600000-0x607fffff 64bit pref]
+[    3.607522] [     T91] pci_bus 0000:00: resource 4 [io  0x0000-0xfffff]
+[    3.607523] [     T91] pci_bus 0000:00: resource 5 [mem 0x60300000-0x63ffffff]
+[    3.607525] [     T91] pci_bus 0000:01: resource 0 [io  0x1000-0x1fff]
+[    3.607525] [     T91] pci_bus 0000:01: resource 1 [mem 0x60400000-0x605fffff]
+[    3.607526] [     T91] pci_bus 0000:01: resource 2 [mem 0x60600000-0x607fffff 64bit pref]
+[    3.608965] [     T91] pcieport 0000:00:00.0: PME: Signaling with IRQ 204
+[    3.609126] [     T91] pcieport 0000:00:00.0: AER: enabled with IRQ 204
+[    3.656979] [    T725] [drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]
+[    3.801010] [    T725] panel-samsung-ana38407 ae94000.dsi.0: ana38407 panel id: 80 00 04
+[    3.895326] [    T543] Bluetooth: HCI UART driver ver 2.3
+[    3.895337] [    T543] Bluetooth: HCI UART protocol H4 registered
+[    3.895416] [    T543] Bluetooth: HCI UART protocol LL registered
+[    3.895677] [    T543] Bluetooth: HCI UART protocol Broadcom registered
+[    3.895728] [    T543] Bluetooth: HCI UART protocol QCA registered
+[    3.897135] [     T88] Bluetooth: hci0: setting up wcn6855
+[    3.919739] [    T658] gts9-panel-recover: cycle 1 recovered panel ID 80 00 04
+[    3.943598] [    T735] gts9-debian: GTS9_DEBIAN_STAGE=panel-recovered
+[    3.963727] [     T88] Bluetooth: hci0: QCA Product ID   :0x00000013
+[    3.963732] [     T88] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    3.963734] [     T88] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    3.963736] [     T88] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    3.967187] [      C2] sh (725): highest shadow stack usage: 496 bytes
+[    3.971475] [     T88] Bluetooth: hci0: QCA controller version 0x12110201
+[    3.971479] [     T88] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    4.342120] [    T771] EXT4-fs (sda6): mounted filesystem 48c8414c-1b62-58ce-8e64-64f4c9172034 ro without journal. Quota mode: none.
+[    4.351757] [    T785] EXT4-fs (sda6): unmounting filesystem 48c8414c-1b62-58ce-8e64-64f4c9172034.
+[    4.362861] [    T661] configfs-gadget.gts9 gadget.1: HOST MAC 4a:40:27:94:69:9d
+[    4.362872] [    T661] configfs-gadget.gts9 gadget.1: MAC 3e:09:23:37:b8:8a
+[    4.404283] [    T533] cfg80211: Loading compiled-in X.509 certificates for regulatory database
+[    4.404455] [    T533] Loaded X.509 cert 'sforshee: 00b28ddf47aef9cea7'
+[    4.404545] [    T533] Loaded X.509 cert 'wens: 61c038651aabdcf94bd0ac7ff06c7248db18c600'
+[    4.408340] [     T76] cfg80211: loaded regulatory.db is malformed or signature is missing/invalid
+[    4.423933] [    T817] gts9-debian: GTS9_DEBIAN_STAGE=usb-acm-ready
+[    4.741916] [     T88] Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[    4.917502] [     T88] Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[    4.918692] [     T88] Bluetooth: hci0: QCA setup on UART is completed
+[    4.918795] [     T88] Bluetooth: hci0: HFP non-HCI data transport is supported
+[    5.409766] [    T864] Bluetooth: MGMT ver 1.23
+[    5.410114] [     T88] Bluetooth: hci0: setting up wcn6855
+[    5.475850] [     T88] Bluetooth: hci0: QCA Product ID   :0x00000013
+[    5.475857] [     T88] Bluetooth: hci0: QCA SOC Version  :0x400c1211
+[    5.475859] [     T88] Bluetooth: hci0: QCA ROM Version  :0x00000201
+[    5.475861] [     T88] Bluetooth: hci0: QCA Patch Version:0x000038e6
+[    5.484554] [     T88] Bluetooth: hci0: QCA controller version 0x12110201
+[    5.484561] [     T88] Bluetooth: hci0: QCA Downloading qca/wcnhpbtfw21.tlv
+[    5.508048] [    T533] ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x605fffff 64bit]: assigned
+[    5.508181] [    T533] ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
+[    5.509340] [    T533] ath11k_pci 0000:01:00.0: MSI vectors: 32
+[    5.509384] [    T533] ath11k_pci 0000:01:00.0: wcn6855 hw2.1
+[    5.678417] [    T533] mhi mhi0: Requested to power ON
+[    5.678437] [    T533] mhi mhi0: Power on setup success
+[    5.827187] [    T191] mhi mhi0: Wait for device to enter SBL or Mission mode
+[    6.042443] [    T890] gts9-debian: GTS9_DEBIAN_STAGE=tty1-getty-active
+[    6.115507] [     T88] Bluetooth: hci0: QCA Downloading qca/wcnhpnv21g.bin
+[    6.285927] [     T88] Bluetooth: hci0: QCA FW build version: BTFW.HSP.2.1.0-00660-USB_UART_PATCHZ-6
+[    6.285948] [     T88] Bluetooth: hci0: QCA setup on UART is completed
+[    6.285958] [     T88] Bluetooth: hci0: HFP non-HCI data transport is supported
+[    6.422104] [    T656] gts9-bt-addr: set public address 38:8A:06:59:04:E7 after 1s (controller was still registering)
+[    6.445916] [    T943] gts9-debian: GTS9_DEBIAN_STAGE=bluetooth-address-set
+[    6.584854] [     T13] ath11k_pci 0000:01:00.0: chip_id 0x12 chip_family 0xb board_id 0xff soc_id 0x400c1211
+[    6.584861] [     T13] ath11k_pci 0000:01:00.0: fw_version 0x11021302 fw_build_timestamp 2026-02-04 08:10 fw_build_id WLAN.HSP.1.1-04866.5-QCAHSPSWPL_V1_V2_SILICONZ_IOE-1
+[    7.214150] [    T533] ath11k_pci 0000:01:00.0 wlp1s0: renamed from wlan0
+[    7.950048] [   T1109] gts9-debian: GTS9_DEBIAN_STAGE=multi-user
+[   10.976203] [    T533] (udev-worker) (533) used greatest stack depth: 10288 bytes left
+[   20.959157] [    T994] ath11k_pci 0000:01:00.0: failed to receive scan abort comple: timed out
+[   20.959167] [    T994] ath11k_pci 0000:01:00.0: failed to abort scan: -110
+[   29.331149] [      C5] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   29.331185] [      C5] rcu: 	6-...!: (1 GPs behind) idle=ef7c/1/0x4000000000000000 softirq=1174/1174 fqs=331
+[   29.331209] [      C5] rcu: 	(detected by 5, t=5252 jiffies, g=745, q=1708 ncpus=8)
+[   29.331229] [      C5] Sending NMI from CPU 5 to CPUs 6:
+[   30.187619] [    T873] ath11k_pci 0000:01:00.0: firmware crashed: MHI_CB_EE_RDDM
+[   30.687159] [     T13] ath11k_pci 0000:01:00.0: wmi command 12291 timeout
+[   30.687164] [     T13] ath11k_pci 0000:01:00.0: failed to send WMI_SCAN_CHAN_LIST cmd
+[   30.687174] [     T13] ath11k_pci 0000:01:00.0: Uploading coredump
+[   39.332517] [      C5] After 10 seconds, these CPUS still haven't responded to the NMI: 6
+[   39.332521] [      C5] rcu: rcu_preempt kthread starved for 7090 jiffies! g745 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=7
+[   39.332546] [      C5] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[   39.332567] [      C5] rcu: RCU grace-period kthread stack dump:
+[   39.332582] [      C5] task:rcu_preempt     state:R  running task     stack:14016 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+[   39.332590] [      C5] Call trace:
+[   39.332591] [      C5]  __switch_to+0x210/0x358 (T)
+[   39.332600] [      C5]  __schedule+0x658/0xa80
+[   39.332603] [      C5]  schedule+0x58/0xd4
+[   39.332605] [      C5]  schedule_timeout+0x8c/0x110
+[   39.332610] [      C5]  rcu_gp_fqs_loop+0x1c0/0x66c
+[   39.332616] [      C5]  rcu_gp_kthread+0x64/0x124
+[   39.332618] [      C5]  kthread+0x108/0x134
+[   39.332622] [      C5]  ret_from_fork+0x10/0x20
+[   39.332627] [      C5] rcu: Stack dump where RCU GP kthread last ran:
+[   39.332642] [      C5] Sending NMI from CPU 5 to CPUs 7:
+[   39.332646] [      C7] NMI backtrace for cpu 7
+[   39.332650] [      C7] CPU: 7 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[   39.332653] [      C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   39.332654] [      C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[   39.332655] [      C7] Workqueue: events_unbound toggle_allocation_gate
+[   39.332664] [      C7] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[   39.332666] [      C7] pc : smp_call_function_many_cond+0x3ec/0x514
+[   39.332674] [      C7] lr : smp_call_function_many_cond+0x310/0x514
+[   39.332676] [      C7] sp : ffffffc0800e3ba0
+[   39.332677] [      C7] x29: ffffffc0800e3bf0 x28: 0000000000000006 x27: ffffffc082c5a180
+[   39.332679] [      C7] x26: ffffff8a727f5e08 x25: 0000000000000001 x24: ffffffc082c7a068
+[   39.332680] [      C7] x23: ffffff8a727f5e00 x22: 0000000000000000 x21: 0000000000000000
+[   39.332681] [      C7] x20: ffffffc082c79c30 x19: 0000000000000007 x18: ffffffc0800a5058
+[   39.332683] [      C7] x17: 0000000000000000 x16: 0000000000100000 x15: ffffff44f9e00000
+[   39.332684] [      C7] x14: 0000000000000000 x13: ffffff880c4ac200 x12: 0000000000000000
+[   39.332686] [      C7] x11: 0000000000000011 x10: ffffff8a7274b188 x9 : 0000000000000002
+[   39.332687] [      C7] x8 : ffffffffffffffff x7 : 0000000000000002 x6 : 0000000000000000
+[   39.332689] [      C7] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000001
+[   39.332691] [      C7] x2 : 0000000000000000 x1 : ffffff8a727f5e10 x0 : 0000000000000000
+[   39.332692] [      C7] Call trace:
+[   39.332692] [      C7]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[   39.332695] [      C7]  kick_all_cpus_sync+0x48/0x7c
+[   39.332697] [      C7]  arch_jump_label_transform_apply+0x14/0x24
+[   39.332700] [      C7]  __jump_label_update+0x118/0x13c
+[   39.332703] [      C7]  jump_label_update+0xe4/0x110
+[   39.332704] [      C7]  static_key_enable_cpuslocked+0x6c/0xb4
+[   39.332705] [      C7]  static_key_enable+0x24/0x3c
+[   39.332707] [      C7]  toggle_allocation_gate+0x58/0x14c
+[   39.332708] [      C7]  process_scheduled_works+0x18c/0x4d0
+[   39.332711] [      C7]  worker_thread+0x1f8/0x2e8
+[   39.332713] [      C7]  kthread+0x108/0x134
+[   39.332715] [      C7]  ret_from_fork+0x10/0x20
+[   70.623156] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 31s!
+[   70.623278] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 59s!
+[   70.623376] [      C0] Showing busy workqueues and worker pools:
+[   70.623385] [      C0] workqueue events: flags=0x100
+[   70.623389] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[   70.623400] [      C0]     pending: drm_fb_helper_damage_work
+[   70.623413] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[   70.623421] [      C0]     in-flight: 117:bpf_prog_free_deferred for 31s ,116:bpf_prog_free_deferred for 31s ,1146:bpf_prog_free_deferred for 31s ,1145:bpf_prog_free_deferred for 31s ,1149:bpf_prog_free_deferred for 31s ,1151:bpf_prog_free_deferred for 31s ,1152:bpf_prog_free_deferred for 31s ,1150:bpf_prog_free_deferred for 31s ,1154:bpf_prog_free_deferred for 31s ,119:bpf_prog_free_deferred for 31s ,1153:bpf_prog_free_deferred for 31s ,1148:bpf_prog_free_deferred for 31s ,115:bpf_prog_free_deferred for 31s ,39:bpf_prog_free_deferred for 31s ,1147:bpf_prog_free_deferred for 31s
+[   70.623540] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[   70.623549] [      C0]     in-flight: 124:reg_todo [cfg80211] for 39s ,45:bpf_prog_free_deferred for 33s
+[   70.623719] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[   70.623727] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[   70.623752] [      C0] workqueue events_unbound: flags=0x2
+[   70.623766] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[   70.623774] [      C0]     in-flight: 12:toggle_allocation_gate for 59s ,91:cfg80211_wiphy_work [cfg80211] for 49s
+[   70.623940] [      C0] workqueue events_power_efficient: flags=0x180
+[   70.623949] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[   70.623958] [      C0]     pending: gc_worker
+[   70.623968] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=5 refcnt=6
+[   70.623977] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work
+[   70.624099] [      C0] workqueue mm_percpu_wq: flags=0x108
+[   70.624108] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[   70.624117] [      C0]     pending: vmstat_update
+[   70.624126] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[   70.624133] [      C0]     pending: vmstat_update
+[   70.624155] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[   70.624164] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[   70.624171] [      C0]     in-flight: 125:cgroup_bpf_release for 62s
+[   70.624249] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[   70.624255] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[   70.624262] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 40s
+[   70.624305] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[   70.624321] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=31s workers=4 idle: 86
+[   70.624333] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 13 90 93 77 183 75 650 649
+[   70.624360] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[   70.624369] [      C0] pool 18:
+[   70.624371] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[   70.624381] [      C0] Workqueue: events reg_todo [cfg80211]
+[   70.624470] [      C0] Call trace:
+[   70.624472] [      C0]  __switch_to+0x210/0x358 (T)
+[   70.624479] [      C0]  __schedule+0x658/0xa80
+[   70.624483] [      C0]  schedule+0x58/0xd4
+[   70.624487] [      C0]  schedule_preempt_disabled+0x28/0x48
+[   70.624491] [      C0]  __mutex_lock+0x428/0x970
+[   70.624496] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[   70.624500] [      C0]  mutex_lock+0x28/0x5c
+[   70.624504] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[   70.624592] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[   70.624679] [      C0]  process_scheduled_works+0x18c/0x4d0
+[   70.624685] [      C0]  worker_thread+0x1f8/0x2e8
+[   70.624691] [      C0]  kthread+0x108/0x134
+[   70.624695] [      C0]  ret_from_fork+0x10/0x20
+[   70.624701] [      C0] pool 18:
+[   70.624704] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[   70.624713] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[   70.624718] [      C0] Call trace:
+[   70.624719] [      C0]  __switch_to+0x210/0x358 (T)
+[   70.624724] [      C0]  __schedule+0x658/0xa80
+[   70.624727] [      C0]  schedule+0x58/0xd4
+[   70.624731] [      C0]  schedule_preempt_disabled+0x28/0x48
+[   70.624735] [      C0]  __mutex_lock+0x428/0x970
+[   70.624739] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[   70.624742] [      C0]  mutex_lock+0x28/0x5c
+[   70.624746] [      C0]  cgroup_bpf_release+0x44/0x378
+[   70.624749] [      C0]  process_scheduled_works+0x18c/0x4d0
+[   70.624754] [      C0]  worker_thread+0x1f8/0x2e8
+[   70.624758] [      C0]  kthread+0x108/0x134
+[   70.624762] [      C0]  ret_from_fork+0x10/0x20
+[   70.624768] [      C0] pool 18:
+[   70.624770] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[   70.624779] [      C0] Workqueue: events bpf_prog_free_deferred
+[   70.624785] [      C0] Call trace:
+[   70.624786] [      C0]  __switch_to+0x210/0x358 (T)
+[   70.624790] [      C0]  0xffffffc08443f000
+[  101.343165] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 62s!
+[  101.343270] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 89s!
+[  101.343363] [      C0] Showing busy workqueues and worker pools:
+[  101.343368] [      C0] workqueue events: flags=0x100
+[  101.343371] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  101.343380] [      C0]     in-flight: 113:once_deferred for 27s
+[  101.343392] [      C0]     pending: drm_fb_helper_damage_work
+[  101.343399] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  101.343407] [      C0]     in-flight: 117:bpf_prog_free_deferred for 62s ,116:bpf_prog_free_deferred for 61s ,1146:bpf_prog_free_deferred for 61s ,1145:bpf_prog_free_deferred for 61s ,1149:bpf_prog_free_deferred for 61s ,1151:bpf_prog_free_deferred for 61s ,1152:bpf_prog_free_deferred for 61s ,1150:bpf_prog_free_deferred for 61s ,1154:bpf_prog_free_deferred for 61s ,119:bpf_prog_free_deferred for 62s ,1153:bpf_prog_free_deferred for 61s ,1148:bpf_prog_free_deferred for 61s ,115:bpf_prog_free_deferred for 62s ,39:bpf_prog_free_deferred for 61s ,1147:bpf_prog_free_deferred for 61s
+[  101.343517] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  101.343526] [      C0]     in-flight: 124:reg_todo [cfg80211] for 70s ,45:bpf_prog_free_deferred for 64s
+[  101.343692] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  101.343701] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  101.343714] [      C0] workqueue events_unbound: flags=0x2
+[  101.343727] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  101.343735] [      C0]     in-flight: 12:toggle_allocation_gate for 90s ,91:cfg80211_wiphy_work [cfg80211] for 80s
+[  101.343901] [      C0] workqueue events_power_efficient: flags=0x180
+[  101.343909] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  101.343918] [      C0]     pending: gc_worker
+[  101.343926] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=6 refcnt=7
+[  101.343935] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211]
+[  101.344175] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  101.344184] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  101.344193] [      C0]     pending: vmstat_update
+[  101.344200] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  101.344207] [      C0]     pending: vmstat_update
+[  101.344217] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  101.344224] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  101.344232] [      C0]     in-flight: 125:cgroup_bpf_release for 93s
+[  101.344242] [      C0] workqueue writeback: flags=0x4a
+[  101.344248] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+[  101.344255] [      C0]     pending: wb_workfn
+[  101.344263] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+[  101.344269] [      C0]     in-flight: 13:wb_workfn for 0s
+[  101.344297] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  101.344304] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  101.344310] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 71s
+[  101.344345] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  101.344358] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  101.344373] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=62s workers=4 idle: 86
+[  101.344384] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  101.344404] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  101.344413] [      C0] pool 18:
+[  101.344415] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  101.344423] [      C0] Workqueue: events reg_todo [cfg80211]
+[  101.344514] [      C0] Call trace:
+[  101.344515] [      C0]  __switch_to+0x210/0x358 (T)
+[  101.344521] [      C0]  __schedule+0x658/0xa80
+[  101.344524] [      C0]  schedule+0x58/0xd4
+[  101.344528] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  101.344532] [      C0]  __mutex_lock+0x428/0x970
+[  101.344537] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  101.344541] [      C0]  mutex_lock+0x28/0x5c
+[  101.344545] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  101.344632] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  101.344719] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  101.344725] [      C0]  worker_thread+0x1f8/0x2e8
+[  101.344730] [      C0]  kthread+0x108/0x134
+[  101.344734] [      C0]  ret_from_fork+0x10/0x20
+[  101.344740] [      C0] pool 18:
+[  101.344741] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  101.344749] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  101.344754] [      C0] Call trace:
+[  101.344755] [      C0]  __switch_to+0x210/0x358 (T)
+[  101.344760] [      C0]  __schedule+0x658/0xa80
+[  101.344764] [      C0]  schedule+0x58/0xd4
+[  101.344767] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  101.344771] [      C0]  __mutex_lock+0x428/0x970
+[  101.344775] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  101.344779] [      C0]  mutex_lock+0x28/0x5c
+[  101.344783] [      C0]  cgroup_bpf_release+0x44/0x378
+[  101.344786] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  101.344791] [      C0]  worker_thread+0x1f8/0x2e8
+[  101.344795] [      C0]  kthread+0x108/0x134
+[  101.344799] [      C0]  ret_from_fork+0x10/0x20
+[  101.344804] [      C0] pool 18:
+[  101.344805] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  101.344814] [      C0] Workqueue: events bpf_prog_free_deferred
+[  101.344820] [      C0] Call trace:
+[  101.344821] [      C0]  __switch_to+0x210/0x358 (T)
+[  101.344825] [      C0]  0xffffffc08443f000
+[  102.351149] [      C5] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[  102.351174] [      C5] rcu: 	6-...!: (1 GPs behind) idle=ef7c/1/0x4000000000000000 softirq=1174/1174 fqs=331
+[  102.351197] [      C5] rcu: 	(detected by 5, t=23507 jiffies, g=745, q=1831 ncpus=8)
+[  102.351215] [      C5] Sending NMI from CPU 5 to CPUs 6:
+[  112.352503] [      C5] After 10 seconds, these CPUS still haven't responded to the NMI: 6
+[  112.352505] [      C5] rcu: rcu_preempt kthread starved for 25345 jiffies! g745 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=7
+[  112.352529] [      C5] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[  112.352550] [      C5] rcu: RCU grace-period kthread stack dump:
+[  112.352564] [      C5] task:rcu_preempt     state:R  running task     stack:14016 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+[  112.352571] [      C5] Call trace:
+[  112.352572] [      C5]  __switch_to+0x210/0x358 (T)
+[  112.352575] [      C5]  __schedule+0x658/0xa80
+[  112.352578] [      C5]  schedule+0x58/0xd4
+[  112.352581] [      C5]  schedule_timeout+0x8c/0x110
+[  112.352585] [      C5]  rcu_gp_fqs_loop+0x1c0/0x66c
+[  112.352591] [      C5]  rcu_gp_kthread+0x64/0x124
+[  112.352594] [      C5]  kthread+0x108/0x134
+[  112.352598] [      C5]  ret_from_fork+0x10/0x20
+[  112.352603] [      C5] rcu: Stack dump where RCU GP kthread last ran:
+[  112.352619] [      C5] Sending NMI from CPU 5 to CPUs 7:
+[  112.352622] [      C7] NMI backtrace for cpu 7
+[  112.352624] [      C7] CPU: 7 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[  112.352626] [      C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[  112.352626] [      C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[  112.352627] [      C7] Workqueue: events_unbound toggle_allocation_gate
+[  112.352629] [      C7] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[  112.352630] [      C7] pc : smp_call_function_many_cond+0x3ec/0x514
+[  112.352631] [      C7] lr : smp_call_function_many_cond+0x310/0x514
+[  112.352633] [      C7] sp : ffffffc0800e3ba0
+[  112.352634] [      C7] x29: ffffffc0800e3bf0 x28: 0000000000000006 x27: ffffffc082c5a180
+[  112.352636] [      C7] x26: ffffff8a727f5e08 x25: 0000000000000001 x24: ffffffc082c7a068
+[  112.352637] [      C7] x23: ffffff8a727f5e00 x22: 0000000000000000 x21: 0000000000000000
+[  112.352638] [      C7] x20: ffffffc082c79c30 x19: 0000000000000007 x18: ffffffc0800a5058
+[  112.352639] [      C7] x17: 0000000000000000 x16: 0000000000100000 x15: ffffff44f9e00000
+[  112.352640] [      C7] x14: 0000000000000000 x13: ffffff880c4ac200 x12: 0000000000000000
+[  112.352641] [      C7] x11: 0000000000000011 x10: ffffff8a7274b188 x9 : 0000000000000002
+[  112.352642] [      C7] x8 : ffffffffffffffff x7 : 0000000000000002 x6 : 0000000000000000
+[  112.352644] [      C7] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000001
+[  112.352645] [      C7] x2 : 0000000000000000 x1 : ffffff8a727f5e10 x0 : 0000000000000000
+[  112.352647] [      C7] Call trace:
+[  112.352647] [      C7]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[  112.352649] [      C7]  kick_all_cpus_sync+0x48/0x7c
+[  112.352651] [      C7]  arch_jump_label_transform_apply+0x14/0x24
+[  112.352653] [      C7]  __jump_label_update+0x118/0x13c
+[  112.352654] [      C7]  jump_label_update+0xe4/0x110
+[  112.352655] [      C7]  static_key_enable_cpuslocked+0x6c/0xb4
+[  112.352657] [      C7]  static_key_enable+0x24/0x3c
+[  112.352659] [      C7]  toggle_allocation_gate+0x58/0x14c
+[  112.352660] [      C7]  process_scheduled_works+0x18c/0x4d0
+[  112.352662] [      C7]  worker_thread+0x1f8/0x2e8
+[  112.352664] [      C7]  kthread+0x108/0x134
+[  112.352665] [      C7]  ret_from_fork+0x10/0x20
+[  132.063157] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 92s!
+[  132.063281] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 120s!
+[  132.063380] [      C0] Showing busy workqueues and worker pools:
+[  132.063387] [      C0] workqueue events: flags=0x100
+[  132.063391] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  132.063400] [      C0]     in-flight: 113:once_deferred for 57s
+[  132.063412] [      C0]     pending: drm_fb_helper_damage_work
+[  132.063420] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  132.063429] [      C0]     in-flight: 117:bpf_prog_free_deferred for 92s ,116:bpf_prog_free_deferred for 92s ,1146:bpf_prog_free_deferred for 92s ,1145:bpf_prog_free_deferred for 92s ,1149:bpf_prog_free_deferred for 92s ,1151:bpf_prog_free_deferred for 92s ,1152:bpf_prog_free_deferred for 92s ,1150:bpf_prog_free_deferred for 92s ,1154:bpf_prog_free_deferred for 92s ,119:bpf_prog_free_deferred for 92s ,1153:bpf_prog_free_deferred for 92s ,1148:bpf_prog_free_deferred for 92s ,115:bpf_prog_free_deferred for 92s ,39:bpf_prog_free_deferred for 92s ,1147:bpf_prog_free_deferred for 92s
+[  132.063545] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  132.063553] [      C0]     in-flight: 124:reg_todo [cfg80211] for 101s ,45:bpf_prog_free_deferred for 94s
+[  132.063721] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  132.063730] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  132.063754] [      C0] workqueue events_unbound: flags=0x2
+[  132.063768] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  132.063777] [      C0]     in-flight: 12:toggle_allocation_gate for 121s ,91:cfg80211_wiphy_work [cfg80211] for 111s
+[  132.063942] [      C0] workqueue events_power_efficient: flags=0x180
+[  132.063950] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  132.063959] [      C0]     pending: gc_worker
+[  132.063969] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  132.063978] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  132.064183] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  132.064193] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  132.064201] [      C0]     pending: vmstat_update
+[  132.064209] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  132.064216] [      C0]     pending: vmstat_update
+[  132.064233] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  132.064241] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  132.064248] [      C0]     in-flight: 125:cgroup_bpf_release for 123s
+[  132.064289] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  132.064294] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  132.064300] [      C0]     in-flight: 13:addrconf_verify_work for 10s
+[  132.064312] [      C0]     inactive: addrconf_verify_work
+[  132.064336] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  132.064341] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  132.064347] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 101s
+[  132.064387] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  132.064402] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  132.064416] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=92s workers=4 idle: 86
+[  132.064428] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  132.064451] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  132.064460] [      C0] pool 18:
+[  132.064463] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  132.064473] [      C0] Workqueue: events reg_todo [cfg80211]
+[  132.064561] [      C0] Call trace:
+[  132.064563] [      C0]  __switch_to+0x210/0x358 (T)
+[  132.064569] [      C0]  __schedule+0x658/0xa80
+[  132.064573] [      C0]  schedule+0x58/0xd4
+[  132.064579] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  132.064583] [      C0]  __mutex_lock+0x428/0x970
+[  132.064588] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  132.064592] [      C0]  mutex_lock+0x28/0x5c
+[  132.064596] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  132.064682] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  132.064769] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  132.064775] [      C0]  worker_thread+0x1f8/0x2e8
+[  132.064780] [      C0]  kthread+0x108/0x134
+[  132.064784] [      C0]  ret_from_fork+0x10/0x20
+[  132.064790] [      C0] pool 18:
+[  132.064793] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  132.064803] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  132.064808] [      C0] Call trace:
+[  132.064810] [      C0]  __switch_to+0x210/0x358 (T)
+[  132.064814] [      C0]  __schedule+0x658/0xa80
+[  132.064819] [      C0]  schedule+0x58/0xd4
+[  132.064822] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  132.064827] [      C0]  __mutex_lock+0x428/0x970
+[  132.064831] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  132.064835] [      C0]  mutex_lock+0x28/0x5c
+[  132.064838] [      C0]  cgroup_bpf_release+0x44/0x378
+[  132.064842] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  132.064846] [      C0]  worker_thread+0x1f8/0x2e8
+[  132.064850] [      C0]  kthread+0x108/0x134
+[  132.064854] [      C0]  ret_from_fork+0x10/0x20
+[  132.064859] [      C0] pool 18:
+[  132.064861] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  132.064872] [      C0] Workqueue: events bpf_prog_free_deferred
+[  132.064877] [      C0] Call trace:
+[  132.064879] [      C0]  __switch_to+0x210/0x358 (T)
+[  132.064883] [      C0]  0xffffffc08443f000
+[  132.086398] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.103063] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.119730] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.136396] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.153063] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.169730] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.186397] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.200845] [   T1176] journal-offline (1176) used greatest stack depth: 10032 bytes left
+[  132.203065] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.219730] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  132.236397] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.783157] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 123s!
+[  162.783278] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 151s!
+[  162.783362] [      C0] Showing busy workqueues and worker pools:
+[  162.783366] [      C0] workqueue events: flags=0x100
+[  162.783370] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  162.783378] [      C0]     in-flight: 113:once_deferred for 88s
+[  162.783387] [      C0]     pending: drm_fb_helper_damage_work
+[  162.783394] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  162.783402] [      C0]     in-flight: 117:bpf_prog_free_deferred for 123s ,116:bpf_prog_free_deferred for 123s ,1146:bpf_prog_free_deferred for 123s ,1145:bpf_prog_free_deferred for 123s ,1149:bpf_prog_free_deferred for 123s ,1151:bpf_prog_free_deferred for 123s ,1152:bpf_prog_free_deferred for 123s ,1150:bpf_prog_free_deferred for 123s ,1154:bpf_prog_free_deferred for 123s ,119:bpf_prog_free_deferred for 123s ,1153:bpf_prog_free_deferred for 123s ,1148:bpf_prog_free_deferred for 123s ,115:bpf_prog_free_deferred for 123s ,39:bpf_prog_free_deferred for 123s ,1147:bpf_prog_free_deferred for 123s
+[  162.783511] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  162.783519] [      C0]     in-flight: 124:reg_todo [cfg80211] for 132s ,45:bpf_prog_free_deferred for 125s
+[  162.783642] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  162.783651] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  162.783666] [      C0] workqueue events_unbound: flags=0x2
+[  162.783679] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  162.783687] [      C0]     in-flight: 12:toggle_allocation_gate for 151s ,91:cfg80211_wiphy_work [cfg80211] for 141s
+[  162.783802] [      C0] workqueue events_power_efficient: flags=0x180
+[  162.783810] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  162.783818] [      C0]     pending: gc_worker
+[  162.783825] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  162.783833] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  162.784026] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  162.784035] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  162.784043] [      C0]     pending: vmstat_update
+[  162.784049] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  162.784056] [      C0]     pending: vmstat_update
+[  162.784066] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  162.784074] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  162.784080] [      C0]     in-flight: 125:cgroup_bpf_release for 154s
+[  162.784102] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  162.784107] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  162.784114] [      C0]     in-flight: 13:addrconf_verify_work for 40s
+[  162.784123] [      C0]     inactive: addrconf_verify_work
+[  162.784136] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  162.784142] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  162.784148] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 132s
+[  162.784182] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  162.784196] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  162.784210] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=123s workers=4 idle: 86
+[  162.784222] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  162.784242] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  162.784251] [      C0] pool 18:
+[  162.784253] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  162.784262] [      C0] Workqueue: events reg_todo [cfg80211]
+[  162.784350] [      C0] Call trace:
+[  162.784352] [      C0]  __switch_to+0x210/0x358 (T)
+[  162.784358] [      C0]  __schedule+0x658/0xa80
+[  162.784362] [      C0]  schedule+0x58/0xd4
+[  162.784365] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  162.784369] [      C0]  __mutex_lock+0x428/0x970
+[  162.784373] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  162.784377] [      C0]  mutex_lock+0x28/0x5c
+[  162.784381] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  162.784467] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  162.784553] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  162.784559] [      C0]  worker_thread+0x1f8/0x2e8
+[  162.784564] [      C0]  kthread+0x108/0x134
+[  162.784568] [      C0]  ret_from_fork+0x10/0x20
+[  162.784574] [      C0] pool 18:
+[  162.784576] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  162.784585] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  162.784589] [      C0] Call trace:
+[  162.784591] [      C0]  __switch_to+0x210/0x358 (T)
+[  162.784595] [      C0]  __schedule+0x658/0xa80
+[  162.784598] [      C0]  schedule+0x58/0xd4
+[  162.784602] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  162.784606] [      C0]  __mutex_lock+0x428/0x970
+[  162.784610] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  162.784614] [      C0]  mutex_lock+0x28/0x5c
+[  162.784619] [      C0]  cgroup_bpf_release+0x44/0x378
+[  162.784622] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  162.784627] [      C0]  worker_thread+0x1f8/0x2e8
+[  162.784632] [      C0]  kthread+0x108/0x134
+[  162.784636] [      C0]  ret_from_fork+0x10/0x20
+[  162.784642] [      C0] pool 18:
+[  162.784643] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  162.784652] [      C0] Workqueue: events bpf_prog_free_deferred
+[  162.784659] [      C0] Call trace:
+[  162.784661] [      C0]  __switch_to+0x210/0x358 (T)
+[  162.784665] [      C0]  0xffffffc08443f000
+[  162.803151] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  162.803157] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.819817] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.836485] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.853151] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.869818] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.886484] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.903152] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.919818] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.936484] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  162.953151] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  175.371150] [      C5] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[  175.371184] [      C5] rcu: 	6-...!: (1 GPs behind) idle=ef7c/1/0x4000000000000000 softirq=1174/1174 fqs=331
+[  175.371210] [      C5] rcu: 	(detected by 5, t=41762 jiffies, g=745, q=2268 ncpus=8)
+[  175.371229] [      C5] Sending NMI from CPU 5 to CPUs 6:
+[  185.372559] [      C5] After 10 seconds, these CPUS still haven't responded to the NMI: 6
+[  185.372562] [      C5] rcu: rcu_preempt kthread starved for 43600 jiffies! g745 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=7
+[  185.372587] [      C5] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[  185.372609] [      C5] rcu: RCU grace-period kthread stack dump:
+[  185.372625] [      C5] task:rcu_preempt     state:R  running task     stack:14016 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+[  185.372633] [      C5] Call trace:
+[  185.372635] [      C5]  __switch_to+0x210/0x358 (T)
+[  185.372641] [      C5]  __schedule+0x658/0xa80
+[  185.372644] [      C5]  schedule+0x58/0xd4
+[  185.372647] [      C5]  schedule_timeout+0x8c/0x110
+[  185.372651] [      C5]  rcu_gp_fqs_loop+0x1c0/0x66c
+[  185.372655] [      C5]  rcu_gp_kthread+0x64/0x124
+[  185.372659] [      C5]  kthread+0x108/0x134
+[  185.372663] [      C5]  ret_from_fork+0x10/0x20
+[  185.372667] [      C5] rcu: Stack dump where RCU GP kthread last ran:
+[  185.372683] [      C5] Sending NMI from CPU 5 to CPUs 7:
+[  185.372687] [      C7] NMI backtrace for cpu 7
+[  185.372687] [      C7] CPU: 7 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[  185.372688] [      C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[  185.372689] [      C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[  185.372689] [      C7] Workqueue: events_unbound toggle_allocation_gate
+[  185.372691] [      C7] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[  185.372692] [      C7] pc : smp_call_function_many_cond+0x3ec/0x514
+[  185.372693] [      C7] lr : smp_call_function_many_cond+0x310/0x514
+[  185.372695] [      C7] sp : ffffffc0800e3ba0
+[  185.372695] [      C7] x29: ffffffc0800e3bf0 x28: 0000000000000006 x27: ffffffc082c5a180
+[  185.372696] [      C7] x26: ffffff8a727f5e08 x25: 0000000000000001 x24: ffffffc082c7a068
+[  185.372697] [      C7] x23: ffffff8a727f5e00 x22: 0000000000000000 x21: 0000000000000000
+[  185.372698] [      C7] x20: ffffffc082c79c30 x19: 0000000000000007 x18: ffffffc0800a5058
+[  185.372699] [      C7] x17: 0000000000000000 x16: 0000000000100000 x15: ffffff44f9e00000
+[  185.372701] [      C7] x14: 0000000000000000 x13: ffffff880c4ac200 x12: 0000000000000000
+[  185.372702] [      C7] x11: 0000000000000011 x10: ffffff8a7274b188 x9 : 0000000000000002
+[  185.372703] [      C7] x8 : ffffffffffffffff x7 : 0000000000000002 x6 : 0000000000000000
+[  185.372704] [      C7] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000001
+[  185.372705] [      C7] x2 : 0000000000000000 x1 : ffffff8a727f5e10 x0 : 0000000000000000
+[  185.372706] [      C7] Call trace:
+[  185.372707] [      C7]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[  185.372708] [      C7]  kick_all_cpus_sync+0x48/0x7c
+[  185.372710] [      C7]  arch_jump_label_transform_apply+0x14/0x24
+[  185.372712] [      C7]  __jump_label_update+0x118/0x13c
+[  185.372713] [      C7]  jump_label_update+0xe4/0x110
+[  185.372714] [      C7]  static_key_enable_cpuslocked+0x6c/0xb4
+[  185.372715] [      C7]  static_key_enable+0x24/0x3c
+[  185.372716] [      C7]  toggle_allocation_gate+0x58/0x14c
+[  185.372718] [      C7]  process_scheduled_works+0x18c/0x4d0
+[  185.372719] [      C7]  worker_thread+0x1f8/0x2e8
+[  185.372721] [      C7]  kthread+0x108/0x134
+[  185.372723] [      C7]  ret_from_fork+0x10/0x20
+[  185.394885] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  185.394892] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.396320] [      C0] fb0: sys_fillrect: framebuffer is not in virtual address space.
+[  185.411548] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.428215] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.444882] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.461548] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.478216] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.494882] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.511549] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.528215] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  185.544882] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.503166] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 154s!
+[  193.504326] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 182s!
+[  193.505444] [      C0] Showing busy workqueues and worker pools:
+[  193.505451] [      C0] workqueue events: flags=0x100
+[  193.505455] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  193.505465] [      C0]     in-flight: 113:once_deferred for 119s
+[  193.505478] [      C0]     pending: drm_fb_helper_damage_work
+[  193.505487] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  193.505495] [      C0]     in-flight: 117:bpf_prog_free_deferred for 154s ,116:bpf_prog_free_deferred for 154s ,1146:bpf_prog_free_deferred for 154s ,1145:bpf_prog_free_deferred for 154s ,1149:bpf_prog_free_deferred for 154s ,1151:bpf_prog_free_deferred for 154s ,1152:bpf_prog_free_deferred for 154s ,1150:bpf_prog_free_deferred for 154s ,1154:bpf_prog_free_deferred for 154s ,119:bpf_prog_free_deferred for 154s ,1153:bpf_prog_free_deferred for 154s ,1148:bpf_prog_free_deferred for 154s ,115:bpf_prog_free_deferred for 154s ,39:bpf_prog_free_deferred for 154s ,1147:bpf_prog_free_deferred for 154s
+[  193.505597] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  193.505604] [      C0]     in-flight: 124:reg_todo [cfg80211] for 162s ,45:bpf_prog_free_deferred for 156s
+[  193.505711] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  193.505718] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  193.505739] [      C0] workqueue events_unbound: flags=0x2
+[  193.505752] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  193.505759] [      C0]     in-flight: 12:toggle_allocation_gate for 182s ,91:cfg80211_wiphy_work [cfg80211] for 172s
+[  193.505865] [      C0] workqueue events_power_efficient: flags=0x180
+[  193.505872] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  193.505880] [      C0]     pending: gc_worker
+[  193.505891] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  193.505900] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  193.506102] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  193.506110] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  193.506119] [      C0]     pending: vmstat_update
+[  193.506127] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  193.506134] [      C0]     pending: vmstat_update
+[  193.506154] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  193.506163] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  193.506169] [      C0]     in-flight: 125:cgroup_bpf_release for 185s
+[  193.506183] [      C0] workqueue writeback: flags=0x4a
+[  193.506188] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+[  193.506194] [      C0]     pending: wb_workfn
+[  193.506232] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  193.506237] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  193.506243] [      C0]     in-flight: 13:addrconf_verify_work for 71s
+[  193.506254] [      C0]     inactive: addrconf_verify_work
+[  193.506279] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  193.506286] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  193.506292] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 163s
+[  193.506332] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  193.506347] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  193.506361] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=154s workers=4 idle: 86
+[  193.506373] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  193.506394] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  193.506404] [      C0] pool 18:
+[  193.506406] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  193.506416] [      C0] Workqueue: events reg_todo [cfg80211]
+[  193.506505] [      C0] Call trace:
+[  193.506507] [      C0]  __switch_to+0x210/0x358 (T)
+[  193.506512] [      C0]  __schedule+0x658/0xa80
+[  193.506517] [      C0]  schedule+0x58/0xd4
+[  193.506521] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  193.506525] [      C0]  __mutex_lock+0x428/0x970
+[  193.506530] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  193.506535] [      C0]  mutex_lock+0x28/0x5c
+[  193.506538] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  193.506626] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  193.506714] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  193.506719] [      C0]  worker_thread+0x1f8/0x2e8
+[  193.506725] [      C0]  kthread+0x108/0x134
+[  193.506729] [      C0]  ret_from_fork+0x10/0x20
+[  193.506735] [      C0] pool 18:
+[  193.506737] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  193.506747] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  193.506751] [      C0] Call trace:
+[  193.506753] [      C0]  __switch_to+0x210/0x358 (T)
+[  193.506757] [      C0]  __schedule+0x658/0xa80
+[  193.506761] [      C0]  schedule+0x58/0xd4
+[  193.506764] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  193.506768] [      C0]  __mutex_lock+0x428/0x970
+[  193.506772] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  193.506776] [      C0]  mutex_lock+0x28/0x5c
+[  193.506779] [      C0]  cgroup_bpf_release+0x44/0x378
+[  193.506782] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  193.506787] [      C0]  worker_thread+0x1f8/0x2e8
+[  193.506791] [      C0]  kthread+0x108/0x134
+[  193.506795] [      C0]  ret_from_fork+0x10/0x20
+[  193.506800] [      C0] pool 18:
+[  193.506802] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  193.506813] [      C0] Workqueue: events bpf_prog_free_deferred
+[  193.506819] [      C0] Call trace:
+[  193.506820] [      C0]  __switch_to+0x210/0x358 (T)
+[  193.506824] [      C0]  0xffffffc08443f000
+[  193.528240] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  193.528247] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.544912] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.561571] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.578239] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.594905] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.611573] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.628238] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.644905] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.661572] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  193.678238] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.223160] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 184s!
+[  224.224114] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 212s!
+[  224.224942] [      C0] Showing busy workqueues and worker pools:
+[  224.224951] [      C0] workqueue events: flags=0x100
+[  224.224956] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  224.224966] [      C0]     in-flight: 113:once_deferred for 149s
+[  224.224982] [      C0]     pending: drm_fb_helper_damage_work
+[  224.224994] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  224.225003] [      C0]     in-flight: 117:bpf_prog_free_deferred for 184s ,116:bpf_prog_free_deferred for 184s ,1146:bpf_prog_free_deferred for 184s ,1145:bpf_prog_free_deferred for 184s ,1149:bpf_prog_free_deferred for 184s ,1151:bpf_prog_free_deferred for 184s ,1152:bpf_prog_free_deferred for 184s ,1150:bpf_prog_free_deferred for 184s ,1154:bpf_prog_free_deferred for 184s ,119:bpf_prog_free_deferred for 184s ,1153:bpf_prog_free_deferred for 184s ,1148:bpf_prog_free_deferred for 184s ,115:bpf_prog_free_deferred for 184s ,39:bpf_prog_free_deferred for 184s ,1147:bpf_prog_free_deferred for 184s
+[  224.225113] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  224.225121] [      C0]     in-flight: 124:reg_todo [cfg80211] for 193s ,45:bpf_prog_free_deferred for 186s
+[  224.225227] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  224.225235] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  224.225258] [      C0] workqueue events_unbound: flags=0x2
+[  224.225272] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  224.225278] [      C0]     in-flight: 12:toggle_allocation_gate for 213s ,91:cfg80211_wiphy_work [cfg80211] for 203s
+[  224.225383] [      C0] workqueue events_power_efficient: flags=0x180
+[  224.225390] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  224.225398] [      C0]     pending: gc_worker
+[  224.225407] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  224.225414] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  224.225620] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  224.225629] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  224.225636] [      C0]     pending: vmstat_update
+[  224.225644] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  224.225652] [      C0]     pending: vmstat_update
+[  224.225672] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  224.225681] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  224.225687] [      C0]     in-flight: 125:cgroup_bpf_release for 215s
+[  224.225740] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  224.225745] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  224.225751] [      C0]     in-flight: 13:addrconf_verify_work for 102s
+[  224.225760] [      C0]     inactive: addrconf_verify_work
+[  224.225790] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  224.225796] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  224.225802] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 194s
+[  224.225840] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  224.225854] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  224.225868] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=184s workers=4 idle: 86
+[  224.225880] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  224.225903] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  224.225913] [      C0] pool 18:
+[  224.225915] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  224.225925] [      C0] Workqueue: events reg_todo [cfg80211]
+[  224.226015] [      C0] Call trace:
+[  224.226017] [      C0]  __switch_to+0x210/0x358 (T)
+[  224.226024] [      C0]  __schedule+0x658/0xa80
+[  224.226028] [      C0]  schedule+0x58/0xd4
+[  224.226032] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  224.226036] [      C0]  __mutex_lock+0x428/0x970
+[  224.226040] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  224.226044] [      C0]  mutex_lock+0x28/0x5c
+[  224.226049] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  224.226134] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  224.226220] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  224.226226] [      C0]  worker_thread+0x1f8/0x2e8
+[  224.226231] [      C0]  kthread+0x108/0x134
+[  224.226236] [      C0]  ret_from_fork+0x10/0x20
+[  224.226242] [      C0] pool 18:
+[  224.226245] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  224.226258] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  224.226262] [      C0] Call trace:
+[  224.226264] [      C0]  __switch_to+0x210/0x358 (T)
+[  224.226268] [      C0]  __schedule+0x658/0xa80
+[  224.226272] [      C0]  schedule+0x58/0xd4
+[  224.226276] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  224.226279] [      C0]  __mutex_lock+0x428/0x970
+[  224.226283] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  224.226288] [      C0]  mutex_lock+0x28/0x5c
+[  224.226291] [      C0]  cgroup_bpf_release+0x44/0x378
+[  224.226295] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  224.226300] [      C0]  worker_thread+0x1f8/0x2e8
+[  224.226305] [      C0]  kthread+0x108/0x134
+[  224.226310] [      C0]  ret_from_fork+0x10/0x20
+[  224.226316] [      C0] pool 18:
+[  224.226318] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  224.226328] [      C0] Workqueue: events bpf_prog_free_deferred
+[  224.226334] [      C0] Call trace:
+[  224.226336] [      C0]  __switch_to+0x210/0x358 (T)
+[  224.226340] [      C0]  0xffffffc08443f000
+[  224.244995] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  224.245002] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.261657] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.278326] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.294991] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.311660] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.328324] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.344991] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.361658] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.378325] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  224.394991] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.655169] [     T69] INFO: task systemd:1 blocked for more than 120 seconds.
+[  242.656119] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.656943] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.657804] [     T69] task:systemd         state:D stack:10032 pid:1     tgid:1     ppid:0      task_flags:0x400100 flags:0x00000000
+[  242.657819] [     T69] Call trace:
+[  242.657824] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.657834] [     T69]  __schedule+0x658/0xa80
+[  242.657840] [     T69]  schedule+0x58/0xd4
+[  242.657846] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.657854] [     T69]  __mutex_lock+0x428/0x970
+[  242.657860] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.657866] [     T69]  mutex_lock+0x28/0x5c
+[  242.657872] [     T69]  cgroup_kn_lock_live+0xc8/0x154
+[  242.657877] [     T69]  cgroup_rmdir+0x2c/0x1a4
+[  242.657884] [     T69]  kernfs_iop_rmdir+0xc0/0x14c
+[  242.657894] [     T69]  vfs_rmdir+0xbc/0x1f4
+[  242.657901] [     T69]  filename_rmdir+0x140/0x230
+[  242.657908] [     T69]  __arm64_sys_unlinkat+0x54/0xe4
+[  242.657915] [     T69]  invoke_syscall+0x4c/0xfc
+[  242.657922] [     T69]  el0_svc_common+0x90/0xe0
+[  242.657928] [     T69]  do_el0_svc+0x20/0x30
+[  242.657935] [     T69]  el0_svc+0x40/0x9c
+[  242.657943] [     T69]  el0t_64_sync_handler+0x88/0x134
+[  242.657950] [     T69]  el0t_64_sync+0x1a4/0x1a8
+[  242.658066] [     T69] INFO: task systemd:1 is blocked on a mutex likely owned by task (agetty):888.
+[  242.658985] [     T69] INFO: task kworker/3:0:39 blocked for more than 120 seconds.
+[  242.659973] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.660945] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.661952] [     T69] task:kworker/3:0     state:D stack:12000 pid:39    tgid:39    ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.661967] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.661978] [     T69] Call trace:
+[  242.661982] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.661990] [     T69]  __schedule+0x658/0xa80
+[  242.661996] [     T69]  schedule+0x58/0xd4
+[  242.662003] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.662010] [     T69]  __mutex_lock+0x428/0x970
+[  242.662015] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.662021] [     T69]  mutex_lock+0x28/0x5c
+[  242.662027] [     T69]  bpf_prog_pack_free+0x30/0x1a8
+[  242.662034] [     T69]  bpf_jit_binary_pack_free+0x24/0x74
+[  242.662040] [     T69]  bpf_jit_free+0x50/0x168
+[  242.662047] [     T69]  bpf_prog_free_deferred+0x1d4/0x1f4
+[  242.662053] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.662061] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.662068] [     T69]  kthread+0x108/0x134
+[  242.662074] [     T69]  ret_from_fork+0x10/0x20
+[  242.662086] [     T69] INFO: task kworker/3:0:39 is blocked on a mutex likely owned by task kworker/4:0:45.
+[  242.663170] [     T69] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.663186] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.663195] [     T69] Call trace:
+[  242.663198] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.663205] [     T69]  0xffffffc08443f000
+[  242.663227] [     T69] INFO: task kworker/u32:4:89 blocked for more than 120 seconds.
+[  242.664577] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.665629] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.666669] [     T69] task:kworker/u32:4   state:D stack:11776 pid:89    tgid:89    ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.666682] [     T69] Workqueue: ath11k_aux_wq ath11k_core_reset [ath11k]
+[  242.666718] [     T69] Call trace:
+[  242.666722] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.666729] [     T69]  __schedule+0x658/0xa80
+[  242.666737] [     T69]  schedule+0x58/0xd4
+[  242.666743] [     T69]  schedule_timeout+0x40/0x110
+[  242.666750] [     T69]  wait_for_common+0xd8/0x1b4
+[  242.666757] [     T69]  wait_for_completion+0x1c/0x2c
+[  242.666763] [     T69]  synchronize_rcu_normal+0x168/0x204
+[  242.666772] [     T69]  synchronize_rcu+0x54/0x1b4
+[  242.666777] [     T69]  synchronize_net+0x38/0x48
+[  242.666787] [     T69]  ath11k_mac_drain_tx+0x20/0xf4 [ath11k]
+[  242.666816] [     T69]  ath11k_core_pre_reconfigure_recovery+0xd4/0x22c [ath11k]
+[  242.666844] [     T69]  ath11k_core_reset+0x104/0x1ec [ath11k]
+[  242.666871] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.666879] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.666885] [     T69]  kthread+0x108/0x134
+[  242.666893] [     T69]  ret_from_fork+0x10/0x20
+[  242.666904] [     T69] INFO: task kworker/u32:6:91 blocked for more than 120 seconds.
+[  242.667993] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.669041] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.670086] [     T69] task:kworker/u32:6   state:D stack:11152 pid:91    tgid:91    ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.670101] [     T69] Workqueue: events_unbound cfg80211_wiphy_work [cfg80211]
+[  242.670213] [     T69] Call trace:
+[  242.670217] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.670224] [     T69]  __schedule+0x658/0xa80
+[  242.670230] [     T69]  schedule+0x58/0xd4
+[  242.670236] [     T69]  schedule_timeout+0x40/0x110
+[  242.670243] [     T69]  wait_for_common+0xd8/0x1b4
+[  242.670249] [     T69]  wait_for_completion+0x1c/0x2c
+[  242.670256] [     T69]  synchronize_rcu_normal+0x168/0x204
+[  242.670262] [     T69]  synchronize_rcu+0x54/0x1b4
+[  242.670268] [     T69]  __ieee80211_scan_completed+0xac/0x274 [mac80211]
+[  242.670361] [     T69]  ieee80211_scan_work+0x70/0x588 [mac80211]
+[  242.670438] [     T69]  cfg80211_wiphy_work+0xb0/0x1a4 [cfg80211]
+[  242.670526] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.670533] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.670540] [     T69]  kthread+0x108/0x134
+[  242.670546] [     T69]  ret_from_fork+0x10/0x20
+[  242.670561] [     T69] INFO: task kworker/0:2:113 blocked for more than 120 seconds.
+[  242.671650] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.672838] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.673902] [     T69] task:kworker/0:2     state:D stack:13824 pid:113   tgid:113   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.673915] [     T69] Workqueue: events once_deferred
+[  242.673925] [     T69] Call trace:
+[  242.673928] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.673935] [     T69]  __schedule+0x658/0xa80
+[  242.673940] [     T69]  schedule+0x58/0xd4
+[  242.673945] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.673951] [     T69]  __mutex_lock+0x428/0x970
+[  242.673957] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.673962] [     T69]  mutex_lock+0x28/0x5c
+[  242.673967] [     T69]  static_key_disable_cpuslocked+0x40/0xe0
+[  242.673973] [     T69]  static_key_disable+0x24/0x3c
+[  242.673978] [     T69]  once_deferred+0x30/0x58
+[  242.673983] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.673990] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.673996] [     T69]  kthread+0x108/0x134
+[  242.674002] [     T69]  ret_from_fork+0x10/0x20
+[  242.674010] [     T69] INFO: task kworker/0:2:113 is blocked on a mutex likely owned by task kworker/u32:0:12.
+[  242.675129] [     T69] task:kworker/u32:0   state:R  running task     stack:9920  pid:12    tgid:12    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.675142] [     T69] Workqueue: events_unbound toggle_allocation_gate
+[  242.675168] [     T69] Call trace:
+[  242.675172] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.675178] [     T69]  toggle_allocation_gate+0x58/0x14c
+[  242.675184] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.675190] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.675196] [     T69]  kthread+0x108/0x134
+[  242.675202] [     T69]  ret_from_fork+0x10/0x20
+[  242.675210] [     T69] INFO: task kworker/3:1:115 blocked for more than 120 seconds.
+[  242.676387] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.677590] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.678377] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  242.678384] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.678800] [     T69] task:kworker/3:1     state:D stack:14448 pid:115   tgid:115   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.680161] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.680170] [     T69] Call trace:
+[  242.680173] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.680180] [     T69]  __schedule+0x658/0xa80
+[  242.680185] [     T69]  schedule+0x58/0xd4
+[  242.680190] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.680196] [     T69]  __mutex_lock+0x428/0x970
+[  242.680202] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.680208] [     T69]  mutex_lock+0x28/0x5c
+[  242.680213] [     T69]  bpf_prog_pack_free+0x30/0x1a8
+[  242.680220] [     T69]  bpf_jit_binary_pack_free+0x24/0x74
+[  242.680226] [     T69]  bpf_jit_free+0x50/0x168
+[  242.680231] [     T69]  bpf_prog_free_deferred+0x1d4/0x1f4
+[  242.680238] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.680244] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.680250] [     T69]  kthread+0x108/0x134
+[  242.680255] [     T69]  ret_from_fork+0x10/0x20
+[  242.680266] [     T69] INFO: task kworker/3:1:115 is blocked on a mutex likely owned by task kworker/4:0:45.
+[  242.681591] [     T69] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.681605] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.681613] [     T69] Call trace:
+[  242.681616] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.681622] [     T69]  0xffffffc08443f000
+[  242.681631] [     T69] INFO: task kworker/3:2:116 blocked for more than 120 seconds.
+[  242.682963] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.684349] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.685755] [     T69] task:kworker/3:2     state:D stack:14240 pid:116   tgid:116   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.685770] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.685779] [     T69] Call trace:
+[  242.685782] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.685788] [     T69]  __schedule+0x658/0xa80
+[  242.685794] [     T69]  schedule+0x58/0xd4
+[  242.685800] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.685806] [     T69]  __mutex_lock+0x428/0x970
+[  242.685812] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.685818] [     T69]  mutex_lock+0x28/0x5c
+[  242.685824] [     T69]  bpf_prog_pack_free+0x30/0x1a8
+[  242.685831] [     T69]  bpf_jit_binary_pack_free+0x24/0x74
+[  242.685839] [     T69]  bpf_jit_free+0x50/0x168
+[  242.685845] [     T69]  bpf_prog_free_deferred+0x1d4/0x1f4
+[  242.685852] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.685859] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.685866] [     T69]  kthread+0x108/0x134
+[  242.685872] [     T69]  ret_from_fork+0x10/0x20
+[  242.685883] [     T69] INFO: task kworker/3:2:116 is blocked on a mutex likely owned by task kworker/4:0:45.
+[  242.687356] [     T69] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.687370] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.687379] [     T69] Call trace:
+[  242.687382] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.687388] [     T69]  0xffffffc08443f000
+[  242.687395] [     T69] INFO: task kworker/3:3:117 blocked for more than 120 seconds.
+[  242.688954] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.690387] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.691877] [     T69] task:kworker/3:3     state:D stack:14208 pid:117   tgid:117   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.691890] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.691899] [     T69] Call trace:
+[  242.691902] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.691908] [     T69]  __schedule+0x658/0xa80
+[  242.691913] [     T69]  schedule+0x58/0xd4
+[  242.691919] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.691924] [     T69]  __mutex_lock+0x428/0x970
+[  242.691930] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.691936] [     T69]  mutex_lock+0x28/0x5c
+[  242.691941] [     T69]  bpf_prog_pack_free+0x30/0x1a8
+[  242.691948] [     T69]  bpf_jit_binary_pack_free+0x24/0x74
+[  242.691954] [     T69]  bpf_jit_free+0x50/0x168
+[  242.691959] [     T69]  bpf_prog_free_deferred+0x1d4/0x1f4
+[  242.691966] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.691972] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.691978] [     T69]  kthread+0x108/0x134
+[  242.691984] [     T69]  ret_from_fork+0x10/0x20
+[  242.691994] [     T69] INFO: task kworker/3:3:117 is blocked on a mutex likely owned by task kworker/4:0:45.
+[  242.693555] [     T69] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.693568] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.693576] [     T69] Call trace:
+[  242.693579] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.693584] [     T69]  0xffffffc08443f000
+[  242.693591] [     T69] INFO: task kworker/3:4:119 blocked for more than 120 seconds.
+[  242.695042] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.695132] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.698476] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.700170] [     T69] task:kworker/3:4     state:D stack:14448 pid:119   tgid:119   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.700184] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.700193] [     T69] Call trace:
+[  242.700197] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.700204] [     T69]  __schedule+0x658/0xa80
+[  242.700210] [     T69]  schedule+0x58/0xd4
+[  242.700215] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.700221] [     T69]  __mutex_lock+0x428/0x970
+[  242.700227] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.700233] [     T69]  mutex_lock+0x28/0x5c
+[  242.700239] [     T69]  bpf_prog_pack_free+0x30/0x1a8
+[  242.700246] [     T69]  bpf_jit_binary_pack_free+0x24/0x74
+[  242.700253] [     T69]  bpf_jit_free+0x50/0x168
+[  242.700259] [     T69]  bpf_prog_free_deferred+0x1d4/0x1f4
+[  242.700266] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.700273] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.700279] [     T69]  kthread+0x108/0x134
+[  242.700285] [     T69]  ret_from_fork+0x10/0x20
+[  242.700297] [     T69] INFO: task kworker/3:4:119 is blocked on a mutex likely owned by task kworker/4:0:45.
+[  242.702022] [     T69] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  242.702036] [     T69] Workqueue: events bpf_prog_free_deferred
+[  242.702045] [     T69] Call trace:
+[  242.702048] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.702054] [     T69]  0xffffffc08443f000
+[  242.702061] [     T69] INFO: task kworker/4:2:124 blocked for more than 120 seconds.
+[  242.703819] [     T69]       Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1
+[  242.705700] [     T69] "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+[  242.707494] [     T69] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  242.707507] [     T69] Workqueue: events reg_todo [cfg80211]
+[  242.707607] [     T69] Call trace:
+[  242.707611] [     T69]  __switch_to+0x210/0x358 (T)
+[  242.707618] [     T69]  __schedule+0x658/0xa80
+[  242.707623] [     T69]  schedule+0x58/0xd4
+[  242.707629] [     T69]  schedule_preempt_disabled+0x28/0x48
+[  242.707634] [     T69]  __mutex_lock+0x428/0x970
+[  242.707640] [     T69]  __mutex_lock_slowpath+0x18/0x28
+[  242.707646] [     T69]  mutex_lock+0x28/0x5c
+[  242.707651] [     T69]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  242.707740] [     T69]  reg_todo+0x260/0x2bc [cfg80211]
+[  242.707828] [     T69]  process_scheduled_works+0x18c/0x4d0
+[  242.707836] [     T69]  worker_thread+0x1f8/0x2e8
+[  242.707842] [     T69]  kthread+0x108/0x134
+[  242.707847] [     T69]  ret_from_fork+0x10/0x20
+[  242.707863] [     T69] INFO: task kworker/4:2:124 is blocked on a mutex likely owned by task kworker/u32:6:91.
+[  242.709686] [     T69] Future hung task reports are suppressed, see sysctl kernel.hung_task_warnings
+[  242.711709] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.728376] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.745042] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.761709] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.778376] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.795042] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.811709] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  242.828376] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  248.391150] [      C5] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[  248.391628] [      C5] rcu: 	6-...!: (1 GPs behind) idle=ef7c/1/0x4000000000000000 softirq=1174/1174 fqs=331
+[  248.392095] [      C5] rcu: 	(detected by 5, t=60017 jiffies, g=745, q=3330 ncpus=8)
+[  248.392558] [      C5] Sending NMI from CPU 5 to CPUs 6:
+[  254.943160] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 215s!
+[  254.945143] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 243s!
+[  254.947056] [      C0] Showing busy workqueues and worker pools:
+[  254.947064] [      C0] workqueue events: flags=0x100
+[  254.947068] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947078] [      C0]     in-flight: 113:once_deferred for 180s
+[  254.947093] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  254.947101] [      C0]     in-flight: 117:bpf_prog_free_deferred for 215s ,116:bpf_prog_free_deferred for 215s ,1146:bpf_prog_free_deferred for 215s ,1145:bpf_prog_free_deferred for 215s ,1149:bpf_prog_free_deferred for 215s ,1151:bpf_prog_free_deferred for 215s ,1152:bpf_prog_free_deferred for 215s ,1150:bpf_prog_free_deferred for 215s ,1154:bpf_prog_free_deferred for 215s ,119:bpf_prog_free_deferred for 215s ,1153:bpf_prog_free_deferred for 215s ,1148:bpf_prog_free_deferred for 215s ,115:bpf_prog_free_deferred for 215s ,39:bpf_prog_free_deferred for 215s ,1147:bpf_prog_free_deferred for 215s
+[  254.947242] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  254.947252] [      C0]     in-flight: 124:reg_todo [cfg80211] for 224s ,45:bpf_prog_free_deferred for 217s
+[  254.947361] [      C0]   pwq 22: cpus=5 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947368] [      C0]     pending: drm_fb_helper_damage_work
+[  254.947380] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  254.947388] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  254.947413] [      C0] workqueue events_unbound: flags=0x2
+[  254.947425] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  254.947431] [      C0]     in-flight: 12:toggle_allocation_gate for 243s ,91:cfg80211_wiphy_work [cfg80211] for 233s
+[  254.947537] [      C0] workqueue events_power_efficient: flags=0x180
+[  254.947545] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947589] [      C0]     pending: gc_worker
+[  254.947599] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  254.947607] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  254.947813] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  254.947822] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947830] [      C0]     pending: vmstat_update
+[  254.947838] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947845] [      C0]     pending: vmstat_update
+[  254.947863] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  254.947872] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  254.947879] [      C0]     in-flight: 125:cgroup_bpf_release for 246s
+[  254.947932] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  254.947938] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  254.947944] [      C0]     in-flight: 13:addrconf_verify_work for 133s
+[  254.947954] [      C0]     inactive: addrconf_verify_work
+[  254.947988] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  254.947994] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  254.948000] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 224s
+[  254.948040] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  254.948054] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  254.948069] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=215s workers=4 idle: 86
+[  254.948081] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  254.948107] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  254.948117] [      C0] pool 18:
+[  254.948119] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  254.948128] [      C0] Workqueue: events reg_todo [cfg80211]
+[  254.948216] [      C0] Call trace:
+[  254.948218] [      C0]  __switch_to+0x210/0x358 (T)
+[  254.948224] [      C0]  __schedule+0x658/0xa80
+[  254.948229] [      C0]  schedule+0x58/0xd4
+[  254.948233] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  254.948238] [      C0]  __mutex_lock+0x428/0x970
+[  254.948242] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  254.948246] [      C0]  mutex_lock+0x28/0x5c
+[  254.948250] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  254.948339] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  254.948426] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  254.948432] [      C0]  worker_thread+0x1f8/0x2e8
+[  254.948437] [      C0]  kthread+0x108/0x134
+[  254.948442] [      C0]  ret_from_fork+0x10/0x20
+[  254.948448] [      C0] pool 18:
+[  254.948452] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  254.948462] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  254.948467] [      C0] Call trace:
+[  254.948468] [      C0]  __switch_to+0x210/0x358 (T)
+[  254.948472] [      C0]  __schedule+0x658/0xa80
+[  254.948477] [      C0]  schedule+0x58/0xd4
+[  254.948481] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  254.948484] [      C0]  __mutex_lock+0x428/0x970
+[  254.948488] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  254.948492] [      C0]  mutex_lock+0x28/0x5c
+[  254.948497] [      C0]  cgroup_bpf_release+0x44/0x378
+[  254.948500] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  254.948504] [      C0]  worker_thread+0x1f8/0x2e8
+[  254.948509] [      C0]  kthread+0x108/0x134
+[  254.948512] [      C0]  ret_from_fork+0x10/0x20
+[  254.948518] [      C0] pool 18:
+[  254.948519] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  254.948528] [      C0] Workqueue: events bpf_prog_free_deferred
+[  254.948533] [      C0] Call trace:
+[  254.948534] [      C0]  __switch_to+0x210/0x358 (T)
+[  254.948538] [      C0]  0xffffffc08443f000
+[  258.393840] [      C5] After 10 seconds, these CPUS still haven't responded to the NMI: 6
+[  258.393842] [      C5] rcu: rcu_preempt kthread starved for 61855 jiffies! g745 f0x2 RCU_GP_WAIT_FQS(5) ->state=0x0 ->cpu=7
+[  258.394309] [      C5] rcu: 	Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+[  258.394775] [      C5] rcu: RCU grace-period kthread stack dump:
+[  258.395236] [      C5] task:rcu_preempt     state:R  running task     stack:14016 pid:16    tgid:16    ppid:2      task_flags:0x208040 flags:0x00000010
+[  258.395244] [      C5] Call trace:
+[  258.395245] [      C5]  __switch_to+0x210/0x358 (T)
+[  258.395249] [      C5]  __schedule+0x658/0xa80
+[  258.395251] [      C5]  schedule+0x58/0xd4
+[  258.395253] [      C5]  schedule_timeout+0x8c/0x110
+[  258.395257] [      C5]  rcu_gp_fqs_loop+0x1c0/0x66c
+[  258.395262] [      C5]  rcu_gp_kthread+0x64/0x124
+[  258.395265] [      C5]  kthread+0x108/0x134
+[  258.395268] [      C5]  ret_from_fork+0x10/0x20
+[  258.395272] [      C5] rcu: Stack dump where RCU GP kthread last ran:
+[  258.395729] [      C5] Sending NMI from CPU 5 to CPUs 7:
+[  258.395733] [      C7] NMI backtrace for cpu 7
+[  258.395734] [      C7] CPU: 7 UID: 0 PID: 12 Comm: kworker/u32:0 Tainted: G S      W           7.2.0-rc3-gts9wifi-dirty #1 PREEMPT 
+[  258.395735] [      C7] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[  258.395736] [      C7] Hardware name: Samsung Galaxy Tab S9 Wi-Fi (DT)
+[  258.395736] [      C7] Workqueue: events_unbound toggle_allocation_gate
+[  258.395738] [      C7] pstate: 03400005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[  258.395739] [      C7] pc : smp_call_function_many_cond+0x3ec/0x514
+[  258.395740] [      C7] lr : smp_call_function_many_cond+0x310/0x514
+[  258.395742] [      C7] sp : ffffffc0800e3ba0
+[  258.395743] [      C7] x29: ffffffc0800e3bf0 x28: 0000000000000006 x27: ffffffc082c5a180
+[  258.395744] [      C7] x26: ffffff8a727f5e08 x25: 0000000000000001 x24: ffffffc082c7a068
+[  258.395745] [      C7] x23: ffffff8a727f5e00 x22: 0000000000000000 x21: 0000000000000000
+[  258.395747] [      C7] x20: ffffffc082c79c30 x19: 0000000000000007 x18: ffffffc0800a5058
+[  258.395748] [      C7] x17: 0000000000000000 x16: 0000000000100000 x15: ffffff44f9e00000
+[  258.395749] [      C7] x14: 0000000000000000 x13: ffffff880c4ac200 x12: 0000000000000000
+[  258.395750] [      C7] x11: 0000000000000011 x10: ffffff8a7274b188 x9 : 0000000000000002
+[  258.395752] [      C7] x8 : ffffffffffffffff x7 : 0000000000000002 x6 : 0000000000000000
+[  258.395754] [      C7] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000001
+[  258.395755] [      C7] x2 : 0000000000000000 x1 : ffffff8a727f5e10 x0 : 0000000000000000
+[  258.395756] [      C7] Call trace:
+[  258.395757] [      C7]  smp_call_function_many_cond+0x3ec/0x514 (P)
+[  258.395758] [      C7]  kick_all_cpus_sync+0x48/0x7c
+[  258.395760] [      C7]  arch_jump_label_transform_apply+0x14/0x24
+[  258.395762] [      C7]  __jump_label_update+0x118/0x13c
+[  258.395763] [      C7]  jump_label_update+0xe4/0x110
+[  258.395765] [      C7]  static_key_enable_cpuslocked+0x6c/0xb4
+[  258.395766] [      C7]  static_key_enable+0x24/0x3c
+[  258.395767] [      C7]  toggle_allocation_gate+0x58/0x14c
+[  258.395769] [      C7]  process_scheduled_works+0x18c/0x4d0
+[  258.395771] [      C7]  worker_thread+0x1f8/0x2e8
+[  258.395773] [      C7]  kthread+0x108/0x134
+[  258.395774] [      C7]  ret_from_fork+0x10/0x20
+[  258.411754] [      C0] dpu_crtc_frame_event_cb: 2 callbacks suppressed
+[  258.411759] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.436754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.461755] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.486754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.511754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.536754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.561754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.586754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.611754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  258.636754] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.663158] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 246s!
+[  285.664837] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 274s!
+[  285.666364] [      C0] Showing busy workqueues and worker pools:
+[  285.666370] [      C0] workqueue events: flags=0x100
+[  285.666374] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  285.666382] [      C0]     in-flight: 113:once_deferred for 211s
+[  285.666393] [      C0]     pending: drm_fb_helper_damage_work
+[  285.666402] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  285.666409] [      C0]     in-flight: 117:bpf_prog_free_deferred for 246s ,116:bpf_prog_free_deferred for 246s ,1146:bpf_prog_free_deferred for 246s ,1145:bpf_prog_free_deferred for 246s ,1149:bpf_prog_free_deferred for 246s ,1151:bpf_prog_free_deferred for 246s ,1152:bpf_prog_free_deferred for 246s ,1150:bpf_prog_free_deferred for 246s ,1154:bpf_prog_free_deferred for 246s ,119:bpf_prog_free_deferred for 246s ,1153:bpf_prog_free_deferred for 246s ,1148:bpf_prog_free_deferred for 246s ,115:bpf_prog_free_deferred for 246s ,39:bpf_prog_free_deferred for 246s ,1147:bpf_prog_free_deferred for 246s
+[  285.666515] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  285.666523] [      C0]     in-flight: 124:reg_todo [cfg80211] for 254s ,45:bpf_prog_free_deferred for 248s
+[  285.666628] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  285.666636] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  285.666652] [      C0] workqueue events_unbound: flags=0x2
+[  285.666664] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  285.666672] [      C0]     in-flight: 12:toggle_allocation_gate for 274s ,91:cfg80211_wiphy_work [cfg80211] for 264s
+[  285.666772] [      C0] workqueue events_power_efficient: flags=0x180
+[  285.666778] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  285.666787] [      C0]     pending: gc_worker
+[  285.666794] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  285.666802] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  285.666993] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  285.667002] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  285.667010] [      C0]     pending: vmstat_update
+[  285.667017] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  285.667024] [      C0]     pending: vmstat_update
+[  285.667035] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  285.667043] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  285.667050] [      C0]     in-flight: 125:cgroup_bpf_release for 277s
+[  285.667078] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  285.667083] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  285.667090] [      C0]     in-flight: 13:addrconf_verify_work for 163s
+[  285.667100] [      C0]     inactive: addrconf_verify_work
+[  285.667117] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  285.667124] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  285.667130] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 255s
+[  285.667194] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  285.667210] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  285.667224] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=246s workers=4 idle: 86
+[  285.667237] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 90 93 77 183 75 650 649
+[  285.667257] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  285.667265] [      C0] pool 18:
+[  285.667267] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  285.667277] [      C0] Workqueue: events reg_todo [cfg80211]
+[  285.667366] [      C0] Call trace:
+[  285.667367] [      C0]  __switch_to+0x210/0x358 (T)
+[  285.667373] [      C0]  __schedule+0x658/0xa80
+[  285.667378] [      C0]  schedule+0x58/0xd4
+[  285.667383] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  285.667387] [      C0]  __mutex_lock+0x428/0x970
+[  285.667391] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  285.667395] [      C0]  mutex_lock+0x28/0x5c
+[  285.667398] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  285.667488] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  285.667574] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  285.667580] [      C0]  worker_thread+0x1f8/0x2e8
+[  285.667585] [      C0]  kthread+0x108/0x134
+[  285.667589] [      C0]  ret_from_fork+0x10/0x20
+[  285.667595] [      C0] pool 18:
+[  285.667597] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  285.667606] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  285.667611] [      C0] Call trace:
+[  285.667612] [      C0]  __switch_to+0x210/0x358 (T)
+[  285.667616] [      C0]  __schedule+0x658/0xa80
+[  285.667620] [      C0]  schedule+0x58/0xd4
+[  285.667623] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  285.667627] [      C0]  __mutex_lock+0x428/0x970
+[  285.667631] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  285.667635] [      C0]  mutex_lock+0x28/0x5c
+[  285.667638] [      C0]  cgroup_bpf_release+0x44/0x378
+[  285.667641] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  285.667646] [      C0]  worker_thread+0x1f8/0x2e8
+[  285.667650] [      C0]  kthread+0x108/0x134
+[  285.667654] [      C0]  ret_from_fork+0x10/0x20
+[  285.667659] [      C0] pool 18:
+[  285.667661] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  285.667671] [      C0] Workqueue: events bpf_prog_free_deferred
+[  285.667676] [      C0] Call trace:
+[  285.667677] [      C0]  __switch_to+0x210/0x358 (T)
+[  285.667681] [      C0]  0xffffffc08443f000
+[  285.686829] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  285.686835] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.703497] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.720163] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.736831] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.753497] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.770163] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.786830] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.803497] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.820163] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  285.836830] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.383163] [      C0] BUG: workqueue lockup - pool cpus=4 node=0 flags=0x0 nice=0 stuck for 277s!
+[  316.384540] [      C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0 nice=0 stuck for 304s!
+[  316.385714] [      C0] Showing busy workqueues and worker pools:
+[  316.385723] [      C0] workqueue events: flags=0x100
+[  316.385728] [      C0]   pwq 2: cpus=0 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  316.385741] [      C0]     in-flight: 113:once_deferred for 242s
+[  316.385757] [      C0]     pending: drm_fb_helper_damage_work
+[  316.385784] [      C0]   pwq 14: cpus=3 node=0 flags=0x0 nice=0 active=15 refcnt=16
+[  316.385793] [      C0]     in-flight: 117:bpf_prog_free_deferred for 277s ,116:bpf_prog_free_deferred for 277s ,1146:bpf_prog_free_deferred for 277s ,1145:bpf_prog_free_deferred for 277s ,1149:bpf_prog_free_deferred for 277s ,1151:bpf_prog_free_deferred for 277s ,1152:bpf_prog_free_deferred for 277s ,1150:bpf_prog_free_deferred for 277s ,1154:bpf_prog_free_deferred for 276s ,119:bpf_prog_free_deferred for 277s ,1153:bpf_prog_free_deferred for 276s ,1148:bpf_prog_free_deferred for 277s ,115:bpf_prog_free_deferred for 277s ,39:bpf_prog_free_deferred for 277s ,1147:bpf_prog_free_deferred for 277s
+[  316.385924] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  316.385932] [      C0]     in-flight: 124:reg_todo [cfg80211] for 285s ,45:bpf_prog_free_deferred for 279s
+[  316.386046] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=2 refcnt=3
+[  316.386056] [      C0]     pending: psi_avgs_work, regulator_init_complete_work_function
+[  316.386077] [      C0] workqueue events_unbound: flags=0x2
+[  316.386089] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+[  316.386098] [      C0]     pending: idle_cull_fn
+[  316.386104] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  316.386110] [      C0]     pending: 2*idle_cull_fn
+[  316.386118] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=5 refcnt=6
+[  316.386125] [      C0]     in-flight: 12:toggle_allocation_gate for 305s ,91:cfg80211_wiphy_work [cfg80211] for 295s
+[  316.386227] [      C0]     pending: 3*idle_cull_fn
+[  316.386234] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  316.386241] [      C0]     pending: 2*idle_cull_fn
+[  316.386248] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=2
+[  316.386254] [      C0]     pending: idle_cull_fn
+[  316.386263] [      C0] workqueue events_power_efficient: flags=0x180
+[  316.386278] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  316.386285] [      C0]     pending: gc_worker
+[  316.386296] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=7 refcnt=8
+[  316.386303] [      C0]     pending: crda_timeout_work [cfg80211], 2*neigh_managed_work, 2*neigh_periodic_work, reg_check_chans_work [cfg80211], check_lifetime
+[  316.386520] [      C0] workqueue mm_percpu_wq: flags=0x108
+[  316.386529] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  316.386536] [      C0]     pending: vmstat_update
+[  316.386545] [      C0]   pwq 30: cpus=7 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  316.386552] [      C0]     pending: vmstat_update
+[  316.386577] [      C0] workqueue cgroup_bpf_destroy: flags=0x100
+[  316.386585] [      C0]   pwq 18: cpus=4 node=0 flags=0x0 nice=0 active=1 refcnt=2
+[  316.386592] [      C0]     in-flight: 125:cgroup_bpf_release for 308s
+[  316.386611] [      C0] workqueue writeback: flags=0x4a
+[  316.386618] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=2 refcnt=3
+[  316.386624] [      C0]     in-flight: 90:wb_workfn for 0s ,93:wb_workfn for 0s
+[  316.386682] [      C0] workqueue ipv6_addrconf: flags=0x6000a
+[  316.386687] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=11
+[  316.386693] [      C0]     in-flight: 13:addrconf_verify_work for 194s
+[  316.386704] [      C0]     inactive: addrconf_verify_work
+[  316.386772] [      C0] workqueue ath11k_aux_wq: flags=0x6000a
+[  316.386781] [      C0]   pwq 32: cpus=0-7 flags=0x4 nice=0 active=1 refcnt=10
+[  316.386788] [      C0]     in-flight: 89:ath11k_core_reset [ath11k] for 286s
+[  316.386836] [      C0] pool 2: cpus=0 node=0 flags=0x0 nice=0 hung=0s workers=3 idle: 9 10
+[  316.386852] [      C0] pool 14: cpus=3 node=0 flags=0x0 nice=0 hung=0s workers=18 idle: 1156 1157 1155
+[  316.386867] [      C0] pool 18: cpus=4 node=0 flags=0x0 nice=0 hung=277s workers=4 idle: 86
+[  316.386880] [      C0] pool 32: cpus=0-7 flags=0x4 nice=0 hung=0s workers=11 idle: 77 183 75 650 649
+[  316.386901] [      C0] Showing backtraces of busy workers in stalled worker pools:
+[  316.386911] [      C0] pool 18:
+[  316.386913] [      C0] task:kworker/4:2     state:D stack:13936 pid:124   tgid:124   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  316.386924] [      C0] Workqueue: events reg_todo [cfg80211]
+[  316.387011] [      C0] Call trace:
+[  316.387013] [      C0]  __switch_to+0x210/0x358 (T)
+[  316.387021] [      C0]  __schedule+0x658/0xa80
+[  316.387025] [      C0]  schedule+0x58/0xd4
+[  316.387029] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  316.387034] [      C0]  __mutex_lock+0x428/0x970
+[  316.387038] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  316.387042] [      C0]  mutex_lock+0x28/0x5c
+[  316.387046] [      C0]  reg_process_self_managed_hints+0x40/0xf4 [cfg80211]
+[  316.387131] [      C0]  reg_todo+0x260/0x2bc [cfg80211]
+[  316.387221] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  316.387227] [      C0]  worker_thread+0x1f8/0x2e8
+[  316.387231] [      C0]  kthread+0x108/0x134
+[  316.387236] [      C0]  ret_from_fork+0x10/0x20
+[  316.387242] [      C0] pool 18:
+[  316.387245] [      C0] task:kworker/4:3     state:D stack:13168 pid:125   tgid:125   ppid:2      task_flags:0x4208060 flags:0x00000010
+[  316.387256] [      C0] Workqueue: cgroup_bpf_destroy cgroup_bpf_release
+[  316.387260] [      C0] Call trace:
+[  316.387262] [      C0]  __switch_to+0x210/0x358 (T)
+[  316.387267] [      C0]  __schedule+0x658/0xa80
+[  316.387270] [      C0]  schedule+0x58/0xd4
+[  316.387274] [      C0]  schedule_preempt_disabled+0x28/0x48
+[  316.387278] [      C0]  __mutex_lock+0x428/0x970
+[  316.387282] [      C0]  __mutex_lock_slowpath+0x18/0x28
+[  316.387286] [      C0]  mutex_lock+0x28/0x5c
+[  316.387290] [      C0]  cgroup_bpf_release+0x44/0x378
+[  316.387293] [      C0]  process_scheduled_works+0x18c/0x4d0
+[  316.387299] [      C0]  worker_thread+0x1f8/0x2e8
+[  316.387303] [      C0]  kthread+0x108/0x134
+[  316.387308] [      C0]  ret_from_fork+0x10/0x20
+[  316.387314] [      C0] pool 18:
+[  316.387317] [      C0] task:kworker/4:0     state:R  running task     stack:13936 pid:45    tgid:45    ppid:2      task_flags:0x4208060 flags:0x00000012
+[  316.387327] [      C0] Workqueue: events bpf_prog_free_deferred
+[  316.387332] [      C0] Call trace:
+[  316.387334] [      C0]  __switch_to+0x210/0x358 (T)
+[  316.387337] [      C0]  0xffffffc08443f000
+[  316.403588] [      C0] dpu_crtc_frame_event_cb: 1 callbacks suppressed
+[  316.403596] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.420248] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.436915] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.453582] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.470254] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.486921] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.503582] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.520248] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.536915] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow
+[  316.553581] [      C0] [drm:dpu_crtc_frame_event_cb] *ERROR* crtc103 event 1 overflow

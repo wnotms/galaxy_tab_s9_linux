@@ -1,0 +1,29 @@
+PID=13
+kworker/u32:1+ipv6_addrconf
+[<0>] rtnl_lock+0x1c/0x2c
+[<0>] addrconf_verify_work+0x1c/0x3c
+[<0>] process_scheduled_works+0x18c/0x4d0
+[<0>] worker_thread+0x1f8/0x2e8
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20
+PID=16
+rcu_preempt
+[<0>] rcu_gp_fqs_loop+0x1c0/0x66c
+[<0>] rcu_gp_kthread+0x64/0x124
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20
+PID=19
+rcu_exp_gp_kthread_worker
+[<0>] kthread_worker_fn+0x1bc/0x324
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20
+PID=39
+kworker/3:0+events
+[<0>] bpf_prog_pack_free+0x30/0x1a8
+[<0>] bpf_jit_binary_pack_free+0x24/0x74
+[<0>] bpf_jit_free+0x50/0x168
+[<0>] bpf_prog_free_deferred+0x1d4/0x1f4
+[<0>] process_scheduled_works+0x18c/0x4d0
+[<0>] worker_thread+0x1f8/0x2e8
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20

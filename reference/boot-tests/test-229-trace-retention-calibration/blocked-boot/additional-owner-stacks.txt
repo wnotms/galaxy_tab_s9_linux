@@ -1,0 +1,42 @@
+PID=45
+kworker/4:0+events
+[<0>] 0xffffffc08443f000
+PID=91
+kworker/u32:6+events_unbound
+[<0>] synchronize_rcu_normal+0x168/0x204
+[<0>] synchronize_rcu+0x54/0x1b4
+[<0>] __ieee80211_scan_completed+0xac/0x274 [mac80211]
+[<0>] ieee80211_scan_work+0x70/0x588 [mac80211]
+[<0>] cfg80211_wiphy_work+0xb0/0x1a4 [cfg80211]
+[<0>] process_scheduled_works+0x18c/0x4d0
+[<0>] worker_thread+0x1f8/0x2e8
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20
+PID=888
+(agetty)
+[<0>] synchronize_rcu_normal+0x168/0x204
+[<0>] synchronize_rcu+0x54/0x1b4
+[<0>] rcu_sync_enter+0xcc/0x198
+[<0>] cgroup_procs_write_start+0x174/0x260
+[<0>] __cgroup_procs_write+0x68/0x170
+[<0>] cgroup_procs_write+0x20/0x3c
+[<0>] cgroup_file_write+0x84/0x160
+[<0>] kernfs_fop_write_iter+0xfc/0x1a0
+[<0>] vfs_write+0x2ac/0x4b8
+[<0>] ksys_write+0x7c/0xf4
+[<0>] __arm64_sys_write+0x20/0x30
+[<0>] invoke_syscall+0x4c/0xfc
+[<0>] el0_svc_common+0x90/0xe0
+[<0>] do_el0_svc+0x20/0x30
+[<0>] el0_svc+0x40/0x9c
+[<0>] el0t_64_sync_handler+0x88/0x134
+[<0>] el0t_64_sync+0x1a4/0x1a8
+PID=113
+kworker/0:2+events
+[<0>] static_key_disable_cpuslocked+0x40/0xe0
+[<0>] static_key_disable+0x24/0x3c
+[<0>] once_deferred+0x30/0x58
+[<0>] process_scheduled_works+0x18c/0x4d0
+[<0>] worker_thread+0x1f8/0x2e8
+[<0>] kthread+0x108/0x134
+[<0>] ret_from_fork+0x10/0x20

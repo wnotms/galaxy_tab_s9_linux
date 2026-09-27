@@ -1,0 +1,184 @@
+{
+  "boot_id": "a50ba330-96cb-446f-bccf-a09e8270f0df",
+  "trace_sha256": "430d09d99cead1dd58f75d6826b36eccb099bad3415c28a1b4265f4dfd07e145",
+  "trace_text_bytes": 3249434,
+  "record_count": 32730,
+  "events": {
+    "csd_function_entry": 5173,
+    "csd_function_exit": 5173,
+    "csd_queue_cpu": 5232,
+    "ipi_entry": 6100,
+    "ipi_exit": 6100,
+    "ipi_raise": 4936,
+    "tracing_mark_write": 16
+  },
+  "all_cpu_common_marker_seconds": 60.00659,
+  "per_cpu": [
+    {
+      "cpu": 0,
+      "marker_coverage_seconds": 60.015977,
+      "binary_stats": {
+        "entries": 7541,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 281448,
+        "oldest event ts": 196.910023,
+        "now ts": 256.943082,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 895011,
+      "peak_41s_serialized": {
+        "bytes": 610961,
+        "window_end_relative_us": 60141623
+      }
+    },
+    {
+      "cpu": 1,
+      "marker_coverage_seconds": 60.016159,
+      "binary_stats": {
+        "entries": 2759,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 69516,
+        "oldest event ts": 196.915734,
+        "now ts": 256.943749,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 248494,
+      "peak_41s_serialized": {
+        "bytes": 169795,
+        "window_end_relative_us": 60136034
+      }
+    },
+    {
+      "cpu": 2,
+      "marker_coverage_seconds": 60.016497,
+      "binary_stats": {
+        "entries": 986,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 25736,
+        "oldest event ts": 196.917611,
+        "now ts": 256.94418,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 87689,
+      "peak_41s_serialized": {
+        "bytes": 61454,
+        "window_end_relative_us": 40991016
+      }
+    },
+    {
+      "cpu": 3,
+      "marker_coverage_seconds": 60.016864,
+      "binary_stats": {
+        "entries": 6221,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 180296,
+        "oldest event ts": 196.916999,
+        "now ts": 256.944759,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 625085,
+      "peak_41s_serialized": {
+        "bytes": 462102,
+        "window_end_relative_us": 49448465
+      }
+    },
+    {
+      "cpu": 4,
+      "marker_coverage_seconds": 60.016915,
+      "binary_stats": {
+        "entries": 1753,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 48316,
+        "oldest event ts": 196.915181,
+        "now ts": 256.945304,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 166025,
+      "peak_41s_serialized": {
+        "bytes": 124488,
+        "window_end_relative_us": 60142475
+      }
+    },
+    {
+      "cpu": 5,
+      "marker_coverage_seconds": 60.017489,
+      "binary_stats": {
+        "entries": 1416,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 38324,
+        "oldest event ts": 196.92152,
+        "now ts": 256.945826,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 131481,
+      "peak_41s_serialized": {
+        "bytes": 91614,
+        "window_end_relative_us": 60140149
+      }
+    },
+    {
+      "cpu": 6,
+      "marker_coverage_seconds": 60.017759,
+      "binary_stats": {
+        "entries": 1198,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 31744,
+        "oldest event ts": 196.921018,
+        "now ts": 256.946375,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 108756,
+      "peak_41s_serialized": {
+        "bytes": 80254,
+        "window_end_relative_us": 40990906
+      }
+    },
+    {
+      "cpu": 7,
+      "marker_coverage_seconds": 60.017429,
+      "binary_stats": {
+        "entries": 10856,
+        "overrun": 0,
+        "commit overrun": 0,
+        "bytes": 276224,
+        "oldest event ts": 196.91003,
+        "now ts": 256.946921,
+        "dropped events": 0,
+        "read events": 0
+      },
+      "serialized_bytes": 986141,
+      "peak_41s_serialized": {
+        "bytes": 673836,
+        "window_end_relative_us": 41071957
+      }
+    }
+  ],
+  "peak_41s_serialized": {
+    "bytes": 2213931,
+    "window_end_relative_us": 41072362
+  },
+  "console_bytes": 917504,
+  "other_log_reserve_bytes": 131072,
+  "trace_budget_bytes": 786432,
+  "peak_41s_to_budget_ratio": 2.8151588439941406,
+  "memory_coverage": "pass_for_observed_healthy_workload",
+  "serialized_capacity": "reject",
+  "reboot_persistence": "not_tested",
+  "early_boot_coverage": "not_tested",
+  "ready_for_wedge_series": false,
+  "limitations": "Latency-format trace read, not an actual panic/printk dump. Byte comparison excludes printk prefixes and later crash logs; observed workload is disarmed production steady state. Per-CPU windows omit remote sender records. No absence-based causal conclusion is supported."
+}

@@ -1,0 +1,93 @@
+[
+  {
+    "name": "dmesg",
+    "command": "dmesg",
+    "utc": "2026-09-27T04:27:51.727224+00:00",
+    "exit_code": 0,
+    "bytes": 147783
+  },
+  {
+    "name": "identity-runtime",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /proc/cmdline; for n in watchdog soft_watchdog softlockup_panic panic watchdog_thresh; do echo $n; cat /proc/sys/kernel/$n; done; cat /sys/devices/system/cpu/online; cat /sys/devices/system/cpu/cpuidle/current_driver",
+    "utc": "2026-09-27T04:27:51.811612+00:00",
+    "exit_code": 0,
+    "bytes": 1309
+  },
+  {
+    "name": "processes",
+    "command": "ps -eo pid,ppid,psr,stat,wchan:40,comm,args",
+    "utc": "2026-09-27T04:27:51.908681+00:00",
+    "exit_code": 0,
+    "bytes": 26683
+  },
+  {
+    "name": "pid1-stack",
+    "command": "cat /proc/1/status; cat /proc/1/stack",
+    "utc": "2026-09-27T04:27:52.009927+00:00",
+    "exit_code": 0,
+    "bytes": 1531
+  },
+  {
+    "name": "blocked-stacks",
+    "command": "for n in 13 16 19 39; do echo PID=$n; cat /proc/$n/comm; cat /proc/$n/stack; done",
+    "utc": "2026-09-27T04:27:52.083248+00:00",
+    "exit_code": 0,
+    "bytes": 827
+  },
+  {
+    "name": "counters-before",
+    "command": "cat /proc/uptime; cat /proc/interrupts; cat /proc/softirqs; cat /proc/stat",
+    "utc": "2026-09-27T04:27:52.163571+00:00",
+    "exit_code": 0,
+    "bytes": 17081
+  },
+  {
+    "name": "mounts",
+    "command": "cat /proc/mounts",
+    "utc": "2026-09-27T04:27:52.245147+00:00",
+    "exit_code": 0,
+    "bytes": 1302
+  },
+  {
+    "name": "stage-record",
+    "command": "cat /var/log/gts9-minimal-last-boot; cat /var/log/gts9-watchdog-debug.txt",
+    "utc": "2026-09-27T04:28:01.294751+00:00",
+    "exit_code": 0,
+    "bytes": 2318
+  },
+  {
+    "name": "kernel-journal",
+    "command": "journalctl -b 0 -k --no-pager -o short-monotonic",
+    "utc": "2026-09-27T04:28:01.365577+00:00",
+    "exit_code": 0,
+    "bytes": 157992
+  },
+  {
+    "name": "journal-boots",
+    "command": "journalctl --list-boots --no-pager --no-legend",
+    "utc": "2026-09-27T04:28:01.455112+00:00",
+    "exit_code": 1,
+    "bytes": 0
+  },
+  {
+    "name": "trace-state",
+    "command": "cat /sys/kernel/tracing/current_tracer; cat /sys/kernel/tracing/tracing_on; cat /sys/kernel/tracing/set_event; cat /sys/kernel/tracing/trace_clock; cat /sys/kernel/tracing/buffer_size_kb; ls /sys/kernel/tracing/instances; cat /proc/sys/kernel/ftrace_dump_on_oops; cat /sys/module/rcupdate/parameters/rcu_cpu_stall_ftrace_dump",
+    "utc": "2026-09-27T04:28:01.528612+00:00",
+    "exit_code": 0,
+    "bytes": 93
+  },
+  {
+    "name": "pstore",
+    "command": "ls -la /sys/fs/pstore /var/lib/systemd/pstore",
+    "utc": "2026-09-27T04:28:01.607257+00:00",
+    "exit_code": 0,
+    "bytes": 370
+  },
+  {
+    "name": "counters-after",
+    "command": "cat /proc/uptime; cat /proc/interrupts; cat /proc/softirqs; cat /proc/stat",
+    "utc": "2026-09-27T04:28:10.670712+00:00",
+    "exit_code": 0,
+    "bytes": 17084
+  }
+]

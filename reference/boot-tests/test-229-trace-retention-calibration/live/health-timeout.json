@@ -1,0 +1,6 @@
+{
+  "command": "systemctl --failed --no-pager followed by health reads",
+  "timeout_s": 30,
+  "result": "local subprocess timed out; no completed health capture",
+  "interpretation": "systemctl responsiveness not established"
+}

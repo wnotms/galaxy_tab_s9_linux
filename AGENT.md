@@ -2,7 +2,7 @@
 
 ## Current review (2026-09-27)
 
-Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and the trace sizing assumptions. Test-228 completed; the next gate is trace retention, with offline replay of runner verdicts. On 2026-09-27 the owner reconnected the tablet in TWRP and requested continuation, resuming hardware work. Test-229 starts with recovery evidence, verified production partition identity and healthy-boot trace capacity calibration. Preserve the production kernel/configuration while establishing retention; no new wedge series before that gate passes.
+Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and trace sizing assumptions. The owner resumed hardware work on 2026-09-27. Test-229 captured another CPU 6 non-response, followed by owner recovery to Debian and a healthy 60-second calibration. Memory coverage passed for that observation, but the reduced seven-event set still exceeds the persistent text budget (2,213,931 bytes in 41 seconds versus 786,432 available). Next prepare bounded serialization offline; no new wedge series before retention passes. The unchanged production profile has watchdog/panic disabled, so matching production partition hashes does not establish the armed stall baseline. Do not reuse the outdated parked baseline bundle. Preserve the production kernel/configuration while establishing retention.
 
 ## Mission
 

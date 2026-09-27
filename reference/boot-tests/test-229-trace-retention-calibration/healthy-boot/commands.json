@@ -1,0 +1,44 @@
+[
+  {
+    "name": "identity",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; cat /proc/cmdline; cat /sys/devices/system/cpu/online; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager",
+    "utc": "2026-09-27T04:33:22.374769+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "recovery-state",
+    "command": "for n in watchdog soft_watchdog softlockup_panic panic watchdog_thresh; do echo $n; cat /proc/sys/kernel/$n; done; cat /sys/devices/system/cpu/cpuidle/current_driver",
+    "utc": "2026-09-27T04:33:22.471638+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "kernel-journal",
+    "command": "journalctl -b 0 -k --no-pager -o short-monotonic",
+    "utc": "2026-09-27T04:33:22.565970+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "journal-boots",
+    "command": "LC_ALL=C journalctl --list-boots --no-pager",
+    "utc": "2026-09-27T04:33:22.651618+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "trace-state",
+    "command": "cat /sys/kernel/tracing/current_tracer; cat /sys/kernel/tracing/tracing_on; cat /sys/kernel/tracing/set_event; cat /sys/kernel/tracing/trace_clock; cat /sys/kernel/tracing/buffer_size_kb; cat /sys/kernel/tracing/trace_options; cat /proc/sys/kernel/ftrace_dump_on_oops; cat /sys/module/rcupdate/parameters/rcu_cpu_stall_ftrace_dump; ls /sys/kernel/tracing/instances",
+    "utc": "2026-09-27T04:33:28.553282+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "available-events",
+    "command": "cat /sys/kernel/tracing/available_events",
+    "utc": "2026-09-27T04:33:28.637318+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "counters",
+    "command": "cat /proc/uptime; cat /proc/interrupts; cat /proc/softirqs",
+    "utc": "2026-09-27T04:33:28.712577+00:00",
+    "exit_code": 0
+  }
+]

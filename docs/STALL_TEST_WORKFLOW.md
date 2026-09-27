@@ -1,6 +1,6 @@
 # Stall investigation: direction review and offline-first workflow
 
-Updated 2026-09-27 after test-228. This is the current work queue. Historical
+Updated 2026-09-27 after test-229. This is the current work queue. Historical
 test records remain evidence of what was observed and concluded at the time;
 the corrections here take precedence over their causal interpretations.
 
@@ -154,5 +154,25 @@ coverage it narrows to failure before that tracepoint, not automatically the GIC
 IPI raise and entry also are not a one-to-one request counter: delivery may be
 coalesced. Match CPU, function/CSD where available and time ordering.
 
-No real device was contacted, rebooted or flashed for this review. Physical
-capture readiness is intentionally left unproven pending the retention gates.
+The original direction review was offline. Hardware work resumed at the owner's
+request for [test-229](../reference/boot-tests/test-229-trace-retention-calibration/README.md).
+After an unarmed production boot showed CPU 6 non-response, the owner rebooted
+to Debian. On that recovered boot the reduced seven-event set retained all
+CPU markers over 60 seconds with no overruns, but produced 3,249,434 bytes of
+text. The busiest 41-second window alone was 2,213,931 bytes, exceeding the
+786,432-byte trace budget before printk overhead. Memory coverage passed for
+that healthy workload; persistent capacity failed. Reboot persistence and
+early-boot coverage remain untested. No new wedge series is ready.
+
+The next step is an offline bounded per-CPU serialization prototype using the
+complete test-229 trace as a fixture. Account for all serialized bytes, metadata,
+CPU imbalance and cross-CPU sender evidence. Truncated coverage must remain
+inconclusive for missing-event claims. `orig_cpu` selects the dumping CPU, not
+necessarily the stalled target. If the required coverage cannot fit, validate
+another sink or narrow the diagnostic question before another physical trial.
+See the test record for the concrete design constraints.
+
+The live production image has watchdog, soft_watchdog, softlockup_panic and panic
+all zero. Verify runtime arming independently of partition restoration hashes;
+the parked stall-baseline bundle has outdated console tokens. Build any future
+armed candidate from the current profile and retain its independent identity.

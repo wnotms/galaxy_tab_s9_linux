@@ -1,0 +1,26 @@
+[
+  {
+    "name": "identity",
+    "command": "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/devices/system/cpu/online; cat /proc/1/wchan; timeout 5 systemctl --failed --no-pager",
+    "status": 0,
+    "utc": "2026-09-27T04:37:47.853028+00:00"
+  },
+  {
+    "name": "trace",
+    "command": "ls /sys/kernel/tracing/instances; cat /sys/kernel/tracing/current_tracer /sys/kernel/tracing/set_event; for f in watchdog soft_watchdog softlockup_panic panic; do echo \"$f=$(cat /proc/sys/kernel/$f)\"; done",
+    "status": 0,
+    "utc": "2026-09-27T04:37:47.966901+00:00"
+  },
+  {
+    "name": "journal",
+    "command": "journalctl -k -b --no-pager -o short-monotonic",
+    "status": 0,
+    "utc": "2026-09-27T04:37:48.088764+00:00"
+  },
+  {
+    "name": "trace-sha256",
+    "command": "sha256sum /tmp/gts9-trace229-a50ba330-96cb-446f-bccf-a09e8270f0df/trace.txt",
+    "status": 0,
+    "utc": "2026-09-27T04:37:48.196290+00:00"
+  }
+]
