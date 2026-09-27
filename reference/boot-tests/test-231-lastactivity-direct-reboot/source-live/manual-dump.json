@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "echo 1 > /sys/module/gts9_lastactivity/parameters/dump"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:15:40.913932+00:00"
+}

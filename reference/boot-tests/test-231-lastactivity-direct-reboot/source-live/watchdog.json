@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "for n in watchdog soft_watchdog softlockup_panic panic; do echo $n; cat /proc/sys/kernel/$n; done; cat /var/log/gts9-watchdog-debug.txt"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T05:15:13.705844+00:00"
+}

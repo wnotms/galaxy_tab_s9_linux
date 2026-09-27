@@ -1,0 +1,43 @@
+watchdog
+1
+soft_watchdog
+1
+softlockup_panic
+1
+panic
+10
+# gts9 watchdog debug profile
+mode=apply
+utc=2026-09-27T05:14:27Z
+boot_id=d953fd46-3ac7-4176-8c2f-30054158cd27
+uptime=3.76
+cmdline_flag=gts9_watchdog_debug=1
+kernel.watchdog: requested=1 effective=1 (was 0)
+kernel.softlockup_panic: requested=1 effective=1 (was 1)
+kernel.softlockup_all_cpu_backtrace: requested=1 effective=1 (was 0)
+kernel.hung_task_timeout_secs: requested=45 effective=45 (was 120)
+kernel.hung_task_panic: requested=1 effective=1 (was 0)
+kernel.hung_task_warnings: requested=5 effective=5 (was 10)
+kernel.hung_task_all_cpu_backtrace: requested=1 effective=1 (was 0)
+workqueue.panic_on_stall: requested=0 effective=0 (was 0)
+workqueue.panic_on_stall_time: requested=45 effective=45 (was 45)
+kernel.panic_on_oops: requested=1 effective=1 (was 1)
+panic_reboot=armed (panic=10)
+kernel.watchdog=1
+kernel.watchdog_thresh=10
+kernel.softlockup_panic=1
+kernel.softlockup_all_cpu_backtrace=1
+kernel.hung_task_timeout_secs=45
+kernel.hung_task_panic=1
+kernel.hung_task_warnings=5
+workqueue.watchdog_thresh=30
+workqueue.panic_on_stall=0
+workqueue.panic_on_stall_time=45
+hardlockup=unsupported (watchdog: Hard watchdog permanently disabled)
+watchdog_device=absent (no /dev/watchdog0, /sys/class/watchdog empty)
+pstore_backend=ramoops-registered
+pstore_records=0
+helper_total_ms=160
+helper_slowest_step=kernel.watchdog
+helper_slowest_ms=10
+# evidence: the serial console capture is the only pre-reboot source until a persistent store exists
