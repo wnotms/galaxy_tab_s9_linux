@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; gts9_capture=$(cat /sys/module/gts9_lastactivity/parameters/capture_id); printf \"capture=%s\n\" \"$gts9_capture\"; cat /sys/module/ramoops/parameters/ecc; cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic; cat /proc/sys/kernel/printk; cat /sys/module/gts9_pnmi_test/parameters/enable; cat /sys/module/gts9_pnmi_test/parameters/status; cat /proc/cmdline; cat /sys/kernel/notes | sha256sum; grep -E \" (_text|_stext|do_nothing|rcu_barrier_handler|irq_work_run|ipi_types)$\" /proc/kallsyms; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T18:18:08.421563+00:00"
+}

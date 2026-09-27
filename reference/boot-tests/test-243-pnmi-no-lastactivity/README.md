@@ -47,3 +47,9 @@ At the attempt's end restore original images and verify all five hashes plus
 a separate >=150-second production boot and ADB/NCM SSH protocol response.
 If software recovery cannot respond, request owner TWRP recovery and continue
 offline analysis; never silently extend this attempt or claim a CPU fix.
+
+Outcome: the single 306.92-second window was clean, without a CPU repair
+conclusion. A separately registered test244 now tests one direct Debian warm
+reboot (historical test234 failure path), using the unchanged installed
+profile. Restoration is deferred to that session's end to avoid redundant
+partition writes. The original single-boot budget is complete; see RESULTS.md.
