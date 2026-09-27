@@ -6,7 +6,7 @@ RELEASE='7.2.0-rc3-gts9wifi-dirty'
 MOUNT='/mnt/debian'
 def mount_root(phase):
  source=json.loads((control.P/'preflight/source.json').read_text())
- s,_=control.shell(phase,'root-devices','getprop ro.product.device; getprop ro.twrp.version; blkid; cat /proc/mounts',serial=control.RECOVERY,timeout=12)
+ s,_=control.shell(phase,'root-devices','getprop ro.product.device; getprop ro.twrp.version; toybox blkid /dev/block/mmcblk*p*; cat /proc/mounts',serial=control.RECOVERY,timeout=12)
  assert 'gts9wifi' in s and '3.7.1' in s
  candidates=[]
  for line in s.splitlines():

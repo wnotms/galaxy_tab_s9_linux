@@ -1,5 +1,8 @@
 # Test246 preparation: capture the failed target through pseudo-NMI
 
+Historical preparation record; deployment and restoration are now complete.
+See [RESULTS.md](RESULTS.md) for the closed trial and current device state.
+
 Motivated by the actual test245 startup fault, not another successful boot.
 This explicitly registered combined diagnostic keeps245's 0022+0024+0026,
 adds CONFIG_ARM64_PSEUDO_NMI and its runtime flag, and uses loglevel5 so the

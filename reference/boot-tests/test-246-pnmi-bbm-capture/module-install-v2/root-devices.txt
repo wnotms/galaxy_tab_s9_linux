@@ -1,0 +1,33 @@
+gts9wifi
+3.7.1_12-gts9wifi
+/dev/block/mmcblk1p1: LABEL="debian-root" UUID="851819a7-0d96-4217-b64a-aeeee5d8be61" TYPE="ext4"
+rootfs / rootfs rw,seclabel,size=5087148k,nr_inodes=1271787 0 0
+tmpfs /dev tmpfs rw,seclabel,nosuid,relatime,size=5362552k,nr_inodes=1340638,mode=755 0 0
+devpts /dev/pts devpts rw,seclabel,relatime,mode=600,ptmxmode=000 0 0
+proc /proc proc rw,relatime,gid=3009,hidepid=invisible 0 0
+sysfs /sys sysfs rw,seclabel,relatime 0 0
+selinuxfs /sys/fs/selinux selinuxfs rw,relatime 0 0
+tmpfs /mnt tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=5362552k,nr_inodes=1340638,mode=755,gid=1000 0 0
+tmpfs /apex tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=5451128k,nr_inodes=1362782,mode=755 0 0
+tmpfs /linkerconfig tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=5451128k,nr_inodes=1362782,mode=755 0 0
+tmpfs /mnt/installer tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=5362552k,nr_inodes=1340638,mode=755,gid=1000 0 0
+tmpfs /mnt/androidwritable tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=5362552k,nr_inodes=1340638,mode=755,gid=1000 0 0
+none /dev/blkio cgroup rw,nosuid,nodev,noexec,relatime,blkio 0 0
+none /dev/cg2_bpf cgroup2 rw,nosuid,nodev,noexec,relatime 0 0
+none /dev/cpuctl cgroup rw,nosuid,nodev,noexec,relatime,cpu 0 0
+none /acct cgroup rw,nosuid,nodev,noexec,relatime,cpuacct 0 0
+none /dev/cpuset cgroup rw,nosuid,nodev,noexec,relatime,cpuset,noprefix,release_agent=/sbin/cpuset_release_agent 0 0
+none /dev/memcg cgroup rw,nosuid,nodev,noexec,relatime,memory 0 0
+tmpfs /tmp tmpfs rw,seclabel,relatime,size=5451128k,nr_inodes=1362782 0 0
+binder /dev/binderfs binder rw,relatime,max=1048576,stats=global 0 0
+none /config configfs rw,relatime 0 0
+pstore /sys/fs/pstore pstore rw,seclabel,relatime 0 0
+adb /dev/usb-ffs/adb functionfs rw,relatime 0 0
+fastboot /dev/usb-ffs/fastboot functionfs rw,relatime 0 0
+mtp /dev/usb-ffs/mtp functionfs rw,relatime 0 0
+/dev/block/by-name/efs /mnt/vendor/efs ext4 ro,seclabel,relatime,norecovery 0 0
+/dev/block/by-name/sec_efs /efs ext4 ro,seclabel,relatime,norecovery 0 0
+/dev/block/by-name/apnhlos /vendor/firmware_mnt vfat ro,relatime,fmask=0000,dmask=0000,allow_utime=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro 0 0
+/dev/block/by-name/metadata /metadata ext4 ro,seclabel,relatime,norecovery 0 0
+/dev/block/sda28 /cache ext4 rw,seclabel,relatime 0 0
+/dev/block/dm-7 /data f2fs rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=5678,usrquota,grpquota,inlinecrypt,alloc_mode=default,checkpoint_merge,fsync_mode=nobarrier,compress_algorithm=lz4,compress_log_size=5,compress_mode=user,discard_unit=block,memory=normal 0 0

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "command -v busybox; command -v toybox; ls -l /dev/block/mmc*; busybox blkid /dev/block/mmc*"
+  ],
+  "status": 127,
+  "utc": "2026-09-27T19:35:10.642835+00:00"
+}

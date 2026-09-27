@@ -1,5 +1,8 @@
 # Test246 preparation complete: matching kernel, modules and rollback artifacts
 
+Historical preparation record; deployment and restoration are now complete.
+See [RESULTS.md](RESULTS.md) for the closed trial and current device state.
+
 Not flashed or booted yet. CPU repair remains OPEN. This preparation follows
 the natural CPU2 failure in245; it does not turn a compile into a repair result.
 

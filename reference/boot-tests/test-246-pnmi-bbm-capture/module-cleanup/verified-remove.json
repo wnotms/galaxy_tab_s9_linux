@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "test \"$(find /mnt/debian/usr/lib/modules/.gts9-test246-tested -type f | wc -l)\" -eq 181 && (cd /mnt/debian/usr/lib/modules/.gts9-test246-tested && sha256sum -c /tmp/gts9-246-candidate-module-checksums.txt) && rm -rf -- /mnt/debian/usr/lib/modules/.gts9-test246-tested && test ! -e /mnt/debian/usr/lib/modules/.gts9-test246-tested"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:39:43.773715+00:00"
+}

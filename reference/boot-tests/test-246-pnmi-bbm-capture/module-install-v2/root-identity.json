@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cat /proc/mounts; cat /mnt/debian/etc/machine-id; cat /mnt/debian/etc/debian_version; df -k /mnt/debian"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:35:34.558934+00:00"
+}

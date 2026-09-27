@@ -1,5 +1,14 @@
 # Stall investigation: direction review and offline-first workflow
 
+Test246 is now closed: matched PSEUDO_NMI kernel plus181 module files, one
+120.08 s diagnostic boot without a detected fault. Runtime identity/GIC/module
+checks pass, but no failed CPU2 PC was captured and no repair is established.
+Both original modules and images were restored; production120.07 s plus ADB/
+USB-NCM SSH-banner checks pass. No failed units in this boot; earlier UPower
+failure remains unresolved. See test246 RESULTS.md. Do not repeat its closed
+budget. Next offline question: can capture start at the first stuck CSD request
+before a later watchdog panic cuts off the target backtrace?
+
 Test245 outcome: positive natural startup failure at30.68 s (RCU CPU2), then
 36.54 s (CPU1 soft lockup/panic), before any low-address workload. The corrected
 BBM kernel did not prevent this fault. Attributed retained console/panic provide

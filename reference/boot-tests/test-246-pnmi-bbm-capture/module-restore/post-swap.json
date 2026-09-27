@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "ls -ld /mnt/debian/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty /mnt/debian/usr/lib/modules/.gts9-test246-*; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:39:43.552237+00:00"
+}

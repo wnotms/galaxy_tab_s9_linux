@@ -2,19 +2,18 @@
 
 ## Current review (2026-09-28)
 
-Test246 preparation is built/packaged, NOT flashed. It keeps245's0022+0024+0026,
-adds PSEUDO_NMI plus its two Kconfig-selected HAVE_* capabilities (hardlockup
-detector still off), loglevel5 and runtime GIC flag. No calibration helper.
-Exact symbols in out/test246, bundle out/boot-bundle-pnmi-bbm; validator/depmod
-pass. Full current-module comparison finds bluetooth/mac80211/ath11k add62/19/8
-priority-mask alternatives while imported-symbol CRC mappings stay equal.
-Therefore deploy matched modules too; version-string checks alone miss this.
-Original181-file directory is backed up with all device hashes before/after;
-candidate archive and swap/rollback pass offline. See246 BUILD_RESULTS.md.
-Device remains original production; physical deployment still needs fresh
-TWRP/mounted-root/partition/module gates. No reboot before the complete pair is
-verified; rollback must restore modules AND boot/vendor_boot. One120 s target,
-no workload or blind repeated healthy boots. CPU repair remains OPEN.
+Test246 is CLOSED after its one matched-kernel/module target. Boot
+2de14bb7-4cd7-4b76-a78c-ad3766d187fa, cap882ba36f-60e6-4c52-a1a0-0e2167ffb530,
+exact notes/six anchors +0x40000, pseudo-NMI/LA1/ECC64/1-1-1-10 all verified.
+All181 candidate module files and the three affected runtime build-id notes
+match. No failure detected through120.08 s; no failed-target PC or repair proof.
+Original181 modules AND boot/vendor_boot restored; all-five hashes pass.
+Final production f231faf9-fd13-468d-b6ec-58b8ade46d8e passed120.07 s, no failed
+units, ADB and USB-NCM SSH banner responsive (no authenticated SSH shell).
+Earlier UPower217/USER remains unresolved despite absence in this boot.
+See246 RESULTS.md; initial missing-blkid read-only failure and toybox fix are
+preserved. No more identical246 boots. Next review early capture at the stuck
+synchronization boundary offline from245 evidence. CPU repair remains OPEN.
 
 Test245 now CLOSED with a real natural startup failure before its workload.
 Fixed-BBM target9c9d553e-86c9-4b80-b6d7-9c29447f7125, cap9343ce3b-8159-47ad-

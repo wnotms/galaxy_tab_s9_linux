@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "toybox blkid /dev/block/mmcblk1p1; toybox od -An -tx1 -j 1080 -N 2 /dev/block/mmcblk1p1; toybox od -An -tx1 -j 1128 -N 16 /dev/block/mmcblk1p1"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T19:35:19.102188+00:00"
+}
