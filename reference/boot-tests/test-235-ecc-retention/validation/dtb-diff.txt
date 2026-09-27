@@ -1,0 +1,10 @@
+--- ECC=0 DTB
++++ ECC=64 DTB
+@@ -1203,6 +1203,7 @@
+ 			record-size = <0x20000>;
+ 			console-size = <0xe0000>;
+ 			pmsg-size = <0x100000>;
++			ecc-size = <0x40>;
+ 			no-map;
+ 			phandle = <0x186>;
+ 		};

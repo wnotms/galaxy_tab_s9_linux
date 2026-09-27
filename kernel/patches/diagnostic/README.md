@@ -146,3 +146,17 @@ layout without updating the capacity calculation. The attribute is removed
 before freeing the backing mapping. Build with
 `GTS9_DIAGNOSTIC_PATCHES=0023-gts9-ramoops-live-readback.patch` and use
 `boot/cmdline.ramoops-live.example.txt`. Test-234 preregisters the trial.
+
+## `0024-gts9-ramoops-ecc64.patch` — DIAGNOSTIC ONLY
+
+Adds upstream `ecc-size = <64>` to the existing X710 ramoops DT node for an
+isolated integrity trial after tests 233/234. Default 128-byte blocks plus
+64 parity symbols fit the Reed–Solomon field. At most 32 erroneous symbols
+per block can be corrected; parity corruption and layout changes matter.
+Reserved region/zone sizes and mem-type remain unchanged, but usable capacity
+shrinks. Source and observer must have the same ECC layout. Old ECC=0 data is
+incompatible; do not treat first-boot correction errors as this trial's result.
+
+Select only `GTS9_DIAGNOSTIC_PATCHES=0024-gts9-ramoops-ecc64.patch`, retain the
+production cmdline/config, and require exact identified bytes after reboot.
+See test-235's preregistration. This is not a CPU fix or crash-retention proof.
