@@ -1,0 +1,205 @@
+{
+  "verdict": "fail_corrupted_snapshot",
+  "source_boot_id": "d953fd46-3ac7-4176-8c2f-30054158cd27",
+  "source_capture_id": "0127f2c4-c55e-4a3a-99c3-52deffd56059",
+  "observer_boot_id": "85b0f19e-00c9-4281-95dd-1942aacd3273",
+  "immediate_next_retained_boot": true,
+  "source_marker_sha256": "be6319720a626d06c2d0531347ee3b46b7832a71cc0f5e969d18a444d27fcfcf",
+  "pstore_sha256": "e858555240f5cfb08ff12494e117e4e6c671138f52d807061ae647729004a010",
+  "pstore_bytes": 8818,
+  "expected_marker_lines": 58,
+  "exact_marker_lines": 50,
+  "corrupted_marker_lines": 8,
+  "changed_marker_bytes": 18,
+  "changed_marker_bits": 26,
+  "repeated_device_and_host_reads_identical": true,
+  "source_journal_markers_still_exact_after_reboot": true,
+  "ramoops_ecc": 0,
+  "ready_for_wedge_series": false,
+  "loss_mechanism": "not_established",
+  "alignment": "58 consecutive physical lines from matching BEGIN; measured corruption only, no repaired trace or causal inference",
+  "changes": [
+    {
+      "line_1based": 5,
+      "expected_ascii": "GTS9_LA_EVENT cpu=0 kind=2 count=1916 ns=76736254188 a=ffffffc080145328 b=ffffff8a726ffba0 c=0000000000000000",
+      "recovered_hex": "475453395f4c415f4556444e54205370753d30206b696e643d3220636f756e743531393136206e733d373637333632353431383820613d6666666666666330383031343533323820623d6666666666663861373236666662613020633d30303030303030303030303030303030",
+      "byte_changes": [
+        {
+          "offset_in_line": 10,
+          "expected_hex": "45",
+          "recovered_hex": "44",
+          "xor_hex": "01",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 14,
+          "expected_hex": "63",
+          "recovered_hex": "53",
+          "xor_hex": "30",
+          "bit_differences": 2
+        },
+        {
+          "offset_in_line": 32,
+          "expected_hex": "3d",
+          "recovered_hex": "35",
+          "xor_hex": "08",
+          "bit_differences": 1
+        }
+      ]
+    },
+    {
+      "line_1based": 9,
+      "expected_ascii": "GTS9_LA_CPU id=0127f2c4-c55e-4a3a-99c3-52deffd56059 cpu=1 valid=1 seq=58202 nested_dropped=0",
+      "recovered_hex": "47545339554c415f4350552069643d30313237663263342d633535652d346133612d393963332d353264656666643536303539206370753d312076616c69643d31207365713d3538323032206e65737465645f64726f707065643d30",
+      "byte_changes": [
+        {
+          "offset_in_line": 4,
+          "expected_hex": "5f",
+          "recovered_hex": "55",
+          "xor_hex": "0a",
+          "bit_differences": 2
+        }
+      ]
+    },
+    {
+      "line_1based": 10,
+      "expected_ascii": "GTS9_LA_EVENT cpu=1 kind=0 count=1749 ns=76736655021 a=0000000000000002 b=ffffffc080141558 c=ffffff88159552d8",
+      "recovered_hex": "475453395f4c415f4556454e54206370753df1206b696e643d3020636f756e743d31373439206e733d373637333636353530323120613d3030303030303030303030303030303220623d6666666666666330383031343135353820633d66666666666638383135393535326438",
+      "byte_changes": [
+        {
+          "offset_in_line": 18,
+          "expected_hex": "31",
+          "recovered_hex": "f1",
+          "xor_hex": "c0",
+          "bit_differences": 2
+        }
+      ]
+    },
+    {
+      "line_1based": 31,
+      "expected_ascii": "GTS9_LA_EVENT cpu=4 kind=0 count=4732 ns=76819374084 a=0000000000000001 b=ffffffc080141558 c=ffffff8815130058",
+      "recovered_hex": "475453395f4c415f4556454e54206370753d34206b696e643d3020636f756e743d34373332206e733d373638313933373430383420613d3030303030303030303030303030303120623d6664666666666330383031303135353820633d66666666666638383135313330303538",
+      "byte_changes": [
+        {
+          "offset_in_line": 75,
+          "expected_hex": "66",
+          "recovered_hex": "64",
+          "xor_hex": "02",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 85,
+          "expected_hex": "34",
+          "recovered_hex": "30",
+          "xor_hex": "04",
+          "bit_differences": 1
+        }
+      ]
+    },
+    {
+      "line_1based": 38,
+      "expected_ascii": "GTS9_LA_EVENT cpu=5 kind=0 count=3749 ns=76808019396 a=0000000000000007 b=ffffffc080141558 c=ffffff880c4ac258",
+      "recovered_hex": "475453395f4c415f4556454e54206370753d322069696e643d3020636f756e743d33373439206e733d373638303830313933393620613d3030303030203030303030303030303720623d6666666666666330383031343135353820633d66666666666638383063346163323538",
+      "byte_changes": [
+        {
+          "offset_in_line": 18,
+          "expected_hex": "35",
+          "recovered_hex": "32",
+          "xor_hex": "07",
+          "bit_differences": 3
+        },
+        {
+          "offset_in_line": 20,
+          "expected_hex": "6b",
+          "recovered_hex": "69",
+          "xor_hex": "02",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 60,
+          "expected_hex": "30",
+          "recovered_hex": "20",
+          "xor_hex": "10",
+          "bit_differences": 1
+        }
+      ]
+    },
+    {
+      "line_1based": 40,
+      "expected_ascii": "GTS9_LA_EVENT cpu=5 kind=2 count=5091 ns=76712433042 a=ffffffc080205350 b=ffffff8a727b4220 c=0000000000000000",
+      "recovered_hex": "475453395f4c415f4556454e54206370753d35206b696e643d3220636f756e743d35303931206e423d373637313234333330343220613d6666646666666330383032303533353020623d6666666666663861373237623432323020633d30303030303030303030303030303030",
+      "byte_changes": [
+        {
+          "offset_in_line": 39,
+          "expected_hex": "73",
+          "recovered_hex": "42",
+          "xor_hex": "31",
+          "bit_differences": 3
+        },
+        {
+          "offset_in_line": 57,
+          "expected_hex": "66",
+          "recovered_hex": "64",
+          "xor_hex": "02",
+          "bit_differences": 1
+        }
+      ]
+    },
+    {
+      "line_1based": 42,
+      "expected_ascii": "GTS9_LA_EVENT cpu=5 kind=4 count=6186 ns=76734517834 a=ffffffc0820c727b b=0000000000000000 c=0000000000000000",
+      "recovered_hex": "475453395f4c415f4556454e54206370753d35206b696e643d3420636f756e743d36313836206e733d373637333435313738333420613d6666666666666330383230633732176220623d3030303030203030302030303030303020633d30303030303030303030303030303030",
+      "byte_changes": [
+        {
+          "offset_in_line": 69,
+          "expected_hex": "37",
+          "recovered_hex": "17",
+          "xor_hex": "20",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 79,
+          "expected_hex": "30",
+          "recovered_hex": "20",
+          "xor_hex": "10",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 83,
+          "expected_hex": "30",
+          "recovered_hex": "20",
+          "xor_hex": "10",
+          "bit_differences": 1
+        }
+      ]
+    },
+    {
+      "line_1based": 58,
+      "expected_ascii": "GTS9_LA_END id=0127f2c4-c55e-4a3a-99c3-52deffd56059 records=48 complete_history=0",
+      "recovered_hex": "475453395f4c415f454e442069643d30313237663263342d633535652d346133612d393963332d353264656666643536303639207265636e7264733d343020636f6d706c6574655f686973746f72793d30",
+      "byte_changes": [
+        {
+          "offset_in_line": 49,
+          "expected_hex": "35",
+          "recovered_hex": "36",
+          "xor_hex": "03",
+          "bit_differences": 2
+        },
+        {
+          "offset_in_line": 55,
+          "expected_hex": "6f",
+          "recovered_hex": "6e",
+          "xor_hex": "01",
+          "bit_differences": 1
+        },
+        {
+          "offset_in_line": 61,
+          "expected_hex": "38",
+          "recovered_hex": "30",
+          "xor_hex": "08",
+          "bit_differences": 1
+        }
+      ]
+    }
+  ]
+}

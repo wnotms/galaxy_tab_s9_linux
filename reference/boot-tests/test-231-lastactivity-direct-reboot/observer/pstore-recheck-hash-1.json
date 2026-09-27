@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "sha256sum /var/lib/systemd/pstore/console-ramoops-0"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:08:01.255989+00:00"
+}

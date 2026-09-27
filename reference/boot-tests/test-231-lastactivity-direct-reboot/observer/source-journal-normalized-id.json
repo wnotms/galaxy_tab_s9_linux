@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "169.254.42.1:5555",
+    "shell",
+    "journalctl -k -b d953fd463ac741768c2f30054158cd27 --no-pager -o short-monotonic"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T06:08:26.033982+00:00"
+}
