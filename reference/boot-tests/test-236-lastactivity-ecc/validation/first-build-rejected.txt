@@ -1,0 +1,24 @@
+ccache enabled: CCACHE_DIR=/home/ms/.cache/ccache
+Cache directory:                          /home/ms/.cache/ccache
+Config file:                              /home/ms/.cache/ccache/ccache.conf
+System config file:                       /etc/ccache.conf
+Stats updated:                            Sun Sep 27 15:21:30 2026
+Cacheable calls:                           796791 / 866887 (91.91%)
+  Hits:                                    722813 / 796791 (90.72%)
+using existing upstream checkout: /home/ms/Samsung/galaxy_tab_s9_linux/.work/linux-mainline
+verified upstream Linux: v7.2-rc3 @ a13c140cc289c0b7b3770bce5b3ad42ab35074aa
+applying 0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch
+applying 0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch
+applying 0004-drm-panel-add-samsung-ana38407.patch
+applying 0006-input-add-samsung-pogo-keyboard.patch
+applying 0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch
+applying 0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch
+applying 0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch
+applying 0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch
+applying nxp-ptn3222-apply-dt-register-overrides.patch
+installing keyboard-samsung-pogo.c -> keyboard/
+installing panel-samsung-ana38407.c -> panel/
+installing samsung-gts9wifi-sec-log.c -> qcom/
+prepared SM-X710 source overlay: /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi
+error: kernel/trace/gts9_lastactivity.c: already exists in working directory
+failed to apply diagnostic patch: 0022-gts9-lastactivity.patch
