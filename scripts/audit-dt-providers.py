@@ -41,6 +41,7 @@ import argparse
 import json
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 
@@ -285,30 +286,47 @@ def builtin_compatibles(modinfo: pathlib.Path) -> set:
     return out
 
 
-def driver_sources(tree: pathlib.Path, compatible: str) -> list:
-    """Files that declare this compatible, in either declaration form.
+def driver_source_index(tree: pathlib.Path) -> dict:
+    """Index declarations in one scan; lifetime is one audit, never on disk.
 
-    The second pass, needed because modinfo can only see drivers that registered a
-    `MODULE_DEVICE_TABLE(of, ...)`: `drivers/pci/controller/dwc/pcie-qcom.c` matches
-    `"qcom,pcie-sm8550"` with `CONFIG_PCIE_QCOM=y` and registers none, so the first
-    pass alone calls the node driverless.
-
-    Both declaration forms count - `{ .compatible = "x" }` and the declarator
-    macros `IRQCHIP_MATCH("x", ...)` / `TIMER_OF_DECLARE(name, "x", ...)` /
-    `CLK_OF_DECLARE(...)` / `OF_DECLARE(...)`.  Missing the macros made
-    `qcom,sm8550-pdc` look driverless while `drivers/irqchip/qcom-pdc.c` declares it
-    and `CONFIG_QCOM_PDC=y`.
+    Keep the same declaration forms as the old per-compatible scan: a
+    .compatible assignment, *DECLARE(name, "compatible", ...) or
+    *MATCH("compatible", ...). A bare mention still is not a driver.
     """
-    # Plain `(...)`, not `(?:...)`: grep -E is POSIX ERE and has no
-    # non-capturing groups.  `(?:` makes grep warn "? at start of expression" and
-    # match nothing, which silently turned every gap into "no driver source".
+    # Plain groups also work with the grep fallback: POSIX ERE has no
+    # non-capturing groups (`(?:` warns "? at start of expression").
     pattern = (r'(\.compatible\s*=\s*|[A-Z_]*DECLARE\([^,]+,\s*|'
-               r'[A-Z_]*MATCH\(\s*)"' + re.escape(compatible) + r'"')
-    found = subprocess.run(
-        ["grep", "-rlE", "--include=*.c", pattern, *SEARCH_DIRS],
-        cwd=tree, capture_output=True, text=True,
-    ).stdout.split()
-    return [pathlib.Path(p) for p in found if not p.startswith(NOT_A_DRIVER)]
+               r'[A-Z_]*MATCH\(\s*)"([^"]+)"')
+    if shutil.which("rg"):
+        command = ["rg", "--no-config", "--no-ignore", "--hidden",
+                   "--with-filename", "--no-heading", "--no-line-number",
+                   "--color=never", "--glob=*.c", "-e", pattern, "--", *SEARCH_DIRS]
+    else:
+        command = ["grep", "-rHE", "--include=*.c", pattern, *SEARCH_DIRS]
+    scan = subprocess.run(command, cwd=tree, capture_output=True, text=True, errors="replace")
+    if scan.returncode not in (0, 1):
+        # A failed scan must never become a successful "no driver" result.
+        raise RuntimeError(f"driver declaration scan failed: {scan.stderr.strip()}")
+    declarations = re.compile(pattern)
+    sources = {}
+    for row in scan.stdout.splitlines():
+        filename, separator, line = row.partition(":")
+        if not separator or filename.startswith(NOT_A_DRIVER):
+            continue
+        for match in declarations.finditer(line):
+            sources.setdefault(match.group(2), set()).add(pathlib.Path(filename))
+    return {compatible: sorted(paths) for compatible, paths in sources.items()}
+
+
+def driver_sources(tree: pathlib.Path, compatible: str, index=None) -> list:
+    """Exact lookup, including drivers without MODULE_DEVICE_TABLE(of, ...).
+
+    The caller shares one index across the audit. Direct calls still work and
+    rebuild the index, so later invocations cannot reuse stale kernel sources.
+    """
+    if index is None:
+        index = driver_source_index(tree)
+    return index.get(compatible, [])
 
 
 def read_config(path: pathlib.Path) -> dict:
@@ -322,7 +340,7 @@ def read_config(path: pathlib.Path) -> dict:
     return cfg
 
 
-def classify(tree: pathlib.Path, cfg: dict, exact: set, compatibles) -> dict:
+def classify(tree: pathlib.Path, cfg: dict, exact: set, compatibles, source_index=None) -> dict:
     """Can a built-in driver bind this node, and if not, why not?
 
     Pass 1 is exact membership in the compatibles built-in drivers declare.  Every
@@ -332,9 +350,11 @@ def classify(tree: pathlib.Path, cfg: dict, exact: set, compatibles) -> dict:
     """
     if any(c in exact for c in compatibles):
         return {"kind": "bound", "sources": []}
+    if source_index is None:
+        source_index = driver_source_index(tree)
     seen, unresolved = [], []
     for compatible in compatibles:
-        for source in driver_sources(tree, compatible):
+        for source in driver_sources(tree, compatible, source_index):
             symbol = config_symbol_for(tree, source)
             if symbol is None:
                 unresolved.append((compatible, str(source)))
@@ -405,11 +425,17 @@ def main() -> int:
         return 2
     exact = builtin_compatibles(modinfo)
 
+    try:
+        source_index = driver_source_index(tree)
+    except (OSError, RuntimeError) as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+
     matched, gaps, unknown, late = [], [], [], []
     for path, comps, status in parse_dts(text):
         if status in ("disabled", "fail", "reserved"):
             continue
-        verdict = classify(tree, cfg, exact, comps)
+        verdict = classify(tree, cfg, exact, comps, source_index)
         if verdict["kind"] in ("bound", "built_no_alias"):
             (late if verdict["kind"] == "built_no_alias" else matched).append(
                 (path, comps[0], verdict))

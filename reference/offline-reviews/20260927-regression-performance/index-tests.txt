@@ -1,0 +1,33 @@
+test_it_distinguishes_eq_m_from_eq_n_and_from_eq_y (test_dt_provider_audit.AuditDocTests.test_it_distinguishes_eq_m_from_eq_n_and_from_eq_y) ... ok
+test_it_names_the_pattern_and_where_it_comes_from (test_dt_provider_audit.AuditDocTests.test_it_names_the_pattern_and_where_it_comes_from) ... ok
+test_it_names_the_second_cpu_path_gap_as_its_own_candidate (test_dt_provider_audit.AuditDocTests.test_it_names_the_second_cpu_path_gap_as_its_own_candidate) ... ok
+test_it_records_all_three_traps (test_dt_provider_audit.AuditDocTests.test_it_records_all_three_traps) ... ok
+test_it_records_the_makefile_idioms (test_dt_provider_audit.AuditDocTests.test_it_records_the_makefile_idioms) ... ok
+test_it_states_its_own_limits (test_dt_provider_audit.AuditDocTests.test_it_states_its_own_limits) ... ok
+test_llcc_bwmon_is_not_hidden_by_the_llcc_controller (test_dt_provider_audit.AuditResultTests.test_llcc_bwmon_is_not_hidden_by_the_llcc_controller)
+`qcom,sm8550-llcc` must not swallow `qcom,sm8550-llcc-bwmon`. ... ok
+test_nothing_is_unclassified (test_dt_provider_audit.AuditResultTests.test_nothing_is_unclassified)
+An empty UNKNOWN set is the gate; a new node must fail loudly. ... ok
+test_pcie_is_not_reported_as_a_gap (test_dt_provider_audit.AuditResultTests.test_pcie_is_not_reported_as_a_gap)
+CONFIG_PCIE_QCOM=y with no MODULE_DEVICE_TABLE: bound, not a gap. ... ok
+test_rmtfs_mem_is_reported_as_a_real_gap (test_dt_provider_audit.AuditResultTests.test_rmtfs_mem_is_reported_as_a_real_gap)
+drivers/of/platform.c mentions it and is not its driver. ... ok
+test_the_cpu_path_bandwidth_monitors_are_reported (test_dt_provider_audit.AuditResultTests.test_the_cpu_path_bandwidth_monitors_are_reported)
+The finding that made this worth automating. ... ok
+test_the_module_only_trap_is_distinguished_from_n (test_dt_provider_audit.AuditResultTests.test_the_module_only_trap_is_distinguished_from_n)
+`=m` yields no driver here; the report must not blur it with `=n`. ... ok
+test_it_has_no_compatible_prefix_matching (test_dt_provider_audit.AuditScriptTests.test_it_has_no_compatible_prefix_matching)
+The modalias `C*` form is not a string prefix. ... ok
+test_it_is_executable_and_compiles (test_dt_provider_audit.AuditScriptTests.test_it_is_executable_and_compiles) ... ok
+test_it_requires_a_declaration_not_a_mention (test_dt_provider_audit.AuditScriptTests.test_it_requires_a_declaration_not_a_mention) ... ok
+test_it_uses_plain_groups_in_grep_patterns (test_dt_provider_audit.AuditScriptTests.test_it_uses_plain_groups_in_grep_patterns)
+`(?:` in a grep -E pattern matches nothing, silently. ... ok
+test_both_engines_preserve_exact_declarations_and_exclusions (test_dt_provider_audit.DriverIndexTests.test_both_engines_preserve_exact_declarations_and_exclusions) ... ok
+test_empty_result_is_valid_but_scan_errors_are_not (test_dt_provider_audit.DriverIndexTests.test_empty_result_is_valid_but_scan_errors_are_not) ... ok
+test_fallback_compatible_and_config_classification_still_work (test_dt_provider_audit.DriverIndexTests.test_fallback_compatible_and_config_classification_still_work) ... ok
+test_one_scan_per_audit_and_new_invocations_see_source_edits (test_dt_provider_audit.DriverIndexTests.test_one_scan_per_audit_and_new_invocations_see_source_edits) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.678s
+
+OK

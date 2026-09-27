@@ -1,0 +1,29 @@
+{
+  "after": {
+    "duration_s": 81.046,
+    "tests": 999
+  },
+  "audit_report_sha256": {
+    "audit-after.json": "c5522f86f18790205a96f6cf9fde9c21b6c466060d43ae562731430c2cc34790",
+    "audit-before.json": "c5522f86f18790205a96f6cf9fde9c21b6c466060d43ae562731430c2cc34790",
+    "audit-fallback.json": "c5522f86f18790205a96f6cf9fde9c21b6c466060d43ae562731430c2cc34790"
+  },
+  "base_commit": "007ba4a9e7de5ed26bc47f99d99f904a3fe49315",
+  "before": {
+    "duration_s": 125.281,
+    "tests": 995
+  },
+  "concurrent_kernel_build_during_benchmarks": false,
+  "hardware_actions": [],
+  "input_sha256": {
+    ".work/build/linux-out/modules.builtin.modinfo": "e86452c83361770ba72660530827e999753487e47df1c223f862a0625267cc85",
+    "out/kernel-gts9wifi/config": "42e37409887a1614467454f3a47c17a586b9fb67ef7f0d5003943803627889e9",
+    "out/kernel-gts9wifi/sm8550-samsung-gts9wifi.dtb": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+    "scripts/audit-dt-providers.py": "8cb2bf0acb2d1d4623d840c231465979fd32ee620d5a2458ac30f4adeb9b3934",
+    "tests/test_dt_provider_audit.py": "b35580347b73dbeb78a1d72a1383311881efc67e31a5c5180851dd977751ad15"
+  },
+  "old_audit_script_sha256": "7d8fca5aa7d40800535e3737a5c72b3300dadd19f648ac24161f1abd254c416b",
+  "python": "3.14.4",
+  "reduction_percent": 35.31,
+  "saved_s": 44.235
+}

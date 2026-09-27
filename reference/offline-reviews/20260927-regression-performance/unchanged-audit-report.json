@@ -1,0 +1,1277 @@
+{
+  "matched": 106,
+  "bound_without_alias": [
+    {
+      "path": "/pmu-a510",
+      "compatible": "arm,cortex-a510-pmu",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/perf/arm_pmuv3.c",
+            "ARM_PMUV3",
+            "y",
+            "arm,cortex-a510-pmu"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/pmu-a710",
+      "compatible": "arm,cortex-a710-pmu",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/perf/arm_pmuv3.c",
+            "ARM_PMUV3",
+            "y",
+            "arm,cortex-a710-pmu"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/pmu-a715",
+      "compatible": "arm,cortex-a715-pmu",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/perf/arm_pmuv3.c",
+            "ARM_PMUV3",
+            "y",
+            "arm,cortex-a715-pmu"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/pmu-x3",
+      "compatible": "arm,cortex-x3-pmu",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/perf/arm_pmuv3.c",
+            "ARM_PMUV3",
+            "y",
+            "arm,cortex-x3-pmu"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/psci",
+      "compatible": "arm,psci-1.0",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/cpuidle/cpuidle-psci-domain.c",
+            "ARM_PSCI_CPUIDLE_DOMAIN",
+            "y",
+            "arm,psci-1.0"
+          ],
+          [
+            "drivers/firmware/psci/psci.c",
+            "ARM_PSCI_FW",
+            "y",
+            "arm,psci-1.0"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "/timer",
+      "compatible": "arm,armv8-timer",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/clocksource/arm_arch_timer.c",
+            "ARM_ARCH_TIMER",
+            "y",
+            "arm,armv8-timer"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "clocks/sleep-clk",
+      "compatible": "fixed-clock",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/clk/clk-fixed-rate.c",
+            "COMMON_CLK",
+            "y",
+            "fixed-clock"
+          ],
+          [
+            "drivers/clk/ti/clk.c",
+            "obj-y",
+            "y",
+            "fixed-clock"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "clocks/xo-board",
+      "compatible": "fixed-clock",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/clk/clk-fixed-rate.c",
+            "COMMON_CLK",
+            "y",
+            "fixed-clock"
+          ],
+          [
+            "drivers/clk/ti/clk.c",
+            "obj-y",
+            "y",
+            "fixed-clock"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "cpus/domain-idle-states/cluster-sleep-0",
+      "compatible": "domain-idle-state",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/pmdomain/core.c",
+            "obj-y",
+            "y",
+            "domain-idle-state"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "cpus/domain-idle-states/cluster-sleep-1",
+      "compatible": "domain-idle-state",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/pmdomain/core.c",
+            "obj-y",
+            "y",
+            "domain-idle-state"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "cpus/idle-states/cpu-sleep-0-0",
+      "compatible": "arm,idle-state",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/cpuidle/cpuidle-arm.c",
+            "ARM_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-big_little.c",
+            "ARM_BIG_LITTLE_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-psci.c",
+            "ARM_PSCI_CPUIDLE",
+            "y",
+            "arm,idle-state"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "cpus/idle-states/cpu-sleep-1-0",
+      "compatible": "arm,idle-state",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/cpuidle/cpuidle-arm.c",
+            "ARM_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-big_little.c",
+            "ARM_BIG_LITTLE_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-psci.c",
+            "ARM_PSCI_CPUIDLE",
+            "y",
+            "arm,idle-state"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "cpus/idle-states/cpu-sleep-2-0",
+      "compatible": "arm,idle-state",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/cpuidle/cpuidle-arm.c",
+            "ARM_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-big_little.c",
+            "ARM_BIG_LITTLE_CPUIDLE",
+            "MISSING",
+            "arm,idle-state"
+          ],
+          [
+            "drivers/cpuidle/cpuidle-psci.c",
+            "ARM_PSCI_CPUIDLE",
+            "y",
+            "arm,idle-state"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/geniqup@ac0000/serial@a9c000",
+      "compatible": "qcom,geni-debug-uart",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/tty/serial/qcom_geni_serial.c",
+            "SERIAL_QCOM_GENI",
+            "y",
+            "qcom,geni-debug-uart"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/interrupt-controller@17100000",
+      "compatible": "arm,gic-v3",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/irqchip/irq-gic-v3.c",
+            "ARM_GIC_V3",
+            "y",
+            "arm,gic-v3"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/interrupt-controller@17100000/msi-controller@17140000",
+      "compatible": "arm,gic-v3-its",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/irqchip/irq-gic-v3-its.c",
+            "ARM_GIC_V3_ITS",
+            "y",
+            "arm,gic-v3-its"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/pcie@1c00000",
+      "compatible": "qcom,pcie-sm8550",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/pci/controller/dwc/pcie-qcom.c",
+            "PCIE_QCOM",
+            "y",
+            "qcom,pcie-sm8550"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@1",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@2",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@3",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@4",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@5",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@6",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@7",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@32300000/glink-edge/fastrpc/compute-cb@8",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@6800000/glink-edge/fastrpc/compute-cb@3",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@6800000/glink-edge/fastrpc/compute-cb@4",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@6800000/glink-edge/fastrpc/compute-cb@5",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@6800000/glink-edge/fastrpc/compute-cb@6",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/remoteproc@6800000/glink-edge/fastrpc/compute-cb@7",
+      "compatible": "qcom,fastrpc-compute-cb",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/misc/fastrpc.c",
+            "QCOM_FASTRPC",
+            "y",
+            "qcom,fastrpc-compute-cb"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "soc@0/timer@17420000",
+      "compatible": "arm,armv7-timer-mem",
+      "second_source": {
+        "kind": "built_no_alias",
+        "sources": [
+          [
+            "drivers/clocksource/arm_arch_timer_mmio.c",
+            "ARM_ARCH_TIMER",
+            "y",
+            "arm,armv7-timer-mem"
+          ]
+        ]
+      }
+    }
+  ],
+  "known_gaps": [
+    {
+      "path": "/sound",
+      "compatible": "qcom,sm8550-sndcard",
+      "note": "sound card; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/qcom/sc8280xp.c",
+            "SND_SOC_SC8280XP",
+            "MISSING",
+            "qcom,sm8450-sndcard"
+          ],
+          [
+            "sound/soc/qcom/sc8280xp.c",
+            "SND_SOC_SC8280XP",
+            "MISSING",
+            "qcom,sm8550-sndcard"
+          ]
+        ],
+        "note": "sound card; out of scope"
+      }
+    },
+    {
+      "path": "/usb-c-sbu-mux",
+      "compatible": "gpio-sbu-mux",
+      "note": "CONFIG_TYPEC_MUX_GPIO_SBU is unset; Type-C SBU mux",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/usb/typec/mux/gpio-sbu-mux.c",
+            "TYPEC_MUX_GPIO_SBU",
+            "n",
+            "gpio-sbu-mux"
+          ]
+        ],
+        "note": "CONFIG_TYPEC_MUX_GPIO_SBU is unset; Type-C SBU mux"
+      }
+    },
+    {
+      "path": "/wcn6855-pmu",
+      "compatible": "qcom,wcn6855-pmu",
+      "note": "Wi-Fi PMU; Wi-Fi bring-up is out of scope",
+      "second_source": {
+        "kind": "module_only",
+        "detail": "requested as =m only, and this port installs no module tree",
+        "sources": [
+          [
+            "drivers/power/sequencing/pwrseq-qcom-wcn.c",
+            "POWER_SEQUENCING_QCOM_WCN",
+            "m",
+            "qcom,wcn6855-pmu"
+          ]
+        ],
+        "note": "Wi-Fi PMU; Wi-Fi bring-up is out of scope"
+      }
+    },
+    {
+      "path": "reserved-memory/rmtfs-region@d4a80000",
+      "compatible": "qcom,rmtfs-mem",
+      "note": "CONFIG_QCOM_RMTFS_MEM is unset; upstream defconfig has it =m. Modem RMTFS carve-out, and the modem is out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/soc/qcom/rmtfs_mem.c",
+            "QCOM_RMTFS_MEM",
+            "n",
+            "qcom,rmtfs-mem"
+          ]
+        ],
+        "note": "CONFIG_QCOM_RMTFS_MEM is unset; upstream defconfig has it =m. Modem RMTFS carve-out, and the modem is out of scope"
+      }
+    },
+    {
+      "path": "soc@0/cci@ac15000",
+      "compatible": "qcom,sm8550-cci",
+      "note": "camera control interface; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/i2c/busses/i2c-qcom-cci.c",
+            "I2C_QCOM_CCI",
+            "n",
+            "qcom,msm8996-cci"
+          ]
+        ],
+        "note": "camera control interface; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/cci@ac15000/i2c-bus@1/camera@21",
+      "compatible": "hynix,hi1337-gts9u-rear",
+      "note": "camera sensor; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "camera sensor; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/cci@ac16000",
+      "compatible": "qcom,sm8550-cci",
+      "note": "camera control interface; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/i2c/busses/i2c-qcom-cci.c",
+            "I2C_QCOM_CCI",
+            "n",
+            "qcom,msm8996-cci"
+          ]
+        ],
+        "note": "camera control interface; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/cci@ac16000/i2c-bus@0/lens@c",
+      "compatible": "dongwoon,dw9808-vcm",
+      "note": "camera lens; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "camera lens; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/cci@ac16000/i2c-bus@1/camera@21",
+      "compatible": "hynix,hi1337-gts9u-front",
+      "note": "camera sensor; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "camera sensor; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/clock-controller@aaf0000",
+      "compatible": "qcom,sm8550-videocc",
+      "note": "video clock controller; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/clk/qcom/videocc-sm8550.c",
+            "SM_VIDEOCC_8550",
+            "n",
+            "qcom,sm8550-videocc"
+          ]
+        ],
+        "note": "video clock controller; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/clock-controller@ade0000",
+      "compatible": "qcom,sm8550-camcc",
+      "note": "camera clock controller; camera is out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/clk/qcom/camcc-sm8550.c",
+            "SM_CAMCC_8550",
+            "n",
+            "qcom,sm8550-camcc"
+          ]
+        ],
+        "note": "camera clock controller; camera is out of scope"
+      }
+    },
+    {
+      "path": "soc@0/codec@6aa0000",
+      "compatible": "qcom,sm8550-lpass-wsa-macro",
+      "note": "audio codec; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/lpass-wsa-macro.c",
+            "SND_SOC_LPASS_WSA_MACRO",
+            "n",
+            "qcom,sm8550-lpass-wsa-macro"
+          ]
+        ],
+        "note": "audio codec; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/codec@6ac0000",
+      "compatible": "qcom,sm8550-lpass-rx-macro",
+      "note": "audio codec; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/lpass-rx-macro.c",
+            "SND_SOC_LPASS_RX_MACRO",
+            "n",
+            "qcom,sm8550-lpass-rx-macro"
+          ]
+        ],
+        "note": "audio codec; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/codec@6ae0000",
+      "compatible": "qcom,sm8550-lpass-tx-macro",
+      "note": "audio codec; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/lpass-tx-macro.c",
+            "SND_SOC_LPASS_TX_MACRO",
+            "n",
+            "qcom,sm8550-lpass-tx-macro"
+          ]
+        ],
+        "note": "audio codec; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/codec@6b00000",
+      "compatible": "qcom,sm8550-lpass-wsa-macro",
+      "note": "audio codec; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/lpass-wsa-macro.c",
+            "SND_SOC_LPASS_WSA_MACRO",
+            "n",
+            "qcom,sm8550-lpass-wsa-macro"
+          ]
+        ],
+        "note": "audio codec; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/codec@6d44000",
+      "compatible": "qcom,sm8550-lpass-va-macro",
+      "note": "audio codec; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/lpass-va-macro.c",
+            "SND_SOC_LPASS_VA_MACRO",
+            "n",
+            "qcom,sm8550-lpass-va-macro"
+          ]
+        ],
+        "note": "audio codec; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/crypto@1dfa000",
+      "compatible": "qcom,sm8550-qce",
+      "note": "CONFIG_CRYPTO_DEV_QCE is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/crypto/qce/core.c",
+            "CRYPTO_DEV_QCE",
+            "n",
+            "qcom,qce"
+          ]
+        ],
+        "note": "CONFIG_CRYPTO_DEV_QCE is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/dma-controller@1dc4000",
+      "compatible": "qcom,bam-v1.7.4",
+      "note": "CONFIG_QCOM_BAM_DMA is unset; no in-tree consumer needs it yet",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/dma/qcom/bam_dma.c",
+            "QCOM_BAM_DMA",
+            "n",
+            "qcom,bam-v1.7.0"
+          ]
+        ],
+        "note": "CONFIG_QCOM_BAM_DMA is unset; no in-tree consumer needs it yet"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@8c0000/i2c@890000/redriver@28",
+      "compatible": "parade,ps5169",
+      "note": "Type-C redriver; no mainline driver needed for the console",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "Type-C redriver; no mainline driver needed for the console"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@8c0000/serial@898000/bluetooth",
+      "compatible": "qcom,wcn6855-bt",
+      "note": "Bluetooth bring-up is explicitly out of scope this round",
+      "second_source": {
+        "kind": "unknown_symbol",
+        "detail": "no Makefile rule could be resolved for the driver source",
+        "unresolved": [
+          [
+            "qcom,wcn6855-bt",
+            "drivers/bluetooth/hci_qca.c"
+          ]
+        ],
+        "note": "Bluetooth bring-up is explicitly out of scope this round"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@98c000/charger@63",
+      "compatible": "siliconmitus,sm5440",
+      "note": "direct charger; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "direct charger; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@998000/amplifier@30",
+      "compatible": "cirrus,cs35l45",
+      "note": "speaker amplifier; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/cs35l45-i2c.c",
+            "SND_SOC_CS35L45_I2C",
+            "n",
+            "cirrus,cs35l45"
+          ],
+          [
+            "sound/soc/codecs/cs35l45-spi.c",
+            "SND_SOC_CS35L45_SPI",
+            "n",
+            "cirrus,cs35l45"
+          ]
+        ],
+        "note": "speaker amplifier; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@998000/amplifier@31",
+      "compatible": "cirrus,cs35l45",
+      "note": "speaker amplifier; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/cs35l45-i2c.c",
+            "SND_SOC_CS35L45_I2C",
+            "n",
+            "cirrus,cs35l45"
+          ],
+          [
+            "sound/soc/codecs/cs35l45-spi.c",
+            "SND_SOC_CS35L45_SPI",
+            "n",
+            "cirrus,cs35l45"
+          ]
+        ],
+        "note": "speaker amplifier; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@998000/amplifier@32",
+      "compatible": "cirrus,cs35l45",
+      "note": "speaker amplifier; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/cs35l45-i2c.c",
+            "SND_SOC_CS35L45_I2C",
+            "n",
+            "cirrus,cs35l45"
+          ],
+          [
+            "sound/soc/codecs/cs35l45-spi.c",
+            "SND_SOC_CS35L45_SPI",
+            "n",
+            "cirrus,cs35l45"
+          ]
+        ],
+        "note": "speaker amplifier; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@998000/amplifier@33",
+      "compatible": "cirrus,cs35l45",
+      "note": "speaker amplifier; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "sound/soc/codecs/cs35l45-i2c.c",
+            "SND_SOC_CS35L45_I2C",
+            "n",
+            "cirrus,cs35l45"
+          ],
+          [
+            "sound/soc/codecs/cs35l45-spi.c",
+            "SND_SOC_CS35L45_SPI",
+            "n",
+            "cirrus,cs35l45"
+          ]
+        ],
+        "note": "speaker amplifier; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "compatible": "siliconmitus,sm5714",
+      "note": "charger/fuel gauge; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "charger/fuel gauge; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "compatible": "siliconmitus,sm5714-usbpd",
+      "note": "USB-PD; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "USB-PD; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@ac0000/i2c@a8c000/digitizer@56",
+      "compatible": "wacom,w90xx",
+      "note": "pen digitizer; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "pen digitizer; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/geniqup@ac0000/i2c@a90000/touchscreen@49",
+      "compatible": "st,fts1ba90a",
+      "note": "touchscreen; out of scope",
+      "second_source": {
+        "kind": "no_driver",
+        "detail": "no driver source declares any of its compatibles",
+        "note": "touchscreen; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/gmu@3d6a000",
+      "compatible": "qcom,adreno-gmu-740.1",
+      "note": "no standalone GMU driver upstream; drm/msm drives it as a sub-device. docs/PROVIDER_FOLLOWUPS.md \u00a72",
+      "second_source": {
+        "kind": "unknown_symbol",
+        "detail": "no Makefile rule could be resolved for the driver source",
+        "unresolved": [
+          [
+            "qcom,adreno-gmu",
+            "drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c"
+          ]
+        ],
+        "note": "no standalone GMU driver upstream; drm/msm drives it as a sub-device. docs/PROVIDER_FOLLOWUPS.md \u00a72"
+      }
+    },
+    {
+      "path": "soc@0/isp@acb7000",
+      "compatible": "qcom,sm8550-camss",
+      "note": "camera subsystem; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/media/platform/qcom/camss/camss.c",
+            "VIDEO_QCOM_CAMSS",
+            "n",
+            "qcom,sm8550-camss"
+          ]
+        ],
+        "note": "camera subsystem; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/pcie@1c00000/pcie@0/wifi@0",
+      "compatible": "pci17cb,1103",
+      "note": "the QCA6490 Wi-Fi function on the PCIe bus; out of scope",
+      "second_source": {
+        "kind": "module_only",
+        "detail": "requested as =m only, and this port installs no module tree",
+        "sources": [
+          [
+            "drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.c",
+            "PCI_PWRCTRL_PWRSEQ",
+            "m",
+            "pci17cb,1103"
+          ]
+        ],
+        "note": "the QCA6490 Wi-Fi function on the PCIe bus; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/pinctrl@6e80000",
+      "compatible": "qcom,sm8550-lpass-lpi-pinctrl",
+      "note": "audio pinctrl; out of scope",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/pinctrl/qcom/pinctrl-sm8550-lpass-lpi.c",
+            "PINCTRL_SM8550_LPASS_LPI",
+            "MISSING",
+            "qcom,sm8550-lpass-lpi-pinctrl"
+          ]
+        ],
+        "note": "audio pinctrl; out of scope"
+      }
+    },
+    {
+      "path": "soc@0/pmu@24091000",
+      "compatible": "qcom,sm8550-llcc-bwmon",
+      "note": "CONFIG_QCOM_ICC_BWMON is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/soc/qcom/icc-bwmon.c",
+            "QCOM_ICC_BWMON",
+            "n",
+            "qcom,sc7280-llcc-bwmon"
+          ]
+        ],
+        "note": "CONFIG_QCOM_ICC_BWMON is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/pmu@240b6400",
+      "compatible": "qcom,sm8550-cpu-bwmon",
+      "note": "CONFIG_QCOM_ICC_BWMON is unset; upstream defconfig has it =m. CPU<->DDR bandwidth monitor, on the CPU path",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/soc/qcom/icc-bwmon.c",
+            "QCOM_ICC_BWMON",
+            "n",
+            "qcom,sdm845-bwmon"
+          ],
+          [
+            "drivers/soc/qcom/icc-bwmon.c",
+            "QCOM_ICC_BWMON",
+            "n",
+            "qcom,sm8550-cpu-bwmon"
+          ]
+        ],
+        "note": "CONFIG_QCOM_ICC_BWMON is unset; upstream defconfig has it =m. CPU<->DDR bandwidth monitor, on the CPU path"
+      }
+    },
+    {
+      "path": "soc@0/rng@10c3000",
+      "compatible": "qcom,sm8550-trng",
+      "note": "CONFIG_CRYPTO_DEV_QCOM_RNG is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/crypto/qcom-rng.c",
+            "CRYPTO_DEV_QCOM_RNG",
+            "n",
+            "qcom,trng"
+          ]
+        ],
+        "note": "CONFIG_CRYPTO_DEV_QCOM_RNG is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@0/adc@9000",
+      "compatible": "qcom,spmi-adc5-gen3",
+      "note": "CONFIG_QCOM_SPMI_ADC5_GEN3 is unset (the plain ADC5 driver is =y but is a different generation); upstream defconfig has the gen3 one =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/iio/adc/qcom-spmi-adc5-gen3.c",
+            "QCOM_SPMI_ADC5_GEN3",
+            "n",
+            "qcom,spmi-adc5-gen3"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_ADC5_GEN3 is unset (the plain ADC5 driver is =y but is a different generation); upstream defconfig has the gen3 one =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@1/temp-alarm@a00",
+      "compatible": "qcom,spmi-temp-alarm",
+      "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/thermal/qcom/qcom-spmi-temp-alarm.c",
+            "QCOM_SPMI_TEMP_ALARM",
+            "n",
+            "qcom,spmi-temp-alarm"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@2/temp-alarm@a00",
+      "compatible": "qcom,spmi-temp-alarm",
+      "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/thermal/qcom/qcom-spmi-temp-alarm.c",
+            "QCOM_SPMI_TEMP_ALARM",
+            "n",
+            "qcom,spmi-temp-alarm"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@3/temp-alarm@a00",
+      "compatible": "qcom,spmi-temp-alarm",
+      "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/thermal/qcom/qcom-spmi-temp-alarm.c",
+            "QCOM_SPMI_TEMP_ALARM",
+            "n",
+            "qcom,spmi-temp-alarm"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@4/temp-alarm@a00",
+      "compatible": "qcom,spmi-temp-alarm",
+      "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/thermal/qcom/qcom-spmi-temp-alarm.c",
+            "QCOM_SPMI_TEMP_ALARM",
+            "n",
+            "qcom,spmi-temp-alarm"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/spmi@c400000/pmic@6/temp-alarm@a00",
+      "compatible": "qcom,spmi-temp-alarm",
+      "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/thermal/qcom/qcom-spmi-temp-alarm.c",
+            "QCOM_SPMI_TEMP_ALARM",
+            "n",
+            "qcom,spmi-temp-alarm"
+          ]
+        ],
+        "note": "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"
+      }
+    },
+    {
+      "path": "soc@0/sram@c3f0000",
+      "compatible": "qcom,rpmh-stats",
+      "note": "CONFIG_QCOM_RPMH_STATS unset; debug-only",
+      "second_source": {
+        "kind": "symbol_off",
+        "detail": "driver source exists but is not built",
+        "sources": [
+          [
+            "drivers/soc/qcom/qcom_stats.c",
+            "QCOM_STATS",
+            "n",
+            "qcom,rpmh-stats"
+          ]
+        ],
+        "note": "CONFIG_QCOM_RPMH_STATS unset; debug-only"
+      }
+    },
+    {
+      "path": "soc@0/video-codec@aa00000",
+      "compatible": "qcom,sm8550-iris",
+      "note": "video codec; out of scope",
+      "second_source": {
+        "kind": "unknown_symbol",
+        "detail": "no Makefile rule could be resolved for the driver source",
+        "unresolved": [
+          [
+            "qcom,sm8550-iris",
+            "drivers/media/platform/qcom/iris/iris_probe.c"
+          ]
+        ],
+        "note": "video codec; out of scope"
+      }
+    }
+  ],
+  "unknown": []
+}

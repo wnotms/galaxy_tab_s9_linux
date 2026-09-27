@@ -60,6 +60,14 @@ declarator macros `IRQCHIP_MATCH("x", …)`, `TIMER_OF_DECLARE(name, "x", …)`,
 `CONFIG_` symbol whose Makefile rule builds it, and that symbol is read out of
 `out/kernel-gts9wifi/config`.
 
+The second pass builds one in-memory declaration index per audit invocation,
+then looks up each compatible exactly. It uses `rg` when available and falls
+back to GNU `grep`; both scan hidden/ignored C sources in the same search roots.
+There is no persistent cache: a new invocation reads source edits immediately.
+Search errors abort the audit instead of being reported as missing drivers.
+This replaces a full recursive scan for every compatible without removing the
+source check, fallback-compatible handling or Makefile/config classification.
+
 **Classification.** `y` means a driver is built and the node is not a gap; `n`
 means the driver is genuinely not requested; `m` means the symbol **is** requested
 and this port installs no module tree, so `=m` yields no driver at all — the trap
@@ -224,3 +232,14 @@ scripts/audit-dt-providers.py --json
 
 A host test runs it whenever those artifacts exist and asserts that `UNKNOWN` is
 empty, so the gate lives in `python3 -B -m unittest discover -s tests` as well.
+
+For complete regression timing on Python 3.12 or newer:
+
+```sh
+python3 -m unittest discover -s tests --durations 20
+```
+
+Run this without a concurrent kernel build for a useful comparison. Keep full
+artifact checks enabled; `scripts/check-stall-offline.sh --focused` is only an
+iteration aid. The benchmark and unchanged audit output are recorded in
+`reference/offline-reviews/20260927-regression-performance/`.
