@@ -4,3 +4,8 @@ sync only; they check record contents, not host filesystem durability. Device
 sync calls remain real. The rerun passed 26 USB tests in 27.452 seconds, and
 74 related debug-channel tests passed in 1.161 seconds. Shell syntax and the
 ccache production build passed. No full regression was run for this scope.
+
+Final fixture refinement removes the one-second wait for a real host usb0,
+which these configfs tests never create. The UDC timeout behavior still runs
+with its real bounded wait. No tests were removed; final timing is recorded
+in usb-adb-tests-final.txt. Production interface waiting is unchanged.

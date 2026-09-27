@@ -78,7 +78,9 @@ class UsbAcmServiceTests(unittest.TestCase):
                            GTS9_USB_UDC_DIR=str(self.udc_dir),
                            GTS9_USB_NET_CONF=str(self.net_conf),
                            GTS9_USB_UDC_WAIT_SECONDS=wait,
-                           GTS9_USB_IFACE_WAIT_SECONDS='1',
+                           # These configfs fixtures have no real usb0.
+                           # Keep the separate bounded UDC wait test real.
+                           GTS9_USB_IFACE_WAIT_SECONDS='0',
                            GTS9_STAGE_HELPER=str(STAGE_HELPER),
                            GTS9_MINIMAL_BOOT_RECORD=str(self.record))
         if env:
