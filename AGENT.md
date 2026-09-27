@@ -2,6 +2,22 @@
 
 ## Current review (2026-09-27)
 
+Latest: tests 233/234 isolated corrupt retention further. Test-233 recovered a
+known 33,005-byte PMSG with 464 changed bytes / 542 bits. Test-234's opt-in
+read-only live RAM view proved exact bytes in three reads before reboot, but
+the next boot recovered 251 changed bytes / 293 bits. Damage occurs after the
+final source read and before observer archive reads; no CPU causal link is
+established. No wedge series before trustworthy retention. See test-234/RESULTS.md.
+
+Test-234 observer `4c78d2cc-7ed8-4a33-be1c-05c2345f77c5` lost responsiveness:
+systemctl timed out after an uptime 54.35-second sample, then both ADB paths
+failed. No positive CPU signature captured yet. Manual TWRP was requested;
+**rollback is pending**. Installed diagnostic boot/vendor_boot hashes are
+6713813b4d10ac40923f77918703fb5af989c6f470d5cc3870237edfda0f2654 /
+92d452910a316616776a4cd61d7ecb0569a44f839c681e0aaca9b3ab4ed4a92b.
+Read the failed boot's persistent journal, then restore test-230 production
+backups and verify all five partition hashes before further physical trials.
+
 Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and trace sizing assumptions. The owner resumed hardware work on 2026-09-27. Test-229 captured another CPU 6 non-response, followed by owner recovery to Debian and a healthy 60-second calibration. Memory coverage passed for that observation, but the reduced seven-event set still exceeds the persistent text budget (2,213,931 bytes in 41 seconds versus 786,432 available). Offline bounded replay is now complete: corrected ramoops budget is 393,204 bytes because the 896 KiB request rounds down to 512 KiB, with a 12-byte header and 128 KiB crash reserve. Equal per-CPU text tails keep only about 2 seconds on CPUs 0/7 with modeled 32-byte prefixes. This fails the original 41-second question; select a separately validated sink or explicitly narrower positive-evidence question before preparing a hardware candidate. No new wedge series before retention passes. The unchanged production profile has watchdog/panic disabled, so matching production partition hashes does not establish the armed stall baseline. Do not reuse the outdated parked baseline bundle. Preserve the production kernel/configuration while establishing retention.
 
 Test-230 subsequently built and physically tested the opt-in last-activity

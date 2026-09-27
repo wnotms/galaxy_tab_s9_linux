@@ -244,3 +244,41 @@ Test-231 rollback restored all production partition hashes, but boot
 and systemctl timing out. The owner returned to TWRP; recovery evidence is
 archived. Image integrity passed; healthy rollback boot did not. USB ADB is
 now being prepared at the owner's request while preserving the NCM/SSH path.
+
+## Tests 232–234: transport works; retention remains corrupt
+
+Test-232 completed USB ADB alongside NCM/SSH. Preserve the independent ep0
+holder, no_disconnect and bound-gadget adbd restart guard; never rebuild the
+live gadget to recover ADB at the expense of SSH.
+
+Test-233's known 33,005-byte binary PMSG returned with 464 changed bytes / 542
+bits after a direct reboot. Test-234 added only an opt-in root-readable view
+of the existing PMSG RAM mapping. Three full live reads proved exact bytes,
+including the last read at source uptime 282 seconds. The next boot's archived
+record instead contains 251 changed bytes / 293 bits; two pulls and the device
+hash agree. This narrows the damage interval to after the last live read and
+before the observer's archive reads. It does not identify firmware, RAM, pstore
+processing or a CPU-wedge root cause. Both tests used ECC=0.
+
+The probe tool requires a regenerated valid reference and one exact full
+occurrence. A surviving header only enables damage measurement, never acceptance.
+Its raw-ring mode is for the pinned ARM64 **ECC=0** layout only. Do not apply it
+unchanged to an ECC-enabled ring. A healthy reboot integrity pass alone would
+not prove crash-triggered capture or retention, and does not open a wedge series.
+
+Test-234 observer `4c78d2cc-7ed8-4a33-be1c-05c2345f77c5` subsequently stopped
+answering systemctl and ADB. Its last returned uptime was 54.35 seconds; the
+saved early journal does not establish a CPU failure signature. Manual TWRP
+recovery and original boot/vendor_boot restoration remain pending. Retrieve
+that boot's disk journal first. See
+[test-234 results](../reference/boot-tests/test-234-live-pmsg-readback/RESULTS.md).
+
+After recovery, assess an isolated ECC diagnostic within the existing reserved
+region. Pinned ram_core.c uses 128-byte Reed–Solomon blocks. ECC=16 can correct
+at most eight erroneous symbols per block, less than test-233's worst observed
+18 changed payload bytes. ECC=64 is a candidate, not a demonstrated remedy:
+parity can also corrupt and the altered layout changes data capacity. Record
+actual corrected bytes/unrecoverable blocks and require exact recovered source
+bytes. Keep source/observer ECC layout identical; first boot after a layout
+change may report errors for incompatible old data. Do not resize/move memory,
+adjust voltages or accept corrected-looking CPU fields without integrity proof.

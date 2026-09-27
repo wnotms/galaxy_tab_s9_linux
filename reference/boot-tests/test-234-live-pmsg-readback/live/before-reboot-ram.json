@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "pull",
+    "/sys/bus/platform/devices/880900000.ramoops/gts9_pmsg_live",
+    "D:\\android\\gts9-test234\\before-reboot.bin"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T07:14:58.023651+00:00"
+}
