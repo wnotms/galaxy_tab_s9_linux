@@ -699,10 +699,19 @@ class BuiltArtifactTests(unittest.TestCase):
                 self.assertNotIn(f"{sym}=y", text)
 
     def test_the_two_configs_differ_by_exactly_the_instrument(self):
-        prod = ROOT / "out/kernel-gts9wifi/config"
+        # This is the historical Test228 comparison, whose source baseline
+        # predates the accepted DCC-off production and later battery support.
+        # The retained host-review artifact matches that registered baseline;
+        # the mutable default build directory is a different candidate now.
+        prod = ROOT / "out/kernel-changed-tests/config"
         diag = ROOT / DIAG_OUT / "config"
         if not prod.exists() or not diag.exists():
             self.skipTest("both configs must be built to compare them")
+        recorded = read("reference/boot-tests/test-226-cpuidle-off-gate/kernel-SHA256SUMS")
+        baseline_hash = next(line.split()[0] for line in recorded.splitlines()
+                             if line.split()[-1] == "config")
+        self.assertEqual(hashlib.sha256(prod.read_bytes()).hexdigest(), baseline_hash,
+                         "historical source config must retain its recorded identity")
         import difflib
         diff = [l for l in difflib.unified_diff(
             prod.read_text().splitlines(), diag.read_text().splitlines(), n=0)

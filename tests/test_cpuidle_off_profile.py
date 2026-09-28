@@ -589,7 +589,9 @@ class TestRecordTests(unittest.TestCase):
         # wrong; asserting it exactly would fail on every honest rebuild, which
         # is how a check becomes noise nobody reads.
         # ------------------------------------------------------------------
-        built = ROOT / "out/kernel-gts9wifi/SHA256SUMS"
+        # Compare this historical record with its retained host-review build,
+        # not the mutable default output used by newer production candidates.
+        built = ROOT / "out/kernel-changed-tests/SHA256SUMS"
         if not built.exists():
             self.skipTest("no built kernel to compare the recorded hashes against")
         recorded_sums = read(f"{self.RECORD}/kernel-SHA256SUMS")
