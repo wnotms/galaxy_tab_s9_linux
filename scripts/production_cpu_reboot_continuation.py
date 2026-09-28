@@ -42,7 +42,9 @@ def ensure_pushed():
             raise old.CaptureError("runner/registration differs from pushed commit: " + path)
     old_summary = json.loads((ATTEMPT / "summary.json").read_text())
     if (old_summary["clean_rounds"] != 12 or old_summary["round13_reboot_issued"] or
-            old_summary["rounds"][-1]["after_boot_id"] != SOURCE_BOOT or
+            len(old_summary["rounds"]) != 13 or
+            old_summary["rounds"][11]["after_boot_id"] != SOURCE_BOOT or
+            old_summary["rounds"][12]["after_boot_id"] is not None or
             old_summary["final_verdict"] != "stopped_on_first_non_clean"):
         raise old.CaptureError("attempt-05 chain is not the sealed twelve-round source")
 
