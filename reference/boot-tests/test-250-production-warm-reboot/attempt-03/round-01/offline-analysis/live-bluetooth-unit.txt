@@ -1,0 +1,89 @@
+# /usr/lib/systemd/system/bluetooth.service
+[Unit]
+Description=Bluetooth service
+Documentation=man:bluetoothd(8)
+ConditionPathIsDirectory=/sys/class/bluetooth
+
+[Service]
+Type=dbus
+BusName=org.bluez
+ExecStart=/usr/libexec/bluetooth/bluetoothd
+NotifyAccess=main
+#WatchdogSec=10
+Restart=on-failure
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+LimitNPROC=1
+
+# Filesystem lockdown
+ProtectHome=true
+ProtectSystem=strict
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+StateDirectory=bluetooth
+StateDirectoryMode=0700
+ConfigurationDirectory=bluetooth
+ConfigurationDirectoryMode=0555
+
+# Execute Mappings
+MemoryDenyWriteExecute=true
+
+# Privilege escalation
+NoNewPrivileges=true
+
+# Real-time
+RestrictRealtime=true
+
+[Install]
+WantedBy=bluetooth.target
+Alias=dbus-org.bluez.service
+
+# /etc/systemd/system/bluetooth.service.d/gts9-bdaddr.conf
+# Make bluetoothd wait for this tablet's Bluetooth public address.
+#
+# The WCN6855 on the X710 cannot supply its own public address: btqca sees the
+# controller report the same placeholder the upstream NVM carries and sets
+# HCI_QUIRK_USE_BDADDR_PROPERTY, which leaves the controller HCI_UNCONFIGURED and
+# closed, with no usable management index at all. gts9-bluetooth-address supplies
+# the real address from Samsung's efs before the daemon looks for a controller.
+#
+# Wants= as well as After= so the address is applied even when something else
+# pulls bluetooth.service in without going through multi-user.target.
+#
+# Evidence: reference/boot-tests/test-218-bluetooth-firmware/
+[Unit]
+Wants=gts9-bluetooth-address.service
+After=gts9-bluetooth-address.service
+
+# /etc/systemd/system/gts9-bluetooth-address.service
+[Unit]
+Description=X710 Bluetooth public address from Samsung's efs
+Documentation=file:/usr/libexec/gts9-bluetooth-address
+# The controller has no usable address of its own (btqca's placeholder check
+# leaves it HCI_UNCONFIGURED), so this must run before bluetoothd, which is what
+# creates the management index the daemon needs. bluetooth.service gains the
+# matching After=/Wants= through the drop-in
+# etc/systemd/system/bluetooth.service.d/gts9-bdaddr.conf, so the ordering holds
+# even if something else pulls the daemon in first.
+Before=bluetooth.service
+After=local-fs.target
+
+# Only the partition is a condition. /sys/class/bluetooth/hci0 deliberately is
+# NOT one: hci_qca registers it from the DT serdev a few seconds into boot, and a
+# ConditionPathExists on it is evaluated once, at start time, so a unit that
+# started first was skipped outright (observed on a cold boot). The helper waits
+# for hci0 itself, which is bounded and cannot race.
+ConditionPathExists=/dev/disk/by-partlabel/efs
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/gts9-bluetooth-address
+RemainAfterExit=yes
+
+# Read-only by design: it mounts efs with -o ro,noload and unmounts it again.
+# It reads one file, passes six bytes to the standard BlueZ management
+# interface, and never writes to any Android partition.
+TimeoutStartSec=60
+
+[Install]
+WantedBy=multi-user.target

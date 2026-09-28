@@ -1,0 +1,34 @@
+3922: void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
+3923: 			  hci_req_complete_t *req_complete,
+3924: 			  hci_req_complete_skb_t *req_complete_skb)
+3925: {
+3926: 	struct sk_buff *skb;
+3927: 	unsigned long flags;
+3928: 
+3929: 	BT_DBG("opcode 0x%04x status 0x%02x", opcode, status);
+3930: 
+3931: 	/* If the completed command doesn't match the last one that was
+3932: 	 * sent we need to do special handling of it.
+3933: 	 */
+3934: 	if (!hci_sent_cmd_data(hdev, opcode)) {
+3935: 		/* Some CSR based controllers generate a spontaneous
+3936: 		 * reset complete event during init and any pending
+3937: 		 * command will never be completed. In such a case we
+3938: 		 * need to resend whatever was the last sent
+3939: 		 * command.
+3940: 		 */
+3941: 		if (test_bit(HCI_INIT, &hdev->flags) && opcode == HCI_OP_RESET)
+3942: 			hci_resend_last(hdev);
+3943: 
+3944: 		return;
+3945: 	}
+3946: 
+3947: 	/* If we reach this point this event matches the last command sent */
+3948: 	hci_dev_clear_flag(hdev, HCI_CMD_PENDING);
+3949: 
+3950: 	/* If the command succeeded and there's still more commands in
+3951: 	 * this request the request is not yet complete.
+3952: 	 */
+3953: 	if (!status && !hci_req_is_complete(hdev))
+3954: 		return;
+3955: 

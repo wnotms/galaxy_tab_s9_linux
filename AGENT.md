@@ -93,6 +93,19 @@ Only use `--attempt 3` after its pushed registration and accepted preflight.
 All original 20/150-second exact-production and first-non-clean stop conditions
 remain in force. Prior stopped attempts remain stopped, not clean or resumed.
 
+Attempt 03 passed pushed exact-production preflight and issued one ordinary
+warm reboot from `188fd5c9-14ca-4818-9ded-e96669a9c836` to
+`830da717-5e6d-40be-8390-7398b55ff2e2`. It stopped as suspect at the 21.30 s
+health poll on `Bluetooth: hci0: unexpected event for opcode 0xfc48`; no second
+reboot was issued and no 150 s registered window completed. Exact Test249
+config/notes/five partitions/all 181 modules and DCC absence remain verified.
+ADB, source-bound NCM and authenticated SSH passed post-stop; Bluetooth setup
+completed and the same boot remained responsive. No CPU-stall/panic signature
+was detected. The HCI event mismatch remains unclassified, despite similar
+historical Test241/Test247 logs; do not silently exempt it or call the round
+clean. Keep the series stopped and production unchanged, read attempt-03
+`RESULTS.md` and `round-01/offline-analysis/`, and do not create Test251.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

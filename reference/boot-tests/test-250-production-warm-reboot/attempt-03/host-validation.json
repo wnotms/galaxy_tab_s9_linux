@@ -1,0 +1,29 @@
+{
+  "changed_check": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "elapsed_test_seconds": 77.273,
+    "executed": true,
+    "exit_code": 0,
+    "reason": "Unknown evidence/AGENT dependencies conservatively selected all retained tests",
+    "tests_run": 1018
+  },
+  "full_review": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/test250-attempt03-record-all.json",
+    "elapsed_seconds": 71.218,
+    "errors": [],
+    "executed": true,
+    "exit_code": 0,
+    "failures": [],
+    "skipped": [],
+    "tests_run": 1018,
+    "tracked_report": "host-all-report.json"
+  },
+  "github_actions_started": false,
+  "historical_seals_verified": {
+    "attempt_02": 299,
+    "attempt_03_preflight": 80,
+    "original_attempt": 170
+  },
+  "production_modified": false,
+  "runner_modified_in_result_commit": false
+}

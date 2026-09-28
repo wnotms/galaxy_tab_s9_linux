@@ -1,0 +1,43 @@
+4403: };
+4404: 
+4405: static void hci_cmd_status_evt(struct hci_dev *hdev, void *data,
+4406: 			       struct sk_buff *skb, u16 *opcode, u8 *status,
+4407: 			       hci_req_complete_t *req_complete,
+4408: 			       hci_req_complete_skb_t *req_complete_skb)
+4409: {
+4410: 	struct hci_ev_cmd_status *ev = data;
+4411: 	int i;
+4412: 
+4413: 	*opcode = __le16_to_cpu(ev->opcode);
+4414: 	*status = ev->status;
+4415: 
+4416: 	bt_dev_dbg(hdev, "opcode 0x%4.4x", *opcode);
+4417: 
+4418: 	for (i = 0; i < ARRAY_SIZE(hci_cs_table); i++) {
+4419: 		if (hci_cs_table[i].op == *opcode) {
+4420: 			hci_cs_table[i].func(hdev, ev->status);
+4421: 			break;
+4422: 		}
+4423: 	}
+4424: 
+4425: 	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
+4426: 
+4427: 	/* Indicate request completion if the command failed. Also, if
+4428: 	 * we're not waiting for a special event and we get a success
+4429: 	 * command status we should try to flag the request as completed
+4430: 	 * (since for this kind of commands there will not be a command
+4431: 	 * complete event).
+4432: 	 */
+4433: 	if (ev->status || (hdev->req_skb && !hci_skb_event(hdev->req_skb))) {
+4434: 		hci_req_cmd_complete(hdev, *opcode, ev->status, req_complete,
+4435: 				     req_complete_skb);
+4436: 		if (hci_dev_test_flag(hdev, HCI_CMD_PENDING)) {
+4437: 			bt_dev_err(hdev, "unexpected event for opcode 0x%4.4x",
+4438: 				   *opcode);
+4439: 			return;
+4440: 		}
+4441: 	}
+4442: 
+4443: 	if (atomic_read(&hdev->cmd_cnt) && !skb_queue_empty(&hdev->cmd_q))
+4444: 		queue_work(hdev->workqueue, &hdev->cmd_work);
+4445: }

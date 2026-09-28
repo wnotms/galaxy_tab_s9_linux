@@ -1,0 +1,46 @@
+4280: 	int i;
+4281: 
+4282: 	*opcode = __le16_to_cpu(ev->opcode);
+4283: 
+4284: 	bt_dev_dbg(hdev, "opcode 0x%4.4x", *opcode);
+4285: 
+4286: 	for (i = 0; i < ARRAY_SIZE(hci_cc_table); i++) {
+4287: 		if (hci_cc_table[i].op == *opcode) {
+4288: 			*status = hci_cc_func(hdev, &hci_cc_table[i], skb);
+4289: 			break;
+4290: 		}
+4291: 	}
+4292: 
+4293: 	if (i == ARRAY_SIZE(hci_cc_table)) {
+4294: 		if (!skb->len) {
+4295: 			bt_dev_err(hdev, "Unexpected cc 0x%4.4x with no status",
+4296: 				   *opcode);
+4297: 			*status = HCI_ERROR_UNSPECIFIED;
+4298: 			return;
+4299: 		}
+4300: 
+4301: 		/* Unknown opcode, assume byte 0 contains the status, so
+4302: 		 * that e.g. __hci_cmd_sync() properly returns errors
+4303: 		 * for vendor specific commands send by HCI drivers.
+4304: 		 * If a vendor doesn't actually follow this convention we may
+4305: 		 * need to introduce a vendor CC table in order to properly set
+4306: 		 * the status.
+4307: 		 */
+4308: 		*status = skb->data[0];
+4309: 	}
+4310: 
+4311: 	handle_cmd_cnt_and_timer(hdev, ev->ncmd);
+4312: 
+4313: 	hci_req_cmd_complete(hdev, *opcode, *status, req_complete,
+4314: 			     req_complete_skb);
+4315: 
+4316: 	if (hci_dev_test_flag(hdev, HCI_CMD_PENDING)) {
+4317: 		bt_dev_err(hdev,
+4318: 			   "unexpected event for opcode 0x%4.4x", *opcode);
+4319: 		return;
+4320: 	}
+4321: 
+4322: 	if (atomic_read(&hdev->cmd_cnt) && !skb_queue_empty(&hdev->cmd_q))
+4323: 		queue_work(hdev->workqueue, &hdev->cmd_work);
+4324: }
+4325: 

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl is-active bluetooth.service gts9-bluetooth-address.service || true; ls -l /sys/class/bluetooth; timeout 8 bluetoothctl show; ip -br addr show usb0"
+  ],
+  "ended_utc": "2026-09-28T05:07:43.856210+00:00",
+  "started_utc": "2026-09-28T05:07:43.718508+00:00",
+  "status": 0
+}
