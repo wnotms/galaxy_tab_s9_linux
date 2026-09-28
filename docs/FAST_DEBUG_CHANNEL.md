@@ -58,6 +58,30 @@ pinned kernel drivers/usb/gadget/function/f_fs.c (no_disconnect and mount-ID
 provenance), Debian adbd 34.0.5-12 and its Linux USB patch. Physical results
 are recorded separately in test-232; host mocks alone prove no enumeration.
 
+## Userspace reconnect candidate (2026-09-28)
+
+Test252 recorded native ADB offline after a physical computer reconnect, while
+NCM and Wi-Fi SSH remained available. Test253 independently registers a Debian
+34.0.5-12 userspace repair; physical acceptance is pending. It does not modify
+the kernel or gadget/NCM/SSH settings. The package daemon remains intact.
+
+`gts9-adbd.service` now uses `/usr/libexec/gts9-adbd-run`. This selects
+`/usr/local/libexec/gts9-adbd-reconnect` when installed, otherwise the original
+`/usr/lib/android-sdk/platform-tools/adbd`. Build the optional daemon with
+`bash scripts/build-adbd-reconnect.sh`; pinned source checksums, patch,
+ARM64 build manifest and owned-FD/real-thread tests live under `userspace/adbd/`.
+
+The patch uses worker completion instead of waiting for glibc to report ESRCH
+for an exited unjoined thread, retains ep0 across internal recovery, and remembers
+actual FunctionFS BIND until UNBIND. It still rejects an initial ENABLE without
+BIND. See [Debian issue54](https://salsa.debian.org/android-tools-team/admin/-/issues/54)
+and [Test253 registration](../reference/boot-tests/test-253-adbd-usb-reconnect/README.md).
+
+Install the launcher, unit and exact hash-verified optional daemon for the next
+ordinary boot only. Keep the live restart guard, holder and no_disconnect mount
+provenance. Do not restart the shared gadget or daemon to activate this change.
+Host tests/building alone do not demonstrate reconnect on hardware.
+
 ## Raising the console baud does nothing, and that was measured
 
 `COM17`/`COM19` are USB **CDC-ACM gadget** ports, not a UART. The gadget

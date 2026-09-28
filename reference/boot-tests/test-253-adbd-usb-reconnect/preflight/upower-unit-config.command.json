@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "systemctl cat upower.service; systemctl show upower.service -p PrivateUsers -p DynamicUser -p User -p Group; zcat /proc/config.gz | grep -E \"CONFIG_(USER_NS|NAMESPACES)\"; dpkg-query -W upower systemd libc6 libstdc++6 libprotobuf32t64 android-libbase android-libboringssl android-libcutils android-liblog; find /usr/lib/aarch64-linux-gnu -maxdepth 2 -name libbase.so.0 -o -name libprotobuf.so.32 -o -name libcrypto.so.0; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "started_utc": "2026-09-28T13:39:12.965782+00:00",
+  "ended_utc": "2026-09-28T13:39:13.981069+00:00",
+  "status": 0
+}

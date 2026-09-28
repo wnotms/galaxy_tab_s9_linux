@@ -10,6 +10,20 @@ remain verified. Stage1 full acceptance is incomplete; Stage2/3 have not started
 Read `reference/boot-tests/test-252-sm5714-stage1/RESULTS.md` before hardware work.
 The historical accepted production baseline remains Test249 below.
 
+The owner requested "先解决adb问题". Test253 independently registers a
+userspace-only Debian adbd reconnect repair under
+`reference/boot-tests/test-253-adbd-usb-reconnect/README.md`. The ARM64 daemon
+is built and host tests pass (1080 full retained tests). Initial Test253
+preflight stopped on an existing UPower217/USER prerequisite failure:
+PrivateUsers=yes with CONFIG_USER_NS disabled. No Test253 device write/reboot
+or physical acceptance has occurred. Its attempt02 proposal is pending owner
+adoption and leaves this independently identified UPower issue unresolved. It preserves the packaged daemon, shared-gadget
+restart guard/holder and NCM/SSH/kernel/charge configuration. Commit/push
+registration and pass exact Test252-candidate read-only preflight before staging
+the optional daemon/launcher/ExecStart for one ordinary next boot. Follow the
+registered reconnect gates; Test252 remains stopped and Stage2/3 do not start.
+
+
 The production DCC-path repair is deployed and accepted on the SM-X710. The
 pinned Linux 7.2-rc3 production build has `CONFIG_HVC_DCC=n`, matching boot and
 vendor_boot images, and all 181 matching module files. Test249 verified the

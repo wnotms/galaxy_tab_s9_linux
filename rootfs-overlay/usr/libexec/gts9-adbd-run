@@ -1,0 +1,9 @@
+#!/bin/sh
+# Prefer the locally built reconnect fix; keep packaged adbd as the fallback.
+# ExecCondition still prevents a live restart of the shared ADB/NCM gadget.
+fixed=${GTS9_ADBD_RECONNECT_BINARY:-/usr/local/libexec/gts9-adbd-reconnect}
+packaged=${GTS9_ADBD_PACKAGED_BINARY:-/usr/lib/android-sdk/platform-tools/adbd}
+if [ -x "$fixed" ]; then
+	exec "$fixed" "$@"
+fi
+exec "$packaged" "$@"

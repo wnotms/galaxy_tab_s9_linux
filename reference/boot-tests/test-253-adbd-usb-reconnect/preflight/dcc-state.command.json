@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "printf 'dev='; test -e /dev/hvc0 && echo present || echo absent; printf 'sysfs='; test -e /sys/class/tty/hvc0 && echo present || echo absent; printf 'getty='; systemctl is-active serial-getty@hvc0.service || true; printf 'symbol='; grep -wE 'hvc_dcc0_put_chars|hvc_write' /proc/kallsyms || true"
+  ],
+  "ended_utc": "2026-09-28T13:37:01.373582+00:00",
+  "started_utc": "2026-09-28T13:37:00.931957+00:00",
+  "status": 0
+}

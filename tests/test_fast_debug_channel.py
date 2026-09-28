@@ -97,7 +97,9 @@ class GadgetNetworkFunctionTests(unittest.TestCase):
 class AdbdUnitTests(unittest.TestCase):
     def test_the_unit_runs_adbd_and_is_enableable(self):
         text = read(ADBD_UNIT)
-        self.assertIn("ExecStart=/usr/lib/android-sdk/platform-tools/adbd", text)
+        self.assertIn("ExecStart=/usr/libexec/gts9-adbd-run", text)
+        launcher = read("rootfs-overlay/usr/libexec/gts9-adbd-run")
+        self.assertIn("/usr/lib/android-sdk/platform-tools/adbd", launcher)
         self.assertIn("WantedBy=multi-user.target", text)
 
     def test_it_does_not_use_the_packaged_gadget_helper(self):

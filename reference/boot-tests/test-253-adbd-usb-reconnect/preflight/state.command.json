@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "set -e; date -u; cat /proc/sys/kernel/random/boot_id /proc/uptime; uname -a; cat /proc/cmdline; sha256sum /sys/kernel/notes; zcat /proc/config.gz | sha256sum; cat /sys/class/power_supply/sm5714-battery/uevent /sys/class/power_supply/sm5714-usb/uevent; systemctl --failed --no-legend --plain --no-pager; journalctl --list-boots --no-pager; journalctl -k -b --no-pager -o json"
+  ],
+  "started_utc": "2026-09-28T13:29:05.821786+00:00",
+  "ended_utc": "2026-09-28T13:29:07.497629+00:00",
+  "status": 0
+}

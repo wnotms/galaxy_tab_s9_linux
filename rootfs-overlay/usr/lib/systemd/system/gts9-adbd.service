@@ -20,7 +20,7 @@ Type=simple
 # Keep TCP ADB available even when USB endpoints exist.
 Environment=ADBD_PORT=5555
 ExecCondition=/usr/libexec/gts9-adbd-can-start
-ExecStart=/usr/lib/android-sdk/platform-tools/adbd
+ExecStart=/usr/libexec/gts9-adbd-run
 Restart=on-failure
 RestartSec=3
 
