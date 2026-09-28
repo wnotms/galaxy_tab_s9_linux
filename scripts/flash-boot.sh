@@ -17,18 +17,18 @@ set -euo pipefail
 
 IMG=${1:?usage: flash-boot.sh <image> [partition]}
 PART=${2:-boot}
-ADB=${ADB:-/mnt/d/android/platform-tools/adb.exe}
+ADB=${ADB:-/mnt/d/android/gts9-active/platform-tools/adb.exe}
 PORT=${PORT:-COM17}
 REPO=$(cd "$(dirname "$0")/.." && pwd)
-STAGE=${STAGE:-/mnt/d/android/gts9-flash}
+STAGE=${STAGE:-/mnt/d/android/gts9-active/gts9-flash}
 LOG=${LOG:-$STAGE/flash.log}
-WIN_LOG=${WIN_LOG:-D:\\android\\gts9-flash\\flash.log}
+WIN_LOG=${WIN_LOG:-D:\\android\\gts9-active\\gts9-flash\\flash.log}
 RECOVERY_TIMEOUT=${RECOVERY_TIMEOUT:-300}
 SHELL_TIMEOUT=${SHELL_TIMEOUT:-120}
 
 mkdir -p "$STAGE"
 cp "$IMG" "$STAGE/$(basename "$PART").img"
-WIN_IMG="D:\\android\\gts9-flash\\$(basename "$PART").img"
+WIN_IMG="D:\\android\\gts9-active\\gts9-flash\\$(basename "$PART").img"
 HOST_SHA=$(sha256sum "$STAGE/$(basename "$PART").img" | cut -d' ' -f1)
 
 phase() { echo "$(date -u +%T) $*"; }

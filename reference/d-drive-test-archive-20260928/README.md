@@ -16,7 +16,7 @@ For a later integrity check, run from the archive root:
 sha256sum -c /home/ms/Samsung/galaxy_tab_s9_linux/reference/d-drive-test-archive-20260928/SHA256SUMS
 ```
 
-Windows retains only the operational paths under `D:\android`:
+Windows retains only the operational paths under `D:\android\gts9-active`:
 
 * `platform-tools/` for Windows ADB;
 * `gts9-stock/` for stock rescue images;
@@ -27,7 +27,10 @@ Windows retains only the operational paths under `D:\android`:
 * `gts9-test249/` with the staged production pair, module archive and
   `rollback/` copies of the passing248 images.
 
-Those five nonempty top-level directories hold 39 files, about 1.3 GiB.
-Historical logs and images are no longer required on Windows. The live test249
-runner refers to the retained Windows paths recorded in
-`reference/boot-tests/test-249-no-dcc-production/backup-and-staging.json`.
+Those five nonempty directories hold 39 files, about 1.3 GiB. The root of
+`D:\android` contains only `gts9-active/`. Historical logs and images are no
+longer required on Windows. All 39 files matched their SHA-256 digests after
+the move, and Windows ADB still reached the Debian device from its new path.
+The test249 staging manifest preserves the Windows
+paths used during that test as historical evidence; the current helper under
+`out/test249/` maps those paths to `gts9-active/` at runtime.

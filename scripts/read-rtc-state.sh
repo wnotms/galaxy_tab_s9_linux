@@ -9,7 +9,7 @@
 # therefore writes one 16-bit state word there as the time of 2031-01-01, and
 # this script reads it back through adb - no timing, no owner, no storage.
 #
-#	ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/read-rtc-state.sh
+#	ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/read-rtc-state.sh
 #
 # Encoding (see docs/RTC_REPORT.md):
 #

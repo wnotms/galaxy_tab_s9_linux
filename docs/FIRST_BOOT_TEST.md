@@ -253,7 +253,7 @@ cat /proc/last_kmsg | tail -200
    Run the capture tool on the host *before* the reboot so nothing is lost:
 
 ```bash
-ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
+ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
 ```
 
    It waits for the tablet to reappear and pulls `/proc/last_kmsg` the moment it

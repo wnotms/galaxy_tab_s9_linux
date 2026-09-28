@@ -6,7 +6,7 @@
 # the shell echoes it, so a boot costs its real duration and nothing more.
 #
 #   powershell -ExecutionPolicy Bypass -File scripts/console-run.ps1 `
-#       -Out D:\android\gts9-testNNN\boot.log -Commands 'dmesg | grep -a pogo'
+#       -Out D:\android\gts9-active\gts9-testNNN\boot.log -Commands 'dmesg | grep -a pogo'
 #
 # -WaitReadySeconds 0 skips the heartbeat and runs the commands immediately.
 param(

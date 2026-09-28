@@ -8,7 +8,7 @@
 #	# from WSL, with the tablet currently in recovery:
 #	powershell.exe -NoProfile -ExecutionPolicy Bypass \
 #	  -File "\\\\wsl.localhost\\<distro>\\<repo>\\scripts\\usb-monitor.ps1" \
-#	  -Out "D:\\android\\gts9-usb-monitor.log" -Minutes 25
+#	  -Out "D:\\android\\gts9-active\\gts9-usb-monitor.log" -Minutes 25
 #
 # The wait for VID_18D1 (recovery's own adb interface) to disappear comes first,
 # so the gadget can never be confused with TWRP's adb.

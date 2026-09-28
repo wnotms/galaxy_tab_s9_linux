@@ -9,7 +9,7 @@
 # connected. It blocks until adb sees the device, then immediately pulls
 # /proc/last_kmsg and reports whether the ring contains a mainline boot.
 #
-#	ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
+#	ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
 #
 # Read-only: it runs `cat` on a proc file and writes the copy on the host. It
 # touches no block device and no partition.

@@ -15,7 +15,7 @@
 #   filesystem   <mountpoint>/gts9-bringup-report.txt, written when the cache
 #                filesystem mounted read-write during boot.
 #
-#	ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/read-bringup-report.sh \
+#	ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/read-bringup-report.sh \
 #	    --out reference/boot-tests/test-017-.../bringup-report.txt
 #
 #	# offline check of a partition dump instead of a tablet:
