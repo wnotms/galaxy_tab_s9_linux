@@ -230,6 +230,25 @@ a new explicit owner request and fresh baseline preflight. Stage2 TCPM and
 Stage3 SM5440 are not implemented and require the earlier stages' physical
 acceptance. Installed production remains Test249 as accepted by Test250.
 
+The owner subsequently requested Test252 physical testing ("开始测试吧").
+Attempt01 is registered under `test-252-sm5714-stage1/attempt-01/README.md`.
+Full read-only Test249 preflight and offline module install/restore rehearsal
+passed. The candidate boot and paired181 modules are now installed, and boot
+`fcb9a367-fa8e-43df-afb1-08db722ff2f1` has exact candidate notes/config/modules,
+five-partition identity, DCC absence, both supplies and working ADB/NCM/Wi-Fi
+SSH. Only boot changed; the other four partitions match accepted Test249.
+Initial computer SDP input is limited500mA and does not overcome system load;
+Charging labels alone are not charging acceptance. Battery-only150s and later
+20-minute ordinary-charge/plug-out tests are in progress, not accepted yet.
+The on-device `.gts9-test252-original` contains all181 verified Test249 files;
+external Test249 boot/module rollback is retained. Do not remove it or start
+Stage2/3 before the results and retention decision. The original prepared-only
+statements above describe the earlier phase, not the currently installed boot.
+Check attempt01 RESULTS/summary before the next hardware action. ADB tools use
+the owner's later `/mnt/d/android/platform-tools/adb.exe` location. One old GPU
+firmware-file-not-found error was recorded separately during preflight; no GPU
+or firmware change was made, and no CPU fault was observed in that evidence.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
