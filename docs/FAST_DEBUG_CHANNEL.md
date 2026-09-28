@@ -82,6 +82,22 @@ ordinary boot only. Keep the live restart guard, holder and no_disconnect mount
 provenance. Do not restart the shared gadget or daemon to activate this change.
 Host tests/building alone do not demonstrate reconnect on hardware.
 
+### Windows host transport recovery
+
+Test253 attempt02 found that raw `adb -s gts9wifi-0001 reconnect` on Windows
+37.0.1/LIBADBUSB removed the server transport without native recovery, while
+PnP, NCM SSH and the device daemon remained responsive. Preserve this stopped
+result; do not treat a successful command return as USB recovery. Attempt03
+reopened the same host server/backend and verified native shell,1MiB byte/hash
+roundtrip and uninterrupted NCM SSH, without any device restart or USB reset.
+
+For this observed host state, use `scripts/gts9-adb-host-rescan.sh`. It runs
+only computer-side kill-server/start-server/devices; the optional
+GTS9_ADB_EXE selects the executable. Default is the owner's current
+/mnt/d/android/platform-tools/adb.exe. It does not call root/usb/tcpip/reboot
+or restart any device service. Physical cable-reconnect acceptance is still
+pending; see [attempt03](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-03/RESULTS.md).
+
 ## Raising the console baud does nothing, and that was measured
 
 `COM17`/`COM19` are USB **CDC-ACM gadget** ports, not a UART. The gadget

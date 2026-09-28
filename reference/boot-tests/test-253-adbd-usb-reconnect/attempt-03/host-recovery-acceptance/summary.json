@@ -1,0 +1,66 @@
+{
+  "adb_offline_repair_target": false,
+  "adb_ok": true,
+  "boot_id": "461c1408e42643afae5b48162771d077",
+  "candidate_config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "code43": false,
+  "dcc_absent": true,
+  "failed_units": [],
+  "full_identity": false,
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "316471812",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.174316,
+          "events": [],
+          "setup_source_seconds": 4.252901
+        },
+        {
+          "completion_source_seconds": 7.176731,
+          "events": [
+            {
+              "completion_source_seconds": 7.176731,
+              "event_source_seconds": 6.373604,
+              "recovery_seconds": 0.803127,
+              "row": 1050
+            }
+          ],
+          "setup_source_seconds": 6.298619
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1050
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1107,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "native_absent_repair_target": false,
+  "ncm_ssh_ok": true,
+  "notes_sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed",
+  "pack_temperature_deciC": 293,
+  "phase": "host-recovery-acceptance",
+  "protected_settings_unchanged": true,
+  "soc": 93,
+  "systemd_classification": {
+    "classification": "no-failed-units",
+    "failed_units": []
+  },
+  "uptime_seconds": 1103.33,
+  "verdict": "passed",
+  "wifi_ssh_ok": true
+}

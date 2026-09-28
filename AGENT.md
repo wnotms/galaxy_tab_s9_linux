@@ -30,12 +30,16 @@ The daemon is installed but reconnect acceptance is incomplete. No extra
 reboot/reset/device-service restart occurred. Current Wi-Fi address is
 10.191.121.29 (DHCP changed from195). Read attempt02 RESULTS/summary/evidence.
 
-Within the ongoing ADB repair authorization, attempt03 independently registers
-one same-version/default-backend Windows ADB server reopening and three
-subsequent physical cycles. Keep earlier stopped outcomes/seals unchanged,
-check its README/results before further work. This host process reopening is
-not a device service restart or a USB driver/controller reset. Do not switch
-backend, modify production or start charging Stage2/3 in this repair.
+Attempt03 independently reopened the same37.0.1/LIBADBUSB Windows ADB server
+once; native USB shell and1MiB byte/hash roundtrip now pass, with same boot/
+PID834/hash and uninterrupted NCM SSH. The device was not rebooted or reset,
+and no device service/config changed. Current native ADB works. The three
+registered physical unplug/replug cycles and full final acceptance remain
+pending; cycle01 monitor awaits the owner's15s cable action. Read attempt03
+RESULTS/summary before proceeding. Keep prior stopped outcomes/seals intact.
+`scripts/gts9-adb-host-rescan.sh` is the verified host recovery for the observed
+missing table entry; raw `adb reconnect`37.0.1 remains an unresolved separate
+limitation. Do not switch backend, modify production or start Stage2/3.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

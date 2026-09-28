@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "scripts/gts9-ssh.sh",
+    "set -eu; printf \"connection=%s\\n\" \"$SSH_CONNECTION\"; for i in $(seq 1 50); do printf \"%s \" \"$i\"; cat /proc/uptime; test \"$(cat /proc/sys/kernel/random/boot_id)\" = 461c1408-e426-43af-ae5b-48162771d077; test \"$(cat /sys/kernel/config/usb_gadget/gts9/UDC)\" = a600000.usb; test \"$(systemctl show -p MainPID --value gts9-adbd.service)\" = 834; sleep 1; done"
+  ],
+  "started_utc": "2026-09-28T14:11:47.604990+00:00",
+  "ended_utc": "2026-09-28T14:12:40.593731+00:00",
+  "status": 0
+}
