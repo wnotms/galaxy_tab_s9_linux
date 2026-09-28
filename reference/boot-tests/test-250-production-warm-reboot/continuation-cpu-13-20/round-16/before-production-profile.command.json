@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/watchdog /proc/sys/kernel/soft_watchdog /proc/sys/kernel/softlockup_panic /proc/sys/kernel/panic /sys/module/ramoops/parameters/ecc"
+  ],
+  "ended_utc": "2026-09-28T07:44:35.134877+00:00",
+  "started_utc": "2026-09-28T07:44:35.063743+00:00",
+  "status": 0
+}

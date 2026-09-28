@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b ac60e29d0a6649baa99d9651b22c0ca6 -k --no-pager -o short-monotonic"
+  ],
+  "ended_utc": "2026-09-28T07:45:16.130236+00:00",
+  "started_utc": "2026-09-28T07:45:16.029724+00:00",
+  "status": 0
+}

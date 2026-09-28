@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf 'dev='; test -e /dev/hvc0 && echo present || echo absent; printf 'sysfs='; test -e /sys/class/tty/hvc0 && echo present || echo absent; printf 'getty='; systemctl is-active serial-getty@hvc0.service || true; printf 'symbol='; grep -wE 'hvc_dcc0_put_chars|hvc_write' /proc/kallsyms || true"
+  ],
+  "ended_utc": "2026-09-28T07:47:30.842425+00:00",
+  "started_utc": "2026-09-28T07:47:30.670217+00:00",
+  "status": 0
+}

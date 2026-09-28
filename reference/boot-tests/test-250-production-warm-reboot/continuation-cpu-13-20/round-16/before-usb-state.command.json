@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; ip -br addr show usb0; ss -lnt; systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true"
+  ],
+  "ended_utc": "2026-09-28T07:44:35.315347+00:00",
+  "started_utc": "2026-09-28T07:44:35.221131+00:00",
+  "status": 0
+}
