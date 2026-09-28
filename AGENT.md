@@ -2,6 +2,14 @@
 
 ## Current state (2026-09-28)
 
+Current device is the authorized **Test252 Stage1 candidate**, not the exact
+accepted Test249 production image. Battery-only/ordinary charge/plug-out windows
+passed, but the attempt stopped on USB ADB offline after computer reconnect.
+NCM and Wi-Fi SSH work; candidate identities/181 files and181 rollback files
+remain verified. Stage1 full acceptance is incomplete; Stage2/3 have not started.
+Read `reference/boot-tests/test-252-sm5714-stage1/RESULTS.md` before hardware work.
+The historical accepted production baseline remains Test249 below.
+
 The production DCC-path repair is deployed and accepted on the SM-X710. The
 pinned Linux 7.2-rc3 production build has `CONFIG_HVC_DCC=n`, matching boot and
 vendor_boot images, and all 181 matching module files. Test249 verified the
@@ -242,8 +250,13 @@ Charging labels alone are not charging acceptance. Battery-only151.021s passed
 and ordinary Lenovo YG65G USB-C2 charging passed1201.035s/121 samples: SOC92 ->97,
 actual pack current+432..1381mA, temperature30.6..31.2C, voltage4.330..4.418V.
 No CPU/kernel/charge fault occurred. Plug-out passed151.127s, returning to
-online0/Discharging with negative actual current. Final USB/identity acceptance
-is still pending; Stage1 physical acceptance is not yet complete.
+online0/Discharging with negative actual current. Final USB gate stopped on persistent ADB offline after reconnect, although
+Windows enumerates both interfaces and source-bound NCM/Wi-Fi SSH work without
+Code43. Post-stop exact candidate config/notes/five partitions/181 files and181
+original files remain verified, DCC absent and no CPU/kernel fault or failed unit.
+Stage1 full acceptance is incomplete. Preserve this stopped attempt/USB evidence;
+no daemon restart, gadget reset, further experiment, rollback or cleanup was made.
+Candidate remains installed for offline USB analysis, not promoted to production.
 The on-device `.gts9-test252-original` contains all181 verified Test249 files;
 external Test249 boot/module rollback is retained. Do not remove it or start
 Stage2/3 before the results and retention decision. The original prepared-only

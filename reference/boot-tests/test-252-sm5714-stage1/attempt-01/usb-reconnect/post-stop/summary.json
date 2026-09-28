@@ -1,0 +1,32 @@
+{
+  "verdict": "candidate identity verified; physical acceptance stopped on USB ADB offline",
+  "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+  "config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "notes_sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed",
+  "exact_config_and_notes_verified": true,
+  "cmdline_unchanged": true,
+  "partition_hashes": {
+    "boot": "5402b7c45c06568591a86cce807af0820fddb23c03a1d9a49cec780dd7e45ec0",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9"
+  },
+  "module_files_verified": 181,
+  "rollback_module_files_verified": 181,
+  "dcc_absent": true,
+  "production_cpu_profile_unchanged": true,
+  "failed_units": [],
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "kernel_journal_rows": 1100,
+  "boot_attribution_unique": true,
+  "adb_state": "offline",
+  "ncm_banner_source_bound": true,
+  "ncm_authenticated_ssh": true,
+  "wifi_ssh": true,
+  "windows_code43": false,
+  "device_state": "candidate retained for offline analysis; no recovery/config/service change",
+  "candidate_physically_accepted": false,
+  "rollback_executed": false
+}

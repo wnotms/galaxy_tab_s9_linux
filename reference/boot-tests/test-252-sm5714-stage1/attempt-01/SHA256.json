@@ -3,6 +3,10 @@
     "bytes": 3149,
     "sha256": "bbe713286873d81a7fdbafb39179c1bc2d882c7ff68eb49b08d7417c0c6fe484"
   },
+  "RESULTS.md": {
+    "bytes": 7736,
+    "sha256": "4bb514b6e2f91e7e11199f464f67f487ff1cbd3a9dfbeef2546ff0e3c72ee22b"
+  },
   "battery-only/acceptance.json": {
     "bytes": 524,
     "sha256": "0c5409d98e7dd3848a06e5cf73fc551cb34bf05970fcbcd170b86360bfd7882e"
@@ -2915,6 +2919,10 @@
     "bytes": 1233,
     "sha256": "147ae8801f16287b33e8012bec42493419ed9dc7bb18b11ee93a6aed1a3f8da9"
   },
+  "summary.json": {
+    "bytes": 9417,
+    "sha256": "18f5826870ad33f828dbc5abae9c6211a271ce4751626eb8f4ca5d403dcbba54"
+  },
   "tools/audit-observation.py": {
     "bytes": 5178,
     "sha256": "ccf4b97bb45c70eca65baf548b8e39678a5e48575fae36d423f70ea08716ff16"
@@ -2922,6 +2930,10 @@
   "tools/candidate-module-checksums.txt": {
     "bytes": 19503,
     "sha256": "9877130daf3d92548e7b783032d0187faf1c8fb3220121cc61530af2b852a632"
+  },
+  "tools/close-result.py": {
+    "bytes": 5555,
+    "sha256": "e626d21634432cac09aa1c2c38ae2bc592affc4ab04a02ca694d257a37efd8ce"
   },
   "tools/final-gate.py": {
     "bytes": 4425,
@@ -2951,9 +2963,429 @@
     "bytes": 1088,
     "sha256": "c64d54318c907a5fe0b53b50e694e70687bdefa6b680f7ecdee3574cd22d3ae1"
   },
+  "usb-reconnect/adb-detection-01.command.json": {
+    "bytes": 208,
+    "sha256": "75e7a80f1e42f6acce6edc3264af445b84f3006a5c1bbd517f6b3f3fca155b0e"
+  },
+  "usb-reconnect/adb-detection-01.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/adb-detection-01.txt": {
+    "bytes": 76,
+    "sha256": "8d4d4705d9b2b09a0d3c08088a715e965f2705b1645a2e7042c555ef5c3de987"
+  },
+  "usb-reconnect/adb-detection-02.command.json": {
+    "bytes": 208,
+    "sha256": "9a2b14efd8e7a555e52a2bd7e06502447eaaffd817e40b5f63369e9bf5a91c0f"
+  },
+  "usb-reconnect/adb-detection-02.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/adb-detection-02.txt": {
+    "bytes": 76,
+    "sha256": "8d4d4705d9b2b09a0d3c08088a715e965f2705b1645a2e7042c555ef5c3de987"
+  },
+  "usb-reconnect/adb-detection-03.command.json": {
+    "bytes": 208,
+    "sha256": "ad52a0d1ba5751128915f62905012a8280fdcbfa772a045126c0d90be8f498f1"
+  },
+  "usb-reconnect/adb-detection-03.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/adb-detection-03.txt": {
+    "bytes": 76,
+    "sha256": "8d4d4705d9b2b09a0d3c08088a715e965f2705b1645a2e7042c555ef5c3de987"
+  },
+  "usb-reconnect/initial-windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "2adbadd3a34f2e1ac9952cde60414d001f4689cc4a1b9c9e78c326874d2fe791"
+  },
+  "usb-reconnect/initial-windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/initial-windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "usb-reconnect/post-stop/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "4d935df1b695494b3733e08cafdac65b6ea15c7970129e5fc4e5c1d0b00073c5"
+  },
+  "usb-reconnect/post-stop/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/adb-state.txt": {
+    "bytes": 76,
+    "sha256": "8d4d4705d9b2b09a0d3c08088a715e965f2705b1645a2e7042c555ef5c3de987"
+  },
+  "usb-reconnect/post-stop/backup-module-hashes.command.json": {
+    "bytes": 291,
+    "sha256": "9cdc26820e04f5fe769be0448286c2bfbbadae036861a45c52f21d1717573488"
+  },
+  "usb-reconnect/post-stop/backup-module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/backup-module-hashes.txt": {
+    "bytes": 26743,
+    "sha256": "600b807ed051c928d2b0950eabfb881262df3a922625041dbedbabe49a548df3"
+  },
+  "usb-reconnect/post-stop/bluetooth-health.json": {
+    "bytes": 275,
+    "sha256": "4f946b40c103fd41a0f692cea006c9626bb91467ba7aefca83cfb22456f35004"
+  },
+  "usb-reconnect/post-stop/bluetooth-state.command.json": {
+    "bytes": 571,
+    "sha256": "36dd7d07419e3dbc366c86493d62f934ca9b94b759c97616a206b1b0179b002d"
+  },
+  "usb-reconnect/post-stop/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/bluetooth-state.txt": {
+    "bytes": 1412,
+    "sha256": "dbaab3bfe378f61b397de7ca98ecb17089e6ebf99c7a7fd64c6a4cf0fa68cbb8"
+  },
+  "usb-reconnect/post-stop/boot-history.command.json": {
+    "bytes": 252,
+    "sha256": "a28318102c84bd794e2df7edd877dfea7ac52764c9e4cdaadfeeb0d680fd4022"
+  },
+  "usb-reconnect/post-stop/boot-history.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/boot-history.txt": {
+    "bytes": 18407,
+    "sha256": "f8a2189d92a9f8023c0a2238def853cb92dbb2b4b4c2d10bb86052b47fab2c2d"
+  },
+  "usb-reconnect/post-stop/boot-id-confirm.command.json": {
+    "bytes": 253,
+    "sha256": "fe4b56b58c5b008f4ca7f0ffa856aef92ea6a775427fec91decd97210726cbc4"
+  },
+  "usb-reconnect/post-stop/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "usb-reconnect/post-stop/boot-id.command.json": {
+    "bytes": 253,
+    "sha256": "66ab41f3010594f63cde645df83267530e80468265f9be70e94d4604a3530048"
+  },
+  "usb-reconnect/post-stop/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "usb-reconnect/post-stop/cmdline.command.json": {
+    "bytes": 235,
+    "sha256": "c334dd56de2b0489c3b3bfdf258c2701bcdf7194e6c44e8ccf8784caa7acb459"
+  },
+  "usb-reconnect/post-stop/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "usb-reconnect/post-stop/config-sha256.command.json": {
+    "bytes": 250,
+    "sha256": "f96b912aa7fa04d2b7ce0e72fa1426a2b38258bbb2c025907c75505831e1168a"
+  },
+  "usb-reconnect/post-stop/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "usb-reconnect/post-stop/dcc-state.command.json": {
+    "bytes": 512,
+    "sha256": "e710e1e407ea4bb22bc0a5b9c7799bd10ba0bd6cfe8e402dc1791d24f8d038ef"
+  },
+  "usb-reconnect/post-stop/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "usb-reconnect/post-stop/embedded-config.command.json": {
+    "bytes": 238,
+    "sha256": "b2169bd8bed67359cd90f4b53a7781733bf33fef07ff790bbaf6db4bc0b48e18"
+  },
+  "usb-reconnect/post-stop/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "usb-reconnect/post-stop/final-state.command.json": {
+    "bytes": 631,
+    "sha256": "f729647c3a95dd8cb8c5d81cb2b1e2315a758f19a91503e11fa12fe1f71ff1e4"
+  },
+  "usb-reconnect/post-stop/final-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/final-state.txt": {
+    "bytes": 1943,
+    "sha256": "a239c05e1d17db3a1da7108ae350c0624211c2cd3ab5a9097a2b4e663c647c26"
+  },
+  "usb-reconnect/post-stop/kernel-journal-json.command.json": {
+    "bytes": 253,
+    "sha256": "c79821a3c087e9996be70554ae3f305d42f10c4a1f15a5c76b249a910c3da1f9"
+  },
+  "usb-reconnect/post-stop/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/kernel-journal-json.txt": {
+    "bytes": 761238,
+    "sha256": "2cd761983fd471d646aebbe6ddcbea53be8bd6a2449d1534a34b9c571a252947"
+  },
+  "usb-reconnect/post-stop/kernel-journal.command.json": {
+    "bytes": 264,
+    "sha256": "69bbc3756f6685126db50d664a2a705008fc286f4828f46df8c387852ffd0ac1"
+  },
+  "usb-reconnect/post-stop/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/kernel-journal.txt": {
+    "bytes": 105659,
+    "sha256": "e84e1a482a9c9fa9591609dccb57902c30e441ec0f396d40382abec44d82575f"
+  },
+  "usb-reconnect/post-stop/kernel-notes.bin": {
+    "bytes": 84,
+    "sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed"
+  },
+  "usb-reconnect/post-stop/kernel-notes.command.json": {
+    "bytes": 245,
+    "sha256": "90612c6b8e4168d4425a23167e51efbc6b1d0e051eab876d022385d9f0edc9d8"
+  },
+  "usb-reconnect/post-stop/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "usb-reconnect/post-stop/kernel-scan.json": {
+    "bytes": 746,
+    "sha256": "8fc41dbec24358dd067b1d9a89800f4fa1a63b2c473e8491ea57f8677aac13e6"
+  },
+  "usb-reconnect/post-stop/module-hashes.command.json": {
+    "bytes": 293,
+    "sha256": "27da42411843fbe4e0be64cefb6fa6eaf0c8447fc6dd762dfd1d20869188f83e"
+  },
+  "usb-reconnect/post-stop/module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/module-hashes.txt": {
+    "bytes": 27105,
+    "sha256": "6216ca25b3f23244b96d3d52dc86d1ab05b5d654bcd3d6d655787b33b8019c62"
+  },
+  "usb-reconnect/post-stop/ncm-authenticated-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "a14e88b10471b0f70ce3b56ddecb214164012a4f780ab3a4f9140ed8f52e341c"
+  },
+  "usb-reconnect/post-stop/ncm-authenticated-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/ncm-authenticated-ssh.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "usb-reconnect/post-stop/partitions.command.json": {
+    "bytes": 311,
+    "sha256": "53c662e47f058c59c75cc1d27bf23c717aaaf8c0cebd48f236c6617866198fac"
+  },
+  "usb-reconnect/post-stop/partitions.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/partitions.txt": {
+    "bytes": 484,
+    "sha256": "ee354f258e4fd54a11217375573a9c677260ed7ae7c1f0f250a5375416e08142"
+  },
+  "usb-reconnect/post-stop/production-profile.command.json": {
+    "bytes": 370,
+    "sha256": "4645d75c1606fb4ffb5efa0c77d38a5cc143919db8b9a61f01a93ff98d8b6b07"
+  },
+  "usb-reconnect/post-stop/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "usb-reconnect/post-stop/production-state.json": {
+    "bytes": 1271,
+    "sha256": "22da330ad3516a68080d9fad15e22bf100f9969c607caf23fdc33124e90378db"
+  },
+  "usb-reconnect/post-stop/splash-region-base64.command.json": {
+    "bytes": 288,
+    "sha256": "433437489140713d39c387af75f1498efb88ab62fc14938ffa9c8950552a8415"
+  },
+  "usb-reconnect/post-stop/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "usb-reconnect/post-stop/summary.json": {
+    "bytes": 1421,
+    "sha256": "cddafd134dde35544b732fb806f58689701b9cd2e7681f1e3c8d908beb1accbe"
+  },
+  "usb-reconnect/post-stop/systemd-failed.command.json": {
+    "bytes": 267,
+    "sha256": "cbae1eb2cdf0b8322f84e62a5c7a471f26cd2e7bddd16fdfa5e7268c6358d263"
+  },
+  "usb-reconnect/post-stop/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/systemd-failed.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/uname.command.json": {
+    "bytes": 226,
+    "sha256": "88b5acc6f3bb5a975c226215fa348c67dbb1cac9339df51f48b21af1010fff42"
+  },
+  "usb-reconnect/post-stop/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "usb-reconnect/post-stop/uptime-end.command.json": {
+    "bytes": 234,
+    "sha256": "e25b3fb91b5f5f5f510041a79603f63937920b95060c661d3e5382fedbdd2c70"
+  },
+  "usb-reconnect/post-stop/uptime-end.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/uptime-end.txt": {
+    "bytes": 17,
+    "sha256": "c0e9b758117dba41ef175d5909596757776abb33a4f3831131afd93d8f465537"
+  },
+  "usb-reconnect/post-stop/uptime.command.json": {
+    "bytes": 234,
+    "sha256": "c683b054069f829b1e36af5e366281ba197e6df987894fbf2fd9c269fb56690c"
+  },
+  "usb-reconnect/post-stop/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/uptime.txt": {
+    "bytes": 17,
+    "sha256": "ad48e464a88f11822c0f80d30149e3d2f749db82010d7bdf736f2aefef425f94"
+  },
+  "usb-reconnect/post-stop/usb-adbd-journal.command.json": {
+    "bytes": 523,
+    "sha256": "1dfb2326b26f8e8c61d2ec35cff0fb9c4595c503aeb94c02aaa0f8f997f50e21"
+  },
+  "usb-reconnect/post-stop/usb-adbd-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/usb-adbd-journal.txt": {
+    "bytes": 4679,
+    "sha256": "b7101356e597480f87bb2e42d0366ae5ef6c0af75a484dc54d1f10276aa76264"
+  },
+  "usb-reconnect/post-stop/usb-state.command.json": {
+    "bytes": 387,
+    "sha256": "f7a197479abddd84d35ac4d9b5dfd82f361bdd35d6ed3014abc6ac4a8a129d75"
+  },
+  "usb-reconnect/post-stop/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "usb-reconnect/post-stop/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "edb0f5dac0fe84dd6d2c8d6e9a7f1ff718ab9648e382f8f6ead0178741540712"
+  },
+  "usb-reconnect/post-stop/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/windows-ncm-banner.txt": {
+    "bytes": 230,
+    "sha256": "3788b853a2240cf2bd75ec165bef66e8b83d7971c3a6139622820503876432d2"
+  },
+  "usb-reconnect/post-stop/windows-pnp-events.command.json": {
+    "bytes": 594,
+    "sha256": "f9cb3965e2282449d15804692121c08b0e233cf9cda938b6021c1834c5c9aa8b"
+  },
+  "usb-reconnect/post-stop/windows-pnp-events.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/windows-pnp-events.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "93470f2c52c48c49b107c542628b43d5e4ff10ebb1d3a00beb57a160e5c9a20b"
+  },
+  "usb-reconnect/post-stop/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "usb-reconnect/post-stop/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "usb-reconnect/wifi-device-state.command.json": {
+    "bytes": 707,
+    "sha256": "d98450136fb2a5b79e1308bc218897c6bf131c2a6079ed1cbcea03f753659436"
+  },
+  "usb-reconnect/wifi-device-state.stderr": {
+    "bytes": 36,
+    "sha256": "a0733d966bb7d2b1d293736d0cbef5e1d8ea733b9110da3c293910d714e056c6"
+  },
+  "usb-reconnect/wifi-device-state.txt": {
+    "bytes": 770418,
+    "sha256": "74a9c7be84625022d0c6b17830715c8b1c8af7a5472de3b9bd751a1836bbd2cc"
+  },
   "validation/physical-host-tests.json": {
     "bytes": 490,
     "sha256": "9fed3db8617dcaff36a7a3e61d2cd25a654710bba53465235460ac3a567b6f23"
+  },
+  "validation/physical-host-tests.log": {
+    "bytes": 35061,
+    "sha256": "210f4159cb7ffa564d99484bbbf5b6cda52f0aa4a4db1a817a14700b6330e96e"
   },
   "validation/post-charge-same-model-review.json": {
     "bytes": 1446,

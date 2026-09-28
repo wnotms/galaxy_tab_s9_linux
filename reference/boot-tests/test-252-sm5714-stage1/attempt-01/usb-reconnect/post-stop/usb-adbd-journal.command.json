@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "journalctl -b -u gts9-adbd.service -u gts9-usb-acm.service --no-pager; cat /sys/class/power_supply/sm5714-battery/uevent /sys/class/power_supply/sm5714-usb/uevent; ls -l /dev/usb-ffs/adb; ps -L -p $(pidof adbd) -o pid,tid,state,wchan,comm; for f in /sys/class/udc/*/state; do echo \"$f\"; cat \"$f\"; done"
+  ],
+  "ended_utc": "2026-09-28T12:43:31.216424+00:00",
+  "started_utc": "2026-09-28T12:43:30.821927+00:00",
+  "status": 0
+}

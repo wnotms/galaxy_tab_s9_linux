@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "set -e; date -u; cat /proc/sys/kernel/random/boot_id /proc/uptime; echo __notes__; base64 /sys/kernel/notes; echo __modules__; find /usr/lib/modules -maxdepth 1 -type d -print; echo __packages__; dpkg-query -W adbd; echo __services__; systemctl cat gts9-adbd.service gts9-usb-adb-hold.service; echo __pstore__; find /sys/fs/pstore -maxdepth 1 -type f -print; echo __boot_end__; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "started_utc": "2026-09-28T12:45:27.503684+00:00",
+  "ended_utc": "2026-09-28T12:45:28.780644+00:00",
+  "status": 0
+}

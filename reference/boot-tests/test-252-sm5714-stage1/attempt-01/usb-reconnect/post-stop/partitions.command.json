@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/disk/by-partlabel/$n; done"
+  ],
+  "ended_utc": "2026-09-28T12:43:26.748960+00:00",
+  "started_utc": "2026-09-28T12:43:25.609713+00:00",
+  "status": 0
+}
