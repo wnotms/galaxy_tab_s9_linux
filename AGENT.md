@@ -116,6 +116,17 @@ precisely bounded host-only classification proposal. Keep physical testing
 stopped until the owner explicitly resolves that classification; production
 and the current runner stay unchanged.
 
+The owner subsequently explicitly adopted the bounded QCA classification
+proposal (reply: "采用"). Test250 attempt 04 is a fresh registration under
+`attempt-04/README.md` and `policy.json`, using `--attempt 4`. Its host parser
+counts only the one exact early hci0/0xfc48 priority-3 event with WCN6855 setup
+completed within 5 s, plus same-boot powered-controller/active-unit health.
+The full 20-round/150-second Test249 identity, attribution, CPU/USB/evidence and
+first-non-clean gates remain. Push registration/tests, then accepted full
+preflight, before reboot. Previous attempts remain stopped and sealed; their
+old plans do not authorize resumption. Production is not modified. Check
+attempt-04 RESULTS/summary if present before starting any work on the device.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

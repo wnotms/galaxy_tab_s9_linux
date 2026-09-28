@@ -396,5 +396,177 @@ class ProductionRegionAndNcmTests(unittest.TestCase):
                 runner.baseline()
 
 
+class QcaBaudrateClassificationTests(unittest.TestCase):
+    def rows(self):
+        messages = ((0, "Linux version test-production", 6),
+                    (6_000_000, ev.QCA_SETUP, 6),
+                    (8_000_000, ev.QCA_BAUDRATE_EVENT, 3),
+                    (8_800_000, ev.QCA_READY, 6))
+        return [{"_BOOT_ID": B, "_SOURCE_BOOTTIME_TIMESTAMP": str(t),
+                 "PRIORITY": str(priority), "MESSAGE": message}
+                for t, message, priority in messages]
+
+    def scan(self, rows=None, **kwargs):
+        raw = "\n".join(json.dumps(row) for row in (self.rows() if rows is None else rows))
+        return ev.inspect_journal(raw, B, accepted_qca_baudrate=True, **kwargs)
+
+    def health(self):
+        return (f"boot_id={B}\nuptime=151.3 300\nbluetooth=active\naddress=active\n"
+                "controllers=hci0 \ncontroller:\nController 38:8A:06:59:04:E7 (public)\n"
+                "\tPowered: yes\n\tPowerState: on\n")
+
+    def test_exact_early_recovered_warning_is_counted(self):
+        scan = self.scan()
+        self.assertEqual(scan["suspects"], [])
+        self.assertEqual(scan["known_warning_count"], 1)
+        self.assertEqual(scan["qca_baudrate_warning"]["state"], "accepted")
+        self.assertEqual(scan["qca_baudrate_warning"]["recovery_seconds"], 0.8)
+        self.assertEqual(clean_gate(journal=scan), "clean")
+
+    def test_default_and_old_attempts_keep_event_suspect(self):
+        raw = "\n".join(json.dumps(row) for row in self.rows())
+        for path in (runner.TEST250_ROOT, runner.TEST250_ROOT / "attempt-02",
+                     runner.TEST250_ROOT / "attempt-03"):
+            with self.subTest(path=path), mock.patch.object(runner, "P", path):
+                base = runner.baseline()
+                self.assertFalse(base["accepted_qca_baudrate"])
+                self.assertTrue(runner.inspect(raw, B, base)["suspects"])
+
+    def test_late_zero_time_and_repeated_event_stop(self):
+        for time_us in (0, 20_000_001):
+            rows = self.rows()
+            rows[2]["_SOURCE_BOOTTIME_TIMESTAMP"] = str(time_us)
+            rows[3]["_SOURCE_BOOTTIME_TIMESTAMP"] = str(time_us + 800_000)
+            self.assertTrue(self.scan(rows)["suspects"])
+        rows = self.rows()
+        rows.append(dict(rows[2]))
+        scan = self.scan(rows)
+        self.assertEqual(scan["qca_baudrate_warning"]["event_count"], 2)
+        self.assertEqual(clean_gate(journal=scan), "suspect")
+        self.assertFalse(ev.may_continue(clean_gate(journal=scan)))
+
+    def test_exact_twenty_second_boundary_is_allowed(self):
+        rows = self.rows()
+        rows[2]["_SOURCE_BOOTTIME_TIMESTAMP"] = "20000000"
+        rows[3]["_SOURCE_BOOTTIME_TIMESTAMP"] = "25000000"
+        self.assertEqual(self.scan(rows)["qca_baudrate_warning"]["state"], "accepted")
+
+    def test_other_opcode_controller_and_priority_remain_suspect(self):
+        for message in (ev.QCA_BAUDRATE_EVENT.replace("fc48", "fc49"),
+                        ev.QCA_BAUDRATE_EVENT.replace("hci0", "hci1")):
+            rows = self.rows()
+            rows[2]["MESSAGE"] = message
+            self.assertTrue(self.scan(rows)["suspects"])
+        for priority in (2, 4, 6):
+            rows = self.rows()
+            rows[2]["PRIORITY"] = str(priority)
+            self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_missing_wrong_soc_or_restarted_setup_stops(self):
+        for message in ("unrelated", ev.QCA_SETUP.replace("wcn6855", "wcn7850")):
+            rows = self.rows()
+            rows[1]["MESSAGE"] = message
+            self.assertTrue(self.scan(rows)["suspects"])
+        rows = self.rows()
+        rows.insert(3, {**rows[1], "_SOURCE_BOOTTIME_TIMESTAMP": "8100000"})
+        self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_missing_late_or_prior_completion_stops(self):
+        self.assertTrue(self.scan(self.rows()[:-1])["suspects"])
+        for time_us in (7_000_000, 13_000_001):
+            rows = self.rows()
+            rows[3]["_SOURCE_BOOTTIME_TIMESTAMP"] = str(time_us)
+            self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_live_pending_has_deadline_and_cannot_be_clean(self):
+        rows = self.rows()[:-1]
+        scan = self.scan(rows, observed_uptime=10)
+        self.assertEqual(scan["suspects"], [])
+        self.assertEqual(scan["qca_baudrate_warning"]["state"], "pending")
+        self.assertEqual(clean_gate(journal=scan), "suspect")
+        self.assertTrue(self.scan(rows, observed_uptime=13.000001)["suspects"])
+
+    def test_cpu_fault_stops_even_while_qca_pending(self):
+        rows = self.rows()[:-1]
+        rows.append({**rows[0], "_SOURCE_BOOTTIME_TIMESTAMP": "10000000",
+                     "MESSAGE": "Kernel panic - not syncing: test"})
+        scan = self.scan(rows, observed_uptime=10)
+        self.assertIn("panic", scan["fault_counts"])
+        self.assertEqual(clean_gate(journal=scan), "failure_observed")
+
+    def test_live_runner_stops_when_setup_deadline_expires(self):
+        with tempfile.TemporaryDirectory() as temp:
+            rec = mock.Mock(folder=Path(temp))
+            rec.adb.return_value = (B + "\n14.0 30.0\n", 0)
+            proc = mock.Mock()
+            proc.poll.return_value = None
+            proc.wait.return_value = -15
+            raw = "\n".join(json.dumps(row) for row in self.rows()[:-1]) + "\n"
+            def start(_argv, stdout, stderr):
+                stdout.write(raw.encode())
+                stdout.flush()
+                return proc
+            with mock.patch.object(runner.subprocess, "Popen", side_effect=start), \
+                 mock.patch.object(runner.time, "sleep") as sleep:
+                with self.assertRaises(runner.KernelEvidenceError) as caught:
+                    runner.observe_window(rec, B, 10.0,
+                        {"known_priority3": set(), "accepted_qca_baudrate": True})
+                self.assertEqual(caught.exception.scan["qca_baudrate_warning"]["state"], "suspect")
+                sleep.assert_not_called()
+                proc.terminate.assert_called_once()
+
+    def test_registration_cannot_silently_increase_event_limit(self):
+        read_text = Path.read_text
+        def altered(path, *args, **kwargs):
+            raw = read_text(path, *args, **kwargs)
+            if path == runner.TEST250_ROOT / "attempt-04/policy.json":
+                value = json.loads(raw)
+                value["maximum_count"] = 2
+                return json.dumps(value)
+            return raw
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-04"), \
+             mock.patch.object(Path, "read_text", altered):
+            with self.assertRaises(ValueError):
+                runner.baseline()
+
+    def test_other_bluetooth_error_cannot_use_known_error_set(self):
+        rows = self.rows()
+        error = "Bluetooth: hci0: command 0xfc00 tx timeout"
+        rows.append({**rows[0], "_SOURCE_BOOTTIME_TIMESTAMP": "14000000",
+                     "PRIORITY": "4", "MESSAGE": error})
+        self.assertTrue(self.scan(rows, known_priority3={error})["suspects"])
+
+    def test_bluetooth_health_requires_same_boot_power_and_units(self):
+        good = self.health()
+        self.assertTrue(runner.parse_bluetooth_health(good, B)["healthy"])
+        for old, new in ((B, C), ("bluetooth=active", "bluetooth=failed"),
+                         ("address=active", "address=inactive"),
+                         ("controllers=hci0 ", "controllers=hci0 hci1 "),
+                         ("Powered: yes", "Powered: no")):
+            self.assertFalse(runner.parse_bluetooth_health(good.replace(old, new), B)["healthy"])
+        with self.assertRaises(ValueError):
+            runner.parse_bluetooth_health("", B)
+
+    def test_unpowered_controller_capture_stops(self):
+        with tempfile.TemporaryDirectory() as temp:
+            rec = mock.Mock(folder=Path(temp))
+            rec.adb.return_value = (self.health().replace("Powered: yes", "Powered: no"), 0)
+            with self.assertRaises(runner.CaptureError):
+                runner.bluetooth_health(rec, B)
+            self.assertFalse(json.loads((Path(temp) / "bluetooth-health.json").read_text())["healthy"])
+
+    def test_approved_attempt_replays_evidence_without_amending_old_verdict(self):
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-04"):
+            base = runner.baseline()
+        raw = (runner.TEST250_ROOT / "attempt-03/round-01/kernel-journal-json.txt").read_text()
+        boot = json.loads(raw.splitlines()[0])["_BOOT_ID"]
+        scan = runner.inspect(raw, boot, base)
+        self.assertEqual(scan["suspects"], [])
+        self.assertEqual(scan["fault_counts"], {})
+        self.assertEqual(scan["qca_baudrate_warning"]["recovery_seconds"], 0.808107)
+        old = json.loads((runner.TEST250_ROOT / "attempt-03/round-01/verdict.json").read_text())
+        self.assertEqual(old["verdict"], "suspect")
+
+
 if __name__ == "__main__":
     unittest.main()

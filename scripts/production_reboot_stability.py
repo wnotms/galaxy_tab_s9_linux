@@ -194,10 +194,21 @@ def baseline():
                data["validation/candidate-module-checksums.txt"].decode().splitlines()}
     old_rows = [json.loads(line) for line in data["final-acceptance/kernel-json.txt"].decode().splitlines()]
     known_priority3 = {row["MESSAGE"] for row in old_rows if int(row.get("PRIORITY", 7)) == 3}
-    third_attempt = P == TEST250_ROOT / "attempt-03"
-    variants = P in (TEST250_ROOT / "attempt-02", TEST250_ROOT / "attempt-03")
+    region_backed = P in (TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04")
+    qca_approved = P == TEST250_ROOT / "attempt-04"
+    variants = P in (TEST250_ROOT / "attempt-02", TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04")
+    if qca_approved:
+        policy = json.loads((P / "policy.json").read_text())
+        if policy != {"owner_authorization": "adopted post-attempt03 bounded classification",
+                      "message": evidence.QCA_BAUDRATE_EVENT, "maximum_count": 1,
+                      "priority": 3, "maximum_source_seconds": 20,
+                      "setup_deadline_seconds": 5, "soc": "wcn6855",
+                      "powered_controller_required": True,
+                      "other_bluetooth_errors_stop": True, "rounds": ROUNDS,
+                      "observation_seconds": WINDOW, "production_changes": False}:
+            raise ValueError("approved QCA classification registration changed")
     iova_range = (0xb8000000, 0xb8200000)
-    if third_attempt:
+    if region_backed:
         checked = json.loads(checked_file(BASE / "validation/build-check.json", manifest))
         name = "out/kernel-no-dcc-production/sm8550-samsung-gts9wifi.dtb"
         meta = checked["artifacts"][name]
@@ -234,15 +245,54 @@ def baseline():
     return {"config_sha256": config, "notes_sha256": identity["notes_sha256"],
             "partitions": partitions, "modules": modules, "known_priority3": known_priority3,
             "accepted_startup_variants": variants,
-            "startup_iova_range": iova_range, "ncm_source_bound": third_attempt,
+            "startup_iova_range": iova_range, "ncm_source_bound": region_backed,
+            "accepted_qca_baudrate": qca_approved,
             "owned_cmdline_tokens": owned_cmdline,
             "test249_manifest_sha256": hashlib.sha256((BASE / "SHA256.json").read_bytes()).hexdigest()}
 
 
-def inspect(raw, boot, base):
+def inspect(raw, boot, base, observed_uptime=None):
     return evidence.inspect_journal(raw, boot, base["known_priority3"],
                                     accepted_startup_variants=base.get("accepted_startup_variants", False),
-                                    startup_iova_range=base.get("startup_iova_range", (0xb8000000, 0xb8200000)))
+                                    startup_iova_range=base.get("startup_iova_range", (0xb8000000, 0xb8200000)),
+                                    accepted_qca_baudrate=base.get("accepted_qca_baudrate", False),
+                                    observed_uptime=observed_uptime)
+
+
+def parse_bluetooth_health(raw, boot):
+    lines = raw.strip().splitlines()
+    keys = ("boot_id", "uptime", "bluetooth", "address", "controllers")
+    if len(lines) < 7 or lines[5] != "controller:" or any(
+            not line.startswith(key + "=") for line, key in zip(lines[:5], keys)):
+        raise ValueError("incomplete Bluetooth health evidence")
+    fields = {key: lines[index].split("=", 1)[1].strip() for index, key in enumerate(keys)}
+    controller = [line for line in lines[6:] if re.fullmatch(
+        r"Controller (?:[0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2} \(public\)", line)]
+    powered = [line.strip() for line in lines[6:] if line.strip().startswith("Powered:")]
+    observed_boot = evidence.canonical_boot_id(fields["boot_id"])
+    uptime = float(fields["uptime"].split()[0])
+    healthy = (observed_boot == boot and fields["bluetooth"] == "active" and
+               fields["address"] == "active" and fields["controllers"].split() == ["hci0"] and
+               len(controller) == 1 and powered == ["Powered: yes"] and uptime >= 0)
+    return {"boot_id": observed_boot, "uptime_seconds": uptime, "healthy": healthy,
+            "bluetooth_service": fields["bluetooth"], "address_service": fields["address"],
+            "controllers": fields["controllers"].split(), "powered": powered == ["Powered: yes"],
+            "controller": controller[0] if len(controller) == 1 else None}
+
+
+def bluetooth_health(rec, boot, prefix=""):
+    raw = rec.adb(prefix + "bluetooth-state",
+        "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; "
+        "printf 'uptime='; cat /proc/uptime; "
+        "printf 'bluetooth='; systemctl is-active bluetooth.service || true; "
+        "printf 'address='; systemctl is-active gts9-bluetooth-address.service || true; "
+        "printf 'controllers='; ls /sys/class/bluetooth | tr '\\n' ' '; echo; "
+        "echo controller:; timeout 8 bluetoothctl show", 15)[0]
+    report = parse_bluetooth_health(raw, boot)
+    write_json(rec.folder / (prefix + "bluetooth-health.json"), report)
+    if not report["healthy"]:
+        raise CaptureError("same-boot powered Bluetooth controller/units not healthy")
+    return report
 
 
 def parse_hashes(text, root):
@@ -290,6 +340,7 @@ def production_state(rec, base, prefix="", full=False):
     usb = adb("usb-state", "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; "
               "ip -br addr show usb0; ss -lnt; "
               "systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true")
+    bluetooth = bluetooth_health(rec, boot, prefix) if base.get("accepted_qca_baudrate") else None
     if base.get("ncm_source_bound"):
         reg = base64.b64decode("".join(adb("splash-region-base64", "base64 "
             "/sys/firmware/devicetree/base/reserved-memory/splash_region/reg").split()), validate=True)
@@ -331,6 +382,8 @@ def production_state(rec, base, prefix="", full=False):
               "profile_ok": profile_ok, "failed_units": failed.splitlines(),
               "partitions_modules_checked": full, "identity_ok": ok,
               "usb_device_state": usb.strip()}
+    if bluetooth is not None:
+        report["bluetooth_health"] = bluetooth
     write_json(rec.folder / (prefix + "production-state.json"), report)
     if not ok:
         raise CaptureError("current device is not accepted Test249 production or has failed units")
@@ -427,6 +480,8 @@ def assert_registration_pushed():
     paths = ["scripts/production-reboot-stability.sh", "scripts/production_reboot_stability.py",
              "scripts/production_stability_evidence.py",
              str((P / "README.md").relative_to(ROOT))]
+    if P == TEST250_ROOT / "attempt-04":
+        paths.append(str((P / "policy.json").relative_to(ROOT)))
     if subprocess.run(["git", "ls-files", "--error-unmatch", "--", *paths],
                       cwd=ROOT, capture_output=True).returncode != 0:
         raise CaptureError("Test250 runner/registration files are not committed")
@@ -457,6 +512,9 @@ def preflight():
                       accepted_startup_variants=base["accepted_startup_variants"],
                       startup_variant_counts=inspected["startup_variant_counts"],
                       journal_boots=len(evidence.boot_list(history)))
+        if base.get("accepted_qca_baudrate"):
+            report.update(accepted_qca_baudrate=True, bluetooth_health=state["bluetooth_health"],
+                          qca_baudrate_warning=inspected["qca_baudrate_warning"])
     except Exception as exc:
         report.update(verdict="stop", error=repr(exc))
         collect_failure(rec, report.get("boot_id"))
@@ -523,7 +581,7 @@ def observe_window(rec, boot, first_uptime, base):
                 stream = follow.read_bytes()
                 complete = stream[:stream.rfind(b"\n") + 1].decode(errors="replace")
                 if complete:
-                    scan = inspect(complete, boot, base)
+                    scan = inspect(complete, boot, base, observed_uptime=uptime)
                     write_json(rec.folder / "live-journal-analysis.json", scan)
                     if scan["fault_counts"] or scan["suspects"]:
                         raise KernelEvidenceError("new boot kernel fault during observation", scan)
@@ -645,6 +703,9 @@ def round_run(index, base, before_expected):
         result["kernel_suspects"] = scan["suspects"]
         result["known_warning_count"] = scan["known_warning_count"]
         result["startup_variant_counts"] = scan["startup_variant_counts"]
+        if base.get("accepted_qca_baudrate"):
+            result["bluetooth_health"] = after_state["bluetooth_health"]
+            result["qca_baudrate_warning"] = scan["qca_baudrate_warning"]
         link = transport(rec, after, source_bound=base.get("ncm_source_bound", False))
         result["transport"] = link
         if not link["code43"]:
@@ -674,6 +735,8 @@ def round_run(index, base, before_expected):
         if isinstance(exc, KernelEvidenceError):
             result.update(kernel_fault_counts=exc.scan["fault_counts"],
                           kernel_suspects=exc.scan["suspects"])
+            if base.get("accepted_qca_baudrate"):
+                result["qca_baudrate_warning"] = exc.scan.get("qca_baudrate_warning")
             if exc.scan["fault_counts"]:
                 result["verdict"] = "failure_observed"
         collect_failure(rec, result.get("after_boot_id"))
@@ -692,6 +755,8 @@ def summary(rounds, base, final=None):
         for name, count in row.get("kernel_fault_counts", {}).items():
             fault_totals[name] = fault_totals.get(name, 0) + count
     result = {"registered_rounds": ROUNDS, "completed_rounds": len(rounds), "clean_rounds": clean,
+              "attempted_rounds": len(rounds),
+              "fully_observed_rounds": sum(row.get("registered_window_completed") is True for row in rounds),
               "first_non_clean_round": first_bad, "rounds": rounds,
               "kernel_config_sha256": base["config_sha256"],
               "kernel_notes_sha256": base["notes_sha256"],
@@ -700,6 +765,7 @@ def summary(rounds, base, final=None):
               "kernel_fault_counts": fault_totals,
               "test249_manifest_sha256": base["test249_manifest_sha256"],
               "accepted_startup_variants": base.get("accepted_startup_variants", False),
+              "accepted_qca_baudrate": base.get("accepted_qca_baudrate", False),
               "final_verdict": "in_progress"}
     if first_bad is not None:
         result["final_verdict"] = "stopped_on_first_non_clean"
@@ -720,6 +786,9 @@ def final_acceptance(base, last):
         result.update(passed=True, boot_id=last, uptime_seconds=state["uptime_seconds"],
                       partition_hashes=base["partitions"], module_files=181,
                       kernel_journal_rows=inspected["rows"], transport=link)
+        if base.get("accepted_qca_baudrate"):
+            result.update(bluetooth_health=state["bluetooth_health"],
+                          qca_baudrate_warning=inspected["qca_baudrate_warning"])
     except Exception as exc:
         result["error"] = repr(exc)
     finally:
@@ -799,7 +868,7 @@ def main():
     global P
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preflight", "run"))
-    parser.add_argument("--attempt", type=int, choices=(2, 3),
+    parser.add_argument("--attempt", type=int, choices=(2, 3, 4),
                         help="Explicitly registered fresh attempt; preserves the stopped original evidence")
     args = parser.parse_args()
     if args.attempt:

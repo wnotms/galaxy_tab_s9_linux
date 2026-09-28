@@ -1,0 +1,32 @@
+{
+  "changed": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "elapsed_test_seconds": 76.157,
+    "executed": true,
+    "exit_code": 0,
+    "scope": "conservative all-tests fallback before final two integration tests",
+    "tests_run": 1031
+  },
+  "final_all": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "elapsed_seconds": 68.571,
+    "errors": [],
+    "executed": true,
+    "exit_code": 0,
+    "failures": [],
+    "skipped": [],
+    "tests_run": 1033,
+    "tracked_report": "host-all-report.json"
+  },
+  "focused": {
+    "executed": true,
+    "exit_code": 0,
+    "scope": "initial classification boundary review before two additional integration tests",
+    "tests_run": 47
+  },
+  "github_actions_started": false,
+  "old_evidence_seals_verified": true,
+  "owner_authorization": "2026-09-28 user reply: \u91c7\u7528",
+  "physical_results_in_registration": false,
+  "production_modified": false
+}

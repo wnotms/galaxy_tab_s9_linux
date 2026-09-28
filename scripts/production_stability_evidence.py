@@ -36,6 +36,59 @@ SMMU_SYNDROMES = {
     "arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]",
     "arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]",
 }
+QCA_BAUDRATE_EVENT = "Bluetooth: hci0: unexpected event for opcode 0xfc48"
+QCA_SETUP = "Bluetooth: hci0: setting up wcn6855"
+QCA_READY = "Bluetooth: hci0: QCA setup on UART is completed"
+BLUETOOTH_ERROR = re.compile(
+    r"^Bluetooth:.*(?:\berror\b|\bfailed\b|\bfailure\b|\btimeout\b|"
+    r"timed? out|unexpected|\bcrash\b|\bmemdump\b)", re.I)
+
+
+def qca_baudrate_warning(rows, observed_uptime=None):
+    """Owner-approved, exact startup event; no general Bluetooth exemption.
+
+    A live prefix may remain pending only until the five-second source-time
+    deadline. Pending evidence can never satisfy a clean/final gate.
+    """
+    events = [(number, row) for number, row in enumerate(rows, 1)
+              if row["MESSAGE"] == QCA_BAUDRATE_EVENT]
+    report = {"event_count": len(events), "state": "absent"}
+    if not events:
+        return report
+    report["state"] = "suspect"
+    if len(events) != 1:
+        report["reason"] = "more than one baudrate event"
+        return report
+    number, event = events[0]
+    stamp = int(event["_SOURCE_BOOTTIME_TIMESTAMP"])
+    report.update(row=number, event_source_seconds=stamp / 1e6)
+    if int(event.get("PRIORITY", 7)) != 3 or not 0 < stamp <= 20_000_000:
+        report["reason"] = "event priority/time outside registered bounds"
+        return report
+    before = rows[:number - 1]
+    setups = [row for row in before if row["MESSAGE"].startswith("Bluetooth: hci0: setting up ")]
+    if not setups or setups[-1]["MESSAGE"] != QCA_SETUP or not (
+            0 <= int(setups[-1]["_SOURCE_BOOTTIME_TIMESTAMP"]) <= stamp):
+        report["reason"] = "no preceding WCN6855 setup"
+        return report
+    for row in rows[number:]:
+        if row["MESSAGE"].startswith("Bluetooth: hci0: setting up "):
+            report["reason"] = "controller restarted before setup completion"
+            return report
+        if row["MESSAGE"] == QCA_READY:
+            end = int(row["_SOURCE_BOOTTIME_TIMESTAMP"])
+            if not stamp < end <= stamp + 5_000_000:
+                report["reason"] = "setup completion outside five-second bound"
+                return report
+            report.update(state="accepted", completion_source_seconds=end / 1e6,
+                          recovery_seconds=(end - stamp) / 1e6)
+            return report
+    latest = max(int(row["_SOURCE_BOOTTIME_TIMESTAMP"]) / 1e6 for row in rows)
+    if observed_uptime is not None and max(latest, observed_uptime) <= stamp / 1e6 + 5:
+        report.update(state="pending", deadline_uptime_seconds=stamp / 1e6 + 5)
+    else:
+        report["reason"] = "missing subsequent setup completion"
+    return report
 
 
 def startup_variant(row, iova_range=(0xb8000000, 0xb8200000)):
@@ -103,7 +156,8 @@ def attribute(before_id, after_id, before_text, after_text):
 
 def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
                     accepted_startup_variants=False,
-                    startup_iova_range=(0xb8000000, 0xb8200000)):
+                    startup_iova_range=(0xb8000000, 0xb8200000),
+                    accepted_qca_baudrate=False, observed_uptime=None):
     """Require complete JSON rows with source timestamps and classify each message."""
     if raw is None:
         raise ValueError("missing kernel journal")
@@ -111,6 +165,8 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
         raise ValueError("empty kernel journal")
     expected = canonical_boot_id(boot_id)
     known = set(known_priority3)
+    if accepted_qca_baudrate:
+        known = {message for message in known if not BLUETOOTH_ERROR.search(message)}
     if accepted_startup_variants:
         # Exact old SMMU/register messages must also obey time/count bounds.
         known = {message for message in known if not (
@@ -160,23 +216,33 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
             raise ValueError(f"invalid priority in journal row {number}")
         if priority == 3 and message in known:
             known_warnings.append(message)
-        elif priority <= 2 or SUSPECT.search(message) or priority == 3:
+        elif (priority <= 2 or SUSPECT.search(message) or priority == 3 or
+              (accepted_qca_baudrate and BLUETOOTH_ERROR.search(message))):
             suspects.append({"row": number, "priority": priority, "message": message})
     if require_start and not any(row["MESSAGE"].startswith("Linux version ") and
                                  row["_SOURCE_BOOTTIME_TIMESTAMP"] == "0" for row in rows):
         raise ValueError("kernel journal lacks the startup Linux-version record")
-    return {"rows": len(rows), "fault_counts": failures, "suspects": suspects,
+    result = {"rows": len(rows), "fault_counts": failures, "suspects": suspects,
             "known_warning_count": len(known_warnings),
             "startup_variant_counts": variant_counts,
             "first_source_timestamp": rows[0]["_SOURCE_BOOTTIME_TIMESTAMP"],
             "last_source_timestamp": rows[-1]["_SOURCE_BOOTTIME_TIMESTAMP"]}
+    if accepted_qca_baudrate:
+        qca = qca_baudrate_warning(rows, observed_uptime)
+        result["qca_baudrate_warning"] = qca
+        if qca["state"] in ("accepted", "pending"):
+            result["suspects"] = [row for row in suspects if row["row"] != qca["row"]]
+            if qca["state"] == "accepted":
+                result["known_warning_count"] += 1
+    return result
 
 
 def round_verdict(*, attribution, journal, identity_ok, dcc_absent, uptime,
                   adb_ok, ssh_ok, ncm_ok, ncm_initial_failure, failed_units):
     if journal.get("fault_counts"):
         return "failure_observed"
-    if attribution != "attributed" or journal.get("suspects") or not identity_ok or not dcc_absent:
+    if (attribution != "attributed" or journal.get("suspects") or not identity_ok or not dcc_absent or
+            journal.get("qca_baudrate_warning", {}).get("state") == "pending"):
         return "suspect"
     if uptime < 150 or not adb_ok or not ssh_ok or not ncm_ok or failed_units:
         return "suspect"
