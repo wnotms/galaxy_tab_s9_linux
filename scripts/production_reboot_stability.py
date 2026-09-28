@@ -487,10 +487,11 @@ def assert_registration_pushed():
         raise CaptureError("Test250 runner/registration files are not committed")
     if subprocess.run(["git", "diff", "--quiet", "HEAD", "--", *paths], cwd=ROOT).returncode != 0:
         raise CaptureError("Test250 runner or registration differs from its pushed commit")
-    local = (P / "README.md").read_bytes()
-    published = subprocess.check_output(["git", "show", "origin/test:" + paths[-1]], cwd=ROOT)
-    if local != published:
-        raise CaptureError("Test250 registration has not been pushed to origin/test")
+    for path in paths:
+        local = (ROOT / path).read_bytes()
+        published = subprocess.check_output(["git", "show", "origin/test:" + path], cwd=ROOT)
+        if local != published:
+            raise CaptureError(f"Test250 runner/registration has not been pushed: {path}")
 
 
 def preflight():

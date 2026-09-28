@@ -1,0 +1,32 @@
+{
+  "changed_tests": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "executed": true,
+    "exit_code": 0,
+    "tests_run": 1034
+  },
+  "final_all": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "elapsed_seconds": 68.776,
+    "errors": [],
+    "executed": true,
+    "exit_code": 0,
+    "failures": [],
+    "skipped": [],
+    "tests_run": 1034,
+    "tracked_report": "host-registration-gate-report.json"
+  },
+  "fix": "Compare every registered runner/README/policy file against its own origin/test blob; preserve dirty/unpushed checks",
+  "focused_tests": {
+    "executed": true,
+    "exit_code": 0,
+    "tests_run": 50
+  },
+  "github_actions_started": false,
+  "initial_stop_before_device_access": true,
+  "initial_stop_created_preflight": false,
+  "initial_stop_file": "registration-gate-initial-stop.txt",
+  "initial_stop_issued_reboot": false,
+  "issue": "README was incorrectly compared against the newly appended policy remote path",
+  "production_modified": false
+}

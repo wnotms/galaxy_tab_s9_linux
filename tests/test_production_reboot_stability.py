@@ -529,6 +529,39 @@ class QcaBaudrateClassificationTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 runner.baseline()
 
+    def test_pushed_registration_compares_each_file_to_its_own_blob(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            test_root = root / "reference/test250"
+            registration = test_root / "attempt-04"
+            registration.mkdir(parents=True)
+            (root / "scripts").mkdir()
+            paths = ("scripts/production-reboot-stability.sh", "scripts/production_reboot_stability.py",
+                     "scripts/production_stability_evidence.py",
+                     "reference/test250/attempt-04/README.md", "reference/test250/attempt-04/policy.json")
+            for index, path in enumerate(paths):
+                (root / path).write_text(f"different registered file {index}\n")
+            changed_remote_policy = False
+            def git_output(argv, **kwargs):
+                if argv[1] == "branch":
+                    return b"test\n"
+                if argv[1] == "rev-parse":
+                    return b"same-pushed-commit\n"
+                self.assertEqual(argv[1], "show")
+                path = argv[2].split(":", 1)[1]
+                if changed_remote_policy and path.endswith("policy.json"):
+                    return b"different remote policy\n"
+                return (root / path).read_bytes()
+            with mock.patch.object(runner, "ROOT", root), \
+                 mock.patch.object(runner, "TEST250_ROOT", test_root), \
+                 mock.patch.object(runner, "P", registration), \
+                 mock.patch.object(runner.subprocess, "check_output", side_effect=git_output), \
+                 mock.patch.object(runner.subprocess, "run", return_value=mock.Mock(returncode=0)):
+                runner.assert_registration_pushed()
+                changed_remote_policy = True
+                with self.assertRaises(runner.CaptureError):
+                    runner.assert_registration_pushed()
+
     def test_other_bluetooth_error_cannot_use_known_error_set(self):
         rows = self.rows()
         error = "Bluetooth: hci0: command 0xfc00 tx timeout"
