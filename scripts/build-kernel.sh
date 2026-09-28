@@ -166,6 +166,8 @@ required=(
     CONFIG_QCOM_CLK_RPMH CONFIG_QCOM_RPMHPD CONFIG_ARM_SMMU
     CONFIG_VT CONFIG_VT_CONSOLE CONFIG_FRAMEBUFFER_CONSOLE
     CONFIG_INPUT_EVDEV CONFIG_I2C_QCOM_GENI
+    # Stage 1 battery safety depends on the actual PMK8550 Gen3 ADC provider.
+    CONFIG_POWER_SUPPLY CONFIG_QCOM_SPMI_ADC5_GEN3 CONFIG_BATTERY_SM5714
 )
 # The verified mainline Pogo port is the only driver selected by the default
 # build. The imported vendor implementation requires an explicit manual A/B.

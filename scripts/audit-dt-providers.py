@@ -98,9 +98,6 @@ KNOWN_GAPS = {
         "CONFIG_CRYPTO_DEV_QCE is unset; upstream defconfig has it =m"),
     "qcom,spmi-temp-alarm": (
         "CONFIG_QCOM_SPMI_TEMP_ALARM is unset; upstream defconfig has it =m"),
-    "qcom,spmi-adc5-gen3": (
-        "CONFIG_QCOM_SPMI_ADC5_GEN3 is unset (the plain ADC5 driver is =y but is a "
-        "different generation); upstream defconfig has the gen3 one =m"),
     "qcom,rmtfs-mem": (
         "CONFIG_QCOM_RMTFS_MEM is unset; upstream defconfig has it =m. Modem RMTFS "
         "carve-out, and the modem is out of scope"),
@@ -131,7 +128,6 @@ KNOWN_GAPS = {
     "st,fts1ba90a": "touchscreen; out of scope",
     "parade,ps5169": "Type-C redriver; no mainline driver needed for the console",
     "siliconmitus,sm5440": "direct charger; out of scope",
-    "siliconmitus,sm5714": "charger/fuel gauge; out of scope",
     "siliconmitus,sm5714-usbpd": "USB-PD; out of scope",
     "qcom,wcn6855-pmu": "Wi-Fi PMU; Wi-Fi bring-up is out of scope",
     "pci17cb,1103": "the QCA6490 Wi-Fi function on the PCIe bus; out of scope",

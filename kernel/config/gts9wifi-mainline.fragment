@@ -368,6 +368,10 @@ CONFIG_QCOM_TSENS=y
 CONFIG_ARM_QCOM_CPUFREQ_HW=y
 CONFIG_RTC_DRV_PM8XXX=y
 CONFIG_QCOM_SPMI_ADC5=y
+# The pack thermistor is on PMK8550's ADC5 Gen3 block, not the older ADC5.
+# SM5714 must never enable ordinary charge without this IIO provider.
+CONFIG_QCOM_SPMI_ADC5_GEN3=y
+CONFIG_BATTERY_SM5714=y
 # The PDC is the interrupt controller the SPMI arbiter hangs off
 # (spmi@c400000 interrupts-extended = <&pdc 1 ...>), and usb@a600000 takes its
 # dp/dm/ss phy interrupts from it as well. The stock 5.15 seed leaves the driver

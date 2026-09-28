@@ -35,6 +35,10 @@ Prefer one purpose per patch. Record origin/upstream status in the patch header 
   console exists upstream.
 - `0004-drm-panel-add-samsung-ana38407.patch` — Kconfig/Makefile integration
   for the SM-X710 panel overlay driver.
+- `0011-power-supply-hook-sm5714-battery.patch` — Kconfig/Makefile integration
+  for Stage 1 SM5714 fuel-gauge telemetry and ordinary BC1.2 switching charge.
+  The driver lives in `kernel/drivers/sm5714-battery.c`; TCPC/PD and SM5440
+  remain out of scope.
 - `0006-input-add-samsung-pogo-keyboard.patch` — Kconfig/Makefile integration
   for the EF-DX710 pogo keyboard overlay driver
   (`kernel/drivers/keyboard-samsung-pogo.c`, installed by

@@ -1,0 +1,24 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] power: supply: wire X710 SM5714 gauge and switching charger
+
+This is a local Kbuild hook for the out-of-tree SM-X710 AP-direct driver.
+The driver itself is kept in kernel/drivers/sm5714-battery.c for review.
+No TCPC, USB role or SM5440 charge-pump support is selected here.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1189 +1189,9 @@
++config BATTERY_SM5714
++	tristate "Samsung X710 SM5714 fuel gauge and ordinary charger"
++	depends on I2C && IIO && OF && QCOM_SPMI_ADC5_GEN3
++	help
++	  Fuel-gauge telemetry, pack-thermistor safety and ordinary BC1.2
++	  switching charge on the SM-X710. Does not manage USB-PD, OTG or
++	  SM5440 direct charging.
++
+ endif # POWER_SUPPLY
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -135 +135,2 @@
+ obj-$(CONFIG_CHARGER_MAX77759)	+= max77759_charger.o
++obj-$(CONFIG_BATTERY_SM5714)	+= sm5714-battery.o

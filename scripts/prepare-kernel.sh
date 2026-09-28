@@ -183,10 +183,11 @@ panel_dir="$tree/drivers/gpu/drm/panel"
 
 shopt -s nullglob
 for drv in "$driver_src"/*.c; do
-    case "${drv##*/}" in
-        panel-*) dest=$panel_dir ;;
-        keyboard-*) dest="$tree/drivers/input/keyboard" ;;
-        *)       dest=$soc_qcom ;;
+	case "${drv##*/}" in
+		panel-*) dest=$panel_dir ;;
+		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
+		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
+		*)       dest=$soc_qcom ;;
     esac
     echo "installing ${drv##*/} -> ${dest##*/}/"
     install -m 0644 "$drv" "$dest/${drv##*/}"
