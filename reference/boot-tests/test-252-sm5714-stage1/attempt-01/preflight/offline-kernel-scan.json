@@ -1,0 +1,48 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 44,
+  "last_source_timestamp": "11506683014",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 5.136956,
+        "events": [],
+        "setup_source_seconds": 4.170253
+      },
+      {
+        "completion_source_seconds": 7.097249,
+        "events": [
+          {
+            "completion_source_seconds": 7.097249,
+            "event_source_seconds": 6.301228,
+            "recovery_seconds": 0.796021,
+            "row": 1044
+          }
+        ],
+        "setup_source_seconds": 6.228338
+      }
+    ],
+    "event_count": 1,
+    "event_rows": [
+      1044
+    ],
+    "setup_count": 2,
+    "state": "accepted"
+  },
+  "rows": 1110,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [
+    {
+      "message": "adreno 3d00000.gpu: [drm:adreno_request_fw] *ERROR* failed to load a740_sqe.fw",
+      "priority": 3,
+      "row": 1103
+    }
+  ]
+}

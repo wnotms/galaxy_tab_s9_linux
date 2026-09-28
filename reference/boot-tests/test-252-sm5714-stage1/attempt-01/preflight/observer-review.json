@@ -1,0 +1,103 @@
+{
+  "canonical_boot_id": "96862d2981ee4098935357f0054c725b",
+  "device_writes": false,
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "11506683014",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.136956,
+          "events": [],
+          "setup_source_seconds": 4.170253
+        },
+        {
+          "completion_source_seconds": 7.097249,
+          "events": [
+            {
+              "completion_source_seconds": 7.097249,
+              "event_source_seconds": 6.301228,
+              "recovery_seconds": 0.796021,
+              "row": 1044
+            }
+          ],
+          "setup_source_seconds": 6.228338
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1044
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1110,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": [
+      {
+        "message": "adreno 3d00000.gpu: [drm:adreno_request_fw] *ERROR* failed to load a740_sqe.fw",
+        "priority": 3,
+        "row": 1103
+      }
+    ]
+  },
+  "original_observer_stop": "Hyphenated WiFi UUID compared against normalized32-character UUID. Offline review also corrected kernel-scan dictionary key usage before any device writes.",
+  "original_summary_preserved": true,
+  "preexisting_gpu_issue": {
+    "decision": "Existing optional GPU firmware absence explains the isolated message. Preserve evidence; no firmware/rootfs/GPU repair in Test252. New unexplained warnings/faults still stop.",
+    "file_missing": true,
+    "firmware_file": "qcom/a740_sqe.fw",
+    "message": "adreno 3d00000.gpu: [drm:adreno_request_fw] *ERROR* failed to load a740_sqe.fw",
+    "preceding_errno": -2,
+    "present_before_test252_deployment": true,
+    "runtime_gpu_rendering_unavailable": true,
+    "source_seconds": 607.872728
+  },
+  "production_state": {
+    "bluetooth_health": {
+      "address_service": "active",
+      "bluetooth_service": "active",
+      "boot_id": "96862d2981ee4098935357f0054c725b",
+      "controller": "Controller 38:8A:06:59:04:E7 (public)",
+      "controllers": [
+        "hci0"
+      ],
+      "healthy": true,
+      "powered": true,
+      "uptime_seconds": 11726.24
+    },
+    "boot_id": "96862d2981ee4098935357f0054c725b",
+    "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+    "dcc_absent": true,
+    "failed_units": [],
+    "identity_ok": true,
+    "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+    "partitions_modules_checked": true,
+    "profile_ok": true,
+    "uname": "Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux",
+    "uptime_seconds": 11725.37,
+    "usb_device_state": "/sys/class/udc/a600000.usb/state\nconfigured\n/sys/class/udc/dummy_udc.0/state\nnot attached\nusb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 \nState  Recv-Q Send-Q Local Address:Port Peer Address:Port\nLISTEN 0      128          0.0.0.0:22        0.0.0.0:*   \nLISTEN 0      128             [::]:22           [::]:*   \nLISTEN 0      4                  *:5555            *:*   \nactive\nactive\nactive"
+  },
+  "raw_wifi_boot_id": "96862d29-81ee-4098-9353-57f0054c725b",
+  "read_only_preflight_verdict": "identity and CPU/USB gates accepted; known degraded GPU firmware recorded separately",
+  "transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": null,
+    "ncm_initial_failure": false,
+    "ncm_recovery_seconds_from_first_attempt": null,
+    "ncm_recovery_utc": null,
+    "ncm_source_bound": true,
+    "ssh_ok": true
+  },
+  "wifi_ssh": true
+}
