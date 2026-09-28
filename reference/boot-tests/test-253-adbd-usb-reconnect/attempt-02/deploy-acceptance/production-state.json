@@ -1,0 +1,27 @@
+{
+  "bluetooth_health": {
+    "address_service": "active",
+    "bluetooth_service": "active",
+    "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+    "controller": "Controller 38:8A:06:59:04:E7 (public)",
+    "controllers": [
+      "hci0"
+    ],
+    "healthy": true,
+    "powered": true,
+    "uptime_seconds": 6330.62
+  },
+  "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+  "config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "dcc_absent": true,
+  "failed_units": [
+    "upower.service loaded failed failed Daemon for power management"
+  ],
+  "identity_ok": false,
+  "notes_sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed",
+  "partitions_modules_checked": false,
+  "profile_ok": true,
+  "uname": "Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux",
+  "uptime_seconds": 6328.45,
+  "usb_device_state": "/sys/class/udc/a600000.usb/state\nconfigured\n/sys/class/udc/dummy_udc.0/state\nnot attached\nusb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 \nState  Recv-Q Send-Q Local Address:Port Peer Address:Port\nLISTEN 0      128          0.0.0.0:22        0.0.0.0:*   \nLISTEN 0      128             [::]:22           [::]:*   \nLISTEN 0      4                  *:5555            *:*   \nactive\nactive\nactive"
+}

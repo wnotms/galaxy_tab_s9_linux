@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false); Get-Content -LiteralPath 'C:\\Users\\ms\\AppData\\Local\\Temp\\adb.log' -Tail 250"
+  ],
+  "ended_utc": "2026-09-28T14:05:15.762352+00:00",
+  "started_utc": "2026-09-28T14:05:15.275519+00:00",
+  "status": 0
+}

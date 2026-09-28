@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; ip -4 -br addr; p=$(systemctl show -p MainPID --value gts9-adbd.service); readlink /proc/$p/exe; sha256sum /proc/$p/exe; systemctl --failed --no-legend --plain --no-pager; journalctl -b -u gts9-adbd --no-pager -o short-monotonic"
+  ],
+  "started_utc": "2026-09-28T13:55:11.131616+00:00",
+  "ended_utc": "2026-09-28T13:55:12.161758+00:00",
+  "status": 0
+}

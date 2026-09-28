@@ -1,0 +1,62 @@
+{
+  "adb_offline_repair_target": true,
+  "adb_ok": false,
+  "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+  "candidate_config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "code43": false,
+  "dcc_absent": true,
+  "failed_units": [
+    "upower.service loaded failed failed Daemon for power management"
+  ],
+  "full_identity": false,
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 43,
+    "last_source_timestamp": "6009933543",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.253146,
+          "events": [],
+          "setup_source_seconds": 4.328791
+        },
+        {
+          "completion_source_seconds": 6.927536,
+          "events": [],
+          "setup_source_seconds": 6.062977
+        }
+      ],
+      "event_count": 0,
+      "event_rows": [],
+      "setup_count": 2,
+      "state": "absent"
+    },
+    "rows": 1104,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "ncm_ssh_ok": true,
+  "notes_sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed",
+  "pack_temperature_deciC": 290,
+  "phase": "deploy-acceptance",
+  "protected_settings_unchanged": true,
+  "soc": 94,
+  "systemd_classification": {
+    "classification": "known-upower-user-namespace-prerequisite",
+    "daemon_executed": false,
+    "failed_units": [
+      "upower.service loaded failed failed Daemon for power management"
+    ],
+    "upower_unresolved": true
+  },
+  "uptime_seconds": 6328.45,
+  "verdict": "passed",
+  "wifi_ssh_ok": true
+}

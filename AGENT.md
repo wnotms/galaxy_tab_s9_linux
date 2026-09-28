@@ -10,23 +10,26 @@ remain verified. Stage1 full acceptance is incomplete; Stage2/3 have not started
 Read `reference/boot-tests/test-252-sm5714-stage1/RESULTS.md` before hardware work.
 The historical accepted production baseline remains Test249 below.
 
-The owner requested "先解决adb问题". Test253 independently registers a
-userspace-only Debian adbd reconnect repair under
-`reference/boot-tests/test-253-adbd-usb-reconnect/README.md`. The ARM64 daemon
-is built and host tests pass (1080 full retained tests). Initial Test253
-preflight stopped on an existing UPower217/USER prerequisite failure:
-PrivateUsers=yes with CONFIG_USER_NS disabled. No Test253 device write/reboot
-or physical acceptance has occurred. The owner subsequently adopted attempt02 ("继续修复adb吧"). Its separately
-recorded registration recognizes only the exact existing UPower217/USER
-prerequisite failure and leaves this independent issue unresolved. No device
-write/reboot has occurred yet. It preserves the packaged daemon, shared-gadget
-restart guard/holder and NCM/SSH/kernel/charge configuration. Commit/push
-registration and pass exact Test252-candidate read-only preflight before staging
-the optional daemon/launcher/ExecStart for one ordinary next boot. Attempt02 exact-candidate full preflight passed with this explicitly recorded
-existing failure; source-bound NCM/Wi-Fi SSH work, native ADB offline is the
-repair target, DCC absent, no kernel fault/Code43. Final local regression passed
-1088 retained tests. Follow the registered reconnect gates; Test252 remains
-stopped and Stage2/3 do not start.
+The owner requested "先解决adb问题" then "继续修复adb吧". Test253 uses a
+separate optional Debian34.0.5-12 userspace daemon at
+/usr/local/libexec/gts9-adbd-reconnect, selected by gts9-adbd-run. It repairs
+glibc worker-completion and retained-ep0/BIND handling, preserving packaged
+adbd, restart guard/holder and NCM/SSH/kernel/charge settings. Initial preflight
+stopped on UPower217/USER: shipped PrivateUsers=yes with USER_NS disabled.
+The owner adopted an exact hash-pinned classification; that independent UPower
+issue remains unresolved. Source/build and1088 host checks pass.
+
+Attempt02 installed the fixed daemon/launcher/ExecStart and issued one normal
+boot,461c1408e42643afae5b48162771d077, PID834. Exact Test252 config/notes/five
+partitions/181 paired/181 original files and DCC/runtime profile still match.
+Native shell and152.945s responsive observation passed. Connected Windows
+`adb reconnect` then removed the host transport and native recovery could not
+be established; attempt02 stopped before file transfer/physical cycles.
+NCM/Wi-Fi SSH, device worker/monitor and PnP remain normal, no Code43/CPU fault.
+The daemon is installed but reconnect acceptance is incomplete. No extra
+reboot/reset/device-service restart occurred. Current Wi-Fi address is
+10.191.121.29 (DHCP changed from195). Read attempt02 RESULTS/summary/evidence.
+
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

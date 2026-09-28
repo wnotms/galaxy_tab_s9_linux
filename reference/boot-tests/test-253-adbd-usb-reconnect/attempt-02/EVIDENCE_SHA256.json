@@ -1,0 +1,3290 @@
+{
+  "LOCAL_VALIDATION.md": {
+    "bytes": 1269,
+    "sha256": "343cad0403b6a9538ec22648c8e8d32a8c5fce67998e954bbd2e150caea6239c"
+  },
+  "PREDEPLOY_SHA256.json": {
+    "bytes": 26323,
+    "sha256": "ea867d304167f7a86687b305389dd00565cfc93bcdbf17cd24ac3a8d44571bc6"
+  },
+  "README.md": {
+    "bytes": 1668,
+    "sha256": "84eb47e5d87e5114fd7eb245264479e7375a5a11f6efb50f4f77514336d498f2"
+  },
+  "REGISTRATION.md": {
+    "bytes": 1604,
+    "sha256": "71a629ccc10dd2b310ff14049fb66cb7c3aa4eb0e4dacd6a1cab88dc6c0f3694"
+  },
+  "RESULTS.md": {
+    "bytes": 2272,
+    "sha256": "6c04e9a114b07e5d3e5171592f67f8f7aa95f3f486f5e78169f40a16097d20b0"
+  },
+  "boot/TRANSPORT_OBSERVER.md": {
+    "bytes": 812,
+    "sha256": "deedeead1baac5fd5203f27610a92b75383b7fa7802c1a52089614bc7f64af51"
+  },
+  "boot/attribution.json": {
+    "bytes": 282,
+    "sha256": "479e9e3a7be2439ef9716cdbc54c748859d327a88d341f64855a01e74f0d7a82"
+  },
+  "boot/before-state.command.json": {
+    "bytes": 353,
+    "sha256": "7793f599c3ab9346e5b3f9510655209c2165bb5b339c4c61fafc8255920c830b"
+  },
+  "boot/before-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/before-state.txt": {
+    "bytes": 782366,
+    "sha256": "5c3c53ee75425787a267de8112053f774e740238b35d3571ccd51261ee775bdb"
+  },
+  "boot/ended-target-kernel-json.command.json": {
+    "bytes": 285,
+    "sha256": "b7d36d5de9dedf65bb2e4e060c6305bce5894578709dc025326c0e06cbe02625"
+  },
+  "boot/ended-target-kernel-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/ended-target-kernel-json.txt": {
+    "bytes": 767062,
+    "sha256": "7c11098b492dce9b1714284366e24c00b4b507a1b5902da2a4c68b5d63a96ed5"
+  },
+  "boot/ended-target-kernel-scan.json": {
+    "bytes": 746,
+    "sha256": "2ddccc44475f68b337f2cbfc8b0a8f2172defc4c303bf9f3b2f037a066bf5f2a"
+  },
+  "boot/first-native-shell.command.json": {
+    "bytes": 527,
+    "sha256": "1af3472b9f2f159fef14f56d8db453397f4f2b0423e4d47968409d3345143838"
+  },
+  "boot/first-native-shell.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/first-native-shell.txt": {
+    "bytes": 2533,
+    "sha256": "127b0640203bd65e0ad463613f735ac6ae429fc2ddd01f8c1d13a83d9cb57ae9"
+  },
+  "boot/initial-adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "ad789ad13a5c208a5ce627b0f321aced229cdf30c52c91b76c4998e46656937c"
+  },
+  "boot/initial-adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/initial-adb-state.txt": {
+    "bytes": 74,
+    "sha256": "8cf2454a3513370d9a2e3eaabed609627c51ee8259177c19d423ec14aa7f265d"
+  },
+  "boot/initial-wifi-boot.command.json": {
+    "bytes": 310,
+    "sha256": "9e713185aa71d67c890bda7c06dd5b199cf2fb6a7f9ef99d996b94c390ffe2ad"
+  },
+  "boot/initial-wifi-boot.stderr": {
+    "bytes": 63,
+    "sha256": "a26230777476a596ed55d3eec17aad41632dec9ac14ea4d7338759988b09dbb7"
+  },
+  "boot/initial-wifi-boot.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/observation/OBSERVER_NOTE.md": {
+    "bytes": 216,
+    "sha256": "eaf8a9b6e3ec86dba16d212409658323141ed08a7b254b849204168693e4e7e6"
+  },
+  "boot/observation/poll-01-adb.command.json": {
+    "bytes": 270,
+    "sha256": "0950febe64fc77dfa4f59ec72a63a5b62619c73fbbabc715306f3893525e2a26"
+  },
+  "boot/observation/poll-01-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/observation/poll-01-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/observation/poll-01-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "0d0abc43068b676001858e846848806d8c7047a5fbeeea21b49883977e59b354"
+  },
+  "boot/observation/poll-01-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/observation/poll-01-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "14495495e14571ef0d05b0cb818e37beb1e5090e8dd1c842104852c57bcb4f4c"
+  },
+  "boot/observation/summary.json": {
+    "bytes": 566,
+    "sha256": "b3267971590600d3b72a3baa249e1cc03adfc5b9bc7079f719b3fd1c83ed4987"
+  },
+  "boot/reboot-command.command.json": {
+    "bytes": 243,
+    "sha256": "4846eb40f226964fa909f6a51fc312110bcecc76ddb3da3fa1ef1b392eba32e5"
+  },
+  "boot/reboot-command.stderr": {
+    "bytes": 53,
+    "sha256": "17a8ea24c75df2affd155e3e8b39b1f734f45aa02f62a5a2cb7d3e54dacf6159"
+  },
+  "boot/reboot-command.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-01-adb.command.json": {
+    "bytes": 270,
+    "sha256": "f392040bb7acf5653b2bf68262797d01def36d7f7091b36f61b502d6e9cbda40"
+  },
+  "boot/steady-observation/poll-01-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-01-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-01-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "0b58783119365250e33033f964bae88865559be9f3d842c93006366bc988e0dc"
+  },
+  "boot/steady-observation/poll-01-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-01-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "56102c43fd5128b4ba2c9a58cb2a35db5863252c4cc752f0f2da4b76db65bf7d"
+  },
+  "boot/steady-observation/poll-02-adb.command.json": {
+    "bytes": 270,
+    "sha256": "246ee3499dd2bbf6b323a0ac679a26c83582bab13b0cd81b51c9ff04fc29989b"
+  },
+  "boot/steady-observation/poll-02-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-02-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-02-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "7d0c5ab7b958e4299386391e39140ae4127468406d4f84ef4832605463ea8b84"
+  },
+  "boot/steady-observation/poll-02-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-02-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "0198bb6c0ba80d6c0b42802f98520e0ea524644b02bcf931ee0f1db3c6d2c424"
+  },
+  "boot/steady-observation/poll-03-adb.command.json": {
+    "bytes": 270,
+    "sha256": "cad29cbf60f7580411163d2a7c1be4515bcfae150440b514bf5bd7dabe0f7602"
+  },
+  "boot/steady-observation/poll-03-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-03-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-03-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "28fb98077b4149307db8e17d46e2f315bcb1483b7182705032c21af34692756c"
+  },
+  "boot/steady-observation/poll-03-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-03-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "52b66e9a9ecfd7588741945b7c5b4f933efd9ee0dca2c601bcf3974cb3599552"
+  },
+  "boot/steady-observation/poll-04-adb.command.json": {
+    "bytes": 270,
+    "sha256": "a587de301e1acdfa3b1ead3a900eb61a7ad5562861942cd91d951d852220cf4b"
+  },
+  "boot/steady-observation/poll-04-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-04-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-04-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "576966d1aabc2d3c0fcf9d37fdc5c1366b364fe21785a4bc2d6d2aba01f46a9c"
+  },
+  "boot/steady-observation/poll-04-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-04-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "60a9db652dca2a1e0df48f96be4bd506894259f11012a9d10cb4f5f4aacc0273"
+  },
+  "boot/steady-observation/poll-05-adb.command.json": {
+    "bytes": 270,
+    "sha256": "40414419389546cd72b2ef8a75f134936b3b0f04d3de356ae930be5c7bcc84f0"
+  },
+  "boot/steady-observation/poll-05-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-05-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-05-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "860c6e2b95f08a49b7c5310ca2f285927abab86a1afd4e368974edf7ada91ce9"
+  },
+  "boot/steady-observation/poll-05-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-05-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "96117490a7d27d13432623d56f1ff25f941191a05c78f82a0d49a34adae2d337"
+  },
+  "boot/steady-observation/poll-06-adb.command.json": {
+    "bytes": 270,
+    "sha256": "6ae3566897447c5da7776244b197f3d99da3143a4b4f34b2c18ae7e68223e396"
+  },
+  "boot/steady-observation/poll-06-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-06-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-06-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "d32f21302f7be999d17fe6eedf93a5e8e26e84304eb998aaf880b310506156f8"
+  },
+  "boot/steady-observation/poll-06-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-06-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "6bc61298e57b8af8a370404daa1229ffb42e11496dfab993b90040920a82857a"
+  },
+  "boot/steady-observation/poll-07-adb.command.json": {
+    "bytes": 270,
+    "sha256": "09f3c578fc2abff8f551e20fd33474352a62f8f568adece00774602f463b4874"
+  },
+  "boot/steady-observation/poll-07-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-07-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-07-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "2f0e8298e8c42175bbd69365a0fb663d6320b65ea740c45a4b5d0a8b69138041"
+  },
+  "boot/steady-observation/poll-07-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-07-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "1df28c2c450fb89c00e73b546d3c9771025820580218e8cc2f59319880dbf60a"
+  },
+  "boot/steady-observation/poll-08-adb.command.json": {
+    "bytes": 270,
+    "sha256": "4008e027c80fb87da57d17e2a9c5a1e20bcd4891ce48a7c27cbfe9d65e651d22"
+  },
+  "boot/steady-observation/poll-08-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-08-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-08-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "78834b04ace79e1f9fbfcb0a2e3897bb3144965995363963888b53cc0876dc4a"
+  },
+  "boot/steady-observation/poll-08-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-08-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "0e31ebb42ba627177af08ae4f6bd9798082b435c5f266d7d8e4137b10808db6b"
+  },
+  "boot/steady-observation/poll-09-adb.command.json": {
+    "bytes": 270,
+    "sha256": "7d848f203c21406ca7710169ac64107820f82357dea1c7862774c7df3457a39c"
+  },
+  "boot/steady-observation/poll-09-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-09-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-09-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "e19ba9900591128d0b6d02f118f5f51e7c3769b06a62a60daeb1336ab223a062"
+  },
+  "boot/steady-observation/poll-09-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-09-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "3420a2f5769fb8068cf73f38ca420b2f4899483d3c169c2cf960480669866463"
+  },
+  "boot/steady-observation/poll-10-adb.command.json": {
+    "bytes": 270,
+    "sha256": "c8c7b49b2049e5bef969a2b3c5f4b735bb3c81bc6a904d89ae0c5fa9e6cd45cb"
+  },
+  "boot/steady-observation/poll-10-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-10-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-10-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "f10c2c0583cad2220b66593dccac94b7c6aba8faf0a355bef60e28679f1d5f21"
+  },
+  "boot/steady-observation/poll-10-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-10-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "1dcfe9c7c164db76c1dc14f775e4a94d77574d8d10a43940e16de21b1e6ad68f"
+  },
+  "boot/steady-observation/poll-11-adb.command.json": {
+    "bytes": 270,
+    "sha256": "4aacc0604d97bc1506388092a42abf05bae7c735a54492fb599628d2f5354248"
+  },
+  "boot/steady-observation/poll-11-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-11-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-11-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "8d77c6070c1dac8078153f78528afb76fd7080e429b74de239c2c95c8dd0bb28"
+  },
+  "boot/steady-observation/poll-11-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-11-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "3b3489b2df7c67ff4b6210702f0af51aee81474c2d706d8cb458b99d4f125f17"
+  },
+  "boot/steady-observation/poll-12-adb.command.json": {
+    "bytes": 270,
+    "sha256": "5e3c3252d42deb8a153cf2ce2dbbc6a5f8e23ccac32194f61cca4bad3e1af47e"
+  },
+  "boot/steady-observation/poll-12-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-12-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-12-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "2dd2f7bfb7388fdafc01542cffda697a7933ea341cbd0a14f3cfd4f967da1477"
+  },
+  "boot/steady-observation/poll-12-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-12-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "d8e8defa654e0f2038c47f4a654176964a6a82abc94c91e0f392827b40fa228c"
+  },
+  "boot/steady-observation/poll-13-adb.command.json": {
+    "bytes": 270,
+    "sha256": "324f0c9510662f5ce55ed77eb7a0584c073ee084d3fcfcecc6c41c54bd7eaf5d"
+  },
+  "boot/steady-observation/poll-13-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-13-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-13-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "32a714e5678d1ddceabb3cfef0a23f88216abb62695df88e7c8a132fd2703285"
+  },
+  "boot/steady-observation/poll-13-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-13-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "921f19122fdf4011f6903d4acb3ad4af95187923bc17027e18af1ee933827d8e"
+  },
+  "boot/steady-observation/poll-14-adb.command.json": {
+    "bytes": 270,
+    "sha256": "2b51e7d8345d50d2bc204d93553e66d7e245bfe38922799558b38d951422a8aa"
+  },
+  "boot/steady-observation/poll-14-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-14-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-14-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "d33f63deb0d626a88218f8390a0d11dff8d85f233a410ccd0d45032813e1eb54"
+  },
+  "boot/steady-observation/poll-14-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-14-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "cb2224aa71ca43871c80125651e667a848138cef775fb7a1fd358f641f71e1c1"
+  },
+  "boot/steady-observation/poll-15-adb.command.json": {
+    "bytes": 270,
+    "sha256": "64794916d007d1c07c17fc39a210cbe1ed9172f5a9f9a6d6ccac1b613537d72e"
+  },
+  "boot/steady-observation/poll-15-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-15-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-15-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "d53dc51df559e3627e0525eb251f30c055ac0bf7a07387cdd025de9c8077973a"
+  },
+  "boot/steady-observation/poll-15-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-15-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "160a09077e1e9245f8f205119e87ac6544ce07540a39e0f6194b0309ebe94cfe"
+  },
+  "boot/steady-observation/poll-16-adb.command.json": {
+    "bytes": 270,
+    "sha256": "3f556b589da5e1b0fb2f9f55c7041107cac9c166f4553a63326ebecb45cb479e"
+  },
+  "boot/steady-observation/poll-16-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-16-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-16-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "111303ace9da3d6fa3647169da871d823bcb00bf1c1a902af5ef1a96d6c4171b"
+  },
+  "boot/steady-observation/poll-16-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-16-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "b9ae99d78d166b747908df69d9913ae67e14eec8d5f801278763578f3c273b16"
+  },
+  "boot/steady-observation/poll-17-adb.command.json": {
+    "bytes": 270,
+    "sha256": "08801970b0e44d8c57aad237a94fd3e3aec9be035367b4d7288bb7f2810fadc5"
+  },
+  "boot/steady-observation/poll-17-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-17-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-17-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "041d034a2e7da89c71eb919e4e65e21a6fda92e3168c9d7b30f26f9797179b66"
+  },
+  "boot/steady-observation/poll-17-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-17-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "33355a8e4417ed1fc7f0fa938fe343dc0e0c319ec4cbf45b68ea1f2228865d68"
+  },
+  "boot/steady-observation/poll-18-adb.command.json": {
+    "bytes": 270,
+    "sha256": "699eb83d37c42f94fcc7f784167c4e173642c857b5ab57a04c0c89685afa2158"
+  },
+  "boot/steady-observation/poll-18-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-18-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-18-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "14dcad7164042f31fb7e0a87830e556ebaba696f942db65edabe017fd8e9fe13"
+  },
+  "boot/steady-observation/poll-18-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-18-wifi.txt": {
+    "bytes": 764772,
+    "sha256": "2048f76faa52b709e6fbba6eda723a2553788a28f62453c4e4a557afaa47af15"
+  },
+  "boot/steady-observation/poll-19-adb.command.json": {
+    "bytes": 270,
+    "sha256": "a7236c1472a6a4e2564e9ff3528d961dc3004a2f65e326279dd5c7a4240104cf"
+  },
+  "boot/steady-observation/poll-19-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-19-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-19-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "bd60de8733ab4a0509198e53c796ae46f57368f806dd3824c0e937452258db73"
+  },
+  "boot/steady-observation/poll-19-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-19-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "138f4a832eff608ec28b7ed60706303deea12f1f92eb0e8f1235f065206b88c4"
+  },
+  "boot/steady-observation/poll-20-adb.command.json": {
+    "bytes": 270,
+    "sha256": "3ea2b52be9ee98d5e36e00e72d0750c016a8e68fbf469b35fd958d64ae904aac"
+  },
+  "boot/steady-observation/poll-20-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-20-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-20-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "f18c558f526a5fbc7c45fd253e5140de1977141a072268b8119ff5dd83c6c1fc"
+  },
+  "boot/steady-observation/poll-20-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-20-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "3720ce5d0798be5349d98e16835ebb7ca3843197e92a6123677d202f80a534de"
+  },
+  "boot/steady-observation/poll-21-adb.command.json": {
+    "bytes": 270,
+    "sha256": "51c71d23e9c6de0bfaf0f428d905f8d54a42fdffba11b971c3e433045b6ede9e"
+  },
+  "boot/steady-observation/poll-21-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-21-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-21-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "157184d054562032e6ad8ebf75737d98483b0fec9be0cfa7ac07e6d1cefa835e"
+  },
+  "boot/steady-observation/poll-21-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-21-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "da60cf1ccf09e52c170240a7a7995fc618a6250d8dec478f81bb9f41ae2fc73c"
+  },
+  "boot/steady-observation/poll-22-adb.command.json": {
+    "bytes": 270,
+    "sha256": "9e143007d548bb950289c1965a508ee604ed33750b19656807ec6eb7edb56ee5"
+  },
+  "boot/steady-observation/poll-22-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-22-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-22-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "a140183310c76c8cc8bc48c5aa0804c33fcb34af17ccdbdbebc8e03d366eb6ca"
+  },
+  "boot/steady-observation/poll-22-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-22-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "4920279550badc79b172c7d4bb5bb3f85bdbbd85d7103fb8b121d945e7f919b5"
+  },
+  "boot/steady-observation/poll-23-adb.command.json": {
+    "bytes": 270,
+    "sha256": "b8fc2c86b490053d9f75aef60cb6ae5f04c34bdb6c945bd79c8d1312b9bbce61"
+  },
+  "boot/steady-observation/poll-23-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-23-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-23-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "0b87739d49a7f0941468e81160a9ff571043d02014c32c13f878af81f75d3611"
+  },
+  "boot/steady-observation/poll-23-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-23-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "9ad8a272d12195a4bb6edbe42e2ab106ff0e2613126ea220bf8a37ac2217626e"
+  },
+  "boot/steady-observation/poll-24-adb.command.json": {
+    "bytes": 270,
+    "sha256": "3c71e6c06aec347ad312e84ded47851d3e59e0bb60155597fdddc84c1b73263b"
+  },
+  "boot/steady-observation/poll-24-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-24-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-24-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "44f67384ba2c199cecc81436199b62487f12b6f6b2e2cee28f2a280ae550d90a"
+  },
+  "boot/steady-observation/poll-24-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-24-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "227c11b0a4d2a3fb5c917b1a01b77f5187491964d8be351279cd7ceb5a7f5c68"
+  },
+  "boot/steady-observation/poll-25-adb.command.json": {
+    "bytes": 270,
+    "sha256": "7ac5d4de5ed2204a19b0805f3f4ff6713d0cb9184cf33d56ae89ba5ef030627d"
+  },
+  "boot/steady-observation/poll-25-adb.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-25-adb.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot/steady-observation/poll-25-wifi.command.json": {
+    "bytes": 483,
+    "sha256": "96d23c27c39b35056f5191bb8845bf255bb82313f67961ac1566ed0824eb6193"
+  },
+  "boot/steady-observation/poll-25-wifi.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot/steady-observation/poll-25-wifi.txt": {
+    "bytes": 766110,
+    "sha256": "d74deb28fda8a19f4b4dd52dbc045ae51401c4fde72a4889fbc8600b8984bce5"
+  },
+  "boot/steady-observation/summary.json": {
+    "bytes": 6375,
+    "sha256": "d0b0b7709ba6594ba75ef37bdde4f4a47c1c55d50b5ef5afef76474ba60f936f"
+  },
+  "boot/wifi-discovery.json": {
+    "bytes": 312,
+    "sha256": "dd4c3902175999ffb4c97f5bdf4213937cfdabe2d36b07588d2b4412850f05da"
+  },
+  "boot-acceptance/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "40d839893631b65113a44dae4adbbfe5c1b99496981a379250737daa596e7005"
+  },
+  "boot-acceptance/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/adb-state.txt": {
+    "bytes": 74,
+    "sha256": "8cf2454a3513370d9a2e3eaabed609627c51ee8259177c19d423ec14aa7f265d"
+  },
+  "boot-acceptance/bluetooth-health.json": {
+    "bytes": 273,
+    "sha256": "73503c0b5cd11e73e4d557f342874ce67c31dbe58bc87fb8c17f356876a06ea4"
+  },
+  "boot-acceptance/bluetooth-state.command.json": {
+    "bytes": 607,
+    "sha256": "c33012cd9460c4221698995978bc9a1ce9b7ad4252573d7494fb7acc1f57ed82"
+  },
+  "boot-acceptance/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/bluetooth-state.txt": {
+    "bytes": 1410,
+    "sha256": "46a531333a62fe706fd230473d7bc171cf23ee83113f514e551b9dcf11a5d4b8"
+  },
+  "boot-acceptance/boot-history.command.json": {
+    "bytes": 288,
+    "sha256": "28178bc21703e0d603007b6380b336730b0b74a3101d3e19f912047013e808e2"
+  },
+  "boot-acceptance/boot-history.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/boot-history.txt": {
+    "bytes": 18501,
+    "sha256": "9f5410c2c8cede4c26903e75580bc403b0df309a796e794754cd8c4ec02a5248"
+  },
+  "boot-acceptance/boot-id-confirm.command.json": {
+    "bytes": 289,
+    "sha256": "7b0f6e431c23e70af068a0b1e8034e2fee3387b4809a5d8157bba3b2b8448c51"
+  },
+  "boot-acceptance/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-acceptance/boot-id.command.json": {
+    "bytes": 289,
+    "sha256": "467d73d024bdff492129c032429f21f59a0fc9c53cdd03728b5b32fe118a710c"
+  },
+  "boot-acceptance/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-acceptance/cmdline.command.json": {
+    "bytes": 271,
+    "sha256": "a7965fdce6942fa6e41ad03749550899a1f56b0b3304b8d9e6b05d82fc224508"
+  },
+  "boot-acceptance/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "boot-acceptance/config-sha256.command.json": {
+    "bytes": 286,
+    "sha256": "a8936720c760692b8c9eddfaa94b372e70f2c0a5a5e74ae81b031ba51897b0a5"
+  },
+  "boot-acceptance/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "boot-acceptance/dcc-state.command.json": {
+    "bytes": 548,
+    "sha256": "af0d70aa8a3a0050bf44a84e41f1fa60de9833b5b5dc489c9e75787d022ab22d"
+  },
+  "boot-acceptance/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "boot-acceptance/embedded-config.command.json": {
+    "bytes": 274,
+    "sha256": "a4aa371853837806e65bd2ce8bc754652261ad5b10fed0fbe6eb9737779044a7"
+  },
+  "boot-acceptance/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "boot-acceptance/end-boot-id.command.json": {
+    "bytes": 289,
+    "sha256": "f88be4c9bc07941a5d090d8c58e37fbbd5199a73237796fcf1c0fc8fc32f0afa"
+  },
+  "boot-acceptance/end-boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/end-boot-id.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-acceptance/kernel-journal-json.command.json": {
+    "bytes": 289,
+    "sha256": "6d1633ef237510227bea87a1d92b32d78904f88b8d0986a3e3c6296290e678cc"
+  },
+  "boot-acceptance/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/kernel-journal-json.txt": {
+    "bytes": 766058,
+    "sha256": "37c37ecef711f6f4e989dc63ad6872f3e3a045ee27d51712adde8974060c2c43"
+  },
+  "boot-acceptance/kernel-journal.command.json": {
+    "bytes": 300,
+    "sha256": "9b90da3b438d7a7a39ab675a3b57de7d3f7fba18bddb6de4f322c118b218a2d4"
+  },
+  "boot-acceptance/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/kernel-journal.txt": {
+    "bytes": 106116,
+    "sha256": "ea8fd87b0bf79558e83b6869284b80ddf597f7399a7299ff60e865e701c72026"
+  },
+  "boot-acceptance/kernel-notes.bin": {
+    "bytes": 84,
+    "sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed"
+  },
+  "boot-acceptance/kernel-notes.command.json": {
+    "bytes": 281,
+    "sha256": "faa0af3026f7c265c30f895da517d4d7dc35104a31db07a8ddbf6c37460cca41"
+  },
+  "boot-acceptance/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "boot-acceptance/kernel-scan.json": {
+    "bytes": 959,
+    "sha256": "a01ba6e99c08f303ee387c3966e96ad15e41cb55c9b970ffaa4572d3475ec5ea"
+  },
+  "boot-acceptance/native-adb-shell.command.json": {
+    "bytes": 270,
+    "sha256": "26c08e002742e77820e2713acfdd30c083e70c8dbf977dfd620bc73440424f96"
+  },
+  "boot-acceptance/native-adb-shell.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/native-adb-shell.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot-acceptance/ncm-authenticated-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "f55f2971ae3f924e05a2011eb95b140512798fd4b1f5fc57f84e5074b9043245"
+  },
+  "boot-acceptance/ncm-authenticated-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/ncm-authenticated-ssh.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-acceptance/notes-base64.command.json": {
+    "bytes": 278,
+    "sha256": "b236f203cdedd09e8c90997cfb28d0abf2cfdb009c825a978bc0d49ecab81517"
+  },
+  "boot-acceptance/notes-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/notes-base64.txt": {
+    "bytes": 114,
+    "sha256": "85e3e25b2cd7eb3d89f7bcc3bb718a2d7950add80e5a400ab45339a9d539c277"
+  },
+  "boot-acceptance/patched-executable.command.json": {
+    "bytes": 357,
+    "sha256": "ad46bd8c4d42898d654ca4c930dbe63b97b75604c6d2aa16534e477f2ff971f8"
+  },
+  "boot-acceptance/patched-executable.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/patched-executable.txt": {
+    "bytes": 119,
+    "sha256": "44f8d52f2b14d016cd0b5dbf429fdcbb87f330261f3437c04cfcc774671dcc88"
+  },
+  "boot-acceptance/production-profile.command.json": {
+    "bytes": 406,
+    "sha256": "95ac8897a5909fb0be25fd04606e4d203a67e53eaa9b707e786d1a9583294a98"
+  },
+  "boot-acceptance/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "boot-acceptance/production-state.json": {
+    "bytes": 1268,
+    "sha256": "751d672b35eba9d6d037acb99ffce308dc90d4b9f7572c8fb32188e50486c84c"
+  },
+  "boot-acceptance/protected-settings-hashes.command.json": {
+    "bytes": 727,
+    "sha256": "20dc8a77ba037507cedc83d8907f7b5df402294c15ee6c385267ab49f8e4b508"
+  },
+  "boot-acceptance/protected-settings-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/protected-settings-hashes.txt": {
+    "bytes": 1933,
+    "sha256": "b1073564f14e541c24562955c7ed5f56cf781bbb1ec2610a4c1f14d25ca3b511"
+  },
+  "boot-acceptance/splash-region-base64.command.json": {
+    "bytes": 324,
+    "sha256": "ed667e519caabd4cdef1c4edc3bf8a6b811544af01a8d1a2fba5e2ae791bf764"
+  },
+  "boot-acceptance/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "boot-acceptance/summary.json": {
+    "bytes": 1750,
+    "sha256": "5f567836e8c28feab0f281939f15464af5df408fc1d9d1f9ddbe5c587a76722e"
+  },
+  "boot-acceptance/supplies.command.json": {
+    "bytes": 350,
+    "sha256": "cf665e397810b239bdf5a63d265258a5af2f48173bccd079057c55804a2bda22"
+  },
+  "boot-acceptance/supplies.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/supplies.txt": {
+    "bytes": 999,
+    "sha256": "e356a56b0f9b5d43e234545934b6e457355995a985b787086bd0dd66fc298a44"
+  },
+  "boot-acceptance/systemd-classification.json": {
+    "bytes": 64,
+    "sha256": "57db2879e0282b79689cff305cc1fcd23feff16a9d68f25cb92d767229986201"
+  },
+  "boot-acceptance/systemd-failed.command.json": {
+    "bytes": 303,
+    "sha256": "280f87bcc601aa6ca3aabc0a05b878ed82a31d98f8aed840512f0c8b2cca30b7"
+  },
+  "boot-acceptance/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/systemd-failed.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/uname.command.json": {
+    "bytes": 262,
+    "sha256": "9718cf3c519a911490a5bca2860267665d6fc28bc5c77db456f6f9fc1dfa1e97"
+  },
+  "boot-acceptance/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "boot-acceptance/upower-config.command.json": {
+    "bytes": 296,
+    "sha256": "870ca04becdfa4a6f5ed4af165d6ffe4c3a25757c467566d2981564237183ae2"
+  },
+  "boot-acceptance/upower-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/upower-config.txt": {
+    "bytes": 28,
+    "sha256": "6361a053d1f58b463c315bbadcefe942fe303e86d049cd62fdd25bc789c714f4"
+  },
+  "boot-acceptance/upower-properties.command.json": {
+    "bytes": 327,
+    "sha256": "fa356ceb51be1ff0f76cf834bf12bfe9248a2f3c9c63c91029fc8e3e0ebfc461"
+  },
+  "boot-acceptance/upower-properties.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/upower-properties.txt": {
+    "bytes": 49,
+    "sha256": "cf58b0c90b53b28d6ac06259cac522fa23c9122d063f61085c7d8393c820ef53"
+  },
+  "boot-acceptance/upower-unit-sha256.command.json": {
+    "bytes": 302,
+    "sha256": "48becb674d4233d74684db81cf060b2f368770cea6ecfeccaac468867d7d691b"
+  },
+  "boot-acceptance/upower-unit-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/upower-unit-sha256.txt": {
+    "bytes": 105,
+    "sha256": "834c63f3e3622e2131d3e3bbca4ba0ef5cbe5a8ed7bc9a3185f2bf80c26b208b"
+  },
+  "boot-acceptance/uptime.command.json": {
+    "bytes": 270,
+    "sha256": "f6d21bba663e990aecd63a81a55590fa3ba606a4bb31dd86babaa410e332c201"
+  },
+  "boot-acceptance/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/uptime.txt": {
+    "bytes": 15,
+    "sha256": "a7dcff0e0c040e0177c0e2395ee5f1171f8caae3e376574d1b8dbf7750afca7c"
+  },
+  "boot-acceptance/usb-adbd-journal.command.json": {
+    "bytes": 371,
+    "sha256": "9911d36d8ed1d56b7c21cc293ba18f45b50506a644e49d3c503fcd92f9542383"
+  },
+  "boot-acceptance/usb-adbd-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/usb-adbd-journal.txt": {
+    "bytes": 3347,
+    "sha256": "b79a5643e7c905a053f57d1b4e0e4f4290ce7689ce51c57df7d6f150ad3e0291"
+  },
+  "boot-acceptance/usb-state.command.json": {
+    "bytes": 423,
+    "sha256": "1f7523441cc58f8af27bdd8aea4b946eb6b159775292f1c396a75656a5653177"
+  },
+  "boot-acceptance/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "boot-acceptance/userspace-state.command.json": {
+    "bytes": 633,
+    "sha256": "c8e6a8afe586ee87e1452e9c1ef0b36b002e4fbab8e33548fd7b977886746522"
+  },
+  "boot-acceptance/userspace-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/userspace-state.txt": {
+    "bytes": 1974,
+    "sha256": "dde002c2d1db2292f6ab3a19a6eb27641967ce5ed937ce553f5ba1b0b2876279"
+  },
+  "boot-acceptance/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "d2c044120bd69dfdfe5a37c10c054851abce893cd45aec5c3f4821ec0f36baa5"
+  },
+  "boot-acceptance/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/windows-ncm-banner.txt": {
+    "bytes": 231,
+    "sha256": "93a48b97c8fa7763cfc72b8696c71e0b7c5d1b39c7331be5d3bff44d935a205d"
+  },
+  "boot-acceptance/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "b017716842a05b52adffb036f53aac2162f913d88d246b3430129b3bc950062f"
+  },
+  "boot-acceptance/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-acceptance/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "boot-initial/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "ed0f93fe9d135b5a4d54e9626e8ea3a38fe11d950cf82761788e58e8d567421d"
+  },
+  "boot-initial/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/adb-state.txt": {
+    "bytes": 74,
+    "sha256": "8cf2454a3513370d9a2e3eaabed609627c51ee8259177c19d423ec14aa7f265d"
+  },
+  "boot-initial/backup-module-hashes.command.json": {
+    "bytes": 327,
+    "sha256": "c91af7d426537d4cfdb84c410a634f22caaccd5142c23fd946bad0b0280fda0e"
+  },
+  "boot-initial/backup-module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/backup-module-hashes.txt": {
+    "bytes": 26743,
+    "sha256": "600b807ed051c928d2b0950eabfb881262df3a922625041dbedbabe49a548df3"
+  },
+  "boot-initial/bluetooth-health.json": {
+    "bytes": 273,
+    "sha256": "15dea0d7bd6d01f0ceecb70560f43874c5fbf1d3ce56fea83a6679c61c2734de"
+  },
+  "boot-initial/bluetooth-state.command.json": {
+    "bytes": 607,
+    "sha256": "193dd9e2b66c983d82b6c6bbbc04faf479b9627993c82866ff99c4d84efcfc38"
+  },
+  "boot-initial/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/bluetooth-state.txt": {
+    "bytes": 1408,
+    "sha256": "d2e8b3cc9944b95f1d6377601dd70d71c8f784a961850a950fdfea432af634a9"
+  },
+  "boot-initial/boot-history.command.json": {
+    "bytes": 288,
+    "sha256": "7fe9b31ec7e9e07a050a7e14cec26331c96a0c0ed648d66f7152415bf88dddc2"
+  },
+  "boot-initial/boot-history.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/boot-history.txt": {
+    "bytes": 18501,
+    "sha256": "ab90a8941af5b23fef675e4d628e5f6126eeb7dba7c3dc31257eb85278ae6bb6"
+  },
+  "boot-initial/boot-id-confirm.command.json": {
+    "bytes": 289,
+    "sha256": "be0f7649d58634af1258caac8698c6952aca3577d24daccf776f6084f6e31e9b"
+  },
+  "boot-initial/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-initial/boot-id.command.json": {
+    "bytes": 289,
+    "sha256": "770fbadb0cd41eb73ad5088d35383b4cf2378290013382c5a04e35337f7df681"
+  },
+  "boot-initial/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-initial/cmdline.command.json": {
+    "bytes": 271,
+    "sha256": "38bffa1910fd2baca19c8d88e927b643592f2f04a774d7f4b69786f52189a97a"
+  },
+  "boot-initial/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "boot-initial/config-sha256.command.json": {
+    "bytes": 286,
+    "sha256": "282d48321364326fa2243211fa7ac214924d04a35f6e9d507a48c44ca87681ef"
+  },
+  "boot-initial/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "boot-initial/dcc-state.command.json": {
+    "bytes": 548,
+    "sha256": "345606dc37364714f88e84b4b30c830b5c148a16ba11918fe74c4f2f25a37455"
+  },
+  "boot-initial/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "boot-initial/embedded-config.command.json": {
+    "bytes": 274,
+    "sha256": "0eb503ad10a67ae1c146c567a4080f90ab1c925e885d130db49a4e8a69f583f9"
+  },
+  "boot-initial/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "boot-initial/end-boot-id.command.json": {
+    "bytes": 289,
+    "sha256": "138ab2f1d68fe06b410ec54062711c12961e0d3d5036985ae21b14c16c2e690d"
+  },
+  "boot-initial/end-boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/end-boot-id.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-initial/kernel-journal-json.command.json": {
+    "bytes": 289,
+    "sha256": "94765bea58af6d3224abbbfd9244ee9fc4f04b0242536035985886408b3b4da3"
+  },
+  "boot-initial/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/kernel-journal-json.txt": {
+    "bytes": 764720,
+    "sha256": "952870e40ebad32644ba1e14f069e8be71da6e938cfbc672aeab8718da685ea1"
+  },
+  "boot-initial/kernel-journal.command.json": {
+    "bytes": 300,
+    "sha256": "65095ef2840e2c55e75400290dd89460a70da4a6b0315f96eb5ae149946e2f86"
+  },
+  "boot-initial/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/kernel-journal.txt": {
+    "bytes": 105940,
+    "sha256": "567e1e51ed391f300bed15482f3c2a2f248e01b63ba7575f05b68e39eaaf8b78"
+  },
+  "boot-initial/kernel-notes.bin": {
+    "bytes": 84,
+    "sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed"
+  },
+  "boot-initial/kernel-notes.command.json": {
+    "bytes": 281,
+    "sha256": "bd19e2fbe9e7cae58440a201b80c5c8a3da735e5af9abd309f088408bfe3778d"
+  },
+  "boot-initial/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "boot-initial/kernel-scan.json": {
+    "bytes": 958,
+    "sha256": "5154229579b7dc028db2958c073cb6d3d7416be317e5ecf1b2dea23456f1f45d"
+  },
+  "boot-initial/module-directories.command.json": {
+    "bytes": 302,
+    "sha256": "04058035b88635f3ecd0894c94b4e7996a93afd6d049476626805aa9dd457d14"
+  },
+  "boot-initial/module-directories.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/module-directories.txt": {
+    "bytes": 99,
+    "sha256": "0d906c83385bc11808061d482d1afa3bf2aa9e9b35e2abe1504e167890a0a8f3"
+  },
+  "boot-initial/module-hashes.command.json": {
+    "bytes": 329,
+    "sha256": "aac83bac8b16cc2764cc6a6418b68ba71da03a8a7195ea590d2004f437f850a8"
+  },
+  "boot-initial/module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/module-hashes.txt": {
+    "bytes": 27105,
+    "sha256": "6216ca25b3f23244b96d3d52dc86d1ab05b5d654bcd3d6d655787b33b8019c62"
+  },
+  "boot-initial/native-adb-shell.command.json": {
+    "bytes": 270,
+    "sha256": "a9455ea19ab555be06eae41e3ef0d8f8b56094ecff91490d2eafc352a7642d91"
+  },
+  "boot-initial/native-adb-shell.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/native-adb-shell.txt": {
+    "bytes": 38,
+    "sha256": "44501afda8d22893aa08e3dc560f4e61f862ecb9a62409dd4932f0af3b091025"
+  },
+  "boot-initial/ncm-authenticated-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "d15117667762b83c6ab6e18f5141470dfa7a74290c23bfbcc5817b4a01de238d"
+  },
+  "boot-initial/ncm-authenticated-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/ncm-authenticated-ssh.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "boot-initial/notes-base64.command.json": {
+    "bytes": 278,
+    "sha256": "47ce4eba0074a64ab127895596aecabae9bf5700fcd67694f1fb84d588c0abde"
+  },
+  "boot-initial/notes-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/notes-base64.txt": {
+    "bytes": 114,
+    "sha256": "85e3e25b2cd7eb3d89f7bcc3bb718a2d7950add80e5a400ab45339a9d539c277"
+  },
+  "boot-initial/partitions.command.json": {
+    "bytes": 347,
+    "sha256": "165aa829a889316677013572f997948ceb931e8f0112ce41c8c7633cd0962888"
+  },
+  "boot-initial/partitions.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/partitions.txt": {
+    "bytes": 484,
+    "sha256": "ee354f258e4fd54a11217375573a9c677260ed7ae7c1f0f250a5375416e08142"
+  },
+  "boot-initial/patched-executable.command.json": {
+    "bytes": 357,
+    "sha256": "629cd4871f79b49486fa7d5e88cf60d7fd213cad7dd54c3df4bbdcfc3711e4cd"
+  },
+  "boot-initial/patched-executable.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/patched-executable.txt": {
+    "bytes": 119,
+    "sha256": "44f8d52f2b14d016cd0b5dbf429fdcbb87f330261f3437c04cfcc774671dcc88"
+  },
+  "boot-initial/production-profile.command.json": {
+    "bytes": 406,
+    "sha256": "79a5e1e28f8d34d29082269434108fdedcba6a3547ddfd5b710675a101fc13b0"
+  },
+  "boot-initial/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "boot-initial/production-state.json": {
+    "bytes": 1267,
+    "sha256": "2407312a0646b5e59b26633f4c54b2dfbb93d3521eda7f804e9b3d97b68d5f7b"
+  },
+  "boot-initial/protected-settings-hashes.command.json": {
+    "bytes": 727,
+    "sha256": "6caa4ecf8c6b5d0ce2828aa87c7ee6175dc8fcd5c6643404c8998f62a675b17b"
+  },
+  "boot-initial/protected-settings-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/protected-settings-hashes.txt": {
+    "bytes": 1933,
+    "sha256": "b1073564f14e541c24562955c7ed5f56cf781bbb1ec2610a4c1f14d25ca3b511"
+  },
+  "boot-initial/splash-region-base64.command.json": {
+    "bytes": 324,
+    "sha256": "2107cc80411459d26020b0e9de9be0eb4d3a7eddfb5b903c03291d7bc49d6754"
+  },
+  "boot-initial/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "boot-initial/summary.json": {
+    "bytes": 1744,
+    "sha256": "9419130515211fe9fd050b5660a14d58f3af5bd79e78291f3056357192818e55"
+  },
+  "boot-initial/supplies.command.json": {
+    "bytes": 350,
+    "sha256": "5e24992e0973626fbc033e704faccad0741f7c55e834a2ac615cf28129895708"
+  },
+  "boot-initial/supplies.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/supplies.txt": {
+    "bytes": 998,
+    "sha256": "f82fef14ae6a42b911acf000f6fb88ca5e5919d452acf366be250cae2abcb167"
+  },
+  "boot-initial/systemd-classification.json": {
+    "bytes": 64,
+    "sha256": "57db2879e0282b79689cff305cc1fcd23feff16a9d68f25cb92d767229986201"
+  },
+  "boot-initial/systemd-failed.command.json": {
+    "bytes": 303,
+    "sha256": "ec6dd85c8a3baae2d427fdb1a9968b42dfa940d996443b69fd5768bcbf61b9c7"
+  },
+  "boot-initial/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/systemd-failed.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/uname.command.json": {
+    "bytes": 262,
+    "sha256": "6ea68a51d3f50f488af3bd8e54d05e3b2a29cbbb17dc0222bf3b9146dd360ead"
+  },
+  "boot-initial/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "boot-initial/upower-config.command.json": {
+    "bytes": 296,
+    "sha256": "4cfd42cea0371ecf6b9bca225884b11e751a1bfd50da159c275e47b0132d54e6"
+  },
+  "boot-initial/upower-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/upower-config.txt": {
+    "bytes": 28,
+    "sha256": "6361a053d1f58b463c315bbadcefe942fe303e86d049cd62fdd25bc789c714f4"
+  },
+  "boot-initial/upower-properties.command.json": {
+    "bytes": 327,
+    "sha256": "f7f7838d2d0ae7a6f45159a06488756c5d061b89fe0a44fbfb92e33889732430"
+  },
+  "boot-initial/upower-properties.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/upower-properties.txt": {
+    "bytes": 49,
+    "sha256": "cf58b0c90b53b28d6ac06259cac522fa23c9122d063f61085c7d8393c820ef53"
+  },
+  "boot-initial/upower-unit-sha256.command.json": {
+    "bytes": 302,
+    "sha256": "aadf4d68fe08c6ea68314ff9ab9a5de35c396645f7ad5c3263274c98d9924413"
+  },
+  "boot-initial/upower-unit-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/upower-unit-sha256.txt": {
+    "bytes": 105,
+    "sha256": "834c63f3e3622e2131d3e3bbca4ba0ef5cbe5a8ed7bc9a3185f2bf80c26b208b"
+  },
+  "boot-initial/uptime.command.json": {
+    "bytes": 270,
+    "sha256": "937662611752e4341bcde6a23219d3a2ce664400f6e2293fb91ae002f57b21c3"
+  },
+  "boot-initial/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/uptime.txt": {
+    "bytes": 13,
+    "sha256": "c392618ec559606030bec6dd3b1a9a79fd5fdca5955d29dd8979e225d9ece741"
+  },
+  "boot-initial/usb-adbd-journal.command.json": {
+    "bytes": 371,
+    "sha256": "1dcfdc6c99fbe4c6ad1f94282ca117e4f465b53cb9fa343a61a402bf7977690b"
+  },
+  "boot-initial/usb-adbd-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/usb-adbd-journal.txt": {
+    "bytes": 3347,
+    "sha256": "b79a5643e7c905a053f57d1b4e0e4f4290ce7689ce51c57df7d6f150ad3e0291"
+  },
+  "boot-initial/usb-state.command.json": {
+    "bytes": 423,
+    "sha256": "d3fcac056043546cb179b9ef4921cb752419b847daeaff457162049b30f2db1c"
+  },
+  "boot-initial/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "boot-initial/userspace-state.command.json": {
+    "bytes": 633,
+    "sha256": "c3edbb7a9531230261cccb1f075fd3c25ec970846b0a3ab4f3b3c680d5097536"
+  },
+  "boot-initial/userspace-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/userspace-state.txt": {
+    "bytes": 1974,
+    "sha256": "dde002c2d1db2292f6ab3a19a6eb27641967ce5ed937ce553f5ba1b0b2876279"
+  },
+  "boot-initial/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "8bca8bc95cef3e95a7f2441d0220f4c35074a79c5fdc0c3db7a68ee4bd9b936f"
+  },
+  "boot-initial/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/windows-ncm-banner.txt": {
+    "bytes": 230,
+    "sha256": "e6ac3c7cc4726e9865feb904b785b0314ac22bd2149d93c4a73a74fe2f6b6583"
+  },
+  "boot-initial/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "0402a3b667c11fe175507a9b303d999c4d45d2716c0bfea3426a1d3b909c55c6"
+  },
+  "boot-initial/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boot-initial/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "deploy/create-staging.command.json": {
+    "bytes": 417,
+    "sha256": "95240a36f17945c2332125b5a15bec1a51d5704c4be232653d4d497ddb69b00e"
+  },
+  "deploy/create-staging.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/create-staging.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/install-userspace.command.json": {
+    "bytes": 230,
+    "sha256": "70e585dc0fd06db1465e4dd391e9d70faf4f592efa6a2909b5102c81dc6c3d65"
+  },
+  "deploy/install-userspace.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/install-userspace.txt": {
+    "bytes": 2277,
+    "sha256": "30ac9d70ee20f0260dc737693df34b5fbd1b97d7a72f022cce10e2e9a952a1a4"
+  },
+  "deploy/ncm-continuity.command.json": {
+    "bytes": 468,
+    "sha256": "cef94d6bc626a29c0abfc9c61448b44a4e76df86706d38b97cec8ea05bb6a0dc"
+  },
+  "deploy/ncm-continuity.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/ncm-continuity.txt": {
+    "bytes": 1040,
+    "sha256": "f6aa83cfc967ab17f237a1d4a2fe15e738053261e3009ea173670e2ee48a3e9c"
+  },
+  "deploy/upload-binary.command.json": {
+    "bytes": 334,
+    "sha256": "74762ad0ef4ee85e1a1c1a6a889456d4feea24fe23545298dc498baff5383c05"
+  },
+  "deploy/upload-binary.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/upload-binary.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/upload-launcher.command.json": {
+    "bytes": 330,
+    "sha256": "adcb7f3b18a5339f3f59c977924b202407175948555b5c6325cd626f0ef36643"
+  },
+  "deploy/upload-launcher.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/upload-launcher.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/upload-unit.command.json": {
+    "bytes": 349,
+    "sha256": "8c27a962c32a09e8a3920f660cdca0112ef2b1064fb5c4f36869a10152c1e545"
+  },
+  "deploy/upload-unit.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy/upload-unit.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "d3ec4ec9b6aef31111407cbc9d0d6617f2ee79d7750feec7ee28560db7c0f831"
+  },
+  "deploy-acceptance/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/adb-state.txt": {
+    "bytes": 75,
+    "sha256": "21fe6eb8d87876f7e9b15089ddfb0d0ea83bb329e64735e999cdf1be0e96f022"
+  },
+  "deploy-acceptance/bluetooth-health.json": {
+    "bytes": 275,
+    "sha256": "e9402700d76ff4d5b6fc43132136f85d8970fec19f10c5d73f2a23a06c6f89a7"
+  },
+  "deploy-acceptance/bluetooth-state.command.json": {
+    "bytes": 608,
+    "sha256": "28222677ac4f716f2a92a59b0f5f9d2a9cd55d8f4233b4e2f6e6f7f66baebd3a"
+  },
+  "deploy-acceptance/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/bluetooth-state.txt": {
+    "bytes": 1412,
+    "sha256": "53085cd4ae4185ba70a157cfbc9ea867046dd16c292f5143b65d559197e31137"
+  },
+  "deploy-acceptance/boot-history.command.json": {
+    "bytes": 289,
+    "sha256": "a1a6e88db75af2cd88114eb559cc0d4842eaf79e7449ad44afa301e50929a5c5"
+  },
+  "deploy-acceptance/boot-history.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/boot-history.txt": {
+    "bytes": 18407,
+    "sha256": "4d1fcfa605503b7c67cf7d4f1573aeb586b22fff2ff85de3f2fbdbdab98e6dad"
+  },
+  "deploy-acceptance/boot-id-confirm.command.json": {
+    "bytes": 290,
+    "sha256": "976268afd665b5df8dec7e720383875af5e0ec4717e329ce1aa01a9027ff7839"
+  },
+  "deploy-acceptance/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "deploy-acceptance/boot-id.command.json": {
+    "bytes": 290,
+    "sha256": "5414a524caee4835efdc2b5caf8f6c5a695747b6679696b06f164caab3a70242"
+  },
+  "deploy-acceptance/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "deploy-acceptance/cmdline.command.json": {
+    "bytes": 272,
+    "sha256": "1b6801d751600ad9824b0e10fc3bcb920a3b1c9aeef1b079aa08d8c89bc645de"
+  },
+  "deploy-acceptance/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "deploy-acceptance/config-sha256.command.json": {
+    "bytes": 287,
+    "sha256": "eb2140db7f5c641f0be658305b47a695637901054b784eeb080593996fff7fd3"
+  },
+  "deploy-acceptance/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "deploy-acceptance/dcc-state.command.json": {
+    "bytes": 549,
+    "sha256": "2a30b91bdacc869bbee0687d078d6080e809cab830aea71c3851572a0e6d4219"
+  },
+  "deploy-acceptance/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "deploy-acceptance/embedded-config.command.json": {
+    "bytes": 275,
+    "sha256": "5d5b4941db85636fd6bb5b09641ccc4b44380b1c45466ea0cb104862219a7b17"
+  },
+  "deploy-acceptance/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "deploy-acceptance/end-boot-id.command.json": {
+    "bytes": 290,
+    "sha256": "5984d7230455bac5bdd33b05e850e02472aa5a6d430ab9d3b612631636a02d14"
+  },
+  "deploy-acceptance/end-boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/end-boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "deploy-acceptance/kernel-journal-json.command.json": {
+    "bytes": 290,
+    "sha256": "45d3b6b3f274399a3e31301bbe6beb4eac7acd9a3cba037517d785537e3c51fd"
+  },
+  "deploy-acceptance/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/kernel-journal-json.txt": {
+    "bytes": 763905,
+    "sha256": "f74ce06c0fc60eccd22928030a918db194cf3906ae7bee2c7f4df76e461c83d1"
+  },
+  "deploy-acceptance/kernel-journal.command.json": {
+    "bytes": 301,
+    "sha256": "f84266a56b2c10e8449a04ea77528cb8d3ac6671ef4202b45fd8de8b4770ab5f"
+  },
+  "deploy-acceptance/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/kernel-journal.txt": {
+    "bytes": 105988,
+    "sha256": "5c522c8c2bb424bb88ee783bfeb05f8497ec92678cb96b727595344734df49f4"
+  },
+  "deploy-acceptance/kernel-notes.bin": {
+    "bytes": 84,
+    "sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed"
+  },
+  "deploy-acceptance/kernel-notes.command.json": {
+    "bytes": 282,
+    "sha256": "d184fddf58876a81fe5bb2634a53decb3cd6257a9631850eeb2a278516bd3b0b"
+  },
+  "deploy-acceptance/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "deploy-acceptance/kernel-scan.json": {
+    "bytes": 746,
+    "sha256": "fa4fe968c4277e03f45f475dc93cfdb1c414f3bc6d703e9c607ab9607a86bfc7"
+  },
+  "deploy-acceptance/ncm-authenticated-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "5724b5df4a52c00578aba7b4387eadf135ec102d00a65a418361d749b558e46b"
+  },
+  "deploy-acceptance/ncm-authenticated-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/ncm-authenticated-ssh.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "deploy-acceptance/notes-base64.command.json": {
+    "bytes": 279,
+    "sha256": "5197d776a43bd4c72816f2ec742b655800ceb30c8c2dc17f08ead8c98cda6465"
+  },
+  "deploy-acceptance/notes-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/notes-base64.txt": {
+    "bytes": 114,
+    "sha256": "85e3e25b2cd7eb3d89f7bcc3bb718a2d7950add80e5a400ab45339a9d539c277"
+  },
+  "deploy-acceptance/production-profile.command.json": {
+    "bytes": 407,
+    "sha256": "07c140dcff1400dbb29f7cd0c822a845a10f3be866a4b04d0f2a3795b05c0df3"
+  },
+  "deploy-acceptance/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "deploy-acceptance/production-state.json": {
+    "bytes": 1345,
+    "sha256": "0a213ba2762025c0740038ea0f08c712b329befe2c62fa693332cc80656ad272"
+  },
+  "deploy-acceptance/protected-settings-hashes.command.json": {
+    "bytes": 728,
+    "sha256": "4dd3fa1d4593dcd7176cc815c6846b580e5472f3dcea236a82058e06d0bca1b0"
+  },
+  "deploy-acceptance/protected-settings-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/protected-settings-hashes.txt": {
+    "bytes": 1933,
+    "sha256": "b1073564f14e541c24562955c7ed5f56cf781bbb1ec2610a4c1f14d25ca3b511"
+  },
+  "deploy-acceptance/splash-region-base64.command.json": {
+    "bytes": 325,
+    "sha256": "5b457eb082093bdfb48c221cb6cffa1f7838ea358c46bd1f7137f95afd8ca9f2"
+  },
+  "deploy-acceptance/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "deploy-acceptance/summary.json": {
+    "bytes": 1758,
+    "sha256": "e3478d630c30037a1ee2de0c8967ca0019b1e9c62830cca717917d8c098882f1"
+  },
+  "deploy-acceptance/supplies.command.json": {
+    "bytes": 351,
+    "sha256": "081dc8f7e10583e5845c2ab6ec14212f470ffd64caa83789ff08bba3a05347f8"
+  },
+  "deploy-acceptance/supplies.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/supplies.txt": {
+    "bytes": 998,
+    "sha256": "700167c5e90e78548187471814012ccb981c9e98d408870c7dbdd84851cabb23"
+  },
+  "deploy-acceptance/systemd-classification.json": {
+    "bytes": 219,
+    "sha256": "4e5b545366c72675af60515f5cc3c1d68ca4a6f07635a2d68527c07a209cb85d"
+  },
+  "deploy-acceptance/systemd-failed.command.json": {
+    "bytes": 304,
+    "sha256": "d430faf0a81beec928ec1094f87582ac2c97af31b7c93cf363582c3502098d28"
+  },
+  "deploy-acceptance/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/systemd-failed.txt": {
+    "bytes": 64,
+    "sha256": "d025709afeb050a5d80b9f4bd8a6549232bd1253b8e35df2bf8724a5fe06e94a"
+  },
+  "deploy-acceptance/uname.command.json": {
+    "bytes": 263,
+    "sha256": "eb6b86a6dfeb0859d26878aef7682037fe3364fc236d5fbf4f02f3180eab1db9"
+  },
+  "deploy-acceptance/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "deploy-acceptance/upower-config.command.json": {
+    "bytes": 297,
+    "sha256": "86c1fcbbd7f855c54d315aac7182db2970ada64e31aa50f835fc77e7c091548b"
+  },
+  "deploy-acceptance/upower-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/upower-config.txt": {
+    "bytes": 28,
+    "sha256": "6361a053d1f58b463c315bbadcefe942fe303e86d049cd62fdd25bc789c714f4"
+  },
+  "deploy-acceptance/upower-properties.command.json": {
+    "bytes": 328,
+    "sha256": "b6d5bae9a0bf7b1611128946913aca09026e162469f39c4c713a1bed14561bf5"
+  },
+  "deploy-acceptance/upower-properties.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/upower-properties.txt": {
+    "bytes": 53,
+    "sha256": "0b6a6299ad30a3910d54eab58f251c342bddff71c310208fb5de9c5c3b2fd6c1"
+  },
+  "deploy-acceptance/upower-unit-sha256.command.json": {
+    "bytes": 303,
+    "sha256": "2acb2509ec1f8a7a9a2215aa11089acd6037dc712103ac88f45e20025d29a44c"
+  },
+  "deploy-acceptance/upower-unit-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/upower-unit-sha256.txt": {
+    "bytes": 105,
+    "sha256": "834c63f3e3622e2131d3e3bbca4ba0ef5cbe5a8ed7bc9a3185f2bf80c26b208b"
+  },
+  "deploy-acceptance/uptime.command.json": {
+    "bytes": 271,
+    "sha256": "bdbc14ff191196abec76daef6280e2243286a13993b691d9eb8d7600f9538f91"
+  },
+  "deploy-acceptance/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/uptime.txt": {
+    "bytes": 17,
+    "sha256": "39c9a6cea7f85b37d7b94e90803928ecd94cd27efc92ee239e3fa979745757f7"
+  },
+  "deploy-acceptance/usb-adbd-journal.command.json": {
+    "bytes": 372,
+    "sha256": "03aae5f11a774982200c5923f40dd6d137feae5b6f7bd0c13b07c821d6952f8c"
+  },
+  "deploy-acceptance/usb-adbd-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/usb-adbd-journal.txt": {
+    "bytes": 3721,
+    "sha256": "08db5a6290fa15b0b3edf2a3d1c345e59eef6f33159bcd0d0861ac1c2bbac257"
+  },
+  "deploy-acceptance/usb-state.command.json": {
+    "bytes": 424,
+    "sha256": "6bac311862555da9a0d5d0da90453cc88d551d16dcd185bc85022cf662137b27"
+  },
+  "deploy-acceptance/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "deploy-acceptance/userspace-state.command.json": {
+    "bytes": 634,
+    "sha256": "219c00fe4d063787e9399a1b697d0ae40ca1c42b78611031ba69b7d9b026d91a"
+  },
+  "deploy-acceptance/userspace-state.stderr": {
+    "bytes": 328,
+    "sha256": "5941004e366e2e7ffa7284669c3d029c2959b8b723df0aa962b2292e5e7cf65a"
+  },
+  "deploy-acceptance/userspace-state.txt": {
+    "bytes": 1931,
+    "sha256": "27cef72a09e5a98330392981e538541d42c4323fd186884cee1eca8ec0a6e10f"
+  },
+  "deploy-acceptance/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "4008594c6cec7cb2a3cc83dc058e95a15b2d8a860570e327b55c6273a626f4d6"
+  },
+  "deploy-acceptance/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/windows-ncm-banner.txt": {
+    "bytes": 230,
+    "sha256": "d9e42d1fe168d752808ca7441cc30a42f370494cf5284530e95ab61c3129626e"
+  },
+  "deploy-acceptance/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "dd94f97a7b9a34c004465e3a656aff37ee382d2e09b5623799719d0627f2877d"
+  },
+  "deploy-acceptance/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "deploy-acceptance/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "host-tests-all.json": {
+    "bytes": 111234,
+    "sha256": "661a06184312d2c9a20d9c232dad1598b15adbd028e4f103020e2fbeaa9c96cb"
+  },
+  "logical-reconnect/adb-server-status.command.json": {
+    "bytes": 204,
+    "sha256": "4a07932990f40287fe0cb0698f40af87d1d6fc8edfe7223b175a9e5b10e4e14d"
+  },
+  "logical-reconnect/adb-server-status.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/adb-server-status.txt": {
+    "bytes": 418,
+    "sha256": "a786df9b6bd5830cf189af33d0072285c898647b43552558c1f6e10ed64c42df"
+  },
+  "logical-reconnect/adb-state-after-stop.command.json": {
+    "bytes": 208,
+    "sha256": "cacdcec78b0d24df134ff976079db5e15234aa18a1821650eda12dac519063f2"
+  },
+  "logical-reconnect/adb-state-after-stop.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/adb-state-after-stop.txt": {
+    "bytes": 28,
+    "sha256": "bbfcc7239a6f1be3544814ebdc6bcc9b66bf5b1f0b03baa3340808f19265a630"
+  },
+  "logical-reconnect/adb-version.command.json": {
+    "bytes": 198,
+    "sha256": "5072592fff75ea18af5fc5a6d41305c9fe4e4cba02a85bb176d5df2bd4645c7e"
+  },
+  "logical-reconnect/adb-version.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/adb-version.txt": {
+    "bytes": 141,
+    "sha256": "cdf6b8f8688a0dbb50bf2fa5f1dd887c9d832727543926c287569a3288ad538c"
+  },
+  "logical-reconnect/failure.json": {
+    "bytes": 262,
+    "sha256": "cdf836c124870967dbeaa509f99fc2b84235e769601b89f6f45a65480eccb173"
+  },
+  "logical-reconnect/host-reconnect.command.json": {
+    "bytes": 231,
+    "sha256": "9947d2c4a23e48fafb40bbf7f2bd61ddc0b814ca6fb4638c1301293a25cd4932"
+  },
+  "logical-reconnect/host-reconnect.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/host-reconnect.txt": {
+    "bytes": 39,
+    "sha256": "5b8d1bfe38ad4bd97e4787442d00b7c9eb0c45a8be95f108b2275f1a7311693f"
+  },
+  "logical-reconnect/ncm-continuity.command.json": {
+    "bytes": 539,
+    "sha256": "f188f98856d69582b96b55da24042c3f9528bd947a1917c77e6004abb2108218"
+  },
+  "logical-reconnect/ncm-continuity.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/ncm-continuity.txt": {
+    "bytes": 940,
+    "sha256": "9a652bf2d91a5a5bb45d83ba230f91d4520cefb59791239e2554df98015f7f88"
+  },
+  "logical-reconnect/ncm-ssh-after-stop.command.json": {
+    "bytes": 263,
+    "sha256": "b224f39c1ae232ec43e2430f6cf6176801598936d71bbbb34d1028552834766f"
+  },
+  "logical-reconnect/ncm-ssh-after-stop.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/ncm-ssh-after-stop.txt": {
+    "bytes": 52,
+    "sha256": "78c917e28c64c5c51c2f7c4f5cba96de8c5613ec1262535e3107b087979f0946"
+  },
+  "logical-reconnect/post-reconnect-state.command.json": {
+    "bytes": 526,
+    "sha256": "a4eb7a031185c196a489edce3acf20c6b74da2ca2ee968044dfd086b1c1a2638"
+  },
+  "logical-reconnect/post-reconnect-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/post-reconnect-state.txt": {
+    "bytes": 768762,
+    "sha256": "64f1f78ed922ed50bb98e5d66b20e49c6cc0b0fd5a3920240011bb3f501e7860"
+  },
+  "logical-reconnect/recovery-01.command.json": {
+    "bytes": 270,
+    "sha256": "23c334f92d91bc1c57d551dc0c606690d690da1ce965e46a238d703793d7fdc1"
+  },
+  "logical-reconnect/recovery-01.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-01.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-02.command.json": {
+    "bytes": 270,
+    "sha256": "91a406b0d93efb3c18f4e122b8eab18cb4b456d9227b52633bb1a9b1004cff26"
+  },
+  "logical-reconnect/recovery-02.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-02.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-03.command.json": {
+    "bytes": 270,
+    "sha256": "fc3d67899f322ba23bf50662c48d33668ad06cbf33e25fa98c07a3328492b8ed"
+  },
+  "logical-reconnect/recovery-03.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-03.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-04.command.json": {
+    "bytes": 270,
+    "sha256": "c47692c9e2ad30689bad28f2036b21ee59ac61cead93a844367ff45104a47cd0"
+  },
+  "logical-reconnect/recovery-04.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-04.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-05.command.json": {
+    "bytes": 270,
+    "sha256": "5ceb3e40174b3d6b32ad681a128b1a9c789ec044e9b2f670a571c8cac49e0151"
+  },
+  "logical-reconnect/recovery-05.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-05.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-06.command.json": {
+    "bytes": 270,
+    "sha256": "68f24d3a7302dc951b1fea447c4c37d6d68b6389a8c911f2e16d3ec7d22d3d51"
+  },
+  "logical-reconnect/recovery-06.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-06.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-07.command.json": {
+    "bytes": 270,
+    "sha256": "94f253556e6ac52f15568867e4157a5b9e4aae5de6d3e92343d1003a5f40047b"
+  },
+  "logical-reconnect/recovery-07.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-07.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-08.command.json": {
+    "bytes": 270,
+    "sha256": "9bd8800db1fc99c523490499b2ab29948c97c27c749dde173a2da9b33a6d7c10"
+  },
+  "logical-reconnect/recovery-08.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-08.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-09.command.json": {
+    "bytes": 270,
+    "sha256": "a4367f09b4921e45fc9684634f2ed1ddd6ad8de0dc42c125d90921322a4e5604"
+  },
+  "logical-reconnect/recovery-09.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-09.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-10.command.json": {
+    "bytes": 270,
+    "sha256": "c88d4458ebc6378acb17ec59bc08515058ee4abec930def737f93fc9222e0de0"
+  },
+  "logical-reconnect/recovery-10.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-10.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-11.command.json": {
+    "bytes": 270,
+    "sha256": "9dd0fc7c9985b9a20082c58cfd1793ec651b2e5755ca026ad1530b4820b46448"
+  },
+  "logical-reconnect/recovery-11.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-11.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-12.command.json": {
+    "bytes": 270,
+    "sha256": "f5c84152a724aa61d2f328d7fd8cb22c23d368bdd768dfe4b9223bf1772a210d"
+  },
+  "logical-reconnect/recovery-12.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-12.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-13.command.json": {
+    "bytes": 270,
+    "sha256": "036df1226fd97c7402ffed7967c19fe87beabe923f8f9869da9f92f134da7f89"
+  },
+  "logical-reconnect/recovery-13.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-13.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-14.command.json": {
+    "bytes": 270,
+    "sha256": "28d676a21d1c6f84a5ccc864340a4a397479b159043137bf0a4394b48e58a7d1"
+  },
+  "logical-reconnect/recovery-14.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-14.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-15.command.json": {
+    "bytes": 270,
+    "sha256": "ec5efe14e6fe21f02e308ec78f73be3e08178d240b2c79bceb90289e0aaca47f"
+  },
+  "logical-reconnect/recovery-15.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-15.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-16.command.json": {
+    "bytes": 270,
+    "sha256": "d7683d94b856409c8836fd86743a05684297dfa4118beaa77684e4e2c6cd0a2e"
+  },
+  "logical-reconnect/recovery-16.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-16.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-17.command.json": {
+    "bytes": 270,
+    "sha256": "01a641cbca8ab6c5fed736a8da1da1ee9fc5fd3e8e52a9a97d182fa7b647b54c"
+  },
+  "logical-reconnect/recovery-17.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-17.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-18.command.json": {
+    "bytes": 270,
+    "sha256": "87015c17ec6d5d7fa6bc36dfb16504b209c5b91b9b3a6eab82a367588329e325"
+  },
+  "logical-reconnect/recovery-18.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-18.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/recovery-19.command.json": {
+    "bytes": 270,
+    "sha256": "3d227c40332262cb7452b74271e03bb9a759e9d33191ecbfaf6902077e1bb301"
+  },
+  "logical-reconnect/recovery-19.stderr": {
+    "bytes": 43,
+    "sha256": "ae490693329102b664368e0d4ddec43b85f7a4a782b805b53ae36752a1d6763a"
+  },
+  "logical-reconnect/recovery-19.txt": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/windows-adb-log-tail.command.json": {
+    "bytes": 401,
+    "sha256": "bbc3190ab2f1253669c95bb7266894021c0291b7c012459183351df5add3f194"
+  },
+  "logical-reconnect/windows-adb-log-tail.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/windows-adb-log-tail.txt": {
+    "bytes": 34976,
+    "sha256": "ba9ea86631da51892a1cac5cbd0817e17208633126a3d5bd26d4fabca06d9a38"
+  },
+  "logical-reconnect/windows-ncm-banner-after-stop.command.json": {
+    "bytes": 2552,
+    "sha256": "3350eb8739fca9e7bfc0896c66d44d70f04a367a329d90fbd9399f60c8129c97"
+  },
+  "logical-reconnect/windows-ncm-banner-after-stop.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/windows-ncm-banner-after-stop.txt": {
+    "bytes": 231,
+    "sha256": "20ad3b19f7e4d7895ec0a8a13052e44aa17cbb316f3ec8aec5a7f74bb854701b"
+  },
+  "logical-reconnect/windows-pnp-after-stop.command.json": {
+    "bytes": 885,
+    "sha256": "f572c4ac8ff30735d8796693abbdf67b50fdaf1232e235b5a0de5d786686972c"
+  },
+  "logical-reconnect/windows-pnp-after-stop.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "logical-reconnect/windows-pnp-after-stop.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "post-stop/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "e423228d1129b84e336c6d49c92ba90445a8fc78a00cf6b18dc2bf351aebf64b"
+  },
+  "post-stop/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/adb-state.txt": {
+    "bytes": 28,
+    "sha256": "bbfcc7239a6f1be3544814ebdc6bcc9b66bf5b1f0b03baa3340808f19265a630"
+  },
+  "post-stop/backup-module-hashes.command.json": {
+    "bytes": 327,
+    "sha256": "40e31c7f80a8df7df7c07f7e1ac85e477257c30643858539cff49998d2565770"
+  },
+  "post-stop/backup-module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/backup-module-hashes.txt": {
+    "bytes": 26743,
+    "sha256": "600b807ed051c928d2b0950eabfb881262df3a922625041dbedbabe49a548df3"
+  },
+  "post-stop/boot-id.command.json": {
+    "bytes": 289,
+    "sha256": "e9be02802249f2e209eecabdfbfbc223a01710b2807d63e40b620fab350fa1d9"
+  },
+  "post-stop/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "post-stop/embedded-config.command.json": {
+    "bytes": 274,
+    "sha256": "5592c5c297d58a081287807589e54dc3a2f09f5067859810ad5432a85fc00e32"
+  },
+  "post-stop/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "post-stop/kernel-journal-json.command.json": {
+    "bytes": 289,
+    "sha256": "0ee1d492f2e4895bf98f2e042ac5824fa5b6defe0382c995565aede26d20aec1"
+  },
+  "post-stop/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/kernel-journal-json.txt": {
+    "bytes": 766058,
+    "sha256": "4e916c21a2d46f10ecc5922db3b5861e7a66341b9c7ecb5260cea276c74168d6"
+  },
+  "post-stop/kernel-journal.command.json": {
+    "bytes": 300,
+    "sha256": "c8fc6e3b8d6593b51c8d2f22bd7891d7c9510afbb98df2841b784a738a7629c7"
+  },
+  "post-stop/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/kernel-journal.txt": {
+    "bytes": 106116,
+    "sha256": "ea8fd87b0bf79558e83b6869284b80ddf597f7399a7299ff60e865e701c72026"
+  },
+  "post-stop/kernel-scan.json": {
+    "bytes": 959,
+    "sha256": "a01ba6e99c08f303ee387c3966e96ad15e41cb55c9b970ffaa4572d3475ec5ea"
+  },
+  "post-stop/module-hashes.command.json": {
+    "bytes": 329,
+    "sha256": "0cc323269269225f0700fcf176e1b010bac7f05a688bd3879e09bfd0d03dc1e3"
+  },
+  "post-stop/module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/module-hashes.txt": {
+    "bytes": 27105,
+    "sha256": "6216ca25b3f23244b96d3d52dc86d1ab05b5d654bcd3d6d655787b33b8019c62"
+  },
+  "post-stop/ncm-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "a3b39c215aaeacb9eecc63cb8866374d70130e95bacb9f35b80d790eb2420024"
+  },
+  "post-stop/ncm-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/ncm-ssh.txt": {
+    "bytes": 37,
+    "sha256": "7badc0914bf3f506b8e063d2cffe8a0aae01a9d84b03a7118fd731d47a38270c"
+  },
+  "post-stop/partitions.command.json": {
+    "bytes": 347,
+    "sha256": "bd4c6fed67590c7c5a7d7e46a0def03002f3e8f3dc584d8543701ac4ac6e4215"
+  },
+  "post-stop/partitions.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/partitions.txt": {
+    "bytes": 484,
+    "sha256": "ee354f258e4fd54a11217375573a9c677260ed7ae7c1f0f250a5375416e08142"
+  },
+  "post-stop/summary.json": {
+    "bytes": 1345,
+    "sha256": "f56b333224dbf0b8f3cd674d66f06a0f7a29fa5e40c519316cffcb807e708290"
+  },
+  "post-stop/uptime.command.json": {
+    "bytes": 270,
+    "sha256": "4a64d4a39882c37bafc2ee78f04833b037e734a790c120955ac8b43f96add045"
+  },
+  "post-stop/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/uptime.txt": {
+    "bytes": 15,
+    "sha256": "f20dad1e7be8ca85fc4cd5f65299ba8cdc59cb4a409fa4d435c0b1693ba2934a"
+  },
+  "post-stop/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "8bdb24c07cee96f2c6d1bc71948ade45db7ad7bee625bb2c59d04e9199ff266c"
+  },
+  "post-stop/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/windows-ncm-banner.txt": {
+    "bytes": 230,
+    "sha256": "f8e26a2dbbf93069d01d47e3cdcb39885ed90f419bfb1438315316ed2a6dd4db"
+  },
+  "post-stop/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "cf26610c4ea6d954a59acab91335dd0fc0a3c7b61c27f886a13e7734dd49e4e3"
+  },
+  "post-stop/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post-stop/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "preflight/OBSERVER_REVIEW.md": {
+    "bytes": 647,
+    "sha256": "043a5ec760c2e20f6ef95bcdf1e4b74ab00f6b087f34638efd9e0d4980068888"
+  },
+  "preflight/bluetooth-health.json": {
+    "bytes": 275,
+    "sha256": "3ac4f23873e77320ce9f2d015fad383a1a7a01234bf7757783cdfad50a5109b0"
+  },
+  "preflight/bluetooth-state.command.json": {
+    "bytes": 608,
+    "sha256": "7d93f4774e80573b3d195f3ffe1dd1ca41281bb8976114386fef5f2b7592ba03"
+  },
+  "preflight/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/bluetooth-state.txt": {
+    "bytes": 1412,
+    "sha256": "383866391b3abcf36e8c24f7849755ed6dd9eed8d8e0dafa56b8f6680071b720"
+  },
+  "preflight/boot-id-confirm.command.json": {
+    "bytes": 290,
+    "sha256": "7bb8cfb3c5fa7534692451f6a013d8fb04c93057b4be03f61500be37ffcc07af"
+  },
+  "preflight/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight/boot-id.command.json": {
+    "bytes": 290,
+    "sha256": "80ee8bb5c2f0610d4fac6c7ee1e37fe5d0e397474435d744e69d5d380ef13a25"
+  },
+  "preflight/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight/cmdline.command.json": {
+    "bytes": 272,
+    "sha256": "ba3627a1f6cd29e750485565c30b7d1e282562cc60792339f863bebc184dbe58"
+  },
+  "preflight/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "preflight/config-sha256.command.json": {
+    "bytes": 287,
+    "sha256": "e71a8f6ee1abb4a7ec3c869f88f99f850562a45389cf725e0756d9358b501888"
+  },
+  "preflight/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "preflight/dcc-state.command.json": {
+    "bytes": 549,
+    "sha256": "9357a2a700f48cc9e03c371831a2803f5dab13fec412a2daaeca4bacb2a279ba"
+  },
+  "preflight/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "preflight/failure.json": {
+    "bytes": 58,
+    "sha256": "f523d0387f9bf050fd07a73c373198dc68f42b819746cfb38de48846dddbbf22"
+  },
+  "preflight/kernel-notes.command.json": {
+    "bytes": 282,
+    "sha256": "a00fc9c1936b7551adcdd6ae85ed33f6f2f63c776c4aa6c8bda7f54ab4d2766a"
+  },
+  "preflight/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "preflight/production-profile.command.json": {
+    "bytes": 407,
+    "sha256": "586cf6eafabba3d16f523b5a95b76b766ec5b31af250c9d03c444b921d6dfbaf"
+  },
+  "preflight/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "preflight/production-state.json": {
+    "bytes": 1345,
+    "sha256": "7e3bc29f3826b69219a9d542aef47f3f7b7656629dc315da9aef97e99d1d486b"
+  },
+  "preflight/splash-region-base64.command.json": {
+    "bytes": 325,
+    "sha256": "8e9ce0304f3522eb303d1ea49f6ea81a90bacf0a321942c445a4a2a594bd3ce2"
+  },
+  "preflight/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "preflight/systemd-classification.json": {
+    "bytes": 219,
+    "sha256": "4e5b545366c72675af60515f5cc3c1d68ca4a6f07635a2d68527c07a209cb85d"
+  },
+  "preflight/systemd-failed.command.json": {
+    "bytes": 304,
+    "sha256": "694ea24de839ece187594bc30e57870a7b00335dfa51d32b63d61544a6becb5f"
+  },
+  "preflight/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/systemd-failed.txt": {
+    "bytes": 64,
+    "sha256": "d025709afeb050a5d80b9f4bd8a6549232bd1253b8e35df2bf8724a5fe06e94a"
+  },
+  "preflight/uname.command.json": {
+    "bytes": 263,
+    "sha256": "d32a98c62e85384db683acd38fa2e438ef2dee6d9d3794528cdc327f888ab90a"
+  },
+  "preflight/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "preflight/upower-config.command.json": {
+    "bytes": 297,
+    "sha256": "9647636aa1eb04d1f5ccb9149857c0c6157f9b791cfbec5a8315baa6e92fb747"
+  },
+  "preflight/upower-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/upower-config.txt": {
+    "bytes": 28,
+    "sha256": "6361a053d1f58b463c315bbadcefe942fe303e86d049cd62fdd25bc789c714f4"
+  },
+  "preflight/upower-properties.command.json": {
+    "bytes": 328,
+    "sha256": "8b7a3a927c283cce2f76e4d868ba23353a5d557a9208635a7c241e5508925c14"
+  },
+  "preflight/upower-properties.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/upower-properties.txt": {
+    "bytes": 53,
+    "sha256": "0b6a6299ad30a3910d54eab58f251c342bddff71c310208fb5de9c5c3b2fd6c1"
+  },
+  "preflight/upower-unit-sha256.command.json": {
+    "bytes": 303,
+    "sha256": "4e7656588f169f8e0108de07dbac8fb1d15e72f0e6c1e72967378d8e3e13d5a2"
+  },
+  "preflight/upower-unit-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/upower-unit-sha256.txt": {
+    "bytes": 105,
+    "sha256": "834c63f3e3622e2131d3e3bbca4ba0ef5cbe5a8ed7bc9a3185f2bf80c26b208b"
+  },
+  "preflight/uptime.command.json": {
+    "bytes": 271,
+    "sha256": "172958b1e97206535c8aafe64939e6027734e895b521ed0832e22d351491fa88"
+  },
+  "preflight/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/uptime.txt": {
+    "bytes": 17,
+    "sha256": "82b4a70a948488f5fd3535904728101f197d3b301df6a662b517fa7db4cdae39"
+  },
+  "preflight/usb-state.command.json": {
+    "bytes": 424,
+    "sha256": "e5d0d24cc430fa7a68f79e0a1442b49ded16dbfb5efabcc5e3ae82f9ad2841ec"
+  },
+  "preflight/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "preflight-verified/adb-state.command.json": {
+    "bytes": 208,
+    "sha256": "a3a124a6b2481656327998a9e715aea06ca701d138de884f55e8182cf465df50"
+  },
+  "preflight-verified/adb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/adb-state.txt": {
+    "bytes": 75,
+    "sha256": "21fe6eb8d87876f7e9b15089ddfb0d0ea83bb329e64735e999cdf1be0e96f022"
+  },
+  "preflight-verified/backup-module-hashes.command.json": {
+    "bytes": 328,
+    "sha256": "2039806e3d20a7e1956424f0633047886ce2a0771e6643d44fe515ffdf831ed5"
+  },
+  "preflight-verified/backup-module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/backup-module-hashes.txt": {
+    "bytes": 26743,
+    "sha256": "600b807ed051c928d2b0950eabfb881262df3a922625041dbedbabe49a548df3"
+  },
+  "preflight-verified/bluetooth-health.json": {
+    "bytes": 275,
+    "sha256": "77f1f8f52c3cf9ade42b920471843442273a80a0bb1d2bcf2b1aafa40e85fc07"
+  },
+  "preflight-verified/bluetooth-state.command.json": {
+    "bytes": 608,
+    "sha256": "cd523ffb45788ef57f10518c57e90780a08e692c92707dfe413ad184f68f13d4"
+  },
+  "preflight-verified/bluetooth-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/bluetooth-state.txt": {
+    "bytes": 1412,
+    "sha256": "592dde702ebe03965f0945cfadd8653492b7ca8464028c256170551fddb48da3"
+  },
+  "preflight-verified/boot-history.command.json": {
+    "bytes": 289,
+    "sha256": "644c33a2bebf48937cd2204f16095514e20e59ad0b6dcc46a2069e69d0671fb4"
+  },
+  "preflight-verified/boot-history.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/boot-history.txt": {
+    "bytes": 18407,
+    "sha256": "5c5c3baf46abe09aea905cf11fc859003787fb107bdad3703ea8bbe4db4e8569"
+  },
+  "preflight-verified/boot-id-confirm.command.json": {
+    "bytes": 290,
+    "sha256": "950f5015fd10f19e7d37eeb924abdefc222e09f156cf57918bab938d1f3ead87"
+  },
+  "preflight-verified/boot-id-confirm.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/boot-id-confirm.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight-verified/boot-id.command.json": {
+    "bytes": 290,
+    "sha256": "b9241ed87b487856d97fcc8464998a895a96f2b4fec939ebdd9ad6ab3e01dd15"
+  },
+  "preflight-verified/boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight-verified/cmdline.command.json": {
+    "bytes": 272,
+    "sha256": "df8539453c7391d445c458f69dcb1ae43f80db8776d798b581e8e8121c210a74"
+  },
+  "preflight-verified/cmdline.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/cmdline.txt": {
+    "bytes": 1156,
+    "sha256": "27480275e33540f2b54685384b35694f9a8fb792f72fd9777d7f883403d072f4"
+  },
+  "preflight-verified/config-sha256.command.json": {
+    "bytes": 287,
+    "sha256": "900c33637ab894c969b5c07cd25543d02d6c33f51543bfdc56ffb947f5e0903c"
+  },
+  "preflight-verified/config-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/config-sha256.txt": {
+    "bytes": 68,
+    "sha256": "d7a68a6b1248543aedaeecaad06c54e95e91583e8658194f995aa22b8025984d"
+  },
+  "preflight-verified/dcc-state.command.json": {
+    "bytes": 549,
+    "sha256": "3302c6c02a9b9734470322ca12d965f70f46900f505f2961d1ea24d54675123e"
+  },
+  "preflight-verified/dcc-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/dcc-state.txt": {
+    "bytes": 46,
+    "sha256": "7a5117bc4618ce4f12cc56e9d879c6b8d7c218968378e3d6a5fe15880780ee5f"
+  },
+  "preflight-verified/embedded-config.command.json": {
+    "bytes": 275,
+    "sha256": "8171b35db9e66d015d57c21073787265629d372ffb3ed3424868d3bb2ac70f75"
+  },
+  "preflight-verified/embedded-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/embedded-config.txt": {
+    "bytes": 240870,
+    "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722"
+  },
+  "preflight-verified/end-boot-id.command.json": {
+    "bytes": 290,
+    "sha256": "0e095cbe2de244fdb9aca2c03b8f562d7dd041393f6997dceede7b202f5ef4fc"
+  },
+  "preflight-verified/end-boot-id.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/end-boot-id.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight-verified/kernel-journal-json.command.json": {
+    "bytes": 290,
+    "sha256": "d0420c97299425aebd25eb1a02a5bb7ccdefe90108a32ae82e33ee11d7b5ecd6"
+  },
+  "preflight-verified/kernel-journal-json.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/kernel-journal-json.txt": {
+    "bytes": 763905,
+    "sha256": "8a1a107b27954fb15bb5a096f484f568aa6bd986f82fb6efb2e6d84d94393a0c"
+  },
+  "preflight-verified/kernel-journal.command.json": {
+    "bytes": 301,
+    "sha256": "84dd259bef04dd5d0e7558815a9bbb76af4262ed4fc48549d8d1bb55f20bf0a2"
+  },
+  "preflight-verified/kernel-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/kernel-journal.txt": {
+    "bytes": 105988,
+    "sha256": "5c522c8c2bb424bb88ee783bfeb05f8497ec92678cb96b727595344734df49f4"
+  },
+  "preflight-verified/kernel-notes.bin": {
+    "bytes": 84,
+    "sha256": "fc35e05b1f8ddaf38faf228cd4aa7f02408e15d92beb908077c979536f99f0ed"
+  },
+  "preflight-verified/kernel-notes.command.json": {
+    "bytes": 282,
+    "sha256": "7ca5816889f973809feae5e77e0f30ec8bf2c03b37c64ad57100373943d49c0c"
+  },
+  "preflight-verified/kernel-notes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/kernel-notes.txt": {
+    "bytes": 84,
+    "sha256": "6a4a3addc1e27e1df6b73c0d7a8041321a31833bc599523b117e023a39bad809"
+  },
+  "preflight-verified/kernel-scan.json": {
+    "bytes": 746,
+    "sha256": "fa4fe968c4277e03f45f475dc93cfdb1c414f3bc6d703e9c607ab9607a86bfc7"
+  },
+  "preflight-verified/module-directories.command.json": {
+    "bytes": 303,
+    "sha256": "d464dbb675a4cce254d1dbfff4d2823b22bef26d4d8d705f606851e96e725fc6"
+  },
+  "preflight-verified/module-directories.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/module-directories.txt": {
+    "bytes": 99,
+    "sha256": "0d906c83385bc11808061d482d1afa3bf2aa9e9b35e2abe1504e167890a0a8f3"
+  },
+  "preflight-verified/module-hashes.command.json": {
+    "bytes": 330,
+    "sha256": "0316261c80f0b4e1c76b8db2d56100c1121961b204556d1ca2b8b0cd4a034f9e"
+  },
+  "preflight-verified/module-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/module-hashes.txt": {
+    "bytes": 27105,
+    "sha256": "6216ca25b3f23244b96d3d52dc86d1ab05b5d654bcd3d6d655787b33b8019c62"
+  },
+  "preflight-verified/ncm-authenticated-ssh.command.json": {
+    "bytes": 245,
+    "sha256": "a83d50f356e3b16aa6d03ae345e2e23811e14fa3d3fea9a36b8f37977a2884e1"
+  },
+  "preflight-verified/ncm-authenticated-ssh.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/ncm-authenticated-ssh.txt": {
+    "bytes": 37,
+    "sha256": "4ad6a3b45787031af6aeece4cec311be8cbb388a75cc0b1621a15382ca7f8cb2"
+  },
+  "preflight-verified/notes-base64.command.json": {
+    "bytes": 279,
+    "sha256": "135c1a31f8fc0a7db044b8a2d0951c0e2bbe804db3a17775afecf104cf091dd3"
+  },
+  "preflight-verified/notes-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/notes-base64.txt": {
+    "bytes": 114,
+    "sha256": "85e3e25b2cd7eb3d89f7bcc3bb718a2d7950add80e5a400ab45339a9d539c277"
+  },
+  "preflight-verified/original-gts9-adbd.service": {
+    "bytes": 1166,
+    "sha256": "9035c0d9e5253d4ca9582ae80db91ae8867d20e80e24e46b104304e39dcd9de3"
+  },
+  "preflight-verified/original-userspace.command.json": {
+    "bytes": 608,
+    "sha256": "4a3b242fac2a3f7cdc4c4f444ec3c0a73e9e0892b99282abcba687b9490015c3"
+  },
+  "preflight-verified/original-userspace.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/original-userspace.txt": {
+    "bytes": 1905,
+    "sha256": "6bba17bdaee70b0a734be4cce5162931d83a69f3ef1df25dda91afab6b5660d8"
+  },
+  "preflight-verified/partitions.command.json": {
+    "bytes": 348,
+    "sha256": "49c79fd8419dac15c814523324f4a9d28396636ee181feb60626b514adc1f874"
+  },
+  "preflight-verified/partitions.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/partitions.txt": {
+    "bytes": 484,
+    "sha256": "ee354f258e4fd54a11217375573a9c677260ed7ae7c1f0f250a5375416e08142"
+  },
+  "preflight-verified/production-profile.command.json": {
+    "bytes": 407,
+    "sha256": "9f8cb3734544740229429d774244b1a42b7ced391e2d70b2288bb8a39a8ea736"
+  },
+  "preflight-verified/production-profile.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/production-profile.txt": {
+    "bytes": 10,
+    "sha256": "aeec6cd696078c273d36ddb33500d5af1aeac51b1b65a725363f3ae5728dd8c6"
+  },
+  "preflight-verified/production-state.json": {
+    "bytes": 1345,
+    "sha256": "90970aa6d06c0014a96208dd49c8b242d1452c87f133b03176cccd6394a8691e"
+  },
+  "preflight-verified/protected-settings-hashes.command.json": {
+    "bytes": 728,
+    "sha256": "66c68c8e4ee5e2fd8584b1e3b2b9572ca8f04399e18298e016112cbae8ecf225"
+  },
+  "preflight-verified/protected-settings-hashes.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/protected-settings-hashes.txt": {
+    "bytes": 1933,
+    "sha256": "b1073564f14e541c24562955c7ed5f56cf781bbb1ec2610a4c1f14d25ca3b511"
+  },
+  "preflight-verified/splash-region-base64.command.json": {
+    "bytes": 325,
+    "sha256": "ae6e6e1c6096a71419ae057641dc99ce3d6e112d80356d2c176f0f25db1fd545"
+  },
+  "preflight-verified/splash-region-base64.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/splash-region-base64.txt": {
+    "bytes": 25,
+    "sha256": "2c19aee0d0d7413cfb93bda70398db9f876b62fb1ad0736f33bb867424281427"
+  },
+  "preflight-verified/summary.json": {
+    "bytes": 1758,
+    "sha256": "5f236b8693d15d119e8b98cec56fc05df3fb5bde704086f8103df85b514f0db5"
+  },
+  "preflight-verified/supplies.command.json": {
+    "bytes": 351,
+    "sha256": "0f43ffdfcc2a730acf305b99734cf5ea5cd21d57244e354a4982569ea1e589d5"
+  },
+  "preflight-verified/supplies.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/supplies.txt": {
+    "bytes": 998,
+    "sha256": "ab8400318e79d3beaf42454d2e0be8657aeeb21149e16e0adc03c7887c7b74e7"
+  },
+  "preflight-verified/systemd-classification.json": {
+    "bytes": 219,
+    "sha256": "4e5b545366c72675af60515f5cc3c1d68ca4a6f07635a2d68527c07a209cb85d"
+  },
+  "preflight-verified/systemd-failed.command.json": {
+    "bytes": 304,
+    "sha256": "7baea830680a7b5dc9c3079bf018021abe841ebb6d3da08160cd75a1dbe18966"
+  },
+  "preflight-verified/systemd-failed.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/systemd-failed.txt": {
+    "bytes": 64,
+    "sha256": "d025709afeb050a5d80b9f4bd8a6549232bd1253b8e35df2bf8724a5fe06e94a"
+  },
+  "preflight-verified/uname.command.json": {
+    "bytes": 263,
+    "sha256": "5a0176bcdf5b16bf703ee6865e728a7dc5e707e337e7662d242a7e82ec09205a"
+  },
+  "preflight-verified/uname.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/uname.txt": {
+    "bytes": 98,
+    "sha256": "564e08a92ebc3c3c2210f81d0ffe0ea6b91594804c60d5a84ce7627236aa40e5"
+  },
+  "preflight-verified/upower-config.command.json": {
+    "bytes": 297,
+    "sha256": "cab95b2b3bebfe1f1e4e010c645604b872040ea7b47d002ead8e2aa79c2184a6"
+  },
+  "preflight-verified/upower-config.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/upower-config.txt": {
+    "bytes": 28,
+    "sha256": "6361a053d1f58b463c315bbadcefe942fe303e86d049cd62fdd25bc789c714f4"
+  },
+  "preflight-verified/upower-properties.command.json": {
+    "bytes": 328,
+    "sha256": "56da494f2d38ee5f0b00feb8dbc0347cb069fe561ef178a0bf33789b7fac7ebe"
+  },
+  "preflight-verified/upower-properties.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/upower-properties.txt": {
+    "bytes": 53,
+    "sha256": "0b6a6299ad30a3910d54eab58f251c342bddff71c310208fb5de9c5c3b2fd6c1"
+  },
+  "preflight-verified/upower-unit-sha256.command.json": {
+    "bytes": 303,
+    "sha256": "151b817d80ad32d5cc87e496b53bd7e983db02db97e33574913c3478cb870016"
+  },
+  "preflight-verified/upower-unit-sha256.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/upower-unit-sha256.txt": {
+    "bytes": 105,
+    "sha256": "834c63f3e3622e2131d3e3bbca4ba0ef5cbe5a8ed7bc9a3185f2bf80c26b208b"
+  },
+  "preflight-verified/uptime.command.json": {
+    "bytes": 271,
+    "sha256": "fd90ffb4c9d1d28ed175e40b14517cab8873c8dd2acd4e04555c515e1e866122"
+  },
+  "preflight-verified/uptime.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/uptime.txt": {
+    "bytes": 17,
+    "sha256": "5356b450107420f19bc12a5a86caf2f9a228eea6e6e205b2d3a001645515bb7b"
+  },
+  "preflight-verified/usb-adbd-journal.command.json": {
+    "bytes": 372,
+    "sha256": "8347ed4ee2f5d765aacf27817ab24f09470b87b0a9bc3cedac625206995b5ecb"
+  },
+  "preflight-verified/usb-adbd-journal.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/usb-adbd-journal.txt": {
+    "bytes": 3721,
+    "sha256": "08db5a6290fa15b0b3edf2a3d1c345e59eef6f33159bcd0d0861ac1c2bbac257"
+  },
+  "preflight-verified/usb-state.command.json": {
+    "bytes": 424,
+    "sha256": "56999388bdba8e201408f3f56f9d9197ec1e7f66196237d6997e502fbab3d09b"
+  },
+  "preflight-verified/usb-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/usb-state.txt": {
+    "bytes": 421,
+    "sha256": "613e077daf20d2fcd4f53a233a875643ee13884d8e6d3000fcb50265fc32db32"
+  },
+  "preflight-verified/userspace-state.command.json": {
+    "bytes": 634,
+    "sha256": "92953bc9835ca6a658238a1ba09348d6cdbd58ff34b3dad1882186de860adf78"
+  },
+  "preflight-verified/userspace-state.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/userspace-state.txt": {
+    "bytes": 1945,
+    "sha256": "d3536f25238a34680f0ac601c29d25ee220c65e5a8381c06ff4adf92652cee4b"
+  },
+  "preflight-verified/windows-ncm-banner.command.json": {
+    "bytes": 2552,
+    "sha256": "8a496fd88f47d9a14280301b0f39ac374d3b00034991ffca2a3ce219ece66576"
+  },
+  "preflight-verified/windows-ncm-banner.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/windows-ncm-banner.txt": {
+    "bytes": 230,
+    "sha256": "0a0f243631512e07deed8e8011f4e4e53831d0b49b4b286af0e7f1827effc0e6"
+  },
+  "preflight-verified/windows-pnp.command.json": {
+    "bytes": 885,
+    "sha256": "e5ccd888fc7da19acd8eadfc122e7ac0c587f8fd249d55ed3a03ee6cdb40a055"
+  },
+  "preflight-verified/windows-pnp.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preflight-verified/windows-pnp.txt": {
+    "bytes": 616,
+    "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+  },
+  "preparation/ABI_REVIEW.md": {
+    "bytes": 955,
+    "sha256": "1191f828ee71408d7761de06f0c0cd9c1ed3685281e8d2a95508369654bef0ae"
+  },
+  "preparation/SHA256.json": {
+    "bytes": 180,
+    "sha256": "d86ca0bfa3115863c8bab600bf33a4d1dc7ce78640e47e70c9d85efeb1819a79"
+  },
+  "preparation/qemu-version.txt": {
+    "bytes": 43,
+    "sha256": "f2c791913dd76d25aceb9b41e9aeaaf1de8982e85639fe4cd94b65bec0e16ebc"
+  },
+  "preparation/upower-identity.command.json": {
+    "bytes": 496,
+    "sha256": "2a0916c9aa1653c0bda85475895d7036f0c75c7e88c069b1d4e6e9ac0110c129"
+  },
+  "preparation/upower-identity.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "preparation/upower-identity.txt": {
+    "bytes": 1077,
+    "sha256": "868b56c1210efd917a0242c1761fb2123c2908dd4c7c9c5fac98aa16fad9844e"
+  },
+  "summary.json": {
+    "bytes": 629,
+    "sha256": "6dcc0dd34258d3859e1fcc2a86d0a451a48579fd8fd3dd22e5e87f1c1ffd0b83"
+  },
+  "tools/check-runtime.py": {
+    "bytes": 8036,
+    "sha256": "0e3f5b4aed235d5be5ffa42240b7797d1ea0ef2ab52e193137839fc227f173a0"
+  },
+  "tools/check.py": {
+    "bytes": 7995,
+    "sha256": "837f76338552fcd24ed9b144d31b759079f5d02f951a8467e15fb16a7430b195"
+  },
+  "tools/install-userspace.sh": {
+    "bytes": 2480,
+    "sha256": "1ca884ced61fb2e94b9a70e7571b3530fe8ffc88d4eb14919ebee8dd6cc8c5ea"
+  },
+  "tools/observe.py": {
+    "bytes": 1925,
+    "sha256": "ee0f96419230a2132b475a33b4d8c47fe4a3484bc74954980da6fdcd35ac5150"
+  },
+  "tools/post-stop.py": {
+    "bytes": 2274,
+    "sha256": "e01e8762a2152cd5e8c6e238193709451d82d510fd294217c63db75e5a51596e"
+  },
+  "tools/restore-userspace-next-boot.sh": {
+    "bytes": 771,
+    "sha256": "10b0627e1f25aa963940975f921080ee210cb5119e99b40894be73952af4a393"
+  },
+  "transfer/payload-manifest.json": {
+    "bytes": 298,
+    "sha256": "1d681a8a7a0fc96a4541c740ed43d74a9bf638362e8f0938698374b17d77bb2a"
+  }
+}

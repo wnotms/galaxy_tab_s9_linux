@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "scripts/gts9-ssh.sh",
+    "set -eu; printf \"connection=%s\\n\" \"$SSH_CONNECTION\"; for i in $(seq 1 50); do printf \"%s \" \"$i\"; cat /proc/uptime; test \"$(cat /proc/sys/kernel/random/boot_id)\" = fcb9a367-fa8e-43df-afb1-08db722ff2f1; test \"$(cat /sys/kernel/config/usb_gadget/gts9/UDC)\" = a600000.usb; sleep 1; done"
+  ],
+  "started_utc": "2026-09-28T13:52:55.845974+00:00",
+  "ended_utc": "2026-09-28T13:53:47.158784+00:00",
+  "status": 0
+}

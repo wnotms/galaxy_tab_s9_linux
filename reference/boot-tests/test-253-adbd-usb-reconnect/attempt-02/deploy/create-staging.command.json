@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "set -eu; test \"$(cat /proc/sys/kernel/random/boot_id)\" = fcb9a367-fa8e-43df-afb1-08db722ff2f1; test ! -e /var/lib/gts9/test253-adbd-reconnect; install -d -m 700 /var/lib/gts9/test253-adbd-reconnect"
+  ],
+  "started_utc": "2026-09-28T13:53:03.653556+00:00",
+  "ended_utc": "2026-09-28T13:53:04.011635+00:00",
+  "status": 0
+}

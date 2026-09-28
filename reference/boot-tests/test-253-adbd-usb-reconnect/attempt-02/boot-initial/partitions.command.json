@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/disk/by-partlabel/$n; done"
+  ],
+  "ended_utc": "2026-09-28T13:55:54.818145+00:00",
+  "started_utc": "2026-09-28T13:55:53.688854+00:00",
+  "status": 0
+}

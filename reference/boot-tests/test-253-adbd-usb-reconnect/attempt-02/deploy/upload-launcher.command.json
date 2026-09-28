@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "--push",
+    "rootfs-overlay/usr/libexec/gts9-adbd-run",
+    "/var/lib/gts9/test253-adbd-reconnect/gts9-adbd-run"
+  ],
+  "started_utc": "2026-09-28T13:53:16.818763+00:00",
+  "ended_utc": "2026-09-28T13:53:17.426255+00:00",
+  "status": 0
+}

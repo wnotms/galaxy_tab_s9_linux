@@ -1,0 +1,1 @@
+This capture checked boot uptime≥150s only; its single poll is not a150s elapsed observation. The required responsive window is recorded separately in boot/steady-observation/. It is not used as window acceptance.
