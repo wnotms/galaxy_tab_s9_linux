@@ -99,7 +99,7 @@ or restart any device service. Physical cable-reconnect acceptance is still
 pending: its first real cable cycle recovered ADB, but an observer's stale-UDC
 assumption prevented the registered recovery/window capture. Attempt03 is
 stopped, not passed. See [attempt03](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-03/RESULTS.md)
-and the unadopted [attempt04 observer proposal](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/README.md).
+and the owner-adopted [attempt04 observer registration](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/README.md).
 No device software/backend change is proposed for these fresh cable checks.
 
 ## Raising the console baud does nothing, and that was measured

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -eu\nsystemctl cat gts9-adbd.service\np=$(systemctl show -p MainPID --value gts9-adbd.service)\nprintf 'PID=%s\\n' \"$p\"\nreadlink /proc/$p/exe\nsha256sum /proc/$p/exe\nps -T -p \"$p\" -o pid,tid,comm,wchan:32\nprintf 'UDC='; cat /sys/kernel/config/usb_gadget/gts9/UDC\nfind /sys/kernel/config/usb_gadget -maxdepth 5 -type l -print\ncat /proc/self/mountinfo | grep usb-ffs\n"
+  ],
+  "ended_utc": "2026-09-28T14:50:55.990886+00:00",
+  "started_utc": "2026-09-28T14:50:55.544575+00:00",
+  "status": 0
+}

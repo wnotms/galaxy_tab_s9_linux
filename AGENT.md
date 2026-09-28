@@ -53,9 +53,11 @@ physical transition. Other faults/warnings still stop. The corrected host
 observer uses offline supply+native absence even with UDC configured,
 conservative command brackets, same boot/PID/hash, real USB/NCM<=60s and150s
 elapsed. No device software/backend change, restart/reset or reboot is allowed.
-Final local1124/1124 and focused33 tests pass. Adopted registration and a fresh
-full read-only preflight must be pushed before the first of three new cable
-cycles. None has run yet. Prior attempt03 remains stopped/unaccepted; keep old
+Final local1124/1124 and focused33 tests pass. Adopted registration was pushed at dcb46833. Fresh full read-only
+preflight-adopted passes exact boot/PID/hash, five partitions/config/notes/
+181+181 modules/DCC/protected settings and all channels, with no new fault/
+failed unit/Code43. Push this evidence, then start cycle01 capture before the
+owner action. None of the three new cycles has run yet. Prior attempt03 remains stopped/unaccepted; keep old
 outcomes/seals. PROPOSAL_SHA256 describes the unadopted phase at c90745c6.
 Read attempt04 README/policy/ADOPTION and fresh preflight before action.
 
