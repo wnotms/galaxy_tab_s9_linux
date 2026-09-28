@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "cat /proc/sys/kernel/random/boot_id; sha256sum /usr/lib/systemd/system/upower.service; systemctl show upower.service -p Result -p ExecMainStatus -p PrivateUsers; systemctl --failed --no-legend --plain --no-pager; ip -4 -br addr; cat /sys/class/power_supply/sm5714-battery/uevent"
+  ],
+  "started_utc": "2026-09-28T13:46:48.010905+00:00",
+  "ended_utc": "2026-09-28T13:46:49.164071+00:00",
+  "status": 0
+}

@@ -1,0 +1,45 @@
+# /usr/lib/systemd/system/gts9-adbd.service
+[Unit]
+Description=Android Debug Bridge daemon (gts9 fast debug channel)
+Documentation=file:/usr/share/doc/adbd/README.adbd
+After=local-fs.target gts9-usb-adb-prepare.service
+Wants=gts9-usb-adb-prepare.service
+
+# A UDC binds one gadget at a time. Do not use Debian's adbd-usb-gadget:
+# it creates a competing g1 gadget. Our prepare unit mounts FunctionFS inside
+# gts9, and gts9-usb-acm waits for descriptors before binding NCM plus ADB.
+# Type=simple deliberately allows NCM fallback if USB readiness never arrives.
+# Do not order this after network.target or gts9-usb-acm (dependency cycle).
+# There is no ExecStopPost that unbinds the shared network gadget.
+#
+# adbd logs "Failed to get adbd socket" and "socket unavailable, disabling user
+# prompts" on a non-Android system.  Both are expected: there is no Android
+# framework to ask, so no key prompt is ever shown.  It is not an error.
+
+[Service]
+Type=simple
+# Keep TCP ADB available even when USB endpoints exist.
+Environment=ADBD_PORT=5555
+ExecCondition=/usr/libexec/gts9-adbd-can-start
+ExecStart=/usr/lib/android-sdk/platform-tools/adbd
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
+PID=838
+/usr/lib/android-sdk/platform-tools/adbd
+3dee0a5b423dc76d8c1751d88e30ee5f7052f8cdff37dd64dac4956651631ad3  /proc/838/exe
+    PID     TID COMMAND         WCHAN
+    838     838 adbd            futex_wait
+    838     896 adbd auth       do_epoll_wait
+    838     897 usb ffs open    futex_wait
+    838     898 server socket   inet_csk_accept
+    838     899 server socket   vsock_accept
+    838     900 jdwp control    do_epoll_wait
+    838     901 UsbFfs-monitor  hrtimer_nanosleep
+UDC=a600000.usb
+/sys/kernel/config/usb_gadget/gts9/configs/c.1/ncm.usb0
+/sys/kernel/config/usb_gadget/gts9/configs/c.1/ffs.adb
+/sys/kernel/config/usb_gadget/gts9/os_desc/c.1
+63 26 0:39 / /dev/usb-ffs/adb rw,relatime shared:137 - functionfs adb rw

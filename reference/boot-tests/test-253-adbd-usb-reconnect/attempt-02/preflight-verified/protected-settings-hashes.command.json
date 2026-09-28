@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -eu\nfor f in /etc/gts9-usb-net /etc/gts9-usb-adb /usr/libexec/gts9-adbd-can-start /usr/libexec/gts9-usb-adb-hold /usr/libexec/gts9-usb-adb-prepare /usr/libexec/gts9-usb-acm /usr/lib/systemd/system/gts9-usb-acm.service /usr/lib/systemd/system/gts9-usb-adb-hold.service /usr/lib/systemd/system/gts9-usb-adb-prepare.service /usr/lib/android-sdk/platform-tools/adbd /root/.ssh/authorized_keys; do sha256sum \"$f\"; done\nfind /etc/ssh -type f -exec sha256sum {} + | sort\n"
+  ],
+  "ended_utc": "2026-09-28T13:50:13.871045+00:00",
+  "started_utc": "2026-09-28T13:50:13.493075+00:00",
+  "status": 0
+}

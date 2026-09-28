@@ -16,12 +16,17 @@ userspace-only Debian adbd reconnect repair under
 is built and host tests pass (1080 full retained tests). Initial Test253
 preflight stopped on an existing UPower217/USER prerequisite failure:
 PrivateUsers=yes with CONFIG_USER_NS disabled. No Test253 device write/reboot
-or physical acceptance has occurred. Its attempt02 proposal is pending owner
-adoption and leaves this independently identified UPower issue unresolved. It preserves the packaged daemon, shared-gadget
+or physical acceptance has occurred. The owner subsequently adopted attempt02 ("继续修复adb吧"). Its separately
+recorded registration recognizes only the exact existing UPower217/USER
+prerequisite failure and leaves this independent issue unresolved. No device
+write/reboot has occurred yet. It preserves the packaged daemon, shared-gadget
 restart guard/holder and NCM/SSH/kernel/charge configuration. Commit/push
 registration and pass exact Test252-candidate read-only preflight before staging
-the optional daemon/launcher/ExecStart for one ordinary next boot. Follow the
-registered reconnect gates; Test252 remains stopped and Stage2/3 do not start.
+the optional daemon/launcher/ExecStart for one ordinary next boot. Attempt02 exact-candidate full preflight passed with this explicitly recorded
+existing failure; source-bound NCM/Wi-Fi SSH work, native ADB offline is the
+repair target, DCC absent, no kernel fault/Code43. Final local regression passed
+1088 retained tests. Follow the registered reconnect gates; Test252 remains
+stopped and Stage2/3 do not start.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

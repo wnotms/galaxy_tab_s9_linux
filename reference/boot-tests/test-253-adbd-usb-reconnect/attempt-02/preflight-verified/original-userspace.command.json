@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "sha256sum /usr/lib/systemd/system/gts9-adbd.service /usr/lib/android-sdk/platform-tools/adbd; stat -c \"%a %u %g %n\" /usr/lib/systemd/system/gts9-adbd.service; printf \"BEGIN_SERVICE\\n\"; base64 /usr/lib/systemd/system/gts9-adbd.service; printf \"END_SERVICE\\n\"; test ! -e /usr/libexec/gts9-adbd-run; test ! -e /usr/local/libexec/gts9-adbd-reconnect; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "started_utc": "2026-09-28T13:50:52.542415+00:00",
+  "ended_utc": "2026-09-28T13:50:53.622818+00:00",
+  "status": 0
+}

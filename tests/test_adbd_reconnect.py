@@ -1,5 +1,6 @@
 """Execute patched Debian adbd methods against real threads and owned fds."""
 import os
+import sys
 import json
 import hashlib
 from pathlib import Path
@@ -10,6 +11,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / 'userspace/adbd/source-baseline'
+sys.path.insert(0, str(ROOT/'scripts'))
 
 
 def function(source, signature):
@@ -276,3 +278,35 @@ class AdbdReconnectTests(unittest.TestCase):
                          GTS9_ADBD_PACKAGED_BINARY=str(root/'package')), capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(result.stdout.strip(), ('fixed' if fixed else 'package') + ':--version')
+
+
+class ExistingUpowerGateTests(unittest.TestCase):
+    def classify(self, failed=None, **changes):
+        import sys
+        sys.path.insert(0, str(ROOT/'scripts'))
+        from adbd_reconnect_evidence import classify_failed_units, FAILED_UNIT, UPOWER_UNIT_SHA256
+        args = dict(failed=FAILED_UNIT if failed is None else failed,
+                    properties='Result=exit-code\nExecMainStatus=217\nPrivateUsers=yes\n',
+                    unit_sha256=UPOWER_UNIT_SHA256, config='# CONFIG_USER_NS is not set\n')
+        args.update(changes)
+        return classify_failed_units(**args)
+
+    def test_recognized_existing_upower_failure(self):
+        self.assertTrue(self.classify()['upower_unresolved'])
+    def test_no_failed_units_is_allowed(self):
+        self.assertEqual(self.classify('')['failed_units'], [])
+    def test_new_failed_unit_stops(self):
+        with self.assertRaises(ValueError): self.classify('ssh.service loaded failed failed SSH')
+    def test_changed_upower_exit_stops(self):
+        with self.assertRaises(ValueError): self.classify(properties='Result=exit-code\nExecMainStatus=1\nPrivateUsers=yes\n')
+    def test_changed_unit_hash_stops(self):
+        with self.assertRaises(ValueError): self.classify(unit_sha256='0'*64)
+    def test_changed_namespace_prerequisite_stops(self):
+        with self.assertRaises(ValueError): self.classify(config='CONFIG_USER_NS=y\n')
+
+    def test_adb_crlf_and_ssh_lf_cmdlines_match(self):
+        from adbd_reconnect_evidence import same_cmdline
+        self.assertTrue(same_cmdline(b'console=tty0\n', b'console=tty0\r\n'))
+    def test_changed_cmdline_stops(self):
+        from adbd_reconnect_evidence import same_cmdline
+        self.assertFalse(same_cmdline(b'console=tty0 panic=0\n', b'console=tty0 panic=10\r\n'))
