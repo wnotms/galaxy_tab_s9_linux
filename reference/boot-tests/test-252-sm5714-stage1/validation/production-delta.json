@@ -1,0 +1,30 @@
+{
+  "baseline_dtb_sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+  "config_delta": {
+    "CONFIG_BATTERY_SM5714": [
+      null,
+      "y"
+    ],
+    "CONFIG_QCOM_SPMI_ADC5_GEN3": [
+      "n",
+      "y"
+    ]
+  },
+  "dcc_absent": true,
+  "dtb_sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+  "dtb_unchanged": true,
+  "expected_config_delta": {
+    "CONFIG_BATTERY_SM5714": [
+      null,
+      "y"
+    ],
+    "CONFIG_QCOM_SPMI_ADC5_GEN3": [
+      "n",
+      "y"
+    ]
+  },
+  "module_trees": 1,
+  "modules_dep_present": true,
+  "sm5714_built_in": true,
+  "valid": true
+}

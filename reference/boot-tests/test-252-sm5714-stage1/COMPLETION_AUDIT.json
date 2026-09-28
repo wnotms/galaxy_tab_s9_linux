@@ -1,0 +1,53 @@
+{
+  "battery_design_uah": 8160000,
+  "battery_typical_mah": 8400,
+  "bundle_validation_exit_code": 0,
+  "candidate_vendor_init_dtbo_match_accepted_device": true,
+  "dcc_absent_in_config_and_symbols": true,
+  "depmod_stderr_bytes": 0,
+  "device_partitions_written": [],
+  "dt_schema_clean": false,
+  "dt_schema_command_exit_code": 0,
+  "dtb_unchanged": true,
+  "dts_source_changed": false,
+  "embedded_config_matches": true,
+  "exact_config_delta": {
+    "CONFIG_BATTERY_SM5714": [
+      null,
+      "y"
+    ],
+    "CONFIG_QCOM_SPMI_ADC5_GEN3": [
+      "n",
+      "y"
+    ]
+  },
+  "float_uv": 4440000,
+  "generated_vbmeta_deployment_forbidden": true,
+  "generated_vbmeta_matches_device": false,
+  "hardware_no_damage_guarantee": false,
+  "host_tests": {
+    "elapsed_s": 71.153,
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "skipped": 0,
+    "tests_run": 1067
+  },
+  "identical_conversion_helpers": 8,
+  "kernel_and_modules_build_exit_code": 0,
+  "kernel_module_count": 167,
+  "module_archive_verified_files": 181,
+  "module_file_count": 181,
+  "physical_test_executed": false,
+  "provider_audit_unknown": 0,
+  "provider_known_gaps_remaining": 42,
+  "purpose": "Stage1 host candidate completion audit",
+  "retained_schema_diagnostics": 51,
+  "rollback_executed": false,
+  "same_model_files_checked": 8,
+  "software_baseline_changed_on_device": false,
+  "stage0_audit": true,
+  "stage2_implemented": false,
+  "stage3_implemented": false,
+  "unexpected_config_delta": {}
+}

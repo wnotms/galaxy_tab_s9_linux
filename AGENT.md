@@ -211,6 +211,22 @@ passed; offline evidence replay passed. See continuation `RESULTS.md`,
 The earlier Windows probe timeout is unresolved. No Test251 was created or
 run; cold/battery-only/Type-C power paths remain untested.
 
+Stage0 X710 battery/charging audit is recorded in
+`docs/X710_BATTERY_CHARGING_PORT_PLAN.md`. Stage1 is a **host-built, unflashed
+SM5714 candidate**, independently registered under
+`reference/boot-tests/test-252-sm5714-stage1/`. It adds the battery/ordinary
+switching-charger driver and mandatory PMK8550 ADC5 Gen3 pack-thermistor
+provider; the exact resolved delta is BATTERY_SM5714 absent -> y and
+QCOM_SPMI_ADC5_GEN3 n -> y. The DTB, DCC-off CPU profile, cmdline, rootfs and
+USB gadget remain unchanged. Source comparison is pinned to the same-model
+`ab123e7d1dbc0cbcd35661f9761197e977b15aa9`; 8400mAh is typical capacity,
+8160mAh is rated minimum and remains the design metadata. Read its
+BUILD_RESULTS/SAFETY_REVIEW/ARTIFACTS before later deployment. No candidate
+boot/probe/charge or new physical acceptance is claimed. Do not flash without
+a new explicit owner request and fresh baseline preflight. Stage2 TCPM and
+Stage3 SM5440 are not implemented and require the earlier stages' physical
+acceptance. Installed production remains Test249 as accepted by Test250.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

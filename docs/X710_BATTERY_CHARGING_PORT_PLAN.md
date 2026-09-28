@@ -46,9 +46,9 @@ Samsung's full vendor battery policy also applies cable, ageing and other protec
 
 ## Kconfig and build gates
 
-Test249 resolved config (`out/kernel-no-dcc-production/config`) has `CONFIG_POWER_SUPPLY=y`, `CONFIG_IIO=y`, `CONFIG_TYPEC=y`, `CONFIG_TYPEC_TCPM=y`, `CONFIG_USB_ROLE_SWITCH=y`, and `# CONFIG_HVC_DCC is not set`. It has no `BATTERY_SM5714`, `TYPEC_SM5714` or `CHARGER_SM5440_DIRECT` because Kconfig definitions are missing. The same-model `prepare.sh` defines `BATTERY_SM5714` with `depends on I2C && IIO`, `TYPEC_SM5714` with `depends on I2C && TYPEC_TCPM && BATTERY_SM5714`, and `CHARGER_SM5440_DIRECT` with `depends on I2C && BATTERY_SM5714`. Stage 1 adds **only** `CONFIG_BATTERY_SM5714=y` and its Kbuild hook. Stage 2 may add TCPC/TCPM transport. Stage 3 may add direct charger, default and runtime OFF. The resolved `.config`, not just the fragment, is the gate.
+Test249 resolved config (`out/kernel-no-dcc-production/config`) has `CONFIG_POWER_SUPPLY=y`, `CONFIG_IIO=y`, `CONFIG_TYPEC=y`, `CONFIG_TYPEC_TCPM=y`, `CONFIG_USB_ROLE_SWITCH=y`, and `# CONFIG_HVC_DCC is not set`. It has no `BATTERY_SM5714`, `TYPEC_SM5714` or `CHARGER_SM5440_DIRECT` because Kconfig definitions are missing. The same-model `prepare.sh` defines `BATTERY_SM5714` with `depends on I2C && IIO`, `TYPEC_SM5714` with `depends on I2C && TYPEC_TCPM && BATTERY_SM5714`, and `CHARGER_SM5440_DIRECT` with `depends on I2C && BATTERY_SM5714`. Stage 1 adds `CONFIG_BATTERY_SM5714=y` and its Kbuild hook, plus the mandatory existing-pack-thermistor provider `CONFIG_QCOM_SPMI_ADC5_GEN3=y`. The accepted config had that provider disabled; IIO alone cannot supply the pack temperature. The new Kconfig also depends on OF and ADC5 Gen3 to prevent an unprotected charger build. Stage 2 may add TCPC/TCPM transport. Stage 3 may add direct charger, default and runtime OFF. The resolved `.config`, not just the fragment, is the gate.
 
-The expected Stage 1 config delta is `CONFIG_BATTERY_SM5714=y` and any narrowly justified dependency resolution only. `CONFIG_HVC_DCC=n` and all Test249/250 CPU diagnostic exclusions must remain. Compare exact old/new resolved configs; any unexpected delta forbids hardware testing. Build kernel **and** modules, DTB, DT validation available in this tree, depmod and provider audit. No flash during candidate preparation.
+The resolved Stage 1 config delta is exactly `CONFIG_BATTERY_SM5714` absent -> `y` and `CONFIG_QCOM_SPMI_ADC5_GEN3=n -> y`. `CONFIG_HVC_DCC=n` and all Test249/250 CPU diagnostic exclusions remain. `scripts/verify-sm5714-stage1.py` rejects any other delta or a changed DTB. Build kernel **and** modules, DTB, available DT schema validation, depmod and provider audit. No flash during candidate preparation.
 
 ## Stages, risks, acceptance and rollback
 
@@ -60,3 +60,25 @@ The expected Stage 1 config delta is `CONFIG_BATTERY_SM5714=y` and any narrowly 
 | 3: optional SM5440 PPS | Separate `sm5440_direct.c`, guarded Kconfig, pump OFF by default, stock-verified limits and fault/temperature recording. Risks: pack overvoltage/current, thermal shutdown, reverse blocking, VBUS/IBUS faults. | Only after Stage 1 and 2 acceptance. First prove the OFF state, then bounded opt-in testing with V/I/temp/SOC/PD logs and stop on any protection trip. Roll back matched Stage 2 image/modules and leave pump OFF. No Stage 3 code or test is part of the present candidate. |
 
 The source port's ~15 W switching and ~23 W PPS measurements are sanity references, not acceptance results or a reason to increase this device's limits. The battery-only and plug/unplug sequence requires user-authorized device handling; this work ends at a buildable, unflashed Stage 1 candidate.
+
+## Stage 1 implementation review
+
+The candidate is registered separately as
+`reference/boot-tests/test-252-sm5714-stage1/README.md`; no Test251 cold/power
+test or Stage 1 physical run has occurred. Its safety review compares the local
+same-model checkout and X710 stock sources. Gauge and current/float conversion
+helpers remain identical to the pinned reference. Charger takeover first opens
+Q4; every reconfiguration restores and verifies the 4.44 V float field while
+preserving the upper register bits. Plain BC1.2 limits remain the reference
+500/1500/1800 mA input classes; unknown/proprietary classifications stay500 mA.
+
+The candidate uses a more conservative first-stage thermal policy than the
+reference: stop below10°C, resume a cold stop at15°C, reduce to500 mA below18°C
+or from42°C, stop at50°C, and recover a hot stop only below46°C. An unavailable
+or implausible external pack sensor inhibits charging; no die-temperature
+fallback authorizes charge. Stock VBUS OVP and charger-watchdog expiry status
+also inhibit charging. Faults are retained rather than reset. No charger
+watchdog/protection register is disabled or reprogrammed. This is a bounded
+mainline policy, not the complete Samsung ageing/cable/thermal policy and not
+a claim of zero hardware risk. See Test252 `SAFETY_REVIEW.md` and
+`BUILD_RESULTS.md` for exact tests, identities and remaining limitations.

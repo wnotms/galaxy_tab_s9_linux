@@ -1,0 +1,442 @@
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+  SYNC    include/config/auto.conf
+  DTC [C] arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb
+usb-role-switch: size (4) error for type flag
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: / (qcom,kalama-mtp): False schema does not allow [[65544, 4]]
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: / (qcom,kalama-mtp): False schema does not allow [[536, 131072], [519, 131072], [519, 65536], [536, 65536]]
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: / (qcom,kalama-mtp): compatible: 'oneOf' conditional failed, one must be fixed:
+	['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550'] is too long
+	['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550'] is too short
+	'qcom,kalama-mtp' is not one of ['qcom,apq8016-sbc', 'schneider,apq8016-hmibsc']
+	'qcom,kalama-mtp' is not one of ['asus,sparrow', 'huawei,sturgeon', 'lg,lenok', 'samsung,matisse-wifi', 'samsung,milletwifi']
+	'qcom,kalama-mtp' is not one of ['asus,nexus7-flo', 'lg,nexus4-mako', 'sony,xperia-yuga', 'qcom,apq8064-cm-qs600', 'qcom,apq8064-ifc6410']
+	'qcom,kalama-mtp' is not one of ['qcom,apq8074-dragonboard']
+	'qcom,kalama-mtp' is not one of ['qcom,apq8060-dragonboard', 'qcom,msm8660-surf']
+	'qcom,kalama-mtp' is not one of ['qcom,apq8084-mtp', 'qcom,apq8084-sbc']
+	'qcom,kalama-mtp' is not one of ['qcom,eliza-mtp']
+	'qcom,kalama-mtp' is not one of ['qcom,glymur-crd']
+	'qcom,kalama-mtp' is not one of ['qcom,mahua-crd']
+	'qcom,kalama-mtp' is not one of ['fairphone,fp6', 'nothing,asteroids']
+	'qcom,kalama-mtp' is not one of ['microsoft,dempsey', 'microsoft,makepeace', 'microsoft,moneypenny', 'motorola,falcon', 'samsung,ms013g', 'samsung,s3ve3g']
+	'qcom,kalama-mtp' is not one of ['htc,memul', 'microsoft,superman-lte', 'microsoft,tesla', 'motorola,peregrine', 'samsung,matisselte']
+	'qcom,kalama-mtp' is not one of ['wingtech,wt82918hd']
+	'qcom,kalama-mtp' is not one of ['asus,z00t', 'huawei,kiwi', 'longcheer,l9100', 'samsung,a7', 'sony,kanuti-tulip', 'square,apq8039-t2', 'wingtech,wt82918', 'wingtech,wt82918hdhw39']
+	'qcom,kalama-mtp' is not one of ['sony,kugo-row', 'sony,suzu-row']
+	'qcom,kalama-mtp' is not one of ['qcom,msm8960-cdp', 'samsung,expressatt']
+	'qcom,kalama-mtp' is not one of ['sony,huashan']
+	'qcom,kalama-mtp' is not one of ['lge,hammerhead', 'samsung,hlte', 'sony,xperia-amami', 'sony,xperia-honami', 'sony,xperia-togari']
+	'qcom,kalama-mtp' is not one of ['fairphone,fp2', 'htc,m8', 'oneplus,bacon', 'samsung,klte', 'sony,xperia-aries', 'sony,xperia-castor', 'sony,xperia-leo']
+	'qcom,kalama-mtp' is not one of ['samsung,kltechn']
+	'qcom,kalama-mtp' is not one of ['longcheer,l9360']
+	'qcom,kalama-mtp' is not one of ['acer,a1-724', 'alcatel,idol347', 'asus,z00l', 'gplus,fl8005a', 'huawei,g7', 'lg,c50', 'lg,m216', 'longcheer,l8910', 'longcheer,l8150', 'motorola,harpia', 'motorola,osprey', 'motorola,surnia', 'qcom,msm8916-mtp', 'samsung,a3u-eur', 'samsung,a5u-eur', 'samsung,coreprimeltevzw', 'samsung,e5', 'samsung,e7', 'samsung,fortuna3g', 'samsung,gprimeltecan', 'samsung,grandmax', 'samsung,grandprimelte', 'samsung,gt510', 'samsung,gt58', 'samsung,j3ltetw', 'samsung,j5', 'samsung,j5x', 'samsung,rossa', 'samsung,serranove', 'thwc,uf896', 'thwc,ufi001c', 'wiko,chuppito', 'wingtech,wt86518', 'wingtech,wt86528', 'wingtech,wt88047', 'yiming,uz801-v3']
+	'qcom,kalama-mtp' is not one of ['xiaomi,riva', 'xiaomi,rolex', 'xiaomi,tiare']
+	'qcom,kalama-mtp' is not one of ['xiaomi,land']
+	'qcom,kalama-mtp' is not one of ['flipkart,rimob', 'motorola,potter', 'xiaomi,daisy', 'xiaomi,mido', 'xiaomi,tissot', 'xiaomi,vince']
+	'qcom,kalama-mtp' is not one of ['lg,bullhead', 'lg,h815', 'microsoft,talkman', 'xiaomi,libra']
+	'qcom,kalama-mtp' is not one of ['sony,karin_windy']
+	'qcom,kalama-mtp' is not one of ['huawei,angler', 'microsoft,cityman', 'sony,ivy-row', 'sony,karin-row', 'sony,satsuki-row', 'sony,sumire-row', 'sony,suzuran-row']
+	'qcom,kalama-mtp' is not one of ['arrow,apq8096-db820c', 'inforce,ifc6640']
+	'arrow,apq8096sg-db820c' was expected
+	'qcom,kalama-mtp' is not one of ['oneplus,oneplus3', 'oneplus,oneplus3t', 'qcom,msm8996-mtp', 'sony,dora-row', 'sony,kagura-row', 'sony,keyaki-row', 'xiaomi,gemini']
+	'qcom,kalama-mtp' is not one of ['xiaomi,natrium', 'xiaomi,scorpio']
+	'qcom,kalama-mtp' is not one of ['asus,novago-tp370ql', 'fxtec,pro1', 'hp,envy-x2', 'lenovo,miix-630', 'oneplus,cheeseburger', 'oneplus,dumpling', 'qcom,msm8998-mtp', 'sony,xperia-lilac', 'sony,xperia-maple', 'sony,xperia-poplar', 'xiaomi,sagit']
+	'qcom,kalama-mtp' is not one of ['8dev,jalapeno', 'alfa-network,ap120c-ac']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq4019-ap-dk01.1-c1', 'qcom,ipq4019-ap-dk04.1-c3', 'qcom,ipq4019-ap-dk07.1-c1', 'qcom,ipq4019-ap-dk07.1-c2', 'qcom,ipq4019-dk04.1-c1']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq5018-rdp432-c2', 'tplink,archer-ax55-v1']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq5210-rdp504']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq5332-ap-mi01.2', 'qcom,ipq5332-ap-mi01.3', 'qcom,ipq5332-ap-mi01.6', 'qcom,ipq5332-ap-mi01.9']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq5424-rdp466']
+	'qcom,kalama-mtp' is not one of ['mikrotik,rb3011', 'qcom,ipq8064-ap148']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq8074-hk01', 'qcom,ipq8074-hk10-c1', 'qcom,ipq8074-hk10-c2']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq9574-ap-al02-c2', 'qcom,ipq9574-ap-al02-c2-emmc', 'qcom,ipq9574-ap-al02-c6', 'qcom,ipq9574-ap-al02-c7', 'qcom,ipq9574-ap-al02-c7-emmc', 'qcom,ipq9574-ap-al02-c8', 'qcom,ipq9574-ap-al02-c9']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq9650-rdp488']
+	'qcom,kalama-mtp' is not one of ['qcom,kaanapali-mtp', 'qcom,kaanapali-qrd']
+	'swir,mangoh-green-wp8548' was expected
+	'qcom,kalama-mtp' is not one of ['arduino,imola', 'qcom,qrb2210-rb1']
+	'qcom,kalama-mtp' is not one of ['fairphone,fp5', 'particle,tachyon', 'qcom,qcm6490-idp', 'qcom,qcs6490-rb3gen2', 'radxa,dragon-q6a', 'shift,otter', 'thundercomm,minipc-g1iot', 'thundercomm,rubikpi3']
+	'qcom,kalama-mtp' is not one of ['qcom,qdu1000-idp', 'qcom,qdu1000-x100']
+	'qcom,kalama-mtp' is not one of ['qcom,qru1000-idp']
+	'qcom,kalama-mtp' is not one of ['qcom,qar2130p']
+	'qcom,kalama-mtp' is not one of ['acer,aspire1', 'ecs,liva-qc710', 'qcom,sc7180-idp']
+	'google,coachz-rev1' was expected
+	'google,coachz' was expected
+	'google,coachz-rev1-sku0' was expected
+	'google,coachz-sku0' was expected
+	'google,homestar-rev2' was expected
+	'google,homestar-rev3' was expected
+	'google,homestar' was expected
+	'google,kingoftown-rev0' was expected
+	'google,kingoftown' was expected
+	'google,lazor-rev0' was expected
+	'google,lazor-rev1' was expected
+	'google,lazor-rev3' was expected
+	'google,lazor-rev9' was expected
+	'google,lazor' was expected
+	'google,lazor-rev1-sku2' was expected
+	'google,lazor-rev3-sku2' was expected
+	'google,lazor-rev9-sku2' was expected
+	'google,lazor-sku2' was expected
+	'google,lazor-rev1-sku0' was expected
+	'google,lazor-rev3-sku0' was expected
+	'google,lazor-rev9-sku0' was expected
+	'google,lazor-sku0' was expected
+	'google,lazor-rev4-sku4' was expected
+	'google,lazor-rev9-sku4' was expected
+	'google,lazor-sku4' was expected
+	'google,lazor-rev4-sku5' was expected
+	'google,lazor-rev5-sku5' was expected
+	'google,lazor-rev9-sku6' was expected
+	'google,lazor-sku6' was expected
+	'google,mrbland-rev0-sku0' was expected
+	'google,mrbland-sku1536' was expected
+	'google,mrbland-rev0-sku16' was expected
+	'google,mrbland-sku1024' was expected
+	'google,pazquel-sku5' was expected
+	'google,pazquel-sku1' was expected
+	'google,pazquel-sku6' was expected
+	'google,pazquel-sku0' was expected
+	'google,pazquel-sku22' was expected
+	'google,pazquel-sku21' was expected
+	'google,pompom-rev1' was expected
+	'google,pompom-rev2' was expected
+	'google,pompom' was expected
+	'google,pompom-rev1-sku0' was expected
+	'google,pompom-rev2-sku0' was expected
+	'google,pompom-sku0' was expected
+	'google,quackingstick-sku1537' was expected
+	'google,quackingstick-sku1536' was expected
+	'google,trogdor' was expected
+	'google,trogdor-sku0' was expected
+	'google,wormdingler-rev0-sku16' was expected
+	'google,wormdingler-sku1024' was expected
+	'google,wormdingler-sku1025' was expected
+	'google,wormdingler-rev0-sku0' was expected
+	'google,wormdingler-sku0' was expected
+	'google,wormdingler-sku1' was expected
+	'qcom,sc7280-crd' was expected
+	'google,zoglin' was expected
+	'google,zoglin-sku1536' was expected
+	'qcom,sc7280-idp' was expected
+	'qcom,sc7280-idp2' was expected
+	'google,evoker' was expected
+	'google,evoker-sku512' was expected
+	'google,herobrine' was expected
+	'google,villager-rev0' was expected
+	'google,villager' was expected
+	'google,villager-sku512' was expected
+	'google,zombie' was expected
+	'google,zombie-sku512' was expected
+	'google,zombie-sku2' was expected
+	'google,zombie-sku514' was expected
+	'qcom,kalama-mtp' is not one of ['xiaomi,beryllium-ebbg', 'xiaomi,beryllium-tianma']
+	'qcom,kalama-mtp' is not one of ['lenovo,flex-5g', 'microsoft,surface-prox', 'qcom,sc8180x-primus']
+	'qcom,kalama-mtp' is not one of ['huawei,gaokun3', 'lenovo,thinkpad-x13s', 'microsoft,arcata', 'microsoft,blackrock', 'qcom,sc8280xp-crd', 'qcom,sc8280xp-qrd']
+	'qcom,kalama-mtp' is not one of ['lenovo,tbx605f', 'motorola,ali']
+	'qcom,kalama-mtp' is not one of ['sony,discovery-row', 'sony,kirin-row', 'sony,pioneer-row', 'sony,voyager-row']
+	'qcom,kalama-mtp' is not one of ['inforce,ifc6560']
+	'qcom,kalama-mtp' is not one of ['fairphone,fp3', 'motorola,ocean']
+	'qcom,kalama-mtp' is not one of ['sony,mermaid-row']
+	'qcom,kalama-mtp' is not one of ['xiaomi,lavender']
+	'qcom,kalama-mtp' is not one of ['google,sargo']
+	'qcom,kalama-mtp' is not one of ['google,bonito-tianma']
+	'qcom,kalama-mtp' is not one of ['qcom,sdx55-mtp', 'qcom,sdx55-telit-fn980-tlb', 'qcom,sdx55-t55']
+	'qcom,kalama-mtp' is not one of ['qcom,sdx65-mtp']
+	'qcom,kalama-mtp' is not one of ['qcom,sdx75-idp']
+	'qcom,kalama-mtp' is not one of ['qcom,ipq6018-cp01', 'qcom,ipq6018-cp01-c1']
+	'qcom,kalama-mtp' is not one of ['qcom,qcs404-evb-1000', 'qcom,qcs404-evb-4000']
+	'qcom,kalama-mtp' is not one of ['arduino,monza', 'qcom,monaco-evk', 'qcom,qcs8300-ride']
+	'qcom,kalama-mtp' is not one of ['qcom,qcs615-ride', 'qcom,talos-evk']
+	'qcom,kalama-mtp' is not one of ['qcom,sa8155p-adp']
+	'qcom,kalama-mtp' is not one of ['qcom,sa8295p-adp', 'qcom,sa8540p-ride']
+	'qcom,kalama-mtp' is not one of ['qcom,sa8775p-ride', 'qcom,sa8775p-ride-r3']
+	'qcom,kalama-mtp' is not one of ['qcom,lemans-evk', 'qcom,qcs9100-ride', 'qcom,qcs9100-ride-r3']
+	'qcom,kalama-mtp' is not one of ['google,blueline', 'google,crosshatch', 'huawei,planck', 'lenovo,yoga-c630', 'lg,judyln', 'lg,judyp', 'oneplus,enchilada', 'oneplus,fajita', 'qcom,sdm845-mtp', 'shift,axolotl', 'samsung,starqltechn', 'samsung,w737', 'sony,akari-row', 'sony,akatsuki-row', 'sony,apollo-row', 'thundercomm,db845c', 'xiaomi,polaris']
+	'qcom,kalama-mtp' is not one of ['oneplus,billie2']
+	'qcom,kalama-mtp' is not one of ['qcom,qrb4210-rb2']
+	'qcom,kalama-mtp' is not one of ['qcom,sm4450-qrd']
+	'qcom,kalama-mtp' is not one of ['fxtec,pro1x']
+	'qcom,kalama-mtp' is not one of ['lenovo,j606f']
+	'qcom,kalama-mtp' is not one of ['sony,pdx201', 'xiaomi,ginkgo', 'xiaomi,laurel-sprout', 'xiaomi,willow']
+	'qcom,kalama-mtp' is not one of ['sony,pdx213']
+	'qcom,kalama-mtp' is not one of ['sony,pdx225']
+	'qcom,kalama-mtp' is not one of ['xiaomi,curtana', 'xiaomi,joyeuse']
+	'qcom,kalama-mtp' is not one of ['google,sunfish']
+	'qcom,kalama-mtp' is not one of ['fairphone,fp4']
+	'qcom,kalama-mtp' is not one of ['motorola,dubai', 'nothing,spacewar']
+	'qcom,kalama-mtp' is not one of ['microsoft,surface-duo', 'qcom,sm8150-hdk', 'qcom,sm8150-mtp', 'sony,bahamut-generic', 'sony,griffin-generic']
+	'qcom,kalama-mtp' is not one of ['qcom,qrb5165-rb5', 'qcom,sm8250-hdk', 'qcom,sm8250-mtp', 'samsung,r8q', 'samsung,x1q', 'sony,pdx203-generic', 'sony,pdx206-generic', 'xiaomi,elish', 'xiaomi,pipa']
+	'qcom,kalama-mtp' is not one of ['microsoft,surface-duo2', 'qcom,sm8350-hdk', 'qcom,sm8350-mtp', 'sony,pdx214-generic', 'sony,pdx215-generic']
+	'qcom,kalama-mtp' is not one of ['qcom,sm8450-hdk', 'qcom,sm8450-qrd', 'samsung,r0q', 'sony,pdx223', 'sony,pdx224']
+	'qcom,kalama-mtp' is not one of ['qcom,sm8550-hdk', 'qcom,sm8550-mtp', 'qcom,sm8550-qrd', 'samsung,q5q', 'sony,pdx234']
+	'qcom,kalama-mtp' is not one of ['qcom,qcs8550-aim300-aiot']
+	'qcom,kalama-mtp' is not one of ['ayaneo,pocket-s2', 'qcom,sm8650-hdk', 'qcom,sm8650-mtp', 'qcom,sm8650-qrd']
+	'qcom,kalama-mtp' is not one of ['qcom,sm8750-mtp', 'qcom,sm8750-qrd']
+	'qcom,kalama-mtp' is not one of ['qcom,x1e001de-devkit']
+	'qcom,kalama-mtp' is not one of ['lenovo,thinkpad-t14s-lcd', 'lenovo,thinkpad-t14s-oled']
+	'qcom,kalama-mtp' is not one of ['medion,sprchrgd14s1', 'tuxedo,elite14gen1']
+	'microsoft,denali-lcd' was expected
+	'qcom,kalama-mtp' is not one of ['asus,vivobook-s15', 'asus,zenbook-a14-ux3407ra', 'dell,inspiron-14-plus-7441', 'dell,latitude-7455', 'dell,xps13-9345', 'hp,elitebook-ultra-g1q', 'hp,omnibook-x14', 'lenovo,ideacentre-mini-01q8x10', 'lenovo,yoga-slim7x', 'microsoft,romulus13', 'microsoft,romulus15', 'qcom,x1e80100-crd', 'qcom,x1e80100-qcp']
+	'qcom,kalama-mtp' is not one of ['qcom,hamoa-iot-evk']
+	'microsoft,denali-oled' was expected
+	'microsoft,surface-pro-12in' was expected
+	'qcom,kalama-mtp' is not one of ['qcom,purwa-iot-evk']
+	'qcom,kalama-mtp' is not one of ['asus,zenbook-a14-ux3407qa-lcd', 'asus,zenbook-a14-ux3407qa-oled']
+	'qcom,kalama-mtp' is not one of ['asus,vivobook-s15-x1p4', 'hp,omnibook-x14-fe1', 'lenovo,thinkbook-16', 'qcom,x1p42100-crd']
+	'qcom,apq8016' was expected
+	'qcom,apq8026' was expected
+	'qcom,apq8064' was expected
+	'qcom,apq8074' was expected
+	'qcom,msm8660' was expected
+	'qcom,apq8084' was expected
+	'qcom,eliza' was expected
+	'qcom,glymur' was expected
+	'qcom,mahua' was expected
+	'qcom,milos' was expected
+	'qcom,msm8226' was expected
+	'qcom,msm8926' was expected
+	'qcom,msm8929' was expected
+	'qcom,msm8939' was expected
+	'qcom,msm8956' was expected
+	'qcom,msm8960' was expected
+	'qcom,msm8960t' was expected
+	'qcom,msm8974' was expected
+	'qcom,msm8974pro' was expected
+	'samsung,klte' was expected
+	'qcom,msm8976' was expected
+	'qcom,msm8916' was expected
+	'qcom,msm8917' was expected
+	'qcom,msm8937' was expected
+	'qcom,msm8953' was expected
+	'qcom,msm8992' was expected
+	'qcom,apq8094' was expected
+	'qcom,msm8994' was expected
+	'qcom,apq8096-sbc' was expected
+	'arrow,apq8096-db820c' was expected
+	'qcom,msm8996' was expected
+	'qcom,msm8996pro' was expected
+	'qcom,msm8998' was expected
+	'qcom,ipq4018' was expected
+	'qcom,ipq4019' was expected
+	'qcom,ipq5018' was expected
+	'qcom,ipq5210' was expected
+	'qcom,ipq5332' was expected
+	'qcom,ipq5424' was expected
+	'qcom,ipq8064' was expected
+	'qcom,ipq8074' was expected
+	'qcom,ipq9574' was expected
+	'qcom,ipq9650' was expected
+	'qcom,kaanapali' was expected
+	'swir,wp8548' was expected
+	'qcom,qrb2210' was expected
+	'qcom,qcm6490' was expected
+	'qcom,qdu1000' was expected
+	'qcom,qru1000' was expected
+	'qcom,sar2130p' was expected
+	'qcom,sc7180' was expected
+	'google,coachz-rev2' was expected
+	'google,coachz-rev2-sku0' was expected
+	'google,homestar-rev23' was expected
+	'google,lazor-rev2' was expected
+	'google,lazor-rev4' was expected
+	'google,lazor-rev2-sku2' was expected
+	'google,lazor-rev4-sku2' was expected
+	'google,lazor-rev2-sku0' was expected
+	'google,lazor-rev4-sku0' was expected
+	'google,lazor-rev9-sku10' was expected
+	'google,lazor-sku10' was expected
+	'google,lazor-rev5-sku4' was expected
+	'google,lazor-rev9-sku15' was expected
+	'google,lazor-sku15' was expected
+	'google,lazor-rev5-sku6' was expected
+	'google,lazor-rev9-sku18' was expected
+	'google,lazor-sku18' was expected
+	'google,mrbland-sku768' was expected
+	'google,pazquel-sku4' was expected
+	'google,pazquel-sku2' was expected
+	'google,pazquel-sku20' was expected
+	'google,hoglin-rev3' was expected
+	'google,hoglin' was expected
+	'google,hoglin-sku1536' was expected
+	'google,senor' was expected
+	'google,piglin' was expected
+	'qcom,sc7280' was expected
+	'google,zombie-sku3' was expected
+	'xiaomi,beryllium' was expected
+	'qcom,sc8180x' was expected
+	'qcom,sc8280xp' was expected
+	'qcom,sdm450' was expected
+	'qcom,sdm630' was expected
+	'qcom,sda660' was expected
+	'qcom,sdm632' was expected
+	'qcom,sdm636' was expected
+	'qcom,sdm660' was expected
+	'qcom,sdm670' was expected
+	'google,bonito' was expected
+	'qcom,sdx55' was expected
+	'qcom,sdx65' was expected
+	'qcom,sdx75' was expected
+	'qcom,ipq6018' was expected
+	'qcom,qcs404-evb' was expected
+	'qcom,qcs8300' was expected
+	'qcom,qcs615' was expected
+	'qcom,sa8155p' was expected
+	'qcom,sa8540p' was expected
+	'qcom,sa8775p' was expected
+	'qcom,qcs9100' was expected
+	'qcom,sdm845' was expected
+	'qcom,sm4250' was expected
+	'qcom,qrb4210' was expected
+	'qcom,sm4450' was expected
+	'qcom,sm6115' was expected
+	'qcom,sm6115p' was expected
+	'qcom,sm6125' was expected
+	'qcom,sm6350' was expected
+	'qcom,sm6375' was expected
+	'qcom,sm7125' was expected
+	'qcom,sm7150' was expected
+	'qcom,sm7225' was expected
+	'qcom,sm7325' was expected
+	'qcom,sm8150' was expected
+	'qcom,sm8250' was expected
+	'qcom,sm8350' was expected
+	'qcom,sm8450' was expected
+	'qcom,sm8550' was expected
+	'qcom,qcs8550-aim300' was expected
+	'qcom,sm8650' was expected
+	'qcom,sm8750' was expected
+	'qcom,x1e001de' was expected
+	'lenovo,thinkpad-t14s' was expected
+	'qcom,x1e78100' was expected
+	'microsoft,denali' was expected
+	'qcom,x1e80100' was expected
+	'qcom,hamoa-iot-som' was expected
+	'qcom,x1p42100' was expected
+	'qcom,purwa-iot-som' was expected
+	'asus,zenbook-a14-ux3407qa' was expected
+	'qcom,apq8096' was expected
+	'qcom,mdm9615' was expected
+	'qcom,qcm2290' was expected
+	'google,lazor-rev5' was expected
+	'google,lazor-rev5-sku2' was expected
+	'google,lazor-rev5-sku0' was expected
+	'google,lazor-rev6-sku4' was expected
+	'google,lazor-rev6-sku6' was expected
+	'google,hoglin-rev4' was expected
+	'google,zombie-sku515' was expected
+	'qcom,qcs404' was expected
+	'qcom,sm6150' was expected
+	'qcom,qcs8550' was expected
+	'qcom,x1p64100' was expected
+	'qcom,apq8096sg' was expected
+	'google,lazor-rev6' was expected
+	'google,lazor-rev6-sku2' was expected
+	'google,lazor-rev6-sku0' was expected
+	'google,lazor-rev7-sku4' was expected
+	'google,lazor-rev7-sku6' was expected
+	'google,piglin-rev3' was expected
+	'google,lazor-rev7' was expected
+	'google,lazor-rev7-sku2' was expected
+	'google,lazor-rev7-sku0' was expected
+	'google,lazor-rev8-sku4' was expected
+	'google,lazor-rev8-sku6' was expected
+	'google,piglin-rev4' was expected
+	from schema $id: http://devicetree.org/schemas/arm/qcom.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /: failed to match any schema with compatible: ['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /: failed to match any schema with compatible: ['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /: failed to match any schema with compatible: ['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /: failed to match any schema with compatible: ['qcom,kalama-mtp', 'qcom,kalama', 'qcom,mtp', 'samsung,gts9wifi', 'qcom,sm8550']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@8c0000/i2c@890000/redriver@28: failed to match any schema with compatible: ['parade,ps5169']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@28 (parade,ps5169): parade,reg50: b'\x00\x00\x00\x10' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@28 (parade,ps5169): parade,reg51: b'\x00\x00\x00p' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@28 (parade,ps5169): parade,reg54: b'\x00\x00\x00\x02' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@28 (parade,ps5169): parade,reg5d: b'\x00\x00\x00@' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@8c0000/i2c@89c000/keyboard@2a: failed to match any schema with compatible: ['samsung,x710-pogo-keyboard']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,irq_type: b'\x00\x00 \x08' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,irq_conn_type: b'\x00\x00 \x03' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,model_name: b'EF-DX715\x00EF-DX710\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,model_name_row: b'EF-DT870\x00EF-DT630\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,fw_name: b'keyboard_stm/stm32_gts9family.bin\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,fota_fw_path: b'keyboard_stm\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): stm32,i2c-burstmax: b'\x00\x00\x00 ' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: keyboard@2a (samsung,x710-pogo-keyboard): 'stm32,fota_fw_path', 'stm32,fw_name', 'stm32,i2c-burstmax', 'stm32,irq_conn_type', 'stm32,irq_type', 'stm32,model_name', 'stm32,model_name_row' do not match any of the regexes: '^#.*', '^(at25|bm|devbus|dmacap|dsa|exynos|fsi[ab]|gpio-fan|gpio-key|gpio|gpmc|hdmi|i2c-gpio),.*', '^(keypad|m25p|max8952|max8997|max8998|mpmc),.*', '^(pciclass|pinctrl-single|#pinctrl-single|PowerPC),.*', '^(pl022|pxa-mmc|rcar_sound|rotary-encoder|s5m8767|sdhci),.*', '^(simple-audio-card|st-plgpio|st-spics|ts|vsc8531),.*', '^100ask,.*', '^70mai,.*', '^8dev,.*', '^9tripod,.*', '^GEFanuc,.*', '^IBM,.*', '^ORCL,.*', '^SUNW,.*', '^[a-zA-Z0-9#_][a-zA-Z0-9#+\\-._@]{0,63}$', '^[a-zA-Z0-9+\\-._]*@[0-9a-zA-Z,]*$', '^abb,.*', '^abilis,.*', '^abracon,.*', '^abt,.*', '^acbel,.*', '^acelink,.*', '^acer,.*', '^acme,.*', '^actions,.*', '^actiontec,.*', '^active-semi,.*', '^ad,.*', '^adafruit,.*', '^adapteva,.*', '^adaptrum,.*', '^adh,.*', '^adi,.*', '^adieng,.*', '^admatec,.*', '^advantech,.*', '^aeroflexgaisler,.*', '^aesop,.*', '^airoha,.*', '^al,.*', '^alcatel,.*', '^aldec,.*', '^alfa-network,.*', '^algoltek,.*', '^allegro,.*', '^allegromicro,.*', '^alliedtelesis,.*', '^alliedvision,.*', '^allo,.*', '^allwinner,.*', '^alphascale,.*', '^alps,.*', '^alt,.*', '^altr,.*', '^amarula,.*', '^amazon,.*', '^amcc,.*', '^amd,.*', '^amediatech,.*', '^amlogic,.*', '^ampere,.*', '^amphenol,.*', '^ampire,.*', '^ams,.*', '^amstaos,.*', '^analogix,.*', '^anbernic,.*', '^andestech,.*', '^anlogic,.*', '^anvo,.*', '^aoly,.*', '^aosong,.*', '^apm,.*', '^apple,.*', '^aptina,.*', '^arasan,.*', '^archermind,.*', '^arcom,.*', '^arctic,.*', '^arcx,.*', '^arduino,.*', '^argon40,.*', '^ariaboard,.*', '^aries,.*', '^arm,.*', '^armadeus,.*', '^armchina,.*', '^armsom,.*', '^arrow,.*', '^artesyn,.*', '^asahi-kasei,.*', '^asc,.*', '^asix,.*', '^asl-tek,.*', '^aspeed,.*', '^asrock,.*', '^asteralabs,.*', '^asus,.*', '^atheros,.*', '^atlas,.*', '^atmel,.*', '^auo,.*', '^auvidea,.*', '^avago,.*', '^avia,.*', '^avic,.*', '^avnet,.*', '^awinic,.*', '^axentia,.*', '^axiado,.*', '^axis,.*', '^ayaneo,.*', '^azoteq,.*', '^azw,.*', '^baikal,.*', '^bananapi,.*', '^beacon,.*', '^beagle,.*', '^belling,.*', '^bestar,.*', '^bhf,.*', '^bigtreetech,.*', '^bitmain,.*', '^blaize,.*', '^bluegiga,.*', '^blutek,.*', '^boe,.*', '^bosch,.*', '^boundary,.*', '^brcm,.*', '^broadmobi,.*', '^bsh,.*', '^bst,.*', '^bticino,.*', '^buffalo,.*', '^buglabs,.*', '^bur,.*', '^bytedance,.*', '^calamp,.*', '^calao,.*', '^calaosystems,.*', '^calxeda,.*', '^cameo,.*', '^canaan,.*', '^caninos,.*', '^capella,.*', '^cascoda,.*', '^catalyst,.*', '^cavium,.*', '^cct,.*', '^cdns,.*', '^cdtech,.*', '^cellwise,.*', '^ceva,.*', '^chargebyte,.*', '^checkpoint,.*', '^chefree,.*', '^chipidea,.*', '^chipone,.*', '^chipspark,.*', '^chongzhou,.*', '^chrontel,.*', '^chrp,.*', '^chunghwa,.*', '^chuwi,.*', '^ciaa,.*', '^cirrus,.*', '^cisco,.*', '^cix,.*', '^clockwork,.*', '^cloos,.*', '^cloudengines,.*', '^cnm,.*', '^cnxt,.*', '^colorfly,.*', '^compal,.*', '^compulab,.*', '^comvetia,.*', '^congatec,.*', '^coolpi,.*', '^corechips,.*', '^coreriver,.*', '^corpro,.*', '^cortina,.*', '^cosmic,.*', '^crane,.*', '^creative,.*', '^crystalfontz,.*', '^csky,.*', '^csot,.*', '^csq,.*', '^csr,.*', '^ctera,.*', '^ctu,.*', '^cubietech,.*', '^cudy,.*', '^cui,.*', '^cypress,.*', '^cyx,.*', '^cznic,.*', '^dallas,.*', '^dataimage,.*', '^davicom,.*', '^deepcomputing,.*', '^dell,.*', '^delta,.*', '^densitron,.*', '^denx,.*', '^devantech,.*', '^dfi,.*', '^dfrobot,.*', '^dh,.*', '^difrnce,.*', '^digi,.*', '^digilent,.*', '^dimonoff,.*', '^diodes,.*', '^dioo,.*', '^displaytech,.*', '^djn,.*', '^dlc,.*', '^dlg,.*', '^dlink,.*', '^dmo,.*', '^doestek,.*', '^domintech,.*', '^dongwoon,.*', '^dptechnics,.*', '^dragino,.*', '^dream,.*', '^ds,.*', '^dserve,.*', '^dynaimage,.*', '^ea,.*', '^ebang,.*', '^ebbg,.*', '^ebs-systart,.*', '^ebv,.*', '^eckelmann,.*', '^econet,.*', '^edgeble,.*', '^edimax,.*', '^edt,.*', '^ees,.*', '^eeti,.*', '^efinix,.*', '^egnite,.*', '^einfochips,.*', '^eink,.*', '^elan,.*', '^element14,.*', '^elgin,.*', '^elida,.*', '^elimo,.*', '^elpida,.*', '^embedfire,.*', '^embest,.*', '^emcraft,.*', '^emlid,.*', '^emmicro,.*', '^empire-electronix,.*', '^emtrion,.*', '^enbw,.*', '^enclustra,.*', '^endian,.*', '^endless,.*', '^ene,.*', '^energymicro,.*', '^engicam,.*', '^engleder,.*', '^epcos,.*', '^epfl,.*', '^epson,.*', '^esp,.*', '^est,.*', '^eswin,.*', '^etekmicro,.*', '^ettus,.*', '^eukrea,.*', '^everest,.*', '^everspin,.*', '^evervision,.*', '^exar,.*', '^excito,.*', '^exegin,.*', '^ezchip,.*', '^ezurio,.*', '^facebook,.*', '^fairchild,.*', '^fairphone,.*', '^faraday,.*', '^fascontek,.*', '^fastrax,.*', '^fcs,.*', '^feixin,.*', '^feiyang,.*', '^fii,.*', '^firefly,.*', '^fitipower,.*', '^flipkart,.*', '^focaltech,.*', '^forlinx,.*', '^foursemi,.*', '^foxlink,.*', '^freebox,.*', '^freecom,.*', '^frida,.*', '^friendlyarm,.*', '^fsl,.*', '^fujitsu,.*', '^fxtec,.*', '^galaxycore,.*', '^gameforce,.*', '^gardena,.*', '^gateway,.*', '^gateworks,.*', '^gcw,.*', '^ge,.*', '^geekbuying,.*', '^gef,.*', '^gehc,.*', '^gemei,.*', '^gemtek,.*', '^genesys,.*', '^genexis,.*', '^geniatech,.*', '^giantec,.*', '^giantplus,.*', '^gira,.*', '^glinet,.*', '^globalscale,.*', '^globaltop,.*', '^gmt,.*', '^gocontroll,.*', '^goldelico,.*', '^goodix,.*', '^google,.*', '^goramo,.*', '^gplus,.*', '^grinn,.*', '^grmn,.*', '^gumstix,.*', '^gw,.*', '^hannstar,.*', '^haochuangyi,.*', '^haoyu,.*', '^hardkernel,.*', '^hce,.*', '^headacoustics,.*', '^hechuang,.*', '^hideep,.*', '^himax,.*', '^hinlink,.*', '^hirschmann,.*', '^hisi,.*', '^hisilicon,.*', '^hit,.*', '^hitex,.*', '^hitron,.*', '^holitech,.*', '^holt,.*', '^holtek,.*', '^honestar,.*', '^honeywell,.*', '^hoperf,.*', '^hoperun,.*', '^hp,.*', '^hpe,.*', '^hsg,.*', '^htc,.*', '^huawei,.*', '^hugsun,.*', '^huiling,.*', '^hwacom,.*', '^hxt,.*', '^hycon,.*', '^hydis,.*', '^hynetek,.*', '^hynitron,.*', '^hynix,.*', '^hyundai,.*', '^i2se,.*', '^ibm,.*', '^icplus,.*', '^idt,.*', '^iei,.*', '^ifi,.*', '^ifm,.*', '^ilitek,.*', '^imagis,.*', '^img,.*', '^imi,.*', '^inanbo,.*', '^incircuit,.*', '^incostartec,.*', '^indiedroid,.*', '^inet-tek,.*', '^infineon,.*', '^inforce,.*', '^ingenic,.*', '^ingrasys,.*', '^injoinic,.*', '^innocomm,.*', '^innolux,.*', '^inside-secure,.*', '^insignal,.*', '^inspur,.*', '^intel,.*', '^intercontrol,.*', '^invensense,.*', '^inventec,.*', '^inversepath,.*', '^iom,.*', '^irondevice,.*', '^isee,.*', '^isil,.*', '^issi,.*', '^ite,.*', '^itead,.*', '^itian,.*', '^ivo,.*', '^iwave,.*', '^jadard,.*', '^jasonic,.*', '^jdi,.*', '^jedec,.*', '^jenson,.*', '^jesurun,.*', '^jethome,.*', '^jianda,.*', '^jide,.*', '^joz,.*', '^jty,.*', '^jutouch,.*', '^kam,.*', '^karo,.*', '^keithkoep,.*', '^keymile,.*', '^khadas,.*', '^kiebackpeter,.*', '^kinetic,.*', '^kingdisplay,.*', '^kingnovel,.*', '^kionix,.*', '^kobo,.*', '^kobol,.*', '^koe,.*', '^kontron,.*', '^kosagi,.*', '^kvg,.*', '^kyo,.*', '^lacie,.*', '^laird,.*', '^lamobo,.*', '^lantiq,.*', '^lattice,.*', '^lckfb,.*', '^lctech,.*', '^leadtek,.*', '^leez,.*', '^lego,.*', '^lemaker,.*', '^lenovo,.*', '^lg,.*', '^lgphilips,.*', '^libretech,.*', '^licheepi,.*', '^linaro,.*', '^lincolntech,.*', '^lineartechnology,.*', '^linkease,.*', '^linksprite,.*', '^linksys,.*', '^linutronix,.*', '^linux,.*', '^linx,.*', '^liontron,.*', '^liteon,.*', '^litex,.*', '^lltc,.*', '^logicpd,.*', '^logictechno,.*', '^longcheer,.*', '^lontium,.*', '^loongmasses,.*', '^loongson,.*', '^lsi,.*', '^luckfox,.*', '^lunzn,.*', '^luxshare,.*', '^luxul,.*', '^lwn,.*', '^lxa,.*', '^lxd,.*', '^m5stack,.*', '^macnica,.*', '^mantix,.*', '^mapleboard,.*', '^marantec,.*', '^marvell,.*', '^maxbotix,.*', '^maxim,.*', '^maxlinear,.*', '^maxtor,.*', '^mayqueen,.*', '^mbvl,.*', '^mcube,.*', '^meas,.*', '^mecer,.*', '^mediatek,.*', '^medion,.*', '^megachips,.*', '^mele,.*', '^melexis,.*', '^melfas,.*', '^mellanox,.*', '^memsensing,.*', '^memsic,.*', '^menlo,.*', '^mentor,.*', '^meraki,.*', '^merrii,.*', '^methode,.*', '^micrel,.*', '^microchip,.*', '^microcrystal,.*', '^micron,.*', '^microsoft,.*', '^microsys,.*', '^microtips,.*', '^mikroe,.*', '^mikrotik,.*', '^milianke,.*', '^milkv,.*', '^miniand,.*', '^minix,.*', '^mips,.*', '^miramems,.*', '^mitsubishi,.*', '^mitsumi,.*', '^mixel,.*', '^miyoo,.*', '^mntre,.*', '^mobileye,.*', '^modtronix,.*', '^moortec,.*', '^mosaixtech,.*', '^motorcomm,.*', '^motorola,.*', '^moxa,.*', '^mpl,.*', '^mps,.*', '^mqmaker,.*', '^mrvl,.*', '^mscc,.*', '^msi,.*', '^mstar,.*', '^mti,.*', '^multi-inno,.*', '^mundoreader,.*', '^murata,.*', '^mxic,.*', '^mxicy,.*', '^myir,.*', '^national,.*', '^neardi,.*', '^nec,.*', '^neofidelity,.*', '^neonode,.*', '^netcube,.*', '^netgear,.*', '^netlogic,.*', '^netron-dy,.*', '^netronix,.*', '^netxeon,.*', '^neweast,.*', '^newhaven,.*', '^newvision,.*', '^nexbox,.*', '^nextthing,.*', '^ni,.*', '^nicera,.*', '^nintendo,.*', '^nlt,.*', '^nokia,.*', '^nordic,.*', '^nothing,.*', '^novatech,.*', '^novatek,.*', '^novtech,.*', '^nuclei,.*', '^numonyx,.*', '^nutsboard,.*', '^nuvoton,.*', '^nvd,.*', '^nvidia,.*', '^nxp,.*', '^oceanic,.*', '^ocs,.*', '^oct,.*', '^okaya,.*', '^oki,.*', '^olimex,.*', '^olpc,.*', '^oneplus,.*', '^onething,.*', '^onie,.*', '^onion,.*', '^onnn,.*', '^ontat,.*', '^opalkelly,.*', '^openailab,.*', '^opencores,.*', '^openembed,.*', '^openpandora,.*', '^openrisc,.*', '^openwrt,.*', '^option,.*', '^oranth,.*', '^orisetech,.*', '^ortustech,.*', '^osddisplays,.*', '^osmc,.*', '^ouya,.*', '^overkiz,.*', '^ovti,.*', '^oxsemi,.*', '^ozzmaker,.*', '^panasonic,.*', '^parade,.*', '^parallax,.*', '^particle,.*', '^pda,.*', '^pegatron,.*', '^pericom,.*', '^pervasive,.*', '^phicomm,.*', '^phontech,.*', '^phytec,.*', '^picochip,.*', '^pinctrl-[0-9]+$', '^pine64,.*', '^pineriver,.*', '^pixcir,.*', '^plantower,.*', '^plathome,.*', '^plda,.*', '^plx,.*', '^ply,.*', '^pni,.*', '^pocketbook,.*', '^polaroid,.*', '^polyhex,.*', '^pool[0-3],.*', '^portwell,.*', '^poslab,.*', '^pov,.*', '^powertip,.*', '^powervr,.*', '^powkiddy,.*', '^pri,.*', '^primeview,.*', '^primux,.*', '^probox2,.*', '^prt,.*', '^pulsedlight,.*', '^purism,.*', '^puya,.*', '^qca,.*', '^qcom,.*', '^qemu,.*', '^qi,.*', '^qiaodian,.*', '^qihua,.*', '^qishenglong,.*', '^qnap,.*', '^quanta,.*', '^radxa,.*', '^raidsonic,.*', '^ralink,.*', '^ramtron,.*', '^raspberrypi,.*', '^raumfeld,.*', '^raydium,.*', '^raystar,.*', '^rda,.*', '^realtek,.*', '^relfor,.*', '^remarkable,.*', '^renesas,.*', '^rervision,.*', '^retronix,.*', '^revotics,.*', '^rex,.*', '^rfdigital,.*', '^richtek,.*', '^ricoh,.*', '^rikomagic,.*', '^riot,.*', '^riscv,.*', '^rockchip,.*', '^rocktech,.*', '^rohm,.*', '^ronbo,.*', '^ronetix,.*', '^roofull,.*', '^roseapplepi,.*', '^rve,.*', '^saef,.*', '^sakurapi,.*', '^samsung,.*', '^samtec,.*', '^sancloud,.*', '^sandisk,.*', '^satoz,.*', '^sbs,.*', '^schindler,.*', '^schneider,.*', '^schulercontrol,.*', '^sciosense,.*', '^sdmc,.*', '^seagate,.*', '^seeed,.*', '^seirobotics,.*', '^semtech,.*', '^senseair,.*', '^sensirion,.*', '^sensortek,.*', '^sercomm,.*', '^sff,.*', '^sgd,.*', '^sgmicro,.*', '^sgx,.*', '^sharp,.*', '^shift,.*', '^shimafuji,.*', '^shineworld,.*', '^shiratech,.*', '^si-en,.*', '^si-linux,.*', '^sielaff,.*', '^siemens,.*', '^sifive,.*', '^siflower,.*', '^sigma,.*', '^sii,.*', '^sil,.*', '^silabs,.*', '^silan,.*', '^silead,.*', '^silergy,.*', '^silex-insight,.*', '^siliconfile,.*', '^siliconmitus,.*', '^silvaco,.*', '^simtek,.*', '^sinlinx,.*', '^sinovoip,.*', '^sinowealth,.*', '^sipeed,.*', '^sirf,.*', '^sis,.*', '^sitronix,.*', '^skov,.*', '^skyworks,.*', '^smartfiber,.*', '^smartlabs,.*', '^smartrg,.*', '^smi,.*', '^smsc,.*', '^snps,.*', '^sochip,.*', '^socionext,.*', '^solidrun,.*', '^solomon,.*', '^somfy,.*', '^sony,.*', '^sophgo,.*', '^sourceparts,.*', '^spacemit,.*', '^spansion,.*', '^sparkfun,.*', '^spinalhdl,.*', '^sprd,.*', '^square,.*', '^ssi,.*', '^sst,.*', '^sstar,.*', '^st,.*', '^st-ericsson,.*', '^starfive,.*', '^starry,.*', '^startek,.*', '^starterkit,.*', '^ste,.*', '^stericsson,.*', '^storlink,.*', '^storm,.*', '^storopack,.*', '^summit,.*', '^sunchip,.*', '^sundance,.*', '^sunplus,.*', '^supermicro,.*', '^swir,.*', '^syna,.*', '^synaptics,.*', '^synology,.*', '^synopsys,.*', '^taiguanck,.*', '^taos,.*', '^tbs,.*', '^tbs-biometrics,.*', '^tcg,.*', '^tcl,.*', '^tcs,.*', '^tcu,.*', '^tdo,.*', '^team-source-display,.*', '^technexion,.*', '^technologic,.*', '^techstar,.*', '^techwell,.*', '^teejet,.*', '^teltonika,.*', '^tempo,.*', '^tenda,.*', '^tenstorrent,.*', '^terasic,.*', '^tesla,.*', '^test,.*', '^tfc,.*', '^thead,.*', '^thine,.*', '^thingyjp,.*', '^thundercomm,.*', '^thwc,.*', '^ti,.*', '^tianma,.*', '^tlm,.*', '^tmt,.*', '^topeet,.*', '^topic,.*', '^topland,.*', '^toppoly,.*', '^topwise,.*', '^toradex,.*', '^toshiba,.*', '^toumaz,.*', '^tpk,.*', '^tplink,.*', '^tpo,.*', '^tq,.*', '^transpeed,.*', '^traverse,.*', '^tronfy,.*', '^tronsmart,.*', '^truly,.*', '^tsd,.*', '^turing,.*', '^tuxedo,.*', '^tyan,.*', '^tyhx,.*', '^u-blox,.*', '^u-boot,.*', '^ubnt,.*', '^ucrobotics,.*', '^udoo,.*', '^ufispace,.*', '^ugoos,.*', '^ultrapower,.*', '^ultrarisc,.*', '^ultratronik,.*', '^uni-t,.*', '^uniwest,.*', '^upisemi,.*', '^urt,.*', '^usi,.*', '^usr,.*', '^utoo,.*', '^v3,.*', '^vaisala,.*', '^valve,.*', '^vamrs,.*', '^variscite,.*', '^vdl,.*', '^verbatim,.*', '^verisilicon,.*', '^vertexcom,.*', '^via,.*', '^vialab,.*', '^vicor,.*', '^videostrong,.*', '^virtio,.*', '^virtual,.*', '^vishay,.*', '^visionox,.*', '^vitesse,.*', '^vivante,.*', '^vivax,.*', '^vocore,.*', '^voipac,.*', '^voltafield,.*', '^vot,.*', '^vscom,.*', '^vxt,.*', '^wacom,.*', '^wanchanglong,.*', '^wand,.*', '^waveshare,.*', '^wd,.*', '^we,.*', '^welltech,.*', '^wetek,.*', '^wexler,.*', '^whwave,.*', '^wi2wi,.*', '^widora,.*', '^wiko,.*', '^wiligear,.*', '^willsemi,.*', '^winbond,.*', '^wingtech,.*', '^winlink,.*', '^winsen,.*', '^winstar,.*', '^wirelesstag,.*', '^wits,.*', '^wlf,.*', '^wm,.*', '^wobo,.*', '^wolfvision,.*', '^x-powers,.*', '^xen,.*', '^xes,.*', '^xiaomi,.*', '^xicor,.*', '^xillybus,.*', '^xingbangda,.*', '^xinpeng,.*', '^xiphera,.*', '^xlnx,.*', '^xnano,.*', '^xunlong,.*', '^xylon,.*', '^yadro,.*', '^yamaha,.*', '^yes-optoelectronics,.*', '^yic,.*', '^yiming,.*', '^ylm,.*', '^yna,.*', '^yones-toptech,.*', '^ys,.*', '^ysoft,.*', '^yuridenki,.*', '^yuzukihd,.*', '^zarlink,.*', '^zealz,.*', '^zeitec,.*', '^zidoo,.*', '^zii,.*', '^zinitix,.*', '^zkmagic,.*', '^zte,.*', '^zyxel,.*'
+	from schema $id: http://devicetree.org/schemas/vendor-prefixes.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: geniqup@9c0000 (qcom,geni-se-i2c-master-hub): i2c@98c000: False schema does not allow ['tx', 'rx']
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: geniqup@9c0000 (qcom,geni-se-i2c-master-hub): i2c@98c000: False schema does not allow [[112, 0, 3, 3], [112, 1, 3, 3]]
+	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,geni-se.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: i2c@98c000 (qcom,geni-i2c-master-hub): False schema does not allow ['tx', 'rx']
+	from schema $id: http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: i2c@98c000 (qcom,geni-i2c-master-hub): False schema does not allow [[112, 0, 3, 3], [112, 1, 3, 3]]
+	from schema $id: http://devicetree.org/schemas/i2c/qcom,i2c-geni-qcom.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@9c0000/i2c@98c000/charger@63: failed to match any schema with compatible: ['siliconmitus,sm5440']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@9c0000/i2c@9a0000/charger@49: failed to match any schema with compatible: ['siliconmitus,sm5714']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33: failed to match any schema with compatible: ['siliconmitus,sm5714-usbpd']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: connector (usb-c-connector): Unevaluated properties are not allowed ('displayport' was unexpected)
+	from schema $id: http://devicetree.org/schemas/connector/usb-connector.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: connector (usb-c-connector): displayport: b'\x00\x00\x00\x7f' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@ac0000/i2c@a8c000/digitizer@56: failed to match any schema with compatible: ['wacom,w90xx']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/geniqup@ac0000/i2c@a90000/touchscreen@49: failed to match any schema with compatible: ['st,fts1ba90a']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@4f (nxp,ptn3222): 'qcom,param-override-seq' does not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/phy/nxp,ptn3222.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: redriver@4f (nxp,ptn3222): qcom,param-override-seq: b'\x00\x00\x00 \x00\x00\x00\x06\x00\x00\x00!\x00\x00\x00\x07\x00\x00\x00c\x00\x00\x00\x08\x00\x00\x00\x03\x00\x00\x00\t\x00\x00\x00\x01\x00\x00\x00\n' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/cci@ac15000/i2c-bus@1/camera@21: failed to match any schema with compatible: ['hynix,hi1337-gts9u-rear']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/cci@ac16000/i2c-bus@0/lens@c: failed to match any schema with compatible: ['dongwoon,dw9808-vcm']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/cci@ac16000/i2c-bus@1/camera@21: failed to match any schema with compatible: ['hynix,hi1337-gts9u-front']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /soc@0/display-subsystem@ae00000/dsi@ae94000/panel@0: failed to match any schema with compatible: ['samsung,ana38407-amsa10fa01']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): cci1-1-sleep-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-disable', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): hall-cover-n-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-disable', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): epen-int-default-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-disable', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): epen-pdct-default-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-disable', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): sm5714-usbpd-int-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-disable', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): pogo-bus-gpio-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-pull-up', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: pinctrl@f100000 (qcom,sm8550-tlmm): pogo-irq-state: 'oneOf' conditional failed, one must be fixed:
+	False schema does not allow True
+	'bias-pull-up', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8550-tlmm.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: /sec-kernel-log: failed to match any schema with compatible: ['samsung,gts9wifi-sec-kernel-log']
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: wcn6855-pmu (qcom,wcn6855-pmu): 'qcom,qmp', 'qcom,wlan-pdc-init' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/regulator/qcom,qca6390-pmu.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: wcn6855-pmu (qcom,wcn6855-pmu): qcom,wlan-pdc-init: b'{class: wlan_pdc, ss: rf, res: s4e.v, upval: 966}\x00{class: wlan_pdc, ss: rf, res: s4e.v, dwnval: 615}\x00{class: wlan_pdc, ss: rf, res: s4g.v, upval: 1350}\x00{class: wlan_pdc, ss: rf, res: s4g.v, dwnval: 945}\x00{class: wlan_pdc, ss: rf, res: s6g.v, upval: 1900}\x00{class: wlan_pdc, ss: rf, res: s6g.v, dwnval: 1825}\x00{class: wlan_pdc, ss: rf, res: s2g.m, enable: 1}\x00{class: wlan_pdc, ss: rf, res: s2g.v, enable: 1}\x00{class: wlan_pdc, ss: rf, res: s2g.v, upval: 1012}\x00{class: wlan_pdc, ss: rf, res: s2g.v, dwnval: 800}\x00{class: wlan_pdc, ss: bb, res: pdc, enable: 0}\x00' is not of type 'object', 'integer', 'array', 'boolean', 'null'
+	from schema $id: http://devicetree.org/schemas/dt-core.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: usb-c-sbu-mux (gpio-sbu-mux): compatible:0: 'gpio-sbu-mux' is not one of ['nxp,cbdtu02043', 'onnn,fsusb42', 'onnn,fsusb43l10x', 'pericom,pi3usb102', 'ti,tmuxhs4212']
+	from schema $id: http://devicetree.org/schemas/usb/gpio-sbu-mux.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: usb-c-sbu-mux (gpio-sbu-mux): compatible: ['gpio-sbu-mux'] is too short
+	from schema $id: http://devicetree.org/schemas/usb/gpio-sbu-mux.yaml
+arch/arm64/boot/dts/qcom/sm8550-samsung-gts9wifi.dtb: gpio-keys (gpio-keys): 'wakeup-source' does not match any of the regexes: '^(button|event|key|switch|(button|event|key|switch)-[a-z0-9-]+|[a-z0-9-]+-(button|event|key|switch))$', '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/input/gpio-keys.yaml
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi'

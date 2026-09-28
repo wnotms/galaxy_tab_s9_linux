@@ -1,0 +1,60 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'kernel/config/gts9wifi-mainline.fragment': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714-battery.c': No reviewed dependency rule: run all tests.
+'kernel/patches/0011-power-supply-hook-sm5714-battery.patch': No reviewed dependency rule: run all tests.
+'kernel/patches/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-252-sm5714-stage1/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-252-sm5714-stage1/SAFETY_REVIEW.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-252-sm5714-stage1/validation/same-model-driver.diff': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-252-sm5714-stage1/validation/same-model-review.json': No reviewed dependency rule: run all tests.
+'scripts/audit-dt-providers.py': Driver scanner fixtures plus the actual built-DTB provider audit, across all tiers.
+'scripts/build-kernel.sh': No reviewed dependency rule: run all tests.
+'scripts/prepare-kernel.sh': No reviewed dependency rule: run all tests.
+'scripts/verify-sm5714-stage1.py': No reviewed dependency rule: run all tests.
+'tests/test_cpuidle_off_profile.py': Changed test module and its static import consumers.
+'tests/test_csd_ipi_diagnostic.py': Changed test module and its static import consumers.
+'tests/test_sm5714_charge_safety.py': Changed test module and its static import consumers.
+'tests/test_sm5714_policy.py': Changed test module and its static import consumers.
+'tests/test_sm5714_stage1.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1067, tiers={'core': 962, 'artifacts': 18, 'archive': 87}
+................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................/tmp/tmpgh7z9ri_/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpgh7z9ri_/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-28T11:32:03.026047+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-28T11:32:03.026209+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-28T11:32:03.026711+00:00"
+}
+.................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1067 tests in 78.636s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.
