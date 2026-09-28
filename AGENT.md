@@ -189,6 +189,12 @@ See attempt-05 `RESULTS.md`, `summary.json`, `EVIDENCE_AUDIT.json` and
 Test251 occurred. The Test250 goal remains incomplete; keep this attempt
 stopped and production unchanged. Any further physical series requires a
 fresh registration and owner decision about this host probe timeout.
+The post-attempt05 read-only review compares 29 successful host probes
+(2.104–2.520 s, median 2.179 s) with the 20.025 s timeout and records an
+unapproved attempt-06 proposal in `post-attempt05-analysis/README.md`.
+It would add stage timestamps and allow 30 s for the outer Windows process
+while keeping the 5 s TCP-connect/banner-read deadlines and every other
+stop gate. It has not changed the runner or authorized a new hardware test.
 
 ## Mission
 
