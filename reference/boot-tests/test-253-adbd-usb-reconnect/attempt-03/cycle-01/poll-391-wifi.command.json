@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -eu; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/class/udc/a600000.usb/state; systemctl show -p MainPID --value gts9-adbd.service; cat /sys/class/power_supply/sm5714-usb/uevent"
+  ],
+  "ended_utc": "2026-09-28T14:24:19.270683+00:00",
+  "started_utc": "2026-09-28T14:24:18.766702+00:00",
+  "status": 0
+}

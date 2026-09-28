@@ -1,5 +1,5 @@
 {
-  "verdict": "in-progress-awaiting-physical-cable-cycle",
+  "verdict": "stopped-evidence-incomplete",
   "host_recovery": "passed",
   "native_adb_shell": true,
   "transfer_bytes": 1048576,
@@ -17,5 +17,11 @@
   "kernel_changes": false,
   "adb_backend": "LIBADBUSB",
   "adb_version": "37.0.1",
-  "previous_attempt_stopped": true
+  "previous_attempt_stopped": true,
+  "physical_cycles_performed": 1,
+  "first_non_clean_phase": "cycle-01",
+  "native_adb_currently_working": true,
+  "stop_reason": "sampler wrongly required UDC to leave configured before recognizing offline supply; native shell deadline and registered elapsed window were not collected",
+  "new_daemon_warning": "received FUNCTIONFS_DISABLE while not enabled?",
+  "post_stop_full_identity": true
 }

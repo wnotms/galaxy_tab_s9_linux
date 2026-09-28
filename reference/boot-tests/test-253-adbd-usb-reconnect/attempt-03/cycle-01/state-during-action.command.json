@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "scripts/gts9-ssh.sh",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/class/power_supply/sm5714-usb/uevent; cat /sys/class/udc/a600000.usb/state; journalctl -b -u gts9-adbd --no-pager -o short-monotonic; ip -br addr show usb0"
+  ],
+  "started_utc": "2026-09-28T14:20:16.526208+00:00",
+  "ended_utc": "2026-09-28T14:20:16.949626+00:00",
+  "status": 0
+}

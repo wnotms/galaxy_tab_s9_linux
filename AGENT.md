@@ -33,10 +33,15 @@ reboot/reset/device-service restart occurred. Current Wi-Fi address is
 Attempt03 independently reopened the same37.0.1/LIBADBUSB Windows ADB server
 once; native USB shell and1MiB byte/hash roundtrip now pass, with same boot/
 PID834/hash and uninterrupted NCM SSH. The device was not rebooted or reset,
-and no device service/config changed. Current native ADB works. The three
-registered physical unplug/replug cycles and full final acceptance remain
-pending; cycle01 monitor awaits the owner's15s cable action. Read attempt03
-RESULTS/summary before proceeding. Keep prior stopped outcomes/seals intact.
+and no device service/config changed. Current native ADB works. The owner performed physical cycle01; native ADB recovered on the same
+boot/PID/hash, but the sampler wrongly required UDC to stop showing configured
+while USB supply was offline. Recovery<=60s/150s elapsed evidence was not
+collected, so attempt03 is stopped with one cycle performed and zero accepted.
+Full post-stop five-partition/config/notes/181+181/DCC/protected-settings and
+ADB/NCM/Wi-Fi checks pass with no Code43/failed unit/kernel fault. A new
+pre-enable FunctionFS DISABLE warning was recorded before ENABLE/new worker;
+review source before future classification. No further cable cycle/reboot/reset
+was made. Read attempt03 RESULTS/review; keep all old outcomes/seals intact.
 `scripts/gts9-adb-host-rescan.sh` is the verified host recovery for the observed
 missing table entry; raw `adb reconnect`37.0.1 remains an unresolved separate
 limitation. Do not switch backend, modify production or start Stage2/3.

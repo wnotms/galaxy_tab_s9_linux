@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "scripts/gts9-ssh.sh",
+    "journalctl -b -u gts9-adbd.service --no-pager -o json"
+  ],
+  "started_utc": "2026-09-28T14:25:47.457415+00:00",
+  "ended_utc": "2026-09-28T14:25:48.633837+00:00",
+  "status": 0
+}

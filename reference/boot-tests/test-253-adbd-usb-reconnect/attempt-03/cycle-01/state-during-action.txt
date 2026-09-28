@@ -1,0 +1,52 @@
+461c1408-e426-43af-ae5b-48162771d077
+1549.82 12303.64
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP
+configured
+[    6.337629] gts9 systemd[1]: Starting gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel)...
+[    6.370137] gts9 systemd[1]: Started gts9-adbd.service - Android Debug Bridge daemon (gts9 fast debug channel).
+[    6.835468] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   834 E gts9-adbd-reconnect: auth.cpp:204 Failed to get adbd socket: Success
+[    6.835468] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   834 E gts9-adbd-reconnect: adbd_auth.cpp:98 adbd_auth: failed to get adbd authentication socket: Success
+[    6.835742] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   834 I gts9-adbd-reconnect: main.cpp:195 adbd listening on tcp:5555
+[    6.835742] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   901 I gts9-adbd-reconnect: usb_ffs.cpp:275 opening control endpoint /dev/usb-ffs/adb/ep0
+[    6.835791] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   834 I gts9-adbd-reconnect: main.cpp:195 adbd listening on vsock:5555
+[    6.835791] gts9 gts9-adbd-run[834]: 09-28 21:54:35.170   834   901 I gts9-adbd-reconnect: usb.cpp:157 UsbFfsConnection constructed
+[    6.835932] gts9 gts9-adbd-run[834]: 09-28 21:54:35.171   834   834 I gts9-adbd-reconnect: main.cpp:306 adbd started
+[    6.837070] gts9 gts9-adbd-run[834]: 09-28 21:54:35.171   834   900 E gts9-adbd-reconnect: adbd_auth.cpp:300 adbd_auth: socket unavailable, disabling user prompts
+[    6.837070] gts9 gts9-adbd-run[834]: 09-28 21:54:35.171   834   905 I gts9-adbd-reconnect: usb.cpp:264 UsbFfs-monitor thread spawned
+[    6.922798] gts9 gts9-adbd-run[834]: 09-28 21:54:35.256   834   905 I gts9-adbd-reconnect: usb.cpp:303 USB event: FUNCTIONFS_BIND
+[    7.269770] gts9 gts9-adbd-run[834]: 09-28 21:54:35.604   834   905 I gts9-adbd-reconnect: usb.cpp:303 USB event: FUNCTIONFS_ENABLE
+[    7.270292] gts9 gts9-adbd-run[834]: 09-28 21:54:35.605   834   973 I gts9-adbd-reconnect: usb.cpp:413 UsbFfs-worker thread spawned
+[    7.524480] gts9 gts9-adbd-run[834]: 09-28 21:54:35.826   834   834 I gts9-adbd-reconnect: adb.cpp:173 UsbFfs: already offline
+[    7.524480] gts9 gts9-adbd-run[834]: 09-28 21:54:35.826   834   834 I gts9-adbd-reconnect: adb.cpp:395 authentication not required
+[ 1043.999992] gts9 gts9-adbd-run[834]: 09-28 22:11:52.334   834   834 I gts9-adbd-reconnect: adb.cpp:177 UsbFfs: offline
+[ 1043.999992] gts9 gts9-adbd-run[834]: 09-28 22:11:52.335   834   834 I gts9-adbd-reconnect: adb.cpp:395 authentication not required
+[ 1490.700347] gts9 gts9-adbd-run[834]: 09-28 22:19:19.034   834   905 I gts9-adbd-reconnect: usb.cpp:303 USB event: FUNCTIONFS_SUSPEND
+[ 1510.374902] gts9 gts9-adbd-run[834]: 09-28 22:19:38.709   834   973 I gts9-adbd-reconnect: transport.cpp:1253 UsbFfs: connection terminated: read 334 failed with error Cannot send after transport endpoint shutdown
+[ 1510.374902] gts9 gts9-adbd-run[834]: 09-28 22:19:38.710   834   834 I gts9-adbd-reconnect: adb.cpp:177 UsbFfs: offline
+[ 1510.374902] gts9 gts9-adbd-run[834]: 09-28 22:19:38.710   834   834 I gts9-adbd-reconnect: transport.cpp:936 destroying transport UsbFfs
+[ 1510.374902] gts9 gts9-adbd-run[834]: 09-28 22:19:38.710   834   834 I gts9-adbd-reconnect: usb.cpp:172 UsbFfsConnection being destroyed
+[ 1510.416673] gts9 gts9-adbd-run[834]: 09-28 22:19:38.751   834   901 I gts9-adbd-reconnect: usb.cpp:157 UsbFfsConnection constructed
+[ 1510.417270] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834  6845 I gts9-adbd-reconnect: usb.cpp:264 UsbFfs-monitor thread spawned
+[ 1510.417270] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834  6845 I gts9-adbd-reconnect: usb.cpp:303 USB event: FUNCTIONFS_DISABLE
+[ 1510.417270] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834  6845 W gts9-adbd-reconnect: usb.cpp:347 received FUNCTIONFS_DISABLE while not enabled?
+[ 1510.417270] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834  6845 I gts9-adbd-reconnect: transport.cpp:1253 UsbFfs: connection terminated: monitor thread finished
+[ 1510.418252] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834   834 I gts9-adbd-reconnect: adb.cpp:173 UsbFfs: already offline
+[ 1510.418252] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834   834 I gts9-adbd-reconnect: transport.cpp:936 destroying transport UsbFfs
+[ 1510.418252] gts9 gts9-adbd-run[834]: 09-28 22:19:38.752   834   834 I gts9-adbd-reconnect: usb.cpp:172 UsbFfsConnection being destroyed
+[ 1510.457677] gts9 gts9-adbd-run[834]: 09-28 22:19:38.792   834   901 I gts9-adbd-reconnect: usb.cpp:157 UsbFfsConnection constructed
+[ 1510.458499] gts9 gts9-adbd-run[834]: 09-28 22:19:38.793   834  6846 I gts9-adbd-reconnect: usb.cpp:264 UsbFfs-monitor thread spawned
+[ 1510.565311] gts9 gts9-adbd-run[834]: 09-28 22:19:38.900   834  6846 I gts9-adbd-reconnect: usb.cpp:303 USB event: FUNCTIONFS_ENABLE
+[ 1510.565463] gts9 gts9-adbd-run[834]: 09-28 22:19:38.900   834  6847 I gts9-adbd-reconnect: usb.cpp:413 UsbFfs-worker thread spawned
+[ 1510.824660] gts9 gts9-adbd-run[834]: 09-28 22:19:39.159   834   834 I gts9-adbd-reconnect: adb.cpp:173 UsbFfs: already offline
+[ 1510.824831] gts9 gts9-adbd-run[834]: 09-28 22:19:39.159   834   834 I gts9-adbd-reconnect: adb.cpp:395 authentication not required
+usb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 

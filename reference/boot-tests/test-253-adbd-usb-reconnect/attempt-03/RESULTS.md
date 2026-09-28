@@ -1,4 +1,4 @@
-# Test253 attempt03: host recovery passed; physical cycles pending
+# Test253 attempt03: host recovery passed; physical capture stopped
 
 The same-version/default LIBADBUSB Windows ADB server was reopened once with
 `scripts/gts9-adb-host-rescan.sh`. It rediscovered native gts9wifi-0001; a real
@@ -18,12 +18,17 @@ owner's D:\android\platform-tools tools remain untouched. Host acceptance
 shows exact kernel config/notes/DCC/profile and protected NCM/SSH files,
 no failed unit, Code43 or CPU/kernel fault, and both SSH paths available.
 
-The three registered physical disconnect/reconnect cycles remain unexecuted:
-cycle01 capture is waiting for the owner's15s unplug/replug action. No cycle
-is counted clean and no final series acceptance is claimed. ADB currently
-works, but automatic cable-reconnect verification and full final acceptance
-are pending. The raw connected `adb reconnect` incident from attempt02 stays
-stopped; host-server rescan is a verified workaround for that observed host
-state, not proof that every37.0.1 backend failure is repaired. No backend
-switch, new daemon variant or charging/kernel configuration change was made.
-Test252 stays stopped; Stage2/3 and further charging tests have not started.
+The owner performed physical cycle01, but its sampler missed the cable state
+transition because UDC remained configured while USB supply was offline. Native
+ADB subsequently recovered with the unchanged boot/PID/hash. The registered
+60s native-shell deadline and150s elapsed observation were not collected;
+cycle01 is not accepted and attempt03 stops. No cycle02/03 or final series
+acceptance occurred. Preserve cycle01/review.json, full raw journals and the
+complete post-stop identity/transport check. The new pre-enable DISABLE warning
+requires source review before further classification. No software/device change,
+extra host server restart or reboot occurred in this physical cycle.
+
+Attempt02's raw connected `adb reconnect` incident remains stopped. Host-server
+rescan is a verified workaround for the observed missing transport, not proof
+that every37.0.1 backend failure is repaired. Test252 remains stopped; Stage2/3
+and further charging tests have not started.
