@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "python3",
+    "scripts/adbd-cable-observer.py",
+    "--registration",
+    "reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/policy.json",
+    "--cycle-dir",
+    "reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/cycle-01"
+  ],
+  "exit_code": 1,
+  "expected_rejection": true,
+  "cycle_directory_created": false,
+  "device_access": false
+}
