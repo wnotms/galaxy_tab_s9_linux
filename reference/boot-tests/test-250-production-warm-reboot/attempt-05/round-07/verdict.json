@@ -1,0 +1,80 @@
+{
+  "after_boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+  "attribution": "attributed",
+  "before_boot_id": "6bf45166665a48da8b02788655e181ca",
+  "bluetooth_health": {
+    "address_service": "active",
+    "bluetooth_service": "active",
+    "boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+    "controller": "Controller 38:8A:06:59:04:E7 (public)",
+    "controllers": [
+      "hci0"
+    ],
+    "healthy": true,
+    "powered": true,
+    "uptime_seconds": 151.97
+  },
+  "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "dcc_absent": true,
+  "elapsed_seconds_from_first_adb_to_last_poll": 142.13,
+  "ended_utc": "2026-09-28T06:50:23.489894+00:00",
+  "first_adb_uptime_seconds": 8.72,
+  "journal_rows": 1092,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "known_warning_count": 44,
+  "new_boot_uptime_seconds": 150.85,
+  "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "observation_seconds": 150.85,
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.811984,
+        "events": [],
+        "setup_source_seconds": 3.918427
+      },
+      {
+        "completion_source_seconds": 6.360889,
+        "events": [
+          {
+            "completion_source_seconds": 6.360889,
+            "event_source_seconds": 5.55737,
+            "recovery_seconds": 0.803519,
+            "row": 1036
+          }
+        ],
+        "setup_source_seconds": 5.48058
+      }
+    ],
+    "event_count": 1,
+    "event_rows": [
+      1036
+    ],
+    "setup_count": 2,
+    "state": "accepted"
+  },
+  "reboot_requested_utc": "2026-09-28T06:47:27.005676+00:00",
+  "registered_window_completed": true,
+  "round": 7,
+  "started_utc": "2026-09-28T06:47:19.277749+00:00",
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "systemd_failed_units": [],
+  "transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": null,
+    "ncm_initial_failure": false,
+    "ncm_recovery_seconds_from_first_attempt": null,
+    "ncm_recovery_utc": null,
+    "ncm_source_bound": true,
+    "ssh_ok": true
+  },
+  "verdict": "clean"
+}

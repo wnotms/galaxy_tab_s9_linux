@@ -1,0 +1,71 @@
+{
+  "after_boot_id": "c819d52864fb49fdb48f8b7580d16482",
+  "attribution": "attributed",
+  "before_boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+  "bluetooth_health": {
+    "address_service": "active",
+    "bluetooth_service": "active",
+    "boot_id": "c819d52864fb49fdb48f8b7580d16482",
+    "controller": "Controller 38:8A:06:59:04:E7 (public)",
+    "controllers": [
+      "hci0"
+    ],
+    "healthy": true,
+    "powered": true,
+    "uptime_seconds": 151.24
+  },
+  "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "dcc_absent": true,
+  "elapsed_seconds_from_first_adb_to_last_poll": 141.76,
+  "ended_utc": "2026-09-28T06:35:02.805427+00:00",
+  "first_adb_uptime_seconds": 8.39,
+  "journal_rows": 1086,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "known_warning_count": 43,
+  "new_boot_uptime_seconds": 150.15,
+  "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "observation_seconds": 150.15,
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.869954,
+        "events": [],
+        "setup_source_seconds": 3.965394
+      },
+      {
+        "completion_source_seconds": 6.293109,
+        "events": [],
+        "setup_source_seconds": 5.400832
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "reboot_requested_utc": "2026-09-28T06:32:07.271657+00:00",
+  "registered_window_completed": true,
+  "round": 2,
+  "started_utc": "2026-09-28T06:31:59.479058+00:00",
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "systemd_failed_units": [],
+  "transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": null,
+    "ncm_initial_failure": false,
+    "ncm_recovery_seconds_from_first_attempt": null,
+    "ncm_recovery_utc": null,
+    "ncm_source_bound": true,
+    "ssh_ok": true
+  },
+  "verdict": "clean"
+}

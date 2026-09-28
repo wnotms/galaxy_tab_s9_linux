@@ -1,0 +1,147 @@
+{
+  "boot_chain": [
+    "457ecc1a5d904d6f8c5fad67e069bef3",
+    "0d3543aa73f4484ba7bacd3dc9057d44",
+    "c819d52864fb49fdb48f8b7580d16482",
+    "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+    "af99164be4da495a94277ca637962d0d",
+    "926c2310a92c435e8b3c63f64f6a7b03",
+    "6bf45166665a48da8b02788655e181ca",
+    "2533bcb3cb244abdbbc9a78e9638b473",
+    "4ff2a339ac684862992e6db0fbcf07fd",
+    "bc4e2ffa015547f1aedbeea7d4308780",
+    "228f72d1e89c4d9aa9c81e971eb87bd8",
+    "d85d14df71be480487f15016fe52b054",
+    "a48bfed924f64996833e789baf2ab011"
+  ],
+  "device_access": false,
+  "executed": true,
+  "final_acceptance_performed": false,
+  "first_non_clean_condition": "host_source_bound_banner_probe_timeout",
+  "first_non_clean_round": 13,
+  "initial_and_post_stop_full_identity_verified": true,
+  "ordinary_reboot_requests_verified": 12,
+  "passed": true,
+  "post_stop_same_boot_verified": true,
+  "previous_evidence_seals_verified": {
+    "reference/boot-tests/test-250-production-warm-reboot": 170,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-02": 299,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-03": 332,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-04": 1407,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-05/preflight": 84,
+    "reference/boot-tests/test-250-production-warm-reboot/post-attempt03-analysis": 7
+  },
+  "production_module_files": 181,
+  "registered_goal_completed": false,
+  "round13_reboot_issued": false,
+  "rounds": [
+    {
+      "after_boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+      "before_boot_id": "457ecc1a5d904d6f8c5fad67e069bef3",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.33,
+      "qca_events": 0,
+      "round": 1,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "c819d52864fb49fdb48f8b7580d16482",
+      "before_boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.15,
+      "qca_events": 0,
+      "round": 2,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+      "before_boot_id": "c819d52864fb49fdb48f8b7580d16482",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.36,
+      "qca_events": 0,
+      "round": 3,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "af99164be4da495a94277ca637962d0d",
+      "before_boot_id": "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+      "kernel_fault_counts": {},
+      "observation_seconds": 151.02,
+      "qca_events": 0,
+      "round": 4,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "926c2310a92c435e8b3c63f64f6a7b03",
+      "before_boot_id": "af99164be4da495a94277ca637962d0d",
+      "kernel_fault_counts": {},
+      "observation_seconds": 151.25,
+      "qca_events": 1,
+      "round": 5,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "6bf45166665a48da8b02788655e181ca",
+      "before_boot_id": "926c2310a92c435e8b3c63f64f6a7b03",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.7,
+      "qca_events": 2,
+      "round": 6,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+      "before_boot_id": "6bf45166665a48da8b02788655e181ca",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.85,
+      "qca_events": 1,
+      "round": 7,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "4ff2a339ac684862992e6db0fbcf07fd",
+      "before_boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.94,
+      "qca_events": 1,
+      "round": 8,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "bc4e2ffa015547f1aedbeea7d4308780",
+      "before_boot_id": "4ff2a339ac684862992e6db0fbcf07fd",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.21,
+      "qca_events": 0,
+      "round": 9,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "228f72d1e89c4d9aa9c81e971eb87bd8",
+      "before_boot_id": "bc4e2ffa015547f1aedbeea7d4308780",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.15,
+      "qca_events": 1,
+      "round": 10,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "d85d14df71be480487f15016fe52b054",
+      "before_boot_id": "228f72d1e89c4d9aa9c81e971eb87bd8",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.38,
+      "qca_events": 0,
+      "round": 11,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "a48bfed924f64996833e789baf2ab011",
+      "before_boot_id": "d85d14df71be480487f15016fe52b054",
+      "kernel_fault_counts": {},
+      "observation_seconds": 150.55,
+      "qca_events": 2,
+      "round": 12,
+      "verdict": "clean"
+    }
+  ]
+}

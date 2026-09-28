@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime='; cat /proc/uptime; printf 'bluetooth='; systemctl is-active bluetooth.service || true; printf 'address='; systemctl is-active gts9-bluetooth-address.service || true; printf 'controllers='; ls /sys/class/bluetooth | tr '\\n' ' '; echo; echo controller:; timeout 8 bluetoothctl show"
+  ],
+  "ended_utc": "2026-09-28T06:50:24.447688+00:00",
+  "started_utc": "2026-09-28T06:50:24.320878+00:00",
+  "status": 0
+}

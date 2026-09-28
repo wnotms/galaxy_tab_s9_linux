@@ -175,6 +175,21 @@ remains suspect. Bluetooth is powered with both units active, no failed unit or
 CPU signature; ADB, bound NCM and authenticated SSH passed immediately, without
 Code43. Push its sealed accepted preflight before `run --attempt 5`.
 
+Attempt 05 issued twelve ordinary warm reboots and recorded twelve CLEAN
+new boots, each observed beyond 150 s with exact attribution and no detected
+CPU fault. Round 13 stopped during source preflight before any reboot: the
+first Windows source-bound NCM SSH-banner PowerShell command timed out at its
+20 s host deadline and the runner ended before bounded retries. Later
+read-only probes on the same boot succeeded, but cannot classify the first
+timeout's internal stage or make the source gate clean. Full post-stop
+Test249 production identity (five partitions, 181 modules, config/notes,
+DCC absence) still matches, and no CPU-stall/panic signature was detected.
+See attempt-05 `RESULTS.md`, `summary.json`, `EVIDENCE_AUDIT.json` and
+`round-13/post-stop/`. No thirteenth reboot, final 20-round acceptance or
+Test251 occurred. The Test250 goal remains incomplete; keep this attempt
+stopped and production unchanged. Any further physical series requires a
+fresh registration and owner decision about this host probe timeout.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

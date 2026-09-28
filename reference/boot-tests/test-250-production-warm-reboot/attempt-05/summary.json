@@ -1,0 +1,1021 @@
+{
+  "accepted_qca_baudrate": true,
+  "accepted_qca_cycles": true,
+  "accepted_startup_variants": true,
+  "attempted_rounds": 13,
+  "clean_rounds": 12,
+  "completed_rounds": 13,
+  "completed_rounds_definition": "Runner legacy field: thirteen terminated attempts; only twelve completed a registered new-boot window.",
+  "dcc_absent_in_completed_clean_rounds": true,
+  "final_acceptance_performed": false,
+  "final_verdict": "stopped_on_first_non_clean",
+  "first_non_clean_condition": "host_source_bound_banner_probe_timeout",
+  "first_non_clean_round": 13,
+  "first_probe_timeout_stage_unknown": true,
+  "fully_observed_rounds": 12,
+  "kernel_config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "kernel_fault_counts": {},
+  "kernel_notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "minimum_observation_seconds": 150,
+  "ordinary_reboot_commands": 12,
+  "production_unchanged": true,
+  "registered_goal_completed": false,
+  "registered_rounds": 20,
+  "round13_post_stop_evidence": "round-13/post-stop/summary.json",
+  "round13_reboot_issued": false,
+  "rounds": [
+    {
+      "after_boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+      "attribution": "attributed",
+      "before_boot_id": "457ecc1a5d904d6f8c5fad67e069bef3",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.47
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 141.59,
+      "ended_utc": "2026-09-28T06:31:59.477438+00:00",
+      "first_adb_uptime_seconds": 8.74,
+      "journal_rows": 1095,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 150.33,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.33,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.011981,
+            "events": [],
+            "setup_source_seconds": 4.08033
+          },
+          {
+            "completion_source_seconds": 6.694002,
+            "events": [],
+            "setup_source_seconds": 5.824877
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 2,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:29:03.924599+00:00",
+      "registered_window_completed": true,
+      "round": 1,
+      "started_utc": "2026-09-28T06:28:55.303763+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "c819d52864fb49fdb48f8b7580d16482",
+      "attribution": "attributed",
+      "before_boot_id": "0d3543aa73f4484ba7bacd3dc9057d44",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "c819d52864fb49fdb48f8b7580d16482",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.24
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 141.76,
+      "ended_utc": "2026-09-28T06:35:02.805427+00:00",
+      "first_adb_uptime_seconds": 8.39,
+      "journal_rows": 1086,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 150.15,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.15,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.869954,
+            "events": [],
+            "setup_source_seconds": 3.965394
+          },
+          {
+            "completion_source_seconds": 6.293109,
+            "events": [],
+            "setup_source_seconds": 5.400832
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 2,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:32:07.271657+00:00",
+      "registered_window_completed": true,
+      "round": 2,
+      "started_utc": "2026-09-28T06:31:59.479058+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+      "attribution": "attributed",
+      "before_boot_id": "c819d52864fb49fdb48f8b7580d16482",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.46
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 141.68,
+      "ended_utc": "2026-09-28T06:38:06.451504+00:00",
+      "first_adb_uptime_seconds": 8.68,
+      "journal_rows": 1093,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 150.36,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.36,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.65483,
+            "events": [],
+            "setup_source_seconds": 3.76195
+          },
+          {
+            "completion_source_seconds": 6.113053,
+            "events": [],
+            "setup_source_seconds": 5.239904
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 2,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:35:10.578211+00:00",
+      "registered_window_completed": true,
+      "round": 3,
+      "started_utc": "2026-09-28T06:35:02.807606+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "af99164be4da495a94277ca637962d0d",
+      "attribution": "attributed",
+      "before_boot_id": "e8ff94a52e6a4c129ffc5766fbc9c8a5",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "af99164be4da495a94277ca637962d0d",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 152.19
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.33,
+      "ended_utc": "2026-09-28T06:41:10.584120+00:00",
+      "first_adb_uptime_seconds": 8.69,
+      "journal_rows": 1091,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 151.02,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 151.02,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.290092,
+            "events": [],
+            "setup_source_seconds": 3.987379
+          },
+          {
+            "completion_source_seconds": 7.269632,
+            "events": [],
+            "setup_source_seconds": 6.366772
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 2,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:38:14.195895+00:00",
+      "registered_window_completed": true,
+      "round": 4,
+      "started_utc": "2026-09-28T06:38:06.453449+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "926c2310a92c435e8b3c63f64f6a7b03",
+      "attribution": "attributed",
+      "before_boot_id": "af99164be4da495a94277ca637962d0d",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "926c2310a92c435e8b3c63f64f6a7b03",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 152.36
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.6,
+      "ended_utc": "2026-09-28T06:44:15.313719+00:00",
+      "first_adb_uptime_seconds": 8.65,
+      "journal_rows": 1099,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 44,
+      "new_boot_uptime_seconds": 151.25,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 151.25,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.859978,
+            "events": [],
+            "setup_source_seconds": 3.919476
+          },
+          {
+            "completion_source_seconds": 6.169375,
+            "events": [
+              {
+                "completion_source_seconds": 6.169375,
+                "event_source_seconds": 5.377145,
+                "recovery_seconds": 0.79223,
+                "row": 1039
+              }
+            ],
+            "setup_source_seconds": 5.302632
+          }
+        ],
+        "event_count": 1,
+        "event_rows": [
+          1039
+        ],
+        "setup_count": 2,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T06:41:18.378493+00:00",
+      "registered_window_completed": true,
+      "round": 5,
+      "started_utc": "2026-09-28T06:41:10.586030+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "6bf45166665a48da8b02788655e181ca",
+      "attribution": "attributed",
+      "before_boot_id": "926c2310a92c435e8b3c63f64f6a7b03",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "6bf45166665a48da8b02788655e181ca",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.79
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.28,
+      "ended_utc": "2026-09-28T06:47:19.275581+00:00",
+      "first_adb_uptime_seconds": 8.42,
+      "journal_rows": 1114,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 45,
+      "new_boot_uptime_seconds": 150.7,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.7,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.19368,
+            "events": [],
+            "setup_source_seconds": 4.215732
+          },
+          {
+            "completion_source_seconds": 6.327002,
+            "events": [
+              {
+                "completion_source_seconds": 6.327002,
+                "event_source_seconds": 5.524371,
+                "recovery_seconds": 0.802631,
+                "row": 1044
+              }
+            ],
+            "setup_source_seconds": 5.454093
+          },
+          {
+            "completion_source_seconds": 9.32278,
+            "events": [
+              {
+                "completion_source_seconds": 9.32278,
+                "event_source_seconds": 8.49708,
+                "recovery_seconds": 0.8257,
+                "row": 1074
+              }
+            ],
+            "setup_source_seconds": 8.417447
+          }
+        ],
+        "event_count": 2,
+        "event_rows": [
+          1044,
+          1074
+        ],
+        "setup_count": 3,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T06:44:23.131972+00:00",
+      "registered_window_completed": true,
+      "round": 6,
+      "started_utc": "2026-09-28T06:44:15.315794+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+      "attribution": "attributed",
+      "before_boot_id": "6bf45166665a48da8b02788655e181ca",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.97
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.13,
+      "ended_utc": "2026-09-28T06:50:23.489894+00:00",
+      "first_adb_uptime_seconds": 8.72,
+      "journal_rows": 1092,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 44,
+      "new_boot_uptime_seconds": 150.85,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.85,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.811984,
+            "events": [],
+            "setup_source_seconds": 3.918427
+          },
+          {
+            "completion_source_seconds": 6.360889,
+            "events": [
+              {
+                "completion_source_seconds": 6.360889,
+                "event_source_seconds": 5.55737,
+                "recovery_seconds": 0.803519,
+                "row": 1036
+              }
+            ],
+            "setup_source_seconds": 5.48058
+          }
+        ],
+        "event_count": 1,
+        "event_rows": [
+          1036
+        ],
+        "setup_count": 2,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T06:47:27.005676+00:00",
+      "registered_window_completed": true,
+      "round": 7,
+      "started_utc": "2026-09-28T06:47:19.277749+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "4ff2a339ac684862992e6db0fbcf07fd",
+      "attribution": "attributed",
+      "before_boot_id": "2533bcb3cb244abdbbc9a78e9638b473",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "4ff2a339ac684862992e6db0fbcf07fd",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 152.07
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.21,
+      "ended_utc": "2026-09-28T06:53:27.701297+00:00",
+      "first_adb_uptime_seconds": 8.73,
+      "journal_rows": 1092,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 44,
+      "new_boot_uptime_seconds": 150.94,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.94,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.896997,
+            "events": [],
+            "setup_source_seconds": 3.962819
+          },
+          {
+            "completion_source_seconds": 6.320412,
+            "events": [
+              {
+                "completion_source_seconds": 6.320412,
+                "event_source_seconds": 5.528646,
+                "recovery_seconds": 0.791766,
+                "row": 1033
+              }
+            ],
+            "setup_source_seconds": 5.456826
+          }
+        ],
+        "event_count": 1,
+        "event_rows": [
+          1033
+        ],
+        "setup_count": 2,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T06:50:31.313469+00:00",
+      "registered_window_completed": true,
+      "round": 8,
+      "started_utc": "2026-09-28T06:50:23.492029+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "bc4e2ffa015547f1aedbeea7d4308780",
+      "attribution": "attributed",
+      "before_boot_id": "4ff2a339ac684862992e6db0fbcf07fd",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "bc4e2ffa015547f1aedbeea7d4308780",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.29
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 141.49,
+      "ended_utc": "2026-09-28T06:56:31.013568+00:00",
+      "first_adb_uptime_seconds": 8.72,
+      "journal_rows": 1102,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 150.21,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.21,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 4.986245,
+            "events": [],
+            "setup_source_seconds": 4.032936
+          },
+          {
+            "completion_source_seconds": 6.352816,
+            "events": [],
+            "setup_source_seconds": 5.476003
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 2,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:53:35.406524+00:00",
+      "registered_window_completed": true,
+      "round": 9,
+      "started_utc": "2026-09-28T06:53:27.703387+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "228f72d1e89c4d9aa9c81e971eb87bd8",
+      "attribution": "attributed",
+      "before_boot_id": "bc4e2ffa015547f1aedbeea7d4308780",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "228f72d1e89c4d9aa9c81e971eb87bd8",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.28
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 141.93,
+      "ended_utc": "2026-09-28T06:59:34.428087+00:00",
+      "first_adb_uptime_seconds": 8.22,
+      "journal_rows": 1093,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 44,
+      "new_boot_uptime_seconds": 150.15,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.15,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.011775,
+            "events": [],
+            "setup_source_seconds": 4.046263
+          },
+          {
+            "completion_source_seconds": 6.704813,
+            "events": [
+              {
+                "completion_source_seconds": 6.704813,
+                "event_source_seconds": 5.900579,
+                "recovery_seconds": 0.804234,
+                "row": 1038
+              }
+            ],
+            "setup_source_seconds": 5.830087
+          }
+        ],
+        "event_count": 1,
+        "event_rows": [
+          1038
+        ],
+        "setup_count": 2,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T06:56:38.653083+00:00",
+      "registered_window_completed": true,
+      "round": 10,
+      "started_utc": "2026-09-28T06:56:31.015885+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "d85d14df71be480487f15016fe52b054",
+      "attribution": "attributed",
+      "before_boot_id": "228f72d1e89c4d9aa9c81e971eb87bd8",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "d85d14df71be480487f15016fe52b054",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.51
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.0,
+      "ended_utc": "2026-09-28T07:02:38.083675+00:00",
+      "first_adb_uptime_seconds": 8.38,
+      "journal_rows": 1108,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 43,
+      "new_boot_uptime_seconds": 150.38,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.38,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.056833,
+            "events": [],
+            "setup_source_seconds": 4.059586
+          },
+          {
+            "completion_source_seconds": 6.61106,
+            "events": [],
+            "setup_source_seconds": 5.728328
+          },
+          {
+            "completion_source_seconds": 9.732486,
+            "events": [],
+            "setup_source_seconds": 8.823889
+          }
+        ],
+        "event_count": 0,
+        "event_rows": [],
+        "setup_count": 3,
+        "state": "absent"
+      },
+      "reboot_requested_utc": "2026-09-28T06:59:42.282842+00:00",
+      "registered_window_completed": true,
+      "round": 11,
+      "started_utc": "2026-09-28T06:59:34.430248+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "a48bfed924f64996833e789baf2ab011",
+      "attribution": "attributed",
+      "before_boot_id": "d85d14df71be480487f15016fe52b054",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "a48bfed924f64996833e789baf2ab011",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 151.68
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 142.29,
+      "ended_utc": "2026-09-28T07:05:42.744758+00:00",
+      "first_adb_uptime_seconds": 8.26,
+      "journal_rows": 1107,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "known_warning_count": 45,
+      "new_boot_uptime_seconds": 150.55,
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 150.55,
+      "qca_baudrate_warning": {
+        "classification": "bounded-per-setup-cycle",
+        "cycles": [
+          {
+            "completion_source_seconds": 5.033895,
+            "events": [],
+            "setup_source_seconds": 4.045223
+          },
+          {
+            "completion_source_seconds": 6.426345,
+            "events": [
+              {
+                "completion_source_seconds": 6.426345,
+                "event_source_seconds": 5.630155,
+                "recovery_seconds": 0.79619,
+                "row": 1030
+              }
+            ],
+            "setup_source_seconds": 5.552583
+          },
+          {
+            "completion_source_seconds": 9.577586,
+            "events": [
+              {
+                "completion_source_seconds": 9.577586,
+                "event_source_seconds": 8.743839,
+                "recovery_seconds": 0.833747,
+                "row": 1065
+              }
+            ],
+            "setup_source_seconds": 8.659247
+          }
+        ],
+        "event_count": 2,
+        "event_rows": [
+          1030,
+          1065
+        ],
+        "setup_count": 3,
+        "state": "accepted"
+      },
+      "reboot_requested_utc": "2026-09-28T07:02:45.780800+00:00",
+      "registered_window_completed": true,
+      "round": 12,
+      "started_utc": "2026-09-28T07:02:38.085797+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_context_fault": 10,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": null,
+      "before_boot_id": "a48bfed924f64996833e789baf2ab011",
+      "bluetooth_health": {
+        "address_service": "active",
+        "bluetooth_service": "active",
+        "boot_id": "a48bfed924f64996833e789baf2ab011",
+        "controller": "Controller 38:8A:06:59:04:E7 (public)",
+        "controllers": [
+          "hci0"
+        ],
+        "healthy": true,
+        "powered": true,
+        "uptime_seconds": 161.16
+      },
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "cpu_fault_detected": false,
+      "dcc_absent": true,
+      "error": "Source preflight Windows source-bound NCM SSH banner probe timed out at host 20 s; runner ended before bounded retries; no reboot was issued",
+      "first_non_clean_condition": "host_source_bound_banner_probe_timeout",
+      "kernel_fault_counts": {},
+      "kernel_suspects": [],
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_seconds": 0,
+      "post_stop_counts_as_registered_clean_window": false,
+      "post_stop_same_boot_evidence": "post-stop/summary.json",
+      "post_stop_transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": null,
+        "ncm_initial_failure": false,
+        "ncm_recovery_seconds_from_first_attempt": null,
+        "ncm_recovery_utc": null,
+        "ncm_source_bound": true,
+        "ssh_ok": true
+      },
+      "reboot_requested": false,
+      "registered_window_completed": false,
+      "round": 13,
+      "source_transport": {
+        "adb_ok": true,
+        "ncm_banner_probe_status": "timeout",
+        "ncm_retries_completed": 0,
+        "ncm_tcp_failure_proven": false,
+        "ssh_state": "not_collected_before_runner_exit",
+        "windows_pnp_code43": false
+      },
+      "source_uptime_seconds": 160.49,
+      "started_utc": "2026-09-28T07:05:42.747045+00:00",
+      "systemd_failed_units": [],
+      "transport_gate_completed": false,
+      "verdict": "suspect"
+    }
+  ],
+  "test249_manifest_sha256": "ed9a7b8544215662ebe7d800316b4952902fd0e1684b16528469a57758af87d4",
+  "test251_created": false
+}

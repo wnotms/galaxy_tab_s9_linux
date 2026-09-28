@@ -1,0 +1,54 @@
+{
+  "after_boot_id": null,
+  "before_boot_id": "a48bfed924f64996833e789baf2ab011",
+  "bluetooth_health": {
+    "address_service": "active",
+    "bluetooth_service": "active",
+    "boot_id": "a48bfed924f64996833e789baf2ab011",
+    "controller": "Controller 38:8A:06:59:04:E7 (public)",
+    "controllers": [
+      "hci0"
+    ],
+    "healthy": true,
+    "powered": true,
+    "uptime_seconds": 161.16
+  },
+  "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "cpu_fault_detected": false,
+  "dcc_absent": true,
+  "error": "Source preflight Windows source-bound NCM SSH banner probe timed out at host 20 s; runner ended before bounded retries; no reboot was issued",
+  "first_non_clean_condition": "host_source_bound_banner_probe_timeout",
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "observation_seconds": 0,
+  "post_stop_counts_as_registered_clean_window": false,
+  "post_stop_same_boot_evidence": "post-stop/summary.json",
+  "post_stop_transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": null,
+    "ncm_initial_failure": false,
+    "ncm_recovery_seconds_from_first_attempt": null,
+    "ncm_recovery_utc": null,
+    "ncm_source_bound": true,
+    "ssh_ok": true
+  },
+  "reboot_requested": false,
+  "registered_window_completed": false,
+  "round": 13,
+  "source_transport": {
+    "adb_ok": true,
+    "ncm_banner_probe_status": "timeout",
+    "ncm_retries_completed": 0,
+    "ncm_tcp_failure_proven": false,
+    "ssh_state": "not_collected_before_runner_exit",
+    "windows_pnp_code43": false
+  },
+  "source_uptime_seconds": 160.49,
+  "started_utc": "2026-09-28T07:05:42.747045+00:00",
+  "systemd_failed_units": [],
+  "transport_gate_completed": false,
+  "verdict": "suspect"
+}

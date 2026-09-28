@@ -1,0 +1,23 @@
+{
+  "conclusion_limit": "Later success cannot identify whether the first 20-second timeout occurred in PowerShell setup, adapter query, TCP connect, or banner read.",
+  "observations": [
+    {
+      "attempt": 0,
+      "status": 0,
+      "valid_bound_banner": true
+    },
+    {
+      "attempt": 1,
+      "status": 0,
+      "valid_bound_banner": true
+    },
+    {
+      "attempt": 2,
+      "status": 0,
+      "valid_bound_banner": true
+    }
+  ],
+  "pnp_event_bytes": 0,
+  "pnp_event_collection_status": 1,
+  "purpose": "Read-only repeat of exact source-bound Windows NCM banner probe after first source-gate timeout; same boot; no reboot"
+}
