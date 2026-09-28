@@ -1,0 +1,25 @@
+{
+  "verdict": "accepted-under-bounded-cable-recovery-policy",
+  "physical_cycle": 3,
+  "boot_id": "461c1408e42643afae5b48162771d077",
+  "daemon_pid": 834,
+  "offline_lower_bound_seconds": 54.75454204699781,
+  "native_ncm_recovery_upper_bound_seconds": 15.06027731300128,
+  "observation_seconds": 151.34478224600025,
+  "native_first_shell_attempt_passed": true,
+  "ncm_initial_timeout_recorded": true,
+  "ncm_recovery_attempts": 2,
+  "ncm_recovery_transient": true,
+  "all_transports_continuous_after_recovery": true,
+  "kernel_fault_counts": {},
+  "code43": false,
+  "full_post_cycle_identity": true,
+  "post_cycle_evidence": "../../final-acceptance",
+  "adbd_review": {
+    "new_pre_enable_disable_warnings": [],
+    "classification": "no-new-adbd-warning"
+  },
+  "host_server_restarts": 0,
+  "device_changes": false,
+  "additional_reboots": 0
+}

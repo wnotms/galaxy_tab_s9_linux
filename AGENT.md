@@ -46,31 +46,29 @@ was made. Read attempt03 RESULTS/review; keep all old outcomes/seals intact.
 missing table entry; raw `adb reconnect`37.0.1 remains an unresolved separate
 limitation. Do not switch backend, modify production or start Stage2/3.
 
-Attempt04 was explicitly adopted by the owner (reply: "使用新方案").
-Its source-derived classification permits one exact pre-enable DISABLE W/cycle,
-with matching monitor/disable and ENABLE<=5s/worker<=1s inside the observed
-physical transition. Other faults/warnings still stop. The corrected host
-observer uses offline supply+native absence even with UDC configured,
-conservative command brackets, same boot/PID/hash, real USB/NCM<=60s and150s
-elapsed. No device software/backend change, restart/reset or reboot is allowed.
-Final local1124/1124 and focused33 tests pass. Adopted registration was pushed at dcb46833. Fresh full read-only
-preflight-adopted passes exact boot/PID/hash, five partitions/config/notes/
-181+181 modules/DCC/protected settings and all channels, with no new fault/
-failed unit/Code43. Push this evidence, then start cycle01 capture before the
-owner action. The initial no-cycle state below is historical. Prior attempt03 remains stopped/unaccepted; keep old
-outcomes/seals. PROPOSAL_SHA256 describes the unadopted phase at c90745c6.
-Cycle01 subsequently passed:37.058s observed offline lower bound,14.100s
-native/NCM recovery upper bound and155.487s elapsed responsive checks. Native
-shell passed first try; NCM first8s timeout then recovery is retained as a
-bounded cable-recovery transient. One exact DISABLE W satisfied contextual
-5s/1s limits. Full post-cycle five partitions/config/notes/181+181/DCC/
-protected settings/daemon/units/kernel/three-channel gate passes without new
-CPU/kernel fault or Code43. Cycle02 also passes:40.166s offline lower bound,15.346s recovery upper bound,
-155.466s responsive checks and full post-cycle identity. First native not-found
-and first NCM8s timeout are retained recovery transients; one contextual W
-completed ENABLE/worker within bounds. Series2/3 accepted; start cycle03 capture
-before asking for its one20s cable action. No reset/reboot/software change.
-Read attempt04 RESULTS/summary and both completed-cycle evidence before action.
+Attempt04 was explicitly adopted (reply: "使用新方案") and completed3/3
+bounded physical cable-recovery cycles on the same boot461c.../PID834/hash.
+Native+NCM recovery upper bounds14.100/15.346/15.060s, followed by real ADB/
+NCM/Wi-Fi responsive windows155.487/155.466/151.345s. Each cycle's first NCM
+8s timeout recovered inside60s and is retained; cycle02 also had first native
+not-found before enumeration. This is accepted bounded recovery with observed
+transients, not three transient-free Test250 CLEAN rounds. Two exact new
+pre-enable DISABLE W events satisfied the adopted contextual/source/count/5s+1s
+bounds; cycle03 had none. No other new daemon fault or CPU/kernel signature,
+extra boot, Code43 or failed unit was detected.
+Full final five-partition/config/notes/181 candidate+181 original/DCC/daemon/
+protected-settings/kernel/three-channel acceptance passes; Windows37.0.1/
+LIBADBUSB status is unchanged. The single final full check also serves cycle03's
+post-gate. No software/backend/driver change, device or host-server restart,
+reset/flash/reboot occurred in this attempt. Host implementation validation
+1124 all+33 focused, adoption33 and final87 archive tests pass.
+Read attempt04 RESULTS/summary/seals and Test253 CURRENT_STATUS.md. Physical
+USB ADB reconnect is now verified within these windows; raw connected Windows
+`adb reconnect` remains unaccepted with a separately verified host rescan
+workaround. Preserve all earlier stopped attempts/seals. Current Test252 Stage1
+kernel remains installed, its original attempt still stopped/unaccepted; do
+not retroactively pass/promote it or begin Stage2/3/extra charging tests. Future
+hardware work needs its own authorized registration and fresh preflight.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

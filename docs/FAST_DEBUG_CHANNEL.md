@@ -62,8 +62,12 @@ are recorded separately in test-232; host mocks alone prove no enumeration.
 
 Test252 recorded native ADB offline after a physical computer reconnect, while
 NCM and Wi-Fi SSH remained available. Test253 independently registers a Debian
-34.0.5-12 userspace repair; physical acceptance is pending. It does not modify
-the kernel or gadget/NCM/SSH settings. The package daemon remains intact.
+34.0.5-12 userspace repair. Its installed daemon passed three bounded physical
+cable-recovery cycles in owner-adopted Test253 attempt04, with real native ADB
+and both SSH paths responsive for>=150s after each recovery. Kernel and
+gadget/NCM/SSH settings are unchanged; the packaged daemon remains intact.
+Initial NCM timeouts recovered inside the60s gate and remain recorded; this
+does not establish transient-free USB operation or pass Test252's old stop.
 
 `gts9-adbd.service` now uses `/usr/libexec/gts9-adbd-run`. This selects
 `/usr/local/libexec/gts9-adbd-reconnect` when installed, otherwise the original
@@ -95,12 +99,16 @@ For this observed host state, use `scripts/gts9-adb-host-rescan.sh`. It runs
 only computer-side kill-server/start-server/devices; the optional
 GTS9_ADB_EXE selects the executable. Default is the owner's current
 /mnt/d/android/platform-tools/adb.exe. It does not call root/usb/tcpip/reboot
-or restart any device service. Physical cable-reconnect acceptance is still
-pending: its first real cable cycle recovered ADB, but an observer's stale-UDC
-assumption prevented the registered recovery/window capture. Attempt03 is
-stopped, not passed. See [attempt03](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-03/RESULTS.md)
-and the owner-adopted [attempt04 observer registration](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/README.md).
-No device software/backend change is proposed for these fresh cable checks.
+or restart any device service. Attempt03 remains stopped: its stale-UDC
+observer missed the registered evidence despite eventual ADB recovery.
+Owner-adopted [attempt04 results](../reference/boot-tests/test-253-adbd-usb-reconnect/attempt-04/RESULTS.md)
+now verify three physical cycles without host-server/device restarts: combined
+native/NCM recovery upper bounds14.100/15.346/15.060s and responsive windows
+155.487/155.466/151.345s. Initial NCM timeouts in all three and one early native
+not-found are retained. Final full identity and both SSH paths pass, with no
+new kernel fault/Code43. Raw connected `adb reconnect` is still unaccepted; the
+rescan is a workaround for the observed missing-host-table state, not a general
+USB-failure fix. See [current Test253 status](../reference/boot-tests/test-253-adbd-usb-reconnect/CURRENT_STATUS.md).
 
 ## Raising the console baud does nothing, and that was measured
 

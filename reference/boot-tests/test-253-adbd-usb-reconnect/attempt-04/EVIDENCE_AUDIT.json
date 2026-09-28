@@ -1,0 +1,38 @@
+{
+  "verdict": "passed",
+  "accepted_cycles": 3,
+  "raw_command_records_checked": 649,
+  "all_boot_ids": [
+    "461c1408e42643afae5b48162771d077"
+  ],
+  "native_daemon_pid": 834,
+  "per_cycle_deadlines_and_elapsed_windows": true,
+  "all_adbd_journals_replayed": true,
+  "new_bounded_warning_count": 2,
+  "all_first_recovery_failures": [
+    {
+      "file": "cycle-01/recovery-01-ncm-shell.command.json",
+      "status": "timeout"
+    },
+    {
+      "file": "cycle-02/recovery-01-native.command.json",
+      "status": 1
+    },
+    {
+      "file": "cycle-02/recovery-02-ncm-shell.command.json",
+      "status": "timeout"
+    },
+    {
+      "file": "cycle-03/recovery-01-ncm-shell.command.json",
+      "status": "timeout"
+    }
+  ],
+  "all_first_failures_preserved": true,
+  "no_failed_cycle": true,
+  "cycle_seals_verified": true,
+  "prior_stopped_attempt03_seal_verified": true,
+  "final_full_identity": true,
+  "host_backend_status_bytes_unchanged": true,
+  "software_changes": false,
+  "additional_reboots": 0
+}
