@@ -1,10 +1,9 @@
-# Test253 attempt04 proposal: observed cable recovery
+# Test253 attempt04: observed cable recovery
 
-Status: proposed, not owner-adopted; no physical action may run yet. The owner's
-ongoing ADB repair request authorizes source review, host code/tests and read-only
-preflight. Root Test253 registration prohibits changing policy to get a pass; the
-one new bounded daemon-warning classification below requires an explicit owner
-decision before fresh hardware testing. Attempt03 remains stopped and unaccepted.
+Status: owner-adopted2026-09-28 (reply: "使用新方案"). The exact proposal
+below was accepted; see ADOPTION.md. Fresh read-only preflight and pushed
+evidence precede any owner cable action. Attempt03 remains stopped/unaccepted.
+No gate or software variable beyond the adopted host classification changes.
 
 Keep the exact installed Test252 Stage1 kernel/config/DTB/modules/partitions and
 Test253 daemon/launcher/service, boot461c1408e42643afae5b48162771d077 PID834. No
@@ -36,7 +35,7 @@ transition. After each window require the read-only post-cycle exact identity/
 failed-unit/transport gate before the next owner action. Runner enforces prior
 cycle acceptance and refuses any series containing a cycle failure.json.
 
-Proposed narrow classification: at most one exact
+Adopted narrow classification: at most one exact
 `received FUNCTIONFS_DISABLE while not enabled?` warning per physical cycle,
 from the exact installed PID/binary, preceded within1s by monitor spawn and
 DISABLE on that monitor TID, followed<=5s by ENABLE and<=1s by worker spawn.
@@ -45,7 +44,7 @@ Warning source time must lie between the last connected sample and the first
 return sample plus5s; journal timestamps must be ordered. Other/duplicate
 warnings, missing context or missing completion stop. AOSP
 severity is parsed from MESSAGE: journald PRIORITY=6 does not hide W/E/F.
-This source-derived classification is a proposal, not retroactive attempt03
+This source-derived classification is not retroactive attempt03
 acceptance or proof that all queued-event behavior is harmless.
 
 Runner: `python3 scripts/adbd-cable-observer.py --registration <this>/policy.json

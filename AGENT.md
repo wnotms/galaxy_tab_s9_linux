@@ -46,22 +46,18 @@ was made. Read attempt03 RESULTS/review; keep all old outcomes/seals intact.
 missing table entry; raw `adb reconnect`37.0.1 remains an unresolved separate
 limitation. Do not switch backend, modify production or start Stage2/3.
 
-Attempt04 is a concrete but unadopted host-observer/classification proposal.
-Source review ties cycle01's W to the pre-enable DISABLE teardown branch,
-followed0.148041s later by ENABLE; this does not establish its queuing cause or
-pass attempt03. New host observer uses offline supply+native absence even with
-UDC configured, conservative command-time bounds (no invented delay), same
-boot/PID/hash, real shell/NCM<=60s and150s elapsed. A proposed allowance permits
-only one exact W/cycle with matching monitor/disable and ENABLE<=5s/worker<=1s,
-within the observed physical transition; all other new faults still stop.
-The runner rejects owner_adopted=false before any device access. Full read-only
-preflight and actual read-only snapshot/journal selectors pass. No new physical
-cycle or device change occurred. Root Test253 registration forbids changing
-policy to get a pass: obtain the owner's explicit classification decision,
-commit/push adoption, then fresh3 cycles; do not resume/reclassify attempt03.
-Final full local regression1124/1124 and focused33 tests pass; an initial
-shared-policy test failure was fixed and retained. Read attempt04 README/policy/
-SOURCE_REVIEW and local validation before action.
+Attempt04 was explicitly adopted by the owner (reply: "使用新方案").
+Its source-derived classification permits one exact pre-enable DISABLE W/cycle,
+with matching monitor/disable and ENABLE<=5s/worker<=1s inside the observed
+physical transition. Other faults/warnings still stop. The corrected host
+observer uses offline supply+native absence even with UDC configured,
+conservative command brackets, same boot/PID/hash, real USB/NCM<=60s and150s
+elapsed. No device software/backend change, restart/reset or reboot is allowed.
+Final local1124/1124 and focused33 tests pass. Adopted registration and a fresh
+full read-only preflight must be pushed before the first of three new cable
+cycles. None has run yet. Prior attempt03 remains stopped/unaccepted; keep old
+outcomes/seals. PROPOSAL_SHA256 describes the unadopted phase at c90745c6.
+Read attempt04 README/policy/ADOPTION and fresh preflight before action.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The
