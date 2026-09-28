@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ncm = Get-NetAdapter -ErrorAction SilentlyContinue | Where-Object { $_.InterfaceDescription -match 'NCM' }\n$ncm | Select-Object Name,ifIndex,Status,MacAddress,InterfaceDescription | Format-List\nforeach ($a in $ncm) {\n  Get-NetIPAddress -InterfaceIndex $a.ifIndex -ErrorAction SilentlyContinue | Select-Object IPAddress,PrefixLength,AddressState,InterfaceIndex | Format-List\n  Get-NetNeighbor -InterfaceIndex $a.ifIndex -ErrorAction SilentlyContinue | Select-Object IPAddress,LinkLayerAddress,State,InterfaceIndex | Format-List\n  Get-NetRoute -InterfaceIndex $a.ifIndex -ErrorAction SilentlyContinue | Select-Object DestinationPrefix,NextHop,RouteMetric,InterfaceIndex | Format-List\n}"
+  ],
+  "ended_utc": "2026-09-28T04:37:15.344797+00:00",
+  "started_utc": "2026-09-28T04:37:12.953940+00:00",
+  "status": 0
+}

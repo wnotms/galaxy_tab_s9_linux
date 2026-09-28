@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$c = New-Object System.Net.Sockets.TcpClient\ntry {\n  $a = $c.BeginConnect('169.254.42.1', 22, $null, $null)\n  if (-not $a.AsyncWaitHandle.WaitOne(5000)) { throw 'TCP connect timeout' }\n  $c.EndConnect($a)\n  $s = $c.GetStream(); $s.ReadTimeout = 5000\n  $b = New-Object byte[] 256\n  $n = $s.Read($b, 0, $b.Length)\n  [Console]::Write([Text.Encoding]::ASCII.GetString($b, 0, $n))\n} finally { $c.Close() }\n"
+  ],
+  "ended_utc": "2026-09-28T04:35:00.082081+00:00",
+  "started_utc": "2026-09-28T04:34:54.634592+00:00",
+  "status": 1
+}

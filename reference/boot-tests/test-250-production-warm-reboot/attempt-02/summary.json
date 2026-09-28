@@ -1,0 +1,118 @@
+{
+  "accepted_startup_variants": true,
+  "additional_non_clean_conditions": [
+    "post-stop usb-transient"
+  ],
+  "clean_rounds": 0,
+  "completed_observation_windows": 0,
+  "completed_rounds": 1,
+  "dcc_absent_in_completed_clean_rounds": true,
+  "final_acceptance_executed": false,
+  "final_verdict": "stopped_on_first_non_clean",
+  "first_non_clean_round": 1,
+  "kernel_config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "kernel_fault_counts": {},
+  "kernel_notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "production_unchanged": true,
+  "reboot_requests": 1,
+  "registered_observation_seconds": 150,
+  "registered_rounds": 20,
+  "rounds": [
+    {
+      "after_boot_id": "188fd5c914ca48189dede96669a9c836",
+      "attribution": "attributed",
+      "before_boot_id": "b08bbc9b3bbf417e9935619fcc5d7222",
+      "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+      "dcc_absent": true,
+      "elapsed_seconds_from_first_adb_to_last_poll": 13.81,
+      "ended_utc": "2026-09-28T04:33:37.953624+00:00",
+      "error": "KernelEvidenceError('new boot kernel fault during observation')",
+      "first_adb_uptime_seconds": 6.3,
+      "journal_rows": 1092,
+      "kernel_fault_counts": {},
+      "kernel_suspects": [
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82a6d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 602
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82e2700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 605
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8314d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 608
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8340900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 611
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb836d600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 614
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb839ac00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 617
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83c8c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 620
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83f4300, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 623
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8420f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 626
+        },
+        {
+          "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb844da00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+          "priority": 3,
+          "row": 629
+        }
+      ],
+      "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+      "observation_basis": "Last successful boot-ID/uptime poll before immediate suspect stop. Original runner zero-window report preserved in runner-verdict.json.",
+      "observation_seconds": 20.11,
+      "post_stop_attribution": "Same new boot; supplemental read-only capture did not resume the registered window.",
+      "post_stop_ncm_classification": "usb-transient",
+      "post_stop_partition_module_hashes_match": true,
+      "post_stop_production_identity_ok": true,
+      "post_stop_snapshot_uptime_seconds": 78.62,
+      "reboot_requested_utc": "2026-09-28T04:32:55.710478+00:00",
+      "registered_window_completed": false,
+      "round": 1,
+      "started_utc": "2026-09-28T04:32:48.751250+00:00",
+      "startup_variant_counts": {
+        "boot_register_warning": 1,
+        "smmu_fsr": 10,
+        "smmu_fsynr": 10
+      },
+      "systemd_failed_units": [],
+      "transport": {
+        "adb_ok": true,
+        "code43": false,
+        "ncm_banner_ok": true,
+        "ncm_first_failure_utc": "2026-09-28T04:34:44.634339+00:00",
+        "ncm_initial_failure": true,
+        "ncm_recovery_seconds_from_first_attempt": 31.495,
+        "ncm_recovery_utc": "2026-09-28T04:35:10.646088+00:00",
+        "ssh_ok": true
+      },
+      "verdict": "suspect"
+    }
+  ],
+  "test249_manifest_sha256": "ed9a7b8544215662ebe7d800316b4952902fd0e1684b16528469a57758af87d4",
+  "test251_created": false
+}

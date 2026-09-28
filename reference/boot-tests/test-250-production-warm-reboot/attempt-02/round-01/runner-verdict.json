@@ -1,0 +1,65 @@
+{
+  "after_boot_id": "188fd5c914ca48189dede96669a9c836",
+  "before_boot_id": "b08bbc9b3bbf417e9935619fcc5d7222",
+  "ended_utc": "2026-09-28T04:33:37.953624+00:00",
+  "error": "KernelEvidenceError('new boot kernel fault during observation')",
+  "first_adb_uptime_seconds": 6.3,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82a6d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 602
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82e2700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 605
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8314d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 608
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8340900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 611
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb836d600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 614
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb839ac00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 617
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83c8c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 620
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83f4300, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 623
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8420f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 626
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb844da00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 629
+    }
+  ],
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-28T04:32:55.710478+00:00",
+  "round": 1,
+  "started_utc": "2026-09-28T04:32:48.751250+00:00",
+  "verdict": "suspect"
+}

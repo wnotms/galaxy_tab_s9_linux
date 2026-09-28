@@ -71,6 +71,17 @@ stop-on-first-non-clean requirements apply. Check attempt-02 results before
 any further test; an explicit restart request is not permission to ignore a
 new non-clean condition.
 
+Attempt 02 subsequently passed full unchanged-production preflight and issued
+one ordinary warm reboot, from `b08bbc9b-3bbf-417e-9935-619fcc5d7222` to
+`188fd5c9-14ca-4818-9ded-e96669a9c836`. Round 01 stopped as suspect at the
+20.11 s observation poll because ten early SMMU IOVAs exceeded its registered
+range; no second reboot was issued and no 150 s window completed. Captured
+journals show no CPU-stall/panic signature. Full post-stop read-only identity
+still matches Test249, with DCC absent and no failed unit; an independent
+same-boot NCM TCP transient recovered on its third attempt. Do not call this
+round clean or broaden the gate after the stop. See attempt-02 `RESULTS.md`
+and `summary.json` before further hardware work. Production remains unchanged.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

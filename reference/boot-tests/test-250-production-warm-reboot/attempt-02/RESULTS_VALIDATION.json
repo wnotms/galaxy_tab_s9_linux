@@ -1,0 +1,19 @@
+{
+  "command": "python3 scripts/run-host-tests.py changed --base HEAD~1 --fail-on-skip --report out/host-tests/test250-attempt02-results-validation.json",
+  "suite": "changed",
+  "counts": {
+    "core": 908,
+    "artifacts": 18,
+    "archive": 87
+  },
+  "executed": true,
+  "tests_run": 1013,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "expected_failures": [],
+  "unexpected_successes": [],
+  "elapsed_s": 79.231,
+  "exit_code": 0,
+  "selection_reason": "New evidence paths conservatively selected all 1013 retained tests."
+}

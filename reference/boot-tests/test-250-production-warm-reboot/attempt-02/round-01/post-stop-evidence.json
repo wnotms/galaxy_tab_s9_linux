@@ -1,0 +1,92 @@
+{
+  "attribution": "attributed",
+  "boot_id_confirmed": "188fd5c914ca48189dede96669a9c836",
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 33,
+    "last_source_timestamp": "31712259",
+    "rows": 1092,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": [
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82a6d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 602
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb82e2700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 605
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8314d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 608
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8340900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 611
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb836d600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 614
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb839ac00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 617
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83c8c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 620
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb83f4300, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 623
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8420f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 626
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb844da00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "priority": 3,
+        "row": 629
+      }
+    ]
+  },
+  "production": {
+    "boot_id": "188fd5c914ca48189dede96669a9c836",
+    "config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+    "dcc_absent": true,
+    "failed_units": [],
+    "identity_ok": true,
+    "notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+    "partitions_modules_checked": true,
+    "profile_ok": true,
+    "uname": "Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux",
+    "uptime_seconds": 78.62,
+    "usb_device_state": "/sys/class/udc/a600000.usb/state\nconfigured\n/sys/class/udc/dummy_udc.0/state\nnot attached\nusb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 \nState  Recv-Q Send-Q Local Address:Port Peer Address:Port\nLISTEN 0      128          0.0.0.0:22        0.0.0.0:*   \nLISTEN 0      4                  *:5555            *:*   \nLISTEN 0      128             [::]:22           [::]:*   \nactive\nactive\nactive"
+  },
+  "purpose": "Read-only evidence after first suspect; not a resumed round or acceptance.",
+  "transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": "2026-09-28T04:34:44.634339+00:00",
+    "ncm_initial_failure": true,
+    "ncm_recovery_seconds_from_first_attempt": 31.495,
+    "ncm_recovery_utc": "2026-09-28T04:35:10.646088+00:00",
+    "ssh_ok": true
+  }
+}
