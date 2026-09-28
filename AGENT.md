@@ -166,6 +166,15 @@ Earlier stopped attempts and seals remain unchanged. Push passing tests and
 registration, then full accepted read-only preflight, before any reboot.
 Production remains untouched; check attempt-05 results before further work.
 
+Attempt 05 passed full read-only preflight on the still-current
+`457ecc1a-5d90-4d6f-8c5f-ad67e069bef3` boot: exact Test249 config/notes, all five
+partition hashes and 181 module hashes, DCC/backup absence, unchanged live
+splash and runtime profile. The two earlier QCA events belong to separate
+completed cycles and satisfy this newly approved policy; attempt 04's verdict
+remains suspect. Bluetooth is powered with both units active, no failed unit or
+CPU signature; ADB, bound NCM and authenticated SSH passed immediately, without
+Code43. Push its sealed accepted preflight before `run --attempt 5`.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
