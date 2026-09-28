@@ -1,0 +1,14 @@
+{
+  "executed": true,
+  "result": "passed",
+  "full_command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/test250-continuation-all.json",
+  "full_selected": 1056,
+  "full_failures": 0,
+  "full_errors": 0,
+  "full_skips": 0,
+  "changed_command": "bash scripts/check-stall-offline.sh --changed --base HEAD",
+  "changed_selected": 1056,
+  "changed_result": "passed",
+  "device_access": false,
+  "github_actions_started": false
+}
