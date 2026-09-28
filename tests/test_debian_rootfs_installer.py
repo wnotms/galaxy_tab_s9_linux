@@ -214,11 +214,21 @@ class DebianRootfsInstaller(unittest.TestCase):
 
     def test_enablement_symlinks_match_each_units_wantedby(self):
         self.install()
-        for unit in sorted((self.target / 'usr/lib/systemd/system').glob('gts9-*.service')):
+        units = sorted((self.target / 'usr/lib/systemd/system').glob('gts9-*.service'))
+        for unit in units:
             wants = [line.split('=', 1)[1].strip()
                      for line in unit.read_text().splitlines()
                      if line.startswith('WantedBy=')]
-            self.assertTrue(wants, unit.name)
+            if not wants:
+                # A static helper is pulled in by another enabled unit's
+                # Wants=; inventing an Install section would start it alone.
+                self.assertTrue(any(
+                    unit.name in line.split('=', 1)[1].split()
+                    for other in units for line in other.read_text().splitlines()
+                    if line.startswith('Wants=')), unit.name)
+                self.assertFalse(list((self.target / 'etc/systemd/system').glob(
+                    f'*.wants/{unit.name}')), unit.name)
+                continue
             for want in wants:
                 link = (self.target / 'etc/systemd/system' /
                         f'{want}.wants' / unit.name)

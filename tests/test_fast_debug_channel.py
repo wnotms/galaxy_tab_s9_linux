@@ -626,12 +626,14 @@ class WedgeMarkerReadingTests(unittest.TestCase):
 
     def test_the_doc_records_that_the_interval_is_microseconds(self):
         self.contains(self.DOC,
-                      "36.340199", "36.340219", "20 µs",
-                      "36.360250", "36.360265", "15 µs",
-                      "did not answer the backtrace request")
+                      "10.001179 s", "21 µs",
+                      "10.001217 s", "20 µs",
+                      "did not answer the ordinary\nbacktrace IPI")
 
     def test_the_doc_does_not_read_the_ten_seconds_literally(self):
-        self.contains(self.DOC, "is **not**\n10 seconds of observation")
+        self.contains(self.DOC,
+                      "previous inference that the actual timeout was\nonly 20 microseconds is withdrawn",
+                      "short-monotonic\nintervals alone do not measure the wait")
 
     def test_the_doc_retracts_the_old_100_percent_reading(self):
         self.contains(self.DOC,
@@ -640,19 +642,14 @@ class WedgeMarkerReadingTests(unittest.TestCase):
                       "that was wrong")
 
     def test_the_mdelay_arithmetic_in_the_doc_matches_the_config(self):
-        """It is the reason the doc refuses to blame mdelay; keep it honest."""
+        """The corrected source-time evidence does not imply an mdelay fault."""
         cfg = ROOT / self.CONFIG
         if not cfg.exists():
             self.skipTest("no resolved config yet")
         self.assertIn("CONFIG_HZ=250", cfg.read_text())
-        # arm64 computes cycles as (xloops * loops_per_jiffy * HZ) >> 32 with
-        # xloops = 1000 * 0x10C7 for a one-millisecond udelay().
-        xloops = 1000 * 0x10C7
-        lpj = 76800          # from dmesg: "38.40 BogoMIPS (lpj=76800)"
-        cycles = (xloops * lpj * 250) >> 32
-        self.assertEqual(cycles, 19200)
-        self.assertEqual(cycles * 1000 // 19200000, 1)   # 19.2 MHz arch timer
-        self.contains(self.DOC, "lpj=76800", "19200 cycles", "1.000 ms")
+        self.contains(self.DOC, "_SOURCE_BOOTTIME_TIMESTAMP",
+                      "10.001179 s", "10.001217 s",
+                      "No mdelay or timer fault follows")
 
     def test_the_doc_keeps_the_independent_evidence(self):
         """The corrections must not have removed what still proves the wedge."""
