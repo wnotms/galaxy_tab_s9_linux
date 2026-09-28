@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "found=$(find /usr/lib/modules -maxdepth 1 -type d -name '.gts9-test*' -print); test -z \"$found\" && echo backups_absent || { printf '%s\\n' \"$found\"; exit 1; }"
+  ],
+  "ended_utc": "2026-09-28T05:04:14.986994+00:00",
+  "started_utc": "2026-09-28T05:04:14.914836+00:00",
+  "status": 0
+}
