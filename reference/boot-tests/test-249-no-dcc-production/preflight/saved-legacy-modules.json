@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ls -ld /usr/lib/modules/.gts9-test248-original; find /usr/lib/modules/.gts9-test248-original -type f -exec sha256sum {} +; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-27T20:39:34.747026+00:00"
+}

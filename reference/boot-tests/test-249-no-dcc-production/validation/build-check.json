@@ -1,0 +1,49 @@
+{
+  "config_differences": {
+    "CONFIG_HVC_DCC": [
+      "y",
+      "n"
+    ],
+    "CONFIG_HVC_DRIVER": [
+      "y",
+      "n"
+    ]
+  },
+  "config_explanation": "HVC_DCC is explicitly disabled; HVC_DRIVER loses its only enabled selector. Production diagnostics remain disabled; comparison is to IKCONFIG extracted from original230 boot.",
+  "dtb_equal_original_production": true,
+  "diagnostic_dt_only_adds_ramoops_ecc_size": true,
+  "release_equal_test247": true,
+  "bbm_patch_present": false,
+  "temporary_diagnostics_absent": true,
+  "calibration_helper_absent": true,
+  "artifacts": {
+    "out/kernel-no-dcc-production/Image.gz": {
+      "bytes": 21828276,
+      "sha256": "97d62e8a69a18c7eed3b457b20b1ed5f28ed88ea03fbec7b50d59ec08a24819a"
+    },
+    "out/kernel-no-dcc-production/config": {
+      "bytes": 240857,
+      "sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82"
+    },
+    "out/kernel-no-dcc-production/sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 177595,
+      "sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0"
+    },
+    "out/kernel-no-dcc-production/kernel.release": {
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "out/test249/vmlinux": {
+      "bytes": 474957264,
+      "sha256": "d78b4f2b9bb775b31b1a94cf2123a4f38d6b0606928560d5d2ed7e431959ea1c"
+    },
+    "out/test249/System.map": {
+      "bytes": 7693499,
+      "sha256": "93795c06100766df793c4c6f764fd7ed865d02d73ab694dfd381340e713402f4"
+    },
+    "out/test249/Module.symvers": {
+      "bytes": 911112,
+      "sha256": "9996b180790fdd030ea8638e78a55930c326710db287e41850eeb33729a19861"
+    }
+  }
+}

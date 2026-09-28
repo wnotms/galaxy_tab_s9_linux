@@ -1,0 +1,34 @@
+{
+  "utc_start": "2026-09-27T20:33:55.141788+00:00",
+  "source_commit": "0d3d4e5a312bbee5d7f5220e3adbaafbfee8e635",
+  "command": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "USE_CCACHE": "1",
+    "ARCH": "arm64",
+    "LLVM": "1",
+    "JOBS": "12",
+    "BUILD_MODULES": "1",
+    "KERNEL_CLEAN": "0",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-no-dcc-production",
+    "GTS9_DIAG_FRAGMENT": "",
+    "GTS9_DIAGNOSTIC_PATCHES": ""
+  },
+  "preparation": [
+    "git",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-gts9wifi",
+    "apply",
+    "--reverse",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/kernel/patches/diagnostic/0022-gts9-lastactivity.patch"
+  ],
+  "source_inputs": {
+    "kernel/config/gts9wifi-mainline.fragment": "127bd6061772bae49a10b02a1de9aaf9691b2063818257e0d64e130ac4e16cda",
+    "scripts/build-kernel.sh": "50482a818b8f7b96112188b9fdcc4bba62928c81d22e9cf0f493d021e842cdfe",
+    "boot/cmdline.example.txt": "e7f153ac06c26e3c24432db75873096fbaffe06e365c46960476c5577b1a1bed"
+  },
+  "status": 0,
+  "utc_end": "2026-09-27T20:40:31.111842+00:00"
+}
