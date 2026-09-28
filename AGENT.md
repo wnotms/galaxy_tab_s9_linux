@@ -135,6 +135,25 @@ single early QCA event satisfies the owner-approved bounds. ADB and bound
 NCM/authenticated SSH passed on their first attempts with no Code43. See its
 `preflight/summary.json`; commit/push this accepted evidence before `run --attempt 4`.
 
+Attempt 04 then issued five ordinary warm reboots. Rounds 01–04 were clean
+through 153.71, 153.98, 154.04 and 153.51 s. Round 05, new boot
+`457ecc1a-5d90-4d6f-8c5f-ad67e069bef3`, stopped as suspect at the 21.37 s poll
+because two exact early `hci0/0xfc48` messages exceeded the approved maximum
+of one per boot. Each belonged to a separate completed WCN6855 setup cycle;
+this does not exempt the repeated count or prove a CPU fault. No sixth reboot
+or final 20-round acceptance occurred. Full post-stop read-only config/notes,
+five partitions and 181 modules still match Test249, DCC remains absent, and
+Bluetooth/ADB/bound NCM/authenticated SSH are healthy. No CPU-stall/panic
+signature was detected in the captured journals. See attempt-04 `RESULTS.md`,
+`summary.json`, `EVIDENCE_AUDIT.json` and `round-05/post-stop/`. Keep the series
+stopped and production unchanged; the 20-round goal is incomplete. Do not
+silently broaden the QCA count, resume/reclassify this attempt or create Test251.
+Further hardware work requires the owner to resolve this new non-clean bound.
+Its post-stop `setup-cycle-review.json` compares eight raw journals and the
+system timeline; `classification-proposal.json` proposes at most two events,
+one per distinct completed cycle, at most three early cycles. That proposal
+is unapproved and unimplemented; it does not authorize another reboot.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

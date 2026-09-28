@@ -1,0 +1,31 @@
+{
+  "after_boot_id": "457ecc1a5d904d6f8c5fad67e069bef3",
+  "before_boot_id": "1a46b6c7d8d14db782bc4f7676d644ca",
+  "ended_utc": "2026-09-28T05:56:55.669055+00:00",
+  "error": "KernelEvidenceError('new boot kernel fault during observation')",
+  "first_adb_uptime_seconds": 9.21,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [
+    {
+      "message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+      "priority": 3,
+      "row": 1033
+    },
+    {
+      "message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+      "priority": 3,
+      "row": 1068
+    }
+  ],
+  "observation_seconds": 21.37,
+  "qca_baudrate_warning": {
+    "event_count": 2,
+    "reason": "more than one baudrate event",
+    "state": "suspect"
+  },
+  "reboot_requested_utc": "2026-09-28T05:56:12.214631+00:00",
+  "registered_window_completed": false,
+  "round": 5,
+  "started_utc": "2026-09-28T05:56:03.954332+00:00",
+  "verdict": "suspect"
+}

@@ -1,0 +1,288 @@
+{
+  "interpretation": "Three setup cycles are already observed in healthy attempt04 boots. In round05, events appear once in each of cycles 2 and 3. Ordering around public-address service and bluetooth.service is consistent with provisioning and daemon startup; no HCI packet trace proves the cause.",
+  "owner_approved_maximum_events_per_boot": 1,
+  "purpose": "Offline analysis of separate completed setup cycles; no verdict change or hardware action",
+  "round05_system_timeline": [
+    {
+      "journal_monotonic_microseconds": "3869345",
+      "kernel_source_boottime_microseconds": null,
+      "message": "Starting gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs...",
+      "unit": "init.scope"
+    },
+    {
+      "journal_monotonic_microseconds": "4052043",
+      "kernel_source_boottime_microseconds": "4052274",
+      "message": "Bluetooth: hci0: setting up wcn6855",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "5457374",
+      "kernel_source_boottime_microseconds": "5177286",
+      "message": "Bluetooth: hci0: QCA setup on UART is completed",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "5457580",
+      "kernel_source_boottime_microseconds": "5260132",
+      "message": "Bluetooth: hci0: setting up wcn6855",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "5457851",
+      "kernel_source_boottime_microseconds": "5341435",
+      "message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "6132296",
+      "kernel_source_boottime_microseconds": "6135215",
+      "message": "Bluetooth: hci0: QCA setup on UART is completed",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "6292142",
+      "kernel_source_boottime_microseconds": null,
+      "message": "gts9-bt-addr: set public address 38:8A:06:59:04:E7 (from /run/gts9-bt-efs/bluetooth/bt_addr)",
+      "unit": "gts9-bluetooth-address.service"
+    },
+    {
+      "journal_monotonic_microseconds": "6296050",
+      "kernel_source_boottime_microseconds": "6296066",
+      "message": "set public address 38:8A:06:59:04:E7 (from /run/gts9-bt-efs/bluetooth/bt_addr)",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "8213067",
+      "kernel_source_boottime_microseconds": null,
+      "message": "Finished gts9-bluetooth-address.service - X710 Bluetooth public address from Samsung's efs.",
+      "unit": "init.scope"
+    },
+    {
+      "journal_monotonic_microseconds": "8218158",
+      "kernel_source_boottime_microseconds": null,
+      "message": "Starting bluetooth.service - Bluetooth service...",
+      "unit": "init.scope"
+    },
+    {
+      "journal_monotonic_microseconds": "8353235",
+      "kernel_source_boottime_microseconds": null,
+      "message": "Started bluetooth.service - Bluetooth service.",
+      "unit": "init.scope"
+    },
+    {
+      "journal_monotonic_microseconds": "8454536",
+      "kernel_source_boottime_microseconds": "8457357",
+      "message": "Bluetooth: hci0: setting up wcn6855",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "8536063",
+      "kernel_source_boottime_microseconds": "8536921",
+      "message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+      "unit": ""
+    },
+    {
+      "journal_monotonic_microseconds": "9332122",
+      "kernel_source_boottime_microseconds": "9334439",
+      "message": "Bluetooth: hci0: QCA setup on UART is completed",
+      "unit": ""
+    }
+  ],
+  "round05_verdict": "suspect",
+  "samples": [
+    {
+      "boot_id": "17714931a67c41ba81836392979a679e",
+      "cycles": [
+        {
+          "completed_source_seconds": 4.963144,
+          "events": [],
+          "start_source_seconds": 3.765155
+        },
+        {
+          "completed_source_seconds": 6.637745,
+          "events": [],
+          "start_source_seconds": 5.772157
+        }
+      ],
+      "path": "reference/boot-tests/test-249-no-dcc-production/production-twrp-continued/kernel-follow.jsonl",
+      "sample": "accepted Test249 TWRP",
+      "sha256": "69757be40037c22137220b601578c56f4e55422c982c67bfef7ee59bc5381684"
+    },
+    {
+      "boot_id": "38a30c1d68b24e108bb442dce8bb0385",
+      "cycles": [
+        {
+          "completed_source_seconds": 5.29766,
+          "events": [],
+          "start_source_seconds": 4.384971
+        },
+        {
+          "completed_source_seconds": 6.415098,
+          "events": [],
+          "start_source_seconds": 5.520548
+        }
+      ],
+      "path": "reference/boot-tests/test-249-no-dcc-production/final-acceptance/kernel-json.txt",
+      "sample": "accepted Test249 warm",
+      "sha256": "bdc617ad08a954bf1182f8d739dc4f70627424e9e79bfd38e00a8195e736544d"
+    },
+    {
+      "boot_id": "830da7175e6d40be83907398b55ff2e2",
+      "cycles": [
+        {
+          "completed_source_seconds": 5.036299,
+          "events": [],
+          "start_source_seconds": 4.00794
+        },
+        {
+          "completed_source_seconds": 6.161381,
+          "events": [],
+          "start_source_seconds": 5.275672
+        },
+        {
+          "completed_source_seconds": 9.174012,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 8.365905
+            }
+          ],
+          "start_source_seconds": 8.288615
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/preflight/kernel-journal-json.txt",
+      "sample": "attempt04 initial",
+      "sha256": "9e0c89f415e222b480c31ccaadc9eb2a04452eeb1d8111b397a2dac9908a0815"
+    },
+    {
+      "boot_id": "c6f88ac95b164471b23c90493044c495",
+      "cycles": [
+        {
+          "completed_source_seconds": 5.009767,
+          "events": [],
+          "start_source_seconds": 3.917052
+        },
+        {
+          "completed_source_seconds": 6.358347,
+          "events": [],
+          "start_source_seconds": 5.484089
+        },
+        {
+          "completed_source_seconds": 9.360462,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 8.562451
+            }
+          ],
+          "start_source_seconds": 8.488839
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/round-01/kernel-journal-json.txt",
+      "sample": "attempt04 round 01",
+      "sha256": "4cd7ed2e5b3017e1a8149d308deebd6e78f9e9ec0267df33b7be5a9d1ce4b248"
+    },
+    {
+      "boot_id": "33faa528758a47f9abdaa5e3f90c186d",
+      "cycles": [
+        {
+          "completed_source_seconds": 4.841468,
+          "events": [],
+          "start_source_seconds": 3.868515
+        },
+        {
+          "completed_source_seconds": 6.506318,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 5.724508
+            }
+          ],
+          "start_source_seconds": 5.652027
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/round-02/kernel-journal-json.txt",
+      "sample": "attempt04 round 02",
+      "sha256": "1cfd9b31f090045e9fbb87ceff38d609701bd0c194cb39df40615ef139e9f116"
+    },
+    {
+      "boot_id": "19291e98e658442781f58869bacce5e4",
+      "cycles": [
+        {
+          "completed_source_seconds": 4.875033,
+          "events": [],
+          "start_source_seconds": 3.781423
+        },
+        {
+          "completed_source_seconds": 6.812785,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 5.988765
+            }
+          ],
+          "start_source_seconds": 5.912806
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/round-03/kernel-journal-json.txt",
+      "sample": "attempt04 round 03",
+      "sha256": "1f6428262d3b4c055866703210fc7fd68fb03e3080be219c968bd22f48b75b73"
+    },
+    {
+      "boot_id": "1a46b6c7d8d14db782bc4f7676d644ca",
+      "cycles": [
+        {
+          "completed_source_seconds": 4.740298,
+          "events": [],
+          "start_source_seconds": 3.843609
+        },
+        {
+          "completed_source_seconds": 6.130817,
+          "events": [],
+          "start_source_seconds": 5.251813
+        },
+        {
+          "completed_source_seconds": 9.530682,
+          "events": [],
+          "start_source_seconds": 8.63166
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/round-04/kernel-journal-json.txt",
+      "sample": "attempt04 round 04",
+      "sha256": "85b7f074647a079eb235558064f6b084474998bd69952f4d0f43181cace3f327"
+    },
+    {
+      "boot_id": "457ecc1a5d904d6f8c5fad67e069bef3",
+      "cycles": [
+        {
+          "completed_source_seconds": 5.177286,
+          "events": [],
+          "start_source_seconds": 4.052274
+        },
+        {
+          "completed_source_seconds": 6.135215,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 5.341435
+            }
+          ],
+          "start_source_seconds": 5.260132
+        },
+        {
+          "completed_source_seconds": 9.334439,
+          "events": [
+            {
+              "priority": "3",
+              "source_seconds": 8.536921
+            }
+          ],
+          "start_source_seconds": 8.457357
+        }
+      ],
+      "path": "reference/boot-tests/test-250-production-warm-reboot/attempt-04/round-05/kernel-journal-json.txt",
+      "sample": "attempt04 round 05",
+      "sha256": "040c6238510a58f210a8ffaa646f5d0543c1f49a1b29683f4a8d96fc0bfae4a2"
+    }
+  ]
+}

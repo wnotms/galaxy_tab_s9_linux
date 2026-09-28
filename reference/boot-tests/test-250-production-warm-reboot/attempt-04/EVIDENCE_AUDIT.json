@@ -1,0 +1,86 @@
+{
+  "approved_count_unchanged": 1,
+  "boot_chain": [
+    "830da7175e6d40be83907398b55ff2e2",
+    "c6f88ac95b164471b23c90493044c495",
+    "33faa528758a47f9abdaa5e3f90c186d",
+    "19291e98e658442781f58869bacce5e4",
+    "1a46b6c7d8d14db782bc4f7676d644ca",
+    "457ecc1a5d904d6f8c5fad67e069bef3"
+  ],
+  "command": "python3 reference/boot-tests/test-250-production-warm-reboot/attempt-04/audit-evidence.py",
+  "device_access": false,
+  "executed": true,
+  "first_non_clean_round": 5,
+  "initial_and_post_stop_full_identity_verified": true,
+  "no_sixth_round_or_final_acceptance": true,
+  "ordinary_reboot_requests_verified": 5,
+  "passed": true,
+  "previous_evidence_seals_verified": {
+    "reference/boot-tests/test-250-production-warm-reboot": 170,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-02": 299,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-03": 332,
+    "reference/boot-tests/test-250-production-warm-reboot/attempt-04/preflight": 84,
+    "reference/boot-tests/test-250-production-warm-reboot/post-attempt03-analysis": 7
+  },
+  "production_module_files": 181,
+  "registered_goal_completed": false,
+  "rounds": [
+    {
+      "after_boot_id": "c6f88ac95b164471b23c90493044c495",
+      "before_boot_id": "830da7175e6d40be83907398b55ff2e2",
+      "fault_counts": {},
+      "health_polls": 22,
+      "observation_seconds": 153.71,
+      "qca_events": 1,
+      "round": 1,
+      "source_and_target_attributed": true,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "33faa528758a47f9abdaa5e3f90c186d",
+      "before_boot_id": "c6f88ac95b164471b23c90493044c495",
+      "fault_counts": {},
+      "health_polls": 22,
+      "observation_seconds": 153.98,
+      "qca_events": 1,
+      "round": 2,
+      "source_and_target_attributed": true,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "19291e98e658442781f58869bacce5e4",
+      "before_boot_id": "33faa528758a47f9abdaa5e3f90c186d",
+      "fault_counts": {},
+      "health_polls": 22,
+      "observation_seconds": 154.04,
+      "qca_events": 1,
+      "round": 3,
+      "source_and_target_attributed": true,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "1a46b6c7d8d14db782bc4f7676d644ca",
+      "before_boot_id": "19291e98e658442781f58869bacce5e4",
+      "fault_counts": {},
+      "health_polls": 22,
+      "observation_seconds": 153.51,
+      "qca_events": 0,
+      "round": 4,
+      "source_and_target_attributed": true,
+      "verdict": "clean"
+    },
+    {
+      "after_boot_id": "457ecc1a5d904d6f8c5fad67e069bef3",
+      "before_boot_id": "1a46b6c7d8d14db782bc4f7676d644ca",
+      "fault_counts": {},
+      "health_polls": 2,
+      "observation_seconds": 21.37,
+      "qca_events": 2,
+      "round": 5,
+      "source_and_target_attributed": true,
+      "verdict": "suspect"
+    }
+  ],
+  "setup_cycle_comparison_raw_hashes_verified": 8
+}

@@ -1,0 +1,205 @@
+{
+  "aliases": [
+    {
+      "alias": "uname.txt",
+      "bytes": 99,
+      "sha256": "181cc1ebe38ab28b601778b81c8bc89b19e93c8d0e4355e97188831ef9d7582d",
+      "source": "post-stop/uname.txt"
+    },
+    {
+      "alias": "uname.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/uname.stderr"
+    },
+    {
+      "alias": "uname.command.json",
+      "bytes": 255,
+      "sha256": "46775abd86eef940f567f9b69e4e865534011667b416f01cd60818049fe106f9",
+      "source": "post-stop/uname.command.json"
+    },
+    {
+      "alias": "cmdline.txt",
+      "bytes": 1157,
+      "sha256": "ea8c6f10a7ce07361d5414be0b7ccc281c9a8960a15a03fcc7514b010b273928",
+      "source": "post-stop/cmdline.txt"
+    },
+    {
+      "alias": "cmdline.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/cmdline.stderr"
+    },
+    {
+      "alias": "cmdline.command.json",
+      "bytes": 264,
+      "sha256": "b536907ad3256b9f7a5f62895f0dff8569d36559e9a9629a950394a277282c57",
+      "source": "post-stop/cmdline.command.json"
+    },
+    {
+      "alias": "uptime.txt",
+      "bytes": 15,
+      "sha256": "8f4453b18b12001e2807e28c2d3e1a31a4fd864602d4dc8272bca07a8193e9eb",
+      "source": "post-stop/uptime.txt"
+    },
+    {
+      "alias": "uptime.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/uptime.stderr"
+    },
+    {
+      "alias": "uptime.command.json",
+      "bytes": 263,
+      "sha256": "e346a12c17ff42fc74543798012ef8f98ad14d5825d335610a2367fb5dfff4bf",
+      "source": "post-stop/uptime.command.json"
+    },
+    {
+      "alias": "kernel-journal.txt",
+      "bytes": 107361,
+      "sha256": "de9b00cc4aaf48f6c713a825687443c121c8de80163a54b4b9d470c1233be031",
+      "source": "post-stop/kernel-journal.txt"
+    },
+    {
+      "alias": "kernel-journal.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/kernel-journal.stderr"
+    },
+    {
+      "alias": "kernel-journal.command.json",
+      "bytes": 326,
+      "sha256": "8f46a4a01ca9ec9310ad35e528b9ddc10322d5e13d768cf4351c66d0a284818e",
+      "source": "post-stop/kernel-journal.command.json"
+    },
+    {
+      "alias": "kernel-journal-json.txt",
+      "bytes": 767462,
+      "sha256": "040c6238510a58f210a8ffaa646f5d0543c1f49a1b29683f4a8d96fc0bfae4a2",
+      "source": "post-stop/kernel-journal-json.txt"
+    },
+    {
+      "alias": "kernel-journal-json.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/kernel-journal-json.stderr"
+    },
+    {
+      "alias": "kernel-journal-json.command.json",
+      "bytes": 315,
+      "sha256": "4a38ac57624391ee4ed07dd831405aa3ee7918ed0af9ff418855674af527709a",
+      "source": "post-stop/kernel-journal-json.command.json"
+    },
+    {
+      "alias": "systemd-failed.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/systemd-failed.txt"
+    },
+    {
+      "alias": "systemd-failed.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/systemd-failed.stderr"
+    },
+    {
+      "alias": "systemd-failed.command.json",
+      "bytes": 296,
+      "sha256": "e0dc3990eab5e879d6a2525d323c278d5cf5003c2579e9897c94c9596116015a",
+      "source": "post-stop/systemd-failed.command.json"
+    },
+    {
+      "alias": "dcc-state.txt",
+      "bytes": 49,
+      "sha256": "77b58abb497b22b14c604c958a3ba4d9a6604e925ef9e9942b1a945bc21849d9",
+      "source": "post-stop/dcc-state.txt"
+    },
+    {
+      "alias": "dcc-state.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/dcc-state.stderr"
+    },
+    {
+      "alias": "dcc-state.command.json",
+      "bytes": 541,
+      "sha256": "cab4d313f9308fc01783e446ca39bffd1abb8d2962369f5e5d04e7ddb2542f93",
+      "source": "post-stop/dcc-state.command.json"
+    },
+    {
+      "alias": "adb-state.txt",
+      "bytes": 75,
+      "sha256": "d77c70fb99c84200b61c67e2d1a0913fe86fe068267d73aa20df7c44abc7cf1e",
+      "source": "post-stop/adb-state.txt"
+    },
+    {
+      "alias": "adb-state.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/adb-state.stderr"
+    },
+    {
+      "alias": "adb-state.command.json",
+      "bytes": 220,
+      "sha256": "b3336605bc692b05496f2272627a280b82f3727be9172c674f3aaf17fd9731ec",
+      "source": "post-stop/adb-state.command.json"
+    },
+    {
+      "alias": "ssh-state.txt",
+      "bytes": 37,
+      "sha256": "55170df07ed312f5927d1b40cb968604ad54386dfc6c36a52e275ea84380df61",
+      "source": "post-stop/ssh-state.txt"
+    },
+    {
+      "alias": "ssh-state.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/ssh-state.stderr"
+    },
+    {
+      "alias": "ssh-state.command.json",
+      "bytes": 245,
+      "sha256": "4099e91635db9c1a9e2b2e920dbe7203ee6c3d8a5c43be7dd3e6ae3624ca33b4",
+      "source": "post-stop/ssh-state.command.json"
+    },
+    {
+      "alias": "usb-state.txt",
+      "bytes": 433,
+      "sha256": "26c9710e4faf08a82cfd12bfecadd4bcb2dcf4d1d71285c128dfa705a4085cd4",
+      "source": "post-stop/usb-state.txt"
+    },
+    {
+      "alias": "usb-state.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/usb-state.stderr"
+    },
+    {
+      "alias": "usb-state.command.json",
+      "bytes": 416,
+      "sha256": "1736f5d4223c8c6c933b3df81549705764ee5578834404b6cbb4ed022cc27739",
+      "source": "post-stop/usb-state.command.json"
+    },
+    {
+      "alias": "boots-after.txt",
+      "bytes": 16513,
+      "sha256": "9ec4315c434d1a92524ff31b0c80dfc1f3ce6b7b6f16688462b5c67431edba56",
+      "source": "post-stop/boots-after.txt"
+    },
+    {
+      "alias": "boots-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "post-stop/boots-after.stderr"
+    },
+    {
+      "alias": "boots-after.command.json",
+      "bytes": 281,
+      "sha256": "a50fdeaeef181f10171b5d2217996de4c1fc9286079e7ecb9c13d737ad8c0c2c",
+      "source": "post-stop/boots-after.command.json"
+    }
+  ],
+  "counts_as_registered_clean_window": false,
+  "purpose": "Required common round filenames alias the post-stop capture, preserving raw bytes and capture timestamps. They are supplemental evidence, not completion of the registered window.",
+  "verdict_unchanged": "suspect"
+}

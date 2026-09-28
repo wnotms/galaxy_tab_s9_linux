@@ -1,0 +1,22 @@
+{
+  "controller": "hci0",
+  "fresh_registration_tests_push_and_full_preflight_required_before_any_new_reboot": true,
+  "maximum_event_source_seconds": 20,
+  "maximum_event_to_completion_seconds": 5,
+  "maximum_events_per_boot": 2,
+  "maximum_events_per_setup_cycle": 1,
+  "maximum_setup_completion_source_seconds": 20,
+  "maximum_setup_cycles_per_boot": 3,
+  "message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+  "old_verdicts_unchanged": true,
+  "original_20_rounds_and_150_seconds_and_all_other_gates_unchanged": true,
+  "other_bluetooth_errors_stop": true,
+  "overlapping_or_incomplete_setups_stop": true,
+  "priority": 3,
+  "production_changes": false,
+  "reason": "First new suspect is two individually recovered QCA events in distinct completed setup cycles, not repeated events in one cycle.",
+  "root_cause_proven": false,
+  "same_boot_powered_controller_and_both_units_active_required": true,
+  "soc": "wcn6855",
+  "status": "unapproved proposal; not implemented or authorized for hardware"
+}

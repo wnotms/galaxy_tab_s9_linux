@@ -1,0 +1,21 @@
+{
+  "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+  "elapsed_test_seconds": 75.927,
+  "errors": [],
+  "executed": true,
+  "exit_code": 0,
+  "failures": [],
+  "full_log_ignored_path": "out/host-tests/test250-attempt04-results-check.log",
+  "full_log_sha256": "99b5b78bf0be4aacc9527e0b590a55cbcd257a83ff405ae4103ed8a619276fc7",
+  "github_actions_started": false,
+  "offline_evidence_audit": {
+    "executed": true,
+    "passed": true,
+    "report": "EVIDENCE_AUDIT.json"
+  },
+  "production_modified": false,
+  "runner_final_all_review": "HOST_REGISTRATION_GATE_REVIEW.json (before physical testing; unchanged runner)",
+  "selection": "Full retained fallback for unreviewed new physical evidence paths; no dependency rules or tests removed.",
+  "skips": [],
+  "tests_run": 1034
+}
