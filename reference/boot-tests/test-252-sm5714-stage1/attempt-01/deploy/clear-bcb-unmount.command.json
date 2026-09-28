@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "test \"$(blockdev --getsize64 /dev/block/by-name/misc)\" = 1048576 && dd if=/dev/zero of=/dev/block/by-name/misc bs=2048 count=1 conv=notrunc && sync && umount /mnt/debian && dd if=/dev/block/by-name/misc bs=32 count=1 2>/dev/null | od -An -tx1"
+  ],
+  "started_utc": "2026-09-28T12:08:00.317749+00:00",
+  "ended_utc": "2026-09-28T12:08:00.472009+00:00",
+  "status": 0
+}

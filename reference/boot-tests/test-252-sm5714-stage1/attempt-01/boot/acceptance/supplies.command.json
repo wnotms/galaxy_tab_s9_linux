@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /sys/class/power_supply/sm5714-battery/uevent; cat /sys/class/power_supply/sm5714-usb/uevent"
+  ],
+  "ended_utc": "2026-09-28T12:09:47.615333+00:00",
+  "started_utc": "2026-09-28T12:09:47.511725+00:00",
+  "status": 0
+}
