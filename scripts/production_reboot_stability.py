@@ -46,7 +46,11 @@ try {
 '''
 PS_USB = r'''Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue |
   Where-Object { $_.InstanceId -match 'VID_0525|VID_18D1|VID_0000&PID_0002' } |
-  Select-Object Status, Problem, Class, FriendlyName, InstanceId | Format-List
+  ForEach-Object {
+    $problem = Get-PnpDeviceProperty -InstanceId $_.InstanceId -KeyName 'DEVPKEY_Device_ProblemCode' -ErrorAction SilentlyContinue
+    [PSCustomObject]@{Status=$_.Status; ProblemCode=$problem.Data; Class=$_.Class;
+      FriendlyName=$_.FriendlyName; InstanceId=$_.InstanceId}
+  } | Format-List
 Get-NetAdapter -ErrorAction SilentlyContinue |
   Where-Object { $_.InterfaceDescription -match 'NCM|USB' } |
   Select-Object Name, Status, InterfaceDescription | Format-List
@@ -79,6 +83,16 @@ def one_line(text):
 
 class CaptureError(RuntimeError):
     pass
+
+
+class KernelEvidenceError(CaptureError):
+    def __init__(self, message, scan):
+        super().__init__(message)
+        self.scan = scan
+
+
+def has_code43(text):
+    return re.search(r"^\s*ProblemCode\s*:\s*43\s*$", text, re.M) is not None
 
 
 class Recorder:
@@ -198,7 +212,7 @@ def production_state(rec, base, prefix="", full=False):
     failed = adb("systemd-failed", "systemctl --failed --no-legend --plain --no-pager")
     usb = adb("usb-state", "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; "
               "ip -br addr show usb0; ss -lnt; "
-              "systemctl is-active ssh.service gts9-usb-net.service gts9-usb-adb.service || true")
+              "systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true")
     if full:
         parts = adb("partitions", "for n in boot vendor_boot init_boot dtbo vbmeta; "
                     "do sha256sum /dev/disk/by-partlabel/$n; done", 40)
@@ -212,8 +226,12 @@ def production_state(rec, base, prefix="", full=False):
             raise CaptureError("Test249 partition/module baseline mismatch")
     after = evidence.canonical_boot_id(one_line(adb("boot-id-confirm", "cat /proc/sys/kernel/random/boot_id")))
     dcc_lines = dcc.splitlines()
-    dcc_ok = dcc_lines[:3] == ["dev=absent", "sysfs=absent", "getty=inactive"] and len(dcc_lines) == 3
+    # The final `symbol=` marker has no value when grep finds no DCC write
+    # symbol. It is intentionally a fourth line, not evidence of a symbol.
+    dcc_ok = dcc_lines == ["dev=absent", "sysfs=absent", "getty=inactive", "symbol="]
     expected_config = config_hash == base["config_sha256"]
+    if full:
+        expected_config = expected_config and hashlib.sha256(config.encode()).hexdigest() == config_hash
     forbidden = ("csdlock_debug=", "gts9_lastactivity=", "irqchip.gicv3_pseudo_nmi=",
                  "gts9_watchdog_debug=", "softlockup_panic=1", "cpuidle.off=1")
     tokens = cmdline.split()
@@ -238,8 +256,8 @@ def production_state(rec, base, prefix="", full=False):
 def transport(rec, boot, prefix=""):
     adb_text, adb_rc = rec.host_adb(prefix + "adb-state", "devices", "-l", required=False)
     adb_ok = adb_rc == 0 and re.search(rf"^{SERIAL}\s+device\b", adb_text, re.M) is not None
-    pnp, _ = rec.ps(prefix + "windows-usb-state", PS_USB, required=False)
-    code43 = "VID_0000&PID_0002" in pnp and re.search(r"Error|43", pnp, re.I) is not None
+    pnp, _ = rec.ps(prefix + "windows-usb-state", PS_USB)
+    code43 = has_code43(pnp)
     if code43:
         rec.ps(prefix + "windows-pnp-events", PS_PNP_EVENTS, required=False)
         report = {"adb_ok": adb_ok, "ssh_ok": False, "ncm_banner_ok": False,
@@ -248,18 +266,28 @@ def transport(rec, boot, prefix=""):
         return report
     ncm_initial_failure = False
     banner_ok = False
+    first_failure_utc = None
+    recovery_utc = None
+    recovery_seconds = None
+    started = time.monotonic()
     for attempt in range(3):
         banner, status = rec.ps(prefix + f"windows-ssh-banner-{attempt}", PS_BANNER, timeout=12, required=False)
         if status == 0 and banner.startswith("SSH-2.0-"):
             banner_ok = True
+            recovery_utc = now() if ncm_initial_failure else None
+            recovery_seconds = round(time.monotonic() - started, 3) if recovery_utc else None
             break
         ncm_initial_failure = True
+        if first_failure_utc is None:
+            first_failure_utc = now()
         if attempt < 2:
             time.sleep(10)
     ssh_text, ssh_rc = rec.ssh(prefix + "ssh-state", "cat /proc/sys/kernel/random/boot_id", timeout=18, required=False)
     ssh_ok = ssh_rc == 0 and evidence.canonical_boot_id(ssh_text) == boot if ssh_text.strip() else False
     report = {"adb_ok": adb_ok, "ssh_ok": ssh_ok, "ncm_banner_ok": banner_ok,
-              "ncm_initial_failure": ncm_initial_failure, "code43": bool(code43)}
+              "ncm_initial_failure": ncm_initial_failure, "code43": bool(code43),
+              "ncm_first_failure_utc": first_failure_utc, "ncm_recovery_utc": recovery_utc,
+              "ncm_recovery_seconds_from_first_attempt": recovery_seconds}
     write_json(rec.folder / (prefix + "transport.json"), report)
     return report
 
@@ -332,6 +360,7 @@ def preflight():
                       journal_boots=len(evidence.boot_list(history)))
     except Exception as exc:
         report.update(verdict="stop", error=repr(exc))
+        collect_failure(rec, report.get("boot_id"))
         raise
     finally:
         report["ended_utc"] = now()
@@ -356,8 +385,8 @@ def wait_new_boot(rec, before):
                 except (ValueError, IndexError):
                     pass
         if attempt % 4 == 0:
-            pnp, _ = rec.ps(f"wait-windows-usb-{attempt:03d}", PS_USB, required=False)
-            if "VID_0000&PID_0002" in pnp and re.search(r"Error|43", pnp, re.I):
+            pnp, _ = rec.ps(f"wait-windows-usb-{attempt:03d}", PS_USB)
+            if has_code43(pnp):
                 rec.ps("wait-windows-pnp-events", PS_PNP_EVENTS, required=False)
                 raise CaptureError("Windows Code43 descriptor failure during boot wait")
         attempt += 1
@@ -365,7 +394,7 @@ def wait_new_boot(rec, before):
     raise CaptureError("no independently verified new Debian boot within 180 seconds")
 
 
-def observe_window(rec, boot, first_uptime):
+def observe_window(rec, boot, first_uptime, base):
     if first_uptime > 60:
         raise CaptureError(f"first ADB visibility too late: {first_uptime:.2f}s")
     follow = rec.folder / "kernel-follow.jsonl"
@@ -383,8 +412,21 @@ def observe_window(rec, boot, first_uptime):
                 if len(lines) != 2 or evidence.canonical_boot_id(lines[0]) != boot:
                     raise CaptureError("boot identity changed during observation")
                 uptime = float(lines[1].split()[0])
+                # Only complete lines can be parsed while ADB is still writing.
+                # Parse the entire boot prefix to keep warning-trace context.
+                stream = follow.read_bytes()
+                complete = stream[:stream.rfind(b"\n") + 1].decode(errors="replace")
+                if complete:
+                    scan = evidence.inspect_journal(complete, boot, base["known_priority3"])
+                    write_json(rec.folder / "live-journal-analysis.json", scan)
+                    if scan["fault_counts"] or scan["suspects"]:
+                        raise KernelEvidenceError("new boot kernel fault during observation", scan)
                 print(f"Test250 {rec.folder.name}: {boot} uptime={uptime:.2f}s", flush=True)
                 count += 1
+                if count % 3 == 0:
+                    pnp, _ = rec.ps(f"observe-windows-usb-{count:03d}", PS_USB)
+                    if has_code43(pnp):
+                        raise CaptureError("Windows Code43 during observation")
                 if uptime < WINDOW:
                     if proc.poll() is not None:
                         raise CaptureError("live kernel journal transport exited early")
@@ -409,6 +451,11 @@ def collect_failure(rec, boot):
     try:
         rec.adb("failure-boots", "journalctl --list-boots --no-pager", 15, required=False)
         rec.adb("failure-current-kernel-json", "journalctl -b -k --no-pager -o json", 20, required=False)
+        rec.adb("failure-usb-device", "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; "
+                "ls -l /sys/kernel/config/usb_gadget/gts9/configs/c.1/; "
+                "ip -br addr show usb0; ss -lnt; "
+                "systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true",
+                15, required=False)
         if boot:
             rec.adb("failure-kernel-json", f"journalctl -b {boot} -k --no-pager -o json", 20, required=False)
             rec.adb("failure-kernel-journal", f"journalctl -b {boot} -k --no-pager -o short-monotonic", 20, required=False)
@@ -455,7 +502,17 @@ def round_run(index, base, before_expected):
         result["first_adb_uptime_seconds"] = first_uptime
         (folder / "after-boot-id.txt").write_text(after + "\n")
         write_json(folder / "verdict.json", result)
-        uptime = observe_window(rec, after, first_uptime)
+        initial_history = rec.adb("boots-after-initial", "journalctl --list-boots --no-pager", 25)[0]
+        initial_attribution = evidence.attribute(before, after, before_history, initial_history)
+        if initial_attribution != "attributed":
+            raise CaptureError(f"new boot attribution: {initial_attribution}")
+        # Shutdown faults belong to the just-ended target, not the new boot.
+        ended_raw = journal(rec, before, "ended-target-")
+        ended_scan = evidence.inspect_journal(ended_raw, before, base["known_priority3"])
+        write_json(folder / "ended-target-journal-analysis.json", ended_scan)
+        if ended_scan["fault_counts"] or ended_scan["suspects"]:
+            raise KernelEvidenceError("just-ended target boot acquired a kernel fault", ended_scan)
+        uptime = observe_window(rec, after, first_uptime, base)
         result["observation_seconds"] = uptime
         result["new_boot_uptime_seconds"] = uptime
         result["live_observation_seconds"] = round(uptime - first_uptime, 2)
@@ -463,7 +520,6 @@ def round_run(index, base, before_expected):
         attribution = evidence.attribute(before, after, before_history, after_history)
         result["attribution"] = attribution
         # Preserve the just-ended target boot separately from the new boot.
-        rec.adb("ended-target-kernel-json", f"journalctl -b {before} -k --no-pager -o json", 30)
         after_state = production_state(rec, base)
         if after_state["boot_id"] != after:
             raise CaptureError("observer boot changed before final health gate")
@@ -498,6 +554,11 @@ def round_run(index, base, before_expected):
     except Exception as exc:
         result.update(verdict="usb-code43" if "Code43" in str(exc) else "suspect",
                       error=repr(exc))
+        if isinstance(exc, KernelEvidenceError):
+            result.update(kernel_fault_counts=exc.scan["fault_counts"],
+                          kernel_suspects=exc.scan["suspects"])
+            if exc.scan["fault_counts"]:
+                result["verdict"] = "failure_observed"
         collect_failure(rec, result.get("after_boot_id"))
     finally:
         result["ended_utc"] = now()

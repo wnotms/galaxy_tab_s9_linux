@@ -53,8 +53,13 @@ not a successful reboot. The new Debian boot ID must differ, and persistent
 journal history must show exactly one new boot after the source boot. Source
 and new-boot journals are saved separately. The new boot must first answer
 ADB by uptime 60 s and remain observable until at least uptime **150 s**,
-with 5 s identity polls and a live kernel-journal follow. ADB wait is bounded
-to 180 s. On expiry, preserve host USB/PnP and any reachable device evidence
+with 5 s identity polls and a live kernel-journal follow.
+Live complete journal rows are checked at every poll; a fault stops observation
+without waiting for 150 s. Boot attribution and the just-ended target's full
+shutdown journal are checked as soon as the new boot answers. Full journals
+must contain the source-time-zero Linux-version record, not only later rows.
+Windows USB problem codes are checked periodically during the window.
+ADB wait is bounded to 180 s. On expiry, preserve host USB/PnP and any reachable device evidence
 and stop. No round may be repeated or evidence overwritten automatically.
 
 Each `round-NN/` retains `before-boot-id.txt`, `after-boot-id.txt`,
@@ -64,7 +69,8 @@ Each `round-NN/` retains `before-boot-id.txt`, `after-boot-id.txt`,
 `dcc-state.txt`, `adb-state.txt`, `ssh-state.txt`, `usb-state.txt`, Windows
 USB/banner captures, command status files and `verdict.json`. The source
 boot's snapshots use `before-`; unprefixed snapshots refer to the new boot.
-The source boot's final journal is `ended-target-kernel-json.txt`; the new
+The source boot's final journals are `ended-target-kernel-journal-json.txt`
+and `ended-target-kernel-journal.txt`; the new
 boot's complete journal and live follow are separate files.
 
 Only an attributed boot with the same production config/notes, DCC absent,
@@ -80,7 +86,8 @@ warning trace is also distinguished from an unexpected new backtrace. Raw
 journals are always saved; any allowlisted warning is counted in the verdict.
 
 Windows NCM/TCP is tried at most three times, 10 s apart, without changing
-the USB configuration. An initial failure that recovers in the same boot is
+the USB configuration. First failure and recovery timestamps and recovery
+duration are recorded. An initial failure that recovers in the same boot is
 `usb-transient`, **not clean**, and stops the series. Windows Code43 stops the
 series and triggers Windows PnP plus device-side gadget/DWC3 capture where
 possible; it is not called a CPU wedge. ADB and SSH both unavailable,

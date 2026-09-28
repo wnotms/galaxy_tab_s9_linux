@@ -14,13 +14,15 @@ FAILURES = {
     "oops_bug": re.compile(r"\bOops:|\bBUG:|Internal error:|\bSError\b", re.I),
     "hung_task": re.compile(r"hung task|blocked for more than \d+ seconds", re.I),
     "workqueue_lockup": re.compile(r"workqueue lockup", re.I),
+    "cpu_nonresponse": re.compile(r"CPU\s*#?\s*\d+.*non-responsive|hard LOCKUP", re.I),
 }
 SUSPECT = re.compile(
     r"Unhandled context fault|\*ERROR\*|(?:mmc\d|ufs|rpmh|dpu).*tim(?:e|ed) out|"
-    r"Call trace:|unexpected (?:CPU )?backtrace",
+    r"Call trace:|unexpected (?:CPU )?backtrace|\bstall\b|\bnon-responsive\b|rcu:\s*INFO",
     re.I,
 )
-AUX_WARNING = re.compile(r"auxiliary aux_bridge\.aux_bridge\.0: deferred probe pending:.*failed to acquire drm_bridge")
+AUX_WARNING = ("auxiliary aux_bridge.aux_bridge.0: deferred probe pending: "
+               "aux_bridge.aux_bridge: failed to acquire drm_bridge")
 REGULATOR_WARNING = "regulator: Not disabling unused regulators"
 
 
@@ -63,7 +65,7 @@ def attribute(before_id, after_id, before_text, after_text):
     return "attributed"
 
 
-def inspect_journal(raw, boot_id, known_priority3=()):
+def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True):
     """Require complete JSON rows with source timestamps and classify each message."""
     if raw is None:
         raise ValueError("missing kernel journal")
@@ -85,6 +87,11 @@ def inspect_journal(raw, boot_id, known_priority3=()):
         if not isinstance(message, str):
             raise ValueError(f"missing message in journal row {number}")
         rows.append(row)
+        try:
+            if int(row["_SOURCE_BOOTTIME_TIMESTAMP"]) < 0:
+                raise ValueError()
+        except (TypeError, ValueError):
+            raise ValueError(f"invalid source timestamp in journal row {number}")
         for name, pattern in FAILURES.items():
             if pattern.search(message):
                 failures[name] = failures.get(name, 0) + 1
@@ -93,7 +100,7 @@ def inspect_journal(raw, boot_id, known_priority3=()):
                                     for old in rows[-25:]) and
                                 any("rcg didn't update its configuration" in old.get("MESSAGE", "")
                                     for old in rows[-25:]))
-        if AUX_WARNING.search(message) or REGULATOR_WARNING in message or accepted_clock_trace:
+        if message in (AUX_WARNING, REGULATOR_WARNING) or accepted_clock_trace:
             known_warnings.append(message)
             continue
         try:
@@ -104,6 +111,9 @@ def inspect_journal(raw, boot_id, known_priority3=()):
             known_warnings.append(message)
         elif priority <= 2 or SUSPECT.search(message) or priority == 3:
             suspects.append({"row": number, "priority": priority, "message": message})
+    if require_start and not any(row["MESSAGE"].startswith("Linux version ") and
+                                 row["_SOURCE_BOOTTIME_TIMESTAMP"] == "0" for row in rows):
+        raise ValueError("kernel journal lacks the startup Linux-version record")
     return {"rows": len(rows), "fault_counts": failures, "suspects": suspects,
             "known_warning_count": len(known_warnings),
             "first_source_timestamp": rows[0]["_SOURCE_BOOTTIME_TIMESTAMP"],

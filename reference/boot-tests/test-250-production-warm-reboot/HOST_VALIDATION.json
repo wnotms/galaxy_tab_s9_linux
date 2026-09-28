@@ -1,0 +1,36 @@
+{
+  "executed": true,
+  "changed_check": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "tests_run": 1006,
+    "elapsed_s": 67.374,
+    "exit_code": 0,
+    "selection": "Unknown new runner/evidence paths conservatively selected the full retained suite."
+  },
+  "final_review": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "suite": "all",
+    "counts": {
+      "core": 901,
+      "artifacts": 18,
+      "archive": 87
+    },
+    "executed": true,
+    "tests_run": 1006,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "expected_failures": [],
+    "unexpected_successes": [],
+    "elapsed_s": 67.34,
+    "exit_code": 0
+  },
+  "source_sha256": {
+    "scripts/production-reboot-stability.sh": "bf9e280d06e88948ae9cdbfc92d2d91f251687d584837a45a9314c115be34dfa",
+    "scripts/production_reboot_stability.py": "3795e1c187d49d9beec4c20aee4c42754e84f269e696c4393a788b150a87d296",
+    "scripts/production_stability_evidence.py": "e6fce70a82d445e053ae02278c68f4f8f8c78e698e6f9345cde44f93cdf0a214",
+    "tests/test_production_reboot_stability.py": "c003ffaf989854a5adf254937479d2804ed459a8bba905b855e7362322a41922"
+  },
+  "sandbox_attempt": "An earlier sandbox run had five LeakSanitizer/ptrace errors. Checks were rerun with sanitizer support and passed; no tests were removed or skipped.",
+  "hardware_reboots_at_review": 0
+}
