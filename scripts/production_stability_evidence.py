@@ -91,6 +91,75 @@ def qca_baudrate_warning(rows, observed_uptime=None):
     return report
 
 
+def qca_baudrate_cycles(rows, observed_uptime=None):
+    """Attempt 05 only: at most two events, one per completed early setup cycle."""
+    events = [(i, row) for i, row in enumerate(rows, 1)
+              if row["MESSAGE"] == QCA_BAUDRATE_EVENT]
+    report = {"classification": "bounded-per-setup-cycle", "event_count": len(events),
+              "setup_count": 0, "cycles": [], "event_rows": [], "state": "suspect"}
+
+    def reject(reason):
+        report["reason"] = reason
+        return report
+
+    if len(events) > 2:
+        return reject("more than two baudrate events in boot")
+    cycle, last_relevant_stamp = None, -1
+    for number, row in enumerate(rows, 1):
+        message = row["MESSAGE"]
+        setup = re.fullmatch(r"Bluetooth: hci\d+: setting up .+", message)
+        ready = re.fullmatch(r"Bluetooth: hci\d+: QCA setup on UART is completed", message)
+        event = message == QCA_BAUDRATE_EVENT
+        if not (setup or ready or event):
+            continue
+        stamp = int(row["_SOURCE_BOOTTIME_TIMESTAMP"]) / 1e6
+        if stamp < last_relevant_stamp or not 0 < stamp <= 20:
+            return reject("setup/event/completion time outside ordered early bounds")
+        last_relevant_stamp = stamp
+        if setup:
+            if message != QCA_SETUP:
+                return reject("different controller or SoC setup")
+            if cycle is not None:
+                return reject("overlapping or restarted setup before completion")
+            report["setup_count"] += 1
+            if report["setup_count"] > 3:
+                return reject("more than three setup cycles in boot")
+            cycle = {"setup_source_seconds": stamp, "events": []}
+            report["cycles"].append(cycle)
+        elif event:
+            if int(row.get("PRIORITY", 7)) != 3:
+                return reject("event priority outside registered bounds")
+            if cycle is None or stamp <= cycle["setup_source_seconds"]:
+                return reject("event lacks preceding distinct WCN6855 setup")
+            if cycle["events"]:
+                return reject("more than one event in a setup cycle")
+            cycle["events"].append({"row": number, "event_source_seconds": stamp})
+            report["event_rows"].append(number)
+        elif ready:
+            if message != QCA_READY or cycle is None:
+                return reject("completion lacks matching controller setup")
+            if stamp <= cycle["setup_source_seconds"]:
+                return reject("completion not after setup")
+            for candidate in cycle["events"]:
+                # Kernel source times have microsecond precision. Preserve an
+                # exact 5 s boundary despite binary floating-point subtraction.
+                delay = round(stamp - candidate["event_source_seconds"], 6)
+                if not 0 < delay <= 5:
+                    return reject("event completion outside five-second bound")
+                candidate.update(completion_source_seconds=stamp, recovery_seconds=delay)
+            cycle["completion_source_seconds"] = stamp
+            cycle = None
+    if cycle is not None:
+        deadline = min([20] + [event["event_source_seconds"] + 5 for event in cycle["events"]])
+        latest = max(int(row["_SOURCE_BOOTTIME_TIMESTAMP"]) / 1e6 for row in rows)
+        if observed_uptime is not None and max(latest, observed_uptime) <= deadline:
+            report.update(state="pending", deadline_uptime_seconds=deadline)
+            return report
+        return reject("missing completed setup within registered deadline")
+    report["state"] = "accepted" if events else "absent"
+    return report
+
+
 def startup_variant(row, iova_range=(0xb8000000, 0xb8200000)):
     """Narrow classes observed in both accepted Test249 production captures.
 
@@ -157,7 +226,7 @@ def attribute(before_id, after_id, before_text, after_text):
 def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
                     accepted_startup_variants=False,
                     startup_iova_range=(0xb8000000, 0xb8200000),
-                    accepted_qca_baudrate=False, observed_uptime=None):
+                    accepted_qca_baudrate=False, accepted_qca_cycles=False, observed_uptime=None):
     """Require complete JSON rows with source timestamps and classify each message."""
     if raw is None:
         raise ValueError("missing kernel journal")
@@ -165,7 +234,7 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
         raise ValueError("empty kernel journal")
     expected = canonical_boot_id(boot_id)
     known = set(known_priority3)
-    if accepted_qca_baudrate:
+    if accepted_qca_baudrate or accepted_qca_cycles:
         known = {message for message in known if not BLUETOOTH_ERROR.search(message)}
     if accepted_startup_variants:
         # Exact old SMMU/register messages must also obey time/count bounds.
@@ -217,7 +286,7 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
         if priority == 3 and message in known:
             known_warnings.append(message)
         elif (priority <= 2 or SUSPECT.search(message) or priority == 3 or
-              (accepted_qca_baudrate and BLUETOOTH_ERROR.search(message))):
+              ((accepted_qca_baudrate or accepted_qca_cycles) and BLUETOOTH_ERROR.search(message))):
             suspects.append({"row": number, "priority": priority, "message": message})
     if require_start and not any(row["MESSAGE"].startswith("Linux version ") and
                                  row["_SOURCE_BOOTTIME_TIMESTAMP"] == "0" for row in rows):
@@ -227,13 +296,20 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
             "startup_variant_counts": variant_counts,
             "first_source_timestamp": rows[0]["_SOURCE_BOOTTIME_TIMESTAMP"],
             "last_source_timestamp": rows[-1]["_SOURCE_BOOTTIME_TIMESTAMP"]}
-    if accepted_qca_baudrate:
-        qca = qca_baudrate_warning(rows, observed_uptime)
+    if accepted_qca_baudrate or accepted_qca_cycles:
+        qca = (qca_baudrate_cycles(rows, observed_uptime) if accepted_qca_cycles else
+               qca_baudrate_warning(rows, observed_uptime))
         result["qca_baudrate_warning"] = qca
         if qca["state"] in ("accepted", "pending"):
-            result["suspects"] = [row for row in suspects if row["row"] != qca["row"]]
+            event_rows = set(qca["event_rows"]) if accepted_qca_cycles else {qca["row"]}
+            result["suspects"] = [row for row in suspects if row["row"] not in event_rows]
             if qca["state"] == "accepted":
-                result["known_warning_count"] += 1
+                result["known_warning_count"] += qca["event_count"]
+        elif accepted_qca_cycles and qca["state"] == "suspect" and not result["suspects"]:
+            # Invalid setups can be informational priority and contain no event.
+            # Retain a structured suspect so the live observer stops immediately.
+            result["suspects"].append({"row": None, "priority": None,
+                                       "message": "QCA setup gate: " + qca["reason"]})
     return result
 
 
@@ -242,7 +318,7 @@ def round_verdict(*, attribution, journal, identity_ok, dcc_absent, uptime,
     if journal.get("fault_counts"):
         return "failure_observed"
     if (attribution != "attributed" or journal.get("suspects") or not identity_ok or not dcc_absent or
-            journal.get("qca_baudrate_warning", {}).get("state") == "pending"):
+            journal.get("qca_baudrate_warning", {}).get("state") in ("pending", "suspect")):
         return "suspect"
     if uptime < 150 or not adb_ok or not ssh_ok or not ncm_ok or failed_units:
         return "suspect"

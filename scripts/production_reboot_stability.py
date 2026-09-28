@@ -194,10 +194,11 @@ def baseline():
                data["validation/candidate-module-checksums.txt"].decode().splitlines()}
     old_rows = [json.loads(line) for line in data["final-acceptance/kernel-json.txt"].decode().splitlines()]
     known_priority3 = {row["MESSAGE"] for row in old_rows if int(row.get("PRIORITY", 7)) == 3}
-    region_backed = P in (TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04")
-    qca_approved = P == TEST250_ROOT / "attempt-04"
-    variants = P in (TEST250_ROOT / "attempt-02", TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04")
-    if qca_approved:
+    cycle_approved = P == TEST250_ROOT / "attempt-05"
+    region_backed = P in (TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04", TEST250_ROOT / "attempt-05")
+    qca_approved = P == TEST250_ROOT / "attempt-04" or cycle_approved
+    variants = P in (TEST250_ROOT / "attempt-02", TEST250_ROOT / "attempt-03", TEST250_ROOT / "attempt-04", TEST250_ROOT / "attempt-05")
+    if qca_approved and not cycle_approved:
         policy = json.loads((P / "policy.json").read_text())
         if policy != {"owner_authorization": "adopted post-attempt03 bounded classification",
                       "message": evidence.QCA_BAUDRATE_EVENT, "maximum_count": 1,
@@ -207,6 +208,19 @@ def baseline():
                       "other_bluetooth_errors_stop": True, "rounds": ROUNDS,
                       "observation_seconds": WINDOW, "production_changes": False}:
             raise ValueError("approved QCA classification registration changed")
+    if cycle_approved:
+        policy = json.loads((P / "policy.json").read_text())
+        if policy != {"owner_authorization": "adopted round05 bounded cycle classification",
+                      "classification": "bounded-per-setup-cycle",
+                      "message": evidence.QCA_BAUDRATE_EVENT, "maximum_count": 2,
+                      "maximum_setup_count": 3, "maximum_per_setup_count": 1,
+                      "priority": 3, "maximum_source_seconds": 20,
+                      "maximum_completion_source_seconds": 20,
+                      "setup_deadline_seconds": 5, "soc": "wcn6855",
+                      "powered_controller_required": True,
+                      "other_bluetooth_errors_stop": True, "rounds": ROUNDS,
+                      "observation_seconds": WINDOW, "production_changes": False}:
+            raise ValueError("approved QCA cycle classification registration changed")
     iova_range = (0xb8000000, 0xb8200000)
     if region_backed:
         checked = json.loads(checked_file(BASE / "validation/build-check.json", manifest))
@@ -247,6 +261,7 @@ def baseline():
             "accepted_startup_variants": variants,
             "startup_iova_range": iova_range, "ncm_source_bound": region_backed,
             "accepted_qca_baudrate": qca_approved,
+            "accepted_qca_cycles": cycle_approved,
             "owned_cmdline_tokens": owned_cmdline,
             "test249_manifest_sha256": hashlib.sha256((BASE / "SHA256.json").read_bytes()).hexdigest()}
 
@@ -256,6 +271,7 @@ def inspect(raw, boot, base, observed_uptime=None):
                                     accepted_startup_variants=base.get("accepted_startup_variants", False),
                                     startup_iova_range=base.get("startup_iova_range", (0xb8000000, 0xb8200000)),
                                     accepted_qca_baudrate=base.get("accepted_qca_baudrate", False),
+                                    accepted_qca_cycles=base.get("accepted_qca_cycles", False),
                                     observed_uptime=observed_uptime)
 
 
@@ -480,7 +496,7 @@ def assert_registration_pushed():
     paths = ["scripts/production-reboot-stability.sh", "scripts/production_reboot_stability.py",
              "scripts/production_stability_evidence.py",
              str((P / "README.md").relative_to(ROOT))]
-    if P == TEST250_ROOT / "attempt-04":
+    if P in (TEST250_ROOT / "attempt-04", TEST250_ROOT / "attempt-05"):
         paths.append(str((P / "policy.json").relative_to(ROOT)))
     if subprocess.run(["git", "ls-files", "--error-unmatch", "--", *paths],
                       cwd=ROOT, capture_output=True).returncode != 0:
@@ -515,6 +531,7 @@ def preflight():
                       journal_boots=len(evidence.boot_list(history)))
         if base.get("accepted_qca_baudrate"):
             report.update(accepted_qca_baudrate=True, bluetooth_health=state["bluetooth_health"],
+                          accepted_qca_cycles=base.get("accepted_qca_cycles", False),
                           qca_baudrate_warning=inspected["qca_baudrate_warning"])
     except Exception as exc:
         report.update(verdict="stop", error=repr(exc))
@@ -767,6 +784,7 @@ def summary(rounds, base, final=None):
               "test249_manifest_sha256": base["test249_manifest_sha256"],
               "accepted_startup_variants": base.get("accepted_startup_variants", False),
               "accepted_qca_baudrate": base.get("accepted_qca_baudrate", False),
+              "accepted_qca_cycles": base.get("accepted_qca_cycles", False),
               "final_verdict": "in_progress"}
     if first_bad is not None:
         result["final_verdict"] = "stopped_on_first_non_clean"
@@ -869,7 +887,7 @@ def main():
     global P
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preflight", "run"))
-    parser.add_argument("--attempt", type=int, choices=(2, 3, 4),
+    parser.add_argument("--attempt", type=int, choices=(2, 3, 4, 5),
                         help="Explicitly registered fresh attempt; preserves the stopped original evidence")
     args = parser.parse_args()
     if args.attempt:

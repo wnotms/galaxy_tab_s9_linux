@@ -154,6 +154,18 @@ system timeline; `classification-proposal.json` proposes at most two events,
 one per distinct completed cycle, at most three early cycles. That proposal
 is unapproved and unimplemented; it does not authorize another reboot.
 
+The owner subsequently explicitly adopted that bounded cycle proposal and
+requested a fresh 20-round registration. Test250 attempt 05 lives under
+`attempt-05/README.md` and `policy.json`; use only `--attempt 5` for this fresh
+series. Its host-only rule permits at most two exact early priority-3 hci0
+events, one per distinct completed WCN6855 cycle, at most three cycles, all
+setup/event/completion times within 20 s and each event completed within 5 s.
+Same-boot powered-controller and active-unit checks plus all original Test249
+identity, CPU/USB/evidence/20-round/150-second/first-non-clean gates remain.
+Earlier stopped attempts and seals remain unchanged. Push passing tests and
+registration, then full accepted read-only preflight, before any reboot.
+Production remains untouched; check attempt-05 results before further work.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

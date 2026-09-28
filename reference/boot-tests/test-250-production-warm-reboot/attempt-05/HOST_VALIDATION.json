@@ -1,0 +1,37 @@
+{
+  "changed": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "elapsed_test_seconds": 68.86,
+    "executed": true,
+    "exit_code": 0,
+    "log_ignored_path": "out/host-tests/test250-attempt05-changed-final.log",
+    "log_sha256": "e9cf29353a4ef34bfea74b91a8e54418e4f6b721dab5d7becf2b7a1021517367",
+    "tests_run": 1052
+  },
+  "final_all": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "elapsed_seconds": 68.304,
+    "errors": [],
+    "executed": true,
+    "exit_code": 0,
+    "failures": [],
+    "skipped": [],
+    "tests_run": 1052,
+    "tracked_report": "host-all-report.json"
+  },
+  "focused": {
+    "command": "python3 -m unittest discover -s tests -p 'test_production_reboot_stability.py'",
+    "elapsed_test_seconds": 0.988,
+    "executed": true,
+    "exit_code": 0,
+    "log_ignored_path": "out/host-tests/test250-attempt05-focused-final.log",
+    "log_sha256": "fbb062e6ef61e744b047c71dceff31f71c20d9ce8c24d06010bdd9b08bbad094",
+    "tests_run": 68
+  },
+  "github_actions_started": false,
+  "owner_authorization": "\u91c7\u7528\u6709\u754c\u6309\u5468\u671f\u5206\u7c7b\uff0c\u91cd\u65b0\u6ce8\u518c20\u8f6e\uff08\u5efa\u8bae\uff09",
+  "physical_reboots_at_registration": 0,
+  "precision_review": "Exact 5-second event delay accepted at microsecond precision; +1 microsecond stops; test added before final validation.",
+  "prior_attempt04_sealed_files_verified": 1407,
+  "production_modified": false
+}

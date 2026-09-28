@@ -601,5 +601,179 @@ class QcaBaudrateClassificationTests(unittest.TestCase):
         self.assertEqual(old["verdict"], "suspect")
 
 
+class QcaCycleClassificationTests(unittest.TestCase):
+    def rows(self, specs=None):
+        specs = specs or [(4, ev.QCA_SETUP, 6), (4.1, ev.QCA_BAUDRATE_EVENT, 3),
+                          (4.9, ev.QCA_READY, 6), (8, ev.QCA_SETUP, 6),
+                          (8.1, ev.QCA_BAUDRATE_EVENT, 3), (8.9, ev.QCA_READY, 6)]
+        return [{"_BOOT_ID": B, "_SOURCE_BOOTTIME_TIMESTAMP": str(round(t * 1e6)),
+                 "PRIORITY": str(priority), "MESSAGE": message}
+                for t, message, priority in [(0, "Linux version test-production", 6)] + specs]
+
+    def scan(self, rows=None, **kwargs):
+        raw = "\n".join(json.dumps(row) for row in (self.rows() if rows is None else rows))
+        return ev.inspect_journal(raw, B, accepted_qca_cycles=True, **kwargs)
+
+    def test_two_events_in_distinct_completed_cycles_are_counted(self):
+        result = self.scan()
+        self.assertEqual(result["suspects"], [])
+        self.assertEqual(result["known_warning_count"], 2)
+        self.assertEqual(result["qca_baudrate_warning"]["setup_count"], 2)
+        self.assertEqual(result["qca_baudrate_warning"]["state"], "accepted")
+        self.assertEqual(clean_gate(journal=result), "clean")
+
+    def test_same_two_events_still_stop_under_single_event_policy(self):
+        raw = "\n".join(json.dumps(row) for row in self.rows())
+        result = ev.inspect_journal(raw, B, accepted_qca_baudrate=True)
+        self.assertEqual(clean_gate(journal=result), "suspect")
+
+    def test_two_events_in_same_cycle_stop(self):
+        result = self.scan(self.rows([(4, ev.QCA_SETUP, 6),
+            (4.1, ev.QCA_BAUDRATE_EVENT, 3), (4.2, ev.QCA_BAUDRATE_EVENT, 3), (5, ev.QCA_READY, 6)]))
+        self.assertEqual(result["qca_baudrate_warning"]["reason"], "more than one event in a setup cycle")
+        self.assertFalse(ev.may_continue(clean_gate(journal=result)))
+
+    def test_third_event_in_third_completed_cycle_stops(self):
+        rows = self.rows() + self.rows([(12, ev.QCA_SETUP, 6),
+            (12.1, ev.QCA_BAUDRATE_EVENT, 3), (13, ev.QCA_READY, 6)])[1:]
+        self.assertEqual(self.scan(rows)["qca_baudrate_warning"]["event_count"], 3)
+        self.assertEqual(clean_gate(journal=self.scan(rows)), "suspect")
+
+    def test_three_complete_cycles_and_no_event_are_absent(self):
+        specs = [(t + offset, msg, 6) for t in (4, 8, 12)
+                 for offset, msg in ((0, ev.QCA_SETUP), (1, ev.QCA_READY))]
+        result = self.scan(self.rows(specs))
+        self.assertEqual(result["qca_baudrate_warning"]["state"], "absent")
+        self.assertEqual(result["qca_baudrate_warning"]["setup_count"], 3)
+        self.assertEqual(clean_gate(journal=result), "clean")
+
+    def test_four_cycles_without_event_stop_with_structured_suspect(self):
+        specs = [(t + offset, msg, 6) for t in (4, 8, 12, 16)
+                 for offset, msg in ((0, ev.QCA_SETUP), (1, ev.QCA_READY))]
+        result = self.scan(self.rows(specs))
+        self.assertTrue(result["suspects"])
+        self.assertEqual(result["qca_baudrate_warning"]["state"], "suspect")
+        self.assertEqual(clean_gate(journal=result), "suspect")
+
+    def test_orphan_completion_or_missing_preceding_setup_stop(self):
+        for specs in ([(4, ev.QCA_READY, 6)], [(4, ev.QCA_BAUDRATE_EVENT, 3)]):
+            with self.subTest(specs=specs):
+                self.assertTrue(self.scan(self.rows(specs))["suspects"])
+
+    def test_overlap_or_wrong_soc_or_controller_stop_without_event(self):
+        cases = [[(4, ev.QCA_SETUP, 6), (5, ev.QCA_SETUP, 6), (6, ev.QCA_READY, 6)],
+                 [(4, ev.QCA_SETUP.replace("6855", "7850"), 6)],
+                 [(4, ev.QCA_SETUP.replace("hci0", "hci1"), 6)]]
+        for specs in cases:
+            with self.subTest(specs=specs):
+                self.assertEqual(clean_gate(journal=self.scan(self.rows(specs))), "suspect")
+
+    def test_late_completion_zero_event_and_wrong_priority_stop(self):
+        cases = [[(18, ev.QCA_SETUP, 6), (19, ev.QCA_BAUDRATE_EVENT, 3), (20.000001, ev.QCA_READY, 6)],
+                 [(21, ev.QCA_SETUP, 6), (22, ev.QCA_READY, 6)],
+                 [(0, ev.QCA_SETUP, 6), (0, ev.QCA_BAUDRATE_EVENT, 3), (1, ev.QCA_READY, 6)],
+                 [(4, ev.QCA_SETUP, 6), (5, ev.QCA_BAUDRATE_EVENT, 4), (6, ev.QCA_READY, 6)],
+                 [(4, ev.QCA_SETUP, 6), (5, ev.QCA_BAUDRATE_EVENT, 3), (10.000001, ev.QCA_READY, 6)]]
+        for specs in cases:
+            with self.subTest(specs=specs):
+                self.assertEqual(clean_gate(journal=self.scan(self.rows(specs))), "suspect")
+
+    def test_completion_at_twenty_seconds_is_allowed(self):
+        specs = [(14, ev.QCA_SETUP, 6), (15, ev.QCA_BAUDRATE_EVENT, 3), (20, ev.QCA_READY, 6)]
+        self.assertEqual(clean_gate(journal=self.scan(self.rows(specs))), "clean")
+
+    def test_exact_microsecond_five_second_boundary_is_preserved(self):
+        specs = [(2, ev.QCA_SETUP, 6), (3.000006, ev.QCA_BAUDRATE_EVENT, 3), (8.000006, ev.QCA_READY, 6)]
+        result = self.scan(self.rows(specs))
+        self.assertEqual(clean_gate(journal=result), "clean")
+        self.assertEqual(result["qca_baudrate_warning"]["cycles"][0]["events"][0]["recovery_seconds"], 5)
+        specs[-1] = (8.000007, ev.QCA_READY, 6)
+        self.assertEqual(clean_gate(journal=self.scan(self.rows(specs))), "suspect")
+
+    def test_pending_second_cycle_deadline_cannot_be_clean(self):
+        rows = self.rows()[:-1]
+        scan = self.scan(rows, observed_uptime=10)
+        self.assertEqual(scan["qca_baudrate_warning"]["state"], "pending")
+        self.assertFalse(scan["suspects"])
+        self.assertEqual(clean_gate(journal=scan), "suspect")
+        self.assertTrue(self.scan(rows, observed_uptime=13.100001)["suspects"])
+
+    def test_no_event_pending_setup_expires_at_twenty_seconds(self):
+        rows = self.rows([(18, ev.QCA_SETUP, 6)])
+        self.assertEqual(self.scan(rows, observed_uptime=19)["qca_baudrate_warning"]["state"], "pending")
+        self.assertTrue(self.scan(rows, observed_uptime=20.000001)["suspects"])
+
+    def test_other_bluetooth_error_and_cpu_panic_are_not_masked(self):
+        for message in ("Bluetooth: hci0: command 0xfc00 tx timeout", "Kernel panic - not syncing: test"):
+            rows = self.rows() + self.rows([(14, message, 4)])[1:]
+            result = self.scan(rows, known_priority3={message})
+            self.assertNotEqual(clean_gate(journal=result), "clean")
+            if message.startswith("Kernel panic"):
+                self.assertIn("panic", result["fault_counts"])
+            else:
+                self.assertTrue(result["suspects"])
+
+    def test_approved_real_cycle_replay_keeps_old_suspect_immutable(self):
+        folder = runner.TEST250_ROOT / "attempt-04/round-05"
+        before = (folder / "verdict.json").read_bytes()
+        raw = (folder / "kernel-journal-json.txt").read_text()
+        boot = json.loads(raw.splitlines()[0])["_BOOT_ID"]
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-05"):
+            base = runner.baseline()
+        self.assertTrue(base["accepted_qca_cycles"])
+        scan = runner.inspect(raw, boot, base)
+        self.assertEqual(scan["suspects"], [])
+        self.assertEqual(scan["qca_baudrate_warning"]["setup_count"], 3)
+        self.assertEqual(scan["qca_baudrate_warning"]["event_count"], 2)
+        self.assertEqual((folder / "verdict.json").read_bytes(), before)
+        self.assertEqual(json.loads(before)["verdict"], "suspect")
+
+    def test_registered_cycle_limits_cannot_be_silently_broadened(self):
+        read_text = Path.read_text
+        for key, value in (("maximum_count", 3), ("maximum_setup_count", 4),
+                           ("maximum_per_setup_count", 2), ("maximum_completion_source_seconds", 25)):
+            def altered(path, *args, **kwargs):
+                raw = read_text(path, *args, **kwargs)
+                if path == runner.TEST250_ROOT / "attempt-05/policy.json":
+                    payload = json.loads(raw); payload[key] = value
+                    return json.dumps(payload)
+                return raw
+            with self.subTest(key=key), mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-05"), \
+                 mock.patch.object(Path, "read_text", altered), self.assertRaises(ValueError):
+                runner.baseline()
+
+    def test_live_cycle_failure_stops_observer_without_extra_wait(self):
+        with tempfile.TemporaryDirectory() as temp:
+            rec = mock.Mock(folder=Path(temp))
+            rec.adb.return_value = (B + "\n14.0 30.0\n", 0)
+            proc = mock.Mock(); proc.poll.return_value = None; proc.wait.return_value = -15
+            raw = "\n".join(json.dumps(row) for row in self.rows()[:-1]) + "\n"
+            def start(_argv, stdout, stderr):
+                stdout.write(raw.encode()); stdout.flush(); return proc
+            with mock.patch.object(runner.subprocess, "Popen", side_effect=start), \
+                 mock.patch.object(runner.time, "sleep") as sleep:
+                with self.assertRaises(runner.KernelEvidenceError):
+                    runner.observe_window(rec, B, 10,
+                        {"known_priority3": set(), "accepted_qca_baudrate": True, "accepted_qca_cycles": True})
+                sleep.assert_not_called()
+                proc.terminate.assert_called_once()
+
+    def test_fresh_attempt_policy_is_in_pushed_registration_gate(self):
+        def git_output(argv, **kwargs):
+            if argv[1] == "branch":
+                return b"test\n"
+            if argv[1] == "rev-parse":
+                return b"same-pushed-commit\n"
+            path = argv[2].split(":", 1)[1]
+            if path.endswith("attempt-05/policy.json"):
+                return b"unpublished policy bytes\n"
+            return (ROOT / path).read_bytes()
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-05"), \
+             mock.patch.object(runner.subprocess, "check_output", side_effect=git_output), \
+             mock.patch.object(runner.subprocess, "run", return_value=mock.Mock(returncode=0)):
+            with self.assertRaises(runner.CaptureError):
+                runner.assert_registration_pushed()
+
+
 if __name__ == "__main__":
     unittest.main()
