@@ -60,6 +60,17 @@ the current boot as a clean Test250 round or retry automatically. Keep productio
 unchanged and review `reference/boot-tests/test-250-production-warm-reboot/RESULTS.md`
 and its raw evidence before another hardware test. Test251 was not created.
 
+The owner subsequently explicitly requested physical testing again. Test250
+attempt 02 is separately registered in
+`reference/boot-tests/test-250-production-warm-reboot/attempt-02/README.md`.
+Use `--attempt 2` to preserve the stopped original records. Its host-only
+parser recognizes tightly bounded startup classes from both manifest-verified
+Test249 accepted production captures; it does not change the device or accept
+USB transients as clean. The same 20-round/150-second, exact-production and
+stop-on-first-non-clean requirements apply. Check attempt-02 results before
+any further test; an explicit restart request is not permission to ignore a
+new non-clean condition.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

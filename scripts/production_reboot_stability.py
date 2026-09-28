@@ -21,7 +21,8 @@ import time
 import production_stability_evidence as evidence
 
 ROOT = Path(__file__).resolve().parents[1]
-P = ROOT / "reference/boot-tests/test-250-production-warm-reboot"
+TEST250_ROOT = ROOT / "reference/boot-tests/test-250-production-warm-reboot"
+P = TEST250_ROOT
 BASE = ROOT / "reference/boot-tests/test-249-no-dcc-production"
 ADB = "/mnt/d/android/gts9-active/platform-tools/adb.exe"
 SERIAL = "gts9wifi-0001"
@@ -156,6 +157,19 @@ def baseline():
                data["validation/candidate-module-checksums.txt"].decode().splitlines()}
     old_rows = [json.loads(line) for line in data["final-acceptance/kernel-json.txt"].decode().splitlines()]
     known_priority3 = {row["MESSAGE"] for row in old_rows if int(row.get("PRIORITY", 7)) == 3}
+    variants = P == TEST250_ROOT / "attempt-02"
+    if variants:
+        accepted_twrp = checked_file(BASE / "production-twrp-continued/kernel-follow.jsonl", manifest)
+        for raw in (accepted_twrp.decode(), data["final-acceptance/kernel-json.txt"].decode()):
+            rows = [json.loads(line) for line in raw.splitlines()]
+            counts = {}
+            for row in rows:
+                kind = evidence.startup_variant(row)
+                if kind:
+                    counts[kind] = counts.get(kind, 0) + 1
+            if counts != {"boot_register_warning": 1, "smmu_context_fault": 10,
+                          "smmu_fsr": 10, "smmu_fsynr": 10}:
+                raise ValueError("accepted Test249 startup-class references changed")
     accepted_cmdline = data["final-acceptance/profile.txt"].decode().splitlines()[1].split()
     owned_cmdline = (ROOT / "boot/cmdline.example.txt").read_text().split()
     if not all(token in accepted_cmdline for token in owned_cmdline):
@@ -164,8 +178,14 @@ def baseline():
         raise ValueError("incomplete Test249 accepted baseline")
     return {"config_sha256": config, "notes_sha256": identity["notes_sha256"],
             "partitions": partitions, "modules": modules, "known_priority3": known_priority3,
+            "accepted_startup_variants": variants,
             "owned_cmdline_tokens": owned_cmdline,
             "test249_manifest_sha256": hashlib.sha256((BASE / "SHA256.json").read_bytes()).hexdigest()}
+
+
+def inspect(raw, boot, base):
+    return evidence.inspect_journal(raw, boot, base["known_priority3"],
+                                    accepted_startup_variants=base.get("accepted_startup_variants", False))
 
 
 def parse_hashes(text, root):
@@ -305,7 +325,7 @@ def status_report(rec, base, prefix="", full=False):
     if evidence.boot_list(history)[-1] != evidence.canonical_boot_id(state["boot_id"]):
         raise CaptureError("current boot is not last in persistent journal")
     raw = journal(rec, state["boot_id"], prefix)
-    inspected = evidence.inspect_journal(raw, state["boot_id"], base["known_priority3"])
+    inspected = inspect(raw, state["boot_id"], base)
     write_json(rec.folder / (prefix + "journal-analysis.json"), inspected)
     if inspected["fault_counts"] or inspected["suspects"]:
         raise CaptureError("current boot has kernel failure or suspect messages")
@@ -328,15 +348,14 @@ def assert_registration_pushed():
         raise CaptureError("Test250 runner commit is not yet pushed to origin/test")
     paths = ["scripts/production-reboot-stability.sh", "scripts/production_reboot_stability.py",
              "scripts/production_stability_evidence.py",
-             "reference/boot-tests/test-250-production-warm-reboot/README.md"]
+             str((P / "README.md").relative_to(ROOT))]
     if subprocess.run(["git", "ls-files", "--error-unmatch", "--", *paths],
                       cwd=ROOT, capture_output=True).returncode != 0:
         raise CaptureError("Test250 runner/registration files are not committed")
     if subprocess.run(["git", "diff", "--quiet", "HEAD", "--", *paths], cwd=ROOT).returncode != 0:
         raise CaptureError("Test250 runner or registration differs from its pushed commit")
     local = (P / "README.md").read_bytes()
-    published = subprocess.check_output(["git", "show", "origin/test:reference/boot-tests/"
-                                         "test-250-production-warm-reboot/README.md"], cwd=ROOT)
+    published = subprocess.check_output(["git", "show", "origin/test:" + paths[-1]], cwd=ROOT)
     if local != published:
         raise CaptureError("Test250 registration has not been pushed to origin/test")
 
@@ -357,6 +376,8 @@ def preflight():
                       config_sha256=state["config_sha256"], notes_sha256=state["notes_sha256"],
                       module_files=181, partition_hashes=base["partitions"],
                       journal_rows=inspected["rows"], transport=link,
+                      accepted_startup_variants=base["accepted_startup_variants"],
+                      startup_variant_counts=inspected["startup_variant_counts"],
                       journal_boots=len(evidence.boot_list(history)))
     except Exception as exc:
         report.update(verdict="stop", error=repr(exc))
@@ -417,7 +438,7 @@ def observe_window(rec, boot, first_uptime, base):
                 stream = follow.read_bytes()
                 complete = stream[:stream.rfind(b"\n") + 1].decode(errors="replace")
                 if complete:
-                    scan = evidence.inspect_journal(complete, boot, base["known_priority3"])
+                    scan = inspect(complete, boot, base)
                     write_json(rec.folder / "live-journal-analysis.json", scan)
                     if scan["fault_counts"] or scan["suspects"]:
                         raise KernelEvidenceError("new boot kernel fault during observation", scan)
@@ -486,7 +507,7 @@ def round_run(index, base, before_expected):
         if evidence.boot_list(before_history)[-1] != before:
             raise CaptureError("source boot history mismatch")
         before_raw = journal(rec, before, "before-")
-        before_scan = evidence.inspect_journal(before_raw, before, base["known_priority3"])
+        before_scan = inspect(before_raw, before, base)
         if before_scan["fault_counts"] or before_scan["suspects"]:
             raise CaptureError("source boot acquired kernel fault before reboot")
         before_link = transport(rec, before, "before-")
@@ -508,7 +529,7 @@ def round_run(index, base, before_expected):
             raise CaptureError(f"new boot attribution: {initial_attribution}")
         # Shutdown faults belong to the just-ended target, not the new boot.
         ended_raw = journal(rec, before, "ended-target-")
-        ended_scan = evidence.inspect_journal(ended_raw, before, base["known_priority3"])
+        ended_scan = inspect(ended_raw, before, base)
         write_json(folder / "ended-target-journal-analysis.json", ended_scan)
         if ended_scan["fault_counts"] or ended_scan["suspects"]:
             raise KernelEvidenceError("just-ended target boot acquired a kernel fault", ended_scan)
@@ -528,11 +549,12 @@ def round_run(index, base, before_expected):
         result["dcc_absent"] = after_state["dcc_absent"]
         result["systemd_failed_units"] = after_state["failed_units"]
         raw = journal(rec, after)
-        scan = evidence.inspect_journal(raw, after, base["known_priority3"])
+        scan = inspect(raw, after, base)
         result["journal_rows"] = scan["rows"]
         result["kernel_fault_counts"] = scan["fault_counts"]
         result["kernel_suspects"] = scan["suspects"]
         result["known_warning_count"] = scan["known_warning_count"]
+        result["startup_variant_counts"] = scan["startup_variant_counts"]
         link = transport(rec, after)
         result["transport"] = link
         if not link["code43"]:
@@ -582,6 +604,7 @@ def summary(rounds, base, final=None):
                   row.get("dcc_absent") is True for row in rounds if row["verdict"] == "clean"),
               "kernel_fault_counts": fault_totals,
               "test249_manifest_sha256": base["test249_manifest_sha256"],
+              "accepted_startup_variants": base.get("accepted_startup_variants", False),
               "final_verdict": "in_progress"}
     if first_bad is not None:
         result["final_verdict"] = "stopped_on_first_non_clean"
@@ -649,7 +672,7 @@ def run():
     pre = json.loads((P / "preflight/summary.json").read_text())
     if pre.get("verdict") != "accepted_production" or pre.get("test249_manifest_sha256") != base["test249_manifest_sha256"]:
         raise CaptureError("Test250 accepted preflight is missing or stale")
-    preflight_path = "reference/boot-tests/test-250-production-warm-reboot/preflight"
+    preflight_path = str((P / "preflight").relative_to(ROOT))
     if subprocess.run(["git", "ls-files", "--error-unmatch", "--", preflight_path + "/summary.json"],
                       cwd=ROOT, capture_output=True).returncode != 0:
         raise CaptureError("Test250 preflight has not been committed")
@@ -678,9 +701,14 @@ def run():
 
 
 def main():
+    global P
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preflight", "run"))
+    parser.add_argument("--attempt", type=int, choices=(2,),
+                        help="Explicitly registered fresh attempt; preserves the stopped original evidence")
     args = parser.parse_args()
+    if args.attempt == 2:
+        P = TEST250_ROOT / "attempt-02"
     try:
         {"preflight": preflight, "run": run}[args.action]()
     except (CaptureError, ValueError, OSError, subprocess.CalledProcessError) as exc:

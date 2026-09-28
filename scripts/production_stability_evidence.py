@@ -24,6 +24,42 @@ SUSPECT = re.compile(
 AUX_WARNING = ("auxiliary aux_bridge.aux_bridge.0: deferred probe pending: "
                "aux_bridge.aux_bridge: failed to acquire drm_bridge")
 REGULATOR_WARNING = "regulator: Not disabling unused regulators"
+BOOT_REGISTER_WARNING = re.compile(
+    r"WARNING: x1-x3 nonzero in violation of boot protocol:\n"
+    r"\tx1: 0000000080000000\n\tx2: [0-9a-f]{16}\n"
+    r"\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel")
+SMMU_CONTEXT = re.compile(
+    r"arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, "
+    r"iova=(0x[0-9a-f]+), fsynr=(0x620021|0x630021), cbfrsynra=0x1c00, cb=9")
+SMMU_FSR = "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00"
+SMMU_SYNDROMES = {
+    "arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]",
+    "arm-smmu 15000000.iommu: FSYNR0 = 00630021 [S1CBNDX=99 PNU PLVL=1]",
+}
+
+
+def startup_variant(row):
+    """Narrow classes observed in both accepted Test249 production captures.
+
+    Counts are enforced by inspect_journal. These are existing errors/warnings,
+    not a claim that SMMU faults are harmless or repaired.
+    """
+    message = row["MESSAGE"]
+    timestamp = int(row["_SOURCE_BOOTTIME_TIMESTAMP"])
+    if int(row.get("PRIORITY", 7)) != 3:
+        return None
+    if timestamp == 0 and BOOT_REGISTER_WARNING.fullmatch(message):
+        return "boot_register_warning"
+    if timestamp > 200_000:
+        return None
+    match = SMMU_CONTEXT.fullmatch(message)
+    if match and int(match[1], 16) & ~0x1fffff == 0xb8000000:
+        return "smmu_context_fault"
+    if message == SMMU_FSR:
+        return "smmu_fsr"
+    if message in SMMU_SYNDROMES:
+        return "smmu_fsynr"
+    return None
 
 
 def canonical_boot_id(value):
@@ -65,7 +101,8 @@ def attribute(before_id, after_id, before_text, after_text):
     return "attributed"
 
 
-def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True):
+def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
+                    accepted_startup_variants=False):
     """Require complete JSON rows with source timestamps and classify each message."""
     if raw is None:
         raise ValueError("missing kernel journal")
@@ -73,6 +110,12 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True):
         raise ValueError("empty kernel journal")
     expected = canonical_boot_id(boot_id)
     known = set(known_priority3)
+    if accepted_startup_variants:
+        # Exact old SMMU/register messages must also obey time/count bounds.
+        known = {message for message in known if not (
+            message.startswith("arm-smmu 15000000.iommu:") or
+            message.startswith("WARNING: x1-x3 nonzero"))}
+    variant_counts = {}
     rows, failures, suspects, known_warnings = [], {}, [], []
     for number, line in enumerate(raw.splitlines(), 1):
         try:
@@ -92,6 +135,13 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True):
                 raise ValueError()
         except (TypeError, ValueError):
             raise ValueError(f"invalid source timestamp in journal row {number}")
+        variant = startup_variant(row) if accepted_startup_variants else None
+        if variant:
+            variant_counts[variant] = variant_counts.get(variant, 0) + 1
+            limit = 1 if variant == "boot_register_warning" else 10
+            if variant_counts[variant] <= limit:
+                known_warnings.append(message)
+                continue
         for name, pattern in FAILURES.items():
             if pattern.search(message):
                 failures[name] = failures.get(name, 0) + 1
@@ -116,6 +166,7 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True):
         raise ValueError("kernel journal lacks the startup Linux-version record")
     return {"rows": len(rows), "fault_counts": failures, "suspects": suspects,
             "known_warning_count": len(known_warnings),
+            "startup_variant_counts": variant_counts,
             "first_source_timestamp": rows[0]["_SOURCE_BOOTTIME_TIMESTAMP"],
             "last_source_timestamp": rows[-1]["_SOURCE_BOOTTIME_TIMESTAMP"]}
 

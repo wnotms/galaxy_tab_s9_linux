@@ -234,6 +234,7 @@ class GateTests(unittest.TestCase):
                      "after_boot_id": B, "observation_seconds": 150,
                      "kernel_fault_counts": {}, "transport": {"adb_ok": True}}
             with mock.patch.object(runner, "P", test_root), \
+                 mock.patch.object(runner, "ROOT", test_root), \
                  mock.patch.object(runner, "assert_registration_pushed"), \
                  mock.patch.object(runner, "baseline", return_value=base), \
                  mock.patch.object(runner.subprocess, "run", return_value=mock.Mock(returncode=0)), \
@@ -246,6 +247,78 @@ class GateTests(unittest.TestCase):
                 final.assert_not_called()
                 saved = json.loads((test_root / "summary.json").read_text())
                 self.assertEqual(saved["first_non_clean_round"], 1)
+
+
+class StartupVariantTests(unittest.TestCase):
+    def setUp(self):
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-02"):
+            self.base = runner.baseline()
+
+    def scan(self, rows):
+        raw = "".join(json.dumps(row) + "\n" for row in rows)
+        return runner.inspect(raw, rows[0]["_BOOT_ID"], self.base)
+
+    def rows(self):
+        p = runner.TEST250_ROOT / "preflight/kernel-journal-json.txt"
+        return [json.loads(line) for line in p.read_text().splitlines()]
+
+    def test_both_accepted_production_captures_and_stopped_preflight_replay(self):
+        for path in (runner.BASE / "production-twrp-continued/kernel-follow.jsonl",
+                     runner.BASE / "final-acceptance/kernel-json.txt",
+                     runner.TEST250_ROOT / "preflight/kernel-journal-json.txt"):
+            with self.subTest(path=path):
+                scan = self.scan([json.loads(line) for line in path.read_text().splitlines()])
+                self.assertEqual(scan["fault_counts"], {})
+                self.assertEqual(scan["suspects"], [])
+                self.assertEqual(scan["startup_variant_counts"]["smmu_context_fault"], 10)
+
+    def test_unknown_smmu_syndrome_sid_bank_and_address_remain_suspect(self):
+        original = self.rows()
+        idx = next(i for i, row in enumerate(original) if ev.SMMU_CONTEXT.fullmatch(row["MESSAGE"]))
+        for old, new in (("fsr=0x402", "fsr=0x404"), ("fsynr=0x620021", "fsynr=0x640021"),
+                         ("cbfrsynra=0x1c00", "cbfrsynra=0x1c01"), ("cb=9", "cb=10"),
+                         ("iova=0xb8000100", "iova=0xb8200000")):
+            with self.subTest(change=new):
+                rows = [dict(row) for row in original]
+                rows[idx]["MESSAGE"] = rows[idx]["MESSAGE"].replace(old, new)
+                self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_late_smmu_fault_not_whitelisted_even_if_exact_accepted_text(self):
+        rows = self.rows()
+        idx = next(i for i, row in enumerate(rows) if row["MESSAGE"] == ev.SMMU_FSR)
+        rows[idx]["_SOURCE_BOOTTIME_TIMESTAMP"] = "200001"
+        self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_more_than_ten_early_context_faults_stop(self):
+        rows = self.rows()
+        row = next(row for row in rows if ev.SMMU_CONTEXT.fullmatch(row["MESSAGE"]))
+        rows.append(dict(row))
+        scan = self.scan(rows)
+        self.assertEqual(scan["startup_variant_counts"]["smmu_context_fault"], 11)
+        self.assertTrue(scan["suspects"])
+
+    def test_new_boot_register_warning_shape_or_time_stops(self):
+        for replacement in ("0000000080000001",):
+            rows = self.rows()
+            row = next(row for row in rows if ev.BOOT_REGISTER_WARNING.fullmatch(row["MESSAGE"]))
+            row["MESSAGE"] = row["MESSAGE"].replace("0000000080000000", replacement)
+            self.assertTrue(self.scan(rows)["suspects"])
+        rows = self.rows()
+        next(row for row in rows if ev.BOOT_REGISTER_WARNING.fullmatch(row["MESSAGE"]))[
+            "_SOURCE_BOOTTIME_TIMESTAMP"] = "1"
+        self.assertTrue(self.scan(rows)["suspects"])
+
+    def test_new_cpu_fault_and_usb_transient_still_stop(self):
+        rows = self.rows()
+        rows.append({"_BOOT_ID": rows[0]["_BOOT_ID"], "_SOURCE_BOOTTIME_TIMESTAMP": "30000000",
+                     "PRIORITY": "3", "MESSAGE": "Kernel panic - not syncing: watchdog"})
+        self.assertIn("panic", self.scan(rows)["fault_counts"])
+        self.assertEqual(clean_gate(ncm_initial_failure=True), "usb-transient")
+
+    def test_original_attempt_retains_conservative_exact_gate(self):
+        scan = runner.inspect((runner.TEST250_ROOT / "preflight/kernel-journal-json.txt").read_text(),
+                              self.rows()[0]["_BOOT_ID"], runner.baseline())
+        self.assertEqual(len(scan["suspects"]), 21)
 
 
 if __name__ == "__main__":

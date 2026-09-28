@@ -1,0 +1,36 @@
+{
+  "purpose": "Explicitly requested fresh Test250 attempt; host-only evidence classification correction.",
+  "changed_check": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "executed": true,
+    "tests_run": 1013,
+    "elapsed_s": 70.299,
+    "exit_code": 0
+  },
+  "final_review": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "suite": "all",
+    "counts": {
+      "core": 908,
+      "artifacts": 18,
+      "archive": 87
+    },
+    "executed": true,
+    "tests_run": 1013,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "expected_failures": [],
+    "unexpected_successes": [],
+    "elapsed_s": 68.246,
+    "exit_code": 0
+  },
+  "source_sha256": {
+    "scripts/production-reboot-stability.sh": "bf9e280d06e88948ae9cdbfc92d2d91f251687d584837a45a9314c115be34dfa",
+    "scripts/production_reboot_stability.py": "45b56004672e8b3729ba2dcc7a5bc92af08df7d3e7867f1ea56a266015352b6a",
+    "scripts/production_stability_evidence.py": "08cc7bfa262447b5b35323860883c8a24b53d6f17262a860e680bd5369c29da2",
+    "tests/test_production_reboot_stability.py": "ca867dcbc992eec4eab9b264ff8abb150e38aec579628b35187e35cb08fcfd38"
+  },
+  "original_evidence_files_verified": 170,
+  "hardware_reboots_at_registration": 0
+}
