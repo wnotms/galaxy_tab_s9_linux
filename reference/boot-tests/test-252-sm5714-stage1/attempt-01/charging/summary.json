@@ -1,0 +1,43 @@
+{
+  "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+  "first": {
+    "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+    "current_ua": 432000,
+    "health": "Good",
+    "host_elapsed_s": 1.567,
+    "input_limit_ua": 1800000,
+    "kernel_fault_counts": {},
+    "kernel_rows": 1099,
+    "observation_s": 1.596,
+    "online": 1,
+    "soc": 92,
+    "status": "Charging",
+    "temp_deciC": 306,
+    "uptime_s": 459.41,
+    "usb_type": "Unknown SDP [DCP] CDP",
+    "utc": "2026-09-28T12:15:47.904149+00:00",
+    "voltage_uv": 4330000
+  },
+  "last": {
+    "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+    "current_ua": 900000,
+    "health": "Good",
+    "host_elapsed_s": 1201.004,
+    "input_limit_ua": 1800000,
+    "kernel_fault_counts": {},
+    "kernel_rows": 1099,
+    "observation_s": 1201.034,
+    "online": 1,
+    "soc": 97,
+    "status": "Charging",
+    "temp_deciC": 312,
+    "uptime_s": 1658.79,
+    "usb_type": "Unknown SDP [DCP] CDP",
+    "utc": "2026-09-28T12:35:47.931701+00:00",
+    "voltage_uv": 4408000
+  },
+  "phase": "charging",
+  "samples": 121,
+  "verdict": "bounded observation completed; acceptance requires cross-phase current/SOC review",
+  "window_s": 1201.035
+}

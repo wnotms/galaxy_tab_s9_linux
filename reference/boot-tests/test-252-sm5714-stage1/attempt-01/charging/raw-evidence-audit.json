@@ -1,0 +1,71 @@
+{
+  "actual_pd_contract_measured": false,
+  "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+  "current_sign": "negative discharge -> positive net charging",
+  "current_ua_range": [
+    432000,
+    1381000
+  ],
+  "failed_units": [],
+  "first": {
+    "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+    "current_ua": 432000,
+    "health": "Good",
+    "host_elapsed_s": 1.567,
+    "input_limit_ua": 1800000,
+    "kernel_fault_counts": {},
+    "kernel_rows": 1099,
+    "observation_s": 1.596,
+    "online": 1,
+    "soc": 92,
+    "status": "Charging",
+    "temp_deciC": 306,
+    "uptime_s": 459.41,
+    "usb_type": "Unknown SDP [DCP] CDP",
+    "utc": "2026-09-28T12:15:47.904149+00:00",
+    "voltage_uv": 4330000
+  },
+  "kernel_fault_counts": {},
+  "known_optional_gpu_missing_firmware_samples": 0,
+  "last": {
+    "boot_id": "fcb9a367fa8e43dfafb108db722ff2f1",
+    "current_ua": 900000,
+    "health": "Good",
+    "host_elapsed_s": 1201.004,
+    "input_limit_ua": 1800000,
+    "kernel_fault_counts": {},
+    "kernel_rows": 1099,
+    "observation_s": 1201.034,
+    "online": 1,
+    "soc": 97,
+    "status": "Charging",
+    "temp_deciC": 312,
+    "uptime_s": 1658.79,
+    "usb_type": "Unknown SDP [DCP] CDP",
+    "utc": "2026-09-28T12:35:47.931701+00:00",
+    "voltage_uv": 4408000
+  },
+  "measured_vbus_ibus_available": false,
+  "observation_samples": 121,
+  "phase": "charging",
+  "plug_out_and_final_acceptance_pending": true,
+  "positive_current_samples": 121,
+  "raw_journal_samples_verified": 121,
+  "raw_sample_span_s": 1200.028,
+  "samples": 121,
+  "soc_range": [
+    92,
+    97
+  ],
+  "soc_rise": 5,
+  "temp_deciC_range": [
+    306,
+    312
+  ],
+  "verdict": "passed bounded observation and raw evidence reconciliation",
+  "voltage_uv_range": [
+    4330000,
+    4418000
+  ],
+  "window_s": 1201.035
+}

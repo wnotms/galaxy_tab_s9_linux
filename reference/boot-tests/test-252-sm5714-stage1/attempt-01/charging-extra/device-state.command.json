@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.195",
+    "scripts/gts9-ssh.sh",
+    "set -e; date -u; cat /proc/sys/kernel/random/boot_id /proc/uptime; cat /sys/class/power_supply/sm5714-battery/uevent /sys/class/power_supply/sm5714-usb/uevent; ip -br addr; systemctl is-active ssh gts9-usb-gadget.service; ls -l /sys/class/typec /sys/class/usb_role /sys/class/power_supply; for f in /sys/kernel/config/usb_gadget/*/UDC /sys/class/udc/*/state; do test ! -f \"$f\" || { echo \"$f\"; cat \"$f\"; }; done"
+  ],
+  "started_utc": "2026-09-28T12:22:56.586089+00:00",
+  "ended_utc": "2026-09-28T12:22:57.048502+00:00",
+  "status": 0
+}

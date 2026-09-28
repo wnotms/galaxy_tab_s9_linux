@@ -238,8 +238,11 @@ passed. The candidate boot and paired181 modules are now installed, and boot
 five-partition identity, DCC absence, both supplies and working ADB/NCM/Wi-Fi
 SSH. Only boot changed; the other four partitions match accepted Test249.
 Initial computer SDP input is limited500mA and does not overcome system load;
-Charging labels alone are not charging acceptance. Battery-only150s and later
-20-minute ordinary-charge/plug-out tests are in progress, not accepted yet.
+Charging labels alone are not charging acceptance. Battery-only151.021s passed
+and ordinary Lenovo YG65G USB-C2 charging passed1201.035s/121 samples: SOC92 ->97,
+actual pack current+432..1381mA, temperature30.6..31.2C, voltage4.330..4.418V.
+No CPU/kernel/charge fault occurred. Plug-out and final USB/identity acceptance
+are still pending; Stage1 physical acceptance is not yet complete.
 The on-device `.gts9-test252-original` contains all181 verified Test249 files;
 external Test249 boot/module rollback is retained. Do not remove it or start
 Stage2/3 before the results and retention decision. The original prepared-only
