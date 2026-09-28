@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "command -v busybox; busybox blkid /dev/block/mmcblk1p1; ls /sys/class/power_supply; for n in sm5714-charger sm5714-fuelgauge sm5440-charger; do echo \"$n\"; cat /sys/class/power_supply/$n/uevent; done"
+  ],
+  "started_utc": "2026-09-28T12:04:14.162817+00:00",
+  "ended_utc": "2026-09-28T12:04:14.263974+00:00",
+  "status": 0
+}

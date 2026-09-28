@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "umount /mnt/debian && mount -t ext4 -o rw /dev/block/mmcblk1p1 /mnt/debian && test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6 && grep \" /mnt/debian \" /proc/mounts"
+  ],
+  "started_utc": "2026-09-28T12:05:45.204382+00:00",
+  "ended_utc": "2026-09-28T12:05:45.417168+00:00",
+  "status": 0
+}

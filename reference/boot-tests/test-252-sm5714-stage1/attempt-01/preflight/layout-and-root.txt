@@ -1,0 +1,14 @@
+96862d29-81ee-4098-9353-57f0054c725b
+/dev/mmcblk1p1: LABEL="debian-root" UUID="851819a7-0d96-4217-b64a-aeeee5d8be61" BLOCK_SIZE="4096" TYPE="ext4" PARTLABEL="Linux data partition" PARTUUID="82a08002-4f24-4b18-812d-65753fc371b0"
+3c2a1b8f2d624db4b5ffdc836050fcf6
+boot /dev/sda21
+196608
+vendor_boot /dev/sda24
+196608
+init_boot /dev/sda22
+16384
+dtbo /dev/sda30
+32768
+vbmeta /dev/sde15
+256
+-rwxr-xr-x 1 root root 9036 Apr 14 05:20 /usr/local/sbin/gts9-debian-to-recovery

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.model; getprop ro.product.device; getprop ro.twrp.version; uname -a; cat /proc/sys/kernel/random/boot_id; for n in boot vendor_boot init_boot dtbo vbmeta misc; do p=$(readlink -f /dev/block/by-name/$n); echo \"$n $p\"; blockdev --getsize64 \"$p\"; done; blkid /dev/block/mmcblk1p1; cat /sys/class/power_supply/battery/uevent; ls -l /sys/fs/pstore"
+  ],
+  "started_utc": "2026-09-28T12:03:47.209271+00:00",
+  "ended_utc": "2026-09-28T12:03:47.397475+00:00",
+  "status": 0
+}
