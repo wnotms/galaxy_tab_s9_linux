@@ -197,6 +197,11 @@ class GateTests(unittest.TestCase):
                 self.assertIn("panic", caught.exception.scan["fault_counts"])
                 sleep.assert_not_called()
                 proc.terminate.assert_called_once()
+                progress = json.loads((rec.folder / "observation-progress.json").read_text())
+                self.assertEqual(progress["last_successful_poll_uptime_seconds"], 20.0)
+                meta = json.loads((rec.folder / "kernel-follow.command.json").read_text())
+                self.assertFalse(meta["registered_window_completed"])
+                self.assertFalse(meta["host_stopped_at_window_end"])
 
     def test_shutdown_fault_stops_before_new_boot_observation(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -319,6 +324,76 @@ class StartupVariantTests(unittest.TestCase):
         scan = runner.inspect((runner.TEST250_ROOT / "preflight/kernel-journal-json.txt").read_text(),
                               self.rows()[0]["_BOOT_ID"], runner.baseline())
         self.assertEqual(len(scan["suspects"]), 21)
+
+
+class ProductionRegionAndNcmTests(unittest.TestCase):
+    def test_verified_dtb_region_recognizes_old_suspect_addresses_without_new_kernel(self):
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-03"):
+            base = runner.baseline()
+        self.assertEqual(base["startup_iova_range"], (0xb8000000, 0xbab00000))
+        raw = (runner.TEST250_ROOT / "attempt-02/round-01/kernel-journal-json.txt").read_text()
+        boot = json.loads(raw.splitlines()[0])["_BOOT_ID"]
+        scan = runner.inspect(raw, boot, base)
+        self.assertEqual(scan["suspects"], [])
+        self.assertEqual(scan["fault_counts"], {})
+        self.assertEqual(scan["startup_variant_counts"]["smmu_context_fault"], 10)
+
+    def test_real_region_boundaries_and_late_faults_still_stop(self):
+        raw = (runner.TEST250_ROOT / "attempt-02/round-01/kernel-journal-json.txt").read_text()
+        rows = [json.loads(line) for line in raw.splitlines()]
+        index = next(i for i, row in enumerate(rows) if ev.SMMU_CONTEXT.fullmatch(row["MESSAGE"]))
+        base = {"known_priority3": runner.baseline()["known_priority3"],
+                "accepted_startup_variants": True, "startup_iova_range": (0xb8000000, 0xbab00000)}
+        for address in ("0xb7ffffff", "0xbab00000"):
+            trial = [dict(row) for row in rows]
+            trial[index]["MESSAGE"] = trial[index]["MESSAGE"].replace("0xb82a6d00", address)
+            scan = runner.inspect("\n".join(json.dumps(row) for row in trial), rows[0]["_BOOT_ID"], base)
+            self.assertTrue(scan["suspects"])
+        rows[index]["_SOURCE_BOOTTIME_TIMESTAMP"] = "200001"
+        self.assertTrue(runner.inspect("\n".join(json.dumps(row) for row in rows),
+                                       rows[0]["_BOOT_ID"], base)["suspects"])
+
+    def bound_row(self):
+        return {"ok": True, "interface_index": 11, "socket_interface": 11,
+                "source_ipv4": "169.254.254.208", "local_endpoint": "169.254.254.208:1358",
+                "remote_endpoint": "169.254.42.1:22", "banner": "SSH-2.0-OpenSSH_test\r\n"}
+
+    def test_bound_banner_rejects_wrong_interface_source_target_and_empty_banner(self):
+        good = self.bound_row()
+        self.assertTrue(runner.bound_banner_ok(json.dumps(good)))
+        for changes in ({"socket_interface": 12}, {"source_ipv4": "127.0.0.1"},
+                        {"local_endpoint": "172.22.1.2:1234"},
+                        {"remote_endpoint": "169.254.42.2:22"}, {"banner": ""}, {"ok": False}):
+            self.assertFalse(runner.bound_banner_ok(json.dumps({**good, **changes})))
+
+    def test_bound_probe_retains_transient_verdict_after_recovery(self):
+        with tempfile.TemporaryDirectory() as temp:
+            rec = mock.Mock(folder=Path(temp))
+            rec.host_adb.return_value = (runner.SERIAL + " device\n", 0)
+            rec.ps.side_effect = [("ProblemCode : 0", 0),
+                (json.dumps({"ok": False, "error": "TCP connect timeout"}), 1),
+                (json.dumps(self.bound_row()), 0)]
+            rec.ssh.return_value = (B, 0)
+            with mock.patch.object(runner.time, "sleep"):
+                link = runner.transport(rec, B, source_bound=True)
+            self.assertTrue(link["ncm_source_bound"])
+            self.assertTrue(link["ncm_initial_failure"])
+            self.assertTrue(link["ssh_ok"])
+            self.assertEqual(clean_gate(ncm_initial_failure=link["ncm_initial_failure"]), "usb-transient")
+
+    def test_corrupt_accepted_dtb_identity_stops_before_using_bounds(self):
+        real_check = runner.checked_file
+        def changed(path, manifest):
+            raw = real_check(path, manifest)
+            if path.name == "build-check.json":
+                data = json.loads(raw)
+                data["artifacts"]["out/kernel-no-dcc-production/sm8550-samsung-gts9wifi.dtb"]["sha256"] = "0" * 64
+                return json.dumps(data).encode()
+            return raw
+        with mock.patch.object(runner, "P", runner.TEST250_ROOT / "attempt-03"), \
+             mock.patch.object(runner, "checked_file", side_effect=changed):
+            with self.assertRaises(ValueError):
+                runner.baseline()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; base64 /sys/firmware/devicetree/base/reserved-memory/splash_region/reg; cat /sys/kernel/config/usb_gadget/gts9/functions/ncm.usb0/host_addr; cat /sys/kernel/config/usb_gadget/gts9/functions/ncm.usb0/dev_addr; ip -br addr show usb0"
+  ],
+  "ended_utc": "2026-09-28T04:51:12.813856+00:00",
+  "started_utc": "2026-09-28T04:51:12.729235+00:00",
+  "status": 0
+}

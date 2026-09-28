@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import struct
 import sys
 import time
 
@@ -44,6 +45,42 @@ try {
   $n = $s.Read($b, 0, $b.Length)
   [Console]::Write([Text.Encoding]::ASCII.GetString($b, 0, $n))
 } finally { $c.Close() }
+'''
+PS_NCM_BOUND_BANNER = r'''$ErrorActionPreference='Stop'
+[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+$report = [ordered]@{ok=$false; interface_index=$null; source_ipv4=$null;
+  local_endpoint=$null; remote_endpoint=$null; socket_interface=$null; banner=$null; error=$null}
+$c=$null
+try {
+  $nic = @(Get-NetAdapter | Where-Object { $_.Status -eq 'Up' -and
+    $_.PnPDeviceID -match 'VID_0525&PID_A4A7&MI_00' -and $_.InterfaceDescription -match 'NCM' })
+  if ($nic.Count -ne 1) { throw 'Production NCM interface not unique/up' }
+  $ip = @(Get-NetIPAddress -InterfaceIndex $nic[0].ifIndex -AddressFamily IPv4 |
+    Where-Object { $_.AddressState -eq 'Preferred' -and $_.IPAddress -like '169.254.*' })
+  if ($ip.Count -ne 1) { throw 'Production NCM IPv4 not unique/preferred' }
+  $report.interface_index=[int]$nic[0].ifIndex; $report.source_ipv4=$ip[0].IPAddress
+  $c = New-Object System.Net.Sockets.TcpClient([System.Net.Sockets.AddressFamily]::InterNetwork)
+  $c.Client.Bind([System.Net.IPEndPoint]::new([System.Net.IPAddress]::Parse($ip[0].IPAddress),0))
+  # Winsock IP_UNICAST_IF=31; setting uses network-order index, getting uses host order.
+  $c.Client.SetSocketOption([System.Net.Sockets.SocketOptionLevel]::IP,
+    [System.Net.Sockets.SocketOptionName]31,[System.Net.IPAddress]::HostToNetworkOrder([int]$nic[0].ifIndex))
+  $report.socket_interface=$c.Client.GetSocketOption([System.Net.Sockets.SocketOptionLevel]::IP,
+    [System.Net.Sockets.SocketOptionName]31)
+  if ($report.socket_interface -ne $report.interface_index) { throw 'Wrong socket interface' }
+  $a=$c.BeginConnect('169.254.42.1',22,$null,$null)
+  if (-not $a.AsyncWaitHandle.WaitOne(5000)) { throw 'TCP connect timeout' }
+  $c.EndConnect($a)
+  $report.local_endpoint=$c.Client.LocalEndPoint.ToString()
+  $report.remote_endpoint=$c.Client.RemoteEndPoint.ToString()
+  $s=$c.GetStream(); $s.ReadTimeout=5000
+  $b=New-Object byte[] 256; $n=$s.Read($b,0,$b.Length)
+  $report.banner=[Text.Encoding]::ASCII.GetString($b,0,$n)
+  if (-not $report.banner.StartsWith('SSH-2.0-')) { throw 'Invalid SSH banner' }
+  $report.ok=$true
+} catch { $report.error=$_.Exception.Message }
+finally { if ($null -ne $c) { $c.Close() } }
+[Console]::Write(($report | ConvertTo-Json -Compress))
+if (-not $report.ok) { exit 1 }
 '''
 PS_USB = r'''Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue |
   Where-Object { $_.InstanceId -match 'VID_0525|VID_18D1|VID_0000&PID_0002' } |
@@ -157,14 +194,32 @@ def baseline():
                data["validation/candidate-module-checksums.txt"].decode().splitlines()}
     old_rows = [json.loads(line) for line in data["final-acceptance/kernel-json.txt"].decode().splitlines()]
     known_priority3 = {row["MESSAGE"] for row in old_rows if int(row.get("PRIORITY", 7)) == 3}
-    variants = P == TEST250_ROOT / "attempt-02"
+    third_attempt = P == TEST250_ROOT / "attempt-03"
+    variants = P in (TEST250_ROOT / "attempt-02", TEST250_ROOT / "attempt-03")
+    iova_range = (0xb8000000, 0xb8200000)
+    if third_attempt:
+        checked = json.loads(checked_file(BASE / "validation/build-check.json", manifest))
+        name = "out/kernel-no-dcc-production/sm8550-samsung-gts9wifi.dtb"
+        meta = checked["artifacts"][name]
+        content = (ROOT / name).read_bytes()
+        if len(content) != meta["bytes"] or hashlib.sha256(content).hexdigest() != meta["sha256"]:
+            raise ValueError("accepted Test249 DTB artifact identity changed")
+        reg = subprocess.check_output(["fdtget", "-t", "x", str(ROOT / name),
+                                       "/reserved-memory/splash_region", "reg"])
+        cells = [int(x, 16) for x in reg.decode().split()]
+        if len(cells) != 4:
+            raise ValueError("invalid accepted splash-region reg")
+        start, size = (cells[0] << 32) | cells[1], (cells[2] << 32) | cells[3]
+        iova_range = start, start + size
+        if iova_range != (0xb8000000, 0xbab00000):
+            raise ValueError("accepted Test249 splash-region bounds changed")
     if variants:
         accepted_twrp = checked_file(BASE / "production-twrp-continued/kernel-follow.jsonl", manifest)
         for raw in (accepted_twrp.decode(), data["final-acceptance/kernel-json.txt"].decode()):
             rows = [json.loads(line) for line in raw.splitlines()]
             counts = {}
             for row in rows:
-                kind = evidence.startup_variant(row)
+                kind = evidence.startup_variant(row, iova_range)
                 if kind:
                     counts[kind] = counts.get(kind, 0) + 1
             if counts != {"boot_register_warning": 1, "smmu_context_fault": 10,
@@ -179,13 +234,15 @@ def baseline():
     return {"config_sha256": config, "notes_sha256": identity["notes_sha256"],
             "partitions": partitions, "modules": modules, "known_priority3": known_priority3,
             "accepted_startup_variants": variants,
+            "startup_iova_range": iova_range, "ncm_source_bound": third_attempt,
             "owned_cmdline_tokens": owned_cmdline,
             "test249_manifest_sha256": hashlib.sha256((BASE / "SHA256.json").read_bytes()).hexdigest()}
 
 
 def inspect(raw, boot, base):
     return evidence.inspect_journal(raw, boot, base["known_priority3"],
-                                    accepted_startup_variants=base.get("accepted_startup_variants", False))
+                                    accepted_startup_variants=base.get("accepted_startup_variants", False),
+                                    startup_iova_range=base.get("startup_iova_range", (0xb8000000, 0xb8200000)))
 
 
 def parse_hashes(text, root):
@@ -233,6 +290,13 @@ def production_state(rec, base, prefix="", full=False):
     usb = adb("usb-state", "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; "
               "ip -br addr show usb0; ss -lnt; "
               "systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true")
+    if base.get("ncm_source_bound"):
+        reg = base64.b64decode("".join(adb("splash-region-base64", "base64 "
+            "/sys/firmware/devicetree/base/reserved-memory/splash_region/reg").split()), validate=True)
+        cells = struct.unpack(">4I", reg)
+        start, size = (cells[0] << 32) | cells[1], (cells[2] << 32) | cells[3]
+        if (start, start + size) != base["startup_iova_range"]:
+            raise CaptureError("live DTB splash-region identity differs from Test249")
     if full:
         parts = adb("partitions", "for n in boot vendor_boot init_boot dtbo vbmeta; "
                     "do sha256sum /dev/disk/by-partlabel/$n; done", 40)
@@ -273,7 +337,18 @@ def production_state(rec, base, prefix="", full=False):
     return report
 
 
-def transport(rec, boot, prefix=""):
+def bound_banner_ok(raw):
+    row = json.loads(raw)
+    index = row.get("interface_index")
+    source = row.get("source_ipv4", "")
+    return (row.get("ok") is True and isinstance(index, int) and index > 0 and
+            row.get("socket_interface") == index and source.startswith("169.254.") and
+            row.get("local_endpoint", "").startswith(source + ":") and
+            row.get("remote_endpoint") == "169.254.42.1:22" and
+            row.get("banner", "").startswith("SSH-2.0-"))
+
+
+def transport(rec, boot, prefix="", source_bound=False):
     adb_text, adb_rc = rec.host_adb(prefix + "adb-state", "devices", "-l", required=False)
     adb_ok = adb_rc == 0 and re.search(rf"^{SERIAL}\s+device\b", adb_text, re.M) is not None
     pnp, _ = rec.ps(prefix + "windows-usb-state", PS_USB)
@@ -291,8 +366,10 @@ def transport(rec, boot, prefix=""):
     recovery_seconds = None
     started = time.monotonic()
     for attempt in range(3):
-        banner, status = rec.ps(prefix + f"windows-ssh-banner-{attempt}", PS_BANNER, timeout=12, required=False)
-        if status == 0 and banner.startswith("SSH-2.0-"):
+        banner, status = rec.ps(prefix + f"windows-ssh-banner-{attempt}",
+                                PS_NCM_BOUND_BANNER if source_bound else PS_BANNER,
+                                timeout=20 if source_bound else 12, required=False)
+        if status == 0 and (bound_banner_ok(banner) if source_bound else banner.startswith("SSH-2.0-")):
             banner_ok = True
             recovery_utc = now() if ncm_initial_failure else None
             recovery_seconds = round(time.monotonic() - started, 3) if recovery_utc else None
@@ -308,6 +385,7 @@ def transport(rec, boot, prefix=""):
               "ncm_initial_failure": ncm_initial_failure, "code43": bool(code43),
               "ncm_first_failure_utc": first_failure_utc, "ncm_recovery_utc": recovery_utc,
               "ncm_recovery_seconds_from_first_attempt": recovery_seconds}
+    report["ncm_source_bound"] = source_bound
     write_json(rec.folder / (prefix + "transport.json"), report)
     return report
 
@@ -329,7 +407,7 @@ def status_report(rec, base, prefix="", full=False):
     write_json(rec.folder / (prefix + "journal-analysis.json"), inspected)
     if inspected["fault_counts"] or inspected["suspects"]:
         raise CaptureError("current boot has kernel failure or suspect messages")
-    link = transport(rec, state["boot_id"], prefix)
+    link = transport(rec, state["boot_id"], prefix, source_bound=base.get("ncm_source_bound", False))
     final_boot = evidence.canonical_boot_id(one_line(rec.adb(prefix + "final-boot-id",
                                                    "cat /proc/sys/kernel/random/boot_id")[0]))
     if final_boot != state["boot_id"]:
@@ -421,6 +499,9 @@ def observe_window(rec, boot, first_uptime, base):
     follow = rec.folder / "kernel-follow.jsonl"
     command = [ADB, "-s", SERIAL, "shell",
                f"journalctl -b {boot} -k -f -n all --no-pager -o json"]
+    started_utc = now()
+    started_monotonic = time.monotonic()
+    completed = False
     with follow.open("wb") as output, (rec.folder / "kernel-follow.stderr").open("wb") as error:
         proc = subprocess.Popen(command, stdout=output, stderr=error)
         try:
@@ -433,6 +514,10 @@ def observe_window(rec, boot, first_uptime, base):
                 if len(lines) != 2 or evidence.canonical_boot_id(lines[0]) != boot:
                     raise CaptureError("boot identity changed during observation")
                 uptime = float(lines[1].split()[0])
+                write_json(rec.folder / "observation-progress.json", {
+                    "boot_id": boot, "last_successful_poll_uptime_seconds": uptime,
+                    "registered_window_completed": uptime >= WINDOW,
+                    "host_observation_elapsed_seconds": round(time.monotonic() - started_monotonic, 3)})
                 # Only complete lines can be parsed while ADB is still writing.
                 # Parse the entire boot prefix to keep warning-trace context.
                 stream = follow.read_bytes()
@@ -448,10 +533,11 @@ def observe_window(rec, boot, first_uptime, base):
                     pnp, _ = rec.ps(f"observe-windows-usb-{count:03d}", PS_USB)
                     if has_code43(pnp):
                         raise CaptureError("Windows Code43 during observation")
+                if proc.poll() is not None:
+                    raise CaptureError("live kernel journal transport exited early")
                 if uptime < WINDOW:
-                    if proc.poll() is not None:
-                        raise CaptureError("live kernel journal transport exited early")
                     time.sleep(min(WINDOW_POLL, max(0, WINDOW - uptime)))
+            completed = True
             return uptime
         finally:
             active = proc.poll() is None
@@ -464,7 +550,10 @@ def observe_window(rec, boot, first_uptime, base):
                 status = proc.wait(timeout=4)
             write_json(rec.folder / "kernel-follow.command.json",
                        {"argv": command, "status": status,
-                        "host_stopped_at_window_end": active, "ended_utc": now()})
+                        "host_stopped_at_window_end": active and completed,
+                        "host_stopped_on_non_clean": active and not completed,
+                        "registered_window_completed": completed,
+                        "started_utc": started_utc, "ended_utc": now()})
 
 
 def collect_failure(rec, boot):
@@ -510,7 +599,7 @@ def round_run(index, base, before_expected):
         before_scan = inspect(before_raw, before, base)
         if before_scan["fault_counts"] or before_scan["suspects"]:
             raise CaptureError("source boot acquired kernel fault before reboot")
-        before_link = transport(rec, before, "before-")
+        before_link = transport(rec, before, "before-", source_bound=base.get("ncm_source_bound", False))
         if not (before_link["adb_ok"] and before_link["ssh_ok"] and before_link["ncm_banner_ok"]) or before_link["code43"] or before_link["ncm_initial_failure"]:
             raise CaptureError("source boot transport not clean")
         result["reboot_requested_utc"] = now()
@@ -536,7 +625,8 @@ def round_run(index, base, before_expected):
         uptime = observe_window(rec, after, first_uptime, base)
         result["observation_seconds"] = uptime
         result["new_boot_uptime_seconds"] = uptime
-        result["live_observation_seconds"] = round(uptime - first_uptime, 2)
+        result["registered_window_completed"] = True
+        result["elapsed_seconds_from_first_adb_to_last_poll"] = round(uptime - first_uptime, 2)
         after_history = rec.adb("boots-after", "journalctl --list-boots --no-pager", 25)[0]
         attribution = evidence.attribute(before, after, before_history, after_history)
         result["attribution"] = attribution
@@ -555,7 +645,7 @@ def round_run(index, base, before_expected):
         result["kernel_suspects"] = scan["suspects"]
         result["known_warning_count"] = scan["known_warning_count"]
         result["startup_variant_counts"] = scan["startup_variant_counts"]
-        link = transport(rec, after)
+        link = transport(rec, after, source_bound=base.get("ncm_source_bound", False))
         result["transport"] = link
         if not link["code43"]:
             final_boot = evidence.canonical_boot_id(one_line(rec.adb(
@@ -576,6 +666,11 @@ def round_run(index, base, before_expected):
     except Exception as exc:
         result.update(verdict="usb-code43" if "Code43" in str(exc) else "suspect",
                       error=repr(exc))
+        progress = folder / "observation-progress.json"
+        if progress.exists():
+            snapshot = json.loads(progress.read_text())
+            result["observation_seconds"] = snapshot["last_successful_poll_uptime_seconds"]
+        result["registered_window_completed"] = False
         if isinstance(exc, KernelEvidenceError):
             result.update(kernel_fault_counts=exc.scan["fault_counts"],
                           kernel_suspects=exc.scan["suspects"])
@@ -704,11 +799,11 @@ def main():
     global P
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("preflight", "run"))
-    parser.add_argument("--attempt", type=int, choices=(2,),
+    parser.add_argument("--attempt", type=int, choices=(2, 3),
                         help="Explicitly registered fresh attempt; preserves the stopped original evidence")
     args = parser.parse_args()
-    if args.attempt == 2:
-        P = TEST250_ROOT / "attempt-02"
+    if args.attempt:
+        P = TEST250_ROOT / f"attempt-{args.attempt:02d}"
     try:
         {"preflight": preflight, "run": run}[args.action]()
     except (CaptureError, ValueError, OSError, subprocess.CalledProcessError) as exc:

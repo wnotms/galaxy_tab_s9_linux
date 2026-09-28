@@ -38,7 +38,7 @@ SMMU_SYNDROMES = {
 }
 
 
-def startup_variant(row):
+def startup_variant(row, iova_range=(0xb8000000, 0xb8200000)):
     """Narrow classes observed in both accepted Test249 production captures.
 
     Counts are enforced by inspect_journal. These are existing errors/warnings,
@@ -53,7 +53,7 @@ def startup_variant(row):
     if timestamp > 200_000:
         return None
     match = SMMU_CONTEXT.fullmatch(message)
-    if match and int(match[1], 16) & ~0x1fffff == 0xb8000000:
+    if match and iova_range[0] <= int(match[1], 16) < iova_range[1]:
         return "smmu_context_fault"
     if message == SMMU_FSR:
         return "smmu_fsr"
@@ -102,7 +102,8 @@ def attribute(before_id, after_id, before_text, after_text):
 
 
 def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
-                    accepted_startup_variants=False):
+                    accepted_startup_variants=False,
+                    startup_iova_range=(0xb8000000, 0xb8200000)):
     """Require complete JSON rows with source timestamps and classify each message."""
     if raw is None:
         raise ValueError("missing kernel journal")
@@ -135,7 +136,7 @@ def inspect_journal(raw, boot_id, known_priority3=(), *, require_start=True,
                 raise ValueError()
         except (TypeError, ValueError):
             raise ValueError(f"invalid source timestamp in journal row {number}")
-        variant = startup_variant(row) if accepted_startup_variants else None
+        variant = startup_variant(row, startup_iova_range) if accepted_startup_variants else None
         if variant:
             variant_counts[variant] = variant_counts.get(variant, 0) + 1
             limit = 1 if variant == "boot_register_warning" else 10

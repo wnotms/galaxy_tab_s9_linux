@@ -1,0 +1,44 @@
+{
+  "changed_check": {
+    "command": "bash scripts/check-stall-offline.sh --changed --base HEAD~1",
+    "executed": true,
+    "tests_run": 1018,
+    "elapsed_s": 76.086,
+    "exit_code": 0
+  },
+  "final_review": {
+    "command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/all.json",
+    "suite": "all",
+    "counts": {
+      "core": 913,
+      "artifacts": 18,
+      "archive": 87
+    },
+    "executed": true,
+    "tests_run": 1018,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "expected_failures": [],
+    "unexpected_successes": [],
+    "elapsed_s": 68.886,
+    "exit_code": 0
+  },
+  "source_sha256": {
+    "scripts/production-reboot-stability.sh": "bf9e280d06e88948ae9cdbfc92d2d91f251687d584837a45a9314c115be34dfa",
+    "scripts/production_reboot_stability.py": "b203511d9d462b77f13aa31157bf754973f19567b1e38a3d3f32d51f33fa9808",
+    "scripts/production_stability_evidence.py": "56c35201461ed0f97473dc04655c08d84bece08076fb591521c34529e61c538c",
+    "tests/test_production_reboot_stability.py": "e4b4b34d84ff5776e1a296722fe047cddc05121014b01889f64c63f9c6bc3921"
+  },
+  "startup_iova_range": [
+    "0xb8000000",
+    "0xbab00000"
+  ],
+  "accepted_dtb_sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+  "ncm_source_bound": true,
+  "prior_sealed_evidence_files_verified": [
+    170,
+    299
+  ],
+  "third_attempt_reboots_at_registration": 0
+}

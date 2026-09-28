@@ -82,6 +82,17 @@ same-boot NCM TCP transient recovered on its third attempt. Do not call this
 round clean or broaden the gate after the stop. See attempt-02 `RESULTS.md`
 and `summary.json` before further hardware work. Production remains unchanged.
 
+The owner then explicitly requested completion of the full regression.
+Test250 attempt 03 is separately registered under its `attempt-03/README.md`.
+Read-only post-attempt02 analysis proves the production splash carveout is
+43 MiB (`0xb8000000`–`0xbab00000`), larger than attempt 02's sampled 2 MiB gate;
+attempt 03 derives the bound from the hash-verified accepted Test249 DTB and
+checks the live property without changing it. It also records source-bound
+Windows NCM socket endpoints; earlier TCP timeout causes remain unproven.
+Only use `--attempt 3` after its pushed registration and accepted preflight.
+All original 20/150-second exact-production and first-non-clean stop conditions
+remain in force. Prior stopped attempts remain stopped, not clean or resumed.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

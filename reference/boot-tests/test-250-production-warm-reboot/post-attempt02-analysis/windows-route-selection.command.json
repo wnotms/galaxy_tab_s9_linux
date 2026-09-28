@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Find-NetRoute -RemoteIPAddress 169.254.42.1 -ErrorAction Stop | Format-List *\nGet-NetRoute -DestinationPrefix 169.254.0.0/16 -ErrorAction SilentlyContinue | Format-List *\nGet-NetAdapter -IncludeHidden | Select-Object Name,ifIndex,Status,MacAddress,InterfaceDescription | Format-List\nGet-NetIPAddress -AddressFamily IPv4 | Select-Object IPAddress,InterfaceIndex,InterfaceAlias,AddressState,PrefixLength | Format-List\nGet-NetIPInterface -AddressFamily IPv4 | Select-Object InterfaceIndex,InterfaceAlias,InterfaceMetric,WeakHostSend,WeakHostReceive,ConnectionState | Format-List\n"
+  ],
+  "ended_utc": "2026-09-28T04:51:15.074696+00:00",
+  "started_utc": "2026-09-28T04:51:12.814069+00:00",
+  "status": 0
+}
