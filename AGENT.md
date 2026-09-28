@@ -48,6 +48,18 @@ bounded, attributable and separately logged. Use the changed-file host test
 selection for local iteration and the full retained suite when changing test
 routing or reviewing a final candidate; see `docs/HOST_TEST_WORKFLOW.md`.
 
+Test250 registered 20 unchanged-production warm reboots but stopped during
+read-only preflight, before issuing any reboot (0/20 rounds). Test249 config,
+notes, five partitions and all 181 modules still match and DCC remains absent.
+The conservative parser flagged early warning/SMMU parameter variants; the
+same SMMU fault class already exists in both accepted Test249 production boots,
+so this is not proof of a new CPU stall. Supplemental same-boot transport
+capture independently found two Windows NCM TCP timeouts followed by automatic
+recovery, with ADB and authenticated SSH available and no Code43. Do not treat
+the current boot as a clean Test250 round or retry automatically. Keep production
+unchanged and review `reference/boot-tests/test-250-production-warm-reboot/RESULTS.md`
+and its raw evidence before another hardware test. Test251 was not created.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

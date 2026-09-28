@@ -1,0 +1,167 @@
+{
+  "test249-twrp": {
+    "boot_id": "17714931a67c41ba81836392979a679e",
+    "boot_protocol_warning": [
+      "WARNING: x1-x3 nonzero in violation of boot protocol:\n\tx1: 0000000080000000\n\tx2: 0000000028268000\n\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel"
+    ],
+    "kernel_rows": 1098,
+    "sha256": "69757be40037c22137220b601578c56f4e55422c982c67bfef7ee59bc5381684",
+    "smmu_context_fault_count": 10,
+    "smmu_faults": [
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155427"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb806d700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155510"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb809d500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155583"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80cc100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155656"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80f7f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155727"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8126f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155801"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8156200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155874"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8184600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "155949"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81b5200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "156024"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81e4600, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "156098"
+      }
+    ],
+    "smmu_syndromes": [
+      "0x620021"
+    ],
+    "source": "reference/boot-tests/test-249-no-dcc-production/production-twrp-continued/kernel-follow.jsonl"
+  },
+  "test249-warm": {
+    "boot_id": "38a30c1d68b24e108bb442dce8bb0385",
+    "boot_protocol_warning": [
+      "WARNING: x1-x3 nonzero in violation of boot protocol:\n\tx1: 0000000080000000\n\tx2: 00000000280b8000\n\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel"
+    ],
+    "kernel_rows": 1091,
+    "sha256": "bdc617ad08a954bf1182f8d739dc4f70627424e9e79bfd38e00a8195e736544d",
+    "smmu_context_fault_count": 10,
+    "smmu_faults": [
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157097"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb806f000, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157187"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a0900, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157262"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80cdd00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157333"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80fb100, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157405"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8128200, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157476"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8155300, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157547"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8183900, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157618"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81b0e00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157690"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81de300, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "157762"
+      }
+    ],
+    "smmu_syndromes": [
+      "0x630021"
+    ],
+    "source": "reference/boot-tests/test-249-no-dcc-production/final-acceptance/kernel-json.txt"
+  },
+  "test250-preflight": {
+    "boot_id": "b08bbc9b3bbf417e9935619fcc5d7222",
+    "boot_protocol_warning": [
+      "WARNING: x1-x3 nonzero in violation of boot protocol:\n\tx1: 0000000080000000\n\tx2: 00000000280a0000\n\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel"
+    ],
+    "kernel_rows": 1096,
+    "sha256": "473a253cfc711596f9ef2ac9d5496acb88cb0f502c15f2a8e9afd0ff90785165",
+    "smmu_context_fault_count": 10,
+    "smmu_faults": [
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141176"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8074e00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141269"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a7800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141348"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80d6a00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141421"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8106200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141496"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8135800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141571"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8163100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141643"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8190300, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141715"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81c0900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141802"
+      },
+      {
+        "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81f5100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9",
+        "source_boottime_us": "141875"
+      }
+    ],
+    "smmu_syndromes": [
+      "0x620021"
+    ],
+    "source": "preflight/kernel-journal-json.txt"
+  }
+}

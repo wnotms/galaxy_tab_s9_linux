@@ -1,0 +1,19 @@
+{
+  "command": "python3 scripts/run-host-tests.py changed --base HEAD~1 --fail-on-skip --report out/host-tests/test250-results-validation.json",
+  "suite": "changed",
+  "counts": {
+    "core": 901,
+    "artifacts": 18,
+    "archive": 87
+  },
+  "executed": true,
+  "tests_run": 1006,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "expected_failures": [],
+  "unexpected_successes": [],
+  "elapsed_s": 81.397,
+  "exit_code": 0,
+  "selection_reason": "Unknown new evidence files selected all 1006 retained tests. This was an executed regression, not zero selected tests."
+}

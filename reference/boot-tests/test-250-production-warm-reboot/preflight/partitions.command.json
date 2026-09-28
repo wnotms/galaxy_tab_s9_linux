@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/gts9-active/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/disk/by-partlabel/$n; done"
+  ],
+  "ended_utc": "2026-09-28T04:14:51.448307+00:00",
+  "started_utc": "2026-09-28T04:14:50.601655+00:00",
+  "status": 0
+}

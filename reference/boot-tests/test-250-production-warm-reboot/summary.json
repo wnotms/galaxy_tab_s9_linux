@@ -1,0 +1,50 @@
+{
+  "bounded_observation": "No registered warm-reboot observation window was executed. Current boot began before Test250. No failure-rate or long-term reliability inference is supported.",
+  "clean_rounds": 0,
+  "completed_rounds": 0,
+  "dcc_absent": true,
+  "final_acceptance_executed": false,
+  "final_verdict": "stopped_before_round_01",
+  "first_non_clean_phase": "preflight",
+  "first_non_clean_round": null,
+  "kernel_config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "kernel_fault_counts": {},
+  "kernel_notes_sha256": "dc063ad84cb33354b646380261b7378dbe27889925c193ec4253c9c90ce40e97",
+  "kernel_suspect_rows": 21,
+  "kernel_variant_analysis": "All three production captures have ten early SMMU context faults; IOVAs and some syndrome/register values differ. These rows do not prove a new CPU failure; no allowlist was broadened after the stop.",
+  "module_files": 181,
+  "module_hashes_exact": true,
+  "partition_hashes": {
+    "boot": "7f021014850504c3d881504cdf4c44171d0adb1049ae987d6552774684a8482b",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9"
+  },
+  "preflight_boot_id": "b08bbc9b3bbf417e9935619fcc5d7222",
+  "preflight_kernel_journal_rows": 1096,
+  "preflight_snapshot_uptime_seconds": 7511.58,
+  "production_changes": [],
+  "production_identity_matches": true,
+  "reboot_requests": 0,
+  "registered_observation_seconds": 150,
+  "registered_rounds": 20,
+  "rounds": [],
+  "stop_reasons": [
+    "unclassified_kernel_message_variants",
+    "usb-transient"
+  ],
+  "systemd_failed_units": [],
+  "test249_manifest_sha256": "ed9a7b8544215662ebe7d800316b4952902fd0e1684b16528469a57758af87d4",
+  "test251_created": false,
+  "transport": {
+    "adb_ok": true,
+    "code43": false,
+    "ncm_banner_ok": true,
+    "ncm_first_failure_utc": "2026-09-28T04:16:29.285872+00:00",
+    "ncm_initial_failure": true,
+    "ncm_recovery_seconds_from_first_attempt": 32.733,
+    "ncm_recovery_utc": "2026-09-28T04:16:55.159916+00:00",
+    "ssh_ok": true
+  }
+}
