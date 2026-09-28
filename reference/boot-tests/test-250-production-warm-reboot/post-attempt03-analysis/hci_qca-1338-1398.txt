@@ -1,0 +1,61 @@
+1338: static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
+1339: {
+1340: 	struct hci_uart *hu = hci_get_drvdata(hdev);
+1341: 	struct qca_data *qca = hu->priv;
+1342: 	struct sk_buff *skb;
+1343: 	u8 cmd[] = { 0x01, 0x48, 0xFC, 0x01, 0x00 };
+1344: 
+1345: 	if (baudrate > QCA_BAUDRATE_3200000)
+1346: 		return -EINVAL;
+1347: 
+1348: 	cmd[4] = baudrate;
+1349: 
+1350: 	skb = bt_skb_alloc(sizeof(cmd), GFP_KERNEL);
+1351: 	if (!skb) {
+1352: 		bt_dev_err(hdev, "Failed to allocate baudrate packet");
+1353: 		return -ENOMEM;
+1354: 	}
+1355: 
+1356: 	/* Assign commands to change baudrate and packet type. */
+1357: 	skb_put_data(skb, cmd, sizeof(cmd));
+1358: 	hci_skb_pkt_type(skb) = HCI_COMMAND_PKT;
+1359: 
+1360: 	skb_queue_tail(&qca->txq, skb);
+1361: 	hci_uart_tx_wakeup(hu);
+1362: 
+1363: 	/* Wait for the baudrate change request to be sent */
+1364: 
+1365: 	while (!skb_queue_empty(&qca->txq))
+1366: 		usleep_range(100, 200);
+1367: 
+1368: 	if (hu->serdev)
+1369: 		serdev_device_wait_until_sent(hu->serdev,
+1370: 		      CMD_TRANS_TIMEOUT);
+1371: 
+1372: 	/* Give the controller time to process the request */
+1373: 	switch (qca_soc_type(hu)) {
+1374: 	case QCA_WCN3950:
+1375: 	case QCA_WCN3988:
+1376: 	case QCA_WCN3990:
+1377: 	case QCA_WCN3991:
+1378: 	case QCA_WCN3998:
+1379: 	case QCA_WCN6750:
+1380: 	case QCA_WCN6855:
+1381: 	case QCA_WCN7850:
+1382: 		usleep_range(1000, 10000);
+1383: 		break;
+1384: 
+1385: 	default:
+1386: 		msleep(300);
+1387: 	}
+1388: 
+1389: 	return 0;
+1390: }
+1391: 
+1392: static inline void host_set_baudrate(struct hci_uart *hu, unsigned int speed)
+1393: {
+1394: 	if (hu->serdev)
+1395: 		serdev_device_set_baudrate(hu->serdev, speed);
+1396: 	else
+1397: 		hci_uart_set_baudrate(hu, speed);
+1398: }

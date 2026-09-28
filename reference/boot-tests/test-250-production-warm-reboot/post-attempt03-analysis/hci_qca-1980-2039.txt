@@ -1,0 +1,60 @@
+1980: 	case QCA_WCN3991:
+1981: 	case QCA_WCN3998:
+1982: 	case QCA_WCN6750:
+1983: 	case QCA_WCN6855:
+1984: 	case QCA_WCN7850:
+1985: 		if (qcadev && qcadev->bdaddr_property_broken)
+1986: 			hci_set_quirk(hdev, HCI_QUIRK_BDADDR_PROPERTY_BROKEN);
+1987: 
+1988: 		hci_set_aosp_capable(hdev);
+1989: 
+1990: 		ret = qca_read_soc_version(hdev, &ver, soc_type);
+1991: 		if (ret)
+1992: 			goto out;
+1993: 		break;
+1994: 
+1995: 	default:
+1996: 		qca_set_speed(hu, QCA_INIT_SPEED);
+1997: 	}
+1998: 
+1999: 	/* Setup user speed if needed */
+2000: 	speed = qca_get_speed(hu, QCA_OPER_SPEED);
+2001: 	if (speed) {
+2002: 		ret = qca_set_speed(hu, QCA_OPER_SPEED);
+2003: 		if (ret)
+2004: 			goto out;
+2005: 
+2006: 		qca_baudrate = qca_get_baudrate_value(speed);
+2007: 	}
+2008: 
+2009: 	switch (soc_type) {
+2010: 	case QCA_WCN3950:
+2011: 	case QCA_WCN3988:
+2012: 	case QCA_WCN3990:
+2013: 	case QCA_WCN3991:
+2014: 	case QCA_WCN3998:
+2015: 	case QCA_WCN6750:
+2016: 	case QCA_WCN6855:
+2017: 	case QCA_WCN7850:
+2018: 		break;
+2019: 
+2020: 	default:
+2021: 		/* Get QCA version information */
+2022: 		ret = qca_read_soc_version(hdev, &ver, soc_type);
+2023: 		if (ret)
+2024: 			goto out;
+2025: 	}
+2026: 
+2027: 	/* Setup patch / NVM configurations */
+2028: 	ret = qca_uart_setup(hdev, qca_baudrate, soc_type, ver,
+2029: 			firmware_name, rampatch_name);
+2030: 	if (!ret) {
+2031: 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
+2032: 		qca_debugfs_init(hdev);
+2033: 		hu->hdev->hw_error = qca_hw_error;
+2034: 		hu->hdev->reset = qca_reset;
+2035: 		if (hu->serdev) {
+2036: 			if (device_can_wakeup(hu->serdev->ctrl->dev.parent))
+2037: 				hu->hdev->wakeup = qca_wakeup;
+2038: 		}
+2039: 	} else if (ret == -ENOENT) {

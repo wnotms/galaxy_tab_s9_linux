@@ -1,0 +1,67 @@
+1510: 		case QCA_WCN6855:
+1511: 		case QCA_WCN7850:
+1512: 			hci_uart_set_flow_control(hu, true);
+1513: 			break;
+1514: 
+1515: 		default:
+1516: 			break;
+1517: 		}
+1518: 
+1519: 		switch (soc_type) {
+1520: 		case QCA_WCN3990:
+1521: 			reinit_completion(&qca->drop_ev_comp);
+1522: 			set_bit(QCA_DROP_VENDOR_EVENT, &qca->flags);
+1523: 			break;
+1524: 
+1525: 		default:
+1526: 			break;
+1527: 		}
+1528: 
+1529: 		qca_baudrate = qca_get_baudrate_value(speed);
+1530: 		bt_dev_dbg(hu->hdev, "Set UART speed to %d", speed);
+1531: 		ret = qca_set_baudrate(hu->hdev, qca_baudrate);
+1532: 		if (ret)
+1533: 			goto error;
+1534: 
+1535: 		host_set_baudrate(hu, speed);
+1536: 
+1537: error:
+1538: 		switch (soc_type) {
+1539: 		case QCA_WCN3950:
+1540: 		case QCA_WCN3988:
+1541: 		case QCA_WCN3990:
+1542: 		case QCA_WCN3991:
+1543: 		case QCA_WCN3998:
+1544: 		case QCA_WCN6750:
+1545: 		case QCA_WCN6855:
+1546: 		case QCA_WCN7850:
+1547: 			hci_uart_set_flow_control(hu, false);
+1548: 			break;
+1549: 
+1550: 		default:
+1551: 			break;
+1552: 		}
+1553: 
+1554: 		switch (soc_type) {
+1555: 		case QCA_WCN3990:
+1556: 			/* Wait for the controller to send the vendor event
+1557: 			 * for the baudrate change command.
+1558: 			 */
+1559: 			if (!wait_for_completion_timeout(&qca->drop_ev_comp,
+1560: 						 msecs_to_jiffies(100))) {
+1561: 				bt_dev_err(hu->hdev,
+1562: 					   "Failed to change controller baudrate\n");
+1563: 				ret = -ETIMEDOUT;
+1564: 			}
+1565: 
+1566: 			clear_bit(QCA_DROP_VENDOR_EVENT, &qca->flags);
+1567: 			break;
+1568: 
+1569: 		default:
+1570: 			break;
+1571: 		}
+1572: 	}
+1573: 
+1574: 	return ret;
+1575: }
+1576: 

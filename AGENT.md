@@ -106,6 +106,16 @@ historical Test241/Test247 logs; do not silently exempt it or call the round
 clean. Keep the series stopped and production unchanged, read attempt-03
 `RESULTS.md` and `round-01/offline-analysis/`, and do not create Test251.
 
+A subsequent read-only source review identified `0xfc48` as the QCA UART
+baudrate command encoded as `0x48, 0xFC`. A primary Qualcomm patch discussion
+covers the same WCN6855 response-handling issue; this boot completed UART setup
+0.808107 s after its event. This improves the explanation but does not prove
+packet ordering or amend the stopped verdict. See Test250
+`post-attempt03-analysis/README.md` for source evidence and an unapproved,
+precisely bounded host-only classification proposal. Keep physical testing
+stopped until the owner explicitly resolves that classification; production
+and the current runner stay unchanged.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.

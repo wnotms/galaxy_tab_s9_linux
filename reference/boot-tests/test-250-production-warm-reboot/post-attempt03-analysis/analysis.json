@@ -1,0 +1,52 @@
+{
+  "baseline_config_sha256": "95de6695511a60c5b5025b63c5e65b1bdf89e4335a5a191bda5cc75deeb4ef82",
+  "boot_id": "830da7175e6d40be83907398b55ff2e2",
+  "cpu_stall_cause_proven": false,
+  "direct_tx_queue_not_hci_command_sync": true,
+  "event_source_seconds": 8.365905,
+  "kernel_journal_path": "reference/boot-tests/test-250-production-warm-reboot/attempt-03/round-01/offline-analysis/kernel-journal-json.txt",
+  "kernel_journal_sha256": "272c1cf834ca8c99e8d0a5580f0190186398939ec0b6174bc20e57643cdd227c",
+  "opcode": "0xfc48",
+  "opcode_meaning": "QCA UART baudrate-change command; established by pinned source, not a literal fc48 search",
+  "opcode_source_encoding": "qca_set_baudrate: u8 cmd[] = { 0x01, 0x48, 0xFC, 0x01, 0x00 }",
+  "original_suspect_verdict_unchanged": true,
+  "physical_series_may_resume": false,
+  "pinned_drop_event_guard_soc": "QCA_WCN3990 only; WCN6855 absent from guard",
+  "pinned_source_commit": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "prospective_host_only_classification_proposal": {
+    "all_existing_cpu_identity_usb_evidence_systemd_stop_gates_retained": true,
+    "exact_message": "Bluetooth: hci0: unexpected event for opcode 0xfc48",
+    "maximum_count_per_boot": 1,
+    "maximum_event_source_seconds": 20,
+    "minimum_new_boot_window_seconds": 150,
+    "other_bluetooth_error_stop": true,
+    "prior_stopped_rounds_remain_non_clean": true,
+    "priority": 3,
+    "production_changes_permitted": false,
+    "registered_rounds": 20,
+    "required_controller_soc": "wcn6855",
+    "required_powered_same_boot_controller_at_final_window": true,
+    "required_subsequent_setup_completion_within_seconds": 5,
+    "status": "unapproved; not implemented or registered"
+  },
+  "purpose": "offline first suspect analysis only; no new registration or physical reboot",
+  "setup_delay_seconds": 0.808107,
+  "source_path": ".work/linux-mainline/drivers/bluetooth/hci_qca.c",
+  "source_sha256": "acd1691beb435a05b5e2cd273d54fad2f579feb1ab8d68e7d786eff67e9f1443",
+  "specific_packet_order_proven": false,
+  "subsequent_setup_seconds": 9.174012,
+  "upstream_sources": [
+    {
+      "author": "Cheng Jiang, Qualcomm",
+      "kind": "primary patch submission; not proof patch is in installed kernel",
+      "published": "2024-08-21",
+      "url": "https://www.spinics.net/lists/linux-bluetooth/msg114463.html"
+    },
+    {
+      "author": "Cheng Jiang, Qualcomm",
+      "kind": "primary author discussion; speed change works but event handling is incomplete",
+      "published": "2024-08-21",
+      "url": "https://lkml.rescloud.iu.edu/2408.2/06106.html"
+    }
+  ]
+}
