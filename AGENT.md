@@ -30,6 +30,12 @@ The daemon is installed but reconnect acceptance is incomplete. No extra
 reboot/reset/device-service restart occurred. Current Wi-Fi address is
 10.191.121.29 (DHCP changed from195). Read attempt02 RESULTS/summary/evidence.
 
+Within the ongoing ADB repair authorization, attempt03 independently registers
+one same-version/default-backend Windows ADB server reopening and three
+subsequent physical cycles. Keep earlier stopped outcomes/seals unchanged,
+check its README/results before further work. This host process reopening is
+not a device service restart or a USB driver/controller reset. Do not switch
+backend, modify production or start charging Stage2/3 in this repair.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

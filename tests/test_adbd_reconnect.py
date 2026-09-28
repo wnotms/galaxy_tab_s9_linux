@@ -310,3 +310,24 @@ class ExistingUpowerGateTests(unittest.TestCase):
     def test_changed_cmdline_stops(self):
         from adbd_reconnect_evidence import same_cmdline
         self.assertFalse(same_cmdline(b'console=tty0 panic=0\n', b'console=tty0 panic=10\r\n'))
+
+
+class AdbHostRescanTests(unittest.TestCase):
+    def run_rescan(self, fail='', args=()):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); fake = root/'adb'; log = root/'commands'
+            fake.write_text('#!/bin/sh\nprintf "%s\\n" "$*" >> "$RESCAN_LOG"\n[ "$1" != "$RESCAN_FAIL" ]\n')
+            fake.chmod(0o755)
+            result = subprocess.run(['bash', str(ROOT/'scripts/gts9-adb-host-rescan.sh'), *args],
+                env=dict(os.environ, GTS9_ADB_EXE=str(fake), RESCAN_LOG=str(log), RESCAN_FAIL=fail), capture_output=True)
+            commands = log.read_text().splitlines() if log.exists() else []
+            return result.returncode, commands
+    def test_restarts_only_host_server_then_lists_devices(self):
+        rc, commands = self.run_rescan()
+        self.assertEqual((rc, commands), (0, ['kill-server','start-server','devices -l']))
+    def test_failed_host_stop_prevents_further_commands(self):
+        rc, commands = self.run_rescan('kill-server')
+        self.assertNotEqual(rc, 0); self.assertEqual(commands, ['kill-server'])
+    def test_device_command_arguments_rejected(self):
+        rc, commands = self.run_rescan(args=('reboot',))
+        self.assertEqual((rc, commands), (2, []))
