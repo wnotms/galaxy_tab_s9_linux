@@ -1,311 +1,52 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current review (2026-09-28)
+## Current state (2026-09-28)
 
-Test249 production repair build is IN PROGRESS (out/kernel-no-dcc-production),
-with both diagnostic environment variables explicitly empty. Original config
-was extracted from the hash-verified230 boot backup; use it for the comparison.
-Two future production startup targets are registered: TWRP entry and one normal
-warm reboot,120 s each, stop on first non-clean result. No249 hardware run yet.
-Device remains passing248 diagnostic repair1707f656-b262-45be-8473-982ae5ffefa8.
-Final controller must handle paired transition from that candidate; preserve
-its rollback pair plus original backups. See249 README before any new writes.
+The production DCC-path repair is deployed and accepted on the SM-X710. The
+pinned Linux 7.2-rc3 production build has `CONFIG_HVC_DCC=n`, matching boot and
+vendor_boot images, and all 181 matching module files. Test249 verified the
+first boot from TWRP for 158.22 s and one ordinary warm boot for 120.09 s; a
+later same-boot check verified all five partition hashes, the 181 modules and
+no new kernel fault. `/dev/hvc0` and `serial-getty@hvc0` are absent. Temporary
+pseudo-NMI, CSD, last-activity, ECC and BBM diagnostics were removed from the
+production build. There is no pending test249 flash or diagnostic rollback.
+See `reference/boot-tests/test-249-no-dcc-production/RESULTS.md` and
+`BUILD_RESULTS.md` for exact identities, hashes and validation limits.
 
-Test248 initial repair target PASSED120.08 s. Target1707f656-b262-45be-8473-
-982ae5ffefa8, cap4ff0340a-587e-4c23-9f4c-db78a329ee37, exact notes/six anchors
-+0x80000. Runtime HVC_DCC=n, no hvc0 device/sysfs node, getty inactive; existing
-PNMI/CSD/LA/ECC/BBM diagnostics remain verified.181 module hashes/three loaded
-notes match;1101 source-time kernel rows, no failed unit, ADB/NCM SSH banner pass.
-Tablet STILL runs the diagnostic repair candidate by explicit result review;
-keep it while preparing the final production fix instead of booting the known
-DCC-fault configuration. Original modules remain .gts9-test248-original; local/
-Windows tar and original230 image backups verified.248 budget closed, no repeat.
-Next build/deploy production HVC_DCC-off with temporary diagnostics removed,
-then bounded startup/reboot regression and owned-directory cleanup. This final
-production rollout remains REQUIRED before the CPU repair goal is complete.
-See248 RESULTS.md for pending device state/rollback. Initial reboot ADB255 was
-an observed transport closure; TWRP was independently verified before resuming.
+Test247 captured a natural CPU4 stall in `hvc_dcc0_put_chars`: the DCC TX-busy
+poll was unbounded while `hvc_write` held an IRQ-saving spinlock. Test248
+validated the DCC-disabled diagnostic candidate, and test249 validated the
+production transition on two boot paths. This supports repair of that concrete
+DCC failure path; it does not prove that every earlier CPU stall shared the
+same cause or rule out future stalls. Keep the accepted production images and
+modules paired. Preserve the original230 and passing248 rollback pairs until a
+separate, verified retention decision. A recurrence needs fresh boot-attributed
+evidence before a new causal claim. See
+`reference/boot-tests/test-247-early-csd-pnmi/RESULTS.md`,
+`reference/boot-tests/test-248-no-dcc/RESULTS.md` and the test249 result above.
 
-Test247 CLOSED with the first natural failed-target PC: CPU4 `(agetty)`
-PID1251 in hvc_dcc0_put_chars+0x34, saved PMR0xc0 and MDCCSR_EL0 x9=0x20000000.
-The exact instruction is yield in TX-busy bit29 polling. hvc_write holds its
-IRQ-saving spinlock across that unbounded loop. Target e432f1a0-f6ab-4e82-be70-
-4c9ba7ab80cb, cap49aded33-4369-49a8-8da6-2adf06809e75, notes/six anchors/panic
-agree+0x88000. CSD requested CPU4 at13.83 s; target stacks at13.83/29.75/35.66 s
-agree. Target journal records serial-getty@hvc0 starting6.50 s. CPU7 panics35.69 s;
-immediate observer ca2235ae-e5c9-4129-858c-9cea934a2c52. Observer /proc PID1251
-is NetworkManager, not failed agetty.14 selected live messages match both
-retained areas exactly by source time; full crash-byte integrity not implied.
-Original181 modules and images restored, all-five hashes match. Production
-6c51a304-186e-41bd-a38c-e6040ddeeaba passed120.08 s, no failed units, ADB/NCM SSH
-banner responsive. See247 RESULTS.md. No fix yet, no more247 boots. Next disable
-inherited HVC_DCC in mainline config and validate the resulting repair while
-preserving panel/USB rescue. Earlier failures need their own causal attribution.
+Native USB ADB and NCM/SSH are present in the production profile. A prior
+Windows Code43 descriptor failure and a separate transient warm-boot NCM TCP
+failure remain unresolved; test249 records both without attributing a cause.
+The Debian login-screen `aux_bridge` deferred probe is a separate missing
+PS5169/DisplayPort bridge-provider issue, not evidence of the DCC CPU fault.
+See `reference/boot-tests/test-249-no-dcc-production/usb-incident/RESULTS.md`
+and `docs/AUX_BRIDGE_LOGIN_MESSAGE.md` before changing USB or display wiring.
 
-Test246 is CLOSED after its one matched-kernel/module target. Boot
-2de14bb7-4cd7-4b76-a78c-ad3766d187fa, cap882ba36f-60e6-4c52-a1a0-0e2167ffb530,
-exact notes/six anchors +0x40000, pseudo-NMI/LA1/ECC64/1-1-1-10 all verified.
-All181 candidate module files and the three affected runtime build-id notes
-match. No failure detected through120.08 s; no failed-target PC or repair proof.
-Original181 modules AND boot/vendor_boot restored; all-five hashes pass.
-Final production f231faf9-fd13-468d-b6ec-58b8ade46d8e passed120.07 s, no failed
-units, ADB and USB-NCM SSH banner responsive (no authenticated SSH shell).
-Earlier UPower217/USER remains unresolved despite absence in this boot.
-See246 RESULTS.md; initial missing-blkid read-only failure and toybox fix are
-preserved. No more identical246 boots. Next review early capture at the stuck
-synchronization boundary offline from245 evidence. CPU repair remains OPEN.
+Historical D-drive test files live in ignored
+`.work/d-drive-test-archive/2026-09-28/`, with tracked hashes in
+`reference/d-drive-test-archive-20260928/SHA256SUMS`. Windows retains only the
+active tools and rescue/rollback artifacts below `D:\android\gts9-active\`;
+`platform-tools/`, `gts9-stock/`, `gts9-test230/`, `gts9-test248/` and
+`gts9-test249/` are beneath it. Current scripts use this path. Old absolute
+paths in immutable test records describe where files were at test time. See
+`reference/d-drive-test-archive-20260928/README.md`.
 
-Test245 now CLOSED with a real natural startup failure before its workload.
-Fixed-BBM target9c9d553e-86c9-4b80-b6d7-9c29447f7125, cap9343ce3b-8159-47ad-
-a4be-5cb28d453aad, exact notes/six anchors +0x178000. Retained console/panic
-agree on48 last-activity cells: RCU CPU2 at30.68 s, CPU1 soft lockup/panic at
-36.54 s. Exact binary/registers show CPU1 waiting for CPU2 synchronous CSD
-inside KFENCE static-key synchronization; CPU2's own stack is missing.
-Two pulls/device hashes agree, ECC1004/1814 corrected/zero bad; no independent
-live reference, so do not overstate integrity. Older .enc.z is unattributed.
-BBM0026 did not prevent this failure; no helper execution/low-address coverage
-or failure-rate/causal claim. Defer that independent branch and prioritize the
-new natural CPU2 evidence; no more test245 boots. See test245 RESULTS.md.
-
-Original images/all-five hashes restored. Production bd20438b-cea6-4172-8e5f-
-de83a6b69a51 has no CPU signature in120.08 s and working ADB/NCM SSH banner,
-but full health is INCONCLUSIVE: UPower fails217/USER (user namespace EINVAL).
-This issue is archived, not hidden/reset. Recovery observer's systemctl reboot
-returned Access denied; ordinary reboot.target transaction worked. No rootfs
-or USB change. Next review CPU2 capture before panic; KFENCE waiter is not proof
-of the target's root cause. CPU repair remains OPEN.
-
-Test245 is pre-registered for one low-address coverage boot using exact test240
-corrected-BBM artifacts. Offline helper review is in
-reference/offline-reviews/20260928-bbm-low-address/. It maps one page at0x1000
-with NOREPLACE, verifies old valid/executable PTEs and performs16 permission
-changes; no deliberate instruction abort or global mmap setting change.
-The owner questioned the repeated300 s wait. For this focused trial use120 s
-total uptime, profile ready by90 s, workload after60 s and >=30 s afterward;
-early failure stops immediately plus bounded20 s backtrace collection.
-Production restoration also gets120 s. This is a shorter startup check, not
-long-run health or CPU-repair proof; older completed results stay unchanged.
-
-Tests243/244 completed a shared minimal-observer session. Exact test241 kernel,
-lastactivity=0 and calibration=0; pseudo-NMI/ECC64 and 1/1/1/10 remained active.
-TWRP-entry target 2094eeee-8fe2-48e5-aea6-abbc1788ea92 passed 306.92 seconds
-(offset +0x188000). Separately pre-registered direct normal-reboot target
-fd1a8ab6-85e9-40fb-b321-207faeaaa525 passed 304.07 seconds (+0xc8000), with
-automatic full capture starting by 17.45 seconds. Notes/six anchors were
-independent per boot. No natural fault or failed-target stack was captured.
-All 1,103 / 1,099 live JSON records respectively have target identity/source
-time; each boot has one priority-0 userspace attribution marker. No claim
-that recorder removal, NMI, or a reboot path changes the failure rate.
-
-Paired rollback restored originals/all-five hashes. Final production
-1aaffb9a-3a07-4415-91a8-7bf40d14328e passed 179.21 seconds; original
-watchdog/panic/ECC zeros, helper absent, ADB/NCM SSH protocol responsive.
-No authenticated SSH session or CPU-stall repair claim. See test243/244
-RESULTS.md; both fixed attempt budgets are closed, no more identical boots.
-
-The seven feature-variation warnings in test244 are only SpecSEI differences
-in AA64MMFR1/MMFR4. Pinned strict/higher-safe policy conservatively retains 1;
-this explains the taint, not CPU failure. No policy was changed; do not mask
-the warning as a repair. See reference/offline-reviews/20260928-specsei-variation/.
-
-Next return to the concrete opt-in A715 BBM defect: test240 physically covered
-high-address nr=1, not the low-address underflush/empty-range branch. Prepare
-and review a bounded missing-branch reproducer offline first, including
-mapping permission/fault handling/path-proof gates and recovery. Keep BBM
-validation separate from proof it caused the multi-CPU stall, and register
-any later fault-generating hardware scope before use. No blind power changes,
-further identical clean-window trials or completion claim.
-
-Test-242 reused the exact test241 kernel with calibration enable=0. Target
-c2f8ec82-d57e-4c42-8dc9-7ab2b3900f08 passed 308.48 seconds without detected
-CPU failure; no natural snapshot or failed-target stack exists. GIC pseudo-NMI,
-notes/six anchors (+0xb0000), ECC64, 1/1/1/10 and inactive helper were verified.
-Full source-time JSON (1,104 kernel records) supplements the rendered journal
-and live stream; the initial default-ten-line follow view was supplemented
-without restarting the process or device. All five original hashes restored.
-Final production d95f41a4-ca6e-4bd5-8a35-207126620d14 passed 214.07 seconds;
-USB ADB and NCM SSH banner respond, no authenticated SSH session claim.
-CPU repair remains OPEN; see test-242/RESULTS.md.
-
-Separate binary-journal review corrected an old timing error: test235 CPU2/5
-backtrace waits span 10.001179/10.001217 seconds on kernel source timestamps,
-while journal receipt deltas are only 21/20 microseconds. Do not investigate
-mdelay failure based on that rendering artifact or infer simultaneous onset.
-See reference/offline-reviews/20260927-journal-source-time/ and corrected
-docs/CPU_WEDGE_EVIDENCE.md. Preserve raw JSON/export source fields for timing.
-
-Next reduce optional observer perturbation before another capture: keep the
-calibrated standard pseudo-NMI/ECC64 path but consider lastactivity=0, whose
-verified la_init branch returns before all seven tracepoint registrations.
-The active recorder adds preemption/atomic/barrier/clock work to IPI/CSD paths.
-This is a reason to simplify diagnostics, not proof it hides or causes faults.
-Test235 had real failures without it, but no controlled rate comparison exists.
-Pre-register one variable and a fixed attempt budget; keep BBM/power settings
-separate. Use -n all at journal follow startup and retain source-time fields.
-Do not repeat the same clean window or treat synthetic passes as CPU repair.
-
-Test-241 calibrated the isolated pseudo-NMI route (0022+0024+0027, no BBM).
-CPU0's actual backtrace arrived 61,407 ns into a 200,000,157 ns PMR-masked
-interval with NMI context and saved IRQ-disabled PMR; both workers completed.
-The stack is the expected calibration counter-read loop, not a clocksource
-fault. After a clean 73-second post-observation, the immediate normal-reboot
-observer recovered all 28 lines / 1,583 payload bytes exactly (two pulls/device
-hash agree; ECC corrected 61 bytes, zero unrecoverable blocks). Source boot
-3bfa876b-be6e-49d3-8029-79e65d0f7ba6, offset +0x20000 with matching notes/anchors;
-observer e72b6d0c-fbf6-4348-bccb-93db1c14e98b. CPU repair remains OPEN. Only the
-healthy CPU0 masking and warm-retention cases were measured.
-
-Original boot/vendor_boot and all five hashes restored. Final production
-6a9e0303-fc8c-4c7f-a18a-0a26727a49cd passed 215.02 seconds; USB ADB
-and NCM SSH banner respond (no authenticated SSH session claim). Watchdog/
-panic/ECC are back to production zeros and the calibration helper is absent.
-Next pre-register one bounded natural failure capture with pseudo-NMI active
-and the synthetic trigger disabled; keep BBM separate, preserve exact target
-symbols/offsets and stop at first failure for review. Do not repeat a successful
-calibration or treat absent failure as repair. See test-241/RESULTS.md and
-docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md.
-
-Test-240 physically validated the opt-in 0022+0024+0026 BBM candidate. Target
-fe1196f2-4464-4c82-b63e-7f875c88223b passed 169 seconds before an A715 CPU3/4
-permission workload, 6,049,962 sustained mprotect calls and 75.75 seconds
-post-workload. Six preliminary kprobe hits prove high-address nr=1 path
-coverage; no natural failure or CPU-stall repair is established. The initial
-tracefs text-append setup failed before workload and was fixed with raw
-non-truncating writes; preserve both attempts. All owned tracing was removed.
-Original images/five hashes restored. Final production c333bb1b-d09b-4b32-
-ac4f-d8e166d4cac7 passed 153.52 seconds with ADB/NCM SSH banner responsive.
-See test-240/RESULTS.md; defaults stay unchanged, 0026 remains opt-in.
-
-The pre-test240 follow-up investigated the missing stack via pseudo-NMI;
-test241 above now supersedes its untested status.
-The old inference that ordinary-IPI non-response excludes NMI-only capture
-was incorrect and is withdrawn. Pinned sources show PMR-based IRQ masking and
-per-CPU NMI backtrace routing only with CONFIG_ARM64_PSEUDO_NMI plus the boot
-flag and successful runtime setup. Test241 has now built/flashed and calibrated the isolated candidate.
-See docs/PSEUDO_NMI_DIAGNOSTIC_REVIEW.md for the bounded IRQ-masked calibration
-design and limits before using it. Keep BBM and NMI causal variables separate.
-
-
-Tests 238/239 reused calibrated 0022+0024 without injection: one 304.96-second
-and two 184-second natural boot windows did not reproduce the CPU failure.
-This is not a repair/rate estimate; no spontaneous snapshot was available.
-Per-boot runtime symbol relocation differs despite nokaslr: +0x8000,
-+0x100000, +0xd8000. Verify the actual target's anchors/kernel notes; never
-reuse an observer's offset. Original boot/vendor_boot and all five hashes
-were restored; final production 0893538f-26ac-4965-9d76-f57b3b7886c5 passed
-162.65 seconds, USB ADB and NCM SSH banner responsive. See test-239/RESULTS.md.
-
-A separate source review verified A715 BBM TLB end-address bug in the pin.
-Exact arm64 maintainer commit 1fef81669147d63eb8c5d3627d54eadc21173a0b is opt-in
-patch 0026, not a production change or established CPU-stall cause. The actual
-function harness fails 12/120 cases before and 0/120 after; clean ccache build
-and out/boot-bundle-bbm-range packaging passed. Config/DTB/release equal test236;
-new symbols are out/test240/vmlinux and System.map. Candidate is NOT flashed.
-Mainline-master compare diverged at check time; do not call it mainline-merged.
-Next assess a separately registered candidate validation, including a bounded
-permission-change workload to exercise the corrected path, and preserve the
-CPU-failure goal rather than treating range correctness as stall resolution.
-See reference/offline-reviews/20260927-a715-tlb-range/.
-
-
-Test-237 passed actual RCU-triggered capture and later controlled-panic retention.
-An explicitly injected 35-second PREEMPT_RCU reader triggered the unchanged
-RCU callback after ~21 seconds; thread and callback both completed. All 58
-marker lines / 6,293 bytes survived SysRq panic and automatic reboot exactly;
-ECC corrected 189 bytes, zero unrecoverable blocks. Source 1926858e-37b8-40be-
-a38c-689ef86583c3, observer 2856e9cd-3cac-452b-8a05-354e6792a125. This is synthetic
-calibration, not spontaneous CPU failure or a root-cause fix. Test-only patch
-0025/flag must be omitted from future natural-failure trials. Next register one
-natural-failure capture using 0022+0024 with explicit integrity/attribution
-limits, not an unbounded reboot series. See test-237/RESULTS.md. Original
-boot/vendor_boot and all five partition hashes were restored after collection.
-Final production boot 6d4e3bae-b772-4ae8-91e2-3034b6205b96 passed 161.11 seconds
-without detected CPU stalls; USB ADB and SSH protocol over NCM responded.
-This is a bounded observation, not long-term stability.
-
-
-Test-236 passed exact lastactivity console retention on a normal warm reboot.
-Source 10f7f83a-d669-4855-8f24-87b5c6568aa6 produced 58 lines / 48 event cells /
-6,294 canonical bytes; observer 95089f53-9cd4-41d3-a799-85a648485731 recovered
-identical markers after ECC corrected 135 bytes, zero unrecoverable blocks.
-Source runtime arming was 1/1/1/10; level-0 output passed console threshold 4.
-This clears manual-snapshot normal-reboot retention only, not automatic RCU
-capture/crash retention, CPU causality or readiness for a wedge series.
-Original boot/vendor_boot and all five production hashes were restored.
-Final boot d5fd2f74-0854-41f4-b8f2-94874d63340f stayed responsive beyond
-151 seconds without detected CPU non-response/workqueue stalls. USB ADB and
-SSH protocol over NCM responded; no long-term stability claim.
-See test-236/RESULTS.md. The combined diagnostic is opt-in; defaults unchanged.
-
-Test-235 completed retrieval: ECC=64 recovered the exact 33,005-byte PMSG,
-correcting 246 bytes with zero unrecoverable blocks. Device hash, two TWRP
-pulls and the original observer journal's FILE field match. Its level-6
-console probe was filtered by loglevel=4: invalid console test, not a pass.
-CPU failures remain (manual boot c1027ef1-e680-425b-b6fc-6d7819800639: CPUs 2/5).
-Original boot/vendor_boot and all five partition hashes were restored.
-
-Restored boot 2d1619e1-3130-418c-b5d3-af51b14e9280 later powered off normally.
-A subsequent owner-started production boot f4d0de47-11eb-4aa5-a19e-9263ed385a31
-has CPU 5 non-response despite ADB/systemctl answering at 200 seconds; firmware
-appended lpcharge=1. Do not label it healthy or attribute the failure to that
-flag. The recovery helper's read-only BCB check timed out without a write;
-owner restart aad74b03-7579-49dc-ba8e-d50b6e8269bd then allowed the normal
-BCB helper to reach TWRP, where all production hashes were verified again.
-Device is parked in TWRP while Test-236 prepares existing lastactivity pr_emerg
-(level 0) plus ECC=64 for console retention calibration; no wedge series.
-See test-235/RESULTS.md and test-236/README.md.
-
-Latest: tests 233/234 isolated corrupt retention further. Test-233 recovered a
-known 33,005-byte PMSG with 464 changed bytes / 542 bits. Test-234's opt-in
-read-only live RAM view proved exact bytes in three reads before reboot, but
-the next boot recovered 251 changed bytes / 293 bits. Damage occurs after the
-final source read and before observer archive reads; no CPU causal link is
-established. No wedge series before trustworthy retention. See test-234/RESULTS.md.
-
-Test-234 observer `4c78d2cc-7ed8-4a33-be1c-05c2345f77c5` lost responsiveness.
-After owner manual recovery to Debian, its disk journal confirms CPU 5
-non-response to the backtrace IPI and RCU/workqueue stalls. CPU 7's responsive
-idle stack is not the stalled CPU's stack. The helper then reached TWRP;
-original boot/vendor_boot were restored and all five partition hashes match
-production. Restored boot e1ae1723-f52f-4493-9088-6df9a58a46cc passed a
-151-second responsive observation; no long-term stability claim. Test-235 prepares an
-isolated upstream ECC=64 retention calibration, not a CPU fix or wedge series.
-
-Read `docs/STALL_TEST_WORKFLOW.md` before continuing stall work. It supersedes older causal exclusions and trace sizing assumptions. The owner resumed hardware work on 2026-09-27. Test-229 captured another CPU 6 non-response, followed by owner recovery to Debian and a healthy 60-second calibration. Memory coverage passed for that observation, but the reduced seven-event set still exceeds the persistent text budget (2,213,931 bytes in 41 seconds versus 786,432 available). Offline bounded replay is now complete: corrected ramoops budget is 393,204 bytes because the 896 KiB request rounds down to 512 KiB, with a 12-byte header and 128 KiB crash reserve. Equal per-CPU text tails keep only about 2 seconds on CPUs 0/7 with modeled 32-byte prefixes. This fails the original 41-second question; select a separately validated sink or explicitly narrower positive-evidence question before preparing a hardware candidate. No new wedge series before retention passes. The unchanged production profile has watchdog/panic disabled, so matching production partition hashes does not establish the armed stall baseline. Do not reuse the outdated parked baseline bundle. Preserve the production kernel/configuration while establishing retention.
-
-Test-230 subsequently built and physically tested the opt-in last-activity
-instrument (diagnostic patch 0022). Live capture passed: READY at 0.103705 s,
-48 event cells / eight valid CPUs, 6,245 marker bytes. The source trial used
-watchdog/panic state 1/1/1/10. Persistence through Debian → TWRP → restored
-Debian failed to yield matching pstore; only old archives remained. Production
-boot/vendor_boot were restored and all five partition hashes verified. Next
-perform one healthy direct Debian → Debian persistence calibration with the
-same bounded candidate, keeping the source capture ID distinct from later
-boots. No wedge series before retention passes. See test-230/RESULTS.md.
-
-Test-231 tested that same candidate through a direct Debian → Debian warm
-reboot. Pstore retained the source capture but corrupted 8 of 58 marker lines
-(18 bytes / 26 bits); two repeat reads matched device-side hashes while the
-source journal remained exact. Retention integrity therefore still fails,
-with ECC=0 confirmed at runtime. This does not locate the corruption or prove
-a shared cause with CPU wedges. Next validate known payload/checksum retention
-and consider a separate ECC diagnostic within the existing reserved region;
-no wedge series yet. See test-231/RESULTS.md for source/observer IDs and rollback.
-
-Test-231 rollback restored all production partition hashes, but boot
-79815bbb-a96b-40c3-a152-ab958fd57d5d then wedged on CPU 5 with PID 1 blocked
-and systemctl timing out. The owner returned to TWRP; recovery evidence is
-archived. Image integrity passed; healthy rollback boot did not. USB ADB work followed at the owner's request while preserving NCM/SSH.
-
-Test-232 added native USB ADB to the existing NCM gadget. Final boot
- a80804be-229c-46f7-aae8-bd797fb22883 has USB/TCP ADB and SSH responsive after
-more than 150 seconds. Existing SSH survived stopping adbd (100 heartbeats,
-max gap 2.01 s). Preserve no_disconnect, the independent ep0 holder, and the
-adbd restart guard: FunctionFS reopening can reset the shared gadget. Prepare
-NCM/UDC before adbd's one-second bind deadline, then use bounded 50 ms polls.
-Changes apply next boot; never unbind a live gadget to add ADB. ADB transport
-failure can require reboot to recover while SSH stays available. This does not
-resolve CPU non-response or corrupt pstore. See test-232/RESULTS.md.
+The test249 registration README and earlier dated reviews are historical plans;
+its `RESULTS.md` is the final device-state record. Keep new physical tests
+bounded, attributable and separately logged. Use the changed-file host test
+selection for local iteration and the full retained suite when changing test
+routing or reviewing a final candidate; see `docs/HOST_TEST_WORKFLOW.md`.
 
 ## Mission
 
@@ -373,7 +114,10 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   CI check. A local successful build/validation is sufficient evidence for
   `compiled` / `packaged` status; it is still not evidence of a physical boot.
 
-## Current direction and physical-test workflow (owner instruction, 2026-09-21)
+## Historical bring-up findings and physical-test workflow (owner instruction, 2026-09-21)
+
+The milestones below describe their individual test dates. The current
+production state is recorded at the top of this file and in test249 results.
 
 - **Milestone reached (test 010, `reference/boot-tests/test-010-.../`): the
   owner watched the tablet power itself off while running this port's kernel.**
@@ -537,8 +281,9 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   authorization, which each test's `source.txt` quotes. Do not flash, reboot or
   claim a hardware observation without a current request; ccache builds are
   always authorized. Compilation is not screen or keyboard validation.
-- Next milestones: a microSD root filesystem, then the touchscreen, and the pogo
-  keyboard's first run on mainline. Compilation is not screen validation.
+- The microSD Debian rootfs, USB ADB/NCM/SSH and panel login were established
+  after these early bring-up tests. Use current evidence before declaring a
+  touchscreen, keyboard or other feature physically verified.
 - **The USB rescue channel works** (test 029): with `gts9_usb_gadget=msc` the
   gadget exports the microSD partition read-only, Windows mounts it by itself,
   and the report can be read off the running tablet over USB - no TWRP, no power
@@ -562,20 +307,19 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   stays an opt-in in the initramfs (it powers the tablet off by itself) and is
   deliberately absent from `boot/cmdline.example.txt`; re-add it to reproduce
   test 010.
-- The owner explicitly requested flashing this candidate and collecting logs.
-  This authorizes a controlled TWRP/adb test of boot, init_boot, vendor_boot and
-  the documented dtbo fallback after validating the bundle, device identity,
-  partition sizes, backups and per-partition write/read-back hashes. Build and
-  validation scripts must remain non-flashing. Do not rewrite recovery, vbmeta,
-  bootloaders, userdata or the partition table as part of these tests.
-- Start log capture before reboot. Observe for 60–90 seconds, then return to
-  recovery and capture immediately. If adb is absent, ask the owner for the
-  physical observation/recovery key action; absence of adb is expected with
-  this minimal initramfs and does not establish a crash. When a test's signal is
-  a physical action (power off, reset, screen change), say so and let the owner
-  watch instead of asking for a key combination.
+- Early candidate flashes were authorized and recorded per test. For later
+  hardware work, follow the owner's authorization in the current session and
+  the specific test registration. Validate the bundle, device identity,
+  partition sizes, backups and per-partition write/read-back hashes before
+  writing. Build and validation scripts must remain non-flashing. Do not rewrite
+  recovery, vbmeta, bootloaders, userdata or the partition table as part of a
+  boot-image test.
+- Start log capture before reboot and use the test's registered observation
+  window and stop conditions. If ADB is absent, correlate device-side and
+  Windows-side evidence and ask for a physical observation only when needed;
+  absence of ADB alone does not establish a crash.
 - **Every subsequent physical test must have a committed log directory** under
-  `reference/boot-tests/test-NNN-YYYYMMDDTHHMMSSZ/`, including failed or aborted
+  `reference/boot-tests/test-NNN-*/`, including failed or aborted
   attempts. Save raw last_kmsg, available pstore, recovery dmesg (labelled as
   recovery), device/layout checks, flash/read-back transcript, artifact hashes,
   source commit, bundle metadata and an observation/result README. Mark absent
@@ -588,17 +332,18 @@ Never copy the entire downstream DTS into `arch/arm64/boot/dts/qcom/` and call t
   defaults to the tracked archive; pass CAPTURE_DIR for the specific test.
 - Mainline log/marker present: follow the last proven stage and the actual
   panic/probe output. Init reached: verify persistence, then storage and USB
-  rescue. Reboots without mainline evidence: validate the sec_log retention
-  path and kernel handoff separately. An absent write-back marker, empty pstore
-  or a compressed-file DTB offset does not prove that Linux was never entered.
+  rescue. Reboots without mainline evidence require independent kernel-handoff
+  and retention checks; the measured `sec_log` ring is not a reliable Linux log.
+  An absent write-back marker, empty pstore or a compressed-file DTB offset does
+  not prove that Linux was never entered.
 - Keep experiments attributable: change one failure hypothesis per follow-up
   test. MMU-off/head.S or Gunyah watchdog instrumentation remains a separate
   diagnostic branch, not a default workaround. Record the final device state
   and any stock restoration with read-back hashes in the test record.
 
-## Latest pogo audit (2026-09-22, after f6c5c6b)
+## Pogo audit (2026-09-22; historical candidate after f6c5c6b)
 
-The current candidate restores DATA to IRQ_TYPE_LEVEL_LOW: announce-gpios is
+That candidate restored DATA to IRQ_TYPE_LEVEL_LOW: announce-gpios is
 GPIO_ACTIVE_LOW, so descriptor 1 means a physical low, not a high pulse. The
 normal startup now releases the protocol mutex before enabling DATA, with only
 50 ms power settling and no bootloader/scan/rail cycle. A model event makes a
