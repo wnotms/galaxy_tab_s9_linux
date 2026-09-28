@@ -1,0 +1,16 @@
+{
+  "executed": true,
+  "offline_audit_command": "python3 reference/boot-tests/test-250-production-warm-reboot/continuation-cpu-13-20/audit-evidence.py",
+  "offline_audit_passed": true,
+  "full_host_command": "python3 scripts/run-host-tests.py all --fail-on-skip --report out/host-tests/test250-continuation-final-all.json",
+  "full_host_tests_run": 1056,
+  "full_host_failures": 0,
+  "full_host_errors": 0,
+  "full_host_skips": 0,
+  "full_host_exit_code": 0,
+  "changed_host_command": "bash scripts/check-stall-offline.sh --changed --base HEAD",
+  "changed_host_tests_run": 1056,
+  "changed_host_result": "passed",
+  "note": "An earlier simultaneous full-suite run had one transient unpack_bootimg skip; the affected test passed alone, and the final serial full-suite run passed with zero skips.",
+  "github_actions_started": false
+}

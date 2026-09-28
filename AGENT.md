@@ -196,6 +196,21 @@ It would add stage timestamps and allow 30 s for the outer Windows process
 while keeping the 5 s TCP-connect/banner-read deadlines and every other
 stop gate. It has not changed the runner or authorized a new hardware test.
 
+The owner then explicitly changed the future Test250 completion criterion to
+continue from round 13 and count the bounded warm-reboot series complete if
+the prior CPU hang does not recur. A separately registered CPU-focused
+continuation under `continuation-cpu-13-20/` kept attempt 05's original
+stopped verdict intact. Eight more ordinary Test249-production warm reboots,
+rounds 13–20, were uniquely attributed and each observed to at least 150 s;
+no CPU-stall/panic signature was detected. Together with attempt 05's twelve
+strictly CLEAN rounds, this completes **20 attributed CPU-focused warm-reboot
+observations**, not 20 CLEAN rounds under the superseded strict transport gate.
+Full final five-partition/181-module/config/notes/DCC and transport acceptance
+passed; offline evidence replay passed. See continuation `RESULTS.md`,
+`summary.json` and `EVIDENCE_AUDIT.json`. Production remained unchanged.
+The earlier Windows probe timeout is unresolved. No Test251 was created or
+run; cold/battery-only/Type-C power paths remain untested.
+
 ## Mission
 
 Maintain a mainline-first Linux port for Samsung Galaxy Tab S9 Wi-Fi (`SM-X710`, Android codename `gts9wifi`) on Qualcomm SM8550 (`kalama`). Prefer upstream Linux interfaces and bindings. Samsung's downstream 5.15.153 sources/config/device tree are evidence about hardware, not the target architecture.
