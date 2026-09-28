@@ -17,7 +17,7 @@ set -euo pipefail
 
 IMG=${1:?usage: flash-boot.sh <image> [partition]}
 PART=${2:-boot}
-ADB=${ADB:-/mnt/d/android/gts9-active/platform-tools/adb.exe}
+ADB=${ADB:-/mnt/d/android/platform-tools/adb.exe}
 PORT=${PORT:-COM17}
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 STAGE=${STAGE:-/mnt/d/android/gts9-active/gts9-flash}

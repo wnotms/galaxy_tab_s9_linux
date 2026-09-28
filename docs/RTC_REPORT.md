@@ -81,7 +81,7 @@ the SPMI write path is understood.
 ## Reading it
 
 ```sh
-ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/read-rtc-state.sh
+ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/read-rtc-state.sh
 ```
 
 The tablet only has to be on adb - TWRP is enough, and it does not matter

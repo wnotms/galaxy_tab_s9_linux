@@ -122,7 +122,7 @@ Use the capture tool, which waits for the tablet and pulls the ring the instant
 `/proc/last_kmsg` is readable:
 
 ```bash
-ADB=/mnt/d/android/gts9-active/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
+ADB=/mnt/d/android/platform-tools/adb.exe ./scripts/capture-last-kmsg.sh
 ```
 
 It prints the marker counts and a first verdict. Or do it by hand:

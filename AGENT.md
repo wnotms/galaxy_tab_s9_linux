@@ -36,9 +36,12 @@ and `docs/AUX_BRIDGE_LOGIN_MESSAGE.md` before changing USB or display wiring.
 Historical D-drive test files live in ignored
 `.work/d-drive-test-archive/2026-09-28/`, with tracked hashes in
 `reference/d-drive-test-archive-20260928/SHA256SUMS`. Windows retains only the
-active tools and rescue/rollback artifacts below `D:\android\gts9-active\`;
-`platform-tools/`, `gts9-stock/`, `gts9-test230/`, `gts9-test248/` and
-`gts9-test249/` are beneath it. Current scripts use this path. Old absolute
+rescue/rollback artifacts below `D:\android\gts9-active\`;
+`gts9-stock/`, `gts9-test230/`, `gts9-test248/` and `gts9-test249/` are beneath
+it. The owner subsequently explicitly requested that ADB tools remain directly
+below `D:\android\platform-tools\` (2026-09-28). Current scripts therefore
+use `/mnt/d/android/platform-tools/adb.exe`; this overrides the earlier tools
+location under gts9-active without relocating test/rollback artifacts. Old absolute
 paths in immutable test records describe where files were at test time. See
 `reference/d-drive-test-archive-20260928/README.md`.
 
