@@ -1,0 +1,79 @@
+READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+{
+  "verdict": "window-passed-awaiting-post-cycle-identity-gate",
+  "boot_id": "461c1408e42643afae5b48162771d077",
+  "daemon_pid": 834,
+  "native_ncm_recovery_upper_bound_seconds": 14.099735211995721,
+  "responsive_observation_seconds": 155.4869348430002,
+  "offline_duration_lower_bound_seconds": 37.057797492001555,
+  "cycle_state": {
+    "expected_boot": "461c1408e42643afae5b48162771d077",
+    "expected_pid": 834,
+    "expected_sha256": "053348e27a1e6b5b70940abd9cf7054225c802d4d9ce6681eb4c3b22cd85c7f5",
+    "first_off_end": 48974.811650128,
+    "last_off_start": 49011.86944762,
+    "first_off_uptime": 3495.66,
+    "last_off_uptime": 3533.32,
+    "return_seen": true,
+    "recovered_at": 49025.969182832,
+    "previous_end": 49014.00575846,
+    "last_connected_uptime": 3494.02,
+    "off_source_earliest": 3494.02,
+    "return_uptime": 3534.84
+  },
+  "kernel_scan": {
+    "rows": 1109,
+    "fault_counts": {},
+    "suspects": [],
+    "known_warning_count": 44,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "first_source_timestamp": "0",
+    "last_source_timestamp": "3534121737",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "event_count": 1,
+      "setup_count": 2,
+      "cycles": [
+        {
+          "setup_source_seconds": 4.252901,
+          "events": [],
+          "completion_source_seconds": 5.174316
+        },
+        {
+          "setup_source_seconds": 6.298619,
+          "events": [
+            {
+              "row": 1050,
+              "event_source_seconds": 6.373604,
+              "completion_source_seconds": 7.176731,
+              "recovery_seconds": 0.803127
+            }
+          ],
+          "completion_source_seconds": 7.176731
+        }
+      ],
+      "event_rows": [
+        1050
+      ],
+      "state": "accepted"
+    }
+  },
+  "adbd_review": {
+    "new_pre_enable_disable_warnings": [
+      {
+        "warning_source_seconds": 3534.201144,
+        "enable_source_seconds": 3534.354978,
+        "worker_source_seconds": 3534.355389,
+        "monitor_tid": "11802"
+      }
+    ],
+    "classification": "bounded-pre-enable-disable"
+  },
+  "host_server_restarts": 0,
+  "device_changes": false
+}

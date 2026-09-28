@@ -12,8 +12,17 @@ identity passed, with DCC absent, protected settings unchanged and no new kernel
 fault, failed unit or Code43. Native ADB, bound NCM banner/authenticated SSH and
 Wi-Fi SSH passed. Fresh evidence is in preflight-adopted/.
 
-No fresh physical cycle has run yet:0/3 performed and accepted. After this
-evidence is pushed, start the corrected cycle01 observer before the owner
-action. No device service/gadget/controller/host server restart, flash or
-reboot occurred. Test252 and prior Test253 attempts remain stopped. The adopted
-classification does not retroactively pass the earlier missing-evidence cycle.
+Cycle01 subsequently passed the adopted cable-recovery gate:37.058s observed
+offline lower bound,14.100s native/NCM recovery upper bound and155.487s elapsed
+responsive observation. Native shell passed first attempt; NCM attempt01 timed
+out8s and attempt02 recovered, retained as a bounded recovery transient. One
+exact contextual pre-enable DISABLE W completed ENABLE/worker within the adopted
+limits. Full post-cycle five partitions/config/notes/181+181/DCC/protected
+settings/daemon/failed-unit/kernel/ADB/NCM/Wi-Fi checks pass without a new
+CPU/kernel fault or Code43. Read cycle01 raw journals/verdict/audit/results.
+
+Series remains in progress:1/3 performed and accepted; cycle02/03 and full final
+series acceptance are pending. No device/host-server restart, reset, software
+change or reboot occurred. This bounded acceptance records the NCM transient;
+it is not a claim of three strictly transient-free cycles. Test252 and prior
+Test253 stopped attempts stay stopped.

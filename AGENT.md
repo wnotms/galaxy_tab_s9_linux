@@ -57,9 +57,17 @@ Final local1124/1124 and focused33 tests pass. Adopted registration was pushed a
 preflight-adopted passes exact boot/PID/hash, five partitions/config/notes/
 181+181 modules/DCC/protected settings and all channels, with no new fault/
 failed unit/Code43. Push this evidence, then start cycle01 capture before the
-owner action. None of the three new cycles has run yet. Prior attempt03 remains stopped/unaccepted; keep old
+owner action. The initial no-cycle state below is historical. Prior attempt03 remains stopped/unaccepted; keep old
 outcomes/seals. PROPOSAL_SHA256 describes the unadopted phase at c90745c6.
-Read attempt04 README/policy/ADOPTION and fresh preflight before action.
+Cycle01 subsequently passed:37.058s observed offline lower bound,14.100s
+native/NCM recovery upper bound and155.487s elapsed responsive checks. Native
+shell passed first try; NCM first8s timeout then recovery is retained as a
+bounded cable-recovery transient. One exact DISABLE W satisfied contextual
+5s/1s limits. Full post-cycle five partitions/config/notes/181+181/DCC/
+protected settings/daemon/units/kernel/three-channel gate passes without new
+CPU/kernel fault or Code43. Series1/3 accepted; next start cycle02 capture
+before asking for its one20s cable action. No reset/reboot/software change.
+Read attempt04 RESULTS/summary and cycle01 evidence before action.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

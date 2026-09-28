@@ -1,8 +1,8 @@
 {
-  "verdict": "registered-fresh-preflight-passed-awaiting-cycle-01",
+  "verdict": "in-progress-cycle-01-accepted",
   "owner_adopted": true,
-  "physical_cycles_performed": 0,
-  "accepted_cycles": 0,
+  "physical_cycles_performed": 1,
+  "accepted_cycles": 1,
   "registered_physical_cycles": 3,
   "device_changes": false,
   "additional_reboots": 0,
@@ -22,5 +22,40 @@
   "ncm_ssh": true,
   "wifi_ssh": true,
   "code43": false,
-  "protected_settings_unchanged": true
+  "protected_settings_unchanged": true,
+  "ncm_recovery_transient_observed": true,
+  "per_cycle": [
+    {
+      "verdict": "accepted-under-bounded-cable-recovery-policy",
+      "boot_id": "461c1408e42643afae5b48162771d077",
+      "daemon_pid": 834,
+      "physical_cycle": 1,
+      "offline_lower_bound_seconds": 37.057797492001555,
+      "native_ncm_recovery_upper_bound_seconds": 14.099735211995721,
+      "observation_seconds": 155.4869348430002,
+      "native_first_shell_attempt_passed": true,
+      "ncm_initial_timeout_recorded": true,
+      "ncm_recovery_attempts": 2,
+      "ncm_recovery_transient": true,
+      "all_transports_continuous_after_recovery": true,
+      "kernel_fault_counts": {},
+      "code43": false,
+      "full_post_cycle_identity": true,
+      "adbd_review": {
+        "new_pre_enable_disable_warnings": [
+          {
+            "warning_source_seconds": 3534.201144,
+            "enable_source_seconds": 3534.354978,
+            "worker_source_seconds": 3534.355389,
+            "monitor_tid": "11802"
+          }
+        ],
+        "classification": "bounded-pre-enable-disable"
+      },
+      "host_server_restarts": 0,
+      "device_changes": false,
+      "additional_reboots": 0
+    }
+  ],
+  "next_cycle": 2
 }
