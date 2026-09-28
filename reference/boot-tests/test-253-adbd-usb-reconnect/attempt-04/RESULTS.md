@@ -21,7 +21,13 @@ limits. Full post-cycle five partitions/config/notes/181+181/DCC/protected
 settings/daemon/failed-unit/kernel/ADB/NCM/Wi-Fi checks pass without a new
 CPU/kernel fault or Code43. Read cycle01 raw journals/verdict/audit/results.
 
-Series remains in progress:1/3 performed and accepted; cycle02/03 and full final
+Cycle02 also passed:40.166s offline lower bound,15.346s combined native/NCM
+recovery upper bound and155.466s responsive observation. Native first not-found
+and NCM first8s timeout are retained as bounded recovery transients. One exact
+contextual DISABLE W completed ENABLE/worker within the adopted bounds. Full
+post-cycle identity and all transport/kernel/systemd gates passed.
+
+Series remains in progress:2/3 performed and accepted; cycle03 and full final
 series acceptance are pending. No device/host-server restart, reset, software
 change or reboot occurred. This bounded acceptance records the NCM transient;
 it is not a claim of three strictly transient-free cycles. Test252 and prior

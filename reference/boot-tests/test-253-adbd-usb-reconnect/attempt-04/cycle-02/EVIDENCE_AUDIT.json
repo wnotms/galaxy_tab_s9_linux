@@ -1,0 +1,17 @@
+{
+  "verdict": "passed",
+  "source_window_and_deadlines_verified": true,
+  "raw_journal_replay_matched": true,
+  "command_records": 180,
+  "nonzero_command_records": [
+    {
+      "command": "recovery-01-native.command.json",
+      "status": 1
+    },
+    {
+      "command": "recovery-02-ncm-shell.command.json",
+      "status": "timeout"
+    }
+  ],
+  "all_recorded_failures_preserved": true
+}

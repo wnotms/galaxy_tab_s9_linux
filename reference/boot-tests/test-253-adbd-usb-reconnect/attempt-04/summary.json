@@ -1,8 +1,8 @@
 {
-  "verdict": "in-progress-cycle-01-accepted",
+  "verdict": "in-progress-cycle-02-accepted",
   "owner_adopted": true,
-  "physical_cycles_performed": 1,
-  "accepted_cycles": 1,
+  "physical_cycles_performed": 2,
+  "accepted_cycles": 2,
   "registered_physical_cycles": 3,
   "device_changes": false,
   "additional_reboots": 0,
@@ -55,7 +55,40 @@
       "host_server_restarts": 0,
       "device_changes": false,
       "additional_reboots": 0
+    },
+    {
+      "verdict": "accepted-under-bounded-cable-recovery-policy",
+      "physical_cycle": 2,
+      "boot_id": "461c1408e42643afae5b48162771d077",
+      "daemon_pid": 834,
+      "offline_lower_bound_seconds": 40.16629954000382,
+      "native_ncm_recovery_upper_bound_seconds": 15.346132081998803,
+      "observation_seconds": 155.46572389699577,
+      "native_first_shell_attempt_passed": false,
+      "native_first_success_attempt": 2,
+      "native_initial_not_found_recorded": true,
+      "ncm_initial_timeout_recorded": true,
+      "ncm_recovery_attempts": 2,
+      "ncm_recovery_transient": true,
+      "all_transports_continuous_after_recovery": true,
+      "kernel_fault_counts": {},
+      "code43": false,
+      "full_post_cycle_identity": true,
+      "adbd_review": {
+        "new_pre_enable_disable_warnings": [
+          {
+            "warning_source_seconds": 3933.528703,
+            "enable_source_seconds": 3933.644427,
+            "worker_source_seconds": 3933.644427,
+            "monitor_tid": "13967"
+          }
+        ],
+        "classification": "bounded-pre-enable-disable"
+      },
+      "host_server_restarts": 0,
+      "device_changes": false,
+      "additional_reboots": 0
     }
   ],
-  "next_cycle": 2
+  "next_cycle": 3
 }

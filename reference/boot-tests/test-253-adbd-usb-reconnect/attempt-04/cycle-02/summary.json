@@ -1,0 +1,78 @@
+{
+  "adbd_review": {
+    "classification": "bounded-pre-enable-disable",
+    "new_pre_enable_disable_warnings": [
+      {
+        "enable_source_seconds": 3933.644427,
+        "monitor_tid": "13967",
+        "warning_source_seconds": 3933.528703,
+        "worker_source_seconds": 3933.644427
+      }
+    ]
+  },
+  "boot_id": "461c1408e42643afae5b48162771d077",
+  "cycle_state": {
+    "expected_boot": "461c1408e42643afae5b48162771d077",
+    "expected_pid": 834,
+    "expected_sha256": "053348e27a1e6b5b70940abd9cf7054225c802d4d9ce6681eb4c3b22cd85c7f5",
+    "first_off_end": 49370.257981596,
+    "first_off_uptime": 3891.09,
+    "last_connected_uptime": 3889.44,
+    "last_off_start": 49410.424281136,
+    "last_off_uptime": 3931.86,
+    "off_source_earliest": 3889.44,
+    "previous_end": 49412.593574786,
+    "recovered_at": 49425.770413218,
+    "return_seen": true,
+    "return_uptime": 3933.45
+  },
+  "daemon_pid": 834,
+  "device_changes": false,
+  "host_server_restarts": 0,
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "3933512675",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.174316,
+          "events": [],
+          "setup_source_seconds": 4.252901
+        },
+        {
+          "completion_source_seconds": 7.176731,
+          "events": [
+            {
+              "completion_source_seconds": 7.176731,
+              "event_source_seconds": 6.373604,
+              "recovery_seconds": 0.803127,
+              "row": 1050
+            }
+          ],
+          "setup_source_seconds": 6.298619
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1050
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1110,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "native_ncm_recovery_upper_bound_seconds": 15.346132081998803,
+  "offline_duration_lower_bound_seconds": 40.16629954000382,
+  "responsive_observation_seconds": 155.46572389699577,
+  "verdict": "window-passed-awaiting-post-cycle-identity-gate"
+}

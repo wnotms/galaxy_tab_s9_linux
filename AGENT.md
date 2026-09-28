@@ -65,9 +65,12 @@ shell passed first try; NCM first8s timeout then recovery is retained as a
 bounded cable-recovery transient. One exact DISABLE W satisfied contextual
 5s/1s limits. Full post-cycle five partitions/config/notes/181+181/DCC/
 protected settings/daemon/units/kernel/three-channel gate passes without new
-CPU/kernel fault or Code43. Series1/3 accepted; next start cycle02 capture
+CPU/kernel fault or Code43. Cycle02 also passes:40.166s offline lower bound,15.346s recovery upper bound,
+155.466s responsive checks and full post-cycle identity. First native not-found
+and first NCM8s timeout are retained recovery transients; one contextual W
+completed ENABLE/worker within bounds. Series2/3 accepted; start cycle03 capture
 before asking for its one20s cable action. No reset/reboot/software change.
-Read attempt04 RESULTS/summary and cycle01 evidence before action.
+Read attempt04 RESULTS/summary and both completed-cycle evidence before action.
 
 
 The production DCC-path repair is deployed and accepted on the SM-X710. The

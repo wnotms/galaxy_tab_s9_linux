@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "journalctl -b -f -n all --no-pager -o json _TRANSPORT=kernel + _SYSTEMD_UNIT=gts9-adbd.service + UNIT=gts9-adbd.service"
+  ],
+  "host_pid": 169646,
+  "started_utc": "2026-09-28T14:58:48.540099+00:00"
+}
