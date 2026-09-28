@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "test \"$(cat /proc/sys/kernel/random/boot_id)\" = 38a30c1d-68b2-4e10-8bb4-42dce8bb0385 && test \"$(cat /etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6 && test -d /usr/lib/modules/7.2.0-rc3-gts9wifi-dirty && test -d /usr/lib/modules/.gts9-test248-original && test -d /usr/lib/modules/.gts9-test249-original && rm -r -- /usr/lib/modules/.gts9-test248-original /usr/lib/modules/.gts9-test249-original && sync && test ! -e /usr/lib/modules/.gts9-test248-original && test ! -e /usr/lib/modules/.gts9-test249-original && find /usr/lib/modules/7.2.0-rc3-gts9wifi-dirty -type f | wc -l && cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-28T01:52:01.177141+00:00"
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl is-active ssh.service gts9-adbd.service gts9-usb-acm.service gts9-usb-adb-hold.service; cat /sys/kernel/config/usb_gadget/gts9/UDC; cat /sys/class/udc/a600000.usb/state; ip -br addr show usb0; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-28T01:44:41.570767+00:00"
+}

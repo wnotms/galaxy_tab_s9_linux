@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; zcat /proc/config.gz | grep -E \"^# CONFIG_(HVC_DCC|ARM64_PSEUDO_NMI|CSD_LOCK_WAIT_DEBUG) is not set$\"; test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && test ! -e /sys/module/smp/parameters/csd_lock_timeout && test ! -e /sys/module/gts9_lastactivity && test ! -e /sys/module/gts9_pnmi_test && echo removed_paths_absent; systemctl is-active serial-getty@hvc0.service; cat /proc/fb; cat /proc/consoles; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "status": 0,
+  "utc": "2026-09-28T01:46:15.248325+00:00"
+}

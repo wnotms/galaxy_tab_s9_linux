@@ -1,0 +1,15 @@
+38a30c1d-68b2-4e10-8bb4-42dce8bb0385
+usb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 
+14: usb0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 1a:98:27:23:ae:cb brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+         56855     255      0       4       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+          4832      35      0       0       0       0 
+169.254.219.80 lladdr da:38:ff:27:77:40 STALE 
+1
+configured
+LISTEN 0      128          0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=1077,fd=6))
+LISTEN 0      4                  *:5555            *:*    users:(("adbd",pid=826,fd=15))
+LISTEN 0      128             [::]:22           [::]:*    users:(("sshd",pid=1077,fd=7))
+38a30c1d-68b2-4e10-8bb4-42dce8bb0385

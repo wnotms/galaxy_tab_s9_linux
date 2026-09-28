@@ -22,9 +22,12 @@ def profile(phase,boot):
     link={row.split()[2]:int(row.split()[0],16) for row in (control.ROOT/'out/test249/System.map').read_text().splitlines()}
     anchors={row.split()[2]:int(row.split()[0],16)-link[row.split()[2]] for row in l[8:-1]}
     assert len(anchors)==6 and len(set(anchors.values()))==1
-    s,_=control.shell(phase,'removed-capabilities','cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | grep -E "^# CONFIG_(HVC_DCC|HVC_DRIVER|ARM64_PSEUDO_NMI|CSD_LOCK_WAIT_DEBUG) is not set$"; test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && test ! -e /sys/module/smp/parameters/csd_lock_timeout && test ! -e /sys/module/gts9_lastactivity && test ! -e /sys/module/gts9_pnmi_test && echo removed_paths_absent; systemctl is-active serial-getty@hvc0.service; cat /proc/fb; cat /proc/consoles; cat /proc/sys/kernel/random/boot_id',timeout=8)
+    s,_=control.shell(phase,'removed-capabilities','cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; zcat /proc/config.gz | grep -E "^# CONFIG_(HVC_DCC|ARM64_PSEUDO_NMI|CSD_LOCK_WAIT_DEBUG) is not set$"; test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && test ! -e /sys/module/smp/parameters/csd_lock_timeout && test ! -e /sys/module/gts9_lastactivity && test ! -e /sys/module/gts9_pnmi_test && echo removed_paths_absent; systemctl is-active serial-getty@hvc0.service; cat /proc/fb; cat /proc/consoles; cat /proc/sys/kernel/random/boot_id',timeout=8)
     lines=s.splitlines();assert lines[0]==lines[-1]==boot
-    for sym in ('HVC_DCC','HVC_DRIVER','ARM64_PSEUDO_NMI','CSD_LOCK_WAIT_DEBUG'):
+    assert lines[1].split()[0]==hashlib.sha256((control.ROOT/'out/kernel-no-dcc-production/config').read_bytes()).hexdigest()
+    # HVC_DRIVER has no emitted "not set" line after losing its only selector;
+    # the exact config hash verifies that it is absent from the target build.
+    for sym in ('HVC_DCC','ARM64_PSEUDO_NMI','CSD_LOCK_WAIT_DEBUG'):
         assert '# CONFIG_'+sym+' is not set' in lines,sym
     assert 'removed_paths_absent' in lines and 'inactive' in lines
     assert any(row.startswith('0 ') for row in lines) and any(row.startswith('tty0 ') and 'E' in row for row in lines)
@@ -37,7 +40,7 @@ def profile(phase,boot):
     (control.P/phase/'identity.json').write_text(json.dumps(identity,indent=2)+'\n')
 
 def run(phase,anchor):
-    assert phase in {'production-twrp','production-warm'}
+    assert phase in {'production-twrp','production-twrp-continued','production-warm'}
     p=control.P/phase;p.mkdir(exist_ok=False)
     verdict={'budget_uptime_seconds':120,'boot_path':phase,'historical_all_causes_proven':False}
     for i in range(20):
