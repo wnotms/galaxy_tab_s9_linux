@@ -14,7 +14,7 @@ rpmh_debug=${GTS9_RPMH_DEBUG:-0}
 idle_ablation=${GTS9_IDLE_ABLATION:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive) ;;
+    ''|sm5440-passive|sm5440-policy-offline) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && [ -n "$idle_ablation" ]; then
@@ -202,6 +202,7 @@ for drv in "$driver_src"/*.c; do
 		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
 		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
 		sm5440-direct.c) dest="$tree/drivers/power/supply" ;;
+		x710-charging-policy.c) dest="$tree/drivers/power/supply" ;;
 		sm5714_usbpd.c) dest="$tree/drivers/usb/typec/tcpm" ;;
 		*)       dest=$soc_qcom ;;
     esac
@@ -214,6 +215,7 @@ install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/usb/typec/tcpm/"
 install -m 0644 "$driver_src/sm5714-pd-policy.h" "$tree/drivers/usb/typec/tcpm/"
 install -m 0644 "$driver_src/sm5440-hw.h" "$tree/drivers/power/supply/"
+install -m 0644 "$driver_src/x710-charging-policy.h" "$tree/drivers/power/supply/"
 install -m 0644 "$repo_root/kernel/bindings/power/supply/siliconmitus,sm5440.yaml" \
     "$tree/Documentation/devicetree/bindings/power/supply/"
 

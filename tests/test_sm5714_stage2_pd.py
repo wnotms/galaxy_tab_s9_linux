@@ -157,10 +157,12 @@ class Stage2CompanionTests(unittest.TestCase):
 #define EPROBE_DEFER 517
 #define EXPORT_SYMBOL_GPL(x)
 #define power_supply_changed(x) ((void)(x))
+#define lockdep_assert_held(x) ((void)(x))
 static int sm5714_companion_lock;
 static struct sm5714_battery *sm5714_companion;
 '''
-        for name in ("int sm5714_battery_set_pd_contract(",
+        for name in ("static void sm5714_inhibit_typec_locked(",
+                     "int sm5714_battery_set_pd_contract(",
                      "int sm5714_battery_set_typec_charge(",
                      "void sm5714_battery_typec_fault(",
                      "int sm5714_battery_typec_claim("):

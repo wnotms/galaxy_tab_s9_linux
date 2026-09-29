@@ -450,6 +450,21 @@ out_unlock:
 }
 
 /* TCPM budget is not a measured VBUS voltage or proof of PS_RDY on its own. */
+static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
+{
+	/* Companion lifetime is held outside chg_lock. Keep the fault latch,
+	 * cleared grant, pack gate and minimum input together for every error
+	 * entry; no fault path can accidentally leave the old budget live.
+	 */
+	lockdep_assert_held(&sm->chg_lock);
+	sm->typec_fault = true;
+	sm->typec_charge = false;
+	sm->typec_ma = 0;
+	sm5714_disable_charging(sm);
+	sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+			       GENMASK(6, 0), sm5714_input_current_reg(100));
+}
+
 int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
 {
 	struct sm5714_battery *sm;
@@ -463,12 +478,8 @@ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
 	}
 	mutex_lock(&sm->chg_lock);
 	if ((mv != 0 && mv != 5000 && mv != 9000) || (!mv && ma)) {
-		sm->typec_fault = true;
-		sm->typec_ma = 0;
+		sm5714_inhibit_typec_locked(sm);
 		ret = -ERANGE;
-		sm5714_disable_charging(sm);
-		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
-				       GENMASK(6, 0), sm5714_input_current_reg(100));
 		mutex_unlock(&sm->chg_lock);
 		goto out;
 	}
@@ -524,12 +535,7 @@ void sm5714_battery_typec_fault(void)
 	sm = sm5714_companion;
 	if (sm) {
 		mutex_lock(&sm->chg_lock);
-		sm->typec_fault = true;
-		sm->typec_charge = false;
-		sm->typec_ma = 0;
-		sm5714_disable_charging(sm);
-		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
-				       GENMASK(6, 0), sm5714_input_current_reg(100));
+		sm5714_inhibit_typec_locked(sm);
 		mutex_unlock(&sm->chg_lock);
 		power_supply_changed(sm->psy_usb);
 		power_supply_changed(sm->psy_bat);

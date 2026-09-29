@@ -203,10 +203,16 @@ static int sm5714_usbpd_get_cc(struct tcpc_dev *tcpc,
 	/* Samsung CC_STATUS: only a Source partner is accepted by this Sink. */
 	if ((cc & SM5714_CC_ATTACH_MASK) == SM5714_CC_SOURCE) {
 		switch (cc & SM5714_CC_RP_MASK) {
-		case 0x08: active = TYPEC_CC_RP_1_5; break;
+		case 0x08:
+			active = TYPEC_CC_RP_1_5;
+			break;
 		case 0x10:
-		case 0x18: active = TYPEC_CC_RP_3_0; break;
-		default: active = TYPEC_CC_RP_DEF; break;
+		case 0x18:
+			active = TYPEC_CC_RP_3_0;
+			break;
+		default:
+			active = TYPEC_CC_RP_DEF;
+			break;
 		}
 	}
 	*cc1 = cc & SM5714_CC_FLIPPED ? TYPEC_CC_OPEN : active;
@@ -448,9 +454,8 @@ static irqreturn_t sm5714_usbpd_irq(int irq, void *data)
 			tcpm_pd_transmit_complete(sm->port, TCPC_TX_DISCARDED);
 		else if (intr[3] & (SM5714_TX_DONE | SM5714_HRST_DONE))
 			tcpm_pd_transmit_complete(sm->port, TCPC_TX_SUCCESS);
-		if (intr[3] & SM5714_HRST_RX) {
+		if (intr[3] & SM5714_HRST_RX)
 			tcpm_pd_hard_reset(sm->port);
-		}
 	}
 	mutex_unlock(&sm->lock);
 	if (ret) {

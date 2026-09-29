@@ -19,7 +19,7 @@ fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 diag_fragment=${GTS9_DIAG_FRAGMENT:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive) ;;
+    ''|sm5440-passive|sm5440-policy-offline) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && {
@@ -134,7 +134,7 @@ stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
 # can never be silently overridden by it.
 merge_cfgs=("$stock_cfg" "$fragment")
 if [ -n "$charging_profile" ]; then
-    merge_cfgs+=("$repo_root/kernel/config/gts9wifi-sm5440-passive.fragment")
+    merge_cfgs+=("$repo_root/kernel/config/gts9wifi-$charging_profile.fragment")
 fi
 if [ -n "$diag_path" ]; then
     merge_cfgs+=("$diag_path")
@@ -148,7 +148,7 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 # Host-only: preserve UPower sandboxing and gate OCI/network prerequisites.
 python3 "$repo_root/scripts/verify-container-config.py" "$build_dir/.config"
 if [ -n "$charging_profile" ]; then
-    python3 "$repo_root/scripts/verify-x710-charging-profile.py" "$build_dir/.config"
+    python3 "$repo_root/scripts/verify-x710-charging-profile.py" "$build_dir/.config" --profile "$charging_profile"
 else
     python3 "$repo_root/scripts/verify-sm5714-stage2.py" "$build_dir/.config"
 fi

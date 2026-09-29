@@ -3,6 +3,7 @@
 import argparse
 import difflib
 import hashlib
+import gzip
 import importlib.util
 import json
 from pathlib import Path
@@ -103,10 +104,23 @@ def audit(out, tree, build, revision, profile):
     if len(modules) != 181:
         errors.append("expected 181 paired regular module-directory files")
     subprocess.run(["llvm-objcopy", "--dump-section", f".notes={out / 'kernel-notes.bin'}",
-                    str(build / "vmlinux")], check=True)
+                    str(build / "vmlinux"), "/dev/null"], check=True)
     archive = out / "modules-x710.tar.gz"
-    with tarfile.open(archive, "w:gz") as tar:
-        tar.add(module_dir, arcname=release)
+    def normalized(info):
+        if info.issym() or info.islnk():
+            return None  # no build/source host-path symlinks in an install archive
+        info.uid = info.gid = info.mtime = 0
+        info.uname = info.gname = "root"
+        return info
+    with archive.open("wb") as raw:
+        with gzip.GzipFile(filename="", fileobj=raw, mode="wb", mtime=0, compresslevel=3) as gz:
+            with tarfile.open(fileobj=gz, mode="w|") as tar:
+                tar.add(module_dir, arcname=release, filter=normalized)
+    with tarfile.open(archive) as tar:
+        archived = {str(Path(p.name).relative_to(release)): hashlib.sha256(tar.extractfile(p).read()).hexdigest()
+                    for p in tar.getmembers() if p.isfile()}
+    if archived != modules:
+        errors.append("module archive does not contain the exact paired regular file set")
     files = [out / "Image.gz", dtb, out / "config", out / "kernel-notes.bin", archive]
     return dict(valid=not errors, errors=errors, revision=revision, profile=profile,
                 config_delta=delta, expected_config_delta=expected,
