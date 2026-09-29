@@ -1,0 +1,21 @@
+{
+  "commit": "ebf4af1c098af1179c69d6f59dcdcb756d03e21a",
+  "source_sha256": {
+    "kernel/drivers/sm5714-battery.c": "4124d11a5d183c2e3bdb53c9fe136c08a7e32d156810709964e3ffb463addff7",
+    "kernel/drivers/sm5714_usbpd.c": "a3e7a236c038518ab5b10d9014f564de98a9dd4478d3fbe6537dce0a85f583dd",
+    "kernel/drivers/sm5714-stage2.h": "5feb40eadc5b9ddc1d7c481efe5628b715c970a1f8417e8f6e8732da8220489e",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "kernel/config/gts9wifi-mainline.fragment": "bb2f91abb9d643ba82493be997db8df44b73af6aa460b3c2233f9ecfda872636"
+  },
+  "artifact_sha256": {
+    "sm8550-samsung-gts9wifi.dtb": "c6148471113c5cb7589c64dee776e17b2fc20235cfeff4482616817a8b4e1c0b",
+    "modules-sm5714-stage2.tar.gz": "28e33cda7814686ee32b480c0b0cf4f02952cdc89d19ad7af37feb47e79edf1c",
+    "kernel-notes.bin": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+    "config": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+    "Image.gz": "f1ce90a4e65a4ab1cf1179391bef2237963eb832cb1bb3be6fdbe5781e27e46c"
+  },
+  "config_sha256": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+  "protected_manifest": "reference/boot-tests/test-255-sm5714-fixed-pd/validation/protected-source-hashes.json",
+  "hardware_observation": "Test255 attempt03 bounded fixed9V/1500mA; no direct hardware acceptance",
+  "physical_commands_executed": false
+}

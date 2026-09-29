@@ -2,6 +2,21 @@
 
 ## Current state (2026-09-29)
 
+The owner now authorizes **offline X710 vendor charging audit and staged
+refactor/SM5440 development only**. Start HEAD is ebf4af1c, work branch test.
+Read docs/X710_VENDOR_CHARGING_AUDIT.md, X710_CHARGING_ARCHITECTURE.md,
+SM5440_REGISTER_AUDIT.md, SM5714_SM5440_HANDOFF.md and
+X710_CHARGING_TEST_PLAN.md, plus Test256 registration. Samsung sources under
+/home/ms/Samsung/kernel_platform are read-only evidence; Fedora snapshot is
+ab123e7d. Preserve sealed Test255 and its installed fixed5/9V limits, float,
+thermal, Test253 adbd/Test254 container gates and rollback pairs. No device
+commands, deploy/flash/reboot/modules/rootfs changes, live PPS or pump activation.
+Keep Stage3A/default fixed behavior separate from passive Stage3B/profile.
+Direct activation remains blocked by actual ADC/OCP/sensor/transaction acceptance;
+vendor aggregate protection init must not be copied blindly. Build/test/config/
+DT/protected-file checks after every commit; push origin/test, no CI/main merge.
+The earlier physical history below is retained, not new device authorization.
+
 The owner has revised the Test255 workflow to connect the existing Lenovo
 YG65G USB-C2 18W PD supply directly and inspect power/battery telemetry.
 Attempt03 registers this bounded observation without an external VBUS meter or

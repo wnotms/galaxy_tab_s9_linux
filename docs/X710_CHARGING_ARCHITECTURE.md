@@ -1,0 +1,84 @@
+# X710 mainline charging architecture
+
+Read [vendor audit](X710_VENDOR_CHARGING_AUDIT.md),
+[register audit](SM5440_REGISTER_AUDIT.md), and
+[transaction design](SM5714_SM5440_HANDOFF.md) first. This design precedes code
+changes and permits offline development only. Current Test255 remains installed.
+
+## Frozen baseline and staged outputs
+
+Baseline commit `ebf4af1c098af1179c69d6f59dcdcb756d03e21a` and its exact
+Test255 config/DTB/modules/manifests are retained. Preserve Linux7.2-rc3,
+CONFIG_HVC_DCC=n, UPower/USER_NS/container gates, SM5714/ADC5 Gen3, Test253
+userspace, CPU/GPU/Wi-Fi/USB/rootfs and cmdline. Default connector remains
+only fixed5V1800mA/9V1500mA, Sink/Device, DWC3 peripheral. A refactor build is
+a NEW unaccepted image even if config and DTB are identical.
+
+* Stage3A: cache lifetime, bounded fixed/PPS pure validation, safety helpers;
+  default runtime still rejects every APDO. No SM5440 binding or PPS request.
+* Stage3B: separately named passive profile builds the SM5440 driver and enables
+  only its existing hub3/0x63 node. Pump-off verification/ID/ADC/fault decode;
+  no PPS and no charger handoff. Preserve hub3 400kHz GPI DMA, never FIFO/PIO.
+* Stage3C: compile and host-test transaction policy with direct activation
+  unavailable. Missing actual OCP/sensor/ADC/abort acceptance blocks active use.
+* Stage3D/E: future independently registered PPS-pump-off and conservative pump
+  acceptance, then increments2/2.25/2.5/3A. Not enabled or deployed here.
+
+Use separate worktrees/build directories/artifact directories. Do not edit the
+resolved .config, overload CPU diagnostic profiles, overwrite Test255 outputs,
+or combine passive and active board changes into a default build.
+
+## Ownership
+
+```mermaid
+flowchart TD
+  TCPC[SM5714 TCPC: registers / IRQ / bounded Request gate] --> TCPM[Stock Linux TCPM: PD/PPS protocol owner]
+  TCPM --> FIX[Fixed contract / SM5714 switching charger]
+  TCPM -. future standard power_supply consumer .-> POL[Serialized direct transaction / eligibility / epochs]
+  POL -. validated hardware operations .-> PUMP[SM5440: ID / ADC / faults / OFF]
+  FIX --> PACK[Battery / mandatory IIO pack thermistor]
+  PUMP -. active enable presently unavailable .-> PACK
+```
+
+Do not replace the existing battery booleans with one enum that loses the
+independent suspended/fault/claimed/standby gates. A derived mode/snapshot can
+improve observability; a separate transaction owns direct transitions. Share
+small pure bounds/encoding/fault helpers with executable host tests. Hardware
+I/O remains in subsystem drivers, not a generic callback hierarchy.
+
+No runtime user-facing fast-charge/sysfs/module parameter is added. The passive
+power_supply is read-only. There is no raw-register debugfs write interface.
+Do not claim guessed IBAT: SM5440 has IBUS but no independently verified IBAT
+ADC; battery current comes from SM5714 gauge, and2*IBUS is an estimate only.
+
+## Lock/lifetime contract
+
+Existing nested order is TCPM port lock -> TCPC transport lock (where needed)
+-> sm5714_companion_lock -> battery chg_lock. Gauge SRAM lock is acquired
+within serialized gauge operations and must never call TCPM. No battery
+operation calls back into TCPM. IRQ receive/reset notifications queue work;
+they do not synchronously acquire the port mutex (pinned tcpm.c).
+
+Future policy worker snapshots its state under its own short mutex, releases
+it before power_supply/TCPM operations or long ADC waits, then rechecks the
+connection epoch. SM5440 io_lock is never held across negotiation/settle waits
+or calls into battery/TCPM. No cross-device locks may nest in reverse order.
+Short baseline Q4 ramp(usleep_range, at most a few ms) is preserved; new
+hundreds-of-ms waits must not extend that lock hold.
+
+Source cache and attach epoch are protected by the TCPC mutex. Init, RX-off,
+hard/soft reset, detach, fault and unbind invalidate capabilities. Reset/detach
+IRQ must invalidate before processing simultaneous stale RX. A stale worker or
+source offer cannot authorize a Request on a new connection. Unbind marks
+unavailable, stops IRQ/work, latches off and unpublishes references before free.
+Generation change is cancellation, never an instruction to restore an old
+contract or turn on switching on a new connection.
+
+## Defaults and acceptance
+
+Unknown/error/invalid ADC/temp/PM/detach => direct OFF. If OFF cannot be
+verified, do not change voltage or enable switching; record a latched fault.
+Vendor defaults with disabled hardware OCP are not silently treated as safe
+protection. Full active policy remains NOT READY pending the staged tests and
+documented sensor/OCP requirements. Offline tests/builds prove bounded code
+behavior, not battery or hardware safety. See Test256 for exact results.
