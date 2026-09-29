@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for f in /sys/class/power_supply/*/uevent; do echo \"$f\"; cat \"$f\"; done"
+  ],
+  "ended_utc": "2026-09-29T10:02:33.118809+00:00",
+  "started_utc": "2026-09-29T10:02:33.030184+00:00",
+  "status": 0
+}

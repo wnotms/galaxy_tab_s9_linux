@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "find /usr/lib/modules/.gts9-test254-original/ -type f -exec sha256sum {} +"
+  ],
+  "ended_utc": "2026-09-29T10:02:30.161523+00:00",
+  "started_utc": "2026-09-29T10:02:27.731568+00:00",
+  "status": 0
+}

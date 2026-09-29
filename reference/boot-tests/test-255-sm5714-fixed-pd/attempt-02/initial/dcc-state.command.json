@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; if systemctl is-active --quiet serial-getty@hvc0.service; then exit 1; fi; echo DCC-absent"
+  ],
+  "ended_utc": "2026-09-29T10:02:22.793154+00:00",
+  "started_utc": "2026-09-29T10:02:22.662358+00:00",
+  "status": 0
+}
