@@ -1,0 +1,25 @@
+{
+  "wifi_argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.37",
+    "scripts/gts9-ssh.sh",
+    "set -e; cat /proc/sys/kernel/random/boot_id; printf \"usb_online=\"; cat /sys/class/power_supply/sm5714-usb/online; printf \"power_role=\"; cat /sys/class/typec/port0/power_role; printf \"data_role=\"; cat /sys/class/typec/port0/data_role; printf \"temp=\"; cat /sys/class/power_supply/sm5714-battery/temp; cat /proc/uptime"
+  ],
+  "adb_argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ncm_argv": [
+    "scripts/gts9-ssh.sh",
+    "cat /proc/sys/kernel/random/boot_id"
+  ],
+  "windows_pnp_argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match \"VID_0525|VID_0000&PID_0002\" } | Select-Object Status,FriendlyName,InstanceId | ConvertTo-Json -Compress"
+  ]
+}
