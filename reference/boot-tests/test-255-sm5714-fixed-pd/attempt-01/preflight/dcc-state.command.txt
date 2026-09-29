@@ -1,0 +1,1 @@
+timeout 15s env GTS9_DEVICE=10.191.121.241 /home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh zcat\ /proc/config.gz\ \|\ grep\ -E\ \"\^\(#\ CONFIG_HVC_DCC\ is\ not\ set\|CONFIG_HVC_DCC=\)\"\;\ test\ \!\ -e\ /dev/hvc0\;\ test\ \!\ -e\ /sys/class/tty/hvc0\;\ systemctl\ is-active\ serial-getty@hvc0.service\ \|\|\ true 

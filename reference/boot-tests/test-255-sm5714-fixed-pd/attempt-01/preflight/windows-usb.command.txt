@@ -1,0 +1,1 @@
+timeout 25s /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -Command Get-PnpDevice\ -PresentOnly\ \|\ Where-Object\ \{\ \$_.InstanceId\ -match\ \"VID_0525\|VID_0000\&PID_0002\"\ \}\ \|\ Select-Object\ Status\,FriendlyName\,InstanceId\ \|\ ConvertTo-Json\ -Compress 
