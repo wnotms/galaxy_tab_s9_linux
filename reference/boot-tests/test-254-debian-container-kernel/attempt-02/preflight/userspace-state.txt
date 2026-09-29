@@ -1,0 +1,35 @@
+PID=828
+/usr/local/libexec/gts9-adbd-reconnect
+053348e27a1e6b5b70940abd9cf7054225c802d4d9ce6681eb4c3b22cd85c7f5  /proc/828/exe
+d2e840b5ef9723cde15da7a889a79d0700a5d54aabd54873c8b602694a0dedc3  /usr/libexec/gts9-adbd-run
+52e80912b62c06a5677f8a7da1ea3a19b65b7627f306c9c66a9b934ba48a499b  /usr/lib/systemd/system/gts9-adbd.service
+053348e27a1e6b5b70940abd9cf7054225c802d4d9ce6681eb4c3b22cd85c7f5  /usr/local/libexec/gts9-adbd-reconnect
+# /usr/lib/systemd/system/gts9-adbd.service
+[Unit]
+Description=Android Debug Bridge daemon (gts9 fast debug channel)
+Documentation=file:/usr/share/doc/adbd/README.adbd
+After=local-fs.target gts9-usb-adb-prepare.service
+Wants=gts9-usb-adb-prepare.service
+
+# A UDC binds one gadget at a time. Do not use Debian's adbd-usb-gadget:
+# it creates a competing g1 gadget. Our prepare unit mounts FunctionFS inside
+# gts9, and gts9-usb-acm waits for descriptors before binding NCM plus ADB.
+# Type=simple deliberately allows NCM fallback if USB readiness never arrives.
+# Do not order this after network.target or gts9-usb-acm (dependency cycle).
+# There is no ExecStopPost that unbinds the shared network gadget.
+#
+# adbd logs "Failed to get adbd socket" and "socket unavailable, disabling user
+# prompts" on a non-Android system.  Both are expected: there is no Android
+# framework to ask, so no key prompt is ever shown.  It is not an error.
+
+[Service]
+Type=simple
+# Keep TCP ADB available even when USB endpoints exist.
+Environment=ADBD_PORT=5555
+ExecCondition=/usr/libexec/gts9-adbd-can-start
+ExecStart=/usr/libexec/gts9-adbd-run
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

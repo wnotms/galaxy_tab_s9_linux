@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "sha256sum /sys/kernel/notes; zcat /proc/config.gz | sha256sum; sha256sum /dev/disk/by-partlabel/boot; systemctl --failed --no-legend --plain; pid=$(systemctl show -p MainPID --value gts9-adbd.service); sha256sum /proc/$pid/exe; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-09-29T00:41:41.726959+00:00",
+  "started_utc": "2026-09-29T00:41:38.655364+00:00",
+  "status": 255
+}

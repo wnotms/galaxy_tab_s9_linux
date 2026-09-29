@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ip -br addr; for f in /sys/class/udc/*/state; do echo \"$f\"; cat \"$f\"; done; systemctl show gts9-adbd.service -p MainPID -p NRestarts -p ActiveState; cat /sys/class/power_supply/sm5714-battery/uevent; cat /sys/class/power_supply/sm5714-usb/uevent"
+  ],
+  "ended_utc": "2026-09-29T00:42:41.970593+00:00",
+  "started_utc": "2026-09-29T00:42:41.839979+00:00",
+  "status": 0
+}

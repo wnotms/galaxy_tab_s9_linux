@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.167",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "find /usr/lib/modules -maxdepth 1 -type d -print; find /usr/lib/modules/7.2.0-rc3-gts9wifi-dirty -type l -exec ls -l {} +"
+  ],
+  "ended_utc": "2026-09-29T00:44:00.542349+00:00",
+  "started_utc": "2026-09-29T00:44:00.141336+00:00",
+  "status": 0
+}

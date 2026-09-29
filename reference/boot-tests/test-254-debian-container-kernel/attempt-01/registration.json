@@ -1,0 +1,58 @@
+{
+  "attempt": 1,
+  "candidate_boot_sha256": "ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7",
+  "candidate_config_sha256": "c80d3c661cca3588fc85c93ba3402356bd99b7e4fe85674773230914fb8e6b71",
+  "candidate_notes_sha256": "7bbb0dc382d4b89b2d6c5b79c1f02805ef0afc8459fe6b48a423d9f26744332b",
+  "docker_backend": "default iptables with Debian iptables-nft",
+  "hardware_settings_changes": false,
+  "images": [
+    "hello-world",
+    "debian:trixie-slim",
+    "nginx:alpine",
+    "alpine"
+  ],
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "module_file_count": 181,
+  "original_partitions": {
+    "boot": "5402b7c45c06568591a86cce807af0820fddb23c03a1d9a49cec780dd7e45ec0",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9"
+  },
+  "owner_authorization": "\u5237\u5165\u6d4b\u8bd5",
+  "package_install_no_recommends": true,
+  "partitions_to_preserve": [
+    "vendor_boot",
+    "init_boot",
+    "dtbo",
+    "vbmeta"
+  ],
+  "partitions_to_write": [
+    "boot"
+  ],
+  "physical_usb_cycles": 1,
+  "planned_debian_packages": [
+    "docker.io",
+    "iptables",
+    "curl",
+    "uidmap",
+    "ipvsadm"
+  ],
+  "preflight_boot_id": "461c1408e42643afae5b48162771d077",
+  "preflight_transport_pending": true,
+  "purpose": "Deploy the sealed config-only candidate; verify UPower and bounded OCI/container prerequisites without hardware/USB/adbd changes",
+  "repository_base": "3d8b8e093eb39b615109bfe090c5cf418da6ba7c",
+  "responsive_observation_seconds": 150,
+  "rollback_boot_sha256": "5402b7c45c06568591a86cce807af0820fddb23c03a1d9a49cec780dd7e45ec0",
+  "rollback_config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "rollback_directory": "/usr/lib/modules/.gts9-test254-original",
+  "stage2_or_stage3": false,
+  "stop_on_first_non_clean": true,
+  "systemd_upower_workaround": false,
+  "test": "Test254 Debian userspace/container kernel feature enablement",
+  "usb_adbd_changes": false,
+  "usb_offline_seconds": 20,
+  "usb_post_recovery_observation_seconds": 150,
+  "usb_recovery_seconds": 60
+}

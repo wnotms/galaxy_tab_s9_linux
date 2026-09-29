@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "env",
+    "KERNEL_OUT_DIR=/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-container-candidate",
+    "MKBOOTIMG=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/mkbootimg.py",
+    "AVBTOOL=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+    "scripts/build-boot-bundle.sh",
+    "--initramfs",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/input/ramdisk",
+    "--cmdline",
+    "boot/cmdline.example.txt",
+    "--bootconfig",
+    "boot/bootconfig.example.txt",
+    "--out",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate"
+  ],
+  "ended_utc": "2026-09-29T00:36:03.335440+00:00",
+  "started_utc": "2026-09-29T00:36:01.309238+00:00",
+  "status": 0
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Continue'; [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false); Get-PnpDevice -PresentOnly | Where-Object {$_.InstanceId -match 'VID_0000&PID_0002|VID_0525'} | ForEach-Object { $_ | Format-List *; Get-PnpDeviceProperty -InstanceId $_.InstanceId | Where-Object {$_.KeyName -match 'Problem|Parent|Location|Container|BusReported|LastArrival|LastRemoval|HardwareIds'} | Format-List KeyName,Data }; Get-NetAdapter -IncludeHidden | Where-Object {$_.InterfaceDescription -match 'NCM|USB'} | Format-List Name,Status,InterfaceDescription,PnPDeviceID"
+  ],
+  "ended_utc": "2026-09-29T00:41:16.331446+00:00",
+  "started_utc": "2026-09-29T00:40:56.959360+00:00",
+  "status": 0
+}

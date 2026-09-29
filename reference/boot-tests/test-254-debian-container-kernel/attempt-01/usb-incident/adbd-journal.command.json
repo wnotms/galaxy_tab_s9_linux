@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "journalctl -b -u gts9-adbd.service -u gts9-usb-acm.service -u gts9-usb-adb-prepare.service -u gts9-usb-adb-hold.service --no-pager -o short-monotonic"
+  ],
+  "ended_utc": "2026-09-29T00:41:35.583175+00:00",
+  "started_utc": "2026-09-29T00:41:32.511330+00:00",
+  "status": 255
+}

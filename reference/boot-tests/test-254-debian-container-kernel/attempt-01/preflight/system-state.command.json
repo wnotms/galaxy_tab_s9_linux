@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.29",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "getent passwd 1000; ip -br addr; ip route; df -h /; systemctl show upower.service -p PrivateUsers -p ActiveState -p Result; command -v docker || true; dpkg-query -W docker.io docker-ce containerd iptables nftables uidmap upower 2>/dev/null; true"
+  ],
+  "ended_utc": "2026-09-29T00:37:29.452714+00:00",
+  "started_utc": "2026-09-29T00:37:29.099876+00:00",
+  "status": 0
+}

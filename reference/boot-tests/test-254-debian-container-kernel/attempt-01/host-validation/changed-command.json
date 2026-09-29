@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "bash",
+    "scripts/check-stall-offline.sh",
+    "--changed",
+    "--base",
+    "HEAD~1"
+  ],
+  "exit_status": 0,
+  "elapsed_seconds": 98.87249290599993,
+  "host_no_argument_sync": "real syncfs repo ext4 and /tmp tmpfs; no device use"
+}

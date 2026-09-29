@@ -1,0 +1,55 @@
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+dummy0           DOWN           
+ifb0             DOWN           
+ifb1             DOWN           
+tunl0@NONE       DOWN           
+gre0@NONE        DOWN           
+gretap0@NONE     DOWN           
+erspan0@NONE     DOWN           
+ip_vti0@NONE     DOWN           
+ip6_vti0@NONE    DOWN           
+sit0@NONE        DOWN           
+ip6tnl0@NONE     DOWN           
+ip6gre0@NONE     DOWN           
+usb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 
+wlp1s0           UP             10.191.121.167/24 2409:8931:b066:997:508f:ed4f:c75f:68e4/64 fe80::d1c5:7130:e42a:3842/64 
+/sys/class/udc/a600000.usb/state
+configured
+/sys/class/udc/dummy_udc.0/state
+not attached
+MainPID=828
+NRestarts=0
+ActiveState=active
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=4066000
+POWER_SUPPLY_VOLTAGE_AVG=4067000
+POWER_SUPPLY_VOLTAGE_OCV=4081000
+POWER_SUPPLY_CURRENT_NOW=-118000
+POWER_SUPPLY_CURRENT_AVG=-230000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=71
+POWER_SUPPLY_TEMP=296
+POWER_SUPPLY_TYPE=Battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP

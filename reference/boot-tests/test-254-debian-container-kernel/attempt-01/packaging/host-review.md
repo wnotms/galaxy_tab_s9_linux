@@ -1,0 +1,3 @@
+Initial host observer rejected healthy Bluetooth because a connected hci0:1 child was counted as a controller. Raw evidence is preserved in preflight-observer-rejected. New capture counts only physical hciN controller names; hci0 power/services/address gates remain required. No device setting changed.
+
+Module deployment archive is repacked from manifest-listed regular files under release/, excluding original host build/source symlinks. Original sealed build archive uses lib/modules/release/ and remains unchanged. Every repacked payload is rehashed; full offline install/restore is rehearsed before deployment.

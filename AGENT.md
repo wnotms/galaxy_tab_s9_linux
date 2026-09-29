@@ -2,6 +2,20 @@
 
 ## Current state (2026-09-29)
 
+The owner subsequently authorized **“刷入测试”**. Test254 attempt01 stopped
+before any device write on initial Windows Code43/absent rescue transports;
+its result and raw evidence remain immutable. The owner confirmed a manual
+ordinary reboot and computer USB attachment. Fresh attempt02 preflight on
+64716d74b79844ac859b8d25e9b7f318 now passes exact Test252 config/notes/five
+partitions/181+181 files, protected Test253 userspace and ADB/source-bound NCM/
+Wi-Fi SSH with no Code43/fault/failed unit. Wi-Fi is10.191.121.167.
+Candidate boot is packaged/validated; exact Test252 boot/module rollback is
+prepared. Read `reference/boot-tests/test-254-debian-container-kernel/attempt-02/`.
+Commit/push registration before TWRP boot-only+paired-module deployment. No
+agent flash/reboot has occurred yet. Necessary bounded Docker package/image
+acceptance is registered; preserve hardware/USB/adbd and Stage2/3 exclusions.
+The sealed original Test254 offline records below remain unchanged.
+
 The owner authorized offline UPower/OCI kernel configuration enablement only.
 Test254 is a separate **unflashed candidate and future acceptance plan** under
 `reference/boot-tests/test-254-debian-container-kernel/`; read its BUILD_RESULTS
