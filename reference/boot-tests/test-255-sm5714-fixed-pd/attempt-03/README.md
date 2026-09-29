@@ -67,3 +67,16 @@ This is a battery/contract telemetry test with declared measurement limits,
 not full original Test255 independent-voltage acceptance or a universal
 hardware safety proof. Existing rollback remains available; no automatic
 rollback is commanded by this attempt.
+
+## PC recovery implementation detail
+
+The read-only recovery capture uses Test253 pure CableCycle/FunctionFS parsing,
+not its old production baseline runtime gates. Fresh offline observations precede
+attachment. Require nativeUSB+NCM authenticated same-boot shell and source-bound
+Windows banner<=60s, counting from the START of the last offline command.
+Preserve all initial transport failures and reject Code43/identity/kernel faults.
+Use the already accepted exact Test253 pre-enable DISABLE classification only:
+at most one warning from the unchanged daemon/hash, same monitor TID spawn and
+DISABLE within1s, ENABLE<=5s and worker<=1s, source time bounded by this fresh
+transition. Other/duplicate/incomplete warnings stop. Follow recovery with an
+independent150s stable PC window. No host/device service restart or workaround.

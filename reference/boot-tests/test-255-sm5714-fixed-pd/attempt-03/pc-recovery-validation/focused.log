@@ -1,0 +1,39 @@
+test_actual_cycle01_full_journal_replay (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_actual_cycle01_full_journal_replay) ... ok
+test_bounded_warning_requires_explicit_opt_in (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_bounded_warning_requires_explicit_opt_in) ... ok
+test_changed_daemon_hash_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_daemon_hash_stops) ... ok
+test_changed_daemon_pid_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_daemon_pid_stops) ... ok
+test_changed_journal_boot_or_pid_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_journal_boot_or_pid_stops) ... ok
+test_changed_native_boot_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_native_boot_stops) ... ok
+test_changed_udc_binding_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_udc_binding_stops) ... ok
+test_changed_wifi_boot_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_changed_wifi_boot_stops) ... ok
+test_configured_udc_with_offline_supply_and_absent_host_is_unplug (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_configured_udc_with_offline_supply_and_absent_host_is_unplug) ... ok
+test_empty_or_malformed_journal_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_empty_or_malformed_journal_stops) ... ok
+test_error_at_info_journal_priority_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_error_at_info_journal_priority_stops) ... ok
+test_exact_warning_with_monitor_disable_enable_worker_is_bounded (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_exact_warning_with_monitor_disable_enable_worker_is_bounded) ... ok
+test_host_absence_with_online_supply_does_not_prove_unplug (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_host_absence_with_online_supply_does_not_prove_unplug) ... ok
+test_missing_ncm_boot_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_missing_ncm_boot_stops) ... ok
+test_non_monotonic_host_bounds_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_non_monotonic_host_bounds_stops) ... ok
+test_observation_is_elapsed_after_recovery (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_observation_is_elapsed_after_recovery) ... ok
+test_observation_without_recovery_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_observation_without_recovery_stops) ... ok
+test_offline_supply_with_host_still_present_does_not_prove_unplug (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_offline_supply_with_host_still_present_does_not_prove_unplug) ... ok
+test_other_warning_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_other_warning_stops) ... ok
+test_recovery_over60_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_recovery_over60_stops) ... ok
+test_recovery_uses_last_off_command_start_without_fake_delay (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_recovery_uses_last_off_command_start_without_fake_delay) ... ok
+test_repeat_warning_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_repeat_warning_stops) ... ok
+test_return_detected_before_native_transport_returns (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_return_detected_before_native_transport_returns) ... ok
+test_short_unplug_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_short_unplug_stops) ... ok
+test_warning_enable_after5s_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_warning_enable_after5s_stops) ... ok
+test_warning_outside_observed_physical_transition_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_warning_outside_observed_physical_transition_stops) ... ok
+test_warning_without_enable_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_warning_without_enable_stops) ... ok
+test_warning_without_matching_monitor_context_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_warning_without_matching_monitor_context_stops) ... ok
+test_warning_without_worker_stops (test_adbd_cable_evidence.AdbdCableEvidenceTests.test_warning_without_worker_stops) ... ok
+test_actual_snapshot_records_configured_offline (test_adbd_cable_evidence.AdbdCableRunnerTests.test_actual_snapshot_records_configured_offline) ... ok
+test_first_wifi_identity_failure_stops_before_recovery (test_adbd_cable_evidence.AdbdCableRunnerTests.test_first_wifi_identity_failure_stops_before_recovery) ... READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+ok
+test_incomplete_snapshot_and_shell_are_not_success (test_adbd_cable_evidence.AdbdCableRunnerTests.test_incomplete_snapshot_and_shell_are_not_success) ... ok
+test_proposed_registration_blocks_before_device_access (test_adbd_cable_evidence.AdbdCableRunnerTests.test_proposed_registration_blocks_before_device_access) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.012s
+
+OK
