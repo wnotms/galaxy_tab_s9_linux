@@ -20,6 +20,7 @@
 #include <linux/workqueue.h>
 
 #include "sm5714-stage2.h"
+#include "sm5714-pd-policy.h"
 
 /* Samsung sm5714_typec.h register map and interrupt bit definitions. */
 #define SM5714_REG_INT1		0x01
@@ -69,6 +70,7 @@ struct sm5714_usbpd {
 	struct delayed_work cc_resync_work;
 	u32 source_pdos[PD_MAX_PAYLOAD];
 	unsigned int nr_source_pdos;
+	u64 source_generation;
 	int irq;
 	bool fault;
 	bool removing;
@@ -86,13 +88,32 @@ static struct sm5714_usbpd *tcpc_to_sm5714(struct tcpc_dev *tcpc)
 	return container_of(tcpc, struct sm5714_usbpd, tcpc);
 }
 
+/* Transport lock protects both the cache and its lifetime. No old offer may
+ * authorize a Request after reset, fault, detach, or a new source publication.
+ */
+static void sm5714_forget_source(struct sm5714_usbpd *sm)
+{
+	lockdep_assert_held(&sm->lock);
+	memset(sm->source_pdos, 0, sizeof(sm->source_pdos));
+	sm->nr_source_pdos = 0;
+	sm->source_generation++;
+}
+
 /* No bus retry/reset loop: first transport failure latches charger off. */
 static int sm5714_result(struct sm5714_usbpd *sm, int ret)
 {
-	if (ret < 0 && !READ_ONCE(sm->fault)) {
-		WRITE_ONCE(sm->fault, true);
-		sm5714_battery_typec_fault();
-		dev_err(sm->dev, "TCPC fault %d; switching charge inhibited\n", ret);
+	bool first;
+
+	if (ret < 0) {
+		mutex_lock(&sm->lock);
+		first = !sm->fault;
+		sm->fault = true;
+		sm5714_forget_source(sm);
+		mutex_unlock(&sm->lock);
+		if (first) {
+			sm5714_battery_typec_fault();
+			dev_err(sm->dev, "TCPC fault %d; switching charge inhibited\n", ret);
+		}
 	}
 	return ret;
 }
@@ -109,6 +130,7 @@ static int sm5714_usbpd_init(struct tcpc_dev *tcpc)
 	if (READ_ONCE(sm->fault))
 		return -EIO;
 	mutex_lock(&sm->lock);
+	sm5714_forget_source(sm);
 	/* Fedora/Samsung normal (non water-detection) CORR initialization. */
 	ret = regmap_write(sm->regmap, SM5714_REG_CORR_CNTL5, 0x00);
 	if (!ret)
@@ -204,7 +226,7 @@ static int sm5714_usbpd_set_cc(struct tcpc_dev *tcpc, enum typec_cc_status cc)
 	mutex_lock(&sm->lock);
 	/* Samsung force-detach=0x88, force UFP=0x45/0x82; no Rp writes. */
 	if (cc == TYPEC_CC_OPEN) {
-		sm->nr_source_pdos = 0;
+		sm5714_forget_source(sm);
 		ret = regmap_write(sm->regmap, SM5714_REG_CC_CNTL3, 0x88);
 	} else {
 		ret = regmap_update_bits(sm->regmap, SM5714_REG_CC_CNTL1,
@@ -268,12 +290,17 @@ static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
 static int sm5714_usbpd_set_pd_rx(struct tcpc_dev *tcpc, bool on)
 {
 	struct sm5714_usbpd *sm = tcpc_to_sm5714(tcpc);
+	int ret;
 
 	if (READ_ONCE(sm->fault))
 		return -EIO;
 	/* Samsung set_pd_control(): ordinary SOP receive=0x08, off=0x00. */
-	return sm5714_result(sm, regmap_write(sm->regmap,
-					    SM5714_REG_PD_CNTL1, on ? 0x08 : 0x00));
+	mutex_lock(&sm->lock);
+	if (!on)
+		sm5714_forget_source(sm);
+	ret = regmap_write(sm->regmap, SM5714_REG_PD_CNTL1, on ? 0x08 : 0x00);
+	mutex_unlock(&sm->lock);
+	return sm5714_result(sm, ret);
 }
 
 static int sm5714_usbpd_set_roles(struct tcpc_dev *tcpc, bool attached,
@@ -293,25 +320,10 @@ static int sm5714_usbpd_set_roles(struct tcpc_dev *tcpc, bool attached,
 /* Guard the actual Request frame without choosing a PDO or changing policy. */
 static bool sm5714_request_allowed(struct sm5714_usbpd *sm, u32 rdo)
 {
-	unsigned int index = rdo_index(rdo), mv, limit, sink_limit;
-	u32 pdo;
-
-	if (!index || index > sm->nr_source_pdos)
-		return false;
-	pdo = sm->source_pdos[index - 1];
-	if (pdo_type(pdo) != PDO_TYPE_FIXED)
-		return false;
-	mv = pdo_fixed_voltage(pdo);
-	if (mv != 5000 && mv != 9000)
-		return false;
-	sink_limit = mv == 9000 ? 1500U : 1800U;
-	limit = min(pdo_max_current(pdo), sink_limit);
-	/* TCPM's CAP_MISMATCH may describe a desired max above the source offer;
-	 * the operating current still cannot exceed that offer or our sink cap.
-	 * See stock tcpm_pd_build_request(): this is not permission to draw max.
+	/* PPS validator is host-tested separately. Until a reviewed live handoff
+	 * gate exists the actual transport accepts fixed offers only.
 	 */
-	return rdo_op_current(rdo) <= limit && rdo_max_current(rdo) <= sink_limit &&
-		((rdo & RDO_CAP_MISMATCH) || rdo_max_current(rdo) <= limit);
+	return sm5714_validate_request(sm->source_pdos, sm->nr_source_pdos, rdo, false);
 }
 
 static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
@@ -329,7 +341,7 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
 	mutex_lock(&sm->lock);
 	if (type == TCPC_TX_HARD_RESET) {
 		/* Samsung hard_reset(): PD_CNTL4 bit2; IRQ HCRST_DONE completes TX. */
-		sm->nr_source_pdos = 0;
+		sm5714_forget_source(sm);
 		ret = regmap_update_bits(sm->regmap, SM5714_REG_PD_CNTL4, BIT(2), BIT(2));
 		goto out;
 	}
@@ -338,6 +350,15 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
 		goto out;
 	}
 	count = pd_header_cnt_le(msg->header);
+	/* This driver has no extended-message transport or EPR implementation.
+	 * Type2/count0 is Get_Source_Cap control, not a malformed Request.
+	 */
+	if (le16_to_cpu(msg->header) & PD_HEADER_EXT_HDR) {
+		ret = -EOPNOTSUPP;
+		goto out;
+	}
+	if (!count && pd_header_type_le(msg->header) == PD_CTRL_SOFT_RESET)
+		sm5714_forget_source(sm);
 	if (pd_header_type_le(msg->header) == PD_DATA_REQUEST && count &&
 	    (count != 1 || !sm5714_request_allowed(sm, le32_to_cpu(msg->payload[0])))) {
 		ret = -ERANGE;
@@ -379,7 +400,11 @@ static int sm5714_usbpd_receive(struct sm5714_usbpd *sm)
 		goto acknowledge;
 	/* Samsung RX_SRC low nibble0=SOP; no cable/alternate-mode transport. */
 	if (!(origin & 0x0f)) {
-		if (count && pd_header_type_le(msg.header) == PD_DATA_SOURCE_CAP) {
+		if (!count && pd_header_type_le(msg.header) == PD_CTRL_SOFT_RESET)
+			sm5714_forget_source(sm);
+		if (count && !(le16_to_cpu(msg.header) & PD_HEADER_EXT_HDR) &&
+		    pd_header_type_le(msg.header) == PD_DATA_SOURCE_CAP) {
+			sm5714_forget_source(sm);
 			sm->nr_source_pdos = count;
 			for (i = 0; i < count; i++)
 				sm->source_pdos[i] = le32_to_cpu(msg.payload[i]);
@@ -402,8 +427,19 @@ static irqreturn_t sm5714_usbpd_irq(int irq, void *data)
 		return IRQ_HANDLED;
 	mutex_lock(&sm->lock);
 	ret = regmap_bulk_read(sm->regmap, SM5714_REG_INT1, intr, sizeof(intr));
-	if (!ret && (intr[3] & SM5714_RX_DONE))
-		ret = sm5714_usbpd_receive(sm);
+	if (!ret && (intr[0] & (SM5714_ATTACH | SM5714_DETACH) ||
+		     intr[3] & (SM5714_HRST_RX | SM5714_HRST_DONE)))
+		sm5714_forget_source(sm);
+	if (!ret && (intr[3] & SM5714_RX_DONE)) {
+		/* Detach/reset may share an IRQ with a buffered old frame. Drain it
+		 * without publishing capabilities or delivering it to the new epoch.
+		 */
+		if (intr[0] & SM5714_DETACH ||
+		    intr[3] & (SM5714_HRST_RX | SM5714_HRST_DONE))
+			ret = regmap_write(sm->regmap, SM5714_REG_RX_BUF, 0x80);
+		else
+			ret = sm5714_usbpd_receive(sm);
+	}
 	if (!ret) {
 		/* Hard-reset completion is also a TX completion, not a timeout. */
 		if (intr[3] & SM5714_TX_ERR)
@@ -413,11 +449,8 @@ static irqreturn_t sm5714_usbpd_irq(int irq, void *data)
 		else if (intr[3] & (SM5714_TX_DONE | SM5714_HRST_DONE))
 			tcpm_pd_transmit_complete(sm->port, TCPC_TX_SUCCESS);
 		if (intr[3] & SM5714_HRST_RX) {
-			sm->nr_source_pdos = 0;
 			tcpm_pd_hard_reset(sm->port);
 		}
-		if (intr[0] & SM5714_DETACH)
-			sm->nr_source_pdos = 0;
 	}
 	mutex_unlock(&sm->lock);
 	if (ret) {
@@ -526,6 +559,9 @@ static void sm5714_usbpd_remove(struct i2c_client *client)
 	disable_irq(client->irq);
 	cancel_delayed_work_sync(&sm->cc_resync_work);
 	WRITE_ONCE(sm->fault, true);
+	mutex_lock(&sm->lock);
+	sm5714_forget_source(sm);
+	mutex_unlock(&sm->lock);
 	sm5714_battery_typec_fault();
 	tcpm_unregister_port(sm->port);
 	fwnode_handle_put(sm->connector);
@@ -539,6 +575,9 @@ static void sm5714_usbpd_shutdown(struct i2c_client *client)
 	disable_irq(client->irq);
 	cancel_delayed_work_sync(&sm->cc_resync_work);
 	WRITE_ONCE(sm->fault, true);
+	mutex_lock(&sm->lock);
+	sm5714_forget_source(sm);
+	mutex_unlock(&sm->lock);
 	sm5714_battery_typec_fault();
 	/* Stop TCPM timers/worker before the I2C controllers shut down. */
 	tcpm_unregister_port(sm->port);

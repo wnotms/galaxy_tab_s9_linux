@@ -91,7 +91,7 @@ Test252/255 evidence. `[BRINGUP_LIMIT]` is deliberately conservative policy.
 | Fault recovery | status/IRQ/errors, UVLO2s retry, software OCP | fail/fallback/backoff | SM5714 first TCPC fault latched; no pump | HARDWARE FACT + BOARD POLICY |
 | Suspend/resume | vendor wakelocks and subsystem PM | worker shutdown/fallback | Q4 stopped on suspend, re-evaluate resume | MAINLINE FRAMEWORK; preserved |
 | SOC | direct end default95%; UI/store policies | >=5 and <90% | no direct SOC gate | BOARD POLICY, conservative future >=5,<80 |
-| VBAT | manager minimum3500mV; pump algorithm minimum3300mV | >=3500,<4350mV | float4440mV, no pump | BOARD POLICY; future3500..4300 |
+| VBAT | manager X710 DT3400mV (generic default3500); pump algorithm3300mV | >=3500,<4350mV | float4440mV, no pump | BOARD POLICY; future3500..4300 |
 | Pack direct temperature | X710 manager >180 and <420 deci°C | >=100,<420 | no direct charging | BOARD POLICY; future200..380 |
 | Termination/recharge | topoff current/timer, autostop, votes | simpler ordinary path | respect FULL; inherited timer/topoff not reprogrammed | NOT PORTED; preserve baseline |
 | Cable compensation | X710 r_ttl320000uohm; initial+200mV | 320mohm/+200mV | absent | BOARD POLICY; [VENDOR], not measured cable resistance |

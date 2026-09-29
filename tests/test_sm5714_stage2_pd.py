@@ -268,12 +268,16 @@ typedef uint32_t u32;
 #define min(x,y) ((x)<(y)?(x):(y))
 #define mutex_lock(x) ((void)(x))
 #define mutex_unlock(x) ((void)(x))
+#define lockdep_assert_held(x) ((void)(x))
 #define dev_info(...) ((void)0)
 #define dev_err(...) ((void)0)
 #define le32_to_cpu(x) (x)
+#define le16_to_cpu(x) (x)
 #define PD_MAX_PAYLOAD 7
 #define PD_DATA_REQUEST 2
 #define PD_DATA_SOURCE_CAP 1
+#define PD_CTRL_SOFT_RESET 13
+#define PD_HEADER_EXT_HDR (1U<<15)
 #define RDO_CAP_MISMATCH (1U<<26)
 #define PDO_TYPE_FIXED 0
 enum typec_cc_status { TYPEC_CC_OPEN, TYPEC_CC_RA, TYPEC_CC_RD,
@@ -288,7 +292,8 @@ struct pd_message { uint16_t header; u32 payload[7]; };
 struct sm5714_usbpd;
 struct tcpc_dev { struct sm5714_usbpd *owner; };
 struct sm5714_usbpd { int dev, lock; void *regmap, *port; struct tcpc_dev tcpc;
- u32 source_pdos[7]; unsigned int nr_source_pdos; bool fault, removing; };
+ u32 source_pdos[7]; unsigned int nr_source_pdos;
+ unsigned long long source_generation; bool fault, removing; };
 static unsigned char regs[256];
 static int calls, failure, disabled, charge_stops, rx_count, tx_status=-1;
 static unsigned int budget_mv, budget_ma;
@@ -329,7 +334,9 @@ typedef int irqreturn_t;
 #define IRQ_HANDLED 1
 '''
         code += "\n".join(line for line in src.splitlines() if line.startswith("#define SM5714_"))
-        names = ["static int sm5714_result(", "static int sm5714_usbpd_init(",
+        code += '\n#include "' + str(ROOT / 'kernel/drivers/sm5714-pd-policy.h') + '"\n'
+        names = ["static void sm5714_forget_source(",
+                 "static int sm5714_result(", "static int sm5714_usbpd_init(",
                  "static int sm5714_usbpd_get_vbus(", "static int sm5714_usbpd_get_current_limit(",
                  "static int sm5714_usbpd_get_cc(", "static int sm5714_usbpd_set_cc(",
                  "static int sm5714_usbpd_set_polarity(", "static int sm5714_usbpd_set_vconn(",
@@ -374,9 +381,35 @@ int main(int argc, char **argv) {
    u32 rdo=(1U<<28)|(50U<<10)|180U|(v?RDO_CAP_MISMATCH:0);
    r=sm5714_request_allowed(&sm,rdo);
  }
- printf("%d %u %u %u %u %u %u %d %d %d %d %d %u %u\n",r,a,b,regs[0x29],
+ if(op==16){
+   sm.nr_source_pdos=1;sm.source_pdos[0]=(180U<<10)|150;
+   if(v==0)r=sm5714_usbpd_init(&sm.tcpc);
+   if(v==1)r=sm5714_usbpd_set_cc(&sm.tcpc,TYPEC_CC_OPEN);
+   if(v==2)r=sm5714_usbpd_set_pd_rx(&sm.tcpc,false);
+   if(v==3)r=sm5714_usbpd_transmit(&sm.tcpc,TCPC_TX_HARD_RESET,NULL,0);
+   if(v==4)r=sm5714_result(&sm,-EIO);
+   if(v==5){struct pd_message m={.header=13};r=sm5714_usbpd_transmit(&sm.tcpc,TCPC_TX_SOP,&m,0);}
+   if(v==6){regs[0x42]=13;r=sm5714_usbpd_receive(&sm);}
+   if(v==7){regs[1]=16;r=sm5714_usbpd_irq(1,&sm);}
+   if(v==8){regs[1]=8;r=sm5714_usbpd_irq(1,&sm);}
+   if(v==9){regs[4]=32;r=sm5714_usbpd_irq(1,&sm);}
+   if(v==10){regs[4]=64;r=sm5714_usbpd_irq(1,&sm);}
+ }
+ if(op==17){
+   sm.nr_source_pdos=1;sm.source_pdos[0]=(180U<<10)|150;
+   regs[0x42]=1;regs[0x43]=16;regs[4]=1;
+   if(v==0)regs[1]=16;
+   if(v==1)regs[4]|=32;
+   if(v==2)regs[4]|=64;
+   r=sm5714_usbpd_irq(1,&sm);
+ }
+ if(op==18){struct pd_message m={.header=0x9002,.payload={(1U<<28)|(180U<<10)|180}};
+   sm.nr_source_pdos=1;sm.source_pdos[0]=(100U<<10)|300;
+   r=sm5714_usbpd_transmit(&sm.tcpc,TCPC_TX_SOP,&m,0);
+ }
+ printf("%d %u %u %u %u %u %u %d %d %d %d %d %u %u %u %llu %u\n",r,a,b,regs[0x29],
  regs[0x2b],regs[0x39],regs[0x3b],sm.fault,charge_stops,rx_count,tx_status,disabled,
- budget_mv,budget_ma);
+ budget_mv,budget_ma,sm.nr_source_pdos,sm.source_generation,sm.source_pdos[0]);
  return 0;
 }
 '''

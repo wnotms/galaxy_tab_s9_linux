@@ -197,6 +197,7 @@ shopt -u nullglob
 
 install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/usb/typec/tcpm/"
+install -m 0644 "$driver_src/sm5714-pd-policy.h" "$tree/drivers/usb/typec/tcpm/"
 
 # Samsung's vendor Pogo import is retained for source comparison only. It is
 # not part of the default X710 build; opt in explicitly for a manual A/B.
