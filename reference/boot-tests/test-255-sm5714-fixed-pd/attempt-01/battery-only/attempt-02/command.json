@@ -1,0 +1,6 @@
+[
+  "env",
+  "GTS9_DEVICE=10.191.121.37",
+  "scripts/gts9-ssh.sh",
+  "set -e; cat /proc/sys/kernel/random/boot_id; for f in capacity temp voltage_now current_now status health; do printf \"%s=\" \"$f\"; cat /sys/class/power_supply/sm5714-battery/$f; done; printf \"usb_online=\"; cat /sys/class/power_supply/sm5714-usb/online; cat /proc/uptime"
+]

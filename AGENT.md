@@ -2,7 +2,28 @@
 
 ## Current state (2026-09-29)
 
-Test255 is now an **offline Stage2 fixed-PD candidate**, prepared under the
+Test255 attempt01 Stage2 candidate has now been installed and booted under the
+owner's physical-test authorization. TWRP readback and Debian first-boot
+identity passed: boot26ef6bd1…, vendor_boot d80d03cd…, config cd7ec9cb…,
+notes fb3d2496…, exact181 modules; init_boot/dtbo/vbmeta stayed Test254.
+The new boot a5b8b87f… reports Type-C Sink/Device; ADB, NCM and Wi-Fi work,
+Windows has no Code43, and first-boot plus a 991-second same-boot kernel scan
+found no new fault. Test254 boot/vendor_boot images and 181 modules are retained
+as a distinct rollback pair beside the Test252/Test249 backups. See
+`reference/boot-tests/test-255-sm5714-fixed-pd/attempt-01/CURRENT_STATUS.md`
+and its raw preflight/recovery/install/boot/postboot/holding-status evidence.
+The first 300-second USB-connected waiting monitor did not count as battery
+testing. After the owner disconnected the PC cable, a fresh 155.473-second
+battery-only window passed on the same boot, with USB offline, Discharging,
+negative current, Good health, stable temperature and no new kernel fault.
+Await manual PC USB reconnect, then verify ADB/NCM/SSH for 150 seconds on
+the same boot. The Lenovo 18W PD charger
+has not been connected; no independent VBUS meter or 5V-only source is
+available, so fixed 5V/9V acceptance remains pending. Do not start Stage3.
+
+### Earlier offline-candidate record (before physical authorization)
+
+Test255 was an **offline Stage2 fixed-PD candidate**, prepared under the
 owner's explicit no-device-command/no-flash instruction. Installed state stays
 Test254 with Test252 Stage1 and Test253 userspace adbd repair; no live identity
 query, reboot, partition/module/rootfs change or Stage3 occurred. Starting local
@@ -35,7 +56,7 @@ Changed/wrapper/full each execute1183 tests with zero failures/errors/skips;
 fixed in a718bd89 without weakening assertions; raw failed evidence is retained.
 No GitHub Actions or CI. No hardware acceptance/safety guarantee is implied.
 
-Future Test255 requires fresh authorization plus pushed rescue registration,
+At that time, future Test255 required fresh authorization plus pushed rescue registration,
 retained Test254 boot+vendor_boot+181 modules alongside Test252/Test249 pairs,
 and an independent measured-VBUS gate (TCPM voltage_now is contract state).
 Use registered battery150s/PC Sink-UFP/5V/proven9V/5min-then20min/unplug150s/
