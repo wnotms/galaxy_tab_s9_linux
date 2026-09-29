@@ -1,0 +1,48 @@
+{
+  "device_writes": false,
+  "files": {
+    "candidate-boot.img": {
+      "bytes": 100663296,
+      "sha256": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063"
+    },
+    "candidate-modules.tar.gz": {
+      "bytes": 44856076,
+      "sha256": "28e33cda7814686ee32b480c0b0cf4f02952cdc89d19ad7af37feb47e79edf1c"
+    },
+    "candidate-vendor_boot.img": {
+      "bytes": 100663296,
+      "sha256": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+    },
+    "gts9-debian-to-recovery.sh": {
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488"
+    },
+    "module-swap.sh": {
+      "bytes": 1879,
+      "sha256": "e71be3e897dbc51cc6b700f8b86d2f2260db351eb5822418c06fdd5988fc0e43"
+    },
+    "rollback-test254-boot.img": {
+      "bytes": 100663296,
+      "sha256": "ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7"
+    },
+    "rollback-test254-vendor_boot.img": {
+      "bytes": 100663296,
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9"
+    },
+    "test254-rollback-modules.sha256": {
+      "bytes": 19503,
+      "sha256": "700160205feeb0b30d7fda899d13d46e31ad5ba710016b8523053b80f141a970"
+    },
+    "test255-candidate-modules.sha256": {
+      "bytes": 19503,
+      "sha256": "3a8e49a1112d07cbfc1f7c188c7ae8de3489713879ee5420fb1c9d010a599051"
+    },
+    "twrp-mount-debian.sh": {
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca"
+    }
+  },
+  "location": "D:/android/gts9-active/gts9-test255",
+  "module_archive_entries": 181,
+  "module_install_restore_rehearsal": "passed with host-only sync shim; WSL global sync blocked"
+}
