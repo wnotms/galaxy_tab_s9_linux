@@ -1,5 +1,11 @@
 # Test255 attempt01 physical status
 
+This attempt's PC reconnect stage was subsequently interrupted by an
+owner-reported manual reboot. Its battery-only result below remains preserved.
+The current boot is `d745248e…`; see `../attempt-02/RESULTS.md` for fresh
+identity and 162.143-second PC USB checks. Do not infer same-boot reconnect
+success from the newer boot. Full fixed-PD acceptance remains incomplete.
+
 The owner authorized physical testing. The Stage2 candidate is installed and
 booted on `a5b8b87f1487422a9035a1db74f85667`. TWRP readback and the first
 Debian boot verified candidate boot `26ef6bd1…`, vendor_boot `d80d03cd…`,
@@ -23,9 +29,9 @@ passed 155.473 seconds of continuous `usb_online=0`, Discharging, negative
 pack current, Good health and stable 28.4°C temperature, on the same boot.
 The complete ending kernel journal had no new fault or suspect and systemd had
 no failed unit. The earlier 300-second monitor only records a wait for the
-manual transition and is not counted as battery-only time. The tablet is now
-unplugged and awaiting PC USB reconnection. Verify ADB/NCM/SSH on the same
-boot for 150 seconds after reconnect. Do not connect the Lenovo 18W PD source
+manual transition and is not counted as battery-only time. At that checkpoint,
+the tablet was unplugged and awaiting PC USB reconnection. The same-boot
+reconnect gate was subsequently interrupted as described above. Do not connect the Lenovo 18W PD source
 in this attempt: there is no independent VBUS meter or 5V-only source for the
 registered voltage gate. Full Test255 fixed-PD acceptance is pending.
 

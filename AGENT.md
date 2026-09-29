@@ -2,6 +2,25 @@
 
 ## Current state (2026-09-29)
 
+Latest installed Test255 Stage2 candidate boot is `d745248e…`, following the
+owner's reported manual reboot after attempt01 battery testing. Attempt02
+initial27/final26 identity/health gates and a fresh162.143-second PC USB window
+passed: ADB binary-config transfer, NCM authenticated SSH/interface-bound
+Windows banner, Wi-Fi, Sink/Device, no Code43/new kernel fault/failed unit.
+Candidate boot/vendor_boot/config/notes/exact181 modules and all three181-file
+Test254/Test252/Test249 rollback directories plus Test253 settings are intact.
+No reboot or software/hardware change was commanded in attempt02. Read its
+`RESULTS.md`/`summary.json` under Test255 before continuing. A fresh changed
+host invocation executed all1183 tests with zero failures/errors/skips in98.483s;
+the earlier WSL sync interruption remains preserved as a separate failed run.
+Attempt01's155.473-second battery-only pass is retained; its following same-boot
+PC reconnect was interrupted by the manual reboot and is not passed. Fixed-PD
+5V-only/9V charging and charger-to-PC acceptance remain unexecuted: no independent
+VBUS meter/5V-only source is available. No PD charger was connected by this
+attempt, no full Stage2 acceptance or Stage3 work is claimed.
+
+### Earlier first-boot physical checkpoint (superseded by attempt02)
+
 Test255 attempt01 Stage2 candidate has now been installed and booted under the
 owner's physical-test authorization. TWRP readback and Debian first-boot
 identity passed: boot26ef6bd1…, vendor_boot d80d03cd…, config cd7ec9cb…,

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; sha256sum /etc/gts9-usb-net /etc/gts9-usb-adb /usr/libexec/gts9-adbd-can-start /usr/libexec/gts9-usb-adb-hold /usr/libexec/gts9-usb-adb-prepare /usr/libexec/gts9-usb-acm /usr/lib/systemd/system/gts9-usb-acm.service /usr/lib/systemd/system/gts9-usb-adb-hold.service /usr/lib/systemd/system/gts9-usb-adb-prepare.service /usr/lib/android-sdk/platform-tools/adbd /root/.ssh/authorized_keys /etc/ssh/ssh_config /etc/ssh/ssh_host_rsa_key /etc/ssh/ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ecdsa_key.pub /etc/ssh/ssh_host_ed25519_key /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_rsa_key.pub /etc/ssh/moduli /etc/ssh/sshd_config"
+  ],
+  "ended_utc": "2026-09-29T10:07:45.365234+00:00",
+  "started_utc": "2026-09-29T10:07:45.292664+00:00",
+  "status": 0
+}
