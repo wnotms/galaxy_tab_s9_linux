@@ -1,0 +1,24 @@
+From: X710 bring-up <bringup@localhost>
+Subject: [PATCH] usb: typec: wire X710 SM5714 fixed-PD Sink transport
+
+Kbuild only. No TCPM policy or API change. Companion charger retains all
+Stage1 safety gates. Transport source is reviewed in kernel/drivers/.
+
+--- a/drivers/usb/typec/tcpm/Kconfig
++++ b/drivers/usb/typec/tcpm/Kconfig
+@@ -95 +95,10 @@
++config TYPEC_SM5714
++	tristate "Samsung X710 SM5714 fixed-PD Sink transport"
++	depends on I2C && TYPEC_TCPM && BATTERY_SM5714
++	select REGMAP_I2C
++	help
++	  Single-role Sink/Device transport for fixed 5 V / 9 V USB PD on
++	  SM-X710. Uses stock TCPM and the ordinary SM5714 switching charger.
++	  No VBUS sourcing, alternate modes or programmable-supply support.
++
+ endif # TYPEC_TCPM
+--- a/drivers/usb/typec/tcpm/Makefile
++++ b/drivers/usb/typec/tcpm/Makefile
+@@ -10 +10,2 @@
+ obj-$(CONFIG_TYPEC_QCOM_PMIC)		+= qcom/
++obj-$(CONFIG_TYPEC_SM5714)			+= sm5714_usbpd.o

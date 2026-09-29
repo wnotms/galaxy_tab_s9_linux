@@ -1,0 +1,390 @@
+{
+  "baseline": "26d62393efbd002f185ba759a7cca8638667dee9",
+  "files": {
+    "boot/bootconfig.example.txt": {
+      "sha256": "b8425a658e2b1521fe61f9225bc97dd11c58155d268a70ddd5f88526af9506fa",
+      "unchanged": true
+    },
+    "boot/bringup-init.sh": {
+      "sha256": "9a53bea5744ed8447f0e183d56eda58327bafdd6551ca750b842a3c60f47b099",
+      "unchanged": true
+    },
+    "boot/cmdline.boot-trace.example.txt": {
+      "sha256": "57f9197257ad0dd764c81ebf14f09030986dacc20b152c3cd49224f6838a0f1f",
+      "unchanged": true
+    },
+    "boot/cmdline.diag-loglevel.example.txt": {
+      "sha256": "bd3995f1bcf708897aaaea2fc781936f6ab401a4d34855801550174736aac5d6",
+      "unchanged": true
+    },
+    "boot/cmdline.example.txt": {
+      "sha256": "e7f153ac06c26e3c24432db75873096fbaffe06e365c46960476c5577b1a1bed",
+      "unchanged": true
+    },
+    "boot/cmdline.lastactivity-rcu-test.example.txt": {
+      "sha256": "b24bb24ec89f42b0257ccc07dbf8f86b129e4b95e1f587ec3c2b43e94db7338c",
+      "unchanged": true
+    },
+    "boot/cmdline.lastactivity.example.txt": {
+      "sha256": "6b7bc69fc48090432f06b9b90dedc00a86e4b3143c35957d7a7a0459c6ef3593",
+      "unchanged": true
+    },
+    "boot/cmdline.minimal-rootfs.example.txt": {
+      "sha256": "384c50a8fc79ed06b8d1161dfd7547c5fa2bcf640e0814ff478f0710f86b3980",
+      "unchanged": true
+    },
+    "boot/cmdline.pnmi-bbm-capture.example.txt": {
+      "sha256": "a40ad731754bff296e01ea243c71029ae0175c5c244e5a9dc80504a9c4b820b7",
+      "unchanged": true
+    },
+    "boot/cmdline.pnmi-calibration.example.txt": {
+      "sha256": "0a2da184a03bf95fda0c00527d05c485ee8fc8914f335605f380022d13a45915",
+      "unchanged": true
+    },
+    "boot/cmdline.pnmi-csd-capture.example.txt": {
+      "sha256": "1e5913c43aa4e487251a3bd6ab9f7ec0cb7f6e0c17a9ea939598fa08bfab25d2",
+      "unchanged": true
+    },
+    "boot/cmdline.pnmi-natural.example.txt": {
+      "sha256": "41a9c8871eddf3cb72ae836213b5fb9391b6db7cb6b851707fd1c4bc89d88437",
+      "unchanged": true
+    },
+    "boot/cmdline.pnmi-no-lastactivity.example.txt": {
+      "sha256": "4fffd6d6f3d31b7e5da8d071a166dfefb7b04676914230641bb4a497458871c2",
+      "unchanged": true
+    },
+    "boot/cmdline.poweroff-trace.example.txt": {
+      "sha256": "44198c64d1029288c33850ee6c522d0f9998683dfe00763c6cbe17a57b942fa3",
+      "unchanged": true
+    },
+    "boot/cmdline.ramoops-live.example.txt": {
+      "sha256": "cf9cfd4c05332d5a829371520d22cc26ec55719775f4332d4bfaeabe50068416",
+      "unchanged": true
+    },
+    "boot/cmdline.rpmh-debug.example.txt": {
+      "sha256": "13d15574ab1e3c539d8f4bfda7c75ea0e38ecb4014bea3f956fc1a869e4880df",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-baseline.example.txt": {
+      "sha256": "263814b89d811bddc7e6478951fb992c7381a44f1592435da039ae0ce0fb6403",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-cpuidle-off.example.txt": {
+      "sha256": "c876e20688b8dc24206769956c1253651bee3481483bbbaa920e3057988e954d",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-csd-lock.example.txt": {
+      "sha256": "1a9941a23d7485ada8c1356e684dfe613fa12163de5f6773146efe06b053723b",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-late-deferred.example.txt": {
+      "sha256": "93b8aa0ba71beaeb06c104327b1820d714ee4ad8a1a22b3ad553c2b8a3f1e8b6",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-no-acd.example.txt": {
+      "sha256": "1e7e2ea9f59b06a23d375be0b47c3a69881528bb1f11a14d663743a58b520ab0",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-no-cluster-idle.example.txt": {
+      "sha256": "263814b89d811bddc7e6478951fb992c7381a44f1592435da039ae0ce0fb6403",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-no-gpu.example.txt": {
+      "sha256": "c8ed64f5d5f87f8dbecdaccabe8ac9a4a6b755aa3f602b4ca98e7f63a4552d3a",
+      "unchanged": true
+    },
+    "boot/cmdline.stall-ab-no-llcc-off.example.txt": {
+      "sha256": "263814b89d811bddc7e6478951fb992c7381a44f1592435da039ae0ce0fb6403",
+      "unchanged": true
+    },
+    "boot/cmdline.watchdog-debug.example.txt": {
+      "sha256": "fea9c5975b8233f674fb2f33ebe52e6b2b5daca15fccddf7d972331cd934361b",
+      "unchanged": true
+    },
+    "boot/gts9-debian-to-recovery.sh": {
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "unchanged": true
+    },
+    "boot/gts9-exec-default.c": {
+      "sha256": "a3e0051dd1e17527b7bb2eee46bd523feaf902274ac1368ba300c2257f4c653e",
+      "unchanged": true
+    },
+    "boot/gts9-minimal-pid1.c": {
+      "sha256": "b176d3f94101295a0672e86a5f3c7a5b8814c2d27b38182e36fc80443161bb93",
+      "unchanged": true
+    },
+    "boot/gts9-reboot-mode.c": {
+      "sha256": "d82501ae31e62194815ba8d3937f93705ebe88e99474ed13cb02a31902a3418e",
+      "unchanged": true
+    },
+    "boot/gts9-rtc-offset.c": {
+      "sha256": "2eb54b80af5c8c0cd409de202b24a499bdc0b822aec747d92e2acdef568bd9f5",
+      "unchanged": true
+    },
+    "boot/gts9-to-recovery.sh": {
+      "sha256": "5f0d616c34c314ca8ee50b8721833a573ec948ae07f3f9b49604a831f95d6e1e",
+      "unchanged": true
+    },
+    "boot/minimal-rootfs-init.sh": {
+      "sha256": "8b893f8c823a07da544b2c9e4a0376c4f06d9215e53950db8963601fe8c47d5a",
+      "unchanged": true
+    },
+    "boot/minimal-rootfs-state.sh": {
+      "sha256": "2a206555e8d17a912b25caffab0ff0e40969f3156198c4207ed84c9e1f54490f",
+      "unchanged": true
+    },
+    "kernel/PROVENANCE.md": {
+      "sha256": "239d5a2f3f8937ee5723d206369ba5de1d6e5f038cf8bb354bbe37f3b7c62ece",
+      "unchanged": true
+    },
+    "kernel/config/gts9wifi-csd-lock.fragment": {
+      "sha256": "cc0d60e35226093f807667daf65ebff7ed3f277d417760d2ff11532a84e96194",
+      "unchanged": true
+    },
+    "kernel/config/gts9wifi-pnmi-csd-lock.fragment": {
+      "sha256": "6beba5bc56208f05275e744ba6fe8ff12763e10724340dc5e9596cbe71e57743",
+      "unchanged": true
+    },
+    "kernel/config/gts9wifi-pnmi.fragment": {
+      "sha256": "62b6af9406097645ba3f06b235bf471e736502d2df3b54bedbbddf531bfca62d",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/Kconfig": {
+      "sha256": "fe4610ffa6cfb54cf9ab368bc9aa9e72a1caa21ac0f04866b0cb6c6fb902e1d2",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/Makefile": {
+      "sha256": "ca2ba57a67762d28598fd08595257e3ec2f7da3df2bc0b7c5f498e575da8fceb",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/README.md": {
+      "sha256": "e60dfd78c1142e4737b8e00781047d655211847a997ce377463ccfb0d74e1473",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/pogo_notifier_v3.h": {
+      "sha256": "8c2f03a5b81561007fe854a13b2333eddc556d2ad5a903592d557b3932180b07",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_compat.h": {
+      "sha256": "e24036e93c7064bfe165572d38593a17b30cf3e947c31bb59f3b5d366585b73a",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_stubs.c": {
+      "sha256": "ed268402cfb15635fc391d403aeb6bef920e3809af3abddadca480dd5ca39e58",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_cmd_v3.c": {
+      "sha256": "6d903314d6d0fe971baede59456435c34d3b3a5eed780fd8c37a93a617d9409f",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_core_v3.c": {
+      "sha256": "d53bdc323109260505e0efe1b711ecdc3a98c62213ab99777c5e3dbc1b617889",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fn_v3.c": {
+      "sha256": "a6e2e5a7adf743ebdac40254b14bc13ccf170707f9abb96eec984385bd766040",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fw.c": {
+      "sha256": "9e7fd56fbbe7cb545eae2b02984d5cdc667652774c7c00b23733c9f80a89f3db",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_i2c_v3.c": {
+      "sha256": "00bf386d7597bc9c2d9b4cf084b360a0037fcbed12c4316ec7e1aa9b0f0730f7",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_interrupt_v3.c": {
+      "sha256": "25254823d32f8fcb88a1d4130d6b58b38ef9f4dc29247338a0298a23df1d92e0",
+      "unchanged": true
+    },
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_v3.h": {
+      "sha256": "d2c5d8a0213568eb8c5a86fa2110392af5e95b0e69a53a373f1942f827e5ef6d",
+      "unchanged": true
+    },
+    "kernel/drivers/keyboard-samsung-pogo.c": {
+      "sha256": "eff8ca0667b3f1dbccee2a8e253ae6dc7022e01db904122d112bb54a92a7c49c",
+      "unchanged": true
+    },
+    "kernel/drivers/panel-samsung-ana38407.c": {
+      "sha256": "c4ed00544ec80f941f2c23cc1c447327db4a6c7ed6d5e9b5f08e97fd4389a54d",
+      "unchanged": true
+    },
+    "kernel/drivers/samsung-gts9wifi-sec-log.c": {
+      "sha256": "f2e436b0ae148a0da921eff050450b0c68a84525ffc8911a9d2ece95bbe7264d",
+      "unchanged": true
+    },
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-cluster-idle.dts": {
+      "sha256": "60f1c453d5ece3cebec1ea773d880489d107244b0f24a17145aa9a237d75a569",
+      "unchanged": true
+    },
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-llcc-off.dts": {
+      "sha256": "577ecc0306674f27c85de97eaf790954a007a380f83616ec72090f6cc8b7554c",
+      "unchanged": true
+    },
+    "kernel/patches/0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch": {
+      "sha256": "0d2ebd3384d48f6c09b324b38a1fc2a3ddceef94263580b55a885a74814ea323",
+      "unchanged": true
+    },
+    "kernel/patches/0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch": {
+      "sha256": "9d7a20de952b5c898b28198fa0b170b6324222ea7db0ab14c6cd7f04022841e7",
+      "unchanged": true
+    },
+    "kernel/patches/0004-drm-panel-add-samsung-ana38407.patch": {
+      "sha256": "6eca342e5045e174036c9f14fe1bdc666d496224f71c72c3a06d8d10735eaf69",
+      "unchanged": true
+    },
+    "kernel/patches/0006-input-add-samsung-pogo-keyboard.patch": {
+      "sha256": "85dfd97df08fdc975254a0245cb6623ccebf2f38b1b8a0b4fd688707889ad49a",
+      "unchanged": true
+    },
+    "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch": {
+      "sha256": "bdebe54ab0623c07ebda53174ba3af197838708617bba9ce5c169fc451f450b2",
+      "unchanged": true
+    },
+    "kernel/patches/0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch": {
+      "sha256": "0159b64b85368435545e0f9a7c38d7279d87947057817f1fab1481343abdea26",
+      "unchanged": true
+    },
+    "kernel/patches/0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch": {
+      "sha256": "c8b097bb0ee894d6e33515f63cd4c0031f6f8b11020d0f61ced62d5a86364ba3",
+      "unchanged": true
+    },
+    "kernel/patches/0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch": {
+      "sha256": "c160c17c171c27b87b4ff868928611b83c65281d914855da0b59ce0312b28295",
+      "unchanged": true
+    },
+    "kernel/patches/0011-power-supply-hook-sm5714-battery.patch": {
+      "sha256": "e285cddfc9e585999c15c98c30654ff00af92ad269497e48e3a24b61a18e23b2",
+      "unchanged": true
+    },
+    "kernel/patches/README.md": {
+      "sha256": "2518ddce2ad66ee849cae420209be14c93d48e0c515310e64e934f763bf0ad77",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0008-i2c-qcom-geni-log-bus-lines-on-error.patch": {
+      "sha256": "453486c55b6603d43d81d017e588d239fa815df369fe7e2b2de5f8260fa45e1e",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0010-pinctrl-report-pogo-pin-state-at-probe.patch": {
+      "sha256": "14059712f592e0e8ddd0e689dc5208edbe19bc368b770c09182f082723e56156",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0020-gts9-poweroff-path-trace.patch": {
+      "sha256": "cea51549499c496961c0ed5c71d538ed77b4b2eb455ae355b4484be8890b50d8",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0021-gts9-rpmh-timeout-state-dump.patch": {
+      "sha256": "aab1adc60ffecbdcb2d423ff0cb55cffcf6e3cbd3f2a5e118353e488ea9769aa",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0022-gts9-lastactivity.patch": {
+      "sha256": "15a38bcbf46780038e330520863a16db2ab708ce94ee164d2688a7b9b88db4fc",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0023-gts9-ramoops-live-readback.patch": {
+      "sha256": "29fe4abff13f2b763650f6dc6f4385cd0e0abb592e743456bd55390a3cb01c45",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0024-gts9-ramoops-ecc64.patch": {
+      "sha256": "8f2ab58ad298196a029c4b53245c8df15b2b01ede6773c33b095a6fde6148094",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0025-gts9-lastactivity-rcu-test.patch": {
+      "sha256": "5347187868710ea395b0d65a1810d1f369d0199f4891f2162b484ce7d9813f43",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0026-arm64-bbm-flush-range.patch": {
+      "sha256": "b221d4cd9ab26400ab39853c77d0c0585bba9afcdc35de75e396b126adadad5d",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/0027-gts9-pnmi-calibration.patch": {
+      "sha256": "968bf32b584a1f467e920596907e43e45a148762a2e520c14771ee12f73d0894",
+      "unchanged": true
+    },
+    "kernel/patches/diagnostic/README.md": {
+      "sha256": "910f7dcc024015d9651d21079c0acb7aab6f925f641a2c8ff747c7b063adc5a7",
+      "unchanged": true
+    },
+    "kernel/patches/nxp-ptn3222-apply-dt-register-overrides.patch": {
+      "sha256": "dd87277a5f2d2b79e29793de2af9201a8d5e060fe8666c3b5fb726888c83c17e",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0003-printk-allow-ignoring-samsung-console-null.patch": {
+      "sha256": "70b4930e1bdcd99769e59de783ddafafbfe5ec377e3d6c166ef9c63197906123",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0005-drm-msm-dpu-start-command-mode-at-enable.patch": {
+      "sha256": "7fffdfaf77463ff620438d189be85a704ba11b5ba1efa28ab22c161db50ef593",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0005-drm-msm-dsi-cycle-x710-link-before-panel.patch": {
+      "sha256": "5f907cd605c886e7bd0ba9d86e4fb608c53dcb9266f85b8fc9533e361577159b",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0005-drm-msm-dsi-quiesce-x710-phy-before-enable.patch": {
+      "sha256": "b2341c4601305c39f563cd6d9f59fcced79a869f08fe9b26a8b057e649abfa64",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0007-i2c-qcom-geni-rearm-se-before-transfers.patch": {
+      "sha256": "9efc234942131f1f074f33449932c3d285ac7b0f10eb13e6a2369ad0c6cbbf52",
+      "unchanged": true
+    },
+    "kernel/patches/pending/0008-drm-msm-a6xx-fix-stale-rpmh-votes-after-suspend.patch": {
+      "sha256": "7c63ec9acfa2ac9f2cbd19bae741955a2e4c76230cfc8ff9e50a2d57764880a5",
+      "unchanged": true
+    },
+    "kernel/patches/pending/README.md": {
+      "sha256": "50555ccca6de732936c4380f066038980349722b88a07e818786cb71385a763d",
+      "unchanged": true
+    },
+    "kernel/patches/pending/qmp-ufs-clear-tx-pull-down-on-power-on.patch": {
+      "sha256": "b0d0346405de6a2ba9fcaa352d7e9a18e4ca985f9f2b66f46f30ef540e7369a1",
+      "unchanged": true
+    },
+    "kernel/patches/pending/snps-eusb2-match-samsung-sm8550-init.patch": {
+      "sha256": "45429d40fd2c9cc990903c1218860afe99a53ec2ef9accf30b35ff2f6fc30c96",
+      "unchanged": true
+    },
+    "scripts/verify-container-config.py": {
+      "sha256": "47ea79a78456d3ba703193650e9af99b14e6c9396abd2508371c1f953cf9488c",
+      "unchanged": true
+    },
+    "userspace/adbd/0001-linux-functionfs-reconnect.patch": {
+      "sha256": "4b1ed2bcd3f44e5d268a9d9670551225a94543345230c9571e9d79daefaffd50",
+      "unchanged": true
+    },
+    "userspace/adbd/Dockerfile": {
+      "sha256": "3be2bc88edf19a28209a895ae996e94f9850799889a726a02afda1540af2da0a",
+      "unchanged": true
+    },
+    "userspace/adbd/NOTICE": {
+      "sha256": "9e097c628332c9f60d958f4477b5a301c95e7342c0afbc513c61b8b6145f4c40",
+      "unchanged": true
+    },
+    "userspace/adbd/README.md": {
+      "sha256": "a6f2c1813ecad0719265368cb471ff2d607eec713611670125f157a2229cfc53",
+      "unchanged": true
+    },
+    "userspace/adbd/build-in-container.sh": {
+      "sha256": "946d98382e34d75077ce25156ff5ede4dd861324adbd4206510c2465ef30385b",
+      "unchanged": true
+    },
+    "userspace/adbd/source-baseline/SHA256.json": {
+      "sha256": "7a5324c93606de2acf3ea28bd4359a3716ad808253ad0a8046305c755b44ffdb",
+      "unchanged": true
+    },
+    "userspace/adbd/source-baseline/android-base/scopeguard.h": {
+      "sha256": "2c9643b3273a112de5aa160bf15f3306d672973bb9bbb74e5439563d08581fbe",
+      "unchanged": true
+    },
+    "userspace/adbd/source-baseline/usb.cpp": {
+      "sha256": "995e6b1d40e7ec973da012fee1ead88fc5dea3ad3c630c2a5efd0453443cd3a3",
+      "unchanged": true
+    },
+    "userspace/adbd/source-baseline/usb_ffs.cpp": {
+      "sha256": "8d12d7684250b13f159b451815ffe869644919358319f66cf79ebbe164a8fd75",
+      "unchanged": true
+    }
+  },
+  "count": 96
+}

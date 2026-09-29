@@ -84,11 +84,13 @@ nodes remain undriven; explicitly disable the inherited SM5440 child and remove
 its TCPM supply link without changing hub3 controller/GPI setup or accessing it.
 Only GPIO133 belongs to the TCPC pinctrl; no OTG/discharge GPIO control.
 
-DWC3 stays peripheral. Its lack of usb-role-switch provider means TCPM's
-optional role-switch lookup returns NULL (roles/class.c checks provider
-property). TCPM can manage Type-C PD/header roles without controlling DWC3.
-Keep CONFIG_USB_ROLE_SWITCH=y because TCPM selects it; do not add the DTS
-provider property or modify DWC3/gadget/FunctionFS/adbd. USB2 cable orientation
+DWC3 stays peripheral. Compiled-DTB review found that sm8550.dtsi inherits
+usb-role-switch even though DWC3 registers the provider only in OTG mode
+(core.c/drd.c). Delete this inherited flag in the board override; otherwise
+TCPM's lookup waits forever for a nonexistent provider. Its optional lookup then
+returns NULL (roles/class.c checks the provider property), and TCPM manages
+Type-C PD/header roles without controlling DWC3. Keep CONFIG_USB_ROLE_SWITCH=y
+because TCPM selects it; do not modify DWC3/gadget/FunctionFS/adbd code. USB2 cable orientation
 is covered by CC status; USB3/DP orientation bring-up is outside acceptance.
 Any actual enumeration regression stops Test255.
 
@@ -105,7 +107,7 @@ Extend Stage1 incrementally with a lifetime-serialized companion interface:
 TCPM ownership, contract budget and charge-enable are distinct. The thermal
 poller must never bypass TCPM's disabled/standby budget using stale BC1.2 DCP.
 Gate registration on the ready charger, propagate failures, keep Q4 open on
-error. PD failures latch charge-off until driver removal/rebind, not a silent
+error. PD failures latch charge-off until a fresh charger probe, not a silent
 high-current retry. Clearing a contract/detach and driver shutdown clear budget.
 Suspend must block both polling and asynchronous callbacks from enabling charge;
 resume can restore only the current bounded budget through thermal validation.
@@ -176,6 +178,19 @@ ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7 and its matched
 181 files retained before Test255. Same release name is not module identity:
 retain a distinct Test254 directory before replacing it. Preserve existing
 .gts9-test254-original Test252 and .gts9-test252-original Test249 directories.
-Read back exact restored hashes, keep the other four partitions and rootfs
-untouched, then one authorized ordinary boot/identity check. Do not initiate
+Restore the original vendor_boot49ae21b3… as well if the new DTB vendor
+image was installed. Read back exact restored hashes, keep the other three
+partitions and rootfs untouched, then one authorized ordinary boot/identity check. Do not initiate
 rollback or device maintenance during this offline task.
+
+## Packaging refinement after source review
+
+Test254 DTB was unchanged, so its deployment changed boot only. Stage2 changes
+DTS. Prepare both boot's appended DTB and vendor_boot's DTB with the new board
+blob, keeping extracted Test254 vendor cmdline/bootconfig/empty ramdisk and
+init_boot byte identity. A future authorized attempt must explicitly register
+boot+vendor_boot+paired modules and retain both original images. Do not assume
+which old DTB copy ABL would choose. Verify the effective live Sink/Device/
+PDO/GPIO133/peripheral topology in addition to packaged DTB hashes; raw live
+FDT may have attributed bootloader chosen/seed changes. Preserve init_boot,
+dtbo,vbmeta and rootfs; no device write is authorized by offline packaging.

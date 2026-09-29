@@ -35,6 +35,7 @@ class ChargeSafetyTests(unittest.TestCase):
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <stdbool.h>
 typedef unsigned char u8;
 #define BIT(n) (1U << (n))
 #define GENMASK(h,l) (((~0U) >> (31 - (h))) & ((~0U) << (l)))
@@ -50,11 +51,13 @@ static unsigned int clamp_val(unsigned int v, unsigned int l, unsigned int h) {
 #define dev_err_ratelimited(...) ((void)0)
 #define dev_info(...) ((void)0)
 enum { POWER_SUPPLY_USB_TYPE_UNKNOWN, POWER_SUPPLY_USB_TYPE_SDP,
-       POWER_SUPPLY_USB_TYPE_DCP, POWER_SUPPLY_USB_TYPE_CDP };
+       POWER_SUPPLY_USB_TYPE_DCP, POWER_SUPPLY_USB_TYPE_CDP, POWER_SUPPLY_USB_TYPE_PD };
 enum { POWER_SUPPLY_STATUS_NOT_CHARGING, POWER_SUPPLY_STATUS_FULL };
 enum sm5714_charge_thermal_state { SM5714_THERMAL_NORMAL,
        SM5714_THERMAL_REDUCED, SM5714_THERMAL_STOP };
-struct sm5714_battery { int chg_lock, chg, dev; unsigned int float_uv;
+struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat; unsigned int float_uv;
+       unsigned int typec_mv, typec_ma;
+       bool typec_owned, typec_claimed, typec_charge, typec_fault, suspended;
        enum sm5714_charge_thermal_state thermal_state; };
 static unsigned int regs[256];
 static int mode, temp = 250, type, writes, temp_error;
@@ -82,8 +85,12 @@ static int sm5714_get_status(struct sm5714_battery *sm) {
         harness += r'''
 int main(int argc, char **argv) {
   struct sm5714_battery sm = { .float_uv = 4440000 };
-  if (argc != 4) return 2;
+  if (argc != 4 && argc != 8) return 2;
   mode = atoi(argv[1]); type = atoi(argv[2]); temp = atoi(argv[3]);
+  if (argc == 8) {
+    sm.typec_owned = true; sm.typec_mv = atoi(argv[4]); sm.typec_ma = atoi(argv[5]);
+    sm.typec_charge = atoi(argv[6]); sm.suspended = atoi(argv[7]);
+  }
   regs[0x13] = 8; regs[0x15] = 0x80 | 120; regs[0x1a] = 0xc0;
   temp_error = mode == 5;
   if (mode == 6) regs[0x0d] |= 4;

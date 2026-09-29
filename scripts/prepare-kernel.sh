@@ -187,12 +187,16 @@ for drv in "$driver_src"/*.c; do
 		panel-*) dest=$panel_dir ;;
 		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
 		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
+		sm5714_usbpd.c) dest="$tree/drivers/usb/typec/tcpm" ;;
 		*)       dest=$soc_qcom ;;
     esac
     echo "installing ${drv##*/} -> ${dest##*/}/"
     install -m 0644 "$drv" "$dest/${drv##*/}"
 done
 shopt -u nullglob
+
+install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/power/supply/"
+install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/usb/typec/tcpm/"
 
 # Samsung's vendor Pogo import is retained for source comparison only. It is
 # not part of the default X710 build; opt in explicitly for a manual A/B.

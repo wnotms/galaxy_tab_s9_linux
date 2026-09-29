@@ -131,6 +131,7 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 # Validate real Kconfig resolution, not just requested fragment assignments.
 # Host-only: preserve UPower sandboxing and gate OCI/network prerequisites.
 python3 "$repo_root/scripts/verify-container-config.py" "$build_dir/.config"
+python3 "$repo_root/scripts/verify-sm5714-stage2.py" "$build_dir/.config"
 
 required=(
     # SERIAL_QCOM_GENI stays built-in but its *console* is deliberately off; the

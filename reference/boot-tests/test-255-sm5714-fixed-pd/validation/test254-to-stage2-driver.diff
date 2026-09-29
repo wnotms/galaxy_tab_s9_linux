@@ -1,0 +1,368 @@
+--- Test254/sm5714-battery.c
++++ Stage2/sm5714-battery.c
+@@ -15,7 +15,8 @@
+  * the fuel gauge and MUIC.
+  *
+  * Stage 1 supports fuel-gauge telemetry and ordinary BC1.2 switching charge.
+- * It does not control the TCPC, OTG boost or SM5440 direct charger.  Register
++ * Stage 2 accepts a bounded fixed-PD budget from the companion TCPM transport.
++ * This driver does not control the TCPC or OTG boost. Register
+  * layout and gauge conversions follow Samsung's downstream SM5714 drivers;
+  * charging limits follow the same-model AP-direct port.  The external pack
+  * thermistor is mandatory for enabling Q4.
+@@ -31,6 +32,8 @@
+ #include <linux/pm.h>
+ #include <linux/power_supply.h>
+ #include <linux/workqueue.h>
++
++#include "sm5714-stage2.h"
+ 
+ #define SM5714_MUIC_I2C_ADDR		0x25
+ #define SM5714_FG_I2C_ADDR		0x71
+@@ -103,7 +106,19 @@
+ 	int last_usb_type;
+ 	unsigned int poll_count;
+ 	enum sm5714_charge_thermal_state thermal_state;
++	/* All policy writes and charge programming serialize on chg_lock. */
++	unsigned int typec_mv;
++	unsigned int typec_ma;
++	bool typec_owned;
++	bool typec_claimed;
++	bool typec_charge;
++	bool typec_fault;
++	bool suspended;
+ };
++
++/* Companion callbacks hold this lock through use; unbind clears before free. */
++static DEFINE_MUTEX(sm5714_companion_lock);
++static struct sm5714_battery *sm5714_companion;
+ 
+ static int sm5714_get_online_raw(struct sm5714_battery *sm);
+ static int sm5714_get_status(struct sm5714_battery *sm);
+@@ -202,6 +217,8 @@
+ 
+ 	if (online <= 0)
+ 		return online < 0 ? online : POWER_SUPPLY_USB_TYPE_UNKNOWN;
++	if (READ_ONCE(sm->typec_mv) == 9000 && READ_ONCE(sm->typec_ma))
++		return POWER_SUPPLY_USB_TYPE_PD;
+ 
+ 	type = i2c_smbus_read_byte_data(sm->muic,
+ 					SM5714_MUIC_REG_DEVICE_TYPE1);
+@@ -292,6 +309,20 @@
+ 	ret = sm5714_disable_charging(sm);
+ 	if (ret)
+ 		goto out_unlock;
++	/* Q4 gates the pack, not all VSYS consumption. Lower the input limit too
++	 * before any early return on a TCPM transition/fault.100mA is the stock
++	 * register's minimum; this does not claim complete VBUS isolation.
++	 */
++	if (sm->typec_owned) {
++		ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++					     GENMASK(6, 0), sm5714_input_current_reg(100));
++		if (ret)
++			goto out_unlock;
++	}
++	/* Polling must not override TCPM standby/reset or suspend's charge-off. */
++	if (sm->suspended || (sm->typec_owned &&
++	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100)))
++		goto out_unlock;
+ 	ret = sm5714_charge_fault(sm);
+ 	if (ret)
+ 		goto out_unlock;
+@@ -327,6 +358,11 @@
+ 	}
+ 
+ 	switch (usb_type) {
++	case POWER_SUPPLY_USB_TYPE_PD:
++		/* Fixed9V ordinary switching only:13.5W input, existing pack limit. */
++		input_ma = 1500;
++		fast_ma = 2100;
++		break;
+ 	case POWER_SUPPLY_USB_TYPE_DCP:
+ 		input_ma = 1800;
+ 		/* 2100 mA maps to the stock bootloader's CHGCNTL2=0x86. */
+@@ -343,6 +379,8 @@
+ 		fast_ma = 500;
+ 		break;
+ 	}
++	if (sm->typec_owned)
++		input_ma = min(input_ma, sm->typec_ma);
+ 
+ 	if (thermal_state == SM5714_THERMAL_REDUCED) {
+ 		input_ma = min(input_ma, 500U);
+@@ -354,7 +392,8 @@
+ 	 * then restore the limit advertised by the MUIC classification.
+ 	 */
+ 	ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+-				     GENMASK(6, 0), sm5714_input_current_reg(500));
++				     GENMASK(6, 0),
++				     sm5714_input_current_reg(min(input_ma, 500U)));
+ 	if (ret)
+ 		goto out_unlock;
+ 
+@@ -401,11 +440,150 @@
+ 
+ out_unlock:
+ 	/* A failed write may still have reached the chip; best-effort open Q4. */
+-	if (ret)
++	if (ret) {
++		if (ret != -ENODEV && sm->typec_owned)
++			sm->typec_fault = true;
+ 		sm5714_disable_charging(sm);
++	}
+ 	mutex_unlock(&sm->chg_lock);
+ 	return ret;
+ }
++
++/* TCPM budget is not a measured VBUS voltage or proof of PS_RDY on its own. */
++int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
++{
++	struct sm5714_battery *sm;
++	int ret;
++
++	mutex_lock(&sm5714_companion_lock);
++	sm = sm5714_companion;
++	if (!sm) {
++		ret = -ENODEV;
++		goto out;
++	}
++	mutex_lock(&sm->chg_lock);
++	if ((mv != 0 && mv != 5000 && mv != 9000) || (!mv && ma)) {
++		sm->typec_fault = true;
++		sm->typec_ma = 0;
++		ret = -ERANGE;
++		sm5714_disable_charging(sm);
++		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++				       GENMASK(6, 0), sm5714_input_current_reg(100));
++		mutex_unlock(&sm->chg_lock);
++		goto out;
++	}
++	sm->typec_mv = mv;
++	/* Store the grant; configure_charging separately caps actual input draw. */
++	sm->typec_ma = ma;
++	mutex_unlock(&sm->chg_lock);
++	ret = sm5714_configure_charging(sm);
++	if (ret == -ENODEV) /* detached/charger POK has not risen; Q4 stays open */
++		ret = 0;
++	power_supply_changed(sm->psy_usb);
++	power_supply_changed(sm->psy_bat);
++out:
++	mutex_unlock(&sm5714_companion_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(sm5714_battery_set_pd_contract);
++
++int sm5714_battery_set_typec_charge(bool charge)
++{
++	struct sm5714_battery *sm;
++	int ret;
++
++	mutex_lock(&sm5714_companion_lock);
++	sm = sm5714_companion;
++	if (!sm) {
++		ret = -ENODEV;
++		goto out;
++	}
++	mutex_lock(&sm->chg_lock);
++	sm->typec_charge = charge;
++	if (!charge) {
++		sm->typec_mv = 0;
++		sm->typec_ma = 0;
++	}
++	mutex_unlock(&sm->chg_lock);
++	ret = sm5714_configure_charging(sm);
++	if (ret == -ENODEV)
++		ret = 0;
++	power_supply_changed(sm->psy_usb);
++	power_supply_changed(sm->psy_bat);
++out:
++	mutex_unlock(&sm5714_companion_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(sm5714_battery_set_typec_charge);
++
++void sm5714_battery_typec_fault(void)
++{
++	struct sm5714_battery *sm;
++
++	mutex_lock(&sm5714_companion_lock);
++	sm = sm5714_companion;
++	if (sm) {
++		mutex_lock(&sm->chg_lock);
++		sm->typec_fault = true;
++		sm->typec_charge = false;
++		sm->typec_ma = 0;
++		sm5714_disable_charging(sm);
++		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++				       GENMASK(6, 0), sm5714_input_current_reg(100));
++		mutex_unlock(&sm->chg_lock);
++		power_supply_changed(sm->psy_usb);
++		power_supply_changed(sm->psy_bat);
++	}
++	mutex_unlock(&sm5714_companion_lock);
++}
++EXPORT_SYMBOL_GPL(sm5714_battery_typec_fault);
++
++int sm5714_battery_typec_claim(void)
++{
++	struct sm5714_battery *sm;
++	int ret = -EPROBE_DEFER;
++
++	mutex_lock(&sm5714_companion_lock);
++	sm = sm5714_companion;
++	if (sm) {
++		mutex_lock(&sm->chg_lock);
++		/* No silent rebind clears a first-fault latch on a live contract. */
++		if (sm->typec_claimed) {
++			ret = -EBUSY;
++		} else {
++			sm->typec_owned = true;
++			sm->typec_claimed = true;
++			sm->typec_charge = false;
++			sm->typec_mv = 0;
++			sm->typec_ma = 0;
++			ret = sm5714_disable_charging(sm);
++			if (!ret)
++				ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++							     GENMASK(6, 0), sm5714_input_current_reg(100));
++		}
++		mutex_unlock(&sm->chg_lock);
++	}
++	mutex_unlock(&sm5714_companion_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(sm5714_battery_typec_claim);
++
++int sm5714_battery_get_bc12_limit(void)
++{
++	struct sm5714_battery *sm;
++	int type, ret = -ENODEV;
++
++	mutex_lock(&sm5714_companion_lock);
++	sm = sm5714_companion;
++	if (sm) {
++		type = sm5714_get_usb_type(sm);
++		ret = type < 0 ? type : type == POWER_SUPPLY_USB_TYPE_DCP ? 1800 :
++			type == POWER_SUPPLY_USB_TYPE_CDP ? 1500 : 500;
++	}
++	mutex_unlock(&sm5714_companion_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(sm5714_battery_get_bc12_limit);
+ 
+ /*
+  * The fuel gauge exposes its measurements through an SRAM read window: point
+@@ -714,7 +892,8 @@
+ 	.usb_types	= BIT(POWER_SUPPLY_USB_TYPE_UNKNOWN) |
+ 			  BIT(POWER_SUPPLY_USB_TYPE_SDP) |
+ 			  BIT(POWER_SUPPLY_USB_TYPE_CDP) |
+-			  BIT(POWER_SUPPLY_USB_TYPE_DCP),
++			  BIT(POWER_SUPPLY_USB_TYPE_DCP) |
++			  BIT(POWER_SUPPLY_USB_TYPE_PD),
+ };
+ 
+ /*
+@@ -748,6 +927,8 @@
+ 			mutex_lock(&sm->chg_lock);
+ 			changed = sm->thermal_state != SM5714_THERMAL_STOP;
+ 			sm->thermal_state = SM5714_THERMAL_STOP;
++			if (sm->typec_owned)
++				sm->typec_fault = true;
+ 			sm5714_disable_charging(sm);
+ 			mutex_unlock(&sm->chg_lock);
+ 			dev_warn_ratelimited(sm->dev,
+@@ -810,22 +991,46 @@
+ static int sm5714_suspend(struct device *dev)
+ {
+ 	struct sm5714_battery *sm = dev_get_drvdata(dev);
+-
++	int ret;
++
++	mutex_lock(&sm->chg_lock);
++	sm->suspended = true;
++	mutex_unlock(&sm->chg_lock);
+ 	cancel_delayed_work_sync(&sm->poll_work);
+ 	/* Thermal polling cannot protect an unattended suspended charge. */
+-	return sm5714_disable_charging(sm);
++	mutex_lock(&sm->chg_lock);
++	ret = sm5714_disable_charging(sm);
++	mutex_unlock(&sm->chg_lock);
++	return ret;
+ }
+ 
+ static int sm5714_resume(struct device *dev)
+ {
+ 	struct sm5714_battery *sm = dev_get_drvdata(dev);
+ 
++	mutex_lock(&sm->chg_lock);
++	sm->suspended = false;
++	mutex_unlock(&sm->chg_lock);
+ 	sm->last_online = false;
+ 	schedule_delayed_work(&sm->poll_work, 0);
+ 	return 0;
+ }
+ 
+ static DEFINE_SIMPLE_DEV_PM_OPS(sm5714_pm_ops, sm5714_suspend, sm5714_resume);
++
++static void sm5714_unpublish_companion(void *data)
++{
++	struct sm5714_battery *sm = data;
++
++	mutex_lock(&sm5714_companion_lock);
++	if (sm5714_companion == sm)
++		sm5714_companion = NULL;
++	mutex_lock(&sm->chg_lock);
++	sm->suspended = true;
++	sm5714_disable_charging(sm);
++	mutex_unlock(&sm->chg_lock);
++	mutex_unlock(&sm5714_companion_lock);
++}
+ 
+ static int sm5714_probe(struct i2c_client *client)
+ {
+@@ -845,6 +1050,10 @@
+ 
+ 	sm->dev = dev;
+ 	sm->chg = client;
++	/* A retained9V contract must not inherit Stage1's DCP1800mA at boot.
++	 * Start inhibited even if TCPC probe is delayed or fails entirely.
++	 */
++	sm->typec_owned = IS_ENABLED(CONFIG_TYPEC_SM5714);
+ 	i2c_set_clientdata(client, sm);
+ 
+ 	sm->battery_temp = devm_iio_channel_get(dev, "battery-temp");
+@@ -895,6 +1104,12 @@
+ 	ret = sm5714_disable_charging(sm);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "cannot open charging path\n");
++	if (sm->typec_owned) {
++		ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++					     GENMASK(6, 0), sm5714_input_current_reg(100));
++		if (ret)
++			return dev_err_probe(dev, ret, "cannot establish pending-TCPM input cap\n");
++	}
+ 
+ 	psy_cfg.drv_data = sm;
+ 	psy_cfg.fwnode = dev_fwnode(dev);
+@@ -953,6 +1168,13 @@
+ 	schedule_delayed_work(&sm->poll_work,
+ 			      msecs_to_jiffies(SM5714_POLL_INTERVAL_MS));
+ 
++	/* Publish only after supplies, thermistor and teardown actions are ready. */
++	ret = devm_add_action_or_reset(dev, sm5714_unpublish_companion, sm);
++	if (ret)
++		return ret;
++	mutex_lock(&sm5714_companion_lock);
++	sm5714_companion = sm;
++	mutex_unlock(&sm5714_companion_lock);
+ 	return 0;
+ }
+ 
+@@ -970,6 +1192,7 @@
+ 
+ static void sm5714_shutdown(struct i2c_client *client)
+ {
++	sm5714_unpublish_companion(i2c_get_clientdata(client));
+ 	sm5714_cancel_poll(i2c_get_clientdata(client));
+ }
+ 

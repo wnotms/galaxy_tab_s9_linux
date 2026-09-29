@@ -364,7 +364,7 @@
 
 		port {
 			usb_c_sbu_mux_in: endpoint {
-				remote-endpoint = <&sm5714_sbu_out>;
+				/* Stage2 has no SBU/orientation graph connection. */
 			};
 		};
 	};
@@ -1191,7 +1191,8 @@
 	sm5440_direct: charger@63 {
 		compatible = "siliconmitus,sm5440";
 		reg = <0x63>;
-		tcpm-power-supply = <&sm5714_usbpd>;
+		/* Stage2 must never bind or access the direct-charge pump. */
+		status = "disabled";
 	};
 };
 
@@ -1233,56 +1234,17 @@
 		reg = <0x33>;
 		interrupts-extended = <&tlmm 133 IRQ_TYPE_LEVEL_LOW>;
 		pinctrl-names = "default";
-		pinctrl-0 = <&sm5714_usbpd_int &sm5714_otg_det_default
-			     &sm5714_vbus_dischg_default>;
-		otg-det-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
-		wakeup-source;
+		pinctrl-0 = <&sm5714_usbpd_int>;
 
 		sm5714_connector: connector {
 			compatible = "usb-c-connector";
-			power-role = "dual";
-			data-role = "dual";
-			try-power-role = "sink";
-			displayport = <&mdss_dp0>;
-
-			/*
-			 * The board allows 3 A at 9 V on the switching charger, so
-			 * advertise the whole 3 A: the Sink Capabilities only set what
-			 * a contract may grant, and sm5714_battery.c decides how much
-			 * is actually drawn.
-			 *
-			 * Nothing above 9 V is offered: the fast path on this board is
-			 * the SM5440 2:1 pump on a PPS contract, and the vendor never
-			 * asks for more than its 11 V VBUS OVP minus 500 mV.
-			 * op-sink-microwatt stays at the stock 15 W because tcpm
-			 * applies it only to programmable (PPS/AVS) operating points:
-			 * it sets the floor the pump may request, not the fixed
-			 * contract, so raising it would only break direct charging.
-			 */
-			op-sink-microwatt = <15000000>;
-			sink-pdos = <PDO_FIXED(5000, 3000,
-					       PDO_FIXED_DUAL_ROLE |
-					       PDO_FIXED_DATA_SWAP |
-					       PDO_FIXED_USB_COMM)
-				     PDO_FIXED(9000, 3000,
-					       PDO_FIXED_USB_COMM)>;
-			source-pdos = <PDO_FIXED(5000, 900,
-						 PDO_FIXED_DUAL_ROLE |
-						 PDO_FIXED_DATA_SWAP |
-						 PDO_FIXED_USB_COMM)>;
-
-			/*
-			 * The SM8550 QMP PHY and DPU expose a DisplayPort
-			 * source.  Register the local Type-C alternate mode so
-			 * TCPM can match the dock's 0xff01 partner mode and
-			 * negotiate pin assignment C or D.
-			 */
-			altmodes {
-				displayport {
-					svid = /bits/ 16 <0xff01>;
-					vdo = <0x00001c46>;
-				};
-			};
+			/* Stage2: no source, role swaps or alternate modes. */
+			power-role = "sink";
+			data-role = "device";
+			op-sink-microwatt = <13500000>;
+			/* Capability is separate from thermally gated charger programming. */
+			sink-pdos = <PDO_FIXED(5000, 1800, PDO_FIXED_USB_COMM)
+				     PDO_FIXED(9000, 1500, PDO_FIXED_USB_COMM)>;
 
 			ports {
 				#address-cells = <1>;
@@ -1297,23 +1259,6 @@
 					};
 				};
 
-				port@1 {
-					reg = <1>;
-
-					sm5714_ss_in: endpoint {
-						remote-endpoint =
-							<&ps5169_ss_out>;
-					};
-				};
-
-				port@2 {
-					reg = <2>;
-
-					sm5714_sbu_out: endpoint {
-						remote-endpoint =
-							<&usb_c_sbu_mux_in>;
-					};
-				};
 			};
 		};
 	};
@@ -1416,7 +1361,7 @@
 				reg = <0>;
 
 				ps5169_ss_out: endpoint {
-					remote-endpoint = <&sm5714_ss_in>;
+					/* Stage2 has no USB3 orientation provider. */
 				};
 			};
 
@@ -1552,12 +1497,12 @@
 };
 
 &usb_1 {
-	/*
-	 * Force the peripheral role.  The Type-C port is managed by an SM5714 PD
-	 * controller that has no mainline driver, so there is no role switch and
-	 * no extcon to move dwc3 out of its OTG default: the core probes, exposes
-	 * a UDC, and never enables the port.
+	/* Stage2 TCPM manages Sink/UFP PD roles; DWC3 stays fixed peripheral.
+	 * sm8550.dtsi advertises a role switch, but DWC3 registers that provider
+	 * only in OTG mode. Remove the inherited flag so TCPM's optional lookup
+	 * cannot defer forever. ADB/NCM keep using the existing peripheral UDC.
 	 */
+	/delete-property/ usb-role-switch;
 	dr_mode = "peripheral";
 	status = "okay";
 };
