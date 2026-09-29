@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.37",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; for f in /sys/class/power_supply/*/uevent; do echo \"$f\"; cat \"$f\"; done"
+  ],
+  "ended_utc": "2026-09-29T10:29:42.428134+00:00",
+  "started_utc": "2026-09-29T10:29:42.142447+00:00",
+  "status": 0
+}

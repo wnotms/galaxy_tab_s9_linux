@@ -1,0 +1,22 @@
+test_active_pps_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_active_pps_stops) ... ok
+test_active_type_requires_brackets (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_active_type_requires_brackets) ... ok
+test_battery_45c_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_battery_45c_stops) ... ok
+test_battery_watts_use_actual_battery_readings (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_battery_watts_use_actual_battery_readings) ... ok
+test_boot_change_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_boot_change_stops) ... ok
+test_charge_current_exceeds_pack_policy_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_charge_current_exceeds_pack_policy_stops) ... ok
+test_contract_above_9v_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_contract_above_9v_stops) ... ok
+test_discharge_sign_not_inverted (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_discharge_sign_not_inverted) ... ok
+test_host_role_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_host_role_stops) ... ok
+test_input_limit_cannot_exceed_9v_policy (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_input_limit_cannot_exceed_9v_policy) ... ok
+test_input_limit_cannot_exceed_pd_grant (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_input_limit_cannot_exceed_pd_grant) ... ok
+test_missing_sections_fail (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_missing_sections_fail) ... ok
+test_rapid_temperature_increase_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_rapid_temperature_increase_stops) ... ok
+test_summary_never_claims_measured_input_power (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_summary_never_claims_measured_input_power) ... ok
+test_supported_but_inactive_pps_does_not_fail (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_supported_but_inactive_pps_does_not_fail) ... ok
+test_unplug_before_charge_is_not_contract_loss (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_unplug_before_charge_is_not_contract_loss) ... ok
+test_vbat_above_float_stops (test_sm5714_pd_telemetry.SM5714PDTelemetryTests.test_vbat_above_float_stops) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.001s
+
+OK

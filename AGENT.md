@@ -2,6 +2,18 @@
 
 ## Current state (2026-09-29)
 
+The owner has revised the Test255 workflow to connect the existing Lenovo
+YG65G USB-C2 18W PD supply directly and inspect power/battery telemetry.
+Attempt03 registers this bounded observation without an external VBUS meter or
+separate5V-only supply. Read its README before continuing: measured battery net
+power is VBAT*IBAT; TCPM voltage/current and switching input-current limits are
+policy values, not actual charger input watts. No kernel/driver/DTS/rootfs or
+charging-policy change, reboot, flash or Stage3 is authorized by this revision.
+First fresh Wi-Fi identity preflight and pushed registration, then5min plus20min
+same-boot charging capture, unplug150s and charger-to-PC bounded recovery.
+The independent physical-VBUS gate remains unobserved, not passed. Earlier
+sealed attempt01/02 results remain unchanged.
+
 Latest installed Test255 Stage2 candidate boot is `d745248e…`, following the
 owner's reported manual reboot after attempt01 battery testing. Attempt02
 initial27/final26 identity/health gates and a fresh162.143-second PC USB window

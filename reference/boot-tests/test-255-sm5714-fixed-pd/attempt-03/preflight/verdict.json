@@ -1,0 +1,108 @@
+{
+  "battery_telemetry": {
+    "battery_current_ua": -1024000,
+    "battery_health": "Good",
+    "battery_net_power_w": -4.005888,
+    "battery_soc": 60,
+    "battery_status": "Discharging",
+    "battery_temp_deciC": 279,
+    "battery_voltage_uv": 3912000,
+    "boot_id": "d745248e6a164243b9ccc5e6ede21fb2",
+    "configured_input_ceiling_w": 0.0,
+    "contract_current_ua": 0,
+    "contract_voltage_uv": 0,
+    "data_role": "device",
+    "input_current_limit_ua": 100000,
+    "measured_input_power_w": null,
+    "power_operation_mode": "usb_power_delivery",
+    "power_role": "sink",
+    "tcpm_online": 0,
+    "tcpm_type": "C",
+    "uptime_seconds": 2328.76,
+    "usb_online": 0,
+    "usb_type": "Unknown"
+  },
+  "boot_id": "d745248e6a164243b9ccc5e6ede21fb2",
+  "checks": {
+    "181-candidate-modules": true,
+    "181-test249-rollback-modules": true,
+    "181-test252-rollback-modules": true,
+    "181-test254-rollback-modules": true,
+    "battery-only-before-charger": true,
+    "battery-safe": true,
+    "boot-id": true,
+    "boot-unchanged-during-capture": true,
+    "cmdline-unchanged": true,
+    "dcc-nodes-getty-absent": true,
+    "dcc-off": true,
+    "exact-embedded-config": true,
+    "five-partitions": true,
+    "kernel-notes": true,
+    "module-directories-unchanged": true,
+    "no-failed-units": true,
+    "no-kernel-fault": true,
+    "owner-reboot-attribution": true,
+    "protected-settings-unchanged": true,
+    "sink-device": true,
+    "stage1-container-config-preserved": true,
+    "telemetry-safe": true,
+    "test253-adbd-active": true
+  },
+  "config_sha256": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+  "device_writes": false,
+  "end_uptime_seconds": 2329.6,
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "1764778005",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.538211,
+          "events": [],
+          "setup_source_seconds": 4.617215
+        },
+        {
+          "completion_source_seconds": 6.683559,
+          "events": [
+            {
+              "completion_source_seconds": 6.683559,
+              "event_source_seconds": 5.881031,
+              "recovery_seconds": 0.802528,
+              "row": 1050
+            }
+          ],
+          "setup_source_seconds": 5.805949
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1050
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1108,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "modules": 181,
+  "notes_sha256": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+  "partitions": {
+    "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+  },
+  "scope": "exact installed candidate identity over Wi-Fi; direct PD telemetry scope",
+  "start_uptime_seconds": 2320.21,
+  "verdict": "passed"
+}

@@ -1,0 +1,407 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'AGENT.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-01/CURRENT_STATUS.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/RESULTS.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/SHA256.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/battery-and-role.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/battery-and-role.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/battery-and-role.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/boot-and-uptime.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/boot-and-uptime.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/boot-and-uptime.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/end-boot-and-uptime.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/end-boot-and-uptime.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/end-boot-and-uptime.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-journal.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-journal.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-journal.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/ending/kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/adb-config-byte-transfer.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/adb-config-byte-transfer.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/adb-config-byte-transfer.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-and-uptime.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-and-uptime.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-and-uptime.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-history.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-history.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/boot-history.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/cmdline.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/cmdline.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/cmdline.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/dcc-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/dcc-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/dcc-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/embedded-config.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/embedded-config.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/embedded-config.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/final-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/final-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/final-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-journal.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-journal.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-journal.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/module-directories.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/module-directories.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/module-directories.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-current.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-current.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-current.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test249.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test249.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test249.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test252.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test252.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test252.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test254.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test254.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/modules-test254.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/notes-hash.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/notes-hash.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/notes-hash.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/partitions.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/partitions.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/partitions.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/power-supplies.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/power-supplies.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/power-supplies.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/protected-settings.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/protected-settings.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/protected-settings.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/test253-adbd.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/test253-adbd.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/test253-adbd.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/typec.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/typec.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/typec.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/uname.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/uname.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/uname.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/usb-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/usb-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/usb-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/verdict.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-source-bound-ncm.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-source-bound-ncm.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-source-bound-ncm.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/final/windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/host-validation/changed.log': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/host-validation/summary.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-00-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-01-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-02-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-03-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-04-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-05-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-06-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-07-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-08-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-banner.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-banner.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-banner.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-ncm-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-wifi-ssh.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-wifi-ssh.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-wifi-ssh.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-windows-usb.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-windows-usb.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/sample-09-windows-usb.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/samples.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/pc-window/summary.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-02/summary.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/check-identity.py': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-and-uptime.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-and-uptime.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-and-uptime.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-history.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-history.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/boot-history.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/cmdline.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/cmdline.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/cmdline.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/dcc-state.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/dcc-state.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/dcc-state.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/embedded-config.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/embedded-config.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/embedded-config.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-journal.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-journal.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-journal.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/notes-hash.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/notes-hash.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/notes-hash.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/uname.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/uname.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/attempt-03/preflight/uname.txt': No reviewed dependency rule: run all tests.
+'scripts/sm5714_pd_telemetry.py': No reviewed dependency rule: run all tests.
+'tests/test_sm5714_pd_telemetry.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1200, tiers={'core': 1095, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmpifuh6ye2/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpifuh6ye2/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-29T10:30:31.933398+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-29T10:30:31.933607+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-29T10:30:31.934142+00:00"
+}
+.....................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1200 tests in 96.710s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.
