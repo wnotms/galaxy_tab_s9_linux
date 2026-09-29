@@ -1,0 +1,20 @@
+2a03:2880:f111:83:face:b00c:0:25de STREAM registry-1.docker.io
+2a03:2880:f111:83:face:b00c:0:25de DGRAM  
+2a03:2880:f111:83:face:b00c:0:25de RAW    
+198.44.185.131  STREAM 
+198.44.185.131  DGRAM  
+198.44.185.131  RAW    
+default via 10.191.121.92 dev wlp1s0 proto dhcp src 10.191.121.241 metric 600 
+10.191.121.0/24 dev wlp1s0 proto kernel scope link src 10.191.121.241 metric 600 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+2409:8931:b066:997::/64 dev wlp1s0 proto ra metric 600 pref medium
+fe80::/64 dev usb0 proto kernel metric 256 pref medium
+fe80::/64 dev wlp1s0 proto kernel metric 1024 pref medium
+default via fe80::1c20:f7ff:fe55:c695 dev wlp1s0 proto ra metric 600 pref high
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+NETWORK ID     NAME      DRIVER    SCOPE
+f049c0fac339   bridge    bridge    local
+95f56a6608f4   host      host      local
+cbed9d3e4e5b   none      null      local

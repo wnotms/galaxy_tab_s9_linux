@@ -1,0 +1,50 @@
+Result=success
+PrivateUsers=yes
+ActiveState=active
+● upower.service - Daemon for power management
+     Loaded: loaded (/usr/lib/systemd/system/upower.service; disabled; preset: enabled)
+     Active: active (running) since Tue 2026-09-29 08:53:25 CST; 65ms ago
+ Invocation: 0a1afe9a8af94c7c931ca9c93205ebe4
+       Docs: man:upowerd(8)
+   Main PID: 2305 (upowerd)
+      Tasks: 5 (limit: 14053)
+     Memory: 4.2M (peak: 4.5M)
+        CPU: 54ms
+     CGroup: /system.slice/upower.service
+             └─2305 /usr/libexec/upowerd
+
+Sep 29 08:53:24 gts9 systemd[1]: Starting upower.service - Daemon for power management...
+Sep 29 08:53:25 gts9 upowerd[2305]: g_udev_device_get_sysfs_path: assertion 'G_UDEV_IS_DEVICE (device)' failed
+Sep 29 08:53:25 gts9 upowerd[2305]: g_udev_client_query_by_sysfs_path: assertion 'sysfs_path != NULL' failed
+Sep 29 08:53:25 gts9 systemd[1]: Started upower.service - Daemon for power management.
+/org/freedesktop/UPower/devices/battery_sm5714_battery
+/org/freedesktop/UPower/devices/line_power_sm5714_usb
+/org/freedesktop/UPower/devices/DisplayDevice
+  native-path:          sm5714-battery
+  power supply:         yes
+  updated:              Tue Sep 29 08:53:25 2026 (0 seconds ago)
+  has history:          yes
+  has statistics:       yes
+  battery
+    present:             yes
+    rechargeable:        yes
+    state:               discharging
+    warning-level:       none
+    energy:              26.0859 Wh
+    energy-empty:        0 Wh
+    energy-full:         36.2304 Wh
+    energy-full-design:  36.2304 Wh
+    energy-rate:         1.11444 W
+    voltage:             4.091 V
+    charge-cycles:       N/A
+    time to empty:       23.4 hours
+    percentage:          72%
+    temperature:         29.6 degrees C
+    capacity:            100%
+    technology:          lithium-ion
+    icon-name:          'battery-full-symbolic'
+  History (charge):
+    1790643205	72.000	discharging
+  History (rate):
+    1790643205	1.114	discharging
+

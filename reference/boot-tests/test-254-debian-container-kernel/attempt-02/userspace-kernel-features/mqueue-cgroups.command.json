@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; grep mqueue /proc/filesystems; findmnt /dev/mqueue; stat -fc %T /sys/fs/cgroup; cat /sys/fs/cgroup/cgroup.controllers; cat /sys/fs/cgroup/cgroup.subtree_control"
+  ],
+  "ended_utc": "2026-09-29T00:54:11.445135+00:00",
+  "started_utc": "2026-09-29T00:54:11.354279+00:00",
+  "status": 0
+}

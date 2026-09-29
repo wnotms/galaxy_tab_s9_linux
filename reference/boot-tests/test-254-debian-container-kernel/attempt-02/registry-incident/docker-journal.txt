@@ -1,0 +1,12 @@
+[  511.295030] gts9 systemd[1]: Starting docker.service - Docker Application Container Engine...
+[  511.300807] gts9 (dockerd)[2885]: docker.service: Referenced but unset environment variable evaluates to an empty string: DOCKER_OPTS
+[  511.339930] gts9 dockerd[2885]: time="2026-09-29T08:58:05.686277565+08:00" level=info msg="Starting up"
+[  512.027459] gts9 dockerd[2885]: time="2026-09-29T08:58:06.374119179+08:00" level=info msg="Loading containers: start."
+[  512.342126] gts9 dockerd[2885]: time="2026-09-29T08:58:06.688789804+08:00" level=info msg="Loading containers: done."
+[  512.643182] gts9 dockerd[2885]: time="2026-09-29T08:58:06.989669127+08:00" level=info msg="Docker daemon" commit=411e817 containerd-snapshotter=false storage-driver=overlay2 version=26.1.5+dfsg1
+[  512.643625] gts9 dockerd[2885]: time="2026-09-29T08:58:06.990111002+08:00" level=info msg="Daemon has completed initialization"
+[  512.742795] gts9 dockerd[2885]: time="2026-09-29T08:58:07.089350898+08:00" level=info msg="API listen on /run/docker.sock"
+[  512.743047] gts9 systemd[1]: Started docker.service - Docker Application Container Engine.
+[  539.987652] gts9 dockerd[2885]: time="2026-09-29T08:58:34.334088492+08:00" level=warning msg="Error getting v2 registry: Get \"https://registry-1.docker.io/v2/\": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)" spanID=7530160983dfa564 traceID=7373923757822b04c4b0adad548f528f
+[  539.989747] gts9 dockerd[2885]: time="2026-09-29T08:58:34.334415888+08:00" level=info msg="Attempting next endpoint for pull after error: Get \"https://registry-1.docker.io/v2/\": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)" spanID=7530160983dfa564 traceID=7373923757822b04c4b0adad548f528f
+[  540.002629] gts9 dockerd[2885]: time="2026-09-29T08:58:34.348342502+08:00" level=error msg="Handler for POST /v1.45/images/create returned error: Get \"https://registry-1.docker.io/v2/\": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)" spanID=7530160983dfa564 traceID=7373923757822b04c4b0adad548f528f

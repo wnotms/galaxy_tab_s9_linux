@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; runuser -u ms -- unshare -Ur id; cat /proc/sys/user/max_user_namespaces; if test -r /proc/sys/kernel/unprivileged_userns_clone; then cat /proc/sys/kernel/unprivileged_userns_clone; else echo kernel.unprivileged_userns_clone=absent-upstream-knob; fi"
+  ],
+  "ended_utc": "2026-09-29T00:54:11.353950+00:00",
+  "started_utc": "2026-09-29T00:54:11.271673+00:00",
+  "status": 0
+}

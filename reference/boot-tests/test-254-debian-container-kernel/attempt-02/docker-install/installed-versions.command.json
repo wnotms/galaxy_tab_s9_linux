@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "dpkg-query -W docker.io docker-cli containerd runc iptables curl uidmap ipvsadm; docker version; iptables --version; update-alternatives --query iptables; systemctl is-active docker containerd; systemctl --failed --no-legend --plain"
+  ],
+  "ended_utc": "2026-09-29T00:58:07.453342+00:00",
+  "started_utc": "2026-09-29T00:58:07.299913+00:00",
+  "status": 0
+}

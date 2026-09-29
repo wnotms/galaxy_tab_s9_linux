@@ -1,0 +1,27 @@
+{
+  "image": "nginx:alpine",
+  "platform": "linux/arm64",
+  "image_id": "sha256:a2b80c421aaa02ba1ef4ef2d3c991112674e676f9db05fd42d456f2529b83a86",
+  "host_engine_image_id": "sha256:84dd96a0337ae0f15be81afa8c6bd99d06a514a2ab71a1503aba91ce4392ecc2",
+  "arm64_manifest_digest": "sha256:84dd96a0337ae0f15be81afa8c6bd99d06a514a2ab71a1503aba91ce4392ecc2",
+  "config_digest_verified_against_official_registry": true,
+  "all_diff_ids_verified": true,
+  "repo_digests": [
+    "nginx@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2"
+  ],
+  "archive": "out/test254-oci-images/nginx-alpine.tar",
+  "bytes": 27160064,
+  "sha256": "ecfe55ff435d985eb0ab4e0380d52bfa4037da6eac3c976f69123adc017263fe",
+  "save_argv": [
+    "docker",
+    "image",
+    "save",
+    "--platform",
+    "linux/arm64",
+    "-o",
+    "out/test254-oci-images/nginx-alpine.tar",
+    "nginx:alpine"
+  ],
+  "source": "docker.io/library official image; host pull then platform-specific save",
+  "device_pull_proven": false
+}

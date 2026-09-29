@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/class/power_supply/sm5714-battery/health; cat /sys/class/power_supply/sm5714-battery/temp; cat /sys/class/power_supply/sm5714-battery/voltage_now; systemctl --failed --no-legend --plain"
+  ],
+  "ended_utc": "2026-09-29T00:51:09.127129+00:00",
+  "started_utc": "2026-09-29T00:51:09.033657+00:00",
+  "status": 0
+}

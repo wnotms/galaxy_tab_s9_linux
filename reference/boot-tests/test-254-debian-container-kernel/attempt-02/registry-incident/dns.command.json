@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "getent ahosts registry-1.docker.io; ip route; ip -6 route; docker image ls; docker ps -a; docker network ls"
+  ],
+  "ended_utc": "2026-09-29T00:59:59.771023+00:00",
+  "started_utc": "2026-09-29T00:59:59.610232+00:00",
+  "status": 0
+}

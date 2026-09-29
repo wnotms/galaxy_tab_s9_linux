@@ -1,0 +1,48 @@
+docker-cli:
+  Installed: (none)
+  Candidate: 26.1.5+dfsg1-9+deb13u1
+  Version table:
+     26.1.5+dfsg1-9+deb13u1 500
+        500 https://mirrors.tuna.tsinghua.edu.cn/debian trixie/main arm64 Packages
+        500 https://security.debian.org/debian-security trixie-security/main arm64 Packages
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (8.14.1-2+deb13u5).
+The following packages were automatically installed and are no longer required:
+  libsodium23 vim-runtime
+Use 'apt autoremove' to remove them.
+The following additional packages will be installed:
+  containerd libip4tc2 libip6tc2 libsubid5 runc tini
+Suggested packages:
+  containernetworking-plugins docker-doc aufs-tools btrfs-progs cgroupfs-mount
+  debootstrap rinse rootlesskit xfsprogs zfs-fuse | zfsutils-linux firewalld
+  heartbeat keepalived ldirectord
+Recommended packages:
+  docker-buildx apparmor needrestart xz-utils criu
+The following NEW packages will be installed:
+  containerd docker-cli docker.io iptables ipvsadm libip4tc2 libip6tc2
+  libsubid5 runc tini uidmap
+0 upgraded, 11 newly installed, 0 to remove and 0 not upgraded.
+Inst runc (1.1.15+ds1-2+b4 Debian:13.7/stable [arm64])
+Inst containerd (1.7.24~ds1-6+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libip4tc2 (1.8.11-2 Debian:13.7/stable [arm64])
+Inst libip6tc2 (1.8.11-2 Debian:13.7/stable [arm64])
+Inst iptables (1.8.11-2 Debian:13.7/stable [arm64])
+Inst tini (0.19.0-3+b8 Debian:13.7/stable [arm64])
+Inst docker.io (26.1.5+dfsg1-9+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst ipvsadm (1:1.31-5 Debian:13.7/stable [arm64])
+Inst docker-cli (26.1.5+dfsg1-9+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libsubid5 (1:4.17.4-2 Debian:13.7/stable [arm64])
+Inst uidmap (1:4.17.4-2 Debian:13.7/stable [arm64])
+Conf runc (1.1.15+ds1-2+b4 Debian:13.7/stable [arm64])
+Conf containerd (1.7.24~ds1-6+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libip4tc2 (1.8.11-2 Debian:13.7/stable [arm64])
+Conf libip6tc2 (1.8.11-2 Debian:13.7/stable [arm64])
+Conf iptables (1.8.11-2 Debian:13.7/stable [arm64])
+Conf tini (0.19.0-3+b8 Debian:13.7/stable [arm64])
+Conf docker.io (26.1.5+dfsg1-9+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf ipvsadm (1:1.31-5 Debian:13.7/stable [arm64])
+Conf docker-cli (26.1.5+dfsg1-9+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libsubid5 (1:4.17.4-2 Debian:13.7/stable [arm64])
+Conf uidmap (1:4.17.4-2 Debian:13.7/stable [arm64])

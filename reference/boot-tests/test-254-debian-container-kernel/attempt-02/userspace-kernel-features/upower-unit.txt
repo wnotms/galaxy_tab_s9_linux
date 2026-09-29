@@ -1,0 +1,60 @@
+# /usr/lib/systemd/system/upower.service
+[Unit]
+Description=Daemon for power management
+Documentation=man:upowerd(8)
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.UPower
+ExecStart=/usr/libexec/upowerd
+Restart=on-failure
+
+# Filesystem lockdown
+ProtectSystem=strict
+# Needed by keyboard backlight support
+ProtectKernelTunables=false
+ProtectControlGroups=true
+ReadWritePaths=/var/lib/upower
+StateDirectory=upower
+ProtectHome=true
+PrivateTmp=true
+
+# Network
+# PrivateNetwork=true would block udev's netlink socket
+IPAddressDeny=any
+RestrictAddressFamilies=AF_UNIX AF_NETLINK
+
+# Execute Mappings
+MemoryDenyWriteExecute=true
+
+# Modules
+ProtectKernelModules=true
+
+# Real-time
+RestrictRealtime=true
+
+# Privilege escalation
+NoNewPrivileges=true
+
+# Capabilities
+CapabilityBoundingSet=
+
+# System call interfaces
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=ioprio_get
+
+# Namespaces
+PrivateUsers=yes
+RestrictNamespaces=yes
+
+# Locked memory
+LimitMEMLOCK=0
+
+[Install]
+WantedBy=graphical.target
+[  230.570206] gts9 systemd[1]: Starting upower.service - Daemon for power management...
+[  230.688499] gts9 upowerd[2305]: g_udev_device_get_sysfs_path: assertion 'G_UDEV_IS_DEVICE (device)' failed
+[  230.688524] gts9 upowerd[2305]: g_udev_client_query_by_sysfs_path: assertion 'sysfs_path != NULL' failed
+[  230.694673] gts9 systemd[1]: Started upower.service - Daemon for power management.

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "getent passwd ms; cat /etc/subuid /etc/subgid; command -v newuidmap newgidmap || true; systemctl show user@1000.service -p Delegate -p ActiveState; cat /sys/fs/cgroup/user.slice/cgroup.controllers; true"
+  ],
+  "ended_utc": "2026-09-29T00:54:11.561042+00:00",
+  "started_utc": "2026-09-29T00:54:11.445404+00:00",
+  "status": 0
+}

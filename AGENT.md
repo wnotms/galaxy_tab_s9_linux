@@ -15,10 +15,17 @@ before any module/boot write. Four other partitions are unchanged/readback verif
 Current boot6c3dde80334e495589169a1e576c8024 has exact Test254 config c80d3c66…
 and notes7bbb0dc3…, DCC absent, protected Test253/USB/SSH unchanged, no failed
 unit/kernel fault and ADB/source-bound NCM/Wi-Fi working (Wi-Fi10.191.121.241).
-Bounded150s boot observation and UPower/Docker/cable acceptance are still ongoing;
-do not claim complete acceptance. Read Test254 attempt02. Preserve all original
-sealed offline/older stopped evidence, hardware/USB/adbd settings and Stage2/3
-exclusions. This is a container-config candidate, not Test249 production.
+Boot151.6s observation, USER_NS/mqueue/cgroup2 and unchanged PrivateUsers=yes
+UPower activation/battery enumeration now pass. Two GUdev assertions remain
+independently recorded. Debian Docker26.1.5/CLI/containerd/runc/iptables-nft/
+uidmap/ipvsadm installed (11 new/no upgrades), daemon cgroup2/overlay2/seccomp
+passes. Attempt02 stopped on first direct Docker Hub pull timeout; its raw
+incident/full post-stop/seal remain preserved, no container/cable test run there.
+Host official registry access works; official ARM64 config/layer/source digests
+are independently verified for a separately registered attempt03 same-boot
+archive-load/container/network/cable test. No proxy/DNS/daemon/kernel/USB change,
+reflash/reboot or Stage2/3. Fresh attempt03 full identity/rescue passes. Push
+registration before its image load/workloads; never relabel device pulls passed.
 
 The owner authorized offline UPower/OCI kernel configuration enablement only.
 Test254 is a separate **unflashed candidate and future acceptance plan** under

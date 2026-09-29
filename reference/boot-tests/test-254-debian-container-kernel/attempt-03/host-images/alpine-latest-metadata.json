@@ -1,0 +1,27 @@
+{
+  "image": "alpine:latest",
+  "platform": "linux/arm64",
+  "image_id": "sha256:33bee74c45f307e3268adc2010c0f55c48e7a6041e12cd12432bb1a46e498e43",
+  "host_engine_image_id": "sha256:260479a1cfaf304c4c20da7f8405d3ce313513dcd534bb743257bdd2fe0f3e2d",
+  "arm64_manifest_digest": "sha256:260479a1cfaf304c4c20da7f8405d3ce313513dcd534bb743257bdd2fe0f3e2d",
+  "config_digest_verified_against_official_registry": true,
+  "all_diff_ids_verified": true,
+  "repo_digests": [
+    "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+  ],
+  "archive": "out/test254-oci-images/alpine-latest.tar",
+  "bytes": 4287488,
+  "sha256": "8058e2b646ae29aa500364a3e71c0a4a8d22e61563ee6abbc3eb147fb4f0cb58",
+  "save_argv": [
+    "docker",
+    "image",
+    "save",
+    "--platform",
+    "linux/arm64",
+    "-o",
+    "out/test254-oci-images/alpine-latest.tar",
+    "alpine:latest"
+  ],
+  "source": "docker.io/library official image; host pull then platform-specific save",
+  "device_pull_proven": false
+}

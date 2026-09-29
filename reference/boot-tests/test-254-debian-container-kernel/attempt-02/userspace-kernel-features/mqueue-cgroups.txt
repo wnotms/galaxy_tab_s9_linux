@@ -1,0 +1,6 @@
+nodev	mqueue
+TARGET      SOURCE FSTYPE OPTIONS
+/dev/mqueue mqueue mqueue rw,nosuid,nodev,noexec,relatime
+cgroup2fs
+cpuset cpu io memory pids
+memory pids

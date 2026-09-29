@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b -u docker -u containerd --no-pager -o short-monotonic"
+  ],
+  "ended_utc": "2026-09-29T00:58:07.631276+00:00",
+  "started_utc": "2026-09-29T00:58:07.526634+00:00",
+  "status": 0
+}

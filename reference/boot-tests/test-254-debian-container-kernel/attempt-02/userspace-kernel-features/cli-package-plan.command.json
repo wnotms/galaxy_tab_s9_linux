@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "apt-cache policy docker-cli; apt-get --simulate --no-install-recommends install docker.io docker-cli iptables curl uidmap ipvsadm"
+  ],
+  "ended_utc": "2026-09-29T00:54:12.500831+00:00",
+  "started_utc": "2026-09-29T00:54:11.561273+00:00",
+  "status": 0
+}

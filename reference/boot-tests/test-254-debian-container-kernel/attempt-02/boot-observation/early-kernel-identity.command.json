@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; systemctl --failed --no-legend --plain"
+  ],
+  "ended_utc": "2026-09-29T00:50:18.769934+00:00",
+  "started_utc": "2026-09-29T00:50:18.647676+00:00",
+  "status": 0
+}

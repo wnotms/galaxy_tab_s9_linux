@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "test ! -f /etc/docker/daemon.json; test ! -d /var/lib/docker; command -v docker || true; iptables --version 2>/dev/null || true; ip -br addr; ip route"
+  ],
+  "ended_utc": "2026-09-29T00:54:55.267859+00:00",
+  "started_utc": "2026-09-29T00:54:55.186273+00:00",
+  "status": 0
+}

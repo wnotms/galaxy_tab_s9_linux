@@ -1,0 +1,58 @@
+containerd	1.7.24~ds1-6+deb13u1
+curl	8.14.1-2+deb13u5
+docker-cli	26.1.5+dfsg1-9+deb13u1
+docker.io	26.1.5+dfsg1-9+deb13u1
+iptables	1.8.11-2
+ipvsadm	1:1.31-5
+runc	1.1.15+ds1-2+b4
+uidmap	1:4.17.4-2
+Client:
+ Version:           26.1.5+dfsg1
+ API version:       1.45
+ Go version:        go1.24.4
+ Git commit:        a72d7cd
+ Built:             Thu Aug 13 05:35:47 2026
+ OS/Arch:           linux/arm64
+ Context:           default
+
+Server:
+ Engine:
+  Version:          26.1.5+dfsg1
+  API version:      1.45 (minimum version 1.24)
+  Go version:       go1.24.4
+  Git commit:       411e817
+  Built:            Thu Aug 13 05:35:47 2026
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          1.7.24~ds1
+  GitCommit:        1.7.24~ds1-6+deb13u1
+ runc:
+  Version:          1.1.15+ds1
+  GitCommit:        1.1.15+ds1-2+b4
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        
+iptables v1.8.11 (nf_tables)
+Name: iptables
+Link: /usr/sbin/iptables
+Slaves:
+ iptables-restore /usr/sbin/iptables-restore
+ iptables-save /usr/sbin/iptables-save
+Status: auto
+Best: /usr/sbin/iptables-nft
+Value: /usr/sbin/iptables-nft
+
+Alternative: /usr/sbin/iptables-legacy
+Priority: 10
+Slaves:
+ iptables-restore /usr/sbin/iptables-legacy-restore
+ iptables-save /usr/sbin/iptables-legacy-save
+
+Alternative: /usr/sbin/iptables-nft
+Priority: 20
+Slaves:
+ iptables-restore /usr/sbin/iptables-nft-restore
+ iptables-save /usr/sbin/iptables-nft-save
+active
+active

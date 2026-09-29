@@ -1,0 +1,27 @@
+{
+  "image": "debian:trixie-slim",
+  "platform": "linux/arm64",
+  "image_id": "sha256:3fde68c8327d49ce5f747c72d9742ec63d27dee28515807ef0ca5259c3e01120",
+  "host_engine_image_id": "sha256:da496358bd6934d2bd6a563a33176a2e50eff5490c54b4ac6fb051b69fef4071",
+  "arm64_manifest_digest": "sha256:da496358bd6934d2bd6a563a33176a2e50eff5490c54b4ac6fb051b69fef4071",
+  "config_digest_verified_against_official_registry": true,
+  "all_diff_ids_verified": true,
+  "repo_digests": [
+    "debian@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a"
+  ],
+  "archive": "out/test254-oci-images/debian-trixie-slim.tar",
+  "bytes": 32185344,
+  "sha256": "dbb8167995c6f2afd26f266c66a199492a70d84df76d3490e4a44c3da925d5e5",
+  "save_argv": [
+    "docker",
+    "image",
+    "save",
+    "--platform",
+    "linux/arm64",
+    "-o",
+    "out/test254-oci-images/debian-trixie-slim.tar",
+    "debian:trixie-slim"
+  ],
+  "source": "docker.io/library official image; host pull then platform-specific save",
+  "device_pull_proven": false
+}

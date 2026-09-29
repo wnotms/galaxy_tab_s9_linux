@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; systemctl start upower.service; systemctl show upower.service -p PrivateUsers -p ActiveState -p Result; systemctl status upower.service --no-pager; upower -e; upower -i /org/freedesktop/UPower/devices/battery_sm5714_battery"
+  ],
+  "ended_utc": "2026-09-29T00:53:24.960563+00:00",
+  "started_utc": "2026-09-29T00:53:24.625076+00:00",
+  "status": 0
+}

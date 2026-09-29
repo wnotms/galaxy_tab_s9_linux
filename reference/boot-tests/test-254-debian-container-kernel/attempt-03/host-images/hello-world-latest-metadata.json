@@ -1,0 +1,27 @@
+{
+  "image": "hello-world:latest",
+  "platform": "linux/arm64",
+  "image_id": "sha256:eb84fdc6f2a3a064445bb2a2fbc89c515666c428d6c96b6ab68a4cd218819688",
+  "host_engine_image_id": "sha256:5099b89d7666cc2186cad769ddc262ddc7c335b33f5fe79f9ffe50a01282b23e",
+  "arm64_manifest_digest": "sha256:5099b89d7666cc2186cad769ddc262ddc7c335b33f5fe79f9ffe50a01282b23e",
+  "config_digest_verified_against_official_registry": true,
+  "all_diff_ids_verified": true,
+  "repo_digests": [
+    "hello-world@sha256:5e23090353324d887c48ad5e5c56d294eab81588df9605b07d1afe895f9cc8f8"
+  ],
+  "archive": "out/test254-oci-images/hello-world-latest.tar",
+  "bytes": 22016,
+  "sha256": "7b91988f7c72672140f65db0e281162261b94586214a6121884fb4af38f3f869",
+  "save_argv": [
+    "docker",
+    "image",
+    "save",
+    "--platform",
+    "linux/arm64",
+    "-o",
+    "out/test254-oci-images/hello-world-latest.tar",
+    "hello-world:latest"
+  ],
+  "source": "docker.io/library official image; host pull then platform-specific save",
+  "device_pull_proven": false
+}

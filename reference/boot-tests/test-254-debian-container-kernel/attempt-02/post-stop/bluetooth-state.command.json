@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.241",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "printf 'boot_id='; cat /proc/sys/kernel/random/boot_id; printf 'uptime='; cat /proc/uptime; printf 'bluetooth='; systemctl is-active bluetooth.service || true; printf 'address='; systemctl is-active gts9-bluetooth-address.service || true; printf 'controllers='; ls /sys/class/bluetooth | sed -n '/^hci[0-9][0-9]*$/p' | tr '\\n' ' '; echo; echo controller:; timeout 8 bluetoothctl show"
+  ],
+  "ended_utc": "2026-09-29T01:01:36.136200+00:00",
+  "started_utc": "2026-09-29T01:01:35.798054+00:00",
+  "status": 0
+}

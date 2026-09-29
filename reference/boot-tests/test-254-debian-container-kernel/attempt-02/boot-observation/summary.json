@@ -1,0 +1,152 @@
+{
+  "ADB": true,
+  "NCM_SSH": true,
+  "WiFi_SSH": true,
+  "boot_attribution_unique": true,
+  "boot_id": "6c3dde80334e495589169a1e576c8024",
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "31712400",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.407291,
+          "events": [],
+          "setup_source_seconds": 4.381302
+        },
+        {
+          "completion_source_seconds": 7.523807,
+          "events": [
+            {
+              "completion_source_seconds": 7.523807,
+              "event_source_seconds": 6.70927,
+              "recovery_seconds": 0.814537,
+              "row": 1048
+            }
+          ],
+          "setup_source_seconds": 6.636787
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1048
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1104,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "observation_seconds": 151.59593396999935,
+  "polls": [
+    {
+      "elapsed_seconds": 1.5488452909994521,
+      "poll": 0,
+      "temperature_deciC": 303,
+      "uptime": 50.94,
+      "voltage_uv": 4092000
+    },
+    {
+      "elapsed_seconds": 12.23768207699959,
+      "poll": 1,
+      "temperature_deciC": 303,
+      "uptime": 62.47,
+      "voltage_uv": 4086000
+    },
+    {
+      "elapsed_seconds": 22.964785295000183,
+      "poll": 2,
+      "temperature_deciC": 302,
+      "uptime": 73.16,
+      "voltage_uv": 4081000
+    },
+    {
+      "elapsed_seconds": 34.024897831999624,
+      "poll": 3,
+      "temperature_deciC": 301,
+      "uptime": 83.89,
+      "voltage_uv": 4093000
+    },
+    {
+      "elapsed_seconds": 45.11515809799948,
+      "poll": 4,
+      "temperature_deciC": 301,
+      "uptime": 94.95,
+      "voltage_uv": 4090000
+    },
+    {
+      "elapsed_seconds": 57.09566269700008,
+      "poll": 5,
+      "temperature_deciC": 300,
+      "uptime": 106.04,
+      "voltage_uv": 4093000
+    },
+    {
+      "elapsed_seconds": 68.71624772099949,
+      "poll": 6,
+      "temperature_deciC": 300,
+      "uptime": 118.02,
+      "voltage_uv": 4091000
+    },
+    {
+      "elapsed_seconds": 80.28557452699988,
+      "poll": 7,
+      "temperature_deciC": 299,
+      "uptime": 129.64,
+      "voltage_uv": 4090000
+    },
+    {
+      "elapsed_seconds": 92.47210478299985,
+      "poll": 8,
+      "temperature_deciC": 299,
+      "uptime": 141.21,
+      "voltage_uv": 4084000
+    },
+    {
+      "elapsed_seconds": 104.29740061499979,
+      "poll": 9,
+      "temperature_deciC": 298,
+      "uptime": 153.39,
+      "voltage_uv": 4089000
+    },
+    {
+      "elapsed_seconds": 116.23654422399977,
+      "poll": 10,
+      "temperature_deciC": 298,
+      "uptime": 165.22,
+      "voltage_uv": 4084000
+    },
+    {
+      "elapsed_seconds": 127.83529875499971,
+      "poll": 11,
+      "temperature_deciC": 298,
+      "uptime": 177.16,
+      "voltage_uv": 4085000
+    },
+    {
+      "elapsed_seconds": 139.683343316,
+      "poll": 12,
+      "temperature_deciC": 297,
+      "uptime": 188.76,
+      "voltage_uv": 4086000
+    },
+    {
+      "elapsed_seconds": 151.59593396999935,
+      "poll": 13,
+      "temperature_deciC": 297,
+      "uptime": 200.6,
+      "voltage_uv": 4085000
+    }
+  ],
+  "verdict": "passed bounded boot responsiveness",
+  "wifi_address": "10.191.121.241"
+}

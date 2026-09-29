@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; runuser -u ms -- id; runuser -u ms -- unshare -Ur id; sysctl kernel.unprivileged_userns_clone user.max_user_namespaces"
+  ],
+  "ended_utc": "2026-09-29T00:53:25.170961+00:00",
+  "started_utc": "2026-09-29T00:53:25.082890+00:00",
+  "status": 1
+}

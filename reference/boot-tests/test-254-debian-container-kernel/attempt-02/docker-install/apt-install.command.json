@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu; export DEBIAN_FRONTEND=noninteractive; apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 update; apt-get -y --no-install-recommends -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 install docker.io docker-cli iptables curl uidmap ipvsadm"
+  ],
+  "elapsed_seconds": 192.03084015399963,
+  "ended_utc": "2026-09-29T00:58:07.298855+00:00",
+  "started_utc": "2026-09-29T00:54:55.268039+00:00",
+  "status": 0
+}

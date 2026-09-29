@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.241",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "for f in /sys/class/udc/*/state; do echo $f; cat $f; done; ip -br addr show usb0; ss -lnt; systemctl is-active ssh.service gts9-usb-acm.service gts9-adbd.service || true"
+  ],
+  "ended_utc": "2026-09-29T01:01:35.797873+00:00",
+  "started_utc": "2026-09-29T01:01:35.402412+00:00",
+  "status": 0
+}

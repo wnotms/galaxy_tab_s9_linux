@@ -1,0 +1,22 @@
+{
+  "PrivateUsers": "yes",
+  "UPower_active": true,
+  "UPower_gudev_assertions": 2,
+  "UPower_gudev_cause": "not established; outside config-only repair",
+  "UPower_namespace_fix": true,
+  "battery_enumerated": true,
+  "cgroup_version": 2,
+  "controllers": [
+    "cpu",
+    "cpuset",
+    "io",
+    "memory",
+    "pids"
+  ],
+  "initial_auxiliary_sysctl": "Debian-specific kernel.unprivileged_userns_clone absent in upstream; not required for successful unshare",
+  "initial_combined_namespace_command_exit": 1,
+  "mqueue": true,
+  "ordinary_user_unshare_exit": 0,
+  "rootless_daemon_tested": false,
+  "verdict": "required kernel features passed; separate UPower GLib warnings retained"
+}

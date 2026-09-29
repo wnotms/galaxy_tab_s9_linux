@@ -1,0 +1,14 @@
+{
+  "docker_cli_reason": "CLI is a separately recommended Debian package, required for requested docker commands; other recommendations not installed",
+  "explicit_packages": [
+    "docker.io",
+    "docker-cli",
+    "iptables",
+    "curl",
+    "uidmap",
+    "ipvsadm"
+  ],
+  "hardware_or_usb_configs_changed": false,
+  "upgrades": 0,
+  "verdict": "installed"
+}

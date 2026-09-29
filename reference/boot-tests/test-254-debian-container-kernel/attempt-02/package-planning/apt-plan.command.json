@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "dpkg-query -W > /tmp/test254-packages-before.txt; cat /tmp/test254-packages-before.txt; apt-cache policy docker.io iptables curl uidmap ipvsadm; apt-get --simulate --no-install-recommends install docker.io iptables curl uidmap ipvsadm"
+  ],
+  "ended_utc": "2026-09-29T00:52:26.730312+00:00",
+  "started_utc": "2026-09-29T00:52:24.909335+00:00",
+  "status": 0
+}
