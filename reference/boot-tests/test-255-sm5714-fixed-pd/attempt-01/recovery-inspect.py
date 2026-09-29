@@ -23,7 +23,9 @@ raw = r.adb("recovery-identity", "getprop ro.product.model; getprop ro.twrp.vers
 assert raw.splitlines()[0] == "SM-X710" and raw.splitlines()[1].startswith("3.7")
 raw = r.adb("partitions-before", "set -e; for n in boot vendor_boot init_boot dtbo vbmeta; do blockdev --getsize64 /dev/block/by-name/$n; sha256sum /dev/block/by-name/$n; done", 70)[0]
 assert p.parse_hashes("\n".join(x for x in raw.splitlines() if "/dev/block/by-name/" in x), "/dev/block/by-name/") == BASE["partitions"]
-assert all(x == "100663296" for x in raw.splitlines() if x.isdigit())
+assert [int(x) for x in raw.splitlines() if x.isdigit()] == [
+    100663296, 100663296, 8388608, 16777216, 131072,
+]
 r.adb("recovery-supplies", 'for f in /sys/class/power_supply/*/uevent; do echo "$f"; cat "$f"; done', 20)
 raw = r.adb("recovery-battery", "cat /sys/class/power_supply/battery/uevent", 15)[0]
 props = dict(x.split("=", 1) for x in raw.splitlines() if x.startswith("POWER_SUPPLY_"))
