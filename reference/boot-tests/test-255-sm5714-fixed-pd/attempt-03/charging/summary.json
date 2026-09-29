@@ -1,0 +1,26 @@
+{
+  "boot_id": "d745248e6a164243b9ccc5e6ede21fb2",
+  "device_configuration_writes": false,
+  "independent_vbus_gate_passed": false,
+  "observation_seconds": 1500.06,
+  "statistics": {
+    "actual_input_power_measured": false,
+    "actual_vbus_independently_measured": false,
+    "battery_net_power_w": {
+      "max": 8.56359,
+      "mean": 7.827682176079733,
+      "min": 6.357504
+    },
+    "configured_input_ceiling_w_max": 13.5,
+    "contract_voltage_uv_values": [
+      9000000
+    ],
+    "positive_current_samples": 301,
+    "sample_count": 301,
+    "soc_end": 69,
+    "soc_start": 59,
+    "temperature_deciC_max": 315,
+    "temperature_deciC_min": 287
+  },
+  "verdict": "bounded-battery-telemetry-passed"
+}

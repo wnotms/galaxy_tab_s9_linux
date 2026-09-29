@@ -12,8 +12,10 @@ charging-policy change, reboot, flash or Stage3 is authorized by this revision.
 Registration b63fad60 and23 fresh Wi-Fi identity gates preceded attachment.
 Attempt03 first300.011s fixed9V/1500mA battery telemetry passed:61 positive
 current samples, mean battery net7.771W, SOC59->61%,28.7..29.7°C.
-The further20-minute same-boot window is in progress; unplug150s and
-charger-to-PC bounded recovery follow. No later stage is passed yet.
+The full1500.060s charging window now passed:301 positive-current samples,
+fixed9V/1500mA, mean battery net7.828W, SOC59->69%,28.7..31.5°C,
+no detected new kernel fault/failed unit. Unplug150s and charger-to-PC
+bounded recovery remain pending; do not infer these from the charging pass.
 The independent physical-VBUS gate remains unobserved, not passed. Earlier
 sealed attempt01/02 results remain unchanged.
 
