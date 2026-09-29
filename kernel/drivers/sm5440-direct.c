@@ -205,16 +205,16 @@ static int sm5440_get_property(struct power_supply *psy,
 	if (!sample.valid || time_after(jiffies, sample.stamp + msecs_to_jiffies(2500)))
 		return -ENODATA;
 	switch (prop) {
-	case POWER_SUPPLY_PROP_ONLINE
+	case POWER_SUPPLY_PROP_ONLINE:
 		val->intval = sample.online;
 		break;
-	case POWER_SUPPLY_PROP_VOLTAGE_NOW
+	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
 		val->intval = sample.vbus_uv;
 		break;
-	case POWER_SUPPLY_PROP_CURRENT_NOW
+	case POWER_SUPPLY_PROP_CURRENT_NOW:
 		val->intval = sample.ibus_ua;
 		break;
-	case POWER_SUPPLY_PROP_TEMP
+	case POWER_SUPPLY_PROP_TEMP:
 		val->intval = sample.die_decic;
 		break;
 	default:

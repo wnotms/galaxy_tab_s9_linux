@@ -33,7 +33,20 @@ typedef uint8_t u8; typedef uint32_t u32;
         code += r'''
 struct sm5440_sample {u32 vbus_uv,vbat_uv,ibus_ua;int die_decic;u32 faults;
  bool online,valid;unsigned long stamp;};
-struct sm5440_direct {void *regmap;int io_lock;bool stopped;};
+struct sm5440_direct {void *regmap;int io_lock;bool stopped,fault;struct sm5440_sample sample;};
+struct power_supply {struct sm5440_direct *sm;};
+union power_supply_propval {int intval;};
+enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
+ POWER_SUPPLY_PROP_ONLINE,POWER_SUPPLY_PROP_VOLTAGE_NOW,POWER_SUPPLY_PROP_CURRENT_NOW,
+ POWER_SUPPLY_PROP_TEMP};
+#define POWER_SUPPLY_STATUS_NOT_CHARGING 3
+#define POWER_SUPPLY_HEALTH_UNSPEC_FAILURE 6
+#define POWER_SUPPLY_HEALTH_GOOD 1
+#define POWER_SUPPLY_HEALTH_UNKNOWN 0
+#define jiffies 100UL
+#define msecs_to_jiffies(ms) (ms)
+#define time_after(a,b) ((long)((b)-(a))<0)
+static struct sm5440_direct *power_supply_get_drvdata(struct power_supply *p) {return p->sm;}
 static u8 regs[64];static int calls,fail_at,never_ready,waits,started,unsafe_writes;
 static struct sm5440_direct *current;
 static int step(void) {calls++;return calls==fail_at?-EIO:0;}
@@ -68,6 +81,7 @@ static void msleep(unsigned int ms) {
 '''
         code += function(src, "static int sm5440_off(") + "\n"
         code += function(src, "static int sm5440_sample_once(") + "\n"
+        code += function(src, "static int sm5440_get_property(") + "\n"
         code += r'''
 unsigned int value(int what,unsigned int high,unsigned int low) {
  switch(what){case 0:return sm5440_raw13(high,low);
@@ -105,6 +119,13 @@ int turn_off(int failure,int *result) {
  struct sm5440_direct sm={0};memset(regs,0,sizeof(regs));regs[0x10]=0xac;
  calls=unsafe_writes=0;fail_at=failure;int ret=sm5440_off(&sm);
  result[0]=regs[0x10];result[1]=unsafe_writes;return ret;
+}
+int property(int p,int valid,int fault,int *v) {
+ struct sm5440_direct sm={0};sm.fault=fault;
+ sm.sample=(struct sm5440_sample){.valid=valid,.stamp=100,.vbus_uv=9000000,
+ .ibus_ua=1000000,.die_decic=350,.online=true};
+ struct power_supply psy={.sm=&sm};union power_supply_propval value={0};
+ int ret=sm5440_get_property(&psy,p,&value);*v=value.intval;return ret;
 }
 '''
         path = Path(cls.temp.name) / "passive.c"
@@ -188,6 +209,15 @@ int turn_off(int failure,int *result) {
         self.assertNotEqual(self.lib.faults(0, 1, 1), 0)
         self.assertEqual(self.lib.faults(64 << 16, 0, 0), 0)  # unplug UVLO
         self.assertEqual(self.lib.faults(((128 | 8) << 8) | (32 << 16), 1, 1), 0)
+
+    def test_real_power_supply_getter_units_and_unavailable_conversion(self):
+        value = ctypes.c_int()
+        for prop, expected in ((0, 3), (1, 1), (2, 1), (3, 9000000), (4, 1000000), (5, 350)):
+            self.assertEqual(self.lib.property(prop, 1, 0, ctypes.byref(value)), 0)
+            self.assertEqual(value.value, expected)
+        self.assertLess(self.lib.property(3, 0, 0, ctypes.byref(value)), 0)
+        self.assertEqual(self.lib.property(1, 0, 1, ctypes.byref(value)), 0)
+        self.assertEqual(value.value, 6)
 
 
 class PassiveProfileTests(unittest.TestCase):
