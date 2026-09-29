@@ -1,0 +1,10 @@
+--- Test254/candidate.config
++++ Test255/candidate.config
+@@ -6138,6 +6138,7 @@
+ # CONFIG_TYPEC_TCPCI_MAXIM is not set
+ # CONFIG_TYPEC_FUSB302 is not set
+ # CONFIG_TYPEC_QCOM_PMIC is not set
++CONFIG_TYPEC_SM5714=y
+ CONFIG_TYPEC_UCSI=y
+ # CONFIG_UCSI_CCG is not set
+ # CONFIG_UCSI_STM32G0 is not set

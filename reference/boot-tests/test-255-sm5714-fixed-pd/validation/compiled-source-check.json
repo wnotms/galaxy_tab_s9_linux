@@ -1,0 +1,13 @@
+{
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "source_bytes_match_prebuild_snapshot": true,
+  "stock_core_files": {
+    "drivers/usb/typec/tcpm/tcpm.c": true,
+    "include/linux/usb/tcpm.h": true,
+    "drivers/usb/dwc3/core.c": true,
+    "drivers/usb/dwc3/drd.c": true,
+    "drivers/usb/dwc3/gadget.c": true,
+    "drivers/usb/roles/class.c": true
+  },
+  "staged_companion_header_in_both_dirs": true
+}

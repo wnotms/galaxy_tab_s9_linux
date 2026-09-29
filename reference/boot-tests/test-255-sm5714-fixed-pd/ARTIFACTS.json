@@ -1,0 +1,32 @@
+{
+  "status": "offline built and packaged; not deployed",
+  "implementation_commit": "814788a306cd6b942f7a28dcdcb5e5539da02691",
+  "kernel_output": "out/kernel-sm5714-stage2",
+  "bundle_output": "out/boot-bundle-sm5714-stage2",
+  "kernel_artifacts": {
+    "Image.gz": "f1ce90a4e65a4ab1cf1179391bef2237963eb832cb1bb3be6fdbe5781e27e46c",
+    "sm8550-samsung-gts9wifi.dtb": "c6148471113c5cb7589c64dee776e17b2fc20235cfeff4482616817a8b4e1c0b",
+    "config": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+    "kernel.release": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+    "kernel-notes.bin": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+    "modules-sm5714-stage2.tar.gz": "28e33cda7814686ee32b480c0b0cf4f02952cdc89d19ad7af37feb47e79edf1c"
+  },
+  "kernel_notes_sha256": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+  "partitions": {
+    "boot.img": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "vendor_boot.img": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+    "init_boot.img": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "dtbo.img": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "vbmeta.img": "b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4"
+  },
+  "module_manifest": "validation/module-hashes.json",
+  "module_count": 181,
+  "boot_and_vendor_DTB_match": true,
+  "init_boot_dtbo_unchanged": true,
+  "generated_vbmeta_preserve_only_never_flash": true,
+  "accepted_device_vbmeta_sha256": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+  "physical_test_executed": false,
+  "device_commands_executed": false,
+  "flashed": false,
+  "device_write_authorized": false
+}

@@ -1,0 +1,90 @@
+{
+  "test-254-debian-container-kernel": {
+    "Image.gz": {
+      "sha256": "69abcdbf67960bd2a46d1c457e1807120c5a92e3e525ae36a70733b5b33e0823",
+      "matches_saved": true
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+      "matches_saved": true
+    },
+    "config": {
+      "sha256": "c80d3c661cca3588fc85c93ba3402356bd99b7e4fe85674773230914fb8e6b71",
+      "matches_saved": true
+    },
+    "kernel.release": {
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "matches_saved": true
+    },
+    "modules-container-candidate.tar.gz": {
+      "sha256": "4ef282f778f01acf4b69b15fd1926dc615319160970d4b3f41704ae2051d4bfe",
+      "matches_saved": true
+    }
+  },
+  "test-252-sm5714-stage1": {
+    "Image.gz": {
+      "sha256": "80b26f059516ef626d841dbfcff847c32d7f9e0b4f2d21c4885b734b401275d7",
+      "matches_saved": true
+    },
+    "config": {
+      "sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+      "matches_saved": true
+    },
+    "kernel.release": {
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "matches_saved": true
+    },
+    "modules-sm5714-stage1.tar.gz": {
+      "sha256": "7985911b32405232f460b86f59ad6c09806dce9db902ecc1dd6b43e6d557d275",
+      "matches_saved": true
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+      "matches_saved": true
+    }
+  },
+  "Test254-bundle": {
+    "boot.img": {
+      "sha256": "ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7",
+      "matches_saved": true
+    },
+    "dtbo.img": {
+      "sha256": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+      "matches_saved": true
+    },
+    "init_boot.img": {
+      "sha256": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+      "matches_saved": true
+    },
+    "vbmeta.img": {
+      "sha256": "b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4",
+      "matches_saved": true
+    },
+    "vendor_boot.img": {
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9",
+      "matches_saved": true
+    }
+  },
+  "Test249-bundle": {
+    "boot.img": {
+      "sha256": "7f021014850504c3d881504cdf4c44171d0adb1049ae987d6552774684a8482b",
+      "matches_saved": true
+    },
+    "dtbo.img": {
+      "sha256": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+      "matches_saved": true
+    },
+    "init_boot.img": {
+      "sha256": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+      "matches_saved": true
+    },
+    "vbmeta.img": {
+      "sha256": "b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4",
+      "matches_saved": true
+    },
+    "vendor_boot.img": {
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9",
+      "matches_saved": true
+    }
+  }
+}

@@ -1,0 +1,80 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'docs/SM5714_STAGE2_PD_PLAN.md': No reviewed dependency rule: run all tests.
+'kernel/config/gts9wifi-mainline.fragment': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714-battery.c': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714-stage2.h': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714_usbpd.c': No reviewed dependency rule: run all tests.
+'kernel/dts/sm8550-samsung-gts9wifi.dts': No reviewed dependency rule: run all tests.
+'kernel/patches/0012-usb-typec-hook-sm5714-sink.patch': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/SOURCE_AUDIT.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/candidate.config': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/config-gate.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/config.diff': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/depmod.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/dtb-audit.py': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/dtb-semantic-diff.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/dtb.diff': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/embedded.config': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/expected-config-delta.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/host-tests/changed-attempt01.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/host-tests/changed-attempt01.log': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/kernel-notes.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/module-SHA256SUMS': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/module-hashes.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/prebuild-source-audit.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/prebuild-source-hashes.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/protected-source-hashes.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/reference-sources.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/retained-stage1-helpers.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/superseded-build-source-hashes.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-255-sm5714-fixed-pd/validation/test254-to-stage2-driver.diff': No reviewed dependency rule: run all tests.
+'scripts/build-kernel.sh': No reviewed dependency rule: run all tests.
+'scripts/prepare-kernel.sh': No reviewed dependency rule: run all tests.
+'scripts/verify-sm5714-stage2.py': No reviewed dependency rule: run all tests.
+'tests/test_rootfs_boot.py': Changed test module and its static import consumers.
+'tests/test_sm5714_charge_safety.py': Changed test module and its static import consumers.
+'tests/test_sm5714_stage2_pd.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1183, tiers={'core': 1078, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmp9d42847e/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp9d42847e/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-29T02:36:32.388861+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-29T02:36:32.389027+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-29T02:36:32.389504+00:00"
+}
+....................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1183 tests in 83.539s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.

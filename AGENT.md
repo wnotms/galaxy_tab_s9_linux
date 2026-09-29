@@ -2,6 +2,52 @@
 
 ## Current state (2026-09-29)
 
+Test255 is now an **offline Stage2 fixed-PD candidate**, prepared under the
+owner's explicit no-device-command/no-flash instruction. Installed state stays
+Test254 with Test252 Stage1 and Test253 userspace adbd repair; no live identity
+query, reboot, partition/module/rootfs change or Stage3 occurred. Starting local
+and origin/test HEAD was26d62393; plan c799fadf preceded implementation814788a3.
+Read docs/SM5714_STAGE2_PD_PLAN.md and Test255 README/SOURCE_AUDIT/BUILD_RESULTS/
+RESULTS/ARTIFACTS/validation/summary.json before proposing hardware work.
+
+Candidate uses stock Linux7.2-rc3 TCPM and a built-in SM5714 TCPC transport at
+hub9/0x33/400kHz/GPIO133-low. Sink+Device only, fixed5V1800/9V1500mA; actual9V
+switching input<=1500mA(13.5W), positive grant honored. Q4 charge-off plus100mA
+hardware input minimum covers zero/subminimum budget, pending TCPC probe/fault;
+it is not complete VBUS/VSYS isolation. Original4440mV float, pack thermistor,
+2100mA pack cap, thermal helpers and suspend stop-charge remain. No Source/OTG,
+role-swap/dock/DP/PS5169/SBU/PPS/SM5440 driver or register operation was added.
+Inherited SM5440 DT child is disabled/unlinked; hub3/GPI remains unchanged.
+DWC3 stays peripheral with retained USB2 graph; delete its inherited inactive
+usb-role-switch flag so TCPM does not defer waiting for an absent provider.
+TCPM/DWC3/gadget/adbd/rootfs and OPP sources are unchanged.
+
+Exact Test254 resolved-config delta is only TYPEC_SM5714 absent->y; config
+cd7ec9cb…, notes fb3d2496…, DCC off and all85 container gates preserved.
+Final Image f1ce90a4…, DTB c6148471…, archive28e33cda… and181 paired files/
+167 ko passed embedded-config/source/DTB/depmod/archive checks. Separate outputs
+out/kernel-sm5714-stage2 and out/boot-bundle-sm5714-stage2 preserve rollback.
+Boot26ef6bd1… and vendor_boot d80d03cd… both carry the new DTB; exact old cmdline,
+bootconfig/ramdisk and init_boot/dtbo are retained. Generated vbmeta is not the
+accepted installed vbmeta: never deploy generated init_boot/dtbo/vbmeta.
+Changed/wrapper/full each execute1183 tests with zero failures/errors/skips;
+35 new,1148 retained. An earlier PTY partial-read fixture failure was separately
+fixed in a718bd89 without weakening assertions; raw failed evidence is retained.
+No GitHub Actions or CI. No hardware acceptance/safety guarantee is implied.
+
+Future Test255 requires fresh authorization plus pushed rescue registration,
+retained Test254 boot+vendor_boot+181 modules alongside Test252/Test249 pairs,
+and an independent measured-VBUS gate (TCPM voltage_now is contract state).
+Use registered battery150s/PC Sink-UFP/5V/proven9V/5min-then20min/unplug150s/
+same-boot charger-to-PC bounded reconnect gates; stop first anomaly. No device
+work is authorized by this offline result. Water detection, USB3 orientation,
+suspend PD continuity and BC1.2/PD timing remain unaccepted; no Stage3.
+Test254's independent Docker I/O/registry/GUdev/network/rootless/cable limits
+remain as recorded. Preserve every old sealed/stopped result and the bounded
+Test247/Test249 DCC conclusion.
+
+### Previously recorded installed-state history (preserved)
+
 The owner subsequently authorized **“刷入测试”**. Test254 attempt01 stopped
 before any device write on initial Windows Code43/absent rescue transports;
 its result/raw evidence remain immutable. Owner confirmed manual reboot and

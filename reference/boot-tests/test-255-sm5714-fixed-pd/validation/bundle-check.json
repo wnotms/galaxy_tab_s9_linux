@@ -1,0 +1,29 @@
+{
+  "valid": true,
+  "partition_artifacts": {
+    "boot.img": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "vendor_boot.img": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+    "init_boot.img": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "dtbo.img": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "vbmeta.img": "b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4"
+  },
+  "boot_payload_exact_Image_gz_plus_DTB": true,
+  "vendor_DTB_matches": true,
+  "vendor_cmdline_header_bootconfig_empty_ramdisk_preserved": true,
+  "init_boot_dtbo_generated_vbmeta_unchanged": true,
+  "generated_vbmeta_is_not_installed_vbmeta": true,
+  "deployment_scope_after_future_authorization": [
+    "boot",
+    "vendor_boot",
+    "paired_modules"
+  ],
+  "never_deploy_generated": [
+    "init_boot",
+    "dtbo",
+    "vbmeta"
+  ],
+  "ramdisk_sha256": "7d524dbcaef4c91fb82a58b794f3a2afa099f1827c1bd0391b65cbcdf2e176fe",
+  "ramdisk_inputs_preserved": true,
+  "device_commands_executed": false,
+  "flashed": false
+}

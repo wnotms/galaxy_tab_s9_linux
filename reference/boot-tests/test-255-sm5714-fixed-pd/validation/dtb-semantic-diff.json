@@ -1,0 +1,181 @@
+{
+  "valid": true,
+  "phandle_identifiers_normalized": true,
+  "changes": [
+    {
+      "node": "/__symbols__",
+      "property": "sm5714_sbu_out",
+      "before": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@2/endpoint",
+      "after": null
+    },
+    {
+      "node": "/__symbols__",
+      "property": "sm5714_ss_in",
+      "before": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@1/endpoint",
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@8c0000/i2c@890000/redriver@28/ports/port@0/endpoint",
+      "property": "remote-endpoint",
+      "before": [
+        "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@1/endpoint"
+      ],
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@98c000/charger@63",
+      "property": "status",
+      "before": null,
+      "after": "disabled"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@98c000/charger@63",
+      "property": "tcpm-power-supply",
+      "before": [
+        "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33"
+      ],
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "property": "otg-det-gpios",
+      "before": [
+        "/soc@0/pinctrl@f100000",
+        89,
+        0
+      ],
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "property": "pinctrl-0",
+      "before": [
+        "/soc@0/pinctrl@f100000/sm5714-usbpd-int-state",
+        "/soc@0/pinctrl@f100000/sm5714-otg-det-default-state",
+        "/soc@0/pinctrl@f100000/sm5714-vbus-dischg-default-state"
+      ],
+      "after": [
+        "/soc@0/pinctrl@f100000/sm5714-usbpd-int-state"
+      ]
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "property": "wakeup-source",
+      "before": "",
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "data-role",
+      "before": "dual",
+      "after": "device"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "displayport",
+      "before": "0x7f",
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "op-sink-microwatt",
+      "before": "0xe4e1c0",
+      "after": "0xcdfe60"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "power-role",
+      "before": "dual",
+      "after": "sink"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "sink-pdos",
+      "before": "0x2601912c 0x402d12c",
+      "after": "0x40190b4 0x402d096"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "source-pdos",
+      "before": "0x2601905a",
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector",
+      "property": "try-power-role",
+      "before": "sink",
+      "after": null
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/altmodes",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/altmodes/displayport",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@1",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@1/endpoint",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@2",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@2/endpoint",
+      "property": "<node>",
+      "before": "present",
+      "after": "absent"
+    },
+    {
+      "node": "/soc@0/usb@a600000",
+      "property": "usb-role-switch",
+      "before": [],
+      "after": null
+    },
+    {
+      "node": "/usb-c-sbu-mux/port/endpoint",
+      "property": "remote-endpoint",
+      "before": [
+        "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33/connector/ports/port@2/endpoint"
+      ],
+      "after": null
+    }
+  ],
+  "unexpected_changes": [],
+  "missing_approved_changes": [],
+  "sink_pdos": [
+    {
+      "type": 0,
+      "mv": 5000,
+      "ma": 1800,
+      "flags": 67108864
+    },
+    {
+      "type": 0,
+      "mv": 9000,
+      "ma": 1500,
+      "flags": 67108864
+    }
+  ],
+  "DWC3_peripheral_unchanged": true,
+  "SM5440_child_disabled": true,
+  "other_hub3_GPI_properties_unchanged": true,
+  "USB2_graph_retained": true,
+  "actual_VBUS_measured": false
+}
