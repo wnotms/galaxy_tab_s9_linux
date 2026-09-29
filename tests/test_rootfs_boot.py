@@ -1,9 +1,11 @@
 """Host checks for the optional Debian microSD boot (gts9_rootfs=)."""
 import os
 import pty
+import select
 import shlex
 import subprocess
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -101,7 +103,16 @@ class RootfsBoot(unittest.TestCase):
                 result = subprocess.run(
                     ['/bin/sh', '-c', shell_script],
                     env=env, text=True, capture_output=True, check=False)
-                output = os.read(master_fd, 4096).decode()
+                # PTY reads may return one line even after the producer exited.
+                # Drain until the second marker, preserving both original checks.
+                collected = bytearray()
+                deadline = time.monotonic() + 1
+                while b'after-dev-move' not in collected:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0 or not select.select([master_fd], [], [], remaining)[0]:
+                        break
+                    collected.extend(os.read(master_fd, 4096))
+                output = collected.decode()
             finally:
                 os.close(master_fd)
                 os.close(slave_fd)
