@@ -14,8 +14,17 @@ Attempt03 first300.011s fixed9V/1500mA battery telemetry passed:61 positive
 current samples, mean battery net7.771W, SOC59->61%,28.7..29.7°C.
 The full1500.060s charging window now passed:301 positive-current samples,
 fixed9V/1500mA, mean battery net7.828W, SOC59->69%,28.7..31.5°C,
-no detected new kernel fault/failed unit. Unplug150s and charger-to-PC
-bounded recovery remain pending; do not infer these from the charging pass.
+no detected new kernel fault/failed unit. Unplug150.005s passed; nativeADB/
+NCM recovery<=14.056s with no failed initial command/new warning, followed
+by156.412s PC USB stability, passed on the same boot/PID827. Fresh final22
+identity gates, native binary-config transfer, PnP/banner/NCM/Wi-Fi and
+all three181-file rollback directories/settings match. PC temperature
+34.1..35.1°C(final35.2), input500mA; net battery discharge on PC is recorded
+separately. Charger is disconnected, computer USB/Wi-Fi retained. Read
+attempt03 RESULTS.md/summary.json. No reboot/flash/config/driver/rootfs
+change or Stage3 occurred; no independent actual input watts/VBUS claim.
+Final all1200 host checks passed in96.129s with zero failures/errors/skips;
+all retained tests remain present, no CI. Per-stage/raw evidence is sealed.
 The independent physical-VBUS gate remains unobserved, not passed. Earlier
 sealed attempt01/02 results remain unchanged.
 

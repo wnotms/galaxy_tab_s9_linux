@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.37",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; sha256sum /usr/local/libexec/gts9-adbd-reconnect /usr/libexec/gts9-adbd-run; systemctl show gts9-adbd -p ActiveState -p MainPID -p ExecStart --no-pager"
+  ],
+  "ended_utc": "2026-09-29T11:06:41.373332+00:00",
+  "started_utc": "2026-09-29T11:06:41.039926+00:00",
+  "status": 0
+}
