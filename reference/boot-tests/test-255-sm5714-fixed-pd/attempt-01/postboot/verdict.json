@@ -1,0 +1,90 @@
+{
+  "battery": {
+    "capacity": "66",
+    "current_now": "-88000",
+    "health": "Good",
+    "status": "Charging",
+    "temp": "292",
+    "voltage_now": "4025000"
+  },
+  "boot_id": "a5b8b87f1487422a9035a1db74f85667",
+  "checks": {
+    "battery-safe": true,
+    "boot-id": true,
+    "capture-complete": true,
+    "config-hash": true,
+    "dcc-absent": true,
+    "five-partitions": true,
+    "matched-current-modules": true,
+    "module-directories": true,
+    "ncm-wifi-same-boot": true,
+    "no-kernel-fault": true,
+    "no-sm5440-probe": true,
+    "no-systemd-fail": true,
+    "notes-hash": true,
+    "pc-usb-current-limit": true,
+    "pdic-probed": true,
+    "qca-startup-recovered": true,
+    "sink-device": true,
+    "startup-variants-bounded": true,
+    "test249-rollback": true,
+    "test252-rollback": true,
+    "test253-adbd-active": true,
+    "test254-rollback": true,
+    "unchanged-cmdline": true,
+    "unique-journal-attribution": true,
+    "windows-source-bound-ncm": true,
+    "windows-usb-no-code43": true
+  },
+  "kernel_scan": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "31712041",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.327295,
+          "events": [],
+          "setup_source_seconds": 4.363391
+        },
+        {
+          "completion_source_seconds": 7.793496,
+          "events": [],
+          "setup_source_seconds": 6.937017
+        },
+        {
+          "completion_source_seconds": 11.032605,
+          "events": [
+            {
+              "completion_source_seconds": 11.032605,
+              "event_source_seconds": 10.227332,
+              "recovery_seconds": 0.805273,
+              "row": 1063
+            }
+          ],
+          "setup_source_seconds": 10.148526
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1063
+      ],
+      "setup_count": 3,
+      "state": "accepted"
+    },
+    "rows": 1104,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "matched_modules": 181,
+  "scope": "candidate first boot and PC USB only; unplug/battery/PC reconnect pending; no PD charger",
+  "uptime_seconds": 178.18,
+  "verdict": "passed"
+}

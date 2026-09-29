@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for f in /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role /sys/class/typec/port0/port_type /sys/class/typec/port0/orientation /sys/class/typec/port0/usb_power_delivery_revision; do printf '%s=' \"$f\"; cat \"$f\"; done; ls -la /sys/class/typec"
+  ],
+  "ended_utc": "2026-09-29T04:33:53.829736+00:00",
+  "started_utc": "2026-09-29T04:33:53.748149+00:00",
+  "status": 0
+}

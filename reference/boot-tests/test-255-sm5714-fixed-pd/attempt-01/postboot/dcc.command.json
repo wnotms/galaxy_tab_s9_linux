@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "zcat /proc/config.gz | grep -E '^(# CONFIG_HVC_DCC is not set|CONFIG_HVC_DCC=)'; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; systemctl is-active serial-getty@hvc0.service || true"
+  ],
+  "ended_utc": "2026-09-29T04:33:53.747835+00:00",
+  "started_utc": "2026-09-29T04:33:53.628452+00:00",
+  "status": 0
+}

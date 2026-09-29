@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for f in capacity temp voltage_now current_now status health; do printf '%s=' \"$f\"; cat /sys/class/power_supply/sm5714-battery/\"$f\"; done"
+  ],
+  "ended_utc": "2026-09-29T04:33:53.999673+00:00",
+  "started_utc": "2026-09-29T04:33:53.911966+00:00",
+  "status": 0
+}

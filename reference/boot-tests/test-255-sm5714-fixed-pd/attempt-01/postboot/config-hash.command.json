@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -o pipefail; zcat /proc/config.gz | sha256sum"
+  ],
+  "ended_utc": "2026-09-29T04:33:43.638674+00:00",
+  "started_utc": "2026-09-29T04:33:43.560791+00:00",
+  "status": 0
+}

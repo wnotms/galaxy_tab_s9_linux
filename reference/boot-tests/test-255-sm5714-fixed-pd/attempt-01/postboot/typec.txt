@@ -1,0 +1,10 @@
+/sys/class/typec/port0/power_role=[sink]
+/sys/class/typec/port0/data_role=[device]
+/sys/class/typec/port0/port_type=[sink]
+/sys/class/typec/port0/orientation=reverse
+/sys/class/typec/port0/usb_power_delivery_revision=3.0
+total 0
+drwxr-xr-x  2 root root 0 Sep 29 12:33 .
+drwxr-xr-x 81 root root 0 Jan  4  1970 ..
+lrwxrwxrwx  1 root root 0 Sep 29 12:30 port0 -> ../../devices/platform/soc@0/9c0000.geniqup/9a4000.i2c/i2c-3/3-0033/typec/port0
+lrwxrwxrwx  1 root root 0 Sep 29 12:33 port0-partner -> ../../devices/platform/soc@0/9c0000.geniqup/9a4000.i2c/i2c-3/3-0033/typec/port0/port0-partner
