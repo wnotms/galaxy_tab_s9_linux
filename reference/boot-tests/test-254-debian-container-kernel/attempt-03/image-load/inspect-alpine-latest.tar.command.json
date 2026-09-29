@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "docker image inspect alpine:latest --format \"{{json .}}\""
+  ],
+  "ended_utc": "2026-09-29T01:06:21.865056+00:00",
+  "started_utc": "2026-09-29T01:06:21.780315+00:00",
+  "status": 0
+}

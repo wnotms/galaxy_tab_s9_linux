@@ -1,0 +1,115 @@
+{
+  "daemon_config_changed": false,
+  "device_registry_pull_proven": false,
+  "images": [
+    {
+      "all_diff_ids_verified": true,
+      "archive": "out/test254-oci-images/alpine-latest.tar",
+      "arm64_manifest_digest": "sha256:260479a1cfaf304c4c20da7f8405d3ce313513dcd534bb743257bdd2fe0f3e2d",
+      "bytes": 4287488,
+      "config_digest_verified_against_official_registry": true,
+      "device_pull_proven": false,
+      "host_engine_image_id": "sha256:260479a1cfaf304c4c20da7f8405d3ce313513dcd534bb743257bdd2fe0f3e2d",
+      "image": "alpine:latest",
+      "image_id": "sha256:33bee74c45f307e3268adc2010c0f55c48e7a6041e12cd12432bb1a46e498e43",
+      "platform": "linux/arm64",
+      "repo_digests": [
+        "alpine@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6"
+      ],
+      "save_argv": [
+        "docker",
+        "image",
+        "save",
+        "--platform",
+        "linux/arm64",
+        "-o",
+        "out/test254-oci-images/alpine-latest.tar",
+        "alpine:latest"
+      ],
+      "sha256": "8058e2b646ae29aa500364a3e71c0a4a8d22e61563ee6abbc3eb147fb4f0cb58",
+      "source": "docker.io/library official image; host pull then platform-specific save"
+    },
+    {
+      "all_diff_ids_verified": true,
+      "archive": "out/test254-oci-images/debian-trixie-slim.tar",
+      "arm64_manifest_digest": "sha256:da496358bd6934d2bd6a563a33176a2e50eff5490c54b4ac6fb051b69fef4071",
+      "bytes": 32185344,
+      "config_digest_verified_against_official_registry": true,
+      "device_pull_proven": false,
+      "host_engine_image_id": "sha256:da496358bd6934d2bd6a563a33176a2e50eff5490c54b4ac6fb051b69fef4071",
+      "image": "debian:trixie-slim",
+      "image_id": "sha256:3fde68c8327d49ce5f747c72d9742ec63d27dee28515807ef0ca5259c3e01120",
+      "platform": "linux/arm64",
+      "repo_digests": [
+        "debian@sha256:a99cfc517144bc59b1978475ec53b46ecabec7e43635402ee5b77cc54cd1b20a"
+      ],
+      "save_argv": [
+        "docker",
+        "image",
+        "save",
+        "--platform",
+        "linux/arm64",
+        "-o",
+        "out/test254-oci-images/debian-trixie-slim.tar",
+        "debian:trixie-slim"
+      ],
+      "sha256": "dbb8167995c6f2afd26f266c66a199492a70d84df76d3490e4a44c3da925d5e5",
+      "source": "docker.io/library official image; host pull then platform-specific save"
+    },
+    {
+      "all_diff_ids_verified": true,
+      "archive": "out/test254-oci-images/hello-world-latest.tar",
+      "arm64_manifest_digest": "sha256:5099b89d7666cc2186cad769ddc262ddc7c335b33f5fe79f9ffe50a01282b23e",
+      "bytes": 22016,
+      "config_digest_verified_against_official_registry": true,
+      "device_pull_proven": false,
+      "host_engine_image_id": "sha256:5099b89d7666cc2186cad769ddc262ddc7c335b33f5fe79f9ffe50a01282b23e",
+      "image": "hello-world:latest",
+      "image_id": "sha256:eb84fdc6f2a3a064445bb2a2fbc89c515666c428d6c96b6ab68a4cd218819688",
+      "platform": "linux/arm64",
+      "repo_digests": [
+        "hello-world@sha256:5e23090353324d887c48ad5e5c56d294eab81588df9605b07d1afe895f9cc8f8"
+      ],
+      "save_argv": [
+        "docker",
+        "image",
+        "save",
+        "--platform",
+        "linux/arm64",
+        "-o",
+        "out/test254-oci-images/hello-world-latest.tar",
+        "hello-world:latest"
+      ],
+      "sha256": "7b91988f7c72672140f65db0e281162261b94586214a6121884fb4af38f3f869",
+      "source": "docker.io/library official image; host pull then platform-specific save"
+    },
+    {
+      "all_diff_ids_verified": true,
+      "archive": "out/test254-oci-images/nginx-alpine.tar",
+      "arm64_manifest_digest": "sha256:84dd96a0337ae0f15be81afa8c6bd99d06a514a2ab71a1503aba91ce4392ecc2",
+      "bytes": 27160064,
+      "config_digest_verified_against_official_registry": true,
+      "device_pull_proven": false,
+      "host_engine_image_id": "sha256:84dd96a0337ae0f15be81afa8c6bd99d06a514a2ab71a1503aba91ce4392ecc2",
+      "image": "nginx:alpine",
+      "image_id": "sha256:a2b80c421aaa02ba1ef4ef2d3c991112674e676f9db05fd42d456f2529b83a86",
+      "platform": "linux/arm64",
+      "repo_digests": [
+        "nginx@sha256:df221db836e1754089190208cee7eeda94f233197056426eda74a43ab1abeac2"
+      ],
+      "save_argv": [
+        "docker",
+        "image",
+        "save",
+        "--platform",
+        "linux/arm64",
+        "-o",
+        "out/test254-oci-images/nginx-alpine.tar",
+        "nginx:alpine"
+      ],
+      "sha256": "ecfe55ff435d985eb0ab4e0380d52bfa4037da6eac3c976f69123adc017263fe",
+      "source": "docker.io/library official image; host pull then platform-specific save"
+    }
+  ],
+  "verdict": "passed all four exact ARM64 config/archive identities"
+}

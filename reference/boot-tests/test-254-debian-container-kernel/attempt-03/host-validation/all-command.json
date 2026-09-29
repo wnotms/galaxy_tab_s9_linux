@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "scripts/run-host-tests.py",
+    "all",
+    "--fail-on-skip",
+    "--report",
+    "out/host-tests/test254-physical-all.json"
+  ],
+  "exit_status": 0,
+  "elapsed_seconds": 91.57288475099995,
+  "qualification": "host-only real syncfs repo ext4+/tmp tmpfs, no device use"
+}

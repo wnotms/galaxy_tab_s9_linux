@@ -1,0 +1,8 @@
+uid=0(root) gid=0(root) groups=0(root),65534(nogroup)
+/usr/bin/newuidmap
+ms:100000:65536
+ms:100000:65536
+Delegate=yes
+ActiveState=active
+cpuset cpu io memory pids
+cpu memory pids

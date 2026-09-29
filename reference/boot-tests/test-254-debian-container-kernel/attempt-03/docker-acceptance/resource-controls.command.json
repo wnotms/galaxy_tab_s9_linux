@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -eu\npid=$(docker inspect --format '{{.State.Pid}}' gts9-test254-limits)\ncg=$(awk -F: '$1==\"0\" {print $3}' /proc/$pid/cgroup)\necho \"$cg\"\nfor n in cpu.max memory.max pids.max cpuset.cpus cpuset.cpus.effective io.max; do echo \"$n\"; cat \"/sys/fs/cgroup$cg/$n\"; done\ndocker inspect gts9-test254-limits --format '{{json .HostConfig}}'\n"
+  ],
+  "ended_utc": "2026-09-29T01:07:35.548072+00:00",
+  "started_utc": "2026-09-29T01:07:35.420390+00:00",
+  "status": 0
+}

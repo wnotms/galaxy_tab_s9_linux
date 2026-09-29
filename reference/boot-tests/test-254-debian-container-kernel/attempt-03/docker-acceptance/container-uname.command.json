@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "timeout 30 docker run --pull=never --rm debian:trixie-slim uname -a"
+  ],
+  "ended_utc": "2026-09-29T01:07:31.304350+00:00",
+  "started_utc": "2026-09-29T01:07:30.042389+00:00",
+  "status": 0
+}

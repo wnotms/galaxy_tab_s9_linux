@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue |\n  Where-Object { $_.InstanceId -match 'VID_0525|VID_18D1|VID_0000&PID_0002' } |\n  ForEach-Object {\n    $problem = Get-PnpDeviceProperty -InstanceId $_.InstanceId -KeyName 'DEVPKEY_Device_ProblemCode' -ErrorAction SilentlyContinue\n    [PSCustomObject]@{Status=$_.Status; ProblemCode=$problem.Data; Class=$_.Class;\n      FriendlyName=$_.FriendlyName; InstanceId=$_.InstanceId}\n  } | Format-List\nGet-NetAdapter -ErrorAction SilentlyContinue |\n  Where-Object { $_.InterfaceDescription -match 'NCM|USB' } |\n  Select-Object Name, Status, InterfaceDescription | Format-List\n"
+  ],
+  "ended_utc": "2026-09-29T01:13:38.975077+00:00",
+  "started_utc": "2026-09-29T01:13:34.955889+00:00",
+  "status": 0
+}

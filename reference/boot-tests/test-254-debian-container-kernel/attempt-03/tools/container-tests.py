@@ -1,7 +1,19 @@
 import sys,json,time,subprocess
 from pathlib import Path
 sys.path.insert(0,str(Path('scripts').resolve()));import production_reboot_stability as p
-A=Path('reference/boot-tests/test-254-debian-container-kernel/attempt-03');r=p.Recorder(A/'docker-acceptance')
+p.P=p.TEST250_ROOT/'attempt-05';base=p.baseline()
+A=Path('reference/boot-tests/test-254-debian-container-kernel/attempt-03');reg=json.loads((A/'registration.json').read_text())
+class Guarded(p.Recorder):
+    def command(self,name,argv,timeout=15,required=True):
+        result=super().command(name,argv,timeout,required)
+        if result[1]==0:
+            raw,_=super().command(name+'-kernel-json',[p.ADB,'-s',p.SERIAL,'shell','journalctl -b -k --no-pager -o json'],30)
+            scan=p.inspect(raw,reg['boot_id'],base)
+            assert not scan['fault_counts'] and not scan['suspects'],scan
+            raw,_=super().command(name+'-health',[p.ADB,'-s',p.SERIAL,'shell','cat /proc/sys/kernel/random/boot_id; cat /sys/class/power_supply/sm5714-battery/health; cat /sys/class/power_supply/sm5714-battery/temp; systemctl --failed --no-legend --plain'],15)
+            lines=raw.splitlines();assert len(lines)==3 and p.evidence.canonical_boot_id(lines[0])==reg['boot_id'] and lines[1]=='Good' and 100<=int(lines[2])<420,raw
+        return result
+r=Guarded(A/'docker-acceptance')
 info=r.adb('docker-info','docker info --format "{{json .}}"',30)[0];data=json.loads(info);assert data['CgroupVersion']=='2' and data['Driver']=='overlay2' and any('seccomp' in x for x in data['SecurityOptions']),data
 r.adb('docker-info-text','docker info',30)
 def stream(name,script,limit=150):

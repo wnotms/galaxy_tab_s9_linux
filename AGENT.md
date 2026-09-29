@@ -21,11 +21,24 @@ independently recorded. Debian Docker26.1.5/CLI/containerd/runc/iptables-nft/
 uidmap/ipvsadm installed (11 new/no upgrades), daemon cgroup2/overlay2/seccomp
 passes. Attempt02 stopped on first direct Docker Hub pull timeout; its raw
 incident/full post-stop/seal remain preserved, no container/cable test run there.
-Host official registry access works; official ARM64 config/layer/source digests
-are independently verified for a separately registered attempt03 same-boot
-archive-load/container/network/cable test. No proxy/DNS/daemon/kernel/USB change,
-reflash/reboot or Stage2/3. Fresh attempt03 full identity/rescue passes. Push
-registration before its image load/workloads; never relabel device pulls passed.
+Host official registry access works; separately registered attempt03 verified
+four official ARM64 image source/config/layer/archive identities and loaded them
+on the same boot. Actual hello-world/trixie/mqueue plus CPU/memory/pids/cpuset
+controls pass. Attempt03 stopped at first ineffective I/O limit (io.max empty).
+Fake-endpoint analysis proves the installed CLI sends empty throttle arrays
+before contacting the real daemon; internal client cause not established.
+BLK_DEV_THROTTLING=y/io controller/file exist: this is not proof of missing kernel
+throttling. No Docker/client/kernel/service workaround applied. Test container
+cleaned. DNS/outbound/NAT/publishing/optional networks/IPVS and physical cable
+regression were not executed after the stop; do not claim full Docker acceptance.
+UPower's two GUdev assertions and direct registry access remain unresolved;
+rootless runtime/delegation unaccepted. Full final same-boot five partitions/
+181 current+181 Test252+181 Test249/DCC/protected settings/three transports/kernel
+and healthy battery pass (1430.74s,71%,29.0°C,4.062V,SDP500mA). No Stage2/3 or
+extra charging test. Candidate remains installed, exact rollback retained, no
+rollback executed. Read Test254 RESULTS/PHYSICAL_SUMMARY/CURRENT_STATUS and
+attempt03 RESULTS before a separately scoped client-input investigation.
+Preserve all old stopped results and original sealed offline documents.
 
 The owner authorized offline UPower/OCI kernel configuration enablement only.
 Test254 is a separate **unflashed candidate and future acceptance plan** under

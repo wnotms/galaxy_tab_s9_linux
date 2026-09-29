@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.241",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; pid=$(systemctl show -p MainPID --value gts9-adbd.service); echo PID=$pid; readlink /proc/$pid/exe; sha256sum /proc/$pid/exe; sha256sum /usr/libexec/gts9-adbd-run /usr/lib/systemd/system/gts9-adbd.service /usr/local/libexec/gts9-adbd-reconnect; systemctl cat gts9-adbd.service"
+  ],
+  "ended_utc": "2026-09-29T01:13:32.232487+00:00",
+  "started_utc": "2026-09-29T01:13:31.876876+00:00",
+  "status": 0
+}

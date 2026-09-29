@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "docker run --pull=never -d --rm --name gts9-test254-limits --memory=256m --cpus=1 --pids-limit=64 --cpuset-cpus=0 --device-read-bps /dev/mmcblk1:1mb --device-write-bps /dev/mmcblk1:1mb debian:trixie-slim sleep 180"
+  ],
+  "ended_utc": "2026-09-29T01:07:35.172366+00:00",
+  "started_utc": "2026-09-29T01:07:34.559794+00:00",
+  "status": 0
+}

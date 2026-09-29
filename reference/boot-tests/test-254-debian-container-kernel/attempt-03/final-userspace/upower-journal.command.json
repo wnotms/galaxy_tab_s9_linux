@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -u upower.service -b --no-pager -o json"
+  ],
+  "ended_utc": "2026-09-29T01:13:24.015779+00:00",
+  "started_utc": "2026-09-29T01:13:23.912921+00:00",
+  "status": 0
+}

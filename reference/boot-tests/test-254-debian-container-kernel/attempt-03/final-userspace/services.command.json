@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl show upower -p PrivateUsers -p ActiveState -p Result; upower -e; systemctl is-active docker gts9-adbd ssh; systemctl --failed --no-legend --plain; docker ps -a; ip netns list"
+  ],
+  "ended_utc": "2026-09-29T01:13:23.774253+00:00",
+  "started_utc": "2026-09-29T01:13:23.610491+00:00",
+  "status": 0
+}

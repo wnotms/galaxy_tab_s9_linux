@@ -1,0 +1,251 @@
+[
+    {
+        "Id": "f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c",
+        "Created": "2026-09-29T01:07:34.815063025Z",
+        "Path": "sleep",
+        "Args": [
+            "180"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 4618,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-09-29T01:07:35.321636671Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:3fde68c8327d49ce5f747c72d9742ec63d27dee28515807ef0ca5259c3e01120",
+        "ResolvConfPath": "/var/lib/docker/containers/f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c/hostname",
+        "HostsPath": "/var/lib/docker/containers/f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c/hosts",
+        "LogPath": "/var/lib/docker/containers/f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c/f27aa8595ca97ff8ab7865a3bb0382e2d0d9d39721b8a0f9d70f8d7867edb40c-json.log",
+        "Name": "/gts9-test254-limits",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "bridge",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": true,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 268435456,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "0",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 536870912,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/11d1bd8a631c720e94e2113fc548d08876966d51773d0907a7383f47d70b1bd7-init/diff:/var/lib/docker/overlay2/ed656e20548157809cdff1150d049a0b151d47731e06f106f5717fca4c27d9bf/diff",
+                "MergedDir": "/var/lib/docker/overlay2/11d1bd8a631c720e94e2113fc548d08876966d51773d0907a7383f47d70b1bd7/merged",
+                "UpperDir": "/var/lib/docker/overlay2/11d1bd8a631c720e94e2113fc548d08876966d51773d0907a7383f47d70b1bd7/diff",
+                "WorkDir": "/var/lib/docker/overlay2/11d1bd8a631c720e94e2113fc548d08876966d51773d0907a7383f47d70b1bd7/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "f27aa8595ca9",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "sleep",
+                "180"
+            ],
+            "Image": "debian:trixie-slim",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "72a76e026bfdc21b279be0f553b7954c7273596caf4793a16dacf4a6f2665f95",
+            "SandboxKey": "/var/run/docker/netns/72a76e026bfd",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "ad752a084543743f8f5ce4121b5c24b099aa5a6a979804a101136e280f0e33a5",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "NetworkID": "f049c0fac339f51a3827e724452e80ce700e5b795f2eceadce4c68127cd10a2f",
+                    "EndpointID": "ad752a084543743f8f5ce4121b5c24b099aa5a6a979804a101136e280f0e33a5",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DriverOpts": null,
+                    "DNSNames": null
+                }
+            }
+        }
+    }
+]
+4618
+Client:
+ Version:    26.1.5+dfsg1
+ Context:    default
+ Debug Mode: false
+
+Server:
+ Containers: 1
+  Running: 1
+  Paused: 0
+  Stopped: 0
+ Images: 4
+ Server Version: 26.1.5+dfsg1
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Cgroup Version: 2
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 1.7.24~ds1-6+deb13u1
+ runc version: 1.1.15+ds1-2+b4
+ init version: 
+ Security Options:
+  seccomp
+   Profile: builtin
+  cgroupns
+ Kernel Version: 7.2.0-rc3-gts9wifi-dirty
+ Operating System: Debian GNU/Linux 13 (trixie)
+ OSType: linux
+ Architecture: aarch64
+ CPUs: 8
+ Total Memory: 10.35GiB
+ Name: gts9
+ ID: 0cd5811f-2601-4cae-8642-d0f2c0ae73ec
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+

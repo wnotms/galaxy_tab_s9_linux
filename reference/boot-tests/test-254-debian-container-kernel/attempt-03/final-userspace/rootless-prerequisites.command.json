@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "runuser -u ms -- unshare -Ur id; command -v newuidmap newgidmap; cat /etc/subuid /etc/subgid; systemctl show user@1000 -p Delegate -p ActiveState; cat /sys/fs/cgroup/user.slice/cgroup.controllers; cat /sys/fs/cgroup/user.slice/cgroup.subtree_control"
+  ],
+  "ended_utc": "2026-09-29T01:13:23.912313+00:00",
+  "started_utc": "2026-09-29T01:13:23.775485+00:00",
+  "status": 0
+}

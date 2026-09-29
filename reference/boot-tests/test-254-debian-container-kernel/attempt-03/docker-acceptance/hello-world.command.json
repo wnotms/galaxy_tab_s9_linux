@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "timeout 30 docker run --pull=never --rm hello-world"
+  ],
+  "ended_utc": "2026-09-29T01:07:29.817163+00:00",
+  "started_utc": "2026-09-29T01:07:28.416498+00:00",
+  "status": 0
+}

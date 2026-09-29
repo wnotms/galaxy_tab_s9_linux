@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "systemctl cat docker.service; systemctl show docker.service -p Delegate -p ControlGroup; cat /sys/fs/cgroup/cgroup.controllers; cat /sys/fs/cgroup/system.slice/cgroup.controllers; cat /sys/fs/cgroup/system.slice/docker.service/cgroup.controllers"
+  ],
+  "ended_utc": "2026-09-29T01:09:33.462371+00:00",
+  "started_utc": "2026-09-29T01:09:33.343547+00:00",
+  "status": 0
+}
