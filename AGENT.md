@@ -4,17 +4,21 @@
 
 The owner subsequently authorized **“刷入测试”**. Test254 attempt01 stopped
 before any device write on initial Windows Code43/absent rescue transports;
-its result and raw evidence remain immutable. The owner confirmed a manual
-ordinary reboot and computer USB attachment. Fresh attempt02 preflight on
-64716d74b79844ac859b8d25e9b7f318 now passes exact Test252 config/notes/five
-partitions/181+181 files, protected Test253 userspace and ADB/source-bound NCM/
-Wi-Fi SSH with no Code43/fault/failed unit. Wi-Fi is10.191.121.167.
-Candidate boot is packaged/validated; exact Test252 boot/module rollback is
-prepared. Read `reference/boot-tests/test-254-debian-container-kernel/attempt-02/`.
-Commit/push registration before TWRP boot-only+paired-module deployment. No
-agent flash/reboot has occurred yet. Necessary bounded Docker package/image
-acceptance is registered; preserve hardware/USB/adbd and Stage2/3 exclusions.
-The sealed original Test254 offline records below remain unchanged.
+its result/raw evidence remain immutable. Owner confirmed manual reboot and
+computer USB attachment. Attempt02 fresh full Test252 identity/rescue passed,
+and registration369ebe3a was pushed before maintenance. TWRP installed only
+candidate boot ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7
+and181 paired modules, retaining exact Test252 modules at .gts9-test254-original
+and the older Test249 backup. Temporary label-validated misc BCB was cleared.
+TWRP blkid returned no UUID; raw ext4 superblock verified the original microSD
+before any module/boot write. Four other partitions are unchanged/readback verified.
+Current boot6c3dde80334e495589169a1e576c8024 has exact Test254 config c80d3c66…
+and notes7bbb0dc3…, DCC absent, protected Test253/USB/SSH unchanged, no failed
+unit/kernel fault and ADB/source-bound NCM/Wi-Fi working (Wi-Fi10.191.121.241).
+Bounded150s boot observation and UPower/Docker/cable acceptance are still ongoing;
+do not claim complete acceptance. Read Test254 attempt02. Preserve all original
+sealed offline/older stopped evidence, hardware/USB/adbd settings and Stage2/3
+exclusions. This is a container-config candidate, not Test249 production.
 
 The owner authorized offline UPower/OCI kernel configuration enablement only.
 Test254 is a separate **unflashed candidate and future acceptance plan** under

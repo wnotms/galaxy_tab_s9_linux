@@ -1,0 +1,27 @@
+ms:x:1000:1000::/home/ms:/bin/bash
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+dummy0           DOWN           
+ifb0             DOWN           
+ifb1             DOWN           
+tunl0@NONE       DOWN           
+gre0@NONE        DOWN           
+gretap0@NONE     DOWN           
+erspan0@NONE     DOWN           
+ip_vti0@NONE     DOWN           
+ip6_vti0@NONE    DOWN           
+sit0@NONE        DOWN           
+ip6tnl0@NONE     DOWN           
+ip6gre0@NONE     DOWN           
+usb0             UP             169.254.42.1/16 fe80::1898:27ff:fe23:aecb/64 
+wlp1s0           UP             10.191.121.241/24 2409:8931:b066:997:508f:ed4f:c75f:68e4/64 fe80::d1c5:7130:e42a:3842/64 
+default via 10.191.121.92 dev wlp1s0 proto dhcp src 10.191.121.241 metric 600 
+10.191.121.0/24 dev wlp1s0 proto kernel scope link src 10.191.121.241 metric 600 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk1p1  113G  2.9G  105G   3% /
+Result=success
+PrivateUsers=yes
+ActiveState=inactive
+iptables	
+nftables	1.1.3-1
+upower	1.90.9-1
