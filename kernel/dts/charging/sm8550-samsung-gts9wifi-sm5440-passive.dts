@@ -1,0 +1,7 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/* Isolated Stage3B candidate. All Stage2 connectors/PDOs/limits stay intact. */
+#include "sm8550-samsung-gts9wifi-board.dts"
+
+&sm5440_direct {
+	status = "okay";
+};

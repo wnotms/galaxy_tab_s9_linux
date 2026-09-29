@@ -1,0 +1,38 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/power/supply/siliconmitus,sm5440.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Silicon Mitus SM5440 charge pump
+
+maintainers:
+  - X710 mainline port <bringup@localhost>
+
+description: |
+  SM5440 on the Samsung SM-X710 I2C hub3. The initial port provides passive
+  identity, converter and fault telemetry only, with the charging pump off.
+  Charging policy and USB-PD protocol are separate from this I2C transport.
+
+properties:
+  compatible:
+    const: siliconmitus,sm5440
+  reg:
+    maxItems: 1
+
+required:
+  - compatible
+  - reg
+
+additionalProperties: false
+
+examples:
+  - |
+    i2c {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        charger@63 {
+            compatible = "siliconmitus,sm5440";
+            reg = <0x63>;
+        };
+    };

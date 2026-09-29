@@ -12,6 +12,15 @@ rpmh_debug=${GTS9_RPMH_DEBUG:-0}
 # CPU-idle ablation profiles (docs/CPU_IDLE_WEDGE_PLAN.md).  Empty = the normal
 # board DTS, which is what every default build and every A/B profile uses.
 idle_ablation=${GTS9_IDLE_ABLATION:-}
+charging_profile=${GTS9_CHARGING_PROFILE:-}
+case "$charging_profile" in
+    ''|sm5440-passive) ;;
+    *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
+esac
+if [ -n "$charging_profile" ] && [ -n "$idle_ablation" ]; then
+    echo 'charging profiles cannot be combined with CPU idle ablations' >&2
+    exit 2
+fi
 
 case "$install_vendor_pogo" in
     0|1) ;;
@@ -138,7 +147,12 @@ qcom_dts="$tree/arch/arm64/boot/dts/qcom"
 # the DTB path, the bundle script, the validator and every hash in this
 # repository keep naming the same artifact - an ablation must not be able to
 # change the shape of the build.
-if [ -n "$idle_ablation" ]; then
+if [ -n "$charging_profile" ]; then
+    install -m 0644 "$dts_src" "$qcom_dts/sm8550-samsung-gts9wifi-board.dts"
+    install -m 0644 "$repo_root/kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts" \
+        "$qcom_dts/sm8550-samsung-gts9wifi.dts"
+    echo "isolated PASSIVE charging candidate: $charging_profile"
+elif [ -n "$idle_ablation" ]; then
     dts_diag="$dts_diag_dir/sm8550-samsung-gts9wifi-$idle_ablation.dts"
     [ -f "$dts_diag" ] || {
         echo "missing idle ablation device tree: $dts_diag" >&2
@@ -187,6 +201,7 @@ for drv in "$driver_src"/*.c; do
 		panel-*) dest=$panel_dir ;;
 		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
 		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
+		sm5440-direct.c) dest="$tree/drivers/power/supply" ;;
 		sm5714_usbpd.c) dest="$tree/drivers/usb/typec/tcpm" ;;
 		*)       dest=$soc_qcom ;;
     esac
@@ -198,6 +213,9 @@ shopt -u nullglob
 install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/usb/typec/tcpm/"
 install -m 0644 "$driver_src/sm5714-pd-policy.h" "$tree/drivers/usb/typec/tcpm/"
+install -m 0644 "$driver_src/sm5440-hw.h" "$tree/drivers/power/supply/"
+install -m 0644 "$repo_root/kernel/bindings/power/supply/siliconmitus,sm5440.yaml" \
+    "$tree/Documentation/devicetree/bindings/power/supply/"
 
 # Samsung's vendor Pogo import is retained for source comparison only. It is
 # not part of the default X710 build; opt in explicitly for a manual A/B.

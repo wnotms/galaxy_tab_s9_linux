@@ -1,0 +1,22 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: add separately selected passive SM5440 monitor
+
+The overlay implementation can only read ID/ADC/faults and confirm mode OFF.
+No pump activation or PPS exists. Default n; Stage2 config is not enabled.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1197 +1197,8 @@
++config CHARGER_SM5440_DIRECT
++	tristate "Samsung X710 passive SM5440 charge-pump monitor"
++	depends on I2C && OF && BATTERY_SM5714
++	select REGMAP_I2C
++	help
++	  Passive ID/ADC/fault telemetry only. No pump activation or PPS.
++
+ endif # POWER_SUPPLY
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -136 +136,2 @@
+ obj-$(CONFIG_BATTERY_SM5714)	+= sm5714-battery.o
++obj-$(CONFIG_CHARGER_SM5440_DIRECT) += sm5440-direct.o

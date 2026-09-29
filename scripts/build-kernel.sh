@@ -17,6 +17,19 @@ fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 #   GTS9_DIAG_FRAGMENT=kernel/config/gts9wifi-csd-lock.fragment \
 #       BUILD_MODULES=0 ./scripts/build-kernel.sh
 diag_fragment=${GTS9_DIAG_FRAGMENT:-}
+charging_profile=${GTS9_CHARGING_PROFILE:-}
+case "$charging_profile" in
+    ''|sm5440-passive) ;;
+    *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
+esac
+if [ -n "$charging_profile" ] && {
+    [ -n "$diag_fragment" ] || [ -n "${GTS9_DIAGNOSTIC_PATCHES:-}" ] ||
+    [ -n "${GTS9_IDLE_ABLATION:-}" ] || [ "${GTS9_RPMH_DEBUG:-0}" != 0 ] ||
+    [ "${GTS9_POWEROFF_TRACE:-0}" != 0 ];
+}; then
+    echo 'isolated charging candidate cannot include diagnostic changes' >&2
+    exit 2
+fi
 jobs=${JOBS:-$(nproc)}
 build_modules=${BUILD_MODULES:-1}
 # ccache turns a KERNEL_CLEAN=1 rebuild from a full recompile into a cache
@@ -120,6 +133,9 @@ stock_cfg="$build_dir/SM-X710-stock-5.15.153.config"
 # diagnostic layer can only ever *add to* or *override* the production one, and
 # can never be silently overridden by it.
 merge_cfgs=("$stock_cfg" "$fragment")
+if [ -n "$charging_profile" ]; then
+    merge_cfgs+=("$repo_root/kernel/config/gts9wifi-sm5440-passive.fragment")
+fi
 if [ -n "$diag_path" ]; then
     merge_cfgs+=("$diag_path")
     echo "diagnostic config fragment: ${diag_fragment}"
@@ -131,7 +147,11 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 # Validate real Kconfig resolution, not just requested fragment assignments.
 # Host-only: preserve UPower sandboxing and gate OCI/network prerequisites.
 python3 "$repo_root/scripts/verify-container-config.py" "$build_dir/.config"
-python3 "$repo_root/scripts/verify-sm5714-stage2.py" "$build_dir/.config"
+if [ -n "$charging_profile" ]; then
+    python3 "$repo_root/scripts/verify-x710-charging-profile.py" "$build_dir/.config"
+else
+    python3 "$repo_root/scripts/verify-sm5714-stage2.py" "$build_dir/.config"
+fi
 
 required=(
     # SERIAL_QCOM_GENI stays built-in but its *console* is deliberately off; the
