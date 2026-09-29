@@ -1,0 +1,43 @@
+'AGENT.md': No reviewed dependency rule: run all tests.
+'docs/SM5440_REGISTER_AUDIT.md': No reviewed dependency rule: run all tests.
+'docs/SM5714_SM5440_HANDOFF.md': No reviewed dependency rule: run all tests.
+'docs/X710_CHARGING_ARCHITECTURE.md': No reviewed dependency rule: run all tests.
+'docs/X710_CHARGING_TEST_PLAN.md': No reviewed dependency rule: run all tests.
+'docs/X710_VENDOR_CHARGING_AUDIT.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-256-x710-charging-offline/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-256-x710-charging-offline/baseline.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-256-x710-charging-offline/sources.json': No reviewed dependency rule: run all tests.
+Host suite=changed: selected=1200, tiers={'core': 1095, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmphwqd_zh3/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmphwqd_zh3/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-29T12:02:32.103933+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-29T12:02:32.104426+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-29T12:02:32.105334+00:00"
+}
+.....................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1200 tests in 131.701s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.

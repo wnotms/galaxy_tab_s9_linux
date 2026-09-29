@@ -1,0 +1,56 @@
+{
+  "a9ab1daf": [
+    "AGENT.md",
+    "docs/SM5440_REGISTER_AUDIT.md",
+    "docs/SM5714_SM5440_HANDOFF.md",
+    "docs/X710_CHARGING_ARCHITECTURE.md",
+    "docs/X710_CHARGING_TEST_PLAN.md",
+    "docs/X710_VENDOR_CHARGING_AUDIT.md",
+    "reference/boot-tests/test-256-x710-charging-offline/README.md",
+    "reference/boot-tests/test-256-x710-charging-offline/baseline.json",
+    "reference/boot-tests/test-256-x710-charging-offline/sources.json"
+  ],
+  "fc19c12d": [
+    "docs/X710_VENDOR_CHARGING_AUDIT.md",
+    "kernel/drivers/sm5714-pd-policy.h",
+    "kernel/drivers/sm5714_usbpd.c",
+    "scripts/audit-x710-charging-build.py",
+    "scripts/prepare-kernel.sh",
+    "tests/test_sm5714_stage2_pd.py",
+    "tests/test_x710_charging_policy.py"
+  ],
+  "ce4705bc": [
+    "kernel/bindings/power/supply/siliconmitus,sm5440.yaml",
+    "kernel/config/gts9wifi-sm5440-passive.fragment",
+    "kernel/drivers/sm5440-direct.c",
+    "kernel/drivers/sm5440-hw.h",
+    "kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts",
+    "kernel/patches/0013-power-supply-hook-sm5440-passive.patch",
+    "scripts/build-kernel.sh",
+    "scripts/prepare-kernel.sh",
+    "scripts/verify-x710-charging-profile.py",
+    "tests/test_sm5440_passive.py"
+  ],
+  "73a75a48": [
+    "kernel/drivers/sm5440-direct.c",
+    "tests/test_sm5440_passive.py"
+  ],
+  "eb552530": [
+    "kernel/config/gts9wifi-sm5440-policy-offline.fragment",
+    "kernel/drivers/sm5714-battery.c",
+    "kernel/drivers/sm5714_usbpd.c",
+    "kernel/drivers/x710-charging-policy.c",
+    "kernel/drivers/x710-charging-policy.h",
+    "kernel/patches/0014-power-supply-hook-x710-policy-offline.patch",
+    "scripts/audit-x710-charging-build.py",
+    "scripts/build-kernel.sh",
+    "scripts/prepare-kernel.sh",
+    "scripts/verify-x710-charging-profile.py",
+    "tests/test_sm5714_stage2_pd.py",
+    "tests/test_x710_direct_transaction.py"
+  ],
+  "61336aff": [
+    "kernel/drivers/sm5440-direct.c",
+    "tests/test_sm5440_passive.py"
+  ]
+}

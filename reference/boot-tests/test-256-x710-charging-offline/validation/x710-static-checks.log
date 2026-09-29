@@ -1,0 +1,41 @@
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-charging'
+/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/Makefile:1280: C=2 specified, but /home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-package/usr/bin/sparse is not available or not up to date
+  SYNC    include/config/auto.conf
+/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/Makefile:1280: C=2 specified, but /home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-package/usr/bin/sparse is not available or not up to date
+  UPD     include/generated/compile.h
+  DESCEND bpf/resolve_btfids
+  CC      scripts/mod/empty.o
+  CC      scripts/mod/devicetable-offsets.s
+  MKELF   scripts/mod/elfconfig.h
+  HOSTCC  scripts/mod/modpost.o
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTCC  scripts/mod/sumversion.o
+  HOSTCC  scripts/mod/symsearch.o
+  INSTALL libsubcmd_headers
+  HOSTLD  scripts/mod/modpost
+  CC      kernel/bounds.s
+  CC      arch/arm64/kernel/asm-offsets.s
+  CC      kernel/sched/rq-offsets.s
+  CALL    /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/checksyscalls.sh 
+  LDS     arch/arm64/kernel/vdso/vdso.lds
+  CC      arch/arm64/kernel/vdso/vgettimeofday.o
+  AS      arch/arm64/kernel/vdso/note.o
+  AS      arch/arm64/kernel/vdso/sigreturn.o
+  CC      arch/arm64/kernel/vdso/vgetrandom.o
+  AS      arch/arm64/kernel/vdso/vgetrandom-chacha.o
+  LD      arch/arm64/kernel/vdso/vdso.so.dbg
+  VDSOSYM include/generated/vdso-offsets.h
+  OBJCOPY arch/arm64/kernel/vdso/vdso.so
+  LDS     arch/arm64/kernel/vdso32/vdso.lds
+  CC32    arch/arm64/kernel/vdso32/note.o
+  CC32    arch/arm64/kernel/vdso32/vgettimeofday.o
+  LD32    arch/arm64/kernel/vdso32/vdso.so.raw
+  MUNGE   arch/arm64/kernel/vdso32/vdso32.so.dbg
+  OBJCOPY arch/arm64/kernel/vdso32/vdso.so
+  CC      drivers/power/supply/sm5714-battery.o
+  CC      drivers/power/supply/sm5440-direct.o
+  CC      drivers/power/supply/x710-charging-policy.o
+  CC      drivers/usb/typec/tcpm/sm5714_usbpd.o
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-charging'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'

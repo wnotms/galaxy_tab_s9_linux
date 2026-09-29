@@ -1,0 +1,25 @@
+{
+  "baseline_diagnostic": [
+    "usb-role-switch: size (4) error for type flag"
+  ],
+  "candidate_diagnostic": [
+    "usb-role-switch: size (4) error for type flag"
+  ],
+  "same_retained_diagnostic": true,
+  "path": "/soc@0/geniqup@8c0000/i2c@890000/redriver@28:usb-role-switch",
+  "baseline_hex": "0000004e",
+  "candidate_hex": "0000004e",
+  "node_status": "absent (enabled DT node, no accepted PS5169 provider driver)",
+  "scope": "Retained unbound PS5169 DT property; no SM5440 binding diagnostic; not modified in this task",
+  "dtbs_check_exit_code": 0,
+  "binding_clean": true,
+  "whole_board_schema_clean": false,
+  "static_checks": {
+    "W1": "passed for four changed drivers",
+    "sparse_commit": "37156835e3d725b6d750f000be33ba3814bb2310",
+    "sparse_version": "v0.6.5-rc1",
+    "driver_diagnostics": [],
+    "retained_vdso_diagnostic": "symbol __kernel_getrandom was not declared. Should it be static?",
+    "initial_checker": "distro sparse0.6.4 rejected for missing __typeof_unqual__; no CHECK run claimed"
+  }
+}

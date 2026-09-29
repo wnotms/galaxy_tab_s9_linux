@@ -1,0 +1,1272 @@
+diff --git a/kernel/drivers/sm5440-direct.c b/kernel/drivers/sm5440-direct.c
+new file mode 100644
+index 00000000..94e1fe01
+--- /dev/null
++++ b/kernel/drivers/sm5440-direct.c
+@@ -0,0 +1,348 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* X710 Stage3B PASSIVE monitor. No pump-ON, PPS, Q4, reset, active protection,
++ * reverse/bypass or writable power_supply property exists in this driver.
++ * Hardware provenance: Samsung sm5440_charger.c/.h, cross-checked Fedora
++ * ab123e7d. See docs/SM5440_REGISTER_AUDIT.md; register writes are limited to
++ * mode-OFF and traced converter controls. Unaccepted ADC => unavailable.
++ */
++#include <linux/delay.h>
++#include <linux/i2c.h>
++#include <linux/jiffies.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/pm.h>
++#include <linux/power_supply.h>
++#include <linux/regmap.h>
++#include <linux/workqueue.h>
++
++#include "sm5440-hw.h"
++
++struct sm5440_sample {
++	u32 vbus_uv;
++	u32 vbat_uv;
++	u32 ibus_ua;
++	int die_decic;
++	u32 faults;
++	bool online;
++	bool valid;
++	unsigned long stamp;
++};
++
++struct sm5440_direct {
++	struct device *dev;
++	struct regmap *regmap;
++	struct mutex io_lock;
++	struct delayed_work work;
++	struct power_supply *psy;
++	struct sm5440_sample sample;
++	bool stopped;
++	bool fault;
++};
++
++static const struct regmap_config sm5440_regmap = {
++	.reg_bits = 8,
++	.val_bits = 8,
++	.max_register = SM5440_DEVICEID,
++	.cache_type = REGCACHE_NONE,
++};
++
++/* Caller holds io_lock. Vendor set_op_mode(): CNTL5[3:2], OFF=0. */
++static int sm5440_off(struct sm5440_direct *sm)
++{
++	unsigned int mode;
++	int ret;
++
++	lockdep_assert_held(&sm->io_lock);
++	ret = regmap_update_bits(sm->regmap, SM5440_CNTL5,
++				 SM5440_MODE_MASK, SM5440_MODE_OFF);
++	if (!ret)
++		ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
++	if (!ret && (mode & SM5440_MODE_MASK))
++		ret = -EIO;
++	return ret;
++}
++
++static int sm5440_sample_once(struct sm5440_direct *sm,
++			      struct sm5440_sample *sample)
++{
++	unsigned int mode, ready;
++	u8 events[4], status[4], adc[11];
++	int ret, i;
++
++	mutex_lock(&sm->io_lock);
++	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
++	if (!ret && (mode & SM5440_MODE_MASK))
++		ret = -EBUSY; /* never adopt a running/reverse pump */
++	/* Consume old conversion/fault latches before starting a new conversion.
++	 * Vendor IRQ reads INT1..4; retain faults instead of discarding them.
++	 */
++	if (!ret)
++		ret = regmap_bulk_read(sm->regmap, SM5440_INT1, events, sizeof(events));
++	if (!ret)
++		ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
++					 SM5440_ADC_ENABLE | SM5440_ADC_RATE, 0);
++	/* A previous conversion can finish between the first latch read and
++	 * disabling ADC. Consume that completion AFTER disable as well.
++	 */
++	if (!ret) {
++		ret = regmap_read(sm->regmap, SM5440_INT4, &ready);
++		if (!ret)
++			events[3] |= ready;
++	}
++	if (!ret)
++		ret = regmap_write(sm->regmap, SM5440_ADCCNTL2, SM5440_ADC_CHANNELS);
++	if (!ret)
++		ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
++					 SM5440_ADC_ENABLE | SM5440_ADC_AVG32,
++					 SM5440_ADC_ENABLE | SM5440_ADC_AVG32);
++	mutex_unlock(&sm->io_lock);
++	if (ret)
++		return ret;
++	/* Single worker; PM/remove synchronously drain it. No mutex is held
++	 * across a converter wait. Unknown completion is not a measurement.
++	 */
++	for (i = 0; i < 12; i++) {
++		if (READ_ONCE(sm->stopped))
++			return -ESHUTDOWN;
++		msleep(25);
++		mutex_lock(&sm->io_lock);
++		ret = regmap_read(sm->regmap, SM5440_INT4, &ready);
++		mutex_unlock(&sm->io_lock);
++		if (ret)
++			return ret;
++		/* Retain watchdog/timer events consumed while waiting. */
++		events[3] |= ready;
++		if (ready & SM5440_ADC_READY)
++			break;
++	}
++	if (i == 12)
++		return -ETIMEDOUT;
++	mutex_lock(&sm->io_lock);
++	ret = regmap_bulk_read(sm->regmap, SM5440_ADC_VBUS, adc, sizeof(adc));
++	if (!ret)
++		ret = regmap_bulk_read(sm->regmap, SM5440_STATUS1, status, sizeof(status));
++	if (!ret)
++		ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
++	if (!ret && (mode & SM5440_MODE_MASK))
++		ret = -EBUSY;
++	if (!ret) {
++		for (i = 0; i < 4; i++)
++			events[i] |= status[i];
++		sample->vbus_uv = sm5440_vbus_uv(adc[0], adc[1]);
++		sample->ibus_ua = sm5440_ibus_ua(adc[4], adc[5]);
++		sample->die_decic = sm5440_die_decic(adc[8]);
++		sample->vbat_uv = sm5440_vbat_uv(adc[9], adc[10]);
++		sample->online = !!(status[2] & BIT(5));
++		sample->faults = sm5440_decode_faults(events, false, 0);
++		/* Implausible pack samples remain unavailable, even if ADC ready.
++		 * Passive monitor never authorizes charge based on these values.
++		 */
++		if (sample->vbat_uv < 2500000 || sample->vbat_uv > 4600000)
++			ret = -ERANGE;
++	}
++	mutex_unlock(&sm->io_lock);
++	return ret;
++}
++
++static void sm5440_poll(struct work_struct *work)
++{
++	struct sm5440_direct *sm = container_of(to_delayed_work(work),
++					       struct sm5440_direct, work);
++	struct sm5440_sample sample = {};
++	int ret;
++
++	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
++		return;
++	ret = sm5440_sample_once(sm, &sample);
++	mutex_lock(&sm->io_lock);
++	if (ret) {
++		sm->sample.valid = false;
++		if (ret != -ESHUTDOWN) {
++			sm->fault = true;
++			/* Best effort OFF is not proof when I2C has failed. */
++			dev_err(sm->dev, "passive ADC fault %d; OFF verification=%d\n",
++				ret, sm5440_off(sm));
++			regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
++					   SM5440_ADC_ENABLE, 0);
++		}
++	} else {
++		sample.valid = true;
++		sample.stamp = jiffies;
++		sm->sample = sample;
++		if (sample.faults) {
++			/* INT latches are consumed by reads. Preserve the first fault
++			 * until unbind/reboot instead of reporting Good next second.
++			 */
++			sm->fault = true;
++			dev_warn_ratelimited(sm->dev, "passive fault bitmap=%#x\n", sample.faults);
++		}
++		dev_dbg(sm->dev, "passive VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC faults=%#x\n",
++			sample.vbus_uv, sample.vbat_uv, sample.ibus_ua,
++			sample.die_decic, sample.faults);
++	}
++	mutex_unlock(&sm->io_lock);
++	power_supply_changed(sm->psy);
++	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))
++		schedule_delayed_work(&sm->work, msecs_to_jiffies(1000));
++}
++
++static int sm5440_get_property(struct power_supply *psy,
++			       enum power_supply_property prop,
++			       union power_supply_propval *val)
++{
++	struct sm5440_direct *sm = power_supply_get_drvdata(psy);
++	struct sm5440_sample sample;
++	bool fault;
++
++	mutex_lock(&sm->io_lock);
++	sample = sm->sample;
++	fault = sm->fault;
++	mutex_unlock(&sm->io_lock);
++	if (prop == POWER_SUPPLY_PROP_STATUS) {
++		val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
++		return 0;
++	}
++	if (prop == POWER_SUPPLY_PROP_HEALTH) {
++		val->intval = fault || sample.faults ? POWER_SUPPLY_HEALTH_UNSPEC_FAILURE :
++			sample.valid ? POWER_SUPPLY_HEALTH_GOOD : POWER_SUPPLY_HEALTH_UNKNOWN;
++		return 0;
++	}
++	if (!sample.valid || time_after(jiffies, sample.stamp + msecs_to_jiffies(2500)))
++		return -ENODATA;
++	switch (prop) {
++	case POWER_SUPPLY_PROP_ONLINE:
++		val->intval = sample.online;
++		break;
++	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
++		val->intval = sample.vbus_uv;
++		break;
++	case POWER_SUPPLY_PROP_CURRENT_NOW:
++		val->intval = sample.ibus_ua;
++		break;
++	case POWER_SUPPLY_PROP_TEMP:
++		val->intval = sample.die_decic;
++		break;
++	default:
++		return -EINVAL;
++	}
++	return 0;
++}
++
++static enum power_supply_property sm5440_props[] = {
++	POWER_SUPPLY_PROP_STATUS, POWER_SUPPLY_PROP_HEALTH, POWER_SUPPLY_PROP_ONLINE,
++	POWER_SUPPLY_PROP_VOLTAGE_NOW, POWER_SUPPLY_PROP_CURRENT_NOW,
++	POWER_SUPPLY_PROP_TEMP,
++};
++
++static const struct power_supply_desc sm5440_desc = {
++	.name = "sm5440-passive",
++	.type = POWER_SUPPLY_TYPE_MAINS,
++	.properties = sm5440_props,
++	.num_properties = ARRAY_SIZE(sm5440_props),
++	.get_property = sm5440_get_property,
++};
++
++static int sm5440_quiesce(struct sm5440_direct *sm)
++{
++	int ret, adc_ret;
++
++	WRITE_ONCE(sm->stopped, true);
++	cancel_delayed_work_sync(&sm->work);
++	mutex_lock(&sm->io_lock);
++	sm->sample.valid = false;
++	ret = sm5440_off(sm);
++	adc_ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
++	mutex_unlock(&sm->io_lock);
++	if (ret || adc_ret)
++		dev_err(sm->dev, "passive teardown cannot verify OFF/ADC-off: %d/%d\n", ret, adc_ret);
++	return ret ? ret : adc_ret;
++}
++
++static void sm5440_stop(void *data)
++{
++	sm5440_quiesce(data);
++}
++
++static int sm5440_suspend(struct device *dev)
++{
++	struct sm5440_direct *sm = dev_get_drvdata(dev);
++
++	return sm5440_quiesce(sm);
++}
++
++static int sm5440_resume(struct device *dev)
++{
++	struct sm5440_direct *sm = dev_get_drvdata(dev);
++	int ret;
++
++	mutex_lock(&sm->io_lock);
++	ret = sm5440_off(sm);
++	mutex_unlock(&sm->io_lock);
++	if (ret || READ_ONCE(sm->fault))
++		return ret ? ret : -EIO;
++	WRITE_ONCE(sm->stopped, false);
++	schedule_delayed_work(&sm->work, 0);
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(sm5440_pm, sm5440_suspend, sm5440_resume);
++
++static int sm5440_probe(struct i2c_client *client)
++{
++	struct sm5440_direct *sm;
++	struct power_supply_config config = {};
++	unsigned int id, mode;
++	int ret;
++
++	sm = devm_kzalloc(&client->dev, sizeof(*sm), GFP_KERNEL);
++	if (!sm)
++		return -ENOMEM;
++	sm->dev = &client->dev;
++	sm->regmap = devm_regmap_init_i2c(client, &sm5440_regmap);
++	if (IS_ERR(sm->regmap))
++		return PTR_ERR(sm->regmap);
++	mutex_init(&sm->io_lock);
++	INIT_DELAYED_WORK(&sm->work, sm5440_poll);
++	i2c_set_clientdata(client, sm);
++	ret = regmap_read(sm->regmap, SM5440_DEVICEID, &id);
++	if (ret || (id & 0xf) != 1)
++		return dev_err_probe(sm->dev, ret ? ret : -ENODEV, "invalid SM5440 identity\n");
++	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
++	if (ret || (mode & SM5440_MODE_MASK))
++		return dev_err_probe(sm->dev, ret ? ret : -EBUSY, "passive probe requires pump OFF\n");
++	config.drv_data = sm;
++	sm->psy = devm_power_supply_register(sm->dev, &sm5440_desc, &config);
++	if (IS_ERR(sm->psy))
++		return PTR_ERR(sm->psy);
++	/* Register last so worker is drained before power_supply/regmap free. */
++	ret = devm_add_action_or_reset(sm->dev, sm5440_stop, sm);
++	if (ret)
++		return ret;
++	schedule_delayed_work(&sm->work, 0);
++	dev_info(sm->dev, "passive SM5440 revision %u; pump activation unavailable\n", id >> 4);
++	return 0;
++}
++
++static void sm5440_shutdown(struct i2c_client *client)
++{
++	sm5440_stop(i2c_get_clientdata(client));
++}
++
++static const struct of_device_id sm5440_match[] = {
++	{ .compatible = "siliconmitus,sm5440" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, sm5440_match);
++
++static struct i2c_driver sm5440_driver = {
++	.driver = {
++		.name = "sm5440-passive",
++		.of_match_table = sm5440_match,
++		.pm = pm_sleep_ptr(&sm5440_pm),
++	},
++	.probe = sm5440_probe,
++	.shutdown = sm5440_shutdown,
++};
++module_i2c_driver(sm5440_driver);
++MODULE_DESCRIPTION("SM-X710 passive SM5440 ID/ADC/fault monitor; pump OFF only");
++MODULE_LICENSE("GPL");
+diff --git a/kernel/drivers/sm5440-hw.h b/kernel/drivers/sm5440-hw.h
+new file mode 100644
+index 00000000..fdc12a19
+--- /dev/null
++++ b/kernel/drivers/sm5440-hw.h
+@@ -0,0 +1,133 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef _SM5440_HW_H
++#define _SM5440_HW_H
++
++/* Samsung X710 sm5440_charger.h/.c register map/conversions; see the source
++ * hash manifest and docs/SM5440_REGISTER_AUDIT.md. No guessed IBAT ADC or OCP
++ * enable recipe. Pure arithmetic is shared with executable host tests.
++ */
++#ifdef __KERNEL__
++#include <linux/bitops.h>
++#include <linux/types.h>
++#endif
++
++#define SM5440_INT1	0x00
++#define SM5440_INT4	0x03
++#define SM5440_STATUS1	0x08
++#define SM5440_CNTL5	0x10
++#define SM5440_ADCCNTL1	0x1c
++#define SM5440_ADCCNTL2	0x1d
++#define SM5440_ADC_VBUS	0x1e
++#define SM5440_DEVICEID	0x2b
++#define SM5440_MODE_MASK	GENMASK(3, 2)
++#define SM5440_MODE_OFF	0
++#define SM5440_ADC_ENABLE BIT(0)
++#define SM5440_ADC_RATE	BIT(1)
++#define SM5440_ADC_AVG32	BIT(3)
++#define SM5440_ADC_READY	BIT(0)
++#define SM5440_ADC_CHANNELS 0xdf /* vendor init_reg_param: VBUS/VBAT/IBUS/DIE */
++
++enum sm5440_fault {
++	SM5440_FAULT_VOUT_OVP = BIT(0),
++	SM5440_FAULT_VBAT_OVP = BIT(1),
++	SM5440_FAULT_REVERSE_OCP = BIT(2),
++	SM5440_FAULT_VBUS_OVP = BIT(3),
++	SM5440_FAULT_VBUS_UVLO = BIT(4),
++	SM5440_FAULT_THERMAL = BIT(5),
++	SM5440_FAULT_STARTUP = BIT(6),
++	SM5440_FAULT_REVBLK = BIT(7),
++	SM5440_FAULT_CFLY_SHORT = BIT(8),
++	SM5440_FAULT_WATCHDOG = BIT(9),
++	SM5440_FAULT_TIMER = BIT(10),
++	SM5440_FAULT_MODE_LOST = BIT(11),
++	SM5440_FAULT_VBUSPOK_LOST = BIT(12),
++};
++
++static inline unsigned int sm5440_raw13(u8 high, u8 low)
++{
++	return ((unsigned int)high << 5) | (low >> 3);
++}
++
++static inline unsigned int sm5440_vbus_uv(u8 high, u8 low)
++{
++	return 4096000U + sm5440_raw13(high, low) * 1000U;
++}
++
++static inline unsigned int sm5440_vbat_uv(u8 high, u8 low)
++{
++	return 2048000U + sm5440_raw13(high, low) * 500U;
++}
++
++static inline unsigned int sm5440_ibus_ua(u8 high, u8 low)
++{
++	return sm5440_raw13(high, low) * 625U;
++}
++
++static inline unsigned int sm5440_die_decic(u8 raw)
++{
++	return 225U + raw * 5U;
++}
++
++/* Validated bounds, round DOWN; future active code must not use vendor's
++ * automatic +50mV/+300mA margins to exceed the independently approved caps.
++ */
++static inline int sm5440_vbat_code(unsigned int mv)
++{
++	if (mv < 3800 || mv > 4440)
++		return -1;
++	return (mv - 3800) * 10 / 125;
++}
++
++static inline int sm5440_ibus_code(unsigned int ma)
++{
++	if (ma < 1000 || ma > 1800)
++		return -1;
++	return ma / 50;
++}
++
++static inline int sm5440_frequency_code(unsigned int khz)
++{
++	if (khz != 450 && khz != 650 && khz != 850)
++		return -1;
++	return (khz - 250) / 50;
++}
++
++static inline unsigned int sm5440_decode_faults(const u8 st[4], bool running,
++					       unsigned int mode)
++{
++	unsigned int faults = 0;
++
++	if (st[0] & BIT(4))
++		faults |= SM5440_FAULT_VOUT_OVP;
++	if (st[0] & BIT(3))
++		faults |= SM5440_FAULT_VBAT_OVP;
++	if (st[0] & GENMASK(1, 0))
++		faults |= SM5440_FAULT_REVERSE_OCP;
++	if (st[2] & BIT(7))
++		faults |= SM5440_FAULT_VBUS_OVP;
++	/* Detached VBUS_UVLO is expected when the passive pump is OFF. */
++	if (running && (st[2] & BIT(6)))
++		faults |= SM5440_FAULT_VBUS_UVLO;
++	if (st[2] & GENMASK(4, 3))
++		faults |= SM5440_FAULT_THERMAL;
++	if (st[1] & GENMASK(1, 0))
++		faults |= SM5440_FAULT_THERMAL;
++	if (st[2] & BIT(2))
++		faults |= SM5440_FAULT_STARTUP;
++	if (st[2] & BIT(1))
++		faults |= SM5440_FAULT_REVBLK;
++	if (st[2] & BIT(0))
++		faults |= SM5440_FAULT_CFLY_SHORT;
++	if (st[3] & BIT(2))
++		faults |= SM5440_FAULT_WATCHDOG;
++	if (st[3] & BIT(1))
++		faults |= SM5440_FAULT_TIMER;
++	if (running && mode != 1)
++		faults |= SM5440_FAULT_MODE_LOST;
++	if (running && !(st[2] & BIT(5)))
++		faults |= SM5440_FAULT_VBUSPOK_LOST;
++	/* IBUSLIM/VBATREG are regulation, not invented normal OCP flags. */
++	return faults;
++}
++
++#endif
+diff --git a/kernel/drivers/sm5714-battery.c b/kernel/drivers/sm5714-battery.c
+index a1490f05..24eeef11 100644
+--- a/kernel/drivers/sm5714-battery.c
++++ b/kernel/drivers/sm5714-battery.c
+@@ -450,6 +450,21 @@ out_unlock:
+ }
+ 
+ /* TCPM budget is not a measured VBUS voltage or proof of PS_RDY on its own. */
++static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
++{
++	/* Companion lifetime is held outside chg_lock. Keep the fault latch,
++	 * cleared grant, pack gate and minimum input together for every error
++	 * entry; no fault path can accidentally leave the old budget live.
++	 */
++	lockdep_assert_held(&sm->chg_lock);
++	sm->typec_fault = true;
++	sm->typec_charge = false;
++	sm->typec_ma = 0;
++	sm5714_disable_charging(sm);
++	sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
++			       GENMASK(6, 0), sm5714_input_current_reg(100));
++}
++
+ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
+ {
+ 	struct sm5714_battery *sm;
+@@ -463,12 +478,8 @@ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
+ 	}
+ 	mutex_lock(&sm->chg_lock);
+ 	if ((mv != 0 && mv != 5000 && mv != 9000) || (!mv && ma)) {
+-		sm->typec_fault = true;
+-		sm->typec_ma = 0;
++		sm5714_inhibit_typec_locked(sm);
+ 		ret = -ERANGE;
+-		sm5714_disable_charging(sm);
+-		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+-				       GENMASK(6, 0), sm5714_input_current_reg(100));
+ 		mutex_unlock(&sm->chg_lock);
+ 		goto out;
+ 	}
+@@ -524,12 +535,7 @@ void sm5714_battery_typec_fault(void)
+ 	sm = sm5714_companion;
+ 	if (sm) {
+ 		mutex_lock(&sm->chg_lock);
+-		sm->typec_fault = true;
+-		sm->typec_charge = false;
+-		sm->typec_ma = 0;
+-		sm5714_disable_charging(sm);
+-		sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+-				       GENMASK(6, 0), sm5714_input_current_reg(100));
++		sm5714_inhibit_typec_locked(sm);
+ 		mutex_unlock(&sm->chg_lock);
+ 		power_supply_changed(sm->psy_usb);
+ 		power_supply_changed(sm->psy_bat);
+diff --git a/kernel/drivers/sm5714-pd-policy.h b/kernel/drivers/sm5714-pd-policy.h
+new file mode 100644
+index 00000000..0762aa05
+--- /dev/null
++++ b/kernel/drivers/sm5714-pd-policy.h
+@@ -0,0 +1,81 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef _SM5714_PD_POLICY_H
++#define _SM5714_PD_POLICY_H
++
++/* Pure Request bounds; protocol encoding comes from Linux7.2-rc3 usb/pd.h.
++ * This is a board safety gate, not PDO selection or a second PD engine.
++ * Fixed limits are Test255's accepted ceilings. PPS limits are future bringup
++ * bounds only; the live Stage3A transport never authorizes PPS.
++ */
++#ifdef __KERNEL__
++#include <linux/usb/pd.h>
++#endif
++
++#define SM5714_FIXED_5V_MA	1800U
++#define SM5714_FIXED_9V_MA	1500U
++#define SM5714_PPS_MIN_MV		8200U
++#define SM5714_PPS_MAX_MV		10500U
++#define SM5714_PPS_MAX_MA		1800U
++
++static inline bool sm5714_validate_fixed_request(u32 pdo, u32 rdo)
++{
++	unsigned int mv, op, maximum, limit, board;
++
++	/* No EPR position/capability, GiveBack, or reserved bits21:20. */
++	if (pdo_type(pdo) != PDO_TYPE_FIXED ||
++	    (rdo & (BIT(31) | BIT(27) | GENMASK(22, 20))))
++		return false;
++	mv = pdo_fixed_voltage(pdo);
++	if (mv != 5000 && mv != 9000)
++		return false;
++	board = mv == 9000 ? SM5714_FIXED_9V_MA : SM5714_FIXED_5V_MA;
++	limit = min(pdo_max_current(pdo), board);
++	op = rdo_op_current(rdo);
++	maximum = rdo_max_current(rdo);
++	/* CAP_MISMATCH may describe desired maximum above a weak source offer.
++	 * Its operating current still cannot exceed that offer or board limit.
++	 */
++	return op && op <= limit && maximum >= op && maximum <= board &&
++		((rdo & RDO_CAP_MISMATCH) || maximum <= limit);
++}
++
++static inline bool sm5714_validate_pps_request(u32 pdo, u32 rdo)
++{
++	unsigned int minimum, maximum, offer, mv, ma;
++
++	/* APDO type0=PPS only. Reject AVS/EPR and reserved APDO fields.
++	 * Bit27 is the source PPS power-limited flag, not a reserved bit.
++	 */
++	if ((pdo >> 30) != 3 || ((pdo >> 28) & 3) ||
++	    (pdo & (GENMASK(26, 25) | BIT(16) | BIT(7))))
++		return false;
++	/* PPS RDO: voltage20mV bits19:9, current50mA bits6:0.
++	 * GiveBack/bit31/EPR and reserved22:20/8:7 are forbidden.
++	 */
++	if (rdo & (BIT(31) | BIT(27) | GENMASK(22, 20) | GENMASK(8, 7)))
++		return false;
++	minimum = ((pdo >> 8) & 0xff) * 100;
++	maximum = ((pdo >> 17) & 0xff) * 100;
++	offer = (pdo & 0x7f) * 50;
++	mv = ((rdo >> 9) & 0x7ff) * 20;
++	ma = (rdo & 0x7f) * 50;
++	return minimum && minimum <= maximum && offer && ma &&
++		mv >= minimum && mv <= maximum && ma <= offer &&
++		mv >= SM5714_PPS_MIN_MV && mv <= SM5714_PPS_MAX_MV &&
++		ma <= SM5714_PPS_MAX_MA;
++}
++
++static inline bool sm5714_validate_request(const u32 *offers, unsigned int count,
++					 u32 rdo, bool pps_authorized)
++{
++	unsigned int index = rdo_index(rdo);
++
++	if (!offers || !count || count > PD_MAX_PAYLOAD ||
++	    !index || index > count || (rdo & BIT(31)))
++		return false;
++	if (pdo_type(offers[index - 1]) == PDO_TYPE_FIXED)
++		return sm5714_validate_fixed_request(offers[index - 1], rdo);
++	return pps_authorized && sm5714_validate_pps_request(offers[index - 1], rdo);
++}
++
++#endif
+diff --git a/kernel/drivers/sm5714_usbpd.c b/kernel/drivers/sm5714_usbpd.c
+index 1c236c04..b551bf5d 100644
+--- a/kernel/drivers/sm5714_usbpd.c
++++ b/kernel/drivers/sm5714_usbpd.c
+@@ -20,6 +20,7 @@
+ #include <linux/workqueue.h>
+ 
+ #include "sm5714-stage2.h"
++#include "sm5714-pd-policy.h"
+ 
+ /* Samsung sm5714_typec.h register map and interrupt bit definitions. */
+ #define SM5714_REG_INT1		0x01
+@@ -69,6 +70,7 @@ struct sm5714_usbpd {
+ 	struct delayed_work cc_resync_work;
+ 	u32 source_pdos[PD_MAX_PAYLOAD];
+ 	unsigned int nr_source_pdos;
++	u64 source_generation;
+ 	int irq;
+ 	bool fault;
+ 	bool removing;
+@@ -86,13 +88,32 @@ static struct sm5714_usbpd *tcpc_to_sm5714(struct tcpc_dev *tcpc)
+ 	return container_of(tcpc, struct sm5714_usbpd, tcpc);
+ }
+ 
++/* Transport lock protects both the cache and its lifetime. No old offer may
++ * authorize a Request after reset, fault, detach, or a new source publication.
++ */
++static void sm5714_forget_source(struct sm5714_usbpd *sm)
++{
++	lockdep_assert_held(&sm->lock);
++	memset(sm->source_pdos, 0, sizeof(sm->source_pdos));
++	sm->nr_source_pdos = 0;
++	sm->source_generation++;
++}
++
+ /* No bus retry/reset loop: first transport failure latches charger off. */
+ static int sm5714_result(struct sm5714_usbpd *sm, int ret)
+ {
+-	if (ret < 0 && !READ_ONCE(sm->fault)) {
+-		WRITE_ONCE(sm->fault, true);
+-		sm5714_battery_typec_fault();
+-		dev_err(sm->dev, "TCPC fault %d; switching charge inhibited\n", ret);
++	bool first;
++
++	if (ret < 0) {
++		mutex_lock(&sm->lock);
++		first = !sm->fault;
++		sm->fault = true;
++		sm5714_forget_source(sm);
++		mutex_unlock(&sm->lock);
++		if (first) {
++			sm5714_battery_typec_fault();
++			dev_err(sm->dev, "TCPC fault %d; switching charge inhibited\n", ret);
++		}
+ 	}
+ 	return ret;
+ }
+@@ -109,6 +130,7 @@ static int sm5714_usbpd_init(struct tcpc_dev *tcpc)
+ 	if (READ_ONCE(sm->fault))
+ 		return -EIO;
+ 	mutex_lock(&sm->lock);
++	sm5714_forget_source(sm);
+ 	/* Fedora/Samsung normal (non water-detection) CORR initialization. */
+ 	ret = regmap_write(sm->regmap, SM5714_REG_CORR_CNTL5, 0x00);
+ 	if (!ret)
+@@ -181,10 +203,16 @@ static int sm5714_usbpd_get_cc(struct tcpc_dev *tcpc,
+ 	/* Samsung CC_STATUS: only a Source partner is accepted by this Sink. */
+ 	if ((cc & SM5714_CC_ATTACH_MASK) == SM5714_CC_SOURCE) {
+ 		switch (cc & SM5714_CC_RP_MASK) {
+-		case 0x08: active = TYPEC_CC_RP_1_5; break;
++		case 0x08:
++			active = TYPEC_CC_RP_1_5;
++			break;
+ 		case 0x10:
+-		case 0x18: active = TYPEC_CC_RP_3_0; break;
+-		default: active = TYPEC_CC_RP_DEF; break;
++		case 0x18:
++			active = TYPEC_CC_RP_3_0;
++			break;
++		default:
++			active = TYPEC_CC_RP_DEF;
++			break;
+ 		}
+ 	}
+ 	*cc1 = cc & SM5714_CC_FLIPPED ? TYPEC_CC_OPEN : active;
+@@ -204,7 +232,7 @@ static int sm5714_usbpd_set_cc(struct tcpc_dev *tcpc, enum typec_cc_status cc)
+ 	mutex_lock(&sm->lock);
+ 	/* Samsung force-detach=0x88, force UFP=0x45/0x82; no Rp writes. */
+ 	if (cc == TYPEC_CC_OPEN) {
+-		sm->nr_source_pdos = 0;
++		sm5714_forget_source(sm);
+ 		ret = regmap_write(sm->regmap, SM5714_REG_CC_CNTL3, 0x88);
+ 	} else {
+ 		ret = regmap_update_bits(sm->regmap, SM5714_REG_CC_CNTL1,
+@@ -268,12 +296,17 @@ static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
+ static int sm5714_usbpd_set_pd_rx(struct tcpc_dev *tcpc, bool on)
+ {
+ 	struct sm5714_usbpd *sm = tcpc_to_sm5714(tcpc);
++	int ret;
+ 
+ 	if (READ_ONCE(sm->fault))
+ 		return -EIO;
+ 	/* Samsung set_pd_control(): ordinary SOP receive=0x08, off=0x00. */
+-	return sm5714_result(sm, regmap_write(sm->regmap,
+-					    SM5714_REG_PD_CNTL1, on ? 0x08 : 0x00));
++	mutex_lock(&sm->lock);
++	if (!on)
++		sm5714_forget_source(sm);
++	ret = regmap_write(sm->regmap, SM5714_REG_PD_CNTL1, on ? 0x08 : 0x00);
++	mutex_unlock(&sm->lock);
++	return sm5714_result(sm, ret);
+ }
+ 
+ static int sm5714_usbpd_set_roles(struct tcpc_dev *tcpc, bool attached,
+@@ -293,25 +326,10 @@ static int sm5714_usbpd_set_roles(struct tcpc_dev *tcpc, bool attached,
+ /* Guard the actual Request frame without choosing a PDO or changing policy. */
+ static bool sm5714_request_allowed(struct sm5714_usbpd *sm, u32 rdo)
+ {
+-	unsigned int index = rdo_index(rdo), mv, limit, sink_limit;
+-	u32 pdo;
+-
+-	if (!index || index > sm->nr_source_pdos)
+-		return false;
+-	pdo = sm->source_pdos[index - 1];
+-	if (pdo_type(pdo) != PDO_TYPE_FIXED)
+-		return false;
+-	mv = pdo_fixed_voltage(pdo);
+-	if (mv != 5000 && mv != 9000)
+-		return false;
+-	sink_limit = mv == 9000 ? 1500U : 1800U;
+-	limit = min(pdo_max_current(pdo), sink_limit);
+-	/* TCPM's CAP_MISMATCH may describe a desired max above the source offer;
+-	 * the operating current still cannot exceed that offer or our sink cap.
+-	 * See stock tcpm_pd_build_request(): this is not permission to draw max.
++	/* PPS validator is host-tested separately. Until a reviewed live handoff
++	 * gate exists the actual transport accepts fixed offers only.
+ 	 */
+-	return rdo_op_current(rdo) <= limit && rdo_max_current(rdo) <= sink_limit &&
+-		((rdo & RDO_CAP_MISMATCH) || rdo_max_current(rdo) <= limit);
++	return sm5714_validate_request(sm->source_pdos, sm->nr_source_pdos, rdo, false);
+ }
+ 
+ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
+@@ -329,7 +347,7 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
+ 	mutex_lock(&sm->lock);
+ 	if (type == TCPC_TX_HARD_RESET) {
+ 		/* Samsung hard_reset(): PD_CNTL4 bit2; IRQ HCRST_DONE completes TX. */
+-		sm->nr_source_pdos = 0;
++		sm5714_forget_source(sm);
+ 		ret = regmap_update_bits(sm->regmap, SM5714_REG_PD_CNTL4, BIT(2), BIT(2));
+ 		goto out;
+ 	}
+@@ -338,6 +356,15 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
+ 		goto out;
+ 	}
+ 	count = pd_header_cnt_le(msg->header);
++	/* This driver has no extended-message transport or EPR implementation.
++	 * Type2/count0 is Get_Source_Cap control, not a malformed Request.
++	 */
++	if (le16_to_cpu(msg->header) & PD_HEADER_EXT_HDR) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++	if (!count && pd_header_type_le(msg->header) == PD_CTRL_SOFT_RESET)
++		sm5714_forget_source(sm);
+ 	if (pd_header_type_le(msg->header) == PD_DATA_REQUEST && count &&
+ 	    (count != 1 || !sm5714_request_allowed(sm, le32_to_cpu(msg->payload[0])))) {
+ 		ret = -ERANGE;
+@@ -379,7 +406,11 @@ static int sm5714_usbpd_receive(struct sm5714_usbpd *sm)
+ 		goto acknowledge;
+ 	/* Samsung RX_SRC low nibble0=SOP; no cable/alternate-mode transport. */
+ 	if (!(origin & 0x0f)) {
+-		if (count && pd_header_type_le(msg.header) == PD_DATA_SOURCE_CAP) {
++		if (!count && pd_header_type_le(msg.header) == PD_CTRL_SOFT_RESET)
++			sm5714_forget_source(sm);
++		if (count && !(le16_to_cpu(msg.header) & PD_HEADER_EXT_HDR) &&
++		    pd_header_type_le(msg.header) == PD_DATA_SOURCE_CAP) {
++			sm5714_forget_source(sm);
+ 			sm->nr_source_pdos = count;
+ 			for (i = 0; i < count; i++)
+ 				sm->source_pdos[i] = le32_to_cpu(msg.payload[i]);
+@@ -402,8 +433,19 @@ static irqreturn_t sm5714_usbpd_irq(int irq, void *data)
+ 		return IRQ_HANDLED;
+ 	mutex_lock(&sm->lock);
+ 	ret = regmap_bulk_read(sm->regmap, SM5714_REG_INT1, intr, sizeof(intr));
+-	if (!ret && (intr[3] & SM5714_RX_DONE))
+-		ret = sm5714_usbpd_receive(sm);
++	if (!ret && (intr[0] & (SM5714_ATTACH | SM5714_DETACH) ||
++		     intr[3] & (SM5714_HRST_RX | SM5714_HRST_DONE)))
++		sm5714_forget_source(sm);
++	if (!ret && (intr[3] & SM5714_RX_DONE)) {
++		/* Detach/reset may share an IRQ with a buffered old frame. Drain it
++		 * without publishing capabilities or delivering it to the new epoch.
++		 */
++		if (intr[0] & SM5714_DETACH ||
++		    intr[3] & (SM5714_HRST_RX | SM5714_HRST_DONE))
++			ret = regmap_write(sm->regmap, SM5714_REG_RX_BUF, 0x80);
++		else
++			ret = sm5714_usbpd_receive(sm);
++	}
+ 	if (!ret) {
+ 		/* Hard-reset completion is also a TX completion, not a timeout. */
+ 		if (intr[3] & SM5714_TX_ERR)
+@@ -412,12 +454,8 @@ static irqreturn_t sm5714_usbpd_irq(int irq, void *data)
+ 			tcpm_pd_transmit_complete(sm->port, TCPC_TX_DISCARDED);
+ 		else if (intr[3] & (SM5714_TX_DONE | SM5714_HRST_DONE))
+ 			tcpm_pd_transmit_complete(sm->port, TCPC_TX_SUCCESS);
+-		if (intr[3] & SM5714_HRST_RX) {
+-			sm->nr_source_pdos = 0;
++		if (intr[3] & SM5714_HRST_RX)
+ 			tcpm_pd_hard_reset(sm->port);
+-		}
+-		if (intr[0] & SM5714_DETACH)
+-			sm->nr_source_pdos = 0;
+ 	}
+ 	mutex_unlock(&sm->lock);
+ 	if (ret) {
+@@ -526,6 +564,9 @@ static void sm5714_usbpd_remove(struct i2c_client *client)
+ 	disable_irq(client->irq);
+ 	cancel_delayed_work_sync(&sm->cc_resync_work);
+ 	WRITE_ONCE(sm->fault, true);
++	mutex_lock(&sm->lock);
++	sm5714_forget_source(sm);
++	mutex_unlock(&sm->lock);
+ 	sm5714_battery_typec_fault();
+ 	tcpm_unregister_port(sm->port);
+ 	fwnode_handle_put(sm->connector);
+@@ -539,6 +580,9 @@ static void sm5714_usbpd_shutdown(struct i2c_client *client)
+ 	disable_irq(client->irq);
+ 	cancel_delayed_work_sync(&sm->cc_resync_work);
+ 	WRITE_ONCE(sm->fault, true);
++	mutex_lock(&sm->lock);
++	sm5714_forget_source(sm);
++	mutex_unlock(&sm->lock);
+ 	sm5714_battery_typec_fault();
+ 	/* Stop TCPM timers/worker before the I2C controllers shut down. */
+ 	tcpm_unregister_port(sm->port);
+diff --git a/kernel/drivers/x710-charging-policy.c b/kernel/drivers/x710-charging-policy.c
+new file mode 100644
+index 00000000..e22892fd
+--- /dev/null
++++ b/kernel/drivers/x710-charging-policy.c
+@@ -0,0 +1,287 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/* Default-inactive X710 charging transaction core. A live hardware adapter is
++ * deliberately NOT supplied until passive ADC/software-OCP/PM acceptance.
++ * No pump register, TCPM protocol engine or auto-retry thread is in this file.
++ * The same production C functions run in host fault-injection tests.
++ */
++#include <linux/errno.h>
++#include <linux/module.h>
++
++#include "x710-charging-policy.h"
++
++bool x710_charge_eligible(const struct x710_charge_facts *f)
++{
++	/* Bringup limits, narrower than X710 vendor (>18,<42C, endSOC95).
++	 * Invalid or absent measurements can never be replaced by defaults.
++	 */
++	return f && f->epoch && f->attached && f->battery_present && f->healthy &&
++		f->pack_valid && f->voltage_valid && f->soc_valid && f->die_valid &&
++		f->adc_valid && f->fixed_healthy && f->apdo && f->thermal_normal &&
++		f->software_ocp_verified && !f->suspended && !f->fault &&
++		f->capacity >= 5 && f->capacity < 80 &&
++		f->vbat_mv >= 3500 && f->vbat_mv < 4300 &&
++		f->pack_decic >= 200 && f->pack_decic < 380 &&
++		f->die_decic >= 0 && f->die_decic < 550 &&
++		(f->fixed_mv == 5000 || f->fixed_mv == 9000);
++}
++
++enum x710_thermal_zone x710_vendor_zone(int decic, enum x710_thermal_zone previous)
++{
++	/* X710 r04 wire thresholds; sec_bat_set_threshold() uses19 deciC.
++	 * Pure audit model only: does not alter the validated Stage1 thermistor
++	 * policy or import the vendor's aggregate zone-current votes.
++	 */
++	int cold = 0, cool3 = 50, cool2 = 150, cool1 = 180;
++	int warm = 420, hot = 500;
++
++	if (previous == X710_OVERHEAT) {
++		hot -= 19;
++		warm -= 19;
++	} else if (previous == X710_WARM) {
++		warm -= 19;
++	}
++	if (previous <= X710_COOL1)
++		cool1 += 19;
++	if (previous <= X710_COOL2)
++		cool2 += 19;
++	if (previous <= X710_COOL3)
++		cool3 += 19;
++	if (previous == X710_COLD)
++		cold += 19;
++	if (decic >= hot)
++		return X710_OVERHEAT;
++	if (decic >= warm)
++		return X710_WARM;
++	if (decic <= cold)
++		return X710_COLD;
++	if (decic <= cool3)
++		return X710_COOL3;
++	if (decic <= cool2)
++		return X710_COOL2;
++	if (decic <= cool1)
++		return X710_COOL1;
++	return X710_NORMAL;
++}
++
++int x710_pps_target(unsigned int vbat_mv, unsigned int offer_min_mv,
++		    unsigned int offer_max_mv, unsigned int offer_ma,
++		    unsigned int *target_mv, unsigned int *target_ma)
++{
++	u64 mv;
++	unsigned int ma, minimum, maximum;
++
++	if (!target_mv || !target_ma || vbat_mv < 3500 || vbat_mv >= 4300 ||
++	    !offer_min_mv || offer_min_mv > offer_max_mv)
++		return -ERANGE;
++	minimum = offer_min_mv > 8200 ? offer_min_mv : 8200;
++	maximum = offer_max_mv < 10500 ? offer_max_mv : 10500;
++	ma = offer_ma < 1800 ? offer_ma : 1800;
++	ma -= ma % 50;
++	if (minimum > maximum || ma < 1000)
++		return -ERANGE;
++	/* Vendor _calc_pps_v_init_offset: r_ttl320000uohm +200mV.
++	 * X710 mainline initial cap1800mA, never vendor's full battery target.
++	 */
++	mv = (u64)vbat_mv * 2 + (u64)ma * 320 / 1000 + 200;
++	if (mv < minimum)
++		mv = minimum;
++	mv = (mv + 19) / 20 * 20;
++	/* A source ceiling too low for headroom is not silently clamped down. */
++	if (mv > maximum)
++		return -ERANGE;
++	*target_mv = mv;
++	*target_ma = ma;
++	return 0;
++}
++
++unsigned int x710_retry_seconds(unsigned int failures)
++{
++	/* Fedora bounded retry reference, NOT an enabled retry policy. */
++	if (!failures)
++		return 0;
++	if (failures >= 5)
++		return 300;
++	return 1U << failures;
++}
++
++static bool x710_ops_valid(const struct x710_charge_ops *ops)
++{
++	return ops && ops->current_epoch && ops->read_facts && ops->switching_gate &&
++		ops->pump_off && ops->pps_request && ops->measure && ops->pump_prepare &&
++		ops->pump_on && ops->fixed_restore;
++}
++
++static int x710_fresh_eligible(struct x710_charge_transaction *tx,
++			      const struct x710_charge_ops *ops, void *ctx)
++{
++	struct x710_charge_facts facts = {};
++	int ret;
++
++	if (!ops->current_epoch(ctx, tx->epoch))
++		return -ECANCELED;
++	ret = ops->read_facts(ctx, &facts);
++	if (ret)
++		return ret;
++	if (facts.epoch != tx->epoch || !x710_charge_eligible(&facts))
++		return -EPERM;
++	return 0;
++}
++
++static int x710_measure_safe(struct x710_charge_transaction *tx,
++			     const struct x710_charge_ops *ops, void *ctx,
++			     unsigned int target, bool running)
++{
++	struct x710_physical_sample sample = {};
++	int ret;
++
++	if (!ops->current_epoch(ctx, tx->epoch))
++		return -ECANCELED;
++	ret = ops->measure(ctx, &sample);
++	if (ret)
++		return ret;
++	if (!ops->current_epoch(ctx, tx->epoch))
++		return -ECANCELED;
++	if (!sample.valid || !sample.online || sample.faults ||
++	    sample.pump_on != running || sample.vbat_mv < 3500 ||
++	    sample.vbat_mv >= 4300 || sample.vbus_mv > 10500 ||
++	    target < 100 || sample.vbus_mv + 100 < target ||
++	    sample.vbus_mv > target + 100 ||
++	    sample.ibus_ma > (running ? tx->target_ma : 100))
++		return -ERANGE;
++	return 0;
++}
++
++/* Failures remain visible even after a successful fixed fallback. OFF failure
++ * is not hidden by another operation, and cannot authorize a voltage change.
++ */
++static int x710_fallback(struct x710_charge_transaction *tx,
++			 const struct x710_charge_ops *ops, void *ctx, int error)
++{
++	int ret;
++
++	tx->last_error = error;
++	if (error)
++		tx->armed = false;
++	tx->state = X710_DIRECT_STOPPING;
++	ret = ops->pump_off(ctx);
++	if (ret)
++		goto fault;
++	if (!ops->current_epoch(ctx, tx->epoch)) {
++		tx->state = X710_CHARGE_OFF;
++		return error ? error : -ECANCELED;
++	}
++	tx->state = X710_FIXED_RESTORE;
++	ret = ops->fixed_restore(ctx);
++	if (!ret)
++		ret = x710_measure_safe(tx, ops, ctx, tx->fixed_mv, false);
++	if (!ret && ops->current_epoch(ctx, tx->epoch))
++		ret = ops->switching_gate(ctx, false);
++	else if (!ret)
++		ret = -ECANCELED;
++	if (ret)
++		goto fault;
++	tx->switching_inhibited = false;
++	tx->state = X710_SWITCHING;
++	return error;
++fault:
++	tx->state = X710_CHARGE_FAULT;
++	tx->armed = false;
++	tx->last_error = ret;
++	return ret;
++}
++
++int x710_charge_start(struct x710_charge_transaction *tx,
++		      const struct x710_charge_facts *facts,
++		      const struct x710_charge_ops *ops, void *ctx)
++{
++	int ret;
++
++	if (!tx || !x710_ops_valid(ops))
++		return -EINVAL;
++	if (!tx->armed)
++		return -EACCES;
++	if (tx->state != X710_SWITCHING || !x710_charge_eligible(facts) ||
++	    tx->target_mv < 8200 || tx->target_mv > 10500 || tx->target_mv % 20 ||
++	    tx->target_ma < 1000 || tx->target_ma > 1800 || tx->target_ma % 50)
++		return -EPERM;
++	tx->epoch = facts->epoch;
++	tx->fixed_mv = facts->fixed_mv;
++	ret = x710_fresh_eligible(tx, ops, ctx);
++	if (ret)
++		return ret;
++	tx->state = X710_DIRECT_PREPARE;
++	/* Ownership must be latched by adapter before any Q4 I/O. On an
++	 * ambiguous switching write, retain the inhibit through fallback.
++	 */
++	tx->switching_inhibited = true;
++	ret = ops->switching_gate(ctx, true);
++	if (ret)
++		return x710_fallback(tx, ops, ctx, ret);
++	ret = ops->pump_off(ctx);
++	if (!ret)
++		ret = x710_fresh_eligible(tx, ops, ctx);
++	if (ret)
++		return x710_fallback(tx, ops, ctx, ret);
++	tx->state = X710_PPS_NEGOTIATING;
++	ret = ops->pps_request(ctx, tx->target_mv, tx->target_ma);
++	if (!ret)
++		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, false);
++	if (!ret)
++		ret = x710_fresh_eligible(tx, ops, ctx);
++	if (ret)
++		return x710_fallback(tx, ops, ctx, ret);
++	tx->state = X710_DIRECT_STARTING;
++	ret = ops->pump_prepare(ctx, tx->target_ma);
++	if (!ret)
++		ret = x710_fresh_eligible(tx, ops, ctx);
++	if (!ret)
++		ret = ops->pump_on(ctx);
++	if (!ret)
++		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, true);
++	if (ret)
++		return x710_fallback(tx, ops, ctx, ret);
++	tx->state = X710_DIRECT_ACTIVE;
++	tx->last_error = 0;
++	return 0;
++}
++
++int x710_charge_refresh(struct x710_charge_transaction *tx,
++			const struct x710_charge_ops *ops, void *ctx)
++{
++	int ret;
++
++	if (!tx || !x710_ops_valid(ops))
++		return -EINVAL;
++	if (tx->state != X710_DIRECT_ACTIVE)
++		return -EPERM;
++	if (!tx->armed)
++		return x710_fallback(tx, ops, ctx, -EACCES);
++	/* Fedora measured REVBLK: pump OFF before every source refresh. */
++	ret = ops->pump_off(ctx);
++	if (!ret)
++		ret = x710_fresh_eligible(tx, ops, ctx);
++	if (!ret)
++		ret = ops->pps_request(ctx, tx->target_mv, tx->target_ma);
++	if (!ret)
++		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, false);
++	if (!ret)
++		ret = x710_fresh_eligible(tx, ops, ctx);
++	if (!ret)
++		ret = ops->pump_on(ctx);
++	if (!ret)
++		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, true);
++	return ret ? x710_fallback(tx, ops, ctx, ret) : 0;
++}
++
++int x710_charge_stop(struct x710_charge_transaction *tx,
++		     const struct x710_charge_ops *ops, void *ctx)
++{
++	if (!tx || !x710_ops_valid(ops))
++		return -EINVAL;
++	if (!tx->switching_inhibited && tx->state == X710_SWITCHING)
++		return 0;
++	return x710_fallback(tx, ops, ctx, 0);
++}
++
++MODULE_DESCRIPTION("X710 offline charging transaction core, no live activation adapter");
++MODULE_LICENSE("GPL");
+diff --git a/kernel/drivers/x710-charging-policy.h b/kernel/drivers/x710-charging-policy.h
+new file mode 100644
+index 00000000..ae01f041
+--- /dev/null
++++ b/kernel/drivers/x710-charging-policy.h
+@@ -0,0 +1,102 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef _X710_CHARGING_POLICY_H
++#define _X710_CHARGING_POLICY_H
++#ifdef __KERNEL__
++#include <linux/types.h>
++#endif
++
++/* Offline transaction core. No live adapter or userspace activation interface
++ * exists. Future adapter must be single-worker/epoch-serialized, must drain on
++ * PM/unbind, and must implement bounded hardware operations without nesting
++ * TCPM/charger locks. Source/parameter provenance is in the X710 audit docs.
++ */
++enum x710_charge_state {
++	X710_SWITCHING,
++	X710_DIRECT_PREPARE,
++	X710_PPS_NEGOTIATING,
++	X710_DIRECT_STARTING,
++	X710_DIRECT_ACTIVE,
++	X710_DIRECT_STOPPING,
++	X710_FIXED_RESTORE,
++	X710_CHARGE_OFF,
++	X710_CHARGE_FAULT,
++};
++
++enum x710_thermal_zone {
++	X710_COLD, X710_COOL3, X710_COOL2, X710_COOL1,
++	X710_NORMAL, X710_WARM, X710_OVERHEAT,
++};
++
++struct x710_charge_facts {
++	u64 epoch;
++	int capacity;
++	int pack_decic;
++	int die_decic;
++	unsigned int vbat_mv;
++	unsigned int fixed_mv;
++	bool attached;
++	bool battery_present;
++	bool healthy;
++	bool pack_valid;
++	bool voltage_valid;
++	bool soc_valid;
++	bool die_valid;
++	bool adc_valid;
++	bool fixed_healthy;
++	bool apdo;
++	bool thermal_normal;
++	bool suspended;
++	bool fault;
++	/* Cannot be inferred from vendor disabled HW OCP / IBUSLIM bits. */
++	bool software_ocp_verified;
++};
++
++struct x710_physical_sample {
++	unsigned int vbus_mv;
++	unsigned int vbat_mv;
++	unsigned int ibus_ma;
++	unsigned int faults;
++	bool valid;
++	bool online;
++	bool pump_on;
++};
++
++struct x710_charge_transaction {
++	enum x710_charge_state state;
++	u64 epoch;
++	unsigned int target_mv;
++	unsigned int target_ma;
++	unsigned int fixed_mv;
++	int last_error;
++	/* Default false, no live setter/consumer supplied by this port. */
++	bool armed;
++	bool switching_inhibited;
++};
++
++/* Exactly one hardware/framework adapter, not a vendor framework. */
++struct x710_charge_ops {
++	bool (*current_epoch)(void *ctx, u64 epoch);
++	int (*read_facts)(void *ctx, struct x710_charge_facts *facts);
++	int (*switching_gate)(void *ctx, bool inhibit);
++	int (*pump_off)(void *ctx);
++	int (*pps_request)(void *ctx, unsigned int mv, unsigned int ma);
++	int (*measure)(void *ctx, struct x710_physical_sample *sample);
++	int (*pump_prepare)(void *ctx, unsigned int ma);
++	int (*pump_on)(void *ctx);
++	int (*fixed_restore)(void *ctx);
++};
++
++bool x710_charge_eligible(const struct x710_charge_facts *facts);
++enum x710_thermal_zone x710_vendor_zone(int decic, enum x710_thermal_zone previous);
++int x710_pps_target(unsigned int vbat_mv, unsigned int offer_min_mv,
++		    unsigned int offer_max_mv, unsigned int offer_ma,
++		    unsigned int *target_mv, unsigned int *target_ma);
++unsigned int x710_retry_seconds(unsigned int failures);
++int x710_charge_start(struct x710_charge_transaction *tx,
++		      const struct x710_charge_facts *facts,
++		      const struct x710_charge_ops *ops, void *ctx);
++int x710_charge_refresh(struct x710_charge_transaction *tx,
++			const struct x710_charge_ops *ops, void *ctx);
++int x710_charge_stop(struct x710_charge_transaction *tx,
++		     const struct x710_charge_ops *ops, void *ctx);
++#endif

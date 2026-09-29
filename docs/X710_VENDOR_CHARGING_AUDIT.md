@@ -164,6 +164,13 @@ therefore remains an additional constraint: pumpOFF -> PPSrequest -> physical
 VBUS settled -> pumpON. Do not claim the vendor establishes that workaround
 is unnecessary.
 
+Vendor `sm5440_charger_suspend()`/`resume()` only manage IRQ wake and IRQ
+disable/enable; they do not themselves stop the pump or exit PPS. The driver
+also registers a charging wakeup source. Those Android wake-lock assumptions
+are not a portable PM safety guarantee. Our proposed transaction must drain
+work, verify pump OFF and leave PPS before suspend; this stricter behavior is
+[MAINLINE/BRINGUP_LIMIT], not an already implemented vendor-equivalent adapter.
+
 ## Linux7.2-rc3 ownership and gaps
 
 The actual pinned `tcpm.c`, `tcpm.h`, `pd.h` were inspected. TCPM selects PPS

@@ -17,6 +17,23 @@ vendor aggregate protection init must not be copied blindly. Build/test/config/
 DT/protected-file checks after every commit; push origin/test, no CI/main merge.
 The earlier physical history below is retained, not new device authorization.
 
+Test256 offline source revision61336aff is now qualified. Read its RESULTS.md,
+BUILD_RESULTS.md, summary.json and validation evidence. All1239 host checks
+passed with no failures/errors/skips (1200 retained +39 added). Default
+fixed-refactor config adds only CHARGER_SM5440_DIRECT=n; DTB is byte-identical
+to Test255. Separate passive/policy profiles enable only the pump monitor and
+optional unused transaction core, with only charger@63 status changed. Each
+candidate has181 paired module-directory files;96 protected files,8 Stage1
+helpers,62 reference sources and frozen Stage2 artifacts are intact. W=1/sparse
+reported no changed-driver diagnostics; dtbs_check retains the baseline unbound
+PS5169 usb-role-switch type diagnostic, not a clean whole-board schema result.
+No device commands or deployment occurred. Live PPS/pump-ON remains unavailable:
+software OCP/protection, actual ADC/sensors and live transaction/PM adapter are
+unaccepted. Active Stage3 candidate NOT READY. Next requires separately registered
+passive probe/ADC acceptance, never automatic PPS or pump activation. The
+stage2-fixed-pd-known-good tag preserves ebf4af1c; use the accepted artifact pair
+for an authorized device rollback, not a rebuilt refactor image.
+
 The owner has revised the Test255 workflow to connect the existing Lenovo
 YG65G USB-C2 18W PD supply directly and inspect power/battery telemetry.
 Attempt03 registers this bounded observation without an external VBUS meter or

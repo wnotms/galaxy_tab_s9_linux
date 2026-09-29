@@ -1,0 +1,169 @@
+{
+  "revision": "61336aff8350c67bc3d3b46a342ca8ccbf71903f",
+  "units": "PD mV/mA; passive supply uV/uA; pack/die temperature deciC",
+  "pump_on_hardware_api": false,
+  "live_tcpm_pps_consumer": false,
+  "default_connector_apdo": false,
+  "fixed_limit_mv_ma": [
+    [
+      5000,
+      1800
+    ],
+    [
+      9000,
+      1500
+    ]
+  ],
+  "future_pps_bounds_mv_ma": [
+    8200,
+    10500,
+    1800
+  ],
+  "float_mv": 4440,
+  "battery_ma": 2100,
+  "functions": {
+    "sm5714-battery.c": [
+      "sm5714_chg_update_bits",
+      "sm5714_disable_charging",
+      "sm5714_batreg_offset",
+      "sm5714_set_float_voltage",
+      "sm5714_charge_fault",
+      "sm5714_get_usb_type",
+      "sm5714_input_current_reg",
+      "sm5714_fast_current_reg",
+      "sm5714_charge_thermal_state",
+      "sm5714_configure_charging",
+      "sm5714_inhibit_typec_locked",
+      "sm5714_battery_set_pd_contract",
+      "sm5714_battery_set_typec_charge",
+      "sm5714_battery_typec_fault",
+      "sm5714_battery_typec_claim",
+      "sm5714_battery_get_bc12_limit",
+      "sm5714_fg_read_sram",
+      "sm5714_get_capacity",
+      "sm5714_get_voltage",
+      "sm5714_get_ocv",
+      "sm5714_get_current",
+      "sm5714_get_temp",
+      "sm5714_get_online_raw",
+      "sm5714_get_status",
+      "sm5714_bat_get_property",
+      "sm5714_usb_get_property",
+      "sm5714_poll_work",
+      "sm5714_charge_thermal_state",
+      "sm5714_cancel_poll",
+      "sm5714_put_battery_info",
+      "sm5714_suspend",
+      "sm5714_resume",
+      "sm5714_unpublish_companion",
+      "sm5714_probe",
+      "sm5714_shutdown"
+    ],
+    "sm5714_usbpd.c": [
+      "sm5714_forget_source",
+      "sm5714_result",
+      "sm5714_usbpd_init",
+      "sm5714_usbpd_get_vbus",
+      "sm5714_usbpd_get_current_limit",
+      "sm5714_usbpd_get_cc",
+      "sm5714_usbpd_set_cc",
+      "sm5714_usbpd_set_polarity",
+      "sm5714_usbpd_set_vconn",
+      "sm5714_usbpd_set_vbus",
+      "sm5714_usbpd_set_current_limit",
+      "sm5714_usbpd_set_pd_rx",
+      "sm5714_usbpd_set_roles",
+      "sm5714_request_allowed",
+      "sm5714_usbpd_transmit",
+      "sm5714_request_allowed",
+      "sm5714_usbpd_receive",
+      "sm5714_usbpd_irq",
+      "sm5714_usbpd_resync",
+      "sm5714_usbpd_probe",
+      "sm5714_usbpd_remove",
+      "sm5714_usbpd_shutdown"
+    ],
+    "sm5440-direct.c": [
+      "sm5440_off",
+      "sm5440_sample_once",
+      "sm5440_poll",
+      "sm5440_get_property",
+      "sm5440_quiesce",
+      "sm5440_stop",
+      "sm5440_suspend",
+      "sm5440_resume",
+      "sm5440_probe",
+      "sm5440_shutdown"
+    ],
+    "x710-charging-policy.c": [
+      "x710_charge_eligible",
+      "x710_vendor_zone",
+      "x710_pps_target",
+      "x710_retry_seconds",
+      "x710_ops_valid",
+      "x710_fresh_eligible",
+      "x710_measure_safe",
+      "x710_fallback",
+      "x710_charge_start",
+      "x710_charge_refresh",
+      "x710_charge_stop"
+    ]
+  },
+  "passive_write_sources": {
+    "CNTL5 mode OFF": "Samsung sm5440_set_op_mode CNTL5[3:2]; verified readback",
+    "ADCCNTL1 enable/rate/average": "Samsung sm5440_set_adc_mode / adc_read code; bounded fresh INT4 ready wait",
+    "ADCCNTL2 0xdf": "Samsung sm5440_init_reg_param channel mask; no pump/protection reset sequence"
+  },
+  "sm5714_new_hardware_sequence": "No new charger/TCPC sequence; consolidate existing fail-closed Q4/min input and ack/drop old RX on lifecycle events",
+  "source_cache_events": [
+    "init",
+    "CC-open",
+    "RX-off",
+    "TX/RX hard reset",
+    "TX/RX soft reset",
+    "attach/detach",
+    "I2C fault",
+    "unbind"
+  ],
+  "protected_stage1_helpers": {
+    "static u8 sm5714_batreg_offset(": {
+      "unchanged": true,
+      "sha256": "4f875c2732e599fb757d18085b270f911a3e09f1f4b1158a82f33669d2b3bfa5"
+    },
+    "static int sm5714_set_float_voltage(": {
+      "unchanged": true,
+      "sha256": "9a8cd2d99d813f896efb0bc112808b45ebbc4b9ad36577ca83cd2f4fc46a1543"
+    },
+    "static enum sm5714_charge_thermal_state\nsm5714_charge_thermal_state(": {
+      "unchanged": true,
+      "sha256": "cfb502178bab5f80615e903454e4b68f41724c8e25057c061283ca65fcbccb00"
+    },
+    "static int sm5714_get_current(": {
+      "unchanged": true,
+      "sha256": "e1e6299d5ed82c3e6b64a7fa1b90da18ae5280151c5761f7237dc8e45ed71b38"
+    },
+    "static int sm5714_get_temp(": {
+      "unchanged": true,
+      "sha256": "9f8e69106e7bd5a176d560a3ae19e081b10ceb1a8ef28751112682db8cf321b1"
+    },
+    "static int sm5714_charge_fault(": {
+      "unchanged": true,
+      "sha256": "df6b23e82600483aa58411ba84be683a2e75faa006a9310eb1bd6b924a0235e9"
+    },
+    "static u8 sm5714_input_current_reg(": {
+      "unchanged": true,
+      "sha256": "de19ada2ba0807a22a3755aa829d2c880e1550de4946bf86dbc239bf7b8dba06"
+    },
+    "static u8 sm5714_fast_current_reg(": {
+      "unchanged": true,
+      "sha256": "3e424274bebf876798ebeb16b87eb0363c795b54977349fdbf9f9fc6f46f5e47"
+    }
+  },
+  "active_blockers": [
+    "Passive ADC accuracy/availability not physically verified",
+    "Vendor software OCP requirement and protective timing unresolved",
+    "No live power_supply adapter/serialized worker/PM cancellation wiring",
+    "Pack/charger/USB sensor completeness and calibration",
+    "Full CC/CV/step/termination and fault recovery policy not restored"
+  ]
+}
