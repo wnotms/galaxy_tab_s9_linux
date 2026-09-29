@@ -2,6 +2,13 @@
 
 ## Current state (2026-09-29)
 
+The owner has requested continued OFFLINE development without flashing.
+Continuation starts at a3ddd0de on test. Test257 registers transaction source-
+offer/freshness/monitor-deadline guards and a deeper software-OCP audit. Keep
+Test256 evidence sealed. This does not authorize device commands, a live PPS
+adapter, pump ON, new APDO, configuration/DT/current/float/thermal changes.
+Read docs/SM5440_SOFTWARE_OCP_AUDIT.md and Test257 registration first.
+
 The owner now authorizes **offline X710 vendor charging audit and staged
 refactor/SM5440 development only**. Start HEAD is ebf4af1c, work branch test.
 Read docs/X710_VENDOR_CHARGING_AUDIT.md, X710_CHARGING_ARCHITECTURE.md,
