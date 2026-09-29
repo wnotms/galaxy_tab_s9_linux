@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; sha256sum /tmp/test255-candidate-boot.img /tmp/test255-candidate-vendor_boot.img /tmp/test255-candidate-modules.tar.gz /tmp/test255-rollback-test254-boot.img /tmp/test255-rollback-test254-vendor_boot.img /tmp/test255-test254-rollback-modules.sha256 /tmp/test255-test255-candidate-modules.sha256 /tmp/test255-module-swap.sh"
+  ],
+  "ended_utc": "2026-09-29T04:29:31.995732+00:00",
+  "started_utc": "2026-09-29T04:29:31.631922+00:00",
+  "status": 0
+}
