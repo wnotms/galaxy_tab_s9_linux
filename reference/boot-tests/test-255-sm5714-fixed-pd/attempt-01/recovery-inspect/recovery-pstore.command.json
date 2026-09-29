@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "for f in /sys/fs/pstore/*; do test -f \"$f\" && { echo \"$f\"; cat \"$f\"; }; done"
+  ],
+  "ended_utc": "2026-09-29T04:28:38.998405+00:00",
+  "started_utc": "2026-09-29T04:28:38.916191+00:00",
+  "status": 1
+}
