@@ -50,9 +50,15 @@ Use a mandatory monotonic `now_ms` callback and nonzero observation timestamps.
 Zero, future or backward time is invalid. Initial logical freshness budgets:
 facts<=500ms, ADC<=100ms; active monitor call gap/ON observation<=100ms.
 These are **[BRINGUP_LIMIT] refusal rules**, not vendor production constants or
-a measured protection latency. Adapter must timestamp completed acquisitions,
+a measured protection latency. Adapter must use the oldest required acquisition
+timestamp in a facts bundle, and the actual completion timestamp for fresh ADC,
 not stamp cached data with the time it was fetched from cache. No auto-refresh
 worker/timer or polling-frequency deployment is added.
+Source capabilities remain valid by generation until invalidated; this is not a
+requirement for new Source_Capabilities messages every500ms. Physical telemetry
+must have genuine acquisition times. Immediately before ON, facts are checked
+again with100ms observation slack (age<=400ms) so a scheduling pause cannot
+reuse the previous grant or let it expire within an accepted post-ON window.
 
 Keep actual IBUS in microamps through the physical sample; compare against
 target_ma*1000. Thus1800001uA is rejected at1800mA, and no integer-mA truncation

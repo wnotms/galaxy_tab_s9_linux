@@ -14,10 +14,12 @@ bool x710_charge_eligible(const struct x710_charge_facts *f)
 	/* Bringup limits, narrower than X710 vendor (>18,<42C, endSOC95).
 	 * Invalid or absent measurements can never be replaced by defaults.
 	 */
-	return f && f->epoch && f->attached && f->battery_present && f->healthy &&
+	return f && f->epoch && f->observed_ms && f->attached &&
+		f->battery_present && f->healthy &&
 		f->pack_valid && f->voltage_valid && f->soc_valid && f->die_valid &&
 		f->adc_valid && f->fixed_healthy && f->apdo && f->thermal_normal &&
 		f->software_ocp_verified && !f->suspended && !f->fault &&
+		f->apdo_min_mv && f->apdo_min_mv <= f->apdo_max_mv && f->apdo_ma &&
 		f->capacity >= 5 && f->capacity < 80 &&
 		f->vbat_mv >= 3500 && f->vbat_mv < 4300 &&
 		f->pack_decic >= 200 && f->pack_decic < 380 &&
@@ -106,15 +108,42 @@ unsigned int x710_retry_seconds(unsigned int failures)
 
 static bool x710_ops_valid(const struct x710_charge_ops *ops)
 {
-	return ops && ops->current_epoch && ops->read_facts && ops->switching_gate &&
+	return ops && ops->now_ms && ops->current_epoch && ops->read_facts &&
+		ops->switching_gate &&
 		ops->pump_off && ops->pps_request && ops->measure && ops->pump_prepare &&
 		ops->pump_on && ops->fixed_restore;
+}
+
+static int x710_now(struct x710_charge_transaction *tx,
+		    const struct x710_charge_ops *ops, void *ctx, u64 *now)
+{
+	*now = ops->now_ms(ctx);
+	if (!*now || *now < tx->last_clock_ms)
+		return -ETIME;
+	tx->last_clock_ms = *now;
+	return 0;
+}
+
+static bool x710_fresh(u64 observed, u64 now, unsigned int maximum_age)
+{
+	return observed && observed <= now && now - observed <= maximum_age;
+}
+
+static bool x710_target_supported(const struct x710_charge_transaction *tx,
+				 const struct x710_charge_facts *facts)
+{
+	return tx->target_mv >= 8200 && tx->target_mv <= 10500 &&
+		!(tx->target_mv % 20) && tx->target_ma >= 1000 &&
+		tx->target_ma <= 1800 && !(tx->target_ma % 50) &&
+		tx->target_mv >= facts->apdo_min_mv &&
+		tx->target_mv <= facts->apdo_max_mv && tx->target_ma <= facts->apdo_ma;
 }
 
 static int x710_fresh_eligible(struct x710_charge_transaction *tx,
 			      const struct x710_charge_ops *ops, void *ctx)
 {
 	struct x710_charge_facts facts = {};
+	u64 now;
 	int ret;
 
 	if (!ops->current_epoch(ctx, tx->epoch))
@@ -122,8 +151,18 @@ static int x710_fresh_eligible(struct x710_charge_transaction *tx,
 	ret = ops->read_facts(ctx, &facts);
 	if (ret)
 		return ret;
-	if (facts.epoch != tx->epoch || !x710_charge_eligible(&facts))
+	/* An epoch can change while the provider is acquiring its snapshot. */
+	if (!ops->current_epoch(ctx, tx->epoch))
+		return -ECANCELED;
+	ret = x710_now(tx, ops, ctx, &now);
+	if (ret)
+		return ret;
+	if (!x710_fresh(facts.observed_ms, now, X710_FACTS_MAX_AGE_MS))
+		return -ESTALE;
+	if (facts.epoch != tx->epoch || !x710_charge_eligible(&facts) ||
+	    !x710_target_supported(tx, &facts))
 		return -EPERM;
+	tx->last_facts_ms = facts.observed_ms;
 	return 0;
 }
 
@@ -132,6 +171,7 @@ static int x710_measure_safe(struct x710_charge_transaction *tx,
 			     unsigned int target, bool running)
 {
 	struct x710_physical_sample sample = {};
+	u64 now;
 	int ret;
 
 	if (!ops->current_epoch(ctx, tx->epoch))
@@ -141,14 +181,58 @@ static int x710_measure_safe(struct x710_charge_transaction *tx,
 		return ret;
 	if (!ops->current_epoch(ctx, tx->epoch))
 		return -ECANCELED;
+	ret = x710_now(tx, ops, ctx, &now);
+	if (ret)
+		return ret;
+	if (!x710_fresh(sample.observed_ms, now, X710_ADC_MAX_AGE_MS))
+		return -ESTALE;
 	if (!sample.valid || !sample.online || sample.faults ||
 	    sample.pump_on != running || sample.vbat_mv < 3500 ||
 	    sample.vbat_mv >= 4300 || sample.vbus_mv > 10500 ||
 	    target < 100 || sample.vbus_mv + 100 < target ||
 	    sample.vbus_mv > target + 100 ||
-	    sample.ibus_ma > (running ? tx->target_ma : 100))
+	    sample.ibus_ua > (running ? tx->target_ma * 1000 : 100000))
 		return -ERANGE;
 	return 0;
+}
+
+static int x710_monitor_deadline(struct x710_charge_transaction *tx,
+				const struct x710_charge_ops *ops, void *ctx,
+				u64 *now)
+{
+	int ret = x710_now(tx, ops, ctx, now);
+
+	if (ret)
+		return ret;
+	if (!x710_fresh(tx->last_monitor_ms, *now, X710_MONITOR_DEADLINE_MS))
+		return -ETIME;
+	return 0;
+}
+
+static int x710_on_observed(struct x710_charge_transaction *tx,
+			     const struct x710_charge_ops *ops, void *ctx)
+{
+	u64 start, end;
+	int ret;
+
+	ret = x710_now(tx, ops, ctx, &start);
+	/* Recheck immediately before ON and reserve the observation window.
+	 * Scheduling/negotiation delays cannot turn an old snapshot into a grant.
+	 */
+	if (!ret && !x710_fresh(tx->last_facts_ms, start,
+			       X710_FACTS_MAX_AGE_MS - X710_MONITOR_DEADLINE_MS))
+		ret = -ESTALE;
+	if (!ret)
+		ret = ops->pump_on(ctx);
+	if (!ret)
+		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, true);
+	if (!ret)
+		ret = x710_now(tx, ops, ctx, &end);
+	if (!ret && end - start > X710_MONITOR_DEADLINE_MS)
+		ret = -ETIME;
+	if (!ret)
+		tx->last_monitor_ms = end;
+	return ret;
 }
 
 /* Failures remain visible even after a successful fixed fallback. OFF failure
@@ -201,14 +285,16 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 	if (!tx->armed)
 		return -EACCES;
 	if (tx->state != X710_SWITCHING || !x710_charge_eligible(facts) ||
-	    tx->target_mv < 8200 || tx->target_mv > 10500 || tx->target_mv % 20 ||
-	    tx->target_ma < 1000 || tx->target_ma > 1800 || tx->target_ma % 50)
+	    !x710_target_supported(tx, facts))
 		return -EPERM;
 	tx->epoch = facts->epoch;
 	tx->fixed_mv = facts->fixed_mv;
 	ret = x710_fresh_eligible(tx, ops, ctx);
-	if (ret)
+	if (ret) {
+		tx->armed = false;
+		tx->last_error = ret;
 		return ret;
+	}
 	tx->state = X710_DIRECT_PREPARE;
 	/* Ownership must be latched by adapter before any Q4 I/O. On an
 	 * ambiguous switching write, retain the inhibit through fallback.
@@ -235,9 +321,7 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 	if (!ret)
 		ret = x710_fresh_eligible(tx, ops, ctx);
 	if (!ret)
-		ret = ops->pump_on(ctx);
-	if (!ret)
-		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, true);
+		ret = x710_on_observed(tx, ops, ctx);
 	if (ret)
 		return x710_fallback(tx, ops, ctx, ret);
 	tx->state = X710_DIRECT_ACTIVE;
@@ -248,6 +332,7 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 int x710_charge_refresh(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx)
 {
+	u64 now;
 	int ret;
 
 	if (!tx || !x710_ops_valid(ops))
@@ -259,6 +344,8 @@ int x710_charge_refresh(struct x710_charge_transaction *tx,
 	/* Fedora measured REVBLK: pump OFF before every source refresh. */
 	ret = ops->pump_off(ctx);
 	if (!ret)
+		ret = x710_monitor_deadline(tx, ops, ctx, &now);
+	if (!ret)
 		ret = x710_fresh_eligible(tx, ops, ctx);
 	if (!ret)
 		ret = ops->pps_request(ctx, tx->target_mv, tx->target_ma);
@@ -267,17 +354,47 @@ int x710_charge_refresh(struct x710_charge_transaction *tx,
 	if (!ret)
 		ret = x710_fresh_eligible(tx, ops, ctx);
 	if (!ret)
-		ret = ops->pump_on(ctx);
+		ret = x710_on_observed(tx, ops, ctx);
+	return ret ? x710_fallback(tx, ops, ctx, ret) : 0;
+}
+
+int x710_charge_monitor(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx)
+{
+	u64 start, end;
+	int ret;
+
+	if (!tx || !x710_ops_valid(ops))
+		return -EINVAL;
+	if (tx->state != X710_DIRECT_ACTIVE)
+		return -EPERM;
+	if (!tx->armed)
+		return x710_fallback(tx, ops, ctx, -EACCES);
+	ret = x710_monitor_deadline(tx, ops, ctx, &start);
+	if (!ret)
+		ret = x710_fresh_eligible(tx, ops, ctx);
 	if (!ret)
 		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, true);
-	return ret ? x710_fallback(tx, ops, ctx, ret) : 0;
+	if (!ret)
+		ret = x710_fresh_eligible(tx, ops, ctx);
+	if (!ret)
+		ret = x710_now(tx, ops, ctx, &end);
+	if (!ret && end - start > X710_MONITOR_DEADLINE_MS)
+		ret = -ETIME;
+	if (ret)
+		return x710_fallback(tx, ops, ctx, ret);
+	tx->last_monitor_ms = end;
+	return 0;
 }
 
 int x710_charge_stop(struct x710_charge_transaction *tx,
 		     const struct x710_charge_ops *ops, void *ctx)
 {
-	if (!tx || !x710_ops_valid(ops))
+	if (!tx)
 		return -EINVAL;
+	tx->armed = false;
+	if (!x710_ops_valid(ops))
+		return -EINVAL; /* OFF is not proven with an invalid adapter. */
 	if (!tx->switching_inhibited && tx->state == X710_SWITCHING)
 		return 0;
 	return x710_fallback(tx, ops, ctx, 0);

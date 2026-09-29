@@ -80,6 +80,16 @@ must remain unchanged. Vendor wake locks are not a mainline PM design.
 
 ## Implementation boundary
 
+Test257 extends the unwired core with latest-source-offer admission, monotonic
+facts/ADC age checks, microamp IBUS comparison and a monitor operation. See
+SM5440_SOFTWARE_OCP_AUDIT.md. Facts use the oldest required acquisition timestamp;
+cached data cannot be stamped fresh. Logical500ms facts/100ms ADC and monitor
+budgets are refusal limits, not hardware OCP qualification. Healthy monitoring
+does not request PPS or change pump mode; late/stale/faulted monitoring invokes
+verified OFF/fixed fallback. Stop revokes authorization even if callbacks are
+invalid; such an invalid adapter cannot prove hardware OFF. No live worker or
+periodic scheduling has been added, so no bounded physical cutoff is claimed.
+
 Pure validation/state/action ordering is shared with compiled host fault tests.
 Passive hardware driver exposes ID/ADC/status and OFF only. A future live
 adapter needs standard TCPM power_supply references, device links, a serialized

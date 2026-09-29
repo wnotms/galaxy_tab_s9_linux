@@ -5,6 +5,11 @@
 #include <linux/types.h>
 #endif
 
+/* Logical refusal deadlines, not measured hardware OCP response guarantees. */
+#define X710_FACTS_MAX_AGE_MS	500U
+#define X710_ADC_MAX_AGE_MS	100U
+#define X710_MONITOR_DEADLINE_MS	100U
+
 /* Offline transaction core. No live adapter or userspace activation interface
  * exists. Future adapter must be single-worker/epoch-serialized, must drain on
  * PM/unbind, and must implement bounded hardware operations without nesting
@@ -29,11 +34,16 @@ enum x710_thermal_zone {
 
 struct x710_charge_facts {
 	u64 epoch;
+	/* Oldest acquisition in this bundle; never the time of a cache lookup. */
+	u64 observed_ms;
 	int capacity;
 	int pack_decic;
 	int die_decic;
 	unsigned int vbat_mv;
 	unsigned int fixed_mv;
+	unsigned int apdo_min_mv;
+	unsigned int apdo_max_mv;
+	unsigned int apdo_ma;
 	bool attached;
 	bool battery_present;
 	bool healthy;
@@ -52,9 +62,11 @@ struct x710_charge_facts {
 };
 
 struct x710_physical_sample {
+	u64 observed_ms;
 	unsigned int vbus_mv;
 	unsigned int vbat_mv;
-	unsigned int ibus_ma;
+	/* Preserve the ADC's625uA LSB through the actual current limit check. */
+	unsigned int ibus_ua;
 	unsigned int faults;
 	bool valid;
 	bool online;
@@ -64,6 +76,9 @@ struct x710_physical_sample {
 struct x710_charge_transaction {
 	enum x710_charge_state state;
 	u64 epoch;
+	u64 last_clock_ms;
+	u64 last_monitor_ms;
+	u64 last_facts_ms;
 	unsigned int target_mv;
 	unsigned int target_ma;
 	unsigned int fixed_mv;
@@ -75,6 +90,7 @@ struct x710_charge_transaction {
 
 /* Exactly one hardware/framework adapter, not a vendor framework. */
 struct x710_charge_ops {
+	u64 (*now_ms)(void *ctx);
 	bool (*current_epoch)(void *ctx, u64 epoch);
 	int (*read_facts)(void *ctx, struct x710_charge_facts *facts);
 	int (*switching_gate)(void *ctx, bool inhibit);
@@ -96,6 +112,8 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 		      const struct x710_charge_facts *facts,
 		      const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_refresh(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx);
+int x710_charge_monitor(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_stop(struct x710_charge_transaction *tx,
 		     const struct x710_charge_ops *ops, void *ctx);
