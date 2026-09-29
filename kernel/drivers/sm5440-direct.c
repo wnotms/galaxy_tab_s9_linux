@@ -169,8 +169,13 @@ static void sm5440_poll(struct work_struct *work)
 		sample.valid = true;
 		sample.stamp = jiffies;
 		sm->sample = sample;
-		if (sample.faults)
+		if (sample.faults) {
+			/* INT latches are consumed by reads. Preserve the first fault
+			 * until unbind/reboot instead of reporting Good next second.
+			 */
+			sm->fault = true;
 			dev_warn_ratelimited(sm->dev, "passive fault bitmap=%#x\n", sample.faults);
+		}
 		dev_dbg(sm->dev, "passive VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC faults=%#x\n",
 			sample.vbus_uv, sample.vbat_uv, sample.ibus_ua,
 			sample.die_decic, sample.faults);

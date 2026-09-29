@@ -22,6 +22,8 @@ class PassiveHardwareTests(unittest.TestCase):
 #include <stdbool.h>
 #include <string.h>
 #include <errno.h>
+#include <stddef.h>
+#include <stdarg.h>
 typedef uint8_t u8; typedef uint32_t u32;
 #define BIT(n) (1U<<(n))
 #define GENMASK(h,l) (((~0U)>>(31-(h))) & ((~0U)<<(l)))
@@ -33,7 +35,10 @@ typedef uint8_t u8; typedef uint32_t u32;
         code += r'''
 struct sm5440_sample {u32 vbus_uv,vbat_uv,ibus_ua;int die_decic;u32 faults;
  bool online,valid;unsigned long stamp;};
-struct sm5440_direct {void *regmap;int io_lock;bool stopped,fault;struct sm5440_sample sample;};
+struct work_struct {int unused;};
+struct delayed_work {struct work_struct work;};
+struct sm5440_direct {void *regmap;int io_lock,dev;bool stopped,fault;
+ struct sm5440_sample sample;struct delayed_work work;struct power_supply *psy;};
 struct power_supply {struct sm5440_direct *sm;};
 union power_supply_propval {int intval;};
 enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
@@ -47,6 +52,17 @@ enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
 #define msecs_to_jiffies(ms) (ms)
 #define time_after(a,b) ((long)((b)-(a))<0)
 static struct sm5440_direct *power_supply_get_drvdata(struct power_supply *p) {return p->sm;}
+static void log_stub(int dev,const char *fmt,...) {(void)dev;(void)fmt;}
+#define dev_err log_stub
+#define dev_dbg log_stub
+#define dev_warn_ratelimited log_stub
+#define to_delayed_work(w) ((struct delayed_work *)(w))
+#define container_of(p,type,member) ((type *)((char *)(p)-offsetof(type,member)))
+static int scheduled,changed;
+static int schedule_delayed_work(struct delayed_work *w,unsigned long delay) {
+ (void)w;(void)delay;scheduled++;return 1;
+}
+static void power_supply_changed(struct power_supply *p) {(void)p;changed++;}
 static u8 regs[64];static int calls,fail_at,never_ready,waits,started,unsafe_writes;
 static struct sm5440_direct *current;
 static int step(void) {calls++;return calls==fail_at?-EIO:0;}
@@ -82,6 +98,7 @@ static void msleep(unsigned int ms) {
         code += function(src, "static int sm5440_off(") + "\n"
         code += function(src, "static int sm5440_sample_once(") + "\n"
         code += function(src, "static int sm5440_get_property(") + "\n"
+        code += function(src, "static void sm5440_poll(") + "\n"
         code += r'''
 unsigned int value(int what,unsigned int high,unsigned int low) {
  switch(what){case 0:return sm5440_raw13(high,low);
@@ -126,6 +143,14 @@ int property(int p,int valid,int fault,int *v) {
  .ibus_ua=1000000,.die_decic=350,.online=true};
  struct power_supply psy={.sm=&sm};union power_supply_propval value={0};
  int ret=sm5440_get_property(&psy,p,&value);*v=value.intval;return ret;
+}
+int poll_fault(int *result) {
+ int ignored[7];sample(0,0,0,ignored);
+ struct sm5440_direct sm={0};current=&sm;scheduled=changed=0;
+ regs[0x0a]=34;sm5440_poll(&sm.work.work);
+ result[0]=sm.fault;result[1]=sm.sample.faults;result[2]=scheduled;
+ int transfers=calls;regs[0x0a]=32;sm5440_poll(&sm.work.work);
+ result[3]=calls-transfers;result[4]=changed;return 0;
 }
 '''
         path = Path(cls.temp.name) / "passive.c"
@@ -218,6 +243,13 @@ int property(int p,int valid,int fault,int *v) {
         self.assertLess(self.lib.property(3, 0, 0, ctypes.byref(value)), 0)
         self.assertEqual(self.lib.property(1, 0, 1, ctypes.byref(value)), 0)
         self.assertEqual(value.value, 6)
+
+    def test_consumed_irq_fault_stays_latched_without_retry(self):
+        result = (ctypes.c_int * 5)()
+        self.lib.poll_fault(result)
+        self.assertEqual(result[0], 1)
+        self.assertNotEqual(result[1], 0)
+        self.assertEqual(list(result)[2:], [0, 0, 1])
 
 
 class PassiveProfileTests(unittest.TestCase):
