@@ -1,0 +1,100 @@
+{
+  "status": "offline-candidate-verified; not flashed or physically accepted",
+  "registered_physical_test": "future Test254 only, no physical attempt started",
+  "baseline_config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "candidate_config_sha256": "c80d3c661cca3588fc85c93ba3402356bd99b7e4fe85674773230914fb8e6b71",
+  "kernel_build_exit": 0,
+  "config_changes": 96,
+  "explicit_enabled": 39,
+  "dependency_enabled": 6,
+  "new_disabled_declarations": 48,
+  "default_integer_declarations": 3,
+  "unexpected_config_changes": {},
+  "dcc_config": "n",
+  "sm5714_config": "y",
+  "adc5_gen3_config": "y",
+  "dtb_byte_identical_to_Test252": true,
+  "protected_source_files_unchanged": 139,
+  "baseline_outputs_and_181_modules_preserved": true,
+  "module_files": 181,
+  "kernel_modules": 167,
+  "moby_generally_necessary_linux7": {
+    "checks": 33,
+    "missing_after": 0,
+    "missing_before": 12
+  },
+  "host_test_runs": [
+    {
+      "command": [
+        "bash",
+        "scripts/check-stall-offline.sh",
+        "--changed",
+        "--base",
+        "HEAD~1"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 94.068,
+      "executed": true,
+      "host_sync_environment": "real syncfs on BOTH Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run-host-tests.py",
+        "changed",
+        "--report",
+        "out/host-tests/container-config-changed.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 80.118,
+      "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "counts": {
+        "core": 1043,
+        "artifacts": 18,
+        "archive": 87
+      },
+      "runner_elapsed_s": 80.022
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run-host-tests.py",
+        "all",
+        "--fail-on-skip",
+        "--report",
+        "out/host-tests/container-config-all.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 78.342,
+      "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "counts": {
+        "core": 1043,
+        "artifacts": 18,
+        "archive": 87
+      },
+      "runner_elapsed_s": 78.236
+    }
+  ],
+  "new_tests": 24,
+  "hardware_drivers_modified": false,
+  "dts_modified": false,
+  "usb_adbd_logic_modified": false,
+  "rootfs_modified": false,
+  "physical_test_executed": false,
+  "device_commands_executed": false,
+  "flashed": false,
+  "stage2_started": false,
+  "stage3_started": false
+}

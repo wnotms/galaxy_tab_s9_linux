@@ -1,6 +1,25 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current state (2026-09-28)
+## Current state (2026-09-29)
+
+The owner authorized offline UPower/OCI kernel configuration enablement only.
+Test254 is a separate **unflashed candidate and future acceptance plan** under
+`reference/boot-tests/test-254-debian-container-kernel/`; read its BUILD_RESULTS
+and README before any later action. USER_NS resolves the missing kernel
+prerequisite for shipped UPower PrivateUsers=yes, without a service workaround.
+The container gate runs after olddefconfig. Preserve Linux7.2-rc3, DCC off,
+SM5714/ADC5 Gen3 and all hardware/adbd/rootfs settings. Build outputs are
+isolated in out/kernel-container-candidate so Test252/rollback artifacts remain
+intact. Final offline kernel+modules and85 prerequisite gates pass; exact config
+delta96 entries has zero unexpected changes (39 explicit+6 dependency enables).
+DTB is byte-identical; all181 paired module archive files are verified. Required
+wrapper/changed/full each execute1148 retained tests with zero failures/errors/
+skips; new24 config checks pass. Host no-argument sync is qualified by real
+syncfs on repo ext4 and /tmp tmpfs after an unrelated WSL global-sync block;
+original incomplete runs are preserved, no helper/test/selector changed.
+This task does not authorize deployment, device commands, hardware
+acceptance or Stage2/3. Installed state and the unresolved installed UPower
+issue remain as recorded below until a separately authorized physical test.
 
 Current device is the authorized **Test252 Stage1 candidate**, not the exact
 accepted Test249 production image. Battery-only/ordinary charge/plug-out windows

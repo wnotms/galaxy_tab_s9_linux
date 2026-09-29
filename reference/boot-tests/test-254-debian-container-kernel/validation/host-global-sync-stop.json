@@ -1,0 +1,20 @@
+{
+  "command": [
+    "bash",
+    "scripts/check-stall-offline.sh",
+    "--changed",
+    "--base",
+    "HEAD~1"
+  ],
+  "verdict": "interrupted/incomplete, not a pass",
+  "reason": "Existing panel-recover host fixture reached unmocked no-argument sync; observed WSL request_wait_answer for more than 236s",
+  "observed_wait_channel": "request_wait_answer",
+  "real_syncfs_tmp_exit": 0,
+  "real_syncfs_repo_exit": 0,
+  "local_filesystem_scopes": {
+    "/home/ms/Samsung/galaxy_tab_s9_linux": "ext2/ext3",
+    "/tmp": "tmpfs"
+  },
+  "second_short_incomplete_run": "A staging guard incorrectly assumed /tmp and repo shared a filesystem; interrupted and corrected before using the wrapper. /tmp is tmpfs and repo is ext4. Both are flushed in the actual rerun.",
+  "next_environment": "No-argument host sync uses real syncfs on BOTH Linux filesystems; explicit-file argv unchanged; no test/production helper edited"
+}

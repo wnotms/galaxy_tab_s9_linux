@@ -1,0 +1,37 @@
+{
+  "status": "compiled kernel and packaged paired module archive; no boot bundle or deployment",
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "repository_base_commit": "cef7ef2cc85cf9e3808f57d82b49950f5b8550c2",
+  "kernel_output": "out/kernel-container-candidate",
+  "kernel_release": "7.2.0-rc3-gts9wifi-dirty",
+  "kernel_artifacts": {
+    "Image.gz": "69abcdbf67960bd2a46d1c457e1807120c5a92e3e525ae36a70733b5b33e0823",
+    "sm8550-samsung-gts9wifi.dtb": "eecc98b89b59f44608cfd31e34ddaa21d967b1dc912911921d763d7c0435bfe0",
+    "config": "c80d3c661cca3588fc85c93ba3402356bd99b7e4fe85674773230914fb8e6b71",
+    "kernel.release": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+    "modules-container-candidate.tar.gz": "4ef282f778f01acf4b69b15fd1926dc615319160970d4b3f41704ae2051d4bfe"
+  },
+  "image_gz_bytes": 22109618,
+  "kernel_notes_sha256": "7bbb0dc382d4b89b2d6c5b79c1f02805ef0afc8459fe6b48a423d9f26744332b",
+  "embedded_config_matches_saved_config": true,
+  "dtb_matches_Test252": true,
+  "module_manifest": "validation/module-hashes.json",
+  "module_file_count": 181,
+  "kernel_module_count": 167,
+  "module_file_set_matches_Test252": true,
+  "baseline_outputs_preserved": true,
+  "protected_files_verified_unchanged": 139,
+  "implementation_source_hashes": {
+    "kernel/config/gts9wifi-mainline.fragment": "b48e43af498721c8f726318425e6b642fb889d73116cdbd9923f16a54ff64cb4",
+    "scripts/build-kernel.sh": "7c07a99fb94a170c46997bab9d41df57210f55dd5c4c78c3b8b29479b5257530",
+    "scripts/verify-container-config.py": "47ea79a78456d3ba703193650e9af99b14e6c9396abd2508371c1f953cf9488c",
+    "tests/test_container_kernel_config.py": "5d9fe7c9a8f4bef0fbc68812ca67a54219c109744a1fa446de70be43207ede74"
+  },
+  "physical_test_executed": false,
+  "device_commands_executed": false,
+  "flashed": false,
+  "boot_bundle_packaged": false,
+  "device_write_authorized": false,
+  "depmod_exit": 0,
+  "depmod_stderr_empty": true
+}

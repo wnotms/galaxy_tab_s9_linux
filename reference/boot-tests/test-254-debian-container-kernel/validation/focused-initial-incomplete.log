@@ -1,0 +1,36 @@
+test_absent_and_explicit_disabled_are_distinct_in_exact_diff (test_container_kernel_config.ContainerKernelConfigTests.test_absent_and_explicit_disabled_are_distinct_in_exact_diff) ... ok
+test_actual_candidate_resolved_config_passes (test_container_kernel_config.ContainerKernelConfigTests.test_actual_candidate_resolved_config_passes) ... FAIL
+test_build_gate_executes_after_olddefconfig_before_compilation (test_container_kernel_config.ContainerKernelConfigTests.test_build_gate_executes_after_olddefconfig_before_compilation) ... ok
+test_cli_missing_config_fails (test_container_kernel_config.ContainerKernelConfigTests.test_cli_missing_config_fails) ... ok
+test_cli_saves_full_diff_and_machine_verdict (test_container_kernel_config.ContainerKernelConfigTests.test_cli_saves_full_diff_and_machine_verdict) ... ok
+test_complete_prerequisites_pass (test_container_kernel_config.ContainerKernelConfigTests.test_complete_prerequisites_pass) ... ok
+test_conflicting_assignments_fail_closed (test_container_kernel_config.ContainerKernelConfigTests.test_conflicting_assignments_fail_closed) ... ok
+test_dcc_cannot_be_restored_as_builtin_or_module (test_container_kernel_config.ContainerKernelConfigTests.test_dcc_cannot_be_restored_as_builtin_or_module) ... ok
+test_empty_config_fails (test_container_kernel_config.ContainerKernelConfigTests.test_empty_config_fails) ... ok
+test_exact_reviewed_delta_passes (test_container_kernel_config.ContainerKernelConfigTests.test_exact_reviewed_delta_passes) ... ok
+test_existing_baseline_fails_missing_userns_and_container_features (test_container_kernel_config.ContainerKernelConfigTests.test_existing_baseline_fails_missing_userns_and_container_features) ... ok
+test_expected_delta_without_baseline_is_rejected (test_container_kernel_config.ContainerKernelConfigTests.test_expected_delta_without_baseline_is_rejected) ... ok
+test_fragment_and_existing_seed_cover_required_features (test_container_kernel_config.ContainerKernelConfigTests.test_fragment_and_existing_seed_cover_required_features) ... ok
+test_invisible_disabled_symbol_is_not_required_to_have_a_comment (test_container_kernel_config.ContainerKernelConfigTests.test_invisible_disabled_symbol_is_not_required_to_have_a_comment) ... ok
+test_missing_each_namespace_resource_and_network_prerequisite_fails (test_container_kernel_config.ContainerKernelConfigTests.test_missing_each_namespace_resource_and_network_prerequisite_fails) ... ok
+test_missing_expected_change_fails (test_container_kernel_config.ContainerKernelConfigTests.test_missing_expected_change_fails) ... ok
+test_nft_family_without_expressions_fails (test_container_kernel_config.ContainerKernelConfigTests.test_nft_family_without_expressions_fails) ... ok
+test_old_iptables_symbol_does_not_replace_linux72_legacy_parents (test_container_kernel_config.ContainerKernelConfigTests.test_old_iptables_symbol_does_not_replace_linux72_legacy_parents) ... ok
+test_required_feature_as_module_does_not_satisfy_builtin_gate (test_container_kernel_config.ContainerKernelConfigTests.test_required_feature_as_module_does_not_satisfy_builtin_gate) ... ok
+test_sm5714_and_thermistor_provider_remain_required (test_container_kernel_config.ContainerKernelConfigTests.test_sm5714_and_thermistor_provider_remain_required) ... ok
+test_test252_fixture_matches_accepted_manifest_and_latest_embedded_config (test_container_kernel_config.ContainerKernelConfigTests.test_test252_fixture_matches_accepted_manifest_and_latest_embedded_config) ... ok
+test_unrelated_hardware_change_fails_exact_delta (test_container_kernel_config.ContainerKernelConfigTests.test_unrelated_hardware_change_fails_exact_delta) ... ok
+
+======================================================================
+FAIL: test_actual_candidate_resolved_config_passes (test_container_kernel_config.ContainerKernelConfigTests.test_actual_candidate_resolved_config_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_container_kernel_config.py", line 175, in test_actual_candidate_resolved_config_passes
+    self.assertTrue(config.is_file(), "build the isolated container candidate first")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : build the isolated container candidate first
+
+----------------------------------------------------------------------
+Ran 22 tests in 3.466s
+
+FAILED (failures=1)

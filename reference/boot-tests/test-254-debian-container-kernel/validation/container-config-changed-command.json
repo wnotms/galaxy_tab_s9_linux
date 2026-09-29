@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "scripts/run-host-tests.py",
+    "changed",
+    "--report",
+    "out/host-tests/container-config-changed.json"
+  ],
+  "exit_code": 0,
+  "elapsed_s": 80.118,
+  "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged"
+}

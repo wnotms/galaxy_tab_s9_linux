@@ -1,0 +1,270 @@
+{
+  "provenance": {
+    "url": "https://raw.githubusercontent.com/moby/moby/a4c5b2be6f69f86fe7b13eb4822676f8d273cf8b/contrib/check-config.sh",
+    "commit": "a4c5b2be6f69f86fe7b13eb4822676f8d273cf8b",
+    "sha256": "fda4343e9b50c47896653ca774ccbe9614bfcdb60f080d2b6277baf27efc0a71",
+    "retrieved_utc": "2026-09-29",
+    "committed_date": "2026-06-16T17:39:06Z",
+    "current_tree_commit": "366ebd37ab54dfebe670278e9ba8ac14e2ca2061",
+    "current_script_content_matches_latest_script_commit": true,
+    "current_script_blob_sha": "b238ae70fba67faeea4f76e37e9d3f6d6c929eb4"
+  },
+  "generally_necessary_linux7": {
+    "unique_symbol_count": 33,
+    "baseline_missing": [
+      "IP6_NF_FILTER",
+      "IP6_NF_MANGLE",
+      "IP6_NF_NAT",
+      "IP6_NF_RAW",
+      "IP6_NF_TARGET_MASQUERADE",
+      "IP_NF_FILTER",
+      "IP_NF_MANGLE",
+      "IP_NF_NAT",
+      "IP_NF_RAW",
+      "IP_NF_TARGET_MASQUERADE",
+      "NETFILTER_XT_MATCH_IPVS",
+      "POSIX_MQUEUE"
+    ],
+    "candidate_missing": []
+  },
+  "script_execution": {
+    "host_uname": "Linux DESKTOP-EAS21AS 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 GNU/Linux",
+    "baseline_exit": 1,
+    "candidate_exit": 0,
+    "runtime_scope": "Host WSL only: cgroups, sysctls, keys, commands and /dev/zfs in these auxiliary outputs are not tablet results"
+  },
+  "rows": [
+    {
+      "symbol": "CONFIG_BRIDGE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_NETFILTER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUPS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_BPF",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_CPUACCT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_DEVICE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_FREEZER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_SCHED",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_CPUSETS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_FILTER",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_MANGLE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_NAT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_RAW",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_MASQUERADE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IPC_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_FILTER",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_MANGLE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_NAT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_RAW",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_MASQUERADE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_KEYS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_MEMCG",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NAMESPACES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MARK",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_CONNTRACK",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_IPVS",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NET_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_NF_NAT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_PID_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_POSIX_MQUEUE",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_UTS_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    },
+    {
+      "symbol": "CONFIG_VETH",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Moby Generally Necessary (Linux7)",
+      "reason": "Unmodified current check-config static requirement; Linux7 legacy table parents resolved explicitly"
+    }
+  ],
+  "candidate_config_sha256": "c80d3c661cca3588fc85c93ba3402356bd99b7e4fe85674773230914fb8e6b71"
+}

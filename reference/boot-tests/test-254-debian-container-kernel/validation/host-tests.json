@@ -1,0 +1,80 @@
+{
+  "executed": true,
+  "new_focused_tests": {
+    "tests_run": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_s": 1.807
+  },
+  "required_checks": [
+    {
+      "command": [
+        "bash",
+        "scripts/check-stall-offline.sh",
+        "--changed",
+        "--base",
+        "HEAD~1"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 94.068,
+      "executed": true,
+      "host_sync_environment": "real syncfs on BOTH Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run-host-tests.py",
+        "changed",
+        "--report",
+        "out/host-tests/container-config-changed.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 80.118,
+      "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "counts": {
+        "core": 1043,
+        "artifacts": 18,
+        "archive": 87
+      },
+      "runner_elapsed_s": 80.022
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run-host-tests.py",
+        "all",
+        "--fail-on-skip",
+        "--report",
+        "out/host-tests/container-config-all.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 78.342,
+      "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged",
+      "tests_run": 1148,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "counts": {
+        "core": 1043,
+        "artifacts": 18,
+        "archive": 87
+      },
+      "runner_elapsed_s": 78.236
+    }
+  ],
+  "routing_changed": false,
+  "changed_modes_use_full_fallback": true,
+  "existing_tests_removed_or_skipped": false,
+  "host_environment_qualification": "No-argument sync uses real syncfs on both local Linux filesystems; explicit-file sync unchanged. Global-sync incomplete runs are retained and not counted as passes.",
+  "device_contacted": false,
+  "github_actions_started": false
+}

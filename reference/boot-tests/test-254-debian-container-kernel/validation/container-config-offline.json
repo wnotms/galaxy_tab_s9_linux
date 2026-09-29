@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/check-stall-offline.sh",
+    "--changed",
+    "--base",
+    "HEAD~1"
+  ],
+  "exit_code": 0,
+  "elapsed_s": 94.068,
+  "executed": true,
+  "host_sync_environment": "real syncfs on BOTH Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged"
+}

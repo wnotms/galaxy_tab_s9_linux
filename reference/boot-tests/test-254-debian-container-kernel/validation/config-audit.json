@@ -1,0 +1,1062 @@
+{
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "baseline_config_sha256": "410e4fe28f6fcc25950aba0029f8cda310b39ddbf1653f3eaa7b334e62f3b722",
+  "symbol_changes": 96,
+  "newly_enabled": 45,
+  "explicit_newly_enabled": 39,
+  "selected_or_default_dependencies": 6,
+  "newly_visible_disabled": 48,
+  "new_default_integer_declarations": 3,
+  "rows": [
+    {
+      "symbol": "CONFIG_BATTERY_SM5714",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Protected baseline",
+      "reason": "Retain the battery/thermistor provider and DCC-path repair unchanged"
+    },
+    {
+      "symbol": "CONFIG_BLK_CGROUP",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_BLK_DEV_THROTTLING",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_NETFILTER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_NF_EBTABLES_LEGACY",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_VLAN_FILTERING",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_CFS_BANDWIDTH",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUPS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_BPF",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_CPUACCT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_DEVICE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_FREEZER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_HUGETLB",
+      "current_Test252_value": "absent",
+      "new_value": "absent",
+      "category": "Docker optional/not-enabled",
+      "reason": "Preserve Test252 value; outside the requested enablement (SELinux already y, not newly enabled)"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_NET_CLASSID",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker dependency",
+      "reason": "NET_CLS_CGROUP selects this legacy classid integration"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_NET_PRIO",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker optional/preserved",
+      "reason": "Already y in Test252; retain existing value, not a newly enabled feature"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_PERF",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "optional perf integration and legacy cgroup packet classifier"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_PIDS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_SCHED",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_CHECKPOINT_RESTORE",
+      "current_Test252_value": "n",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Preserve Test252 value; outside the requested enablement (SELinux already y, not newly enabled)"
+    },
+    {
+      "symbol": "CONFIG_CPUSETS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_EXT4_FS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_EXT4_FS_POSIX_ACL",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_EXT4_FS_SECURITY",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_FAIR_GROUP_SCHED",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_GROUP_SCHED_BANDWIDTH",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker dependency",
+      "reason": "CFS_BANDWIDTH selects the shared CPU quota implementation"
+    },
+    {
+      "symbol": "CONFIG_HVC_DCC",
+      "current_Test252_value": "n",
+      "new_value": "n",
+      "category": "Protected baseline",
+      "reason": "Retain the battery/thermistor provider and DCC-path repair unchanged"
+    },
+    {
+      "symbol": "CONFIG_INET",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_FILTER",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_IPTABLES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_IPTABLES_LEGACY",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_MANGLE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_MATCH_RPFILTER",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_NAT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_RAW",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_SECURITY",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_HL",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_MASQUERADE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_NPT",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_REJECT",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IPC_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IPV6",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_IPVLAN",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_IPVLAN_L3S",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker dependency",
+      "reason": "Default y under IPVLAN+NETFILTER for conntracked L3 mode"
+    },
+    {
+      "symbol": "CONFIG_IPVTAP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_ARPFILTER",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_ARPTABLES",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_FILTER",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_IPTABLES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_IPTABLES_LEGACY",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_MANGLE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_MATCH_RPFILTER",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_NAT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_RAW",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_SECURITY",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_ECN",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_MASQUERADE",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_NETMAP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_REDIRECT",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_REJECT",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_TTL",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_SCTP",
+      "current_Test252_value": "n",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Preserve Test252 value; outside the requested enablement (SELinux already y, not newly enabled)"
+    },
+    {
+      "symbol": "CONFIG_IP_VS",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_DEBUG",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_DH",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_FO",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_FTP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_IPV6",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LBLC",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LBLCR",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LC",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_MH",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_MH_TAB_INDEX",
+      "current_Test252_value": "absent",
+      "new_value": "12",
+      "category": "Docker optional/not-enabled",
+      "reason": "Default IPVS sizing; SH/MH schedulers remain off"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_NFCT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_NQ",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_OVF",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_AH",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_ESP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_SCTP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_TCP",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_UDP",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_RR",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SED",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SH",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SH_TAB_BITS",
+      "current_Test252_value": "absent",
+      "new_value": "8",
+      "category": "Docker optional/not-enabled",
+      "reason": "Default IPVS sizing; SH/MH schedulers remain off"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_TAB_BITS",
+      "current_Test252_value": "absent",
+      "new_value": "12",
+      "category": "Docker optional/not-enabled",
+      "reason": "Default IPVS sizing; SH/MH schedulers remain off"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_TWOS",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_WLC",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_WRR",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_KEYS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_MACVLAN",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_MACVTAP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_MEMCG",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "cgroup v2 CPU/cpuset/memory/pids/io and device BPF support"
+    },
+    {
+      "symbol": "CONFIG_NAMESPACES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_ADVANCED",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XTABLES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XTABLES_LEGACY",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Linux 7.2 legacy evaluator parents and IPv4/IPv6 tables fallback"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MARK",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_CONNTRACK",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_IPVS",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "minimal Swarm/IPVS TCP/UDP, conntrack and round-robin prerequisites"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_NAT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_CHECKSUM",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_CT",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_DSCP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_HL",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_MASQUERADE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_NOTRACK",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_REDIRECT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TCPOPTSTRIP",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TPROXY",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TRACE",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Explicitly suppress a now-visible stock request outside ordinary Docker scope"
+    },
+    {
+      "symbol": "CONFIG_NET_CLS_CGROUP",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker resource control",
+      "reason": "optional perf integration and legacy cgroup packet classifier"
+    },
+    {
+      "symbol": "CONFIG_NET_L3_MASTER_DEV",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker dependency",
+      "reason": "IPVLAN_L3S selects the L3 master integration"
+    },
+    {
+      "symbol": "CONFIG_NET_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_NET_VRF",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NFT_COMPAT",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_CT",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_DUP_IPV4",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NFT_DUP_IPV6",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_INET",
+      "current_Test252_value": "absent",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Newly visible Kconfig disabled declaration/default; no additional enabled functionality"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_IPV4",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_IPV6",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_MASQ",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_NAT",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NFT_REDIR",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NF_CONNTRACK",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NF_NAT",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NF_NAT_MASQUERADE",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "connection tracking, NAT and existing x_tables extensions"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_INET",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_IPV4",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_IPV6",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "Debian iptables-nft/native nftables families, NAT and compatibility"
+    },
+    {
+      "symbol": "CONFIG_OVERLAY_FS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_PID_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_POSIX_MQUEUE",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_POSIX_MQUEUE_SYSCTL",
+      "current_Test252_value": "absent",
+      "new_value": "y",
+      "category": "Docker dependency",
+      "reason": "POSIX_MQUEUE and existing SYSCTL select queue limits"
+    },
+    {
+      "symbol": "CONFIG_QCOM_SPMI_ADC5_GEN3",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Protected baseline",
+      "reason": "Retain the battery/thermistor provider and DCC-path repair unchanged"
+    },
+    {
+      "symbol": "CONFIG_SECCOMP",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_SECCOMP_FILTER",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_SECURITY_APPARMOR",
+      "current_Test252_value": "n",
+      "new_value": "n",
+      "category": "Docker optional/not-enabled",
+      "reason": "Preserve Test252 value; outside the requested enablement (SELinux already y, not newly enabled)"
+    },
+    {
+      "symbol": "CONFIG_SECURITY_SELINUX",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker optional/preserved",
+      "reason": "Already y in Test252; retain existing value, not a newly enabled feature"
+    },
+    {
+      "symbol": "CONFIG_TMPFS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_USER_NS",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "UPower / Docker rootless",
+      "reason": "systemd PrivateUsers= and rootless user namespaces"
+    },
+    {
+      "symbol": "CONFIG_UTS_NS",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker required",
+      "reason": "OCI isolation, IPC, seccomp, keys and overlay2 prerequisites"
+    },
+    {
+      "symbol": "CONFIG_VETH",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_VLAN_8021Q",
+      "current_Test252_value": "y",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    },
+    {
+      "symbol": "CONFIG_VXLAN",
+      "current_Test252_value": "n",
+      "new_value": "y",
+      "category": "Docker networking",
+      "reason": "common Docker virtual networks and bridge VLAN support"
+    }
+  ]
+}

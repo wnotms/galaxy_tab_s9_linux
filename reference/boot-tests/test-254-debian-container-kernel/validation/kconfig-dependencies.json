@@ -1,0 +1,804 @@
+{
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "note": "Declarations are from byte-verified pinned Kconfig files; parent if/menu dependencies also apply and are verified by olddefconfig",
+  "entries": [
+    {
+      "symbol": "CONFIG_POSIX_MQUEUE",
+      "file": "init/Kconfig",
+      "line": 492,
+      "declaration": "config POSIX_MQUEUE\n\tbool \"POSIX Message Queues\"\n\tdepends on NET"
+    },
+    {
+      "symbol": "CONFIG_POSIX_MQUEUE_SYSCTL",
+      "file": "init/Kconfig",
+      "line": 508,
+      "declaration": "config POSIX_MQUEUE_SYSCTL\n\tbool\n\tdepends on POSIX_MQUEUE\n\tdepends on SYSCTL\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_CGROUPS",
+      "file": "init/Kconfig",
+      "line": 1044,
+      "declaration": "menuconfig CGROUPS\n\tbool \"Control Group support\"\n\tselect KERNFS"
+    },
+    {
+      "symbol": "CONFIG_MEMCG",
+      "file": "init/Kconfig",
+      "line": 1073,
+      "declaration": "config MEMCG\n\tbool \"Memory controller\"\n\tselect PAGE_COUNTER\n\tselect EVENTFD\n\tselect SLAB_OBJ_EXT\n\tselect VM_EVENT_COUNTERS"
+    },
+    {
+      "symbol": "CONFIG_BLK_CGROUP",
+      "file": "init/Kconfig",
+      "line": 1113,
+      "declaration": "config BLK_CGROUP\n\tbool \"IO controller\"\n\tdepends on BLOCK\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_SCHED",
+      "file": "init/Kconfig",
+      "line": 1140,
+      "declaration": "menuconfig CGROUP_SCHED\n\tbool \"CPU controller\"\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_GROUP_SCHED_BANDWIDTH",
+      "file": "init/Kconfig",
+      "line": 1152,
+      "declaration": "config GROUP_SCHED_BANDWIDTH\n\tdef_bool n"
+    },
+    {
+      "symbol": "CONFIG_FAIR_GROUP_SCHED",
+      "file": "init/Kconfig",
+      "line": 1155,
+      "declaration": "config FAIR_GROUP_SCHED\n\tbool \"Group scheduling for SCHED_OTHER\"\n\tdepends on CGROUP_SCHED\n\tselect GROUP_SCHED_WEIGHT\n\tdefault CGROUP_SCHED"
+    },
+    {
+      "symbol": "CONFIG_CFS_BANDWIDTH",
+      "file": "init/Kconfig",
+      "line": 1161,
+      "declaration": "config CFS_BANDWIDTH\n\tbool \"CPU bandwidth provisioning for FAIR_GROUP_SCHED\"\n\tdepends on FAIR_GROUP_SCHED\n\tselect GROUP_SCHED_BANDWIDTH\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_PIDS",
+      "file": "init/Kconfig",
+      "line": 1234,
+      "declaration": "config CGROUP_PIDS\n\tbool \"PIDs controller\""
+    },
+    {
+      "symbol": "CONFIG_CGROUP_FREEZER",
+      "file": "init/Kconfig",
+      "line": 1270,
+      "declaration": "config CGROUP_FREEZER\n\tbool \"Freezer controller\""
+    },
+    {
+      "symbol": "CONFIG_CGROUP_HUGETLB",
+      "file": "init/Kconfig",
+      "line": 1281,
+      "declaration": "config CGROUP_HUGETLB\n\tbool \"HugeTLB controller\"\n\tdepends on HUGETLB_PAGE\n\tselect PAGE_COUNTER\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_CPUSETS",
+      "file": "init/Kconfig",
+      "line": 1297,
+      "declaration": "config CPUSETS\n\tbool \"Cpuset controller\"\n\tdepends on SMP\n\tselect UNION_FIND\n\tselect CPU_ISOLATION"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_DEVICE",
+      "file": "init/Kconfig",
+      "line": 1329,
+      "declaration": "config CGROUP_DEVICE\n\tbool \"Device controller\""
+    },
+    {
+      "symbol": "CONFIG_CGROUP_CPUACCT",
+      "file": "init/Kconfig",
+      "line": 1335,
+      "declaration": "config CGROUP_CPUACCT\n\tbool \"Simple CPU accounting controller\""
+    },
+    {
+      "symbol": "CONFIG_CGROUP_PERF",
+      "file": "init/Kconfig",
+      "line": 1341,
+      "declaration": "config CGROUP_PERF\n\tbool \"Perf controller\"\n\tdepends on PERF_EVENTS"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_BPF",
+      "file": "init/Kconfig",
+      "line": 1352,
+      "declaration": "config CGROUP_BPF\n\tbool \"Support for eBPF programs attached to cgroups\"\n\tdepends on BPF_SYSCALL\n\tselect SOCK_CGROUP_DATA"
+    },
+    {
+      "symbol": "CONFIG_NAMESPACES",
+      "file": "init/Kconfig",
+      "line": 1397,
+      "declaration": "menuconfig NAMESPACES\n\tbool \"Namespaces support\" if EXPERT\n\tdepends on MULTIUSER\n\tdefault !EXPERT"
+    },
+    {
+      "symbol": "CONFIG_UTS_NS",
+      "file": "init/Kconfig",
+      "line": 1409,
+      "declaration": "config UTS_NS\n\tbool \"UTS namespace\"\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_IPC_NS",
+      "file": "init/Kconfig",
+      "line": 1426,
+      "declaration": "config IPC_NS\n\tbool \"IPC namespace\"\n\tdepends on (SYSVIPC || POSIX_MQUEUE)\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_USER_NS",
+      "file": "init/Kconfig",
+      "line": 1434,
+      "declaration": "config USER_NS\n\tbool \"User namespace\"\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_PID_NS",
+      "file": "init/Kconfig",
+      "line": 1448,
+      "declaration": "config PID_NS\n\tbool \"PID Namespaces\"\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_NET_NS",
+      "file": "init/Kconfig",
+      "line": 1456,
+      "declaration": "config NET_NS\n\tbool \"Network namespace\"\n\tdepends on NET\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_CHECKPOINT_RESTORE",
+      "file": "init/Kconfig",
+      "line": 1466,
+      "declaration": "config CHECKPOINT_RESTORE\n\tbool \"Checkpoint/restore support\"\n\tdepends on PROC_FS\n\tselect PROC_CHILDREN\n\tselect KCMP\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_BLK_DEV_THROTTLING",
+      "file": "block/Kconfig",
+      "line": 106,
+      "declaration": "config BLK_DEV_THROTTLING\n\tbool \"Block layer bio throttling support\"\n\tdepends on BLK_CGROUP\n\tselect BLK_CGROUP_RWSTAT"
+    },
+    {
+      "symbol": "CONFIG_INET",
+      "file": "net/Kconfig",
+      "line": 114,
+      "declaration": "config INET\n\tbool \"TCP/IP networking\""
+    },
+    {
+      "symbol": "CONFIG_NETFILTER",
+      "file": "net/Kconfig",
+      "line": 165,
+      "declaration": "menuconfig NETFILTER\n\tbool \"Network packet filtering framework (Netfilter)\""
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_ADVANCED",
+      "file": "net/Kconfig",
+      "line": 220,
+      "declaration": "config NETFILTER_ADVANCED\n\tbool \"Advanced netfilter configuration\"\n\tdepends on NETFILTER\n\tdefault y"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_NETFILTER",
+      "file": "net/Kconfig",
+      "line": 231,
+      "declaration": "config BRIDGE_NETFILTER\n\ttristate \"Bridged IP/ARP packets filtering\"\n\tdepends on BRIDGE\n\tdepends on NETFILTER && INET\n\tdepends on NETFILTER_ADVANCED\n\tselect NETFILTER_FAMILY_BRIDGE\n\tselect SKB_EXTENSIONS"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_NET_PRIO",
+      "file": "net/Kconfig",
+      "line": 334,
+      "declaration": "config CGROUP_NET_PRIO\n\tbool \"Network priority cgroup\"\n\tdepends on CGROUPS\n\tselect SOCK_CGROUP_DATA"
+    },
+    {
+      "symbol": "CONFIG_CGROUP_NET_CLASSID",
+      "file": "net/Kconfig",
+      "line": 342,
+      "declaration": "config CGROUP_NET_CLASSID\n\tbool \"Network classid cgroup\"\n\tdepends on CGROUPS\n\tselect SOCK_CGROUP_DATA"
+    },
+    {
+      "symbol": "CONFIG_NET_CLS_CGROUP",
+      "file": "net/sched/Kconfig",
+      "line": 550,
+      "declaration": "config NET_CLS_CGROUP\n\ttristate \"Control Group Classifier\"\n\tselect NET_CLS\n\tselect CGROUP_NET_CLASSID\n\tdepends on CGROUPS"
+    },
+    {
+      "symbol": "CONFIG_MACVLAN",
+      "file": "drivers/net/Kconfig",
+      "line": 165,
+      "declaration": "config MACVLAN\n\ttristate \"MAC-VLAN support\""
+    },
+    {
+      "symbol": "CONFIG_MACVTAP",
+      "file": "drivers/net/Kconfig",
+      "line": 179,
+      "declaration": "config MACVTAP\n\ttristate \"MAC-VLAN based tap driver\"\n\tdepends on MACVLAN\n\tdepends on INET\n\tselect TAP"
+    },
+    {
+      "symbol": "CONFIG_IPVLAN_L3S",
+      "file": "drivers/net/Kconfig",
+      "line": 193,
+      "declaration": "config IPVLAN_L3S\n\tdepends on NETFILTER\n\tdepends on IPVLAN\n\tdef_bool y\n\tselect NET_L3_MASTER_DEV"
+    },
+    {
+      "symbol": "CONFIG_IPVLAN",
+      "file": "drivers/net/Kconfig",
+      "line": 199,
+      "declaration": "config IPVLAN\n\ttristate \"IP-VLAN support\"\n\tdepends on INET"
+    },
+    {
+      "symbol": "CONFIG_IPVTAP",
+      "file": "drivers/net/Kconfig",
+      "line": 216,
+      "declaration": "config IPVTAP\n\ttristate \"IP-VLAN based tap driver\"\n\tdepends on IPVLAN\n\tdepends on INET\n\tselect TAP"
+    },
+    {
+      "symbol": "CONFIG_VXLAN",
+      "file": "drivers/net/Kconfig",
+      "line": 230,
+      "declaration": "config VXLAN\n\ttristate \"Virtual eXtensible Local Area Network (VXLAN)\"\n\tdepends on INET\n\tselect NET_UDP_TUNNEL\n\tselect GRO_CELLS"
+    },
+    {
+      "symbol": "CONFIG_VETH",
+      "file": "drivers/net/Kconfig",
+      "line": 435,
+      "declaration": "config VETH\n\ttristate \"Virtual ethernet pair device\"\n\tselect PAGE_POOL"
+    },
+    {
+      "symbol": "CONFIG_NET_VRF",
+      "file": "drivers/net/Kconfig",
+      "line": 472,
+      "declaration": "config NET_VRF\n\ttristate \"Virtual Routing and Forwarding (Lite)\"\n\tdepends on IP_MULTIPLE_TABLES\n\tdepends on NET_L3_MASTER_DEV\n\tdepends on IPV6_MULTIPLE_TABLES || IPV6=n"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE",
+      "file": "net/bridge/Kconfig",
+      "line": 6,
+      "declaration": "config BRIDGE\n\ttristate \"802.1d Ethernet Bridging\"\n\tselect LLC\n\tselect STP"
+    },
+    {
+      "symbol": "CONFIG_BRIDGE_VLAN_FILTERING",
+      "file": "net/bridge/Kconfig",
+      "line": 50,
+      "declaration": "config BRIDGE_VLAN_FILTERING\n\tbool \"VLAN filtering\"\n\tdepends on BRIDGE\n\tdepends on VLAN_8021Q\n\tdefault n"
+    },
+    {
+      "symbol": "CONFIG_NF_CONNTRACK",
+      "file": "net/netfilter/Kconfig",
+      "line": 82,
+      "declaration": "config NF_CONNTRACK\n\ttristate \"Netfilter connection tracking support\"\n\tdefault m if NETFILTER_ADVANCED=n\n\tselect NF_DEFRAG_IPV4\n\tselect NF_DEFRAG_IPV6 if IPV6 != n"
+    },
+    {
+      "symbol": "CONFIG_NF_NAT",
+      "file": "net/netfilter/Kconfig",
+      "line": 407,
+      "declaration": "config NF_NAT\n\ttristate \"Network Address Translation support\"\n\tdepends on NF_CONNTRACK\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_NF_NAT_MASQUERADE",
+      "file": "net/netfilter/Kconfig",
+      "line": 444,
+      "declaration": "config NF_NAT_MASQUERADE\n\tbool"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES",
+      "file": "net/netfilter/Kconfig",
+      "line": 455,
+      "declaration": "config NF_TABLES\n\tselect NETFILTER_NETLINK\n\tselect NET_CRC32C\n\ttristate \"Netfilter nf_tables support\""
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_INET",
+      "file": "net/netfilter/Kconfig",
+      "line": 472,
+      "declaration": "config NF_TABLES_INET\n\tdepends on IPV6\n\tselect NF_TABLES_IPV4\n\tselect NF_TABLES_IPV6\n\tbool \"Netfilter nf_tables mixed IPv4/IPv6 tables support\""
+    },
+    {
+      "symbol": "CONFIG_NFT_CT",
+      "file": "net/netfilter/Kconfig",
+      "line": 491,
+      "declaration": "config NFT_CT\n\tdepends on NF_CONNTRACK\n\ttristate \"Netfilter nf_tables conntrack module\""
+    },
+    {
+      "symbol": "CONFIG_NFT_MASQ",
+      "file": "net/netfilter/Kconfig",
+      "line": 532,
+      "declaration": "config NFT_MASQ\n\tdepends on NF_CONNTRACK\n\tdepends on NF_NAT\n\tselect NF_NAT_MASQUERADE\n\ttristate \"Netfilter nf_tables masquerade support\""
+    },
+    {
+      "symbol": "CONFIG_NFT_REDIR",
+      "file": "net/netfilter/Kconfig",
+      "line": 541,
+      "declaration": "config NFT_REDIR\n\tdepends on NF_CONNTRACK\n\tdepends on NF_NAT\n\ttristate \"Netfilter nf_tables redirect support\"\n\tselect NF_NAT_REDIRECT"
+    },
+    {
+      "symbol": "CONFIG_NFT_NAT",
+      "file": "net/netfilter/Kconfig",
+      "line": 550,
+      "declaration": "config NFT_NAT\n\tdepends on NF_CONNTRACK\n\tselect NF_NAT\n\tdepends on NF_TABLES_IPV4 || NF_TABLES_IPV6\n\ttristate \"Netfilter nf_tables nat module\""
+    },
+    {
+      "symbol": "CONFIG_NFT_COMPAT",
+      "file": "net/netfilter/Kconfig",
+      "line": 591,
+      "declaration": "config NFT_COMPAT\n\tdepends on NETFILTER_XTABLES\n\ttristate \"Netfilter x_tables over nf_tables module\""
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB",
+      "file": "net/netfilter/Kconfig",
+      "line": 605,
+      "declaration": "config NFT_FIB\n\ttristate"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_INET",
+      "file": "net/netfilter/Kconfig",
+      "line": 608,
+      "declaration": "config NFT_FIB_INET\n\tdepends on NF_TABLES_INET\n\tdepends on NFT_FIB_IPV4\n\tdepends on NFT_FIB_IPV6\n\ttristate \"Netfilter nf_tables fib inet support\""
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XTABLES",
+      "file": "net/netfilter/Kconfig",
+      "line": 729,
+      "declaration": "config NETFILTER_XTABLES\n\ttristate \"Netfilter Xtables support (required for ip_tables)\"\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XTABLES_LEGACY",
+      "file": "net/netfilter/Kconfig",
+      "line": 747,
+      "declaration": "config NETFILTER_XTABLES_LEGACY\n\tbool \"Netfilter legacy tables support\"\n\tdepends on !PREEMPT_RT"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MARK",
+      "file": "net/netfilter/Kconfig",
+      "line": 759,
+      "declaration": "config NETFILTER_XT_MARK\n\ttristate 'nfmark target and match support'\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_CHECKSUM",
+      "file": "net/netfilter/Kconfig",
+      "line": 811,
+      "declaration": "config NETFILTER_XT_TARGET_CHECKSUM\n\ttristate \"CHECKSUM target support\"\n\tdepends on IP_NF_MANGLE || IP6_NF_MANGLE || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_CT",
+      "file": "net/netfilter/Kconfig",
+      "line": 861,
+      "declaration": "config NETFILTER_XT_TARGET_CT\n\ttristate '\"CT\" target support'\n\tdepends on NF_CONNTRACK\n\tdepends on IP_NF_RAW || IP6_NF_RAW || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_DSCP",
+      "file": "net/netfilter/Kconfig",
+      "line": 873,
+      "declaration": "config NETFILTER_XT_TARGET_DSCP\n\ttristate '\"DSCP\" and \"TOS\" target support'\n\tdepends on IP_NF_MANGLE || IP6_NF_MANGLE || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_HL",
+      "file": "net/netfilter/Kconfig",
+      "line": 889,
+      "declaration": "config NETFILTER_XT_TARGET_HL\n\ttristate '\"HL\" hoplimit target support'\n\tdepends on IP_NF_MANGLE || IP6_NF_MANGLE || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_NAT",
+      "file": "net/netfilter/Kconfig",
+      "line": 974,
+      "declaration": "config NETFILTER_XT_NAT\n\ttristate '\"SNAT and DNAT\" targets support'\n\tdepends on NF_NAT"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_NOTRACK",
+      "file": "net/netfilter/Kconfig",
+      "line": 1014,
+      "declaration": "config NETFILTER_XT_TARGET_NOTRACK\n\ttristate  '\"NOTRACK\" target support (DEPRECATED)'\n\tdepends on NF_CONNTRACK\n\tdepends on IP_NF_RAW || IP6_NF_RAW\n\tdepends on NETFILTER_ADVANCED\n\tselect NETFILTER_XT_TARGET_CT"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_MASQUERADE",
+      "file": "net/netfilter/Kconfig",
+      "line": 1043,
+      "declaration": "config NETFILTER_XT_TARGET_MASQUERADE\n\ttristate \"MASQUERADE target support\"\n\tdepends on NF_NAT\n\tdefault m if NETFILTER_ADVANCED=n\n\tselect NF_NAT_MASQUERADE"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TPROXY",
+      "file": "net/netfilter/Kconfig",
+      "line": 1068,
+      "declaration": "config NETFILTER_XT_TARGET_TPROXY\n\ttristate '\"TPROXY\" target transparent proxying support'\n\tdepends on NETFILTER_XTABLES\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP6_NF_IPTABLES || IP6_NF_IPTABLES=n\n\tdepends on IP_NF_MANGLE || NFT_COMPAT\n\tselect NF_DEFRAG_IPV4\n\tselect NF_DEFRAG_IPV6 if IP6_NF_IPTABLES != n\n\tselect NF_TPROXY_IPV4\n\tselect NF_TPROXY_IPV6 if IP6_NF_IPTABLES"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TRACE",
+      "file": "net/netfilter/Kconfig",
+      "line": 1089,
+      "declaration": "config NETFILTER_XT_TARGET_TRACE\n\ttristate  '\"TRACE\" target support'\n\tdepends on IP_NF_RAW || IP6_NF_RAW\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_TARGET_TCPOPTSTRIP",
+      "file": "net/netfilter/Kconfig",
+      "line": 1137,
+      "declaration": "config NETFILTER_XT_TARGET_TCPOPTSTRIP\n\ttristate '\"TCPOPTSTRIP\" target support'\n\tdepends on IP_NF_MANGLE || IP6_NF_MANGLE || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE",
+      "file": "net/netfilter/Kconfig",
+      "line": 1149,
+      "declaration": "config NETFILTER_XT_MATCH_ADDRTYPE\n\ttristate '\"addrtype\" address type match support'\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_CONNTRACK",
+      "file": "net/netfilter/Kconfig",
+      "line": 1247,
+      "declaration": "config NETFILTER_XT_MATCH_CONNTRACK\n\ttristate '\"conntrack\" connection tracking match support'\n\tdepends on NF_CONNTRACK\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_NETFILTER_XT_MATCH_IPVS",
+      "file": "net/netfilter/Kconfig",
+      "line": 1375,
+      "declaration": "config NETFILTER_XT_MATCH_IPVS\n\ttristate '\"ipvs\" match support'\n\tdepends on IP_VS\n\tdepends on NETFILTER_ADVANCED\n\tdepends on NF_CONNTRACK"
+    },
+    {
+      "symbol": "CONFIG_IP_VS",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 5,
+      "declaration": "menuconfig IP_VS\n\ttristate \"IP virtual server support\"\n\tdepends on INET && NETFILTER\n\tdepends on (NF_CONNTRACK || NF_CONNTRACK=n)"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_IPV6",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 29,
+      "declaration": "config\tIP_VS_IPV6\n\tbool \"IPv6 support for IPVS\"\n\tdepends on IPV6 = y || IP_VS = IPV6\n\tselect NF_DEFRAG_IPV6"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_DEBUG",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 38,
+      "declaration": "config\tIP_VS_DEBUG\n\tbool \"IP virtual server debugging\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_TAB_BITS",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 45,
+      "declaration": "config\tIP_VS_TAB_BITS\n\tint \"IPVS connection table size (the Nth power of 2)\"\n\trange 8 20 if !64BIT\n\trange 8 27 if 64BIT\n\tdefault 12"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_TCP",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 79,
+      "declaration": "config\tIP_VS_PROTO_TCP\n\tbool \"TCP load balancing support\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_UDP",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 85,
+      "declaration": "config\tIP_VS_PROTO_UDP\n\tbool \"UDP load balancing support\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_ESP",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 94,
+      "declaration": "config\tIP_VS_PROTO_ESP\n\tbool \"ESP load balancing support\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_AH",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 100,
+      "declaration": "config\tIP_VS_PROTO_AH\n\tbool \"AH load balancing support\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_PROTO_SCTP",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 106,
+      "declaration": "config  IP_VS_PROTO_SCTP\n\tbool \"SCTP load balancing support\"\n\tselect NET_CRC32C"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_RR",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 115,
+      "declaration": "config\tIP_VS_RR\n\ttristate \"round-robin scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_WRR",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 124,
+      "declaration": "config\tIP_VS_WRR\n\ttristate \"weighted round-robin scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LC",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 137,
+      "declaration": "config\tIP_VS_LC\n\ttristate \"least-connection scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_WLC",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 147,
+      "declaration": "config\tIP_VS_WLC\n\ttristate \"weighted least-connection scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_FO",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 157,
+      "declaration": "config  IP_VS_FO\n\t\ttristate \"weighted failover scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_OVF",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 167,
+      "declaration": "config  IP_VS_OVF\n\ttristate \"weighted overflow scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LBLC",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 178,
+      "declaration": "config\tIP_VS_LBLC\n\ttristate \"locality-based least-connection scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_LBLCR",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 192,
+      "declaration": "config  IP_VS_LBLCR\n\ttristate \"locality-based least-connection with replication scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_DH",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 210,
+      "declaration": "config\tIP_VS_DH\n\ttristate \"destination hashing scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SH",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 220,
+      "declaration": "config\tIP_VS_SH\n\ttristate \"source hashing scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_MH",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 230,
+      "declaration": "config\tIP_VS_MH\n\ttristate \"maglev hashing scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SED",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 249,
+      "declaration": "config\tIP_VS_SED\n\ttristate \"shortest expected delay scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_NQ",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 262,
+      "declaration": "config\tIP_VS_NQ\n\ttristate \"never queue scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_TWOS",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 275,
+      "declaration": "config\tIP_VS_TWOS\n\ttristate \"weighted random twos choice least-connection scheduling\""
+    },
+    {
+      "symbol": "CONFIG_IP_VS_SH_TAB_BITS",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 288,
+      "declaration": "config IP_VS_SH_TAB_BITS\n\tint \"IPVS source hashing table size (the Nth power of 2)\"\n\trange 4 20\n\tdefault 8"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_MH_TAB_INDEX",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 303,
+      "declaration": "config IP_VS_MH_TAB_INDEX\n\tint \"IPVS maglev hashing table index of size (the prime numbers)\"\n\trange 8 17\n\tdefault 12"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_FTP",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 321,
+      "declaration": "config\tIP_VS_FTP\n\ttristate \"FTP protocol helper\"\n\tdepends on IP_VS_PROTO_TCP && NF_CONNTRACK && NF_NAT && \\\n\t\tNF_CONNTRACK_FTP\n\tselect IP_VS_NFCT"
+    },
+    {
+      "symbol": "CONFIG_IP_VS_NFCT",
+      "file": "net/netfilter/ipvs/Kconfig",
+      "line": 337,
+      "declaration": "config\tIP_VS_NFCT\n\tbool \"Netfilter connection tracking\"\n\tdepends on NF_CONNTRACK"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_IPTABLES_LEGACY",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 14,
+      "declaration": "config IP_NF_IPTABLES_LEGACY\n\ttristate \"Legacy IP tables support\"\n\tdepends on NETFILTER_XTABLES_LEGACY\n\tdepends on NETFILTER_XTABLES\n\tdefault\tm if NETFILTER_XTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_IPV4",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 35,
+      "declaration": "config NF_TABLES_IPV4\n\tbool \"IPv4 nf_tables support\""
+    },
+    {
+      "symbol": "CONFIG_NFT_DUP_IPV4",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 47,
+      "declaration": "config NFT_DUP_IPV4\n\ttristate \"IPv4 nf_tables packet duplication support\"\n\tdepends on !NF_CONNTRACK || NF_CONNTRACK\n\tselect NF_DUP_IPV4"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_IPV4",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 54,
+      "declaration": "config NFT_FIB_IPV4\n\tselect NFT_FIB\n\ttristate \"nf_tables fib / ip route lookup support\""
+    },
+    {
+      "symbol": "CONFIG_IP_NF_IPTABLES",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 130,
+      "declaration": "config IP_NF_IPTABLES\n\ttristate \"IP tables support (required for filtering/masq/NAT)\"\n\tdefault m if NETFILTER_ADVANCED=n\n\tselect NETFILTER_XTABLES"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_MATCH_RPFILTER",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 163,
+      "declaration": "config IP_NF_MATCH_RPFILTER\n\ttristate '\"rpfilter\" reverse path filter match support'\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP_NF_MANGLE || IP_NF_RAW || NFT_COMPAT"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_FILTER",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 184,
+      "declaration": "config IP_NF_FILTER\n\ttristate \"Packet filtering\"\n\tdefault m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY\n\tdepends on IP_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_REJECT",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 195,
+      "declaration": "config IP_NF_TARGET_REJECT\n\ttristate \"REJECT target support\"\n\tdepends on IP_NF_FILTER || NFT_COMPAT\n\tselect NF_REJECT_IPV4\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_NAT",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 221,
+      "declaration": "config IP_NF_NAT\n\ttristate \"iptables NAT support\"\n\tdepends on NF_CONNTRACK\n\tdepends on IP_NF_IPTABLES_LEGACY\n\tdefault m if NETFILTER_ADVANCED=n\n\tselect NF_NAT\n\tselect NETFILTER_XT_NAT"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_MASQUERADE",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 237,
+      "declaration": "config IP_NF_TARGET_MASQUERADE\n\ttristate \"MASQUERADE target support\"\n\tselect NETFILTER_XT_TARGET_MASQUERADE"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_NETMAP",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 244,
+      "declaration": "config IP_NF_TARGET_NETMAP\n\ttristate \"NETMAP target support\"\n\tdepends on NETFILTER_ADVANCED\n\tselect NETFILTER_XT_TARGET_NETMAP"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_REDIRECT",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 253,
+      "declaration": "config IP_NF_TARGET_REDIRECT\n\ttristate \"REDIRECT target support\"\n\tdepends on NETFILTER_ADVANCED\n\tselect NETFILTER_XT_TARGET_REDIRECT"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_MANGLE",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 265,
+      "declaration": "config IP_NF_MANGLE\n\ttristate \"Packet mangling\"\n\tdefault m if NETFILTER_ADVANCED=n || IP_NF_IPTABLES_LEGACY\n\tdepends on IP_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_ECN",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 276,
+      "declaration": "config IP_NF_TARGET_ECN\n\ttristate \"ECN target support\"\n\tdepends on IP_NF_MANGLE || NFT_COMPAT\n\tdepends on NETFILTER_ADVANCED"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_TARGET_TTL",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 291,
+      "declaration": "config IP_NF_TARGET_TTL\n\ttristate '\"TTL\" target support'\n\tdepends on NETFILTER_ADVANCED && IP_NF_MANGLE\n\tselect NETFILTER_XT_TARGET_HL"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_RAW",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 301,
+      "declaration": "config IP_NF_RAW\n\ttristate  'raw table support (required for NOTRACK/TRACE)'\n\tdepends on IP_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_SECURITY",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 313,
+      "declaration": "config IP_NF_SECURITY\n\ttristate \"Security table\"\n\tdepends on SECURITY\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_ARPTABLES",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 327,
+      "declaration": "config IP_NF_ARPTABLES\n\ttristate \"Legacy ARPTABLES support\"\n\tdepends on NETFILTER_XTABLES_LEGACY\n\tdepends on NETFILTER_XTABLES\n\tdefault\tn"
+    },
+    {
+      "symbol": "CONFIG_IP_NF_ARPFILTER",
+      "file": "net/ipv4/netfilter/Kconfig",
+      "line": 343,
+      "declaration": "config IP_NF_ARPFILTER\n\ttristate \"arptables-legacy packet filtering support\"\n\tselect IP_NF_ARPTABLES\n\tselect NETFILTER_FAMILY_ARP\n\tdepends on NETFILTER_XTABLES_LEGACY\n\tdepends on NETFILTER_XTABLES"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_IPTABLES_LEGACY",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 10,
+      "declaration": "config IP6_NF_IPTABLES_LEGACY\n\ttristate \"Legacy IP6 tables support\"\n\tdepends on INET && IPV6 && NETFILTER_XTABLES_LEGACY\n\tdepends on NETFILTER_XTABLES\n\tdefault\tm if NETFILTER_XTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_NF_TABLES_IPV6",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 31,
+      "declaration": "config NF_TABLES_IPV6\n\tbool \"IPv6 nf_tables support\""
+    },
+    {
+      "symbol": "CONFIG_NFT_DUP_IPV6",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 43,
+      "declaration": "config NFT_DUP_IPV6\n\ttristate \"IPv6 nf_tables packet duplication support\"\n\tdepends on !NF_CONNTRACK || NF_CONNTRACK\n\tselect NF_DUP_IPV6"
+    },
+    {
+      "symbol": "CONFIG_NFT_FIB_IPV6",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 50,
+      "declaration": "config NFT_FIB_IPV6\n\ttristate \"nf_tables fib / ipv6 route lookup support\"\n\tselect NFT_FIB"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_IPTABLES",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 80,
+      "declaration": "config IP6_NF_IPTABLES\n\ttristate \"IP6 tables support (required for filtering)\"\n\tdepends on INET && IPV6\n\tselect NETFILTER_XTABLES\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_MATCH_RPFILTER",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 158,
+      "declaration": "config IP6_NF_MATCH_RPFILTER\n\ttristate '\"rpfilter\" reverse path filter match support'\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP6_NF_MANGLE || IP6_NF_RAW || NFT_COMPAT"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_HL",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 188,
+      "declaration": "config IP6_NF_TARGET_HL\n\ttristate '\"HL\" hoplimit target support'\n\tdepends on NETFILTER_ADVANCED && IP6_NF_MANGLE\n\tselect NETFILTER_XT_TARGET_HL"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_FILTER",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 197,
+      "declaration": "config IP6_NF_FILTER\n\ttristate \"Packet filtering\"\n\tdefault m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY\n\tdepends on IP6_NF_IPTABLES_LEGACY\n\ttristate"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_REJECT",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 209,
+      "declaration": "config IP6_NF_TARGET_REJECT\n\ttristate \"REJECT target support\"\n\tdepends on IP6_NF_FILTER || NFT_COMPAT\n\tselect NF_REJECT_IPV6\n\tdefault m if NETFILTER_ADVANCED=n"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_MANGLE",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 234,
+      "declaration": "config IP6_NF_MANGLE\n\ttristate \"Packet mangling\"\n\tdefault m if NETFILTER_ADVANCED=n || IP6_NF_IPTABLES_LEGACY\n\tdepends on IP6_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_RAW",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 245,
+      "declaration": "config IP6_NF_RAW\n\ttristate  'raw table support (required for TRACE)'\n\tdepends on IP6_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_SECURITY",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 257,
+      "declaration": "config IP6_NF_SECURITY\n\ttristate \"Security table\"\n\tdepends on SECURITY\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP6_NF_IPTABLES_LEGACY"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_NAT",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 268,
+      "declaration": "config IP6_NF_NAT\n\ttristate \"ip6tables NAT support\"\n\tdepends on NF_CONNTRACK\n\tdepends on NETFILTER_ADVANCED\n\tdepends on IP6_NF_IPTABLES_LEGACY\n\tselect NF_NAT\n\tselect NETFILTER_XT_NAT"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_MASQUERADE",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 282,
+      "declaration": "config IP6_NF_TARGET_MASQUERADE\n\ttristate \"MASQUERADE target support\"\n\tselect NETFILTER_XT_TARGET_MASQUERADE\n\tdepends on IP6_NF_NAT"
+    },
+    {
+      "symbol": "CONFIG_IP6_NF_TARGET_NPT",
+      "file": "net/ipv6/netfilter/Kconfig",
+      "line": 290,
+      "declaration": "config IP6_NF_TARGET_NPT\n\ttristate \"NPT (Network Prefix translation) target support\"\n\tdepends on IP6_NF_NAT || NFT_COMPAT"
+    }
+  ],
+  "pinned_file_sha256": {
+    "block/Kconfig": "57f318e8a735b9edfb06b3761f9aa4559d6b93e67659682b9f6576fe639e3779",
+    "drivers/net/Kconfig": "b0100ba1b77d170abae9eb7a09f2ce8f2c02781e620ac4bf65d035c743bc274e",
+    "init/Kconfig": "6fa494881bb0d84cb6c1629fda157527ecc4d0c1be68f00bc4d264498f97f2b8",
+    "net/Kconfig": "6f2bc3c4b0928f317cd7a184354701d5565a07561166f82054f2edd2ec69e4a7",
+    "net/bridge/Kconfig": "25cd9fb60d8574cb270fc1ae344395241784850f3add76c6b768c2065aca9db7",
+    "net/ipv4/netfilter/Kconfig": "0ba1f96e7a8278b5ba87564c72b4aba28d6def65026e80584b23d77f604ce424",
+    "net/ipv6/netfilter/Kconfig": "5d388fc7d6978b9dfd19420944b37e70d48513c8c93abd4b4bc83d10a4fd8eae",
+    "net/netfilter/Kconfig": "3dbafa1f07d9f8e4176db4b0b810e2788d52d19cbd9a32152559315bf8695338",
+    "net/netfilter/ipvs/Kconfig": "dd99e7900e99f0b91b300ed42b5c4cd2ea29ecaf1ac2cb9d08899a1c14380a26",
+    "net/sched/Kconfig": "355b68427c939a32919078043aff4f7c84db3aee8c89aefb619accfb6b020753"
+  }
+}

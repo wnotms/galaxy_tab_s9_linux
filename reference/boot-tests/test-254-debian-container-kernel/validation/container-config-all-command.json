@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "scripts/run-host-tests.py",
+    "all",
+    "--fail-on-skip",
+    "--report",
+    "out/host-tests/container-config-all.json"
+  ],
+  "exit_code": 0,
+  "elapsed_s": 78.342,
+  "host_sync_environment": "real syncfs on Linux repo ext4 and /tmp tmpfs; explicit-file sync unchanged"
+}
