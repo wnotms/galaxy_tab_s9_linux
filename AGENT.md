@@ -9,8 +9,11 @@ separate5V-only supply. Read its README before continuing: measured battery net
 power is VBAT*IBAT; TCPM voltage/current and switching input-current limits are
 policy values, not actual charger input watts. No kernel/driver/DTS/rootfs or
 charging-policy change, reboot, flash or Stage3 is authorized by this revision.
-First fresh Wi-Fi identity preflight and pushed registration, then5min plus20min
-same-boot charging capture, unplug150s and charger-to-PC bounded recovery.
+Registration b63fad60 and23 fresh Wi-Fi identity gates preceded attachment.
+Attempt03 first300.011s fixed9V/1500mA battery telemetry passed:61 positive
+current samples, mean battery net7.771W, SOC59->61%,28.7..29.7°C.
+The further20-minute same-boot window is in progress; unplug150s and
+charger-to-PC bounded recovery follow. No later stage is passed yet.
 The independent physical-VBUS gate remains unobserved, not passed. Earlier
 sealed attempt01/02 results remain unchanged.
 

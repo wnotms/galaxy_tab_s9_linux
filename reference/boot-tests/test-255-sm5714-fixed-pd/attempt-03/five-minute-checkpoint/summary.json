@@ -1,0 +1,23 @@
+{
+  "observation_seconds": 300.011,
+  "statistics": {
+    "actual_input_power_measured": false,
+    "actual_vbus_independently_measured": false,
+    "battery_net_power_w": {
+      "max": 8.428736,
+      "mean": 7.7712097540983605,
+      "min": 6.514893
+    },
+    "configured_input_ceiling_w_max": 13.5,
+    "contract_voltage_uv_values": [
+      9000000
+    ],
+    "positive_current_samples": 61,
+    "sample_count": 61,
+    "soc_end": 61,
+    "soc_start": 59,
+    "temperature_deciC_max": 297,
+    "temperature_deciC_min": 287
+  },
+  "verdict": "telemetry-clean"
+}

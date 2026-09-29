@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.37",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -eu\ncat /proc/sys/kernel/random/boot_id; cat /proc/uptime\nfind /sys/class/typec -maxdepth 2 -type l -print\nfor f in /sys/class/typec/port0-partner/supports_usb_power_delivery /sys/class/typec/port0-partner/usb_power_delivery_revision; do\n    if test -r \"$f\"; then printf '%s=' \"$f\"; cat \"$f\"; fi\ndone\nif test -d /sys/class/usb_power_delivery; then ls -lR /sys/class/usb_power_delivery; else echo usb_power_delivery-class-unavailable; fi\n"
+  ],
+  "ended_utc": "2026-09-29T10:35:46.039550+00:00",
+  "started_utc": "2026-09-29T10:35:45.605980+00:00",
+  "status": 0
+}
