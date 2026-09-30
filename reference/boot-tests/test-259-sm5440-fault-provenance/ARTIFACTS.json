@@ -1,0 +1,90 @@
+{
+  "artifacts": {
+    "out/boot-bundle-x710-259-passive/boot.img": {
+      "sha256": "3b6370e127a482fadcdb551c3aae51eb680c57152ecc0a3146e6446bbab9dc28",
+      "bytes": 100663296
+    },
+    "out/boot-bundle-x710-259-passive/vendor_boot.img": {
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "bytes": 100663296
+    },
+    "out/kernel-x710-259-passive/Image.gz": {
+      "sha256": "5271464e6559cc23d83bb085fadbb517e01d5c86e6f4c89531336d4e46e67e65",
+      "bytes": 22119478
+    },
+    "out/kernel-x710-259-passive/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-259-passive/config": {
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "out/kernel-x710-259-passive/kernel-notes.bin": {
+      "sha256": "73cd833d9f80e749b5db5d0a2accfc380feea4c159afc86a7037c4bc9a9ae221",
+      "bytes": 84
+    },
+    "out/kernel-x710-259-passive/modules-x710.tar.gz": {
+      "sha256": "dd49cc0e9880801bfc1e7d5926591e919cdf98a40cb61f6b1f2c48dd3e756c83",
+      "bytes": 47318335
+    }
+  },
+  "baseline_partitions": {
+    "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+  },
+  "candidate_partitions": {
+    "boot": "3b6370e127a482fadcdb551c3aae51eb680c57152ecc0a3146e6446bbab9dc28",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "compiled_source_revision": "74e75de6",
+  "config_delta": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "absent",
+      "n"
+    ]
+  },
+  "deployment_allowed_partitions": [
+    "boot",
+    "vendor_boot"
+  ],
+  "dt_delta": {
+    "/soc@0/geniqup@9c0000/i2c@98c000/charger@63:status": [
+      "64 69 73 61 62 6c 65 64 0",
+      "6f 6b 61 79 0"
+    ]
+  },
+  "host_tests": {
+    "tests_run": 1270,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "elapsed_s": 106.9,
+    "executed": true
+  },
+  "kernel_release": "7.2.0-rc3-gts9wifi-dirty",
+  "max_fixed_pd_mv": 9000,
+  "module_file_count": 181,
+  "pps_live_enabled": false,
+  "profile": "sm5440-passive",
+  "pump_on_available": false,
+  "retained_partitions": [
+    "init_boot",
+    "dtbo",
+    "vbmeta"
+  ],
+  "toolchain": "clang 21.1.8",
+  "transaction_core_enabled": false,
+  "unexpected_delta": {},
+  "upstream_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa"
+}
