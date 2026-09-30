@@ -1,5 +1,43 @@
 # Host regression tiers
 
+## Validate changes, not commits (owner instruction, 2026-09-30)
+
+A candidate gets one final build/artifact audit and one final full host run.
+Reuse that qualification for the exact unchanged source/build inputs and hashed
+artifacts. Recording results or updating documentation does not require another
+kernel build or full regression. Keep the source revision and artifact hashes in
+the qualification record; a later documentation commit is not a new candidate.
+
+| Actual change | Required work |
+| --- | --- |
+| Kernel, driver, config, DTS, build integration | Affected tests during development; one final build/config/DT/protected-file/artifact audit and full host run |
+| Runner or parser | Affected host tests and syntax checks; no kernel rebuild unless kernel/build inputs also change |
+| Suite routing | One full host run; no kernel rebuild solely for routing |
+| Documentation, status, raw results | Diff review, new evidence hash/summary checks where relevant; no build or full host run |
+| Unchanged candidate, physical observation | Essential live identity/rescue/battery gates and observation; reuse offline qualification |
+
+Do not invoke wrapper, changed and all consecutively when they execute the same
+IDs. For a final candidate, the full run can serve the selected host regression
+too; record shell/artifact checks separately if needed. Existing tests remain
+available and unchanged. A failed check or a change to the relevant source,
+profile, pin, toolchain, build input or artifact invalidates the affected
+qualification. A new commit containing only results does not.
+
+For a reviewed documentation/results-only commit, record `executed: false`, the
+reason and the earlier qualification being reused. Do not label omitted tests a
+new regression pass. The selection tool still conservatively falls back to all
+for unknown paths; that fallback does not mandate executing it for prose-only
+work. Do not add blanket exclusions for evidence or documentation that is read
+by executable tests.
+
+Physical checks are also scoped: inspect the full baseline once, verify files
+and partition/module readback at deployment, then use boot/config/notes and
+health/transport gates on startup. Combine telemetry, boot ID and fault checks
+per sample. Preserve full kernel journal at stage boundaries and on first fault;
+do not retrieve it or rehash unchanged rollback directories on every sample.
+Unknown identity, new reboot, lost rescue or a safety fault still stops the test.
+Registered observation windows and safety limits remain in force.
+
 The primary development command is:
 
 ```sh
@@ -53,8 +91,10 @@ outside Git path selection: run the appropriate artifact/full checks yourself.
 Update the dependency map when introducing a new consumer of a mapped script.
 
 This selection is for iteration. Run all tests after editing selection rules,
-for broad integration changes and for final candidate review. No past passing
-result is cached or reused, and the tool does not build, flash or contact hardware.
+for broad integration changes and once for final candidate review. The tool
+itself does not cache passing results, build, flash or contact hardware. The
+workflow may reuse a recorded qualification for unchanged source/artifacts as
+described above; it must not present that reuse as a new executed test run.
 
 | Tier | When required | What it checks |
 | --- | --- | --- |

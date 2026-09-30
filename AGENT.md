@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+The owner requests reduced checking overhead. The change-scoped workflow below
+supersedes historical requirements to rebuild/retest after every commit. Qualify
+each candidate once; documentation/results commits do not invalidate unchanged
+source or artifacts. Do not repeat a full build/regression because HEAD changed.
+Test258 source f3a266b5 already passed its passive build, artifact/bundle audit
+and all1264 host tests. Reuse those exact hashed artifacts for the authorized
+test; retain essential device identity, rescue/rollback, battery safety and
+write/readback gates. Active PPS/pump authorization remains unchanged.
+
 The owner now explicitly requests "刷入测试吧". Test258 registers ONLY the
 separate SM5440 passive profile: pumpOFF, no PPS/live transaction core, ordinary
 PC USB150s. Read its README/preflight before any action. Preliminary current
@@ -50,8 +59,8 @@ thermal, Test253 adbd/Test254 container gates and rollback pairs. No device
 commands, deploy/flash/reboot/modules/rootfs changes, live PPS or pump activation.
 Keep Stage3A/default fixed behavior separate from passive Stage3B/profile.
 Direct activation remains blocked by actual ADC/OCP/sensor/transaction acceptance;
-vendor aggregate protection init must not be copied blindly. Build/test/config/
-DT/protected-file checks after every commit; push origin/test, no CI/main merge.
+vendor aggregate protection init must not be copied blindly. Use the current
+change-scoped validation rules below; push origin/test, no CI/main merge.
 The earlier physical history below is retained, not new device authorization.
 
 Test256 offline source revision61336aff is now qualified. Read its RESULTS.md,
@@ -873,6 +882,36 @@ that X710 needs another MCU image. Host tests pass; record physical results
 separately and keep pre-existing test-087 logs distinct from new tests.
 
 ## Build commands
+
+### Change-scoped validation (owner instruction, 2026-09-30)
+
+- Kernel/driver/config/DTS or build integration changes: build once after the
+  implementation is ready; validate resolved config, DT, protected files and
+  paired artifacts. Run affected host tests during development and one full
+  regression for final candidate review. Do not run wrapper/changed/all in
+  succession when they select the same tests.
+- Host runner/parser changes: run affected tests and syntax checks. Rebuild only
+  if those changes also affect kernel inputs or packaging. Routing changes still
+  require one full host regression; never delete or weaken tests to save time.
+- Documentation/status/results changes: review the diff; check newly recorded
+  evidence hashes and summary consistency as appropriate. No kernel rebuild or
+  full host regression. Record `executed: false` for tests not run and reference
+  the existing qualification separately. Changed-mode's conservative fallback
+  is not a requirement to run all tests for a reviewed prose-only commit.
+- Reuse qualification only while relevant source, profile, upstream pin,
+  toolchain, build inputs and artifact hashes are unchanged. New source/input,
+  artifact mismatch, failed validation or a relevant unresolved concern
+  invalidates the affected qualification; commit SHA alone does not.
+- Device testing: one full baseline check before deployment; verify staged
+  files and written partitions/modules at the write boundary. Check current
+  boot/config/notes, rescue transports and battery safety after boot. During a
+  same-candidate observation, collect boot ID, telemetry, transport and new
+  faults together; do not repeatedly hash every partition and rollback module
+  directory or fetch an unchanged full journal for every sample. Save full
+  journal at observation boundaries and on first anomaly. A new reboot or
+  unexplained identity change requires fresh applicable checks. Keep registered
+  observation windows, stop conditions and rollback; reduce duplicate checks,
+  not safety limits or evidence needed to attribute a failure.
 
 Host regression uses `bash scripts/check-stall-offline.sh` (changed files by default).
 Use `--changed --base REV` for committed changes, `--core` for unconditional core
