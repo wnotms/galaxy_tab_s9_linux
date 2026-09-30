@@ -1,0 +1,28 @@
+{
+  "device_commands_for_fix": false,
+  "device_deployed": false,
+  "elapsed_seconds": 2.671,
+  "errors": 0,
+  "executed": true,
+  "failures": 0,
+  "files": {
+    "reference/boot-tests/test-258-sm5440-passive/ARCHIVE_LAYOUT_FIX.md": {
+      "bytes": 2008,
+      "sha256": "4a740827b5ec28b569c99886fffa1826a86552e5fd65007b8d473ed6f18e0970"
+    },
+    "reference/boot-tests/test-258-sm5440-passive/module-swap-release-root.sh": {
+      "bytes": 2592,
+      "sha256": "90e4d924b5a73c2fb9146204ddb51522739f1783a380a9440357c0870d028605"
+    },
+    "tests/test_sm5440_module_staging.py": {
+      "bytes": 5112,
+      "sha256": "a424cb9a7ac5d3ecf85e269d232dd705e826f3c2122d10894ba9d77da1637e02"
+    }
+  },
+  "full_host_regression_repeated": false,
+  "kernel_rebuilt": false,
+  "qualification_reused_source": "f3a266b5",
+  "scope": "offline module transaction and refusal tests",
+  "skips": 0,
+  "tests_run": 5
+}
