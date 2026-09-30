@@ -2,6 +2,12 @@
 
 ## Current state (2026-09-30)
 
+Test260 attempt02 installed sealed boot/vendor_boot and181 paired modules with
+five-partition readback; exact Test255 original modules saved in fresh260slot.
+TWRP root unmounted/BCB cleared, candidate not yet booted/accepted at this record.
+Next one normal Debian boot, ADB-first admission and150s passivePCUSB observation;
+stop first and restore Test255 if needed. No PPS/pumpON/protection/currentchange.
+
 Test260 attempt01 STOP before deployment: unsupported journalctl --no-legend
 auxiliary capture, raw firsterror retained; no recovery/devicewrites occurred.
 Attempt02 corrects the host spelling before first physical test; inherited
