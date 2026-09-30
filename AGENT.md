@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test262 attempt02 fixed9V/1.5A charging phase PASS300.011s/61samples on18bce160:
+netbatterymean7.827W, SOC54→56%, pack28.4–29.2C, passiveSM5440 OFF/IBUS0,
+no newkernel/CPU/failedunit/passivefault. Read CURRENT_STATUS/charging RESULTS.
+Unplug15s verification and freshPCADB/NCM/Wi-Fi gates pending; wholeTest262
+not yet complete. FirsthostparserSTOP and Windowschimeincident retained.
+No actual inputpower/calibratedVBUS claim, no20min extension, no PPS/pumpON/
+configuration/reboot/flash. Reuse44 affectedhosttests and Test260 pairing/build.
+
+
 Test262 charging attempt01 STOP before charger prompt/window due host parser
 empty@@failed EOF recognition, no physical charging fault or device change.
 Retain charging/RESULTS/raw STOP/seal. EOF correction44 affected tests+syntax

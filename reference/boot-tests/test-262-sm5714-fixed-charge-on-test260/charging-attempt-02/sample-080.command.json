@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.145",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -eu\necho 'SECTION meta'\nprintf 'boot_id='; cat /proc/sys/kernel/random/boot_id\nprintf 'uptime='; cut -d' ' -f1 /proc/uptime\necho 'SECTION battery'; cat /sys/class/power_supply/sm5714-battery/uevent\necho 'SECTION usb'; cat /sys/class/power_supply/sm5714-usb/uevent\necho 'SECTION tcpm'; cat /sys/class/power_supply/tcpm-source-psy-3-0033/uevent\necho 'SECTION typec'\nfor f in power_role data_role power_operation_mode; do\n    printf '%s=' \"$f\"; cat \"/sys/class/typec/port0/$f\"\ndone\n\necho @@passive; cat /sys/class/power_supply/sm5440-passive/uevent\necho @@failed; systemctl --failed --plain --no-legend --no-pager\n\necho @@kernel; journalctl -b -k --no-pager -o json --show-cursor --after-cursor='s=0e9cc8651fa34ae5875adb1b7f906071;i=bec56;b=18bce160ddda4c5b9f27f8429f204b59;m=834f0ee6;t=65cb02acc5c2d;x=57cc5861f9fa6673'"
+  ],
+  "ended_utc": "2026-09-30T10:02:33.838180+00:00",
+  "started_utc": "2026-09-30T10:02:33.215614+00:00",
+  "status": 0
+}

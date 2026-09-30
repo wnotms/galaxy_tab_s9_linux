@@ -1,0 +1,35 @@
+{
+  "actual_vbus_independently_calibrated": false,
+  "boot_id": "18bce160ddda4c5b9f27f8429f204b59",
+  "device_configuration_writes": false,
+  "observation_seconds": 300.011,
+  "pps_requested": false,
+  "pump_on": false,
+  "startup": {
+    "classification": "confirmed-inactive-startup-latch",
+    "confirmation_source_us": 2609795,
+    "event_source_us": 290045,
+    "pending_source_us": 290025,
+    "warning_retained": true
+  },
+  "statistics": {
+    "actual_input_power_measured": false,
+    "actual_vbus_independently_measured": false,
+    "battery_net_power_w": {
+      "max": 8.289024,
+      "mean": 7.826778508196721,
+      "min": 6.567981
+    },
+    "configured_input_ceiling_w_max": 13.5,
+    "contract_voltage_uv_values": [
+      9000000
+    ],
+    "positive_current_samples": 61,
+    "sample_count": 61,
+    "soc_end": 56,
+    "soc_start": 54,
+    "temperature_deciC_max": 292,
+    "temperature_deciC_min": 284
+  },
+  "verdict": "PASS bounded fixed-PD battery telemetry; passive pump OFF"
+}
