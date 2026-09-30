@@ -2,6 +2,20 @@
 
 ## Current state (2026-09-30)
 
+Owner requests continued repair. Test260 is OFFLINE: narrow first-only inactive
+startupREVBLK confirmation (two new safe conversions within5s), retained raw
+startup event, UNKNOWN/noADC publication while pending. Live/recurrentREVBLK,
+allVBAT_OVP (including0x82), unsafeADC/I2C/deadline/protectionchange/PM still
+stop. Read docs/SM5440_PASSIVE_STARTUP_STATE.md and Test260 registration.
+ADB-first host admission saves hardware evidence before NCM; first transport
+failure is retained, no retry-to-clean. Current read-only Windows/WSL snapshots
+show mirroredAPIPA eth2 and working boundbanner/NCM on restoredcfb09d01;
+historicalTest259 timeout cause remains unknown. No USB/config/rootfs change,
+no physical retry/reboot/flash/PPS/pumpON authorized by this offline correction.
+Qualify changed candidate once; preserve frozenTest258/259/Test255 artifacts.
+ActiveStage3 remains NOT READY; passive hardware acceptance pending.
+
+
 Test259 source74e75de6 fixes first-fault INT/STATUS/ADC/protection provenance;
 passive build/bundle/protected/config/DT audit/full1270/related15/archive5 pass.
 Attempt01 hosthelperpath STOP before permanentwrites retained. Attempt02 installed

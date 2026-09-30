@@ -31,14 +31,18 @@ typedef uint8_t u8; typedef uint32_t u32;
 #define mutex_unlock(x) ((void)(x))
 #define lockdep_assert_held(x) ((void)(x))
 #define READ_ONCE(x) (x)
+#define WRITE_ONCE(x,v) ((x)=(v))
 ''' + '\n#include "' + str(ROOT / 'kernel/drivers/sm5440-hw.h') + '"\n'
         code += function(src, 'struct sm5440_sample {') + ';\n'
         code += r'''
 struct work_struct {int unused;};
 struct delayed_work {struct work_struct work;};
 struct sm5440_direct {void *regmap;int io_lock,dev;bool stopped,fault;
- struct sm5440_sample sample;struct delayed_work work;struct power_supply *psy;};
+ bool initial_sample_done;u8 startup_confirmations;unsigned long startup_deadline;
+ struct sm5440_sample startup_sample,sample;struct delayed_work work;struct power_supply *psy;};
 struct power_supply {struct sm5440_direct *sm;};
+struct device {struct sm5440_direct *sm;};
+static struct sm5440_direct *dev_get_drvdata(struct device *d) {return d->sm;}
 union power_supply_propval {int intval;};
 enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
  POWER_SUPPLY_PROP_ONLINE,POWER_SUPPLY_PROP_VOLTAGE_NOW,POWER_SUPPLY_PROP_CURRENT_NOW,
@@ -47,7 +51,8 @@ enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
 #define POWER_SUPPLY_HEALTH_UNSPEC_FAILURE 6
 #define POWER_SUPPLY_HEALTH_GOOD 1
 #define POWER_SUPPLY_HEALTH_UNKNOWN 0
-#define jiffies 100UL
+static unsigned long fake_jiffies=100;
+#define jiffies fake_jiffies
 #define msecs_to_jiffies(ms) (ms)
 #define time_after(a,b) ((long)((b)-(a))<0)
 static struct sm5440_direct *power_supply_get_drvdata(struct power_supply *p) {return p->sm;}
@@ -55,9 +60,12 @@ static void log_stub(int dev,const char *fmt,...) {(void)dev;(void)fmt;}
 #define dev_err log_stub
 #define dev_dbg log_stub
 #define dev_warn_ratelimited log_stub
+#define dev_warn log_stub
+#define dev_info log_stub
 #define to_delayed_work(w) ((struct delayed_work *)(w))
 #define container_of(p,type,member) ((type *)((char *)(p)-offsetof(type,member)))
 static int scheduled,changed;
+static void cancel_delayed_work_sync(struct delayed_work *w) {(void)w;}
 static int schedule_delayed_work(struct delayed_work *w,unsigned long delay) {
  (void)w;(void)delay;scheduled++;return 1;
 }
@@ -97,7 +105,12 @@ static void msleep(unsigned int ms) {
         code += function(src, "static int sm5440_off(") + "\n"
         code += function(src, "static int sm5440_sample_once(") + "\n"
         code += function(src, "static int sm5440_get_property(") + "\n"
+        code += function(src, "static bool sm5440_passive_pc_sample(") + "\n"
+        code += function(src, "static bool sm5440_startup_revblk(") + "\n"
+        code += function(src, "static bool sm5440_startup_matches(") + "\n"
         code += function(src, "static void sm5440_poll(") + "\n"
+        code += function(src, "static int sm5440_quiesce(") + "\n"
+        code += function(src, "static int sm5440_resume(") + "\n"
         code += r'''
 unsigned int value(int what,unsigned int high,unsigned int low) {
  switch(what){case 0:return sm5440_raw13(high,low);
@@ -158,6 +171,55 @@ int property(int p,int valid,int fault,int *v) {
  struct power_supply psy={.sm=&sm};union power_supply_propval value={0};
  int ret=sm5440_get_property(&psy,p,&value);*v=value.intval;return ret;
 }
+int startup(int scenario,int *result) {
+ int ignored[7];sample(0,0,0,ignored);fake_jiffies=100;
+ struct sm5440_direct sm={0};current=&sm;scheduled=changed=0;
+ regs[SM5440_ADC_VBUS]=904>>5;regs[SM5440_ADC_VBUS+1]=(904&31)<<3;
+ regs[0x22]=regs[0x23]=0;regs[2]=0x62;regs[0x0a]=0x20;
+ if(scenario==3)regs[0]=8; /* VBATOVP + REVBLK never exempt */
+ if(scenario==4)regs[0x23]=8; /* any nonzero IBUS */
+ if(scenario==5){regs[0x1e]=4904>>5;regs[0x1f]=(4904&31)<<3;}
+ if(scenario==12)regs[2]=0; /* initial clean, later REVBLK */
+ sm5440_poll(&sm.work.work);
+ struct power_supply psy={.sm=&sm};union power_supply_propval val={0};
+ sm5440_get_property(&psy,POWER_SUPPLY_PROP_HEALTH,&val);
+ result[0]=sm.fault;result[1]=sm.startup_confirmations;result[2]=val.intval;
+ result[3]=sm5440_get_property(&psy,POWER_SUPPLY_PROP_VOLTAGE_NOW,&val);
+ if(scenario==1 || scenario==12)regs[2]=2;
+ if(scenario==2)regs[0x0a]=0x22;
+ if(scenario==6)fake_jiffies=5101;
+ if(scenario==7)regs[SM5440_VBATCNTL]^=1;
+ if(scenario==8)regs[0x0a]=0;
+ if(scenario==9)fail_at=calls+1;
+ if(scenario==10)sm5440_quiesce(&sm);
+ sm5440_poll(&sm.work.work);
+ result[4]=sm.fault;result[5]=sm.startup_confirmations;
+ if(scenario==13){
+  struct device dev={.sm=&sm};sm5440_quiesce(&sm);
+  result[6]=sm5440_resume(&dev);result[7]=sm.fault;
+  result[8]=unsafe_writes;fake_jiffies=100;return 0;
+ }
+ if(scenario==11)regs[2]=2; /* fail on last confirmation */
+ sm5440_poll(&sm.work.work);
+ sm5440_get_property(&psy,POWER_SUPPLY_PROP_HEALTH,&val);
+ result[6]=sm.fault;result[7]=sm.startup_confirmations;result[8]=val.intval;
+ result[9]=unsafe_writes;int transfers=calls;
+ if(sm.fault)sm5440_poll(&sm.work.work);
+ result[10]=calls-transfers;result[11]=sm.startup_sample.faults;
+ fake_jiffies=100;return 0;
+}
+int startup_bound(int field,unsigned int v) {
+ struct sm5440_sample s={.faults=SM5440_FAULT_REVBLK,.int_before={0,0,2,0},
+ .status={0,0,32,0},.int4_wait=1,.online=true,.vbus_uv=5000000,
+ .vbat_uv=4000000,.ibus_ua=0,.die_decic=300};
+ switch(field){case 0:s.vbus_uv=v;break;case 1:s.vbat_uv=v;break;
+ case 2:s.ibus_ua=v;break;case 3:s.die_decic=v;break;
+ case 4:s.mode_before=v;break;case 5:s.mode_after=v;break;
+ case 6:s.status[2]=v;break;case 7:s.faults=v;break;
+ case 8:s.online=v;break;case 9:s.int4_wait=v;break;
+ case 10:s.int_before[0]=v;break;}
+ return sm5440_startup_revblk(&s);
+}
 int poll_fault(int *result) {
  int ignored[7];sample(0,0,0,ignored);
  struct sm5440_direct sm={0};current=&sm;scheduled=changed=0;
@@ -181,6 +243,67 @@ int poll_fault(int *result) {
         values = (ctypes.c_int * 7)()
         ret = self.lib.sample(failure, timeout, bad, values)
         return ret, list(values)
+
+    def startup(self, scenario=0):
+        values = (ctypes.c_int * 12)()
+        self.assertEqual(self.lib.startup(scenario, values), 0)
+        return list(values)
+
+    def test_startup_revblk_needs_two_new_confirmations(self):
+        v = self.startup()
+        self.assertEqual(v[:4], [0, 2, 0, -61])  # UNKNOWN, ADC not published
+        self.assertEqual(v[4:6], [0, 1])
+        self.assertEqual(v[6:10], [0, 0, 1, 0])  # Good only after BOTH
+        self.assertEqual(v[11], 0x80)  # original raw-event snapshot retained
+
+    def test_pending_resume_is_refused(self):
+        v = self.startup(13)
+        self.assertEqual(v[6:9], [-5, 1, 0])
+
+    def test_startup_classifier_bounds_and_fault_sources(self):
+        for field, accepted, rejected in (
+            (0, (4500000, 5500000), (4499999, 5500001, 9000000)),
+            (1, (3500000, 4299999), (3499999, 4300000)),
+            (2, (0,), (1, 100000)),
+            (3, (225, 419), (224, 420)),
+            (4, (0, 1), (4, 8, 12)),
+            (5, (0, 1), (4, 8, 12)),
+            (6, (32,), (34, 128, 1, 16)),
+            (7, (0x80,), (0, 0x82, 0x88)),
+            (8, (1,), (0,)), (9, (1,), (0,)),
+            (10, (0,), (8, 16, 1)),
+        ):
+            for value in accepted:
+                self.assertEqual(self.lib.startup_bound(field, value), 1)
+            for value in rejected:
+                self.assertEqual(self.lib.startup_bound(field, value), 0)
+
+    def test_startup_live_or_recurrent_revblk_stays_failure(self):
+        for scenario in (1, 2, 11, 12):
+            v = self.startup(scenario)
+            self.assertEqual(v[6], 1)
+            self.assertEqual(v[8], 6)
+            self.assertEqual(v[9:11], [0, 0])
+
+    def test_startup_vbatovp_never_exempted(self):
+        v = self.startup(3)
+        self.assertEqual(v[:3], [1, 0, 6])
+        self.assertEqual(v[6], 1)
+
+    def test_startup_nine_volts_or_nonzero_current_not_exempted(self):
+        for scenario in (4, 5):
+            self.assertEqual(self.startup(scenario)[:3], [1, 0, 6])
+
+    def test_startup_deadline_protection_detach_and_i2c_fail_closed(self):
+        for scenario in (6, 7, 8, 9):
+            v = self.startup(scenario)
+            self.assertEqual(v[6], 1)
+            self.assertEqual(v[8:11], [6, 0, 0])
+
+    def test_suspend_during_startup_cannot_clear_fault(self):
+        v = self.startup(10)
+        self.assertEqual(v[4], 1)
+        self.assertEqual(v[8:11], [6, 0, 0])
 
     def test_first_fault_preserves_latch_and_live_provenance(self):
         for live in (0, 1):

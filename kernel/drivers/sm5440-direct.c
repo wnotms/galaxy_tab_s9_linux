@@ -42,6 +42,10 @@ struct sm5440_direct {
 	struct sm5440_sample sample;
 	bool stopped;
 	bool fault;
+	bool initial_sample_done;
+	u8 startup_confirmations;
+	unsigned long startup_deadline;
+	struct sm5440_sample startup_sample;
 };
 
 static const struct regmap_config sm5440_regmap = {
@@ -183,6 +187,40 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 	return ret;
 }
 
+/* A pre-conversion REVBLK latch is not proof of current pump activity.
+ * Samsung IRQ uses direct-state/mode context (see passive startup audit).
+ * Keep the event, require new conversions, and never exempt live/repeated
+ * faults or VBAT_OVP. This classifier is limited to ordinary PC USB.
+ */
+static bool sm5440_passive_pc_sample(const struct sm5440_sample *sample)
+{
+	return !(sample->mode_before & SM5440_MODE_MASK) &&
+		!(sample->mode_after & SM5440_MODE_MASK) &&
+		(sample->int4_wait & SM5440_ADC_READY) && sample->online &&
+		sample->vbus_uv >= 4500000 && sample->vbus_uv <= 5500000 &&
+		sample->vbat_uv >= 3500000 && sample->vbat_uv < 4300000 &&
+		!sample->ibus_ua && sample->die_decic >= 225 &&
+		sample->die_decic < 420;
+}
+
+static bool sm5440_startup_revblk(const struct sm5440_sample *sample)
+{
+	return sample->faults == SM5440_FAULT_REVBLK &&
+		sm5440_decode_faults(sample->int_before, false, 0) == SM5440_FAULT_REVBLK &&
+		!sm5440_decode_faults(sample->status, false, 0) &&
+		sm5440_passive_pc_sample(sample);
+}
+
+static bool sm5440_startup_matches(const struct sm5440_sample *sample,
+				   const struct sm5440_sample *initial)
+{
+	return !sample->faults && sm5440_passive_pc_sample(sample) &&
+		sample->cntl2 == initial->cntl2 &&
+		sample->vbuscntl == initial->vbuscntl &&
+		sample->vbatcntl == initial->vbatcntl &&
+		sample->prtncntl == initial->prtncntl;
+}
+
 static void sm5440_poll(struct work_struct *work)
 {
 	struct sm5440_direct *sm = container_of(to_delayed_work(work),
@@ -205,14 +243,37 @@ static void sm5440_poll(struct work_struct *work)
 					   SM5440_ADC_ENABLE, 0);
 		}
 	} else {
+		/* A suspect startup latch is UNKNOWN until two new safe samples.
+		 * Failure is permanent; the exemption is consumed once per probe.
+		 */
+		if (!sm->initial_sample_done && sm5440_startup_revblk(&sample)) {
+			sm->startup_sample = sample;
+			sm->startup_confirmations = 2;
+			sm->startup_deadline = jiffies + msecs_to_jiffies(5000);
+			dev_warn(sm->dev, "passive startup REVBLK awaiting two fresh confirmations\n");
+		} else if (sm->startup_confirmations) {
+			if (time_after(jiffies, sm->startup_deadline) ||
+			    !sm5440_startup_matches(&sample, &sm->startup_sample)) {
+				sm->fault = true;
+				dev_err(sm->dev, "passive startup confirmation failed\n");
+			} else {
+				sm->startup_confirmations--;
+				if (!sm->startup_confirmations)
+					dev_info(sm->dev, "passive startup REVBLK confirmed inactive; event retained\n");
+			}
+		}
+		sm->initial_sample_done = true;
 		sample.valid = true;
 		sample.stamp = jiffies;
 		sm->sample = sample;
 		if (sample.faults) {
-			/* INT latches are consumed by reads. Preserve the first fault
-			 * until unbind/reboot instead of reporting Good next second.
+			/* Reads consume INT. Only the initial qualified REVBLK may
+			 * await confirmation; all other faults latch until unbind.
+			 * startup_sample retains the original event independently.
 			 */
-			sm->fault = true;
+			if (!sm->startup_confirmations ||
+			    !sm5440_startup_revblk(&sample))
+				sm->fault = true;
 			dev_warn_ratelimited(sm->dev,
 				"passive fault bitmap=%#x INT=%*ph STATUS=%*ph INT4-disable=%02x INT4-wait=%02x mode=%02x/%02x CNTL2=%02x VBUSCNTL=%02x VBATCNTL=%02x PRTNCNTL=%02x ADC=%*ph VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC\n",
 				sample.faults, 4, sample.int_before, 4, sample.status,
@@ -238,22 +299,28 @@ static int sm5440_get_property(struct power_supply *psy,
 {
 	struct sm5440_direct *sm = power_supply_get_drvdata(psy);
 	struct sm5440_sample sample;
-	bool fault;
+	bool fault, startup_pending;
 
 	mutex_lock(&sm->io_lock);
 	sample = sm->sample;
 	fault = sm->fault;
+	startup_pending = sm->startup_confirmations != 0;
 	mutex_unlock(&sm->io_lock);
 	if (prop == POWER_SUPPLY_PROP_STATUS) {
 		val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
 		return 0;
 	}
 	if (prop == POWER_SUPPLY_PROP_HEALTH) {
-		val->intval = fault || sample.faults ? POWER_SUPPLY_HEALTH_UNSPEC_FAILURE :
-			sample.valid ? POWER_SUPPLY_HEALTH_GOOD : POWER_SUPPLY_HEALTH_UNKNOWN;
+		if (fault || (!startup_pending && sample.faults))
+			val->intval = POWER_SUPPLY_HEALTH_UNSPEC_FAILURE;
+		else if (!startup_pending && sample.valid)
+			val->intval = POWER_SUPPLY_HEALTH_GOOD;
+		else
+			val->intval = POWER_SUPPLY_HEALTH_UNKNOWN;
 		return 0;
 	}
-	if (!sample.valid || time_after(jiffies, sample.stamp + msecs_to_jiffies(2500)))
+	if (startup_pending || !sample.valid ||
+	    time_after(jiffies, sample.stamp + msecs_to_jiffies(2500)))
 		return -ENODATA;
 	switch (prop) {
 	case POWER_SUPPLY_PROP_ONLINE:
@@ -296,6 +363,9 @@ static int sm5440_quiesce(struct sm5440_direct *sm)
 	cancel_delayed_work_sync(&sm->work);
 	mutex_lock(&sm->io_lock);
 	sm->sample.valid = false;
+	/* Never carry unconfirmed startup evidence across suspend/unbind. */
+	if (sm->startup_confirmations)
+		sm->fault = true;
 	ret = sm5440_off(sm);
 	adc_ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
 	mutex_unlock(&sm->io_lock);
