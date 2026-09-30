@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Owner requests "修复并继续测试". Test259 fixes passive first-fault provenance
+only, retaining all fault stops and fixed-PD behavior. Read its registration.
+Qualify changed source once, seal/push before the authorized PC-USB passive
+physical test; use distinct Test259 slots and preserve Test258 failed modules.
+No PPS/pump ON/protection/current change. On first fault retain raw evidence,
+stop and restore exact Test255. Do not mask0x82 to obtain a pass. Prior offline-
+only next-step restriction is superseded for this bounded diagnostic test.
+
+
 Test258 attempt02 physically installed/booted the qualified passive candidate:
 paired boot/vendor_boot and181 modules passed readback, SM5440 revision2 probed
 on0-0063, ADB/NCM/Wi-Fi/Sink-Device/no-Code43 gates passed. First source fault

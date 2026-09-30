@@ -32,9 +32,8 @@ typedef uint8_t u8; typedef uint32_t u32;
 #define lockdep_assert_held(x) ((void)(x))
 #define READ_ONCE(x) (x)
 ''' + '\n#include "' + str(ROOT / 'kernel/drivers/sm5440-hw.h') + '"\n'
+        code += function(src, 'struct sm5440_sample {') + ';\n'
         code += r'''
-struct sm5440_sample {u32 vbus_uv,vbat_uv,ibus_ua;int die_decic;u32 faults;
- bool online,valid;unsigned long stamp;};
 struct work_struct {int unused;};
 struct delayed_work {struct work_struct work;};
 struct sm5440_direct {void *regmap;int io_lock,dev;bool stopped,fault;
@@ -132,6 +131,21 @@ int sample(int failure,int timeout,int bad,int *result) {
  result[3]=data.vbat_uv;result[4]=data.ibus_ua;result[5]=data.die_decic;
  result[6]=calls;return ret;
 }
+int provenance(int live,int *result) {
+ int ignored[7];sample(0,0,0,ignored);
+ struct sm5440_direct sm={0};struct sm5440_sample data={0};current=&sm;
+ regs[live?SM5440_STATUS1:SM5440_INT1]=8;
+ regs[(live?SM5440_STATUS1:SM5440_INT1)+2]|=2;
+ regs[SM5440_CNTL2]=0xa5;regs[SM5440_VBUSCNTL]=0x31;
+ regs[SM5440_VBATCNTL]=0x33;regs[SM5440_PRTNCNTL]=0x55;
+ int ret=sm5440_sample_once(&sm,&data);
+ result[0]=data.int_before[0];result[1]=data.int_before[2];
+ result[2]=data.status[0];result[3]=data.status[2];result[4]=data.faults;
+ result[5]=data.cntl2;result[6]=data.vbuscntl;result[7]=data.vbatcntl;
+ result[8]=data.prtncntl;result[9]=data.int4_wait;
+ result[10]=data.mode_before;result[11]=data.mode_after;
+ result[12]=data.adc[9];result[13]=unsafe_writes;return ret;
+}
 int turn_off(int failure,int *result) {
  struct sm5440_direct sm={0};memset(regs,0,sizeof(regs));regs[0x10]=0xac;
  calls=unsafe_writes=0;fail_at=failure;int ret=sm5440_off(&sm);
@@ -167,6 +181,18 @@ int poll_fault(int *result) {
         values = (ctypes.c_int * 7)()
         ret = self.lib.sample(failure, timeout, bad, values)
         return ret, list(values)
+
+    def test_first_fault_preserves_latch_and_live_provenance(self):
+        for live in (0, 1):
+            values = (ctypes.c_int * 14)()
+            self.assertEqual(self.lib.provenance(live, values), 0)
+            v = list(values)
+            self.assertEqual(v[:4], [0, 0, 8, 34] if live else [8, 2, 0, 32])
+            self.assertEqual(v[4], 0x82)  # same conservative stop, either source
+            self.assertEqual(v[5:9], [0xa5, 0x31, 0x33, 0x55])
+            self.assertEqual(v[9:12], [1, 0, 0])
+            self.assertEqual(v[12], 3904 >> 5)
+            self.assertEqual(v[13], 0)  # added reads cannot program protections
 
     def test_vendor_adc_scales_and_endianness(self):
         for raw in (0, 1, 31, 32, 3904, 8191):

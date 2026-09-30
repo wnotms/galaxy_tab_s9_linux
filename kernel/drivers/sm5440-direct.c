@@ -13,6 +13,7 @@
 #include <linux/pm.h>
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
+#include <linux/string.h>
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
@@ -23,6 +24,10 @@ struct sm5440_sample {
 	u32 ibus_ua;
 	int die_decic;
 	u32 faults;
+	/* Preserve read-to-clear INT separately from live STATUS. */
+	u8 int_before[4], status[4], adc[11];
+	u8 int4_after_disable, int4_wait, mode_before, mode_after;
+	u8 cntl2, vbuscntl, vbatcntl, prtncntl;
 	bool online;
 	bool valid;
 	unsigned long stamp;
@@ -65,7 +70,7 @@ static int sm5440_off(struct sm5440_direct *sm)
 static int sm5440_sample_once(struct sm5440_direct *sm,
 			      struct sm5440_sample *sample)
 {
-	unsigned int mode, ready;
+	unsigned int mode, ready, value;
 	u8 events[4], status[4], adc[11];
 	int ret, i;
 
@@ -73,11 +78,15 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
 	if (!ret && (mode & SM5440_MODE_MASK))
 		ret = -EBUSY; /* never adopt a running/reverse pump */
+	if (!ret)
+		sample->mode_before = mode;
 	/* Consume old conversion/fault latches before starting a new conversion.
 	 * Vendor IRQ reads INT1..4; retain faults instead of discarding them.
 	 */
 	if (!ret)
 		ret = regmap_bulk_read(sm->regmap, SM5440_INT1, events, sizeof(events));
+	if (!ret)
+		memcpy(sample->int_before, events, sizeof(events));
 	if (!ret)
 		ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
 					 SM5440_ADC_ENABLE | SM5440_ADC_RATE, 0);
@@ -86,8 +95,10 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 	 */
 	if (!ret) {
 		ret = regmap_read(sm->regmap, SM5440_INT4, &ready);
-		if (!ret)
+		if (!ret) {
+			sample->int4_after_disable = ready;
 			events[3] |= ready;
+		}
 	}
 	if (!ret)
 		ret = regmap_write(sm->regmap, SM5440_ADCCNTL2, SM5440_ADC_CHANNELS);
@@ -111,6 +122,7 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 		if (ret)
 			return ret;
 		/* Retain watchdog/timer events consumed while waiting. */
+		sample->int4_wait |= ready;
 		events[3] |= ready;
 		if (ready & SM5440_ADC_READY)
 			break;
@@ -125,7 +137,34 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 		ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
 	if (!ret && (mode & SM5440_MODE_MASK))
 		ret = -EBUSY;
+	/* Samsung get_vbatreg()/get_ibuslim()/init_reg_param(): these are
+	 * ordinary control registers, not read-to-clear interrupt registers.
+	 * Read-only provenance; never change protections to suppress a fault.
+	 */
 	if (!ret) {
+		sample->mode_after = mode;
+		ret = regmap_read(sm->regmap, SM5440_CNTL2, &value);
+		if (!ret)
+			sample->cntl2 = value;
+	}
+	if (!ret) {
+		ret = regmap_read(sm->regmap, SM5440_VBUSCNTL, &value);
+		if (!ret)
+			sample->vbuscntl = value;
+	}
+	if (!ret) {
+		ret = regmap_read(sm->regmap, SM5440_VBATCNTL, &value);
+		if (!ret)
+			sample->vbatcntl = value;
+	}
+	if (!ret) {
+		ret = regmap_read(sm->regmap, SM5440_PRTNCNTL, &value);
+		if (!ret)
+			sample->prtncntl = value;
+	}
+	if (!ret) {
+		memcpy(sample->status, status, sizeof(status));
+		memcpy(sample->adc, adc, sizeof(adc));
 		for (i = 0; i < 4; i++)
 			events[i] |= status[i];
 		sample->vbus_uv = sm5440_vbus_uv(adc[0], adc[1]);
@@ -174,7 +213,14 @@ static void sm5440_poll(struct work_struct *work)
 			 * until unbind/reboot instead of reporting Good next second.
 			 */
 			sm->fault = true;
-			dev_warn_ratelimited(sm->dev, "passive fault bitmap=%#x\n", sample.faults);
+			dev_warn_ratelimited(sm->dev,
+				"passive fault bitmap=%#x INT=%*ph STATUS=%*ph INT4-disable=%02x INT4-wait=%02x mode=%02x/%02x CNTL2=%02x VBUSCNTL=%02x VBATCNTL=%02x PRTNCNTL=%02x ADC=%*ph VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC\n",
+				sample.faults, 4, sample.int_before, 4, sample.status,
+				sample.int4_after_disable, sample.int4_wait,
+				sample.mode_before, sample.mode_after, sample.cntl2,
+				sample.vbuscntl, sample.vbatcntl, sample.prtncntl,
+				11, sample.adc, sample.vbus_uv, sample.vbat_uv,
+				sample.ibus_ua, sample.die_decic);
 		}
 		dev_dbg(sm->dev, "passive VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC faults=%#x\n",
 			sample.vbus_uv, sample.vbat_uv, sample.ibus_ua,
