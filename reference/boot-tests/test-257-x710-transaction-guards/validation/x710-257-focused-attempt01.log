@@ -1,0 +1,26 @@
+setUpClass (test_x710_direct_transaction.TransactionTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_x710_direct_transaction.TransactionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_x710_direct_transaction.py", line 187, in setUpClass
+    raise AssertionError(run.stderr)
+AssertionError: /tmp/tmpwdkz8d_f/transaction.c: In function ‘pps’:
+/tmp/tmpwdkz8d_f/transaction.c:424:2: error: this ‘if’ clause does not guard... [-Werror=misleading-indentation]
+  424 |  if(pump)return -EPERM;if(!r)bus=mv;return r;
+      |  ^~
+/tmp/tmpwdkz8d_f/transaction.c:424:24: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  424 |  if(pump)return -EPERM;if(!r)bus=mv;return r;
+      |                        ^~
+/tmp/tmpwdkz8d_f/transaction.c: In function ‘scenario’:
+/tmp/tmpwdkz8d_f/transaction.c:514:21: error: suggest parentheses around ‘&&’ within ‘||’ [-Werror=parentheses]
+  514 |  if(!r && (kind>=10 && kind<=18 || kind>=29 && kind<=35)){
+      |            ~~~~~~~~~^~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.077s
+
+FAILED (errors=1)

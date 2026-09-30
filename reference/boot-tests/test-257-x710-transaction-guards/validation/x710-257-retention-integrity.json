@@ -1,0 +1,24 @@
+{
+  "baseline_tests": 1239,
+  "final_tests": 1253,
+  "new_tests": [
+    "test_x710_direct_transaction.TransactionTests.test_active_monitor_deadline_or_callback_overrun_stops",
+    "test_x710_direct_transaction.TransactionTests.test_epoch_changes_inside_facts_callback_before_inhibit",
+    "test_x710_direct_transaction.TransactionTests.test_every_monitor_callback_failure_pump_off_and_no_rearm",
+    "test_x710_direct_transaction.TransactionTests.test_healthy_monitor_does_not_touch_pump_or_pps",
+    "test_x710_direct_transaction.TransactionTests.test_invalid_timestamps_clock_and_facts_fail_closed",
+    "test_x710_direct_transaction.TransactionTests.test_latest_source_offer_required_before_any_path_change",
+    "test_x710_direct_transaction.TransactionTests.test_monotonic_age_bounds_no_zero_future_or_wraparound",
+    "test_x710_direct_transaction.TransactionTests.test_on_rechecks_facts_and_reserves_full_observation_budget",
+    "test_x710_direct_transaction.TransactionTests.test_post_on_observation_has_elapsed_deadline",
+    "test_x710_direct_transaction.TransactionTests.test_refresh_off_wait_allowed_but_overdue_active_rearm_rejected",
+    "test_x710_direct_transaction.TransactionTests.test_source_contracts_before_on_or_during_monitor",
+    "test_x710_direct_transaction.TransactionTests.test_stale_and_future_facts_cannot_enter_direct",
+    "test_x710_direct_transaction.TransactionTests.test_stop_revokes_authorization_even_when_already_switching",
+    "test_x710_direct_transaction.TransactionTests.test_sub_milliamp_overcurrent_preserved_and_exact_cap_allowed"
+  ],
+  "missing_retained": [],
+  "Test256_evidence_intact": true,
+  "reference_sources_intact": 62,
+  "changed_hardware_files": []
+}

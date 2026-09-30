@@ -1,0 +1,242 @@
+{
+  "test": "Test257: offline X710 transaction source/evidence/monitor guards",
+  "start_head": "a3ddd0debd2eb92a98e1ee4174cd476c526cb18c",
+  "registration_revision": "f0f28089f36fd53d4ff4d41ef8b81c2731d8697a",
+  "qualified_source_revision": "31ca86caf0a9af23789f3da89113b9b06c069266",
+  "branch": "test",
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "linux_version": "7.2-rc3",
+  "fedora_snapshot": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "rollback_tag": "stage2-fixed-pd-known-good",
+  "profiles": {
+    "fixed": {
+      "revision": "31ca86ca",
+      "profile": "fixed",
+      "config_delta": {
+        "CONFIG_CHARGER_SM5440_DIRECT": [
+          "absent",
+          "n"
+        ]
+      },
+      "unexpected_config_delta": {},
+      "dt_delta": {},
+      "container_gate": {
+        "valid": true,
+        "errors": [],
+        "config_sha256": "db85d66a2ce9c68b1bc060f637aac1f9b9259d24c3acd05878ca2ef1ce735e95",
+        "required_y_count": 85,
+        "dcc_absent": true,
+        "config_delta": null,
+        "unexpected_delta": null,
+        "missing_expected_delta": null
+      },
+      "protected_file_count": 96,
+      "protected_changes": {},
+      "frozen_artifacts_intact": true,
+      "artifacts": {
+        "Image.gz": {
+          "path": "out/kernel-x710-257-fixed/Image.gz",
+          "sha256": "bcd9304c301b235ce66578a8a357d7740c21ca5bd9382f23837c0cb1c8a83f03",
+          "bytes": 22115813
+        },
+        "sm8550-samsung-gts9wifi.dtb": {
+          "path": "out/kernel-x710-257-fixed/sm8550-samsung-gts9wifi.dtb",
+          "sha256": "c6148471113c5cb7589c64dee776e17b2fc20235cfeff4482616817a8b4e1c0b",
+          "bytes": 176939
+        },
+        "config": {
+          "path": "out/kernel-x710-257-fixed/config",
+          "sha256": "db85d66a2ce9c68b1bc060f637aac1f9b9259d24c3acd05878ca2ef1ce735e95",
+          "bytes": 243246
+        },
+        "kernel-notes.bin": {
+          "path": "out/kernel-x710-257-fixed/kernel-notes.bin",
+          "sha256": "bf482262d94553fb751ac159b2d0d8d50c3e1c99b85bcefccfa7faa4673093d8",
+          "bytes": 84
+        },
+        "modules-x710.tar.gz": {
+          "path": "out/kernel-x710-257-fixed/modules-x710.tar.gz",
+          "sha256": "467eb2d411f0e59c83c6859785b2fbb9df18516d3ee2f807b41477554079b793",
+          "bytes": 47317936
+        }
+      },
+      "module_directory_files": 181,
+      "physical_acceptance": false
+    },
+    "policy": {
+      "revision": "31ca86ca",
+      "profile": "sm5440-policy-offline",
+      "config_delta": {
+        "CONFIG_CHARGER_SM5440_DIRECT": [
+          "absent",
+          "y"
+        ],
+        "CONFIG_X710_CHARGING_POLICY": [
+          "absent",
+          "y"
+        ]
+      },
+      "unexpected_config_delta": {},
+      "dt_delta": {
+        "/soc@0/geniqup@9c0000/i2c@98c000/charger@63:status": [
+          "64 69 73 61 62 6c 65 64 0",
+          "6f 6b 61 79 0"
+        ]
+      },
+      "container_gate": {
+        "valid": true,
+        "errors": [],
+        "config_sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+        "required_y_count": 85,
+        "dcc_absent": true,
+        "config_delta": null,
+        "unexpected_delta": null,
+        "missing_expected_delta": null
+      },
+      "protected_file_count": 96,
+      "protected_changes": {},
+      "frozen_artifacts_intact": true,
+      "artifacts": {
+        "Image.gz": {
+          "path": "out/kernel-x710-257-policy/Image.gz",
+          "sha256": "609f0ad5a2152d38ba8597902e44f76e2b1bc44e3f87aea2584709346bde2c6f",
+          "bytes": 22121756
+        },
+        "sm8550-samsung-gts9wifi.dtb": {
+          "path": "out/kernel-x710-257-policy/sm8550-samsung-gts9wifi.dtb",
+          "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+          "bytes": 176935
+        },
+        "config": {
+          "path": "out/kernel-x710-257-policy/config",
+          "sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+          "bytes": 243265
+        },
+        "kernel-notes.bin": {
+          "path": "out/kernel-x710-257-policy/kernel-notes.bin",
+          "sha256": "fc7541b417c6abee5fddfad94adebc014029de99cd1c785317cf032766f4dece",
+          "bytes": 84
+        },
+        "modules-x710.tar.gz": {
+          "path": "out/kernel-x710-257-policy/modules-x710.tar.gz",
+          "sha256": "13b2985281dc252c9168f2ebb6b8ebaf862ce369b02bb429eb207671bff6c9f4",
+          "bytes": 47317932
+        }
+      },
+      "module_directory_files": 181,
+      "physical_acceptance": false
+    }
+  },
+  "Test256_comparison": {
+    "fixed": {
+      "delta_since_Test256": {},
+      "same_artifacts_since_Test256": {
+        "Image.gz": true,
+        "sm8550-samsung-gts9wifi.dtb": true,
+        "config": true,
+        "kernel-notes.bin": true,
+        "modules-x710.tar.gz": true
+      }
+    },
+    "policy": {
+      "delta_since_Test256": {},
+      "same_artifacts_since_Test256": {
+        "Image.gz": false,
+        "sm8550-samsung-gts9wifi.dtb": true,
+        "config": true,
+        "kernel-notes.bin": false,
+        "modules-x710.tar.gz": false
+      }
+    }
+  },
+  "host_tests": {
+    "suite": "all",
+    "executed": true,
+    "tests_run": 1253,
+    "counts": {
+      "core": 1148,
+      "artifacts": 18,
+      "archive": 87
+    },
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "elapsed_s": 88.69,
+    "exit_code": 0
+  },
+  "retention": {
+    "baseline_tests": 1239,
+    "final_tests": 1253,
+    "new_tests": [
+      "test_x710_direct_transaction.TransactionTests.test_active_monitor_deadline_or_callback_overrun_stops",
+      "test_x710_direct_transaction.TransactionTests.test_epoch_changes_inside_facts_callback_before_inhibit",
+      "test_x710_direct_transaction.TransactionTests.test_every_monitor_callback_failure_pump_off_and_no_rearm",
+      "test_x710_direct_transaction.TransactionTests.test_healthy_monitor_does_not_touch_pump_or_pps",
+      "test_x710_direct_transaction.TransactionTests.test_invalid_timestamps_clock_and_facts_fail_closed",
+      "test_x710_direct_transaction.TransactionTests.test_latest_source_offer_required_before_any_path_change",
+      "test_x710_direct_transaction.TransactionTests.test_monotonic_age_bounds_no_zero_future_or_wraparound",
+      "test_x710_direct_transaction.TransactionTests.test_on_rechecks_facts_and_reserves_full_observation_budget",
+      "test_x710_direct_transaction.TransactionTests.test_post_on_observation_has_elapsed_deadline",
+      "test_x710_direct_transaction.TransactionTests.test_refresh_off_wait_allowed_but_overdue_active_rearm_rejected",
+      "test_x710_direct_transaction.TransactionTests.test_source_contracts_before_on_or_during_monitor",
+      "test_x710_direct_transaction.TransactionTests.test_stale_and_future_facts_cannot_enter_direct",
+      "test_x710_direct_transaction.TransactionTests.test_stop_revokes_authorization_even_when_already_switching",
+      "test_x710_direct_transaction.TransactionTests.test_sub_milliamp_overcurrent_preserved_and_exact_cap_allowed"
+    ],
+    "missing_retained": [],
+    "Test256_evidence_intact": true,
+    "reference_sources_intact": 62,
+    "changed_hardware_files": []
+  },
+  "focused_tests": 28,
+  "earlier_changed_tests": 1252,
+  "failed_attempts_preserved": [
+    "validation/x710-257-focused-attempt01.log"
+  ],
+  "static": {
+    "W1_sparse_drivers_checked": 4,
+    "new_driver_diagnostics": [],
+    "retained_warning": "VDSO __kernel_getrandom declaration",
+    "dtbs_check_log_complete": true,
+    "dt_schema_files": "siliconmitus,sm5440.yaml",
+    "retained_DT_diagnostic": "unbound PS5169 usb-role-switch size(4) for type flag",
+    "whole_board_schema_clean": false
+  },
+  "changes": {
+    "DTS": false,
+    "config_fragments": false,
+    "hardware_drivers": false,
+    "TCPM_core": false,
+    "DWC3": false,
+    "adbd": false,
+    "OPP": false,
+    "float_voltage": false,
+    "charging_current": false,
+    "thermal_policy": false
+  },
+  "limits": {
+    "fixed_5V_mA": 1800,
+    "fixed_9V_mA": 1500,
+    "float_mV": 4440,
+    "facts_age_ms": 500,
+    "pre_ON_facts_age_ms": 400,
+    "ADC_age_ms": 100,
+    "monitor_gap_ms": 100,
+    "limits_are_physical_OCP_qualification": false
+  },
+  "device_commands_executed": false,
+  "deployment": false,
+  "live_adapter": false,
+  "live_PPS_requests": false,
+  "pump_activation": false,
+  "hardware_acceptance": false,
+  "active_candidate": "NOT READY",
+  "remaining_blockers": [
+    "Actual software-OCP response and independent protection/watchdog acceptance",
+    "Passive ADC accuracy/current calibration",
+    "Required sensor provenance and validity",
+    "Live serialized epoch/transaction/PM adapter"
+  ],
+  "next": "Registered passive ID/OFF and fixed-PD ADC acceptance before separately authorized PPS pump-OFF/active bring-up",
+  "post_record_verification": "Separate ignored out/kernel-x710-257-record and out/x710-257-record-*; do not overwrite qualified profiles"
+}

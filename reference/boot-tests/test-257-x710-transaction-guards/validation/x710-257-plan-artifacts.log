@@ -1,0 +1,34 @@
+{
+  "valid": true,
+  "errors": [],
+  "revision": "f0f28089",
+  "profile": "fixed",
+  "config_delta": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "absent",
+      "n"
+    ]
+  },
+  "expected_config_delta": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "absent",
+      "n"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "dt_delta": {},
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "frozen_artifacts_intact": true,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "device_commands_executed": false
+}

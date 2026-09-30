@@ -1,0 +1,37 @@
+'AGENT.md': No reviewed dependency rule: run all tests.
+'docs/SM5440_SOFTWARE_OCP_AUDIT.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-257-x710-transaction-guards/README.md': No reviewed dependency rule: run all tests.
+Host suite=changed: selected=1239, tiers={'core': 1134, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmp4fj1fyqi/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp4fj1fyqi/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-29T13:20:33.563606+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-29T13:20:33.563787+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-29T13:20:33.564257+00:00"
+}
+............................................................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1239 tests in 120.167s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.

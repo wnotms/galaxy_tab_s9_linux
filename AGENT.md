@@ -1,6 +1,6 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current state (2026-09-29)
+## Current state (2026-09-30)
 
 The owner has requested continued OFFLINE development without flashing.
 Continuation starts at a3ddd0de on test. Test257 registers transaction source-
@@ -8,6 +8,16 @@ offer/freshness/monitor-deadline guards and a deeper software-OCP audit. Keep
 Test256 evidence sealed. This does not authorize device commands, a live PPS
 adapter, pump ON, new APDO, configuration/DT/current/float/thermal changes.
 Read docs/SM5440_SOFTWARE_OCP_AUDIT.md and Test257 registration first.
+
+Test257 source31ca86ca now has offline source-offer/freshness/monitor guards.
+Full1253 host tests passed, with all1239 previous IDs retained and14 new.
+Default fixed Image/DTB/config/notes/module archive are byte-identical to Test256;
+isolated policy build retains the same config/DT gates and181 module-directory
+files. No DTS/config/hardware-driver changes. The core remains unwired and
+unarmed by default;500ms facts/100ms ADC-monitor refusal limits do NOT qualify
+physical software OCP. Actual protection, ADC, sensors and live transaction/PM
+adapter remain unresolved. Read Test257 RESULTS/summary before continuing.
+No flash, tablet command or hardware acceptance occurred; active PPS NOT READY.
 
 The owner now authorizes **offline X710 vendor charging audit and staged
 refactor/SM5440 development only**. Start HEAD is ebf4af1c, work branch test.

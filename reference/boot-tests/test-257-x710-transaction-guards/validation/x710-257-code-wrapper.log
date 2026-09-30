@@ -1,0 +1,51 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'AGENT.md': No reviewed dependency rule: run all tests.
+'docs/SM5440_SOFTWARE_OCP_AUDIT.md': No reviewed dependency rule: run all tests.
+'docs/SM5714_SM5440_HANDOFF.md': No reviewed dependency rule: run all tests.
+'kernel/drivers/x710-charging-policy.c': No reviewed dependency rule: run all tests.
+'kernel/drivers/x710-charging-policy.h': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-257-x710-transaction-guards/README.md': No reviewed dependency rule: run all tests.
+'tests/test_x710_direct_transaction.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1252, tiers={'core': 1147, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmpf37ploj0/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpf37ploj0/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-29T13:29:29.810352+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-29T13:29:29.810554+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-29T13:29:29.811031+00:00"
+}
+.........................................................................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1252 tests in 101.158s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.
