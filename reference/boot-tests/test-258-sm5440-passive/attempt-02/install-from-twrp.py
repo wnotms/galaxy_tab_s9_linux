@@ -75,6 +75,7 @@ expected = dict(BASE["partitions"])
 expected["boot"] = expected_files["candidate-boot.img"]
 expected["vendor_boot"] = expected_files["candidate-vendor_boot.img"]
 assert p.parse_hashes(raw, "/dev/block/by-name/") == expected
-r.adb("clear-bcb-unmount", "set -e; test \"$(blockdev --getsize64 /dev/block/by-name/misc)\" = 1048576; dd if=/dev/zero of=/dev/block/by-name/misc bs=2048 count=1 conv=notrunc; sync; umount /mnt/debian; dd if=/dev/block/by-name/misc bs=32 count=1 2>/dev/null | od -An -tx1", 40)
+raw = r.adb("clear-bcb-unmount", "set -e; test \"$(blockdev --getsize64 /dev/block/by-name/misc)\" = 1048576; dd if=/dev/zero of=/dev/block/by-name/misc bs=2048 count=1 conv=notrunc; sync; umount /mnt/debian; dd if=/dev/block/by-name/misc bs=32 count=1 2>/dev/null | od -An -v -tx1", 40)[0]
+assert len(raw.split()) == 32 and set(raw.split()) == {"00"}
 p.write_json(A / "install/summary.json", {"verdict": "candidate boot/vendor_boot and 181 matched modules installed with readback; TWRP remains before reboot", "partitions": expected, "rollback_modules": "/usr/lib/modules/.gts9-test258-original", "older_backups_untouched": True, "root_unmounted": True, "bcb_cleared": True})
 print("Install/readback passed. TWRP remains active; commit/push evidence before system boot.", flush=True)
