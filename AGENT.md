@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Owner requests next porting step. Test263 registers OFFLINE passiveSM5440 cached
+ADC/raw/freshness evidence interface; read docs/SM5440_ADC_SNAPSHOT.md first.
+No new register operation, PPS/liveadapter/pumpON/config/DT/current/thermal/
+USB change or device command/deployment. Current Test260/Test262 fixed path
+remains installed. New263 output directories; qualify source once with affected
+checks + one build/full run, reuse for result commits. ActiveStage3 NOT READY;
+ADC calibration/protection/PM still require separately authorized acceptance.
+
+
 Test262 finalized COMPLETED_WITH_EVIDENCE_GAP: fixed9V/1.5A300.011s/61samples
 chargingPASS (netbatterymean7.827W, SOC54→56%, pack28.4–29.2C); post-owner
 unplug15.001s offline/Discharging endpointPASS and PCADB/NCM/Wi-Fi/config/
