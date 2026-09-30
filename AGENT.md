@@ -2,6 +2,19 @@
 
 ## Current state (2026-09-30)
 
+Test258 physical deployment STOPPED before image writes/current-module rename:
+the qualified module archive is release-root, while the historical staging
+helper expected lib/modules. Keep the first failure, raw recovery and results.
+Five partitions and181 original modules verified unchanged; failed extraction
+removed, root unmounted/BCB cleared, ordinary Test255 returned on0456f423.
+ADB/NCM remain working, no Code43/new kernel fault/failed unit; Wi-Fi SSH to
+new DHCP10.191.121.119 failed initially and in one read-only diagnostic retry.
+Do not call Test258 booted/passed; its150s candidate observation never started.
+No candidate retry/PPS/pump. A release-root helper is prepared offline separately
+with real-archive transaction tests; it has not been sent to the device.
+Next deployment needs a fresh bounded registration and working rescue preflight,
+using unchanged qualified artifacts without another kernel/full host run.
+
 The owner requests reduced checking overhead. The change-scoped workflow below
 supersedes historical requirements to rebuild/retest after every commit. Qualify
 each candidate once; documentation/results commits do not invalidate unchanged

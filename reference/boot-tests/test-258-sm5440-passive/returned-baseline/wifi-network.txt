@@ -1,0 +1,16 @@
+15: wlp1s0    inet 10.191.121.119/24 brd 10.191.121.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 3314sec preferred_lft 3314sec
+default via 10.191.121.92 dev wlp1s0 proto dhcp src 10.191.121.119 metric 600 
+10.191.121.0/24 dev wlp1s0 proto kernel scope link src 10.191.121.119 metric 600 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+Connected to 0a:b5:db:3d:b0:11 (on wlp1s0)
+	SSID: OnePlus 13s
+	freq: 2462.0
+	RX: 30386 bytes (193 packets)
+	TX: 3358 bytes (28 packets)
+	signal: -47 dBm
+	rx bitrate: 1.0 MBit/s
+	tx bitrate: 52.0 MBit/s MCS 11
+	bss flags: CTS-protection short-preamble short-slot-time
+	dtim period: 2
+	beacon int: 100

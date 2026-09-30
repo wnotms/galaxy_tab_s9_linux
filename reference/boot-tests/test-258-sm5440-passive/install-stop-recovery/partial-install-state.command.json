@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /mnt/debian/etc/machine-id; grep \" /mnt/debian \" /proc/mounts; test ! -e /mnt/debian/usr/lib/modules/.gts9-test258-original; test ! -e /mnt/debian/usr/lib/modules/.gts9-test258-tested; find /mnt/debian/usr/lib/modules/.gts9-test258-stage -maxdepth 4 -type d; cd /mnt/debian/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty; sha256sum -c /tmp/test258-test255-rollback-modules.sha256"
+  ],
+  "ended_utc": "2026-09-30T03:11:23.282578+00:00",
+  "started_utc": "2026-09-30T03:11:23.063315+00:00",
+  "status": 0
+}

@@ -1,0 +1,41 @@
+{
+  "accepted_baseline_restored": true,
+  "active_stage3_ready": false,
+  "baseline_module_files": 181,
+  "baseline_partition_hashes": {
+    "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+  },
+  "boot_vendor_written": false,
+  "candidate_booted": false,
+  "candidate_installed": false,
+  "current_modules_changed": false,
+  "final_verdict": "STOP deployment staging; candidate not installed or booted",
+  "kernel_fault_counts": {},
+  "kernel_rebuilt": false,
+  "kernel_suspects": [],
+  "observation_seconds": 0,
+  "offline_qualification_reused": {
+    "full_host_tests": 1264,
+    "profile": "sm5440-passive",
+    "source": "f3a266b5"
+  },
+  "physical_acceptance_executed": false,
+  "pps_requested": false,
+  "pump_on": false,
+  "reason": "release-root archive vs historical lib/modules extraction layout",
+  "result_commit_tests": {
+    "executed": false,
+    "reason": "Results/prose only; offline candidate source/artifacts unchanged; physical stop evidence checked"
+  },
+  "returned_boot_id": "0456f42317a1471c90d5d0b90d4a027c",
+  "returned_transports": {
+    "ADB": true,
+    "Code43": false,
+    "NCM_SSH": true,
+    "WiFi_SSH": false
+  }
+}
