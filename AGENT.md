@@ -2,6 +2,12 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 verified TWRP identity/root/five original partitions/current181
+modules and staged files; no boot/vendor/module write yet. Save/push this evidence
+before paired installation. Exact Test260 rollback and older backups remain.
+No PPS/pumpON/current/protection/USB change. Read attempt01 registration.
+
+
 Owner authorizes Test263 physical acceptance (continue hardware test). Read
 Test263 attempt-01 README/PACKAGE/STAGED_FILES before action. Reuse ea938b24
 qualified snapshot candidate; host gate12/module adapter5/syntax/bundle pass,

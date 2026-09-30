@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cd /mnt/debian/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty && sha256sum -c /tmp/test263-a01-test260-rollback-modules.sha256"
+  ],
+  "ended_utc": "2026-09-30T14:32:05.198586+00:00",
+  "started_utc": "2026-09-30T14:32:03.189632+00:00",
+  "status": 0
+}
