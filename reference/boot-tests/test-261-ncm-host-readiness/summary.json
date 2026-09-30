@@ -1,0 +1,44 @@
+{
+  "source_commit": "3ecf209368ca0560f0157d7d0d34a1a0a109e250",
+  "final_verdict": "current NCM host path verified; startup-timeout root cause unresolved",
+  "current_transport": {
+    "boot_id": "cfb09d0136a64f9b9d5e1ad0e2fd9c45",
+    "delayed_readiness": false,
+    "device_configuration_changed": false,
+    "readiness_seconds": 13.883,
+    "ready": true,
+    "reason": "Windows/WSL NCM path ready",
+    "samples": 1,
+    "source_ipv4": "169.254.74.160",
+    "ssh_attempts": 1,
+    "verdict": "NCM authenticated on verified host path",
+    "windows_interface_index": 9,
+    "wsl_interface": "eth2"
+  },
+  "ssh_process_seconds": 0.830397,
+  "host_tests": {
+    "executed": true,
+    "tests_run": 109,
+    "elapsed_seconds": 1.041,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "kernel_build_executed": false,
+    "full_suite_executed": false,
+    "reason": "Host connection entry only; unchanged routing and kernel inputs"
+  },
+  "syntax_checks": {
+    "python_compile": true,
+    "shell_syntax": true,
+    "diff_check": true
+  },
+  "deployed": false,
+  "rebooted": false,
+  "device_writes": false,
+  "pps_enabled": false,
+  "pump_enabled": false,
+  "existing_kernel_qualification_reused": "Test260 source6fbafede; not deployed; no build input changes",
+  "historical_test259_result_changed": false,
+  "startup_stability_tested": false,
+  "reconnect_tested": false
+}

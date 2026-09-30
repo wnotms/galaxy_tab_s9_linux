@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test261 source3ecf2093: explicit NCM host-readiness/source-bound SSH entry passes
+one read-only check on acceptedTest255 bootcfb09d01. Windows NIC9 preferred
+169.254.74.160/16 matches WSLeth2/directroute; noCode43, oneSSH0.83s, sameboot.
+First metadata capture13.883s is not APIPA recovery time.109 affectedhosttests
+and syntax pass, no routing/kernel/build changes or full/buildrepeat. Read
+Test261 RESULTS/summary and docs/NCM_HOST_READINESS.md. HistoricalTest259 early
+~9.3s SSHtimeout cause remains unknown; no startup/reconnect qualification.
+No flash/reboot/configuration/device writes; Test260 stays offline/unaccepted.
+
 Owner clarifies "先修 NCM，暂不刷机". Test261 registers host-only bounded NCM
 readiness and one source-bound SSH connection on unchanged Test255. Read
 docs/NCM_HOST_READINESS.md and Test261 README. No flash/reboot/rootfs/network/
