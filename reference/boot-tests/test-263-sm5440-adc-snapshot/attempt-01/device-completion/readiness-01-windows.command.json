@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Stop'\n[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)\n$nic=@(Get-NetAdapter | Where-Object { $_.InterfaceDescription -match 'NCM' })\n$indices=@($nic | ForEach-Object { [int]$_.ifIndex })\n[ordered]@{\n  adapters=@($nic | Select-Object Name,ifIndex,InterfaceDescription,Status,PnPDeviceID)\n  addresses=@(Get-NetIPAddress -AddressFamily IPv4 |\n    Where-Object { $indices -contains $_.InterfaceIndex } |\n    Select-Object InterfaceIndex,IPAddress,AddressState,PrefixLength)\n  routes=@(Get-NetRoute -AddressFamily IPv4 |\n    Where-Object { $indices -contains $_.InterfaceIndex } |\n    Select-Object InterfaceIndex,DestinationPrefix,NextHop,RouteMetric)\n  code43=@(Get-CimInstance Win32_PnPEntity | Where-Object { $_.ConfigManagerErrorCode -eq 43 } |\n    Select-Object Name,PNPDeviceID,ConfigManagerErrorCode)\n} | ConvertTo-Json -Depth 5 -Compress\n"
+  ],
+  "ended_utc": "2026-09-30T15:15:31.551891+00:00",
+  "started_utc": "2026-09-30T15:15:18.147248+00:00",
+  "status": 0
+}

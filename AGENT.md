@@ -2,6 +2,21 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 DEVICE ACCEPTANCE COMPLETED under updated owner criteria:
+PC30.220s/PD30.420s/unplug15.370s and final separate read-onlyADB/NCM/SSH/
+Wi-Fi/config/notes/DCC/health pass on33435db7, no Code43/newfault. Original
+pc-endpoint host filename-collision STOP preserved; not original runnerCLEAN.
+Owner says device normal completes test, so no rollback/reflash/reboot/retrial
+for this host defect; device remains Test263 with Test260 rollback intact.
+Read attempt01 RESULTS/summary/CURRENT_STATUS/device-completion/raw seal.
+Future physical acceptance: judge the registered device behavior; host-only
+logging/parser errors are recorded separately and do not by themselves require
+rollback or repeat physical windows when device evidence confirms normal state.
+If device state is unknown, report incomplete evidence rather than invent a
+pass. Actual device safety/identity/transport fault still stops; no current/
+PPS/pumpON expansion. Results executed:false; exact qualification reused.
+ActiveStage3 NOT READY (ADC calibration/OCP/PM/livehandoff unresolved).
+
 Test263 attempt01 STOP at final PCendpoint: host recorder kernel-json filename
 collision between Wi-Fi capture and ADB admit, original error/evidence retained.
 PriorPC30.220s/PD30.420s/unplug15.370s pass; final1sample/ADB identity/no newfault

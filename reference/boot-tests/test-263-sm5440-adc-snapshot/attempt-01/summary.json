@@ -1,0 +1,67 @@
+{
+  "verdict": "DEVICE_ACCEPTANCE_COMPLETED_WITH_HOST_TOOL_DEFECT_RETAINED",
+  "boot_id": "33435db741e94574aeb2c209730acf67",
+  "device_acceptance_complete": true,
+  "original_strict_runner_series_clean": false,
+  "owner_acceptance_updated": true,
+  "kernel_source": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "module_file_count": 181,
+  "phases": {
+    "pc_snapshot": {
+      "verdict": "passive probe and bounded PC-USB observation passed",
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "observation_seconds": 30.22,
+      "sample_count": 7,
+      "evidence": "observation/summary.json"
+    },
+    "fixed9v_snapshot": {
+      "verdict": "fixed9V snapshot endpoint passed",
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "observation_seconds": 30.42,
+      "sample_count": 7,
+      "evidence": "pd-observation/summary.json"
+    },
+    "unplug_endpoint": {
+      "verdict": "unplug endpoint passed",
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "observation_seconds": 15.37,
+      "sample_count": 4,
+      "evidence": "unplug-endpoint/summary.json"
+    },
+    "pc_endpoint_original": {
+      "verdict": "STOP first non-clean pc endpoint",
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "observation_seconds": null,
+      "sample_count": 1,
+      "evidence": "pc-endpoint/summary.json"
+    },
+    "pc_device_completion": {
+      "verdict": "DEVICE_ACCEPTANCE_COMPLETED",
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "observation_seconds": null,
+      "sample_count": 0,
+      "evidence": "device-completion/summary.json"
+    }
+  },
+  "pc_final_transports": {
+    "ADB": "PASS",
+    "NCM_SSH": "PASS",
+    "WiFi": "PASS",
+    "Code43": false
+  },
+  "pps_requested": false,
+  "pump_on": false,
+  "independent_ADC_calibration": false,
+  "actual_input_power_measured": false,
+  "physical_recovery_time_measured": false,
+  "rollback_performed": false,
+  "rollback_available": "Test260 original modules .gts9-test263-original and sealed rollback images",
+  "active_stage3_ready": false,
+  "validation": {
+    "executed": false,
+    "reason": "Results/documentation only; unchanged kernel qualification and existing admission helper reused.",
+    "prior_qualification": "ea938b24 build/W1/sparse/full1351, 15 endpoint host checks; endpoint name collision is a known uncovered host defect."
+  }
+}

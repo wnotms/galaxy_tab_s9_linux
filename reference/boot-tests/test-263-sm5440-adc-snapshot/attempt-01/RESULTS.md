@@ -1,3 +1,33 @@
+# Test263 attempt01 — device acceptance completed
+
+Owner updated acceptance on2026-09-30: device-side normal operation completes
+the test; a host collection defect alone does not mandate rollback/retrial.
+No rollback/reboot/reflash occurred after the original host STOP. Candidate
+Test263 remains installed, with exact Test260 rollback retained.
+
+PC cached snapshot30.220s/7samples, fixed9V30.420s/7samples, and unplug
+15.370s/4samples passed on33435db741e94574aeb2c209730acf67. Final separate
+read-only device-completion capture confirmed ADB shell/config/notes, healthy
+battery/passiveOFF, Sink/Device, DCC absence and active SSH/adbd. Windows NCM
+and authenticated SSH matched the same boot, with one readiness sample/no
+authentication retry/delayed readiness; no Code43/new kernel/CPU/systemd fault.
+Wi-Fi was responsive for the preceding PC endpoint/full failure journal.
+Readiness capture13.434s is not a measured physical reconnect latency.
+
+Reported fixed9V VBUS9.076..9.109V, pack29.0..29.1C, telemetry-derived netbattery
+power mean7.813216W (not measured USB inputpower). Pump remainedOFF/IBUS0;
+no PPS, current/protection/thermal/USB change. Independent ADC calibration,
+active OCP/PM/live handoff are unqualified; ActiveStage3 remains NOT READY.
+
+The original pc-endpoint STOP/raw files below are retained without alteration.
+The later device-completion namespace supplies the missing final acceptance,
+not a second charging trial or rewriting the failed host orchestration as clean.
+summary.json distinguishes device completion from original strict runner clean.
+No build/full rerun (executed:false); reuse ea938b24 qualification. The host
+filename collision remains a known tooling issue for future offline correction.
+
+## Original first host STOP record (historical; rollback superseded by owner)
+
 # Test263 attempt01 — STOP at PC endpoint evidence collection
 
 The registered series stops at its first non-clean endpoint. PC snapshot30.220s,

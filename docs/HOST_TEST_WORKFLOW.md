@@ -38,6 +38,19 @@ do not retrieve it or rehash unchanged rollback directories on every sample.
 Unknown identity, new reboot, lost rescue or a safety fault still stops the test.
 Registered observation windows and safety limits remain in force.
 
+## Device completion criterion (owner instruction, 2026-09-30)
+
+For subsequent physical tests, normal device behavior within the registered
+scope is sufficient to complete device acceptance. Record a host-only logging,
+filename or parser defect separately; it does not itself require a rollback,
+reflash, repeated physical observation window or complete host regression.
+When needed, collect only the missing device evidence in a fresh namespace.
+Preserve the original error/raw verdict and distinguish device completion from
+an original runner's clean result. Unknown device state remains an evidence
+gap, not a fabricated pass. Actual device safety/identity/transport failures
+still stop. This criterion does not authorize PPS/pump/current escalation or
+another unregistered physical test.
+
 The primary development command is:
 
 ```sh

@@ -1,0 +1,40 @@
+{
+  "ADB": "available; shell/config/notes/services verified",
+  "DCC": "absent",
+  "NCM_SSH": "authenticated same boot",
+  "boot_id": "33435db741e94574aeb2c209730acf67",
+  "code43": false,
+  "device_configuration_changed": false,
+  "identity": {
+    "boot_id": "33435db741e94574aeb2c209730acf67",
+    "device_configuration_changed": false,
+    "ncm": "authenticated",
+    "physical_window_completed": false,
+    "startup": {
+      "classification": "confirmed-inactive-startup-latch",
+      "confirmation_source_us": 2561609,
+      "event_source_us": 273645,
+      "pending_source_us": 273637,
+      "warning_retained": true
+    },
+    "transport_retries": 0,
+    "verdict": "ADB-first passive admission passed"
+  },
+  "original_host_STOP_preserved": true,
+  "physical_recovery_time_measured": false,
+  "physical_retry": false,
+  "pps_requested": false,
+  "pump_on": false,
+  "readiness": {
+    "delayed_readiness": false,
+    "readiness_seconds": 13.434,
+    "ready": true,
+    "reason": "Windows/WSL NCM path ready",
+    "samples": 1,
+    "source_ipv4": "169.254.88.129",
+    "windows_interface_index": 9,
+    "wsl_interface": "eth2"
+  },
+  "rollback_required": false,
+  "verdict": "DEVICE_ACCEPTANCE_COMPLETED"
+}

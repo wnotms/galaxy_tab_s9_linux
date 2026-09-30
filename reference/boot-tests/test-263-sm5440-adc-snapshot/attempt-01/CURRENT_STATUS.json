@@ -1,5 +1,5 @@
 {
-  "verdict": "STOP_HOST_EVIDENCE_COLLISION_PC_ENDPOINT",
+  "verdict": "DEVICE_ACCEPTANCE_COMPLETED_WITH_HOST_TOOL_DEFECT_RETAINED",
   "boot_id": "33435db741e94574aeb2c209730acf67",
   "seconds": 30.22,
   "samples": 7,
@@ -33,7 +33,7 @@
   "pd_phase": "PASS",
   "pump_on": false,
   "pps_requested": false,
-  "physical_series_complete": false,
+  "physical_series_complete": true,
   "followup_host_gate_tests": 15,
   "pd_observation_seconds": 30.42,
   "pd_samples": 7,
@@ -69,15 +69,59 @@
     3.0
   ],
   "unplug_phase": "PASS",
-  "pc_reconnect_phase": "STOP",
+  "pc_reconnect_phase": "DEVICE_PASS_ORIGINAL_HOST_STOP_RETAINED",
   "unplug_observation_seconds": 15.37,
   "unplug_samples": 4,
   "results_validation": {
     "executed": false,
     "reason": "Raw evidence/status only; reuse 15 endpoint checks and unchanged ea938b24 qualification."
   },
-  "rollback_required": true,
-  "rollback_state": "PENDING",
+  "rollback_required": false,
+  "rollback_state": "NOT_PERFORMED_OWNER_ACCEPTANCE_UPDATED",
   "first_non_clean_phase": "pc-endpoint",
-  "error": "refusing to overwrite /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-263-sm5440-adc-snapshot/attempt-01/pc-endpoint/kernel-json.txt"
+  "error": "refusing to overwrite /home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-263-sm5440-adc-snapshot/attempt-01/pc-endpoint/kernel-json.txt",
+  "device_acceptance_complete": true,
+  "original_strict_runner_series_clean": false,
+  "acceptance_policy": "Owner 2026-09-30: device normal completes test; host collection defect alone does not require rollback or another physical trial.",
+  "device_completion": {
+    "ADB": "available; shell/config/notes/services verified",
+    "DCC": "absent",
+    "NCM_SSH": "authenticated same boot",
+    "boot_id": "33435db741e94574aeb2c209730acf67",
+    "code43": false,
+    "device_configuration_changed": false,
+    "identity": {
+      "boot_id": "33435db741e94574aeb2c209730acf67",
+      "device_configuration_changed": false,
+      "ncm": "authenticated",
+      "physical_window_completed": false,
+      "startup": {
+        "classification": "confirmed-inactive-startup-latch",
+        "confirmation_source_us": 2561609,
+        "event_source_us": 273645,
+        "pending_source_us": 273637,
+        "warning_retained": true
+      },
+      "transport_retries": 0,
+      "verdict": "ADB-first passive admission passed"
+    },
+    "original_host_STOP_preserved": true,
+    "physical_recovery_time_measured": false,
+    "physical_retry": false,
+    "pps_requested": false,
+    "pump_on": false,
+    "readiness": {
+      "delayed_readiness": false,
+      "readiness_seconds": 13.434,
+      "ready": true,
+      "reason": "Windows/WSL NCM path ready",
+      "samples": 1,
+      "source_ipv4": "169.254.88.129",
+      "windows_interface_index": 9,
+      "wsl_interface": "eth2"
+    },
+    "rollback_required": false,
+    "verdict": "DEVICE_ACCEPTANCE_COMPLETED"
+  },
+  "active_stage3_ready": false
 }
