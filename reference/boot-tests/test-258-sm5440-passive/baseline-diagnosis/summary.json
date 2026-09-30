@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "181-current-modules": true,
+    "181-rollback-test249": true,
+    "181-rollback-test252": true,
+    "181-rollback-test254": true,
+    "ADB": true,
+    "ADB-shell": true,
+    "Wi-Fi-SSH": true,
+    "battery": true,
+    "cmdline": false,
+    "embedded-config": true,
+    "failed-units": true,
+    "kernel-health": true,
+    "no-Code43": true,
+    "notes": true,
+    "partitions": true,
+    "protected-settings": true,
+    "same-boot": true,
+    "sink-device": true
+  },
+  "device_writes": false,
+  "error": "failed gates: cmdline",
+  "verdict": "STOP before device writes"
+}

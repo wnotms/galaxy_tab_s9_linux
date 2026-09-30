@@ -2,6 +2,17 @@
 
 ## Current state (2026-09-30)
 
+The owner now explicitly requests "刷入测试吧". Test258 registers ONLY the
+separate SM5440 passive profile: pumpOFF, no PPS/live transaction core, ordinary
+PC USB150s. Read its README/preflight before any action. Preliminary current
+boot c1716879 has accepted Test255 five-partition/config/notes/181-module and
+rescue identities, but vendor lpcharge=1 differs from the accepted command line.
+Read-only diagnosis passed every other gate. Registration permits ONE ordinary
+baseline reboot after push to restore normal entry; no image/module repair or
+candidate flash before a fresh normal-preflight passes. Keep all STOP evidence.
+This authorization supersedes the earlier offline-only restriction for these
+specific Test258 actions; active PPS/pump tests remain NOT READY/unapproved.
+
 The owner has requested continued OFFLINE development without flashing.
 Continuation starts at a3ddd0de on test. Test257 registers transaction source-
 offer/freshness/monitor-deadline guards and a deeper software-OCP audit. Keep

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-NetAdapter | Select-Object Name,InterfaceDescription,Status,ifIndex | ConvertTo-Json"
+  ],
+  "ended_utc": "2026-09-30T02:32:54.113502+00:00",
+  "started_utc": "2026-09-30T02:32:51.667898+00:00",
+  "status": 0
+}
