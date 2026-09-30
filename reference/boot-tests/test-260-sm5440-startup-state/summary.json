@@ -1,0 +1,82 @@
+{
+  "purpose": "offline startup-state correction; no physical attempt",
+  "kernel_source_revision": "6fbafede",
+  "admission_final_revision": "5ee5ce56a448a9b6439bf82ce0dc5a4e2f56238b",
+  "profile": "sm5440-passive",
+  "build": {
+    "passed": true,
+    "kernel_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+    "toolchain": "clang21.1.8",
+    "modules": 181,
+    "bundle_validation": true
+  },
+  "full_host_tests": {
+    "revision": "6fbafede",
+    "tests_run": 1290,
+    "elapsed_s": 109.553,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "previous1270_ids_retained": true,
+    "new_ids": 20
+  },
+  "driver_focused_tests": 23,
+  "final_admission_focused_tests": 12,
+  "admission_followup_scope": "preserve device state after ALL transport failures; targeted tests, no kernel input change",
+  "static_checks": {
+    "W1_sparse_exit": 0,
+    "changed_driver_diagnostics": [],
+    "other_warnings": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "dtbs_check_executed": false,
+    "dtbs_check_reason": "unchanged DTB; prior known PS5169 role-switch schema diagnostic retained, no new clean-schema claim"
+  },
+  "config_delta_from_test259": {},
+  "dt_delta_from_test259": {},
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "container_requirements": 85,
+  "dcc_absent": true,
+  "artifacts": {
+    "out/boot-bundle-x710-260-passive/boot.img": {
+      "sha256": "62bfc5ff19ff562590556dbae944799a0d5f86cf0256c006c14273f3aa96fad1",
+      "bytes": 100663296
+    },
+    "out/boot-bundle-x710-260-passive/vendor_boot.img": {
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "bytes": 100663296
+    },
+    "out/kernel-x710-260-passive/Image.gz": {
+      "sha256": "78b72f5e594aa6b85b548b1b73575259eb5e5ae4c6930fee669ad84717a8a9a9",
+      "bytes": 22123296
+    },
+    "out/kernel-x710-260-passive/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-260-passive/config": {
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "out/kernel-x710-260-passive/kernel-notes.bin": {
+      "sha256": "5425adeadc1c07b2eea7fc2869b5a884eba4c3ad0406b7c217dbe91dc8ef116b",
+      "bytes": 84
+    },
+    "out/kernel-x710-260-passive/modules-x710.tar.gz": {
+      "sha256": "e9b6ba62099d97992d9780a223aaea4e2859e85fd09333fe5ae600889e82f579",
+      "bytes": 47317867
+    }
+  },
+  "device": {
+    "configuration_changed": false,
+    "rebooted": false,
+    "flashed": false,
+    "read_only_transport_snapshot": true,
+    "installed_baseline": "accepted Test255",
+    "startup_fix_hardware_tested": false,
+    "historical_NCM_timeout_root_cause": "unresolved"
+  },
+  "passive_candidate": "offline-qualified; physical acceptance pending",
+  "active_stage3_ready": false
+}

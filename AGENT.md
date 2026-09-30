@@ -2,6 +2,20 @@
 
 ## Current state (2026-09-30)
 
+Test260 offline correction source6fbafede now qualifies: startupREVBLK first-only
+confirmation state; build/bundle/protected/config/DT/181module audit andfull1290
+pass, all prior1270IDs retained. Driverfocused23 and W=1/sparse pass (one retained
+VDSO warning). Host-only followup5ee5ce56 captures tablet-side state on every
+transport failure; affected12 admission checks pass, no rebuild/fullrepeat.
+Config/DTB identicalTest259;96 protectedfiles/85containers/DCC unchanged. Read
+Test260 RESULTS/summary/PHYSICAL_PLAN. No physicalattempt/flash/reboot/settings
+change: currentcfb09d01 remains acceptedTest255. Readonly transport works now,
+historicalNCMtimeout rootcause unresolved. Startupfix has NOhardwareacceptance;
+noautomaticphysicalretry, no0x82whitelist/PPS/pumpON/protection/currentchange.
+ActiveStage3 NOT READY. Futurepassive test needs fresh registration and retained
+startup-warning classification; qualified artifacts are reused, not rebuilt.
+
+
 Owner requests continued repair. Test260 is OFFLINE: narrow first-only inactive
 startupREVBLK confirmation (two new safe conversions within5s), retained raw
 startup event, UNKNOWN/noADC publication while pending. Live/recurrentREVBLK,

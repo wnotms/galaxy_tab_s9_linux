@@ -1,0 +1,52 @@
+{
+  "compiled_source_revision": "6fbafede",
+  "kernel_release": "7.2.0-rc3-gts9wifi-dirty",
+  "artifacts": {
+    "out/boot-bundle-x710-260-passive/boot.img": {
+      "sha256": "62bfc5ff19ff562590556dbae944799a0d5f86cf0256c006c14273f3aa96fad1",
+      "bytes": 100663296
+    },
+    "out/boot-bundle-x710-260-passive/vendor_boot.img": {
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "bytes": 100663296
+    },
+    "out/kernel-x710-260-passive/Image.gz": {
+      "sha256": "78b72f5e594aa6b85b548b1b73575259eb5e5ae4c6930fee669ad84717a8a9a9",
+      "bytes": 22123296
+    },
+    "out/kernel-x710-260-passive/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-260-passive/config": {
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "out/kernel-x710-260-passive/kernel-notes.bin": {
+      "sha256": "5425adeadc1c07b2eea7fc2869b5a884eba4c3ad0406b7c217dbe91dc8ef116b",
+      "bytes": 84
+    },
+    "out/kernel-x710-260-passive/modules-x710.tar.gz": {
+      "sha256": "e9b6ba62099d97992d9780a223aaea4e2859e85fd09333fe5ae600889e82f579",
+      "bytes": 47317867
+    }
+  },
+  "module_file_count": 181,
+  "baseline_partitions": {
+    "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+  },
+  "candidate_partitions": {
+    "boot": "62bfc5ff19ff562590556dbae944799a0d5f86cf0256c006c14273f3aa96fad1",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "pps_live_enabled": false,
+  "pump_on_available": false,
+  "profile": "sm5440-passive"
+}

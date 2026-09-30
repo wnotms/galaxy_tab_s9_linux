@@ -1,0 +1,28 @@
+test_adc_timeout_and_suspend_cancel_bounded (test_sm5440_passive.PassiveHardwareTests.test_adc_timeout_and_suspend_cancel_bounded) ... ok
+test_all_vendor_fault_bits_and_lost_mode_vbus (test_sm5440_passive.PassiveHardwareTests.test_all_vendor_fault_bits_and_lost_mode_vbus) ... ok
+test_complete_conversion_waits_past_stale_ready (test_sm5440_passive.PassiveHardwareTests.test_complete_conversion_waits_past_stale_ready) ... ok
+test_consumed_irq_fault_stays_latched_without_retry (test_sm5440_passive.PassiveHardwareTests.test_consumed_irq_fault_stays_latched_without_retry) ... ok
+test_each_i2c_failure_cannot_publish_complete_sample (test_sm5440_passive.PassiveHardwareTests.test_each_i2c_failure_cannot_publish_complete_sample) ... ok
+test_first_fault_preserves_latch_and_live_provenance (test_sm5440_passive.PassiveHardwareTests.test_first_fault_preserves_latch_and_live_provenance) ... ok
+test_off_preserves_unrelated_bits_and_reports_i2c_failure (test_sm5440_passive.PassiveHardwareTests.test_off_preserves_unrelated_bits_and_reports_i2c_failure) ... ok
+test_pending_resume_is_refused (test_sm5440_passive.PassiveHardwareTests.test_pending_resume_is_refused) ... ok
+test_real_power_supply_getter_units_and_unavailable_conversion (test_sm5440_passive.PassiveHardwareTests.test_real_power_supply_getter_units_and_unavailable_conversion) ... ok
+test_register_bounds_and_round_down (test_sm5440_passive.PassiveHardwareTests.test_register_bounds_and_round_down) ... ok
+test_running_pump_and_invalid_pack_rejected (test_sm5440_passive.PassiveHardwareTests.test_running_pump_and_invalid_pack_rejected) ... ok
+test_startup_classifier_bounds_and_fault_sources (test_sm5440_passive.PassiveHardwareTests.test_startup_classifier_bounds_and_fault_sources) ... ok
+test_startup_deadline_protection_detach_and_i2c_fail_closed (test_sm5440_passive.PassiveHardwareTests.test_startup_deadline_protection_detach_and_i2c_fail_closed) ... ok
+test_startup_live_or_recurrent_revblk_stays_failure (test_sm5440_passive.PassiveHardwareTests.test_startup_live_or_recurrent_revblk_stays_failure) ... ok
+test_startup_nine_volts_or_nonzero_current_not_exempted (test_sm5440_passive.PassiveHardwareTests.test_startup_nine_volts_or_nonzero_current_not_exempted) ... ok
+test_startup_revblk_needs_two_new_confirmations (test_sm5440_passive.PassiveHardwareTests.test_startup_revblk_needs_two_new_confirmations) ... ok
+test_startup_vbatovp_never_exempted (test_sm5440_passive.PassiveHardwareTests.test_startup_vbatovp_never_exempted) ... ok
+test_suspend_during_startup_cannot_clear_fault (test_sm5440_passive.PassiveHardwareTests.test_suspend_during_startup_cannot_clear_fault) ... ok
+test_vendor_adc_scales_and_endianness (test_sm5440_passive.PassiveHardwareTests.test_vendor_adc_scales_and_endianness) ... ok
+test_default_stage2_gate_still_rejects_passive_enable (test_sm5440_passive.PassiveProfileTests.test_default_stage2_gate_still_rejects_passive_enable) ... ok
+test_exact_resolved_profile_and_protected_changes_rejected (test_sm5440_passive.PassiveProfileTests.test_exact_resolved_profile_and_protected_changes_rejected) ... ok
+test_invalid_profile_rejected_before_any_source_or_build_operation (test_sm5440_passive.PassiveProfileTests.test_invalid_profile_rejected_before_any_source_or_build_operation) ... ok
+test_primary_dt_fragment_and_gpi_stay_frozen (test_sm5440_passive.PassiveProfileTests.test_primary_dt_fragment_and_gpi_stay_frozen) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.527s
+
+OK
