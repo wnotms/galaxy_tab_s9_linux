@@ -41,8 +41,9 @@ SSH timeout prevented early admission but ADB later retrieved fault1.676898s.
 Replace this ordering in a new helper: ADB boot/journal/supplies first; any
 hardwarefault stops before transport probes. Collect Windows adapter/address/
 route evidence, interface-bound banner and actual NCM authentication separately.
-Keep first NCM failure, finite readiness attempts and recovery timing; recovered
-transport is usb-transient, never silently clean. WiFi is a separate channel,
+Keep the first NCM failure and probe timing; this admission makes ONE attempt,
+then stops. A future recovery observation must label a recovered transport
+usb-transient, never silently clean. WiFi is a separate channel,
 not proof of NCM. No device/Windows networkconfiguration or USBdriver change.
 Current host route is mirrored WSL eth2/APIPA; the old helper's generic NAT
 comment alone cannot establish topology at the failedboot. Historical failed

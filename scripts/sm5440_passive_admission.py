@@ -99,21 +99,27 @@ def admit(rec, boot_id, config_sha256, notes_sha256, known_messages=()):
     p.write_json(rec.folder / 'startup-evidence.json', startup)
     # Persist topology before the first connection: WSL mirroring/APIPA readiness
     # is separate from tablet usb0/sshd and from Windows adapter enumeration.
-    rec.command('wsl-route', ['ip', '-j', 'route', 'get', '169.254.42.1'], required=False)
-    rec.command('wsl-addresses', ['ip', '-j', '-4', 'addr', 'show'], required=False)
-    text, status = rec.ps('windows-topology', PS_NCM_STATE, timeout=30, required=False)
-    require(status == 0, 'Windows topology capture failed')
-    topology = json.loads(text)
-    require(isinstance(topology.get('code43'), list) and not topology['code43'], 'Windows Code43/missing evidence')
-    text, status = rec.ps('ncm-bound-banner', p.PS_NCM_BOUND_BANNER, timeout=20, required=False)
-    bound = json.loads(text) if text.strip() else {}
-    require(status == 0 and bound.get('ok') is True, 'Windows NCM bound banner unavailable')
-    text, status = rec.ssh('ncm-auth', 'cat /proc/sys/kernel/random/boot_id', 15, required=False)
-    if status != 0:
-        rec.adb('ncm-failure-device', 'cat /proc/sys/kernel/random/boot_id; ip -4 -o addr; '
-                'systemctl is-active ssh gts9-adbd gts9-usb-acm', 15, required=False)
-        raise p.CaptureError('NCM authentication failed; first failure retained; no retry')
-    require(e.canonical_boot_id(text) == boot, 'NCM boot attribution')
+    try:
+        rec.command('wsl-route', ['ip', '-j', 'route', 'get', '169.254.42.1'], required=False)
+        rec.command('wsl-addresses', ['ip', '-j', '-4', 'addr', 'show'], required=False)
+        text, status = rec.ps('windows-topology', PS_NCM_STATE, timeout=30, required=False)
+        require(status == 0, 'Windows topology capture failed')
+        topology = json.loads(text)
+        require(isinstance(topology.get('code43'), list) and not topology['code43'], 'Windows Code43/missing evidence')
+        text, status = rec.ps('ncm-bound-banner', p.PS_NCM_BOUND_BANNER, timeout=20, required=False)
+        bound = json.loads(text) if text.strip() else {}
+        require(status == 0 and bound.get('ok') is True, 'Windows NCM bound banner unavailable')
+        text, status = rec.ssh('ncm-auth', 'cat /proc/sys/kernel/random/boot_id', 15, required=False)
+        require(status == 0, 'NCM authentication failed; first failure retained; no retry')
+        require(e.canonical_boot_id(text) == boot, 'NCM boot attribution')
+    except Exception:
+        # Also preserve tablet-side state for a failed Windows bound probe or
+        # Code43, not just an authenticated-SSH timeout. Keep the first error.
+        rec.adb('ncm-failure-device', 'cat /proc/sys/kernel/random/boot_id; '
+                'ip -4 -o addr; systemctl is-active ssh gts9-adbd gts9-usb-acm; '
+                'echo @@kernel; journalctl -b -k --no-pager -o json',
+                25, required=False)
+        raise
     return {'verdict': 'ADB-first passive admission passed', 'boot_id': boot,
             'startup': startup, 'ncm': 'authenticated', 'transport_retries': 0,
             'device_configuration_changed': False, 'physical_window_completed': False}

@@ -161,6 +161,8 @@ class PassiveAdmissionTests(unittest.TestCase):
         self.r.code43 = [{'ConfigManagerErrorCode': 43}]
         with self.assertRaisesRegex(a.p.CaptureError, 'Code43'): self.run_gate()
         self.assertNotIn(('ssh', 'ncm-auth'), self.r.calls)
+        self.assertEqual(self.r.calls[-1], ('adb', 'ncm-failure-device'))
         self.r.code43 = []; self.r.banner_ok = False
         with self.assertRaisesRegex(a.p.CaptureError, 'bound banner'): self.run_gate()
         self.assertNotIn(('ssh', 'ncm-auth'), self.r.calls)
+        self.assertEqual(self.r.calls[-1], ('adb', 'ncm-failure-device'))
