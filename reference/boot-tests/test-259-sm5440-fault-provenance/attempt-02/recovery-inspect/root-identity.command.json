@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "cat /mnt/debian/etc/machine-id; grep ' /mnt/debian ' /proc/mounts; dd if=/dev/block/mmcblk1p1 bs=1 skip=1128 count=16 2>/dev/null | od -An -tx1; find /mnt/debian/usr/lib/modules -maxdepth 1 -type d -print"
+  ],
+  "ended_utc": "2026-09-30T04:14:45.252649+00:00",
+  "started_utc": "2026-09-30T04:14:45.147923+00:00",
+  "status": 0
+}
