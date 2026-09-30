@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "df -h /tmp; for n in boot vendor_boot; do blockdev --getsize64 /dev/block/by-name/$n; done"
+  ],
+  "ended_utc": "2026-09-30T03:38:28.676619+00:00",
+  "started_utc": "2026-09-30T03:38:28.587974+00:00",
+  "status": 0
+}
