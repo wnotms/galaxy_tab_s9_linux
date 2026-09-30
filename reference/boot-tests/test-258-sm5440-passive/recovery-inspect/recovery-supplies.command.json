@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "for f in /sys/class/power_supply/*/uevent; do echo \"$f\"; cat \"$f\"; done"
+  ],
+  "ended_utc": "2026-09-30T03:05:20.396849+00:00",
+  "started_utc": "2026-09-30T03:05:20.242476+00:00",
+  "status": 0
+}

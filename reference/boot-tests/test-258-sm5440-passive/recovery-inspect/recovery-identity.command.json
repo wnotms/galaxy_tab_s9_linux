@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.model; getprop ro.twrp.version; uname -a; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-09-30T03:05:19.864879+00:00",
+  "started_utc": "2026-09-30T03:05:19.759065+00:00",
+  "status": 0
+}
