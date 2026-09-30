@@ -2,6 +2,17 @@
 
 ## Current state (2026-09-30)
 
+Owner authorizes Test263 physical acceptance (continue hardware test). Read
+Test263 attempt-01 README/PACKAGE/STAGED_FILES before action. Reuse ea938b24
+qualified snapshot candidate; host gate12/module adapter5/syntax/bundle pass,
+no kernel/full repeat. Current18bce160 Test260 identity/rescue/safety passes.
+Only paired boot/vendor/modules deployment, passivePC30s and owner-confirmed
+fixed9V30s telemetry comparison, then endpoints; exact Test260 rollback in
+fresh263 slots. Push registration before recovery/write; preserve oldbackups.
+No PPS/pumpON/protection/current/thermal/USB change. Stop first non-clean;
+no absolute ADC calibration claim or activeStage3 readiness.
+
+
 Test263 OFFLINE QUALIFIED at ea938b245bff3ae9e3c1828751ea149a90337992: optional
 root-read-only cached SM5440 raw ADC/freshness/startup/error snapshot, zero I2C
 on read and unchanged hardware/charging policy. Read Test263 RESULTS/summary/

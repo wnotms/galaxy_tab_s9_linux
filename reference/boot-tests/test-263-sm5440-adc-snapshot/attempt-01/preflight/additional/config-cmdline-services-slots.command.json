@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; zcat /proc/config.gz | sha256sum; cat /proc/cmdline; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; systemctl is-active ssh gts9-adbd; test -d /usr/lib/modules/.gts9-test260-original; test ! -e /usr/lib/modules/.gts9-test263-original; test ! -e /usr/lib/modules/.gts9-test263-stage; test ! -e /usr/lib/modules/.gts9-test263-tested; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-09-30T14:12:37.616738+00:00",
+  "started_utc": "2026-09-30T14:12:37.484992+00:00",
+  "status": 0
+}

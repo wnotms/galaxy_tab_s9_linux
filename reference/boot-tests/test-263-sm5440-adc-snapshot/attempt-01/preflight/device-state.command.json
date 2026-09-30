@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; uname -a; cat /proc/uptime; cat /proc/cmdline; sha256sum /sys/kernel/notes; ip -4 -o addr; systemctl --failed --no-pager; for x in /sys/class/power_supply/*; do echo @@$x; cat $x/uevent; done; cat /sys/class/udc/*/state; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && echo DCC_ABSENT; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "returncode": 0,
+  "elapsed_s": 0.13534362399514066,
+  "ended_utc": "2026-09-30T14:08:19.068262+00:00"
+}
