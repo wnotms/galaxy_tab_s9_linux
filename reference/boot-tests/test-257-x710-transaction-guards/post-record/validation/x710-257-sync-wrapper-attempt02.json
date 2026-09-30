@@ -1,0 +1,12 @@
+{
+  "passed": false,
+  "status": "interrupted-host-infrastructure",
+  "reason": "temporary misc.img BCB fixture also calls global sync; scope its real syncfs to the file filesystem; no block device used",
+  "pids": [
+    462753,
+    469411,
+    469423,
+    462288,
+    461965
+  ]
+}

@@ -11,6 +11,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
+from record_sync_fixture import record_sync_env
 
 ROOT = Path(__file__).resolve().parent.parent
 INIT = (ROOT / 'boot' / 'minimal-rootfs-init.sh').read_text()
@@ -40,7 +41,8 @@ def run_library(tmp, body, extra_env=None):
         env.update(extra_env)
     return subprocess.run(
         ['/bin/sh', '-c', f'. {STATE}\n{body}'],
-        env=env, text=True, capture_output=True, check=False)
+        env=record_sync_env(tmp, env), text=True, capture_output=True,
+        check=False, timeout=30)
 
 
 def parse_record(path):
@@ -224,7 +226,7 @@ class MinimalRootfsStateTests(unittest.TestCase):
                  '  i=$((i + 1))\n'
                  '  minimal_state_stage "stage-$i"\n'
                  'done\n'],
-                env=dict(os.environ, GTS9_MINIMAL_LOG_DIR=tmp),
+                env=record_sync_env(tmp, dict(os.environ, GTS9_MINIMAL_LOG_DIR=tmp)),
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             deadline = time.time() + 30
             observations = 0

@@ -19,6 +19,15 @@ physical software OCP. Actual protection, ADC, sensors and live transaction/PM
 adapter remain unresolved. Read Test257 RESULTS/summary before continuing.
 No flash, tablet command or hardware acceptance occurred; active PPS NOT READY.
 
+Test257 post-record build/config/DT/protected audit passed at260133f0. Its host
+rerun exposed global sync waiting on WSL/Windows mounts; three interrupted runs
+are preserved, not passed. Follow-up scopes ONLY temporary host boot-record/
+misc.img fixture sync to real syncfs on that filesystem and adds30s waits;
+device scripts unchanged. Focused66 and changed/full1255 passed with zero
+failures/errors/skips; all1253 Test257 IDs retained,2 fixture checks added.
+Read Test257 POST_RECORD_CHECKS.md and post-record evidence/summary. Original
+Test257/Test256 seals and qualified outputs remain immutable. No device action.
+
 The owner now authorizes **offline X710 vendor charging audit and staged
 refactor/SM5440 development only**. Start HEAD is ebf4af1c, work branch test.
 Read docs/X710_VENDOR_CHARGING_AUDIT.md, X710_CHARGING_ARCHITECTURE.md,

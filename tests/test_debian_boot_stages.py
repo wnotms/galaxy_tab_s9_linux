@@ -4,6 +4,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from record_sync_fixture import record_sync_env
 
 ROOT = Path(__file__).resolve().parent.parent
 OVERLAY = ROOT / 'rootfs-overlay' / 'usr'
@@ -33,8 +34,9 @@ mmc_devices=/dev/mmcblk1,/dev/mmcblk1p1
 def run_helper(record, *args):
     return subprocess.run(
         ['sh', str(HELPER), *args],
-        env=dict(os.environ, GTS9_MINIMAL_BOOT_RECORD=str(record)),
-        text=True, capture_output=True, check=False)
+        env=record_sync_env(Path(record).parent,
+                            dict(os.environ, GTS9_MINIMAL_BOOT_RECORD=str(record))),
+        text=True, capture_output=True, check=False, timeout=30)
 
 
 def parse(path):
@@ -243,8 +245,8 @@ class InitramfsToDebianChain(unittest.TestCase):
                  + ''.join(f'minimal_state_stage {stage}\n'
                            for stage in INITRAMFS_STAGES)
                  + 'minimal_state_persist_enable "$GTS9_MINIMAL_LOG_DIR"\n'],
-                env=dict(os.environ, GTS9_MINIMAL_LOG_DIR=tmp),
-                text=True, capture_output=True, check=False)
+                env=record_sync_env(tmp, dict(os.environ, GTS9_MINIMAL_LOG_DIR=tmp)),
+                text=True, capture_output=True, check=False, timeout=30)
             self.assertEqual(initramfs.returncode, 0, initramfs.stderr)
             self.assertTrue(record.is_file())
 
@@ -256,7 +258,8 @@ class InitramfsToDebianChain(unittest.TestCase):
             stub_bin.mkdir()
             (stub_bin / 'systemctl').write_text('#!/bin/sh\nexit 1\n')
             (stub_bin / 'systemctl').chmod(0o755)
-            env = dict(os.environ, GTS9_MINIMAL_BOOT_RECORD=str(record))
+            env = record_sync_env(tmp, dict(os.environ,
+                                          GTS9_MINIMAL_BOOT_RECORD=str(record)))
             env['PATH'] = f'{stub_bin}:{env["PATH"]}'
             for unit_name in ('gts9-debian-entered.service',
                               'gts9-debian-basic-stage.service',
@@ -269,7 +272,7 @@ class InitramfsToDebianChain(unittest.TestCase):
                                           str(HELPER))
                 result = subprocess.run(['/bin/sh', '-c', command], env=env,
                                         text=True, capture_output=True,
-                                        check=False)
+                                        check=False, timeout=30)
                 self.assertEqual(result.returncode, 0, f'{unit_name}: {result.stderr}')
             # The USB service records its own outcome when it binds the gadget.
             result = run_helper(record, 'usb-acm-ready')
@@ -283,7 +286,7 @@ class InitramfsToDebianChain(unittest.TestCase):
                                          '/usr/libexec/gts9-record-debian-stage',
                                          str(HELPER))],
                                     env=env, text=True, capture_output=True,
-                                    check=False)
+                                    check=False, timeout=30)
             self.assertEqual(result.returncode, 0, result.stderr)
 
             fields = parse(record)

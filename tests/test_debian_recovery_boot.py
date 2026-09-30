@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from record_sync_fixture import record_sync_env
 
 ROOT = Path(__file__).resolve().parents[1]
 HELPER = ROOT / 'boot/gts9-debian-to-recovery.sh'
@@ -58,7 +59,8 @@ class DebianRecoveryBoot(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             dev = Path(tmp) / 'misc.img'
             dev.write_bytes(b'\xff' * 4096)  # pre-fill: the write must overwrite
-            subprocess.run(['sh', '-eu', '-c', harness, 'sh', str(dev)], check=True)
+            subprocess.run(['sh', '-eu', '-c', harness, 'sh', str(dev)],
+                           env=record_sync_env(tmp), check=True, timeout=30)
             got = dev.read_bytes()
 
         # Exactly one 2048-byte block is touched; the rest is left alone.

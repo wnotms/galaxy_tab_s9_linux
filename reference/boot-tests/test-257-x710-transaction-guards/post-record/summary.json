@@ -1,0 +1,39 @@
+{
+  "result_commit": "260133f0",
+  "qualified_kernel_source": "31ca86ca",
+  "post_record_build_audit": "passed",
+  "post_record_changed_original": "interrupted-host-infrastructure, not passed",
+  "repair": "host fixture real syncfs scoped to temporary boot-record/misc.img filesystem, not noop; subprocess timeouts; device scripts unchanged",
+  "interrupted_runs": 3,
+  "focused_tests": 66,
+  "focused_seconds": 8.871,
+  "changed_tests": 1255,
+  "changed_seconds": 103.162,
+  "all": {
+    "suite": "all",
+    "executed": true,
+    "tests_run": 1255,
+    "elapsed_s": 83.983,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "exit_code": 0
+  },
+  "retained_original_Test257_ids": 1253,
+  "new_tests": [
+    "test_record_sync_fixture.RecordSyncFixtureTests.test_fixture_rejects_changed_sync_arguments_and_keeps_parent_env",
+    "test_record_sync_fixture.RecordSyncFixtureTests.test_real_syncfs_has_both_pre_and_post_rename_barriers"
+  ],
+  "fixture_source_sha256": {
+    "tests/record_sync_fixture.py": "0db5f097ec53e19e134350bb4a782129d78d9bfc8595fd2d44b28014cd6cd171",
+    "tests/test_record_sync_fixture.py": "ff6629bf6330e770f1f9f4b2e8894717e7ff9816f9ae5ce82d2000128607d967",
+    "tests/test_minimal_rootfs_stages.py": "e0a0ce10f093fffcccabd270ec4dd4bb75d055608b48b97a5dfc218daa20291f",
+    "tests/test_debian_boot_stages.py": "7174d56578a174fb491b4e49d06f085e02bbc34b818383806afbca433310c5de",
+    "tests/test_debian_panel_recover.py": "eb93a1c9393b17aed9d8d301d3d2fc1c407160291e761bffd6bb0768b8d02be7",
+    "tests/test_debian_recovery_boot.py": "5f7cf7e1a94cc72699bf5a79c46ebc316a64c174972c3e2c79fc96aa0197f947"
+  },
+  "protected_kernel_boot_rootfs_changes": [],
+  "device_commands": false,
+  "active_candidate": "NOT READY",
+  "after_followup_commit_checks": "Separate ignored out/kernel-x710-257-sync and out/x710-257-sync-post-*; no sealed result overwrite"
+}

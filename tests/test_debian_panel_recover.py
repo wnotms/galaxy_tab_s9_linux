@@ -5,6 +5,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
+from record_sync_fixture import record_sync_env
 
 ROOT = Path(__file__).resolve().parent.parent
 OVERLAY = ROOT / 'rootfs-overlay' / 'usr'
@@ -64,8 +65,10 @@ class PanelRecoverServiceTests(unittest.TestCase):
         environment.update(overrides)
         if env:
             environment.update(env)
-        return subprocess.run(['sh', str(HELPER)], env=environment,
-                              text=True, capture_output=True, check=False)
+        return subprocess.run(['sh', str(HELPER)],
+                              env=record_sync_env(self.root, environment),
+                              text=True, capture_output=True, check=False,
+                              timeout=30)
 
     def stages(self):
         fields = {}
