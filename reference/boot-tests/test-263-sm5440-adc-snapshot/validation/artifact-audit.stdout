@@ -1,0 +1,47 @@
+{
+  "valid": true,
+  "errors": [],
+  "revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "profile": "sm5440-passive",
+  "config_delta": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "absent",
+      "n"
+    ]
+  },
+  "expected_config_delta": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "absent",
+      "n"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "dt_delta": {
+    "/soc@0/geniqup@9c0000/i2c@98c000/charger@63:status": [
+      "64 69 73 61 62 6c 65 64 0",
+      "6f 6b 61 79 0"
+    ]
+  },
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "frozen_artifacts_intact": true,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "device_commands_executed": false
+}

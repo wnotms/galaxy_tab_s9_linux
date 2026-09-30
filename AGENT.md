@@ -2,6 +2,20 @@
 
 ## Current state (2026-09-30)
 
+Test263 OFFLINE QUALIFIED at ea938b245bff3ae9e3c1828751ea149a90337992: optional
+root-read-only cached SM5440 raw ADC/freshness/startup/error snapshot, zero I2C
+on read and unchanged hardware/charging policy. Read Test263 RESULTS/summary/
+SHA256 and docs/SM5440_ADC_SNAPSHOT.md. Final build/embedded-config/DT/protected/
+181-file pairing audit, 34 affected +11 PM checks and one full1351 pass; prior
+1290 IDs retained. W=1/actual compatible sparse pass, known VDSO warning retained.
+Config/DTB identical acceptedTest260;85 containers/DCC/96 protectedfiles intact.
+No device command/deployment/rootfs/USB/current/thermal/protection/PPS/pumpON.
+Device remains Test260/Test262. Next passive ADC evidence acceptance requires
+new authorization/registration; no automatic physical test. Independent ADC
+calibration/OCP/PM/live handoff still unresolved; ActiveStage3 NOT READY.
+Results-only commits reuse exact qualification, executed:false, no rebuild/CI.
+
+
 Owner requests next porting step. Test263 registers OFFLINE passiveSM5440 cached
 ADC/raw/freshness evidence interface; read docs/SM5440_ADC_SNAPSHOT.md first.
 No new register operation, PPS/liveadapter/pumpON/config/DT/current/thermal/

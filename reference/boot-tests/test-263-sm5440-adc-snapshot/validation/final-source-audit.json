@@ -1,0 +1,28 @@
+{
+  "debugfs_cleanup_order": "remove/drain files before worker/supplies/driver memory devres teardown",
+  "device_commands_executed": false,
+  "fixed5v_input_ma": 1800,
+  "fixed9v_input_ma": 1500,
+  "float_mv": 4440,
+  "live_adapter_added": false,
+  "max_fixed_pd_mv": 9000,
+  "new_functions_register_access": false,
+  "no_new_register_writes": true,
+  "poller_only_adds_error_and_timestamp_metadata": true,
+  "pps_enabled": false,
+  "pump_enable_api": false,
+  "snapshot_lock_order": "one io_lock while copying; formatting after unlock",
+  "unchanged_hardware_functions": {
+    "sm5440_get_property": true,
+    "sm5440_off": true,
+    "sm5440_passive_pc_sample": true,
+    "sm5440_quiesce": true,
+    "sm5440_resume": true,
+    "sm5440_sample_once": true,
+    "sm5440_startup_matches": true,
+    "sm5440_startup_revblk": true
+  },
+  "source_revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "baseline_revision": "1e1f0840b87e976d06315712402abc479a317efb",
+  "pm_stop_read_once": true
+}

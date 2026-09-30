@@ -1,0 +1,17 @@
+{
+  "executed": true,
+  "purpose": "results consistency and evidence hash verification, not a repeated host/kernel regression",
+  "source_revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "checks": [
+    "summary/build/full source attribution",
+    "1351 zero-failure/error/skip report",
+    "Test260 exact config/DTB",
+    "current candidate hashes and saved config/notes",
+    "actual sparse CHECK line"
+  ],
+  "device_commands_executed": false,
+  "whitespace_review": {
+    "source_and_documentation_diff_check": "passed",
+    "raw_build_stdout_trailing_spaces": "preserved exactly; two existing Kbuild CALL lines, not normalized"
+  }
+}

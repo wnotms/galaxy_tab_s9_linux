@@ -7,7 +7,9 @@ PPS/APDO request, Q4/handoff, pump enable or current/protection change.
 
 ## Why this precedes active integration
 
-Test260 startup SM5440 VBAT3.6005V differs from the contemporaneous SM5714 gauge.
+Test260 startup SM5440 VBAT3.6005V differs from later SM5714 gauge telemetry
+in the same boot. Acquisition times differ: this is not a proven calibration
+error or a simultaneous sensor comparison.
 Existing power_supply exposes VBUS/current/die only; the retained first fault
 has raw ADC, but later successful samples lose those raw values in user-visible
 telemetry. Neither independently calibrated VBUS nor active OCP/PM coordination
@@ -69,3 +71,19 @@ age. An inline meter or other independent reference is still needed for absolute
 VBUS validation. Stop on any new fault, unsafe/unavailable measurement or rescue
 loss. No deliberate heating, overvoltage, PPS or pump run. A snapshot candidate
 must be flashed only after new authorization; this task ends offline.
+
+## Reading the implemented format (after separate candidate acceptance)
+
+`format=sm5440-passive-v1`, root read-only mode0400. Each read copies memory;
+`sample_*` is the most recent completed/cached conversion, `startup_*` preserves
+the first suspect latch. `sample_present=0` means even displayed raw zero values
+are unavailable; `sample_valid` alone does not override stale/fault/stop/pending.
+Use `sample_fresh`, `sample_age_ms`, captured/stamp jiffies and explicit uV/uA/
+deciC fields together. The2500ms passive window must never be reused as a100ms
+active transaction deadline. Last I2C/conversion error is reported separately.
+
+Startup sample.valid/stamp retain the original pre-publication state; its
+actual recording jiffies are `startup_capture_jiffies`. This avoids restamping
+an old warning as a fresh sample. `independently_calibrated=0` and
+`pump_enable_supported=0` are explicit; this is an unstable diagnostic format,
+not a userspace charging control or standard power_supply property substitute.

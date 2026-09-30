@@ -1,0 +1,119 @@
+{
+  "test": 263,
+  "purpose": "offline cached SM5440 ADC/raw/freshness evidence interface",
+  "baseline_revision": "1e1f0840b87e976d06315712402abc479a317efb",
+  "kernel_source_revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "profile": "sm5440-passive",
+  "verdict": "OFFLINE_QUALIFIED",
+  "hardware_acceptance": "NOT_EXECUTED",
+  "active_stage3": "NOT_READY",
+  "device_commands_executed": false,
+  "deployed": false,
+  "pps_enabled": false,
+  "pump_enable_supported": false,
+  "fixed_policy": {
+    "max_fixed_mv": 9000,
+    "five_volt_input_limit_ma": 1800,
+    "nine_volt_input_limit_ma": 1500,
+    "float_mv": 4440,
+    "thermal_policy_changed": false
+  },
+  "build": {
+    "passed": true,
+    "kernel_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+    "release": "7.2.0-rc3-gts9wifi-dirty",
+    "toolchain": "clang 21.1.8",
+    "command_record": "validation/final-build-command.json",
+    "initial_build_revision": "b4fcdb9c0242a996d1ee524eeb30068b0d6c3d8f",
+    "initial_build_qualifies_final_source": false,
+    "sandbox_retry_record": "validation/sandbox-final-build-command.json",
+    "module_regular_files": 181,
+    "ko_files": 167,
+    "archive_exactly_matches_directory": true
+  },
+  "full_host_tests": {
+    "source_revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+    "tests_run": 1351,
+    "elapsed_s": 135.586,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "all_previous_test260_1290_ids_retained": true,
+    "full_runs": 1
+  },
+  "development_tests": {
+    "affected_passed": 34,
+    "PM_followup_snapshot_passed": 11
+  },
+  "config_delta_from_test260": {},
+  "dtb_delta_from_test260": {},
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "container_requirements": 85,
+  "dcc_absent": true,
+  "frozen_stage2_artifacts_intact": true,
+  "accepted_test260_artifacts_intact": true,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "static_checks": {
+    "source_revision": "ea938b245bff3ae9e3c1828751ea149a90337992",
+    "static_checked": true,
+    "W1": true,
+    "sparse_revision": "37156835e3d725b6d750f000be33ba3814bb2310",
+    "changed_driver_diagnostics": [],
+    "upstream_diagnostics": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "dtbs_check_executed": false,
+    "dtbs_check_reason": "byte-identical Test260 DTB; existing PS5169 role-switch schema caveat retained",
+    "poller_only_metadata_changed_verified": true,
+    "device_commands_executed": false
+  },
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-263-passive/Image.gz",
+      "sha256": "fb830606f7fd4e95f5ebc388851cad9e8a6994869e2a4a7125929bc6f24d45a9",
+      "bytes": 22120889
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-263-passive/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-263-passive/config",
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-263-passive/kernel-notes.bin",
+      "sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-263-passive/modules-x710.tar.gz",
+      "sha256": "a50b498c21985bd25cde7cc33f2cf4c498ab17b64590225d25f5f909e4e2bef6",
+      "bytes": 47319271
+    }
+  },
+  "limitations": [
+    "No independent ADC calibration",
+    "No physical snapshot acceptance",
+    "Active protection/OCP and live PM/handoff integration unresolved",
+    "No PPS/pump/direct charging enabled",
+    "No deployment boot bundle generated"
+  ],
+  "next_plan": "PHYSICAL_PLAN.md",
+  "result_commit_validation": {
+    "executed": false,
+    "reason": "documentation/results only; reuse unchanged source qualification and sealed artifacts"
+  }
+}
