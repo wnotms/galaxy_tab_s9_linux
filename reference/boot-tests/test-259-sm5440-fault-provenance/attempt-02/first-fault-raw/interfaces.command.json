@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ip -4 -o addr; systemctl is-active ssh gts9-adbd gts9-usb-acm; cat /sys/class/typec/port0/power_role; cat /sys/class/typec/port0/data_role; systemctl --failed --no-legend --plain"
+  ],
+  "ended_utc": "2026-09-30T04:17:51.255482+00:00",
+  "started_utc": "2026-09-30T04:17:51.130721+00:00",
+  "status": 0
+}

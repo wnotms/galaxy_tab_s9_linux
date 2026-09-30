@@ -1,0 +1,46 @@
+{
+  "verdict": "STOP first fault/transport failure; exact Test255 restored",
+  "boot_id": "08af1c86643545918043f69d36d93807",
+  "source_fault_seconds": 1.676898,
+  "fault_bitmap": "0x80",
+  "int_before": [
+    0,
+    0,
+    98,
+    0
+  ],
+  "status": [
+    0,
+    0,
+    32,
+    0
+  ],
+  "pump_mode": 0,
+  "adc": {
+    "vbus_uv": 4867000,
+    "vbat_uv": 3938000,
+    "ibus_ua": 0,
+    "die_decic": 285
+  },
+  "ncm_first_failure": true,
+  "clean_samples": 0,
+  "observation_completed": false,
+  "rollback": {
+    "bcb_cleared": true,
+    "module_file_count": 181,
+    "partitions": {
+      "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+      "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+      "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+      "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+    },
+    "root_unmounted": true,
+    "tested_candidate_modules_retained": true,
+    "verdict": "accepted Test255 boot/vendor/modules restored and readback verified; TWRP remains"
+  },
+  "pps": false,
+  "pump_on": false,
+  "active_stage3_ready": false,
+  "checks_reexecuted": false
+}

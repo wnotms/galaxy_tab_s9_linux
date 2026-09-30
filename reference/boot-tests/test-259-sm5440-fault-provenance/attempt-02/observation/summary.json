@@ -1,0 +1,11 @@
+{
+  "boot_id": null,
+  "error": "identity: status=255; b'ssh: connect to host 169.254.42.1 port 22: Connection timed out\\r\\n'",
+  "pps_requested": false,
+  "pump_on": false,
+  "rollback_required": true,
+  "samples": [],
+  "verdict": "STOP first non-clean passive observation",
+  "attributed_boot_id": "08af1c86643545918043f69d36d93807",
+  "attribution_source": "candidate-boot and fresh raw ADB identity agree; initial SSH failure retained"
+}

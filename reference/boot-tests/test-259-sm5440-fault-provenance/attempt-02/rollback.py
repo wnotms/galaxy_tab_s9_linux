@@ -38,7 +38,7 @@ if mode == 'enter':
     assert failure['verdict'].startswith('STOP') and failure['rollback_required']
     p.SERIAL = 'gts9wifi-0001'
     raw = r.adb('failed-boot-identity', 'set -e; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes', 30)[0].splitlines()
-    assert p.evidence.canonical_boot_id(raw[0]) == failure['boot_id']
+    assert p.evidence.canonical_boot_id(raw[0]) == (failure['boot_id'] or failure['attributed_boot_id'])
     assert raw[1].split()[0] == M['artifacts']['out/kernel-x710-259-passive/config']['sha256']
     assert raw[2].split()[0] == M['artifacts']['out/kernel-x710-259-passive/kernel-notes.bin']['sha256']
     helper = push('gts9-debian-to-recovery.sh')
