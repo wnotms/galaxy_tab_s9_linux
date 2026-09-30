@@ -2,6 +2,14 @@
 
 ## Current state (2026-09-30)
 
+Owner now authorizes "开始刷机测试": Test260 attempt01 passive PCUSB150s only,
+superseding prior no-flash scope for this attempt/rollback. Read its README.
+Reuse source6fbafede sealed candidate/full1290, no rebuild/fullrepeat. ADB-first
+hardware admission unchanged; explicit30s host-readiness adapter/source-bound
+one-shotSSH, first unready delay retained as suspect. Keep first faults and exact
+Test255 rollback/new260 module slots/older tested backups. No PPS/pumpON/current/
+protection/thermal/USB change. Register/push before recovery/write; stop first.
+
 Test261 source3ecf2093: explicit NCM host-readiness/source-bound SSH entry passes
 one read-only check on acceptedTest255 bootcfb09d01. Windows NIC9 preferred
 169.254.74.160/16 matches WSLeth2/directroute; noCode43, oneSSH0.83s, sameboot.

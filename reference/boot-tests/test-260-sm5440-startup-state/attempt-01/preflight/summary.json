@@ -1,0 +1,50 @@
+{
+  "battery": {
+    "POWER_SUPPLY_CAPACITY": "54",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "-487000",
+    "POWER_SUPPLY_CURRENT_NOW": "-520000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "281",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "3895000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "3901000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "3914000"
+  },
+  "boot_id": "cfb09d0136a64f9b9d5e1ad0e2fd9c45",
+  "checks": {
+    "NCM": true,
+    "NCM-adapter": true,
+    "NCM-host-ready": true,
+    "WiFi": true,
+    "battery": true,
+    "config": true,
+    "dcc-passive-and-slots-absent": true,
+    "kernel-health": true,
+    "no-Code43": true,
+    "no-failed-units": true,
+    "normal-cmdline": true,
+    "notes": true,
+    "same-boot": true,
+    "sink-device": true
+  },
+  "config_sha256": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+  "device_writes": false,
+  "notes_sha256": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+  "partition_module_hash_gate": "fresh TWRP inspection at write boundary",
+  "partitions": {
+    "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+  },
+  "verdict": "preflight passed",
+  "wifi": "10.191.121.114"
+}
