@@ -2,6 +2,14 @@
 
 ## Current state (2026-09-30)
 
+Test260 attempt01 STOP before deployment: unsupported journalctl --no-legend
+auxiliary capture, raw firsterror retained; no recovery/devicewrites occurred.
+Attempt02 corrects the host spelling before first physical test; inherited
+preflight timestamps are explicit and sameboot/config/notes/battery/history
+refresh passes. Same sealed artifacts/slots, affected6+actualarchive5 reused.
+Read attempt02 README; original owner flash authorization still applies to
+this predeployment correction, not to retry after a physical failure.
+
 Owner now authorizes "开始刷机测试": Test260 attempt01 passive PCUSB150s only,
 superseding prior no-flash scope for this attempt/rollback. Read its README.
 Reuse source6fbafede sealed candidate/full1290, no rebuild/fullrepeat. ADB-first
