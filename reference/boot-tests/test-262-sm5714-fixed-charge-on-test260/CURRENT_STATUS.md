@@ -1,14 +1,12 @@
-# Test262 current status
+# Test262 final status
 
-Charging phase PASS300.011s/61samples, ordinary fixed9V/1.5A, battery net
-mean7.827W, SOC54→56%, pack28.4–29.2C. See charging-attempt-02 RESULTS.
+Work is recorded:300.011s fixed9V/1.5A charging phase PASS, post-unplug state
+PASS, PCADB/NCM/Wi-Fi/identity/health endpoint PASS. See RESULTS and summary.
+Original unplug observer STOP waiting300s; transition not captured, whole
+procedure COMPLETED_WITH_EVIDENCE_GAP and not whollyCLEAN. Keep all first STOPs
+and pretest Windowschime incident. Root cause of audible issue unknown.
 
-Original unplug observer STOP after300s waiting, before removal was observed.
-The owner subsequently confirmed removal; post-unplug-readonly confirms15.001s
-of normal offline/Discharging/negative current and unchanged kernel/startup.
-Retain this evidence gap; no continuous transition/unplug acceptance claim.
-No new charge trial. PC rescue attachment/check pending owner confirmation;
-check once after confirmation instead of running another long waiting loop.
-
-No PPS/pumpON/config change/reboot/flash. ActiveStage3 remains NOT READY.
-Historical host-parserSTOP and Windowschime incident remain retained.
+Device stays on unchanged accepted Test260 passive candidate, PC USB attached;
+no PPS/pumpON/config/reboot/flash. Exact rollback retained. ActiveStage3 NOT READY.
+No automatic next physical test or higher-current level. No new build/full tests
+for results; reuse Test260 artifacts and44 affected parser/telemetry/admission.

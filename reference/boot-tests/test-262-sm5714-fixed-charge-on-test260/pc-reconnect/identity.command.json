@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; uname -a; cat /proc/uptime; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; echo DCC_NODES_ABSENT; systemctl show serial-getty@hvc0.service -p ActiveState; cat /sys/class/udc/a600000.usb/state; systemctl show gts9-adbd -p ActiveState -p NRestarts -p MainPID"
+  ],
+  "ended_utc": "2026-09-30T10:40:07.630807+00:00",
+  "started_utc": "2026-09-30T10:40:07.474262+00:00",
+  "status": 0
+}

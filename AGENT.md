@@ -2,6 +2,18 @@
 
 ## Current state (2026-09-30)
 
+Test262 finalized COMPLETED_WITH_EVIDENCE_GAP: fixed9V/1.5A300.011s/61samples
+chargingPASS (netbatterymean7.827W, SOC54→56%, pack28.4–29.2C); post-owner
+unplug15.001s offline/Discharging endpointPASS and PCADB/NCM/Wi-Fi/config/
+notes/DCC/health endpointPASS on same18bce160. Original unplug observerSTOP
+waiting300s is retained; no captured transition or precise recovery time claim,
+not whole-seriesCLEAN. Read Test262 RESULTS/summary/SHA256. HostparserfirstSTOP
+and pretestWindowschimes/rootcauseunknown retained. Device remains Test260
+passive onPCUSB; no hardware/config/source change/reboot/flash/PPS/pumpON.
+Reuse44 affected tests and Test260 pairing/build, results executed:false.
+ActiveStage3 NOT READY; no automatic next physical test/current increase.
+
+
 Test262 charging phasePASS retained. Original unplug observer STOP waiting300s
 before owner removal; keep its rawSTOP and do not claim captured transition.
 After owner's "已拔", separate read-only15.001s endpoint confirms offline/
