@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; test ! -e /sys/class/power_supply/sm5440-passive; test ! -e /usr/lib/modules/.gts9-test259-original; test ! -e /usr/lib/modules/.gts9-test259-stage; test ! -e /usr/lib/modules/.gts9-test259-tested; test -d /usr/lib/modules/.gts9-test258-tested; systemctl is-active ssh gts9-adbd gts9-usb-acm"
+  ],
+  "ended_utc": "2026-09-30T04:11:33.942632+00:00",
+  "started_utc": "2026-09-30T04:11:33.831987+00:00",
+  "status": 0
+}
