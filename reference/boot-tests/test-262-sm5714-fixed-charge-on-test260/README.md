@@ -61,3 +61,17 @@ NCM/Wi-Fi/sameboot/health gates pass. See `usb-chime-incident/RESULTS.md`.
 Root cause remains unknown; the historical incident is retained, not relabeled
 clean. No kernel/service/configuration change. Proceed to the registered
 charging collector and attachment prompt; charging has not yet been observed.
+
+## Fresh charging attempt02 (host parser correction)
+
+Attempt01 (`charging/`) STOPPED before any charger prompt or charge window:
+empty failed-unit section at EOF was not parsed after separating the journal.
+Retain its generated STOP and raw evidence. The EOF-only host parser correction
+passes44 affected tests (including four exact first-capture replay cases).
+No kernel/configuration, current/thermal policy or hardware acceptance changed.
+
+Register a fresh `charging-attempt-02/`, sameboot18bce160, Wi-Fi10.191.121.145,
+300s ordinary SM5714 fixed5V/9V charging; all above stops remain unchanged.
+Start collection and wait for ARMED before requesting Lenovo USB-C2 attachment.
+This is correction of a pre-physical observer failure within the owner's
+existing charging authorization, not retry after a physical charging fault.

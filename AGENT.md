@@ -2,6 +2,13 @@
 
 ## Current state (2026-09-30)
 
+Test262 charging attempt01 STOP before charger prompt/window due host parser
+empty@@failed EOF recognition, no physical charging fault or device change.
+Retain charging/RESULTS/raw STOP/seal. EOF correction44 affected tests+syntax
+pass, no kernel/full repeat. Fresh charging-attempt-02 uses same18bce160 boot,
+unchanged300s5V/9V limits and first-fault stops. Push registration, start Wi-Fi
+collector, wait ARMED, then request18W C2 connection. No PPS/pumpON/reboot.
+
 Test262 charging has NOT started yet. Owner reports Windows connection sounds
 resolved after manual PC-USB replug; fresh ADB/NCM/Wi-Fi/boot/battery/passive-OFF
 gates pass. Read usb-chime-incident RESULTS/summary/raw seal. Root cause unknown;

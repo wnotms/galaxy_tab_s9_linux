@@ -17,6 +17,31 @@ def monitored():
 
 
 class FixedChargeRegressionTests(unittest.TestCase):
+    def capture(self):
+        # Retained first live host failure: the separator consumed the newline
+        # after @@failed before parsing. Replay the exact captured evidence.
+        root = Path(__file__).resolve().parents[1]
+        return (root / 'reference/boot-tests/test-262-sm5714-fixed-charge-on-test260'
+                / 'charging/sample-000.txt').read_text().split('\n@@kernel\n', 1)[0]
+
+    def test_captured_empty_failed_section_at_eof(self):
+        value = regression.parse(self.capture())
+        self.assertEqual(value['failed_units'], '')
+        self.assertEqual(value['usb_type'], 'SDP')
+        self.assertIsNone(regression.safety(value, value['boot_id']))
+        self.assertFalse(regression.charger_ready(value))
+
+    def test_empty_failed_section_with_newline(self):
+        self.assertEqual(regression.parse(self.capture() + '\n')['failed_units'], '')
+
+    def test_missing_failed_section_still_fails_closed(self):
+        with self.assertRaises(KeyError):
+            regression.parse(self.capture().removesuffix('@@failed'))
+
+    def test_captured_failed_unit_still_stops(self):
+        value = regression.parse(self.capture() + '\nbad.service failed\n')
+        self.assertEqual(regression.safety(value, value['boot_id']), 'systemd-failed-unit')
+
     def test_fixed_9v_safe_and_ready(self):
         value = monitored()
         self.assertIsNone(regression.safety(value, value['boot_id']))

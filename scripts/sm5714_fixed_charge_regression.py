@@ -20,7 +20,9 @@ echo @@failed; systemctl --failed --plain --no-legend --no-pager
 
 
 def parse(raw):
-    parts = re.split(r'^@@([^\n]+)\n', raw, flags=re.M)
+    # Splitting off the incremental journal leaves an empty @@failed at EOF.
+    # That is a captured empty failed-unit list, not a missing section.
+    parts = re.split(r'^@@([^\n]+)(?:\n|\Z)', raw, flags=re.M)
     sample = telemetry.parse_sample(parts[0])
     sections = dict(zip(parts[1::2], parts[2::2]))
     monitor = dict(x.split('=', 1) for x in sections['passive'].splitlines()
