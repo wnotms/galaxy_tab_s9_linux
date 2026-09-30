@@ -1,5 +1,5 @@
 {
-  "verdict": "PC_AND_PD_PHASES_PASS_ENDPOINTS_PENDING",
+  "verdict": "PC_PD_UNPLUG_PASS_PC_RECONNECT_PENDING",
   "boot_id": "33435db741e94574aeb2c209730acf67",
   "seconds": 30.22,
   "samples": 7,
@@ -68,6 +68,12 @@
     -6.5,
     3.0
   ],
-  "unplug_phase": "PENDING_OWNER_CONFIRMATION",
-  "pc_reconnect_phase": "NOT_STARTED"
+  "unplug_phase": "PASS",
+  "pc_reconnect_phase": "PENDING_OWNER_CONFIRMATION",
+  "unplug_observation_seconds": 15.37,
+  "unplug_samples": 4,
+  "results_validation": {
+    "executed": false,
+    "reason": "Raw evidence/status only; reuse 15 endpoint checks and unchanged ea938b24 qualification."
+  }
 }

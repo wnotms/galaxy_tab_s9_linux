@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 unplug endpoint PASS15.370s/4samples on33435db7: offline
+USB/TCPM/passive, Discharging -1.720..-1.063A, pack29.4C, SM5440 OFF/IBUS0/
+validfresh/unchangedprotection, no new fault. Read UNPLUG_RESULTS/raw seal.
+Detached4.096V is raw-zero ADC floor, not attachedsource/calibration. PCrescue
+endpoint pending owner connection; no transition/recoverylatency claim.
+Results executed:false, reuse15 focused checks/ea938b24 qualification; no
+kernel/full repeat. No PPS/pumpON/config/current/thermal/USB change. Whole
+series incomplete; activeStage3 NOT READY.
+
 Test263 attempt01 fixed9V snapshot PASS30.420s/7samples on33435db7: reported
 VBUS9.076..9.109V, IBUS0/OFF, validfresh/rawdecode/protection unchanged,
 pack29.0..29.1C, netbatterymean7.813216W (not USBinputpower). Read PD_RESULTS/
