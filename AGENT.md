@@ -2,6 +2,20 @@
 
 ## Current state (2026-09-30)
 
+Test262 charging has NOT started. Owner reports repeated Windows connection
+sounds while PC USB is attached; keep charger connection paused for read-only
+USB/PnP attribution. Do not infer a tablet disconnect from dummy_udc.0 being
+unattached: the actual gts9 gadget is bound to a600000.usb and configured.
+Preserve the incident evidence; no USB/service/kernel changes or reboot.
+
+Owner authorizes ordinary charging test. Test262 registers300s SM5714 fixedPD
+on currentTest260/18bce160, priorLenovoYG65G C2 18W source, WiFi10.191.121.145.
+Read Test262 README before cable action. No PPS/pumpON/current/config change,
+reflash/reboot or automatic20min extension. Keep SM5440 passive/OFF and first
+fault stops; record battery netpower vs contract/ICL ceilings separately.
+PassiveADC is uncalibrated; no inputpower/absolutevoltage safety-proof claim.
+Qualify affected host tests only, reuse Test260 artifact/kernel qualification.
+
 Test260 attempt02 PASS bounded passivePCUSB: boot18bce160,150.197s/30samples,
 181 modulehashes/partitionreadbacks/config/notes match. First-only0x80 retained:
 pending0.290025s/event0.290045s/confirmed2.609795s; two fresh safe conversions,
