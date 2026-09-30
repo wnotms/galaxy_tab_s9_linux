@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Owner clarifies "先修 NCM，暂不刷机". Test261 registers host-only bounded NCM
+readiness and one source-bound SSH connection on unchanged Test255. Read
+docs/NCM_HOST_READINESS.md and Test261 README. No flash/reboot/rootfs/network/
+USB/kernel/charging changes; Test260 remains offline. Preserve first unready
+metadata/first SSH failure; no retry-to-clean. New helper is opt-in for fresh
+registrations, never silently changes old runner deadlines. Historical Test259
+timeout cause is not established. Qualify affected host tests only; no rebuild
+or repeated full kernel regression for this host-only change.
+
 Test260 offline correction source6fbafede now qualifies: startupREVBLK first-only
 confirmation state; build/bundle/protected/config/DT/181module audit andfull1290
 pass, all prior1270IDs retained. Driverfocused23 and W=1/sparse pass (one retained

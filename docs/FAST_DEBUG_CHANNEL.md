@@ -173,6 +173,13 @@ $ ping -c1 169.254.42.1
 
 ## ssh
 
+For early-startup NCM checks on the current mirrored Windows/WSL host, use the
+explicit [bounded readiness entry](NCM_HOST_READINESS.md) before attempting a
+connection. It verifies Windows APIPA and the matching WSL route, then makes
+one source-bound authenticated connection. The existing wrapper below retains
+its original behavior and timeout; historical runs do not acquire implicit
+retries or extra waits. Current native ADB is under `D:\android\platform-tools`.
+
 `sshd` was already running; only key auth was missing, and
 `scripts/gts9-ssh.sh` is the wrapper:
 
