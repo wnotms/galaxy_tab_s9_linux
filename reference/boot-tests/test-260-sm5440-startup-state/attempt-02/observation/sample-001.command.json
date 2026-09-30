@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/dev/null",
+    "-4",
+    "-T",
+    "-b",
+    "169.254.59.206",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectionAttempts=1",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "root@169.254.42.1",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uptime; cat /proc/uptime; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@power-role; cat /sys/class/typec/port0/power_role; echo @@data-role; cat /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@kernel; journalctl -b -k --no-pager -o json --show-cursor --after-cursor='s=0e9cc8651fa34ae5875adb1b7f906071;i=be956;b=18bce160ddda4c5b9f27f8429f204b59;m=1e3e527;t=65cafa961326d;x=2af6779b4427ef'"
+  ],
+  "ended_utc": "2026-09-30T09:10:02.146465+00:00",
+  "started_utc": "2026-09-30T09:10:01.929734+00:00",
+  "status": 0
+}

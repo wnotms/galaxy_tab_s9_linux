@@ -1,0 +1,89 @@
+{
+  "verdict": "PASS bounded passive PC-USB acceptance with retained confirmed-inactive startup warning",
+  "kernel_source": "6fbafede",
+  "registration_commit": "34649dc5",
+  "installation_record_commit": "92d7e5b0",
+  "boot_id": "18bce160ddda4c5b9f27f8429f204b59",
+  "boot_attribution": "attributed",
+  "observation_seconds": 150.197,
+  "samples": 30,
+  "startup": {
+    "classification": "confirmed-inactive-startup-latch",
+    "confirmation_source_us": 2609795,
+    "event_source_us": 290045,
+    "pending_source_us": 290025,
+    "warning_retained": true
+  },
+  "readiness": {
+    "delayed_readiness": false,
+    "readiness_seconds": 12.879,
+    "ready": true,
+    "reason": "Windows/WSL NCM path ready",
+    "samples": 1,
+    "source_ipv4": "169.254.59.206",
+    "windows_interface_index": 9,
+    "wsl_interface": "eth2"
+  },
+  "module_file_count": 181,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "notes_sha256": "5425adeadc1c07b2eea7fc2869b5a884eba4c3ad0406b7c217dbe91dc8ef116b",
+  "partition_readbacks": {
+    "boot": "62bfc5ff19ff562590556dbae944799a0d5f86cf0256c006c14273f3aa96fad1",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "adb": true,
+  "ncm": true,
+  "wifi": true,
+  "code43": false,
+  "pps_requested": false,
+  "pump_on": false,
+  "protection_policy_changed": false,
+  "adc_independently_calibrated": false,
+  "ocp_physically_qualified": false,
+  "active_stage3_ready": false,
+  "rollback_executed": false,
+  "rollback_modules": "/usr/lib/modules/.gts9-test260-original",
+  "installed_candidate": "Test260 passive; bounded acceptance only",
+  "prior_attempt01": "STOP host option error before deployment; retained",
+  "qualification": {
+    "host_adapter_tests": 6,
+    "actual_archive_install_restore_tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "kernel_build_executed": false,
+    "full_tests_executed": false,
+    "reason": "unchanged qualified artifacts; host-only registration adapter affected tests pass"
+  },
+  "reported_ranges": {
+    "battery/POWER_SUPPLY_TEMP": {
+      "min": 287,
+      "max": 293
+    },
+    "battery/POWER_SUPPLY_VOLTAGE_NOW": {
+      "min": 3921000,
+      "max": 3941000
+    },
+    "battery/POWER_SUPPLY_CAPACITY": {
+      "min": 56,
+      "max": 56
+    },
+    "passive/POWER_SUPPLY_TEMP": {
+      "min": 265,
+      "max": 275
+    },
+    "passive/POWER_SUPPLY_VOLTAGE_NOW": {
+      "min": 4906000,
+      "max": 4913000
+    },
+    "passive/POWER_SUPPLY_CURRENT_NOW": {
+      "min": 0,
+      "max": 0
+    }
+  }
+}

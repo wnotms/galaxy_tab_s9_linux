@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@power-role; cat /sys/class/typec/port0/power_role; echo @@data-role; cat /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --plain --no-legend --no-pager; echo @@boot; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-09-30T09:09:35.863124+00:00",
+  "started_utc": "2026-09-30T09:09:35.747501+00:00",
+  "status": 0
+}

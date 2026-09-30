@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/dev/null",
+    "-4",
+    "-T",
+    "-b",
+    "169.254.59.206",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectionAttempts=1",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "root@169.254.42.1",
+    "ip -4 -o addr show dev wlp1s0"
+  ],
+  "ended_utc": "2026-09-30T09:09:53.437894+00:00",
+  "started_utc": "2026-09-30T09:09:53.280106+00:00",
+  "status": 0
+}

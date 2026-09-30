@@ -2,6 +2,17 @@
 
 ## Current state (2026-09-30)
 
+Test260 attempt02 PASS bounded passivePCUSB: boot18bce160,150.197s/30samples,
+181 modulehashes/partitionreadbacks/config/notes match. First-only0x80 retained:
+pending0.290025s/event0.290045s/confirmed2.609795s; two fresh safe conversions,
+Good health/IBUS0 throughout, no newkernel/CPU/failedunit/Code43. ADB/NCM/WiFi
+pass; dynamicAPIPA169.254.59.206 matchesWSLeth2, one-shotboundauth, no retries.
+Read attempt02 RESULTS/summary/rawseal; historicalTest258/259 failures unchanged.
+Device now stays on passedTest260 passive, exactTest255 original modules in
+.gts9-test260-original plus rollback images retained, older tested backups intact.
+No PPS/pumpON/protection/current/thermal/USB change. No automaticnextphysicaltest.
+Passive pass is NOT ADC calibration/OCP/PM/direct readiness; ActiveStage3 NOT READY.
+
 Test260 attempt02 installed sealed boot/vendor_boot and181 paired modules with
 five-partition readback; exact Test255 original modules saved in fresh260slot.
 TWRP root unmounted/BCB cleared, candidate not yet booted/accepted at this record.
