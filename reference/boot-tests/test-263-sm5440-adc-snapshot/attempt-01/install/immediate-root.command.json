@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; cat /mnt/debian/etc/machine-id; grep ' /mnt/debian ' /proc/mounts; test ! -e /mnt/debian/usr/lib/modules/.gts9-test263-original; test ! -e /mnt/debian/usr/lib/modules/.gts9-test263-stage"
+  ],
+  "ended_utc": "2026-09-30T14:33:26.754133+00:00",
+  "started_utc": "2026-09-30T14:33:26.668231+00:00",
+  "status": 0
+}

@@ -2,6 +2,13 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 boot/vendor and181 paired modules installed/readback verified;
+original Test260 modules saved in .gts9-test263-original, older backups intact.
+Root unmounted and BCB cleared. Candidate has not yet booted/accepted. Next one
+normal Debian boot, exact config/notes/journal attribution and passivePC30s
+snapshot observation. No PPS/pumpON/protection/current/thermal/USB change.
+
+
 Test263 attempt01 verified TWRP identity/root/five original partitions/current181
 modules and staged files; no boot/vendor/module write yet. Save/push this evidence
 before paired installation. Exact Test260 rollback and older backups remain.

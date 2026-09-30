@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(blockdev --getsize64 /dev/block/by-name/vendor_boot)\" = 100663296; dd if=/tmp/test263-a01-candidate-vendor_boot.img of=/dev/block/by-name/vendor_boot bs=4M; sync"
+  ],
+  "ended_utc": "2026-09-30T14:33:35.787945+00:00",
+  "started_utc": "2026-09-30T14:33:35.463646+00:00",
+  "status": 0
+}
