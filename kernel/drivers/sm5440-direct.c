@@ -6,6 +6,7 @@
  * mode-OFF and traced converter controls. Unaccepted ADC => unavailable.
  */
 #include <linux/delay.h>
+#include <linux/debugfs.h>
 #include <linux/i2c.h>
 #include <linux/jiffies.h>
 #include <linux/module.h>
@@ -13,6 +14,7 @@
 #include <linux/pm.h>
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
+#include <linux/seq_file.h>
 #include <linux/string.h>
 #include <linux/workqueue.h>
 
@@ -46,7 +48,118 @@ struct sm5440_direct {
 	u8 startup_confirmations;
 	unsigned long startup_deadline;
 	struct sm5440_sample startup_sample;
+	unsigned long startup_stamp;
+	int last_sample_error;
+	struct dentry *debug_root;
 };
+
+/* Diagnostic copy only. No register access or charging authorization. */
+struct sm5440_snapshot {
+	struct sm5440_sample sample, startup;
+	unsigned long captured, startup_stamp;
+	u64 age_ms;
+	int last_error;
+	u8 pending;
+	bool present, stopped, fault, fresh;
+};
+
+static void sm5440_snapshot_capture(struct sm5440_direct *sm,
+				    struct sm5440_snapshot *snapshot)
+{
+	mutex_lock(&sm->io_lock);
+	snapshot->sample = sm->sample;
+	snapshot->startup = sm->startup_sample;
+	snapshot->captured = jiffies;
+	snapshot->startup_stamp = sm->startup_stamp;
+	snapshot->last_error = sm->last_sample_error;
+	snapshot->pending = sm->startup_confirmations;
+	snapshot->present = sm->initial_sample_done;
+	snapshot->stopped = sm->stopped;
+	snapshot->fault = sm->fault;
+	mutex_unlock(&sm->io_lock);
+	snapshot->fresh = snapshot->present && snapshot->sample.valid &&
+		!snapshot->stopped && !snapshot->fault && !snapshot->pending &&
+		!snapshot->sample.faults && !time_before(snapshot->captured,
+			snapshot->sample.stamp) && !time_after(snapshot->captured,
+			snapshot->sample.stamp + msecs_to_jiffies(2500));
+	/* Keep long fault-cache ages in 64 bits; zero without present is unknown. */
+	snapshot->age_ms = snapshot->present ?
+		jiffies64_to_msecs((u64)(snapshot->captured - snapshot->sample.stamp)) : 0;
+}
+
+static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
+				       const struct sm5440_sample *sample)
+{
+	seq_printf(seq, "%s_valid=%u\n%s_stamp_jiffies=%lu\n%s_faults=0x%x\n",
+		   name, sample->valid, name, sample->stamp, name, sample->faults);
+	seq_printf(seq, "%s_int=%*ph\n%s_status=%*ph\n%s_adc=%*ph\n", name,
+		   4, sample->int_before, name, 4, sample->status, name, 11, sample->adc);
+	seq_printf(seq, "%s_int4_disable=0x%02x\n%s_int4_wait=0x%02x\n",
+		   name, sample->int4_after_disable, name, sample->int4_wait);
+	seq_printf(seq, "%s_mode_before=0x%02x\n%s_mode_after=0x%02x\n",
+		   name, sample->mode_before, name, sample->mode_after);
+	seq_printf(seq, "%s_cntl2=0x%02x\n%s_vbuscntl=0x%02x\n"
+		   "%s_vbatcntl=0x%02x\n%s_prtncntl=0x%02x\n", name, sample->cntl2,
+		   name, sample->vbuscntl, name, sample->vbatcntl, name, sample->prtncntl);
+	seq_printf(seq, "%s_vbus_uv=%u\n%s_vbat_uv=%u\n%s_ibus_ua=%u\n%s_die_decic=%d\n",
+		   name, sample->vbus_uv, name, sample->vbat_uv,
+		   name, sample->ibus_ua, name, sample->die_decic);
+}
+
+static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
+{
+	struct sm5440_snapshot snapshot;
+
+	(void)unused;
+	sm5440_snapshot_capture(seq->private, &snapshot);
+	/* Format after releasing io_lock. Never refresh or consume INT on read. */
+	seq_puts(seq, "format=sm5440-passive-v1\nregisters_are_cached=1\n"
+		 "independently_calibrated=0\npump_enable_supported=0\n");
+	seq_printf(seq, "capture_jiffies=%lu\nsample_present=%u\nsample_fresh=%u\n"
+		   "sample_age_ms=%llu\nstopped=%u\nfault=%u\nstartup_pending=%u\n"
+		   "last_sample_error=%d\nstartup_retained=%u\nstartup_capture_jiffies=%lu\n",
+		   snapshot.captured, snapshot.present, snapshot.fresh,
+		   (unsigned long long)snapshot.age_ms, snapshot.stopped, snapshot.fault,
+		   snapshot.pending, snapshot.last_error, !!snapshot.startup.faults,
+		   snapshot.startup_stamp);
+	sm5440_snapshot_sample_show(seq, "sample", &snapshot.sample);
+	sm5440_snapshot_sample_show(seq, "startup", &snapshot.startup);
+	return 0;
+}
+DEFINE_SHOW_ATTRIBUTE(sm5440_snapshot);
+
+static void sm5440_debugfs_remove(void *data)
+{
+	struct sm5440_direct *sm = data;
+
+	debugfs_remove(sm->debug_root);
+	sm->debug_root = NULL;
+}
+
+static void sm5440_debugfs_init(struct sm5440_direct *sm)
+{
+	struct dentry *file;
+	char name[64];
+
+	if (snprintf(name, sizeof(name), "sm5440-%s", dev_name(sm->dev)) >= (int)sizeof(name))
+		return;
+	sm->debug_root = debugfs_create_dir(name, NULL);
+	if (IS_ERR_OR_NULL(sm->debug_root)) {
+		sm->debug_root = NULL;
+		return;
+	}
+	file = debugfs_create_file("snapshot", 0400, sm->debug_root, sm,
+				   &sm5440_snapshot_fops);
+	if (IS_ERR_OR_NULL(file)) {
+		sm5440_debugfs_remove(sm);
+		return;
+	}
+	/* Added after stop: devres removes/drains files before freeing driver data.
+	 * Use normal debugfs proxies, not the unsafe create_file variant.
+	 */
+	if (devm_add_action_or_reset(sm->dev, sm5440_debugfs_remove, sm))
+		dev_dbg(sm->dev, "passive snapshot unavailable; monitor unchanged\n");
+}
 
 static const struct regmap_config sm5440_regmap = {
 	.reg_bits = 8,
@@ -232,6 +345,7 @@ static void sm5440_poll(struct work_struct *work)
 		return;
 	ret = sm5440_sample_once(sm, &sample);
 	mutex_lock(&sm->io_lock);
+	sm->last_sample_error = ret;
 	if (ret) {
 		sm->sample.valid = false;
 		if (ret != -ESHUTDOWN) {
@@ -248,6 +362,7 @@ static void sm5440_poll(struct work_struct *work)
 		 */
 		if (!sm->initial_sample_done && sm5440_startup_revblk(&sample)) {
 			sm->startup_sample = sample;
+			sm->startup_stamp = jiffies;
 			sm->startup_confirmations = 2;
 			sm->startup_deadline = jiffies + msecs_to_jiffies(5000);
 			dev_warn(sm->dev, "passive startup REVBLK awaiting two fresh confirmations\n");
@@ -430,10 +545,11 @@ static int sm5440_probe(struct i2c_client *client)
 	sm->psy = devm_power_supply_register(sm->dev, &sm5440_desc, &config);
 	if (IS_ERR(sm->psy))
 		return PTR_ERR(sm->psy);
-	/* Register last so worker is drained before power_supply/regmap free. */
+	/* Register stop after supplies so work drains before their memory is freed. */
 	ret = devm_add_action_or_reset(sm->dev, sm5440_stop, sm);
 	if (ret)
 		return ret;
+	sm5440_debugfs_init(sm);
 	schedule_delayed_work(&sm->work, 0);
 	dev_info(sm->dev, "passive SM5440 revision %u; pump activation unavailable\n", id >> 4);
 	return 0;
