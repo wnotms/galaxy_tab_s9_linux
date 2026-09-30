@@ -5,11 +5,11 @@
 Test259 source74e75de6 fixes first-fault INT/STATUS/ADC/protection provenance;
 passive build/bundle/protected/config/DT audit/full1270/related15/archive5 pass.
 Attempt01 hosthelperpath STOP before permanentwrites retained. Attempt02 installed
-and booted08af1c86, then firstNCM SSHtimeout + source0x80: INT006200 vs live
-STATUS002000, modeOFF, ADC4.867V/3.938V/0A/28.5C. See RESULTS/FAILURE_ANALYSIS.
+and booted08af1c86, then firstNCM SSHtimeout + source0x80: INT3=0x62 vs live
+STATUS3=0x20, modeOFF, ADC4.867V/3.938V/0A/28.5C. See RESULTS/FAILURE_ANALYSIS.
 No150s pass, no retry-to-clean, no PPS/pumpON/protection/current change. This
 cannot prove priorTest2580x82 benign. ExactTest255 fivepartitions/181modules
-restored; finalbootcfb09d01 passes14 health/rescue gates, WiFi10.191.121.114;
+restored; finalbootcfb09d01 passes13 health/rescue gates, WiFi10.191.121.114;
 Test258/Test259 testedmodules preserved. ActiveStage3 NOT READY. Next is offline
 vendor startup-latch/state/protection audit and separateNCM timing diagnosis,
 not faultmasking or another automaticphysicalattempt. Results commits reuse

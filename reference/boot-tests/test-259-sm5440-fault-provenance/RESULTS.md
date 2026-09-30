@@ -10,7 +10,7 @@ identitytimeout and source0x80 (preconversionREVBLK, liveSTATUSclear, modeOFF,
 completeADC). Fullraw evidence retained. No150s passiveacceptance. Previous
 Test2580x82 cannot be reclassified from this differentboot's0x80 evidence.
 
-ExactTest255 rollback completed. Freshfinalbootcfb09d01 passes all14 baseline/
+ExactTest255 rollback completed. Freshfinalbootcfb09d01 passes all13 baseline/
 health/rescue checks, WiFi10.191.121.114. FailedTest258/259modules retained.
 No PPS/pumpON/protection/current change. ActiveStage3 NOT READY.
 
