@@ -1,0 +1,151 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'AGENT.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/PREFLIGHT_SHA256.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-devices.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-devices.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/adb-devices.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/battery.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/battery.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/battery.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/boot-history.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/boot-history.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/boot-history.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/cmdline.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/cmdline.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/cmdline.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/current-modules.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/current-modules.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/current-modules.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/dcc.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/dcc.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/dcc.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/embedded-config.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/embedded-config.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/embedded-config.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/failed-units.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/failed-units.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/failed-units.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/final-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/final-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/final-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/initial-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/initial-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/initial-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-journal.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-journal.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-journal.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-json.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-json.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-json.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/kernel-scan.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/notes-hash.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/notes-hash.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/notes-hash.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/partitions.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/partitions.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/partitions.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/power-supplies.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/power-supplies.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/power-supplies.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/protected-settings.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/protected-settings.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/protected-settings.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test249.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test249.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test249.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test252.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test252.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test252.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test254.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test254.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/rollback-test254.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/summary.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/typec.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/typec.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/typec.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/uname.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/uname.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/uname.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/usb-services.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/usb-services.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/usb-services.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-address.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-address.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-address.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/wifi-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-code43.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-code43.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-code43.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-network.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-network.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-network.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-pnp.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-pnp.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/baseline-diagnosis/windows-pnp.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight.py': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/boot-history.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/boot-history.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/boot-history.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/cmdline.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/cmdline.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/cmdline.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/identity-after-stop.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/identity-after-stop.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/initial-boot.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/initial-boot.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/initial-boot.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/summary.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/uname.command.json': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/uname.stderr': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-258-sm5440-passive/preflight/uname.txt': No reviewed dependency rule: run all tests.
+'scripts/sm5440_passive_evidence.py': No reviewed dependency rule: run all tests.
+'tests/test_sm5440_passive_evidence.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1264, tiers={'core': 1159, 'artifacts': 18, 'archive': 87}
+..............................READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................../tmp/tmpcyhp8g5g/pogo.c:44:12: warning: unused function 'gpiod_get_value_cansleep' [-Wunused-function]
+   44 | static int gpiod_get_value_cansleep(int *x) { return *x; }
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpcyhp8g5g/pogo.c:45:13: warning: unused function 'disable_irq_nosync' [-Wunused-function]
+   45 | static void disable_irq_nosync(int irq) { (void)irq; }
+      |             ^~~~~~~~~~~~~~~~~~
+2 warnings generated.
+12 packet/error cases passed
+.....pogo suspend/resume lifecycle cases passed
+.....................{
+  "round": 1,
+  "started_utc": "2026-09-30T02:41:38.796861+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-09-30T02:41:38.797031+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-09-30T02:41:38.797502+00:00"
+}
+.....................................................................................................................................................................................................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 1264 tests in 110.005s
+
+OK
+Offline checks completed for the reported scope; this does not establish physical capture readiness.

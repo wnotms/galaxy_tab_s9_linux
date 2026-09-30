@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-CimInstance Win32_PnPEntity | Where-Object { $_.ConfigManagerErrorCode -eq 43 } | Select-Object Name,PNPDeviceID,ConfigManagerErrorCode | ConvertTo-Json"
+  ],
+  "ended_utc": "2026-09-30T02:59:34.176687+00:00",
+  "started_utc": "2026-09-30T02:59:33.429522+00:00",
+  "status": 0
+}

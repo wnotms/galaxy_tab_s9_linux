@@ -64,3 +64,16 @@ and push registration before this reboot. No image/module/parameter repair and
 no candidate deployment until that fresh preflight passes. If the command line
 or any other gate still differs, stop and report; no second baseline reboot.
 Candidate-stage stop-on-first-failure and no automatic experiment retry remain.
+
+## Owner workflow refinement (2026-09-30)
+
+Reuse the completed f3a266b5 build/full1264 qualification for unchanged candidate
+inputs and sealed artifacts. No rebuild/full rerun for registration, staging,
+physical results or documentation commits. Adapted deployment scripts receive
+syntax review and the nine existing passive-admission tests. Full baseline
+identity is captured once after the registered normal reboot. Enter-recovery
+checks same boot/config/notes and fresh battery; TWRP verifies partitions and
+root/modules once before writes. Install confirms the same TWRP boot and staged
+files, then reads back all five partitions. Observation combines boot ID,
+telemetry and fault checks per sample, full journals at boundaries/first failure.
+Safety, rescue, rollback and the150s window remain required. No active PPS/pump.
