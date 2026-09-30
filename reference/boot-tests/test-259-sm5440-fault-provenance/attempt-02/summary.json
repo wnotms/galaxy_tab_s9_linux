@@ -42,5 +42,95 @@
   "pps": false,
   "pump_on": false,
   "active_stage3_ready": false,
-  "checks_reexecuted": false
+  "checks_reexecuted": false,
+  "final_baseline": {
+    "battery": {
+      "POWER_SUPPLY_CAPACITY": "65",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "-215000",
+      "POWER_SUPPLY_CURRENT_NOW": "-350000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "292",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4032000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4032000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4022000"
+    },
+    "boot_id": "cfb09d0136a64f9b9d5e1ad0e2fd9c45",
+    "candidate_modules_retained": true,
+    "checks": {
+      "NCM": true,
+      "WiFi": true,
+      "baseline-only-and-DCC-absent": true,
+      "battery": true,
+      "boot": true,
+      "cmdline": true,
+      "config": true,
+      "kernel-health": true,
+      "no-Code43": true,
+      "no-failed-units": true,
+      "notes": true,
+      "same-boot": true,
+      "sink-device": true
+    },
+    "full_host_tests_repeated": false,
+    "kernel_rebuilt": false,
+    "partition_module_identity": "five partition rollback readbacks and181 restore checks reused; no intervening writes",
+    "verdict": "accepted Test255 restored and final gates passed",
+    "wifi_ip": "10.191.121.114"
+  },
+  "cpu_journal_scan": {
+    "rows": 1113,
+    "fault_counts": {},
+    "suspects": [],
+    "known_warning_count": 44,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "first_source_timestamp": "0",
+    "last_source_timestamp": "31714168",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "event_count": 1,
+      "setup_count": 3,
+      "cycles": [
+        {
+          "setup_source_seconds": 3.913233,
+          "events": [],
+          "completion_source_seconds": 4.864843
+        },
+        {
+          "setup_source_seconds": 5.081608,
+          "events": [
+            {
+              "row": 1038,
+              "event_source_seconds": 5.157782,
+              "completion_source_seconds": 5.946865,
+              "recovery_seconds": 0.789083
+            }
+          ],
+          "completion_source_seconds": 5.946865
+        },
+        {
+          "setup_source_seconds": 8.47225,
+          "events": [],
+          "completion_source_seconds": 9.368237
+        }
+      ],
+      "event_rows": [
+        1038
+      ],
+      "state": "accepted"
+    }
+  },
+  "windows_candidate_code43_gate": "not collected before first transport stop; restored baseline no-Code43 passed"
 }
