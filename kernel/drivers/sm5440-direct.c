@@ -74,7 +74,8 @@ static void sm5440_snapshot_capture(struct sm5440_direct *sm,
 	snapshot->last_error = sm->last_sample_error;
 	snapshot->pending = sm->startup_confirmations;
 	snapshot->present = sm->initial_sample_done;
-	snapshot->stopped = sm->stopped;
+	/* PM sets stopped before taking io_lock and draining the worker. */
+	snapshot->stopped = READ_ONCE(sm->stopped);
 	snapshot->fault = sm->fault;
 	mutex_unlock(&sm->io_lock);
 	snapshot->fresh = snapshot->present && snapshot->sample.valid &&

@@ -37,7 +37,8 @@ static unsigned long fake_jiffies;
 #define time_after(a,b) ((long)((b)-(a))<0)
 #define time_before(a,b) time_after(b,a)
 static u64 jiffies64_to_msecs(u64 n) { return n; }
-static int locks,lock_depth,format_locked,mutate;
+static int locks,lock_depth,format_locked,mutate,once_reads;
+#define READ_ONCE(x) (once_reads++,(x))
 static void mutex_lock(struct mutex *m) { (void)m;locks++;lock_depth++; }
 ''' + function(src, 'struct sm5440_sample {') + ';\n'
         code += function(src, 'struct sm5440_direct {') + ';\n'
@@ -104,7 +105,8 @@ static int devm_add_action_or_reset(struct device *d,void (*fn)(void *),void *da
             code += function(src, marker) + '\n'
         code += r'''
 void snapshot(int scenario,char *buffer) {
- struct sm5440_direct sm={0};current=&sm;locks=lock_depth=format_locked=0;mutate=0;
+ struct sm5440_direct sm={0};current=&sm;locks=lock_depth=format_locked=0;
+ mutate=once_reads=0;
  sm.initial_sample_done=true;fake_jiffies=120;
  sm.sample.valid=true;sm.sample.stamp=100;sm.sample.vbus_uv=9000000;
  sm.sample.vbat_uv=4000000;sm.sample.ibus_ua=0;sm.sample.die_decic=300;
@@ -127,7 +129,7 @@ void snapshot(int scenario,char *buffer) {
  struct seq_file seq={.private=&sm,.buffer=buffer,.size=8192};buffer[0]=0;
  sm5440_snapshot_show(&seq,NULL);
 }
-int lock_stats(int index){return index==0?locks:index==1?lock_depth:format_locked;}
+int lock_stats(int index){return index==0?locks:index==1?lock_depth:index==2?format_locked:once_reads;}
 void setup(int failure,int *output) {
  struct device dev={.name="0-0063"};struct sm5440_direct sm={.dev=&dev};
  setup_failure=failure;removed=permissions=registered=0;cleanup=NULL;
@@ -203,6 +205,7 @@ void setup(int failure,int *output) {
         self.assertEqual(value['sample_vbus_uv'], '9000000')
         self.assertEqual(value['fault'], '0')
         self.assertEqual([self.lib.lock_stats(i) for i in range(3)], [1, 0, 0])
+        self.assertEqual(self.lib.lock_stats(3), 1)
 
     def test_no_calibration_or_activation_claim(self):
         value = self.read()
