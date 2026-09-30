@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 fixed9V snapshot PASS30.420s/7samples on33435db7: reported
+VBUS9.076..9.109V, IBUS0/OFF, validfresh/rawdecode/protection unchanged,
+pack29.0..29.1C, netbatterymean7.813216W (not USBinputpower). Read PD_RESULTS/
+CURRENT_STATUS/raw seal. Unplug15s endpoint and PCrescue remain pending owner
+confirmation; no human-wait timer or transition/latency claim. Endpoint host
+helper15 focused checks pass, no kernel/full repeat. No PPS/pumpON/current/
+protection/thermal/USB change; whole series NOT complete, activeStage3 NOT READY.
+
+
 Test263 attempt01 passivePC snapshot PASS30.220s/7samples on33435db7: exact
 config/notes/partitions/181 modules, valid cachedraw/fresh age128..948ms/OFF/
 unchangedprotection, bounded startup0x80 retained, no newfault/Code43. Read

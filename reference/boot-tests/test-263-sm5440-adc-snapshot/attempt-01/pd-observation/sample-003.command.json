@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.191.121.33",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@before; cat /proc/uptime; echo @@snapshot; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@after; cat /proc/uptime; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@tcpm; cat /sys/class/power_supply/tcpm-source-psy-3-0033/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --plain --no-legend --no-pager"
+  ],
+  "ended_utc": "2026-09-30T14:54:01.088312+00:00",
+  "started_utc": "2026-09-30T14:54:00.528885+00:00",
+  "status": 0
+}

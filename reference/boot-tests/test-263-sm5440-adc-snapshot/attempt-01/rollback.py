@@ -34,10 +34,10 @@ def push(name):
 
 
 if mode == 'enter':
-    failure_path = A / 'pd-observation/summary.json'
-    if not failure_path.exists():
-        failure_path = A / 'observation/summary.json'
-    failure = json.loads(failure_path.read_text())
+    failures = [A / name / 'summary.json' for name in ('observation', 'pd-observation', 'unplug-endpoint', 'pc-endpoint')]
+    failures = [f for f in failures if f.exists() and json.loads(f.read_text())['verdict'].startswith('STOP')]
+    assert len(failures) == 1, 'identify unique first failed phase before rollback'
+    failure = json.loads(failures[0].read_text())
     assert failure['verdict'].startswith('STOP') and failure['rollback_required']
     p.SERIAL = 'gts9wifi-0001'
     raw = r.adb('failed-boot-identity', 'set -e; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes', 30)[0].splitlines()

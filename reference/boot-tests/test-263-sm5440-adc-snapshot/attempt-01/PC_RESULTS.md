@@ -6,7 +6,7 @@ is readable and root-only/cached; 30.220s/7samples pass freshness/raw decode/OFF
 unchanged protection gates. Current sample and retained startup are distinct.
 Reported VBUS4.909..4.913V, VBAT3.8995..3.9145V, IBUS0, die26.5..27.0C, age128..948ms.
 GaugeVBAT3.983..3.988V, SOC60%, pack29.3..29.5C. Pairwise cached ADC-minus-gauge
-VBAT difference -88.5..-68.5mV is recorded, not declared calibration error or a
+VBAT difference -87.5..-70.5mV is recorded, not declared calibration error or a
 correction factor: sensor acquisition times differ and gauge cache age is unknown.
 
 First-only retained0x80 startup pending0.273637/event0.273645/confirmed2.561609s

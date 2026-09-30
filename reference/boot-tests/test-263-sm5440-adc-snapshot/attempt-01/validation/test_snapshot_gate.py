@@ -1,6 +1,7 @@
 """Offline sampling gate tests. Never import a device orchestration script."""
 import importlib.util
 from pathlib import Path
+import sys
 import unittest
 
 A = Path(__file__).resolve().parents[1]
@@ -109,6 +110,28 @@ class GateTests(unittest.TestCase):
                       '<= 1500000', 'elapsed >= 30', 'STOP first non-clean',
                       'protection changed since PC', 'fixed9V contract'):
             self.assertIn(value, text)
+
+    def test_endpoint_only_after_confirmation_and_preserves_failure(self):
+        text = (A / 'endpoint.py').read_text()
+        for value in ("in {'unplug', 'pc'}", "previous['verdict'].endswith('passed')",
+                      "observation/final-wifi-address.txt", "f.parse(raw)", "f.safety(sample, boot, rows)",
+                      'sample_age_ms', 'sample_mode_after', 'first-failure-kernel-json',
+                      'transition_captured=False', "sample['elapsed_seconds'] >= 15"):
+            self.assertIn(value, text)
+        self.assertNotIn('300', text)
+        self.assertNotIn('systemctl reboot', text)
+
+    def test_actual_unplug_packet_accepts_appended_snapshot_section(self):
+        root = A.parents[3]
+        sys.path.insert(0, str(root / 'scripts'))
+        import sm5714_fixed_charge_regression as fixed
+        raw = (root / 'reference/boot-tests/test-262-sm5714-fixed-charge-on-test260/post-unplug-readonly/sample-00.txt').read_text()
+        before = fixed.parse(raw)
+        after = fixed.parse(raw + '\n@@snapshot\n' + self.fixture() + '\n')
+        self.assertEqual(before, after)
+        self.assertEqual(after['usb_online'], 0)
+        self.assertEqual(after['battery_status'], 'Discharging')
+        self.assertIsNone(fixed.safety(after, after['boot_id']))
 
 
 if __name__ == '__main__':
