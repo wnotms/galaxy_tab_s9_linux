@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test262 charging phasePASS retained. Original unplug observer STOP waiting300s
+before owner removal; keep its rawSTOP and do not claim captured transition.
+After owner's "已拔", separate read-only15.001s endpoint confirms offline/
+Discharging/current-0.91..-1.129A/pack29.6C, same18bce160/no newfault. No new
+charging trial. PC rescue attachment/check now pending owner confirmation; use
+one bounded check afterward, not a human-wait timer. WholeTest262 has an evidence
+gap and must not be labeled whollyCLEAN. No PPS/pumpON/config/reboot/flash.
+
+
 Test262 attempt02 fixed9V/1.5A charging phase PASS300.011s/61samples on18bce160:
 netbatterymean7.827W, SOC54→56%, pack28.4–29.2C, passiveSM5440 OFF/IBUS0,
 no newkernel/CPU/failedunit/passivefault. Read CURRENT_STATUS/charging RESULTS.

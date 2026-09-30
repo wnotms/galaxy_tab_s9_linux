@@ -43,6 +43,25 @@
   "registered_charge_seconds": 300,
   "root_cause_of_pretest_windows_chimes": "unknown; owner reported recovery after manual replug",
   "software_baseline": "unchanged installed Test260 passive candidate with Stage2 fixed-PD/Test253 adbd/Test254 container config",
-  "unplug": "pending",
-  "verdict": "IN_PROGRESS: fixed-PD charging PASS, unplug/PC follow-ups pending"
+  "unplug": {
+    "original_observer": {
+      "device_configuration_changed": false,
+      "error": "unplug-not-confirmed-within-300s",
+      "samples": 61,
+      "verdict": "STOP"
+    },
+    "post_owner_endpoint": {
+      "boot_id": "18bce160ddda4c5b9f27f8429f204b59",
+      "device_configuration_changed": false,
+      "observed_seconds": 15.001,
+      "original_unplug_observer": "STOP waiting300s; no detach samples; retained",
+      "pps_requested": false,
+      "pump_on": false,
+      "samples": 4,
+      "unplug_transition_captured": false,
+      "verdict": "PASS current post-owner-unplug endpoint state only"
+    },
+    "transition_captured": false
+  },
+  "verdict": "IN_PROGRESS with retained unplug evidence gap; PC rescue check pending"
 }
