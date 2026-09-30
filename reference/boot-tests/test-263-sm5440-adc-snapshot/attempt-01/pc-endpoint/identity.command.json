@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes"
+  ],
+  "ended_utc": "2026-09-30T15:11:47.164613+00:00",
+  "started_utc": "2026-09-30T15:11:47.078660+00:00",
+  "status": 0
+}

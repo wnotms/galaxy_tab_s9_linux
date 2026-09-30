@@ -2,6 +2,16 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 STOP at final PCendpoint: host recorder kernel-json filename
+collision between Wi-Fi capture and ADB admit, original error/evidence retained.
+PriorPC30.220s/PD30.420s/unplug15.370s pass; final1sample/ADB identity/no newfault
+captured but NCM/Windows/DCC-service gate NOT complete. No observed devicefault
+claim or retry-to-clean. Read attempt01 RESULTS/CURRENT_STATUS. Registered exact
+Test260 rollback pending; no PPS/pumpON/current/protection/thermal/USB change.
+Results executed:false; unchanged source qualification reused. ActiveStage3
+NOT READY. Fix evidence namespaces offline with combined-recorder test before
+any separately registered hardware attempt.
+
 Test263 attempt01 unplug endpoint PASS15.370s/4samples on33435db7: offline
 USB/TCPM/passive, Discharging -1.720..-1.063A, pack29.4C, SM5440 OFF/IBUS0/
 validfresh/unchangedprotection, no new fault. Read UNPLUG_RESULTS/raw seal.
