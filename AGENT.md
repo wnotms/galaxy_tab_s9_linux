@@ -2,6 +2,16 @@
 
 ## Current state (2026-09-30)
 
+Owner now requests "继续实机测试": Test258 attempt02 registers the SAME passive
+candidate with the release-root install helper. Read attempt02 README first.
+Fresh runtime preflight on0456f423 finds ADB/NCM/Wi-Fi10.191.121.119 working;
+old Wi-Fi failures are retained, cause/recovery timing unknown. Reuse f3a266b5
+build/full1264 and a4437ece five actual-archive host tests, no rebuild/full rerun.
+Push registration before recovery. TWRP verifies baseline partitions/modules
+before installing paired boot/vendor_boot/modules;150s PC USB passive only.
+No PPS/pump/current increase. Stop first, retain evidence and restore accepted
+Test255 if needed. Earlier stopped attempt below is immutable, not continued.
+
 Test258 physical deployment STOPPED before image writes/current-module rename:
 the qualified module archive is release-root, while the historical staging
 helper expected lib/modules. Keep the first failure, raw recovery and results.
