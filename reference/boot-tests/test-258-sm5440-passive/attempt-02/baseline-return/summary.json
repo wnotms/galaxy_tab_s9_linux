@@ -1,0 +1,43 @@
+{
+  "battery": {
+    "POWER_SUPPLY_CAPACITY": "62",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "-207000",
+    "POWER_SUPPLY_CURRENT_NOW": "-281000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "292",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4018000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4018000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "3998000"
+  },
+  "boot_id": "f965e05406b04d3aaa78b86bc1979f13",
+  "candidate_modules_retained": true,
+  "checks": {
+    "NCM": true,
+    "WiFi": true,
+    "baseline-only-and-DCC-absent": true,
+    "battery": true,
+    "boot": true,
+    "cmdline": true,
+    "config": true,
+    "kernel-health": true,
+    "no-Code43": true,
+    "no-failed-units": true,
+    "notes": true,
+    "sink-device": true
+  },
+  "config_sha256": "cd7ec9cbd259475a027862ddaf125eb5ad63ae3dc63e33cea5073ef492cdde3f",
+  "full_host_tests_repeated": false,
+  "kernel_rebuilt": false,
+  "notes_sha256": "fb3d249642e900d9bb591fb629c1865b370b50098d44970b986cc793f45c160c",
+  "partition_module_identity": "exact rollback readback and181 restore-helper checks reused; no later writes",
+  "verdict": "accepted Test255 restored and final health gates passed",
+  "wifi_ip": "10.191.121.242"
+}

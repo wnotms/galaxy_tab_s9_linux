@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; cat /proc/cmdline; cat /sys/class/power_supply/sm5714-battery/uevent; ip -4 -o addr show; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@roles; cat /sys/class/typec/port0/power_role; cat /sys/class/typec/port0/data_role; echo @@baseline; test ! -e /sys/class/power_supply/sm5440-passive; test ! -e /usr/lib/modules/.gts9-test258-stage; test ! -e /usr/lib/modules/.gts9-test258-original; test -d /usr/lib/modules/.gts9-test258-tested; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; echo accepted"
+  ],
+  "ended_utc": "2026-09-30T03:46:19.070544+00:00",
+  "started_utc": "2026-09-30T03:46:18.940722+00:00",
+  "status": 0
+}

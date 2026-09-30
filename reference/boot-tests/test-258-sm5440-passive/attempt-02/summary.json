@@ -1,0 +1,94 @@
+{
+  "active_stage3_ready": false,
+  "candidate_boot_id": "f96739d4c57b4968b971889368351458",
+  "candidate_booted": true,
+  "candidate_installed": true,
+  "clean_samples": 0,
+  "compiled_source_revision": "f3a266b5",
+  "completed_observation_seconds": 0,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "current_limits_changed": false,
+  "decoded_flags": [
+    "VBAT_OVP",
+    "REVBLK"
+  ],
+  "final_verdict": "STOP first passive fault; exact accepted Test255 restored",
+  "first_failed_sample_uptime_seconds": 30.07,
+  "first_failure": "passive health/OFF-backed sample unavailable; PC VBUS not reported online; passive die temperature missing/invalid; passive VBUS missing/invalid; passive IBUS missing/invalid",
+  "first_fault_source_seconds": 1.60859,
+  "independent_ADC_calibration": false,
+  "kernel_CPU_fault_counts": {},
+  "kernel_CPU_suspects": [],
+  "kernel_rebuilt": false,
+  "module_file_count": 181,
+  "notes_sha256": "fd89d2bd274b80f0dfa1258814d81617849bbd5a12327830fb4291c5453f3e6d",
+  "offline_qualification_reused": {
+    "archive_helper_source": "a4437ece",
+    "build_full_source": "f3a266b5",
+    "focused_archive_tests": 5,
+    "full_tests": 1264
+  },
+  "pps_requested": false,
+  "profile": "sm5440-passive",
+  "pump_on": false,
+  "raw_latch_status_provenance_available": false,
+  "real_battery_overvoltage_established": false,
+  "registered_observation_seconds": 150,
+  "registration_revision": "328621ac",
+  "result_commit_host_tests": {
+    "executed": false,
+    "reason": "Evidence/results/prose only; qualification unchanged; no repeated build/full run"
+  },
+  "rollback": {
+    "candidate_modules_retained": "/usr/lib/modules/.gts9-test258-tested",
+    "final_battery": {
+      "POWER_SUPPLY_CAPACITY": "62",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "-207000",
+      "POWER_SUPPLY_CURRENT_NOW": "-281000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "292",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4018000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4018000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "3998000"
+    },
+    "final_boot_id": "f965e05406b04d3aaa78b86bc1979f13",
+    "final_checks": {
+      "NCM": true,
+      "WiFi": true,
+      "baseline-only-and-DCC-absent": true,
+      "battery": true,
+      "boot": true,
+      "cmdline": true,
+      "config": true,
+      "kernel-health": true,
+      "no-Code43": true,
+      "no-failed-units": true,
+      "notes": true,
+      "sink-device": true
+    },
+    "modules": 181,
+    "partitions": {
+      "boot": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+      "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+      "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+      "vendor_boot": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46"
+    },
+    "passed": true,
+    "wifi_ip": "10.191.121.242"
+  },
+  "sm5440_probe": {
+    "i2c_device": "0-0063",
+    "passed": true,
+    "revision": 2
+  },
+  "software_fault_bitmap": "0x82"
+}

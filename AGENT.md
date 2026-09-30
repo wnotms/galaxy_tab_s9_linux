@@ -2,6 +2,21 @@
 
 ## Current state (2026-09-30)
 
+Test258 attempt02 physically installed/booted the qualified passive candidate:
+paired boot/vendor_boot and181 modules passed readback, SM5440 revision2 probed
+on0-0063, ADB/NCM/Wi-Fi/Sink-Device/no-Code43 gates passed. First source fault
+at1.608590s is software bitmap0x82 (VBAT_OVP+REVBLK); first host sample30.07s
+reports Unspecified failure with stale/unavailable ADC fields. STOP, no150s
+pass and no retry. No PPS/pump ON/current increase. Exact Test255 rollback
+boot/vendor/181 modules completed; all five partition readbacks match, candidate
+modules retained at .gts9-test258-tested. Final bootf965e054 has12 health/identity/
+rescue gates passed, Wi-Fi10.191.121.242, battery62%,29.2C,4018mV,Good.
+Read attempt02 RESULTS/FAILURE_ANALYSIS/summary. Raw fault provenance is missing
+(INT latches merged with STATUS); actual overvoltage is not established. Next
+is offline first-fault raw-snapshot/vendor-state audit, not another physical
+attempt/PPS activation. Active Stage3 remains NOT READY. Reused build/full1264
+and5 focused archive checks; no repeated build/full run for result commits.
+
 Owner now requests "继续实机测试": Test258 attempt02 registers the SAME passive
 candidate with the release-root install helper. Read attempt02 README first.
 Fresh runtime preflight on0456f423 finds ADB/NCM/Wi-Fi10.191.121.119 working;
