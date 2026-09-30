@@ -101,6 +101,15 @@ class GateTests(unittest.TestCase):
             self.assertIn(value, text)
         self.assertNotIn('out/kernel-x710-260-passive', text)
 
+    def test_pd_uses_verified_postboot_wifi_and_keeps_fault_stops(self):
+        text = (A / 'observe-pd.py').read_text()
+        self.assertIn("observation/final-wifi-address.txt", text)
+        self.assertNotIn("preflight/summary.json", text)
+        for value in ('validate_snapshot(sections[\'snapshot\'], 9)',
+                      '<= 1500000', 'elapsed >= 30', 'STOP first non-clean',
+                      'protection changed since PC', 'fixed9V contract'):
+            self.assertIn(value, text)
+
 
 if __name__ == '__main__':
     unittest.main()

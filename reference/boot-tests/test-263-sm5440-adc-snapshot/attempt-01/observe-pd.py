@@ -20,7 +20,12 @@ boot = accepted['boot_id']
 package = json.loads((A / 'PACKAGE.json').read_text())
 assert not (A / 'pd-observation').exists()
 r = p.Recorder(A / 'pd-observation')
-wifi = json.loads((A / 'preflight/summary.json').read_text())['wifi']
+# DHCP may change at the candidate reboot. Use the already verified postboot
+# address; never reuse the original Test260 preflight address.
+wifi_match = re.search(r'\binet (\d+\.\d+\.\d+\.\d+)/',
+                       (A / 'observation/final-wifi-address.txt').read_text())
+assert wifi_match is not None, 'accepted candidate Wi-Fi address missing'
+wifi = wifi_match.group(1)
 samples = []
 known_file = ROOT / 'reference/boot-tests/test-254-debian-container-kernel/attempt-03/final-acceptance/kernel-journal-json.txt'
 known = {x['MESSAGE'] for x in map(json.loads, known_file.read_text().splitlines()) if int(x.get('PRIORITY', 7)) <= 3}

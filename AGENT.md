@@ -2,6 +2,15 @@
 
 ## Current state (2026-09-30)
 
+Test263 attempt01 passivePC snapshot PASS30.220s/7samples on33435db7: exact
+config/notes/partitions/181 modules, valid cachedraw/fresh age128..948ms/OFF/
+unchangedprotection, bounded startup0x80 retained, no newfault/Code43. Read
+attempt01 PC_RESULTS/CURRENT_STATUS/raw seal. Wi-Fi now10.191.121.33; PD host
+uses verifiedpostboot address, 13 focused checks pass, no network setting change.
+Fixed9V30s and unplug/PC endpoints pending owner cable confirmation. No PPS/
+pumpON/protection/current/thermal/USB change; whole series NOT complete.
+
+
 Test263 attempt01 boot/vendor and181 paired modules installed/readback verified;
 original Test260 modules saved in .gts9-test263-original, older backups intact.
 Root unmounted and BCB cleared. Candidate has not yet booted/accepted. Next one

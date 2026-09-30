@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/dev/null",
+    "-4",
+    "-T",
+    "-b",
+    "169.254.88.129",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectionAttempts=1",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "root@169.254.42.1",
+    "set -e; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; readlink -f /sys/class/power_supply/sm5440-passive/device/driver; cat /sys/firmware/devicetree/base/soc@0/geniqup@9c0000/i2c@98c000/charger@63/status; echo; systemctl is-active ssh gts9-adbd gts9-usb-acm"
+  ],
+  "ended_utc": "2026-09-30T14:36:25.616418+00:00",
+  "started_utc": "2026-09-30T14:36:25.434577+00:00",
+  "status": 0
+}

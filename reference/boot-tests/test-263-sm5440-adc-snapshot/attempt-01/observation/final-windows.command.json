@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match \"VID_0525\" } | Select-Object Status,Class,FriendlyName,InstanceId | ConvertTo-Json; Write-Output \"@@code43\"; Get-CimInstance Win32_PnPEntity | Where-Object { $_.ConfigManagerErrorCode -eq 43 } | Select-Object Name,PNPDeviceID,ConfigManagerErrorCode | ConvertTo-Json; Write-Output \"@@network\"; Get-NetAdapter | Select-Object Name,InterfaceDescription,Status | ConvertTo-Json"
+  ],
+  "ended_utc": "2026-09-30T14:37:05.179886+00:00",
+  "started_utc": "2026-09-30T14:37:02.409631+00:00",
+  "status": 0
+}

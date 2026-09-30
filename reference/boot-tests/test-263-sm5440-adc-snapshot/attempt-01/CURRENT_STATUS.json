@@ -1,0 +1,38 @@
+{
+  "verdict": "PC_PHASE_PASS_PD_PENDING",
+  "boot_id": "33435db741e94574aeb2c209730acf67",
+  "seconds": 30.22,
+  "samples": 7,
+  "snapshot_ranges": {
+    "sample_vbus_uv": [
+      4909000,
+      4913000
+    ],
+    "sample_vbat_uv": [
+      3899500,
+      3914500
+    ],
+    "sample_ibus_ua": [
+      0,
+      0
+    ],
+    "sample_die_decic": [
+      265,
+      270
+    ],
+    "sample_age_ms": [
+      128,
+      948
+    ]
+  },
+  "cached_adc_minus_gauge_vbat_mv": [
+    -87.5,
+    -70.5
+  ],
+  "wifi": "10.191.121.33",
+  "pd_phase": "NOT_STARTED",
+  "pump_on": false,
+  "pps_requested": false,
+  "physical_series_complete": false,
+  "followup_host_gate_tests": 13
+}

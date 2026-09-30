@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/dev/null",
+    "-4",
+    "-T",
+    "-b",
+    "169.254.88.129",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "IdentitiesOnly=yes",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectionAttempts=1",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "root@169.254.42.1",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; cat /proc/cmdline"
+  ],
+  "ended_utc": "2026-09-30T14:36:25.005656+00:00",
+  "started_utc": "2026-09-30T14:36:24.799015+00:00",
+  "status": 0
+}
