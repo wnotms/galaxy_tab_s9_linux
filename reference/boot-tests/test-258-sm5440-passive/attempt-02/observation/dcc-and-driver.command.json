@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; readlink -f /sys/class/power_supply/sm5440-passive/device/driver; cat /sys/firmware/devicetree/base/soc@0/geniqup@9c0000/i2c@98c000/charger@63/status; echo; systemctl is-active ssh gts9-adbd gts9-usb-acm"
+  ],
+  "ended_utc": "2026-09-30T03:40:47.221582+00:00",
+  "started_utc": "2026-09-30T03:40:47.033397+00:00",
+  "status": 0
+}

@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uptime; cat /proc/uptime; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@power-role; cat /sys/class/typec/port0/power_role; echo @@data-role; cat /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@kernel; journalctl -b -k --no-pager -o json --show-cursor --after-cursor='s=0e9cc8651fa34ae5875adb1b7f906071;i=bcb2f;b=f96739d4c57b4968b971889368351458;m=1433661;t=65cab10562eaa;x=2031da67842ccd1f'"
+  ],
+  "ended_utc": "2026-09-30T03:40:51.247310+00:00",
+  "started_utc": "2026-09-30T03:40:50.927467+00:00",
+  "status": 0
+}

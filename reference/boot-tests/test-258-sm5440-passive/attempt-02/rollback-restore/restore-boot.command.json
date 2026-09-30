@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(blockdev --getsize64 /dev/block/by-name/boot)\" = 100663296; dd if=/tmp/test258-a02-rollback-rollback-test255-boot.img of=/dev/block/by-name/boot bs=4M; sync"
+  ],
+  "ended_utc": "2026-09-30T03:42:29.538780+00:00",
+  "started_utc": "2026-09-30T03:42:29.115892+00:00",
+  "status": 0
+}
