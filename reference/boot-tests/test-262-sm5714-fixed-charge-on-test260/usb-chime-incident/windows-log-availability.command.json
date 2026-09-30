@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\nforeach($log in @('Microsoft-Windows-Kernel-PnP/Configuration','Microsoft-Windows-DriverFrameworks-UserMode/Operational','System')) {\n try { $info=Get-WinEvent -ListLog $log -ErrorAction Stop; $last=Get-WinEvent -LogName $log -MaxEvents 3 -ErrorAction Stop;[ordered]@{log=$log;enabled=$info.IsEnabled;count=$info.RecordCount;last=@($last | Select-Object TimeCreated,Id,ProviderName,Message)} | ConvertTo-Json -Depth 4 -Compress }\n catch { [ordered]@{log=$log;error=$_.Exception.Message} | ConvertTo-Json -Compress }\n}"
+  ],
+  "ended_utc": "2026-09-30T09:42:25.078155+00:00",
+  "started_utc": "2026-09-30T09:42:24.357672+00:00",
+  "status": 0
+}

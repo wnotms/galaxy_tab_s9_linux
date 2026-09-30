@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\nforeach($log in @('System','Microsoft-Windows-DeviceSetupManager/Admin','Microsoft-Windows-Kernel-PnP/Configuration')) {\n try { $events=Get-WinEvent -FilterHashtable @{LogName=$log;StartTime=[datetime]'2026-09-30T17:40:00'} -MaxEvents 200 -ErrorAction Stop;[ordered]@{log=$log;events=@($events | Select-Object TimeCreated,Id,ProviderName,Message)} | ConvertTo-Json -Depth 5 -Compress }\n catch { [ordered]@{log=$log;error=$_.Exception.Message} | ConvertTo-Json -Compress }\n}\n"
+  ],
+  "ended_utc": "2026-09-30T09:47:16.643043+00:00",
+  "started_utc": "2026-09-30T09:47:16.053737+00:00",
+  "status": 0
+}

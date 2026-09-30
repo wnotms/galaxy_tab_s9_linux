@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Stop'\n[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\n$sid='gts9-readonly-chime-'+[Guid]::NewGuid().ToString()\ntry {\n Register-CimIndicationEvent -Namespace root/cimv2 -Query 'SELECT * FROM Win32_DeviceChangeEvent' -SourceIdentifier $sid | Out-Null\n [ordered]@{kind='listener-start';time=(Get-Date).ToString('o')} | ConvertTo-Json -Compress\n $watch=[Diagnostics.Stopwatch]::StartNew();$count=0\n while($watch.Elapsed.TotalSeconds -lt 50) {\n   Wait-Event -SourceIdentifier $sid -Timeout 1 | Out-Null\n   foreach($ev in @(Get-Event -SourceIdentifier $sid -ErrorAction SilentlyContinue)) {\n     $count++;$n=$ev.SourceEventArgs.NewEvent\n     [ordered]@{kind='device-change';received=(Get-Date).ToString('o');event_type=$n.EventType;source_time=[DateTime]::FromFileTimeUtc([long]$n.TIME_CREATED).ToString('o')} | ConvertTo-Json -Compress\n     Remove-Event -EventIdentifier $ev.EventIdentifier\n   }\n }\n [ordered]@{kind='listener-end';time=(Get-Date).ToString('o');seconds=$watch.Elapsed.TotalSeconds;event_count=$count} | ConvertTo-Json -Compress\n} finally { Unregister-Event -SourceIdentifier $sid -ErrorAction SilentlyContinue }\n"
+  ],
+  "ended_utc": "2026-09-30T09:45:08.701090+00:00",
+  "started_utc": "2026-09-30T09:44:17.344562+00:00",
+  "status": 0
+}

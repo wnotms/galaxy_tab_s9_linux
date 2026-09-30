@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Stop'\n[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\nfunction Snapshot {\n  @(Get-CimInstance Win32_PnPEntity | Where-Object {$_.Present -eq $true} | Select-Object PNPDeviceID,Name,Status,ConfigManagerErrorCode)\n}\n$prev=Snapshot\n[ordered]@{kind='start';time=(Get-Date).ToString('o');devices=$prev} | ConvertTo-Json -Depth 5 -Compress\n$timer=[Diagnostics.Stopwatch]::StartNew();$polls=0;$changes=0\nwhile($timer.Elapsed.TotalSeconds -lt 50) {\n  Start-Sleep -Seconds 1\n  $cur=Snapshot;$polls++\n  $removed=@($prev | Where-Object {$_.PNPDeviceID -notin $cur.PNPDeviceID})\n  $added=@($cur | Where-Object {$_.PNPDeviceID -notin $prev.PNPDeviceID})\n  $changed=@($cur | Where-Object {$d=$_;$old=@($prev | Where-Object {$_.PNPDeviceID -eq $d.PNPDeviceID});$old.Count -eq 1 -and ($old[0].Status -ne $d.Status -or $old[0].ConfigManagerErrorCode -ne $d.ConfigManagerErrorCode)})\n  if($removed.Count -or $added.Count -or $changed.Count) {\n    $changes++\n    [ordered]@{kind='change';time=(Get-Date).ToString('o');removed=$removed;added=$added;changed=$changed} | ConvertTo-Json -Depth 5 -Compress\n  }\n  $prev=$cur\n}\n[ordered]@{kind='end';time=(Get-Date).ToString('o');elapsed=$timer.Elapsed.TotalSeconds;polls=$polls;changes=$changes;tablet=@($prev | Where-Object {$_.PNPDeviceID -match 'VID_0525|VID_18D1|VID_0000&PID_0002'})} | ConvertTo-Json -Depth 5 -Compress\n"
+  ],
+  "ended_utc": "2026-09-30T09:43:05.589666+00:00",
+  "started_utc": "2026-09-30T09:41:55.708209+00:00",
+  "status": 0
+}

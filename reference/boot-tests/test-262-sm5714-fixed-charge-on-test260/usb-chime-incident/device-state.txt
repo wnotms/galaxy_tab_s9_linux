@@ -1,0 +1,59 @@
+18bce160-ddda-4c5b-9f27-f8429f204b59
+1473.47 11732.50
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.191.121.145/24 brd 10.191.121.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 2143sec preferred_lft 2143sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+NRestarts=0
+ExecMainStartTimestamp=Wed 2026-09-30 17:09:24 CST
+ExecMainPID=862
+ActiveState=active
+SubState=running
+
+NRestarts=0
+ExecMainStartTimestamp=Wed 2026-09-30 17:09:24 CST
+ExecMainPID=864
+ActiveState=active
+SubState=exited
+
+NRestarts=0
+ExecMainStartTimestamp=Wed 2026-09-30 17:09:26 CST
+ExecMainPID=1097
+ActiveState=active
+SubState=running
+configured
+not attached
+[sink]
+[device]
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3906000
+POWER_SUPPLY_VOLTAGE_AVG=3903000
+POWER_SUPPLY_VOLTAGE_OCV=3921000
+POWER_SUPPLY_CURRENT_NOW=-1118000
+POWER_SUPPLY_CURRENT_AVG=-753000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=55
+POWER_SUPPLY_TEMP=281
+POWER_SUPPLY_TYPE=Battery
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_NOW=4916000
+POWER_SUPPLY_CURRENT_NOW=0
+POWER_SUPPLY_TEMP=255
+POWER_SUPPLY_TYPE=Mains

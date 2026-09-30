@@ -2,11 +2,12 @@
 
 ## Current state (2026-09-30)
 
-Test262 charging has NOT started. Owner reports repeated Windows connection
-sounds while PC USB is attached; keep charger connection paused for read-only
-USB/PnP attribution. Do not infer a tablet disconnect from dummy_udc.0 being
-unattached: the actual gts9 gadget is bound to a600000.usb and configured.
-Preserve the incident evidence; no USB/service/kernel changes or reboot.
+Test262 charging has NOT started yet. Owner reports Windows connection sounds
+resolved after manual PC-USB replug; fresh ADB/NCM/Wi-Fi/boot/battery/passive-OFF
+gates pass. Read usb-chime-incident RESULTS/summary/raw seal. Root cause unknown;
+no USB/kernel/service change or repeated-reconnect qualification. Keep incident
+separate from charging results. Resume registered300s fixed-PD via Wi-Fi only
+once collector is ARMED, then request the owner's18W source connection.
 
 Owner authorizes ordinary charging test. Test262 registers300s SM5714 fixedPD
 on currentTest260/18bce160, priorLenovoYG65G C2 18W source, WiFi10.191.121.145.

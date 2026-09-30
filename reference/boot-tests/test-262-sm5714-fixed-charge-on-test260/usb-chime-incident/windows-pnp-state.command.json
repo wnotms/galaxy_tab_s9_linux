@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Stop'; [Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\n$entities=@(Get-CimInstance Win32_PnPEntity | Where-Object { $_.PNPDeviceID -match 'VID_0525|VID_18D1|VID_0000&PID_0002' -or $_.ConfigManagerErrorCode -ne 0 })\n[ordered]@{time=(Get-Date).ToString('o'); devices=@($entities | Select-Object Name,PNPDeviceID,Status,ConfigManagerErrorCode); adapters=@(Get-NetAdapter | Where-Object {$_.InterfaceDescription -match 'NCM|USB'} | Select-Object Name,ifIndex,Status,InterfaceDescription,PnPDeviceID)} | ConvertTo-Json -Depth 5 -Compress"
+  ],
+  "ended_utc": "2026-09-30T09:35:03.071973+00:00",
+  "started_utc": "2026-09-30T09:34:50.876857+00:00",
+  "status": 0
+}

@@ -55,3 +55,9 @@ Windows connection sounds on PC USB. Pause the charger transition while
 capturing Windows PnP/device events and device-side USB/FunctionFS state under
 `usb-chime-incident/`. Do not classify the sound alone as a CPU/charging fault
 or repair USB configuration without an attributed failure.
+
+Update after manual PC-USB replug: owner reports normal operation, fresh ADB,
+NCM/Wi-Fi/sameboot/health gates pass. See `usb-chime-incident/RESULTS.md`.
+Root cause remains unknown; the historical incident is retained, not relabeled
+clean. No kernel/service/configuration change. Proceed to the registered
+charging collector and attachment prompt; charging has not yet been observed.

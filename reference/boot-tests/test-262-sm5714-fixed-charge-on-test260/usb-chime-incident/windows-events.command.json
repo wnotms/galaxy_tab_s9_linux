@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding($false)\nforeach($log in @('Microsoft-Windows-Kernel-PnP/Configuration','Microsoft-Windows-DriverFrameworks-UserMode/Operational','System')) {\n  Write-Output \"@@log=$log\"\n  Get-WinEvent -FilterHashtable @{LogName=$log;StartTime=(Get-Date).AddMinutes(-20)} -MaxEvents 400 -ErrorAction SilentlyContinue |\n    Where-Object {$_.ProviderName -match 'PnP|USB|DriverFrameworks|DeviceSetup' -or $_.Message -match 'VID_0525|VID_18D1|VID_0000&PID_0002|GTS9'} |\n    Select-Object TimeCreated,Id,ProviderName,LevelDisplayName,Message | ConvertTo-Json -Depth 3\n}"
+  ],
+  "ended_utc": "2026-09-30T09:35:03.739060+00:00",
+  "started_utc": "2026-09-30T09:35:03.072270+00:00",
+  "status": 0
+}
