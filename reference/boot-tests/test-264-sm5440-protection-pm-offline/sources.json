@@ -1,0 +1,58 @@
+{
+  "baseline_revision": "655d39fa3a9d17c436e623622be70bfac353adca",
+  "fedora_local_revision": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "sources": [
+    {
+      "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+      "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+      "bytes": 52883
+    },
+    {
+      "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h",
+      "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5",
+      "bytes": 4574
+    },
+    {
+      "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_direct_charger.c",
+      "sha256": "be3497d6a055baa05ebf36fa5e6459a34deeb874f2cfcb0151c035f10996f6e4",
+      "bytes": 50190
+    },
+    {
+      "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_direct_charger.h",
+      "sha256": "b197c754a0ba4c8308c549f0c01658a526fa465753d20cfbc94bc7c24dbaa8ed",
+      "bytes": 5974
+    },
+    {
+      "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+      "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+      "bytes": 28361
+    },
+    {
+      "path": "kernel/drivers/sm5440-direct.c",
+      "sha256": "d195d35609038cee35a23592c53287910948dba623d58b507a8869c608ce4247",
+      "bytes": 19352
+    },
+    {
+      "path": "kernel/drivers/sm5440-hw.h",
+      "sha256": "ca6d641deb9b8a0a8d397e367a19d6d1cfb9a58e762340556de6fff08a068d67",
+      "bytes": 3683
+    },
+    {
+      "path": "kernel/drivers/x710-charging-policy.c",
+      "sha256": "8017cc4130a094c8b669fafdfafd0643e4910e6dbeb831ecce06e73f17d2e7c2",
+      "bytes": 11863
+    },
+    {
+      "path": "kernel/drivers/x710-charging-policy.h",
+      "sha256": "e56e6f3df9ab8076e571dab6649bee881b0e4f0ab604278611ea08b3ac901fdd",
+      "bytes": 3681
+    }
+  ],
+  "matches_test256_where_recorded": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c": true,
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h": true,
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_direct_charger.c": true,
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_direct_charger.h": true,
+    "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c": true
+  }
+}

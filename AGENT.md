@@ -1,5 +1,19 @@
 # AGENT.md — SM-X710 mainline port working rules
 
+## Current state (2026-10-01)
+
+Test264 continues OFFLINE from655d39fa: protection/watchdog/PM audit against
+Samsung X710 and Fedora ab123e7d, plus future isolated completion evidence helper.
+Read docs/SM5440_ACTIVE_PROTECTION_PM_PLAN.md and Test264 README/sources.
+Owner permits direct use/port of Fedora same-model logic: adopt its OFF-before-
+refresh and drain/OFF/fixed-before-PM order, with checked errors/readback rather
+than copying unchecked restore or introducing private frameworks. No device
+command/flash/reboot/PPS/pumpON/current/protection/config/DT/USB change.
+Installed Test263 device acceptance stays complete; Test260 rollback intact.
+Source review confirms unsupported HW OCP and vendor unchecked mode/WDT writes;
+activeStage3 remains NOT READY. Reuse ea938b24 kernel qualification for this
+host/docs-only phase; affected helper tests only, no kernel/full repeat.
+
 ## Current state (2026-09-30)
 
 Test263 attempt01 DEVICE ACCEPTANCE COMPLETED under updated owner criteria:
