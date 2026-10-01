@@ -1,0 +1,154 @@
+{
+  "rows": 1115,
+  "fault_counts": {},
+  "suspects": [
+    {
+      "row": 598,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb84ccc00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 600,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 601,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8505f00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 603,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 604,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8549c00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 606,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 607,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8573200, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 609,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 610,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb859f100, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 612,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 613,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb85c8000, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 615,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 616,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb85f0e00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 618,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 619,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb861db00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 621,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 622,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb864e500, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 624,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    },
+    {
+      "row": 625,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb867cc00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9"
+    },
+    {
+      "row": 627,
+      "priority": 3,
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]"
+    }
+  ],
+  "known_warning_count": 25,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_fsr": 10
+  },
+  "first_source_timestamp": "0",
+  "last_source_timestamp": "6017286442",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "event_count": 2,
+    "setup_count": 3,
+    "cycles": [
+      {
+        "setup_source_seconds": 4.061815,
+        "events": [],
+        "completion_source_seconds": 5.103667
+      },
+      {
+        "setup_source_seconds": 5.769055,
+        "events": [
+          {
+            "row": 1045,
+            "event_source_seconds": 5.846821,
+            "completion_source_seconds": 6.635056,
+            "recovery_seconds": 0.788235
+          }
+        ],
+        "completion_source_seconds": 6.635056
+      },
+      {
+        "setup_source_seconds": 8.813355,
+        "events": [
+          {
+            "row": 1072,
+            "event_source_seconds": 8.894501,
+            "completion_source_seconds": 9.701511,
+            "recovery_seconds": 0.80701
+          }
+        ],
+        "completion_source_seconds": 9.701511
+      }
+    ],
+    "event_rows": [
+      1045,
+      1072
+    ],
+    "state": "accepted"
+  }
+}

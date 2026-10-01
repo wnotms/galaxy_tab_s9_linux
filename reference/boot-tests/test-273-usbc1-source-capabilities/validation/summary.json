@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "name": "parser",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_tcpm_source_capabilities.py",
+        "-v"
+      ],
+      "status": 0,
+      "tests": 25,
+      "wall_seconds": 0.056,
+      "executed": true
+    },
+    {
+      "name": "collector",
+      "argv": [
+        "python3",
+        "reference/boot-tests/test-273-usbc1-source-capabilities/host_tests.py",
+        "-v"
+      ],
+      "status": 0,
+      "tests": 15,
+      "wall_seconds": 0.101,
+      "executed": true
+    }
+  ],
+  "total_tests": 40,
+  "syntax_files": [
+    "scripts/tcpm_source_capabilities.py",
+    "tests/test_tcpm_source_capabilities.py",
+    "reference/boot-tests/test-273-usbc1-source-capabilities/capture.py",
+    "reference/boot-tests/test-273-usbc1-source-capabilities/host_tests.py"
+  ],
+  "syntax": "pass",
+  "hardware_software_tree_changes": [],
+  "kernel_build": {
+    "executed": false,
+    "reason": "host-only runner/parser; identical kernel/config/DT/modules inputs",
+    "reuse": "Test272 final399eb497 qualification, installed Test263 unchanged"
+  },
+  "full_host": {
+    "executed": false,
+    "reason": "routing/build integration unchanged; affected-only scope per AGENT and HOST_TEST_WORKFLOW",
+    "reuse": "Test272 all1424 pass; this is not a new full regression"
+  }
+}

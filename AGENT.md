@@ -2,6 +2,20 @@
 
 ## Current state (2026-10-01)
 
+Test273 registers ONE owner-confirmed LenovoYG65G C1 attach/C2empty,30s ordinary
+fixed-PD source-capability identification on unchanged263/846248af. Read273README
+and registration; counted freshTCPM frame/currentpartner sysfs must agree,
+missing/overflow/reset/mismatch UNKNOWN, not negativePPS proof or charging grant.
+Initial5V/3A Rp budget is not measured draw; actual5V1800/9V1500 input and final
+fixed contract independently capped. Source offers>9V are not selected voltage.
+FirstPC ring read archived after push/before owner action, then onePC endpoint.
+No flash/reboot/PPS/pumpON/current/protection/kernel/rootfs/USB change.20oldSMMU
+startup suspects unchanged/unresolved, no globalwhitelist.40affected gates/syntax
+pass; unchanged272 build/all1424 reused, no build/full/CI rerun. ActualC1 APDO
+stillUNKNOWN; ActiveStage3 NOT READY. Owner cable confirmation required before
+source window; no retry/latch clear. HostNCM not a device acceptance prerequisite.
+
+
 Owner identifies LenovoYG65G C1<=65W, stockAndroid reportedly~45W (method unknown).
 Read X710_PPS_SOURCE_PLAN: C1/C2empty is candidate for future ordinary fixed-PD
 Source_Capabilities capture, not proof of PPS/mainline45W or current escalation.
