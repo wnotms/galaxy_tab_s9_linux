@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-01)
 
+Test277 DEVICE_NORMAL_ACQUISITION_REFUSED_ROLLBACK_COMPLETED: ONE2721cb7050bboot/
+ONE276observer load/onefresh101ms-110 refusal,0usable/0.211s collection; unload
+status0/moduledebugfsabsent/samebootADBWi-FideviceNCM normal/noCode43/newCPUfault.
+No30s/timingpass;275STOP/unknown freeze causation retained. Exact263 all5partitions/
+181modules restored; currentbootcdce6deba2e04f3481679632e38ac997, Wi-Fi10.125.29.166/
+ADB/deviceNCM normal, pack77%/4.140V/32.9C/Good, passivefault0/pumpOFF/IBUS0,
+DCC/observer/freshAPI absent. Early readinessstatus1 preserved; sameboot endpoint
+completion separate, no new reboot/reflash/cable/software retry. Candidate
+modules/allolderbackups retained. Read277RESULTS/summary/raw/seals.22localhost/
+syntax pass; reuse272provider/2761481/W1/sparse, no rebuild/full/CI. No PPS/pumpON/
+current/ADC/deadline/USB change. Next offline timing-path analysis, not physical
+retry/limit relaxation. ActiveStage3 NOT READY.
+
 Test277 exact263rollback READBACK VERIFIED in TWRP: all5partitions/181paired
 modules, tested272 directory.gts9-test277-tested/allolderbackups retained,
 rootunmounted/BCBclear. One revised276observer load unloaded normally; one
