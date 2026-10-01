@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-01)
 
+Test275 STOP_TRANSPORT_LOSS_DURING_DIAGNOSTIC_UNLOAD. ONE272e7018be8boot/
+ONE274observerload/onefreshcall-110 in108ms/zero usable/firsterrorSTOP. rmmod
+timeout20s, postkernel reads timeout25s, Wi-Fi252banner timeout; Windowsenumerated
+ADB/NCM Code0 != devicehealth. Read275CURRENT_STATUS/summary/STOPseal/raw. No
+complete30s/endpoint acceptance/retry/PPS/pumpON/currentincrease. Owner asked for
+TWRP;272installed,263rollback NOT yet executed/confirmed. No Debian boot/reload.
+Source audit proves observer unowned exited kthread pointer lifetime bug; actual
+post-unload kernel fault/CPUstall cause UNKNOWN until persistentjournal. Preserve
+APIrefusal separately; old274module NOT safe for further load/unload. Next offline
+lifetime fix only, no deadline/ADC/register/safety relaxation. ActiveStage3 NOT READY.
+
+
 Test275 ONE272candidateboot e7018be8 healthy, no observer loaded yet. Original
 host startup STOP preserved: extra bitmap substring rule misclassified frozen
 0x80 twofresh recovery (0.290722->2.598256s), currentfault0/OFF/IBUS0/gauge4.146V/

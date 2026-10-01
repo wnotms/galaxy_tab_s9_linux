@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; if test -e /sys/module/sm5440_fresh_observer; then rmmod sm5440_fresh_observer; fi; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer/result"
+  ],
+  "ended_utc": "2026-10-01T12:33:16.989757+00:00",
+  "started_utc": "2026-10-01T12:32:56.965469+00:00",
+  "status": "timeout"
+}

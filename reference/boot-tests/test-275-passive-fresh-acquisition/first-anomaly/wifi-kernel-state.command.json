@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.125.29.252",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@modules; cat /proc/modules; echo @@kernel; journalctl -b -k --no-pager -o json; echo @@blocked; ps -eo pid,comm,state,wchan:40 | head -100"
+  ],
+  "ended_utc": "2026-10-01T12:36:25.619242+00:00",
+  "started_utc": "2026-10-01T12:36:15.442434+00:00",
+  "status": 255
+}
