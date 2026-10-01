@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Owner requests higher-power porting. Test269 registers OFFLINE PPS operating-point
+retarget core, see X710_PPS_RETARGET/269README. Recompute freshVBAT/source while
+OFF, no automatic current increase; <=1.8A/10.5V initialcap unchanged. One final
+isolated policy build/full qualification. No liveadapter/device command/flash/
+reboot/PPS/pumpON/gate/current/DT/USB change. Test267 STOP/installed263 unchanged;
+fullpack/freshADC/current/OCP/livePM blockers remain, ActiveStage3 NOT READY.
+
+
 Test268 battery-only window COMPLETED150.378s/28samples on unchanged263/4bbd8221.
 SOC99, gauge4.343–4.366V, discharge−1.320..−0.510A, pack29.0→27.8C; Wi-Fi healthy,
 no new CPU/kernel fault/failedunit. USB unplugged intentionally. OldSM5440x80

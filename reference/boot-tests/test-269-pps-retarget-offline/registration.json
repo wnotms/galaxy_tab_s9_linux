@@ -1,0 +1,19 @@
+{
+  "baseline_revision": "27febd67",
+  "purpose": "Offline PPS operating-point retarget transaction using fresh battery/source facts, pump OFF before negotiation",
+  "profile": "sm5440-policy-offline",
+  "expected_config_delta_from_Test263": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "expected_DTB_delta_from_Test263": {},
+  "PPS_current_ceiling_mA": 1800,
+  "PPS_voltage_ceiling_mV": 10500,
+  "fixed_PD_ceiling": "5V/1800mA; 9V/1500mA unchanged",
+  "device_commands_executed": false,
+  "physical_acceptance": "NOT_AUTHORIZED",
+  "live_adapter_added": false,
+  "startup_fault_gate_changed": false
+}
