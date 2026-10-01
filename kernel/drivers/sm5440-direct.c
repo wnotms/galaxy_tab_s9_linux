@@ -218,7 +218,10 @@ int sm5440_passive_request_fresh(struct sm5440_passive_measurement *out)
 	 * after quiesce has canceled work. Running work may finish an old sample;
 	 * that completion will be refused, not relabeled as this acquisition.
 	 */
-	mod_delayed_work(system_wq, &sm->work, 0);
+	/* Match schedule_delayed_work(): pinned7.2 uses system_percpu_wq.
+	 * A different queue would forfeit same-work non-reentrancy.
+	 */
+	mod_delayed_work(system_percpu_wq, &sm->work, 0);
 	mutex_unlock(&sm->io_lock);
 	if (!wait_event_timeout(sm->request_wait,
 		READ_ONCE(sm->sample_seq) != seq || READ_ONCE(sm->stopped) ||

@@ -45,7 +45,7 @@ struct wait_queue_head {pthread_mutex_t mutex;pthread_cond_t cond;};
 typedef struct wait_queue_head wait_queue_head_t;
 struct device {int unused;};struct regmap {int unused;};
 struct delayed_work {int unused;};struct power_supply {int unused;};
-struct dentry {int unused;};static void *system_wq;
+struct dentry {int unused;};static void *system_percpu_wq;
 static _Thread_local int registry_held,io_held;
 static int errors,scenario,queued,drained,recursive_result;
 static bool io_busy;static atomic_ullong clock_ms;
@@ -314,6 +314,10 @@ int fresh_case(int kind,u64 *out) {
         src = (ROOT / 'kernel/drivers/sm5440-direct.c').read_text()
         api = function(src, 'int sm5440_passive_request_fresh(')
         self.assertNotIn('regmap_', api)
+        self.assertIn('mod_delayed_work(system_percpu_wq,', api)
+        pinned = ROOT / '.work/linux-mainline/include/linux/workqueue.h'
+        self.assertIn('system_percpu_wq', function(pinned.read_text(),
+                      'static inline bool schedule_delayed_work('))
         self.assertNotIn('sm5440_off(', api)
         self.assertNotIn('cancel_delayed_work', api)
         self.assertNotIn('pps', api.lower())

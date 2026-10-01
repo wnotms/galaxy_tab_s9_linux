@@ -44,6 +44,9 @@ cache under io_lock, wakes requesters, then drains the existing worker without
 io_lock and verifies OFF/ADC disable. Thus a request cannot queue work after PM's
 drain. Resume never resumes a request or carries its deadline/grant forward.
 
+The request uses `system_percpu_wq`, matching pinned7.2-rc3
+`schedule_delayed_work()`. Its deprecated `system_wq` is a separate allocation,
+so mixing those queues would lose the same-work non-reentrancy guarantee.
 Worker completes state/sequence under io_lock then wakes requests. Snapshot and
 startup/fault handling remain identical; rejected/failed requests never modify
 raw sample provenance or authorize ON. Existing300ms worker can continue after
