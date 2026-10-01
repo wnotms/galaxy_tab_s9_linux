@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-01)
 
+Test275 exact263rollback READBACK VERIFIED in TWRP: all5partitions +181paired
+modules,272candidate preserved.test275-tested/allolderbackups retained, root
+unmounted/BCBclear. Owner confirmedfreeze/manual272Debianreboot, no observer
+reloaded. Failed e7011109persistentkernelrows stop316.436572s before513.484s
+request; pstoreempty, postunloadtrace absent/no negativefaultproof. Read275
+ROLLBACK_STATUS/rollback-install. Next one263baselineboot/endpoint only.
+Test2767a887eab OFFLINEtasklifetimefix26affected/full1481/W1/sparse pass, all1475
+retained,149hardwareinputs/provider/DT/config/181archive intact, original274
+artifactpreserved. New276module9aafabf6 NOT deployed. No PPS/pumpON/current/
+deadline/ADCchange; freezecausation unproved. ActiveStage3 NOT READY.
+
+
 Test275 STOP_TRANSPORT_LOSS_DURING_DIAGNOSTIC_UNLOAD. ONE272e7018be8boot/
 ONE274observerload/onefreshcall-110 in108ms/zero usable/firsterrorSTOP. rmmod
 timeout20s, postkernel reads timeout25s, Wi-Fi252banner timeout; Windowsenumerated

@@ -1,0 +1,12 @@
+qrtr_mhi 12288 0 - Live 0xffffffc07b29b000
+ath11k_pci 32768 0 - Live 0xffffffc07b28f000
+ath11k 421888 1 ath11k_pci, Live 0xffffffc07b224000
+mac80211 1114112 1 ath11k, Live 0xffffffc07b110000
+cfg80211 1122304 2 ath11k,mac80211, Live 0xffffffc07affa000
+hci_uart 73728 0 - Live 0xffffffc07afe5000
+btqca 16384 1 hci_uart, Live 0xffffffc07afde000
+btbcm 20480 1 hci_uart, Live 0xffffffc07afd8000
+bluetooth 618496 22 hci_uart,btqca,btbcm, Live 0xffffffc07af3f000
+pwrseq_qcom_wcn 16384 2 - Live 0xffffffc07af38000
+gpio_shared_proxy 12288 0 - Live 0xffffffc07af2e000
+pci_pwrctrl_pwrseq 12288 0 - Live 0xffffffc07af28000
