@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uptime; cat /proc/uptime; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@snapshot; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@network; ip -4 -o addr; echo @@dcc; test ! -e /dev/hvc0; test ! -e /sys/class/tty/hvc0; ! systemctl is-active --quiet serial-getty@hvc0.service; echo @@cmdline; cat /proc/cmdline"
+  ],
+  "ended_utc": "2026-10-01T03:39:59.932364+00:00",
+  "started_utc": "2026-10-01T03:39:59.795630+00:00",
+  "status": 0
+}

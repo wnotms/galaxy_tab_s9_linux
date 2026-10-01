@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-01)
 
+Test267 finalized STOP_PASSIVE_MONITOR_FAULT, zero30s window completed. Exact
+263 restored/readback and Debian4bbd8221 config/notes/cmdline pass; ADB/NCM/WiFi
+normal/noCode43/newCPUfault. Baseline also0x80 atVBAT4.3215V/OFF/IBUS0; passive
+Unspecifiedfailure persists, batteryGood. This is not fixed by rollback or a
+qualified Test266 physical pass. Read Test267 RESULTS/summary/seal. Preserve
+original observer hostcmdline STOP; fullruntime actually equals263. Next offline
+audit existingfullpack startupclassifier (VBAT<4.3V), no automatic retry/cutoff
+relaxation/clear-latch/PPS/pumpON. Device263; all olderbackups retained. Results
+reuse266 qualification/42focused checks; no build/full/CI repeat.
+
+
 Test267 exact Test263 boot+181modules restored/readback; all5partitions match
 accepted263. Candidate module directory preserved .gts9-test267-tested, older
 backups intact; root unmounted/BCB clear. StillTWRP, next ordinary baseline
