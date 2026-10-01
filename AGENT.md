@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test266 registers OFFLINE passive SM5440 coherent cached-consumer API;
+read Test266 README/registration. Add actual acquisition-start BOOTTIME metadata,
+max100ms refusal and short registry->io lock lifetime; no I2C on read/new worker/
+converter/ON/PPS/protection/current change. Existing passive polling/property/
+startup/PM behavior stays. Consumer may ESTALE between1s polls; no fresh-on-read
+or ADC calibration claim. One passive build/full qualification after code;
+config/DTB must equal263, protected/containers/DCC intact. Installed263 untouched;
+no device command/physical test authorized. ActiveStage3 NOT READY.
+
 Test265 OFFLINE PM CORE QUALIFIED at0da8e89a: Fedora-derived suspend latch/
 revoke/checkOFF-fixed-measure-switching; resume never auto-arms.38 actualC tests
 (10 new PM) + full1369 pass, all prior1351 IDs retained; one isolated policy
