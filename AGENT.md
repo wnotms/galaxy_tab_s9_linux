@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Test267 exact Test263 boot+181modules restored/readback; all5partitions match
+accepted263. Candidate module directory preserved .gts9-test267-tested, older
+backups intact; root unmounted/BCB clear. StillTWRP, next ordinary baseline
+boot/recovery endpoint only, no repeat candidate/charging test. Monitor failure
+and hostcmdline defect retained; no gates/PPS/pumpON/current/USB change.
+
+
 Test267 candidate0fb695fd reached responsiveDebian/config/notes match. Physical
 passive monitor STOP: retained0x80 at0.278016s, VBAT4.3055V outside unchanged
 <4.3V startup classifier; pumpOFF/IBUS0, batteryGood/SOC99, no CPU/kernel fault.

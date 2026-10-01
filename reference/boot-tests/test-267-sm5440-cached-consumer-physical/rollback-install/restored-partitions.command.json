@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/block/by-name/$n; done; echo @@slots; ls -d /mnt/debian/usr/lib/modules/.gts9-test267-tested /mnt/debian/usr/lib/modules/.gts9-test263-original /mnt/debian/usr/lib/modules/.gts9-test260-original"
+  ],
+  "ended_utc": "2026-10-01T03:33:05.204647+00:00",
+  "started_utc": "2026-10-01T03:33:04.908195+00:00",
+  "status": 0
+}
