@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test277 paired installation READBACK VERIFIED in TWRP: bootd837b52f+181272
+modules, other4partitions exact263, unique277 rollback/all older backups retained,
+rootunmounted/BCBclear. Registratione4d0a6d7 pushed beforewrites. Candidate boot
+and one revised276observer9aafabf6 load next; no old274reload. No PPS/pumpON/
+current/ADC/deadline/USB/rootfs change. Read277INSTALL_STATUS/install. Reuse
+272provider/2761481/W1/sparse/22localhost qualification; no rebuild/full/CI.
+ActiveStage3 NOT READY; unconditional exact263 rollback after diagnostic.
+
 Test277 independent revised passive observer registered: sealed272399eb497
 provider +2767a887eab owned-task observer9aafabf6, ONE PCUSB boot/load,
 <=8calls/1s/100ms/max30s; first refusal ends early, safe unload/endpoint assessed
