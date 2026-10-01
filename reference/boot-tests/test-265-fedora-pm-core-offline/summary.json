@@ -1,0 +1,94 @@
+{
+  "test": 265,
+  "verdict": "OFFLINE_PM_CORE_QUALIFIED",
+  "kernel_source_revision": "0da8e89a25b57d85cbdc088add0b1483310a2199",
+  "kernel_source_hashes": {
+    "kernel/drivers/x710-charging-policy.c": "38db190eac0fa35d477d76b8eb9fcad6441e1d8b5d2006c6673a916bd524d8d8",
+    "kernel/drivers/x710-charging-policy.h": "630064a0de29b0798ae726594f2716a01c5928a301f5ebb3b838767ecf5525a3"
+  },
+  "Fedora_reference": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "profile": "sm5440-policy-offline",
+  "purpose": "Suspend/resume transitions only in unwired transaction core",
+  "physical_acceptance": "NOT_EXECUTED",
+  "device_commands_executed": false,
+  "deployed": false,
+  "installed_baseline": "Test263 accepted",
+  "PPS_enabled": false,
+  "pump_enable_supported": false,
+  "live_adapter_added": false,
+  "active_stage3_ready": false,
+  "build": {
+    "executed": true,
+    "passed": true,
+    "kernel_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+    "module_file_count": 181
+  },
+  "development_tests": {
+    "count": 38,
+    "new_PM_tests": 10,
+    "passed": true
+  },
+  "full_host_tests": {
+    "executed": true,
+    "tests_run": 1369,
+    "elapsed_s": 128.781,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "previous_1351_ids_retained": true
+  },
+  "static_checks": {
+    "W1": true,
+    "sparse": true,
+    "policy_driver_diagnostics": [],
+    "upstream_warning": "VDSO __kernel_getrandom missing declaration, retained",
+    "object_unchanged": true
+  },
+  "config_delta_from_Test263": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_identical_to_Test263": true,
+  "dtbs_check_executed": false,
+  "dtbs_check_reason": "Byte-identical accepted Test263 DTB; no DT/schema change.",
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "Docker_UPower_required_y": 85,
+  "DCC_absent": true,
+  "frozen_fixed_artifacts_intact": true,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-265-policy/Image.gz",
+      "sha256": "0c091c5df83e085a8638163b88f4080a8c6b2aa72dea84dc677fce31ab58c88a",
+      "bytes": 22125498
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-265-policy/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-265-policy/config",
+      "sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+      "bytes": 243265
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-265-policy/kernel-notes.bin",
+      "sha256": "d9e44feed13198d4c897135db2fac7dbb0070deb9b300e6375f57a3eb092ac43",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-265-policy/modules-x710.tar.gz",
+      "sha256": "921c94d1c33be6a4da4ede56c9a6fdaccc1bb44d57307c99548489ee3b94795c",
+      "bytes": 47318075
+    }
+  },
+  "remaining": [
+    "Independent physical ADC/current calibration",
+    "Active protection/cutoff qualification",
+    "Live adapter cancellation/PM supplier ordering"
+  ]
+}

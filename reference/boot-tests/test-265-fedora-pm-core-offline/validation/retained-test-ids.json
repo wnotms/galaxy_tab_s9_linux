@@ -1,0 +1,25 @@
+{
+  "baseline_count": 1351,
+  "new_count": 1369,
+  "missing": [],
+  "added": [
+    "test_sm5440_device_completion.DeviceCompletionTests.test_code43_stops_and_preserves_device_evidence",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_existing_directory_refused_before_any_command",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_fault_keeps_evidence_and_never_claims_completion",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_identity_change_stops_before_transport",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_inactive_service_and_reboot_do_not_pass",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_ncm_auth_failure_is_not_retried",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_parent_journal_and_original_stop_preserved_combined_admission",
+    "test_sm5440_device_completion.DeviceCompletionTests.test_real_recorder_still_rejects_duplicate_filename",
+    "test_x710_direct_transaction.TransactionTests.test_pm_active_exit_is_off_fixed_measure_switching",
+    "test_x710_direct_transaction.TransactionTests.test_pm_each_exit_failure_blocks_resume_and_propagates",
+    "test_x710_direct_transaction.TransactionTests.test_pm_epoch_loss_never_restores_old_connection",
+    "test_x710_direct_transaction.TransactionTests.test_pm_inactive_suspend_revokes_grant_without_hardware",
+    "test_x710_direct_transaction.TransactionTests.test_pm_invalid_adapter_latches_suspend_and_never_claims_off",
+    "test_x710_direct_transaction.TransactionTests.test_pm_invalid_or_unpaired_resume_is_refused",
+    "test_x710_direct_transaction.TransactionTests.test_pm_monitor_refresh_with_suspend_latch_exit_without_request",
+    "test_x710_direct_transaction.TransactionTests.test_pm_old_facts_and_manual_grant_cannot_start_while_suspended",
+    "test_x710_direct_transaction.TransactionTests.test_pm_repeated_suspend_does_not_rearm_or_repeat_io",
+    "test_x710_direct_transaction.TransactionTests.test_pm_resume_never_arms_or_requests_old_pps"
+  ]
+}

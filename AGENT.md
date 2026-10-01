@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-01)
 
+Test265 OFFLINE PM CORE QUALIFIED at0da8e89a: Fedora-derived suspend latch/
+revoke/checkOFF-fixed-measure-switching; resume never auto-arms.38 actualC tests
+(10 new PM) + full1369 pass, all prior1351 IDs retained; one isolated policy
+Image/DTB/181modules build, embedded config/notes/source/85containers/96protected
+and W1/sparse pass (knownVDSO warning retained). Exact263 config delta only
+X710_CHARGING_POLICY n->y; DTB identical. Read Test265 RESULTS/summary/seal and
+X710_FEDORA_PM_PORT. No liveadapter/notifier/device command/flash/reboot/PPS/
+pumpON/current/thermal/USB change. Installed263 accepted,260 rollback intact.
+ActiveStage3 NOT READY: physical ADC/current/OCP/live PM supplier order remain.
+Results-only commits reuse exact qualification; no repeat build/full/CI.
+
 Test265 Fedora-derived unwired PM core implemented: suspend latch/revoke grant,
 checked OFF/fixed/measure/switching exit; resume never auto-arms and refuses
 fault/epoch/inhibit.38 actual-C tests (10 new PM) and full1369 pass. Isolated

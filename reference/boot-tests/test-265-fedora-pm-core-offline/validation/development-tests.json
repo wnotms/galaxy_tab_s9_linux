@@ -1,0 +1,17 @@
+{
+  "executed": true,
+  "command": "python3 -m unittest discover -s tests -p test_x710_direct_transaction.py -v",
+  "tests_run": 38,
+  "new_pm_tests": 10,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "elapsed_seconds": 0.251,
+  "evidence": "Tool execution output from initial changed-C development test; final full run separately records all test IDs/log.",
+  "source_hashes": {
+    "kernel/drivers/x710-charging-policy.c": "38db190eac0fa35d477d76b8eb9fcad6441e1d8b5d2006c6673a916bd524d8d8",
+    "kernel/drivers/x710-charging-policy.h": "630064a0de29b0798ae726594f2716a01c5928a301f5ebb3b838767ecf5525a3",
+    "tests/test_x710_direct_transaction.py": "282a420ce1d85d7a885ec083144a9ee19c5ec63599cc1e5a27eb67527b8fbaa2"
+  },
+  "device_commands_executed": false
+}

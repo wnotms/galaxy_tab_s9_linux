@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "python3",
+    "scripts/audit-x710-charging-build.py",
+    "--out",
+    "out/kernel-x710-265-policy",
+    "--tree",
+    ".work/build/linux-src-x710-charging",
+    "--build",
+    ".work/build/linux-out-x710-265-policy",
+    "--profile",
+    "sm5440-policy-offline",
+    "--report",
+    "reference/boot-tests/test-265-fedora-pm-core-offline/validation/artifact-audit.json",
+    "--revision",
+    "0da8e89a25b57d85cbdc088add0b1483310a2199"
+  ],
+  "revision": "0da8e89a25b57d85cbdc088add0b1483310a2199",
+  "started_utc": "2026-10-01T01:54:34.113812+00:00",
+  "device_commands_executed": false,
+  "status": 0,
+  "ended_utc": "2026-10-01T01:55:10.315388+00:00"
+}

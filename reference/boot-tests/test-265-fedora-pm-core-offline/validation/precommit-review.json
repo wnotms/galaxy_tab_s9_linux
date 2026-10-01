@@ -1,0 +1,21 @@
+{
+  "build_pass": true,
+  "full_host_tests_pass": true,
+  "exact_config_delta": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "dtb_identical": true,
+  "allowed_kernel_changes": [
+    "kernel/drivers/x710-charging-policy.c",
+    "kernel/drivers/x710-charging-policy.h"
+  ],
+  "compiled_current_source_matches": true,
+  "build_source_hashes": {
+    "kernel/drivers/x710-charging-policy.c": "38db190eac0fa35d477d76b8eb9fcad6441e1d8b5d2006c6673a916bd524d8d8",
+    "kernel/drivers/x710-charging-policy.h": "630064a0de29b0798ae726594f2716a01c5928a301f5ebb3b838767ecf5525a3"
+  },
+  "device_commands_executed": false
+}
