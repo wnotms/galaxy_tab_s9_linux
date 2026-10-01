@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python3",
+    "-c",
+    "import subprocess; s=subprocess.check_output(['llvm-nm','--defined-only','.work/build/linux-out-x710-272-passive/vmlinux'],text=True); print('\\n'.join(x for x in s.splitlines() if x.split()[-1] in ('sm5440_passive_request_fresh','sm5440_poll','sm5440_sample_once','__tracepoint_workqueue_queue_work','__tracepoint_workqueue_execute_start','__tracepoint_workqueue_execute_end')))"
+  ],
+  "ended_utc": "2026-10-01T14:12:44.672472+00:00",
+  "started_utc": "2026-10-01T14:12:43.847038+00:00",
+  "status": 0
+}

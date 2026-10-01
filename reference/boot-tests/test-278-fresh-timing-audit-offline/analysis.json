@@ -1,0 +1,167 @@
+{
+  "PPS": false,
+  "active_Stage3": "NOT READY",
+  "cases": [
+    {
+      "boot_id": "e7018be8b5254796a7512aefe531f27e",
+      "charging_authorized": false,
+      "cleared_fields_are_measurements": false,
+      "consumer_status": -110,
+      "hardware_ADC_fault_proven": false,
+      "observer_elapsed_ms": 108,
+      "observer_request_ms": 513484,
+      "observer_return_ms": 513592,
+      "original_verdict": "STOP_REQUIRES_ANALYSIS",
+      "phase_durations_ms": {
+        "conversion_ready": null,
+        "delivery": null,
+        "publication": null,
+        "queue": null,
+        "release": null
+      },
+      "provider_status": -110,
+      "publication_deltas": [
+        {
+          "after": "sample-00",
+          "before": "before-load-state",
+          "cache_advanced": true,
+          "proves_request_conversion_duration": false,
+          "publication_delta_ms": 12672,
+          "publication_delta_ticks": 3168
+        }
+      ],
+      "snapshots": [
+        {
+          "absolute_publication_boottime_ms": null,
+          "actual_conversion_ms": null,
+          "capture_jiffies": 4295017517,
+          "clock_anchor_available": false,
+          "debug_cache_fresh": 1,
+          "label": "before-load-state",
+          "publication_age_ms": 452,
+          "publication_jiffies": 4295017404
+        },
+        {
+          "absolute_publication_boottime_ms": null,
+          "actual_conversion_ms": null,
+          "capture_jiffies": 4295020699,
+          "clock_anchor_available": false,
+          "debug_cache_fresh": 1,
+          "label": "sample-00",
+          "publication_age_ms": 508,
+          "publication_jiffies": 4295020572
+        }
+      ],
+      "test": "Test275",
+      "timeout_branch": "UNKNOWN",
+      "unload_confirmed": false,
+      "usable": false
+    },
+    {
+      "boot_id": "1cb7050b9242406f9bdf7dd6826bacf0",
+      "charging_authorized": false,
+      "cleared_fields_are_measurements": false,
+      "consumer_status": -110,
+      "hardware_ADC_fault_proven": false,
+      "observer_elapsed_ms": 101,
+      "observer_request_ms": 44343,
+      "observer_return_ms": 44444,
+      "original_verdict": "DEVICE_NORMAL_ACQUISITION_REFUSED",
+      "phase_durations_ms": {
+        "conversion_ready": null,
+        "delivery": null,
+        "publication": null,
+        "queue": null,
+        "release": null
+      },
+      "provider_status": -110,
+      "publication_deltas": [
+        {
+          "after": "sample-00",
+          "before": "before-load-state",
+          "cache_advanced": true,
+          "proves_request_conversion_duration": false,
+          "publication_delta_ms": 12716,
+          "publication_delta_ticks": 3179
+        },
+        {
+          "after": "endpoint-state",
+          "before": "sample-00",
+          "cache_advanced": true,
+          "proves_request_conversion_duration": false,
+          "publication_delta_ms": 368,
+          "publication_delta_ticks": 92
+        }
+      ],
+      "snapshots": [
+        {
+          "absolute_publication_boottime_ms": null,
+          "actual_conversion_ms": null,
+          "capture_jiffies": 4294900208,
+          "clock_anchor_available": false,
+          "debug_cache_fresh": 1,
+          "label": "before-load-state",
+          "publication_age_ms": 256,
+          "publication_jiffies": 4294900144
+        },
+        {
+          "absolute_publication_boottime_ms": null,
+          "actual_conversion_ms": null,
+          "capture_jiffies": 4294903408,
+          "clock_anchor_available": false,
+          "debug_cache_fresh": 1,
+          "label": "sample-00",
+          "publication_age_ms": 340,
+          "publication_jiffies": 4294903323
+        },
+        {
+          "absolute_publication_boottime_ms": null,
+          "actual_conversion_ms": null,
+          "capture_jiffies": 4294903532,
+          "clock_anchor_available": false,
+          "debug_cache_fresh": 1,
+          "label": "endpoint-state",
+          "publication_age_ms": 468,
+          "publication_jiffies": 4294903415
+        }
+      ],
+      "test": "Test277",
+      "timeout_branch": "UNKNOWN",
+      "unload_confirmed": true,
+      "usable": false
+    }
+  ],
+  "deadline_changed": false,
+  "device_commands_executed": false,
+  "kernel_or_hardware_changed": false,
+  "physical_attempts": 0,
+  "profile": {
+    "actual_sleep_or_conversion_ms": null,
+    "averaging": 32,
+    "charging_authorized": false,
+    "deadline_ms": 100,
+    "diagnostic_cache_freshness_ms": 2500,
+    "hz": 250,
+    "maximum_polls": 12,
+    "maximum_requested_sleep_sum_ms": 300,
+    "nominal_four_poll_timeout_sum_ms": 112,
+    "poll_requested_ms": 25,
+    "poll_timeout_nominal_ms": 28,
+    "poll_timeout_ticks": 7,
+    "timeout_branch_candidates": [
+      "initial_budget",
+      "wait_expired",
+      "post_wake_budget",
+      "final_release_budget"
+    ],
+    "tracing": {
+      "FUNCTION_TRACER": false,
+      "KPROBES": true,
+      "KRETPROBES": true,
+      "TRACEPOINTS": true
+    },
+    "unsigned_long_bits": 64
+  },
+  "pump_ON": false,
+  "verdict": "OFFLINE_TIMING_AUDIT_COMPLETED_ATTRIBUTION_UNRESOLVED"
+}

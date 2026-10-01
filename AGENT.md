@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-01)
 
+Test278 OFFLINE_TIMING_AUDIT_COMPLETED_ATTRIBUTION_UNRESOLVED:16host+syntax/
+byte-identical report/source+275277seals pass. FourAPI-110 branches, all phase
+latencies UNKNOWN/null. HZ25025ms=7ticks nominal28ms;112ms four-timeout budget
+risk != actual conversion.277cache92ticks368ms != ADC duration, no absolute
+BOOTTIME without anchor/false grant. Read278RESULTS/analysis and
+SM5440_FRESH_TIMING_AUDIT. Frozen272source/config/DT/ADC/deadline/USB/rootfs/
+hardware unchanged; zero device/probe/tracefs/build/full/CI. Reuse272provider/
+2761481/W1/sparse. Lastverified263cdce6deb from277, no deployment in278.
+Existing KPROBE_EVENTS/workqueue support can narrow future queue/worker timing;
+sample_once standalone absent, runtime addresses differ from ELF, symbolic
+resolution only. Future offline collector review + separate registered passive
+trace, no automatic physical retry/relaxation/PPS/pumpON/current. ActiveStage3 NOT READY.
+
 Test278 registers OFFLINE fresh-timeout source/evidence audit on frozen272/
 276 and raw275/277. No device command/flash/reboot/request/kernel/config/DT/
 ADC/deadline/USB/rootfs change. Current restored263 unchanged. VerifyINPUTS;

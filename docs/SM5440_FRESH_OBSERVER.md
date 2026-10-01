@@ -6,12 +6,13 @@ diagnostic module; no production Kconfig, DTS, I2C driver or rootfs changes.
 Its new compiled .ko is kept separate from the matched181module-directory files.
 It cannot load on old263 and must never be force-loaded there.
 
-Test275 physical STOP: first-110 then shell/SSH lost during unload; persistent
-logs and rollback pending. Original274 module must not be loaded again. Test276
-corrects a definite lifetime defect offline: parked kthread_create, owned task
-reference before wake, kthread_stop_put before debugfs removal. Old loop tests
-did not model autonomous task destruction. Connection failure causation awaits
-failed-boot journal. New module is not physical acceptance or charging permission.
+Test275 physical STOP remains: first-110 then shell/SSH lost during unload.
+Retrieved persistent logs end before module load; no fault stack, cause unproved.
+Original274 module must not be loaded again. Test276 corrects task lifetime:
+parked kthread_create, owned reference before wake, kthread_stop_put before removal.
+Test277 verified ONE unload-after-refusal with that revision and normal sameboot
+ADB/Wi-Fi/deviceNCM; fresh call still-110/101ms, no acquisition pass. Exact263
+rollback completed. See278offline timing audit; no PPS/pump/current permission.
 
 ## Ownership
 
@@ -39,7 +40,8 @@ clang21/ccache, check ELF/imports/W1/sparse, host-execute actual C lifecycle/ret
 validation/stop/unload paths. One final full host run retains all previous IDs.
 Config and DT diff must be empty; Image/181modules untouched. No device command.
 
-Future Test275 only: verified272provider+paired181modules and exact263rollback,
+Historical Test275 plan (superseded by277): verified272provider+paired181modules
+and exact263rollback,
 PC fixed5V/SDP500mA, pumpOFF/fault0/thermal<38C/rescue, one explicit module load
 within30s window. Save all rows, raw snapshot and boundary/first-fault kernel
 journal; first nonzero status ends requests and preserves failure. No reload.

@@ -1,0 +1,43 @@
+{
+  "Actions": false,
+  "PPS": false,
+  "active_Stage3": "NOT READY",
+  "actual_branch": "UNKNOWN",
+  "actual_conversion_ms": null,
+  "analyser_source_sha256": "3d845f3f4eb029fe6254a78052ff550c95e49216fe7ef4a47ce11ff3c0eebb8b",
+  "current_increase": false,
+  "device_commands_executed": false,
+  "four_nominal_timeouts_sum_ms": 112,
+  "full_host_tests": {
+    "executed": false,
+    "reason": "no kernel/routing change; reuse2761481PASS"
+  },
+  "future_tracing": "plan only; existing symbolic probes + filtered workqueue; no driver rebuild assumed; inlined converter detail remains unavailable",
+  "historical275_and277_seals_verified": true,
+  "host_tests_source_sha256": "95a3010ef349eef4a796d509ed5c19e8b483f0ee85ac24c37139f94e14ed4949",
+  "kernel_build": {
+    "executed": false,
+    "reason": "pure host audit; frozen272provider reused"
+  },
+  "local_tests_passed": 16,
+  "nominal25ms_timeout_ticks": 7,
+  "nominal_timeout_ms": 28,
+  "observer_build": {
+    "executed": false,
+    "reason": "no observer changes; reuse2767a887eabW1/sparse"
+  },
+  "physical_attempts": 0,
+  "prior_device_baseline": "Test263 cdce6deba2e04f3481679632e38ac997; last verified Test277",
+  "publication_interval_ms_not_conversion": 368,
+  "pump_ON": false,
+  "recorded_caller_elapsed_ms": {
+    "Test275": 108,
+    "Test277": 101
+  },
+  "registration_revision": "f6327094",
+  "report_reproduced_byte_identical": true,
+  "source_config_DTB_hardware_changed": false,
+  "syntax": "pass",
+  "timeout_branches": 4,
+  "verdict": "OFFLINE_TIMING_AUDIT_COMPLETED_ATTRIBUTION_UNRESOLVED"
+}

@@ -55,8 +55,11 @@ a requester timeout, and normal1s scheduling continues unchanged.
 ## Verification boundary
 
 Mock/host execution verifies sequence, times, units, failures and ordering; ARM64
-build/static checks verify integration. Passive physical API timing, nonzero
-current and independent calibration remain untested. No actual hard cutoff or
-active-mode sampling is claimed. An active adapter still needs its own supplier
+build/static checks verify integration. Test275/Test277 attempted passive timing
+and both refused the 100ms contract;
+Test277 verified corrected observer unload after refusal. Passive timing remains
+unqualified; nonzero current and independent calibration remain untested.
+See `SM5440_FRESH_TIMING_AUDIT.md` for the offline branch/budget audit. No actual
+hard cutoff or active-mode sampling is claimed. An active adapter still needs its own supplier
 lifetime/PM contract and protection qualification before PPS/pumpON. Fixed5V<=1.8A,
 9V<=1.5A,4440mV, thermistor fail-closed and USB/ADB are frozen.
