@@ -11,6 +11,7 @@
 #include <linux/ktime.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
+#include <linux/sched/task.h>
 #include <linux/seq_file.h>
 
 #include "sm5440-hw.h"
@@ -140,11 +141,17 @@ static int __init observer_init(void)
 		ret = IS_ERR(file) ? PTR_ERR(file) : -ENOMEM;
 		goto remove;
 	}
-	observer_task = kthread_run(observer_thread, NULL, "sm5440-observe");
+	/* The bounded worker can return before unload. Pinned
+	 * kthread.c requires caller ownership when stopping an exited thread.
+	 * Create parked: take the reference BEFORE the worker can run/return.
+	 */
+	observer_task = kthread_create(observer_thread, NULL, "sm5440-observe");
 	if (IS_ERR(observer_task)) {
 		ret = PTR_ERR(observer_task);
 		goto remove;
 	}
+	get_task_struct(observer_task);
+	wake_up_process(observer_task);
 	return 0;
 remove:
 	debugfs_remove(observer_root);
@@ -154,7 +161,7 @@ remove:
 static void __exit observer_exit(void)
 {
 	/* Join before removing cached results; no lock held over the drain. */
-	kthread_stop(observer_task);
+	kthread_stop_put(observer_task);
 	debugfs_remove(observer_root);
 }
 module_init(observer_init);

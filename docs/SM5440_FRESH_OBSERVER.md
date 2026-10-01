@@ -6,6 +6,13 @@ diagnostic module; no production Kconfig, DTS, I2C driver or rootfs changes.
 Its new compiled .ko is kept separate from the matched181module-directory files.
 It cannot load on old263 and must never be force-loaded there.
 
+Test275 physical STOP: first-110 then shell/SSH lost during unload; persistent
+logs and rollback pending. Original274 module must not be loaded again. Test276
+corrects a definite lifetime defect offline: parked kthread_create, owned task
+reference before wake, kthread_stop_put before debugfs removal. Old loop tests
+did not model autonomous task destruction. Connection failure causation awaits
+failed-boot journal. New module is not physical acceptance or charging permission.
+
 ## Ownership
 
 One kthread starts only when a future registered operator explicitly loads the

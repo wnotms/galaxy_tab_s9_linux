@@ -212,8 +212,122 @@ int null_check(void) {return observer_check(1000,1080,0,NULL);}
         self.assertEqual(src.count('sm5440_passive_request_fresh(&row.raw)'), 1)
 
 
+class ObserverTaskLifetimeTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.tmp.cleanup)
+        src = SOURCE.read_text()
+        code = r'''
+#include <stdbool.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#define __init
+#define __exit
+#define DEFINE_SHOW_ATTRIBUTE(x)
+#define IS_ERR(x) ((intptr_t)(x)<0 && (intptr_t)(x)>-4096)
+#define PTR_ERR(x) ((intptr_t)(x))
+#define IS_ERR_OR_NULL(x) (!(x)||IS_ERR(x))
+struct dentry {int unused;};struct task_struct {int refs, running;};
+static struct dentry root;static struct task_struct task;
+static struct dentry *observer_root;static struct task_struct *observer_task;
+static int observer_result_fops;
+static int failure,fast,errors,joined,removed,gets,wakes;
+static int observer_thread(void *arg) {(void)arg;return 0;}
+static struct dentry *debugfs_create_dir(const char *name,void *p) {
+ (void)name;(void)p;return failure==1 ? (void*)-ENOMEM : failure==2 ? NULL : &root;
+}
+static struct dentry *debugfs_create_file(const char *name,int perm,void *p,void *d,void *f) {
+ (void)name;(void)perm;(void)p;(void)d;(void)f;return failure==3 ? (void*)-EINVAL : &root;
+}
+static void debugfs_remove(void *p) {(void)p;removed++;}
+static struct task_struct *kthread_create(int (*fn)(void*),void *d,const char *name) {
+ (void)fn;(void)d;(void)name;if(failure==4)return (void*)-ENOMEM;
+ task.refs=1;task.running=0;return &task;
+}
+static void get_task_struct(struct task_struct *p) {
+ if(p->refs<=0) {errors++;} p->refs++;gets++;
+}
+static void wake_up_process(struct task_struct *p) {
+ wakes++;if(p->refs<2)errors++;p->running=1;
+ /* Model autonomous return before init returns; worker drops its task ref. */
+ if(fast) {p->running=0;p->refs--;}
+}
+static struct task_struct *kthread_run(int (*fn)(void*),void *d,const char *name) {
+ struct task_struct *p=kthread_create(fn,d,name);if(!IS_ERR(p))wake_up_process(p);return p;
+}
+static void kthread_stop(struct task_struct *p) {
+ if(p->refs<=0) {errors++;return;}
+ joined++;if(p->running) {p->running=0;p->refs--;}
+}
+static void kthread_stop_put(struct task_struct *p) {
+ kthread_stop(p);if(p->refs<=0)errors++;else p->refs--;
+}
+'''
+        init = function(src, 'static int __init observer_init(')
+        exit_code = function(src, 'static void __exit observer_exit(')
+        code += init+'\n'+exit_code+'\n'
+        # Negative control reproduces old unowned kthread_run + later stop.
+        old_init = init.replace('observer_init(', 'old_init(').replace('kthread_create(observer_thread', 'kthread_run(observer_thread')
+        old_init = old_init.replace('get_task_struct(observer_task);', '').replace('wake_up_process(observer_task);', '')
+        old_exit = exit_code.replace('observer_exit(', 'old_exit(').replace('kthread_stop_put(observer_task)', 'kthread_stop(observer_task)')
+        code += old_init+'\n'+old_exit+'\n'
+        code += r'''
+int lifecycle(int fail,int immediate,int old,int *result) {
+ failure=fail;fast=immediate;errors=joined=removed=gets=wakes=0;
+ task.refs=task.running=0;observer_root=NULL;observer_task=NULL;
+ int ret=old?old_init():observer_init();
+ int before=task.refs;if(!ret) {if(old)old_exit();else observer_exit();}
+ result[0]=errors;result[1]=before;result[2]=task.refs;result[3]=joined;
+ result[4]=removed;result[5]=gets;result[6]=wakes;result[7]=task.running;
+ return ret;
+}
+'''
+        cfile = Path(cls.tmp.name)/'lifetime.c';cfile.write_text(code)
+        so = cfile.with_suffix('.so')
+        compiled = subprocess.run(['cc','-shared','-fPIC','-std=c11','-Wall','-Wextra','-Werror',str(cfile),'-o',str(so)],capture_output=True)
+        if compiled.returncode:
+            raise RuntimeError(compiled.stderr.decode())
+        cls.lib = ctypes.CDLL(str(so))
+        cls.lib.lifecycle.argtypes = [ctypes.c_int]*3+[ctypes.POINTER(ctypes.c_int)]
+        cls.lib.lifecycle.restype = ctypes.c_int
+
+    def run_case(self, fail=0, immediate=0, old=0):
+        result = (ctypes.c_int*8)()
+        return self.lib.lifecycle(fail, immediate, old, result), list(result)
+
+    def test_worker_returns_before_init_and_unload(self):
+        rc, facts = self.run_case(immediate=1)
+        self.assertEqual(rc, 0)
+        self.assertEqual(facts, [0,1,0,1,1,1,1,0])
+
+    def test_running_worker_join_releases_owned_reference(self):
+        rc, facts = self.run_case()
+        self.assertEqual(rc, 0)
+        self.assertEqual(facts, [0,2,0,1,1,1,1,0])
+
+    def test_create_failure_never_owns_or_stops_task(self):
+        rc, facts = self.run_case(fail=4)
+        self.assertEqual(rc, -errno.ENOMEM)
+        self.assertEqual(facts, [0,0,0,0,1,0,0,0])
+
+    def test_debugfs_failures_do_not_create_task_or_leak(self):
+        for fail, expected_rc, removed in ((1,-errno.ENOMEM,0),(2,-errno.ENOMEM,0),(3,-errno.EINVAL,1)):
+            rc, facts = self.run_case(fail=fail)
+            self.assertEqual(rc, expected_rc)
+            self.assertEqual(facts, [0,0,0,0,removed,0,0,0])
+
+    def test_negative_control_old_code_detects_destroyed_task(self):
+        rc, facts = self.run_case(immediate=1, old=1)
+        self.assertEqual(rc, 0)
+        self.assertGreater(facts[0], 0)
+        self.assertEqual(facts[1], 0)
+        self.assertEqual(facts[5], 0)
+
+
 class ObserverBuilderTests(unittest.TestCase):
-    def build_fixture(self, changed=False):
+    def build_fixture(self, changed=False, separate_output=False):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / 'scripts').mkdir()
@@ -242,8 +356,14 @@ class ObserverBuilderTests(unittest.TestCase):
             for name in ('git', 'make'):
                 (bin_dir / name).chmod(0o755)
             env = dict(os.environ, PATH=str(bin_dir) + ':' + os.environ['PATH'])
+            if separate_output:
+                original = root/'out/sm5440-fresh-observer/sm5440-fresh-observer.ko'
+                original.parent.mkdir(parents=True);original.write_bytes(b'original frozen module')
+                env['OBSERVER_OUT_DIR'] = str(root/'out/revised-observer')
             result = subprocess.run(['bash', str(root / 'scripts/build-sm5440-fresh-observer.sh')], env=env, capture_output=True, timeout=10)
-            artifact = root / 'out/sm5440-fresh-observer/sm5440-fresh-observer.ko'
+            artifact = root / ('out/revised-observer/sm5440-fresh-observer.ko' if separate_output else 'out/sm5440-fresh-observer/sm5440-fresh-observer.ko')
+            if separate_output:
+                self.assertEqual(original.read_bytes(), b'original frozen module')
             return result.returncode, result.stderr.decode(), artifact.exists()
 
     def test_matching_frozen_provider_builds_external_only(self):
@@ -256,6 +376,11 @@ class ObserverBuilderTests(unittest.TestCase):
         self.assertNotEqual(status, 0)
         self.assertIn('source no longer matches sealed Test272 provider', stderr)
         self.assertFalse(present)
+
+    def test_separate_output_keeps_original_frozen_module(self):
+        status, stderr, present = self.build_fixture(separate_output=True)
+        self.assertEqual(status, 0, stderr)
+        self.assertTrue(present)
 
 
 if __name__ == '__main__':

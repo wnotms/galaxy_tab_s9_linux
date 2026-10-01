@@ -1,0 +1,31 @@
+test_busy_provider_not_retried (test_sm5440_fresh_observer.FreshObserverTests.test_busy_provider_not_retried) ... ok
+test_clock_reversal_refused (test_sm5440_fresh_observer.FreshObserverTests.test_clock_reversal_refused) ... ok
+test_delivery_above_100ms_stops (test_sm5440_fresh_observer.FreshObserverTests.test_delivery_above_100ms_stops) ... ok
+test_eight_successes_are_bounded_and_complete (test_sm5440_fresh_observer.FreshObserverTests.test_eight_successes_are_bounded_and_complete) ... ok
+test_exact_deadline_acquisition_and_safe_bounds (test_sm5440_fresh_observer.FreshObserverTests.test_exact_deadline_acquisition_and_safe_bounds) ... ok
+test_i2c_failure_stops_after_partial_success (test_sm5440_fresh_observer.FreshObserverTests.test_i2c_failure_stops_after_partial_success) ... ok
+test_interrupted_sleep_never_starts_next_request (test_sm5440_fresh_observer.FreshObserverTests.test_interrupted_sleep_never_starts_next_request) ... ok
+test_no_hardware_policy_or_read_trigger (test_sm5440_fresh_observer.FreshObserverTests.test_no_hardware_policy_or_read_trigger) ... ok
+test_nonzero_ibus_keeps_failed_raw_evidence (test_sm5440_fresh_observer.FreshObserverTests.test_nonzero_ibus_keeps_failed_raw_evidence) ... ok
+test_null_measurement_refused (test_sm5440_fresh_observer.FreshObserverTests.test_null_measurement_refused) ... ok
+test_offline_refused (test_sm5440_fresh_observer.FreshObserverTests.test_offline_refused) ... ok
+test_old_future_or_missing_timestamp_refused (test_sm5440_fresh_observer.FreshObserverTests.test_old_future_or_missing_timestamp_refused) ... ok
+test_provider_timeout_stops_first_call (test_sm5440_fresh_observer.FreshObserverTests.test_provider_timeout_stops_first_call) ... ok
+test_stop_before_first_request (test_sm5440_fresh_observer.FreshObserverTests.test_stop_before_first_request) ... ok
+test_suspend_refusal_no_resume_retry (test_sm5440_fresh_observer.FreshObserverTests.test_suspend_refusal_no_resume_retry) ... ok
+test_unload_during_interval_stops_without_extra_call (test_sm5440_fresh_observer.FreshObserverTests.test_unload_during_interval_stops_without_extra_call) ... ok
+test_unpublished_provider_refused (test_sm5440_fresh_observer.FreshObserverTests.test_unpublished_provider_refused) ... ok
+test_voltage_or_temperature_bounds_refused (test_sm5440_fresh_observer.FreshObserverTests.test_voltage_or_temperature_bounds_refused) ... ok
+test_matching_frozen_provider_builds_external_only (test_sm5440_fresh_observer.ObserverBuilderTests.test_matching_frozen_provider_builds_external_only) ... ok
+test_new_header_cannot_silently_pair_old_image_even_if_tree_matches (test_sm5440_fresh_observer.ObserverBuilderTests.test_new_header_cannot_silently_pair_old_image_even_if_tree_matches) ... ok
+test_separate_output_keeps_original_frozen_module (test_sm5440_fresh_observer.ObserverBuilderTests.test_separate_output_keeps_original_frozen_module) ... ok
+test_create_failure_never_owns_or_stops_task (test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_create_failure_never_owns_or_stops_task) ... ok
+test_debugfs_failures_do_not_create_task_or_leak (test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_debugfs_failures_do_not_create_task_or_leak) ... ok
+test_negative_control_old_code_detects_destroyed_task (test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_negative_control_old_code_detects_destroyed_task) ... ok
+test_running_worker_join_releases_owned_reference (test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_running_worker_join_releases_owned_reference) ... ok
+test_worker_returns_before_init_and_unload (test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_worker_returns_before_init_and_unload) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.513s
+
+OK

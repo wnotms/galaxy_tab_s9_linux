@@ -1,0 +1,14 @@
+{
+  "added": [
+    "test_sm5440_fresh_observer.ObserverBuilderTests.test_separate_output_keeps_original_frozen_module",
+    "test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_create_failure_never_owns_or_stops_task",
+    "test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_debugfs_failures_do_not_create_task_or_leak",
+    "test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_negative_control_old_code_detects_destroyed_task",
+    "test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_running_worker_join_releases_owned_reference",
+    "test_sm5440_fresh_observer.ObserverTaskLifetimeTests.test_worker_returns_before_init_and_unload"
+  ],
+  "all_prior_retained": true,
+  "new_count": 1481,
+  "prior_count": 1475,
+  "removed": []
+}

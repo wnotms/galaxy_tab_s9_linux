@@ -4,7 +4,7 @@
 set -euo pipefail
 repo_root=$(cd "$(dirname "$0")/.." && pwd)
 observer_stage="$repo_root/.work/build/sm5440-fresh-observer"
-observer_out="$repo_root/out/sm5440-fresh-observer"
+observer_out=${OBSERVER_OUT_DIR:-$repo_root/out/sm5440-fresh-observer}
 provider_tree="$repo_root/.work/build/linux-src-x710-charging"
 provider_build="$repo_root/.work/build/linux-out-x710-272-passive"
 python3 - "$repo_root" "$provider_tree" "$provider_build" <<'PY'
