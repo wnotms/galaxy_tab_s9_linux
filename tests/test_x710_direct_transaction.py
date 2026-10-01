@@ -190,6 +190,33 @@ int stop_missing_clock(void) {
  missing.now_ms=0;int r=x710_charge_stop(&tx,&missing,0);
  return r==-EINVAL && !tx.armed;
 }
+int pm_case(int kind,int fail,int cancel,int *out) {
+ int scratch[6];scenario(kind==0 || kind==4?0:1,0,0,0,scratch);
+ struct x710_charge_transaction tx={.state=scratch[0],.epoch=1,
+ .fixed_mv=9000,.target_mv=8800,.target_ma=1800,.armed=true,
+ .switching_inhibited=inhibited,.last_clock_ms=1000};
+ struct x710_charge_ops current=ops;
+ n=step=0;actions[0]=0;failstep=fail;cancelstep=cancel;
+ int r, resumed=-999, started=-999;
+ if(kind==2)current.now_ms=0;
+ if(kind==4){tx.suspended=true;r=x710_charge_start(&tx,&facts,&ops,0);}
+ else if(kind==9 || kind==10){tx.suspended=true;
+   r=kind==9?x710_charge_monitor(&tx,&ops,0):x710_charge_refresh(&tx,&ops,0);}
+ else {r=x710_charge_suspend(&tx,&current,0);
+   if(kind==7 && !r)r=x710_charge_suspend(&tx,&current,0);
+   resumed=x710_charge_resume(&tx);
+   if(kind==3 && !resumed)started=x710_charge_start(&tx,&facts,&ops,0);
+ }
+ out[0]=tx.state;out[1]=pump;out[2]=inhibited;out[3]=tx.armed;
+ out[4]=tx.suspended;out[5]=resumed;out[6]=started;out[7]=step;
+ return r;
+}
+int invalid_pm(int kind) {
+ struct x710_charge_transaction tx={.state=X710_SWITCHING};
+ if(kind==0)return x710_charge_suspend(0,&ops,0);
+ if(kind==1)return x710_charge_resume(0);
+ return x710_charge_resume(&tx);
+}
 '''
         path = Path(cls.temp.name) / 'transaction.c'
         path.write_text(code)
@@ -208,6 +235,79 @@ int stop_missing_clock(void) {
         result = (ctypes.c_int * 6)()
         ret = self.lib.scenario(kind, fail, cancel, bad, result)
         return ret, list(result), self.lib.trace().decode()
+
+    def pm_case(self, kind=1, fail=0, cancel=0):
+        result = (ctypes.c_int * 8)()
+        ret = self.lib.pm_case(kind, fail, cancel, result)
+        return ret, list(result), self.lib.trace().decode()
+
+    def test_pm_active_exit_is_off_fixed_measure_switching(self):
+        ret, state, trace = self.pm_case()
+        self.assertEqual(ret, 0)
+        self.assertEqual(trace, 'OFMS')
+        self.assertEqual(state[:6], [0, 0, 0, 0, 0, 0])
+
+    def test_pm_inactive_suspend_revokes_grant_without_hardware(self):
+        ret, state, trace = self.pm_case(kind=0)
+        self.assertEqual(ret, 0)
+        self.assertEqual(trace, '')
+        self.assertEqual(state[:6], [0, 0, 0, 0, 0, 0])
+
+    def test_pm_each_exit_failure_blocks_resume_and_propagates(self):
+        for operation in range(1, 5):
+            ret, state, trace = self.pm_case(fail=operation)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[0], 8)
+            self.assertEqual(state[2:5], [1, 0, 1])
+            self.assertLess(state[5], 0)
+            self.assertNotIn('N', trace)
+            if operation == 1:
+                self.assertEqual(trace, 'O')
+                self.assertEqual(state[1], 1)  # OFF not proven; no voltage change.
+
+    def test_pm_invalid_adapter_latches_suspend_and_never_claims_off(self):
+        ret, state, trace = self.pm_case(kind=2)
+        self.assertLess(ret, 0)
+        self.assertEqual(state[1:5], [1, 1, 0, 1])
+        self.assertLess(state[5], 0)
+        self.assertEqual(trace, '')
+
+    def test_pm_resume_never_arms_or_requests_old_pps(self):
+        ret, state, trace = self.pm_case(kind=3)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[3:6], [0, 0, 0])
+        self.assertLess(state[6], 0)
+        self.assertEqual(trace, 'OFMS')
+
+    def test_pm_old_facts_and_manual_grant_cannot_start_while_suspended(self):
+        ret, state, trace = self.pm_case(kind=4)
+        self.assertLess(ret, 0)
+        self.assertEqual(state[4], 1)
+        self.assertEqual(trace, '')
+
+    def test_pm_epoch_loss_never_restores_old_connection(self):
+        ret, state, trace = self.pm_case(cancel=1)
+        self.assertLess(ret, 0)
+        self.assertEqual(state[:5], [7, 0, 1, 0, 1])
+        self.assertLess(state[5], 0)
+        self.assertEqual(trace, 'O')
+
+    def test_pm_repeated_suspend_does_not_rearm_or_repeat_io(self):
+        ret, state, trace = self.pm_case(kind=7)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[3:6], [0, 0, 0])
+        self.assertEqual(trace, 'OFMS')
+
+    def test_pm_monitor_refresh_with_suspend_latch_exit_without_request(self):
+        for kind in (9, 10):
+            ret, state, trace = self.pm_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:5], [0, 0, 0, 0, 1])
+            self.assertEqual(trace, 'OFMS')
+
+    def test_pm_invalid_or_unpaired_resume_is_refused(self):
+        for kind in range(3):
+            self.assertLess(self.lib.invalid_pm(kind), 0)
 
     def test_default_unarmed_calls_no_hardware(self):
         ret, state, trace = self.run_case(kind=0)

@@ -282,6 +282,8 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 
 	if (!tx || !x710_ops_valid(ops))
 		return -EINVAL;
+	if (tx->suspended)
+		return -EBUSY;
 	if (!tx->armed)
 		return -EACCES;
 	if (tx->state != X710_SWITCHING || !x710_charge_eligible(facts) ||
@@ -339,7 +341,7 @@ int x710_charge_refresh(struct x710_charge_transaction *tx,
 		return -EINVAL;
 	if (tx->state != X710_DIRECT_ACTIVE)
 		return -EPERM;
-	if (!tx->armed)
+	if (!tx->armed || tx->suspended)
 		return x710_fallback(tx, ops, ctx, -EACCES);
 	/* Fedora measured REVBLK: pump OFF before every source refresh. */
 	ret = ops->pump_off(ctx);
@@ -368,7 +370,7 @@ int x710_charge_monitor(struct x710_charge_transaction *tx,
 		return -EINVAL;
 	if (tx->state != X710_DIRECT_ACTIVE)
 		return -EPERM;
-	if (!tx->armed)
+	if (!tx->armed || tx->suspended)
 		return x710_fallback(tx, ops, ctx, -EACCES);
 	ret = x710_monitor_deadline(tx, ops, ctx, &start);
 	if (!ret)
@@ -398,6 +400,33 @@ int x710_charge_stop(struct x710_charge_transaction *tx,
 	if (!tx->switching_inhibited && tx->state == X710_SWITCHING)
 		return 0;
 	return x710_fallback(tx, ops, ctx, 0);
+}
+
+int x710_charge_suspend(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx)
+{
+	if (!tx)
+		return -EINVAL;
+	/* Fedora ab123e7d sm5440_pm_notify: drain -> OFF -> fixed contract.
+	 * The future adapter owns draining/serialization before this call. Unlike
+	 * its unchecked restore, propagate failure and retain the PM/arming latch.
+	 */
+	tx->suspended = true;
+	return x710_charge_stop(tx, ops, ctx);
+}
+
+int x710_charge_resume(struct x710_charge_transaction *tx)
+{
+	if (!tx || !tx->suspended)
+		return -EINVAL;
+	/* Only a proven quiesced transaction can clear the PM latch. An OFF/
+	 * fixed-restore/epoch failure may not resume an unknown charging path.
+	 * No I/O, retry, old PPS restoration or grant is performed here.
+	 */
+	if (tx->state != X710_SWITCHING || tx->switching_inhibited || tx->armed)
+		return -EBUSY;
+	tx->suspended = false;
+	return 0;
 }
 
 MODULE_DESCRIPTION("X710 offline charging transaction core, no live activation adapter");

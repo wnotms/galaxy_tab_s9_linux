@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test265 Fedora-derived unwired PM core implemented: suspend latch/revoke grant,
+checked OFF/fixed/measure/switching exit; resume never auto-arms and refuses
+fault/epoch/inhibit.38 actual-C tests (10 new PM) and full1369 pass. Isolated
+policy-offline Image/DTB/modules build passes; exact config delta only
+X710_CHARGING_POLICY n->y, DTB byte-identical263; W1/sparse pass (knownVDSO
+warning only, unchanged object hash). Final committed-source artifact audit
+pending; initial precommit-revision mismatch report retained as host attribution
+setup, not build failure. No device/flash/PPS/pumpON/USB/current/thermal change.
+Read docs/X710_FEDORA_PM_PORT.md. Installed263 stays; activeStage3 NOT READY.
+
 Test265 registers OFFLINE Fedora-derived PM transitions in unwired C core;
 read Test265 README/registration. Adopt drain/OFF/fixed-before-suspend order,
 revoke arming/latch suspend, checked errors and no resume auto-arm. No live

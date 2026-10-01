@@ -86,6 +86,8 @@ struct x710_charge_transaction {
 	/* Default false, no live setter/consumer supplied by this port. */
 	bool armed;
 	bool switching_inhibited;
+	/* PM cancellation is independent of facts acquired before suspend. */
+	bool suspended;
 };
 
 /* Exactly one hardware/framework adapter, not a vendor framework. */
@@ -117,4 +119,8 @@ int x710_charge_monitor(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_stop(struct x710_charge_transaction *tx,
 		     const struct x710_charge_ops *ops, void *ctx);
+/* Future serialized adapter drains work before suspend; resume never arms. */
+int x710_charge_suspend(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx);
+int x710_charge_resume(struct x710_charge_transaction *tx);
 #endif
