@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Owner requests continued physical testing. Test268 registers battery-only150s
+readiness on unchanged263/4bbd8221 via verifiedWiFi10.168.36.149, after owner
+unplug confirmation. StillSOC100/4.394V/32.3C, oldpassive0x80 fault/cachestale.
+No Test267 retry/SM5440 acceptance/latchclear/flash/reboot/PPS/pumpON/threshold
+change. Read268README/registration; gauge onlyentryhint, not freshADC.8focused
+gates+syntax pass, no build/full rerun. Push registration before cable action.
+
+
 Test267 finalized STOP_PASSIVE_MONITOR_FAULT, zero30s window completed. Exact
 263 restored/readback and Debian4bbd8221 config/notes/cmdline pass; ADB/NCM/WiFi
 normal/noCode43/newCPUfault. Baseline also0x80 atVBAT4.3215V/OFF/IBUS0; passive
