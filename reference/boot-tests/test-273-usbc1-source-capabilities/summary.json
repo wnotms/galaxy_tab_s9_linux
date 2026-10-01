@@ -1,0 +1,271 @@
+{
+  "test": "Test273",
+  "final_verdict": "DEVICE_SOURCE_IDENTIFICATION_AND_PC_ENDPOINT_COMPLETED_WITH_HOST_OBSERVER_CORRECTIONS",
+  "installed_baseline": "Test263",
+  "boot_id": "846248afd9914b499f799402274d08e6",
+  "registered_source_attaches": 1,
+  "completed_source_attaches": 1,
+  "repeated_source_attaches": 0,
+  "physical_observation_seconds": 30.883,
+  "samples": 7,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "source_capabilities": {
+    "PPS_request_authorized": false,
+    "classification": "PPS_ADVERTISED",
+    "independently_measured": false,
+    "limits": [
+      {
+        "current_ma": 3000,
+        "source_timestamp_us": 8395334958,
+        "voltage_mv": 5000
+      },
+      {
+        "current_ma": 500,
+        "source_timestamp_us": 8395537368,
+        "voltage_mv": 5000
+      },
+      {
+        "current_ma": 1500,
+        "source_timestamp_us": 8395666077,
+        "voltage_mv": 9000
+      }
+    ],
+    "limits_are_measured_draw": false,
+    "objects": [
+      {
+        "kind": "fixed",
+        "maximum_current_ma": 3000,
+        "position": 1,
+        "type": 0,
+        "voltage_mv": 5000
+      },
+      {
+        "kind": "fixed",
+        "maximum_current_ma": 3000,
+        "position": 2,
+        "type": 0,
+        "voltage_mv": 9000
+      },
+      {
+        "kind": "fixed",
+        "maximum_current_ma": 3000,
+        "position": 3,
+        "type": 0,
+        "voltage_mv": 12000
+      },
+      {
+        "kind": "fixed",
+        "maximum_current_ma": 3000,
+        "position": 4,
+        "type": 0,
+        "voltage_mv": 15000
+      },
+      {
+        "kind": "fixed",
+        "maximum_current_ma": 3250,
+        "position": 5,
+        "type": 0,
+        "voltage_mv": 20000
+      },
+      {
+        "kind": "pps",
+        "maximum_current_ma": 3000,
+        "maximum_voltage_mv": 11000,
+        "minimum_voltage_mv": 5000,
+        "position": 6,
+        "type": 3
+      }
+    ],
+    "pump_ON_authorized": false,
+    "reason": "complete attributed decoded source list",
+    "source_frames": [
+      {
+        "header": "0x61a1",
+        "object_count": 6,
+        "objects": [
+          {
+            "kind": "fixed",
+            "maximum_current_ma": 3000,
+            "position": 1,
+            "type": 0,
+            "voltage_mv": 5000
+          },
+          {
+            "kind": "fixed",
+            "maximum_current_ma": 3000,
+            "position": 2,
+            "type": 0,
+            "voltage_mv": 9000
+          },
+          {
+            "kind": "fixed",
+            "maximum_current_ma": 3000,
+            "position": 3,
+            "type": 0,
+            "voltage_mv": 12000
+          },
+          {
+            "kind": "fixed",
+            "maximum_current_ma": 3000,
+            "position": 4,
+            "type": 0,
+            "voltage_mv": 15000
+          },
+          {
+            "kind": "fixed",
+            "maximum_current_ma": 3250,
+            "position": 5,
+            "type": 0,
+            "voltage_mv": 20000
+          },
+          {
+            "kind": "pps",
+            "maximum_current_ma": 3000,
+            "maximum_voltage_mv": 11000,
+            "minimum_voltage_mv": 5000,
+            "position": 6,
+            "type": 3
+          }
+        ],
+        "source_timestamp_us": 8395526542
+      }
+    ]
+  },
+  "selected_contract": {
+    "type": "fixed",
+    "voltage_mv": 9000,
+    "current_ma": 1500,
+    "nominal_contract_ceiling_w": 13.5,
+    "actual_input_power_measured": false
+  },
+  "SM5714_programmed_input_limit_ma": 1500,
+  "battery_gauge_voltage_uv": {
+    "minimum": 4227000,
+    "maximum": 4233000
+  },
+  "battery_current_ua": {
+    "minimum": 1298000,
+    "maximum": 1952000
+  },
+  "battery_temperature_decic": {
+    "minimum": 290,
+    "maximum": 290
+  },
+  "SOC": {
+    "minimum": 77,
+    "maximum": 77
+  },
+  "estimated_net_battery_power_w": {
+    "minimum": 5.493,
+    "maximum": 8.259,
+    "method": "gauge VBAT*IBAT; not USB input power"
+  },
+  "passive_cached_vbus_uv": {
+    "minimum": 9136000,
+    "maximum": 9148000
+  },
+  "passive_cached_vbat_uv": {
+    "minimum": 4137500,
+    "maximum": 4138500
+  },
+  "passive_die_temperature_decic": {
+    "minimum": 345,
+    "maximum": 350
+  },
+  "passive_age_ms": {
+    "minimum": 76,
+    "maximum": 1012
+  },
+  "independent_ADC_calibration": false,
+  "fresh100ms_API_on_device_qualified": false,
+  "pump_ON": false,
+  "PPS_request": false,
+  "flash": false,
+  "reboot": false,
+  "device_software_or_current_policy_changed": false,
+  "original_prepare_verdict": "STOP_FIRST_NON_CLEAN",
+  "original_source_verdict": "STOP_FIRST_NON_CLEAN",
+  "original_STOPS_rewritten": false,
+  "owner_normal_device_completion_rule_applied": true,
+  "host_observer_corrections": [
+    "omitted DCC field",
+    "pending reset timer is not actual reset",
+    "TCPM USB_TYPE source capability vs ONLINE protocol",
+    "generic sysfs power directory is not PDO"
+  ],
+  "PC_endpoint": {
+    "ADB": "responsive",
+    "WiFi": "same-boot authenticated",
+    "boot_id": "846248afd9914b499f799402274d08e6",
+    "device_NCM_usb0": true,
+    "device_NCM_ipv4": "169.254.42.1",
+    "sshd": "active",
+    "host_NCM_TCP_tested": false,
+    "Windows_Code43": false,
+    "usb_type": "SDP",
+    "SM5714_input_limit_ma": 500,
+    "battery_health": "Good",
+    "battery_current_ua": -248000
+  },
+  "DCC_absent": true,
+  "new_kernel_fault_counts": {},
+  "retained_unresolved_original_startup_SMMU_messages": 20,
+  "host_qualification": {
+    "source_revision": "616fd891",
+    "parser_tests": 31,
+    "collector_tests": 18,
+    "syntax": "pass",
+    "kernel_build": {
+      "executed": false,
+      "reuse": "Test272 final399eb497"
+    },
+    "full_host": {
+      "executed": false,
+      "reuse": "Test272 all1424"
+    },
+    "results_phase_tests": {
+      "executed": false,
+      "reason": "results/docs only, exact runner/parser and kernel inputs unchanged"
+    }
+  },
+  "historical_seals": [
+    {
+      "manifest": "REGISTRATION_SHA256.json",
+      "verified_against_revision": "b7e27663",
+      "files": 25,
+      "pass": true
+    },
+    {
+      "manifest": "OBSERVER_CORRECTION_SHA256.json",
+      "verified_against_revision": "60feb5c5",
+      "files": 18,
+      "pass": true
+    },
+    {
+      "manifest": "SOURCE_OBSERVER_SHA256.json",
+      "verified_against_revision": "e019d1b3",
+      "files": 19,
+      "pass": true
+    },
+    {
+      "manifest": "CAPABILITY_OBSERVER_SHA256.json",
+      "verified_against_revision": "616fd891",
+      "files": 27,
+      "pass": true
+    },
+    {
+      "manifest": "SOURCE_RESULT_SHA256.json",
+      "verified_against_revision": "c241770e",
+      "files": 44,
+      "pass": true
+    }
+  ],
+  "active_Stage3": "NOT READY",
+  "remaining_gaps": [
+    "actual fresh request 100ms timing",
+    "independent voltage/nonzero current calibration",
+    "OCP/cutoff qualification",
+    "live PPS/direct adapter and PM lifetime safety"
+  ]
+}

@@ -2,6 +2,22 @@
 
 ## Current state (2026-10-01)
 
+Test273 DEVICE_SOURCE_IDENTIFICATION_AND_PC_ENDPOINT_COMPLETED_WITH_HOST_OBSERVER_
+CORRECTIONS: ONE C1/C2empty attach, same263/846248af, counted6PDO +partner sysfs
+agree: fixed5/9/12/15V3A/20V3.25A and PPS5–11V3A. Actualfixed9V1500/ONLINE1/
+SM5714input1500,30.883s/7healthy samples,77%/29C, passivefault0/OFF/IBUS0.
+Onecharger→PC endpoint ADB/WiFi/deviceusb0/sshd normal/noCode43/sameboot, SDP500.
+HostNCM_TCP nottested. No newkernel fault;20oldstartupSMMU unresolved. Original
+prepare/source hostSTOPs unchanged, freshnamespace completions separate; no
+hardware retry/flash/reboot/PPS/pumpON/current/software/gate change. Read273
+RESULTS/summary/finalseal; historicalseals verified at recordedcommits.31+18host/
+syntax reuse, results-only executed:false/no build/full/CI rerun; unchanged272
+qualification reused. C1APDO nowcaptured, not a PPS contract/45W proof; contract
+ceiling13.5W != actualdraw. ActiveStage3 NOT READY until fresh100ms/current/ADC/
+OCP/liveadapter/PM qualification. Next offlineconsumer/adapter audit, no automatic
+higher-power activation. Installed263 and rollback unchanged.
+
+
 Test273 source-completion COMPLETED30.883s/7samples same263/846248af after ONE
 C1attach/C2empty. Freshcounted6PDO +currentpartner agree: fixed5/9/12/15/20V,
 PPS5–11V3A; actualRequest fixed9V1500/ONLINE1/SM5714input1500, no APDO Request.
