@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-01)
 
+Test273 source-completion COMPLETED30.883s/7samples same263/846248af after ONE
+C1attach/C2empty. Freshcounted6PDO +currentpartner agree: fixed5/9/12/15/20V,
+PPS5–11V3A; actualRequest fixed9V1500/ONLINE1/SM5714input1500, no APDO Request.
+Battery77%/4.227–4.233V/+1.298..1.952A/29C, passiveGood/fault0/OFF/IBUS0/VBUS
+9.136–9.148V, no new kernel fault;20oldSMMU unresolved. Originalobserver STOP
+preserved, sameattach completion separate. Read273SOURCE_RESULTS/seal. OnePC
+endpoint pending. No flash/reboot/software/PPS/pumpON/current change; results-only
+executed:false/reuse31+18host/unchanged272build/all1424, no build/full/CI rerun.
+Source APDO nowproved advertised; ActiveStage3 NOT READY until remaining freshADC/
+nonzero calibration/OCP/liveadapter/PM gates qualified.13.5W contract != measureddraw.
+
+
 Test273 C1source originalobserver STOP/zero-window retained: USB_TYPE[PD_PPS]
 means source PPS supported in pinnedTCPM, NOT activePPS. ActualONLINE1/fixed9V/
 1500mA, SM5714input1500, pack29.9C/Good, passivefault0/OFF/IBUS0/VBUS9.136V.

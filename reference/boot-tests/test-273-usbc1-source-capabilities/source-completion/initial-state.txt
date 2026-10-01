@@ -1,0 +1,173 @@
+@@boot
+846248af-d991-4b49-9f79-9402274d08e6
+@@uname
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+@@cmdline
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+@@uptime
+8698.28 69559.34
+@@identity
+f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5  -
+fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34  /sys/kernel/notes
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=4232000
+POWER_SUPPLY_VOLTAGE_AVG=4228000
+POWER_SUPPLY_VOLTAGE_OCV=4148000
+POWER_SUPPLY_CURRENT_NOW=1298000
+POWER_SUPPLY_CURRENT_AVG=1714000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=77
+POWER_SUPPLY_TEMP=290
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=1500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown SDP DCP CDP [PD]
+@@passive
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_NOW=9146000
+POWER_SUPPLY_CURRENT_NOW=0
+POWER_SUPPLY_TEMP=350
+POWER_SUPPLY_TYPE=Mains
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4297066875
+sample_present=1
+sample_fresh=1
+sample_age_ms=892
+stopped=0
+fault=0
+startup_pending=0
+last_sample_error=0
+startup_retained=0
+startup_capture_jiffies=0
+sample_valid=1
+sample_stamp_jiffies=4297066652
+sample_faults=0x0
+sample_int=00 00 00 00
+sample_status=00 00 20 00
+sample_adc=9d d0 8c 28 00 00 52 90 19 82 a0
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=9146000
+sample_vbat_uv=4138000
+sample_ibus_ua=0
+sample_die_decic=350
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x0
+startup_int=00 00 00 00
+startup_status=00 00 00 00
+startup_adc=00 00 00 00 00 00 00 00 00 00 00
+startup_int4_disable=0x00
+startup_int4_wait=0x00
+startup_mode_before=0x00
+startup_mode_after=0x00
+startup_cntl2=0x00
+startup_vbuscntl=0x00
+startup_vbatcntl=0x00
+startup_prtncntl=0x00
+startup_vbus_uv=0
+startup_vbat_uv=0
+startup_ibus_ua=0
+startup_die_decic=0
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.125.29.77/24 brd 10.125.29.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 2117sec preferred_lft 2117sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+@@services
+active
+active
+active
+@@roles
+[sink]
+[device]
+@@failed
+@@dcc
+absent
+@@tcpm
+DEVTYPE=power_supply
+OF_NAME=usbpd
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33
+OF_COMPATIBLE_0=siliconmitus,sm5714-usbpd
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=tcpm-source-psy-3-0033
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_MAX=9000000
+POWER_SUPPLY_VOLTAGE_MIN=9000000
+POWER_SUPPLY_VOLTAGE_NOW=9000000
+POWER_SUPPLY_CURRENT_MAX=1500000
+POWER_SUPPLY_CURRENT_NOW=1500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS
+@@sourcecaps
+PD_PARTNER_LINK=/sys/devices/virtual/usb_power_delivery/pd1
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/1:fixed_supply
+voltage=5000mV
+maximum_current=3000mA
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/2:fixed_supply
+voltage=9000mV
+maximum_current=3000mA
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/3:fixed_supply
+voltage=12000mV
+maximum_current=3000mA
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/4:fixed_supply
+voltage=15000mV
+maximum_current=3000mA
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/5:fixed_supply
+voltage=20000mV
+maximum_current=3250mA
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/6:programmable_supply
+minimum_voltage=5000mV
+maximum_voltage=11000mV
+maximum_current=3000mA
+pps_power_limited=0
+PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/power
+@@kernel
+{"PRIORITY":"6","_SOURCE_MONOTONIC_TIMESTAMP":"8389516573","_RUNTIME_SCOPE":"system","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","_TRANSPORT":"kernel","MESSAGE":"sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","__REALTIME_TIMESTAMP":"1790852162815988","_SOURCE_BOOTTIME_TIMESTAMP":"8389516573","_UDEV_SYSNAME":"3-0033","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c228f;b=846248afd9914b499f799402274d08e6;m=1f40dd357;t=65cc5430287f4;x=552e3091f85b42d5","__MONOTONIC_TIMESTAMP":"8389514071","_BOOT_ID":"846248afd9914b499f799402274d08e6","SYSLOG_FACILITY":"0","_KERNEL_DEVICE":"+i2c:3-0033","_HOSTNAME":"gts9","SYSLOG_IDENTIFIER":"kernel","__SEQNUM":"795279","_KERNEL_SUBSYSTEM":"i2c"}
+{"_HOSTNAME":"gts9","SYSLOG_FACILITY":"1","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2292;b=846248afd9914b499f799402274d08e6;m=1f42c3102;t=65cc54320e59f;x=b76fee2b1619c9e","PRIORITY":"4","__MONOTONIC_TIMESTAMP":"8391504130","MESSAGE":"screen on (backlight restored)","_SOURCE_MONOTONIC_TIMESTAMP":"8391505202","__REALTIME_TIMESTAMP":"1790852164806047","_TRANSPORT":"kernel","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","SYSLOG_IDENTIFIER":"gts9-power-key","_SOURCE_BOOTTIME_TIMESTAMP":"8391505202","_RUNTIME_SCOPE":"system","__SEQNUM":"795282","_BOOT_ID":"846248afd9914b499f799402274d08e6"}
+{"PRIORITY":"6","_BOOT_ID":"846248afd9914b499f799402274d08e6","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","SYSLOG_IDENTIFIER":"kernel","_RUNTIME_SCOPE":"system","MESSAGE":"sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2293;b=846248afd9914b499f799402274d08e6;m=1f466a5ee;t=65cc5435b5a8b;x=1de424e4a1c5ffbe","SYSLOG_FACILITY":"0","_KERNEL_SUBSYSTEM":"i2c","__SEQNUM":"795283","_HOSTNAME":"gts9","_TRANSPORT":"kernel","_SOURCE_BOOTTIME_TIMESTAMP":"8395338333","_UDEV_SYSNAME":"3-0033","_SOURCE_MONOTONIC_TIMESTAMP":"8395338333","__MONOTONIC_TIMESTAMP":"8395335150","__REALTIME_TIMESTAMP":"1790852168637067","_KERNEL_DEVICE":"+i2c:3-0033"}
+{"_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","__SEQNUM":"795284","PRIORITY":"6","SYSLOG_FACILITY":"0","__MONOTONIC_TIMESTAMP":"8395350144","_TRANSPORT":"kernel","_KERNEL_DEVICE":"+i2c:2-0049","MESSAGE":"sm5714-battery 2-0049: ordinary charging: USB type 2, 1800 mA input, 2100 mA battery","_SOURCE_MONOTONIC_TIMESTAMP":"8395353497","_SOURCE_BOOTTIME_TIMESTAMP":"8395353497","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2294;b=846248afd9914b499f799402274d08e6;m=1f466e080;t=65cc5435b951e;x=deaedeb3a8e1f14b","_UDEV_SYSNAME":"2-0049","SYSLOG_IDENTIFIER":"kernel","__REALTIME_TIMESTAMP":"1790852168652062","_BOOT_ID":"846248afd9914b499f799402274d08e6","_RUNTIME_SCOPE":"system","_KERNEL_SUBSYSTEM":"i2c","_HOSTNAME":"gts9"}
+{"__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2295;b=846248afd9914b499f799402274d08e6;m=1f46a349a;t=65cc5435ee936;x=230c21fd84620045","PRIORITY":"6","SYSLOG_IDENTIFIER":"kernel","_KERNEL_DEVICE":"+i2c:2-0049","SYSLOG_FACILITY":"0","__MONOTONIC_TIMESTAMP":"8395568282","_HOSTNAME":"gts9","_UDEV_SYSNAME":"2-0049","_SOURCE_MONOTONIC_TIMESTAMP":"8395570884","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","_RUNTIME_SCOPE":"system","__SEQNUM":"795285","_BOOT_ID":"846248afd9914b499f799402274d08e6","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","__REALTIME_TIMESTAMP":"1790852168870198","_TRANSPORT":"kernel","MESSAGE":"sm5714-battery 2-0049: ordinary charging: USB type 2, 500 mA input, 2100 mA battery","_KERNEL_SUBSYSTEM":"i2c","_SOURCE_BOOTTIME_TIMESTAMP":"8395570884"}
+{"_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","_KERNEL_SUBSYSTEM":"i2c","__SEQNUM":"795286","MESSAGE":"sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 500 mA (not measured VBUS)","_TRANSPORT":"kernel","_SOURCE_BOOTTIME_TIMESTAMP":"8395570896","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2296;b=846248afd9914b499f799402274d08e6;m=1f46a3a41;t=65cc5435eeede;x=5432fcd19aa0defc","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","_SOURCE_MONOTONIC_TIMESTAMP":"8395570896","_UDEV_SYSNAME":"3-0033","SYSLOG_FACILITY":"0","_HOSTNAME":"gts9","_RUNTIME_SCOPE":"system","_KERNEL_DEVICE":"+i2c:3-0033","__REALTIME_TIMESTAMP":"1790852168871646","PRIORITY":"6","SYSLOG_IDENTIFIER":"kernel","_BOOT_ID":"846248afd9914b499f799402274d08e6","__MONOTONIC_TIMESTAMP":"8395569729"}
+{"_HOSTNAME":"gts9","_UDEV_SYSNAME":"2-0049","_KERNEL_SUBSYSTEM":"i2c","MESSAGE":"sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","SYSLOG_IDENTIFIER":"kernel","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2297;b=846248afd9914b499f799402274d08e6;m=1f46bd5af;t=65cc543608a4c;x=45b0e0c973a54a90","__REALTIME_TIMESTAMP":"1790852168976972","_SOURCE_BOOTTIME_TIMESTAMP":"8395678492","PRIORITY":"6","__MONOTONIC_TIMESTAMP":"8395675055","_SOURCE_MONOTONIC_TIMESTAMP":"8395678492","__SEQNUM":"795287","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","SYSLOG_FACILITY":"0","_BOOT_ID":"846248afd9914b499f799402274d08e6","_RUNTIME_SCOPE":"system","_TRANSPORT":"kernel","_KERNEL_DEVICE":"+i2c:2-0049"}
+{"_TRANSPORT":"kernel","_HOSTNAME":"gts9","_BOOT_ID":"846248afd9914b499f799402274d08e6","_SOURCE_MONOTONIC_TIMESTAMP":"8395678505","_KERNEL_DEVICE":"+i2c:3-0033","SYSLOG_FACILITY":"0","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","MESSAGE":"sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1500 mA (not measured VBUS)","_UDEV_SYSNAME":"3-0033","_RUNTIME_SCOPE":"system","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2298;b=846248afd9914b499f799402274d08e6;m=1f46bd949;t=65cc543608de6;x=7538c0691f570972","_KERNEL_SUBSYSTEM":"i2c","SYSLOG_IDENTIFIER":"kernel","_SOURCE_BOOTTIME_TIMESTAMP":"8395678505","__SEQNUM":"795288","__MONOTONIC_TIMESTAMP":"8395675977","PRIORITY":"6","__REALTIME_TIMESTAMP":"1790852168977894"}
+{"__REALTIME_TIMESTAMP":"1790852169150031","_KERNEL_DEVICE":"+i2c:2-0049","__SEQNUM":"795289","PRIORITY":"6","_BOOT_ID":"846248afd9914b499f799402274d08e6","_SOURCE_BOOTTIME_TIMESTAMP":"8395851098","_KERNEL_SUBSYSTEM":"i2c","__SEQNUM_ID":"0e9cc8651fa34ae5875adb1b7f906071","_RUNTIME_SCOPE":"system","SYSLOG_IDENTIFIER":"kernel","_TRANSPORT":"kernel","_SOURCE_MONOTONIC_TIMESTAMP":"8395851098","SYSLOG_FACILITY":"0","__CURSOR":"s=0e9cc8651fa34ae5875adb1b7f906071;i=c2299;b=846248afd9914b499f799402274d08e6;m=1f46e79b3;t=65cc543632e4f;x=850c2e981ef08847","MESSAGE":"sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery","__MONOTONIC_TIMESTAMP":"8395848115","_MACHINE_ID":"3c2a1b8f2d624db4b5ffdc836050fcf6","_HOSTNAME":"gts9","_UDEV_SYSNAME":"2-0049"}
+-- cursor: s=0e9cc8651fa34ae5875adb1b7f906071;i=c2299;b=846248afd9914b499f799402274d08e6;m=1f46e79b3;t=65cc543632e4f;x=850c2e981ef08847

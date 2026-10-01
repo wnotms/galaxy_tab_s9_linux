@@ -1,0 +1,122 @@
+{
+  "PPS_request_authorized": false,
+  "classification": "PPS_ADVERTISED",
+  "independently_measured": false,
+  "limits": [
+    {
+      "current_ma": 3000,
+      "source_timestamp_us": 8395334958,
+      "voltage_mv": 5000
+    },
+    {
+      "current_ma": 500,
+      "source_timestamp_us": 8395537368,
+      "voltage_mv": 5000
+    },
+    {
+      "current_ma": 1500,
+      "source_timestamp_us": 8395666077,
+      "voltage_mv": 9000
+    }
+  ],
+  "limits_are_measured_draw": false,
+  "objects": [
+    {
+      "kind": "fixed",
+      "maximum_current_ma": 3000,
+      "position": 1,
+      "type": 0,
+      "voltage_mv": 5000
+    },
+    {
+      "kind": "fixed",
+      "maximum_current_ma": 3000,
+      "position": 2,
+      "type": 0,
+      "voltage_mv": 9000
+    },
+    {
+      "kind": "fixed",
+      "maximum_current_ma": 3000,
+      "position": 3,
+      "type": 0,
+      "voltage_mv": 12000
+    },
+    {
+      "kind": "fixed",
+      "maximum_current_ma": 3000,
+      "position": 4,
+      "type": 0,
+      "voltage_mv": 15000
+    },
+    {
+      "kind": "fixed",
+      "maximum_current_ma": 3250,
+      "position": 5,
+      "type": 0,
+      "voltage_mv": 20000
+    },
+    {
+      "kind": "pps",
+      "maximum_current_ma": 3000,
+      "maximum_voltage_mv": 11000,
+      "minimum_voltage_mv": 5000,
+      "position": 6,
+      "type": 3
+    }
+  ],
+  "pump_ON_authorized": false,
+  "reason": "complete attributed decoded source list",
+  "source_frames": [
+    {
+      "header": "0x61a1",
+      "object_count": 6,
+      "objects": [
+        {
+          "kind": "fixed",
+          "maximum_current_ma": 3000,
+          "position": 1,
+          "type": 0,
+          "voltage_mv": 5000
+        },
+        {
+          "kind": "fixed",
+          "maximum_current_ma": 3000,
+          "position": 2,
+          "type": 0,
+          "voltage_mv": 9000
+        },
+        {
+          "kind": "fixed",
+          "maximum_current_ma": 3000,
+          "position": 3,
+          "type": 0,
+          "voltage_mv": 12000
+        },
+        {
+          "kind": "fixed",
+          "maximum_current_ma": 3000,
+          "position": 4,
+          "type": 0,
+          "voltage_mv": 15000
+        },
+        {
+          "kind": "fixed",
+          "maximum_current_ma": 3250,
+          "position": 5,
+          "type": 0,
+          "voltage_mv": 20000
+        },
+        {
+          "kind": "pps",
+          "maximum_current_ma": 3000,
+          "maximum_voltage_mv": 11000,
+          "minimum_voltage_mv": 5000,
+          "position": 6,
+          "type": 3
+        }
+      ],
+      "source_timestamp_us": 8395526542
+    }
+  ]
+}
