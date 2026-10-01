@@ -19,7 +19,8 @@ No sysfs fast-charge control, parameters, PPS, pump enable or arming grant.
 Each row keeps independent provider/validation status, request/return BOOTTIME,
 actual acquired BOOTTIME and raw copied uV/uA/deciC. Refuse time reversal, total
 delivery>100ms, old/future acquisition, offline/nonzero pumpIBUS/invalid voltage/
-temperature; clear returned facts on refusal. Do not restamp an old sample. This
+temperature. Failed raw rows remain explicitly diagnostic/status!=0/usable=0;
+no policy facts or grants are returned. Do not restamp an old sample. This
 consumer qualifies passive delivery behavior only, not converter timing under
 active current, independent accuracy or hardware OCP. An in-flight converter can
 outlast the request timeout; never cancel/clear/retry the normal monitor to pass.
