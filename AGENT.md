@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test264 OFFLINE review/helper PASS:55 affected tests, zero failures/errors/skips;
+new future completion helper uses fresh child directory, preserves parent raw/
+STOP, tests actual Recorder overwrite guard. Read Test264 RESULTS/summary/seal.
+Fedora reuse approved; implement its drain/OFF/fixed-before-PM semantics with
+checked errors, not unchecked fallback. No device/kernel/config/DT/USB change;
+no build/full rerun, reuse ea938b24. Installed Test263 remains device accepted.
+ActiveStage3 NOT READY; next unwired PM core, no automatic physical test.
+
 Test264 continues OFFLINE from655d39fa: protection/watchdog/PM audit against
 Samsung X710 and Fedora ab123e7d, plus future isolated completion evidence helper.
 Read docs/SM5440_ACTIVE_PROTECTION_PM_PLAN.md and Test264 README/sources.

@@ -1,0 +1,36 @@
+{
+  "test": 264,
+  "verdict": "OFFLINE_REVIEW_AND_HOST_HELPER_PASS",
+  "device_acceptance": "Test263 remains accepted; no new physical trial",
+  "device_commands_executed": false,
+  "kernel_changes": {},
+  "config_diff": {},
+  "dtb_diff": {},
+  "PPS_enabled": false,
+  "pump_enable_supported": false,
+  "host_tests": {
+    "executed": true,
+    "count": 55,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "elapsed_seconds": 0.046
+  },
+  "build": {
+    "executed": false,
+    "reason": "No kernel/build inputs changed; reuse ea938b24 qualification."
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "Host helper and audit only; no routing/kernel changes."
+  },
+  "offline_test263_seal_intact": true,
+  "vendor_and_fedora_sources_unchanged": true,
+  "active_stage3_ready": false,
+  "remaining": [
+    "Independent ADC/current calibration",
+    "Active protection and actual cutoff behavior",
+    "Live PM/transaction adapter"
+  ],
+  "Fedora_reuse": "OFF/refresh/settle/ON and drain/OFF/fixed-before-suspend semantics; checked error propagation required."
+}
