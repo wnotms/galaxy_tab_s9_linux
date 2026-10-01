@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test277 independent revised passive observer registered: sealed272399eb497
+provider +2767a887eab owned-task observer9aafabf6, ONE PCUSB boot/load,
+<=8calls/1s/100ms/max30s; first refusal ends early, safe unload/endpoint assessed
+separately. Current exact263/590eca6a preflight passes five partitions/181modules/
+ADB/Wi-Fi/deviceNCM/battery/pumpOFF. Preserve275STOP, no old274reload. New277
+backup slots, all older backups retained; exact263 rollback after diagnostic.
+Read277README/registration/PACKAGE/preflight.22localhost+syntax pass; reuse272
+build/2761481/W1/sparse, no rebuild/full/CI. No PPS/pumpON/current/ADC/deadline/
+rootfs/USB change. Push registration BEFORE writes. ActiveStage3 NOT READY.
+
 Test275 STOP retained; exact Test263 rollback and device endpoint COMPLETED.
 All five partition hashes and 181 paired module files match accepted Test263.
 Baseline boot590eca6af9574abbb0fe98e127a6b835: ADB, Wi-Fi SSH10.125.29.70,

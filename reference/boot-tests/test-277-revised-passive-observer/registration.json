@@ -1,0 +1,50 @@
+{
+  "PPS": false,
+  "baseline_notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "before_boot_id": "590eca6af9574abbb0fe98e127a6b835",
+  "candidate_notes_sha256": "51db912b126b4d68e581b3a1e89b25726db177062551a25817f0c8bddcb380d7",
+  "candidate_wifi_resolution": "unique current wlp1s0 IPv4 from ADB, authenticated SSH boot match; initial wifi is before-boot address",
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "current_command": "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uname; uname -a; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@snapshot; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@network; ip -4 -o addr; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi",
+  "current_increase": false,
+  "delivery_deadline_ms": 100,
+  "direct_charging_authorized": false,
+  "first_refusal_stops": true,
+  "interval_ms": 1000,
+  "local_tests": "local runner/gates+syntax; reuse272 provider and27626affected/full1481/W1/sparse; no rebuild/full/CI repeat",
+  "maximum_calls": 8,
+  "normal_candidate_boots": 1,
+  "observation_seconds": 30,
+  "observation_window_semantics": "maximum30s collection; first refusal or8completed calls ends earlier; report actual duration, not30s stability pass",
+  "observer_loads": 1,
+  "observer_revision": "7a887eab",
+  "observer_sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+  "protection": {
+    "sample_cntl2": "0xf2",
+    "sample_prtncntl": "0xfe",
+    "sample_vbatcntl": "0x37",
+    "sample_vbuscntl": "0xe7"
+  },
+  "provider_revision": "399eb497",
+  "pump_ON": false,
+  "purpose": "one revised observer load: bounded fresh delivery AND safe unload; not PPS/charging or attribution of275freeze",
+  "retained_startup_host_attribution": "exact early OFF0x80+waiting+completion<=5s+raw safety+currenthealthy; no incremental/live/repeated/other fault accepted",
+  "rollback": "exact263 boot+181modules in unique277 slots; unconditional rollback after this diagnostic, keep all older backups",
+  "runtime_cmdline": "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277",
+  "startup_smmu_diagnostic_only": {
+    "context": "fsr=0x402/fsynr0x660021/cbfrsynra0x1c00/cb9/S1CBNDX102",
+    "context_syndrome_counts_equal": true,
+    "global_parser_modified": false,
+    "iova_half_open": [
+      "0xb8000000",
+      "0xbab00000"
+    ],
+    "maximum_each": 10,
+    "priority": 3,
+    "source_timestamp_us_max": 200000,
+    "unresolved": true
+  },
+  "stop": "first provider/consumer error: unload without retry; real kernel/safety/rescue/identity fault: stop and safe recovery/exact263 rollback",
+  "test": "Test277 revised passive observer acceptance",
+  "wifi": "10.125.29.70"
+}
