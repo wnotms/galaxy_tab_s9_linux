@@ -172,25 +172,6 @@ maximum_current=4500mA
             with self.assertRaises(ValueError):
                 cap.parse_partner_sysfs(attrs)
 
-    def test_generic_power_directory_is_not_a_source_pdo(self):
-        attrs = ATTRS + 'PDO_PATH=/sys/devices/virtual/usb_power_delivery/pd1/source-capabilities/power\n'
-        self.assertEqual(len(cap.corroborate_partner(self.parse(log(FIXED)), attrs)), 3)
-        with self.assertRaises(ValueError):
-            cap.parse_partner_sysfs(attrs + 'maximum_current=3000mA\n')
-
-    def test_actual_c1_log_and_current_partner_agree(self):
-        root = ROOT / 'reference/boot-tests/test-273-usbc1-source-capabilities'
-        raw = (root / 'source-diagnosis/tcpm-source-first.txt').read_text().split('\n', 1)[1]
-        parsed = self.parse(raw)
-        text = (root / 'source/initial-state.txt').read_text()
-        attrs = text.split('@@sourcecaps\n', 1)[1].split('@@kernel\n', 1)[0]
-        peer = cap.corroborate_partner(parsed, attrs)
-        self.assertEqual(parsed['classification'], 'PPS_ADVERTISED')
-        self.assertEqual(len(peer), 6)
-        self.assertEqual(parsed['objects'][5]['minimum_voltage_mv'], 5000)
-        self.assertEqual(parsed['objects'][5]['maximum_voltage_mv'], 11000)
-        self.assertEqual(parsed['objects'][5]['maximum_current_ma'], 3000)
-
     def test_unknown_log_cannot_be_promoted_by_sysfs(self):
         with self.assertRaises(ValueError):
             cap.corroborate_partner(self.parse(''), ATTRS)

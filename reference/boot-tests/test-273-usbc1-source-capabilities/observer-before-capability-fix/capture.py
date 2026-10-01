@@ -22,7 +22,6 @@ SPEC.loader.exec_module(gate)
 CURRENT = json.loads((ROOT / 'reference/boot-tests/test-270-high-power-readiness/device-state-via-adb/current-state.command.json').read_text())['argv'][-1] + r'; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi'
 # Original preparation stopped on a host-only omitted field; preserve it unchanged.
 PREPARE_PHASE = 'prepare-completion'
-SOURCE_PHASE = 'source-completion'
 
 KNOWN_FILE = ROOT / 'reference/boot-tests/test-254-debian-container-kernel/attempt-03/final-acceptance/kernel-journal-json.txt'
 KNOWN = {x['MESSAGE'] for x in map(json.loads, KNOWN_FILE.read_text().splitlines()) if int(x.get('PRIORITY', 7)) <= 3}
@@ -84,9 +83,7 @@ def sample(sec, source=False):
     battery, usb, monitor, tcpm = [gate.props(sec[k]) for k in ('battery', 'usb', 'passive', 'tcpm')]
     gate.battery_entry(battery)  # Normal fixed-charge scope; NEVER active admission.
     require(battery['POWER_SUPPLY_STATUS'] == 'Charging' and int(battery['POWER_SUPPLY_CURRENT_NOW']) > 0, 'battery charging/current')
-    # Pinned TCPM USB_TYPE reports source capabilities, not active protocol.
-    # ONLINE=1 is fixed, 2 is active PPS, 3 active SPR AVS (tcpm.c enum).
-    require(tcpm.get('POWER_SUPPLY_ONLINE') == '1', 'fixed PD unavailable')
+    require('[PD]' in tcpm.get('POWER_SUPPLY_USB_TYPE', '') and tcpm.get('POWER_SUPPLY_ONLINE') == '1', 'fixed PD unavailable')
     mv = int(tcpm['POWER_SUPPLY_VOLTAGE_NOW']) // 1000
     require(int(tcpm['POWER_SUPPLY_VOLTAGE_NOW']) in (5000000, 9000000), 'unapproved selected voltage')
     ceiling = 1500000 if mv == 9000 else 1800000
@@ -126,7 +123,7 @@ def ssh(rec, name, command, timeout=20, required=True):
 
 
 def execute(phase, owner_confirmed=False):
-    folder = A / (PREPARE_PHASE if phase == 'prepare' else SOURCE_PHASE if phase == 'source' else phase)
+    folder = A / (PREPARE_PHASE if phase == 'prepare' else phase)
     require(not folder.exists(), 'no phase retry/overwrite')
     require(phase == 'prepare' or owner_confirmed, 'owner cable confirmation required')
     if phase != 'prepare':
@@ -153,11 +150,7 @@ def execute(phase, owner_confirmed=False):
             sec = gate.sections(ssh(rec, 'initial-state', cmd))
             first = sample(sec, True)
             cursor = kernel(rec, 'initial', sec['kernel'], float(sec['uptime'].split()[0]))
-            # First ring was already archived while diagnosing the host USB_TYPE error.
-            # Preserve it and append unread tail; a real later reset/detach aborts.
-            initial_boot, _, initial_log = (A / 'source-diagnosis/tcpm-source-first.txt').read_text().partition('\n')
-            require(e.canonical_boot_id(initial_boot) == PLAN['boot_id'], 'initial source log boot mismatch')
-            rawlog = initial_log + ssh(rec, 'tcpm-source-unread-tail', 'cat ' + shlex.quote(PLAN['tcpm_log_path']))
+            rawlog = ssh(rec, 'tcpm-source-first', 'cat ' + shlex.quote(PLAN['tcpm_log_path']))
             parsed = caps.parse_source_capabilities(rawlog, same_boot=True, owner_confirmed=owner_confirmed,
                                                     fresh_log_boundary=prepared['fresh_log_boundary'])
             p.write_json(rec.folder / 'source-capabilities-first.json', parsed)

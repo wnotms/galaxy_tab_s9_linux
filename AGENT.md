@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-01)
 
+Test273 C1source originalobserver STOP/zero-window retained: USB_TYPE[PD_PPS]
+means source PPS supported in pinnedTCPM, NOT activePPS. ActualONLINE1/fixed9V/
+1500mA, SM5714input1500, pack29.9C/Good, passivefault0/OFF/IBUS0/VBUS9.136V.
+Firstfresh6PDO C1ring saved+partner sysfs agree: fixed5/9/12/15/20V and PPS5-11V
+3A; actualRequest fixed9V1500, no APDO request. Correcthost ONLINE1 vs active2/3,
+ignore onlygenericpower directory, preservecount/lifecycle/current/thermal gates.
+31parser+18collector/syntax pass. Read273SOURCE_OBSERVER_CORRECTION; same-attach
+source-completion30s supplementsmissingwindow, no reattach/physicalretry/device
+software/PPS/pumpON/current/gate change. Unchanged272build/all1424 reused.
+
+
 Test273 prepare-completion READY same846248af/exact263, DCCabsent,75%/4.108V/
 32.9C Good/passivefault0/OFF/IBUS0/cache692ms; firstPC TCPM ring archived once.
 Originalprepare host-only omittedDCC STOP preserved, no physical attempt yet.

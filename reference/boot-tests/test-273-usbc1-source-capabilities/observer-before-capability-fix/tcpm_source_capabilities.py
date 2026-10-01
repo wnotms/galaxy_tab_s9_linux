@@ -154,11 +154,6 @@ def parse_partner_sysfs(raw):
             if link is None or not line.split('=', 1)[1].startswith(link + '/source-capabilities/'):
                 raise ValueError('object outside current partner source capabilities')
             name = line.rsplit('/', 1)[-1]
-            # Generic sysfs device power/ directory is not a PDO. Counted
-            # source frame agreement still catches any omitted actual object.
-            if name == 'power':
-                current = None
-                continue
             m = re.fullmatch(r'(\d+):(fixed_supply|programmable_supply|variable_supply|battery)', name)
             if not m:
                 raise ValueError('unsupported partner source object')

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "env",
+    "GTS9_DEVICE=10.125.29.77",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/gts9-ssh.sh",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uname; uname -a; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@snapshot; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@network; ip -4 -o addr; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi; echo @@tcpm; cat /sys/class/power_supply/tcpm-source-psy-3-0033/uevent; echo @@sourcecaps\npd=$(readlink -f /sys/class/typec/port0-partner/usb_power_delivery || true)\nprintf 'PD_PARTNER_LINK=%s\\n' \"$pd\"\nif test -d \"$pd/source-capabilities\"; then\n  for obj in \"$pd\"/source-capabilities/*; do\n    test -d \"$obj\" || continue\n    printf 'PDO_PATH=%s\\n' \"$obj\"\n    for attr in voltage minimum_voltage maximum_voltage maximum_current maximum_power pps_power_limited; do\n      if test -f \"$obj/$attr\"; then printf '%s=' \"$attr\"; cat \"$obj/$attr\"; fi\n    done\n  done\nfi; echo @@kernel; journalctl -b -k --no-pager -o json --show-cursor --after-cursor='s=0e9cc8651fa34ae5875adb1b7f906071;i=c21fc;b=846248afd9914b499f799402274d08e6;m=1cb4b2a7f;t=65cc51a3fdf1b;x=81d28ccc04dc7e2b'"
+  ],
+  "ended_utc": "2026-10-01T10:56:26.334676+00:00",
+  "started_utc": "2026-10-01T10:56:25.024587+00:00",
+  "status": 0
+}

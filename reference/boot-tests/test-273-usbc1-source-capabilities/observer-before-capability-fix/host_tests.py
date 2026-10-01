@@ -76,7 +76,7 @@ class CollectorTests(unittest.TestCase):
 
     def test_negotiated_pps_refused_even_if_voltage_is_nine(self):
         sec = self.pd()
-        sec['tcpm'] = sec['tcpm'].replace('[PD]', 'PD [PD_PPS]').replace('POWER_SUPPLY_ONLINE=1', 'POWER_SUPPLY_ONLINE=2')
+        sec['tcpm'] = sec['tcpm'].replace('[PD]', 'PD [PD_PPS]')
         with self.assertRaises(c.p.CaptureError):
             c.sample(sec, True)
 
@@ -112,20 +112,6 @@ class CollectorTests(unittest.TestCase):
         with self.assertRaises(c.p.CaptureError):
             c.sample(sec)
 
-    def test_pps_capability_marked_source_can_be_fixed_online(self):
-        raw = (A / 'source/initial-state.txt').read_text()
-        value = c.sample(c.gate.sections(raw), True)
-        self.assertIn('[PD_PPS]', value['tcpm']['POWER_SUPPLY_USB_TYPE'])
-        self.assertEqual(value['tcpm']['POWER_SUPPLY_ONLINE'], '1')
-        self.assertEqual(value['negotiated_voltage_mv'], 9000)
-        self.assertFalse(value['active_charge_admission'])
-
-    def test_active_avs_online_refused(self):
-        sec = self.pd()
-        sec['tcpm'] = sec['tcpm'].replace('POWER_SUPPLY_ONLINE=1', 'POWER_SUPPLY_ONLINE=3')
-        with self.assertRaises(c.p.CaptureError):
-            c.sample(sec, True)
-
     def test_owner_confirmation_required_before_capture(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(c, 'A', Path(tmp)):
             with self.assertRaises(c.p.CaptureError):
@@ -134,7 +120,7 @@ class CollectorTests(unittest.TestCase):
 
     def test_existing_phase_cannot_retry_or_overwrite(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(c, 'A', Path(tmp)):
-            (Path(tmp) / c.SOURCE_PHASE).mkdir()
+            (Path(tmp) / 'source').mkdir()
             with self.assertRaises(c.p.CaptureError):
                 c.execute('source', True)
 
@@ -157,7 +143,7 @@ class CollectorTests(unittest.TestCase):
             (Path(tmp) / c.PREPARE_PHASE / 'summary.json').write_text(json.dumps({'verdict': 'READY_FOR_OWNER_C1_ATTACH', 'cursor': 'fixture'}))
             with self.assertRaises(c.p.CaptureError):
                 c.execute('source', True)
-            result = json.loads((Path(tmp) / c.SOURCE_PHASE / 'summary.json').read_text())
+            result = json.loads((Path(tmp) / 'source/summary.json').read_text())
             self.assertEqual(result['verdict'], 'STOP_FIRST_NON_CLEAN')
             self.assertFalse(result['PPS'])
             self.assertFalse(result['pump_ON'])
