@@ -9,6 +9,16 @@
 #ifdef __KERNEL__
 #include <linux/bitops.h>
 #include <linux/types.h>
+
+/* Copied passive facts, not a live adapter, calibrated ADC or ON grant. */
+struct sm5440_passive_measurement {
+	u64 observed_ms;
+	u32 vbus_uv, vbat_uv, ibus_ua;
+	int die_decic;
+	bool online;
+};
+
+int sm5440_passive_read_cached(struct sm5440_passive_measurement *out);
 #endif
 
 #define SM5440_INT1	0x00

@@ -24,7 +24,7 @@ class PassiveHardwareTests(unittest.TestCase):
 #include <errno.h>
 #include <stddef.h>
 #include <stdarg.h>
-typedef uint8_t u8; typedef uint32_t u32;
+typedef uint8_t u8; typedef uint32_t u32; typedef uint64_t u64;
 #define BIT(n) (1U<<(n))
 #define GENMASK(h,l) (((~0U)>>(31-(h))) & ((~0U)<<(l)))
 #define mutex_lock(x) ((void)(x))
@@ -53,6 +53,9 @@ enum power_supply_property {POWER_SUPPLY_PROP_STATUS,POWER_SUPPLY_PROP_HEALTH,
 #define POWER_SUPPLY_HEALTH_GOOD 1
 #define POWER_SUPPLY_HEALTH_UNKNOWN 0
 static unsigned long fake_jiffies=100;
+static u64 fake_boottime_ms=1000;
+static u64 ktime_get_boottime(void) {return fake_boottime_ms*1000000;}
+#define ktime_to_ms(n) ((n)/1000000)
 #define jiffies fake_jiffies
 #define msecs_to_jiffies(ms) (ms)
 #define time_after(a,b) ((long)((b)-(a))<0)
@@ -98,7 +101,7 @@ static int regmap_update_bits(void *m,unsigned int r,unsigned int mask,unsigned 
  return 0;
 }
 static void msleep(unsigned int ms) {
- (void)ms;waits++;
+ fake_boottime_ms+=ms;waits++;
  if(started && waits>=3 && !never_ready)regs[SM5440_INT4]|=SM5440_ADC_READY;
  if(never_ready==2)current->stopped=true;
 }
@@ -132,7 +135,7 @@ unsigned int faults(unsigned int packed,int running,int mode) {
 int sample(int failure,int timeout,int bad,int *result) {
  struct sm5440_direct sm={0};struct sm5440_sample data={0};
  memset(regs,0,sizeof(regs));calls=waits=started=unsafe_writes=0;
- fail_at=failure;never_ready=timeout;current=&sm;
+ fail_at=failure;never_ready=timeout;current=&sm;fake_boottime_ms=1000;
  /* VBAT4.0V -> raw3904; VBUS9V -> raw4904. */
  regs[0x1e]=4904>>5;regs[0x1f]=(4904&31)<<3;
  regs[0x27]=3904>>5;regs[0x28]=(3904&31)<<3;
@@ -144,6 +147,13 @@ int sample(int failure,int timeout,int bad,int *result) {
  result[0]=waits;result[1]=unsafe_writes;result[2]=data.vbus_uv;
  result[3]=data.vbat_uv;result[4]=data.ibus_ua;result[5]=data.die_decic;
  result[6]=calls;return ret;
+}
+int acquisition_timestamp(void) {
+ int ignored[7];sample(0,0,0,ignored);
+ struct sm5440_direct sm={0};struct sm5440_sample data={0};current=&sm;
+ fake_boottime_ms=1000;never_ready=fail_at=0;
+ int r=sm5440_sample_once(&sm,&data);
+ return !r && data.acquired_ms==1000 && fake_boottime_ms==1075;
 }
 int provenance(int live,int *result) {
  int ignored[7];sample(0,0,0,ignored);
@@ -352,7 +362,10 @@ int poll_fault(int *result) {
             with self.subTest(step=step):
                 ret, values = self.sample(failure=step)
                 self.assertLess(ret, 0)
-                self.assertEqual(values[1], 0)
+        self.assertEqual(values[1], 0)
+
+    def test_acquisition_timestamp_precedes_converter_wait_and_publication(self):
+        self.assertTrue(self.lib.acquisition_timestamp())
 
     def test_adc_timeout_and_suspend_cancel_bounded(self):
         ret, values = self.sample(timeout=1)

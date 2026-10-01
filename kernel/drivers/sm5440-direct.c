@@ -9,6 +9,7 @@
 #include <linux/debugfs.h>
 #include <linux/i2c.h>
 #include <linux/jiffies.h>
+#include <linux/ktime.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
 #include <linux/pm.h>
@@ -26,6 +27,8 @@ struct sm5440_sample {
 	u32 ibus_ua;
 	int die_decic;
 	u32 faults;
+	/* BOOTTIME before converter enable: oldest plausible ADC acquisition. */
+	u64 acquired_ms;
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
 	u8 int4_after_disable, int4_wait, mode_before, mode_after;
@@ -52,6 +55,82 @@ struct sm5440_direct {
 	int last_sample_error;
 	struct dentry *debug_root;
 };
+
+/* Copy-only companion access. Lock order: companion_lock -> io_lock.
+ * No pointer escapes; unpublish serializes with readers before devres teardown.
+ * Poll/PM/debugfs never take companion_lock. No I2C/wait under this lock pair.
+ */
+static DEFINE_MUTEX(sm5440_companion_lock);
+static struct sm5440_direct *sm5440_companion;
+
+static int sm5440_publish(struct sm5440_direct *sm)
+{
+	int ret = 0;
+
+	mutex_lock(&sm5440_companion_lock);
+	if (sm5440_companion)
+		ret = -EBUSY;
+	else
+		sm5440_companion = sm;
+	mutex_unlock(&sm5440_companion_lock);
+	return ret;
+}
+
+static void sm5440_unpublish(void *data)
+{
+	mutex_lock(&sm5440_companion_lock);
+	if (sm5440_companion == data)
+		sm5440_companion = NULL;
+	mutex_unlock(&sm5440_companion_lock);
+}
+
+int sm5440_passive_read_cached(struct sm5440_passive_measurement *out)
+{
+	struct sm5440_direct *sm;
+	u64 now;
+	int ret = 0;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	mutex_lock(&sm5440_companion_lock);
+	sm = sm5440_companion;
+	if (!sm) {
+		ret = -ENODEV;
+		goto unlock;
+	}
+	/* Do not hold the lifetime registry while waiting on worker I2C. */
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto unlock;
+	}
+	now = ktime_to_ms(ktime_get_boottime());
+	if (READ_ONCE(sm->stopped))
+		ret = -ESHUTDOWN;
+	else if (sm->fault || sm->sample.faults || sm->last_sample_error)
+		ret = -EIO;
+	else if (!sm->initial_sample_done || !sm->sample.valid ||
+		 sm->startup_confirmations)
+		ret = -EAGAIN;
+	else if ((sm->sample.mode_before | sm->sample.mode_after) & SM5440_MODE_MASK)
+		ret = -EBUSY;
+	else if (!sm->sample.acquired_ms || sm->sample.acquired_ms > now ||
+		 now - sm->sample.acquired_ms > 100)
+		ret = -ESTALE;
+	else {
+		out->observed_ms = sm->sample.acquired_ms;
+		out->vbus_uv = sm->sample.vbus_uv;
+		out->vbat_uv = sm->sample.vbat_uv;
+		out->ibus_ua = sm->sample.ibus_ua;
+		out->die_decic = sm->sample.die_decic;
+		out->online = sm->sample.online;
+	}
+	mutex_unlock(&sm->io_lock);
+unlock:
+	mutex_unlock(&sm5440_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5440_passive_read_cached);
 
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
@@ -220,10 +299,13 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 	}
 	if (!ret)
 		ret = regmap_write(sm->regmap, SM5440_ADCCNTL2, SM5440_ADC_CHANNELS);
-	if (!ret)
+	if (!ret) {
+		/* Vendor converter sequence unchanged; never stamp a cache lookup. */
+		sample->acquired_ms = ktime_to_ms(ktime_get_boottime());
 		ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
 					 SM5440_ADC_ENABLE | SM5440_ADC_AVG32,
 					 SM5440_ADC_ENABLE | SM5440_ADC_AVG32);
+	}
 	mutex_unlock(&sm->io_lock);
 	if (ret)
 		return ret;
@@ -551,6 +633,13 @@ static int sm5440_probe(struct i2c_client *client)
 	if (ret)
 		return ret;
 	sm5440_debugfs_init(sm);
+	/* Added last: unpublish/drain copy readers before debugfs/stop/free. */
+	ret = devm_add_action_or_reset(sm->dev, sm5440_unpublish, sm);
+	if (ret)
+		return ret;
+	ret = sm5440_publish(sm);
+	if (ret)
+		return dev_err_probe(sm->dev, ret, "SM5440 companion already bound\n");
 	schedule_delayed_work(&sm->work, 0);
 	dev_info(sm->dev, "passive SM5440 revision %u; pump activation unavailable\n", id >> 4);
 	return 0;
