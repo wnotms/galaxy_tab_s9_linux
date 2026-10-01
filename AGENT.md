@@ -2,14 +2,17 @@
 
 ## Current state (2026-10-01)
 
-Test272 implements OFFLINE passive SM5440 fresh-request/lifetime API after271.
-Read SM5440_FRESH_REQUEST/272README. Kernel-only new worker completion, genuine
-acquisition/delivery<=100ms guard; existing25ms/300ms converter/default1s poll,
-startup/protection/fixed/thermal intact. No liveadapter/ON/PPS/current/DT/USB or
-device command. One final passive build/full qualification; installed263 remains.
-112affected host tests pass, including28actual-C fresh requests/threaded unpublish.
-Final passive build/full/W1/sparse/artifact qualification pending.
-No hard-real-time/OCP/calibration claim; ActiveStage3 NOT READY.
+Test272 OFFLINE_INTERFACE_QUALIFIED at399eb497: sleepable kernel-only fresh
+OFF-mode request, genuine conversion seq/stamp/delivery100ms validity, atomic
+users/drain and PMepoch; same system_percpu_wq as existing monitor.28actualC
+new/112affected/all1424 pass (1396retained); final passive Image/DTB/181modules,
+W1/sparse/audit pass, exact263config/DTB,85containers/DCC/96protected/frozen intact.
+Initial2c8c8b9a qualification superseded after queue-identity review; retained.
+Read272 RESULTS/summary/seal and SM5440_FRESH_REQUEST. No device command/flash/
+reboot/PPS/pumpON/current/DT/USB/safety change; installed263 untouched.
+Actual fresh-API timing/current/calibration/OCP/liveadapter/APDO unqualified,
+ActiveStage3 NOT READY. Future read-only consumer/physical plan not executed.
+Results-only reuse final qualification; no build/full/CI rerun.
 
 Test271 finalized DEVICE_PASSIVE_DIAGNOSIS_COMPLETED_WITH_STARTUP_CLASSIFICATION_GAP:
 one unchanged263 normal reboot to846248af, separate sameboot30.158s/7samples,

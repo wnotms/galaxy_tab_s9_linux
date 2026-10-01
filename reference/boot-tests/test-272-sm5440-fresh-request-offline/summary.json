@@ -1,0 +1,87 @@
+{
+  "DTB_byte_identical_Test263": true,
+  "DTB_vs_Test263": {},
+  "HVC_DCC": "n",
+  "PPS_requested": false,
+  "W1_sparse": {
+    "executed": true,
+    "known_upstream_VDSO_warning": true,
+    "object_unchanged": true,
+    "status": 0
+  },
+  "active_mode_API": false,
+  "active_stage3_verdict": "NOT READY",
+  "affected_tests": 112,
+  "artifacts": {
+    "Image.gz": {
+      "bytes": 22125671,
+      "path": "out/kernel-x710-272-passive/Image.gz",
+      "sha256": "e61fa442a29017880e7d3702a2ebb1375027937351a7b407ae9e0f6b6ab66456"
+    },
+    "config": {
+      "bytes": 243276,
+      "path": "out/kernel-x710-272-passive/config",
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5"
+    },
+    "kernel-notes.bin": {
+      "bytes": 84,
+      "path": "out/kernel-x710-272-passive/kernel-notes.bin",
+      "sha256": "51db912b126b4d68e581b3a1e89b25726db177062551a25817f0c8bddcb380d7"
+    },
+    "modules-x710.tar.gz": {
+      "bytes": 47319155,
+      "path": "out/kernel-x710-272-passive/modules-x710.tar.gz",
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 176935,
+      "path": "out/kernel-x710-272-passive/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    }
+  },
+  "build": {
+    "ccache": true,
+    "executed": true,
+    "modules": true,
+    "status": 0
+  },
+  "compiled_overlay_sources_all_match": true,
+  "config_byte_identical_Test263": true,
+  "config_vs_Test263": {},
+  "container_required_y": 85,
+  "converter_wait_ms_unchanged": 300,
+  "current_limit_changed": false,
+  "default_converter_sequence_changed": false,
+  "default_poll_cadence_changed": false,
+  "device_commands_executed": false,
+  "final_queue": "system_percpu_wq",
+  "flashed": false,
+  "fresh_request_deadline_ms": 100,
+  "frozen_Stage2_artifacts_intact": true,
+  "full_tests": {
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "prior1396_retained": true,
+    "report_elapsed_s": 98.099,
+    "skips": 0,
+    "tests": 1424
+  },
+  "hardware_OCP_or_cutoff_qualified": false,
+  "historical267_and271_results_unchanged": true,
+  "independently_calibrated": false,
+  "initial_2c8c8b9a_qualification_superseded": true,
+  "installed_baseline": "Test263 unchanged",
+  "live_adapter_added": false,
+  "module_files": 181,
+  "new_actual_C_tests": 28,
+  "physical_fresh_request_qualified": false,
+  "profile": "sm5440-passive",
+  "protected_changes": {},
+  "protected_files": 96,
+  "pump_ON": false,
+  "rebooted": false,
+  "source_revision": "399eb49786039d8ef654769dd94ef2a439d0af90",
+  "test": "Test272",
+  "verdict": "OFFLINE_INTERFACE_QUALIFIED"
+}

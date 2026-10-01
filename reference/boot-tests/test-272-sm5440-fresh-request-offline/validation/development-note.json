@@ -1,1 +1,7 @@
-{"initial_snapshot_mock_error":"missing atomic_t/wait_queue_head_t for newly expanded struct; fixed mock type declarations, all assertions retained", "device_commands": false}
+{
+  "initial_snapshot_mock_error": "missing atomic_t/wait_queue_head_t for newly expanded struct; fixed mock type declarations, all assertions retained",
+  "device_commands": false,
+  "initial_qualification_superseded": "source review found system_wq and system_percpu_wq distinct in pinned7.2; use same existing per-CPU queue to preserve non-reentrancy, update actual-C mock/queue assertion; final build/tests required",
+  "initial_source_revision": "2c8c8b9a9833e33ebdaa54dd3b341326b7d353a2",
+  "initial_build_and_1424_tests_passed_but_not_final": true
+}
