@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test277 exact263rollback READBACK VERIFIED in TWRP: all5partitions/181paired
+modules, tested272 directory.gts9-test277-tested/allolderbackups retained,
+rootunmounted/BCBclear. One revised276observer load unloaded normally; one
+fresh101ms-110 refusal, device normal/acquisition not qualified. Next one263
+baselineboot/endpoint only. Read277ROLLBACK_STATUS/raw. No retry/PPS/pumpON/
+current/ADC/deadline/USB change. Reuse qualification/no build/full/CI.
+ActiveStage3 NOT READY;275freeze causation remains unproved.
+
 Test277 DEVICE_NORMAL_ACQUISITION_REFUSED: one2721cb7050bboot/one276observer
 load/onefreshcall-110 in101ms/zero usable,0.211s boundedfirstrefusal collection,
 no30s/timingpass. Unload returned0, module/debugfs absent; ADB/Wi-Fi/deviceNCM
