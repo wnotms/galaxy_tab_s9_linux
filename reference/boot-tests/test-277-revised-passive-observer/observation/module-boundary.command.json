@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer/result; test \"$(sha256sum /tmp/test277-observer.ko | cut -d \" \" -f1)\" = 9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582; grep -w sm5440_passive_request_fresh /proc/kallsyms"
+  ],
+  "ended_utc": "2026-10-01T13:26:18.810979+00:00",
+  "started_utc": "2026-10-01T13:26:18.689393+00:00",
+  "status": 0
+}

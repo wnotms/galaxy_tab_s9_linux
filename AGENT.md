@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test277 DEVICE_NORMAL_ACQUISITION_REFUSED: one2721cb7050bboot/one276observer
+load/onefreshcall-110 in101ms/zero usable,0.211s boundedfirstrefusal collection,
+no30s/timingpass. Unload returned0, module/debugfs absent; ADB/Wi-Fi/deviceNCM
+sameboot normal/noCode43/no new detected CPU signature,20startupSMMU unresolved.
+Read277observation/ACQUISITION_RESULT.275STOP/unknown freeze causation retained.
+No retry/PPS/pumpON/current/ADC/deadline change. Next unconditional exact263
+rollback under277registration; no further physical acquisition. ActiveStage3 NOT READY.
+
 Test277 paired installation READBACK VERIFIED in TWRP: bootd837b52f+181272
 modules, other4partitions exact263, unique277 rollback/all older backups retained,
 rootunmounted/BCBclear. Registratione4d0a6d7 pushed beforewrites. Candidate boot
