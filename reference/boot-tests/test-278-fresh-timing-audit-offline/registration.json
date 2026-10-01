@@ -1,0 +1,36 @@
+{
+  "PPS": false,
+  "averaging_unchanged": 32,
+  "baseline_revision": "d1cb1529",
+  "build": false,
+  "converter_maximum_polls_unchanged": 12,
+  "converter_poll_ms_unchanged": 25,
+  "current_increase": false,
+  "deadline_ms_unchanged": 100,
+  "device_commands": false,
+  "forbidden": [
+    "device command",
+    "flash/reboot",
+    "new request",
+    "source/instrumentation/ADC/config/DT/rootfs change",
+    "weaken deadline",
+    "convert jiffies stamp to absolute BOOTTIME without a clock anchor",
+    "claim timeout branch or physical duration from errno alone"
+  ],
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "observer_revision": "7a887eab",
+  "physical_rounds": 0,
+  "provider_revision": "399eb497",
+  "pump_ON": false,
+  "purpose": "offline audit of distinct fresh timeout branches and existing timestamp evidence; not repair/physical timing acceptance",
+  "qualification": "affected host tests+syntax; reuse272provider/2761481/W1/sparse; no routing/full/build/CI change",
+  "rollback": "not applicable; current restored263 untouched",
+  "scope": [
+    "source audit",
+    "pure host analyser",
+    "host tests",
+    "derived report",
+    "future minimal attribution plan"
+  ],
+  "test": "Test278"
+}

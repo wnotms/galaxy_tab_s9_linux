@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test278 registers OFFLINE fresh-timeout source/evidence audit on frozen272/
+276 and raw275/277. No device command/flash/reboot/request/kernel/config/DT/
+ADC/deadline/USB/rootfs change. Current restored263 unchanged. VerifyINPUTS;
+pure host analyser/tests report actual facts and missing phase timestamps,
+never infer ADC fault/duration or110branch from errno/cache age.25ms nominal
+sleep atHZ250 and100ms guard audited, no relaxation. Future symbolic tracing
+plan only, no probe/runtime enabling. Reuse272build/2761481/W1/sparse, affected
+host+syntax only/no routing/full/CI. ActiveStage3 NOT READY. Read278README.
+
 Test277 DEVICE_NORMAL_ACQUISITION_REFUSED_ROLLBACK_COMPLETED: ONE2721cb7050bboot/
 ONE276observer load/onefresh101ms-110 refusal,0usable/0.211s collection; unload
 status0/moduledebugfsabsent/samebootADBWi-FideviceNCM normal/noCode43/newCPUfault.
