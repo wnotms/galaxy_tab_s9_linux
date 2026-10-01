@@ -1,0 +1,19 @@
+{
+  "test": "Test276 observer task lifetime correction",
+  "purpose": "Offline correction of autonomous kthread exit followed by stop of unowned task pointer",
+  "predecessor": "Test275 STOP transport loss during observer unload; persistent journal and exact263 rollback pending",
+  "provider": "Test272399eb497 frozen",
+  "old_observer": "Test27410d57da0/9d66c080 preserved",
+  "changes": ["external observer task reference ownership", "host lifecycle tests", "separate offline output path", "documentation"],
+  "maximum_calls": 8,
+  "interval_ms": 1000,
+  "delivery_deadline_ms": 100,
+  "PPS": false,
+  "pump_ON": false,
+  "physical_attempts": 0,
+  "auto_deploy": false,
+  "current_increase": false,
+  "kernel_provider_rebuild": false,
+  "validation": "affected actual-C lifecycle and retained loop tests; one external ARM64/W1/sparse build; final full host tests retaining1475IDs",
+  "hardware_failure_cause_proven": false
+}
