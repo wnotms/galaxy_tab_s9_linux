@@ -2,6 +2,22 @@
 
 ## Current state (2026-10-01)
 
+Test274 OFFLINE_BOUNDED_FRESH_OBSERVER_QUALIFIED at10d57da0: stand-alone external
+GPL .ko9d66c080/267536B against frozen272provider399eb497; max8calls/1s/firsterror
+STOP, cached0400/rawstatus/times, no parameters/readtrigger/I2C/ON/PPS/policy.
+20affected (18actualC +2isolatedbuilder) and finalall1475 pass/zero skips; W1/
+sparse/ARM64 pass, unchangedobject/module/config/DT/Image/181archive, all1424prior
+and1473initial IDs retained. Initial1473 superseded after final frozen-source build
+provenance guard, preserved. Read274RESULTS/summary/ARTIFACTS/finalseal and future
+275plan. Publicsequence internalAPI guard, not exported/invented rowcounter.
+No device commands/flash/reboot/install/current/hardware/rootfs changes; installed
+263 remains. Results-only reuse qualification/executed:false, no build/full/CI
+rerun. Future passive30s PCUSB/one observer load only after independent275 registration
+and exactprovider deployment; never force-load on263. ActiveStage3 NOT READY:
+actual100ms/ADC/nonzero current/OCP/liveadapter/PM still unqualified. C1APDO5–11V3A
+captured273, not45W proof. Next passive acquisition acceptance, no automaticPPS/ON.
+
+
 Test274 registers OFFLINE bounded freshADC diagnostic consumer. Read274README/
 registration and SM5440_FRESH_OBSERVER before implementation. Stand-alone .ko
 against sealed272 provider, max8calls/1s between successes/firsterror STOP, cached

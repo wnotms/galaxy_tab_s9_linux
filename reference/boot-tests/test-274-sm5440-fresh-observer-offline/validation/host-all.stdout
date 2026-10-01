@@ -1,0 +1,20 @@
+READY: perform one unplug>=20s/replug; Wi-Fi stays on, no charger/reboot
+12 packet/error cases passed
+pogo suspend/resume lifecycle cases passed
+{
+  "round": 1,
+  "started_utc": "2026-10-01T11:31:31.797635+00:00",
+  "verdict": "failure_observed",
+  "before_boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "after_boot_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "observation_seconds": 0,
+  "reboot_requested_utc": "2026-10-01T11:31:31.797834+00:00",
+  "first_adb_uptime_seconds": 20,
+  "error": "KernelEvidenceError('just-ended target boot acquired a kernel fault')",
+  "registered_window_completed": false,
+  "kernel_fault_counts": {
+    "oops_bug": 1
+  },
+  "kernel_suspects": [],
+  "ended_utc": "2026-10-01T11:31:31.798305+00:00"
+}

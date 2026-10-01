@@ -38,3 +38,8 @@ within30s window. Save all rows, raw snapshot and boundary/first-fault kernel
 journal; first nonzero status ends requests and preserves failure. No reload.
 Unload verifies the kthread stopped; sameboot ADB/deviceNCM/Wi-Fi endpoint. Timing
 success is not PPS/pump/current admission; nonzero ADC/OCP/livePM remain separate.
+
+Cached result state:0=RUNNING,1=COMPLETED,2=STOPPED,3=CANCELLED; each row's
+provider_status and status are signed Linux errno, usable is only passive evidence.
+External diagnostic .ko is unsigned, force-signature config is off; future load
+may add O/E diagnostic taints. This is not a reason to suppress any kernel fault.
