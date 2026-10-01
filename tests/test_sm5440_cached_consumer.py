@@ -26,6 +26,12 @@ typedef uint8_t u8;typedef uint32_t u32;typedef uint64_t u64;
 #define BIT(n) (1U<<(n))
 #define GENMASK(h,l) (((~0U)>>(31-(h))) & ((~0U)<<(l)))
 #define READ_ONCE(x) (x)
+#define WRITE_ONCE(x,v) ((x)=(v))
+#define lockdep_assert_held(x) ((void)(x))
+typedef int atomic_t; typedef int wait_queue_head_t;
+#define atomic_read(p) (*(p))
+#define wake_up_all(p) ((void)(p))
+#define wait_event(q,c) ((void)(q), (void)(c))
 struct mutex {int registry;};struct device {int unused;};
 struct regmap {int unused;};struct delayed_work {int unused;};
 struct power_supply {int unused;};struct dentry {int unused;};
@@ -53,6 +59,8 @@ static int mutex_trylock(struct mutex *m) {
         code += 'static struct mutex sm5440_companion_lock={.registry=1};\n'
         code += 'static struct sm5440_direct *sm5440_companion;\n'
         for marker in ('static int sm5440_publish(', 'static void sm5440_unpublish(',
+                       'static int sm5440_sample_ready_locked(',
+                       'static int sm5440_copy_sample_locked(',
                        'int sm5440_passive_read_cached('):
             code += function(src, marker) + '\n'
         code += r'''

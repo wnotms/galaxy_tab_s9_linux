@@ -16,7 +16,8 @@ waitqueue, atomic lifetime references and short mutex state sections.
 per provider. It requests the existing worker and waits at most the remaining
 100ms software budget. Only a new completion with acquisition start after the
 request and age/delivery within100ms can succeed. A conversion already started
-before the request cannot masquerade as new. No cache lookup changes timestamps.
+before the request cannot masquerade as new, including same-millisecond starts:
+a conversion sequence captured under io_lock supplements the oldest timestamp. No cache lookup changes timestamps.
 IBUS stays microamps, voltage microvolts, die temperature deci°C.
 
 A request can fail because the unchanged32-sample averaging/300ms converter
@@ -25,17 +26,20 @@ this is a delivery validity guard, NOT a wall-time/cutoff promise. A timed-out
 read does not cancel the ordinary monitor or clear a latched fault. Default poll
 behavior has no new requests unless this kernel API is explicitly called.
 No userspace writer/activation interface or live policy adapter is supplied.
+Call only from sleepable external context, with no charger/TCPM/core mutex held;
+never from the same converter worker or teardown callback being waited upon.
 
 ## Locks and lifetime
 
 Registry -> io_lock is still the copy-only cached API's short lock order.
 Fresh request pins an atomic user under registry, releases registry, then uses
 trylock io_lock for checks/queue/copy. It never waits on io_lock or holds it across
-converter/PD waits. One request reservation under io_lock rejects another caller.
+converter/PD waits. An atomic request reservation rejects another caller.
 
 Unpublish removes the pointer under registry and marks dying; it then wakes
 requesters and drains users without registry/io_lock held. The final user signals
-its drain waitqueue before teardown may free state. PM sets stopped and invalidates
+its drain waitqueue under registry; teardown takes a final registry barrier so
+that wake/unlock finishes before state may be freed. PM sets stopped and invalidates
 cache under io_lock, wakes requesters, then drains the existing worker without
 io_lock and verifies OFF/ADC disable. Thus a request cannot queue work after PM's
 drain. Resume never resumes a request or carries its deadline/grant forward.

@@ -1,0 +1,21 @@
+{
+  "executed": true,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_sm5440*.py",
+    "-v"
+  ],
+  "tests": 112,
+  "seconds": 4.558,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "existing_tests_retained": true,
+  "new_fresh_request_tests": 28
+}

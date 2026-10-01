@@ -5,6 +5,7 @@
  * ab123e7d. See docs/SM5440_REGISTER_AUDIT.md; register writes are limited to
  * mode-OFF and traced converter controls. Unaccepted ADC => unavailable.
  */
+#include <linux/atomic.h>
 #include <linux/delay.h>
 #include <linux/debugfs.h>
 #include <linux/i2c.h>
@@ -17,6 +18,7 @@
 #include <linux/regmap.h>
 #include <linux/seq_file.h>
 #include <linux/string.h>
+#include <linux/wait.h>
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
@@ -29,6 +31,7 @@ struct sm5440_sample {
 	u32 faults;
 	/* BOOTTIME before converter enable: oldest plausible ADC acquisition. */
 	u64 acquired_ms;
+	u64 acquisition_seq;
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
 	u8 int4_after_disable, int4_wait, mode_before, mode_after;
@@ -54,9 +57,15 @@ struct sm5440_direct {
 	unsigned long startup_stamp;
 	int last_sample_error;
 	struct dentry *debug_root;
+	/* Fresh requests pin lifetime, not a charging grant. */
+	atomic_t request_users, request_busy;
+	wait_queue_head_t request_wait, users_wait;
+	unsigned long sample_seq, request_epoch;
+	u64 conversion_seq;
+	bool dying;
 };
 
-/* Copy-only companion access. Lock order: companion_lock -> io_lock.
+/* Companion access. Cached lock order: companion_lock -> io_lock.
  * No pointer escapes; unpublish serializes with readers before devres teardown.
  * Poll/PM/debugfs never take companion_lock. No I2C/wait under this lock pair.
  */
@@ -78,10 +87,57 @@ static int sm5440_publish(struct sm5440_direct *sm)
 
 static void sm5440_unpublish(void *data)
 {
+	struct sm5440_direct *sm = data;
+
 	mutex_lock(&sm5440_companion_lock);
-	if (sm5440_companion == data)
+	if (sm5440_companion == sm)
 		sm5440_companion = NULL;
+	WRITE_ONCE(sm->dying, true);
 	mutex_unlock(&sm5440_companion_lock);
+	wake_up_all(&sm->request_wait);
+	wait_event(sm->users_wait, !atomic_read(&sm->request_users));
+	/* A last user decrements/wakes while holding the registry. Wait for its
+	 * final wake/unlock before devres may free the waitqueue and state.
+	 */
+	mutex_lock(&sm5440_companion_lock);
+	mutex_unlock(&sm5440_companion_lock);
+}
+
+/* io_lock held; shared refusal rules for cached and new conversion copies. */
+static int sm5440_sample_ready_locked(struct sm5440_direct *sm)
+{
+	lockdep_assert_held(&sm->io_lock);
+	if (READ_ONCE(sm->dying))
+		return -ENODEV;
+	if (READ_ONCE(sm->stopped))
+		return -ESHUTDOWN;
+	if (sm->fault || sm->sample.faults || sm->last_sample_error)
+		return -EIO;
+	if (!sm->initial_sample_done || !sm->sample.valid ||
+	    sm->startup_confirmations)
+		return -EAGAIN;
+	if ((sm->sample.mode_before | sm->sample.mode_after) & SM5440_MODE_MASK)
+		return -EBUSY;
+	return 0;
+}
+
+static int sm5440_copy_sample_locked(struct sm5440_direct *sm,
+				     struct sm5440_passive_measurement *out, u64 now)
+{
+	int ret = sm5440_sample_ready_locked(sm);
+
+	if (ret)
+		return ret;
+	if (!sm->sample.acquired_ms || sm->sample.acquired_ms > now ||
+	    now - sm->sample.acquired_ms > SM5440_FRESH_REQUEST_MS)
+		return -ESTALE;
+	out->observed_ms = sm->sample.acquired_ms;
+	out->vbus_uv = sm->sample.vbus_uv;
+	out->vbat_uv = sm->sample.vbat_uv;
+	out->ibus_ua = sm->sample.ibus_ua;
+	out->die_decic = sm->sample.die_decic;
+	out->online = sm->sample.online;
+	return 0;
 }
 
 int sm5440_passive_read_cached(struct sm5440_passive_measurement *out)
@@ -105,32 +161,110 @@ int sm5440_passive_read_cached(struct sm5440_passive_measurement *out)
 		goto unlock;
 	}
 	now = ktime_to_ms(ktime_get_boottime());
-	if (READ_ONCE(sm->stopped))
-		ret = -ESHUTDOWN;
-	else if (sm->fault || sm->sample.faults || sm->last_sample_error)
-		ret = -EIO;
-	else if (!sm->initial_sample_done || !sm->sample.valid ||
-		 sm->startup_confirmations)
-		ret = -EAGAIN;
-	else if ((sm->sample.mode_before | sm->sample.mode_after) & SM5440_MODE_MASK)
-		ret = -EBUSY;
-	else if (!sm->sample.acquired_ms || sm->sample.acquired_ms > now ||
-		 now - sm->sample.acquired_ms > 100)
-		ret = -ESTALE;
-	else {
-		out->observed_ms = sm->sample.acquired_ms;
-		out->vbus_uv = sm->sample.vbus_uv;
-		out->vbat_uv = sm->sample.vbat_uv;
-		out->ibus_ua = sm->sample.ibus_ua;
-		out->die_decic = sm->sample.die_decic;
-		out->online = sm->sample.online;
-	}
+	ret = sm5440_copy_sample_locked(sm, out, now);
 	mutex_unlock(&sm->io_lock);
 unlock:
 	mutex_unlock(&sm5440_companion_lock);
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sm5440_passive_read_cached);
+
+/* Sleepable, OFF-mode only. No registry/charger lock across the wait, no
+ * second converter, no cancellation of ordinary monitoring on a timeout.
+ * This is a100ms evidence validity guard, NOT hardware cutoff/realtime proof.
+ */
+int sm5440_passive_request_fresh(struct sm5440_passive_measurement *out)
+{
+	struct sm5440_direct *sm;
+	unsigned long seq, epoch;
+	u64 start, now, started_seq;
+	long remaining;
+	bool reserved = false;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	start = ktime_to_ms(ktime_get_boottime());
+	mutex_lock(&sm5440_companion_lock);
+	sm = sm5440_companion;
+	if (sm)
+		atomic_inc(&sm->request_users);
+	mutex_unlock(&sm5440_companion_lock);
+	if (!sm)
+		return -ENODEV;
+	if (atomic_cmpxchg(&sm->request_busy, 0, 1)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	reserved = true;
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5440_sample_ready_locked(sm);
+	if (ret)
+		goto unlock;
+	seq = sm->sample_seq;
+	started_seq = sm->conversion_seq;
+	epoch = sm->request_epoch;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (now < start || now - start >= SM5440_FRESH_REQUEST_MS) {
+		ret = -ETIMEDOUT;
+		goto unlock;
+	}
+	remaining = msecs_to_jiffies(SM5440_FRESH_REQUEST_MS - (now - start));
+	/* PM sets stopped/epoch under this same lock BEFORE drain: never queue
+	 * after quiesce has canceled work. Running work may finish an old sample;
+	 * that completion will be refused, not relabeled as this acquisition.
+	 */
+	mod_delayed_work(system_wq, &sm->work, 0);
+	mutex_unlock(&sm->io_lock);
+	if (!wait_event_timeout(sm->request_wait,
+		READ_ONCE(sm->sample_seq) != seq || READ_ONCE(sm->stopped) ||
+		READ_ONCE(sm->fault) || READ_ONCE(sm->dying) ||
+		READ_ONCE(sm->request_epoch) != epoch, remaining)) {
+		ret = -ETIMEDOUT;
+		goto put;
+	}
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	now = ktime_to_ms(ktime_get_boottime());
+	if (sm->request_epoch != epoch)
+		ret = -ESHUTDOWN;
+	else if (now < start || now - start > SM5440_FRESH_REQUEST_MS)
+		ret = -ETIMEDOUT;
+	else if (sm->sample_seq == seq)
+		ret = sm5440_sample_ready_locked(sm) ?: -EAGAIN;
+	else if (sm->sample.acquisition_seq <= started_seq)
+		ret = -ESTALE;
+	else {
+		ret = sm5440_copy_sample_locked(sm, out, now);
+		if (!ret && out->observed_ms < start)
+			ret = -ESTALE;
+	}
+unlock:
+	mutex_unlock(&sm->io_lock);
+put:
+	if (ret)
+		memset(out, 0, sizeof(*out));
+	if (reserved)
+		atomic_set(&sm->request_busy, 0);
+	mutex_lock(&sm5440_companion_lock);
+	if (atomic_dec_and_test(&sm->request_users))
+		wake_up_all(&sm->users_wait);
+	mutex_unlock(&sm5440_companion_lock);
+	/* No provider access after dropping its user; include final release delay. */
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!ret && (now < start || now - start > SM5440_FRESH_REQUEST_MS)) {
+		memset(out, 0, sizeof(*out));
+		ret = -ETIMEDOUT;
+	}
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5440_passive_request_fresh);
 
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
@@ -272,6 +406,8 @@ static int sm5440_sample_once(struct sm5440_direct *sm,
 	int ret, i;
 
 	mutex_lock(&sm->io_lock);
+	/* Distinguish an older in-flight conversion even within one clock ms. */
+	sample->acquisition_seq = ++sm->conversion_seq;
 	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
 	if (!ret && (mode & SM5440_MODE_MASK))
 		ret = -EBUSY; /* never adopt a running/reverse pump */
@@ -485,7 +621,9 @@ static void sm5440_poll(struct work_struct *work)
 			sample.vbus_uv, sample.vbat_uv, sample.ibus_ua,
 			sample.die_decic, sample.faults);
 	}
+	WRITE_ONCE(sm->sample_seq, sm->sample_seq + 1);
 	mutex_unlock(&sm->io_lock);
+	wake_up_all(&sm->request_wait);
 	power_supply_changed(sm->psy);
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))
 		schedule_delayed_work(&sm->work, msecs_to_jiffies(1000));
@@ -557,7 +695,13 @@ static int sm5440_quiesce(struct sm5440_direct *sm)
 {
 	int ret, adc_ret;
 
+	/* Serialize stop with new-request scheduling, never hold across drain. */
+	mutex_lock(&sm->io_lock);
 	WRITE_ONCE(sm->stopped, true);
+	WRITE_ONCE(sm->request_epoch, sm->request_epoch + 1);
+	sm->sample.valid = false;
+	mutex_unlock(&sm->io_lock);
+	wake_up_all(&sm->request_wait);
 	cancel_delayed_work_sync(&sm->work);
 	mutex_lock(&sm->io_lock);
 	sm->sample.valid = false;
@@ -616,6 +760,10 @@ static int sm5440_probe(struct i2c_client *client)
 	if (IS_ERR(sm->regmap))
 		return PTR_ERR(sm->regmap);
 	mutex_init(&sm->io_lock);
+	atomic_set(&sm->request_users, 0);
+	atomic_set(&sm->request_busy, 0);
+	init_waitqueue_head(&sm->request_wait);
+	init_waitqueue_head(&sm->users_wait);
 	INIT_DELAYED_WORK(&sm->work, sm5440_poll);
 	i2c_set_clientdata(client, sm);
 	ret = regmap_read(sm->regmap, SM5440_DEVICEID, &id);
@@ -633,7 +781,7 @@ static int sm5440_probe(struct i2c_client *client)
 	if (ret)
 		return ret;
 	sm5440_debugfs_init(sm);
-	/* Added last: unpublish/drain copy readers before debugfs/stop/free. */
+	/* Added last: unpublish/drain all readers before debugfs/stop/free. */
 	ret = devm_add_action_or_reset(sm->dev, sm5440_unpublish, sm);
 	if (ret)
 		return ret;

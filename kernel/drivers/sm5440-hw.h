@@ -19,7 +19,14 @@ struct sm5440_passive_measurement {
 };
 
 int sm5440_passive_read_cached(struct sm5440_passive_measurement *out);
+/* Sleepable OFF-mode new conversion request; clears output on any refusal.
+ * No hard-realtime/OCP guarantee, no active-mode or userspace ON interface.
+ */
+int sm5440_passive_request_fresh(struct sm5440_passive_measurement *out);
 #endif
+
+/* Software freshness/delivery refusal budget, not converter/cutoff timing. */
+#define SM5440_FRESH_REQUEST_MS 100U
 
 #define SM5440_INT1	0x00
 #define SM5440_INT4	0x03

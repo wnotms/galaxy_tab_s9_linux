@@ -32,6 +32,7 @@ typedef uint8_t u8; typedef uint32_t u32; typedef uint64_t u64;
 #define lockdep_assert_held(x) ((void)(x))
 #define READ_ONCE(x) (x)
 #define WRITE_ONCE(x,v) ((x)=(v))
+#define wake_up_all(p) ((void)(p))
 ''' + '\n#include "' + str(ROOT / 'kernel/drivers/sm5440-hw.h') + '"\n'
         code += function(src, 'struct sm5440_sample {') + ';\n'
         code += r'''
@@ -40,7 +41,8 @@ struct delayed_work {struct work_struct work;};
 struct sm5440_direct {void *regmap;int io_lock,dev;bool stopped,fault;
  bool initial_sample_done;u8 startup_confirmations;unsigned long startup_deadline;
  struct sm5440_sample startup_sample,sample;unsigned long startup_stamp;
- int last_sample_error;struct delayed_work work;struct power_supply *psy;};
+ int last_sample_error;struct delayed_work work;struct power_supply *psy;
+ unsigned long sample_seq,request_epoch;u64 conversion_seq;int request_wait;};
 struct power_supply {struct sm5440_direct *sm;};
 struct device {struct sm5440_direct *sm;};
 static struct sm5440_direct *dev_get_drvdata(struct device *d) {return d->sm;}

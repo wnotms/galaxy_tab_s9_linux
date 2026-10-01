@@ -25,6 +25,7 @@ class SnapshotTests(unittest.TestCase):
 #include <string.h>
 #include <errno.h>
 typedef uint8_t u8; typedef uint32_t u32; typedef uint64_t u64;
+typedef int atomic_t; typedef int wait_queue_head_t;
 struct mutex { int unused; };
 struct device { const char *name; };
 struct regmap { int unused; };
