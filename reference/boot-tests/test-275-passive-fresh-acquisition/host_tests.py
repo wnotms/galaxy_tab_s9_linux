@@ -68,6 +68,12 @@ class Baseline(unittest.TestCase):
         boot, _ = gate.identity(self.sec, self.plan, self.plan['baseline_notes_sha256'])
         self.assertEqual(boot, self.plan['before_boot_id'])
 
+    def test_only_boot_partition_changes(self):
+        pkg = json.loads((A/'PACKAGE.json').read_text())
+        self.assertEqual(pkg['write_partitions'], ['boot'])
+        for part in ('vendor_boot', 'init_boot', 'dtbo', 'vbmeta'):
+            self.assertEqual(pkg['candidate_partitions'][part], pkg['baseline_partitions'][part])
+
     def test_identity_and_safety_changes(self):
         for key, value in [('dcc', 'present'), ('failed', 'bad.service failed'), ('roles', '[source]\n[host]'),
                            ('network', 'lo'), ('identity', self.sec['identity'].replace('fea0613f', '00000000')),

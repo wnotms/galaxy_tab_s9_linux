@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; test ! -e /mnt/debian/usr/lib/modules/.gts9-test275-original; test ! -e /mnt/debian/usr/lib/modules/.gts9-test275-stage; test ! -e /mnt/debian/usr/lib/modules/.gts9-test275-tested; echo @@partitions; for part in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/block/by-name/$part; done; echo @@sizes; blockdev --getsize64 /dev/block/by-name/boot; echo @@battery; cat /sys/class/power_supply/battery/uevent; echo @@slots; ls -d /mnt/debian/usr/lib/modules/.gts9-*"
+  ],
+  "ended_utc": "2026-10-01T12:19:08.733431+00:00",
+  "started_utc": "2026-10-01T12:19:08.346785+00:00",
+  "status": 0
+}

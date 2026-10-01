@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test275 paired installation verified in TWRP:272bootd837b52f+181modules,
+other4partitions exact263; new275-original rollback/allolderbackups retained,
+rootunmounted/BCBclear. Candidate not booted, no observer load/PPS/pumpON. Read
+275INSTALL_STATUS and originalhoststops: p.e import beforeBCB corrected; unused
+hostvbmeta b95e5ef9 vs accepted9844859b manifest corrected by readonly copy,
+no repeated flash.12localhost/syntax pass; registrationseal checked at0e95e9e3,
+installationseal separate. Reuse272/274qualification/no build/full/CI repeat.
+Next one candidateboot/passive observer, firstrefusal unload/no retry.
+
+
 Test275 registered passive fresh delivery: sealed272399eb497 provider +27410d57da0
 observer, ONE PCUSB candidateboot/load, <=8calls/1s/100ms and bounded30s; first
 refusal stop/unload/no retry, device-normal and acquisition verdicts separate.

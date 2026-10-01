@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; sha256sum /tmp/test275-to-recovery.sh /sys/kernel/notes; cat /sys/class/power_supply/sm5714-battery/uevent"
+  ],
+  "ended_utc": "2026-10-01T12:17:24.135618+00:00",
+  "started_utc": "2026-10-01T12:17:24.038236+00:00",
+  "status": 0
+}
