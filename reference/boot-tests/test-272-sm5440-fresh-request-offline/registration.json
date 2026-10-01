@@ -1,0 +1,17 @@
+{
+  "test": "Test272",
+  "purpose": "offline passive fresh conversion request and lifetime qualification",
+  "baseline_commit": "20494199",
+  "installed_baseline": "Test263",
+  "physical_rounds": 0,
+  "device_commands": false,
+  "PPS": false,
+  "pump_ON": false,
+  "current_policy_changed": false,
+  "deadline_ms": 100,
+  "converter_wait_ms_unchanged": 300,
+  "default_poll_ms_unchanged": 1000,
+  "profile": "sm5440-passive",
+  "rollback": "not applicable; device unchanged",
+  "final_qualification": "one passive kernel build, full host tests, W1/sparse/config/DT/protected/artifact audit"
+}

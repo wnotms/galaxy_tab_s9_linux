@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Test272 registers OFFLINE passive SM5440 fresh-request/lifetime API after271.
+Read SM5440_FRESH_REQUEST/272README. Kernel-only new worker completion, genuine
+acquisition/delivery<=100ms guard; existing25ms/300ms converter/default1s poll,
+startup/protection/fixed/thermal intact. No liveadapter/ON/PPS/current/DT/USB or
+device command. One final passive build/full qualification; installed263 remains.
+No hard-real-time/OCP/calibration claim; ActiveStage3 NOT READY.
+
 Test271 finalized DEVICE_PASSIVE_DIAGNOSIS_COMPLETED_WITH_STARTUP_CLASSIFICATION_GAP:
 one unchanged263 normal reboot to846248af, separate sameboot30.158s/7samples,
 Good/fault0/advancing cachedADC/OFF/IBUS0; ADB/Wi-Fi10.125.29.77/DCC normal.
