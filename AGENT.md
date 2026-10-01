@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test274 registers OFFLINE bounded freshADC diagnostic consumer. Read274README/
+registration and SM5440_FRESH_OBSERVER before implementation. Stand-alone .ko
+against sealed272 provider, max8calls/1s between successes/firsterror STOP, cached
+read-only results, no autoload/parameters/PPS/pumpON. Installed263 unchanged,
+no device commands/flash/reboot/current/config/DT/hardwaredriver changes. One
+module build/W1/sparse and finalfullhost; reuse unchanged272Image/DT/181modules.
+Future275 physical plan only; ActiveStage3 NOT READY. Docs-only executed:false.
+
+
 Test273 DEVICE_SOURCE_IDENTIFICATION_AND_PC_ENDPOINT_COMPLETED_WITH_HOST_OBSERVER_
 CORRECTIONS: ONE C1/C2empty attach, same263/846248af, counted6PDO +partner sysfs
 agree: fixed5/9/12/15V3A/20V3.25A and PPS5–11V3A. Actualfixed9V1500/ONLINE1/

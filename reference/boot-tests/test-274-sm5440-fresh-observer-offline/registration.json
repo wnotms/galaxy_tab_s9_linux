@@ -1,0 +1,22 @@
+{
+  "test": "Test274",
+  "purpose": "offline bounded passive fresh-acquisition kernel consumer",
+  "starting_HEAD": "6dd6a1e8",
+  "provider": "Test272 final399eb497 artifacts",
+  "installed_baseline": "Test263",
+  "device_commands": false,
+  "physical_rounds": 0,
+  "maximum_calls": 8,
+  "interval_ms": 1000,
+  "first_nonzero_status_stops": true,
+  "automatic_retry": false,
+  "request_freshness_ms": 100,
+  "interface": "explicitly loaded external diagnostic module; read-only cached debugfs results",
+  "PPS": false,
+  "pump_ON": false,
+  "current_policy_changed": false,
+  "kernel_config_or_DT_changed": false,
+  "production_module_directory_changed": false,
+  "qualification": "one ARM64 external module build, W1/sparse, affected tests then one final full host run; unchanged272 Image/DTB/config/181module archive reused",
+  "rollback": "no deployment in Test274; future acceptance retains exact263 boot/181modules; observer rmmod ends diagnosis"
+}
