@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Owner now permits physical testing. Test270 registers one bounded read-only
+high-power readiness capture on expected263/Wi-Fi; read270README. Actual failed/
+stale monitor or missing liveadapter/freshADC/OCP qualification stops before
+charging. No automatic flash/reboot/PPS/pumpON/current/gate/latch clear. Reuse
+269 qualification, no build/full repeat. Preserve267STOP and cached provenance.
+
+
 Test269 OFFLINE PPS retarget QUALIFIED at19991d6c: freshVBAT/source operating point,
 OFF across Request, physical settle/current reprogram/ON and checked fallback;
 no automatic current increase, <=1.8A/10.5V initial limits unchanged.55 realC +

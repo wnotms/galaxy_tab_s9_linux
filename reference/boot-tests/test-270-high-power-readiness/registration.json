@@ -1,0 +1,24 @@
+{
+  "purpose": "Read-only physical readiness for higher-power charging after Test269 offline qualification",
+  "baseline_revision": "6c65a5b1",
+  "installed_baseline_expected": "Test263",
+  "expected_config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "expected_notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "transport": "Wi-Fi SSH 10.168.36.149, one bounded capture",
+  "known_boot_id": "4bbd82213c2c4501814c4dfc13d0695e",
+  "observation_window_seconds": 0,
+  "stop_conditions": [
+    "unknown baseline/transport",
+    "failed/stale SM5440 monitor",
+    "missing qualified nonzero-current/protection/fresh-acquisition/live-adapter evidence",
+    "battery entry outside existing SOC/VBAT/thermal gates"
+  ],
+  "flash": false,
+  "reboot": false,
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "fault_clear_or_gate_relaxation": false,
+  "next_action_on_not_ready": "retain complete current state/journal and report physical blockers; no unsafe charging experiment",
+  "rollback": "not required: no device software/configuration write"
+}
