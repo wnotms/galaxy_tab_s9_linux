@@ -1,0 +1,7 @@
+{
+  "reason": "Copy API must not retain registry mutex while waiting for worker I2C io_lock. Replace blocking acquisition with trylock/EBUSY, add actual-C busy-worker refusal test.",
+  "initial_build_qualifies_final_source": false,
+  "initial_full_run_qualifies_final_source": false,
+  "final_validation_required": true,
+  "device_commands_executed": false
+}

@@ -1,0 +1,16 @@
+{
+  "executed": true,
+  "command": "PYTHONPATH=tests:scripts python3 -m unittest test_sm5440_cached_consumer test_sm5440_passive test_sm5440_snapshot -v",
+  "tests_run": 43,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "elapsed_seconds": 0.814,
+  "source_hashes": {
+    "kernel/drivers/sm5440-direct.c": "075dd0b19174a88e02a16e0b8225fe2128c48bb49a6fe2fa654fdfb52c755b9b",
+    "kernel/drivers/sm5440-hw.h": "7d16ea9305d807d91e127ab6fa6d062989c69f1b7c2df0ab359df95cb23f3313",
+    "tests/test_sm5440_passive.py": "576c5b99f29943ad3a729e5c2dbb8c588d1d593eddeaa1471a172adbed0a7617",
+    "tests/test_sm5440_cached_consumer.py": "f3a6ae57a8384b27fd5b46a3cef76a1df581241b095eae15d8694c1bc6ea71b2"
+  },
+  "device_commands_executed": false
+}

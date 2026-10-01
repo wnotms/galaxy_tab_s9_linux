@@ -9,8 +9,10 @@ unpublish before devres teardown; no pointer escape/I2C/on-demand conversion.
 44 affected + finalfull1379 pass; final passive Image/DTB/modules build and
 W1/sparse pass, unchanged object/knownVDSO warning. Config/DTB byte-identical263.
 Initial build/full1378 retained, superseded after busy-lock review; not final
-qualification. Final committed-source artifact audit pending. Installed263
-untouched; no device command/flash/PPS/pumpON/current/protection/thermal/USB.
+qualification. Final committed-source artifact audit6477a094 passed:181 paired files,
+85 containers/DCC/96 protectedfiles and frozen artifacts intact. Read Test266
+RESULTS/summary/seal. Results-only changes reuse this qualification, no
+repeat build/full/CI. Installed263 untouched; no device command/flash/PPS/pumpON/current/protection/thermal/USB.
 Read SM5440_CACHED_CONSUMER and Test266. ActiveStage3 NOT READY; stale reads
 between1s polls are refused, not an active100ms sampler/calibration claim.
 

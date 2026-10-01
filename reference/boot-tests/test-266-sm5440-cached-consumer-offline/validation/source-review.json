@@ -1,0 +1,19 @@
+{
+  "kernel_changes": [
+    "sm5440-direct.c",
+    "sm5440-hw.h"
+  ],
+  "unchanged_hardware_functions": {
+    "sm5440_poll": true,
+    "sm5440_off": true,
+    "sm5440_quiesce": true,
+    "sm5440_resume": true
+  },
+  "converter_delta": "Timestamp immediately before existing enable; same regmap calls/register values/waits.",
+  "lock_order": "companion_lock -> io_lock; no I2C/wait/callback in API",
+  "new_API_io": false,
+  "new_API_pointer_escape": false,
+  "new_API_activation": false,
+  "physical_acquisition_on_read": false,
+  "device_commands_executed": false
+}

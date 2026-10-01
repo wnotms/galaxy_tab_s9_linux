@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "JOBS": "8",
+    "USE_CCACHE": "1",
+    "BUILD_MODULES": "1",
+    "GTS9_CHARGING_PROFILE": "sm5440-passive",
+    "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-266-passive",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-266-passive"
+  },
+  "started_utc": "2026-10-01T02:41:54.916721+00:00",
+  "source_hashes": {
+    "kernel/drivers/sm5440-direct.c": "610c3d804d00c4ba2888d64a5b90123d3ee52dbd6d3b2a9082162d8dd03d529d",
+    "kernel/drivers/sm5440-hw.h": "7d16ea9305d807d91e127ab6fa6d062989c69f1b7c2df0ab359df95cb23f3313"
+  },
+  "device_commands_executed": false,
+  "purpose": "Final incremental build after busy-worker trylock correction.",
+  "status": 0,
+  "ended_utc": "2026-10-01T02:42:58.638659+00:00"
+}

@@ -1,0 +1,149 @@
+{
+  "verdict": "OFFLINE_CACHED_CONSUMER_QUALIFIED",
+  "source_revision": "6477a094a084885a3730324f02ff1fba0fd34c93",
+  "profile": "sm5440-passive",
+  "implemented": "copy-only cached passive measurement API; oldest acquisition-start BOOTTIME; maximum age 100ms; busy-worker refusal and provider lifetime protection",
+  "final_build": {
+    "passed": true,
+    "command_record": "validation/build-command.json",
+    "artifacts": {
+      "Image.gz": {
+        "path": "out/kernel-x710-266-passive/Image.gz",
+        "sha256": "064c25383ee611d5ced970d3d8cf2b51a3f0cb8ad535c974bd50b094bf57b53f",
+        "bytes": 22125012
+      },
+      "sm8550-samsung-gts9wifi.dtb": {
+        "path": "out/kernel-x710-266-passive/sm8550-samsung-gts9wifi.dtb",
+        "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+        "bytes": 176935
+      },
+      "config": {
+        "path": "out/kernel-x710-266-passive/config",
+        "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+        "bytes": 243276
+      },
+      "kernel-notes.bin": {
+        "path": "out/kernel-x710-266-passive/kernel-notes.bin",
+        "sha256": "f007e42b3fbbc2b30ad6e763cc19b3c9e970ab6a157a8ea6662e448a48fe2791",
+        "bytes": 84
+      },
+      "modules-x710.tar.gz": {
+        "path": "out/kernel-x710-266-passive/modules-x710.tar.gz",
+        "sha256": "f940f1085f4ac1c28122e84e9bf47cb57329d868d0e6338968ccb39b49f7e5f4",
+        "bytes": 47319395
+      }
+    },
+    "matched_regular_module_files": 181,
+    "exact_module_archive": true
+  },
+  "affected_tests": {
+    "executed": true,
+    "tests_run": 44,
+    "elapsed_seconds": 0.691,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "source_hashes": {
+      "kernel/drivers/sm5440-direct.c": "610c3d804d00c4ba2888d64a5b90123d3ee52dbd6d3b2a9082162d8dd03d529d",
+      "kernel/drivers/sm5440-hw.h": "7d16ea9305d807d91e127ab6fa6d062989c69f1b7c2df0ab359df95cb23f3313",
+      "tests/test_sm5440_passive.py": "576c5b99f29943ad3a729e5c2dbb8c588d1d593eddeaa1471a172adbed0a7617",
+      "tests/test_sm5440_cached_consumer.py": "4bfcc071f4964dd1fec79ec280193044688cab427cd780ab784986dc57371e90"
+    },
+    "device_commands_executed": false,
+    "actual_C_busy_worker_refusal": true
+  },
+  "full_host_tests": {
+    "suite": "all",
+    "counts": {
+      "core": 1274,
+      "artifacts": 18,
+      "archive": 87
+    },
+    "executed": true,
+    "tests_run": 1379,
+    "failures": [],
+    "errors": [],
+    "skipped": [],
+    "expected_failures": [],
+    "unexpected_successes": [],
+    "elapsed_s": 107.441,
+    "exit_code": 0
+  },
+  "retained_tests": {
+    "prior_test": 265,
+    "prior_count": 1369,
+    "final_count": 1379,
+    "missing": [],
+    "added": [
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_busy_worker_io_refused_without_wait_under_registry",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_coherent_values_units_and_original_acquisition_time",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_exact_age_boundary_and_zero_age",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_fault_pending_unavailable_stopped_or_active_cannot_publish",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_null_destination_refused_before_locks",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_offline_is_a_fact_not_fabricated_online",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_publish_duplicate_and_unpublish_identity_lifetime",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_teardown_unpublishes_before_debugfs_worker_memory",
+      "test_sm5440_cached_consumer.CachedConsumerTests.test_zero_future_and_large_age_clear_previous_destination",
+      "test_sm5440_passive.PassiveHardwareTests.test_acquisition_timestamp_precedes_converter_wait_and_publication"
+    ]
+  },
+  "static_checks": {
+    "W1_sparse_pass": true,
+    "object_unchanged": true,
+    "retained_upstream_warning": "arch/arm64/kernel/vdso/vgetrandom.c __kernel_getrandom missing declaration"
+  },
+  "identity": {
+    "comparison_baseline": "accepted Test263",
+    "config_delta": {},
+    "DTB_identical": true,
+    "embedded_config_matches": true,
+    "compiled_source_matches": {
+      "sm5714-battery.c": true,
+      "sm5714-stage2.h": true,
+      "sm5714_usbpd.c": true,
+      "sm5714-pd-policy.h": true,
+      "sm5440-direct.c": true,
+      "sm5440-hw.h": true,
+      "x710-charging-policy.c": true,
+      "x710-charging-policy.h": true
+    },
+    "container_requirements": 85,
+    "DCC_absent": true,
+    "protected_files": 96,
+    "protected_changes": {}
+  },
+  "audit_comparison_note": "artifact-audit uses older Test255: its passive SM5440 config/node delta predates this increment; exact Test263 config/DTB diff is empty",
+  "superseded_qualification": {
+    "initial_build_and_full1378_retained": true,
+    "accepted_as_final": false,
+    "reason": "Final review changed blocking io_lock acquisition to immediate mutex_trylock refusal; final build, affected44 and full1379 qualify corrected source."
+  },
+  "scope": {
+    "device_commands_executed": false,
+    "physical_tests_executed": false,
+    "flash": false,
+    "PPS_enabled": false,
+    "pump_enable_added": false,
+    "live_policy_adapter": false,
+    "fresh_acquisition_on_read": false,
+    "hardware_register_sequence_changed": false,
+    "current_thermal_USB_change": false
+  },
+  "limits": {
+    "maximum_consumer_age_ms": 100,
+    "existing_poll_interval_ms": 1000,
+    "calibration_qualified": false,
+    "active_OCP_qualified": false,
+    "active_Stage3_ready": false
+  },
+  "dtbs_check": {
+    "executed": false,
+    "reason": "No DTS change; final DTB byte-identical to accepted Test263. No new schema validation claim."
+  },
+  "results_commit_validation": {
+    "tests_executed": false,
+    "build_executed": false,
+    "reason": "Result/status-only commit reuses exact final source and artifacts; evidence hashes/summary reviewed."
+  },
+  "installed_device": "Test263 remains untouched; Test260 rollback retained"
+}
