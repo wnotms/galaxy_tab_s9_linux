@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Test279 registers an OFFLINE private-tracefs collector/parser qualification.
+Read its README/registration before work. Host fixtures only: no device command,
+tracefs enable, observer load, flash or hardware change. Preserve Test278 UNKNOWN
+attribution and Test275/277 raw verdicts. Reuse sealed272/276 qualification;
+affected host tests/syntax only, no kernel build/full suite/routing/CI. Future
+physical tracing needs a separate registration. Active Stage3 remains NOT READY.
+
 Test278 OFFLINE_TIMING_AUDIT_COMPLETED_ATTRIBUTION_UNRESOLVED:16host+syntax/
 byte-identical report/source+275277seals pass. FourAPI-110 branches, all phase
 latencies UNKNOWN/null. HZ25025ms=7ticks nominal28ms;112ms four-timeout budget

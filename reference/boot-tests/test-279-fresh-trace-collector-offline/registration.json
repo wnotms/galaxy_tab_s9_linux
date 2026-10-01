@@ -1,0 +1,21 @@
+{
+  "test": "Test279",
+  "purpose": "offline qualification of private tracefs collector and strict timing evidence parser",
+  "baseline_revision": "8a87778afcdc9cd5d2e26d58410d496c8ff104a9",
+  "provider_revision": "399eb497",
+  "observer_revision": "7a887eab",
+  "physical_rounds": 0,
+  "device_commands": false,
+  "tracing_enabled_on_device": false,
+  "kernel_build": false,
+  "deadline_ms_unchanged": 100,
+  "adc_average_unchanged": 32,
+  "adc_poll_ms_unchanged": 25,
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "test_routing_change": false,
+  "qualification": "affected mock/pure host tests and syntax; reuse unchanged272provider/2761481/W1/sparse",
+  "rollback": "not applicable; no device mutation",
+  "failure_policy": "unknown or incomplete trace evidence must not grant timing/hardware acceptance"
+}
