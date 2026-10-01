@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test267 candidate0fb695fd reached responsiveDebian/config/notes match. Physical
+passive monitor STOP: retained0x80 at0.278016s, VBAT4.3055V outside unchanged
+<4.3V startup classifier; pumpOFF/IBUS0, batteryGood/SOC99, no CPU/kernel fault.
+Window not completed. Observer firsthostcmdline error preserved: runtime equals
+accepted263, vendor-only input was wrong comparison. Read first-device-fault.
+Restore exact263 boot/.gts9-test267-original via verifiedTWRP; no retry/gate
+relaxation/PPS/pumpON. No claimed Test267 physical pass.
+
+
 Test267 boot b9f296d8 +181paired modules installed/readback; other4partitions
 unchanged, exact263 modules in .gts9-test267-original/older backups intact.
 Root unmounted/BCB clear; candidate not yet booted. Next one ordinary PCUSB

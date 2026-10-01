@@ -1,0 +1,69 @@
+@@boot
+0fb695fd-76b7-475f-8dca-b4017e0bd203
+@@uptime
+301.88 2374.08
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4294967768
+sample_present=1
+sample_fresh=0
+sample_age_ms=301612
+stopped=0
+fault=1
+startup_pending=0
+last_sample_error=0
+startup_retained=0
+startup_capture_jiffies=0
+sample_valid=1
+sample_stamp_jiffies=4294892365
+sample_faults=0x80
+sample_int=00 00 62 01
+sample_status=00 00 20 00
+sample_adc=1b 20 91 c0 00 00 6d 98 01 8d 18
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4964000
+sample_vbat_uv=4305500
+sample_ibus_ua=0
+sample_die_decic=230
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x0
+startup_int=00 00 00 00
+startup_status=00 00 00 00
+startup_adc=00 00 00 00 00 00 00 00 00 00 00
+startup_int4_disable=0x00
+startup_int4_wait=0x00
+startup_mode_before=0x00
+startup_mode_after=0x00
+startup_cntl2=0x00
+startup_vbuscntl=0x00
+startup_vbatcntl=0x00
+startup_prtncntl=0x00
+startup_vbus_uv=0
+startup_vbat_uv=0
+startup_ibus_ua=0
+startup_die_decic=0
+@@services
+active
+active
+active
+@@failed
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.168.36.244/24 brd 10.168.36.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 3314sec preferred_lft 3314sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+@@roles
+[sink]
+[device]
+@@dcc
