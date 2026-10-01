@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-01)
 
+Test275 registered passive fresh delivery: sealed272399eb497 provider +27410d57da0
+observer, ONE PCUSB candidateboot/load, <=8calls/1s/100ms and bounded30s; first
+refusal stop/unload/no retry, device-normal and acquisition verdicts separate.
+Read275README/registration/PACKAGE/preflight: exact263 installed/181modules/five
+partitions/ADB/Wi-Fi/deviceNCM normal,75%/4.105V/32.6C/fault0/OFF. Newboot
+d837b52f; config/DT identical263, other4partitions unchanged; exact263 rollback
+with fresh275slots/allolderbackups retained.11localhost/syntax/package checks pass;
+reuse272kernel1424 +274final1475/W1/sparse, no build/full/CI repeat.20startup
+SMMU suspects remain unresolved; local bounded diagnostic attribution only, global
+parser untouched/no CLEAN claim. No PPS/pumpON/current/protection/gate/rootfs
+change; ActiveStage3 NOT READY. Registration push precedes any device writes.
+
+
 Test274 OFFLINE_BOUNDED_FRESH_OBSERVER_QUALIFIED at10d57da0: stand-alone external
 GPL .ko9d66c080/267536B against frozen272provider399eb497; max8calls/1s/firsterror
 STOP, cached0400/rawstatus/times, no parameters/readtrigger/I2C/ON/PPS/policy.

@@ -1,0 +1,21 @@
+{
+  "CI": {
+    "executed": false
+  },
+  "affected_host_tests": {
+    "executed": true,
+    "passed": 11
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "host-only local collector/gates; no routing or kernel source change"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reused": "Test272399eb4971424tests/build/W1/sparse/config/DT/181 sealed"
+  },
+  "observer_build": {
+    "executed": false,
+    "reused": "Test27410d57da0 final1475tests/module/W1/sparse"
+  }
+}
