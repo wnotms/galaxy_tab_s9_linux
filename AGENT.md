@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test268 battery-only window COMPLETED150.378s/28samples on unchanged263/4bbd8221.
+SOC99, gauge4.343–4.366V, discharge−1.320..−0.510A, pack29.0→27.8C; Wi-Fi healthy,
+no new CPU/kernel fault/failedunit. USB unplugged intentionally. OldSM5440x80
+stoppedcache unchanged/unqualified; Test267 stillSTOP, ActiveStage3 NOT READY.
+Read268 RESULTS/summary/SHA256. No flash/reboot/PPS/pumpON/latchclear/gate/config
+change; no rollback needed. Results-only reuse8focused/263qualification, no build/
+full rerun. Next offline fullpack classifier/freshADC audit, no automatic retry.
+
+
 Owner requests continued physical testing. Test268 registers battery-only150s
 readiness on unchanged263/4bbd8221 via verifiedWiFi10.168.36.149, after owner
 unplug confirmation. StillSOC100/4.394V/32.3C, oldpassive0x80 fault/cachestale.

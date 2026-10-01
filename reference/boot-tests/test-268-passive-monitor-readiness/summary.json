@@ -1,0 +1,41 @@
+{
+  "PPS": false,
+  "boot_id": "4bbd82213c2c4501814c4dfc13d0695e",
+  "fresh_SM5440_ADC_available": false,
+  "gauge_entry_hint": false,
+  "next_step": "Do not restart/flash on stale ADC; full-pack monitor audit or a separately registered fresh in-range boot still required.",
+  "observation_seconds": 150.378,
+  "old_fault_cleared": false,
+  "passive_monitor_acceptance": false,
+  "physical_unplug_transition_latency_measured": false,
+  "pump_ON": false,
+  "reboot_or_flash": false,
+  "verdict": "BATTERY_ONLY_WINDOW_COMPLETED_MONITOR_UNQUALIFIED",
+  "sample_count": 28,
+  "battery_health": "Good",
+  "battery_status": "Discharging",
+  "usb_online": 0,
+  "soc_percent": [
+    99,
+    99
+  ],
+  "voltage_uV_range": [
+    4343000,
+    4366000
+  ],
+  "current_uA_range": [
+    -1320000,
+    -510000
+  ],
+  "temperature_deciC_range": [
+    278,
+    290
+  ],
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "kernel_journal_rows": 1108,
+  "new_systemd_failed_units": 0,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "device_configuration_changed": false
+}

@@ -1,0 +1,93 @@
+@@boot
+4bbd8221-3c2c-4501-814c-4dfc13d0695e
+@@uptime
+2463.41 19668.58
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Discharging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=4351000
+POWER_SUPPLY_VOLTAGE_AVG=4359000
+POWER_SUPPLY_VOLTAGE_OCV=4385000
+POWER_SUPPLY_CURRENT_NOW=-909000
+POWER_SUPPLY_CURRENT_AVG=-769000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=99
+POWER_SUPPLY_TEMP=282
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=0
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=100000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=[Unknown] SDP DCP CDP PD
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4295508152
+sample_present=1
+sample_fresh=0
+sample_age_ms=2463144
+stopped=0
+fault=1
+startup_pending=0
+last_sample_error=0
+startup_retained=0
+startup_capture_jiffies=0
+sample_valid=1
+sample_stamp_jiffies=4294892366
+sample_faults=0x80
+sample_int=00 00 62 00
+sample_status=00 00 20 00
+sample_adc=1b a0 92 30 00 00 6b a0 02 8e 18
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4980000
+sample_vbat_uv=4321500
+sample_ibus_ua=0
+sample_die_decic=235
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x0
+startup_int=00 00 00 00
+startup_status=00 00 00 00
+startup_adc=00 00 00 00 00 00 00 00 00 00 00
+startup_int4_disable=0x00
+startup_int4_wait=0x00
+startup_mode_before=0x00
+startup_mode_after=0x00
+startup_cntl2=0x00
+startup_vbuscntl=0x00
+startup_vbatcntl=0x00
+startup_prtncntl=0x00
+startup_vbus_uv=0
+startup_vbat_uv=0
+startup_ibus_ua=0
+startup_die_decic=0
+@@failed
+@@kernel
+-- cursor: s=0e9cc8651fa34ae5875adb1b7f906071;i=c17c3;b=4bbd82213c2c4501814c4dfc13d0695e;m=8cec3fa8;t=65cbfb3d1d1bb;x=322967b70f3317ef
