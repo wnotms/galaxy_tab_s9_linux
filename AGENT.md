@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test271 separately registers ONE normal unchanged263 warm boot +30s passive
+startup/freshcache diagnosis at currentgauge4.215V, under renewed owner physical
+request. Read271README before reboot. DiagnosticSOC84 allowed ordinary OFF-mode
+baseline boot, NEVER higher-power admission (unchangedSOC<80 still fails).
+Original<4.3V/twofresh<=5s startup gate/snapshot/protection unchanged. Push before
+reboot; no secondboot/retry/flash/latchclear/PPS/pumpON/currentchange.8focused
+gates/syntax pass; exact263/269qualification reused, no build/full repeat.
+
+
 Test270 high-power preflight NOT READY: same263/4bbd8221 ADB healthy, oldWi-Fi
 10.168 timeout preserved; actual10.125.29.149 firstauth works. Battery84%/4.215V/
 32.7C Good; SOC<80 fails, oldpassive0x80 and stale4.3215V snapshot persist.
