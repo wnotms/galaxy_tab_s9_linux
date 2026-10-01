@@ -1,0 +1,10 @@
+{
+  "not_device_failures": [
+    "blkid unavailable in TWRP",
+    "busybox unavailable in TWRP",
+    "Windows adb push requires D:/ path, not /mnt/d path"
+  ],
+  "original_errors_preserved": true,
+  "correction": "repository mount helper ext4-magic fallback; Windows host paths",
+  "permanent_writes_at_errors": false
+}

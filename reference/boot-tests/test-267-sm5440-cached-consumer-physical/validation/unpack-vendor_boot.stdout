@@ -1,0 +1,28 @@
+boot magic: VNDRBOOT
+vendor boot image header version: 4
+page size: 0x00001000
+kernel load address: 0x80008000
+ramdisk load address: 0x82000000
+vendor ramdisk total size: 82
+vendor command line args: console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32
+kernel tags load address: 0x81e00000
+product name: 
+vendor boot image header size: 2128
+dtb size: 176935
+dtb address: 0x0000000081f00000
+vendor ramdisk table size: 108
+vendor ramdisk table: [
+    vendor_ramdisk00: {
+        size: 82
+        offset: 0
+        type: 0x1
+        name: 
+        board_id: [
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+            0x00000000, 0x00000000, 0x00000000, 0x00000000,
+        ]
+    }
+]
+vendor bootconfig size: 111

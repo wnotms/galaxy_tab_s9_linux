@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; sha256sum /tmp/test267-candidate-boot.img /tmp/test267-candidate-modules.tar.gz /tmp/test267-module-swap.sh /tmp/test267-rollback-test263-boot.img /tmp/test267-rollback-test263-vendor_boot.img /tmp/test267-test263-rollback-modules.sha256 /tmp/test267-test266-candidate-modules.sha256 /tmp/test267-twrp-mount-debian.sh"
+  ],
+  "ended_utc": "2026-10-01T03:15:19.351554+00:00",
+  "started_utc": "2026-10-01T03:15:19.048547+00:00",
+  "status": 0
+}

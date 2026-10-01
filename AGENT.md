@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Owner now authorizes Test267 deployment/physical test of qualified Test266.
+Read Test267 README/registration/PACKAGE first. Device arrives in verifiedTWRP;
+five partitions/181modules match263; full battery100%/4.409V/25.2C. Install only
+boot+181paired modules, fresh267 rollback slots; keep otherpartitions/backups.
+One ordinary PCUSB boot/passive30s/full-battery bounded snapshot + rescue endpoint;
+no9V power trial/PPS/pumpON/liveadapter/current/thermal/USB change. Device-normal
+completion rule applies; unknown evidence incomplete, actualfault stops/rollback.
+Reuse266 qualification, no kernel/full rerun. Push registration before install.
+
+
 Test266 cached passive consumer implemented: coherent copieduV/uA/deciC plus
 oldest acquisition-start BOOTTIME,100ms/stopped/fault/pending/mode/unbound gates;
 clear output on failure. Registry->tryio lock, busyI2C refuses without wait,

@@ -1,0 +1,18 @@
+{
+  "purpose": "Test266 boot/passive cached poller/PC gadget regression",
+  "source_revision": "6477a094a084885a3730324f02ff1fba0fd34c93",
+  "baseline": "accepted Test263",
+  "candidate_boot_hash": "b9f296d829da43c27943c2d75bbd7ab2f408721d62f22b6353fbe7002141f4b0",
+  "observation_seconds": 30,
+  "sampling_seconds": 5,
+  "full_battery_passive_only": true,
+  "PPS": false,
+  "pump_ON": false,
+  "fixed9V_test": false,
+  "rollback": "Test263 boot and .gts9-test267-original module directory",
+  "older_rollbacks_preserved": true,
+  "kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "qualification_reused": "Test266 final qualification",
+  "device_normal_acceptance_owner_rule": true
+}

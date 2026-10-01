@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; cat /mnt/debian/etc/machine-id; cat /mnt/debian/etc/debian_version; grep \" /mnt/debian \" /proc/mounts; ls -la /mnt/debian/usr/lib/modules; cat /mnt/debian/var/log/gts9-minimal-last-boot; echo @@journal; ls /mnt/debian/var/log/journal"
+  ],
+  "ended_utc": "2026-10-01T03:04:58.859095+00:00",
+  "started_utc": "2026-10-01T03:04:58.728079+00:00",
+  "status": 0
+}

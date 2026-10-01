@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "env",
+    "KERNEL_OUT_DIR=out/kernel-x710-266-passive",
+    "BUNDLE_OUT_DIR=out/boot-bundle-x710-266-passive",
+    "MKBOOTIMG=.work/tools/mkbootimg.py",
+    "AVBTOOL=.work/tools/avbtool.py",
+    "bash",
+    "scripts/build-boot-bundle.sh",
+    "--initramfs",
+    ".work/test267-package-inputs/init_boot/ramdisk",
+    "--cmdline",
+    ".work/test267-package-inputs/cmdline.txt",
+    "--bootconfig",
+    ".work/test267-package-inputs/vendor_boot/bootconfig"
+  ],
+  "ended_utc": "2026-10-01T03:09:08.494804+00:00",
+  "started_utc": "2026-10-01T03:09:06.796483+00:00",
+  "status": 0
+}

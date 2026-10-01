@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; busybox blkid /dev/block/mmcblk*; echo @@battery; for x in /sys/class/power_supply/battery/uevent /sys/class/power_supply/bms/uevent; do if test -f \"$x\"; then cat \"$x\"; fi; done; echo @@partitions; for n in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/block/by-name/$n; done; echo @@pstore; ls -l /sys/fs/pstore"
+  ],
+  "ended_utc": "2026-10-01T03:03:52.557707+00:00",
+  "started_utc": "2026-10-01T03:03:52.486994+00:00",
+  "status": 127
+}

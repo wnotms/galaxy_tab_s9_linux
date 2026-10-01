@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; cd /mnt/debian/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty; find . -type f -exec sha256sum {} +"
+  ],
+  "ended_utc": "2026-10-01T03:05:23.077605+00:00",
+  "started_utc": "2026-10-01T03:05:21.065782+00:00",
+  "status": 0
+}
