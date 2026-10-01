@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test273 prepare-completion READY same846248af/exact263, DCCabsent,75%/4.108V/
+32.9C Good/passivefault0/OFF/IBUS0/cache692ms; firstPC TCPM ring archived once.
+Originalprepare host-only omittedDCC STOP preserved, no physical attempt yet.
+Actual log review distinguishes pendingreset timer from executedreset;29parser+
+16collector gates/syntax pass, historicalseals againstb7e27663/60feb5c5. Read273
+PREPARATION_RESULTS/currentobserverseal. C1APDO stillUNKNOWN; owner cable-confirmed
+source30s next, no flash/reboot/PPS/pumpON/current/software/gate change. Reuse
+unchanged272 build/all1424, no build/full/CI rerun. ActiveStage3 NOT READY.
+
+
 Test273 initialprepare STOP/zero samples retained: host CURRENT omitted @@dcc,
 not evidence that DCC returned (exact263config/notes). No ring consumed/cable
 request/charging window yet. Correct only read-only DCC field, fresh

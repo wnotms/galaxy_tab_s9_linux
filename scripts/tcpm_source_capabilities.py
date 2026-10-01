@@ -81,6 +81,10 @@ def parse_source_capabilities(raw, *, same_boot=False, owner_confirmed=False,
                 if header > 0xffff:
                     raise ValueError('invalid PD header')
                 count = (header >> 12) & 7
+                if seen and not attached:
+                    raise ValueError('RX after current source became detached')
+                if seen and not (header & 0x8000) and not count and header & 0x1f == 13:
+                    raise ValueError('Soft_Reset control RX after capabilities')
                 if header & 0x8000 or header & 0x1f != 1 or not count:
                     continue
                 if not attached:
@@ -119,8 +123,10 @@ def parse_source_capabilities(raw, *, same_boot=False, owner_confirmed=False,
             if limit:
                 result['limits'].append({'voltage_mv': int(limit[1]), 'current_ma': int(limit[2]),
                                          'source_timestamp_us': stamp})
-            # A later detach/reset invalidates the source cache for this attach.
-            if seen and re.search(r'(-> SNK_UNATTACHED\b|HARD_RESET|SOFT_RESET|PORT_RESET)', text):
+            # Actual transitions invalidate; pending timeout targets are not resets.
+            if seen and (re.match(r'^state change \S+ -> (?:SNK_UNATTACHED|HARD_RESET\S*|SOFT_RESET\S*|PORT_RESET\S*)\b', text)
+                         or text == 'Received hard reset'
+                         or re.match(r'^AMS SOFT_RESET(?:_AMS)? (?:start|finished)$', text)):
                 raise ValueError('source lifecycle reset/detach after capabilities')
         if pending or not seen:
             raise ValueError('missing/incomplete current Source_Capabilities')

@@ -1,0 +1,70 @@
+[    0.171855] load-step:0x0 load-char:0x0 compl:0x0 op-pdp:0x0 max-pdp:0xd
+[    0.171862] Unable to find pd-revision property or incorrect array size
+[    0.173914] Setting usb_comm capable false
+[    0.174458] Setting voltage/current limit 0 mV 0 mA
+[    0.175115] polarity 0
+[    0.175117] Requesting mux state 0, usb-role 0, orientation 0
+[    0.175551] state change INVALID_STATE -> SNK_UNATTACHED [rev1 NONE_AMS]
+[    0.175721] CC1: 0 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
+[    0.175725] 3-0033: registered
+[    0.176426] Setting usb_comm capable false
+[    0.176993] Setting voltage/current limit 0 mV 0 mA
+[    0.177346] polarity 0
+[    0.177347] Requesting mux state 0, usb-role 0, orientation 0
+[    0.177501] cc:=2
+[    0.177898] pending state change PORT_RESET -> PORT_RESET_WAIT_OFF @ 100 ms [rev1 NONE_AMS]
+[    0.277910] state change PORT_RESET -> PORT_RESET_WAIT_OFF [delayed 100 ms]
+[    0.277914] pending state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED @ 920 ms [rev1 NONE_AMS]
+[    0.291572] CC1: 0 -> 3, CC2: 0 -> 0 [state PORT_RESET_WAIT_OFF, polarity 0, connected]
+[    0.297186] CC1: 3 -> 5, CC2: 0 -> 0 [state PORT_RESET_WAIT_OFF, polarity 0, connected]
+[    1.197927] state change PORT_RESET_WAIT_OFF -> SNK_UNATTACHED [delayed 920 ms]
+[    1.197931] cc:=2
+[    1.201140] CC1: 5 -> 0, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, disconnected]
+[    1.313883] CC1: 0 -> 3, CC2: 0 -> 0 [state SNK_UNATTACHED, polarity 0, connected]
+[    1.313886] state change SNK_UNATTACHED -> SNK_ATTACH_WAIT [rev1 NONE_AMS]
+[    1.313889] pending state change SNK_ATTACH_WAIT -> SNK_DEBOUNCED @ 200 ms [rev1 NONE_AMS]
+[    1.320697] CC1: 3 -> 5, CC2: 0 -> 0 [state SNK_ATTACH_WAIT, polarity 0, connected]
+[    1.513899] state change SNK_ATTACH_WAIT -> SNK_DEBOUNCED [delayed 200 ms]
+[    1.513904] state change SNK_DEBOUNCED -> SNK_ATTACHED [rev1 NONE_AMS]
+[    1.513905] polarity 0
+[    1.513907] Requesting mux state 1, usb-role 2, orientation 1
+[    1.514092] state change SNK_ATTACHED -> SNK_STARTUP [rev1 NONE_AMS]
+[    1.514096] state change SNK_STARTUP -> SNK_DISCOVERY [rev3 NONE_AMS]
+[    1.514097] Setting voltage/current limit 5000 mV 3000 mA
+[    1.514538] vbus=0 charge:=1
+[    1.519685] state change SNK_DISCOVERY -> SNK_WAIT_CAPABILITIES [rev3 NONE_AMS]
+[    1.519798] pending state change SNK_WAIT_CAPABILITIES -> SNK_SOFT_RESET @ 310 ms [rev3 NONE_AMS]
+[    1.696277] VBUS on
+[    1.696450] CC1: 5 -> 5, CC2: 0 -> 0 [state SNK_WAIT_CAPABILITIES, polarity 0, connected]
+[    1.829806] state change SNK_WAIT_CAPABILITIES -> SNK_SOFT_RESET [delayed 310 ms]
+[    1.829809] AMS SOFT_RESET_AMS start
+[    1.829810] state change SNK_SOFT_RESET -> AMS_START [rev3 SOFT_RESET_AMS]
+[    1.829811] state change AMS_START -> SOFT_RESET_SEND [rev3 SOFT_RESET_AMS]
+[    1.829812] PD TX, header: 0x8d
+[    1.831493] PD TX complete, status: 0
+[    1.831508] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev3 SOFT_RESET_AMS]
+[    1.837444] PD RX, header: 0x1a3 [1]
+[    1.837446] AMS SOFT_RESET_AMS finished
+[    1.837446] state change SOFT_RESET_SEND -> SNK_WAIT_CAPABILITIES [rev3 NONE_AMS]
+[    1.837690] pending state change SNK_WAIT_CAPABILITIES -> SNK_WAIT_CAPABILITIES_TIMEOUT @ 310 ms [rev3 NONE_AMS]
+[    1.839811] PD RX, header: 0x13a1 [1]
+[    1.839813]  PDO 0: type 0, 5000 mV, 3000 mA [RSHUD]
+[    1.839855] state change SNK_WAIT_CAPABILITIES -> SNK_NEGOTIATE_CAPABILITIES [rev3 POWER_NEGOTIATION]
+[    1.839856] Setting usb_comm capable true
+[    1.839859] cc=2 cc1=5 cc2=0 vbus=0 vconn=sink polarity=0
+[    1.839860] Requesting PDO 0: 5000 mV, 1800 mA [mismatch]
+[    1.839860] PD TX, header: 0x1282
+[    1.841882] PD TX complete, status: 0
+[    1.841896] pending state change SNK_NEGOTIATE_CAPABILITIES -> HARD_RESET_SEND @ 60 ms [rev3 POWER_NEGOTIATION]
+[    1.844495] PD RX, header: 0x5a3 [1]
+[    1.844496] state change SNK_NEGOTIATE_CAPABILITIES -> SNK_TRANSITION_SINK [rev3 POWER_NEGOTIATION]
+[    1.974127] PD RX, header: 0x7a6 [1]
+[    1.974128] Setting voltage/current limit 5000 mV 1800 mA
+[    1.979448] state change SNK_TRANSITION_SINK -> SNK_READY [rev3 POWER_NEGOTIATION]
+[    1.979564] AMS POWER_NEGOTIATION finished
+[    1.979566] AMS DISCOVER_IDENTITY start
+[    1.979567] PD TX, header: 0x148f
+[    1.981421] PD TX complete, status: 0
+[    1.984853] PD RX, header: 0x19af [1]
+[    1.984854] Rx VDM cmd 0xff00a081 type 2 cmd 1 len 1
+[    1.984855] AMS DISCOVER_IDENTITY finished

@@ -120,6 +120,24 @@ class SourceCapabilityTests(unittest.TestCase):
                       'state change SNK_READY -> HARD_RESET_SEND', 'AMS SOFT_RESET finished'):
             self.unknown(log(PPS) + '[ 11.000000] ' + event + '\n')
 
+    def test_pending_hard_reset_timeout_is_not_an_actual_reset(self):
+        raw = log(FIXED) + '[ 11.000000] pending state change SNK_NEGOTIATE_CAPABILITIES -> HARD_RESET_SEND @ 60 ms [rev3 POWER_NEGOTIATION]\n'
+        self.assertEqual(self.parse(raw)['classification'], 'NO_PPS_ADVERTISED')
+
+    def test_received_hard_reset_invalidates_current_source(self):
+        self.unknown(log(FIXED) + '[ 11.000000] Received hard reset\n')
+
+    def test_soft_reset_control_rx_invalidates_current_source(self):
+        self.unknown(log(FIXED) + '[ 11.000000] PD RX, header: 0x3ad [1]\n')
+
+    def test_archived_actual_pc_ring_pending_timer_is_classified(self):
+        raw = (ROOT / 'reference/boot-tests/test-273-usbc1-source-capabilities/prepare-completion/tcpm-before.txt').read_text()
+        p = self.parse(raw)
+        self.assertEqual(p['classification'], 'NO_PPS_ADVERTISED')
+        self.assertEqual(p['objects'][0]['maximum_current_ma'], 3000)
+        self.assertEqual(len(p['source_frames']), 1)
+        self.assertFalse(p['limits_are_measured_draw'])
+
     def test_negotiated_limit_is_distinct_from_advertised_voltage(self):
         p = self.parse(log(FIXED) + '[ 10.100000] Setting voltage/current limit 9000 mV 1500 mA\n')
         self.assertEqual(p['limits'][0]['voltage_mv'], 9000)
