@@ -1,0 +1,25 @@
+{
+  "prior_test": 266,
+  "prior_count": 1379,
+  "final_count": 1396,
+  "missing": [],
+  "added": [
+    "test_x710_direct_transaction.TransactionTests.test_retarget_deadline_and_clock_regression_stop",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_detach_during_each_io_does_not_restore_old_contract",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_each_fallback_failure_keeps_inhibit_and_disarms",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_eligibility_failures_stop_and_revoke",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_every_io_failure_uses_checked_fallback",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_falling_vbat_respects_minimum_voltage",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_fault_or_stale_off_adc_never_requests_pps",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_inactive_or_invalid_adapter_performs_no_io",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_insufficient_source_falls_back_before_request",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_long_negotiation_only_off_then_new_fresh_observation",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_on_observation_timeout_falls_back",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_pm_and_unarmed_refuse_negotiation",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_rising_vbat_off_request_prepare_on_order",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_source_changes_before_and_after_request_refuse_on",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_source_expansion_never_increases_current",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_source_reduction_reprograms_pump_current",
+    "test_x710_direct_transaction.TransactionTests.test_retarget_sub_ma_overcurrent_checks_reduced_current"
+  ]
+}

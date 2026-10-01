@@ -1,0 +1,47 @@
+{
+  "verdict": "OFFLINE_PPS_RETARGET_QUALIFIED",
+  "source_revision": "19991d6c5671cc9faadcd0bd0f2b72058ac9ce4a",
+  "active_stage3": "NOT_READY",
+  "device_commands_executed": false,
+  "hardware_tested": false,
+  "implemented": "fresh VBAT/source-derived operating-point update; checked OFF/physical settle/current reprogram/ON/fallback transaction",
+  "PPS_current_ceiling_mA": 1800,
+  "PPS_voltage_ceiling_mV": 10500,
+  "higher_current_enabled": false,
+  "fixed_5V_ceiling_mA": 1800,
+  "fixed_9V_ceiling_mA": 1500,
+  "float_voltage_mV": 4440,
+  "startup_fault_gate_changed": false,
+  "config_delta_from_Test263": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_identical_Test263": true,
+  "affected_tests": 55,
+  "new_tests": 17,
+  "full_tests": 1396,
+  "full_elapsed_s": 127.013,
+  "full_failures": 0,
+  "full_errors": 0,
+  "full_skips": 0,
+  "build_passed": true,
+  "W1_sparse_passed": true,
+  "known_static_warning": "upstream VDSO __kernel_getrandom missing declaration",
+  "paired_module_files": 181,
+  "protected_files": 96,
+  "protected_changes": {},
+  "frozen_stage2_artifacts_intact": true,
+  "required_container_symbols_y": 85,
+  "HVC_DCC_absent": true,
+  "not_ported": "live adapter, automatic current ramp, full CC/CV/termination feedback, active HW OCP/protection qualification",
+  "physical_blockers": [
+    "retained Test267 full-pack passive monitor fault",
+    "genuine bounded fresh ADC and independently checked nonzero current",
+    "protection and worst-case cutoff response",
+    "live adapter supplier lifetime/PM ordering",
+    "actual source PPS APDO capability"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "JOBS": "8",
+    "USE_CCACHE": "1",
+    "BUILD_MODULES": "1",
+    "GTS9_CHARGING_PROFILE": "sm5440-policy-offline",
+    "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-269-policy",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-269-policy"
+  },
+  "started_utc": "2026-10-01T04:41:56.267396+00:00",
+  "source_revision": "19991d6c5671cc9faadcd0bd0f2b72058ac9ce4a",
+  "device_commands_executed": false,
+  "build_clone": "cp -a --reflink=auto from Test265 build, independent inodes; no frozen output overwrite",
+  "status": 0,
+  "ended_utc": "2026-10-01T04:43:39.206182+00:00"
+}

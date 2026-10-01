@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "python3",
+    "scripts/audit-x710-charging-build.py",
+    "--out",
+    "out/kernel-x710-269-policy",
+    "--tree",
+    ".work/build/linux-src-x710-charging",
+    "--build",
+    ".work/build/linux-out-x710-269-policy",
+    "--profile",
+    "sm5440-policy-offline",
+    "--report",
+    "reference/boot-tests/test-269-pps-retarget-offline/validation/artifact-audit.json",
+    "--revision",
+    "19991d6c5671cc9faadcd0bd0f2b72058ac9ce4a"
+  ],
+  "started_utc": "2026-10-01T04:44:25.186321+00:00",
+  "device_commands_executed": false,
+  "status": 0,
+  "ended_utc": "2026-10-01T04:45:05.029410+00:00"
+}

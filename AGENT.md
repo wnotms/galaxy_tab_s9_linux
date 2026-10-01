@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-01)
 
+Test269 OFFLINE PPS retarget QUALIFIED at19991d6c: freshVBAT/source operating point,
+OFF across Request, physical settle/current reprogram/ON and checked fallback;
+no automatic current increase, <=1.8A/10.5V initial limits unchanged.55 realC +
+all1396 pass (all1379 retained); one isolated policy Image/DTB/181module build,
+W1/sparse/artifact audit pass. Config263 delta onlyX710_CHARGING_POLICY n->y,
+DTB identical,85containers/DCC/96protected/frozenimages intact. Read269 RESULTS/
+summary/seal and X710_PPS_RETARGET. No liveadapter/device command/flash/reboot/
+PPS/pumpON/gate/charging current/thermal/USB change. Installed263/Test267STOP
+unchanged; fullpack/freshADC/nonzero-current/OCP/livePM and actualAPDO supply
+remain blockers, ActiveStage3 NOT READY. Results-only reuse qualification,
+no build/full/CI rerun; future physical plan is not executed/authorized.
+
+
 Owner requests higher-power porting. Test269 registers OFFLINE PPS operating-point
 retarget core, see X710_PPS_RETARGET/269README. Recompute freshVBAT/source while
 OFF, no automatic current increase; <=1.8A/10.5V initialcap unchanged. One final
