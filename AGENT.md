@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-01)
 
+Test271 finalized DEVICE_PASSIVE_DIAGNOSIS_COMPLETED_WITH_STARTUP_CLASSIFICATION_GAP:
+one unchanged263 normal reboot to846248af, separate sameboot30.158s/7samples,
+Good/fault0/advancing cachedADC/OFF/IBUS0; ADB/Wi-Fi10.125.29.77/DCC normal.
+Original runner STOP/zero-window and20 fsynr660021/S1CBNDX102 startupSMMU
+suspects retained unresolved, globalparser unchanged; no original CLEAN claim.
+No startupREVBLK innewboot/twofresh branch coverage. HostNCM nottested.
+No flash/PPS/pumpON/current/protection/gate/software change. ActiveStage3 NOT
+READY: SOC83 plus physical100ms/calibration/OCP/livePM/APDO proof remain.
+Read271 RESULTS/summary/seal. Preserve267/270 failures, no automatic retry.
+Results-only reuse8focused/263/269 qualification; no build/full/CI rerun.
+
+
 Test271 separately registers ONE normal unchanged263 warm boot +30s passive
 startup/freshcache diagnosis at currentgauge4.215V, under renewed owner physical
 request. Read271README before reboot. DiagnosticSOC84 allowed ordinary OFF-mode

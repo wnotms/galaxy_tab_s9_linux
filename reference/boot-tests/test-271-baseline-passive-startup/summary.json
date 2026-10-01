@@ -1,0 +1,97 @@
+{
+  "ADB": "responsive",
+  "DCC": "absent",
+  "PPS": false,
+  "WiFi_SSH": "same-boot authenticated",
+  "active_100ms_API_qualified": false,
+  "before_boot_id": "4bbd82213c2c4501814c4dfc13d0695e",
+  "boot_id": "846248afd9914b499f799402274d08e6",
+  "completion_window_samples": 7,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "flash": false,
+  "high_power_admission": false,
+  "high_power_verdict": "NOT READY",
+  "historical_Test267_STOP_unchanged": true,
+  "host_NCM_tested": false,
+  "independent_ADC_calibration": false,
+  "installed_baseline": "Test263 unchanged",
+  "kernel_classification": {
+    "detected_CPU_failure_signatures": 0,
+    "new_failure_during_completion": false,
+    "unresolved_startup_SMMU_messages": 20
+  },
+  "metrics": {
+    "battery_current_ua": {
+      "final": -367000,
+      "max": -94000,
+      "min": -407000
+    },
+    "battery_soc_percent": {
+      "final": 83,
+      "max": 83,
+      "min": 83
+    },
+    "battery_temp_decic": {
+      "final": 327,
+      "max": 327,
+      "min": 327
+    },
+    "gauge_vbat_uv": {
+      "final": 4202000,
+      "max": 4203000,
+      "min": 4198000
+    },
+    "monitor_age_ms": {
+      "final": 244,
+      "max": 920,
+      "min": 148
+    },
+    "monitor_die_decic": {
+      "final": 255,
+      "max": 255,
+      "min": 255
+    },
+    "monitor_vbat_uv": {
+      "final": 4131000,
+      "max": 4135000,
+      "min": 4122500
+    },
+    "monitor_vbus_uv": {
+      "final": 4912000,
+      "max": 4912000,
+      "min": 4906000
+    }
+  },
+  "new_flash_or_reboot": false,
+  "no_NEW_kernel_or_passive_failure": true,
+  "notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "observation_seconds": 30.158,
+  "ordinary_warm_reboots": 1,
+  "original_runner_STOP_preserved": true,
+  "original_runner_verdict": "STOP_BASELINE_STARTUP_DIAGNOSTIC",
+  "original_runner_window_samples": 0,
+  "protection_changed": false,
+  "pump_ON": false,
+  "qualification_reused": [
+    "Test263 installed baseline",
+    "Test269 offline build/all1396"
+  ],
+  "remaining_active_prerequisites": [
+    "SOC must meet unchanged 5..<80 entry (observed 83)",
+    "qualified genuine <=100ms physical acquisition API",
+    "independently calibrated voltage/nonzero-current telemetry",
+    "verified protection/cutoff response",
+    "live PM/lifetime-safe hardware adapter",
+    "actual source PPS APDO capability proof"
+  ],
+  "retained_unclassified_startup_suspects": 20,
+  "software_changed": false,
+  "startup": {
+    "classification": "no-startup-event",
+    "warning_retained": false
+  },
+  "startup_classifier_branch_exercised": false,
+  "test": "Test271",
+  "verdict": "DEVICE_PASSIVE_DIAGNOSIS_COMPLETED_WITH_STARTUP_CLASSIFICATION_GAP",
+  "wifi_address": "10.125.29.77"
+}
