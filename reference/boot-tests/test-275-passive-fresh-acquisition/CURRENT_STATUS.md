@@ -1,23 +1,15 @@
-# STOP; offline recovery pending
+# STOP retained; exact263 restored and device endpoint completed
 
-One272candidate boot and one274observer load. First fresh call returned-110 in
-108ms; zero usable facts. Observer stopped after one call, no retry. Then rmmod
-command timed out20s, both fullkernel reads timed out25s, Wi-Fi SSH banner timeout.
-Windows still enumerates ADB/NCM with Code0; this does not establish device health.
-No final acceptance or complete30s window. No PPS/pumpON/current increase.
+Test275 failed after one-110/108ms fresh refusal followed by unload/shell/SSH loss
+and owner-observed freeze. No acquisition timing pass or completed30s window.
+Original summary/observationSTOP retained; see RESULTS/final-summary for recovery.
 
-Owner requested to enter TWRP to collect persistent journal and restore exact263
-boot+saved181modules; neither recovery nor rollback is confirmed yet. Current
-deployment272 remains. Do not boot Debian/reload observer/repeat physical test.
+Failedboot persistent1109rows end before module load; pstore empty. Lifetime
+defect is source-proven; actual freeze mechanism remains unproved without stack.
+Test2767a887eab fixes optional observer OFFLINE:26affected/full1481/W1/sparse pass,
+notdeployed, no ADC/deadline/provider/charging-policy change. Old274mustnotreload.
 
-Source review identified a real diagnostic lifetime defect: observer_thread exits
-after STOP/completion, while observer_exit later calls kthread_stop on an unowned
-task pointer. Pinned7.2 kernel/kthread.c documents caller lifetime responsibility.
-This is an implementation bug regardless of whether persistent logs prove it
-caused this loss. CPU stall/panic/Oops not yet proven; logs are unavailable.
-Do not conflate fresh deadline refusal with subsequent unload transport failure.
-
-All raw STOPs and startup/vbmeta host corrections remain immutable.16 local tests
-and unchanged272/274 offline qualification reused, no results-only rebuild/full
-run. ActiveStage3 NOT READY; next fix is diagnostic task lifetime, no ADC gate or
-charging-policy relaxation.
+Currentdevice exact263boot+181modules restored/readback; baseline590eca6a, ADB/
+Wi-Fi10.125.29.70/deviceNCM normal/noCode43, batteryGood/passivefault0/pumpOFF.
+Candidate modules and all older backups preserved. No PPS/current increase or
+new physical retry. ActiveStage3 NOT READY.

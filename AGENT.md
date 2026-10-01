@@ -2,16 +2,21 @@
 
 ## Current state (2026-10-01)
 
-Test275 exact263rollback READBACK VERIFIED in TWRP: all5partitions +181paired
-modules,272candidate preserved.test275-tested/allolderbackups retained, root
-unmounted/BCBclear. Owner confirmedfreeze/manual272Debianreboot, no observer
-reloaded. Failed e7011109persistentkernelrows stop316.436572s before513.484s
-request; pstoreempty, postunloadtrace absent/no negativefaultproof. Read275
-ROLLBACK_STATUS/rollback-install. Next one263baselineboot/endpoint only.
-Test2767a887eab OFFLINEtasklifetimefix26affected/full1481/W1/sparse pass, all1475
-retained,149hardwareinputs/provider/DT/config/181archive intact, original274
-artifactpreserved. New276module9aafabf6 NOT deployed. No PPS/pumpON/current/
-deadline/ADCchange; freezecausation unproved. ActiveStage3 NOT READY.
+Test275 STOP retained; exact Test263 rollback and device endpoint COMPLETED.
+All five partition hashes and 181 paired module files match accepted Test263.
+Baseline boot590eca6af9574abbb0fe98e127a6b835: ADB, Wi-Fi SSH10.125.29.70,
+device NCM/sshd normal, no Code43; config/notes exact, DCC/observer/freshAPI absent,
+battery Good, passive fault0/pumpOFF/IBUS0. Candidate modules and older backups
+preserved. Failed e701 persistent journal1109rows ends316.436572s before request
+513.484s; pstore empty. Actual freeze mechanism remains unproved, not a clean test.
+Read Test275 RESULTS/final-summary; original STOP and raw evidence are retained.
+Test2767a887eab task-lifetime fix is OFFLINE qualified:26affected/full1481/W1/
+sparse pass, all1475 prior IDs retained,149 protected inputs/provider/config/DT/
+181-module archive unchanged. New module9aafabf6 NOT deployed. Original274 module
+must NOT be reloaded. No PPS/pumpON/current/deadline/ADC change. ActiveStage3
+NOT READY; any revised physical observer test needs independent registration.
+
+The entries below are historical checkpoints; the state above is authoritative.
 
 
 Test275 STOP_TRANSPORT_LOSS_DURING_DIAGNOSTIC_UNLOAD. ONE272e7018be8boot/

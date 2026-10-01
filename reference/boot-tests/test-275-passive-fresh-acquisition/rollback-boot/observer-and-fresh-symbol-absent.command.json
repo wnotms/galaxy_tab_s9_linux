@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer/result; if grep -w sm5440_passive_request_fresh /proc/kallsyms; then exit 1; fi; echo observer-and-fresh-symbol-absent"
+  ],
+  "ended_utc": "2026-10-01T13:00:48.306055+00:00",
+  "started_utc": "2026-10-01T13:00:48.147474+00:00",
+  "status": 0
+}
