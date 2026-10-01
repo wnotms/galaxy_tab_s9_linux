@@ -139,16 +139,16 @@ static bool x710_target_supported(const struct x710_charge_transaction *tx,
 		tx->target_mv <= facts->apdo_max_mv && tx->target_ma <= facts->apdo_ma;
 }
 
-static int x710_fresh_eligible(struct x710_charge_transaction *tx,
-			      const struct x710_charge_ops *ops, void *ctx)
+static int x710_read_eligible(struct x710_charge_transaction *tx,
+			     const struct x710_charge_ops *ops, void *ctx,
+			     struct x710_charge_facts *facts)
 {
-	struct x710_charge_facts facts = {};
 	u64 now;
 	int ret;
 
 	if (!ops->current_epoch(ctx, tx->epoch))
 		return -ECANCELED;
-	ret = ops->read_facts(ctx, &facts);
+	ret = ops->read_facts(ctx, facts);
 	if (ret)
 		return ret;
 	/* An epoch can change while the provider is acquiring its snapshot. */
@@ -157,13 +157,24 @@ static int x710_fresh_eligible(struct x710_charge_transaction *tx,
 	ret = x710_now(tx, ops, ctx, &now);
 	if (ret)
 		return ret;
-	if (!x710_fresh(facts.observed_ms, now, X710_FACTS_MAX_AGE_MS))
+	if (!x710_fresh(facts->observed_ms, now, X710_FACTS_MAX_AGE_MS))
 		return -ESTALE;
-	if (facts.epoch != tx->epoch || !x710_charge_eligible(&facts) ||
-	    !x710_target_supported(tx, &facts))
+	if (facts->epoch != tx->epoch || !x710_charge_eligible(facts))
 		return -EPERM;
-	tx->last_facts_ms = facts.observed_ms;
+	tx->last_facts_ms = facts->observed_ms;
 	return 0;
+}
+
+static int x710_fresh_eligible(struct x710_charge_transaction *tx,
+			      const struct x710_charge_ops *ops, void *ctx)
+{
+	struct x710_charge_facts facts = {};
+	int ret;
+
+	ret = x710_read_eligible(tx, ops, ctx, &facts);
+	if (!ret && !x710_target_supported(tx, &facts))
+		ret = -EPERM;
+	return ret;
 }
 
 static int x710_measure_safe(struct x710_charge_transaction *tx,
@@ -353,6 +364,62 @@ int x710_charge_refresh(struct x710_charge_transaction *tx,
 		ret = ops->pps_request(ctx, tx->target_mv, tx->target_ma);
 	if (!ret)
 		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, false);
+	if (!ret)
+		ret = x710_fresh_eligible(tx, ops, ctx);
+	if (!ret)
+		ret = x710_on_observed(tx, ops, ctx);
+	return ret ? x710_fallback(tx, ops, ctx, ret) : 0;
+}
+
+int x710_charge_retarget(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx)
+{
+	struct x710_charge_facts facts = {};
+	unsigned int mv, ma, offered_ma;
+	u64 now;
+	int ret;
+
+	if (!tx || !x710_ops_valid(ops))
+		return -EINVAL;
+	if (tx->state != X710_DIRECT_ACTIVE)
+		return -EPERM;
+	if (!tx->armed || tx->suspended)
+		return x710_fallback(tx, ops, ctx, -EACCES);
+	/* Fedora refresh/renegotiate: VBAT-derived target, OFF across Request.
+	 * Current can only decrease here; source expansion is not a ramp grant.
+	 * The future serialized adapter owns physical OCP and genuine ADC age.
+	 */
+	ret = ops->pump_off(ctx);
+	if (!ret)
+		ret = x710_monitor_deadline(tx, ops, ctx, &now);
+	if (!ret)
+		ret = x710_read_eligible(tx, ops, ctx, &facts);
+	if (!ret) {
+		offered_ma = facts.apdo_ma < tx->target_ma ?
+			facts.apdo_ma : tx->target_ma;
+		ret = x710_pps_target(facts.vbat_mv, facts.apdo_min_mv,
+				      facts.apdo_max_mv, offered_ma, &mv, &ma);
+	}
+	if (!ret)
+		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, false);
+	if (ret)
+		return x710_fallback(tx, ops, ctx, ret);
+
+	/* Pump OFF proven; install proposed target before its fresh source check.
+	 * On failure retain it for diagnosis; fixed fallback uses fixed_mv.
+	 */
+	tx->target_mv = mv;
+	tx->target_ma = ma;
+	ret = x710_fresh_eligible(tx, ops, ctx);
+	if (!ret)
+		ret = ops->pps_request(ctx, tx->target_mv, tx->target_ma);
+	if (!ret)
+		ret = x710_measure_safe(tx, ops, ctx, tx->target_mv, false);
+	if (!ret)
+		ret = x710_fresh_eligible(tx, ops, ctx);
+	/* PPS current is not the pump's regulation setting or proven OCP. */
+	if (!ret)
+		ret = ops->pump_prepare(ctx, tx->target_ma);
 	if (!ret)
 		ret = x710_fresh_eligible(tx, ops, ctx);
 	if (!ret)

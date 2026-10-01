@@ -37,10 +37,11 @@ static u64 clock_ms;
 static unsigned int measure_delay,facts_delay,on_delay,pps_delay,trip_ua;
 static int sample_time_mode,contractstep;static bool acquire_fresh;
 static bool pause_before_on;static int on_clock_reads;
+static unsigned int requested_ma,prepared_ma;static int recovery_failstep;
 static int record(char c) {actions[n++]=c;actions[n]=0;step++;
  if(step==cancelstep)alive=false;
  if(step==contractstep)facts.apdo_ma=1750;
- return step==failstep?-EIO:0;
+ return step==failstep || step==recovery_failstep?-EIO:0;
 }
 static u64 now(void *c) {(void)c;
  if(pause_before_on && step==9 && ++on_clock_reads==2)clock_ms+=501;
@@ -58,9 +59,9 @@ static int gate(void *c,bool b) {(void)c;int r=record(b?'I':'S');
 }
 static int off(void *c) {(void)c;int r=record('O');if(!r)pump=false;return r;}
 static int pps(void *c,unsigned int mv,unsigned int ma) {
- (void)c;(void)ma;int r=record('P');clock_ms+=pps_delay;
+ (void)c;int r=record('P');clock_ms+=pps_delay;
  if(pump)return -EPERM;
- if(!r)bus=mv;
+ if(!r){bus=mv;requested_ma=ma;}
  return r;
 }
 static int measure(void *c,struct x710_physical_sample *s) {
@@ -72,7 +73,9 @@ static int measure(void *c,struct x710_physical_sample *s) {
  s->vbus_mv=bus;s->vbat_mv=facts.vbat_mv;s->ibus_ua=pump?trip_ua:0;
  s->faults=samplefault;return r;
 }
-static int prepare(void *c,unsigned int ma) {(void)c;(void)ma;return record('C');}
+static int prepare(void *c,unsigned int ma) {(void)c;int r=record('C');
+ if(!r)prepared_ma=ma;
+ return r;}
 static int on(void *c) {(void)c;int r=record('N');
  clock_ms+=on_delay;
  if(!alive || !inhibited)return -ECANCELED;
@@ -118,6 +121,7 @@ int scenario(int kind,int fail,int cancel,int bad,int *out) {
  clock_ms=1000;measure_delay=facts_delay=on_delay=pps_delay=0;trip_ua=1000000;
  sample_time_mode=contractstep=0;acquire_fresh=false;
  pause_before_on=kind==36;on_clock_reads=0;
+ requested_ma=prepared_ma=0;recovery_failstep=0;
  struct x710_charge_transaction tx={.state=X710_SWITCHING,.armed=kind!=0,
  .target_mv=8800,.target_ma=1800};
  if(bad==1)facts.pack_valid=false;
@@ -217,6 +221,54 @@ int invalid_pm(int kind) {
  if(kind==1)return x710_charge_resume(0);
  return x710_charge_resume(&tx);
 }
+int retarget_case(int kind,int fail,int cancel,int *out) {
+ int scratch[6];int r=scenario(1,0,0,0,scratch);
+ if(r)return r;
+ struct x710_charge_transaction tx={.state=X710_DIRECT_ACTIVE,.epoch=1,
+ .fixed_mv=9000,.target_mv=8800,.target_ma=1800,.armed=true,
+ .switching_inhibited=true,.last_clock_ms=1000,.last_monitor_ms=1000};
+ n=step=0;actions[0]=0;failstep=fail;cancelstep=cancel;
+ facts.vbat_mv=4200;
+ if(kind==1)facts.vbat_mv=3600;
+ if(kind==2 || kind==20)facts.apdo_ma=1549;
+ if(kind==3)facts.apdo_ma=3000;
+ if(kind==4)facts.apdo_max_mv=9000;
+ if(kind==5)facts.apdo_ma=999;
+ if(kind==6)facts.observed_ms=499;
+ if(kind==7)facts.pack_valid=false;
+ if(kind==8)facts.apdo=false;
+ if(kind==9)tx.suspended=true;
+ if(kind==10)tx.armed=false;
+ if(kind==11)clock_ms+=101;
+ if(kind==12)sample_time_mode=1;
+ if(kind==13)samplefault=128;
+ if(kind==14)trip_ua=1800001;
+ if(kind==15)contractstep=4;
+ if(kind==16)contractstep=7;
+ if(kind==17)on_delay=101;
+ if(kind==18){pps_delay=2500;acquire_fresh=true;}
+ if(kind==19)facts.vbat_mv=4300;
+ if(kind==21)tx.state=X710_SWITCHING;
+ if(kind==22)facts.observed_ms=1001;
+ if(kind==23)facts.pack_decic=380;
+ if(kind==24)facts.software_ocp_verified=false;
+ if(kind==25)facts.capacity=80;
+ if(kind==26)facts.die_valid=false;
+ if(kind==27)clock_ms--;
+ if(kind==28){facts.apdo_ma=1549;trip_ua=1500001;}
+ if(kind>=29 && kind<=32){failstep=5;recovery_failstep=kind-23;}
+ r=x710_charge_retarget(&tx,&ops,0);
+ if(!r && kind==20){facts.apdo_ma=3000;r=x710_charge_retarget(&tx,&ops,0);}
+ out[0]=tx.state;out[1]=pump;out[2]=inhibited;out[3]=tx.armed;
+ out[4]=tx.target_mv;out[5]=tx.target_ma;out[6]=tx.last_error;out[7]=bus;
+ out[8]=requested_ma;out[9]=prepared_ma;
+ return r;
+}
+int invalid_retarget(int kind) {
+ struct x710_charge_transaction tx={.state=X710_DIRECT_ACTIVE,.armed=true};
+ struct x710_charge_ops missing=ops;missing.now_ms=0;
+ return kind?x710_charge_retarget(&tx,&missing,0):x710_charge_retarget(0,&ops,0);
+}
 '''
         path = Path(cls.temp.name) / 'transaction.c'
         path.write_text(code)
@@ -240,6 +292,146 @@ int invalid_pm(int kind) {
         result = (ctypes.c_int * 8)()
         ret = self.lib.pm_case(kind, fail, cancel, result)
         return ret, list(result), self.lib.trace().decode()
+
+    def retarget_case(self, kind=0, fail=0, cancel=0):
+        result = (ctypes.c_int * 10)()
+        ret = self.lib.retarget_case(kind, fail, cancel, result)
+        return ret, list(result), self.lib.trace().decode()
+
+    def test_retarget_rising_vbat_off_request_prepare_on_order(self):
+        ret, state, trace = self.retarget_case()
+        self.assertEqual(ret, 0)
+        self.assertEqual(trace, 'OEMEPMECENM')
+        self.assertEqual(state[:6], [4, 1, 1, 1, 9180, 1800])
+        self.assertEqual(state[7], 9180)
+
+    def test_retarget_falling_vbat_respects_minimum_voltage(self):
+        ret, state, trace = self.retarget_case(kind=1)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[4:6], [8200, 1800])
+        self.assertEqual(trace, 'OEMEPMECENM')
+
+    def test_retarget_source_reduction_reprograms_pump_current(self):
+        ret, state, trace = self.retarget_case(kind=2)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[4:6], [9080, 1500])
+        self.assertEqual(state[8:10], [1500, 1500])
+        self.assertIn('PMECENM', trace)
+
+    def test_retarget_source_expansion_never_increases_current(self):
+        ret, state, _ = self.retarget_case(kind=3)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[5], 1800)
+        ret, state, trace = self.retarget_case(kind=20)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[4:6], [9080, 1500])
+        self.assertEqual(trace, 'OEMEPMECENM' * 2)
+
+    def test_retarget_insufficient_source_falls_back_before_request(self):
+        for kind in (4, 5):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [0, 0, 0, 0])
+            self.assertNotIn('P', trace)
+            self.assertNotIn('N', trace)
+            self.assertTrue(trace.endswith('OFMS'))
+
+    def test_retarget_eligibility_failures_stop_and_revoke(self):
+        for kind in (6, 7, 8, 19, 22, 23, 24, 25, 26):
+            with self.subTest(kind=kind):
+                ret, state, trace = self.retarget_case(kind=kind)
+                self.assertLess(ret, 0)
+                self.assertEqual(state[1], 0)
+                self.assertEqual(state[3], 0)
+                self.assertNotIn('P', trace)
+                self.assertNotIn('N', trace)
+
+    def test_retarget_pm_and_unarmed_refuse_negotiation(self):
+        for kind in (9, 10):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [0, 0, 0, 0])
+            self.assertEqual(trace, 'OFMS')
+
+    def test_retarget_deadline_and_clock_regression_stop(self):
+        for kind in (11, 27):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[1], 0)
+            self.assertEqual(state[3], 0)
+            self.assertNotIn('P', trace)
+            self.assertNotIn('N', trace)
+
+    def test_retarget_fault_or_stale_off_adc_never_requests_pps(self):
+        for kind in (12, 13):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [8, 0, 1, 0])
+            self.assertNotIn('P', trace)
+            self.assertNotIn('N', trace)
+
+    def test_retarget_sub_ma_overcurrent_checks_reduced_current(self):
+        for kind in (14, 28):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [0, 0, 0, 0])
+            self.assertTrue(trace.endswith('NMOFMS'))
+
+    def test_retarget_source_changes_before_and_after_request_refuse_on(self):
+        for kind in (15, 16):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [0, 0, 0, 0])
+            self.assertNotIn('N', trace)
+            self.assertTrue(trace.endswith('OFMS'))
+
+    def test_retarget_every_io_failure_uses_checked_fallback(self):
+        for step in range(1, 12):
+            with self.subTest(step=step):
+                ret, state, trace = self.retarget_case(fail=step)
+                self.assertLess(ret, 0)
+                self.assertEqual(state[:4], [0, 0, 0, 0])
+                self.assertTrue(trace.endswith('OFMS'))
+                if step <= 9:
+                    self.assertNotIn('N', trace)
+
+    def test_retarget_detach_during_each_io_does_not_restore_old_contract(self):
+        for step in range(1, 12):
+            with self.subTest(step=step):
+                ret, state, trace = self.retarget_case(cancel=step)
+                self.assertLess(ret, 0)
+                self.assertEqual(state[:4], [7, 0, 1, 0])
+                self.assertNotIn('F', trace)
+                self.assertTrue(trace.endswith('O'))
+
+    def test_retarget_on_observation_timeout_falls_back(self):
+        ret, state, trace = self.retarget_case(kind=17)
+        self.assertLess(ret, 0)
+        self.assertEqual(state[:4], [0, 0, 0, 0])
+        self.assertTrue(trace.endswith('NMOFMS'))
+
+    def test_retarget_each_fallback_failure_keeps_inhibit_and_disarms(self):
+        for kind in range(29, 33):
+            ret, state, trace = self.retarget_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:4], [8, 0, 1, 0])
+            self.assertNotIn('N', trace)
+            if kind == 29:
+                self.assertEqual(trace, 'OEMEPO')  # Failed OFF: no fixed voltage write.
+
+    def test_retarget_long_negotiation_only_off_then_new_fresh_observation(self):
+        ret, state, trace = self.retarget_case(kind=18)
+        self.assertEqual(ret, 0)
+        self.assertEqual(state[:6], [4, 1, 1, 1, 9180, 1800])
+        self.assertEqual(trace, 'OEMEPMECENM')
+
+    def test_retarget_inactive_or_invalid_adapter_performs_no_io(self):
+        ret, _, trace = self.retarget_case(kind=21)
+        self.assertLess(ret, 0)
+        self.assertEqual(trace, '')
+        for kind in (0, 1):
+            self.assertLess(self.lib.invalid_retarget(kind), 0)
+            self.assertEqual(self.lib.trace().decode(), '')
 
     def test_pm_active_exit_is_off_fixed_measure_switching(self):
         ret, state, trace = self.pm_case()

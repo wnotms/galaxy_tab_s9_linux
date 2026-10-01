@@ -1,0 +1,22 @@
+setUpClass (test_x710_direct_transaction.TransactionTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_x710_direct_transaction.TransactionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_x710_direct_transaction.py", line 279, in setUpClass
+    raise AssertionError(run.stderr)
+AssertionError: /tmp/tmpvqjnyy_v/transaction.c: In function ‘prepare’:
+/tmp/tmpvqjnyy_v/transaction.c:551:2: error: this ‘if’ clause does not guard... [-Werror=misleading-indentation]
+  551 |  if(!r)prepared_ma=ma;return r;}
+      |  ^~
+/tmp/tmpvqjnyy_v/transaction.c:551:23: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  551 |  if(!r)prepared_ma=ma;return r;}
+      |                       ^~~~~~
+cc1: all warnings being treated as errors
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.066s
+
+FAILED (errors=1)

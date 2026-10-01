@@ -115,6 +115,9 @@ int x710_charge_start(struct x710_charge_transaction *tx,
 		      const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_refresh(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
+/* Recompute from fresh VBAT/source while OFF; never autonomously raise current. */
+int x710_charge_retarget(struct x710_charge_transaction *tx,
+			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_monitor(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_stop(struct x710_charge_transaction *tx,
