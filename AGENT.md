@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-01)
 
+Test270 high-power preflight NOT READY: same263/4bbd8221 ADB healthy, oldWi-Fi
+10.168 timeout preserved; actual10.125.29.149 firstauth works. Battery84%/4.215V/
+32.7C Good; SOC<80 fails, oldpassive0x80 and stale4.3215V snapshot persist.
+No reboot/flash/PPS/pumpON/gate/current change in270; no Test269 live test. Read
+270 RESULTS/seal. Owner renewed physical authorization may cover a separately
+registered single baseline startup diagnostic, not activecharge admission or
+retroactive267 pass. No build/full rerun for evidence-only work.
+
+
 Owner now permits physical testing. Test270 registers one bounded read-only
 high-power readiness capture on expected263/Wi-Fi; read270README. Actual failed/
 stale monitor or missing liveadapter/freshADC/OCP qualification stops before
