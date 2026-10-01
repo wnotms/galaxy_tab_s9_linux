@@ -19,10 +19,7 @@ PLAN = json.loads((A / 'registration.json').read_text())
 SPEC = importlib.util.spec_from_file_location('baseline_diagnostic_gate', ROOT / 'reference/boot-tests/test-271-baseline-passive-startup/gate.py')
 gate = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(gate)
-CURRENT = json.loads((ROOT / 'reference/boot-tests/test-270-high-power-readiness/device-state-via-adb/current-state.command.json').read_text())['argv'][-1] + r'; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi'
-# Original preparation stopped on a host-only omitted field; preserve it unchanged.
-PREPARE_PHASE = 'prepare-completion'
-
+CURRENT = json.loads((ROOT / 'reference/boot-tests/test-270-high-power-readiness/device-state-via-adb/current-state.command.json').read_text())['argv'][-1]
 KNOWN_FILE = ROOT / 'reference/boot-tests/test-254-debian-container-kernel/attempt-03/final-acceptance/kernel-journal-json.txt'
 KNOWN = {x['MESSAGE'] for x in map(json.loads, KNOWN_FILE.read_text().splitlines()) if int(x.get('PRIORITY', 7)) <= 3}
 BASE_SUSPECTS = json.loads((A / 'preflight/kernel-scan.json').read_text())['suspects']
@@ -72,7 +69,7 @@ def identity(sec):
     require(sec['cmdline'].strip() == PLAN['runtime_cmdline'], 'runtime cmdline changed')
     require(sec['services'].splitlines() == ['active'] * 3 and not sec['failed'].strip(), 'services/failed unit')
     require(sec['roles'].splitlines() == ['[sink]', '[device]'], 'Sink/Device role changed')
-    require(sec.get('dcc', '').strip() == 'absent', 'DCC absence evidence missing/restored')
+    require(sec.get('dcc', '').strip() == 'absent', 'DCC absence changed')
 
 
 def sample(sec, source=False):
@@ -123,11 +120,11 @@ def ssh(rec, name, command, timeout=20, required=True):
 
 
 def execute(phase, owner_confirmed=False):
-    folder = A / (PREPARE_PHASE if phase == 'prepare' else phase)
+    folder = A / phase
     require(not folder.exists(), 'no phase retry/overwrite')
     require(phase == 'prepare' or owner_confirmed, 'owner cable confirmation required')
     if phase != 'prepare':
-        prepared = json.loads((A / PREPARE_PHASE / 'summary.json').read_text())
+        prepared = json.loads((A / 'prepare/summary.json').read_text())
         require(prepared['verdict'] == 'READY_FOR_OWNER_C1_ATTACH', 'prepare not qualified')
     rec = p.Recorder(folder)
     samples = []

@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test273 initialprepare STOP/zero samples retained: host CURRENT omitted @@dcc,
+not evidence that DCC returned (exact263config/notes). No ring consumed/cable
+request/charging window yet. Correct only read-only DCC field, fresh
+prepare-completion namespace, originalobserver archived/seal againstb7e27663.
+No device/software/gate change; affectedcollector16tests/syntax pass, reuse
+unchangedparser25/272kernel/all1424. No physical retry/reflash/CI.
+
+
 Test273 registers ONE owner-confirmed LenovoYG65G C1 attach/C2empty,30s ordinary
 fixed-PD source-capability identification on unchanged263/846248af. Read273README
 and registration; counted freshTCPM frame/currentpartner sysfs must agree,

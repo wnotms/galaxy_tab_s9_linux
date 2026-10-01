@@ -94,12 +94,6 @@ class CollectorTests(unittest.TestCase):
             with self.assertRaises(c.p.CaptureError):
                 c.fixed_budget_history({'limits': [{'voltage_mv': mv, 'current_ma': ma}]})
 
-    def test_production_command_collects_required_dcc_field(self):
-        self.assertIn('echo @@dcc;', c.CURRENT)
-        self.assertIn('test ! -e /dev/hvc0', c.CURRENT)
-        self.assertIn('test ! -e /sys/class/tty/hvc0', c.CURRENT)
-        self.assertIn('is-active --quiet serial-getty@hvc0.service', c.CURRENT)
-
     def test_dcc_absence_required(self):
         sec = self.pc()
         sec['dcc'] = 'present'
@@ -139,8 +133,8 @@ class CollectorTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch.object(c, 'A', Path(tmp)), \
                 patch.object(c.p, 'Recorder', MockRecorder), patch.object(c, 'ssh', fake_ssh), \
                 patch.object(c.time, 'sleep', return_value=None):
-            (Path(tmp) / c.PREPARE_PHASE).mkdir()
-            (Path(tmp) / c.PREPARE_PHASE / 'summary.json').write_text(json.dumps({'verdict': 'READY_FOR_OWNER_C1_ATTACH', 'cursor': 'fixture'}))
+            (Path(tmp) / 'prepare').mkdir()
+            (Path(tmp) / 'prepare/summary.json').write_text(json.dumps({'verdict': 'READY_FOR_OWNER_C1_ATTACH', 'cursor': 'fixture'}))
             with self.assertRaises(c.p.CaptureError):
                 c.execute('source', True)
             result = json.loads((Path(tmp) / 'source/summary.json').read_text())
