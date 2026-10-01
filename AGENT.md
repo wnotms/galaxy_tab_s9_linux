@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Owner identifies LenovoYG65G C1<=65W, stockAndroid reportedly~45W (method unknown).
+Read X710_PPS_SOURCE_PLAN: C1/C2empty is candidate for future ordinary fixed-PD
+Source_Capabilities capture, not proof of PPS/mainline45W or current escalation.
+Actual APDO/independent calibration/OCP/liveadapter remain unqualified. No cable
+request/device command in this doc update. Installed263 fixed5V1800/9V1500mA;
+Test272399eb497 offlinequalification reused, executed:false for new checks.
+
 Test272 OFFLINE_INTERFACE_QUALIFIED at399eb497: sleepable kernel-only fresh
 OFF-mode request, genuine conversion seq/stamp/delivery100ms validity, atomic
 users/drain and PMepoch; same system_percpu_wq as existing monitor.28actualC
