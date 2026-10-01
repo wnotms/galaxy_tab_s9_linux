@@ -1,0 +1,16 @@
+{
+  "baseline_revision": "9ac46d4683199dc0f9779e988a20baa9a2cf594a",
+  "purpose": "Offline Fedora-derived PM transaction state transitions",
+  "kernel_source_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "profile": "sm5440-policy-offline",
+  "expected_config_delta": {
+    "CONFIG_X710_CHARGING_POLICY": {
+      "before": "n",
+      "after": "y"
+    }
+  },
+  "device_commands_executed": false,
+  "PPS_enabled": false,
+  "pump_enable_supported": false,
+  "physical_acceptance": "NOT_AUTHORIZED"
+}

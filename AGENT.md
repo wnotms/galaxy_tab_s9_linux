@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-01)
 
+Test265 registers OFFLINE Fedora-derived PM transitions in unwired C core;
+read Test265 README/registration. Adopt drain/OFF/fixed-before-suspend order,
+revoke arming/latch suspend, checked errors and no resume auto-arm. No live
+adapter/notifier/hardware API/device command; installed Test263 untouched.
+One isolated policy-offline build/full qualification after implementation;
+expected config delta only X710_CHARGING_POLICY=y, identical DTB/protected
+hardware/containers/DCC. ActiveStage3 NOT READY. No physical test authorized.
+
 Test264 OFFLINE review/helper PASS:55 affected tests, zero failures/errors/skips;
 new future completion helper uses fresh child directory, preserves parent raw/
 STOP, tests actual Recorder overwrite guard. Read Test264 RESULTS/summary/seal.
