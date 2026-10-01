@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-01)
 
+Test267 boot b9f296d8 +181paired modules installed/readback; other4partitions
+unchanged, exact263 modules in .gts9-test267-original/older backups intact.
+Root unmounted/BCB clear; candidate not yet booted. Next one ordinary PCUSB
+boot/passive30s. Existing startupREVBLK classifier VBAT<4.3V stays; fullbattery
+fault must stop, no whitelist/gate change. Read INSTALL_STATUS/install summary.
+
+
 Owner now authorizes Test267 deployment/physical test of qualified Test266.
 Read Test267 README/registration/PACKAGE first. Device arrives in verifiedTWRP;
 five partitions/181modules match263; full battery100%/4.409V/25.2C. Install only

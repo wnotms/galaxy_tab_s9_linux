@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; cd /mnt/debian/usr/lib/modules/.gts9-test267-original; sha256sum -c /tmp/test267-test263-rollback-modules.sha256; echo @@older; ls -d /mnt/debian/usr/lib/modules/.gts9-test263-original /mnt/debian/usr/lib/modules/.gts9-test260-original"
+  ],
+  "ended_utc": "2026-10-01T03:17:04.847287+00:00",
+  "started_utc": "2026-10-01T03:17:04.658957+00:00",
+  "status": 0
+}

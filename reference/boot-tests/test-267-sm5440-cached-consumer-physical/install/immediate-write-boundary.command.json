@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(getprop ro.product.device)\" = gts9wifi; test \"$(getprop ro.product.model)\" = SM-X710; cat /proc/sys/kernel/random/boot_id; test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; test ! -e /mnt/debian/usr/lib/modules/.gts9-test267-original; test ! -e /mnt/debian/usr/lib/modules/.gts9-test267-stage; test ! -e /mnt/debian/usr/lib/modules/.gts9-test267-tested; sha256sum /dev/block/by-name/boot /tmp/test267-candidate-boot.img /tmp/test267-candidate-modules.tar.gz /tmp/test267-module-swap.sh; cat /sys/class/power_supply/battery/uevent"
+  ],
+  "ended_utc": "2026-10-01T03:16:56.112947+00:00",
+  "started_utc": "2026-10-01T03:16:55.777626+00:00",
+  "status": 0
+}
