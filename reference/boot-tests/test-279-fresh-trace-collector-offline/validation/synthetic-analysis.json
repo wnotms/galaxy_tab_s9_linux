@@ -1,0 +1,50 @@
+{
+  "adc_duration_ns": null,
+  "boot_id": "11111111-2222-4333-8444-555555555555",
+  "causal_assignment": "not established; temporal overlap only",
+  "clock": "boot",
+  "displayed_timestamp_precision": "6..9 decimal seconds; no sub-display precision inferred",
+  "hardware_acceptance": false,
+  "limitations": [
+    "worker includes I2C/waits/scheduling; not ADC duration",
+    "tracing adds overhead",
+    "timeout branch remains unknown"
+  ],
+  "queue_boundaries_complete": true,
+  "request_timeout_branch": "UNKNOWN",
+  "requests": [
+    {
+      "causal_worker_assignment": null,
+      "elapsed_ns": 101000000,
+      "entry_ns": 1000000000,
+      "overlapping_workers": [
+        {
+          "already_running_at_entry": false,
+          "completed_before_return": false,
+          "queued_during_request": true,
+          "worker_index": 0
+        }
+      ],
+      "pid": 40,
+      "return_code": -110,
+      "return_ns": 1101000000,
+      "timeout_branch": "UNKNOWN"
+    }
+  ],
+  "source": "SYNTHETIC MOCK ONLY; not measured device evidence",
+  "uninstrumented_timing_acceptance": false,
+  "verdict": "BOUNDED_TRACE_ATTRIBUTED",
+  "workers": [
+    {
+      "end_ns": 1131000000,
+      "pid": 60,
+      "poll_entry_ns": 1011000000,
+      "poll_return_ns": 1130000000,
+      "queue_delay_ns": 9000000,
+      "queue_ns": 1001000000,
+      "start_ns": 1010000000,
+      "work": "000000001234abcd",
+      "worker_elapsed_ns": 121000000
+    }
+  ]
+}

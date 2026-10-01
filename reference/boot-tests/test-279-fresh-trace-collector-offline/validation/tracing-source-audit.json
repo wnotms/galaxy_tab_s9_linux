@@ -1,0 +1,49 @@
+{
+  "files": {
+    "Documentation/trace/ftrace.rst": {
+      "bytes": 145055,
+      "equals_linux_pin": true,
+      "sha256": "9e88c073d02a114b861f976da1fa26b2fbe75bcd7be28e52ea3b057b8a231de9"
+    },
+    "Documentation/trace/kprobetrace.rst": {
+      "bytes": 12517,
+      "equals_linux_pin": true,
+      "sha256": "895d33982a36474ffc2f3ff291bf6e6dabed2fe0cbad4225ac5ddd06fe395242"
+    },
+    "include/trace/events/workqueue.h": {
+      "bytes": 3051,
+      "equals_linux_pin": true,
+      "sha256": "1d29f0ea148a22445961580965e86d5916f61aebce378769683eb76107144d4a"
+    },
+    "kernel/trace/trace.c": {
+      "bytes": 252490,
+      "equals_linux_pin": true,
+      "sha256": "ebd3fd6618d39af3bd6de1cd1c9183044c3d2bbd3c5616fd757489a22cc64ed1"
+    },
+    "kernel/trace/trace_kprobe.c": {
+      "bytes": 54901,
+      "equals_linux_pin": true,
+      "sha256": "20274ce42a72771785fd389b2735fa9896c722c66a1edd9087469bbaf9ba0a34"
+    },
+    "kernel/trace/trace_probe.c": {
+      "bytes": 57495,
+      "equals_linux_pin": true,
+      "sha256": "688e5544b347d6bb053a0b64a01545b460d2499d685584fa994abd74b3586f2b"
+    },
+    "kernel/trace/trace_probe.h": {
+      "bytes": 20817,
+      "equals_linux_pin": true,
+      "sha256": "dcbada1e5b504da39c2e065b2d3d243244ad8113ed52294702d4fa5702078130"
+    }
+  },
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "notes": [
+    "New instances inherit some global trace options; normalize only private formatting/overwrite flags.",
+    "New instance buffer can record by default; disable before enabling owned events.",
+    "work/function fields are pointer-valued; filters use runtime kallsyms function address.",
+    "kprobe_profile columns: event name, hits, missed; unique event names avoid cross-group ambiguity.",
+    "Signed s32 retval prints decimal; no instruction offsets or structure-memory fetches.",
+    "boot uses fast BOOTTIME; clock reversal is rejected, no jiffies clock conversion."
+  ],
+  "observer_276_sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582"
+}

@@ -1,0 +1,55 @@
+test_bad_token (__main__.CollectorTests.test_bad_token) ... ok
+test_cleanup_error_is_retained (__main__.CollectorTests.test_cleanup_error_is_retained) ... ok
+test_collision_does_not_adopt_instance (__main__.CollectorTests.test_collision_does_not_adopt_instance) ... ok
+test_counter_read_failure_retains_raw_trace (__main__.CollectorTests.test_counter_read_failure_retains_raw_trace) ... ok
+test_deadline_bounds (__main__.CollectorTests.test_deadline_bounds) ... ok
+test_duplicate_symbol (__main__.CollectorTests.test_duplicate_symbol) ... ok
+test_failed_filter_before_start (__main__.CollectorTests.test_failed_filter_before_start) ... ok
+test_format_failure_before_start (__main__.CollectorTests.test_format_failure_before_start) ... ok
+test_hidden_runtime_address (__main__.CollectorTests.test_hidden_runtime_address) ... ok
+test_missing_clock_cleanup (__main__.CollectorTests.test_missing_clock_cleanup) ... ok
+test_missing_runtime_symbol_no_mutation (__main__.CollectorTests.test_missing_runtime_symbol_no_mutation) ... ok
+test_no_output_overwrite (__main__.CollectorTests.test_no_output_overwrite) ... ok
+test_orchestration_bad_marker (__main__.CollectorTests.test_orchestration_bad_marker) ... ok
+test_orchestration_deadline_no_retry (__main__.CollectorTests.test_orchestration_deadline_no_retry) ... ok
+test_orchestration_interruption_cleanup (__main__.CollectorTests.test_orchestration_interruption_cleanup) ... ok
+test_orchestration_terminal_marker (__main__.CollectorTests.test_orchestration_terminal_marker) ... ok
+test_partial_probe_setup_cleanup (__main__.CollectorTests.test_partial_probe_setup_cleanup) ... ok
+test_probe_collision (__main__.CollectorTests.test_probe_collision) ... ok
+test_real_adapter_does_not_truncate_probe_commands (__main__.CollectorTests.test_real_adapter_does_not_truncate_probe_commands) ... ok
+test_snapshot_failure_is_not_success (__main__.CollectorTests.test_snapshot_failure_is_not_success) ... ok
+test_success_only_owned_writes_and_cleanup (__main__.CollectorTests.test_success_only_owned_writes_and_cleanup) ... ok
+test_timeout_still_collects_then_cleans (__main__.CollectorTests.test_timeout_still_collects_then_cleans) ... ok
+test_bad_signed_return_format (__main__.ParserTests.test_bad_signed_return_format) ... ok
+test_boot_changed (__main__.ParserTests.test_boot_changed) ... ok
+test_cleanup_failure (__main__.ParserTests.test_cleanup_failure) ... ok
+test_clock_reversal (__main__.ParserTests.test_clock_reversal) ... ok
+test_consumed_events (__main__.ParserTests.test_consumed_events) ... ok
+test_count_truncation (__main__.ParserTests.test_count_truncation) ... ok
+test_duplicate_profile (__main__.ParserTests.test_duplicate_profile) ... ok
+test_empty_trace (__main__.ParserTests.test_empty_trace) ... ok
+test_invalid_manifest_schema (__main__.ParserTests.test_invalid_manifest_schema) ... ok
+test_missed_return_probe (__main__.ParserTests.test_missed_return_probe) ... ok
+test_missing_cpu_stats (__main__.ParserTests.test_missing_cpu_stats) ... ok
+test_missing_old_queue_is_not_zero_delay (__main__.ParserTests.test_missing_old_queue_is_not_zero_delay) ... ok
+test_missing_trace (__main__.ParserTests.test_missing_trace) ... ok
+test_nested_request_pairing (__main__.ParserTests.test_nested_request_pairing) ... ok
+test_old_inflight_worker_is_distinguished (__main__.ParserTests.test_old_inflight_worker_is_distinguished) ... ok
+test_paired_timeout_is_not_adc_or_hardware_acceptance (__main__.ParserTests.test_paired_timeout_is_not_adc_or_hardware_acceptance) ... ok
+test_partial_last_line (__main__.ParserTests.test_partial_last_line) ... ok
+test_pending_queue_is_incomplete (__main__.ParserTests.test_pending_queue_is_incomplete) ... ok
+test_probe_hits_not_in_trace (__main__.ParserTests.test_probe_hits_not_in_trace) ... ok
+test_request_after_first_refusal_is_rejected (__main__.ParserTests.test_request_after_first_refusal_is_rejected) ... ok
+test_return_without_entry (__main__.ParserTests.test_return_without_entry) ... ok
+test_tamper (__main__.ParserTests.test_tamper) ... ok
+test_trace_loss (__main__.ParserTests.test_trace_loss) ... ok
+test_unknown_cpu (__main__.ParserTests.test_unknown_cpu) ... ok
+test_unpaired_work_end (__main__.ParserTests.test_unpaired_work_end) ... ok
+test_wrong_clock (__main__.ParserTests.test_wrong_clock) ... ok
+test_wrong_filter (__main__.ParserTests.test_wrong_filter) ... ok
+test_zero_return_still_does_not_grant_acceptance (__main__.ParserTests.test_zero_return_still_does_not_grant_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 0.111s
+
+OK

@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test279 OFFLINE_COLLECTOR_QUALIFIED_PHYSICAL_NOT_TESTED:50 host tests+syntax pass.
+Independent tracefs instance and symbolic probes; raw/hash/clock/loss/miss/PID/work
+pairing and cleanup audited, no ADC/causal/timing acceptance inferred. Read279
+RESULTS and docs/SM5440_FRESH_TRACE_COLLECTOR.md.198 protected files/21 Test278
+inputs/275277278 seals unchanged; zero device/tracefs/load/request/flash/build/
+full/CI. Reuse272provider/2761481/W1/sparse. Last verified263 from277 unchanged
+by this turn. Next separate single passive trace registration; hardware/probe
+acceptance and timeout attribution remain untested/UNKNOWN. No automatic retry,
+deadline/ADC/PPS/pump/current change. Active Stage3 remains NOT READY.
+
 Test279 registers an OFFLINE private-tracefs collector/parser qualification.
 Read its README/registration before work. Host fixtures only: no device command,
 tracefs enable, observer load, flash or hardware change. Preserve Test278 UNKNOWN

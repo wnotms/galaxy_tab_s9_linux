@@ -1,0 +1,8 @@
+# tracer: nop
+     task-40 [000] .... 1.000000: gts9t279_abcdef012345_request_enter: (symbol)
+     task-40 [000] .... 1.001000: workqueue_queue_work: work struct=000000001234abcd function=sm5440_poll workqueue=events req_cpu=0 cpu=0
+     task-60 [000] .... 1.010000: workqueue_execute_start: work struct 000000001234abcd: function sm5440_poll
+     task-60 [000] .... 1.011000: gts9t279_abcdef012345_poll_enter: (symbol)
+     task-40 [000] .... 1.101000: gts9t279_abcdef012345_request_return: (symbol) ret=-110
+     task-60 [000] .... 1.130000: gts9t279_abcdef012345_poll_return: (symbol)
+     task-60 [000] .... 1.131000: workqueue_execute_end: work struct 000000001234abcd: function sm5440_poll

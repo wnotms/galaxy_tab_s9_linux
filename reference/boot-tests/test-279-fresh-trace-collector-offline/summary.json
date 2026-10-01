@@ -1,0 +1,36 @@
+{
+  "PPS": false,
+  "active_stage3": "NOT READY",
+  "adc_duration_ms": null,
+  "current_increase": false,
+  "device_commands": 0,
+  "device_tracefs_mutations": 0,
+  "full_suite": {
+    "executed": false,
+    "reason": "host-only collector/parser; no routing change",
+    "reused": "Test276 all1481/W1/sparse and unchanged Test272 provider"
+  },
+  "host_tests": {
+    "count": 50,
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "skips": 0
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "kernel/config/DT/build inputs unchanged"
+  },
+  "last_recorded_device_baseline": "Test263 from Test277; no live verification in Test279",
+  "next": "independent single passive tracing registration; not executed",
+  "physical_acceptance": false,
+  "physical_rounds": 0,
+  "protected_files_unchanged": 198,
+  "pump_ON": false,
+  "registration_commit": "14346f20",
+  "syntax": "PASS",
+  "test": "Test279",
+  "timeout_branch": "UNKNOWN",
+  "unchanged_deadline_ms": 100,
+  "verdict": "OFFLINE_COLLECTOR_QUALIFIED_PHYSICAL_NOT_TESTED"
+}
