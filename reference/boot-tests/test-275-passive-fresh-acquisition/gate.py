@@ -1,6 +1,7 @@
 """Test275 evidence only; never grants charging permission or accesses hardware."""
 import importlib.util
 import json
+import ipaddress
 from pathlib import Path
 import re
 import sys
@@ -17,6 +18,8 @@ CONTEXT = re.compile(r'arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x4
 SYNDROME = 'arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]'
 HEADER = dict(format='sm5440-fresh-observer-v1', maximum_calls='8', interval_ms='1000', PPS_authorized='0', pump_ON_authorized='0', independently_calibrated='0')
 FIELDS = {'row', 'request_ms', 'return_ms', 'provider_status', 'status', 'usable', 'acquisition_ms', 'raw_vbus_uv', 'raw_vbat_uv', 'raw_ibus_ua', 'raw_die_decic', 'raw_online'}
+PASSIVE_PREFIX = 'sm5440-passive 0-0063: '
+STARTUP_FAULT = re.compile(re.escape(PASSIVE_PREFIX) + r'passive fault bitmap=0x80 INT=00 00 62 00 STATUS=00 00 20 00 INT4-disable=00 INT4-wait=01 mode=01/01 CNTL2=f2 VBUSCNTL=e7 VBATCNTL=37 PRTNCNTL=fe ADC=((?:[0-9a-f]{2} ){10}[0-9a-f]{2}) VBUS=(\d+)uV VBAT=(\d+)uV IBUS=0uA die=(\d+) deciC')
 
 
 def require(ok, message):
@@ -36,6 +39,37 @@ def identity(sec, plan, notes, boot=None):
     value = baseline.diagnostic_sample(sec)
     require(all(value['snapshot'][k] == v for k, v in plan['protection'].items()), 'protection changed')
     return current, value
+
+
+def wifi_address(sec):
+    addresses = re.findall(r'^\d+: wlp1s0\s+inet ([0-9.]+)/\d+ ', sec['network'], re.M)
+    require(len(addresses) == 1, 'WiFi address missing/ambiguous')
+    return str(ipaddress.IPv4Address(addresses[0]))
+
+
+def retained_startup(rows, full):
+    faults = [r for r in rows if 'sm5440-passive' in r['MESSAGE'] and any(w in r['MESSAGE'] for w in ('fault bitmap=', 'ADC fault', 'confirmation failed'))]
+    if not faults:
+        return None
+    # Confirm the already-frozen driver's safe recovery branch, not a fault
+    # exemption. Later/live/other faults, absent confirmation, repeated events,
+    # different protection or unsafe raw facts all remain failures.
+    require(full and len(faults) == 1, 'new/repeated passive fault')
+    fault = faults[0]; match = STARTUP_FAULT.fullmatch(fault['MESSAGE'])
+    require(match is not None and int(fault['PRIORITY']) == 4, 'unclassified passive fault')
+    waiting = [r for r in rows if r['MESSAGE'] == PASSIVE_PREFIX+'passive startup REVBLK awaiting two fresh confirmations']
+    done = [r for r in rows if r['MESSAGE'] == PASSIVE_PREFIX+'passive startup REVBLK confirmed inactive; event retained']
+    require(len(waiting) == len(done) == 1, 'startup confirmation absent/ambiguous')
+    require(int(waiting[0]['PRIORITY']) == 4 and int(done[0]['PRIORITY']) == 6, 'startup confirmation priority')
+    t0, tf, t1 = [int(r['_SOURCE_BOOTTIME_TIMESTAMP']) for r in (waiting[0], fault, done[0])]
+    require(0 < t0 <= tf <= 1000000 and tf-t0 <= 100000 and 0 < t1-tf <= 5000000, 'startup confirmation deadline')
+    adc = [int(x, 16) for x in match[1].split()]
+    raw13 = lambda offset: (adc[offset] << 5) | (adc[offset+1] >> 3)
+    vbus, vbat, die = map(int, match.groups()[1:])
+    require(vbus == 4096000+raw13(0)*1000 and vbat == 2048000+raw13(9)*500 and raw13(4) == 0 and die == 225+adc[8]*5, 'startup raw/decoded disagreement')
+    require(4500000 <= vbus <= 5500000 and 3500000 <= vbat < 4300000 and 225 <= die < 420, 'startup unsafe ADC')
+    return dict(fault=fault, waiting=waiting[0], confirmed=done[0], confirmation_seconds=(t1-tf)/1000000,
+                event_retained=True, charging_authorized=False, current_healthy_snapshot_required=True)
 
 
 def observer(raw):
@@ -99,7 +133,7 @@ def journal(raw, boot, known, uptime, full=True):
             unknown.append(suspect)
     require(counts['context'] <= 10 and counts['syndrome'] <= 10 and counts['context'] == counts['syndrome'], 'startup SMMU diagnostic bound')
     require(not unknown, 'new/unclassified kernel suspect')
-    require(not any('sm5440-passive' in row['MESSAGE'] and any(word in row['MESSAGE'] for word in ('fault bitmap=', 'ADC fault', 'confirmation failed')) for row in rows), 'passive fault')
+    startup = retained_startup(rows, full)
     scan.update(unresolved_startup_smmu=classified, unresolved_counts=counts,
-                diagnostic_attribution_only=True, stability_clean_claim=False)
+                diagnostic_attribution_only=True, stability_clean_claim=False, retained_startup_confirmation=startup)
     return scan

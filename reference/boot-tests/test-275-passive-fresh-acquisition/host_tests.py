@@ -85,6 +85,43 @@ class Baseline(unittest.TestCase):
     def test_unexpected_boot(self):
         with self.assertRaises(ValueError): gate.identity(self.sec, self.plan, self.plan['baseline_notes_sha256'], '1'*32)
 
+    def test_wifi_current_dhcp_address(self):
+        self.assertEqual(gate.wifi_address(self.sec), '10.125.29.77')
+        changed = dict(self.sec, network=self.sec['network'].replace('10.125.29.77', '10.125.29.252'))
+        self.assertEqual(gate.wifi_address(changed), '10.125.29.252')
+        for raw in ['', self.sec['network']+self.sec['network']]:
+            with self.assertRaises(ValueError): gate.wifi_address(dict(self.sec, network=raw))
+
+    def test_retained_startup_confirmed_branch(self):
+        rows = [json.loads(x) for x in (A/'candidate-boot/startup-kernel-json.txt').read_text().splitlines()]
+        out = gate.retained_startup(rows, True)
+        self.assertAlmostEqual(out['confirmation_seconds'], 2.307534)
+        self.assertFalse(out['charging_authorized'])
+
+    def test_retained_startup_rejects_incomplete_late_and_unsafe(self):
+        original = [json.loads(x) for x in (A/'candidate-boot/startup-kernel-json.txt').read_text().splitlines()]
+        for change in ['missing', 'late', 'newbitmap', 'voltage', 'mode', 'protection', 'raw', 'repeat', 'error']:
+            rows = copy.deepcopy(original)
+            if change == 'missing': rows = [r for r in rows if 'confirmed inactive' not in r['MESSAGE']]
+            elif change == 'late':
+                for r in rows:
+                    if 'confirmed inactive' in r['MESSAGE']: r['_SOURCE_BOOTTIME_TIMESTAMP'] = '6000000'
+            elif change == 'repeat': rows += [copy.deepcopy(next(r for r in rows if 'fault bitmap=' in r['MESSAGE']))]
+            else:
+                fault = next(r for r in rows if 'fault bitmap=' in r['MESSAGE'])
+                before, after = {'newbitmap':('bitmap=0x80','bitmap=0x81'), 'voltage':('VBAT=4056500','VBAT=4400000'),
+                                 'mode':('mode=01/01','mode=0d/0d'), 'protection':('CNTL2=f2','CNTL2=f3'),
+                                 'raw':('ADC=18 88','ADC=18 90'), 'error':('passive fault bitmap=0x80','ADC fault')}[change]
+                fault['MESSAGE'] = fault['MESSAGE'].replace(before, after)
+            with self.subTest(change=change):
+                with self.assertRaises(ValueError): gate.retained_startup(rows, True)
+        with self.assertRaises(ValueError): gate.retained_startup(original, False)
+
+    def test_retained_startup_never_masks_kernel_failure(self):
+        raw = (A/'candidate-boot/startup-kernel-json.txt').read_text()
+        row = json.loads(raw.splitlines()[0]); row.update(MESSAGE='BUG: soft lockup', _SOURCE_BOOTTIME_TIMESTAMP='400000')
+        with self.assertRaises(ValueError): gate.journal(raw+'\n'+json.dumps(row), row['_BOOT_ID'], (), 300)
+
     def test_original_kernel_diagnosis(self):
         raw = (A/'preflight/kernel-json.txt').read_text()
         # Known priority3 records are drawn from accepted254, not arbitrary current errors.

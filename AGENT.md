@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-01)
 
+Test275 ONE272candidateboot e7018be8 healthy, no observer loaded yet. Original
+host startup STOP preserved: extra bitmap substring rule misclassified frozen
+0x80 twofresh recovery (0.290722->2.598256s), currentfault0/OFF/IBUS0/gauge4.146V/
+31.2C/SDP500.16affected tests+syntax pass for exact earlysafe branch attribution,
+no live/incremental/other/repeated/late fault exemption; globalparser/driver/gates
+unchanged. Read275STARTUP_OBSERVER_CORRECTION. DHCPnew10.125.29.252 is derived
+from ADB and authenticatedsameboot, no staleIP retry. No repeatboot/flash/latch
+clear/PPS/pumpON/current/full/build/CI. Push correction before one observer load.
+
+
 Test275 paired installation verified in TWRP:272bootd837b52f+181modules,
 other4partitions exact263; new275-original rollback/allolderbackups retained,
 rootunmounted/BCBclear. Candidate not booted, no observer load/PPS/pumpON. Read

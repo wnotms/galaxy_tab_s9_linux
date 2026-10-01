@@ -33,7 +33,9 @@ def run():
         history = rec.adb('boots-after', 'journalctl --list-boots --no-pager')[0]
         before = (A / 'preflight/boots-before.txt').read_text()
         gate.require(gate.evidence.attribute(PLAN['before_boot_id'], boot, before, history) == 'attributed', 'unexpected boot history')
-        rec.command('wifi-before', ['env', 'GTS9_DEVICE=' + PLAN['wifi'], p.SSH, 'cat /proc/sys/kernel/random/boot_id'], 20)
+        wifi_ip = gate.wifi_address(sec)
+        result['wifi_ip'] = wifi_ip
+        rec.command('wifi-before', ['env', 'GTS9_DEVICE=' + wifi_ip, p.SSH, 'cat /proc/sys/kernel/random/boot_id'], 20)
         gate.require(gate.evidence.canonical_boot_id((rec.folder / 'wifi-before.txt').read_text()) == boot, 'WiFi boot')
         usb, _ = rec.ps('windows-before', p.PS_USB, 30)
         gate.require(not p.has_code43(usb), 'Windows Code43 before load')
@@ -82,7 +84,7 @@ def run():
             final = gate.baseline.sections(rec.adb('endpoint-state', CURRENT, 20)[0])
             gate.identity(final, PLAN, PLAN['candidate_notes_sha256'], boot)
             p.write_json(rec.folder / 'kernel-final-scan.json', gate.journal(raw, boot, KNOWN, float(final['uptime'].split()[0])))
-            wifi, _ = rec.command('wifi-final', ['env', 'GTS9_DEVICE=' + PLAN['wifi'], p.SSH, 'cat /proc/sys/kernel/random/boot_id'], 20)
+            wifi, _ = rec.command('wifi-final', ['env', 'GTS9_DEVICE=' + gate.wifi_address(final), p.SSH, 'cat /proc/sys/kernel/random/boot_id'], 20)
             gate.require(gate.evidence.canonical_boot_id(wifi) == boot, 'final WiFi boot')
             usb, _ = rec.ps('windows-usb', p.PS_USB, 30)
             gate.require(not p.has_code43(usb), 'Windows Code43')
