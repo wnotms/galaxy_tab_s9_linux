@@ -1,0 +1,17 @@
+226: static int sm5440_convert_adc(struct sm5440_charger *sm5440, u8 index)
+227: {
+228: 	u8 reg1, reg2;
+229: 	int adc;
+230: #if !defined(CONFIG_SEC_FACTORY)
+231: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+232: 
+233: 	if (sm_dc_get_current_state(sm_dc) < SM_DC_CHECK_VBAT &&
+234: 		!(sm5440->rev_boost)) {
+235: 		/* Didn't worked ADC block during on CHG-OFF status */
+236: 		return -1;
+237: 	}
+238: #endif
+239: 
+240: 	switch (index) {
+241: 	case SM5440_ADC_THEM:
+242: 		sm5440_read_reg(sm5440, SM5440_REG_ADC_THEM1, &reg1);

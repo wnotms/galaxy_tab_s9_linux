@@ -1,0 +1,159 @@
+{
+  "boot_id": "57535bed-a626-48d0-aaaa-3071ac8332e5",
+  "range": "0-2b\n",
+  "registers": [
+    {
+      "name": "MODE_BEFORE",
+      "register": 16,
+      "raw": "10: 01\n",
+      "value": 1,
+      "start_boottime_ns": 14098951816391,
+      "end_boottime_ns": 14098953044099
+    },
+    {
+      "name": "CNTL1",
+      "register": 12,
+      "raw": "0c: 48\n",
+      "value": 72,
+      "start_boottime_ns": 14098955279412,
+      "end_boottime_ns": 14098955502172
+    },
+    {
+      "name": "CNTL2",
+      "register": 13,
+      "raw": "0d: f2\n",
+      "value": 242,
+      "start_boottime_ns": 14098955557693,
+      "end_boottime_ns": 14098955736391
+    },
+    {
+      "name": "CNTL3",
+      "register": 14,
+      "raw": "0e: b8\n",
+      "value": 184,
+      "start_boottime_ns": 14098955781964,
+      "end_boottime_ns": 14098955957485
+    },
+    {
+      "name": "CNTL4",
+      "register": 15,
+      "raw": "0f: ff\n",
+      "value": 255,
+      "start_boottime_ns": 14098955993579,
+      "end_boottime_ns": 14098956195610
+    },
+    {
+      "name": "CNTL5",
+      "register": 16,
+      "raw": "10: 01\n",
+      "value": 1,
+      "start_boottime_ns": 14098956268058,
+      "end_boottime_ns": 14098956450454
+    },
+    {
+      "name": "CNTL6",
+      "register": 17,
+      "raw": "11: 89\n",
+      "value": 137,
+      "start_boottime_ns": 14098956455037,
+      "end_boottime_ns": 14098956653579
+    },
+    {
+      "name": "CNTL7",
+      "register": 18,
+      "raw": "12: 0c\n",
+      "value": 12,
+      "start_boottime_ns": 14098956703943,
+      "end_boottime_ns": 14098956894256
+    },
+    {
+      "name": "VBUSCNTL",
+      "register": 19,
+      "raw": "13: e7\n",
+      "value": 231,
+      "start_boottime_ns": 14098956984985,
+      "end_boottime_ns": 14098957170349
+    },
+    {
+      "name": "VBATCNTL",
+      "register": 20,
+      "raw": "14: 37\n",
+      "value": 55,
+      "start_boottime_ns": 14098957257016,
+      "end_boottime_ns": 14098957443162
+    },
+    {
+      "name": "VOUTCNTL",
+      "register": 21,
+      "raw": "15: 3f\n",
+      "value": 63,
+      "start_boottime_ns": 14098957528058,
+      "end_boottime_ns": 14098957725922
+    },
+    {
+      "name": "IBUSCNTL",
+      "register": 22,
+      "raw": "16: 41\n",
+      "value": 65,
+      "start_boottime_ns": 14098957821287,
+      "end_boottime_ns": 14098958009204
+    },
+    {
+      "name": "PRTNCNTL",
+      "register": 25,
+      "raw": "19: fe\n",
+      "value": 254,
+      "start_boottime_ns": 14098958104464,
+      "end_boottime_ns": 14098958291860
+    },
+    {
+      "name": "THEMCNTL1",
+      "register": 26,
+      "raw": "1a: 0c\n",
+      "value": 12,
+      "start_boottime_ns": 14098958394933,
+      "end_boottime_ns": 14098958588735
+    },
+    {
+      "name": "THEMCNTL2",
+      "register": 27,
+      "raw": "1b: 18\n",
+      "value": 24,
+      "start_boottime_ns": 14098958684360,
+      "end_boottime_ns": 14098958873422
+    },
+    {
+      "name": "ADCCNTL1",
+      "register": 28,
+      "raw": "1c: 0c\n",
+      "value": 12,
+      "start_boottime_ns": 14098958968370,
+      "end_boottime_ns": 14098959155870
+    },
+    {
+      "name": "ADCCNTL2",
+      "register": 29,
+      "raw": "1d: df\n",
+      "value": 223,
+      "start_boottime_ns": 14098959248787,
+      "end_boottime_ns": 14098959436391
+    },
+    {
+      "name": "DEVICEID",
+      "register": 43,
+      "raw": "2b: 21\n",
+      "value": 33,
+      "start_boottime_ns": 14098959537901,
+      "end_boottime_ns": 14098959726287
+    },
+    {
+      "name": "MODE_AFTER",
+      "register": 16,
+      "raw": "10: 01\n",
+      "value": 1,
+      "start_boottime_ns": 14098959825766,
+      "end_boottime_ns": 14098960030714
+    }
+  ],
+  "battery": "DEVTYPE=power_supply\nOF_NAME=charger\nOF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49\nOF_COMPATIBLE_0=siliconmitus,sm5714\nOF_COMPATIBLE_N=1\nPOWER_SUPPLY_NAME=sm5714-battery\nPOWER_SUPPLY_TYPE=Battery\nPOWER_SUPPLY_STATUS=Charging\nPOWER_SUPPLY_HEALTH=Good\nPOWER_SUPPLY_PRESENT=1\nPOWER_SUPPLY_TECHNOLOGY=Li-ion\nPOWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000\nPOWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000\nPOWER_SUPPLY_VOLTAGE_NOW=3753000\nPOWER_SUPPLY_VOLTAGE_AVG=3755000\nPOWER_SUPPLY_VOLTAGE_OCV=3779000\nPOWER_SUPPLY_CURRENT_NOW=-305000\nPOWER_SUPPLY_CURRENT_AVG=-297000\nPOWER_SUPPLY_CHARGE_FULL_DESIGN=8160000\nPOWER_SUPPLY_CAPACITY=27\nPOWER_SUPPLY_TEMP=318\nPOWER_SUPPLY_TYPE=Battery\n"
+}

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; uname -a; sha256sum /sys/kernel/notes; zcat /proc/config.gz | sha256sum; cat /sys/kernel/debug/sm5440-passive/snapshot; for z in /sys/class/thermal/thermal_zone*; do printf '%s ' \"$z\"; cat \"$z/type\"; cat \"$z/mode\"; done; cat /sys/class/thermal/thermal_zone37/temp; systemctl --failed --no-pager"
+  ],
+  "utc": "2026-10-02T16:04:46.053735+00:00",
+  "exit_code": 0,
+  "device_writes": false
+}

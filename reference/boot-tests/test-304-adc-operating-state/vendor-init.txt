@@ -1,0 +1,17 @@
+449: static void sm5440_init_reg_param(struct sm5440_charger *sm5440)
+450: {
+451: 	sm5440_set_wdt_timer(sm5440, WDT_TIMER_S_30);
+452: 	sm5440_set_freq(sm5440, sm5440->pdata->freq);
+453: 
+454: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL2, 0xF2);               /* disable IBUSOCP,IBATOCP,THEM */
+455: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL4, 0xFF);               /* used DEB:8ms */
+456: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL6, 0x09);               /* forced PWM mode, disable ENHIZ */
+457: 	sm5440_update_reg(sm5440, SM5440_REG_VBUSCNTL, 0x7, 0x7, 0);    /* VBUS_OVP_TH=11V */
+458: 	sm5440_write_reg(sm5440, SM5440_REG_VOUTCNTL, 0x3F);            /* VOUT=max */
+459: 	sm5440_write_reg(sm5440, SM5440_REG_PRTNCNTL, 0xFE);            /* OCP,OVP setting */
+460: 	sm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, 1, 0x1, 3);      /* ADC average sample = 32 */
+461: 	sm5440_write_reg(sm5440, SM5440_REG_ADCCNTL2, 0xDF);            /* ADC channel setting */
+462: 	sm5440_write_reg(sm5440, SM5440_REG_THEMCNTL1, 0x0C);           /* Thermal Regulation threshold = 120'C */
+463: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL3, 0xB8);               /* disable CHGTMR, enable VBATREG */
+464: }
+465: 

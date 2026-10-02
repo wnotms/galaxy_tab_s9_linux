@@ -1,0 +1,13 @@
+365: static int sm5440_set_ENHIZ(struct sm5440_charger *sm5440, bool vbus, bool chg_en)
+366: {
+367: 	u8 enhiz = 0;   /* case : chg_on or chg_off & vbus_uvlo */
+368: 
+369: 	if (vbus && !(chg_en))
+370: 		enhiz = 1;              /* case : chg_off & vbus_pok */
+371: 
+372: 	dev_info(sm5440->dev, "%s: vbus=%d, chg_en=%d, enhiz=%d\n",
+373: 			__func__, vbus, chg_en, enhiz);
+374: 	sm5440_update_reg(sm5440, SM5440_REG_CNTL6, enhiz, 0x1, 7);
+375: 
+376: 	return 0;
+377: }

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /sys/kernel/debug/sm5440-0-0063/snapshot; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "utc": "2026-10-02T16:05:13.680264+00:00",
+  "exit_code": 0,
+  "device_writes": false
+}

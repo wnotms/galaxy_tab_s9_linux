@@ -1,6 +1,23 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current state (2026-10-02)
+## Current state (2026-10-03)
+
+Test304 READ_ONLY_OPERATING_STATE_CAPTURED. Same retained299/Test30057535...
+notes/config;19 single stable control/identity regmap reads (exact range0-2b,
+7-byte seek/read/O_RDONLY/noINT), no devicewrite/reboot/PPS/pump/faultclear.
+CNTL6=89/ENHIZ1; vendor init09 clears it but vendor attached+OFF explicitly
+setsENHIZ1: condition difference, NOT proven bug/cause. Other principal init
+controls already match vendor; do not import wholesale active init. Inherited
+inactive VBATCNTL37=4487.5mV/IBUSCNTL41=3250mA not measured/approved limits.
+Sameboot1180journal/zeroCPUfault+thermaldisable/packzoneenabled31.8C/noSM5440zone;
+snapshot stale/fault1/pending2 remains. Startup pairs222/328mV difference,
+142/128ms converter intervals retained; cause/100ms grant unresolved.
+Initial wrong debugfs path rawerror retained, corrected set-e source path.
+Evidence-only host/build executed:false; no full/CI. Read304RESULTS/summary.
+Next isolated source-backed ENHIZ/ADC condition comparison with OFF/readback/
+restore/PM/fault preservation, registered before mutation; no delay-only replay,
+guessedoffset/threshold waiver or known-failing303 invocation. Stage3NOTREADY/
+fullgoalactive;303consumer remains offline/currentdevice299 thermalfix retained.
 
 Test303 OFFLINE_OWNED_PPS_CONSUMER_QUALIFIED, source53f223cf.568unique affected
 PASS (511unchanged reused+57final); ARM6491.651s/W1sparse8.435s/object+vmlinux

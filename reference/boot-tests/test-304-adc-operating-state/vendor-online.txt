@@ -1,0 +1,29 @@
+810: static int psy_chg_set_online(struct sm5440_charger *sm5440, int online)
+811: {
+812: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+813: 	int ret = 0;
+814: 	u8 vbus_pok = 0x0, reg = 0x0, op_mode = 0x0;
+815: 	bool en_opmode = 0;
+816: 
+817: 	dev_info(sm5440->dev, "%s: online=%d\n", __func__, online);
+818: 
+819: 	if (online < 1) {
+820: 		if (sm_dc_get_current_state(sm_dc) > SM_DC_EOC)
+821: 			sm5440_stop_charging(sm5440);
+822: 	}
+823: 	sm5440->cable_online = online;
+824: 
+825: 	sm5440_read_reg(sm5440, SM5440_REG_STATUS3, &reg);
+826: 	dev_info(sm5440->dev, "%s: STATUS3=0x%x\n", __func__, reg);
+827: 	vbus_pok = (reg >> 5) & 0x1;
+828: 
+829: 	sm5440->vbus_in = vbus_pok;
+830: 	op_mode = sm5440_get_op_mode(sm5440);
+831: 	en_opmode = op_mode < 1 ? 0 : 1;
+832: 	sm5440_set_ENHIZ(sm5440, sm5440->vbus_in, en_opmode);
+833: 
+834: 	sm5440->ps_type = SM_DC_POWER_SUPPLY_PD;
+835: 
+836: 	return ret;
+837: }
+838: 

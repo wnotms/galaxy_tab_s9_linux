@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /sys/class/power_supply/sm5714-battery/uevent"
+  ],
+  "utc": "2026-10-02T16:04:46.411621+00:00",
+  "exit_code": 0,
+  "device_writes": false
+}

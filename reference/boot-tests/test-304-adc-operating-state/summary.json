@@ -1,0 +1,74 @@
+{
+  "test": "Test304",
+  "verdict": "READ_ONLY_OPERATING_STATE_CAPTURED",
+  "source_revision": "628be5ac",
+  "boot_id": "57535bed-a626-48d0-aaaa-3071ac8332e5",
+  "device_baseline": "Test299 retained under Test300",
+  "kernel_notes_sha256": "aea7c145b3901408040453648d8f81cd4cca23f27443d0e1c30d701e35717403",
+  "embedded_config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "kernel_journal_rows": 1180,
+  "kernel_journal_boots": [
+    "57535beda62648d0aaaa3071ac8332e5"
+  ],
+  "cpu_fault_signatures": 0,
+  "thermal_read_failure_messages": 0,
+  "battery_temperature_decic": 318,
+  "battery_thermal_zone_enabled": true,
+  "passive_thermal_zone_present": false,
+  "failed_systemd_units": 0,
+  "mode_before": 1,
+  "mode_after": 1,
+  "cntl6": 137,
+  "enhiz": true,
+  "adc_controls": {
+    "ADCCNTL1": 12,
+    "ADCCNTL2": 223
+  },
+  "stable_register_reads": 19,
+  "interrupt_register_reads": 0,
+  "read_method": "regmap range must be exact0-2b; row7-byte lseek/read only on explicit stable addresses; O_RDONLY",
+  "snapshot_fault": 1,
+  "snapshot_startup_pending": 2,
+  "snapshot_sample_fresh": false,
+  "startup_voltage_pairs": [
+    {
+      "seq": 1,
+      "adc_start_ms": 174,
+      "adc_read_ms": 316,
+      "adc_vbat_uv": 3597000,
+      "gauge_uv": 3819000,
+      "difference_uv": 222000
+    },
+    {
+      "seq": 2,
+      "adc_start_ms": 1369,
+      "adc_read_ms": 1497,
+      "adc_vbat_uv": 3498000,
+      "gauge_uv": 3826000,
+      "difference_uv": 328000
+    }
+  ],
+  "enhiz_during_startup_conversion": "UNKNOWN: CNTL6 was not recorded then",
+  "adc_failure_cause": "UNKNOWN",
+  "active_adc_grant": false,
+  "device_writes": false,
+  "reboot": false,
+  "flash": false,
+  "PPS_requested": false,
+  "pump_enabled": false,
+  "charging_limits_changed": false,
+  "host_tests": {
+    "executed": false,
+    "reason": "read-only evidence/source comparison; no driver/build/config/routing changes"
+  },
+  "build": {
+    "executed": false,
+    "reason": "no changed kernel input"
+  },
+  "initial_collection_issue": {
+    "file": "state.stderr",
+    "error": "incorrect passive debugfs path; shell returned0 due to later commands",
+    "recovery": "separate set-e command on source-derived sm5440-0-0063 path; raw initial error retained"
+  },
+  "next": "Isolated vendor-backed ENHIZ/ADC operating-condition candidate with OFF/readback/restore/PM/fault preservation; qualify source and bounded physical scope before execution. Do not assume HIZ is a defect or import active init wholesale."
+}

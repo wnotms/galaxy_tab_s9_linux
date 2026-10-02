@@ -80,3 +80,21 @@ register bits understood when source only gives a magic aggregate value.
 Test296 adds the vendor20ms disabled rearm interval before the unchanged single-shot
 converter (SM5440_ADC_REARM.md). Test295 adjacent-window differences244–355mV
 remain unexplained; no calibration/threshold/charging grant follows from this fix.
+
+## Test304 live operating-condition comparison
+
+Read-only stable-register evidence on retained Test299/Test300 shows CNTL6=0x89,
+with ENHIZ bit7 set. Vendor `sm5440_set_ENHIZ()` explicitly sets that bit for
+VBUS-present/charging-OFF, whereas `init_reg_param()` and audited Fedora active
+`hw_init()` write0x09 before direct charging. This distinguishes operating
+conditions; it does not prove the inherited OFF state is wrong or caused the
+ADC discrepancy. CNTL6 during original startup conversion remains unknown.
+
+Most other principal vendor initialization values are already present. Inactive
+VBATCNTL=0x37 and IBUSCNTL=0x41 encode4487.5mV and3250mA, respectively; neither
+is measured pack voltage/current nor an approved mainline active ceiling.
+Whole vendor init still disables protections and must not be imported merely
+to obtain ADC readings. See Test304 raw rows/source excerpts/results for a
+bounded ENHIZ/ADC condition comparison proposal. No register writes or changes
+to physical validity/freshness, fault, ordinary charging or active grants were
+made in304.
