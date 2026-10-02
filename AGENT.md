@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test282 independent SINGLE passive symbolic trace registered on accepted281normal
+Test2631c1c3d0d. Read282README/registration/PACKAGE/preflight before writes. Reuse
+272provider+276ownedobserver+279Session+280coordinator;18portable tests/AST/package/
+syntax pass,198protected files unchanged; no build/full/CI. Push before transfer/
+BCB/boot/modules. New282backup slots, onlypaired272boot/181modules; onecandidate
+boot/observer load, firstrefusalSTOP, fixed500ms tail then ownedcleanup/unload.
+Require exact normalcmdline and all health/rescue gates, loss/miss/pair/clock gaps
+UNKNOWN, no causal/ADC/timing grant. Unconditional exact263rollback/readback/
+endpoint; retain all old backups. No repeat/ADC/deadline/PPS/pump/current change.
+Preserve275277280281history. ActiveStage3 NOT READY.
+
 Test281 NORMAL_TEST263_BASELINE_REENTRY_COMPLETED: one ordinary reboot31e9a212
 ->1c1c3d0d387c469098bfcd6db2ac6fb3 uniquely attributed; exact accepted normal
 cmdline restored (lpcharge=1 additions absent), configf2891de2/notesfea0613f exact.
