@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+Test287 SINGLE passive trace registered on normal263d0bbaeb8/Wi-Fi10.125.29.102;
+live identity/health/OFF/rescue/new286diagnostic journal passes. Reuse272/276/
+279/280, explicitly select285nonseekTraceFS +286bounded complete SMMUprofile +
+283nativewaiter/ADC_UPDATED.19portabletests/syntax/staging pass; no build/full/CI
+repeat/sourcechange. Push beforetransfer/BCB/install. Oneboot/load/firstrefusal
+STOP/fixed500ms tail/ownedcleanup/unload; unconditionalexact263rollback/new287
+slots/alloldbackups retained. Group stages/parallel independent reads, no per-
+command pauses. No ADC/deadline/PPS/pump/current/USB/rootfs change; old284STOP
+unchanged. Read287README/registration/PACKAGE/preflight. ActiveStage3 NOT READY.
+
 Test286 OFFLINE_DISPLAY_STARTUP_CLASSIFIER_QUALIFIED_DEVICE_NOT_TESTED:19host+
 syntax/real28499+103replay/source+compiledDTBmapping/input+283284285seals pass.
 New diagnostic-only gate requires full sameboot currentidentity/healthyOFF and

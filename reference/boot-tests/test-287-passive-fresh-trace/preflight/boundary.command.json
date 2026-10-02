@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer; test ! -e /tmp/test287-tools; test ! -e /tmp/test287-capture; for n in original stage tested; do test ! -e /usr/lib/modules/.gts9-test287-$n; done; command -v gts9-debian-to-recovery; cat /sys/kernel/tracing/kprobe_events; ls /sys/kernel/tracing/instances"
+  ],
+  "ended_utc": "2026-10-02T04:55:56.799879+00:00",
+  "started_utc": "2026-10-02T04:55:56.709232+00:00",
+  "status": 0
+}
