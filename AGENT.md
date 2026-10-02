@@ -2,6 +2,21 @@
 
 ## Current state (2026-10-02)
 
+Test300 PASSIVE_THERMAL_FIX_DEVICE_ACCEPTED_CANDIDATE_RETAINED. Currentdevice
+source9173df11/Test299, boot57535beda62648d0aaaa3071ac8332e5; NO LONGER263.
+Oneboot/dynamic noSM5440thermalzone/realpackzone37enabled31.1->31.5C/15sendpoint
+ADB/deviceNCM/SinkDevice/Code0/config notes/fullJSON/noCPUfault pass. Retained
+underregisteredfe9ca9ce; all5write/readback/181paired/BCBclear/unmount pass.
+Notesaea7c145b3901408040453648d8f81cd4cca23f27443d0e1c30d701e35717403; configf2891de2 unchanged.
+Knownpassive startuprefusal/fault1 stays; nofakeTEMP/clearfault/activegrant/PPS/
+pump/current. HostNCMoneprobe255 recorded/no prolongedretry. Exact263boot+
+300original181modules/olderbackups retained; rollback:false onregisteredPASS.
+29affected/buildW1sparse/exactconfigDT/protected181299 reused+8runnerPASS;
+no full/buildrepeatCI. Read300RESULTS/CURRENT_STATUS/PACKAGE/summary/raw.
+Next real liveTCPM/PPS adapter; USBTYPEPDPPS capability != ONLINE2 activePPS;
+ADC/OCP/PM remain unresolved/Stage3NOTREADY/fullgoalactive. Reuseinstallation
+when inputsunchanged; newmutation needsregistration. No224sdelay/oldfixrollback.
+
 Test300 ONE passive thermal registration fix test registered. Source9173df11/
 29929affected/buildW1sparse/exactconfigDT/protected181 qualified;8runner PASS.
 PCUSB/one candidate boot/dynamic thermal NAME absence+realpackvalid/15sendpoint;

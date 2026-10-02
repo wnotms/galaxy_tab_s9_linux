@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "printf %s 'ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af  /tmp/gts9-test300/candidate-boot.img\nf331a2320b1519a9ad958d37200db5923da7ccd0689c5fea5fb53752bd4bce78  /tmp/gts9-test300/candidate-modules.sha256\n0941b232f57b75b9e8ad2278f0bfa49be5c0fca8d2416af97630a661f41e09c0  /tmp/gts9-test300/candidate-modules.tar.gz\n81206af94d9e31e068c353a599331e97ca7eb2b26543dd47c8bc059366f95905  /tmp/gts9-test300/module-swap.sh\n3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca  /tmp/gts9-test300/mount-debian.sh\n50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6  /tmp/gts9-test300/rollback-modules.sha256\ncc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6  /tmp/gts9-test300/rollback-test263-boot.img\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-02T12:08:04.936896+00:00",
+  "started_utc": "2026-10-02T12:08:04.691819+00:00",
+  "status": 0
+}
