@@ -1,0 +1,80 @@
+{
+  "calibration_offset_established": false,
+  "comparison": [
+    {
+      "seq": 1,
+      "test295_difference_uv": 292500,
+      "test296_difference_uv": 283000
+    },
+    {
+      "seq": 2,
+      "test295_difference_uv": 244000,
+      "test296_difference_uv": 224500
+    },
+    {
+      "seq": 3,
+      "test295_difference_uv": 355000,
+      "test296_difference_uv": 319000
+    }
+  ],
+  "diagnostic_only": true,
+  "gauge_hardware_acquisition_time_known": false,
+  "hypothesis": "missing vendor20msdisabled interval explains refusal",
+  "observed_result": "rearm does not resolve discrepancy/startup refusal in this single boot",
+  "pairs": [
+    {
+      "ADC_oldest_to_read_span_ms": 133,
+      "ADC_reads_completed_upper_bound_ms": 302,
+      "ADC_start_ms": 169,
+      "SM5440_vbat_uv": 3597000,
+      "SM5714_gauge_uv": 3880000,
+      "charging_grant": false,
+      "gauge_end_ms": 302,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 283000,
+      "gauge_read_ms": 0,
+      "gauge_start_ms": 302,
+      "independently_calibrated": false,
+      "seq": 1,
+      "simultaneous_conversion": false,
+      "source_us": 306956
+    },
+    {
+      "ADC_oldest_to_read_span_ms": 144,
+      "ADC_reads_completed_upper_bound_ms": 1477,
+      "ADC_start_ms": 1333,
+      "SM5440_vbat_uv": 3597500,
+      "SM5714_gauge_uv": 3822000,
+      "charging_grant": false,
+      "gauge_end_ms": 1478,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 224500,
+      "gauge_read_ms": 1,
+      "gauge_start_ms": 1477,
+      "independently_calibrated": false,
+      "seq": 2,
+      "simultaneous_conversion": false,
+      "source_us": 1482235
+    },
+    {
+      "ADC_oldest_to_read_span_ms": 141,
+      "ADC_reads_completed_upper_bound_ms": 2661,
+      "ADC_start_ms": 2520,
+      "SM5440_vbat_uv": 3497000,
+      "SM5714_gauge_uv": 3816000,
+      "charging_grant": false,
+      "gauge_end_ms": 2661,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 319000,
+      "gauge_read_ms": 0,
+      "gauge_start_ms": 2661,
+      "independently_calibrated": false,
+      "seq": 3,
+      "simultaneous_conversion": false,
+      "source_us": 2666165
+    }
+  ],
+  "physical_cause": "UNKNOWN",
+  "root_cause_established": false,
+  "short_startup_transient_excluded": false
+}

@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Test296 DEVICE_REARM_DIAGNOSTIC_COMPLETED_EXACT263_RESTORED. Source18e495bc,
+oneboot6f688b21/3pairs/15sdeviceendpoint pass;
+20msvendorrearm didnotresolve adjacentwindow224.5–319mV difference; startup
+refusal2.666175s retained/nocalibration orcausalproof. ADB/deviceNCM/Code0/noCPU
+fault, hostNCMtimeouts recordedunderdevice-centredscope/no retry. All5/181263
+restored/BCBclear/unmounted; finalffca1c7b Good44%
+3.826V30.2C, passivehealthREFUSED.
+228affected+5runner/ARM6491.64s/W1sparse/objectsame/exactconfigDT/protected181pass;
+no fullrepeat/CI/PPS/pump/current/threshold/faultclear. Read296RESULTS/paired/raw.
+Next real mainline coordinator prerequisites +vendorOFF-modeADC validity, not
+more delay-only trials orguessedoffset. Fullportgoalactive/Stage3NOTREADY.
+
 Test296 ONE source-backed ADC20msrearm comparison registered, source18e495bc.
 228affected/8new+5runner PASS; ARM6491.64s/W1sparse/objectsame/exact295configDT/
 protected/181pairedpass. CheckedOFF/ADCdisable+unlock20ms+cancellation before

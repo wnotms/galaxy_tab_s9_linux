@@ -1,1 +1,2 @@
-REGISTERED_ONE_VENDOR_REARM_COMPARISON_BOOT; device not yet modified.
+DEVICE_REARM_DIAGNOSTIC_COMPLETED_HYPOTHESIS_UNRESOLVED_EXACT263_RESTORED
+Device OFF-only scope complete, not active charging acceptance; Stage3 NOT READY.
