@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test281 independent normal-baseline reentry registered after owner's continue.
+Incoming31e9a212 exact owner-explained280lpcharge profile; Test263config/notes/
+all5partitions/181module hashes/health/rescue verified once. ONEsystemctlreboot
+after push, max180s readiness, exact accepted normal cmdline + unique boot history
+and15s sameboot endpoint. If different/extra boot/fault/rescue gap STOP, no second
+reboot/auto repair. No flash/module/trace/observer/charging change; preserve280STOP.
+Read281README/registration. Docs/results qualification executed:false, reuse
+frozen275277gates/28024; no build/full/CI. Active Stage3 remains NOT READY.
+
 Test280 STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY / OFFLINE_COORDINATOR_QUALIFIED.
 Owner confirms31e9a212 manual power-on/reboot, not unexplained reboot. Exact263
 config/notes/device health normal; lpcharge=1 still differs from accepted normal
