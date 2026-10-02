@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Additional D:project cleanup2026-10-02:7obsolete Kbuild intermediates +13clean
+detached source worktrees removed; 36.93GiB guest allocation / 30.95GiB
+observed D:free increase, now~37.28GiB free. All43186out/oldreference files
+hash-unchanged;21262debug/config/module/generated inputs moved+verified under
+.work/host-storage-cleanup/2026-10-02-reclaim/retained-build-inputs. Current263/
+272/290/default build providers, formal packages, rollback, WindowsADB/stock/263/
+292 remain; Git revisions/tags intact. Removed7oldincremental dirs no longer
+usable as build trees; reconstruct ifneeded. Online trim only/no WSLshutdown/
+offlinecompact/devicecmd/sourceconfigDTUSBchange. Readreference/host-storage-
+cleanup/2026-10-02-reclaim/README, compressed manifests/summary/validation.
+Storage-only build/hostregression executed:false. Chargingstate293 unchanged.
+
 Test293 OFFLINE_STARTUP_SAMPLE_REFUSAL_ATTRIBUTED;21affected actual263C/replay
 PASS(512combined/1024faultbytevectors),syntax/CLI/old263290291292seals unchanged.
 292final b06bb6c2 confirmation2.304099s/576ticksHZ250 =>5sdeadline excluded.
