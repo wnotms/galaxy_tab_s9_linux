@@ -2,17 +2,19 @@
 
 ## Current state (2026-10-02)
 
-Test302 actual owned PPS protocol operation/callbacks implemented;185affected
-PASS5.102s, ARM64/static/exactconfigDT/protected181 qualification pending.
-Kernel-only ONLINE2/current/voltage with checked switch-OFFlease/source/token,
-exact per-operation RDO pair permission closes onreturn, actual TX/callback
-pair match/native2.5W fixed-return standby, kind distinguishesPPS9V fromfixed9V.
-No installed liveconsumer/devicecmd/pumpON/release/raised ordinary limits/core/
-DTconfig/USB change. Ordinary changes stillrevoke; owned callbacks preservelease
-onlywithverifiedQ4OFF/input100, failuresinhibit/revoke. PPSkeepalive requires
-caller pumpOFF+API again; pinnedTCPMno periodicrefresh timer. Device remains
-retained299/Test30057535...thermalfix. Read302README/design; activeStage3NR,
-physicalADC/OCP/PM/coordinator remain/fullgoalactive.
+Test302 OFFLINE_OWNED_TCPM_PPS_PROTOCOL_QUALIFIED, code de2ebc5c/build21d534c1.
+185affected PASS5.102s/ARM6496.678s/W1sparse8.361s/object+vmlinuxidentical/
+exact301configDT/96protected/8overlays/twoheadercopies/181paired PASS. No full/CI.
+Actual kernel-only ONLINE2/current/voltage with checked switch-OFFlease/source/
+token; exact per-operation RDO permission closes onreturn, native2.5W standby,
+kind distinguishes PPS9V from fixed9V. No installed liveconsumer/devicePPS/pump/
+release/core/DTconfig/USB/current increase. Sharedheader changes require newly
+paired module CRCs. Device stays retained299/Test30057535...thermalfix. Owner
+photo byte-identical to299; read-only sameboot1145journal/zero thermal disable,
+packzone37enabled31.8C, noSM5440zone; see300photo-followup-2026-10-02.
+Read302RESULTS/summary/design. ActiveStage3 NOTREADY; liveconsumer/PM/physical
+ADCfreshness/OCP/PPS/pump acceptance remain/fullgoalactive. Next purposeful
+pumpOFF protocol scope onlyafteractual physical gates, no unchanged delay replay.
 
 Test301 OFFLINE_TCPM_FIXED_RESTORATION_QUALIFIED, source2207d132.143affected
 PASS4.549s/ARM6492.282s/W1sparse/linkedobjects exact (initial omitted ccacheBASE

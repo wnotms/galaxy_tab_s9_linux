@@ -1,0 +1,18 @@
+{
+  "test301_artifacts_intact": {
+    "Image.gz": true,
+    "sm8550-samsung-gts9wifi.dtb": true,
+    "config": true,
+    "kernel-notes.bin": true,
+    "modules-x710.tar.gz": true
+  },
+  "config_identical": true,
+  "dtb_identical": true,
+  "shared_header_both_compiled_copies_match": {
+    "drivers/power/supply/sm5714-stage2.h": true,
+    "drivers/usb/typec/tcpm/sm5714-stage2.h": true
+  },
+  "owner_photo_identical_to_test299": true,
+  "device_build_unchanged": true,
+  "device_only_read_followup": "../test-300-passive-thermal-registration/photo-followup-2026-10-02"
+}

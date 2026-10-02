@@ -1,0 +1,101 @@
+{
+  "test": "Test302",
+  "verdict": "OFFLINE_OWNED_TCPM_PPS_PROTOCOL_QUALIFIED",
+  "implementation_revision": "de2ebc5c5b217d9e38525e81fd18215b113b6ec1",
+  "build_revision": "21d534c16ac103d9e274e8be10e601a414ca8f49",
+  "device_mutation": false,
+  "device_baseline": "Test299 source9173df11 retained under Test300",
+  "tests": {
+    "executed": true,
+    "affected": 185,
+    "elapsed_seconds": 5.102459028999874,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "full_executed": false
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 96.67780080400189
+  },
+  "static": {
+    "exit_code": 0,
+    "elapsed_seconds": 8.36124264099999,
+    "objects_identical_to_linked_build": true,
+    "vmlinux_unchanged": true,
+    "changed_driver_warnings": 0,
+    "upstream_warning": "vDSO __kernel_getrandom declaration; unchanged upstream"
+  },
+  "test301_to_test302_config_diff": {},
+  "test301_to_test302_dtb_diff": {},
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "frozen_stage2_artifacts_intact": true,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "shared_header_copies_match": {
+    "drivers/power/supply/sm5714-stage2.h": true,
+    "drivers/usb/typec/tcpm/sm5714-stage2.h": true
+  },
+  "paired_modules": 181,
+  "module_files_changed_vs_test301": 167,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-302-passive/Image.gz",
+      "sha256": "f8a74930ef0b669057c1a3ac70d91518367dec0a72435e105d151be4ab3c28d3",
+      "bytes": 22133976
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-302-passive/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-302-passive/config",
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-302-passive/kernel-notes.bin",
+      "sha256": "2baf6011e410e8ef191959706e8498b5808adc7265417f38313b78225b6452e2",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-302-passive/modules-x710.tar.gz",
+      "sha256": "ac557937d91092f9b787a8ba6d75f9be46a2bc663a1e9695fad2e4799c39feae",
+      "bytes": 47318989
+    }
+  },
+  "fixed_limits": {
+    "5V_ma": 1800,
+    "9V_ma": 1500
+  },
+  "kernel_api_pps_bounds": {
+    "min_mv": 8200,
+    "max_mv": 10500,
+    "max_ma": 1800
+  },
+  "installed_live_consumer": false,
+  "device_PPS_requested": false,
+  "pump_ON_supported": false,
+  "switching_release_executed": false,
+  "physical_PPS_acceptance": false,
+  "active_stage3_ready": false,
+  "outstanding": [
+    "live coordinator/consumer and PM integration",
+    "physical ADC validity and active freshness",
+    "OCP/protection qualification",
+    "separately registered pump-OFF PPS protocol acceptance before pump activation",
+    "bounded direct-charge physical acceptance"
+  ],
+  "owner_photo_readonly_followup": "reference/boot-tests/test-300-passive-thermal-registration/photo-followup-2026-10-02",
+  "Actions_started": false
+}
