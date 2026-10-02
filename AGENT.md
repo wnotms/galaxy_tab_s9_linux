@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test281 NORMAL_TEST263_BASELINE_REENTRY_COMPLETED: one ordinary reboot31e9a212
+->1c1c3d0d387c469098bfcd6db2ac6fb3 uniquely attributed; exact accepted normal
+cmdline restored (lpcharge=1 additions absent), configf2891de2/notesfea0613f exact.
+All5partitions/181modules verified before reboot, zero software writes/changes.
+Battery/OFF/fault0/PCSDP500/ADB/Wi-Fi10.125.29.181/deviceNCM/WindowsCode0 healthy,
+no CPU signature/failed unit. Two endpoints86.64s apart, not continuous stability
+proof. Read281RESULTS/raw/seal.280STOP retained. No observer/trace/fresh request.
+Docs/results executed:false reuse28024/272/2761481/W1/sparse; no build/full/CI.
+Next separately registered passive trace wrapper/deployment/263rollback only;
+no PPS/pump/current/ADC/deadline change. ActiveStage3 NOT READY.
+
 Test281 independent normal-baseline reentry registered after owner's continue.
 Incoming31e9a212 exact owner-explained280lpcharge profile; Test263config/notes/
 all5partitions/181module hashes/health/rescue verified once. ONEsystemctlreboot
