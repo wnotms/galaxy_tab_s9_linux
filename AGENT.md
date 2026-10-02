@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test289 SINGLE passive I2Cphase observation registered on normal26351d70189/
+Wi-Fi10.125.29.58; live identity/healthOFF/protection/rescue/286journal +all4
+actualI2Ctracepointformats pass. Reuse272/276; select288phaseSession/coordinator/
+decoder +285IO +286hostgate +283nativewaiter.20portabletests/syntax/staging pass,
+no build/full/CI/sourcechange. Push beforetransfer/BCB/install. Oneboot/load/
+max30s8calls100ms/firstrefusalSTOP/500mstail/ownedcleanup/unload; unconditional
+exact263rollback/new289slots/oldbackups retained. Groupstages/batchedpush/
+parallelreads/no percommand pauses. No newI2Caccess/ADC/deadline/PPS/pump/current/
+USB/rootfs change. Read289README/registration/preflight/PACKAGE. ActiveStage3
+NOT READY;287raw/refusal unchanged.
+
 Test288 OFFLINE_I2C_PHASE_PROFILE_QUALIFIED_DEVICE_NOT_TESTED:36host/syntax/
 source+protectedinput/279280283284285286287seals pass(formatawarehash-only/new
 object audit). Newnamed privateSession/decoder/analyser/coordinator observes

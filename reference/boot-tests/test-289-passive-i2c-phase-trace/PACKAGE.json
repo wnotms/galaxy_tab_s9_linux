@@ -1,0 +1,69 @@
+{
+  "artifacts": {
+    "Image.gz": {
+      "bytes": 22125671,
+      "path": "out/kernel-x710-272-passive/Image.gz",
+      "sha256": "e61fa442a29017880e7d3702a2ebb1375027937351a7b407ae9e0f6b6ab66456"
+    },
+    "config": {
+      "bytes": 243276,
+      "path": "out/kernel-x710-272-passive/config",
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5"
+    },
+    "kernel-notes.bin": {
+      "bytes": 84,
+      "path": "out/kernel-x710-272-passive/kernel-notes.bin",
+      "sha256": "51db912b126b4d68e581b3a1e89b25726db177062551a25817f0c8bddcb380d7"
+    },
+    "modules-x710.tar.gz": {
+      "bytes": 47319155,
+      "path": "out/kernel-x710-272-passive/modules-x710.tar.gz",
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 176935,
+      "path": "out/kernel-x710-272-passive/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    }
+  },
+  "baseline_partitions": {
+    "boot": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "build_executed": false,
+  "candidate_partitions": {
+    "boot": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "classification": "Test286 complete startup display triplets + frozen283 ADC_UPDATED",
+  "exact_embedded_Image_DTB_config": true,
+  "i2c_phase_profile": "Test28836hostqualified/sourceaudit",
+  "kernel_release": "7.2.0-rc3-gts9wifi-dirty",
+  "kernel_source_revision": "399eb49786039d8ef654769dd94ef2a439d0af90",
+  "modules_must_be_paired": true,
+  "observer": {
+    "architecture": "AArch64",
+    "bytes": 273080,
+    "installed": false,
+    "path": "out/sm5440-fresh-observer-276/sm5440-fresh-observer.ko",
+    "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582"
+  },
+  "observer_qualification": "Test2767a887eab26affected/full1481/W1/sparse",
+  "protected_kernel_inputs_unchanged": true,
+  "provider_qualification": "Test272399eb497",
+  "reuse_boot_bundle": "out/boot-bundle-x710-275-passive/boot.img",
+  "source_wrapper_revision": "pending registration commit",
+  "stage_root": "D:/android/gts9-active/gts9-test289",
+  "test": "Test289",
+  "vbmeta_reused_exact263": true,
+  "vendor_boot_unchanged_no_write": true,
+  "write_partitions": [
+    "boot"
+  ]
+}

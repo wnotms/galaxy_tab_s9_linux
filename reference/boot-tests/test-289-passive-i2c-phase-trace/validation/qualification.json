@@ -1,0 +1,30 @@
+{
+  "host_tests": {
+    "executed": true,
+    "count": 20,
+    "result": "PASS",
+    "includes": "explicit288phasecoordinator +285IOselection +18portabletests"
+  },
+  "syntax": "PASS",
+  "staging": "PASS",
+  "actual_I2C_formats": "PASS",
+  "build": {
+    "executed": false,
+    "reason": "same272/276"
+  },
+  "full": {
+    "executed": false,
+    "reason": "referencewrapper only; no routing/build integration"
+  },
+  "reuse": [
+    "272",
+    "2761481/W1/sparse",
+    "27950",
+    "28024",
+    "28328",
+    "28512",
+    "28619",
+    "28836"
+  ],
+  "CI": false
+}
