@@ -1,6 +1,16 @@
 # AGENT.md — SM-X710 mainline port working rules
 
-## Current state (2026-10-01)
+## Current state (2026-10-02)
+
+Test280 read-only preflight STOP_CMDLINE_IDENTITY: currentboot31e9a2127e7c41909c8ddd601badc85b
+has accepted263config/notes, healthyPCSDP500/OFF/fault0/battery/ADB/Wi-Fi/deviceNCM,
+but lpcharge=1 runtime cmdline differs from accepted normal boot. New boot cause
+awaits owner; agent sent no reboot. Raw280preflight retained. No tracefs write,
+observer load, transfer, flash or module change; no automatic identity exemption,
+reboot or retry. Continue offline single-process trace/observer coordinator tests
+only under280registration. Preserve279/275/277 seals; reuse qualification, no
+build/full/routing/CI. Future physical test needs separate accepted normal-boot
+registration. Active Stage3 remains NOT READY.
 
 Test279 OFFLINE_COLLECTOR_QUALIFIED_PHYSICAL_NOT_TESTED:50 host tests+syntax pass.
 Independent tracefs instance and symbolic probes; raw/hash/clock/loss/miss/PID/work

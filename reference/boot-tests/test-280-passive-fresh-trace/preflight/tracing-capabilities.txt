@@ -1,0 +1,75 @@
+/usr/bin/python3
+Python 3.13.5
+@@mounts
+proc /proc proc rw,relatime 0 0
+sysfs /sys sysfs rw,relatime 0 0
+devtmpfs /dev devtmpfs rw,relatime,size=5419196k,nr_inodes=1354799,mode=755 0 0
+tmpfs /run tmpfs rw,relatime 0 0
+/dev/mmcblk1p1 / ext4 rw,noatime 0 0
+securityfs /sys/kernel/security securityfs rw,nosuid,nodev,noexec,relatime 0 0
+selinuxfs /sys/fs/selinux selinuxfs rw,nosuid,noexec,relatime 0 0
+tmpfs /dev/shm tmpfs rw,nosuid,nodev 0 0
+devpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=600,ptmxmode=000 0 0
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+none /sys/fs/pstore pstore rw,nosuid,nodev,noexec,relatime 0 0
+bpf /sys/fs/bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700 0 0
+tmpfs /run/credentials/systemd-journald.service tmpfs ro,nosuid,nodev,noexec,relatime,nosymfollow,size=1024k,nr_inodes=1024,mode=700,noswap 0 0
+tracefs /sys/kernel/tracing tracefs rw,nosuid,nodev,noexec,relatime 0 0
+mqueue /dev/mqueue mqueue rw,nosuid,nodev,noexec,relatime 0 0
+debugfs /sys/kernel/debug debugfs rw,nosuid,nodev,noexec,relatime 0 0
+fusectl /sys/fs/fuse/connections fusectl rw,nosuid,nodev,noexec,relatime 0 0
+configfs /sys/kernel/config configfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /tmp tmpfs rw,nosuid,nodev,size=5428696k,nr_inodes=1048576 0 0
+tmpfs /run/lock tmpfs rw,nosuid,nodev,noexec,relatime,size=5120k 0 0
+adb /dev/usb-ffs/adb functionfs rw,relatime 0 0
+tmpfs /run/credentials/getty@tty1.service tmpfs ro,nosuid,nodev,noexec,relatime,nosymfollow,size=1024k,nr_inodes=1024,mode=700,noswap 0 0
+@@tracefs
+root=/sys/kernel/tracing
+[local] global counter uptime perf mono mono_raw boot tai
+annotate
+bin
+bitmask-list
+block
+context-info
+copy_trace_marker
+disable_on_free
+event-fork
+fields
+hash-ptr
+hex
+irq-info
+latency-format
+markers
+overwrite
+pause-on-trace
+print-parent
+printk-msg-only
+raw
+record-cmd
+record-tgid
+stacktrace
+sym-addr
+sym-offset
+sym-userobj
+test_nop_accept
+test_nop_refuse
+trace_printk
+trace_printk_dest
+userstacktrace
+verbose
+@@work-format
+name: workqueue_execute_start
+ID: 82
+format:
+	field:unsigned short common_type;	offset:0;	size:2;	signed:0;
+	field:unsigned char common_flags;	offset:2;	size:1;	signed:0;
+	field:unsigned char common_preempt_count;	offset:3;	size:1;	signed:0;
+	field:int common_pid;	offset:4;	size:4;	signed:1;
+
+	field:void * work;	offset:8;	size:8;	signed:0;
+	field:void * function;	offset:16;	size:8;	signed:0;
+
+print fmt: "work struct %p: function %ps", REC->work, REC->function
+@@probes
+@@instances
+@@absent

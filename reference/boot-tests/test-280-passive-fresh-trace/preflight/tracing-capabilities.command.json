@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; command -v python3; python3 --version; echo @@mounts; cat /proc/mounts; echo @@tracefs; for t in /sys/kernel/tracing /sys/kernel/debug/tracing; do if test -f \"$t/kprobe_events\"; then echo \"root=$t\"; cat \"$t/trace_clock\"; ls \"$t/options\"; echo @@work-format; cat \"$t/events/workqueue/workqueue_execute_start/format\"; echo @@probes; cat \"$t/kprobe_events\"; echo @@instances; ls \"$t/instances\"; break; fi; done; echo @@absent; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer/result"
+  ],
+  "ended_utc": "2026-10-02T02:58:49.402788+00:00",
+  "started_utc": "2026-10-02T02:58:49.288384+00:00",
+  "status": 0
+}

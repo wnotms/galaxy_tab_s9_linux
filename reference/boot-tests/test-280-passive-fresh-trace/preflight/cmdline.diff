@@ -1,0 +1,5 @@
+--- accepted-normal-boot
++++ current-readonly-boot
+@@ -23,9 +23,18 @@
+ sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3-pdic_notifier_module.pdic_param_lpcharge=0-nfc_sec.nfc_param_lpcharge=0-flicker_sensor.flicker_param_lpcharge=0+pdic_notifier_module.pdic_param_lpcharge=1+nfc_sec.nfc_param_lpcharge=1+flicker_sensor.flicker_param_lpcharge=1+cpufreq_limit.lpcharge=1+sec-battery.lpcharge=1+max77705_charger.lpcharge=1+max77705-fuelgauge.lpcharge=1+p9320_charger.lpcharge=1+s2miw04_charger.lpcharge=1+cps4038_charger.lpcharge=1+nu1668_charger.lpcharge=1+msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00@@ -42,6 +51,6 @@
+ sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0-sec_pon_alarm.lpcharge=0+sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277

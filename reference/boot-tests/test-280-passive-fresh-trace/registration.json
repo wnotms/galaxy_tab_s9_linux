@@ -1,0 +1,23 @@
+{
+  "test": "Test280",
+  "baseline_revision": "e68c9f7f",
+  "purpose": "single-process passive trace/observer integration qualification; read-only physical preflight stopped",
+  "physical_state": "STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY",
+  "physical_retry": false,
+  "offline_coordinator_tests": true,
+  "provider_revision": "399eb497",
+  "observer_revision": "7a887eab",
+  "observer_sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+  "device_mutation_authorized_by_this_registration": false,
+  "observer_loads_executed": 0,
+  "device_tracefs_writes_executed": 0,
+  "future_coordinator_maximum_observation_seconds": 30,
+  "future_coordinator_tail_seconds": 0.5,
+  "future_coordinator_unload_timeout_seconds": 10,
+  "deadline_ms_unchanged": 100,
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "rollback": "not needed in280; no device changes",
+  "qualification": "affected mock coordinator tests+syntax; reuse Test27950 and Test272/2761481/W1/sparse; no build/full/routing/CI"
+}
