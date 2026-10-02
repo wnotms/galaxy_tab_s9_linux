@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-02)
 
+Test298 RUNTIME_DEVICE_DIAGNOSTIC_COMPLETED_EXACT263_RESTORED. Sourceeefef33f,
+registration15f1bae6/oneboot1b47865f/oneAPIret0 at17.275s:
+instance1/source9/budget14/PDO3701912c fixed5V3A/currentTCPM5V1.8A;15sdevice
+endpoint ADB/deviceNCM/SinkDevice/Code0/noCPUfaultpass. PCactualinput500mA/SDP,
+not9Wphysicalmeasurement/chargegrant. CandidateSM5440cachedOFF/fault0/IBUS0;
+oldADC/OCP/PM questions unresolved. HostNCMoneprobe255 recorded/no retry.
+All5/181263 restored/BCBclear/rootunmounted; finalacdd2dfc
+Good43%/3.817V/29.8C/ADB/deviceNCM/Code0.
+10runner PASS;reuse297119/buildW1sparse/exactconfigDT/protected181/no fullrepeatCI.
+NoPPS/pump/current/rootfs/configDT/USB/core change. Read298RESULTS/summary/raw.
+Next real liveTCPM/PPS coordinator withphysicalADC/OCP/PM gates, no delay-only
+replay. Fullgoalactive/Stage3NOTREADY. Changedchecks+shortpurposefuldevice scope.
+
 Test298 ONE standardTCPM runtime read registered; qualified297sourceeefef33f/
 119tests/buildW1sparse/exactconfigDT/protected181 reused;10new runner PASS.
 Current263ffca1c7b sameboot/all5/181/confignotes/ADB/deviceNCM/Code0/Goodbattery

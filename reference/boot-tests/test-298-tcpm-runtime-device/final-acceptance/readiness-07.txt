@@ -1,0 +1,117 @@
+@@boot
+acdd2dfc-7f8a-4970-aa57-d71edab99df6
+@@uname
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+@@cmdline
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+@@uptime
+7.02 35.61
+@@identity
+f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5  -
+fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34  /sys/kernel/notes
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3801000
+POWER_SUPPLY_VOLTAGE_AVG=3818000
+POWER_SUPPLY_VOLTAGE_OCV=3838000
+POWER_SUPPLY_CURRENT_NOW=-858000
+POWER_SUPPLY_CURRENT_AVG=-533000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=43
+POWER_SUPPLY_TEMP=286
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD
+@@passive
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Unspecified failure
+POWER_SUPPLY_TYPE=Mains
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4294894068
+sample_present=1
+sample_fresh=0
+sample_age_ms=4524
+stopped=0
+fault=1
+startup_pending=1
+last_sample_error=0
+startup_retained=1
+startup_capture_jiffies=4294892365
+sample_valid=1
+sample_stamp_jiffies=4294892937
+sample_faults=0x0
+sample_int=00 00 00 00
+sample_status=00 00 20 00
+sample_adc=19 48 70 70 00 00 64 38 07 5a a0
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4905000
+sample_vbat_uv=3498000
+sample_ibus_ua=0
+sample_die_decic=260
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x80
+startup_int=00 00 62 00
+startup_status=00 00 20 00
+startup_adc=18 c0 6e 80 00 00 63 b0 07 60 c8
+startup_int4_disable=0x00
+startup_int4_wait=0x01
+startup_mode_before=0x01
+startup_mode_after=0x01
+startup_cntl2=0xf2
+startup_vbuscntl=0xe7
+startup_vbatcntl=0x37
+startup_prtncntl=0xfe
+startup_vbus_uv=4888000
+startup_vbat_uv=3596500
+startup_ibus_ua=0
+startup_die_decic=260
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+@@services
+activating
+active
+activating
+@@roles
+[sink]
+[device]
+@@failed
+@@dcc
+absent

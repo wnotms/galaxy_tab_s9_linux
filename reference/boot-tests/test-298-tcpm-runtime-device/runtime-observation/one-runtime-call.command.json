@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@before; cat /proc/sys/kernel/random/boot_id; echo @@runtime; set -- /sys/kernel/debug/sm5714-*/current-port; test \"$#\" -eq 1; test -f \"$1\"; test \"$(stat -c %a \"$1\")\" = 400; cat \"$1\"; echo @@supply; set -- /sys/class/power_supply/tcpm-source-psy-*; test \"$#\" -eq 1; cat \"$1/uevent\"; echo @@after; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-02T11:46:04.933623+00:00",
+  "started_utc": "2026-10-02T11:46:04.846061+00:00",
+  "status": 0
+}
