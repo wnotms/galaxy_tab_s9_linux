@@ -61,6 +61,11 @@ static u64 ktime_get_boottime(void) {return fake_boottime_ms*1000000;}
 #define jiffies fake_jiffies
 #define msecs_to_jiffies(ms) (ms)
 #define time_after(a,b) ((long)((b)-(a))<0)
+/* Supplier absent in legacy hardware fixtures; diagnostic must not affect policy. */
+static struct power_supply *power_supply_get_by_name(const char *name) {(void)name;return NULL;}
+static int power_supply_get_property(struct power_supply *p,enum power_supply_property prop,
+ union power_supply_propval *v) {(void)p;(void)prop;(void)v;return -ENODEV;}
+static void power_supply_put(struct power_supply *p) {(void)p;}
 static struct sm5440_direct *power_supply_get_drvdata(struct power_supply *p) {return p->sm;}
 static void log_stub(int dev,const char *fmt,...) {(void)dev;(void)fmt;}
 #define dev_err log_stub
@@ -114,6 +119,7 @@ static void msleep(unsigned int ms) {
         code += function(src, "static bool sm5440_passive_pc_sample(") + "\n"
         code += function(src, "static bool sm5440_startup_revblk(") + "\n"
         code += function(src, "static bool sm5440_startup_matches(") + "\n"
+        code += function(src, "static void sm5440_startup_gauge(") + "\n"
         code += function(src, "static void sm5440_poll(") + "\n"
         code += function(src, "static int sm5440_quiesce(") + "\n"
         code += function(src, "static int sm5440_resume(") + "\n"

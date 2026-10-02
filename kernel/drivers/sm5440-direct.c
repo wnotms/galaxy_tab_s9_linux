@@ -34,6 +34,10 @@ struct sm5440_sample {
 	/* After complete checked reads, immediately before cache publication. */
 	u64 completed_ms;
 	u64 acquisition_seq;
+	/* Startup diagnostic only; never consulted by charging/admission. */
+	u64 adc_read_completed_ms, gauge_started_ms, gauge_completed_ms;
+	int gauge_ret, gauge_uv;
+	bool gauge_attempted;
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
 	u8 int4_after_disable, int4_wait, mode_before, mode_after;
@@ -423,6 +427,13 @@ static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
 {
 	seq_printf(seq, "%s_valid=%u\n%s_stamp_jiffies=%lu\n%s_faults=0x%x\n",
 		   name, sample->valid, name, sample->stamp, name, sample->faults);
+	seq_printf(seq, "%s_gauge_attempted=%u\n%s_adc_read_completed_ms=%llu\n"
+		   "%s_gauge_started_ms=%llu\n%s_gauge_completed_ms=%llu\n"
+		   "%s_gauge_ret=%d\n%s_gauge_uv=%d\n", name, sample->gauge_attempted,
+		   name, (unsigned long long)sample->adc_read_completed_ms,
+		   name, (unsigned long long)sample->gauge_started_ms,
+		   name, (unsigned long long)sample->gauge_completed_ms,
+		   name, sample->gauge_ret, name, sample->gauge_uv);
 	seq_printf(seq, "%s_int=%*ph\n%s_status=%*ph\n%s_adc=%*ph\n", name,
 		   4, sample->int_before, name, 4, sample->status, name, 11, sample->adc);
 	seq_printf(seq, "%s_int4_disable=0x%02x\n%s_int4_wait=0x%02x\n",
@@ -670,6 +681,33 @@ static bool sm5440_startup_matches(const struct sm5440_sample *sample,
 		sample->prtncntl == initial->prtncntl;
 }
 
+/* Near-time comparison, not sensor calibration or a charging grant.
+ * Called only for startup evidence, after sample_once has released io_lock.
+ * The standard SM5714 property reads fresh SRAM under its own sram_lock.
+ * No SM5440/companion lock may cross this supplier call.
+ */
+static void sm5440_startup_gauge(struct sm5440_sample *sample)
+{
+	union power_supply_propval value = {};
+	struct power_supply *gauge;
+
+	sample->adc_read_completed_ms = ktime_to_ms(ktime_get_boottime());
+	sample->gauge_attempted = true;
+	sample->gauge_uv = 0;
+	sample->gauge_started_ms = ktime_to_ms(ktime_get_boottime());
+	gauge = power_supply_get_by_name("sm5714-battery");
+	if (!gauge) {
+		sample->gauge_ret = -ENODEV;
+	} else {
+		sample->gauge_ret = power_supply_get_property(gauge,
+					POWER_SUPPLY_PROP_VOLTAGE_NOW, &value);
+		if (!sample->gauge_ret)
+			sample->gauge_uv = value.intval;
+		power_supply_put(gauge);
+	}
+	sample->gauge_completed_ms = ktime_to_ms(ktime_get_boottime());
+}
+
 static void sm5440_poll(struct work_struct *work)
 {
 	struct sm5440_direct *sm = container_of(to_delayed_work(work),
@@ -680,6 +718,18 @@ static void sm5440_poll(struct work_struct *work)
 	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
 		return;
 	ret = sm5440_sample_once(sm, &sample);
+	if (!ret && (!sm->initial_sample_done || sm->startup_confirmations)) {
+		sm5440_startup_gauge(&sample);
+		dev_info(sm->dev,
+			 "startup voltage pair seq=%llu ADC-start=%llums ADC-read=%llums VBAT=%uuV gauge-start=%llums gauge-end=%llums gauge-ret=%d gauge=%duV\n",
+			 (unsigned long long)sample.acquisition_seq,
+			 (unsigned long long)sample.acquired_ms,
+			 (unsigned long long)sample.adc_read_completed_ms,
+			 sample.vbat_uv,
+			 (unsigned long long)sample.gauge_started_ms,
+			 (unsigned long long)sample.gauge_completed_ms,
+			 sample.gauge_ret, sample.gauge_uv);
+	}
 	mutex_lock(&sm->io_lock);
 	sm->last_sample_error = ret;
 	if (ret) {
