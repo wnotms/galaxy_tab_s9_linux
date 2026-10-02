@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-02)
 
+Test282 STOP_UNCLASSIFIED_PASSIVE_STARTUP_EVENT on272dd9a0205: frozen275gate
+rejects INT00 00 62 01 vs accepted00 00 62 00. OFF01/01/IBUS0/bitmap80, driver
+confirmation2.300114s/currentfault0/healthy/ADBWi-FideviceNCM/noCode43/CPUfault.
+No exemption: zeroobserverloads/freshrequests/tracefswrites/tools transfer. Read
+282ACQUISITION_STATUS/raw/seal. Next unconditional exact263rollback only; no
+second boot/acquisition/ADC/deadline/PPS/pump/current change. ActiveStage3 NOT READY.
+
 Test282 paired installation READBACK VERIFIED in TWRP: sealed272bootd837b52f/
 181modules, other4partitions exact263; original181modules under unique282backup/
 allolderbackups retained/rootunmounted/BCBclear. Read282INSTALL_STATUS/raw/seal.
