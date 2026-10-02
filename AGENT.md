@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Test286 OFFLINE_DISPLAY_STARTUP_CLASSIFIER_QUALIFIED_DEVICE_NOT_TESTED:19host+
+syntax/real28499+103replay/source+compiledDTBmapping/input+283284285seals pass.
+New diagnostic-only gate requires full sameboot currentidentity/healthyOFF and
+complete <=10 SMMU triplets/first200ms/each1ms/priority3/SID1c00/cb9/splash/
+exactflags/matching one observed98/99/102/103tag. Old STOPs/sharedparser/gates
+unchanged; CPU/otherfaults stop. SIDdisplay/sourcechronology proved, rootcause
+UNKNOWN; earlier unprogrammedbank/harmlessness claim corrected in docs. Zero
+device/source/build/full/CI changes. Reuse272/276/279/280/283/285qualification.
+Next separate single physical registration selecting285IO +286gate +283native
+waiter; unconditional263rollback/no ADC/deadline/PPS/pump/current change. Read
+286README/RESULTS/replay. Current263from284 unchanged. ActiveStage3 NOT READY.
+
 Test285 OFFLINE_COMMAND_IO_QUALIFIED_DEVICE_NOT_TESTED:12hosttests inclrealHOST
 seq_file appendopenEINVAL/nonseekopen+mockwrite, syntax/hash pass. Newadapter
 tracefs_io overrides279kprobe_eventswrite: O_WRONLY|O_CLOEXEC/no append/truncate/

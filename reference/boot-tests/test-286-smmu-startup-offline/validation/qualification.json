@@ -1,0 +1,25 @@
+{
+  "CI": false,
+  "affected_tests": {
+    "count": 19,
+    "executed": true,
+    "result": "PASS"
+  },
+  "build": {
+    "executed": false,
+    "reason": "same sealed272 kernel/DT/config/modules and276 observer"
+  },
+  "full": {
+    "executed": false,
+    "reason": "new offline profile only; no routing/build integration change"
+  },
+  "reuse": [
+    "Test272 provider",
+    "Test276 owned observer/full1481/W1/sparse",
+    "Test279 session/parser50",
+    "Test280 coordinator24",
+    "Test283 ADC bitfield28",
+    "Test285 nonseek commandIO12"
+  ],
+  "syntax": "PASS"
+}

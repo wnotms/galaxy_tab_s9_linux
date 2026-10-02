@@ -1,0 +1,82 @@
+{
+  ".work/build/linux-out-x710-272-passive/vmlinux": {
+    "bytes": 487306064,
+    "sha256": "9ca5a2e1b865663e96ba36df1111b5d92cfdce6867c89d81a30457cb072d4bad"
+  },
+  ".work/build/linux-src-x710-charging/arch/arm64/boot/dts/qcom/sm8550.dtsi": {
+    "bytes": 188031,
+    "sha256": "15342d242441d979ed0584be7c5fd34ca044169d962610b5d1938292c2e7954e"
+  },
+  ".work/build/linux-src-x710-charging/arch/arm64/include/asm/insn.h": {
+    "bytes": 24094,
+    "sha256": "30b47a0fe92f00fa2807090144084893ca6831f1056063f4d88d14bedcd6945e"
+  },
+  ".work/build/linux-src-x710-charging/arch/arm64/kernel/probes/decode-insn.c": {
+    "bytes": 5607,
+    "sha256": "6e7d844cfed958f147ef982c05dac42218b579e1fe596cb770ee728b8256e9d8"
+  },
+  ".work/build/linux-src-x710-charging/arch/arm64/kernel/probes/kprobes.c": {
+    "bytes": 10937,
+    "sha256": "ff68c52722b29ce7d0594d8b33920bd13df66c98460491ea5f5fbda8cec14346"
+  },
+  ".work/build/linux-src-x710-charging/drivers/iommu/arm/arm-smmu/arm-smmu.c": {
+    "bytes": 67881,
+    "sha256": "580bcc9326837da0607e45843f4906694c28a0a5b68ca9297bc516747704d55f"
+  },
+  ".work/build/linux-src-x710-charging/drivers/iommu/arm/arm-smmu/arm-smmu.h": {
+    "bytes": 16885,
+    "sha256": "b7221ee9b767594ba79cfc139fca838236f81ba949fb5e0be81e31ef42b1911c"
+  },
+  "kernel/dts/sm8550-samsung-gts9wifi.dts": {
+    "bytes": 57937,
+    "sha256": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a"
+  },
+  "out/kernel-x710-272-passive/sm8550-samsung-gts9wifi.dtb": {
+    "bytes": 176935,
+    "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+  },
+  "reference/boot-tests/test-275-passive-fresh-acquisition/gate.py": {
+    "bytes": 9024,
+    "sha256": "149279d8c781354571d3f89bc2071aed1612a3540f654695beaf1519bda4c925"
+  },
+  "reference/boot-tests/test-283-startup-adc-event-offline/gate.py": {
+    "bytes": 5475,
+    "sha256": "ad982cb126b3f7f3bdd4f8baef49225ef843c4203420495b65f0be8cde15401b"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/SHA256.json": {
+    "bytes": 59307,
+    "sha256": "df4273233ebfc4189dada0d923b5709d60c0a215058f4f862856ef35ad466769"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/candidate-admission/current-state.txt": {
+    "bytes": 4594,
+    "sha256": "61c1da42bb5999fc51a9bbf5a94901b857700e3fabc4eb77b4b6427e689c5a80"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/candidate-admission/kernel-json.txt": {
+    "bytes": 738588,
+    "sha256": "3014ab87176954671c9cb6dea20314c90feddc54b311112c464a9055803180ef"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/candidate-admission/summary.json": {
+    "bytes": 6508,
+    "sha256": "12938e23fd159a7e3bb394af09fde48cf1400984a4b06e3605c87edae235be25"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/final-acceptance/current-state.txt": {
+    "bytes": 4640,
+    "sha256": "af111e3c15e454b9c9e1b0394467a60a49d1abfd69309fd909423801e246ffce"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/final-acceptance/kernel-json.txt": {
+    "bytes": 761638,
+    "sha256": "0d58c344d5a957cbb248e0692b8f113949222cb328a6630d36baaf3c50081fde"
+  },
+  "reference/boot-tests/test-284-passive-fresh-trace/final-acceptance/summary.json": {
+    "bytes": 7035,
+    "sha256": "1d51e4ac6e7df8b7f16854dae60342bc91f0b0b27dbaee4cc80c3a1a67695dac"
+  },
+  "reference/boot-tests/test-285-tracefs-command-io-offline/SHA256.json": {
+    "bytes": 1288,
+    "sha256": "e9aa1f6d041bfa816c4dde60cf05476883da63ea2ff2d3676a3604ec9465888a"
+  },
+  "scripts/production_stability_evidence.py": {
+    "bytes": 16348,
+    "sha256": "998a23b2cf6889117a823b8c2623b8c50596fd74c79f944283ab7da8ae37589a"
+  }
+}

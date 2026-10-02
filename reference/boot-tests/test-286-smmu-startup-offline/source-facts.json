@@ -1,0 +1,187 @@
+{
+  "apps_smmu_phandle": "3a",
+  "charging_causality": "NOT ESTABLISHED",
+  "compiled_DTB_sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "mdss_iommus": "3a 1c00 2",
+  "observed_rows": [
+    {
+      "message": "arm-smmu 3da0000.iommu: \t22 context banks (0 stage-2 only)",
+      "source_us": 124965
+    },
+    {
+      "message": "arm-smmu 3da0000.iommu: \tpreserved 0 boot mappings",
+      "source_us": 125068
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: \t70 context banks (0 stage-2 only)",
+      "source_us": 131215
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: \tpreserved 0 boot mappings",
+      "source_us": 131984
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139044
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139080
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139101
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8074b00, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139134
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139158
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139177
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a4400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139207
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139228
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139246
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80cf500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139275
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139296
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139314
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80fb800, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139343
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139364
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139383
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8125400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139412
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139433
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139451
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8151400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139480
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139501
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139518
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb817d500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139547
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139568
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139586
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81a8200, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139616
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139636
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139654
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81d3100, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "source_us": 139684
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00",
+      "source_us": 139704
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "source_us": 139722
+    },
+    {
+      "message": "sm5440-passive 0-0063: passive SM5440 revision 2; pump activation unavailable",
+      "source_us": 147315
+    },
+    {
+      "message": "sm5714-battery 2-0049: SM5714 charger device id 0x09",
+      "source_us": 150163
+    },
+    {
+      "message": "sm5714-battery 2-0049: SM5714 fuel gauge device id 0x0001",
+      "source_us": 150355
+    },
+    {
+      "message": "sm5714-battery 2-0049: SM5714 MUIC device id 0x01",
+      "source_us": 150516
+    },
+    {
+      "message": "sm5714-battery 2-0049: battery regulation voltage 4440 mV",
+      "source_us": 151532
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)",
+      "source_us": 164765
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: SM-X710 fixed5/9V Sink/Device TCPC registered",
+      "source_us": 165351
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)",
+      "source_us": 166494
+    },
+    {
+      "message": "sm5440-passive 0-0063: passive startup REVBLK awaiting two fresh confirmations",
+      "source_us": 277784
+    },
+    {
+      "message": "sm5440-passive 0-0063: passive fault bitmap=0x80 INT=00 00 62 00 STATUS=00 00 20 00 INT4-disable=00 INT4-wait=01 mode=01/01 CNTL2=f2 VBUSCNTL=e7 VBATCNTL=37 PRTNCNTL=fe ADC=18 b8 7b 30 00 00 65 30 06 75 f0 VBUS=4887000uV VBAT=3935000uV IBUS=0uA die=255 deciC",
+      "source_us": 277806
+    }
+  ],
+  "root_cause": "UNKNOWN",
+  "splash_reg": "0 b8000000 0 2b00000"
+}

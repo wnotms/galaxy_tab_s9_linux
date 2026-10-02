@@ -1,5 +1,21 @@
 # The X710's earliest abnormal event: SMMU context faults on the MDSS stream
 
+## Evidence boundary correction (Test286, 2026-10-02)
+
+The SID-to-MDSS mapping below is supported by the pinned source and compiled DTB.
+The earlier explanation that a differing `cb`/`S1CBNDX` **proves** an unprogrammed
+context bank or a harmless bootloader handoff is a hypothesis, not a demonstrated
+mechanism. Likewise, the archived count variation does not prove driver faults
+impossible. Test284's restored263 boot reports70 hardware context banks and
+S1CBNDX103; those observations must not be conflated into a valid bank103.
+No causal connection to CPU stalls or charging faults has been established.
+
+Test286 records the exact source/compiled-DTB mapping and bounds complete startup
+triplets for a diagnostic-only profile; it does not repair the underlying issue
+or rewrite previous STOPs. See
+`reference/boot-tests/test-286-smmu-startup-offline/README.md` and its raw-preserving
+replay reports. The historical analysis below is retained with this correction.
+
 Every boot of this port produces a handful of `arm-smmu` context faults in the
 first half-second, before anything else abnormal happens. By the investigation's
 own rule — establish `first abnormal event → first stalled subsystem →
