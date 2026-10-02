@@ -1,0 +1,68 @@
+{
+  "test": "Test299",
+  "verdict": "PASSIVE_THERMAL_INCIDENT_ATTRIBUTED_AND_OFFLINE_FIX_QUALIFIED",
+  "source_revision": "9173df11",
+  "incident_boot_id": "acdd2dfc7f8a4970aa57d71edab99df6",
+  "zone37": "sm5440-passive",
+  "cause": "old startup confirmation refusal stops sampler; stale/ENODATA disables auto tripless zone",
+  "battery_temperature_normal": true,
+  "change": "passive desc.no_thermal=true, TEMP/ENODATA/fault/pack thermal preserved",
+  "tests": {
+    "thermal_registration": 5,
+    "passive": 24,
+    "full_executed": false
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 96.6353685819995
+  },
+  "static": {
+    "exit_code": 0,
+    "object_unchanged": true
+  },
+  "config_diff": {},
+  "dtb_diff": {},
+  "protected_changes": {},
+  "paired_modules": 181,
+  "artifacts": {
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-299-passive/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-299-passive/modules-x710.tar.gz",
+      "bytes": 47319377,
+      "sha256": "0941b232f57b75b9e8ad2278f0bfa49be5c0fca8d2416af97630a661f41e09c0"
+    },
+    "SHA256SUMS": {
+      "path": "out/kernel-x710-299-passive/SHA256SUMS",
+      "bytes": 323,
+      "sha256": "c110f89da0eb449e2608a75927c237d67f30628569e5e85387054f6d09772d17"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-299-passive/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-299-passive/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "aea7c145b3901408040453648d8f81cd4cca23f27443d0e1c30d701e35717403"
+    },
+    "config": {
+      "path": "out/kernel-x710-299-passive/config",
+      "bytes": 243276,
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5"
+    },
+    "Image.gz": {
+      "path": "out/kernel-x710-299-passive/Image.gz",
+      "bytes": 22131635,
+      "sha256": "c793e59fb9cc35b2d8013c2fabafba1ef453259883605a37a746025fbec19c31"
+    }
+  },
+  "device_mutation": false,
+  "PPS": false,
+  "pump_ON": false,
+  "active_stage3_ready": false
+}

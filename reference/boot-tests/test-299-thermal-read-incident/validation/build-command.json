@@ -1,0 +1,18 @@
+{
+  "command": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "environment": {
+    "JOBS": "8",
+    "USE_CCACHE": "1",
+    "BUILD_MODULES": "1",
+    "GTS9_CHARGING_PROFILE": "sm5440-passive",
+    "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-299-passive",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-299-passive"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 96.6353685819995,
+  "source_revision": "9173df11dd188f16e866cbd2dfb30ea4f26147ec"
+}

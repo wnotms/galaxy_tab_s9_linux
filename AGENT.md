@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test299 incident+OFFLINEfix qualified9173df11. Thermalzone37 old263/acdd2dfc
+isSM5440passive, refusedstartup4.037s->cacheENODATA->autozone disabled224.224s;
+packzone38/IIO31.8C normal. Onlydesc.no_thermal=true; TEMP/ENODATA/fault/sampler/
+packpolicy unchanged.5registration+24passive tests/ARM6496.64s/W1sparse/objectsame/
+exact297configDT/protected96/overlays/181pairedPASS. No device mutation/PPS/pump/
+current/rootfs/DTconfig/coreUSB. Next pushTest300oneboot/assertpassivezoneabsent+
+realpackzone/15s endpoint; retainPASSfix, exact263rollbackonfailure. No224sdelay/
+fullrepeatCI. Goalactive/Stage3NOTREADY. Read299RESULTS/summary/raw/photo.
+
 Test299 owner photo thermalzone37 at224s attributed read-only to restored263/
 acdd2dfc, typeSM5440passive/cacheENODATA afteroldstartuprefusal4.037s. Packzone38
 normal/enabled31.8C/IIO, noCPUfault/servicefailure. `.no_thermal=true` onlypassive

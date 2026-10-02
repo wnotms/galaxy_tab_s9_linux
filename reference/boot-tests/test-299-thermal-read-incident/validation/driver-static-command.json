@@ -1,0 +1,21 @@
+{
+  "command": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-299-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "-j8",
+    "drivers/power/supply/sm5440-direct.o"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 8.20761049199973,
+  "object_before": "cdc46f93d12ecaeb7ce4a711ac4db5792db20f1bb88358d990ecf32220d80796",
+  "object_after": "cdc46f93d12ecaeb7ce4a711ac4db5792db20f1bb88358d990ecf32220d80796",
+  "object_unchanged": true
+}
