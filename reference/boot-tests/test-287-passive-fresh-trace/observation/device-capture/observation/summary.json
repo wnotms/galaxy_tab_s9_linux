@@ -1,0 +1,97 @@
+{
+  "PPS": false,
+  "binding": {
+    "charging_authorized": false,
+    "observer_trace_bound": true,
+    "request_count": 1,
+    "timing_acceptance": false
+  },
+  "current_increase": false,
+  "device_endpoint_qualified": false,
+  "elapsed_seconds_with_cleanup": 1.055814218000009,
+  "errors": [],
+  "observation_seconds": 0.1216961980000093,
+  "observer": {
+    "acquisition_outcome": "REFUSED",
+    "charging_authorized": false,
+    "count": 1,
+    "delivery_ms_max": null,
+    "delivery_ms_min": null,
+    "first_refusal": 1,
+    "independently_calibrated": false,
+    "rows": [
+      {
+        "acquisition_ms": 0,
+        "provider_status": -110,
+        "raw_die_decic": 0,
+        "raw_ibus_ua": 0,
+        "raw_online": 0,
+        "raw_vbat_uv": 0,
+        "raw_vbus_uv": 0,
+        "request_ms": 100910,
+        "return_ms": 101012,
+        "row": 1,
+        "status": -110,
+        "usable": 0
+      }
+    ],
+    "state": 2,
+    "successful_calls": 0
+  },
+  "observer_load_attempted": true,
+  "observer_unloaded": true,
+  "pump_ON": false,
+  "same_boot_after_unload": true,
+  "tail_seconds": 0.5,
+  "timing_acceptance": false,
+  "trace_analysis": {
+    "adc_duration_ns": null,
+    "boot_id": "2fe71db0-1359-4aba-9153-d2229a39f00d",
+    "causal_assignment": "not established; temporal overlap only",
+    "clock": "boot",
+    "displayed_timestamp_precision": "6..9 decimal seconds; no sub-display precision inferred",
+    "hardware_acceptance": false,
+    "limitations": [
+      "worker includes I2C/waits/scheduling; not ADC duration",
+      "tracing adds overhead",
+      "timeout branch remains unknown"
+    ],
+    "queue_boundaries_complete": true,
+    "request_timeout_branch": "UNKNOWN",
+    "requests": [
+      {
+        "causal_worker_assignment": null,
+        "elapsed_ns": 101510000,
+        "entry_ns": 100910559000,
+        "overlapping_workers": [
+          {
+            "already_running_at_entry": false,
+            "completed_before_return": false,
+            "queued_during_request": true,
+            "worker_index": 0
+          }
+        ],
+        "pid": 1579,
+        "return_code": -110,
+        "return_ns": 101012069000,
+        "timeout_branch": "UNKNOWN"
+      }
+    ],
+    "uninstrumented_timing_acceptance": false,
+    "verdict": "BOUNDED_TRACE_ATTRIBUTED",
+    "workers": [
+      {
+        "end_ns": 101044969000,
+        "pid": 140,
+        "poll_entry_ns": 100910578000,
+        "poll_return_ns": 101044962000,
+        "queue_delay_ns": 11000,
+        "queue_ns": 100910565000,
+        "start_ns": 100910576000,
+        "work": "000000000fa83e9d",
+        "worker_elapsed_ns": 134393000
+      }
+    ]
+  },
+  "verdict": "PASSIVE_REFUSAL_CAPTURED"
+}

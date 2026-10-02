@@ -1,0 +1,19 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 7/7   #P:8
+#
+#                                _-----=> irqs-off/BH-disabled
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+  sm5440-observe-1579    [005] d....   100.910559: gts9t279_3b4751b2f869_request_enter: (sm5440_passive_request_fresh+0x0/0x574)
+  sm5440-observe-1579    [005] d..1.   100.910565: workqueue_queue_work: work struct=000000000fa83e9d function=sm5440_poll workqueue=events req_cpu=32 cpu=5
+     kworker/5:3-140     [005] .....   100.910576: workqueue_execute_start: work struct 000000000fa83e9d: function sm5440_poll
+     kworker/5:3-140     [005] d....   100.910578: gts9t279_3b4751b2f869_poll_enter: (sm5440_poll+0x0/0x7b8)
+  sm5440-observe-1579    [005] d..1.   101.012069: gts9t279_3b4751b2f869_request_return: (observer_thread+0x110/0x27c [sm5440_fresh_observer] <- sm5440_passive_request_fresh) ret=-110
+     kworker/5:3-140     [005] d..1.   101.044962: gts9t279_3b4751b2f869_poll_return: (process_scheduled_works+0x18c/0x4d0 <- sm5440_poll)
+     kworker/5:3-140     [005] .....   101.044969: workqueue_execute_end: work struct 000000000fa83e9d: function sm5440_poll

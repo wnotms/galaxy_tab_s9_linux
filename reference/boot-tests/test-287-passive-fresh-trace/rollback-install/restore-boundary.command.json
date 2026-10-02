@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; test -d /mnt/debian/usr/lib/modules/.gts9-test287-original; test ! -e /mnt/debian/usr/lib/modules/.gts9-test287-tested; sha256sum /dev/block/by-name/boot /dev/block/by-name/dtbo /dev/block/by-name/init_boot /dev/block/by-name/vbmeta /dev/block/by-name/vendor_boot"
+  ],
+  "ended_utc": "2026-10-02T05:03:36.809102+00:00",
+  "started_utc": "2026-10-02T05:03:36.538926+00:00",
+  "status": 0
+}

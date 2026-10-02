@@ -2,6 +2,23 @@
 
 ## Current state (2026-10-02)
 
+Test287 PASSIVE_REFUSAL_CAPTURED + EXACT263_ROLLBACK_DEVICE_SCOPE_COMPLETED.
+One2722fe71db0boot/one276observer/onefresh-110/0usable, firstrefusalSTOP.285IO
+physically worked:4probes/7events/0miss/loss, request101.510ms/queue11us/worker
+134.393ms ending32.900ms afterreturn; aggregate only, ADC/branch/causalityUNKNOWN.
+Collection0.1217s/500ms tail/cleanup+unload1.0558s; sameboot endpointhealthyOFF/
+ADBWi-FideviceNCM/noCode43/newCPUfault, ownedtrace+observer absent. Exact263all5/
+181restored/tested287+oldbackups retained/BCBclear/rootunmounted. Final263
+51d701890b84482d9d42b5b7db3508ad/Wi-Fi10.125.29.58 exactidentity/normalcmdline/
+full286journal/health/rescue/uniquehistory, battery66%4.020V31.0C/Good/OFFfault0/
+IBUS0, observerfreshAPI/DCCabsent. Startupdisplay diagnostic retained/unresolved,
+not stabilityclean. Read287RESULTS/raw/summary/seal. Physicalrecordspan416.32s
+not benchmark. Groupstages/batchedpush/parallelreads/nativewait; reuse/buildfull
+executed:false/noCI. Old283284285286seals/protectedinputs unchanged. Next OFFLINE
+worker/I2Cphase sourceanalysis oncapturedtrace, no sameaggregate repeat or ADC/
+deadline/PPS/pump/current change; future physicalneeds separateregistration.
+ActiveStage3 NOT READY/fullportgoalactive.
+
 Test287 paired272deployment/readback+candidateadmission PASS:2fe71db013594aba
 9153d2229a39f00d/Wi-Fi10.125.29.50, exactnotes/config/normalcmdline/currenthealth
 OFF/protection/rescue/noCode43/uniquehistory/new286journal. All5/181verified,
