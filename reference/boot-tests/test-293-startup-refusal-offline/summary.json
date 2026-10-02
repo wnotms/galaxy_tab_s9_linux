@@ -1,0 +1,69 @@
+{
+  "CI": false,
+  "active_stage3": "NOT READY",
+  "actual_C_oracle_source": "ea938b245bff3ae9e3c1828751ea149a90337992",
+  "compiler_vectors": {
+    "all_single_byte_fault_values": 1024,
+    "boundary_vectors": true,
+    "combined_predicate_cases": 512
+  },
+  "device_commands": 0,
+  "full_host_tests": {
+    "executed": false,
+    "reason": "host parser affected21 tests only;1520kernel/module qualification unchanged, not a new full pass"
+  },
+  "host_tests": {
+    "errors": 0,
+    "executed": true,
+    "failed": 0,
+    "passed": 21,
+    "seconds": 0.164,
+    "skipped": 0
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "host-only offline parser; no kernel inputs changed"
+  },
+  "old_seals_unchanged": {
+    "test-263-sm5440-adc-snapshot": 44,
+    "test-290-passive-observation-api": 32,
+    "test-291-passive-observer-offline": 22,
+    "test-292-passive-observation": 335
+  },
+  "replay": {
+    "PPS_authorized": false,
+    "active_freshness_grant": false,
+    "below_startup_lower_bound_uv": 1500,
+    "boot_id": "b06bb6c2cac5481da40fe8d6c317b9e3",
+    "changing_bounds_justified": false,
+    "configured_HZ": 250,
+    "deadline_expiry_excluded": true,
+    "decoded_VBAT_uv": 3498500,
+    "gauge_reported_VBAT_uv": 3879000,
+    "independently_calibrated": false,
+    "kernel_config_identity": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+    "kernel_notes_identity": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+    "physical_voltage_error_uv": null,
+    "policy_admission": false,
+    "pump_ON_authorized": false,
+    "raw_ADC_VBAT_hex": "5aa8",
+    "retained_ADC_minus_later_gauge_uv": -380500,
+    "same_fault_retry_authorized": false,
+    "sample_refusal_reasons": [
+      "VBAT_outside_startup_window"
+    ],
+    "startup_lower_bound_uv": 3500000,
+    "startup_to_failure_source_us": 2304099,
+    "startup_to_last_sample_ticks": 576,
+    "synchronous_gauge_comparison": false,
+    "verdict": "ATTRIBUTED_PASSIVE_STARTUP_SAMPLE_REFUSAL",
+    "voltage_discrepancy_cause": "UNKNOWN"
+  },
+  "syntax": true,
+  "test": "Test293",
+  "unchanged_current_predicates": {
+    "static bool sm5440_passive_pc_sample(": "539307d3c7383f877ef08c32d3adfbf2113bcf28cfc2829da33b187b7f19f82f",
+    "static bool sm5440_startup_matches(": "29a66ff715e0ceed3ae8708a0603b9b9978b5d1da895982e5fe0de734f1cf68e"
+  },
+  "verdict": "OFFLINE_STARTUP_SAMPLE_REFUSAL_ATTRIBUTED"
+}

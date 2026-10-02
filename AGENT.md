@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-02)
 
+Test293 OFFLINE_STARTUP_SAMPLE_REFUSAL_ATTRIBUTED;21affected actual263C/replay
+PASS(512combined/1024faultbytevectors),syntax/CLI/old263290291292seals unchanged.
+292final b06bb6c2 confirmation2.304099s/576ticksHZ250 =>5sdeadline excluded.
+Sole sample predicate VBAT3.4985V<3.5V by1.5mV; OFF/ready/online/VBUS/IBUS0/die/
+fault0/protections pass. ADC5a a8/raw2901 matchesvendor; trunc3498mV vs3498.5mV
+not scaleerror. Gauge3.879V measuredat283.59s vsretainedsample2.602s: notsamewindow/
+calibrationoffset; physical causeUNKNOWN. Parserdiagnostic only/allgrantsfalse;
+no threshold/reset/ADC/deadline changes. No devicecmd/kernel/buildfull/routing/CI,
+reuseunchanged290/291qualification. Read293RESULTS/replay/INPUTS/script/tests.
+Next source-backed samewindow/sensor qualification design, notsamefailedround or
+relaxation. Currentdevice lastverified292263b06bb6c2/rescue normal/passivehealth
+REFUSED unchanged. Fullwiredportgoalactive/ActiveStage3NOTREADY.
+
 D:project staging cleanup2026-10-02 completed:326oldfiles, ~5.39GiB reclaimed,
 free~6.32GiB. Byte-SHA duplicates +two181file payload-identical uncompressed
 archives removed; unique smallrecords archived/3packets tracked. Preserve Windows

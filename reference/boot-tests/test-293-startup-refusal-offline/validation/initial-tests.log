@@ -1,0 +1,55 @@
+test_actual_C_and_reported_failure_agree (test_sm5440_startup_refusal.RefusalTests.test_actual_C_and_reported_failure_agree) ... ok
+test_config_identity_mismatch (test_sm5440_startup_refusal.RefusalTests.test_config_identity_mismatch) ... ok
+test_deadline_or_wrap_unresolved (test_sm5440_startup_refusal.RefusalTests.test_deadline_or_wrap_unresolved) ... ok
+test_duplicate_snapshot_or_section (test_sm5440_startup_refusal.RefusalTests.test_duplicate_snapshot_or_section) ... ok
+test_duplicate_transition_refused (test_sm5440_startup_refusal.RefusalTests.test_duplicate_transition_refused) ... FAIL
+test_empty_journal_refused (test_sm5440_startup_refusal.RefusalTests.test_empty_journal_refused) ... ok
+test_fault_bitmap_mismatch_refused (test_sm5440_startup_refusal.RefusalTests.test_fault_bitmap_mismatch_refused) ... ok
+test_fault_decode_all_single_byte_values_match_C (test_sm5440_startup_refusal.RefusalTests.test_fault_decode_all_single_byte_values_match_C) ... ok
+test_missing_transition_refused (test_sm5440_startup_refusal.RefusalTests.test_missing_transition_refused) ... ok
+test_not_retained_successful_read_profile_refused (test_sm5440_startup_refusal.RefusalTests.test_not_retained_successful_read_profile_refused) ... ok
+test_notes_identity_mismatch (test_sm5440_startup_refusal.RefusalTests.test_notes_identity_mismatch) ... ok
+test_other_boot_journal_refused (test_sm5440_startup_refusal.RefusalTests.test_other_boot_journal_refused) ... ok
+test_predicate_combined_faults_match_C (test_sm5440_startup_refusal.RefusalTests.test_predicate_combined_faults_match_C) ... ok
+test_predicate_reasons_match_C_at_boundaries (test_sm5440_startup_refusal.RefusalTests.test_predicate_reasons_match_C_at_boundaries) ... ok
+test_raw_ADC_mismatch_refused (test_sm5440_startup_refusal.RefusalTests.test_raw_ADC_mismatch_refused) ... ok
+test_real_refusal_attributed_without_grant (test_sm5440_startup_refusal.RefusalTests.test_real_refusal_attributed_without_grant) ... ERROR
+test_sample_journal_chronology_disagrees (test_sm5440_startup_refusal.RefusalTests.test_sample_journal_chronology_disagrees) ... ok
+test_unsigned_and_register_width (test_sm5440_startup_refusal.RefusalTests.test_unsigned_and_register_width) ... ok
+
+======================================================================
+ERROR: test_real_refusal_attributed_without_grant (test_sm5440_startup_refusal.RefusalTests.test_real_refusal_attributed_without_grant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_startup_refusal.py", line 36, in test_real_refusal_attributed_without_grant
+    result=self.replay();self.assertEqual(result['sample_refusal_reasons'],['VBAT_outside_startup_window']);self.assertEqual(result['decoded_VBAT_uv'],3498500);self.assertEqual(result['below_startup_lower_bound_uv'],1500);self.assertTrue(result['deadline_expiry_excluded']);self.assertEqual(result['startup_to_last_sample_ticks'],576);self.assertEqual(result['startup_to_failure_source_us'],2304099)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_startup_refusal.py", line 32, in replay
+    return m.analyze(self.current if current is None else current,self.journal if journal is None else journal,self.config if config is None else config,**(self.identity if identity is None else identity))
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/sm5440_startup_refusal.py", line 148, in analyze
+    battery = fields(sec['battery']) if all('=' in l for l in sec['battery'].splitlines()) else {}
+              ~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/sm5440_startup_refusal.py", line 27, in fields
+    require(sep and key not in result, 'snapshot malformed/duplicate')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/sm5440_startup_refusal.py", line 13, in require
+    raise ValueError(why)
+ValueError: snapshot malformed/duplicate
+
+======================================================================
+FAIL: test_duplicate_transition_refused (test_sm5440_startup_refusal.RefusalTests.test_duplicate_transition_refused)
+----------------------------------------------------------------------
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_startup_refusal.py", line 69, in test_duplicate_transition_refused
+    with self.assertRaisesRegex(ValueError,'transition'):self.replay(journal=self.journal+'\n'+row+'\n')
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "transition" does not match "Expecting value: line 1 column 1 (char 0)"
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.263s
+
+FAILED (failures=1, errors=1)

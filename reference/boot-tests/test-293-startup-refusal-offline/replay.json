@@ -1,0 +1,29 @@
+{
+  "PPS_authorized": false,
+  "active_freshness_grant": false,
+  "below_startup_lower_bound_uv": 1500,
+  "boot_id": "b06bb6c2cac5481da40fe8d6c317b9e3",
+  "changing_bounds_justified": false,
+  "configured_HZ": 250,
+  "deadline_expiry_excluded": true,
+  "decoded_VBAT_uv": 3498500,
+  "gauge_reported_VBAT_uv": 3879000,
+  "independently_calibrated": false,
+  "kernel_config_identity": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "kernel_notes_identity": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "physical_voltage_error_uv": null,
+  "policy_admission": false,
+  "pump_ON_authorized": false,
+  "raw_ADC_VBAT_hex": "5aa8",
+  "retained_ADC_minus_later_gauge_uv": -380500,
+  "same_fault_retry_authorized": false,
+  "sample_refusal_reasons": [
+    "VBAT_outside_startup_window"
+  ],
+  "startup_lower_bound_uv": 3500000,
+  "startup_to_failure_source_us": 2304099,
+  "startup_to_last_sample_ticks": 576,
+  "synchronous_gauge_comparison": false,
+  "verdict": "ATTRIBUTED_PASSIVE_STARTUP_SAMPLE_REFUSAL",
+  "voltage_discrepancy_cause": "UNKNOWN"
+}
