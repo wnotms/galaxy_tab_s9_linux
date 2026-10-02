@@ -295,7 +295,9 @@ struct sm5714_usbpd;
 struct tcpc_dev { struct sm5714_usbpd *owner; };
 struct sm5714_usbpd { int dev, lock; void *regmap, *port; struct tcpc_dev tcpc;
  u32 source_pdos[7]; unsigned int nr_source_pdos;
- unsigned long long source_generation; bool fault, removing; };
+ unsigned long long source_generation,budget_generation;
+ unsigned int budget_mv,budget_ma,budget_pending;bool charge_requested,observation_exhausted; bool fault, removing; };
+#define U64_MAX UINT64_MAX
 static unsigned char regs[256];
 static int calls, failure, disabled, charge_stops, rx_count, tx_status=-1;
 static unsigned int budget_mv, budget_ma;
@@ -337,7 +339,8 @@ typedef int irqreturn_t;
 '''
         code += "\n".join(line for line in src.splitlines() if line.startswith("#define SM5714_"))
         code += '\n#include "' + str(ROOT / 'kernel/drivers/sm5714-pd-policy.h') + '"\n'
-        names = ["static void sm5714_forget_source(",
+        names = ["static void sm5714_budget_tick_locked(", "static void sm5714_budget_begin(",
+                 "static void sm5714_budget_end(", "static void sm5714_forget_source(",
                  "static int sm5714_result(", "static int sm5714_usbpd_init(",
                  "static int sm5714_usbpd_get_vbus(", "static int sm5714_usbpd_get_current_limit(",
                  "static int sm5714_usbpd_get_cc(", "static int sm5714_usbpd_set_cc(",

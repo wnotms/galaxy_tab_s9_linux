@@ -1,0 +1,16 @@
+{
+  "test": "Test297",
+  "scope": "offline",
+  "purpose": "lifetime-safe standard TCPM source/fixed-budget observation",
+  "baseline": "Test296 source18e495bc, exactconfig/DT/passive profile",
+  "PPS": false,
+  "pump_ON": false,
+  "hardware_operations_added": false,
+  "physical_test_executed": false,
+  "full_regression": {
+    "executed": false,
+    "reused": "Test294 unchanged relevant qualification",
+    "reason": "changed suites only; no routing changes"
+  },
+  "next": "separately register Test298 before any deployment"
+}

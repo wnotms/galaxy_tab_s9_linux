@@ -18,4 +18,20 @@ void sm5714_battery_typec_fault(void);
 int sm5714_battery_switching_acquire(u64 *lease);
 int sm5714_battery_switching_release(u64 lease);
 
+#define SM5714_SOURCE_PDO_MAX 7U
+
+/* Standard TCPM fixed-budget observation, not physical VBUS or a charge grant.
+ * No controller/supply pointer escapes. On error the complete output is zero.
+ */
+struct sm5714_pd_snapshot {
+	u64 instance, source_generation, budget_generation;
+	u64 started_ms, completed_ms;
+	u32 source_pdos[SM5714_SOURCE_PDO_MAX];
+	unsigned int nr_source_pdos;
+	unsigned int budget_mv, budget_ma;
+	int online, usb_type, voltage_uv, current_ua;
+	bool charge_requested;
+};
+int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out);
+
 #endif

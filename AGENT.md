@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-02)
 
+Test297 runtime snapshot implemented;119affected SM5714 host tests PASS4.546s.
+Lifetime-pinned standard TCPM PSY/source/fixed callback mirrors, generations,
+zero-output refusal/no property locks;0400 debugfs uses actual API. No PPS/pump/
+charge grant/configDT/USB/SM5440 changes. ARM64/W1sparse/pairing pending; no new
+physical operations. Next separately register one short Test298 read +exact263
+rollback, not more ADCdelay trials. Currentdevice last263ffca1c7b from296.
+Read297README/registration +SM5714_TCPM_RUNTIME_SNAPSHOT. Fullgoalactive/Stage3NR.
+
 Test296 DEVICE_REARM_DIAGNOSTIC_COMPLETED_EXACT263_RESTORED. Source18e495bc,
 oneboot6f688b21/3pairs/15sdeviceendpoint pass;
 20msvendorrearm didnotresolve adjacentwindow224.5–319mV difference; startup

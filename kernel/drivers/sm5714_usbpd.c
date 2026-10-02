@@ -8,7 +8,14 @@
  * Stock Linux TCPM owns policy. No private policy, boost, role-swap quirk,
  * alternate-mode, direct-charger or programmable-supply implementation.
  */
+#include <linux/atomic.h>
+#include <linux/debugfs.h>
 #include <linux/delay.h>
+#include <linux/ktime.h>
+#include <linux/limits.h>
+#include <linux/power_supply.h>
+#include <linux/seq_file.h>
+#include <linux/wait.h>
 #include <linux/i2c.h>
 #include <linux/interrupt.h>
 #include <linux/module.h>
@@ -71,6 +78,13 @@ struct sm5714_usbpd {
 	u32 source_pdos[PD_MAX_PAYLOAD];
 	unsigned int nr_source_pdos;
 	u64 source_generation;
+	u64 port_instance, budget_generation;
+	unsigned int budget_mv, budget_ma, budget_pending;
+	bool charge_requested, observation_exhausted;
+	struct power_supply *tcp_supply;
+	atomic_t snapshot_users;
+	wait_queue_head_t snapshot_wait;
+	struct dentry *snapshot_debug;
 	int irq;
 	bool fault;
 	bool removing;
@@ -96,7 +110,246 @@ static void sm5714_forget_source(struct sm5714_usbpd *sm)
 	lockdep_assert_held(&sm->lock);
 	memset(sm->source_pdos, 0, sizeof(sm->source_pdos));
 	sm->nr_source_pdos = 0;
-	sm->source_generation++;
+	if (sm->source_generation == U64_MAX)
+		sm->observation_exhausted = true;
+	else
+		sm->source_generation++;
+}
+
+/* Registry->tryTCPC for short copies only. No registry/TCPC lock across
+ * standard power_supply properties, which may run TCPM code. Teardown drains
+ * pinned operations before releasing its supply reference or port resources.
+ */
+static DEFINE_MUTEX(sm5714_port_registry_lock);
+static struct sm5714_usbpd *sm5714_port_provider;
+static u64 sm5714_port_issuer;
+
+static void sm5714_budget_tick_locked(struct sm5714_usbpd *sm)
+{
+	lockdep_assert_held(&sm->lock);
+	if (sm->budget_generation == U64_MAX)
+		sm->observation_exhausted = true;
+	else
+		sm->budget_generation++;
+}
+
+static void sm5714_budget_begin(struct sm5714_usbpd *sm)
+{
+	mutex_lock(&sm->lock);
+	sm->budget_pending++;
+	sm5714_budget_tick_locked(sm);
+	mutex_unlock(&sm->lock);
+}
+
+static void sm5714_budget_end(struct sm5714_usbpd *sm, int ret,
+			      bool current, unsigned int mv, unsigned int ma,
+			      bool charge)
+{
+	mutex_lock(&sm->lock);
+	if (!ret) {
+		if (current) {
+			sm->budget_mv = mv;
+			sm->budget_ma = ma;
+		} else {
+			sm->charge_requested = charge;
+		}
+	}
+	sm->budget_pending--;
+	sm5714_budget_tick_locked(sm);
+	mutex_unlock(&sm->lock);
+}
+
+static int sm5714_port_publish(struct sm5714_usbpd *sm)
+{
+	int ret = 0;
+
+	mutex_lock(&sm5714_port_registry_lock);
+	if (!sm->tcp_supply)
+		ret = -ENODEV;
+	else if (sm5714_port_provider)
+		ret = -EBUSY;
+	else if (sm5714_port_issuer == U64_MAX)
+		ret = -EOVERFLOW;
+	else {
+		sm->port_instance = ++sm5714_port_issuer;
+		sm5714_port_provider = sm;
+	}
+	mutex_unlock(&sm5714_port_registry_lock);
+	return ret;
+}
+
+static void sm5714_port_unpublish(struct sm5714_usbpd *sm)
+{
+	mutex_lock(&sm5714_port_registry_lock);
+	WRITE_ONCE(sm->removing, true);
+	if (sm5714_port_provider == sm)
+		sm5714_port_provider = NULL;
+	mutex_unlock(&sm5714_port_registry_lock);
+	wait_event(sm->snapshot_wait, !atomic_read(&sm->snapshot_users));
+	/* Last put wakes while holding registry; wait for its final unlock. */
+	mutex_lock(&sm5714_port_registry_lock);
+	mutex_unlock(&sm5714_port_registry_lock);
+}
+
+static int sm5714_snapshot_locked(struct sm5714_usbpd *sm,
+				  struct sm5714_pd_snapshot *sample)
+{
+	lockdep_assert_held(&sm->lock);
+	if (READ_ONCE(sm->removing))
+		return -ESHUTDOWN;
+	if (sm->fault)
+		return -EIO;
+	if (sm->observation_exhausted)
+		return -EOVERFLOW;
+	if (!sm->nr_source_pdos || !sm->source_generation)
+		return -ENODATA;
+	if (sm->nr_source_pdos > SM5714_SOURCE_PDO_MAX)
+		return -EPROTO;
+	if (sm->budget_pending)
+		return -EAGAIN;
+	sample->instance = sm->port_instance;
+	sample->source_generation = sm->source_generation;
+	sample->budget_generation = sm->budget_generation;
+	sample->budget_mv = sm->budget_mv;
+	sample->budget_ma = sm->budget_ma;
+	sample->charge_requested = sm->charge_requested;
+	sample->nr_source_pdos = sm->nr_source_pdos;
+	memcpy(sample->source_pdos, sm->source_pdos, sizeof(sample->source_pdos));
+	return 0;
+}
+
+static int sm5714_snapshot_properties(struct power_supply *psy,
+				      struct sm5714_pd_snapshot *sample)
+{
+	static const enum power_supply_property props[] = {
+		POWER_SUPPLY_PROP_ONLINE, POWER_SUPPLY_PROP_USB_TYPE,
+		POWER_SUPPLY_PROP_VOLTAGE_NOW, POWER_SUPPLY_PROP_CURRENT_NOW,
+	};
+	int *values[] = { &sample->online, &sample->usb_type,
+			  &sample->voltage_uv, &sample->current_ua };
+	union power_supply_propval value;
+	unsigned int i;
+	int ret;
+
+	for (i = 0; i < ARRAY_SIZE(props); i++) {
+		ret = power_supply_get_property(psy, props[i], &value);
+		if (ret)
+			return ret;
+		*values[i] = value.intval;
+	}
+	return 0;
+}
+
+int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot before = {}, after = {}, repeat = {};
+	struct sm5714_usbpd *sm;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	mutex_lock(&sm5714_port_registry_lock);
+	sm = sm5714_port_provider;
+	if (!sm) {
+		ret = -ENODEV;
+		goto registry_out;
+	}
+	if (!mutex_trylock(&sm->lock)) {
+		ret = -EBUSY;
+		goto registry_out;
+	}
+	ret = sm5714_snapshot_locked(sm, &before);
+	if (!ret)
+		atomic_inc(&sm->snapshot_users);
+	mutex_unlock(&sm->lock);
+registry_out:
+	mutex_unlock(&sm5714_port_registry_lock);
+	if (ret)
+		return ret;
+	before.started_ms = ktime_to_ms(ktime_get_boottime());
+	ret = sm5714_snapshot_properties(sm->tcp_supply, &before);
+	if (!ret)
+		ret = sm5714_snapshot_properties(sm->tcp_supply, &repeat);
+	before.completed_ms = ktime_to_ms(ktime_get_boottime());
+	mutex_lock(&sm->lock);
+	if (!ret)
+		ret = sm5714_snapshot_locked(sm, &after);
+	if (!ret && (before.instance != after.instance ||
+		before.source_generation != after.source_generation ||
+		before.budget_generation != after.budget_generation ||
+		before.online != repeat.online || before.usb_type != repeat.usb_type ||
+		before.voltage_uv != repeat.voltage_uv || before.current_ua != repeat.current_ua))
+		ret = -EAGAIN;
+	/* Only stable fixed PD is usable here. No inferred physical measurement.
+	 * Mirror matching rejects lockless TCPM publication before its callback.
+	 */
+	if (!ret && (!before.started_ms || before.completed_ms < before.started_ms ||
+		before.online != 1 || before.usb_type != POWER_SUPPLY_USB_TYPE_PD ||
+		!before.charge_requested ||
+		(before.budget_mv != 5000 && before.budget_mv != 9000) ||
+		before.budget_ma < 100 || before.budget_ma > 1800 ||
+		(before.budget_mv == 9000 && before.budget_ma > 1500) ||
+		before.voltage_uv != before.budget_mv * 1000 ||
+		before.current_ua != before.budget_ma * 1000))
+		ret = -EAGAIN;
+	if (!ret)
+		*out = before;
+	mutex_unlock(&sm->lock);
+	mutex_lock(&sm5714_port_registry_lock);
+	if (atomic_dec_and_test(&sm->snapshot_users))
+		wake_up_all(&sm->snapshot_wait);
+	mutex_unlock(&sm5714_port_registry_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_pd_read_snapshot);
+
+static int sm5714_current_port_show(struct seq_file *seq, void *unused)
+{
+	struct sm5714_pd_snapshot sample;
+	unsigned int i;
+	int ret = sm5714_pd_read_snapshot(&sample);
+
+	(void)unused;
+	seq_printf(seq, "format=sm5714-current-port-v1\nret=%d\ncharging_grant=0\n"
+		   "values_are_not_physical_measurements=1\n", ret);
+	if (ret)
+		return 0;
+	seq_printf(seq, "instance=%llu\nsource_generation=%llu\nbudget_generation=%llu\n"
+		   "started_ms=%llu\ncompleted_ms=%llu\nonline=%d\nusb_type=%d\n"
+		   "voltage_uv=%d\ncurrent_ua=%d\nbudget_mv=%u\nbudget_ma=%u\n"
+		   "charge_requested=%u\nnr_source_pdos=%u\n",
+		   (unsigned long long)sample.instance,
+		   (unsigned long long)sample.source_generation,
+		   (unsigned long long)sample.budget_generation,
+		   (unsigned long long)sample.started_ms,
+		   (unsigned long long)sample.completed_ms, sample.online, sample.usb_type,
+		   sample.voltage_uv, sample.current_ua, sample.budget_mv, sample.budget_ma,
+		   sample.charge_requested, sample.nr_source_pdos);
+	for (i = 0; i < sample.nr_source_pdos; i++)
+		seq_printf(seq, "source_pdo_%u=0x%08x\n", i + 1, sample.source_pdos[i]);
+	return 0;
+}
+DEFINE_SHOW_ATTRIBUTE(sm5714_current_port);
+
+static void sm5714_snapshot_debug_remove(void *data)
+{
+	struct sm5714_usbpd *sm = data;
+
+	debugfs_remove_recursive(sm->snapshot_debug);
+}
+
+static void sm5714_snapshot_debug_init(struct sm5714_usbpd *sm)
+{
+	char name[64];
+
+	snprintf(name, sizeof(name), "sm5714-%s", dev_name(sm->dev));
+	sm->snapshot_debug = debugfs_create_dir(name, NULL);
+	if (IS_ERR_OR_NULL(sm->snapshot_debug))
+		return;
+	debugfs_create_file("current-port", 0400, sm->snapshot_debug, NULL,
+			    &sm5714_current_port_fops);
+	devm_add_action_or_reset(sm->dev, sm5714_snapshot_debug_remove, sm);
 }
 
 /* No bus retry/reset loop: first transport failure latches charger off. */
@@ -268,6 +521,7 @@ static int sm5714_usbpd_set_vconn(struct tcpc_dev *tcpc, bool on)
 static int sm5714_usbpd_set_vbus(struct tcpc_dev *tcpc, bool on, bool charge)
 {
 	struct sm5714_usbpd *sm = tcpc_to_sm5714(tcpc);
+	int ret;
 
 	if (on)
 		return -EOPNOTSUPP;
@@ -276,7 +530,10 @@ static int sm5714_usbpd_set_vbus(struct tcpc_dev *tcpc, bool on, bool charge)
 	if (READ_ONCE(sm->fault) && charge)
 		return -EIO;
 	/* Required by TCPM: apply Sink charge gate, never generate VBUS. */
-	return sm5714_result(sm, sm5714_battery_set_typec_charge(charge));
+	sm5714_budget_begin(sm);
+	ret = sm5714_battery_set_typec_charge(charge);
+	sm5714_budget_end(sm, ret, false, 0, 0, charge);
+	return sm5714_result(sm, ret);
 }
 
 static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
@@ -286,7 +543,9 @@ static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
 
 	if (READ_ONCE(sm->fault))
 		return -EIO;
+	sm5714_budget_begin(sm);
 	ret = sm5714_battery_set_pd_contract(mv, ma);
+	sm5714_budget_end(sm, ret, true, mv, ma, false);
 	if (!ret)
 		dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)\n",
 			 mv, ma);
@@ -501,6 +760,8 @@ static int sm5714_usbpd_probe(struct i2c_client *client)
 	if (IS_ERR(sm->regmap))
 		return PTR_ERR(sm->regmap);
 	mutex_init(&sm->lock);
+	atomic_set(&sm->snapshot_users, 0);
+	init_waitqueue_head(&sm->snapshot_wait);
 	INIT_DELAYED_WORK(&sm->cc_resync_work, sm5714_usbpd_resync);
 	i2c_set_clientdata(client, sm);
 	sm->connector = device_get_named_child_node(dev, "connector");
@@ -545,6 +806,27 @@ static int sm5714_usbpd_probe(struct i2c_client *client)
 		tcpm_unregister_port(sm->port);
 		goto fault;
 	}
+	/* Pinned Linux TCPM registers this standard supply before returning. */
+	{
+		char *name = kasprintf(GFP_KERNEL, "tcpm-source-psy-%s", dev_name(dev));
+
+		if (!name) {
+			ret = -ENOMEM;
+		} else {
+			sm->tcp_supply = power_supply_get_by_name(name);
+			kfree(name);
+			ret = sm->tcp_supply ? 0 : -ENODEV;
+		}
+	}
+	if (!ret)
+		ret = sm5714_port_publish(sm);
+	if (ret) {
+		if (sm->tcp_supply)
+			power_supply_put(sm->tcp_supply);
+		tcpm_unregister_port(sm->port);
+		goto fault;
+	}
+	sm5714_snapshot_debug_init(sm);
 	enable_irq(client->irq);
 	mod_delayed_work(system_dfl_wq, &sm->cc_resync_work, msecs_to_jiffies(1500));
 	dev_info(dev, "SM-X710 fixed5/9V Sink/Device TCPC registered\n");
@@ -560,7 +842,7 @@ static void sm5714_usbpd_remove(struct i2c_client *client)
 {
 	struct sm5714_usbpd *sm = i2c_get_clientdata(client);
 
-	WRITE_ONCE(sm->removing, true);
+	sm5714_port_unpublish(sm);
 	disable_irq(client->irq);
 	cancel_delayed_work_sync(&sm->cc_resync_work);
 	WRITE_ONCE(sm->fault, true);
@@ -568,6 +850,7 @@ static void sm5714_usbpd_remove(struct i2c_client *client)
 	sm5714_forget_source(sm);
 	mutex_unlock(&sm->lock);
 	sm5714_battery_typec_fault();
+	power_supply_put(sm->tcp_supply);
 	tcpm_unregister_port(sm->port);
 	fwnode_handle_put(sm->connector);
 }
@@ -576,7 +859,7 @@ static void sm5714_usbpd_shutdown(struct i2c_client *client)
 {
 	struct sm5714_usbpd *sm = i2c_get_clientdata(client);
 
-	WRITE_ONCE(sm->removing, true);
+	sm5714_port_unpublish(sm);
 	disable_irq(client->irq);
 	cancel_delayed_work_sync(&sm->cc_resync_work);
 	WRITE_ONCE(sm->fault, true);
@@ -585,6 +868,7 @@ static void sm5714_usbpd_shutdown(struct i2c_client *client)
 	mutex_unlock(&sm->lock);
 	sm5714_battery_typec_fault();
 	/* Stop TCPM timers/worker before the I2C controllers shut down. */
+	power_supply_put(sm->tcp_supply);
 	tcpm_unregister_port(sm->port);
 }
 
