@@ -51,6 +51,8 @@ int sm5440_passive_observe(struct sm5440_passive_observation *out);
 #define SM5440_VBATCNTL	0x14
 #define SM5440_PRTNCNTL	0x19
 #define SM5440_CNTL5	0x10
+#define SM5440_CNTL6	0x11
+#define SM5440_ENHIZ	BIT(7) /* vendor sm5440_set_ENHIZ(): OFF+VBUS =>1 */
 #define SM5440_ADCCNTL1	0x1c
 #define SM5440_ADCCNTL2	0x1d
 #define SM5440_ADC_VBUS	0x1e

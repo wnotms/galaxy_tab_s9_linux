@@ -1,0 +1,18 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: isolate one OFF-mode SM5440 ADC comparison
+
+Default-off condition experiment with no companion publication, pump activation
+or PPS consumer. Normal charging/passive builds keep their existing behavior.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1211 +1211,9 @@
++config SM5440_ADC_CONDITION_TEST
++	bool "X710 one OFF-mode SM5440 ENHIZ/ADC comparison"
++	depends on CHARGER_SM5440_DIRECT=y && !X710_CHARGING_POLICY
++	help
++	  One diagnostic conversion with bit7-only temporary ENHIZ adjustment
++	  and verified restoration. No pump ON, PPS or charging authorization.
++	  Leave disabled for normal or previously accepted passive builds.
++
+ endif # POWER_SUPPLY

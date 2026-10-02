@@ -14,7 +14,7 @@ rpmh_debug=${GTS9_RPMH_DEBUG:-0}
 idle_ablation=${GTS9_IDLE_ABLATION:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive|sm5440-policy-offline) ;;
+    ''|sm5440-passive|sm5440-policy-offline|sm5440-adc-condition) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && [ -n "$idle_ablation" ]; then

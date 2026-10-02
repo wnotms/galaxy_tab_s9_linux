@@ -48,13 +48,16 @@ def audit(out, tree, build, revision, profile):
              if before.get(key, "absent") != after.get(key, "absent")}
     # New inactive Kconfig declarations are an explained absent->n difference.
     expected = {}
-    for key in ("CONFIG_CHARGER_SM5440_DIRECT", "CONFIG_X710_CHARGING_POLICY"):
+    for key in ("CONFIG_CHARGER_SM5440_DIRECT", "CONFIG_X710_CHARGING_POLICY",
+                "CONFIG_SM5440_ADC_CONDITION_TEST"):
         if key in after and key not in before:
             expected[key] = ["absent", "n"]
-    if profile in ("sm5440-passive", "sm5440-policy-offline"):
+    if profile in ("sm5440-passive", "sm5440-policy-offline", "sm5440-adc-condition"):
         expected["CONFIG_CHARGER_SM5440_DIRECT"] = [before.get("CONFIG_CHARGER_SM5440_DIRECT", "absent"), "y"]
     if profile == "sm5440-policy-offline":
         expected["CONFIG_X710_CHARGING_POLICY"] = [before.get("CONFIG_X710_CHARGING_POLICY", "absent"), "y"]
+    if profile == "sm5440-adc-condition":
+        expected["CONFIG_SM5440_ADC_CONDITION_TEST"] = [before.get("CONFIG_SM5440_ADC_CONDITION_TEST", "absent"), "y"]
     if delta != expected:
         errors.append("resolved configuration has an unexpected or missing change")
     container = CONFIG.verify(cfg)
@@ -73,7 +76,7 @@ def audit(out, tree, build, revision, profile):
     old, new = ({}, {}) if sha(old_dtb) == sha(dtb) else (dt_properties(old_dtb), dt_properties(dtb))
     dt_delta = {key: [old.get(key), new.get(key)] for key in sorted(old.keys() | new.keys())
                 if old.get(key) != new.get(key)}
-    if profile in ("sm5440-passive", "sm5440-policy-offline"):
+    if profile in ("sm5440-passive", "sm5440-policy-offline", "sm5440-adc-condition"):
         status_keys = [k for k, value in old.items() if k.endswith("/charger@63:status")]
         allowed_dt = {k: ["64 69 73 61 62 6c 65 64 0", "6f 6b 61 79 0"] for k in status_keys}
         if len(status_keys) != 1 or dt_delta != allowed_dt:
@@ -139,7 +142,7 @@ def main():
     for name in ("out", "tree", "build", "report"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--revision", required=True)
-    parser.add_argument("--profile", choices=("fixed", "sm5440-passive", "sm5440-policy-offline"), default="fixed")
+    parser.add_argument("--profile", choices=("fixed", "sm5440-passive", "sm5440-policy-offline", "sm5440-adc-condition"), default="fixed")
     args = parser.parse_args()
     result = audit(args.out, args.tree, args.build, args.revision, args.profile)
     args.report.parent.mkdir(parents=True, exist_ok=True)

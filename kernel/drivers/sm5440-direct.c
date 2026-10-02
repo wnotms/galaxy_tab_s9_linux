@@ -4,6 +4,8 @@
  * Hardware provenance: Samsung sm5440_charger.c/.h, cross-checked Fedora
  * ab123e7d. See docs/SM5440_REGISTER_AUDIT.md; register writes are limited to
  * mode-OFF and traced converter controls. Unaccepted ADC => unavailable.
+ * A separately selected one-conversion condition test may temporarily clear
+ * and restore ENHIZ bit7; it never publishes a charging companion.
  */
 #include <linux/atomic.h>
 #include <linux/delay.h>
@@ -38,6 +40,11 @@ struct sm5440_sample {
 	u64 adc_read_completed_ms, gauge_started_ms, gauge_completed_ms;
 	int gauge_ret, gauge_uv;
 	bool gauge_attempted;
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	u8 cntl6_before, cntl6_during, cntl6_restored;
+	bool cntl6_before_valid, cntl6_during_valid, cntl6_restored_valid;
+	int condition_error, restore_error;
+#endif
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
 	u8 int4_after_disable, int4_wait, mode_before, mode_after;
@@ -69,6 +76,11 @@ struct sm5440_direct {
 	unsigned long sample_seq, request_epoch;
 	u64 conversion_seq;
 	bool dying;
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	bool condition_attempted, enhiz_restore_pending;
+	u8 enhiz_saved;
+	struct sm5440_sample condition_sample;
+#endif
 };
 
 /* Companion access. Cached lock order: companion_lock -> io_lock.
@@ -78,6 +90,7 @@ struct sm5440_direct {
 static DEFINE_MUTEX(sm5440_companion_lock);
 static struct sm5440_direct *sm5440_companion;
 
+#ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 static int sm5440_publish(struct sm5440_direct *sm)
 {
 	int ret = 0;
@@ -90,6 +103,7 @@ static int sm5440_publish(struct sm5440_direct *sm)
 	mutex_unlock(&sm5440_companion_lock);
 	return ret;
 }
+#endif
 
 static void sm5440_unpublish(void *data)
 {
@@ -390,6 +404,10 @@ EXPORT_SYMBOL_GPL(sm5440_passive_observe);
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
 	struct sm5440_sample sample, startup;
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	struct sm5440_sample condition;
+	bool condition_attempted, enhiz_restore_pending;
+#endif
 	unsigned long captured, startup_stamp;
 	u64 age_ms;
 	int last_error;
@@ -403,6 +421,11 @@ static void sm5440_snapshot_capture(struct sm5440_direct *sm,
 	mutex_lock(&sm->io_lock);
 	snapshot->sample = sm->sample;
 	snapshot->startup = sm->startup_sample;
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	snapshot->condition = sm->condition_sample;
+	snapshot->condition_attempted = sm->condition_attempted;
+	snapshot->enhiz_restore_pending = sm->enhiz_restore_pending;
+#endif
 	snapshot->captured = jiffies;
 	snapshot->startup_stamp = sm->startup_stamp;
 	snapshot->last_error = sm->last_sample_error;
@@ -434,6 +457,16 @@ static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
 		   name, (unsigned long long)sample->gauge_started_ms,
 		   name, (unsigned long long)sample->gauge_completed_ms,
 		   name, sample->gauge_ret, name, sample->gauge_uv);
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	seq_printf(seq, "%s_cntl6_before_valid=%u\n%s_cntl6_before=0x%02x\n"
+		   "%s_cntl6_during_valid=%u\n%s_cntl6_during=0x%02x\n"
+		   "%s_cntl6_restored_valid=%u\n%s_cntl6_restored=0x%02x\n"
+		   "%s_condition_error=%d\n%s_restore_error=%d\n", name,
+		   sample->cntl6_before_valid, name, sample->cntl6_before, name,
+		   sample->cntl6_during_valid, name, sample->cntl6_during, name,
+		   sample->cntl6_restored_valid, name, sample->cntl6_restored, name,
+		   sample->condition_error, name, sample->restore_error);
+#endif
 	seq_printf(seq, "%s_int=%*ph\n%s_status=%*ph\n%s_adc=%*ph\n", name,
 		   4, sample->int_before, name, 4, sample->status, name, 11, sample->adc);
 	seq_printf(seq, "%s_int4_disable=0x%02x\n%s_int4_wait=0x%02x\n",
@@ -466,6 +499,12 @@ static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 		   snapshot.startup_stamp);
 	sm5440_snapshot_sample_show(seq, "sample", &snapshot.sample);
 	sm5440_snapshot_sample_show(seq, "startup", &snapshot.startup);
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	seq_printf(seq, "condition_test=1\ncondition_attempted=%u\n"
+		   "enhiz_restore_pending=%u\n", snapshot.condition_attempted,
+		   snapshot.enhiz_restore_pending);
+	sm5440_snapshot_sample_show(seq, "condition", &snapshot.condition);
+#endif
 	return 0;
 }
 DEFINE_SHOW_ATTRIBUTE(sm5440_snapshot);
@@ -709,6 +748,131 @@ static int sm5440_adc_rearm(struct sm5440_direct *sm)
 	return READ_ONCE(sm->stopped) ? -ESHUTDOWN : 0;
 }
 
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+/* Samsung init_reg_param() clears ENHIZ before direct-state ADC work, while
+ * set_ENHIZ() sets CNTL6[7] for attached+OFF. Isolate only that condition;
+ * do not import active init, reset, protection/current writes or pump ON.
+ * Single drained worker owns saved state; PM/remove wait without io_lock.
+ */
+static int sm5440_condition_begin(struct sm5440_direct *sm,
+				 struct sm5440_sample *sample)
+{
+	unsigned int mode, value;
+	int ret;
+
+	mutex_lock(&sm->io_lock);
+	if (sm->condition_attempted) {
+		ret = -EALREADY;
+		goto out;
+	}
+	sm->condition_attempted = true;
+	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->dying)) {
+		ret = -ESHUTDOWN;
+		goto out;
+	}
+	if (sm->fault) {
+		ret = -EIO;
+		goto out;
+	}
+	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
+	if (!ret && (mode & SM5440_MODE_MASK))
+		ret = -EBUSY;
+	if (!ret)
+		ret = regmap_read(sm->regmap, SM5440_CNTL6, &value);
+	if (ret)
+		goto out;
+	sm->enhiz_saved = value;
+	sample->cntl6_before = value;
+	sample->cntl6_before_valid = true;
+	ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (!ret)
+		ret = regmap_read(sm->regmap, SM5440_ADCCNTL1, &value);
+	if (!ret && (value & SM5440_ADC_ENABLE))
+		ret = -EIO;
+	if (ret)
+		goto out;
+	/* A failed write may have reached silicon: pending BEFORE attempting it. */
+	sm->enhiz_restore_pending = true;
+	ret = regmap_update_bits(sm->regmap, SM5440_CNTL6, SM5440_ENHIZ, 0);
+	if (!ret)
+		ret = regmap_read(sm->regmap, SM5440_CNTL6, &value);
+	if (!ret) {
+		sample->cntl6_during = value;
+		sample->cntl6_during_valid = true;
+		if (value != (sm->enhiz_saved & ~SM5440_ENHIZ))
+			ret = -EIO;
+	}
+out:
+	mutex_unlock(&sm->io_lock);
+	return ret;
+}
+
+/* Always try bit-only restoration, even when OFF/ADC-off verification failed.
+ * Never claim success from a write alone; retain pending on ANY cleanup error.
+ * A caller returns the first conversion error separately from cleanup failure.
+ */
+static int sm5440_condition_restore(struct sm5440_direct *sm,
+				   struct sm5440_sample *sample)
+{
+	unsigned int value;
+	int ret = 0, err;
+
+	mutex_lock(&sm->io_lock);
+	if (!sm->enhiz_restore_pending)
+		goto out;
+	ret = sm5440_off(sm);
+	err = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (!ret)
+		ret = err;
+	err = regmap_read(sm->regmap, SM5440_ADCCNTL1, &value);
+	if (!err && (value & SM5440_ADC_ENABLE))
+		err = -EIO;
+	if (!ret)
+		ret = err;
+	err = regmap_update_bits(sm->regmap, SM5440_CNTL6, SM5440_ENHIZ,
+				 sm->enhiz_saved & SM5440_ENHIZ);
+	if (!ret)
+		ret = err;
+	err = regmap_read(sm->regmap, SM5440_CNTL6, &value);
+	if (!err) {
+		sample->cntl6_restored = value;
+		sample->cntl6_restored_valid = true;
+		if (value != sm->enhiz_saved)
+			err = -EIO;
+	}
+	if (!ret)
+		ret = err;
+	err = regmap_read(sm->regmap, SM5440_CNTL5, &value);
+	if (!err && (value & SM5440_MODE_MASK))
+		err = -EIO;
+	if (!ret)
+		ret = err;
+	if (!ret)
+		sm->enhiz_restore_pending = false;
+	else
+		sm->fault = true;
+out:
+	sample->restore_error = ret;
+	mutex_unlock(&sm->io_lock);
+	return ret;
+}
+
+static int sm5440_condition_cycle(struct sm5440_direct *sm,
+				 struct sm5440_sample *sample)
+{
+	int ret, restore;
+
+	ret = sm5440_condition_begin(sm, sample);
+	if (!ret)
+		ret = sm5440_adc_rearm(sm);
+	if (!ret)
+		ret = sm5440_sample_once(sm, sample);
+	sample->condition_error = ret;
+	restore = sm5440_condition_restore(sm, sample);
+	return ret ? ret : restore;
+}
+#endif
+
 /* Near-time comparison, not sensor calibration or a charging grant.
  * Called only for startup evidence, after sample_once has released io_lock.
  * The standard SM5714 property reads fresh SRAM under its own sram_lock.
@@ -745,9 +909,13 @@ static void sm5440_poll(struct work_struct *work)
 
 	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
 		return;
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	ret = sm5440_condition_cycle(sm, &sample);
+#else
 	ret = sm5440_adc_rearm(sm);
 	if (!ret)
 		ret = sm5440_sample_once(sm, &sample);
+#endif
 	if (!ret && (!sm->initial_sample_done || sm->startup_confirmations)) {
 		sm5440_startup_gauge(&sample);
 		dev_info(sm->dev,
@@ -761,6 +929,9 @@ static void sm5440_poll(struct work_struct *work)
 			 sample.gauge_ret, sample.gauge_uv);
 	}
 	mutex_lock(&sm->io_lock);
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	sm->condition_sample = sample;
+#endif
 	sm->last_sample_error = ret;
 	if (ret) {
 		sm->sample.valid = false;
@@ -823,8 +994,10 @@ static void sm5440_poll(struct work_struct *work)
 	mutex_unlock(&sm->io_lock);
 	wake_up_all(&sm->request_wait);
 	power_supply_changed(sm->psy);
+#ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))
 		schedule_delayed_work(&sm->work, msecs_to_jiffies(1000));
+#endif
 }
 
 static int sm5440_get_property(struct power_supply *psy,
@@ -922,14 +1095,29 @@ static int sm5440_quiesce(struct sm5440_direct *sm)
 
 static void sm5440_stop(void *data)
 {
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	struct sm5440_direct *sm = data;
+
+#endif
 	sm5440_quiesce(data);
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	if (sm5440_condition_restore(sm, &sm->condition_sample))
+		dev_err(sm->dev, "ADC condition teardown cannot verify restoration\n");
+#endif
 }
 
 static int sm5440_suspend(struct device *dev)
 {
 	struct sm5440_direct *sm = dev_get_drvdata(dev);
 
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	int ret = sm5440_quiesce(sm);
+	int restore = sm5440_condition_restore(sm, &sm->condition_sample);
+
+	return ret ? ret : restore;
+#else
 	return sm5440_quiesce(sm);
+#endif
 }
 
 static int sm5440_resume(struct device *dev)
@@ -937,6 +1125,11 @@ static int sm5440_resume(struct device *dev)
 	struct sm5440_direct *sm = dev_get_drvdata(dev);
 	int ret;
 
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+	/* One experiment per bind, never rearm a second one on resume. */
+	if (sm->condition_attempted)
+		return -EOPNOTSUPP;
+#endif
 	mutex_lock(&sm->io_lock);
 	ret = sm5440_off(sm);
 	mutex_unlock(&sm->io_lock);
@@ -989,9 +1182,11 @@ static int sm5440_probe(struct i2c_client *client)
 	ret = devm_add_action_or_reset(sm->dev, sm5440_unpublish, sm);
 	if (ret)
 		return ret;
+#ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 	ret = sm5440_publish(sm);
 	if (ret)
 		return dev_err_probe(sm->dev, ret, "SM5440 companion already bound\n");
+#endif
 	schedule_delayed_work(&sm->work, 0);
 	dev_info(sm->dev, "passive SM5440 revision %u; pump activation unavailable\n", id >> 4);
 	return 0;
