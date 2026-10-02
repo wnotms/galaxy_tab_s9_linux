@@ -1,0 +1,81 @@
+{
+  "test": "Test301",
+  "verdict": "OFFLINE_TCPM_FIXED_RESTORATION_QUALIFIED",
+  "source_revision": "2207d132d9aa29b270acfbf8a3b3bfefbe4ae8cc",
+  "device_mutation": false,
+  "device_baseline": "Test299 source9173df11 retained under Test300",
+  "tests": {
+    "executed": true,
+    "affected": 143,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "elapsed_seconds": 4.549352236999766,
+    "full_executed": false
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 92.28172366699982
+  },
+  "static": {
+    "exit_code": 0,
+    "objects_identical_to_linked_build": true,
+    "initial_environment_mismatch_retained_and_resolved": true
+  },
+  "config_diff": {},
+  "dtb_diff": {},
+  "protected_changes": {},
+  "paired_modules": 181,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-301-passive/Image.gz",
+      "sha256": "243bf297e974e14edc2742d7b63e713945ff458f9bc3654c4780eb00bb843f2d",
+      "bytes": 22130824
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-301-passive/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-301-passive/config",
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+      "bytes": 243276
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-301-passive/kernel-notes.bin",
+      "sha256": "c026f539d69b7d4359c05f08f801caa5d65219a5e259e10e80cfa348d32053c1",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-301-passive/modules-x710.tar.gz",
+      "sha256": "1ca37b254c518a57b5dc9f72323865f1d41b249f0ee5fe22c4977a45cb57fd53",
+      "bytes": 47319050
+    }
+  },
+  "protocol_setter": "ONLINE=1 only, no call if already fixed",
+  "USB_TYPE_classification": "capability; ONLINE1 distinguishes fixed",
+  "PPS_activation": false,
+  "PPS_tuning": false,
+  "pump_ON": false,
+  "switching_release": false,
+  "live_coordinator": false,
+  "active_stage3_ready": false,
+  "outstanding": [
+    "owned PPS budget callbacks/RDO authorization",
+    "live coordination consumer",
+    "physical ADC validity/freshness",
+    "OCP/protection qualification",
+    "PM and actual PPS/direct-charge acceptance"
+  ]
+}

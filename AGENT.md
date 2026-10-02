@@ -2,6 +2,20 @@
 
 ## Current state (2026-10-02)
 
+Test301 OFFLINE_TCPM_FIXED_RESTORATION_QUALIFIED, source2207d132.143affected
+PASS4.549s/ARM6492.282s/W1sparse/linkedobjects exact (initial omitted ccacheBASE
+mismatch retained/resolved)/exact299configDT/96protected/8overlays/181pairedPASS.
+No full/CI/devicewrite/PPSactivate/tune/pump/release/liveconsumer; actualRequest
+stillfalse. Kernel-only standardONLINE1 restore requires exactport/source and
+acquiredlease, no propertylocks/pinned drain/zerooutput; alreadyfixed no write.
+USBTYPEcapability +ONLINE1 fixesPPS-capable fixed observation; ONLINE2/3 refused.
+Budgetchange stillrevokeslease/inhibit, logicalsnapshotnotphysical/releasegrant.
+Device remains retained299/Test30057535... thermalfix, alloldseals intact.
+Next owned PPS callback/exactRDOauthorization +liveconsumer with ADC/OCP/PM
+physical gates, not delay-only replay. Read301RESULTS/summary/design; activeStage3
+NOTREADY/fullgoalactive. Staticcommands must inherit CCACHE_BASEDIR=.work and
+sloppiness from build script; make will not detect a changed ccache environment.
+
 Test301 OFFLINE fixed-restoration prerequisite implemented/143affected host PASS.
 Fixed snapshot uses ONLINE1 + PD capability (PD/PPS/SPRAVS/dual), never ONLINE2/3;
 new kernel-only ONLINE1 fallback requires exactport/source +acquired lease,

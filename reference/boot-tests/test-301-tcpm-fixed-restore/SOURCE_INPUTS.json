@@ -1,0 +1,34 @@
+{
+  "linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "files": {
+    "drivers/usb/typec/tcpm/tcpm.c": {
+      "sha256": "3bbadbb3089cea167c680ca83b1599762821738c0e5134654ef16c4f5ca31003",
+      "matches_pin": true
+    },
+    "include/linux/usb/tcpm.h": {
+      "sha256": "95f552f3d435439ebfeb6cfee4ceede1f4dbc9b9f446b9e21634bf1165ade527",
+      "matches_pin": true
+    },
+    "include/linux/power_supply.h": {
+      "sha256": "a7e0e04d4332a17e9ceff521c176be4181ed1885e1a3202b88012f50e2663116",
+      "matches_pin": true
+    }
+  },
+  "protocol_writes": [
+    "POWER_SUPPLY_PROP_ONLINE=1 only when current ONLINE=2"
+  ],
+  "request_guard_pps_authorized": false,
+  "live_consumer": false,
+  "device_commands_executed": false,
+  "facts": {
+    "USB_TYPE": "source advertised capability, not active-mode proof",
+    "ONLINE": {
+      "1": "fixed",
+      "2": "PPS",
+      "3": "SPR AVS"
+    },
+    "completion_timeout_ms": 10000,
+    "timeout_scope": "TCPM completion only, upstream swap mutex wait additional",
+    "battery_lease_check": "no I2C, no reopen, no physical proof"
+  }
+}

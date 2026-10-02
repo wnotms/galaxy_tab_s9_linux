@@ -1,0 +1,33 @@
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-301-passive'
+  DESCEND bpf/resolve_btfids
+  CC      scripts/mod/empty.o
+  CC      scripts/mod/devicetable-offsets.s
+  MKELF   scripts/mod/elfconfig.h
+  HOSTCC  scripts/mod/modpost.o
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTCC  scripts/mod/sumversion.o
+  HOSTCC  scripts/mod/symsearch.o
+  INSTALL libsubcmd_headers
+  HOSTLD  scripts/mod/modpost
+  CC      kernel/bounds.s
+  CC      arch/arm64/kernel/asm-offsets.s
+  CC      kernel/sched/rq-offsets.s
+  CALL    /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/checksyscalls.sh 
+  LDS     arch/arm64/kernel/vdso/vdso.lds
+  CC      arch/arm64/kernel/vdso/vgettimeofday.o
+  AS      arch/arm64/kernel/vdso/note.o
+  AS      arch/arm64/kernel/vdso/sigreturn.o
+  CC      arch/arm64/kernel/vdso/vgetrandom.o
+  AS      arch/arm64/kernel/vdso/vgetrandom-chacha.o
+  LD      arch/arm64/kernel/vdso/vdso.so.dbg
+  VDSOSYM include/generated/vdso-offsets.h
+  OBJCOPY arch/arm64/kernel/vdso/vdso.so
+  LDS     arch/arm64/kernel/vdso32/vdso.lds
+  LD32    arch/arm64/kernel/vdso32/vdso.so.raw
+  MUNGE   arch/arm64/kernel/vdso32/vdso32.so.dbg
+  OBJCOPY arch/arm64/kernel/vdso32/vdso.so
+  CC      drivers/power/supply/sm5714-battery.o
+  CC      drivers/usb/typec/tcpm/sm5714_usbpd.o
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-301-passive'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
