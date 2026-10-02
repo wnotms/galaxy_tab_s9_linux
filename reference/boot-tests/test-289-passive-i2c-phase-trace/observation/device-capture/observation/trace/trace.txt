@@ -1,0 +1,87 @@
+# tracer: nop
+#
+# entries-in-buffer/entries-written: 75/75   #P:8
+#
+#                                _-----=> irqs-off/BH-disabled
+#                               / _----=> need-resched
+#                              | / _---=> hardirq/softirq
+#                              || / _--=> preempt-depth
+#                              ||| / _-=> migrate-disable
+#                              |||| /     delay
+#           TASK-PID     CPU#  |||||  TIMESTAMP  FUNCTION
+#              | |         |   |||||     |         |
+  sm5440-observe-1574    [006] d....    31.116294: gts9t279_390a4a63fad2_request_enter: (sm5440_passive_request_fresh+0x0/0x574)
+  sm5440-observe-1574    [006] d..1.    31.116300: workqueue_queue_work: work struct=000000005cb38031 function=sm5440_poll workqueue=events req_cpu=32 cpu=6
+     kworker/6:1-86      [006] .....    31.116308: workqueue_execute_start: work struct 000000005cb38031: function sm5440_poll
+     kworker/6:1-86      [006] d....    31.116310: gts9t279_390a4a63fad2_poll_enter: (sm5440_poll+0x0/0x7b8)
+     kworker/6:1-86      [006] .....    31.116314: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [10]
+     kworker/6:1-86      [006] .....    31.116315: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.117073: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [01]
+     kworker/6:1-86      [006] .....    31.117075: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.117080: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [00]
+     kworker/6:1-86      [006] .....    31.117082: i2c_read: i2c-0 #1 a=063 f=0001 l=4
+     kworker/6:1-86      [006] .....    31.117310: i2c_reply: i2c-0 #1 a=063 f=0001 l=4 [00-00-00-00]
+     kworker/6:1-86      [006] .....    31.117310: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.117311: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [1c]
+     kworker/6:1-86      [006] .....    31.117311: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.117469: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [0c]
+     kworker/6:1-86      [006] .....    31.117469: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.117470: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [03]
+     kworker/6:1-86      [006] .....    31.117470: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.117627: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [00]
+     kworker/6:1-86      [006] .....    31.117627: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.117630: i2c_write: i2c-0 #0 a=063 f=0000 l=2 [1d-df]
+     kworker/6:1-86      [006] .....    31.117738: i2c_result: i2c-0 n=1 ret=1
+     kworker/6:1-86      [006] .....    31.117739: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [1c]
+     kworker/6:1-86      [006] .....    31.117739: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.117897: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [0c]
+     kworker/6:1-86      [006] .....    31.117897: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.117897: i2c_write: i2c-0 #0 a=063 f=0000 l=2 [1c-0d]
+     kworker/6:1-86      [006] .....    31.118005: i2c_result: i2c-0 n=1 ret=1
+     kworker/6:1-86      [006] .....    31.148223: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [03]
+     kworker/6:1-86      [006] .....    31.148225: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.149539: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [00]
+     kworker/6:1-86      [006] .....    31.149541: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.180331: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [03]
+     kworker/6:1-86      [006] .....    31.180333: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.181810: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [00]
+     kworker/6:1-86      [006] .....    31.181813: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.212471: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [03]
+     kworker/6:1-86      [006] .....    31.212475: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.213681: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [00]
+     kworker/6:1-86      [006] .....    31.213684: i2c_result: i2c-0 n=2 ret=2
+  sm5440-observe-1574    [004] d..1.    31.220031: gts9t279_390a4a63fad2_request_return: (observer_thread+0x110/0x27c [sm5440_fresh_observer] <- sm5440_passive_request_fresh) ret=-110
+     kworker/6:1-86      [006] .....    31.244404: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [03]
+     kworker/6:1-86      [006] .....    31.244407: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.245313: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [01]
+     kworker/6:1-86      [006] .....    31.245316: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.245321: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [1e]
+     kworker/6:1-86      [006] .....    31.245322: i2c_read: i2c-0 #1 a=063 f=0001 l=11
+     kworker/6:1-86      [006] .....    31.246831: i2c_reply: i2c-0 #1 a=063 f=0001 l=11 [19-a0-79-00-00-00-66-f8-04-75-00]
+     kworker/6:1-86      [006] .....    31.246833: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.246835: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [08]
+     kworker/6:1-86      [006] .....    31.246836: i2c_read: i2c-0 #1 a=063 f=0001 l=4
+     kworker/6:1-86      [006] .....    31.248629: i2c_reply: i2c-0 #1 a=063 f=0001 l=4 [00-00-20-00]
+     kworker/6:1-86      [006] .....    31.248632: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.248641: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [10]
+     kworker/6:1-86      [006] .....    31.248644: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.250151: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [01]
+     kworker/6:1-86      [006] .....    31.250155: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.250165: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [0d]
+     kworker/6:1-86      [006] .....    31.250168: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.251549: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [f2]
+     kworker/6:1-86      [006] .....    31.251550: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.251552: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [13]
+     kworker/6:1-86      [006] .....    31.251553: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.253553: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [e7]
+     kworker/6:1-86      [006] .....    31.253556: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.253565: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [14]
+     kworker/6:1-86      [006] .....    31.253567: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.254827: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [37]
+     kworker/6:1-86      [006] .....    31.254828: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] .....    31.254830: i2c_write: i2c-0 #0 a=063 f=0000 l=1 [19]
+     kworker/6:1-86      [006] .....    31.254831: i2c_read: i2c-0 #1 a=063 f=0001 l=1
+     kworker/6:1-86      [006] .....    31.256232: i2c_reply: i2c-0 #1 a=063 f=0001 l=1 [fe]
+     kworker/6:1-86      [006] .....    31.256233: i2c_result: i2c-0 n=2 ret=2
+     kworker/6:1-86      [006] d..1.    31.256249: gts9t279_390a4a63fad2_poll_return: (process_scheduled_works+0x18c/0x4d0 <- sm5440_poll)
+     kworker/6:1-86      [006] .....    31.256253: workqueue_execute_end: work struct 000000005cb38031: function sm5440_poll

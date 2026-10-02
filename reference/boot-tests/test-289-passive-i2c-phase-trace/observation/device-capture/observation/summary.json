@@ -1,0 +1,1557 @@
+{
+  "PPS": false,
+  "binding": {
+    "charging_authorized": false,
+    "observer_trace_bound": true,
+    "request_count": 1,
+    "timing_acceptance": false
+  },
+  "current_increase": false,
+  "device_endpoint_qualified": false,
+  "elapsed_seconds_with_cleanup": 1.0721229679999986,
+  "errors": [],
+  "observation_seconds": 0.1457069790000034,
+  "observer": {
+    "acquisition_outcome": "REFUSED",
+    "charging_authorized": false,
+    "count": 1,
+    "delivery_ms_max": null,
+    "delivery_ms_min": null,
+    "first_refusal": 1,
+    "independently_calibrated": false,
+    "rows": [
+      {
+        "acquisition_ms": 0,
+        "provider_status": -110,
+        "raw_die_decic": 0,
+        "raw_ibus_ua": 0,
+        "raw_online": 0,
+        "raw_vbat_uv": 0,
+        "raw_vbus_uv": 0,
+        "request_ms": 31116,
+        "return_ms": 31220,
+        "row": 1,
+        "status": -110,
+        "usable": 0
+      }
+    ],
+    "state": 2,
+    "successful_calls": 0
+  },
+  "observer_load_attempted": true,
+  "observer_unloaded": true,
+  "pump_ON": false,
+  "same_boot_after_unload": true,
+  "tail_seconds": 0.5,
+  "timing_acceptance": false,
+  "trace_analysis": {
+    "adc_duration_ns": null,
+    "boot_id": "7a4d9ce5-e4a6-4b5a-8208-1c54ddcfce3f",
+    "causal_assignment": "not established; temporal overlap only",
+    "clock": "boot",
+    "displayed_timestamp_precision": "6..9 decimal seconds; no sub-display precision inferred",
+    "hardware_acceptance": false,
+    "i2c_phases": {
+      "adc_duration_ns": null,
+      "hardware_acceptance": false,
+      "unassigned_background_i2c_records": 0,
+      "workers": [
+        {
+          "phase": {
+            "adc_duration_ns": null,
+            "adc_read": {
+              "data": [
+                25,
+                160,
+                121,
+                0,
+                0,
+                0,
+                102,
+                248,
+                4,
+                117,
+                0
+              ],
+              "end_ns": 31246833000,
+              "kind": "read",
+              "messages": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    30
+                  ],
+                  "event": "i2c_write",
+                  "flags": 0,
+                  "length": 1,
+                  "msg": 0,
+                  "ns": 31245321000,
+                  "pid": 86
+                },
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "event": "i2c_read",
+                  "flags": 1,
+                  "length": 11,
+                  "msg": 1,
+                  "ns": 31245322000,
+                  "pid": 86
+                }
+              ],
+              "register": 30,
+              "replies": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    25,
+                    160,
+                    121,
+                    0,
+                    0,
+                    0,
+                    102,
+                    248,
+                    4,
+                    117,
+                    0
+                  ],
+                  "event": "i2c_reply",
+                  "flags": 1,
+                  "length": 11,
+                  "msg": 1,
+                  "ns": 31246831000,
+                  "pid": 86
+                }
+              ],
+              "result": {
+                "adapter": 0,
+                "cpu": "cpu6",
+                "event": "i2c_result",
+                "nr": 2,
+                "ns": 31246833000,
+                "pid": 86,
+                "ret": 2
+              },
+              "start_ns": 31245321000,
+              "wall_ns": 1512000
+            },
+            "between_transaction_wall_ns_sum": 122436000,
+            "enable_call_to_ready_reply_wall_ns": 127416000,
+            "enable_write": {
+              "data": [
+                13
+              ],
+              "end_ns": 31118005000,
+              "kind": "write",
+              "messages": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    28,
+                    13
+                  ],
+                  "event": "i2c_write",
+                  "flags": 0,
+                  "length": 2,
+                  "msg": 0,
+                  "ns": 31117897000,
+                  "pid": 86
+                }
+              ],
+              "register": 28,
+              "replies": [],
+              "result": {
+                "adapter": 0,
+                "cpu": "cpu6",
+                "event": "i2c_result",
+                "nr": 1,
+                "ns": 31118005000,
+                "pid": 86,
+                "ret": 1
+              },
+              "start_ns": 31117897000,
+              "wall_ns": 108000
+            },
+            "first_ready_poll": {
+              "data": [
+                1
+              ],
+              "end_ns": 31245316000,
+              "kind": "read",
+              "messages": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    3
+                  ],
+                  "event": "i2c_write",
+                  "flags": 0,
+                  "length": 1,
+                  "msg": 0,
+                  "ns": 31244404000,
+                  "pid": 86
+                },
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "event": "i2c_read",
+                  "flags": 1,
+                  "length": 1,
+                  "msg": 1,
+                  "ns": 31244407000,
+                  "pid": 86
+                }
+              ],
+              "register": 3,
+              "replies": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    1
+                  ],
+                  "event": "i2c_reply",
+                  "flags": 1,
+                  "length": 1,
+                  "msg": 1,
+                  "ns": 31245313000,
+                  "pid": 86
+                }
+              ],
+              "result": {
+                "adapter": 0,
+                "cpu": "cpu6",
+                "event": "i2c_result",
+                "nr": 2,
+                "ns": 31245316000,
+                "pid": 86,
+                "ret": 2
+              },
+              "start_ns": 31244404000,
+              "wall_ns": 912000
+            },
+            "hardware_acceptance": false,
+            "last_notready_poll": {
+              "data": [
+                0
+              ],
+              "end_ns": 31213684000,
+              "kind": "read",
+              "messages": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    3
+                  ],
+                  "event": "i2c_write",
+                  "flags": 0,
+                  "length": 1,
+                  "msg": 0,
+                  "ns": 31212471000,
+                  "pid": 86
+                },
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "event": "i2c_read",
+                  "flags": 1,
+                  "length": 1,
+                  "msg": 1,
+                  "ns": 31212475000,
+                  "pid": 86
+                }
+              ],
+              "register": 3,
+              "replies": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    0
+                  ],
+                  "event": "i2c_reply",
+                  "flags": 1,
+                  "length": 1,
+                  "msg": 1,
+                  "ns": 31213681000,
+                  "pid": 86
+                }
+              ],
+              "result": {
+                "adapter": 0,
+                "cpu": "cpu6",
+                "event": "i2c_result",
+                "nr": 2,
+                "ns": 31213684000,
+                "pid": 86,
+                "ret": 2
+              },
+              "start_ns": 31212471000,
+              "wall_ns": 1213000
+            },
+            "limitations": [
+              "register sampling instant within transfer is not captured",
+              "I2C envelopes include scheduling/core/tracing; not on-wire time",
+              "inter-transfer gaps include sleeps/locks/scheduling; not ADC duration"
+            ],
+            "mode_after": 1,
+            "mode_before": 1,
+            "poll_count": 4,
+            "poll_values": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "post_disable_latch": 0,
+            "protection": {
+              "0x13": 231,
+              "0x14": 55,
+              "0x19": 254,
+              "0xd": 242
+            },
+            "status_read": {
+              "data": [
+                0,
+                0,
+                32,
+                0
+              ],
+              "end_ns": 31248632000,
+              "kind": "read",
+              "messages": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    8
+                  ],
+                  "event": "i2c_write",
+                  "flags": 0,
+                  "length": 1,
+                  "msg": 0,
+                  "ns": 31246835000,
+                  "pid": 86
+                },
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "event": "i2c_read",
+                  "flags": 1,
+                  "length": 4,
+                  "msg": 1,
+                  "ns": 31246836000,
+                  "pid": 86
+                }
+              ],
+              "register": 8,
+              "replies": [
+                {
+                  "adapter": 0,
+                  "addr": 99,
+                  "cpu": "cpu6",
+                  "data": [
+                    0,
+                    0,
+                    32,
+                    0
+                  ],
+                  "event": "i2c_reply",
+                  "flags": 1,
+                  "length": 4,
+                  "msg": 1,
+                  "ns": 31248629000,
+                  "pid": 86
+                }
+              ],
+              "result": {
+                "adapter": 0,
+                "cpu": "cpu6",
+                "event": "i2c_result",
+                "nr": 2,
+                "ns": 31248632000,
+                "pid": 86,
+                "ret": 2
+              },
+              "start_ns": 31246835000,
+              "wall_ns": 1797000
+            },
+            "transaction_wall_ns_sum": 17483000,
+            "transfers": [
+              {
+                "data": [
+                  1
+                ],
+                "end_ns": 31117075000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      16
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31116314000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31116315000,
+                    "pid": 86
+                  }
+                ],
+                "register": 16,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      1
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117073000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31117075000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31116314000,
+                "wall_ns": 761000
+              },
+              {
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "end_ns": 31117310000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31117080000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 4,
+                    "msg": 1,
+                    "ns": 31117082000,
+                    "pid": 86
+                  }
+                ],
+                "register": 0,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 4,
+                    "msg": 1,
+                    "ns": 31117310000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31117310000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31117080000,
+                "wall_ns": 230000
+              },
+              {
+                "data": [
+                  12
+                ],
+                "end_ns": 31117469000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      28
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31117311000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117311000,
+                    "pid": 86
+                  }
+                ],
+                "register": 28,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      12
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117469000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31117469000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31117311000,
+                "wall_ns": 158000
+              },
+              {
+                "data": [
+                  0
+                ],
+                "end_ns": 31117627000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      3
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31117470000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117470000,
+                    "pid": 86
+                  }
+                ],
+                "register": 3,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117627000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31117627000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31117470000,
+                "wall_ns": 157000
+              },
+              {
+                "data": [
+                  223
+                ],
+                "end_ns": 31117738000,
+                "kind": "write",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      29,
+                      223
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 2,
+                    "msg": 0,
+                    "ns": 31117630000,
+                    "pid": 86
+                  }
+                ],
+                "register": 29,
+                "replies": [],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 1,
+                  "ns": 31117738000,
+                  "pid": 86,
+                  "ret": 1
+                },
+                "start_ns": 31117630000,
+                "wall_ns": 108000
+              },
+              {
+                "data": [
+                  12
+                ],
+                "end_ns": 31117897000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      28
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31117739000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117739000,
+                    "pid": 86
+                  }
+                ],
+                "register": 28,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      12
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31117897000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31117897000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31117739000,
+                "wall_ns": 158000
+              },
+              {
+                "data": [
+                  13
+                ],
+                "end_ns": 31118005000,
+                "kind": "write",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      28,
+                      13
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 2,
+                    "msg": 0,
+                    "ns": 31117897000,
+                    "pid": 86
+                  }
+                ],
+                "register": 28,
+                "replies": [],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 1,
+                  "ns": 31118005000,
+                  "pid": 86,
+                  "ret": 1
+                },
+                "start_ns": 31117897000,
+                "wall_ns": 108000
+              },
+              {
+                "data": [
+                  0
+                ],
+                "end_ns": 31149541000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      3
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31148223000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31148225000,
+                    "pid": 86
+                  }
+                ],
+                "register": 3,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31149539000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31149541000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31148223000,
+                "wall_ns": 1318000
+              },
+              {
+                "data": [
+                  0
+                ],
+                "end_ns": 31181813000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      3
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31180331000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31180333000,
+                    "pid": 86
+                  }
+                ],
+                "register": 3,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31181810000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31181813000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31180331000,
+                "wall_ns": 1482000
+              },
+              {
+                "data": [
+                  0
+                ],
+                "end_ns": 31213684000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      3
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31212471000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31212475000,
+                    "pid": 86
+                  }
+                ],
+                "register": 3,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31213681000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31213684000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31212471000,
+                "wall_ns": 1213000
+              },
+              {
+                "data": [
+                  1
+                ],
+                "end_ns": 31245316000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      3
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31244404000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31244407000,
+                    "pid": 86
+                  }
+                ],
+                "register": 3,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      1
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31245313000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31245316000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31244404000,
+                "wall_ns": 912000
+              },
+              {
+                "data": [
+                  25,
+                  160,
+                  121,
+                  0,
+                  0,
+                  0,
+                  102,
+                  248,
+                  4,
+                  117,
+                  0
+                ],
+                "end_ns": 31246833000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      30
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31245321000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 11,
+                    "msg": 1,
+                    "ns": 31245322000,
+                    "pid": 86
+                  }
+                ],
+                "register": 30,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      25,
+                      160,
+                      121,
+                      0,
+                      0,
+                      0,
+                      102,
+                      248,
+                      4,
+                      117,
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 11,
+                    "msg": 1,
+                    "ns": 31246831000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31246833000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31245321000,
+                "wall_ns": 1512000
+              },
+              {
+                "data": [
+                  0,
+                  0,
+                  32,
+                  0
+                ],
+                "end_ns": 31248632000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      8
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31246835000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 4,
+                    "msg": 1,
+                    "ns": 31246836000,
+                    "pid": 86
+                  }
+                ],
+                "register": 8,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      0,
+                      0,
+                      32,
+                      0
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 4,
+                    "msg": 1,
+                    "ns": 31248629000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31248632000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31246835000,
+                "wall_ns": 1797000
+              },
+              {
+                "data": [
+                  1
+                ],
+                "end_ns": 31250155000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      16
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31248641000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31248644000,
+                    "pid": 86
+                  }
+                ],
+                "register": 16,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      1
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31250151000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31250155000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31248641000,
+                "wall_ns": 1514000
+              },
+              {
+                "data": [
+                  242
+                ],
+                "end_ns": 31251550000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      13
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31250165000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31250168000,
+                    "pid": 86
+                  }
+                ],
+                "register": 13,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      242
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31251549000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31251550000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31250165000,
+                "wall_ns": 1385000
+              },
+              {
+                "data": [
+                  231
+                ],
+                "end_ns": 31253556000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      19
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31251552000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31251553000,
+                    "pid": 86
+                  }
+                ],
+                "register": 19,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      231
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31253553000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31253556000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31251552000,
+                "wall_ns": 2004000
+              },
+              {
+                "data": [
+                  55
+                ],
+                "end_ns": 31254828000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      20
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31253565000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31253567000,
+                    "pid": 86
+                  }
+                ],
+                "register": 20,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      55
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31254827000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31254828000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31253565000,
+                "wall_ns": 1263000
+              },
+              {
+                "data": [
+                  254
+                ],
+                "end_ns": 31256233000,
+                "kind": "read",
+                "messages": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      25
+                    ],
+                    "event": "i2c_write",
+                    "flags": 0,
+                    "length": 1,
+                    "msg": 0,
+                    "ns": 31254830000,
+                    "pid": 86
+                  },
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "event": "i2c_read",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31254831000,
+                    "pid": 86
+                  }
+                ],
+                "register": 25,
+                "replies": [
+                  {
+                    "adapter": 0,
+                    "addr": 99,
+                    "cpu": "cpu6",
+                    "data": [
+                      254
+                    ],
+                    "event": "i2c_reply",
+                    "flags": 1,
+                    "length": 1,
+                    "msg": 1,
+                    "ns": 31256232000,
+                    "pid": 86
+                  }
+                ],
+                "result": {
+                  "adapter": 0,
+                  "cpu": "cpu6",
+                  "event": "i2c_result",
+                  "nr": 2,
+                  "ns": 31256233000,
+                  "pid": 86,
+                  "ret": 2
+                },
+                "start_ns": 31254830000,
+                "wall_ns": 1403000
+              }
+            ],
+            "verdict": "PASSIVE_SINGLE_SHOT_SEQUENCE_OBSERVED"
+          },
+          "worker": {
+            "end_ns": 31256253000,
+            "pid": 86,
+            "poll_entry_ns": 31116310000,
+            "poll_return_ns": 31256249000,
+            "queue_delay_ns": 8000,
+            "queue_ns": 31116300000,
+            "start_ns": 31116308000,
+            "work": "000000005cb38031",
+            "worker_elapsed_ns": 139945000
+          }
+        }
+      ]
+    },
+    "limitations": [
+      "worker includes I2C/waits/scheduling; not ADC duration",
+      "tracing adds overhead",
+      "timeout branch remains unknown"
+    ],
+    "queue_boundaries_complete": true,
+    "request_timeout_branch": "UNKNOWN",
+    "requests": [
+      {
+        "causal_worker_assignment": null,
+        "elapsed_ns": 103737000,
+        "entry_ns": 31116294000,
+        "overlapping_workers": [
+          {
+            "already_running_at_entry": false,
+            "completed_before_return": false,
+            "queued_during_request": true,
+            "worker_index": 0
+          }
+        ],
+        "pid": 1574,
+        "return_code": -110,
+        "return_ns": 31220031000,
+        "timeout_branch": "UNKNOWN"
+      }
+    ],
+    "uninstrumented_timing_acceptance": false,
+    "verdict": "BOUNDED_TRACE_ATTRIBUTED",
+    "workers": [
+      {
+        "end_ns": 31256253000,
+        "pid": 86,
+        "poll_entry_ns": 31116310000,
+        "poll_return_ns": 31256249000,
+        "queue_delay_ns": 8000,
+        "queue_ns": 31116300000,
+        "start_ns": 31116308000,
+        "work": "000000005cb38031",
+        "worker_elapsed_ns": 139945000
+      }
+    ]
+  },
+  "verdict": "PASSIVE_REFUSAL_CAPTURED"
+}

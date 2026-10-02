@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "StrictHostKeyChecking=no",
+    "-o",
+    "UserKnownHostsFile=/dev/null",
+    "-o",
+    "LogLevel=ERROR",
+    "-o",
+    "ConnectTimeout=5",
+    "root@10.125.29.47",
+    "cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-02T05:40:11.600078+00:00",
+  "started_utc": "2026-10-02T05:40:10.541251+00:00",
+  "status": 0
+}

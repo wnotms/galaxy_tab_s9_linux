@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "sha256sum /tmp/test289-tools/analyse.py /tmp/test289-tools/collector.py /tmp/test289-tools/coordinator.py /tmp/test289-tools/device_ops.py /tmp/test289-tools/health_gate.py /tmp/test289-tools/observer_gate.py /tmp/test289-tools/phase_analyse.py /tmp/test289-tools/phase_collector.py /tmp/test289-tools/phase_coordinator.py /tmp/test289-tools/phase_decode.py /tmp/test289-tools/snapshot_gate.py /tmp/test289-tools/tracefs_io.py /tmp/test289-tools/packet.json /tmp/test289-tools/observer.ko"
+  ],
+  "ended_utc": "2026-10-02T05:40:07.653325+00:00",
+  "started_utc": "2026-10-02T05:40:07.582222+00:00",
+  "status": 0
+}

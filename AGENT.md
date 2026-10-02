@@ -2,6 +2,24 @@
 
 ## Current state (2026-10-02)
 
+Test289 PASSIVE_REFUSAL_CAPTURED; EXACT263_ROLLBACK_DEVICE_SCOPE_COMPLETED.
+One2727a4d9ce5boot/one276observer/onefresh-110/0usable; firstrefusalSTOP.
+288phaseprofile captured18successfulI2Ctransactions/4polls[0,0,0,1], request
+103.737ms/queue8us/worker139.945ms, enable-to-ready-reply127.416ms WALL only;
+I2C17.483ms/intertransaction122.436ms, no ADCduration/calibration/timing grant.
+Requiredfinalreads afterreturn; exactbranch/causalassignment UNKNOWN. Actual0x0d
+AVG32bit3 matchesvendor mask1shift3/FedoraBIT3; bit2UNKNOWN, no guessed field/fix.
+Collection0.1457s/500mstail/cleanupunload1.0721s; sameboot healthyOFF/rescue/noCPU
+fault/Code43/ownedtraceobserver absent. Exact263all5/181rollback/tested289+
+oldbackups retained/BCBclear/rootunmounted. Final263d856e6f593254cc28f3a178579e07c1b
+Wi-Fi10.125.29.32/confignotesnormalcmdline/full286journal/uniquehistory/ADBWi-Fi
+/deviceNCM healthy; battery64%4.000V31.1C/OFFfault0IBUS0. Displaydiagnostic remains
+unresolved/notstabilityclean. Read289RESULTS/summary/raw/seal. Results testsbuildfull
+executed:false/reuse28836/28920/2722761481W1sparse/noCI. Next OFFLINE source-backed
+acquisition/publication/delivery API design, notsameprofilereplay or100ms/ADCrelax.
+No kernel/config/DT/USB/adbd/rootfs/PPS/pump/current change. ActiveStage3 NOT READY;
+fullportgoalactive. Groupstages/batchedpush/parallelreads/qualificationreuse.
+
 Test289 paired272deployment+candidateadmission PASS: 7a4d9ce5e4a64b5a82081c54ddcfce3f
 /Wi-Fi10.125.29.47; exactidentity/normalcmdline/healthOFF/protection/
 rescue/new286journal/uniquehistory. All5/181verified/new289original/oldbackups

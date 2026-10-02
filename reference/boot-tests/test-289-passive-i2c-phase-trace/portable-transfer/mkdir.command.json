@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /tmp/test289-tools; test ! -e /tmp/test289-capture; mkdir /tmp/test289-tools"
+  ],
+  "ended_utc": "2026-10-02T05:40:07.502256+00:00",
+  "started_utc": "2026-10-02T05:40:07.425710+00:00",
+  "status": 0
+}
