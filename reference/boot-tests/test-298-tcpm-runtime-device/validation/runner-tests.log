@@ -1,0 +1,14 @@
+F.........
+======================================================================
+FAIL: test_ceiling_source_and_mirror_gates (test_sm5714_runtime_device_runner.RuntimeDeviceRunnerTests.test_ceiling_source_and_mirror_gates) (raw='@@before\n11111111111111111111111111111111\n@@runtime\nformat=sm5714-current-port-v1\nret=0\ncharging_grant=0\nvalues_are_not_physical_measurements=1\ninstance=1\nsource_generation=2\nbudget_generation=4\nstarted_ms=30000\ncompleted_ms=30001\nonline=1\nusb_type=8\nvoltage_uv=5000000\ncurrent_ua=1800000\nbudget_mv=5000\nbudget_ma=1800\ncharge_requested=1\nnr_source_pdos=1\nsource_pdo_1=0x190b4\n@@supply\nPOWER_SUPPLY_USB_TYPE=C [PD] PD_PPS\nPOWER_SUPPLY_VOLTAGE_NOW=5000000\nPOWER_SUPPLY_CURRENT_NOW=1800000\n@@after\n11111111111111111111111111111111\n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_runtime_device_runner.py", line 40, in test_ceiling_source_and_mirror_gates
+    with self.subTest(raw=raw),self.assertRaises(ValueError):m.parse_runtime(raw,BOOT)
+                               ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.002s
+
+FAILED (failures=1)

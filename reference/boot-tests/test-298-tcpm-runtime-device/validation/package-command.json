@@ -1,0 +1,22 @@
+{
+  "mkbootimg": [
+    "python3",
+    ".work/tools/mkbootimg.py",
+    "--kernel",
+    "out/boot-bundle-x710-297-passive/kernel-dtb",
+    "--cmdline",
+    "",
+    "--header_version",
+    "4",
+    "--os_version",
+    "13",
+    "--os_patch_level",
+    "2025-07",
+    "-o",
+    "out/boot-bundle-x710-297-passive/boot.img"
+  ],
+  "avb_salt": "52ed4edf4fd9023d4e3f18e3e3cb535feee4dd92aabae581f5d0de46bd7f13b7",
+  "stage": "/mnt/d/android/gts9-active/gts9-test298",
+  "verified_files": 7,
+  "qualified_source": "eefef33f"
+}

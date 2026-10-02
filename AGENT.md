@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+Test298 ONE standardTCPM runtime read registered; qualified297sourceeefef33f/
+119tests/buildW1sparse/exactconfigDT/protected181 reused;10new runner PASS.
+Current263ffca1c7b sameboot/all5/181/confignotes/ADB/deviceNCM/Code0/Goodbattery
+read-onlypreflightpass; NCMauth sameboot/PD5V reported. One0400realAPIread +15s
+endpoint/exact263rollback; unexpectedrefusal STOP/no retry/no observermodule.
+ExplicitENODATA only ifPCnoPD; contract values notphysical/grant. Pushregistration
+beforemutation; new298backupslots. Host-onlyNCMoneprobe/no prolongedwait; device
+safety mandatory. NoPPS/pumpON/current/ADCthreshold/USB/core/DTconfig changes.
+Read298README/registration/PACKAGE; goalactive/Stage3NOTREADY.
+
 Test297 OFFLINE_RUNTIME_SNAPSHOT_QUALIFIED, sourceeefef33f (d352deb4 +macrofix).
 119affected PASS4.399s; ARM6466.85s/W1sparse/objectidentical/exact296configDT/
 protected96/compiled overlays/181pairedpass. Initial macro build failure retained;
