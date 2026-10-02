@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test284 independent SINGLE passive trace registered on normal26360b572d1;
+preflight identity/health/rescue passes, Wi-Fi10.125.29.204. Reuse272provider+
+276ownedobserver+279Session/280coordinator; new283boundedADC_UPDATED/currenthealth
+hostgate and native recovery waiter.18portabletests/syntax pass, no runtime/source
+change/build/full/CI. Push registration BEFORE device transfer/BCB/install. New284
+backup slots; onlypaired272boot/181modules, onecandidateboot/observerload, first
+refusalSTOP/fixed500ms trace tail/ownedcleanup/unload; unconditional exact263rollback.
+Group stage/parallelreadonlycapture/reusequalification, no per-command pauses.
+No gate/ADC/deadline/PPS/pump/current change; preserve282STOP. Read284README/
+registration/PACKAGE/preflight. ActiveStage3 NOT READY.
+
 Test283 OFFLINE_CLASSIFIER_AND_RECOVERY_FLOW_QUALIFIED_PHYSICAL_NOT_TESTED.
 Read283README/registration/RESULTS/replay and CHARGING_ROUND_WORKFLOW.28hosttests
 incl256INT4cases/ASTjournal equivalence+syntax/hash pass. New host gate permits
