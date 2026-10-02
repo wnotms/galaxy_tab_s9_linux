@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(cat /proc/sys/kernel/random/boot_id | tr -d -)\" = 1c1c3d0d387c469098bfcd6db2ac6fb3; TMPDIR=/tmp gts9-debian-to-recovery --yes --no-reboot"
+  ],
+  "ended_utc": "2026-10-02T03:43:40.660885+00:00",
+  "started_utc": "2026-10-02T03:43:40.515262+00:00",
+  "status": 0
+}

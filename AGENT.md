@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-02)
 
+Test282 paired installation READBACK VERIFIED in TWRP: sealed272bootd837b52f/
+181modules, other4partitions exact263; original181modules under unique282backup/
+allolderbackups retained/rootunmounted/BCBclear. Read282INSTALL_STATUS/raw/seal.
+Next onecandidate boot/health+identity+rescue admission then onepassive trace and
+unconditional exact263rollback. No repeat/PPS/pumpON/current/ADC/deadline change.
+Qualification reuse; no build/full/CI. ActiveStage3 NOT READY.
+
 Test282 independent SINGLE passive symbolic trace registered on accepted281normal
 Test2631c1c3d0d. Read282README/registration/PACKAGE/preflight before writes. Reuse
 272provider+276ownedobserver+279Session+280coordinator;18portable tests/AST/package/
