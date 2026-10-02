@@ -1,0 +1,24 @@
+{
+  "added": [
+    "test_sm5440_passive_observation.PassiveObservationTests.test_admission_failures_never_queue",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_budget_boundaries_and_release_delay",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_i2c_active_pending_and_copy_contention_clear_output",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_legacy_and_diagnostic_requests_share_exclusion",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_legacy_functions_converter_and_quiesce_remain_frozen",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_null_and_absent_provider",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_offline_is_retained_as_fact",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_same_millisecond_conversion_needs_new_sequence",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_slow_new_observation_reports_original_age_not_fresh_grant",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_suspend_and_resume_epoch_do_not_adopt_old_work",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_timestamp_zero_backward_future_or_old_conversion",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_unpublish_wakes_and_drains_real_lifetime_thread",
+    "test_sm5440_passive_observation.PassiveObservationTests.test_wait_timeout_does_not_cancel_or_retry_monitor"
+  ],
+  "all_prior_retained": true,
+  "changed_execution": false,
+  "changed_selection_covered_by_full": true,
+  "current": 1494,
+  "prior": 1481,
+  "reason": "one full run covers identical1494 selection; avoid duplicate wrapper/changed/all",
+  "removed": []
+}

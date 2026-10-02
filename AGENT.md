@@ -2,6 +2,21 @@
 
 ## Current state (2026-10-02)
 
+Test290 PASSIVE_OBSERVATION_OFFLINE_QUALIFIED_DEVICE_NOT_TESTED, source8e890215.
+13actualC/1494fullPASS/0failureerror skip/all1481prior IDs retained. OneARM64build,
+W1sparse/objectconsistent, exact272embeddedresolvedconfig/DTB,96protected/8compiled
+overlays/181pairedarchive PASS.167modulebinary changes allBTF(+onebuildid/debug),
+otherELFsections incltext match; use newpairedarchive. Old272artifacts/276/283-289
+seals intact. Separate500ms DIAGNOSTIC API returns actualoldest acquisition age,
+completion/delivery/seq/epoch; legacy/active100ms +converter/quiesce unchanged.
+No consumer/observer wired/devicecmd/PPS/pump/current/DT/config/USB/rootfs change.
+Installed263d856e6f5/Wi-Fi10.125.29.32 lastverified289 unchanged. Read290RESULTS/
+summary/artifacts/seal/design/futureplan. Full coverschangedselection; no repeat
+wrapper/buildfull/CI forresultcommit. Next separately qualifyowned passiveconsumer
+then oneindependentregisteredcall/263rollback, no samelegacyrefusal replay or
+active100mswaiver. Calibration/OCP/livePM/PPS/pumpremain open: Stage3 NOT READY;
+fullportgoalactive. Groupstages/batchedtools/parallelreads/reusequalification.
+
 Test290 OFFLINE implementation/build+1494full host PASS; committed-source
 artifact pairing/W1sparse finalaudit pending, no device test. Independent passive
 observe API returns true oldest acquisition/completion/delivery/age with500ms

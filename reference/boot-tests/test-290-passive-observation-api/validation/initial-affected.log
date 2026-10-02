@@ -1,0 +1,77 @@
+test_admission_failures_never_queue (test_sm5440_passive_observation.PassiveObservationTests.test_admission_failures_never_queue) ... ok
+test_budget_boundaries_and_release_delay (test_sm5440_passive_observation.PassiveObservationTests.test_budget_boundaries_and_release_delay) ... FAIL
+test_i2c_active_pending_and_copy_contention_clear_output (test_sm5440_passive_observation.PassiveObservationTests.test_i2c_active_pending_and_copy_contention_clear_output) ... FAIL
+test_legacy_and_diagnostic_requests_share_exclusion (test_sm5440_passive_observation.PassiveObservationTests.test_legacy_and_diagnostic_requests_share_exclusion) ... FAIL
+test_legacy_functions_converter_and_quiesce_remain_frozen (test_sm5440_passive_observation.PassiveObservationTests.test_legacy_functions_converter_and_quiesce_remain_frozen) ... ok
+test_null_and_absent_provider (test_sm5440_passive_observation.PassiveObservationTests.test_null_and_absent_provider) ... ok
+test_offline_is_retained_as_fact (test_sm5440_passive_observation.PassiveObservationTests.test_offline_is_retained_as_fact) ... ok
+test_same_millisecond_conversion_needs_new_sequence (test_sm5440_passive_observation.PassiveObservationTests.test_same_millisecond_conversion_needs_new_sequence) ... ok
+test_slow_new_observation_reports_original_age_not_fresh_grant (test_sm5440_passive_observation.PassiveObservationTests.test_slow_new_observation_reports_original_age_not_fresh_grant) ... ok
+test_suspend_and_resume_epoch_do_not_adopt_old_work (test_sm5440_passive_observation.PassiveObservationTests.test_suspend_and_resume_epoch_do_not_adopt_old_work) ... ok
+test_timestamp_zero_backward_future_or_old_conversion (test_sm5440_passive_observation.PassiveObservationTests.test_timestamp_zero_backward_future_or_old_conversion) ... FAIL
+test_unpublish_wakes_and_drains_real_lifetime_thread (test_sm5440_passive_observation.PassiveObservationTests.test_unpublish_wakes_and_drains_real_lifetime_thread) ... ok
+test_wait_timeout_does_not_cancel_or_retry_monitor (test_sm5440_passive_observation.PassiveObservationTests.test_wait_timeout_does_not_cancel_or_retry_monitor) ... ok
+
+======================================================================
+FAIL: test_budget_boundaries_and_release_delay (test_sm5440_passive_observation.PassiveObservationTests.test_budget_boundaries_and_release_delay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 132, in test_budget_boundaries_and_release_delay
+    self.refused(28, errno.ETIMEDOUT)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 96, in refused
+    self.assertEqual(ret, -error)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 0 != -110
+
+======================================================================
+FAIL: test_i2c_active_pending_and_copy_contention_clear_output (test_sm5440_passive_observation.PassiveObservationTests.test_i2c_active_pending_and_copy_contention_clear_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 167, in test_i2c_active_pending_and_copy_contention_clear_output
+    self.refused(kind, error)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 96, in refused
+    self.assertEqual(ret, -error)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: -110 != -116
+
+======================================================================
+FAIL: test_legacy_and_diagnostic_requests_share_exclusion (test_sm5440_passive_observation.PassiveObservationTests.test_legacy_and_diagnostic_requests_share_exclusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 160, in test_legacy_and_diagnostic_requests_share_exclusion
+    ret, values = self.read(kind)
+                  ~~~~~~~~~^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 91, in read
+    self.assertEqual(list(values)[8:11], [0, 0, 0], 'users/reservation/locks drain')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [0, 0, 2] != [0, 0, 0]
+
+First differing element 2:
+2
+0
+
+- [0, 0, 2]
+?        ^
+
++ [0, 0, 0]
+?        ^
+ : users/reservation/locks drain
+
+======================================================================
+FAIL: test_timestamp_zero_backward_future_or_old_conversion (test_sm5440_passive_observation.PassiveObservationTests.test_timestamp_zero_backward_future_or_old_conversion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 141, in test_timestamp_zero_backward_future_or_old_conversion
+    self.refused(38, errno.ETIMEDOUT)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_passive_observation.py", line 96, in refused
+    self.assertEqual(ret, -error)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 0 != -110
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.410s
+
+FAILED (failures=4)

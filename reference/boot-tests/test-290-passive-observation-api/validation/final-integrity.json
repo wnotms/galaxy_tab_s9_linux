@@ -1,0 +1,23 @@
+{
+  "device_commands": false,
+  "hardware_boot_rootfs_userspace_scripts_changes": [
+    "kernel/drivers/sm5440-direct.c",
+    "kernel/drivers/sm5440-hw.h"
+  ],
+  "new_source_inputs_match": true,
+  "old272_artifacts_unchanged": true,
+  "old_seals_unchanged": [
+    "reference/boot-tests/test-272-sm5440-fresh-request-offline",
+    "reference/boot-tests/test-276-observer-task-lifetime-offline",
+    "reference/boot-tests/test-283-startup-adc-event-offline",
+    "reference/boot-tests/test-284-passive-fresh-trace",
+    "reference/boot-tests/test-285-tracefs-command-io-offline",
+    "reference/boot-tests/test-286-smmu-startup-offline",
+    "reference/boot-tests/test-287-passive-fresh-trace",
+    "reference/boot-tests/test-288-i2c-phase-trace-offline",
+    "reference/boot-tests/test-289-passive-i2c-phase-trace"
+  ],
+  "protected96_unchanged": true,
+  "static_object_unchanged": true,
+  "verdict": "PASS"
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "python3",
+    "scripts/audit-x710-charging-build.py",
+    "--out",
+    "out/kernel-x710-290-passive",
+    "--tree",
+    ".work/build/linux-src-x710-charging",
+    "--build",
+    ".work/build/linux-out-x710-290-passive",
+    "--profile",
+    "sm5440-passive",
+    "--report",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-290-passive-observation-api/validation/artifact-audit.json",
+    "--revision",
+    "8e890215"
+  ],
+  "environment": {},
+  "started_utc": "2026-10-02T06:06:49.062192+00:00",
+  "device_commands_executed": false,
+  "status": 0,
+  "ended_utc": "2026-10-02T06:07:28.771202+00:00"
+}

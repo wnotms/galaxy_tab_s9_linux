@@ -1,0 +1,66 @@
+{
+  "ADC_sequence_changed": false,
+  "API_is_charging_grant": false,
+  "CI": false,
+  "DTB_diff_to272": {},
+  "PPS": false,
+  "active_freshness_ms": 100,
+  "active_stage3": "NOT READY",
+  "build": {
+    "argv": [
+      "bash",
+      "scripts/build-kernel.sh"
+    ],
+    "device_commands_executed": false,
+    "ended_utc": "2026-10-02T06:03:51.341982+00:00",
+    "environment": {
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-passive",
+      "JOBS": "8",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-290-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-290-passive",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "USE_CCACHE": "1"
+    },
+    "started_utc": "2026-10-02T06:02:10.367582+00:00",
+    "status": 0
+  },
+  "compiled_overlay_match": {
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "sm5714-battery.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true
+  },
+  "config_diff_to272": {},
+  "current_increase": false,
+  "device_commands_executed": false,
+  "diagnostic_collection_budget_ms": 500,
+  "hardware_acceptance": false,
+  "host": {
+    "added_IDs": 13,
+    "affected_tests": 13,
+    "all_tests": 1494,
+    "changed_selection_covered_by_full": true,
+    "changed_tests_executed": false,
+    "elapsed_s": 133.59,
+    "errors": 0,
+    "failures": 0,
+    "prior_IDs_retained": 1481,
+    "skipped": 0
+  },
+  "installed_device": "unchanged exactTest263 d856e6f593254cc28f3a178579e07c1b; verified289",
+  "legacy_fresh_ms": 100,
+  "module_binary_changed_files": 167,
+  "module_files": 181,
+  "protected_files": 96,
+  "pump_ON": false,
+  "source_revision": "8e890215",
+  "static": "W1/sparse PASS, old upstreamVDSO warning retained",
+  "static_object_unchanged": true,
+  "test": "Test290",
+  "verdict": "PASSIVE_OBSERVATION_OFFLINE_QUALIFIED_DEVICE_NOT_TESTED"
+}
