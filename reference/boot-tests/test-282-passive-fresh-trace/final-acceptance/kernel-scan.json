@@ -1,0 +1,109 @@
+{
+  "diagnostic_attribution_only": true,
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 43,
+  "last_source_timestamp": "31712740",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.923275,
+        "events": [],
+        "setup_source_seconds": 3.749151
+      },
+      {
+        "completion_source_seconds": 5.894774,
+        "events": [],
+        "setup_source_seconds": 5.022982
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "retained_startup_confirmation": {
+    "charging_authorized": false,
+    "confirmation_seconds": 2.31951,
+    "confirmed": {
+      "MESSAGE": "sm5440-passive 0-0063: passive startup REVBLK confirmed inactive; event retained",
+      "PRIORITY": "6",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "60b572d127b14921b4f5f7332f04d923",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "2606214",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "2606214",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c6133;b=60b572d127b14921b4f5f7332f04d923;m=3454b1;t=65cd37200e8b4;x=6bda52c30295cbb8",
+      "__MONOTONIC_TIMESTAMP": "3429553",
+      "__REALTIME_TIMESTAMP": "1790913080780980",
+      "__SEQNUM": "811315",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    },
+    "current_healthy_snapshot_required": true,
+    "event_retained": true,
+    "fault": {
+      "MESSAGE": "sm5440-passive 0-0063: passive fault bitmap=0x80 INT=00 00 62 00 STATUS=00 00 20 00 INT4-disable=00 INT4-wait=01 mode=01/01 CNTL2=f2 VBUSCNTL=e7 VBATCNTL=37 PRTNCNTL=fe ADC=18 d8 7d 08 00 00 61 d8 08 78 40 VBUS=4891000uV VBAT=3972000uV IBUS=0uA die=265 deciC",
+      "PRIORITY": "4",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "60b572d127b14921b4f5f7332f04d923",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "286704",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "286704",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c603b;b=60b572d127b14921b4f5f7332f04d923;m=181da3;t=65cd371e4b1a7;x=c7ddd83514907e6d",
+      "__MONOTONIC_TIMESTAMP": "1580451",
+      "__REALTIME_TIMESTAMP": "1790913078931879",
+      "__SEQNUM": "811067",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    },
+    "waiting": {
+      "MESSAGE": "sm5440-passive 0-0063: passive startup REVBLK awaiting two fresh confirmations",
+      "PRIORITY": "4",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "60b572d127b14921b4f5f7332f04d923",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "286701",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "286701",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c603a;b=60b572d127b14921b4f5f7332f04d923;m=181d57;t=65cd371e4b15a;x=b447b6559f09c5e9",
+      "__MONOTONIC_TIMESTAMP": "1580375",
+      "__REALTIME_TIMESTAMP": "1790913078931802",
+      "__SEQNUM": "811066",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    }
+  },
+  "rows": 1108,
+  "stability_clean_claim": false,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [],
+  "unresolved_counts": {
+    "context": 0,
+    "syndrome": 0
+  },
+  "unresolved_startup_smmu": []
+}

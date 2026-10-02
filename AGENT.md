@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-02)
 
+Test282 STOP_STARTUP_ADMISSION + EXACT263_ROLLBACK_DEVICE_ENDPOINT_COMPLETED.
+One272dd9a0205boot; INT00 00 62 01 fails frozen275accepted00 00 62 00, bitmap80/
+OFF01/01/IBUS0 and driverconfirmation2.300114s/currenthealthy retained. Zero
+observerloads/freshrequests/tracefswrites/tools transfer; no exemption/retry.
+Offline bit0=ADC_UPDATED sourcefact, not new acceptance; latchcause unresolved.
+Read282RESULTS/summary/raw/sourceanalysis/seals. Exact263all5/181 restored/current
+60b572d127b14921b4f5f7332f04d923 Wi-Fi10.125.29.204/ADB/deviceNCM healthy/noCode43/
+newCPUfault; notes/config/normalcmdline exact, observer/freshAPI/DCCabsent.
+All198protectedinputs/oldseals/portable/staging unchanged; results executed:false
+reuse28218/272/2761481/W1/sparse/27950/28024; no build/full/CI. Next OFFLINE bounded
+startupbitfield classification review/tests only, independent future physical
+registration; no automatic retry/ADC/deadline/PPS/pump/current. ActiveStage3 NOT READY.
+
 Test282 exact263rollback READBACK VERIFIED in TWRP: all5partition/181module
 hashes exact; tested272modules and older backups retained/rootunmounted/BCBclear.
 Next one263baseline boot/finalendpoint only.282startup STOP retained; zero

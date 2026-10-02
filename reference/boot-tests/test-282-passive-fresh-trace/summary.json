@@ -1,0 +1,73 @@
+{
+  "ADB": "responsive",
+  "ADC_duration": "UNKNOWN",
+  "API_timeout_branch": "UNKNOWN",
+  "Code43": false,
+  "PPS": false,
+  "WiFi": "same-boot authenticated",
+  "active_Stage3": "NOT READY",
+  "candidate_boot_id": "dd9a020553c442dfae29e90392ac86cb",
+  "candidate_boots": 1,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "current_increase": false,
+  "current_wifi": "10.125.29.204",
+  "device_NCM": "usb0/sshd active",
+  "device_endpoint_completed": true,
+  "final_boot_id": "60b572d127b14921b4f5f7332f04d923",
+  "final_notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
+  "final_verdict": "STOP_UNCLASSIFIED_PASSIVE_STARTUP_EVENT_EXACT263_ROLLBACK_COMPLETED",
+  "fresh_requests": 0,
+  "historical_seals_verified": {
+    "test-275-passive-fresh-acquisition": {
+      "files_verified": 380,
+      "manifest_sha256": "072b499f48d5c98aec88a8a77ce46226ab6d01a81852a06cdfd4611087415b79"
+    },
+    "test-277-revised-passive-observer": {
+      "files_verified": 417,
+      "manifest_sha256": "ebaf8c9a063258ddae0470cd824d463950a7e9433299e36a7f7b4634dd8182f6"
+    },
+    "test-278-fresh-timing-audit-offline": {
+      "files_verified": 25,
+      "manifest_sha256": "3be1fcf104d42719da1933f7389049a0a350622daa2cccc4ff9e6a14d7fd051e"
+    },
+    "test-279-fresh-trace-collector-offline": {
+      "files_verified": 43,
+      "manifest_sha256": "122beb95d0413537bf52dc1913a6d3340c995248b4eccbef621e2a79c2fc3689"
+    },
+    "test-280-passive-fresh-trace": {
+      "files_verified": 33,
+      "manifest_sha256": "5459aa3869ee5305c4af4675731c4e9a47823bdabe88e5b5048fae9b1d33070c"
+    }
+  },
+  "host_NCM_TCP_retested": false,
+  "new_CPU_fault_counts": {},
+  "normal_cmdline_exact": true,
+  "observer_loads": 0,
+  "portable_package_hashes_verified": 7,
+  "protected_file_audit": {
+    "base": "8a87778afcdc9cd5d2e26d58410d496c8ff104a9",
+    "changed": [],
+    "unchanged": 198
+  },
+  "pump_ON": false,
+  "qualification": {
+    "executed": false,
+    "reason": "physical results/documentation only; unchanged18-test wrapper and frozen provider/observer reused",
+    "reused": "Test28218+syntax; Test272provider; Test27626affected/full1481/W1/sparse; Test27950/Test28024"
+  },
+  "rollback_completed": true,
+  "rollback_module_files": 181,
+  "rollback_partition_hashes": {
+    "boot": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "source_fact_analysis": "OFFLINE_SOURCE_FACTS_ONLY_NO_GATE_CHANGE",
+  "test": "Test282",
+  "timing_acceptance": false,
+  "trace_analysis": "NOT_ATTEMPTED",
+  "tracefs_writes": 0,
+  "windows_staged_hashes_verified": 16
+}

@@ -1,0 +1,38 @@
+{
+  "INT4_bit0": "ADC_UPDATED / SM5440_ADC_READY",
+  "INT4_bit0_fault_decoder": "does not itself set watchdog/timer fault; those use bits2/1",
+  "REVBLK_bit": "INT3 bit1, preserved bitmap0x80",
+  "event_INT": "00 00 62 01",
+  "extra_physical_test": false,
+  "future_requirement": "separate offline bounded classifier review/tests must reject watchdog/timer/unknown bits, preserve REVBLK event and require raw/protection/chronology/currenthealthy confirmations before any separately registered physical attempt",
+  "new_classification_implemented": false,
+  "original_gate_INT": "00 00 62 00",
+  "original_gate_verdict": "STOP_UNCLASSIFIED_PASSIVE_STARTUP_EVENT",
+  "physical_evidence": "OFF01/01, IBUS0, safe cachedV/I/temp, two-confirmation log2.300114s later/currentfault0",
+  "registered_gate_weakened": false,
+  "source_inference": "difference is consistent with a retained ADC completion bit; exact hardware timing/why latch existed unresolved",
+  "source_inputs": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h": {
+      "bytes": 4574,
+      "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5"
+    },
+    "docs/SM5440_REGISTER_AUDIT.md": {
+      "bytes": 5210,
+      "sha256": "23008733936bc0cc77ad90335478513d24b65cfb66c276eb7c15e0e03914ab58"
+    },
+    "kernel/drivers/sm5440-direct.c": {
+      "bytes": 26746,
+      "sha256": "22bae671255af21f726eafb0fd607655d8aad56693104f401fe6b5e19d16840e"
+    },
+    "kernel/drivers/sm5440-hw.h": {
+      "bytes": 4300,
+      "sha256": "0c37b4fbf0ed39853b008e45cd645e54d42d612483ef9c3a9f2b2dff2a1aef4a"
+    },
+    "reference/boot-tests/test-275-passive-fresh-acquisition/gate.py": {
+      "bytes": 9024,
+      "sha256": "149279d8c781354571d3f89bc2071aed1612a3540f654695beaf1519bda4c925"
+    }
+  },
+  "timeout_attribution": "NOT_MEASURED",
+  "verdict": "OFFLINE_SOURCE_FACTS_ONLY_NO_GATE_CHANGE"
+}
