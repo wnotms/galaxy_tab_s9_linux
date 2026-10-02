@@ -85,7 +85,8 @@ def audit(out, tree, build, revision, profile):
     compiled = {}
     for name in ("sm5714-battery.c", "sm5714-stage2.h", "sm5714_usbpd.c",
                  "sm5714-pd-policy.h", "sm5440-direct.c", "sm5440-hw.h",
-                 "x710-charging-policy.c", "x710-charging-policy.h"):
+                 "x710-charging-policy.c", "x710-charging-policy.h",
+                 "x710-pd-session.c", "x710-pd-session.h"):
         show = subprocess.run(["git", "-C", str(ROOT), "show", f"{revision}:kernel/drivers/{name}"],
                               capture_output=True)
         if show.returncode:

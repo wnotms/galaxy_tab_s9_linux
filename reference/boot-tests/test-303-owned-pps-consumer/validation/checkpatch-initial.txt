@@ -1,0 +1,43 @@
+CHECK: Please use a blank line after function/struct/union/enum declarations
+#17: FILE: kernel/drivers/sm5714-stage2.h:80:
++};
++/* Atomically binds lease release to the exact current fixed source/instance.
+
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#86: 
+new file mode 100644
+
+CHECK: Alignment should match open parenthesis
+#237: FILE: kernel/drivers/x710-pd-session.c:147:
++		ret = sm5714_pd_restore_fixed(result->instance, result->source_generation,
++					     result->lease, &fixed);
+
+CHECK: Alignment should match open parenthesis
+#248: FILE: kernel/drivers/x710-pd-session.c:158:
++		ret = sm5714_pd_release_fixed(result->instance, result->source_generation,
++					     result->lease, &proof);
+
+CHECK: Alignment should match open parenthesis
+#255: FILE: kernel/drivers/x710-pd-session.c:165:
++int x710_pd_off_roundtrip(unsigned int mv, unsigned int ma,
++			 struct x710_pd_session_result *out)
+
+CHECK: Alignment should match open parenthesis
+#305: FILE: kernel/drivers/x710-pd-session.c:215:
++		ret = sm5714_pd_request_pps(result.instance, result.source_generation,
++					   result.lease, mv, ma, &pps);
+
+CHECK: Alignment should match open parenthesis
+#395: FILE: kernel/drivers/x710-pd-session.h:18:
++int x710_pd_off_roundtrip(unsigned int mv, unsigned int ma,
++			 struct x710_pd_session_result *out);
+
+total: 0 errors, 1 warnings, 6 checks, 374 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/tmp/gts9-test303-source.patch has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

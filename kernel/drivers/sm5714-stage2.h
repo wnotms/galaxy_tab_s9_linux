@@ -32,6 +32,10 @@ void sm5714_battery_typec_fault(void);
  */
 int sm5714_battery_switching_acquire(u64 *lease);
 int sm5714_battery_switching_release(u64 lease);
+/* Try-only authorization release; no IIO/I2C or producer wait. The unchanged
+ * battery worker performs ordinary thermal/charging programming afterwards.
+ */
+int sm5714_battery_switching_release_async(u64 lease);
 int sm5714_battery_switching_check(u64 lease);
 /* Owned callbacks can only maintain checked switching OFF, never enable it. */
 int sm5714_battery_set_owned_contract(u64 lease, unsigned int mv, unsigned int ma,
@@ -68,5 +72,20 @@ int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
 int sm5714_pd_request_pps(u64 instance, u64 source_generation, u64 lease,
 			 unsigned int mv, unsigned int ma,
 			 struct sm5714_pd_snapshot *out);
+
+/* Actual fresh physical evidence supplied by a serialized pump-OFF consumer,
+ * never reconstructed from a logical TCPM budget or stale diagnostic cache.
+ */
+struct sm5714_fixed_proof {
+	u64 observed_ms;
+	u32 vbus_uv, ibus_ua;
+	bool pump_off;
+};
+
+/* Atomically binds lease release to the exact current fixed source/instance.
+ * No protocol setter, retry or fabricated proof. Physical evidence<=100ms.
+ */
+int sm5714_pd_release_fixed(u64 instance, u64 source_generation, u64 lease,
+			    const struct sm5714_fixed_proof *proof);
 
 #endif

@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-02)
 
+Test303 actual kernel pumpOFF PPS consumer implemented;568unique affected PASS (511unchanged results reused +57final consumer/
+release/ownership PASS). No full/CI/device writes. Real pack/strict100ms SM5440 proof/
+checked Q4lease/native PPS->fixed/source-locked fresh-proofasync release; PM cancel
+before drain/unresolved blocks retry+suspend/no autoarm. Release schedules
+unchanged ordinary poller, not proofQ4 alreadyprogrammed; try-only locks/no IIO
+under source gate avoids501ms possible thermistor wait. Native failed fixed
+cleanup is not retried. Explicit policy-offline profile only, no pumpON or ADC/
+OCP/threshold/ordinarylimit/core/configDT/USB/rootfschange. ARM64/static/exact
+policyconfigDT/protected181 qualification pending. Device retained299/Test300
+57535...thermalfix. Read303README/design. Old301cache tobe reused after preserved
+inputs;302/artifact/rescue immutable. Fullgoalactive/activeStage3NOTREADY; real
+ADC validity/freshness/OCP/PM/physical PPS+pump acceptance remain.
+
 Test302 OFFLINE_OWNED_TCPM_PPS_PROTOCOL_QUALIFIED, code de2ebc5c/build21d534c1.
 185affected PASS5.102s/ARM6496.678s/W1sparse8.361s/object+vmlinuxidentical/
 exact301configDT/96protected/8overlays/twoheadercopies/181paired PASS. No full/CI.

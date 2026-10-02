@@ -616,6 +616,44 @@ out:
 }
 EXPORT_SYMBOL_GPL(sm5714_battery_switching_release);
 
+int sm5714_battery_switching_release_async(u64 lease)
+{
+	struct sm5714_battery *sm;
+	int ret = -ENODEV;
+
+	if (!lease)
+		return -EINVAL;
+	if (!mutex_trylock(&sm5714_companion_lock))
+		return -EBUSY;
+	sm = sm5714_companion;
+	if (!sm)
+		goto out;
+	if (!mutex_trylock(&sm->chg_lock)) {
+		ret = -EBUSY;
+		goto out;
+	}
+	if (!sm->switching_inhibited || sm->switching_lease != lease)
+		ret = -ESTALE;
+	else if (!sm5714_fixed_grant_locked(sm))
+		ret = -EAGAIN;
+	else {
+		/* Caller holds the exact source gate and fresh physical OFF proof.
+		 * Do not hold it across the thermistor's501ms possible IIO wait.
+		 * This releases authorization, not proof of completed Q4 programming.
+		 */
+		sm->switching_inhibited = false;
+		sm->switching_lease = 0;
+		sm5714_switching_blocked = false;
+		mod_delayed_work(system_percpu_wq, &sm->poll_work, 0);
+		ret = 0;
+	}
+	mutex_unlock(&sm->chg_lock);
+out:
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_switching_release_async);
+
 /* TCPM budget is not a measured VBUS voltage or proof of PS_RDY on its own. */
 static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
 {

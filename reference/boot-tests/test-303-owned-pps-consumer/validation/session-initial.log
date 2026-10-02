@@ -1,0 +1,37 @@
+In file included from /tmp/tmpitpn3j4w/session.c:55:
+/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers/sm5714-pd-policy.h: In function ‘sm5714_validate_request’:
+/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers/sm5714-pd-policy.h:67:30: error: implicit declaration of function ‘rdo_index’; did you mean ‘rindex’? [-Wimplicit-function-declaration]
+   67 |         unsigned int index = rdo_index(rdo);
+      |                              ^~~~~~~~~
+      |                              rindex
+/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers/sm5714-pd-policy.h:69:42: error: ‘PD_MAX_PAYLOAD’ undeclared (first use in this function)
+   69 |         if (!offers || !count || count > PD_MAX_PAYLOAD ||
+      |                                          ^~~~~~~~~~~~~~
+/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers/sm5714-pd-policy.h:69:42: note: each undeclared identifier is reported only once for each function it appears in
+/tmp/tmpitpn3j4w/session.c: At top level:
+/tmp/tmpitpn3j4w/session.c:73:25: error: ‘puts’ defined but not used [-Werror=unused-variable]
+   73 | static int pack[5],gets,puts,reads,measures,acquires,pps_calls,fixed_calls,releases;
+      |                         ^~~~
+cc1: all warnings being treated as errors
+setUpClass (test_x710_pd_session.PdSessionTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_x710_pd_session.PdSessionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_x710_pd_session.py", line 218, in setUpClass
+    subprocess.run(['cc', '-shared', '-fPIC', '-pthread', '-Wall', '-Werror',
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    '-Wno-misleading-indentation', '-I'+str(directory),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    str(c), '-o', str(lib)], check=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cc', '-shared', '-fPIC', '-pthread', '-Wall', '-Werror', '-Wno-misleading-indentation', '-I/tmp/tmpitpn3j4w', '/tmp/tmpitpn3j4w/session.c', '-o', '/tmp/tmpitpn3j4w/session.so']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.185s
+
+FAILED (errors=1)

@@ -68,11 +68,28 @@ static void host_unlock(void *p) {
  else {assert(held & 2);held &= ~2;pthread_mutex_unlock(&charger);}
 }
 '''
+        code += r'''
+static int try_busy,async_queued;
+#define mutex_trylock(p) host_trylock(p)
+static int host_trylock(void *p) {
+ if(p==&sm5714_companion_lock) {
+  assert(held==0);if(try_busy==1||pthread_mutex_trylock(&registry))return 0;held=1;
+ }else {
+  assert(held==1);if(try_busy==2||pthread_mutex_trylock(&charger))return 0;held=3;
+ }
+ return 1;
+}
+static void *system_percpu_wq;
+static void mod_delayed_work(void *queue,void *work,int delay) {
+ (void)queue;(void)work;assert(held==3);assert(delay==0);async_queued++;
+}
+'''
         code += 'typedef unsigned int u32;\n#include "'+str(ROOT/'kernel/drivers/sm5714-stage2.h')+'"\n'
         for name in ('static int sm5714_verify_switching_off_locked(',
                      'static bool sm5714_fixed_grant_locked(',
                      'int sm5714_battery_switching_acquire(',
                      'int sm5714_battery_switching_release(',
+                     'int sm5714_battery_switching_release_async(',
                      'int sm5714_battery_switching_check(',
                      'static void sm5714_inhibit_typec_locked(',
                      'int sm5714_battery_set_pd_contract(',
@@ -249,6 +266,26 @@ int main(int argc,char **argv) {
   assert(sm5714_battery_set_pd_contract(9000,1500)==0);
   io=0;r=sm5714_battery_switching_release(lease);
  }
+
+ if(op==31) {
+  assert(sm5714_battery_switching_acquire(&lease)==0);io=0;
+  if(arg==2)lease++;
+  if(arg==3)sm.typec_pps=true;
+  if(arg==4)sm.suspended=true;
+  if(arg==5)sm.typec_fault=true;
+  if(arg==6)sm.typec_charge=false;
+  if(arg==7)try_busy=1;
+  if(arg==8)try_busy=2;
+  if(arg==9)sm5714_companion=NULL;
+  if(arg==10)lease=0;
+  if(arg==11)sm.switching_inhibited=false;
+  if(arg==12)temp_error=-EIO;
+  r=sm5714_battery_switching_release_async(lease);
+  assert(io==0);assert(!(regs[0x13]&8));
+  assert(async_queued==(!r));
+  if(arg==1||arg==12)sm5714_poll_work((void *)&sm.poll_work);
+  if(arg==13){assert(sm5714_suspend((void *)&sm)==0);sm5714_poll_work((void *)&sm.poll_work);}
+ }
  printf("%d %u %u %u %u %llu %llu %u %u %d %d\n",r,regs[0x13]&8,regs[0x15]&127,
  sm.switching_inhibited,sm.typec_fault,lease,sm.switching_lease,sm.typec_mv,sm.typec_ma,sm.typec_pps,io);
 }
@@ -390,6 +427,35 @@ int main(int argc,char **argv) {
     def test_ordinary_same_numbers_pps_to_fixed_change_revokes_lease(self):
         r=self.run_case(30)
         self.assertEqual((r[0],r[1],r[3],r[6],r[9],r[-1]),(-116,0,1,0,0,0))
+
+    def test_async_release_does_no_io_and_does_not_claim_q4_already_enabled(self):
+        r=self.run_case(31)
+        self.assertEqual((r[0],r[1],r[3],r[6],r[-1]),(0,0,0,0,0))
+
+    def test_async_release_ordinary_poller_restores_original_ceiling(self):
+        r=self.run_case(31,1)
+        self.assertEqual(r[:5],[0,8,56,0,0])
+
+    def test_async_release_refuses_wrong_state_or_lease_without_io(self):
+        for arg,error in [(2,-116),(3,-11),(4,-11),(5,-11),(6,-11),
+                          (9,-19),(10,-22),(11,-116)]:
+            with self.subTest(arg=arg):
+                r=self.run_case(31,arg)
+                self.assertEqual((r[0],r[1],r[-1]),(error,0,0))
+
+    def test_async_release_try_only_registry_and_charger_busy(self):
+        for arg in [7,8]:
+            r=self.run_case(31,arg)
+            self.assertEqual((r[0],r[1],r[3],r[6],r[-1]),(-16,0,1,1,0))
+
+    def test_async_release_poller_still_fails_closed_on_real_temperature_error(self):
+        r=self.run_case(31,12)
+        self.assertEqual(r[0],0)
+        self.assertEqual((r[1],r[4]),(0,1))
+
+    def test_async_release_cannot_bypass_suspend_guard(self):
+        r=self.run_case(31,13)
+        self.assertEqual((r[0],r[1]),(0,0))
 
 
 if __name__ == '__main__':

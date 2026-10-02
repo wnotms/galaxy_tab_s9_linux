@@ -492,6 +492,56 @@ put:
 }
 EXPORT_SYMBOL_GPL(sm5714_pd_restore_fixed);
 
+int sm5714_pd_release_fixed(u64 instance, u64 source_generation, u64 lease,
+			    const struct sm5714_fixed_proof *proof)
+{
+	struct sm5714_pd_snapshot sample = {}, present = {};
+	struct sm5714_usbpd *sm;
+	u64 now;
+	int ret;
+
+	if (!proof || !instance || !source_generation || !lease || !proof->pump_off ||
+	    proof->ibus_ua)
+		return -EINVAL;
+	ret = sm5714_port_get(&sm, &sample);
+	if (ret)
+		return ret;
+	if (!mutex_trylock(&sm->control_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_read_fixed_pinned(sm, &sample);
+	if (ret)
+		goto unlock;
+	mutex_lock(&sm->lock);
+	ret = sm5714_snapshot_locked(sm, &present);
+	if (!ret && (present.instance != instance ||
+		     present.source_generation != source_generation ||
+		     present.budget_generation != sample.budget_generation ||
+		     present.pps_contract))
+		ret = -ESTALE;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!ret && (!proof->observed_ms || now < proof->observed_ms ||
+		     now - proof->observed_ms > 100))
+		ret = -ESTALE;
+	if (!ret && (proof->vbus_uv + 100000ULL < sample.budget_mv * 1000ULL ||
+		     proof->vbus_uv > sample.budget_mv * 1000ULL + 100000))
+		ret = -ERANGE;
+	/* TCPC -> try-only companion/charger. Authorize the unchanged ordinary
+	 * worker; no producer wait, IIO/I2C/TCPM setter while holding this gate.
+	 * Source reset/withdrawal cannot interleave authorization release.
+	 */
+	if (!ret)
+		ret = sm5714_battery_switching_release_async(lease);
+	mutex_unlock(&sm->lock);
+unlock:
+	mutex_unlock(&sm->control_lock);
+put:
+	sm5714_port_put(sm);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_pd_release_fixed);
+
 /* Pair validation does not select an APDO: TCPM still chooses and builds RDOs. */
 static bool sm5714_pps_pair_locked(struct sm5714_usbpd *sm,
 				  unsigned int mv, unsigned int ma)

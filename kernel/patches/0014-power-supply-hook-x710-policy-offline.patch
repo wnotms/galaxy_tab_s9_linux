@@ -1,22 +1,23 @@
 From: X710 mainline port <bringup@localhost>
 Subject: [PATCH] power: supply: compile default-inactive X710 transaction core
 
-Pure transaction ordering/eligibility shared with host fault tests. No live
-adapter, activation interface or device-tree policy consumer is supplied.
+Transaction core and explicitly invoked pump-OFF PPS consumer. No automatic
+activation, pump ON, userspace control or device-tree policy consumer.
 
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
 @@ -1204 +1204,8 @@
 +config X710_CHARGING_POLICY
-+	bool "X710 offline charging transaction core"
++	bool "X710 inactive charging transactions and PPS consumer"
 +	depends on CHARGER_SM5440_DIRECT=y && TYPEC_SM5714=y
 +	help
-+	  Compile bounded eligibility/transaction helpers. Does not activate
-+	  charging; there is no live pump/TCPM adapter or userspace control.
++	  Compile bounded transaction helpers and an explicitly invoked
++	  pump-OFF PPS roundtrip. No automatic start, pump ON or userspace control.
 +
  endif # POWER_SUPPLY
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
-@@ -137 +137,2 @@
+@@ -137 +137,3 @@
  obj-$(CONFIG_CHARGER_SM5440_DIRECT) += sm5440-direct.o
 +obj-$(CONFIG_X710_CHARGING_POLICY) += x710-charging-policy.o
++obj-$(CONFIG_X710_CHARGING_POLICY) += x710-pd-session.o

@@ -1,0 +1,27 @@
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:600: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  """An anchored `^\[` reported 0 while the capture held kernel lines."""
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:738: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  a bad regex (`^\[` against `<timestamp> RECV  [`-prefixed lines) and
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:2196: SyntaxWarning: invalid decimal literal
+  self.assertIn(boot, read(f"reference/boot-tests/{d}/round-{1if d.startswith('test-195') else 4}.txt"))
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3428: SyntaxWarning: "\[" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\["? A raw string is also an option.
+  The metric anchored on `^\[` reported 0 while the capture held kernel
+/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_gpu_gmu_rpmh_stall.py:3483: SyntaxWarning: "\$" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\$"? A raw string is also an option.
+  self.assertNotIn("boot_id=\$(cat /proc/sys/kernel/random/boot_id)", text)
+'docs/X710_OWNED_PPS_CONSUMER.md': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714-stage2.h': No reviewed dependency rule: run all tests.
+'kernel/drivers/sm5714_usbpd.c': No reviewed dependency rule: run all tests.
+'kernel/drivers/x710-pd-session.c': No reviewed dependency rule: run all tests.
+'kernel/drivers/x710-pd-session.h': No reviewed dependency rule: run all tests.
+'kernel/patches/0014-power-supply-hook-x710-policy-offline.patch': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/README.md': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/validation/fixed-release-initial.log': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/validation/selection-preview.log': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/validation/selection-preview.txt': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/validation/session-fixtures-fixed.log': No reviewed dependency rule: run all tests.
+'reference/boot-tests/test-303-owned-pps-consumer/validation/session-initial.log': No reviewed dependency rule: run all tests.
+'scripts/audit-x710-charging-build.py': No reviewed dependency rule: run all tests.
+'scripts/prepare-kernel.sh': No reviewed dependency rule: run all tests.
+'tests/test_sm5714_fixed_release.py': Changed test module and its static import consumers.
+'tests/test_x710_pd_session.py': Changed test module and its static import consumers.
+Host suite=changed: selected=1719, tiers={'core': 1614, 'artifacts': 18, 'archive': 87}
