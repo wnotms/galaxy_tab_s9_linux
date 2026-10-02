@@ -52,6 +52,11 @@ class PortableTests(unittest.TestCase):
  def test_wrong_ssh_boot_stops(self):
   rec=Mock();rec.command.return_value=('cd'*16+'\n',0)
   with self.assertRaises(ValueError):flow.ssh(rec,'wifi','127.0.0.1','ab'*16)
+ def test_early_active_without_wifi_not_ready(self):
+  raw='ab'*16+'\nactive\nactive\nactive\nsample_valid=1\n';self.assertFalse(flow.debian_ready(raw,0))
+ def test_wifi_ready_requires_success_unique_ipv4(self):
+  raw='ab'*16+'\nactive\nactive\nactive\n15: wlp1s0    inet 10.125.29.240/24 scope global\nsample_valid=1\n'
+  self.assertTrue(flow.debian_ready(raw,0));self.assertFalse(flow.debian_ready(raw,1));self.assertFalse(flow.debian_ready(raw+raw.splitlines()[4]+'\n',0))
  def test_syntax_and_no_trace(self):
   ast.parse((R/'host_flow.py').read_text());self.assertNotIn('/sys/kernel/tracing',(R/'host_flow.py').read_text())
 if __name__=='__main__':unittest.main(verbosity=2)

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-Process adb -ErrorAction SilentlyContinue | Select-Object Id,Path,StartTime | Format-List"
+  ],
+  "ended_utc": "2026-10-02T08:49:26.760717+00:00",
+  "started_utc": "2026-10-02T08:49:26.332470+00:00",
+  "status": 0
+}

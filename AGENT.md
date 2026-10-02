@@ -2,6 +2,20 @@
 
 ## Current state (2026-10-02)
 
+Test292 STOP_ADB_TRANSPORT_NO_OBSERVATION; exact263all5/181rollback verified.
+One290candidateb8945a98, zeroobserver/calls/trace/PPS/pump/current. Earlyhost
+readiness missed DHCP; sameboot IPv4 observed77.285s,18portable fixPASS. After
+interruption Wi-Fi sameboot healthy; hostADBdaemonstartup failed/emptylist while
+WindowsCode0/NCMUp/deviceadbdactive/DWC3configured. FirsttransportgapSTOP;
+strictWi-Fi BCBhelper+ordinaryreboot/TWRP exactrollback/new292tested/oldbackups/
+BCBclear/unmounted. Final263b06bb6c2/Wi-Fi10.125.29.6 exactidentity/ADBWi-FiNCM/
+WindowsCode0/Good52%3.879V31.9C/noCPUfault, but PASSIVE HEALTH REFUSED fault1/
+pending1/staleOFFsampleVBAT3.4985V vsgauge3.879V/IBUS0. Nohealth exemption/reset/
+replay; rootcause/calibration unresolved. Read292RESULTS/summary/raw. Reuse290/
+291 buildfull;18portable only; noCI. OfflineUSB/VBAT analysis before newround.
+ActiveStage3 NOT READY/fullportgoalactive. Dstoragecleanup authorized/inprogress,
+retaincurrent263/292 rescue/stock andADB.
+
 Test292 ONE passive observation registered;16portable tests/syntax/package pass.
 Reuse290provider8e890215/291consumer0c5bc998 +1520full/static; no build/full/trace
 repeat. Readonly current263d856e6f5 all5/181/config/notes/normalcmdline/healthOFF/

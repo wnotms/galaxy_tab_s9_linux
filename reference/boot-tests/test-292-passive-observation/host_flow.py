@@ -4,6 +4,7 @@ import concurrent.futures
 import hashlib
 import importlib.util
 import json
+import re
 from pathlib import Path
 import shlex
 import sys
@@ -60,12 +61,19 @@ def parallel(jobs):
     return results
 
 
+def debian_ready(raw,status):
+    # Services can be active before DHCP. Wait within the same180s bound;
+    # do not start a new boot or relax final identity/authentication gates.
+    addresses=re.findall(r'\bwlp1s0\s+inet\s+[0-9]+(?:\.[0-9]+){3}/[0-9]+',raw)
+    return status==0 and raw.splitlines().count('active')==3 and 'sample_valid=1' in raw and len(addresses)==1
+
+
 def wait_debian(rec):
     start=time.monotonic();i=0
     while time.monotonic()-start<180:
         raw,status=rec.adb(f'readiness-{i:02}','set -e; cat /proc/sys/kernel/random/boot_id; systemctl is-active ssh gts9-adbd gts9-usb-acm; ip -4 -o addr show wlp1s0; cat /sys/kernel/debug/sm5440-0-0063/snapshot',timeout=5,required=False)
         i+=1
-        if status==0 and raw.splitlines().count('active')==3 and 'sample_valid=1' in raw:return
+        if debian_ready(raw,status):return
         time.sleep(3)
     raise TimeoutError('Debian unavailable; no repeat reboot')
 

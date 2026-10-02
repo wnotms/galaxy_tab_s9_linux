@@ -1,0 +1,14 @@
+STOP raw journal and unique boot saved; Wi-Fi safety recovery
+exact263 all5/181 restored; final baseline boot
+Traceback (most recent call last):
+  File "/tmp/rollback292-wifi.py", line 31, in <module>
+    summary,boots=h.boundary(r/'final-acceptance',h.PLAN['baseline_notes_sha256'],boot,jobs['boots'][0]);print(json.dumps(summary,indent=2),flush=True)
+                  ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-292-passive-observation/host_flow.py", line 84, in boundary
+    sec=g.baseline.sections(raw);boot,health=g.identity(sec,PLAN,notes)
+                                             ~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-275-passive-fresh-acquisition/gate.py", line 39, in identity
+    value = baseline.diagnostic_sample(sec)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-271-baseline-passive-startup/gate.py", line 44, in diagnostic_sample
+    raise ValueError('passive monitor failed/pending')
+ValueError: passive monitor failed/pending

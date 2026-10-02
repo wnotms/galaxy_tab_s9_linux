@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(blockdev --getsize64 /dev/block/by-name/boot)\" = 100663296; test \"$(sha256sum /dev/block/by-name/boot | cut -d \" \" -f1)\" = d268d702a91db9935440a5692287e229b85f94446474ec5ed0c2819d3dd0c543; test \"$(sha256sum /tmp/gts9-test292/rollback-test263-boot.img | cut -d \" \" -f1)\" = cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6; dd if=/tmp/gts9-test292/rollback-test263-boot.img of=/dev/block/by-name/boot bs=4M; sync"
+  ],
+  "ended_utc": "2026-10-02T08:51:56.458069+00:00",
+  "started_utc": "2026-10-02T08:51:55.979473+00:00",
+  "status": 0
+}
