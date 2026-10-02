@@ -24,6 +24,7 @@ class RuntimeSnapshotTests(unittest.TestCase):
 #include <stdatomic.h>
 #include <unistd.h>
 typedef uint32_t u32;typedef uint64_t u64;typedef atomic_int atomic_t;
+#define current get_current() /* Kernel macro must not become a parameter. */
 #define U64_MAX UINT64_MAX
 #define PD_MAX_PAYLOAD 7
 #define SM5714_SOURCE_PDO_MAX 7
@@ -67,7 +68,7 @@ union power_supply_propval {int intval;};
         code+=function(cls.source,'struct sm5714_usbpd {')+';\n'
         code+=r'''
 static struct mutex sm5714_port_registry_lock={PTHREAD_MUTEX_INITIALIZER,1};
-static struct sm5714_usbpd *sm5714_port_provider,*current;static u64 sm5714_port_issuer;
+static struct sm5714_usbpd *sm5714_port_provider,*port_under_test;static u64 sm5714_port_issuer;
 static struct power_supply supply;static int values[]={1,2,5000000,1800000};
 static pthread_mutex_t control=PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t event=PTHREAD_COND_INITIALIZER;static bool entered,released;
@@ -85,8 +86,8 @@ static int power_supply_get_property(struct power_supply *p,enum power_supply_pr
  if(scenario==17&&calls==1){
   pthread_mutex_lock(&control);entered=true;pthread_cond_broadcast(&event);
   while(!released)pthread_cond_wait(&event,&control);pthread_mutex_unlock(&control);}
- if(scenario==9&&calls==2){mutex_lock(&current->lock);sm5714_forget_source(current);mutex_unlock(&current->lock);}
- if(scenario==10&&calls==2){sm5714_budget_begin(current);sm5714_budget_end(current,0,true,9000,1500,false);}
+ if(scenario==9&&calls==2){mutex_lock(&port_under_test->lock);sm5714_forget_source(port_under_test);mutex_unlock(&port_under_test->lock);}
+ if(scenario==10&&calls==2){sm5714_budget_begin(port_under_test);sm5714_budget_end(port_under_test,0,true,9000,1500,false);}
  if(scenario==11&&calls==5)values[2]=9000000;
  if(scenario==13)clock_ms=900;else clock_ms++;
  v->intval=values[prop];return 0;}
@@ -107,7 +108,7 @@ static struct sm5714_pd_snapshot result;static int reader_ret;
 static void *reader(void *unused){(void)unused;reader_ret=sm5714_pd_read_snapshot(&result);return 0;}
 static void *unpublisher(void *s){sm5714_port_unpublish(s);atomic_store(&unpublished,1);return 0;}
 int exercise(int mode,int failure,long long *out){
- struct sm5714_usbpd s,other;initialize(&s);initialize(&other);current=&s;
+ struct sm5714_usbpd s,other;initialize(&s);initialize(&other);port_under_test=&s;
  scenario=mode;errors=calls=force_busy=0;clock_ms=1000;fail_at=failure;
  values[0]=1;values[1]=2;values[2]=5000000;values[3]=1800000;
  entered=released=false;atomic_store(&draining,0);atomic_store(&unpublished,0);

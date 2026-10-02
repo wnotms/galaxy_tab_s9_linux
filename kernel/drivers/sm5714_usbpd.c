@@ -142,12 +142,12 @@ static void sm5714_budget_begin(struct sm5714_usbpd *sm)
 }
 
 static void sm5714_budget_end(struct sm5714_usbpd *sm, int ret,
-			      bool current, unsigned int mv, unsigned int ma,
+			      bool update_current, unsigned int mv, unsigned int ma,
 			      bool charge)
 {
 	mutex_lock(&sm->lock);
 	if (!ret) {
-		if (current) {
+		if (update_current) {
 			sm->budget_mv = mv;
 			sm->budget_ma = ma;
 		} else {
