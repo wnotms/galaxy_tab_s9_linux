@@ -2,6 +2,21 @@
 
 ## Current state (2026-10-02)
 
+Test288 OFFLINE_I2C_PHASE_PROFILE_QUALIFIED_DEVICE_NOT_TESTED:36host/syntax/
+source+protectedinput/279280283284285286287seals pass(formatawarehash-only/new
+object audit). Newnamed privateSession/decoder/analyser/coordinator observes
+existingbus0write/read/reply/result, notnewaccesses. Resultnoaddress=>all4
+adapter_nr0filters; sameworkerPID+pollbounds/address63/complete source sequence/
+counts/bytes/loss/hash/clock/cleanup required. Observedpolls/ADCbytes/I2Cwall+
+intertransfergaps only; ADCduration/other110branchUNKNOWN, no timing/chargegrant.
+287enqueueexcludesinitialbudgetbranch; latepollreturn notpublication/wakeup.
+Newparser287UNKNOWN(missingI2C), rawunchanged. Zero device/source/ADC/deadline/
+PPS/pump/current/buildfull/CI/routingchanges; reuse272/276/279/280/283/285/286/
+287. Last26351d70189from287 unchanged. Read288README/RESULTS/qualification +
+SM5440_I2C_PHASE_TRACE. Next separate ONEphysicalphaseprofileregistration/
+newslots/essentialgates/exact263rollback; no aggregate repeat/100ms/ADCrelax.
+ActiveStage3 NOT READY/fullportgoalactive.
+
 Test287 PASSIVE_REFUSAL_CAPTURED + EXACT263_ROLLBACK_DEVICE_SCOPE_COMPLETED.
 One2722fe71db0boot/one276observer/onefresh-110/0usable, firstrefusalSTOP.285IO
 physically worked:4probes/7events/0miss/loss, request101.510ms/queue11us/worker
