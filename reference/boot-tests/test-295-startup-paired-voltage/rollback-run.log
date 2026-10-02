@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-295-startup-paired-voltage/host_flow.py", line 158, in <module>
+    print(json.dumps({'install':install,'rollback':rollback}[sys.argv[1]](),indent=2),flush=True)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-295-startup-paired-voltage/host_flow.py", line 154, in rollback
+    return boundary(R/'final-acceptance',h.PLAN['baseline_notes_sha256'],target,boots)
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-295-startup-paired-voltage/host_flow.py", line 101, in boundary
+    jobs=h.parallel({'kernel':lambda:rec.adb('kernel-json','journalctl -k -b -o json --no-pager',timeout=15),
+       'boots':lambda:rec.adb('boots-after','journalctl --list-boots --no-pager',timeout=10),
+       'ncm':lambda:h.ssh(rec,'ncm-ssh','169.254.42.1',boot),
+       'windows':lambda:rec.ps('windows-usb',p.PS_USB,timeout=20)})
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-292-passive-observation/host_flow.py", line 60, in parallel
+    if errors:raise RuntimeError('; '.join(errors))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ncm: ncm-ssh: status=255; b'ssh: connect to host 169.254.42.1 port 22: Connection timed out\r\n'

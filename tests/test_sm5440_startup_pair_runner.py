@@ -34,11 +34,18 @@ class StartupPairRunnerTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.check(self.raw.replace('@@dcc\nabsent','@@dcc\npresent'))
     def test_data_role(self):
         with self.assertRaises(ValueError):self.check(self.raw.replace('[device]','[host]'))
+    def test_actual_baseline_refusal_classified_without_health_grant(self):
+        snap=self.check()[3]
+        raw=(R.parent/'test-292-passive-observation/final-diagnostic/kernel-json.txt').read_text()
+        boot=json.loads(raw.splitlines()[0])['_BOOT_ID']
+        scan=m.scan_journal(raw,boot,6500,snap)
+        self.assertTrue(scan['known_startup_refusal'])
+        self.assertFalse(scan['charging_authorized'])
     def test_new_fault_and_cpu_stall_stop(self):
         snap=self.check()[3]
         source=(R.parent/'test-292-passive-observation/final-diagnostic/kernel-json.txt').read_text()
         boot=json.loads(source.splitlines()[0])['_BOOT_ID']
-        for message in ['watchdog: BUG: soft lockup - CPU#4 stuck','sm5440-direct 0-0063: passive ADC fault -5; OFF verification=-5']:
+        for message in ['watchdog: BUG: soft lockup - CPU#4 stuck','sm5440-passive 0-0063: passive ADC fault -5; OFF verification=-5']:
             rows=source.splitlines();row=json.loads(rows[-1]);row['MESSAGE']=message;row['PRIORITY']='3';rows.append(json.dumps(row))
             with self.assertRaises(ValueError):m.scan_journal('\n'.join(rows),boot,6500,snap)
     def test_no_new_observer_and_unconditional_registered_restore(self):

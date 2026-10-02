@@ -1,0 +1,60 @@
+{
+  "calibration_offset_established": false,
+  "diagnostic_only": true,
+  "pairs": [
+    {
+      "ADC_oldest_to_read_span_ms": 131,
+      "ADC_reads_completed_upper_bound_ms": 281,
+      "ADC_start_ms": 150,
+      "SM5440_vbat_uv": 3598500,
+      "SM5714_gauge_uv": 3891000,
+      "charging_grant": false,
+      "gauge_end_ms": 282,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 292500,
+      "gauge_read_ms": 1,
+      "gauge_start_ms": 281,
+      "independently_calibrated": false,
+      "seq": 1,
+      "simultaneous_conversion": false,
+      "source_us": 286604
+    },
+    {
+      "ADC_oldest_to_read_span_ms": 128,
+      "ADC_reads_completed_upper_bound_ms": 1437,
+      "ADC_start_ms": 1309,
+      "SM5440_vbat_uv": 3600000,
+      "SM5714_gauge_uv": 3844000,
+      "charging_grant": false,
+      "gauge_end_ms": 1437,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 244000,
+      "gauge_read_ms": 0,
+      "gauge_start_ms": 1437,
+      "independently_calibrated": false,
+      "seq": 2,
+      "simultaneous_conversion": false,
+      "source_us": 1442447
+    },
+    {
+      "ADC_oldest_to_read_span_ms": 128,
+      "ADC_reads_completed_upper_bound_ms": 2589,
+      "ADC_start_ms": 2461,
+      "SM5440_vbat_uv": 3499000,
+      "SM5714_gauge_uv": 3854000,
+      "charging_grant": false,
+      "gauge_end_ms": 2590,
+      "gauge_errno": 0,
+      "gauge_minus_SM5440_uv": 355000,
+      "gauge_read_ms": 1,
+      "gauge_start_ms": 2589,
+      "independently_calibrated": false,
+      "seq": 3,
+      "simultaneous_conversion": false,
+      "source_us": 2594897
+    }
+  ],
+  "physical_cause": "UNKNOWN",
+  "root_cause_established": false,
+  "short_startup_transient_excluded": false
+}

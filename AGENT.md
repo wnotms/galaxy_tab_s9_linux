@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test295 PAIRED_STARTUP_CAPTURED_STOP_NCM_EXACT263_RESTORED. One1028ae06 boot,
+3near-time pairs: SM5440/gauge3.5985/3.891,3.6/3.844,3.499/3.854V;244–355mV
+adjacent-window difference, no calibratedoffset/trueVBAT/causalproof; startup
+refusal at2.594914s retained. FirstcandidateNCMtimeout STOP/no15sendpoint/retry;
+ADB/deviceNCM/WindowsCode0/noCPUfault. Exact263all5/181restore/BCBclear/unmounted;
+finalADB Good45%3.831V29.9C, NCMhosttimeout/passivehealthREFUSED. 208affected+
+11initial/12recoveryrunner tests/build/W1sparse/exactconfigDT/protected/181pass;
+fullnotrerun. No PPS/pump/current/threshold/faultclear. Read295RESULTS/summary/
+paired-voltage/raw. Next source-backed ADCoperating-condition analysis, not
+samefailedtransportprofile or guessedcalibration. ActiveStage3NOTREADY.
+
 Test295 ONE short paired-startup-voltage diagnostic registered, source1028ae06.
 208affected +11runner PASS/ARM64/W1sparse/exact294configDT/protected/181paired.
 Only startup gauge read outsideio lock; original converter/100ms/500ms/threshold/

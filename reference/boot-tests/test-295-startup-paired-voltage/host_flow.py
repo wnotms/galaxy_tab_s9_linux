@@ -67,7 +67,7 @@ def identity(raw,notes,expected=None):
 
 def scan_journal(raw,boot,uptime,snapshot):
     old=(R.parent/'test-292-passive-observation/final-diagnostic/kernel-json.txt').read_text()
-    known={x['MESSAGE'] for line in old.splitlines() if int((x:=json.loads(line)).get('PRIORITY',7))<=3 and not x['MESSAGE'].startswith('sm5440-direct ')}
+    known={x['MESSAGE'] for line in old.splitlines() if int((x:=json.loads(line)).get('PRIORITY',7))<=3 and not x['MESSAGE'].startswith(('sm5440-direct ', 'sm5440-passive '))}
     scan=h.g.evidence.inspect_journal(raw,boot,known,require_start=True,
         accepted_startup_variants=True,startup_iova_range=(0xb8000000,0xbab00000),
         accepted_qca_cycles=True,observed_uptime=uptime)
@@ -78,9 +78,9 @@ def scan_journal(raw,boot,uptime,snapshot):
     for suspect in scan['suspects']:
         m=suspect['message']
         if suspect['row'] in bounded:continue
-        if m=='sm5440-direct 0-0063: passive startup confirmation failed' and snapshot['fault']=='1':
+        if m=='sm5440-passive 0-0063: passive startup confirmation failed' and snapshot['fault']=='1':
             refused.append(suspect);continue
-        if m.startswith('sm5440-direct 0-0063: passive fault bitmap=0x80 ') and snapshot['startup_faults']=='0x80':
+        if m.startswith('sm5440-passive 0-0063: passive fault bitmap=0x80 ') and snapshot['startup_faults']=='0x80':
             refused.append(suspect);continue
         raise ValueError('new/unclassified kernel suspect: '+m)
     if scan['fault_counts']:raise ValueError('CPU/kernel failure')
@@ -138,7 +138,12 @@ def install():
 
 
 def rollback():
-    rec=p.Recorder(R/'rollback-install');h.enter_recovery(rec);h.transfer(rec)
+    rec=p.Recorder(R/'rollback-install')
+    # Recovery must also work when admission stopped before summary publication.
+    target,_=rec.adb('target-boot-id','cat /proc/sys/kernel/random/boot_id',timeout=8)
+    boots,_=rec.adb('target-boots','journalctl --list-boots --no-pager',timeout=10)
+    target=target.strip().replace('-','')
+    h.enter_recovery(rec);h.transfer(rec)
     raw,_=rec.adb('partitions-before',h.PARTS,timeout=20);h.require_partitions(raw,h.PACKAGE['candidate_partitions'])
     rec.adb('remount-rw','mount -o remount,rw /mnt/debian',timeout=10)
     rec.adb('restore-modules',f'sh {h.TMP}/module-swap.sh /mnt/debian restore {h.TMP}/rollback-modules.sha256',timeout=25)
@@ -146,8 +151,7 @@ def rollback():
     h.verify_modules(rec,'restored-modules','rollback-modules.sha256')
     raw,_=rec.adb('partitions-after',h.PARTS,timeout=20);h.require_partitions(raw,h.PACKAGE['baseline_partitions'])
     h.clear_unmount(rec);rec.host_adb('normal-reboot','-s',p.SERIAL,'reboot',timeout=10)
-    admitted=read(R/'candidate-admission/summary.json')
-    return boundary(R/'final-acceptance',h.PLAN['baseline_notes_sha256'],admitted['boot_id'],(R/'candidate-admission/boots-after.txt').read_text())
+    return boundary(R/'final-acceptance',h.PLAN['baseline_notes_sha256'],target,boots)
 
 if __name__=='__main__':
     configure()
