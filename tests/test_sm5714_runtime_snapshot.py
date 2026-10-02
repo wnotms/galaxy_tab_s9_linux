@@ -34,20 +34,21 @@ typedef uint32_t u32;typedef uint64_t u64;typedef atomic_int atomic_t;
 #define atomic_read(p) atomic_load(p)
 #define atomic_inc(p) atomic_fetch_add(p,1)
 #define atomic_dec_and_test(p) (atomic_fetch_sub(p,1)==1)
-struct mutex {pthread_mutex_t m;int registry;};
+struct mutex {pthread_mutex_t m;int registry,operation;};
 struct wait_queue {pthread_mutex_t m;pthread_cond_t c;};typedef struct wait_queue wait_queue_head_t;
 struct device {int unused;};struct regmap {int unused;};struct tcpc_dev {int unused;};
 struct tcpm_port {int unused;};struct fwnode_handle {int unused;};struct delayed_work {int unused;};
 struct dentry {int unused;};struct power_supply {int unused;};
-static _Thread_local int registry_held,transport_held;
+static _Thread_local int registry_held,transport_held,operation_held;
 static int errors,force_busy;
 static void mutex_lock(struct mutex *m){
  pthread_mutex_lock(&m->m);
- if(m->registry){if(transport_held)errors++;registry_held++;}else transport_held++;}
+ if(m->registry){if(transport_held)errors++;registry_held++;}else if(m->operation)operation_held++;else transport_held++;}
 static void mutex_unlock(struct mutex *m){
- if(m->registry)registry_held--;else transport_held--;pthread_mutex_unlock(&m->m);}
+ if(m->registry)registry_held--;else if(m->operation)operation_held--;else transport_held--;pthread_mutex_unlock(&m->m);}
 static int mutex_trylock(struct mutex *m){
- if(force_busy||pthread_mutex_trylock(&m->m))return 0;transport_held++;return 1;}
+ if(force_busy||pthread_mutex_trylock(&m->m))return 0;
+ if(m->operation)operation_held++;else transport_held++;return 1;}
 #define lockdep_assert_held(m) do {if(!transport_held)errors++;}while(0)
 static atomic_int draining,unpublished;
 static void wake_up_all(wait_queue_head_t *q){
@@ -62,12 +63,15 @@ static u64 ktime_get_boottime(void){return clock_ms*1000000ULL;}
 enum power_supply_property {POWER_SUPPLY_PROP_ONLINE,POWER_SUPPLY_PROP_USB_TYPE,
  POWER_SUPPLY_PROP_VOLTAGE_NOW,POWER_SUPPLY_PROP_CURRENT_NOW};
 #define POWER_SUPPLY_USB_TYPE_PD 2
+#define POWER_SUPPLY_USB_TYPE_PD_PPS 4
+#define POWER_SUPPLY_USB_TYPE_PD_SPR_AVS 5
+#define POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS 6
 union power_supply_propval {int intval;};
 '''
         code+=function(header,'struct sm5714_pd_snapshot {')+';\n'
         code+=function(cls.source,'struct sm5714_usbpd {')+';\n'
         code+=r'''
-static struct mutex sm5714_port_registry_lock={PTHREAD_MUTEX_INITIALIZER,1};
+static struct mutex sm5714_port_registry_lock={PTHREAD_MUTEX_INITIALIZER,1,0};
 static struct sm5714_usbpd *sm5714_port_provider,*port_under_test;static u64 sm5714_port_issuer;
 static struct power_supply supply;static int values[]={1,2,5000000,1800000};
 static pthread_mutex_t control=PTHREAD_MUTEX_INITIALIZER;
@@ -93,16 +97,20 @@ static int power_supply_get_property(struct power_supply *p,enum power_supply_pr
  v->intval=values[prop];return 0;}
 '''
         code+=function(cls.source,'static int sm5714_snapshot_properties(')+'\n'
-        code+=function(cls.source,'int sm5714_pd_read_snapshot(')+'\n'
+        for marker in ['static int sm5714_port_get(', 'static void sm5714_port_put(',
+                       'static bool sm5714_pd_capable(', 'static int sm5714_read_fixed_pinned(',
+                       'int sm5714_pd_read_snapshot(']:
+            code+=function(cls.source,marker)+'\n'
         code+=r'''
 static void initialize(struct sm5714_usbpd *s){
  memset(s,0,sizeof(*s));pthread_mutex_init(&s->lock.m,0);
+ s->control_lock.operation=1;pthread_mutex_init(&s->control_lock.m,0);
  pthread_mutex_init(&s->snapshot_wait.m,0);pthread_cond_init(&s->snapshot_wait.c,0);
  atomic_init(&s->snapshot_users,0);s->tcp_supply=&supply;s->source_generation=2;
  s->nr_source_pdos=2;s->source_pdos[0]=0x019191f4;s->source_pdos[1]=0x0002d12c;
  s->budget_generation=4;s->budget_mv=5000;s->budget_ma=1800;s->charge_requested=true;}
 static void destroy(struct sm5714_usbpd *s){
- pthread_mutex_destroy(&s->lock.m);pthread_mutex_destroy(&s->snapshot_wait.m);
+ pthread_mutex_destroy(&s->lock.m);pthread_mutex_destroy(&s->control_lock.m);pthread_mutex_destroy(&s->snapshot_wait.m);
  pthread_cond_destroy(&s->snapshot_wait.c);}
 static struct sm5714_pd_snapshot result;static int reader_ret;
 static void *reader(void *unused){(void)unused;reader_ret=sm5714_pd_read_snapshot(&result);return 0;}
@@ -123,6 +131,11 @@ int exercise(int mode,int failure,long long *out){
  if(mode==6)s.budget_pending=1;
  if(mode==7)s.observation_exhausted=true;
  if(mode==14)values[1]=3;
+ if(mode==25)values[1]=POWER_SUPPLY_USB_TYPE_PD_PPS;
+ if(mode==26){values[0]=2;values[1]=POWER_SUPPLY_USB_TYPE_PD_PPS;}
+ if(mode==27)values[1]=POWER_SUPPLY_USB_TYPE_PD_SPR_AVS;
+ if(mode==28)values[1]=POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS;
+ if(mode==29){values[0]=3;values[1]=POWER_SUPPLY_USB_TYPE_PD_SPR_AVS;}
  if(mode==15)values[3]=1500000;
  if(mode==18){s.source_generation=UINT64_MAX;mutex_lock(&s.lock);sm5714_forget_source(&s);mutex_unlock(&s.lock);}
  if(mode==19){s.budget_generation=UINT64_MAX;sm5714_budget_begin(&s);sm5714_budget_end(&s,0,true,5000,1800,false);}
@@ -148,6 +161,7 @@ int exercise(int mode,int failure,long long *out){
  out[10]=result.started_ms;out[11]=result.completed_ms;
  done:sm5714_port_provider=0;destroy(&s);destroy(&other);return ret;}
 '''
+        cls.fixture_code=code
         c=Path(cls.tmp.name)/'runtime.c';c.write_text(code);lib=c.with_suffix('.so')
         subprocess.run(['cc','-shared','-fPIC','-pthread','-Wall','-Werror','-Wno-misleading-indentation',str(c),'-o',str(lib)],check=True)
         cls.lib=ctypes.CDLL(str(lib));cls.lib.exercise.argtypes=[ctypes.c_int,ctypes.c_int,ctypes.POINTER(ctypes.c_longlong)]
@@ -190,4 +204,12 @@ int exercise(int mode,int failure,long long *out){
     def test_request_guard_still_fixed_only(self):
         self.assertIn('rdo, false)',function(self.source,'static bool sm5714_request_allowed('))
         body=function(self.source,'static void sm5714_snapshot_debug_init(')
-        self.assertIn('0400',body);self.assertNotIn('set_property',self.source)
+        self.assertIn('0400',body)
+        self.assertNotIn('set_property',function(self.source,'static int sm5714_read_fixed_pinned('))
+        self.assertNotIn('set_property',function(self.source,'int sm5714_pd_read_snapshot('))
+
+    def test_fixed_on_pps_capable_source(self):self.assertEqual(self.case(25)[0],0)
+    def test_active_pps_online_is_never_fixed(self):self.assertEqual(self.case(26)[0],-errno.EAGAIN)
+    def test_fixed_on_avs_and_dual_capable_sources(self):
+        for mode in (27,28):self.assertEqual(self.case(mode)[0],0)
+    def test_active_avs_online_is_never_fixed(self):self.assertEqual(self.case(29)[0],-errno.EAGAIN)

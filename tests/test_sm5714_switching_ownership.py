@@ -72,6 +72,7 @@ static void host_unlock(void *p) {
                      'static bool sm5714_fixed_grant_locked(',
                      'int sm5714_battery_switching_acquire(',
                      'int sm5714_battery_switching_release(',
+                     'int sm5714_battery_switching_check(',
                      'static void sm5714_inhibit_typec_locked(',
                      'int sm5714_battery_set_pd_contract(',
                      'int sm5714_battery_set_typec_charge(',
@@ -183,6 +184,18 @@ int main(int argc,char **argv) {
   sm5714_poll_work((struct work_struct *)&sm.poll_work);io=0;
   r=sm5714_battery_switching_release(lease);
  }
+ if(op==24) {
+  assert(sm5714_battery_switching_acquire(&lease)==0);io=0;
+  if(arg==1)lease++;
+  if(arg==2)sm.suspended=true;
+  if(arg==3)sm.typec_fault=true;
+  if(arg==4)sm.typec_owned=false;
+  if(arg==5)sm.typec_charge=false;
+  if(arg==6)sm.switching_inhibited=false;
+  if(arg==7)sm5714_companion=NULL;
+  if(arg==8)lease=0;
+  r=sm5714_battery_switching_check(lease);
+ }
  printf("%d %u %u %u %u %llu %llu %u %u %d\n",r,regs[0x13]&8,regs[0x15]&127,
  sm.switching_inhibited,sm.typec_fault,lease,sm.switching_lease,sm.typec_mv,sm.typec_ma,io);
 }
@@ -282,6 +295,14 @@ int main(int argc,char **argv) {
     def test_default_fixed_path_stays_enabled_at_original_current(self):
         r = self.run_case(21)
         self.assertEqual(r[:5], [0, 8, 56, 0, 0])
+
+    def test_read_only_lease_check_has_no_hardware_side_effects(self):
+        for arg,error in ((0,0),(1,-116),(2,-11),(3,-11),(4,-11),(5,-11),(6,-116),(7,-19),(8,-22)):
+            with self.subTest(arg=arg):
+                r=self.run_case(24,arg)
+                self.assertEqual((r[0],r[-1]),(error,0))
+                self.assertEqual(r[1],0)
+                self.assertEqual(r[6],1)
 
 
 if __name__ == '__main__':

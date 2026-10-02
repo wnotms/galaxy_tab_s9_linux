@@ -71,6 +71,7 @@ struct sm5714_usbpd {
 	struct device *dev;
 	struct regmap *regmap;
 	struct mutex lock;
+	struct mutex control_lock;
 	struct tcpc_dev tcpc;
 	struct tcpm_port *port;
 	struct fwnode_handle *connector;
@@ -240,15 +241,13 @@ static int sm5714_snapshot_properties(struct power_supply *psy,
 	return 0;
 }
 
-int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out)
+/* Reference pinning is shared by observations and protocol-only restoration. */
+static int sm5714_port_get(struct sm5714_usbpd **out,
+			   struct sm5714_pd_snapshot *sample)
 {
-	struct sm5714_pd_snapshot before = {}, after = {}, repeat = {};
 	struct sm5714_usbpd *sm;
 	int ret;
 
-	if (!out)
-		return -EINVAL;
-	memset(out, 0, sizeof(*out));
 	mutex_lock(&sm5714_port_registry_lock);
 	sm = sm5714_port_provider;
 	if (!sm) {
@@ -259,12 +258,46 @@ int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out)
 		ret = -EBUSY;
 		goto registry_out;
 	}
-	ret = sm5714_snapshot_locked(sm, &before);
+	ret = sm5714_snapshot_locked(sm, sample);
 	if (!ret)
 		atomic_inc(&sm->snapshot_users);
 	mutex_unlock(&sm->lock);
 registry_out:
 	mutex_unlock(&sm5714_port_registry_lock);
+	if (!ret)
+		*out = sm;
+	return ret;
+}
+
+static void sm5714_port_put(struct sm5714_usbpd *sm)
+{
+	mutex_lock(&sm5714_port_registry_lock);
+	if (atomic_dec_and_test(&sm->snapshot_users))
+		wake_up_all(&sm->snapshot_wait);
+	mutex_unlock(&sm5714_port_registry_lock);
+}
+
+/* TCPM USB_TYPE describes advertised augmented capabilities, not active mode.
+ * ONLINE=1 is fixed even on a PPS/AVS-capable source. Never accept ONLINE=2/3
+ * as fixed. Linux 7.2-rc3 tcpm_pd_select_pdo()/tcpm_psy_get_online().
+ */
+static bool sm5714_pd_capable(int type)
+{
+	return type == POWER_SUPPLY_USB_TYPE_PD ||
+		type == POWER_SUPPLY_USB_TYPE_PD_PPS ||
+		type == POWER_SUPPLY_USB_TYPE_PD_SPR_AVS ||
+		type == POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS;
+}
+
+static int sm5714_read_fixed_pinned(struct sm5714_usbpd *sm,
+				    struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot before = {}, after = {}, repeat = {};
+	int ret;
+
+	mutex_lock(&sm->lock);
+	ret = sm5714_snapshot_locked(sm, &before);
+	mutex_unlock(&sm->lock);
 	if (ret)
 		return ret;
 	before.started_ms = ktime_to_ms(ktime_get_boottime());
@@ -285,7 +318,7 @@ registry_out:
 	 * Mirror matching rejects lockless TCPM publication before its callback.
 	 */
 	if (!ret && (!before.started_ms || before.completed_ms < before.started_ms ||
-		before.online != 1 || before.usb_type != POWER_SUPPLY_USB_TYPE_PD ||
+		before.online != 1 || !sm5714_pd_capable(before.usb_type) ||
 		!before.charge_requested ||
 		(before.budget_mv != 5000 && before.budget_mv != 9000) ||
 		before.budget_ma < 100 || before.budget_ma > 1800 ||
@@ -296,13 +329,107 @@ registry_out:
 	if (!ret)
 		*out = before;
 	mutex_unlock(&sm->lock);
-	mutex_lock(&sm5714_port_registry_lock);
-	if (atomic_dec_and_test(&sm->snapshot_users))
-		wake_up_all(&sm->snapshot_wait);
-	mutex_unlock(&sm5714_port_registry_lock);
+	return ret;
+}
+
+int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot sample = {};
+	struct sm5714_usbpd *sm;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	ret = sm5714_port_get(&sm, &sample);
+	if (ret)
+		return ret;
+	ret = sm5714_read_fixed_pinned(sm, out);
+	sm5714_port_put(sm);
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sm5714_pd_read_snapshot);
+
+static int sm5714_restore_token(struct sm5714_usbpd *sm, u64 instance,
+				u64 source_generation)
+{
+	struct sm5714_pd_snapshot sample = {};
+	int ret;
+
+	mutex_lock(&sm->lock);
+	ret = sm5714_snapshot_locked(sm, &sample);
+	if (!ret && (sample.instance != instance ||
+		     sample.source_generation != source_generation))
+		ret = -ESTALE;
+	mutex_unlock(&sm->lock);
+	return ret;
+}
+
+/* Kernel-only protocol fallback. The caller must have stopped the pump and
+ * must not release its switching lease concurrently. No pump/physical-VBUS
+ * proof is inferred here, and this API never releases switching inhibition.
+ */
+int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
+			   struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot sample = {}, repeat = {}, fixed = {};
+	union power_supply_propval value = { .intval = 1 };
+	struct sm5714_usbpd *sm;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	if (!instance || !source_generation || !lease)
+		return -EINVAL;
+	ret = sm5714_port_get(&sm, &sample);
+	if (ret)
+		return ret;
+	if (!mutex_trylock(&sm->control_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_restore_token(sm, instance, source_generation);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (!ret)
+		ret = sm5714_snapshot_properties(sm->tcp_supply, &sample);
+	if (!ret)
+		ret = sm5714_snapshot_properties(sm->tcp_supply, &repeat);
+	if (!ret && (sample.online != repeat.online ||
+		     sample.usb_type != repeat.usb_type ||
+		     sample.voltage_uv != repeat.voltage_uv ||
+		     sample.current_ua != repeat.current_ua))
+		ret = -EAGAIN;
+	/* Do not deactivate an unreviewed AVS state. ONLINE=2 is PPS only;
+	 * this operation can only leave it, never enter or tune it.
+	 */
+	if (!ret && (!sm5714_pd_capable(sample.usb_type) ||
+		     (sample.online != 1 && sample.online != 2) ||
+		     (sample.online == 2 &&
+		      sample.usb_type != POWER_SUPPLY_USB_TYPE_PD_PPS &&
+		      sample.usb_type != POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS)))
+		ret = -EOPNOTSUPP;
+	if (!ret)
+		ret = sm5714_restore_token(sm, instance, source_generation);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (!ret && sample.online == 2)
+		ret = power_supply_set_property(sm->tcp_supply,
+					       POWER_SUPPLY_PROP_ONLINE, &value);
+	if (!ret)
+		ret = sm5714_read_fixed_pinned(sm, &fixed);
+	if (!ret && (fixed.instance != instance ||
+		     fixed.source_generation != source_generation))
+		ret = -ESTALE;
+	if (!ret)
+		*out = fixed;
+	mutex_unlock(&sm->control_lock);
+put:
+	sm5714_port_put(sm);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_pd_restore_fixed);
 
 static int sm5714_current_port_show(struct seq_file *seq, void *unused)
 {
@@ -760,6 +887,7 @@ static int sm5714_usbpd_probe(struct i2c_client *client)
 	if (IS_ERR(sm->regmap))
 		return PTR_ERR(sm->regmap);
 	mutex_init(&sm->lock);
+	mutex_init(&sm->control_lock);
 	atomic_set(&sm->snapshot_users, 0);
 	init_waitqueue_head(&sm->snapshot_wait);
 	INIT_DELAYED_WORK(&sm->cc_resync_work, sm5714_usbpd_resync);

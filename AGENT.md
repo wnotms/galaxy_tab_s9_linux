@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+Test301 OFFLINE fixed-restoration prerequisite implemented/143affected host PASS.
+Fixed snapshot uses ONLINE1 + PD capability (PD/PPS/SPRAVS/dual), never ONLINE2/3;
+new kernel-only ONLINE1 fallback requires exactport/source +acquired lease,
+real standardPSY/no propertylocks/pinned drain/zerooutput/refusals. No activation/
+tuning/pump/release/liveconsumer; actualRequestguardstillfalse. Budgetchange
+stillrevokeslease/inhibit; logicalsnapshotnotphysical/releasegrant. ARM64/static/
+configDT/protected181 qualification pending. Device remains retained299source
+9173df11/Test30057535..., thermalfixnotreverted/no deviceoperation. Read301README
+and docs/SM5714_TCPM_FIXED_RESTORE; fullgoalactive/activeStage3NOTREADY.
+
 Test300 PASSIVE_THERMAL_FIX_DEVICE_ACCEPTED_CANDIDATE_RETAINED. Currentdevice
 source9173df11/Test299, boot57535beda62648d0aaaa3071ac8332e5; NO LONGER263.
 Oneboot/dynamic noSM5440thermalzone/realpackzone37enabled31.1->31.5C/15sendpoint

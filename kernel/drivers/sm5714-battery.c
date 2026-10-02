@@ -550,6 +550,32 @@ out:
 }
 EXPORT_SYMBOL_GPL(sm5714_battery_switching_acquire);
 
+/* Read-only ownership check; no I2C or permission to reopen Q4. */
+int sm5714_battery_switching_check(u64 lease)
+{
+	struct sm5714_battery *sm;
+	int ret = -ENODEV;
+
+	if (!lease)
+		return -EINVAL;
+	mutex_lock(&sm5714_companion_lock);
+	sm = sm5714_companion;
+	if (sm) {
+		mutex_lock(&sm->chg_lock);
+		if (!sm->switching_inhibited || sm->switching_lease != lease)
+			ret = -ESTALE;
+		else if (sm->suspended || sm->typec_fault || !sm->typec_owned ||
+			 !sm->typec_charge)
+			ret = -EAGAIN;
+		else
+			ret = 0;
+		mutex_unlock(&sm->chg_lock);
+	}
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_switching_check);
+
 int sm5714_battery_switching_release(u64 lease)
 {
 	struct sm5714_battery *sm;

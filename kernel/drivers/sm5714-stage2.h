@@ -17,6 +17,7 @@ void sm5714_battery_typec_fault(void);
  */
 int sm5714_battery_switching_acquire(u64 *lease);
 int sm5714_battery_switching_release(u64 lease);
+int sm5714_battery_switching_check(u64 lease);
 
 #define SM5714_SOURCE_PDO_MAX 7U
 
@@ -33,5 +34,14 @@ struct sm5714_pd_snapshot {
 	bool charge_requested;
 };
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out);
+
+/* Caller-proven pump OFF, acquired switching lease, no concurrent release.
+ * ONLINE=1 only; no activation/voltage/current write, lease release or physical
+ * proof. A budget change may revoke the lease while leaving inhibition set;
+ * success is a logical fixed snapshot, not authorization to release that lease.
+ * No live consumer is installed by this interface.
+ */
+int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
+			   struct sm5714_pd_snapshot *out);
 
 #endif
