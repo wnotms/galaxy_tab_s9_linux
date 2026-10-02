@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+Test300 ONE passive thermal registration fix test registered. Source9173df11/
+29929affected/buildW1sparse/exactconfigDT/protected181 qualified;8runner PASS.
+PCUSB/one candidate boot/dynamic thermal NAME absence+realpackvalid/15sendpoint;
+retain299PASSfix/paired181 ondevice; exact263rollback onlyonfirstfailure/new300
+original slots retained. Current263acdd2dfc all5/181/confignotes/rescue/packnormal
+preflightpass; oldzone37SM5440warning explicitlypreflight-only, nevercandidate or
+packwaiver. NoPPS/pump/current/ADCmath/threshold/faultclear/core/DTconfig/USB change.
+Pushregistrationbeforemutation; no224sdelay/fullrepeatCI. Read300README/plan/
+PACKAGE. Goalactive/Stage3NR; retention fixesowner symptom, notdirectgrant.
+
 Test299 incident+OFFLINEfix qualified9173df11. Thermalzone37 old263/acdd2dfc
 isSM5440passive, refusedstartup4.037s->cacheENODATA->autozone disabled224.224s;
 packzone38/IIO31.8C normal. Onlydesc.no_thermal=true; TEMP/ENODATA/fault/sampler/
