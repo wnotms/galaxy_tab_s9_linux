@@ -1,0 +1,12 @@
+{
+  "vendor_path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+  "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+  "function": "sm5440_set_adc_mode",
+  "branch": "SM_DC_ADC_MODE_ONESHOT",
+  "lines": [
+    1058,
+    1065
+  ],
+  "fact": "disable ADC, msleep20, rate0, enable; not proof of OFF-mode sensor calibration",
+  "baseline": "Test295 three adjacent-window voltage pairs / frozen converter"
+}

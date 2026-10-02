@@ -119,6 +119,7 @@ static void msleep(unsigned int ms) {
         code += function(src, "static bool sm5440_passive_pc_sample(") + "\n"
         code += function(src, "static bool sm5440_startup_revblk(") + "\n"
         code += function(src, "static bool sm5440_startup_matches(") + "\n"
+        code += function(src, "static int sm5440_adc_rearm(") + "\n"
         code += function(src, "static void sm5440_startup_gauge(") + "\n"
         code += function(src, "static void sm5440_poll(") + "\n"
         code += function(src, "static int sm5440_quiesce(") + "\n"

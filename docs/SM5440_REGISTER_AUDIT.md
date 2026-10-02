@@ -24,7 +24,7 @@ not guessed. Passive code must not import vendor active init wholesale.
 | IBUS limit | IBUSCNTL=0x16 bits6:0;50mA/code | helper | bounded pure encoding; not proof of usable HW OCP |
 | Protection | PRTNCNTL=0x19 init0xFE | copied | bits not fully documented; no speculative write |
 | Thermal threshold | THEMCNTL1=0x1a init0x0C(120°C); THEMCNTL2=0x1b | copied | not bringup temperature allowance |
-| ADC control | ADCCNTL1=0x1c:enable0,rate1,average3 | oneshot | named enable/channel operation only, pump stays OFF |
+| ADC control | ADCCNTL1=0x1c:enable0,rate1,average3 | continuous in hw_init | named enable/channel operation only, pump stays OFF |
 | ADC channels | ADCCNTL2=0x1d;vendor0xDF | 0xDF | same traced channel mask for conversion |
 | ADC data | VBUS0x1e/1f,VOUT20/21,IBUS22/23,THEM24/25,DIE26,VBAT27/28 | reads | physical telemetry, complete conversion only |
 | Identity | DEVICEID=0x2b;low nibble1,high nibble revision | same | no writes if ID invalid |
@@ -76,3 +76,7 @@ vendor behavior, not an authorization to exceed our4440mV/1800mA bringup caps.
 The complete active protection recipe and hardware-current overshoot response
 must be resolved before a pump-ON candidate. This audit does not label all
 register bits understood when source only gives a magic aggregate value.
+
+Test296 adds the vendor20ms disabled rearm interval before the unchanged single-shot
+converter (SM5440_ADC_REARM.md). Test295 adjacent-window differences244–355mV
+remain unexplained; no calibration/threshold/charging grant follows from this fix.

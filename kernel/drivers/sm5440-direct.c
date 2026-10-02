@@ -681,6 +681,34 @@ static bool sm5440_startup_matches(const struct sm5440_sample *sample,
 		sample->prtncntl == initial->prtncntl;
 }
 
+/* Samsung sm5440_set_adc_mode(ONESHOT): disable,20ms,rate0,enable.
+ * Keep sample_once's checked converter/latch sequence intact. Its second
+ * disable is idempotent; no ADC enable occurs between these two steps.
+ * A single drained worker owns this preamble; no lock across the wait.
+ */
+static int sm5440_adc_rearm(struct sm5440_direct *sm)
+{
+	unsigned int mode;
+	int ret;
+
+	mutex_lock(&sm->io_lock);
+	if (READ_ONCE(sm->stopped)) {
+		ret = -ESHUTDOWN;
+	} else {
+		ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
+		if (!ret && (mode & SM5440_MODE_MASK))
+			ret = -EBUSY;
+		if (!ret)
+			ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1,
+						 SM5440_ADC_ENABLE, 0);
+	}
+	mutex_unlock(&sm->io_lock);
+	if (ret)
+		return ret;
+	msleep(20);
+	return READ_ONCE(sm->stopped) ? -ESHUTDOWN : 0;
+}
+
 /* Near-time comparison, not sensor calibration or a charging grant.
  * Called only for startup evidence, after sample_once has released io_lock.
  * The standard SM5714 property reads fresh SRAM under its own sram_lock.
@@ -717,7 +745,9 @@ static void sm5440_poll(struct work_struct *work)
 
 	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
 		return;
-	ret = sm5440_sample_once(sm, &sample);
+	ret = sm5440_adc_rearm(sm);
+	if (!ret)
+		ret = sm5440_sample_once(sm, &sample);
 	if (!ret && (!sm->initial_sample_done || sm->startup_confirmations)) {
 		sm5440_startup_gauge(&sample);
 		dev_info(sm->dev,
