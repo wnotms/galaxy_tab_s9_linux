@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test295 ONE short paired-startup-voltage diagnostic registered, source1028ae06.
+208affected +11runner PASS/ARM64/W1sparse/exact294configDT/protected/181paired.
+Only startup gauge read outsideio lock; original converter/100ms/500ms/threshold/
+deadline/fault unchanged. PCUSB held; ADB+strictNCMSSH sameboot required;
+WiFi host unreachable recorded/notrequired forPCscope. Onecandidateboot/cache/
+fullkernelJSON/15sendpoint/unconditional exact263rollback; oldstartuprefusal
+retaineddiagnostic, no charginggrant/PPS/pump/current. Push beforemutation.
+Read295README/registration/PACKAGE/ARTIFACTS/design. ActiveStage3NOTREADY.
+
 Test294 OFFLINE_SWITCHING_OWNERSHIP_QUALIFIED_DEVICE_NOT_TESTED, sourcebb534146.
 16actualC +1557full host PASS/0failureerror skip/all1520priorIDs retained; ARM64
 99.44s/W1sparse/objectconsistent/exact290configDT/96protected/8overlays/181paired

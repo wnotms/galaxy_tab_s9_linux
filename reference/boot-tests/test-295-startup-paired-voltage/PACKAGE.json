@@ -1,0 +1,55 @@
+{
+  "test": "Test295",
+  "source_revision": "1028ae06",
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-295-passive/Image.gz",
+      "bytes": 22122503,
+      "sha256": "0d104a562ba90e0bef9d4d430a75d9620a4f58475fcb37a3bf6193d05af31b38"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-295-passive/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-295-passive/config",
+      "bytes": 243276,
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-295-passive/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "e5d0ad24914eb5ac1e333c220618b8fd2bba4ba26a9b9e3cac0103ecb2871037"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-295-passive/modules-x710.tar.gz",
+      "bytes": 47318641,
+      "sha256": "63abd2df4181ea496bcfbba931148437b95401e598e53fe66548381775b580bc"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-295-passive/boot.img",
+      "bytes": 100663296,
+      "sha256": "0cbcc6da6549b163ea5c9a79e47030741b3b35e7f9732c7ba3f88d308f00a61d"
+    }
+  },
+  "baseline_partitions": {
+    "boot": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "0cbcc6da6549b163ea5c9a79e47030741b3b35e7f9732c7ba3f88d308f00a61d",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "modules": 181,
+  "write_partitions": [
+    "boot"
+  ],
+  "vendor_boot_unchanged_no_write": true
+}
