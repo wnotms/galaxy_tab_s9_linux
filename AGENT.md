@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test287 paired272deployment/readback+candidateadmission PASS:2fe71db013594aba
+9153d2229a39f00d/Wi-Fi10.125.29.50, exactnotes/config/normalcmdline/currenthealth
+OFF/protection/rescue/noCode43/uniquehistory/new286journal. All5/181verified,
+new287original/allolderbackups retained/BCBclear/rootunmounted. NativeTWRPwait
+27.65s; ancillaryavailability captured. Read287INSTALL_STATUS/raw. Next ONE
+279/280trace with285IO/firstrefusalSTOP/ownedcleanup/unload then unconditional
+263rollback. No repeat/PPS/pump/current/source change; reuse/no build/full/CI.
+ActiveStage3 NOT READY.
+
 Test287 SINGLE passive trace registered on normal263d0bbaeb8/Wi-Fi10.125.29.102;
 live identity/health/OFF/rescue/new286diagnostic journal passes. Reuse272/276/
 279/280, explicitly select285nonseekTraceFS +286bounded complete SMMUprofile +

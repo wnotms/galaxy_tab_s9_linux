@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; systemctl is-active ssh gts9-adbd gts9-usb-acm; ip -4 -o addr show wlp1s0; cat /sys/kernel/debug/sm5440-0-0063/snapshot"
+  ],
+  "ended_utc": "2026-10-02T04:59:41.990156+00:00",
+  "started_utc": "2026-10-02T04:59:41.928551+00:00",
+  "status": 1
+}

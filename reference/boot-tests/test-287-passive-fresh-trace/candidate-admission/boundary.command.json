@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /sys/module/sm5440_fresh_observer; test ! -e /sys/kernel/debug/sm5440-fresh-observer; test ! -e /tmp/test287-tools; test ! -e /tmp/test287-capture; test -x /sbin/insmod; test -x /sbin/rmmod; command -v python3; grep -wE \"sm5440_passive_request_fresh|sm5440_poll\" /proc/kallsyms; findmnt /sys/kernel/tracing; cat /sys/kernel/tracing/kprobe_events; ls /sys/kernel/tracing/instances"
+  ],
+  "ended_utc": "2026-10-02T05:00:15.994456+00:00",
+  "started_utc": "2026-10-02T05:00:15.859521+00:00",
+  "status": 0
+}
