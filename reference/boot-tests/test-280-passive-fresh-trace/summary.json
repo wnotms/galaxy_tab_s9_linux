@@ -1,0 +1,41 @@
+{
+  "PPS": false,
+  "active_stage3": "NOT READY",
+  "adc_duration_ms": null,
+  "boot_id": "31e9a2127e7c41909c8ddd601badc85b",
+  "cmdline_mismatch_retained": true,
+  "config_notes_match_Test263": true,
+  "current_increase": false,
+  "device_endpoint_qualified": false,
+  "device_readonly_commands_archived": 6,
+  "device_tracefs_writes": 0,
+  "full_suite": {
+    "executed": false,
+    "reason": "host-only library/parser; no routing change",
+    "reused": "Test27950 and Test272/2761481/W1/sparse"
+  },
+  "host_tests": {
+    "count": 24,
+    "errors": 0,
+    "executed": true,
+    "failures": 0,
+    "skips": 0
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "protected kernel/build inputs unchanged"
+  },
+  "module_replacement": false,
+  "offline_status": "COORDINATOR_QUALIFIED_LIBRARY_ONLY",
+  "owner_explained_manual_boot": true,
+  "partition_writes": 0,
+  "physical_observer_loads": 0,
+  "physical_retry": false,
+  "protected_files_unchanged": 198,
+  "pump_ON": false,
+  "rollback_required": false,
+  "syntax": "PASS",
+  "test": "Test280",
+  "timeout_branch": "UNKNOWN",
+  "verdict": "STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY"
+}

@@ -1,0 +1,33 @@
+{
+  "base": "e68c9f7f",
+  "device_tests_executed": false,
+  "errors": 0,
+  "executed": true,
+  "failures": 0,
+  "full_suite_executed": false,
+  "historical_seals": {
+    "test-275-passive-fresh-acquisition": {
+      "manifest_sha256": "072b499f48d5c98aec88a8a77ce46226ab6d01a81852a06cdfd4611087415b79",
+      "verified_files": 380
+    },
+    "test-277-revised-passive-observer": {
+      "manifest_sha256": "ebaf8c9a063258ddae0470cd824d463950a7e9433299e36a7f7b4634dd8182f6",
+      "verified_files": 417
+    },
+    "test-278-fresh-timing-audit-offline": {
+      "manifest_sha256": "3be1fcf104d42719da1933f7389049a0a350622daa2cccc4ff9e6a14d7fd051e",
+      "verified_files": 25
+    },
+    "test-279-fresh-trace-collector-offline": {
+      "manifest_sha256": "122beb95d0413537bf52dc1913a6d3340c995248b4eccbef621e2a79c2fc3689",
+      "verified_files": 43
+    }
+  },
+  "kernel_build_executed": false,
+  "protected_files_unchanged": 198,
+  "reused": "Test27950 and Test272/2761481/W1/sparse",
+  "skips": 0,
+  "syntax": "ast.parse PASS",
+  "tests": 24,
+  "trace_attribution_cause": "UNKNOWN"
+}

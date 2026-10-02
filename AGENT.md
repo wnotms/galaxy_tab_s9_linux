@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test280 STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY / OFFLINE_COORDINATOR_QUALIFIED.
+Owner confirms31e9a212 manual power-on/reboot, not unexplained reboot. Exact263
+config/notes/device health normal; lpcharge=1 still differs from accepted normal
+cmdline. No device mutation/trace/load/reboot/transfer/deployment; no retry or
+automatic exemption.24 mock integration+syntax pass;198 protected inputs and
+275277278279 seals unchanged. Single-process coordinator library only, frozen
+observer gate AST and BOOTTIME/errno/count binding; no causal/ADC/timing grant.
+Read280RESULTS. Reuse27950/272/2761481/W1/sparse; no build/full/routing/CI. Future
+physical wrapper needs accepted normal boot and separate pushed registration/
+paired readback/263rollback. Timeout attribution UNKNOWN; Active Stage3 NOT READY.
+
 Test280 read-only preflight STOP_CMDLINE_IDENTITY: currentboot31e9a2127e7c41909c8ddd601badc85b
 has accepted263config/notes, healthyPCSDP500/OFF/fault0/battery/ADB/Wi-Fi/deviceNCM,
 but lpcharge=1 runtime cmdline differs from accepted normal boot. New boot cause

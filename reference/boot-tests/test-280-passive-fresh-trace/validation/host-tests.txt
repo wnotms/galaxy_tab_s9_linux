@@ -1,0 +1,29 @@
+test_clock_at_upper_boundary_rejected (__main__.BindingTests.test_clock_at_upper_boundary_rejected) ... ok
+test_clock_before_request_rejected (__main__.BindingTests.test_clock_before_request_rejected) ... ok
+test_millisecond_floor_envelope (__main__.BindingTests.test_millisecond_floor_envelope) ... ok
+test_provider_return_mismatch (__main__.BindingTests.test_provider_return_mismatch) ... ok
+test_request_count_mismatch (__main__.BindingTests.test_request_count_mismatch) ... ok
+test_unknown_trace_rejected (__main__.BindingTests.test_unknown_trace_rejected) ... ok
+test_ambiguous_load_timeout_no_reload (__main__.CoordinatorTests.test_ambiguous_load_timeout_no_reload) ... ok
+test_boot_changes_before_setup (__main__.CoordinatorTests.test_boot_changes_before_setup) ... ok
+test_cache_failure_no_new_request (__main__.CoordinatorTests.test_cache_failure_no_new_request) ... ok
+test_cleanup_failure_preserved (__main__.CoordinatorTests.test_cleanup_failure_preserved) ... ok
+test_counter_loss_never_grants_timing (__main__.CoordinatorTests.test_counter_loss_never_grants_timing) ... ok
+test_deadline_no_observation_retry (__main__.CoordinatorTests.test_deadline_no_observation_retry) ... ok
+test_existing_output_never_overwritten (__main__.CoordinatorTests.test_existing_output_never_overwritten) ... ok
+test_gate_ast_identical_to_frozen275 (__main__.CoordinatorTests.test_gate_ast_identical_to_frozen275) ... ok
+test_live_boot_change_no_pass (__main__.CoordinatorTests.test_live_boot_change_no_pass) ... ok
+test_malformed_terminal_is_stop (__main__.CoordinatorTests.test_malformed_terminal_is_stop) ... ok
+test_old_module_forbidden (__main__.CoordinatorTests.test_old_module_forbidden) ... ok
+test_one_refusal_bound_then_cleanup_unload (__main__.CoordinatorTests.test_one_refusal_bound_then_cleanup_unload) ... ok
+test_preloaded_observer_not_adopted_or_unloaded (__main__.CoordinatorTests.test_preloaded_observer_not_adopted_or_unloaded) ... ok
+test_rejected_preflight_never_touches_trace_or_module (__main__.CoordinatorTests.test_rejected_preflight_never_touches_trace_or_module) ... ok
+test_setup_failure_cleans_without_loading (__main__.CoordinatorTests.test_setup_failure_cleans_without_loading) ... ok
+test_tail_interruption_still_cleans_unloads (__main__.CoordinatorTests.test_tail_interruption_still_cleans_unloads) ... ok
+test_unload_failure_preserved (__main__.CoordinatorTests.test_unload_failure_preserved) ... ok
+test_wrong_cmdline_never_touches_trace (__main__.CoordinatorTests.test_wrong_cmdline_never_touches_trace) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.036s
+
+OK

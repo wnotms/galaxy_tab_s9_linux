@@ -2,6 +2,7 @@
   "ADB": "responsive",
   "PPS": false,
   "WiFi": "authenticated same boot",
+  "additional_checks_omitted_reason": "early command-line identity stop; no candidate deployment",
   "battery": {
     "POWER_SUPPLY_CAPACITY": "69",
     "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
@@ -27,14 +28,18 @@
   "current_increase": false,
   "device_NCM": "usb0/sshd active",
   "device_python": "3.13.5",
+  "device_readonly_commands_archived": 6,
   "device_tracefs_writes": 0,
   "kernel_gate_error": null,
   "kernel_notes_sha256": "fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34",
   "last_recorded_boot_id": "cdce6deba2e04f3481679632e38ac997",
+  "module_hashes_executed": false,
   "module_replacement": false,
-  "new_boot_explanation": "awaiting owner; no reboot issued by agent",
+  "new_boot_explanation": "owner confirmed manual power-on/reboot; not unexplained reboot",
   "new_lpcharge_values": "1",
   "observer_loads": 0,
+  "owner_explanation_source": "owner-boot-explanation.json",
+  "partition_hashes_executed": false,
   "partition_writes": 0,
   "passive": {
     "POWER_SUPPLY_CURRENT_NOW": "0",
@@ -104,5 +109,6 @@
   "test": "Test280",
   "test_retry_allowed": false,
   "tracefs_available_readonly": true,
-  "verdict": "STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY"
+  "verdict": "STOP_READONLY_PREFLIGHT_CMDLINE_IDENTITY",
+  "windows_Code43_probe_executed": false
 }
