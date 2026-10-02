@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "echo @@error-log; cat /sys/kernel/tracing/error_log; echo @@blacklist; cat /sys/kernel/debug/kprobes/blacklist; echo @@list; cat /sys/kernel/debug/kprobes/list; echo @@enabled; cat /sys/kernel/debug/kprobes/enabled; echo @@boot; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-02T04:24:07.615095+00:00",
+  "started_utc": "2026-10-02T04:24:07.534788+00:00",
+  "status": 0
+}

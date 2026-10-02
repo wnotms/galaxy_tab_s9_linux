@@ -1,0 +1,132 @@
+{
+  "boot_after": "cdca467d-7e60-4543-b766-06c0706b3009",
+  "boot_before": "cdca467d-7e60-4543-b766-06c0706b3009",
+  "cleanup_errors": [
+    "[Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'",
+    "[Errno 22] Invalid argument"
+  ],
+  "clock": "boot",
+  "collection_complete": false,
+  "collection_error": "OSError: [Errno 22] Invalid argument; trace snapshot: snapshot incomplete: [Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'",
+  "cpus": [
+    "cpu0",
+    "cpu1",
+    "cpu2",
+    "cpu3",
+    "cpu4",
+    "cpu5",
+    "cpu6",
+    "cpu7"
+  ],
+  "events": [
+    "workqueue_queue_work",
+    "workqueue_execute_start",
+    "workqueue_execute_end"
+  ],
+  "files": {
+    "available-clocks.txt": {
+      "bytes": 58,
+      "sha256": "925ca315bd3de6ef99e08c002e320406936ae2da2f2c0afd8da1e87f7980a253"
+    },
+    "cpu0-after.stats": {
+      "bytes": 133,
+      "sha256": "6adb8e0e76cc68e2b16f9cb05963a908d6fc7c0db2e45d29bad2bd4f7c423bb8"
+    },
+    "cpu1-after.stats": {
+      "bytes": 133,
+      "sha256": "e037a753ae2ff32404c738f447411cbc9c4d61c2bf0ca74a8489b399b524c91a"
+    },
+    "cpu2-after.stats": {
+      "bytes": 133,
+      "sha256": "33a2b1d7d0c79a8069814f98a29badd18a0d0fb1d2e3abd6ec0a0971921648b1"
+    },
+    "cpu3-after.stats": {
+      "bytes": 133,
+      "sha256": "6597277ac60ede35e6aacea18f3b21cf23e305751bb1dbdb8c32f612de57d117"
+    },
+    "cpu4-after.stats": {
+      "bytes": 133,
+      "sha256": "8ab0779c7e51cbd20a30ef3b7b7c21d57ddbb87669fd0eaf97feec3686e299cc"
+    },
+    "cpu5-after.stats": {
+      "bytes": 133,
+      "sha256": "0e9e6b2389c7d83db3ca3616a2538b3c518f1eb95a01ed9b4343a48549a3d252"
+    },
+    "cpu6-after.stats": {
+      "bytes": 133,
+      "sha256": "689dbdac250fc71867bc4df5e5825469af581cf4352aed346b642e45db3b015c"
+    },
+    "cpu7-after.stats": {
+      "bytes": 133,
+      "sha256": "365f655751f3a481539a67d223408b5cdc611f150a51306c0eda96437c25d960"
+    },
+    "global-probes-after.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "global-probes-at-stop.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "global-probes-before.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "initial-tracing-on.txt": {
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "kallsyms.txt": {
+      "bytes": 8650430,
+      "sha256": "af27199ab7a1209324ef1832d83be2abee112fd0a10f657f612cc88a06ca0743"
+    },
+    "ownership.json": {
+      "bytes": 310,
+      "sha256": "f2e2759044979f43859b3163c11051cbb1a5be3002638ff64c01179d5b86167e"
+    },
+    "profile-after.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "trace.txt": {
+      "bytes": 515,
+      "sha256": "f94ca6af0299c8976743d225ce5450e145e0e93091842ff74659455e19879be8"
+    },
+    "workqueue_execute_end.filter": {
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113"
+    },
+    "workqueue_execute_end.format": {
+      "bytes": 462,
+      "sha256": "8b483e971678bc6d1858b9f564df662de8ebbab99c97a1598e3429d4a70ed882"
+    },
+    "workqueue_execute_start.filter": {
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113"
+    },
+    "workqueue_execute_start.format": {
+      "bytes": 464,
+      "sha256": "397a1d55781d447c431e4a17a4e1bd07d02c787ea8cfcda7fe0e663889782970"
+    },
+    "workqueue_queue_work.filter": {
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113"
+    },
+    "workqueue_queue_work.format": {
+      "bytes": 696,
+      "sha256": "0528737fa9c96a98d7450cfd038ce8627c9007b9ebca93075bcf94c86581a348"
+    }
+  },
+  "group": "gts9t279_3cfab424d21f",
+  "physical_acceptance": false,
+  "probes": {
+    "poll_enter": "gts9t279_3cfab424d21f_poll_enter",
+    "poll_return": "gts9t279_3cfab424d21f_poll_return",
+    "request_enter": "gts9t279_3cfab424d21f_request_enter",
+    "request_return": "gts9t279_3cfab424d21f_request_return"
+  },
+  "symbols": {
+    "sm5440_passive_request_fresh": "ffffffc080ebf9a0",
+    "sm5440_poll": "ffffffc080ec0264"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "ADC_duration": "UNKNOWN",
+  "Code43": false,
+  "PPS": false,
+  "acquisition": "NOT_ATTEMPTED",
+  "active_Stage3": "NOT READY",
+  "all5_partition_hashes": {
+    "boot": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_boot_id": "cdca467d7e604543b76606c0706b3009",
+  "cleanup_endpoint": "owned instance/probe/module absent; empty kernel kprobes list, kprobes enabled1, error_log empty",
+  "current_increase": false,
+  "device_current_health": "normal; full journal contains20unclassified earlySMMU context103 lines",
+  "final_boot_id": "d0bbaeb81d7a422e9e9e44f6e7346b77",
+  "final_journal_suspects": [
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 598
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 600
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8074b00, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 601
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 603
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a4400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 604
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 606
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80cf500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 607
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 609
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80fb800, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 610
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 612
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8125400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 613
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 615
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8151400, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 616
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 618
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb817d500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 619
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 621
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81a8200, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 622
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 624
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81d3100, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 625
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 627
+    }
+  ],
+  "final_wifi": "10.125.29.102",
+  "fresh_requests": 0,
+  "kernel_fault_counts": {},
+  "module_files": 181,
+  "next": "offline command-interface IO audit and SMMU evidence analysis; no automatic physical retry",
+  "observer_loads": 0,
+  "paired263_rollback_completed": true,
+  "probe_cleanup_errors_retained": [
+    "OSError: [Errno 22] Invalid argument",
+    "trace snapshot: snapshot incomplete: [Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'",
+    "trace cleanup: [Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'; [Errno 22] Invalid argument"
+  ],
+  "probe_error": "EINVAL at first request_enter definition; operation(open/write) not distinguished in original coordinator error",
+  "pump_ON": false,
+  "qualification": {
+    "executed": false,
+    "reason": "physical results only, no new runner/kernel edits; reuse28418/28328/27950/28024/272build/2761481/W1/sparse"
+  },
+  "test": "Test284",
+  "timeout_branch": "UNKNOWN",
+  "timing_acceptance": false,
+  "trace_setup_attempted": true,
+  "trace_started": false,
+  "trace_verdict": "UNKNOWN",
+  "verdict": "STOP_TRACE_SETUP_EINVAL_EXACT263_ROLLBACK_JOURNAL_SUSPECT_RETAINED"
+}

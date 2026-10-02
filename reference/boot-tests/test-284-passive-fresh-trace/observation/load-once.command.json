@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 /tmp/test284-tools/device_ops.py --packet /tmp/test284-packet.json --packet-sha256 b2efb34cc77ae27631fed093b5898dd3ebba36484b20165d84d639efe88b9ae1 --module /tmp/test284-observer.ko --output /tmp/test284-capture"
+  ],
+  "ended_utc": "2026-10-02T04:23:04.037623+00:00",
+  "started_utc": "2026-10-02T04:23:03.224832+00:00",
+  "status": 1
+}

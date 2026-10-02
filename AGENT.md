@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-02)
 
+Test284 STOP_TRACE_SETUP_EINVAL; exact263rollback readback/currenthealth completed,
+finaljournalSUSPECT retained. One272cdca467dboot admitted new283gate; first symbolic
+request_enter definition EINVAL before observerload/tracestart, zero freshcalls.
+Originalsetup/snapshot/cleanup errors retained; endpoint namedprobe/instance/
+observer absent, kprobelist empty/enabled1/errorlogempty, sameboot device healthy.
+All5/181263 restored/tested284+oldbackups kept/BCBclear/rootunmounted. Current263
+bootd0bbaeb81d7a422e9e9e44f6e7346b77 notes/config/normalcmdline exact/ADBWi-FiNCM/
+batteryOFF healthy/noCode43/CPUfault; fulljournal20early SMMU0x670021/context103
+outside registered102 => STOP, not clean. Read284RESULTS/raw/summary/seal. Next
+OFFLINE IO/source audit +SMMU evidence only, no auto physicalretry/ADC/deadline/
+PPS/pump/current change. Reusequalification/results executed:false/no build/full/
+CI. ActiveStage3 NOT READY; rootcause actual open vswrite not yet distinguished.
+
 Test284 paired272deployment/readback+candidateadmission PASS: cdca467d7e604543
 b76606c0706b3009/Wi-Fi10.125.29.144 exactnotes/config/normalcmdline+healthyOFF/
 ADB/deviceNCM/noCode43/new283startupgate. Portabletools/packet/276observerhash

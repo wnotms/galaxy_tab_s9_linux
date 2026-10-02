@@ -1,0 +1,24 @@
+{
+  "PPS": false,
+  "current_increase": false,
+  "device_endpoint_qualified": false,
+  "errors": [
+    "OSError: [Errno 22] Invalid argument",
+    "trace snapshot: snapshot incomplete: [Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'",
+    "trace cleanup: [Errno 2] No such file or directory: '/sys/kernel/tracing/instances/gts9t279_3cfab424d21f/events/gts9t279_3cfab424d21f/gts9t279_3cfab424d21f_request_enter/enable'; [Errno 22] Invalid argument"
+  ],
+  "observer_load_attempted": false,
+  "observer_unloaded": false,
+  "pump_ON": false,
+  "same_boot_after_unload": true,
+  "timing_acceptance": false,
+  "trace_analysis": {
+    "adc_duration_ns": null,
+    "hardware_acceptance": false,
+    "reason": "collection/cleanup failed",
+    "request_timeout_branch": "UNKNOWN",
+    "uninstrumented_timing_acceptance": false,
+    "verdict": "UNKNOWN"
+  },
+  "verdict": "STOP"
+}
