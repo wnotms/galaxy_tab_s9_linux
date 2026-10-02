@@ -2,6 +2,12 @@
 
 ## Current state (2026-10-02)
 
+Test282 exact263rollback READBACK VERIFIED in TWRP: all5partition/181module
+hashes exact; tested272modules and older backups retained/rootunmounted/BCBclear.
+Next one263baseline boot/finalendpoint only.282startup STOP retained; zero
+observerload/trace/freshrequest; no retry/PPS/pump/current. ActiveStage3 NOT READY.
+Read282ROLLBACK_STATUS/raw/seal. Qualification reused/no build/full/CI.
+
 Test282 STOP_UNCLASSIFIED_PASSIVE_STARTUP_EVENT on272dd9a0205: frozen275gate
 rejects INT00 00 62 01 vs accepted00 00 62 00. OFF01/01/IBUS0/bitmap80, driver
 confirmation2.300114s/currentfault0/healthy/ADBWi-FideviceNCM/noCode43/CPUfault.
