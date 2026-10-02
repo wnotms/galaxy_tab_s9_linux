@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "root@10.125.29.32",
+    "cat /proc/sys/kernel/random/boot_id; uname -a"
+  ],
+  "ended_utc": "2026-10-02T06:45:45.239971+00:00",
+  "started_utc": "2026-10-02T06:45:43.943566+00:00",
+  "status": 255
+}

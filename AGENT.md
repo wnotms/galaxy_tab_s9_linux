@@ -2,6 +2,17 @@
 
 ## Current state (2026-10-02)
 
+Test292 ONE passive observation registered;16portable tests/syntax/package pass.
+Reuse290provider8e890215/291consumer0c5bc998 +1520full/static; no build/full/trace
+repeat. Readonly current263d856e6f5 all5/181/config/notes/normalcmdline/healthOFF/
+full286journal/ADB/authenticatedWi-Fi/deviceNCM/WindowsCode0 passes. Initial SSH
+hostkey lookup failed; publickey pinned through ADB, strict checking recovered
+sameboot (raw failure retained). Newpaired290bootd268d702/181modules +module333fe5,
+oneboot/load/call/500msDIAGNOSTIC/5scompletion/10sunload; no100msfreshgrant/ADC/
+PPS/pump/current change. Push beforemutation; unconditionalexact263rollback/new
+292slots/oldbackups retained. Groupinstall/admission/onecall/endpoint/rollback;
+read292README/registration/PACKAGE/host_flow. ActiveStage3 NOT READY/goalactive.
+
 Test291 ONE_PASSIVE_OBSERVER_OFFLINE_QUALIFIED_DEVICE_NOT_TESTED.
 Independent module333fe5ee/APIobserveCRCcbefd51c paired with2908e890215, onecall/
 no retry ortrace; genuine age/seq/epoch, charge+legacyfreshgrant0. Parkedownedtask/

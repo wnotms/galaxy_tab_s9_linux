@@ -1,0 +1,43 @@
+{
+  "purpose": "boot-only standard header4 recipe; other4accepted263partitions reused unchanged",
+  "commands": [
+    [
+      "python3",
+      ".work/tools/mkbootimg.py",
+      "--kernel",
+      "out/boot-bundle-x710-292-passive/boot-kernel",
+      "--cmdline",
+      "",
+      "--header_version",
+      "4",
+      "--os_version",
+      "13",
+      "--os_patch_level",
+      "2025-07",
+      "-o",
+      "out/boot-bundle-x710-292-passive/boot.img"
+    ],
+    [
+      "python3",
+      ".work/tools/avbtool.py",
+      "add_hash_footer",
+      "--image",
+      "out/boot-bundle-x710-292-passive/boot.img",
+      "--partition_name",
+      "boot",
+      "--partition_size",
+      "100663296",
+      "--salt",
+      "0f758dfe175e1098d491c80b30d196d71da4031b90854c764ec0e67d9761ce91"
+    ]
+  ],
+  "AVB_verify": "Verifying image out/boot-bundle-x710-292-passive/boot.img using embedded public key\nvbmeta: Successfully verified footer and NONE vbmeta struct in out/boot-bundle-x710-292-passive/boot.img\nboot: Successfully verified sha256 hash of out/boot-bundle-x710-292-passive/boot.img for image of 22306816 bytes\n",
+  "payload_Image_DTB_exact": true,
+  "boot": {
+    "path": "out/boot-bundle-x710-292-passive/boot.img",
+    "sha256": "d268d702a91db9935440a5692287e229b85f94446474ec5ed0c2819d3dd0c543",
+    "bytes": 100663296
+  },
+  "kernel_rebuilt": false,
+  "device_commands": false
+}

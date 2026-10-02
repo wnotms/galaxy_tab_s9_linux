@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for part in boot vendor_boot init_boot dtbo vbmeta; do sha256sum /dev/disk/by-partlabel/$part; done; echo @@modules; cd /usr/lib/modules/7.2.0-rc3-gts9wifi-dirty; find . -type f -print0 | sort -z | xargs -0 sha256sum; echo @@backups; ls -d /usr/lib/modules/*.gts9-test* 2>/dev/null || true; echo @@machine; cat /etc/machine-id"
+  ],
+  "ended_utc": "2026-10-02T06:45:46.269986+00:00",
+  "started_utc": "2026-10-02T06:45:43.943330+00:00",
+  "status": 0
+}

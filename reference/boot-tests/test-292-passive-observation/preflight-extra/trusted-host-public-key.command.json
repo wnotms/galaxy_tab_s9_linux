@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /etc/ssh/ssh_host_ed25519_key.pub; find /usr/lib/modules -maxdepth 1 -name \".gts9-test*\"; test ! -e /sys/module/sm5440_passive_observer; test ! -e /sys/kernel/debug/sm5440-passive-observer"
+  ],
+  "ended_utc": "2026-10-02T06:51:49.341832+00:00",
+  "started_utc": "2026-10-02T06:51:49.255093+00:00",
+  "status": 0
+}
