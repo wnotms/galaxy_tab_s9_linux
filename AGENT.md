@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Test285 OFFLINE_COMMAND_IO_QUALIFIED_DEVICE_NOT_TESTED:12hosttests inclrealHOST
+seq_file appendopenEINVAL/nonseekopen+mockwrite, syntax/hash pass. Newadapter
+tracefs_io overrides279kprobe_eventswrite: O_WRONLY|O_CLOEXEC/no append/truncate/
+create/seek/onewrite/no retry/openvswrite stage errors. Frozen279Session/280/
+parser untouched; no device/source/build/full/routing/CI changes.284actualexception
+origin stillsourceinference(no syscallstage/devicePython captured); STOP preserved.
+Captured284SMMU10310context+10syndrome rootcause/chargingrelationUNKNOWN, no gate
+expansion/hardware retry. Read285README/RESULTS/INPUTS/smmu103facts. Last263from284
+unchanged byoffline285. Next OFFLINE SMMU/boothandoff mapping before separate
+physicalregistration withnewadapter; no ADC/deadline/PPS/pump/current changes.
+Reuse27950/28024/272/2761481qualification. ActiveStage3 NOT READY; fullportgoalactive.
+
 Test284 STOP_TRACE_SETUP_EINVAL; exact263rollback readback/currenthealth completed,
 finaljournalSUSPECT retained. One272cdca467dboot admitted new283gate; first symbolic
 request_enter definition EINVAL before observerload/tracestart, zero freshcalls.
