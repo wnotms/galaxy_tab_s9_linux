@@ -2,6 +2,13 @@
 
 ## Current state (2026-10-02)
 
+Test289 paired272deployment+candidateadmission PASS: 7a4d9ce5e4a64b5a82081c54ddcfce3f
+/Wi-Fi10.125.29.47; exactidentity/normalcmdline/healthOFF/protection/
+rescue/new286journal/uniquehistory. All5/181verified/new289original/oldbackups
+retained/BCBclear/rootunmounted. Next ONE288phase acquisition/285IO/firstrefusal
+STOP/cleanup/unload then unconditional263rollback. Read289INSTALL_STATUS/raw.
+No ADC/deadline/PPS/pump/current change; reuse/no buildfull/CI. ActiveStage3 NR.
+
 Test289 SINGLE passive I2Cphase observation registered on normal26351d70189/
 Wi-Fi10.125.29.58; live identity/healthOFF/protection/rescue/286journal +all4
 actualI2Ctracepointformats pass. Reuse272/276; select288phaseSession/coordinator/
