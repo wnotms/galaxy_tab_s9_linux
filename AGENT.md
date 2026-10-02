@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Test291 ONE_PASSIVE_OBSERVER_OFFLINE_QUALIFIED_DEVICE_NOT_TESTED.
+Independent module333fe5ee/APIobserveCRCcbefd51c paired with2908e890215, onecall/
+no retry ortrace; genuine age/seq/epoch, charge+legacyfreshgrant0. Parkedownedtask/
+stop_put lifecycle retained.26C/cache/lifetime/builder/coordinator +1520fullPASS,
+all1494priorIDs retained/0failureerror skip; externalbuild/W1sparse/samebytes,
+290provider and276/289/290seals intact. No kernelrebuild/driverDTconfigrootfsUSB/
+ADC/legacy100ms/PPS/pump/current/devicecmd/CI change. Read291RESULTS/artifacts/
+inputs/design; separate292physicalregistration needed. Current263d856e6f5 read-only
+292preflight sameboot/WindowsCode0; admission completion pending. ActiveStage3
+NOT READY/fullportgoalactive. Next grouponepassivecall/endpoint/263rollback,
+reusequalification/no redundanttrace/buildfull.
+
 Test290 PASSIVE_OBSERVATION_OFFLINE_QUALIFIED_DEVICE_NOT_TESTED, source8e890215.
 13actualC/1494fullPASS/0failureerror skip/all1481prior IDs retained. OneARM64build,
 W1sparse/objectconsistent, exact272embeddedresolvedconfig/DTB,96protected/8compiled

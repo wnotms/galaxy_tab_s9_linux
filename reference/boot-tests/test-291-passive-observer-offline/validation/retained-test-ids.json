@@ -1,0 +1,33 @@
+{
+  "added": [
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_pending_and_cancelled_are_incomplete_not_success",
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_provenance_age_deadline_sequence_and_range_refusals",
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_provider_failure_cannot_hide_raw_stale_or_status",
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_refusal_retains_one_call_with_zero_provider_output",
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_valid_slow_age_never_grants_fresh_or_charging",
+    "test_sm5440_passive_observer.PassiveCacheGateTests.test_wrong_contract_schema_duplicates_and_extra_calls",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_failed_preflight_never_loads_or_unloads",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_incomplete_cache_has_bounded_wait_no_reload",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_one_success_no_trace_and_healthy_cleanup",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_partial_load_timeout_gets_owned_cleanup_without_retry",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_portable_ops_select_new_namespace_only",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_read_parse_and_boot_fault_preserve_errors_and_cleanup",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_refusal_is_captured_without_retry",
+    "test_sm5440_passive_observer.PassiveCoordinatorTests.test_unload_failure_cannot_be_reported_qualified",
+    "test_sm5440_passive_observer.PassiveObserverBuilderTests.test_exact_provider_isolated_output_and_old_observer_retained",
+    "test_sm5440_passive_observer.PassiveObserverBuilderTests.test_wrong_artifact_config_ABI_overlay_notes_or_export_stops",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_caller_late_zero_or_reversed_time_refused",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_first_provider_failure_stops_without_retry",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_no_hw_policy_loop_or_read_activation",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_null_or_corrupt_provenance_refused",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_one_slow_diagnostic_preserves_age_sequence_epoch",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_online_current_voltage_temperature_bounds",
+    "test_sm5440_passive_observer.PassiveObserverTests.test_unload_before_call_cancels_without_request",
+    "test_sm5440_passive_observer.PassiveTaskLifetimeTests.test_creation_failures_do_not_join_or_leak",
+    "test_sm5440_passive_observer.PassiveTaskLifetimeTests.test_owned_fast_return_and_running_join",
+    "test_sm5440_passive_observer.PassiveTaskLifetimeTests.test_unowned_negative_control_still_detects_uaf"
+  ],
+  "new": 1520,
+  "prior": 1494,
+  "removed": []
+}
