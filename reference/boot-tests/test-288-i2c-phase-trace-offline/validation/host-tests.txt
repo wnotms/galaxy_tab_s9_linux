@@ -1,0 +1,41 @@
+test_extra_trace_setup_failure_no_observer_load (__main__.Coordination.test_extra_trace_setup_failure_no_observer_load) ... ok
+test_frozen_coordinator_functions_and_worker_pairing_ast_preserved (__main__.Coordination.test_frozen_coordinator_functions_and_worker_pairing_ast_preserved) ... ok
+test_load_cache_boot_deadline_interrupt_unload_failures_stop_without_retry (__main__.Coordination.test_load_cache_boot_deadline_interrupt_unload_failures_stop_without_retry) ... ok
+test_one_refusal_binding_cleanup_before_unload_and_no_grant (__main__.Coordination.test_one_refusal_binding_cleanup_before_unload_and_no_grant) ... ok
+test_preflight_failure_no_trace_or_load (__main__.Coordination.test_preflight_failure_no_trace_or_load) ... ok
+test_all_extra_filters_bus_only_not_address_only (__main__.Ownership.test_all_extra_filters_bus_only_not_address_only) ... ok
+test_partial_extra_event_setup_cleans_all_owned_state (__main__.Ownership.test_partial_extra_event_setup_cleans_all_owned_state) ... ok
+test_private_i2c_scope_cleanup_and_unrelated_probe_preserved (__main__.Ownership.test_private_i2c_scope_cleanup_and_unrelated_probe_preserved) ... ok
+test_runtime_field_type_change_rejected (__main__.Ownership.test_runtime_field_type_change_rejected) ... ok
+test_snapshot_failure_keeps_raw_and_stops (__main__.Ownership.test_snapshot_failure_keeps_raw_and_stops) ... ok
+test_287_without_i2c_is_unknown_not_fabricated_phase_evidence (__main__.Parser.test_287_without_i2c_is_unknown_not_fabricated_phase_evidence) ... ok
+test_background_other_pid_retained_unassigned (__main__.Parser.test_background_other_pid_retained_unassigned) ... ok
+test_changed_adc_write_or_rate_unknown (__main__.Parser.test_changed_adc_write_or_rate_unknown) ... ok
+test_changed_channel_sequence_unknown (__main__.Parser.test_changed_channel_sequence_unknown) ... ok
+test_changed_protection_unknown (__main__.Parser.test_changed_protection_unknown) ... ok
+test_clock_reversal_and_truncation_unknown (__main__.Parser.test_clock_reversal_and_truncation_unknown) ... ok
+test_disable_write_can_be_skipped_when_adc_already_disabled (__main__.Parser.test_disable_write_can_be_skipped_when_adc_already_disabled) ... ok
+test_duplicate_reply_rejected (__main__.Parser.test_duplicate_reply_rejected) ... ok
+test_each_missing_message_reply_result_stops (__main__.Parser.test_each_missing_message_reply_result_stops) ... ok
+test_extra_poll_after_ready_unknown (__main__.Parser.test_extra_poll_after_ready_unknown) ... ok
+test_extra_register_write_unknown (__main__.Parser.test_extra_register_write_unknown) ... ok
+test_full_trace_entry_count_not_just_probe_count_required (__main__.Parser.test_full_trace_entry_count_not_just_probe_count_required) ... ok
+test_hash_mismatch_unknown (__main__.Parser.test_hash_mismatch_unknown) ... ok
+test_i2c_filters_formats_and_enabled_set_verified (__main__.Parser.test_i2c_filters_formats_and_enabled_set_verified) ... ok
+test_i2c_negative_result_retained_no_retry_or_adc_grant (__main__.Parser.test_i2c_negative_result_retained_no_retry_or_adc_grant) ... ok
+test_lost_events_probe_miss_and_bad_clock_unknown (__main__.Parser.test_lost_events_probe_miss_and_bad_clock_unknown) ... ok
+test_missing_ready_unknown (__main__.Parser.test_missing_ready_unknown) ... ok
+test_no_new_enable_edge_unknown (__main__.Parser.test_no_new_enable_edge_unknown) ... ok
+test_probe_hit_without_record_unknown (__main__.Parser.test_probe_hit_without_record_unknown) ... ok
+test_pump_on_after_adc_unknown (__main__.Parser.test_pump_on_after_adc_unknown) ... ok
+test_pump_on_before_or_after_unknown (__main__.Parser.test_pump_on_before_or_after_unknown) ... ok
+test_register_activity_after_failure_unknown (__main__.Parser.test_register_activity_after_failure_unknown) ... ok
+test_short_i2c_transfer_failure_retained (__main__.Parser.test_short_i2c_transfer_failure_retained) ... ok
+test_source_recipe_four_observed_polls_not_elapsed_guess (__main__.Parser.test_source_recipe_four_observed_polls_not_elapsed_guess) ... ok
+test_unrelated_pid_cannot_supply_missing_worker_read (__main__.Parser.test_unrelated_pid_cannot_supply_missing_worker_read) ... ok
+test_wrong_adapter_address_flags_or_buffer_never_admitted (__main__.Parser.test_wrong_adapter_address_flags_or_buffer_never_admitted) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.386s
+
+OK

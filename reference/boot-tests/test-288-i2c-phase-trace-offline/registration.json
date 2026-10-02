@@ -1,0 +1,24 @@
+{
+  "ADC_sequence_changes": false,
+  "CI": false,
+  "I2C_events": [
+    "i2c_write",
+    "i2c_read",
+    "i2c_reply",
+    "i2c_result"
+  ],
+  "build_executed": false,
+  "delivery_guard_ms": 100,
+  "device_commands": 0,
+  "filter": "adapter_nr == 0",
+  "full_executed": false,
+  "guard_changes": false,
+  "hardware_acceptance": false,
+  "kernel_configuration_changes": false,
+  "new_hardware_access": false,
+  "one_shot_only": true,
+  "purpose": "Offline source audit and private bus0 passive I2C phase profile qualification",
+  "target_address": 99,
+  "test": "Test288",
+  "worker_PID_and_boundaries_required": true
+}

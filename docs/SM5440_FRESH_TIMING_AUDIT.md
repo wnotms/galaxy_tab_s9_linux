@@ -1,5 +1,13 @@
 # Fresh-request timing audit — Test278 offline
 
+Latest evidence: Test287 captured a complete symbolic trace: request101.510ms,
+queue11us, worker134.393ms. The original Test278 analysis below remains scoped
+to its older inputs. Enqueue excludes initial-budget refusal for this287call;
+worker return is later than publication/wakeup, so the remaining timeout branch
+and ADC duration remain unresolved. Test288 qualifies existing-I2C-tracepoint
+phase observation offline; see `SM5440_I2C_PHASE_TRACE.md`. Neither test changes
+the ADC sequence/100ms guard or authorizes PPS/pump/current increase.
+
 [MEASURED] Test275 returned provider/consumer -110 in 108ms, followed by unload
 transport loss. Test277 returned -110 in 101ms; the corrected observer unloaded
 normally and the same boot's ADB/Wi-Fi/device NCM remained healthy. Neither is a
