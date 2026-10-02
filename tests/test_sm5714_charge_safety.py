@@ -61,7 +61,7 @@ enum sm5714_charge_thermal_state { SM5714_THERMAL_NORMAL,
        SM5714_THERMAL_REDUCED, SM5714_THERMAL_STOP };
 struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat; unsigned int float_uv;
        unsigned int typec_mv, typec_ma;
-       bool typec_owned, typec_claimed, typec_charge, typec_fault, suspended;
+       bool typec_owned, typec_claimed, typec_charge, typec_pps, typec_fault, suspended;
        bool switching_inhibited; u64 switching_lease;
        enum sm5714_charge_thermal_state thermal_state; };
 static unsigned int regs[256];

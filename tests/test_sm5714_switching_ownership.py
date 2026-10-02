@@ -68,6 +68,7 @@ static void host_unlock(void *p) {
  else {assert(held & 2);held &= ~2;pthread_mutex_unlock(&charger);}
 }
 '''
+        code += 'typedef unsigned int u32;\n#include "'+str(ROOT/'kernel/drivers/sm5714-stage2.h')+'"\n'
         for name in ('static int sm5714_verify_switching_off_locked(',
                      'static bool sm5714_fixed_grant_locked(',
                      'int sm5714_battery_switching_acquire(',
@@ -75,6 +76,7 @@ static void host_unlock(void *p) {
                      'int sm5714_battery_switching_check(',
                      'static void sm5714_inhibit_typec_locked(',
                      'int sm5714_battery_set_pd_contract(',
+                     'int sm5714_battery_set_owned_contract(',
                      'int sm5714_battery_set_typec_charge(',
                      'void sm5714_battery_typec_fault(',
                      'static void sm5714_poll_work(',
@@ -196,8 +198,59 @@ int main(int argc,char **argv) {
   if(arg==8)lease=0;
   r=sm5714_battery_switching_check(lease);
  }
- printf("%d %u %u %u %u %llu %llu %u %u %d\n",r,regs[0x13]&8,regs[0x15]&127,
- sm.switching_inhibited,sm.typec_fault,lease,sm.switching_lease,sm.typec_mv,sm.typec_ma,io);
+
+ if(op>=25&&op<=29) {
+  assert(sm5714_battery_switching_acquire(&lease)==0);io=0;
+  if(op==25) {
+   r=sm5714_battery_set_owned_contract(lease,9000,1800,SM5714_CONTRACT_PPS);
+   assert(r==0);assert(sm5714_battery_switching_check(lease)==0);
+   r=sm5714_battery_switching_release(lease);
+  }
+  if(op==26) {
+   assert(sm5714_battery_set_owned_contract(lease,8800,1800,SM5714_CONTRACT_PPS)==0);
+   assert(sm5714_configure_charging(&sm)==0);assert(!(regs[0x13]&8));
+   assert(sm5714_battery_set_owned_contract(lease,9000,1500,SM5714_CONTRACT_FIXED)==0);
+   r=sm5714_battery_switching_release(lease);
+  }
+  if(op==27) {
+   unsigned int mv=8800,ma=1800;enum sm5714_contract_kind kind=SM5714_CONTRACT_PPS;
+   if(arg==0)mv=8180;
+   if(arg==1)mv=10520;
+   if(arg==2)mv=8801;
+   if(arg==3)ma=1850;
+   if(arg==4)ma=1799;
+   if(arg==5){kind=SM5714_CONTRACT_FIXED;mv=9000;}
+   if(arg==6){kind=SM5714_CONTRACT_STANDBY;ma=285;}
+   if(arg==7)kind=3;
+   if(arg==8){kind=SM5714_CONTRACT_FIXED;mv=ma=0;}
+   if(arg==9){kind=SM5714_CONTRACT_STANDBY;mv=5000;ma=0;}
+   r=sm5714_battery_set_owned_contract(lease,mv,ma,kind);
+  }
+  if(op==28) {
+   if(arg<=6){regs[0x13]|=8;regs[0x15]=0x80|56;fail_at=arg;}
+   if(arg==7)lease++;
+   if(arg==8)sm.suspended=true;
+   if(arg==9)sm.typec_fault=true;
+   if(arg==10)sm.typec_charge=false;
+   r=sm5714_battery_set_owned_contract(lease,8800,1800,SM5714_CONTRACT_PPS);
+  }
+  if(op==29) {
+   assert(sm5714_battery_set_owned_contract(lease,8800,1800,SM5714_CONTRACT_PPS)==0);
+   assert(sm5714_battery_set_owned_contract(lease,8800,284,SM5714_CONTRACT_STANDBY)==0);
+   assert(sm5714_battery_switching_release(lease)==-EAGAIN);
+   assert(sm.switching_lease==lease&&sm.switching_inhibited&&!(regs[0x13]&8));
+   assert(sm5714_battery_set_owned_contract(lease,9000,1500,SM5714_CONTRACT_FIXED)==0);
+   r=sm5714_battery_switching_release(lease);
+  }
+ }
+ if(op==30) {
+  assert(sm5714_battery_switching_acquire(&lease)==0);
+  assert(sm5714_battery_set_owned_contract(lease,9000,1500,SM5714_CONTRACT_PPS)==0);
+  assert(sm5714_battery_set_pd_contract(9000,1500)==0);
+  io=0;r=sm5714_battery_switching_release(lease);
+ }
+ printf("%d %u %u %u %u %llu %llu %u %u %d %d\n",r,regs[0x13]&8,regs[0x15]&127,
+ sm.switching_inhibited,sm.typec_fault,lease,sm.switching_lease,sm.typec_mv,sm.typec_ma,sm.typec_pps,io);
 }
 '''
         path = Path(cls.temp.name) / 'ownership.c'
@@ -303,6 +356,40 @@ int main(int argc,char **argv) {
                 self.assertEqual((r[0],r[-1]),(error,0))
                 self.assertEqual(r[1],0)
                 self.assertEqual(r[6],1)
+
+    def test_owned_9v_pps_cannot_be_released_as_fixed_9v(self):
+        r=self.run_case(25)
+        self.assertEqual((r[0],r[1],r[2],r[3],r[6],r[9]),(-11,0,0,1,1,1))
+        self.assertEqual(r[7:9],[9000,1800])
+
+    def test_owned_pps_budget_keeps_off_then_fixed_restore_can_release(self):
+        r=self.run_case(26)
+        self.assertEqual(r[:5],[0,8,56,0,0])
+        self.assertEqual(r[6:10],[0,9000,1500,0])
+
+    def test_owned_invalid_bounds_encoding_and_kind_inhibit_and_revoke(self):
+        for arg in range(10):
+            with self.subTest(arg=arg):
+                r=self.run_case(27,arg)
+                self.assertEqual((r[0],r[1],r[2],r[3],r[4],r[6]),(-34,0,0,1,1,0))
+
+    def test_every_owned_off_transfer_failure_faults_without_grant(self):
+        for transfer in range(1,7):
+            r=self.run_case(28,transfer)
+            self.assertEqual((r[0],r[1],r[3],r[4],r[6]),(-121,0,1,1,0))
+
+    def test_stale_pm_fault_and_charge_off_owned_callback_does_no_io(self):
+        for arg,error in ((7,-116),(8,-11),(9,-11),(10,-11)):
+            r=self.run_case(28,arg)
+            self.assertEqual((r[0],r[-1]),(error,0))
+            self.assertEqual(r[1],0)
+
+    def test_off_only_fixed_return_standby_preserves_lease_but_refuses_release(self):
+        self.assertEqual(self.run_case(29)[:5],[0,8,56,0,0])
+
+    def test_ordinary_same_numbers_pps_to_fixed_change_revokes_lease(self):
+        r=self.run_case(30)
+        self.assertEqual((r[0],r[1],r[3],r[6],r[9],r[-1]),(-116,0,1,0,0,0))
 
 
 if __name__ == '__main__':

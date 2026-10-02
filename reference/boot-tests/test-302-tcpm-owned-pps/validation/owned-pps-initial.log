@@ -1,0 +1,46 @@
+test_already_owned_unchanged_pair_requests_a_real_refresh (test_sm5714_owned_pps.OwnedPpsTests.test_already_owned_unchanged_pair_requests_a_real_refresh) ... ok
+test_automatic_rdo_current_increase_is_rejected_before_i2c (test_sm5714_owned_pps.OwnedPpsTests.test_automatic_rdo_current_increase_is_rejected_before_i2c) ... ok
+test_bounded_but_unrequested_voltage_is_rejected (test_sm5714_owned_pps.OwnedPpsTests.test_bounded_but_unrequested_voltage_is_rejected) ... ok
+test_bounds_steps_power_and_missing_operating_power_do_not_write (test_sm5714_owned_pps.OwnedPpsTests.test_bounds_steps_power_and_missing_operating_power_do_not_write) ... ok
+test_callback_cannot_publish_budget_other_than_actual_request (test_sm5714_owned_pps.OwnedPpsTests.test_callback_cannot_publish_budget_other_than_actual_request) ... ok
+test_callback_generation_race_and_owned_hardware_error_refuse (test_sm5714_owned_pps.OwnedPpsTests.test_callback_generation_race_and_owned_hardware_error_refuse) ... ok
+test_cleanup_error_does_not_replace_first_failure (test_sm5714_owned_pps.OwnedPpsTests.test_cleanup_error_does_not_replace_first_failure) ... ok
+test_each_property_failure_zero_output_and_clears_failed_owner (test_sm5714_owned_pps.OwnedPpsTests.test_each_property_failure_zero_output_and_clears_failed_owner) ... ok
+test_each_setter_timeout_preserves_first_error_and_no_retry (test_sm5714_owned_pps.OwnedPpsTests.test_each_setter_timeout_preserves_first_error_and_no_retry) ... ok
+test_each_transport_transfer_failure_faults_and_keeps_inhibited (test_sm5714_owned_pps.OwnedPpsTests.test_each_transport_transfer_failure_faults_and_keeps_inhibited) ... ok
+test_explicit_fixed_restore_with_transitional_old_voltage_keeps_off (test_sm5714_owned_pps.OwnedPpsTests.test_explicit_fixed_restore_with_transitional_old_voltage_keeps_off) ... ok
+test_inconsistent_properties_attempt_one_fixed_cleanup_preserving_error (test_sm5714_owned_pps.OwnedPpsTests.test_inconsistent_properties_attempt_one_fixed_cleanup_preserving_error) ... ok
+test_initial_current_first_then_voltage_and_real_rdo_callbacks (test_sm5714_owned_pps.OwnedPpsTests.test_initial_current_first_then_voltage_and_real_rdo_callbacks) ... ok
+test_lease_loss_before_each_critical_operation_cancels (test_sm5714_owned_pps.OwnedPpsTests.test_lease_loss_before_each_critical_operation_cancels) ... ok
+test_pm_pending_fault_remove_exhaustion_and_bad_inputs_do_not_write (test_sm5714_owned_pps.OwnedPpsTests.test_pm_pending_fault_remove_exhaustion_and_bad_inputs_do_not_write) ... ok
+test_source_change_and_disappearance_do_not_cleanup_new_source (test_sm5714_owned_pps.OwnedPpsTests.test_source_change_and_disappearance_do_not_cleanup_new_source) ... ok
+test_source_forget_invalidates_window (test_sm5714_owned_pps.OwnedPpsTests.test_source_forget_invalidates_window) ... ok
+test_stale_restorer_cannot_revoke_newer_owner (test_sm5714_owned_pps.OwnedPpsTests.test_stale_restorer_cannot_revoke_newer_owner) ... FAIL
+test_target_seed_voltage_needs_only_activation_and_current (test_sm5714_owned_pps.OwnedPpsTests.test_target_seed_voltage_needs_only_activation_and_current) ... ok
+test_unpublish_drains_blocking_operation_before_resources (test_sm5714_owned_pps.OwnedPpsTests.test_unpublish_drains_blocking_operation_before_resources) ... ok
+test_voltage_first_when_lower_current_intermediate_lacks_operating_power (test_sm5714_owned_pps.OwnedPpsTests.test_voltage_first_when_lower_current_intermediate_lacks_operating_power) ... ok
+test_wrong_identity_lease_and_capabilities_do_not_write (test_sm5714_owned_pps.OwnedPpsTests.test_wrong_identity_lease_and_capabilities_do_not_write) ... ok
+
+======================================================================
+FAIL: test_stale_restorer_cannot_revoke_newer_owner (test_sm5714_owned_pps.OwnedPpsTests.test_stale_restorer_cannot_revoke_newer_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_owned_pps.py", line 317, in test_stale_restorer_cannot_revoke_newer_owner
+    ret,r=self.case(mode);self.assertEqual(ret,-errno.ESTALE)
+          ~~~~~~~~~^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_owned_pps.py", line 228, in case
+    self.assertEqual(out[:3],[0,0,0]);self.assertEqual(out[24],1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1, 0, 0] != [0, 0, 0]
+
+First differing element 0:
+1
+0
+
+- [1, 0, 0]
++ [0, 0, 0]
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.424s
+
+FAILED (failures=1)

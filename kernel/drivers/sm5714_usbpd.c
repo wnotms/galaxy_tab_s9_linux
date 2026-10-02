@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * SM-X710 SM5714 TCPC transport, fixed 5/9 V Sink + Device only.
+ * SM-X710 SM5714 TCPC transport, Sink + Device; fixed5/9V by default.
  *
  * Register provenance: Samsung X710 GPL sm5714_typec.c/.h, and same-model
  * nacht20-de/gts9wifi-fedora-linux ab123e7d, kernel/files/sm5714_usbpd.c.
  * See docs/SM5714_STAGE2_PD_PLAN.md and Test255 SOURCE_AUDIT for each sequence.
  * Stock Linux TCPM owns policy. No private policy, boost, role-swap quirk,
- * alternate-mode, direct-charger or programmable-supply implementation.
+ * alternate-mode or direct-charger implementation. Kernel-owned PPS protocol
+ * operation requires checked switching-OFF ownership; no live caller installed.
  */
 #include <linux/atomic.h>
+#include <linux/build_bug.h>
 #include <linux/debugfs.h>
 #include <linux/delay.h>
 #include <linux/ktime.h>
@@ -28,6 +30,8 @@
 
 #include "sm5714-stage2.h"
 #include "sm5714-pd-policy.h"
+
+static_assert(SM5714_STANDBY_MAX_MW == PD_P_SNK_STDBY_MW);
 
 /* Samsung sm5714_typec.h register map and interrupt bit definitions. */
 #define SM5714_REG_INT1		0x01
@@ -81,7 +85,11 @@ struct sm5714_usbpd {
 	u64 source_generation;
 	u64 port_instance, budget_generation;
 	unsigned int budget_mv, budget_ma, budget_pending;
-	bool charge_requested, observation_exhausted;
+	bool charge_requested, observation_exhausted, budget_pps;
+	u64 pps_lease, pps_source_generation;
+	unsigned int pps_mv, pps_ma, pps_previous_mv, pps_previous_ma;
+	unsigned int operating_snk_mw, request_mv, request_ma;
+	bool pps_restoring, last_request_pps, pps_operation_active;
 	struct power_supply *tcp_supply;
 	atomic_t snapshot_users;
 	wait_queue_head_t snapshot_wait;
@@ -103,12 +111,24 @@ static struct sm5714_usbpd *tcpc_to_sm5714(struct tcpc_dev *tcpc)
 	return container_of(tcpc, struct sm5714_usbpd, tcpc);
 }
 
+static void sm5714_pps_revoke_locked(struct sm5714_usbpd *sm)
+{
+	lockdep_assert_held(&sm->lock);
+	sm->pps_lease = 0;
+	sm->pps_source_generation = 0;
+	sm->pps_mv = sm->pps_ma = 0;
+	sm->pps_previous_mv = sm->pps_previous_ma = 0;
+	sm->pps_restoring = sm->last_request_pps = sm->pps_operation_active = false;
+	sm->request_mv = sm->request_ma = 0;
+}
+
 /* Transport lock protects both the cache and its lifetime. No old offer may
  * authorize a Request after reset, fault, detach, or a new source publication.
  */
 static void sm5714_forget_source(struct sm5714_usbpd *sm)
 {
 	lockdep_assert_held(&sm->lock);
+	sm5714_pps_revoke_locked(sm);
 	memset(sm->source_pdos, 0, sizeof(sm->source_pdos));
 	sm->nr_source_pdos = 0;
 	if (sm->source_generation == U64_MAX)
@@ -144,13 +164,14 @@ static void sm5714_budget_begin(struct sm5714_usbpd *sm)
 
 static void sm5714_budget_end(struct sm5714_usbpd *sm, int ret,
 			      bool update_current, unsigned int mv, unsigned int ma,
-			      bool charge)
+			      bool charge, bool pps)
 {
 	mutex_lock(&sm->lock);
 	if (!ret) {
 		if (update_current) {
 			sm->budget_mv = mv;
 			sm->budget_ma = ma;
+			sm->budget_pps = pps;
 		} else {
 			sm->charge_requested = charge;
 		}
@@ -214,6 +235,7 @@ static int sm5714_snapshot_locked(struct sm5714_usbpd *sm,
 	sample->budget_mv = sm->budget_mv;
 	sample->budget_ma = sm->budget_ma;
 	sample->charge_requested = sm->charge_requested;
+	sample->pps_contract = sm->budget_pps;
 	sample->nr_source_pdos = sm->nr_source_pdos;
 	memcpy(sample->source_pdos, sm->source_pdos, sizeof(sample->source_pdos));
 	return 0;
@@ -289,8 +311,8 @@ static bool sm5714_pd_capable(int type)
 		type == POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS;
 }
 
-static int sm5714_read_fixed_pinned(struct sm5714_usbpd *sm,
-				    struct sm5714_pd_snapshot *out)
+static int sm5714_read_contract_pinned(struct sm5714_usbpd *sm,
+				       struct sm5714_pd_snapshot *out, bool pps)
 {
 	struct sm5714_pd_snapshot before = {}, after = {}, repeat = {};
 	int ret;
@@ -314,15 +336,21 @@ static int sm5714_read_fixed_pinned(struct sm5714_usbpd *sm,
 		before.online != repeat.online || before.usb_type != repeat.usb_type ||
 		before.voltage_uv != repeat.voltage_uv || before.current_ua != repeat.current_ua))
 		ret = -EAGAIN;
-	/* Only stable fixed PD is usable here. No inferred physical measurement.
+	/* Only stable mirrored contracts are usable here. No physical measurement.
 	 * Mirror matching rejects lockless TCPM publication before its callback.
 	 */
 	if (!ret && (!before.started_ms || before.completed_ms < before.started_ms ||
-		before.online != 1 || !sm5714_pd_capable(before.usb_type) ||
+		before.online != (pps ? 2 : 1) || !sm5714_pd_capable(before.usb_type) ||
+		before.pps_contract != pps ||
 		!before.charge_requested ||
-		(before.budget_mv != 5000 && before.budget_mv != 9000) ||
-		before.budget_ma < 100 || before.budget_ma > 1800 ||
-		(before.budget_mv == 9000 && before.budget_ma > 1500) ||
+		(pps ? (before.budget_mv < SM5714_PPS_MIN_MV ||
+			before.budget_mv > SM5714_PPS_MAX_MV || before.budget_mv % 20 ||
+			before.budget_ma % 50 ||
+			(before.usb_type != POWER_SUPPLY_USB_TYPE_PD_PPS &&
+			 before.usb_type != POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS)) :
+			(before.budget_mv != 5000 && before.budget_mv != 9000)) ||
+		before.budget_ma < 100 || before.budget_ma > SM5714_PPS_MAX_MA ||
+		(!pps && before.budget_mv == 9000 && before.budget_ma > SM5714_FIXED_9V_MA) ||
 		before.voltage_uv != before.budget_mv * 1000 ||
 		before.current_ua != before.budget_ma * 1000))
 		ret = -EAGAIN;
@@ -330,6 +358,12 @@ static int sm5714_read_fixed_pinned(struct sm5714_usbpd *sm,
 		*out = before;
 	mutex_unlock(&sm->lock);
 	return ret;
+}
+
+static int sm5714_read_fixed_pinned(struct sm5714_usbpd *sm,
+				    struct sm5714_pd_snapshot *out)
+{
+	return sm5714_read_contract_pinned(sm, out, false);
 }
 
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out)
@@ -365,30 +399,14 @@ static int sm5714_restore_token(struct sm5714_usbpd *sm, u64 instance,
 	return ret;
 }
 
-/* Kernel-only protocol fallback. The caller must have stopped the pump and
- * must not release its switching lease concurrently. No pump/physical-VBUS
- * proof is inferred here, and this API never releases switching inhibition.
- */
-int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
-			   struct sm5714_pd_snapshot *out)
+static int sm5714_restore_fixed_pinned(struct sm5714_usbpd *sm, u64 instance,
+				      u64 source_generation, u64 lease,
+				      struct sm5714_pd_snapshot *out)
 {
 	struct sm5714_pd_snapshot sample = {}, repeat = {}, fixed = {};
 	union power_supply_propval value = { .intval = 1 };
-	struct sm5714_usbpd *sm;
 	int ret;
 
-	if (!out)
-		return -EINVAL;
-	memset(out, 0, sizeof(*out));
-	if (!instance || !source_generation || !lease)
-		return -EINVAL;
-	ret = sm5714_port_get(&sm, &sample);
-	if (ret)
-		return ret;
-	if (!mutex_trylock(&sm->control_lock)) {
-		ret = -EBUSY;
-		goto put;
-	}
 	ret = sm5714_restore_token(sm, instance, source_generation);
 	if (!ret)
 		ret = sm5714_battery_switching_check(lease);
@@ -414,6 +432,20 @@ int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
 		ret = sm5714_restore_token(sm, instance, source_generation);
 	if (!ret)
 		ret = sm5714_battery_switching_check(lease);
+	if (!ret && sample.online == 2) {
+		mutex_lock(&sm->lock);
+		if (sm->source_generation != source_generation || sm->removing || sm->fault ||
+		    (sm->pps_lease && sm->pps_lease != lease)) {
+			ret = -ESTALE;
+		} else {
+			sm->pps_lease = lease;
+			sm->pps_source_generation = source_generation;
+			sm->pps_mv = sm->pps_ma = 0;
+			sm->pps_previous_mv = sm->pps_previous_ma = 0;
+			sm->pps_restoring = true;
+		}
+		mutex_unlock(&sm->lock);
+	}
 	if (!ret && sample.online == 2)
 		ret = power_supply_set_property(sm->tcp_supply,
 					       POWER_SUPPLY_PROP_ONLINE, &value);
@@ -424,12 +456,210 @@ int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
 		ret = -ESTALE;
 	if (!ret)
 		*out = fixed;
+	mutex_lock(&sm->lock);
+	if (sm->port_instance == instance && sm->pps_lease == lease &&
+	    sm->pps_source_generation == source_generation)
+		sm5714_pps_revoke_locked(sm);
+	mutex_unlock(&sm->lock);
+	return ret;
+}
+
+/* Caller-proven pump OFF; serialize against releasing its switching lease. */
+int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
+			   struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot sample = {};
+	struct sm5714_usbpd *sm;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	if (!instance || !source_generation || !lease)
+		return -EINVAL;
+	ret = sm5714_port_get(&sm, &sample);
+	if (ret)
+		return ret;
+	if (!mutex_trylock(&sm->control_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_restore_fixed_pinned(sm, instance, source_generation, lease, out);
 	mutex_unlock(&sm->control_lock);
 put:
 	sm5714_port_put(sm);
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sm5714_pd_restore_fixed);
+
+/* Pair validation does not select an APDO: TCPM still chooses and builds RDOs. */
+static bool sm5714_pps_pair_locked(struct sm5714_usbpd *sm,
+				  unsigned int mv, unsigned int ma)
+{
+	unsigned int i;
+	u32 rdo;
+
+	lockdep_assert_held(&sm->lock);
+	if (!sm->operating_snk_mw || mv < SM5714_PPS_MIN_MV ||
+	    mv > SM5714_PPS_MAX_MV || ma < 100 || ma > SM5714_PPS_MAX_MA ||
+	    mv % 20 || ma % 50 || mv * ma / 1000 < sm->operating_snk_mw)
+		return false;
+	for (i = 0; i < sm->nr_source_pdos; i++) {
+		rdo = RDO_PROG(i + 1, mv, ma, RDO_USB_COMM | RDO_NO_SUSPEND);
+		if (sm5714_validate_pps_request(sm->source_pdos[i], rdo))
+			return true;
+	}
+	return false;
+}
+
+static int sm5714_pps_step(struct sm5714_usbpd *sm, u64 instance, u64 source,
+			  u64 lease, unsigned int mv, unsigned int ma,
+			  enum power_supply_property prop, int value,
+			  bool *mutated, struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot sample = {};
+	union power_supply_propval val = { .intval = value };
+	int ret;
+
+	ret = sm5714_battery_switching_check(lease);
+	if (ret)
+		return ret;
+	mutex_lock(&sm->lock);
+	ret = sm5714_snapshot_locked(sm, &sample);
+	if (!ret && (sample.instance != instance || sample.source_generation != source ||
+		     sm->pps_lease != lease || sm->pps_source_generation != source))
+		ret = -ESTALE;
+	if (!ret && !sm5714_pps_pair_locked(sm, mv, ma))
+		ret = -ERANGE;
+	if (!ret) {
+		sm->pps_previous_mv = sm->budget_mv;
+		sm->pps_previous_ma = sm->budget_ma;
+		sm->pps_mv = mv;
+		sm->pps_ma = ma;
+	}
+	mutex_unlock(&sm->lock);
+	if (ret)
+		return ret;
+	*mutated = true;
+	ret = power_supply_set_property(sm->tcp_supply, prop, &val);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (!ret)
+		ret = sm5714_read_contract_pinned(sm, &sample, true);
+	if (!ret && (sample.instance != instance || sample.source_generation != source ||
+		     sample.budget_mv != mv || sample.budget_ma != ma))
+		ret = -ESTALE;
+	if (!ret)
+		*out = sample;
+	return ret;
+}
+
+/* Protocol-only operation: no live caller, pump control, or permission to ON.
+ * Caller must stop pump before EVERY operation, including unchanged refresh.
+ */
+int sm5714_pd_request_pps(u64 instance, u64 source_generation, u64 lease,
+			 unsigned int mv, unsigned int ma,
+			 struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot sample = {}, result = {}, fixed = {};
+	struct sm5714_usbpd *sm;
+	unsigned int old_mv, old_ma;
+	bool mutated = false, current_first;
+	int ret, cleanup;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	if (!instance || !source_generation || !lease)
+		return -EINVAL;
+	ret = sm5714_port_get(&sm, &sample);
+	if (ret)
+		return ret;
+	if (!mutex_trylock(&sm->control_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_read_contract_pinned(sm, &result, sample.pps_contract);
+	if (!ret)
+		ret = sm5714_restore_token(sm, instance, source_generation);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (ret)
+		goto done;
+	old_mv = result.budget_mv;
+	old_ma = result.budget_ma;
+	mutex_lock(&sm->lock);
+	if (!sm5714_pps_pair_locked(sm, mv, ma) ||
+	    !sm5714_pps_pair_locked(sm, old_mv, old_ma)) {
+		ret = -ERANGE;
+	} else if ((!result.pps_contract && (old_mv != 9000 || sm->pps_lease)) ||
+		   (result.pps_contract && (sm->pps_lease != lease ||
+		    sm->pps_source_generation != source_generation))) {
+		ret = -ESTALE;
+	}
+	current_first = sm5714_pps_pair_locked(sm, old_mv, ma);
+	if (!ret && !current_first && !sm5714_pps_pair_locked(sm, mv, old_ma))
+		ret = -ERANGE;
+	if (!ret) {
+		sm->pps_lease = lease;
+		sm->pps_source_generation = source_generation;
+		sm->pps_restoring = false;
+		sm->pps_operation_active = true;
+	}
+	mutex_unlock(&sm->lock);
+	if (ret)
+		goto done;
+	if (!result.pps_contract) {
+		ret = sm5714_pps_step(sm, instance, source_generation, lease, old_mv, old_ma,
+				      POWER_SUPPLY_PROP_ONLINE, 2, &mutated, &result);
+		if (ret)
+			goto failed;
+	}
+	if (current_first) {
+		if (ma != old_ma || (mv == old_mv && sample.pps_contract))
+			ret = sm5714_pps_step(sm, instance, source_generation, lease, old_mv, ma,
+					      POWER_SUPPLY_PROP_CURRENT_NOW, ma * 1000,
+					      &mutated, &result);
+		if (!ret && mv != old_mv)
+			ret = sm5714_pps_step(sm, instance, source_generation, lease, mv, ma,
+					      POWER_SUPPLY_PROP_VOLTAGE_NOW, mv * 1000,
+					      &mutated, &result);
+	} else {
+		ret = sm5714_pps_step(sm, instance, source_generation, lease, mv, old_ma,
+				      POWER_SUPPLY_PROP_VOLTAGE_NOW, mv * 1000, &mutated, &result);
+		if (!ret && ma != old_ma)
+			ret = sm5714_pps_step(sm, instance, source_generation, lease, mv, ma,
+					      POWER_SUPPLY_PROP_CURRENT_NOW, ma * 1000,
+					      &mutated, &result);
+	}
+	if (ret)
+		goto failed;
+	*out = result;
+	goto done;
+failed:
+	if (mutated) {
+		cleanup = sm5714_restore_fixed_pinned(sm, instance, source_generation,
+					     lease, &fixed);
+		dev_warn_ratelimited(sm->dev, "PPS operation refused %d; fixed restore %d; switching inhibited\n",
+				     ret, cleanup);
+	}
+	mutex_lock(&sm->lock);
+	if (sm->port_instance == instance && sm->pps_lease == lease &&
+	    sm->pps_source_generation == source_generation)
+		sm5714_pps_revoke_locked(sm);
+	mutex_unlock(&sm->lock);
+done:
+	mutex_lock(&sm->lock);
+	if (sm->port_instance == instance && sm->pps_lease == lease &&
+	    sm->pps_source_generation == source_generation)
+		sm->pps_operation_active = false;
+	mutex_unlock(&sm->lock);
+	mutex_unlock(&sm->control_lock);
+put:
+	sm5714_port_put(sm);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_pd_request_pps);
 
 static int sm5714_current_port_show(struct seq_file *seq, void *unused)
 {
@@ -657,25 +887,60 @@ static int sm5714_usbpd_set_vbus(struct tcpc_dev *tcpc, bool on, bool charge)
 	if (READ_ONCE(sm->fault) && charge)
 		return -EIO;
 	/* Required by TCPM: apply Sink charge gate, never generate VBUS. */
+	if (!charge) {
+		mutex_lock(&sm->lock);
+		sm5714_pps_revoke_locked(sm);
+		mutex_unlock(&sm->lock);
+	}
 	sm5714_budget_begin(sm);
 	ret = sm5714_battery_set_typec_charge(charge);
-	sm5714_budget_end(sm, ret, false, 0, 0, charge);
+	sm5714_budget_end(sm, ret, false, 0, 0, charge, false);
 	return sm5714_result(sm, ret);
 }
 
 static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
 {
 	struct sm5714_usbpd *sm = tcpc_to_sm5714(tcpc);
+	enum sm5714_contract_kind kind;
+	u64 lease, source;
 	int ret;
 
 	if (READ_ONCE(sm->fault))
 		return -EIO;
+	mutex_lock(&sm->lock);
+	lease = sm->pps_lease;
+	source = sm->source_generation;
+	kind = sm->last_request_pps ? SM5714_CONTRACT_PPS : SM5714_CONTRACT_FIXED;
+	if (sm->pps_restoring && mv && ma > 0 &&
+	    ma <= SM5714_STANDBY_MAX_MW * 1000 / mv && mv == sm->budget_mv)
+		kind = SM5714_CONTRACT_STANDBY;
+	ret = 0;
+	if (lease && kind != SM5714_CONTRACT_STANDBY &&
+	    (sm->request_mv != mv || sm->request_ma != ma))
+		ret = -ERANGE;
+	if (!mv && !ma) {
+		sm5714_pps_revoke_locked(sm);
+		lease = 0;
+		ret = 0;
+	}
+	mutex_unlock(&sm->lock);
+	if (ret)
+		return sm5714_result(sm, ret);
 	sm5714_budget_begin(sm);
-	ret = sm5714_battery_set_pd_contract(mv, ma);
-	sm5714_budget_end(sm, ret, true, mv, ma, false);
+	if (lease)
+		ret = sm5714_battery_set_owned_contract(lease, mv, ma, kind);
+	else
+		ret = sm5714_battery_set_pd_contract(mv, ma);
+	if (!ret && lease) {
+		mutex_lock(&sm->lock);
+		if (sm->pps_lease != lease || sm->source_generation != source ||
+		    sm->pps_source_generation != source)
+			ret = -ESTALE;
+		mutex_unlock(&sm->lock);
+	}
+	sm5714_budget_end(sm, ret, true, mv, ma, false, kind != SM5714_CONTRACT_FIXED);
 	if (!ret)
-		dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)\n",
-			 mv, ma);
+		dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)\n", mv, ma);
 	return sm5714_result(sm, ret);
 }
 
@@ -712,10 +977,16 @@ static int sm5714_usbpd_set_roles(struct tcpc_dev *tcpc, bool attached,
 /* Guard the actual Request frame without choosing a PDO or changing policy. */
 static bool sm5714_request_allowed(struct sm5714_usbpd *sm, u32 rdo)
 {
-	/* PPS validator is host-tested separately. Until a reviewed live handoff
-	 * gate exists the actual transport accepts fixed offers only.
-	 */
-	return sm5714_validate_request(sm->source_pdos, sm->nr_source_pdos, rdo, false);
+	unsigned int mv = ((rdo >> 9) & 0x7ff) * 20;
+	unsigned int ma = (rdo & 0x7f) * 50;
+
+	if (sm5714_validate_request(sm->source_pdos, sm->nr_source_pdos, rdo, false))
+		return true;
+	return sm->pps_lease && sm->pps_operation_active && !sm->pps_restoring &&
+		sm->pps_source_generation == sm->source_generation &&
+		((mv == sm->pps_mv && ma == sm->pps_ma) ||
+		 (mv == sm->pps_previous_mv && ma == sm->pps_previous_ma)) &&
+		sm5714_validate_request(sm->source_pdos, sm->nr_source_pdos, rdo, true);
 }
 
 static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
@@ -724,6 +995,8 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
 {
 	struct sm5714_usbpd *sm = tcpc_to_sm5714(tcpc);
 	unsigned int count;
+	u64 lease, source;
+	bool pps_request = false;
 	int ret = 0;
 
 	if (READ_ONCE(sm->fault))
@@ -756,6 +1029,23 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
 		ret = -ERANGE;
 		goto out;
 	}
+	if (pd_header_type_le(msg->header) == PD_DATA_REQUEST && count) {
+		u32 rdo = le32_to_cpu(msg->payload[0]);
+
+		pps_request = pdo_type(sm->source_pdos[rdo_index(rdo) - 1]) != PDO_TYPE_FIXED;
+		if (pps_request) {
+			lease = sm->pps_lease;
+			source = sm->source_generation;
+			mutex_unlock(&sm->lock);
+			ret = sm5714_battery_switching_check(lease);
+			mutex_lock(&sm->lock);
+			if (!ret && (sm->source_generation != source || sm->pps_lease != lease ||
+				     !sm5714_request_allowed(sm, rdo) || sm->fault || sm->removing))
+				ret = -ESTALE;
+			if (ret)
+				goto out;
+		}
+	}
 	/* Samsung write_msg_header/obj/send_msg: little-endian header/payload. */
 	ret = regmap_bulk_write(sm->regmap, SM5714_REG_TX_HEADER,
 				&msg->header, sizeof(msg->header));
@@ -764,6 +1054,14 @@ static int sm5714_usbpd_transmit(struct tcpc_dev *tcpc,
 					msg->payload, count * sizeof(msg->payload[0]));
 	if (!ret)
 		ret = regmap_write(sm->regmap, SM5714_REG_TX_REQ, 0x07); /* SOP only */
+	if (!ret && pd_header_type_le(msg->header) == PD_DATA_REQUEST && count) {
+		u32 rdo = le32_to_cpu(msg->payload[0]);
+
+		sm->last_request_pps = pps_request;
+		sm->request_mv = pps_request ? ((rdo >> 9) & 0x7ff) * 20 :
+			pdo_fixed_voltage(sm->source_pdos[rdo_index(rdo) - 1]);
+		sm->request_ma = pps_request ? (rdo & 0x7f) * 50 : rdo_op_current(rdo);
+	}
 out:
 	mutex_unlock(&sm->lock);
 	return sm5714_result(sm, ret);
@@ -907,6 +1205,13 @@ static int sm5714_usbpd_probe(struct i2c_client *client)
 				       dev_name(dev), sm);
 	if (ret)
 		goto fault;
+	{
+		u32 operating_uw = 0;
+
+		fwnode_property_read_u32(sm->connector, "op-sink-microwatt", &operating_uw);
+		sm->operating_snk_mw = operating_uw / 1000;
+	}
+
 	sm->tcpc.fwnode = sm->connector;
 	sm->tcpc.init = sm5714_usbpd_init;
 	sm->tcpc.get_vbus = sm5714_usbpd_get_vbus;

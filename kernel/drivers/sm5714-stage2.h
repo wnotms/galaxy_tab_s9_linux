@@ -4,6 +4,21 @@
 
 #include <linux/types.h>
 
+/* Accepted fixed ceilings and initial PPS bring-up bounds, not pump grants. */
+#define SM5714_FIXED_5V_MA	1800U
+#define SM5714_FIXED_9V_MA	1500U
+#define SM5714_PPS_MIN_MV	8200U
+#define SM5714_PPS_MAX_MV	10500U
+#define SM5714_PPS_MAX_MA	1800U
+/* Linux PD_P_SNK_STDBY_MW; switching remains OFF during fixed return. */
+#define SM5714_STANDBY_MAX_MW	2500U
+
+enum sm5714_contract_kind {
+	SM5714_CONTRACT_FIXED,
+	SM5714_CONTRACT_PPS,
+	SM5714_CONTRACT_STANDBY,
+};
+
 /* Serialized companion API; no raw charger pointer escapes its lifetime. */
 int sm5714_battery_typec_claim(void);
 int sm5714_battery_get_bc12_limit(void);
@@ -18,8 +33,11 @@ void sm5714_battery_typec_fault(void);
 int sm5714_battery_switching_acquire(u64 *lease);
 int sm5714_battery_switching_release(u64 lease);
 int sm5714_battery_switching_check(u64 lease);
+/* Owned callbacks can only maintain checked switching OFF, never enable it. */
+int sm5714_battery_set_owned_contract(u64 lease, unsigned int mv, unsigned int ma,
+				    enum sm5714_contract_kind kind);
 
-#define SM5714_SOURCE_PDO_MAX 7U
+#define SM5714_SOURCE_PDO_MAX	7U
 
 /* Standard TCPM fixed-budget observation, not physical VBUS or a charge grant.
  * No controller/supply pointer escapes. On error the complete output is zero.
@@ -31,17 +49,24 @@ struct sm5714_pd_snapshot {
 	unsigned int nr_source_pdos;
 	unsigned int budget_mv, budget_ma;
 	int online, usb_type, voltage_uv, current_ua;
-	bool charge_requested;
+	bool charge_requested, pps_contract;
 };
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out);
 
 /* Caller-proven pump OFF, acquired switching lease, no concurrent release.
  * ONLINE=1 only; no activation/voltage/current write, lease release or physical
- * proof. A budget change may revoke the lease while leaving inhibition set;
+ * proof. An ordinary budget change revokes the lease while inhibition stays set;
  * success is a logical fixed snapshot, not authorization to release that lease.
  * No live consumer is installed by this interface.
  */
 int sm5714_pd_restore_fixed(u64 instance, u64 source_generation, u64 lease,
 			   struct sm5714_pd_snapshot *out);
+
+/* Kernel-only, caller-proven pump OFF, externally acquired switching lease.
+ * No live consumer installed. Initial entry requires healthy fixed9V.
+ */
+int sm5714_pd_request_pps(u64 instance, u64 source_generation, u64 lease,
+			 unsigned int mv, unsigned int ma,
+			 struct sm5714_pd_snapshot *out);
 
 #endif

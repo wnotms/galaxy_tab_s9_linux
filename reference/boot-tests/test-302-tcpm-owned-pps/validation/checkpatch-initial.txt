@@ -1,0 +1,13 @@
+WARNING: line length of 102 exceeds 100 columns
+#625: FILE: kernel/drivers/sm5714_usbpd.c:641:
++		cleanup = sm5714_restore_fixed_pinned(sm, instance, source_generation, lease, &fixed);
+
+total: 0 errors, 1 warnings, 750 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/tmp/gts9-302-source.patch has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

@@ -5,17 +5,13 @@
 /* Pure Request bounds; protocol encoding comes from Linux7.2-rc3 usb/pd.h.
  * This is a board safety gate, not PDO selection or a second PD engine.
  * Fixed limits are Test255's accepted ceilings. PPS limits are future bringup
- * bounds only; the live Stage3A transport never authorizes PPS.
+ * bounds only; default transport refuses PPS without a checked owned window.
  */
 #ifdef __KERNEL__
 #include <linux/usb/pd.h>
 #endif
 
-#define SM5714_FIXED_5V_MA	1800U
-#define SM5714_FIXED_9V_MA	1500U
-#define SM5714_PPS_MIN_MV		8200U
-#define SM5714_PPS_MAX_MV		10500U
-#define SM5714_PPS_MAX_MA		1800U
+#include "sm5714-stage2.h"
 
 static inline bool sm5714_validate_fixed_request(u32 pdo, u32 rdo)
 {

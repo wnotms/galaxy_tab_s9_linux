@@ -1,0 +1,21 @@
+.........F.............
+======================================================================
+FAIL: test_every_owned_off_transfer_failure_faults_without_grant (test_sm5714_switching_ownership.SwitchingOwnershipTests.test_every_owned_off_transfer_failure_faults_without_grant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_switching_ownership.py", line 373, in test_every_owned_off_transfer_failure_faults_without_grant
+    self.assertEqual((r[0],r[1],r[3],r[4],r[6]),(-121,0,1,1,0))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (0, 0, 1, 0, 1) != (-121, 0, 1, 1, 0)
+
+First differing element 0:
+0
+-121
+
+- (0, 0, 1, 0, 1)
++ (-121, 0, 1, 1, 0)
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.339s
+
+FAILED (failures=1)

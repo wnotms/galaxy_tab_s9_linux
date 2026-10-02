@@ -2,6 +2,18 @@
 
 ## Current state (2026-10-02)
 
+Test302 actual owned PPS protocol operation/callbacks implemented;185affected
+PASS5.102s, ARM64/static/exactconfigDT/protected181 qualification pending.
+Kernel-only ONLINE2/current/voltage with checked switch-OFFlease/source/token,
+exact per-operation RDO pair permission closes onreturn, actual TX/callback
+pair match/native2.5W fixed-return standby, kind distinguishesPPS9V fromfixed9V.
+No installed liveconsumer/devicecmd/pumpON/release/raised ordinary limits/core/
+DTconfig/USB change. Ordinary changes stillrevoke; owned callbacks preservelease
+onlywithverifiedQ4OFF/input100, failuresinhibit/revoke. PPSkeepalive requires
+caller pumpOFF+API again; pinnedTCPMno periodicrefresh timer. Device remains
+retained299/Test30057535...thermalfix. Read302README/design; activeStage3NR,
+physicalADC/OCP/PM/coordinator remain/fullgoalactive.
+
 Test301 OFFLINE_TCPM_FIXED_RESTORATION_QUALIFIED, source2207d132.143affected
 PASS4.549s/ARM6492.282s/W1sparse/linkedobjects exact (initial omitted ccacheBASE
 mismatch retained/resolved)/exact299configDT/96protected/8overlays/181pairedPASS.

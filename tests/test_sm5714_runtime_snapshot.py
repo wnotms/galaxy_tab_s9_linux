@@ -27,7 +27,7 @@ typedef uint32_t u32;typedef uint64_t u64;typedef atomic_int atomic_t;
 #define current get_current() /* Kernel macro must not become a parameter. */
 #define U64_MAX UINT64_MAX
 #define PD_MAX_PAYLOAD 7
-#define SM5714_SOURCE_PDO_MAX 7
+#define SM5714_SOURCE_PDO_MAX 7U
 #define ARRAY_SIZE(x) (sizeof(x)/sizeof(*(x)))
 #define READ_ONCE(x) __atomic_load_n(&(x),__ATOMIC_SEQ_CST)
 #define WRITE_ONCE(x,v) __atomic_store_n(&(x),(v),__ATOMIC_SEQ_CST)
@@ -77,7 +77,7 @@ static struct power_supply supply;static int values[]={1,2,5000000,1800000};
 static pthread_mutex_t control=PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t event=PTHREAD_COND_INITIALIZER;static bool entered,released;
 '''
-        for marker in ['static void sm5714_forget_source(', 'static void sm5714_budget_tick_locked(',
+        for marker in ['static void sm5714_pps_revoke_locked(', 'static void sm5714_forget_source(', 'static void sm5714_budget_tick_locked(',
                        'static void sm5714_budget_begin(', 'static void sm5714_budget_end(',
                        'static int sm5714_port_publish(', 'static void sm5714_port_unpublish(',
                        'static int sm5714_snapshot_locked(']:
@@ -91,14 +91,15 @@ static int power_supply_get_property(struct power_supply *p,enum power_supply_pr
   pthread_mutex_lock(&control);entered=true;pthread_cond_broadcast(&event);
   while(!released)pthread_cond_wait(&event,&control);pthread_mutex_unlock(&control);}
  if(scenario==9&&calls==2){mutex_lock(&port_under_test->lock);sm5714_forget_source(port_under_test);mutex_unlock(&port_under_test->lock);}
- if(scenario==10&&calls==2){sm5714_budget_begin(port_under_test);sm5714_budget_end(port_under_test,0,true,9000,1500,false);}
+ if(scenario==10&&calls==2){sm5714_budget_begin(port_under_test);sm5714_budget_end(port_under_test,0,true,9000,1500,false,false);}
  if(scenario==11&&calls==5)values[2]=9000000;
  if(scenario==13)clock_ms=900;else clock_ms++;
  v->intval=values[prop];return 0;}
 '''
+        code+='\n'.join(line for line in header.splitlines() if line.startswith('#define SM5714_'))+'\n'
         code+=function(cls.source,'static int sm5714_snapshot_properties(')+'\n'
         for marker in ['static int sm5714_port_get(', 'static void sm5714_port_put(',
-                       'static bool sm5714_pd_capable(', 'static int sm5714_read_fixed_pinned(',
+                       'static bool sm5714_pd_capable(', 'static int sm5714_read_contract_pinned(', 'static int sm5714_read_fixed_pinned(',
                        'int sm5714_pd_read_snapshot(']:
             code+=function(cls.source,marker)+'\n'
         code+=r'''
@@ -138,7 +139,7 @@ int exercise(int mode,int failure,long long *out){
  if(mode==29){values[0]=3;values[1]=POWER_SUPPLY_USB_TYPE_PD_SPR_AVS;}
  if(mode==15)values[3]=1500000;
  if(mode==18){s.source_generation=UINT64_MAX;mutex_lock(&s.lock);sm5714_forget_source(&s);mutex_unlock(&s.lock);}
- if(mode==19){s.budget_generation=UINT64_MAX;sm5714_budget_begin(&s);sm5714_budget_end(&s,0,true,5000,1800,false);}
+ if(mode==19){s.budget_generation=UINT64_MAX;sm5714_budget_begin(&s);sm5714_budget_end(&s,0,true,5000,1800,false,false);}
  if(mode==20){ret=sm5714_port_publish(&other);out[0]=sm5714_port_issuer;out[1]=s.port_instance;out[2]=errors;goto done;}
  if(mode==21){ret=sm5714_pd_read_snapshot(0);out[0]=calls;out[1]=atomic_read(&s.snapshot_users);out[2]=errors;goto done;}
  if(mode==22){sm5714_port_unpublish(&s);ret=sm5714_port_publish(&other);out[0]=s.port_instance;out[1]=other.port_instance;out[2]=errors;goto done;}

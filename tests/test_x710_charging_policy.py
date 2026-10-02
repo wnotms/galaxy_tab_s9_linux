@@ -21,6 +21,7 @@ class RequestBoundsTests(unittest.TestCase):
 #include <stdint.h>
 #include <stddef.h>
 typedef uint32_t u32;
+typedef uint64_t u64;
 #define BIT(n) (1U<<(n))
 #define GENMASK(h,l) (((~0U)>>(31-(h))) & ((~0U)<<(l)))
 #define min(x,y) ((x)<(y)?(x):(y))

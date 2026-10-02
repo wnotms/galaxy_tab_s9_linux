@@ -1,0 +1,136 @@
+..................../tmp/tmpe9_nbiz_/runtime.c:224:9: error: ‘SM5714_SOURCE_PDO_MAX’ redefined [-Werror]
+  224 | #define SM5714_SOURCE_PDO_MAX 7U
+      |         ^~~~~~~~~~~~~~~~~~~~~
+/tmp/tmpe9_nbiz_/runtime.c:14:9: note: this is the location of the previous definition
+   14 | #define SM5714_SOURCE_PDO_MAX 7
+      |         ^~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+E............................./tmp/tmp8zm6hw64/runtime.c:224:9: error: ‘SM5714_SOURCE_PDO_MAX’ redefined [-Werror]
+  224 | #define SM5714_SOURCE_PDO_MAX 7U
+      |         ^~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp8zm6hw64/runtime.c:14:9: note: this is the location of the previous definition
+   14 | #define SM5714_SOURCE_PDO_MAX 7
+      |         ^~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+E...........................E.................
+======================================================================
+ERROR: setUpClass (test_sm5714_fixed_restore.FixedRestoreTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_fixed_restore.py", line 19, in setUpClass
+    snapshot.RuntimeSnapshotTests.setUpClass.__func__(cls)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_runtime_snapshot.py", line 167, in setUpClass
+    subprocess.run(['cc','-shared','-fPIC','-pthread','-Wall','-Werror','-Wno-misleading-indentation',str(c),'-o',str(lib)],check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cc', '-shared', '-fPIC', '-pthread', '-Wall', '-Werror', '-Wno-misleading-indentation', '/tmp/tmpe9_nbiz_/runtime.c', '-o', '/tmp/tmpe9_nbiz_/runtime.so']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_sm5714_runtime_snapshot.RuntimeSnapshotTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_runtime_snapshot.py", line 167, in setUpClass
+    subprocess.run(['cc','-shared','-fPIC','-pthread','-Wall','-Werror','-Wno-misleading-indentation',str(c),'-o',str(lib)],check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cc', '-shared', '-fPIC', '-pthread', '-Wall', '-Werror', '-Wno-misleading-indentation', '/tmp/tmp8zm6hw64/runtime.c', '-o', '/tmp/tmp8zm6hw64/runtime.so']' returned non-zero exit status 1.
+
+======================================================================
+ERROR: setUpClass (test_sm5714_stage2_pd.Stage2TransportTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_stage2_pd.py", line 432, in setUpClass
+    raise AssertionError(run.stderr)
+AssertionError: /tmp/tmp1_u_tzq1/transport.c: In function ‘sm5714_usbpd_set_current_limit’:
+/tmp/tmp1_u_tzq1/transport.c:392:35: error: missing terminating " character [-Werror]
+  392 |                 dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)
+      |                                   ^
+/tmp/tmp1_u_tzq1/transport.c:393:1: error: missing terminating " character [-Werror]
+  393 | ", mv, ma);
+      | ^
+/tmp/tmp1_u_tzq1/transport.c:658:2: error: unterminated argument list invoking macro ‘dev_info’
+  658 | }
+      |  ^
+/tmp/tmp1_u_tzq1/transport.c:392:17: error: ‘dev_info’ undeclared (first use in this function)
+  392 |                 dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)
+      |                 ^~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:392:17: note: each undeclared identifier is reported only once for each function it appears in
+/tmp/tmp1_u_tzq1/transport.c:392:25: error: expected ‘;’ at end of input
+  392 |                 dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)
+      |                         ^
+      |                         ;
+......
+/tmp/tmp1_u_tzq1/transport.c:391:9: note: ‘-Wmisleading-indentation’ is disabled from this point onwards, since column-tracking was disabled due to the size of the code/headers
+  391 |         if (!ret)
+      |         ^~
+/tmp/tmp1_u_tzq1/transport.c:392:17: error: expected declaration or statement at end of input
+  392 |                 dev_info(sm->dev, "TCPM Sink budget: %u mV %u mA (not measured VBUS)
+      |                 ^~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:659: error: control reaches end of non-void function [-Werror=return-type]
+/tmp/tmp1_u_tzq1/transport.c: At top level:
+/tmp/tmp1_u_tzq1/transport.c:358:12: error: ‘sm5714_usbpd_set_current_limit’ defined but not used [-Werror=unused-function]
+  358 | static int sm5714_usbpd_set_current_limit(struct tcpc_dev *tcpc, u32 ma, u32 mv)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:336:12: error: ‘sm5714_usbpd_set_vbus’ defined but not used [-Werror=unused-function]
+  336 | static int sm5714_usbpd_set_vbus(struct tcpc_dev *tcpc, bool on, bool charge)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:324:12: error: ‘sm5714_usbpd_set_vconn’ defined but not used [-Werror=unused-function]
+  324 | static int sm5714_usbpd_set_vconn(struct tcpc_dev *tcpc, bool on)
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:318:12: error: ‘sm5714_usbpd_set_polarity’ defined but not used [-Werror=unused-function]
+  318 | static int sm5714_usbpd_set_polarity(struct tcpc_dev *tcpc,
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:294:12: error: ‘sm5714_usbpd_set_cc’ defined but not used [-Werror=unused-function]
+  294 | static int sm5714_usbpd_set_cc(struct tcpc_dev *tcpc, enum typec_cc_status cc)
+      |            ^~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:262:12: error: ‘sm5714_usbpd_get_cc’ defined but not used [-Werror=unused-function]
+  262 | static int sm5714_usbpd_get_cc(struct tcpc_dev *tcpc,
+      |            ^~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:251:12: error: ‘sm5714_usbpd_get_current_limit’ defined but not used [-Werror=unused-function]
+  251 | static int sm5714_usbpd_get_current_limit(struct tcpc_dev *tcpc)
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:240:12: error: ‘sm5714_usbpd_get_vbus’ defined but not used [-Werror=unused-function]
+  240 | static int sm5714_usbpd_get_vbus(struct tcpc_dev *tcpc)
+      |            ^~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:196:12: error: ‘sm5714_usbpd_init’ defined but not used [-Werror=unused-function]
+  196 | static int sm5714_usbpd_init(struct tcpc_dev *tcpc)
+      |            ^~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:84:13: error: ‘disable_irq_nosync’ defined but not used [-Werror=unused-function]
+   84 | static void disable_irq_nosync(int i) {(void)i;disabled++;}
+      |             ^~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:83:13: error: ‘tcpm_vbus_change’ defined but not used [-Werror=unused-function]
+   83 | static void tcpm_vbus_change(void *p) {(void)p;}
+      |             ^~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:82:13: error: ‘tcpm_cc_change’ defined but not used [-Werror=unused-function]
+   82 | static void tcpm_cc_change(void *p) {(void)p;}
+      |             ^~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:81:13: error: ‘tcpm_pd_hard_reset’ defined but not used [-Werror=unused-function]
+   81 | static void tcpm_pd_hard_reset(void *p) {(void)p;}
+      |             ^~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:80:13: error: ‘tcpm_pd_transmit_complete’ defined but not used [-Werror=unused-function]
+   80 | static void tcpm_pd_transmit_complete(void *p,int s) {(void)p;tx_status=s;}
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:78:13: error: ‘tcpm_pd_receive’ defined but not used [-Werror=unused-function]
+   78 | static void tcpm_pd_receive(void *p, const struct pd_message *m,int sop) {
+      |             ^~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:71:21: error: ‘pd_header_type_le’ defined but not used [-Werror=unused-function]
+   71 | static unsigned int pd_header_type_le(uint16_t h) {return h&31;}
+      |                     ^~~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:70:21: error: ‘pd_header_cnt_le’ defined but not used [-Werror=unused-function]
+   70 | static unsigned int pd_header_cnt_le(uint16_t h) {return (h>>12)&7;}
+      |                     ^~~~~~~~~~~~~~~~
+/tmp/tmp1_u_tzq1/transport.c:66:12: error: ‘sm5714_battery_switching_check’ defined but not used [-Werror=unused-function]
+   66 | static int sm5714_battery_switching_check(u64 lease) {(void)lease;return -ESTALE;}
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+----------------------------------------------------------------------
+Ran 93 tests in 4.311s
+
+FAILED (errors=3)

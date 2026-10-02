@@ -113,6 +113,7 @@ struct sm5714_battery {
 	bool typec_owned;
 	bool typec_claimed;
 	bool typec_charge;
+	bool typec_pps;
 	bool typec_fault;
 	bool suspended;
 	/* Default inactive; only an explicit companion lease inhibits switching. */
@@ -224,6 +225,8 @@ static int sm5714_get_usb_type(struct sm5714_battery *sm)
 
 	if (online <= 0)
 		return online < 0 ? online : POWER_SUPPLY_USB_TYPE_UNKNOWN;
+	if (READ_ONCE(sm->typec_pps) && READ_ONCE(sm->typec_ma))
+		return POWER_SUPPLY_USB_TYPE_PD_PPS;
 	if (READ_ONCE(sm->typec_mv) == 9000 && READ_ONCE(sm->typec_ma))
 		return POWER_SUPPLY_USB_TYPE_PD;
 
@@ -335,7 +338,7 @@ static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 			goto out_unlock;
 	}
 	/* Polling must not override TCPM standby/reset or suspend's charge-off. */
-	if (sm->switching_inhibited || sm->suspended || (sm->typec_owned &&
+	if (sm->switching_inhibited || sm->typec_pps || sm->suspended || (sm->typec_owned &&
 	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100)))
 		goto out_unlock;
 	ret = sm5714_charge_fault(sm);
@@ -504,7 +507,7 @@ static int sm5714_verify_switching_off_locked(struct sm5714_battery *sm)
 static bool sm5714_fixed_grant_locked(struct sm5714_battery *sm)
 {
 	lockdep_assert_held(&sm->chg_lock);
-	return !sm->suspended && !sm->typec_fault && sm->typec_owned &&
+	return !sm->suspended && !sm->typec_fault && !sm->typec_pps && sm->typec_owned &&
 		sm->typec_charge && sm->typec_ma >= 100 &&
 		(sm->typec_mv == 5000 || sm->typec_mv == 9000);
 }
@@ -625,6 +628,7 @@ static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
 	sm->typec_fault = true;
 	sm->typec_charge = false;
 	sm->typec_ma = 0;
+	sm->typec_pps = false;
 	sm5714_disable_charging(sm);
 	sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
 			       GENMASK(6, 0), sm5714_input_current_reg(100));
@@ -648,9 +652,10 @@ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
 		mutex_unlock(&sm->chg_lock);
 		goto out;
 	}
-	if (mv != sm->typec_mv || ma != sm->typec_ma)
+	if (mv != sm->typec_mv || ma != sm->typec_ma || sm->typec_pps)
 		sm5714_revoke_switching_locked(sm);
 	sm->typec_mv = mv;
+	sm->typec_pps = false;
 	/* Store the grant; configure_charging separately caps actual input draw. */
 	sm->typec_ma = ma;
 	mutex_unlock(&sm->chg_lock);
@@ -664,6 +669,72 @@ out:
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sm5714_battery_set_pd_contract);
+
+/* TCPM-owned budget update. The ordinary API still revokes on budget changes.
+ * No thermal/pump grant: only verified Q4 OFF + minimum switching input.
+ */
+int sm5714_battery_set_owned_contract(u64 lease, unsigned int mv, unsigned int ma,
+				    enum sm5714_contract_kind kind)
+{
+	struct sm5714_battery *sm;
+	bool valid = false;
+	int ret = -ENODEV;
+
+	if (!lease)
+		return -EINVAL;
+	mutex_lock(&sm5714_companion_lock);
+	sm = sm5714_companion;
+	if (!sm)
+		goto out;
+	mutex_lock(&sm->chg_lock);
+	if (!sm->switching_inhibited || sm->switching_lease != lease) {
+		ret = -ESTALE;
+		goto unlock;
+	}
+	if (sm->suspended || sm->typec_fault || !sm->typec_owned || !sm->typec_charge) {
+		ret = -EAGAIN;
+		goto unlock;
+	}
+	switch (kind) {
+	case SM5714_CONTRACT_FIXED:
+		valid = (mv == 5000 || mv == 9000) && ma >= 100 &&
+			ma <= (mv == 9000 ? SM5714_FIXED_9V_MA : SM5714_FIXED_5V_MA);
+		break;
+	case SM5714_CONTRACT_PPS:
+		valid = mv >= SM5714_PPS_MIN_MV && mv <= SM5714_PPS_MAX_MV &&
+			!(mv % 20) && ma >= 100 && ma <= SM5714_PPS_MAX_MA && !(ma % 50);
+		break;
+	case SM5714_CONTRACT_STANDBY:
+		/* TCPM fixed return may use the old PPS voltage at up to 2.5W.
+		 * Off-only transitional budget, never eligible for release.
+		 */
+		valid = (mv == 5000 || mv == 9000 ||
+			 (mv >= SM5714_PPS_MIN_MV && mv <= SM5714_PPS_MAX_MV)) &&
+			ma > 0 && ma <= SM5714_STANDBY_MAX_MW * 1000 / mv;
+		break;
+	}
+	if (!valid) {
+		sm5714_inhibit_typec_locked(sm);
+		ret = -ERANGE;
+		goto unlock;
+	}
+	ret = sm5714_verify_switching_off_locked(sm);
+	if (ret) {
+		sm5714_inhibit_typec_locked(sm);
+		goto unlock;
+	}
+	sm->typec_mv = mv;
+	sm->typec_ma = ma;
+	sm->typec_pps = kind != SM5714_CONTRACT_FIXED;
+unlock:
+	mutex_unlock(&sm->chg_lock);
+	power_supply_changed(sm->psy_usb);
+	power_supply_changed(sm->psy_bat);
+out:
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_set_owned_contract);
 
 int sm5714_battery_set_typec_charge(bool charge)
 {
@@ -682,6 +753,7 @@ int sm5714_battery_set_typec_charge(bool charge)
 		sm5714_revoke_switching_locked(sm);
 		sm->typec_mv = 0;
 		sm->typec_ma = 0;
+		sm->typec_pps = false;
 	}
 	mutex_unlock(&sm->chg_lock);
 	ret = sm5714_configure_charging(sm);
@@ -730,6 +802,7 @@ int sm5714_battery_typec_claim(void)
 			sm->typec_charge = false;
 			sm->typec_mv = 0;
 			sm->typec_ma = 0;
+			sm->typec_pps = false;
 			ret = sm5714_disable_charging(sm);
 			if (!ret)
 				ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,

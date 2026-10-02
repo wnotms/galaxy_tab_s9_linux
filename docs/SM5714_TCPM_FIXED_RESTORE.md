@@ -31,8 +31,9 @@ and require the original instance/source generation. Zero output on any error;
 preserve the first setter error and do not retry. Success is only a logical
 contract observation, not physical VBUS or permission to charge.
 
-The current actual Request guard remains fixed-only (`pps_authorized=false`).
-Consequently this commit cannot reach a live PPS contract through this driver.
+Test301 had a fixed-only actual Request guard. The Test302 extension permits
+PPS only during an exact leased kernel-owned operation; absent it the default
+remains fixed-only. See SM5714_OWNED_PPS_TRANSACTION.md.
 The PPS-exit branch is executed with a lock-aware protocol mock, not claimed as
 hardware-tested. No writable debugfs/sysfs activation interface is added.
 
@@ -53,15 +54,17 @@ before it returns. No hand-written Samsung PD policy is introduced.
 Detach/reset/source changes during a blocking setter cannot be made globally
 atomic with upstream lockless properties. They invalidate completion evidence;
 the API cannot claim that no detach occurred in an unobservable interval. A new
-source is never accepted as success for an old token. Ordinary callback budget
-changes still revoke the lease and retain inhibition. A successful fixed result
+source is never accepted as success for an old token. Ordinary callback budget or kind
+changes still revoke the lease and retain inhibition. Test302 owned callbacks
+retain the exact lease while verifying switching OFF. A successful fixed result
 therefore does not imply the original lease remains releasable. The future live
-adapter must integrate owned budget transitions rather than weaken revocation.
+adapter must use those owned transitions rather than weaken ordinary revocation.
 
 ## Remaining gates and next physical purpose
 
-Actual owned PPS callbacks/RDO authorization, live coordinator, physical fresh
-SM5440 ADC, protection/OCP and PM qualification remain incomplete. This is not an
+Test302 implements owned PPS callbacks/RDO authorization as an offline-qualified
+protocol backend. The live consumer, physical fresh SM5440 ADC, protection/OCP
+and PM qualification remain incomplete. This is not an
 active charging candidate. Next register a short, pump-OFF test on a known
 PPS-capable source: verify ONLINE=1 fixed classification, then exercise an acquired
 lease and idempotent fixed restoration. Physical fixed VBUS must be established

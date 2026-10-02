@@ -43,14 +43,14 @@ static int power_supply_set_property(struct power_supply *p,enum power_supply_pr
  if(set_error)return set_error;
  values[0]=scenario==44?2:1;values[2]=9000000;values[3]=1500000;
  sm5714_budget_begin(port_under_test);
- sm5714_budget_end(port_under_test,0,true,9000,scenario==45?1400:1500,false);
+ sm5714_budget_end(port_under_test,0,true,9000,scenario==45?1400:1500,false,false);
  if(scenario==46){mutex_lock(&port_under_test->lock);port_under_test->source_generation++;mutex_unlock(&port_under_test->lock);}
  if(scenario==47){mutex_lock(&port_under_test->lock);sm5714_forget_source(port_under_test);mutex_unlock(&port_under_test->lock);}
  if(scenario==48)port_under_test->fault=true;
  return 0;
 }
 '''
-        for marker in ('static int sm5714_restore_token(', 'int sm5714_pd_restore_fixed('):
+        for marker in ('static int sm5714_restore_token(', 'static int sm5714_restore_fixed_pinned(', 'int sm5714_pd_restore_fixed('):
             code += function(cls.source, marker) + '\n'
         code += r'''
 static void *restorer(void *unused) {
@@ -210,7 +210,7 @@ int exercise(int mode,int failure,long long *out) {
         self.assertEqual((ret, r[4]), (-errno.EINVAL, 0))
 
     def test_no_activation_tuning_release_or_writable_user_interface(self):
-        body = function(self.source, 'int sm5714_pd_restore_fixed(')
+        body = function(self.source, 'static int sm5714_restore_fixed_pinned(')
         self.assertEqual(body.count('power_supply_set_property('), 1)
         self.assertIn('.intval = 1', body)
         self.assertNotIn('POWER_SUPPLY_PROP_VOLTAGE_NOW', body)

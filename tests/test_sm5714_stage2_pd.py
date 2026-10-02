@@ -263,6 +263,7 @@ class Stage2TransportTests(unittest.TestCase):
 #include <errno.h>
 typedef uint8_t u8;
 typedef uint32_t u32;
+typedef uint64_t u64;
 #define BIT(n) (1U<<(n))
 #define GENMASK(h,l) (((~0U)>>(31-(h))) & ((~0U)<<(l)))
 #define READ_ONCE(x) (x)
@@ -296,7 +297,9 @@ struct tcpc_dev { struct sm5714_usbpd *owner; };
 struct sm5714_usbpd { int dev, lock; void *regmap, *port; struct tcpc_dev tcpc;
  u32 source_pdos[7]; unsigned int nr_source_pdos;
  unsigned long long source_generation,budget_generation;
- unsigned int budget_mv,budget_ma,budget_pending;bool charge_requested,observation_exhausted; bool fault, removing; };
+ unsigned int budget_mv,budget_ma,budget_pending;bool charge_requested,observation_exhausted,budget_pps;
+ u64 pps_lease,pps_source_generation;unsigned int pps_mv,pps_ma,pps_previous_mv,pps_previous_ma;
+ bool pps_restoring,last_request_pps,pps_operation_active;unsigned int request_mv,request_ma; bool fault, removing; };
 #define U64_MAX UINT64_MAX
 static unsigned char regs[256];
 static int calls, failure, disabled, charge_stops, rx_count, tx_status=-1;
@@ -316,6 +319,7 @@ static int regmap_bulk_write(void *m,unsigned int r,const void *v,unsigned int n
  (void)m; int e=step(); if (!e) memcpy(regs+r,v,n); return e; }
 static void sm5714_battery_typec_fault(void) {charge_stops++;}
 static int sm5714_battery_get_bc12_limit(void) {return 1800;}
+static int sm5714_battery_switching_check(u64 lease) {(void)lease;return -ESTALE;}
 static int sm5714_battery_set_typec_charge(bool b) {if(!b) charge_stops++; return 0;}
 static int sm5714_battery_set_pd_contract(unsigned int mv,unsigned int ma) {
  budget_mv=mv; budget_ma=ma; return mv==0||mv==5000||mv==9000?0:-ERANGE; }
@@ -339,8 +343,9 @@ typedef int irqreturn_t;
 '''
         code += "\n".join(line for line in src.splitlines() if line.startswith("#define SM5714_"))
         code += '\n#include "' + str(ROOT / 'kernel/drivers/sm5714-pd-policy.h') + '"\n'
+        code += 'int sm5714_battery_set_owned_contract(u64 l,unsigned int mv,unsigned int ma,enum sm5714_contract_kind k) {(void)l;(void)mv;(void)ma;(void)k;return -ESTALE;}\n'
         names = ["static void sm5714_budget_tick_locked(", "static void sm5714_budget_begin(",
-                 "static void sm5714_budget_end(", "static void sm5714_forget_source(",
+                 "static void sm5714_budget_end(", "static void sm5714_pps_revoke_locked(", "static void sm5714_forget_source(",
                  "static int sm5714_result(", "static int sm5714_usbpd_init(",
                  "static int sm5714_usbpd_get_vbus(", "static int sm5714_usbpd_get_current_limit(",
                  "static int sm5714_usbpd_get_cc(", "static int sm5714_usbpd_set_cc(",
