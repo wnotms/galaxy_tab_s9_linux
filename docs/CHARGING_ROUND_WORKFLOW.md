@@ -1,5 +1,11 @@
 # Charging round execution with less repeated work
 
+Latest owner instruction2026-10-02: prioritize short physical rounds and check
+only modified parts/dependencies; avoid lengthy repeated review/full regression.
+Reuse qualified candidates and ask a new concrete hardware question per round.
+The detailed historical trace profile below is not a mandatory template for
+every charging test; register the minimum evidence appropriate to the new scope.
+
 Owner instruction2026-10-02: accelerate each round. Follow
 `HOST_TEST_WORKFLOW.md`: reuse qualification for unchanged source/artifacts;
 normal device behavior completes the registered device scope. A host-only

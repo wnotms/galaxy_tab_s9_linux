@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "python3",
+    "scripts/audit-x710-charging-build.py",
+    "--out",
+    "out/kernel-x710-294-passive",
+    "--tree",
+    ".work/build/linux-src-x710-charging",
+    "--build",
+    ".work/build/linux-out-x710-294-passive",
+    "--profile",
+    "sm5440-passive",
+    "--report",
+    "reference/boot-tests/test-294-switching-ownership-offline/validation/artifact-audit.json",
+    "--revision",
+    "bb534146"
+  ],
+  "started_utc": "2026-10-02T10:13:19.420927+00:00",
+  "device_commands_executed": false,
+  "status": 0,
+  "ended_utc": "2026-10-02T10:13:55.504357+00:00"
+}

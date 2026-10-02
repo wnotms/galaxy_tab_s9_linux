@@ -1,5 +1,19 @@
 # Host regression tiers
 
+## Latest owner scope (2026-10-02, supersedes routine full-run rules below)
+
+Check the actual modified parts and their dependencies. Reuse unchanged build,
+artifact and host qualification; do not spend a new full regression or lengthy
+review on each round. Choose affected tests directly when the change selector
+would conservatively select unrelated suites. Record exact executed coverage;
+only broaden for a concrete dependency, routing or unresolved validation issue.
+Prioritize short, registered physical tests that answer a new hardware question.
+A first failure leads to evidence/source comparison and correction, not repeated
+flashes of the unchanged failed profile. Consult Fedora X710, S9 Ultra common
+platform work and exact Samsung X710 stock evidence as needed; preserve the
+X710 limits and essential rescue/identity/thermal/OFF/rollback checks.
+
+
 ## Validate changes, not commits (owner instruction, 2026-09-30)
 
 A candidate gets one final build/artifact audit and one final full host run.

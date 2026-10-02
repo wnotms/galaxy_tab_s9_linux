@@ -2,6 +2,26 @@
 
 ## Current state (2026-10-02)
 
+Test294 OFFLINE_SWITCHING_OWNERSHIP_QUALIFIED_DEVICE_NOT_TESTED, sourcebb534146.
+16actualC +1557full host PASS/0failureerror skip/all1520priorIDs retained; ARM64
+99.44s/W1sparse/objectconsistent/exact290configDT/96protected/8overlays/181paired
+archive pass. New lease inhibits beforecheckedQ4OFF+100mA, preservesfixedbudget;
+standby/budget/fault/detach/PM/unbind revoke butkeepinhibit; rebind sticky/unique
+issuer; release needscaller-proven pumpOFF/freshphysicalfixedVBUS. Defaultinactive/
+no liveconsumer/PPS/pump/current change.167modulefiles differ: use newpaired294
+archive; no section-cause claim. Old263290291292293seals intact. Read294RESULTS/
+summary/artifacts/design. Current263b06bb6c2 ADB sameboot Good47%3.845V32C, passive
+healthREFUSED unchanged. ActiveStage3NOTREADY/fullportgoalactive.
+
+Latest owner workflow2026-10-02: check actual changed parts, avoid long repeated
+review; prioritize short purposeful physical tests using qualified candidates.
+Use Fedora X710, S9Ultra common-platform work and Samsung stock as evidence
+when helpful. Reuse unchanged build/tests, no routine full-suite run per change
+or result commit; broaden only for demonstrated dependency/routing concern.
+Register/push each physical scope before mutation; essential identity/thermal/
+pumpOFF/rollback and first-failure safety remain. Do not repeatedly flash the
+same failed profile; obtain evidence, source-backed fix, next bounded test.
+
 Additional D:project cleanup2026-10-02:7obsolete Kbuild intermediates +13clean
 detached source worktrees removed; 36.93GiB guest allocation / 30.95GiB
 observed D:free increase, now~37.28GiB free. All43186out/oldreference files
