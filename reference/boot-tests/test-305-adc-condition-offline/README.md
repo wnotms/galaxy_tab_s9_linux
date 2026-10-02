@@ -20,8 +20,8 @@ Local integration regression:1,748 tests passed, no failure/error/skip,112.621s.
 Final21 diagnostic/profile tests passed0.705s, including an added normal-path
 preprocessor equivalence check. Existing1,728 results are reused unchanged;
 unique qualified tests1,749. No tests deleted, skipped or weakened; no Actions.
-ARM64/W1/sparse/config/DT/protected/module qualification is pending at this
-source checkpoint. Do not deploy an unqualified candidate.
+ARM64/W1/sparse/config/DT/protected/module qualification subsequently passed;
+see [RESULTS.md](RESULTS.md). Physical entry currently waits for battery recharge.
 
 Old297 incremental cache debug/config/generated inputs were compressed and
 hash-verified (2,733 files); the cache can be reused instead of another4.7GiB

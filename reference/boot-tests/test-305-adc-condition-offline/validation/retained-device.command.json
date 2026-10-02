@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; sha256sum /sys/kernel/notes; zcat /proc/config.gz | sha256sum; cat /sys/class/power_supply/sm5714-battery/uevent"
+  ],
+  "exit_code": 0,
+  "device_writes": false
+}

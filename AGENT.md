@@ -2,6 +2,26 @@
 
 ## Current state (2026-10-03)
 
+Test305 OFFLINE_ADC_CONDITION_CANDIDATE_QUALIFIED, source9dceb767. One isolated
+ENHIZbit7 clear/unchangedADC/verifiedrestore, OFF+ADC-off checks/firsterror+cleanup/
+pendingfault onfailure/PMdrain; no companion publication/reschedule/secondresume
+experiment/PPS/pump/reset/threshold/current. Default/passive/policy compiled
+paths unchanged; new default-n SM5440_ADC_CONDITION_TEST only explicit profile,
+cannot coexist withPPSconsumer. Full1748PASS112.621s then final21PASS0.705s with
+addedpreprocessorcheck;1749unique (1728reused+21final), nofail/error/skip/CI.
+ARM6492.647/W1sparse8.078/object+vmlinuxidentical/96protected/10overlays/181paired
+PASS; exactlyTest299config absent->y diagnostic symbol, DTB identical. Driver
+warnings0/checkpatch0/upstreamvDSOwarning retained. Old297cache reused onlyafter
+2733debug/generated inputs compressed+verified;25formal263297299302303seals intact,
+old297cachepath no longer usable provider. Read305RESULTS/summary/design.
+Device still299/Test30057535...sameaccepted notes/config, no mutation. Final
+read found0%/3.287V/netnegative/SDP500mA/31.3C/SinkDevice; WiFi10.139.153.19 strict
+SSHresponsive. PHYSICALENTRYSTOP lowbattery; owner asked reconnectaccepted18W C2,
+no reboot. Recharge is ordinary baseline, notcandidateacceptance. No flash/PPS/
+pump untilbattery recovers andnewphysical scope registered+pushed. ENHIZcause/
+ADCvalidity100ms/OCP/activecoordinator/physicalPPS+PM remain/fullStage3NOTREADY/
+fullgoalactive. Do not invoke known-failing303 or relabeldiag ascharginggrant.
+
 Test304 READ_ONLY_OPERATING_STATE_CAPTURED. Same retained299/Test30057535...
 notes/config;19 single stable control/identity regmap reads (exact range0-2b,
 7-byte seek/read/O_RDONLY/noINT), no devicewrite/reboot/PPS/pump/faultclear.

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /sys/class/power_supply/sm5714-usb/uevent; ip -4 -o addr show dev wlp1s0; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role"
+  ],
+  "exit_code": 0,
+  "device_writes": false
+}

@@ -1,0 +1,151 @@
+{
+  "test": "Test305",
+  "verdict": "OFFLINE_ADC_CONDITION_CANDIDATE_QUALIFIED",
+  "source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+  "profile": "sm5440-adc-condition",
+  "device_mutation": false,
+  "hardware_tested": false,
+  "active_stage3_ready": false,
+  "tests": {
+    "full_executed": true,
+    "full_tests_run": 1748,
+    "full_elapsed_seconds": 112.621,
+    "final_tests_run": 21,
+    "final_elapsed_seconds": 0.705,
+    "unchanged_results_reused": 1728,
+    "unique_qualified": 1749,
+    "failures": [],
+    "errors": [],
+    "skips": []
+  },
+  "build": {
+    "argv": [
+      "bash",
+      "scripts/build-kernel.sh"
+    ],
+    "source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+    "utc": "2026-10-02T23:15:05.300246+00:00",
+    "elapsed_seconds": 92.64716183099517,
+    "exit_code": 0,
+    "env": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-adc-condition",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-305-adc-condition",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-305-adc-condition"
+    }
+  },
+  "static": {
+    "exit_code": 0,
+    "elapsed_seconds": 8.077910015999805,
+    "objects_identical": true,
+    "vmlinux_identical": true,
+    "changed_driver_warnings": 0,
+    "upstream_warning": "unchanged vDSO __kernel_getrandom declaration"
+  },
+  "checkpatch": {
+    "argv": [
+      "checkpatch.pl",
+      "--no-tree",
+      "--show-types",
+      "--terse",
+      "-"
+    ],
+    "exit_code": 0,
+    "output_bytes": 0
+  },
+  "normal_preprocessed_structures_and_functions_identical": 16,
+  "original_converter_rearm_quiesce_thresholds_fresh_APIs_unchanged": true,
+  "test299_to_test305_config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "absent",
+      "y"
+    ]
+  },
+  "test299_to_test305_dtb_delta": {},
+  "protected_files": 96,
+  "protected_changes": {},
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true,
+    "x710-pd-session.c": true,
+    "x710-pd-session.h": true
+  },
+  "frozen_stage2_artifacts_intact": true,
+  "paired_modules": 181,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-305-adc-condition/Image.gz",
+      "sha256": "cfa79d283ceb8be010412bd6363b35a7e9dd0aaedbaa738d347159939eb0379f",
+      "bytes": 22136218
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-305-adc-condition/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-305-adc-condition/config",
+      "sha256": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+      "bytes": 243311
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-305-adc-condition/kernel-notes.bin",
+      "sha256": "b5254272a3e77f426abc055ea79238c159dad1f09cdba79cb94a617546a93776",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-305-adc-condition/modules-x710.tar.gz",
+      "sha256": "44ca71bc0f15255bd07642448d59c55210096e1992796aa317b7d15dcedeb351",
+      "bytes": 47318582
+    }
+  },
+  "cache_retention": {
+    "previous_cache": ".work/build/linux-out-x710-297-passive",
+    "reused_cache": ".work/build/linux-out-x710-305-adc-condition",
+    "retained_archive": ".work/build-input-snapshots/test297-before-reuse/generated-and-debug-inputs.tar.gz",
+    "archive_sha256": "0e402591b805d7ef5cb280e58dc76f498b7386f225af4940646b9f7db4c70158",
+    "archive_bytes": 229961937,
+    "retained_files": 2733,
+    "archive_verified": true,
+    "cache_renamed": true,
+    "elapsed_seconds": 56.190042328002164,
+    "old_cache_still_usable_as_test297_provider": false
+  },
+  "old_formal_artifact_seals_intact": 25,
+  "diagnostic": {
+    "conversions": 1,
+    "temporary_register": "CNTL6",
+    "register_address": 17,
+    "mask": 128,
+    "restore_required": true,
+    "companion_published": false,
+    "autoreschedule": false,
+    "PPS_requested": false,
+    "pump_ON_supported": false,
+    "active_protection_or_current_programmed": false
+  },
+  "retained_device": {
+    "baseline": "Test299/Test300",
+    "boot_id": "57535bed-a626-48d0-aaaa-3071ac8332e5",
+    "notes_sha256": "aea7c145b3901408040453648d8f81cd4cca23f27443d0e1c30d701e35717403",
+    "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+    "observed_soc": 0,
+    "observed_voltage_uv": 3287000,
+    "observed_temperature_decic": 313,
+    "PC_input_limit_ua": 500000,
+    "physical_entry_ready": false,
+    "reason": "low SOC/VBAT; await ordinary baseline recharge",
+    "wifi_ssh_responsive": true
+  },
+  "next": "After battery recovery, register/push one purpose-specific PC-USB ADC condition comparison and accepted299 rollback; no PPS/pump test before independent physical gates",
+  "Actions_started": false
+}

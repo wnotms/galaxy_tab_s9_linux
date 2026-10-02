@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "bash",
+    "scripts/build-kernel.sh"
+  ],
+  "source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+  "utc": "2026-10-02T23:15:05.300246+00:00",
+  "elapsed_seconds": 92.64716183099517,
+  "exit_code": 0,
+  "env": {
+    "JOBS": "8",
+    "USE_CCACHE": "1",
+    "BUILD_MODULES": "1",
+    "GTS9_CHARGING_PROFILE": "sm5440-adc-condition",
+    "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-305-adc-condition",
+    "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-305-adc-condition"
+  }
+}

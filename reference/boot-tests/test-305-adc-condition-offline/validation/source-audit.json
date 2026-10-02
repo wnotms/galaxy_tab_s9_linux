@@ -1,0 +1,43 @@
+{
+  "source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+  "purpose": "one pump-OFF ENHIZ/ADC operating-condition comparison",
+  "new_functions": [
+    "sm5440_condition_begin",
+    "sm5440_condition_restore",
+    "sm5440_condition_cycle"
+  ],
+  "temporary_register": {
+    "name": "CNTL6",
+    "address": 17,
+    "write_mask": 128,
+    "source": "Samsung X710 sm5440_set_ENHIZ() bit7 and init_reg_param()09; Test304 live89",
+    "preserve_other_bits": true,
+    "verified_restore": true
+  },
+  "unchanged_helpers": [
+    "sm5440_sample_once",
+    "sm5440_adc_rearm",
+    "sm5440_quiesce",
+    "sm5440_passive_request_fresh",
+    "sm5440_passive_observe",
+    "sm5440_startup_matches"
+  ],
+  "normal_preprocessed_paths_identical": true,
+  "diagnostic_companion_published": false,
+  "diagnostic_conversion_count": 1,
+  "normal_profiles_changed": false,
+  "TCPM_core_modified": false,
+  "DWC3_modified": false,
+  "USB_gadget_modified": false,
+  "adbd_modified": false,
+  "SM5714_modified": false,
+  "DTS_modified": false,
+  "ordinary_current_limits_modified": false,
+  "active_protection_thresholds_modified": false,
+  "PPS_requested": false,
+  "pump_ON_supported": false,
+  "ADC_freshness_ms": 100,
+  "float_voltage_mv": 4440,
+  "thermal_policy": "unchanged fail-closed SM5714/IIO",
+  "hardware_results": "NOT EXECUTED"
+}
