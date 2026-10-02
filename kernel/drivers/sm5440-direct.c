@@ -31,6 +31,8 @@ struct sm5440_sample {
 	u32 faults;
 	/* BOOTTIME before converter enable: oldest plausible ADC acquisition. */
 	u64 acquired_ms;
+	/* After complete checked reads, immediately before cache publication. */
+	u64 completed_ms;
 	u64 acquisition_seq;
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
@@ -268,6 +270,118 @@ put:
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sm5440_passive_request_fresh);
+
+/* A slow, newly acquired OFF-mode sample may be useful diagnostic evidence
+ * while still FAILING the legacy100ms freshness/delivery contract. Keep this
+ * API and its output type separate: no active consumer or userspace writer.
+ * Lifetime/reservation/PM serialization match the original request API.
+ */
+int sm5440_passive_observe(struct sm5440_passive_observation *out)
+{
+	struct sm5440_direct *sm;
+	unsigned long seq, epoch;
+	u64 start, now, started_seq;
+	long remaining;
+	bool reserved = false;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	start = ktime_to_ms(ktime_get_boottime());
+	mutex_lock(&sm5440_companion_lock);
+	sm = sm5440_companion;
+	if (sm)
+		atomic_inc(&sm->request_users);
+	mutex_unlock(&sm5440_companion_lock);
+	if (!sm)
+		return -ENODEV;
+	if (atomic_cmpxchg(&sm->request_busy, 0, 1)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	reserved = true;
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5440_sample_ready_locked(sm);
+	if (ret)
+		goto unlock;
+	seq = sm->sample_seq;
+	started_seq = sm->conversion_seq;
+	epoch = sm->request_epoch;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!start || now < start ||
+	    now - start >= SM5440_PASSIVE_OBSERVATION_MS) {
+		ret = -ETIMEDOUT;
+		goto unlock;
+	}
+	remaining = msecs_to_jiffies(SM5440_PASSIVE_OBSERVATION_MS - (now - start));
+	mod_delayed_work(system_percpu_wq, &sm->work, 0);
+	mutex_unlock(&sm->io_lock);
+	if (!wait_event_timeout(sm->request_wait,
+		READ_ONCE(sm->sample_seq) != seq || READ_ONCE(sm->stopped) ||
+		READ_ONCE(sm->fault) || READ_ONCE(sm->dying) ||
+		READ_ONCE(sm->request_epoch) != epoch, remaining)) {
+		ret = -ETIMEDOUT;
+		goto put;
+	}
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	now = ktime_to_ms(ktime_get_boottime());
+	if (sm->request_epoch != epoch)
+		ret = -ESHUTDOWN;
+	else if (now < start || now - start > SM5440_PASSIVE_OBSERVATION_MS)
+		ret = -ETIMEDOUT;
+	else
+		ret = sm5440_sample_ready_locked(sm);
+	if (ret)
+		goto unlock;
+	if (sm->sample_seq == seq || sm->sample.acquisition_seq <= started_seq ||
+	    !sm->sample.acquired_ms || sm->sample.acquired_ms < start ||
+	    sm->sample.completed_ms < sm->sample.acquired_ms ||
+	    sm->sample.completed_ms > now) {
+		ret = -ESTALE;
+		goto unlock;
+	}
+	out->measurement.observed_ms = sm->sample.acquired_ms;
+	out->measurement.vbus_uv = sm->sample.vbus_uv;
+	out->measurement.vbat_uv = sm->sample.vbat_uv;
+	out->measurement.ibus_ua = sm->sample.ibus_ua;
+	out->measurement.die_decic = sm->sample.die_decic;
+	out->measurement.online = sm->sample.online;
+	out->request_ms = start;
+	out->completed_ms = sm->sample.completed_ms;
+	out->acquisition_seq = sm->sample.acquisition_seq;
+	out->request_epoch = epoch;
+unlock:
+	mutex_unlock(&sm->io_lock);
+put:
+	if (reserved)
+		atomic_set(&sm->request_busy, 0);
+	mutex_lock(&sm5440_companion_lock);
+	if (atomic_dec_and_test(&sm->request_users))
+		wake_up_all(&sm->users_wait);
+	mutex_unlock(&sm5440_companion_lock);
+	/* No provider access after dropping its user; do not restamp acquisition. */
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!ret) {
+		if (now < out->completed_ms || now < start ||
+		    now - start > SM5440_PASSIVE_OBSERVATION_MS)
+			ret = -ETIMEDOUT;
+		else {
+			out->returned_ms = now;
+			out->oldest_age_ms = now - out->measurement.observed_ms;
+		}
+	}
+	if (ret)
+		memset(out, 0, sizeof(*out));
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5440_passive_observe);
 
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
@@ -602,6 +716,7 @@ static void sm5440_poll(struct work_struct *work)
 		sm->initial_sample_done = true;
 		sample.valid = true;
 		sample.stamp = jiffies;
+		sample.completed_ms = ktime_to_ms(ktime_get_boottime());
 		sm->sample = sample;
 		if (sample.faults) {
 			/* Reads consume INT. Only the initial qualified REVBLK may

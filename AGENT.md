@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+Test290 OFFLINE implementation/build+1494full host PASS; committed-source
+artifact pairing/W1sparse finalaudit pending, no device test. Independent passive
+observe API returns true oldest acquisition/completion/delivery/age with500ms
+DIAGNOSTIC collection only; legacy100ms cached/fresh +active100ms policy andADC
+sequence untouched.13new actualC tests,0removed/skips; exact272config/DTB and96
+protected inputs pass. Newdriver/header only; fixed/thermal/USB/rootfs unchanged.
+Read290CURRENT_STATUS/registration/SOURCE_INPUTS +SM5440_PASSIVE_OBSERVATION_API.
+Installed263d856e6f5/Wi-Fi10.125.29.32 unchanged; noflash/reboot/PPS/pump/current.
+ActiveStage3 NOT READY/fullportgoalactive; keep289refusal immutable.
+
 Test289 PASSIVE_REFUSAL_CAPTURED; EXACT263_ROLLBACK_DEVICE_SCOPE_COMPLETED.
 One2727a4d9ce5boot/one276observer/onefresh-110/0usable; firstrefusalSTOP.
 288phaseprofile captured18successfulI2Ctransactions/4polls[0,0,0,1], request

@@ -18,15 +18,30 @@ struct sm5440_passive_measurement {
 	bool online;
 };
 
+/* OFF-mode diagnostic observation, NOT a replacement for the100ms fresh API.
+ * All times are BOOTTIME milliseconds. Completion is software publication
+ * provenance, not the physical ADC sampling instant. Age uses oldest start.
+ */
+struct sm5440_passive_observation {
+	struct sm5440_passive_measurement measurement;
+	u64 request_ms, completed_ms, returned_ms, oldest_age_ms;
+	u64 acquisition_seq;
+	unsigned long request_epoch;
+};
+
 int sm5440_passive_read_cached(struct sm5440_passive_measurement *out);
 /* Sleepable OFF-mode new conversion request; clears output on any refusal.
  * No hard-realtime/OCP guarantee, no active-mode or userspace ON interface.
  */
 int sm5440_passive_request_fresh(struct sm5440_passive_measurement *out);
+/* External sleepable caller, no charger/TCPM locks; telemetry only. */
+int sm5440_passive_observe(struct sm5440_passive_observation *out);
 #endif
 
 /* Software freshness/delivery refusal budget, not converter/cutoff timing. */
 #define SM5440_FRESH_REQUEST_MS 100U
+/* Separate diagnostic collection budget; never an active freshness grant. */
+#define SM5440_PASSIVE_OBSERVATION_MS 500U
 
 #define SM5440_INT1	0x00
 #define SM5440_INT4	0x03
