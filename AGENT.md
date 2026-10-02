@@ -2,18 +2,24 @@
 
 ## Current state (2026-10-02)
 
-Test303 actual kernel pumpOFF PPS consumer implemented;568unique affected PASS (511unchanged results reused +57final consumer/
-release/ownership PASS). No full/CI/device writes. Real pack/strict100ms SM5440 proof/
-checked Q4lease/native PPS->fixed/source-locked fresh-proofasync release; PM cancel
-before drain/unresolved blocks retry+suspend/no autoarm. Release schedules
-unchanged ordinary poller, not proofQ4 alreadyprogrammed; try-only locks/no IIO
-under source gate avoids501ms possible thermistor wait. Native failed fixed
-cleanup is not retried. Explicit policy-offline profile only, no pumpON or ADC/
-OCP/threshold/ordinarylimit/core/configDT/USB/rootfschange. ARM64/static/exact
-policyconfigDT/protected181 qualification pending. Device retained299/Test300
-57535...thermalfix. Read303README/design. Old301cache tobe reused after preserved
-inputs;302/artifact/rescue immutable. Fullgoalactive/activeStage3NOTREADY; real
-ADC validity/freshness/OCP/PM/physical PPS+pump acceptance remain.
+Test303 OFFLINE_OWNED_PPS_CONSUMER_QUALIFIED, source53f223cf.568unique affected
+PASS (511unchanged reused+57final); ARM6491.651s/W1sparse8.435s/object+vmlinux
+identical/96protected/10overlays/4headercopies/181paired PASS. Explicit policy
+offline profile only: exactly X710_CHARGING_POLICY n->y vs302, DTB identical,
+container/DCC preserved. Real pack/strict100ms SM5440 proof/Q4lease/nativePPS->
+fixed/source-bound async authorization release; PM cancellation/drain/noautoarm/
+unresolved blocks retry+suspend/native failed fallback not retried. Release
+notQ4completion: unchanged ordinary poller programs later, try-only locks avoid
+501ms possible IIO wait under TCPC. No auto-start/pumpON/devicecommand/PPS/
+rootfs/core/USB/ordinarylimit change. Source style0errors/1MAINTAINERSadvisory/
+2bracechecks retained; changed driver W1/sparse0warnings. No full/CI.
+Old301cache reused after2731debug/generated inputs compressed+hashverified;
+301/302 formal artifacts immutable/302cache retained/old301path no longer usable
+provider. Device stays299/Test30057535...thermalfix. Read303RESULTS/summary/design.
+ADC validity/startup/refusal/>100ms physical gate remains unwaived; next source-
+backed operating-condition fix before physical replay, not delay-only retest.
+Physical PPS/pump/activeOCP/PM/fullcoordinator acceptance remains/Stage3NOTREADY/
+fullgoalactive. No automatic deployment of known-failing ADC prerequisite.
 
 Test302 OFFLINE_OWNED_TCPM_PPS_PROTOCOL_QUALIFIED, code de2ebc5c/build21d534c1.
 185affected PASS5.102s/ARM6496.678s/W1sparse8.361s/object+vmlinuxidentical/

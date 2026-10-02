@@ -1,0 +1,36 @@
+{
+  "command": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "-j8",
+    "drivers/power/supply/sm5714-battery.o",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o",
+    "drivers/power/supply/x710-pd-session.o"
+  ],
+  "environment": {
+    "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+    "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 8.434776974998385,
+  "objects_before": {
+    "drivers/power/supply/sm5714-battery.o": "cac888690029586dad028cdb4023dfe9fb2016907edb7510731c14322bd76869",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o": "3c7dde2ad968a614f9fdf878873e8d983a5e07dfefcdf2e2c23c7c2f7825ac0a",
+    "drivers/power/supply/x710-pd-session.o": "058274833b76169fdd92d45db1833a20d394167ef2ef2136eb318a8b3825885e"
+  },
+  "objects_after": {
+    "drivers/power/supply/sm5714-battery.o": "cac888690029586dad028cdb4023dfe9fb2016907edb7510731c14322bd76869",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o": "3c7dde2ad968a614f9fdf878873e8d983a5e07dfefcdf2e2c23c7c2f7825ac0a",
+    "drivers/power/supply/x710-pd-session.o": "058274833b76169fdd92d45db1833a20d394167ef2ef2136eb318a8b3825885e"
+  },
+  "objects_unchanged": true,
+  "vmlinux_unchanged": true
+}

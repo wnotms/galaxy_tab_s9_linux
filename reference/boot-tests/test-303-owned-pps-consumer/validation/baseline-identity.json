@@ -1,0 +1,36 @@
+{
+  "config_delta": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "dtb_identical": true,
+  "old301_and302_artifacts_intact": {
+    "test-301-tcpm-fixed-restore": {
+      "Image.gz": true,
+      "sm8550-samsung-gts9wifi.dtb": true,
+      "config": true,
+      "kernel-notes.bin": true,
+      "modules-x710.tar.gz": true
+    },
+    "test-302-tcpm-owned-pps": {
+      "Image.gz": true,
+      "sm8550-samsung-gts9wifi.dtb": true,
+      "config": true,
+      "kernel-notes.bin": true,
+      "modules-x710.tar.gz": true
+    }
+  },
+  "compiled_shared_headers": {
+    "drivers/power/supply/sm5714-stage2.h": true,
+    "drivers/power/supply/sm5714-pd-policy.h": true,
+    "drivers/usb/typec/tcpm/sm5714-stage2.h": true,
+    "drivers/usb/typec/tcpm/sm5714-pd-policy.h": true
+  },
+  "old_battery_and_tcpc_code_not_deleted_or_rewritten": {
+    "sm5714-battery.c": true,
+    "sm5714_usbpd.c": true
+  },
+  "device_mutation": false
+}

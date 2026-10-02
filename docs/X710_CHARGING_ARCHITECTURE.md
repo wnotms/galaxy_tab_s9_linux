@@ -1,4 +1,11 @@
 # X710 mainline charging architecture
+Current continuation: Test303 supplies an explicitly invoked kernel pump-OFF
+PPS consumer, real provider integration, PM drain and source-bound authorization
+release; see [owned consumer](X710_OWNED_PPS_CONSUMER.md). The active core's
+pump actuator/OCP/physical ADC qualification is still incomplete. The historical
+Test256 design below is not a claim of current device identity: device remains
+retained Test299/Test300, not Test255. No automatic PPS/direct charging.
+
 
 Read [vendor audit](X710_VENDOR_CHARGING_AUDIT.md),
 [register audit](SM5440_REGISTER_AUDIT.md), and

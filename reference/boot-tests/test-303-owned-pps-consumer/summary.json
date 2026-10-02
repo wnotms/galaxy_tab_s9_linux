@@ -1,0 +1,126 @@
+{
+  "test": "Test303",
+  "verdict": "OFFLINE_OWNED_PPS_CONSUMER_QUALIFIED",
+  "source_revision": "53f223cf42effc010394d51f74a74abbd9045b4d",
+  "device_mutation": false,
+  "installed_device_baseline": "Test299 source9173df11 retained under Test300",
+  "tests": {
+    "executed": true,
+    "unique_affected": 568,
+    "unchanged_results_reused": 511,
+    "final_executed": 57,
+    "final_seconds": 0.7610237219996634,
+    "initial_affected_seconds": 16.28865344699807,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "full_executed": false
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 91.65141746500012,
+    "profile": "sm5440-policy-offline"
+  },
+  "static": {
+    "exit_code": 0,
+    "elapsed_seconds": 8.434776974998385,
+    "objects_identical": true,
+    "vmlinux_identical": true,
+    "changed_driver_warnings": 0,
+    "upstream_warning": "unchanged vDSO __kernel_getrandom declaration"
+  },
+  "checkpatch": {
+    "errors": 0,
+    "warnings": 1,
+    "checks": 2,
+    "notes": "new-file MAINTAINERS advisory and brace-style checks retained; no compiler/sparse warning in changed drivers"
+  },
+  "test302_to_test303_config_delta": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ]
+  },
+  "dtb_delta": {},
+  "protected_files": 96,
+  "protected_changes": {},
+  "frozen_stage2_artifacts_intact": true,
+  "compiled_source_matches": {
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "sm5714_usbpd.c": true,
+    "sm5714-pd-policy.h": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true,
+    "x710-pd-session.c": true,
+    "x710-pd-session.h": true
+  },
+  "shared_header_copies_match": {
+    "drivers/power/supply/sm5714-stage2.h": true,
+    "drivers/power/supply/sm5714-pd-policy.h": true,
+    "drivers/usb/typec/tcpm/sm5714-stage2.h": true,
+    "drivers/usb/typec/tcpm/sm5714-pd-policy.h": true
+  },
+  "paired_modules": 181,
+  "module_files_changed_vs_test302": 170,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-303-policy/Image.gz",
+      "sha256": "eb45c4353286246990333bbdf8ebecc9caab2aa7b5c42fdcb8ac66f7e4e37b6c",
+      "bytes": 22142232
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-303-policy/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "config": {
+      "path": "out/kernel-x710-303-policy/config",
+      "sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+      "bytes": 243265
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-303-policy/kernel-notes.bin",
+      "sha256": "2272f70246c1a2bf4efe1935eed7309bdba52f93e4b4fc51759a5eefd68655cc",
+      "bytes": 84
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-303-policy/modules-x710.tar.gz",
+      "sha256": "8c55571da277f98cfc34db5241ba6f46bdf0d40a547ffa45a87974b1c88f3ae4",
+      "bytes": 47318714
+    }
+  },
+  "cache_reuse": {
+    "previous_cache": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-301-passive",
+    "reused_cache": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+    "retained_archive": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build-input-snapshots/test301-before-reuse/generated-and-debug-inputs.tar.gz",
+    "archive_sha256": "99ad6ca8068735b35c36eabdd82a4fdbed3fdce3823ab8369996bd3f6a943f1c",
+    "archive_bytes": 239895416,
+    "retained_files": 2731,
+    "archive_verified": true,
+    "out_artifacts_changed": false,
+    "old_cache_still_usable_as_test301_provider": false,
+    "reason": "Use existing intermediate cache instead of another4.7GiB clone; exact old debug/generated inputs retained, old301/302 formal artifacts/rescue unchanged",
+    "elapsed_seconds": 11.386629274002189
+  },
+  "real_consumer_implemented": true,
+  "consumer_automatically_invoked": false,
+  "userspace_activation_interface": false,
+  "pump_ON_supported": false,
+  "device_PPS_requested": false,
+  "strict_physical_freshness_ms": 100,
+  "ordinary_charge_limits_increased": false,
+  "switching_release_semantics": "source-bound try-only authorization release; unchanged battery worker performs and verifies ordinary programming later",
+  "hardware_tested": false,
+  "active_stage3_ready": false,
+  "outstanding": [
+    "actual SM5440 ADC operating-condition/validity/freshness qualification",
+    "physical pump-OFF PPS protocol acceptance",
+    "active pump actuator and protection/OCP qualification",
+    "full direct coordinator monitoring/refresh/PM physical acceptance"
+  ],
+  "next": "Source-backed ADC operating-condition correction before any known-failing physical replay; inspect missing vendor initialization facts, do not manufacture timestamps/calibration or relax current gates",
+  "Actions_started": false
+}
