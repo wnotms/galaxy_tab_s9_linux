@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@zone37; for f in type temp mode policy trip_point_0_type trip_point_0_temp; do echo @@$f; cat /sys/class/thermal/thermal_zone37/$f 2>&1; done; readlink -f /sys/class/thermal/thermal_zone37; readlink -f /sys/class/thermal/thermal_zone37/device; echo @@zones; for d in /sys/class/thermal/thermal_zone*; do printf \"%s \" \"$d\"; cat \"$d/type\"; done; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@pack-iio; for d in /sys/bus/iio/devices/iio:device*; do echo \"$d\"; cat \"$d/name\"; done; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm"
+  ],
+  "ended_utc": "2026-10-02T11:55:16.116342+00:00",
+  "started_utc": "2026-10-02T11:55:15.926274+00:00",
+  "status": 0
+}

@@ -884,6 +884,12 @@ static enum power_supply_property sm5440_props[] = {
 static const struct power_supply_desc sm5440_desc = {
 	.name = "sm5440-passive",
 	.type = POWER_SUPPLY_TYPE_MAINS,
+	/* OFF-only diagnostic cache can stop on fault or become stale. It is
+	 * not a continuously available thermal sensor. Keep TEMP/ENODATA and
+	 * fault gates; avoid power_supply's automatic tripless thermal zone.
+	 * Pack temperature remains the independent SM5714/IIO safety input.
+	 */
+	.no_thermal = true,
 	.properties = sm5440_props,
 	.num_properties = ARRAY_SIZE(sm5440_props),
 	.get_property = sm5440_get_property,

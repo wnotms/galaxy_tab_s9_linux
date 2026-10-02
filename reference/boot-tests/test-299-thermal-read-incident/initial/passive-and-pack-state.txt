@@ -1,0 +1,64 @@
+@@boot
+acdd2dfc-7f8a-4970-aa57-d71edab99df6
+@@passive
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4295013996
+sample_present=1
+sample_fresh=0
+sample_age_ms=484236
+stopped=0
+fault=1
+startup_pending=1
+last_sample_error=0
+startup_retained=1
+startup_capture_jiffies=4294892365
+sample_valid=1
+sample_stamp_jiffies=4294892937
+sample_faults=0x0
+sample_int=00 00 00 00
+sample_status=00 00 20 00
+sample_adc=19 48 70 70 00 00 64 38 07 5a a0
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4905000
+sample_vbat_uv=3498000
+sample_ibus_ua=0
+sample_die_decic=260
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x80
+startup_int=00 00 62 00
+startup_status=00 00 20 00
+startup_adc=18 c0 6e 80 00 00 63 b0 07 60 c8
+startup_int4_disable=0x00
+startup_int4_wait=0x01
+startup_mode_before=0x01
+startup_mode_after=0x01
+startup_cntl2=0xf2
+startup_vbuscntl=0xe7
+startup_vbatcntl=0x37
+startup_prtncntl=0xfe
+startup_vbus_uv=4888000
+startup_vbat_uv=3596500
+startup_ibus_ua=0
+startup_die_decic=260
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Unspecified failure
+POWER_SUPPLY_TYPE=Mains
+@@battery-zone
+sm5714-battery
+31800
+enabled
+@@failed

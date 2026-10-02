@@ -1,0 +1,92 @@
+@@boot
+acdd2dfc-7f8a-4970-aa57-d71edab99df6
+@@uptime
+459.00 3636.28
+@@identity
+f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5  -
+fea0613f810d57b4baee737127334195fe8ba2f12f59752ad2eee76159679c34  /sys/kernel/notes
+@@zone37
+@@type
+sm5440-passive
+@@temp
+cat: /sys/class/thermal/thermal_zone37/temp: No data available
+@@mode
+disabled
+@@policy
+step_wise
+@@trip_point_0_type
+cat: /sys/class/thermal/thermal_zone37/trip_point_0_type: No such file or directory
+@@trip_point_0_temp
+cat: /sys/class/thermal/thermal_zone37/trip_point_0_temp: No such file or directory
+/sys/devices/virtual/thermal/thermal_zone37
+/sys/devices/virtual/thermal/thermal_zone37/device
+@@zones
+/sys/class/thermal/thermal_zone0 aoss0-thermal
+/sys/class/thermal/thermal_zone1 cpuss0-thermal
+/sys/class/thermal/thermal_zone10 cpu5-bottom-thermal
+/sys/class/thermal/thermal_zone11 cpu6-top-thermal
+/sys/class/thermal/thermal_zone12 cpu6-bottom-thermal
+/sys/class/thermal/thermal_zone13 cpu7-top-thermal
+/sys/class/thermal/thermal_zone14 cpu7-middle-thermal
+/sys/class/thermal/thermal_zone15 cpu7-bottom-thermal
+/sys/class/thermal/thermal_zone16 aoss1-thermal
+/sys/class/thermal/thermal_zone17 cpu0-thermal
+/sys/class/thermal/thermal_zone18 cpu1-thermal
+/sys/class/thermal/thermal_zone19 cpu2-thermal
+/sys/class/thermal/thermal_zone2 cpuss1-thermal
+/sys/class/thermal/thermal_zone20 video-thermal
+/sys/class/thermal/thermal_zone21 mem-thermal
+/sys/class/thermal/thermal_zone22 modem0-thermal
+/sys/class/thermal/thermal_zone23 modem1-thermal
+/sys/class/thermal/thermal_zone24 modem2-thermal
+/sys/class/thermal/thermal_zone25 modem3-thermal
+/sys/class/thermal/thermal_zone26 camera0-thermal
+/sys/class/thermal/thermal_zone27 camera1-thermal
+/sys/class/thermal/thermal_zone28 aoss2-thermal
+/sys/class/thermal/thermal_zone29 gpuss-0-thermal
+/sys/class/thermal/thermal_zone3 cpuss2-thermal
+/sys/class/thermal/thermal_zone30 gpuss-1-thermal
+/sys/class/thermal/thermal_zone31 gpuss-2-thermal
+/sys/class/thermal/thermal_zone32 cdsp0-thermal
+/sys/class/thermal/thermal_zone33 cdsp1-thermal
+/sys/class/thermal/thermal_zone34 cdsp2-thermal
+/sys/class/thermal/thermal_zone35 cdsp3-thermal
+/sys/class/thermal/thermal_zone36 gpuss-7-thermal
+/sys/class/thermal/thermal_zone37 sm5440-passive
+/sys/class/thermal/thermal_zone38 sm5714-battery
+/sys/class/thermal/thermal_zone4 cpuss3-thermal
+/sys/class/thermal/thermal_zone5 cpu3-top-thermal
+/sys/class/thermal/thermal_zone6 cpu3-bottom-thermal
+/sys/class/thermal/thermal_zone7 cpu4-top-thermal
+/sys/class/thermal/thermal_zone8 cpu4-bottom-thermal
+/sys/class/thermal/thermal_zone9 cpu5-top-thermal
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3821000
+POWER_SUPPLY_VOLTAGE_AVG=3821000
+POWER_SUPPLY_VOLTAGE_OCV=3836000
+POWER_SUPPLY_CURRENT_NOW=-648000
+POWER_SUPPLY_CURRENT_AVG=-362000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=42
+POWER_SUPPLY_TEMP=318
+POWER_SUPPLY_TYPE=Battery
+@@pack-iio
+/sys/bus/iio/devices/iio:device0
+spmi-adc5-gen3
+@@services
+active
+active
+active

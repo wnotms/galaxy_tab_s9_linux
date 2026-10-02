@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@passive; cat /sys/kernel/debug/sm5440-0-0063/snapshot; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@battery-zone; cat /sys/class/thermal/thermal_zone38/type /sys/class/thermal/thermal_zone38/temp /sys/class/thermal/thermal_zone38/mode; echo @@failed; systemctl --failed --no-legend --plain --no-pager"
+  ],
+  "ended_utc": "2026-10-02T11:55:43.825028+00:00",
+  "started_utc": "2026-10-02T11:55:43.731429+00:00",
+  "status": 0
+}

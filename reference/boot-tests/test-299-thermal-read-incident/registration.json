@@ -1,0 +1,20 @@
+{
+  "test": "Test299",
+  "purpose": "attribute owner post-test SM5440 passive thermal warning and correct automatic sensor registration",
+  "scope": "read-only incident + offline source qualification",
+  "runtime_baseline": "Test263/acdd2dfc",
+  "device_mutation": false,
+  "change": "power_supply descriptor no_thermal=true for OFF-only passive monitor",
+  "temperature_fallback": false,
+  "hardware_policy_changed": false,
+  "PPS": false,
+  "pump_ON": false,
+  "tests": {
+    "thermal_registration": 5,
+    "passive": 24,
+    "full": {
+      "executed": false,
+      "reason": "only descriptor metadata changed; affected tests"
+    }
+  }
+}

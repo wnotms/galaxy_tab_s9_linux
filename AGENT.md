@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test299 owner photo thermalzone37 at224s attributed read-only to restored263/
+acdd2dfc, typeSM5440passive/cacheENODATA afteroldstartuprefusal4.037s. Packzone38
+normal/enabled31.8C/IIO, noCPUfault/servicefailure. `.no_thermal=true` onlypassive
+PSYmetadata prevents automatic tripless registration; TEMP/ENODATA/fault/ADC/
+packthermal unchanged.5actualmainline-registration +24passive host PASS;
+ARM64qualification pending. No newdevicewrite/PPS/pump/current. Next register
+one Test300 short absence-of-passive-zone +packzone proof/15s/exact263rollback;
+no224sdelay needed toprove registration absent. Goalactive/Stage3NOTREADY.
+
 Test298 RUNTIME_DEVICE_DIAGNOSTIC_COMPLETED_EXACT263_RESTORED. Sourceeefef33f,
 registration15f1bae6/oneboot1b47865f/oneAPIret0 at17.275s:
 instance1/source9/budget14/PDO3701912c fixed5V3A/currentTCPM5V1.8A;15sdevice
