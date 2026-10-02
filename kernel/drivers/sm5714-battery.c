@@ -29,6 +29,7 @@
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
+#include <linux/limits.h>
 #include <linux/pm.h>
 #include <linux/power_supply.h>
 #include <linux/workqueue.h>
@@ -114,11 +115,17 @@ struct sm5714_battery {
 	bool typec_charge;
 	bool typec_fault;
 	bool suspended;
+	/* Default inactive; only an explicit companion lease inhibits switching. */
+	bool switching_inhibited;
+	u64 switching_lease;
 };
 
 /* Companion callbacks hold this lock through use; unbind clears before free. */
 static DEFINE_MUTEX(sm5714_companion_lock);
 static struct sm5714_battery *sm5714_companion;
+/* Registry lock protects issuer and inhibition inherited across unbind/rebind. */
+static u64 sm5714_switching_issuer;
+static bool sm5714_switching_blocked;
 
 static int sm5714_get_online_raw(struct sm5714_battery *sm);
 static int sm5714_get_status(struct sm5714_battery *sm);
@@ -296,7 +303,15 @@ sm5714_charge_thermal_state(struct sm5714_battery *sm, int temp)
 	return SM5714_THERMAL_NORMAL;
 }
 
-static int sm5714_configure_charging(struct sm5714_battery *sm)
+/* Invalidation never drops inhibition: another charger's state is unknown. */
+static void sm5714_revoke_switching_locked(struct sm5714_battery *sm)
+{
+	lockdep_assert_held(&sm->chg_lock);
+	if (sm->switching_inhibited)
+		sm->switching_lease = 0;
+}
+
+static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 {
 	unsigned int input_ma, fast_ma;
 	enum sm5714_charge_thermal_state thermal_state;
@@ -304,7 +319,7 @@ static int sm5714_configure_charging(struct sm5714_battery *sm)
 	int temp;
 	int ret;
 
-	mutex_lock(&sm->chg_lock);
+	lockdep_assert_held(&sm->chg_lock);
 	/* Never inherit Android's unknown limits or leave Q4 closed on error. */
 	ret = sm5714_disable_charging(sm);
 	if (ret)
@@ -320,7 +335,7 @@ static int sm5714_configure_charging(struct sm5714_battery *sm)
 			goto out_unlock;
 	}
 	/* Polling must not override TCPM standby/reset or suspend's charge-off. */
-	if (sm->suspended || (sm->typec_owned &&
+	if (sm->switching_inhibited || sm->suspended || (sm->typec_owned &&
 	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100)))
 		goto out_unlock;
 	ret = sm5714_charge_fault(sm);
@@ -441,13 +456,136 @@ static int sm5714_configure_charging(struct sm5714_battery *sm)
 out_unlock:
 	/* A failed write may still have reached the chip; best-effort open Q4. */
 	if (ret) {
-		if (ret != -ENODEV && sm->typec_owned)
+		if (ret != -ENODEV && sm->typec_owned) {
 			sm->typec_fault = true;
+			sm5714_revoke_switching_locked(sm);
+		}
 		sm5714_disable_charging(sm);
 	}
+	return ret;
+}
+
+static int sm5714_configure_charging(struct sm5714_battery *sm)
+{
+	int ret;
+
+	mutex_lock(&sm->chg_lock);
+	ret = sm5714_configure_charging_locked(sm);
 	mutex_unlock(&sm->chg_lock);
 	return ret;
 }
+
+/*
+ * Samsung chg_set_enq4fet()/VBUSCNTL encoding, already used by ordinary
+ * switching above. Verify both safety settings; 100mA is not VSYS isolation.
+ * Preserve the first error but attempt both operations even on an I2C fault.
+ */
+static int sm5714_verify_switching_off_locked(struct sm5714_battery *sm)
+{
+	int ret, value, first;
+
+	lockdep_assert_held(&sm->chg_lock);
+	first = sm5714_disable_charging(sm);
+	value = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CNTL1);
+	ret = value < 0 ? value : (value & SM5714_CHG_CNTL1_ENQ4FET) ? -EIO : 0;
+	if (!first)
+		first = ret;
+	ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+				     GENMASK(6, 0), sm5714_input_current_reg(100));
+	if (!first)
+		first = ret;
+	value = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_VBUSCNTL);
+	ret = value < 0 ? value : (value & GENMASK(6, 0)) ? -EIO : 0;
+	if (!first)
+		first = ret;
+	return first;
+}
+
+static bool sm5714_fixed_grant_locked(struct sm5714_battery *sm)
+{
+	lockdep_assert_held(&sm->chg_lock);
+	return !sm->suspended && !sm->typec_fault && sm->typec_owned &&
+		sm->typec_charge && sm->typec_ma >= 100 &&
+		(sm->typec_mv == 5000 || sm->typec_mv == 9000);
+}
+
+int sm5714_battery_switching_acquire(u64 *lease)
+{
+	struct sm5714_battery *sm;
+	int ret = -ENODEV;
+
+	if (!lease)
+		return -EINVAL;
+	*lease = 0;
+	mutex_lock(&sm5714_companion_lock);
+	sm = sm5714_companion;
+	if (!sm)
+		goto out;
+	mutex_lock(&sm->chg_lock);
+	if (sm->switching_lease) {
+		ret = -EBUSY;
+	} else if (!sm5714_fixed_grant_locked(sm)) {
+		ret = -EAGAIN;
+	} else if (sm5714_switching_issuer == U64_MAX) {
+		ret = -EOVERFLOW;
+	} else {
+		/* Inhibit before touching Q4, without destroying the fixed budget. */
+		sm->switching_inhibited = true;
+		sm->switching_lease = ++sm5714_switching_issuer;
+		*lease = sm->switching_lease;
+		ret = sm5714_verify_switching_off_locked(sm);
+		if (ret) {
+			sm->typec_fault = true;
+			sm5714_revoke_switching_locked(sm);
+		}
+	}
+	mutex_unlock(&sm->chg_lock);
+	if (*lease) {
+		power_supply_changed(sm->psy_usb);
+		power_supply_changed(sm->psy_bat);
+	}
+out:
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_switching_acquire);
+
+int sm5714_battery_switching_release(u64 lease)
+{
+	struct sm5714_battery *sm;
+	int ret = -ENODEV;
+
+	if (!lease)
+		return -EINVAL;
+	mutex_lock(&sm5714_companion_lock);
+	sm = sm5714_companion;
+	if (!sm)
+		goto out;
+	mutex_lock(&sm->chg_lock);
+	if (!sm->switching_inhibited || sm->switching_lease != lease) {
+		ret = -ESTALE;
+	} else if (!sm5714_fixed_grant_locked(sm)) {
+		ret = -EAGAIN;
+	} else {
+		/* Caller must first prove pump OFF and fresh physical fixed VBUS.
+		 * Hold chg_lock through restore: no poller/TCPM interleaving.
+		 */
+		sm->switching_inhibited = false;
+		ret = sm5714_configure_charging_locked(sm);
+		if (ret)
+			sm->switching_inhibited = true;
+		else
+			sm5714_switching_blocked = false;
+		sm->switching_lease = 0;
+	}
+	mutex_unlock(&sm->chg_lock);
+	power_supply_changed(sm->psy_usb);
+	power_supply_changed(sm->psy_bat);
+out:
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_switching_release);
 
 /* TCPM budget is not a measured VBUS voltage or proof of PS_RDY on its own. */
 static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
@@ -457,6 +595,7 @@ static void sm5714_inhibit_typec_locked(struct sm5714_battery *sm)
 	 * entry; no fault path can accidentally leave the old budget live.
 	 */
 	lockdep_assert_held(&sm->chg_lock);
+	sm5714_revoke_switching_locked(sm);
 	sm->typec_fault = true;
 	sm->typec_charge = false;
 	sm->typec_ma = 0;
@@ -483,6 +622,8 @@ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
 		mutex_unlock(&sm->chg_lock);
 		goto out;
 	}
+	if (mv != sm->typec_mv || ma != sm->typec_ma)
+		sm5714_revoke_switching_locked(sm);
 	sm->typec_mv = mv;
 	/* Store the grant; configure_charging separately caps actual input draw. */
 	sm->typec_ma = ma;
@@ -512,6 +653,7 @@ int sm5714_battery_set_typec_charge(bool charge)
 	mutex_lock(&sm->chg_lock);
 	sm->typec_charge = charge;
 	if (!charge) {
+		sm5714_revoke_switching_locked(sm);
 		sm->typec_mv = 0;
 		sm->typec_ma = 0;
 	}
@@ -933,6 +1075,7 @@ static void sm5714_poll_work(struct work_struct *work)
 			mutex_lock(&sm->chg_lock);
 			changed = sm->thermal_state != SM5714_THERMAL_STOP;
 			sm->thermal_state = SM5714_THERMAL_STOP;
+			sm5714_revoke_switching_locked(sm);
 			if (sm->typec_owned)
 				sm->typec_fault = true;
 			sm5714_disable_charging(sm);
@@ -954,6 +1097,7 @@ static void sm5714_poll_work(struct work_struct *work)
 		}
 	} else if (online == 0 && sm->last_online) {
 		mutex_lock(&sm->chg_lock);
+		sm5714_revoke_switching_locked(sm);
 		sm5714_disable_charging(sm);
 		mutex_unlock(&sm->chg_lock);
 	}
@@ -1001,6 +1145,7 @@ static int sm5714_suspend(struct device *dev)
 
 	mutex_lock(&sm->chg_lock);
 	sm->suspended = true;
+	sm5714_revoke_switching_locked(sm);
 	mutex_unlock(&sm->chg_lock);
 	cancel_delayed_work_sync(&sm->poll_work);
 	/* Thermal polling cannot protect an unattended suspended charge. */
@@ -1032,10 +1177,30 @@ static void sm5714_unpublish_companion(void *data)
 	if (sm5714_companion == sm)
 		sm5714_companion = NULL;
 	mutex_lock(&sm->chg_lock);
+	if (sm->switching_inhibited)
+		sm5714_switching_blocked = true;
+	sm5714_revoke_switching_locked(sm);
 	sm->suspended = true;
 	sm5714_disable_charging(sm);
 	mutex_unlock(&sm->chg_lock);
 	mutex_unlock(&sm5714_companion_lock);
+}
+
+static int sm5714_publish_companion(struct sm5714_battery *sm)
+{
+	int ret = 0;
+
+	mutex_lock(&sm5714_companion_lock);
+	if (sm5714_companion) {
+		ret = -EBUSY;
+	} else {
+		mutex_lock(&sm->chg_lock);
+		sm->switching_inhibited = sm5714_switching_blocked;
+		mutex_unlock(&sm->chg_lock);
+		sm5714_companion = sm;
+	}
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
 }
 
 static int sm5714_probe(struct i2c_client *client)
@@ -1178,10 +1343,7 @@ static int sm5714_probe(struct i2c_client *client)
 	ret = devm_add_action_or_reset(dev, sm5714_unpublish_companion, sm);
 	if (ret)
 		return ret;
-	mutex_lock(&sm5714_companion_lock);
-	sm5714_companion = sm;
-	mutex_unlock(&sm5714_companion_lock);
-	return 0;
+	return sm5714_publish_companion(sm);
 }
 
 static const struct of_device_id sm5714_of_match[] = {

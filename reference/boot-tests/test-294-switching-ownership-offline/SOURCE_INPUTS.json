@@ -1,0 +1,22 @@
+{
+  "starting_revision": "706811f9",
+  "inputs": {
+    "kernel/drivers/sm5714-battery.c": {
+      "sha256": "f0d5911f9630627a310285082452bcd12a4ac5d8d439a081714318c1657f2689",
+      "base_sha256": "6b0a448bf3d582e3c00d775b186f76fd099f24a7edb843dd89d7fc62fa2b8fe4"
+    },
+    "kernel/drivers/sm5714-stage2.h": {
+      "sha256": "de0fb65063aa8ca119088e2587a09f5d48e9f04708be203fda70e4a1683c7d42",
+      "base_sha256": "5feb40eadc5b9ddc1d7c481efe5628b715c970a1f8417e8f6e8732da8220489e"
+    },
+    "tests/test_sm5714_charge_safety.py": {
+      "sha256": "d2f6fc5839e7545193e9f5d55980ad811e73d53378f7eceb1688f47c6e94f014",
+      "base_sha256": "86d3a93ec1334fe99527345d336335e8d4315e20ade4a3d264a08ee0557c4fe7"
+    },
+    "tests/test_sm5714_switching_ownership.py": {
+      "sha256": "6492913b3d87b6e6ff1f526ce97c8e79aeeb5462c17f73a358f8542e96aaaff5",
+      "base_sha256": null
+    }
+  },
+  "device_operations": false
+}

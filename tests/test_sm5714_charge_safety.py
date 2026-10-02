@@ -29,6 +29,8 @@ class ChargeSafetyTests(unittest.TestCase):
             "static u8 sm5714_input_current_reg(",
             "static u8 sm5714_fast_current_reg(",
             "static enum sm5714_charge_thermal_state\nsm5714_charge_thermal_state(",
+            "static void sm5714_revoke_switching_locked(",
+            "static int sm5714_configure_charging_locked(",
             "static int sm5714_configure_charging(",
         ]
         harness = r'''
@@ -37,6 +39,8 @@ class ChargeSafetyTests(unittest.TestCase):
 #include <errno.h>
 #include <stdbool.h>
 typedef unsigned char u8;
+typedef unsigned long long u64;
+#define lockdep_assert_held(x) ((void)(x))
 #define BIT(n) (1U << (n))
 #define GENMASK(h,l) (((~0U) >> (31 - (h))) & ((~0U) << (l)))
 static unsigned int clamp_val(unsigned int v, unsigned int l, unsigned int h) {
@@ -58,6 +62,7 @@ enum sm5714_charge_thermal_state { SM5714_THERMAL_NORMAL,
 struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat; unsigned int float_uv;
        unsigned int typec_mv, typec_ma;
        bool typec_owned, typec_claimed, typec_charge, typec_fault, suspended;
+       bool switching_inhibited; u64 switching_lease;
        enum sm5714_charge_thermal_state thermal_state; };
 static unsigned int regs[256];
 static int mode, temp = 250, type, writes, temp_error;

@@ -1,0 +1,12 @@
+{
+  "purpose": "leased SM5714 switching inhibition backend for future transactional handoff",
+  "starting_revision": "706811f9",
+  "scope": "offline",
+  "device_operations": false,
+  "pps_authorized": false,
+  "pump_on_authorized": false,
+  "fixed_limits_mv_ma": [[5000, 1800], [9000, 1500]],
+  "float_uv": 4440000,
+  "source_design": "docs/SM5714_SWITCHING_OWNERSHIP.md",
+  "qualification": ["actual-C fault and lifetime tests", "kernel build", "full host regression", "config/DT/protected/artifact audit"]
+}
