@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test296 ONE source-backed ADC20msrearm comparison registered, source18e495bc.
+228affected/8new+5runner PASS; ARM6491.64s/W1sparse/objectsame/exact295configDT/
+protected/181pairedpass. CheckedOFF/ADCdisable+unlock20ms+cancellation before
+unchangedconverter; no ADCmath/threshold/deadline/fault/freshnesswaiver. OnePCUSB
+boot/three startup pairs/fullJSON/15sdeviceendpoint/exact263rollback; hostNCM
+oneprobe recorded, host-onlytimeout doesnot prolongOFF-only diagnostic; device/
+Code43/kernel/thermal gatesremain. Push beforemutation; read296docs/registration/
+package/artifacts. No PPS/pump/current; notcausalproof/Stage3activeNOTREADY.
+
 Test295 PAIRED_STARTUP_CAPTURED_STOP_NCM_EXACT263_RESTORED. One1028ae06 boot,
 3near-time pairs: SM5440/gauge3.5985/3.891,3.6/3.844,3.499/3.854V;244–355mV
 adjacent-window difference, no calibratedoffset/trueVBAT/causalproof; startup

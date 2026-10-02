@@ -1,0 +1,1 @@
+REGISTERED_ONE_VENDOR_REARM_COMPARISON_BOOT; device not yet modified.
