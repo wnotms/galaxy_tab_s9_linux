@@ -2,6 +2,15 @@
 
 ## Current state (2026-10-02)
 
+Test297 OFFLINE_RUNTIME_SNAPSHOT_QUALIFIED, sourceeefef33f (d352deb4 +macrofix).
+119affected PASS4.399s; ARM6466.85s/W1sparse/objectidentical/exact296configDT/
+protected96/compiled overlays/181pairedpass. Initial macro build failure retained;
+fixed actualC fixture covers kernel macro. StandardTCPM/source/fixed mirrors/
+lifetime drain/0400realAPI; no atomicTCPM/physical/chargegrant claim. No core/
+configDT/USB/SM5440/PPS/pump/current change. Next separate one Test298 read/
+15sdeviceendpoint/exact263rollback. Fullnotrerun/noCI; goalactive/Stage3NR.
+Read297RESULTS/summary/validation. Current263ffca1c7b unchanged/read-only298preflight.
+
 Test297 runtime snapshot implemented;119affected SM5714 host tests PASS4.546s.
 Lifetime-pinned standard TCPM PSY/source/fixed callback mirrors, generations,
 zero-output refusal/no property locks;0400 debugfs uses actual API. No PPS/pump/

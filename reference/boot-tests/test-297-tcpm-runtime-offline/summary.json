@@ -1,0 +1,72 @@
+{
+  "test": "Test297",
+  "verdict": "OFFLINE_RUNTIME_SNAPSHOT_QUALIFIED",
+  "source_revision": "eefef33f",
+  "tests": {
+    "affected": 119,
+    "elapsed_seconds": 4.399,
+    "failures": 0,
+    "errors": 0,
+    "full": {
+      "executed": false,
+      "reused": "Test294",
+      "reason": "owner changed-dependency workflow/no routing change"
+    }
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 66.8500817410004,
+    "initial_build_failure": "current macro collision, preserved build.log; fixed in eefef33f"
+  },
+  "static": {
+    "exit_code": 0,
+    "object_unchanged": true,
+    "driver_warnings": 0,
+    "upstream_warning": "vDSO __kernel_getrandom undeclared symbol"
+  },
+  "config_diff": {},
+  "dtb_diff": {},
+  "protected_changes": {},
+  "paired_module_files": 181,
+  "artifacts": {
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-297-passive/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-297-passive/modules-x710.tar.gz",
+      "bytes": 47319331,
+      "sha256": "cb81a2c8de8f34b5dc8af7d3a5e6c2e0d2c86ecce6e5327c8e7e26ef8fc09b45"
+    },
+    "SHA256SUMS": {
+      "path": "out/kernel-x710-297-passive/SHA256SUMS",
+      "bytes": 323,
+      "sha256": "af1d519abdd55d2d1ee41db8666fbf324715cb434bfbd3368e2971b36b550168"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-297-passive/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-297-passive/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "392679160914132cc97d73a7011c80e24a9a8eafb85e264bf8b16198c27950df"
+    },
+    "config": {
+      "path": "out/kernel-x710-297-passive/config",
+      "bytes": 243276,
+      "sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5"
+    },
+    "Image.gz": {
+      "path": "out/kernel-x710-297-passive/Image.gz",
+      "bytes": 22131610,
+      "sha256": "50db738292ffce9a1b612bfb49a151c1b88800c7041e65439bf0fef0bf0ddb86"
+    }
+  },
+  "hardware_tested": false,
+  "PPS": false,
+  "pump_ON": false,
+  "charging_authorized": false
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-297-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "-j8",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 7.904331919999095,
+  "object_before": "8c6d10cd271844650f59b2bd236bb62b16dd467f8612826c49fce22fba330bad",
+  "object_after": "8c6d10cd271844650f59b2bd236bb62b16dd467f8612826c49fce22fba330bad",
+  "object_unchanged": true
+}
