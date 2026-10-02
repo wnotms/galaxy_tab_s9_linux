@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-03)
 
+Test305 follow-up:11 bounded readonlyWiFi rows completed; same299boot57535...,
+allSDP500mA/SOC0/temp31.3C/netnegative, min3.135V/final3.145V. No chargerchange
+observed/owner C2reconnect pending. Monitor terminal/notrestarted; no mutation,
+flash/reboot/PPS/pump/current/ADC invocation. EntrySTOP lowbattery; first restore
+ordinaryaccepted18Wcharging, thenSOC/VBATsafe andregisteredphysicalscope. Read
+305low-battery-observation raw/summary. Offlinequalification unchanged; no
+host/buildrepeat. Goalactive/fullStage3NOTREADY, notCPUwedgecausalproof.
+
 Test305 OFFLINE_ADC_CONDITION_CANDIDATE_QUALIFIED, source9dceb767. One isolated
 ENHIZbit7 clear/unchangedADC/verifiedrestore, OFF+ADC-off checks/firsterror+cleanup/
 pendingfault onfailure/PMdrain; no companion publication/reschedule/secondresume

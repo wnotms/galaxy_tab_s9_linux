@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test292-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.139.153.19",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; cat /sys/class/power_supply/sm5714-battery/uevent; cat /sys/class/power_supply/sm5714-usb/uevent"
+  ],
+  "interval_after_completion_seconds": 15,
+  "maximum_observations": 11,
+  "read_only": true,
+  "process_terminal": true,
+  "process_restarted": false
+}
