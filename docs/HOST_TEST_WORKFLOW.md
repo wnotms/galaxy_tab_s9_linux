@@ -38,6 +38,16 @@ do not retrieve it or rehash unchanged rollback directories on every sample.
 Unknown identity, new reboot, lost rescue or a safety fault still stops the test.
 Registered observation windows and safety limits remain in force.
 
+## Round speed (owner instruction, 2026-10-02)
+
+Use [CHARGING_ROUND_WORKFLOW.md](CHARGING_ROUND_WORKFLOW.md) for the reviewed
+sequence. Group related capture and independent read-only checks, accept native
+ADB recovery readiness promptly, and reuse unchanged build/test qualification.
+Do not pause for a separate commit or review after each command; register/push
+before mutation and archive/push each completed meaningful stage/test. Preserve
+safety/identity/transport gates, observation limits and first-failure handling.
+A failure needs immediate cleanup/recovery, not a wait for a network push.
+
 ## Device completion criterion (owner instruction, 2026-09-30)
 
 For subsequent physical tests, normal device behavior within the registered

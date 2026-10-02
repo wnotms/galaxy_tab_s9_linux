@@ -1,0 +1,96 @@
+{
+  "all_archived_command_count": 116,
+  "all_archived_command_seconds": 52.351525,
+  "command_record_span_seconds": 888.907699,
+  "optimization_claim": "native-state bug removed in mocked helper; not yet hardware benchmarked; no guaranteed overall round duration",
+  "other_recorded_phases": "preflight included in all_archived counts, not in listed physical phase subtotals",
+  "phases": {
+    "candidate-admission": {
+      "command_seconds": 13.864851999999999,
+      "commands": 19,
+      "slowest": [
+        {
+          "name": "boots-after.command",
+          "seconds": 6.99925
+        },
+        {
+          "name": "windows-usb.command",
+          "seconds": 3.988905
+        }
+      ]
+    },
+    "final-acceptance": {
+      "command_seconds": 13.516715,
+      "commands": 19,
+      "slowest": [
+        {
+          "name": "boots-after.command",
+          "seconds": 6.715949
+        },
+        {
+          "name": "windows-usb.command",
+          "seconds": 3.959492
+        }
+      ]
+    },
+    "install": {
+      "command_seconds": 11.615739,
+      "commands": 18,
+      "slowest": [
+        {
+          "name": "paired-module-swap.command",
+          "seconds": 5.614748
+        },
+        {
+          "name": "module-boundary.command",
+          "seconds": 2.019592
+        }
+      ]
+    },
+    "recovery-entry": {
+      "command_seconds": 2.107458,
+      "commands": 29,
+      "slowest": [
+        {
+          "name": "bcb-request.command",
+          "seconds": 0.145623
+        },
+        {
+          "name": "ordinary-reboot.command",
+          "seconds": 0.123553
+        }
+      ]
+    },
+    "rollback-install": {
+      "command_seconds": 4.790312999999999,
+      "commands": 13,
+      "slowest": [
+        {
+          "name": "restore-paired-modules.command",
+          "seconds": 2.219429
+        },
+        {
+          "name": "restore-boot.command",
+          "seconds": 0.533391
+        }
+      ]
+    },
+    "rollback-recovery-entry": {
+      "command_seconds": 0.951396,
+      "commands": 12,
+      "slowest": [
+        {
+          "name": "bcb-request.command",
+          "seconds": 0.138826
+        },
+        {
+          "name": "helper-readonly-check.command",
+          "seconds": 0.12646
+        }
+      ]
+    }
+  },
+  "physical_speed_benchmark": false,
+  "source": "Test282 archived command metadata",
+  "unnecessary_recovery_polls_seconds": 45.947993
+}

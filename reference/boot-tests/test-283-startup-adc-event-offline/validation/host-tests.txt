@@ -1,0 +1,33 @@
+test_adc_and_confirmation_failure_not_exempted (__main__.Classification.test_adc_and_confirmation_failure_not_exempted) ... ok
+test_all256_int4_values_only_completion_bit_allowed (__main__.Classification.test_all256_int4_values_only_completion_bit_allowed) ... ok
+test_all_other_literal_safety_fields_remain_exact (__main__.Classification.test_all_other_literal_safety_fields_remain_exact) ... ok
+test_confirmation_deadlines (__main__.Classification.test_confirmation_deadlines) ... ok
+test_cpu_and_severe_kernel_faults_still_stop (__main__.Classification.test_cpu_and_severe_kernel_faults_still_stop) ... ok
+test_empty_missing_and_wrong_boot_journal (__main__.Classification.test_empty_missing_and_wrong_boot_journal) ... ok
+test_existing_journal_cpu_smmu_rules_ast_unchanged (__main__.Classification.test_existing_journal_cpu_smmu_rules_ast_unchanged) ... ok
+test_final_baseline_int4_zero_keeps_original_behavior (__main__.Classification.test_final_baseline_int4_zero_keeps_original_behavior) ... ok
+test_healthy_current_snapshot_is_mandatory (__main__.Classification.test_healthy_current_snapshot_is_mandatory) ... ok
+test_identity_services_dcc_and_battery_still_stop (__main__.Classification.test_identity_services_dcc_and_battery_still_stop) ... ok
+test_incremental_fault_never_gets_startup_exemption (__main__.Classification.test_incremental_fault_never_gets_startup_exemption) ... ok
+test_late_or_bad_startup_chronology (__main__.Classification.test_late_or_bad_startup_chronology) ... ok
+test_missing_and_duplicate_confirmations (__main__.Classification.test_missing_and_duplicate_confirmations) ... ok
+test_no_startup_fault_requires_no_exemption (__main__.Classification.test_no_startup_fault_requires_no_exemption) ... ok
+test_priorities_remain_exact (__main__.Classification.test_priorities_remain_exact) ... ok
+test_raw_adc_decoding_disagreement_rejected (__main__.Classification.test_raw_adc_decoding_disagreement_rejected) ... ok
+test_real282_classified_without_rewriting_original_stop (__main__.Classification.test_real282_classified_without_rewriting_original_stop) ... ok
+test_repeated_or_later_fault_rejected (__main__.Classification.test_repeated_or_later_fault_rejected) ... ok
+test_unsafe_raw_vbus_rejected_even_when_decoding_matches (__main__.Classification.test_unsafe_raw_vbus_rejected_even_when_decoding_matches) ... ok
+test_waiting_to_fault_over100ms_rejected (__main__.Classification.test_waiting_to_fault_over100ms_rejected) ... ok
+test_ambiguous_or_unauthorized_state_stops (__main__.RecoveryFlow.test_ambiguous_or_unauthorized_state_stops) ... ok
+test_deadline_no_reboot_flash_or_infinite_retry (__main__.RecoveryFlow.test_deadline_no_reboot_flash_or_infinite_retry) ... ok
+test_debian_and_offline_are_not_recovery (__main__.RecoveryFlow.test_debian_and_offline_are_not_recovery) ... ok
+test_invalid_deadline (__main__.RecoveryFlow.test_invalid_deadline) ... ok
+test_native_recovery_and_device_states (__main__.RecoveryFlow.test_native_recovery_and_device_states) ... ok
+test_returns_immediately_on_first_recovery_no_fixed_wait (__main__.RecoveryFlow.test_returns_immediately_on_first_recovery_no_fixed_wait) ... ok
+test_transitional_absence_does_not_trigger_another_reboot (__main__.RecoveryFlow.test_transitional_absence_does_not_trigger_another_reboot) ... ok
+test_transport_error_is_not_ready (__main__.RecoveryFlow.test_transport_error_is_not_ready) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 1.915s
+
+OK

@@ -2,6 +2,20 @@
 
 ## Current state (2026-10-02)
 
+Test283 OFFLINE_CLASSIFIER_AND_RECOVERY_FLOW_QUALIFIED_PHYSICAL_NOT_TESTED.
+Read283README/registration/RESULTS/replay and CHARGING_ROUND_WORKFLOW.28hosttests
+incl256INT4cases/ASTjournal equivalence+syntax/hash pass. New host gate permits
+only startupINT4ADC_UPDATED0/1; all other275conditions retained + mandatorysameboot
+currentidentity/healthyOFF. CPU/SMMU rules unchanged;282STOP/raw remain unchanged.
+Native recovery waiter removes wrong-state fixed waiting in mocks (28245.948s
+excess); not hardware speed benchmarked. No devicecmd/flash/reboot/load/trace/
+PPS/pumpON/current/kernel/config/DT/ADC/deadline/USB/rootfs change; reuse272/276/
+279/280/282 qualification, no build/full/CI. Lastverified Test263 from282 unchanged
+by283. Future separate registered onepassive trace with new gate/waiter, essential
+identity/rescue/safety gates + unconditional263rollback. Batch related checks/
+parallel independent reads/reuse qualification/no per-command manual pauses;
+never shorten safety/observation limits. ActiveStage3 NOT READY.
+
 Test282 STOP_STARTUP_ADMISSION + EXACT263_ROLLBACK_DEVICE_ENDPOINT_COMPLETED.
 One272dd9a0205boot; INT00 00 62 01 fails frozen275accepted00 00 62 00, bitmap80/
 OFF01/01/IBUS0 and driverconfirmation2.300114s/currenthealthy retained. Zero

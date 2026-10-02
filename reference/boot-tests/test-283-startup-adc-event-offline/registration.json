@@ -1,0 +1,23 @@
+{
+  "INT4_allowed": [
+    0,
+    1
+  ],
+  "PPS": false,
+  "base_commit": "a18e91eaa950b5a40a54e7c9836b6fce2352bc3a",
+  "current_increase": false,
+  "device_operations_allowed": false,
+  "faults_never_exempted": "watchdog/timer/unknown INT4 bits, live/repeated/new/unconfirmed startup fault, unsafe ADC/current state, CPU fault, identity/transport gap",
+  "full_host_suite": false,
+  "future_physical_test": "separate pushed registration/new slots/live preflight/pairedreadback/one observer/max30s8calls100ms/firstrefusal/unconditional263rollback",
+  "historical_Test282_STOP_preserved": true,
+  "kernel_build": false,
+  "other_startup_rules": "all frozen275 raw/literal/ranges/priority/chronology/protection checks retained; current sameboot identity/healthyOFF mandatory",
+  "physical_retry": false,
+  "pump_ON": false,
+  "purpose": "offline bounded startup ADC_UPDATED classification and recovery readiness optimization",
+  "reason": "host-only isolated gate/waiter; no kernel/routing/integration changes",
+  "reuse_qualification": "Test272provider; Test276observer26affected/full1481/W1/sparse; Test27950/Test28024/Test28218",
+  "rollback": "not performed/not required: offlineTest283 makes zero device changes",
+  "test": "Test283"
+}
