@@ -1,0 +1,112 @@
+{
+  "classification_profile": "Test283 bounded INT4 ADC_UPDATED only",
+  "current_health_verified": true,
+  "diagnostic_attribution_only": true,
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 41,
+  "last_source_timestamp": "15290093",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.943821,
+        "events": [],
+        "setup_source_seconds": 3.655355
+      },
+      {
+        "completion_source_seconds": 6.519859,
+        "events": [],
+        "setup_source_seconds": 5.658856
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "retained_startup_confirmation": {
+    "charging_authorized": false,
+    "confirmation_seconds": 2.294363,
+    "confirmed": {
+      "MESSAGE": "sm5440-passive 0-0063: passive startup REVBLK confirmed inactive; event retained",
+      "PRIORITY": "6",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "cdca467d7e604543b76606c0706b3009",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "2573445",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "2573445",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c6875;b=cdca467d7e604543b76606c0706b3009;m=32aa37;t=65cd3dbdaec65;x=f7f5e9d51fd05d2a",
+      "__MONOTONIC_TIMESTAMP": "3320375",
+      "__REALTIME_TIMESTAMP": "1790914856676453",
+      "__SEQNUM": "813173",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    },
+    "current_healthy_snapshot_required": true,
+    "event_retained": true,
+    "fault": {
+      "MESSAGE": "sm5440-passive 0-0063: passive fault bitmap=0x80 INT=00 00 62 00 STATUS=00 00 20 00 INT4-disable=00 INT4-wait=01 mode=01/01 CNTL2=f2 VBUSCNTL=e7 VBATCNTL=37 PRTNCNTL=fe ADC=1a 08 7b 30 00 00 64 f0 06 76 e0 VBUS=4929000uV VBAT=3950000uV IBUS=0uA die=255 deciC",
+      "PRIORITY": "4",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "cdca467d7e604543b76606c0706b3009",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "279082",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "279082",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c6789;b=cdca467d7e604543b76606c0706b3009;m=17e9a9;t=65cd3dbc02bd7;x=ea91ee7e295536de",
+      "__MONOTONIC_TIMESTAMP": "1567145",
+      "__REALTIME_TIMESTAMP": "1790914854923223",
+      "__SEQNUM": "812937",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    },
+    "int4_adc_updated": false,
+    "waiting": {
+      "MESSAGE": "sm5440-passive 0-0063: passive startup REVBLK awaiting two fresh confirmations",
+      "PRIORITY": "4",
+      "SYSLOG_FACILITY": "0",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_BOOT_ID": "cdca467d7e604543b76606c0706b3009",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_DEVICE": "+i2c:0-0063",
+      "_KERNEL_SUBSYSTEM": "i2c",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "_RUNTIME_SCOPE": "system",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "279078",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "279078",
+      "_TRANSPORT": "kernel",
+      "_UDEV_SYSNAME": "0-0063",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=c6788;b=cdca467d7e604543b76606c0706b3009;m=17e931;t=65cd3dbc02b5e;x=94641caf4d18f30b",
+      "__MONOTONIC_TIMESTAMP": "1567025",
+      "__REALTIME_TIMESTAMP": "1790914854923102",
+      "__SEQNUM": "812936",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    }
+  },
+  "rows": 1070,
+  "stability_clean_claim": false,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [],
+  "unresolved_counts": {
+    "context": 0,
+    "syndrome": 0
+  },
+  "unresolved_startup_smmu": []
+}

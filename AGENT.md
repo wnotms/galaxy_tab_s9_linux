@@ -2,6 +2,14 @@
 
 ## Current state (2026-10-02)
 
+Test284 paired272deployment/readback+candidateadmission PASS: cdca467d7e604543
+b76606c0706b3009/Wi-Fi10.125.29.144 exactnotes/config/normalcmdline+healthyOFF/
+ADB/deviceNCM/noCode43/new283startupgate. Portabletools/packet/276observerhash
+readback verified. Read284INSTALL_STATUS/raw. Next ONE279/280coordinatedtrace/
+firstrefusalSTOP/ownedcleanup/unload then unconditional exact263rollback.
+Originalmodules/allbackups retained; no retry/PPS/pump/current/source change.
+Reusequalification/no build/full/CI. ActiveStage3 NOT READY.
+
 Test284 independent SINGLE passive trace registered on normal26360b572d1;
 preflight identity/health/rescue passes, Wi-Fi10.125.29.204. Reuse272provider+
 276ownedobserver+279Session/280coordinator; new283boundedADC_UPDATED/currenthealth
