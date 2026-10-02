@@ -1,0 +1,2455 @@
+{
+  "scope": "only historical project staging under D:/android/gts9-active",
+  "preserved": [
+    "gts9-stock",
+    "gts9-test263",
+    "gts9-test292",
+    "D:/android/platform-tools"
+  ],
+  "before_free_bytes": 998244352,
+  "actions": [
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test230/backup-boot.img",
+      "bytes": 100663296,
+      "sha256": "71e194a528d373580ee354bea1c0e68c2ff146d014ae34679955577b261d038d",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-cpuidle-off/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test230/backup-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/boot.img",
+      "bytes": 100663296,
+      "sha256": "de33cf6466d7139f358700fa6b0782e822a46b925f81754aa08e136c9718bc0e",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/candidate-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "af80c6d340e402d167faf8ce435ac1de3397bcba6a1dc835619ea16710e85ce5",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test248/candidate-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-248-no-dcc/validation/candidate-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/candidate-modules.tar",
+      "bytes": 158023680,
+      "sha256": "f33fece16bf1cda8f00028072b140475a60d57329d4eb21b21bf6ec4bf162af1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test248/candidate-modules.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/module-swap.sh",
+      "bytes": 1978,
+      "sha256": "1117699774e580aa2be74fedd9cb11c20b430c2bd21741e4cfaa993b64c0996b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test248/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/original-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "fc51e6329c1a18146f2d8c59392394b6c22cc792573ecc363240a0a7111942ef",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test248/original-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-247-early-csd-pnmi/validation/original-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test248/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "97625eee2f1fcca2e571b4710e981f083ff49b2ea21420062caa5976c725e232",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/boot.img",
+      "bytes": 100663296,
+      "sha256": "7f021014850504c3d881504cdf4c44171d0adb1049ae987d6552774684a8482b",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc-production/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/candidate-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "d7e19f94a39618975ab2bdb27d4b382935c951003eb98709c60e1dcffa64f0fc",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/candidate-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-249-no-dcc-production/validation/candidate-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/candidate-modules.tar",
+      "bytes": 157982720,
+      "sha256": "0b22114ae2244ca6f4c51c166dbff987cd7b1edb6147139ef48140d6bb3d63fa",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test249/candidate-modules.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/module-swap.sh",
+      "bytes": 1978,
+      "sha256": "910d69f9ca49195f52e3ccea9c0b34a609a3faa5fc96d60b2b7bc1a0240b72c0",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/original-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "af80c6d340e402d167faf8ce435ac1de3397bcba6a1dc835619ea16710e85ce5",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/original-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-249-no-dcc-production/validation/original-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/BUNDLE_INFO",
+      "bytes": 347,
+      "sha256": "96fa94b3b640d85e64f45826365496dffac335ef0867144805a3d970d573282e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/rollback/BUNDLE_INFO"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/SHA256SUMS",
+      "bytes": 389,
+      "sha256": "3a1aedcba6de9fe36626d179247639a0256d94c9ce1e02067ee768d10c1439d1",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/rollback/SHA256SUMS"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/boot.img",
+      "bytes": 100663296,
+      "sha256": "de33cf6466d7139f358700fa6b0782e822a46b925f81754aa08e136c9718bc0e",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/dtbo.img",
+      "bytes": 16777216,
+      "sha256": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-abl-no-cluster-idle/dtbo.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/init_boot.img",
+      "bytes": 8388608,
+      "sha256": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-abl-no-cluster-idle/init_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/vbmeta.img",
+      "bytes": 131072,
+      "sha256": "b95e5ef931fbe588f8574c06331db56ae906b1ac91ed73204704b35cb220b3d4",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test249/rollback/vbmeta.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/rollback/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "97625eee2f1fcca2e571b4710e981f083ff49b2ea21420062caa5976c725e232",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test249/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/boot.img",
+      "bytes": 100663296,
+      "sha256": "5402b7c45c06568591a86cce807af0820fddb23c03a1d9a49cec780dd7e45ec0",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage1/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/candidate-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "9877130daf3d92548e7b783032d0187faf1c8fb3220121cc61530af2b852a632",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test252/candidate-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-252-sm5714-stage1/attempt-01/tools/candidate-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/candidate-modules.tar",
+      "bytes": 157982720,
+      "sha256": "ea5ff9fe3c519270cd74653c1da45779ee4f72cb45b06b82c58569bb64cf8bd1",
+      "action": "removed_verified_module_content_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-gts9wifi/modules-sm5714-stage1.tar.gz",
+      "retained_archive_sha256": "7985911b32405232f460b86f59ad6c09806dce9db902ecc1dd6b43e6d557d275",
+      "matched_file_count": 181,
+      "matched_file_names_and_bytes": true,
+      "container_metadata_identical": false,
+      "reason": "obsolete uncompressed staging tar; exact module file set retained in WSL compressed archive; directory/tar metadata excluded"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/module-swap.sh",
+      "bytes": 1978,
+      "sha256": "f71d44b28e39b224ad02c8ba774a3ab67fc75834778e04d6b0dd072ccc1b8f64",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test252/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/original-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "d7e19f94a39618975ab2bdb27d4b382935c951003eb98709c60e1dcffa64f0fc",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test252/original-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-252-sm5714-stage1/attempt-01/tools/original-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/original-modules.tar",
+      "bytes": 157982720,
+      "sha256": "0b22114ae2244ca6f4c51c166dbff987cd7b1edb6147139ef48140d6bb3d63fa",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test249/candidate-modules.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/rollback-boot.img",
+      "bytes": 100663296,
+      "sha256": "7f021014850504c3d881504cdf4c44171d0adb1049ae987d6552774684a8482b",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-no-dcc-production/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test252/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test252/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/alpine-latest.tar",
+      "bytes": 4287488,
+      "sha256": "8058e2b646ae29aa500364a3e71c0a4a8d22e61563ee6abbc3eb147fb4f0cb58",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test254-oci-images/alpine-latest.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/candidate-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "700160205feeb0b30d7fda899d13d46e31ad5ba710016b8523053b80f141a970",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/candidate-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-254-debian-container-kernel/attempt-01/tools/candidate-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/candidate-modules.tar",
+      "bytes": 158064640,
+      "sha256": "bc727c362a184a1ec2f82e32481454703b753188bccdd4863a33ebe6e34cd95b",
+      "action": "removed_verified_module_content_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-container-candidate/modules-container-candidate.tar.gz",
+      "retained_archive_sha256": "4ef282f778f01acf4b69b15fd1926dc615319160970d4b3f41704ae2051d4bfe",
+      "matched_file_count": 181,
+      "matched_file_names_and_bytes": true,
+      "container_metadata_identical": false,
+      "reason": "obsolete uncompressed staging tar; exact module file set retained in WSL compressed archive; directory/tar metadata excluded"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/candidate-modules.tar.gz",
+      "bytes": 44853636,
+      "sha256": "4ef282f778f01acf4b69b15fd1926dc615319160970d4b3f41704ae2051d4bfe",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-container-candidate/modules-container-candidate.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/debian-trixie-slim.tar",
+      "bytes": 32185344,
+      "sha256": "dbb8167995c6f2afd26f266c66a199492a70d84df76d3490e4a44c3da925d5e5",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test254-oci-images/debian-trixie-slim.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/hello-world-latest.tar",
+      "bytes": 22016,
+      "sha256": "7b91988f7c72672140f65db0e281162261b94586214a6121884fb4af38f3f869",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/hello-world-latest.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/module-swap.sh",
+      "bytes": 1820,
+      "sha256": "9c2e9525a4cb7f7aba1f5def837677f510a2aabeb08f37f48227050679c16faa",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/nginx-alpine.tar",
+      "bytes": 27160064,
+      "sha256": "ecfe55ff435d985eb0ab4e0380d52bfa4037da6eac3c976f69123adc017263fe",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/test254-oci-images/nginx-alpine.tar"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/original-module-checksums.txt",
+      "bytes": 19503,
+      "sha256": "9877130daf3d92548e7b783032d0187faf1c8fb3220121cc61530af2b852a632",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/original-module-checksums.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-254-debian-container-kernel/attempt-01/tools/original-module-checksums.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/rollback-boot.img",
+      "bytes": 100663296,
+      "sha256": "5402b7c45c06568591a86cce807af0820fddb23c03a1d9a49cec780dd7e45ec0",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage1/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test254/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test254/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/candidate-modules.tar.gz",
+      "bytes": 44856076,
+      "sha256": "28e33cda7814686ee32b480c0b0cf4f02952cdc89d19ad7af37feb47e79edf1c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-sm5714-stage2/modules-sm5714-stage2.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/candidate-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/gts9-debian-to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test255/gts9-debian-to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/module-swap.sh",
+      "bytes": 1879,
+      "sha256": "e71be3e897dbc51cc6b700f8b86d2f2260db351eb5822418c06fdd5988fc0e43",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test255/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/rollback-test254-boot.img",
+      "bytes": 100663296,
+      "sha256": "ea73e65836ab316af658ed53273be0ec6351b335750978095e509054164509f7",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/rollback-test254-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "49ae21b333f953e88de430cf7c4b66f1b45afa0503640c042746ba79fd1f44f9",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-container-candidate/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/test254-rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "700160205feeb0b30d7fda899d13d46e31ad5ba710016b8523053b80f141a970",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test255/test254-rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/test255-candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "3a8e49a1112d07cbfc1f7c188c7ae8de3489713879ee5420fb1c9d010a599051",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test255/test255-candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test255/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test255/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d444b9ecf62b3968c5d0d74de9dc528da726fc389271ff395c9dbbd7d703642c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-258-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/candidate-modules.tar.gz",
+      "bytes": 47318321,
+      "sha256": "a146a0b04c9cc5158752e28736daea7020205d4c345d99e858c85d7e6ce8dd6a",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-258-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/candidate-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-258-passive/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/gts9-debian-to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258/gts9-debian-to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/module-swap.sh",
+      "bytes": 1879,
+      "sha256": "929784a50e6851b9460df5421b2536e8bd168f92c70d4c48c874955d94b56e15",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/rollback-test255-boot.img",
+      "bytes": 100663296,
+      "sha256": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/rollback-test255-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/test255-rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "3a8e49a1112d07cbfc1f7c188c7ae8de3489713879ee5420fb1c9d010a599051",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258/test255-rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/test258-candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "a44346617d60929357d8bcfa5378e8dbb6be0fc893b5072a44c17ed53d3856f5",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258/test258-candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test258-a02/module-swap.sh",
+      "bytes": 2592,
+      "sha256": "90e4d924b5a73c2fb9146204ddb51522739f1783a380a9440357c0870d028605",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test258-a02/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "3b6370e127a482fadcdb551c3aae51eb680c57152ecc0a3146e6446bbab9dc28",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-259-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/candidate-modules.tar.gz",
+      "bytes": 47318335,
+      "sha256": "dd49cc0e9880801bfc1e7d5926591e919cdf98a40cb61f6b1f2c48dd3e756c83",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-259-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/candidate-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-259-passive/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/gts9-debian-to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test259/gts9-debian-to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/module-swap.sh",
+      "bytes": 2592,
+      "sha256": "ea1d9c706121a92c22ec8b844d96a837cca10e49fefa19b61f21b8ea91c370a6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test259/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/rollback-test255-boot.img",
+      "bytes": 100663296,
+      "sha256": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/rollback-test255-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/test255-rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "3a8e49a1112d07cbfc1f7c188c7ae8de3489713879ee5420fb1c9d010a599051",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test259/test255-rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/test259-candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "a4e96ac27583068fba0e28392b4c8887b19a519fc67844321f4955f7324f6089",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test259/test259-candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test259/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test259/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "62bfc5ff19ff562590556dbae944799a0d5f86cf0256c006c14273f3aa96fad1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-260-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/candidate-modules.tar.gz",
+      "bytes": 47317867,
+      "sha256": "e9b6ba62099d97992d9780a223aaea4e2859e85fd09333fe5ae600889e82f579",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-260-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/candidate-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-260-passive/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/gts9-debian-to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test260/gts9-debian-to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/module-swap.sh",
+      "bytes": 2592,
+      "sha256": "7aeaae3a72677fd4e3d2891213e51612f1b1fd3db8a84285c1a301d6e91aaa3d",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test260/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/rollback-test255-boot.img",
+      "bytes": 100663296,
+      "sha256": "26ef6bd143a9575b997b8cf73f24686d647f1ac742f0e7d92d44aa600ef7c063",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/rollback-test255-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "d80d03cdf0ac810d9ac741074a9b97327c48880a98a4459db219ed7813461a46",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-sm5714-stage2/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/test255-rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "3a8e49a1112d07cbfc1f7c188c7ae8de3489713879ee5420fb1c9d010a599051",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test260/test255-rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/test260-candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "80ec86a2339f584fb2519017de82940a762d6c7ea9181b4fa56df3a59b3eca38",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test260/test260-candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test260/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test260/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "b9f296d829da43c27943c2d75bbd7ab2f408721d62f22b6353fbe7002141f4b0",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-266-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/candidate-modules.tar.gz",
+      "bytes": 47319395,
+      "sha256": "f940f1085f4ac1c28122e84e9bf47cb57329d868d0e6338968ccb39b49f7e5f4",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-266-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/gts9-debian-to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test267/gts9-debian-to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/module-swap.sh",
+      "bytes": 2592,
+      "sha256": "515193d134712096051ce59de9dbd0a10e2b1435cc64a48120991dd5117b2a68",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test267/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/rollback-test263-vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-258-passive/vendor_boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/test263-rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test267/test263-rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/test266-candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "936903430d85d2fd8ee0ee06d0a2b1613ae2819280f9dabff05779596e43992f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test267/test266-candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test267/twrp-mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test267/twrp-mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "0fa7a68c8abc6c5439f768c96bc3b937bd4538e6c5abc0c0915f98fc579c2e5e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/observer.ko",
+      "bytes": 267536,
+      "sha256": "9d66c0804f40f8882e0e4550cfc012a54e9c3d0364915ab0b160f45b39924c52",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test275/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test275/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "76cc4710337dbbaae0b55cb318c7ea6070d1a1fbec34871853b342d65c30e3ea",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/observer.ko",
+      "bytes": 273080,
+      "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test277/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test277/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/analyse.py",
+      "bytes": 10293,
+      "sha256": "b360304dce6664413376c031d961682032eaad2e89e023026dd96e15bb9d5105",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/analyse.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/collector.py",
+      "bytes": 14810,
+      "sha256": "b0bd7e0e1b826ce34d2e9439dc941be883f3b1b6ec8cd5d952eb978707e63b96",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/collector.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/coordinator.py",
+      "bytes": 7241,
+      "sha256": "25ffa84dbb14da1ff7ea3374c38eed690ba927e6220d96305f0673a5463bddf0",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/coordinator.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/device_ops.py",
+      "bytes": 4500,
+      "sha256": "3a4c2977afe792d33b3a5f6e26aa6ffbc8ee3c14497ecd854f267a4da9e9196d",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/device_ops.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/health_gate.py",
+      "bytes": 3430,
+      "sha256": "8372bcf687c9535ce0e8e65de0b3472cd32f3b08af9b011f3e5916f92bde94f8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/health_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "f368fc75538dfad523f55b46a40dd8bd2a325140a143c5c6258f61f6cae7998e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/observer.ko",
+      "bytes": 273080,
+      "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/observer_gate.py",
+      "bytes": 3072,
+      "sha256": "bb176b49503b9fcfe93b0eb7654699a1af0a2cf4f4ba1b30d35e52dfe85da5ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/observer_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/snapshot_gate.py",
+      "bytes": 3221,
+      "sha256": "0f0015510217495348fb789986293c9c97bf3e3495c740df4c9aa24eeff132ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/snapshot_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test282/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test282/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/analyse.py",
+      "bytes": 10293,
+      "sha256": "b360304dce6664413376c031d961682032eaad2e89e023026dd96e15bb9d5105",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/analyse.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/collector.py",
+      "bytes": 14810,
+      "sha256": "b0bd7e0e1b826ce34d2e9439dc941be883f3b1b6ec8cd5d952eb978707e63b96",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/collector.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/coordinator.py",
+      "bytes": 7241,
+      "sha256": "25ffa84dbb14da1ff7ea3374c38eed690ba927e6220d96305f0673a5463bddf0",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/coordinator.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/commands/000-live-preflight.json",
+      "bytes": 993,
+      "sha256": "6c5c861df8c9e4e1f6e4117167446f506c7eeeb906b1b2ab68edb8062ba15e31",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/commands/000-live-preflight.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/commands/000-live-preflight.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/commands/000-live-preflight.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/commands/000-live-preflight.txt",
+      "bytes": 4472,
+      "sha256": "61018950f449927d1b12d4371069beb09a8fcd6ceccb7e3d8f761c4039769fb6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/commands/000-live-preflight.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/summary.json",
+      "bytes": 986,
+      "sha256": "6782340e4c729f67fdc67ad57baee6e009ebcf8e8b0106ecaef55e2aa314df01",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/summary.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/summary.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/available-clocks.txt",
+      "bytes": 58,
+      "sha256": "925ca315bd3de6ef99e08c002e320406936ae2da2f2c0afd8da1e87f7980a253",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/available-clocks.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/available-clocks.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu0-after.stats",
+      "bytes": 133,
+      "sha256": "6adb8e0e76cc68e2b16f9cb05963a908d6fc7c0db2e45d29bad2bd4f7c423bb8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu0-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu0-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu1-after.stats",
+      "bytes": 133,
+      "sha256": "e037a753ae2ff32404c738f447411cbc9c4d61c2bf0ca74a8489b399b524c91a",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu1-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu1-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu2-after.stats",
+      "bytes": 133,
+      "sha256": "33a2b1d7d0c79a8069814f98a29badd18a0d0fb1d2e3abd6ec0a0971921648b1",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu2-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu2-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu3-after.stats",
+      "bytes": 133,
+      "sha256": "6597277ac60ede35e6aacea18f3b21cf23e305751bb1dbdb8c32f612de57d117",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu3-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu3-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu4-after.stats",
+      "bytes": 133,
+      "sha256": "8ab0779c7e51cbd20a30ef3b7b7c21d57ddbb87669fd0eaf97feec3686e299cc",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu4-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu4-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu5-after.stats",
+      "bytes": 133,
+      "sha256": "0e9e6b2389c7d83db3ca3616a2538b3c518f1eb95a01ed9b4343a48549a3d252",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu5-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu5-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu6-after.stats",
+      "bytes": 133,
+      "sha256": "689dbdac250fc71867bc4df5e5825469af581cf4352aed346b642e45db3b015c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu6-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu6-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/cpu7-after.stats",
+      "bytes": 133,
+      "sha256": "365f655751f3a481539a67d223408b5cdc611f150a51306c0eda96437c25d960",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/cpu7-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/cpu7-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/global-probes-after.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/global-probes-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/global-probes-at-stop.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/global-probes-at-stop.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-at-stop.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/global-probes-before.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/global-probes-before.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-before.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/initial-tracing-on.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/initial-tracing-on.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/initial-tracing-on.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/kallsyms.txt",
+      "bytes": 8650430,
+      "sha256": "af27199ab7a1209324ef1832d83be2abee112fd0a10f657f612cc88a06ca0743",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/kallsyms.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/manifest.json",
+      "bytes": 4542,
+      "sha256": "2d5a3792c5355304a5e8ef97fde2ef3bb05880aea2ca4638ffac8e65b872cd34",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/manifest.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/manifest.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/ownership.json",
+      "bytes": 310,
+      "sha256": "f2e2759044979f43859b3163c11051cbb1a5be3002638ff64c01179d5b86167e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/ownership.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/ownership.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/profile-after.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/profile-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/profile-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/trace.txt",
+      "bytes": 515,
+      "sha256": "f94ca6af0299c8976743d225ce5450e145e0e93091842ff74659455e19879be8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/trace.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/trace.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_execute_end.filter",
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_execute_end.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_end.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_execute_end.format",
+      "bytes": 462,
+      "sha256": "8b483e971678bc6d1858b9f564df662de8ebbab99c97a1598e3429d4a70ed882",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_execute_end.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_end.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_execute_start.filter",
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_execute_start.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_start.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_execute_start.format",
+      "bytes": 464,
+      "sha256": "397a1d55781d447c431e4a17a4e1bd07d02c787ea8cfcda7fe0e663889782970",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_execute_start.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_start.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_queue_work.filter",
+      "bytes": 31,
+      "sha256": "c74c5693422e68a0ead3a65202f44bb876f9969252a001a6cdaa90f333193113",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_queue_work.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_queue_work.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device-capture/observation/trace/workqueue_queue_work.format",
+      "bytes": 696,
+      "sha256": "0528737fa9c96a98d7450cfd038ce8627c9007b9ebca93075bcf94c86581a348",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device-capture/observation/trace/workqueue_queue_work.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_queue_work.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/device_ops.py",
+      "bytes": 4500,
+      "sha256": "082b05d2bbcfda1f56d18055bdf7392623467fefda9e789b114506267ad9f239",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/device_ops.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/health_gate.py",
+      "bytes": 3430,
+      "sha256": "8372bcf687c9535ce0e8e65de0b3472cd32f3b08af9b011f3e5916f92bde94f8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/health_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "772d77252859b446a2f5d37a68357f1af4dd5b29d0a6848ab4967ed19405983b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/observer.ko",
+      "bytes": 273080,
+      "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/observer_gate.py",
+      "bytes": 3072,
+      "sha256": "bb176b49503b9fcfe93b0eb7654699a1af0a2cf4f4ba1b30d35e52dfe85da5ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/observer_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/packet.json",
+      "bytes": 5144,
+      "sha256": "b2efb34cc77ae27631fed093b5898dd3ebba36484b20165d84d639efe88b9ae1",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/packet.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/host-storage-cleanup/2026-10-02/preserved/gts9-test284/packet.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/snapshot_gate.py",
+      "bytes": 3221,
+      "sha256": "0f0015510217495348fb789986293c9c97bf3e3495c740df4c9aa24eeff132ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/snapshot_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test284/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test284/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/analyse.py",
+      "bytes": 10293,
+      "sha256": "b360304dce6664413376c031d961682032eaad2e89e023026dd96e15bb9d5105",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/analyse.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/collector.py",
+      "bytes": 14810,
+      "sha256": "b0bd7e0e1b826ce34d2e9439dc941be883f3b1b6ec8cd5d952eb978707e63b96",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/collector.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/coordinator.py",
+      "bytes": 7241,
+      "sha256": "25ffa84dbb14da1ff7ea3374c38eed690ba927e6220d96305f0673a5463bddf0",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/coordinator.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/000-live-preflight.json",
+      "bytes": 993,
+      "sha256": "6c5c861df8c9e4e1f6e4117167446f506c7eeeb906b1b2ab68edb8062ba15e31",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/000-live-preflight.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/000-live-preflight.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/000-live-preflight.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/000-live-preflight.txt",
+      "bytes": 4470,
+      "sha256": "f6e1671438e6add9c1abb5bba583bce1ca15973238a225b6d0a5a5cdd16a2e1e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/000-live-preflight.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/001-insmod-once.json",
+      "bytes": 116,
+      "sha256": "6623fe7306764e629cc07273f35b2ab56aed06914e311247b41b99061676db53",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/001-insmod-once.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/001-insmod-once.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/001-insmod-once.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/001-insmod-once.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/001-insmod-once.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/001-insmod-once.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/001-insmod-once.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/001-insmod-once.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/002-rmmod-once.json",
+      "bytes": 107,
+      "sha256": "4d84941e8fdd9b0d36f2c2f47b0ce52accfcea003ee4778a07e7be6146a4633a",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/002-rmmod-once.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/002-rmmod-once.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/002-rmmod-once.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/commands/002-rmmod-once.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/commands/002-rmmod-once.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/observer-before-unload.txt",
+      "bytes": 317,
+      "sha256": "37c0f6f66db55153204a36ab586908918f103ee3def8f8e81ab1c82812525f32",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/observer-before-unload.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/observer-before-unload.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/summary.json",
+      "bytes": 2690,
+      "sha256": "07aca72d6af0fb943a36f1cb2a668f7c595146876f60cbabd9ab1c395eefb530",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/summary.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/summary.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/terminal-observer.txt",
+      "bytes": 317,
+      "sha256": "37c0f6f66db55153204a36ab586908918f103ee3def8f8e81ab1c82812525f32",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/terminal-observer.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/terminal-observer.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/available-clocks.txt",
+      "bytes": 58,
+      "sha256": "925ca315bd3de6ef99e08c002e320406936ae2da2f2c0afd8da1e87f7980a253",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/available-clocks.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/available-clocks.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/clock.txt",
+      "bytes": 58,
+      "sha256": "f5fb93aeb9fa98d9eda164579e3ed0d52d9def6359fae8029a7b5a1ff4aee33c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/clock.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/clock.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu0-after.stats",
+      "bytes": 133,
+      "sha256": "826eef7da6eebc693f531f61644236f4a7f5a6fda8e6ea9b6022bead809ebae6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu0-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu0-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu0-before.stats",
+      "bytes": 133,
+      "sha256": "ad025ae116e361b49f80bb7a1bd37d5bc3f6f1ea936d2d6b4424c9b000068f82",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu0-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu0-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu1-after.stats",
+      "bytes": 133,
+      "sha256": "ad74e72c9d78da13a77024eeff55b5b84b663e4c5f5c2e5a572bdb8dc5559d1e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu1-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu1-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu1-before.stats",
+      "bytes": 133,
+      "sha256": "a68b99de0490839c892d86ddb2099af576549ee91eb60e9e609e548b2b3b497c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu1-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu1-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu2-after.stats",
+      "bytes": 133,
+      "sha256": "3bd740d79bac477c1d38aaddc7b53726fc693b06d32fb705495ab22805d27626",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu2-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu2-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu2-before.stats",
+      "bytes": 133,
+      "sha256": "06d0ca9191855cd056491ec429a13202f9d65c9b8a11ed9c1ff12708d417419f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu2-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu2-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu3-after.stats",
+      "bytes": 133,
+      "sha256": "c15a3cdd4cafbfaadd3978010d14b7b36462b33e5d205b6f4e7307cfa8b0dced",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu3-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu3-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu3-before.stats",
+      "bytes": 133,
+      "sha256": "cf3cd0253c87e349ea9700aa30f4025d2ab72671e28f3757ca5a8ec17238ec5b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu3-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu3-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu4-after.stats",
+      "bytes": 133,
+      "sha256": "f2fd5c0b0d27a5d5d828351db44fd741e1948b0efb460124ffeaf97ff20fa503",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu4-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu4-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu4-before.stats",
+      "bytes": 133,
+      "sha256": "1a4e5033effe48298d8d5f61234ca0f6f8829d783b99989f8312243cfa2734f9",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu4-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu4-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu5-after.stats",
+      "bytes": 135,
+      "sha256": "023a62909082fa34f47134f84cf334d56029e7f0200bdf6448097cb2b7b67fe8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu5-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu5-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu5-before.stats",
+      "bytes": 133,
+      "sha256": "755b0d17db683dd426783066655bac580231019ec28faba34731cf01a5942862",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu5-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu5-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu6-after.stats",
+      "bytes": 133,
+      "sha256": "506d4d2be62f91b61158c7d337df95220ebbbcf25a5d35a05b7ba7d19311da5f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu6-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu6-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu6-before.stats",
+      "bytes": 133,
+      "sha256": "10dd7d7fb42dc4e36a1ebfce872dae0f014cd6b2fdf487d2499ae678b52c4d08",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu6-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu6-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu7-after.stats",
+      "bytes": 133,
+      "sha256": "9d909f995587cdf51637caad95b6d7e82fb4755cf901adca898cdd0a3e29bc5e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu7-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu7-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/cpu7-before.stats",
+      "bytes": 133,
+      "sha256": "f080af11f6e0837967078867157ec8d63a7088c9bf0a1b2b574c201c509d4ae6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/cpu7-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/cpu7-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/enabled-events.txt",
+      "bytes": 325,
+      "sha256": "6d04ae7a2e1c94252ed5dc566637a690eec476c81c71786f40a172b963ff6bc7",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/enabled-events.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/enabled-events.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/global-probes-after.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/global-probes-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/global-probes-at-stop.txt",
+      "bytes": 338,
+      "sha256": "8d87a1008765eecc129e46837059e14b17910a8a4c106a8c11e7a7e98ed5e682",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/global-probes-at-stop.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-at-stop.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/global-probes-before.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/global-probes-before.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-before.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/initial-tracing-on.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/initial-tracing-on.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/initial-tracing-on.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/kallsyms.txt",
+      "bytes": 8650430,
+      "sha256": "ca9c0c3106e915e8cae359b407f99dcc375704bb3eeae7319d660483ad204815",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/kallsyms.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/manifest.json",
+      "bytes": 6419,
+      "sha256": "39a6f500dbaf0319954ee8d825ad10460529245b01b0d7562694683b960157d9",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/manifest.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/manifest.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/options.txt",
+      "bytes": 400,
+      "sha256": "170d7fbcbebe315e8f6f9e0e24b3bc68e1470d1557b80fcb11357dfc09faa181",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/options.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/options.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/ownership.json",
+      "bytes": 310,
+      "sha256": "a4d4562083e1c96eba955019e89b8beb5edeb35765edab9262a8d19892e60b01",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/ownership.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/ownership.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/poll_enter.format",
+      "bytes": 403,
+      "sha256": "fe84a9a42b8e8c218349007b8619b4773b7c6b894ca06133eb8450bc4c8ffa55",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/poll_enter.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/poll_enter.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/poll_return.format",
+      "bytes": 502,
+      "sha256": "d7bf327a319fdb57d3367c9c1c8cdcead6c9ef2452e3a13b14c06637b13ecb08",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/poll_return.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/poll_return.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/profile-after.txt",
+      "bytes": 316,
+      "sha256": "1b9dc2c7e79590dc92ccfa0076d9583adeb60eebb1d418a70cbbc1a2a0947f5c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/profile-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/profile-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/profile-before.txt",
+      "bytes": 316,
+      "sha256": "aa0e78bdf195bad677b6d722fbbe12d4dae2c87b3f981e69d69603999b3bc53b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/profile-before.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/profile-before.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/ready.txt",
+      "bytes": 52,
+      "sha256": "77156488b600233a9de9f14c7430a67c062cad3309c9573e436fe8d559b643de",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/ready.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/ready.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/request_enter.format",
+      "bytes": 406,
+      "sha256": "e5320bf1c817e346d273eff5153c867abebd57211812f6dadbc81d62032fabfa",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/request_enter.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/request_enter.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/request_return.format",
+      "bytes": 567,
+      "sha256": "6d0b300e79eca1aacf9587307aa4c3e40be0863dfb4310a458d8d16f2fb11f3b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/request_return.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/request_return.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/trace.txt",
+      "bytes": 1485,
+      "sha256": "481e919ebb3d8a3d380da34dcde3c4117863a0ba54209af78325a93054225309",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/trace.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/trace.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_execute_end.filter",
+      "bytes": 31,
+      "sha256": "3d03411ea2838cf1bd52bd6e1851191ce1ffbacafe27adc402d3090db1fa5d94",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_execute_end.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_end.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_execute_end.format",
+      "bytes": 462,
+      "sha256": "8b483e971678bc6d1858b9f564df662de8ebbab99c97a1598e3429d4a70ed882",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_execute_end.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_end.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_execute_start.filter",
+      "bytes": 31,
+      "sha256": "3d03411ea2838cf1bd52bd6e1851191ce1ffbacafe27adc402d3090db1fa5d94",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_execute_start.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_start.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_execute_start.format",
+      "bytes": 464,
+      "sha256": "397a1d55781d447c431e4a17a4e1bd07d02c787ea8cfcda7fe0e663889782970",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_execute_start.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_start.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_queue_work.filter",
+      "bytes": 31,
+      "sha256": "3d03411ea2838cf1bd52bd6e1851191ce1ffbacafe27adc402d3090db1fa5d94",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_queue_work.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_queue_work.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device-capture/observation/trace/workqueue_queue_work.format",
+      "bytes": 696,
+      "sha256": "0528737fa9c96a98d7450cfd038ce8627c9007b9ebca93075bcf94c86581a348",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device-capture/observation/trace/workqueue_queue_work.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_queue_work.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/device_ops.py",
+      "bytes": 4522,
+      "sha256": "568e234441839275873aa661b29baee386ab890d1f71a1affe98e86b1aaa0a40",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/device_ops.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/health_gate.py",
+      "bytes": 3430,
+      "sha256": "8372bcf687c9535ce0e8e65de0b3472cd32f3b08af9b011f3e5916f92bde94f8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/health_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "02fb1b91ce7242069677bf65f10bc5803509b6ca85f20ed00610e23f1c93bbc8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/observer.ko",
+      "bytes": 273080,
+      "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/observer_gate.py",
+      "bytes": 3072,
+      "sha256": "bb176b49503b9fcfe93b0eb7654699a1af0a2cf4f4ba1b30d35e52dfe85da5ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/observer_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/packet.json",
+      "bytes": 5402,
+      "sha256": "2f511fc70dae1d512ab8731c1c60ab03cbb7f7fbbe85baa7a47acc0505ae1d6c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/packet.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/host-storage-cleanup/2026-10-02/preserved/gts9-test287/packet.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/snapshot_gate.py",
+      "bytes": 3221,
+      "sha256": "0f0015510217495348fb789986293c9c97bf3e3495c740df4c9aa24eeff132ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/snapshot_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test287/tracefs_io.py",
+      "bytes": 1539,
+      "sha256": "53f302e7ccadd79b5ff948fcd854e712ad10908fbe4c503ce9746ece9c5e9ac7",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test287/tracefs_io.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/analyse.py",
+      "bytes": 10293,
+      "sha256": "b360304dce6664413376c031d961682032eaad2e89e023026dd96e15bb9d5105",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/analyse.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "d837b52f09c1402046b84f38a3896cd74a4dfc5a39ea929126601d57fa3be95c",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-275-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4393f64fa32792603f5d7f448c88be2efa8e5d9cd086df66f707f84b15a460ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/candidate-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/candidate-modules.tar.gz",
+      "bytes": 47319155,
+      "sha256": "aa5a6344caf837182b4de68de87d10c322fb0a9faf145fdbc6181f19fa6cabba",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-272-passive/modules-x710.tar.gz"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/collector.py",
+      "bytes": 14810,
+      "sha256": "b0bd7e0e1b826ce34d2e9439dc941be883f3b1b6ec8cd5d952eb978707e63b96",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/collector.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/coordinator.py",
+      "bytes": 7241,
+      "sha256": "25ffa84dbb14da1ff7ea3374c38eed690ba927e6220d96305f0673a5463bddf0",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/coordinator.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/000-live-preflight.json",
+      "bytes": 993,
+      "sha256": "6c5c861df8c9e4e1f6e4117167446f506c7eeeb906b1b2ab68edb8062ba15e31",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/000-live-preflight.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/000-live-preflight.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/000-live-preflight.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/commands/000-live-preflight.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/000-live-preflight.txt",
+      "bytes": 4469,
+      "sha256": "eb7ac182e3a565fafa3e9c89e90f25aede3d70e065297b8683907c4d6e943a77",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/000-live-preflight.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/commands/000-live-preflight.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/001-insmod-once.json",
+      "bytes": 116,
+      "sha256": "3dd115728adf2b1618727b8701b7f2ee0a2481353cf64afde2e4893d77e8491b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/001-insmod-once.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/commands/001-insmod-once.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/001-insmod-once.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/001-insmod-once.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/001-insmod-once.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/001-insmod-once.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/001-insmod-once.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/001-insmod-once.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/002-rmmod-once.json",
+      "bytes": 107,
+      "sha256": "4d84941e8fdd9b0d36f2c2f47b0ce52accfcea003ee4778a07e7be6146a4633a",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/002-rmmod-once.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/002-rmmod-once.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/002-rmmod-once.stderr",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.stderr"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/commands/002-rmmod-once.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/commands/002-rmmod-once.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/commands/002-rmmod-once.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/observer-before-unload.txt",
+      "bytes": 315,
+      "sha256": "dd03d4c172b2238cd96c96f3b308f8a4f58d0e0a04e5490f92c2e4260d64804a",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/observer-before-unload.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/observer-before-unload.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/summary.json",
+      "bytes": 45240,
+      "sha256": "e07095015e03988c79b36bc36d3fe6338c3486fd7afc3830ba76ee156d40f55c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/summary.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/summary.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/terminal-observer.txt",
+      "bytes": 315,
+      "sha256": "dd03d4c172b2238cd96c96f3b308f8a4f58d0e0a04e5490f92c2e4260d64804a",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/terminal-observer.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/terminal-observer.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/available-clocks.txt",
+      "bytes": 58,
+      "sha256": "925ca315bd3de6ef99e08c002e320406936ae2da2f2c0afd8da1e87f7980a253",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/available-clocks.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/available-clocks.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/clock.txt",
+      "bytes": 58,
+      "sha256": "f5fb93aeb9fa98d9eda164579e3ed0d52d9def6359fae8029a7b5a1ff4aee33c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/clock.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/clock.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu0-after.stats",
+      "bytes": 133,
+      "sha256": "d378e3186c6374873e5006ee855e576aabe23af5f12f18b24271a2d318d53254",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu0-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu0-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu0-before.stats",
+      "bytes": 133,
+      "sha256": "90d63b25943692181f06d78f90be4554966db214470d93719866f75321587429",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu0-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu0-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu1-after.stats",
+      "bytes": 133,
+      "sha256": "ab8896df14aedd53775d5d60417015207a973790982fbcbfd4633c4e27124dfb",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu1-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu1-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu1-before.stats",
+      "bytes": 133,
+      "sha256": "badcf352b6a0b7c85d6fe4d5e5c751a9292399fcd712146ae622f6839bd36b57",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu1-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu1-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu2-after.stats",
+      "bytes": 133,
+      "sha256": "a7ffba1e62854f6e71aabfee189346190360cf32c53042497a3e55dda8a75952",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu2-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu2-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu2-before.stats",
+      "bytes": 133,
+      "sha256": "4f277ff7f733684604723293bf4275b93450e4fcbad9ab67f35ef412b4e947f8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu2-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu2-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu3-after.stats",
+      "bytes": 133,
+      "sha256": "61269500c8b7ad70447cfa000b8049ab4138b844a862966f841ecf849f69d38e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu3-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu3-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu3-before.stats",
+      "bytes": 133,
+      "sha256": "c743502afbb20526b133a824f1775a7f84345e662c1a1404999b5a8295f8d119",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu3-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu3-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu4-after.stats",
+      "bytes": 134,
+      "sha256": "344493f7eb58005d5ce630df506c056c623683eeef5809f130609ae6c190562b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu4-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu4-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu4-before.stats",
+      "bytes": 133,
+      "sha256": "d66bcf697460e45bec18eecb69b6399975faac6888d51182833612db4d1133f7",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu4-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu4-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu5-after.stats",
+      "bytes": 133,
+      "sha256": "620a6546194f90d65381225e9067788e88a0c39addb4d114600fdb605ea40d09",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu5-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu5-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu5-before.stats",
+      "bytes": 133,
+      "sha256": "7bfd75c8175a73d4493665d67bcdb22900804b2f007dfc8f208de14d15d32b40",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu5-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu5-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu6-after.stats",
+      "bytes": 137,
+      "sha256": "dcf0a1cfbaa60616fb757d09199d67ae8a7d895826fe6e56dbf2b2714d40f92d",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu6-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu6-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu6-before.stats",
+      "bytes": 133,
+      "sha256": "e9a69b729ae47c69a4794386737ea2c214935f274a98a5690a8af4598b300e9c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu6-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu6-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu7-after.stats",
+      "bytes": 133,
+      "sha256": "79d79fbcd98ae671672488bfbfe3238906e7399cee21bc0fb0ae92e01d9940ae",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu7-after.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu7-after.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/cpu7-before.stats",
+      "bytes": 133,
+      "sha256": "dcd2e2f90963e864da379089ac04b90a0bd02ce9e8d492322cd764f3946ef6b6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/cpu7-before.stats",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/cpu7-before.stats"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/enabled-events-i2c.txt",
+      "bytes": 381,
+      "sha256": "83986f924276980b700d9bad6b1376ce9c2e8a34acc4fc6e0200cdc0fb3523d3",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/enabled-events-i2c.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/enabled-events-i2c.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/enabled-events.txt",
+      "bytes": 325,
+      "sha256": "eba4306cfde9554c61a2a988abbf39c40155ed24a1bd0e2aec69f9d511d4c9cf",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/enabled-events.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/enabled-events.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/global-probes-after.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/global-probes-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/global-probes-at-stop.txt",
+      "bytes": 338,
+      "sha256": "ea0019b8106ff44739a0d05e5b233b6c741b7150f6d517966dadb7166d7b3964",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/global-probes-at-stop.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/global-probes-at-stop.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/global-probes-before.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/global-probes-before.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/global-probes-before.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_read.filter",
+      "bytes": 16,
+      "sha256": "f9089b8c62549a09ef5ba4cd947871c34e64bcb24f3a874b0fd5af47178e4961",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_read.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_read.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_read.format",
+      "bytes": 633,
+      "sha256": "baea8a46a65c06aed0fa06c7dfd1fcb600f59e9074f22e7cffb7f1b5fb6475c1",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_read.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_read.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_reply.filter",
+      "bytes": 16,
+      "sha256": "f9089b8c62549a09ef5ba4cd947871c34e64bcb24f3a874b0fd5af47178e4961",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_reply.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_reply.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_reply.format",
+      "bytes": 737,
+      "sha256": "2a9b549e10580912e6a59fbfe3c2dd0a51b65307d96a182f88b5cc73c94e39c6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_reply.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_reply.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_result.filter",
+      "bytes": 16,
+      "sha256": "f9089b8c62549a09ef5ba4cd947871c34e64bcb24f3a874b0fd5af47178e4961",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_result.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_result.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_result.format",
+      "bytes": 506,
+      "sha256": "4bfad2244717d96c67f9123da6854d29f100dd827da72ed3fd9253f5b5a3a26c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_result.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_result.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_write.filter",
+      "bytes": 16,
+      "sha256": "f9089b8c62549a09ef5ba4cd947871c34e64bcb24f3a874b0fd5af47178e4961",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_write.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_write.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/i2c_write.format",
+      "bytes": 737,
+      "sha256": "e0c9f6e2d3db9704fae964a10e6404406692b63ceb8c4c06601c9446ae13662e",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/i2c_write.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/i2c_write.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/initial-tracing-on.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/initial-tracing-on.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/initial-tracing-on.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/kallsyms.txt",
+      "bytes": 8650492,
+      "sha256": "28b533701dc6f0e98d5d8ea9b5d75cd046b240434057b9d6ea6fbc3b032afb5f",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/kallsyms.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/manifest.json",
+      "bytes": 7868,
+      "sha256": "5f8f0e58f47b49f4fd5c939bc8a473a35941ac1ce72c54ab621087d528f050af",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/manifest.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/manifest.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/options.txt",
+      "bytes": 400,
+      "sha256": "170d7fbcbebe315e8f6f9e0e24b3bc68e1470d1557b80fcb11357dfc09faa181",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/options.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/options.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/ownership.json",
+      "bytes": 310,
+      "sha256": "67ada542e768e36d05ba650cb7b596a51242bd82abac9e9a3ab3505d7b65cd50",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/ownership.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/ownership.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/poll_enter.format",
+      "bytes": 403,
+      "sha256": "485f27962f0d33f5d88adabee41aee569cf2c1119257e685310ca534ffb9a287",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/poll_enter.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/poll_enter.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/poll_return.format",
+      "bytes": 502,
+      "sha256": "cdf90fccfbc439bad1c14eacdb76721fa126126593b91be9acc60c173423744c",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/poll_return.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/poll_return.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/profile-after.txt",
+      "bytes": 316,
+      "sha256": "4ed76f85b75dbcafac2b3b107282b57c00b9172379cc8f63dd5523030c8935ac",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/profile-after.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/profile-after.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/profile-before.txt",
+      "bytes": 316,
+      "sha256": "1d0df442c42afa0d443b42aa2e1a2d20ce8ef5b0e26a1b77a49c42627009e165",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/profile-before.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/profile-before.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/ready.txt",
+      "bytes": 52,
+      "sha256": "77156488b600233a9de9f14c7430a67c062cad3309c9573e436fe8d559b643de",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/ready.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-287-passive-fresh-trace/observation/device-capture/observation/trace/ready.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/request_enter.format",
+      "bytes": 406,
+      "sha256": "64145830b1caacf0ebefbf2d02473f131afa0af473c54659d6d19f856a9208af",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/request_enter.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/request_enter.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/request_return.format",
+      "bytes": 567,
+      "sha256": "fc2a45e507c63533f7d16e86607542ee3054ca8dca28a3fadd768b3570ba6a11",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/request_return.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/request_return.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/trace.txt",
+      "bytes": 7519,
+      "sha256": "cebebd6271a701387461634ea7c7ecd8da4726f508d0aa660bb5f98fa9dd4070",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/trace.txt",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/trace.txt"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_execute_end.filter",
+      "bytes": 31,
+      "sha256": "5a77b7dd5a790c3e28172ba03c52f9ee2fb4430ac2c5fab43d4d618e66fbe73f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_execute_end.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/workqueue_execute_end.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_execute_end.format",
+      "bytes": 462,
+      "sha256": "8b483e971678bc6d1858b9f564df662de8ebbab99c97a1598e3429d4a70ed882",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_execute_end.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_end.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_execute_start.filter",
+      "bytes": 31,
+      "sha256": "5a77b7dd5a790c3e28172ba03c52f9ee2fb4430ac2c5fab43d4d618e66fbe73f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_execute_start.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/workqueue_execute_start.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_execute_start.format",
+      "bytes": 464,
+      "sha256": "397a1d55781d447c431e4a17a4e1bd07d02c787ea8cfcda7fe0e663889782970",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_execute_start.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_execute_start.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_queue_work.filter",
+      "bytes": 31,
+      "sha256": "5a77b7dd5a790c3e28172ba03c52f9ee2fb4430ac2c5fab43d4d618e66fbe73f",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_queue_work.filter",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-289-passive-i2c-phase-trace/observation/device-capture/observation/trace/workqueue_queue_work.filter"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device-capture/observation/trace/workqueue_queue_work.format",
+      "bytes": 696,
+      "sha256": "0528737fa9c96a98d7450cfd038ce8627c9007b9ebca93075bcf94c86581a348",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device-capture/observation/trace/workqueue_queue_work.format",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-284-passive-fresh-trace/observation/device-capture/observation/trace/workqueue_queue_work.format"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/device_ops.py",
+      "bytes": 4528,
+      "sha256": "9e9ff94c6fa0653bc882a7528ab809f5fbe10c4edd36d5127e84a63b9e37bbdf",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/device_ops.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/health_gate.py",
+      "bytes": 3430,
+      "sha256": "8372bcf687c9535ce0e8e65de0b3472cd32f3b08af9b011f3e5916f92bde94f8",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/health_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/module-swap.sh",
+      "bytes": 2606,
+      "sha256": "39b5e33e63af7a0d733e31cbf07c2024850c115a2bc889bf3394c6666f8c271b",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/module-swap.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/mount-debian.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/observer.ko",
+      "bytes": 273080,
+      "sha256": "9aafabf63a18ebf31b593c97dd3edc1d0fb43a7348936e10b02f0773e5661582",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/observer.ko"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/observer_gate.py",
+      "bytes": 3072,
+      "sha256": "bb176b49503b9fcfe93b0eb7654699a1af0a2cf4f4ba1b30d35e52dfe85da5ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/observer_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/packet.json",
+      "bytes": 5783,
+      "sha256": "5d862b187910e74856247b279f0fd7fd47809005f9db73230752588f7f51a781",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/packet.json",
+      "tracked_evidence_copy": "/home/ms/Samsung/galaxy_tab_s9_linux/reference/host-storage-cleanup/2026-10-02/preserved/gts9-test289/packet.json"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/phase_analyse.py",
+      "bytes": 9640,
+      "sha256": "c9a71e0861c4636ef4cd0d64a62e243a35c0b2d77e0c5da2996cd8260c8f01cb",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/phase_analyse.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/phase_collector.py",
+      "bytes": 3808,
+      "sha256": "8f3b618ba3e04fc01c042871760675a6950e6ff7f4da9ea4f908b5cca2d02cc6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/phase_collector.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/phase_coordinator.py",
+      "bytes": 7314,
+      "sha256": "c73f403fc056a3f72683f02e8873178ec307c37159283ec78b421d65a48bace6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/phase_coordinator.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/phase_decode.py",
+      "bytes": 10164,
+      "sha256": "2abac7a5d9e2f21715da425e1b1a83cb5c8e7ef7ecd1dcc27c6ae1b75597c739",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/phase_decode.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "50d87562df5e18528380ee0db97232bdb04441b4c72ca4c9ccd036c914483bd6",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/rollback-modules.sha256"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/rollback-test263-boot.img",
+      "bytes": 100663296,
+      "sha256": "cc31efa00efa6ae2e27b2229c584ccaba9541d398366c87a0ac0ee344f2237e6",
+      "action": "removed_verified_duplicate",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-263-passive/boot.img"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/snapshot_gate.py",
+      "bytes": 3221,
+      "sha256": "0f0015510217495348fb789986293c9c97bf3e3495c740df4c9aa24eeff132ba",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/snapshot_gate.py"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/to-recovery.sh",
+      "bytes": 9036,
+      "sha256": "a6f46b8532e3d681e35e44fb87e5b8ded90fbe844a6a5239ec0240f71fa76488",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/to-recovery.sh"
+    },
+    {
+      "windows": "/mnt/d/android/gts9-active/gts9-test289/tracefs_io.py",
+      "bytes": 1539,
+      "sha256": "53f302e7ccadd79b5ff948fcd854e712ad10908fbe4c503ce9746ece9c5e9ac7",
+      "action": "archived_small_then_removed",
+      "retained": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/host-storage-cleanup/2026-10-02/unique-windows/gts9-test289/tracefs_io.py"
+    }
+  ]
+}

@@ -2,6 +2,16 @@
 
 ## Current state (2026-10-02)
 
+D:project staging cleanup2026-10-02 completed:326oldfiles, ~5.39GiB reclaimed,
+free~6.32GiB. Byte-SHA duplicates +two181file payload-identical uncompressed
+archives removed; unique smallrecords archived/3packets tracked. Preserve Windows
+android/platform-tools +gts9-active/{gts9-stock,gts9-test263,gts9-test292}; no other
+Windows/VHD/userfiles/driver change. Readreference/host-storage-cleanup/2026-10-02
+manifest/validation/README; storage-only build/tests executed:false. Future rounds
+pruneverifiedobsolete staging afterevidencearchive, retainactive+rescue. Current
+device remains restored263b06bb6c2 from292: rescue responsive, passivehealthREFUSED;
+no newdeviceoperations/charginggrant. Activefullportgoalunchanged/Stage3NOTREADY.
+
 Test292 STOP_ADB_TRANSPORT_NO_OBSERVATION; exact263all5/181rollback verified.
 One290candidateb8945a98, zeroobserver/calls/trace/PPS/pump/current. Earlyhost
 readiness missed DHCP; sameboot IPv4 observed77.285s,18portable fixPASS. After
