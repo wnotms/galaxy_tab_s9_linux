@@ -1,0 +1,36 @@
+{
+  "device_commands_executed": false,
+  "kept": "Test302 source/config/DTB/modules/vmlinux/CRC/headers and original evidence; accepted311/299 packages and308 debug freeze unchanged",
+  "latest_test": 312,
+  "no_expired_images_archived": true,
+  "removed_images": [
+    {
+      "allocated_bytes": 22134784,
+      "bytes": 22133976,
+      "nlink_before": 1,
+      "path": "out/kernel-x710-302-passive/Image.gz",
+      "reason": "Test302 images outside recent Test303-Test312 window; current accepted311/rollback299 not touched",
+      "sha256": "f8a74930ef0b669057c1a3ac70d91518367dec0a72435e105d151be4ab3c28d3"
+    },
+    {
+      "allocated_bytes": 48721920,
+      "bytes": 48720384,
+      "nlink_before": 1,
+      "path": ".work/build/linux-out-x710-302-passive/arch/arm64/boot/Image",
+      "reason": "Test302 images outside recent Test303-Test312 window; current accepted311/rollback299 not touched",
+      "sha256": "245f10b82d531823de593ec845aa34ce4660f4c026284817962e0aa72cab5fb4"
+    },
+    {
+      "allocated_bytes": 22134784,
+      "bytes": 22133976,
+      "nlink_before": 1,
+      "path": ".work/build/linux-out-x710-302-passive/arch/arm64/boot/Image.gz",
+      "reason": "Test302 images outside recent Test303-Test312 window; current accepted311/rollback299 not touched",
+      "sha256": "f8a74930ef0b669057c1a3ac70d91518367dec0a72435e105d151be4ab3c28d3"
+    }
+  ],
+  "window": [
+    303,
+    312
+  ]
+}
