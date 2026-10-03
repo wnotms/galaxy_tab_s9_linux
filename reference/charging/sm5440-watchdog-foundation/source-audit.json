@@ -1,0 +1,52 @@
+{
+  "vendor_C": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+    "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+    "excerpts": [
+      {
+        "first_line": 306,
+        "text": "static int sm5440_set_wdt_timer(struct sm5440_charger *sm5440, u8 tmr)\n{\n\tint ret;\n\n\tret = sm5440_update_reg(sm5440, SM5440_REG_CNTL1, tmr, 0x7, 4);\n\n\treturn ret;\n}\n\nstatic int sm5440_enable_wdt(struct sm5440_charger *sm5440, bool enable)\n{\n\tint ret;\n\n\tret = sm5440_update_reg(sm5440, SM5440_REG_CNTL1, enable, 0x1, 7);\n\n\treturn ret;\n}"
+      },
+      {
+        "first_line": 445,
+        "text": "\n\treturn ret;\n}\n\nstatic void sm5440_init_reg_param(struct sm5440_charger *sm5440)\n{\n\tsm5440_set_wdt_timer(sm5440, WDT_TIMER_S_30);\n\tsm5440_set_freq(sm5440, sm5440->pdata->freq);\n\n\tsm5440_write_reg(sm5440, SM5440_REG_CNTL2, 0xF2);               /* disable IBUSOCP,IBATOCP,THEM */\n\tsm5440_write_reg(sm5440, SM5440_REG_CNTL4, 0xFF);               /* used DEB:8ms */"
+      }
+    ]
+  },
+  "vendor_H": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h",
+    "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5",
+    "excerpts": [
+      {
+        "first_line": 110,
+        "text": "};\n\nenum sm5440_wdt_tmr {\n\tWDT_TIMER_S_0P5     = 0x0,\n\tWDT_TIMER_S_1       = 0x1,\n\tWDT_TIMER_S_2       = 0x2,\n\tWDT_TIMER_S_4       = 0x3,\n\tWDT_TIMER_S_30      = 0x4,\n\tWDT_TIMER_S_60      = 0x5,\n\tWDT_TIMER_S_90      = 0x6,\n\tWDT_TIMER_S_120     = 0x7,\n};"
+      }
+    ]
+  },
+  "fedora": {
+    "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+    "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+    "excerpts": [
+      {
+        "first_line": 167,
+        "text": "static int sm5440_update_bits(struct sm5440_direct *sm, u8 reg, u8 mask,\n\t\t\t      u8 val)\n{\n\tint old;\n\n\told = i2c_smbus_read_byte_data(sm->client, reg);\n\tif (old < 0)\n\t\treturn old;\n\n\treturn i2c_smbus_write_byte_data(sm->client, reg,\n\t\t\t\t\t (old & ~mask) | (val & mask));\n}"
+      },
+      {
+        "first_line": 778,
+        "text": "\t\tgoto out;\n\t}\n\n\t/* Rewriting CNTL1 services the hardware watchdog. */\n\tret = sm5440_update_bits(sm, SM5440_REG_CNTL1,\n\t\t\t\t SM5440_CNTL1_WDT_EN,\n\t\t\t\t SM5440_CNTL1_WDT_EN);\n\tif (ret) {\n\t\tsm5440_restore_switching(sm);\n\t\tdelay = sm5440_backoff(sm);\n\t\tgoto out;"
+      }
+    ],
+    "local_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9"
+  },
+  "Linux_regmap": {
+    "path": ".work/linux-mainline/drivers/base/regmap/regmap.c",
+    "sha256": "3d4b622a577f2a008539727d9d26b422112da67dcea170e05ba9d567e2f5a7a9",
+    "excerpts": [
+      {
+        "first_line": 3249,
+        "text": "static int _regmap_update_bits(struct regmap *map, unsigned int reg,\n\t\t\t       unsigned int mask, unsigned int val,\n\t\t\t       bool *change, bool force_write)\n{\n\tint ret;\n\tunsigned int tmp, orig;\n\n\tif (change)\n\t\t*change = false;\n\n\tif (regmap_volatile(map, reg) && map->reg_update_bits) {\n\t\tif (map->cache_only)\n\t\t\treturn -EBUSY;\n\n\t\treg = regmap_reg_addr(map, reg);\n\t\tret = map->reg_update_bits(map->bus_context, reg, mask, val);\n\t\tif (ret == 0 && change)\n\t\t\t*change = true;\n\t} else {\n\t\tret = _regmap_read(map, reg, &orig);\n\t\tif (ret != 0)\n\t\t\treturn ret;\n\n\t\ttmp = orig & ~mask;\n\t\ttmp |= val & mask;\n\n\t\tif (force_write || (tmp != orig) || map->force_write_field) {\n\t\t\tret = _regmap_write(map, reg, tmp);\n\t\t\tif (ret == 0 && change)\n\t\t\t\t*change = true;\n\t\t}\n\t}"
+      }
+    ],
+    "pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa"
+  }
+}

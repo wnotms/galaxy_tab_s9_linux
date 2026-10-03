@@ -1,0 +1,21 @@
+test_cleanup_can_work_with_fault_or_detached_status_when_off (test_sm5440_watchdog.WatchdogTests.test_cleanup_can_work_with_fault_or_detached_status_when_off) ... ok
+test_each_off_cleanup_io_failure_retains_ownership_and_error (test_sm5440_watchdog.WatchdogTests.test_each_off_cleanup_io_failure_retains_ownership_and_error) ... ok
+test_epoch_deadline_or_clock_regression_has_no_service_io (test_sm5440_watchdog.WatchdogTests.test_epoch_deadline_or_clock_regression_has_no_service_io) ... ok
+test_every_arm_bus_failure_preserves_error_and_no_auto_rearm (test_sm5440_watchdog.WatchdogTests.test_every_arm_bus_failure_preserves_error_and_no_auto_rearm) ... ok
+test_every_service_io_failure_latches_error_and_blocks_further_feed (test_sm5440_watchdog.WatchdogTests.test_every_service_io_failure_latches_error_and_blocks_further_feed) ... ok
+test_ignored_enable_write_caught (test_sm5440_watchdog.WatchdogTests.test_ignored_enable_write_caught) ... ok
+test_invalid_id_live_fault_running_reset_or_inherited_wdt_refused (test_sm5440_watchdog.WatchdogTests.test_invalid_id_live_fault_running_reset_or_inherited_wdt_refused) ... ok
+test_live_fault_drift_or_lost_wdt_blocks_service (test_sm5440_watchdog.WatchdogTests.test_live_fault_drift_or_lost_wdt_blocks_service) ... ok
+test_mode_loss_after_service_is_detected (test_sm5440_watchdog.WatchdogTests.test_mode_loss_after_service_is_detected) ... ok
+test_null_or_invalid_identity_has_no_authority (test_sm5440_watchdog.WatchdogTests.test_null_or_invalid_identity_has_no_authority) ... ok
+test_persistent_bus_failure_cannot_claim_cleanup (test_sm5440_watchdog.WatchdogTests.test_persistent_bus_failure_cannot_claim_cleanup) ... ok
+test_real_equal_value_refresh_occurs_and_exact_original_restores (test_sm5440_watchdog.WatchdogTests.test_real_equal_value_refresh_occurs_and_exact_original_restores) ... ok
+test_reset_bit_in_cleanup_is_not_rewritten (test_sm5440_watchdog.WatchdogTests.test_reset_bit_in_cleanup_is_not_rewritten) ... ok
+test_running_cleanup_does_not_disable_watchdog (test_sm5440_watchdog.WatchdogTests.test_running_cleanup_does_not_disable_watchdog) ... ok
+test_second_arm_does_not_touch_bus (test_sm5440_watchdog.WatchdogTests.test_second_arm_does_not_touch_bus) ... ok
+test_unowned_drift_is_preserved_and_uncertainty_retained (test_sm5440_watchdog.WatchdogTests.test_unowned_drift_is_preserved_and_uncertainty_retained) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.232s
+
+OK

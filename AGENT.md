@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+Unintegrated watchdog foundation now supplies realchecked regmap arm/service/
+OFF-only restore, vendorCNTL1 timer/enable/reset provenance and Fedoraactual
+refresh semantics (plainregmap equalupdate wouldskipwrite).16 actualC fault
+hostPASS0.233s, ARM64singleobject/W1/sparsePASS3.236s; initialkernelcurrentmacro
+collision corrected/logexit2 retained. NoKbuild/caller/export/ON/PPS/devicewrite.
+All316provider/317sealedinputs/formalpackage hashesunchanged; noimage relink/
+config/DT/full/Actions. Results reference/charging/sm5440-watchdog-foundation/.
+Device observedstillTWRP;317ownerC2boot pending/rollback_required=true. No live
+capture process, no failedcandidateboot inference from Wi-Fi No route. Goal
+active/fullportNOTREADY; finish317 then integratefutureactiveprofile separately.
+
 Test317 INSTALLED_IN_TWRP_AWAITING_OWNER_FIXED9_BOOT_ROLLBACK_REQUIRED. Qualified316 kernel only,
 73 affected host PASS0.745s/no skips, syntaxPASS; no rebuild/full/routing/Actions.
 One source-bound OFF context/ENHIZ comparison, diagnostic500ms notactive100ms;
