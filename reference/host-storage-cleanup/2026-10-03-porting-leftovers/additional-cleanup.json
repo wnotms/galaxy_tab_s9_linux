@@ -1,0 +1,82 @@
+[
+  {
+    "original": ".work/d-drive-test-archive/2026-09-28/android/gts9-test246/candidate-modules.tar",
+    "kind": "migration module tar",
+    "bytes": 158023680,
+    "allocated_bytes": 158023680,
+    "sha256": "2bb2bee8aea783652b5382ef6902117c5c6e0caa949e0b9e4cee494a7750b23b",
+    "retained": ".work/host-storage-cleanup/2026-10-03-porting-leftovers/compressed-files/2bb2bee8aea783652b5382ef6902117c5c6e0caa949e0b9e4cee494a7750b23b-candidate-modules.tar.gz",
+    "retained_sha256": "36e2ff641c8c4338bd93d026d524a9d99a7107abe31d1550bee03719df4efca6",
+    "byte_exact_reconstruction_verified": true
+  },
+  {
+    "original": ".work/d-drive-test-archive/2026-09-28/android/gts9-test246/original-modules.tar",
+    "kind": "migration module tar",
+    "bytes": 157757440,
+    "allocated_bytes": 157757440,
+    "sha256": "d2f1a6052da02f7c65b7bbc44b9f5dda92b619af06345d8efaf35deb2e7009bb",
+    "retained": ".work/host-storage-cleanup/2026-10-03-porting-leftovers/compressed-files/d2f1a6052da02f7c65b7bbc44b9f5dda92b619af06345d8efaf35deb2e7009bb-original-modules.tar.gz",
+    "retained_sha256": "5acb6a146a8ce847a95ba86e4ccc3f24c7115af584cee96eb0c1012dc7e1b21a",
+    "byte_exact_reconstruction_verified": true
+  },
+  {
+    "original": ".work/d-drive-test-archive/2026-09-28/android/gts9-test247/candidate-modules.tar",
+    "kind": "migration module tar",
+    "bytes": 158023680,
+    "allocated_bytes": 158023680,
+    "sha256": "e6a0378feaa40d179fb0026e2e32ff9b85e12f30ded5fb000c45bf68992d45fc",
+    "retained": ".work/host-storage-cleanup/2026-10-03-porting-leftovers/compressed-files/e6a0378feaa40d179fb0026e2e32ff9b85e12f30ded5fb000c45bf68992d45fc-candidate-modules.tar.gz",
+    "retained_sha256": "8962412b317aa0b295b83ffcd4a939b35ebbce24accf0704add4d7a7903186a1",
+    "byte_exact_reconstruction_verified": true
+  },
+  {
+    "original": ".work/build/kout-pcie-off",
+    "kind": "obsolete image staging",
+    "allocated_bytes": 22020096,
+    "members": {
+      "sm8550-samsung-gts9wifi.dtb": {
+        "bytes": 177433,
+        "allocated_bytes": 180224,
+        "sha256": "137a54764c825c6514c47b1f27603708f4730041d5b7cfe335343eebb0f3c30e"
+      },
+      "kernel.release": {
+        "bytes": 25,
+        "allocated_bytes": 4096,
+        "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+      },
+      "Image.gz": {
+        "bytes": 21833071,
+        "allocated_bytes": 21835776,
+        "sha256": "2cfe97932d7bc3bffe0ced34cd48dd95fb344bf7fd52e5a20f55d5c78ea18d6d"
+      }
+    },
+    "retained": ".work/host-storage-cleanup/2026-10-03-porting-leftovers/kout-pcie-off-metadata.tar.gz",
+    "retained_sha256": "7484e1b925e9edf6922899d978c9fb418bf446583152ebdd2cefd77082d80404",
+    "image_content_retained": false
+  },
+  {
+    "original": ".work/build/kout-power-trace",
+    "kind": "obsolete image staging",
+    "allocated_bytes": 22020096,
+    "members": {
+      "sm8550-samsung-gts9wifi.dtb": {
+        "bytes": 177425,
+        "allocated_bytes": 180224,
+        "sha256": "f49b373462a278fcafb858fa9f59dac174d88b4f14810ad2638509d9c2e9e9be"
+      },
+      "kernel.release": {
+        "bytes": 25,
+        "allocated_bytes": 4096,
+        "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+      },
+      "Image.gz": {
+        "bytes": 21833071,
+        "allocated_bytes": 21835776,
+        "sha256": "2cfe97932d7bc3bffe0ced34cd48dd95fb344bf7fd52e5a20f55d5c78ea18d6d"
+      }
+    },
+    "retained": ".work/host-storage-cleanup/2026-10-03-porting-leftovers/kout-power-trace-metadata.tar.gz",
+    "retained_sha256": "8b759c66f87a205fc419285ec9785d294d3207c1beeb3dac4af50129c5079aed",
+    "image_content_retained": false
+  }
+]

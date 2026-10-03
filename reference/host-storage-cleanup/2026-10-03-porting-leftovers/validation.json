@@ -1,0 +1,50 @@
+{
+  "removed_source_worktrees": 3,
+  "removed_module_expansions": 28,
+  "removed_adbd_mktemp_jobs": 5,
+  "compressed_historical_files": 17,
+  "repacked_debug_trees": 7,
+  "removed_original_allocated_bytes": 21138366464,
+  "saved_reconstruction_allocated_bytes": 4575940608,
+  "net_file_allocated_byte_reduction": 16606720000,
+  "observed_linux_available_byte_change": 16245936128,
+  "protected_files_hash_verified": 41364,
+  "all_reconstruction_archives_verified": true,
+  "kernel_build": {
+    "executed": false
+  },
+  "host_regression": {
+    "executed": false
+  },
+  "device_commands": {
+    "executed": false
+  },
+  "ci": {
+    "executed": false
+  },
+  "summed_allocation_hardlink_overcount_bytes": 473550848,
+  "removed_original_unique_allocated_bytes": 21182660608,
+  "additional_removed_migration_tars": 3,
+  "additional_removed_image_staging_directories": 2,
+  "additional_observed_linux_available_byte_change": 517705728,
+  "host_space": {
+    "initial_reading": {
+      "linux_available_bytes": 844956549120,
+      "windows_d_available_bytes": 20453986304
+    },
+    "after_trim": {
+      "linux_available_bytes": 868611895296,
+      "windows_d_available_bytes": 35648770048
+    },
+    "observed_windows_d_available_byte_change": 15194783744,
+    "note": "Initial whole-host reading precedes the cleanup script; concurrent activity may affect this change."
+  },
+  "online_trim": {
+    "executed": true,
+    "exit_code": 0,
+    "logical_discard_bytes": 53498462208,
+    "output": "/: 49.8 GiB (53498462208 bytes) trimmed",
+    "note": "Discard ranges are not an additional reclaimed-byte count."
+  },
+  "adbd_retained_canonical_members_hash_verified": 11494
+}
