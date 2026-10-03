@@ -1,5 +1,12 @@
 # D-drive test artifact migration (2026-09-28)
 
+**2026-10-03 retention update:** the owner requested deletion of obsolete image
+backups and a rolling ten-round limit. Historical images in this local migration
+archive have now been deleted; logs, module archives and other evidence remain.
+See `reference/host-storage-cleanup/2026-10-03-image-retention/` for the deletion
+manifest and verification. The original `SHA256SUMS` below records the migration
+date; a full check now reports the intentionally removed images as missing.
+
 Moved 639 historical test files (about 20 GiB) from `D:\android` and the
 top-level `D:\gts9-*` test paths into this repository's local
 `.work/d-drive-test-archive/2026-09-28/`. Original relative paths are
