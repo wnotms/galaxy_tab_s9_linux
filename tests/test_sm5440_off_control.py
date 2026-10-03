@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -211,7 +212,14 @@ int null_args(int n) {struct sm5440_control c={0};struct regmap m={0};
         source=(ROOT/'kernel/drivers/sm5440-control.c').read_text()
         for text in ['EXPORT_SYMBOL','module_init','late_initcall','msleep','usleep','SM5440_MODE_CHG_ON']:
             self.assertNotIn(text,source)
-        self.assertNotIn('sm5440_control_prepare(', (ROOT/'kernel/drivers/sm5440-direct.c').read_text())
+        driver=(ROOT/'kernel/drivers/sm5440-direct.c').read_text()
+        # The new isolated diagnostic caller disappears from both default and
+        # offline-policy preprocessing; no production activation was added.
+        no_headers=re.sub(r'^\s*#include[^\n]*', '', driver, flags=re.M)
+        for flags in [[], ['-DCONFIG_X710_CHARGING_POLICY=1']]:
+            parsed=subprocess.check_output(['cc','-E','-P','-x','c',*flags,'-'],
+                                           input=no_headers,text=True)
+            self.assertNotIn('sm5440_control_prepare(',parsed)
         self.assertNotIn('sm5440_control_prepare(', (ROOT/'kernel/drivers/x710-pd-session.c').read_text())
         patch=(ROOT/'kernel/patches/0016-power-supply-hook-sm5440-off-control.patch').read_text()
         self.assertIn('obj-$(CONFIG_X710_CHARGING_POLICY) += sm5440-control.o',patch)

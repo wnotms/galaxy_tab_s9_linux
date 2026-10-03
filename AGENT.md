@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test314，窗口为 **Test305–Test314**；没有生成镜像的轮次仍占一轮。
+  编号为 Test315，窗口为 **Test306–Test315**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test315 source-bound fixed9 OFF context OFFLINE_IMPLEMENTED_PENDING_BUILD.
+Existing isolated sm5440-adc-condition profile only; ordinary preprocessed paths
+unchanged. Standard source epochs + real pack + physical9V before checked
+SM5714 switching lease; real Test314 settings and pre-ENHIZ liveSTATUS, exact
+ADC/ENHIZ/settings restore. Lease retained, never500ms->100ms release/charge
+grant; no PPS/ON/protection-mask/reset or DTS/USB/rootfs change.122 affected
+host PASS1.632s, no failure/error/skip/full/Actions.314 formal artifacts plus
+symbols/79 inputs frozen/verified before one incremental cache reuse. Window
+306-315 expired305 Image/boot copies deleted with hashes; logs/modules kept.
+Accepted311 remains installed: owner follow-up same1f1e01bf, ADB/network/pack
+normal, known passiveADCrefusal retained; no physical315 scope or deployment.
+Read315 README and docs/SM5440_FIXED9_OFF_CONTEXT.md. Full port NOT READY.
+
 
 Test314 OFF_ONLY_SETTINGS_OFFLINE_QUALIFIED_NOT_DEPLOYED, source deb28242.
 New actual regmap OFF-only input/regulation/frequency transaction, original

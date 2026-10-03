@@ -24,6 +24,10 @@
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+#include "sm5440-control.h"
+#include "sm5714-stage2.h"
+#endif
 
 struct sm5440_sample {
 	u32 vbus_uv;
@@ -44,6 +48,8 @@ struct sm5440_sample {
 	u8 cntl6_before, cntl6_during, cntl6_restored;
 	bool cntl6_before_valid, cntl6_during_valid, cntl6_restored_valid;
 	int condition_error, restore_error;
+	u8 pre_status[4];
+	bool pre_status_valid;
 #endif
 	/* Preserve read-to-clear INT separately from live STATUS. */
 	u8 int_before[4], status[4], adc[11];
@@ -53,6 +59,19 @@ struct sm5440_sample {
 	bool valid;
 	unsigned long stamp;
 };
+
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+/* Worker-local evidence is copied under io_lock; no foreign supplier pointer. */
+struct sm5440_context {
+	struct sm5440_sample initial, confirmation, before, handoff;
+	struct sm5440_control controls;
+	u64 instance, source_generation, budget_generation, lease;
+	u64 started_ms, completed_ms, pack_started_ms, pack_completed_ms;
+	unsigned int budget_ma;
+	int capacity, pack_uv, pack_decic, phase, error, cleanup_error;
+	bool inactive_revblk, lease_retained;
+};
+#endif
 
 struct sm5440_direct {
 	struct device *dev;
@@ -80,6 +99,8 @@ struct sm5440_direct {
 	bool condition_attempted, enhiz_restore_pending;
 	u8 enhiz_saved;
 	struct sm5440_sample condition_sample;
+	struct sm5440_context context;
+	bool context_attempted;
 #endif
 };
 
@@ -407,6 +428,7 @@ struct sm5440_snapshot {
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	struct sm5440_sample condition;
 	bool condition_attempted, enhiz_restore_pending;
+	struct sm5440_context context;
 #endif
 	unsigned long captured, startup_stamp;
 	u64 age_ms;
@@ -423,6 +445,7 @@ static void sm5440_snapshot_capture(struct sm5440_direct *sm,
 	snapshot->startup = sm->startup_sample;
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	snapshot->condition = sm->condition_sample;
+	snapshot->context = sm->context;
 	snapshot->condition_attempted = sm->condition_attempted;
 	snapshot->enhiz_restore_pending = sm->enhiz_restore_pending;
 #endif
@@ -466,6 +489,12 @@ static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
 		   sample->cntl6_during_valid, name, sample->cntl6_during, name,
 		   sample->cntl6_restored_valid, name, sample->cntl6_restored, name,
 		   sample->condition_error, name, sample->restore_error);
+	seq_printf(seq, "%s_pre_status_valid=%u\n%s_pre_status=%*ph\n", name,
+		   sample->pre_status_valid, name, 4, sample->pre_status);
+	seq_printf(seq, "%s_acquired_ms=%llu\n%s_completed_ms=%llu\n%s_acquisition_seq=%llu\n",
+		   name, (unsigned long long)sample->acquired_ms,
+		   name, (unsigned long long)sample->completed_ms,
+		   name, (unsigned long long)sample->acquisition_seq);
 #endif
 	seq_printf(seq, "%s_int=%*ph\n%s_status=%*ph\n%s_adc=%*ph\n", name,
 		   4, sample->int_before, name, 4, sample->status, name, 11, sample->adc);
@@ -504,6 +533,43 @@ static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 		   "enhiz_restore_pending=%u\n", snapshot.condition_attempted,
 		   snapshot.enhiz_restore_pending);
 	sm5440_snapshot_sample_show(seq, "condition", &snapshot.condition);
+	seq_printf(seq, "context_phase=%d\ncontext_error=%d\ncontext_cleanup_error=%d\n"
+		   "context_instance=%llu\ncontext_source_generation=%llu\n"
+		   "context_budget_generation=%llu\ncontext_lease=%llu\n"
+		   "context_lease_retained=%u\ncontext_inactive_revblk=%u\n"
+		   "context_budget_ma=%u\ncontext_capacity=%d\ncontext_pack_uv=%d\n"
+		   "context_pack_decic=%d\ncontext_settings_pending=%u\n",
+		   snapshot.context.phase, snapshot.context.error,
+		   snapshot.context.cleanup_error,
+		   (unsigned long long)snapshot.context.instance,
+		   (unsigned long long)snapshot.context.source_generation,
+		   (unsigned long long)snapshot.context.budget_generation,
+		   (unsigned long long)snapshot.context.lease,
+		   snapshot.context.lease_retained, snapshot.context.inactive_revblk,
+		   snapshot.context.budget_ma, snapshot.context.capacity,
+		   snapshot.context.pack_uv, snapshot.context.pack_decic,
+		   snapshot.context.controls.pending);
+	seq_printf(seq, "context_started_ms=%llu\ncontext_completed_ms=%llu\n"
+		   "context_pack_started_ms=%llu\ncontext_pack_completed_ms=%llu\n"
+		   "context_controls_state=%u\ncontext_controls_attempted=0x%x\n"
+		   "context_controls_off_verified=%u\ncontext_controls_operation_error=%d\n"
+		   "context_controls_restore_error=%d\ncontext_controls_witness_valid=%u\n"
+		   "context_controls_before=%*ph\ncontext_controls_witness=%*ph\n"
+		   "context_controls_status_before=%*ph\ncontext_controls_status_after=%*ph\n",
+		   (unsigned long long)snapshot.context.started_ms,
+		   (unsigned long long)snapshot.context.completed_ms,
+		   (unsigned long long)snapshot.context.pack_started_ms,
+		   (unsigned long long)snapshot.context.pack_completed_ms,
+		   snapshot.context.controls.state, snapshot.context.controls.attempted,
+		   snapshot.context.controls.off_verified, snapshot.context.controls.operation_error,
+		   snapshot.context.controls.restore_error, snapshot.context.controls.witness_valid,
+		   SM5440_CONTROL_SETTINGS, snapshot.context.controls.before,
+		   SM5440_CONTROL_WITNESSES, snapshot.context.controls.witness,
+		   4, snapshot.context.controls.status_before, 4, snapshot.context.controls.status_after);
+	sm5440_snapshot_sample_show(seq, "context_initial", &snapshot.context.initial);
+	sm5440_snapshot_sample_show(seq, "context_confirmation", &snapshot.context.confirmation);
+	sm5440_snapshot_sample_show(seq, "context_before", &snapshot.context.before);
+	sm5440_snapshot_sample_show(seq, "context_handoff", &snapshot.context.handoff);
 #endif
 	return 0;
 }
@@ -777,6 +843,19 @@ static int sm5440_condition_begin(struct sm5440_direct *sm,
 	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
 	if (!ret && (mode & SM5440_MODE_MASK))
 		ret = -EBUSY;
+	if (!ret) {
+		/* Live STATUS immediately before mutation, never an INT latch. */
+		ret = regmap_bulk_read(sm->regmap, SM5440_STATUS1,
+				       sample->pre_status, sizeof(sample->pre_status));
+		if (!ret) {
+			sample->pre_status_valid = true;
+			if (sm5440_decode_faults(sample->pre_status, false, 0) ||
+			    (sample->pre_status[2] & BIT(6)))
+				ret = -EIO;
+			else if (!(sample->pre_status[2] & BIT(5)))
+				ret = -ENOLINK;
+		}
+	}
 	if (!ret)
 		ret = regmap_read(sm->regmap, SM5440_CNTL6, &value);
 	if (ret)
@@ -900,6 +979,322 @@ static void sm5440_startup_gauge(struct sm5440_sample *sample)
 	sample->gauge_completed_ms = ktime_to_ms(ktime_get_boottime());
 }
 
+#ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+static void sm5440_context_publish(struct sm5440_direct *sm,
+				   struct sm5440_context *context, int phase)
+{
+	context->phase = phase;
+	mutex_lock(&sm->io_lock);
+	sm->context = *context;
+	mutex_unlock(&sm->io_lock);
+}
+
+static int sm5440_context_source(struct sm5440_direct *sm,
+				 const struct sm5714_pd_snapshot *before,
+				 struct sm5714_pd_snapshot *after, u64 lease)
+{
+	u64 now;
+	int ret;
+
+	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->dying))
+		return -ESHUTDOWN;
+	ret = sm5714_pd_read_snapshot(after);
+	if (ret)
+		return ret;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!after->started_ms || now < after->completed_ms ||
+	    after->completed_ms < after->started_ms ||
+	    now - after->started_ms > SM5440_PASSIVE_OBSERVATION_MS)
+		return -ESTALE;
+	if (!after->instance || !after->source_generation || after->budget_mv != 9000 ||
+	    after->budget_ma < 1000 || after->budget_ma > SM5714_FIXED_9V_MA ||
+	    after->online != 1 || after->usb_type != POWER_SUPPLY_USB_TYPE_PD ||
+	    after->voltage_uv != 9000000 ||
+	    after->current_ua != after->budget_ma * 1000U ||
+	    !after->charge_requested || after->pps_contract)
+		return -EPERM;
+	if (before && (before->instance != after->instance ||
+		       before->source_generation != after->source_generation ||
+		       before->budget_generation != after->budget_generation))
+		return -ESTALE;
+	if (lease) {
+		ret = sm5714_battery_switching_check(lease);
+		if (ret)
+			return ret;
+	}
+	return READ_ONCE(sm->stopped) || READ_ONCE(sm->dying) ? -ESHUTDOWN : 0;
+}
+
+static int sm5440_context_pack(struct sm5440_context *c)
+{
+	static const enum power_supply_property props[] = {
+		POWER_SUPPLY_PROP_PRESENT, POWER_SUPPLY_PROP_HEALTH,
+		POWER_SUPPLY_PROP_CAPACITY, POWER_SUPPLY_PROP_VOLTAGE_NOW,
+		POWER_SUPPLY_PROP_TEMP,
+	};
+	struct power_supply *psy;
+	union power_supply_propval value;
+	int values[ARRAY_SIZE(props)] = {}, ret = 0;
+	unsigned int i;
+
+	c->pack_started_ms = ktime_to_ms(ktime_get_boottime());
+	psy = power_supply_get_by_name("sm5714-battery");
+	if (!psy)
+		return -ENODEV;
+	for (i = 0; i < ARRAY_SIZE(props); i++) {
+		ret = power_supply_get_property(psy, props[i], &value);
+		if (ret)
+			break;
+		values[i] = value.intval;
+	}
+	power_supply_put(psy);
+	c->pack_completed_ms = ktime_to_ms(ktime_get_boottime());
+	c->capacity = values[2];
+	c->pack_uv = values[3];
+	c->pack_decic = values[4];
+	if (ret)
+		return ret;
+	if (!c->pack_started_ms || c->pack_completed_ms < c->pack_started_ms ||
+	    c->pack_completed_ms - c->pack_started_ms > SM5440_PASSIVE_OBSERVATION_MS)
+		return -ESTALE;
+	if (values[0] != 1 || values[1] != POWER_SUPPLY_HEALTH_GOOD ||
+	    c->capacity < 5 || c->capacity >= 80 || c->pack_uv < 3500000 ||
+	    c->pack_uv >= 4300000 || c->pack_decic < 200 || c->pack_decic >= 380)
+		return -EPERM;
+	return 0;
+}
+
+/* Diagnostic converter, always disable/readback before returning. No core
+ * charger/TCPC lock across rearm/conversion/supplier calls. Never a100ms grant.
+ */
+static int sm5440_context_observe(struct sm5440_direct *sm,
+				  struct sm5440_sample *sample)
+{
+	unsigned int value;
+	int ret, cleanup, err;
+
+	memset(sample, 0, sizeof(*sample));
+	ret = sm5440_adc_rearm(sm);
+	if (!ret)
+		ret = sm5440_sample_once(sm, sample);
+	if (!ret)
+		sm5440_startup_gauge(sample);
+	mutex_lock(&sm->io_lock);
+	cleanup = sm5440_off(sm);
+	err = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (!cleanup)
+		cleanup = err;
+	err = regmap_read(sm->regmap, SM5440_ADCCNTL1, &value);
+	if (!err && (value & SM5440_ADC_ENABLE))
+		err = -EIO;
+	if (!cleanup)
+		cleanup = err;
+	mutex_unlock(&sm->io_lock);
+	sample->restore_error = cleanup;
+	sample->completed_ms = ktime_to_ms(ktime_get_boottime());
+	if (!ret)
+		ret = cleanup;
+	sample->valid = !ret;
+	return ret;
+}
+
+static bool sm5440_context_physical(const struct sm5440_sample *sample)
+{
+	u64 now = ktime_to_ms(ktime_get_boottime());
+
+	return sample->acquired_ms && now >= sample->completed_ms &&
+		sample->completed_ms >= sample->acquired_ms &&
+		now - sample->acquired_ms <= SM5440_PASSIVE_OBSERVATION_MS &&
+		!(sample->mode_before & SM5440_MODE_MASK) &&
+		!(sample->mode_after & SM5440_MODE_MASK) && sample->online &&
+		!(sample->status[2] & BIT(6)) &&
+		(sample->int4_wait & SM5440_ADC_READY) &&
+		sample->vbus_uv >= 8500000 && sample->vbus_uv <= 9500000 &&
+		!sample->ibus_ua && sample->die_decic >= 225 && sample->die_decic < 420 &&
+		sample->vbat_uv >= 2500000 && sample->vbat_uv <= 4600000 &&
+		!sm5440_decode_faults(sample->status, false, 0);
+}
+
+/* Preserve a preexisting OFF latch, never mask live or repeated REVBLK. The
+ * original and both new confirmations remain diagnostic evidence only.
+ */
+static bool sm5440_context_inactive(const struct sm5440_sample *sample)
+{
+	return sm5440_context_physical(sample) && sample->faults == SM5440_FAULT_REVBLK &&
+		sm5440_decode_faults(sample->int_before, false, 0) == SM5440_FAULT_REVBLK;
+}
+
+static int sm5440_context_restore_settings(struct sm5440_direct *sm,
+					  struct sm5440_control *controls)
+{
+	int ret;
+
+	mutex_lock(&sm->io_lock);
+	ret = sm5440_control_restore(sm->regmap, controls);
+	mutex_unlock(&sm->io_lock);
+	return ret;
+}
+
+static int sm5440_fixed_context_cycle(struct sm5440_direct *sm,
+				     struct sm5440_sample *sample)
+{
+	struct sm5440_context c = {};
+	struct sm5714_pd_snapshot fixed = {}, after = {};
+	struct sm5440_sample *confirm;
+	int ret = -ENODATA, i;
+
+	mutex_lock(&sm->io_lock);
+	if (sm->context_attempted) {
+		mutex_unlock(&sm->io_lock);
+		return -EALREADY;
+	}
+	sm->context_attempted = true;
+	mutex_unlock(&sm->io_lock);
+	c.started_ms = ktime_to_ms(ktime_get_boottime());
+	sm5440_context_publish(sm, &c, 1);
+	/* Only not-yet-published/initializing source state gets readiness waits.
+	 * No register/charging mutation and no retry after an actual refusal.
+	 */
+	for (i = 0; i < 40; i++) {
+		ret = sm5440_context_source(sm, NULL, &fixed, 0);
+		if (ret != -ENODEV && ret != -ENODATA && ret != -EAGAIN && ret != -EBUSY)
+			break;
+		if (READ_ONCE(sm->stopped) || READ_ONCE(sm->dying)) {
+			ret = -ESHUTDOWN;
+			break;
+		}
+		msleep(100);
+	}
+	if (ret)
+		goto done;
+	c.instance = fixed.instance;
+	c.source_generation = fixed.source_generation;
+	c.budget_generation = fixed.budget_generation;
+	c.budget_ma = fixed.budget_ma;
+	sm5440_context_publish(sm, &c, 2);
+	ret = sm5440_context_pack(&c);
+	if (ret)
+		goto done;
+	sm5440_context_publish(sm, &c, 3);
+	ret = sm5440_context_observe(sm, &c.initial);
+	if (!ret && !sm5440_context_physical(&c.initial))
+		ret = -ERANGE;
+	if (ret)
+		goto done;
+	c.before = c.initial;
+	if (c.initial.faults) {
+		if (!sm5440_context_inactive(&c.initial)) {
+			ret = -EIO;
+			goto done;
+		}
+		sm5440_context_publish(sm, &c, 4);
+		for (i = 0; i < 2; i++) {
+			confirm = i ? &c.before : &c.confirmation;
+			ret = sm5440_context_source(sm, &fixed, &after, 0);
+			if (!ret)
+				ret = sm5440_context_observe(sm, confirm);
+			if (!ret && (confirm->faults || !sm5440_context_physical(confirm) ||
+				     confirm->cntl2 != c.initial.cntl2 ||
+				     confirm->vbuscntl != c.initial.vbuscntl ||
+				     confirm->vbatcntl != c.initial.vbatcntl ||
+				     confirm->prtncntl != c.initial.prtncntl))
+				ret = -EIO;
+			if (ret)
+				goto done;
+		}
+		c.inactive_revblk = true;
+	}
+	ret = sm5440_context_pack(&c);
+	if (!ret)
+		ret = sm5440_context_source(sm, &fixed, &after, 0);
+	if (!ret && (!sm5440_context_physical(&c.before) || c.before.faults))
+		ret = -ESTALE;
+	if (ret)
+		goto done;
+	sm5440_context_publish(sm, &c, 5);
+	ret = sm5714_battery_switching_acquire(&c.lease);
+	/* Nonzero even on error means inhibited/diagnostic, not authorization. */
+	c.lease_retained = !!c.lease;
+	if (!ret && !c.lease)
+		ret = -EIO;
+	if (ret)
+		goto done;
+	sm5440_context_publish(sm, &c, 6);
+	ret = sm5440_context_source(sm, &fixed, &after, c.lease);
+	if (!ret)
+		ret = sm5440_context_observe(sm, &c.handoff);
+	if (!ret && (c.handoff.faults || !sm5440_context_physical(&c.handoff)))
+		ret = -EIO;
+	if (!ret)
+		ret = sm5440_context_pack(&c);
+	if (!ret)
+		ret = sm5440_context_source(sm, &fixed, &after, c.lease);
+	if (!ret && !sm5440_context_physical(&c.handoff))
+		ret = -ESTALE;
+	if (ret)
+		goto done;
+	sm5440_context_publish(sm, &c, 7);
+	mutex_lock(&sm->io_lock);
+	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->dying))
+		ret = -ESHUTDOWN;
+	else
+		ret = sm5440_control_prepare(sm->regmap, c.budget_ma, &c.controls);
+	mutex_unlock(&sm->io_lock);
+	if (ret)
+		goto done;
+	ret = sm5440_context_source(sm, &fixed, &after, c.lease);
+	if (!ret && !sm5440_context_physical(&c.handoff))
+		ret = -ESTALE;
+	if (ret)
+		goto cleanup;
+	sm5440_context_publish(sm, &c, 8);
+	ret = sm5440_condition_cycle(sm, sample);
+	if (!ret) {
+		sm5440_startup_gauge(sample);
+		sample->completed_ms = ktime_to_ms(ktime_get_boottime());
+		if (!sm5440_context_physical(sample) || sample->faults ||
+		    sample->gauge_ret || sample->vbat_uv < 3500000 ||
+		    sample->vbat_uv >= 4300000 ||
+		    sample->gauge_uv < 3500000 || sample->gauge_uv >= 4300000 ||
+		    abs((int)sample->vbat_uv - sample->gauge_uv) > 100000)
+			ret = -ERANGE;
+	}
+	if (!ret)
+		ret = sm5440_context_pack(&c);
+	if (!ret)
+		ret = sm5440_context_source(sm, &fixed, &after, c.lease);
+cleanup:
+	sm5440_context_publish(sm, &c, 9);
+	/* No second ENHIZ cleanup attempt in this worker. Unknown condition
+	 * restoration prevents claiming/restoring a complete settings witness.
+	 */
+	if (READ_ONCE(sm->enhiz_restore_pending))
+		c.cleanup_error = sample->restore_error ? sample->restore_error : -EIO;
+	else
+		c.cleanup_error = sm5440_context_restore_settings(sm, &c.controls);
+	if (!ret)
+		ret = c.cleanup_error;
+done:
+	c.error = ret;
+	c.completed_ms = ktime_to_ms(ktime_get_boottime());
+	/* Test314 already makes one cleanup attempt on prepare failure. Retain
+	 * pending/error, do not silently retry it here or release switching.
+	 */
+	if (!c.cleanup_error)
+		c.cleanup_error = c.controls.restore_error;
+	if (!c.cleanup_error)
+		c.cleanup_error = c.initial.restore_error;
+	if (!c.cleanup_error)
+		c.cleanup_error = c.confirmation.restore_error;
+	if (!c.cleanup_error)
+		c.cleanup_error = c.before.restore_error;
+	if (!c.cleanup_error)
+		c.cleanup_error = c.handoff.restore_error;
+	sm5440_context_publish(sm, &c, ret ? c.phase : 10);
+	return ret;
+}
+#endif
+
 static void sm5440_poll(struct work_struct *work)
 {
 	struct sm5440_direct *sm = container_of(to_delayed_work(work),
@@ -910,14 +1305,16 @@ static void sm5440_poll(struct work_struct *work)
 	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
 		return;
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
-	ret = sm5440_condition_cycle(sm, &sample);
+	ret = sm5440_fixed_context_cycle(sm, &sample);
 #else
 	ret = sm5440_adc_rearm(sm);
 	if (!ret)
 		ret = sm5440_sample_once(sm, &sample);
 #endif
 	if (!ret && (!sm->initial_sample_done || sm->startup_confirmations)) {
+#ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 		sm5440_startup_gauge(&sample);
+#endif
 		dev_info(sm->dev,
 			 "startup voltage pair seq=%llu ADC-start=%llums ADC-read=%llums VBAT=%uuV gauge-start=%llums gauge-end=%llums gauge-ret=%d gauge=%duV\n",
 			 (unsigned long long)sample.acquisition_seq,
@@ -1103,6 +1500,8 @@ static void sm5440_stop(void *data)
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	if (sm5440_condition_restore(sm, &sm->condition_sample))
 		dev_err(sm->dev, "ADC condition teardown cannot verify restoration\n");
+	else if (sm5440_context_restore_settings(sm, &sm->context.controls))
+		dev_err(sm->dev, "fixed context teardown cannot restore settings\n");
 #endif
 }
 
@@ -1113,8 +1512,13 @@ static int sm5440_suspend(struct device *dev)
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	int ret = sm5440_quiesce(sm);
 	int restore = sm5440_condition_restore(sm, &sm->condition_sample);
+	int settings = restore ? restore :
+		sm5440_context_restore_settings(sm, &sm->context.controls);
 
-	return ret ? ret : restore;
+	if (ret || settings)
+		return ret ? ret : settings;
+	/* The diagnostic cannot release switching from its500ms samples. */
+	return sm->context.lease_retained ? -EBUSY : 0;
 #else
 	return sm5440_quiesce(sm);
 #endif
@@ -1128,6 +1532,8 @@ static int sm5440_resume(struct device *dev)
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	/* One experiment per bind, never rearm a second one on resume. */
 	if (sm->condition_attempted)
+		return -EOPNOTSUPP;
+	if (sm->context_attempted)
 		return -EOPNOTSUPP;
 #endif
 	mutex_lock(&sm->io_lock);

@@ -6,13 +6,14 @@ or PPS consumer. Normal charging/passive builds keep their existing behavior.
 
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
-@@ -1211 +1211,9 @@
+@@ -1211 +1211,10 @@
 +config SM5440_ADC_CONDITION_TEST
 +	bool "X710 one OFF-mode SM5440 ENHIZ/ADC comparison"
 +	depends on CHARGER_SM5440_DIRECT=y && !X710_CHARGING_POLICY
++	depends on TYPEC_SM5714=y && BATTERY_SM5714=y
 +	help
-+	  One diagnostic conversion with bit7-only temporary ENHIZ adjustment
-+	  and verified restoration. No pump ON, PPS or charging authorization.
++	  Source-bound fixed9V OFF comparison after checked switching handoff
++	  and verified settings restoration. No pump ON, PPS or charge grant.
 +	  Leave disabled for normal or previously accepted passive builds.
 +
  endif # POWER_SUPPLY

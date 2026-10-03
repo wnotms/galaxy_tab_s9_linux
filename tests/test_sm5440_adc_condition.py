@@ -11,13 +11,8 @@ from test_sm5714_policy import function
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class ConditionTransactionTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.tmp = tempfile.TemporaryDirectory()
-        cls.addClassCleanup(cls.tmp.cleanup)
-        cls.source = (ROOT / 'kernel/drivers/sm5440-direct.c').read_text()
-        code = r'''
+def condition_fixture_source(source):
+    code = r'''
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
@@ -39,9 +34,11 @@ static void mutex_unlock(struct mutex *p){(void)p;depth--;}
 #define ktime_to_ms(x) ((x)/1000000ULL)
 static u64 ktime_get_boottime(void){return clock_ms*1000000ULL;}
 ''' + '#include "' + str(ROOT / 'kernel/drivers/sm5440-hw.h') + '"\n'
-        code += function(cls.source, 'struct sm5440_sample {') + ';\n'
-        code += function(cls.source, 'struct sm5440_direct {') + ';\n'
-        code += r'''
+    code += function(source, 'struct sm5440_sample {') + ';\n'
+    code += '#include \"' + str(ROOT / 'kernel/drivers/sm5440-control.h') + '\"\n'
+    code += function(source, 'struct sm5440_context {') + ';\n'
+    code += function(source, 'struct sm5440_direct {') + ';\n'
+    code += r'''
 static struct sm5440_direct *current;
 static int step(void){if(depth!=1)errors++;calls++;return calls==fail||calls==fail2?-EIO:0;}
 static int regmap_read(struct regmap *m,unsigned int r,unsigned int *v){
@@ -67,11 +64,11 @@ static void msleep(unsigned int ms){
  if(started&&++waits>=3&&!never_ready)regs[SM5440_INT4]|=SM5440_ADC_READY;
  if(stop_wait==1||(stop_wait==2&&started&&waits==2))current->stopped=true;}
 '''
-        for name in ['static int sm5440_off(', 'static int sm5440_sample_once(',
-                     'static int sm5440_adc_rearm(', 'static int sm5440_condition_begin(',
-                     'static int sm5440_condition_restore(', 'static int sm5440_condition_cycle(']:
-            code += function(cls.source, name) + '\n'
-        code += r'''
+    for name in ['static int sm5440_off(', 'static int sm5440_sample_once(',
+                 'static int sm5440_adc_rearm(', 'static int sm5440_condition_begin(',
+                 'static int sm5440_condition_restore(', 'static int sm5440_condition_cycle(']:
+        code += function(source, name) + '\n'
+    code += r'''
 int exercise(int failure,int second,int initial,int scenario,int mismatch,long long *out){
  struct sm5440_direct sm={0};struct sm5440_sample s={0};current=&sm;
  depth=errors=calls=waits=started=writes=never_ready=stop_wait=0;clock_ms=1000;
@@ -107,6 +104,16 @@ int exercise(int failure,int second,int initial,int scenario,int mismatch,long l
  }
  return ret;}
 '''
+    return code
+
+
+class ConditionTransactionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.tmp.cleanup)
+        cls.source = (ROOT / 'kernel/drivers/sm5440-direct.c').read_text()
+        code = condition_fixture_source(cls.source)
         c = Path(cls.tmp.name) / 'condition.c'
         c.write_text(code)
         lib = c.with_suffix('.so')
@@ -166,14 +173,14 @@ int exercise(int failure,int second,int initial,int scenario,int mismatch,long l
             self.assertTrue(r[8] or r[9], step)
 
     def test_uncertain_enhiz_write_is_restored(self):
-        ret, r = self.run_case(fail=5)
+        ret, r = self.run_case(fail=6)
         self.assertEqual(ret, -errno.EIO)
         self.assertEqual(r[3], 0x89)
         self.assertEqual(r[9], 0)
         self.assertEqual(r[6], 0)
 
     def test_readback_mismatch_refuses_and_restores(self):
-        ret, r = self.run_case(mismatch=6)
+        ret, r = self.run_case(mismatch=7)
         self.assertEqual(ret, -errno.EIO)
         self.assertEqual(r[3], 0x89)
         self.assertEqual(r[6], 0)
@@ -196,7 +203,7 @@ int exercise(int failure,int second,int initial,int scenario,int mismatch,long l
         self.assertEqual(r[8:10], [-errno.ESHUTDOWN, 0])
 
     def test_adc_disable_readback_refused_before_enhiz_mutation(self):
-        ret, r = self.run_case(mismatch=4)
+        ret, r = self.run_case(mismatch=5)
         self.assertEqual(ret, -errno.EIO)
         self.assertEqual(r[3], 0x89)
         self.assertEqual(r[6], 0)
@@ -211,7 +218,7 @@ int exercise(int failure,int second,int initial,int scenario,int mismatch,long l
         self.assertEqual(r[14], 1)
 
     def test_native_error_and_cleanup_error_both_preserved(self):
-        ret, r = self.run_case(fail=5, second=11)
+        ret, r = self.run_case(fail=6, second=11)
         self.assertEqual(ret, -errno.EIO)
         self.assertEqual(r[8:10], [-errno.EIO, -errno.EIO])
         self.assertEqual(r[6:8], [1, 1])
