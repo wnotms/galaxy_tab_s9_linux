@@ -1,0 +1,17 @@
+{
+  "valid": true,
+  "python_files": [
+    "reference/boot-tests/test-306-adc-condition-comparison/host_flow.py",
+    "reference/boot-tests/test-306-adc-condition-comparison/gate.py",
+    "reference/boot-tests/test-306-adc-condition-comparison/build_package.py",
+    "tests/test_sm5440_condition_device_gate.py",
+    "tests/test_sm5440_condition_device_runner.py"
+  ],
+  "shell_files": [
+    "reference/boot-tests/test-306-adc-condition-comparison/module-swap.sh",
+    "scripts/twrp-mount-debian.sh"
+  ],
+  "device_commands_executed": false,
+  "elapsed_seconds": 0.017758870002580807,
+  "final_revision_syntax_rechecked": true
+}

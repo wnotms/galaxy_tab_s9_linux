@@ -1,0 +1,18 @@
+test_low_battery_actual_record_refused (test_sm5440_condition_device_gate.BatteryEntryTests.test_low_battery_actual_record_refused) ... ok
+test_safe_entry (test_sm5440_condition_device_gate.BatteryEntryTests.test_safe_entry) ... ok
+test_soc_voltage_temperature_and_health_bounds (test_sm5440_condition_device_gate.BatteryEntryTests.test_soc_voltage_temperature_and_health_bounds) ... ok
+test_already_clear_is_not_informative (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_already_clear_is_not_informative) ... ok
+test_complete_one_pair_preserves_difference_and_no_grant (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_complete_one_pair_preserves_difference_and_no_grant) ... ok
+test_conflicting_duplicate_field_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_conflicting_duplicate_field_refused) ... ok
+test_fault_stop_missing_sample_and_wrong_profile_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_fault_stop_missing_sample_and_wrong_profile_refused) ... ok
+test_gauge_unavailable_and_malformed_fields_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_gauge_unavailable_and_malformed_fields_refused) ... ok
+test_journal_absent_mixed_extra_pair_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_journal_absent_mixed_extra_pair_refused) ... ok
+test_mode_current_voltage_temperature_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_mode_current_voltage_temperature_refused) ... ok
+test_only_original_preconversion_revblk_can_be_retained (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_only_original_preconversion_revblk_can_be_retained) ... ok
+test_pair_timestamp_and_value_mismatch_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_pair_timestamp_and_value_mismatch_refused) ... ok
+test_read_flags_restoration_pending_error_refused (test_sm5440_condition_device_gate.ConditionEvidenceTests.test_read_flags_restoration_pending_error_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.003s
+
+OK

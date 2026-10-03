@@ -1,0 +1,39 @@
+{
+  "source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+  "qualification_reused": "Test305",
+  "kernel_and_build_source_changes_since_qualification": [],
+  "artifacts_checked": {
+    "Image.gz": "cfa79d283ceb8be010412bd6363b35a7e9dd0aaedbaa738d347159939eb0379f",
+    "sm8550-samsung-gts9wifi.dtb": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+    "config": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+    "kernel-notes.bin": "b5254272a3e77f426abc055ea79238c159dad1f09cdba79cb94a617546a93776",
+    "modules-x710.tar.gz": "44ca71bc0f15255bd07642448d59c55210096e1992796aa317b7d15dcedeb351",
+    "boot.img": "0699c5e297dc0ac51d5c794d34e71aafd8d8a58bcd6e52264a30e8ae55d32c74",
+    "rollback-boot.img": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af",
+    "rollback-modules-x710.tar.gz": "0941b232f57b75b9e8ad2278f0bfa49be5c0fca8d2416af97630a661f41e09c0"
+  },
+  "candidate_boot_payload_unpacked_verified": true,
+  "new_boot_only": true,
+  "other_four_partition_hashes_unchanged": true,
+  "Test299_DTB_identical": true,
+  "candidate_module_file_count": 181,
+  "rollback_module_file_count": 181,
+  "Test299_config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "absent",
+      "y"
+    ]
+  },
+  "new_kernel_build": {
+    "executed": false,
+    "reason": "no kernel/build/config/DT source changed; exact qualified artifacts verified"
+  },
+  "full_host_regression": {
+    "executed": false,
+    "reason": "new host runner/parser/package only; affected tests executed separately"
+  },
+  "device_commands": {
+    "executed": false,
+    "reason": "battery recovery/owner physical state confirmation pending"
+  }
+}

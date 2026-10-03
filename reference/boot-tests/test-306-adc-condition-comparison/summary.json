@@ -1,0 +1,53 @@
+{
+  "test": "Test306",
+  "verdict": "OFFLINE_REGISTRATION_PACKAGE_AND_RUNNER_READY",
+  "kernel_source_revision": "9dceb767698b9518a5c150dad7f51b46df4742d2",
+  "qualification_reused": "Test305",
+  "host_tests": {
+    "executed": true,
+    "tests_run": 51,
+    "new_tests": 43,
+    "reused_thermal_runner_tests_executed": 8,
+    "elapsed_seconds": 0.123,
+    "failures": [],
+    "errors": [],
+    "skips": []
+  },
+  "build": {
+    "executed": false,
+    "reason": "unchanged qualified Test305 kernel; verified binary hashes reused"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "host runner/parser/package change only; no test-routing or kernel/build change"
+  },
+  "boot_package": {
+    "built_offline": true,
+    "unpacked_payload_verified": true,
+    "boot_sha256": "0699c5e297dc0ac51d5c794d34e71aafd8d8a58bcd6e52264a30e8ae55d32c74",
+    "other_four_partitions_unchanged": true,
+    "paired_modules": 181,
+    "Windows_stage": "D:/android/gts9-active/gts9-test306",
+    "stage_completed_without_rewriting_verified_partial_files": true
+  },
+  "physical": {
+    "executed": false,
+    "fresh_preflight_executed": false,
+    "entry": "STOP_RECHARGE_AND_CURRENT_DEVICE_STATE_NOT_CONFIRMED",
+    "last_observed_baseline": "Test299 retained under Test300",
+    "last_observed_SOC": 0,
+    "last_observed_voltage_uv": 3145000,
+    "not_a_current_measurement": true,
+    "maximum_candidate_boots": 1,
+    "maximum_conversions": 1,
+    "endpoint_seconds": 15,
+    "rollback": "unconditional accepted Test299 and original181 modules"
+  },
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "physical_freshness_grant": false,
+  "charging_authorized": false,
+  "active_stage3_ready": false,
+  "goal_complete": false
+}

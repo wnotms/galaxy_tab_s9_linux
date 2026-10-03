@@ -2,6 +2,19 @@
 
 ## Current state (2026-10-03)
 
+Test306 OFFLINE_REGISTRATION_PACKAGE_AND_RUNNER_READY. Qualified305 source and
+artifacts reused; boot-only package / paired181 / exact accepted299 rollback
+staged in D:\android\gts9-active\gts9-test306.51 affected host tests PASS; no new
+kernel build/full/CI/device command. One OFF-mode ENHIZ comparison, exact restore
+flags / original fault / unique ADC-gauge pair /15s endpoint; unconditional299
+rollback, not263. Baseline/candidate config checked separately; lightweight
+readiness / one full identity / parallel journal-history-USB / one NCM probe.
+Cleanup tracked before BCB request; unknown identity/rescue -> manual TWRP, no
+blind retry. Physical NOT EXECUTED: owner recharge/current-screen confirmation
+still pending; last0%/3.145V is historical, not fresh proof. Read306 registration,
+RESULTS/summary/INPUTS. No PPS/pump/current/freshness waiver; full Stage3NOTREADY,
+full goalactive. Register/push before any future physical mutation.
+
 Test305 follow-up:11 bounded readonlyWiFi rows completed; same299boot57535...,
 allSDP500mA/SOC0/temp31.3C/netnegative, min3.135V/final3.145V. No chargerchange
 observed/owner C2reconnect pending. Monitor terminal/notrestarted; no mutation,
