@@ -2,6 +2,21 @@
 
 ## Current state (2026-10-03)
 
+Test307 STOP_CRITICALLY_LOW_BATTERY_AND_CHARGE_PROGRAM_MISMATCH. One readonly
+ADB incident capture: new fd198...boot (cause unknown/no reboot issued), same
+299 notes/config but lpcharge=1/normal306cmdline mismatch; SOC0/VBAT2.775V/
+~+6mA/31.5C/Good/Not charging. PC SDP online reports1800mA;8 atomic stable
+register-pointer reads show Q4OFF/input1800/fast97/float4200; initial logs500/500
+at1.52/1.98s. Mode5/WDT04(disabled NOW); reset cause/prior WDT unknown. Initial
+name guard failure before I2C preserved/corrected via bound driver+OF.1109raw
+kernel rows/zero matched CPU signatures/packzone enabled; no write/flash/PPS/
+pump/current/reset/rootfs. Old WiFi19 unavailable/new16; no further polling.
+Owner C2recharge/current-state confirmation pending. Do not run306 at lowbattery
+or lpcharge boot. Next bounded ordinary programmed-state recovery per design
+SM5714_PROGRAM_STATE_RECOVERY, not active pump bringup.307 docs/evidence only,
+host/build executed:false. Full Stage3NOTREADY/fullgoalactive; current normal
+production acceptance not asserted from notes/config alone.
+
 Test306 OFFLINE_REGISTRATION_PACKAGE_AND_RUNNER_READY. Qualified305 source and
 artifacts reused; boot-only package / paired181 / exact accepted299 rollback
 staged in D:\android\gts9-active\gts9-test306.51 affected host tests PASS; no new

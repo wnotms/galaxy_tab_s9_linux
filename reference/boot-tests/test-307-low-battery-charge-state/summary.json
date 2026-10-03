@@ -1,0 +1,75 @@
+{
+  "test": "Test307",
+  "verdict": "STOP_CRITICALLY_LOW_BATTERY_AND_CHARGE_PROGRAM_MISMATCH",
+  "device_mutations": false,
+  "configuration_data_writes": false,
+  "atomic_register_pointer_reads": 8,
+  "initial_name_guard_failure_before_any_I2C": true,
+  "boot_id": "fd198d7c-3c89-40a5-9172-4a2f50ea0a34",
+  "previous_boot_id": "57535bed-a626-48d0-aaaa-3071ac8332e5",
+  "boot_change_cause": "unknown; no reboot command issued by this work",
+  "uptime_seconds": 2052.43,
+  "config_sha256": "f2891de2b636820c8ad10b8682d7e68a9f4447c4af70cdfcd2b953de942f40b5",
+  "kernel_notes_sha256": "aea7c145b3901408040453648d8f81cd4cca23f27443d0e1c30d701e35717403",
+  "software_identity": "accepted Test299 notes/config; full partition/module identity not rechecked under low battery",
+  "lpcharge_boot": true,
+  "normal_registered_cmdline_matches": false,
+  "SOC": 0,
+  "gauge_voltage_uv": 2775000,
+  "gauge_current_ua": 6000,
+  "pack_temp_decic": 315,
+  "battery_status": "Not charging",
+  "battery_health": "Good",
+  "USB_online": true,
+  "USB_type": "SDP",
+  "input_limit_ua": 1800000,
+  "roles": [
+    "[sink]",
+    "[device]"
+  ],
+  "pack_thermal_enabled": true,
+  "failed_units": [],
+  "kernel_rows": 1109,
+  "kernel_signature_counts": {},
+  "stable_registers": {
+    "0x0d": "0x01",
+    "0x0e": "0x00",
+    "0x13": "0x64",
+    "0x14": "0x05",
+    "0x15": "0x44",
+    "0x18": "0x97",
+    "0x1a": "0x55"
+  },
+  "decoded": {
+    "Q4_enable": false,
+    "operation_mode": 5,
+    "VBUS_input_limit_ma": 1800,
+    "CHGCNTL2_fast_code": 151,
+    "BATREG_code": 21,
+    "float_mv": 4200,
+    "watchdog_control": 4,
+    "watchdog_enabled_at_read": false
+  },
+  "observed_log_configurations": [
+    {
+      "source_us": 1520775,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery"
+    },
+    {
+      "source_us": 1979544,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery"
+    }
+  ],
+  "unproven": [
+    "cause/time of register change",
+    "prior watchdog state",
+    "physical battery calibration",
+    "cause of new lpcharge boot"
+  ],
+  "Test306_executed": false,
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "active_stage3_ready": false,
+  "goal_complete": false
+}

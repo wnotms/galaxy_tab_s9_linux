@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uptime; cat /proc/uptime; echo @@cmdline; cat /proc/cmdline; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@kernel; journalctl -k -b -o json --no-pager; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@supply-links; readlink -f /sys/class/power_supply/sm5714-battery/device; echo @@modules; ls /sys/bus/i2c/devices/*/name; echo @@thermal; for z in /sys/class/thermal/thermal_zone*; do if test \"$(cat \"$z/type\")\" = sm5714-battery; then cat \"$z/type\" \"$z/temp\" \"$z/mode\"; fi; done"
+  ],
+  "ended_utc": "2026-10-03T00:17:08.363718+00:00",
+  "started_utc": "2026-10-03T00:17:08.105040+00:00",
+  "status": 0
+}

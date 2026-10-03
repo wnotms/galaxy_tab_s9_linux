@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import ctypes as c, fcntl, os, json\nfrom pathlib import Path\nnode=Path('\"'\"'/sys/bus/i2c/devices/2-0049'\"'\"')\nassert node.resolve() == Path('\"'\"'/sys/class/power_supply/sm5714-battery/device'\"'\"').resolve()\nassert (node/'\"'\"'driver'\"'\"').resolve().name == '\"'\"'sm5714-battery'\"'\"'\nassert b'\"'\"'siliconmitus,sm5714'\"'\"' in (node/'\"'\"'of_node/compatible'\"'\"').read_bytes().split(b'\"'\"'\\0'\"'\"')\nclass Msg(c.Structure):\n    _fields_=[('\"'\"'addr'\"'\"',c.c_uint16),('\"'\"'flags'\"'\"',c.c_uint16),('\"'\"'length'\"'\"',c.c_uint16),('\"'\"'buf'\"'\"',c.POINTER(c.c_uint8))]\nclass Transfer(c.Structure):\n    _fields_=[('\"'\"'msgs'\"'\"',c.POINTER(Msg)),('\"'\"'nmsgs'\"'\"',c.c_uint32)]\nfd=os.open('\"'\"'/dev/i2c-2'\"'\"',os.O_RDWR)\ntry:\n    result={}\n    for reg in (0x22,):\n        pointer=(c.c_uint8*1)(reg); output=(c.c_uint8*1)()\n        msgs=(Msg*2)(Msg(0x49,0,1,pointer),Msg(0x49,1,1,output))\n        packet=Transfer(msgs,2); fcntl.ioctl(fd,0x0707,packet)\n        result[f'\"'\"'0x{reg:02x}'\"'\"']=f'\"'\"'0x{output[0]:02x}'\"'\"'\n    print(json.dumps({'\"'\"'boot_id'\"'\"':Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),'\"'\"'i2c_name'\"'\"':(node/'\"'\"'name'\"'\"').read_text().strip(),'\"'\"'stable_registers'\"'\"':result,'\"'\"'register_data_writes'\"'\"':False,'\"'\"'only_atomic_pointer_reads'\"'\"':True}))\nfinally:\n    os.close(fd)\n'"
+  ],
+  "ended_utc": "2026-10-03T00:23:38.501019+00:00",
+  "started_utc": "2026-10-03T00:23:38.388171+00:00",
+  "status": 0
+}
