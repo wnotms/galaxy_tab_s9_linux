@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "-j8",
+    "drivers/power/supply/sm5714-battery.o"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 8.313830523999968,
+  "object_before": "6ada8d8b6cb4b454d75d4be3f81590ff6ba6828a4cad1e6c134acbcb63457678",
+  "object_after": "6ada8d8b6cb4b454d75d4be3f81590ff6ba6828a4cad1e6c134acbcb63457678",
+  "vmlinux_before": "0a43101a1b994070d73fa1f3fd39e7e259d260afddbce7e71f64841d2fb9c65e",
+  "vmlinux_after": "0a43101a1b994070d73fa1f3fd39e7e259d260afddbce7e71f64841d2fb9c65e",
+  "env": {
+    "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+    "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+    "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime"
+  }
+}

@@ -92,6 +92,25 @@
 
 ## Current state (2026-10-03)
 
+Test308 OFFLINE_ORDINARY_PROGRAM_RECOVERY_QUALIFIED, source158d0dd3. Actual
+readback witness/four stable controls/AICL reduction preserved/one recovery per
+binding; intentionalOFF invalidates/second mismatch+I/O+silentwrite sticky
+program fault even withoutTCPM ownership/cleanupOFF+input readback. Existing
+5V1.8A/9V1.5A/4.44V/thermal/full/PM/lease retained; noPPS/pump/reset/WDTclear/
+TCPCcore/configfragment/DT/USB/adbd/device command.102unique affected PASS4.759s/
+ARM6485.037s/W1sparse8.314s/object+vmlinuxsame/96protected/10overlays/181paired.
+Against299only existingdiagnosticdeclaration absent->n; DTB identical/notfalse
+byteconfigclaim. No full/CI; earlier interrupted logs preserved asNOTpasses.
+Read308RESULTS/summary/validation. ArtifactsWSLonly;302regen intermediates
+trimmed3.87GiB/7871debuginputsverified/308sole current incremental cache;302path
+no longer completeincrementalprovider (supersedes above two-cache listing).
+Owner storage cleanup commitsc22a6856precede source qualification; retiredold
+Stage2Image not checkedasexisting. Last3070%/2.775V/lpcharge boot remains unsafe;
+owner C2recharge confirmation pending/no newpoll/flash/reboot. Next separately
+register ordinary recovery acceptance after safe battery; old306source seal
+cannot be bypassed. Fullgoalactive/Stage3NOTREADY; ADC/OCP/PPS/PM hardware remain.
+
+
 Test307 STOP_CRITICALLY_LOW_BATTERY_AND_CHARGE_PROGRAM_MISMATCH. One readonly
 ADB incident capture: new fd198...boot (cause unknown/no reboot issued), same
 299 notes/config but lpcharge=1/normal306cmdline mismatch; SOC0/VBAT2.775V/

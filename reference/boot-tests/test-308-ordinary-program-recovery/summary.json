@@ -1,0 +1,142 @@
+{
+  "test": "Test308",
+  "verdict": "OFFLINE_ORDINARY_PROGRAM_RECOVERY_QUALIFIED",
+  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "driver_sha256": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a",
+  "profile": "sm5440-passive",
+  "device_mutation": false,
+  "hardware_tested": false,
+  "active_stage3_ready": false,
+  "tests": {
+    "executed": true,
+    "affected_tests_run": 102,
+    "unique_ids": 102,
+    "elapsed_seconds": 4.758895519000362,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "full_executed": false,
+    "scope": "actual ordinary charger, Stage1/Stage2, companion/lease/PM, startup gauge and thermal registration; owner change-scoped workflow"
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 85.03688942899953,
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-passive",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-308-passive",
+      "CCACHE_DIR": "/home/ms/.cache/ccache"
+    },
+    "git_base": "c22a6856f40cdd6e9db026b42f73b61f3ad8cbec",
+    "driver_sha256": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a",
+    "driver_unchanged_during_build": true,
+    "independent_background_pid": 5773
+  },
+  "static": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "-j8",
+      "drivers/power/supply/sm5714-battery.o"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 8.313830523999968,
+    "object_before": "6ada8d8b6cb4b454d75d4be3f81590ff6ba6828a4cad1e6c134acbcb63457678",
+    "object_after": "6ada8d8b6cb4b454d75d4be3f81590ff6ba6828a4cad1e6c134acbcb63457678",
+    "vmlinux_before": "0a43101a1b994070d73fa1f3fd39e7e259d260afddbce7e71f64841d2fb9c65e",
+    "vmlinux_after": "0a43101a1b994070d73fa1f3fd39e7e259d260afddbce7e71f64841d2fb9c65e",
+    "env": {
+      "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+      "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime"
+    }
+  },
+  "checkpatch": {
+    "exit_code": 0,
+    "output_bytes": 0
+  },
+  "test299_config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "absent",
+      "n"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_identical_to_Test299": true,
+  "protected_files": 96,
+  "protected_changes": {},
+  "compiled_overlay_count": 10,
+  "paired_modules": 181,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-308-passive/Image.gz",
+      "bytes": 22138508,
+      "sha256": "f2eed85c27b6163a219fe107a848a6c622e01f1b87d2ba7142e9443f3e8a0129"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-308-passive/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-308-passive/config",
+      "bytes": 243322,
+      "sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-308-passive/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-308-passive/modules-x710.tar.gz",
+      "bytes": 47318437,
+      "sha256": "3e106de81d6f1399fa6e355d35175f857910bf252535a1c8ca9047c21b4c4804"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-308-passive/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "cache_consolidation": {
+    "old_cache": ".work/build/linux-out-x710-302-passive",
+    "current_incremental_cache": ".work/build/linux-out-x710-308-passive",
+    "old_cache_is_complete_incremental_provider": false,
+    "old_debug_and_module_inputs_preserved": true,
+    "source_worktree_removed": false,
+    "removed_files": 11684,
+    "released_allocated_bytes": 4155482112,
+    "retained_files_hash_verified": 7871,
+    "regenerable_intermediates_archived": false,
+    "elapsed_seconds": 51.15172856299978,
+    "selection_implementation": "reference/host-storage-cleanup/2026-10-03-build-intermediates/cleanup-executed.py",
+    "selection_implementation_sha256": "09e09fcccfa3afc206c25f9c74674a6b403ad6aec6a62b13d3efe99e932daf81",
+    "disk_after": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1007G  117G  840G  13% /\nD:\\             276G  223G   53G  81% /mnt/d\n"
+  },
+  "known_upstream_warning": "unchanged vDSO __kernel_getrandom declaration; changed driver warnings zero",
+  "retained_device": {
+    "last_authoritative_test": "Test307",
+    "boot_id": "fd198d7c-3c89-40a5-9172-4a2f50ea0a34",
+    "SOC": 0,
+    "VBAT_uv": 2775000,
+    "status": "Not charging",
+    "cmdline_contains_lpcharge_1": true,
+    "physical_entry_ready": false,
+    "fresh_device_query_executed_this_qualification": false
+  },
+  "next": "Safe ordinary recharge and a separately registered/pushed ordinary recovery acceptance; never substitute candidate in old Test306 runner",
+  "Actions_started": false
+}

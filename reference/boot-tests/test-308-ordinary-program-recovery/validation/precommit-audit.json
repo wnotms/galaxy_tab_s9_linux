@@ -1,0 +1,25 @@
+{
+  "config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "absent",
+      "n"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "dtb_identical_to_test299": true,
+  "protected_file_count": 96,
+  "protected_changes": {},
+  "compiled_source_matches": {
+    "kernel/drivers/x710-charging-policy.h": true,
+    "kernel/drivers/x710-pd-session.h": true,
+    "kernel/drivers/sm5714-stage2.h": true,
+    "kernel/drivers/sm5714-pd-policy.h": true,
+    "kernel/drivers/x710-charging-policy.c": true,
+    "kernel/drivers/sm5440-direct.c": true,
+    "kernel/drivers/sm5714_usbpd.c": true,
+    "kernel/drivers/x710-pd-session.c": true,
+    "kernel/drivers/sm5714-battery.c": true,
+    "kernel/drivers/sm5440-hw.h": true
+  },
+  "driver_sha256": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a"
+}
