@@ -1,0 +1,56 @@
+{
+  "vendor_C": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+    "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+    "excerpts": [
+      {
+        "first_line": 160,
+        "text": "static int sm5440_set_op_mode(struct sm5440_charger *sm5440, u8 op_mode)\n{\n\tint ret;\n\n\tret = sm5440_update_reg(sm5440, SM5440_REG_CNTL5, op_mode, 0x3, 2);\n\n\treturn ret;\n}\n"
+      },
+      {
+        "first_line": 365,
+        "text": "static int sm5440_set_ENHIZ(struct sm5440_charger *sm5440, bool vbus, bool chg_en)\n{\n\tu8 enhiz = 0;   /* case : chg_on or chg_off & vbus_uvlo */\n\n\tif (vbus && !(chg_en))\n\t\tenhiz = 1;              /* case : chg_off & vbus_pok */\n\n\tdev_info(sm5440->dev, \"%s: vbus=%d, chg_en=%d, enhiz=%d\\n\",\n\t\t\t__func__, vbus, chg_en, enhiz);\n\tsm5440_update_reg(sm5440, SM5440_REG_CNTL6, enhiz, 0x1, 7);\n\n\treturn 0;\n}"
+      },
+      {
+        "first_line": 1096,
+        "text": "static int sm5440_set_charging_enable(struct i2c_client *i2c, bool enable)\n{\n\tstruct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);\n\n\tsm5440_set_ENHIZ(sm5440, sm5440->vbus_in, enable);\n\tif (enable)\n\t\tsm5440_set_op_mode(sm5440, OP_MODE_CHG_ON);\n\telse\n\t\tsm5440_set_op_mode(sm5440, OP_MODE_CHG_OFF);\n\n\tsm5440_enable_wdt(sm5440, enable);\n\tsm5440_print_regmap(sm5440);\n"
+      }
+    ]
+  },
+  "vendor_H": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h",
+    "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5",
+    "excerpts": [
+      {
+        "first_line": 110,
+        "text": "};\n\nenum sm5440_wdt_tmr {\n\tWDT_TIMER_S_0P5     = 0x0,\n\tWDT_TIMER_S_1       = 0x1,\n\tWDT_TIMER_S_2       = 0x2,\n\tWDT_TIMER_S_4       = 0x3,\n\tWDT_TIMER_S_30      = 0x4,\n\tWDT_TIMER_S_60      = 0x5,\n\tWDT_TIMER_S_90      = 0x6,\n\tWDT_TIMER_S_120     = 0x7,\n};"
+      }
+    ]
+  },
+  "fedora": {
+    "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+    "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+    "excerpts": [
+      {
+        "first_line": 378,
+        "text": "static int sm5440_pump_off(struct sm5440_direct *sm)\n{\n\treturn sm5440_update_bits(sm, SM5440_REG_CNTL5,\n\t\t\t\t  SM5440_CNTL5_OP_MODE_MASK, 0);\n}\n\nstatic int sm5440_pump_on(struct sm5440_direct *sm)\n{\n\tint status3 = 0;\n\tint i;\n\tint ret;\n\n\tret = sm5440_update_bits(sm, SM5440_REG_CNTL5,\n\t\t\t\t SM5440_CNTL5_OP_MODE_MASK,\n\t\t\t\t SM5440_CNTL5_CHG_ON);\n\tif (ret)\n\t\treturn ret;\n\n\t/*\n\t * VBUSPOK is set as soon as the pump starts pulling the bus down, which is\n\t * well before the 100 ms this used to sleep unconditionally.  Poll for it\n\t * instead, keeping the old worst case as the loop bound.\n\t */\n\tfor (i = 0; i < 5; i++) {\n\t\tmsleep(20);\n\t\tstatus3 = i2c_smbus_read_byte_data(sm->client,\n\t\t\t\t\t\t   SM5440_REG_STATUS3);\n\t\tif (status3 < 0)\n\t\t\treturn status3;\n\t\tif (status3 & SM5440_STATUS3_VBUSPOK)\n\t\t\treturn 0;\n\t}\n\n\treturn -ENOLINK;"
+      },
+      {
+        "first_line": 626,
+        "text": "\n\tret = sm5440_wait_vbus_settled(sm, target_mv);\n\tif (ret)\n\t\tgoto restore;\n\n\tret = sm5440_update_bits(sm, SM5440_REG_CNTL1,\n\t\t\t\t SM5440_CNTL1_WDT_EN,\n\t\t\t\t SM5440_CNTL1_WDT_EN);\n\tif (ret)\n\t\tgoto restore;\n\n\tret = sm5440_pump_on(sm);\n\tif (ret)\n\t\tgoto restore;\n\n\tsm->active = true;\n\tsm->target_mv = target_mv;"
+      }
+    ],
+    "local_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9"
+  },
+  "Linux_regmap": {
+    "path": ".work/linux-mainline/drivers/base/regmap/regmap.c",
+    "sha256": "3d4b622a577f2a008539727d9d26b422112da67dcea170e05ba9d567e2f5a7a9",
+    "excerpts": [
+      {
+        "first_line": 3249,
+        "text": "static int _regmap_update_bits(struct regmap *map, unsigned int reg,\n\t\t\t       unsigned int mask, unsigned int val,\n\t\t\t       bool *change, bool force_write)\n{\n\tint ret;\n\tunsigned int tmp, orig;\n\n\tif (change)\n\t\t*change = false;\n\n\tif (regmap_volatile(map, reg) && map->reg_update_bits) {\n\t\tif (map->cache_only)\n\t\t\treturn -EBUSY;\n\n\t\treg = regmap_reg_addr(map, reg);\n\t\tret = map->reg_update_bits(map->bus_context, reg, mask, val);\n\t\tif (ret == 0 && change)\n\t\t\t*change = true;\n\t} else {\n\t\tret = _regmap_read(map, reg, &orig);\n\t\tif (ret != 0)\n\t\t\treturn ret;\n\n\t\ttmp = orig & ~mask;\n\t\ttmp |= val & mask;\n\n\t\tif (force_write || (tmp != orig) || map->force_write_field) {\n\t\t\tret = _regmap_write(map, reg, tmp);\n\t\t\tif (ret == 0 && change)\n\t\t\t\t*change = true;\n\t\t}\n\t}"
+      }
+    ],
+    "pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa"
+  }
+}

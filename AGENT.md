@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+Unintegrated pump register layer now supplies actualchecked ENHIZ/CHG_ON/OFF
+plus existingsettings/watchdog cleanup, noKbuild/caller/activation. Disabledby
+zero init; mandatoryqualifiedOCP/lease/realPPS ONLINE2/mirrorednativeepochs/
+matchingAPDO/physical100ms/facts400ms/<=1.8A/42C die. Singleattemptcleanup,
+unknownOFF keepsWDT/settings owned; no automaticsecondOFF/PM rearm.44 affected
+hostPASS0.574s (14actuator/16WDT/14OFFsettings), ARM64singleobject/W1/sparse
+PASS3.657s; six316provider/98sealed317inputs/nineartifacts exact/configDTsame.
+Noimage/full/CI/devicechargingwrite. Initialhostsignedness/mockparenthesis
+corrected; earlierARM64beforecleanup-latch superseded/logsretained. Results
+reference/charging/sm5440-actuator-foundation/. Fullport stillNOTREADY: integrate
+real adapter onlyafter ADC/OCP/current/cutoff/PM acceptance, no deviceON grant.
+Latest317access: initiallyTWRP, laterADBempty andWi-Fi No route; no newbootID,
+no livecaptureprocess, no failure/success inference. OwnerC2boot reply/access
+pending; candidate installed/rollback_required=true. Finish317 andexact311restore
+before separately integrating futureactiveprofile. This supersedes older
+checkpoint wording that device is stillTWRP; presentboot/transport unknown.
+
 Unintegrated watchdog foundation now supplies realchecked regmap arm/service/
 OFF-only restore, vendorCNTL1 timer/enable/reset provenance and Fedoraactual
 refresh semantics (plainregmap equalupdate wouldskipwrite).16 actualC fault
