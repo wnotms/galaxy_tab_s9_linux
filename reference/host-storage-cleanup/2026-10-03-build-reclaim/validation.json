@@ -1,0 +1,51 @@
+{
+  "removed_build_count": 3,
+  "removed_tree_files": 58665,
+  "removed_tree_allocated_bytes": 14788743168,
+  "retained_archive_allocated_bytes": 846270464,
+  "archived_debug_input_count": 8490,
+  "protected_artifact_evidence_files_hash_verified": 46417,
+  "retained_provider_builds": [
+    "linux-out",
+    "linux-out-x710-263-passive",
+    "linux-out-x710-272-passive",
+    "linux-out-x710-290-passive",
+    "linux-out-x710-299-passive",
+    "linux-out-x710-302-passive",
+    "linux-out-x710-303-policy",
+    "linux-out-x710-305-adc-condition",
+    "linux-out-x710-308-passive"
+  ],
+  "observed_linux_available_byte_change": 13953638400,
+  "all_archives_hash_verified": true,
+  "kernel_build": {
+    "executed": false
+  },
+  "host_regression": {
+    "executed": false
+  },
+  "device_commands": {
+    "executed": false
+  },
+  "ci": {
+    "executed": false
+  },
+  "host_space": {
+    "before": {
+      "windows_d_available_bytes": 7618629632,
+      "linux_available_bytes": 828993392640
+    },
+    "after": {
+      "windows_d_available_bytes": 19279974400,
+      "linux_available_bytes": 842951356416
+    },
+    "observed_windows_d_available_byte_change": 11661344768
+  },
+  "online_trim": {
+    "executed": true,
+    "exit_code": 0,
+    "logical_discard_bytes": 875962785792,
+    "output": "/: 815.8 GiB (875962785792 bytes) trimmed",
+    "interpretation": "Logical discard ranges; not additional reclaimed Windows bytes."
+  }
+}
