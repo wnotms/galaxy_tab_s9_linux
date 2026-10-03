@@ -92,18 +92,18 @@
 
 ## Current state (2026-10-03)
 
-Test309 HOST_PARTITION_PATH_FIXED_READY_FOR_FRESH_PREFLIGHT. Owner confirmed
-normal power-on;224ffde1 normalcmdline/confignotes299/43%/3.826V/31C. Second
-readonlypreflight stopped on inheritedTWRP by-name paths absent inDebian;
-allparallel raw preserved309preflight-rejected-02, noBCB/flash/reboot/module/PPS.
-Independent309hostfix usesDebian by-partlabel+resolvedblock PARTNAME guard+
-exactfive unique hashes; recovery/historicalrunners unchanged/noaliasescreated.
-77unique affectedhost PASS0.265s/noerrorfail skip;114inputsresealed onlyhost
-runner/test/registration/README. Kernel308/package/181pair unchanged/no new
-build/full/CI. Freshactualpreflight required before oneboot+15s accepted scope;
-retaincandidate onPASS/exact299rollback onactualfailure. Oldrejected-01 lpcharge
-evidence immutable; no automatic replay of candidate attempt. Fullgoalactive/
-Stage3NOTREADY; ADC/OCP/PPS/handoff/PM remain.
+Test309 STOP_COLLECTOR_AMBIGUOUS_I2C_ADDRESSES_ACCEPTED299_RESTORED. Normal
+224ffde1 preflight passed allfive/181 afterhostnamespacefix77PASS; candidate
+766bce71 installed+readback/identity/pack/rescue/attribution/1063journal CPU0.
+Collector failed BEFOREbusopen: global*-0049 uniqueness wrong, boardhas2-0049+
+7-0049; actualbatteryprovider2-0049/boundSM5714/OFverified. No15sendpoint/clean
+claim/no registertransactions. Exact299boot/181 restoredonce/allfive readback/
+BCBclear; finalnormal732d3733/43%/3.823V/29.3C/confignotes/rescue/attributed/
+1065journal CPU0. Knownpassive startuprefusal retained/notADCacceptance; host
+NCM255recorded. Mutationrollback_required=false;309terminal/noreplay. Preserve
+source/collector/raw; newfollowup must anchor power_supply provider withalias/
+binding/OF guards and tolerate unrelatedsameaddress. Reuse308kernelartifact/no
+kernelchange/build/full/PPS/pump/current/rootfs/USB. Fullgoalactive/Stage3NR.
 
 Current architecture documentation now distinguishes historical Test255 policy
 from retained299 hardware and undeployed308/309 candidate. Test302 native TCPM

@@ -1,10 +1,40 @@
 # Test309 registration and offline runner qualification
 
-Verdict: **HOST_PARTITION_PATH_FIXED_READY_FOR_FRESH_PREFLIGHT**.
+Verdict: **STOP_COLLECTOR_AMBIGUOUS_I2C_ADDRESSES_ACCEPTED299_RESTORED**.
 Kernel source `158d0dd376dac2770cd72582be1bd1fe2474e71d`; exact Test308 qualification reused.
-Registration qualification required no device access. The subsequent read-only
-preflight below stopped before deployment; no new build/full regression, reboot,
-partition write, module replacement, PPS request or pump activation occurred.
+Registration qualification required no device access. The two rejected
+preflights below preceded the single physical candidate attempt. No new kernel
+build/full regression, PPS request or pump activation occurred.
+
+## Physical attempt and restoration
+
+After the host path correction was committed/pushed, a fresh normal baseline
+preflight passed allfive partitions/181 modules and live safety/identity gates.
+Only candidate boot and paired modules were installed, with exact readback.
+Candidate boot `766bce71-388b-4c96-9811-b301b6ff8fac` passed its identity,
+boot attribution, pack thermal and device rescue checks. Its1063-row full kernel
+journal has no matched CPU fault; the existing passive startup confirmation
+refusal is separately recorded, not a physical ADC acceptance.
+
+Stable-control collection failed before any I2C bus open: the observer required
+global uniqueness of `*-0049`, but this board has both2-0049 and7-0049. The
+actual battery provider is2-0049, bound to sm5714-battery with the expected OF
+compatible. This is a collector assumption defect, not evidence of charger
+register drift or CPU failure. The15-second endpoint was not completed and no
+candidate acceptance is claimed. Source and failed collector remain sealed.
+
+The registered first-failure path restored exact accepted299 boot and181
+modules once, checked allfive partition hashes, cleared recovery request and
+booted normally. Final boot `732d3733-2e87-422a-a9a6-e13e4202bfce` has43%,
+3.823V,29.3°C, attributed history, expected config/notes, real pack thermal and
+device ADB/NCM. Host NCM SSH returned255 and is reported separately. Complete
+final journal has1065 rows and no matched CPU fault; existing passive refusal
+remains explicit. `mutation-state.json` records rollback_required=false.
+
+Do not replay Test309. A separately registered follow-up must select the
+power_supply provider first, validate its bus alias/bound driver/compatible,
+and tolerate unrelated same-address devices. It may reuse unchanged Test308
+artifacts after new collector host tests; no kernel rebuild is necessary.
 
 ## Normal boot and host-only path correction
 

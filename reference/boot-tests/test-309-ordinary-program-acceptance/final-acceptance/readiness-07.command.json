@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@network; ip -4 -o addr show usb0"
+  ],
+  "ended_utc": "2026-10-03T07:42:09.091479+00:00",
+  "started_utc": "2026-10-03T07:42:08.994069+00:00",
+  "status": 0
+}

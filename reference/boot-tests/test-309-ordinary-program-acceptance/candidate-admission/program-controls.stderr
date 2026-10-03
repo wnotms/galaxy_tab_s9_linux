@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<string>", line 54, in <module>
+    print(json.dumps(capture()))
+                     ~~~~~~~^^
+  File "<string>", line 26, in capture
+    raise ValueError('unique SM5714 charger I2C node required')
+ValueError: unique SM5714 charger I2C node required

@@ -1,0 +1,5 @@
+{
+  "direct_charging_authorized": false,
+  "error": "program-controls: status=1; b'raceback (most recent call last):\\r\\n  File \"<string>\", line 54, in <module>\\r\\n    print(json.dumps(capture()))\\r\\n                     ~~~~~~~^^\\r\\n  File \"<string>\", line 26, in capture\\r\\n    raise ValueError(\\'unique SM5714 charger I2C node required\\')\\r\\nValueError: unique SM5714 charger I2C node required\\r\\n'",
+  "stopped": true
+}

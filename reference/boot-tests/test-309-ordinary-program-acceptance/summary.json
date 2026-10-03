@@ -1,14 +1,30 @@
 {
-  "test": "Test309",
-  "verdict": "HOST_PARTITION_PATH_FIXED_READY_FOR_FRESH_PREFLIGHT",
-  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
-  "kernel_qualification": "Test308",
-  "kernel_build": {
-    "executed": false,
-    "reason": "exact qualified Test308 kernel/config/DT/modules reused"
+  "Actions_started": false,
+  "PPS": false,
+  "active_stage3_ready": false,
+  "all_other_partitions_unchanged": true,
+  "candidate_boot_id": "766bce71388b4c969811b301b6ff8fac",
+  "candidate_boot_sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+  "collector_register_access_executed": false,
+  "current_increase": false,
+  "device_commands_executed": true,
+  "device_scope_completed": false,
+  "endpoint_completed": false,
+  "endpoint_seconds": 15,
+  "entry_status": "BASELINE_NORMAL_PREFLIGHT_PASSED",
+  "final_boot_id": "732d37332e87422aa9a6e13e4202bfce",
+  "first_failure": {
+    "direct_charging_authorized": false,
+    "error": "program-controls: status=1; b'raceback (most recent call last):\\r\\n  File \"<string>\", line 54, in <module>\\r\\n    print(json.dumps(capture()))\\r\\n                     ~~~~~~~^^\\r\\n  File \"<string>\", line 26, in capture\\r\\n    raise ValueError(\\'unique SM5714 charger I2C node required\\')\\r\\nValueError: unique SM5714 charger I2C node required\\r\\n'",
+    "stopped": true
   },
   "host_tests": {
+    "elapsed_seconds": 0.26468873100020573,
+    "errors": [],
     "executed": true,
+    "failures": [],
+    "full_executed": false,
+    "kernel_build_executed": false,
     "selected": [
       "test_sm5714_ordinary_device_runner.AdmissionTests.test_code43_cpu_stall_and_register_failure_stop",
       "test_sm5714_ordinary_device_runner.AdmissionTests.test_complete_mocked_admission_has_no_adc_invocation_or_extra_wait",
@@ -88,35 +104,46 @@
       "test_sm5440_condition_device_gate.ConditionEvidenceTests.test_pair_timestamp_and_value_mismatch_refused",
       "test_sm5440_condition_device_gate.ConditionEvidenceTests.test_read_flags_restoration_pending_error_refused"
     ],
-    "tests_run": 77,
-    "elapsed_seconds": 0.26468873100020573,
-    "failures": [],
-    "errors": [],
     "skips": [],
-    "full_executed": false,
-    "kernel_build_executed": false
+    "tests_run": 77
   },
+  "kernel_build": {
+    "executed": false,
+    "reason": "exact qualified Test308 kernel/config/DT/modules reused"
+  },
+  "kernel_qualification": "Test308",
+  "last_authoritative_device_evidence": "restored accepted299 normal732d3733/43%/3.823V/29.3C/rescue; allfive+181 verified",
   "normal_candidate_boots": 1,
-  "endpoint_seconds": 15,
-  "readiness_max_seconds": 150,
-  "device_commands_executed": true,
-  "physical_preflight_executed": true,
-  "physical_test_executed": false,
-  "entry_status": "NORMAL_BOOT_CONFIRMED_HOST_HASH_PATH_CORRECTED",
-  "last_authoritative_device_evidence": "preflight-rejected-02:normal224ffde1/43%/3.826V/31C; TWRP aliases absent in Debian; no mutation",
-  "registered_inputs": 114,
-  "staged_files": 7,
-  "staged_bytes": 248695976,
-  "candidate_boot_sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
-  "rollback_boot_sha256": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af",
-  "all_other_partitions_unchanged": true,
+  "normal_candidate_boots_executed": 1,
   "paired_modules": 181,
-  "retention": "candidate only on registered device PASS; first failure exact accepted299 restore once if safe/responsive; otherwise manual TWRP",
-  "PPS": false,
+  "physical_preflight_executed": true,
+  "physical_test_executed": true,
   "pump_ON": false,
-  "current_increase": false,
+  "readiness_max_seconds": 150,
+  "readonly_preflight_evidence": "preflight-rejected-01/summary.json",
+  "registered_inputs": 114,
+  "retention": "candidate only on registered device PASS; first failure exact accepted299 restore once if safe/responsive; otherwise manual TWRP",
+  "rollback": {
+    "final": {
+      "battery": {
+        "soc": 43,
+        "temp_decic": 293,
+        "voltage_uv": 3823000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "732d37332e87422aa9a6e13e4202bfce",
+      "charging_authorized": false,
+      "device_NCM": true,
+      "host_NCM_probe_status": 255
+    },
+    "phase": "accepted299-restored-after-failure",
+    "rollback_required": false
+  },
+  "rollback_boot_sha256": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af",
+  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "staged_bytes": 248695976,
+  "staged_files": 7,
+  "test": "Test309",
   "trigger_program_loss": false,
-  "active_stage3_ready": false,
-  "Actions_started": false,
-  "readonly_preflight_evidence": "preflight-rejected-01/summary.json"
+  "verdict": "STOP_COLLECTOR_AMBIGUOUS_I2C_ADDRESSES_ACCEPTED299_RESTORED"
 }
