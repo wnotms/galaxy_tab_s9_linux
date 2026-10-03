@@ -2,12 +2,17 @@
   "Actions_started": false,
   "PPS": false,
   "active_stage3_ready": false,
+  "boot_attribution": "attributed",
   "build_executed": false,
+  "candidate_boot_id": "45f6c91250344cddaa67a47c7e20d9a0",
   "current_increase": false,
-  "device_commands_executed": false,
-  "device_scope_completed": false,
+  "device_ADB": true,
+  "device_NCM": true,
+  "device_commands_executed": true,
+  "device_scope_completed": true,
   "endpoint_seconds": 15,
   "full_host_tests_executed": false,
+  "host_NCM_probe_status": 255,
   "host_tests": {
     "build_executed": false,
     "device_commands_executed": false,
@@ -57,17 +62,49 @@
     "tests_run": 35
   },
   "kernel_config_DTS_changed": false,
+  "kernel_fault_counts": {
+    "candidate-admission": {},
+    "endpoint": {}
+  },
   "kernel_qualification_reused": "Test308",
+  "kernel_rows": {
+    "candidate-admission": 1071,
+    "endpoint": 1107
+  },
   "kernel_source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
-  "latest_historical_device_boot": "788fef75-722a-4243-8ad1-9e0b3a16269c",
-  "latest_historical_device_state": "Test310 final accepted299/42%/3.815V/30.2C; not a fresh Test311 preflight",
-  "next": "fresh safe normal accepted299 preflight before any future physical run",
-  "physical_executed": false,
+  "next": "one isolated ADC operating-condition comparison preserving accepted ordinary recovery; PPS/pump still OFF",
+  "physical_ADC_qualified": false,
+  "physical_executed": true,
   "previous_attempt": "Test310 STOP; exact299 restored; terminal not replayed",
+  "program_controls_at_admission": {
+    "AICL_lower_limit_allowed": true,
+    "boot_id": "45f6c91250344cddaa67a47c7e20d9a0",
+    "direct_charging_authorized": false,
+    "fast_code": 32,
+    "float_code": 45,
+    "input_limit_ma": 500,
+    "verdict": "ORDINARY_PC_CONTROLS_VERIFIED"
+  },
+  "program_controls_at_endpoint": {
+    "AICL_lower_limit_allowed": true,
+    "boot_id": "45f6c91250344cddaa67a47c7e20d9a0",
+    "direct_charging_authorized": false,
+    "fast_code": 32,
+    "float_code": 45,
+    "input_limit_ma": 500,
+    "verdict": "ORDINARY_PC_CONTROLS_VERIFIED"
+  },
+  "program_history": {
+    "classification": "NO_PROGRAM_DRIFT_DETECTED",
+    "recovery_observed": false
+  },
   "pump_ON": false,
   "registered_normal_candidate_boots": 1,
+  "retained_candidate": true,
   "rollback": "current accepted299 boot + paired181; Test263 historical rollback retired",
+  "rollback_required": false,
   "sealed_inputs": 136,
+  "stability_clean_claim": false,
   "test": "Test311",
-  "verdict": "OFFLINE_SERIAL_COLLECTOR_REGISTRATION_READY"
+  "verdict": "ORDINARY_RECOVERY_CANDIDATE_DEVICE_SCOPE_COMPLETED"
 }

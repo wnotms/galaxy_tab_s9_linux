@@ -96,6 +96,21 @@
 
 ## Current state (2026-10-03)
 
+Test311 ORDINARY_RECOVERY_CANDIDATE_DEVICE_SCOPE_COMPLETED. Normal45f6c912 retained/
+unique attribution/boot+181written+readback/allfive/BCBclear. Baseline40%3.809V31.8C;
+admission40%3.798V30.2C;15sendpoint40%3.818V31.4C. ActualQ4ON/input500/fast500/
+float4440 twice/no program drift or naturalrecovery; recoverybranch not physically
+proved under drift. DeviceADB/services/NCM/SinkDevice/realthermal PASS; hostNCM255
+separate. Full1071/1107journal rows/fault_counts empty/knownstartup warnings retained,
+no broadstabilityclaim. OriginalSM5440REVBLK retained/two freshconfirmations inactive;
+ADC/gauge263/211/329mV disagreement UNKNOWN/notcalibrated. PC500mA netnegative
+batterycurrent recorded.311 terminal/PASSretained/no rollbackpending/no replay/
+PPS/pump/currentraise/config/DTS/USB/adbd/rootfs change; offline35 PASS reused.
+Exact299rollback/current308 artifacts retained. Next isolatedvendor ENHIZ/ADC
+comparison must retain newly accepted ordinaryrecovery; no old305 flash reverting
+that driver. Fullgoalactive/Stage3NR: ADC/protection/actuator/PPS/handoff/PM remain.
+
+
 Test311 OFFLINE_SERIAL_COLLECTOR_REGISTRATION_READY.35affected host PASS0.145s/
 syntaxPASS; exact308kernel/artifacts reused/no kernel/config/DTS/USB/adbd/rootfs/
 PPS/pump/current change/build/full/Actions. Primaryidentity/thermal/actualcontrols/
