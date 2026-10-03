@@ -1,13 +1,13 @@
 14: #ifndef __SM5440_CHARGER_H__
 15: #define __SM5440_CHARGER_H__
-16: 
+16:
 17: #define SM5440_TA_MIN_CURRENT   1000
 18: #define SM5440_CV_OFFSET        50
 19: #define SM5440_CI_OFFSET        300
 20: #define SM5440_VBAT_MIN         3300
 21: #define SM5440_SIOP_LEV1        1100
 22: #define SM5440_SIOP_LEV2        1700
-23: 
+23:
 73: 	SM5440_REG_CNTL1        = 0X0C,
 74: 	SM5440_REG_CNTL2        = 0X0D,
 75: 	SM5440_REG_CNTL3        = 0X0E,
@@ -37,7 +37,7 @@
 99: 	SM5440_REG_ADC_VBAT2    = 0X28,
 100: 	SM5440_REG_DEVICEID     = 0X2B,
 101: };
-102: 
+102:
 103: enum sm5440_adc_channel {
 104: 	SM5440_ADC_THEM         = 0x0,
 105: 	SM5440_ADC_DIETEMP,
@@ -46,7 +46,7 @@
 108: 	SM5440_ADC_IBUS,
 109: 	SM5440_ADC_VBUS,
 110: };
-111: 
+111:
 112: enum sm5440_wdt_tmr {
 113: 	WDT_TIMER_S_0P5     = 0x0,
 114: 	WDT_TIMER_S_1       = 0x1,
@@ -57,14 +57,14 @@
 119: 	WDT_TIMER_S_90      = 0x6,
 120: 	WDT_TIMER_S_120     = 0x7,
 121: };
-122: 
+122:
 123: enum sm5440_ibus_ocp {
 124: 	IBUS_OCP_100        = 0x0,
 125: 	IBUS_OCP_200        = 0x1,
 126: 	IBUS_OCP_300        = 0x2,
 127: 	IBUS_OCP_400        = 0x3,
 128: };
-129: 
+129:
 130: enum sm5440_op_mode {
 131: 	OP_MODE_CHG_OFF     = 0x0,
 132: 	OP_MODE_CHG_ON      = 0x1,

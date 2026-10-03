@@ -1,0 +1,78 @@
+{
+  "verdict": "OFF_ONLY_SETTINGS_OFFLINE_QUALIFIED_NOT_DEPLOYED",
+  "source_revision": "deb28242954d6fb289b41926d656526df8f69ac7",
+  "kernel": "Linux7.2-rc3",
+  "profile": "sm5440-policy-offline",
+  "implemented": [
+    "OFF-only audited settings prepare/readback",
+    "uncertain-write rollback with OFF readback and pending/error provenance",
+    "unchanged-register witness"
+  ],
+  "compiled_not_exported": [
+    "sm5440_control_prepare",
+    "sm5440_control_restore"
+  ],
+  "automatic_caller": false,
+  "pump_on_available": false,
+  "physical_executed": false,
+  "flash": false,
+  "reboot": false,
+  "pps_requested": false,
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 87.07528794600148
+  },
+  "host": {
+    "executed": true,
+    "tests_run": 105,
+    "elapsed_seconds": 1.529141791001166,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "full_suite_executed": false
+  },
+  "static": {
+    "exit_code": 0,
+    "elapsed_seconds": 6.986572657999204,
+    "object_and_vmlinux_identical": true,
+    "changed_driver_warning": false,
+    "existing_upstream_vdso_warning_retained": true
+  },
+  "config_delta": {
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "y"
+    ],
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "absent"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "dtb_identical": true,
+  "protected_files_unchanged": 96,
+  "paired_module_files": 181,
+  "container_config_retained": true,
+  "DCC": false,
+  "SM5714_float_mv": 4440,
+  "pump_regulation_uv": 4437500,
+  "maximum_requested_input_ma": 1800,
+  "ordinary_fixed_5V_ma": 1800,
+  "ordinary_fixed_9V_ma": 1500,
+  "accepted_device": "restored accepted311, boot1f1e01bf at latest read-only follow-up",
+  "outstanding": [
+    "source/lease/pack/pre-status/physical-VBUS preparation adapter",
+    "physical ADC/calibration/freshness acceptance",
+    "qualified active protection/software OCP and watchdog",
+    "pump-ON actuator/live policy/PM/handoff/fallback acceptance"
+  ],
+  "full_port_ready": false,
+  "overbroad_test_selection": {
+    "record": "validation/overbroad-host.json",
+    "tests": 444,
+    "failures": 3,
+    "errors": 8,
+    "skips": 19,
+    "reason": "unrelated historical image checks selected inadvertently; retired images not recreated and existing tests not modified"
+  }
+}

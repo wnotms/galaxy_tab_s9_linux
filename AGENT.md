@@ -98,14 +98,20 @@
 
 ## Current state (2026-10-03)
 
-Test314 source: added OFF-only SM5440 settings transaction in the existing
-default-inactive X710_CHARGING_POLICY profile; no runtime caller or export.
-Input1000..1800mA rounded down, pump regulation4437.5mV, vendor frequency
-mapping; original settings and ten control witnesses checked; uncertain I2C
-write/failed restoration retain error and pending state. No CHG_ON/PPS/reset/
-ENHIZ/protection masking or SM5714/DTS/USB/rootfs change. Source excerpts/design
-and actual-C fault tests added. Build qualification pending; no device command.
-Accepted311 stays installed;313 remains STOP; full charging port NOT READY.
+Test314 OFF_ONLY_SETTINGS_OFFLINE_QUALIFIED_NOT_DEPLOYED, source deb28242.
+New actual regmap OFF-only input/regulation/frequency transaction, original
+field restoration and ten protection/operating witnesses; uncertain writes
+and failed OFF/cleanup retain pending/errors. No caller/export/probe/ON/PPS
+or SM5714/DTS/USB/adbd/rootfs change.105 affected host PASS1.529s; ARM64 build
+PASS87.075s; W1/sparse PASS6.987s/object+vmlinux unchanged/known vDSO warning.
+Exact config X710_CHARGING_POLICY n->y; ADC_CONDITION_TEST n->absent due !policy;
+unexpected empty, DTB identical,96 protected and12 overlays verified,181 paired
+module files, embedded config/container/DCC gates pass. Formal308/312 intact;
+312 symbols+79 inputs verified before cache reuse, now314 provider. No device
+operation/full/Actions. Initial overbroad444-test historical-image failure/skips
+retained, not all-pass; tests unchanged. Read314 RESULTS/summary and new OFF
+transaction design. Next actual source-bound preparation/ADC/OCP/watchdog/ON/
+handoff/fallback/PM remain; accepted311 stays installed; full goal NOT READY.
 
 
 Owner powered-on follow-up: same restoredaccepted311 boot1f1e01bf, config/notes

@@ -98,3 +98,13 @@ to obtain ADC readings. See Test304 raw rows/source excerpts/results for a
 bounded ENHIZ/ADC condition comparison proposal. No register writes or changes
 to physical validity/freshness, fault, ordinary charging or active grants were
 made in304.
+
+## Test314 inactive OFF settings layer
+
+The new sm5440-control.c/.h applies only the already audited IBUSCNTL/VBATCNTL/
+CNTL7 fields through checked masked writes and exact readback, with original
+settings restoration and ten unchanged control witnesses. It is compiled only
+by the existing inactive policy profile, has no caller/export/probe/ON hook and
+is not deployed. See SM5440_OFF_SETTINGS_TRANSACTION.md and Test314 results.
+No aggregate protection recipe, margin or hardware-OCP assumption was imported;
+software OCP/physical ADC/active actuator qualification remains outstanding.

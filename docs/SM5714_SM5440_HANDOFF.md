@@ -10,8 +10,9 @@ operations, and Test303 implements an explicitly invoked pump-OFF consumer
 with a battery lease and PM drain. See
 [owned PPS consumer](X710_OWNED_PPS_CONSUMER.md). Those compiled, host-tested
 components do not supply a live pump-ON actuator or qualify physical protection.
-The retained device is accepted299/Test300; Test309's ordinary recovery
-candidate remains undeployed after a normal-cmdline preflight rejection.
+The retained device is accepted311 ordinary recovery, restored after Test313.
+Test314 compiles an inactive OFF-only hardware settings/restoration layer;
+it has no live adapter or ON hook and does not yet complete this transaction.
 
 ## Admission and state
 
