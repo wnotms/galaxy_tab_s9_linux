@@ -98,7 +98,7 @@
 
 ## Current state (2026-10-03)
 
-Test317 FIXED9_OFF_CONTEXT_PREFLIGHT_ACCEPTED_NOT_DEPLOYED. Qualified316 kernel only,
+Test317 INSTALLED_IN_TWRP_AWAITING_OWNER_FIXED9_BOOT_ROLLBACK_REQUIRED. Qualified316 kernel only,
 73 affected host PASS0.745s/no skips, syntaxPASS; no rebuild/full/routing/Actions.
 One source-bound OFF context/ENHIZ comparison, diagnostic500ms notactive100ms;
 no PPS/pump/current raise. Install/readback boot+181 in validatedTWRP, clearBCB/
@@ -110,7 +110,10 @@ Window308-317 no expired307 images found. Installed311 unchanged1f1e01bf/29%/
 Fresh317preflight allfive/181/config/notes/actualQ4ON500mA/4.44V/pack31.7C/
 28%3.77V/same1f1e01bf/Code0/deviceNCM/authenticatedWi-Fi pass. Fullkernel
 knownpassiveADCrefusal retained, no new CPU signature; onehostNCM probe separate.
-Fullchargingport NOTREADY; no candidate deployment or hardware acceptance yet.
+317candidateboot+181 installed/readbackonce/allfiveverified/BCBclear/rootunmounted.
+STOPinTWRP, no scriptedcandidateboot; ownerPC->C2fixed9 thenRebootSystem pending.
+CaptureNOTEXECUTED/rollback_required=true; afteronceWi-Fi capture orfirstfault
+reconnectPC and restoreaccepted311 unconditionally. Fullchargingport NOTREADY.
 
 Test316 FIXED_CONTRACT_CLASSIFICATION_OFFLINE_QUALIFIED_NOT_DEPLOYED,
 source8b77b426. Match unchanged standard producer capability labels, active
