@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test308，窗口为 **Test299–Test308**；没有生成镜像的轮次仍占一轮。
+  编号为 Test309，窗口为 **Test300–Test309**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -91,6 +91,24 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test309 REGISTRATION_RUNNER_PACKAGE_READY_PHYSICAL_NOT_EXECUTED. Qualified308
+source158d0dd3 reused/no kernel/fullrepeat;73unique affected host PASS0.192s,
+114source inputs/7 staged files/syntax/header+payload/181pairs verified. One
+PCUSB boot+15s endpoint/actual7stable pointerreads/provider guard/AICL reduction
+accepted/no inducedloss; uniqueboot/current realpack/rescue/identity/fulljournal.
+Natural recovery <=1 verified within5s; first devicefailure exact299restore once
+when safe/responsive/manualTWRPotherwise. PASSretain; post-device-acceptance host
+recording error doesnot reflash. NoPPS/pump/current/ADCrequest/rootfs/core/USB/
+configDT/observer/devicecommand/preflight. StageDandroidgts9-activegts9-test309;
+ADBandroid/platform-tools. Read309README/registration/PACKAGE/RESULTS/summary.
+Last3070%/2.775V/lpcharge stillunsafe/notfresh; owner nowasked charger/currentSOC/
+runningstate, confirmationpending. Do not execute before safe battery and
+pushedregistration/actualpreflight. Old306seal not repurposed.308incrementalcache
+reused/currentsource unchanged; recent-window300–309 (accepted299production and
+window-qualified rollback exceptions per owner rule). Fullgoalactive/Stage3NR;
+next separately registered ordinaryfixed9V/physicalADC/PPS/protection/PM scopes.
+
 
 Test308 OFFLINE_ORDINARY_PROGRAM_RECOVERY_QUALIFIED, source158d0dd3. Actual
 readback witness/four stable controls/AICL reduction preserved/one recovery per

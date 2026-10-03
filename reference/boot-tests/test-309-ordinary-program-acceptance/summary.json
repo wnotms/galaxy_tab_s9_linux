@@ -1,0 +1,41 @@
+{
+  "test": "Test309",
+  "verdict": "REGISTRATION_RUNNER_AND_PACKAGE_READY_PHYSICAL_NOT_EXECUTED",
+  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "kernel_qualification": "Test308",
+  "kernel_build": {
+    "executed": false,
+    "reason": "exact qualified Test308 kernel/config/DT/modules reused"
+  },
+  "host_tests": {
+    "executed": true,
+    "tests_run": 73,
+    "elapsed_seconds": 0.1924053790025937,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "full_executed": false
+  },
+  "normal_candidate_boots": 1,
+  "endpoint_seconds": 15,
+  "readiness_max_seconds": 150,
+  "device_commands_executed": false,
+  "physical_preflight_executed": false,
+  "physical_test_executed": false,
+  "entry_status": "STOP_RECHARGE_CURRENT_STATE_CONFIRMATION_PENDING",
+  "last_authoritative_device_evidence": "Test307:0%/2.775V/Not charging/lpcharge=1; not fresh entry proof",
+  "registered_inputs": 114,
+  "staged_files": 7,
+  "staged_bytes": 248695976,
+  "candidate_boot_sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+  "rollback_boot_sha256": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af",
+  "all_other_partitions_unchanged": true,
+  "paired_modules": 181,
+  "retention": "candidate only on registered device PASS; first failure exact accepted299 restore once if safe/responsive; otherwise manual TWRP",
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "trigger_program_loss": false,
+  "active_stage3_ready": false,
+  "Actions_started": false
+}
