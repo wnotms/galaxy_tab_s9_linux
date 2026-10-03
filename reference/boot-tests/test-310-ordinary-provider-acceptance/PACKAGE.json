@@ -1,0 +1,74 @@
+{
+  "test": "Test310",
+  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "kernel_qualification": "Test308",
+  "write_partitions": [
+    "boot"
+  ],
+  "modules": 181,
+  "baseline_partitions": {
+    "boot": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "rollback_baseline": "accepted Test299 retained under Test300",
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-308-passive/Image.gz",
+      "bytes": 22138508,
+      "sha256": "f2eed85c27b6163a219fe107a848a6c622e01f1b87d2ba7142e9443f3e8a0129"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-308-passive/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-308-passive/config",
+      "bytes": 243322,
+      "sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-308-passive/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-308-passive/modules-x710.tar.gz",
+      "bytes": 47318437,
+      "sha256": "3e106de81d6f1399fa6e355d35175f857910bf252535a1c8ca9047c21b4c4804"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-308-passive/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-308-passive/boot.img",
+      "bytes": 100663296,
+      "sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-299-passive/boot.img",
+      "bytes": 100663296,
+      "sha256": "ea7f2da99c5d0ba71fdb76d38a81bfb044498938a75feae9c76502f0708eb8af"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-299-passive/modules-x710.tar.gz",
+      "bytes": 47319377,
+      "sha256": "0941b232f57b75b9e8ad2278f0bfa49be5c0fca8d2416af97630a661f41e09c0"
+    }
+  },
+  "all_other_partitions_unchanged": true,
+  "device_commands_executed": false,
+  "package_reuse": "byte-identical qualified Test308/Test309 boot and modules; no rebuild"
+}

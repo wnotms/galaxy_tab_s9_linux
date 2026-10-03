@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test309，窗口为 **Test300–Test309**；没有生成镜像的轮次仍占一轮。
+  编号为 Test310，窗口为 **Test301–Test310**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -91,6 +91,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test310 REGISTERED_PROVIDER_COLLECTOR_READY_PHYSICAL_NOT_EXECUTED. Samequalified
+308kernel/source158d0dd3/bootpackage+181pair, noC/config/DT/current/USB/rootfs/
+PPS/pump/build/full/CIchange. Independentcollector anchored toactualbattery
+provider+I2Calias+driver+OF, unrelated7-0049allowed; baselinecontrols checked
+BEFOREmutation pluscandidate/admission15s endpoint.32affectedactualreader+
+310lifecycle/gate/preflight PASS~0.12s;125inputssealed/7stagesmatch. Stage310six
+unchangedfiles NTFShardlinks toneighbor309/no largeduplicate; helperunique310.
+Exact299rollback retained; firstfailure stop/restoreonce/PASSretain/nohostrecord
+reflash. Registerpush beforefresh preflight+run; no310devicecommandyet. Owner
+alreadyauthorized ordinarydeployment/tests, device restored299normal732d3733.
+Fullgoalactive/Stage3NR; ADC/OCP/PPS/handoff/PM physicalqualification stillopen.
 
 Test309 STOP_COLLECTOR_AMBIGUOUS_I2C_ADDRESSES_ACCEPTED299_RESTORED. Normal
 224ffde1 preflight passed allfive/181 afterhostnamespacefix77PASS; candidate
