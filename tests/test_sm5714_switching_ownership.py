@@ -85,7 +85,8 @@ static void mod_delayed_work(void *queue,void *work,int delay) {
 }
 '''
         code += 'typedef unsigned int u32;\n#include "'+str(ROOT/'kernel/drivers/sm5714-stage2.h')+'"\n'
-        for name in ('static int sm5714_verify_switching_off_locked(',
+        for name in ('static int sm5714_recover_programmed_charging(',
+                     'static int sm5714_verify_switching_off_locked(',
                      'static bool sm5714_fixed_grant_locked(',
                      'int sm5714_battery_switching_acquire(',
                      'int sm5714_battery_switching_release(',

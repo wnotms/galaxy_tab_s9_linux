@@ -119,6 +119,12 @@ struct sm5714_battery {
 	/* Default inactive; only an explicit companion lease inhibits switching. */
 	bool switching_inhibited;
 	u64 switching_lease;
+	/* Only a verified ordinary configuration creates this witness. */
+	bool charge_programmed;
+	bool charge_recovery_used;
+	bool charge_program_fault;
+	u8 programmed_input;
+	u8 programmed_fast;
 };
 
 /* Companion callbacks hold this lock through use; unbind clears before free. */
@@ -151,8 +157,12 @@ static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
 
 static int sm5714_disable_charging(struct sm5714_battery *sm)
 {
-	int ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_CNTL1,
-					 SM5714_CHG_CNTL1_ENQ4FET, 0);
+	int ret;
+
+	/* Invalidate even if the subsequent I2C operation has an uncertain result. */
+	sm->charge_programmed = false;
+	ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_CNTL1,
+				    SM5714_CHG_CNTL1_ENQ4FET, 0);
 
 	if (ret)
 		dev_err_ratelimited(sm->dev, "cannot open Q4 charging path: %d\n", ret);
@@ -314,6 +324,40 @@ static void sm5714_revoke_switching_locked(struct sm5714_battery *sm)
 		sm->switching_lease = 0;
 }
 
+/* Stable controls only: never consume interrupt latches or clear faults. */
+static int sm5714_check_programmed_locked(struct sm5714_battery *sm, bool exact_input)
+{
+	int q4, input, fast, batreg;
+
+	lockdep_assert_held(&sm->chg_lock);
+	q4 = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CNTL1);
+	if (q4 < 0)
+		return q4;
+	input = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_VBUSCNTL);
+	if (input < 0)
+		return input;
+	fast = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CHGCNTL2);
+	if (fast < 0)
+		return fast;
+	batreg = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CHGCNTL4);
+	if (batreg < 0)
+		return batreg;
+
+	/* AICL may reduce VBUSCNTL autonomously. Never undo that reduction. */
+	input &= GENMASK(6, 0);
+	if ((q4 & SM5714_CHG_CNTL1_ENQ4FET) &&
+	    (exact_input ? input == sm->programmed_input : input <= sm->programmed_input) &&
+	    fast == sm->programmed_fast &&
+	    (batreg & SM5714_CHG_BATREG_MASK) == sm5714_batreg_offset(sm->float_uv))
+		return 0;
+
+	dev_warn_ratelimited(sm->dev,
+		"ordinary program mismatch: Q4=%02x input=%02x/%02x fast=%02x/%02x float=%02x/%02x\n",
+		q4, input, sm->programmed_input, fast, sm->programmed_fast,
+		batreg, sm5714_batreg_offset(sm->float_uv));
+	return -EUCLEAN;
+}
+
 static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 {
 	unsigned int input_ma, fast_ma;
@@ -338,7 +382,8 @@ static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 			goto out_unlock;
 	}
 	/* Polling must not override TCPM standby/reset or suspend's charge-off. */
-	if (sm->switching_inhibited || sm->typec_pps || sm->suspended || (sm->typec_owned &&
+	if (sm->charge_program_fault || sm->switching_inhibited || sm->typec_pps ||
+	    sm->suspended || (sm->typec_owned &&
 	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100)))
 		goto out_unlock;
 	ret = sm5714_charge_fault(sm);
@@ -451,10 +496,17 @@ static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 	ret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
 				     GENMASK(6, 0), sm5714_input_current_reg(input_ma));
 	if (ret)
-		sm5714_disable_charging(sm);
-	else
-		dev_info(sm->dev, "ordinary charging: USB type %d, %u mA input, %u mA battery\n",
-			 usb_type, input_ma, fast_ma);
+		goto out_unlock;
+	sm->programmed_input = sm5714_input_current_reg(input_ma);
+	sm->programmed_fast = sm5714_fast_current_reg(fast_ma);
+	ret = sm5714_check_programmed_locked(sm, true);
+	if (ret) {
+		sm->charge_program_fault = true;
+		goto out_unlock;
+	}
+	sm->charge_programmed = true;
+	dev_info(sm->dev, "ordinary charging: USB type %d, %u mA input, %u mA battery\n",
+		 usb_type, input_ma, fast_ma);
 
 out_unlock:
 	/* A failed write may still have reached the chip; best-effort open Q4. */
@@ -474,6 +526,70 @@ static int sm5714_configure_charging(struct sm5714_battery *sm)
 
 	mutex_lock(&sm->chg_lock);
 	ret = sm5714_configure_charging_locked(sm);
+	mutex_unlock(&sm->chg_lock);
+	return ret;
+}
+
+/* One recovery per binding; no reset, watchdog clear, PD request or retry loop. */
+static int sm5714_recover_programmed_charging(struct sm5714_battery *sm)
+{
+	int ret, value, cleanup;
+
+	mutex_lock(&sm->chg_lock);
+	if (!sm->charge_programmed || sm->charge_program_fault || sm->suspended ||
+	    sm->switching_inhibited || sm->typec_pps || (sm->typec_owned &&
+	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100))) {
+		ret = 0;
+		goto out;
+	}
+	ret = sm5714_check_programmed_locked(sm, false);
+	if (!ret)
+		goto out;
+	if (ret != -EUCLEAN || sm->charge_recovery_used)
+		goto fault;
+
+	/* Invalidate before hardware work; an acknowledged write is not OFF proof. */
+	sm->charge_recovery_used = true;
+	ret = sm5714_disable_charging(sm);
+	if (ret)
+		goto fault;
+	value = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CNTL1);
+	ret = value < 0 ? value : (value & SM5714_CHG_CNTL1_ENQ4FET) ? -EIO : 0;
+	if (ret)
+		goto fault;
+
+	/* Revalidate the live grant, hardware faults and real pack temperature. */
+	ret = sm5714_configure_charging_locked(sm);
+	if (ret)
+		goto fault;
+	ret = sm->charge_programmed ? 1 : 0;
+	dev_info(sm->dev, "ordinary program recovery: %s\n",
+		 ret ? "verified" : "charging intentionally off");
+	goto out;
+
+fault:
+	/* Sticky across cable/PM/budget changes. Unknown OFF is never healthy. */
+	sm->charge_program_fault = true;
+	sm5714_revoke_switching_locked(sm);
+	if (sm->typec_owned)
+		sm->typec_fault = true;
+	cleanup = sm5714_disable_charging(sm);
+	value = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_CNTL1);
+	if (!cleanup)
+		cleanup = value < 0 ? value :
+			  (value & SM5714_CHG_CNTL1_ENQ4FET) ? -EIO : 0;
+	if (cleanup)
+		dev_err_ratelimited(sm->dev, "program recovery Q4 OFF unproven: %d\n", cleanup);
+	cleanup = sm5714_chg_update_bits(sm, SM5714_CHG_REG_VBUSCNTL,
+					 GENMASK(6, 0), sm5714_input_current_reg(100));
+	value = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_VBUSCNTL);
+	if (!cleanup)
+		cleanup = value < 0 ? value : (value & GENMASK(6, 0)) ? -EIO : 0;
+	if (cleanup)
+		dev_err_ratelimited(sm->dev, "program recovery minimum input unproven: %d\n",
+				    cleanup);
+	dev_err_ratelimited(sm->dev, "ordinary program recovery inhibited: %d\n", ret);
+out:
 	mutex_unlock(&sm->chg_lock);
 	return ret;
 }
@@ -1231,6 +1347,9 @@ static void sm5714_poll_work(struct work_struct *work)
 						     "ordinary charge configuration failed: %d\n",
 						     ret);
 			changed = true;
+		} else {
+			ret = sm5714_recover_programmed_charging(sm);
+			changed = ret != 0;
 		}
 	} else if (online == 0 && sm->last_online) {
 		mutex_lock(&sm->chg_lock);

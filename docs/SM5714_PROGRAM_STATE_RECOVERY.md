@@ -43,11 +43,12 @@ from this incident. No guessed low-VBAT charging recipe, emergency current
 increase, OTP override, watchdog reset, SM5440/PPS, charger mode write, thermal
 waiver or live register patch belongs in this change.
 
-## Proposed implementation
+## Implementation
 
-Keep an internal programmed-state witness under existing `chg_lock`: validity,
-expected input and fast-current codes, plus a bounded recovery-used flag.
-Float uses the existing4.44V encoding. Capture this witness only after a
+The implementation keeps an internal programmed-state witness under existing `chg_lock`: validity,
+expected input and fast-current codes, a bounded recovery-used flag and a
+sticky program-fault latch independent of Type-C ownership.
+Float uses the existing4.44V encoding. The witness is captured only after a
 successful full configuration with actual Q4/input/fast/float readback.
 Every deliberate disable invalidates it before I2C, including uncertain writes.
 
@@ -55,7 +56,10 @@ Ordinary polling compares the witness with fresh stable register reads only
 when charging is authorized: no suspend, PPS, switching lease, Type-C fault or
 standby. Compare only controlled masks and actual programmed codes; do not
 manufacture a CHG_ON status requirement for hardware trickle/regulation.
-An unchanged witness causes no register write and no repetitive log.
+An unchanged witness causes no register write and no repetitive log. Hardware
+AICL can autonomously lower the input-current code: monitoring treats the saved
+input as a ceiling and never raises it merely to restore an exact match. Initial
+configuration readback remains exact. Float/fast/Q4 compare their owned bits.
 
 A positively read mismatch permits at most one recovery per driver binding.
 First open/verify the pack gate; re-run the existing bounded ordinary configure
@@ -65,7 +69,9 @@ drifted registers. Do not hold TCPC locks or initiate PD negotiation. Record
 before/expected values and the one recovery outcome; preserve the first error.
 
 An I2C error, active fault, failed readback or second mismatch refuses recovery,
-opens Q4, revokes/inhibits ordinary authorization and remains latched. No
+attempts Q4OFF/minimum input and reads both back, revokes/inhibits ordinary
+authorization and remains latched. The program-fault latch survives later
+budget/PM/cable changes even on the unclaimed BC1.2 path. No
 watchdog clear, automatic reset, retry timer or recovery storm. If cleanup I2C
 fails, OFF is unproven; require unplug/manual recovery instead of a healthy
 status claim. Detach/PM/lease paths must never be misidentified as programming
@@ -78,8 +84,11 @@ intentional OFF states, known Test307 mismatches, unchanged-state no-write,
 mask preservation, bounded recovery, second mismatch, source contraction,
 thermal failure, suspend and detach. Existing Stage1/Stage2/lease tests stay.
 Build the standard passive candidate with the same Linux7.2-rc3/toolchain and
-pair181 modules. Resolved config and DTB must match retained Test299 exactly;
-only this ordinary charger implementation changes. Run affected tests / W=1 /
+pair181 modules. Resolved feature settings must match retained Test299;
+only this ordinary charger implementation changes in this patch. The already
+introduced, default-off ADC diagnostic declaration adds an explicit disabled
+line relative to Test299; that is the sole resolved-config delta, not a feature
+enablement. DTB must remain byte-identical. Run affected tests / W=1 /
 sparse and preserve accepted rollback. Do not deploy at0% or below the safe
 registered VBAT entry range.
 
