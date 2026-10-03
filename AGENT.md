@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+Test313 OFFLINE_REGISTERED_ONE_CONDITION_COMPARISON_READY. Qualified312diagnostic/
+accepted311ordinary recovery preserved; one pumpOFFconversion+15sendpoint, exact
+accepted311boot+181 unconditionalrestore.51affectedactualrunner/parser/fixture
+hostPASS0.324s/syntaxPASS; no newkernel/full/Actions. Serialactualcontrols/thermal/
+fullkernel beforeone20shistory; partialADC/restore error immediateSTOP; corrected
+DebianPARTNAME/providerbinding; knownfault provenance unchanged. Conditiongate
+byteidentical306/ordinarygate+readeridentical311; sourceinputs sealed. Physical
+NOTEXECUTED, fresh safe normalaccepted311preflight mandatory. NoPPS/pump/current
+raise/DTS/USB/adbd/rootfs change. Fullgoalactive/Stage3NR. Read313README/RESULTS.
+
+
 Test312 OFFLINE_ADC_CONDITION_WITH_ACCEPTED_ORDINARY_RECOVERY_QUALIFIED. Current
 Test311 accepted45f6c912 retained, no312device command. Same158d0dd3 source /
 onlyCONFIG_SM5440_ADC_CONDITION_TEST n->y vsaccepted308/311;DTBidentical/96protected/
