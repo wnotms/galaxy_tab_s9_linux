@@ -98,17 +98,17 @@
 
 ## Current state (2026-10-03)
 
-Test316 FIXED_SOURCE_CLASS_READINESS_IMPLEMENTED_PENDING_BUILD. Test315 not
-physically deployed: its exact-PD check incorrectly rejects C1 fixed9/PD_PPS,
-and immediate5V refusal can precede TCPM normal9V negotiation. Use same four
-capability labels as existing stable producer; still ONLINE1/!pps/fixed9<=1.5A.
-Only initial coherent5V+fixed9>=1A PDO may wait, same instance/source epoch,
-40calls/4s elapsed; no protocol setter/I2C/lease until9V, late result refused.
-Raw firststandby/count/timing retained.128 affected host PASS1.931s; ordinary
-preprocessed paths unchanged.315 symbols/79 inputs+formal hashes frozen before
-same cache reuse. Window307-316;306 reused305, expired305 images already deleted.
-No device operation/PPS/ON/TCPMcore/battery/DTS/USB/rootfs/full/Actions. Fullport
-NOT READY. Next qualify corrected candidate before separate physical registration.
+Test316 FIXED_CONTRACT_CLASSIFICATION_OFFLINE_QUALIFIED_NOT_DEPLOYED,
+source8b77b426. Match unchanged standard producer capability labels, active
+mode still fixedONLINE1/!pps/fixed9<=1.5A. Source-bound initial5V+fixed9>=1A PDO
+can wait for normalTCPM negotiation,40calls/4s elapsed; first rawstandby/epochs/
+timing saved; late supplier refused/no hardware before9V/no fault retry.128
+host PASS1.931s; ARM64 PASS81.444s; W1/sparse PASS7.616s/standardobjects restored
+exact6.150s/vmlinux unchanged/no changed-driver warning. Only ADC_TEST n->y
+vsaccepted311, DTBsame/96protected/12overlays/181modules/containers/DCC pass.
+315 symbols/79inputs and formal hashes frozen; solecache now316. No device/
+PPS/pump/TCPMcore/battery/DTS/USB/rootfs/full/Actions; fullport NOT READY.
+Next separately register fixed9 OFF comparison and unconditional exact311restore.
 
 
 Test315 FIXED9_OFF_CONTEXT_OFFLINE_QUALIFIED_NOT_DEPLOYED, source30cf862a.
