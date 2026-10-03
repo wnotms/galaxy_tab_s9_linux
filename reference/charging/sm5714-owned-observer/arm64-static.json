@@ -1,0 +1,63 @@
+{
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "drivers/usb/typec/tcpm/sm5714-owned-observer.o"
+  ],
+  "exit_code": 0,
+  "seconds": 5.8405959630035795,
+  "provider_before": {
+    ".config": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+    "include/generated/utsrelease.h": "da2a6224a72e872beaa54789eec5efe6d77924251d9dd44dcd4d34c05af3d6cb",
+    "Module.symvers": "8dc19bd5f66838e97e2b8129e859a35dbda9b4a96a4b29bb9d1cfc6e56bd7b7e",
+    "vmlinux": "0f35ece1959a2c8d21c733cec4c90d744cf944ffed1f5877e340016e9115109a",
+    "drivers/power/supply/sm5440-direct.o": "bad7a8e8dae72b4e421fc09cbc8ede573ef8b846bd4ab0110fc7ded213132fd7",
+    "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o": "9e7b500bd9d194da053665cccaa7b53cc3be70cdc982d394b0a4b9793f8aacec"
+  },
+  "provider_after": {
+    ".config": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+    "include/generated/utsrelease.h": "da2a6224a72e872beaa54789eec5efe6d77924251d9dd44dcd4d34c05af3d6cb",
+    "Module.symvers": "8dc19bd5f66838e97e2b8129e859a35dbda9b4a96a4b29bb9d1cfc6e56bd7b7e",
+    "vmlinux": "0f35ece1959a2c8d21c733cec4c90d744cf944ffed1f5877e340016e9115109a",
+    "drivers/power/supply/sm5440-direct.o": "bad7a8e8dae72b4e421fc09cbc8ede573ef8b846bd4ab0110fc7ded213132fd7",
+    "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o": "9e7b500bd9d194da053665cccaa7b53cc3be70cdc982d394b0a4b9793f8aacec"
+  },
+  "provider_preserved": true,
+  "kernel_Image_build": false,
+  "Kbuild_integration": false,
+  "unlinked_objects": 1,
+  "device_writes": false,
+  "environment": {
+    "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+    "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+    "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime",
+    "KBUILD_BUILD_USER": "gts9-mainline",
+    "KBUILD_BUILD_HOST": "reproducible",
+    "SOURCE_DATE_EPOCH": "1783890999",
+    "KBUILD_BUILD_TIMESTAMP": "Sun Jul 12 21:16:39 UTC 2026"
+  },
+  "patch_sha256": "9342f19ffa16ec814930123215806dfe0515eb96c118db0e6b24f2776de8f0bb",
+  "patched_source_sha256": {
+    "kernel/drivers/sm5714_usbpd.c": "b755bc431653cd80538ad0d0943711170c3eaeb2ec200c6641299e84b1a59ed6",
+    "kernel/drivers/sm5714-stage2.h": "cf295aa7bbc51a8178d00b2fd6c44d92f633bffbe4324471caabcc7f7f73da67"
+  },
+  "compile_source_sha256": {
+    "drivers/usb/typec/tcpm/sm5714-owned-observer.c": "297d900ec04d0e194eb558eb649c55f625a9589aed8accabe963876fc07a8367",
+    "drivers/usb/typec/tcpm/sm5714-owned-observer-stage2.h": "cf295aa7bbc51a8178d00b2fd6c44d92f633bffbe4324471caabcc7f7f73da67"
+  },
+  "alias_change": "Only TCPC object filename and its stage2 include filename renamed to avoid replacing the sealed current provider; implementation/header bytes otherwise identical.",
+  "objects_sha256": {
+    "sm5714-owned-observer.o": "09bd03f2392adfcc794b775c70bc19bef5c406174dbd5cc0111be40010ae61d2"
+  }
+}

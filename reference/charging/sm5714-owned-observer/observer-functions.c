@@ -1,0 +1,67 @@
+/* Read-only active PPS receipt; no Request, budget callback or lease release.
+ * The control gate excludes owned entry/refresh/restore, while the lifetime
+ * pin spans every supplier access. Short transport checks bracket the native
+ * getter without holding the transport/registry mutex across it.
+ */
+static int sm5714_owned_observer_token(struct sm5714_usbpd *sm,
+				      const struct sm5714_pd_snapshot *receipt,
+				      u64 instance, u64 source_generation, u64 lease)
+{
+	struct sm5714_pd_snapshot present = {};
+	int ret;
+
+	mutex_lock(&sm->lock);
+	ret = sm5714_snapshot_locked(sm, &present);
+	if (!ret && (present.instance != instance ||
+		     present.source_generation != source_generation ||
+		     present.budget_generation != receipt->budget_generation ||
+		     !present.pps_contract || !present.charge_requested ||
+		     sm->pps_lease != lease ||
+		     sm->pps_source_generation != source_generation ||
+		     sm->pps_operation_active || sm->pps_restoring ||
+		     sm->pps_mv != present.budget_mv || sm->pps_ma != present.budget_ma))
+		ret = -ESTALE;
+	if (!ret && !sm5714_pps_pair_locked(sm, present.budget_mv, present.budget_ma))
+		ret = -ERANGE;
+	mutex_unlock(&sm->lock);
+	return ret;
+}
+
+int sm5714_pd_read_owned_snapshot(u64 instance, u64 source_generation, u64 lease,
+				 struct sm5714_pd_snapshot *out)
+{
+	struct sm5714_pd_snapshot seed = {}, observed = {};
+	struct sm5714_usbpd *sm;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	if (!instance || !source_generation || !lease)
+		return -EINVAL;
+	ret = sm5714_port_get(&sm, &seed);
+	if (ret)
+		return ret;
+	if (!mutex_trylock(&sm->control_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_owned_observer_token(sm, &seed, instance, source_generation, lease);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (!ret)
+		ret = sm5714_read_contract_pinned(sm, &observed, true);
+	if (!ret && observed.budget_generation != seed.budget_generation)
+		ret = -ESTALE;
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	if (!ret)
+		ret = sm5714_owned_observer_token(sm, &observed, instance, source_generation, lease);
+	if (!ret)
+		*out = observed;
+	mutex_unlock(&sm->control_lock);
+put:
+	sm5714_port_put(sm);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_pd_read_owned_snapshot);

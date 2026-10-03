@@ -1,0 +1,54 @@
+{
+  "verdict": "OFFLINE_OWNED_PPS_OBSERVER_PATCH_QUALIFIED_UNAPPLIED",
+  "created_utc": "2026-10-03T14:03:42.711312+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5714_owned_observer",
+      "test_sm5714_runtime_snapshot",
+      "test_sm5714_owned_pps",
+      "test_sm5714_fixed_restore",
+      "test_sm5714_fixed_release"
+    ],
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.4561363159955363,
+    "actual_producer_C": true,
+    "real_pthread_locks": true,
+    "TCPM_mock": true,
+    "full": false,
+    "routing_changed": false
+  },
+  "ARM64_object": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 5.8405959630035795,
+    "W1": true,
+    "sparse": true,
+    "changed_driver_warnings": 0,
+    "known_unrelated_warning": "upstream vDSO __kernel_getrandom declaration"
+  },
+  "protected_provider_files": 7,
+  "Test317_inputs": 98,
+  "formal_artifacts": 9,
+  "provider_preserved": true,
+  "active_patch_applied": false,
+  "Kbuild_integration": false,
+  "kernel_Image_build": {
+    "executed": false
+  },
+  "full_tests": {
+    "executed": false,
+    "reason": "Actual five affected producer/control API test modules; no routing change"
+  },
+  "config_diff": [],
+  "DTB_diff": [],
+  "device_commands_this_turn": "One ADB devices list: empty; no shell, boot or charging write",
+  "Test317_capture_executed": false,
+  "Test317_rollback_required": true,
+  "physical_ADC_acceptance": false,
+  "physical_software_OCP_verified": false,
+  "full_goal_ready": false
+}

@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+Current public TCPC snapshot is fixed-only; active PPS needs a fresh readonly
+producer, not Request-per-sample or restamped entry receipts. Prepared an
+unapplied two-file owned-PPS observer patch: existing native getter/lifetime/
+try-control/token/APDO/lease checks, original acquisition timestamps, zero
+failed output, no mutation.88 affected host tests PASS1.456s; complete patched
+TCPC unlinked ARM64/W1/sparse PASS5.841s, no changed-driver warning. Original
+negative publication stimulus error retained/corrected. Seven provider files,
+98 Test317 inputs/nine artifacts exact; config/DT diff empty, no Image/full/
+Actions/current TCPC change/device PPS/pump. Evidence reference/charging/
+sm5714-owned-observer/, design docs/SM5714_OWNED_PPS_OBSERVATION.md. Apply only
+in a separately qualified future integration after317 capture/accepted311
+rollback. Actual adapter/pack/ADC/OCP/cutoff/ON/fallback/PM remain; full goal
+NOT complete. ADB still empty thisturn; current IP/connection pending.
+
+
 Offline actuator PPS park/resume now keeps OFF across native negotiation,
 retains settings/WDT and requires advancing real budget generation, same
 attach/lease/source and physical OFF ADC acquired after PPS completion. Current

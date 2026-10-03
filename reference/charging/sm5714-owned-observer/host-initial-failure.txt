@@ -1,0 +1,24 @@
+test_every_getter_error_propagates_without_mutation (test_sm5714_owned_observer.OwnedObserverTests.test_every_getter_error_propagates_without_mutation) ... ok
+test_fixed_capability_and_malformed_or_inactive_pps_are_not_active_proof (test_sm5714_owned_observer.OwnedObserverTests.test_fixed_capability_and_malformed_or_inactive_pps_are_not_active_proof) ... ok
+test_invalid_identity_and_null_output_do_no_supplier_io (test_sm5714_owned_observer.OwnedObserverTests.test_invalid_identity_and_null_output_do_no_supplier_io) ... ok
+test_lease_check_before_and_after_native_read (test_sm5714_owned_observer.OwnedObserverTests.test_lease_check_before_and_after_native_read) ... ok
+test_missing_busy_fault_draining_and_exhausted_provider (test_sm5714_owned_observer.OwnedObserverTests.test_missing_busy_fault_draining_and_exhausted_provider) ... ok
+test_native_active_receipt_without_request_or_budget_change (test_sm5714_owned_observer.OwnedObserverTests.test_native_active_receipt_without_request_or_budget_change) ... ok
+test_patch_only_adds_readonly_api_and_preserves_fixed_wrapper (test_sm5714_owned_observer.OwnedObserverTests.test_patch_only_adds_readonly_api_and_preserves_fixed_wrapper) ... ok
+test_pm_revocation_or_switching_not_inhibited (test_sm5714_owned_observer.OwnedObserverTests.test_pm_revocation_or_switching_not_inhibited) ... ok
+test_source_reset_budget_callback_publication_and_clock_change (test_sm5714_owned_observer.OwnedObserverTests.test_source_reset_budget_callback_publication_and_clock_change) ... FAIL
+test_unpublish_drains_actual_pinned_read_and_refuses_removing_source (test_sm5714_owned_observer.OwnedObserverTests.test_unpublish_drains_actual_pinned_read_and_refuses_removing_source) ... ok
+
+======================================================================
+FAIL: test_source_reset_budget_callback_publication_and_clock_change (test_sm5714_owned_observer.OwnedObserverTests.test_source_reset_budget_callback_publication_and_clock_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_owned_observer.py", line 168, in test_source_reset_budget_callback_publication_and_clock_change
+    self.assertLess(self.case(mode)[0], 0)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not less than 0
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.480s
+
+FAILED (failures=1)

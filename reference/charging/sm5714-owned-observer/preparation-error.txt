@@ -1,0 +1,7 @@
+Initial temporary patch-generation command failed before producing a patch.
+Traceback (most recent call last):
+  File "<stdin>", line 74, in <module>
+  File "<stdin>", line 74, in <genexpr>
+TypeError: unsupported operand type(s) for //: str and int
+Exit code: 1. Replaced the redundant indentation conversion with explicit kernel-style source.
+Not a kernel build, host regression or device failure.

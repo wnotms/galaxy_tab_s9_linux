@@ -1,0 +1,15 @@
+{
+  "base_source_sha256": {
+    "kernel/drivers/sm5714_usbpd.c": "a0a7fbe59ccffbaacdd52bd4317ace75a15b78ef5bb779252b65fd923b54ab49",
+    "kernel/drivers/sm5714-stage2.h": "ca22d48521663606f879f8cd08a58537a39419a040335aba09dc6279e426e1e5"
+  },
+  "patch_sha256": "9342f19ffa16ec814930123215806dfe0515eb96c118db0e6b24f2776de8f0bb",
+  "functions_sha256": "8109b56508c1a3b61cc09d5a4405a737fc77cdbc5105e94d09f167308702ec6e",
+  "test_sha256": "1a5185a146487d213c028db4a3b1ddeca075cd34ee8e70cb1899edf28569e7dc",
+  "Linux_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "native_producer": "Existing port_get/put, snapshot_locked, read_contract_pinned(...,true), pps_pair_locked and battery switching_check; no vendor protocol state machine.",
+  "missing_current_interface": "Current public sm5714_pd_read_snapshot is fixed-only; PPS operation receipts cannot be restamped for periodic active monitoring.",
+  "mutation": false,
+  "active_patch_applied": false,
+  "physical_OCP_producer_qualified": false
+}

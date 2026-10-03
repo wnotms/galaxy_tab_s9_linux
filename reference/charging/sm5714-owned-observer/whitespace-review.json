@@ -1,0 +1,13 @@
+{
+  "staged_archive_check": {
+    "exit_code": 2,
+    "output": "reference/charging/sm5714-owned-observer/owned-pps-observer.patch:6: trailing whitespace.\n+ \nreference/charging/sm5714-owned-observer/owned-pps-observer.patch:77: space before tab in indent.\n+ \tstruct sm5714_pd_snapshot sample;\nreference/charging/sm5714-owned-observer/owned-pps-observer.patch:81: space before tab in indent.\n+ \t\t\t unsigned int mv, unsigned int ma,\nreference/charging/sm5714-owned-observer/owned-pps-observer.patch:82: space before tab in indent.\n+ \t\t\t struct sm5714_pd_snapshot *out);\nreference/charging/sm5714-owned-observer/owned-pps-observer.patch:83: trailing whitespace.\n+ \n"
+  },
+  "reviewed_source_docs_tests": {
+    "exit_code": 0,
+    "output": ""
+  },
+  "exact_exception": "Canonical unified-diff context prefix followed by original tab or blank line, not whitespace in proposed added code; stripping it would alter the patch.",
+  "patch_added_lines_trailing_whitespace": false,
+  "excluded_path": "reference/charging/sm5714-owned-observer/owned-pps-observer.patch"
+}
