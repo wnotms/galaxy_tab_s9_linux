@@ -1,0 +1,127 @@
+{
+  "verdict": "NATIVE_READONLY_OWNED_PPS_API_INTEGRATED_OFFLINE_QUALIFIED",
+  "created_utc": "2026-10-03T14:56:45.156970+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5714_owned_observer",
+      "test_sm5714_runtime_snapshot",
+      "test_sm5714_owned_pps",
+      "test_sm5714_fixed_restore",
+      "test_sm5714_fixed_release"
+    ],
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.6085663620033301,
+    "actual_integrated_C": true,
+    "real_pthread_locks": true,
+    "TCPM_mock": true,
+    "full": false,
+    "routing_changed": false
+  },
+  "Image_dtbs_modules_build": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 88.4226855320012,
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-adc-condition",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-owned-observer",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache"
+    },
+    "base_revision": "5ab712920de8f3ad0429453f332bfd8865466f47",
+    "inputs": "inputs-before.json",
+    "source_state": "tracked hashes plus current diff",
+    "toolchain": "Ubuntu clang version 21.1.8 (6ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-21/bin\n",
+    "physical_executed": false,
+    "actions_executed": false
+  },
+  "ARM64_W1_sparse": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 7.201681458995154,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/usb/typec/tcpm/sm5714_usbpd.o"
+    ],
+    "actual_Kbuild_object": true,
+    "W1": true,
+    "sparse": true
+  },
+  "changed_driver_warnings": 0,
+  "known_static_warning": "upstream vDSO __kernel_getrandom declaration",
+  "config_diff": {
+    "Test316": {},
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "y"
+      ]
+    }
+  },
+  "DTB_diff": [],
+  "embedded_config_identical": true,
+  "protected_source_count": 137,
+  "paired_module_files": 181,
+  "changed_module_files": 167,
+  "changed_module_sections": {
+    ".BTF": 167
+  },
+  "module_code_data_changes": false,
+  "source_API_integrated": true,
+  "native_API_linked": true,
+  "active_worker_integrated": false,
+  "device": {
+    "boot_id": "6f0d319b-e8bf-4871-84a3-24c15560c304",
+    "identity": "accepted311/original Test308",
+    "same_previously_accepted_boot": true,
+    "config_sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89",
+    "kernel_notes_sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6",
+    "ADB": "read-only shell succeeded",
+    "usb0": "UP/LOWER_UP",
+    "wifi": "10.139.153.195",
+    "pack_temp_decic": 313,
+    "thermal_zone37_type": "sm5714-battery",
+    "thermal_zone37_mode": "enabled",
+    "thermal_failure_currently_reproduced": false,
+    "SM5440_status": "Not charging",
+    "host_NCM_SSH_checked_this_turn": false,
+    "new_physical_acceptance": false
+  },
+  "current_device_changed": false,
+  "reboot_flash_partition_module_rootfs_write": false,
+  "PPS_requests_executed": false,
+  "pump_enabled": false,
+  "current_increase": false,
+  "software_ocp_verified": false,
+  "full_tests": {
+    "executed": false,
+    "reason": "Latest owner affected-only scope; no routing change; five actual producer/control API modules, 88 tests"
+  },
+  "actions": {
+    "executed": false
+  },
+  "full_goal_ready": false,
+  "next_required": [
+    "fresh pack acquisition and live worker integration",
+    "physical ADC/current and cutoff/OCP qualification",
+    "native OFF-before-PPS refresh/fixed fallback/PM acceptance"
+  ],
+  "scope": "same diagnostic profile as Test316; offline API integration only, no physical test registration"
+}

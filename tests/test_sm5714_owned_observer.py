@@ -1,4 +1,4 @@
-"""Execute the sealed-source draft API with real producer C and pthread locks."""
+"""Execute the integrated read-only API with real producer C and pthread locks."""
 import ctypes
 import errno
 from pathlib import Path
@@ -9,7 +9,6 @@ import test_sm5714_owned_pps as owned
 from test_sm5714_policy import function
 
 ROOT = Path(__file__).resolve().parents[1]
-DRAFT = ROOT / 'reference/charging/sm5714-owned-observer'
 
 
 class OwnedObserverTests(unittest.TestCase):
@@ -17,17 +16,12 @@ class OwnedObserverTests(unittest.TestCase):
     def setUpClass(cls):
         owned.OwnedPpsTests.setUpClass.__func__(cls)
         p = Path(cls.tmp.name)
-        for name in ('sm5714_usbpd.c', 'sm5714-stage2.h'):
-            dest = p / 'kernel/drivers' / name
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            dest.write_bytes((ROOT / 'kernel/drivers' / name).read_bytes())
         if 'int sm5714_pd_read_owned_snapshot(' not in cls.source:
-            result = subprocess.run(['patch', '--batch', '-p1', '-i',
-                                     str(DRAFT / 'owned-pps-observer.patch')],
-                                    cwd=p, capture_output=True, text=True)
-            if result.returncode:
-                raise AssertionError(result.stdout + result.stderr)
-        cls.future_source = (p / 'kernel/drivers/sm5714_usbpd.c').read_text()
+            raise AssertionError('read-only observer must be present in the actual driver')
+        cls.actual_source = cls.source
+        cls.fixed_baseline = subprocess.run(
+            ['git', 'show', '2f245cea:kernel/drivers/sm5714_usbpd.c'], cwd=ROOT,
+            capture_output=True, text=True, check=True).stdout
         code = (p / 'owned-pps.c').read_text().replace('int exercise(', 'int pps_fixture_exercise(')
         code = code.replace('if(registry_held||transport_held||p!=&supply)errors++;calls++;',
                             'if(registry_held||transport_held||operation_held!=1||p!=&supply)errors++;calls++;')
@@ -39,7 +33,7 @@ class OwnedObserverTests(unittest.TestCase):
                             'sm5714_pps_revoke_locked(port_under_test);mutex_unlock(&port_under_test->lock);}')
         for marker in ('static int sm5714_owned_observer_token(',
                        'int sm5714_pd_read_owned_snapshot('):
-            code += function(cls.future_source, marker) + '\n'
+            code += function(cls.actual_source, marker) + '\n'
         code += r'''
 static void *observe_reader(void *unused) {
  (void)unused;reader_ret=sm5714_pd_read_owned_snapshot(1,2,7,&result);return 0;
@@ -181,13 +175,13 @@ int observe(int mode,int arg,long long *out) {
     def test_unpublish_drains_actual_pinned_read_and_refuses_removing_source(self):
         self.assertEqual(self.case(17)[0], -errno.ESHUTDOWN)
 
-    def test_patch_only_adds_readonly_api_and_preserves_fixed_wrapper(self):
-        before = function(self.source, 'int sm5714_pd_read_snapshot(')
-        after = function(self.future_source, 'int sm5714_pd_read_snapshot(')
+    def test_integrated_api_is_readonly_and_preserves_fixed_wrapper(self):
+        before = function(self.fixed_baseline, 'int sm5714_pd_read_snapshot(')
+        after = function(self.actual_source, 'int sm5714_pd_read_snapshot(')
         self.assertEqual(before, after)
         for marker in ('static int sm5714_owned_observer_token(',
                        'int sm5714_pd_read_owned_snapshot('):
-            body = function(self.future_source, marker)
+            body = function(self.actual_source, marker)
             for banned in ('set_property', 'pps_request(', 'regmap_', 'release_async', 'msleep'):
                 self.assertNotIn(banned, body)
 

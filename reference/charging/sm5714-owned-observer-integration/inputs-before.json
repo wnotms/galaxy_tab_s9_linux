@@ -1,0 +1,71 @@
+{
+  "created_utc": "2026-10-03T14:45:01.519927+00:00",
+  "base_revision": "5ab712920de8f3ad0429453f332bfd8865466f47",
+  "formal_artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-316-fixed-contract/Image.gz",
+      "bytes": 22141997,
+      "sha256": "d00c2bb2319c8a6acb0bea200633f88024105a136c3b251c82c27acdc8d600ea"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-316-fixed-contract/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-316-fixed-contract/config",
+      "bytes": 243311,
+      "sha256": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-316-fixed-contract/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "61984781036a3883ad09d98f83e15986b00ac6287df00c2e83122d5e5168e9a0"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-316-fixed-contract/modules-x710.tar.gz",
+      "bytes": 47319315,
+      "sha256": "cf9a7d7592b54f96e0b5cec0d112ce72e9da557a46b399fd8e6ca0f088b645e6"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-316-fixed-contract/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-316-fixed-contract/boot.img",
+      "bytes": 100663296,
+      "sha256": "1a6df94fe11b1898b8c72122b06462dd3e8ddc438c8558ee673f74f836d25a20"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-308-passive/boot.img",
+      "bytes": 100663296,
+      "sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-308-passive/modules-x710.tar.gz",
+      "bytes": 47318437,
+      "sha256": "3e106de81d6f1399fa6e355d35175f857910bf252535a1c8ca9047c21b4c4804"
+    }
+  },
+  "preserved_sources": {
+    "kernel/drivers/sm5714-battery.c": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a",
+    "kernel/drivers/sm5440-direct.c": "e0f6573ef42611add103226e3b4aa0dfeb68f65a309ba66ce55509c106d71066",
+    "kernel/drivers/sm5440-control.c": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d",
+    "kernel/drivers/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts": "3bb73ca047d7eae76136e10f7b0bc38a084c8650a5264e242838832e7b900a14",
+    "kernel/config/gts9wifi-mainline.fragment": "bb2f91abb9d643ba82493be997db8df44b73af6aa460b3c2233f9ecfda872636",
+    "kernel/config/gts9wifi-sm5440-adc-condition.fragment": "beaef9d1a2e288fd5ade51f0cd849aaea15c1da67107d9890d3681ac0c30863b",
+    "scripts/prepare-kernel.sh": "940e26c19ecb7d104343665a72292b87ff5b8fbd85261aedd85dd5fdd69547c9",
+    "scripts/build-kernel.sh": "202ad70f37ca1248c4c1c5a1f3b8c0b57cc4329c51dde15a71ed2e86adf57875"
+  },
+  "changed_sources": {
+    "kernel/drivers/sm5714_usbpd.c": "b755bc431653cd80538ad0d0943711170c3eaeb2ec200c6641299e84b1a59ed6",
+    "kernel/drivers/sm5714-stage2.h": "cf295aa7bbc51a8178d00b2fd6c44d92f633bffbe4324471caabcc7f7f73da67",
+    "tests/test_sm5714_owned_observer.py": "fbc920c294f35b954d6ed99b3a6773931d84dc7aa2361232e4741769bb6234c0"
+  },
+  "reused_cache": ".work/build/linux-out-x710-308-passive",
+  "profile": "sm5440-adc-condition",
+  "new_build_tree": false
+}

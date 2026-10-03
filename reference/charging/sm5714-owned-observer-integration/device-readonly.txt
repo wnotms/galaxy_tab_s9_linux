@@ -1,0 +1,36 @@
+Sat Sep 26 15:11:58 UTC 2026
+6f0d319b-e8bf-4871-84a3-24c15560c304
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+1720.54 13727.66
+55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89  -
+cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6  /sys/kernel/notes
+/sys/class/thermal/thermal_zone37/type
+sm5714-battery
+/sys/class/thermal/thermal_zone37/temp
+31300
+/sys/class/thermal/thermal_zone37/mode
+enabled
+/sys/class/power_supply/sm5714-battery/status
+Charging
+/sys/class/power_supply/sm5714-battery/temp
+313
+/sys/class/power_supply/sm5714-battery/capacity
+17
+/sys/class/power_supply/sm5714-battery/voltage_now
+3713000
+/sys/class/power_supply/sm5440-passive/status
+Not charging
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+14: usb0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    inet 169.254.42.1/16 scope global usb0
+       valid_lft forever preferred_lft forever
+15: wlp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    altname wlx00037f122807
+    inet 10.139.153.195/24 brd 10.139.153.255 scope global dynamic noprefixroute wlp1s0
+       valid_lft 1901sec preferred_lft 1901sec
+16: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default 
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+hvc0-absent

@@ -1,0 +1,11 @@
+{
+  "executed": true,
+  "exit_code": 1,
+  "error_type": "FileNotFoundError",
+  "path": "out/kernel-x710-owned-observer/modules-x710.tar.gz",
+  "stage": "first ad-hoc artifact audit before deterministic module packaging",
+  "device_fault": false,
+  "build_fault": false,
+  "correction": "Use existing normalized module archive format, extract notes, then qualify all artifacts in artifact-audit.py",
+  "original_error": "FileNotFoundError: [Errno 2] No such file or directory: out/kernel-x710-owned-observer/modules-x710.tar.gz"
+}

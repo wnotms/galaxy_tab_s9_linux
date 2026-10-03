@@ -73,6 +73,13 @@ int sm5714_pd_request_pps(u64 instance, u64 source_generation, u64 lease,
 			 unsigned int mv, unsigned int ma,
 			 struct sm5714_pd_snapshot *out);
 
+/* Read-only active PPS observation, exact source/lease and native timestamps.
+ * No Request/refresh, current programming, pump operation or charge grant.
+ * Caller owns serialization against battery lease release; errors zero output.
+ */
+int sm5714_pd_read_owned_snapshot(u64 instance, u64 source_generation, u64 lease,
+				 struct sm5714_pd_snapshot *out);
+
 /* Actual fresh physical evidence supplied by a serialized pump-OFF consumer,
  * never reconstructed from a logical TCPM budget or stale diagnostic cache.
  */

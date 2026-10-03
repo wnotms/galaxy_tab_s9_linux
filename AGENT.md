@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+Native read-only owned PPS API is now integrated in the actual TCPC/header and
+linked through normal Kbuild; previous unapplied-patch entries below are
+historical.88 actual-C/pthread affected tests PASS1.609s/no skips, full ARM64
+Image/DT/modules PASS88.423s, actual TCPC W1/sparse PASS7.202s/no changed-driver
+warning. Config equals316; DT equalsaccepted311; only prior diagnostic ADC
+profile delta vs311.181 paired files;167ko changed only BTF, code/data/version
+sections identical.137 protected sources/nine old artifacts retained. Evidence
+reference/charging/sm5714-owned-observer-integration/. Current device stillsame
+accepted311 boot6f0d319b/exactconfig+notes, ADB/usb0/Wi-Fi up, pack31.3C and
+battery thermal_zone37 enabled; oldphoto error not reproduced/not declaredfixed.
+No flash/reboot/PPS/pump/currentincrease/Actions/full regression. Source API is
+logical evidence only; realpack/worker/physical100ms/current/cutoff/OCP/native
+refresh/fallback/PM acceptance remain. Converter unchanged. Fullgoal NOTREADY.
+
 Test317 now completed salvage and unconditional exactaccepted311 restore.
 Attributed candidatecc6d3fae/matched316 config+notes; early fixed9 OFF context
 phase10/error0/cleanup0, five zeroIBUS samples9.138–9.342V, sample-prefix gates

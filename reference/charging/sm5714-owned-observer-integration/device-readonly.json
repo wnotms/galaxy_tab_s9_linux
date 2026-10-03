@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "date -u; cat /proc/sys/kernel/random/boot_id; uname -a; cat /proc/uptime; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; for f in /sys/class/thermal/thermal_zone37/type /sys/class/thermal/thermal_zone37/temp /sys/class/thermal/thermal_zone37/mode /sys/class/power_supply/sm5714-battery/status /sys/class/power_supply/sm5714-battery/temp /sys/class/power_supply/sm5714-battery/capacity /sys/class/power_supply/sm5714-battery/voltage_now /sys/class/power_supply/sm5440-passive/status; do echo \"$f\"; cat \"$f\"; done; ip -4 addr show; test ! -e /dev/hvc0 && echo hvc0-absent"
+  ],
+  "mutating": false
+}

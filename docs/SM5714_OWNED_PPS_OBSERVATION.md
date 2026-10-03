@@ -6,8 +6,11 @@ but cannot remain fresh throughout active charging. Issuing Requests to
 obtain every monitoring snapshot would introduce frequent renegotiations and
 violate the pump-OFF rule. The active adapter needs a separate read-only API.
 
-The draft in `reference/charging/sm5714-owned-observer/owned-pps-observer.patch`
-adds `sm5714_pd_read_owned_snapshot(instance, source_generation, lease, out)`.
+The driver now implements
+`sm5714_pd_read_owned_snapshot(instance, source_generation, lease, out)`.
+The earlier draft is preserved in
+`reference/charging/sm5714-owned-observer/owned-pps-observer.patch` as historical
+evidence; its unapplied status describes that earlier qualification only.
 It uses the existing lifetime pin, try-only control mutex and actual native
 `sm5714_read_contract_pinned(..., true)` path. Short transport-locked checks
 bracket that getter; the transport and registry mutexes are never held across
@@ -25,18 +28,28 @@ Returned timestamps are the original property acquisition window, never a
 fresh stamp on a retained receipt. No Request, callback, lease release, SM5714
 register programming or pump operation occurs. Budget generation is unchanged.
 
-The fixed wrapper, PPS operation, native TCPM and current installed Test317
-remain unchanged. This is a two-file **unapplied** integration patch, not a
-new installed driver or registered physical candidate. Its complete TCPC C is
-compiled as a separate unlinked ARM64 object with a private include filename;
-only those names differ from the patched source, protecting the current provider.
-The host tests execute the patched functions together with existing producer,
-property validation, actual pthread locking and teardown code.
+Test317 has ended and exact accepted311 has been restored. The source API is
+now integrated through the normal SM5714 TCPC Kbuild path, while the fixed
+wrapper, PPS operation and native TCPM remain unchanged. The device continues
+running accepted311. The current tests require the API in the actual driver;
+they no longer apply a draft into a temporary tree to supply a missing API.
+They execute the actual functions with the existing producer, property
+validation, pthread locking and teardown code. The unchanged fixed wrapper is
+compared against the sealed pre-integration source, not against itself.
 
-After Test317 capture and compulsory exact accepted311 rollback, apply the
-reviewed patch to a separately qualified integration candidate. The active
-worker can then pair new native receipts with genuinely acquired pack/ADC data
-and cancellation generation, without changing PPS cadence. This API is logical
-contract evidence only: it cannot establish physical VBUS, ADC calibration,
-qualified OCP/cutoff latency, safe ON, fixed fallback or PM acceptance. Those
-remain required; the full charging port is NOT READY.
+Integration evidence, the normal ARM64 Image/DT/modules build, exact config/DT
+comparison and affected tests are recorded in
+`reference/charging/sm5714-owned-observer-integration/`. This uses the existing
+`sm5440-adc-condition` incremental cache and preserves the Test316 artifacts
+and accepted311 rollback. It is an offline build, not a physical registration
+or authorization to use its diagnostic profile for active charging.
+
+The future active worker must pair these native receipts with genuinely
+acquired pack/ADC data and cancellation generation, without changing PPS
+cadence. This API is logical contract evidence only: it cannot establish
+physical VBUS, ADC calibration, qualified OCP/cutoff latency, safe ON, fixed
+fallback or PM acceptance. Test317's 128–130 ms ADC acquisition/read brackets
+remain diagnostic evidence, not a 100 ms protection qualification. This change
+does not modify the converter's averaging, waits, registers or deadlines.
+Physical qualification and live worker integration remain required; the full
+charging port is NOT READY.

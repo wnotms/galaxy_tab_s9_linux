@@ -1,0 +1,1057 @@
+{
+  "valid": true,
+  "config_diff": {
+    "Test316": {},
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "y"
+      ]
+    }
+  },
+  "DTB_diff": [],
+  "formal_previous_artifacts_preserved": true,
+  "protected_sources": {
+    "kernel/PROVENANCE.md": "239d5a2f3f8937ee5723d206369ba5de1d6e5f038cf8bb354bbe37f3b7c62ece",
+    "kernel/bindings/power/supply/siliconmitus,sm5440.yaml": "b7ac81d6dcf35a5d350abf7774fdceaa288e4de3c3b1ef9fdee4845efbd12923",
+    "kernel/config/gts9wifi-csd-lock.fragment": "cc0d60e35226093f807667daf65ebff7ed3f277d417760d2ff11532a84e96194",
+    "kernel/config/gts9wifi-mainline.fragment": "bb2f91abb9d643ba82493be997db8df44b73af6aa460b3c2233f9ecfda872636",
+    "kernel/config/gts9wifi-pnmi-csd-lock.fragment": "6beba5bc56208f05275e744ba6fe8ff12763e10724340dc5e9596cbe71e57743",
+    "kernel/config/gts9wifi-pnmi.fragment": "62b6af9406097645ba3f06b235bf471e736502d2df3b54bedbbddf531bfca62d",
+    "kernel/config/gts9wifi-sm5440-adc-condition.fragment": "beaef9d1a2e288fd5ade51f0cd849aaea15c1da67107d9890d3681ac0c30863b",
+    "kernel/config/gts9wifi-sm5440-passive.fragment": "a4a810aa69008ccc82e4ff92a70e37b704df2a9d723fd128a4b63c07a36078c8",
+    "kernel/config/gts9wifi-sm5440-policy-offline.fragment": "6ddfc2b8c644e3a4b6e0b9ea1ad3f90558eb2f6e21de064073ac16eed7213811",
+    "kernel/diagnostics/sm5440-fresh-observer/Makefile": "f62ce71935524d047e693de0658ac6ec7d3ca00e865d2c6d72576918b4d5cab1",
+    "kernel/diagnostics/sm5440-fresh-observer/sm5440-fresh-observer.c": "87e3b8c200bc893bbe91e1278c002562e2010a67082332d63496dcb122c03947",
+    "kernel/diagnostics/sm5440-passive-observer/Makefile": "045c6bd75446e376f1a6c410f70447266a81167b674d6c937748d07bb4afff65",
+    "kernel/diagnostics/sm5440-passive-observer/sm5440-passive-observer.c": "8a7dd1f33dd3cb806857c11eee2808554dff6c825c7ae77af014e689b863ccc5",
+    "kernel/drivers/input/samsung-pogo/Kconfig": "fe4610ffa6cfb54cf9ab368bc9aa9e72a1caa21ac0f04866b0cb6c6fb902e1d2",
+    "kernel/drivers/input/samsung-pogo/Makefile": "ca2ba57a67762d28598fd08595257e3ec2f7da3df2bc0b7c5f498e575da8fceb",
+    "kernel/drivers/input/samsung-pogo/README.md": "e60dfd78c1142e4737b8e00781047d655211847a997ce377463ccfb0d74e1473",
+    "kernel/drivers/input/samsung-pogo/pogo_notifier_v3.h": "8c2f03a5b81561007fe854a13b2333eddc556d2ad5a903592d557b3932180b07",
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_compat.h": "e24036e93c7064bfe165572d38593a17b30cf3e947c31bb59f3b5d366585b73a",
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_stubs.c": "ed268402cfb15635fc391d403aeb6bef920e3809af3abddadca480dd5ca39e58",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_cmd_v3.c": "6d903314d6d0fe971baede59456435c34d3b3a5eed780fd8c37a93a617d9409f",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_core_v3.c": "d53bdc323109260505e0efe1b711ecdc3a98c62213ab99777c5e3dbc1b617889",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fn_v3.c": "a6e2e5a7adf743ebdac40254b14bc13ccf170707f9abb96eec984385bd766040",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fw.c": "9e7fd56fbbe7cb545eae2b02984d5cdc667652774c7c00b23733c9f80a89f3db",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_i2c_v3.c": "00bf386d7597bc9c2d9b4cf084b360a0037fcbed12c4316ec7e1aa9b0f0730f7",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_interrupt_v3.c": "25254823d32f8fcb88a1d4130d6b58b38ef9f4dc29247338a0298a23df1d92e0",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_v3.h": "d2c5d8a0213568eb8c5a86fa2110392af5e95b0e69a53a373f1942f827e5ef6d",
+    "kernel/drivers/keyboard-samsung-pogo.c": "eff8ca0667b3f1dbccee2a8e253ae6dc7022e01db904122d112bb54a92a7c49c",
+    "kernel/drivers/panel-samsung-ana38407.c": "c4ed00544ec80f941f2c23cc1c447327db4a6c7ed6d5e9b5f08e97fd4389a54d",
+    "kernel/drivers/samsung-gts9wifi-sec-log.c": "f2e436b0ae148a0da921eff050450b0c68a84525ffc8911a9d2ece95bbe7264d",
+    "kernel/drivers/sm5440-actuator.c": "53764c296790aca8c2272602804bfd54884cd1b20c680e72051e7de2b9b6451f",
+    "kernel/drivers/sm5440-actuator.h": "fdad3bd0780934982872affab520fe6deb3f5fee0237edc9a760326e8e792d9a",
+    "kernel/drivers/sm5440-control.c": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d",
+    "kernel/drivers/sm5440-control.h": "0fa7c25d7d9b2ac9401061050c02bc0a52d02554480ed21ad5602b8906c966e0",
+    "kernel/drivers/sm5440-conversion.c": "295512234e4bf060c1fa2027fe670d08c2237bbe2ebd99845221a8a4f0a1be63",
+    "kernel/drivers/sm5440-conversion.h": "05eb71daa5273af257c4e754e867d93f033770f3a78c287c48efc2a51bea5a77",
+    "kernel/drivers/sm5440-direct.c": "e0f6573ef42611add103226e3b4aa0dfeb68f65a309ba66ce55509c106d71066",
+    "kernel/drivers/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b",
+    "kernel/drivers/sm5440-supervisor.c": "902ee2fd2e0d559d2976fb58c33480e34807390a64d8c6939bf0889e3ed0c42a",
+    "kernel/drivers/sm5440-supervisor.h": "11fb0e9a86669d7a46b1c195af84ee397f8bda7c8fd08246e697b73232377e52",
+    "kernel/drivers/sm5440-watchdog.c": "c639ac1dd0c36bb5fa90facbd60ed9ae5a1c1b0b1eae447c4f5aa5f0a34370cb",
+    "kernel/drivers/sm5440-watchdog.h": "135684956db32918549d1c81e4c543271021da2656b7f1024741f66ddc4ce1f9",
+    "kernel/drivers/sm5714-battery.c": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a",
+    "kernel/drivers/sm5714-pd-policy.h": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d",
+    "kernel/drivers/x710-charging-policy.c": "758afdf318809cdb39baf1f0d1f70b58ecf718a620543acba17e2c4793e0e162",
+    "kernel/drivers/x710-charging-policy.h": "122ba6a79fc40e274c26d0e3d60f88a30e428173e0ad071055c443734eafac31",
+    "kernel/drivers/x710-pd-session.c": "2a919dc7e240c7cc34de53f4b090e1a04a6986842a90ad2efa06b03b00e1b1e9",
+    "kernel/drivers/x710-pd-session.h": "a151ac44f7630addf4c78a35123b995b76956a594f1569d5b6c26dab8a599929",
+    "kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts": "3bb73ca047d7eae76136e10f7b0bc38a084c8650a5264e242838832e7b900a14",
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-cluster-idle.dts": "60f1c453d5ece3cebec1ea773d880489d107244b0f24a17145aa9a237d75a569",
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-llcc-off.dts": "577ecc0306674f27c85de97eaf790954a007a380f83616ec72090f6cc8b7554c",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "kernel/patches/0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch": "0d2ebd3384d48f6c09b324b38a1fc2a3ddceef94263580b55a885a74814ea323",
+    "kernel/patches/0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch": "9d7a20de952b5c898b28198fa0b170b6324222ea7db0ab14c6cd7f04022841e7",
+    "kernel/patches/0004-drm-panel-add-samsung-ana38407.patch": "6eca342e5045e174036c9f14fe1bdc666d496224f71c72c3a06d8d10735eaf69",
+    "kernel/patches/0006-input-add-samsung-pogo-keyboard.patch": "85dfd97df08fdc975254a0245cb6623ccebf2f38b1b8a0b4fd688707889ad49a",
+    "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch": "bdebe54ab0623c07ebda53174ba3af197838708617bba9ce5c169fc451f450b2",
+    "kernel/patches/0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch": "0159b64b85368435545e0f9a7c38d7279d87947057817f1fab1481343abdea26",
+    "kernel/patches/0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch": "c8b097bb0ee894d6e33515f63cd4c0031f6f8b11020d0f61ced62d5a86364ba3",
+    "kernel/patches/0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch": "c160c17c171c27b87b4ff868928611b83c65281d914855da0b59ce0312b28295",
+    "kernel/patches/0011-power-supply-hook-sm5714-battery.patch": "e285cddfc9e585999c15c98c30654ff00af92ad269497e48e3a24b61a18e23b2",
+    "kernel/patches/0012-usb-typec-hook-sm5714-sink.patch": "41214b3b84e0f963f42b677137300fbff1f06355450663b826f8284128d1819c",
+    "kernel/patches/0013-power-supply-hook-sm5440-passive.patch": "41a386eae49403e1eb730e7c106f90d97d6172dc8bb6d86d3bd0939c679386be",
+    "kernel/patches/0014-power-supply-hook-x710-policy-offline.patch": "571bc204e55c838ee11f686b2aea300d14128e427a93451b791ed3ba6ab3ee80",
+    "kernel/patches/0015-power-supply-hook-sm5440-adc-condition.patch": "b740413d4db593c968afbc976d4e9bfbb9f8c3979f03a003879f31c733124291",
+    "kernel/patches/0016-power-supply-hook-sm5440-off-control.patch": "3099466bcf0936a866d4a9e5d0ed289383344d90cd316f3383376a87e46c2a40",
+    "kernel/patches/README.md": "2518ddce2ad66ee849cae420209be14c93d48e0c515310e64e934f763bf0ad77",
+    "kernel/patches/diagnostic/0008-i2c-qcom-geni-log-bus-lines-on-error.patch": "453486c55b6603d43d81d017e588d239fa815df369fe7e2b2de5f8260fa45e1e",
+    "kernel/patches/diagnostic/0010-pinctrl-report-pogo-pin-state-at-probe.patch": "14059712f592e0e8ddd0e689dc5208edbe19bc368b770c09182f082723e56156",
+    "kernel/patches/diagnostic/0020-gts9-poweroff-path-trace.patch": "cea51549499c496961c0ed5c71d538ed77b4b2eb455ae355b4484be8890b50d8",
+    "kernel/patches/diagnostic/0021-gts9-rpmh-timeout-state-dump.patch": "aab1adc60ffecbdcb2d423ff0cb55cffcf6e3cbd3f2a5e118353e488ea9769aa",
+    "kernel/patches/diagnostic/0022-gts9-lastactivity.patch": "15a38bcbf46780038e330520863a16db2ab708ce94ee164d2688a7b9b88db4fc",
+    "kernel/patches/diagnostic/0023-gts9-ramoops-live-readback.patch": "29fe4abff13f2b763650f6dc6f4385cd0e0abb592e743456bd55390a3cb01c45",
+    "kernel/patches/diagnostic/0024-gts9-ramoops-ecc64.patch": "8f2ab58ad298196a029c4b53245c8df15b2b01ede6773c33b095a6fde6148094",
+    "kernel/patches/diagnostic/0025-gts9-lastactivity-rcu-test.patch": "5347187868710ea395b0d65a1810d1f369d0199f4891f2162b484ce7d9813f43",
+    "kernel/patches/diagnostic/0026-arm64-bbm-flush-range.patch": "b221d4cd9ab26400ab39853c77d0c0585bba9afcdc35de75e396b126adadad5d",
+    "kernel/patches/diagnostic/0027-gts9-pnmi-calibration.patch": "968bf32b584a1f467e920596907e43e45a148762a2e520c14771ee12f73d0894",
+    "kernel/patches/diagnostic/README.md": "910f7dcc024015d9651d21079c0acb7aab6f925f641a2c8ff747c7b063adc5a7",
+    "kernel/patches/nxp-ptn3222-apply-dt-register-overrides.patch": "dd87277a5f2d2b79e29793de2af9201a8d5e060fe8666c3b5fb726888c83c17e",
+    "kernel/patches/pending/0003-printk-allow-ignoring-samsung-console-null.patch": "70b4930e1bdcd99769e59de783ddafafbfe5ec377e3d6c166ef9c63197906123",
+    "kernel/patches/pending/0005-drm-msm-dpu-start-command-mode-at-enable.patch": "7fffdfaf77463ff620438d189be85a704ba11b5ba1efa28ab22c161db50ef593",
+    "kernel/patches/pending/0005-drm-msm-dsi-cycle-x710-link-before-panel.patch": "5f907cd605c886e7bd0ba9d86e4fb608c53dcb9266f85b8fc9533e361577159b",
+    "kernel/patches/pending/0005-drm-msm-dsi-quiesce-x710-phy-before-enable.patch": "b2341c4601305c39f563cd6d9f59fcced79a869f08fe9b26a8b057e649abfa64",
+    "kernel/patches/pending/0007-i2c-qcom-geni-rearm-se-before-transfers.patch": "9efc234942131f1f074f33449932c3d285ac7b0f10eb13e6a2369ad0c6cbbf52",
+    "kernel/patches/pending/0008-drm-msm-a6xx-fix-stale-rpmh-votes-after-suspend.patch": "7c63ec9acfa2ac9f2cbd19bae741955a2e4c76230cfc8ff9e50a2d57764880a5",
+    "kernel/patches/pending/README.md": "50555ccca6de732936c4380f066038980349722b88a07e818786cb71385a763d",
+    "kernel/patches/pending/qmp-ufs-clear-tx-pull-down-on-power-on.patch": "b0d0346405de6a2ba9fcaa352d7e9a18e4ca985f9f2b66f46f30ef540e7369a1",
+    "kernel/patches/pending/snps-eusb2-match-samsung-sm8550-init.patch": "45429d40fd2c9cc990903c1218860afe99a53ec2ef9accf30b35ff2f6fc30c96",
+    "rootfs-overlay/etc/gts9-usb-adb": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "rootfs-overlay/etc/gts9-usb-net": "b08de4c0e8cd18c70f76686b46c12133c59b0d2ed0648454ddc3755e49f81c2c",
+    "rootfs-overlay/etc/systemd/logind.conf.d/60-gts9-power-key.conf": "bdd610dd8d86464e904aee36babffc7be2aab76d94f645709aaaafe22fc66e07",
+    "rootfs-overlay/etc/systemd/system/bluetooth.service.d/gts9-bdaddr.conf": "b2d0ddbf3a34ab244c8b6f47670e12616db320b92a625756d92308c93c5c117c",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-adbd.service": "52e80912b62c06a5677f8a7da1ea3a19b65b7627f306c9c66a9b934ba48a499b",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-bluetooth-address.service": "7a18e8d8d79fce7d54fd5cc3ff359c4359bd007f531e6ff352613c6f15188d85",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-boot-stage.service": "8a95ec35c0cfff1c6c4dc378d11c17d4702fe0a5007e991c7e22d5f9bc090ad6",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-debian-basic-stage.service": "cdf5095c27d755cb873e02b60ea5000c26e2a3feecfafce094f79c27c4237fbb",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-debian-entered.service": "5051625aaa5b2f9c3c0e7bb478471ba4ef320018dc9197661c5b74281dea98d9",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-debian-getty-stage.service": "0c151a5fb7859e7e96e4f3d1b460d773c76a87bc4da2bff8b41197cb13c786f7",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-debian-multi-user-stage.service": "ee9cc1e5162597011097e78750e5c43bcceba42a242d9bc76300455c4f0bfecf",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-dpu-flight.service": "ca6f43f3928f6417f4347156517749822df45cbd7b4bcf513a3b2d7deadace20",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-getty-stage.service": "5c288fd056d1e79e1b16d7496d73ee883be1bcf2afd254443b6ee8b1121bc77d",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-kmsg-console.service": "fd5589584830626cf3b0a56fce432c13944c0118284aa0d571a15ce029e6dbb5",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-panel-recover.service": "f1ad667c6232563c68fecfc1200c639f05ea3b51d3f990aa9000d407299bfcea",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-power-key.service": "519a4f370d9ad86249e2be06da9e9f697b0a60b388d0c4b6a8197be173f5cebf",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-poweroff-stage.service": "fd29cf0bd1a816da67d7c10b1d41665f227baf7728089e4c9522cac86abc641f",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-prev-boot-evidence.service": "e8f9ead9e4822af4add4e9b1fe1b6cad0d9898daff25794eaec5d901b58a08dc",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-usb-acm.service": "27dc26b688bf8571e3c52276ef2a956bedbb59d48711ab864eed6079f037ed0c",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-usb-adb-hold.service": "feacfe19d684c0368d8fa31dbc5c624a0e141c03750988a91bdb7e5d98ff1f8c",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-usb-adb-prepare.service": "38ebb369c45e413d90e0c0eaedca02be50c3ae25ace5e1a9c7033420a17a0868",
+    "rootfs-overlay/usr/lib/systemd/system/gts9-watchdog-debug.service": "dc43e56cdabc7898221c4df4148bc15e2ecb824e28b4b27600193170645257df",
+    "rootfs-overlay/usr/libexec/gts9-adbd-can-start": "ea0324d6006e707d517c3462982e34ef9bff1fbe4e1435e4a491b813a344d259",
+    "rootfs-overlay/usr/libexec/gts9-adbd-run": "d2e840b5ef9723cde15da7a889a79d0700a5d54aabd54873c8b602694a0dedc3",
+    "rootfs-overlay/usr/libexec/gts9-bluetooth-address": "67d2d2c22bbda19d3b1fc75d4edf3361141b297594c40908b855896231929366",
+    "rootfs-overlay/usr/libexec/gts9-device-changes": "ba1a279999db243360b61e1e436e934f49690ed50e8deaaf5cef6feda0e3aaba",
+    "rootfs-overlay/usr/libexec/gts9-enable-units": "658277e4c53b66444f23d535bbd6ec29e3806e428592aa3d387f4d36ca83eacc",
+    "rootfs-overlay/usr/libexec/gts9-journal-survey": "7752493ce9b8904b1f790c3134cec24d93359887b4a642659bb5c9d0593c234d",
+    "rootfs-overlay/usr/libexec/gts9-kmsg-console": "d0a55d0acfd7cf7e7297fb24b788131c5d37cf3c2e63f6c5a758bd4b10f93a80",
+    "rootfs-overlay/usr/libexec/gts9-panel-recover": "f89a8ee21b329b9a42ac193b79675954868586e8d5126ad3c80629e9ce675f5d",
+    "rootfs-overlay/usr/libexec/gts9-power-key.c": "378d1abca9b58d1aabd6db392b1ec10adcd651632b48f1d55a12f4ea8d0b1e59",
+    "rootfs-overlay/usr/libexec/gts9-prev-boot-evidence": "7c03fcd1b9c20b24217a0a14f1370f59ff67621ad2e99f0848ba479b09a55c44",
+    "rootfs-overlay/usr/libexec/gts9-record-boot-stage": "30c50875266770ad71319bdf0e0ede56a72d71da1403218298b6ece8c1d709b6",
+    "rootfs-overlay/usr/libexec/gts9-record-debian-stage": "6a647da7584a8fb436845ff024c557a021958d49fc3467b8addd621d535595c9",
+    "rootfs-overlay/usr/libexec/gts9-record-poweroff-stage": "a82336253e189c42e9abf6bfee1d621a54aaa7cb3b08cd5e81d14827ef24173f",
+    "rootfs-overlay/usr/libexec/gts9-usb-acm": "1bc42de5e9d8fe2a440c79500373368fe27730990844c20be0cfc475100ec4c3",
+    "rootfs-overlay/usr/libexec/gts9-usb-adb-hold": "5a76721cc680f1bf9af0bcf5cf5852fa28bde29a612da9c67f1f96500d0d7d3d",
+    "rootfs-overlay/usr/libexec/gts9-usb-adb-prepare": "4e122bfca977c338ecc5916962393759351f5daaee0108c247870e28e21bd97a",
+    "rootfs-overlay/usr/libexec/gts9-watchdog-debug": "029a624780f5f05622a083bfa631da81c6a5a221a7830279008987f27466f2d3",
+    "scripts/build-kernel.sh": "202ad70f37ca1248c4c1c5a1f3b8c0b57cc4329c51dde15a71ed2e86adf57875",
+    "scripts/prepare-kernel.sh": "940e26c19ecb7d104343665a72292b87ff5b8fbd85261aedd85dd5fdd69547c9",
+    "userspace/adbd/0001-linux-functionfs-reconnect.patch": "4b1ed2bcd3f44e5d268a9d9670551225a94543345230c9571e9d79daefaffd50",
+    "userspace/adbd/Dockerfile": "3be2bc88edf19a28209a895ae996e94f9850799889a726a02afda1540af2da0a",
+    "userspace/adbd/NOTICE": "9e097c628332c9f60d958f4477b5a301c95e7342c0afbc513c61b8b6145f4c40",
+    "userspace/adbd/README.md": "a6f2c1813ecad0719265368cb471ff2d607eec713611670125f157a2229cfc53",
+    "userspace/adbd/build-in-container.sh": "946d98382e34d75077ce25156ff5ede4dd861324adbd4206510c2465ef30385b",
+    "userspace/adbd/source-baseline/SHA256.json": "7a5324c93606de2acf3ea28bd4359a3716ad808253ad0a8046305c755b44ffdb",
+    "userspace/adbd/source-baseline/android-base/scopeguard.h": "2c9643b3273a112de5aa160bf15f3306d672973bb9bbb74e5439563d08581fbe",
+    "userspace/adbd/source-baseline/usb.cpp": "995e6b1d40e7ec973da012fee1ead88fc5dea3ad3c630c2a5efd0453443cd3a3",
+    "userspace/adbd/source-baseline/usb_ffs.cpp": "8d12d7684250b13f159b451815ffe869644919358319f66cf79ebbe164a8fd75"
+  },
+  "compiled_source_matches": {
+    "usb/typec/tcpm/sm5714_usbpd.c": true,
+    "usb/typec/tcpm/sm5714-stage2.h": true,
+    "power/supply/sm5714-battery.c": true,
+    "power/supply/sm5714-stage2.h": true,
+    "power/supply/sm5440-direct.c": true
+  },
+  "module_file_count": 181,
+  "module_set_unchanged": true,
+  "module_hash_changes": {
+    "kernel/drivers/block/zram/zram.ko": [
+      "8f8f36fa9451f3df7e683a7d39f8aa187362463c63d7f5820b0f9e4c9ecfc7d1",
+      "e690785e6086046154f8df1a0df9325af69e8db8ceb3a9b56ee0d82a6a4263e0"
+    ],
+    "kernel/drivers/bluetooth/btbcm.ko": [
+      "723a0e00f9c2262ac6a4b758d6031bf26c05eecb7ddbbf4fed50943afda911aa",
+      "b9a5ba6a45ee430468e70cbd98eacf3bd7f05e13e6df119d9a9128463e1ccc44"
+    ],
+    "kernel/drivers/bluetooth/btqca.ko": [
+      "702b90328d9f0215bdf4d8aa21665438022d8d728428b2e5b50f532165e0ac31",
+      "c741b6c04488776a4cdf0fbb90ce5a7031c98ccedbb05938f937d908730b1f3b"
+    ],
+    "kernel/drivers/bluetooth/btsdio.ko": [
+      "b87ecb72a7d02d0b86b1c41464a8ba1ee4294ee0f3b19d9327c905c25c361046",
+      "6550bbfebf6c748b342da56f654317f1f2204f7a0d7de64ef037fdbc21d52e12"
+    ],
+    "kernel/drivers/bluetooth/hci_uart.ko": [
+      "3c5ffed735bce93beaf130f7007c1360cff2d962603bb980d35f6a1e3abf1e6b",
+      "a37aa5d3f25642c407179437b4d926ba94fd8e9fab1d9d04882af4bd1bb24496"
+    ],
+    "kernel/drivers/clk/qcom/camcc-x1p42100.ko": [
+      "b8386dd076dd2e77081a7a26ff6d9031d749d265ca32e543f4e87da7226c874c",
+      "f0c0dad2db23fd0f3d4c830951e47c2328baac43914e022f841eeb5462f4e019"
+    ],
+    "kernel/drivers/clk/qcom/gcc-x1e80100.ko": [
+      "9ed5d805ad886babee44c8c7969bd58a696e253b9a50929c97ad049a77e64b40",
+      "a826418afd023747a85b500948843cc88e27c088c56a69794dac2fa48ec5b579"
+    ],
+    "kernel/drivers/clk/qcom/videocc-x1p42100.ko": [
+      "1b206d2867037c99567ddf61d59517d8117b20d719cc4605dc796628fd7b1ae9",
+      "9701d365176c982d19f34e9a4d14f6f858fa77f82612a15c21fced83dd472cdf"
+    ],
+    "kernel/drivers/gpio/gpio-shared-proxy.ko": [
+      "dd3e4013c4d8a1c9d243a98ff9f41c3bf99cf8552582108ad4994c02e1a49ea3",
+      "3e4f055dd44e1bdb50d8124a6ab435e66182580a8be8c52f0857f591470464e4"
+    ],
+    "kernel/drivers/media/dvb-frontends/a8293.ko": [
+      "555ff00742a476a7ca903b47f7d7c7d001a687ba112e36e46de81ef6d4d5594f",
+      "ce9a50e709a91f1e75930b8581c8527ed13d1c21f03e072ce99c197250e542c5"
+    ],
+    "kernel/drivers/media/dvb-frontends/af9033.ko": [
+      "d31fe2c6a52f87cad218bfd2d867c4d0c2ee8c94b8aa388f1906d3910d1e1296",
+      "7b6385cbc79b59c248d9886f389f5100efa3d46fc19d6b2adbae141a60a19b62"
+    ],
+    "kernel/drivers/media/dvb-frontends/ascot2e.ko": [
+      "d506b8c37dcf1acc4dae62ac7e0e2eeaee787456d9ab91be7b922f632734b243",
+      "bf763da14b49b446fce5ea33b44f0e85de3437fd5b92738a527b6afefbc218da"
+    ],
+    "kernel/drivers/media/dvb-frontends/atbm8830.ko": [
+      "f2b40ae1b2c8f720a847b72a1a1deb164114aa7cbf84c932044d41f410372c1a",
+      "63827e0b719af7d04e5a1ef369a8d07a4612c0ba28ad31e4fd7299dab0fddef7"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_common.ko": [
+      "64151a2592d7bb695ae42b45b3b5d5e252b58d47ce38672b0985162bf2b06539",
+      "944acc3a0acaad825fff9995eb8531874ee5608509baca26c4a69a804da9f6f8"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_decoder.ko": [
+      "b912415bc7c1956d0f1ca10368706ce448cf5dac29b3b19a916f86f55e0eb9e2",
+      "8aa7fd5c5c4041d0f691a6120b6dc20f03701a30452ad33ca12791e7ffb4a247"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_dig.ko": [
+      "1a83a5022b6fb751f07eab6f669313d873cbb4b28882c309c061fd2a1873c02c",
+      "a115b91c78630762b996007df0e763cc3a001733f1d5e9f0142c2038a4ef4a68"
+    ],
+    "kernel/drivers/media/dvb-frontends/bcm3510.ko": [
+      "8e6c638c96558463b9ed1290bdf24f68e296618523127a8ff73a9375cf016690",
+      "38b4517503522bbe30305739b28ca1bb1b8eae2e4aa9c531a63ea08bafec24db"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22700.ko": [
+      "be291390d01c2cbdc16e774045991717c75a3af8b2bf1cf8e811c1d4ec7ffc9d",
+      "6c96a2e391727a7205a813243aef0036067b6edb57746f4c439adec62a3a439e"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22702.ko": [
+      "2dbcb6736eca81c20c569aec720fcf1c556eae35ff1ecd1ccb91a093143046f4",
+      "3c5b80b21778e033603a1c2bc4a5e82f243a1c03557dd6af8fd17945f1096df2"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24110.ko": [
+      "8cab2a39327dc3e33ea29c21d9e6d0b4048522eb927943ecf936ebe62c23d7ee",
+      "578d8635acc9baa34f7f351ab9335ef8b3becad4c5f771d857609ae103c9eb97"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24113.ko": [
+      "70db9d89a662a66bcb72c3fd013ebcbd8885c5c60ed4259f1ff92325dd3f4fe4",
+      "76159fa5731625a085da4d14394812fa838e895d1fad58ee5c4ea9d6b8373a6b"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24116.ko": [
+      "fc50b779d3ab305759dc9d5924876e3a18bcee88395b12af42753f77312e48e2",
+      "f247d0177425109fcd45aed54e66feb1a83d3f61a7bdac2f75693a9db9e7ed04"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24117.ko": [
+      "2e8d805d6eceb28cfe2d4ffc80d9f26a9e854c482794d6f7b09e3079af55f439",
+      "e5e73b9b9651cb1235891ea51c60e4acfd63d01e62f969f8134897514c703edb"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24120.ko": [
+      "33406842e8c8804fefb6597b1533288245155ab0b650350bad9804105c7aeb37",
+      "6a8ae1b0747105eae49af2d007b17256ccd436e05ead64a6b3f8ee544b61e99e"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24123.ko": [
+      "5f4bbf1cb422cef00e37b91384b2b789a421b80851509327b965d1f4ec8f40f0",
+      "c259f453151fff5996b024bf25436f118698f36a1ee777c40df47efcc61d16b2"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2099.ko": [
+      "e09a9a12bc5121bf35a476020033d00ac1f3c62dc38e21211a6c0142134a7510",
+      "58d30c102683d648aaf6b1747a786f0f08baee71ea4d82793b858ef176bde6e1"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2820r.ko": [
+      "d2eb9315836728ca52969635d225f96fdac9c9b37a62c62e03364b179f59c5a2",
+      "416415cfe662c15a2be5631a3aff8c3ba2d3d98a3213ea4ae275fffe0561bf20"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2841er.ko": [
+      "962f0039636cf70f95dd4074abf6e7034530e763e9daf5af12e94bdcd733c11b",
+      "32fda11cb64e6821e19ea309562d7c8eeab19f5354d863f9f6ee4490dfc89897"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko": [
+      "65e0a59e79f56f1abe233baf7f477f2d4f16e2454c14e906a547f79fff032d3b",
+      "f2970786f0ad002a42da7bf7ede7e75ddaa483b1e29dc20cb8752259584eb4fb"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0070.ko": [
+      "4dab0f4d8b3c5a68299f12c6cbe96f7540ae534987b44248504dd7bfe0c6d8ad",
+      "0ac31a49c9e7745859e89bdd7d0e682650301a8eb627aebe6c289633bf46df98"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0090.ko": [
+      "d8e5b8e3dabbb76090c07751083c18ea5a4de9c5b9848e0bc708a82be7c18eaf",
+      "ba3035c10836e30dc96be4218db9bc092925eac076ab43b4b8a340d2dc54887b"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mb.ko": [
+      "9188a6ce83e4f6b955a756051adbf5323e85482368f3346cb3cea16e41d5ad25",
+      "1d0d673c05d9b6161da488a3b0a3644909d0385994b3adaee25282a864416f2a"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mc.ko": [
+      "bdb4486d2ee10a711ab4c1edcd9fb1199d6efe2235cb3c6d498d7165e125cf32",
+      "c0f3abce70c3413756f8a1f2ceb134f152870b43bb75fc4afc5f035aafc5ab6a"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000m.ko": [
+      "289cbfd630079e6980eac4576854192b555ded0adbe066833d0ed5d8e65e01df",
+      "1bd6a943b0df20299dad9e3b754051c877ab0f8b70ea3ad3b9f7340c03af1344"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000p.ko": [
+      "7d57fe5c184abc2e1503532953ef7b46684003937e3f8bb6d2b2a9565d3dfda7",
+      "24af5d20e2abd606de0201cfdfb8280617c52debc57c582ac3995bf9582fbc60"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib8000.ko": [
+      "dda117b00f812f5ada9290ad0a34f0787ac4c96aca58468bb7f67682d89b2c16",
+      "65dad2006e380173928a8a0154e2e7c101d2b19f1ada6c3d7bad1893023f3a80"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib9000.ko": [
+      "97424885b5b97a8e09d029ae88cc2daf1db4c167e6b190702ce6d542662f40f7",
+      "1cf2df8cb57e867ab86cd71f3b547c15d273f61d22c457f52ba34c71624b5ed4"
+    ],
+    "kernel/drivers/media/dvb-frontends/dibx000_common.ko": [
+      "b72cdbecd897fbc455c1f225bc3fc4df56269fc3ceea43cb867060cbc539c3dd",
+      "5bc91cb0c22f0f66aa0d2e4ca05640e236fb052c8bf61ffd2374a0ecd454d1dc"
+    ],
+    "kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko": [
+      "79af0e141b71e5681dfe0a0c723bf97dbf495b4bce0c06598449566354295c6f",
+      "a21bcf5485d09ebf2ce349c49f76fc6d97f6f7046cad10ca4b0bf6ba5481dd06"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxd.ko": [
+      "0862c72596a9e47adccf04451d7effe8db66056eb1c20f47e78df9d18a0a5afe",
+      "6b63c58ad46d039731b99cde913739c74ff3a8131368bd22555d1f316b770c72"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxk.ko": [
+      "11a7de3d1dde8c43cdcc32dac788a378b0bd80fc177573a7b4e050b434a63ff6",
+      "f92febdbff8045970b74361680608493cf11a9c03c53d95b8511d0dcde110316"
+    ],
+    "kernel/drivers/media/dvb-frontends/ds3000.ko": [
+      "9dc4e2cbdb084701dbded5ed5e1a18ba3dd0a05a420398baae9426b9c99f8a41",
+      "72a1a29f758347d9f5414ec2c053e84d597233128fedc86cea6ab23d17c2b8fa"
+    ],
+    "kernel/drivers/media/dvb-frontends/dvb-pll.ko": [
+      "f34f56768d6b2383cdac5c959d069a654315be007a1bd768f20356c5e62236ba",
+      "7f1aeed25b9fcce92bc1b4543dbe007244d8d680f0a2993bab2c452e670af804"
+    ],
+    "kernel/drivers/media/dvb-frontends/ec100.ko": [
+      "c00f819dfec7035d7c37a6ce1c48feba117ca4f7d81ee5a2ce48fcc593729bf9",
+      "b1f8a3f59f7ac1052d1155997fc076fb112b16758d83196bebacbd58db856b49"
+    ],
+    "kernel/drivers/media/dvb-frontends/helene.ko": [
+      "af365df8e14be73a1f8ac6b885d2a94a293b9f3d18a73e9d44e85941ee6ad7ba",
+      "f221e70ba3ed563a3c14e31344934e5697ef4718f2d69c153b5f8d4449d7e045"
+    ],
+    "kernel/drivers/media/dvb-frontends/horus3a.ko": [
+      "318fdeef644f124ab4228656b5394add2362a168db33d1f2aae29c747f84c63c",
+      "9a3cf3b611b56eeede19e94234b252ba1c53c8445332a2d0b70154931b58064c"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6405.ko": [
+      "50459e43de52392a785d0d3d60d775f60ae919af0a8d8c59c2dcf8e2a67d3b13",
+      "905aa75182bae349091b7e38352582fd916b944225837cc921ddb7ac1d966ffb"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6421.ko": [
+      "676a73f069dace003207c62e97a09b14b0c834db64d0c87a61d17b90ee98c39d",
+      "ab4e8a91246f8516ead856f0fe7560123a6447d297ae19a31dc8394f4dde5638"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6423.ko": [
+      "6e2709e5846beed3be398bebd8f43f9cb45ea8fcb9048e9e410f162e8990ed75",
+      "a0a717d2992591e2bbce7a6313a2e80db879cd038dffa112cfe184e4c3722301"
+    ],
+    "kernel/drivers/media/dvb-frontends/itd1000.ko": [
+      "c7e89a8c8fa554bf51942515166cc5239138bbe15e441e1703682510f0f929bf",
+      "9c337a7dad48c169496a78e29171d2f5cee23714fff73512de92fb19283078c7"
+    ],
+    "kernel/drivers/media/dvb-frontends/ix2505v.ko": [
+      "d59edcd6742cc9f736c4acaf389149eb3a9579983c413f242d9aaf91332baeb4",
+      "d6ef18b123fbd11b93a03dd82829cc56cd0429532ea935c765dfb561e6dff850"
+    ],
+    "kernel/drivers/media/dvb-frontends/l64781.ko": [
+      "9cdc485afc279fb5c45f00af871937471622bfbc60ac6422ed37aef36b21f439",
+      "d410bdc86739b2e72905d343a113f0c9b864bb4b33227fe2830b645c89434100"
+    ],
+    "kernel/drivers/media/dvb-frontends/lg2160.ko": [
+      "42c1848b56c2969a55714c7679ed556861bde5be321c9056f62c6e7e35734175",
+      "6226e4639671ead9f7757c2b79d2165710ecd3ba58312fbcea6236db67a1b65b"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt3305.ko": [
+      "f72f5aa54f5b28d54d819278fa1fea73756df901c19ff320f73975f6e9070725",
+      "475a876125bfa8052e12b9eada006b8869cf0f06492a8526710b830211a03f11"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt330x.ko": [
+      "d99e7a918663b27f0c56c69fef65eba74588ead736411898484c6567d550a075",
+      "eca63d544a4b987f6b873d19d3287dbbfb1b916fbacfe6b280ef3726433cae90"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gl5.ko": [
+      "5bff9a7336a6f46876401bf6d27532843403a6d9f4fc5f4194313fd21455ce95",
+      "0a4c0777ae3056d224cb062b265f2be71cb95dacc5ca7482a3b8852b8ee9b854"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gxx.ko": [
+      "b3460bdee511c791cef8a923f32e9c2adb2a331a5e8695ff3ca58f01c4358095",
+      "e399ab05ec83e1cbc3c8db08f38fefe61135c40735fc87b52d8313c0986fbdd2"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh25.ko": [
+      "78ddfd7ba4b64ac31c2cbf2ec6815454a84ba9a71918c7e2afd323896c6522de",
+      "c552649cf95c11188116d7af8d57aca68d0a17d3b231b3ac29658c34ff75e6fc"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh29.ko": [
+      "f29925029307e1d10f3aebf3acb924566e95b315721a903758fbd9134127b87d",
+      "1db17a8b29b5df7f35a34dce7d22489db94a0eb1ed1f4cabd7854b1297463f39"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp21.ko": [
+      "91fd64eef4553f43f1ab6d61b919698a290a70e7ac81fb3890d823fe1f943157",
+      "e91050ffd6386a46eeb12cd2cf7738288ac0dda2ba14b90d4e360d2da961f7f7"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp22.ko": [
+      "05890f675841bf5ed10829ad29508134a77155316c55ebcde65974fadefea07d",
+      "4144ba1fa7e53c5d9b9d6b0af4973c70fbfdd8d3abc9befee1c07e9826e9b544"
+    ],
+    "kernel/drivers/media/dvb-frontends/m88rs2000.ko": [
+      "14c8cdc3141b984887c6a9f1fb91bb6f8ea152df0552d58b73dfa43537ca86e0",
+      "b615d32d14fc5bdbd614c1a0914ba667d87d1b741961df9afa39b572aa4d7b5d"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a16.ko": [
+      "d034a3ee99f6714bec2d45e4a50bc1241e7d12b60ab0444543e2ebd99938f58f",
+      "c4d67b7e3b6a77b8e0bf2a87ce2b70135b616bb26458a6aa45e27fe4fc16c2b1"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a20s.ko": [
+      "981d187f9d2a965dda31e9f82638ceb6cd718a09e1d5ccc3d3f3706e25607eee",
+      "4ed19a67c01fb440a8626048f51fbd66a2670c0525f18a8bd66f7f54952715a8"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88443x.ko": [
+      "64290b43ee44d5c8dc86ed420a498fd6d58b3b533d3fb44a8ccf3de3166d50d2",
+      "06c79189e9cfceb6d3ca079a2b53eb3f583ac04896d9caf39a5ab4942143b839"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88472.ko": [
+      "88494883dfa0979d6e6e3d9b0a78d7ca9dae2ca11cce9df001e788215756bfad",
+      "02ec3307038e8d59bba44c70b79652244a445a5826596c287c67365612105857"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88473.ko": [
+      "bf968eed78e75315d90bb8cab047fdf8d6da6ca869a534f2b8f33ccf56d46b54",
+      "2684f708735805aa344f196afdbabd798d0aa55e8642fee2e9aa3da402e11517"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt312.ko": [
+      "311bf988852cd72d4e5a94c3fe471474e602db468a5c705923fb7c95c41a6894",
+      "dbe55fbb7559633c0a577f695479a156c42701f2c1d76c9e36e6ed03d270717a"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt352.ko": [
+      "a9681958f905e06eac95d494aafaf0977c21b44a9af8379b5ef028a24e7796b9",
+      "9a9953a208ad8b8ebbc3e57b1ab2adba6fbc8ef53de0df4af16f1543da5c78a6"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl5xx.ko": [
+      "33d2496fe9795869bf7db62dec1bf5430ed6cad1c4808d288058ac06b4690609",
+      "97dc8fef02d2354b0680aeb5a698a74dbfe881b76452392aea3f838e0dad08dd"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl692.ko": [
+      "6b61e50a0d31e451c45a32d2571e2360336ed8a6b132e79712ad0871b9c77e9c",
+      "7c2acc1083a8e0558e56b39c9c8786fc2236991b52b26b01bc71295430d6bfa5"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt200x.ko": [
+      "1e469b9656b1b06f05525ca513a4dec1fc319fdf8899abe21f40ef7f044e422a",
+      "2e8f96f0fbd1e68c775f467f33a9e34f42ec8706c2d4fb5da43605f70f5b607e"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt6000.ko": [
+      "5147af3dc9f5dada1e2d057456d6a6db6355e8166fbb205b7e98e64d1243da0f",
+      "0d7392b62615bc74f0c1b7eb88adb4e7d1b150eefc691a96ce6e53d6952bcf15"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51132.ko": [
+      "7b1b25aa2eede81bf1f68cc27990a0489b0ca9a523cc7626f288f15d7c381ac1",
+      "e4d261960056942ee565bb6d123c81ef3b9a74990471a053c6b9484597ed39ab"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51211.ko": [
+      "d07959698225774ddf826a2babe49d15602bdbfcc2896102157d21abc09f63cd",
+      "d554b25bc47e25d40d00fa4a1d11c071b6d45a8935414e860efcb0dcec394ce8"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1409.ko": [
+      "66b9d2690385db5c14e3d858d9305340b19a5a523bae5cb290c39894d86d6039",
+      "ec70b9e1e351d7b67c84cc60ce9e785f164220dd368581cad5307a84c5fc79a7"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1411.ko": [
+      "a0b35768c6fcaf4b9fca830dfb34299823f367e62c129d70fc35e5df911eba9a",
+      "668b20bfdd74e072b0e11aede1b54e31bb14c4e71677c07f9ef083a2507fe356"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1420.ko": [
+      "9c7c00a89a4332c966531f966bb06f256375ac7ba5527cc56b37cabe7e58b6d5",
+      "e3013f8d2553afbe3fbe533a0e510906ac7eafd49debad50b0d66487b74654a5"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1432.ko": [
+      "9313839ad481a8752f090b6eaf8498e56cad3c41ba8eb3ce3606703ad2033e15",
+      "0a194339d75b96f1497dd3f582d0a386d8f2cb80e7aba8ca8b769141824b4d23"
+    ],
+    "kernel/drivers/media/dvb-frontends/s921.ko": [
+      "bcabb766825a0e57556f90609d12f5f8d9e598b49c030c308c8b0a28bb590926",
+      "d4a9a20692e443ded54163742cd184d9b4fe7f903cffddd5189283046fd8bb4e"
+    ],
+    "kernel/drivers/media/dvb-frontends/si2165.ko": [
+      "25b816a80997acb169a2aa20bc0cf7140896c6eafd8033285725ab2bd445392b",
+      "43e333de7eec2c13170a2b3ae38c79a48c6496082f313580cf892faf13bc15dc"
+    ],
+    "kernel/drivers/media/dvb-frontends/si21xx.ko": [
+      "09188c799d2205070bfa89287fcf52d5adbe0ced096dc9c2dc9de4e5cde7bb6f",
+      "a13beab9e8baacc5c8624158ca92c08778d2e2f82a292d2ba0ed7bdc75af7ec5"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp2.ko": [
+      "f6344b97050a0f990ca3e7f5f14219095515821504bb362184f82129b452a6a7",
+      "134eedd3898cd61956c68aec8c893833c0b36013f960ec11e03d3d0b4c4eb860"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp887x.ko": [
+      "88becc268bc6cb194bf0bdbd91e9af740e13a8fc1fd78635800d3fe205e5678b",
+      "cf19117990026f0b96eb801e36f50e185ef3f31d146b7aa260ab909ac1d9296e"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb0899.ko": [
+      "192c761ad77b43fc7ae7e2fa668735153726bdfa11aa11d3187c68775b62fae6",
+      "f5aecfdf4abbf4a3a04146aa923a172af0e411136af3eb2dfae6d3f636dd9f31"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6000.ko": [
+      "d571fe6565bedcfe09261b29f1de8592dbb95727237f31479c760e160b4704ff",
+      "c274cf4eb034c399686627c1fc3d1e0fcc0a160c30ac9b38466daf841cab0c39"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6100.ko": [
+      "4633eea9655bf393016a5601a202ac5238389bc435213c52146c79125692df04",
+      "35654d9ad794bb3560cbd95970b56e3ffcb8888bc4d2e1f266e28957f17e51b5"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0288.ko": [
+      "5b373817fe4db65234ab75a2e14ed5d7202f7dc9e23a4418e9f729980429c6da",
+      "525648a3204364ba82b0d08084643f33124bf77e93ec8ca43df7d146256352a5"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0297.ko": [
+      "2cadd301d21e21815e1ed8b5f51606f83e3094c14e1bdcb507ac0688d4ec2838",
+      "75f88248c382e85aa7e625dc5ea40b7ed460fb51caf9a58972e7f069491a96e5"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0299.ko": [
+      "64d54375308b34f5bca6c60fabf189f41a18e440f44f435eb7a13061378192bd",
+      "674438daa6d3eb0e1f25c3f2e20bccaac326183fa3faf5f2b0f768152da13b5f"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0367.ko": [
+      "6a5e24a69fef80328989a04d65c3726fc0ec261dc5d498b77076447d691638f3",
+      "004e538b10bc5b41b9fdea656ce14c87a5f66c0244cbeb4b6fc6d0a512141ffe"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0900.ko": [
+      "4f49d3d5001f48bde34e8e8066aecda5a1adb4fd96f6452d2ac6d12c0df26e64",
+      "71be8016ba2f12be7b7d27b62646174470456801f57e58cbcfbbeaeb2ab7333e"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv090x.ko": [
+      "af74c726dd5185f76d894d40ed1eece0513d112b5d7797deeb0cc1a40d2b29d8",
+      "a1198e74aaed03e48e1f5a2f86327013a4cd5e2c664b2460b139c4fb82504297"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0910.ko": [
+      "576ecfbbba9b46ed5db6a31a04a9a406977d9861c1167c1848dffaf649c63dbe",
+      "02a3880239154415354ada537f382e5cb066768de501cd11b8469955cdd6e948"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110.ko": [
+      "4789af7e2c5d72359e68d10e291f095eabe49410d88f53e510d8e90a6efa01c9",
+      "ca7cf9dbf00afb6f228df16e0ac0d46db0d9d4fd5f2cf7689ea8fc472bb5a8d6"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110x.ko": [
+      "97d8aac46c96c78636016ffbde71d87dac6923d763ec9394f4318a495584b312",
+      "215eda10fdfc07d22d7294db55416e16541792dba0514212563b8693ea5d074a"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6111.ko": [
+      "9f593319b7943bfc1ee170af9d9a301b353716e812c16ef3ecebfd22f7d21d5e",
+      "580d4da60ffe2fc0bc987bb766837139d8915b44a25d8833a574783a82dcf659"
+    ],
+    "kernel/drivers/media/dvb-frontends/tc90522.ko": [
+      "8355a169c76066eecb248e0e9701d63be1e9d48cf9f61221d76bf9f83ddb074b",
+      "bf1b00c45b23e41eea18f11bd1c71cd363e3002b105518a1e439554d763bdf7a"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10021.ko": [
+      "8992608a3247580aced5215f49461f0004a0cb87f4fbeb19289af68903f43ca5",
+      "4bc512dc46a8027386b483d25f007ae00aa64e6d9b973943f90a9257b40bf0c6"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10023.ko": [
+      "a14f0ec80d726018b935acdf107128b93dff37faff5b2e825444e49e1342213e",
+      "cedef2e9067bfb9d0efa1a963fcb590863228df8d5c2e723b318189d646d5725"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10048.ko": [
+      "1ccdf5a1e6a73a0e9c160a78856b3d5dd3af335ff77e89c30862751331269d4d",
+      "bd937d1d3c47a487a4adfef9d19ec9bd8600e5f68bda9c4ef73b1b4781c03f71"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda1004x.ko": [
+      "7d713d229166e12d851d59442bfecc150db6e16842e9559e04ca67e1ad6e5533",
+      "be54a17edd667074b4678b78ad81621aa959cfd364e81768886341ce9dab5505"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10071.ko": [
+      "9334fe9ded45dcd3a5ac68daf256f140c4dd586825c3b2dfa398e5dc65d28f4b",
+      "518aa0ecf1b007f0c8e2392c3b59d690af67125c1f9460526d29e35e7f5489d7"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10086.ko": [
+      "489df5c77e5d854d3e168a8ea611818df282c959891a73f33d86b0aa9c0af65a",
+      "928314789c44492540ce1c740bf35fea6371b74ada944a5c5b5594c215a02c82"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda18271c2dd.ko": [
+      "eb84b56e8bea39c453297cdf43e5da45f16ff0ef5bb99fb492c26915fc35b06a",
+      "2b685f2ff3fc6f637c40a36f1a231d85222155784cf09d4fb2c125d35c0eac44"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda665x.ko": [
+      "cf26106dcbd665f634f4647f5c49d91fcd66dfc9173ea131955faa3a90776f82",
+      "3dbe3cc09d72842e0dfa17e8df590a9972c9ecc869adef7a0f49ae7206b2f432"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8083.ko": [
+      "fcf5beef2c5ca5873132c5cc0e6cdf658a29c358f1f506a48040202e2de1ddbc",
+      "bbb051f4fd74cc0f282e0d673358a77df52c07d16a3e68270ac5fdbc56caea1f"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8261.ko": [
+      "261ede9397d30989de4cbec3d3499f4bb5be5ec83718f803b6a3a6553f12a99d",
+      "1275f9e67d031740efd9c93a71070f010a36c3b1f0e7d9988847824426c8a5a3"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda826x.ko": [
+      "c382430ab1dbeca5ab97c7bea800cec10ff898d279107c7827b0eb51ed1b34f3",
+      "c97b271e4db49007218646e436e8c1604cb5316f5e43926e7e6780a872d8d524"
+    ],
+    "kernel/drivers/media/dvb-frontends/ts2020.ko": [
+      "e471e13386143f7dd2e08d813a453ee7ad950bfa812ccced995dd370d1dbd6e7",
+      "37ce35076b7a8e36773d56a1d4826cac91cf9ad391171dc0e04ad2701190d564"
+    ],
+    "kernel/drivers/media/dvb-frontends/tua6100.ko": [
+      "debce29801da6d097e85a0df1a036dd0bd311dc166ac03ae7714c781c1459543",
+      "e758e1943f26b85b9ed9f92e422eed50263c73cb091c9847fbfff94312574dbb"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1820.ko": [
+      "2b38dc7faf72f45de8619ac82a2572e54d1a2018a17a41e2c20452bc40f696c6",
+      "5939ffffdbdfff11775b4cae2ac24c733d0c4433fabb4036e27053ef1437846b"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1x93.ko": [
+      "ec32af0e47ff204191b11548e8434d68891ec6a97933110ea66248c80290d967",
+      "946c7bf5df86e8b4c9bb51295e1291a486a4f14855810761ac5964d59eb82839"
+    ],
+    "kernel/drivers/media/dvb-frontends/zd1301_demod.ko": [
+      "b36aa288658b9654c250931e92e3d1cdec33160837090b8d28be554d51e2fb97",
+      "ba633bb8ee9993d55a16253b64c223734918cbb0485c8de59fdfb3d0098a5bd7"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10036.ko": [
+      "67eb4a4e855122540da544de728aa8595565069ff58f978c525b9767944400df",
+      "567c7962d248c2c12c9696d893defdad1ee98a9d2392507597fa0844440ecdb4"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10039.ko": [
+      "475ab9e17bc966b995187faac61ed940dce94123c5239501c8f5120f8780f36c",
+      "ac215a04bae935da9598c4ce16a2b8c59f8317fe7ae0006e9baf0ba6a69f11f3"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10353.ko": [
+      "004ae4970e2dd38a44b30071fe3ce7ab166907365aa4b47e0f4c3d094b33d935",
+      "6051da20f1c89c757d90eddfea36bb77e092f0ee76fb02587c630fa976eb2ea4"
+    ],
+    "kernel/drivers/media/spi/cxd2880-spi.ko": [
+      "d8270f8c77813f9bbad1b14ea214aa352445ce140c0ed579221a7a03b95c3f81",
+      "f141e167b318e19022b995e56e5b68ad0ce9b82c6a28dfc4e735a8dc4c6d0477"
+    ],
+    "kernel/drivers/media/tuners/e4000.ko": [
+      "01c4149af44600752880cf6256122d63139e776b113b854a01c5efd13b76ea7d",
+      "58183cfd070c61e6b057cfe5177ee6df579ac9bd74f92667e24f77cddce17153"
+    ],
+    "kernel/drivers/media/tuners/fc0011.ko": [
+      "677cf82c352bf245ac02f40bd1b659f3b6ede6dca600f04a067c7c3847648f6c",
+      "1c84abc2dce0a99cfb43b698c71448fa456b3646424a64a239700c1588e40f36"
+    ],
+    "kernel/drivers/media/tuners/fc0012.ko": [
+      "32bada534ab628766da78283c579e351e485dfa587dd52550545768ee819dd18",
+      "07657d900400903f7d7de16e1a1ad8e1165311e7ec0bf483c7c2e1714c31f012"
+    ],
+    "kernel/drivers/media/tuners/fc0013.ko": [
+      "34e38ce180e4b335862f0013ebb23ab9caf6abea0d2c826c19c163ae209eb3b5",
+      "f36ff2ebafe3068f063c3f6eacf4ac79360fada2c51d0ad95cf81bd21f6f6109"
+    ],
+    "kernel/drivers/media/tuners/fc2580.ko": [
+      "d63603a2f4f7c93ce1462d2885b18618e007f1e03464048cecaf169756ca9d05",
+      "3a66603204fad7adbfe376dc0aae7f7bd3155a0b814e9d463ca96b89c8fe9660"
+    ],
+    "kernel/drivers/media/tuners/it913x.ko": [
+      "632663de48bb782a92436c0ab0fa75a2c936f7a01c11a015544ff39d99750270",
+      "8d16d1ebf6597fb91402ded337731faef5cefc384bc3643e6a944b36bccb483a"
+    ],
+    "kernel/drivers/media/tuners/m88rs6000t.ko": [
+      "36faba1de5274a0c6ed131a9d57f4bdb38006cbfd422409d72745d8a961e821b",
+      "0d0dc09721804251a2ffc0dfed42803e3e1e38e5f4acecf8bdbfe78ed0c72a56"
+    ],
+    "kernel/drivers/media/tuners/max2165.ko": [
+      "8582aec413546f603c4943a98d857f8ab03ff4e0fc94d51ac454e71878ad31bf",
+      "0b0bd485af671734b45968a27921b81a225c1848aed4559acfffa68b00b6d8ce"
+    ],
+    "kernel/drivers/media/tuners/mc44s803.ko": [
+      "3d2f0b5bd876f75c3191690b5430cc18255bbeeb6736e824561c5b7967ab9e7a",
+      "58897488f823e7b36ee1d803d75c144b09371b22c8e3297a31ad44699b689134"
+    ],
+    "kernel/drivers/media/tuners/msi001.ko": [
+      "36120be7ce052844fee177065105542ce02da2053812aef829d40e5e80ead0a8",
+      "5131e7a47036f65d0aa6b9151a6c26c6e55c9fa3d0f9c90555c70dcceefe9440"
+    ],
+    "kernel/drivers/media/tuners/mt2060.ko": [
+      "337a5920223a4f65a13d21392c56b6523a9ddadead8e55a581dbd675b55b7209",
+      "2d4bce6b82fce5f2744768ad7df3747929b6caa9aa1b1efce68c10c3eea05a3f"
+    ],
+    "kernel/drivers/media/tuners/mt2063.ko": [
+      "7bce70b62965567a46057cc5f8dad936fddaefce6cbe97f68bf135ef2b966605",
+      "2f5552100fec09e1fe126b5f327219c1dde906cca0fa8b7f28216156eabba566"
+    ],
+    "kernel/drivers/media/tuners/mt20xx.ko": [
+      "2f01a5946fa9ca494dbfdee777dbb0425e68706167a379f9a7401266998a4da6",
+      "37c5251bc99a37025755c35a8036305c05ec424967af76cc66a9fcbc45c1623a"
+    ],
+    "kernel/drivers/media/tuners/mt2131.ko": [
+      "7bb244cec6b761780ceb109e1a5dc554346971a7b465f0f6747c510ce194963b",
+      "a8c782103d58bbfd0888ad8115c53dbff6081e9bfe3e578d8f66e5b4d3488c97"
+    ],
+    "kernel/drivers/media/tuners/mt2266.ko": [
+      "5a1a74109781dd26f66dcce61fea18f2d16fb53966cd5caf1bf40df24fc42093",
+      "648293ed4370137e836e11204499332d1bfd9e1e12dfa3401a6a5a3273f13f0c"
+    ],
+    "kernel/drivers/media/tuners/mxl301rf.ko": [
+      "afd5f7f2ba7d1db474286ed2359412bfe81ab769843ffa2b1ad3e4a33b8c52a4",
+      "65e468d53b7bb27c56fdd0347a86d838b8f0015fe0e38f18498b3ad62f6cf57b"
+    ],
+    "kernel/drivers/media/tuners/mxl5005s.ko": [
+      "c6635ed952f7c4dabb30b40b8417c82c7d17edc2714fc08a90b9831cafbf64e3",
+      "0c335054e7244e17bc156033ce48c9b8c6391e04b9556f779b1c75df131ba0ea"
+    ],
+    "kernel/drivers/media/tuners/mxl5007t.ko": [
+      "23cb977ac144297f67101d9b3fc9ecfacc827d6a1474c20ab8f2de67170572cd",
+      "3afbe7cf6faed7dbb68647c6155af6fc63981db1bfea6a23037c46dd27c267cb"
+    ],
+    "kernel/drivers/media/tuners/qm1d1b0004.ko": [
+      "c467c2a2f95bbe6e85e065c6dbb1f0655db72b4e25355c76c694006909678f29",
+      "c76bf8ffb84bac82ce80aa6190e569da00abd3f488e94ff13b5ae7e62936baa6"
+    ],
+    "kernel/drivers/media/tuners/qm1d1c0042.ko": [
+      "ba315e9b8f5f604b77ff4ee836dc2c8c3b8fdeb4ef6fdfd61c5993eec3a09e61",
+      "d1e00cdbd7171e752d978277184a65bc38c2d583b6760f749b56a3bcfd0b2166"
+    ],
+    "kernel/drivers/media/tuners/qt1010.ko": [
+      "7923007e49ce1e709bb8c8ebb3dcc3903db1557f6e7cea33e7bd90364df925f1",
+      "11bae504e60d3bd2ae3c4d203588547bcc800e4f2c778f4be941ae02a0e9e0ce"
+    ],
+    "kernel/drivers/media/tuners/r820t.ko": [
+      "ab391345872b0e86c5513dbb9339483be7bc1a222e221272c0f825c1e618c143",
+      "5d3a4305ebc933170209ef9159962e607e519ff0cb53f439ee4eaaebea581a0e"
+    ],
+    "kernel/drivers/media/tuners/si2157.ko": [
+      "8da4a531b156e0f2be616ff18c70f2cd67402e64899b8280aa3ff01e2b6217f6",
+      "2c6b4d9f069382e0a53e476b880f8c420995f330bde795d0950e6e45361fceb8"
+    ],
+    "kernel/drivers/media/tuners/tda18212.ko": [
+      "21bb9050a66dd52aecbf0e3673a840e95ed1490abfefb5f8a6dbeff8436a658a",
+      "4f7955aa6bac2a1cdcaeae6bf45dfce1f11447f3e438c7e03fb3c57f19264fae"
+    ],
+    "kernel/drivers/media/tuners/tda18218.ko": [
+      "337f7593ab2487f4cc08094aabc8eb411e01ba7fbcd7fe92b680f782b52d5102",
+      "c371b6968bd63ff320347914f124aae61f68b46d1fccf28baf36e1642aecc9c6"
+    ],
+    "kernel/drivers/media/tuners/tda18250.ko": [
+      "175e81010cde24dde971a4712a2297b061e471f205cb784545024ac37d257eed",
+      "7f429cb95405cbe5920aa76c5a39fa6b99b9630c152ab7c3308e4038dab574b5"
+    ],
+    "kernel/drivers/media/tuners/tda18271.ko": [
+      "c03e70d27ccd7e8a0361d6069f47b09dfb0c002c98c70f5aa81b67fc85a358ab",
+      "f3273d93b47dc3d346c092411d1500bf3020bc9232d9926d64e109cb5289d6e7"
+    ],
+    "kernel/drivers/media/tuners/tda827x.ko": [
+      "4ca875aa3abdfc9e84d8cd57037c736d97b0c5368ccbc81d6f2dfe0250b49ac0",
+      "d83c5df4c85b7b3f4edeef83606f976a25a2866d7c49c9e444d7700d2c8c5d86"
+    ],
+    "kernel/drivers/media/tuners/tda8290.ko": [
+      "a861adfcc45f07eaaac677318ae9f8a0484e9ce4491fef26fa3b84f4042ebe9c",
+      "1aa21e459759d9e5d10afaaf8c91db3de4e255bec9d3a89844c559700579b93c"
+    ],
+    "kernel/drivers/media/tuners/tda9887.ko": [
+      "8aa7fdb46ee819818b1a9b0b66784eb3a8890df24ab3bd7b084ede4b3b6fca1d",
+      "c1c277617e1d671438fe2940e3ad06b525782ed15bdc35b91186ea7d7202e20f"
+    ],
+    "kernel/drivers/media/tuners/tea5761.ko": [
+      "a7dc29ca8acef5d04bd019162c652fa3c8908bb9d5e8d7b808f3913cbb92041b",
+      "6b2c78c98ab12d142e85017ed86fd08db79d3efd65f09b8847303b3fb3bf2f36"
+    ],
+    "kernel/drivers/media/tuners/tea5767.ko": [
+      "9cd4c67e61917bbf9a7205e8fafc641844d36906d9d15cca07f56d06b4251c3f",
+      "3e6e54608cab548f1fad8a360df56537a5461f089961cd554784ca140151b360"
+    ],
+    "kernel/drivers/media/tuners/tua9001.ko": [
+      "fad6c2058c9847c1a22ec965a5245f31520e4699e5e1ef58a61bce477995ad28",
+      "6a687f3054feaa31183cc7fb1036f5778384f57dd86f8867c4a766772d8b8fd2"
+    ],
+    "kernel/drivers/media/tuners/tuner-simple.ko": [
+      "a510ec9ce0019ab1205a63cfe7d9b3c52a9c3451bb6c00d3589b178947f5e451",
+      "12e69cc9a2198d7fd5d9f1598090eabef731a1cae4680fa5c518de44045a57d7"
+    ],
+    "kernel/drivers/media/tuners/tuner-types.ko": [
+      "6f039a3648737057f39cad68274cf323934f0d988621b738ea72cd57c0be7ba0",
+      "c732b90f90c88b060027e7cbd1c029d811efa6d272305e5db76acb7119973470"
+    ],
+    "kernel/drivers/media/tuners/xc2028.ko": [
+      "f6c8753974836c8556123c5979e69c393371e64804d050da300c463230ad5f7b",
+      "2d0e357812cb06cef355769874c92a6a1d348956aab50f8d9046963caefba306"
+    ],
+    "kernel/drivers/media/tuners/xc4000.ko": [
+      "21154c4764c8f22fcd6496b380a4399ee983c2691e359f7257ec0928b29611b4",
+      "197027aa71be45be46976356cd7bc45a50dc0ac5e4740d2aa58d8dd3f25e1d30"
+    ],
+    "kernel/drivers/media/tuners/xc5000.ko": [
+      "c2ca909698c901d74e230589b89b3888e5d0f4f46e5503d353306f2e50a1cb77",
+      "9401648d1f6256bcdf9a1a3fa5a28d962f55a3ce9a41ab7d79d13b10cf50c26d"
+    ],
+    "kernel/drivers/net/wireless/ath/ath.ko": [
+      "769a0bf53a98c3956a85f3bb2101d68d534235e24d2139948e73f2e01340d2bc",
+      "8fcf1db799e981f1e26dc2c39bc054d5ba60700ad414d9bb4095c64503060c07"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k.ko": [
+      "545629aa61404b1cda30f5152053087f464cf5132cfad8e4db4fef5a34f91996",
+      "0841be6afc21cfe872329d79cdf8a2e200bf17b26aedd60ed3fd11c3da967f70"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko": [
+      "8bd457c806efedc9004f0ca227688fabbec30136c03347bf4be83343d3c43ae7",
+      "d036774cc7fb4309190c424ff0023d5ec32a4eac8bb34423ba7600177a59bac3"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": [
+      "3683db834d4344b44e6dda2cbe97e19d758ce2c3fc0550356eae29bae625dd31",
+      "aad4e9bf9264a9d6574b3bc579b34230b318ba57c06e9ef0db5e81f4b238e190"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko": [
+      "9f9e76da84d4f4d70171f3ec39e29ec813d95a09d2f2cd3717dba5795c4cbb53",
+      "c722ccdf5a0d423de07304ec926d8ba192464667e94c205e5b7aca6c58ea5ed1"
+    ],
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": [
+      "2cbf86d400cb91ea14e776893f636fd6360be427f8402b665460954646567e85",
+      "db30cfc777e14f03ed6ba4c0b48df2b02f2a4eb993d30b51fe2f29982b238953"
+    ],
+    "kernel/mm/zsmalloc.ko": [
+      "4a81404b78eecf3c952589da643ea5efbb919c24147ae46edd1a40bfe7c8dc7a",
+      "24b83db6df533111236ce078db7db85fb1abb648ff03c9fe89f5e884cae0a47a"
+    ],
+    "kernel/net/bluetooth/bluetooth.ko": [
+      "e23309f30ce4d0d87bc5b1eee422026388438777fe7d2b7c31f361ea8b9de37a",
+      "186fef665e4cf3afa5842224fcffcfa911de2e9e58d5cb4014241c01e1e61f45"
+    ],
+    "kernel/net/mac80211/mac80211.ko": [
+      "b20f9bdb68946f5a947b005441aaefcb9277dec10a0e0c1111f0cd61d70a75b6",
+      "4710cc2afaca182d9a2a119c6b41684b52662f9d1535e9e242285b87f8b11c12"
+    ],
+    "kernel/net/qrtr/qrtr-mhi.ko": [
+      "b5ef0d4807b29f7892f5bf3d1ce0db1822dab117f370c4f3c763fe5f9ff63312",
+      "71ecb206ff29ad876ac799c778b74327069c36512b59c768b54b6ba7efbf14d1"
+    ],
+    "kernel/net/wireless/cfg80211.ko": [
+      "b4c5a89ab7f34de68bed079d7c1c662be6c4e0ea2dc0deaa7865589705364cfe",
+      "3b983b8acb26a733e5842d6cf218b6e90dd0b43e92acc292803922752a0d2dc0"
+    ]
+  },
+  "modules": {
+    "kernel/drivers/block/zram/zram.ko": "e690785e6086046154f8df1a0df9325af69e8db8ceb3a9b56ee0d82a6a4263e0",
+    "kernel/drivers/bluetooth/btbcm.ko": "b9a5ba6a45ee430468e70cbd98eacf3bd7f05e13e6df119d9a9128463e1ccc44",
+    "kernel/drivers/bluetooth/btqca.ko": "c741b6c04488776a4cdf0fbb90ce5a7031c98ccedbb05938f937d908730b1f3b",
+    "kernel/drivers/bluetooth/btsdio.ko": "6550bbfebf6c748b342da56f654317f1f2204f7a0d7de64ef037fdbc21d52e12",
+    "kernel/drivers/bluetooth/hci_uart.ko": "a37aa5d3f25642c407179437b4d926ba94fd8e9fab1d9d04882af4bd1bb24496",
+    "kernel/drivers/clk/qcom/camcc-x1p42100.ko": "f0c0dad2db23fd0f3d4c830951e47c2328baac43914e022f841eeb5462f4e019",
+    "kernel/drivers/clk/qcom/gcc-x1e80100.ko": "a826418afd023747a85b500948843cc88e27c088c56a69794dac2fa48ec5b579",
+    "kernel/drivers/clk/qcom/videocc-x1p42100.ko": "9701d365176c982d19f34e9a4d14f6f858fa77f82612a15c21fced83dd472cdf",
+    "kernel/drivers/gpio/gpio-shared-proxy.ko": "3e4f055dd44e1bdb50d8124a6ab435e66182580a8be8c52f0857f591470464e4",
+    "kernel/drivers/media/dvb-frontends/a8293.ko": "ce9a50e709a91f1e75930b8581c8527ed13d1c21f03e072ce99c197250e542c5",
+    "kernel/drivers/media/dvb-frontends/af9033.ko": "7b6385cbc79b59c248d9886f389f5100efa3d46fc19d6b2adbae141a60a19b62",
+    "kernel/drivers/media/dvb-frontends/ascot2e.ko": "bf763da14b49b446fce5ea33b44f0e85de3437fd5b92738a527b6afefbc218da",
+    "kernel/drivers/media/dvb-frontends/atbm8830.ko": "63827e0b719af7d04e5a1ef369a8d07a4612c0ba28ad31e4fd7299dab0fddef7",
+    "kernel/drivers/media/dvb-frontends/au8522_common.ko": "944acc3a0acaad825fff9995eb8531874ee5608509baca26c4a69a804da9f6f8",
+    "kernel/drivers/media/dvb-frontends/au8522_decoder.ko": "8aa7fd5c5c4041d0f691a6120b6dc20f03701a30452ad33ca12791e7ffb4a247",
+    "kernel/drivers/media/dvb-frontends/au8522_dig.ko": "a115b91c78630762b996007df0e763cc3a001733f1d5e9f0142c2038a4ef4a68",
+    "kernel/drivers/media/dvb-frontends/bcm3510.ko": "38b4517503522bbe30305739b28ca1bb1b8eae2e4aa9c531a63ea08bafec24db",
+    "kernel/drivers/media/dvb-frontends/cx22700.ko": "6c96a2e391727a7205a813243aef0036067b6edb57746f4c439adec62a3a439e",
+    "kernel/drivers/media/dvb-frontends/cx22702.ko": "3c5b80b21778e033603a1c2bc4a5e82f243a1c03557dd6af8fd17945f1096df2",
+    "kernel/drivers/media/dvb-frontends/cx24110.ko": "578d8635acc9baa34f7f351ab9335ef8b3becad4c5f771d857609ae103c9eb97",
+    "kernel/drivers/media/dvb-frontends/cx24113.ko": "76159fa5731625a085da4d14394812fa838e895d1fad58ee5c4ea9d6b8373a6b",
+    "kernel/drivers/media/dvb-frontends/cx24116.ko": "f247d0177425109fcd45aed54e66feb1a83d3f61a7bdac2f75693a9db9e7ed04",
+    "kernel/drivers/media/dvb-frontends/cx24117.ko": "e5e73b9b9651cb1235891ea51c60e4acfd63d01e62f969f8134897514c703edb",
+    "kernel/drivers/media/dvb-frontends/cx24120.ko": "6a8ae1b0747105eae49af2d007b17256ccd436e05ead64a6b3f8ee544b61e99e",
+    "kernel/drivers/media/dvb-frontends/cx24123.ko": "c259f453151fff5996b024bf25436f118698f36a1ee777c40df47efcc61d16b2",
+    "kernel/drivers/media/dvb-frontends/cxd2099.ko": "58d30c102683d648aaf6b1747a786f0f08baee71ea4d82793b858ef176bde6e1",
+    "kernel/drivers/media/dvb-frontends/cxd2820r.ko": "416415cfe662c15a2be5631a3aff8c3ba2d3d98a3213ea4ae275fffe0561bf20",
+    "kernel/drivers/media/dvb-frontends/cxd2841er.ko": "32fda11cb64e6821e19ea309562d7c8eeab19f5354d863f9f6ee4490dfc89897",
+    "kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko": "f2970786f0ad002a42da7bf7ede7e75ddaa483b1e29dc20cb8752259584eb4fb",
+    "kernel/drivers/media/dvb-frontends/dib0070.ko": "0ac31a49c9e7745859e89bdd7d0e682650301a8eb627aebe6c289633bf46df98",
+    "kernel/drivers/media/dvb-frontends/dib0090.ko": "ba3035c10836e30dc96be4218db9bc092925eac076ab43b4b8a340d2dc54887b",
+    "kernel/drivers/media/dvb-frontends/dib3000mb.ko": "1d0d673c05d9b6161da488a3b0a3644909d0385994b3adaee25282a864416f2a",
+    "kernel/drivers/media/dvb-frontends/dib3000mc.ko": "c0f3abce70c3413756f8a1f2ceb134f152870b43bb75fc4afc5f035aafc5ab6a",
+    "kernel/drivers/media/dvb-frontends/dib7000m.ko": "1bd6a943b0df20299dad9e3b754051c877ab0f8b70ea3ad3b9f7340c03af1344",
+    "kernel/drivers/media/dvb-frontends/dib7000p.ko": "24af5d20e2abd606de0201cfdfb8280617c52debc57c582ac3995bf9582fbc60",
+    "kernel/drivers/media/dvb-frontends/dib8000.ko": "65dad2006e380173928a8a0154e2e7c101d2b19f1ada6c3d7bad1893023f3a80",
+    "kernel/drivers/media/dvb-frontends/dib9000.ko": "1cf2df8cb57e867ab86cd71f3b547c15d273f61d22c457f52ba34c71624b5ed4",
+    "kernel/drivers/media/dvb-frontends/dibx000_common.ko": "5bc91cb0c22f0f66aa0d2e4ca05640e236fb052c8bf61ffd2374a0ecd454d1dc",
+    "kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko": "a21bcf5485d09ebf2ce349c49f76fc6d97f6f7046cad10ca4b0bf6ba5481dd06",
+    "kernel/drivers/media/dvb-frontends/drxd.ko": "6b63c58ad46d039731b99cde913739c74ff3a8131368bd22555d1f316b770c72",
+    "kernel/drivers/media/dvb-frontends/drxk.ko": "f92febdbff8045970b74361680608493cf11a9c03c53d95b8511d0dcde110316",
+    "kernel/drivers/media/dvb-frontends/ds3000.ko": "72a1a29f758347d9f5414ec2c053e84d597233128fedc86cea6ab23d17c2b8fa",
+    "kernel/drivers/media/dvb-frontends/dvb-pll.ko": "7f1aeed25b9fcce92bc1b4543dbe007244d8d680f0a2993bab2c452e670af804",
+    "kernel/drivers/media/dvb-frontends/ec100.ko": "b1f8a3f59f7ac1052d1155997fc076fb112b16758d83196bebacbd58db856b49",
+    "kernel/drivers/media/dvb-frontends/helene.ko": "f221e70ba3ed563a3c14e31344934e5697ef4718f2d69c153b5f8d4449d7e045",
+    "kernel/drivers/media/dvb-frontends/horus3a.ko": "9a3cf3b611b56eeede19e94234b252ba1c53c8445332a2d0b70154931b58064c",
+    "kernel/drivers/media/dvb-frontends/isl6405.ko": "905aa75182bae349091b7e38352582fd916b944225837cc921ddb7ac1d966ffb",
+    "kernel/drivers/media/dvb-frontends/isl6421.ko": "ab4e8a91246f8516ead856f0fe7560123a6447d297ae19a31dc8394f4dde5638",
+    "kernel/drivers/media/dvb-frontends/isl6423.ko": "a0a717d2992591e2bbce7a6313a2e80db879cd038dffa112cfe184e4c3722301",
+    "kernel/drivers/media/dvb-frontends/itd1000.ko": "9c337a7dad48c169496a78e29171d2f5cee23714fff73512de92fb19283078c7",
+    "kernel/drivers/media/dvb-frontends/ix2505v.ko": "d6ef18b123fbd11b93a03dd82829cc56cd0429532ea935c765dfb561e6dff850",
+    "kernel/drivers/media/dvb-frontends/l64781.ko": "d410bdc86739b2e72905d343a113f0c9b864bb4b33227fe2830b645c89434100",
+    "kernel/drivers/media/dvb-frontends/lg2160.ko": "6226e4639671ead9f7757c2b79d2165710ecd3ba58312fbcea6236db67a1b65b",
+    "kernel/drivers/media/dvb-frontends/lgdt3305.ko": "475a876125bfa8052e12b9eada006b8869cf0f06492a8526710b830211a03f11",
+    "kernel/drivers/media/dvb-frontends/lgdt330x.ko": "eca63d544a4b987f6b873d19d3287dbbfb1b916fbacfe6b280ef3726433cae90",
+    "kernel/drivers/media/dvb-frontends/lgs8gl5.ko": "0a4c0777ae3056d224cb062b265f2be71cb95dacc5ca7482a3b8852b8ee9b854",
+    "kernel/drivers/media/dvb-frontends/lgs8gxx.ko": "e399ab05ec83e1cbc3c8db08f38fefe61135c40735fc87b52d8313c0986fbdd2",
+    "kernel/drivers/media/dvb-frontends/lnbh25.ko": "c552649cf95c11188116d7af8d57aca68d0a17d3b231b3ac29658c34ff75e6fc",
+    "kernel/drivers/media/dvb-frontends/lnbh29.ko": "1db17a8b29b5df7f35a34dce7d22489db94a0eb1ed1f4cabd7854b1297463f39",
+    "kernel/drivers/media/dvb-frontends/lnbp21.ko": "e91050ffd6386a46eeb12cd2cf7738288ac0dda2ba14b90d4e360d2da961f7f7",
+    "kernel/drivers/media/dvb-frontends/lnbp22.ko": "4144ba1fa7e53c5d9b9d6b0af4973c70fbfdd8d3abc9befee1c07e9826e9b544",
+    "kernel/drivers/media/dvb-frontends/m88rs2000.ko": "b615d32d14fc5bdbd614c1a0914ba667d87d1b741961df9afa39b572aa4d7b5d",
+    "kernel/drivers/media/dvb-frontends/mb86a16.ko": "c4d67b7e3b6a77b8e0bf2a87ce2b70135b616bb26458a6aa45e27fe4fc16c2b1",
+    "kernel/drivers/media/dvb-frontends/mb86a20s.ko": "4ed19a67c01fb440a8626048f51fbd66a2670c0525f18a8bd66f7f54952715a8",
+    "kernel/drivers/media/dvb-frontends/mn88443x.ko": "06c79189e9cfceb6d3ca079a2b53eb3f583ac04896d9caf39a5ab4942143b839",
+    "kernel/drivers/media/dvb-frontends/mn88472.ko": "02ec3307038e8d59bba44c70b79652244a445a5826596c287c67365612105857",
+    "kernel/drivers/media/dvb-frontends/mn88473.ko": "2684f708735805aa344f196afdbabd798d0aa55e8642fee2e9aa3da402e11517",
+    "kernel/drivers/media/dvb-frontends/mt312.ko": "dbe55fbb7559633c0a577f695479a156c42701f2c1d76c9e36e6ed03d270717a",
+    "kernel/drivers/media/dvb-frontends/mt352.ko": "9a9953a208ad8b8ebbc3e57b1ab2adba6fbc8ef53de0df4af16f1543da5c78a6",
+    "kernel/drivers/media/dvb-frontends/mxl5xx.ko": "97dc8fef02d2354b0680aeb5a698a74dbfe881b76452392aea3f838e0dad08dd",
+    "kernel/drivers/media/dvb-frontends/mxl692.ko": "7c2acc1083a8e0558e56b39c9c8786fc2236991b52b26b01bc71295430d6bfa5",
+    "kernel/drivers/media/dvb-frontends/nxt200x.ko": "2e8f96f0fbd1e68c775f467f33a9e34f42ec8706c2d4fb5da43605f70f5b607e",
+    "kernel/drivers/media/dvb-frontends/nxt6000.ko": "0d7392b62615bc74f0c1b7eb88adb4e7d1b150eefc691a96ce6e53d6952bcf15",
+    "kernel/drivers/media/dvb-frontends/or51132.ko": "e4d261960056942ee565bb6d123c81ef3b9a74990471a053c6b9484597ed39ab",
+    "kernel/drivers/media/dvb-frontends/or51211.ko": "d554b25bc47e25d40d00fa4a1d11c071b6d45a8935414e860efcb0dcec394ce8",
+    "kernel/drivers/media/dvb-frontends/s5h1409.ko": "ec70b9e1e351d7b67c84cc60ce9e785f164220dd368581cad5307a84c5fc79a7",
+    "kernel/drivers/media/dvb-frontends/s5h1411.ko": "668b20bfdd74e072b0e11aede1b54e31bb14c4e71677c07f9ef083a2507fe356",
+    "kernel/drivers/media/dvb-frontends/s5h1420.ko": "e3013f8d2553afbe3fbe533a0e510906ac7eafd49debad50b0d66487b74654a5",
+    "kernel/drivers/media/dvb-frontends/s5h1432.ko": "0a194339d75b96f1497dd3f582d0a386d8f2cb80e7aba8ca8b769141824b4d23",
+    "kernel/drivers/media/dvb-frontends/s921.ko": "d4a9a20692e443ded54163742cd184d9b4fe7f903cffddd5189283046fd8bb4e",
+    "kernel/drivers/media/dvb-frontends/si2165.ko": "43e333de7eec2c13170a2b3ae38c79a48c6496082f313580cf892faf13bc15dc",
+    "kernel/drivers/media/dvb-frontends/si21xx.ko": "a13beab9e8baacc5c8624158ca92c08778d2e2f82a292d2ba0ed7bdc75af7ec5",
+    "kernel/drivers/media/dvb-frontends/sp2.ko": "134eedd3898cd61956c68aec8c893833c0b36013f960ec11e03d3d0b4c4eb860",
+    "kernel/drivers/media/dvb-frontends/sp887x.ko": "cf19117990026f0b96eb801e36f50e185ef3f31d146b7aa260ab909ac1d9296e",
+    "kernel/drivers/media/dvb-frontends/stb0899.ko": "f5aecfdf4abbf4a3a04146aa923a172af0e411136af3eb2dfae6d3f636dd9f31",
+    "kernel/drivers/media/dvb-frontends/stb6000.ko": "c274cf4eb034c399686627c1fc3d1e0fcc0a160c30ac9b38466daf841cab0c39",
+    "kernel/drivers/media/dvb-frontends/stb6100.ko": "35654d9ad794bb3560cbd95970b56e3ffcb8888bc4d2e1f266e28957f17e51b5",
+    "kernel/drivers/media/dvb-frontends/stv0288.ko": "525648a3204364ba82b0d08084643f33124bf77e93ec8ca43df7d146256352a5",
+    "kernel/drivers/media/dvb-frontends/stv0297.ko": "75f88248c382e85aa7e625dc5ea40b7ed460fb51caf9a58972e7f069491a96e5",
+    "kernel/drivers/media/dvb-frontends/stv0299.ko": "674438daa6d3eb0e1f25c3f2e20bccaac326183fa3faf5f2b0f768152da13b5f",
+    "kernel/drivers/media/dvb-frontends/stv0367.ko": "004e538b10bc5b41b9fdea656ce14c87a5f66c0244cbeb4b6fc6d0a512141ffe",
+    "kernel/drivers/media/dvb-frontends/stv0900.ko": "71be8016ba2f12be7b7d27b62646174470456801f57e58cbcfbbeaeb2ab7333e",
+    "kernel/drivers/media/dvb-frontends/stv090x.ko": "a1198e74aaed03e48e1f5a2f86327013a4cd5e2c664b2460b139c4fb82504297",
+    "kernel/drivers/media/dvb-frontends/stv0910.ko": "02a3880239154415354ada537f382e5cb066768de501cd11b8469955cdd6e948",
+    "kernel/drivers/media/dvb-frontends/stv6110.ko": "ca7cf9dbf00afb6f228df16e0ac0d46db0d9d4fd5f2cf7689ea8fc472bb5a8d6",
+    "kernel/drivers/media/dvb-frontends/stv6110x.ko": "215eda10fdfc07d22d7294db55416e16541792dba0514212563b8693ea5d074a",
+    "kernel/drivers/media/dvb-frontends/stv6111.ko": "580d4da60ffe2fc0bc987bb766837139d8915b44a25d8833a574783a82dcf659",
+    "kernel/drivers/media/dvb-frontends/tc90522.ko": "bf1b00c45b23e41eea18f11bd1c71cd363e3002b105518a1e439554d763bdf7a",
+    "kernel/drivers/media/dvb-frontends/tda10021.ko": "4bc512dc46a8027386b483d25f007ae00aa64e6d9b973943f90a9257b40bf0c6",
+    "kernel/drivers/media/dvb-frontends/tda10023.ko": "cedef2e9067bfb9d0efa1a963fcb590863228df8d5c2e723b318189d646d5725",
+    "kernel/drivers/media/dvb-frontends/tda10048.ko": "bd937d1d3c47a487a4adfef9d19ec9bd8600e5f68bda9c4ef73b1b4781c03f71",
+    "kernel/drivers/media/dvb-frontends/tda1004x.ko": "be54a17edd667074b4678b78ad81621aa959cfd364e81768886341ce9dab5505",
+    "kernel/drivers/media/dvb-frontends/tda10071.ko": "518aa0ecf1b007f0c8e2392c3b59d690af67125c1f9460526d29e35e7f5489d7",
+    "kernel/drivers/media/dvb-frontends/tda10086.ko": "928314789c44492540ce1c740bf35fea6371b74ada944a5c5b5594c215a02c82",
+    "kernel/drivers/media/dvb-frontends/tda18271c2dd.ko": "2b685f2ff3fc6f637c40a36f1a231d85222155784cf09d4fb2c125d35c0eac44",
+    "kernel/drivers/media/dvb-frontends/tda665x.ko": "3dbe3cc09d72842e0dfa17e8df590a9972c9ecc869adef7a0f49ae7206b2f432",
+    "kernel/drivers/media/dvb-frontends/tda8083.ko": "bbb051f4fd74cc0f282e0d673358a77df52c07d16a3e68270ac5fdbc56caea1f",
+    "kernel/drivers/media/dvb-frontends/tda8261.ko": "1275f9e67d031740efd9c93a71070f010a36c3b1f0e7d9988847824426c8a5a3",
+    "kernel/drivers/media/dvb-frontends/tda826x.ko": "c97b271e4db49007218646e436e8c1604cb5316f5e43926e7e6780a872d8d524",
+    "kernel/drivers/media/dvb-frontends/ts2020.ko": "37ce35076b7a8e36773d56a1d4826cac91cf9ad391171dc0e04ad2701190d564",
+    "kernel/drivers/media/dvb-frontends/tua6100.ko": "e758e1943f26b85b9ed9f92e422eed50263c73cb091c9847fbfff94312574dbb",
+    "kernel/drivers/media/dvb-frontends/ves1820.ko": "5939ffffdbdfff11775b4cae2ac24c733d0c4433fabb4036e27053ef1437846b",
+    "kernel/drivers/media/dvb-frontends/ves1x93.ko": "946c7bf5df86e8b4c9bb51295e1291a486a4f14855810761ac5964d59eb82839",
+    "kernel/drivers/media/dvb-frontends/zd1301_demod.ko": "ba633bb8ee9993d55a16253b64c223734918cbb0485c8de59fdfb3d0098a5bd7",
+    "kernel/drivers/media/dvb-frontends/zl10036.ko": "567c7962d248c2c12c9696d893defdad1ee98a9d2392507597fa0844440ecdb4",
+    "kernel/drivers/media/dvb-frontends/zl10039.ko": "ac215a04bae935da9598c4ce16a2b8c59f8317fe7ae0006e9baf0ba6a69f11f3",
+    "kernel/drivers/media/dvb-frontends/zl10353.ko": "6051da20f1c89c757d90eddfea36bb77e092f0ee76fb02587c630fa976eb2ea4",
+    "kernel/drivers/media/spi/cxd2880-spi.ko": "f141e167b318e19022b995e56e5b68ad0ce9b82c6a28dfc4e735a8dc4c6d0477",
+    "kernel/drivers/media/tuners/e4000.ko": "58183cfd070c61e6b057cfe5177ee6df579ac9bd74f92667e24f77cddce17153",
+    "kernel/drivers/media/tuners/fc0011.ko": "1c84abc2dce0a99cfb43b698c71448fa456b3646424a64a239700c1588e40f36",
+    "kernel/drivers/media/tuners/fc0012.ko": "07657d900400903f7d7de16e1a1ad8e1165311e7ec0bf483c7c2e1714c31f012",
+    "kernel/drivers/media/tuners/fc0013.ko": "f36ff2ebafe3068f063c3f6eacf4ac79360fada2c51d0ad95cf81bd21f6f6109",
+    "kernel/drivers/media/tuners/fc2580.ko": "3a66603204fad7adbfe376dc0aae7f7bd3155a0b814e9d463ca96b89c8fe9660",
+    "kernel/drivers/media/tuners/it913x.ko": "8d16d1ebf6597fb91402ded337731faef5cefc384bc3643e6a944b36bccb483a",
+    "kernel/drivers/media/tuners/m88rs6000t.ko": "0d0dc09721804251a2ffc0dfed42803e3e1e38e5f4acecf8bdbfe78ed0c72a56",
+    "kernel/drivers/media/tuners/max2165.ko": "0b0bd485af671734b45968a27921b81a225c1848aed4559acfffa68b00b6d8ce",
+    "kernel/drivers/media/tuners/mc44s803.ko": "58897488f823e7b36ee1d803d75c144b09371b22c8e3297a31ad44699b689134",
+    "kernel/drivers/media/tuners/msi001.ko": "5131e7a47036f65d0aa6b9151a6c26c6e55c9fa3d0f9c90555c70dcceefe9440",
+    "kernel/drivers/media/tuners/mt2060.ko": "2d4bce6b82fce5f2744768ad7df3747929b6caa9aa1b1efce68c10c3eea05a3f",
+    "kernel/drivers/media/tuners/mt2063.ko": "2f5552100fec09e1fe126b5f327219c1dde906cca0fa8b7f28216156eabba566",
+    "kernel/drivers/media/tuners/mt20xx.ko": "37c5251bc99a37025755c35a8036305c05ec424967af76cc66a9fcbc45c1623a",
+    "kernel/drivers/media/tuners/mt2131.ko": "a8c782103d58bbfd0888ad8115c53dbff6081e9bfe3e578d8f66e5b4d3488c97",
+    "kernel/drivers/media/tuners/mt2266.ko": "648293ed4370137e836e11204499332d1bfd9e1e12dfa3401a6a5a3273f13f0c",
+    "kernel/drivers/media/tuners/mxl301rf.ko": "65e468d53b7bb27c56fdd0347a86d838b8f0015fe0e38f18498b3ad62f6cf57b",
+    "kernel/drivers/media/tuners/mxl5005s.ko": "0c335054e7244e17bc156033ce48c9b8c6391e04b9556f779b1c75df131ba0ea",
+    "kernel/drivers/media/tuners/mxl5007t.ko": "3afbe7cf6faed7dbb68647c6155af6fc63981db1bfea6a23037c46dd27c267cb",
+    "kernel/drivers/media/tuners/qm1d1b0004.ko": "c76bf8ffb84bac82ce80aa6190e569da00abd3f488e94ff13b5ae7e62936baa6",
+    "kernel/drivers/media/tuners/qm1d1c0042.ko": "d1e00cdbd7171e752d978277184a65bc38c2d583b6760f749b56a3bcfd0b2166",
+    "kernel/drivers/media/tuners/qt1010.ko": "11bae504e60d3bd2ae3c4d203588547bcc800e4f2c778f4be941ae02a0e9e0ce",
+    "kernel/drivers/media/tuners/r820t.ko": "5d3a4305ebc933170209ef9159962e607e519ff0cb53f439ee4eaaebea581a0e",
+    "kernel/drivers/media/tuners/si2157.ko": "2c6b4d9f069382e0a53e476b880f8c420995f330bde795d0950e6e45361fceb8",
+    "kernel/drivers/media/tuners/tda18212.ko": "4f7955aa6bac2a1cdcaeae6bf45dfce1f11447f3e438c7e03fb3c57f19264fae",
+    "kernel/drivers/media/tuners/tda18218.ko": "c371b6968bd63ff320347914f124aae61f68b46d1fccf28baf36e1642aecc9c6",
+    "kernel/drivers/media/tuners/tda18250.ko": "7f429cb95405cbe5920aa76c5a39fa6b99b9630c152ab7c3308e4038dab574b5",
+    "kernel/drivers/media/tuners/tda18271.ko": "f3273d93b47dc3d346c092411d1500bf3020bc9232d9926d64e109cb5289d6e7",
+    "kernel/drivers/media/tuners/tda827x.ko": "d83c5df4c85b7b3f4edeef83606f976a25a2866d7c49c9e444d7700d2c8c5d86",
+    "kernel/drivers/media/tuners/tda8290.ko": "1aa21e459759d9e5d10afaaf8c91db3de4e255bec9d3a89844c559700579b93c",
+    "kernel/drivers/media/tuners/tda9887.ko": "c1c277617e1d671438fe2940e3ad06b525782ed15bdc35b91186ea7d7202e20f",
+    "kernel/drivers/media/tuners/tea5761.ko": "6b2c78c98ab12d142e85017ed86fd08db79d3efd65f09b8847303b3fb3bf2f36",
+    "kernel/drivers/media/tuners/tea5767.ko": "3e6e54608cab548f1fad8a360df56537a5461f089961cd554784ca140151b360",
+    "kernel/drivers/media/tuners/tua9001.ko": "6a687f3054feaa31183cc7fb1036f5778384f57dd86f8867c4a766772d8b8fd2",
+    "kernel/drivers/media/tuners/tuner-simple.ko": "12e69cc9a2198d7fd5d9f1598090eabef731a1cae4680fa5c518de44045a57d7",
+    "kernel/drivers/media/tuners/tuner-types.ko": "c732b90f90c88b060027e7cbd1c029d811efa6d272305e5db76acb7119973470",
+    "kernel/drivers/media/tuners/xc2028.ko": "2d0e357812cb06cef355769874c92a6a1d348956aab50f8d9046963caefba306",
+    "kernel/drivers/media/tuners/xc4000.ko": "197027aa71be45be46976356cd7bc45a50dc0ac5e4740d2aa58d8dd3f25e1d30",
+    "kernel/drivers/media/tuners/xc5000.ko": "9401648d1f6256bcdf9a1a3fa5a28d962f55a3ce9a41ab7d79d13b10cf50c26d",
+    "kernel/drivers/net/wireless/ath/ath.ko": "8fcf1db799e981f1e26dc2c39bc054d5ba60700ad414d9bb4095c64503060c07",
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k.ko": "0841be6afc21cfe872329d79cdf8a2e200bf17b26aedd60ed3fd11c3da967f70",
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko": "d036774cc7fb4309190c424ff0023d5ec32a4eac8bb34423ba7600177a59bac3",
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": "aad4e9bf9264a9d6574b3bc579b34230b318ba57c06e9ef0db5e81f4b238e190",
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko": "c722ccdf5a0d423de07304ec926d8ba192464667e94c205e5b7aca6c58ea5ed1",
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": "db30cfc777e14f03ed6ba4c0b48df2b02f2a4eb993d30b51fe2f29982b238953",
+    "kernel/mm/zsmalloc.ko": "24b83db6df533111236ce078db7db85fb1abb648ff03c9fe89f5e884cae0a47a",
+    "kernel/net/bluetooth/bluetooth.ko": "186fef665e4cf3afa5842224fcffcfa911de2e9e58d5cb4014241c01e1e61f45",
+    "kernel/net/mac80211/mac80211.ko": "4710cc2afaca182d9a2a119c6b41684b52662f9d1535e9e242285b87f8b11c12",
+    "kernel/net/qrtr/qrtr-mhi.ko": "71ecb206ff29ad876ac799c778b74327069c36512b59c768b54b6ba7efbf14d1",
+    "kernel/net/wireless/cfg80211.ko": "3b983b8acb26a733e5842d6cf218b6e90dd0b43e92acc292803922752a0d2dc0",
+    "modules.alias": "63feb3f52f46262779b4bbef3554da4aac6d7170b021f8809f09bab96ab76929",
+    "modules.alias.bin": "1e6f4bd9dd33d9ccef5ddd86b1a658e03bad85a65259ace8af1d04dee6246a27",
+    "modules.builtin": "b86cc446f23ff688cb172e4894a19ed1e576e37ea33ffd94fe02bb495417fa7d",
+    "modules.builtin.alias.bin": "d45ec131c89f6013a56557a804a3bd8b90036ef819728bbdde10f3bc46110c2b",
+    "modules.builtin.bin": "6fcfc15b860d423424561c8bf719ae91b19f3c9920d5b7e061a138d72e0cb511",
+    "modules.builtin.modinfo": "fd64fb199a50469f220cd2060f13c256e3931cbf7213c0c668393fdc937443a1",
+    "modules.dep": "0c24fa67b45e3b7d8119761522fa58ef2be11abce765bf3b7d3c7e09dcbb86b0",
+    "modules.dep.bin": "6521a484bb5404c8e591e5c2647a8cbc6e1694831cf8a21c441a6aacfbc8f6ec",
+    "modules.devname": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modules.order": "adb75ce35b02a5833c083710bdb11cbaa2733bf1e7e8c56077a7a01b6895963f",
+    "modules.softdep": "ac2de753255c506934be29e69261f1485f51ee9cf9c2bf467bcc0c4cf95f8713",
+    "modules.symbols": "99d46ec3111e02e6c42eb857fb46994bd1e002baa1ad1001b657993b83696a85",
+    "modules.symbols.bin": "8e25a0fdc603469abd50aaef8272f36065dc5efe4b9a21d31782bede4f60d9bd",
+    "modules.weakdep": "a1fffe1059d8150b5d402b3f284f507025a8d4b5881810cb17b3fda8b8ab9304"
+  },
+  "native_observer_linked_symbols": [
+    "ffffffc082308e9c r __ksymtab_sm5714_pd_read_owned_snapshot",
+    "ffffffc080dd07f4 T sm5714_pd_read_owned_snapshot"
+  ],
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-owned-observer/Image.gz",
+      "bytes": 22138434,
+      "sha256": "68f9dbf30a97e45793899113f79d1913084f6ca4e7b75e78f0e8c09b09d793a0"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-owned-observer/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-owned-observer/config",
+      "bytes": 243311,
+      "sha256": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-owned-observer/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "bcf75559bb95839ff11a55985e7563065f7efe958b6bcf6f97bdf56f2c8e151d"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-owned-observer/modules-x710.tar.gz",
+      "bytes": 47319154,
+      "sha256": "36247fed827bd85c4678dfdfe80f3217cdaffbf718624c2f3dc2ee006fa5bb42"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-owned-observer/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "embedded_config_identical": true,
+  "pump_activation_available": false,
+  "PPS_requests_executed": false,
+  "software_ocp_verified": false,
+  "physical_test_registered": false
+}
