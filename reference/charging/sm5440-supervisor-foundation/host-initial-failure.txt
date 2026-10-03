@@ -1,0 +1,259 @@
+test_PM_cancel_before_and_during_measurement_is_terminal (test_sm5440_supervisor.SupervisorTests.test_PM_cancel_before_and_during_measurement_is_terminal) ... ok
+test_delayed_bus_stops_instead_of_resetting_the_monitor_clock (test_sm5440_supervisor.SupervisorTests.test_delayed_bus_stops_instead_of_resetting_the_monitor_clock) ... ok
+test_detach_during_sampling_cancels_before_next_feed (test_sm5440_supervisor.SupervisorTests.test_detach_during_sampling_cancels_before_next_feed) ... ok
+test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) ... 
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=1, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=1, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=2, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=2, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=3, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=3, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=4, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=4, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=5, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=5, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=6, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=6, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=53, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=53, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=54, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=54, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=55, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=55, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=56, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=56, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=57, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=57, uncertain=1) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=58, uncertain=0) ... FAIL
+  test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=58, uncertain=1) ... FAIL
+test_fixed_capability_and_changed_source_budget_or_instance_stop (test_sm5440_supervisor.SupervisorTests.test_fixed_capability_and_changed_source_budget_or_instance_stop) ... ok
+test_foreign_enabled_converter_is_not_adopted_or_declared_quiesced (test_sm5440_supervisor.SupervisorTests.test_foreign_enabled_converter_is_not_adopted_or_declared_quiesced) ... ok
+test_generation_change_during_watchdog_service_is_stopped_after_readback (test_sm5440_supervisor.SupervisorTests.test_generation_change_during_watchdog_service_is_stopped_after_readback) ... ok
+test_lost_mode_operating_register_drift_and_ADC_timeout (test_sm5440_supervisor.SupervisorTests.test_lost_mode_operating_register_drift_and_ADC_timeout) ... ok
+test_measured_current_then_actual_equal_value_watchdog_write (test_sm5440_supervisor.SupervisorTests.test_measured_current_then_actual_equal_value_watchdog_write) ... ok
+test_no_ocp_permission_disabled_monitor_and_stale_facts_shut_down (test_sm5440_supervisor.SupervisorTests.test_no_ocp_permission_disabled_monitor_and_stale_facts_shut_down) ... ok
+test_one_625ua_over_limit_stops_before_feeding_watchdog (test_sm5440_supervisor.SupervisorTests.test_one_625ua_over_limit_stops_before_feeding_watchdog) ... ok
+test_persistent_bus_loss_keeps_unknown_OFF_and_watchdog_ownership (test_sm5440_supervisor.SupervisorTests.test_persistent_bus_loss_keeps_unknown_OFF_and_watchdog_ownership) ... ok
+test_physical_voltage_vbat_die_limits_and_revblk_stop (test_sm5440_supervisor.SupervisorTests.test_physical_voltage_vbat_die_limits_and_revblk_stop) ... ok
+test_two_cycles_use_new_measurements_and_service_writes (test_sm5440_supervisor.SupervisorTests.test_two_cycles_use_new_measurements_and_service_writes) ... ok
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=1, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=1, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=2, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=2, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=3, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=3, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=4, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=4, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=5, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=5, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=6, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=6, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 285, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[8], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=53, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=53, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=54, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=54, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=55, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=55, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=56, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=56, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=57, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=57, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=58, uncertain=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_bus_error_causes_one_terminal_actual_shutdown (test_sm5440_supervisor.SupervisorTests.test_each_bus_error_causes_one_terminal_actual_shutdown) (call=58, uncertain=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_supervisor.py", line 284, in test_each_bus_error_causes_one_terminal_actual_shutdown
+    self.assertEqual(o[25], 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.570s
+
+FAILED (failures=24)

@@ -1,0 +1,55 @@
+{
+  "verdict": "OFFLINE_NATIVE_MONITOR_SHUTDOWN_CHAIN_QUALIFIED_UNINTEGRATED",
+  "created_utc": "2026-10-03T13:18:04.386223+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5440_supervisor",
+      "test_sm5440_conversion",
+      "test_sm5440_actuator",
+      "test_sm5440_watchdog",
+      "test_sm5440_off_control"
+    ],
+    "tests": 76,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.6681429540039971,
+    "real_C": true,
+    "mocked_bus_and_clock": true,
+    "full": false,
+    "routing_changed": false
+  },
+  "ARM64_objects": {
+    "executed": true,
+    "objects": 2,
+    "exit_code": 0,
+    "seconds": 4.898349284994765,
+    "W1": true,
+    "sparse": true,
+    "changed_helper_warnings": 0,
+    "unrelated_warning": "upstream vDSO __kernel_getrandom declaration"
+  },
+  "initial_failed_assertions_retained": true,
+  "software_OCP_comparison_implemented": true,
+  "physical_software_OCP_verified": false,
+  "physical_ADC_acceptance": false,
+  "pump_ON_device_test": {
+    "executed": false
+  },
+  "live_worker_and_Kbuild": false,
+  "kernel_Image_build": {
+    "executed": false,
+    "reason": "Two unlinked ARM64 objects only; frozen current Test317/rollback unchanged."
+  },
+  "full_tests": {
+    "executed": false,
+    "reason": "Affected converter/supervisor/actuator/WDT/control C; no routing change."
+  },
+  "config_diff": [],
+  "DTB_diff": [],
+  "PPS_request_or_device_charging_write": false,
+  "Test317_capture_executed": false,
+  "Test317_rollback_required": true,
+  "full_goal_ready": false
+}

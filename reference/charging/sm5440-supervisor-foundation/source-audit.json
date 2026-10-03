@@ -1,0 +1,24 @@
+{
+  "source_sha256": {
+    "kernel/drivers/sm5440-supervisor.c": "902ee2fd2e0d559d2976fb58c33480e34807390a64d8c6939bf0889e3ed0c42a",
+    "kernel/drivers/sm5440-supervisor.h": "11fb0e9a86669d7a46b1c195af84ee397f8bda7c8fd08246e697b73232377e52",
+    "kernel/drivers/sm5440-conversion.c": "295512234e4bf060c1fa2027fe670d08c2237bbe2ebd99845221a8a4f0a1be63",
+    "kernel/drivers/sm5440-conversion.h": "05eb71daa5273af257c4e754e867d93f033770f3a78c287c48efc2a51bea5a77",
+    "kernel/drivers/sm5440-actuator.c": "b629a00749f46e33aab2155742d0673c143c831336e11272f43aa3535258a6db",
+    "kernel/drivers/sm5440-control.c": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d",
+    "kernel/drivers/sm5440-watchdog.c": "c639ac1dd0c36bb5fa90facbd60ed9ae5a1c1b0b1eae447c4f5aa5f0a34370cb",
+    "kernel/drivers/x710-charging-policy.c": "758afdf318809cdb39baf1f0d1f70b58ecf718a620543acba17e2c4793e0e162",
+    "kernel/drivers/sm5714-pd-policy.h": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d",
+    "tests/test_sm5440_supervisor.py": "77450943b1057c718945ff04d96efd17d71a7d0afc07084e0369e9c655de9477"
+  },
+  "vendor_Fedora_provenance": "reference/charging/sm5440-actuator-foundation/source-audit.json and reference/charging/sm5440-conversion-foundation/source-audit.json",
+  "additional_register_recipe": false,
+  "settings_witnesses": "Existing verified control/actuator register tables; active ENHIZ witness cleared, WDT owned witness used.",
+  "physical_current_precision_ua": 625,
+  "current_ceiling_ma": 1800,
+  "VBAT_entry_upper_uv_exclusive": 4300000,
+  "die_upper_decic_exclusive": 420,
+  "monitor_deadline_ms": 100,
+  "qualified_device_software_OCP_producer": false,
+  "physical_sampling_and_shutdown_acceptance": false
+}

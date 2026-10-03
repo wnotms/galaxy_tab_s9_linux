@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+Native monitor/shutdown foundation now composes actual converter, actuator OFF
+and WDT helpers. Real source/facts/epoch/100ms gates, exact625uA trip, new raw
+MEASURED before cleanup, OFF priority, healthy-only WDT service, separate first/
+cleanup errors and terminal no retry. Managed ADC cleanup halts on first error;
+standalone behavior retained and converter requalified.76 affected actual-C
+tests PASS1.668s, two unlinked ARM64 objects/W=1/sparse PASS4.898s, no changed
+helper warning. Initial quiescence assertion failures retained/corrected to
+preserve unknown cleanup. Six provider/98 Test317 inputs/nine artifacts exact,
+config/DT diff empty; no Kbuild/worker/Image/full/Actions/device charging write.
+Evidence reference/charging/sm5440-supervisor-foundation/. Physical ADC/OCP/
+cutoff/live adapter/refresh lifecycle/fallback/PM acceptance still missing;
+software_ocp_verified remains false on device. Whole goal NOT complete.
+Current317 Wi-Fi/ADB access pending; one bounded registered-subnet discovery
+found no SSH listener, not a device-fault inference. Capture NOTEXECUTED and
+exactaccepted311 rollback still required; no unobserved reflash or boot replay.
+
+
 Offline bounded converter layer now provides actual regmap begin/advance/cancel,
 vendor 20 ms rearm/one-shot AVG32, fresh READY provenance, live/latch separation,
 raw ADC/current precision and checked original converter cleanup. Native BOOTTIME

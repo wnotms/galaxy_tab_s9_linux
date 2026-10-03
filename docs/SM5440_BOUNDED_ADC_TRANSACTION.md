@@ -62,3 +62,11 @@ ARM64 W=1/sparse single object. No Image/module relink, device deployment, new
 test number or physical acceptance is implied. If AVG32 cannot meet 100 ms on
 hardware, refuse active charging and design a separately sourced sampling or
 protection solution; do not expand 100 ms to the 500 ms OFF diagnostic window.
+
+The supervisor extension adds an explicit managed mode (default false). A new
+`MEASURED` stage exposes only raw data, with sample.valid still false, so actual
+overcurrent/temperature shutdown can precede converter cleanup. `finish()`
+publishes only after verified cleanup and final checks. In managed mode a fault
+retains ownership for supervisor OFF first, followed by explicit `cancel()` drain.
+Standalone callers still get the original automatic cleanup behavior. Neither
+partial data nor successful final publication grants calibrated physical OCP.

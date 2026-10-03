@@ -1,0 +1,67 @@
+{
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "drivers/power/supply/sm5440-conversion.o",
+    "drivers/power/supply/sm5440-supervisor.o"
+  ],
+  "exit_code": 0,
+  "seconds": 4.898349284994765,
+  "provider_before": {
+    ".config": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+    "include/generated/utsrelease.h": "da2a6224a72e872beaa54789eec5efe6d77924251d9dd44dcd4d34c05af3d6cb",
+    "Module.symvers": "8dc19bd5f66838e97e2b8129e859a35dbda9b4a96a4b29bb9d1cfc6e56bd7b7e",
+    "vmlinux": "0f35ece1959a2c8d21c733cec4c90d744cf944ffed1f5877e340016e9115109a",
+    "drivers/power/supply/sm5440-direct.o": "bad7a8e8dae72b4e421fc09cbc8ede573ef8b846bd4ab0110fc7ded213132fd7",
+    "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d"
+  },
+  "provider_after": {
+    ".config": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+    "include/generated/utsrelease.h": "da2a6224a72e872beaa54789eec5efe6d77924251d9dd44dcd4d34c05af3d6cb",
+    "Module.symvers": "8dc19bd5f66838e97e2b8129e859a35dbda9b4a96a4b29bb9d1cfc6e56bd7b7e",
+    "vmlinux": "0f35ece1959a2c8d21c733cec4c90d744cf944ffed1f5877e340016e9115109a",
+    "drivers/power/supply/sm5440-direct.o": "bad7a8e8dae72b4e421fc09cbc8ede573ef8b846bd4ab0110fc7ded213132fd7",
+    "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d"
+  },
+  "provider_preserved": true,
+  "kernel_Image_build": false,
+  "unlinked_objects": 2,
+  "Kbuild_integration": false,
+  "device_writes": false,
+  "objects_sha256": {
+    "sm5440-conversion.o": "a7b1c2f1322fa6a87fc6661c1c3e741f6599268ea2f66baca404bdd98f6f6ad7",
+    "sm5440-supervisor.o": "cd40f9f94b3ec01cad72675e76683c278e121630692ab43ef2df64f464166242"
+  },
+  "source_sha256": {
+    "kernel/drivers/sm5440-conversion.c": "295512234e4bf060c1fa2027fe670d08c2237bbe2ebd99845221a8a4f0a1be63",
+    "kernel/drivers/sm5440-supervisor.c": "902ee2fd2e0d559d2976fb58c33480e34807390a64d8c6939bf0889e3ed0c42a",
+    "kernel/drivers/sm5440-supervisor.h": "11fb0e9a86669d7a46b1c195af84ee397f8bda7c8fd08246e697b73232377e52",
+    "kernel/drivers/sm5440-control.c": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d",
+    "kernel/drivers/sm5440-watchdog.c": "c639ac1dd0c36bb5fa90facbd60ed9ae5a1c1b0b1eae447c4f5aa5f0a34370cb",
+    "kernel/drivers/sm5440-actuator.c": "b629a00749f46e33aab2155742d0673c143c831336e11272f43aa3535258a6db",
+    "kernel/drivers/sm5440-watchdog.h": "135684956db32918549d1c81e4c543271021da2656b7f1024741f66ddc4ce1f9",
+    "kernel/drivers/sm5440-control.h": "0fa7c25d7d9b2ac9401061050c02bc0a52d02554480ed21ad5602b8906c966e0",
+    "kernel/drivers/sm5440-direct.c": "e0f6573ef42611add103226e3b4aa0dfeb68f65a309ba66ce55509c106d71066",
+    "kernel/drivers/sm5440-actuator.h": "816bda5d6965759548ddf133c5f61b568d64aff79a86cf34ed80b0f1cb68e19e",
+    "kernel/drivers/sm5440-conversion.h": "05eb71daa5273af257c4e754e867d93f033770f3a78c287c48efc2a51bea5a77",
+    "kernel/drivers/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b"
+  },
+  "environment": {
+    "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+    "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+    "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime",
+    "KBUILD_BUILD_USER": "gts9-mainline",
+    "KBUILD_BUILD_HOST": "reproducible",
+    "SOURCE_DATE_EPOCH": "1783890999",
+    "KBUILD_BUILD_TIMESTAMP": "Sun Jul 12 21:16:39 UTC 2026"
+  }
+}

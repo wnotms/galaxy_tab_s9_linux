@@ -12,6 +12,7 @@ enum sm5440_conversion_state {
 	SM5440_CONVERSION_WAIT,
 	SM5440_CONVERSION_DONE,
 	SM5440_CONVERSION_FAULT,
+	SM5440_CONVERSION_MEASURED,
 };
 
 /* No live caller/Kbuild. One object per request; caller serializes uncached I/O
@@ -27,6 +28,10 @@ struct sm5440_conversion {
 	int die_decic;
 	unsigned int polls;
 	bool enabled, running, owned, cleanup_attempted, adc_off_verified, ready;
+	/* Managed supervisor consumes raw current before cleanup and handles OFF
+	 * first on errors. Default false preserves standalone cleanup semantics.
+	 */
+	bool defer_cleanup, data_acquired;
 	int operation_error, cleanup_error;
 	struct x710_physical_sample sample;
 };
@@ -34,6 +39,7 @@ struct sm5440_conversion {
 /* -EINPROGRESS means schedule advance, not a valid measurement. */
 int sm5440_conversion_begin(struct regmap *map, struct sm5440_conversion *adc);
 int sm5440_conversion_advance(struct regmap *map, struct sm5440_conversion *adc);
+int sm5440_conversion_finish(struct regmap *map, struct sm5440_conversion *adc);
 int sm5440_conversion_cancel(struct regmap *map, struct sm5440_conversion *adc);
 
 #endif

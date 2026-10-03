@@ -83,21 +83,35 @@ static int sm5440_conversion_cleanup(struct regmap *map, struct sm5440_conversio
 		return 0;
 	/* Do not re-enable any converter, including after uncertain enable writes. */
 	ret = regmap_update_bits(map, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (ret && a->defer_cleanup)
+		goto out; /* managed active owner must get OFF priority immediately */
 	err = regmap_read(map, SM5440_ADCCNTL1, &control);
 	if (!err && (control & SM5440_ADC_ENABLE))
 		err = -EBUSY;
 	if (!ret)
 		ret = err;
+	if (ret && a->defer_cleanup)
+		goto out;
 	if (err)
 		goto out;
 	a->adc_off_verified = true;
 	err = regmap_write(map, SM5440_ADCCNTL2, a->before_channels);
+	if (err && a->defer_cleanup) {
+		ret = err;
+		goto out;
+	}
 	if (!err)
 		err = sm5440_conversion_readback(map, SM5440_ADCCNTL2, a->before_channels);
 	if (!ret)
 		ret = err;
+	if (ret && a->defer_cleanup)
+		goto out;
 	err = regmap_update_bits(map, SM5440_ADCCNTL1, SM5440_CONVERSION_FIELDS,
 				 a->before_control);
+	if (err && a->defer_cleanup) {
+		ret = err;
+		goto out;
+	}
 	if (!err)
 		err = sm5440_conversion_readback(map, SM5440_ADCCNTL1,
 				(control & ~SM5440_CONVERSION_FIELDS) |
@@ -120,7 +134,8 @@ static int sm5440_conversion_fail(struct regmap *map, struct sm5440_conversion *
 	a->sample.valid = false;
 	a->state = SM5440_CONVERSION_FAULT;
 	a->enabled = false;
-	sm5440_conversion_cleanup(map, a);
+	if (!a->defer_cleanup)
+		sm5440_conversion_cleanup(map, a);
 	return a->operation_error;
 }
 
@@ -249,6 +264,28 @@ int sm5440_conversion_advance(struct regmap *map, struct sm5440_conversion *a)
 	 */
 	if (a->vbat_uv < 2500000 || a->vbat_uv > 4600000)
 		return sm5440_conversion_fail(map, a, -ERANGE);
+	a->data_acquired = true;
+	a->state = SM5440_CONVERSION_MEASURED;
+	/* Current/fault supervisor must be able to stop the pump BEFORE converter
+	 * restoration. Raw data is not published valid until checked finish.
+	 */
+	if (a->defer_cleanup)
+		return -EINPROGRESS;
+	return sm5440_conversion_finish(map, a);
+}
+
+int sm5440_conversion_finish(struct regmap *map, struct sm5440_conversion *a)
+{
+	u64 now;
+	int ret;
+
+	if (!map || !a)
+		return -EINVAL;
+	if (a->state != SM5440_CONVERSION_MEASURED || !a->data_acquired)
+		return -EALREADY;
+	ret = sm5440_conversion_clock(a, &now);
+	if (ret)
+		return sm5440_conversion_fail(map, a, ret);
 	ret = sm5440_conversion_cleanup(map, a);
 	if (!ret)
 		ret = sm5440_conversion_status(map, a);
@@ -272,9 +309,15 @@ int sm5440_conversion_advance(struct regmap *map, struct sm5440_conversion *a)
 
 int sm5440_conversion_cancel(struct regmap *map, struct sm5440_conversion *a)
 {
+	int ret;
+
 	if (!map || !a)
 		return -EINVAL;
-	if (a->state == SM5440_CONVERSION_DONE || a->state == SM5440_CONVERSION_FAULT)
+	if (a->state == SM5440_CONVERSION_DONE ||
+	    (a->state == SM5440_CONVERSION_FAULT &&
+	     (!a->defer_cleanup || !a->owned || a->cleanup_attempted)))
 		return -EALREADY;
-	return sm5440_conversion_fail(map, a, -ECANCELED);
+	ret = sm5440_conversion_fail(map, a, -ECANCELED);
+	sm5440_conversion_cleanup(map, a); /* explicitly drain a managed deferred request */
+	return ret;
 }
