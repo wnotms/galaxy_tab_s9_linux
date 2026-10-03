@@ -1,0 +1,57 @@
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive'
+  DESCEND bpf/resolve_btfids
+  CC      scripts/mod/empty.o
+  CC      scripts/mod/devicetable-offsets.s
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/mod/empty.c
+  MKELF   scripts/mod/elfconfig.h
+  HOSTCC  scripts/mod/modpost.o
+  HOSTCC  scripts/mod/sumversion.o
+  HOSTCC  scripts/mod/symsearch.o
+  HOSTCC  scripts/mod/file2alias.o
+  INSTALL libsubcmd_headers
+  HOSTLD  scripts/mod/modpost
+  CC      kernel/bounds.s
+  CC      arch/arm64/kernel/asm-offsets.s
+  CC      kernel/sched/rq-offsets.s
+  CALL    /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/checksyscalls.sh 
+  LDS     arch/arm64/kernel/vdso/vdso.lds
+  CC      arch/arm64/kernel/vdso/vgettimeofday.o
+  AS      arch/arm64/kernel/vdso/note.o
+  AS      arch/arm64/kernel/vdso/sigreturn.o
+  CC      arch/arm64/kernel/vdso/vgetrandom.o
+  AS      arch/arm64/kernel/vdso/vgetrandom-chacha.o
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgettimeofday.c
+/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?
+  LD      arch/arm64/kernel/vdso/vdso.so.dbg
+  VDSOSYM include/generated/vdso-offsets.h
+  OBJCOPY arch/arm64/kernel/vdso/vdso.so
+  LDS     arch/arm64/kernel/vdso32/vdso.lds
+  LD32    arch/arm64/kernel/vdso32/vdso.so.raw
+  MUNGE   arch/arm64/kernel/vdso32/vdso32.so.dbg
+  OBJCOPY arch/arm64/kernel/vdso32/vdso.so
+  CC      drivers/power/supply/sm5440-watchdog.o
+../linux-src-x710-charging/drivers/power/supply/sm5440-watchdog.c:70:21: error: a function declaration without a prototype is deprecated in all versions of C [-Werror,-Wstrict-prototypes]
+   70 |         unsigned int mode, current;
+      |                            ^
+../linux-src-x710-charging/arch/arm64/include/asm/current.h:24:28: note: expanded from macro 'current'
+   24 | #define current get_current()
+      |                            ^
+../linux-src-x710-charging/drivers/power/supply/sm5440-watchdog.c:70:21: error: conflicting types for 'get_current'
+../linux-src-x710-charging/arch/arm64/include/asm/current.h:24:17: note: expanded from macro 'current'
+   24 | #define current get_current()
+      |                 ^
+../linux-src-x710-charging/arch/arm64/include/asm/current.h:15:44: note: previous definition is here
+   15 | static __always_inline struct task_struct *get_current(void)
+      |                                            ^
+2 errors generated.
+make[6]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/Makefile.build:289: drivers/power/supply/sm5440-watchdog.o] Error 1
+make[5]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/Makefile.build:549: drivers/power/supply] Error 2
+make[4]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/Makefile.build:549: drivers/power] Error 2
+make[3]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/Makefile.build:549: drivers] Error 2
+make[2]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/Makefile:2184: .] Error 2
+make[1]: *** [/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/Makefile:248: __sub-make] Error 2
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive'
+make: *** [Makefile:248: __sub-make] Error 2
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
