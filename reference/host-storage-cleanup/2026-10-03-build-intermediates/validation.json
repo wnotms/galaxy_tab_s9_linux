@@ -1,0 +1,36 @@
+{
+  "trimmed_builds": [
+    "linux-out",
+    "linux-out-x710-263-passive",
+    "linux-out-x710-272-passive",
+    "linux-out-x710-290-passive",
+    "linux-out-x710-299-passive",
+    "linux-out-x710-303-policy",
+    "linux-out-x710-305-adc-condition"
+  ],
+  "full_incremental_builds_untouched": [
+    "linux-out-x710-302-passive",
+    "linux-out-x710-308-passive"
+  ],
+  "removed_files": 81658,
+  "removed_allocated_bytes": 28974915584,
+  "build_before_allocated_bytes": 47990665216,
+  "build_after_allocated_bytes": 19015749632,
+  "protected_files_hash_verified": 330078,
+  "surviving_file_set_and_hashes_unchanged": true,
+  "regenerable_intermediates_archived": false,
+  "disk_before": "Filesystem         1B-blocks         Used        Avail Use%\n/dev/sdd       1081101176832 157501542400 868607279104  16%\nD:\\             296014385152 260377739264  35636645888  88%\n",
+  "disk_after": "Filesystem         1B-blocks         Used        Avail Use%\n/dev/sdd       1081101176832 128550936576 897557884928  13%\nD:\\             296014385152 238376255488  57638129664  81%\n",
+  "kernel_build": {
+    "executed": false
+  },
+  "host_regression": {
+    "executed": false
+  },
+  "device_commands": {
+    "executed": false
+  },
+  "ci": {
+    "executed": false
+  }
+}
