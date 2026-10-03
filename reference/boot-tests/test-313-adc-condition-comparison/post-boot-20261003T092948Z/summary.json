@@ -1,0 +1,57 @@
+{
+  "scope": "read-only follow-up of restored accepted311 boot; not a new condition experiment",
+  "boot_id": "1f1e01bfde9643b08e363237a92dcd80",
+  "same_boot_as_restore": true,
+  "config_sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89",
+  "notes_sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6",
+  "uptime_seconds": 1672.74,
+  "battery": {
+    "soc": 37,
+    "voltage_uv": 3794000,
+    "temp_decic": 319
+  },
+  "controls": {
+    "verdict": "ORDINARY_PC_CONTROLS_VERIFIED",
+    "boot_id": "1f1e01bfde9643b08e363237a92dcd80",
+    "input_limit_ma": 500,
+    "fast_code": 32,
+    "float_code": 45,
+    "AICL_lower_limit_allowed": true,
+    "direct_charging_authorized": false
+  },
+  "kernel_rows": 1100,
+  "kernel_fault_counts": {},
+  "temperature_warning_this_boot": false,
+  "thermal_zone37_current_provider": "sm5714-battery",
+  "historical_photo_provider": "not determined from numeric zone ID",
+  "services": [
+    "active",
+    "active",
+    "active"
+  ],
+  "roles": [
+    "[sink]",
+    "[device]"
+  ],
+  "passive_adc": {
+    "fault": "1",
+    "startup_pending": "1",
+    "pump_enable_supported": "0",
+    "accepted_for_charging": false
+  },
+  "flashed": false,
+  "rebooted": false,
+  "pps_requested": false,
+  "pump_enabled": false,
+  "tests": {
+    "executed": false,
+    "reason": "raw read-only follow-up; reused unchanged source/build qualification"
+  },
+  "collector_issue": {
+    "initial_snapshot_path": "/sys/kernel/debug/sm5440-passive/snapshot",
+    "result": "missing path; host lookup error retained in health.txt",
+    "corrected_snapshot_path": "/sys/kernel/debug/sm5440-0-0063/snapshot",
+    "corrected_capture": "current-state.txt",
+    "device_mutation": false
+  }
+}

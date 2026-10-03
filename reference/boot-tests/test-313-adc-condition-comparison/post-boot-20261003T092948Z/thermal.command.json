@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "exec-out",
+    "sh -c 'cat /proc/sys/kernel/random/boot_id; for z in /sys/class/thermal/thermal_zone*; do echo $z; cat $z/type $z/mode; done; cat /sys/class/thermal/thermal_zone37/temp; cat /sys/class/power_supply/sm5714-battery/temp; cat /proc/sys/kernel/random/boot_id'"
+  ],
+  "started_utc": "2026-10-03T09:29:48.510167+00:00",
+  "read_only": true,
+  "returncode": 0,
+  "elapsed_seconds": 0.132891
+}

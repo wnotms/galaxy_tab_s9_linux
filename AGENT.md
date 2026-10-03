@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+Owner powered-on follow-up: same restoredaccepted311 boot1f1e01bf, config/notes
+match, SOC37/3.794V/31.9C; ordinaryQ4/input500/fast500/float4440 verified once,
+ADB/services/deviceNCM/Wi-Fi/SinkDevice/DCCabsent. Full1100kernel rows, matched
+CPUfaults empty; knownpassiveADCrefusal retained/notcharginggrant. Currentzone37
+pack enabled/read31900mC/no temperature warning thisboot; oldphoto numeric ID
+doesnotidentify historicalprovider. Initialhostdebugfspathlookup error retained,
+correctprovidercommand captured; noflash/reboot/PPS/pump/configchange. Evidence
+313/post-boot-20261003T092948Z; tests/build executed:false unchangedqualification.
+313STOP remains terminal; fullchargingport active/notready.
+
+
 Post313 source comparison: Samsungattached+OFF setsENHIZ; ordinary ADC gated below
 CHECK_VBAT; Fedoraab123e7d activeinit followsfixed9V switchinghandoff, notPC5V
 bit-only recipe.313source-analysis exact hashes/lines retained. Next source-bound

@@ -1,0 +1,47 @@
+1f1e01bf-de96-43b0-8e36-3237a92dcd80
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+1580.04 12605.07
+55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89  -
+cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6  /sys/kernel/notes
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3801000
+POWER_SUPPLY_VOLTAGE_AVG=3798000
+POWER_SUPPLY_VOLTAGE_OCV=3815000
+POWER_SUPPLY_CURRENT_NOW=-466000
+POWER_SUPPLY_CURRENT_AVG=-296000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=37
+POWER_SUPPLY_TEMP=319
+POWER_SUPPLY_TYPE=Battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD
+active
+active
+1: lo    inet [35m127.0.0.1[0m/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet [35m169.254.42.1[0m/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet [35m10.139.153.84[0m/24 brd [35m10.139.153.255 [0mscope global dynamic noprefixroute wlp1s0\       valid_lft 2048sec preferred_lft 2048sec
+16: docker0    inet [35m172.17.0.1[0m/16 brd [35m172.17.255.255 [0mscope global docker0\       valid_lft forever preferred_lft forever
+hvc0_absent
+cat: /sys/kernel/debug/sm5440-passive/snapshot: No such file or directory
+1f1e01bf-de96-43b0-8e36-3237a92dcd80

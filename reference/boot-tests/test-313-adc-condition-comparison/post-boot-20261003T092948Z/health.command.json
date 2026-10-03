@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "exec-out",
+    "sh -c 'cat /proc/sys/kernel/random/boot_id; uname -a; cat /proc/uptime; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; cat /sys/class/power_supply/sm5714-battery/uevent; cat /sys/class/power_supply/sm5714-usb/uevent; systemctl is-active gts9-adbd ssh; ip -o -4 addr show; test ! -e /dev/hvc0 && echo hvc0_absent; cat /sys/kernel/debug/sm5440-passive/snapshot; cat /proc/sys/kernel/random/boot_id'"
+  ],
+  "started_utc": "2026-10-03T09:29:48.251350+00:00",
+  "read_only": true,
+  "returncode": 0,
+  "elapsed_seconds": 0.128143
+}
