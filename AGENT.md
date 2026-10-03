@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+Test313 STOP_LIVE_REVBLK_AND_NONZERO_OFF_IBUS_ACCEPTED311_RESTORED. Singlecandidate
+41c7fe02/raw1060kernel/fullsnapshot preserved. CNTL6 89->09->89 readvalid/
+ADCoff+ENHIZcleanup verified; ADC3.7995V/gauge3.802V(delta2.5mV),5.010V VBUS/
+30.625mA IBUS/liveSTATUS3=22/REVBLK80; mode01/01 OFF/no pump activation support.
+Originalerrorpumpcurrent/newfault preserved, NOT CHG_ON proof. conditionvalid0/
+fault1/no endpoint/devicePASS/calibration/freshness. CauseUNKNOWN/pre-clearSTATUS
+missing; no treatingLIVEfault asoldinactive latch. Offlineboot attributionderived
+from savedrollbacktargethistory, notclean reclassification. Exactaccepted311
+boot+181 restoredonce/allfive/BCBclear/finalnormal1f1e01bf/39%3.796V30.2C/
+actualordinarycontrols/notesconfig/pack/rescue/attribution. Knownpassiverefusal
+retained/hostNCM255separate/rollback_required=false/313terminal/noreplay.51host
+PASS reused/no newbuild/full/PPS/pump/current/rootfs/USB. Next source-backed
+operatingcontext/livepre-status/freshVBUS/fixedcontract/pack gates before any
+newconditiontrial; do not copyvendor/Fedorafullactiveinit or guess9V cure.
+Fullgoalactive/Stage3NR: ADC/protection/actuator/PPS/handoff/fallback/PM remain.
+
+
 Test313 OFFLINE_REGISTERED_ONE_CONDITION_COMPARISON_READY. Qualified312diagnostic/
 accepted311ordinary recovery preserved; one pumpOFFconversion+15sendpoint, exact
 accepted311boot+181 unconditionalrestore.51affectedactualrunner/parser/fixture

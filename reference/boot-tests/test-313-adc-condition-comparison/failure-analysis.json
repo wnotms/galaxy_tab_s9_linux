@@ -1,0 +1,84 @@
+{
+  "ADC_VBAT_uv": 3799500,
+  "ADC_read_ms": 286,
+  "CNTL6_before": "0x89",
+  "CNTL6_during": "0x09",
+  "CNTL6_restored": "0x89",
+  "IBUS_ua": 30625,
+  "absolute_ADC_gauge_delta_uv": 2500,
+  "adjacent_gauge_uv": 3802000,
+  "attribution_source": "saved preflight and rollback target boot history; derived after initial admission refused, not a clean reclassification",
+  "candidate_attribution": "attributed",
+  "candidate_boot_id": "41c7fe02731a4be2912d6e81e98e8c0a",
+  "condition_error": 0,
+  "condition_valid": false,
+  "faults": "0x80",
+  "gauge_end_ms": 286,
+  "gauge_start_ms": 286,
+  "independent_calibration": false,
+  "journal_suspects": [
+    {
+      "message": "OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB",
+      "priority": 3,
+      "row": 8
+    },
+    {
+      "message": "OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB",
+      "priority": 3,
+      "row": 9
+    },
+    {
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nkaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)",
+      "priority": 3,
+      "row": 75
+    },
+    {
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nuh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)",
+      "priority": 3,
+      "row": 76
+    },
+    {
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nuh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)",
+      "priority": 3,
+      "row": 77
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb821af00, fsynr=0x630021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 626
+    },
+    {
+      "message": "remoteproc remoteproc0: request_firmware failed: -2",
+      "priority": 3,
+      "row": 642
+    },
+    {
+      "message": "msm_dpu ae01000.display-controller: no GPU device was found",
+      "priority": 3,
+      "row": 731
+    },
+    {
+      "message": "Failed to find module 'autofs4'",
+      "priority": 3,
+      "row": 852
+    },
+    {
+      "message": "[drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]",
+      "priority": 3,
+      "row": 1000
+    }
+  ],
+  "kernel_fault_counts": {},
+  "live_status": "00 00 22 00",
+  "next": "source-backed operating-condition prerequisites before another physical trial; no repeat of same5V scope",
+  "original_int": "00 00 62 00",
+  "physical_VBUS_uv": 5010000,
+  "physical_cause": "UNKNOWN; no pre-clear STATUS3 sample was captured; 5V versus 2*VBAT and bias/path interaction are hypotheses, not causal proof",
+  "physical_freshness_grant": false,
+  "pump_activation_supported": false,
+  "pump_mode_after": "0x01",
+  "pump_mode_before": "0x01",
+  "raw_kernel_rows": 1060,
+  "restore_error": 0,
+  "restore_pending": false
+}
