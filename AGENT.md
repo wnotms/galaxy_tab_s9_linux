@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+Post313 source comparison: Samsungattached+OFF setsENHIZ; ordinary ADC gated below
+CHECK_VBAT; Fedoraab123e7d activeinit followsfixed9V switchinghandoff, notPC5V
+bit-only recipe.313source-analysis exact hashes/lines retained. Next source-bound
+pumpOFFpreparation needsactualVBUS/pre-status/pack/epoch/switching context; no
+logical9V-onlygrant, faultmasking/reset/protection-disable copy, same5Vreplay or
+claim9Vcure. Docscondition+architecture current311/313 state corrected. Prose/
+sourceexcerpt review only, tests/build/device executed:false; prior qualification
+unchanged. Fullgoalactive/Stage3NR, active actuator/protection+physical acceptance remain.
+
+
 Test313 STOP_LIVE_REVBLK_AND_NONZERO_OFF_IBUS_ACCEPTED311_RESTORED. Singlecandidate
 41c7fe02/raw1060kernel/fullsnapshot preserved. CNTL6 89->09->89 readvalid/
 ADCoff+ENHIZcleanup verified; ADC3.7995V/gauge3.802V(delta2.5mV),5.010V VBUS/

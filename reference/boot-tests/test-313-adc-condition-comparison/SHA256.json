@@ -1188,6 +1188,18 @@
       "bytes": 19503,
       "sha256": "8b31da0187baae51afb42b4808051e95d422b1824d5e6514102134886585a0f1"
     },
+    "source-analysis/SOURCES.json": {
+      "bytes": 846,
+      "sha256": "0ab70677f088fe67218855f118c13369a6fb5eccbd362af38b6e6255cd5e91c2"
+    },
+    "source-analysis/fedora-context.txt": {
+      "bytes": 3342,
+      "sha256": "2ba17d108146043b35c467947b1b2a07c62f1e4a176c2ff0392e854246a1df2d"
+    },
+    "source-analysis/vendor-context.txt": {
+      "bytes": 3412,
+      "sha256": "74c0710e35a4ff3dfd7818c57711ff34c9561f2a008ffe5618cc3cd6c54bb599"
+    },
     "staged-files.json": {
       "bytes": 957,
       "sha256": "ab25b2531f84feffb175520398e014b37f2bfb35b2acfebcfa2b1173b8affd9f"
@@ -1221,6 +1233,6 @@
       "sha256": "54bab7864e1f3158096fc1449954c629a367c92debd9e524d997f7057fdbb931"
     }
   },
-  "scope": "immutable registration, full raw first-failure/restoration evidence and offline analysis",
+  "scope": "immutable registration/raw physical failure and exact restoration; subsequent source-context analysis",
   "test": "Test313"
 }

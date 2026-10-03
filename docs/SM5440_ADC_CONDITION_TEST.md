@@ -42,3 +42,39 @@ accepted Test299/Test300 rollback. First failure stops the scope; preserve
 raw journal/paired ADC and restore the accepted installation. No PPS or charger
 swap is needed. Physical results, calibration and active readiness remain
 unproven until that separately registered test is executed.
+
+## Test313 result and the next operating context
+
+Test313 is terminal STOP with exact accepted311 restoration. CNTL6
+89 ->09 ->89 was read back and cleanup completed. One OFF conversion gave
+ADC3.7995V/gauge3.802V(delta2.5mV), but live STATUS3=0x22/REVBLK and
+IBUS30.625mA remain actual refusal signals. Mode01/01 stayed OFF. No pre-clear
+STATUS3 was captured, so causality is UNKNOWN. Do not turn close voltage readings
+into a calibration/charging grant or classify live REVBLK as an old inactive
+latch. Original snapshots/journal and source excerpts are in Test313.
+
+[VENDOR] set_ENHIZ() sets bit7 for VBUS-present+charging-OFF. Normal ADC access is
+refused below CHECK_VBAT except the factory/reverse context. init_reg_param()
+clears ENHIZ inside a reset/initialization sequence; it also changes watchdog,
+protection and ADC settings. [FEDORA ab123e7d] the active start path hands off
+SM5714 at an existing fixed9V contract before reset/init/PPS. Neither sequence
+is an isolated permission to clear ENHIZ on a PC5V sink. Do not copy protection
+-disable/reset magic to make this experiment pass.
+
+Next implementation must establish a complete pump-OFF preparation context,
+not repeat the unchanged5V experiment. Use the existing mainline source-bound
+fixed snapshot/lease primitives. Require the same live fixed9V attachment and
+bounded pack/thermal state, checked switching handoff if the reviewed hardware
+sequence requires it, actual fresh physical VBUS and pre-mutation live STATUS.
+A logical9V budget alone is not physical proof. Capture original read-to-clear
+latches without losing their provenance. Never clear/mask a live fault to gain
+admission. Preserve all protections, only approved writes, exact cleanup and
+fixed-path rollback. Keep generation checks across unlocked waits and the
+existing lock order; no long negotiation/ADC wait under the charger mutex.
+
+Whether9V/headroom or switching-path state resolves the fault remains an
+unverified hypothesis. Any additional condition write needs a separately built,
+host-qualified and registered scope. No PPS/pumpON/current raise, alternate
+ADC math or wider fault/age acceptance follows from Test313. Actual active
+protection/actuator work must remain a separate candidate and default-disabled
+until its physical prerequisites pass. Ordinary accepted311 stays the fallback.

@@ -1,0 +1,108 @@
+261: static int sm5440_pps_target_mv(int ma, int vbat_uv)
+262: {
+263: 	int headroom = DIV_ROUND_UP(ma * SM5440_R_TTL_MILLIOHM, 1000) +
+264: 		       SM5440_EXTRA_HEADROOM_MV;
+265: 	int mv = DIV_ROUND_UP((vbat_uv / 1000) * 2 + headroom,
+266: 			      SM5440_PPS_V_STEP_MV) * SM5440_PPS_V_STEP_MV;
+267: 
+268: 	return clamp(mv, 8200, SM5440_MAX_PPS_MV);
+269: }
+
+534: static int sm5440_hw_init(struct sm5440_direct *sm)
+535: {
+536: 	int reg;
+537: 	int ret;
+538: 	int i;
+539: 
+540: 	ret = i2c_smbus_write_byte_data(sm->client, SM5440_REG_CNTL1,
+541: 					 SM5440_CNTL1_SW_RESET);
+542: 	if (ret)
+543: 		return ret;
+544: 	for (i = 0; i < 255; i++) {
+545: 		usleep_range(1000, 2000);
+546: 		reg = i2c_smbus_read_byte_data(sm->client, SM5440_REG_CNTL1);
+547: 		if (reg < 0)
+548: 			return reg;
+549: 		if (!(reg & SM5440_CNTL1_SW_RESET))
+550: 			break;
+551: 	}
+552: 	if (i == 255)
+553: 		return -ETIMEDOUT;
+554: 
+555: #define SM5440_WRITE(_reg, _val) do {					\
+556: 	ret = i2c_smbus_write_byte_data(sm->client, (_reg), (_val));	\
+557: 	if (ret)							\
+558: 		return ret;						\
+559: } while (0)
+560: 
+561: 	SM5440_WRITE(SM5440_REG_CNTL1, SM5440_CNTL1_WDT_30S);
+562: 	SM5440_WRITE(SM5440_REG_CNTL2, 0xf2);
+563: 	SM5440_WRITE(SM5440_REG_CNTL3, 0xb8);
+564: 	SM5440_WRITE(SM5440_REG_CNTL4, 0xff);
+565: 	SM5440_WRITE(SM5440_REG_CNTL6, 0x09);
+566: 	/* CNTL7 (switching frequency) is programmed per charge current in
+567: 	 * sm5440_start(), the way the vendor driver does it. */
+568: 	SM5440_WRITE(SM5440_REG_VBUSCNTL, 0x07);
+569: 	SM5440_WRITE(SM5440_REG_VBATCNTL,
+570: 		     ((SM5440_VBATREG_MV - 3800) * 10) / 125);
+571: 	SM5440_WRITE(SM5440_REG_VOUTCNTL, 0x3f);
+572: 	SM5440_WRITE(SM5440_REG_IBUSCNTL, SM5440_INITIAL_IBUS_MA / 50);
+573: 	SM5440_WRITE(SM5440_REG_PRTNCNTL, 0xfe);
+574: 	SM5440_WRITE(SM5440_REG_THEMCNTL1, 0x0c);
+575: 	SM5440_WRITE(SM5440_REG_ADCCNTL1,
+576: 		     SM5440_ADCCNTL1_AVG_32 |
+577: 		     SM5440_ADCCNTL1_CONTINUOUS |
+578: 		     SM5440_ADCCNTL1_ENABLE);
+579: 	SM5440_WRITE(SM5440_REG_ADCCNTL2, 0xdf);
+580: #undef SM5440_WRITE
+581: 
+582: 	/* Reading the four interrupt latches clears stale bootloader events. */
+583: 	for (i = 0; i < 4; i++) {
+584: 		ret = i2c_smbus_read_byte_data(sm->client, i);
+585: 		if (ret < 0)
+586: 			return ret;
+587: 	}
+588: 
+589: 	return 0;
+590: }
+591: 
+592: static int sm5440_start(struct sm5440_direct *sm)
+593: {
+594: 	int battery_uv, target_mv, target_ma;
+595: 	int ret;
+596: 
+597: 	battery_uv = sm5440_psy_get(sm->battery,
+598: 				    POWER_SUPPLY_PROP_VOLTAGE_NOW);
+599: 	if (battery_uv < 0)
+
+600: 		return battery_uv;
+601: 
+602: 	/*
+603: 	 * Open the SM5714 switching path while VBUS is still at its safe fixed
+604: 	 * 9 V contract.  Only then may the direct charger leave that contract
+605: 	 * for a programmable one.
+606: 	 */
+607: 	ret = sm5714_battery_set_direct_charge(true);
+608: 	if (ret)
+609: 		return ret;
+610: 
+611: 	ret = sm5440_hw_init(sm);
+612: 	if (ret)
+613: 		goto restore;
+614: 
+615: 	ret = sm5440_negotiate_pps(sm, battery_uv, &target_ma, &target_mv);
+616: 	if (ret)
+617: 		goto restore;
+618: 
+619: 	ret = sm5440_select_freq(sm, target_ma);
+620: 	if (ret)
+621: 		goto restore;
+622: 
+623: 	ret = sm5440_set_ibus_limit(sm, target_ma);
+624: 	if (ret)
+625: 		goto restore;
+626: 
+627: 	ret = sm5440_wait_vbus_settled(sm, target_mv);
+628: 	if (ret)
+629: 		goto restore;
+630: 

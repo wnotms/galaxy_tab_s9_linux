@@ -3,21 +3,20 @@ Current continuation (2026-10-03): Test303 supplies an explicitly invoked kernel
 PPS consumer, real provider integration, PM drain and source-bound authorization
 release; see [owned consumer](X710_OWNED_PPS_CONSUMER.md). The active core's
 pump actuator/OCP/physical ADC qualification is still incomplete. The historical
-Test256 design below is not a claim of current device identity: device remains
-retained Test299/Test300, not Test255. No automatic PPS/direct charging.
+Test256 design below is not a claim of current device identity: current device retains
+Test308 ordinary recovery accepted in Test311 and restored after Test313, not Test255. No automatic PPS/direct charging.
 
 
 Read [vendor audit](X710_VENDOR_CHARGING_AUDIT.md),
 [register audit](SM5440_REGISTER_AUDIT.md), and
 [transaction design](SM5714_SM5440_HANDOFF.md) first. This design precedes code
 changes and permits offline development only. Test255 is the frozen fixed-PD
-behavioral reference, not the current device image. Last read-only Test309
-preflight found accepted299 config/notes,46%/3.854V/31.9°C and responsive ADB,
-but rejected the `lpcharge=1` cmdline before any candidate deployment.
-Test308's ordinary-program recovery candidate is compiled and host-qualified;
-Test309 has not accepted it on hardware. See the current
-[Test309 results](../reference/boot-tests/test-309-ordinary-program-acceptance/RESULTS.md)
-for the entry stop rather than inferring the installed version from this design.
+behavioral reference, not the current device image. Test311 accepted one ordinary
+PC-USB candidate boot/15s endpoint with actual programming witness. Test313's
+isolated ENHIZ/ADC conversion stopped on live REVBLK/nonzero IBUS and restored
+that accepted boot+181 once; current final1f1e01bf is normal. Read current
+AGENT.md and [Test313 results](../reference/boot-tests/test-313-adc-condition-comparison/RESULTS.md)
+for authoritative device status. Ordinary recovery is not ADC/PPS/pump acceptance.
 
 ## Frozen baseline and staged outputs
 
@@ -50,10 +49,10 @@ supersede the original per-stage directory recommendation.
 
 | Component | Implementation evidence | Outstanding acceptance |
 | --- | --- | --- |
-| Ordinary fixed charging | Stage1/Stage2 hardware evidence; Test308 adds exact programming witness and one bounded recovery | Test309 normal-boot entry and ordinary candidate acceptance; fixed9V recovery is a separate scope |
+| Ordinary fixed charging | Stage1/Stage2 hardware evidence; Test308 adds exact programming witness and one bounded recovery | Test311 ordinary PC acceptance passed without observed drift; forced/natural recovery branch and fixed9V recovery are separate scopes |
 | TCPM PPS protocol adapter | Test302 actual native TCPM power_supply operations and source-bound ownership, compiled and host-tested | No successful physical PPS roundtrip is claimed |
 | Pump-OFF PPS consumer | Test303 real battery lease/provider integration and PM cancellation/drain, compiled and host-tested | Genuine physical acquisition must satisfy its100ms admission; slow diagnostic observations cannot substitute |
-| SM5440 passive transport | Readback, ADC decoding, OFF checks and passive physical observations | ADC/gauge disagreement and conversion timing remain unresolved; Test305 condition profile is not yet hardware-tested |
+| SM5440 passive transport | Readback, ADC decoding, OFF checks and passive physical observations | Test313 close single voltage pair but live REVBLK/nonzero OFF IBUS: STOP; complete operating context, independent calibration and physical freshness remain unresolved |
 | Direct transaction engine | Actual C entry/refresh/retarget/monitor/fallback/PM functions exercised with faulting host adapters | No live pump-ON actuator, approved active protection or physical cutoff acceptance |
 
 These are separate prerequisites. Passing ordinary recovery does not grant PPS;

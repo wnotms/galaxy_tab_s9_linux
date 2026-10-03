@@ -1,0 +1,85 @@
+226: static int sm5440_convert_adc(struct sm5440_charger *sm5440, u8 index)
+227: {
+228: 	u8 reg1, reg2;
+229: 	int adc;
+230: #if !defined(CONFIG_SEC_FACTORY)
+231: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+232: 
+233: 	if (sm_dc_get_current_state(sm_dc) < SM_DC_CHECK_VBAT &&
+234: 		!(sm5440->rev_boost)) {
+235: 		/* Didn't worked ADC block during on CHG-OFF status */
+236: 		return -1;
+237: 	}
+238: #endif
+239: 
+240: 	switch (index) {
+241: 	case SM5440_ADC_THEM:
+
+365: static int sm5440_set_ENHIZ(struct sm5440_charger *sm5440, bool vbus, bool chg_en)
+366: {
+367: 	u8 enhiz = 0;   /* case : chg_on or chg_off & vbus_uvlo */
+368: 
+369: 	if (vbus && !(chg_en))
+370: 		enhiz = 1;              /* case : chg_off & vbus_pok */
+371: 
+372: 	dev_info(sm5440->dev, "%s: vbus=%d, chg_en=%d, enhiz=%d\n",
+373: 			__func__, vbus, chg_en, enhiz);
+374: 	sm5440_update_reg(sm5440, SM5440_REG_CNTL6, enhiz, 0x1, 7);
+375: 
+376: 	return 0;
+377: }
+
+449: static void sm5440_init_reg_param(struct sm5440_charger *sm5440)
+450: {
+451: 	sm5440_set_wdt_timer(sm5440, WDT_TIMER_S_30);
+452: 	sm5440_set_freq(sm5440, sm5440->pdata->freq);
+453: 
+454: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL2, 0xF2);               /* disable IBUSOCP,IBATOCP,THEM */
+455: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL4, 0xFF);               /* used DEB:8ms */
+456: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL6, 0x09);               /* forced PWM mode, disable ENHIZ */
+457: 	sm5440_update_reg(sm5440, SM5440_REG_VBUSCNTL, 0x7, 0x7, 0);    /* VBUS_OVP_TH=11V */
+458: 	sm5440_write_reg(sm5440, SM5440_REG_VOUTCNTL, 0x3F);            /* VOUT=max */
+459: 	sm5440_write_reg(sm5440, SM5440_REG_PRTNCNTL, 0xFE);            /* OCP,OVP setting */
+460: 	sm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, 1, 0x1, 3);      /* ADC average sample = 32 */
+461: 	sm5440_write_reg(sm5440, SM5440_REG_ADCCNTL2, 0xDF);            /* ADC channel setting */
+462: 	sm5440_write_reg(sm5440, SM5440_REG_THEMCNTL1, 0x0C);           /* Thermal Regulation threshold = 120'C */
+463: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL3, 0xB8);               /* disable CHGTMR, enable VBATREG */
+464: }
+465: 
+466: static int sm5440_start_charging(struct sm5440_charger *sm5440)
+467: {
+468: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+469: 	struct sm_dc_power_source_info ta;
+470: 	int state = sm_dc_get_current_state(sm_dc);
+471: 	int ret;
+472: 
+473: 	if (sm5440->cable_online < 1) {
+474: 		dev_err(sm5440->dev, "%s: can't detect valid cable connection(online=%d)\n",
+475: 				__func__, sm5440->cable_online);
+476: 		return -ENODEV;
+477: 	}
+478: 
+479: 	if (state < SM_DC_CHECK_VBAT) {
+480: 		dev_info(sm5440->dev, "%s: charging off state (state=%d)\n", __func__, state);
+481: 		ret = sm5440_sw_reset(sm5440);
+482: 		if (ret < 0) {
+483: 			dev_err(sm5440->dev, "%s: fail to sw reset(ret=%d)\n", __func__, ret);
+484: 			return ret;
+485: 		}
+486: 		sm5440_init_reg_param(sm5440);
+487: 	} else if (state == SM_DC_CV_MAN) {
+
+1096: static int sm5440_set_charging_enable(struct i2c_client *i2c, bool enable)
+1097: {
+1098: 	struct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);
+1099: 
+1100: 	sm5440_set_ENHIZ(sm5440, sm5440->vbus_in, enable);
+1101: 	if (enable)
+1102: 		sm5440_set_op_mode(sm5440, OP_MODE_CHG_ON);
+1103: 	else
+1104: 		sm5440_set_op_mode(sm5440, OP_MODE_CHG_OFF);
+1105: 
+1106: 	sm5440_enable_wdt(sm5440, enable);
+1107: 	sm5440_print_regmap(sm5440);
+1108: 
+1109: 	return 0;
