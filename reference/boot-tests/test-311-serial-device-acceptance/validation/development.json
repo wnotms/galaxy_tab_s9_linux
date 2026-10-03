@@ -1,0 +1,10 @@
+{
+  "initial_host_discovery": {
+    "tests_run": 35,
+    "errors": 29,
+    "failures": 0,
+    "cause": "staged-files.json had not yet been prepared; fixture configure raised FileNotFoundError",
+    "device_commands": false
+  },
+  "correction": "prepare registered metadata/staging before executing complete fixtures"
+}

@@ -96,6 +96,19 @@
 
 ## Current state (2026-10-03)
 
+Test311 OFFLINE_SERIAL_COLLECTOR_REGISTRATION_READY.35affected host PASS0.145s/
+syntaxPASS; exact308kernel/artifacts reused/no kernel/config/DTS/USB/adbd/rootfs/
+PPS/pump/current change/build/full/Actions. Primaryidentity/thermal/actualcontrols/
+fullkernel classification precede single20shistory; ADBserial; allactual safety/
+attribution/15sendpoint gates retained, missinghistory stillSTOP.125 inherited310
+inputs unchanged/136sealed; sixWindowsstage hardlinks+one uniquehelper/no largecopy.
+Physical311 NOTEXECUTED; freshsafe normal299preflight required. Lastactual final
+788fef75 accepted299 restored after310STOP, not fresh311identity.309/310terminal/
+noreplay. Test263 historicalrollbackimages retired; current299production/rollback
+and exact308candidate retained. See311RESULTS/summary/validation. Fullgoalactive/
+Stage3NR: physicalADC/protection/actuator/PPS/handoff/fallback/PM still outstanding.
+
+
 Test310 STOP_BOOT_HISTORY_CAPTURE_TIMEOUT_ACCEPTED299_RESTORED.32affectedhost
 PASS0.146s/providercollector correct onbaselineBEFOREflash Q4/input500/fast500/
 float4440. Candidatec9663df0 identity/pack/rescue/currentstate0.292s/fullkernel

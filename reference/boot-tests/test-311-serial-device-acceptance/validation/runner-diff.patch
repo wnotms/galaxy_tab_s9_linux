@@ -1,0 +1,120 @@
+--- Test310/host_flow.py
++++ Test311/host_flow.py
+@@ -70,7 +70,7 @@
+     PACKAGE = read(R / 'PACKAGE.json')
+     STAGED = read(R / 'staged-files.json')
+     h.R, h.PLAN, h.PACKAGE, h.STAGED = R, PLAN, PACKAGE, STAGED
+-    h.STAGE, h.TMP = 'D:/android/gts9-active/gts9-test310', '/tmp/gts9-test310'
++    h.STAGE, h.TMP = 'D:/android/gts9-active/gts9-test311', '/tmp/gts9-test311'
+     p.SERIAL = 'gts9wifi-0001'
+ 
+ 
+@@ -92,7 +92,7 @@
+         path = ROOT / name
+         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+             raise ValueError('registered input drift: ' + name)
+-    verify_stage(Path('/mnt/d/android/gts9-active/gts9-test310'))
++    verify_stage(Path('/mnt/d/android/gts9-active/gts9-test311'))
+     if require_push:
+         def git(*args):
+             return subprocess.check_output(['git', '-C', str(ROOT), *args], text=True).strip()
+@@ -188,21 +188,23 @@
+                'cd /usr/lib/modules/7.2.0-rc3-gts9wifi-dirty; '
+                'test "$(find . -type f | wc -l)" = 181; printf %s ' +
+                shlex.quote(modules) + ' | sha256sum -c -')
+-    jobs = h.parallel({
+-        'partitions': lambda: rec.adb('partitions', DEBIAN_PARTS, timeout=20),
+-        'modules': lambda: rec.adb('modules', command, timeout=20),
+-        'boots': lambda: rec.adb('boots-before', 'journalctl --list-boots --no-pager', timeout=10),
+-        'kernel': lambda: rec.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15),
+-        'windows': lambda: rec.ps('windows-usb', p.PS_USB, timeout=20)})
++    # One shared ADB transport: preserve primary device evidence first, then
++    # perform each metadata operation once without competing shell streams.
++    thermal(rec, 'thermal', boot)
++    baseline_controls = controls(rec, 'program-controls', boot)
++    jobs = {}
++    jobs['partitions'] = rec.adb('partitions', DEBIAN_PARTS, timeout=20)
++    jobs['modules'] = rec.adb('modules', command, timeout=20)
++    jobs['kernel'] = rec.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15)
++    scan = old.scan_journal(jobs['kernel'][0], boot, float(sec['uptime'].split()[0]), snap)
++    write(rec.folder / 'journal-classification.json', scan)
++    jobs['boots'] = rec.adb('boots-before', 'journalctl --list-boots --no-pager', timeout=20)
++    jobs['windows'] = rec.ps('windows-usb', p.PS_USB, timeout=20)
+     require_debian_partitions(jobs['partitions'][0], PACKAGE['baseline_partitions'])
+     if p.has_code43(jobs['windows'][0]) or not re.search(r'ProblemCode\s*:\s*0\b', jobs['windows'][0]):
+         raise ValueError('Windows USB not confirmed Code0')
+     if h.g.evidence.boot_list(jobs['boots'][0])[-1] != boot:
+         raise ValueError('preflight boot history')
+-    scan = old.scan_journal(jobs['kernel'][0], boot, float(sec['uptime'].split()[0]), snap)
+-    write(rec.folder / 'journal-classification.json', scan)
+-    thermal(rec, 'thermal', boot)
+-    baseline_controls = controls(rec, 'program-controls', boot)
+     old.ncm_probe(rec, boot)  # one host probe; device NCM/rescue remain mandatory
+     result = dict(verdict='READY_FOR_REGISTERED_ONE_BOOT', boot_id=boot,
+                   collected_at_epoch=time.time(), battery=battery, device_NCM=True,
+@@ -232,23 +234,24 @@
+         raise TimeoutError('Debian rescue unavailable; no repeated boot')
+     raw, _ = rec.adb('current-state', PLAN['current_command'], timeout=15)
+     sec, boot, battery, snap = identity(raw, phase)
+-    jobs = h.parallel({
+-        'kernel': lambda: rec.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15),
+-        'boots': lambda: rec.adb('boots-after', 'journalctl --list-boots --no-pager', timeout=10),
+-        'windows': lambda: rec.ps('windows-usb', p.PS_USB, timeout=20),
+-        'ncm': lambda: old.ncm_probe(rec, boot)})
++    thermal(rec, 'thermal', boot)
++    actual_controls = controls(rec, 'program-controls', boot) if phase == 'candidate' else None
++    jobs = {}
++    jobs['kernel'] = rec.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15)
++    scan = old.scan_journal(jobs['kernel'][0], boot, float(sec['uptime'].split()[0]), snap)
++    write(rec.folder / 'journal-classification.json', scan)
++    jobs['boots'] = rec.adb('boots-after', 'journalctl --list-boots --no-pager', timeout=20)
++    jobs['windows'] = rec.ps('windows-usb', p.PS_USB, timeout=20)
++    jobs['ncm'] = old.ncm_probe(rec, boot)
+     if p.has_code43(jobs['windows'][0]):
+         raise ValueError('Windows Code43')
+     if before is not None and h.g.evidence.attribute(before, boot, boots_before, jobs['boots'][0]) != 'attributed':
+         raise ValueError('unexplained/missing boot attribution')
+-    scan = old.scan_journal(jobs['kernel'][0], boot, float(sec['uptime'].split()[0]), snap)
+-    write(folder / 'journal-classification.json', scan)
+-    thermal(rec, 'thermal', boot)
+     result = dict(boot_id=boot, battery=battery, device_NCM=True,
+                   host_NCM_probe_status=jobs['ncm'][1], charging_authorized=False,
+                   boot_attribution='attributed' if before is not None else 'missing_failed_candidate_history')
+     if phase == 'candidate':
+-        result['program_controls'] = controls(rec, 'program-controls', boot)
++        result['program_controls'] = actual_controls
+         result['program_history'] = gate.program_history(jobs['kernel'][0], boot)
+     write(folder / 'summary.json', result)
+     return result, jobs['boots'][0]
+@@ -292,7 +295,7 @@
+     rec.adb('remount-rw', 'mount -o remount,rw /mnt/debian', timeout=10)
+     module_root = '/mnt/debian/usr/lib/modules'
+     state, _ = rec.adb('module-layout', f'set -e; test "$(cat /mnt/debian/etc/machine-id)" = 3c2a1b8f2d624db4b5ffdc836050fcf6; '
+-                      f'if test -d {module_root}/.gts9-test310-original; then echo saved; else echo no-saved; fi', timeout=10)
++                      f'if test -d {module_root}/.gts9-test311-original; then echo saved; else echo no-saved; fi', timeout=10)
+     if state.strip() == 'saved':
+         rec.adb('restore-modules', f'sh {h.TMP}/module-swap.sh /mnt/debian restore {h.TMP}/rollback-modules.sha256', timeout=25)
+     elif state.strip() != 'no-saved' or current != PACKAGE['baseline_partitions']['boot']:
+@@ -307,7 +310,7 @@
+     rec.host_adb('normal-reboot', '-s', p.SERIAL, 'reboot', timeout=10)
+     # A failed candidate may never have completed journald. Still verify the
+     # restored baseline's actual identity/thermal/rescue/journal, while retaining
+-    # the missing candidate attribution explicitly (never a clean Test310).
++    # the missing candidate attribution explicitly (never a clean Test311).
+     final = admission(R / ('manual-final-acceptance' if from_recovery else 'final-acceptance'),
+                       'baseline', target, boots)[0]
+     write(R / 'mutation-state.json', dict(rollback_required=False, phase='accepted299-restored', final=final))
+@@ -344,11 +347,11 @@
+     end = p.Recorder(R / 'endpoint')
+     raw, _ = end.adb('current-state', PLAN['current_command'], timeout=15)
+     sec, boot, _, _ = identity(raw, 'candidate', result['boot_id'])
++    write(end.folder / 'program-controls.json', controls(end, 'program-controls', boot))
++    thermal(end, 'thermal', boot)
+     journal, _ = end.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15)
+-    write(end.folder / 'program-controls.json', controls(end, 'program-controls', boot))
+     write(end.folder / 'program-history.json', gate.program_history(journal, boot))
+     write(end.folder / 'journal-classification.json', old.scan_journal(journal, boot, float(sec['uptime'].split()[0]), gate.values(sec['snapshot'])))
+-    thermal(end, 'thermal', boot)
+     return result
+ 
+ 
