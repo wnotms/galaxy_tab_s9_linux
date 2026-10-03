@@ -4,6 +4,15 @@ This is an offline Stage3C design. It does not enable direct charging. The
 vendor audit and unresolved hardware OCP/ADC requirements are entry gates.
 Fixed Stage2 remains the installed fallback and primary build profile.
 
+Current implementation boundary (2026-10-03): this document describes the
+future **active** transaction. Test302 implements native source-owned TCPM PPS
+operations, and Test303 implements an explicitly invoked pump-OFF consumer
+with a battery lease and PM drain. See
+[owned PPS consumer](X710_OWNED_PPS_CONSUMER.md). Those compiled, host-tested
+components do not supply a live pump-ON actuator or qualify physical protection.
+The retained device is accepted299/Test300; Test309's ordinary recovery
+candidate remains undeployed after a normal-cmdline preflight rejection.
+
 ## Admission and state
 
 Use an explicit transaction: SWITCHING -> DIRECT_PREPARE -> PPS_NEGOTIATING
@@ -91,8 +100,11 @@ invalid; such an invalid adapter cannot prove hardware OFF. No live worker or
 periodic scheduling has been added, so no bounded physical cutoff is claimed.
 
 Pure validation/state/action ordering is shared with compiled host fault tests.
-Passive hardware driver exposes ID/ADC/status and OFF only. A future live
-adapter needs standard TCPM power_supply references, device links, a serialized
-worker, PM cancellation and battery ownership APIs; it may not be advertised
-as implemented merely because a pure engine passes mocks. Stage3D live adapter,
-active protection and sensor acceptance are explicitly gated in Test256 results.
+Passive hardware driver exposes ID/ADC/status and OFF only. The pump-OFF
+consumer already integrates standard TCPM power_supply references, real battery
+ownership and a serialized PM cancellation/drain boundary. An active adapter
+still needs checked pump preparation/ON/OFF hardware operations, genuinely
+qualified ADC data, active protection, bounded monitoring and supplier-safe PM
+exit. It may not be advertised as implemented merely because the pure engine
+or pump-OFF consumer passes mocks. Test256's original live-adapter gap is partly
+addressed by Test302/Test303; its active protection and sensor gates remain open.

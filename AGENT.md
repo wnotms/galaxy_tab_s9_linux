@@ -107,6 +107,15 @@ fresh normalbaseline/identity/battery gates required before oneboot+15s test.
 114inputs/7stage seals remain; exact299rollback when safe; PASSretaincandidate.
 Fullgoalactive/Stage3NOTREADY; ADC/OCP/PPS/handoff/PM acceptance remains.
 
+Current architecture documentation now distinguishes historical Test255 policy
+from retained299 hardware and undeployed308/309 candidate. Test302 native TCPM
+and Test303 owned pump-OFF consumer are implemented/compiled/host-tested, not
+physical PPS or active pump acceptance. Three design documents were corrected;
+no source/profile/runner/test changed,114registered309inputs unchanged. Review
+record309validation/architecture-docs-review.json; extra host/build executed:false
+per reviewed prose-only workflow. Current storage reuse rules replace the old
+per-stage full-tree recommendation. No device operation in this docs update.
+
 
 Test308 OFFLINE_ORDINARY_PROGRAM_RECOVERY_QUALIFIED, source158d0dd3. Actual
 readback witness/four stable controls/AICL reduction preserved/one recovery per

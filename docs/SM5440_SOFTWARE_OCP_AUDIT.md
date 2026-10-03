@@ -1,5 +1,14 @@
 # X710 software OCP and transaction evidence admission
 
+Current boundary (2026-10-03): the Test257 findings below are historical source
+evidence, not the current implementation inventory. Test302/Test303 now supply
+the actual native TCPM PPS adapter and owned pump-OFF consumer; default fixed
+charging does not call them. The active transaction core still has no qualified
+pump-ON hardware adapter. No physical cutoff/ADC acceptance has established
+`software_ocp_verified`, and no100ms refusal budget is a vendor hardware timing
+guarantee. Current component status is in
+[charging architecture](X710_CHARGING_ARCHITECTURE.md).
+
 Test257 continues offline work from a3ddd0de. This design precedes code.
 No device access, PPS request, pump activation or configuration/DT change.
 Test255 fixed5V1800/9V1500mA, float4440mV and Stage1 thermal remain frozen.

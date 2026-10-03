@@ -1,5 +1,5 @@
 # X710 mainline charging architecture
-Current continuation: Test303 supplies an explicitly invoked kernel pump-OFF
+Current continuation (2026-10-03): Test303 supplies an explicitly invoked kernel pump-OFF
 PPS consumer, real provider integration, PM drain and source-bound authorization
 release; see [owned consumer](X710_OWNED_PPS_CONSUMER.md). The active core's
 pump actuator/OCP/physical ADC qualification is still incomplete. The historical
@@ -10,12 +10,21 @@ retained Test299/Test300, not Test255. No automatic PPS/direct charging.
 Read [vendor audit](X710_VENDOR_CHARGING_AUDIT.md),
 [register audit](SM5440_REGISTER_AUDIT.md), and
 [transaction design](SM5714_SM5440_HANDOFF.md) first. This design precedes code
-changes and permits offline development only. Current Test255 remains installed.
+changes and permits offline development only. Test255 is the frozen fixed-PD
+behavioral reference, not the current device image. Last read-only Test309
+preflight found accepted299 config/notes,46%/3.854V/31.9°C and responsive ADB,
+but rejected the `lpcharge=1` cmdline before any candidate deployment.
+Test308's ordinary-program recovery candidate is compiled and host-qualified;
+Test309 has not accepted it on hardware. See the current
+[Test309 results](../reference/boot-tests/test-309-ordinary-program-acceptance/RESULTS.md)
+for the entry stop rather than inferring the installed version from this design.
 
 ## Frozen baseline and staged outputs
 
-Baseline commit `ebf4af1c098af1179c69d6f59dcdcb756d03e21a` and its exact
-Test255 config/DTB/modules/manifests are retained. Preserve Linux7.2-rc3,
+Historical fixed-PD baseline commit
+`ebf4af1c098af1179c69d6f59dcdcb756d03e21a` is identified by Test255's
+config/DTB/modules/manifests. Historical image retention follows AGENT.md;
+an old recorded image path is not proof that the image still exists. Preserve Linux7.2-rc3,
 CONFIG_HVC_DCC=n, UPower/USER_NS/container gates, SM5714/ADC5 Gen3, Test253
 userspace, CPU/GPU/Wi-Fi/USB/rootfs and cmdline. Default connector remains
 only fixed5V1800mA/9V1500mA, Sink/Device, DWC3 peripheral. A refactor build is
@@ -31,9 +40,25 @@ a NEW unaccepted image even if config and DTB are identical.
 * Stage3D/E: future independently registered PPS-pump-off and conservative pump
   acceptance, then increments2/2.25/2.5/3A. Not enabled or deployed here.
 
-Use separate worktrees/build directories/artifact directories. Do not edit the
-resolved .config, overload CPU diagnostic profiles, overwrite Test255 outputs,
-or combine passive and active board changes into a default build.
+Reuse the existing incremental directory for each active profile after freezing
+its previous formal outputs and source/config/toolchain identities. Keep
+independent profile outputs and module providers distinct; a new test number
+does not require a copied full tree. Do not edit resolved .config, overload CPU
+diagnostic profiles, overwrite historical evidence, or combine passive and
+active board changes into a default build. AGENT.md's current storage rules
+supersede the original per-stage directory recommendation.
+
+| Component | Implementation evidence | Outstanding acceptance |
+| --- | --- | --- |
+| Ordinary fixed charging | Stage1/Stage2 hardware evidence; Test308 adds exact programming witness and one bounded recovery | Test309 normal-boot entry and ordinary candidate acceptance; fixed9V recovery is a separate scope |
+| TCPM PPS protocol adapter | Test302 actual native TCPM power_supply operations and source-bound ownership, compiled and host-tested | No successful physical PPS roundtrip is claimed |
+| Pump-OFF PPS consumer | Test303 real battery lease/provider integration and PM cancellation/drain, compiled and host-tested | Genuine physical acquisition must satisfy its100ms admission; slow diagnostic observations cannot substitute |
+| SM5440 passive transport | Readback, ADC decoding, OFF checks and passive physical observations | ADC/gauge disagreement and conversion timing remain unresolved; Test305 condition profile is not yet hardware-tested |
+| Direct transaction engine | Actual C entry/refresh/retarget/monitor/fallback/PM functions exercised with faulting host adapters | No live pump-ON actuator, approved active protection or physical cutoff acceptance |
+
+These are separate prerequisites. Passing ordinary recovery does not grant PPS;
+a pump-OFF protocol roundtrip would not grant pump-ON or higher current. Keep
+the accepted fixed path and exact paired rollback available at each transition.
 
 ## Ownership
 
@@ -41,7 +66,8 @@ or combine passive and active board changes into a default build.
 flowchart TD
   TCPC[SM5714 TCPC: registers / IRQ / bounded Request gate] --> TCPM[Stock Linux TCPM: PD/PPS protocol owner]
   TCPM --> FIX[Fixed contract / SM5714 switching charger]
-  TCPM -. future standard power_supply consumer .-> POL[Serialized direct transaction / eligibility / epochs]
+  TCPM --> OFF[Existing explicitly invoked pump-OFF consumer / standard power_supply / source-bound lease]
+  TCPM -. future active hardware adapter .-> POL[Serialized direct transaction / eligibility / epochs]
   POL -. validated hardware operations .-> PUMP[SM5440: ID / ADC / faults / OFF]
   FIX --> PACK[Battery / mandatory IIO pack thermistor]
   PUMP -. active enable presently unavailable .-> PACK
@@ -88,4 +114,7 @@ verified, do not change voltage or enable switching; record a latched fault.
 Vendor defaults with disabled hardware OCP are not silently treated as safe
 protection. Full active policy remains NOT READY pending the staged tests and
 documented sensor/OCP requirements. Offline tests/builds prove bounded code
-behavior, not battery or hardware safety. See Test256 for exact results.
+behavior, not battery or hardware safety. Historical pure-engine results are in
+Test256/Test257. Actual native adapter and owned pump-OFF consumer qualifications
+are recorded separately in Test302 and Test303; neither establishes physical
+direct-charge readiness.

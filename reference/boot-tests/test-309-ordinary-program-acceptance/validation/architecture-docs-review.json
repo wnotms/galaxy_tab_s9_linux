@@ -1,0 +1,55 @@
+{
+  "device_commands_executed": false,
+  "files": {
+    "docs/SM5440_SOFTWARE_OCP_AUDIT.md": "ae42c05c42809404cb794f1519f7944a688ef7f94c980b579fa097e8ca978a46",
+    "docs/SM5714_SM5440_HANDOFF.md": "f7ccfe70e110c492225c6fafad5d3a4523bc5d238b10147042680f61e1b202f8",
+    "docs/X710_CHARGING_ARCHITECTURE.md": "0cb2341619c8e8cbf83ce782f9164703b1dc71b2766160711f5bd43dd616dd96"
+  },
+  "host_tests": {
+    "executed": false,
+    "reason": "reviewed prose-only inventory/provenance update per docs/HOST_TEST_WORKFLOW.md; no executable consumer reads these three documents",
+    "reused_qualification": [
+      "Test308 exact ordinary recovery source/artifacts",
+      "Test309 unchanged 73 affected host tests",
+      "Test302 and Test303 historical native adapter/consumer qualifications; not physical acceptance"
+    ]
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "no kernel/build input changed"
+  },
+  "kernel_config_DTS_driver_runner_test_changes": false,
+  "physical_entry": "Test309 still STOP_NORMAL_CMDLINE_MISMATCH; normal boot confirmation pending",
+  "purpose": "correct current charging architecture inventory without changing candidate source",
+  "registered_Test309_inputs_verified": 114,
+  "relative_links_verified": [
+    [
+      "docs/X710_CHARGING_ARCHITECTURE.md",
+      "X710_OWNED_PPS_CONSUMER.md"
+    ],
+    [
+      "docs/X710_CHARGING_ARCHITECTURE.md",
+      "X710_VENDOR_CHARGING_AUDIT.md"
+    ],
+    [
+      "docs/X710_CHARGING_ARCHITECTURE.md",
+      "SM5440_REGISTER_AUDIT.md"
+    ],
+    [
+      "docs/X710_CHARGING_ARCHITECTURE.md",
+      "SM5714_SM5440_HANDOFF.md"
+    ],
+    [
+      "docs/X710_CHARGING_ARCHITECTURE.md",
+      "../reference/boot-tests/test-309-ordinary-program-acceptance/RESULTS.md"
+    ],
+    [
+      "docs/SM5714_SM5440_HANDOFF.md",
+      "X710_OWNED_PPS_CONSUMER.md"
+    ],
+    [
+      "docs/SM5440_SOFTWARE_OCP_AUDIT.md",
+      "X710_CHARGING_ARCHITECTURE.md"
+    ]
+  ]
+}
