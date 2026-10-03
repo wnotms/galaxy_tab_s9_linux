@@ -2,19 +2,19 @@
   "files": {
     "INPUTS.json": {
       "bytes": 14800,
-      "sha256": "df48dba445d59710d954360a61ef64f3a7f0836a13c07d57f9c61301aacfd7af"
+      "sha256": "8ef848bd8d1e934a88e012b2a5e4ed2f3365ce6e5224d1fcca0414cf2507d2fa"
     },
     "PACKAGE.json": {
       "bytes": 3044,
       "sha256": "538719ccc2ba7aacca27d32aae269ceb9db829dbaba2757cc72cae12323c0a47"
     },
     "README.md": {
-      "bytes": 6007,
-      "sha256": "2708b610449b4137877f765c0c080cbfaef7fcdd25f129a3f646f9f90021cf94"
+      "bytes": 6227,
+      "sha256": "833c9928089083f55bf83717d2e6868a4b6b4e174de2d66e20fb41a0b5e6eada"
     },
     "RESULTS.md": {
-      "bytes": 4886,
-      "sha256": "4e8ea36196b78a24286fc4b45e6f0860948551be8958a3b37355341a54a54d5d"
+      "bytes": 6471,
+      "sha256": "c38d354c98a9bc2d1e21a5f31256d2683007c6f11029a2ea94cab8ae1a58357d"
     },
     "build_package.py": {
       "bytes": 8172,
@@ -29,8 +29,8 @@
       "sha256": "3367011aea13bd0518a380f4d49ea28c6ee853cbb802e2a0983a0baf7d1e75e3"
     },
     "host_flow.py": {
-      "bytes": 20327,
-      "sha256": "86d571bb068cd4bf8d5eb18c60e4187fd2afc047ea3a90174b1af23b00fcee72"
+      "bytes": 21570,
+      "sha256": "294d09d089348361e89f535d90c1514127e256074a78cb7ef455e829cc0f73b9"
     },
     "module-swap.sh": {
       "bytes": 2626,
@@ -92,13 +92,85 @@
       "bytes": 89,
       "sha256": "2e89a9362d4a1d6f183a8ecadfe88096df3b64a5414368b905a142241cb3108c"
     },
+    "preflight-rejected-02/boots-before.command.json": {
+      "bytes": 269,
+      "sha256": "4d9e543ac77efbcca63ebd78e3794b6c869529743069c02c698758881e591fe1"
+    },
+    "preflight-rejected-02/boots-before.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/boots-before.txt": {
+      "bytes": 22593,
+      "sha256": "c6b0711fc68a7f8bf108711eaab8b774be1d7fc2a66c64e84ab8597922fda41d"
+    },
+    "preflight-rejected-02/current-state.command.json": {
+      "bytes": 1136,
+      "sha256": "d1055eb473dfff907c07c7e88adb24de834d5c732b94dc21e1473c0541599777"
+    },
+    "preflight-rejected-02/current-state.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/current-state.txt": {
+      "bytes": 4883,
+      "sha256": "78906dbf5d4ba3c3db1ecb663527cdfed9cd3e99157c7d265e26f187a082a56a"
+    },
+    "preflight-rejected-02/kernel-json.command.json": {
+      "bytes": 270,
+      "sha256": "7dbc048da90bdf2f3d6731f2cb720e3c8dc2001e2323e9671af542021260f6b0"
+    },
+    "preflight-rejected-02/kernel-json.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/kernel-json.txt": {
+      "bytes": 755238,
+      "sha256": "65dc2ae2fa2a57da2910c7732e2d3ae27ede721fd084870151ecb4a0d2d3e623"
+    },
+    "preflight-rejected-02/modules.command.json": {
+      "bytes": 20112,
+      "sha256": "f39f253369b0ab35d7b886da37186cdbb0eaa7ad90cf575152d17d0027269a55"
+    },
+    "preflight-rejected-02/modules.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/modules.txt": {
+      "bytes": 8462,
+      "sha256": "f4072572628b03297e991c3352bff36bb47ff444f7a8fccc9a962b0c67643ac2"
+    },
+    "preflight-rejected-02/partitions.command.json": {
+      "bytes": 378,
+      "sha256": "00ac58e8dd591040782a5b64cc7ca29bf179d3228ff31c1809e79f515334c79c"
+    },
+    "preflight-rejected-02/partitions.stderr": {
+      "bytes": 329,
+      "sha256": "084b0242d2ffe8d063b818766eddb2c97754b429c7205628d187876ea1e4ba89"
+    },
+    "preflight-rejected-02/partitions.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/windows-usb.command.json": {
+      "bytes": 885,
+      "sha256": "48c053932489d62c0e932fbca21c669ddf9974532af70edfe44592cc42e02fb6"
+    },
+    "preflight-rejected-02/windows-usb.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preflight-rejected-02/windows-usb.txt": {
+      "bytes": 616,
+      "sha256": "3a6ae5c5e7cdb38bac8921578fb2cf53cff9309d919c9f7775db938c5935d9d3"
+    },
     "read-controls.py": {
       "bytes": 2011,
       "sha256": "a4c7cd7f4d840c0f96f75ed3291896680d103de2dfb6d461ce269b68aba6d750"
     },
     "registration.json": {
-      "bytes": 5012,
-      "sha256": "c8e587d5b5a6f016119ce53af954372e94e5ef0f82048b26c6ebec8ab3b8de2b"
+      "bytes": 5221,
+      "sha256": "f09cb4d400280aece2e2fa9b0dad710e7dd9a090e7cfc7d13d6f0cf1da6bb87d"
     },
     "rollback-modules.sha256": {
       "bytes": 19503,
@@ -109,8 +181,8 @@
       "sha256": "efcfbec7e78a538b8aa2676c743b8b210f56858fc26d5645a157abb343e74e34"
     },
     "summary.json": {
-      "bytes": 1616,
-      "sha256": "624696858097b116f44ff7a8692b2d598319b2fe6c6fda6d23e858e9612aa6bf"
+      "bytes": 10042,
+      "sha256": "190a42329383583abdadbe534c43398182e8c9e8bf7a18db5db525acf526c827"
     },
     "validation/affected.json": {
       "bytes": 7918,
@@ -139,6 +211,14 @@
     "validation/package-build.txt": {
       "bytes": 3044,
       "sha256": "538719ccc2ba7aacca27d32aae269ceb9db829dbaba2757cc72cae12323c0a47"
+    },
+    "validation/partition-namespace-host.json": {
+      "bytes": 8419,
+      "sha256": "2aafae76e1344c4d30fe102e4a68a1b2ba4479660cb1fcc95730105e23685de7"
+    },
+    "validation/partition-namespace-host.txt": {
+      "bytes": 12305,
+      "sha256": "9e963b566a20302142490470432e423bbd449d30e9e34d5280638be9cd259d2c"
     }
   }
 }

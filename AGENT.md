@@ -92,20 +92,18 @@
 
 ## Current state (2026-10-03)
 
-Test309 READONLY_PREFLIGHT_STOP_NORMAL_CMDLINE_MISMATCH. Current e414c6df boot
-has46%/3.854V/31.9C/Good/present/realpack enabled/SDP500mA/ADB responsive,
-usb0up/WiFi10.139.153.81. Config/notes match accepted299, but lpcharge parameters
-persist/exact registered normalcmdline gate rejected before fullhash/mutation.
-1106sameboot kernelJSON/history/thermal preserved in309preflight-rejected-01;
-no matched CPU/kernel fault/new suspect; known display startup diagnostics kept.
-Boot origin unknown/no reboot issued. Owner asked normal cable-disconnected
-power-on thenPCreconnect; confirmation pending. Candidate/source/package/scope
-unchanged, no flash/PPS/pump/rootfs/module/current/driver/configDT changes.
-Reuse308build and30973hosttests; extra host/build executed:false evidence-only.
-Read309RESULTS/summary; rejected evidence immutable/not reused as READY. Actual
-fresh normalbaseline/identity/battery gates required before oneboot+15s test.
-114inputs/7stage seals remain; exact299rollback when safe; PASSretaincandidate.
-Fullgoalactive/Stage3NOTREADY; ADC/OCP/PPS/handoff/PM acceptance remains.
+Test309 HOST_PARTITION_PATH_FIXED_READY_FOR_FRESH_PREFLIGHT. Owner confirmed
+normal power-on;224ffde1 normalcmdline/confignotes299/43%/3.826V/31C. Second
+readonlypreflight stopped on inheritedTWRP by-name paths absent inDebian;
+allparallel raw preserved309preflight-rejected-02, noBCB/flash/reboot/module/PPS.
+Independent309hostfix usesDebian by-partlabel+resolvedblock PARTNAME guard+
+exactfive unique hashes; recovery/historicalrunners unchanged/noaliasescreated.
+77unique affectedhost PASS0.265s/noerrorfail skip;114inputsresealed onlyhost
+runner/test/registration/README. Kernel308/package/181pair unchanged/no new
+build/full/CI. Freshactualpreflight required before oneboot+15s accepted scope;
+retaincandidate onPASS/exact299rollback onactualfailure. Oldrejected-01 lpcharge
+evidence immutable; no automatic replay of candidate attempt. Fullgoalactive/
+Stage3NOTREADY; ADC/OCP/PPS/handoff/PM remain.
 
 Current architecture documentation now distinguishes historical Test255 policy
 from retained299 hardware and undeployed308/309 candidate. Test302 native TCPM
