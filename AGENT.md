@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+Owner now reports powered on. Fresh bounded checks show no ADB device and
+registered Wi-Fi 10.139.153.84 returns No route to host. No new boot ID,
+kernel identity or charger connection has been observed; current device state
+is unverified. This does not prove a CPU fault or that TWRP remains running.
+Test317 capture NOT EXECUTED; rollback_required=true. Current Wi-Fi IP and
+physical connection are pending. Raw evidence and hashes are under Test317
+post-install-availability. Status-only tests/build executed:false; reuse unchanged
+73 affected host tests and Test316 build qualification. No reflash/reboot/PPS/pump.
+
 Unintegrated pump register layer now supplies actualchecked ENHIZ/CHG_ON/OFF
 plus existingsettings/watchdog cleanup, noKbuild/caller/activation. Disabledby
 zero init; mandatoryqualifiedOCP/lease/realPPS ONLINE2/mirrorednativeepochs/
