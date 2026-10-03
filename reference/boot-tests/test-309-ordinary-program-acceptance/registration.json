@@ -63,5 +63,7 @@
   "maximum_new_program_recoveries": 1,
   "trigger_program_loss": false,
   "register_reads": "one guarded atomic pointer/read of seven stable ordinary charger controls at admission and endpoint; no INT clear/configuration data write",
-  "charging_authorization_scope": "existing ordinary SM5714 switching only; no host grant for PPS/pump/physical ADC"
+  "charging_authorization_scope": "existing ordinary SM5714 switching only; no host grant for PPS/pump/physical ADC",
+  "preflight_partition_namespace": "/dev/disk/by-partlabel; resolved block device kernel PARTNAME verified; exactly all five matching hashes",
+  "recovery_partition_namespace": "/dev/block/by-name unchanged"
 }

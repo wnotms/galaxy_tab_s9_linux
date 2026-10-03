@@ -31,6 +31,29 @@ def load(name, path):
 gate = load('ordinary309_gate', R / 'gate.py')
 old = load('ordinary309_thermal', R.parent / 'test-300-passive-thermal-registration/host_flow.py')
 h = old.h
+PARTITION_NAMES = ('boot', 'vendor_boot', 'init_boot', 'dtbo', 'vbmeta')
+# Debian udev uses by-partlabel; recovery uses its separate by-name namespace.
+# Verify the resolved block device's kernel PARTNAME before reading its bytes.
+DEBIAN_PARTS = ('set -e; for name in ' + ' '.join(PARTITION_NAMES) + '; do '
+    'path=/dev/disk/by-partlabel/$name; dev=$(readlink -f "$path"); '
+    'test -b "$dev"; node=${dev##*/}; '
+    'test "$(sed -n "s/^PARTNAME=//p" /sys/class/block/$node/uevent)" = "$name"; '
+    'sha256sum "$path"; done')
+
+
+def require_debian_partitions(raw, expected):
+    observed = {}
+    for line in raw.splitlines():
+        fields = line.split()
+        if len(fields) != 2 or not re.fullmatch('[0-9a-f]{64}', fields[0]):
+            raise ValueError('invalid Debian partition hash row')
+        path = fields[1]
+        name = path.removeprefix('/dev/disk/by-partlabel/')
+        if path != '/dev/disk/by-partlabel/' + name or name not in PARTITION_NAMES or name in observed:
+            raise ValueError('invalid/duplicate Debian partition label')
+        observed[name] = fields[0]
+    if set(expected) != set(PARTITION_NAMES) or observed != expected:
+        raise ValueError('allfive Debian partition identity')
 
 
 def read(path):
@@ -166,12 +189,12 @@ def preflight():
                'test "$(find . -type f | wc -l)" = 181; printf %s ' +
                shlex.quote(modules) + ' | sha256sum -c -')
     jobs = h.parallel({
-        'partitions': lambda: rec.adb('partitions', h.PARTS, timeout=20),
+        'partitions': lambda: rec.adb('partitions', DEBIAN_PARTS, timeout=20),
         'modules': lambda: rec.adb('modules', command, timeout=20),
         'boots': lambda: rec.adb('boots-before', 'journalctl --list-boots --no-pager', timeout=10),
         'kernel': lambda: rec.adb('kernel-json', 'journalctl -k -b -o json --no-pager', timeout=15),
         'windows': lambda: rec.ps('windows-usb', p.PS_USB, timeout=20)})
-    h.require_partitions(jobs['partitions'][0], PACKAGE['baseline_partitions'])
+    require_debian_partitions(jobs['partitions'][0], PACKAGE['baseline_partitions'])
     if p.has_code43(jobs['windows'][0]) or not re.search(r'ProblemCode\s*:\s*0\b', jobs['windows'][0]):
         raise ValueError('Windows USB not confirmed Code0')
     if h.g.evidence.boot_list(jobs['boots'][0])[-1] != boot:

@@ -27,6 +27,9 @@ package creation, import, host tests or this registration.
    Save boot history/full kernel JSON/real pack zone/Windows USB evidence. One
    host NCM probe is recorded; host-only timeout with device NCM/ADB healthy
    does not cause repeated waits. Low battery or lpcharge stops before BCB.
+   Debian hashes use `/dev/disk/by-partlabel/` after checking each resolved block
+   device's kernel PARTNAME. TWRP deployment/readback keeps its separate
+   `/dev/block/by-name/` paths; no device-side alias is created.
 2. Registration/source/stage must be committed and pushed to origin/test.
    Recheck one live safety/identity boundary within300s; from the first possible
    BCB request record cleanup required. Use the existing normal-reboot recovery

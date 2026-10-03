@@ -1,8 +1,10 @@
 """Test309 pure evidence and mocked lifecycle; import never contacts hardware."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import tempfile
+import subprocess
 import unittest
 from unittest import mock
 
@@ -58,9 +60,86 @@ def journal(messages):
         _SOURCE_BOOTTIME_TIMESTAMP=str(stamp))) for stamp, message in messages)
 
 
+class PreflightTests(unittest.TestCase):
+    def test_debian_preflight_uses_label_hashes_without_touching_recovery_or_bcb(self):
+        m.configure()
+        with tempfile.TemporaryDirectory() as tmp:
+            folder=Path(tmp); (folder/'preflight').mkdir()
+            (folder/'rollback-modules.sha256').write_text('fixture module manifest\n')
+            commands=[]
+            def adb(name, command, **kwargs):
+                commands.append((name,command))
+                if name=='current-state': return identity('baseline'),0
+                if name=='partitions': return ''.join(value+'  /dev/disk/by-partlabel/'+key+'\n'
+                    for key,value in m.PACKAGE['baseline_partitions'].items()),0
+                if name=='modules': return 'fixture: OK\n',0
+                if name=='boots-before': return '0 '+BOOT+' boot\n',0
+                if name=='kernel-json': return journal([(0,'Linux version fixture')]),0
+                raise AssertionError('unexpected device operation: '+name)
+            rec=mock.Mock(folder=folder/'preflight'); rec.adb.side_effect=adb
+            rec.ps.return_value=('ProblemCode : 0\n',0)
+            with mock.patch.object(m,'R',folder), mock.patch.object(m,'verify_inputs'), \
+                 mock.patch.object(m.p,'Recorder',return_value=rec), \
+                 mock.patch.object(m.old,'scan_journal',return_value={'fault_counts':{}}), \
+                 mock.patch.object(m,'thermal'), mock.patch.object(m.old,'ncm_probe'), \
+                 mock.patch.object(m.h,'require_partitions') as recovery_parser:
+                result=m.preflight()
+            self.assertEqual(result['verdict'],'READY_FOR_REGISTERED_ONE_BOOT')
+            self.assertEqual(dict(commands)['partitions'],m.DEBIAN_PARTS)
+            recovery_parser.assert_not_called()
+            self.assertNotIn('reboot', ' '.join(command for _,command in commands))
+            self.assertFalse((folder/'mutation-state.json').exists())
+
+
 class GateTests(unittest.TestCase):
     def setUp(self):
         m.configure()
+
+    def test_debian_and_recovery_partition_namespaces_are_distinct(self):
+        expected = {name: str(i) * 64 for i, name in enumerate(m.PARTITION_NAMES, 1)}
+        raw = ''.join(value+'  /dev/disk/by-partlabel/'+name+'\n' for name,value in expected.items())
+        m.require_debian_partitions(raw, expected)
+        self.assertIn('/dev/block/by-name/boot', m.h.PARTS)
+        self.assertNotIn('/dev/block/by-name/', m.DEBIAN_PARTS)
+        with self.assertRaises(ValueError):
+            m.require_debian_partitions(raw.replace('/dev/disk/by-partlabel/', '/dev/block/by-name/'), expected)
+
+    def test_debian_hash_set_requires_five_unique_exact_rows(self):
+        expected = {name: str(i)*64 for i,name in enumerate(m.PARTITION_NAMES,1)}
+        lines = [value+'  /dev/disk/by-partlabel/'+name for name,value in expected.items()]
+        for raw in ('', '\n'.join(lines[:-1]), '\n'.join(lines+[lines[0]]),
+                    '\n'.join(lines).replace('1'*64, '0'*64),
+                    '\n'.join(lines).replace('/boot', '/boot_a'),
+                    '\n'.join(lines)+'\nunexpected output',
+                    '\n'.join(lines).replace('1'*64, 'invalid')):
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                m.require_debian_partitions(raw, expected)
+
+    def test_debian_partition_command_checks_real_kernel_labels_before_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); labels=root/'labels'; sysfs=root/'sys'; devices=root/'dev'
+            for folder in (labels,sysfs,devices): folder.mkdir()
+            expected={}
+            for i,name in enumerate(m.PARTITION_NAMES):
+                node='disk'+str(i); dev=devices/node; dev.write_bytes(name.encode())
+                (labels/name).symlink_to(dev); (sysfs/node).mkdir()
+                (sysfs/node/'uevent').write_text('PARTNAME='+name+'\n')
+                expected[name]=hashlib.sha256(dev.read_bytes()).hexdigest()
+            # Use real readlink/sed/hash operations; only mock the block-device
+            # predicate because host fixture files must not create live devices.
+            command=m.DEBIAN_PARTS.replace('/dev/disk/by-partlabel', str(labels)).replace('/sys/class/block', str(sysfs))
+            prefix='test() { if [ "$1" = -b ]; then builtin test -f "$2"; else builtin test "$@"; fi; }; '
+            result=subprocess.run(['bash','-c',prefix+command],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            m.require_debian_partitions(result.stdout.replace(str(labels), '/dev/disk/by-partlabel'),expected)
+            (sysfs/'disk0/uevent').write_text('PARTNAME=recovery\n')
+            result=subprocess.run(['bash','-c',prefix+command],capture_output=True,text=True)
+            self.assertNotEqual(result.returncode,0)
+            self.assertEqual(result.stdout,'')
+            (sysfs/'disk0/uevent').write_text('PARTNAME=boot\n'); (labels/'boot').unlink()
+            result=subprocess.run(['bash','-c',prefix+command],capture_output=True,text=True)
+            self.assertNotEqual(result.returncode,0)
+            self.assertEqual(result.stdout,'')
 
     def test_baseline_candidate_identity_and_new_config_are_distinct(self):
         for phase in ('baseline', 'candidate'):

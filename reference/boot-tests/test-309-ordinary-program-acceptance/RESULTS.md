@@ -1,10 +1,35 @@
 # Test309 registration and offline runner qualification
 
-Verdict: **READONLY_PREFLIGHT_STOP_NORMAL_CMDLINE_MISMATCH**.
+Verdict: **HOST_PARTITION_PATH_FIXED_READY_FOR_FRESH_PREFLIGHT**.
 Kernel source `158d0dd376dac2770cd72582be1bd1fe2474e71d`; exact Test308 qualification reused.
 Registration qualification required no device access. The subsequent read-only
 preflight below stopped before deployment; no new build/full regression, reboot,
 partition write, module replacement, PPS request or pump activation occurred.
+
+## Normal boot and host-only path correction
+
+Owner confirmed normal power-on. New224ffde1-c182-4f8b-af83-412c3da5024e boot
+matches the registered normal cmdline, accepted299 config/notes and live entry:
+43%,3.826V,31°C. The second preflight stopped because the inherited partition
+command used TWRP `/dev/block/by-name/` paths absent in Debian. Preserve every
+parallel job's raw output in `preflight-rejected-02/`. No BCB or write occurred;
+this host collection defect is not a CPU/charging failure or candidate boot.
+
+The independent Test309 runner now reads Debian `/dev/disk/by-partlabel/` paths,
+verifies each resolved block device's sysfs PARTNAME, and requires exactly five
+unique valid hashes matching accepted values. Recovery aliases and historical
+runners stay unchanged. No guessed disk numbers, alias creation or device-side
+configuration.77 unique affected host tests passed with zero failure/error/skip,
+including real shell/hash operations with fixture labels, missing/mislabelled
+devices, incomplete/duplicate/wrong hash sets and mocked preflight routing.
+The block-device predicate alone is mocked in host fixtures; physical preflight
+uses the real predicate. Exact elapsed time/raw output are in
+`validation/partition-namespace-host.json` and `.txt`.
+
+Only runner/host test and registration metadata changed;114 source inputs are
+resealed for this host correction. Qualified Test308 kernel/package/module
+bytes are reused; no new kernel build/full regression or Actions. Commit/push
+the correction, then execute a fresh successful preflight before deployment.
 
 ## First read-only preflight
 
