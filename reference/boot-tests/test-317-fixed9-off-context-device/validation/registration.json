@@ -1,0 +1,33 @@
+{
+  "verdict": "REGISTERED_OFF_CONTEXT_READY_NOT_EXECUTED",
+  "kernel_qualification": "Test316",
+  "kernel_build_executed": false,
+  "reason": "exact qualified316 source/config/artifacts unchanged",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5440_fixed9_device",
+      "test_sm5440_condition_accepted_recovery"
+    ],
+    "tests": 73,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 0.7454697339999257,
+    "full": false,
+    "routing_changed": false
+  },
+  "syntax": "PASS",
+  "source_inputs": 97,
+  "all_other_partitions_unchanged": true,
+  "DTB_unchanged": true,
+  "modules": 181,
+  "PPS": false,
+  "pump_ON": false,
+  "rollback": "unconditional exact accepted311 boot/original181",
+  "retention": {
+    "window": "308-317",
+    "expired307_images": [],
+    "rollback_original": "Test308 accepted311 counted by use Test317"
+  }
+}

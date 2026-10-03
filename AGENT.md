@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test316，窗口为 **Test307–Test316**；没有生成镜像的轮次仍占一轮。
+  编号为 Test317，窗口为 **Test308–Test317**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test317 FIXED9_OFF_CONTEXT_REGISTERED_NOT_EXECUTED. Qualified316 kernel only,
+73 affected host PASS0.745s/no skips, syntaxPASS; no rebuild/full/routing/Actions.
+One source-bound OFF context/ENHIZ comparison, diagnostic500ms notactive100ms;
+no PPS/pump/current raise. Install/readback boot+181 in validatedTWRP, clearBCB/
+unmount, STOPthere; owner attachesLenovoC2fixed9 BEFOREboot, authenticatedWi-Fi
+capture/fullkernel/epochs/liveSTATUS/15s endpoint; firstfaultSTOP. Unconditional
+exactaccepted311 rollback and device rescue. Test313 remains terminal/no5Vreplay.
+Window308-317 no expired307 images found. Installed311 unchanged1f1e01bf/29%/
+3.770V31.9C at shortread; fresh full rescue preflight mandatory before mutation.
+Fullchargingport NOTREADY; no candidate deployment or hardware acceptance yet.
 
 Test316 FIXED_CONTRACT_CLASSIFICATION_OFFLINE_QUALIFIED_NOT_DEPLOYED,
 source8b77b426. Match unchanged standard producer capability labels, active
