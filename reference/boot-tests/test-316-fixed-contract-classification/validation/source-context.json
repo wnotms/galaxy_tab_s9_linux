@@ -1,0 +1,15 @@
+{
+  "sources": {
+    ".work/linux-mainline/drivers/usb/typec/tcpm/tcpm.c": "3bbadbb3089cea167c680ca83b1599762821738c0e5134654ef16c4f5ca31003",
+    ".work/linux-mainline/include/linux/usb/pd.h": "eec0ac4127a66a5a4768f2560b4df5a5f6e7b971245ad0b2ad462292a0660ad6",
+    "kernel/drivers/sm5714_usbpd.c": "a0a7fbe59ccffbaacdd52bd4317ace75a15b78ef5bb779252b65fd923b54ab49",
+    "reference/boot-tests/test-273-usbc1-source-capabilities/source/initial-state.txt": "6265cb33bd54311a78896f6294fbb8129b409c2cc351325e2175c97ce08a3ba4"
+  },
+  "TCPM_functions": [
+    "tcpm_pd_select_pdo",
+    "tcpm_psy_get_online"
+  ],
+  "existing_producer": "sm5714_pd_capable + sm5714_read_contract_pinned; fixed API remains unchanged",
+  "measured_fixed9_capability_label": "Test273 ONLINE1 voltage9000000 current1500000 USB_TYPE_PD_PPS",
+  "not_PPS_or_AVS_activation": true
+}

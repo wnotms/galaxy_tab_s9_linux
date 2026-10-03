@@ -36,6 +36,7 @@ static u64 ktime_get_boottime(void){return clock_ms*1000000ULL;}
 ''' + '#include "' + str(ROOT / 'kernel/drivers/sm5440-hw.h') + '"\n'
     code += function(source, 'struct sm5440_sample {') + ';\n'
     code += '#include \"' + str(ROOT / 'kernel/drivers/sm5440-control.h') + '\"\n'
+    code += '#include \"' + str(ROOT / 'kernel/drivers/sm5714-stage2.h') + '\"\n'
     code += function(source, 'struct sm5440_context {') + ';\n'
     code += function(source, 'struct sm5440_direct {') + ';\n'
     code += r'''

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test315，窗口为 **Test306–Test315**；没有生成镜像的轮次仍占一轮。
+  编号为 Test316，窗口为 **Test307–Test316**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test316 FIXED_SOURCE_CLASS_READINESS_IMPLEMENTED_PENDING_BUILD. Test315 not
+physically deployed: its exact-PD check incorrectly rejects C1 fixed9/PD_PPS,
+and immediate5V refusal can precede TCPM normal9V negotiation. Use same four
+capability labels as existing stable producer; still ONLINE1/!pps/fixed9<=1.5A.
+Only initial coherent5V+fixed9>=1A PDO may wait, same instance/source epoch,
+40calls/4s elapsed; no protocol setter/I2C/lease until9V, late result refused.
+Raw firststandby/count/timing retained.128 affected host PASS1.931s; ordinary
+preprocessed paths unchanged.315 symbols/79 inputs+formal hashes frozen before
+same cache reuse. Window307-316;306 reused305, expired305 images already deleted.
+No device operation/PPS/ON/TCPMcore/battery/DTS/USB/rootfs/full/Actions. Fullport
+NOT READY. Next qualify corrected candidate before separate physical registration.
+
 
 Test315 FIXED9_OFF_CONTEXT_OFFLINE_QUALIFIED_NOT_DEPLOYED, source30cf862a.
 Existing isolated ADC-condition profile only; source/pack/physical9V + checked

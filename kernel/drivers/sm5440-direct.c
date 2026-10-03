@@ -25,6 +25,7 @@
 
 #include "sm5440-hw.h"
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+#include <linux/usb/pd.h>
 #include "sm5440-control.h"
 #include "sm5714-stage2.h"
 #endif
@@ -65,9 +66,11 @@ struct sm5440_sample {
 struct sm5440_context {
 	struct sm5440_sample initial, confirmation, before, handoff;
 	struct sm5440_control controls;
+	struct sm5714_pd_snapshot standby;
 	u64 instance, source_generation, budget_generation, lease;
 	u64 started_ms, completed_ms, pack_started_ms, pack_completed_ms;
 	unsigned int budget_ma;
+	unsigned int readiness_checks;
 	int capacity, pack_uv, pack_decic, phase, error, cleanup_error;
 	bool inactive_revblk, lease_retained;
 };
@@ -570,6 +573,19 @@ static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 	sm5440_snapshot_sample_show(seq, "context_confirmation", &snapshot.context.confirmation);
 	sm5440_snapshot_sample_show(seq, "context_before", &snapshot.context.before);
 	sm5440_snapshot_sample_show(seq, "context_handoff", &snapshot.context.handoff);
+	seq_printf(seq, "context_readiness_checks=%u\ncontext_standby_instance=%llu\n"
+		   "context_standby_source_generation=%llu\ncontext_standby_started_ms=%llu\n"
+		   "context_standby_completed_ms=%llu\ncontext_standby_budget_mv=%u\n"
+		   "context_standby_budget_ma=%u\ncontext_standby_usb_type=%d\n"
+		   "context_standby_nr_source_pdos=%u\ncontext_standby_source_pdos=%*ph\n",
+		   snapshot.context.readiness_checks,
+		   (unsigned long long)snapshot.context.standby.instance,
+		   (unsigned long long)snapshot.context.standby.source_generation,
+		   (unsigned long long)snapshot.context.standby.started_ms,
+		   (unsigned long long)snapshot.context.standby.completed_ms,
+		   snapshot.context.standby.budget_mv, snapshot.context.standby.budget_ma,
+		   snapshot.context.standby.usb_type, snapshot.context.standby.nr_source_pdos,
+		   (int)sizeof(snapshot.context.standby.source_pdos), snapshot.context.standby.source_pdos);
 #endif
 	return 0;
 }
@@ -980,6 +996,43 @@ static void sm5440_startup_gauge(struct sm5440_sample *sample)
 }
 
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
+/* USB_TYPE labels source capabilities, not the active protocol mode.
+ * Match the stable standard snapshot producer; ONLINE=1/!pps remains mandatory.
+ * Linux7.2 tcpm_pd_select_pdo()/tcpm_psy_get_online(), Test273 fixed9/PD_PPS.
+ */
+static bool sm5440_context_pd_capable(int type)
+{
+	return type == POWER_SUPPLY_USB_TYPE_PD || type == POWER_SUPPLY_USB_TYPE_PD_PPS ||
+		type == POWER_SUPPLY_USB_TYPE_PD_SPR_AVS ||
+		type == POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS;
+}
+
+/* Readiness only: TCPM may expose fixed5V standby before its normal9V request.
+ * No PDO selection/setter or physical grant here. Never wait on an APDO-only
+ *9V offer, weak source, invalid snapshot or changed source epoch.
+ */
+static bool sm5440_context_waitable_fixed5(const struct sm5714_pd_snapshot *s)
+{
+	u64 now = ktime_to_ms(ktime_get_boottime());
+	unsigned int i;
+
+	if (!s->instance || !s->source_generation || !s->started_ms ||
+	    now < s->completed_ms || s->completed_ms < s->started_ms ||
+	    now - s->started_ms > SM5440_PASSIVE_OBSERVATION_MS ||
+	    s->online != 1 || !sm5440_context_pd_capable(s->usb_type) ||
+	    s->pps_contract || !s->charge_requested || s->budget_mv != 5000 ||
+	    s->budget_ma < 100 || s->budget_ma > SM5714_FIXED_5V_MA ||
+	    s->voltage_uv != 5000000 || s->current_ua != s->budget_ma * 1000U ||
+	    !s->nr_source_pdos || s->nr_source_pdos > SM5714_SOURCE_PDO_MAX)
+		return false;
+	for (i = 0; i < s->nr_source_pdos; i++)
+		if (pdo_type(s->source_pdos[i]) == PDO_TYPE_FIXED &&
+		    pdo_fixed_voltage(s->source_pdos[i]) == 9000 &&
+		    pdo_max_current(s->source_pdos[i]) >= 1000)
+			return true;
+	return false;
+}
+
 static void sm5440_context_publish(struct sm5440_direct *sm,
 				   struct sm5440_context *context, int phase)
 {
@@ -1008,7 +1061,7 @@ static int sm5440_context_source(struct sm5440_direct *sm,
 		return -ESTALE;
 	if (!after->instance || !after->source_generation || after->budget_mv != 9000 ||
 	    after->budget_ma < 1000 || after->budget_ma > SM5714_FIXED_9V_MA ||
-	    after->online != 1 || after->usb_type != POWER_SUPPLY_USB_TYPE_PD ||
+	    after->online != 1 || !sm5440_context_pd_capable(after->usb_type) ||
 	    after->voltage_uv != 9000000 ||
 	    after->current_ua != after->budget_ma * 1000U ||
 	    !after->charge_requested || after->pps_contract)
@@ -1141,6 +1194,7 @@ static int sm5440_fixed_context_cycle(struct sm5440_direct *sm,
 	struct sm5440_context c = {};
 	struct sm5714_pd_snapshot fixed = {}, after = {};
 	struct sm5440_sample *confirm;
+	bool waitable;
 	int ret = -ENODATA, i;
 
 	mutex_lock(&sm->io_lock);
@@ -1152,12 +1206,28 @@ static int sm5440_fixed_context_cycle(struct sm5440_direct *sm,
 	mutex_unlock(&sm->io_lock);
 	c.started_ms = ktime_to_ms(ktime_get_boottime());
 	sm5440_context_publish(sm, &c, 1);
-	/* Only not-yet-published/initializing source state gets readiness waits.
-	 * No register/charging mutation and no retry after an actual refusal.
+	/* Only initializing state or source-bound5V standby gets readiness waits.
+	 * No register/charging mutation; no retry after an actual admission/fault.
 	 */
 	for (i = 0; i < 40; i++) {
 		ret = sm5440_context_source(sm, NULL, &fixed, 0);
-		if (ret != -ENODEV && ret != -ENODATA && ret != -EAGAIN && ret != -EBUSY)
+		c.readiness_checks++;
+		if (ktime_to_ms(ktime_get_boottime()) < c.started_ms ||
+		    ktime_to_ms(ktime_get_boottime()) - c.started_ms > 4000) {
+			ret = -ETIMEDOUT;
+			break;
+		}
+		waitable = ret == -EPERM && sm5440_context_waitable_fixed5(&fixed);
+		if ((!ret || waitable) && c.standby.instance &&
+		    (c.standby.instance != fixed.instance ||
+		     c.standby.source_generation != fixed.source_generation)) {
+			ret = -ESTALE;
+			break;
+		}
+		if (!c.standby.instance && waitable)
+			c.standby = fixed;
+		if (!waitable && ret != -ENODEV && ret != -ENODATA &&
+		    ret != -EAGAIN && ret != -EBUSY)
 			break;
 		if (READ_ONCE(sm->stopped) || READ_ONCE(sm->dying)) {
 			ret = -ESHUTDOWN;
@@ -1165,6 +1235,8 @@ static int sm5440_fixed_context_cycle(struct sm5440_direct *sm,
 		}
 		msleep(100);
 	}
+	if (i == 40 && c.standby.instance)
+		ret = -ETIMEDOUT;
 	if (ret)
 		goto done;
 	c.instance = fixed.instance;

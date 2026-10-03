@@ -31,7 +31,8 @@ class FixedContextTests(unittest.TestCase):
 #define WRITE_ONCE(x,v) ((x)=(v))
 enum power_supply_property {POWER_SUPPLY_PROP_PRESENT,POWER_SUPPLY_PROP_HEALTH,
  POWER_SUPPLY_PROP_CAPACITY,POWER_SUPPLY_PROP_VOLTAGE_NOW,POWER_SUPPLY_PROP_TEMP};
-enum {POWER_SUPPLY_HEALTH_GOOD=1,POWER_SUPPLY_USB_TYPE_PD=3};
+enum {POWER_SUPPLY_HEALTH_GOOD=1,POWER_SUPPLY_USB_TYPE_PD=3,POWER_SUPPLY_USB_TYPE_PD_PPS=4,
+ POWER_SUPPLY_USB_TYPE_PD_SPR_AVS=5,POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS=6};
 union power_supply_propval {int intval;};
 static struct power_supply supplier;
 static void foreign(void){if(depth)errors++;}
@@ -53,10 +54,27 @@ static int power_supply_get_property(struct power_supply *p,enum power_supply_pr
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *s){
  foreign();source_calls++;memset(s,0,sizeof(*s));
  if(scenario==29)return -ENODATA;
+ if(scenario==46){clock_ms+=400;return -ENODATA;}
  s->instance=1;s->source_generation=1;s->budget_generation=1;
  s->started_ms=s->completed_ms=clock_ms;s->budget_mv=9000;s->budget_ma=1500;
  s->online=1;s->usb_type=POWER_SUPPLY_USB_TYPE_PD;
  s->voltage_uv=9000000;s->current_ua=1500000;s->charge_requested=true;
+
+ if(scenario>=32 && scenario<=34)s->usb_type=scenario-28;
+ if(scenario==35)s->usb_type=0;if(scenario==44)s->online=2;
+ if(scenario>=36 && scenario<=43){
+  s->nr_source_pdos=2;s->source_pdos[0]=(100U<<10)|300;
+  s->source_pdos[1]=(180U<<10)|300;
+  if(scenario!=36 || source_calls<=3){s->budget_mv=5000;s->voltage_uv=5000000;
+   s->budget_ma=500;s->current_ua=500000;}
+  else s->budget_generation=2;
+  if(scenario==38 && source_calls>=2)s->source_generation++;
+  if(scenario==39)s->source_pdos[1]=(3U<<30)|(110U<<17)|(50U<<8)|60;
+  if(scenario==40)s->source_pdos[1]=(180U<<10)|99;
+  if(scenario==41)s->current_ua=1500000;
+  if(scenario==42 && source_calls==2)current->stopped=true;
+  if(scenario==43)s->nr_source_pdos=1;
+ }
  if(scenario==1){s->budget_mv=5000;s->voltage_uv=5000000;}
  if(scenario==2)s->pps_contract=true;
  if(scenario==3)s->started_ms-=501;
@@ -74,7 +92,18 @@ int sm5714_battery_switching_check(u64 l){
  foreign();checks++;if(l!=99)errors++;return scenario==18?-ESTALE:0;}
 '''
         code += re.sub(r'^#include[^\n]*\n', '', (ROOT/'kernel/drivers/sm5440-control.c').read_text(), flags=re.M)
-        for name in ['static void sm5440_startup_gauge(',
+        pd = (ROOT / '.work/linux-mainline/include/linux/usb/pd.h').read_text()
+        code += function(pd, 'enum pd_pdo_type {') + ';\n'
+        for name in ['PDO_TYPE_SHIFT', 'PDO_TYPE_MASK', 'PDO_FIXED_VOLT_SHIFT',
+                     'PDO_VOLT_MASK', 'PDO_VAR_MAX_CURR_SHIFT', 'PDO_CURR_MASK']:
+            code += re.search(r'^#define '+name+r'\s+[^\n]+', pd, re.M)[0] + '\n'
+        for name in ['static inline enum pd_pdo_type pdo_type(',
+                     'static inline unsigned int pdo_fixed_voltage(',
+                     'static inline unsigned int pdo_max_current(']:
+            code += function(pd, name) + '\n'
+        for name in ['static bool sm5440_context_pd_capable(',
+                     'static bool sm5440_context_waitable_fixed5(',
+                     'static void sm5440_startup_gauge(',
                      'static void sm5440_context_publish(', 'static int sm5440_context_source(',
                      'static int sm5440_context_pack(', 'static int sm5440_context_observe(',
                      'static bool sm5440_context_physical(', 'static bool sm5440_context_inactive(',
@@ -246,3 +275,36 @@ int context_case(int scen,int failure,int second,long long *out){
                           'sm5714_battery_switching_release','SM5440_MODE_ON']:
             self.assertNotIn(forbidden,body)
         self.assertIn('sample->pre_status',function(source,'static int sm5440_condition_begin('))
+
+    def test_augmented_source_capability_labels_still_accept_only_fixed9(self):
+        for scenario in [32,33,34]:
+            ret,r=self.run_case(scenario);self.assertEqual(ret,0)
+            self.assertEqual(r[8],1);self.assertEqual(r[20],0)
+        for scenario in [35,44,2]:
+            ret,r=self.run_case(scenario);self.assertEqual(ret,-errno.EPERM)
+            self.assertEqual([r[0],r[9],r[40]],[0,0,0])
+
+    def test_fixed5_negotiation_standby_then_same_source9_admitted_once(self):
+        ret,r=self.run_case(36);self.assertEqual(ret,0)
+        self.assertEqual(r[9],1);self.assertGreaterEqual(r[11],4)
+        _,clean=self.run_case();self.assertEqual(r[0],clean[0])
+        self.assertEqual(r[39]-clean[39],300)
+
+    def test_fixed5_wait_is_bounded_readonly_and_never_selects_voltage(self):
+        ret,r=self.run_case(37);self.assertEqual(ret,-errno.ETIMEDOUT)
+        self.assertEqual([r[0],r[9],r[11],r[39],r[40]],[0,0,40,5000,0])
+
+    def test_standby_source_epoch_change_or_pm_stops_without_bus(self):
+        for scenario,err in [(38,errno.ESTALE),(42,errno.ESHUTDOWN)]:
+            ret,r=self.run_case(scenario);self.assertEqual(ret,-err)
+            self.assertEqual([r[0],r[9],r[11],r[40]],[0,0,2,0])
+
+    def test_apdo_only_weak_missing9_or_mismatched_snapshot_not_waited_out(self):
+        for scenario in [39,40,41,43]:
+            ret,r=self.run_case(scenario);self.assertEqual(ret,-errno.EPERM)
+            self.assertEqual([r[0],r[9],r[11],r[40]],[0,0,1,0])
+
+    def test_slow_source_reads_cannot_extend_readiness_to_twenty_seconds(self):
+        ret,r=self.run_case(46);self.assertEqual(ret,-errno.ETIMEDOUT)
+        self.assertLessEqual(r[11],9);self.assertLessEqual(r[39],5400)
+        self.assertEqual([r[0],r[9],r[40]],[0,0,0])

@@ -54,3 +54,22 @@ lease failure, source change/detach/PM at each stage, control/condition/cleanup
 faults and successful OFF comparison with lease retained. Preserve old transaction
 fault tests and ordinary preprocessing equality. Standard pinned ARM64 build,
 source/config/DT/protected/module audit and W1/sparse precede physical registration.
+
+## Test316 readiness correction
+
+The initial Test315 PD-only/immediate5V refusal was overly strict. Pinned TCPM
+reports source capabilities in USB_TYPE, actual fixed/PPS/AVS via ONLINE1/2/3;
+Test273's C1 fixed9 capture has PD_PPS. Current diagnostic accepts the same four
+capability labels as its stable snapshot producer, still requires ONLINE1 and
+!pps_contract. This does not authorize PPS/AVS or any voltage above fixed9.
+
+Only during initial readiness, a coherent fixed5V100..1800mA snapshot with a
+fixed9V>=1A source PDO may wait for TCPM's ordinary negotiation. Save the first
+snapshot, pin instance/source generation and require unchanged epoch when9V
+arrives. No PDO request/setter, converter/charger write, physical grant or fault
+retry; APDO-only/weak/missing9V sources remain immediately refused. Bound both
+40 read attempts and4s elapsed readiness (an in-flight supplier call can return
+later; the late result is refused). Accepted9V budget/source gates and500ms
+measurement/100ms active/release limits remain unchanged. Expose readiness count
+and original standby/capability timing in read-only evidence. Ordinary builds
+remain preprocessed-identical; offline correction precedes physical registration.
