@@ -1,0 +1,52 @@
+{
+  "verdict": "OFFLINE_PPS_PARK_RESUME_QUALIFIED_UNINTEGRATED",
+  "created_utc": "2026-10-03T13:45:16.870087+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5440_park",
+      "test_sm5440_supervisor",
+      "test_sm5440_conversion",
+      "test_sm5440_actuator",
+      "test_sm5440_watchdog",
+      "test_sm5440_off_control"
+    ],
+    "tests": 88,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 1.7945774010004243,
+    "real_C": true,
+    "mocked_bus_and_clock": true,
+    "full": false,
+    "routing_changed": false
+  },
+  "ARM64_objects": {
+    "executed": true,
+    "objects": 2,
+    "exit_code": 0,
+    "seconds": 4.9978791429966805,
+    "W1": true,
+    "sparse": true,
+    "changed_helper_warnings": 0,
+    "unrelated_warning": "upstream vDSO __kernel_getrandom declaration"
+  },
+  "physical_ADC_acceptance": false,
+  "physical_software_OCP_verified": false,
+  "native_live_worker": false,
+  "Kbuild_integration": false,
+  "kernel_Image_build": {
+    "executed": false,
+    "reason": "Two unlinked objects only; installed candidate/rollback unchanged"
+  },
+  "full_tests": {
+    "executed": false,
+    "reason": "Six actual affected C test modules only; no routing change"
+  },
+  "config_diff": [],
+  "DTB_diff": [],
+  "PPS_request_or_device_charging_write": false,
+  "Test317_capture_executed": false,
+  "Test317_rollback_required": true,
+  "full_goal_ready": false
+}

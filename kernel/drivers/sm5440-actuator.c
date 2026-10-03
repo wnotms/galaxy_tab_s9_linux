@@ -146,8 +146,12 @@ static int sm5440_actuator_prepared(struct regmap *map, struct sm5440_actuator *
 			return ret;
 	}
 	for (i = 0; i < 10; i++) {
+		u8 expected = i == 0 ? a->watchdog.expected :
+			i == 4 && a->enhiz_owned ? a->cntl6_before & ~SM5440_ENHIZ :
+			a->controls.witness[i];
+
 		ret = regmap_read(map, witnesses[i], &value);
-		if (!ret && value != (i ? a->controls.witness[i] : a->watchdog.expected))
+		if (!ret && value != expected)
 			ret = -EIO;
 		if (ret)
 			return ret;
@@ -254,8 +258,177 @@ int sm5440_actuator_start(struct regmap *map, struct sm5440_actuator *a,
 		ret = sm5440_actuator_status(map, true);
 	if (!ret)
 		ret = sm5440_actuator_guard(a, facts, sample, source, mv, ma);
-	if (!ret)
+	if (!ret) {
+		a->active_mv = mv;
+		a->active_ma = ma;
 		return 0; /* register ON only; caller still requires fresh post-ON ADC */
+	}
+fail:
+	sm5440_actuator_error(a, ret);
+	sm5440_actuator_stop(map, a);
+	return ret;
+}
+
+/* Fedora sm5440_renegotiate_pps(): mode OFF across every Request, retaining
+ * prepared fields/ENHIZ/WDT. No I/O or lock is held across TCPM/ADC waits here.
+ */
+int sm5440_actuator_pause(struct regmap *map, struct sm5440_actuator *a)
+{
+	unsigned int mode, adc;
+	u64 now;
+	int ret;
+
+	if (!map || !a)
+		return -EINVAL;
+	if (a->paused || a->cleanup_attempted)
+		return -EALREADY;
+	if (!a->attempted && !a->controls.pending && !a->watchdog.owned && !a->mode_possible)
+		return -EPERM;
+	if (!a->enabled || !a->attempted || !a->mode_possible || a->off_verified ||
+	    a->operation_error || !a->active_mv || !a->active_ma || !a->generation ||
+	    !a->epoch || READ_ONCE(*a->generation) != a->epoch)
+		ret = -ECANCELED;
+	else if (a->pause_sequence == ~0ULL)
+		ret = -EOVERFLOW;
+	else
+		ret = sm5440_actuator_status(map, true);
+	if (!ret)
+		ret = sm5440_actuator_prepared(map, a, a->active_ma);
+	if (!ret)
+		ret = regmap_read(map, SM5440_ADCCNTL1, &adc);
+	if (!ret && (adc & SM5440_ADC_ENABLE))
+		ret = -EBUSY; /* single owner must drain measurement before Request */
+	if (!ret)
+		ret = regmap_read(map, SM5440_CNTL5, &mode);
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!ret && (!now || now < a->last_clock_ms || !a->watchdog.serviced_ms ||
+		     now < a->watchdog.serviced_ms ||
+		     now - a->watchdog.serviced_ms > SM5440_WATCHDOG_SERVICE_MS ||
+		     READ_ONCE(*a->generation) != a->epoch))
+		ret = -ETIME;
+	if (ret)
+		goto fail;
+	a->paused = true; /* ownership before a possibly uncertain OFF write */
+	a->resume_attempted = false;
+	a->pause_started_ms = now;
+	a->paused_budget_generation = a->budget_generation;
+	a->pause_sequence++;
+	a->last_clock_ms = now;
+	ret = sm5440_actuator_update(map, SM5440_CNTL5, SM5440_MODE_MASK, 0, mode);
+	if (ret) {
+		/* First OFF is uncertain: retain ownership/WDT, do not hide it behind
+		 * another OFF attempt from terminal cleanup or an outer fallback.
+		 */
+		sm5440_actuator_error(a, ret);
+		a->cleanup_attempted = true;
+		a->enabled = false;
+		a->cleanup_error = ret;
+		return ret;
+	}
+	a->mode_possible = false;
+	a->off_verified = true;
+	if (!ret)
+		ret = sm5440_actuator_status(map, false);
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!ret && (!now || now < a->last_clock_ms ||
+		     now - a->pause_started_ms > SM5440_WATCHDOG_SERVICE_MS ||
+		     now - a->watchdog.serviced_ms > SM5440_WATCHDOG_SERVICE_MS ||
+		     READ_ONCE(*a->generation) != a->epoch))
+		ret = -ETIME;
+	if (ret)
+		goto fail;
+	a->last_clock_ms = now;
+	return 0;
+fail:
+	sm5440_actuator_error(a, ret);
+	sm5440_actuator_stop(map, a);
+	return ret;
+}
+
+/* Source receipt binds to the actual post-pause native producer generation;
+ * never change it merely to admit an old budget or capability-only label.
+ */
+int sm5440_actuator_resume(struct regmap *map, struct sm5440_actuator *a,
+			   const struct x710_charge_facts *facts,
+			   const struct x710_physical_sample *sample,
+			   const struct sm5714_pd_snapshot *source,
+			   unsigned int mv, unsigned int ma)
+{
+	unsigned int value, mode, khz;
+	u64 now;
+	int ret;
+
+	if (!map || !a)
+		return -EINVAL;
+	if (!a->paused || a->resume_attempted || a->cleanup_attempted)
+		return -EALREADY;
+	a->resume_attempted = true;
+	if (!facts || !sample || !source) {
+		ret = -EINVAL;
+		goto fail;
+	}
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!a->off_verified || a->mode_possible || !a->pause_started_ms ||
+	    !now || now < a->pause_started_ms ||
+	    now - a->pause_started_ms > SM5440_WATCHDOG_SERVICE_MS ||
+	    !a->active_ma || ma > a->active_ma || source->started_ms < a->pause_started_ms ||
+	    sample->observed_ms < source->completed_ms ||
+	    source->budget_generation <= a->paused_budget_generation ||
+	    source->instance != a->instance || source->source_generation != a->source_generation) {
+		ret = -ESTALE;
+		goto fail;
+	}
+	a->budget_generation = source->budget_generation;
+	ret = sm5440_actuator_guard(a, facts, sample, source, mv, ma);
+	if (!ret)
+		ret = sm5440_actuator_status(map, false);
+	if (!ret)
+		ret = sm5440_actuator_prepared(map, a, a->active_ma);
+	if (!ret)
+		ret = regmap_read(map, SM5440_ADCCNTL1, &value);
+	if (!ret && value & SM5440_ADC_ENABLE)
+		ret = -EBUSY;
+	if (ret)
+		goto fail;
+	/* Approved current can only decrease while verified OFF. Original saved
+	 * bytes remain the terminal cleanup target; no vendor current margin.
+	 */
+	if (ma < a->active_ma) {
+		ret = regmap_read(map, 0x16, &value);
+		if (!ret)
+			ret = sm5440_actuator_update(map, 0x16, 0x7f, sm5440_ibus_code(ma), value);
+		khz = ma <= 1100 ? 450 : ma <= 1700 ? 650 : 850;
+		if (!ret)
+			ret = regmap_read(map, 0x12, &value);
+		if (!ret)
+			ret = sm5440_actuator_update(map, 0x12, 0x1f, sm5440_frequency_code(khz), value);
+		if (ret)
+			goto fail;
+	}
+	ret = sm5440_actuator_prepared(map, a, ma);
+	if (!ret)
+		ret = sm5440_actuator_guard(a, facts, sample, source, mv, ma);
+	if (!ret)
+		ret = regmap_read(map, SM5440_CNTL5, &mode);
+	if (!ret && mode & SM5440_MODE_MASK)
+		ret = -EBUSY;
+	if (!ret)
+		ret = sm5440_actuator_guard(a, facts, sample, source, mv, ma);
+	if (ret)
+		goto fail;
+	a->mode_possible = true;
+	a->off_verified = false;
+	ret = sm5440_actuator_update(map, SM5440_CNTL5, SM5440_MODE_MASK, BIT(2), mode);
+	if (!ret)
+		ret = sm5440_actuator_status(map, true);
+	if (!ret)
+		ret = sm5440_actuator_guard(a, facts, sample, source, mv, ma);
+	if (ret)
+		goto fail;
+	a->active_mv = mv;
+	a->active_ma = ma;
+	a->paused = false;
+	return 0; /* fresh post-ON supervisor/core observation is still required */
 fail:
 	sm5440_actuator_error(a, ret);
 	sm5440_actuator_stop(map, a);

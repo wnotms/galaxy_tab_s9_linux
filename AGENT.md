@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+Offline actuator PPS park/resume now keeps OFF across native negotiation,
+retains settings/WDT and requires advancing real budget generation, same
+attach/lease/source and physical OFF ADC acquired after PPS completion. Current
+can only fall; uncertain first OFF latches unknown ownership without hidden
+retry. Fresh post-ON supervisor required.88 affected actual-C host tests PASS
+1.795s; two ARM64/W1/sparse objects PASS4.998s, no changed-helper warning.
+Six cached provider/98 Test317 inputs/nine artifacts unchanged, config/DT diff
+empty. No Kbuild/live worker/Image/full/Actions/device PPS/pump operation.
+Evidence reference/charging/sm5440-park-foundation/ and docs/SM5440_PPS_PARK_RESUME.md.
+Physical OCP/ADC/cutoff/native integration/fallback/PM still unqualified; full
+goal NOT complete. Test317 access/current owner IP/connection pending, capture
+NOT EXECUTED and accepted311 rollback remains required. No blind boot replay.
+
+
 Native monitor/shutdown foundation now composes actual converter, actuator OFF
 and WDT helpers. Real source/facts/epoch/100ms gates, exact625uA trip, new raw
 MEASURED before cleanup, OFF priority, healthy-only WDT service, separate first/
