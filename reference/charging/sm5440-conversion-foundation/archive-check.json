@@ -1,0 +1,21 @@
+{
+  "initial_guard": {
+    "result": "FAIL",
+    "reason": "Hard-coded evidence count expected9 but actual10; hash verification itself succeeded.",
+    "functional_code_affected": false
+  },
+  "corrected_guard": {
+    "result": "PASS",
+    "exact_file_set": true,
+    "all_sha256_match": true,
+    "verified_evidence_files": 10,
+    "checked_against_committed_manifest": true
+  },
+  "new_build": {
+    "executed": false
+  },
+  "new_host_tests": {
+    "executed": false
+  },
+  "device_operations": false
+}
