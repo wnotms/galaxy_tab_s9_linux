@@ -1,0 +1,36 @@
+{
+  "device_commands_executed": false,
+  "kept": "Test303 source/config/DTB/modules/vmlinux/CRC/headers and original evidence; current accepted311/rollback/312 candidate untouched",
+  "latest_test": 313,
+  "no_expired_images_archived": true,
+  "removed_images": [
+    {
+      "allocated_bytes": 22142976,
+      "bytes": 22142232,
+      "nlink_before": 1,
+      "path": "out/kernel-x710-303-policy/Image.gz",
+      "reason": "Test303 historical images outside recent304-313 window; no installed or registered313 image deleted",
+      "sha256": "eb45c4353286246990333bbdf8ebecc9caab2aa7b5c42fdcb8ac66f7e4e37b6c"
+    },
+    {
+      "allocated_bytes": 48721920,
+      "bytes": 48720384,
+      "nlink_before": 1,
+      "path": ".work/build/linux-out-x710-303-policy/arch/arm64/boot/Image",
+      "reason": "Test303 historical images outside recent304-313 window; no installed or registered313 image deleted",
+      "sha256": "fc68546a01521ba518a98e76dafa6cbc1c319fabc54e8543a12a1007c5947dd3"
+    },
+    {
+      "allocated_bytes": 22142976,
+      "bytes": 22142232,
+      "nlink_before": 1,
+      "path": ".work/build/linux-out-x710-303-policy/arch/arm64/boot/Image.gz",
+      "reason": "Test303 historical images outside recent304-313 window; no installed or registered313 image deleted",
+      "sha256": "eb45c4353286246990333bbdf8ebecc9caab2aa7b5c42fdcb8ac66f7e4e37b6c"
+    }
+  ],
+  "window": [
+    304,
+    313
+  ]
+}

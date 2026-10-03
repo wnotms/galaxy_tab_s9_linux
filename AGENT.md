@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test312，窗口为 **Test303–Test312**；没有生成镜像的轮次仍占一轮。
+  编号为 Test313，窗口为 **Test304–Test313**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -24,6 +24,7 @@
   本次七个过期镜像删除及三个现用非 boot 文件的精确例外见
   `reference/host-storage-cleanup/2026-10-03-test311-image-retirement/`；
   Test312 窗口清理见 `reference/host-storage-cleanup/2026-10-03-test312-image-retirement/`。
+  Test313 窗口清理见 `reference/host-storage-cleanup/2026-10-03-test313-image-retirement/`。
 
 ## 构建目录与空间控制（用户指令，2026-10-03）
 
