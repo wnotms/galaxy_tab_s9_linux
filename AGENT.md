@@ -98,18 +98,21 @@
 
 ## Current state (2026-10-03)
 
-Test315 source-bound fixed9 OFF context OFFLINE_IMPLEMENTED_PENDING_BUILD.
-Existing isolated sm5440-adc-condition profile only; ordinary preprocessed paths
-unchanged. Standard source epochs + real pack + physical9V before checked
-SM5714 switching lease; real Test314 settings and pre-ENHIZ liveSTATUS, exact
-ADC/ENHIZ/settings restore. Lease retained, never500ms->100ms release/charge
-grant; no PPS/ON/protection-mask/reset or DTS/USB/rootfs change.122 affected
-host PASS1.632s, no failure/error/skip/full/Actions.314 formal artifacts plus
-symbols/79 inputs frozen/verified before one incremental cache reuse. Window
-306-315 expired305 Image/boot copies deleted with hashes; logs/modules kept.
-Accepted311 remains installed: owner follow-up same1f1e01bf, ADB/network/pack
-normal, known passiveADCrefusal retained; no physical315 scope or deployment.
-Read315 README and docs/SM5440_FIXED9_OFF_CONTEXT.md. Full port NOT READY.
+Test315 FIXED9_OFF_CONTEXT_OFFLINE_QUALIFIED_NOT_DEPLOYED, source30cf862a.
+Existing isolated ADC-condition profile only; source/pack/physical9V + checked
+SM5714 lease before real OFF settings/ENHIZ comparison. Pre-liveSTATUS/timing/
+raw/protection witnesses, error+cleanup/pending retained; lease inhibited, no
+500ms->100ms grant/release/PPS/ON.122 affected host PASS1.632s; ARM64 PASS86.218s;
+W1/sparse exit0/no changed-driver warning. Initial object-equality guard failures
+retained; two standard objects restored exactly6.057s/vmlinux unchanged, not
+false W1==standard claim. Only ADC_CONDITION_TEST n->y vsaccepted311, DTBsame/
+96protected/12overlays/181modules/container/DCC pass.314 symbols/79 inputs frozen
+and formal artifacts intact; cache now315 diagnostic. Window306-315 four old305
+images deleted with hashes, no archive. No device315/full/Actions. Installed311
+same1f1e01bf at owner follow-up/32%3.785V31.6C/ADBnetwork/knownADCrefusal retained.
+Read315 RESULTS/summary/design; next separately register fixed9 preattached
+one-shot context with unconditional exact311 restore, not PC5V replay. Full
+port NOT READY: physicalADC/OCP/watchdog/ON/PPS/fallback/PM still remain.
 
 
 Test314 OFF_ONLY_SETTINGS_OFFLINE_QUALIFIED_NOT_DEPLOYED, source deb28242.

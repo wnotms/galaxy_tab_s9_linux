@@ -1,0 +1,201 @@
+{
+  "source_revision": "30cf862a8dbacb1a2cba373ae163c555f64a1cec",
+  "files": {
+    "kernel/config/gts9wifi-csd-lock.fragment": {
+      "bytes": 5255,
+      "sha256": "cc0d60e35226093f807667daf65ebff7ed3f277d417760d2ff11532a84e96194"
+    },
+    "kernel/config/gts9wifi-mainline.fragment": {
+      "bytes": 24878,
+      "sha256": "bb2f91abb9d643ba82493be997db8df44b73af6aa460b3c2233f9ecfda872636"
+    },
+    "kernel/config/gts9wifi-pnmi-csd-lock.fragment": {
+      "bytes": 612,
+      "sha256": "6beba5bc56208f05275e744ba6fe8ff12763e10724340dc5e9596cbe71e57743"
+    },
+    "kernel/config/gts9wifi-pnmi.fragment": {
+      "bytes": 99,
+      "sha256": "62b6af9406097645ba3f06b235bf471e736502d2df3b54bedbbddf531bfca62d"
+    },
+    "kernel/config/gts9wifi-sm5440-adc-condition.fragment": {
+      "bytes": 184,
+      "sha256": "beaef9d1a2e288fd5ade51f0cd849aaea15c1da67107d9890d3681ac0c30863b"
+    },
+    "kernel/config/gts9wifi-sm5440-passive.fragment": {
+      "bytes": 161,
+      "sha256": "a4a810aa69008ccc82e4ff92a70e37b704df2a9d723fd128a4b63c07a36078c8"
+    },
+    "kernel/config/gts9wifi-sm5440-policy-offline.fragment": {
+      "bytes": 141,
+      "sha256": "6ddfc2b8c644e3a4b6e0b9ea1ad3f90558eb2f6e21de064073ac16eed7213811"
+    },
+    "kernel/drivers/keyboard-samsung-pogo.c": {
+      "bytes": 64080,
+      "sha256": "eff8ca0667b3f1dbccee2a8e253ae6dc7022e01db904122d112bb54a92a7c49c"
+    },
+    "kernel/drivers/panel-samsung-ana38407.c": {
+      "bytes": 31306,
+      "sha256": "c4ed00544ec80f941f2c23cc1c447327db4a6c7ed6d5e9b5f08e97fd4389a54d"
+    },
+    "kernel/drivers/samsung-gts9wifi-sec-log.c": {
+      "bytes": 16843,
+      "sha256": "f2e436b0ae148a0da921eff050450b0c68a84525ffc8911a9d2ece95bbe7264d"
+    },
+    "kernel/drivers/sm5440-control.c": {
+      "bytes": 5543,
+      "sha256": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d"
+    },
+    "kernel/drivers/sm5440-control.h": {
+      "bytes": 1112,
+      "sha256": "0fa7c25d7d9b2ac9401061050c02bc0a52d02554480ed21ad5602b8906c966e0"
+    },
+    "kernel/drivers/sm5440-direct.c": {
+      "bytes": 54513,
+      "sha256": "c04d86099185a92cd6d91789e82958d8f6c287306f78727a2614b2f370190684"
+    },
+    "kernel/drivers/sm5440-hw.h": {
+      "bytes": 5094,
+      "sha256": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b"
+    },
+    "kernel/drivers/sm5714-battery.c": {
+      "bytes": 47389,
+      "sha256": "cda64e0652a547ebb3e9f608dc40c505fa99d3fa9ef6585814d07555a1e0189a"
+    },
+    "kernel/drivers/sm5714-pd-policy.h": {
+      "bytes": 2702,
+      "sha256": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d"
+    },
+    "kernel/drivers/sm5714-stage2.h": {
+      "bytes": 3598,
+      "sha256": "ca22d48521663606f879f8cd08a58537a39419a040335aba09dc6279e426e1e5"
+    },
+    "kernel/drivers/sm5714_usbpd.c": {
+      "bytes": 43263,
+      "sha256": "a0a7fbe59ccffbaacdd52bd4317ace75a15b78ef5bb779252b65fd923b54ab49"
+    },
+    "kernel/drivers/x710-charging-policy.c": {
+      "bytes": 14908,
+      "sha256": "758afdf318809cdb39baf1f0d1f70b58ecf718a620543acba17e2c4793e0e162"
+    },
+    "kernel/drivers/x710-charging-policy.h": {
+      "bytes": 4214,
+      "sha256": "122ba6a79fc40e274c26d0e3d60f88a30e428173e0ad071055c443734eafac31"
+    },
+    "kernel/drivers/x710-pd-session.c": {
+      "bytes": 8389,
+      "sha256": "2a919dc7e240c7cc34de53f4b090e1a04a6986842a90ad2efa06b03b00e1b1e9"
+    },
+    "kernel/drivers/x710-pd-session.h": {
+      "bytes": 727,
+      "sha256": "a151ac44f7630addf4c78a35123b995b76956a594f1569d5b6c26dab8a599929"
+    },
+    "kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts": {
+      "bytes": 206,
+      "sha256": "3bb73ca047d7eae76136e10f7b0bc38a084c8650a5264e242838832e7b900a14"
+    },
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": {
+      "bytes": 57937,
+      "sha256": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a"
+    },
+    "kernel/patches/0001-arm64-dts-qcom-sm8550-add-samsung-abl-labels.patch": {
+      "bytes": 1886,
+      "sha256": "0d2ebd3384d48f6c09b324b38a1fc2a3ddceef94263580b55a885a74814ea323"
+    },
+    "kernel/patches/0002-soc-qcom-hook-x710-sec-log-into-kbuild.patch": {
+      "bytes": 2350,
+      "sha256": "9d7a20de952b5c898b28198fa0b170b6324222ea7db0ab14c6cd7f04022841e7"
+    },
+    "kernel/patches/0004-drm-panel-add-samsung-ana38407.patch": {
+      "bytes": 2185,
+      "sha256": "6eca342e5045e174036c9f14fe1bdc666d496224f71c72c3a06d8d10735eaf69"
+    },
+    "kernel/patches/0006-input-add-samsung-pogo-keyboard.patch": {
+      "bytes": 964,
+      "sha256": "85dfd97df08fdc975254a0245cb6623ccebf2f38b1b8a0b4fd688707889ad49a"
+    },
+    "kernel/patches/0007-drm-msm-adreno-a6xx-mark-cxpd-device-link-stateless.patch": {
+      "bytes": 4796,
+      "sha256": "bdebe54ab0623c07ebda53174ba3af197838708617bba9ce5c169fc451f450b2"
+    },
+    "kernel/patches/0008-power-sequencing-qcom-wcn-send-aop-wlan-pdc-votes.patch": {
+      "bytes": 5879,
+      "sha256": "0159b64b85368435545e0f9a7c38d7279d87947057817f1fab1481343abdea26"
+    },
+    "kernel/patches/0009-phy-qcom-qmp-pcie-select-phy-source-on-pipe-mux.patch": {
+      "bytes": 2383,
+      "sha256": "c8b097bb0ee894d6e33515f63cd4c0031f6f8b11020d0f61ced62d5a86364ba3"
+    },
+    "kernel/patches/0010-remoteproc-qcom-q6v5-quiet-the-repeated-handover.patch": {
+      "bytes": 2243,
+      "sha256": "c160c17c171c27b87b4ff868928611b83c65281d914855da0b59ce0312b28295"
+    },
+    "kernel/patches/0011-power-supply-hook-sm5714-battery.patch": {
+      "bytes": 952,
+      "sha256": "e285cddfc9e585999c15c98c30654ff00af92ad269497e48e3a24b61a18e23b2"
+    },
+    "kernel/patches/0012-usb-typec-hook-sm5714-sink.patch": {
+      "bytes": 913,
+      "sha256": "41214b3b84e0f963f42b677137300fbff1f06355450663b826f8284128d1819c"
+    },
+    "kernel/patches/0013-power-supply-hook-sm5440-passive.patch": {
+      "bytes": 815,
+      "sha256": "41a386eae49403e1eb730e7c106f90d97d6172dc8bb6d86d3bd0939c679386be"
+    },
+    "kernel/patches/0014-power-supply-hook-x710-policy-offline.patch": {
+      "bytes": 949,
+      "sha256": "571bc204e55c838ee11f686b2aea300d14128e427a93451b791ed3ba6ab3ee80"
+    },
+    "kernel/patches/0015-power-supply-hook-sm5440-adc-condition.patch": {
+      "bytes": 814,
+      "sha256": "b740413d4db593c968afbc976d4e9bfbb9f8c3979f03a003879f31c733124291"
+    },
+    "kernel/patches/0016-power-supply-hook-sm5440-off-control.patch": {
+      "bytes": 541,
+      "sha256": "3099466bcf0936a866d4a9e5d0ed289383344d90cd316f3383376a87e46c2a40"
+    },
+    "kernel/patches/nxp-ptn3222-apply-dt-register-overrides.patch": {
+      "bytes": 4771,
+      "sha256": "dd87277a5f2d2b79e29793de2af9201a8d5e060fe8666c3b5fb726888c83c17e"
+    },
+    "scripts/build-kernel.sh": {
+      "bytes": 21250,
+      "sha256": "202ad70f37ca1248c4c1c5a1f3b8c0b57cc4329c51dde15a71ed2e86adf57875"
+    },
+    "scripts/fetch-mainline.sh": {
+      "bytes": 813,
+      "sha256": "52013416a2ed8b91f8b1b5bcf69467ce2844a4a840d9808eb1a66bff24894e72"
+    },
+    "scripts/prepare-kernel.sh": {
+      "bytes": 10669,
+      "sha256": "940e26c19ecb7d104343665a72292b87ff5b8fbd85261aedd85dd5fdd69547c9"
+    },
+    "scripts/verify-container-config.py": {
+      "bytes": 7025,
+      "sha256": "47ea79a78456d3ba703193650e9af99b14e6c9396abd2508371c1f953cf9488c"
+    },
+    "scripts/verify-sm5714-stage2.py": {
+      "bytes": 2016,
+      "sha256": "7690be2cb38d860f0abc6facddaec47e52b44512552d17ca6ecaad2e90cea861"
+    },
+    "scripts/verify-x710-charging-profile.py": {
+      "bytes": 2573,
+      "sha256": "23d3c85777595c12662eab233b303c1f88d00102b484728e9880fe052240efbb"
+    },
+    "tests/test_sm5440_adc_condition.py": {
+      "bytes": 15664,
+      "sha256": "6f824cf93fefeb78848f951609e12470d23dbbf32b9d4888dc41ea51e87ef765"
+    },
+    "tests/test_sm5440_fixed9_context.py": {
+      "bytes": 13677,
+      "sha256": "fc8222405835f7416aba28593349ac5e17631479dbef2b8de1246ae93dc14e5e"
+    },
+    "tests/test_sm5440_off_control.py": {
+      "bytes": 11799,
+      "sha256": "d200dcd54fb2e886119eb6e2870246f03a13ef38b96156be2460ae78806b6ae5"
+    },
+    "tests/test_sm5714_policy.py": {
+      "bytes": 3173,
+      "sha256": "d03fd2a78663778fbe17bc425c334749bece76265fec59645dadc173beaa392c"
+    }
+  }
+}

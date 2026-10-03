@@ -1,0 +1,121 @@
+{
+  "verdict": "FIXED9_OFF_CONTEXT_OFFLINE_QUALIFIED_NOT_DEPLOYED",
+  "source_revision": "30cf862a8dbacb1a2cba373ae163c555f64a1cec",
+  "kernel": "Linux7.2-rc3",
+  "profile": "sm5440-adc-condition",
+  "implemented": [
+    "source-bound real fixed9 snapshot/epoch",
+    "standard battery and physical OFF ADC gates",
+    "inactive latch retained/two new confirmations",
+    "real checked switching lease",
+    "actual audited OFF controls/ENHIZ/ADC comparison and restore"
+  ],
+  "diagnostic_caller": true,
+  "ordinary_preprocessed_paths_identical": true,
+  "physical_executed": false,
+  "flash": false,
+  "reboot": false,
+  "pps_requested": false,
+  "pump_on_available": false,
+  "lease_retained_not_released": true,
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 86.21800516400253
+  },
+  "host": {
+    "executed": true,
+    "tests_run": 122,
+    "elapsed_seconds": 1.6323442149951006,
+    "failures": [],
+    "errors": [],
+    "skips": []
+  },
+  "full_suite_executed": false,
+  "static": {
+    "valid": true,
+    "static_exit_code": 0,
+    "static_elapsed_seconds": 2.5728712380005163,
+    "static_argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "-j8",
+      "drivers/power/supply/sm5440-direct.o",
+      "drivers/power/supply/sm5440-control.o"
+    ],
+    "static_environment": {
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+      "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+      "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime",
+      "KBUILD_BUILD_USER": "gts9-mainline",
+      "KBUILD_BUILD_HOST": "reproducible",
+      "SOURCE_DATE_EPOCH": "1783890999",
+      "KBUILD_BUILD_TIMESTAMP": "Sun Jul 12 21:16:39 UTC 2026"
+    },
+    "W1_object_hashes": {
+      "drivers/power/supply/sm5440-direct.o": "73d4e2195b3216768764cc613df0df035201731aa791971a7abe1104d094ba7d",
+      "drivers/power/supply/sm5440-control.o": "3007fc046c4864a7bcb1ff7eaa378fe0154c2c5e5568bf514e090858b34fa338",
+      "vmlinux": "e1fe1f60753e6071bf1c01343134616acda4b3e0efdb046b79570bcc35ff21ab"
+    },
+    "standard_restore_argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "drivers/power/supply/sm5440-direct.o",
+      "drivers/power/supply/sm5440-control.o"
+    ],
+    "standard_restore_exit_code": 0,
+    "standard_restore_seconds": 6.056893658998888,
+    "qualified_build_objects": {
+      "drivers/power/supply/sm5440-direct.o": "835b302e89015157ac4edda8968626b8d1ad9afd965141a37c634b30940e56fa",
+      "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d",
+      "vmlinux": "e1fe1f60753e6071bf1c01343134616acda4b3e0efdb046b79570bcc35ff21ab"
+    },
+    "final_provider_objects": {
+      "drivers/power/supply/sm5440-direct.o": "835b302e89015157ac4edda8968626b8d1ad9afd965141a37c634b30940e56fa",
+      "drivers/power/supply/sm5440-control.o": "bc67a2bf36f1fc2494e664d085466a8871327f179ca054de9a7e782a889b6e9d",
+      "vmlinux": "e1fe1f60753e6071bf1c01343134616acda4b3e0efdb046b79570bcc35ff21ab"
+    },
+    "vmlinux_unchanged": true,
+    "provider_restored_exactly": true,
+    "prior_equality_guard_failures_retained": true,
+    "device_commands": false
+  },
+  "config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "y"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "dtb_identical": true,
+  "protected_files_unchanged": 96,
+  "compiled_overlays": 12,
+  "paired_module_files": 181,
+  "container_config_retained": true,
+  "DCC": false,
+  "ordinary_fixed_5V_ma": 1800,
+  "ordinary_fixed_9V_ma": 1500,
+  "diagnostic_budget_ma_max": 1500,
+  "SM5714_float_mv": 4440,
+  "accepted_device": "accepted311 boot1f1e01bf unchanged at owner follow-up",
+  "outstanding": [
+    "new physical fixed9 operating-context registration/acceptance",
+    "physical ADC/calibration and real 100ms freshness",
+    "software OCP/watchdog/ON actuator",
+    "physical PPS/pump/handoff/fallback/PM acceptance"
+  ],
+  "full_port_ready": false
+}

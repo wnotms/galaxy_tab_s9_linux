@@ -1,0 +1,36 @@
+{
+  "source_revision": "30cf862a8dbacb1a2cba373ae163c555f64a1cec",
+  "existing_vendor_context_refs": {
+    "reference/boot-tests/test-313-adc-condition-comparison/source-analysis/SOURCES.json": "0ab70677f088fe67218855f118c13369a6fb5eccbd362af38b6e6255cd5e91c2"
+  },
+  "new_functions": [
+    "sm5440_context_publish",
+    "sm5440_context_source",
+    "sm5440_context_pack",
+    "sm5440_context_observe",
+    "sm5440_context_physical",
+    "sm5440_context_inactive",
+    "sm5440_context_restore_settings",
+    "sm5440_fixed_context_cycle"
+  ],
+  "ordinary_preprocessed_paths_identical": true,
+  "lock_order": "worker io_lock only for own regmap/copies; no io_lock across waits, suppliers or SM5714 APIs; PM/remove drains before bounded cleanup",
+  "source_bound_fixed_mv": 9000,
+  "maximum_diagnostic_budget_ma": 1500,
+  "maximum_physical_vbus_uv": 9500000,
+  "diagnostic_oldest_age_ms": 500,
+  "active_release_or_charging_freshness_ms": 100,
+  "active_freshness_unchanged": true,
+  "SM5714_float_mv": 4440,
+  "SM5714_thermal_policy_unchanged": true,
+  "own_register_writes": "existing ADC/OFF/ENHIZ plus Test314 masked IBUSCNTL0x16 VBATCNTL0x14 CNTL7=0x12; vendor references unchanged",
+  "switching_handoff": "real checked companion acquire: Q4 OFF/min100mA; lease retained even on error",
+  "activation": false,
+  "pps_requests": false,
+  "source_role": false,
+  "SM5714_driver_modified": false,
+  "TCPM_core_modified": false,
+  "DWC3_modified": false,
+  "DTS_modified": false,
+  "rootfs_or_adbd_modified": false
+}
