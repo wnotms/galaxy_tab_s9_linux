@@ -1,0 +1,77 @@
+{
+  "current_source_gate_accepted": false,
+  "historical_ADC_gauge_delta_uv": 43500,
+  "initial_inactive_latch_not_new_live_fault": true,
+  "intrinsic_ADC_conversion_period_proven": false,
+  "oldest_acquisition_after_100ms": false,
+  "physical_OCP_qualified": false,
+  "sample_prefix_gates_pass": true,
+  "samples": {
+    "condition": {
+      "adc_acquisition_to_read_ms": 130,
+      "adc_read_ms": 2822,
+      "complete_interval_ms": 131,
+      "die_decic": 320,
+      "end": 2823,
+      "faults": 0,
+      "ibus_ua": 0,
+      "seq": 5,
+      "start": 2692,
+      "vbus_uv": 9342000,
+      "voltage_uv": 3841500
+    },
+    "context_before": {
+      "adc_acquisition_to_read_ms": 129,
+      "adc_read_ms": 2489,
+      "complete_interval_ms": 130,
+      "die_decic": 300,
+      "end": 2490,
+      "faults": 0,
+      "ibus_ua": 0,
+      "seq": 3,
+      "start": 2360,
+      "vbus_uv": 9179000,
+      "voltage_uv": 3883500
+    },
+    "context_confirmation": {
+      "adc_acquisition_to_read_ms": 128,
+      "adc_read_ms": 2337,
+      "complete_interval_ms": 130,
+      "die_decic": 300,
+      "end": 2339,
+      "faults": 0,
+      "ibus_ua": 0,
+      "seq": 2,
+      "start": 2209,
+      "vbus_uv": 9210000,
+      "voltage_uv": 3865000
+    },
+    "context_handoff": {
+      "adc_acquisition_to_read_ms": 128,
+      "adc_read_ms": 2649,
+      "complete_interval_ms": 130,
+      "die_decic": 300,
+      "end": 2651,
+      "faults": 0,
+      "ibus_ua": 0,
+      "seq": 4,
+      "start": 2521,
+      "vbus_uv": 9334000,
+      "voltage_uv": 3831500
+    },
+    "context_initial": {
+      "adc_acquisition_to_read_ms": 129,
+      "adc_read_ms": 2185,
+      "complete_interval_ms": 131,
+      "die_decic": 300,
+      "end": 2187,
+      "faults": 128,
+      "ibus_ua": 0,
+      "seq": 1,
+      "start": 2056,
+      "vbus_uv": 9138000,
+      "voltage_uv": 3871500
+    }
+  },
+  "software_interval_includes_I2C_and_scheduling": true
+}

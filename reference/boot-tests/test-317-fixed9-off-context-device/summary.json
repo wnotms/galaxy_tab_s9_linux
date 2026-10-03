@@ -1,0 +1,76 @@
+{
+  "ADC_VBUS_uv": [
+    9138000,
+    9210000,
+    9179000,
+    9334000,
+    9342000
+  ],
+  "ADC_current_ua": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "ADC_gauge_delta_uv": 43500,
+  "ADC_read_intervals_ms": [
+    129,
+    128,
+    129,
+    128,
+    130
+  ],
+  "OCP_verified": false,
+  "PPS_requested": false,
+  "all_five_partition_restore_verified": true,
+  "build": {
+    "executed": false
+  },
+  "candidate_boot_attribution": "attributed",
+  "candidate_boot_id": "cc6d3fae43e44b5e945a47f7f4260aa5",
+  "candidate_config_sha256": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8",
+  "candidate_notes_sha256": "61984781036a3883ad09d98f83e15986b00ac6287df00c2e83122d5e5168e9a0",
+  "created_utc": "2026-10-03T14:23:54.718079+00:00",
+  "current_increase": false,
+  "current_source": {
+    "retained_source_generation": 9,
+    "source_generation": 13,
+    "voltage_mv": 5000
+  },
+  "final_acceptance": {
+    "battery": {
+      "soc": 19,
+      "temp_decic": 294,
+      "voltage_uv": 3709000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "6f0d319be8bf487184a324c15560c304",
+    "charging_authorized": false,
+    "device_NCM": true,
+    "host_NCM_probe_status": 0
+  },
+  "final_boot_id": "6f0d319be8bf487184a324c15560c304",
+  "full_charging_port_ready": false,
+  "kernel_classification": {
+    "new_fault_counts": {},
+    "new_suspects": [],
+    "rows": 1111
+  },
+  "matching_module_files": 181,
+  "physical_100ms_ADC_acceptance": false,
+  "pump_ON": false,
+  "registered_fixed9_15s_endpoint_accepted": false,
+  "registered_wifi_capture_executed": false,
+  "retained_cleanup_error": 0,
+  "retained_context_completed": true,
+  "retained_context_error": 0,
+  "rollback_required": false,
+  "sample_prefix_gates_pass": true,
+  "test": "Test317",
+  "tests": {
+    "executed": false,
+    "reason": "Physical results/status only; unchanged Test31773 affected host and Test316 build qualification reused"
+  },
+  "verdict": "DIAGNOSTIC_CONTEXT_RETAINED_CURRENT_SOURCE_GATE_STOP_ACCEPTED311_RESTORED"
+}

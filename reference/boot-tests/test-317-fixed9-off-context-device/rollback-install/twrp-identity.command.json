@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; getprop ro.product.device; uname -a; id; test \"$(blockdev --getsize64 /dev/block/by-name/boot)\" = 100663296; test \"$(blockdev --getsize64 /dev/block/by-name/misc)\" = 1048576"
+  ],
+  "ended_utc": "2026-10-03T14:15:59.249755+00:00",
+  "started_utc": "2026-10-03T14:15:59.154701+00:00",
+  "status": 0
+}

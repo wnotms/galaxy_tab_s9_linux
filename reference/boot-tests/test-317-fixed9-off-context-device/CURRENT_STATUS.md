@@ -1,49 +1,20 @@
 # Test317 current status
 
-Candidate installed/read back once in freshly validated native TWRP. All five
-partitions match the registered candidate layout; only boot changed. Exact181
-paired modules installed, BCB cleared and Debian root unmounted. No candidate
-reboot was issued: owner must attach Lenovo C2 18W before tapping Reboot System.
+DIAGNOSTIC_CONTEXT_RETAINED_CURRENT_SOURCE_GATE_STOP_ACCEPTED311_RESTORED.
+One attributed candidate boot, matched config/notes. Early fixed9 OFF context
+completed with no operation/cleanup error, zero IBUS, physical VBUS9.138–9.342V;
+all retained sample-prefix gates pass, initial inactive latch preserved.
+ADC/gauge postcomparison delta43.5mV. Complete kernel/history/raw controls retained.
 
-Rollback is still required. Candidate capture NOT EXECUTED; no hardware pass,
-PPS/pump enable, current increase or ADC calibration/freshness grant. Continue
-with `host_flow.py capture` after owner confirmation, preserve first refusal,
-then reconnect PC and `host_flow.py restore` regardless of capture outcome.
-If unreachable, manually enter TWRP and use `restore --from-recovery`; preserve
-missing failed boot attribution rather than inventing a clean result.
+Later ADB salvage sees fixed5V/source13, while context source is9. Original
+registered current-source/15s endpoint refused; no forged current9V receipt or
+candidate replay. No newly classified CPU/panic/I2C failure. Read brackets
+128–130ms are diagnostic500ms evidence, NOT physical100ms/OCP qualification.
 
-Host73 PASS/no skip and exact316 build reused. No new kernel/full/Actions run.
-Preflight authenticated Wi-Fi was10.139.153.84, pack28%/3.77V/31.7C.
-Known passive startup confirmation refusal on accepted311 remains recorded.
-HostNCM255 is separate; baseline deviceusb0/services/WindowsCode0 were normal.
-
-Full charging port remains NOT READY. Fixed9 diagnostic is one bounded next
-step; real ADC/protection/OCP/watchdog/ON/PPS/fallback/PM acceptance remains.
-
-## Owner-powered-on checkpoint
-
-Owner reports “已开机”. Fresh bounded host checks show no ADB device and the
-registered Wi-Fi address 10.139.153.84 returns No route to host. The former
-TWRP observation is historical, not the current verified device state. No new
-boot ID, running kernel identity or charger connection has been observed.
-This is an access/evidence gap, not proof of a kernel fault or hardware pass.
-
-Raw commands, timestamps, statuses and hashes are saved under
-`post-install-availability/`. Candidate capture is still NOT EXECUTED and
-rollback remains required. Await current Wi-Fi IP and physical connection;
-do not reflash, replay the candidate boot or enable PPS/pump to recover access.
-No tests/build were executed for this status-only update; unchanged Test317
-73 affected host tests and Test316 build qualification remain separate.
-
-## Bounded address discovery
-
-A read-only Windows neighbor query found only the router and broadcast in the
-registered10.139.153.0/24 Wi-Fi network. One bounded TCP22 discovery (16 workers,
-150ms connection timeout,2.425s total) found no listener. No device authenticated,
-no boot ID or kernel state inferred, no SSH command issued to another device.
-This does not prove a CPU stall, failed boot or disconnected charger.
-
-Raw query/parameters/results retained in post-install-availability/neighbor-discovery.
-Await owner current IP/physical connection; Test317 capture still NOT EXECUTED
-and exactaccepted311 rollback required. No reflash, boot replay, pump/PPS write,
-new build or tests for this evidence-only update.
+Exactaccepted311 original boot and181 modules/allfive restored; attributed final
+boot6f0d319be8bf487184a324c15560c304, ADB/deviceNCM/hostSSH/ordinary4.44V config
+and controls/roles/services/DCC absence pass, pack19%3.709V29.4C. Mutation state
+rollback_required=false. Current installed state is accepted311, NOT candidate316.
+No PPS/pump/current increase/new physical series. Read RESULTS.md/summary.json.
+Status/results-only tests/build executed:false; prior qualification reused.
+Full charging port NOT READY; physical ADC/OCP/native integration still required.

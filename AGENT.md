@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+Test317 now completed salvage and unconditional exactaccepted311 restore.
+Attributed candidatecc6d3fae/matched316 config+notes; early fixed9 OFF context
+phase10/error0/cleanup0, five zeroIBUS samples9.138–9.342V, sample-prefix gates
+pass, ADC/gauge43.5mV. Later current source5V/gen13 differsretainedgen9, so
+registered current-source/15s endpoint refused; no fake9V receipt/boot replay.
+Full1111 kernel rows/new CPU-panic-I2C counts empty; initial inactive latch and
+known display/SMMU diagnostics retained. ADCread brackets128–130ms, diagnostic
+500ms only/NOT active100ms/OCP proof. Exactaccepted311 originalboot+181/allfive
+restored/readback; final6f0d319b attributed, config/notes/ordinary4.44V controls,
+ADB/deviceNCM/hostSSH/services/roles/DCC pass;19%3.709V29.4C. rollback_required
+false. Test317 RESULTS/summary/raw evidence authoritative; older access-pending
+and candidate-installed entries below historical. No new build/tests/Actions
+for results; reuse73host/Test316 qualification. Next actual native observation/
+pack/worker integration and physical100ms/current/cutoff/OCP/ON/PPS/fallback/PM
+remain. Full chargingport goal NOT complete; no pump/current escalation grant.
+
+
 Current public TCPC snapshot is fixed-only; active PPS needs a fresh readonly
 producer, not Request-per-sample or restamped entry receipts. Prepared an
 unapplied two-file owned-PPS observer patch: existing native getter/lifetime/
