@@ -202,6 +202,7 @@ for drv in "$driver_src"/*.c; do
 		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
 		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
 		sm5440-direct.c) dest="$tree/drivers/power/supply" ;;
+		sm5440-control.c) dest="$tree/drivers/power/supply" ;;
 		x710-charging-policy.c) dest="$tree/drivers/power/supply" ;;
 		x710-pd-session.c) dest="$tree/drivers/power/supply" ;;
 		sm5714_usbpd.c) dest="$tree/drivers/usb/typec/tcpm" ;;
@@ -217,6 +218,7 @@ install -m 0644 "$driver_src/sm5714-stage2.h" "$tree/drivers/usb/typec/tcpm/"
 install -m 0644 "$driver_src/sm5714-pd-policy.h" "$tree/drivers/usb/typec/tcpm/"
 install -m 0644 "$driver_src/sm5714-pd-policy.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5440-hw.h" "$tree/drivers/power/supply/"
+install -m 0644 "$driver_src/sm5440-control.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/x710-charging-policy.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/x710-pd-session.h" "$tree/drivers/power/supply/"
 install -m 0644 "$repo_root/kernel/bindings/power/supply/siliconmitus,sm5440.yaml" \

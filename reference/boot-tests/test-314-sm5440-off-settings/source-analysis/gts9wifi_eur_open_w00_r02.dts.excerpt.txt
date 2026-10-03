@@ -1,0 +1,20 @@
+9699: 	};
+9700: 
+9701: 	fragment@46 {
+9702: 		target = <0xffffffff>;
+9703: 
+9704: 		__overlay__ {
+9705: 			status = "okay";
+9706: 
+9707: 			sm5440@63 {
+9708: 				compatible = "siliconmitus,sm5440";
+9709: 				reg = <0x63>;
+9710: 				sm5440,freq = <0x352>;
+9711: 				sm5440,r_ttl = <0x4e200>;
+9712: 				sm5440,freq_siop = <0x1c2 0x28a>;
+9713: 				sm5440,en_vbatreg = <0x00>;
+9714: 				phandle = <0x159>;
+9715: 			};
+9716: 		};
+9717: 	};
+9718: 

@@ -1,0 +1,10 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: compile inactive SM5440 OFF settings transaction
+
+Checked hardware settings and restoration only. No probe hook or ON caller.
+
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -139 +139,2 @@
+ obj-$(CONFIG_X710_CHARGING_POLICY) += x710-pd-session.o
++obj-$(CONFIG_X710_CHARGING_POLICY) += sm5440-control.o

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test313，窗口为 **Test304–Test313**；没有生成镜像的轮次仍占一轮。
+  编号为 Test314，窗口为 **Test305–Test314**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test314 source: added OFF-only SM5440 settings transaction in the existing
+default-inactive X710_CHARGING_POLICY profile; no runtime caller or export.
+Input1000..1800mA rounded down, pump regulation4437.5mV, vendor frequency
+mapping; original settings and ten control witnesses checked; uncertain I2C
+write/failed restoration retain error and pending state. No CHG_ON/PPS/reset/
+ENHIZ/protection masking or SM5714/DTS/USB/rootfs change. Source excerpts/design
+and actual-C fault tests added. Build qualification pending; no device command.
+Accepted311 stays installed;313 remains STOP; full charging port NOT READY.
+
 
 Owner powered-on follow-up: same restoredaccepted311 boot1f1e01bf, config/notes
 match, SOC37/3.794V/31.9C; ordinaryQ4/input500/fast500/float4440 verified once,

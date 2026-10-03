@@ -1,0 +1,172 @@
+116: static u32 sm5440_get_vbatreg(struct sm5440_charger *sm5440)
+117: {
+118: 	u8 reg;
+119: 
+120: 	sm5440_read_reg(sm5440, SM5440_REG_VBATCNTL, &reg);
+121: 
+122: 	return 3800 + (((reg & 0x3F) * 125) / 10);
+123: }
+124: 
+125: static u32 sm5440_get_ibuslim(struct sm5440_charger *sm5440)
+126: {
+127: 	u8 reg;
+128: 
+129: 	sm5440_read_reg(sm5440, SM5440_REG_IBUSCNTL, &reg);
+130: 
+131: 	return (reg & 0x7F) * 50;
+132: }
+133: 
+134: static int sm5440_set_vbatreg(struct sm5440_charger *sm5440, u32 vbatreg)
+135: {
+136: 	u8 reg;
+137: 
+138: 	if (vbatreg < 3800)
+139: 		reg = 0;
+140: 	else
+141: 		reg = ((vbatreg - 3800) * 10) / 125;
+142: 
+143: 	return sm5440_update_reg(sm5440, SM5440_REG_VBATCNTL, reg, 0x3F, 0);
+144: }
+145: 
+146: static int sm5440_set_ibuslim(struct sm5440_charger *sm5440, u32 ibuslim)
+147: {
+148: 	u8 reg = ibuslim / 50;
+149: 
+150: 	return sm5440_write_reg(sm5440, SM5440_REG_IBUSCNTL, reg);
+151: }
+152: 
+153: static int sm5440_set_freq(struct sm5440_charger *sm5440, u32 freq)
+154: {
+155: 	u8 reg = ((freq - 250) / 50) & 0x1F;
+156: 
+157: 	return sm5440_update_reg(sm5440, SM5440_REG_CNTL7, reg, 0x1F, 0);
+158: }
+159: 
+160: static int sm5440_set_op_mode(struct sm5440_charger *sm5440, u8 op_mode)
+161: {
+162: 	int ret;
+163: 
+164: 	ret = sm5440_update_reg(sm5440, SM5440_REG_CNTL5, op_mode, 0x3, 2);
+165: 
+166: 	return ret;
+167: }
+168: 
+169: static u8 sm5440_get_op_mode(struct sm5440_charger *sm5440)
+170: {
+171: 	u8 reg;
+172: 
+173: 	sm5440_read_reg(sm5440, SM5440_REG_CNTL5, &reg);
+174: 
+175: 	return (reg >> 2) & 0x3;
+176: }
+449: static void sm5440_init_reg_param(struct sm5440_charger *sm5440)
+450: {
+451: 	sm5440_set_wdt_timer(sm5440, WDT_TIMER_S_30);
+452: 	sm5440_set_freq(sm5440, sm5440->pdata->freq);
+453: 
+454: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL2, 0xF2);               /* disable IBUSOCP,IBATOCP,THEM */
+455: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL4, 0xFF);               /* used DEB:8ms */
+456: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL6, 0x09);               /* forced PWM mode, disable ENHIZ */
+457: 	sm5440_update_reg(sm5440, SM5440_REG_VBUSCNTL, 0x7, 0x7, 0);    /* VBUS_OVP_TH=11V */
+458: 	sm5440_write_reg(sm5440, SM5440_REG_VOUTCNTL, 0x3F);            /* VOUT=max */
+459: 	sm5440_write_reg(sm5440, SM5440_REG_PRTNCNTL, 0xFE);            /* OCP,OVP setting */
+460: 	sm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, 1, 0x1, 3);      /* ADC average sample = 32 */
+461: 	sm5440_write_reg(sm5440, SM5440_REG_ADCCNTL2, 0xDF);            /* ADC channel setting */
+462: 	sm5440_write_reg(sm5440, SM5440_REG_THEMCNTL1, 0x0C);           /* Thermal Regulation threshold = 120'C */
+463: 	sm5440_write_reg(sm5440, SM5440_REG_CNTL3, 0xB8);               /* disable CHGTMR, enable VBATREG */
+464: }
+465: 
+466: static int sm5440_start_charging(struct sm5440_charger *sm5440)
+467: {
+468: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+469: 	struct sm_dc_power_source_info ta;
+1096: static int sm5440_set_charging_enable(struct i2c_client *i2c, bool enable)
+1097: {
+1098: 	struct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);
+1099: 
+1100: 	sm5440_set_ENHIZ(sm5440, sm5440->vbus_in, enable);
+1101: 	if (enable)
+1102: 		sm5440_set_op_mode(sm5440, OP_MODE_CHG_ON);
+1103: 	else
+1104: 		sm5440_set_op_mode(sm5440, OP_MODE_CHG_OFF);
+1105: 
+1106: 	sm5440_enable_wdt(sm5440, enable);
+1107: 	sm5440_print_regmap(sm5440);
+1108: 
+1109: 	return 0;
+1110: }
+1111: 
+1112: static int sm5440_dc_set_charging_config(struct i2c_client *i2c, u32 cv_gl, u32 ci_gl, u32 cc_gl)
+1113: {
+1114: 	struct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);
+1115: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+1116: 	u32 vbatreg, ibuslim, freq;
+1117: 
+1118: 	if (sm5440->pdata->en_vbatreg)
+1119: 		vbatreg = cv_gl;
+1120: 	else
+1121: 		vbatreg = cv_gl + SM5440_CV_OFFSET;
+1122: 	if (ci_gl <= SM5440_TA_MIN_CURRENT)
+1123: 		ibuslim = ci_gl + SM5440_CI_OFFSET * 2;
+1124: 	else
+1125: 		ibuslim = ci_gl + SM5440_CI_OFFSET;
+1126: 
+1127: 	if (ci_gl <= SM5440_SIOP_LEV1)
+1128: 		freq = sm5440->pdata->freq_siop[0];
+1129: 	else if (ci_gl <= SM5440_SIOP_LEV2)
+1130: 		freq = sm5440->pdata->freq_siop[1];
+1131: 	else
+1132: 		freq = sm5440->pdata->freq;
+1133: 
+1134: 	sm5440_set_ibuslim(sm5440, ibuslim);
+1135: 	sm5440_set_vbatreg(sm5440, vbatreg);
+1136: 	sm5440_set_freq(sm5440, freq);
+1137: 
+1138: 	pr_info("%s %s: vbat_reg=%dmV, ibus_lim=%dmA, freq=%dkHz\n", sm_dc->name,
+1139: 		__func__, vbatreg, ibuslim, freq);
+1140: 
+1255: static void sm5440_ocp_check_work(struct work_struct *work)
+1256: {
+1257: 	struct sm5440_charger *sm5440 = container_of(work, struct sm5440_charger,
+1258: 			ocp_check_work.work);
+1259: 	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+1260: 	int i;
+1261: 	u8 reg1, reg2;
+1262: 
+1263: 	for (i = 0; i < 3; ++i) {
+1264: 		sm5440_read_reg(sm5440, SM5440_REG_STATUS2, &reg1);
+1265: 		sm5440_read_reg(sm5440, SM5440_REG_STATUS3, &reg2);
+1266: 
+1267: 		/* activate IBUSLIM & THEMSHDN_ALM */
+1268: 		if ((reg1 & (0x1 << 7)) && (reg2 & (0x1 << 4))) {
+1269: 			dev_err(sm5440->dev, "%s: detect IBUSLIM (i=%d)\n", __func__, i);
+1270: 			msleep(1000);
+1271: 		} else {
+1272: 			break;
+1273: 		}
+1274: 	}
+1275: 
+1276: 	if (i == 3) {
+1277: 		dev_err(sm5440->dev, "%s: Detected SW/IBUSOCP\n", __func__);
+1278: 		sm_dc_report_error_status(sm_dc, SM_DC_ERR_IBUSOCP);
+1279: 	}
+1280: }
+1748: 
+1749: 	/* create sm direct-charging instance for PD3.0(PPS) */
+1750: 	pps_dc = sm_dc_create_pd_instance("SM5440-PD-DC", i2c);
+1751: 	if (IS_ERR(pps_dc)) {
+1752: 		dev_err(&i2c->dev, "%s: fail to create PD-DC module\n", __func__);
+1753: 		return -ENOMEM;
+1754: 	}
+1755: 	pps_dc->config.ta_min_current = SM5440_TA_MIN_CURRENT;
+1756: 	pps_dc->config.ta_min_voltage = 8200;
+1757: 	pps_dc->config.dc_min_vbat = SM5440_VBAT_MIN;
+1758: 	pps_dc->config.dc_vbus_ovp_th = 11000;
+1759: 	pps_dc->config.r_ttl = pdata->r_ttl;
+1760: 	pps_dc->config.topoff_current = pdata->topoff;
+1761: 	pps_dc->config.need_to_sw_ocp = 1;           /* SM5440 can't used HW_OCP, please keep it. */
+1762: 	pps_dc->config.support_pd_remain = 1;        /* if pdic can't support PPS remaining, plz activate it. */
+1763: 	pps_dc->config.chg_float_voltage = pdata->battery.chg_float_voltage;
+1764: 	pps_dc->config.sec_dc_name = pdata->battery.sec_dc_name;
+1765: 	pps_dc->ops = &sm5440_dc_pps_ops;
+1766: 	ret = sm_dc_verify_configuration(pps_dc);
