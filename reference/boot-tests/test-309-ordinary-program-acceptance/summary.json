@@ -1,6 +1,6 @@
 {
   "test": "Test309",
-  "verdict": "REGISTRATION_RUNNER_AND_PACKAGE_READY_PHYSICAL_NOT_EXECUTED",
+  "verdict": "READONLY_PREFLIGHT_STOP_NORMAL_CMDLINE_MISMATCH",
   "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
   "kernel_qualification": "Test308",
   "kernel_build": {
@@ -19,11 +19,11 @@
   "normal_candidate_boots": 1,
   "endpoint_seconds": 15,
   "readiness_max_seconds": 150,
-  "device_commands_executed": false,
-  "physical_preflight_executed": false,
+  "device_commands_executed": true,
+  "physical_preflight_executed": true,
   "physical_test_executed": false,
-  "entry_status": "STOP_RECHARGE_CURRENT_STATE_CONFIRMATION_PENDING",
-  "last_authoritative_device_evidence": "Test307:0%/2.775V/Not charging/lpcharge=1; not fresh entry proof",
+  "entry_status": "STOP_NORMAL_CMDLINE_MISMATCH_NO_DEPLOYMENT",
+  "last_authoritative_device_evidence": "preflight-rejected-01:46%/3.854V/31.9C/SDP500mA/config-notes match299; lpcharge parameters persist",
   "registered_inputs": 114,
   "staged_files": 7,
   "staged_bytes": 248695976,
@@ -37,5 +37,6 @@
   "current_increase": false,
   "trigger_program_loss": false,
   "active_stage3_ready": false,
-  "Actions_started": false
+  "Actions_started": false,
+  "readonly_preflight_evidence": "preflight-rejected-01/summary.json"
 }

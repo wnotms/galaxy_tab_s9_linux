@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; for z in /sys/class/thermal/thermal_zone*; do if test \"$(cat \"$z/type\")\" = sm5714-battery; then echo \"$z\"; cat \"$z/mode\" \"$z/temp\"; fi; done"
+  ],
+  "ended_utc": "2026-10-03T06:27:09.116508+00:00",
+  "started_utc": "2026-10-03T06:27:08.964948+00:00",
+  "status": 0
+}

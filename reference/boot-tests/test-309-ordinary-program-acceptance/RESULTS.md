@@ -1,8 +1,37 @@
 # Test309 registration and offline runner qualification
 
-Verdict: **REGISTRATION_RUNNER_AND_PACKAGE_READY_PHYSICAL_NOT_EXECUTED**.
+Verdict: **READONLY_PREFLIGHT_STOP_NORMAL_CMDLINE_MISMATCH**.
 Kernel source `158d0dd376dac2770cd72582be1bd1fe2474e71d`; exact Test308 qualification reused.
-No new kernel build/full regression, device command, preflight, reboot or flash.
+Registration qualification required no device access. The subsequent read-only
+preflight below stopped before deployment; no new build/full regression, reboot,
+partition write, module replacement, PPS request or pump activation occurred.
+
+## First read-only preflight
+
+Saved independently in `preflight-rejected-01/`, so a later fresh preflight
+cannot overwrite this rejection. Current boot is
+`e414c6df-d6d9-41e1-83d9-0aa5fbadf597`; its origin is not yet attributed to an
+owner action. Battery recovered to46%,3.854V,31.9°C,Good/present, with the real
+pack thermal zone enabled. USB is SDP/online with500mA input limit; ADB responds,
+device usb0 is up at169.254.42.1 and Wi-Fi is10.139.153.81. Charging status with
+negative gauge current means the pack was net discharging in this sample; it
+does not prove a charging failure or measure input power.
+
+Embedded config/notes match accepted299, but runtime cmdline still carries
+vendor `lpcharge=1` parameters and fails the exact registered normal-cmdline
+gate. The runner stopped there, before full partition/module hashing or any
+mutation. Do not treat matching notes/config as full baseline acceptance.
+The follow-up incident capture is read-only:1106 same-boot kernel JSON rows,
+journal boot history and real-pack thermal state. The existing classifier
+reports no matched CPU/kernel fault or new suspect; known startup display
+diagnostics are preserved, not erased or claimed resolved. This is neither
+Test309 candidate acceptance nor a stability proof.
+
+Requested next action: boot normally with the cable disconnected, then reconnect
+PC USB and run a fresh preflight. No automatic reboot was issued. New boot
+history must be attributed before candidate deployment. Offline qualification
+and the registered scope remain unchanged; `executed: false` for additional
+host tests/builds in this evidence-only update.
 
 One ordinary PC-USB candidate boot /15-second endpoint is registered, with
 actual stable charger controls, real pack sensor, unique boot/full JSON journal,
@@ -35,11 +64,10 @@ Windows stage: `D:\android\gts9-active\gts9-test309`,
 `D:\android\platform-tools\adb.exe`. Input/provenance/module manifests,
 package/header verification and exact hashes are preserved in this directory.
 
-No device completion is claimed. Last known Test3070%/2.775V/Not charging and
-lpcharge=1 cannot satisfy entry. A fresh request for present charger/displayed
-SOC/running state is pending; do not interpret elapsed time as recharge proof.
-Run preflight only after owner confirmation, and mutation only after this
-registration is committed/pushed and every actual safety/identity gate passes.
+No device completion is claimed. The new sample supersedes Test307's critical
+battery observation for current state, but does not satisfy normal-cmdline
+identity. Run another preflight after normal boot is confirmed; mutation still
+requires pushed registration and every actual safety/identity gate.
 A host-only completion recording error after all device gates pass does not
 cause automatic rollback; an actual device/evidence gap still stops.
 

@@ -92,22 +92,20 @@
 
 ## Current state (2026-10-03)
 
-Test309 REGISTRATION_RUNNER_PACKAGE_READY_PHYSICAL_NOT_EXECUTED. Qualified308
-source158d0dd3 reused/no kernel/fullrepeat;73unique affected host PASS0.192s,
-114source inputs/7 staged files/syntax/header+payload/181pairs verified. One
-PCUSB boot+15s endpoint/actual7stable pointerreads/provider guard/AICL reduction
-accepted/no inducedloss; uniqueboot/current realpack/rescue/identity/fulljournal.
-Natural recovery <=1 verified within5s; first devicefailure exact299restore once
-when safe/responsive/manualTWRPotherwise. PASSretain; post-device-acceptance host
-recording error doesnot reflash. NoPPS/pump/current/ADCrequest/rootfs/core/USB/
-configDT/observer/devicecommand/preflight. StageDandroidgts9-activegts9-test309;
-ADBandroid/platform-tools. Read309README/registration/PACKAGE/RESULTS/summary.
-Last3070%/2.775V/lpcharge stillunsafe/notfresh; owner nowasked charger/currentSOC/
-runningstate, confirmationpending. Do not execute before safe battery and
-pushedregistration/actualpreflight. Old306seal not repurposed.308incrementalcache
-reused/currentsource unchanged; recent-window300–309 (accepted299production and
-window-qualified rollback exceptions per owner rule). Fullgoalactive/Stage3NR;
-next separately registered ordinaryfixed9V/physicalADC/PPS/protection/PM scopes.
+Test309 READONLY_PREFLIGHT_STOP_NORMAL_CMDLINE_MISMATCH. Current e414c6df boot
+has46%/3.854V/31.9C/Good/present/realpack enabled/SDP500mA/ADB responsive,
+usb0up/WiFi10.139.153.81. Config/notes match accepted299, but lpcharge parameters
+persist/exact registered normalcmdline gate rejected before fullhash/mutation.
+1106sameboot kernelJSON/history/thermal preserved in309preflight-rejected-01;
+no matched CPU/kernel fault/new suspect; known display startup diagnostics kept.
+Boot origin unknown/no reboot issued. Owner asked normal cable-disconnected
+power-on thenPCreconnect; confirmation pending. Candidate/source/package/scope
+unchanged, no flash/PPS/pump/rootfs/module/current/driver/configDT changes.
+Reuse308build and30973hosttests; extra host/build executed:false evidence-only.
+Read309RESULTS/summary; rejected evidence immutable/not reused as READY. Actual
+fresh normalbaseline/identity/battery gates required before oneboot+15s test.
+114inputs/7stage seals remain; exact299rollback when safe; PASSretaincandidate.
+Fullgoalactive/Stage3NOTREADY; ADC/OCP/PPS/handoff/PM acceptance remains.
 
 
 Test308 OFFLINE_ORDINARY_PROGRAM_RECOVERY_QUALIFIED, source158d0dd3. Actual

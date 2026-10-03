@@ -1,0 +1,36 @@
+{
+  "battery": {
+    "soc": 46,
+    "temp_decic": 319,
+    "voltage_uv": 3854000
+  },
+  "boot_id": "e414c6dfd6d941e183d90aa5fbadf597",
+  "config_notes_match_baseline": true,
+  "device_mutation": false,
+  "full_partition_module_hashes_executed": false,
+  "host_tests": {
+    "executed": false,
+    "reason": "read-only evidence/docs only; registered code unchanged"
+  },
+  "kernel_rows": 1106,
+  "lpcharge_parameter_present": true,
+  "physical_test_executed": false,
+  "reboot_issued": false,
+  "runtime_cmdline_matches_registration": false,
+  "verdict": "STOP_BEFORE_MUTATION_NORMAL_CMDLINE_MISMATCH",
+  "kernel_classification": {
+    "rows": 1106,
+    "fault_counts": {},
+    "suspects": [],
+    "known_warning_count": 43,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "stability_clean_claim": false,
+    "charging_authorized": false,
+    "detail_file": "journal-classification.json"
+  }
+}
