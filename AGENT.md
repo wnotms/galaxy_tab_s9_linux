@@ -97,6 +97,22 @@
 
 ## Current state (2026-10-03)
 
+Test312 OFFLINE_ADC_CONDITION_WITH_ACCEPTED_ORDINARY_RECOVERY_QUALIFIED. Current
+Test311 accepted45f6c912 retained, no312device command. Same158d0dd3 source /
+onlyCONFIG_SM5440_ADC_CONDITION_TEST n->y vsaccepted308/311;DTBidentical/96protected/
+10overlays/181paired/embeddedconfig andDocker/DCC gatesPASS. Build89.526s/
+36affected actual-C/profile testsPASS1.651s/W1sparse8.221s object+vmlinuxidentical;
+knownupstreamvDSOwarning retained/no full/Actions. Actual308 incrementalpath reused
+as312diagnosticprovider: old308cachequalification ends; formal308artifacts unchanged,
+oldvmlinux+79CRC/config/generated inputs verified inout/debug-x710-308-accepted.
+Existingvendor one-conversion ENHIZ bit7/PumpOFF/restoration diagnostic source
+unchanged/no PPS/pumpON/currentraise. Next independent physicalregistration needs
+freshaccepted311preflight and exact308/311boot+181 unconditionalrollback, notold
+305reverting ordinary recovery.312RESULTS/summary/validation; sourceinputs sealed.
+Window303-312/3old302Imagesdeleted without archive; originaldebug/logs kept.
+Fullgoalactive/Stage3NR; physicalADC/calibration/freshness/protection/PPS/handoff/PM remain.
+
+
 Test311 ORDINARY_RECOVERY_CANDIDATE_DEVICE_SCOPE_COMPLETED. Normal45f6c912 retained/
 unique attribution/boot+181written+readback/allfive/BCBclear. Baseline40%3.809V31.8C;
 admission40%3.798V30.2C;15sendpoint40%3.818V31.4C. ActualQ4ON/input500/fast500/

@@ -1,0 +1,163 @@
+{
+  "Actions_started": false,
+  "DCC": false,
+  "DTB_identical_to_accepted_Test311": true,
+  "PPS": false,
+  "active_stage3_ready": false,
+  "build": {
+    "elapsed_seconds": 89.52649694300271,
+    "environment": {
+      "BUILD_MODULES": "1",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+      "GTS9_CHARGING_PROFILE": "sm5440-adc-condition",
+      "JOBS": "8",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-312-adc-condition",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "USE_CCACHE": "1"
+    },
+    "exit_code": 0,
+    "git_base": "9c9291c70d5aa6ab7235b37244c4a1d55384382c",
+    "physical_executed": false
+  },
+  "candidate_artifacts": {
+    "Image.gz": {
+      "bytes": 22135441,
+      "path": "out/kernel-x710-312-adc-condition/Image.gz",
+      "sha256": "e8267126f275433496285dc3772626b2528a7d0c68ee5132475472c143d32a55"
+    },
+    "config": {
+      "bytes": 243311,
+      "path": "out/kernel-x710-312-adc-condition/config",
+      "sha256": "2be619efc93bc44dac2eec51b27b55954aec12e3d1f22d47167bf1499ffdd9f8"
+    },
+    "kernel-notes.bin": {
+      "bytes": 84,
+      "path": "out/kernel-x710-312-adc-condition/kernel-notes.bin",
+      "sha256": "e7d375c33e5aa7e398c2d41ee0cda71df3c7e83dc3e89cfa2d7f8fc94d4b874b"
+    },
+    "kernel.release": {
+      "bytes": 25,
+      "path": "out/kernel-x710-312-adc-condition/kernel.release",
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "modules-x710.tar.gz": {
+      "bytes": 47318708,
+      "path": "out/kernel-x710-312-adc-condition/modules-x710.tar.gz",
+      "sha256": "d7b81871fd307d4327551c561b4167ec0136d8360dce1bad7dceeeffce39f9e2"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 176935,
+      "path": "out/kernel-x710-312-adc-condition/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    }
+  },
+  "compiled_overlay_count": 10,
+  "config_delta": {
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "y"
+    ]
+  },
+  "container_config_preserved": true,
+  "current_increase": false,
+  "device_commands_executed": false,
+  "formal_accepted_artifacts_unchanged": true,
+  "full_host_tests_executed": false,
+  "host_tests": {
+    "device_commands_executed": false,
+    "elapsed_seconds": 1.6508731129979424,
+    "errors": [],
+    "executed": true,
+    "failures": [],
+    "full_executed": false,
+    "selected": [
+      "test_sm5440_adc_condition.ConditionProfileTests.test_exact_separate_profile_and_refused_ordinary_enable",
+      "test_sm5440_adc_condition.ConditionProfileTests.test_existing_profiles_accept_new_inactive_declaration",
+      "test_sm5440_adc_condition.ConditionProfileTests.test_kconfig_built_in_dependency_and_no_default_enable",
+      "test_sm5440_adc_condition.ConditionProfileTests.test_policy_and_diagnostic_cannot_be_combined",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_active_mode_refused_before_condition_write",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_adc_disable_readback_refused_before_enhiz_mutation",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_cancel_during_converter_wait_restores",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_cancel_during_unlocked_rearm_restores",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_diagnostic_has_no_publish_reschedule_or_resume_rearm",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_every_actual_bus_failure_has_no_grant_and_restore_accounting",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_initial_clear_bit_and_other_bits_preserved",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_native_error_and_cleanup_error_both_preserved",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_normal_preprocessed_driver_paths_are_identical",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_one_actual_converter_restores_bit_and_preserves_decode",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_original_converter_rearm_quiesce_and_thresholds_unchanged",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_readback_mismatch_refuses_and_restores",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_restoration_readback_mismatch_keeps_pending_fault",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_snapshot_fields_validity_not_zero_fabrication",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_stopped_dying_fault_second_attempt_do_not_touch_bus",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_timeout_restores_without_masking_first_error",
+      "test_sm5440_adc_condition.ConditionTransactionTests.test_uncertain_enhiz_write_is_restored",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_actual_same_attach_poller_calls_recovery",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_aicl_lower_input_is_not_raised",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_deliberate_disable_invalidates_witness",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_detach_during_recovery_refuses_old_program",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_every_recovery_transfer_error_stays_off_and_preserves_first_error",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_fresh_sensor_ovp_watchdog_faults_fail_closed",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_intentional_off_states_never_attempt_recovery",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_non_typec_path_also_has_sticky_program_fault",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_recovery_revalidates_contracted_source_budget",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_second_drift_latches_across_future_configurations",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_silent_program_write_is_detected_by_readback",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_test307_drift_restores_only_existing_sdp_limits_and_float",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_thermal_stop_and_full_are_intentional_off",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_unacknowledged_off_is_not_claimed_safe",
+      "test_sm5714_program_recovery.ProgramRecoveryTests.test_unchanged_program_reads_four_controls_without_writes"
+    ],
+    "skipped": [],
+    "tests_run": 36
+  },
+  "kernel_profile": "sm5440-adc-condition",
+  "kernel_source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "next": "register separate PC-USB single condition conversion with exact accepted311 rollback; no automatic diagnostic retention",
+  "old_Test308_provider_overwritten": true,
+  "old_debug_inputs_verified": true,
+  "paired_modules": 181,
+  "physical_executed": false,
+  "production_baseline": "Test311 accepted Test308 kernel; retains ordinary programmed-state recovery",
+  "protected_file_count": 96,
+  "pump_ON": false,
+  "reuse_build_path": ".work/build/linux-out-x710-308-passive",
+  "sealed_inputs": 143,
+  "static": {
+    "after": {
+      "object": "b312ad05a4751f6a893948f63577407019e8a3b6408353e17dbca5e5a228c72f",
+      "vmlinux": "0e4e6f050d78e09e6df19b9c1640372936841ddfc1bb5256896d6cb8d6e49c1f"
+    },
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "-j8",
+      "drivers/power/supply/sm5440-direct.o"
+    ],
+    "before": {
+      "object": "b312ad05a4751f6a893948f63577407019e8a3b6408353e17dbca5e5a228c72f",
+      "vmlinux": "0e4e6f050d78e09e6df19b9c1640372936841ddfc1bb5256896d6cb8d6e49c1f"
+    },
+    "device_commands": false,
+    "elapsed_seconds": 8.221181766999507,
+    "env": {
+      "CCACHE_BASEDIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache",
+      "CCACHE_SLOPPINESS": "include_file_ctime,include_file_mtime"
+    },
+    "exit_code": 0
+  },
+  "test": "Test312",
+  "unchanged_existing_qualification": "Test305 diagnostic source/realC tests and Test308 battery/profile sources; affected tests rerun and new profile built/audited",
+  "unexpected_config_delta": {},
+  "verdict": "OFFLINE_ADC_CONDITION_WITH_ACCEPTED_ORDINARY_RECOVERY_QUALIFIED"
+}
