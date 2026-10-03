@@ -34,3 +34,16 @@ rollback remains required. Await current Wi-Fi IP and physical connection;
 do not reflash, replay the candidate boot or enable PPS/pump to recover access.
 No tests/build were executed for this status-only update; unchanged Test317
 73 affected host tests and Test316 build qualification remain separate.
+
+## Bounded address discovery
+
+A read-only Windows neighbor query found only the router and broadcast in the
+registered10.139.153.0/24 Wi-Fi network. One bounded TCP22 discovery (16 workers,
+150ms connection timeout,2.425s total) found no listener. No device authenticated,
+no boot ID or kernel state inferred, no SSH command issued to another device.
+This does not prove a CPU stall, failed boot or disconnected charger.
+
+Raw query/parameters/results retained in post-install-availability/neighbor-discovery.
+Await owner current IP/physical connection; Test317 capture still NOT EXECUTED
+and exactaccepted311 rollback required. No reflash, boot replay, pump/PPS write,
+new build or tests for this evidence-only update.
