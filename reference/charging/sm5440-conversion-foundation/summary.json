@@ -1,0 +1,50 @@
+{
+  "verdict": "OFFLINE_BOUNDED_CONVERSION_FOUNDATION_QUALIFIED_UNINTEGRATED",
+  "created_utc": "2026-10-03T12:48:54.026661+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5440_conversion",
+      "test_sm5440_actuator",
+      "test_sm5440_watchdog",
+      "test_sm5440_off_control"
+    ],
+    "tests": 60,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 0.8254202850002912,
+    "real_C": true,
+    "mocked_bus": true,
+    "full": false,
+    "routing_changed": false
+  },
+  "ARM64_single_object": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 4.519566773997212,
+    "W1": true,
+    "sparse": true,
+    "changed_helper_warnings": 0,
+    "unrelated_warning": "upstream vDSO __kernel_getrandom declaration"
+  },
+  "initial_failures_preserved": true,
+  "kernel_Image_build": {
+    "executed": false,
+    "reason": "New unlinked object only; current candidate/rollback sealed unchanged."
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "Affected converter/actuator/watchdog/control C only; routing unchanged."
+  },
+  "config_diff": [],
+  "DTB_diff": [],
+  "software_ocp_verified": false,
+  "physical_ADC_freshness_accepted": false,
+  "PPS_requested": false,
+  "pump_enabled": false,
+  "device_commands_executed": false,
+  "Test317_capture_executed": false,
+  "Test317_rollback_required": true,
+  "full_goal_ready": false
+}

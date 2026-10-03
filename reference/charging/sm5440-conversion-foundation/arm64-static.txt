@@ -1,0 +1,12 @@
+make: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'
+make[1]: Entering directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive'
+  DESCEND bpf/resolve_btfids
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/scripts/mod/empty.c
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgettimeofday.c
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c
+/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?
+  INSTALL libsubcmd_headers
+  CC      drivers/power/supply/sm5440-conversion.o
+  CHECK   /home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/drivers/power/supply/sm5440-conversion.c
+make[1]: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive'
+make: Leaving directory '/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging'

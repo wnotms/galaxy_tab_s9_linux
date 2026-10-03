@@ -1,0 +1,51 @@
+{
+  "vendor": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+    "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+    "excerpts": [
+      {
+        "first_line": 226,
+        "text": "static int sm5440_convert_adc(struct sm5440_charger *sm5440, u8 index)\n{\n\tu8 reg1, reg2;\n\tint adc;\n#if !defined(CONFIG_SEC_FACTORY)\n\tstruct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);\n\n\tif (sm_dc_get_current_state(sm_dc) < SM_DC_CHECK_VBAT &&\n\t\t!(sm5440->rev_boost)) {\n\t\t/* Didn't worked ADC block during on CHG-OFF status */\n\t\treturn -1;\n\t}\n#endif\n\n\tswitch (index) {\n\tcase SM5440_ADC_THEM:\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_THEM1, &reg1);\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_THEM2, &reg2);\n\t\tadc = ((((int)reg1 << 5) | (reg2 >> 3)) * 250) / 1000;\n\t\tbreak;\n\tcase SM5440_ADC_DIETEMP:    /* unit - C x 10 */\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_DIETEMP, &reg1);\n\t\tadc = 225 + (u16)reg1 * 5;\n\t\tbreak;\n\tcase SM5440_ADC_VBAT1:\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VBAT1, &reg1);\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VBAT2, &reg2);\n\t\tadc = 2048 + (((((int)reg1 << 5) | (reg2 >> 3)) * 500) / 1000);\n\t\tbreak;\n\tcase SM5440_ADC_VOUT:\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VOUT1, &reg1);\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VOUT2, &reg2);\n\t\tadc = 2048 + (((((int)reg1 << 5) | (reg2 >> 3)) * 500) / 1000);\n\t\tbreak;\n\tcase SM5440_ADC_IBUS:\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_IBUS1, &reg1);\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_IBUS2, &reg2);\n\t\tadc = ((((int)reg1 << 5) | (reg2 >> 3)) * 625) / 1000;\n\t\tbreak;\n\tcase SM5440_ADC_VBUS:\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VBUS1, &reg1);\n\t\tsm5440_read_reg(sm5440, SM5440_REG_ADC_VBUS2, &reg2);\n\t\tadc = 4096 + (((u16)reg1 << 5) | (reg2 >> 3));\n\t\tbreak;\n\tdefault:\n\t\tadc = 0;\n\t}\n\n\treturn adc;\n}"
+      },
+      {
+        "first_line": 324,
+        "text": "static int sm5440_set_adc_rate(struct sm5440_charger *sm5440, u8 rate)\n{\n\tint ret;\n\n\tret = sm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, rate, 0x1, 1);\n\n\treturn ret;\n}"
+      },
+      {
+        "first_line": 333,
+        "text": "static int sm5440_enable_adc(struct sm5440_charger *sm5440, bool enable)\n{\n\tint ret;\n\n\n\tret = sm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, enable, 0x1, 0);\n\n\treturn ret;\n}"
+      },
+      {
+        "first_line": 1053,
+        "text": "static int sm5440_set_adc_mode(struct i2c_client *i2c, u8 mode)\n{\n\tstruct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);\n\n\tswitch (mode) {\n\tcase SM_DC_ADC_MODE_ONESHOT:\n\t\tsm5440_enable_adc(sm5440, 0);\n\t\tmsleep(20);\n\t\tsm5440_set_adc_rate(sm5440, 0x0);\n\t\tschedule_delayed_work(&sm5440->adc_work, msecs_to_jiffies(200));\n\t\tsm5440_enable_adc(sm5440, 1);\n\t\tbreak;\n\tcase SM_DC_ADC_MODE_CONTINUOUS:\n\t\tcancel_delayed_work(&sm5440->adc_work);\n\t\tsm5440_enable_adc(sm5440, 0);\n\t\tmsleep(50);\n\t\tsm5440_set_adc_rate(sm5440, 0x1);\n\t\tsm5440_enable_adc(sm5440, 1);\n\t\tbreak;\n\tcase SM_DC_ADC_MODE_OFF:\n\tdefault:\n\t\tcancel_delayed_work(&sm5440->adc_work);\n\t\tsm5440_enable_adc(sm5440, 0);\n\t\tbreak;\n\t}\n\n\treturn 0;\n}"
+      }
+    ],
+    "AVG32_and_channels_excerpt": {
+      "first_line": 460,
+      "text": "\tsm5440_update_reg(sm5440, SM5440_REG_ADCCNTL1, 1, 0x1, 3);      /* ADC average sample = 32 */\n\tsm5440_write_reg(sm5440, SM5440_REG_ADCCNTL2, 0xDF);            /* ADC channel setting */"
+    }
+  },
+  "fedora": {
+    "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+    "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+    "local_HEAD": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+    "ADC_initialization_lines": [
+      "\tSM5440_WRITE(SM5440_REG_ADCCNTL1,",
+      "\t\t     SM5440_ADCCNTL1_AVG_32 |",
+      "\t\t     SM5440_ADCCNTL1_CONTINUOUS |",
+      "\t\t     SM5440_ADCCNTL1_ENABLE);",
+      "\tSM5440_WRITE(SM5440_REG_ADCCNTL2, 0xdf);"
+    ]
+  },
+  "converter_fields": {
+    "ADCCNTL1": "0x1c enable0/rate1/AVG32 bit3",
+    "ADCCNTL2": "0x1d channels0xdf",
+    "interrupts": "0x00..03 read-to-clear, ADC_UPDATED bit0 of INT4",
+    "live_status": "0x08..0b",
+    "data": "0x1e..0x28 11 bytes"
+  },
+  "software_budget_ms": 100,
+  "vendor_rearm_ms": 20,
+  "physical_timing_qualified": false,
+  "OCP_qualified": false
+}

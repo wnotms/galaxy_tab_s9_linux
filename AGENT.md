@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+Offline bounded converter layer now provides actual regmap begin/advance/cancel,
+vendor 20 ms rearm/one-shot AVG32, fresh READY provenance, live/latch separation,
+raw ADC/current precision and checked original converter cleanup. Native BOOTTIME
+request <=100 ms including cleanup; no sleeps/locks/cache restamps/old READY.
+60 affected actual-C tests PASS0.825s, ARM64 single object W=1/sparse PASS4.520s,
+no changed-helper warning. Initial decoding/failed-disable assertion failures
+retained and corrected. Six provider/98 Test317 inputs/nine artifacts unchanged;
+config/DT diff empty. No Kbuild/caller/Image/device/PPS/pump/full/Actions.
+Results reference/charging/sm5440-conversion-foundation/. Vendor200ms worker and
+Fedora continuous ADC are NOT physical100ms/OCP proof; actual acceptance and live
+adapter remain open. Test317 capture pending/rollback_required=true, awaiting
+current Wi-Fi IP/connection after owner's powered-on report. Goal NOT complete.
+
+
 Owner now reports powered on. Fresh bounded checks show no ADB device and
 registered Wi-Fi 10.139.153.84 returns No route to host. No new boot ID,
 kernel identity or charger connection has been observed; current device state
