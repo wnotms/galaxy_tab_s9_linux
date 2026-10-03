@@ -1,14 +1,34 @@
 {
-  "test": "Test310",
-  "verdict": "REGISTERED_PROVIDER_COLLECTOR_READY_PHYSICAL_NOT_EXECUTED",
-  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
-  "kernel_qualification": "Test308",
-  "kernel_build": {
-    "executed": false,
-    "reason": "exact qualified unchanged Test308 package reused"
+  "Actions_started": false,
+  "PPS": false,
+  "Windows_large_files_copied": false,
+  "active_stage3_ready": false,
+  "candidate_boot_id": "c9663df0eafc4487b4269051ed85c477",
+  "candidate_kernel_fault_counts": {},
+  "candidate_kernel_rows": 1064,
+  "candidate_known_startup_refusal": [
+    {
+      "message": "sm5440-passive 0-0063: passive startup confirmation failed",
+      "priority": 3,
+      "row": 937
+    }
+  ],
+  "candidate_program_controls_read": false,
+  "current_increase": false,
+  "endpoint_completed": false,
+  "endpoint_seconds": 15,
+  "final_boot_id": "788fef75722a42438ad19e0b3a16269c",
+  "first_failure": {
+    "direct_charging_authorized": false,
+    "error": "boots: boots-after: status=timeout; b''",
+    "stopped": true
   },
   "host_tests": {
+    "elapsed_seconds": 0.14604143999895314,
+    "errors": [],
     "executed": true,
+    "failures": [],
+    "full_executed": false,
     "selected": [
       "test_sm5714_provider_acceptance.AdmissionTests.test_code43_cpu_stall_and_register_failure_stop",
       "test_sm5714_provider_acceptance.AdmissionTests.test_complete_mocked_admission_has_no_adc_invocation_or_extra_wait",
@@ -43,21 +63,37 @@
       "test_sm5714_provider_acceptance.ProviderTests.test_wrong_address_provider_is_rejected_before_io",
       "test_sm5714_provider_acceptance.ProviderTests.test_wrong_driver_or_compatible_is_rejected_before_io"
     ],
-    "tests_run": 32,
-    "elapsed_seconds": 0.14604143999895314,
-    "failures": [],
-    "errors": [],
     "skips": [],
-    "full_executed": false
+    "tests_run": 32
   },
-  "physical_test_executed": false,
+  "kernel_build": {
+    "executed": false,
+    "reason": "exact qualified unchanged Test308 package reused"
+  },
+  "kernel_qualification": "Test308",
+  "last_authoritative_device_evidence": "restored accepted299 normal788fef75/42%/3.815V/30.2C/ADB+deviceNCM; allfive181 readback verified",
   "normal_candidate_boots": 1,
-  "endpoint_seconds": 15,
-  "PPS": false,
+  "normal_candidate_boots_executed": 1,
+  "physical_test_executed": true,
   "pump_ON": false,
-  "current_increase": false,
-  "active_stage3_ready": false,
-  "Windows_large_files_copied": false,
+  "rollback": {
+    "final": {
+      "battery": {
+        "soc": 42,
+        "temp_decic": 302,
+        "voltage_uv": 3815000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "788fef75722a42438ad19e0b3a16269c",
+      "charging_authorized": false,
+      "device_NCM": true,
+      "host_NCM_probe_status": 255
+    },
+    "phase": "accepted299-restored-after-failure",
+    "rollback_required": false
+  },
   "source_inputs": 125,
-  "Actions_started": false
+  "source_revision": "158d0dd376dac2770cd72582be1bd1fe2474e71d",
+  "test": "Test310",
+  "verdict": "STOP_BOOT_HISTORY_CAPTURE_TIMEOUT_ACCEPTED299_RESTORED"
 }

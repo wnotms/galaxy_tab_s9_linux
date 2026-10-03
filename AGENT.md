@@ -92,17 +92,17 @@
 
 ## Current state (2026-10-03)
 
-Test310 REGISTERED_PROVIDER_COLLECTOR_READY_PHYSICAL_NOT_EXECUTED. Samequalified
-308kernel/source158d0dd3/bootpackage+181pair, noC/config/DT/current/USB/rootfs/
-PPS/pump/build/full/CIchange. Independentcollector anchored toactualbattery
-provider+I2Calias+driver+OF, unrelated7-0049allowed; baselinecontrols checked
-BEFOREmutation pluscandidate/admission15s endpoint.32affectedactualreader+
-310lifecycle/gate/preflight PASS~0.12s;125inputssealed/7stagesmatch. Stage310six
-unchangedfiles NTFShardlinks toneighbor309/no largeduplicate; helperunique310.
-Exact299rollback retained; firstfailure stop/restoreonce/PASSretain/nohostrecord
-reflash. Registerpush beforefresh preflight+run; no310devicecommandyet. Owner
-alreadyauthorized ordinarydeployment/tests, device restored299normal732d3733.
-Fullgoalactive/Stage3NR; ADC/OCP/PPS/handoff/PM physicalqualification stillopen.
+Test310 STOP_BOOT_HISTORY_CAPTURE_TIMEOUT_ACCEPTED299_RESTORED.32affectedhost
+PASS0.146s/providercollector correct onbaselineBEFOREflash Q4/input500/fast500/
+float4440. Candidatec9663df0 identity/pack/rescue/currentstate0.292s/fullkernel
+1064rows1.279s/CPU0; parallelbootlist10.014stimeout, no candidatecontrols/15s
+endpoint/completeattribution/cleanclaim. CauseUNKNOWN, not CPUcausalproof.
+Failurekernel/history0.154/0.153s; exact299boot/181 restoredonce/allfive/BCBclear,
+finalnormal788fef75/42%/3.815V/30.2C/ADBdeviceNCM/attributed; finalhistory7.627s.
+Knownpassive startuprefusal retained; hostNCM255separate. Rollbackrequiredfalse/
+310terminal/noreplay/noPPS/pump/current/kernelbuild/fullCI. Nexthostcollector
+prioritizeactualcontrols/thermal/journal, serializeADBjobs, single boundedhistory
+query; keep allactualidentity/boot/faultgates. Fullgoalactive/Stage3NR.
 
 Test309 STOP_COLLECTOR_AMBIGUOUS_I2C_ADDRESSES_ACCEPTED299_RESTORED. Normal
 224ffde1 preflight passed allfive/181 afterhostnamespacefix77PASS; candidate

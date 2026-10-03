@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; if test -d /mnt/debian/usr/lib/modules/.gts9-test310-original; then echo saved; else echo no-saved; fi"
+  ],
+  "ended_utc": "2026-10-03T08:00:23.295007+00:00",
+  "started_utc": "2026-10-03T08:00:23.213114+00:00",
+  "status": 0
+}
