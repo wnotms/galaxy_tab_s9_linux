@@ -1,0 +1,6 @@
+{
+  "host_setup": "Initial fixture extraction matched forward declarations for get_temp/get_status and duplicated the next C function. Fixed exact definition markers; production code unchanged by that fixture correction. Raw initial-host-error.log retained.",
+  "host_PM": "Initial PM stimulus had Q4 already OFF, so the assertion expecting a write failed. Set Q4 ON only in the injected PM case; keep the same real PM/zero-output assertions. Failed host-development.log retained.",
+  "artifact_gate": "Initial expected config diff required an explicit n for ADC diagnostic, but Linux Kconfig depends on !X710_CHARGING_POLICY; symbol becomes absent. The actual Kconfig source was checked, exact absent delta recorded, and the initial failing audit log retained. No config/build gate weakened.",
+  "final_consumer_review": "Found caller did not use native attachment/Type-C grant and did not validate receipt identity/generation/lease. Added refusal checks and a host test, retained pre-change build/tests, then ran final 162 tests and one final build."
+}

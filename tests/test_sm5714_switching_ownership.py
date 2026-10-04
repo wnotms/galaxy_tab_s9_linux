@@ -37,7 +37,7 @@ static _Thread_local int held;''')
                             '  if ((drop_q4 && r == 0x13) || (drop_input && r == 0x15)) return 0;')
         code = code.replace('static int sm5714_get_online_raw(struct sm5714_battery *sm) { (void)sm; return 1; }', 'static int sm5714_get_online_raw(struct sm5714_battery *sm) { (void)sm; return online; }')
         code = code.replace('struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat;',
-                            'struct sm5714_battery { bool last_online; int last_status, last_capacity, last_usb_type; unsigned int poll_count; int chg_lock, chg, dev, psy_usb, psy_bat, poll_work;')
+                            'struct sm5714_battery { bool last_online, pack_removing; u64 pack_instance; int pack_users, pack_wait; int last_status, last_capacity, last_usb_type; unsigned int poll_count; int chg_lock, chg, dev, psy_usb, psy_bat, poll_work;')
         code += r'''
 struct work_struct { int dummy; };
 #define to_delayed_work(x) (x)
@@ -57,6 +57,10 @@ static int sm5714_companion_lock;
 static struct sm5714_battery *sm5714_companion;
 static u64 sm5714_switching_issuer;
 static bool sm5714_switching_blocked;
+static u64 sm5714_pack_issuer;
+#define atomic_read(p) (*(p))
+#define WRITE_ONCE(p,v) ((p)=(v))
+#define wait_event(w,c) ((void)(w),assert(c))
 static pthread_mutex_t registry = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t charger = PTHREAD_MUTEX_INITIALIZER;
 static void host_lock(void *p) {

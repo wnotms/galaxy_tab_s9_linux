@@ -113,6 +113,26 @@ static int power_supply_get_property(struct power_supply *p,enum power_supply_pr
  if(scenario==21)clock_ms+=110;v->intval=pack[n];return 0;
 }
 static void power_supply_put(struct power_supply *p){if(p!=&battery)errors++;puts++;}
+/* Native pack producer is executed separately; this adapter mock preserves
+ * per-getter fault/PM/source injection and the original acquisition window.
+ */
+int sm5714_battery_read_pack(u64 lease,struct sm5714_pack_snapshot *out){
+ memset(out,0,sizeof(*out));u64 start=clock_ms;int values[5],ret=0;
+ if(lease&&(!lease_live||lease!=7))return -ESTALE;
+ struct power_supply *p=power_supply_get_by_name("sm5714-battery");if(!p)return -ENODEV;
+ for(int i=0;i<5;i++) {union power_supply_propval v;ret=power_supply_get_property(p,i,&v);
+  if(ret)break;values[i]=v.intval;}
+ power_supply_put(p);if(ret)return ret;
+ if(lease&&!lease_live)return -ESTALE;
+ out->instance=1;out->state_generation=1;out->switching_lease=lease;
+ out->started_ms=start;out->completed_ms=clock_ms;
+ out->battery_present=values[0]==1;out->health=values[1];out->capacity=values[2];
+ out->voltage_uv=values[3];out->pack_decic=values[4];
+ out->attached=scenario!=46;out->typec_owned=scenario!=47;out->typec_charge=scenario!=48;
+ if(scenario==49)out->instance=0;if(scenario==50)out->state_generation=0;
+ if(scenario==51)out->switching_lease=lease+1;
+ return 0;
+}
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out){
  reads++;int ret=step('r');if(ret)return ret;if(logical_pps)return -EOPNOTSUPP;
  memset(out,0,sizeof(*out));out->instance=source_instance;out->source_generation=source_epoch;
@@ -338,6 +358,12 @@ int pm_case(int action,int unresolved,int initfail,long long *out){
             ret, out = self.case(mode)
             self.assertEqual(ret, -errno.EPERM)
             self.assertEqual(out[5], 0)
+
+    def test_native_pack_identity_attachment_charge_and_lease_are_required(self):
+        for mode in (46, 47, 48, 49, 50, 51):
+            ret, out = self.case(mode)
+            self.assertEqual(ret, -errno.EPERM if mode < 49 else -errno.ESTALE)
+            self.assertEqual(out[5:9], [0]*4)
 
     def test_bad_parameters_do_not_touch_providers(self):
         for mode in range(40, 45):

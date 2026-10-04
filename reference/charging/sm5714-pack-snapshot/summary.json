@@ -1,0 +1,144 @@
+{
+  "verdict": "NATIVE_PACK_PRODUCER_AND_OFF_ONLY_CONSUMER_OFFLINE_QUALIFIED",
+  "created_utc": "2026-10-04T12:56:01.684251+00:00",
+  "host": {
+    "executed": true,
+    "modules": [
+      "test_sm5714_pack_snapshot",
+      "test_sm5714_policy",
+      "test_sm5714_charge_safety",
+      "test_sm5714_switching_ownership",
+      "test_sm5714_program_recovery",
+      "test_sm5714_stage2_pd",
+      "test_x710_pd_session",
+      "test_sm5714_owned_pps",
+      "test_sm5714_owned_observer"
+    ],
+    "tests": 162,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 5.774476956000001,
+    "actual_producer_C": true,
+    "real_pthread_locks": true,
+    "sensor_IO_mock": true,
+    "full": false,
+    "routing_changed": false,
+    "last_put_wakeup_barrier": true,
+    "consumer_provenance_and_live_attach_checked": true
+  },
+  "Image_dtbs_modules_build": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 64.20225796,
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-policy-offline",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-pack-observation",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache"
+    },
+    "base_revision": "1ef36630bf49beaa80a6bbcd17658d160e4d21ad",
+    "source_inputs": "inputs-before.json",
+    "toolchain": "Ubuntu clang version 21.1.8 (6ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/lib/llvm-21/bin\n",
+    "physical_executed": false,
+    "actions_executed": false,
+    "consumer_provenance_and_live_attach_checked": true
+  },
+  "ARM64_W1_sparse": {
+    "executed": true,
+    "exit_code": 0,
+    "seconds": 7.260489479000057,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/sm5714-battery.o",
+      "drivers/power/supply/x710-pd-session.o"
+    ],
+    "actual_Kbuild_objects": true,
+    "W1": true,
+    "sparse": true
+  },
+  "changed_driver_warnings": 0,
+  "known_static_warning": "upstream vDSO __kernel_getrandom declaration",
+  "config_diff": {
+    "Test316": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "y",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ]
+    },
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ]
+    }
+  },
+  "DTB_diff": [],
+  "embedded_config_identical": true,
+  "protected_source_count": 136,
+  "preserved_formal_artifacts": 15,
+  "unchanged_hardware_policy_functions": 14,
+  "paired_module_files": 181,
+  "changed_module_ko_files": 167,
+  "changed_module_sections": {
+    ".BTF": 167
+  },
+  "changed_builtin_metadata": [
+    "modules.builtin",
+    "modules.builtin.bin",
+    "modules.builtin.modinfo"
+  ],
+  "module_code_data_changes": false,
+  "native_producer_and_consumer_linked": true,
+  "public_PRESENT_hardware_derived": true,
+  "source_state_generation_saturating": true,
+  "source_API_errors_zero_output": true,
+  "lifetime_final_put_barrier": true,
+  "native_temp_reads_per_bundle": 1,
+  "physical_ADC_or_OCP_qualification": false,
+  "active_worker_integrated": false,
+  "pump_enabled": false,
+  "PPS_requests_executed": false,
+  "current_increase": false,
+  "device_commands_this_turn": {
+    "executed": false,
+    "reason": "Offline source/build qualification; previous read-only accepted311 identity is historical reuse, no new device acceptance"
+  },
+  "flash_reboot_partition_module_rootfs_write": false,
+  "full_tests": {
+    "executed": false,
+    "reason": "Latest owner affected-only scope; nine actual battery/transport/session dependency modules, no routing changes"
+  },
+  "actions": {
+    "executed": false
+  },
+  "full_goal_ready": false,
+  "next_required": [
+    "real direct worker and provider adapter",
+    "physical ADC/current/cutoff/OCP qualification",
+    "native refresh/fixed fallback/PM device acceptance",
+    "conservative PPS/pump bring-up then staged higher current"
+  ]
+}

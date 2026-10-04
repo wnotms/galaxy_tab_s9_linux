@@ -24,38 +24,24 @@ static u64 x710_session_now(void)
 	return ktime_to_ms(ktime_get_boottime());
 }
 
-static int x710_session_pack(void)
+static int x710_session_pack(u64 lease)
 {
-	static const enum power_supply_property props[] = {
-		POWER_SUPPLY_PROP_PRESENT, POWER_SUPPLY_PROP_HEALTH,
-		POWER_SUPPLY_PROP_CAPACITY, POWER_SUPPLY_PROP_VOLTAGE_NOW,
-		POWER_SUPPLY_PROP_TEMP,
-	};
-	struct power_supply *psy;
-	union power_supply_propval value;
-	u64 start = x710_session_now(), end;
-	int values[ARRAY_SIZE(props)], ret = 0;
-	unsigned int i;
+	struct sm5714_pack_snapshot sample = {};
+	u64 now;
+	int ret = sm5714_battery_read_pack(lease, &sample);
 
-	psy = power_supply_get_by_name("sm5714-battery");
-	if (!psy)
-		return -ENODEV;
-	for (i = 0; i < ARRAY_SIZE(props); i++) {
-		ret = power_supply_get_property(psy, props[i], &value);
-		if (ret)
-			break;
-		values[i] = value.intval;
-	}
-	power_supply_put(psy);
 	if (ret)
 		return ret;
-	end = x710_session_now();
-	if (!start || end < start || end - start > 500)
+	now = x710_session_now();
+	if (!sample.instance || !sample.state_generation || sample.switching_lease != lease ||
+	    !sample.started_ms || sample.completed_ms < sample.started_ms ||
+	    now < sample.completed_ms || now - sample.started_ms > 500)
 		return -ESTALE;
 	/* Existing conservative bring-up window, not vendor maximum ratings. */
-	if (values[0] != 1 || values[1] != POWER_SUPPLY_HEALTH_GOOD ||
-	    values[2] < 5 || values[2] >= 80 || values[3] < 3500000 ||
-	    values[3] >= 4300000 || values[4] < 200 || values[4] >= 380)
+	if (!sample.attached || !sample.typec_owned || !sample.typec_charge ||
+	    !sample.battery_present || sample.health != POWER_SUPPLY_HEALTH_GOOD ||
+	    sample.capacity < 5 || sample.capacity >= 80 || sample.voltage_uv < 3500000 ||
+	    sample.voltage_uv >= 4300000 || sample.pack_decic < 200 || sample.pack_decic >= 380)
 		return -EPERM;
 	return 0;
 }
@@ -150,7 +136,7 @@ static int x710_session_cleanup(struct x710_pd_session_result *result, bool pps_
 	result->fixed_observed = true;
 	if (fixed.budget_mv != 9000)
 		return -ERANGE;
-	ret = x710_session_pack();
+	ret = x710_session_pack(result->lease);
 	if (!ret)
 		ret = x710_session_measure(fixed.budget_mv, &proof);
 	if (!ret)
@@ -192,7 +178,7 @@ int x710_pd_off_roundtrip(unsigned int mv, unsigned int ma,
 		ret = -EPERM;
 		goto done;
 	}
-	ret = x710_session_pack();
+	ret = x710_session_pack(0);
 	if (!ret)
 		ret = x710_session_measure(9000, &proof);
 	if (!ret)
@@ -203,7 +189,7 @@ int x710_pd_off_roundtrip(unsigned int mv, unsigned int ma,
 		goto done;
 	ret = sm5714_battery_switching_acquire(&result.lease);
 	if (!ret)
-		ret = x710_session_pack();
+		ret = x710_session_pack(result.lease);
 	if (!ret)
 		ret = x710_session_measure(9000, &proof);
 	if (!ret)
@@ -223,7 +209,7 @@ int x710_pd_off_roundtrip(unsigned int mv, unsigned int ma,
 	if (!ret && atomic_read(&x710_session_quiescing))
 		ret = -ECANCELED;
 	if (!ret)
-		ret = x710_session_pack();
+		ret = x710_session_pack(result.lease);
 	if (!ret)
 		ret = x710_session_measure(mv, &proof);
 	if (!ret)

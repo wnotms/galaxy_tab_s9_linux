@@ -1,0 +1,42 @@
+setUpClass (test_sm5714_pack_snapshot.PackSnapshotTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_sm5714_pack_snapshot.PackSnapshotTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_pack_snapshot.py", line 267, in setUpClass
+    raise AssertionError(result.stdout + result.stderr)
+AssertionError: /tmp/tmp1liie4g6/pack.c:318:12: error: redefinition of ‘sm5714_chg_update_bits’
+  318 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:219:12: note: previous definition of ‘sm5714_chg_update_bits’ with type ‘int(struct sm5714_battery *, u8,  u8,  u8)’ {aka ‘int(struct sm5714_battery *, unsigned char,  unsigned char,  unsigned char)’}
+  219 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:353:12: error: redefinition of ‘sm5714_chg_update_bits’
+  353 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:318:12: note: previous definition of ‘sm5714_chg_update_bits’ with type ‘int(struct sm5714_battery *, u8,  u8,  u8)’ {aka ‘int(struct sm5714_battery *, unsigned char,  unsigned char,  unsigned char)’}
+  318 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:351:12: error: ‘sm5714_get_temp’ used but never defined [-Werror]
+  351 | static int sm5714_get_temp(struct sm5714_battery *sm, int *val);
+      |            ^~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:350:12: error: ‘sm5714_get_status’ used but never defined [-Werror]
+  350 | static int sm5714_get_status(struct sm5714_battery *sm);
+      |            ^~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:353:12: error: ‘sm5714_chg_update_bits’ defined but not used [-Werror=unused-function]
+  353 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:318:12: error: ‘sm5714_chg_update_bits’ defined but not used [-Werror=unused-function]
+  318 | static int sm5714_chg_update_bits(struct sm5714_battery *sm, u8 reg,
+      |            ^~~~~~~~~~~~~~~~~~~~~~
+/tmp/tmp1liie4g6/pack.c:186:12: error: ‘iio_read_channel_processed’ defined but not used [-Werror=unused-function]
+  186 | static int iio_read_channel_processed(struct iio_channel *c,int *value){
+      |            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.034s
+
+FAILED (errors=1)

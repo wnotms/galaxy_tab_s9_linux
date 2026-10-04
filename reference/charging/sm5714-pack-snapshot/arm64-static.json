@@ -1,0 +1,23 @@
+{
+  "executed": true,
+  "exit_code": 0,
+  "seconds": 7.260489479000057,
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "drivers/power/supply/sm5714-battery.o",
+    "drivers/power/supply/x710-pd-session.o"
+  ],
+  "actual_Kbuild_objects": true,
+  "W1": true,
+  "sparse": true
+}

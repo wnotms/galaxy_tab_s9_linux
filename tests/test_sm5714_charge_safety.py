@@ -29,6 +29,7 @@ class ChargeSafetyTests(unittest.TestCase):
             "static u8 sm5714_input_current_reg(",
             "static u8 sm5714_fast_current_reg(",
             "static enum sm5714_charge_thermal_state\nsm5714_charge_thermal_state(",
+            "static void sm5714_pack_changed_locked(",
             "static void sm5714_revoke_switching_locked(",
             "static int sm5714_check_programmed_locked(",
             "static int sm5714_configure_charging_locked(",
@@ -41,6 +42,9 @@ class ChargeSafetyTests(unittest.TestCase):
 #include <stdbool.h>
 typedef unsigned char u8;
 typedef unsigned long long u64;
+#ifndef U64_MAX
+#define U64_MAX (~0ULL)
+#endif
 #define lockdep_assert_held(x) ((void)(x))
 #define BIT(n) (1U << (n))
 #define GENMASK(h,l) (((~0U) >> (31 - (h))) & ((~0U) << (l)))
@@ -63,7 +67,7 @@ enum sm5714_charge_thermal_state { SM5714_THERMAL_NORMAL,
 struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat; unsigned int float_uv;
        unsigned int typec_mv, typec_ma;
        bool typec_owned, typec_claimed, typec_charge, typec_pps, typec_fault, suspended;
-       bool switching_inhibited; u64 switching_lease;
+       bool switching_inhibited; u64 switching_lease, pack_generation;
        bool charge_programmed, charge_recovery_used, charge_program_fault;
        u8 programmed_input, programmed_fast;
        enum sm5714_charge_thermal_state thermal_state; };

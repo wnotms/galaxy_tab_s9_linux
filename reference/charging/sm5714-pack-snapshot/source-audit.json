@@ -1,0 +1,54 @@
+{
+  "unchanged_hardware_policy_functions": {
+    "static int sm5714_configure_charging_locked(": true,
+    "static int sm5714_recover_programmed_charging(": true,
+    "static int sm5714_disable_charging(": true,
+    "static u8 sm5714_batreg_offset(": true,
+    "static int sm5714_set_float_voltage(": true,
+    "static int sm5714_charge_fault(": true,
+    "static u8 sm5714_input_current_reg(": true,
+    "static u8 sm5714_fast_current_reg(": true,
+    "static enum sm5714_charge_thermal_state\nsm5714_charge_thermal_state(": true,
+    "static int sm5714_fg_read_sram(": true,
+    "static int sm5714_get_capacity(": true,
+    "static int sm5714_get_voltage(": true,
+    "static int sm5714_get_current(": true,
+    "static int sm5714_get_temp(struct sm5714_battery *sm, int *val)\n{": true
+  },
+  "vendor_presence": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5714_charger/sm5714_charger.c",
+    "sha256": "ccf007874a25194b1b1b12b0d5e35ea15eecbc508a5cb27c84d10626e8f64112",
+    "function": "static int psy_chg_get_present(struct sm5714_charger_data *charger)\n{\n\tu8 reg;\n\n\tsm5714_read_reg(charger->i2c, SM5714_CHG_REG_STATUS2, &reg);\n\n\treturn (reg & (0x1 << 2)) ? 0 : 1;\n}",
+    "STATUS2_address": "0x0e",
+    "absent_bit": 2,
+    "category": "VENDOR hardware fact"
+  },
+  "native_pack_IO": {
+    "charger_live_status_addresses": [
+      "0x0d",
+      "0x0e"
+    ],
+    "fuel_gauge_address": "0x71",
+    "SRAM_selector": "0x8c",
+    "SRAM_data": "0x8d",
+    "SRAM_words": {
+      "SOC": "0x00",
+      "VBAT": "0x03",
+      "current": "0x05"
+    },
+    "temperature": "real battery-temp IIO channel, one read",
+    "charger_control_writes": false,
+    "latch_reads": false,
+    "cache_restamps": false
+  },
+  "new_epoch_metadata": "under chg_lock, saturating, invalidated by lease/budget/revoke/PM events",
+  "lifetime": "registry -> charger short pin/token checks; sensor calls outside both; registry-protected final put+wakeup, unpublish waits outside then acquires final barrier",
+  "float_voltage_mv": 4440,
+  "fixed_5v_max_ma": 1800,
+  "fixed_9v_max_ma": 1500,
+  "thermal_policy_unchanged": true,
+  "PPS_requests_executed": false,
+  "pump_ON": false,
+  "active_OCP_qualification": false,
+  "source_scope": "native facts and existing explicitly invoked OFF-only session; no active worker"
+}

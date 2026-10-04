@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-04 native pack observation is now implemented in real battery driver
+and consumed by the real OFF-only PPS session. Real gauge/SOC/signedcurrent/
+onepackIIO read, native time, liveSTATUS attach/presence/health checks and exact
+lease/state generation; no cached/default successful data. Registry->charger
+short try-pin/token only, IIO/gauge outsidecorelocks, drain/finalput-wakeupbarrier
+beforedevres. Vendor STATUS2[2] now drives public PRESENT; errorspropagate.
+162 affected actual-C/pthread tests PASS5.774s/noskips, final full ARM64build
+PASS64.202s, twoactualW1/sparse objects PASS7.260s/nochanged-driverwarning.
+14 hardwarepolicyfunctions unchanged;136protected sources/15oldartifacts exact.
+Existing policy-offline config includes actualsession and excludes ADCdiagnostic
+via !policy dependency (absent, not explicitn); exactdiff retained/DTidentical311.
+181 pairedfiles,167koBTF-only/3expectedbuiltinmetadata changes. Evidence
+reference/charging/sm5714-pack-snapshot/, docs/SM5714_NATIVE_PACK_OBSERVATION.md.
+No devicecommands/flash/reboot/PPS/pump/currentincrease/Actions/fullregression.
+Previous accepted311 device observation historical reuse only, not freshtest.
+Realworker/adapter/physicalADC/current/cutoff/OCP/refresh/fallback/PM stillremain.
+500msfacts bracket not100msphysicalprotection, no deadline/averaging relaxation.
+Fullgoal NOTREADY; existing fixedcaps/4.44V/thermal/USB/DCC remain.
+
 Native read-only owned PPS API is now integrated in the actual TCPC/header and
 linked through normal Kbuild; previous unapplied-patch entries below are
 historical.88 actual-C/pthread affected tests PASS1.609s/no skips, full ARM64

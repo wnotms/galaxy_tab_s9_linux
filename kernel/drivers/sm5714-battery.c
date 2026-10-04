@@ -22,6 +22,7 @@
  * thermistor is mandatory for enabling Q4.
  */
 
+#include <linux/atomic.h>
 #include <linux/bitops.h>
 #include <linux/delay.h>
 #include <linux/i2c.h>
@@ -30,8 +31,10 @@
 #include <linux/module.h>
 #include <linux/mutex.h>
 #include <linux/limits.h>
+#include <linux/ktime.h>
 #include <linux/pm.h>
 #include <linux/power_supply.h>
+#include <linux/wait.h>
 #include <linux/workqueue.h>
 
 #include "sm5714-stage2.h"
@@ -44,6 +47,8 @@
 #define  SM5714_CHG_STATUS1_VBUS_POK	BIT(0)
 #define  SM5714_CHG_STATUS1_VBUS_OVP	BIT(2)
 #define SM5714_CHG_REG_STATUS2		0x0e
+/* X710 vendor psy_chg_get_present(): STATUS2[2] = battery absent. */
+#define  SM5714_CHG_STATUS2_NOBAT		BIT(2)
 #define  SM5714_CHG_STATUS2_CHG_ON	BIT(3)
 #define  SM5714_CHG_STATUS2_TOPOFF	BIT(5)
 #define  SM5714_CHG_STATUS2_WDT_EXPIRED	BIT(7)
@@ -78,6 +83,7 @@
 
 #define SM5714_POLL_INTERVAL_MS		1000
 #define SM5714_CAPACITY_POLL_DIVIDER	10
+#define SM5714_PACK_REQUEST_MAX_MS	500U
 
 enum sm5714_charge_thermal_state {
 	SM5714_THERMAL_NORMAL,
@@ -125,6 +131,12 @@ struct sm5714_battery {
 	bool charge_program_fault;
 	u8 programmed_input;
 	u8 programmed_fast;
+	/* Lifetime pin for unlocked IIO/gauge acquisitions; no raw pointer escapes. */
+	atomic_t pack_users;
+	wait_queue_head_t pack_wait;
+	u64 pack_instance;
+	u64 pack_generation;
+	bool pack_removing;
 };
 
 /* Companion callbacks hold this lock through use; unbind clears before free. */
@@ -133,6 +145,7 @@ static struct sm5714_battery *sm5714_companion;
 /* Registry lock protects issuer and inhibition inherited across unbind/rebind. */
 static u64 sm5714_switching_issuer;
 static bool sm5714_switching_blocked;
+static u64 sm5714_pack_issuer;
 
 static int sm5714_get_online_raw(struct sm5714_battery *sm);
 static int sm5714_get_status(struct sm5714_battery *sm);
@@ -316,10 +329,19 @@ sm5714_charge_thermal_state(struct sm5714_battery *sm, int temp)
 	return SM5714_THERMAL_NORMAL;
 }
 
+/* Saturation refuses future observations instead of allowing an epoch ABA. */
+static void sm5714_pack_changed_locked(struct sm5714_battery *sm)
+{
+	lockdep_assert_held(&sm->chg_lock);
+	if (sm->pack_generation < U64_MAX)
+		sm->pack_generation++;
+}
+
 /* Invalidation never drops inhibition: another charger's state is unknown. */
 static void sm5714_revoke_switching_locked(struct sm5714_battery *sm)
 {
 	lockdep_assert_held(&sm->chg_lock);
+	sm5714_pack_changed_locked(sm);
 	if (sm->switching_inhibited)
 		sm->switching_lease = 0;
 }
@@ -649,6 +671,7 @@ int sm5714_battery_switching_acquire(u64 *lease)
 		ret = -EOVERFLOW;
 	} else {
 		/* Inhibit before touching Q4, without destroying the fixed budget. */
+		sm5714_pack_changed_locked(sm);
 		sm->switching_inhibited = true;
 		sm->switching_lease = ++sm5714_switching_issuer;
 		*lease = sm->switching_lease;
@@ -715,6 +738,7 @@ int sm5714_battery_switching_release(u64 lease)
 		/* Caller must first prove pump OFF and fresh physical fixed VBUS.
 		 * Hold chg_lock through restore: no poller/TCPM interleaving.
 		 */
+		sm5714_pack_changed_locked(sm);
 		sm->switching_inhibited = false;
 		ret = sm5714_configure_charging_locked(sm);
 		if (ret)
@@ -757,6 +781,7 @@ int sm5714_battery_switching_release_async(u64 lease)
 		 * Do not hold it across the thermistor's501ms possible IIO wait.
 		 * This releases authorization, not proof of completed Q4 programming.
 		 */
+		sm5714_pack_changed_locked(sm);
 		sm->switching_inhibited = false;
 		sm->switching_lease = 0;
 		sm5714_switching_blocked = false;
@@ -800,6 +825,7 @@ int sm5714_battery_set_pd_contract(unsigned int mv, unsigned int ma)
 		goto out;
 	}
 	mutex_lock(&sm->chg_lock);
+	sm5714_pack_changed_locked(sm);
 	if ((mv != 0 && mv != 5000 && mv != 9000) || (!mv && ma)) {
 		sm5714_inhibit_typec_locked(sm);
 		ret = -ERANGE;
@@ -841,6 +867,7 @@ int sm5714_battery_set_owned_contract(u64 lease, unsigned int mv, unsigned int m
 	if (!sm)
 		goto out;
 	mutex_lock(&sm->chg_lock);
+	sm5714_pack_changed_locked(sm);
 	if (!sm->switching_inhibited || sm->switching_lease != lease) {
 		ret = -ESTALE;
 		goto unlock;
@@ -902,6 +929,7 @@ int sm5714_battery_set_typec_charge(bool charge)
 		goto out;
 	}
 	mutex_lock(&sm->chg_lock);
+	sm5714_pack_changed_locked(sm);
 	sm->typec_charge = charge;
 	if (!charge) {
 		sm5714_revoke_switching_locked(sm);
@@ -951,6 +979,7 @@ int sm5714_battery_typec_claim(void)
 		if (sm->typec_claimed) {
 			ret = -EBUSY;
 		} else {
+			sm5714_pack_changed_locked(sm);
 			sm->typec_owned = true;
 			sm->typec_claimed = true;
 			sm->typec_charge = false;
@@ -1131,6 +1160,156 @@ static int sm5714_get_status(struct sm5714_battery *sm)
 	return POWER_SUPPLY_STATUS_NOT_CHARGING;
 }
 
+static int sm5714_get_present(struct sm5714_battery *sm)
+{
+	int status = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS2);
+
+	return status < 0 ? status : !(status & SM5714_CHG_STATUS2_NOBAT);
+}
+
+static int sm5714_pack_token_locked(struct sm5714_battery *sm, u64 lease,
+				    struct sm5714_pack_snapshot *token)
+{
+	lockdep_assert_held(&sm->chg_lock);
+	if (READ_ONCE(sm->pack_removing))
+		return -ESHUTDOWN;
+	if (!sm->pack_instance || !sm->pack_generation || sm->pack_generation == U64_MAX)
+		return -EOVERFLOW;
+	if (sm->suspended)
+		return -EAGAIN;
+	if (sm->typec_fault || sm->charge_program_fault)
+		return -EIO;
+	if (lease ? (!sm->switching_inhibited || sm->switching_lease != lease) :
+		    (sm->switching_inhibited || sm->switching_lease))
+		return -ESTALE;
+	token->instance = sm->pack_instance;
+	token->state_generation = sm->pack_generation;
+	token->switching_lease = sm->switching_lease;
+	token->thermal_normal = sm->thermal_state == SM5714_THERMAL_NORMAL;
+	token->typec_mv = sm->typec_mv;
+	token->typec_ma = sm->typec_ma;
+	token->typec_owned = sm->typec_owned;
+	token->typec_charge = sm->typec_charge;
+	token->pps_contract = sm->typec_pps;
+	return 0;
+}
+
+/* Registry -> charger only for pin/token operations, never across IIO/SRAM. */
+static int sm5714_pack_get(struct sm5714_battery **out, u64 lease,
+			   struct sm5714_pack_snapshot *token)
+{
+	struct sm5714_battery *sm;
+	int ret = -ENODEV;
+
+	if (!mutex_trylock(&sm5714_companion_lock))
+		return -EBUSY;
+	sm = sm5714_companion;
+	if (!sm)
+		goto registry_out;
+	if (!mutex_trylock(&sm->chg_lock)) {
+		ret = -EBUSY;
+		goto registry_out;
+	}
+	ret = sm5714_pack_token_locked(sm, lease, token);
+	if (!ret) {
+		atomic_inc(&sm->pack_users);
+		*out = sm;
+	}
+	mutex_unlock(&sm->chg_lock);
+registry_out:
+	mutex_unlock(&sm5714_companion_lock);
+	return ret;
+}
+
+static void sm5714_pack_put(struct sm5714_battery *sm)
+{
+	mutex_lock(&sm5714_companion_lock);
+	if (atomic_dec_and_test(&sm->pack_users))
+		wake_up_all(&sm->pack_wait);
+	mutex_unlock(&sm5714_companion_lock);
+}
+
+int sm5714_battery_read_pack(u64 lease, struct sm5714_pack_snapshot *out)
+{
+	struct sm5714_pack_snapshot sample = {}, after = {};
+	struct sm5714_battery *sm;
+	int status1, status2, repeat1, repeat2, ret;
+
+	if (!out)
+		return -EINVAL;
+	memset(out, 0, sizeof(*out));
+	ret = sm5714_pack_get(&sm, lease, &sample);
+	if (ret)
+		return ret;
+	/* The oldest actual acquisition brackets every live status/gauge/IIO read.
+	 * SRAM RADDR writes select measurements only; no charger control writes.
+	 */
+	sample.started_ms = ktime_to_ms(ktime_get_boottime());
+	status1 = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS1);
+	status2 = status1 < 0 ? status1 :
+		i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS2);
+	ret = status2 < 0 ? status2 : sm5714_get_capacity(sm, &sample.capacity);
+	if (!ret)
+		ret = sm5714_get_voltage(sm, SM5714_FG_SRAM_VBAT, &sample.voltage_uv);
+	if (!ret)
+		ret = sm5714_get_current(sm, SM5714_FG_SRAM_CURRENT, &sample.current_ua);
+	if (!ret)
+		ret = sm5714_get_temp(sm, &sample.pack_decic);
+	if (ret)
+		goto put;
+	repeat1 = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS1);
+	repeat2 = repeat1 < 0 ? repeat1 :
+		i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS2);
+	if (repeat2 < 0) {
+		ret = repeat2;
+		goto put;
+	}
+	/* Live attach/presence/health, not CHG_ON or interrupt latches. */
+	if (((status1 ^ repeat1) & (SM5714_CHG_STATUS1_VBUS_POK | SM5714_CHG_STATUS1_VBUS_OVP)) ||
+	    ((status2 ^ repeat2) & (SM5714_CHG_STATUS2_NOBAT | SM5714_CHG_STATUS2_WDT_EXPIRED))) {
+		ret = -EAGAIN;
+		goto put;
+	}
+	if (!mutex_trylock(&sm->chg_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	ret = sm5714_pack_token_locked(sm, lease, &after);
+	mutex_unlock(&sm->chg_lock);
+	if (!ret && (sample.instance != after.instance ||
+		     sample.state_generation != after.state_generation ||
+		     sample.thermal_normal != after.thermal_normal ||
+		     sample.typec_mv != after.typec_mv || sample.typec_ma != after.typec_ma ||
+		     sample.typec_owned != after.typec_owned ||
+		     sample.typec_charge != after.typec_charge ||
+		     sample.pps_contract != after.pps_contract))
+		ret = -ESTALE;
+	if (ret)
+		goto put;
+	sample.completed_ms = ktime_to_ms(ktime_get_boottime());
+	if (!sample.started_ms || sample.completed_ms < sample.started_ms ||
+	    sample.completed_ms - sample.started_ms > SM5714_PACK_REQUEST_MAX_MS) {
+		ret = -ESTALE;
+		goto put;
+	}
+	if (sample.voltage_uv <= 0 || sample.capacity < 0 || sample.capacity > 100) {
+		ret = -ERANGE;
+		goto put;
+	}
+	sample.attached = !!(status1 & SM5714_CHG_STATUS1_VBUS_POK);
+	sample.battery_present = !(status2 & SM5714_CHG_STATUS2_NOBAT);
+	sample.health = !sample.battery_present ? POWER_SUPPLY_HEALTH_UNKNOWN :
+		(status1 & SM5714_CHG_STATUS1_VBUS_OVP) ? POWER_SUPPLY_HEALTH_OVERVOLTAGE :
+		(status2 & SM5714_CHG_STATUS2_WDT_EXPIRED) ? POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE :
+		sample.pack_decic < 100 ? POWER_SUPPLY_HEALTH_COLD :
+		sample.pack_decic >= 500 ? POWER_SUPPLY_HEALTH_OVERHEAT : POWER_SUPPLY_HEALTH_GOOD;
+	*out = sample;
+put:
+	sm5714_pack_put(sm);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5714_battery_read_pack);
+
 static int sm5714_bat_get_property(struct power_supply *psy,
 				   enum power_supply_property psp,
 				   union power_supply_propval *val)
@@ -1146,7 +1325,10 @@ static int sm5714_bat_get_property(struct power_supply *psy,
 		val->intval = ret;
 		return 0;
 	case POWER_SUPPLY_PROP_PRESENT:
-		val->intval = 1;
+		ret = sm5714_get_present(sm);
+		if (ret < 0)
+			return ret;
+		val->intval = ret;
 		return 0;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
 		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
@@ -1417,6 +1599,7 @@ static int sm5714_resume(struct device *dev)
 
 	mutex_lock(&sm->chg_lock);
 	sm->suspended = false;
+	sm5714_pack_changed_locked(sm);
 	mutex_unlock(&sm->chg_lock);
 	sm->last_online = false;
 	schedule_delayed_work(&sm->poll_work, 0);
@@ -1432,6 +1615,7 @@ static void sm5714_unpublish_companion(void *data)
 	mutex_lock(&sm5714_companion_lock);
 	if (sm5714_companion == sm)
 		sm5714_companion = NULL;
+	WRITE_ONCE(sm->pack_removing, true);
 	mutex_lock(&sm->chg_lock);
 	if (sm->switching_inhibited)
 		sm5714_switching_blocked = true;
@@ -1439,6 +1623,11 @@ static void sm5714_unpublish_companion(void *data)
 	sm->suspended = true;
 	sm5714_disable_charging(sm);
 	mutex_unlock(&sm->chg_lock);
+	mutex_unlock(&sm5714_companion_lock);
+	/* Drain before devres releases gauge clients, IIO or driver memory. */
+	wait_event(sm->pack_wait, !atomic_read(&sm->pack_users));
+	/* Seeing zero alone does not prove the final put finished its wakeup. */
+	mutex_lock(&sm5714_companion_lock);
 	mutex_unlock(&sm5714_companion_lock);
 }
 
@@ -1449,8 +1638,15 @@ static int sm5714_publish_companion(struct sm5714_battery *sm)
 	mutex_lock(&sm5714_companion_lock);
 	if (sm5714_companion) {
 		ret = -EBUSY;
+	} else if (atomic_read(&sm->pack_users)) {
+		ret = -EBUSY;
+	} else if (sm5714_pack_issuer == U64_MAX) {
+		ret = -EOVERFLOW;
 	} else {
 		mutex_lock(&sm->chg_lock);
+		sm->pack_instance = ++sm5714_pack_issuer;
+		sm->pack_generation = 1;
+		WRITE_ONCE(sm->pack_removing, false);
 		sm->switching_inhibited = sm5714_switching_blocked;
 		mutex_unlock(&sm->chg_lock);
 		sm5714_companion = sm;
@@ -1477,6 +1673,9 @@ static int sm5714_probe(struct i2c_client *client)
 
 	sm->dev = dev;
 	sm->chg = client;
+	atomic_set(&sm->pack_users, 0);
+	init_waitqueue_head(&sm->pack_wait);
+	sm->pack_generation = 1;
 	/* A retained9V contract must not inherit Stage1's DCP1800mA at boot.
 	 * Start inhibited even if TCPC probe is delayed or fails entirely.
 	 */

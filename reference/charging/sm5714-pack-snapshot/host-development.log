@@ -1,0 +1,33 @@
+test_actual_suspend_resume_invalidates_pre_pm_acquisition (test_sm5714_pack_snapshot.PackSnapshotTests.test_actual_suspend_resume_invalidates_pre_pm_acquisition) ... FAIL
+test_admission_pm_fault_removal_and_exhausted_epoch (test_sm5714_pack_snapshot.PackSnapshotTests.test_admission_pm_fault_removal_and_exhausted_epoch) ... ok
+test_budget_and_lease_aba_refused (test_sm5714_pack_snapshot.PackSnapshotTests.test_budget_and_lease_aba_refused) ... ok
+test_busy_and_missing_provider_do_no_hardware_io (test_sm5714_pack_snapshot.PackSnapshotTests.test_busy_and_missing_provider_do_no_hardware_io) ... ok
+test_every_native_io_and_thermistor_error_zeroes_output (test_sm5714_pack_snapshot.PackSnapshotTests.test_every_native_io_and_thermistor_error_zeroes_output) ... ok
+test_exact_owned_lease_accepts_pps_without_request_or_control_write (test_sm5714_pack_snapshot.PackSnapshotTests.test_exact_owned_lease_accepts_pps_without_request_or_control_write) ... ok
+test_fault_and_post_acquisition_busy_refused (test_sm5714_pack_snapshot.PackSnapshotTests.test_fault_and_post_acquisition_busy_refused) ... ok
+test_invalid_voltage_or_pack_thermistor_refused (test_sm5714_pack_snapshot.PackSnapshotTests.test_invalid_voltage_or_pack_thermistor_refused) ... ok
+test_lifetime_and_core_lock_boundaries_are_actual_source (test_sm5714_pack_snapshot.PackSnapshotTests.test_lifetime_and_core_lock_boundaries_are_actual_source) ... ok
+test_live_presence_attach_ovp_and_watchdog_change_refused (test_sm5714_pack_snapshot.PackSnapshotTests.test_live_presence_attach_ovp_and_watchdog_change_refused) ... ok
+test_native_sram_iio_window_and_signed_discharge_current (test_sm5714_pack_snapshot.PackSnapshotTests.test_native_sram_iio_window_and_signed_discharge_current) ... ok
+test_null_output_does_not_pin_or_read (test_sm5714_pack_snapshot.PackSnapshotTests.test_null_output_does_not_pin_or_read) ... ok
+test_offline_absent_fault_or_cold_pack_is_not_healthy_charging (test_sm5714_pack_snapshot.PackSnapshotTests.test_offline_absent_fault_or_cold_pack_is_not_healthy_charging) ... ok
+test_oldest_time_deadline_and_clock_rollback_zero_not_restamped (test_sm5714_pack_snapshot.PackSnapshotTests.test_oldest_time_deadline_and_clock_rollback_zero_not_restamped) ... ok
+test_present_property_uses_vendor_status_and_propagates_io_error (test_sm5714_pack_snapshot.PackSnapshotTests.test_present_property_uses_vendor_status_and_propagates_io_error) ... ok
+test_publish_refuses_wrapped_identity_or_undrained_readers (test_sm5714_pack_snapshot.PackSnapshotTests.test_publish_refuses_wrapped_identity_or_undrained_readers) ... ok
+test_thermal_state_change_invalidates_bundle (test_sm5714_pack_snapshot.PackSnapshotTests.test_thermal_state_change_invalidates_bundle) ... ok
+test_unpublish_drains_real_pinned_iio_before_free (test_sm5714_pack_snapshot.PackSnapshotTests.test_unpublish_drains_real_pinned_iio_before_free) ... ok
+test_wrong_or_unowned_lease_never_reads_sensor (test_sm5714_pack_snapshot.PackSnapshotTests.test_wrong_or_unowned_lease_never_reads_sensor) ... ok
+
+======================================================================
+FAIL: test_actual_suspend_resume_invalidates_pre_pm_acquisition (test_sm5714_pack_snapshot.PackSnapshotTests.test_actual_suspend_resume_invalidates_pre_pm_acquisition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5714_pack_snapshot.py", line 328, in test_actual_suspend_resume_invalidates_pre_pm_acquisition
+    self.assertGreater(out[4], 0, 'injected real PM disables Q4')
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 0 : injected real PM disables Q4
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.151s
+
+FAILED (failures=1)

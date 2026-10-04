@@ -37,6 +37,22 @@ int sm5714_battery_switching_release(u64 lease);
  */
 int sm5714_battery_switching_release_async(u64 lease);
 int sm5714_battery_switching_check(u64 lease);
+
+/* Fresh native gauge/pack-thermistor observation, not a pump grant. A zero
+ * lease is pre-entry observation; an owned observation needs the exact lease.
+ * State/PM/rebind changes refuse the whole bundle. Errors zero output. The
+ * consumer must also bracket acquisition with native TCPC epoch observations.
+ */
+struct sm5714_pack_snapshot {
+	u64 instance, state_generation, switching_lease;
+	u64 started_ms, completed_ms;
+	unsigned int typec_mv, typec_ma;
+	int capacity, voltage_uv, current_ua, pack_decic, health;
+	bool battery_present, attached, thermal_normal;
+	bool typec_owned, typec_charge, pps_contract;
+};
+int sm5714_battery_read_pack(u64 lease, struct sm5714_pack_snapshot *out);
+
 /* Owned callbacks can only maintain checked switching OFF, never enable it. */
 int sm5714_battery_set_owned_contract(u64 lease, unsigned int mv, unsigned int ma,
 				    enum sm5714_contract_kind kind);
