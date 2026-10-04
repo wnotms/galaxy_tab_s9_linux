@@ -1,0 +1,35 @@
+ac442c81-d5f1-4dc1-8991-82210d1cae3e
+1671.64 13344.36
+SUPPLY /sys/class/power_supply/sm5440-passive
+type=Mains
+status=Not charging
+online=1
+voltage_now=4913000
+current_now=0
+temp=225
+health=Good
+SUPPLY /sys/class/power_supply/sm5714-battery
+type=Battery
+status=Charging
+present=1
+capacity=9
+voltage_now=3670000
+current_now=-405000
+temp=307
+health=Good
+SUPPLY /sys/class/power_supply/sm5714-usb
+type=USB
+online=1
+usb_type=Unknown [SDP] DCP CDP PD
+SUPPLY /sys/class/power_supply/tcpm-source-psy-3-0033
+type=USB
+online=1
+voltage_now=5000000
+current_now=1800000
+usb_type=C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS
+voltage_max=5000000
+current_max=1800000
+THERMAL /sys/class/thermal/thermal_zone37
+type=sm5714-battery
+mode=enabled
+temp=30700

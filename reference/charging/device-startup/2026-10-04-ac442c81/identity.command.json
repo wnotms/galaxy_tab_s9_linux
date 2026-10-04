@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; uname -a; cat /proc/cmdline; cat /proc/uptime; printf \"config=\"; zcat /proc/config.gz | sha256sum; printf \"notes=\"; sha256sum /sys/kernel/notes; ip -br addr; systemctl --failed --no-legend --no-pager; for p in /dev/hvc0 /sys/class/tty/hvc0; do test ! -e \"$p\" && echo \"$p absent\"; done"
+  ],
+  "started_utc": "2026-10-04T13:08:19.991351+00:00",
+  "returncode": 0
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /proc/uptime; for d in /sys/class/power_supply/*; do echo \"SUPPLY $d\"; for p in type status present online capacity voltage_now current_now temp health usb_type voltage_max current_max; do if [ -r \"$d/$p\" ]; then printf \"%s=\" \"$p\"; cat \"$d/$p\"; fi; done; done; for z in /sys/class/thermal/thermal_zone*; do if [ \"$(cat \"$z/type\" 2>/dev/null)\" = sm5714-battery ] || [ \"$z\" = /sys/class/thermal/thermal_zone37 ]; then echo \"THERMAL $z\"; for p in type mode temp; do printf \"%s=\" \"$p\"; cat \"$z/$p\" 2>&1; done; fi; done"
+  ],
+  "started_utc": "2026-10-04T13:08:20.103876+00:00",
+  "returncode": 0
+}

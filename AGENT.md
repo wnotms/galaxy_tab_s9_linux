@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-04 owner powered-on report: fresh read-only boot ac442c81, embedded
+config/notes match accepted311; ADB/authenticated Wi-Fi SSH/device usb0 respond.
+Real sm5714-battery zone37 enabled30.7C, pack9%/3.670V/net-405mA on PC USB;
+pump Not charging. Current/previous complete journal and historical photo boot
+retained under reference/charging/device-startup/2026-10-04-ac442c81/.
+Photo224.226049s belongs to old acdd2dfc SM5440 passive zone, as already proven
+by Test299 enumeration; accepted Test300 no_thermal fix is retained. Dynamic
+zone37 now identifies pack, not that old cache. No current thermal-disable
+message; no new continuous die-temperature/OCP/direct-charge acceptance.
+No device mutation/build/tests/Actions; results-only executed:false.
+Next independently qualify OFF continuous ADC timing using actual vendor
+AVG32/RATE1/50ms rearm, without altering frozen one-shot or100ms active gate.
+
 2026-10-04 native pack observation is now implemented in real battery driver
 and consumed by the real OFF-only PPS session. Real gauge/SOC/signedcurrent/
 onepackIIO read, native time, liveSTATUS attach/presence/health checks and exact

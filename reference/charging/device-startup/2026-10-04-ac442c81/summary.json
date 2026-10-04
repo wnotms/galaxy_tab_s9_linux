@@ -1,0 +1,43 @@
+{
+  "source_commit": "809617ff01e6982f4e06a1d2fe2f4106c2aef477",
+  "scope": "read-only startup and historical photo attribution",
+  "boot_id": "ac442c81-d5f1-4dc1-8991-82210d1cae3e",
+  "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+  "config_sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89",
+  "notes_sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6",
+  "adb": true,
+  "wifi_ssh": true,
+  "device_ncm_link": "UP 169.254.42.1/16",
+  "host_ncm_ssh": "not checked",
+  "battery": {
+    "type": "Battery",
+    "status": "Charging",
+    "present": "1",
+    "capacity": "9",
+    "voltage_now": "3670000",
+    "current_now": "-405000",
+    "temp": "307",
+    "health": "Good"
+  },
+  "pack_zone": {
+    "type": "sm5714-battery",
+    "mode": "enabled",
+    "temp_mc": 30700
+  },
+  "current_kernel_rows": 1116,
+  "current_temperature_disable_messages": [],
+  "photo_boot_id": "acdd2dfc7f8a4970aa57d71edab99df6",
+  "photo_historical_zone_type": "sm5440-passive",
+  "photo_type_provenance": "reference/boot-tests/test-299-thermal-read-incident/initial/thermal-state.txt",
+  "photo_fix_provenance": "reference/boot-tests/test-300-passive-thermal-registration/RESULTS.md",
+  "tests": {
+    "executed": false,
+    "reason": "read-only results; no executable change"
+  },
+  "build": {
+    "executed": false,
+    "reason": "no source/config/DT/packaging change"
+  },
+  "device_mutations": [],
+  "full_charging_goal_ready": false
+}
