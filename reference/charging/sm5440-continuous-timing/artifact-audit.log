@@ -1,0 +1,45 @@
+{
+  "valid": true,
+  "errors": [],
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ]
+    },
+    "Test316": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "y",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ]
+    },
+    "native-pack": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "y",
+        "n"
+      ]
+    }
+  },
+  "module_file_count": 181,
+  "changed_builtin_metadata": [],
+  "linked": {
+    "sm5440_timing_begin": true,
+    "sm5440_timing_step": true,
+    "sm5440_timing_finish": true,
+    "sm5440_timing_cycle": true,
+    "sm5714_battery_read_pack": true
+  }
+}

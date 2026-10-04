@@ -24,6 +24,10 @@
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#include "sm5440-timing.h"
+#include "sm5714-stage2.h"
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 #include <linux/usb/pd.h>
 #include "sm5440-control.h"
@@ -76,6 +80,17 @@ struct sm5440_context {
 };
 #endif
 
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+struct sm5440_timing_context {
+	struct sm5440_timing acquisition;
+	struct sm5714_pd_snapshot source[2];
+	struct sm5714_pack_snapshot pack[2];
+	unsigned int readiness_checks;
+	int admission_error, exit_error, off_error, first_readiness_error;
+	bool attempted, off_attempted;
+};
+#endif
+
 struct sm5440_direct {
 	struct device *dev;
 	struct regmap *regmap;
@@ -98,6 +113,9 @@ struct sm5440_direct {
 	unsigned long sample_seq, request_epoch;
 	u64 conversion_seq;
 	bool dying;
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	struct sm5440_timing_context timing;
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	bool condition_attempted, enhiz_restore_pending;
 	u8 enhiz_saved;
@@ -117,6 +135,11 @@ static struct sm5440_direct *sm5440_companion;
 #ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 static int sm5440_publish(struct sm5440_direct *sm)
 {
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	/* Isolated diagnostic: neither cached nor fresh charging API is published. */
+	(void)sm;
+	return 0;
+#else
 	int ret = 0;
 
 	mutex_lock(&sm5440_companion_lock);
@@ -126,6 +149,7 @@ static int sm5440_publish(struct sm5440_direct *sm)
 		sm5440_companion = sm;
 	mutex_unlock(&sm5440_companion_lock);
 	return ret;
+#endif
 }
 #endif
 
@@ -428,6 +452,9 @@ EXPORT_SYMBOL_GPL(sm5440_passive_observe);
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
 	struct sm5440_sample sample, startup;
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	struct sm5440_timing_context timing;
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	struct sm5440_sample condition;
 	bool condition_attempted, enhiz_restore_pending;
@@ -446,6 +473,9 @@ static void sm5440_snapshot_capture(struct sm5440_direct *sm,
 	mutex_lock(&sm->io_lock);
 	snapshot->sample = sm->sample;
 	snapshot->startup = sm->startup_sample;
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	snapshot->timing = sm->timing;
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	snapshot->condition = sm->condition_sample;
 	snapshot->context = sm->context;
@@ -513,6 +543,55 @@ static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
 		   name, sample->ibus_ua, name, sample->die_decic);
 }
 
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+static void sm5440_timing_show(struct seq_file *seq,
+			       const struct sm5440_timing_context *c)
+{
+	const struct sm5440_timing *t = &c->acquisition;
+	unsigned int i;
+
+	seq_printf(seq, "timing_test=1\ntiming_attempted=%u\ntiming_admission_error=%d\n"
+		   "timing_exit_error=%d\ntiming_error=%d\ntiming_cleanup_error=%d\n"
+		   "timing_count=%u\ntiming_polls=%u\ntiming_restored=%u\n"
+		   "timing_started_ms=%llu\ntiming_disabled_ms=%llu\n"
+		   "timing_enabled_ms=%llu\ntiming_completed_ms=%llu\n",
+		   c->attempted, c->admission_error, c->exit_error, t->error,
+		   t->cleanup_error, t->count, t->polls, t->restored,
+		   t->started_ms, t->disabled_ms, t->enabled_ms, t->completed_ms);
+	seq_printf(seq, "timing_controls=%02x/%02x/%02x/%02x\n"
+		   "timing_initial_int=%*ph\ntiming_initial_status=%*ph\n",
+		   t->control_before, t->channels_before, t->control_after,
+		   t->channels_after, 4, t->initial_interrupt, 4, t->initial_status);
+	seq_printf(seq, "timing_off_attempted=%u\ntiming_off_error=%d\n",
+		   c->off_attempted, c->off_error);
+	seq_printf(seq, "timing_readiness_checks=%u\n", c->readiness_checks);
+	seq_printf(seq, "timing_first_readiness_error=%d\n", c->first_readiness_error);
+	for (i = 0; i < 2; i++)
+		seq_printf(seq, "timing_source%u=%llu/%llu/%llu/%llu/%llu/%u/%u/%d\n"
+			   "timing_pack%u=%llu/%llu/%llu/%llu/%d/%d/%d\n",
+			   i, c->source[i].instance, c->source[i].source_generation,
+			   c->source[i].budget_generation, c->source[i].started_ms,
+			   c->source[i].completed_ms, c->source[i].budget_mv,
+			   c->source[i].budget_ma, c->source[i].online,
+			   i, c->pack[i].instance, c->pack[i].state_generation,
+			   c->pack[i].started_ms, c->pack[i].completed_ms,
+			   c->pack[i].capacity, c->pack[i].voltage_uv, c->pack[i].pack_decic);
+	/* Include the partial failed slot as well as all completed samples. */
+	for (i = 0; i < SM5440_TIMING_SAMPLES && i <= t->count; i++) {
+		const struct sm5440_timing_sample *a = &t->sample[i];
+
+		seq_printf(seq, "timing_sample%u_times=%llu/%llu/%llu/%llu/%llu\n"
+			   "timing_sample%u_int=%*ph\ntiming_sample%u_status=%*ph\n"
+			   "timing_sample%u_status_after=%*ph\ntiming_sample%u_adc=%*ph\n"
+			   "timing_sample%u_controls=%02x/%02x/%02x\n"
+			   "timing_sample%u_faults=0x%x\n", i, a->cleared_ms,
+			   a->ready_begin_ms, a->ready_end_ms, a->adc_begin_ms, a->adc_end_ms,
+			   i, 4, a->interrupt, i, 4, a->status, i, 4, a->status_after,
+			   i, 11, a->adc, i, a->mode, a->control, a->channels, i, a->faults);
+	}
+}
+#endif
+
 static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 {
 	struct sm5440_snapshot snapshot;
@@ -531,6 +610,9 @@ static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 		   snapshot.startup_stamp);
 	sm5440_snapshot_sample_show(seq, "sample", &snapshot.sample);
 	sm5440_snapshot_sample_show(seq, "startup", &snapshot.startup);
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	sm5440_timing_show(seq, &snapshot.timing);
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	seq_printf(seq, "condition_test=1\ncondition_attempted=%u\n"
 		   "enhiz_restore_pending=%u\n", snapshot.condition_attempted,
@@ -1367,6 +1449,141 @@ done:
 }
 #endif
 
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+static bool sm5440_timing_same_source(const struct sm5714_pd_snapshot *a,
+				      const struct sm5714_pd_snapshot *b)
+{
+	return a->instance == b->instance &&
+		a->source_generation == b->source_generation &&
+		a->budget_generation == b->budget_generation &&
+		a->budget_mv == b->budget_mv && a->budget_ma == b->budget_ma;
+}
+
+static int sm5440_timing_facts(struct sm5714_pd_snapshot *source,
+			      struct sm5714_pack_snapshot *pack)
+{
+	struct sm5714_pd_snapshot after;
+	u64 now;
+	int ret = sm5714_pd_read_snapshot(source);
+
+	if (!ret)
+		ret = sm5714_battery_read_pack(0, pack);
+	if (!ret)
+		ret = sm5714_pd_read_snapshot(&after);
+	if (ret)
+		return ret;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!source->instance || !source->source_generation ||
+	    !source->budget_generation || !sm5440_timing_same_source(source, &after) ||
+	    source->online != 1 || after.online != 1 || source->pps_contract ||
+	    after.pps_contract || !source->charge_requested || !after.charge_requested ||
+	    !source->budget_ma ||
+	    (source->budget_mv != 5000 && source->budget_mv != 9000) ||
+	    source->budget_ma > (source->budget_mv == 5000 ?
+		SM5714_FIXED_5V_MA : SM5714_FIXED_9V_MA))
+		return -ESTALE;
+	if (!pack->instance || !pack->state_generation || pack->switching_lease ||
+	    !pack->battery_present || !pack->attached || !pack->thermal_normal ||
+	    !pack->typec_owned || !pack->typec_charge || pack->pps_contract ||
+	    pack->health != POWER_SUPPLY_HEALTH_GOOD || pack->capacity < 5 ||
+	    pack->capacity >= 80 || pack->voltage_uv < 3500000 ||
+	    pack->voltage_uv >= 4300000 || pack->pack_decic < 200 ||
+	    pack->pack_decic >= 380 || pack->typec_mv != source->budget_mv ||
+	    pack->typec_ma != source->budget_ma)
+		return -ERANGE;
+	if (!source->started_ms || source->started_ms > source->completed_ms ||
+	    source->completed_ms > now || now - source->started_ms > 500 ||
+	    !pack->started_ms || pack->started_ms > pack->completed_ms ||
+	    pack->completed_ms > now || now - pack->started_ms > 500 ||
+	    !after.started_ms || after.started_ms > after.completed_ms ||
+	    after.completed_ms > now || now - after.started_ms > 500)
+		return -ESTALE;
+	return 0;
+}
+
+static void sm5440_timing_cycle(struct sm5440_direct *sm)
+{
+	struct sm5440_timing_context c = {};
+	int ret;
+
+	c.attempted = true;
+	/* Existing startup/admission and frozen converter have already passed.
+	 * Suppliers and waits are always outside io_lock. No lease/PD setters.
+	 */
+	/* TCPM may still be attaching when the first healthy OFF sample arrives.
+	 * Only EAGAIN/EBUSY permit bounded read-only readiness retries, before any new
+	 * converter write. A source/pack fault is not retried or reclassified.
+	 */
+	for (c.readiness_checks = 1; c.readiness_checks <= 20; c.readiness_checks++) {
+		if (READ_ONCE(sm->stopped)) {
+			ret = -ESHUTDOWN;
+			break;
+		}
+		ret = sm5440_timing_facts(&c.source[0], &c.pack[0]);
+		if (ret && !c.first_readiness_error)
+			c.first_readiness_error = ret;
+		if ((ret != -EAGAIN && ret != -EBUSY) || c.readiness_checks == 20)
+			break;
+		msleep(100);
+	}
+	c.admission_error = ret;
+	if (ret)
+		goto publish;
+	ret = sm5440_adc_rearm(sm);
+	if (ret)
+		goto publish;
+	mutex_lock(&sm->io_lock);
+	if (READ_ONCE(sm->stopped))
+		ret = -ESHUTDOWN;
+	else
+		ret = sm5440_timing_begin(sm->regmap, &c.acquisition);
+	mutex_unlock(&sm->io_lock);
+	while (!ret) {
+		msleep(5);
+		mutex_lock(&sm->io_lock);
+		if (READ_ONCE(sm->stopped))
+			ret = -ESHUTDOWN;
+		else
+			ret = sm5440_timing_step(sm->regmap, &c.acquisition);
+		mutex_unlock(&sm->io_lock);
+	}
+	if (ret == 1)
+		ret = 0;
+	mutex_lock(&sm->io_lock);
+	if (ret) {
+		/* An unexpected mode/fault must get one checked OFF attempt before
+		 * converter restoration; retain the original error and OFF outcome.
+		 */
+		c.off_attempted = true;
+		c.off_error = sm5440_off(sm);
+	}
+	ret = sm5440_timing_finish(sm->regmap, &c.acquisition, ret);
+	mutex_unlock(&sm->io_lock);
+	if (!ret) {
+		ret = sm5440_timing_facts(&c.source[1], &c.pack[1]);
+		if (!ret && (!sm5440_timing_same_source(&c.source[0], &c.source[1]) ||
+			    c.pack[0].instance != c.pack[1].instance ||
+			    c.pack[0].state_generation != c.pack[1].state_generation))
+			ret = -ESTALE;
+		c.exit_error = ret;
+	}
+publish:
+	mutex_lock(&sm->io_lock);
+	/* A late stop still refuses, even after converter cleanup completed. */
+	if (!ret && READ_ONCE(sm->stopped))
+		ret = -ESHUTDOWN;
+	if (ret && !c.acquisition.error)
+		c.acquisition.error = ret;
+	sm->timing = c;
+	if (ret) {
+		sm->fault = true;
+		dev_err(sm->dev, "OFF continuous ADC diagnostic stopped: %d; cleanup=%d\n",
+			ret, c.acquisition.cleanup_error);
+	}
+	mutex_unlock(&sm->io_lock);
+}
+#endif
+
 static void sm5440_poll(struct work_struct *work)
 {
 	struct sm5440_direct *sm = container_of(to_delayed_work(work),
@@ -1463,6 +1680,13 @@ static void sm5440_poll(struct work_struct *work)
 	mutex_unlock(&sm->io_lock);
 	wake_up_all(&sm->request_wait);
 	power_supply_changed(sm->psy);
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&
+	    sm->initial_sample_done && !sm->startup_confirmations) {
+		sm5440_timing_cycle(sm);
+		return; /* One experiment per bind; no second conversion/retry. */
+	}
+#endif
 #ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))
 		schedule_delayed_work(&sm->work, msecs_to_jiffies(1000));
@@ -1600,6 +1824,12 @@ static int sm5440_resume(struct device *dev)
 {
 	struct sm5440_direct *sm = dev_get_drvdata(dev);
 	int ret;
+
+#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+	/* A timing diagnostic is not rearmed after suspend or failure. */
+	if (sm->timing.attempted)
+		return -EOPNOTSUPP;
+#endif
 
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	/* One experiment per bind, never rearm a second one on resume. */

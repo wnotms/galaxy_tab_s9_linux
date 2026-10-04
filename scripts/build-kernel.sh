@@ -19,7 +19,7 @@ fragment="$repo_root/kernel/config/gts9wifi-mainline.fragment"
 diag_fragment=${GTS9_DIAG_FRAGMENT:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive|sm5440-policy-offline|sm5440-adc-condition) ;;
+    ''|sm5440-passive|sm5440-policy-offline|sm5440-adc-condition|sm5440-adc-timing) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && {

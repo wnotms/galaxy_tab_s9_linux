@@ -1,0 +1,181 @@
+{
+  "verdict": "OFF_CONTINUOUS_ADC_DIAGNOSTIC_OFFLINE_QUALIFIED",
+  "source_base_commit": "37339747",
+  "profile": "sm5440-adc-timing",
+  "host": {
+    "latest_new_suite_tests": 21,
+    "latest_new_suite_seconds": 0.628,
+    "retained_unchanged_dependency_tests": 175,
+    "dependency_modules": [
+      "test_sm5440_adc_rearm",
+      "test_sm5440_adc_condition",
+      "test_sm5440_passive",
+      "test_sm5440_conversion",
+      "test_sm5440_snapshot",
+      "test_sm5440_fresh_request",
+      "test_sm5440_passive_observation",
+      "test_sm5714_pack_snapshot",
+      "test_sm5714_stage2_pd"
+    ],
+    "deduplicated_affected_tests": 196,
+    "previous_combined_run_tests": 196,
+    "previous_combined_run_seconds": 11.628,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "test_source_sha256": "be9b141221814093b5b63a34d6bc16cf7f028fedee07358d44b023b3ffa8c06a",
+    "actual_converter_C": true,
+    "actual_cycle_C": true,
+    "actual_native_fact_gate_C": true,
+    "regmap_and_native_supplier_IO_mock": true,
+    "full_suite_executed": false,
+    "routing_changed": false
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 83.14253182399989,
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-adc-timing",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-continuous-timing",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache"
+    }
+  },
+  "limits": {
+    "pump": "OFF",
+    "fixed5_ma": 1800,
+    "fixed9_ma": 1500,
+    "PPS_requests": false,
+    "samples": 8,
+    "diagnostic_window_ms": 2000,
+    "per_READY_diagnostic_ms": 500,
+    "active_ADC_gate_ms_unchanged": 100,
+    "vendor_continuous_rearm_ms": 50,
+    "AVG32": true
+  },
+  "physical_executed": false,
+  "flash_executed": false,
+  "kernel_device_changes": false,
+  "source_kernel_protection_policy_changed": false,
+  "software_ocp_verified": false,
+  "full_charging_goal_ready": false,
+  "next_physical_scope": "separately registered Test318, one PC fixed5 boot / OFF timing / unconditional accepted311 restore",
+  "owner_charging_request_pending": true,
+  "last_readonly_before_request": {
+    "boot_id": "ac442c81-d5f1-4dc1-8991-82210d1cae3e",
+    "capacity_percent": 6,
+    "voltage_uv": 3660000,
+    "current_ua": -427000,
+    "pack_decic": 311,
+    "health": "Good",
+    "provenance": "bounded ADB shell stdout observed this turn, after archived startup snapshot; values transcribed, no separate acquisition timestamp recorded"
+  },
+  "ARM64_W1_sparse": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/sm5440-direct.o",
+      "drivers/power/supply/sm5440-timing.o"
+    ],
+    "returncode": 0,
+    "seconds": 6.176585971999884
+  },
+  "changed_driver_warnings": 0,
+  "known_static_warning": "upstream vDSO __kernel_getrandom declaration",
+  "artifact_audit": "artifact-audit.json",
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ]
+    },
+    "Test316": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "y",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ]
+    },
+    "native-pack": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "y",
+        "n"
+      ]
+    }
+  },
+  "DTB_diff": [],
+  "paired_module_files": 181,
+  "module_code_data_changes": false,
+  "changed_module_ko_BTF_only": 167,
+  "protected_source_count": 209,
+  "preserved_formal_artifact_count": 21,
+  "actual_Kbuild_linked": {
+    "sm5440_timing_begin": true,
+    "sm5440_timing_step": true,
+    "sm5440_timing_finish": true,
+    "sm5440_timing_cycle": true,
+    "sm5714_battery_read_pack": true
+  },
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-continuous-timing/Image.gz",
+      "bytes": 22140157,
+      "sha256": "24bdf48750f57da3668e062c61503d08e6a08cde43ffb5c32f379cd472d8a6dc"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-continuous-timing/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-continuous-timing/config",
+      "bytes": 243354,
+      "sha256": "b5a09b7828825ca4170be32a58d419819a197dd54ef4e07c85940f81224871c5"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-continuous-timing/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "dd790ac42e80b41227771e0f60928c6525633c2a88706d1402b08284b3cea130"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-continuous-timing/modules-x710.tar.gz",
+      "bytes": 47319063,
+      "sha256": "62cf70d01885abdb18d73f077274cc2906e636d65a10f7377fbc183d00937a46"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-continuous-timing/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "superseded_builds": [
+    "build-initial.json",
+    "build-readiness.json"
+  ],
+  "source_before_final_build": "inputs-final.json"
+}

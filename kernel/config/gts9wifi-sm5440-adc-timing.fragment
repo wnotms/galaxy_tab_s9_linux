@@ -1,0 +1,5 @@
+# Independent OFF continuous ADC timing diagnostic; no charging consumer.
+CONFIG_CHARGER_SM5440_DIRECT=y
+CONFIG_SM5440_ADC_TIMING_TEST=y
+# CONFIG_SM5440_ADC_CONDITION_TEST is not set
+# CONFIG_X710_CHARGING_POLICY is not set

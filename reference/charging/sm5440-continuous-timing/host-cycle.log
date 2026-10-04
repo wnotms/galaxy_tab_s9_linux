@@ -1,0 +1,69 @@
+/tmp/tmp7jumq8mv/mock.c: In function ‘sm5440_timing_facts’:
+/tmp/tmp7jumq8mv/mock.c:117:41: error: ‘EAGAIN’ undeclared (first use in this function)
+  117 |  if(scenario==40&&facts_calls<3)return -EAGAIN;
+      |                                         ^~~~~~
+/tmp/tmp7jumq8mv/mock.c:117:41: note: each undeclared identifier is reported only once for each function it appears in
+/tmp/tmp7jumq8mv/mock.c:118:41: error: ‘EBUSY’ undeclared (first use in this function)
+  118 |  if(scenario==41&&facts_calls<3)return -EBUSY;
+      |                                         ^~~~~
+/tmp/tmp7jumq8mv/mock.c:119:26: error: ‘EIO’ undeclared (first use in this function)
+  119 |  if(scenario==42)return -EIO;
+      |                          ^~~
+/tmp/tmp7jumq8mv/mock.c: In function ‘sm5440_off’:
+/tmp/tmp7jumq8mv/mock.c:141:9: error: implicit declaration of function ‘lockdep_assert_held’ [-Wimplicit-function-declaration]
+  141 |         lockdep_assert_held(&sm->io_lock);
+      |         ^~~~~~~~~~~~~~~~~~~
+/tmp/tmp7jumq8mv/mock.c:147:24: error: ‘EIO’ undeclared (first use in this function)
+  147 |                 ret = -EIO;
+      |                        ^~~
+/tmp/tmp7jumq8mv/mock.c: In function ‘sm5440_adc_rearm’:
+/tmp/tmp7jumq8mv/mock.c:156:24: error: ‘ESHUTDOWN’ undeclared (first use in this function)
+  156 |                 ret = -ESHUTDOWN;
+      |                        ^~~~~~~~~
+/tmp/tmp7jumq8mv/mock.c:160:32: error: ‘EBUSY’ undeclared (first use in this function)
+  160 |                         ret = -EBUSY;
+      |                                ^~~~~
+/tmp/tmp7jumq8mv/mock.c: In function ‘sm5440_timing_cycle’:
+/tmp/tmp7jumq8mv/mock.c:185:32: error: ‘ESHUTDOWN’ undeclared (first use in this function)
+  185 |                         ret = -ESHUTDOWN;
+      |                                ^~~~~~~~~
+/tmp/tmp7jumq8mv/mock.c:191:30: error: ‘EAGAIN’ undeclared (first use in this function)
+  191 |                 if ((ret != -EAGAIN && ret != -EBUSY) || c.readiness_checks == 20)
+      |                              ^~~~~~
+/tmp/tmp7jumq8mv/mock.c:191:48: error: ‘EBUSY’ undeclared (first use in this function)
+  191 |                 if ((ret != -EAGAIN && ret != -EBUSY) || c.readiness_checks == 20)
+      |                                                ^~~~~
+/tmp/tmp7jumq8mv/mock.c:233:32: error: ‘ESTALE’ undeclared (first use in this function)
+  233 |                         ret = -ESTALE;
+      |                                ^~~~~~
+setUpClass (test_sm5440_adc_timing.TimingHardwareTests) ... ERROR
+test_cached_snapshot_read_performs_no_IO (test_sm5440_adc_timing.TimingIntegrationTests.test_cached_snapshot_read_performs_no_IO) ... ok
+test_frozen_converter_and_active_budget_unchanged (test_sm5440_adc_timing.TimingIntegrationTests.test_frozen_converter_and_active_budget_unchanged) ... ok
+test_no_companion_publication_or_resume_rearm (test_sm5440_adc_timing.TimingIntegrationTests.test_no_companion_publication_or_resume_rearm) ... ok
+test_no_source_mutator_or_pump_activation_in_timing_cycle (test_sm5440_adc_timing.TimingIntegrationTests.test_no_source_mutator_or_pump_activation_in_timing_cycle) ... ok
+test_profile_is_exclusive_and_not_default_enabled (test_sm5440_adc_timing.TimingIntegrationTests.test_profile_is_exclusive_and_not_default_enabled) ... ok
+test_every_native_read_error_and_epoch_health_limit_time_refusal (test_sm5440_adc_timing.TimingNativeFactsTests.test_every_native_read_error_and_epoch_health_limit_time_refusal) ... ok
+test_native_fixed5_and_fixed9_and_signed_pack_current (test_sm5440_adc_timing.TimingNativeFactsTests.test_native_fixed5_and_fixed9_and_signed_pack_current) ... ok
+
+======================================================================
+ERROR: setUpClass (test_sm5440_adc_timing.TimingHardwareTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_adc_timing.py", line 179, in setUpClass
+    subprocess.run(['cc', '-shared', '-fPIC', '-std=gnu11', '-Wall', '-Wextra', '-Werror',
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    '-Wno-misleading-indentation', '-D__KERNEL__', '-I'+str(p),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    '-I'+str(ROOT/'kernel/drivers'), str(p/'mock.c'),
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    str(ROOT/'kernel/drivers/sm5440-timing.c'), '-o', str(lib)], check=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['cc', '-shared', '-fPIC', '-std=gnu11', '-Wall', '-Wextra', '-Werror', '-Wno-misleading-indentation', '-D__KERNEL__', '-I/tmp/tmp7jumq8mv', '-I/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers', '/tmp/tmp7jumq8mv/mock.c', '/home/ms/Samsung/galaxy_tab_s9_linux/kernel/drivers/sm5440-timing.c', '-o', '/tmp/tmp7jumq8mv/timing.so']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.434s
+
+FAILED (errors=1)

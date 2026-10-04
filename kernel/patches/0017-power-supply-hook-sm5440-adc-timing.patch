@@ -1,0 +1,24 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: isolate OFF continuous SM5440 ADC timing
+
+Default-off bounded continuous-converter diagnostic, separate from previous
+ENHIZ experiments and charging policy. No pump activation or PPS consumer.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1220 +1220,10 @@
++config SM5440_ADC_TIMING_TEST
++	bool "X710 OFF continuous SM5440 ADC timing diagnostic"
++	depends on CHARGER_SM5440_DIRECT=y && !X710_CHARGING_POLICY
++	depends on TYPEC_SM5714=y && BATTERY_SM5714=y
++	depends on !SM5440_ADC_CONDITION_TEST
++	help
++	  Record up to eight fresh READY observations with pump OFF, preserving
++	  ADC controls. No companion publication, PPS or charging activation.
++
+ endif # POWER_SUPPLY
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -141 +141,2 @@
+ obj-$(CONFIG_SM5440_ADC_CONDITION_TEST) += sm5440-control.o
++obj-$(CONFIG_SM5440_ADC_TIMING_TEST) += sm5440-timing.o

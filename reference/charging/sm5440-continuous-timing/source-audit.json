@@ -1,0 +1,42 @@
+{
+  "references": [
+    {
+      "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+      "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+      "functions": [
+        "sm5440_set_adc_mode",
+        "sm5440_init_reg_param"
+      ]
+    },
+    {
+      "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+      "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+      "functions": [
+        "sm5440_hw_init"
+      ]
+    }
+  ],
+  "Fedora_commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "ADC": {
+    "control_register": "0x1c",
+    "channels_register": "0x1d",
+    "AVG32": "BIT(3)",
+    "continuous": "BIT(1)",
+    "enable": "BIT(0)",
+    "channels": "0xdf",
+    "continuous_rearm_ms": 50
+  },
+  "permitted_writes": [
+    "ADCCNTL1 converter bits only",
+    "ADCCNTL2 channels",
+    "existing CNTL5 OFF only on diagnostic failure"
+  ],
+  "TCPM_core_changed": false,
+  "DTS_changed": false,
+  "charging_current_changed": false,
+  "ENHIZ_changed": false,
+  "float_voltage_changed": false,
+  "thermal_policy_changed": false,
+  "software_ocp_verified": false,
+  "physical_executed": false
+}

@@ -98,6 +98,29 @@
 
 ## Current state (2026-10-03)
 
+OFF continuous ADC timing is now integrated in actual passive driver/Kbuild,
+separate default-off sm5440-adc-timing profile, not an unlinked foundation.
+Existing frozen one-shot/startup gates preserved; native fixed/pack provenance,
+vendor AVG32/RATE1/50ms, eight READY/raw/read brackets, mode/live/latch/control
+checks, one exact ADC cleanup and source/pack endpoint. No companion publication,
+PPS/lease/Q4/current/protection/ENHIZ/ON operation or resume rearm. Fault uses
+existing checked OFF before converter cleanup. Diagnostic500/2000ms does NOT
+change active100ms gate or certify analog/OCP/coherent channel/current/cutoff.
+Latest21 actual-C tests PASS0.628s plus175unchanged affected deps; previous
+combined196PASS11.628s/no skips. Final full ARM64build PASS83.143s; twoactual
+objects W1/sparse PASS6.177s/nochanged-driverwarning.209protectedsources and
+21priorformal artifacts exact; config vsaccepted311 only newTIMING absent->y,
+DTidentical,181pairedfiles/167BTF-only ko changes/no code-data/metadata change.
+Formal out/kernel-x710-continuous-timing; evidence reference/charging/
+sm5440-continuous-timing/, design docs/SM5440_CONTINUOUS_ADC_TIMING.md.
+No flash/reboot/deviceADC/PPS/pump/current raise/Actions/full regression.
+Device stillaccepted311/ac442c81, latestread6%/3.660V/31.1C/Good/net-427mA onPC.
+Owner asked to connect previously accepted C2 ordinary18W charging; reply pending,
+no inferred connection/charge or new test. Next separately register Test318 one
+PCfixed5 boot/OFFtiming/exact311 unconditional restore after battery readiness.
+Full charging goal remainsNOTREADY; physical100ms/OCP/current/cutoff/liveworker/
+ON/PPS/fallback/PM acceptance still remain. Older next-step entries historical.
+
 2026-10-04 owner powered-on report: fresh read-only boot ac442c81, embedded
 config/notes match accepted311; ADB/authenticated Wi-Fi SSH/device usb0 respond.
 Real sm5714-battery zone37 enabled30.7C, pack9%/3.670V/net-405mA on PC USB;
