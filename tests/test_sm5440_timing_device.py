@@ -88,6 +88,18 @@ class TimingEvidence(unittest.TestCase):
         with self.assertRaises(ValueError):g.timing(text(s)+'\ntiming_count=1',text(p))
 
 class RunnerLifecycle(unittest.TestCase):
+    def test_low_reserve_skips_full_preflight(self):
+        h=load('timing_device_runner_fast_reserve','host_flow.py');h.configure()
+        battery='POWER_SUPPLY_HEALTH=Good\nPOWER_SUPPLY_PRESENT=1\nPOWER_SUPPLY_CAPACITY=19\nPOWER_SUPPLY_VOLTAGE_NOW=3700000\nPOWER_SUPPLY_TEMP=310'
+        with tempfile.TemporaryDirectory() as tmp:
+            h.R=Path(tmp)
+            with patch.object(h.p,'Recorder') as recorder,patch.object(h.base,'preflight') as full:
+                recorder.return_value.folder=Path(tmp)
+                recorder.return_value.adb.return_value=('@@boot\n'+'a'*32+'\n@@battery\n'+battery,0)
+                with self.assertRaisesRegex(ValueError,'battery reserve'):h.preflight()
+                full.assert_not_called()
+                self.assertFalse(json.loads((Path(tmp)/'summary.json').read_text())['device_mutation'])
+
     def test_low_reserve_refuses_before_recovery(self):
         h=load('timing_device_runner_reserve','host_flow.py');h.configure()
         with tempfile.TemporaryDirectory() as tmp:

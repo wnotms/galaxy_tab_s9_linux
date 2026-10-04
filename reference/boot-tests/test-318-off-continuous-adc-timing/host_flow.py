@@ -88,6 +88,21 @@ base.old.ncm_probe=ncm_probe
 
 
 def preflight():
+    # An entry refusal is cheap. Do not hash partitions/modules or probe
+    # Windows while the actual pack cannot support candidate+rollback boots.
+    # This is only an entry filter; full identity/rescue still follows once.
+    rec=p.Recorder(R/'reserve-checks'/str(time.time_ns()))
+    raw,_=rec.adb('battery-reserve','set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent',timeout=8)
+    sec=h.g.baseline.sections(raw)
+    if not re.fullmatch('[0-9a-f]{32}',sec['boot'].strip().replace('-','')):raise ValueError('reserve packet boot identity')
+    try:
+        battery=gate.battery_entry(sec['battery'])
+    except (ValueError, KeyError) as exc:
+        write(rec.folder/'summary.json',dict(verdict='PACK_ENTRY_NOT_READY',error=str(exc),full_preflight_executed=False,device_mutation=False))
+        raise
+    if not PLAN['minimum_flash_soc']<=battery['soc']<PLAN['maximum_flash_soc_exclusive']:
+        write(rec.folder/'summary.json',dict(verdict='FLASH_RESERVE_NOT_READY',battery=battery,full_preflight_executed=False,device_mutation=False))
+        raise ValueError('flash/rescue battery reserve')
     result=base.preflight()
     if not PLAN['minimum_flash_soc']<=result['battery']['soc']<PLAN['maximum_flash_soc_exclusive']: raise ValueError('flash/rescue battery reserve')
     sec=h.g.baseline.sections((R/'preflight/current-state.txt').read_text().replace('\r',''))

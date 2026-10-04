@@ -98,6 +98,12 @@
 
 ## Current state (2026-10-03)
 
+Test318 entry now filters real pack reserve before expensive probes. Actual
+ADB packet sameac442c81/SOC4%/3.651V/net-331mA/31.2C refused in0.092s; no full
+preflight/mutation/candidate ADC.16 affected parser/lifecycle tests PASS0.033s,
+unchanged kernel/artifact qualification reused. Await genuine ordinary C2 charge
+recovery and20%SOC reserve; no reported source change inferred.
+
 Test318 registered offline: one PCfixed5/OFFcontinuousREADYtiming boot, eight
 raw events/500ms perREADY/2000ms transaction, one15s endpoint, unconditional exact
 accepted311 boot/original181 rollback. Source44c2190a qualification reused, exact

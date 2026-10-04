@@ -68,3 +68,11 @@ Commands are explicit `host_flow.py preflight`, `run`, or emergency `restore
 --from-recovery`; import/packaging/unit tests perform no device IO. The runner
 uses accepted helpers for baseline/recovery/hashes; its timing parser has separate
 semantics and never inherits the old diagnostic getty/watchdog arming gate.
+
+Entry filter update: a bounded8s ADB boot/real-pack packet precedes all expensive
+partition/module/Windows probes. Actual initial refusal at SOC4% took0.092s,
+retained under reserve-checks; no full preflight or device mutation ran. This is
+a maintenance-entry refusal, not an executed candidate round or successful ADC
+result. Entry safety/identity gates remain unchanged; full preflight follows only
+once the reserve filter passes. Final16 parser/lifecycle tests PASS0.033s; prior
+15-test registration evidence remains retained, no kernel rebuild needed.
