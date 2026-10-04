@@ -1,0 +1,21 @@
+{
+  "command": "python3 -m unittest discover -s tests -p test_sm5440_timing_device.py -v",
+  "returncode": 0,
+  "tests": 15,
+  "seconds": 0.028,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "physical": false,
+  "kernel_rebuilt": false,
+  "full_suite": false,
+  "syntax_checks": [
+    "python3 -m py_compile build_package.py host_flow.py gate.py",
+    "bash -n module-swap.sh"
+  ],
+  "reused_kernel_qualification": "reference/charging/sm5440-continuous-timing/summary.json",
+  "test_source_sha256": "54628d08dba1b89eff05a2ed0884330b6faed73666180ed1b38c00fd51b656fb",
+  "raw_whitespace_preserved": "unpack_bootimg command line args: empty value retains one trailing space; raw stdout retained without trimming",
+  "registered_source_full_revision": "44c2190ab9b264d4c43a95e31351bc1d0fb53c05",
+  "package_stdout_source_spelling": "44c2190a abbreviated same commit; raw creation output unchanged"
+}

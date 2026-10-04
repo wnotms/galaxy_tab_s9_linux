@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test317，窗口为 **Test308–Test317**；没有生成镜像的轮次仍占一轮。
+  编号为 Test318，窗口为 **Test309–Test318**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test318 registered offline: one PCfixed5/OFFcontinuousREADYtiming boot, eight
+raw events/500ms perREADY/2000ms transaction, one15s endpoint, unconditional exact
+accepted311 boot/original181 rollback. Source44c2190a qualification reused, exact
+DT/packagedpayload/readback/pairedarchive hashes;15 new parser/lifecycle tests
+PASS0.028s/no skips, no kernel rebuild/full/Actions. Package/stage/runner/gate
+reference/boot-tests/test-318-off-continuous-adc-timing/. Actual latest accepted311
+maintenance packet sameac442c81 SOC4%/3.634V/net-1.058A/31.2C/Good onPC SDP500.
+No physical318 preflight/flash/reboot/ADC/PPS/ON; pending owner C2 ordinarycharge.
+Need fresh20–<80%SOC flash/rescue reserve first. Registration does not infer
+charge recovery. Retained operational rollback original308 belongs to318 and
+current device, not an expired historical308 backup. Fullcharginggoal NOTREADY.
 
 OFF continuous ADC timing is now integrated in actual passive driver/Kbuild,
 separate default-off sm5440-adc-timing profile, not an unlinked foundation.
