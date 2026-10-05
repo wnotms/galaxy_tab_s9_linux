@@ -1,0 +1,151 @@
+@@boot
+fca646a8-8cc0-405c-814d-36cde33baa9e
+@@uname
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+@@cmdline
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+@@uptime
+2421.61 19339.75
+@@identity
+31d5a9419dbe027e4c3d735a363b490c9484584152d22bb83eb990c092076132  -
+d8e5fcf394811878c0368d8bd1db461e79e29a2cf949dc493256924f464d51f9  /sys/kernel/notes
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=4034000
+POWER_SUPPLY_VOLTAGE_AVG=4036000
+POWER_SUPPLY_VOLTAGE_OCV=3963000
+POWER_SUPPLY_CURRENT_NOW=1129000
+POWER_SUPPLY_CURRENT_AVG=1184000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=59
+POWER_SUPPLY_TEMP=319
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=1800000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD
+@@passive
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Unspecified failure
+POWER_SUPPLY_TYPE=Mains
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4295497705
+sample_present=1
+sample_fresh=0
+sample_age_ms=2418980
+stopped=0
+fault=1
+startup_pending=1
+last_sample_error=0
+startup_retained=1
+startup_capture_jiffies=4294892368
+sample_valid=1
+sample_stamp_jiffies=4294892960
+sample_faults=0x0
+sample_gauge_attempted=1
+sample_adc_read_completed_ms=2653
+sample_gauge_started_ms=2653
+sample_gauge_completed_ms=2654
+sample_gauge_ret=0
+sample_gauge_uv=3933000
+sample_int=00 00 60 00
+sample_status=00 00 40 00
+sample_adc=10 d8 78 d8 00 00 67 c8 04 74 18
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4635000
+sample_vbat_uv=3905500
+sample_ibus_ua=0
+sample_die_decic=245
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x80
+startup_gauge_attempted=1
+startup_adc_read_completed_ms=285
+startup_gauge_started_ms=285
+startup_gauge_completed_ms=286
+startup_gauge_ret=0
+startup_gauge_uv=3925000
+startup_int=00 00 62 00
+startup_status=00 00 20 00
+startup_adc=1c 60 70 f0 00 00 67 78 04 60 c0
+startup_int4_disable=0x00
+startup_int4_wait=0x01
+startup_mode_before=0x01
+startup_mode_after=0x01
+startup_cntl2=0xf2
+startup_vbuscntl=0xe7
+startup_vbatcntl=0x37
+startup_prtncntl=0xfe
+startup_vbus_uv=5004000
+startup_vbat_uv=3596000
+startup_ibus_ua=0
+startup_die_decic=245
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.139.153.116/24 brd 10.139.153.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 2992sec preferred_lft 2992sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+@@services
+active
+active
+active
+@@roles
+[sink]
+[device]
+@@failed
+@@dcc
+absent
+@@host-key
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcDq5XdwKgjymVdJr/xPAwNQuYTr7rmdt9mxLzT9/PL root@DESKTOP-EAS21AS
+@@tcpm
+DEVTYPE=power_supply
+OF_NAME=usbpd
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33
+OF_COMPATIBLE_0=siliconmitus,sm5714-usbpd
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=tcpm-source-psy-3-0033
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_MAX=5000000
+POWER_SUPPLY_VOLTAGE_MIN=5000000
+POWER_SUPPLY_VOLTAGE_NOW=5000000
+POWER_SUPPLY_CURRENT_MAX=1800000
+POWER_SUPPLY_CURRENT_NOW=1800000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS
+@@boot-end
+fca646a8-8cc0-405c-814d-36cde33baa9e

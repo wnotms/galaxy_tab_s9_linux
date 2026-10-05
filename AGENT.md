@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test323，窗口为 **Test314–Test323**；没有生成镜像的轮次仍占一轮。
+  编号为 Test324，窗口为 **Test315–Test324**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-05 Test324 isolated native one-shot fixed9V registration prepared:
+oneTWRPboot-only/181 install with no automatic candidate reboot; owner switches
+PC->acceptedC2 inTWRP and bootsSystem once, WiFi captures four READY/checked100ms
+transactions +15s endpoint. Unconditional exact323 boot/saved181/allfive restore.
+Fresh fca646a8 normal59%4.034V31.9C/preflightallfive181/rescue/WindowsCode0 and
+input1800/fast115/float45 confirmed.9new parser/lifecycle/current323 baseline
+PASS0.042s; unchangedab30aff2 build reused. Registration test324-native-oneshot-off,
+Windowsgts9-test324; no physical mutation yet. Currentdevice323 retained;
+no PPS/pump/current/protection/USB change or calibration/OCP grant. FullportNOTREADY.
+
 
 2026-10-05 native single-shot OFF candidate qualified offline (not deployed):
 new isolated SM5440_ADC_ONESHOT_TEST invokes unchanged100ms converter four times
