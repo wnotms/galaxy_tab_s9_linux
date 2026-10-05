@@ -1,0 +1,13 @@
+{
+  "test": "test_terminal_cleanup_cancels_pending_off_adc_after_running_monitor",
+  "before_fix": {
+    "release": -5,
+    "hardware_quiesced": false,
+    "owned": true,
+    "native_tests_run": 22,
+    "failed": 1
+  },
+  "cause": "Native cleanup selected old started supervisor instead of newer paused OFF ADC; converter ownership remained.",
+  "fix": "After proven OFF, cancel both independently owned converter contexts once; preserve first error.",
+  "device_executed": false
+}

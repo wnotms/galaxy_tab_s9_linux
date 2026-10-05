@@ -29,12 +29,15 @@ The 100ms refusal/READY requirement is unchanged; Test321 RAW measurements are
 not used as calibration, freshness or software-OCP acceptance.
 
 **Native START, RESUME, PAUSE and active-monitor operations remain refused.**
-The driver never sets its actuator's activation flag, source lease or validated
-OCP grant. A caller-supplied `software_ocp_verified=true` cannot override that
+The driver never sets its actuator's activation flag or validated OCP grant.
+Explicit source binding checks a real owned TCPM snapshot and switching lease
+outside io_lock, then rechecks PM/lifetime and stores the source/consumer epoch.
+That binding is ownership evidence, not physical qualification or an ON grant. A caller-supplied `software_ocp_verified=true` cannot override that
 boundary. Compiling the real helpers is not permission to energize hardware.
 No userspace switch, writable property, automatic PPS request or pump start is
-added. The final transaction/controller worker and its standard TCPM fixed-PD
-fallback are still unfinished; this executor does not negotiate PD.
+added. The native controller now retains the actual transaction and temporary
+pause/resume state and calls standard TCPM with terminal fixed-PD fallback.
+Activation qualification remains unfinished; this executor does not negotiate PD.
 
 Unexpected conversion/hardware errors preserve the first operation error and
 latch a driver fault. Terminal cleanup attempts checked pump OFF first, then
@@ -60,8 +63,10 @@ Host tests execute the actual driver session, PM and unpublish bodies together
 with the six real hardware/policy C units on a mocked bus. They cover lifecycle,
 old tokens, ordinary-reader exclusion, cache republication, delayed unpublish,
 PM during claim/conversion, malformed requests, timeout, every I2C call failure,
-uncertain writes, exact restoration and terminal retry refusal. These tests
-establish software behavior only, not physical ADC timing/OCP or direct charging.
+uncertain writes, exact restoration and terminal retry refusal. Mock-only private grants also execute real source-bound START, running supervisor,
+PAUSE, fresh OFF conversion, budget-changing RESUME and terminal restoration;
+source/epoch/OCP/temperature failures must leave the pump OFF. These tests establish
+software behavior only, not physical ADC timing/OCP or direct charging.
 
 Future device validation must separately register an OFF-only native ownership/
 settings/acquisition/restoration candidate with accepted311 rollback and rescue

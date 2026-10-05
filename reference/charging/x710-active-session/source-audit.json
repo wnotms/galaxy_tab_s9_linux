@@ -1,0 +1,21 @@
+{
+  "linux_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "tcpm_sha256": "3bbadbb3089cea167c680ca83b1599762821738c0e5134654ef16c4f5ca31003",
+  "functions": {
+    "tcpm_aug_set_op_curr": 7269,
+    "tcpm_aug_set_out_volt": 7335,
+    "tcpm_psy_set_online": 8352,
+    "tcpm_psy_set_prop": 8384
+  },
+  "protocol_owner": "stock TCPM",
+  "unchanged_target_refresh": "CURRENT_NOW setter still starts SNK_NEGOTIATE_PPS_CAPABILITIES/AMS; no value-equality shortcut in this pinned implementation. Controller pauses before invoking native standard power_supply setter.",
+  "periodic_schedule": {
+    "monitor_ms": 20,
+    "refresh_retarget_ms": 4000,
+    "origin": "Existing docs/SM5714_SM5440_HANDOFF.md FEDORA/BRINGUP_LIMIT, not hardware timing acceptance."
+  },
+  "native_binding": "Native owned snapshot+switching_check outside io_lock; recheck provider PM/generation under io_lock. No enable/OCP grant.",
+  "active_mock_grant": "Test translation unit only; never compiled into kernel.",
+  "production_arming_setter": false,
+  "physical_executed": false
+}

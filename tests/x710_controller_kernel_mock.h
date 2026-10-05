@@ -35,7 +35,7 @@ static int wait_for_completion_timeout(struct completion *c,unsigned int ms){
  while(!c->done&&!ret)ret=pthread_cond_timedwait(&c->cond,&c->lock,&deadline);
  int done=c->done;pthread_mutex_unlock(&c->lock);return done;
 }
-#define msecs_to_jiffies(ms) (100)
+#define msecs_to_jiffies(ms) ((ms)==1000?100:(ms))
 static atomic_uint_fast64_t clock_ms;
 static u64 ktime_get_boottime(void){return atomic_load(&clock_ms)*1000000;}
 #define ktime_to_ms(n) ((n)/1000000)
@@ -64,11 +64,19 @@ struct work_struct {void (*func)(struct work_struct *);};
 struct workqueue_struct {pthread_t thread;};
 static pthread_mutex_t wq_lock=PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t wq_cond=PTHREAD_COND_INITIALIZER;
+struct delayed_work {struct work_struct work;};
+#define DECLARE_DELAYED_WORK(n,f) struct delayed_work n={{f}}
 static struct work_struct *pending;
+static struct delayed_work *delayed_pending;
+static u64 delayed_due;
 static bool running,quit,queue_fail,defer_work;
 static atomic_int cancel_started;
 static void *wq_loop(void *unused){(void)unused;pthread_mutex_lock(&wq_lock);
- while(!quit){while((!pending||defer_work)&&!quit)pthread_cond_wait(&wq_cond,&wq_lock);
+ while(!quit){
+  while(!quit){if(!pending&&delayed_pending&&atomic_load(&clock_ms)>=delayed_due){
+   pending=&delayed_pending->work;delayed_pending=NULL;}
+   if(pending&&!defer_work)break;pthread_cond_wait(&wq_cond,&wq_lock);
+  }
   if(quit)break;struct work_struct *job=pending;pending=NULL;running=true;
   pthread_mutex_unlock(&wq_lock);job->func(job);pthread_mutex_lock(&wq_lock);
   running=false;pthread_cond_broadcast(&wq_cond);
@@ -84,6 +92,26 @@ static struct workqueue_struct *alloc_ordered_workqueue(const char *name,int fla
 static bool queue_work(struct workqueue_struct *q,struct work_struct *job){
  (void)q;pthread_mutex_lock(&wq_lock);bool ok=!pending&&!queue_fail;
  if(ok){pending=job;pthread_cond_broadcast(&wq_cond);}pthread_mutex_unlock(&wq_lock);return ok;
+}
+static bool queue_delayed_work(struct workqueue_struct *q,struct delayed_work *w,unsigned int ms){
+ if(!ms)return queue_work(q,&w->work);
+ (void)q;pthread_mutex_lock(&wq_lock);bool ok=!delayed_pending;
+ if(ok){delayed_pending=w;delayed_due=atomic_load(&clock_ms)+ms;pthread_cond_broadcast(&wq_cond);}
+ pthread_mutex_unlock(&wq_lock);return ok;
+}
+static bool cancel_delayed_work(struct delayed_work *w){
+ pthread_mutex_lock(&wq_lock);bool existed=delayed_pending==w;
+ if(existed)delayed_pending=NULL;
+ if(pending==&w->work)pending=NULL;
+ pthread_cond_broadcast(&wq_cond);pthread_mutex_unlock(&wq_lock);return existed;
+}
+static bool mod_delayed_work(struct workqueue_struct *q,struct delayed_work *w,unsigned int ms){
+ cancel_delayed_work(w);return queue_delayed_work(q,w,ms);
+}
+static void cancel_delayed_work_sync(struct delayed_work *w){
+ atomic_store(&cancel_started,1);cancel_delayed_work(w);
+ pthread_mutex_lock(&wq_lock);while(running)pthread_cond_wait(&wq_cond,&wq_lock);
+ pthread_mutex_unlock(&wq_lock);
 }
 static void cancel_work_sync(struct work_struct *job){(void)job;atomic_store(&cancel_started,1);
  pthread_mutex_lock(&wq_lock);pending=NULL;

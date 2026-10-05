@@ -32,6 +32,7 @@ class NativeControlTests(unittest.TestCase):
 #include <time.h>
 #include <unistd.h>
 #include <linux/errno.h>
+#include <linux/power_supply.h>
 #include "sm5440-native.h"
 #include "sm5440-hw.h"
 #define CONFIG_X710_NATIVE_CONTROL 1
@@ -114,9 +115,26 @@ static int schedule_delayed_work(struct delayed_work *w,int delay){
  (void)w;(void)delay;queued++;return 1;
 }
 '''
+        prefix += r'''
+static struct sm5714_pd_snapshot supplied_source;
+static int source_failure,lease_failure,source_calls;
+int sm5714_pd_read_owned_snapshot(u64 instance,u64 gen,u64 lease,struct sm5714_pd_snapshot *s){
+ if(io_held||registry_held)violations++;source_calls++;
+ if(source_failure)return source_failure;
+ if(instance!=11||gen!=12||lease!=99)return -ESTALE;
+ *s=supplied_source;
+ if(scenario==25)sm5440_companion->native.generation++;
+ return 0;
+}
+int sm5714_battery_switching_check(u64 lease){
+ if(io_held||registry_held)violations++;return lease_failure?lease_failure:lease==99?0:-ESTALE;
+}
+'''
         for marker in ('static void sm5440_unpublish(', 'static int sm5440_sample_ready_locked(', 'static int sm5440_off(',
                        'static void sm5440_native_result_locked(',
                        'static int sm5440_native_cleanup_locked(',
+                       'static bool sm5440_native_bound(',
+                       'static int sm5440_native_bind(',
                        'static int sm5440_native_operation_locked(',
                        'int sm5440_native_control(', 'static int sm5440_quiesce(',
                        'static int sm5440_native_quiesce(', 'static int sm5440_resume('):
@@ -219,6 +237,114 @@ void exercise_lifetime(int *o){
  o[5]=sm5440_native_control(SM5440_NATIVE_RELEASE,&lifetime_owner,NULL,&out);
  o[6]=sm.request_users;o[7]=violations;o[8]=m.on;o[9]=m.reg[0x0c];
  pthread_mutex_destroy(&sm.io_lock.m);
+}
+'''
+        prefix += r'''
+void binding(int mode,int *o){
+ struct regmap m={0};struct sm5440_direct sm={0};struct sm5440_native_result result={0};
+ struct sm5440_native_owner owner={0};
+ struct sm5714_pd_snapshot proposed={.instance=11,.source_generation=12,.budget_generation=13,
+  .started_ms=1000,.completed_ms=1000,.nr_source_pdos=1,.budget_mv=9000,.budget_ma=1500,
+  .voltage_uv=9000000,.current_ua=1500000,.online=2,.usb_type=POWER_SUPPLY_USB_TYPE_PD_PPS,
+  .charge_requested=true,.pps_contract=true,.source_pdos={0xc0000000U|(110<<17)|(33<<8)|60}};
+ struct sm5440_native_input in={.source=&proposed,.consumer_epoch=901,.switching_lease=99};
+ fake_clock=1000;scenario=mode==4?25:0;violations=queued=drained=0;source_calls=0;
+ source_failure=mode==1?-EIO:0;lease_failure=mode==2?-ESTALE:0;supplied_source=proposed;
+ if(mode==3)supplied_source.budget_generation++;
+ if(mode==6)proposed.source_pdos[0]++;
+ if(mode==5)in.consumer_epoch=0;
+ pthread_mutex_init(&sm.io_lock.m,NULL);sm5440_companion=&sm;sm.regmap=&m;
+ sm.native.instance=7;sm.initial_sample_done=sm.sample.valid=true;
+ o[0]=sm5440_native_control(SM5440_NATIVE_CLAIM,NULL,NULL,&result);owner=result.owner;
+ m.calls=0;o[1]=sm5440_native_control(SM5440_NATIVE_BIND_SOURCE,&owner,&in,&result);
+ o[2]=sm.native.consumer_epoch;o[3]=sm.native.actuator.lease;
+ o[4]=sm.native.actuator.enabled;o[5]=source_calls;o[6]=m.calls;o[7]=violations;
+ o[8]=sm5440_native_control(SM5440_NATIVE_START,&owner,&in,&result);o[9]=m.on;
+ o[10]=sm5440_native_control(SM5440_NATIVE_RELEASE,&owner,NULL,&result);
+ sm5440_companion=NULL;pthread_mutex_destroy(&sm.io_lock.m);
+}
+'''
+        prefix += r'''
+/* Private grants below exist only in this mocked-bus translation unit. */
+static struct x710_charge_facts active_facts(u64 epoch){
+ return (struct x710_charge_facts){.epoch=epoch,.observed_ms=fake_clock,.capacity=30,
+ .pack_decic=300,.die_decic=300,.vbat_mv=3800,.fixed_mv=9000,
+ .apdo_min_mv=8200,.apdo_max_mv=10500,.apdo_ma=1800,
+ .attached=true,.battery_present=true,.healthy=true,.pack_valid=true,.voltage_valid=true,
+ .soc_valid=true,.die_valid=true,.adc_valid=true,.fixed_healthy=true,.apdo=true,
+ .thermal_normal=true,.software_ocp_verified=true};
+}
+static int native_sample(enum sm5440_native_operation op,struct sm5440_native_owner *owner,
+                        struct sm5440_native_input *in,struct sm5440_native_result *out){
+ int ret=sm5440_native_control(op,owner,in,out);
+ for(int i=0;ret==-EINPROGRESS&&i<25;i++){
+  fake_clock+=5;
+  ret=sm5440_native_control(op==SM5440_NATIVE_ADC_BEGIN?SM5440_NATIVE_ADC_ADVANCE:
+    SM5440_NATIVE_MONITOR_ADVANCE,owner,in,out);
+ }
+ return ret;
+}
+void native_active(int mode,int *o){
+ struct regmap m={0};struct sm5440_direct sm={0};struct sm5440_native_result result={0};
+ struct sm5440_native_owner owner={0};struct x710_charge_facts facts={0};
+ struct x710_physical_sample physical={0};
+ struct sm5440_native_input in={.source=&supplied_source,.consumer_epoch=901,
+   .switching_lease=99,.ma=1500,.mv=9000,.facts=&facts,.physical=&physical};
+ fake_clock=1000;scenario=0;violations=queued=drained=0;source_calls=0;
+ source_failure=lease_failure=0;
+ supplied_source=(struct sm5714_pd_snapshot){.instance=11,.source_generation=12,.budget_generation=13,
+  .started_ms=1000,.completed_ms=1000,.nr_source_pdos=1,.budget_mv=9000,.budget_ma=1500,
+  .voltage_uv=9000000,.current_ua=1500000,.online=2,.usb_type=POWER_SUPPLY_USB_TYPE_PD_PPS,
+  .charge_requested=true,.pps_contract=true,.source_pdos={0xc0000000U|(110<<17)|(33<<8)|60}};
+ pthread_mutex_init(&sm.io_lock.m,NULL);sm5440_companion=&sm;sm.regmap=&m;
+ sm.native.instance=7;sm.initial_sample_done=sm.sample.valid=true;
+ m.reg[0x2b]=0x21;m.reg[0x10]=1;m.reg[0x0a]=32;m.reg[0x0c]=0x42;
+ m.reg[0x0d]=0xf2;m.reg[0x0e]=0xb8;m.reg[0x0f]=0xff;m.reg[0x11]=0x89;
+ m.reg[0x13]=0xe7;m.reg[0x15]=0x3f;m.reg[0x19]=0xfe;m.reg[0x1a]=0x0c;
+ m.reg[0x16]=0x41;m.reg[0x14]=0x37;m.reg[0x12]=12;m.reg[0x1c]=0x82;m.reg[0x1d]=0x55;
+ raw13(m.reg+0x1e,4904);raw13(m.reg+0x22,0);m.reg[0x26]=15;raw13(m.reg+0x27,3504);
+ memcpy(m.original,m.reg,256);
+ o[0]=sm5440_native_control(SM5440_NATIVE_CLAIM,NULL,NULL,&result);owner=result.owner;
+ o[1]=sm5440_native_control(SM5440_NATIVE_PREPARE,&owner,&in,&result);
+ o[2]=native_sample(SM5440_NATIVE_ADC_BEGIN,&owner,&in,&result);physical=result.physical;
+ facts=active_facts(901);
+ o[3]=sm5440_native_control(SM5440_NATIVE_BIND_SOURCE,&owner,&in,&result);
+ sm.native.actuator.enabled=true;
+ if(mode==1)facts.epoch++;
+ if(mode==2)source_failure=-EIO;
+ if(mode==3)facts.pack_decic=450;
+ o[4]=sm5440_native_control(SM5440_NATIVE_START,&owner,&in,&result);
+ o[5]=m.on;o[6]=sm.native.actuator.epoch;o[7]=sm.native.consumer_epoch;
+ if(!o[4]){
+  raw13(m.reg+0x22,mode==4?2401:1920);facts=active_facts(901);
+  o[8]=native_sample(SM5440_NATIVE_MONITOR_BEGIN,&owner,&in,&result);
+  o[9]=result.physical.valid;o[10]=result.die_decic;o[11]=result.vbus_uv;
+  o[12]=result.physical.ibus_ua;
+  if(!o[8]){
+   o[13]=sm5440_native_control(SM5440_NATIVE_PAUSE,&owner,NULL,&result);
+   o[14]=result.owned;o[15]=sm.native.actuator.controls.pending;
+   o[16]=sm.native.actuator.watchdog.owned;o[17]=sm.native.actuator.paused;
+   fake_clock+=5;supplied_source.budget_generation++;
+   supplied_source.started_ms=supplied_source.completed_ms=fake_clock;
+   raw13(m.reg+0x22,0);
+   if(mode==6){o[18]=sm5440_native_control(SM5440_NATIVE_ADC_BEGIN,&owner,&in,&result);
+    goto final_release;}
+   o[18]=native_sample(SM5440_NATIVE_ADC_BEGIN,&owner,&in,&result);physical=result.physical;
+   facts=active_facts(901);
+   if(mode==5)supplied_source.source_generation++;
+   o[19]=sm5440_native_control(SM5440_NATIVE_RESUME,&owner,&in,&result);
+   if(!o[19]){raw13(m.reg+0x22,1920);facts=active_facts(901);
+    o[20]=native_sample(SM5440_NATIVE_MONITOR_BEGIN,&owner,&in,&result);o[21]=result.physical.valid;}
+  }
+ }
+final_release:
+ source_failure=0;
+ o[22]=sm5440_native_control(SM5440_NATIVE_RELEASE,&owner,NULL,&result);
+ o[23]=result.hardware_quiesced;o[24]=result.owned;o[25]=m.on;o[26]=violations;
+ o[27]=(m.reg[0x10]&12);o[28]=m.reg[0x11];o[29]=m.reg[0x0c];
+ o[30]=m.reg[0x16]==m.original[0x16]&&m.reg[0x14]==m.original[0x14]&&m.reg[0x12]==m.original[0x12];
+ o[31]=m.reg[0x1c]==m.original[0x1c]&&m.reg[0x1d]==m.original[0x1d];
+ sm5440_companion=NULL;pthread_mutex_destroy(&sm.io_lock.m);
 }
 '''
         (p / 'mock.c').write_text(prefix)
@@ -332,6 +458,63 @@ void exercise_lifetime(int *o){
             self.assertFalse(o[12]); self.assertTrue(o[13])
             self.assertEqual(o[20], -errno.EIO); self.assertEqual(o[21:23], [-errno.EIO, 0])
             self.assertEqual(o[28], 0)
+
+    def test_actual_source_binding_checks_suppliers_outside_io_and_never_grants_on(self):
+        for mode, expected in ((0, 0), (1, -errno.EIO), (2, -errno.ESTALE),
+                               (3, -errno.ESTALE), (4, -errno.ECANCELED),
+                               (5, -errno.EINVAL), (6, -errno.ESTALE)):
+            out = (ctypes.c_int * 12)()
+            self.lib.binding(mode, out)
+            self.assertEqual(out[0], 0)
+            self.assertEqual(out[1], expected)
+            self.assertEqual(list(out[2:4]), [901, 99] if not expected else [0, 0])
+            self.assertEqual(out[4], 0)
+            self.assertEqual(list(out[6:8]), [0, 0])
+            self.assertNotEqual(out[8], 0)
+            self.assertEqual(out[9], 0)
+            self.assertEqual(out[10], 0)
+
+    def native_active_case(self, mode=0):
+        out = (ctypes.c_int * 32)()
+        self.lib.native_active(mode, out)
+        self.assertEqual(list(out[:4]), [0, 0, 0, 0])
+        self.assertEqual(out[26], 0, 'supplier called under I/O or registry lock')
+        self.assertEqual(out[27], 0, 'terminal cleanup left mocked pump running')
+        return list(out)
+
+    def test_mock_native_grant_maps_consumer_epoch_and_preserves_pause_settings(self):
+        o = self.native_active_case()
+        self.assertEqual(o[4], 0)
+        self.assertEqual(o[6:8], [1, 901])
+        self.assertEqual(o[8:13], [0, 1, 300, 9000000, 1200000])
+        self.assertEqual(o[13:18], [0, 1, 1, 1, 1])
+        self.assertEqual(o[18:26], [0, 0, 0, 1, 0, 1, 0, 2])
+        self.assertEqual(o[28:31], [0x89, 0x42, 1])
+
+    def test_native_mock_grant_rejects_epoch_source_failure_and_unsafe_temperature(self):
+        for mode, expected in ((1, -errno.ESTALE), (2, -errno.EIO), (3, -errno.EPERM)):
+            o = self.native_active_case(mode)
+            self.assertEqual(o[4], expected)
+            self.assertEqual(o[5], 0)
+            self.assertEqual(o[22:25], [0, 1, 0])
+
+    def test_actual_native_supervisor_overcurrent_and_new_source_stop_without_resume(self):
+        o = self.native_active_case(4)
+        self.assertEqual(o[8], -errno.ERANGE)
+        self.assertEqual(o[25], 1)
+        self.assertEqual(o[22:25], [0, 1, 0])
+        o = self.native_active_case(5)
+        self.assertEqual(o[19], -errno.ESTALE)
+        self.assertEqual(o[25], 1)
+        self.assertEqual(o[22:25], [0, 1, 0])
+
+    def test_terminal_cleanup_cancels_pending_off_adc_after_running_monitor(self):
+        o = self.native_active_case(6)
+        self.assertEqual(o[8], 0)
+        self.assertEqual(o[13:18], [0, 1, 1, 1, 1])
+        self.assertEqual(o[18], -errno.EINPROGRESS)
+        self.assertEqual(o[22:25], [0, 1, 0])
+        self.assertEqual(o[28:32], [0x89, 0x42, 1, 1])
 
     def test_native_profile_gate_cannot_be_smuggled_into_old_profile(self):
         import importlib.util

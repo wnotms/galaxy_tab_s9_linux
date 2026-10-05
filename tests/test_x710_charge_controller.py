@@ -45,6 +45,8 @@ static unsigned int rdo_max_current(u32 p){return (p&1023)*10;}
 static int scenario,fail_event,block_event,event_count,lock_errors;
 static int pps_count,restore_count,release_count,hardware_release,adc_count,sources,packs;
 static bool hardware_owned,hardware_off=true,pps_mode;
+static unsigned int pps_mv=8800,pps_ma=1800;
+static int on_count,pause_count,resume_count,prepare_count,monitor_count;
 static u64 lease;
 static char trace[4096];static unsigned int trace_n;
 static pthread_mutex_t barrier_lock=PTHREAD_MUTEX_INITIALIZER;
@@ -59,8 +61,8 @@ static int event(char type){
  atomic_fetch_add(&clock_ms,1);return n==fail_event?-EIO:0;
 }
 static void source(struct sm5714_pd_snapshot *s){
- unsigned int mv=pps_mode?8800:9000,ma=pps_mode?1800:1500;
- *s=(struct sm5714_pd_snapshot){.instance=11,.source_generation=12,.budget_generation=pps_mode?14:13,
+ unsigned int mv=pps_mode?pps_mv:9000,ma=pps_mode?pps_ma:1500;
+ *s=(struct sm5714_pd_snapshot){.instance=11,.source_generation=12,.budget_generation=pps_mode?13+pps_count:13,
   .started_ms=atomic_load(&clock_ms)-1,.completed_ms=atomic_load(&clock_ms),
   .source_pdos={(9000/50<<10)|300,0xc0000000U|(110<<17)|(33<<8)|60},
   .nr_source_pdos=2,.budget_mv=mv,.budget_ma=ma,.online=pps_mode?2:1,
@@ -92,7 +94,7 @@ int sm5714_battery_read_pack(u64 l,struct sm5714_pack_snapshot *p){
  int ret=event('B');if(ret)return ret;packs++;
  *p=(struct sm5714_pack_snapshot){.instance=21,.state_generation=22,.switching_lease=l,
   .started_ms=atomic_load(&clock_ms)-1,.completed_ms=atomic_load(&clock_ms),
-  .typec_mv=pps_mode?8800:9000,.typec_ma=pps_mode?1800:1500,
+  .typec_mv=pps_mode?pps_mv:9000,.typec_ma=pps_mode?pps_ma:1500,
   .capacity=30,.voltage_uv=3800000,.current_ua=-300000,.pack_decic=300,
   .health=1,.battery_present=true,.attached=true,.thermal_normal=true,
   .typec_owned=true,.typec_charge=true,.pps_contract=pps_mode};
@@ -107,11 +109,11 @@ int sm5714_battery_switching_acquire(u64 *l){
 }
 int sm5714_pd_request_pps(u64 instance,u64 gen,u64 l,unsigned int mv,unsigned int ma,
                          struct sm5714_pd_snapshot *s){
- (void)mv;(void)ma;int ret=event('P');pps_count++;
+ int ret=event('P');pps_count++;
  if(instance!=11||gen!=12||l!=99||!hardware_off)return -EPERM;
  if(scenario==16)x710_charge_controller_cancel();
  if(ret||scenario==9||scenario==10){pps_mode=false;return ret?ret:-EIO;}
- pps_mode=true;source(s);if(scenario==8)s->instance++;return 0;
+ pps_mv=mv;pps_ma=ma;pps_mode=true;source(s);if(scenario==8)s->instance++;return 0;
 }
 int sm5714_pd_restore_fixed(u64 instance,u64 gen,u64 l,struct sm5714_pd_snapshot *s){
  int ret=event('F');restore_count++;
@@ -136,13 +138,27 @@ int sm5440_native_control(enum sm5440_native_operation op,const struct sm5440_na
  if(op==SM5440_NATIVE_RELEASE){ret=event('Q');hardware_release++;
   out->owned=hardware_owned;out->owner=*owner;
   if(ret||scenario==11){hardware_off=false;return ret?ret:-EIO;}
-  out->hardware_quiesced=true;out->owned=hardware_owned=false;return 0;}
- if(op==SM5440_NATIVE_ADC_BEGIN){ret=event('A');adc_count++;return ret?ret:-EINPROGRESS;}
- if(op==SM5440_NATIVE_ADC_ADVANCE){ret=event('a');if(ret)return ret;
+  out->hardware_quiesced=true;out->owned=hardware_owned=false;hardware_off=true;return 0;}
+ if(op==SM5440_NATIVE_CHECK_OFF){ret=event('c');return ret?ret:hardware_off?0:-EBUSY;}
+ if(op==SM5440_NATIVE_PREPARE){ret=event('K');prepare_count++;return ret;}
+ if(op==SM5440_NATIVE_BIND_SOURCE){ret=event('D');
+  if(!in||in->switching_lease!=99||in->consumer_epoch!=x710_controller_generation)return -ESTALE;
+  return ret;}
+ if(op==SM5440_NATIVE_START||op==SM5440_NATIVE_RESUME){ret=event(op==SM5440_NATIVE_START?'N':'n');
+  if(!x710_controller_activation_qualified)return -EPERM;
+  if(ret)return ret;hardware_off=false;if(op==SM5440_NATIVE_START)on_count++;else resume_count++;return 0;}
+ if(op==SM5440_NATIVE_PAUSE){ret=event('H');pause_count++;if(!ret)hardware_off=true;return ret;}
+ if(op==SM5440_NATIVE_ADC_BEGIN||op==SM5440_NATIVE_MONITOR_BEGIN){
+  ret=event(op==SM5440_NATIVE_ADC_BEGIN?'A':'U');adc_count++;
+  if(op==SM5440_NATIVE_MONITOR_BEGIN)monitor_count++;return ret?ret:-EINPROGRESS;}
+
+ if(op==SM5440_NATIVE_ADC_ADVANCE||op==SM5440_NATIVE_MONITOR_ADVANCE){
+  ret=event(op==SM5440_NATIVE_ADC_ADVANCE?'a':'u');if(ret)return ret;
   if(scenario==14)return -EINPROGRESS;
-  unsigned int mv=pps_mode?8800:9000;
+  unsigned int mv=pps_mode?pps_mv:9000;
   out->physical=(struct x710_physical_sample){.observed_ms=atomic_load(&clock_ms)-1,
-    .vbus_mv=mv,.vbat_mv=3800,.online=true,.valid=true};
+    .vbus_mv=mv,.vbat_mv=3800,.online=true,.valid=true,.pump_on=!hardware_off,
+    .ibus_ua=hardware_off?0:1500000};
   out->vbus_uv=mv*1000;out->die_valid=true;out->die_decic=300;
   if(scenario==4)out->die_decic=420;
   if(scenario==5)out->vbus_uv+=100001;
@@ -158,13 +174,15 @@ int sm5440_passive_request_fresh(struct sm5440_passive_measurement *p){
   .vbus_uv=9000000,.vbat_uv=3800000,.ibus_ua=0,.die_decic=300,.online=true};return 0;
 }
 static void reset(int mode,int failure){
- if(!x710_controller_wq)x710_controller_init();flush_work(&x710_controller_job);
+ if(!x710_controller_wq)x710_controller_init();cancel_delayed_work_sync(&x710_controller_periodic);flush_work(&x710_controller_job);
  mutex_lock(&x710_controller_lock);x710_controller_quiescing=false;x710_controller_inflight=false;
  x710_controller_cancelled=false;x710_controller_unresolved=false;x710_controller_generation=1;
+ x710_controller_active=false;x710_controller_activation_qualified=false;
  x710_controller_result=(struct x710_controller_result){};mutex_unlock(&x710_controller_lock);
  memset(&x710_controller,0,sizeof(x710_controller));scenario=mode;fail_event=failure;
  block_event=event_count=lock_errors=pps_count=restore_count=release_count=hardware_release=0;
- adc_count=sources=packs=0;hardware_owned=false;hardware_off=true;pps_mode=false;lease=0;
+ adc_count=sources=packs=0;on_count=pause_count=resume_count=prepare_count=monitor_count=0;
+ pps_mv=8800;pps_ma=1800;hardware_owned=false;hardware_off=true;pps_mode=false;lease=0;
  trace_n=0;trace[0]=0;blocked=released=false;queue_fail=false;defer_work=false;
  atomic_store(&clock_ms,1000);atomic_store(&cancel_started,0);
 }
@@ -221,6 +239,42 @@ int invalid(int mode){
  if(mode==4)x710_controller_generation=U64_MAX;
  if(mode==5)queue_fail=true;
  return x710_charge_controller_request(0,8800,1800,&r);
+}
+void active_cycle(int stage,int failure,int64_t *o){
+ reset(0,0);x710_controller_activation_qualified=true;
+ struct x710_controller_result r={};
+ int ret=x710_charge_controller_request(X710_CONTROLLER_START,8800,1800,&r);
+ flush_work(&x710_controller_job);o[25]=ret;o[26]=r.active;o[27]=r.generation;
+ if(ret){output(ret,&r,o);return;}
+ int before=event_count;
+ if(failure)fail_event=before+failure;
+ if(stage==1)ret=x710_charge_controller_request(X710_CONTROLLER_MONITOR,0,0,&r);
+ if(stage==2)ret=x710_charge_controller_request(X710_CONTROLLER_REFRESH,0,0,&r);
+ if(stage==3)ret=x710_charge_controller_request(X710_CONTROLLER_RETARGET,0,0,&r);
+ if(stage==4)ret=x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);
+ if(stage==5){scenario=11;ret=x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);}
+ if(stage==6){scenario=13;ret=x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);}
+ if(stage==7){x710_charge_controller_cancel();flush_work(&x710_controller_periodic.work);
+  x710_charge_controller_status(&r);ret=r.error;}
+ if(stage==8){ret=x710_controller_pm(NULL,PM_SUSPEND_PREPARE,NULL);
+  x710_charge_controller_status(&r);o[40]=ret;ret=r.error;
+  int prior=event_count;x710_controller_pm(NULL,PM_POST_SUSPEND,NULL);o[41]=event_count-prior;}
+ if(stage==9){atomic_fetch_add(&clock_ms,101);
+  ret=x710_charge_controller_request(X710_CONTROLLER_MONITOR,0,0,&r);}
+ if(stage==10||stage==11){
+  cancel_delayed_work_sync(&x710_controller_periodic);
+  if(stage==11)x710_controller.refreshed_ms=atomic_load(&clock_ms)-4000;
+  queue_work(x710_controller_wq,&x710_controller_periodic.work);
+  flush_work(&x710_controller_periodic.work);x710_charge_controller_status(&r);ret=r.error;
+ }
+ if(stage==12){scenario=15;ret=x710_charge_controller_request(X710_CONTROLLER_MONITOR,0,0,&r);}
+ output(ret,&r,o);o[28]=r.active;o[29]=r.generation;o[30]=on_count;o[31]=pause_count;
+ o[32]=resume_count;o[33]=prepare_count;o[34]=monitor_count;o[35]=hardware_owned;
+ o[36]=hardware_off;o[37]=x710_controller.tx.target_mv;o[38]=x710_controller.tx.target_ma;
+ o[39]=event_count-before;
+ // End each test's mock session; preserve the asserted results before cleanup.
+ cancel_delayed_work_sync(&x710_controller_periodic);
+ if(x710_controller_active)x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);
 }
 '''
         (d / 'harness.c').write_text(code)
@@ -361,6 +415,76 @@ int invalid(int mode){
         for mode, error in enumerate((errno.EINVAL, errno.ERANGE, errno.ERANGE,
                                       errno.ESHUTDOWN, errno.EOVERFLOW, errno.EBUSY)):
             self.assertEqual(self.lib.invalid(mode), -error)
+
+    def active_case(self, stage, failure=0):
+        out = (ctypes.c_int64 * 44)()
+        self.lib.active_cycle(stage, failure, out)
+        self.assertEqual(out[25:27], [0, 1], 'mock grant must exercise actual entry')
+        self.assertEqual(out[2], 0, 'supplier called under publication lock')
+        return list(out)
+
+    def test_mock_grant_retains_session_across_monitor_refresh_and_retarget(self):
+        for stage in (1, 2, 3):
+            o = self.active_case(stage)
+            self.assertEqual(o[0], 0)
+            self.assertEqual(o[28], 1)
+            self.assertEqual(o[27], o[29], 'active operation replaced original epoch')
+            self.assertEqual(o[4:7], [0, 0, 0], 'active operation terminalized ownership')
+            self.assertEqual(o[35:37], [1, 0])
+            self.assertEqual(o[30], 1)
+            self.assertEqual(o[31:33], [0, 0] if stage == 1 else [1, 1])
+            self.assertGreaterEqual(o[34], 2)
+            self.assertLessEqual(o[38], 1800)
+            if stage == 3:
+                self.assertEqual(o[37], 8380)
+
+    def test_active_stop_restores_each_owner_once(self):
+        o = self.active_case(4)
+        self.assertEqual(o[0], 0)
+        self.assertEqual(o[4:7], [1, 1, 1])
+        self.assertEqual(o[28], 0)
+        self.assertEqual(o[35:37], [0, 1])
+        self.assertEqual(o[14], 1)
+
+    def test_every_active_operation_supplier_failure_ends_safe_not_retried(self):
+        for stage in (1, 2, 3, 4):
+            count = self.active_case(stage)[39]
+            for failed in range(1, count + 1):
+                with self.subTest(stage=stage, event=failed):
+                    o = self.active_case(stage, failed)
+                    self.assertNotEqual(o[0], 0)
+                    self.assertEqual(o[28], 0)
+                    self.assertLessEqual(o[4], 1)
+                    self.assertLessEqual(o[5], 1)
+                    self.assertLessEqual(o[6], 1)
+
+    def test_unknown_active_off_and_failed_switching_release_are_latched(self):
+        for stage in (5, 6):
+            o = self.active_case(stage)
+            self.assertNotEqual(o[0], 0)
+            self.assertEqual(o[10], 1)
+            self.assertEqual(o[28], 0)
+            self.assertEqual(o[6], 1)
+        o = self.active_case(5)
+        self.assertEqual(o[4:6], [0, 0])
+
+    def test_active_cancel_pm_and_late_monitor_exit_without_rearming(self):
+        for stage in (7, 8, 9, 12):
+            o = self.active_case(stage)
+            self.assertNotEqual(o[0], 0)
+            self.assertEqual(o[28], 0)
+            self.assertEqual(o[35:37], [0, 1])
+            self.assertEqual(o[6], 1)
+        o = self.active_case(8)
+        self.assertEqual(o[40:42], [1, 0])
+
+    def test_actual_periodic_body_monitors_and_refreshes_same_session(self):
+        for stage in (10, 11):
+            o = self.active_case(stage)
+            self.assertEqual(o[0], 0)
+            self.assertEqual(o[28], 1)
+            self.assertEqual(o[27], o[29])
+            self.assertEqual(o[31:33], [0, 0] if stage == 10 else [1, 1])
 
     def test_profile_link_and_no_automatic_activation(self):
         patch = (ROOT / 'kernel/patches/0020-power-supply-hook-sm5440-native-control.patch').read_text()

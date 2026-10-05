@@ -1,0 +1,184 @@
+{
+  "verdict": "OFFLINE_RETAINED_NATIVE_SESSION_QUALIFIED",
+  "full_goal_verdict": "NOT_READY",
+  "base_revision": "fe2a66b144fd161ca996f0ade2568b87355c94c2",
+  "record_parent_revision": "0a9115d969f2ed04e659627907c69880c91ba0e5",
+  "profile": "sm5440-native-control",
+  "tests": {
+    "executed": true,
+    "modules": [
+      "test_x710_charge_controller",
+      "test_sm5440_native_control",
+      "test_sm5440_actuator",
+      "test_sm5440_conversion",
+      "test_sm5440_supervisor",
+      "test_sm5440_watchdog",
+      "test_x710_charge_observer",
+      "test_x710_charging_policy",
+      "test_x710_pd_session",
+      "test_x710_direct_transaction",
+      "test_sm5714_stage2_pd",
+      "test_sm5714_pack_snapshot",
+      "test_sm5714_owned_observer",
+      "test_sm5714_runtime_snapshot",
+      "test_container_kernel_config"
+    ],
+    "tests_run": 325,
+    "seconds": 10.255708721997507,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "valid": true,
+    "full_executed": false,
+    "reason": "Actual controller + native executor/policy/TCPM/observer/pack/container dependencies; no suite routing changed."
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 79.79593746200044,
+    "started_utc": "2026-10-05T11:07:40.940801+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-native-control",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-active-session"
+    },
+    "device_operations": []
+  },
+  "static": {
+    "returncode": 0,
+    "seconds": 7.415857995998522,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/x710-charge-controller.o",
+      "drivers/power/supply/sm5440-direct.o"
+    ],
+    "warnings": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "changed_driver_warnings": []
+  },
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ],
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "Test303": {
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "native-control": {},
+    "OFF-controller": {}
+  },
+  "DTB_diff": [],
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-active-session/Image.gz",
+      "bytes": 22167825,
+      "sha256": "7842b2ba5cc48fb05a008b9938a9c3c76938d2d4f477e2b5cbbf076d1b633a11"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-active-session/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-active-session/config",
+      "bytes": 243294,
+      "sha256": "6f70dd31a582efc0464c37b505693f7fe8af3949a9c2a573a1ca116a7e73f42d"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-active-session/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "1e15e06fd93d8a9a125b1026c6f295aa5ca59bb724ff91e9d90f424e88860947"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-active-session/modules-x710.tar.gz",
+      "bytes": 47331514,
+      "sha256": "b0d9ecaadf08a3a495b75aeafe3d3b4a3c43dbb257a8d9c40428799d8b0f67b3"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-active-session/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "module_files": 181,
+  "protected_sources": 53,
+  "preserved_formal_artifacts": 24,
+  "linked": {
+    "sm5440_native_control": true,
+    "sm5440_native_quiesce": true,
+    "x710_charge_request_observation": true,
+    "x710_charge_controller_request": true,
+    "x710_charge_controller_status": true,
+    "x710_charge_controller_cancel": true,
+    "x710_controller_work": true,
+    "x710_controller_pm": true,
+    "x710_controller_tick": true,
+    "sm5440_control_prepare": true,
+    "sm5440_watchdog_arm_off": true,
+    "sm5440_actuator_start": true,
+    "sm5440_actuator_stop": true,
+    "sm5440_actuator_pause": true,
+    "sm5440_actuator_resume": true,
+    "sm5440_conversion_begin": true,
+    "sm5440_conversion_advance": true,
+    "sm5440_conversion_finish": true,
+    "sm5440_conversion_cancel": true,
+    "sm5440_supervisor_begin": true,
+    "sm5440_supervisor_advance": true,
+    "sm5440_supervisor_cancel": true
+  },
+  "activation_grants": {
+    "controller_qualified": false,
+    "native_actuator_enabled": false,
+    "ocp_qualified": false,
+    "public_setter": false,
+    "mock_test_grants_compiled_into_kernel": false
+  },
+  "session_operations": [
+    "entry",
+    "native source/lease binding",
+    "monitor",
+    "pause",
+    "PPS refresh/retarget",
+    "resume",
+    "terminal stop/fixed restore/switching release",
+    "periodic work",
+    "cancel/PM drain"
+  ],
+  "physical_executed": false,
+  "device_operations": [],
+  "full_tests_executed": false,
+  "remaining": [
+    "physical acquisition/calibration/current/protection/cutoff qualification",
+    "separate source-bound activation admission",
+    "registered PPS OFF / <=1.8A pump / fault-PM physical acceptance",
+    "later vendor-equivalent/higher-power progression"
+  ]
+}

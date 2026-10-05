@@ -25,6 +25,13 @@ static struct x710_controller_result x710_controller_result;
 static u64 x710_controller_generation;
 static bool x710_controller_quiescing = true, x710_controller_inflight;
 static bool x710_controller_cancelled, x710_controller_unresolved;
+/* No public setter or accepted physical grant exists. */
+static bool x710_controller_activation_qualified;
+static bool x710_controller_active;
+static void x710_controller_tick(struct work_struct *work);
+static DECLARE_DELAYED_WORK(x710_controller_periodic, x710_controller_tick);
+#define X710_CONTROLLER_POLL_MS 20U
+#define X710_CONTROLLER_REFRESH_MS 4000U
 static enum x710_controller_command x710_controller_command;
 static unsigned int x710_controller_mv, x710_controller_ma;
 
@@ -35,12 +42,16 @@ struct x710_native_controller {
 	struct sm5714_pd_snapshot source, fixed;
 	struct x710_charge_facts facts;
 	struct x710_physical_sample physical;
-	u64 generation, lease, pack_instance;
+	u64 generation, lease, pack_instance, refreshed_ms;
 	u32 physical_vbus_uv;
 	int die_decic;
 	bool die_valid, hardware_owned, hardware_quiesced, pps_failed;
+	bool retained, running, paused, ocp_qualified;
 	bool fixed_observed, switching_released, pps_observed;
 	int cleanup_error;
+	bool terminal_off_attempted, fixed_attempted, release_attempted;
+	bool final_measure_attempted;
+	int off_error, fixed_error, release_error, final_measure_error;
 };
 
 static struct x710_native_controller x710_controller;
@@ -137,22 +148,36 @@ static int x710_controller_measure(void *context, struct x710_physical_sample *o
 {
 	struct x710_native_controller *c = context;
 	struct sm5440_native_result result = {};
+	struct sm5440_native_input input = {
+		.facts = &c->facts, .source = &c->source,
+		.consumer_epoch = c->generation, .switching_lease = c->lease,
+	};
 	struct sm5440_passive_measurement passive = {};
 	u64 start = x710_controller_now(NULL), now;
 	int ret;
 
 	memset(out, 0, sizeof(*out));
+	if (!c->hardware_owned && c->lease) {
+		if (c->final_measure_attempted) {
+			if (!c->final_measure_error)
+				*out = c->physical;
+			return c->final_measure_error;
+		}
+		c->final_measure_attempted = true;
+	}
 	c->die_valid = false;
 	if (c->hardware_owned) {
-		ret = sm5440_native_control(SM5440_NATIVE_ADC_BEGIN,
-					    &c->hardware_owner, NULL, &result);
+		ret = sm5440_native_control(c->running ? SM5440_NATIVE_MONITOR_BEGIN :
+					    SM5440_NATIVE_ADC_BEGIN,
+					    &c->hardware_owner, &input, &result);
 		while (ret == -EINPROGRESS) {
 			now = x710_controller_now(NULL);
 			if (now < start || now - start > X710_ADC_MAX_AGE_MS)
 				return -ETIMEDOUT;
 			usleep_range(1000, 2000);
-			ret = sm5440_native_control(SM5440_NATIVE_ADC_ADVANCE,
-						    &c->hardware_owner, NULL, &result);
+			ret = sm5440_native_control(c->running ? SM5440_NATIVE_MONITOR_ADVANCE :
+						    SM5440_NATIVE_ADC_ADVANCE,
+						    &c->hardware_owner, &input, &result);
 		}
 		if (ret)
 			return ret;
@@ -162,8 +187,10 @@ static int x710_controller_measure(void *context, struct x710_physical_sample *o
 		c->die_valid = result.die_valid;
 	} else {
 		ret = sm5440_passive_request_fresh(&passive);
-		if (ret)
+		if (ret) {
+			c->final_measure_error = ret;
 			return ret;
+		}
 		*out = (struct x710_physical_sample) {
 			.observed_ms = passive.observed_ms, .vbus_mv = passive.vbus_uv / 1000,
 			.vbat_mv = passive.vbat_uv / 1000, .ibus_ua = passive.ibus_ua,
@@ -176,11 +203,13 @@ static int x710_controller_measure(void *context, struct x710_physical_sample *o
 	now = x710_controller_now(NULL);
 	if (!x710_controller_fresh(start, now, now, X710_ADC_MAX_AGE_MS) ||
 	    !x710_controller_fresh(out->observed_ms, now, now, X710_ADC_MAX_AGE_MS) ||
-	    !out->valid || !out->online || out->pump_on || out->faults || out->ibus_ua ||
+	    !out->valid || !out->online || out->pump_on != c->running || out->faults ||
+	    out->ibus_ua > (c->running ? c->tx.target_ma * 1000U : 0U) ||
 	    out->vbat_mv < 3500 || out->vbat_mv >= 4300 ||
 	    out->vbus_mv < 4500 || out->vbus_mv > SM5714_PPS_MAX_MV ||
 	    !c->die_valid || c->die_decic < 0 || c->die_decic >= 420) {
 		memset(out, 0, sizeof(*out));
+		c->final_measure_error = -ERANGE;
 		return -ERANGE;
 	}
 	c->physical = *out;
@@ -207,8 +236,12 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 		ret = sm5714_battery_read_pack(c->lease, &a);
 	if (!ret)
 		ret = x710_controller_pack_check(c, &a, &first);
-	if (!ret)
-		ret = x710_controller_measure(c, &physical);
+	if (!ret) {
+		if (c->retained)
+			physical = c->physical;
+		else
+			ret = x710_controller_measure(c, &physical);
+	}
 	if (!ret)
 		ret = sm5714_battery_read_pack(c->lease, &b);
 	if (!ret)
@@ -229,7 +262,10 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 	ret = x710_controller_pack_check(c, &b, &last);
 	if (ret)
 		return ret;
-	if (c->physical_vbus_uv + 100000ULL < last.budget_mv * 1000ULL ||
+	if (!physical.valid || !physical.online || physical.pump_on != c->running ||
+	    physical.faults || !c->die_valid || c->die_decic < 0 || c->die_decic >= 420 ||
+	    physical.ibus_ua > (c->running ? c->tx.target_ma * 1000U : 0U) ||
+	    c->physical_vbus_uv + 100000ULL < last.budget_mv * 1000ULL ||
 	    c->physical_vbus_uv > last.budget_mv * 1000ULL + 100000)
 		return -ERANGE;
 	oldest = min(first.started_ms, last.started_ms);
@@ -244,7 +280,7 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 		.die_valid = true, .adc_valid = true, .fixed_healthy = true,
 		.thermal_normal = true,
 		/* Physical OCP/cutoff qualification has not been obtained. */
-		.software_ocp_verified = false,
+		.software_ocp_verified = c->ocp_qualified,
 	};
 	/* These ranges come from the current source, not a remembered APDO. The
 	 * board validator only bounds a requested pair; TCPM selects its PDO.
@@ -292,8 +328,12 @@ static int x710_controller_gate(void *context, bool inhibit)
 	proof.vbus_uv = c->physical_vbus_uv;
 	proof.ibus_ua = c->physical.ibus_ua;
 	proof.pump_off = true;
+	if (c->release_attempted)
+		return c->release_error;
+	c->release_attempted = true;
 	ret = sm5714_pd_release_fixed(c->fixed.instance, c->fixed.source_generation,
 				      c->lease, &proof);
+	c->release_error = ret;
 	if (!ret) {
 		c->switching_released = true;
 		c->lease = 0;
@@ -305,15 +345,35 @@ static int x710_controller_off(void *context)
 {
 	struct x710_native_controller *c = context;
 	struct sm5440_native_result result = {};
+	struct x710_physical_sample physical = {};
+	bool temporary = c->retained &&
+		(c->tx.state == X710_DIRECT_ACTIVE || c->tx.state == X710_DIRECT_PREPARE);
 	int ret;
 
 	if (!c->hardware_owned)
 		return c->hardware_quiesced ? 0 : -EPERM;
+	if (temporary) {
+		ret = sm5440_native_control(c->running ? SM5440_NATIVE_PAUSE :
+					    SM5440_NATIVE_CHECK_OFF,
+					    &c->hardware_owner, NULL, &result);
+		if (ret)
+			return ret;
+		c->paused = c->running;
+		c->running = false;
+		/* Fresh zero-current OFF evidence precedes every protocol setter. */
+		return x710_controller_measure(c, &physical);
+	}
+	if (c->terminal_off_attempted)
+		return c->off_error;
+	c->terminal_off_attempted = true;
 	ret = sm5440_native_control(SM5440_NATIVE_RELEASE, &c->hardware_owner, NULL, &result);
+	c->off_error = ret ? ret : (!result.hardware_quiesced || result.owned ? -EIO : 0);
 	if (ret || !result.hardware_quiesced || result.owned)
 		return ret ? ret : -EIO;
 	c->hardware_owned = false;
 	c->hardware_quiesced = true;
+	c->running = false;
+	c->paused = false;
 	return 0;
 }
 
@@ -334,8 +394,10 @@ static int x710_controller_pps(void *context, unsigned int mv, unsigned int ma)
 		     !pps.pps_contract || pps.online != 2 ||
 		     pps.budget_mv != mv || pps.budget_ma != ma))
 		return -ESTALE;
-	if (!ret)
+	if (!ret) {
 		c->source = pps;
+		c->refreshed_ms = x710_controller_now(NULL);
+	}
 	return ret;
 }
 
@@ -350,18 +412,41 @@ static int x710_controller_prepare(void *context, unsigned int ma)
 	return sm5440_native_control(SM5440_NATIVE_PREPARE, &c->hardware_owner, &input, &result);
 }
 
+static int x710_controller_bind(struct x710_native_controller *c)
+{
+	struct sm5440_native_input input = {
+		.source = &c->source, .consumer_epoch = c->generation, .switching_lease = c->lease,
+	};
+	struct sm5440_native_result result = {};
+
+	return sm5440_native_control(SM5440_NATIVE_BIND_SOURCE,
+				    &c->hardware_owner, &input, &result);
+}
+
 static int x710_controller_on(void *context)
 {
 	struct x710_native_controller *c = context;
 	struct sm5440_native_input input = {
 		.facts = &c->facts, .physical = &c->physical, .source = &c->source,
 		.mv = c->tx.target_mv, .ma = c->tx.target_ma,
+		.consumer_epoch = c->generation, .switching_lease = c->lease,
 	};
 	struct sm5440_native_result result = {};
+	int ret;
 
 	if (!x710_controller_current(c, c->generation) || !c->hardware_owned)
 		return -ECANCELED;
-	return sm5440_native_control(SM5440_NATIVE_START, &c->hardware_owner, &input, &result);
+
+	ret = x710_controller_bind(c);
+	if (!ret)
+		ret = sm5440_native_control(c->paused ? SM5440_NATIVE_RESUME : SM5440_NATIVE_START,
+					    &c->hardware_owner, &input, &result);
+	if (!ret) {
+		c->running = true;
+		c->paused = false;
+		c->physical.valid = false; /* A fresh running sample is still required. */
+	}
+	return ret;
 }
 
 static int x710_controller_fixed(void *context)
@@ -372,21 +457,26 @@ static int x710_controller_fixed(void *context)
 
 	if (!c->hardware_quiesced || !c->lease)
 		return -EPERM;
+	if (c->fixed_attempted)
+		return c->fixed_error;
+	c->fixed_attempted = true;
+	c->fixed_error = -EIO; /* Success must be published explicitly. */
 	if (c->pps_failed) {
 		/* Native PPS failure already attempted restore. No hidden retry. */
 		ret = sm5714_pd_read_snapshot(&fixed);
 		if (ret || fixed.instance != c->fixed.instance ||
 		    fixed.source_generation != c->fixed.source_generation)
-			return ret ? ret : -ESTALE;
+			return c->fixed_error = ret ? ret : -ESTALE;
 	} else {
 		ret = sm5714_pd_restore_fixed(c->fixed.instance, c->fixed.source_generation,
 					      c->lease, &fixed);
 		if (ret)
-			return ret;
+			return c->fixed_error = ret;
 	}
 	if (fixed.pps_contract || fixed.online != 1 || fixed.budget_mv != c->fixed.budget_mv)
-		return -ERANGE;
+		return c->fixed_error = -ERANGE;
 	c->source = fixed;
+	c->fixed_error = 0;
 	c->fixed_observed = true;
 	return 0;
 }
@@ -477,23 +567,107 @@ static int x710_controller_roundtrip(struct x710_native_controller *c,
 	return ret;
 }
 
-static void x710_controller_work(struct work_struct *work)
+static int x710_controller_start(struct x710_native_controller *c,
+				 unsigned int mv, unsigned int ma)
 {
-	struct x710_native_controller *c = &x710_controller;
-	struct x710_controller_result result = {};
-	enum x710_controller_command command;
-	unsigned int mv, ma;
+	struct x710_observer_owner ordinary = {};
+	struct x710_charge_observation observation = {};
+	struct sm5440_native_result hardware = {};
+	struct x710_physical_sample physical = {};
+	struct x710_charge_facts facts = {};
 	int ret;
 
+	/* Admission is closed until the private physical grant is qualified. */
+	if (!c->tx.armed)
+		return x710_charge_start(&c->tx, &facts, &x710_controller_ops, c);
+	ret = x710_charge_request_observation(&ordinary, &observation);
+	if (ret)
+		return ret;
+	c->fixed = observation.source;
+	c->source = observation.source;
+	c->pack_instance = observation.pack.instance;
+	c->tx.target_mv = mv;
+	c->tx.target_ma = ma;
+	if (!c->pack_instance || c->fixed.budget_mv != 9000 ||
+	    c->fixed.nr_source_pdos > SM5714_SOURCE_PDO_MAX)
+		return -EPERM;
+	ret = sm5440_native_control(SM5440_NATIVE_CLAIM, NULL, NULL, &hardware);
+	c->hardware_owner = hardware.owner;
+	c->hardware_owned = hardware.owned;
+	c->hardware_quiesced = hardware.hardware_quiesced;
+	if (!ret)
+		ret = x710_controller_measure(c, &physical);
+	if (!ret)
+		ret = x710_controller_facts(c, &facts);
+	if (!ret)
+		ret = x710_charge_start(&c->tx, &facts, &x710_controller_ops, c);
+	return ret;
+}
+
+static void x710_controller_finish(struct x710_native_controller *c, int ret, bool terminal)
+{
+	struct x710_controller_result result = {};
+	bool cancelled;
+
 	mutex_lock(&x710_controller_lock);
-	command = x710_controller_command;
-	mv = x710_controller_mv;
-	ma = x710_controller_ma;
-	memset(c, 0, sizeof(*c));
-	c->generation = x710_controller_generation;
-	c->tx.state = X710_SWITCHING;
-	result.started_ms = x710_controller_now(NULL);
+	cancelled = x710_controller_cancelled || x710_controller_quiescing;
 	mutex_unlock(&x710_controller_lock);
+	if (!ret && cancelled)
+		ret = -ECANCELED;
+	terminal |= ret || c->tx.state != X710_DIRECT_ACTIVE;
+	if (terminal) {
+		c->tx.armed = false;
+		c->tx.state = (c->lease || c->hardware_owned) ?
+			X710_DIRECT_STOPPING : X710_SWITCHING;
+		c->cleanup_error = x710_controller_cleanup(c);
+		if (!ret)
+			ret = c->cleanup_error;
+	}
+	result.generation = c->generation;
+	result.completed_ms = x710_controller_now(NULL);
+	result.instance = c->fixed.instance;
+	result.source_generation = c->fixed.source_generation;
+	result.lease = c->lease;
+	result.hardware_owner = c->hardware_owner;
+	result.error = ret;
+	result.cleanup_error = c->cleanup_error;
+	result.hardware_quiesced = c->hardware_quiesced;
+	result.pps_observed = c->pps_observed;
+	result.fixed_observed = c->fixed_observed;
+	result.switching_released = c->switching_released;
+	result.active = !terminal && c->running && c->hardware_owned && c->lease;
+	result.unresolved = !result.active && (c->lease || c->hardware_owned || c->cleanup_error);
+	result.state = result.active ? X710_DIRECT_ACTIVE :
+		result.unresolved ? X710_CHARGE_FAULT : X710_SWITCHING;
+	c->tx.state = result.state;
+	mutex_lock(&x710_controller_lock);
+	result.started_ms = x710_controller_result.started_ms;
+	result.cancelled = x710_controller_cancelled || x710_controller_quiescing;
+	if (result.active && result.cancelled) {
+		/* Cancellation raced the active publication. Finish OFF before replying. */
+		mutex_unlock(&x710_controller_lock);
+		x710_controller_finish(c, -ECANCELED, true);
+		return;
+	}
+	if (terminal)
+		x710_controller_activation_qualified = false;
+	x710_controller_active = result.active;
+	x710_controller_unresolved = result.unresolved;
+	x710_controller_result = result;
+	x710_controller_inflight = false;
+	complete_all(&x710_controller_done);
+	if (result.active)
+		queue_delayed_work(x710_controller_wq, &x710_controller_periodic,
+				   msecs_to_jiffies(X710_CONTROLLER_POLL_MS));
+	mutex_unlock(&x710_controller_lock);
+}
+
+static void x710_controller_execute(enum x710_controller_command command,
+				    unsigned int mv, unsigned int ma)
+{
+	struct x710_native_controller *c = &x710_controller;
+	int ret;
+
 	if (!x710_controller_current(c, c->generation)) {
 		ret = -ECANCELED;
 	} else {
@@ -502,8 +676,7 @@ static void x710_controller_work(struct work_struct *work)
 			ret = x710_controller_roundtrip(c, mv, ma);
 			break;
 		case X710_CONTROLLER_START:
-			/* Core and hardware activation gates are both default-inactive. */
-			ret = x710_charge_start(&c->tx, &c->facts, &x710_controller_ops, c);
+			ret = x710_controller_start(c, mv, ma);
 			break;
 		case X710_CONTROLLER_REFRESH:
 			ret = x710_charge_refresh(&c->tx, &x710_controller_ops, c);
@@ -519,38 +692,56 @@ static void x710_controller_work(struct work_struct *work)
 			break;
 		}
 	}
-	if (!ret && !x710_controller_current(c, c->generation))
-		ret = -ECANCELED;
-	c->tx.state = (c->lease || c->hardware_owned) ? X710_DIRECT_STOPPING : X710_SWITCHING;
-	c->cleanup_error = x710_controller_cleanup(c);
-	if (!ret)
-		ret = c->cleanup_error;
-	result.generation = c->generation;
-	result.completed_ms = x710_controller_now(NULL);
-	result.instance = c->fixed.instance;
-	result.source_generation = c->fixed.source_generation;
-	result.lease = c->lease;
-	result.hardware_owner = c->hardware_owner;
-	result.error = ret;
-	result.cleanup_error = c->cleanup_error;
-	result.hardware_quiesced = c->hardware_quiesced;
-	result.pps_observed = c->pps_observed;
-	result.fixed_observed = c->fixed_observed;
-	result.switching_released = c->switching_released;
-	result.unresolved = c->lease || c->hardware_owned || c->cleanup_error;
-	result.state = result.unresolved ? X710_CHARGE_FAULT : X710_SWITCHING;
+	x710_controller_finish(c, ret, command == X710_CONTROLLER_OFF_ROUNDTRIP ||
+			       command == X710_CONTROLLER_STOP);
+}
+
+static void x710_controller_work(struct work_struct *work)
+{
+	struct x710_native_controller *c = &x710_controller;
+	enum x710_controller_command command;
+	unsigned int mv, ma;
+
 	mutex_lock(&x710_controller_lock);
-	result.cancelled = x710_controller_cancelled || x710_controller_quiescing;
-	if (!result.error && result.cancelled)
-		result.error = -ECANCELED;
-	x710_controller_unresolved = result.unresolved;
-	x710_controller_result = result;
-	x710_controller_inflight = false;
-	complete_all(&x710_controller_done);
+	command = x710_controller_command;
+	mv = x710_controller_mv;
+	ma = x710_controller_ma;
+	/* Only entry owns a new context. Never erase a retained hardware/lease. */
+	if (command == X710_CONTROLLER_START || command == X710_CONTROLLER_OFF_ROUNDTRIP) {
+		memset(c, 0, sizeof(*c));
+		c->tx.state = X710_SWITCHING;
+		c->retained = command == X710_CONTROLLER_START;
+		c->tx.armed = c->retained && x710_controller_activation_qualified;
+		c->ocp_qualified = c->tx.armed;
+	}
+	c->generation = x710_controller_generation;
+	x710_controller_result.started_ms = x710_controller_now(NULL);
 	mutex_unlock(&x710_controller_lock);
+	x710_controller_execute(command, mv, ma);
 }
 
 static DECLARE_WORK(x710_controller_job, x710_controller_work);
+
+static void x710_controller_tick(struct work_struct *work)
+{
+	struct x710_native_controller *c = &x710_controller;
+	enum x710_controller_command command;
+	u64 now;
+
+	mutex_lock(&x710_controller_lock);
+	if (!x710_controller_active || x710_controller_inflight) {
+		mutex_unlock(&x710_controller_lock);
+		return;
+	}
+	x710_controller_inflight = true;
+	x710_controller_result.started_ms = x710_controller_now(NULL);
+	mutex_unlock(&x710_controller_lock);
+	now = x710_controller_now(NULL);
+	command = !c->refreshed_ms || now < c->refreshed_ms ||
+		now - c->refreshed_ms >= X710_CONTROLLER_REFRESH_MS ?
+		X710_CONTROLLER_RETARGET : X710_CONTROLLER_MONITOR;
+	x710_controller_execute(command, 0, 0);
+}
 
 int x710_charge_controller_status(struct x710_controller_result *out)
 {
@@ -570,6 +761,8 @@ void x710_charge_controller_cancel(void)
 {
 	mutex_lock(&x710_controller_lock);
 	x710_controller_cancelled = true;
+	if (x710_controller_active && !x710_controller_inflight)
+		mod_delayed_work(x710_controller_wq, &x710_controller_periodic, 0);
 	mutex_unlock(&x710_controller_lock);
 }
 EXPORT_SYMBOL_GPL(x710_charge_controller_cancel);
@@ -585,9 +778,10 @@ int x710_charge_controller_request(enum x710_controller_command command,
 	memset(out, 0, sizeof(*out));
 	if (command < X710_CONTROLLER_OFF_ROUNDTRIP || command > X710_CONTROLLER_STOP)
 		return -EINVAL;
-	if (command == X710_CONTROLLER_OFF_ROUNDTRIP &&
-	    (mv < SM5714_PPS_MIN_MV || mv > SM5714_PPS_MAX_MV || mv % 20 ||
-	     ma < 100 || ma > SM5714_PPS_MAX_MA || ma % 50))
+	if ((command == X710_CONTROLLER_OFF_ROUNDTRIP || command == X710_CONTROLLER_START) &&
+	    ((command != X710_CONTROLLER_START || mv || ma) &&
+	     (mv < SM5714_PPS_MIN_MV || mv > SM5714_PPS_MAX_MV || mv % 20 ||
+	     ma < 100 || ma > SM5714_PPS_MAX_MA || ma % 50)))
 		return -ERANGE;
 	if (!mutex_trylock(&x710_controller_request_lock))
 		return -EBUSY;
@@ -600,16 +794,24 @@ int x710_charge_controller_request(enum x710_controller_command command,
 		ret = -EBUSY;
 		goto unlock;
 	}
-	if (x710_controller_generation == U64_MAX) {
+	if (x710_controller_active &&
+	    (command == X710_CONTROLLER_START || command == X710_CONTROLLER_OFF_ROUNDTRIP)) {
+		ret = -EBUSY;
+		goto unlock;
+	}
+	if (!x710_controller_active && x710_controller_generation == U64_MAX) {
 		ret = -EOVERFLOW;
 		goto unlock;
 	}
-	x710_controller_generation++;
+	if (!x710_controller_active)
+		x710_controller_generation++;
+	cancel_delayed_work(&x710_controller_periodic);
 	x710_controller_command = command;
 	x710_controller_mv = mv;
 	x710_controller_ma = ma;
 	x710_controller_cancelled = false;
-	x710_controller_result = (struct x710_controller_result) {};
+	if (!x710_controller_active)
+		x710_controller_result = (struct x710_controller_result) {};
 	x710_controller_inflight = true;
 	reinit_completion(&x710_controller_done);
 	if (!queue_work(x710_controller_wq, &x710_controller_job)) {
@@ -648,8 +850,16 @@ static int x710_controller_pm(struct notifier_block *nb, unsigned long action, v
 		x710_controller_cancelled = true;
 		mutex_unlock(&x710_controller_lock);
 		/* Flush, not cancel: a queued operation must publish and drain cleanup. */
+		cancel_delayed_work_sync(&x710_controller_periodic);
 		flush_work(&x710_controller_job);
 		mutex_lock(&x710_controller_lock);
+		if (x710_controller_active) {
+			x710_controller_inflight = true;
+			mutex_unlock(&x710_controller_lock);
+			x710_controller_finish(&x710_controller, -ECANCELED, true);
+			mutex_lock(&x710_controller_lock);
+		}
+		x710_controller_activation_qualified = false;
 		ret = x710_controller_unresolved ? NOTIFY_BAD : NOTIFY_OK;
 		mutex_unlock(&x710_controller_lock);
 		return ret;

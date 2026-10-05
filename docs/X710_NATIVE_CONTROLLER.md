@@ -32,11 +32,16 @@ nor a fabricated `software_ocp_verified` field can grant activation. This is an
 unfinished full direct-charge port, not hardware acceptance or a higher-power
 release. No userspace activation interface is introduced.
 
-The current worker terminalizes each OFF roundtrip; it does not retain a running
-direct session. Direct entry/refresh/retarget/monitor commands therefore refuse
-their inactive state without supplier mutation. A retained active adapter,
-nonterminal park/resume and scheduled monitoring/refresh still need integration
-before activation can be considered, in addition to physical qualification.
+The worker now retains an admitted active session across entry, monitor, refresh
+and retarget. Temporary pause preserves settings/watchdog ownership; only terminal
+cleanup restores/releases them. Real native source/lease binding precedes actuator
+operations and maps the controller epoch to the hardware session. One ordered queue
+runs 20ms monitor scheduling and 4s paused refresh/retarget, refusing late work under
+the existing 100ms deadline. See [retained session design](X710_ACTIVE_SESSION.md).
+Neither scheduler nor caller grants activation: the private qualification flag has
+no setter and native ON remains closed. Host-only mock grants exercise the actual
+entry/monitor/pause/resume/stop paths and are excluded from kernel compilation.
+Physical ADC/calibration/current/protection/cutoff/PPS acceptance remains required.
 
 Waiter timeout requests cancellation but is not worker termination. New work is
 refused until the existing worker finishes its once-only cleanup. A read-only

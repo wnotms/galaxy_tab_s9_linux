@@ -103,6 +103,8 @@ struct sm5440_native_context {
 	struct sm5440_actuator actuator;
 	struct sm5440_conversion adc;
 	struct sm5440_supervisor monitor;
+	struct sm5714_pd_snapshot bound_source;
+	u64 consumer_epoch;
 	u64 instance, generation;
 	bool owned, draining, cleanup_attempted, hardware_quiesced;
 	int operation_error, cleanup_error;
@@ -806,11 +808,12 @@ static int sm5440_native_cleanup_locked(struct sm5440_direct *sm)
 	/* Pump OFF precedes converter cleanup, including timeout/I2C/PM faults. */
 	if (n->monitor.started) {
 		sm5440_supervisor_cancel(sm->regmap, &n->monitor);
-		err = n->monitor.converter_error;
-	} else {
-		sm5440_conversion_cancel(sm->regmap, &n->adc);
-		err = n->adc.cleanup_error;
+		if (!ret)
+			ret = n->monitor.converter_error;
 	}
+	/* A paused session can own a newer OFF conversion than its old monitor. */
+	sm5440_conversion_cancel(sm->regmap, &n->adc);
+	err = n->adc.cleanup_error;
 	if (!ret)
 		ret = err;
 	err = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
@@ -832,12 +835,88 @@ out:
 	return ret;
 }
 
+/* Exact source witness, independent of the time a snapshot was recopied. */
+static bool sm5440_native_bound(const struct sm5714_pd_snapshot *b,
+				const struct sm5714_pd_snapshot *s)
+{
+	return s && b->instance && b->source_generation && b->budget_generation &&
+		b->instance == s->instance && b->source_generation == s->source_generation &&
+		b->budget_generation == s->budget_generation &&
+		s->nr_source_pdos && s->nr_source_pdos <= SM5714_SOURCE_PDO_MAX &&
+		b->nr_source_pdos == s->nr_source_pdos &&
+		!memcmp(b->source_pdos, s->source_pdos,
+			s->nr_source_pdos * sizeof(s->source_pdos[0])) &&
+		b->budget_mv == s->budget_mv && b->budget_ma == s->budget_ma &&
+		b->voltage_uv == s->voltage_uv && b->current_ua == s->current_ua &&
+		s->online == 2 && s->pps_contract && s->charge_requested &&
+		(s->usb_type == POWER_SUPPLY_USB_TYPE_PD_PPS ||
+		 s->usb_type == POWER_SUPPLY_USB_TYPE_PD_PPS_SPR_AVS);
+}
+
+/* Caller pins this hardware instance and reserves its native request slot.
+ * Drop io_lock for the native TCPC/companion checks, then recheck PM/lifetime.
+ * This binds an owner/source; it never manufactures the missing ON/OCP grant.
+ */
+static int sm5440_native_bind(struct sm5440_direct *sm,
+			      const struct sm5440_native_owner *owner,
+			      const struct sm5440_native_input *in)
+{
+	struct sm5440_native_context *n = &sm->native;
+	struct sm5714_pd_snapshot source = {};
+	struct sm5714_pd_snapshot witness = {};
+	u64 epoch, lease, now;
+	int ret;
+
+	lockdep_assert_held(&sm->io_lock);
+	if (!in || !in->source || !in->consumer_epoch || !in->switching_lease)
+		return -EINVAL;
+	if (!n->owned || n->draining || n->cleanup_attempted || sm->stopped ||
+	    sm->fault || READ_ONCE(sm->dying) || n->generation != owner->generation)
+		return -ECANCELED;
+	if (n->consumer_epoch &&
+	    (n->consumer_epoch != in->consumer_epoch ||
+	     n->actuator.lease != in->switching_lease ||
+	     n->bound_source.instance != in->source->instance ||
+	     n->bound_source.source_generation != in->source->source_generation))
+		return -ESTALE;
+	epoch = in->consumer_epoch;
+	lease = in->switching_lease;
+	witness = *in->source;
+	mutex_unlock(&sm->io_lock);
+	ret = sm5714_pd_read_owned_snapshot(witness.instance,
+					    witness.source_generation, lease, &source);
+	if (!ret)
+		ret = sm5714_battery_switching_check(lease);
+	mutex_lock(&sm->io_lock);
+	if (ret)
+		return ret;
+	now = ktime_to_ms(ktime_get_boottime());
+	if (!n->owned || n->draining || n->cleanup_attempted || sm->stopped ||
+	    sm->fault || READ_ONCE(sm->dying) || n->generation != owner->generation)
+		return -ECANCELED;
+	if (!sm5440_native_bound(&witness, &source) || !source.started_ms ||
+	    source.started_ms > source.completed_ms || source.completed_ms > now ||
+	    now - source.started_ms > X710_FACTS_MAX_AGE_MS - X710_MONITOR_DEADLINE_MS)
+		return -ESTALE;
+	n->consumer_epoch = epoch;
+	n->bound_source = source;
+	n->actuator.instance = source.instance;
+	n->actuator.source_generation = source.source_generation;
+	n->actuator.lease = lease;
+	n->actuator.switching_inhibited = true;
+	if (!n->actuator.attempted)
+		n->actuator.budget_generation = source.budget_generation;
+	return 0;
+}
+
 static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 					  enum sm5440_native_operation op,
 					  const struct sm5440_native_input *in,
 					  struct sm5440_native_result *out)
 {
 	struct sm5440_native_context *n = &sm->native;
+	struct x710_charge_facts mapped;
+	unsigned int mode;
 	int ret;
 
 	lockdep_assert_held(&sm->io_lock);
@@ -860,9 +939,21 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 	if (n->draining || sm->fault)
 		return -EBUSY;
 	switch (op) {
+	case SM5440_NATIVE_CHECK_OFF:
+		if (n->adc.owned || n->monitor.sampling || n->monitor.adc.owned)
+			return -EBUSY;
+		ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
+		if (!ret && (mode & SM5440_MODE_MASK))
+			ret = -EBUSY;
+		break;
 	case SM5440_NATIVE_PREPARE:
 		if (!in)
 			return -EINVAL;
+		if (n->adc.owned || n->monitor.sampling || n->monitor.adc.owned)
+			return -EBUSY;
+		/* Resume itself updates a decreased target while retaining witnesses. */
+		if (n->actuator.paused && in->ma >= 1000 && in->ma <= n->actuator.active_ma)
+			return 0;
 		if (n->adc.owned || n->actuator.controls.state != SM5440_CONTROL_IDLE)
 			return -EALREADY;
 		/* OFF settings + WDT only; no charging authorization is manufactured. */
@@ -873,7 +964,7 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 						      ktime_to_ms(ktime_get_boottime()));
 		break;
 	case SM5440_NATIVE_ADC_BEGIN:
-		if (n->monitor.started || n->actuator.mode_possible)
+		if (n->monitor.sampling || n->monitor.adc.owned || n->actuator.mode_possible)
 			return -EBUSY;
 		if (n->adc.state == SM5440_CONVERSION_DONE && !n->adc.owned &&
 		    !n->adc.cleanup_error)
@@ -909,14 +1000,21 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 			return -EPERM;
 		if (!in || !in->facts || !in->physical || !in->source)
 			return -EINVAL;
+		if (!n->consumer_epoch || in->facts->epoch != n->consumer_epoch ||
+		    !sm5440_native_bound(&n->bound_source, in->source))
+			return -ESTALE;
+		mapped = *in->facts;
+		mapped.epoch = n->generation;
 		if (n->adc.owned || n->monitor.sampling)
 			return -EBUSY;
 		if (op == SM5440_NATIVE_START)
-			ret = sm5440_actuator_start(sm->regmap, &n->actuator, in->facts,
+			ret = sm5440_actuator_start(sm->regmap, &n->actuator, &mapped,
 						    in->physical, in->source, in->mv, in->ma);
 		else
-			ret = sm5440_actuator_resume(sm->regmap, &n->actuator, in->facts,
+			ret = sm5440_actuator_resume(sm->regmap, &n->actuator, &mapped,
 						     in->physical, in->source, in->mv, in->ma);
+		if (!ret)
+			n->monitor = (struct sm5440_supervisor) { .actuator = &n->actuator };
 		break;
 	case SM5440_NATIVE_PAUSE:
 		if (!n->actuator.enabled)
@@ -931,6 +1029,11 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 			return -EPERM;
 		if (!in || !in->facts || !in->source)
 			return -EINVAL;
+		if (!n->consumer_epoch || in->facts->epoch != n->consumer_epoch ||
+		    !sm5440_native_bound(&n->bound_source, in->source))
+			return -ESTALE;
+		mapped = *in->facts;
+		mapped.epoch = n->generation;
 		if (n->adc.owned)
 			return -EBUSY;
 		n->monitor.enabled = true;
@@ -938,12 +1041,16 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 		n->monitor.target_ma = n->actuator.active_ma;
 		if (op == SM5440_NATIVE_MONITOR_BEGIN)
 			ret = sm5440_supervisor_begin(sm->regmap, &n->monitor,
-						      in->facts, in->source);
+						      &mapped, in->source);
 		else
 			ret = sm5440_supervisor_advance(sm->regmap, &n->monitor,
-							in->facts, in->source);
-		if (!ret)
+							&mapped, in->source);
+		if (!ret) {
 			out->physical = n->monitor.adc.sample;
+			out->vbus_uv = n->monitor.adc.vbus_uv;
+			out->die_decic = n->monitor.adc.die_decic;
+			out->die_valid = n->monitor.adc.data_acquired;
+		}
 		break;
 	default:
 		return -EINVAL;
@@ -1004,6 +1111,24 @@ int sm5440_native_control(enum sm5440_native_operation op,
 			ret = -ECANCELED;
 			goto unlock;
 		}
+		if (op == SM5440_NATIVE_BIND_SOURCE ||
+		    (n->actuator.enabled && (op == SM5440_NATIVE_START ||
+		     op == SM5440_NATIVE_RESUME || op == SM5440_NATIVE_MONITOR_BEGIN ||
+		     op == SM5440_NATIVE_MONITOR_ADVANCE))) {
+			ret = sm5440_native_bind(sm, &wanted, in);
+			if (ret) {
+				if (n->actuator.mode_possible || n->actuator.controls.pending ||
+				    n->actuator.watchdog.owned) {
+					if (!n->operation_error)
+						n->operation_error = ret;
+					sm->fault = true;
+					sm5440_native_cleanup_locked(sm);
+				}
+				goto report;
+			}
+			if (op == SM5440_NATIVE_BIND_SOURCE)
+				goto report;
+		}
 		ret = sm5440_native_operation_locked(sm, op, in, out);
 		goto report;
 	}
@@ -1025,6 +1150,8 @@ int sm5440_native_control(enum sm5440_native_operation op,
 	n->hardware_quiesced = false;
 	n->operation_error = 0;
 	n->cleanup_error = 0;
+	n->consumer_epoch = 0;
+	n->bound_source = (struct sm5714_pd_snapshot) {};
 	n->actuator = (struct sm5440_actuator) {
 		.generation = &n->generation, .epoch = n->generation,
 	}; /* enabled=false, no source lease/ON grant */

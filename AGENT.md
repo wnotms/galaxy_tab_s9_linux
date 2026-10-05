@@ -98,6 +98,22 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 retained native active-session integration now preserves ownership
+across actual entry/monitor/paused refresh-retarget/resume/stop, native owned
+source+switching binding outsideio_lock/epoch mapping,20ms monitor/4s paused
+retarget; once-only terminal OFF/fixed/release and PM/cancel drain. Pending paused
+OFF ADC cleanup omission reproduced in actualC, fixed by cancelling both converter
+contexts; no altered hardware limits. Kernel controller/native/OCP grants remain
+closed/no public setter; mock-only grants excluded from build. 325 affectedPASS
+10.256s/0skip, ARM64PASS79.796s/W1sparse7.416s knownVDSOonly/checkpatch0.
+Exact previous native config/accepted311 DTB/181paired/53protected/24formal preserved.
+reference/charging/x710-active-session/,out/kernel-x710-active-session/. No
+physical deployment/PPS/ON/rootfs/USB/Actions; currentordinarydevice unchanged.
+FullgoalNOTREADY: physicalADC/calibration/current/protection/cutoff qualification
+then independent activation/PPSOFF/<=1.8A pump/faultPM/higherpower stillrequired.
+Same native cache reused; old303 provider identity not revived.
+
+
 2026-10-05 latest owner-confirmed USB reconnect endpoint passes nativeADB/Windows
 composite+ADB+NCM Code0/Up/interface-bound NCM SSH/authenticatedWi-Fi, sameecaa3c64
 accepted311 config/notes/SinkDevice/DCCabsent/pumpOFF. Battery0%/3.226V/30.8C/Good

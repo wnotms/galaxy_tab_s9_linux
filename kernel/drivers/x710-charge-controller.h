@@ -23,7 +23,7 @@ struct x710_controller_result {
 	struct sm5440_native_owner hardware_owner;
 	enum x710_charge_state state;
 	int error, cleanup_error;
-	bool inflight, cancelled, unresolved, hardware_quiesced;
+	bool inflight, cancelled, unresolved, hardware_quiesced, active;
 	bool pps_observed, fixed_observed, switching_released;
 };
 

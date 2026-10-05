@@ -19,6 +19,8 @@ enum sm5440_native_operation {
 	SM5440_NATIVE_RESUME,
 	SM5440_NATIVE_MONITOR_BEGIN,
 	SM5440_NATIVE_MONITOR_ADVANCE,
+	SM5440_NATIVE_BIND_SOURCE,
+	SM5440_NATIVE_CHECK_OFF,
 	SM5440_NATIVE_RELEASE,
 };
 
@@ -30,6 +32,7 @@ struct sm5440_native_input {
 	const struct x710_charge_facts *facts;
 	const struct x710_physical_sample *physical;
 	const struct sm5714_pd_snapshot *source;
+	u64 consumer_epoch, switching_lease;
 	unsigned int mv, ma;
 };
 
