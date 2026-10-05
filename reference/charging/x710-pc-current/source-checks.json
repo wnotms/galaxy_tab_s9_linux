@@ -1,0 +1,40 @@
+[
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0
+  },
+  {
+    "argv": [
+      ".work/build/linux-src-x710-charging/scripts/checkpatch.pl",
+      "--no-tree",
+      "--strict",
+      "--file",
+      "kernel/drivers/sm5714-battery.c"
+    ],
+    "returncode": 1
+  },
+  {
+    "argv": [
+      ".work/build/linux-src-x710-charging/scripts/checkpatch.pl",
+      "--no-tree",
+      "--strict",
+      "-"
+    ],
+    "returncode": 0
+  },
+  {
+    "argv": [
+      ".work/build/linux-src-x710-charging/scripts/checkpatch.pl",
+      "--no-tree",
+      "--strict",
+      "--file",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/reference/charging/x710-pc-current/source-before.c"
+    ],
+    "returncode": 1,
+    "reason": "Baseline exact HEAD source checked: seven identical pre-existing CHECK notices; zero errors/warnings. No unrelated style edit."
+  }
+]

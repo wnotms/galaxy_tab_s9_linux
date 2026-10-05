@@ -44,6 +44,7 @@ int main(int argc, char **argv) {
  assert(argc==3); int op=atoi(argv[1]),arg=atoi(argv[2]),ret=0;
  struct sm5714_battery sm={.float_uv=4440000,.typec_owned=true,
   .typec_charge=true,.typec_mv=5000,.typec_ma=1800};
+ if((op==2 || op==22) && arg==500)sm.typec_ma=500;
  type=POWER_SUPPLY_USB_TYPE_SDP;
  regs[0x13]=0x64; regs[0x15]=0x80|68; regs[0x1a]=0xd5;
  assert(sm5714_configure_charging(&sm)==0);assert(sm.charge_programmed);
@@ -118,9 +119,13 @@ int main(int argc, char **argv) {
         self.assertEqual((r[0], r[2], r[5], r[8]), (0, 0x88, 0, 0))
 
     def test_test307_drift_restores_only_existing_sdp_limits_and_float(self):
-        r = self.run_case(2)
-        self.assertEqual(r[:5], [1, 0x6c, 0x90, 0x20, 0xed])
-        self.assertEqual(r[7:10], [1, 1, 0])
+        # Keep the original default-SDP assertions, and also exercise the
+        # higher 5V grant actually present in Test307's TCPM journal.
+        for grant, input_reg, fast_reg in ((500, 0x90, 0x20), (1800, 0xc4, 0x73)):
+            with self.subTest(grant=grant):
+                r = self.run_case(2, grant)
+                self.assertEqual(r[:5], [1, 0x6c, input_reg, fast_reg, 0xed])
+                self.assertEqual(r[7:10], [1, 1, 0])
 
     def test_every_recovery_transfer_error_stays_off_and_preserves_first_error(self):
         count = self.run_case(2)[6]
@@ -180,9 +185,11 @@ int main(int argc, char **argv) {
         self.assertEqual((r[0], r[1] & 8, r[9]), (-117, 0, 1))
 
     def test_actual_same_attach_poller_calls_recovery(self):
-        r = self.run_case(22)
-        self.assertEqual(r[:5], [1, 0x6c, 0x90, 0x20, 0xed])
-        self.assertEqual(r[7:10], [1, 1, 0])
+        for grant, input_reg, fast_reg in ((500, 0x90, 0x20), (1800, 0xc4, 0x73)):
+            with self.subTest(grant=grant):
+                r = self.run_case(22, grant)
+                self.assertEqual(r[:5], [1, 0x6c, input_reg, fast_reg, 0xed])
+                self.assertEqual(r[7:10], [1, 1, 0])
 
 
 if __name__ == '__main__':

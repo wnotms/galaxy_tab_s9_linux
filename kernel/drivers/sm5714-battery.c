@@ -464,6 +464,15 @@ static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 		fast_ma = 500;
 		break;
 	}
+	/* TCPM's Rp/PD budget takes precedence over BC1.2 at fixed 5V.
+	 * A default SDP grant stays at 500mA; the connector alone grants nothing.
+	 * Keep DCP's existing pack target and all validated board ceilings.
+	 */
+	if (sm->typec_owned && sm->typec_mv == 5000 && sm->typec_ma > 500) {
+		input_ma = min(sm->typec_ma, SM5714_FIXED_5V_MA);
+		if (fast_ma < input_ma)
+			fast_ma = input_ma;
+	}
 	if (sm->typec_owned)
 		input_ma = min(input_ma, sm->typec_ma);
 

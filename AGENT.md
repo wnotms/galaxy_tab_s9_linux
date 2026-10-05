@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 source-authorized fixed5V budget correction qualified offline:
+SM5714 ordinary configuration now gives existing TCPM5V>500mA authorization
+precedence over SDP/UNKNOWN/CDP, capped1800mA; lower pack target rises only to
+capped grant. DefaultSDP500, fixed9V1500/pack2100, DCP2100, float4440, thermal500/
+fail-closed/PM/PPS switching inhibition unchanged. Test307 raw historical grant
+3000->1800 alongside500 charging supports underuse, not current PC capability.
+Twelve pre-fix actual-C failures;109 affectedPASS4.604s/0skip; old500 recovery
+assertions retained plus higher-grant exact assertions. ARM64PASS76.045s;
+W1/sparsePASS6.998s known upstreamVDSO only, standard object exactly restored.
+Patch checkpatch clean; seven unchanged whole-file baseline styleCHECKs recorded.
+Exact preceding native config/accepted311DTB/181paired/56protected/42formal preserved.
+Formal out/kernel-x710-pc-current/, evidence reference/charging/x710-pc-current/.
+No device deployment/USB/TCPC/DTS/config/rootfs/PPS/ON; grantsclosed. Owner current
+low-battery shutdown requires accepted18W recharge/normalSOC>=20% entry before
+physical source-grant/5V charging acceptance. Current PC port remains unknown.
+Full port NOT READY: ADC/current/calibration/cutoff, PPS-OFF/pump/faultPM and
+higher-power acceptance remain. No new cache tree/Windows staging/Actions.
+
+
 2026-10-05 native cancellation/queue-refusal increment qualified offline:
 active cancelled sessions refuse new controls; an active regular queue refusal
 keeps EBUSY and schedules once-only terminal OFF/fixed/release. Twelve actual-C

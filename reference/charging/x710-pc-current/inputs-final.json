@@ -1,0 +1,28 @@
+{
+  "compiled_inputs": {
+    "kernel/drivers/x710-charge-controller.c": "d575ceef85d4bfea104f84f00915c2785a474172458e7c6f6f80a3e5d68428de",
+    "kernel/drivers/x710-charge-controller.h": "e4d4333f228168a4864c5e1443c9ac6ab968347ed2bc70f9b427da07b7fd76fb",
+    "kernel/drivers/sm5440-direct.c": "3ef72076f470e65c0524c87cf1f7c98b0dee1d1876c9f611dcf7d70ade3c0b59",
+    "kernel/drivers/sm5440-native.h": "6ac3aa80e8240dce7c684bdc874ad5bbd29855694a395fd871959b8973174431",
+    "scripts/prepare-kernel.sh": "556e2e6b040692b7ff12b3091cc770abc5d542033234dba179f0ac77b2244d94",
+    "kernel/patches/0020-power-supply-hook-sm5440-native-control.patch": "a3a81b2894dee6aa4bbc3ad5a61bcd3af74cb048c68a1d48c696327a7548706b",
+    "kernel/drivers/x710-charge-observer.h": "ce1dbd6e7cac839e5a4f50f1675941746c0efdec085342b50ab89f638f9cba59",
+    "kernel/drivers/x710-charging-policy.h": "e878972f15eab2f711d98d7bd13657e9908b16c82119bfa3261e9bd5943bd107",
+    "kernel/drivers/x710-charge-observer.c": "cbea5538dbde52231ad76bdcf095197aaafffb4d35ca96da042389484521b40d",
+    "kernel/drivers/x710-pd-session.h": "a151ac44f7630addf4c78a35123b995b76956a594f1569d5b6c26dab8a599929",
+    "kernel/drivers/x710-charging-policy.c": "312bc46e91d4200c1204b0d64c498d211d60013db00a12a28c200d06e02fa126",
+    "kernel/drivers/x710-pd-session.c": "8c32ca5ee5c3607dc89f5e8624845973dd4fa91ce16e5c25f34c7bcf4dcedeb6",
+    "kernel/drivers/sm5714-battery.c": "64a505c9adec4d0172dc46e80056cd64ff7d99a344c43be975ae1678c7bfc127"
+  },
+  "base_revision": "6136be9b9899925664e7e9c6166318178c6e5fca",
+  "profile": "sm5440-native-control",
+  "hardware_operations": [],
+  "host_test_inputs": {
+    "tests/test_sm5714_charge_safety.py": "d7d9795d30edbe6308710d4c77b8e80cef02de36f0d47cd260839c8aee6bce54",
+    "tests/test_sm5714_program_recovery.py": "8b977b81c5bdf4b16a9e942bae8ee22a39b065a20f27f9549e01772f2cac4db9",
+    "tests/test_sm5714_stage2_pd.py": "e58e40eb8f123b19cd80bb1df948c105f1158ea5115d8cbec7e66442ef6c2400",
+    "tests/test_sm5714_policy.py": "d03fd2a78663778fbe17bc425c334749bece76265fec59645dadc173beaa392c",
+    "tests/test_sm5714_switching_ownership.py": "65f52971365c6c408d5d5243bd7896df73e37fcd8a2a365180a488f8f09b25ef",
+    "tests/test_sm5714_fixed_charge_regression.py": "f35c851a83553139bafdfb04e3f29d8b12b31112b9db5b3849c5ac74e0b7d8bc"
+  }
+}

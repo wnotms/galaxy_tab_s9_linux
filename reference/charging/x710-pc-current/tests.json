@@ -1,0 +1,19 @@
+{
+  "executed": true,
+  "modules": [
+    "test_sm5714_policy",
+    "test_sm5714_charge_safety",
+    "test_sm5714_stage2_pd",
+    "test_sm5714_switching_ownership",
+    "test_sm5714_program_recovery",
+    "test_sm5714_fixed_charge_regression"
+  ],
+  "tests_run": 109,
+  "seconds": 4.603663984999002,
+  "valid": true,
+  "failures": [],
+  "errors": [],
+  "skips": [],
+  "full_executed": false,
+  "reason": "All shared fixture consumers, actual source-budget/ownership/recovery policy and fixed acceptance parser. No routing/integration changes; original 500mA recovery assertions retained with default500 grant, higher-grant assertion added."
+}

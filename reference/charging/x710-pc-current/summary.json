@@ -1,0 +1,138 @@
+{
+  "verdict": "OFFLINE_SOURCE_AUTHORIZED_5V_BUDGET_PASS",
+  "full_port_verdict": "NOT_READY",
+  "base_revision": "6136be9b9899925664e7e9c6166318178c6e5fca",
+  "implemented": "Use existing TCPM fixed5V grant above500mA before BC1.2 clamp, max1800mA; raise lower pack target only to capped grant. No blind SDP current increase.",
+  "tests": {
+    "executed": true,
+    "modules": [
+      "test_sm5714_policy",
+      "test_sm5714_charge_safety",
+      "test_sm5714_stage2_pd",
+      "test_sm5714_switching_ownership",
+      "test_sm5714_program_recovery",
+      "test_sm5714_fixed_charge_regression"
+    ],
+    "tests_run": 109,
+    "seconds": 4.603663984999002,
+    "valid": true,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "full_executed": false,
+    "reason": "All shared fixture consumers, actual source-budget/ownership/recovery policy and fixed acceptance parser. No routing/integration changes; original 500mA recovery assertions retained with default500 grant, higher-grant assertion added."
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 76.04547187800199,
+    "started_utc": "2026-10-05T12:32:41.119740+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-native-control",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-pc-current"
+    },
+    "device_operations": []
+  },
+  "static": {
+    "returncode": 0,
+    "seconds": 6.99775130800117,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/sm5714-battery.o"
+    ],
+    "warnings": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "changed_driver_warnings": [],
+    "W1_runtime_sections_unchanged": true,
+    "bad_runtime_sections": [],
+    "changed_W1_sections": [],
+    "object_sha256_before": "c5734b1706b4817968a86b66afd2e880e3f834540a3b0392ac1cd6f55242d4a6",
+    "object_sha256_W1": "c5734b1706b4817968a86b66afd2e880e3f834540a3b0392ac1cd6f55242d4a6",
+    "object_sha256_restored": "c5734b1706b4817968a86b66afd2e880e3f834540a3b0392ac1cd6f55242d4a6",
+    "standard_object_byte_identical_after_restore": true,
+    "restore_returncode": 0,
+    "restore_seconds": 6.602229473999614,
+    "restore_argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "drivers/power/supply/sm5714-battery.o"
+    ],
+    "formal_artifacts_relinked": false
+  },
+  "config_delta_from_cancel_drain": {},
+  "DTB_delta": [],
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-pc-current/Image.gz",
+      "bytes": 22168221,
+      "sha256": "0ed3113192e05d011aa2f24fbd296b3203e8a895e167095df1ac9c67459bc55e"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-pc-current/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-pc-current/config",
+      "bytes": 243294,
+      "sha256": "6f70dd31a582efc0464c37b505693f7fe8af3949a9c2a573a1ca116a7e73f42d"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-pc-current/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "401b23e86d0e33c27b792cf06bb300c5d0520ee1cec6d04b62c2242d87c93d9a"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-pc-current/modules-x710.tar.gz",
+      "bytes": 47331591,
+      "sha256": "bef7850196c1b47445c5558fe15dc5cc443796c44ad4d79db03f13a1d1afb9ba"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-pc-current/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "protected_source_count": 56,
+  "preserved_formal_artifact_count": 42,
+  "module_file_count": 181,
+  "PC_port_capability_current": "unknown; owner reply pending",
+  "historical_Test307_logical_grants_ma": [
+    3000,
+    1800
+  ],
+  "current_power_state": "owner reports low-battery shutdown; no new measurement",
+  "device_mutations": [],
+  "physical_executed": false,
+  "PPS_requested": false,
+  "pump_ON": false,
+  "github_actions_started": false,
+  "new_full_build_tree": false,
+  "remaining": [
+    "recharge and normal boot/SOC>=20%/transport entry",
+    "separate source-capability/5V charging/downgrade/unplug/reconnect physical acceptance",
+    "physical ADC/gauge/current/cutoff qualification",
+    "independent PPS-OFF/<=1.8A pump/fault/PM and higher-power acceptance"
+  ]
+}

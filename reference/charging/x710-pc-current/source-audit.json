@@ -1,0 +1,21 @@
+{
+  "valid": true,
+  "implementation_and_test_changes": [
+    "kernel/drivers/sm5714-battery.c",
+    "tests/test_sm5714_charge_safety.py",
+    "tests/test_sm5714_program_recovery.py",
+    "tests/test_sm5714_stage2_pd.py"
+  ],
+  "protected_source_count": 56,
+  "preserved_formal_artifact_count": 42,
+  "max_fixed_5v_input_ma": 1800,
+  "default_sdp_input_ma": 500,
+  "fixed_9v_input_ma": 1500,
+  "DCP_pack_target_ma": 2100,
+  "higher_5v_sdp_pack_target": "min(granted_ma,1800); only after existing safety gates",
+  "thermal_reduced_input_and_pack_ma": 500,
+  "native_activation_available": false,
+  "PPS_enabled_by_this_change": false,
+  "TCPC_USB_DTS_config_rootfs_changed": false,
+  "device_operations": []
+}

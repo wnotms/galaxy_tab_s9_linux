@@ -20,6 +20,10 @@ class ChargeSafetyTests(unittest.TestCase):
         definitions = "\n".join(line for line in source.splitlines()
                                 if line.startswith("#define SM5714_CHG_") or
                                 line.startswith("#define  SM5714_CHG_"))
+        # Use the real shared ceiling in every consumer of this C fixture.
+        definitions += "\n" + next(
+            line for line in (ROOT / 'kernel/drivers/sm5714-stage2.h').read_text().splitlines()
+            if line.startswith('#define SM5714_FIXED_5V_MA'))
         helpers = [
             "static int sm5714_chg_update_bits(",
             "static int sm5714_disable_charging(",

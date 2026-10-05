@@ -1,0 +1,60 @@
+{
+  "vendor": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/common/sec_battery.c",
+    "sha256": "17855a7aa5396ed1055e3e15b103478fcaa8a66f0247ccdb9e4cd315e49fbff2",
+    "first_line": 4505,
+    "last_line": 4595,
+    "excerpt": "static void sec_bat_set_usb_configure(struct sec_battery_info *battery, int usb_status)\n{\n\tint cable_work_delay = 0;\n\n\tpr_info(\"%s: usb configured %d -> %d\\n\", __func__, battery->prev_usb_conf, usb_status);\n\n\tif (usb_status == USB_CURRENT_UNCONFIGURED) {\n\t\tsec_bat_set_current_event(battery,\n\t\t\t\tSEC_BAT_CURRENT_EVENT_USB_100MA, SEC_BAT_CURRENT_EVENT_USB_STATE);\n\t\tif (battery->cable_type == SEC_BATTERY_CABLE_USB && !sec_bat_get_lpmode()) {\n\t\t\tsec_vote(battery->fcc_vote, VOTER_USB_100MA, true, 100);\n\t\t\tsec_vote(battery->input_vote, VOTER_USB_100MA, true, 100);\n\t\t}\n\t} else if (usb_status == USB_CURRENT_HIGH_SPEED || usb_status == USB_CURRENT_SUPER_SPEED) {\n\t\tbattery->usb_slow_chg = false;\n\t\tsec_vote(battery->fcc_vote, VOTER_USB_100MA, false, 0);\n\t\tsec_vote(battery->input_vote, VOTER_USB_100MA, false, 0);\n\t\tif (usb_status == USB_CURRENT_HIGH_SPEED) {\n\t\t\tsec_bat_set_current_event(battery, 0, SEC_BAT_CURRENT_EVENT_USB_STATE);\n\t\t\tif (battery->cable_type == SEC_BATTERY_CABLE_USB) {\n\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true,\n\t\t\t\t\t\tbattery->pdata->default_usb_charging_current);\n\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true,\n\t\t\t\t\t\tbattery->pdata->default_usb_input_current);\n\t\t\t}\n\t\t} else {\n\t\t\tsec_bat_set_current_event(battery,\n\t\t\t\t\tSEC_BAT_CURRENT_EVENT_USB_SUPER, SEC_BAT_CURRENT_EVENT_USB_STATE);\n\t\t\tif (battery->cable_type == SEC_BATTERY_CABLE_USB) {\n\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true, USB_CURRENT_SUPER_SPEED);\n\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true, USB_CURRENT_SUPER_SPEED);\n\t\t\t}\n\t\t}\n\t\tif (battery->sink_status.rp_currentlvl == RP_CURRENT_LEVEL3) {\n\t\t\tif (battery->current_event & SEC_BAT_CURRENT_EVENT_HV_DISABLE) {\n\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true,\n\t\t\t\t\t\tbattery->pdata->default_charging_current);\n\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true,\n\t\t\t\t\t\tbattery->pdata->default_input_current);\n\t\t\t} else {\n\t\t\t\tif (battery->store_mode) {\n\t\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true,\n\t\t\t\t\t\t\tbattery->pdata->max_charging_current);\n\t\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true,\n\t\t\t\t\t\t\tbattery->pdata->rp_current_rdu_rp3);\n\t\t\t\t} else {\n\t\t\t\t\tif (!(is_pd_wire_type(battery->wire_status) ||\n\t\t\t\t\t\tis_pd_wire_type(battery->cable_type))) {\n\t\t\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true,\n\t\t\t\t\t\t\tbattery->pdata->max_charging_current);\n\t\t\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true,\n\t\t\t\t\t\t\tbattery->pdata->rp_current_rp3);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t} else if (battery->sink_status.rp_currentlvl == RP_CURRENT_LEVEL2) {\n\t\t\tif (!(is_pd_wire_type(battery->wire_status) ||\n\t\t\t\tis_pd_wire_type(battery->cable_type))) {\n\t\t\t\tsec_vote(battery->fcc_vote, VOTER_CABLE, true, battery->pdata->rp_current_rp2);\n\t\t\t\tsec_vote(battery->input_vote, VOTER_CABLE, true, battery->pdata->rp_current_rp2);\n\t\t\t}\n\t\t}\n\t} else if (usb_status == USB_CURRENT_SUSPENDED) {\n\t\tbattery->usb_slow_chg = false;\n\t\tsec_bat_set_current_event(battery,\n\t\t\t\tSEC_BAT_CURRENT_EVENT_USB_SUSPENDED, SEC_BAT_CURRENT_EVENT_USB_STATE);\n\t\tsec_vote(battery->chgen_vote, VOTER_SUSPEND, true, SEC_BAT_CHG_MODE_BUCK_OFF);\n\t\tif (battery->sink_status.rp_currentlvl == RP_CURRENT_LEVEL_DEFAULT) {\n\t\t\tsec_vote(battery->fcc_vote, VOTER_USB_100MA, true, 100);\n\t\t\tsec_vote(battery->input_vote, VOTER_USB_100MA, true, 100);\n\t\t}\n\t\tcable_work_delay = 500;\n\t\tstore_battery_log(\n\t\t\t\t\"USB suspend:%d%%,%dmV,%s,ct(%d,%d,%d),cev(0x%x),mev(0x%x)\",\n\t\t\t\tbattery->capacity,\n\t\t\t\tbattery->voltage_now,\n\t\t\t\tsb_get_bst_str(battery->status),\n\t\t\t\tbattery->cable_type,\n\t\t\t\tbattery->wire_status,\n\t\t\t\tbattery->muic_cable_type,\n\t\t\t\tbattery->current_event,\n\t\t\t\tbattery->misc_event\n\t\t\t\t);\n\t} else if (usb_status == USB_CURRENT_CLEAR) {\n\t\tsec_bat_set_current_event(battery, 0, SEC_BAT_CURRENT_EVENT_USB_STATE);\n\t\tsec_vote(battery->chgen_vote, VOTER_SUSPEND, false, 0);\n\t\tsec_vote(battery->fcc_vote, VOTER_USB_100MA, false, 0);\n\t\tsec_vote(battery->input_vote, VOTER_USB_100MA, false, 0);\n\t}\n\n\tif (usb_status != USB_CURRENT_SUSPENDED)"
+  },
+  "fedora": {
+    "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5714_battery.c",
+    "sha256": "5524318027f538a436dade984a5a68c641390424c76d1a362566a59a6b696bef",
+    "first_line": 350,
+    "last_line": 435,
+    "excerpt": "\tunsigned int input_ma, fast_ma;\n\tunsigned int typec_mv, typec_ma;\n\tenum sm5714_charge_thermal_state thermal_state;\n\tint usb_type;\n\tint temp;\n\tint ret;\n\n\tmutex_lock(&sm->chg_lock);\n\tif (READ_ONCE(sm->otg_active)) {\n\t\tret = -EBUSY;\n\t\tgoto out_unlock;\n\t}\n\n\ttypec_mv = sm->typec_mv;\n\ttypec_ma = sm->typec_ma;\n\tusb_type = sm5714_get_usb_type(sm);\n\tif (usb_type < 0) {\n\t\tret = usb_type;\n\t\tgoto out_unlock;\n\t}\n\n\tthermal_state = sm->thermal_state;\n\tif (!sm5714_get_temp(sm, &temp)) {\n\t\tthermal_state = sm5714_charge_thermal_state(sm, temp);\n\t\tsm->thermal_state = thermal_state;\n\t}\n\n\tif (thermal_state == SM5714_THERMAL_STOP) {\n\t\tret = sm5714_chg_update_bits(sm, SM5714_CHG_REG_CNTL1,\n\t\t\t\t\t     SM5714_CHG_CNTL1_ENQ4FET, 0);\n\t\tif (!ret)\n\t\t\tdev_warn(sm->dev,\n\t\t\t\t \"charging suspended at battery temperature %d.%d C\\n\",\n\t\t\t\t temp / 10, abs(temp % 10));\n\t\tgoto out_unlock;\n\t}\n\n\tif (typec_mv >= 5000 && typec_ma >= 500) {\n\t\t/*\n\t\t * Stock board data allows 3 A input, 3150 mA battery current and\n\t\t * 9 V on the switching charger.  Stock firmware only ever drew\n\t\t * 15 W of that (9 V / 1.66 A) and left the rest of a 45 W adapter\n\t\t * unused; with fast charging on the tablet takes the board's whole\n\t\t * budget, and the sink PDOs advertise 9 V / 3 A so the contract can\n\t\t * actually grant it.\n\t\t *\n\t\t * This is an input ceiling, not a demand: the pack is limited by\n\t\t * fast_ma below, so the extra headroom can only ever feed the\n\t\t * system.  A Type-C Rp=3 A fallback may still use 5 V / 3 A.\n\t\t */\n\t\tif (sm->fast_charge) {\n\t\t\tinput_ma = min(typec_ma, 3000U);\n\t\t\tfast_ma = 3150;\n\t\t} else {\n\t\t\tinput_ma = min(typec_ma,\n\t\t\t\t       typec_mv > 5000 ? 1660U : 3000U);\n\t\t\tfast_ma = 2800;\n\t\t}\n\n\t} else switch (usb_type) {\n\tcase POWER_SUPPLY_USB_TYPE_DCP:\n\t\tinput_ma = 1800;\n\t\t/* 2100 mA maps to the stock bootloader's CHGCNTL2=0x86. */\n\t\tfast_ma = 2100;\n\t\tbreak;\n\tcase POWER_SUPPLY_USB_TYPE_CDP:\n\t\tinput_ma = 1500;\n\t\tfast_ma = 1500;\n\t\tbreak;\n\tcase POWER_SUPPLY_USB_TYPE_SDP:\n\tdefault:\n\t\t/* Unknown sources must never be treated as high-current ports. */\n\t\tinput_ma = 500;\n\t\tfast_ma = 500;\n\t\tbreak;\n\t}\n\n\tif (thermal_state == SM5714_THERMAL_REDUCED) {\n\t\t/*\n\t\t * Keep the fixed-PD input budget available: the panel/GPU can\n\t\t * consume most of a 9 W cap by themselves.  The stock switching\n\t\t * charger uses 2.1 A battery current on this board, so use that\n\t\t * well-tested value in the warm band and reserve the hard cutoff\n\t\t * for 50 C.\n\t\t */\n\t\tfast_ma = min(fast_ma, 2100U);"
+  },
+  "mainline": {
+    "path": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/drivers/usb/typec/tcpm/tcpm.c",
+    "sha256": "3bbadbb3089cea167c680ca83b1599762821738c0e5134654ef16c4f5ca31003",
+    "first_line": 1238,
+    "last_line": 1276,
+    "excerpt": "static u32 tcpm_get_current_limit(struct tcpm_port *port)\n{\n\tenum typec_cc_status cc;\n\tu32 limit;\n\n\tcc = port->polarity ? port->cc2 : port->cc1;\n\tswitch (cc) {\n\tcase TYPEC_CC_RP_1_5:\n\t\tlimit = 1500;\n\t\tbreak;\n\tcase TYPEC_CC_RP_3_0:\n\t\tlimit = 3000;\n\t\tbreak;\n\tcase TYPEC_CC_RP_DEF:\n\tdefault:\n\t\tif (port->tcpc->get_current_limit)\n\t\t\tlimit = port->tcpc->get_current_limit(port->tcpc);\n\t\telse\n\t\t\tlimit = 0;\n\t\tbreak;\n\t}\n\n\treturn limit;\n}\n\nstatic int tcpm_set_current_limit(struct tcpm_port *port, u32 max_ma, u32 mv)\n{\n\tint ret = -EOPNOTSUPP;\n\n\ttcpm_log(port, \"Setting voltage/current limit %u mV %u mA\", mv, max_ma);\n\n\tport->supply_voltage = mv;\n\tport->current_limit = max_ma;\n\tpower_supply_changed(port->psy);\n\n\tif (port->tcpc->set_current_limit)\n\t\tret = port->tcpc->set_current_limit(port->tcpc, max_ma, mv);\n\n\treturn ret;"
+  },
+  "Test307": {
+    "path": "reference/boot-tests/test-307-low-battery-charge-state/kernel-json.txt",
+    "sha256": "5c30731cb939c0a32fa2ee5b59ba0251f6100a3c2f51573c4e480c1aaf5d85a1",
+    "selected_messages": [
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "170789",
+        "MESSAGE": "sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)"
+      },
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "175878",
+        "MESSAGE": "sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)"
+      },
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "1515630",
+        "MESSAGE": "sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)"
+      },
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "1520775",
+        "MESSAGE": "sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery"
+      },
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "1979544",
+        "MESSAGE": "sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery"
+      },
+      {
+        "_BOOT_ID": "fd198d7c3c8940a591724a2f50ea0a34",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "1979553",
+        "MESSAGE": "sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 1800 mA (not measured VBUS)"
+      }
+    ],
+    "scope": "Historical logical TCPM budget/configuration, not current PC capability or physical current/power proof."
+  }
+}

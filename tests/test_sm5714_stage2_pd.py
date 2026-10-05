@@ -105,8 +105,9 @@ class Stage2ChargeTests(unittest.TestCase):
         # Same real configure_charging fixture as Stage1; its old checks remain.
         safety.ChargeSafetyTests.setUpClass.__func__(cls)
 
-    def charge(self, mv=9000, ma=3000, enabled=1, suspended=0, temp=250, mode=0):
-        result = subprocess.run([str(self.binary), str(mode), "4", str(temp),
+    def charge(self, mv=9000, ma=3000, enabled=1, suspended=0, temp=250, mode=0,
+               usb_type=4):
+        result = subprocess.run([str(self.binary), str(mode), str(usb_type), str(temp),
                                  str(mv), str(ma), str(enabled), str(suspended)],
                                 check=True, capture_output=True, text=True)
         return list(map(int, result.stdout.split()))
@@ -146,6 +147,57 @@ class Stage2ChargeTests(unittest.TestCase):
         for mode in (1, 2, 3, 4, 5, 6, 8):
             self.assertEqual(self.charge(mode=mode)[1] & 8, 0)
 
+    def test_5v_grant_supersedes_sdp_unknown_and_cdp_current_clamps(self):
+        for usb_type in (0, 1, 3):
+            for ma in (900, 1500, 1800, 3000):
+                with self.subTest(usb_type=usb_type, ma=ma):
+                    r = self.charge(mv=5000, ma=ma, usb_type=usb_type)
+                    target = min(ma, 1800)
+                    self.assertEqual(r[0], 0)
+                    self.assertEqual(r[1] & 8, 8)
+                    self.assertEqual(100 + (r[2] & 0x7f) * 25, target)
+                    # CDP's existing1500mA pack target need not decrease.
+                    fast = max(target, 1500 if usb_type == 3 else 500)
+                    self.assertEqual(r[3], 7 + (fast * 1000 - 109375) // 15625)
+                    self.assertEqual(r[4], 0xc0 | 0x2d)
+
+    def test_5v_default_and_lower_grants_do_not_authorize_higher_input(self):
+        for usb_type in (0, 1):
+            for ma in (100, 250, 500):
+                r = self.charge(mv=5000, ma=ma, usb_type=usb_type)
+                self.assertEqual(100 + (r[2] & 0x7f) * 25, ma)
+                self.assertEqual(r[3], 32)
+            for ma in (0, 55, 99):
+                r = self.charge(mv=5000, ma=ma, usb_type=usb_type)
+                self.assertEqual(r[1] & 8, 0)
+                self.assertEqual(r[2] & 0x7f, 0)
+
+    def test_5v_input_encoding_rounds_down_and_never_exceeds_board_cap(self):
+        for ma in (501, 524, 901, 1499, 1799, 1801, 2147483647):
+            r = self.charge(mv=5000, ma=ma, usb_type=1)
+            target = min(ma, 1800)
+            self.assertEqual(r[0], 0)
+            self.assertEqual(r[2], 0x80 | ((target - 100) // 25))
+            actual_fast_ua = 109375 + (r[3] - 7) * 15625
+            self.assertLessEqual(actual_fast_ua, target * 1000)
+
+    def test_5v_high_grant_preserves_dcp_and_thermal_caps(self):
+        r = self.charge(mv=5000, usb_type=2)
+        self.assertEqual(r[2], 0x80 | 68)
+        self.assertEqual(r[3], 0x86)
+        for temp in (100, 179, 420, 499):
+            r = self.charge(mv=5000, usb_type=1, temp=temp)
+            self.assertEqual(r[2] & 0x7f, 16)
+            self.assertEqual(r[3], 32)
+
+    def test_5v_high_grant_still_fails_closed(self):
+        for mode in (1, 2, 3, 4, 5, 6, 7, 8):
+            self.assertEqual(self.charge(mv=5000, usb_type=1, mode=mode)[1] & 8, 0)
+        for temp in (99, 500, 650):
+            self.assertEqual(self.charge(mv=5000, usb_type=1, temp=temp)[1] & 8, 0)
+        self.assertEqual(self.charge(mv=5000, usb_type=1, enabled=0)[1] & 8, 0)
+        self.assertEqual(self.charge(mv=5000, usb_type=1, suspended=1)[1] & 8, 0)
+
 
 class Stage2CompanionTests(unittest.TestCase):
     @classmethod
@@ -173,6 +225,7 @@ int main(int argc, char **argv) {
  struct sm5714_battery sm={.float_uv=4440000};
  int op=atoi(argv[1]),mv=atoi(argv[2]),ma=atoi(argv[3]),r=0;
  type=POWER_SUPPLY_USB_TYPE_PD;
+ if(op>=8)type=POWER_SUPPLY_USB_TYPE_SDP;
  regs[0x13]=8; regs[0x1a]=0xc0;
  regs[0x15]=0x80|120;
  if(op!=5)sm5714_companion=&sm;
@@ -186,6 +239,16 @@ int main(int argc, char **argv) {
    if(op==1)r=sm5714_battery_set_typec_charge(false);
    if(op==3){sm5714_battery_typec_fault();r=sm5714_battery_set_typec_charge(true);}
    if(op==4)r=sm5714_battery_typec_claim();
+   if(op==9)r=sm5714_battery_set_pd_contract(5000,500);
+   if(op==10){
+     r=sm5714_battery_set_typec_charge(false);
+     if(r || (regs[0x13]&8) || sm.typec_ma || sm.typec_mv)return 3;
+     r=sm5714_battery_set_pd_contract(5000,500);
+     if(r || (regs[0x13]&8))return 4;
+     r=sm5714_battery_set_typec_charge(true);
+   }
+   if(op==11){sm5714_battery_typec_fault();r=sm5714_battery_set_typec_charge(true);}
+   if(op==12){sm.suspended=true;r=sm5714_battery_set_pd_contract(mv,ma);}
  }
  printf("%d %u %u %u %u %d\n",r,regs[0x13],regs[0x15],sm.typec_mv,
         sm.typec_ma,sm.typec_fault);
@@ -210,6 +273,24 @@ int main(int argc, char **argv) {
         self.assertEqual(r[0], 0)
         self.assertEqual(r[2] & 0x7f, 56)
         self.assertEqual(r[3:5], [9000, 3000])
+
+    def test_real_5v_companion_grant_and_downgrade(self):
+        r = self.run_companion(op=8, mv=5000, ma=3000)
+        self.assertEqual(r[0], 0)
+        self.assertEqual(r[2] & 0x7f, 68)
+        self.assertEqual(r[3:5], [5000, 3000])
+        for op in (9, 10):
+            r = self.run_companion(op=op, mv=5000, ma=3000)
+            self.assertEqual(r[0], 0)
+            self.assertEqual(r[1] & 8, 8)
+            self.assertEqual(r[2] & 0x7f, 16)
+            self.assertEqual(r[3:5], [5000, 500])
+
+    def test_5v_companion_fault_and_suspend_cannot_keep_high_input(self):
+        for op in (11, 12):
+            r = self.run_companion(op=op, mv=5000, ma=3000)
+            self.assertEqual(r[1] & 8, 0)
+            self.assertEqual(r[2] & 0x7f, 0)
 
     def test_invalid_voltage_latches_off(self):
         for mv in (6000, 9500, 12000, 15000, 20000):

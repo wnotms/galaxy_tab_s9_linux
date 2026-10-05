@@ -1,0 +1,22 @@
+{
+  "executed": true,
+  "modules": [
+    "test_sm5714_policy",
+    "test_sm5714_charge_safety",
+    "test_sm5714_stage2_pd",
+    "test_sm5714_switching_ownership",
+    "test_sm5714_program_recovery",
+    "test_sm5714_fixed_charge_regression"
+  ],
+  "tests_run": 109,
+  "seconds": 4.64553416200215,
+  "valid": false,
+  "failures": [
+    "test_sm5714_program_recovery.ProgramRecoveryTests.test_actual_same_attach_poller_calls_recovery",
+    "test_sm5714_program_recovery.ProgramRecoveryTests.test_test307_drift_restores_only_existing_sdp_limits_and_float"
+  ],
+  "errors": [],
+  "skips": [],
+  "full_executed": false,
+  "reason": "Only battery configure policy and shared actual-C fixture changed; exercise all fixture consumers, policy and fixed acceptance parser. No routing/integration changes."
+}
