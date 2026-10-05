@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+Test318 fresh NORMAL preflight passed after Test320: same8146a9cf accepted311,
+allfive partitions/exact181 modules, realpack22%/3.763V/31.3C, ordinaryPC500mA
+controls/float4440, passiveOFF, nativeADB/deviceNCM/authenticated Wi-Fi.11 and
+WindowsCode0/no43. Frozen source/profile/artifact/stage identities unchanged;
+no new build/full regression/Actions. Preflight evidence sealed before the one
+registered OFF timing candidate boot and unconditional exact311 restoration.
+No candidate deployment/result is claimed by this entry.
+
+
 2026-10-05 Test320 recovered USB with exactly one registered unchanged Wi-Fi
 normal reboot. New8146a9cf uniquely attributed, exact accepted311 config/notes
 and NORMALcmdline/lpcharge0. Native ADB shell25.783s; authenticated Wi-Fi at new
