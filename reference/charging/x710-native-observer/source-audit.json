@@ -1,0 +1,55 @@
+{
+  "new_functions": [
+    "x710_observer_now",
+    "x710_observer_current",
+    "x710_observer_bracket",
+    "x710_observer_source",
+    "x710_observer_same_source",
+    "x710_observer_same_pack",
+    "x710_observer_source_valid",
+    "x710_observer_pack_valid",
+    "x710_observer_collect",
+    "x710_observer_work",
+    "x710_charge_request_observation",
+    "x710_observer_pm",
+    "x710_observer_init"
+  ],
+  "native_read_providers": [
+    "sm5440_passive_request_fresh",
+    "sm5714_battery_read_pack",
+    "sm5714_pd_read_snapshot",
+    "sm5714_pd_read_owned_snapshot"
+  ],
+  "new_register_sequences": [],
+  "new_charging_writers": [],
+  "delegated_acquisition": "Existing native fresh ADC and pack providers; converter/register-address selection is unchanged, on explicit kernel request only.",
+  "source_lifecycle": "Native source/pack instance + generations + PDO/budget/lease equality across ADC acquisition; source errors zero output.",
+  "publication_lifecycle": "Frozen queued-job generation; timeout discards late result; single inflight; PM drains outside publication mutex; resume does not queue.",
+  "direct_charge_control_adapter_complete": false,
+  "PPS_requested": false,
+  "pump_ON": false,
+  "automatic_observation": false,
+  "software_ocp_verified": false,
+  "conversion_freshness_proven": false,
+  "calibration_verified": false,
+  "DTS_change": false,
+  "TCPM_core_change": false,
+  "DWC3_change": false,
+  "USB_gadget_adbd_rootfs_change": false,
+  "SM5714_hardware_driver_change": false,
+  "SM5440_hardware_driver_change": false,
+  "float_mv": 4440,
+  "fixed_limits_mv_ma": [
+    [
+      5000,
+      1800
+    ],
+    [
+      9000,
+      1500
+    ]
+  ],
+  "thermal_policy_unchanged": true,
+  "protected_source_count": 61,
+  "preserved_formal_artifact_count": 20
+}

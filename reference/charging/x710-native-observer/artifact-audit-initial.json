@@ -1,0 +1,1452 @@
+{
+  "valid": false,
+  "errors": [
+    "unexpected config difference",
+    "module code/data changed: kernel/drivers/block/zram/zram.ko",
+    "module code/data changed: kernel/drivers/bluetooth/btbcm.ko",
+    "module code/data changed: kernel/drivers/bluetooth/btqca.ko",
+    "module code/data changed: kernel/drivers/bluetooth/btsdio.ko",
+    "module code/data changed: kernel/drivers/bluetooth/hci_uart.ko",
+    "module code/data changed: kernel/drivers/clk/qcom/camcc-x1p42100.ko",
+    "module code/data changed: kernel/drivers/clk/qcom/gcc-x1e80100.ko",
+    "module code/data changed: kernel/drivers/clk/qcom/videocc-x1p42100.ko",
+    "module code/data changed: kernel/drivers/gpio/gpio-shared-proxy.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/a8293.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/af9033.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ascot2e.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/atbm8830.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/au8522_common.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/au8522_decoder.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/au8522_dig.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/bcm3510.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx22700.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx22702.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24110.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24113.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24116.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24117.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24120.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cx24123.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cxd2099.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cxd2820r.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cxd2841er.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib0070.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib0090.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib3000mb.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib3000mc.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib7000m.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib7000p.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib8000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dib9000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dibx000_common.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/drxd.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/drxk.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ds3000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/dvb-pll.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ec100.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/helene.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/horus3a.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/isl6405.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/isl6421.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/isl6423.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/itd1000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ix2505v.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/l64781.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lg2160.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lgdt3305.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lgdt330x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lgs8gl5.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lgs8gxx.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lnbh25.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lnbh29.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lnbp21.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/lnbp22.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/m88rs2000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mb86a16.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mb86a20s.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mn88443x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mn88472.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mn88473.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mt312.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mt352.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mxl5xx.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/mxl692.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/nxt200x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/nxt6000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/or51132.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/or51211.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/s5h1409.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/s5h1411.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/s5h1420.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/s5h1432.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/s921.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/si2165.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/si21xx.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/sp2.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/sp887x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stb0899.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stb6000.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stb6100.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0288.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0297.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0299.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0367.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0900.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv090x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv0910.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv6110.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv6110x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/stv6111.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tc90522.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda10021.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda10023.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda10048.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda1004x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda10071.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda10086.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda18271c2dd.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda665x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda8083.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda8261.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tda826x.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ts2020.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/tua6100.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ves1820.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/ves1x93.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/zd1301_demod.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/zl10036.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/zl10039.ko",
+    "module code/data changed: kernel/drivers/media/dvb-frontends/zl10353.ko",
+    "module code/data changed: kernel/drivers/media/spi/cxd2880-spi.ko",
+    "module code/data changed: kernel/drivers/media/tuners/e4000.ko",
+    "module code/data changed: kernel/drivers/media/tuners/fc0011.ko",
+    "module code/data changed: kernel/drivers/media/tuners/fc0012.ko",
+    "module code/data changed: kernel/drivers/media/tuners/fc0013.ko",
+    "module code/data changed: kernel/drivers/media/tuners/fc2580.ko",
+    "module code/data changed: kernel/drivers/media/tuners/it913x.ko",
+    "module code/data changed: kernel/drivers/media/tuners/m88rs6000t.ko",
+    "module code/data changed: kernel/drivers/media/tuners/max2165.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mc44s803.ko",
+    "module code/data changed: kernel/drivers/media/tuners/msi001.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mt2060.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mt2063.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mt20xx.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mt2131.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mt2266.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mxl301rf.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mxl5005s.ko",
+    "module code/data changed: kernel/drivers/media/tuners/mxl5007t.ko",
+    "module code/data changed: kernel/drivers/media/tuners/qm1d1b0004.ko",
+    "module code/data changed: kernel/drivers/media/tuners/qm1d1c0042.ko",
+    "module code/data changed: kernel/drivers/media/tuners/qt1010.ko",
+    "module code/data changed: kernel/drivers/media/tuners/r820t.ko",
+    "module code/data changed: kernel/drivers/media/tuners/si2157.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda18212.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda18218.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda18250.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda18271.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda827x.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda8290.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tda9887.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tea5761.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tea5767.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tua9001.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tuner-simple.ko",
+    "module code/data changed: kernel/drivers/media/tuners/tuner-types.ko",
+    "module code/data changed: kernel/drivers/media/tuners/xc2028.ko",
+    "module code/data changed: kernel/drivers/media/tuners/xc4000.ko",
+    "module code/data changed: kernel/drivers/media/tuners/xc5000.ko",
+    "module code/data changed: kernel/drivers/net/wireless/ath/ath.ko",
+    "module code/data changed: kernel/drivers/net/wireless/ath/ath11k/ath11k.ko",
+    "module code/data changed: kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko",
+    "module code/data changed: kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko",
+    "module code/data changed: kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko",
+    "module code/data changed: kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko",
+    "module code/data changed: kernel/mm/zsmalloc.ko",
+    "module code/data changed: kernel/net/bluetooth/bluetooth.ko",
+    "module code/data changed: kernel/net/mac80211/mac80211.ko",
+    "module code/data changed: kernel/net/qrtr/qrtr-mhi.ko",
+    "module code/data changed: kernel/net/wireless/cfg80211.ko",
+    "actual worker/native suppliers not linked"
+  ],
+  "profile_gate": {
+    "valid": true,
+    "errors": [],
+    "config_sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+    "required_y_count": 85,
+    "dcc_absent": true,
+    "config_delta": {
+      "CONFIG_CHARGER_SM5440_DIRECT": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "absent",
+        "y"
+      ]
+    },
+    "unexpected_delta": {},
+    "missing_expected_delta": {},
+    "profile": "sm5440-policy-offline",
+    "pump_activation_available": false
+  },
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ]
+    },
+    "Test303": {}
+  },
+  "DTB_diff": [],
+  "embedded_config_identical": true,
+  "compiled_sources": {
+    "x710-charge-observer.c": true,
+    "x710-charge-observer.h": true,
+    "x710-charging-policy.c": true,
+    "x710-charging-policy.h": true,
+    "x710-pd-session.c": true,
+    "sm5440-direct.c": true,
+    "sm5440-hw.h": true,
+    "sm5714-battery.c": true,
+    "sm5714-stage2.h": true,
+    "tcpc/sm5714_usbpd.c": true,
+    "tcpc/sm5714-stage2.h": true,
+    "tcpc/sm5714-pd-policy.h": true
+  },
+  "protected_source_count": 61,
+  "preserved_formal_artifact_count": 20,
+  "module_file_count": 181,
+  "changed_module_sections": {
+    "kernel/drivers/block/zram/zram.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/bluetooth/btbcm.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/bluetooth/btqca.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/bluetooth/btsdio.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/bluetooth/hci_uart.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/clk/qcom/camcc-x1p42100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/clk/qcom/gcc-x1e80100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/clk/qcom/videocc-x1p42100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/gpio/gpio-shared-proxy.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/a8293.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/af9033.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ascot2e.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/atbm8830.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_common.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_decoder.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_dig.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/bcm3510.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22700.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22702.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24110.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24113.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24116.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24117.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24120.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24123.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2099.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2820r.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2841er.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0070.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0090.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mb.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mc.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000m.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000p.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib8000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib9000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dibx000_common.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxd.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxk.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ds3000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/dvb-pll.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ec100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/helene.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/horus3a.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6405.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6421.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6423.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/itd1000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ix2505v.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/l64781.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lg2160.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt3305.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt330x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gl5.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gxx.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh25.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh29.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp21.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp22.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/m88rs2000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a16.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a20s.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88443x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88472.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88473.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt312.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt352.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl5xx.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl692.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt200x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt6000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51132.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51211.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1409.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1411.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1420.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1432.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/s921.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/si2165.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/si21xx.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp2.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp887x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb0899.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0288.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0297.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0299.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0367.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0900.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv090x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0910.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6111.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tc90522.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10021.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10023.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10048.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda1004x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10071.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10086.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda18271c2dd.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda665x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8083.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8261.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda826x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ts2020.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/tua6100.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1820.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1x93.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/zd1301_demod.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10036.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10039.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10353.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/spi/cxd2880-spi.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/e4000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/fc0011.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/fc0012.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/fc0013.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/fc2580.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/it913x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/m88rs6000t.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/max2165.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mc44s803.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/msi001.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mt2060.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mt2063.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mt20xx.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mt2131.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mt2266.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mxl301rf.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mxl5005s.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/mxl5007t.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/qm1d1b0004.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/qm1d1c0042.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/qt1010.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/r820t.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/si2157.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda18212.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda18218.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda18250.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda18271.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda827x.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda8290.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tda9887.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tea5761.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tea5767.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tua9001.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tuner-simple.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/tuner-types.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/xc2028.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/xc4000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/media/tuners/xc5000.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/net/wireless/ath/ath.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/mm/zsmalloc.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/net/bluetooth/bluetooth.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/net/mac80211/mac80211.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/net/qrtr/qrtr-mhi.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ],
+    "kernel/net/wireless/cfg80211.ko": [
+      ".BTF",
+      ".debug_str",
+      ".note.gnu.build-id",
+      ".rela.debug_info",
+      ".symtab"
+    ]
+  },
+  "changed_builtin_metadata": [
+    "modules.builtin",
+    "modules.builtin.bin",
+    "modules.builtin.modinfo"
+  ],
+  "linked": {
+    "x710_charge_request_observation": true,
+    "x710_observer_work": true,
+    "x710_observer_collect": false,
+    "x710_observer_pm": true,
+    "sm5714_battery_read_pack": true,
+    "sm5714_pd_read_snapshot": true,
+    "sm5714_pd_read_owned_snapshot": true,
+    "sm5440_passive_request_fresh": true
+  },
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-native-observer/Image.gz",
+      "bytes": 22151216,
+      "sha256": "6a739937c5d7d48c16d9998e7b78f55c226e7399b40392edde0c74424268beb6"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-native-observer/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-native-observer/config",
+      "bytes": 243265,
+      "sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-native-observer/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "a2f815dfe176e7b2c19d2ffdef8a2f5a693fc2f84cc848d44e624ccefbb18c95"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-native-observer/modules-x710.tar.gz",
+      "bytes": 47331190,
+      "sha256": "f3c12b0911672966abdeb22611d3de50c9c8f6908261efd2da88868fb681163f"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-native-observer/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "upstream_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "source_inputs": "inputs-before.json/inputs-final.json",
+  "device_operations": [],
+  "software_ocp_verified": false,
+  "conversion_freshness_proven": false,
+  "pump_activation_available": false,
+  "physical_executed": false
+}

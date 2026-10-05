@@ -1,0 +1,12 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: link native X710 charge observation worker
+
+One explicitly requested native observation, no automatic charging activation.
+Reuse the existing default-disabled transaction profile without adding a symbol.
+
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -142,2 +142,3 @@
+ obj-$(CONFIG_SM5440_ADC_TIMING_TEST) += sm5440-timing.o
+ obj-$(CONFIG_SM5440_ADC_RAW_TEST) += sm5440-timing.o
++obj-$(CONFIG_X710_CHARGING_POLICY) += x710-charge-observer.o

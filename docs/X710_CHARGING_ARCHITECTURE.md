@@ -52,6 +52,7 @@ supersede the original per-stage directory recommendation.
 | Ordinary fixed charging | Stage1/Stage2 hardware evidence; Test308 adds exact programming witness and one bounded recovery | Test311 ordinary PC acceptance passed without observed drift; forced/natural recovery branch and fixed9V recovery are separate scopes |
 | TCPM PPS protocol adapter | Test302 actual native TCPM power_supply operations and source-bound ownership, compiled and host-tested | No successful physical PPS roundtrip is claimed |
 | Pump-OFF PPS consumer | Test303 real battery lease/provider integration and PM cancellation/drain, compiled and host-tested | Genuine physical acquisition must satisfy its100ms admission; slow diagnostic observations cannot substitute |
+| Native observation worker | `x710-charge-observer.c` links real source/pack/OFF-fresh providers through one explicitly requested ordered worker; generations, timeout and PM drain are exercised by threaded host tests | Does not complete the live control adapter or grant ADC/calibration/OCP acceptance; no automatic requests or physical deployment |
 | SM5440 passive transport | Readback, ADC decoding, OFF checks and passive physical observations | Test313 close single voltage pair but live REVBLK/nonzero OFF IBUS: STOP; complete operating context, independent calibration and physical freshness remain unresolved |
 | Direct transaction engine | Actual C entry/refresh/retarget/monitor/fallback/PM functions exercised with faulting host adapters | No live pump-ON actuator, approved active protection or physical cutoff acceptance |
 
@@ -97,6 +98,14 @@ connection epoch. SM5440 io_lock is never held across negotiation/settle waits
 or calls into battery/TCPM. No cross-device locks may nest in reverse order.
 Short baseline Q4 ramp(usleep_range, at most a few ms) is preserved; new
 hundreds-of-ms waits must not extend that lock hold.
+
+The native observation worker already implements this acquisition-side pattern:
+publication mutex only around request/result state, native provider operations
+outside that mutex, single in-flight request, late-publication invalidation and
+PM drain. It does not call the transaction engine or actuator. See
+[X710_NATIVE_CHARGE_OBSERVER.md](X710_NATIVE_CHARGE_OBSERVER.md). Completion of
+the actual control worker and its transactional fault/PM/fixed restoration is
+still required; this data worker must not be reported as direct-charge readiness.
 
 Source cache and attach epoch are protected by the TCPC mutex. Init, RX-off,
 hard/soft reset, detach, fault and unbind invalidate capabilities. Reset/detach

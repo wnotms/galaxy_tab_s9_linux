@@ -1,0 +1,79 @@
+{
+  "verdict": "OFFLINE_NATIVE_OBSERVATION_WORKER_QUALIFIED",
+  "full_charging_goal": "NOT READY",
+  "goal_progress": "Actual native data acquisition worker and providers are linked; actual control/actuator/monitor/fallback integration and physical safety qualification remain.",
+  "build": {
+    "returncode": 0,
+    "seconds": 168.27638565800044,
+    "started_utc": "2026-10-05T06:36:05.798612+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-policy-offline",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-native-observer"
+    },
+    "reason": "Final native-worker build after ARM64 current macro collision fix. Existing303 policy cache retained; no clean/new full tree."
+  },
+  "affected_tests": {
+    "executed": true,
+    "count": 189,
+    "seconds": 4.366779542999211,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "new_observer_tests": 15,
+    "kernel_current_macro_mocked": true
+  },
+  "static": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/x710-charge-observer.o"
+    ],
+    "returncode": 0,
+    "seconds": 7.724139654999817
+  },
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ]
+    },
+    "Test303": {}
+  },
+  "DTB_diff": [],
+  "module_file_count": 181,
+  "module_runtime_code_data_unchanged": true,
+  "compiled_native_providers": [
+    "sm5440_passive_request_fresh",
+    "sm5714_battery_read_pack",
+    "sm5714_pd_read_snapshot",
+    "sm5714_pd_read_owned_snapshot"
+  ],
+  "collector_inlined": true,
+  "physical_executed": false,
+  "device_operations": [],
+  "PPS": false,
+  "pump_ON": false,
+  "new_full_host_run": false,
+  "prior_full_host_run": "NOT PASS; historical retired artifact failures remain recorded in sm5440-continuous-raw. No test deleted/weakened/skipped here.",
+  "github_actions": false,
+  "main_merge": false
+}

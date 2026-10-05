@@ -1,0 +1,151 @@
+{
+  "created_utc": "2026-10-05T06:09:47.736967+00:00",
+  "base_revision": "3ac8c497eeb015b6dd2ca388c856349a51d409c5",
+  "protected_sources": {
+    "kernel/drivers/x710-charging-policy.h": "122ba6a79fc40e274c26d0e3d60f88a30e428173e0ad071055c443734eafac31",
+    "kernel/drivers/samsung-gts9wifi-sec-log.c": "f2e436b0ae148a0da921eff050450b0c68a84525ffc8911a9d2ece95bbe7264d",
+    "kernel/drivers/sm5440-conversion.c": "295512234e4bf060c1fa2027fe670d08c2237bbe2ebd99845221a8a4f0a1be63",
+    "kernel/drivers/x710-pd-session.h": "a151ac44f7630addf4c78a35123b995b76956a594f1569d5b6c26dab8a599929",
+    "kernel/drivers/sm5440-timing.h": "08e5a70ad315ff8bd5d0317bd09ca7ef81c852d9f2e44d2b5afb97c0d1128606",
+    "kernel/drivers/sm5440-supervisor.c": "902ee2fd2e0d559d2976fb58c33480e34807390a64d8c6939bf0889e3ed0c42a",
+    "kernel/drivers/sm5440-supervisor.h": "11fb0e9a86669d7a46b1c195af84ee397f8bda7c8fd08246e697b73232377e52",
+    "kernel/drivers/sm5714-stage2.h": "15dabde641ffae6c945502b37d68fc9a3125347cfcf91364b59d1ac3b65181c0",
+    "kernel/drivers/keyboard-samsung-pogo.c": "eff8ca0667b3f1dbccee2a8e253ae6dc7022e01db904122d112bb54a92a7c49c",
+    "kernel/drivers/sm5714-pd-policy.h": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d",
+    "kernel/drivers/sm5440-control.c": "7a8ddae7954d53b67f448edff24943f569a2ae93dfd84563d004a11482c0523d",
+    "kernel/drivers/sm5440-watchdog.c": "c639ac1dd0c36bb5fa90facbd60ed9ae5a1c1b0b1eae447c4f5aa5f0a34370cb",
+    "kernel/drivers/sm5440-actuator.c": "53764c296790aca8c2272602804bfd54884cd1b20c680e72051e7de2b9b6451f",
+    "kernel/drivers/panel-samsung-ana38407.c": "c4ed00544ec80f941f2c23cc1c447327db4a6c7ed6d5e9b5f08e97fd4389a54d",
+    "kernel/drivers/sm5440-watchdog.h": "135684956db32918549d1c81e4c543271021da2656b7f1024741f66ddc4ce1f9",
+    "kernel/drivers/sm5440-control.h": "0fa7c25d7d9b2ac9401061050c02bc0a52d02554480ed21ad5602b8906c966e0",
+    "kernel/drivers/x710-charging-policy.c": "758afdf318809cdb39baf1f0d1f70b58ecf718a620543acba17e2c4793e0e162",
+    "kernel/drivers/sm5440-direct.c": "bdd17785cf2279e3434a3a5977573d29dac86e493914454646b22e690b7d501e",
+    "kernel/drivers/sm5714_usbpd.c": "b755bc431653cd80538ad0d0943711170c3eaeb2ec200c6641299e84b1a59ed6",
+    "kernel/drivers/x710-pd-session.c": "8c32ca5ee5c3607dc89f5e8624845973dd4fa91ce16e5c25f34c7bcf4dcedeb6",
+    "kernel/drivers/sm5440-actuator.h": "fdad3bd0780934982872affab520fe6deb3f5fee0237edc9a760326e8e792d9a",
+    "kernel/drivers/sm5440-timing.c": "83371d420be9c30337053fdd49ac0a23a7eb2f0989a62a157ab119be2a755105",
+    "kernel/drivers/sm5440-conversion.h": "05eb71daa5273af257c4e754e867d93f033770f3a78c287c48efc2a51bea5a77",
+    "kernel/drivers/sm5714-battery.c": "cb7de5057add01d38ee5fae255be66601fa32fa8edc82d4d82aac42298084ed0",
+    "kernel/drivers/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fw.c": "9e7fd56fbbe7cb545eae2b02984d5cdc667652774c7c00b23733c9f80a89f3db",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_core_v3.c": "d53bdc323109260505e0efe1b711ecdc3a98c62213ab99777c5e3dbc1b617889",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_v3.h": "d2c5d8a0213568eb8c5a86fa2110392af5e95b0e69a53a373f1942f827e5ef6d",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_i2c_v3.c": "00bf386d7597bc9c2d9b4cf084b360a0037fcbed12c4316ec7e1aa9b0f0730f7",
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_compat.h": "e24036e93c7064bfe165572d38593a17b30cf3e947c31bb59f3b5d366585b73a",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_cmd_v3.c": "6d903314d6d0fe971baede59456435c34d3b3a5eed780fd8c37a93a617d9409f",
+    "kernel/drivers/input/samsung-pogo/samsung_pogo_stubs.c": "ed268402cfb15635fc391d403aeb6bef920e3809af3abddadca480dd5ca39e58",
+    "kernel/drivers/input/samsung-pogo/Kconfig": "fe4610ffa6cfb54cf9ab368bc9aa9e72a1caa21ac0f04866b0cb6c6fb902e1d2",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_interrupt_v3.c": "25254823d32f8fcb88a1d4130d6b58b38ef9f4dc29247338a0298a23df1d92e0",
+    "kernel/drivers/input/samsung-pogo/Makefile": "ca2ba57a67762d28598fd08595257e3ec2f7da3df2bc0b7c5f498e575da8fceb",
+    "kernel/drivers/input/samsung-pogo/README.md": "e60dfd78c1142e4737b8e00781047d655211847a997ce377463ccfb0d74e1473",
+    "kernel/drivers/input/samsung-pogo/pogo_notifier_v3.h": "8c2f03a5b81561007fe854a13b2333eddc556d2ad5a903592d557b3932180b07",
+    "kernel/drivers/input/samsung-pogo/stm32_pogo_fn_v3.c": "a6e2e5a7adf743ebdac40254b14bc13ccf170707f9abb96eec984385bd766040",
+    "kernel/config/gts9wifi-csd-lock.fragment": "cc0d60e35226093f807667daf65ebff7ed3f277d417760d2ff11532a84e96194",
+    "kernel/config/gts9wifi-sm5440-passive.fragment": "a4a810aa69008ccc82e4ff92a70e37b704df2a9d723fd128a4b63c07a36078c8",
+    "kernel/config/gts9wifi-pnmi-csd-lock.fragment": "6beba5bc56208f05275e744ba6fe8ff12763e10724340dc5e9596cbe71e57743",
+    "kernel/config/gts9wifi-sm5440-adc-timing.fragment": "17da9cec06fd658960b7b3539115e9f0c371ee2a4d7dadd1f5306105d226b771",
+    "kernel/config/gts9wifi-sm5440-adc-raw.fragment": "b8ac0f53cc39ed664359dace2b2d0ea4777b03541d0f3bbc610e795e62a7906c",
+    "kernel/config/gts9wifi-mainline.fragment": "bb2f91abb9d643ba82493be997db8df44b73af6aa460b3c2233f9ecfda872636",
+    "kernel/config/gts9wifi-sm5440-adc-condition.fragment": "beaef9d1a2e288fd5ade51f0cd849aaea15c1da67107d9890d3681ac0c30863b",
+    "kernel/config/gts9wifi-sm5440-policy-offline.fragment": "6ddfc2b8c644e3a4b6e0b9ea1ad3f90558eb2f6e21de064073ac16eed7213811",
+    "kernel/config/gts9wifi-pnmi.fragment": "62b6af9406097645ba3f06b235bf471e736502d2df3b54bedbbddf531bfca62d",
+    "kernel/dts/sm8550-samsung-gts9wifi.dts": "20db96df3867501432bcfcbbdbd484918572d62f17990d4915f92a420617c45a",
+    "kernel/dts/charging/sm8550-samsung-gts9wifi-sm5440-passive.dts": "3bb73ca047d7eae76136e10f7b0bc38a084c8650a5264e242838832e7b900a14",
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-cluster-idle.dts": "60f1c453d5ece3cebec1ea773d880489d107244b0f24a17145aa9a237d75a569",
+    "kernel/dts/diagnostic/sm8550-samsung-gts9wifi-no-llcc-off.dts": "577ecc0306674f27c85de97eaf790954a007a380f83616ec72090f6cc8b7554c",
+    "kernel/bindings/power/supply/siliconmitus,sm5440.yaml": "b7ac81d6dcf35a5d350abf7774fdceaa288e4de3c3b1ef9fdee4845efbd12923",
+    "userspace/adbd/build-in-container.sh": "946d98382e34d75077ce25156ff5ede4dd861324adbd4206510c2465ef30385b",
+    "userspace/adbd/NOTICE": "9e097c628332c9f60d958f4477b5a301c95e7342c0afbc513c61b8b6145f4c40",
+    "userspace/adbd/Dockerfile": "3be2bc88edf19a28209a895ae996e94f9850799889a726a02afda1540af2da0a",
+    "userspace/adbd/README.md": "a6f2c1813ecad0719265368cb471ff2d607eec713611670125f157a2229cfc53",
+    "userspace/adbd/0001-linux-functionfs-reconnect.patch": "4b1ed2bcd3f44e5d268a9d9670551225a94543345230c9571e9d79daefaffd50",
+    "userspace/adbd/source-baseline/usb_ffs.cpp": "8d12d7684250b13f159b451815ffe869644919358319f66cf79ebbe164a8fd75",
+    "userspace/adbd/source-baseline/SHA256.json": "7a5324c93606de2acf3ea28bd4359a3716ad808253ad0a8046305c755b44ffdb",
+    "userspace/adbd/source-baseline/usb.cpp": "995e6b1d40e7ec973da012fee1ead88fc5dea3ad3c630c2a5efd0453443cd3a3",
+    "userspace/adbd/source-baseline/android-base/scopeguard.h": "2c9643b3273a112de5aa160bf15f3306d672973bb9bbb74e5439563d08581fbe"
+  },
+  "formal_artifacts": {
+    "out/kernel-x710-303-policy/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-303-policy/modules-x710.tar.gz": {
+      "sha256": "8c55571da277f98cfc34db5241ba6f46bdf0d40a547ffa45a87974b1c88f3ae4",
+      "bytes": 47318714
+    },
+    "out/kernel-x710-303-policy/SHA256SUMS": {
+      "sha256": "5d492311069c74f51ac3e7b8d5e4f8d449b3494fc9fb0e7fabea228a6ac39f4b",
+      "bytes": 323
+    },
+    "out/kernel-x710-303-policy/kernel.release": {
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "bytes": 25
+    },
+    "out/kernel-x710-303-policy/kernel-notes.bin": {
+      "sha256": "2272f70246c1a2bf4efe1935eed7309bdba52f93e4b4fc51759a5eefd68655cc",
+      "bytes": 84
+    },
+    "out/kernel-x710-303-policy/config": {
+      "sha256": "8dd8de24726ef8f185590066cfffdf03f42f2a7257fde96a2cfdbbdfa0788645",
+      "bytes": 243265
+    },
+    "out/kernel-x710-308-passive/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-308-passive/modules-x710.tar.gz": {
+      "sha256": "3e106de81d6f1399fa6e355d35175f857910bf252535a1c8ca9047c21b4c4804",
+      "bytes": 47318437
+    },
+    "out/kernel-x710-308-passive/SHA256SUMS": {
+      "sha256": "21271fac92c3780ea586b342b143fc879917e605705a7bfe570d3854620df551",
+      "bytes": 323
+    },
+    "out/kernel-x710-308-passive/kernel.release": {
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "bytes": 25
+    },
+    "out/kernel-x710-308-passive/kernel-notes.bin": {
+      "sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6",
+      "bytes": 84
+    },
+    "out/kernel-x710-308-passive/config": {
+      "sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89",
+      "bytes": 243322
+    },
+    "out/kernel-x710-308-passive/Image.gz": {
+      "sha256": "f2eed85c27b6163a219fe107a848a6c622e01f1b87d2ba7142e9443f3e8a0129",
+      "bytes": 22138508
+    },
+    "out/kernel-x710-continuous-raw/sm8550-samsung-gts9wifi.dtb": {
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "bytes": 176935
+    },
+    "out/kernel-x710-continuous-raw/modules-x710.tar.gz": {
+      "sha256": "53c97a9db556f1c0b247525e06e62e97064558bd40ea8c780ee1269f7833d6ed",
+      "bytes": 47318576
+    },
+    "out/kernel-x710-continuous-raw/SHA256SUMS": {
+      "sha256": "3c4bcba2986b9ac7a98e35f8d024014663c7b24313c582f8c499f6db5bc08871",
+      "bytes": 323
+    },
+    "out/kernel-x710-continuous-raw/kernel.release": {
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "bytes": 25
+    },
+    "out/kernel-x710-continuous-raw/kernel-notes.bin": {
+      "sha256": "1c8562ca607f54e62845272daa65ed624091914286bbd2a49a9e70d951d68cd7",
+      "bytes": 84
+    },
+    "out/kernel-x710-continuous-raw/config": {
+      "sha256": "aa906b6250752708f7ad7b9582e6227d83e6c7cc3bd7e94a93a7675a6c922e77",
+      "bytes": 243394
+    },
+    "out/kernel-x710-continuous-raw/Image.gz": {
+      "sha256": "7a06d25db27cb22b2cb061beeb0f0e0fcb2af4eee66ad12adf9937fb527730b9",
+      "bytes": 22139635
+    }
+  },
+  "build_reuse": ".work/build/linux-out-x710-303-policy",
+  "old_provider_after_reuse": "No longer Test303 source/provider; original formal artifacts retained. New native-observer qualification required."
+}

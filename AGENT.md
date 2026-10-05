@@ -98,6 +98,27 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native charging observation worker now actually linked under existing
+X710_CHARGING_POLICY profile: native source/pack/OFFfresh ADC bracket, exact
+instance/generation/PDO/budget/lease consistency, queued-token cancellation,
+500ms waiter timeout without another ADC, PM drain/resume-no-restart. No automatic
+sampling/lease/PPS/ON/charging controls. Final189 affected PASS4.367s/0skip
+incl15 threaded actual-C observer tests; ARM64 PASS168.276s after correcting
+kernel current macro collision and adding that macro to fixture. W1/sparsePASS,
+knownupstreamvDSOwarning only; checkpatch0. Exact embeddedconfig/Test303 nodiff;
+vsaccepted311 only POLICYn->y/CONDITIONn->absent(!POLICY dependency). DTBidentical,
+181paired files;167module BTF/build-ID/DWARF directory offsets differ, all other
+runtime bytes/shape/relocations/nondebug symbols unchanged; collector inlining
+proved byDWARF + actualnative references. Protected61/formal20 preserved.
+Qualification reference/charging/x710-native-observer/, formalout/kernel-x710-native-observer/.
+Reused303named directory now new native-observer provider, not oldTest303; keep
+this incremental policy cache for actual unfinished integration. Original303/
+accepted311/RAW formal outputs retained. No device mutation/flash/reboot/Actions/
+newfullrun; previoushistoricalfullNOTPASS unchanged. Current accepted311 device
+fromTest321 unchanged. FullgoalNOTREADY: actualcontrol/actuator/monitor/fallback
+integration and physicalADC/current/cutoff/OCP/PPS/ON acceptance stillunfinished.
+
+
 2026-10-05 owner-confirmed PC USB reconnect endpoint passes a single read-only
 capture on same Test321 final ecaa3c64: accepted311 config/notes/normalcmdline,
 nativeADB shell, Windows composite/ADB/NCM Code0/Up, interface-bound NCM SSH
