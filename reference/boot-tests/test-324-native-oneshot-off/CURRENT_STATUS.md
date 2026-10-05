@@ -1,17 +1,23 @@
-# Test324 — installation completed; physical acquisition pending
+# Test324 — STOP_WIFI_EVIDENCE_UNAVAILABLE; matched restore pending
 
-Candidate ab30aff2 installed boot-only with181matching files through TWRP.
-Allfive post-write hashes match registered candidate; exact323 original181
-saved under `.gts9-test324-original`, original311 rollback remains independent.
-BCB cleared/root unmounted. Current device is TWRP (`R52X10045LT`), **not** an
-accepted candidate Debian boot; no automatic candidate reboot was sent.
+Owner reports the single fixed9V candidate boot reached Debian. The registered
+WiFi collector could not authenticate/read a shell within150s at the preflight
+address. A read-only subnet TCP22 discovery found no server; Windows neighbor
+94 refused TCP22 and its attempted address update was not authenticated. The
+original preflight address metadata was restored, and all errors are retained.
+No new boot identity, actual ADC transaction or kernel journal is yet collected;
+**do not infer CPU stall, ADC pass, calibration or stable charging from this**.
 
-Await owner PC->Lenovo USB-C2 switch in TWRP and one Reboot System for fixed9V
-boot. Then authenticated WiFi collects four native100ms READY transactions,
-15s endpoint, full journal/attribution, followed by unconditional exact323
-rollback after PC reconnect. No PPS/pump activation/current/protection change.
-Raw installation commands/readbacks retained; sample/calibration/OCP/current/
-cutoff/direct-charging acceptance are not claimed. Overall port NOT_READY.
+Stop recorded; no second candidate boot/rebind/replay or diagnostic trigger.
+Owner asked to unplug charger and reconnect PC without reboot to preserve this
+boot's ADC/kernel evidence, then restore exact accepted323 boot/181. Current
+runtime cannot be asserted from owner screen status alone. Persisted mutation
+state says rollback_required=true. If ADB/SSH still unavailable, manualTWRP is
+needed; no blind partition write. Device result and host-only connectivity issue
+will be classified only after evidence retrieval. Full port remains NOT_READY.
 
-Build/tests executed:false for this installation; unchanged ab30aff2 qualified
-candidate and nine registration/parser/lifecycle tests reused. No Actions.
+Installation allfive/181 verified, BCB cleared/root unmounted; accepted323
+original181 saved `.gts9-test324-original`, original311 retained independently.
+No PPS/pump activation/current/protection change authorized. Unchangedab30aff2
+build/139tests and nine parser/lifecycle tests reused; build/tests executed:false
+for this physical stage. No Actions. Raw requests/errors sealed in STAGE_SHA256.

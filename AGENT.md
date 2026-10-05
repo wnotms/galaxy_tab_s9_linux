@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test324 ownerreports fixed9V boot Debian, but authenticatedWiFi
+collector failed150s/registered address; boundedsubnetTCP22 foundnone. STOP,
+no candidatebootID/ADC/kernel yet; no CPUcause or ADC/chargingPASS inference.
+Owneraskedcharger->PC withoutreboot for originalboot evidence then exact323
+pairedrestore. Currentruntime unverified; rollback_requiredtrue .gts9-test324-
+original saved. No secondboot/rebind/PPS/ON or blindwrite; manualTWRP ifrescue
+unavailable. CURRENT_STATUS324/rawfirstfailure; unchangedqualifications reused,
+build/testsfalse. FullportNOTREADY.
+
+
 2026-10-05 Test324 candidate boot/181 installed, allfive readback verified,
 BCBcleared/rootunmounted; currentdeviceTWRP R52X10045LT awaiting ownerC2fixed9V
 boot, NOTaccepted Debian candidate. Exact323 original181saved .gts9-test324-original,

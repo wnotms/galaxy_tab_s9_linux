@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test324-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test324",
+    "root@10.139.153.94",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uname; uname -a; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@passive; cat /sys/class/power_supply/sm5440-passive/uevent; echo @@snapshot; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@network; ip -4 -o addr; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm || true; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi; echo @@host-key; cat /etc/ssh/ssh_host_ed25519_key.pub; echo @@tcpm; set -- /sys/class/power_supply/tcpm-source-psy-*/uevent; test \"$#\" = 1; cat \"$1\"; echo @@boot-end; cat /proc/sys/kernel/random/boot_id\necho @@pack-thermal\npack=\nfor z in /sys/class/thermal/thermal_zone*; do\n if test \"$(cat \"$z/type\")\" = sm5714-battery; then test -z \"$pack\"; pack=$z; fi\ndone\ntest -n \"$pack\"; cat \"$pack/type\" \"$pack/mode\" \"$pack/temp\"\necho @@source\ncat /sys/kernel/debug/sm5714-*/current-port\necho @@oneshot\ncat /sys/kernel/debug/sm5440-0-0063/oneshot\necho @@boot-end; cat /proc/sys/kernel/random/boot_id\n"
+  ],
+  "ended_utc": "2026-10-05T15:49:14.807799+00:00",
+  "started_utc": "2026-10-05T15:49:14.793121+00:00",
+  "status": 255
+}

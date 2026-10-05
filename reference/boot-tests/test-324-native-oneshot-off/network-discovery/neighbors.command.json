@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-NetNeighbor -AddressFamily IPv4 | Where-Object {$_.IPAddress -like '10.139.153.*'} | Select-Object IPAddress,LinkLayerAddress,State | ConvertTo-Json -Compress"
+  ],
+  "ended_utc": "2026-10-05T15:48:30.050393+00:00",
+  "started_utc": "2026-10-05T15:48:28.640954+00:00",
+  "status": 0
+}
