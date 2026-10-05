@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test321，窗口为 **Test312–Test321**；没有生成镜像的轮次仍占一轮。
+  编号为 Test322，窗口为 **Test313–Test322**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,21 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-05 ordinary PC candidate/Test322 registered, no physical execution yet:
+85419619 correction rebuilt in reused308 passive cache PASS89.513s;49passive
+PASS1.807s, previous109charging reused,14newgate/runnerPASS0.033s. Exact311DTB,
+onlyRAW/TIMING absent->n config entries;181paired runtime unchanged/BTFchanges,
+57protected/48formal frozen. Native controls absent/PPS/pumpclosed. Offline
+boot-only out/boot-bundle-x710-pc-ordinary, qualified out/kernel-x710-pc-ordinary.
+Owner charged/reconnected; actualADB9e6e4813 sameaccepted311 config/notes,
+49%3.877V30.4CGood,lpcharge1; TCPM5V1800 versusUSB500/net−517mA. WiFi10.139.153.35,
+SinkDevice/NCM/restoredADB. Pushed322 permits one unchanged normalreboot then
+fresh normalSOC>=20%/rescue/allfive181 admission, boot+paired181,60s observedPC
+program/netcurrent acceptance; first devicefailure restores311, no PPS/ADC/ON.
+Test311 original308 currentrollback attached to322 retention; never reuse308
+cacheasoldprovider. Current device still311 until newresults. FullportNOTREADY.
+
 
 2026-10-05 source-authorized fixed5V budget correction qualified offline:
 SM5714 ordinary configuration now gives existing TCPM5V>500mA authorization
