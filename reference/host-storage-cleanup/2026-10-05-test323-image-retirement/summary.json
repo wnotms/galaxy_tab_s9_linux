@@ -1,0 +1,36 @@
+{
+  "deleted": [
+    {
+      "path": "out/kernel-x710-312-adc-condition/Image.gz",
+      "sha256": "e8267126f275433496285dc3772626b2528a7d0c68ee5132475472c143d32a55",
+      "bytes": 22135441,
+      "witnesses": [
+        "reference/boot-tests/test-312-adc-condition-requalification/summary.json",
+        "reference/boot-tests/test-312-adc-condition-requalification/validation/artifact-audit.json",
+        "reference/boot-tests/test-313-adc-condition-comparison/PACKAGE.json"
+      ],
+      "reason": "312 source/313 use expired from314\u2013323 window; diagnostic reverted/closed, no current image consumer"
+    },
+    {
+      "path": "out/boot-bundle-x710-312-adc-condition/boot.img",
+      "sha256": "6359fb2f847beb4c7a2493f6b71b014ee6d228ff213d16f2ac3c1d64fe6ebea6",
+      "bytes": 100663296,
+      "witnesses": [
+        "reference/boot-tests/test-313-adc-condition-comparison/PACKAGE.json"
+      ],
+      "reason": "312 source/313 use expired from314\u2013323 window; diagnostic reverted/closed, no current image consumer"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test313/candidate-boot.img",
+      "sha256": "6359fb2f847beb4c7a2493f6b71b014ee6d228ff213d16f2ac3c1d64fe6ebea6",
+      "bytes": 100663296,
+      "witnesses": [
+        "reference/boot-tests/test-313-adc-condition-comparison/PACKAGE.json"
+      ],
+      "reason": "312 source/313 use expired from314\u2013323 window; diagnostic reverted/closed, no current image consumer"
+    }
+  ],
+  "bytes_removed": 223462033,
+  "historical_hashes_retained": true,
+  "archive_created": false
+}
