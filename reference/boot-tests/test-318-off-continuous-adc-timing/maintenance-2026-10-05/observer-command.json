@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "window_seconds": 1200,
+  "interval_seconds": 30,
+  "timeout_seconds": 8,
+  "physical_mutation": false,
+  "full_preflight": false
+}

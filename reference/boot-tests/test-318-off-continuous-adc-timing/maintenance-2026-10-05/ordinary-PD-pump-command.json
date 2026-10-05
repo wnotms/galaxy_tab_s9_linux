@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@source; cat /sys/kernel/debug/sm5714-*/current-port; echo @@pump; cat /sys/kernel/debug/sm5440-0-0063/snapshot; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "host_completed_epoch": 1791173973.6635103,
+  "returncode": 0
+}

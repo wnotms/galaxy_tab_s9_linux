@@ -1,0 +1,56 @@
+{
+  "previous": {
+    "returncode": 0,
+    "rows": 1107,
+    "boots": [
+      "dac3a61546f545fb995220227254b51a"
+    ],
+    "CPU_fault_candidates": [
+      {
+        "SYSLOG_FACILITY": "0",
+        "_RUNTIME_SCOPE": "system",
+        "__REALTIME_TIMESTAMP": "1790546289089128",
+        "SYSLOG_IDENTIFIER": "kernel",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "39364",
+        "MESSAGE": "ramoops: using 0x200000@0x880900000, ecc: 0",
+        "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+        "__SEQNUM": "882321",
+        "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+        "_HOSTNAME": "gts9",
+        "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=d7691;b=dac3a61546f545fb995220227254b51a;m=1b1d8f;t=65c7e0b83da68;x=e63719ccd820e609",
+        "_SOURCE_BOOTTIME_TIMESTAMP": "39364",
+        "_TRANSPORT": "kernel",
+        "__MONOTONIC_TIMESTAMP": "1777039",
+        "PRIORITY": "6",
+        "_BOOT_ID": "dac3a61546f545fb995220227254b51a"
+      }
+    ]
+  },
+  "current": {
+    "returncode": 0,
+    "rows": 1105,
+    "boots": [
+      "647d50c80fc94fb0bfea5006c519a255"
+    ],
+    "CPU_fault_candidates": [
+      {
+        "_BOOT_ID": "647d50c80fc94fb0bfea5006c519a255",
+        "__SEQNUM": "883823",
+        "_HOSTNAME": "gts9",
+        "SYSLOG_FACILITY": "0",
+        "_SOURCE_MONOTONIC_TIMESTAMP": "39364",
+        "SYSLOG_IDENTIFIER": "kernel",
+        "__MONOTONIC_TIMESTAMP": "1773761",
+        "_RUNTIME_SCOPE": "system",
+        "_SOURCE_BOOTTIME_TIMESTAMP": "39364",
+        "_TRANSPORT": "kernel",
+        "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+        "MESSAGE": "ramoops: using 0x200000@0x880900000, ecc: 0",
+        "PRIORITY": "6",
+        "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=d7c6f;b=647d50c80fc94fb0bfea5006c519a255;m=1b10c1;t=65c5b58476cad;x=8b97ffd68d9052ff",
+        "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+        "__REALTIME_TIMESTAMP": "1790397253119149"
+      }
+    ]
+  }
+}

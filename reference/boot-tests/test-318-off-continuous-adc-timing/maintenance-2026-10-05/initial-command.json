@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@key; cat /etc/ssh/ssh_host_ed25519_key.pub; echo @@machine; cat /etc/machine-id; echo @@boots; journalctl --list-boots --no-pager"
+  ],
+  "epoch": 1791173534.1662905,
+  "returncode": 0
+}

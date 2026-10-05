@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test318，窗口为 **Test309–Test318**；没有生成镜像的轮次仍占一轮。
+  编号为 Test319，窗口为 **Test310–Test319**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-05 Test319 normal accepted311 reentry registered before Test318 ADC
+deployment. Owner confirmed manual647d50c8; config/notes exact but known incoming
+lpcharge=1 args differ from normal. Ordinary C2 charge observed, source9V/1.5A,
+pumpOFF/zeroIBUS/fault0; pack reached20%/3.867V/27.5C. Bounded32-row maintenance
+log ended965.069s, no writes/PPS/ON. Test319 one unchanged PCsystemctlreboot after
+push: allfive/181 checked once, exact incoming then exactnormal cmdline, unique
+boot attribution/15s endpoint; no flash/BCB/modules, first non-cleanSTOP/no second
+reboot. Seven identity/no-replay tests PASS0.004s/no skips; no build/full/Actions.
+Test318 remains unexecuted and needs freshnormal preflight after319. Operational
+original308 rollback belongs to current318/319, not an expired historicalimage.
 
 Test318 entry now filters real pack reserve before expensive probes. Actual
 ADB packet sameac442c81/SOC4%/3.651V/net-331mA/31.2C refused in0.092s; no full

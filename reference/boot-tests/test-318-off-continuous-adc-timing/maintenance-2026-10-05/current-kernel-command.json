@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "journalctl -k -b 0 -o json --no-pager"
+  ],
+  "started_epoch": 1791173708.9362373,
+  "completed_epoch": 1791173709.7913733,
+  "returncode": 0
+}
