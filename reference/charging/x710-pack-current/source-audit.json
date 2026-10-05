@@ -1,0 +1,64 @@
+{
+  "sources": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c": {
+      "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+      "excerpts": [
+        {
+          "first_line": 1035,
+          "last_line": 1051,
+          "text": "\tcase SM_DC_ADC_VOUT:\n\t\tadc = sm5440_convert_adc(sm5440, SM5440_ADC_VOUT);\n\t\tbreak;\n\tcase SM_DC_ADC_VBUS:\n\t\tadc = sm5440_convert_adc(sm5440, SM5440_ADC_VBUS);\n\t\tbreak;\n\tcase SM_DC_ADC_IBUS:\n\t\tadc = sm5440_convert_adc(sm5440, SM5440_ADC_IBUS);\n\t\tbreak;\n\tcase SM_DC_ADC_IBAT:\n\tdefault:\n\t\tadc = 0;\n\t\tbreak;\n\t}\n\n\treturn adc;\n}"
+        },
+        {
+          "first_line": 450,
+          "last_line": 458,
+          "text": "{\n\tsm5440_set_wdt_timer(sm5440, WDT_TIMER_S_30);\n\tsm5440_set_freq(sm5440, sm5440->pdata->freq);\n\n\tsm5440_write_reg(sm5440, SM5440_REG_CNTL2, 0xF2);               /* disable IBUSOCP,IBATOCP,THEM */\n\tsm5440_write_reg(sm5440, SM5440_REG_CNTL4, 0xFF);               /* used DEB:8ms */\n\tsm5440_write_reg(sm5440, SM5440_REG_CNTL6, 0x09);               /* forced PWM mode, disable ENHIZ */\n\tsm5440_update_reg(sm5440, SM5440_REG_VBUSCNTL, 0x7, 0x7, 0);    /* VBUS_OVP_TH=11V */\n\tsm5440_write_reg(sm5440, SM5440_REG_VOUTCNTL, 0x3F);            /* VOUT=max */"
+        }
+      ]
+    },
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_direct_charger.c": {
+      "sha256": "be3497d6a055baa05ebf36fa5e6459a34deeb874f2cfcb0151c035f10996f6e4",
+      "excerpts": [
+        {
+          "first_line": 203,
+          "last_line": 225,
+          "text": "}\n\nstatic int setup_direct_charging_work_config(struct sm_dc_info *sm_dc)\n{\n\tsm_dc->wq.pps_cl = 0;\n\tsm_dc->wq.c_down = 0;\n\tsm_dc->wq.c_up = 0;\n\tsm_dc->wq.v_down = 0;\n\tsm_dc->wq.v_up = 0;\n\tsm_dc->wq.prev_adc_ibus = 0;\n\tsm_dc->wq.prev_adc_vbus = 0;\n\tsm_dc->wq.cc_limit = 0;\n\tsm_dc->wq.cc_cnt = 0;\n\tsm_dc->wq.cv_cnt = 0;\n\tsm_dc->wq.cv_gl = sm_dc->target_vbat;\n\tsm_dc->wq.ci_gl = MIN(sm_dc->ta.c_max, ((sm_dc->target_ibus * 100) / 100));\n\tsm_dc->wq.cc_gl = sm_dc->wq.ci_gl * 2;\n\n\tpr_info(\"%s %s: CV_GL=%dmV, CI_GL=%dmA, CC_GL=%dmA\\n\", sm_dc->name, __func__,\n\t\t\tsm_dc->wq.cv_gl, sm_dc->wq.ci_gl, sm_dc->wq.cc_gl);\n\tsm_dc->ops->set_charging_config(sm_dc->i2c, sm_dc->wq.cv_gl, sm_dc->wq.ci_gl, sm_dc->wq.cc_gl);\n\n\treturn 0;"
+        },
+        {
+          "first_line": 488,
+          "last_line": 504,
+          "text": "\t\t\tsm_dc->name, __func__, adc_vbat, sm_dc->config.ta_min_voltage, sm_dc->ta.v_max,\n\t\t\tsm_dc->ta.c_max, sm_dc->target_ibus);\n\n\tsm_dc->ta.c = MIN(sm_dc->ta.c_max, ((sm_dc->target_ibus * 50) / 100));\n\tsm_dc->ta.c = pps_c(MAX(sm_dc->ta.c, sm_dc->config.ta_min_current));\n\tsm_dc->ta.v = (2 * adc_vbat) + _calc_pps_v_init_offset(sm_dc);\n\tsm_dc->ta.v = pps_v(MAX(sm_dc->ta.v, sm_dc->config.ta_min_voltage));\n\tret = send_power_source_msg(sm_dc);\n\tif (ret < 0)\n\t\treturn;\n\n\tmsleep(DELAY_PPS_UPDATE);\n\n\tif (sm_dc->ops->get_charging_enable(sm_dc->i2c) == 0x0)\n\t\t_adjust_pps_v(sm_dc, sm_dc->ta.v);\n\n\tif (sm_dc->target_ibus < sm_dc->wq.ci_gl)"
+        }
+      ]
+    },
+    "kernel/drivers/sm5714-battery.c": {
+      "sha256": "cb7de5057add01d38ee5fae255be66601fa32fa8edc82d4d82aac42298084ed0",
+      "excerpts": [
+        {
+          "first_line": 1087,
+          "last_line": 1108,
+          "text": "\n/*\n * Current is a sign-magnitude value in units of 1/2044 A.  Bit 15 marks a\n * discharge, which matches the power supply class convention of negative\n * current flowing out of the battery.\n */\nstatic int sm5714_get_current(struct sm5714_battery *sm, u8 sram_addr, int *val)\n{\n\tint raw = sm5714_fg_read_sram(sm, sram_addr);\n\tint ma;\n\n\tif (raw < 0)\n\t\treturn raw;\n\n\tma = ((raw & 0x7fff) * 1000) / 2044;\n\tif (raw & 0x8000)\n\t\tma = -ma;\n\n\t*val = ma * 1000;\n\treturn 0;\n}\n"
+        },
+        {
+          "first_line": 1250,
+          "last_line": 1268,
+          "text": "\t\ti2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS2);\n\tret = status2 < 0 ? status2 : sm5714_get_capacity(sm, &sample.capacity);\n\tif (!ret)\n\t\tret = sm5714_get_voltage(sm, SM5714_FG_SRAM_VBAT, &sample.voltage_uv);\n\tif (!ret)\n\t\tret = sm5714_get_current(sm, SM5714_FG_SRAM_CURRENT, &sample.current_ua);\n\tif (!ret)\n\t\tret = sm5714_get_temp(sm, &sample.pack_decic);\n\tif (ret)\n\t\tgoto put;\n\trepeat1 = i2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS1);\n\trepeat2 = repeat1 < 0 ? repeat1 :\n\t\ti2c_smbus_read_byte_data(sm->chg, SM5714_CHG_REG_STATUS2);\n\tif (repeat2 < 0) {\n\t\tret = repeat2;\n\t\tgoto put;\n\t}\n\t/* Live attach/presence/health, not CHG_ON or interrupt latches. */\n\tif (((status1 ^ repeat1) & (SM5714_CHG_STATUS1_VBUS_POK | SM5714_CHG_STATUS1_VBUS_OVP)) ||"
+        }
+      ]
+    }
+  },
+  "new_envelope_ua": [
+    -3600000,
+    3600000
+  ],
+  "envelope_category": "BRINGUP_LIMIT, not vendor OCP or measured protection",
+  "source_correction": "Actual vendor preset scales target_ibus by50%; work configuration defines cc_gl=ci_gl*2. No claim that preset reads target_ibat.",
+  "sensor": "existing SM5714 gauge sign-magnitude SRAM; successful provider read required",
+  "sensor_resolution_ua": 1000,
+  "software_ocp_verified": false,
+  "native_activation_qualified": false,
+  "changes_actual_charger_current_setting": false,
+  "register_writes_added": false,
+  "locks_added": false,
+  "waits_added": false,
+  "physical_operations": []
+}

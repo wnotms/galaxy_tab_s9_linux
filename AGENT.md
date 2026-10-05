@@ -98,6 +98,22 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native real pack current now retained/bracketed/mandatory in actual
+controller/core/actuator/supervisor/paused resume: both acquisitions refused
+independently, invalid reads erase previous current, raw refusal telemetry.
+Six actual-C missing-current guard cases reproduced before fix. Signed±3.6A
+bringup envelope/sourcecc_gl=2*ci_gl, not vendorOCP/current programming; vendor
+preset actually target_ibus*50/100 audit corrected.351 affectedPASS11.072s/0skip,
+ARM64PASS90.621s/W1sparse7.376s knownVDSOonly/checkpatch0. Exact previous native
+config/accepted311DTB/181paired/53protected/30formal preserved. Formal
+out/kernel-x710-pack-current/, evidence reference/charging/x710-pack-current/.
+Same native cache now this provider, not old303. No SM5714/TCPC/DTS/config/USB/
+adbd/rootfs/device/flash/reboot/PPS/ON/Actions change; native/OCP grantsclosed.
+FullgoalNOTREADY: physicalADC/current freshness/calibration/cutoff, independent
+PPSOFF/<=1.8A pump/faultPM/higherpower stillrequired. Latest owner reconnect access
+unavailable/current IP/power/boot replypending; do not deploy until normal entry.
+
+
 2026-10-05 owner replied reconnect complete; endpoint capture 114135Z STOP:
 nativeADB list empty/filteredWindowsPnP no match; expandedWindowsUSB/context
 20s timeout preserved, Code43UNKNOWN. Wi-Fi last10.139.153.84 No route before

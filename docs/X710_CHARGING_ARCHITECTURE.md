@@ -135,3 +135,16 @@ historical offline-policy profile and does not complete active deployment.
 The bound OFF coordinator is documented in
 [X710_NATIVE_CONTROLLER.md](X710_NATIVE_CONTROLLER.md). Its real cleanup and
 source-bound release do not grant active protection or higher-power charging.
+
+## Native real pack-current admission (2026-10-05)
+
+The existing SM5714 gauge current is now retained with its original acquisition
+bracket, checked independently on both reads, and forwarded as mandatory signed
+current facts to transaction/actuator/supervisor/paused resume. Native result
+telemetry records the last attempted read separately from its health/freshness.
+The conservative signed ±3.6A bringup refusal envelope is not vendor OCP or a
+current programming increase; ordinary fixed charging is unchanged. Actual-C
+current/read/fallback/native mapping tests and ARM64 qualification are recorded
+under `reference/charging/x710-pack-current/`. Private native/OCP grants remain
+closed. Physical current/gauge freshness/cutoff acceptance is still required.
+See [pack-current design](X710_PACK_CURRENT_GUARD.md) for source/units/bounds.

@@ -1,0 +1,29 @@
+{
+  "executed": true,
+  "modules": [
+    "test_x710_charge_controller",
+    "test_sm5440_native_control",
+    "test_sm5440_actuator",
+    "test_sm5440_conversion",
+    "test_sm5440_supervisor",
+    "test_sm5440_park",
+    "test_sm5440_watchdog",
+    "test_x710_charge_observer",
+    "test_x710_charging_policy",
+    "test_x710_pd_session",
+    "test_x710_direct_transaction",
+    "test_sm5714_stage2_pd",
+    "test_sm5714_pack_snapshot",
+    "test_sm5714_owned_observer",
+    "test_sm5714_runtime_snapshot",
+    "test_container_kernel_config"
+  ],
+  "tests_run": 348,
+  "seconds": 11.057231207996665,
+  "failures": [],
+  "errors": [],
+  "skips": [],
+  "valid": true,
+  "full_executed": false,
+  "reason": "Actual controller + native executor/policy/TCPM/observer/pack/container dependencies; no suite routing changed."
+}

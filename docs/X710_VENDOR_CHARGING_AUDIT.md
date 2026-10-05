@@ -140,8 +140,13 @@ and unrelated fast-power policy45000mW are separate. Current validated
 fixed9V ceiling1500mA (13.5W policy input) stays frozen. Neither a source3A
 advertisement nor the vendor45W figure authorizes a current increase.
 
-Vendor `pd_preset_dc_work()` computes initial current approximately target
-battery-current/2, bounded by APDO and minimum1000mA. Initial voltage is:
+Vendor `pd_preset_dc_work()` computes initial `ta.c` as
+`min(ta.c_max, target_ibus * 50 / 100)`, then applies the minimum1000mA and PPS
+step rounding. The source variable is **target_ibus**, not target_ibat;
+`setup_direct_charging_work_config()` separately sets
+`ci_gl = min(ta.c_max, target_ibus)` and `cc_gl = ci_gl * 2`. These vendor
+policy quantities are not a measured IBAT or a mainline protection grant.
+Initial voltage is:
 
 ```
 2 * VBAT_mV + (requested_mA * r_ttl_uohm)/1000000 + 200mV

@@ -1,0 +1,30 @@
+[
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "returncode": 0
+  },
+  {
+    "argv": [
+      ".work/build/linux-src-x710-charging/scripts/checkpatch.pl",
+      "--no-tree",
+      "--strict",
+      "--file",
+      "kernel/drivers/x710-charge-controller.c",
+      "kernel/drivers/x710-charge-controller.h"
+    ],
+    "returncode": 0
+  },
+  {
+    "argv": [
+      ".work/build/linux-src-x710-charging/scripts/checkpatch.pl",
+      "--no-tree",
+      "--strict",
+      "-"
+    ],
+    "returncode": 0
+  }
+]

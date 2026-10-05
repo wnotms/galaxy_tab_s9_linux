@@ -102,6 +102,13 @@ int sm5714_battery_read_pack(u64 l,struct sm5714_pack_snapshot *p){
  if(scenario==3)p->pack_decic=450;
  if(scenario==21)p->voltage_uv=4305500;
  if(scenario==26)p->instance++;
+ if(scenario==27 && packs%2==1)p->current_ua=3600001;
+ if(scenario==28 && packs%2==0)p->current_ua=3600001;
+ if(scenario==29)p->current_ua=-3600001;
+ if(scenario==30)return -EIO;
+ if(scenario==31)p->current_ua=3600000;
+ if(scenario==32)p->current_ua=-3600000;
+ if(scenario==33)p->current_ua=0;
  return 0;
 }
 int sm5714_battery_switching_acquire(u64 *l){
@@ -192,6 +199,7 @@ static void output(int ret,const struct x710_controller_result *r,int64_t *o){
  o[11]=r->hardware_quiesced;o[12]=r->pps_observed;o[13]=r->fixed_observed;
  o[14]=r->switching_released;o[15]=r->inflight;o[16]=r->cancelled;o[17]=r->lease;
  o[18]=r->generation;o[19]=x710_controller_unresolved;
+ o[23]=r->pack_current_valid;o[24]=r->pack_current_ua;
 }
 void run(int mode,int failure,int command,int64_t *o){
  reset(mode,failure);struct x710_controller_result r;
@@ -267,11 +275,16 @@ void active_cycle(int stage,int failure,int64_t *o){
   queue_work(x710_controller_wq,&x710_controller_periodic.work);
   flush_work(&x710_controller_periodic.work);x710_charge_controller_status(&r);ret=r.error;
  }
+ if(stage>=13 && stage<=16){
+  scenario=stage==13?27:stage==14?28:stage==15?29:30;
+  ret=x710_charge_controller_request(stage==14?X710_CONTROLLER_REFRESH:
+                                      X710_CONTROLLER_MONITOR,0,0,&r);
+ }
  if(stage==12){scenario=15;ret=x710_charge_controller_request(X710_CONTROLLER_MONITOR,0,0,&r);}
  output(ret,&r,o);o[28]=r.active;o[29]=r.generation;o[30]=on_count;o[31]=pause_count;
  o[32]=resume_count;o[33]=prepare_count;o[34]=monitor_count;o[35]=hardware_owned;
  o[36]=hardware_off;o[37]=x710_controller.tx.target_mv;o[38]=x710_controller.tx.target_ma;
- o[39]=event_count-before;
+ o[39]=event_count-before;o[42]=r.pack_current_ua;o[43]=r.pack_current_valid;
  // End each test's mock session; preserve the asserted results before cleanup.
  cancel_delayed_work_sync(&x710_controller_periodic);
  if(x710_controller_active)x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);
@@ -306,6 +319,42 @@ void active_cycle(int stage,int failure,int64_t *o){
         self.assertLess(trace.index('F'), trace.index('M'))
         self.assertLess(trace.index('M'), trace.index('R'))
         self.assertNotIn('!', trace)
+
+    def test_real_first_and_second_pack_spikes_refuse_pps(self):
+        for mode in (27, 28, 29):
+            with self.subTest(mode=mode):
+                o = self.run_case(mode)
+                self.assertNotEqual(o[0], 0)
+                self.assertEqual(o[3], 0, 'unsafe pack current must precede PPS')
+                self.assertEqual(o[2], 0)
+                self.assertEqual(o[6], 1)
+                self.assertEqual(o[23:25], [1, -3600001 if mode == 29 else 3600001])
+
+    def test_real_current_read_error_refuses_pps(self):
+        o = self.run_case(30)
+        self.assertEqual(o[0], -errno.EIO)
+        self.assertEqual(o[3], 0)
+        self.assertEqual(o[6], 1)
+        self.assertEqual(o[23:25], [0, 0], 'read failure must not reuse old current')
+
+    def test_pack_signed_endpoints_and_zero_are_real_allowed_measurements(self):
+        for mode in (31, 32, 33):
+            o = self.run_case(mode)
+            self.assertEqual(o[0], 0)
+            self.assertEqual(o[3:7], [1, 1, 1, 1])
+
+    def test_active_pack_spike_or_read_failure_terminalizes_once(self):
+        for stage in (13, 14, 15, 16):
+            with self.subTest(stage=stage):
+                o = self.active_case(stage)
+                self.assertNotEqual(o[0], 0)
+                self.assertEqual(o[28], 0)
+                self.assertEqual(o[35:37], [0, 1])
+                self.assertEqual(o[4:7], [1, 1, 1])
+                self.assertEqual(o[30], 1, 'fault must not enable pump again')
+                self.assertEqual(o[32], 0, 'paused fault must not resume pump')
+                self.assertEqual(o[42:44], [0, 0] if stage == 16 else
+                                 [-3600001 if stage == 15 else 3600001, 1])
 
     def test_default_direct_commands_cannot_mutate_suppliers(self):
         for command in range(1, 6):

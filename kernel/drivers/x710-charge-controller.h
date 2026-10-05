@@ -23,6 +23,12 @@ struct x710_controller_result {
 	struct sm5440_native_owner hardware_owner;
 	enum x710_charge_state state;
 	int error, cleanup_error;
+	/* Last attempted gauge read, including an excessive value on refusal.
+	 * Valid means read succeeded, not current/fresh/OCP-qualified.
+	 */
+	int pack_current_ua;
+	u64 pack_current_started_ms, pack_current_completed_ms;
+	bool pack_current_valid;
 	bool inflight, cancelled, unresolved, hardware_quiesced, active;
 	bool pps_observed, fixed_observed, switching_released;
 };

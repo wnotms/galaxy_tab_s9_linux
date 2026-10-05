@@ -9,11 +9,13 @@
 #define X710_FACTS_MAX_AGE_MS	500U
 #define X710_ADC_MAX_AGE_MS	100U
 #define X710_MONITOR_DEADLINE_MS	100U
+/* Signed pack-current bringup envelope; not a vendor OCP trip threshold. */
+#define X710_PACK_CURRENT_LIMIT_UA	3600000
 
-/* Offline transaction core. No live adapter or userspace activation interface
- * exists. Future adapter must be single-worker/epoch-serialized, must drain on
- * PM/unbind, and must implement bounded hardware operations without nesting
- * TCPM/charger locks. Source/parameter provenance is in the X710 audit docs.
+/* Default-inactive transaction core with an ordered native adapter. No public
+ * activation interface exists. Native/OCP acceptance grants remain closed.
+ * PM/unbind drain and bounded operations avoid nesting TCPM/charger locks.
+ * Source/parameter provenance is in the X710 audit docs.
  */
 enum x710_charge_state {
 	X710_SWITCHING,
@@ -39,6 +41,8 @@ struct x710_charge_facts {
 	int capacity;
 	int pack_decic;
 	int die_decic;
+	/* Real signed SM5714 gauge current, never inferred from PPS/IBUS. */
+	int pack_current_ua;
 	unsigned int vbat_mv;
 	unsigned int fixed_mv;
 	unsigned int apdo_min_mv;
@@ -49,6 +53,7 @@ struct x710_charge_facts {
 	bool healthy;
 	bool pack_valid;
 	bool voltage_valid;
+	bool current_valid;
 	bool soc_valid;
 	bool die_valid;
 	bool adc_valid;
@@ -83,7 +88,7 @@ struct x710_charge_transaction {
 	unsigned int target_ma;
 	unsigned int fixed_mv;
 	int last_error;
-	/* Default false, no live setter/consumer supplied by this port. */
+	/* Default false; native consumer has no public activation setter. */
 	bool armed;
 	bool switching_inhibited;
 	/* PM cancellation is independent of facts acquired before suspend. */
@@ -104,6 +109,7 @@ struct x710_charge_ops {
 	int (*fixed_restore)(void *ctx);
 };
 
+bool x710_pack_current_safe(int current_ua);
 bool x710_charge_eligible(const struct x710_charge_facts *facts);
 enum x710_thermal_zone x710_vendor_zone(int decic, enum x710_thermal_zone previous);
 int x710_pps_target(unsigned int vbat_mv, unsigned int offer_min_mv,
@@ -122,7 +128,7 @@ int x710_charge_monitor(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_stop(struct x710_charge_transaction *tx,
 		     const struct x710_charge_ops *ops, void *ctx);
-/* Future serialized adapter drains work before suspend; resume never arms. */
+/* Serialized native adapter drains work before suspend; resume never arms. */
 int x710_charge_suspend(struct x710_charge_transaction *tx,
 			const struct x710_charge_ops *ops, void *ctx);
 int x710_charge_resume(struct x710_charge_transaction *tx);

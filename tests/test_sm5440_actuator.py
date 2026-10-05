@@ -90,7 +90,8 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
  o[1]=sm5440_watchdog_arm_off(&m,&a.watchdog,1,100);
  f.epoch=1;f.observed_ms=100;f.capacity=30;f.pack_decic=310;f.die_decic=300;f.vbat_mv=3800;
  f.fixed_mv=9000;f.apdo_min_mv=3300;f.apdo_max_mv=11000;f.apdo_ma=1800;
- f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.soc_valid=true;
+ f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.current_valid=f.soc_valid=true;
+ f.pack_current_ua=1000000;
  f.die_valid=f.adc_valid=f.fixed_healthy=f.apdo=f.thermal_normal=f.software_ocp_verified=true;
  physical.observed_ms=100;physical.vbus_mv=9000;physical.vbat_mv=3800;
  physical.valid=physical.online=true;
@@ -128,6 +129,12 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
  if(scenario==30)f.fault=true;
  if(scenario==31){physical.valid=false;physical.observed_ms=0;}
  if(scenario==32)a.lease=0;
+ if(scenario==35)f.current_valid=false;
+ if(scenario==36)f.pack_current_ua=3600001;
+ if(scenario==37)f.pack_current_ua=-3600001;
+ if(scenario==38)f.pack_current_ua=3600000;
+ if(scenario==39)f.pack_current_ua=-3600000;
+ if(scenario==40)f.pack_current_ua=0;
  if(scenario==34){sm5440_actuator_stop(&m,&a);a.enabled=true;}
  m.calls=m.writes=m.on=0;m.fail=fail;m.persistent=persistent;
  m.uncertain=uncertain;m.drop=drop;m.step=step;fake_clock=100;
@@ -175,6 +182,19 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
         for scenario in (1,2,3,4,6,7,11,12,13,14,30,31,32):
             with self.subTest(scenario=scenario):
                 o=self.case(scenario);self.assertLess(o[2],0);self.assertEqual(o[4],0);self.assertEqual(o[5]&12,0)
+
+    def test_real_current_permission_is_required_before_on(self):
+        for scenario in (35, 36, 37):
+            o = self.case(scenario)
+            self.assertLess(o[2], 0)
+            self.assertEqual(o[4], 0)
+            self.assertEqual(o[5] & 12, 0)
+
+    def test_current_exact_signed_endpoints_and_zero_allow_mock_grant(self):
+        for scenario in (38, 39, 40):
+            o = self.case(scenario)
+            self.assertEqual(o[2], 0)
+            self.assertEqual(o[4], 1)
 
     def test_freshness_expires_during_register_checks_before_on(self):
         o=self.case(5,step=1);self.assertEqual(o[2],-116);self.assertEqual(o[4],0)

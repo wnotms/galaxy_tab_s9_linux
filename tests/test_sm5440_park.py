@@ -75,7 +75,8 @@ void exercise(int scenario,int fail_pause,int fail_resume,int persistent,int unc
  o[1]=sm5440_watchdog_arm_off(&m,&a.watchdog,1,1000);
  f.epoch=1;f.observed_ms=1000;f.capacity=30;f.pack_decic=310;f.die_decic=300;f.vbat_mv=3800;
  f.fixed_mv=9000;f.apdo_min_mv=3300;f.apdo_max_mv=11000;f.apdo_ma=1800;
- f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.soc_valid=true;
+ f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.current_valid=f.soc_valid=true;
+ f.pack_current_ua=1000000;
  f.die_valid=f.adc_valid=f.fixed_healthy=f.apdo=f.thermal_normal=f.software_ocp_verified=true;
  physical.observed_ms=1000;physical.vbus_mv=9000;physical.vbat_mv=3800;
  physical.valid=physical.online=true;

@@ -105,7 +105,8 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
  o[1]=sm5440_watchdog_arm_off(&m,&a.watchdog,1,1000);
  f.epoch=1;f.observed_ms=1000;f.capacity=30;f.pack_decic=310;f.die_decic=300;f.vbat_mv=3800;
  f.fixed_mv=9000;f.apdo_min_mv=3300;f.apdo_max_mv=11000;f.apdo_ma=1800;
- f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.soc_valid=true;
+ f.attached=f.battery_present=f.healthy=f.pack_valid=f.voltage_valid=f.current_valid=f.soc_valid=true;
+ f.pack_current_ua=1000000;
  f.die_valid=f.adc_valid=f.fixed_healthy=f.apdo=f.thermal_normal=f.software_ocp_verified=true;
  physical.observed_ms=1000;physical.vbus_mv=9000;physical.vbat_mv=3800;
  physical.valid=physical.online=true;
@@ -141,6 +142,12 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
  if(scenario==30)a.lease=0;
  if(scenario==31)s.samples=~0ULL;
  if(scenario==32)fake_clock=1;
+ if(scenario==39)f.current_valid=false;
+ if(scenario==40)f.pack_current_ua=3600001;
+ if(scenario==41)f.pack_current_ua=-3600001;
+ if(scenario==44)f.pack_current_ua=3600000;
+ if(scenario==45)f.pack_current_ua=-3600000;
+ if(scenario==46)f.pack_current_ua=0;
  if(scenario==27)ret=sm5440_supervisor_cancel(&m,&s);
  else if(scenario==36)ret=sm5440_supervisor_begin(&m,&s,0,&p);
  else if(scenario==37)ret=sm5440_supervisor_begin(&m,&s,&f,0);
@@ -148,6 +155,8 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
  o[3]=ret;
  for(int i=0;ret==-115 && i<40;i++) {
   fake_clock+=5;
+  if(scenario==42 && i==4)f.current_valid=false;
+  if(scenario==43 && i==4)f.pack_current_ua=3600001;
   if(scenario==38 && i==4)ret=sm5440_supervisor_advance(&m,&s,0,&p);
   else if(scenario==26 && i==4)ret=sm5440_supervisor_cancel(&m,&s);
   else ret=sm5440_supervisor_advance(&m,&s,&f,&p);
@@ -222,6 +231,23 @@ void exercise(int scenario,int fail,int persistent,int uncertain,int drop,int st
                 self.assertEqual(o[8], 1)
                 self.assertEqual(o[12], 1)
                 self.assertEqual(o[16], 0)
+
+    def test_pack_current_fault_before_and_during_conversion_is_terminal_off(self):
+        for scenario in (39, 40, 41, 42, 43):
+            with self.subTest(scenario=scenario):
+                o = self.case(scenario)
+                self.assertLess(o[4], 0)
+                self.assertEqual(o[8], 1)
+                self.assertEqual(o[12], 1)
+                self.assertEqual(o[16], 0, 'no feed after current fault')
+                self.assertEqual(o[17], 1, 'exactly one terminal OFF')
+                self.assertEqual(o[18], 0, 'no new pump ON')
+
+    def test_signed_current_endpoints_and_real_zero_monitor_normally(self):
+        for scenario in (44, 45, 46):
+            o = self.case(scenario)
+            self.assertEqual(o[4], 0)
+            self.assertEqual(o[16], 1)
 
     def test_fixed_capability_and_changed_source_budget_or_instance_stop(self):
         for scenario in (4, 6, 7, 8, 9, 28, 29):

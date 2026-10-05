@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
-/* Default-inactive X710 charging transaction core. A live hardware adapter is
- * deliberately NOT supplied until passive ADC/software-OCP/PM acceptance.
+/* Default-inactive X710 charging transaction core. Its ordered native adapter
+ * remains unarmed pending physical ADC/software-OCP/PM acceptance.
  * No pump register, TCPM protocol engine or auto-retry thread is in this file.
  * The same production C functions run in host fault-injection tests.
  */
@@ -9,6 +9,16 @@
 
 #include "x710-charging-policy.h"
 
+bool x710_pack_current_safe(int current_ua)
+{
+	/* 2:1 /1800mA input cap gives a conservative3600mA pack envelope.
+	 * A measured value is required; this comparison does not qualify OCP.
+	 * Compare signed values directly: no abs(INT_MIN) or unit truncation.
+	 */
+	return current_ua >= -X710_PACK_CURRENT_LIMIT_UA &&
+		current_ua <= X710_PACK_CURRENT_LIMIT_UA;
+}
+
 bool x710_charge_eligible(const struct x710_charge_facts *f)
 {
 	/* Bringup limits, narrower than X710 vendor (>18,<42C, endSOC95).
@@ -16,7 +26,8 @@ bool x710_charge_eligible(const struct x710_charge_facts *f)
 	 */
 	return f && f->epoch && f->observed_ms && f->attached &&
 		f->battery_present && f->healthy &&
-		f->pack_valid && f->voltage_valid && f->soc_valid && f->die_valid &&
+		f->pack_valid && f->voltage_valid && f->current_valid &&
+		x710_pack_current_safe(f->pack_current_ua) && f->soc_valid && f->die_valid &&
 		f->adc_valid && f->fixed_healthy && f->apdo && f->thermal_normal &&
 		f->software_ocp_verified && !f->suspended && !f->fault &&
 		f->apdo_min_mv && f->apdo_min_mv <= f->apdo_max_mv && f->apdo_ma &&
@@ -387,7 +398,7 @@ int x710_charge_retarget(struct x710_charge_transaction *tx,
 		return x710_fallback(tx, ops, ctx, -EACCES);
 	/* Fedora refresh/renegotiate: VBAT-derived target, OFF across Request.
 	 * Current can only decrease here; source expansion is not a ramp grant.
-	 * The future serialized adapter owns physical OCP and genuine ADC age.
+	 * The native serialized adapter must prove physical OCP and genuine ADC age.
 	 */
 	ret = ops->pump_off(ctx);
 	if (!ret)

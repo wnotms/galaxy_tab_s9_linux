@@ -94,7 +94,7 @@ static struct x710_charge_facts good(void) {
  return (struct x710_charge_facts){.epoch=1,.observed_ms=1000,
  .apdo_min_mv=8200,.apdo_max_mv=10500,.apdo_ma=1800,.capacity=50,.pack_decic=250,
  .die_decic=350,.vbat_mv=4000,.fixed_mv=9000,.attached=true,.battery_present=true,
- .healthy=true,.pack_valid=true,.voltage_valid=true,.soc_valid=true,
+ .healthy=true,.pack_valid=true,.voltage_valid=true,.current_valid=true,.pack_current_ua=1000000,.soc_valid=true,
  .die_valid=true,.adc_valid=true,.fixed_healthy=true,.apdo=true,
  .thermal_normal=true,.software_ocp_verified=true};
 }
@@ -107,6 +107,10 @@ int eligibility(int capacity,int pack,int vbat,int die,int missing) {
  case 8:f.healthy=false;break;case 9:f.apdo=false;break;case 10:f.die_valid=false;break;
  case 11:f.voltage_valid=false;break;case 12:f.soc_valid=false;break;
  case 13:f.thermal_normal=false;break;case 14:f.epoch=0;break;}
+ return x710_charge_eligible(&f);
+}
+int eligibility_current(int ua,int valid) {
+ struct x710_charge_facts f=good();f.pack_current_ua=ua;f.current_valid=valid;
  return x710_charge_eligible(&f);
 }
 int target(unsigned int vb,unsigned int lo,unsigned int hi,unsigned int ma,unsigned int *v) {
@@ -140,6 +144,9 @@ int scenario(int kind,int fail,int cancel,int bad,int *out) {
  if(bad==14)facts.observed_ms=1001;
  if(bad==15)facts.observed_ms=600;
  if(bad==16)facts.observed_ms=599;
+ if(bad==17)facts.current_valid=false;
+ if(bad==18)facts.pack_current_ua=3600001;
+ if(bad==19)facts.pack_current_ua=-3600001;
  if(kind==21)contractstep=8;
  if(kind==22)on_delay=101;
  if(kind==23)on_delay=100;
@@ -158,7 +165,8 @@ int scenario(int kind,int fail,int cancel,int bad,int *out) {
  if(!r && kind==27){pps_delay=2500;acquire_fresh=true;
    r=x710_charge_refresh(&tx,&ops,0);}
  if(!r && kind==28){clock_ms+=101;r=x710_charge_refresh(&tx,&ops,0);}
- if(!r && ((kind>=10 && kind<=18) || (kind>=29 && kind<=35))){
+ if(!r && kind==40){facts.pack_current_ua=3600001;r=x710_charge_refresh(&tx,&ops,0);}
+ if(!r && ((kind>=10 && kind<=18) || (kind>=29 && kind<=35) || (kind>=37 && kind<=39))){
    if(kind==11)trip_ua=1800625;
    if(kind==12)clock_ms+=101;
    if(kind==13)measure_delay=101;
@@ -174,6 +182,9 @@ int scenario(int kind,int fail,int cancel,int bad,int *out) {
    if(kind==33)clock_ms=0;
    if(kind==34)contractstep=step+2;
    if(kind==35)trip_ua=1800000;
+   if(kind==37)facts.current_valid=false;
+   if(kind==38)facts.pack_current_ua=3600001;
+   if(kind==39)facts.pack_current_ua=-3600001;
    r=x710_charge_monitor(&tx,&ops,0);
  }
  out[0]=tx.state;out[1]=pump;out[2]=inhibited;out[3]=step;out[4]=tx.last_error;
@@ -297,6 +308,29 @@ int invalid_retarget(int kind) {
         result = (ctypes.c_int * 10)()
         ret = self.lib.retarget_case(kind, fail, cancel, result)
         return ret, list(result), self.lib.trace().decode()
+
+    def test_current_requires_real_value_and_exact_signed_limits(self):
+        for ua in (-3600000, -300000, 0, 2100000, 3600000):
+            self.assertEqual(self.lib.eligibility_current(ua, 1), 1)
+            self.assertEqual(self.lib.eligibility_current(ua, 0), 0)
+        for ua in (-2147483648, -3600001, 3600001, 2147483647):
+            self.assertEqual(self.lib.eligibility_current(ua, 1), 0)
+
+    def test_invalid_or_excessive_current_refuses_start_before_io(self):
+        for bad in (17, 18, 19):
+            ret, state, trace = self.run_case(kind=1, bad=bad)
+            self.assertLess(ret, 0)
+            self.assertEqual(trace, '')
+            self.assertEqual(state[1:3], [0, 0])
+
+    def test_current_loss_or_excursion_in_monitor_and_refresh_uses_fallback(self):
+        for kind in (37, 38, 39, 40):
+            ret, state, trace = self.run_case(kind=kind)
+            self.assertLess(ret, 0)
+            self.assertEqual(state[:3], [0, 0, 0])
+            self.assertEqual(state[5], 0)
+            self.assertTrue(trace.endswith('OFMS'))
+            self.assertEqual(trace.count('N'), 1, 'fault must not re-enable pump')
 
     def test_retarget_rising_vbat_off_request_prepare_on_order(self):
         ret, state, trace = self.retarget_case()

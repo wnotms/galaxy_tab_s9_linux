@@ -42,6 +42,8 @@ struct x710_native_controller {
 	struct sm5714_pd_snapshot source, fixed;
 	struct x710_charge_facts facts;
 	struct x710_physical_sample physical;
+	struct sm5714_pack_snapshot pack_current;
+	bool pack_current_valid;
 	u64 generation, lease, pack_instance, refreshed_ms;
 	u32 physical_vbus_uv;
 	int die_decic;
@@ -125,10 +127,28 @@ static int x710_controller_source_check(struct x710_native_controller *c,
 	return 0;
 }
 
+static int x710_controller_pack(struct x710_native_controller *c,
+				struct sm5714_pack_snapshot *out)
+{
+	int ret;
+
+	/* A failed current read never reuses the preceding good measurement. */
+	c->pack_current_valid = false;
+	memset(&c->pack_current, 0, sizeof(c->pack_current));
+	ret = sm5714_battery_read_pack(c->lease, out);
+	if (!ret) {
+		c->pack_current = *out;
+		c->pack_current_valid = true;
+	}
+	return ret;
+}
+
 static int x710_controller_pack_check(struct x710_native_controller *c,
 				      const struct sm5714_pack_snapshot *p,
 				      const struct sm5714_pd_snapshot *s)
 {
+	if (!x710_pack_current_safe(p->current_ua))
+		return -ERANGE;
 	if (!p->instance || p->instance != c->pack_instance ||
 	    !p->state_generation || p->switching_lease != c->lease ||
 	    !p->attached || !p->typec_owned || !p->typec_charge || !p->thermal_normal ||
@@ -233,7 +253,7 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 	if (!ret)
 		ret = x710_controller_source_check(c, &first);
 	if (!ret)
-		ret = sm5714_battery_read_pack(c->lease, &a);
+		ret = x710_controller_pack(c, &a);
 	if (!ret)
 		ret = x710_controller_pack_check(c, &a, &first);
 	if (!ret) {
@@ -243,7 +263,7 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 			ret = x710_controller_measure(c, &physical);
 	}
 	if (!ret)
-		ret = sm5714_battery_read_pack(c->lease, &b);
+		ret = x710_controller_pack(c, &b);
 	if (!ret)
 		ret = x710_controller_source(c, &last);
 	if (ret)
@@ -274,6 +294,7 @@ static int x710_controller_facts(void *context, struct x710_charge_facts *out)
 	*out = (struct x710_charge_facts) {
 		.epoch = c->generation, .observed_ms = oldest, .capacity = b.capacity,
 		.pack_decic = b.pack_decic, .die_decic = c->die_decic,
+		.pack_current_ua = b.current_ua, .current_valid = true,
 		.vbat_mv = b.voltage_uv / 1000, .fixed_mv = c->fixed.budget_mv,
 		.attached = true, .battery_present = true, .healthy = true,
 		.pack_valid = true, .voltage_valid = true, .soc_valid = true,
@@ -631,6 +652,10 @@ static void x710_controller_finish(struct x710_native_controller *c, int ret, bo
 	result.hardware_owner = c->hardware_owner;
 	result.error = ret;
 	result.cleanup_error = c->cleanup_error;
+	result.pack_current_ua = c->pack_current.current_ua;
+	result.pack_current_started_ms = c->pack_current.started_ms;
+	result.pack_current_completed_ms = c->pack_current.completed_ms;
+	result.pack_current_valid = c->pack_current_valid;
 	result.hardware_quiesced = c->hardware_quiesced;
 	result.pps_observed = c->pps_observed;
 	result.fixed_observed = c->fixed_observed;

@@ -270,7 +270,7 @@ static struct x710_charge_facts active_facts(u64 epoch){
  return (struct x710_charge_facts){.epoch=epoch,.observed_ms=fake_clock,.capacity=30,
  .pack_decic=300,.die_decic=300,.vbat_mv=3800,.fixed_mv=9000,
  .apdo_min_mv=8200,.apdo_max_mv=10500,.apdo_ma=1800,
- .attached=true,.battery_present=true,.healthy=true,.pack_valid=true,.voltage_valid=true,
+ .attached=true,.battery_present=true,.healthy=true,.pack_valid=true,.voltage_valid=true,.current_valid=true,.pack_current_ua=1000000,
  .soc_valid=true,.die_valid=true,.adc_valid=true,.fixed_healthy=true,.apdo=true,
  .thermal_normal=true,.software_ocp_verified=true};
 }
@@ -313,10 +313,14 @@ void native_active(int mode,int *o){
  if(mode==1)facts.epoch++;
  if(mode==2)source_failure=-EIO;
  if(mode==3)facts.pack_decic=450;
+ if(mode==7)facts.current_valid=false;
+ if(mode==8)facts.pack_current_ua=3600001;
  o[4]=sm5440_native_control(SM5440_NATIVE_START,&owner,&in,&result);
  o[5]=m.on;o[6]=sm.native.actuator.epoch;o[7]=sm.native.consumer_epoch;
  if(!o[4]){
   raw13(m.reg+0x22,mode==4?2401:1920);facts=active_facts(901);
+  if(mode==9)facts.current_valid=false;
+  if(mode==10)facts.pack_current_ua=3600001;
   o[8]=native_sample(SM5440_NATIVE_MONITOR_BEGIN,&owner,&in,&result);
   o[9]=result.physical.valid;o[10]=result.die_decic;o[11]=result.vbus_uv;
   o[12]=result.physical.ibus_ua;
@@ -331,6 +335,8 @@ void native_active(int mode,int *o){
     goto final_release;}
    o[18]=native_sample(SM5440_NATIVE_ADC_BEGIN,&owner,&in,&result);physical=result.physical;
    facts=active_facts(901);
+   if(mode==11)facts.current_valid=false;
+   if(mode==12)facts.pack_current_ua=-3600001;
    if(mode==5)supplied_source.source_generation++;
    o[19]=sm5440_native_control(SM5440_NATIVE_RESUME,&owner,&in,&result);
    if(!o[19]){raw13(m.reg+0x22,1920);facts=active_facts(901);
@@ -507,6 +513,28 @@ final_release:
         self.assertEqual(o[19], -errno.ESTALE)
         self.assertEqual(o[25], 1)
         self.assertEqual(o[22:25], [0, 1, 0])
+
+    def test_native_epoch_mapping_preserves_current_refusal_at_start(self):
+        for mode in (7, 8):
+            o = self.native_active_case(mode)
+            self.assertEqual(o[4], -errno.EPERM)
+            self.assertEqual(o[5], 0)
+            self.assertEqual(o[22:25], [0, 1, 0])
+
+    def test_native_current_fault_uses_supervisor_off_without_another_on(self):
+        for mode in (9, 10):
+            o = self.native_active_case(mode)
+            self.assertEqual(o[8], -errno.EPERM)
+            self.assertEqual(o[25], 1)
+            self.assertEqual(o[22:25], [0, 1, 0])
+
+    def test_native_current_loss_or_discharge_excursion_cannot_resume(self):
+        for mode in (11, 12):
+            o = self.native_active_case(mode)
+            self.assertEqual(o[13:18], [0, 1, 1, 1, 1])
+            self.assertEqual(o[19], -errno.EPERM)
+            self.assertEqual(o[25], 1)
+            self.assertEqual(o[22:25], [0, 1, 0])
 
     def test_terminal_cleanup_cancels_pending_off_adc_after_running_monitor(self):
         o = self.native_active_case(6)
