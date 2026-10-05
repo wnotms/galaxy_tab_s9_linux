@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test319，窗口为 **Test310–Test319**；没有生成镜像的轮次仍占一轮。
+  编号为 Test320，窗口为 **Test311–Test320**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-05 Test319 STOP before reboot: actual Windows Code43 descriptor failure
+survives owner-confirmed PC cable/port reconnect; nativeADB absent, same647d50c8
+Wi-Fi/config/notes/pack22%/26.5C/pumpOFF remain healthy. No reboot/flash/BCB/modules
+or device config write. Test318 undeployed. Test320 independently registers ONE
+unchanged normal Wi-Fi systemctlreboot for USB recovery; intentional incoming
+Code43 only, exactnormal endpoint/uniquehistory/nativeADB/PnP0/15s health required.
+No live gadget/adbd restart, no charging policy change/PPS/ON/second reset;
+first non-clean STOP. Reuse frozen parsers, tests/build executed:false.
+Original308 accepted311 operating rollback belongs to318/320; no new image.
+
 
 2026-10-05 Test319 normal accepted311 reentry registered before Test318 ADC
 deployment. Owner confirmed manual647d50c8; config/notes exact but known incoming
