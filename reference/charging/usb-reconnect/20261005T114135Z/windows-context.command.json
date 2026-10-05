@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)\n$usb = @(Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object {$_.InstanceId -like 'USB\\*'} | ForEach-Object { $c=Get-PnpDeviceProperty -InstanceId $_.InstanceId -KeyName 'DEVPKEY_Device_ProblemCode' -ErrorAction SilentlyContinue; [PSCustomObject]@{Status=$_.Status;ProblemCode=$c.Data;Name=$_.FriendlyName;InstanceId=$_.InstanceId}})\n$ips = @(Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue | Where-Object {$_.AddressState -eq 'Preferred'} | Select-Object InterfaceAlias,IPAddress,PrefixLength)\n$neighbors = @(Get-NetNeighbor -AddressFamily IPv4 -ErrorAction SilentlyContinue | Where-Object {$_.IPAddress -like '10.139.153.*'} | Select-Object InterfaceAlias,IPAddress,State)\n[PSCustomObject]@{USB=$usb;HostIPv4=$ips;KnownSubnetNeighbors=$neighbors} | ConvertTo-Json -Depth 5\n"
+  ],
+  "started_utc": "2026-10-05T11:43:12.832297+00:00",
+  "ended_utc": "2026-10-05T11:43:32.856854+00:00",
+  "status": 124
+}

@@ -1,0 +1,45 @@
+{
+  "verdict": "ACCESS_UNAVAILABLE_STOP",
+  "source_head": "1a314e4efd3198f10e9effcaac6c68e57bc6506f",
+  "adb_list_status": 0,
+  "adb_devices": [],
+  "filtered_windows_pnp_status": 0,
+  "filtered_windows_pnp_matches": [],
+  "expanded_windows_usb_context_status": 124,
+  "windows_code43": "UNKNOWN: expanded probe timed out; filtered probe matched no device",
+  "wifi": {
+    "address": "10.139.153.84",
+    "status": 255,
+    "error": "No route to host",
+    "authenticated": false
+  },
+  "current_boot_id": null,
+  "current_kernel_identity": null,
+  "current_battery": null,
+  "last_known_battery": {
+    "captured_utc": "2026-10-05T11:31:52Z",
+    "boot_id": "5e039c8f-c138-47d2-9629-3a07ae6162ff",
+    "soc_percent": 0,
+    "voltage_uv": 3213000,
+    "current_ua": -351000,
+    "temp_decic": 305,
+    "cmdline_lpcharge": true,
+    "evidence": "reference/charging/battery-recovery/20261005T113152Z.json",
+    "is_current_observation": false
+  },
+  "kernel_journal": {
+    "collected": false,
+    "reason": "No accessible device transport"
+  },
+  "device_mutations": [],
+  "physical_reconnect_timing_captured": false,
+  "cpu_stall_proven": false,
+  "tests": {
+    "executed": false,
+    "reason": "Read-only transport evidence/status; no code change"
+  },
+  "build": {
+    "executed": false
+  },
+  "next_required": "Owner screen/power/current Wi-Fi address/boot attribution; no automatic recovery or deploy"
+}

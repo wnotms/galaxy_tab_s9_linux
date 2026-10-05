@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 owner replied reconnect complete; endpoint capture 114135Z STOP:
+nativeADB list empty/filteredWindowsPnP no match; expandedWindowsUSB/context
+20s timeout preserved, Code43UNKNOWN. Wi-Fi last10.139.153.84 No route before
+auth; no currentboot/identity/battery/deviceUSB/journal, no CPUstall proof.
+Prior113152Z same5e039c8f lpcharge1/0%3.213V/30.5C/net−351mA retained separately,
+not a current observation or shutdown-cause proof. Owner screen/IP/reboot reply
+pending. No automatic recovery/flash/reboot/service/config/ADC/PPS/ON; tests/
+buildfalse (evidence only). reference/charging/usb-reconnect/20261005T114135Z/.
+
+
 2026-10-05 ADC context read stopped before registers because boot changed to
 5e039c8f-c138-47d2-9629-3a07ae6162ff. Sameaccepted311 config/notes,lpcharge=1,
 1%3.409V29.2C/PCnet−239mA. No agentreboot; ownercause/recharge reply pending.
