@@ -67,6 +67,8 @@ static pthread_cond_t wq_cond=PTHREAD_COND_INITIALIZER;
 struct delayed_work {struct work_struct work;};
 #define DECLARE_DELAYED_WORK(n,f) struct delayed_work n={{f}}
 static struct work_struct *pending;
+/* Refuse only the named job; preserve the existing global failure injection. */
+static struct work_struct *queue_fail_target;
 static struct delayed_work *delayed_pending;
 static u64 delayed_due;
 static bool running,quit,queue_fail,defer_work;
@@ -90,7 +92,7 @@ static struct workqueue_struct *alloc_ordered_workqueue(const char *name,int fla
  pthread_create(&q->thread,NULL,wq_loop,NULL);return q;
 }
 static bool queue_work(struct workqueue_struct *q,struct work_struct *job){
- (void)q;pthread_mutex_lock(&wq_lock);bool ok=!pending&&!queue_fail;
+ (void)q;pthread_mutex_lock(&wq_lock);bool ok=!pending&&!queue_fail&&job!=queue_fail_target;
  if(ok){pending=job;pthread_cond_broadcast(&wq_cond);}pthread_mutex_unlock(&wq_lock);return ok;
 }
 static bool queue_delayed_work(struct workqueue_struct *q,struct delayed_work *w,unsigned int ms){

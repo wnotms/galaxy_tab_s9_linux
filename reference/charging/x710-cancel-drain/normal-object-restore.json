@@ -1,0 +1,17 @@
+{
+  "returncode": 0,
+  "seconds": 7.433251490001567,
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "drivers/power/supply/x710-charge-controller.o"
+  ],
+  "reason": "W=1 defines KBUILD_EXTRA_WARN1 and recompiles the object; restore standard flags in shared cache without relinking/mutating sealed formal artifacts. Compare runtime sections next.",
+  "object_sha256": "b3bdcd42f5facce149d9c54bebdb5b7e8b9c635abaefeecadb85fea353f000db"
+}

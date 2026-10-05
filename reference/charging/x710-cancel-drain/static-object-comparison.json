@@ -1,0 +1,14 @@
+{
+  "standard_flags_restored": true,
+  "W1_runtime_sections_unchanged": true,
+  "changed_sections": [
+    ".debug_line",
+    ".debug_str",
+    ".rela.debug_info",
+    ".rela.debug_line"
+  ],
+  "bad_runtime_sections": [],
+  "W1_object_sha256": "f78380dc37ea54c7852d783dd614c68ac98dd6605b37c35a5f526a0f47f1b5a4",
+  "standard_object_sha256": "b3bdcd42f5facce149d9c54bebdb5b7e8b9c635abaefeecadb85fea353f000db",
+  "initial_assertion": "Byte-identical object assumption failed after successful W1/sparse make; raw static.json/log retained. Normal and W1 compiled objects compared; no formal relink or device operation."
+}

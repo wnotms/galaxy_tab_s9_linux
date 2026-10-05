@@ -190,7 +190,7 @@ static void reset(int mode,int failure){
  block_event=event_count=lock_errors=pps_count=restore_count=release_count=hardware_release=0;
  adc_count=sources=packs=0;on_count=pause_count=resume_count=prepare_count=monitor_count=0;
  pps_mv=8800;pps_ma=1800;hardware_owned=false;hardware_off=true;pps_mode=false;lease=0;
- trace_n=0;trace[0]=0;blocked=released=false;queue_fail=false;defer_work=false;
+ trace_n=0;trace[0]=0;blocked=released=false;queue_fail=false;queue_fail_target=NULL;defer_work=false;
  atomic_store(&clock_ms,1000);atomic_store(&cancel_started,0);
 }
 static void output(int ret,const struct x710_controller_result *r,int64_t *o){
@@ -286,6 +286,43 @@ void active_cycle(int stage,int failure,int64_t *o){
  o[36]=hardware_off;o[37]=x710_controller.tx.target_mv;o[38]=x710_controller.tx.target_ma;
  o[39]=event_count-before;o[42]=r.pack_current_ua;o[43]=r.pack_current_valid;
  // End each test's mock session; preserve the asserted results before cleanup.
+ cancel_delayed_work_sync(&x710_controller_periodic);
+ if(x710_controller_active)x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);
+}
+
+static void defer_execution(bool defer){
+ pthread_mutex_lock(&wq_lock);defer_work=defer;pthread_cond_broadcast(&wq_cond);
+ pthread_mutex_unlock(&wq_lock);
+}
+void active_admission(int mode,int command,int64_t *o){
+ reset(0,0);x710_controller_activation_qualified=true;
+ struct x710_controller_result r={};
+ int started=x710_charge_controller_request(X710_CONTROLLER_START,8800,1800,&r);
+ flush_work(&x710_controller_job);o[25]=started;o[26]=r.active;
+ if(started)return;
+ defer_execution(true);
+ if(mode==0)x710_charge_controller_cancel();else queue_fail_target=&x710_controller_job;
+ int before=event_count;
+ int refused=x710_charge_controller_request(command,command<2?8800:0,command<2?1800:0,&r);
+ int supplier_calls=event_count-before;
+ struct x710_controller_result status={};x710_charge_controller_status(&status);
+ bool cancelled=status.cancelled,cleanup_pending;
+ pthread_mutex_lock(&wq_lock);
+ cleanup_pending=pending==&x710_controller_periodic.work||delayed_pending==&x710_controller_periodic;
+ pthread_mutex_unlock(&wq_lock);
+ int again=x710_charge_controller_request(X710_CONTROLLER_MONITOR,0,0,&r);
+ queue_fail_target=NULL;
+ if(mode==2)scenario=11; // unknown hardware OFF must remain latched
+ int pm=0,post_calls=0;
+ if(mode==3){pm=x710_controller_pm(NULL,PM_SUSPEND_PREPARE,NULL);
+  int prior=event_count;x710_controller_pm(NULL,PM_POST_SUSPEND,NULL);post_calls=event_count-prior;}
+ defer_execution(false);flush_work(&x710_controller_periodic.work);
+ x710_charge_controller_status(&status);output(refused,&status,o);
+ o[20]=supplier_calls;o[21]=cleanup_pending;o[22]=cancelled;o[23]=again;
+ o[24]=status.active;o[27]=hardware_owned;o[28]=hardware_off;
+ o[29]=on_count;o[30]=resume_count;o[31]=x710_controller_activation_qualified;
+ o[32]=pm;o[33]=post_calls;
+ // End a faulty pre-fix mock session without hiding the asserted evidence.
  cancel_delayed_work_sync(&x710_controller_periodic);
  if(x710_controller_active)x710_charge_controller_request(X710_CONTROLLER_STOP,0,0,&r);
 }
@@ -534,6 +571,52 @@ void active_cycle(int stage,int failure,int64_t *o){
             self.assertEqual(o[28], 1)
             self.assertEqual(o[27], o[29])
             self.assertEqual(o[31:33], [0, 0] if stage == 10 else [1, 1])
+
+    def admission_case(self, mode, command):
+        out = (ctypes.c_int64 * 34)()
+        self.lib.active_admission(mode, command, out)
+        self.assertEqual(out[25:27], [0, 1], 'actual mock-granted active session')
+        self.assertEqual(out[2], 0, 'no supplier calls under publication lock')
+        return list(out)
+
+    def test_pending_active_cancellation_cannot_be_revoked_by_any_request(self):
+        for command in range(6):
+            with self.subTest(command=command):
+                o = self.admission_case(0, command)
+                self.assertEqual(o[0], -errno.ESHUTDOWN)
+                self.assertEqual(o[20:23], [0, 1, 1])
+                self.assertEqual(o[23], -errno.ESHUTDOWN)
+                self.assertEqual(o[24], 0)
+                self.assertEqual(o[4:7], [1, 1, 1])
+                self.assertEqual(o[27:32], [0, 1, 1, 0, 0])
+
+    def test_active_request_queue_refusal_schedules_once_only_terminal_exit(self):
+        for command in range(2, 6):
+            with self.subTest(command=command):
+                o = self.admission_case(1, command)
+                self.assertEqual(o[0], -errno.EBUSY)
+                self.assertEqual(o[20:23], [0, 1, 1])
+                self.assertEqual(o[23], -errno.ESHUTDOWN)
+                self.assertEqual(o[4:7], [1, 1, 1])
+                self.assertEqual(o[24], 0)
+                self.assertEqual(o[27:32], [0, 1, 1, 0, 0])
+
+    def test_queue_refusal_with_unknown_off_forbids_voltage_and_release(self):
+        o = self.admission_case(2, 4)
+        self.assertEqual(o[0], -errno.EBUSY)
+        self.assertEqual(o[20:23], [0, 1, 1])
+        self.assertEqual(o[4:7], [0, 0, 1])
+        self.assertEqual(o[10], 1)
+        self.assertEqual(o[24], 0)
+        self.assertEqual(o[31], 0)
+
+    def test_pm_drains_queued_emergency_exit_and_resume_does_not_restart(self):
+        o = self.admission_case(3, 5)
+        self.assertEqual(o[0], -errno.EBUSY)
+        self.assertEqual(o[20:23], [0, 1, 1])
+        self.assertEqual(o[4:7], [1, 1, 1])
+        self.assertEqual(o[24], 0)
+        self.assertEqual(o[27:34], [0, 1, 1, 0, 0, 1, 0])
 
     def test_profile_link_and_no_automatic_activation(self):
         patch = (ROOT / 'kernel/patches/0020-power-supply-hook-sm5440-native-control.patch').read_text()

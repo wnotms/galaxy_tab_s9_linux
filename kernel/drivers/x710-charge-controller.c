@@ -811,7 +811,9 @@ int x710_charge_controller_request(enum x710_controller_command command,
 	if (!mutex_trylock(&x710_controller_request_lock))
 		return -EBUSY;
 	mutex_lock(&x710_controller_lock);
-	if (x710_controller_quiescing || !x710_controller_wq || x710_controller_unresolved) {
+	/* A retained cancelled session owns terminal cleanup, not another command. */
+	if (x710_controller_quiescing || !x710_controller_wq || x710_controller_unresolved ||
+	    (x710_controller_active && x710_controller_cancelled)) {
 		ret = -ESHUTDOWN;
 		goto unlock;
 	}
@@ -841,6 +843,13 @@ int x710_charge_controller_request(enum x710_controller_command command,
 	reinit_completion(&x710_controller_done);
 	if (!queue_work(x710_controller_wq, &x710_controller_job)) {
 		x710_controller_inflight = false;
+		if (x710_controller_active) {
+			/* Periodic monitoring was cancelled above. Never leave an active
+			 * session unsupervised or retry the refused command.
+			 */
+			x710_controller_cancelled = true;
+			mod_delayed_work(x710_controller_wq, &x710_controller_periodic, 0);
+		}
 		ret = -EBUSY;
 		goto unlock;
 	}

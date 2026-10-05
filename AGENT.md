@@ -98,6 +98,24 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native cancellation/queue-refusal increment qualified offline:
+active cancelled sessions refuse new controls; an active regular queue refusal
+keeps EBUSY and schedules once-only terminal OFF/fixed/release. Twelve actual-C
+pre-fix failing subcases reproduced; 29 affected controller tests PASS 0.442s,
+unchanged prior dependencies reused by exact hashes, not a new full regression.
+ARM64 PASS 85.446s; W=1/sparse PASS 7.014s, known upstream vDSO warning only;
+standard flags restored after debug-only object differences. Exact preceding
+native config/accepted311 DTB/181 paired files/56 protected/36 formal preserved.
+Formal out/kernel-x710-cancel-drain/, evidence reference/charging/x710-cancel-drain/.
+No device/SM5714/TCPC/DTS/config/USB/adbd/rootfs/current/thermal/PPS/ON changes;
+activation/OCP grants remain closed. Full port NOT READY: physical ADC/current/
+calibration/cutoff and separate PPS/pump/fault/PM/higher-power acceptance remain.
+Owner now attributes current access loss to low-battery shutdown; recharge using
+accepted 18W supply before physical normal-entry checks. This does not attribute
+previous unaccounted boot changes. PC port capability remains pending; review
+found possible valid 5V grant underuse via SDP clamp, but no blind current raise.
+
+
 2026-10-05 native real pack current now retained/bracketed/mandatory in actual
 controller/core/actuator/supervisor/paused resume: both acquisitions refused
 independently, invalid reads erase previous current, raw refusal telemetry.

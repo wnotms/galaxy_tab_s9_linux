@@ -1,0 +1,15 @@
+{
+  "valid": true,
+  "changed_implementation_and_test_paths": [
+    "kernel/drivers/x710-charge-controller.c",
+    "tests/test_x710_charge_controller.py",
+    "tests/x710_controller_kernel_mock.h"
+  ],
+  "protected_sources": 56,
+  "preserved_formal_artifacts": 36,
+  "unchanged_dependency_test_scope": "Only test_x710_charge_controller uses modified mock header. Remaining 15 prior affected suites unchanged from base; reuse previous qualification, not reported as re-executed.",
+  "native_activation_available": false,
+  "software_ocp_grant": false,
+  "hardware_limits_changed": false,
+  "device_operations": []
+}

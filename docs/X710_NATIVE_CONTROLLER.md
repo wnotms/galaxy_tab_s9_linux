@@ -45,7 +45,11 @@ Physical ADC/calibration/current/protection/cutoff/PPS acceptance remains requir
 
 Waiter timeout requests cancellation but is not worker termination. New work is
 refused until the existing worker finishes its once-only cleanup. A read-only
-status call exposes in-flight and unresolved ownership. PM marks cancellation,
+status call exposes in-flight and unresolved ownership. A cancelled retained
+session rejects all new controls until terminal drain; request-worker queue
+refusal schedules immediate terminal cleanup rather than leaving monitoring
+cancelled. See [cancellation and queue-failure design](X710_CANCEL_DRAIN.md).
+PM marks cancellation,
 flushes the work including cleanup, and vetoes suspend on unresolved hardware or
 switching ownership. Resume never starts work or arms charging. Provider unbind
 and detach are observed through their native token checks; uncertain OFF must
