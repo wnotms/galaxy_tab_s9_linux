@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "echo @@udc; for x in /sys/class/udc/*; do echo \"$x\"; cat \"$x/state\" \"$x/current_speed\" \"$x/function\" 2>/dev/null; done; echo @@gadget; for g in /sys/kernel/config/usb_gadget/*; do echo \"$g\"; cat \"$g/UDC\" \"$g/idVendor\" \"$g/idProduct\" 2>/dev/null; ls -l \"$g/configs\"/*; done; echo @@usb0; ip -d link show usb0; echo @@adbd; systemctl show gts9-adbd gts9-usb-acm gts9-usb-adb-prepare -p ActiveState -p SubState -p MainPID -p NRestarts -p ExecMainStatus; echo @@role-switch; for r in /sys/class/usb_role/*; do cat \"$r/role\"; done; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-05T04:40:49.841095+00:00",
+  "started_utc": "2026-10-05T04:40:48.756072+00:00",
+  "status": 0
+}

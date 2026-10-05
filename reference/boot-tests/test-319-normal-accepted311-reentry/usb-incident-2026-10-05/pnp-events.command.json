@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-WinEvent -FilterHashtable @{\n  LogName='Microsoft-Windows-Kernel-PnP/Configuration'\n  StartTime=(Get-Date).AddMinutes(-30)\n} -MaxEvents 100 -ErrorAction SilentlyContinue |\n  Where-Object { $_.Message -match 'VID_0000&PID_0002|DEVICE_DESCRIPTOR_FAILURE|VID_0525' } |\n  Select-Object TimeCreated, Id, ProviderName, Message | Format-List\n"
+  ],
+  "ended_utc": "2026-10-05T04:40:49.332415+00:00",
+  "started_utc": "2026-10-05T04:40:48.755229+00:00",
+  "status": 1
+}

@@ -1,0 +1,55 @@
+@@boot
+647d50c8-0fc9-4fb0-bfea-5006c519a255
+@@udc
+configured
+super-speed-plus
+@@ffs
+1
+@@services
+active
+active
+@@dmesg
+[   16.353440] [     T76] qcom-rpmhpd 17a00000.rsc:power-controller: sync_state() pending due to a9c000.serial
+[   16.353447] [     T76] qnoc-sm8550 1600000.interconnect: sync_state() pending due to a9c000.serial
+[   16.353453] [     T76] qnoc-sm8550 24100000.interconnect: sync_state() pending due to a9c000.serial
+[   16.353459] [     T76] qnoc-sm8550 interconnect-0: sync_state() pending due to a9c000.serial
+[   16.353465] [     T76] gcc-sm8550 100000.clock-controller: sync_state() pending due to a9c000.serial
+[   31.712475] [     T95] regulator: Not disabling unused regulators
+[  237.389084] [    T663] gts9-power-key: screen off (backlight off, system keeps running)
+[  316.388797] [     T12] kworker/u32:0 (12) used greatest stack depth: 8880 bytes left
+[  316.440450] [      C5] kworker/u32:0 (12): highest shadow stack usage: 792 bytes
+[  609.878251] [    T663] gts9-power-key: screen on (backlight restored)
+[  610.375081] [    T663] gts9-power-key: screen off (backlight off, system keeps running)
+[ 1926.260462] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)
+[ 1928.393914] [    T663] gts9-power-key: screen on (backlight restored)
+[ 1931.090371] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)
+[ 1931.105142] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 1931.284256] [     T39] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 1931.362361] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 1931.362365] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 1800 mA (not measured VBUS)
+[ 1931.616260] [    T663] gts9-power-key: screen off (backlight off, system keeps running)
+[ 1933.992175] [      C6] ath11k_pci 0000:01:00.0: msdu_done bit in attention is not set
+[ 2270.757997] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)
+[ 2273.492889] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)
+[ 2273.522015] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 2, 1800 mA input, 2100 mA battery
+[ 2273.705138] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 2, 500 mA input, 2100 mA battery
+[ 2273.705159] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 500 mA (not measured VBUS)
+[ 2273.851924] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery
+[ 2273.851938] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1500 mA (not measured VBUS)
+[ 2274.380882] [   T1562] sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery
+[ 3477.564456] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)
+[ 3480.945435] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)
+[ 3480.952063] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 3481.221187] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 3481.221200] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 1800 mA (not measured VBUS)
+[ 3481.696184] [   T1562] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 3841.559046] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)
+[ 3843.740404] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)
+[ 3843.755805] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 3844.029419] [    T120] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+[ 3844.029434] [    T120] sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 1800 mA (not measured VBUS)
+[ 3844.674637] [   T2788] sm5714-battery 2-0049: ordinary charging: USB type 1, 500 mA input, 500 mA battery
+@@tcpm
+/sys/kernel/debug/usb/tcpm/*
+@@boot-end
+647d50c8-0fc9-4fb0-bfea-5006c519a255

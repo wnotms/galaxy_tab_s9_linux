@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@udc; cat /sys/class/udc/a600000.usb/state /sys/class/udc/a600000.usb/current_speed; echo @@ffs; cat /sys/kernel/config/usb_gadget/gts9/functions/ffs.adb/ready; echo @@services; systemctl is-active gts9-adbd gts9-usb-acm; echo @@dmesg; dmesg | tail -40; echo @@tcpm; for p in /sys/kernel/debug/usb/tcpm/*; do echo \"$p\"; cat \"$p\"; done; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-05T04:42:50.232084+00:00",
+  "started_utc": "2026-10-05T04:42:49.906656+00:00",
+  "status": 0
+}
