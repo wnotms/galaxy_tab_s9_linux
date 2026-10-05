@@ -57,8 +57,8 @@ def verify_inputs(require_push=False):
         if git('status','--porcelain','--',*controlled):raise ValueError('uncommitted registered input')
         subprocess.run(['git','-C',str(ROOT),'ls-files','--error-unmatch',*controlled],check=True,stdout=subprocess.DEVNULL)
 
-def ssh_command(rec,name,command,timeout=15,required=True):
-    pre=read(R/'preflight/summary.json');wifi=pre['wifi']
+def ssh_command(rec,name,command,timeout=15,required=True,address=None):
+    pre=read(R/'preflight/summary.json');wifi=address or pre['wifi']
     if not re.fullmatch(r'(?:\d{1,3}\.){3}\d{1,3}',wifi):raise ValueError('invalid registered Wi-Fi address')
     return rec.command(name,['ssh','-i','/home/ms/.ssh/gts9_ed25519','-o','BatchMode=yes',
         '-o','ConnectTimeout=5','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(TRUST),
@@ -196,9 +196,22 @@ def wifi_address(address):
     ipaddress.IPv4Address(address)
     state=read(R/'mutation-state.json')
     if state['phase']!='candidate-installed-awaiting-owner-fixed9-boot':raise ValueError('address update outside pending single boot')
-    pre=read(R/'preflight/summary.json');pre['wifi']=address;write(R/'preflight/summary.json',pre)
-    rec=p.Recorder(R/'wifi-address');raw,_=ssh_command(rec,'identity','cat /etc/machine-id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes',timeout=8)
-    if raw.splitlines()[0]!='3c2a1b8f2d624db4b5ffdc836050fcf6' or [s.split()[0] for s in raw.splitlines()[1:]]!=[PLAN['candidate_config_sha256'],PLAN['candidate_notes_sha256']]:raise ValueError('address candidate authentication failed')
+    path=R/'preflight/summary.json';pre=read(path)
+    rec=p.Recorder(R/'wifi-address');raw,_=ssh_command(rec,'identity','cat /etc/machine-id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes',timeout=8,address=address)
+    rows=raw.splitlines()
+    if len(rows)!=3 or rows[0]!='3c2a1b8f2d624db4b5ffdc836050fcf6' or [s.split()[0] for s in rows[1:]]!=[PLAN['candidate_config_sha256'],PLAN['candidate_notes_sha256']]:raise ValueError('address candidate authentication failed')
+    # Keep readers on the enrolled address until authentication and publication
+    # both succeed. A failed probe must never redirect an in-flight collector.
+    import os,tempfile
+    pre['wifi']=address
+    temporary=None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w',dir=path.parent,delete=False) as stream:
+            temporary=Path(stream.name)
+            stream.write(json.dumps(pre,indent=2,sort_keys=True)+'\n')
+        os.replace(temporary,path)
+    finally:
+        if temporary and temporary.exists():temporary.unlink()
     return dict(authenticated_address=address)
 
 if __name__=='__main__':
