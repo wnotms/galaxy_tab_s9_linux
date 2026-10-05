@@ -1,0 +1,34 @@
+{
+  "verdict": "USB_RECONNECT_ENDPOINT_PASS",
+  "boot_id": "ecaa3c64-5c69-4bbe-b755-1a2aff6a88ca",
+  "boot_changed": false,
+  "config_sha256": "55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89",
+  "notes_sha256": "cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6",
+  "adb_shell": true,
+  "windows_problem_codes": [
+    0,
+    0,
+    0
+  ],
+  "ncm_banner": true,
+  "wifi_authenticated": true,
+  "battery": {
+    "soc_percent": 0,
+    "vbat_uv": 3226000,
+    "current_ua": -119000,
+    "temp_decic": 308,
+    "health": "Good"
+  },
+  "pump_off": true,
+  "physical_cycle_timing_captured": false,
+  "device_mutations": [],
+  "deployment_stopped_low_battery": true,
+  "host_capture_error": "First Wi-Fi probe incorrectly reused removed temporary known-hosts file. Preserved failure; retry pinned host key from native ADB succeeded.",
+  "tests": {
+    "executed": false,
+    "reason": "Read-only evidence/status only."
+  },
+  "build": {
+    "executed": false
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-F",
+    "/dev/null",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-reconnect-host-dd3oland",
+    "-o",
+    "HostKeyAlias=gts9-reconnect",
+    "root@10.139.153.84",
+    "cat /proc/sys/kernel/random/boot_id; cat /etc/machine-id"
+  ],
+  "started_utc": "2026-10-05T10:59:50.064442+00:00",
+  "ended_utc": "2026-10-05T10:59:50.416736+00:00",
+  "status": 255
+}

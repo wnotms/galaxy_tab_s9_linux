@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 latest owner-confirmed USB reconnect endpoint passes nativeADB/Windows
+composite+ADB+NCM Code0/Up/interface-bound NCM SSH/authenticatedWi-Fi, sameecaa3c64
+accepted311 config/notes/SinkDevice/DCCabsent/pumpOFF. Battery0%/3.226V/30.8C/Good
+and PCnet−119mA: no deployment/reboot; asked owner to recharge on accepted18W C2.
+Read-only evidence reference/charging/usb-reconnect/20261005T105902Z/. First Wi-Fi
+host tempfile-path error preserved, corrected pinned retry succeeds. Endpoint
+only/no permanentfix or cycle timing claim. No device mutation; tests/buildfalse.
+
+
 2026-10-05 native OFF coordination worker now links real source/pack/SM5440
 owner/ADC/switching lease/TCPM PPS/fixed-return operations, explicitly requested
 only under X710_NATIVE_CONTROL. Generation/provider checks, timeout cancellation
