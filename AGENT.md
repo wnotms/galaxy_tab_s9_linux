@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 isolated fixed9V startup correction source80d590f0 qualifiedoffline:
+onlyONESHOT acceptsOFF8.5–9.5V initialinactiveREVBLK then2freshclean/sameclass/
+unchangedcontrols/5s; ordinaryPC3predicates/converter/rearm/PM unchanged.158affected
+PASS6.601s; finalARM64PASS60.731s; W1/sparsePASS/no warnings/exactobjectrestored.
+SameTest324config/exact323DTB/181runtime/59protected/30formal verified. Newformal
+out/kernel-x710-oneshot-fixed9 and boot-bundle-x710-oneshot-fixed9; samecache reused,
+not oldprovider. No physical325 registration/deployment yet; deviceaccepted323
+4cf32922 retained,324STOP preserved. No PPS/pump/current/protection/USB change;
+NEXT_PHYSICAL_PLAN needsnewregistration. FullportNOTREADY.
+
+
 2026-10-06 Test324 stopped and exact accepted323 restored. OwnerPCreturn recovered
 originalcandidate eb24355a, normal/exactconfig/notes/uniquejournalhistory;
 nativeattempt0/samples0, initialOFF9.4V/REVBLKlatchevent/livecleanfaultcontext

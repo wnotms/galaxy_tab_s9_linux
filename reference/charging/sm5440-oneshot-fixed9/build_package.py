@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build/hash a boot-only Test318 package offline. Never contacts a device."""
+"""Build/hash a boot-only Test325 candidate offline. Never contacts a device."""
 import argparse
 import hashlib
 import json
@@ -97,8 +97,8 @@ def build():
     manifest(R / 'rollback-modules.sha256', original_modules)
     baseline = accepted['candidate_partitions']
     candidate = dict(baseline, boot=sha(boot))
-    package = dict(test='Test324', source_revision=q['source_revision'],
-                   kernel_qualification='isolated unchanged native one-shot ADC qualification', write_partitions=['boot'], modules=181,
+    package = dict(test='Test325', source_revision=q['source_revision'],
+                   kernel_qualification='isolated fixed9 OFF startup confirmation; unchanged native ADC converter', write_partitions=['boot'], modules=181,
                    baseline_partitions=baseline, candidate_partitions=candidate,
                    rollback_baseline='accepted Test323 source-authorized ordinary PC charging',
                    artifacts=dict(q['artifacts'], **{'boot.img': metadata(boot),
