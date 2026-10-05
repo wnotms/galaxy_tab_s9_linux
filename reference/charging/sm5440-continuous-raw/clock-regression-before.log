@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_time_before_enable_readback_is_refused (test_sm5440_adc_raw.RawHardwareTests.test_time_before_enable_readback_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_adc_raw.py", line 94, in test_time_before_enable_readback_is_refused
+    self.assertEqual(r[0], -errno.ESTALE)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != -116
+
+----------------------------------------------------------------------
+Ran 1 test in 0.315s
+
+FAILED (failures=1)
