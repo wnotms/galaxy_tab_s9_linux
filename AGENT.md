@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 subsequent owner-confirmed PC USB reconnect endpoint passes once:
+same ecaa3c64 accepted311 config/notes/cmdline, nativeADB, Windows composite/
+ADB/NCM Code0/Up, interface-bound NCM SSH banner and authenticated Wi-Fi.
+Pack16%/3.699V/31.3C/Good, PCSDP500mA net-349mA; below20% deployment gate,
+no flash/reboot/reset/service/config/PPS/ON. SM5440 OFF/IBUS0/fault0.
+Full1108-row journal, prior1104 exactcursorprefix, four ordinary screen/stack
+rows/no new detected CPU signature. Endpoint only, physical-cycle timing and
+permanent USB fix unproved; prior display faults UNKNOWN. Evidence
+reference/charging/usb-reconnect/20261005T070314Z/; tests/build executed:false,
+noActions. Offline native-observer/control integration remains unfinished.
+
 2026-10-05 native charging observation worker now actually linked under existing
 X710_CHARGING_POLICY profile: native source/pack/OFFfresh ADC bracket, exact
 instance/generation/PDO/budget/lease consistency, queued-token cancellation,

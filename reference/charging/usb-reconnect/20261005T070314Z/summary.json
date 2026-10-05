@@ -1,0 +1,79 @@
+{
+  "verdict": "USB_RECONNECT_ENDPOINT_PASS",
+  "source_head": "32ec4d902a0271cbcd9efe4fa64ebf09e096146f",
+  "boot_id": "ecaa3c64-5c69-4bbe-b755-1a2aff6a88ca",
+  "boot_id_unchanged": true,
+  "identity_matches_previous_accepted_endpoint": true,
+  "cmdline_unchanged": true,
+  "command_exit_codes": {
+    "device-state": 0,
+    "windows-usb": 0,
+    "ncm-banner": 0,
+    "wifi-identity": 0,
+    "kernel-journal": 0
+  },
+  "native_adb_shell": true,
+  "windows_problem_codes": [
+    0,
+    0,
+    0
+  ],
+  "windows_output_encoding": "GB18030 (raw bytes retained)",
+  "windows_ncm_up": true,
+  "host_ncm_ssh_banner": {
+    "ok": true,
+    "interface_index": 10,
+    "source_ipv4": "169.254.147.249",
+    "local_endpoint": "169.254.147.249:2131",
+    "remote_endpoint": "169.254.42.1:22",
+    "socket_interface": 10,
+    "banner": "SSH-2.0-OpenSSH_10.0p2 Debian-7+deb13u4\r\n",
+    "error": null
+  },
+  "authenticated_wifi": true,
+  "services": [
+    "active",
+    "active",
+    "active"
+  ],
+  "failed_units": [],
+  "roles": [
+    "[sink]",
+    "[device]"
+  ],
+  "dcc_absent": true,
+  "battery": {
+    "soc": 16,
+    "temperature_decic": 313,
+    "voltage_uv": 3699000,
+    "current_ua": -349000,
+    "health": "Good"
+  },
+  "pump_current_ua": 0,
+  "passive_fault": 0,
+  "sample_mode": "0x01",
+  "journal": {
+    "rows": 1108,
+    "previous_rows": 1104,
+    "previous_cursor_prefix_exact": true,
+    "additional_rows": 4,
+    "new_cpu_signature_hits": []
+  },
+  "permanent_usb_fix_proven": false,
+  "physical_cycle_timing_observed": false,
+  "device_mutation": false,
+  "reboot": false,
+  "flash": false,
+  "pps_request": false,
+  "pump_enable": false,
+  "deployment_blocked_by_soc": true,
+  "tests": {
+    "executed": false,
+    "reason": "Read-only endpoint evidence/status only; executable inputs unchanged."
+  },
+  "build": {
+    "executed": false,
+    "reason": "No kernel inputs changed."
+  },
+  "github_actions": false
+}
