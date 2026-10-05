@@ -1,0 +1,271 @@
+@@boot
+6d6fe2e7-4da4-4d20-95cb-465812e81f09
+@@uname
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+@@cmdline
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+@@uptime
+8.82 43.41
+@@identity
+aa906b6250752708f7ad7b9582e6227d83e6c7cc3bd7e94a93a7675a6c922e77  -
+1c8562ca607f54e62845272daa65ed624091914286bbd2a49a9e70d951d68cd7  /sys/kernel/notes
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3722000
+POWER_SUPPLY_VOLTAGE_AVG=3725000
+POWER_SUPPLY_VOLTAGE_OCV=3752000
+POWER_SUPPLY_CURRENT_NOW=-892000
+POWER_SUPPLY_CURRENT_AVG=-809000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=20
+POWER_SUPPLY_TEMP=295
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD
+@@passive
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_TYPE=Mains
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4294894509
+sample_present=1
+sample_fresh=0
+sample_age_ms=6204
+stopped=0
+fault=0
+startup_pending=0
+last_sample_error=0
+startup_retained=1
+startup_capture_jiffies=4294892372
+sample_valid=1
+sample_stamp_jiffies=4294892958
+sample_faults=0x0
+sample_gauge_attempted=1
+sample_adc_read_completed_ms=2645
+sample_gauge_started_ms=2645
+sample_gauge_completed_ms=2646
+sample_gauge_ret=0
+sample_gauge_uv=3705000
+sample_int=00 00 00 00
+sample_status=00 00 20 00
+sample_adc=1a a8 65 c0 00 00 65 b0 06 5c f0
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4949000
+sample_vbat_uv=3535000
+sample_ibus_ua=0
+sample_die_decic=255
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x80
+startup_gauge_attempted=1
+startup_adc_read_completed_ms=301
+startup_gauge_started_ms=301
+startup_gauge_completed_ms=302
+startup_gauge_ret=0
+startup_gauge_uv=3790000
+startup_int=00 00 62 00
+startup_status=00 00 20 00
+startup_adc=1c b8 68 80 00 00 65 18 06 61 40
+startup_int4_disable=0x00
+startup_int4_wait=0x01
+startup_mode_before=0x01
+startup_mode_after=0x01
+startup_cntl2=0xf2
+startup_vbuscntl=0xe7
+startup_vbatcntl=0x37
+startup_prtncntl=0xfe
+startup_vbus_uv=5015000
+startup_vbat_uv=3604000
+startup_ibus_ua=0
+startup_die_decic=255
+timing_test=0
+timing_attempted=1
+timing_admission_error=0
+timing_exit_error=0
+timing_error=0
+timing_cleanup_error=0
+timing_count=8
+timing_polls=42
+timing_restored=1
+timing_started_ms=2672
+timing_disabled_ms=2673
+timing_enabled_ms=2734
+timing_completed_ms=3179
+raw_test=1
+conversion_freshness_proven=0
+timing_observation_mode=2
+timing_controls=0c/df/0c/df
+timing_initial_int=00 00 00 00
+timing_initial_status=00 00 20 00
+timing_off_attempted=0
+timing_off_error=0
+timing_readiness_checks=1
+timing_first_readiness_error=0
+timing_source0=1/9/14/2646/2646/5000/1800/1
+timing_pack0=1/13/2646/2650/20/3705000/280
+timing_source1=1/9/14/3179/3179/5000/1800/1
+timing_pack1=1/13/3179/3183/20/3747000/280
+raw_sample0_read_ms=2757/2758
+raw_sample0_READY_observed=0
+timing_sample0_times=2734/2756/2756/2757/2758
+timing_sample0_int=00 00 00 00
+timing_sample0_status=00 00 20 00
+timing_sample0_status_after=00 00 20 00
+timing_sample0_adc=1a 68 65 c0 00 00 65 b0 06 5c f0
+timing_sample0_controls=01/0f/df
+timing_sample0_faults=0x0
+raw_sample1_read_ms=2817/2818
+raw_sample1_READY_observed=0
+timing_sample1_times=2756/2816/2816/2817/2818
+timing_sample1_int=00 00 00 00
+timing_sample1_status=00 00 20 00
+timing_sample1_status_after=00 00 20 00
+timing_sample1_adc=1a 68 67 08 00 00 65 b0 06 5c f8
+timing_sample1_controls=01/0f/df
+timing_sample1_faults=0x0
+raw_sample2_read_ms=2877/2878
+raw_sample2_READY_observed=0
+timing_sample2_times=2816/2876/2876/2877/2878
+timing_sample2_int=00 00 00 00
+timing_sample2_status=00 00 20 00
+timing_sample2_status_after=00 00 20 00
+timing_sample2_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample2_controls=01/0f/df
+timing_sample2_faults=0x0
+raw_sample3_read_ms=2937/2938
+raw_sample3_READY_observed=0
+timing_sample3_times=2876/2936/2936/2937/2938
+timing_sample3_int=00 00 00 00
+timing_sample3_status=00 00 20 00
+timing_sample3_status_after=00 00 20 00
+timing_sample3_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample3_controls=01/0f/df
+timing_sample3_faults=0x0
+raw_sample4_read_ms=2997/2998
+raw_sample4_READY_observed=0
+timing_sample4_times=2936/2996/2996/2997/2998
+timing_sample4_int=00 00 00 00
+timing_sample4_status=00 00 20 00
+timing_sample4_status_after=00 00 20 00
+timing_sample4_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample4_controls=01/0f/df
+timing_sample4_faults=0x0
+raw_sample5_read_ms=3057/3058
+raw_sample5_READY_observed=0
+timing_sample5_times=2996/3056/3056/3057/3058
+timing_sample5_int=00 00 00 00
+timing_sample5_status=00 00 20 00
+timing_sample5_status_after=00 00 20 00
+timing_sample5_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample5_controls=01/0f/df
+timing_sample5_faults=0x0
+raw_sample6_read_ms=3117/3118
+raw_sample6_READY_observed=0
+timing_sample6_times=3056/3116/3116/3117/3118
+timing_sample6_int=00 00 00 00
+timing_sample6_status=00 00 20 00
+timing_sample6_status_after=00 00 20 00
+timing_sample6_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample6_controls=01/0f/df
+timing_sample6_faults=0x0
+raw_sample7_read_ms=3177/3178
+raw_sample7_READY_observed=0
+timing_sample7_times=3116/3176/3176/3177/3178
+timing_sample7_int=00 00 00 00
+timing_sample7_status=00 00 20 00
+timing_sample7_status_after=00 00 20 00
+timing_sample7_adc=1a 68 67 08 00 00 65 b8 06 5c f8
+timing_sample7_controls=01/0f/df
+timing_sample7_faults=0x0
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+@@services
+active
+active
+active
+@@roles
+[sink]
+[device]
+@@failed
+@@dcc
+absent
+@@host-key
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcDq5XdwKgjymVdJr/xPAwNQuYTr7rmdt9mxLzT9/PL root@DESKTOP-EAS21AS
+@@pack-thermal
+sm5714-battery
+enabled
+29600
+@@tcpm
+DEVTYPE=power_supply
+OF_NAME=usbpd
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33
+OF_COMPATIBLE_0=siliconmitus,sm5714-usbpd
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=tcpm-source-psy-3-0033
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_MAX=5000000
+POWER_SUPPLY_VOLTAGE_MIN=5000000
+POWER_SUPPLY_VOLTAGE_NOW=5000000
+POWER_SUPPLY_CURRENT_MAX=1800000
+POWER_SUPPLY_CURRENT_NOW=1800000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS
+@@source
+format=sm5714-current-port-v1
+ret=0
+charging_grant=0
+values_are_not_physical_measurements=1
+instance=1
+source_generation=9
+budget_generation=14
+started_ms=8958
+completed_ms=8958
+online=1
+usb_type=6
+voltage_uv=5000000
+current_ua=1800000
+budget_mv=5000
+budget_ma=1800
+charge_requested=1
+nr_source_pdos=1
+source_pdo_1=0x1511912c
+@@boot-end
+6d6fe2e7-4da4-4d20-95cb-465812e81f09

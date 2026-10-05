@@ -98,6 +98,26 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test321 physically executed once and PASSED OFF raw transport scope:
+candidate6d6fe2e7 exact config/notes/normal/181/uniquehistory; eightreads0READY,
+42polls/507ms transaction/61ms rearm, firstread23ms fromenable,next59ms from
+previousreadend,1ms readbrackets. Nativeepochs stable,0c/df exactADCrestore,
+error/cleanup0. VBUS4.941V/IBUS0/die25.5C,VBAT3.5350–3.5355V(oneLSB),nativepack
+3.705–3.747V: OFF difference170–212mV, notcalibration/fresh/coherent100ms/OCP
+proof, nooffsetfix/grant. Candidate15s endpoint/ADB/deviceNCM/hostNCM/roles/
+realthermal/controls/DCC/noCode43 pass. Exactaccepted311 originalboot/181/allfive
+rollback completed/BCBclear/unmounted, finalecaa3c64 normalidentity/uniquehistory/
+20%3.710V29.8CGood/pumpOFF/fault0/rescueWindowsCode0, freshauthenticated Wi-Fi
+10.139.153.84. rollback_required:false. Outerzshstatus-variable assignment
+failedafterPythoncontrollercompleted; retainedhosterror, no physicalreplay.
+Fulljournals/source timestamps/rawcmd/hashseals underTest321, known10startup
+MDSS/SMMU contexts UNKNOWN retained, nooverallstabilityclean. No new kernel/
+full/Actions; exactd2b4c127/b4f5qualification/29hosttests reused. NoPPS/ON/current/
+protection/ENHIZ/rootfs/DT/USB/adbd change. Failed318STOP unchanged. Fullgoal
+NOTREADY; next actualnative adapter/worker fault/PM/fallback integration with
+activationdisabled, then independent safety/current/freshness qualification.
+
+
 Test321 registered offline: one PCfixed5/OFF continuous RAW boot, eight bounded
 rawreads/READYoptional/2000ms, one15s endpoint, unconditional exactaccepted311
 originalboot/181/allfive restoration. Reuse d2b4c127/b4f5c3e3 RAWbuild/qualification,

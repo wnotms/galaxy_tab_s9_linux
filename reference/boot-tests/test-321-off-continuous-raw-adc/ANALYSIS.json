@@ -1,0 +1,38 @@
+{
+  "capture_boot_id": "6d6fe2e7-4da4-4d20-95cb-465812e81f09",
+  "native_pack_vbat_uv": [
+    3705000,
+    3747000
+  ],
+  "sm5440_vbat_uv": [
+    3535000,
+    3535500,
+    3535500,
+    3535500,
+    3535500,
+    3535500,
+    3535500,
+    3535500
+  ],
+  "raw_changed_byte_offsets": [
+    2,
+    3,
+    7,
+    10
+  ],
+  "interpretation": "One VBAT LSB changed; source VBUS steady. Does not bound conversion age or certify calibration/coherence/100ms OCP. OFF SM5440 VBAT differs from native pack by about170-212mV; do not introduce an offset correction.",
+  "protected_fixed_limits_mv_ma": [
+    [
+      5000,
+      1800
+    ],
+    [
+      9000,
+      1500
+    ]
+  ],
+  "PPS": false,
+  "pump_ON": false,
+  "conversion_freshness_proven": false,
+  "software_ocp_verified": false
+}
