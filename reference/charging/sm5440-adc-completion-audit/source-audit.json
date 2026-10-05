@@ -1,0 +1,69 @@
+{
+  "sources": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h": {
+      "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5",
+      "line_ranges": [
+        [
+          48,
+          57
+        ],
+        [
+          67,
+          89
+        ]
+      ]
+    },
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c": {
+      "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+      "line_ranges": [
+        [
+          226,
+          244
+        ],
+        [
+          1053,
+          1075
+        ],
+        [
+          1378,
+          1384
+        ]
+      ]
+    },
+    "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c": {
+      "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+      "line_ranges": [
+        [
+          575,
+          579
+        ]
+      ]
+    }
+  },
+  "conclusions": {
+    "vendor_masks": [
+      192,
+      247,
+      24,
+      248
+    ],
+    "mask4_address": 7,
+    "adc_updated_INT4_bit": 0,
+    "current_mask_values": "UNKNOWN: first observation aborted before register read",
+    "missing_READY_cause": "UNKNOWN",
+    "changing_masks_authorized": false,
+    "ADC_qualification_granted": false
+  },
+  "device_writes": false,
+  "mainline_regmap_reader": {
+    "path": ".work/build/linux-src-x710-charging/drivers/base/regmap/regmap-debugfs.c",
+    "sha256": "6a3aa0eae0efa081b6612a51e2ba462607b41cdd3af92621d68a6541fcffc998",
+    "kernel_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+    "lines": [
+      96,
+      216,
+      255
+    ],
+    "contract": "Offset lookup only scans register printability. regmap_read is invoked only when p>=requested offset and the full7-byte line fits requested count. No I2C read of skipped preceding INT registers."
+  }
+}

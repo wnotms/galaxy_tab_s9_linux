@@ -1,0 +1,44 @@
+{
+  "verdict": "STOP_UNEXPLAINED_NEW_LPCHARGE_BOOT_LOW_BATTERY",
+  "base_revision": "7add856274c5819a7f1a77b4edd5fce10d203858",
+  "attempted_boot": "ecaa3c64-5c69-4bbe-b755-1a2aff6a88ca",
+  "actual_boot": "5e039c8f-c138-47d2-9629-3a07ae6162ff",
+  "accepted_config_matches": true,
+  "accepted_notes_match": true,
+  "lpcharge": true,
+  "registers_read": false,
+  "mask_values": "UNKNOWN",
+  "battery": {
+    "soc_percent": 1,
+    "vbat_uv": 3409000,
+    "net_ua": -239000,
+    "temp_decic": 292,
+    "usb_type": "SDP",
+    "input_ua": 500000
+  },
+  "recent_boot_rows": [
+    "  -2 6d6fe2e74da44d2095cb465812e81f09 Sat 2026-09-26 14:43:04 CST Sat 2026-09-26 14:43:46 CST",
+    "  -1 ecaa3c645c694bbeb7551a2aff6a88ca Sat 2026-09-26 14:44:32 CST Sat 2026-09-26 19:58:11 CST",
+    "   0 5e039c8fc13847d296293a07ae6162ff Sat 2026-09-26 20:12:55 CST Sat 2026-09-26 20:13:46 CST"
+  ],
+  "device_mutations": [],
+  "reboot_issued_by_agent": false,
+  "reboot_reason": "UNKNOWN owner attribution pending",
+  "tests": {
+    "executed": true,
+    "tests_run": 12,
+    "seconds": 0.029212180998001713,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "valid": true,
+    "full_executed": false,
+    "kernel_build_executed": false,
+    "reason": "Read-only host/device collector and actual filesystem/transport/error/identity tests; kernel inputs unchanged."
+  },
+  "build": {
+    "executed": false,
+    "reason": "No kernel/DT/config/build input change; reuse7add8562 qualification."
+  },
+  "full_goal_verdict": "NOT_READY"
+}

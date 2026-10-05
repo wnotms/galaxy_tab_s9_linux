@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uname; uname -a; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@boots; journalctl --list-boots --no-pager; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "started_utc": "2026-10-05T11:17:00.336827+00:00",
+  "ended_utc": "2026-10-05T11:17:07.436709+00:00",
+  "returncode": 0,
+  "device_writes": false
+}

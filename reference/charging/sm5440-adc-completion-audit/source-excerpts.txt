@@ -1,0 +1,98 @@
+/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h:48-57
+};
+
+enum sm5440_int4_desc {
+	SM5440_INT4_RVSBSTRDY       = 1 << 6,
+	SM5440_INT4_MIDVBUS2VOUT    = 1 << 5,
+	SM5440_INT4_SW_RDY          = 1 << 4,
+	SM5440_INT4_WDTMROFF        = 1 << 2,
+	SM5440_INT4_CHGTMROFF       = 1 << 1,
+	SM5440_INT4_ADCUPDATED      = 1 << 0,
+};
+
+/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h:67-89
+	SM5440_REG_MSK3         = 0X06,
+	SM5440_REG_MSK4         = 0X07,
+	SM5440_REG_STATUS1      = 0X08,
+	SM5440_REG_STATUS2      = 0X09,
+	SM5440_REG_STATUS3      = 0X0A,
+	SM5440_REG_STATUS4      = 0X0B,
+	SM5440_REG_CNTL1        = 0X0C,
+	SM5440_REG_CNTL2        = 0X0D,
+	SM5440_REG_CNTL3        = 0X0E,
+	SM5440_REG_CNTL4        = 0X0F,
+	SM5440_REG_CNTL5        = 0X10,
+	SM5440_REG_CNTL6        = 0X11,
+	SM5440_REG_CNTL7        = 0X12,
+	SM5440_REG_VBUSCNTL     = 0X13,
+	SM5440_REG_VBATCNTL     = 0X14,
+	SM5440_REG_VOUTCNTL     = 0X15,
+	SM5440_REG_IBUSCNTL     = 0X16,
+	SM5440_REG_PRTNCNTL     = 0X19,
+	SM5440_REG_THEMCNTL1    = 0X1A,
+	SM5440_REG_THEMCNTL2    = 0X1B,
+	SM5440_REG_ADCCNTL1     = 0X1C,
+	SM5440_REG_ADCCNTL2     = 0X1D,
+	SM5440_REG_ADC_VBUS1    = 0X1E,
+
+/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c:226-244
+static int sm5440_convert_adc(struct sm5440_charger *sm5440, u8 index)
+{
+	u8 reg1, reg2;
+	int adc;
+#if !defined(CONFIG_SEC_FACTORY)
+	struct sm_dc_info *sm_dc = select_sm_dc_info(sm5440);
+
+	if (sm_dc_get_current_state(sm_dc) < SM_DC_CHECK_VBAT &&
+		!(sm5440->rev_boost)) {
+		/* Didn't worked ADC block during on CHG-OFF status */
+		return -1;
+	}
+#endif
+
+	switch (index) {
+	case SM5440_ADC_THEM:
+		sm5440_read_reg(sm5440, SM5440_REG_ADC_THEM1, &reg1);
+		sm5440_read_reg(sm5440, SM5440_REG_ADC_THEM2, &reg2);
+		adc = ((((int)reg1 << 5) | (reg2 >> 3)) * 250) / 1000;
+
+/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c:1053-1075
+static int sm5440_set_adc_mode(struct i2c_client *i2c, u8 mode)
+{
+	struct sm5440_charger *sm5440 = i2c_get_clientdata(i2c);
+
+	switch (mode) {
+	case SM_DC_ADC_MODE_ONESHOT:
+		sm5440_enable_adc(sm5440, 0);
+		msleep(20);
+		sm5440_set_adc_rate(sm5440, 0x0);
+		schedule_delayed_work(&sm5440->adc_work, msecs_to_jiffies(200));
+		sm5440_enable_adc(sm5440, 1);
+		break;
+	case SM_DC_ADC_MODE_CONTINUOUS:
+		cancel_delayed_work(&sm5440->adc_work);
+		sm5440_enable_adc(sm5440, 0);
+		msleep(50);
+		sm5440_set_adc_rate(sm5440, 0x1);
+		sm5440_enable_adc(sm5440, 1);
+		break;
+	case SM_DC_ADC_MODE_OFF:
+	default:
+		cancel_delayed_work(&sm5440->adc_work);
+		sm5440_enable_adc(sm5440, 0);
+
+/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c:1378-1384
+	gpio_free(sm5440->pdata->irq_gpio);
+
+	sm5440_write_reg(sm5440, SM5440_REG_MSK1, 0xC0);
+	sm5440_write_reg(sm5440, SM5440_REG_MSK2, 0xF7);    /* used VBATREG */
+	sm5440_write_reg(sm5440, SM5440_REG_MSK3, 0x18);
+	sm5440_write_reg(sm5440, SM5440_REG_MSK4, 0xF8);
+
+
+/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c:575-579
+	SM5440_WRITE(SM5440_REG_ADCCNTL1,
+		     SM5440_ADCCNTL1_AVG_32 |
+		     SM5440_ADCCNTL1_CONTINUOUS |
+		     SM5440_ADCCNTL1_ENABLE);
+	SM5440_WRITE(SM5440_REG_ADCCNTL2, 0xdf);

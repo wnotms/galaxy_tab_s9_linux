@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 ADC context read stopped before registers because boot changed to
+5e039c8f-c138-47d2-9629-3a07ae6162ff. Sameaccepted311 config/notes,lpcharge=1,
+1%3.409V29.2C/PCnet−239mA. No agentreboot; ownercause/recharge reply pending.
+Full prior/currentkernel and prior systemjournals saved; late shutdown.target is
+user@0.service/PID2614, NOT systempoweroff proof. Actualmaskvalues UNKNOWN.
+VendorMSK4F8 is a missing comparison fact, notproven READYcause. Single bounded
+readonly scripts/sm5440-adc-context.py ready;12testsPASS0.029s, no kernel/build/
+DT/config/USB/charging change. reference/charging/sm5440-adc-completion-audit/.
+No write/ADC/PPS/ON/flash or automaticrecovery; no relaxed100ms/READY/grant.
+Battery recovery/normal-entry attribution first; fullgoalNOTREADY.
+
+
 2026-10-05 retained native active-session integration now preserves ownership
 across actual entry/monitor/paused refresh-retarget/resume/stop, native owned
 source+switching binding outsideio_lock/epoch mapping,20ms monitor/4s paused
