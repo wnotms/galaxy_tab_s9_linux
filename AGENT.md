@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 owner-confirmed PC USB reconnect endpoint passes a single read-only
+capture on same Test321 final ecaa3c64: accepted311 config/notes/normalcmdline,
+nativeADB shell, Windows composite/ADB/NCM Code0/Up, interface-bound NCM SSH
+banner and authenticated Wi-Fi10.139.153.84. Pack20%/3.730V/31.6C/Good with
+PCSDP500mA and net-381mA; pumpOFF/IBUS0/fault0. Full1104-row kernel journal,
+exact1067-row prior cursor prefix,37 extra rows without new detected CPU fault;
+known startupMDSS/SMMU UNKNOWN unchanged. Endpoint recovery only, no captured
+physical-cycle timing/permanent USB fix. No reboot/flash/service/config/PPS/ON,
+no new host/kernel/Actions. Evidence reference/charging/usb-reconnect/20261005T055849Z/.
+
+
 2026-10-05 Test321 physically executed once and PASSED OFF raw transport scope:
 candidate6d6fe2e7 exact config/notes/normal/181/uniquehistory; eightreads0READY,
 42polls/507ms transaction/61ms rearm, firstread23ms fromenable,next59ms from
