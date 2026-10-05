@@ -1,0 +1,26 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: observe native single-shot acquisition with pump OFF
+
+Four bounded transactions use the same native converter implementation; no
+native actuator/controller, PPS, protection or switching-path operation.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1211 +1211,12 @@
++config SM5440_ADC_ONESHOT_TEST
++	bool "X710 OFF native single-shot SM5440 observation"
++	depends on CHARGER_SM5440_DIRECT=y && !X710_CHARGING_POLICY
++	depends on TYPEC_SM5714=y && BATTERY_SM5714=y
++	depends on !SM5440_ADC_CONDITION_TEST && !SM5440_ADC_TIMING_TEST
++	depends on !SM5440_ADC_RAW_TEST && !X710_NATIVE_CONTROL
++	help
++	  Four pump-OFF acquisitions using the unchanged native100ms converter,
++	  with real pack/source brackets and once-only checked ADC restoration.
++	  No companion publication, PPS, native actuator or charging grant.
++
+ endif # POWER_SUPPLY
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -147 +147,2 @@
+ obj-$(CONFIG_X710_NATIVE_CONTROL) += x710-charge-controller.o
++obj-$(CONFIG_SM5440_ADC_ONESHOT_TEST) += sm5440-conversion.o

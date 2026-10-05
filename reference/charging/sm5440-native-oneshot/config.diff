@@ -1,0 +1,10 @@
+--- out/kernel-x710-pc-ordinary/config
++++ out/kernel-x710-oneshot/config
+@@ -3695,6 +3695,7 @@
+ # CONFIG_SM5440_ADC_CONDITION_TEST is not set
+ # CONFIG_SM5440_ADC_TIMING_TEST is not set
+ # CONFIG_SM5440_ADC_RAW_TEST is not set
++CONFIG_SM5440_ADC_ONESHOT_TEST=y
+ # CONFIG_HWMON is not set
+ CONFIG_THERMAL=y
+ CONFIG_THERMAL_NETLINK=y

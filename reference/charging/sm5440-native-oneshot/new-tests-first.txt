@@ -1,0 +1,54 @@
+test_active_mode_all_bus_errors_remain_invalid_without_touching_pump (test_sm5440_conversion.ConversionTests.test_active_mode_all_bus_errors_remain_invalid_without_touching_pump) ... ok
+test_cancel_during_rearm_or_conversion_disables_and_preserves_error (test_sm5440_conversion.ConversionTests.test_cancel_during_rearm_or_conversion_disables_and_preserves_error) ... ok
+test_default_disabled_has_no_bus_access_or_enabled_converter (test_sm5440_conversion.ConversionTests.test_default_disabled_has_no_bus_access_or_enabled_converter) ... ok
+test_delayed_bus_crossing_deadline_cannot_publish_fresh (test_sm5440_conversion.ConversionTests.test_delayed_bus_crossing_deadline_cannot_publish_fresh) ... ok
+test_dropped_writes_require_real_readback_not_successful_bus_status (test_sm5440_conversion.ConversionTests.test_dropped_writes_require_real_readback_not_successful_bus_status) ... ok
+test_each_live_and_latched_hardware_fault_is_retained_and_rejected (test_sm5440_conversion.ConversionTests.test_each_live_and_latched_hardware_fault_is_retained_and_rejected) ... ok
+test_every_single_bus_error_invalidates_with_no_converter_retry (test_sm5440_conversion.ConversionTests.test_every_single_bus_error_invalidates_with_no_converter_retry) ... ok
+test_fault_generation_and_control_drift_refuse_measurement (test_sm5440_conversion.ConversionTests.test_fault_generation_and_control_drift_refuse_measurement) ... ok
+test_identity_epoch_foreign_conversion_and_prefault_refuse_start (test_sm5440_conversion.ConversionTests.test_identity_epoch_foreign_conversion_and_prefault_refuse_start) ... ok
+test_microvolt_voltage_is_preserved_alongside_core_millivolts (test_sm5440_conversion.ConversionTests.test_microvolt_voltage_is_preserved_alongside_core_millivolts) ... ok
+test_native_clock_regression_and_request_timeout (test_sm5440_conversion.ConversionTests.test_native_clock_regression_and_request_timeout) ... ok
+test_off_conversion_preserves_original_fields_and_oldest_time (test_sm5440_conversion.ConversionTests.test_off_conversion_preserves_original_fields_and_oldest_time) ... ok
+test_old_ready_cannot_finish_new_conversion_and_raw_latch_is_retained (test_sm5440_conversion.ConversionTests.test_old_ready_cannot_finish_new_conversion_and_raw_latch_is_retained) ... ok
+test_persistent_bus_loss_preserves_unknown_cleanup_and_first_error (test_sm5440_conversion.ConversionTests.test_persistent_bus_loss_preserves_unknown_cleanup_and_first_error) ... ok
+test_running_conversion_preserves_625ua_and_never_changes_pump_mode (test_sm5440_conversion.ConversionTests.test_running_conversion_preserves_625ua_and_never_changes_pump_mode) ... ok
+test_same_millisecond_polling_cannot_run_forever (test_sm5440_conversion.ConversionTests.test_same_millisecond_polling_cannot_run_forever) ... ok
+setUpClass (test_sm5440_native_oneshot.OneShotTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_sm5440_native_oneshot.OneShotTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_native_oneshot.py", line 70, in setUpClass
+    if run.returncode:raise AssertionError(run.stdout+run.stderr)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: /tmp/tmpl4b96fmh/oneshot.c: In function ‘sm5440_oneshot_cycle’:
+/tmp/tmpl4b96fmh/oneshot.c:144:20: error: ‘ENOMEM’ undeclared (first use in this function)
+  144 |         int ret = -ENOMEM;
+      |                    ^~~~~~
+/tmp/tmpl4b96fmh/oneshot.c:144:20: note: each undeclared identifier is reported only once for each function it appears in
+/tmp/tmpl4b96fmh/oneshot.c:162:49: error: ‘ESHUTDOWN’ undeclared (first use in this function)
+  162 |                 ret = READ_ONCE(sm->stopped) ? -ESHUTDOWN :
+      |                                                 ^~~~~~~~~
+/tmp/tmpl4b96fmh/oneshot.c:166:30: error: ‘EAGAIN’ undeclared (first use in this function)
+  166 |                 if ((ret != -EAGAIN && ret != -EBUSY) || c->readiness_checks == 20)
+      |                              ^~~~~~
+/tmp/tmpl4b96fmh/oneshot.c:166:48: error: ‘EBUSY’ undeclared (first use in this function)
+  166 |                 if ((ret != -EAGAIN && ret != -EBUSY) || c->readiness_checks == 20)
+      |                                                ^~~~~
+/tmp/tmpl4b96fmh/oneshot.c:183:32: error: ‘ESTALE’ undeclared (first use in this function)
+  183 |                         ret = -ESTALE;
+      |                                ^~~~~~
+/tmp/tmpl4b96fmh/oneshot.c:194:32: error: ‘EINPROGRESS’ undeclared (first use in this function)
+  194 |                 while (ret == -EINPROGRESS) {
+      |                                ^~~~~~~~~~~
+/tmp/tmpl4b96fmh/oneshot.c:215:32: error: ‘ERANGE’ undeclared (first use in this function)
+  215 |                         ret = -ERANGE;
+      |                                ^~~~~~
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.472s
+
+FAILED (errors=1)

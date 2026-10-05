@@ -14,7 +14,7 @@ rpmh_debug=${GTS9_RPMH_DEBUG:-0}
 idle_ablation=${GTS9_IDLE_ABLATION:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive|sm5440-policy-offline|sm5440-native-control|sm5440-adc-condition|sm5440-adc-timing|sm5440-adc-raw) ;;
+    ''|sm5440-passive|sm5440-policy-offline|sm5440-native-control|sm5440-adc-condition|sm5440-adc-timing|sm5440-adc-raw|sm5440-adc-oneshot) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && [ -n "$idle_ablation" ]; then
@@ -228,6 +228,7 @@ install -m 0644 "$driver_src/sm5440-actuator.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5440-watchdog.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5440-conversion.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5440-supervisor.h" "$tree/drivers/power/supply/"
+install -m 0644 "$driver_src/sm5440-oneshot.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/sm5440-timing.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/x710-charging-policy.h" "$tree/drivers/power/supply/"
 install -m 0644 "$driver_src/x710-pd-session.h" "$tree/drivers/power/supply/"

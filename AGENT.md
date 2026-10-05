@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native single-shot OFF candidate qualified offline (not deployed):
+new isolated SM5440_ADC_ONESHOT_TEST invokes unchanged100ms converter four times
+with pack/source brackets and terminal cleanup; no native actuator/controller,
+PPS/ON/OCP/calibration grant.139affected PASS6.485s; ARM64PASS78.783s, W1/sparse
+known upstreamVDSO only; exact323DTB, only newONESHOT absent->y,181paired runtime,
+59protected/23formal preserved. Current ordinary323 fca646a8 unchanged, latest
+PCnet+1.238A/56%/32CGood. Read-only0c control data are stale startup-fault cache,
+not ADCselfclear proof. Candidate out/kernel-x710-oneshot and boot-bundle-x710-
+oneshot; evidence reference/charging/sm5440-native-oneshot. Test324 needs one
+qualified fixed9V OFF acquisition and exact323 paired rollback; no speculative
+mask/ENHIZ/protection/charging/USB change. FullportNOTREADY.
+
+
 2026-10-05 post323 one bounded read-only ADC context captured: actualordinary
 MSK1..4=00/00/00/00, ADCCNTL1=0c/ADCCNTL2=df, ID21/MODE01beforeafterOFF.
 VendorMSK4f8diff now measured, not proven historicaltimeoutcause; no maskwrite/

@@ -21,11 +21,15 @@
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
 #include <linux/seq_file.h>
+#include <linux/slab.h>
 #include <linux/string.h>
 #include <linux/wait.h>
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+#include "sm5440-oneshot.h"
+#endif
 #ifdef CONFIG_X710_NATIVE_CONTROL
 #include "sm5440-native.h"
 #endif
@@ -112,6 +116,9 @@ struct sm5440_native_context {
 #endif
 
 struct sm5440_direct {
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+	struct sm5440_oneshot_context oneshot;
+#endif
 	struct device *dev;
 	struct regmap *regmap;
 	struct mutex io_lock;
@@ -163,6 +170,10 @@ static int sm5440_publish(struct sm5440_direct *sm)
 {
 #ifdef CONFIG_SM5440_ADC_TIMING_TEST
 	/* Isolated diagnostic: neither cached nor fresh charging API is published. */
+	(void)sm;
+	return 0;
+#elif defined(CONFIG_SM5440_ADC_ONESHOT_TEST)
+	/* Native converter diagnostic is not a charging supplier. */
 	(void)sm;
 	return 0;
 #elif defined(CONFIG_SM5440_ADC_RAW_TEST)
@@ -724,6 +735,55 @@ static void sm5440_debugfs_remove(void *data)
 	sm->debug_root = NULL;
 }
 
+
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+static int sm5440_oneshot_show(struct seq_file *seq, void *unused)
+{
+	struct sm5440_direct *sm = seq->private;
+	struct sm5440_oneshot_context *c;
+	unsigned int i;
+
+	c = kmalloc(sizeof(*c), GFP_KERNEL);
+	if (!c)
+		return -ENOMEM;
+	mutex_lock(&sm->io_lock);
+	*c = sm->oneshot;
+	mutex_unlock(&sm->io_lock);
+	seq_printf(seq, "oneshot_attempted=%u\noneshot_finished=%u\noneshot_count=%u\n"
+		   "oneshot_error=%d\noneshot_cleanup_error=%d\noneshot_off_error=%d\n"
+		   "oneshot_readiness_checks=%u\noneshot_first_readiness_error=%d\n"
+		   "deadline_ms=%u\ncalibrated=0\nOCP_verified=0\npump_ON=0\n",
+		   c->attempted, c->finished, c->count, c->error, c->cleanup_error,
+		   c->off_error, c->readiness_checks, c->first_readiness_error,
+		   X710_MONITOR_DEADLINE_MS);
+	for (i = 0; i < SM5440_ONESHOT_SAMPLES; i++) {
+		const struct sm5440_oneshot_sample *a = &c->sample[i];
+		const struct sm5440_conversion *d = &a->adc;
+
+		seq_printf(seq, "sample%u_times=%llu/%llu/%llu/%llu\n"
+			   "sample%u_result=%d/%d/%u/%u/%u/%u/%u/%u\n"
+			   "sample%u_control=%02x/%02x/%02x\n"
+			   "sample%u_events=%*ph\nsample%u_status=%*ph\nsample%u_adc=%*ph\n"
+			   "sample%u_physical=%u/%u/%u/%d\n"
+			   "sample%u_pack_before=%llu/%llu/%d/%d/%d\n"
+			   "sample%u_pack_after=%llu/%llu/%d/%d/%d\n",
+			   i, d->requested_ms, d->disabled_ms, d->acquired_ms, d->completed_ms,
+			   i, d->operation_error, d->cleanup_error, d->state, d->ready,
+			   d->owned, d->adc_off_verified, d->data_acquired, d->sample.valid,
+			   i, d->before_control, d->expected_control, d->before_channels,
+			   i, 4, d->events, i, 4, d->status, i, 11, d->adc,
+			   i, d->vbus_uv, d->vbat_uv, d->ibus_ua, d->die_decic,
+			   i, a->before.started_ms, a->before.completed_ms,
+			   a->before.voltage_uv, a->before.current_ua, a->before.pack_decic,
+			   i, a->after.started_ms, a->after.completed_ms,
+			   a->after.voltage_uv, a->after.current_ua, a->after.pack_decic);
+	}
+	kfree(c);
+	return 0;
+}
+DEFINE_SHOW_ATTRIBUTE(sm5440_oneshot);
+#endif
+
 static void sm5440_debugfs_init(struct sm5440_direct *sm)
 {
 	struct dentry *file;
@@ -742,6 +802,14 @@ static void sm5440_debugfs_init(struct sm5440_direct *sm)
 		sm5440_debugfs_remove(sm);
 		return;
 	}
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+	file = debugfs_create_file("oneshot", 0400, sm->debug_root, sm,
+				   &sm5440_oneshot_fops);
+	if (IS_ERR_OR_NULL(file)) {
+		sm5440_debugfs_remove(sm);
+		return;
+	}
+#endif
 	/* Added after stop: devres removes/drains files before freeing driver data.
 	 * Use normal debugfs proxies, not the unsafe create_file variant.
 	 */
@@ -1933,7 +2001,8 @@ done:
 }
 #endif
 
-#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST) || \
+	defined(CONFIG_SM5440_ADC_ONESHOT_TEST)
 static bool sm5440_timing_same_source(const struct sm5714_pd_snapshot *a,
 				      const struct sm5714_pd_snapshot *b)
 {
@@ -1985,6 +2054,120 @@ static int sm5440_timing_facts(struct sm5714_pd_snapshot *source,
 	return 0;
 }
 
+#endif
+
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+static void sm5440_oneshot_cycle(struct sm5440_direct *sm)
+{
+	struct sm5440_oneshot_context *c;
+	struct sm5714_pd_snapshot source;
+	unsigned int i;
+	int ret = -ENOMEM;
+
+	/* Keep multi-sample evidence off the kernel stack. No core lock is held
+	 * across source/gauge acquisition, allocation or converter waits.
+	 */
+	c = kzalloc(sizeof(*c), GFP_KERNEL);
+	if (!c) {
+		mutex_lock(&sm->io_lock);
+		sm->oneshot.attempted = true;
+		sm->oneshot.finished = true;
+		sm->oneshot.error = ret;
+		sm->fault = true;
+		mutex_unlock(&sm->io_lock);
+		return;
+	}
+	c->attempted = true;
+	c->generation = 1;
+	for (c->readiness_checks = 1; c->readiness_checks <= 20; c->readiness_checks++) {
+		ret = READ_ONCE(sm->stopped) ? -ESHUTDOWN :
+			sm5440_timing_facts(&c->source, &c->sample[0].before);
+		if (ret && !c->first_readiness_error)
+			c->first_readiness_error = ret;
+		if ((ret != -EAGAIN && ret != -EBUSY) || c->readiness_checks == 20)
+			break;
+		msleep(100);
+	}
+	if (ret)
+		goto publish;
+	/* Drain is implicit: this is the bound poll worker itself. The same
+	 * ordinary rearm verified OFF/ADC-off before the native100ms request.
+	 */
+	ret = sm5440_adc_rearm(sm);
+	if (ret)
+		goto publish;
+	for (i = 0; i < SM5440_ONESHOT_SAMPLES && !ret; i++) {
+		struct sm5440_oneshot_sample *a = &c->sample[i];
+
+		ret = sm5440_timing_facts(&source, &a->before);
+		if (!ret && !sm5440_timing_same_source(&c->source, &source))
+			ret = -ESTALE;
+		if (ret)
+			break;
+		a->adc = (struct sm5440_conversion) {
+			.generation = &c->generation, .epoch = c->generation,
+			.enabled = true,
+		}; /* diagnostic acquisition only; running=false, no native ON grant */
+		mutex_lock(&sm->io_lock);
+		ret = READ_ONCE(sm->stopped) ? -ESHUTDOWN :
+			sm5440_conversion_begin(sm->regmap, &a->adc);
+		mutex_unlock(&sm->io_lock);
+		while (ret == -EINPROGRESS) {
+			msleep(5);
+			mutex_lock(&sm->io_lock);
+			if (READ_ONCE(sm->stopped)) {
+				c->generation++;
+				ret = sm5440_conversion_cancel(sm->regmap, &a->adc);
+			} else {
+				ret = sm5440_conversion_advance(sm->regmap, &a->adc);
+			}
+			mutex_unlock(&sm->io_lock);
+		}
+		/* The unmodified native converter performs checked restoration even
+		 * on timeout/I2C/cancel. Unknown cleanup is separately retained.
+		 */
+		c->cleanup_error = a->adc.cleanup_error;
+		if (!ret && c->cleanup_error)
+			ret = c->cleanup_error;
+		if (!ret && (!a->adc.ready || !a->adc.sample.valid ||
+			    a->adc.ibus_ua || a->adc.die_decic >= 420 ||
+			    a->adc.vbus_uv < 4500000 || a->adc.vbus_uv > 9500000 ||
+			    a->adc.vbat_uv < 3500000 || a->adc.vbat_uv >= 4300000))
+			ret = -ERANGE;
+		if (!ret)
+			ret = sm5440_timing_facts(&source, &a->after);
+		if (!ret && (!sm5440_timing_same_source(&c->source, &source) ||
+			    a->before.instance != a->after.instance ||
+			    a->before.state_generation != a->after.state_generation))
+			ret = -ESTALE;
+		if (!ret)
+			c->count++;
+	}
+	if (ret) {
+		mutex_lock(&sm->io_lock);
+		c->off_error = sm5440_off(sm);
+		mutex_unlock(&sm->io_lock);
+	}
+publish:
+	c->error = ret;
+	c->finished = true;
+	mutex_lock(&sm->io_lock);
+	if (!c->error && READ_ONCE(sm->stopped))
+		c->error = -ESHUTDOWN;
+	for (i = 0; i < SM5440_ONESHOT_SAMPLES; i++)
+		c->sample[i].adc.generation = NULL; /* evidence must not retain a freed pointer */
+	sm->oneshot = *c;
+	if (c->error)
+		sm->fault = true;
+	mutex_unlock(&sm->io_lock);
+	if (c->error)
+		dev_err(sm->dev, "OFF native one-shot stopped: %d; cleanup=%d OFF=%d\n",
+			c->error, c->cleanup_error, c->off_error);
+	kfree(c);
+}
+#endif
+
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 static void sm5440_timing_cycle(struct sm5440_direct *sm)
 {
 	struct sm5440_timing_context c = {};
@@ -2172,6 +2355,13 @@ static void sm5440_poll(struct work_struct *work)
 	mutex_unlock(&sm->io_lock);
 	wake_up_all(&sm->request_wait);
 	power_supply_changed(sm->psy);
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&
+	    sm->initial_sample_done && !sm->startup_confirmations) {
+		sm5440_oneshot_cycle(sm);
+		return; /* one bounded observation per bind; no requeue/retry */
+	}
+#endif
 #if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&
 	    sm->initial_sample_done && !sm->startup_confirmations) {
@@ -2358,6 +2548,11 @@ static int sm5440_resume(struct device *dev)
 {
 	struct sm5440_direct *sm = dev_get_drvdata(dev);
 	int ret;
+
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+	if (sm->oneshot.attempted)
+		return -EOPNOTSUPP;
+#endif
 
 #if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	/* A timing diagnostic is not rearmed after suspend or failure. */

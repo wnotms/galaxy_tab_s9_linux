@@ -1,0 +1,53 @@
+test_bus_time_does_not_relax100ms (test_sm5440_native_oneshot.OneShotTests.test_bus_time_does_not_relax100ms) ... ok
+test_changed_source_pack_no_second_request (test_sm5440_native_oneshot.OneShotTests.test_changed_source_pack_no_second_request) ... ok
+test_failed_rearm_no_conversion (test_sm5440_native_oneshot.OneShotTests.test_failed_rearm_no_conversion) ... ok
+test_fault_no_retry (test_sm5440_native_oneshot.OneShotTests.test_fault_no_retry) ... ok
+test_four_actual_native_conversions (test_sm5440_native_oneshot.OneShotTests.test_four_actual_native_conversions) ... ok
+test_heap_failure_no_io (test_sm5440_native_oneshot.OneShotTests.test_heap_failure_no_io) ... ok
+test_i2c_failure_cleanup (test_sm5440_native_oneshot.OneShotTests.test_i2c_failure_cleanup) ... 
+  test_i2c_failure_cleanup (test_sm5440_native_oneshot.OneShotTests.test_i2c_failure_cleanup) (fail=53) ... FAIL
+test_invalid_pack_no_enable (test_sm5440_native_oneshot.OneShotTests.test_invalid_pack_no_enable) ... ok
+test_no_ready_no_retry (test_sm5440_native_oneshot.OneShotTests.test_no_ready_no_retry) ... ok
+test_nonzero_off_current_refused (test_sm5440_native_oneshot.OneShotTests.test_nonzero_off_current_refused) ... ok
+test_not_ready_bounded_then_success (test_sm5440_native_oneshot.OneShotTests.test_not_ready_bounded_then_success) ... ok
+test_not_ready_refuses_after_bound (test_sm5440_native_oneshot.OneShotTests.test_not_ready_refuses_after_bound) ... ok
+test_production_and_converter_unchanged (test_sm5440_native_oneshot.OneShotTests.test_production_and_converter_unchanged) ... ERROR
+test_profile_only_enabled_in_diagnostic (test_sm5440_native_oneshot.OneShotTests.test_profile_only_enabled_in_diagnostic) ... ok
+test_suspend_during_wait (test_sm5440_native_oneshot.OneShotTests.test_suspend_during_wait) ... ok
+
+======================================================================
+ERROR: test_production_and_converter_unchanged (test_sm5440_native_oneshot.OneShotTests.test_production_and_converter_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_native_oneshot.py", line 115, in test_production_and_converter_unchanged
+    self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(),freeze['protected_sources'][name])
+                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'kernel/drivers/sm5440-conversion.c'
+
+======================================================================
+FAIL: test_i2c_failure_cleanup (test_sm5440_native_oneshot.OneShotTests.test_i2c_failure_cleanup) (fail=53)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_native_oneshot.py", line 103, in test_i2c_failure_cleanup
+    with self.subTest(fail=fail):o=self.case(fail=fail);self.assertLess(o[0],0);self.assertEqual(o[1],0)
+                                   ~~~~~~~~~^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_native_oneshot.py", line 77, in case
+    self.assertEqual(list(out)[8:12],[0,1,12,223])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [0, 1, 13, 223] != [0, 1, 12, 223]
+
+First differing element 2:
+13
+12
+
+- [0, 1, 13, 223]
+?         ^
+
++ [0, 1, 12, 223]
+?         ^
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.439s
+
+FAILED (failures=1, errors=1)
