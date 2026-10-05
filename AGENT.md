@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test320 recovered USB with exactly one registered unchanged Wi-Fi
+normal reboot. New8146a9cf uniquely attributed, exact accepted311 config/notes
+and NORMALcmdline/lpcharge0. Native ADB shell25.783s; authenticated Wi-Fi at new
+DHCP10.139.153.11 within125.952s; Windows composite/ADB/NCM Code0 within128.680s,
+no Code43. Old .121 readiness probe false-negative retained/resolved by actual
+new-address evidence; never repeat a boot for stale DHCP.15s endpoint sameboot
+pack22%/3.767V/31.1C/Good/realthermal, passiveOFF/IBUS0/fault0, services/deviceNCM
+normal/DCCabsent. Full old/new/end journals; no new CPU/unclassified fault; known
+10 startupMDSS/SMMU contexts UNKNOWN, no overallstabilityclean claim. No flash/
+BCB/modules/config/PPS/pumpON/build/full/Actions.7 existingidentity tests PASS
+0.004s/0skip. Test319 remains STOP; Test318 undeployed. USB runtime recovery
+only, permanent charger-to-PC rootcause/fix UNDETERMINED. Read Test320 RESULTS.
+
+
 2026-10-05 Test319 STOP before reboot: actual Windows Code43 descriptor failure
 survives owner-confirmed PC cable/port reconnect; nativeADB absent, same647d50c8
 Wi-Fi/config/notes/pack22%/26.5C/pumpOFF remain healthy. No reboot/flash/BCB/modules

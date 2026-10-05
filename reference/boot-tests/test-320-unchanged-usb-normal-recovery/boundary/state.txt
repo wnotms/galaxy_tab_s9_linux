@@ -1,0 +1,178 @@
+@@boot
+647d50c8-0fc9-4fb0-bfea-5006c519a255
+@@uname
+Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux
+@@cmdline
+console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=1 nfc_sec.nfc_param_lpcharge=1 flicker_sensor.flicker_param_lpcharge=1 cpufreq_limit.lpcharge=1 sec-battery.lpcharge=1 max77705_charger.lpcharge=1 max77705-fuelgauge.lpcharge=1 p9320_charger.lpcharge=1 s2miw04_charger.lpcharge=1 cps4038_charger.lpcharge=1 nu1668_charger.lpcharge=1 msm_drm.secdp_param_lpcharge=1 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=1 hdm.status=NONE frpc-adsprpc.signoff=0x7277
+@@uptime
+4179.78 33374.29
+@@identity
+55365a030f56ecddf77322a202790842d0d41a0cf5df2ed2812369ce75af8d89  -
+cda95fb0bff9e6711d2f79891fd051c300bbb20a0a94a072395c0757700712d6  /sys/kernel/notes
+@@battery
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=3768000
+POWER_SUPPLY_VOLTAGE_AVG=3765000
+POWER_SUPPLY_VOLTAGE_OCV=3758000
+POWER_SUPPLY_CURRENT_NOW=-1072000
+POWER_SUPPLY_CURRENT_AVG=-518000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=22
+POWER_SUPPLY_TEMP=264
+POWER_SUPPLY_TYPE=Battery
+@@usb
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-usb
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_INPUT_CURRENT_LIMIT=500000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=Unknown [SDP] DCP CDP PD
+@@passive
+DEVTYPE=power_supply
+POWER_SUPPLY_NAME=sm5440-passive
+POWER_SUPPLY_TYPE=Mains
+POWER_SUPPLY_STATUS=Not charging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_NOW=4957000
+POWER_SUPPLY_CURRENT_NOW=0
+POWER_SUPPLY_TEMP=235
+POWER_SUPPLY_TYPE=Mains
+@@snapshot
+format=sm5440-passive-v1
+registers_are_cached=1
+independently_calibrated=0
+pump_enable_supported=0
+capture_jiffies=4295937250
+sample_present=1
+sample_fresh=1
+sample_age_ms=972
+stopped=0
+fault=0
+startup_pending=0
+last_sample_error=0
+startup_retained=0
+startup_capture_jiffies=0
+sample_valid=1
+sample_stamp_jiffies=4295937007
+sample_faults=0x0
+sample_gauge_attempted=0
+sample_adc_read_completed_ms=0
+sample_gauge_started_ms=0
+sample_gauge_completed_ms=0
+sample_gauge_ret=0
+sample_gauge_uv=0
+sample_int=00 00 00 00
+sample_status=00 00 20 00
+sample_adc=1a e8 6b c8 00 00 69 b0 02 5d 18
+sample_int4_disable=0x00
+sample_int4_wait=0x01
+sample_mode_before=0x01
+sample_mode_after=0x01
+sample_cntl2=0xf2
+sample_vbuscntl=0xe7
+sample_vbatcntl=0x37
+sample_prtncntl=0xfe
+sample_vbus_uv=4957000
+sample_vbat_uv=3537500
+sample_ibus_ua=0
+sample_die_decic=235
+startup_valid=0
+startup_stamp_jiffies=0
+startup_faults=0x0
+startup_gauge_attempted=0
+startup_adc_read_completed_ms=0
+startup_gauge_started_ms=0
+startup_gauge_completed_ms=0
+startup_gauge_ret=0
+startup_gauge_uv=0
+startup_int=00 00 00 00
+startup_status=00 00 00 00
+startup_adc=00 00 00 00 00 00 00 00 00 00 00
+startup_int4_disable=0x00
+startup_int4_wait=0x00
+startup_mode_before=0x00
+startup_mode_after=0x00
+startup_cntl2=0x00
+startup_vbuscntl=0x00
+startup_vbatcntl=0x00
+startup_prtncntl=0x00
+startup_vbus_uv=0
+startup_vbat_uv=0
+startup_ibus_ua=0
+startup_die_decic=0
+@@network
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.139.153.121/24 brd 10.139.153.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 3035sec preferred_lft 3035sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+@@services
+active
+active
+active
+@@roles
+[sink]
+[device]
+@@failed
+@@dcc
+absent
+@@host-key
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcDq5XdwKgjymVdJr/xPAwNQuYTr7rmdt9mxLzT9/PL root@DESKTOP-EAS21AS
+@@pack-thermal
+sm5714-battery
+enabled
+26400
+@@tcpm
+DEVTYPE=power_supply
+OF_NAME=usbpd
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33
+OF_COMPATIBLE_0=siliconmitus,sm5714-usbpd
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=tcpm-source-psy-3-0033
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_ONLINE=1
+POWER_SUPPLY_VOLTAGE_MAX=5000000
+POWER_SUPPLY_VOLTAGE_MIN=5000000
+POWER_SUPPLY_VOLTAGE_NOW=5000000
+POWER_SUPPLY_CURRENT_MAX=1800000
+POWER_SUPPLY_CURRENT_NOW=1800000
+POWER_SUPPLY_TYPE=USB
+POWER_SUPPLY_USB_TYPE=C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS
+@@source
+format=sm5714-current-port-v1
+ret=0
+charging_grant=0
+values_are_not_physical_measurements=1
+instance=1
+source_generation=25
+budget_generation=58
+started_ms=4179985
+completed_ms=4179985
+online=1
+usb_type=6
+voltage_uv=5000000
+current_ua=1800000
+budget_mv=5000
+budget_ma=1800
+charge_requested=1
+nr_source_pdos=1
+source_pdo_1=0x1511912c
+@@boot-end
+647d50c8-0fc9-4fb0-bfea-5006c519a255

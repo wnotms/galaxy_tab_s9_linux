@@ -1,0 +1,25 @@
+{
+  "existing_host_identity_suite": {
+    "executed": true,
+    "command": "python3 -m unittest discover -s tests -p test_x710_normal_reentry.py",
+    "passed": 7,
+    "skipped": 0,
+    "seconds": 0.004
+  },
+  "capture_helper_syntax": {
+    "executed": true,
+    "passed": true
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel/build input change"
+  },
+  "full_host_regression": {
+    "executed": false,
+    "reason": "No routing or kernel change"
+  },
+  "hash_check": {
+    "executed": true
+  },
+  "github_actions_started": false
+}

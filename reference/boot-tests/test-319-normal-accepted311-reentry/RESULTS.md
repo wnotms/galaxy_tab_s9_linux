@@ -17,4 +17,5 @@ also not proof. Recent PnP event query failed/status1, retained as missing evide
 No reboot/BCB/flash/module/rootfs/register/charging-policy write took place.
 Test318 remains undeployed. Test319 does not retry: independently registered
 Test320 addresses the actual USB failure with one unchanged ordinary Wi-Fi reboot.
-Host tests/build/full regression executed:false for this evidence-only change.
+Seven existing identity tests rerun: PASS0.004s/0skip. Kernel build/full regression
+executed:false; no kernel or reusable runner change.

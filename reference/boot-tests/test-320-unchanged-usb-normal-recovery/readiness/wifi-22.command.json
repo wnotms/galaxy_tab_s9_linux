@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-maintenance318-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-maintenance318",
+    "root@10.139.153.121",
+    "cat /proc/sys/kernel/random/boot_id; cat /etc/machine-id"
+  ],
+  "ended_utc": "2026-10-05T04:49:01.827146+00:00",
+  "started_utc": "2026-10-05T04:48:58.815941+00:00",
+  "status": 255
+}
