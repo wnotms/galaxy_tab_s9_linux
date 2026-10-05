@@ -36,6 +36,10 @@ struct sm5440_native_input {
 struct sm5440_native_result {
 	struct sm5440_native_owner owner;
 	struct x710_physical_sample physical;
+	/* Only valid with a successful newly completed ADC operation. */
+	u32 vbus_uv;
+	int die_decic;
+	bool die_valid;
 	bool owned, draining, hardware_quiesced;
 	int operation_error, cleanup_error;
 };

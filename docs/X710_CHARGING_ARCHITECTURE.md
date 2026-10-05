@@ -53,7 +53,8 @@ supersede the original per-stage directory recommendation.
 | TCPM PPS protocol adapter | Test302 actual native TCPM power_supply operations and source-bound ownership, compiled and host-tested | No successful physical PPS roundtrip is claimed |
 | Pump-OFF PPS consumer | Test303 real battery lease/provider integration and PM cancellation/drain, compiled and host-tested | Genuine physical acquisition must satisfy its100ms admission; slow diagnostic observations cannot substitute |
 | Native observation worker | `x710-charge-observer.c` links real source/pack/OFF-fresh providers through one explicitly requested ordered worker; generations, timeout and PM drain are exercised by threaded host tests | Does not complete the live control adapter or grant ADC/calibration/OCP acceptance; no automatic requests or physical deployment |
-| Native hardware executor | `sm5440_native_control()` binds real map/IO/poller ownership, converter/settings/WDT and terminal cleanup under its isolated profile; PM and lifetime are host-tested | Native activation unavailable; controller worker/source ownership/fixed fallback and physical ADC/OCP acceptance still required |
+| Native hardware executor | `sm5440_native_control()` binds real map/IO/poller ownership, converter/settings/WDT and terminal cleanup under its isolated profile; PM and lifetime are host-tested | Native activation unavailable; physical ADC/OCP acceptance still required |
+| Native OFF coordinator | `x710-charge-controller.c` runs actual native ownership/ADC/source/pack/switching lease/TCPM request/fixed-return pipeline on one ordered worker; timeout/cancellation/PM cleanup and supplier faults host-tested | Explicit terminal OFF roundtrip only; retained active-session park/resume and scheduled monitor/refresh plus physical acceptance remain unfinished |
 | SM5440 passive transport | Readback, ADC decoding, OFF checks and passive physical observations | Test313 close single voltage pair but live REVBLK/nonzero OFF IBUS: STOP; complete operating context, independent calibration and physical freshness remain unresolved |
 | Direct transaction engine | Actual C entry/refresh/retarget/monitor/fallback/PM functions exercised with faulting host adapters | No live pump-ON actuator, approved active protection or physical cutoff acceptance |
 
@@ -131,3 +132,6 @@ direct-charge readiness.
 The actual hardware-session boundary is documented in
 [SM5440_NATIVE_CONTROL.md](SM5440_NATIVE_CONTROL.md). It is separate from the
 historical offline-policy profile and does not complete active deployment.
+The bound OFF coordinator is documented in
+[X710_NATIVE_CONTROLLER.md](X710_NATIVE_CONTROLLER.md). Its real cleanup and
+source-bound release do not grant active protection or higher-power charging.

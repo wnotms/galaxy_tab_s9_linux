@@ -1,0 +1,179 @@
+{
+  "verdict": "OFFLINE_NATIVE_OFF_COORDINATION_QUALIFIED",
+  "full_goal_verdict": "NOT_READY",
+  "profile": "sm5440-native-control",
+  "base_revision": "0c163962206c51d606a8f21b38b47be422a90c7a",
+  "tests": {
+    "executed": true,
+    "modules": [
+      "test_x710_charge_controller",
+      "test_sm5440_native_control",
+      "test_sm5440_actuator",
+      "test_sm5440_conversion",
+      "test_sm5440_supervisor",
+      "test_sm5440_watchdog",
+      "test_x710_charge_observer",
+      "test_x710_charging_policy",
+      "test_x710_pd_session",
+      "test_x710_direct_transaction",
+      "test_sm5714_stage2_pd",
+      "test_sm5714_pack_snapshot",
+      "test_sm5714_owned_observer",
+      "test_sm5714_runtime_snapshot",
+      "test_container_kernel_config"
+    ],
+    "tests_run": 313,
+    "seconds": 11.04386579900165,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "valid": true,
+    "full_executed": false,
+    "reason": "Actual controller + native executor/policy/TCPM/observer/pack/container dependencies; no suite routing changed."
+  },
+  "final_native_tests": {
+    "tests_run": 17,
+    "valid": true,
+    "seconds": 0.7652322009998898,
+    "failures": [],
+    "errors": [],
+    "skips": [],
+    "reason": "New native result raw VBUS/die telemetry checked against actual converter on mock bus; kernel source unchanged since final build."
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 60.24691303899817,
+    "started_utc": "2026-10-05T10:24:18.933557+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-native-control",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-native-controller"
+    },
+    "device_operations": []
+  },
+  "static": {
+    "returncode": 0,
+    "seconds": 7.702005007002299,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/x710-charge-controller.o",
+      "drivers/power/supply/sm5440-direct.o"
+    ],
+    "warnings": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "changed_driver_warnings": []
+  },
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ],
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "Test303": {
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "native-control": {}
+  },
+  "DTB_diff": [],
+  "module_files": 181,
+  "protected_sources": 53,
+  "preserved_formal_artifacts": 18,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-native-controller/Image.gz",
+      "bytes": 22165345,
+      "sha256": "77c464e0664af90b77575bf485f6cc8430930c259d50bc09c9a0ed90b3adef0f"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-native-controller/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-native-controller/config",
+      "bytes": 243294,
+      "sha256": "6f70dd31a582efc0464c37b505693f7fe8af3949a9c2a573a1ca116a7e73f42d"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-native-controller/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "5240c6fb61733e27abbb1e1c7586edac7aed53bae4d37a75cbfae36aef661912"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-native-controller/modules-x710.tar.gz",
+      "bytes": 47331509,
+      "sha256": "8f836a1b9dec4bade3283b7224b5fd065798083b83999ea911560e47d54e14d5"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-native-controller/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "linked": {
+    "sm5440_native_control": true,
+    "sm5440_native_quiesce": true,
+    "x710_charge_request_observation": true,
+    "x710_charge_controller_request": true,
+    "x710_charge_controller_status": true,
+    "x710_charge_controller_cancel": true,
+    "x710_controller_work": true,
+    "x710_controller_pm": true,
+    "sm5440_control_prepare": true,
+    "sm5440_watchdog_arm_off": true,
+    "sm5440_actuator_start": true,
+    "sm5440_actuator_stop": true,
+    "sm5440_actuator_pause": true,
+    "sm5440_actuator_resume": true,
+    "sm5440_conversion_begin": true,
+    "sm5440_conversion_advance": true,
+    "sm5440_conversion_finish": true,
+    "sm5440_conversion_cancel": true,
+    "sm5440_supervisor_begin": true,
+    "sm5440_supervisor_advance": true,
+    "sm5440_supervisor_cancel": true
+  },
+  "physical_executed": false,
+  "device_operations": [],
+  "PPS_requested_on_device": false,
+  "pump_enabled_on_device": false,
+  "software_ocp_verified": false,
+  "native_activation_grant": false,
+  "rootfs_modified": false,
+  "usb_modified": false,
+  "github_actions": false,
+  "remaining": [
+    "Retained active adapter session/park-resume and scheduled hardware monitor/refresh binding with native source lease/OCP grant; current controller remains terminal OFF-roundtrip only",
+    "Independent physical ADC validity/calibration/current/cutoff/protection acceptance; RAW/Test321 timing is not an admission grant",
+    "Separately registered physical PPS pump-OFF then <=1.8A direct-charge/PM/fault acceptance",
+    "Vendor-equivalent higher-power/thermal/current progression after physical acceptance"
+  ],
+  "storage": "Reused native-profile cache; one new formal output, prior accepted/native outputs hash-preserved; no Windows staging."
+}

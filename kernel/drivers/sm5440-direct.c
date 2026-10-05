@@ -893,8 +893,12 @@ static int sm5440_native_operation_locked(struct sm5440_direct *sm,
 		ret = sm5440_conversion_advance(sm->regmap, &n->adc);
 		if (ret == -EINPROGRESS && n->adc.state == SM5440_CONVERSION_MEASURED)
 			ret = sm5440_conversion_finish(sm->regmap, &n->adc);
-		if (!ret)
+		if (!ret) {
 			out->physical = n->adc.sample;
+			out->vbus_uv = n->adc.vbus_uv;
+			out->die_decic = n->adc.die_decic;
+			out->die_valid = n->adc.data_acquired;
+		}
 		break;
 	case SM5440_NATIVE_START:
 	case SM5440_NATIVE_RESUME:

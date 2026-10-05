@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native OFF coordination worker now links real source/pack/SM5440
+owner/ADC/switching lease/TCPM PPS/fixed-return operations, explicitly requested
+only under X710_NATIVE_CONTROL. Generation/provider checks, timeout cancellation
+and once-only cleanup/PM drain; unknown OFF prohibits voltage/release, unresolved
+ownership blocks retry. Native raw VBUS/die exported without rounding proof.
+313 affected PASS11.044s/0skip +17 native export PASS0.765s; ARM64 modules
+PASS60.247s/W1sparse7.702s only known upstreamVDSO warning. Exact prior native
+config/accepted311 DTB/181 paired,53 protected/18 formal hashes preserved.
+reference/charging/x710-native-controller/,out/kernel-x710-native-controller/.
+No device operation/flash/PPS/ON/rootfs/USB/Actions. Direct remains unarmed,
+OCP/calibration/cutoff unaccepted; retained ACTIVE/park/resume and scheduled
+monitor/refresh integration still required. Full goal NOTREADY; not a direct-
+charge release or new physical result. Same native-profile cache reused.
+
 2026-10-05 native SM5440 hardware executor now linked to actual bound I2C/map/
 poller ownership under new isolated sm5440-native-control/X710_NATIVE_CONTROL.
 Old offline-policy control meaning/frozen quiesce/rearm/converter unchanged;

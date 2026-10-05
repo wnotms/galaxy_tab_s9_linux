@@ -173,6 +173,7 @@ void exercise(int sc,int phase,int fail,int persistent,int uncertain,int *o){
      if(ret!=-EINPROGRESS)break;
     }
     o[7]=ret;o[8]=r.physical.valid;o[9]=r.physical.observed_ms;o[31]=m.calls;
+    o[35]=r.die_valid;o[36]=r.die_decic;o[37]=r.vbus_uv;
    }
   }
  }
@@ -258,6 +259,12 @@ void exercise_lifetime(int *o){
         self.assertGreaterEqual(o[9], 1020)
         self.assertEqual(o[10], 0); self.assertEqual(o[12:15], [1, 0, 0])
         self.assertEqual(o[16:19], [0x82, 0x42, 1])
+
+    def test_completed_native_adc_exports_actual_die_and_unrounded_vbus(self):
+        o = self.case()
+        self.assertEqual(o[35:38], [1, 300, 9000000])
+        o = self.case(12)
+        self.assertEqual(o[35:38], [0, 0, 0])
 
     def test_refused_claim_cannot_touch_registers(self):
         for scenario in range(1, 8):

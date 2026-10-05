@@ -6,10 +6,11 @@ uncached I2C map. No native activation grant or automatic charging start.
 
 --- a/drivers/power/supply/Makefile
 +++ b/drivers/power/supply/Makefile
-@@ -144 +144,3 @@
+@@ -144 +144,4 @@
  obj-$(CONFIG_X710_CHARGING_POLICY) += x710-charge-observer.o
 +obj-$(CONFIG_X710_NATIVE_CONTROL) += sm5440-watchdog.o sm5440-actuator.o
 +obj-$(CONFIG_X710_NATIVE_CONTROL) += sm5440-conversion.o sm5440-supervisor.o
++obj-$(CONFIG_X710_NATIVE_CONTROL) += x710-charge-controller.o
 --- a/drivers/power/supply/Kconfig
 +++ b/drivers/power/supply/Kconfig
 @@ -1211 +1211,8 @@
