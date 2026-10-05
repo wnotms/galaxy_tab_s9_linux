@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 owner PCUSB reconnect endpoint now passes one read-only capture:
+same e71954cf accepted311 normal config/notes/cmdline, nativeADB shell and
+authenticated Wi-Fi.184, interface-bound WindowsNCM SSHbanner, composite/ADB/NCM
+Code0/adapterUp. Pack22%/3.746V/31.5C/Good, PCSDP500mA net-280mA; pumpOFF/IBUS0/
+fault0, Sink/Device, three services active/no failed unit/DCCabsent. Full1100-row
+kernel JSON losslessgzip, prior1060-row exactcursorprefix,40additional rows no
+detected CPU-stall/panic/Oops signature. Previous startupMDSS/SMMU UNKNOWN retained.
+No agentreboot/flash/reset/service/config/PPS/ON, no new build/host/Actions.
+Current USB recovery only; physical cycle timing not observed/permanentfix NOT
+proven. Test319/318 failures unchanged. Evidence reference/charging/usb-reconnect/
+20261005T051810Z/. Fullcharginggoal stillNOTREADY.
+
+
 2026-10-05 Test318 physically executed once and STOPPED. Candidate df1ce8c0
 exact identity/uniquehistory; nativefixed5/packadmission passed, but OFFcontinuous
 READY never arrived within500ms: error-110/count0/polls38/589ms transaction,
