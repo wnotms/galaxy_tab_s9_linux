@@ -7,7 +7,7 @@
 #include "sm5714-stage2.h"
 #include "x710-charging-policy.h"
 
-/* Unintegrated, default disabled. Caller owns serialized uncached I/O and
+/* Default disabled; the native hardware session owns serialized uncached I/O and
  * generation publication/drain; these registers do not grant PD or OCP.
  */
 struct sm5440_actuator {

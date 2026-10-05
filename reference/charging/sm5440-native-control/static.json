@@ -1,0 +1,27 @@
+{
+  "returncode": 0,
+  "elapsed_s": 6.98772619599913,
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+    "drivers/power/supply/sm5440-direct.o",
+    "drivers/power/supply/sm5440-actuator.o",
+    "drivers/power/supply/sm5440-watchdog.o",
+    "drivers/power/supply/sm5440-conversion.o",
+    "drivers/power/supply/sm5440-supervisor.o"
+  ],
+  "scope": "Final prepared native ownership publication source and all five real hardware units.",
+  "warnings": [
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+  ],
+  "changed_driver_warnings": []
+}

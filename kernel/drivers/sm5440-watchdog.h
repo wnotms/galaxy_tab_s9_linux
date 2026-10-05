@@ -6,7 +6,7 @@
 
 struct regmap;
 
-/* Unintegrated hardware helper, no caller/export/charging grant. Caller owns
+/* Native-session hardware helper, no standalone export/charging grant. Caller owns
  * uncached I/O serialization, source epoch, pump shutdown and PM drain.
  */
 enum sm5440_watchdog_state {

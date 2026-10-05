@@ -1,0 +1,21 @@
+--- 
+
++++ 
+
+@@ -2593,6 +2593,15 @@
+
+ sm5440_direct.description=SM-X710 passive SM5440 ID/ADC/fault monitor; pump OFF only
+ sm5440_direct.file=drivers/power/supply/sm5440-direct
+ sm5440_direct.license=GPL
++x710_charging_policy.description=X710 offline charging transaction core, no live activation adapter
++x710_charging_policy.file=drivers/power/supply/x710-charging-policy
++x710_charging_policy.license=GPL
++x710_pd_session.description=X710 explicitly invoked owned PPS roundtrip; pump OFF only
++x710_pd_session.file=drivers/power/supply/x710-pd-session
++x710_pd_session.license=GPL
++x710_charge_observer.description=X710 native OFF charging observation worker; no activation
++x710_charge_observer.file=drivers/power/supply/x710-charge-observer
++x710_charge_observer.license=GPL
+ qcom_tsens.file=drivers/thermal/qcom/qcom_tsens
+ qcom_tsens.license=GPL v2
+ qcom_tsens.description=QCOM Temperature Sensor driver

@@ -1,0 +1,7 @@
+# Stage3C offline transaction core + passive monitor, not an active pump image.
+CONFIG_CHARGER_SM5440_DIRECT=y
+CONFIG_X710_CHARGING_POLICY=y
+
+# Native hardware executor, separate from the historical offline-only core.
+# Default inactive: no ON grant, automatic request or userspace setter.
+CONFIG_X710_NATIVE_CONTROL=y

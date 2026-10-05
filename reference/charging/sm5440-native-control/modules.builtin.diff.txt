@@ -1,0 +1,15 @@
+--- 
+
++++ 
+
+@@ -488,6 +488,9 @@
+
+ kernel/drivers/power/sequencing/pwrseq-core.ko
+ kernel/drivers/power/supply/sm5714-battery.ko
+ kernel/drivers/power/supply/sm5440-direct.ko
++kernel/drivers/power/supply/x710-charging-policy.ko
++kernel/drivers/power/supply/x710-pd-session.ko
++kernel/drivers/power/supply/x710-charge-observer.ko
+ kernel/drivers/thermal/qcom/qcom_tsens.ko
+ kernel/drivers/thermal/hisi_thermal.ko
+ kernel/drivers/watchdog/watchdog.ko

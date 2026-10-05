@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* X710 vendor set_op_mode/set_ENHIZ, checked mainline register transaction.
- * Not in Kbuild, no live caller/export/activation. See SM5440_PUMP_ACTUATOR.md.
+ * Linked by the isolated native hardware session; native activation remains
+ * unavailable. See SM5440_PUMP_ACTUATOR.md and SM5440_NATIVE_CONTROL.md.
  */
 #include <linux/compiler.h>
 #include <linux/errno.h>

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* X710 Stage3B PASSIVE monitor. No pump-ON, PPS, Q4, reset, active protection,
- * reverse/bypass or writable power_supply property exists in this driver.
+ * reverse/bypass or writable power_supply property exists in the ordinary
+ * profile. The isolated native-control profile adds explicit kernel-only
+ * ownership/settings/converter operations, with no native activation grant.
  * Hardware provenance: Samsung sm5440_charger.c/.h, cross-checked Fedora
  * ab123e7d. See docs/SM5440_REGISTER_AUDIT.md; register writes are limited to
  * mode-OFF and traced converter controls. Unaccepted ADC => unavailable.
@@ -24,6 +26,9 @@
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
+#ifdef CONFIG_X710_NATIVE_CONTROL
+#include "sm5440-native.h"
+#endif
 #if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 #include "sm5440-timing.h"
 #include "sm5714-stage2.h"
@@ -91,6 +96,19 @@ struct sm5440_timing_context {
 };
 #endif
 
+#ifdef CONFIG_X710_NATIVE_CONTROL
+/* io_lock protects hardware ownership; request_busy covers the drain gap. */
+struct sm5440_native_context {
+	struct sm5440_native_owner owner;
+	struct sm5440_actuator actuator;
+	struct sm5440_conversion adc;
+	struct sm5440_supervisor monitor;
+	u64 instance, generation;
+	bool owned, draining, cleanup_attempted, hardware_quiesced;
+	int operation_error, cleanup_error;
+};
+#endif
+
 struct sm5440_direct {
 	struct device *dev;
 	struct regmap *regmap;
@@ -113,6 +131,9 @@ struct sm5440_direct {
 	unsigned long sample_seq, request_epoch;
 	u64 conversion_seq;
 	bool dying;
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	struct sm5440_native_context native;
+#endif
 #if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	struct sm5440_timing_context timing;
 #endif
@@ -131,6 +152,9 @@ struct sm5440_direct {
  */
 static DEFINE_MUTEX(sm5440_companion_lock);
 static struct sm5440_direct *sm5440_companion;
+#ifdef CONFIG_X710_NATIVE_CONTROL
+static atomic64_t sm5440_native_instances = ATOMIC64_INIT(0);
+#endif
 
 #ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 static int sm5440_publish(struct sm5440_direct *sm)
@@ -183,6 +207,10 @@ static int sm5440_sample_ready_locked(struct sm5440_direct *sm)
 		return -ENODEV;
 	if (READ_ONCE(sm->stopped))
 		return -ESHUTDOWN;
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	if (sm->native.owned)
+		return -EBUSY;
+#endif
 	if (sm->fault || sm->sample.faults || sm->last_sample_error)
 		return -EIO;
 	if (!sm->initial_sample_done || !sm->sample.valid ||
@@ -741,6 +769,318 @@ static int sm5440_off(struct sm5440_direct *sm)
 		ret = -EIO;
 	return ret;
 }
+
+#ifdef CONFIG_X710_NATIVE_CONTROL
+/* Native hardware boundary: no supplier locks/PD calls/waits under io_lock. */
+static void sm5440_native_result_locked(struct sm5440_direct *sm,
+					struct sm5440_native_result *out)
+{
+	struct sm5440_native_context *n = &sm->native;
+
+	lockdep_assert_held(&sm->io_lock);
+	out->owner = n->owner;
+	out->owned = n->owned;
+	out->draining = n->draining;
+	out->hardware_quiesced = n->hardware_quiesced;
+	out->operation_error = n->operation_error;
+	out->cleanup_error = n->cleanup_error;
+}
+
+/* Terminal once per session. An uncertain OFF retains settings/WDT ownership;
+ * never lower voltage, restart passive sampling or hide a second OFF attempt.
+ */
+static int sm5440_native_cleanup_locked(struct sm5440_direct *sm)
+{
+	struct sm5440_native_context *n = &sm->native;
+	unsigned int control;
+	int ret, err;
+
+	lockdep_assert_held(&sm->io_lock);
+	if (n->cleanup_attempted)
+		return n->cleanup_error;
+	n->cleanup_attempted = true;
+	n->hardware_quiesced = false;
+	ret = sm5440_actuator_stop(sm->regmap, &n->actuator);
+	if (!n->actuator.off_verified || n->actuator.mode_possible)
+		goto out;
+	/* Pump OFF precedes converter cleanup, including timeout/I2C/PM faults. */
+	if (n->monitor.started) {
+		sm5440_supervisor_cancel(sm->regmap, &n->monitor);
+		err = n->monitor.converter_error;
+	} else {
+		sm5440_conversion_cancel(sm->regmap, &n->adc);
+		err = n->adc.cleanup_error;
+	}
+	if (!ret)
+		ret = err;
+	err = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (!err)
+		err = regmap_read(sm->regmap, SM5440_ADCCNTL1, &control);
+	if (!err && (control & SM5440_ADC_ENABLE))
+		err = -EBUSY;
+	if (!ret)
+		ret = err;
+	n->hardware_quiesced = !ret && !n->actuator.controls.pending &&
+		!n->actuator.watchdog.owned && !n->actuator.enhiz_owned &&
+		!n->adc.owned && !n->monitor.adc.owned;
+	if (!ret && !n->hardware_quiesced)
+		ret = -EIO;
+out:
+	n->cleanup_error = ret;
+	if (ret)
+		sm->fault = true;
+	return ret;
+}
+
+static int sm5440_native_operation_locked(struct sm5440_direct *sm,
+					  enum sm5440_native_operation op,
+					  const struct sm5440_native_input *in,
+					  struct sm5440_native_result *out)
+{
+	struct sm5440_native_context *n = &sm->native;
+	int ret;
+
+	lockdep_assert_held(&sm->io_lock);
+	if (op == SM5440_NATIVE_RELEASE) {
+		if (!n->owned)
+			return 0;
+		ret = sm5440_native_cleanup_locked(sm);
+		if (!ret) {
+			WRITE_ONCE(n->owned, false);
+			sm->sample.valid = false;
+			if (!sm->stopped && !sm->fault && !READ_ONCE(sm->dying))
+				schedule_delayed_work(&sm->work, 0);
+		}
+		return ret;
+	}
+	if (READ_ONCE(sm->dying) || sm->stopped)
+		return -ESHUTDOWN;
+	if (n->generation != n->owner.generation || n->cleanup_attempted)
+		return -ECANCELED;
+	if (n->draining || sm->fault)
+		return -EBUSY;
+	switch (op) {
+	case SM5440_NATIVE_PREPARE:
+		if (!in)
+			return -EINVAL;
+		if (n->adc.owned || n->actuator.controls.state != SM5440_CONTROL_IDLE)
+			return -EALREADY;
+		/* OFF settings + WDT only; no charging authorization is manufactured. */
+		ret = sm5440_control_prepare(sm->regmap, in->ma, &n->actuator.controls);
+		if (!ret)
+			ret = sm5440_watchdog_arm_off(sm->regmap, &n->actuator.watchdog,
+						      n->generation,
+						      ktime_to_ms(ktime_get_boottime()));
+		break;
+	case SM5440_NATIVE_ADC_BEGIN:
+		if (n->monitor.started || n->actuator.mode_possible)
+			return -EBUSY;
+		if (n->adc.state == SM5440_CONVERSION_DONE && !n->adc.owned &&
+		    !n->adc.cleanup_error)
+			n->adc = (struct sm5440_conversion) {
+				.generation = &n->generation, .epoch = n->generation,
+				.defer_cleanup = true,
+			};
+		if (n->adc.state != SM5440_CONVERSION_IDLE)
+			return -EBUSY;
+		n->adc.enabled = true;
+		ret = sm5440_conversion_begin(sm->regmap, &n->adc);
+		break;
+	case SM5440_NATIVE_ADC_ADVANCE:
+		if (n->adc.state != SM5440_CONVERSION_REARM &&
+		    n->adc.state != SM5440_CONVERSION_WAIT)
+			return -EALREADY;
+		ret = sm5440_conversion_advance(sm->regmap, &n->adc);
+		if (ret == -EINPROGRESS && n->adc.state == SM5440_CONVERSION_MEASURED)
+			ret = sm5440_conversion_finish(sm->regmap, &n->adc);
+		if (!ret)
+			out->physical = n->adc.sample;
+		break;
+	case SM5440_NATIVE_START:
+	case SM5440_NATIVE_RESUME:
+		/* The native provider has no activation setter/accepted OCP grant.
+		 * Even caller-supplied software_ocp_verified cannot override this.
+		 */
+		if (!n->actuator.enabled)
+			return -EPERM;
+		if (!in || !in->facts || !in->physical || !in->source)
+			return -EINVAL;
+		if (n->adc.owned || n->monitor.sampling)
+			return -EBUSY;
+		if (op == SM5440_NATIVE_START)
+			ret = sm5440_actuator_start(sm->regmap, &n->actuator, in->facts,
+						    in->physical, in->source, in->mv, in->ma);
+		else
+			ret = sm5440_actuator_resume(sm->regmap, &n->actuator, in->facts,
+						     in->physical, in->source, in->mv, in->ma);
+		break;
+	case SM5440_NATIVE_PAUSE:
+		if (!n->actuator.enabled)
+			return -EPERM;
+		if (n->adc.owned || n->monitor.sampling)
+			return -EBUSY;
+		ret = sm5440_actuator_pause(sm->regmap, &n->actuator);
+		break;
+	case SM5440_NATIVE_MONITOR_BEGIN:
+	case SM5440_NATIVE_MONITOR_ADVANCE:
+		if (!n->actuator.enabled)
+			return -EPERM;
+		if (!in || !in->facts || !in->source)
+			return -EINVAL;
+		if (n->adc.owned)
+			return -EBUSY;
+		n->monitor.enabled = true;
+		n->monitor.target_mv = n->actuator.active_mv;
+		n->monitor.target_ma = n->actuator.active_ma;
+		if (op == SM5440_NATIVE_MONITOR_BEGIN)
+			ret = sm5440_supervisor_begin(sm->regmap, &n->monitor,
+						      in->facts, in->source);
+		else
+			ret = sm5440_supervisor_advance(sm->regmap, &n->monitor,
+							in->facts, in->source);
+		if (!ret)
+			out->physical = n->monitor.adc.sample;
+		break;
+	default:
+		return -EINVAL;
+	}
+	if (ret && ret != -EINPROGRESS) {
+		if (!n->operation_error)
+			n->operation_error = ret;
+		sm->fault = true; /* Unexpected hardware/conversion error stays latched. */
+		sm5440_native_cleanup_locked(sm);
+	}
+	return ret;
+}
+
+int sm5440_native_control(enum sm5440_native_operation op,
+			  const struct sm5440_native_owner *owner,
+			  const struct sm5440_native_input *in,
+			  struct sm5440_native_result *out)
+{
+	struct sm5440_native_owner wanted = owner ? *owner :
+		(struct sm5440_native_owner) {};
+	struct sm5440_native_context *n;
+	struct sm5440_direct *sm;
+	unsigned int control, mode;
+	bool reserved = false;
+	int ret;
+
+	if (!out)
+		return -EINVAL;
+	/* Support passing &out->owner back to this API without erasing the token. */
+	memset(out, 0, sizeof(*out));
+	if (op < SM5440_NATIVE_CLAIM || op > SM5440_NATIVE_RELEASE)
+		return -EINVAL;
+	mutex_lock(&sm5440_companion_lock);
+	sm = sm5440_companion;
+	if (sm)
+		atomic_inc(&sm->request_users);
+	mutex_unlock(&sm5440_companion_lock);
+	if (!sm)
+		return -ENODEV;
+	if (atomic_cmpxchg(&sm->request_busy, 0, 1)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	reserved = true;
+	if (!mutex_trylock(&sm->io_lock)) {
+		ret = -EBUSY;
+		goto put;
+	}
+	n = &sm->native;
+	if (op != SM5440_NATIVE_CLAIM) {
+		if (!wanted.instance || !wanted.generation ||
+		    wanted.instance != n->owner.instance ||
+		    wanted.generation != n->owner.generation) {
+			ret = -ESTALE;
+			goto unlock; /* No other owner's state or I/O escapes. */
+		}
+		if (!n->owned && op != SM5440_NATIVE_RELEASE) {
+			ret = -ECANCELED;
+			goto unlock;
+		}
+		ret = sm5440_native_operation_locked(sm, op, in, out);
+		goto report;
+	}
+	ret = sm5440_sample_ready_locked(sm);
+	if (ret)
+		goto unlock;
+	if (!n->instance || n->generation == ~0ULL) {
+		ret = -EOVERFLOW;
+		goto unlock;
+	}
+	/* Reserve before drain; no new fresh/cached request or requeue can enter.
+	 * A running old poll is allowed to finish before touching owned registers.
+	 */
+	n->generation++;
+	n->owner = (struct sm5440_native_owner) { n->instance, n->generation };
+	WRITE_ONCE(n->owned, true);
+	n->draining = true;
+	n->cleanup_attempted = false;
+	n->hardware_quiesced = false;
+	n->operation_error = 0;
+	n->cleanup_error = 0;
+	n->actuator = (struct sm5440_actuator) {
+		.generation = &n->generation, .epoch = n->generation,
+	}; /* enabled=false, no source lease/ON grant */
+	n->adc = (struct sm5440_conversion) {
+		.generation = &n->generation, .epoch = n->generation,
+		.defer_cleanup = true,
+	};
+	n->monitor = (struct sm5440_supervisor) { .actuator = &n->actuator };
+	WRITE_ONCE(sm->request_epoch, sm->request_epoch + 1);
+	sm->sample.valid = false;
+	mutex_unlock(&sm->io_lock);
+	wake_up_all(&sm->request_wait);
+	cancel_delayed_work_sync(&sm->work);
+	mutex_lock(&sm->io_lock);
+	sm->sample.valid = false; /* A drained old poll may have republished it. */
+	n->draining = false;
+	if (READ_ONCE(sm->dying) || sm->stopped || n->generation != n->owner.generation) {
+		ret = -ESHUTDOWN;
+		goto failed_claim;
+	}
+	if (sm->fault) {
+		ret = -EIO;
+		goto failed_claim;
+	}
+	ret = regmap_read(sm->regmap, SM5440_CNTL5, &mode);
+	if (!ret && (mode & SM5440_MODE_MASK))
+		ret = -EBUSY;
+	if (!ret)
+		ret = regmap_update_bits(sm->regmap, SM5440_ADCCNTL1, SM5440_ADC_ENABLE, 0);
+	if (!ret)
+		ret = regmap_read(sm->regmap, SM5440_ADCCNTL1, &control);
+	if (!ret && (control & SM5440_ADC_ENABLE))
+		ret = -EBUSY;
+	if (!ret) {
+		n->actuator.off_verified = true;
+		goto report;
+	}
+failed_claim:
+	n->operation_error = ret;
+	/* Retain a failed-claim token for cleanup; it is not an ownership grant.
+	 * PM may have already done terminal cleanup while the old poll drained.
+	 */
+	sm5440_native_cleanup_locked(sm);
+report:
+	sm5440_native_result_locked(sm, out);
+unlock:
+	mutex_unlock(&sm->io_lock);
+put:
+	if (ret)
+		out->physical.valid = false;
+	if (reserved)
+		atomic_set(&sm->request_busy, 0);
+	mutex_lock(&sm5440_companion_lock);
+	if (atomic_dec_and_test(&sm->request_users))
+		wake_up_all(&sm->users_wait);
+	mutex_unlock(&sm5440_companion_lock);
+	return ret;
+}
+EXPORT_SYMBOL_GPL(sm5440_native_control);
+#endif
 
 static int sm5440_sample_once(struct sm5440_direct *sm,
 			      struct sm5440_sample *sample)
@@ -1610,6 +1950,10 @@ static void sm5440_poll(struct work_struct *work)
 
 	if (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))
 		return;
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	if (READ_ONCE(sm->native.owned))
+		return;
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	ret = sm5440_fixed_context_cycle(sm, &sample);
 #else
@@ -1703,6 +2047,10 @@ static void sm5440_poll(struct work_struct *work)
 		sm5440_timing_cycle(sm);
 		return; /* One experiment per bind; no second conversion/retry. */
 	}
+#endif
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	if (READ_ONCE(sm->native.owned))
+		return;
 #endif
 #ifndef CONFIG_SM5440_ADC_CONDITION_TEST
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))
@@ -1803,13 +2151,49 @@ static int sm5440_quiesce(struct sm5440_direct *sm)
 	return ret ? ret : adc_ret;
 }
 
+#ifdef CONFIG_X710_NATIVE_CONTROL
+static int sm5440_native_quiesce(struct sm5440_direct *sm)
+{
+	int ret;
+
+	/* Serialize stop with new-request scheduling, never hold across drain. */
+	mutex_lock(&sm->io_lock);
+	WRITE_ONCE(sm->stopped, true);
+	WRITE_ONCE(sm->request_epoch, sm->request_epoch + 1);
+	if (sm->native.owned && sm->native.generation == sm->native.owner.generation)
+		sm->native.generation++;
+	sm->sample.valid = false;
+	mutex_unlock(&sm->io_lock);
+	wake_up_all(&sm->request_wait);
+	cancel_delayed_work_sync(&sm->work);
+	mutex_lock(&sm->io_lock);
+	sm->sample.valid = false;
+	/* Never carry unconfirmed startup evidence across suspend/unbind. */
+	if (sm->startup_confirmations)
+		sm->fault = true;
+	if (sm->native.owned) {
+		ret = sm5440_native_cleanup_locked(sm);
+		if (!ret)
+			WRITE_ONCE(sm->native.owned, false);
+		mutex_unlock(&sm->io_lock);
+		return ret;
+	}
+	mutex_unlock(&sm->io_lock);
+	return sm5440_quiesce(sm);
+}
+#endif
+
 static void sm5440_stop(void *data)
 {
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	struct sm5440_direct *sm = data;
 
 #endif
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	sm5440_native_quiesce(data);
+#else
 	sm5440_quiesce(data);
+#endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
 	if (sm5440_condition_restore(sm, &sm->condition_sample))
 		dev_err(sm->dev, "ADC condition teardown cannot verify restoration\n");
@@ -1832,6 +2216,8 @@ static int sm5440_suspend(struct device *dev)
 		return ret ? ret : settings;
 	/* The diagnostic cannot release switching from its500ms samples. */
 	return sm->context.lease_retained ? -EBUSY : 0;
+#elif defined(CONFIG_X710_NATIVE_CONTROL)
+	return sm5440_native_quiesce(sm);
 #else
 	return sm5440_quiesce(sm);
 #endif
@@ -1856,6 +2242,12 @@ static int sm5440_resume(struct device *dev)
 		return -EOPNOTSUPP;
 #endif
 	mutex_lock(&sm->io_lock);
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	if (sm->native.owned) {
+		mutex_unlock(&sm->io_lock);
+		return -EBUSY;
+	}
+#endif
 	ret = sm5440_off(sm);
 	mutex_unlock(&sm->io_lock);
 	if (ret || READ_ONCE(sm->fault))
@@ -1882,6 +2274,11 @@ static int sm5440_probe(struct i2c_client *client)
 	if (IS_ERR(sm->regmap))
 		return PTR_ERR(sm->regmap);
 	mutex_init(&sm->io_lock);
+#ifdef CONFIG_X710_NATIVE_CONTROL
+	sm->native.instance = atomic64_inc_return(&sm5440_native_instances);
+	if (!sm->native.instance)
+		return -EOVERFLOW;
+#endif
 	atomic_set(&sm->request_users, 0);
 	atomic_set(&sm->request_busy, 0);
 	init_waitqueue_head(&sm->request_wait);

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* X710 vendor CNTL1 timer/enable; Fedora same-model refresh cross-check.
- * Not in Kbuild or called by the current passive/fixed-PD profile.
+ * Linked only by the isolated native-control profile. Ordinary passive/fixed
+ * charging does not call this helper.
  * See docs/SM5440_WATCHDOG_TRANSACTION.md; no HW OCP or charging grant.
  */
 #include <linux/errno.h>

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Checked ADC/current/fault -> actual OFF, not qualified analog protection.
- * Offline only; see SM5440_ACTIVE_SUPERVISOR.md. No PD policy or ON operation.
+ * Linked by the inactive native session; see SM5440_ACTIVE_SUPERVISOR.md.
+ * No PD policy, native activation grant or ON operation.
  */
 #include <linux/compiler.h>
 #include <linux/errno.h>

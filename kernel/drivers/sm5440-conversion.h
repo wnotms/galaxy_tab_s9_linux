@@ -15,7 +15,7 @@ enum sm5440_conversion_state {
 	SM5440_CONVERSION_MEASURED,
 };
 
-/* No live caller/Kbuild. One object per request; caller serializes uncached I/O
+/* One object per native request; the bound driver serializes uncached I/O
  * and cancellation generation, including exclusive read-to-clear IRQ access.
  */
 struct sm5440_conversion {

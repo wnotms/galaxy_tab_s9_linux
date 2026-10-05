@@ -5,7 +5,7 @@
 #include "sm5440-actuator.h"
 #include "sm5440-conversion.h"
 
-/* Offline only, no worker/Kbuild/activation. Caller serializes I/O, source
+/* The inactive native session serializes actual I/O; no activation grant. Source
  * snapshots and cancellation generation; no charger/TCPM lock across waits.
  */
 struct sm5440_supervisor {

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* X710 vendor single-shot sequence and arithmetic, bounded native provenance.
- * Offline only. No pump/PD operation, live worker or protection qualification.
+ * Linked by the explicit native session. No pump/PD operation, automatic
+ * acquisition or protection qualification.
  */
 #include <linux/compiler.h>
 #include <linux/errno.h>

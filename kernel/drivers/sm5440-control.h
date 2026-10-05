@@ -9,7 +9,7 @@ struct regmap;
 /* OFF-only register preparation. No physical/thermal/source/ON grant.
  * Caller uses an uncached map, serializes I/O and drains ADC work;
  * lifetime/lease is its responsibility.
- * The isolated fixed9V diagnostic is the only current caller. No export or
+ * Isolated fixed9V and native-session callers remain OFF-only. No standalone export or
  * userspace activation interface is provided.
  */
 enum sm5440_control_state {

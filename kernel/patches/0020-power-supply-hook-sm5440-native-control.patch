@@ -1,0 +1,23 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: link SM5440 native hardware session helpers
+
+Explicit kernel-only ownership/ADC/settings/cleanup operations bind the real
+uncached I2C map. No native activation grant or automatic charging start.
+
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -144 +144,3 @@
+ obj-$(CONFIG_X710_CHARGING_POLICY) += x710-charge-observer.o
++obj-$(CONFIG_X710_NATIVE_CONTROL) += sm5440-watchdog.o sm5440-actuator.o
++obj-$(CONFIG_X710_NATIVE_CONTROL) += sm5440-conversion.o sm5440-supervisor.o
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1211 +1211,8 @@
++config X710_NATIVE_CONTROL
++	bool "X710 inactive native SM5440 hardware session"
++	depends on X710_CHARGING_POLICY
++	help
++	  Explicit kernel-only hardware ownership, converter and settings calls.
++	  No automatic start, native pump activation grant or userspace control.
++
+ endif # POWER_SUPPLY

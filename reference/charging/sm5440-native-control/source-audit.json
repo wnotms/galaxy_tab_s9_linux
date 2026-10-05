@@ -1,0 +1,25 @@
+{
+  "helper_algorithms_unchanged": {
+    "sm5440-actuator.c": true,
+    "sm5440-actuator.h": true,
+    "sm5440-watchdog.c": true,
+    "sm5440-watchdog.h": true,
+    "sm5440-conversion.c": true,
+    "sm5440-conversion.h": true,
+    "sm5440-supervisor.c": true,
+    "sm5440-supervisor.h": true,
+    "sm5440-control.h": true
+  },
+  "frozen_functions": {
+    "static int sm5440_quiesce(": true,
+    "static int sm5440_sample_once(": true,
+    "static int sm5440_adc_rearm(": true
+  },
+  "activation_setter": false,
+  "automatic_calls": false,
+  "hardware_map": "existing bound uncached SM5440 I2C",
+  "DTS_changed": false,
+  "SM5714_changed": false,
+  "USB_changed": false,
+  "notes": "Native hardware boundary linked; activation/source lease/fixed fallback controller still incomplete. No protection/timing acceptance inferred."
+}

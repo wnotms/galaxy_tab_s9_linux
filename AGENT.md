@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 native SM5440 hardware executor now linked to actual bound I2C/map/
+poller ownership under new isolated sm5440-native-control/X710_NATIVE_CONTROL.
+Old offline-policy control meaning/frozen quiesce/rearm/converter unchanged;
+no old tests changed. Native generation/token/lifetime/drain/cached-request
+exclusion/PM cleanup/terminal OFF-first restore implemented; WRITE_ONCE owner
+publication. Default native actuator has no activation/lease/OCP grant; START/
+RESUME/PAUSE/active-monitor refused, no auto API calls. Final535 related PASS
+16.673s/0skip +16 native PASS0.761s after publication;
+ARM64 PASS78.340s, W1/sparsePASS, knownvDSOwarning only/checkpatch0.
+Config vsobserver only NATIVE absent->y; vsaccepted311 alsoPOLICYn->y/CONDITIONn
+->absent; DTBidentical/181paired/runtimebytes unchanged beyond BTF/buildID/debug;
+builtinmetadata matchesobserver. Protected51/formal27 preserved; helpers only
+comment updates. reference/charging/sm5440-native-control/, formal
+out/kernel-sm5440-native-control/. Existing303named cache now this profile's
+provider, NOT old303/observer. No device/flash/reboot/PPS/ON/rootfs/USB/Actions;
+current accepted311 baseline not changed. FullgoalNOTREADY: real source-bound
+controller/transaction workloop/fixedfallback + physical ADC/current/cutoff/OCP/
+PPS/ON/higherpower acceptance stillrequired. Do not deploy/arm from these logs.
+
 2026-10-05 subsequent owner-confirmed PC USB reconnect endpoint passes once:
 same ecaa3c64 accepted311 config/notes/cmdline, nativeADB, Windows composite/
 ADB/NCM Code0/Up, interface-bound NCM SSH banner and authenticated Wi-Fi.

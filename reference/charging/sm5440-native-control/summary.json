@@ -1,0 +1,182 @@
+{
+  "verdict": "OFFLINE_NATIVE_HARDWARE_SESSION_QUALIFIED",
+  "full_goal_verdict": "NOT_READY",
+  "purpose": "Bind actual SM5440 hardware ownership/settings/ADC/actuator/supervisor helpers, keeping native activation unavailable",
+  "profile": "sm5440-native-control",
+  "tests": {
+    "related": {
+      "executed": true,
+      "modules": [
+        "test_sm5440_actuator",
+        "test_sm5440_adc_condition",
+        "test_sm5440_adc_raw",
+        "test_sm5440_adc_rearm",
+        "test_sm5440_adc_timing",
+        "test_sm5440_cached_consumer",
+        "test_sm5440_conversion",
+        "test_sm5440_fresh_request",
+        "test_sm5440_native_control",
+        "test_sm5440_off_control",
+        "test_sm5440_park",
+        "test_sm5440_passive",
+        "test_sm5440_passive_admission",
+        "test_sm5440_passive_evidence",
+        "test_sm5440_passive_observation",
+        "test_sm5440_ready_admission",
+        "test_sm5440_snapshot",
+        "test_sm5440_startup_gauge",
+        "test_sm5440_startup_refusal",
+        "test_sm5440_supervisor",
+        "test_sm5440_thermal_registration",
+        "test_sm5440_watchdog",
+        "test_x710_charge_observer",
+        "test_x710_direct_transaction",
+        "test_x710_charging_policy",
+        "test_x710_pd_session",
+        "test_sm5714_pack_snapshot",
+        "test_sm5714_owned_observer",
+        "test_sm5714_runtime_snapshot",
+        "test_sm5714_stage2_pd",
+        "test_container_kernel_config"
+      ],
+      "tests_run": 535,
+      "failures": [],
+      "errors": [],
+      "skipped": [],
+      "elapsed_s": 16.673460554000485,
+      "valid": true,
+      "full_executed": false,
+      "reason": "Final native poll guard isolation; related driver/helpers/source-pack/PPS transactions/observer/Type-C/container tests; no routing change, latest owner scope."
+    },
+    "final_native": {
+      "tests_run": 16,
+      "valid": true,
+      "failures": [],
+      "errors": [],
+      "skipped": [],
+      "elapsed_s": 0.7607897050002066,
+      "reason": "Final WRITE_ONCE owner publication to the lockless poller; only native session changed since535 related pass."
+    },
+    "full_executed": false
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 78.33966629399947,
+    "started_utc": "2026-10-05T09:48:17.344067+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-native-control",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-sm5440-native-control"
+    },
+    "device_operations": [],
+    "reason": "Final native ownership WRITE_ONCE publication; frozen functions/helper algorithms/profile unchanged."
+  },
+  "static": {
+    "returncode": 0,
+    "elapsed_s": 6.98772619599913,
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-303-policy",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/sm5440-direct.o",
+      "drivers/power/supply/sm5440-actuator.o",
+      "drivers/power/supply/sm5440-watchdog.o",
+      "drivers/power/supply/sm5440-conversion.o",
+      "drivers/power/supply/sm5440-supervisor.o"
+    ],
+    "scope": "Final prepared native ownership publication source and all five real hardware units.",
+    "warnings": [
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging/arch/arm64/kernel/vdso/vgetrandom.c:5:27: warning: symbol '__kernel_getrandom' was not declared. Should it be static?"
+    ],
+    "changed_driver_warnings": []
+  },
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "n",
+        "absent"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "n",
+        "y"
+      ],
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "Test303": {
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    },
+    "native-observer": {
+      "CONFIG_X710_NATIVE_CONTROL": [
+        "absent",
+        "y"
+      ]
+    }
+  },
+  "DTB_diff": [],
+  "module_files": 181,
+  "protected_sources": 51,
+  "preserved_formal_artifacts": 27,
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-sm5440-native-control/Image.gz",
+      "bytes": 22159343,
+      "sha256": "5254c5617cb2f026e3a2e4042628841f0942f43217b17b63e7d04f7bb29f0227"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-sm5440-native-control/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-sm5440-native-control/config",
+      "bytes": 243294,
+      "sha256": "6f70dd31a582efc0464c37b505693f7fe8af3949a9c2a573a1ca116a7e73f42d"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-sm5440-native-control/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "5c232ce3c6dfc2cb90b2d6048a9b4ea450897082ee5dcd0b72b9854859333f46"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-sm5440-native-control/modules-x710.tar.gz",
+      "bytes": 47331542,
+      "sha256": "77816d24e48a3023df47e984122969ea237bf33dd40dc48ed3f77a2413c220a1"
+    },
+    "kernel.release": {
+      "path": "out/kernel-sm5440-native-control/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "device_operations": [],
+  "PPS_requested": false,
+  "pump_enabled": false,
+  "native_activation_grant": false,
+  "rootfs_modified": false,
+  "usb_modified": false,
+  "github_actions": false,
+  "remaining": [
+    "Actual TCPM/source-bound transaction/controller work loop and fixed-PD fallback integration",
+    "Independent physical ADC/calibration/current/cutoff/OCP acceptance",
+    "Registered physical PPS/direct-charge/PM/fault/higher-power acceptance"
+  ],
+  "storage": "One new formal output; existing303-named incremental tree now native-control provider. No new full build tree or Windows staging."
+}

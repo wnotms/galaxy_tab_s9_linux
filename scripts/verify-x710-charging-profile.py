@@ -16,13 +16,18 @@ def verify(text, baseline=None, profile="sm5440-passive"):
     before = STAGE2.CONTAINER.read_config(baseline or BASE.read_text())
     after = STAGE2.CONTAINER.read_config(text)
     expected = {"CONFIG_CHARGER_SM5440_DIRECT": [before.get("CONFIG_CHARGER_SM5440_DIRECT", "absent"), "y"]}
-    if profile not in ("sm5440-passive", "sm5440-policy-offline", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw"):
+    if profile not in ("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw"):
         return {"valid": False, "errors": ["unknown charging profile"]}
     policy = "CONFIG_X710_CHARGING_POLICY"
     if policy in after and policy not in before:
         expected[policy] = ["absent", "n"]
-    if profile == "sm5440-policy-offline":
+    if profile in ("sm5440-policy-offline", "sm5440-native-control"):
         expected[policy] = [before.get(policy, "absent"), "y"]
+    native = "CONFIG_X710_NATIVE_CONTROL"
+    if native in after and native not in before:
+        expected[native] = ["absent", "n"]
+    if profile == "sm5440-native-control":
+        expected[native] = [before.get(native, "absent"), "y"]
     condition = "CONFIG_SM5440_ADC_CONDITION_TEST"
     if condition in after and condition not in before:
         expected[condition] = ["absent", "n"]
@@ -50,6 +55,8 @@ def verify(text, baseline=None, profile="sm5440-passive"):
         allowed.add(raw)
     result["errors"] += [f"{name}: forbidden advanced feature" for name in sorted(
         STAGE2.FORBIDDEN - allowed) if after.get(name) in ("y", "m")]
+    if profile != "sm5440-native-control" and after.get(native) in ("y", "m"):
+        result["errors"].append("native control requires its isolated profile")
     result["valid"] = not result["errors"]
     result["profile"] = profile
     result["pump_activation_available"] = False
@@ -59,7 +66,7 @@ def verify(text, baseline=None, profile="sm5440-passive"):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", type=Path)
-    parser.add_argument("--profile", choices=("sm5440-passive", "sm5440-policy-offline", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw"), default="sm5440-passive")
+    parser.add_argument("--profile", choices=("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw"), default="sm5440-passive")
     args = parser.parse_args()
     result = verify(args.config.read_text(), profile=args.profile)
     print(json.dumps(result, indent=2))
