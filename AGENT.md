@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test324 candidate boot/181 installed, allfive readback verified,
+BCBcleared/rootunmounted; currentdeviceTWRP R52X10045LT awaiting ownerC2fixed9V
+boot, NOTaccepted Debian candidate. Exact323 original181saved .gts9-test324-original,
+323 rollbackboot sealed; original311independent saved remains. No automatic
+candidate reboot/PPS/pump/current/protection/USB change. Build/testsfalse for
+installation, reuseab30aff2+9registered tests. On capture/firstfault requirePC
+reconnect and unconditional exact323 restoration; no secondcandidateboot/replay.
+CURRENT_STATUS324 and rawinstallation evidence. FullportNOTREADY.
+
+
 2026-10-05 Test324 isolated native one-shot fixed9V registration prepared:
 oneTWRPboot-only/181 install with no automatic candidate reboot; owner switches
 PC->acceptedC2 inTWRP and bootsSystem once, WiFi captures four READY/checked100ms
