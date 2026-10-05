@@ -1,0 +1,56 @@
+{
+  "verdict": "STOP_CONTINUOUS_READY_TIMEOUT_BASELINE_RESTORED",
+  "completed_clean": false,
+  "candidate_boot_id": "df1ce8c0a95e42c48911fb2c48b8a569",
+  "final_boot_id": "e71954cffb784ee3aa76cbaafe5841fc",
+  "candidate_identity_attributed": true,
+  "first_host_error": "services/role/DCC/failed",
+  "physical_driver_error": -110,
+  "physical_error_source": "OFF continuous ADC diagnostic stopped: -110; cleanup=0",
+  "READY_samples": 0,
+  "polls": 38,
+  "transaction_ms": 589,
+  "enable_to_cleanup_ms": 506,
+  "last_READY_poll_latch": 0,
+  "ADC_controls_saved": "0c/df/0c/df",
+  "exact_ADC_restore": true,
+  "checked_OFF_error": 0,
+  "candidate_observation_uptime_seconds": 6.31,
+  "candidate_services": [
+    "inactive",
+    "active",
+    "active"
+  ],
+  "candidate_roles": [
+    "[sink]",
+    "[device]"
+  ],
+  "candidate_failed_units": "",
+  "candidate_DCC_absent": true,
+  "rollback_allfive_181_verified": true,
+  "final_rescue": {
+    "PPS": false,
+    "authenticated_wifi": true,
+    "baseline": true,
+    "battery": {
+      "soc": 22,
+      "temp_decic": 314,
+      "voltage_uv": 3759000
+    },
+    "boot_id": "e71954cffb784ee3aa76cbaafe5841fc",
+    "native_adb": true,
+    "pump_ON": false,
+    "real_pack_thermal": true,
+    "wifi": "10.139.153.184"
+  },
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "ADC_active_100ms_gate_qualified": false,
+  "software_ocp_verified": false,
+  "repeat_failed_candidate": false,
+  "new_kernel_build_executed": false,
+  "new_host_regression_executed": false,
+  "qualification_reused": "44c2190a kernel qualification and unchanged 16 host lifecycle/parser tests",
+  "full_charging_goal_complete": false
+}

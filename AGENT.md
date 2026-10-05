@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test318 physically executed once and STOPPED. Candidate df1ce8c0
+exact identity/uniquehistory; nativefixed5/packadmission passed, but OFFcontinuous
+READY never arrived within500ms: error-110/count0/polls38/589ms transaction,
+control0x0f/channeldf/statushealthy. ExactADC0x0c/df cleanup and checkedOFF pass.
+Original host services/role/DCC/failed first-error retained (SSHinactive6.31s),
+not a waiver for earlier realADCtimeout. Unconditional exact accepted311boot/
+181/allfive rollback completed, final e71954cf normalidentity/controls/realthermal
+ADB/deviceNCM/WindowsCode0/NCMhost/Wi-Fi10.139.153.184 pass,22%/31.4C/Good/OFF.
+No PPS/ON/current/protection/ENHIZ/rootfs/DT or active100ms-gate change. No new
+build/host regression/Actions; frozen44c2190a qualification reused. Full raw
+journals/snapshot/commands/hashseals; RESULTS/ANALYSIS underTest318. Do not flash
+this failed READY profile again unchanged. Fedora continuous path reads raw
+ADC without per-sampleREADY; vendor1100ms is policycadence, not conversion proof.
+No successfulcontinuouscalibration/current/cutoff/OCP/PPS/ON acceptance; actual
+activeworker/nativeadapter/PM/fallback still unfinished, fullgoalNOTREADY.
+
+
 Test318 fresh NORMAL preflight passed after Test320: same8146a9cf accepted311,
 allfive partitions/exact181 modules, realpack22%/3.763V/31.3C, ordinaryPC500mA
 controls/float4440, passiveOFF, nativeADB/deviceNCM/authenticated Wi-Fi.11 and

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; cd /mnt/debian/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty; test \"$(find . -type f | wc -l)\" = 181; sha256sum -c /tmp/gts9-test318/rollback-modules.sha256"
+  ],
+  "ended_utc": "2026-10-05T04:59:05.737945+00:00",
+  "started_utc": "2026-10-05T04:59:05.544849+00:00",
+  "status": 0
+}
