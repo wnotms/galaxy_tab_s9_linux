@@ -1,0 +1,23 @@
+{
+  "verdict": "CONTEXT_CAPTURED_NOT_ADC_QUALIFIED",
+  "expected": {
+    "boot_id": "fca646a8-8cc0-405c-814d-36cde33baa9e",
+    "config": "31d5a9419dbe027e4c3d735a363b490c9484584152d22bb83eb990c092076132",
+    "notes": "d8e5fcf394811878c0368d8bd1db461e79e29a2cf949dc493256924f464d51f9"
+  },
+  "command": {
+    "argv": [
+      "/mnt/d/android/platform-tools/adb.exe",
+      "-s",
+      "gts9wifi-0001",
+      "shell",
+      "python3",
+      "-"
+    ],
+    "started_utc": "2026-10-05T15:03:16.066752+00:00",
+    "ended_utc": "2026-10-05T15:03:16.232962+00:00",
+    "returncode": 0,
+    "device_writes": false
+  },
+  "device_writes": false
+}

@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 post323 one bounded read-only ADC context captured: actualordinary
+MSK1..4=00/00/00/00, ADCCNTL1=0c/ADCCNTL2=df, ID21/MODE01beforeafterOFF.
+VendorMSK4f8diff now measured, not proven historicaltimeoutcause; no maskwrite/
+ADCstart/INTread/PPS/ON or fresh/calibration/OCP grant. Same323identity; existing
+12script tests reused, build/testsfalse(resultonly). reference/charging/
+sm5440-adc-completion-audit/ordinary323-context/. FullportNOTREADY.
+
 2026-10-05 Test323 PC fixed5V source-budget candidate physically accepted and
 retained: newnormal fca646a8-8cc0-405c-814d-36cde33baa9e, config31d5a9419dbe027e4c3d735a363b490c9484584152d22bb83eb990c092076132,
 notesd8e5fcf394811878c0368d8bd1db461e79e29a2cf949dc493256924f464d51f9,
