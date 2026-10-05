@@ -1,0 +1,47 @@
+{
+  "mode": "OFF-only raw registers",
+  "native_consumers": [
+    "sm5714_pd_read_snapshot",
+    "sm5714_battery_read_pack"
+  ],
+  "writers": [
+    "ADC enable/RATE/AVG32/channels; exact restore",
+    "existing checked mode OFF on error"
+  ],
+  "preserved_unknown_ADC_bits": true,
+  "register_provenance": {
+    "50ms disable/RATE1/enable": "Samsung X710 sm5440_set_adc_mode(CONTINUOUS)",
+    "AVG32/df": "Samsung X710 sm5440_init_reg_param",
+    "20ms first/50ms next read": "Fedora ab123e7d sm5440_wait_vbus_settled; polling choices only"
+  },
+  "source_evidence": "reference/boot-tests/test-318-off-continuous-adc-timing/analysis-sources.json",
+  "conversion_freshness_proven": false,
+  "independent_calibration": false,
+  "software_ocp_verified": false,
+  "PPS": false,
+  "pump_ON": false,
+  "current_increase": false,
+  "ENHIZ_change": false,
+  "protection_change": false,
+  "TCPM_change": false,
+  "DWC3_change": false,
+  "USB_gadget_adbd_change": false,
+  "DTS_change": false,
+  "thermal_policy_change": false,
+  "float_voltage_mv": 4440,
+  "fixed_limits_mv_ma": [
+    [
+      5000,
+      1800
+    ],
+    [
+      9000,
+      1500
+    ]
+  ],
+  "production_device_changed": false,
+  "lock_order": "existing companion->io; RAW never publishes companion; native facts and waits outside io_lock",
+  "clock_regression": "new actual-C test first failed, then passes with RAW anchor check; final affected68 PASS",
+  "protected_sources": 209,
+  "formal_artifacts_frozen": 26
+}

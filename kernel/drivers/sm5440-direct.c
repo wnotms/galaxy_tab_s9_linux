@@ -24,7 +24,7 @@
 #include <linux/workqueue.h>
 
 #include "sm5440-hw.h"
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 #include "sm5440-timing.h"
 #include "sm5714-stage2.h"
 #endif
@@ -80,7 +80,7 @@ struct sm5440_context {
 };
 #endif
 
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 struct sm5440_timing_context {
 	struct sm5440_timing acquisition;
 	struct sm5714_pd_snapshot source[2];
@@ -113,7 +113,7 @@ struct sm5440_direct {
 	unsigned long sample_seq, request_epoch;
 	u64 conversion_seq;
 	bool dying;
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	struct sm5440_timing_context timing;
 #endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
@@ -137,6 +137,10 @@ static int sm5440_publish(struct sm5440_direct *sm)
 {
 #ifdef CONFIG_SM5440_ADC_TIMING_TEST
 	/* Isolated diagnostic: neither cached nor fresh charging API is published. */
+	(void)sm;
+	return 0;
+#elif defined(CONFIG_SM5440_ADC_RAW_TEST)
+	/* Raw diagnostic also cannot publish a charging companion. */
 	(void)sm;
 	return 0;
 #else
@@ -452,7 +456,7 @@ EXPORT_SYMBOL_GPL(sm5440_passive_observe);
 /* Diagnostic copy only. No register access or charging authorization. */
 struct sm5440_snapshot {
 	struct sm5440_sample sample, startup;
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	struct sm5440_timing_context timing;
 #endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
@@ -473,7 +477,7 @@ static void sm5440_snapshot_capture(struct sm5440_direct *sm,
 	mutex_lock(&sm->io_lock);
 	snapshot->sample = sm->sample;
 	snapshot->startup = sm->startup_sample;
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	snapshot->timing = sm->timing;
 #endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
@@ -543,21 +547,25 @@ static void sm5440_snapshot_sample_show(struct seq_file *seq, const char *name,
 		   name, sample->ibus_ua, name, sample->die_decic);
 }
 
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 static void sm5440_timing_show(struct seq_file *seq,
 			       const struct sm5440_timing_context *c)
 {
 	const struct sm5440_timing *t = &c->acquisition;
 	unsigned int i;
 
-	seq_printf(seq, "timing_test=1\ntiming_attempted=%u\ntiming_admission_error=%d\n"
+	seq_printf(seq, "timing_test=%u\ntiming_attempted=%u\ntiming_admission_error=%d\n"
 		   "timing_exit_error=%d\ntiming_error=%d\ntiming_cleanup_error=%d\n"
 		   "timing_count=%u\ntiming_polls=%u\ntiming_restored=%u\n"
 		   "timing_started_ms=%llu\ntiming_disabled_ms=%llu\n"
 		   "timing_enabled_ms=%llu\ntiming_completed_ms=%llu\n",
+		   !IS_ENABLED(CONFIG_SM5440_ADC_RAW_TEST),
 		   c->attempted, c->admission_error, c->exit_error, t->error,
 		   t->cleanup_error, t->count, t->polls, t->restored,
 		   t->started_ms, t->disabled_ms, t->enabled_ms, t->completed_ms);
+	seq_printf(seq, "raw_test=%u\nconversion_freshness_proven=0\n"
+		   "timing_observation_mode=%u\n",
+		   IS_ENABLED(CONFIG_SM5440_ADC_RAW_TEST), t->observation_mode);
 	seq_printf(seq, "timing_controls=%02x/%02x/%02x/%02x\n"
 		   "timing_initial_int=%*ph\ntiming_initial_status=%*ph\n",
 		   t->control_before, t->channels_before, t->control_after,
@@ -580,6 +588,11 @@ static void sm5440_timing_show(struct seq_file *seq,
 	for (i = 0; i < SM5440_TIMING_SAMPLES && i <= t->count; i++) {
 		const struct sm5440_timing_sample *a = &t->sample[i];
 
+		if (IS_ENABLED(CONFIG_SM5440_ADC_RAW_TEST))
+			seq_printf(seq, "raw_sample%u_read_ms=%llu/%llu\n"
+				   "raw_sample%u_READY_observed=%u\n", i,
+				   a->adc_begin_ms, a->adc_end_ms, i,
+				   !!(a->interrupt[3] & SM5440_ADC_READY));
 		seq_printf(seq, "timing_sample%u_times=%llu/%llu/%llu/%llu/%llu\n"
 			   "timing_sample%u_int=%*ph\ntiming_sample%u_status=%*ph\n"
 			   "timing_sample%u_status_after=%*ph\ntiming_sample%u_adc=%*ph\n"
@@ -610,7 +623,7 @@ static int sm5440_snapshot_show(struct seq_file *seq, void *unused)
 		   snapshot.startup_stamp);
 	sm5440_snapshot_sample_show(seq, "sample", &snapshot.sample);
 	sm5440_snapshot_sample_show(seq, "startup", &snapshot.startup);
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	sm5440_timing_show(seq, &snapshot.timing);
 #endif
 #ifdef CONFIG_SM5440_ADC_CONDITION_TEST
@@ -1449,7 +1462,7 @@ done:
 }
 #endif
 
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 static bool sm5440_timing_same_source(const struct sm5714_pd_snapshot *a,
 				      const struct sm5714_pd_snapshot *b)
 {
@@ -1544,7 +1557,11 @@ static void sm5440_timing_cycle(struct sm5440_direct *sm)
 		if (READ_ONCE(sm->stopped))
 			ret = -ESHUTDOWN;
 		else
+#ifdef CONFIG_SM5440_ADC_RAW_TEST
+			ret = sm5440_timing_raw_step(sm->regmap, &c.acquisition);
+#else
 			ret = sm5440_timing_step(sm->regmap, &c.acquisition);
+#endif
 		mutex_unlock(&sm->io_lock);
 	}
 	if (ret == 1)
@@ -1680,7 +1697,7 @@ static void sm5440_poll(struct work_struct *work)
 	mutex_unlock(&sm->io_lock);
 	wake_up_all(&sm->request_wait);
 	power_supply_changed(sm->psy);
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	if (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&
 	    sm->initial_sample_done && !sm->startup_confirmations) {
 		sm5440_timing_cycle(sm);
@@ -1825,7 +1842,7 @@ static int sm5440_resume(struct device *dev)
 	struct sm5440_direct *sm = dev_get_drvdata(dev);
 	int ret;
 
-#ifdef CONFIG_SM5440_ADC_TIMING_TEST
+#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)
 	/* A timing diagnostic is not rearmed after suspend or failure. */
 	if (sm->timing.attempted)
 		return -EOPNOTSUPP;

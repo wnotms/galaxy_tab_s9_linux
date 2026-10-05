@@ -1,0 +1,235 @@
+{
+  "verdict": "OFF_RAW_CANDIDATE_COMPILED_AFFECTED_TESTS_PASS",
+  "profile": "sm5440-adc-raw",
+  "final_build": {
+    "returncode": 0,
+    "seconds": 57.58285189799972,
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-adc-raw",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-continuous-raw",
+      "CCACHE_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/ccache"
+    },
+    "reason": "Final RAW enable/readback clock rollback guard; unchanged profile and artifacts location."
+  },
+  "static": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "CHECK=/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/sparse-src/sparse",
+      "drivers/power/supply/sm5440-direct.o",
+      "drivers/power/supply/sm5440-timing.o"
+    ],
+    "returncode": 0,
+    "seconds": 7.500044044999413
+  },
+  "affected_host_tests": {
+    "executed": true,
+    "tests_run": 68,
+    "seconds": 1.922,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "new_raw_tests": 13,
+  "old_ready_semantics_tests": 21,
+  "host_all": {
+    "executed": true,
+    "tests_run": 2178,
+    "seconds": 101.387,
+    "passed": false,
+    "failures": [
+      "test_cpuidle_off_profile.TestRecordTests.test_each_parked_bundle_verifies_against_itself (bundle='cpuidle-off')",
+      "test_cpuidle_off_profile.TestRecordTests.test_each_parked_bundle_verifies_against_itself (bundle='abl-no-llcc-off')",
+      "test_cpuidle_off_profile.TestRecordTests.test_each_parked_bundle_verifies_against_itself (bundle='abl-no-cluster-idle')"
+    ],
+    "errors": [
+      "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_changes_only_the_two_dtb_carrying_partitions (partition='init_boot.img')",
+      "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_changes_only_the_two_dtb_carrying_partitions (partition='dtbo.img')",
+      "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_changes_only_the_two_dtb_carrying_partitions (partition='vbmeta.img')",
+      "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_changes_only_the_two_dtb_carrying_partitions",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_all_profiles_share_one_kernel",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes (profile='baseline')",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes (profile='no-acd')",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes (profile='no-gpu')",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes (profile='late-deferred')",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes (profile='rpmh-debug')",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_candidate_records_the_real_hashes",
+      "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_profiles_differ_only_in_vendor_boot"
+    ],
+    "skipped": [
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_it_does_not_claim_the_wedge_is_fixed",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_it_promises_the_x910_frequencies_as_an_expectation_not_a_result",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_it_records_the_rpmh_debug_build_flag_requirement",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_it_states_that_it_has_not_been_flashed",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_only_boot_img_differs_from_the_flashed_baseline",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_candidate_records_the_real_hashes",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_cmdline_is_unchanged",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_flash_script_writes_only_boot_and_vendor_boot",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_probe_is_one_line_and_valid_shell",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_probe_reports_the_failure_case_unambiguously",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_rate_harness_cuts_a_survived_cycle_short",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_rate_harness_fixes_test_190s_three_defects",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_rate_harness_quotes_the_baseline_it_compares_against",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_two_scripts_are_executable_and_syntax_clean",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test191CandidateTests.test_the_verify_script_cannot_change_the_tablet",
+        "reason": "test-191 bundle not built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test192LoglevelTests.test_only_vendor_boot_differs_from_the_test_191_bundle",
+        "reason": "test-192 bundle not built"
+      },
+      {
+        "id": "test_cpuidle_off_profile.AblationVerifierTests.test_it_verifies_the_dtb_inside_the_bundle_that_would_be_flashed",
+        "reason": "the cpuidle-off bundle has not been built"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_arming_gate_string_is_in_the_diagnostic_bundle",
+        "reason": "the CSD bundle has not been built"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_carries_the_diagnostic_kernel",
+        "reason": "the CSD bundle has not been built"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_bundle_cmdline_carries_the_token",
+        "reason": "the CSD bundle has not been built"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_gate_strings_are_absent_from_the_production_bundle",
+        "reason": "no production bundle to compare against"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_instrument_is_absent_from_the_production_kernel",
+        "reason": "no production kernel built"
+      },
+      {
+        "id": "test_csd_ipi_diagnostic.BuiltArtifactTests.test_the_instrument_string_is_in_the_diagnostic_kernel",
+        "reason": "the diagnostic kernel has not been built"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.DocumentationTests.test_the_flashed_kernel_carries_the_rpmh_diagnostic",
+        "reason": "flashed boot bundle not present"
+      },
+      {
+        "id": "test_gpu_gmu_rpmh_stall.Test187CandidateTests.test_the_rpmh_debug_profile_reuses_the_verified_cmdline_bundle",
+        "reason": "bundles not built"
+      }
+    ],
+    "reason": "Historical images were retired under owner retention rules; do not recreate/skip/weaken tests to claim all-green.",
+    "source_scope": "Full run before final RAW clock guard; final affected68 includes guard regression. Unchanged full coverage reused, no second full run."
+  },
+  "artifact_audit": "artifact-audit.json",
+  "config_diff": {
+    "accepted311": {
+      "CONFIG_SM5440_ADC_RAW_TEST": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "n"
+      ]
+    },
+    "Test316": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "y",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_RAW_TEST": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "n"
+      ]
+    },
+    "native-pack": {
+      "CONFIG_SM5440_ADC_CONDITION_TEST": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_SM5440_ADC_RAW_TEST": [
+        "absent",
+        "y"
+      ],
+      "CONFIG_SM5440_ADC_TIMING_TEST": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_X710_CHARGING_POLICY": [
+        "y",
+        "n"
+      ]
+    }
+  },
+  "dtb_changed": false,
+  "module_file_count": 181,
+  "protected_source_count": 209,
+  "prior_formal_artifacts_preserved": 26,
+  "physical_executed": false,
+  "device_changed": false,
+  "conversion_freshness_proven": false,
+  "software_ocp_verified": false,
+  "PPS": false,
+  "pump_ON": false,
+  "full_charging_goal_complete": false,
+  "next_step": "Independently register one fixed5/PC OFF raw observation with exact accepted311 paired restoration. Real PPS/active worker/OCP/PM remain unfinished.",
+  "actions_started": false
+}

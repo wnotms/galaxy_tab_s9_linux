@@ -119,7 +119,8 @@ int sm5440_timing_begin(struct regmap *map, struct sm5440_timing *t)
 	return ret;
 }
 
-int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
+static int sm5440_observation_step(struct regmap *map, struct sm5440_timing *t,
+				   enum sm5440_observation_mode mode)
 {
 	struct sm5440_timing_sample *sample;
 	u64 now = sm5440_timing_now();
@@ -127,6 +128,9 @@ int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
 
 	if (!t->attempted || !t->saved || !t->disabled_ms || t->finished)
 		return -EINVAL;
+	if (t->observation_mode && t->observation_mode != mode)
+		return -EINVAL;
+	t->observation_mode = mode;
 	if (t->count == SM5440_TIMING_SAMPLES)
 		return 1;
 	ret = sm5440_timing_clock(t, now);
@@ -178,11 +182,25 @@ int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
 		if (ret)
 			return ret;
 		t->enabled = true;
+		/* RAW first-delay starts after successful enable/readback. */
+		t->raw_anchor_ms = sm5440_timing_now();
 		return 0;
 	}
 	if (now < t->ready_deadline_ms ||
-	    now - t->ready_deadline_ms > SM5440_TIMING_READY_MS)
+	    (mode == SM5440_OBSERVATION_READY &&
+	     now - t->ready_deadline_ms > SM5440_TIMING_READY_MS))
 		return -ETIMEDOUT;
+	/* Reject time rollback across enable/readback before unsigned subtraction. */
+	if (mode == SM5440_OBSERVATION_RAW && now < t->raw_anchor_ms)
+		return -ESTALE;
+	/* Fedora ab123e7d wait_vbus_settled: first20ms, subsequent50ms.
+	 * Polling intervals only; neither delay proves a chip conversion happened.
+	 * Wait before touching latches, so a pending RAW step performs no I2C.
+	 */
+	if (mode == SM5440_OBSERVATION_RAW &&
+	    now - (t->count ? t->sample[t->count - 1].adc_end_ms : t->raw_anchor_ms) <
+		(t->count ? SM5440_RAW_INTERVAL_MS : SM5440_RAW_FIRST_MS))
+		return 0;
 	sample->cleared_ms = t->cleared_ms;
 	sample->ready_begin_ms = now;
 	ret = regmap_bulk_read(map, SM5440_INT1, sample->interrupt, 4);
@@ -198,7 +216,8 @@ int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
 		return ret;
 	/* Oldest bound is the read call's start, not a fabricated chip instant. */
 	t->cleared_ms = sample->ready_begin_ms;
-	if (!(sample->interrupt[3] & SM5440_ADC_READY))
+	if (mode == SM5440_OBSERVATION_READY &&
+	    !(sample->interrupt[3] & SM5440_ADC_READY))
 		return 0;
 	sample->adc_begin_ms = sm5440_timing_now();
 	ret = regmap_bulk_read(map, SM5440_ADC_VBUS, sample->adc, 11);
@@ -209,7 +228,8 @@ int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
 	sample->adc_end_ms = sm5440_timing_now();
 	if (!ret)
 		ret = sm5440_timing_clock(t, sample->adc_end_ms);
-	if (!ret && sample->ready_end_ms - t->ready_deadline_ms > SM5440_TIMING_READY_MS)
+	if (!ret && mode == SM5440_OBSERVATION_READY &&
+	    sample->ready_end_ms - t->ready_deadline_ms > SM5440_TIMING_READY_MS)
 		ret = -ETIMEDOUT;
 	if (!ret && (sm5440_vbus_uv(sample->adc[0], sample->adc[1]) < 4500000 ||
 		     sm5440_vbus_uv(sample->adc[0], sample->adc[1]) > 9500000 ||
@@ -226,6 +246,16 @@ int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
 	t->ready_deadline_ms = sample->ready_end_ms;
 	t->count++;
 	return t->count == SM5440_TIMING_SAMPLES ? 1 : 0;
+}
+
+int sm5440_timing_step(struct regmap *map, struct sm5440_timing *t)
+{
+	return sm5440_observation_step(map, t, SM5440_OBSERVATION_READY);
+}
+
+int sm5440_timing_raw_step(struct regmap *map, struct sm5440_timing *t)
+{
+	return sm5440_observation_step(map, t, SM5440_OBSERVATION_RAW);
 }
 
 int sm5440_timing_finish(struct regmap *map, struct sm5440_timing *t, int error)

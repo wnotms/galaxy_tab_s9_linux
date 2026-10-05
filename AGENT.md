@@ -98,6 +98,29 @@
 
 ## Current state (2026-10-03)
 
+OFF continuous raw ADC observation is integrated in actual passive driver/shared
+helper/Kbuild, default-off sm5440-adc-raw profile. Vendor/Fedora direct raw reads
+replace per-READY assumption only in new profile; failed318 and oldREADY semantics
+retained. Eight raw reads first20ms(afterenable/readback)/next50ms/total2000ms,
+READYoptional, explicit nofreshnessclaim/noAPIpublication. Native fixed/pack
+epochs/fault/OFF/bounds/exactcleanup/PM gates unchanged. A new actual-C clock
+regression first FAILED, RAW anchor guard thenfixed; final68affected PASS1.922s
+0skip incl13RAW/21oldTIMING. FinalARM64build PASS57.583s; twoobjectsW1/sparsePASS,
+nochangeddriverwarning, knownupstreamvDSOwarning retained. Exactembeddedconfig,
+DTidentical/181pairedfiles/BTF-onlychanges/209protected/26oldformal hashesPASS.
+Configvsaccepted311 only RAWabsent->y/TIMINGabsent->n; DCCn/container/SM5714
+float/thermal/fixedlimits preserved. Full2178run NOTPASS: historicalretired
+cpuidle/CSD/Test187 images3subtestfail/12errors/25skips; no testweakening/rebuild
+ofexpiredimages. Rawreports preserved; latestaffected rerun includes clockfix.
+Qualification reference/charging/sm5440-continuous-raw/, design
+docs/SM5440_CONTINUOUS_RAW_OBSERVATION.md, out/kernel-x710-continuous-raw/.
+Incremental308namedtree nowRAWprovider, not historicalbaseline; formalrollback
+retained. No deviceflash/reboot/ADC/PPS/ON/current/ENHIZ/protection/rootfs/DT/
+USB/adbd/Actions/main change. Next separatelyregister onePCfixed5/OFFraw with
+exactaccepted311restore; no failed318 replay. Fullgoal remainsNOTREADY: freshADC/
+current/cutoff/OCP/actualactiveworker/PPS/fallback/PM stillunfinished.
+
+
 2026-10-05 owner PCUSB reconnect endpoint now passes one read-only capture:
 same e71954cf accepted311 normal config/notes/cmdline, nativeADB shell and
 authenticated Wi-Fi.184, interface-bound WindowsNCM SSHbanner, composite/ADB/NCM
