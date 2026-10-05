@@ -67,3 +67,10 @@ calibration/current/cutoff/OCP and higher-power acceptance remain unproven.
 Future physical work needs a separate pushed registration and fresh rescue/
 ≥20% SOC admission; this offline result is not authorization or evidence to
 energize the pump. See docs/SM5440_NATIVE_CONTROL.md.
+
+Evidence storage follow-up: the complete artifact audit is losslessly retained
+in artifact-audit.json.gz (original-byte hash in artifact-audit.format.json).
+Derived metadata diff headers have explicit labels and no trailing whitespace.
+The native profile-gate test now uses the tracked Test255 baseline rather than
+untracked old build outputs. Kernel inputs/artifacts and physical scope did
+not change; only the16 affected native tests are rerun.

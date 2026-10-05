@@ -330,7 +330,7 @@ void exercise_lifetime(int *o){
         import importlib.util
         spec = importlib.util.spec_from_file_location('native_gate', ROOT / 'scripts/verify-x710-charging-profile.py')
         gate = importlib.util.module_from_spec(spec); spec.loader.exec_module(gate)
-        baseline = (ROOT / 'out/kernel-x710-native-observer/config').read_text()
+        baseline = gate.BASE.read_text() + '\nCONFIG_CHARGER_SM5440_DIRECT=y\nCONFIG_X710_CHARGING_POLICY=y\n'
         candidate = baseline + '\nCONFIG_X710_NATIVE_CONTROL=y\n'
         self.assertTrue(gate.verify(candidate, profile='sm5440-native-control')['valid'])
         for profile in ('sm5440-policy-offline', 'sm5440-passive'):

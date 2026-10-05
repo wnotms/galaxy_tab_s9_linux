@@ -57,7 +57,16 @@
       "elapsed_s": 0.7607897050002066,
       "reason": "Final WRITE_ONCE owner publication to the lockless poller; only native session changed since535 related pass."
     },
-    "full_executed": false
+    "full_executed": false,
+    "portable_fixture": {
+      "tests_run": 16,
+      "valid": true,
+      "failures": [],
+      "errors": [],
+      "skipped": [],
+      "elapsed_s": 0.8792747430015879,
+      "reason": "Tracked config fixture and lossless evidence formatting only; kernel inputs/artifacts unchanged."
+    }
   },
   "build": {
     "returncode": 0,
@@ -178,5 +187,6 @@
     "Independent physical ADC/calibration/current/cutoff/OCP acceptance",
     "Registered physical PPS/direct-charge/PM/fault/higher-power acceptance"
   ],
-  "storage": "One new formal output; existing303-named incremental tree now native-control provider. No new full build tree or Windows staging."
+  "storage": "One new formal output; existing303-named incremental tree now native-control provider. No new full build tree or Windows staging.",
+  "evidence_format": "artifact-audit.json.gz lossless with original SHA"
 }
