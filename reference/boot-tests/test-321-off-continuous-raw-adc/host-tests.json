@@ -1,0 +1,18 @@
+{
+  "executed": true,
+  "tests_run": 29,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 0.16,
+  "command": "PYTHONPATH=tests python3 -m unittest test_sm5440_raw_device test_sm5440_timing_device -v",
+  "kernel_build": {
+    "executed": false,
+    "reason": "Exact committed RAW candidate qualification reused"
+  },
+  "host_full": {
+    "executed": false,
+    "reason": "Runner/parser only; unchanged source qualification and full historical failure evidence reused"
+  },
+  "github_actions": false
+}

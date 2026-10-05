@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test320，窗口为 **Test311–Test320**；没有生成镜像的轮次仍占一轮。
+  编号为 Test321，窗口为 **Test312–Test321**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,21 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+Test321 registered offline: one PCfixed5/OFF continuous RAW boot, eight bounded
+rawreads/READYoptional/2000ms, one15s endpoint, unconditional exactaccepted311
+originalboot/181/allfive restoration. Reuse d2b4c127/b4f5c3e3 RAWbuild/qualification,
+no new kernel/full/Actions. Newparser/lifecycle13 + old31816=29 PASS0.160s/no
+skips; noREADY/fresh/OCPgrant, nativefault wins over startupservicepending,
+completedraw may wait bounded150s for services without repeatingADC. Offline
+boot-only package/payload/header/DTB/paired181/stagedinputhashes verified. Inputs
+under reference/boot-tests/test-321-off-continuous-raw-adc/. Original308 current
+accepted311 operational rollback assigned321; currentretentionwindow312–321.
+Latest readonlypacket samee71954cf normalbaseline,21%/3.735V/31.6C/net-369mA
+onPC/Wi-Fi.184; not physical321preflight/flash/result. Need fresh20%SOCrescue
+and once allfive/181 beforeoneinstall. No PPS/ON/current/protection/ENHIZ/USB/
+adbd/rootfs/DT change. Failed318 remainsSTOP; fullcharginggoalNOTREADY.
+
 
 OFF continuous raw ADC observation is integrated in actual passive driver/shared
 helper/Kbuild, default-off sm5440-adc-raw profile. Vendor/Fedora direct raw reads
