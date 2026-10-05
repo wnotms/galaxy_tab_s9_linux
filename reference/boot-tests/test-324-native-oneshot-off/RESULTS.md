@@ -26,3 +26,10 @@ Next source correction is isolated to the OFF one-shot profile: permit fixed9V
 inactive initial REVBLK context only with two new clean same-voltage-class
 confirmations, unchanged controls and existing safety/timeout gates. Ordinary
 PC classifier and native 100ms deadline remain unchanged. No repeat of Test324.
+
+Build/tests executed:false for physical result recording; reuse ab30aff2
+qualification (139 affected tests, ARM64/W=1/sparse) and registered nine host
+tests. Post-series host address correction has a separate 15-test record and
+never ran on this physical series. Original INPUTS and STAGE_SHA256 remain
+historical registration/stage manifests; RESULTS_SHA256 seals the final evidence.
+The rollback used frozen original runner before post-series host correction.

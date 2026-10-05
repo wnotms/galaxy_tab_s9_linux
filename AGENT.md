@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test324 stopped and exact accepted323 restored. OwnerPCreturn recovered
+originalcandidate eb24355a, normal/exactconfig/notes/uniquejournalhistory;
+nativeattempt0/samples0, initialOFF9.4V/REVBLKlatchevent/livecleanfaultcontext
+outsideordinaryPC4.5–5.5Vclassifier, NOT100mstimeout. ADC4.009V/gauge4.087V gap78mV
+notcalibrated. Full1103kernelrows/noCPUfaultsignature preserved; originalWiFistop
+notrewrittenPASS. Frozen0725runner restored323boot/saved181/allfive,BCBclear/root
+unmounted. Finalnormal4cf32922/exact323identity/64%4.076V30.9C/ADB+NCM+WiFi;
+rollback_requiredfalse, ordinary323retained. Separatehostaddressfix15PASSafter
+physicalrestore, no repeatTest324. Nextdiagnosticonlyfixed9startupclassification
+mustrequiretwofreshcleanconfirmations/unchangedcontrols; noordinary/100ms/
+PPS/pump/thermal/current/USBchange. RESULTS324/fullportNOTREADY.
+
+
 2026-10-05 Test324 ownerreports fixed9V boot Debian, but authenticatedWiFi
 collector failed150s/registered address; boundedsubnetTCP22 foundnone. STOP,
 no candidatebootID/ADC/kernel yet; no CPUcause or ADC/chargingPASS inference.

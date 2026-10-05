@@ -1,0 +1,39 @@
+{
+  "test": "Test324",
+  "verdict": "STOP_STARTUP_REVBLK_OUTSIDE_PC_WINDOW_RESTORED",
+  "original_host_stop_preserved": {
+    "charging_authorized": false,
+    "error": "candidate Wi-Fi/readiness unavailable; no repeat boot",
+    "observed_boot_id": null,
+    "phase": "candidate",
+    "stopped": true
+  },
+  "candidate_boot_id": "eb24355ab887423f9c50a2d7ac60a08d",
+  "boot_attribution": "attributed",
+  "native_attempted": false,
+  "native_samples": 0,
+  "ADC_gauge_gap_uv": 78000,
+  "kernel_rows": 1103,
+  "CPU_fault_counts": {},
+  "kernel_suspects": [],
+  "full_scope_clean": false,
+  "rollback": {
+    "final": {
+      "battery": {
+        "soc": 64,
+        "temp_decic": 309,
+        "voltage_uv": 4076000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "4cf32922df0b4f90a48d27416d777d13",
+      "charging_authorized": false,
+      "device_NCM": true,
+      "host_NCM_probe_status": 0
+    },
+    "phase": "accepted323-restored",
+    "rollback_required": false
+  },
+  "PPS": false,
+  "pump_ON": false,
+  "full_port_verdict": "NOT_READY"
+}

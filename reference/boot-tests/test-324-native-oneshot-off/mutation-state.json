@@ -1,7 +1,16 @@
 {
-  "allfive_verified": true,
-  "modules": 181,
-  "observed_boot_id": null,
-  "phase": "first-failure-awaiting-PC-unconditional-restore",
-  "rollback_required": true
+  "final": {
+    "battery": {
+      "soc": 64,
+      "temp_decic": 309,
+      "voltage_uv": 4076000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "4cf32922df0b4f90a48d27416d777d13",
+    "charging_authorized": false,
+    "device_NCM": true,
+    "host_NCM_probe_status": 0
+  },
+  "phase": "accepted323-restored",
+  "rollback_required": false
 }
