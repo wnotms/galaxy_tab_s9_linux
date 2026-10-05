@@ -98,7 +98,12 @@
 
 ## Current state (2026-10-03)
 
-2026-10-05 ordinary PC candidate/Test322 registered, no physical execution yet:
+2026-10-05 Test322 stopped before flash at early Wi-Fi admission. One unchanged
+normal boot nowaca39fe7, lpcharge0/exact311 identity,49%3.870V30.4C, late Wi-Fi
+10.139.153.254/authenticated/oneattributed boot/full kernel no new CPUfault.
+Late recovery is not322PASS; no module/bootwrite/PPS/ON. Evidence322 RESULTS.
+
+2026-10-05 ordinary PC candidate/Test322 registered:
 85419619 correction rebuilt in reused308 passive cache PASS89.513s;49passive
 PASS1.807s, previous109charging reused,14newgate/runnerPASS0.033s. Exact311DTB,
 onlyRAW/TIMING absent->n config entries;181paired runtime unchanged/BTFchanges,
