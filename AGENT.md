@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-05 Test323 PC fixed5V source-budget candidate physically accepted and
+retained: newnormal fca646a8-8cc0-405c-814d-36cde33baa9e, config31d5a9419dbe027e4c3d735a363b490c9484584152d22bb83eb990c092076132,
+notesd8e5fcf394811878c0368d8bd1db461e79e29a2cf949dc493256924f464d51f9,
+exact311DTB, boot+181matchingmodules readback/otherfourunchanged. TCPM5V1800,
+hardwareinput1800/fast115/float45/Q4mode verified admission+endpoint,60s/four
+snapshots bracket74.52s net+1.022..1.323A/SOC49->50/30.2..31.2C/Good. ADB+NCM
+(device/hostSSH)+freshWiFi+WindowsCode0; fulljournal/attributedboot/no newkernel
+signature/programdrift. PPS/pump/native remainOFF; no TCPC/USB/DTS/adbd/rootfs/
+thermal change. ActualUSBwatts NOTmeasured. Current baseline now ordinary323,
+not old311 config/notes;311 original308 exactrollback .gts9-test323-original
+preserved. Results323;build/hostqualification reused, no repeatedfullchecks.
+FullportNOTREADY: ADC/current/calibration/cutoff/PPS/pump/faultPM acceptance remain.
+Expired312/313 threeimagecopies removed223462033bytes per cleanup2026-10-05-test323.
+
+
 2026-10-05 Test323 same ordinary PC candidate registered for one boot-only +181
 matched swap; no repeat normalization/rebuild. Wi-Fi address now included in
 bounded150s readiness then authenticated fresh rescue.20affected gate/startup
