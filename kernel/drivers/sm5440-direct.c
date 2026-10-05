@@ -1418,6 +1418,24 @@ static bool sm5440_passive_pc_sample(const struct sm5440_sample *sample)
 		sample->die_decic < 420;
 }
 
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+/* OFF observation only. Test324 retained an inactive REVBLK latch at 9.4V;
+ * Samsung sm5440_irq_thread qualifies REVBLK in direct-state/mode context.
+ * Require two subsequent clean conversions in this same fixed9V window;
+ * this never changes ordinary PC admission or grants pump/PPS authority.
+ */
+static bool sm5440_passive_fixed9_sample(const struct sm5440_sample *sample)
+{
+	return !(sample->mode_before & SM5440_MODE_MASK) &&
+		!(sample->mode_after & SM5440_MODE_MASK) &&
+		(sample->int4_wait & SM5440_ADC_READY) && sample->online &&
+		sample->vbus_uv >= 8500000 && sample->vbus_uv <= 9500000 &&
+		sample->vbat_uv >= 3500000 && sample->vbat_uv < 4300000 &&
+		!sample->ibus_ua && sample->die_decic >= 225 &&
+		sample->die_decic < 420;
+}
+#endif
+
 static bool sm5440_startup_revblk(const struct sm5440_sample *sample)
 {
 	return sample->faults == SM5440_FAULT_REVBLK &&
@@ -1435,6 +1453,29 @@ static bool sm5440_startup_matches(const struct sm5440_sample *sample,
 		sample->vbatcntl == initial->vbatcntl &&
 		sample->prtncntl == initial->prtncntl;
 }
+
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+static bool sm5440_oneshot_startup_revblk(const struct sm5440_sample *sample)
+{
+	return sm5440_passive_fixed9_sample(sample) &&
+		sample->faults == SM5440_FAULT_REVBLK &&
+		sm5440_decode_faults(sample->int_before, false, 0) ==
+			SM5440_FAULT_REVBLK &&
+		!sm5440_decode_faults(sample->status, false, 0);
+}
+
+static bool sm5440_oneshot_startup_matches(const struct sm5440_sample *sample,
+					   const struct sm5440_sample *initial)
+{
+	if (!sm5440_passive_fixed9_sample(initial))
+		return sm5440_startup_matches(sample, initial);
+	return !sample->faults && sm5440_passive_fixed9_sample(sample) &&
+		sample->cntl2 == initial->cntl2 &&
+		sample->vbuscntl == initial->vbuscntl &&
+		sample->vbatcntl == initial->vbatcntl &&
+		sample->prtncntl == initial->prtncntl;
+}
+#endif
 
 /* Samsung sm5440_set_adc_mode(ONESHOT): disable,20ms,rate0,enable.
  * Keep sample_once's checked converter/latch sequence intact. Its second
@@ -2308,7 +2349,12 @@ static void sm5440_poll(struct work_struct *work)
 		/* A suspect startup latch is UNKNOWN until two new safe samples.
 		 * Failure is permanent; the exemption is consumed once per probe.
 		 */
-		if (!sm->initial_sample_done && sm5440_startup_revblk(&sample)) {
+		if (!sm->initial_sample_done &&
+		    (sm5440_startup_revblk(&sample)
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+		     || sm5440_oneshot_startup_revblk(&sample)
+#endif
+		    )) {
 			sm->startup_sample = sample;
 			sm->startup_stamp = jiffies;
 			sm->startup_confirmations = 2;
@@ -2316,7 +2362,12 @@ static void sm5440_poll(struct work_struct *work)
 			dev_warn(sm->dev, "passive startup REVBLK awaiting two fresh confirmations\n");
 		} else if (sm->startup_confirmations) {
 			if (time_after(jiffies, sm->startup_deadline) ||
-			    !sm5440_startup_matches(&sample, &sm->startup_sample)) {
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+			    !sm5440_oneshot_startup_matches(&sample, &sm->startup_sample)
+#else
+			    !sm5440_startup_matches(&sample, &sm->startup_sample)
+#endif
+			   ) {
 				sm->fault = true;
 				dev_err(sm->dev, "passive startup confirmation failed\n");
 			} else {

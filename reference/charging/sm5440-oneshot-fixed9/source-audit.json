@@ -1,0 +1,25 @@
+{
+  "modified_driver": "kernel/drivers/sm5440-direct.c",
+  "changes": "guarded inactive OFF fixed9 startup predicate and same-class two fresh confirmation dispatch",
+  "ordinary_functions_identical_to_9e4a3179": [
+    "sm5440_passive_pc_sample",
+    "sm5440_startup_revblk",
+    "sm5440_startup_matches",
+    "sm5440_sample_once",
+    "sm5440_adc_rearm",
+    "sm5440_quiesce"
+  ],
+  "native_converter_sha256": "3940a2ebf8e82bd710c97afafe26b9c36ee9035c141865788072ae9f1eb50747",
+  "native_deadline_ms": 100,
+  "input_limits_ma": {
+    "5V": 1800,
+    "9V": 1500
+  },
+  "float_mv": 4440,
+  "thermal_policy_changed": false,
+  "protection_or_current_write_added": false,
+  "PPS_or_pump_ON": false,
+  "DTS_USB_TCPM_rootfs_changed": false,
+  "physical_executed": false,
+  "full_port_verdict": "NOT_READY"
+}

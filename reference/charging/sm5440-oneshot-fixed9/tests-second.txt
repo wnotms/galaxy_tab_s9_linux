@@ -1,0 +1,14 @@
+..F...........................................................................................................................................................
+======================================================================
+FAIL: test_confirmations_cannot_cross_voltage_classes (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_confirmations_cannot_cross_voltage_classes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 80, in test_confirmations_cannot_cross_voltage_classes
+    self.assertEqual(self.evaluate(self.initial(),self.clean(5000000)),1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 1
+
+----------------------------------------------------------------------
+Ran 158 tests in 6.646s
+
+FAILED (failures=1)

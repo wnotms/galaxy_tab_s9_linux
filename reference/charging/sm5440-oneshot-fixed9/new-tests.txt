@@ -1,0 +1,59 @@
+...F.FFFFF..
+======================================================================
+FAIL: test_existing_worker_still_requires_two_new_confirmations (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_existing_worker_still_requires_two_new_confirmations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 102, in test_existing_worker_still_requires_two_new_confirmations
+    self.assertIn('if (!--sm->startup_confirmations)',poll)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'if (!--sm->startup_confirmations)' not found in 'static void sm5440_poll(struct work_struct *work)\n{\n\tstruct sm5440_direct *sm = container_of(to_delayed_work(work),\n\t\t\t\t\t       struct sm5440_direct, work);\n\tstruct sm5440_sample sample = {};\n\tint ret;\n\n\tif (READ_ONCE(sm->stopped) || READ_ONCE(sm->fault))\n\t\treturn;\n#ifdef CONFIG_X710_NATIVE_CONTROL\n\tif (READ_ONCE(sm->native.owned))\n\t\treturn;\n#endif\n#ifdef CONFIG_SM5440_ADC_CONDITION_TEST\n\tret = sm5440_fixed_context_cycle(sm, &sample);\n#else\n\tret = sm5440_adc_rearm(sm);\n\tif (!ret)\n\t\tret = sm5440_sample_once(sm, &sample);\n#endif\n\tif (!ret && (!sm->initial_sample_done || sm->startup_confirmations)) {\n#ifndef CONFIG_SM5440_ADC_CONDITION_TEST\n\t\tsm5440_startup_gauge(&sample);\n#endif\n\t\tdev_info(sm->dev,\n\t\t\t "startup voltage pair seq=%llu ADC-start=%llums ADC-read=%llums VBAT=%uuV gauge-start=%llums gauge-end=%llums gauge-ret=%d gauge=%duV\\n",\n\t\t\t (unsigned long long)sample.acquisition_seq,\n\t\t\t (unsigned long long)sample.acquired_ms,\n\t\t\t (unsigned long long)sample.adc_read_completed_ms,\n\t\t\t sample.vbat_uv,\n\t\t\t (unsigned long long)sample.gauge_started_ms,\n\t\t\t (unsigned long long)sample.gauge_completed_ms,\n\t\t\t sample.gauge_ret, sample.gauge_uv);\n\t}\n\tmutex_lock(&sm->io_lock);\n#ifdef CONFIG_SM5440_ADC_CONDITION_TEST\n\tsm->condition_sample = sample;\n#endif\n\tsm->last_sample_error = ret;\n\tif (ret) {\n\t\tsm->sample.valid = false;\n\t\tif (ret != -ESHUTDOWN) {\n\t\t\tsm->fault = true;\n\t\t\t/* Best effort OFF is not proof when I2C has failed. */\n\t\t\tdev_err(sm->dev, "passive ADC fault %d; OFF verification=%d\\n",\n\t\t\t\tret, sm5440_off(sm));\n\t\t\tregmap_update_bits(sm->regmap, SM5440_ADCCNTL1,\n\t\t\t\t\t   SM5440_ADC_ENABLE, 0);\n\t\t}\n\t} else {\n\t\t/* A suspect startup latch is UNKNOWN until two new safe samples.\n\t\t * Failure is permanent; the exemption is consumed once per probe.\n\t\t */\n\t\tif (!sm->initial_sample_done && sm5440_startup_revblk(&sample)) {\n\t\t\tsm->startup_sample = sample;\n\t\t\tsm->startup_stamp = jiffies;\n\t\t\tsm->startup_confirmations = 2;\n\t\t\tsm->startup_deadline = jiffies + msecs_to_jiffies(5000);\n\t\t\tdev_warn(sm->dev, "passive startup REVBLK awaiting two fresh confirmations\\n");\n\t\t} else if (sm->startup_confirmations) {\n\t\t\tif (time_after(jiffies, sm->startup_deadline) ||\n\t\t\t    !sm5440_startup_matches(&sample, &sm->startup_sample)) {\n\t\t\t\tsm->fault = true;\n\t\t\t\tdev_err(sm->dev, "passive startup confirmation failed\\n");\n\t\t\t} else {\n\t\t\t\tsm->startup_confirmations--;\n\t\t\t\tif (!sm->startup_confirmations)\n\t\t\t\t\tdev_info(sm->dev, "passive startup REVBLK confirmed inactive; event retained\\n");\n\t\t\t}\n\t\t}\n\t\tsm->initial_sample_done = true;\n\t\tsample.valid = true;\n\t\tsample.stamp = jiffies;\n\t\tsample.completed_ms = ktime_to_ms(ktime_get_boottime());\n\t\tsm->sample = sample;\n\t\tif (sample.faults) {\n\t\t\t/* Reads consume INT. Only the initial qualified REVBLK may\n\t\t\t * await confirmation; all other faults latch until unbind.\n\t\t\t * startup_sample retains the original event independently.\n\t\t\t */\n\t\t\tif (!sm->startup_confirmations ||\n\t\t\t    !sm5440_startup_revblk(&sample))\n\t\t\t\tsm->fault = true;\n\t\t\tdev_warn_ratelimited(sm->dev,\n\t\t\t\t"passive fault bitmap=%#x INT=%*ph STATUS=%*ph INT4-disable=%02x INT4-wait=%02x mode=%02x/%02x CNTL2=%02x VBUSCNTL=%02x VBATCNTL=%02x PRTNCNTL=%02x ADC=%*ph VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC\\n",\n\t\t\t\tsample.faults, 4, sample.int_before, 4, sample.status,\n\t\t\t\tsample.int4_after_disable, sample.int4_wait,\n\t\t\t\tsample.mode_before, sample.mode_after, sample.cntl2,\n\t\t\t\tsample.vbuscntl, sample.vbatcntl, sample.prtncntl,\n\t\t\t\t11, sample.adc, sample.vbus_uv, sample.vbat_uv,\n\t\t\t\tsample.ibus_ua, sample.die_decic);\n\t\t}\n\t\tdev_dbg(sm->dev, "passive VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC faults=%#x\\n",\n\t\t\tsample.vbus_uv, sample.vbat_uv, sample.ibus_ua,\n\t\t\tsample.die_decic, sample.faults);\n\t}\n\tWRITE_ONCE(sm->sample_seq, sm->sample_seq + 1);\n\tmutex_unlock(&sm->io_lock);\n\twake_up_all(&sm->request_wait);\n\tpower_supply_changed(sm->psy);\n#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST\n\tif (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&\n\t    sm->initial_sample_done && !sm->startup_confirmations) {\n\t\tsm5440_oneshot_cycle(sm);\n\t\treturn; /* one bounded observation per bind; no requeue/retry */\n\t}\n#endif\n#if defined(CONFIG_SM5440_ADC_TIMING_TEST) || defined(CONFIG_SM5440_ADC_RAW_TEST)\n\tif (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault) &&\n\t    sm->initial_sample_done && !sm->startup_confirmations) {\n\t\tsm5440_timing_cycle(sm);\n\t\treturn; /* One experiment per bind; no second conversion/retry. */\n\t}\n#endif\n#ifdef CONFIG_X710_NATIVE_CONTROL\n\tif (READ_ONCE(sm->native.owned))\n\t\treturn;\n#endif\n#ifndef CONFIG_SM5440_ADC_CONDITION_TEST\n\tif (!READ_ONCE(sm->stopped) && !READ_ONCE(sm->fault))\n\t\tschedule_delayed_work(&sm->work, msecs_to_jiffies(1000));\n#endif\n}'
+
+======================================================================
+FAIL: test_off_ready_online_zero_current_temperature_pack_required (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_off_ready_online_zero_current_temperature_pack_required) (field=4, value=17)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 82, in test_off_ready_online_zero_current_temperature_pack_required
+    self.assertEqual(self.evaluate(a,self.clean())&1,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_off_ready_online_zero_current_temperature_pack_required (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_off_ready_online_zero_current_temperature_pack_required) (field=4, value=33)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 82, in test_off_ready_online_zero_current_temperature_pack_required
+    self.assertEqual(self.evaluate(a,self.clean())&1,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_off_ready_online_zero_current_temperature_pack_required (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_off_ready_online_zero_current_temperature_pack_required) (field=5, value=17)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 82, in test_off_ready_online_zero_current_temperature_pack_required
+    self.assertEqual(self.evaluate(a,self.clean())&1,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_off_ready_online_zero_current_temperature_pack_required (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_off_ready_online_zero_current_temperature_pack_required) (field=5, value=33)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 82, in test_off_ready_online_zero_current_temperature_pack_required
+    self.assertEqual(self.evaluate(a,self.clean())&1,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_only_initial_inactive_revblk_latch_can_be_classified (test_sm5440_oneshot_fixed9.Fixed9StartupTests.test_only_initial_inactive_revblk_latch_can_be_classified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_fixed9.py", line 88, in test_only_initial_inactive_revblk_latch_can_be_classified
+    self.assertEqual(self.evaluate(a,self.clean())&1,0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.329s
+
+FAILED (failures=6)

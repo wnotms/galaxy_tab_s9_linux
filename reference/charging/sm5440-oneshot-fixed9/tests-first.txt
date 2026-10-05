@@ -1,0 +1,15 @@
+..................................................................F...........................................................................................
+======================================================================
+FAIL: test_no_changes_to_frozen_converter_and_admission (test_sm5440_adc_rearm.RearmTests.test_no_changes_to_frozen_converter_and_admission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_adc_rearm.py", line 71, in test_no_changes_to_frozen_converter_and_admission
+    self.assertEqual(function(self.source,name),function(old,name))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'stat[115 chars]\n{\n#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST\n\t[545 chars];\n}' != 'stat[115 chars]\n{\n\treturn !sample->faults && sm5440_passiv[197 chars];\n}'
+Diff is 706 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 158 tests in 6.587s
+
+FAILED (failures=1)
