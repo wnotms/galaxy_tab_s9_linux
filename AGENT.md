@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test322，窗口为 **Test313–Test322**；没有生成镜像的轮次仍占一轮。
+  编号为 Test323，窗口为 **Test314–Test323**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-05 Test323 same ordinary PC candidate registered for one boot-only +181
+matched swap; no repeat normalization/rebuild. Wi-Fi address now included in
+bounded150s readiness then authenticated fresh rescue.20affected gate/startup
+PASS0.032s, exact precedingbuild reused. Fresh aca39fe7 normalpreflight49%3.867V
+30.5C, allfive/181/config/notes/SinkDevice/packthermal/ADB+WiFi/NCMdevice/Windows
+confirmed; oldphysicalinput500 despite grant1800. Retain only after capped hardware
+controls,60s four sameboot snapshots/netpositive endpoint/fullkernel; failure
+restores accepted311, no PPS/ON/ADC/native/USB/rootfschange. Staging322 renamed323
+no duplicate. FullportNOTREADY. Test322STOP preserved; windows314–323.
+
 
 2026-10-05 Test322 stopped before flash at early Wi-Fi admission. One unchanged
 normal boot nowaca39fe7, lpcharge0/exact311 identity,49%3.870V30.4C, late Wi-Fi

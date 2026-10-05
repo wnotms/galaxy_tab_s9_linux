@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@tcpm; set -- /sys/class/power_supply/tcpm-source-psy-*/uevent; test \"$#\" = 1; cat \"$1\"; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-05T14:58:23.478611+00:00",
+  "started_utc": "2026-10-05T14:58:23.398920+00:00",
+  "status": 0
+}
