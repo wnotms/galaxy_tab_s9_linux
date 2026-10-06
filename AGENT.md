@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test332，窗口为 **Test323–Test332**；没有生成镜像的轮次仍占一轮。
+  编号为 Test333，窗口为 **Test324–Test333**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test333 charger-attached fixed9 OFF check registered. Reuse unchanged
+48cc5d16/3fe4adf1/notesff706409/config51/DT233a/181 qualification. 43 affected
+host tests PASS (0.263s); no rebuild/full run. Install pauses in TWRP; owner
+attaches C2 18W/C1empty before single System boot. Native300s/physical proof/
+30s/OFF/thermal/identity gates unchanged. Strict enrolled private-/24 WiFi
+admission preserves unique boot history; complete journal retains early proof.
+No PPS/pumpON/current raise. Restore exact331 after owner PC return regardless
+of result;331-original323 secondary retained. Registration333README; no physical
+execution yet. Fresh preflight READY same205a2404,79%4.254V32.3C, exact
+allfive/181/OFF/ADB/deviceNCM/strictWiFi55/WindowsCode0, fresh333slots.
+This is already-fixed9 return, not PPS transition/calibration.
+
 
 2026-10-06 Test332 stopped before fixed9 acquisition; exact331 restored.
 Candidate48cc5d16/3fe4adf1/paired181 PCstartup healthy7b5eef2d, but two host-only
