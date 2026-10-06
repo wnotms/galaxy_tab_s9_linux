@@ -170,7 +170,8 @@ def collect():
     verify_inputs(require_push=True)
     state=read(R/'startup-summary.json');boot=state['boot_id']
     address=state['transport']['wifi']
-    rec=p.Recorder(R/('fixed-observation' if not (R/'fixed-observation').exists() else 'fixed-observation-trust-corrected'))
+    name='fixed-observation' if not (R/'fixed-observation').exists() else ('fixed-observation-trust-corrected' if not (R/'fixed-observation-trust-corrected').exists() else 'fixed-observation-word-boundary')
+    rec=p.Recorder(R/name)
     source=(R/'observe.py').read_text()
     trust='/tmp/gts9-test323-known-hosts'  # base.wifi_rescue enrolls this exact file
     command='python3 -u -c '+shlex.quote(source)+' '+shlex.quote(boot)+' '+PLAN['candidate_config_sha256']+' '+PLAN['candidate_notes_sha256']

@@ -3,7 +3,7 @@
 import gzip,hashlib,json,os,re,subprocess,sys,threading,time
 from pathlib import Path
 BOOT=sys.argv[1];CONFIG=sys.argv[2];NOTES=sys.argv[3]
-FAULT=re.compile(r'Kernel panic|BUG:|Oops:|Internal error:|SError|soft lockup|hard LOCKUP|rcu.*(?:detected.*stall|INFO:.*stall)|blocked for more than|non-responsive|workqueue lockup|CSD.*(?:stall|non.response)',re.I)
+FAULT=re.compile(r'\b(?:Kernel panic|BUG:|Oops:|Internal error:|SError|soft lockup|hard LOCKUP|rcu.*(?:detected.*stall|INFO:.*stall)|blocked for more than|non-responsive|workqueue lockup|CSD.*(?:stall|non.response))',re.I)
 rows=[];lock=threading.Lock();emit_lock=threading.Lock();journal=None
 
 def emit(kind,**d):

@@ -166,3 +166,12 @@ class CollectorTrust(unittest.TestCase):
                 self.assertIn('UserKnownHostsFile=/tmp/gts9-test323-known-hosts',args)
                 self.assertIn('StrictHostKeyChecking=yes',args)
                 self.assertIn('HostKeyAlias=gts9-test292',args)
+
+class ActualObserverFaultPattern(unittest.TestCase):
+    def test_actual_fault_pattern_excludes_ramoops_and_known_warnings(self):
+        import ast,re
+        tree=ast.parse((R/'observe.py').read_text());node=next(x for x in tree.body if isinstance(x,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='FAULT' for t in x.targets));ns={'re':re};exec(compile(ast.Module(body=[node],type_ignores=[]),'observe.py','exec'),ns);pattern=ns['FAULT']
+        for message in ['ramoops: using 0x200000@0x880900000, ecc: 0','auxiliary aux_bridge: deferred probe pending: failed to acquire drm_bridge','regulator: Not disabling unused regulators']:
+            self.assertIsNone(pattern.search(message))
+        for message in ['Oops: bad','BUG: problem','Kernel panic - not syncing','watchdog: soft lockup','rcu: INFO: rcu_preempt detected stalls','CSD: CPU5 non-response','INFO: task blocked for more than120 seconds']:
+            self.assertIsNotNone(pattern.search(message),message)
