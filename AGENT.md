@@ -103,8 +103,9 @@ qualificationf105ffed unchanged. Boot-only opt-in, exact327 config/DT/notes/181;
 no source rebuild/ADC repair/current ramp. PCpreflight79%4.234V31.2C/WiFi224,
 allfive/181/OFF healthy. Device-local observer finally drains worker/unbinds,
 checks OFF+fixed9V; firstfault stops. After ownerPCreturn restore327defaultOFF
-onPASS, exact323+saved327original181 onrealPPSfault. Await registrationpush,
-physicalNOTEXECUTED. Plan/reference test-328-fedora-pps-short; fullportNOT_READY.
+onPASS, exact323+saved327original181 onrealPPSfault. Registrationb33b6d65 pushed;34 affected runner/guardian PASS. Fresh PC
+follow-upSOC81%4.232V31.7C/paramN/same327boot; entry blocked before any
+mutation, await ownerunplug/discharge78%. PhysicalNOTEXECUTED. Plan/reference test-328-fedora-pps-short; fullportNOT_READY.
 
 
 2026-10-06 Test327 physical default-OFF PASS; pushedregistrationbd4251e6/source376693d7,

@@ -1,0 +1,13 @@
+{
+  "status": "WAIT_FOR_SOC_BELOW_80",
+  "observed_soc": 81,
+  "voltage_uv": 4232000,
+  "pack_temp_decic": 317,
+  "battery_status": "Charging",
+  "direct_charge": "N",
+  "boot_id": "7f9c0caac4ae471a95f492941ceb7ccc",
+  "source": "authenticated WiFi SSH follow-up after registration push",
+  "device_mutation_executed": false,
+  "PPS_executed": false,
+  "reason": "PC ordinary charging raised SOC before boot-only opt-in; retain Test327 default-OFF; await unplug/discharge to78 for installation margin"
+}
