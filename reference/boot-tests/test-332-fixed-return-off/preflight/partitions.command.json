@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for name in boot vendor_boot init_boot dtbo vbmeta; do path=/dev/disk/by-partlabel/$name; dev=$(readlink -f \"$path\"); test -b \"$dev\"; node=${dev##*/}; test \"$(sed -n \"s/^PARTNAME=//p\" /sys/class/block/$node/uevent)\" = \"$name\"; sha256sum \"$path\"; done"
+  ],
+  "ended_utc": "2026-10-06T11:24:21.150461+00:00",
+  "started_utc": "2026-10-06T11:24:20.271730+00:00",
+  "status": 0
+}

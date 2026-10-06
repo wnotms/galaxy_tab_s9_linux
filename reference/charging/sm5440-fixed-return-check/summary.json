@@ -1,0 +1,647 @@
+{
+  "verdict": "OFFLINE_FIXED_RETURN_CHECK_PASS",
+  "full_port_verdict": "NOT_READY",
+  "profile": "sm5440-fedora",
+  "base_revision": "189170efea48d7c7854516173c0056c7a6411e56",
+  "profile_gate": {
+    "valid": true,
+    "errors": [],
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "required_y_count": 85,
+    "dcc_absent": true,
+    "config_delta": {
+      "CONFIG_CHARGER_SM5440_DIRECT": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_CHARGER_SM5440_FEDORA": [
+        "absent",
+        "y"
+      ]
+    },
+    "unexpected_delta": {},
+    "missing_expected_delta": {},
+    "profile": "sm5440-fedora",
+    "pump_activation_available": true,
+    "direct_charge_default": false,
+    "requires_registered_boot_opt_in": true
+  },
+  "config_delta_from_accepted323": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "y",
+      "n"
+    ],
+    "CONFIG_CHARGER_SM5440_FEDORA": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_RAW_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_TIMING_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "absent"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_delta": [],
+  "compiled_sources": {
+    "power/supply/sm5714-battery.c": "64a505c9adec4d0172dc46e80056cd64ff7d99a344c43be975ae1678c7bfc127",
+    "power/supply/sm5440-fedora.c": "f74b0d5813e52db88d25a125e26a8672708cddfe18bd9d009f228ffeb10b1166",
+    "power/supply/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b",
+    "power/supply/sm5714-stage2.h": "a240372278da39975e36a7133b5b45981b1abdf9e880f7dec996f9b6350bf3db",
+    "usb/typec/tcpm/sm5714_usbpd.c": "06a039f26e1d1ded781022c01f2af1a88da3a94b23c51950283b5a9280d9f4cf",
+    "usb/typec/tcpm/sm5714-stage2.h": "a240372278da39975e36a7133b5b45981b1abdf9e880f7dec996f9b6350bf3db",
+    "usb/typec/tcpm/sm5714-pd-policy.h": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d"
+  },
+  "protected_source_count": 841,
+  "preserved_formal_artifact_count": 30,
+  "module_file_count": 181,
+  "module_runtime_unchanged": true,
+  "metadata_identity_change_only": true,
+  "module_changes": {
+    "kernel/drivers/block/zram/zram.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btbcm.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btqca.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btsdio.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/hci_uart.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/camcc-x1p42100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/gcc-x1e80100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/videocc-x1p42100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/gpio/gpio-shared-proxy.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/a8293.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/af9033.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ascot2e.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/atbm8830.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_common.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_decoder.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_dig.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/bcm3510.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22700.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22702.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24110.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24113.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24116.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24117.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24120.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24123.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2099.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2820r.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2841er.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0070.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0090.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mb.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mc.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000m.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000p.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib8000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib9000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dibx000_common.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxd.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxk.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ds3000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dvb-pll.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ec100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/helene.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/horus3a.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6405.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6421.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6423.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/itd1000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ix2505v.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/l64781.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lg2160.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt3305.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt330x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gl5.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gxx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh25.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh29.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp21.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp22.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/m88rs2000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a16.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a20s.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88443x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88472.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88473.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt312.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt352.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl5xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl692.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt200x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt6000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51132.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51211.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1409.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1411.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1420.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1432.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s921.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/si2165.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/si21xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp2.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp887x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb0899.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0288.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0297.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0299.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0367.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0900.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv090x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0910.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6111.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tc90522.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10021.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10023.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10048.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda1004x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10071.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10086.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda18271c2dd.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda665x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8083.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8261.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda826x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ts2020.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tua6100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1820.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1x93.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zd1301_demod.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10036.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10039.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10353.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/spi/cxd2880-spi.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/e4000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0011.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0012.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0013.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc2580.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/it913x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/m88rs6000t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/max2165.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mc44s803.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/msi001.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2060.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2063.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt20xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2131.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2266.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl301rf.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl5005s.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl5007t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qm1d1b0004.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qm1d1c0042.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qt1010.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/r820t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/si2157.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18212.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18218.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18250.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18271.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda827x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda8290.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda9887.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tea5761.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tea5767.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tua9001.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tuner-simple.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tuner-types.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc2028.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc4000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc5000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": [
+      ".BTF"
+    ],
+    "kernel/mm/zsmalloc.ko": [
+      ".BTF"
+    ],
+    "kernel/net/bluetooth/bluetooth.ko": [
+      ".BTF"
+    ],
+    "kernel/net/mac80211/mac80211.ko": [
+      ".BTF"
+    ],
+    "kernel/net/qrtr/qrtr-mhi.ko": [
+      ".BTF"
+    ],
+    "kernel/net/wireless/cfg80211.ko": [
+      ".BTF"
+    ],
+    "modules.builtin": {
+      "old_sha256": "b86cc446f23ff688cb172e4894a19ed1e576e37ea33ffd94fe02bb495417fa7d",
+      "new_sha256": "ee7d9fd81a7a6e9d0ab9d78d6b93486899b0c74eb8687c52f40b4ed3df7a9f24",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.alias.bin": {
+      "old_sha256": "d45ec131c89f6013a56557a804a3bd8b90036ef819728bbdde10f3bc46110c2b",
+      "new_sha256": "4c27b74e5f7adf929f38fb39de083d9c3084f7824eb97e41f5d687ec9ddeaab8",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.bin": {
+      "old_sha256": "6fcfc15b860d423424561c8bf719ae91b19f3c9920d5b7e061a138d72e0cb511",
+      "new_sha256": "e9324f565103f05fd81f6c98aba4f06b4e8e79c3db3189b62eba8ae61ce525fd",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.modinfo": {
+      "old_sha256": "fd64fb199a50469f220cd2060f13c256e3931cbf7213c0c668393fdc937443a1",
+      "new_sha256": "e577575537c051488ff97ca310146fa163914edaa8a0670697dd1ce3a8f51f41",
+      "reason": "replaced built-in driver identity/parameters"
+    }
+  },
+  "native_symbols_absent": [
+    "x710_charge_controller_request",
+    "x710_charge_controller_cancel",
+    "x710_charge_request_observation",
+    "sm5440_native_control",
+    "sm5440_conversion_begin",
+    "sm5440_conversion_advance",
+    "hvc_dcc0_put_chars"
+  ],
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora-fixed-check/Image.gz",
+      "bytes": 22136596,
+      "sha256": "f81d73013a81ea5b9eadd3d3370299909129e7fcfc673b43990cc275e55bfc0a"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora-fixed-check/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora-fixed-check/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora-fixed-check/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "ff706409f519e5592f5f42579cc8354a6861d86433a95c9bea0f14e9f4771c3f"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-fixed-check/modules-x710.tar.gz",
+      "bytes": 47319243,
+      "sha256": "0283d99ad7a8004555305fb085cb42ba67e73a358fbcfa67b2579a129b9d3e80"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora-fixed-check/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "device_commands_executed": false,
+  "physical_executed": false,
+  "pump_ON": false,
+  "PPS_requested": false,
+  "direct_charge_default": false,
+  "PPS_cap_ma": 1800,
+  "source_revision": "48cc5d1624357d115f265be93f6985b4fce6ead5",
+  "upstream_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "config_delta_from_test331": {},
+  "DTB_delta_from_test331": [],
+  "unresolved": "Corrected fixed-return proof and active PPS require separately registered physical acceptance",
+  "inherited_qualification_sha256": "e4777d608f60d383e8c71302fad4da027f1047e0c794e142b3fc483be78a1f67"
+}

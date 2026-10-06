@@ -1,0 +1,17 @@
+............F......................
+======================================================================
+FAIL: test_cmdline_reordering_rejected (test_host.Gates.test_cmdline_reordering_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-332-fixed-return-off/test_host.py", line 75, in test_cmdline_reordering_rejected
+    self.reject('cmdline',' '.join(tokens))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-332-fixed-return-off/test_host.py", line 17, in reject
+    with self.assertRaises(ValueError):G.identity(self.s,P,'candidate')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.256s
+
+FAILED (failures=1)

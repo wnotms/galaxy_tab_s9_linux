@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test331，窗口为 **Test322–Test331**；没有生成镜像的轮次仍占一轮。
+  编号为 Test332，窗口为 **Test323–Test332**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,21 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test332 OFF-only fixed9 return scope registered/preflight READY:
+source48cc5d16 defaultfalse/readonly fixed_return_check, mutual exclusion with
+direct/PPS activation, one existing worker transaction/300s absolute probe
+wait/no retries. Only checkedOFF+existingADCchannelsdf+lease/pack/fixed proof/
+release; no init/reset/PPS/ON/currentraise. 253affectedPASS/build80.690s/
+W1+sparse12.810s zero newwarning; config/DT identical331/181 matched. Newboot
+3fe4adf1 single fixed-check flag, notesff706409; default-directN. 35runner tests
+PASS, kernel qualification reused. Fresh preflight same331boot6b76a591,
+73%4.180V32.2C/+1.171A, allfive/181/OFF/strictWiFi193/WindowsCode0,332slots
+fresh. Register/push before installation. Owner C2alone after armed observer,
+30s healthy fixed9 after source-bound release; complete journal/native physical
+proof required. Unconditionally restore exact331 OFF boot+paired181 afterward;
+331-original323 secondary retained. No physical execution yet. FullportNOT_READY;
+this cannot establish PPS voltage transition or calibration. See Test332README.
 
 2026-10-06 fixed-return gate correction OFFLINE qualified, source9901200d:
 shared fixed5/9V steady window±5% (USB-IF Table4.6, source-receptacle rule,
