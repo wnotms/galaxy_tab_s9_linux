@@ -60,7 +60,7 @@ struct notifier_block { int (*notifier_call)(struct notifier_block *,unsigned lo
                            if (line.startswith('#define SM5440_') or line.startswith('#define  SM5440_')) and not line.startswith('#define SM5440_WRITE')) + '\n'
         prefix += function(src, 'struct sm5440_direct {') + ';\n'
         prefix += r'''
-static bool direct_charge;
+static bool direct_charge, fixed_return_check;
 static struct sm5440_direct sm;
 static struct i2c_client client;
 static struct device dev;
@@ -166,7 +166,8 @@ int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct s
                  'sm5440_pump_off', 'sm5440_pump_on', 'sm5440_wait_vbus_settled',
                  'sm5440_renegotiate_pps', 'sm5440_monitor_faults', 'sm5440_log_faults',
                  'sm5440_restore_switching', 'sm5440_hw_init', 'sm5440_start',
-                 'sm5440_eligible', 'sm5440_backoff', 'sm5440_work',
+                 'sm5440_eligible', 'sm5440_fixed_check_ready', 'sm5440_fixed_return_once',
+                 'sm5440_backoff', 'sm5440_work',
                  'sm5440_cancel_work', 'sm5440_pm_notify']
         for name in names:
             import re
@@ -177,9 +178,10 @@ void reset(void) {
  memset(&sm,0,sizeof(sm));memset(regs,0,sizeof(regs));sm.client=&client;sm.dev=&dev;
  source=(struct sm5714_pd_snapshot){.instance=12,.source_generation=44,.budget_generation=88,.budget_mv=9000,.budget_ma=1500,.online=1,.charge_requested=true};
  pack=(struct sm5714_pack_snapshot){.instance=9,.capacity=50,.voltage_uv=4180000,.pack_decic=300,.battery_present=true,.attached=true,.thermal_normal=true,.health=1};
- regs[SM5440_REG_STATUS3]=32;regs[SM5440_REG_DEVICEID]=0x21;set_vbus(9000);
+ regs[SM5440_REG_ADCCNTL2]=0xdf;regs[SM5440_REG_STATUS3]=32;regs[SM5440_REG_DEVICEID]=0x21;set_vbus(9000);
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
- clock_ms=1000;owned_lease=0;direct_charge=true;
+ clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
+ sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
  fixed_sampling=fixed_sample_count=fixed_pattern=0;fixed_return_started=0;
@@ -202,7 +204,9 @@ void input(int key,int value) {
  case 13:sm.pps_ticks=value;break;case 14:raw13(SM5440_REG_ADC_IBUS1,value);break;
  case 15:pack.thermal_normal=value;break;case 16:fail_owned_at=value;break;
  case 17:mutate_pack=value;break;case 18:fixed_adc_offset=value;break;
- case 19:fixed_pattern=value;break;}
+ case 19:fixed_pattern=value;break;case 20:fixed_return_check=value;break;
+ case 21:sm.fixed_check_deadline=value;break;
+ case 22:source.budget_mv=value;break;case 23:regs[SM5440_REG_ADCCNTL2]=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -211,7 +215,7 @@ int value(int key) {
  case 8:return calls;case 9:return pump_ons;case 10:return regs[SM5440_REG_IBUSCNTL];
  case 11:return scheduled;case 12:return sm.last_cleanup_error;case 13:return sm.target_mv;
  case 14:return sm.target_ma;case 15:return canceled;
- case 20:return clock_ms-fixed_return_started;case 21:return fixed_sample_count;
+ case 22:return sm.fixed_check_done;case 20:return clock_ms-fixed_return_started;case 21:return fixed_sample_count;
  case 18:return fixed_snapshot_calls;case 19:return owned_snapshot_calls;
  case 16:return scheduled_delay;case 17:return regs[SM5440_REG_CNTL1]&128;
  default:return -1;}
@@ -238,6 +242,49 @@ int value(int key) {
         self.assertEqual(self.lib.eligible(), 0)
         self.assertEqual(self.lib.start(), -1)
         self.assertEqual([self.v(n) for n in (2, 4, 8, 9)], [0, 0, 0, 0])
+
+    def test_off_only_fixed_check_is_single_shot_without_pps_or_pump_on(self):
+        self.lib.input(0, 0); self.lib.input(20, 1)
+        self.lib.input(18, 272)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 5, 9, 22)],
+                         [0, 0, 1, 0, 1, 0, 1])
+        counts = [self.v(k) for k in (4, 5, 8, 9, 11)]
+        self.lib.work()
+        self.assertEqual(counts, [self.v(k) for k in (4, 5, 8, 9, 11)])
+
+    def test_fixed_check_waits_readonly_on_pc_and_has_absolute_deadline(self):
+        self.lib.input(0, 0); self.lib.input(20, 1); self.lib.input(22, 5000)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (2, 4, 8, 9, 22)], [0, 0, 0, 0, 0])
+        self.assertEqual(self.v(11), 1)
+        self.lib.input(21, 1000)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (2, 4, 8, 9, 22)], [0, 0, 0, 0, 1])
+        self.assertEqual(self.v(7), 1)
+        self.assertEqual(self.v(11), 1)  # no scheduling after completion/failure
+
+    def test_fixed_check_refuses_direct_optin_and_unhealthy_pack(self):
+        for key, value in [(0, 1), (1, 80), (2, 4300000), (3, 380),
+                           (4, -5), (15, 0), (22, 12000)]:
+            self.lib.reset(); self.lib.input(0, 0); self.lib.input(20, 1)
+            self.lib.input(key, value); self.lib.work()
+            self.assertEqual([self.v(k) for k in (2, 3, 4, 8, 9, 22)],
+                             [0, 0, 0, 0, 0, 1])
+            self.assertEqual(self.lib.eligible(), 0)
+
+    def test_fixed_check_refuses_unknown_adc_channels_without_reconfiguration(self):
+        self.lib.input(0, 0); self.lib.input(20, 1); self.lib.input(23, 0)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 7, 9, 22)],
+                         [0, 0, 0, 0, 1, 0, 1])
+
+    def test_fixed_check_proof_failure_is_not_retried(self):
+        self.lib.input(0, 0); self.lib.input(20, 1); self.lib.input(18, 451)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 7, 9, 22)],
+                         [0, 7, 0, 0, 1, 0, 1])
+        count = self.v(8); self.lib.work(); self.assertEqual(self.v(8), count)
 
     def test_actual_entry_and_transactional_fixed_return(self):
         self.assertEqual(self.lib.start(), 0)

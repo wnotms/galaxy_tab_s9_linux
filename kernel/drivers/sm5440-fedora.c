@@ -98,6 +98,10 @@
 static bool direct_charge;
 module_param(direct_charge, bool, 0400);
 MODULE_PARM_DESC(direct_charge, "Explicit registered 1.8A direct-charge bring-up (default off)");
+static bool fixed_return_check;
+module_param(fixed_return_check, bool, 0400);
+MODULE_PARM_DESC(fixed_return_check, "Registered one-shot fixed9V OFF return proof (default off, no PPS)");
+#define SM5440_FIXED_CHECK_WAIT_MS	300000
 
 /*
  * Board tuning from the X710 device tree (sm5440,freq = 850, freq_siop = 450
@@ -139,6 +143,8 @@ struct sm5440_direct {
 	struct sm5714_pd_snapshot source;
 	u64 pack_instance;
 	int last_cleanup_error;
+	u64 fixed_check_deadline;
+	bool fixed_check_done;
 	struct notifier_block pm_nb;
 };
 
@@ -202,7 +208,8 @@ static int sm5440_adc_die_temp(struct sm5440_direct *sm)
 
 static bool sm5440_direct_enabled(struct sm5440_direct *sm)
 {
-	return READ_ONCE(direct_charge) && !READ_ONCE(sm->stopping) &&
+	return READ_ONCE(direct_charge) && !READ_ONCE(fixed_return_check) &&
+        !READ_ONCE(sm->stopping) &&
         !READ_ONCE(sm->suspending) && !sm->fault_latched;
 }
 
@@ -629,6 +636,11 @@ static int sm5440_restore_switching(struct sm5440_direct *sm)
         sm->source.source_generation, sm->lease, &proof);
 		if (ret)
 			goto failed;
+		dev_info(sm->dev,
+			 "fixed return verified: source=%llu lease=%llu vbus=%uuV samples=%u range=%d..%dmV settled=%llums raw_ibus=0 pump_off=1\n",
+			 sm->source.source_generation, sm->lease, proof.vbus_uv,
+			 stable_samples, vbus_min, vbus_max,
+			 proof.observed_ms - stable_started_ms);
 		sm->lease = 0;
 	}
 	sm->last_cleanup_error = 0;
@@ -803,6 +815,68 @@ static bool sm5440_eligible(struct sm5440_direct *sm)
 	return !ret && pack.voltage_uv < 4300000 && pack.pack_decic < 380;
 }
 
+/* Single worker owner, drained by the existing PM/remove callbacks. Waiting
+ * on a PC fixed5V source is read-only and bounded. This mode can only exercise
+ * the existing fixed return proof: no PPS Request, reset/init or pump enable.
+ */
+static int sm5440_fixed_check_ready(struct sm5440_direct *sm)
+{
+	struct sm5714_pd_snapshot source;
+	struct sm5714_pack_snapshot pack;
+	int ret;
+
+	if (READ_ONCE(direct_charge) || READ_ONCE(sm->suspending) ||
+	    READ_ONCE(sm->stopping) || sm->fault_latched || sm->lease)
+		return -EPERM;
+	ret = sm5714_pd_read_snapshot(&source);
+	if (ret)
+		return ret;
+	if (source.pps_contract || !source.online || !source.charge_requested)
+		return -EAGAIN;
+	if (source.budget_mv == 5000)
+		return -EAGAIN;
+	if (source.budget_mv != 9000 || source.budget_ma < 1000 ||
+	    source.budget_ma > SM5714_FIXED_9V_MA)
+		return -ERANGE;
+	ret = sm5714_battery_read_pack(0, &pack);
+	if (ret)
+		return ret;
+	sm->source = source;
+	sm->pack_instance = pack.instance;
+	ret = sm5440_read_pack(sm, &pack);
+	if (!ret && (pack.voltage_uv >= 4300000 || pack.pack_decic >= 380))
+		ret = -ERANGE;
+	return ret;
+}
+
+static int sm5440_fixed_return_once(struct sm5440_direct *sm)
+{
+	struct sm5714_pack_snapshot pack;
+	int ret, cleanup, adc_channels;
+
+	ret = sm5440_pump_off(sm);
+	if (ret)
+		return ret;
+	/* Fedora's existing channel setup is 0xdf. Do not silently sample
+	 * disabled channels or change this configuration for the experiment.
+	 */
+	adc_channels = i2c_smbus_read_byte_data(sm->client, SM5440_REG_ADCCNTL2);
+	if (adc_channels < 0)
+		return adc_channels;
+	if (adc_channels != 0xdf)
+		return -ENODATA;
+	if (READ_ONCE(sm->suspending) || READ_ONCE(sm->stopping))
+		return -ESHUTDOWN;
+	ret = sm5714_battery_switching_acquire(&sm->lease);
+	if (!ret)
+		ret = sm5440_read_pack(sm, &pack);
+	/* Even a partial acquire failure must attempt the existing safe return;
+	 * preserve its original error. The worker never retries this experiment.
+	 */
+	cleanup = sm->lease ? sm5440_restore_switching(sm) : 0;
+	return ret ? ret : cleanup;
+}
+
 /*
  * A pump that cannot hold is worse than no pump: it hands the pack back to the
  * switching charger and re-negotiates PPS over and over.  Back off exponentially
@@ -833,6 +907,28 @@ static void sm5440_work(struct work_struct *work)
 	int capacity, die_temp, ibus, op_mode, pack_temp, status3;
 	int vbat, vbus;
 	int ret;
+
+	if (READ_ONCE(fixed_return_check)) {
+		if (sm->fixed_check_done)
+			return;
+		if (ktime_to_ms(ktime_get_boottime()) >= sm->fixed_check_deadline)
+			ret = -ETIMEDOUT;
+		else
+			ret = sm5440_fixed_check_ready(sm);
+		if (ret == -EAGAIN || ret == -ENODEV)
+			goto out;
+		sm->fixed_check_done = true;
+		if (!ret)
+			ret = sm5440_fixed_return_once(sm);
+		if (ret) {
+			sm->fault_latched = true;
+			dev_err(sm->dev, "fixed return check failed: %d; lease=%llu\n",
+				ret, sm->lease);
+		} else {
+			dev_info(sm->dev, "fixed return check complete: lease=0 PPS=0 pump_ON=0\n");
+		}
+		return;
+	}
 
 	if (!sm->active) {
 		/*
@@ -1021,6 +1117,8 @@ static int sm5440_probe(struct i2c_client *client)
 	int id;
 	int ret;
 
+	if (direct_charge && fixed_return_check)
+		return -EINVAL;
 	if (!i2c_check_functionality(client->adapter,
 				     I2C_FUNC_SMBUS_BYTE_DATA))
 		return -EOPNOTSUPP;
@@ -1030,6 +1128,8 @@ static int sm5440_probe(struct i2c_client *client)
 		return -ENOMEM;
 	sm->dev = &client->dev;
 	sm->client = client;
+	sm->fixed_check_deadline = ktime_to_ms(ktime_get_boottime()) +
+				   SM5440_FIXED_CHECK_WAIT_MS;
 	i2c_set_clientdata(client, sm);
 
 	id = i2c_smbus_read_byte_data(client, SM5440_REG_DEVICEID);
