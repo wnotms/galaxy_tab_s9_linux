@@ -1,14 +1,7 @@
-# Test326 — installed; awaiting one owner fixed9V boot
+# Test326 — stopped; accepted Test323 restored
 
-Candidate f338eeb3 / ee59e368 qualification installed via TWRP. Boot and all five
-partition readbacks match; 181 paired modules verified. BCB cleared and Debian
-root unmounted. No automatic candidate boot was issued. Device is in TWRP,
-rollback_required=true; exact accepted323 modules saved as .gts9-test326-original.
-
-Owner must replace PC with Lenovo C2 (18W, C1 empty), choose Reboot System once,
-wait >=30s after Debian login, then return to PC without reboot. Capture original
-retained ADC/boot/kernel evidence once, then unconditionally restore exact323
-boot/modules in finally. No repeat/rebind/PPS/pump/current/protection/USB change.
-
-Build/tests executed:false for installation; unchanged ee59e368 kernel/artifact
-qualification and registered 22 packet/parser tests reused. Full port NOT READY.
+Two startup confirmations succeeded; native100ms request timed out -110/count0.
+Cleanup0/OFF0, no PPS/pump-ON. Exact323boot/181/allfive restored, finalnormal
+3f4cf492/75%/4.180V/30.3C/ADB+NCM+WiFi, rollback_required=false. Original STOP/raw
+retained. Owner selects Fedora source port, ending custom ADC repair. Results
+build/tests executed:false with previous qualification reused. Full port NOT READY.

@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test326 STOP_NATIVE_100MS_TIMEOUT; two startupconfirmations completed,
+nativeattempt1count0/error-110/cleanup0OFF0. Candidate d25fc7ec raw/sourcejournal
+retained. Finally restored323boot/181/allfive/BCBclear/rootunmount; finalnormal
+3f4cf492/75%4.180V30.3C/ADB+NCM+WiFi, rollbackfalse. Owner directs same-model Fedora
+SM5440/PPS source; stop custom ADC repair/replay. Keep323 livebaseline until new
+candidate qualified/registered. NoPPS/pump/current/USBchange326. FullportNOTREADY.
+
+
 2026-10-06 Test326 boot/181 paired modules installed via TWRP; allfive readback
 verified, BCB cleared/root unmounted, no automaticcandidateboot. Awaiting owner
 C2bootSystemonce/hold>=30s thenPCreturn sameboot; captureonce and unconditional

@@ -1,0 +1,41 @@
+{
+  "charging_authorized": false,
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 43,
+  "last_source_timestamp": "115870672",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 5.3762,
+        "events": [],
+        "setup_source_seconds": 4.307107
+      },
+      {
+        "completion_source_seconds": 6.756912,
+        "events": [],
+        "setup_source_seconds": 5.871482
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "rows": 1114,
+  "stability_clean_claim": false,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [
+    {
+      "message": "sm5440-passive 0-0063: OFF native one-shot stopped: -110; cleanup=0 OFF=0",
+      "priority": 3,
+      "row": 944
+    }
+  ]
+}

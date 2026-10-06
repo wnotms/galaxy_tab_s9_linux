@@ -1,0 +1,42 @@
+{
+  "verdict": "STOP_NATIVE_100MS_TIMEOUT_ACCEPTED323_RESTORED",
+  "candidate_boot_id": "d25fc7ec63084d69864320368403e5f5",
+  "boot_attribution": "attributed",
+  "native_attempted": 1,
+  "native_count": 0,
+  "native_error": -110,
+  "cleanup_error": 0,
+  "off_error": 0,
+  "request_ms": 2683,
+  "disabled_ms": 2685,
+  "enable_bound_ms": 2718,
+  "polls": 4,
+  "new_READY": false,
+  "startup_confirmations": 2,
+  "kernel_fault_counts": {},
+  "final": {
+    "battery": {
+      "soc": 75,
+      "temp_decic": 303,
+      "voltage_uv": 4180000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "3f4cf492bb2f4d8c89e805c6ec499642",
+    "charging_authorized": false,
+    "device_NCM": true,
+    "host_NCM_probe_status": 0
+  },
+  "baseline_restored": true,
+  "charging_authorized": false,
+  "pump_ON": false,
+  "PPS_requested": false,
+  "next_route": "Fedora source port; stop custom ADC diagnostic repairs",
+  "build": {
+    "executed": false,
+    "reused": "ee59e368"
+  },
+  "host_tests": {
+    "executed": false,
+    "reason": "Results only; qualification reused"
+  }
+}
