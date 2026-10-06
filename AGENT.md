@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 PPS-OFF-return candidate OFFLINE qualified; source4d058527,
+readonly/defaultfalse/exclusive pps_return_check, one existing worker/300s/one
+owned PPS call/ADC-only/zeroON, terminal fixed9 proof/release and separate errors.
+263affectedC+10entry PASS, cached build83.583s/W1+sparse13.524s no warnings,
+config/DT equal331/181 paired/108protected+17formal unchanged. Armedbootffb7bc94,
+notes59a97374; rollback331025e/181. Helper03f8d9bf bounds10s healthy-charge
+settling before30s;335 sealed. No device commands/flash/PPS/ON/new buildtree/
+fullrun/Actions; latest physical remains335 and installed331. Proposed336 needs
+separate registration and explicit PPS-OFF scope; no automaticactivation or
+pump/current escalation. FullportNOT_READY. See sm5440-pps-off-returnRESULTS.
+
+
 2026-10-06 Test335 DEVICE_SCOPE_PASS on unchanged331f1/config51/notes03:
 fixed9 switching30.244s/30samples, unplug15.675s, pumpOFF/PPSfalse, no new
 kernel/unit fault, final68%/4.055V/24.9C/-0.615A. Original runnerSTOP early
