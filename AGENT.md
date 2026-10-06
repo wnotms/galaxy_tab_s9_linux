@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test333 STOP at charger System boot49c58e20: SOC80/VBAT4.288V/
+pack27.4C/fixed9budget1.5A. Native -ERANGE(-34)/lease0 agrees entry refusal;
+read pump OFF, fulljournal preserved. No physical proof/30s acceptance/PPS/ON.
+Owner returnedPC. Exact331 restoration registered with separate normal baseline
+endpoint (SOC≤100/VBAT≤4.44V); candidate bring-up <80/<4.3 gates unchanged,
+restoration helper rejects candidate phase. Five affected tests PASS, no build.
+Rollback pending; no repeated Test333 or automatic escalation. See333 restoration.
+
+
 2026-10-06 Test333 charger-attached fixed9 OFF check registered. Reuse unchanged
 48cc5d16/3fe4adf1/notesff706409/config51/DT233a/181 qualification. 43 affected
 host tests PASS (0.263s); no rebuild/full run. Install pauses in TWRP; owner
