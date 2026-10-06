@@ -1,0 +1,185 @@
+..FF..FFF.FFFFFFFF..FFFF.FFF
+======================================================================
+FAIL: test_actual_entry_and_transactional_fixed_return (test_sm5440_fedora.FedoraPortTests.test_actual_entry_and_transactional_fixed_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 227, in test_actual_entry_and_transactional_fixed_return
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_all_entry_i2c_failures_cleanup (test_sm5440_fedora.FedoraPortTests.test_all_entry_i2c_failures_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 333, in test_all_entry_i2c_failures_cleanup
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_each_cleanup_failure_keeps_switching_inhibited (test_sm5440_fedora.FedoraPortTests.test_each_cleanup_failure_keeps_switching_inhibited) (key=6)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 279, in test_each_cleanup_failure_keeps_switching_inhibited
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_each_cleanup_failure_keeps_switching_inhibited (test_sm5440_fedora.FedoraPortTests.test_each_cleanup_failure_keeps_switching_inhibited) (key=7)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 279, in test_each_cleanup_failure_keeps_switching_inhibited
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_each_cleanup_failure_keeps_switching_inhibited (test_sm5440_fedora.FedoraPortTests.test_each_cleanup_failure_keeps_switching_inhibited) (key=8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 279, in test_each_cleanup_failure_keeps_switching_inhibited
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=11, value=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=11, value=128)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=11, value=64)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=11, value=8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=11, value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=12, value=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=4, value=-5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_fault_or_mode_loss_precedes_refresh (test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh) (key=3, value=420)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 295, in test_fault_or_mode_loss_precedes_refresh
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_nonzero_fractional_mA_blocks_fixed_release (test_sm5440_fedora.FedoraPortTests.test_nonzero_fractional_mA_blocks_fixed_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 286, in test_nonzero_fractional_mA_blocks_fixed_release
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_observed_fixed_adc_offset_still_blocks_release (test_sm5440_fedora.FedoraPortTests.test_observed_fixed_adc_offset_still_blocks_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 253, in test_observed_fixed_adc_offset_still_blocks_release
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_pm_and_remove_drain_before_cleanup (test_sm5440_fedora.FedoraPortTests.test_pm_and_remove_drain_before_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 307, in test_pm_and_remove_drain_before_cleanup
+    self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_pps_checks_use_owned_snapshot_both_sides (test_sm5440_fedora.FedoraPortTests.test_pps_checks_use_owned_snapshot_both_sides)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 234, in test_pps_checks_use_owned_snapshot_both_sides
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_refresh_parks_pump_across_pps (test_sm5440_fedora.FedoraPortTests.test_refresh_parks_pump_across_pps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 259, in test_refresh_parks_pump_across_pps
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+======================================================================
+FAIL: test_repeated_first_poll_fault_reaches_quiet_backoff (test_sm5440_fedora.FedoraPortTests.test_repeated_first_poll_fault_reaches_quiet_backoff)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 325, in test_repeated_first_poll_fault_reaches_quiet_backoff
+    self.assertEqual(self.v(0), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_unproven_off_preserves_watchdog_and_vetoes_suspend (test_sm5440_fedora.FedoraPortTests.test_unproven_off_preserves_watchdog_and_vetoes_suspend)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_fedora.py", line 316, in test_unproven_off_preserves_watchdog_and_vetoes_suspend
+    self.assertEqual(self.lib.start(), 0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: -11 != 0
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.395s
+
+FAILED (failures=20)

@@ -71,6 +71,7 @@ static u64 clock_ms, owned_lease;
 static int calls, fail_at, pps_calls, fixed_calls, releases, pump_ons, unsafe_pps;
 static int request_error, fixed_error, off_error, release_error, pack_error;
 static int detach_wait, scheduled, canceled;
+static int fixed_snapshot_calls, owned_snapshot_calls, fail_owned_at, mutate_pack, fixed_adc_offset;
 static unsigned long scheduled_delay;
 static void log_stub(struct device *d,const char *fmt,...) {(void)d;(void)fmt;}
 #define dev_info log_stub
@@ -103,15 +104,24 @@ static u64 ktime_get_boottime(void) {return clock_ms*1000000;}
 #define ktime_to_ms(n) ((n)/1000000)
 static int schedule_delayed_work(struct delayed_work *w,unsigned long ms) {(void)w;scheduled_delay=ms;scheduled++;return 0;}
 static void cancel_delayed_work_sync(struct delayed_work *w) {(void)w;canceled++;}
-int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out) {*out=source;return 0;}
+int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out) {
+ fixed_snapshot_calls++;
+ /* Actual public API is fixed-only, not a universal snapshot mock. */
+ if(source.pps_contract)return -EAGAIN;
+ *out=source;return 0;
+}
 int sm5714_pd_read_owned_snapshot(u64 instance,u64 generation,u64 lease,struct sm5714_pd_snapshot *out) {
+ owned_snapshot_calls++;
+ if(owned_snapshot_calls==fail_owned_at)return -EAGAIN;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.pps_contract)return -ESTALE;
  *out=source;return 0;
 }
 int sm5714_battery_read_pack(u64 lease,struct sm5714_pack_snapshot *out) {
  if(pack_error)return pack_error;
  if(lease&&lease!=owned_lease)return -ESTALE;
- *out=pack;out->typec_mv=source.budget_mv;out->typec_ma=source.budget_ma;return 0;
+ *out=pack;out->typec_mv=source.budget_mv;out->typec_ma=source.budget_ma;
+ if(mutate_pack && source.pps_contract){source.source_generation++;mutate_pack=0;}
+ return 0;
 }
 int sm5714_battery_switching_acquire(u64 *lease) {owned_lease=7;*lease=7;return 0;}
 int sm5714_pd_request_pps(u64 instance,u64 generation,u64 lease,unsigned int mv,unsigned int ma,struct sm5714_pd_snapshot *out) {
@@ -119,15 +129,15 @@ int sm5714_pd_request_pps(u64 instance,u64 generation,u64 lease,unsigned int mv,
  if(regs[SM5440_REG_CNTL5]&12)unsafe_pps++;
  if(request_error)return request_error;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.online)return -ESTALE;
- source.pps_contract=true;source.budget_mv=mv;source.budget_ma=ma;source.budget_generation++;
+ source.pps_contract=true;source.online=2;source.budget_mv=mv;source.budget_ma=ma;source.budget_generation++;
  set_vbus(mv);*out=source;return 0;
 }
 int sm5714_pd_restore_fixed(u64 instance,u64 generation,u64 lease,struct sm5714_pd_snapshot *out) {
  fixed_calls++;
  if(fixed_error)return fixed_error;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.online)return -ESTALE;
- source.pps_contract=false;source.budget_mv=9000;source.budget_ma=1500;source.budget_generation++;
- set_vbus(9000);*out=source;return 0;
+ source.pps_contract=false;source.online=1;source.budget_mv=9000;source.budget_ma=1500;source.budget_generation++;
+ set_vbus(9000+fixed_adc_offset);*out=source;return 0;
 }
 int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct sm5714_fixed_proof *proof) {
  if(release_error)return release_error;
@@ -138,7 +148,7 @@ int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct s
 '''
         names = ['sm5440_update_bits', 'sm5440_read_adc_pair', 'sm5440_adc_vbus_mv',
                  'sm5440_adc_ibus_ma', 'sm5440_adc_vbat_mv', 'sm5440_adc_die_temp',
-                 'sm5440_direct_enabled', 'sm5440_read_pack', 'sm5440_pps_retry',
+                 'sm5440_direct_enabled', 'sm5440_read_source', 'sm5440_read_pack', 'sm5440_pps_retry',
                  'sm5440_pps_target_mv', 'sm5440_set_ibus_limit', 'sm5440_negotiate_pps',
                  'sm5440_refresh_pps', 'sm5440_set_freq', 'sm5440_select_freq',
                  'sm5440_pump_off', 'sm5440_pump_on', 'sm5440_wait_vbus_settled',
@@ -159,6 +169,7 @@ void reset(void) {
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
  clock_ms=1000;owned_lease=0;direct_charge=true;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
+ fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
  request_error=fixed_error=off_error=release_error=pack_error=detach_wait=scheduled=canceled=0;
 }
 int eligible(void) {return sm5440_eligible(&sm);}
@@ -175,7 +186,8 @@ void input(int key,int value) {
  case 8:release_error=value;break;case 9:fail_at=value;break;case 10:detach_wait=value;break;
  case 11:regs[SM5440_REG_INT3]=value;break;case 12:regs[SM5440_REG_CNTL5]=value;break;
  case 13:sm.pps_ticks=value;break;case 14:raw13(SM5440_REG_ADC_IBUS1,value);break;
- case 15:pack.thermal_normal=value;break;}
+ case 15:pack.thermal_normal=value;break;case 16:fail_owned_at=value;break;
+ case 17:mutate_pack=value;break;case 18:fixed_adc_offset=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -184,6 +196,7 @@ int value(int key) {
  case 8:return calls;case 9:return pump_ons;case 10:return regs[SM5440_REG_IBUSCNTL];
  case 11:return scheduled;case 12:return sm.last_cleanup_error;case 13:return sm.target_mv;
  case 14:return sm.target_ma;case 15:return canceled;
+ case 18:return fixed_snapshot_calls;case 19:return owned_snapshot_calls;
  case 16:return scheduled_delay;case 17:return regs[SM5440_REG_CNTL1]&128;
  default:return -1;}
 }
@@ -216,6 +229,31 @@ int value(int key) {
         self.assertTrue(8200 <= self.v(13) <= 10500)
         self.assertEqual(self.lib.cleanup(), 0)
         self.assertEqual([self.v(n) for n in (0, 1, 2, 3, 6, 7)], [0, 0, 0, 1, 0, 0])
+
+    def test_pps_checks_use_owned_snapshot_both_sides(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.assertEqual(self.v(19), 2)
+        before = self.v(18)
+        self.assertEqual(self.lib.refresh(), 0)
+        self.assertEqual(self.v(18), before)  # PPS refresh must never call fixed-only API.
+        self.assertGreaterEqual(self.v(19), 4)
+
+    def test_first_or_second_owned_read_failure_never_starts_pump(self):
+        for n in [1, 2]:
+            self.lib.reset(); self.lib.input(16, n)
+            self.assertEqual(self.lib.start(), -11)
+            self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 9)], [0, 0, 0, 1, 0])
+
+    def test_generation_changes_during_pack_read_abort_handoff(self):
+        self.lib.input(17, 1)
+        self.assertNotEqual(self.lib.start(), 0)
+        self.assertEqual([self.v(k) for k in (0, 1, 3, 7, 9)], [0, 0, 0, 1, 0])
+
+    def test_observed_fixed_adc_offset_still_blocks_release(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.lib.input(18, 272)  # Test330 continuous ADC9.272V with fixed9V protocol.
+        self.assertEqual(self.lib.cleanup(), -110)
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7)], [0, 0, 7, 0, 1])
 
     def test_refresh_parks_pump_across_pps(self):
         self.assertEqual(self.lib.start(), 0)

@@ -206,16 +206,27 @@ static bool sm5440_direct_enabled(struct sm5440_direct *sm)
         !READ_ONCE(sm->suspending) && !sm->fault_latched;
 }
 
+/* Public snapshots admit fixed contracts only. Once PPS owns the handoff,
+ * both sides of the pack coherence check must use the same leased PPS API.
+ * It also rejects detach/replacement and a revoked lease before pump enable.
+ */
+static int sm5440_read_source(struct sm5440_direct *sm,
+                             struct sm5714_pd_snapshot *source)
+{
+	if (sm->source.pps_contract)
+		return sm5714_pd_read_owned_snapshot(sm->source.instance,
+				sm->source.source_generation, sm->lease, source);
+
+	return sm5714_pd_read_snapshot(source);
+}
+
 static int sm5440_read_pack(struct sm5440_direct *sm,
                             struct sm5714_pack_snapshot *pack)
 {
 	struct sm5714_pd_snapshot source, after;
 	int ret;
 
-	ret = sm->source.pps_contract ?
-       sm5714_pd_read_owned_snapshot(sm->source.instance,
-          sm->source.source_generation, sm->lease, &source) :
-       sm5714_pd_read_snapshot(&source);
+	ret = sm5440_read_source(sm, &source);
 	if (ret)
 		return ret;
 	if (!source.online || !source.charge_requested ||
@@ -233,7 +244,7 @@ static int sm5440_read_pack(struct sm5440_direct *sm,
 					pack->voltage_uv < 3500000 || pack->voltage_uv >= 4400000 ||
 					pack->pack_decic < 150 || pack->pack_decic >= 420)
 		return -ERANGE;
-	ret = sm5714_pd_read_snapshot(&after);
+	ret = sm5440_read_source(sm, &after);
 	if (ret)
 		return ret;
 	if (source.instance != after.instance ||
