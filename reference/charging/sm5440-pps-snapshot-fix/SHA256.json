@@ -1,0 +1,77 @@
+{
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/Image.gz",
+      "bytes": 22136063,
+      "sha256": "efb2a1aaf68962270816d99ed54ebc94013f08ea82a95bf9b8c465618595d6cb"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-pc-ordinary/boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-pc-ordinary/modules-x710.tar.gz",
+      "bytes": 47319293,
+      "sha256": "445d32e06c7f609d6e0b96de4b0f902e98128bbef4189a9356883a135b42428f"
+    }
+  },
+  "records": {
+    "PACKAGE.json": "9a3a7503e3f2ded3fe2a50cdab0085fd21d457543c95646508635d20cbd856ab",
+    "PLAN.md": "a4e4244eb18a45b8132514b94baed141fa28604fb1a9fb9deda99d1a7d8c2019",
+    "RESULTS.md": "2e4de89eb83946c5c659d52c39759f5dd0dbda18d35214143a0830f9080a0ef7",
+    "before-fix-tests.txt": "03e8d6a157e33be0c5b7cd0a92ab21992b7a4d3b927337022c42c1c9df927457",
+    "build.json": "84145a7a4dac7690b423bf180dda4da37905417c281506e6666006af6c0722ca",
+    "build.log.gz": "8d3c163f0311005469260331c7496ba76ee2c42c343284936777738824399212",
+    "build.py": "22242038806a9a7fd67a5a5fba3675ee8d871c11c11dabe8e0d5c8c5dd2a19c9",
+    "build_package.py": "fbe60ab4f766dbf630a37c802bc82632f158aa972afd40fb6771a089566ce8e0",
+    "candidate-modules.sha256": "ae20fbf4907770e2a831fbf321e23a1a5cd16a2e5d8cc9be391e21fd80643732",
+    "config-from323.diff": "611393760c206637fa4efab3c0515570efd79ad1201d5f3e00b3d8cd59154a07",
+    "config.diff": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-tests.json": "13651548f8a070c1c53f923d07beb91d8b3b69c51036c95a547389a670177d06",
+    "inputs-before.json": "4ff76787591059d3176b1ede30695fe8a68d08d546817cd60efc279bafc5b594",
+    "package-build.txt": "4f1ab88fb424a4a3c65510fdfd6ea690e97d7b4fd5a52f3142a3c55c03b58ebc",
+    "qualification.txt": "f866e360dc4559a11682ee20fdd3b6e3dd057af55d70ddbeb1f31d1a5a8df62d",
+    "qualify.py": "a92a0bb0c7e1a68af3faadca1f09fab22edad1bb786534b8b095f23bca23893e",
+    "rollback-modules.sha256": "882e47cbf7c8d937d2f99dcb7e2bb70ae54cc46481632d75a4b3050c098a967f",
+    "run_tests.py": "757accab8efc97e4c49357872c6462ed2d0d2c507a6dc007261575a3938fcab3",
+    "source-inputs.json": "1817eb04bd3b1c9e5d56fac2039a46df255a81b145f7609ad482467e6c20e74b",
+    "static-check.py": "ee5e93bd60071fd4a966b8e0a3b4d0a185250f14736f1eb88b31fb3f7c0f17bc",
+    "static-standard.log.gz": "f19105b235e41d8dde0577ff8f99d8be3d9e183b49725893a06c2db14fbbf1fd",
+    "static.json": "b6d22c5af64ecdec9e1286eabd07d2f52a35c7a6ba122c6f03b04e005db4fa06",
+    "static.log.gz": "16a0eba90d8804672359514fa6470e1ed7fc9b1229e5470b9dd3ce27452a0030",
+    "summary.json": "713ed04c03e3e47ef028cbd3727d3ddc63c5ca9fd708f50baad0a56523659228",
+    "tests.txt": "a95a13d572f15e8ce18efdcee116f336248cec5e97412b51406428591630c4c6",
+    "validation/boot-header.txt": "7f86587d5a7d1dc56adba1161819a052d1134def83001fddee8077c69ebf9847"
+  }
+}

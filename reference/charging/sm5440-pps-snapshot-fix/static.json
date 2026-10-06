@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "drivers/power/supply/sm5440-fedora.o"
+  ],
+  "returncode": 0,
+  "standard_flags_returncode": 0,
+  "seconds": 13.115269085999898,
+  "warnings": [],
+  "qualified_object_sha256": "8751c92222cd217a9b384ac6fbaa4a2acfe90f94f5ebe8d423501d37e497dbba",
+  "qualified_object_restored": true,
+  "formal_artifacts_relinked": false
+}

@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 offline PPS adapter correction: kernel1f1d8568/current observer11e2ce1d.
+Both pack coherence reads use leased PPS API after handoff; fixed-only mock now
+reproduces former-EAGAIN. Newcurrentguard uses ONLINE mode/capability distinction,
+requires actual switching recovery; sealed328/330 unchanged. 187affectedPASS,
+83.454s ARM64 build/13.115s W1+sparse no warnings, config+DT identical testedFedora,
+181paired/runtimechecked; defaultOFF package in out/*-fedora-snapshot-fix.
+Physical±100mV fixedreturn timeout independently unresolved; +272mV test still
+OFF/leaseheld/timeout. No ADC/current/safety/TCPC/USB/rootfs changes or device
+commands/replay. Lastaccepteddevice323 per330restore, no freshliveclaim.
+FullportNOT_READY; next independently justified/registered return-proof scope,
+not pump escalation. See reference/charging/sm5440-pps-snapshot-fix/RESULTS.md.
+
+
 2026-10-06 Test330 STOP firstrealPPSfailure: TCPM ONLINE2/8.72V/1.8A observed2
 samples, directstart-11/physicalfixedreturn-110, switchinginhibited. Guardian
 firstfault/unbind and cleanupfailure preserved;169samples/noON/no30s pumpwindow,

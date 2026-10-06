@@ -1,0 +1,909 @@
+{
+  "verdict": "OFFLINE_PPS_ADAPTER_FIX_PASS",
+  "full_port_verdict": "NOT_READY",
+  "profile": "sm5440-fedora",
+  "base_revision": "00cecaa4e47cb47ee90ae3e915752f13901015e6",
+  "profile_gate": {
+    "valid": true,
+    "errors": [],
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "required_y_count": 85,
+    "dcc_absent": true,
+    "config_delta": {
+      "CONFIG_CHARGER_SM5440_DIRECT": [
+        "absent",
+        "n"
+      ],
+      "CONFIG_CHARGER_SM5440_FEDORA": [
+        "absent",
+        "y"
+      ]
+    },
+    "unexpected_delta": {},
+    "missing_expected_delta": {},
+    "profile": "sm5440-fedora",
+    "pump_activation_available": true,
+    "direct_charge_default": false,
+    "requires_registered_boot_opt_in": true
+  },
+  "config_delta_from_accepted323": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "y",
+      "n"
+    ],
+    "CONFIG_CHARGER_SM5440_FEDORA": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_RAW_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_TIMING_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "absent"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_delta": [],
+  "compiled_sources": {
+    "power/supply/sm5714-battery.c": "64a505c9adec4d0172dc46e80056cd64ff7d99a344c43be975ae1678c7bfc127",
+    "power/supply/sm5440-fedora.c": "82db60acfe9a486426a2480b89e0dab4c079d04c26bb746dc54b8648bcd6e2e2",
+    "power/supply/sm5440-hw.h": "aa767178806b52a320780a942356d449adee57ef6f999d72f71f3259eb27d05b",
+    "power/supply/sm5714-stage2.h": "15dabde641ffae6c945502b37d68fc9a3125347cfcf91364b59d1ac3b65181c0",
+    "usb/typec/tcpm/sm5714_usbpd.c": "b755bc431653cd80538ad0d0943711170c3eaeb2ec200c6641299e84b1a59ed6",
+    "usb/typec/tcpm/sm5714-stage2.h": "15dabde641ffae6c945502b37d68fc9a3125347cfcf91364b59d1ac3b65181c0",
+    "usb/typec/tcpm/sm5714-pd-policy.h": "96de842e78b2dce3625bcc8297ecfb8b1b19c1669795c803fe1cfbdba861c40d"
+  },
+  "protected_source_count": 841,
+  "preserved_formal_artifact_count": 14,
+  "module_file_count": 181,
+  "module_runtime_unchanged": true,
+  "metadata_identity_change_only": true,
+  "module_changes": {
+    "kernel/drivers/block/zram/zram.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btbcm.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btqca.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/btsdio.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/bluetooth/hci_uart.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/camcc-x1p42100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/gcc-x1e80100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/clk/qcom/videocc-x1p42100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/gpio/gpio-shared-proxy.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/a8293.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/af9033.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ascot2e.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/atbm8830.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_common.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_decoder.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/au8522_dig.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/bcm3510.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22700.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx22702.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24110.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24113.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24116.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24117.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24120.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cx24123.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2099.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2820r.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2841er.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/cxd2880/cxd2880.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0070.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib0090.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mb.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib3000mc.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000m.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib7000p.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib8000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dib9000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dibx000_common.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drx39xyj/drx39xyj.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxd.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/drxk.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ds3000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/dvb-pll.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ec100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/helene.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/horus3a.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6405.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6421.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/isl6423.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/itd1000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ix2505v.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/l64781.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lg2160.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt3305.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgdt330x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gl5.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lgs8gxx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh25.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbh29.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp21.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/lnbp22.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/m88rs2000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a16.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mb86a20s.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88443x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88472.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mn88473.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt312.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mt352.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl5xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/mxl692.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt200x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/nxt6000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51132.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/or51211.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1409.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1411.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1420.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s5h1432.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/s921.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/si2165.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/si21xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp2.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/sp887x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb0899.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stb6100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0288.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0297.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0299.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0367.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0900.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv090x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv0910.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6110x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/stv6111.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tc90522.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10021.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10023.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10048.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda1004x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10071.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda10086.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda18271c2dd.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda665x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8083.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda8261.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tda826x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ts2020.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/tua6100.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1820.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/ves1x93.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zd1301_demod.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10036.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10039.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/dvb-frontends/zl10353.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/spi/cxd2880-spi.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/e4000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0011.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0012.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc0013.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/fc2580.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/it913x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/m88rs6000t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/max2165.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mc44s803.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/msi001.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2060.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2063.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt20xx.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2131.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mt2266.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl301rf.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl5005s.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/mxl5007t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qm1d1b0004.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qm1d1c0042.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/qt1010.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/r820t.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/si2157.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18212.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18218.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18250.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda18271.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda827x.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda8290.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tda9887.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tea5761.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tea5767.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tua9001.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tuner-simple.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/tuner-types.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc2028.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc4000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/media/tuners/xc5000.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/net/wireless/ath/ath11k/ath11k_pci.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-pwrseq.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/pci/pwrctrl/pci-pwrctrl-tc9563.ko": [
+      ".BTF"
+    ],
+    "kernel/drivers/power/sequencing/pwrseq-qcom-wcn.ko": [
+      ".BTF"
+    ],
+    "kernel/mm/zsmalloc.ko": [
+      ".BTF"
+    ],
+    "kernel/net/bluetooth/bluetooth.ko": [
+      ".BTF"
+    ],
+    "kernel/net/mac80211/mac80211.ko": [
+      ".BTF"
+    ],
+    "kernel/net/qrtr/qrtr-mhi.ko": [
+      ".BTF"
+    ],
+    "kernel/net/wireless/cfg80211.ko": [
+      ".BTF"
+    ],
+    "modules.builtin": {
+      "old_sha256": "b86cc446f23ff688cb172e4894a19ed1e576e37ea33ffd94fe02bb495417fa7d",
+      "new_sha256": "ee7d9fd81a7a6e9d0ab9d78d6b93486899b0c74eb8687c52f40b4ed3df7a9f24",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.alias.bin": {
+      "old_sha256": "d45ec131c89f6013a56557a804a3bd8b90036ef819728bbdde10f3bc46110c2b",
+      "new_sha256": "4c27b74e5f7adf929f38fb39de083d9c3084f7824eb97e41f5d687ec9ddeaab8",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.bin": {
+      "old_sha256": "6fcfc15b860d423424561c8bf719ae91b19f3c9920d5b7e061a138d72e0cb511",
+      "new_sha256": "e9324f565103f05fd81f6c98aba4f06b4e8e79c3db3189b62eba8ae61ce525fd",
+      "reason": "replaced built-in driver identity/parameters"
+    },
+    "modules.builtin.modinfo": {
+      "old_sha256": "fd64fb199a50469f220cd2060f13c256e3931cbf7213c0c668393fdc937443a1",
+      "new_sha256": "4801d20a9d3b0870705a47080685dcc4d98870073fdccad6c6a2638665009c49",
+      "reason": "replaced built-in driver identity/parameters"
+    }
+  },
+  "native_symbols_absent": [
+    "x710_charge_controller_request",
+    "x710_charge_controller_cancel",
+    "x710_charge_request_observation",
+    "sm5440_native_control",
+    "sm5440_conversion_begin",
+    "sm5440_conversion_advance",
+    "hvc_dcc0_put_chars"
+  ],
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/Image.gz",
+      "bytes": 22136063,
+      "sha256": "efb2a1aaf68962270816d99ed54ebc94013f08ea82a95bf9b8c465618595d6cb"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    }
+  },
+  "device_commands_executed": false,
+  "physical_executed": false,
+  "pump_ON": false,
+  "PPS_requested": false,
+  "direct_charge_default": false,
+  "PPS_cap_ma": 1800,
+  "source_revision": "1f1d856858757c6d9082a4ccacc8de9de9b5cbed",
+  "upstream_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "config_delta_from_test330": {},
+  "DTB_delta_from_test330": [],
+  "unresolved": "Physical fixed9 return ADC proof timeout remains; no gate relaxation",
+  "inherited_qualification_sha256": "e4777d608f60d383e8c71302fad4da027f1047e0c794e142b3fc483be78a1f67",
+  "observer_revision": "11e2ce1dc0f58333c4b2cbdb02883bb1192065b8",
+  "build_preceded_source_commit": true,
+  "kernel_inputs_verified_against_source_commit": true,
+  "affected_tests": {
+    "executed": true,
+    "selected": [
+      "test_sm5440_fedora.FedoraIntegrationTests.test_alternative_profile_selects_only_fedora_driver",
+      "test_sm5440_fedora.FedoraIntegrationTests.test_original_source_archive_and_default_off_probe",
+      "test_sm5440_fedora.FedoraPortTests.test_actual_entry_and_transactional_fixed_return",
+      "test_sm5440_fedora.FedoraPortTests.test_all_entry_i2c_failures_cleanup",
+      "test_sm5440_fedora.FedoraPortTests.test_default_off_has_no_handoff_or_requests",
+      "test_sm5440_fedora.FedoraPortTests.test_detach_during_start_cannot_release_new_connection",
+      "test_sm5440_fedora.FedoraPortTests.test_each_cleanup_failure_keeps_switching_inhibited",
+      "test_sm5440_fedora.FedoraPortTests.test_entry_temperature_soc_voltage_and_invalid_sensor",
+      "test_sm5440_fedora.FedoraPortTests.test_fault_or_mode_loss_precedes_refresh",
+      "test_sm5440_fedora.FedoraPortTests.test_first_or_second_owned_read_failure_never_starts_pump",
+      "test_sm5440_fedora.FedoraPortTests.test_generation_changes_during_pack_read_abort_handoff",
+      "test_sm5440_fedora.FedoraPortTests.test_nonzero_fractional_mA_blocks_fixed_release",
+      "test_sm5440_fedora.FedoraPortTests.test_observed_fixed_adc_offset_still_blocks_release",
+      "test_sm5440_fedora.FedoraPortTests.test_pm_and_remove_drain_before_cleanup",
+      "test_sm5440_fedora.FedoraPortTests.test_pps_checks_use_owned_snapshot_both_sides",
+      "test_sm5440_fedora.FedoraPortTests.test_pps_refusal_restores_and_never_starts",
+      "test_sm5440_fedora.FedoraPortTests.test_refresh_parks_pump_across_pps",
+      "test_sm5440_fedora.FedoraPortTests.test_repeated_first_poll_fault_reaches_quiet_backoff",
+      "test_sm5440_fedora.FedoraPortTests.test_unproven_off_preserves_watchdog_and_vetoes_suspend",
+      "test_x710_pps_guard.FixedReturnTests.test_active_pps_avs_offline_or_unknown_blocked",
+      "test_x710_pps_guard.FixedReturnTests.test_invalid_fixed_voltage_or_current_blocked",
+      "test_x710_pps_guard.FixedReturnTests.test_missing_evidence_blocked",
+      "test_x710_pps_guard.FixedReturnTests.test_pps_capability_at_fixed_online",
+      "test_x710_pps_guard.FixedReturnTests.test_switching_not_released_is_still_failure",
+      "test_x710_pps_guard.FixedReturnTests.test_test330_fixed_protocol_does_not_prove_switching_release",
+      "test_x710_pps_guard.GuardTests.test_adc_disabled",
+      "test_x710_pps_guard.GuardTests.test_bounded_clean_and_cleanup",
+      "test_x710_pps_guard.GuardTests.test_clean",
+      "test_x710_pps_guard.GuardTests.test_cleanup_failure_never_pass",
+      "test_x710_pps_guard.GuardTests.test_continuous_math",
+      "test_x710_pps_guard.GuardTests.test_contract_current",
+      "test_x710_pps_guard.GuardTests.test_current_fraction",
+      "test_x710_pps_guard.GuardTests.test_die",
+      "test_x710_pps_guard.GuardTests.test_fault_messages",
+      "test_x710_pps_guard.GuardTests.test_first_fault_stops_and_cleans",
+      "test_x710_pps_guard.GuardTests.test_first_start_event_after_mode_is_not_second_start",
+      "test_x710_pps_guard.GuardTests.test_fixed_not_pps",
+      "test_x710_pps_guard.GuardTests.test_fixed_online_is_not_pps",
+      "test_x710_pps_guard.GuardTests.test_i2c_failure_cleanup",
+      "test_x710_pps_guard.GuardTests.test_persistent_off_refusal",
+      "test_x710_pps_guard.GuardTests.test_reverse_mode",
+      "test_x710_pps_guard.GuardTests.test_settle_mismatch",
+      "test_x710_pps_guard.GuardTests.test_soc80",
+      "test_x710_pps_guard.GuardTests.test_source_gone",
+      "test_x710_pps_guard.GuardTests.test_temperature",
+      "test_x710_pps_guard.GuardTests.test_unexpected_second_start",
+      "test_x710_pps_guard.GuardTests.test_vbat",
+      "test_x710_pps_guard.GuardTests.test_vbus",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_already_owned_unchanged_pair_requests_a_real_refresh",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_automatic_rdo_current_increase_is_rejected_before_i2c",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_bounded_but_unrequested_voltage_is_rejected",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_bounds_steps_power_and_missing_operating_power_do_not_write",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_callback_cannot_publish_budget_other_than_actual_request",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_callback_generation_race_and_owned_hardware_error_refuse",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_cleanup_error_does_not_replace_first_failure",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_each_property_failure_zero_output_and_clears_failed_owner",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_each_setter_timeout_preserves_first_error_and_no_retry",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_each_transport_transfer_failure_faults_and_keeps_inhibited",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_explicit_fixed_restore_with_transitional_old_voltage_keeps_off",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_inconsistent_properties_attempt_one_fixed_cleanup_preserving_error",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_initial_current_first_then_voltage_and_real_rdo_callbacks",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_lease_loss_before_each_critical_operation_cancels",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_oversized_source_cache_and_avs_reserved_apdo_do_not_write",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_pm_pending_fault_remove_exhaustion_and_bad_inputs_do_not_write",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_pps_permission_closes_after_api_and_unsolicited_refresh_is_refused",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_source_change_and_disappearance_do_not_cleanup_new_source",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_source_forget_invalidates_window",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_stale_restorer_cannot_revoke_newer_owner",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_target_seed_voltage_needs_only_activation_and_current",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_unpublish_drains_blocking_operation_before_resources",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_voltage_first_when_lower_current_intermediate_lacks_operating_power",
+      "test_sm5714_owned_pps.OwnedPpsTests.test_wrong_identity_lease_and_capabilities_do_not_write",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_each_property_failure_never_calls_release",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_exact_physical_age_and_voltage_boundaries",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_fixed_pps_capable_source_releases_once_under_source_lock",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_release_hardware_and_lease_errors_are_not_hidden_or_retried",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_reset_and_budget_change_during_properties_do_not_release",
+      "test_sm5714_fixed_release.FixedReleaseTests.test_wrong_identity_bad_proof_and_pending_source_do_not_release",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_actual_suspend_resume_invalidates_pre_pm_acquisition",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_admission_pm_fault_removal_and_exhausted_epoch",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_budget_and_lease_aba_refused",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_busy_and_missing_provider_do_no_hardware_io",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_every_native_io_and_thermistor_error_zeroes_output",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_exact_owned_lease_accepts_pps_without_request_or_control_write",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_fault_and_post_acquisition_busy_refused",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_invalid_voltage_or_pack_thermistor_refused",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_lifetime_and_core_lock_boundaries_are_actual_source",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_live_presence_attach_ovp_and_watchdog_change_refused",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_native_sram_iio_window_and_signed_discharge_current",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_null_output_does_not_pin_or_read",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_offline_absent_fault_or_cold_pack_is_not_healthy_charging",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_oldest_time_deadline_and_clock_rollback_zero_not_restamped",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_present_property_uses_vendor_status_and_propagates_io_error",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_publish_refuses_wrapped_identity_or_undrained_readers",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_thermal_state_change_invalidates_bundle",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_unpublish_drains_real_pinned_iio_before_free",
+      "test_sm5714_pack_snapshot.PackSnapshotTests.test_wrong_or_unowned_lease_never_reads_sensor",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_active_avs_online_is_never_fixed",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_active_pps_online_is_never_fixed",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_actual_teardown_put_after_drain_before_tcpm",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_all_eight_property_errors_zero_output_and_unpin",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_budget_generation_cannot_wrap",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_callback_budget_change",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_clock_regression",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_duplicate_provider",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_exhausted_evidence",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_fault",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_fixed_on_avs_and_dual_capable_sources",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_fixed_on_pps_capable_source",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_instance_cannot_wrap",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_live_standard_snapshot",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_lockless_property_publication_mismatch",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_mirror_budget_must_match",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_missing_provider",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_missing_source",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_no_registry_wait_on_busy_transport",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_null_output",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_pending_budget",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_provider_requires_supply_reference",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_rebind_uses_unique_instance",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_removal",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_request_guard_still_fixed_only",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_source_generation_cannot_wrap",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_source_withdrawal_during_properties",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_unexpected_pps_not_a_fixed_grant",
+      "test_sm5714_runtime_snapshot.RuntimeSnapshotTests.test_unpublish_drains_read_before_resources",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_active_avs_offline_and_inconsistent_type_are_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_all_property_errors_preserve_first_error_zero_output",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_already_fixed_does_not_write",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_busy_operation_is_refused_and_unpinned",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_completed_setter_without_fixed_or_matching_budget_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_dual_capability_pps_can_only_exit",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_fault_after_setter_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_invalid_tokens_and_no_owner_never_write",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_lease_revoked_before_write_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_no_activation_tuning_release_or_writable_user_interface",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_null_output",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_one_online_fixed_write_and_mirrored_result",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_pending_callback_before_write_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_pending_fault_removal_source_absence_exhaustion_before_write",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_property_change_before_write_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_setter_error_is_not_hidden_or_retried",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_source_change_before_write_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_source_change_or_withdrawal_after_setter_is_refused",
+      "test_sm5714_fixed_restore.FixedRestoreTests.test_unbind_drains_blocking_standard_setter_before_resources",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_5v_default_and_lower_grants_do_not_authorize_higher_input",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_5v_grant_supersedes_sdp_unknown_and_cdp_current_clamps",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_5v_high_grant_preserves_dcp_and_thermal_caps",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_5v_high_grant_still_fails_closed",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_5v_input_encoding_rounds_down_and_never_exceeds_board_cap",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_9v_three_amp_offer_draws_at_most_1500ma",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_contract_current_is_respected",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_pd_program_readback_faults_never_enable_q4",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_same_thermal_limits_and_float",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_tcpm_off_and_suspend_inhibit_async_charge",
+      "test_sm5714_stage2_pd.Stage2ChargeTests.test_zero_and_subminimum_standby_budget_open_q4",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_5v_companion_fault_and_suspend_cannot_keep_high_input",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_first_fault_survives_enable_and_rebind",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_grant_preserved_actual_draw_capped",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_invalid_voltage_latches_off",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_not_ready_supplier_defers_without_pointer_access",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_pending_probe_claim_keeps_retained_high_input_inhibited",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_program_failure_stays_inhibited_after_io_recovers",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_real_5v_companion_grant_and_downgrade",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_suspended_callback_cannot_reenable",
+      "test_sm5714_stage2_pd.Stage2CompanionTests.test_zero_budget_and_explicit_charge_off",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_build_default_gate_does_not_reject_separate_diagnostic_delta",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_dcc_and_other_hardware_changes_fail",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_every_test254_prerequisite_stays_builtin",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_exact_one_symbol_delta",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_forbidden_features_and_missing_transport_fail",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_fragment_and_default_build_gate",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_kbuild_no_core_patch_or_advanced_transport",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_minimum_sink_topology",
+      "test_sm5714_stage2_pd.Stage2ConfigTests.test_stage2_probe_inhibited_before_tcpc_claim",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_cap_mismatch_does_not_exceed_source_operating_current",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_cc_polarity_and_rp_levels",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_each_init_transfer_failure_latches_charge_off",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_failed_level_irq_clear_disables_irq_and_charge",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_fixed_request_voltage_and_current_guard",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_hard_reset_completion_and_error_precedence",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_host_source_vconn_and_vbus_rejected",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_init_sink_only_and_header_bits_preserved",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_local_source_accessory_states_not_accepted",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_only_rd_and_open_allowed",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_rx_sop_delivered_and_cable_frames_ignored",
+      "test_sm5714_stage2_pd.Stage2TransportTests.test_rx_transfer_failures_do_not_deliver_partial_frames"
+    ],
+    "tests": 187,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 6.295624559999851,
+    "coverage": [
+      "test_sm5440_fedora",
+      "test_x710_pps_guard",
+      "test_sm5714_owned_pps",
+      "test_sm5714_fixed_release",
+      "test_sm5714_pack_snapshot",
+      "test_sm5714_runtime_snapshot",
+      "test_sm5714_fixed_restore",
+      "test_sm5714_stage2_pd"
+    ],
+    "full_suite_executed": false,
+    "reason": "Actual adapter, its existing lease/epoch/fixed-return APIs, profile gate and new observer; routing unchanged",
+    "device_commands_executed": false
+  },
+  "static_checks": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "drivers/power/supply/sm5440-fedora.o"
+    ],
+    "returncode": 0,
+    "standard_flags_returncode": 0,
+    "seconds": 13.115269085999898,
+    "warnings": [],
+    "qualified_object_sha256": "8751c92222cd217a9b384ac6fbaa4a2acfe90f94f5ebe8d423501d37e497dbba",
+    "qualified_object_restored": true,
+    "formal_artifacts_relinked": false
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 83.45447219299967,
+    "started_utc": "2026-10-06T10:15:34.024117+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-fedora",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-fedora-snapshot-fix"
+    },
+    "device_operations": []
+  },
+  "device_state_basis": "Last accepted Test330 emergency restoration to Test323; no fresh device observation in this offline correction",
+  "build_context_revision": "00cecaa4e47cb47ee90ae3e915752f13901015e6",
+  "inherited_scripts": {
+    "reference/charging/sm5440-fedora-port/build_package.py": "54e8e5a595808042aa3f50dbc9c0f01a56e0cf9177714e50cfb4802cc38556df",
+    "reference/charging/sm5440-fedora-port/qualify.py": "e4777d608f60d383e8c71302fad4da027f1047e0c794e142b3fc483be78a1f67",
+    "reference/charging/sm5440-fedora-port/static-check.py": "6099138647e3727f5c9ff27e6f3a1a4b6cfec25f9bb7bce6452c0fa6918705bf",
+    "reference/charging/sm5440-fedora-port/build.py": "11f486a84f24e51c4e91b00d86bc24586ae2ca86b18d40c9a023712770ade7dd"
+  },
+  "results_only_validation": {
+    "executed": false,
+    "reason": "No kernel/observer/test changes after qualified build and affected run; review source hashes and record integrity only"
+  }
+}
