@@ -1,0 +1,85 @@
+{
+  "test": "Test335",
+  "device_verdict": "PASS registered fixed9 switching and unplug scope; missing device evidence supplemented without new attach",
+  "original_runner_verdict": "STOP early entry: negative current at first9V sample; unchanged raw preserved",
+  "registered_source": "unchanged accepted331",
+  "boot_id": "f1e9a45a55054b88ab05b969775657e9",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "phases": {
+    "charge": {
+      "verdict": "PASS",
+      "observation_seconds": 30.24437629000022,
+      "observed_samples": 30,
+      "max_sample_gap_seconds": 1.0599696350000158,
+      "soc_range": [
+        67,
+        68
+      ],
+      "vbat_range_uv": [
+        4124000,
+        4140000
+      ],
+      "current_range_ua": [
+        1636000,
+        2068000
+      ],
+      "temp_range_decic": [
+        251,
+        251
+      ],
+      "endpoint_battery_power_w": 8.437382,
+      "pump_register_values": [
+        1
+      ],
+      "kernel_rows_final": 1132,
+      "new_kernel_errors": 0,
+      "severe_kernel_faults": 0,
+      "failed_units": "",
+      "boot_id": "f1e9a45a55054b88ab05b969775657e9"
+    },
+    "discharge": {
+      "verdict": "PASS",
+      "observation_seconds": 15.675120932000027,
+      "observed_samples": 16,
+      "max_sample_gap_seconds": 1.0495273960000304,
+      "soc_range": [
+        68,
+        68
+      ],
+      "vbat_range_uv": [
+        4050000,
+        4066000
+      ],
+      "current_range_ua": [
+        -828000,
+        -540000
+      ],
+      "temp_range_decic": [
+        249,
+        249
+      ],
+      "endpoint_battery_power_w": -2.493825,
+      "pump_register_values": [
+        1
+      ],
+      "kernel_rows_final": 1133,
+      "new_kernel_errors": 0,
+      "severe_kernel_faults": 0,
+      "failed_units": "",
+      "boot_id": "f1e9a45a55054b88ab05b969775657e9"
+    }
+  },
+  "PPS": false,
+  "pump_ON": false,
+  "flash": false,
+  "reboot": false,
+  "source_policy_change": false,
+  "host_tests": 53,
+  "kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "rollback_required": false,
+  "limitation": "Not a native one-shot replay, PPS-to-fixed transition, independent VBUS measurement, pump/high-power acceptance or retroactive Test334 PASS",
+  "next": "Correct future host admission to wait for healthy ordinary charging with a bounded settling stage; no native OFF proof replay or automatic PPS/current progression",
+  "final_soc": 68
+}

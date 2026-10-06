@@ -1,0 +1,26 @@
+{
+  "window": "Test326\u2013Test335",
+  "expired_test": 325,
+  "removed": [
+    {
+      "path": "out/kernel-x710-oneshot-fixed9/Image.gz",
+      "expected_sha256": "1b2586bb60677ae712d8cc7af65ad14466af13fd8938faa5de9479419fc00e91",
+      "current_package_consumers": [],
+      "bytes": 22142312,
+      "sha256": "1b2586bb60677ae712d8cc7af65ad14466af13fd8938faa5de9479419fc00e91",
+      "deleted": true
+    },
+    {
+      "path": "out/boot-bundle-x710-oneshot-fixed9/boot.img",
+      "expected_sha256": "58d6967c21e2233a939ae2a66ab87db41afff80d5a7af52d896b57fde14438b4",
+      "current_package_consumers": [],
+      "bytes": 100663296,
+      "sha256": "58d6967c21e2233a939ae2a66ab87db41afff80d5a7af52d896b57fde14438b4",
+      "deleted": true
+    }
+  ],
+  "freed_bytes": 122805608,
+  "windows_test325_stage_exists": false,
+  "kept": "current331, accepted323 secondary, recent334 artifacts; old325 source/config/DT/module archives/journals/hash records retained",
+  "device_operation": false
+}

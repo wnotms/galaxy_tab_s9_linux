@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test335 DEVICE_SCOPE_PASS on unchanged331f1/config51/notes03:
+fixed9 switching30.244s/30samples, unplug15.675s, pumpOFF/PPSfalse, no new
+kernel/unit fault, final68%/4.055V/24.9C/-0.615A. Original runnerSTOP early
+negativeFG current at first9V retained; published supplement collected missing
+first30s without new attach/flash/reboot, not retroactive clean. 53host reused,
+no build/fullrun/Actions/driver change. Native334proof not replayed. Futurehost
+admission needs bounded healthy-charge settling; no automaticPPS/current advance.
+FullportNOT_READY. Expired325 Image/boot122.8MB removed exacthash/no current
+consumer;331/323/334 retained. See335RESULTS/summary and cleanup record.
+
+
 2026-10-06 Test335 REGISTERED: same accepted331f1 boot/config51/notes03;
 read-only fixed9 switching30s then unplug15s, new bounded enrolled WiFi helper.
 No flash/reboot/kernel/rootfs/native-check/PPS/ON/current change; Test334 native
