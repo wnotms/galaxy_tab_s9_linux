@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 owner continues Test334 after preparation9a135c1b. Fresh append-only
+PC preflight same3ae598ff,67%4.097V30.5C, allfive/181/OFF/ADB/deviceNCM/strict
+WiFi238/WindowsCode0/fresh334slots. Execution record pushed before deployment;
+reuse48cc5d16 build/55host qualification, no kernel/config/power changes. Install
+once then pauseTWRP; owner C2-before-System boot, fixed9 OFF proof+30s and exact331
+restore mandatory. No PPS/pumpON/current progression. Not physically accepted.
+
+
 2026-10-06 Test334 PREPARED ONLY, no recovery/reboot/partition/module write.
 Owner asks prepare next test. Fresh PC preflight on accepted331 same3ae598ff:
 66%4.079V29.0C/+1.050A, exactallfive/181/OFF/ADB/WindowsCode0/deviceNCM/strict
