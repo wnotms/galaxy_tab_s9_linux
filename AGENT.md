@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test334，窗口为 **Test325–Test334**；没有生成镜像的轮次仍占一轮。
+  编号为 Test335，窗口为 **Test326–Test335**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,14 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test335 REGISTERED: same accepted331f1 boot/config51/notes03;
+read-only fixed9 switching30s then unplug15s, new bounded enrolled WiFi helper.
+No flash/reboot/kernel/rootfs/native-check/PPS/ON/current change; Test334 native
+proof retained and original transportSTOP sealed. 53 affected tests PASS; reuse
+unchanged build/allfive/181 qualification, no fullrun/Actions. Physical not yet
+executed; next arm and owner C2 action only. FullportNOT_READY. See335README.
+
 
 2026-10-06 host discovery cd667ae7 read-only livePASS: previousIP19→current163
 matched32.154s/drained32.156s, strict same331f1e9a45a/config51/notes03/machine/
