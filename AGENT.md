@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test329，窗口为 **Test320–Test329**；没有生成镜像的轮次仍占一轮。
+  编号为 Test330，窗口为 **Test321–Test330**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,15 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test330 new independent firstPPS1.8A/30s registration after328host
+separatorbug. Only hostidentity compares exactordered tokens afterone opt-in;
+allflags/order/duplicates/confignotes/safety preserved. Exact328guard/payload/
+181/source reused, nobuild/driverchange. New330 namespace/hardlinkedstage,
+registerpush before oneinstall; PCbootOFF/armedWiFi beforeC1. PASS327defaultOFF
+restore, firstrealPPSfault exact323+saved327original181. Current222efdcc327OFF,
+52%29.4C/WiFi150/nativeADB/no43. FullportNOT_READY; physicalawaitregistration.
+
 
 2026-10-06 Test328 STOP_HOST_CMDLINE_WHITESPACE beforePPS: boot-onlyopt-in
 4d64e996 exactconfig/notes/orderedtokens exceptflag, bytecomparison rejected
