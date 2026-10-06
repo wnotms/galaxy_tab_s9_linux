@@ -1,0 +1,44 @@
+{
+  "latest_test": 331,
+  "retained_window": [
+    322,
+    331
+  ],
+  "retired_test": 321,
+  "scope": "Expired Test321 candidate Image.gz/boot copies and unused Windows rollback duplicate; same-hash formal rollback still referenced in retained322/323 records; no module/DT/config/evidence deletion",
+  "files": [
+    {
+      "path": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-321-continuous-raw/boot.img",
+      "bytes": 100663296,
+      "sha256": "ffa5e12e37192adb6d987fab6c986f2676cc46f182fe8cd3b691795e3f44beb6",
+      "kind": "boot.img"
+    },
+    {
+      "path": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-continuous-raw/Image.gz",
+      "bytes": 22139635,
+      "sha256": "7a06d25db27cb22b2cb061beeb0f0e0fcb2af4eee66ad12adf9937fb527730b9",
+      "kind": "Image.gz"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test321/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "ffa5e12e37192adb6d987fab6c986f2676cc46f182fe8cd3b691795e3f44beb6",
+      "kind": "boot.img"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test321/rollback-accepted311-boot.img",
+      "bytes": 100663296,
+      "sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+      "kind": "expired Test321 Windows rollback duplicate",
+      "retained_formal_path": "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-x710-308-passive/boot.img"
+    }
+  ],
+  "deleted_verified": true,
+  "retired_files": 4,
+  "logical_bytes": 324129523,
+  "device_operations": [],
+  "validation": {
+    "executed": false,
+    "reason": "Exact content-hash retirement and retained-source verification only; no kernel/runner change"
+  }
+}
