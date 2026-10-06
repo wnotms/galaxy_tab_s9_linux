@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test333，窗口为 **Test324–Test333**；没有生成镜像的轮次仍占一轮。
+  编号为 Test334，窗口为 **Test325–Test334**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test334 PREPARED ONLY, no recovery/reboot/partition/module write.
+Owner asks prepare next test. Fresh PC preflight on accepted331 same3ae598ff:
+66%4.079V29.0C/+1.050A, exactallfive/181/OFF/ADB/WindowsCode0/deviceNCM/strict
+WiFi238, fresh334slots. Reuse48cc5d16/3fe4adf1/config51/notesff/DT233a/181;
+55affected hostPASS0.275s/no kernel build/fullrun. Added pre-recovery SOC≤75
+margin; native/physical<80/<4.3V/20–<38C/300s/30s/OFF gates unchanged. Appended
+preflight-refresh namespace/hash pointer preserves preparation evidence and
+retains600s freshness; obtain fresh preflight before later execution instruction.
+Primaryrollback331, explicitly assigned323 secondary; no PPS/current progression.
+Ready for new charger-first OFF-only scope, not full port READY. See334README/
+preparation-summary. No physical Test334 outcome yet; Test333STOP sealed.
+
 
 2026-10-06 Test333 completed STOPPED entry limit, exact331 restored. Candidate
 unique49c58e20 onC2: SOC80/4.288V27.4C/fixed9budget1.5A; native10.470670s

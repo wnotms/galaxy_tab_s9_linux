@@ -1,0 +1,83 @@
+{
+  "test": "Test334",
+  "source_revision": "48cc5d1624357d115f265be93f6985b4fce6ead5",
+  "kernel_qualification": "same-model Fedora SM5440/PPS source port; default direct charging off",
+  "write_partitions": [
+    "boot"
+  ],
+  "modules": 181,
+  "baseline_partitions": {
+    "boot": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "rollback_baseline": "Test331 accepted default-OFF",
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora-fixed-check/Image.gz",
+      "bytes": 22136596,
+      "sha256": "f81d73013a81ea5b9eadd3d3370299909129e7fcfc673b43990cc275e55bfc0a"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora-fixed-check/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora-fixed-check/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora-fixed-check/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "ff706409f519e5592f5f42579cc8354a6861d86433a95c9bea0f14e9f4771c3f"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-fixed-check/modules-x710.tar.gz",
+      "bytes": 47319243,
+      "sha256": "0283d99ad7a8004555305fb085cb42ba67e73a358fbcfa67b2579a129b9d3e80"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora-fixed-check/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-fixed-return-check-on/boot.img",
+      "sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+      "bytes": 100663296
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    }
+  },
+  "all_other_partitions_unchanged": true,
+  "device_commands_executed": false,
+  "purpose": "Fixed9 OFF return after fresh SOC<=75 preparation margin",
+  "cmdline_flag": "sm5440_fedora.fixed_return_check=1",
+  "emergency323_partitions": {
+    "boot": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "kernel_build_executed": false
+}

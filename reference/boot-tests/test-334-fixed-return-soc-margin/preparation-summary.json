@@ -1,0 +1,32 @@
+{
+  "test": "Test334",
+  "status": "PREPARED_NOT_FLASHED",
+  "baseline_boot_id": "3ae598ff00c94ecfa1378a74e1731fe3",
+  "baseline_health": {
+    "current_ua": 1050000,
+    "input_limit_ua": 1800000,
+    "soc": 66,
+    "temp_decic": 290,
+    "voltage_uv": 4079000
+  },
+  "ADB": true,
+  "Windows_Code43": false,
+  "device_NCM": true,
+  "authenticated_WiFi": true,
+  "allfive_and_181_baseline_verified": true,
+  "fresh_module_slots": true,
+  "kernel_build_executed": false,
+  "affected_host_tests": 55,
+  "full_host_tests_executed": false,
+  "qualified_source": "48cc5d1624357d115f265be93f6985b4fce6ead5",
+  "candidate_boot_sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+  "prepare_soc_max": 75,
+  "active_entry_soc_max_exclusive": 80,
+  "observation_seconds": 30,
+  "PPS": false,
+  "pump_ON": false,
+  "reboot_executed": false,
+  "partition_writes": false,
+  "module_swap_executed": false,
+  "next_step": "Execution instruction, refreshed <=600s preflight, install then charger-attached TWRP System boot; no automatic execution in this preparation turn"
+}
