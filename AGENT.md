@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test330 STOP firstrealPPSfailure: TCPM ONLINE2/8.72V/1.8A observed2
+samples, directstart-11/physicalfixedreturn-110, switchinginhibited. Guardian
+firstfault/unbind and cleanupfailure preserved;169samples/noON/no30s pumpwindow,
+no retry/currentraise. Pack27.9–31.7C/3.903–3.971V/noCPUfault. OwnerC1unplug/PC,
+exact323boot+saved327original181/allfive/BCB/unmount restored; uniquely67673895,
+54%3.954V30.6C/passiveOFF/ordinarycharging/nativeADB/no43/deviceNCM/WiFi109,
+rollbackfalse. Saved327original consumed, failedFedora181 at327tested; formal
+artifacts retained. Sourceaudit finds PPS finalcoherence uses fixed-only API,
+observer wronglyuses PPS-capableUSBTYPE as active; physical100mV proof timeout
+also unresolved. No ADCrepair/relaxedproof/sourcefix/replay in thisstoppedseries.
+Results/ANALYSIS330; nextphasecorrectadapter/observer offline, fullportNOT_READY.
+
+
 2026-10-06 Test330 c064e61a boot-only opt-in installed, allfive readback/181
 unchanged/BCBclear/rootunmount; new32a075d2 uniquelyfrom222efdcc. Correctordered
 cmd/confignotes, FedoraY but PC CNTL5=01 OFF,54%3.960V30.5C, ADB/no43/WiFi108/

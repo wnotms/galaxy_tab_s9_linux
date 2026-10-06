@@ -1,0 +1,49 @@
+{
+  "verdict": "STOP_FIRST_REAL_PPS_FAILURE_RESTORED_TEST323",
+  "candidate_boot_id": "32a075d2bf7b48aaa134c7b6bede8f5d",
+  "final_boot_id": "67673895d2d042879ffbbb2d293ce339",
+  "final_boot_attribution": "attributed",
+  "first_start_error": -11,
+  "fixed_fallback_error": -110,
+  "guard_cleanup_error": "fixed9 not restored",
+  "PPS_online2_samples": 2,
+  "PPS_request_mv": 8720,
+  "PPS_request_ma": 1800,
+  "samples": 169,
+  "modeON_samples": 0,
+  "completed_30s_pump_window": false,
+  "continuous_ADC_vbus_mv_range": [
+    8627,
+    9296
+  ],
+  "physical_ADC_independently_calibrated": false,
+  "VBAT_gauge_uv_range": [
+    3903000,
+    3971000
+  ],
+  "pack_decic_range": [
+    279,
+    317
+  ],
+  "kernel_CPU_faults": [],
+  "rollback_required": false,
+  "restored_modules": 181,
+  "final_battery": {
+    "current_ua": 971000,
+    "input_limit_ua": 1800000,
+    "soc": 54,
+    "temp_decic": 306,
+    "voltage_uv": 3954000
+  },
+  "final_wifi": "10.139.153.109",
+  "device_final_ADC_provider": "sm5440-passive",
+  "configuration_changes": "restored exact acceptedTest323boot/modules, no rootfs/USB/adbd change",
+  "source_build_executed": false,
+  "host_tests": {
+    "executed": true,
+    "host": 15,
+    "guardian": 23,
+    "total": 38
+  },
+  "next": "Offline contract snapshot adapter and fixed-return proof review; no replay/current raise/ADC workaround"
+}
