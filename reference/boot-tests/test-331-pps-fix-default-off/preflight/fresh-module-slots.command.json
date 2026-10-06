@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; for slot in original stage tested; do test ! -e /usr/lib/modules/.gts9-test331-$slot; done; echo fresh331-slots"
+  ],
+  "ended_utc": "2026-10-06T10:30:39.392434+00:00",
+  "started_utc": "2026-10-06T10:30:39.319101+00:00",
+  "status": 0
+}
