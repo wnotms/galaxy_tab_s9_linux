@@ -524,8 +524,7 @@ int sm5714_pd_release_fixed(u64 instance, u64 source_generation, u64 lease,
 	if (!ret && (!proof->observed_ms || now < proof->observed_ms ||
 		     now - proof->observed_ms > 100))
 		ret = -ESTALE;
-	if (!ret && (proof->vbus_uv + 100000ULL < sample.budget_mv * 1000ULL ||
-		     proof->vbus_uv > sample.budget_mv * 1000ULL + 100000))
+	if (!ret && !sm5714_fixed_vbus_valid(sample.budget_mv, proof->vbus_uv))
 		ret = -ERANGE;
 	/* TCPC -> try-only companion/charger. Authorize the unchanged ordinary
 	 * worker; no producer wait, IIO/I2C/TCPM setter while holding this gate.

@@ -16,6 +16,7 @@ class FixedReleaseTests(unittest.TestCase):
         code = cls.fixture_code.replace('int exercise(', 'int snapshot_exercise(')
         header = (snapshot.ROOT/'kernel/drivers/sm5714-stage2.h').read_text()
         code += function(header, 'struct sm5714_fixed_proof {')+';\n'
+        code += function(header, 'static inline bool sm5714_fixed_vbus_valid(')+'\n'
         code += r'''
 static int release_calls,release_error;
 int sm5714_battery_switching_release_async(u64 lease) {
@@ -42,8 +43,8 @@ int exercise(int mode,int failure,long long *out) {
  if(mode==7)proof.observed_ms=1010;
  if(mode==8)proof.observed_ms=907;
  if(mode==11)values[2]=5000000;
- if(mode==12)proof.vbus_uv=9100001;
- if(mode==13)proof.vbus_uv=8899999;
+ if(mode==12)proof.vbus_uv=9450001;
+ if(mode==13)proof.vbus_uv=8549999;
  if(mode==14)release_error=-EIO;
  if(mode==15)release_error=-ESTALE;
  if(mode==16)pthread_mutex_lock(&s.control_lock.m);
@@ -52,8 +53,8 @@ int exercise(int mode,int failure,long long *out) {
  if(mode==20)s.fault=true;
  if(mode==21)s.removing=true;
  if(mode==22)proof.observed_ms=908; /* inclusive100ms after eight property reads */
- if(mode==23)proof.vbus_uv=9100000;
- if(mode==24)proof.vbus_uv=8900000;
+ if(mode==23)proof.vbus_uv=9450000;
+ if(mode==24)proof.vbus_uv=8550000;
  if(mode==25)instance=0;
  if(mode==26)source=0;
  if(mode==27)lease=0;
@@ -64,6 +65,7 @@ int exercise(int mode,int failure,long long *out) {
  sm5714_port_provider=0;destroy(&s);return ret;
 }
 '''
+        code += '''\nint voltage_ok(unsigned int mv,unsigned int uv) {return sm5714_fixed_vbus_valid(mv,uv); }\n'''
         c = Path(cls.tmp.name)/'release.c'
         c.write_text(code)
         lib = c.with_suffix('.so')
@@ -109,6 +111,16 @@ int exercise(int mode,int failure,long long *out) {
             ret, out = self.case(mode)
             self.assertEqual(ret, -expected)
             self.assertEqual(out[3], 1)
+
+    def test_only_approved_fixed_voltages_and_inclusive_five_percent_window(self):
+        for mv, low, high in [(5000, 4750000, 5250000),
+                              (9000, 8550000, 9450000)]:
+            for uv in [low, high, mv * 1000]:
+                self.assertEqual(self.lib.voltage_ok(mv, uv), 1)
+            for uv in [0, low - 1, high + 1, 0xffffffff]:
+                self.assertEqual(self.lib.voltage_ok(mv, uv), 0)
+        for mv in [0, 4999, 8200, 8720, 9500, 12000, 15000, 20000, 0xffffffff]:
+            self.assertEqual(self.lib.voltage_ok(mv, 9000000), 0)
 
     def test_exact_physical_age_and_voltage_boundaries(self):
         for mode in [22, 23, 24]:

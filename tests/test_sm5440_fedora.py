@@ -73,6 +73,8 @@ static int request_error, fixed_error, off_error, release_error, pack_error;
 static int detach_wait, scheduled, canceled;
 static int fixed_snapshot_calls, owned_snapshot_calls, fail_owned_at, mutate_pack, fixed_adc_offset;
 static unsigned long scheduled_delay;
+static int fixed_sampling, fixed_sample_count, fixed_pattern;
+static u64 fixed_return_started;
 static void log_stub(struct device *d,const char *fmt,...) {(void)d;(void)fmt;}
 #define dev_info log_stub
 #define dev_info_ratelimited log_stub
@@ -97,6 +99,15 @@ static int i2c_smbus_write_byte_data(struct i2c_client *c,int reg,int value) {
 }
 static void msleep(unsigned int ms) {
  clock_ms+=ms;
+ if(fixed_sampling){
+  fixed_sample_count++;
+  int mv=9000+fixed_adc_offset;
+  if(fixed_pattern==1)mv+=(fixed_sample_count%2?60:-60);
+  if(fixed_pattern==2 && fixed_sample_count==1)mv=9600;
+  if(fixed_pattern==3 && !(fixed_sample_count%2))mv=9600;
+  if(fixed_pattern==4)mv+=(fixed_sample_count-1)*40;
+  set_vbus(mv);
+ }
  if(detach_wait){source.source_generation++;source.online=0;detach_wait=0;}
 }
 static void usleep_range(unsigned int a,unsigned int b) {(void)b;clock_ms+=(a+999)/1000;}
@@ -137,12 +148,13 @@ int sm5714_pd_restore_fixed(u64 instance,u64 generation,u64 lease,struct sm5714_
  if(fixed_error)return fixed_error;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.online)return -ESTALE;
  source.pps_contract=false;source.online=1;source.budget_mv=9000;source.budget_ma=1500;source.budget_generation++;
+ fixed_sampling=1;fixed_sample_count=0;fixed_return_started=clock_ms;
  set_vbus(9000+fixed_adc_offset);*out=source;return 0;
 }
 int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct sm5714_fixed_proof *proof) {
  if(release_error)return release_error;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||source.pps_contract||!proof->pump_off||proof->ibus_ua||
-    (regs[SM5440_REG_CNTL5]&12)||clock_ms-proof->observed_ms>100||proof->vbus_uv<8900000||proof->vbus_uv>9100000)return -ESTALE;
+    (regs[SM5440_REG_CNTL5]&12)||clock_ms-proof->observed_ms>100||!sm5714_fixed_vbus_valid(source.budget_mv,proof->vbus_uv))return -ESTALE;
  releases++;owned_lease=0;return 0;
 }
 '''
@@ -170,12 +182,14 @@ void reset(void) {
  clock_ms=1000;owned_lease=0;direct_charge=true;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
+ fixed_sampling=fixed_sample_count=fixed_pattern=0;fixed_return_started=0;
  request_error=fixed_error=off_error=release_error=pack_error=detach_wait=scheduled=canceled=0;
 }
 int eligible(void) {return sm5440_eligible(&sm);}
 int start(void) {if(!sm5440_eligible(&sm))return -EPERM;return sm5440_start(&sm);}
 int refresh(void) {return sm5440_renegotiate_pps(&sm);}
 int cleanup(void) {return sm5440_restore_switching(&sm);}
+void prepare_fixed_return(void) {sm.source=source;sm.lease=owned_lease=7;}
 void work(void) {sm5440_work(&sm.work.work);}
 int pm(int n) {return sm5440_pm_notify(&sm.pm_nb,n,0);}
 void remove_worker(void) {sm5440_cancel_work(&sm);}
@@ -187,7 +201,8 @@ void input(int key,int value) {
  case 11:regs[SM5440_REG_INT3]=value;break;case 12:regs[SM5440_REG_CNTL5]=value;break;
  case 13:sm.pps_ticks=value;break;case 14:raw13(SM5440_REG_ADC_IBUS1,value);break;
  case 15:pack.thermal_normal=value;break;case 16:fail_owned_at=value;break;
- case 17:mutate_pack=value;break;case 18:fixed_adc_offset=value;break;}
+ case 17:mutate_pack=value;break;case 18:fixed_adc_offset=value;break;
+ case 19:fixed_pattern=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -196,6 +211,7 @@ int value(int key) {
  case 8:return calls;case 9:return pump_ons;case 10:return regs[SM5440_REG_IBUSCNTL];
  case 11:return scheduled;case 12:return sm.last_cleanup_error;case 13:return sm.target_mv;
  case 14:return sm.target_ma;case 15:return canceled;
+ case 20:return clock_ms-fixed_return_started;case 21:return fixed_sample_count;
  case 18:return fixed_snapshot_calls;case 19:return owned_snapshot_calls;
  case 16:return scheduled_delay;case 17:return regs[SM5440_REG_CNTL1]&128;
  default:return -1;}
@@ -249,11 +265,79 @@ int value(int key) {
         self.assertNotEqual(self.lib.start(), 0)
         self.assertEqual([self.v(k) for k in (0, 1, 3, 7, 9)], [0, 0, 0, 1, 0])
 
-    def test_observed_fixed_adc_offset_still_blocks_release(self):
+    def test_stable_observed_fixed_offset_releases_after_three_samples(self):
         self.assertEqual(self.lib.start(), 0)
-        self.lib.input(18, 272)  # Test330 continuous ADC9.272V with fixed9V protocol.
+        self.lib.input(18, 272)  # Test330 fixed9V ADC; no offset/calibration change.
+        self.assertEqual(self.lib.cleanup(), 0)
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7)], [0, 0, 0, 1, 0])
+        self.assertEqual(self.v(21), 3)
+        self.assertGreaterEqual(self.v(20), 120)
+
+    def test_fixed_return_from_off_does_not_request_pps_or_enable_pump(self):
+        self.lib.prepare_fixed_return()
+        self.lib.input(18, 272)
+        self.assertEqual(self.lib.cleanup(), 0)
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 9)], [0, 0, 1, 0, 0])
+
+    def test_each_fixed_return_i2c_failure_keeps_lease_and_pump_off(self):
+        self.lib.prepare_fixed_return()
+        before = self.v(8)
+        self.assertEqual(self.lib.cleanup(), 0)
+        count = self.v(8) - before
+        for call in range(1, count + 1):
+            with self.subTest(call=call):
+                self.lib.reset(); self.lib.prepare_fixed_return()
+                self.lib.input(9, call)
+                self.assertEqual(self.lib.cleanup(), -5)
+                self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 7, 9)],
+                                 [0, 7, 0, 0, 1, 0])
+
+    def test_detach_during_fixed_settling_never_releases_new_connection(self):
+        self.lib.prepare_fixed_return()
+        self.lib.input(10, 1)
+        self.assertNotEqual(self.lib.cleanup(), 0)
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 4, 7, 9)],
+                         [0, 7, 0, 0, 1, 0])
+
+    def test_outside_fixed_window_never_releases(self):
+        for offset in [451, -451]:
+            self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+            self.lib.input(18, offset)
+            self.assertEqual(self.lib.cleanup(), -110)
+            self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7)], [0, 0, 7, 0, 1])
+
+    def test_fixed_window_boundaries_are_inclusive(self):
+        for offset in [450, -450]:
+            self.lib.reset(); self.assertEqual(self.lib.start(), 0)
+            self.lib.input(18, offset)
+            self.assertEqual(self.lib.cleanup(), 0)
+            self.assertEqual(self.v(3), 1)
+
+    def test_fluctuating_in_window_voltage_never_releases(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.lib.input(19, 1)  # Every reading is valid, but range is120mV.
         self.assertEqual(self.lib.cleanup(), -110)
-        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7)], [0, 0, 7, 0, 1])
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 7)], [0, 7, 0, 1])
+        self.assertEqual(self.v(21), 30)
+
+    def test_outside_sample_restarts_the_full_settling_interval(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.lib.input(19, 2)
+        self.assertEqual(self.lib.cleanup(), 0)
+        self.assertEqual(self.v(21), 4)
+        self.assertGreaterEqual(self.v(20), 170)
+
+    def test_intermittent_outside_voltage_never_accumulates_proof(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.lib.input(19, 3)
+        self.assertEqual(self.lib.cleanup(), -110)
+        self.assertEqual([self.v(k) for k in (1, 2, 3, 7)], [0, 7, 0, 1])
+
+    def test_stability_limit_is_range_not_endpoint_error(self):
+        self.assertEqual(self.lib.start(), 0)
+        self.lib.input(19, 4)  # 40mV steps; total80mV across three reads.
+        self.assertEqual(self.lib.cleanup(), 0)
+        self.assertEqual(self.v(21), 3)
 
     def test_refresh_parks_pump_across_pps(self):
         self.assertEqual(self.lib.start(), 0)

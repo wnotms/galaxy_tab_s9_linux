@@ -547,6 +547,9 @@ static int sm5440_restore_switching(struct sm5440_direct *sm)
 	struct sm5714_pd_snapshot fixed;
 	struct sm5714_fixed_proof proof = {};
 	int i, ret, err, vbus = 0, ibus = 0;
+	int vbus_min = 0, vbus_max = 0;
+	unsigned int stable_samples = 0;
+	u64 stable_started_ms = 0, now;
 
  /* A failed OFF proof must never release the switching path. */
 	ret = sm5440_pump_off(sm);
@@ -577,8 +580,32 @@ static int sm5440_restore_switching(struct sm5440_direct *sm)
 				ret = vbus < 0 ? vbus : ibus;
 				break;
 			}
-			if (abs(vbus - (int)fixed.budget_mv) <= 100 && !ibus) {
-				proof.observed_ms = ktime_to_ms(ktime_get_boottime());
+			if (!sm5714_fixed_vbus_valid(fixed.budget_mv, vbus * 1000U) || ibus) {
+				stable_samples = 0;
+				continue;
+			}
+			now = ktime_to_ms(ktime_get_boottime());
+			/* Separate nominal voltage tolerance from settling. Require
+			 * three zero-current observations over >=100ms whose entire
+			 * range stays within 100mV. This is a bring-up stability gate,
+			 * not an assertion of independent ADC conversions.
+			 */
+			if (!stable_samples) {
+				vbus_min = vbus_max = vbus;
+				stable_started_ms = now;
+			} else {
+				if (vbus < vbus_min)
+					vbus_min = vbus;
+				if (vbus > vbus_max)
+					vbus_max = vbus;
+				if (vbus_max - vbus_min > 100) {
+					vbus_min = vbus_max = vbus;
+					stable_started_ms = now;
+					stable_samples = 0;
+				}
+			}
+			if (++stable_samples >= 3 && now - stable_started_ms >= 100) {
+				proof.observed_ms = now;
 				proof.vbus_uv = vbus * 1000U;
 				proof.ibus_ua = 0;
 				proof.pump_off = true;

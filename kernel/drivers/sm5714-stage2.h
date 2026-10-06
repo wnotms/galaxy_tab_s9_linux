@@ -13,6 +13,20 @@
 /* Linux PD_P_SNK_STDBY_MW; switching remains OFF during fixed return. */
 #define SM5714_STANDBY_MAX_MW	2500U
 
+/* USB PD r3.2 v1.2 Table 4.6 vSrcNew: fixed source voltage +/-5%.
+ * Use this steady-state window as the board's physical return gate; do not
+ * include the additional vSrcValid transient allowance. ADC at the sink is
+ * not a calibrated source-receptacle compliance measurement. Only approved
+ * fixed contracts are accepted, so the uV products cannot overflow.
+ */
+static inline bool sm5714_fixed_vbus_valid(unsigned int mv, u32 vbus_uv)
+{
+	if (mv != 5000 && mv != 9000)
+		return false;
+
+	return vbus_uv >= mv * 950U && vbus_uv <= mv * 1050U;
+}
+
 enum sm5714_contract_kind {
 	SM5714_CONTRACT_FIXED,
 	SM5714_CONTRACT_PPS,
