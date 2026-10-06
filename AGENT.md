@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Fedora X710 source route now supersedes custom ADC repair: kernel source
+376693d7 imports ab123e7d SM5440 charging worker, continuous ADC and PPS/settle/ON
+with current TCPM/switching lease integration. Isolated sm5440-fedora profile,
+default direct_charge=false/read-only boot opt-in; compiled activation exists,
+not a closed passive-only profile. No device commands/deployment/PPS/pump ON in
+this source port; live accepted323 final3f4cf492 retained. Fixed5V1.8A/9V1.5A,
+SM5714 float4.44/thermal unchanged; initial PPS cap1.8A/8.2–10.5V. OFF/fallback/
+watchdog/suspend veto/backoff fail-closed. 155 affected PASS6.912s; final15 metadata
+suite PASS0.289s overlaps155. ARM64 final PASS75.858s; W1/sparse PASS12.344s/no
+warnings; exact DTB,181 runtime modules,59 protected/37 formal,only6 expected
+config deltas. Host-only metadata/results reuse final build. Formal candidate
+out/kernel-x710-fedora + boot-bundle-x710-fedora, UNREGISTERED; no new Windows
+copy/full tree. reference/charging/sm5440-fedora-port/RESULTS.md + next plan.
+Do not replay326 or rewrite its timeout; next separate registration checks this
+new source then conservative PPS. Full hardware port NOT_READY.
+
+
 2026-10-06 Test326 STOP_NATIVE_100MS_TIMEOUT; two startupconfirmations completed,
 nativeattempt1count0/error-110/cleanup0OFF0. Candidate d25fc7ec raw/sourcejournal
 retained. Finally restored323boot/181/allfive/BCBclear/rootunmount; finalnormal

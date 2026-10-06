@@ -320,6 +320,10 @@ class FedoraIntegrationTests(unittest.TestCase):
         m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
         baseline = m.BASE.read_text()
         config = baseline + '\n# CONFIG_CHARGER_SM5440_DIRECT is not set\nCONFIG_CHARGER_SM5440_FEDORA=y\n'
-        self.assertTrue(m.verify(config, profile='sm5440-fedora')['valid'])
+        result = m.verify(config, profile='sm5440-fedora')
+        self.assertTrue(result['valid'])
+        self.assertTrue(result['pump_activation_available'])
+        self.assertFalse(result['direct_charge_default'])
+        self.assertTrue(result['requires_registered_boot_opt_in'])
         self.assertFalse(m.verify(config, profile='sm5440-passive')['valid'])
         self.assertFalse(m.verify(config.replace('# CONFIG_CHARGER_SM5440_DIRECT is not set', 'CONFIG_CHARGER_SM5440_DIRECT=y'), profile='sm5440-fedora')['valid'])

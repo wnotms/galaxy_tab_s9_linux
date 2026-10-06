@@ -1,0 +1,87 @@
+{
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora/Image.gz",
+      "bytes": 22133146,
+      "sha256": "f4eddc132e844699b367296bd7ed364e9b88f7f48067aaacf9f7162c54ac10a6"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "5ec694b48a1234a269695e50d1293c597f045adf28992b8a70a513411a73cb41"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora/modules-x710.tar.gz",
+      "bytes": 47318685,
+      "sha256": "8f352a0e2fe0873f902c10b803b0b4359bc44386303a36b42b5cf9937579e14e"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-fedora/boot.img",
+      "bytes": 100663296,
+      "sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-pc-ordinary/boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-pc-ordinary/modules-x710.tar.gz",
+      "bytes": 47319293,
+      "sha256": "445d32e06c7f609d6e0b96de4b0f902e98128bbef4189a9356883a135b42428f"
+    }
+  },
+  "evidence": {
+    "NEXT_PHYSICAL_PLAN.md": "0b16b400b7b13e534ce2336444b37f2e8f76438af4260b062164241195fa2bbc",
+    "PACKAGE.json": "11164bafd06fa211e63e7ae4b3c7ea8e492bcffdbef11f84f3cfd6a54b9b6c13",
+    "RESULTS.md": "9baf7f5cbd2f2d6a2b33ea74568d4e4b7bdf7f9fce6021559208447decc646c9",
+    "SOURCE.json": "22de44f4bd6cc543a67985474187a4a895cc8b9e9cdcf2dd99c2b3e4c27275da",
+    "__pycache__/build.cpython-314.pyc": "344489db58a61672bea7c3a65c82cc3b809d4940dfd98fb94a18d7260aa24cee",
+    "__pycache__/build_package.cpython-314.pyc": "e3571614ff730c8f5e62a207659ac25cc5ac93bf375d2ef000c7766e4a11addc",
+    "__pycache__/qualify.cpython-314.pyc": "6bd878374a85d6e4bdd9c5f4206951d10e233d80628c32db54a1e412eaabfb47",
+    "__pycache__/static-check.cpython-314.pyc": "32325f29dc7c1106b224b219a230c55313329abe33f3522567d78955e07085e7",
+    "affected-tests.txt": "55896d2d251c592cf4d52bbabb54745db7260f162d8ef1cbfe0a1d50af52f839",
+    "build.json": "67bb11eb929d7411b49405a63f9ade0b5e93ee0050acc12a5207b19609cb4fa2",
+    "build.log.gz": "f06ee8fb094ea5739b5e9188acde4dc61f5b56b3dfe3bdfa205606a0d2001ea6",
+    "build.py": "11f486a84f24e51c4e91b00d86bc24586ae2ca86b18d40c9a023712770ade7dd",
+    "build_package.py": "54e8e5a595808042aa3f50dbc9c0f01a56e0cf9177714e50cfb4802cc38556df",
+    "candidate-modules.sha256": "c7eac30ba63f3aea7bcdc6802a072b42b77e25e968c889be04cbdfdfa30eaf83",
+    "config.diff": "e9b7521ccd8a83b87b202b8649e67f07e319c2d05de7e359109790e1d73b1775",
+    "first-build.json": "461f59726541e25b4eb55d21a37e48eebd9bd4544a6dca8dd86d5e5460c226a8",
+    "first-build.log.gz": "a587558df6e9a2c906f98098eeb27f6762c47543d83542130c761d9f48fa3903",
+    "host-tests.json": "f5ef4fc1d2fb4a99fd97097556e61287a7a588b714f9fa5402afd0c216fe5ada",
+    "initial-success-build.json": "d4ed9585b2471476951714c9f60ae54cb6729f14329d76f259fbd732f97a8220",
+    "initial-success-build.log.gz": "80e00c0cfb4adcb9041cf44315ad0d72ed26569b3b9fd845fe668855d3b5cc01",
+    "inputs-before.json": "a34ef2cf306606cb61fe5bf6c9adee2371f7d01ed3d87b0b2b55daff78001f0b",
+    "package-build.txt": "11164bafd06fa211e63e7ae4b3c7ea8e492bcffdbef11f84f3cfd6a54b9b6c13",
+    "qualification.txt": "9a75f18839f105d7a98ebfec14302354693ee9dd3bb16ef95042e087b7d6b6a5",
+    "qualify.py": "e4777d608f60d383e8c71302fad4da027f1047e0c794e142b3fc483be78a1f67",
+    "rollback-modules.sha256": "882e47cbf7c8d937d2f99dcb7e2bb70ae54cc46481632d75a4b3050c098a967f",
+    "source-inputs.json": "b811356b88b6d4a723158a8a85fa89cfe752a958df463852c37e7e1c110428ca",
+    "static-check.py": "6099138647e3727f5c9ff27e6f3a1a4b6cfec25f9bb7bce6452c0fa6918705bf",
+    "static-command.txt": "359e7a5e42921a29acfc43483836c1228a42315add5093400ef00829c818129b",
+    "static-standard.log.gz": "f19105b235e41d8dde0577ff8f99d8be3d9e183b49725893a06c2db14fbbf1fd",
+    "static.json": "d0a33d83960a375711cf61bd26cdc8fb912c59da6efd0904a43366fdb922289e",
+    "static.log.gz": "16a0eba90d8804672359514fa6470e1ed7fc9b1229e5470b9dd3ce27452a0030",
+    "summary.json": "906946ca9a61172c7fe16a5d40de04f6662cf94f3924b12904ab20858f48ad59",
+    "tests.txt": "336dc424cd5182c2b0fa200f3c6a3dd29b563619fe09d3d31178c16dc6dfcf18",
+    "upstream-sm5440_direct.c.gz": "1e4883baa40333a44dbd09077767b6421155463947b7012e80510978cdf14551",
+    "upstream-to-port.diff": "dd725c71c737f632ac064d7fef7216adbe41a8f6250c59c3ba6e200e1e2f9558",
+    "validation/boot-header.txt": "acedd392791cb651476e593a0a3dd41caf1bb044c41f2dcb0bf353079ccf7940"
+  }
+}

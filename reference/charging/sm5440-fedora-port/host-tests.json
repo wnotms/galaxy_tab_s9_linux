@@ -1,0 +1,33 @@
+{
+  "executed": true,
+  "tests": 155,
+  "seconds": 6.912,
+  "failures": 0,
+  "skips": 0,
+  "coverage": [
+    "test_sm5440_fedora",
+    "test_sm5714_stage2_pd",
+    "test_sm5440_passive",
+    "test_sm5440_native_control",
+    "test_sm5440_native_oneshot",
+    "test_sm5440_adc_raw",
+    "test_sm5440_adc_timing"
+  ],
+  "full_suite_executed": false,
+  "reason": "Affected config/build gate and new actual C source paths; test routing unchanged",
+  "device_commands_executed": false,
+  "final_metadata_review": {
+    "executed": true,
+    "tests": 15,
+    "seconds": 0.289,
+    "failures": 0,
+    "skips": 0,
+    "coverage": [
+      "test_sm5440_fedora"
+    ],
+    "overlaps_affected_run": true,
+    "reason": "Report compiled opt-in activation honestly; default remains OFF"
+  },
+  "final_kernel_build_reused": true,
+  "reuse_reason": "Only verifier metadata, assertions and qualification documentation changed after final driver build; kernel inputs unchanged."
+}

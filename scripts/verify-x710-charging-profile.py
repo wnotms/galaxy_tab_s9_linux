@@ -77,7 +77,10 @@ def verify(text, baseline=None, profile="sm5440-passive"):
         result["errors"].append("Fedora source port requires its isolated profile")
     result["valid"] = not result["errors"]
     result["profile"] = profile
-    result["pump_activation_available"] = False
+    result["pump_activation_available"] = profile == "sm5440-fedora"
+    if profile == "sm5440-fedora":
+        result["direct_charge_default"] = False
+        result["requires_registered_boot_opt_in"] = True
     return result
 
 

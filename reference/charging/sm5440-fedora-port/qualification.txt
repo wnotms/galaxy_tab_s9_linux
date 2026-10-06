@@ -1,0 +1,56 @@
+{
+  "verdict": "OFFLINE_FEDORA_PORT_PASS",
+  "full_port_verdict": "NOT_READY",
+  "profile": "sm5440-fedora",
+  "base_revision": "9a8f2f5f",
+  "config_delta_from_accepted323": {
+    "CONFIG_CHARGER_SM5440_DIRECT": [
+      "y",
+      "n"
+    ],
+    "CONFIG_CHARGER_SM5440_FEDORA": [
+      "absent",
+      "y"
+    ],
+    "CONFIG_SM5440_ADC_CONDITION_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_RAW_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_SM5440_ADC_TIMING_TEST": [
+      "n",
+      "absent"
+    ],
+    "CONFIG_X710_CHARGING_POLICY": [
+      "n",
+      "absent"
+    ]
+  },
+  "unexpected_config_delta": {},
+  "DTB_delta": [],
+  "protected_source_count": 59,
+  "preserved_formal_artifact_count": 37,
+  "module_file_count": 181,
+  "module_runtime_unchanged": true,
+  "metadata_identity_change_only": true,
+  "native_symbols_absent": [
+    "x710_charge_controller_request",
+    "x710_charge_controller_cancel",
+    "x710_charge_request_observation",
+    "sm5440_native_control",
+    "sm5440_conversion_begin",
+    "sm5440_conversion_advance",
+    "hvc_dcc0_put_chars"
+  ],
+  "device_commands_executed": false,
+  "physical_executed": false,
+  "pump_ON": false,
+  "PPS_requested": false,
+  "direct_charge_default": false,
+  "PPS_cap_ma": 1800,
+  "source_revision": "376693d732e2aede470643c611d4cc31d93d4893",
+  "upstream_revision": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa"
+}
