@@ -1,0 +1,1 @@
+Completed325 rollbackfalse; checked sevenfile identity then renamed325->326, replaced only candidate/modulehelper/manifests, unchanged accepted323 rollback reused. No duplicateWindows staging. ADB remains /mnt/d/android/platform-tools/adb.exe.

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test325，窗口为 **Test316–Test325**；没有生成镜像的轮次仍占一轮。
+  编号为 Test326，窗口为 **Test317–Test326**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test326 registered exactf338eeb3 completeddiagnosticdispatch/newunique
+closingproducer; qualificationee59e368 reuse88actualworker tests+ARM6481.920s/
+W1sparsePASS/exactconfigDTB181/59protected37formal.22newpacket/parserPASS0.058s,
+no kernelrebuildforregistration. Fresh323normalabc27877/allfive181/confignotes/
+71%4.148V31.5CGood/ADBWiFiNCMWindowsCode0/input1800fast115float45. OneC2candidate
+boot/30s->PCretainedADCcapture andautomaticfinallyexact323restore, no325replay/
+PPS/pump/current/protection/USBchange. Notinstalledyet; stage325verified/renamed326
+no duplicateWindowscopy; retention317–326,316hadno standaloneimage. FullportNOTREADY.
+
 
 2026-10-06 Test325 STOP/nativeattempt0count0, exact323 restored normalabc27877/
 70%4.127V29.3C/ADB+NCM+WiFi/allfive181/rollbackfalse. Rawcandidateboot/config/notes
