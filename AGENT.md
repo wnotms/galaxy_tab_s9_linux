@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 host-only WiFi discovery correction OFFLINE qualified23PASS0.112s.
+New charging_wifi_discovery.py: recentIP directstrictSSH, fallback RFC1918-/24,
+TCP3s/16workers/SSH2slots/shared90s/two passes, perattempt JSONL, identity/boot/
+enrolledkey unchanged-file gates, cancellation drains children. No kernel/charging/
+rootfs/USB/ADB/config change; sealed333/334 untouched/no build/fullrun/Actions.
+Next one read-only oldIP19→current331 identity discovery check afterpush; no
+reboot/flash/PPS/pump or nativecheck replay. FullportNOT_READY; prior334 cause
+not uniquely proven. See reference/charging/wifi-discovery-recovery/README.
+
+
 2026-10-06 Test334 native fixed-return PROVEN, series STOP hostWiFi90s,331 restored.
 Unique216deecd native10.642744s: source9/lease1/VBUS9.427V/3samples121ms/
 range9427..9427/rawIBUS0/OFF, then lease0/PPS0/ON0 completion. No30s host
