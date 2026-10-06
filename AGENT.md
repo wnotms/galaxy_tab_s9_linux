@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 fixed-return gate correction OFFLINE qualified, source9901200d:
+shared fixed5/9V steady window±5% (USB-IF Table4.6, source-receptacle rule,
+not ADC calibration), Fedora producer three consecutive rawIBUSzero samples
+across≥100ms/range≤100mV; fresh≤100ms/source/lease/pumpOFF intact. 248affected
+hostPASS5.748s/build80.757s/W1+sparse14.443s zero newwarning; exact331config/DTB,
+181 module archive identical,839protected/22formal unchanged. New defaultOFF
+boot167730dd in out/boot-bundle-x710-fedora-fixed-return, no deployment.
+Device same331boot6b76a591,67%4.116V32.3C/+1.239A,checkedCNTL5=01OFF,
+ADB/services/roles normal. Next separately register actual pump-OFF fixed-return
+proof, then boundedPPS; PPS ADC/request mismatch stillunresolved. No current/
+ADC/safety/config/DTS/rootfs change, fullportNOT_READY. Earlier ±100mV entries
+are historical gate/result records; do not overwrite sealed Test330 failure.
+See reference/charging/sm5440-fixed-return-window/RESULTS.md.
+
 2026-10-06 Test331 defaultOFF physicalPASS retained: corrected1f1d8568 candidate
 025ebea4+paired181 installed via TWRP/allfive/BCBclear/unmount, unique67673895→
 6b76a591f91648c0917d207b772175b4. Exactconfig51ba6a9c/notes03c9c46e/defaultN/

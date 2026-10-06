@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "make",
+    "-C",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+    "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+    "ARCH=arm64",
+    "LLVM=1",
+    "CC=ccache clang",
+    "-j8",
+    "W=1",
+    "C=2",
+    "drivers/power/supply/sm5440-fedora.o",
+    "drivers/power/supply/sm5714-battery.o",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o"
+  ],
+  "returncode": 0,
+  "standard_flags_returncode": 0,
+  "seconds": 14.44345070500276,
+  "warnings": [],
+  "qualified_object_sha256": {
+    "drivers/power/supply/sm5440-fedora.o": "5df3f4eada877afd4e2c56dde18709deef9b6cb77e50577a0556a77ccdbc2c05",
+    "drivers/power/supply/sm5714-battery.o": "1eeb2150aa3ac38e0474dd031bafc9b85347be9be143c15e6aef97704fad2a89",
+    "drivers/usb/typec/tcpm/sm5714_usbpd.o": "5d5bae8ec7f913ed4901d802b58dbc30c4e417479542dabf920ab3dbaed6340e"
+  },
+  "qualified_object_restored": true,
+  "formal_artifacts_relinked": false
+}

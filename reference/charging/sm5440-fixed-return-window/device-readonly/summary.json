@@ -1,0 +1,27 @@
+{
+  "verdict": "UNCHANGED_TEST331_READ_ONLY_PASS",
+  "boot_id": "6b76a591f91648c0917d207b772175b4",
+  "battery": {
+    "soc": 67,
+    "voltage_uv": 4116000,
+    "temp_decic": 323,
+    "current_ua": 1239000,
+    "input_limit_ua": 1800000
+  },
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "direct_charge": "N",
+  "PPS_requested": false,
+  "pump_ON_requested": false,
+  "mutations": [],
+  "host_parser_correction": "Initial helper lookup referenced nonexistent gate.baseline; raw capture retained, sections split locally then same existing admission validator passed",
+  "pump_off": {
+    "boot_before": "6b76a591-f916-48c0-917d-207b772175b4",
+    "boot_after": "6b76a591-f916-48c0-917d-207b772175b4",
+    "driver": "sm5440-fedora",
+    "register": 16,
+    "value": 1,
+    "config_data_written": false
+  },
+  "pump_read_seconds": 0.10546855700522428
+}
