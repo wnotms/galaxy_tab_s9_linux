@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test326 boot/181 paired modules installed via TWRP; allfive readback
+verified, BCB cleared/root unmounted, no automaticcandidateboot. Awaiting owner
+C2bootSystemonce/hold>=30s thenPCreturn sameboot; captureonce and unconditional
+exact323 restoreinfinally. DeviceTWRP/rollback_requiredtrue; original323 saved
+.gts9-test326-original. Installation results archived; unchanged qualifications
+reused, build/testsfalse. No PPS/pump/current/protection/USB change. FullportNOTREADY.
+
+
 2026-10-06 Test326 registered exactf338eeb3 completeddiagnosticdispatch/newunique
 closingproducer; qualificationee59e368 reuse88actualworker tests+ARM6481.920s/
 W1sparsePASS/exactconfigDTB181/59protected37formal.22newpacket/parserPASS0.058s,
