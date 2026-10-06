@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test328 resumed preflight READY after ownerdischarge and PCreturn:
+accepted327/329boot094c2a35,52%3.928V29.4C, ADB/Windowsno43/WiFi152 healthy,
+allfive partitions/exact181/confignotes/OFF match. Original highSOC/Code43
+incidents retained,329 ordinaryrecoveryaccepted; noTest328mutation yet. Reuse
+unchanged registered328opt-inboot c064e61a and34hosttests, nobuild/fullsuite.
+Next oneboot-only install then armedWiFiguard before ownerC1attach,1.8A/30s;
+firstfault cleanup and exact323restore, PASS327defaultOFFrestore. No limitraise.
+
+
 2026-10-06 Test329 deviceUSBrecovery PASS: one ordinaryunchanged327 reboot,
 7f9c0caa→094c2a35 uniquelyattributed, sameconfig51ba6a9c/notes5ec694b4/normalcmd,
 FedoraN/CNTL5=01 OFF. NativeADB/WindowsCode0/WiFi152/deviceNCM/15s endpoint/no
