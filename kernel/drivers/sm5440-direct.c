@@ -2387,7 +2387,11 @@ static void sm5440_poll(struct work_struct *work)
 			 * startup_sample retains the original event independently.
 			 */
 			if (!sm->startup_confirmations ||
-			    !sm5440_startup_revblk(&sample))
+			    !(sm5440_startup_revblk(&sample)
+#ifdef CONFIG_SM5440_ADC_ONESHOT_TEST
+			      || sm5440_oneshot_startup_revblk(&sample)
+#endif
+			    ))
 				sm->fault = true;
 			dev_warn_ratelimited(sm->dev,
 				"passive fault bitmap=%#x INT=%*ph STATUS=%*ph INT4-disable=%02x INT4-wait=%02x mode=%02x/%02x CNTL2=%02x VBUSCNTL=%02x VBATCNTL=%02x PRTNCNTL=%02x ADC=%*ph VBUS=%uuV VBAT=%uuV IBUS=%uuA die=%d deciC\n",

@@ -1,0 +1,45 @@
+F..F..
+======================================================================
+FAIL: test_actual_fixed9_worker_reaches_native_only_after_two_fresh_confirmations (test_sm5440_oneshot_worker.WorkerTests.test_actual_fixed9_worker_reaches_native_only_after_two_fresh_confirmations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_worker.py", line 60, in test_actual_fixed9_worker_reaches_native_only_after_two_fresh_confirmations
+    v=self.run_case();self.assertEqual(v[:3],[0,2,0]);self.assertEqual(v[3:6],[0,1,0]);self.assertEqual(v[6:11],[0,0,1,128,0])
+                      ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1, 2, 0] != [0, 2, 0]
+
+First differing element 0:
+1
+0
+
+- [1, 2, 0]
+?  ^
+
++ [0, 2, 0]
+?  ^
+
+
+======================================================================
+FAIL: test_generic_fault_block_does_not_reject_admitted_initial_fixed9_context (test_sm5440_oneshot_worker.WorkerTests.test_generic_fault_block_does_not_reject_admitted_initial_fixed9_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/tests/test_sm5440_oneshot_worker.py", line 62, in test_generic_fault_block_does_not_reject_admitted_initial_fixed9_context
+    self.assertEqual(self.run_case()[:3],[0,2,0])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [1, 2, 0] != [0, 2, 0]
+
+First differing element 0:
+1
+0
+
+- [1, 2, 0]
+?  ^
+
++ [0, 2, 0]
+?  ^
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.147s
+
+FAILED (failures=2)
