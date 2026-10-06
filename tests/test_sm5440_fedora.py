@@ -37,6 +37,7 @@ typedef uint8_t u8; typedef uint32_t u32; typedef uint64_t u64;
 #define clamp(n,l,h) ((n)<(l)?(l):((n)>(h)?(h):(n)))
 #define clamp_val clamp
 #define min(a,b) ((a)<(b)?(a):(b))
+#define max(a,b) ((a)>(b)?(a):(b))
 #define msecs_to_jiffies(n) (n)
 #define container_of(p,t,m) ((t *)((char *)(p)-offsetof(t,m)))
 #define to_delayed_work(p) ((struct delayed_work *)(p))
@@ -60,7 +61,7 @@ struct notifier_block { int (*notifier_call)(struct notifier_block *,unsigned lo
                            if (line.startswith('#define SM5440_') or line.startswith('#define  SM5440_')) and not line.startswith('#define SM5440_WRITE')) + '\n'
         prefix += function(src, 'struct sm5440_direct {') + ';\n'
         prefix += r'''
-static bool direct_charge, fixed_return_check;
+static bool direct_charge, fixed_return_check, pps_return_check;
 static struct sm5440_direct sm;
 static struct i2c_client client;
 static struct device dev;
@@ -73,7 +74,7 @@ static int request_error, fixed_error, off_error, release_error, pack_error;
 static int detach_wait, scheduled, canceled;
 static int fixed_snapshot_calls, owned_snapshot_calls, fail_owned_at, mutate_pack, fixed_adc_offset;
 static unsigned long scheduled_delay;
-static int fixed_sampling, fixed_sample_count, fixed_pattern;
+static int fixed_sampling, fixed_sample_count, fixed_pattern, pps_offset, pps_drift, suspend_wait;
 static u64 fixed_return_started;
 static void log_stub(struct device *d,const char *fmt,...) {(void)d;(void)fmt;}
 #define dev_info log_stub
@@ -109,6 +110,8 @@ static void msleep(unsigned int ms) {
   set_vbus(mv);
  }
  if(detach_wait){source.source_generation++;source.online=0;detach_wait=0;}
+ if(suspend_wait){sm.suspending=true;suspend_wait=0;}
+ if(source.pps_contract && pps_drift){source.budget_generation++;source.budget_mv+=20;pps_drift=0;}
 }
 static void usleep_range(unsigned int a,unsigned int b) {(void)b;clock_ms+=(a+999)/1000;}
 static u64 ktime_get_boottime(void) {return clock_ms*1000000;}
@@ -141,7 +144,7 @@ int sm5714_pd_request_pps(u64 instance,u64 generation,u64 lease,unsigned int mv,
  if(request_error)return request_error;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.online)return -ESTALE;
  source.pps_contract=true;source.online=2;source.budget_mv=mv;source.budget_ma=ma;source.budget_generation++;
- set_vbus(mv);*out=source;return 0;
+ set_vbus(mv+pps_offset);*out=source;return 0;
 }
 int sm5714_pd_restore_fixed(u64 instance,u64 generation,u64 lease,struct sm5714_pd_snapshot *out) {
  fixed_calls++;
@@ -160,13 +163,14 @@ int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct s
 '''
         names = ['sm5440_update_bits', 'sm5440_read_adc_pair', 'sm5440_adc_vbus_mv',
                  'sm5440_adc_ibus_ma', 'sm5440_adc_vbat_mv', 'sm5440_adc_die_temp',
-                 'sm5440_direct_enabled', 'sm5440_read_source', 'sm5440_read_pack', 'sm5440_pps_retry',
+                 'sm5440_direct_enabled', 'sm5440_modes_valid', 'sm5440_read_source', 'sm5440_read_pack', 'sm5440_pps_retry',
                  'sm5440_pps_target_mv', 'sm5440_set_ibus_limit', 'sm5440_negotiate_pps',
                  'sm5440_refresh_pps', 'sm5440_set_freq', 'sm5440_select_freq',
                  'sm5440_pump_off', 'sm5440_pump_on', 'sm5440_wait_vbus_settled',
                  'sm5440_renegotiate_pps', 'sm5440_monitor_faults', 'sm5440_log_faults',
                  'sm5440_restore_switching', 'sm5440_hw_init', 'sm5440_start',
                  'sm5440_eligible', 'sm5440_fixed_check_ready', 'sm5440_fixed_return_once',
+                 'sm5440_pps_check_pack', 'sm5440_pps_return_once',
                  'sm5440_backoff', 'sm5440_work',
                  'sm5440_cancel_work', 'sm5440_pm_notify']
         for name in names:
@@ -181,6 +185,7 @@ void reset(void) {
  regs[SM5440_REG_ADCCNTL2]=0xdf;regs[SM5440_REG_STATUS3]=32;regs[SM5440_REG_DEVICEID]=0x21;set_vbus(9000);
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
  clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
+ pps_return_check=false;pps_offset=pps_drift=suspend_wait=0;
  sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
@@ -188,6 +193,7 @@ void reset(void) {
  request_error=fixed_error=off_error=release_error=pack_error=detach_wait=scheduled=canceled=0;
 }
 int eligible(void) {return sm5440_eligible(&sm);}
+int modes_valid(void) {return sm5440_modes_valid();}
 int start(void) {if(!sm5440_eligible(&sm))return -EPERM;return sm5440_start(&sm);}
 int refresh(void) {return sm5440_renegotiate_pps(&sm);}
 int cleanup(void) {return sm5440_restore_switching(&sm);}
@@ -206,7 +212,9 @@ void input(int key,int value) {
  case 17:mutate_pack=value;break;case 18:fixed_adc_offset=value;break;
  case 19:fixed_pattern=value;break;case 20:fixed_return_check=value;break;
  case 21:sm.fixed_check_deadline=value;break;
- case 22:source.budget_mv=value;break;case 23:regs[SM5440_REG_ADCCNTL2]=value;break;}
+ case 22:source.budget_mv=value;break;case 23:regs[SM5440_REG_ADCCNTL2]=value;break;
+ case 24:pps_return_check=value;break;case 25:pps_offset=value;break;
+ case 26:pps_drift=value;break;case 27:suspend_wait=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -242,6 +250,69 @@ int value(int key) {
         self.assertEqual(self.lib.eligible(), 0)
         self.assertEqual(self.lib.start(), -1)
         self.assertEqual([self.v(n) for n in (2, 4, 8, 9)], [0, 0, 0, 0])
+
+    def pps_off(self):
+        self.lib.input(0, 0); self.lib.input(24, 1)
+
+    def test_all_boot_mode_combinations_are_exclusive(self):
+        import itertools
+        for direct,fixed,pps in itertools.product((0,1),repeat=3):
+            self.lib.input(0,direct); self.lib.input(20,fixed); self.lib.input(24,pps)
+            self.assertEqual(self.lib.modes_valid(), int(direct+fixed+pps<=1))
+
+    def test_pps_off_roundtrip_never_programs_pump_current_or_on(self):
+        self.pps_off(); self.lib.input(18, 427)
+        self.lib.work()
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 4, 5, 9, 10, 22)],
+                         [0, 0, 0, 1, 1, 1, 0, 0, 1])
+        self.assertEqual(self.v(7), 0)
+        counts = [self.v(k) for k in (4, 5, 8, 9, 11)]
+        self.lib.work()
+        self.assertEqual(counts, [self.v(k) for k in (4, 5, 8, 9, 11)])
+
+    def test_pps_off_wait_on_pc_and_absolute_deadline(self):
+        self.pps_off(); self.lib.input(22, 5000); self.lib.work()
+        self.assertEqual([self.v(k) for k in (2, 4, 8, 9, 22)], [0]*5)
+        self.lib.input(21, 1000); self.lib.work()
+        self.assertEqual([self.v(k) for k in (4, 9, 22, 7)], [0, 0, 1, 1])
+
+    def test_pps_off_strict_entry_pack_and_unknown_channels(self):
+        for key, value in [(0,1),(1,19),(1,80),(2,4300000),(3,199),(3,380),(4,-5),(23,0)]:
+            self.lib.reset(); self.pps_off(); self.lib.input(key,value); self.lib.work()
+            self.assertEqual([self.v(k) for k in (2,4,9,22,7)], [0,0,0,1,1])
+
+    def test_pps_off_negotiation_failure_preserved_even_after_safe_return(self):
+        self.pps_off(); self.lib.input(5,-11); self.lib.work()
+        self.assertEqual([self.v(k) for k in (1,2,3,4,5,7,9)], [0,0,1,1,1,1,0])
+        self.assertEqual(self.v(12),0)  # cleanup passed, primary PPS failed
+
+    def test_pps_off_outside_envelope_stops_and_returns_fixed(self):
+        self.pps_off(); self.lib.input(25,548); self.lib.work()
+        self.assertEqual([self.v(k) for k in (1,2,3,4,5,7,9)], [0,0,1,1,1,1,0])
+
+    def test_pps_off_nonzero_ibus_never_releases_unverified_current(self):
+        self.pps_off(); self.lib.input(14,1); self.lib.work()
+        self.assertEqual([self.v(k) for k in (1,2,3,7,9)], [0,7,0,1,0])
+
+    def test_pps_off_owned_failure_detach_suspend_or_budget_drift(self):
+        for key,value in [(16,1),(10,1),(27,1),(26,1),(17,1)]:
+            self.lib.reset(); self.pps_off(); self.lib.input(key,value); self.lib.work()
+            self.assertEqual(self.v(7),1)
+            self.assertEqual(self.v(1),0); self.assertEqual(self.v(9),0)
+
+    def test_pps_off_cleanup_error_retains_lease_and_no_retry(self):
+        self.pps_off(); self.lib.input(6,-5); self.lib.work()
+        self.assertEqual([self.v(k) for k in (1,2,3,7,9,12)], [0,7,0,1,0,-5])
+        calls=self.v(8); self.lib.work(); self.assertEqual(self.v(8),calls)
+
+    def test_every_pps_off_i2c_failure_has_no_pump_on_or_followup_request(self):
+        self.pps_off(); self.lib.work(); count=self.v(8)
+        for call in range(1,count+1):
+            with self.subTest(call=call):
+                self.lib.reset(); self.pps_off(); self.lib.input(9,call); self.lib.work()
+                self.assertEqual(self.v(7),1)
+                self.assertEqual(self.v(9),0); self.assertEqual(self.v(1),0)
+                calls=self.v(8); self.lib.work(); self.assertEqual(self.v(8),calls)
 
     def test_off_only_fixed_check_is_single_shot_without_pps_or_pump_on(self):
         self.lib.input(0, 0); self.lib.input(20, 1)

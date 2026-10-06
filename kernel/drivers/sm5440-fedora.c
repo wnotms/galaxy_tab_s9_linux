@@ -101,6 +101,9 @@ MODULE_PARM_DESC(direct_charge, "Explicit registered 1.8A direct-charge bring-up
 static bool fixed_return_check;
 module_param(fixed_return_check, bool, 0400);
 MODULE_PARM_DESC(fixed_return_check, "Registered one-shot fixed9V OFF return proof (default off, no PPS)");
+static bool pps_return_check;
+module_param(pps_return_check, bool, 0400);
+MODULE_PARM_DESC(pps_return_check, "Registered one-shot PPS/fixed return with pump OFF (default off)");
 #define SM5440_FIXED_CHECK_WAIT_MS	300000
 
 /*
@@ -209,8 +212,14 @@ static int sm5440_adc_die_temp(struct sm5440_direct *sm)
 static bool sm5440_direct_enabled(struct sm5440_direct *sm)
 {
 	return READ_ONCE(direct_charge) && !READ_ONCE(fixed_return_check) &&
+	       !READ_ONCE(pps_return_check) &&
         !READ_ONCE(sm->stopping) &&
         !READ_ONCE(sm->suspending) && !sm->fault_latched;
+}
+
+static bool sm5440_modes_valid(void)
+{
+	return (direct_charge + fixed_return_check + pps_return_check) <= 1;
 }
 
 /* Public snapshots admit fixed contracts only. Once PPS owns the handoff,
@@ -877,6 +886,164 @@ static int sm5440_fixed_return_once(struct sm5440_direct *sm)
 	return ret ? ret : cleanup;
 }
 
+/* The diagnostic never reaches hw_init/start/pump_on. Reuse the verified
+ * Fedora ADC setup and the native TCPM lease. No pump current, protections,
+ * reset, frequency or channel mask is programmed by this transaction.
+ */
+static int sm5440_pps_check_pack(struct sm5440_direct *sm)
+{
+	struct sm5714_pack_snapshot pack;
+	int ret = sm5440_read_pack(sm, &pack);
+
+	if (!ret && (pack.capacity < 20 || pack.voltage_uv >= 4300000 ||
+		     pack.pack_decic < 200 || pack.pack_decic >= 380))
+		ret = -ERANGE;
+	return ret;
+}
+
+static int sm5440_pps_return_once(struct sm5440_direct *sm)
+{
+	struct sm5714_pack_snapshot pack;
+	struct sm5714_pd_snapshot receipt, after;
+	u64 started = 0, now;
+	int ret, cleanup, channels, i;
+	int vbus = -1, ibus = -1, mode = -1;
+	int low = 0, high = 0, samples = 0;
+	const char *step = "OFF/channels";
+
+	ret = sm5440_pump_off(sm);
+	if (ret)
+		goto restore;
+	channels = i2c_smbus_read_byte_data(sm->client, SM5440_REG_ADCCNTL2);
+	if (channels != 0xdf) {
+		ret = channels < 0 ? channels : -ENODATA;
+		goto restore;
+	}
+	step = "lease/pack";
+	ret = sm5714_battery_switching_acquire(&sm->lease);
+	if (ret)
+		goto restore;
+	ret = sm5440_pps_check_pack(sm);
+	if (ret)
+		goto restore;
+	ret = sm5440_read_pack(sm, &pack);
+	if (ret)
+		goto restore;
+	sm->target_mv = sm5440_pps_target_mv(SM5440_MAX_PPS_MA,
+					   pack.voltage_uv);
+	sm->target_ma = SM5440_MAX_PPS_MA;
+	step = "ADC";
+	/* Existing same-model continuous/32-average sequence, channels unchanged. */
+	ret = sm5440_update_bits(sm, SM5440_REG_ADCCNTL1,
+		SM5440_ADCCNTL1_AVG_32 | SM5440_ADCCNTL1_CONTINUOUS |
+		SM5440_ADCCNTL1_ENABLE,
+		SM5440_ADCCNTL1_AVG_32 | SM5440_ADCCNTL1_CONTINUOUS |
+		SM5440_ADCCNTL1_ENABLE);
+	if (ret)
+		goto restore;
+	sm->adc_running = true;
+	step = "PPS request";
+	if (READ_ONCE(sm->suspending) || READ_ONCE(sm->stopping)) {
+		ret = -ESHUTDOWN;
+		goto restore;
+	}
+	/* Exactly one owned API call. No diagnostic retry/PPS keepalive/pump ON. */
+	ret = sm5714_pd_request_pps(sm->source.instance,
+		sm->source.source_generation, sm->lease,
+		sm->target_mv, sm->target_ma, &receipt);
+	if (ret)
+		goto restore;
+	sm->source = receipt;
+	dev_info(sm->dev,
+		 "PPS OFF negotiated: source=%llu lease=%llu target=%dmV/%dmA pump_ON=0\n",
+		 sm->source.source_generation, sm->lease,
+		 sm->target_mv, sm->target_ma);
+	step = "PPS physical sample";
+	for (i = 0; i < 30; i++) {
+		msleep(i ? 50 : 20);
+		if (READ_ONCE(sm->suspending) || READ_ONCE(sm->stopping)) {
+			ret = -ESHUTDOWN;
+			goto restore;
+		}
+		ret = sm5440_pps_check_pack(sm);
+		if (ret)
+			goto restore;
+		ret = sm5440_read_source(sm, &receipt);
+		if (ret)
+			goto restore;
+		if (!receipt.pps_contract || receipt.online != 2 ||
+		    receipt.budget_mv != sm->target_mv ||
+		    receipt.budget_ma != sm->target_ma) {
+			ret = -ESTALE;
+			goto restore;
+		}
+		mode = i2c_smbus_read_byte_data(sm->client, SM5440_REG_CNTL5);
+		vbus = sm5440_adc_vbus_mv(sm);
+		ibus = sm5440_read_adc_pair(sm, SM5440_REG_ADC_IBUS1);
+		if (mode < 0 || vbus < 0 || ibus < 0) {
+			ret = mode < 0 ? mode : (vbus < 0 ? vbus : ibus);
+			goto restore;
+		}
+		ret = sm5440_read_source(sm, &after);
+		if (ret)
+			goto restore;
+		if (receipt.budget_generation != after.budget_generation) {
+			ret = -ESTALE;
+			goto restore;
+		}
+		if ((mode & SM5440_CNTL5_OP_MODE_MASK) || ibus ||
+		    vbus > SM5440_MAX_PPS_MV + 300) {
+			ret = -ERANGE;
+			goto restore;
+		}
+		/* Retain Fedora's existing PPS ±500mV envelope. This is not an
+		 * independent ADC calibration; require stability separately.
+		 */
+		if (vbus < sm->target_mv - 500 || vbus > sm->target_mv + 500) {
+			samples = 0;
+			continue;
+		}
+		now = ktime_to_ms(ktime_get_boottime());
+		if (!samples) {
+			low = high = vbus;
+			started = now;
+			samples = 0;
+		} else {
+			low = min(low, vbus);
+			high = max(high, vbus);
+			if (high - low > 100) {
+				low = high = vbus;
+				started = now;
+				samples = 0;
+			}
+		}
+		if (++samples >= 3 && now - started >= 100) {
+			dev_info(sm->dev,
+				 "PPS OFF sampled: target=%dmV/%dmA observed=%dmV range=%d..%dmV samples=%d settled=%llums raw_ibus=0 pump_ON=0\n",
+				 sm->target_mv, sm->target_ma, vbus, low, high,
+				 samples, now - started);
+			ret = 0;
+			goto restore;
+		}
+	}
+	ret = -ETIMEDOUT;
+restore:
+	/* Restore even on partial acquisition/request/sampling failure. Preserve
+	 * the primary error independently of terminal physical-return failure.
+	 */
+	cleanup = sm->lease ? sm5440_restore_switching(sm) : 0;
+	if (ret || cleanup)
+		dev_err(sm->dev,
+			"PPS OFF return failed: step=%s primary=%d cleanup=%d lease=%llu target=%dmV/%dmA observed=%dmV raw_ibus=%d mode=%d\n",
+			step, ret, cleanup, sm->lease, sm->target_mv,
+			sm->target_ma, vbus, ibus, mode);
+	else
+		dev_info(sm->dev,
+			"PPS OFF return complete: target=%dmV/%dmA lease=0 fixed_return=1 pump_ON=0\n",
+			sm->target_mv, sm->target_ma);
+	return ret ? ret : cleanup;
+}
+
 /*
  * A pump that cannot hold is worse than no pump: it hands the pack back to the
  * switching charger and re-negotiates PPS over and over.  Back off exponentially
@@ -907,6 +1074,28 @@ static void sm5440_work(struct work_struct *work)
 	int capacity, die_temp, ibus, op_mode, pack_temp, status3;
 	int vbat, vbus;
 	int ret;
+
+	if (READ_ONCE(pps_return_check)) {
+		if (sm->fixed_check_done)
+			return;
+		if (ktime_to_ms(ktime_get_boottime()) >= sm->fixed_check_deadline)
+			ret = -ETIMEDOUT;
+		else
+			ret = sm5440_fixed_check_ready(sm);
+		if (!ret)
+			ret = sm5440_pps_check_pack(sm);
+		if (ret == -EAGAIN || ret == -ENODEV)
+			goto out;
+		sm->fixed_check_done = true;
+		if (!ret)
+			ret = sm5440_pps_return_once(sm);
+		if (ret) {
+			sm->fault_latched = true;
+			dev_err(sm->dev, "PPS OFF check stopped: %d; lease=%llu\n",
+				ret, sm->lease);
+		}
+		return;
+	}
 
 	if (READ_ONCE(fixed_return_check)) {
 		if (sm->fixed_check_done)
@@ -1117,7 +1306,7 @@ static int sm5440_probe(struct i2c_client *client)
 	int id;
 	int ret;
 
-	if (direct_charge && fixed_return_check)
+	if (!sm5440_modes_valid())
 		return -EINVAL;
 	if (!i2c_check_functionality(client->adapter,
 				     I2C_FUNC_SMBUS_BYTE_DATA))
