@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test334 native fixed-return PROVEN, series STOP hostWiFi90s,331 restored.
+Unique216deecd native10.642744s: source9/lease1/VBUS9.427V/3samples121ms/
+range9427..9427/rawIBUS0/OFF, then lease0/PPS0/ON0 completion. No30s host
+observation, not fullscopePASS or PPS transition/calibration. PCcapture68%/4.103V/
+29.7C, OFF01, WiFi19; priorSSH probe raced registeredrecovery and is inconclusive.
+Allfive/181 exact331 restored uniquef1e9a45a: config51/notes03/checkabsent/directOFF,
+68%4.103V29.7C/+0.796A, ADB/WindowsCode0/deviceNCM/strictWiFi163/fulljournal/
+failedunits empty/no newfault. Rollbackfalse;334-original consumed,331-original323
+retained. Source/build/55host reused. Next bounded hostdiscovery correction (0.4s/
+254burst suspect, cause not uniquelyproven), no unchangednativecheck reflash or
+autoPPS/current escalation. FullportNOT_READY. See334RESULTS/summary/nativeproof.
+
+
 2026-10-06 Test334 paired install complete after pushed8c647724. Allfive/181
 verified, BCBclear/rootunmounted, staysTWRP awaiting owner C2-before-System boot;
 no host Systemreboot. Exact331 saved334-original;331-original323 secondary

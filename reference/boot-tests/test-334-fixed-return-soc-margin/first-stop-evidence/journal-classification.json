@@ -1,0 +1,47 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 44,
+  "last_source_timestamp": "150020092",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 4.862551,
+        "events": [],
+        "setup_source_seconds": 3.941193
+      },
+      {
+        "completion_source_seconds": 6.494176,
+        "events": [
+          {
+            "completion_source_seconds": 6.494176,
+            "event_source_seconds": 5.693299,
+            "recovery_seconds": 0.800877,
+            "row": 1045
+          }
+        ],
+        "setup_source_seconds": 5.619002
+      },
+      {
+        "completion_source_seconds": 9.682709,
+        "events": [],
+        "setup_source_seconds": 8.800894
+      }
+    ],
+    "event_count": 1,
+    "event_rows": [
+      1045
+    ],
+    "setup_count": 3,
+    "state": "accepted"
+  },
+  "rows": 1121,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": []
+}

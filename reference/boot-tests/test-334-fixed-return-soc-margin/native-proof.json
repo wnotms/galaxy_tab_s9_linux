@@ -1,0 +1,31 @@
+{
+  "PPS": false,
+  "boot_attribution": "attributed",
+  "boot_id": "216deecdbc2a4dda9aa01989347e20f6",
+  "completion_message": "sm5440-fedora 0-0063: fixed return check complete: lease=0 PPS=0 pump_ON=0",
+  "completion_source_seconds": 10.642774,
+  "continuous_host_observation_executed": false,
+  "full_registered_scope_pass": false,
+  "kernel_source_seconds": 10.642744,
+  "native_message": "sm5440-fedora 0-0063: fixed return verified: source=9 lease=1 vbus=9427000uV samples=3 range=9427..9427mV settled=121ms raw_ibus=0 pump_off=1",
+  "observation_seconds_required": 30,
+  "proof": {
+    "lease": 1,
+    "max_mv": 9427,
+    "min_mv": 9427,
+    "samples": 3,
+    "settled_ms": 121,
+    "source": 9,
+    "vbus_uv": 9427000
+  },
+  "pump_ON": false,
+  "pump_read_after_PC_return": {
+    "boot_after": "216deecd-bc2a-4dda-9aa0-1989347e20f6",
+    "boot_before": "216deecd-bc2a-4dda-9aa0-1989347e20f6",
+    "config_data_written": false,
+    "driver": "sm5440-fedora",
+    "register": 16,
+    "value": 1
+  },
+  "status": "NATIVE_FIXED_RETURN_PROOF_VALID"
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-334-fixed-return-soc-margin/host_flow.py", line 252, in <module>
+    print(json.dumps(restore(args.from_recovery) if args.action=='restore' else globals()[args.action](),indent=2),flush=True)
+                                                                                ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-334-fixed-return-soc-margin/host_flow.py", line 203, in admit
+    if not address:raise TimeoutError('enrolled-key candidate WiFi not found')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: enrolled-key candidate WiFi not found
