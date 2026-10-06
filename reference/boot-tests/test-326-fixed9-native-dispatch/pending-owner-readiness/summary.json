@@ -1,0 +1,18 @@
+{
+  "verdict": "AWAITING_OWNER_SINGLE_BOOT_AND_PC_RETURN",
+  "read_only": true,
+  "adb_list_empty": true,
+  "registered_wifi_status": 255,
+  "candidate_runtime_verified": false,
+  "cpu_failure_inferred": false,
+  "reboot_or_write_issued": false,
+  "rollback_required": true,
+  "build": {
+    "executed": false,
+    "reason": "Read-only transport observation; unchanged candidate qualification reused"
+  },
+  "host_tests": {
+    "executed": false,
+    "reason": "Raw transport evidence only; no runner or parser change"
+  }
+}
