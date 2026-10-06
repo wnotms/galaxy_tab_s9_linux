@@ -1,0 +1,61 @@
+{
+  "test": "Test332",
+  "verdict": "STOPPED_BEFORE_FIXED9_GATE_KERNEL_WAIT_DEADLINE",
+  "registration_revision": "1842ba3d301590357b28ed8c4560b5ffeff1853b",
+  "kernel_source_revision": "48cc5d16",
+  "candidate_boot_id": "7b5eef2dabe442629014d633a45ee340",
+  "restored_boot_id": "205a240476ea4aaeb60e0e913a8cc2a8",
+  "PPS_requested": false,
+  "pump_ON": false,
+  "fixed9_physical_gate_executed": false,
+  "switching_lease_acquired": false,
+  "kernel_deadline_event": {
+    "__REALTIME_TIMESTAMP": "1790512220568194",
+    "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+    "__MONOTONIC_TIMESTAMP": "301280480",
+    "MESSAGE": "sm5440-fedora 0-0063: fixed return check failed: -110; lease=0",
+    "_BOOT_ID": "7b5eef2dabe442629014d633a45ee340",
+    "_SOURCE_MONOTONIC_TIMESTAMP": "301280545",
+    "_KERNEL_DEVICE": "+i2c:0-0063",
+    "__SEQNUM": "935202",
+    "_HOSTNAME": "gts9",
+    "_KERNEL_SUBSYSTEM": "i2c",
+    "_TRANSPORT": "kernel",
+    "SYSLOG_IDENTIFIER": "kernel",
+    "PRIORITY": "3",
+    "_SOURCE_BOOTTIME_TIMESTAMP": "301280545",
+    "SYSLOG_FACILITY": "0",
+    "_RUNTIME_SCOPE": "system",
+    "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=e4522;b=7b5eef2dabe442629014d633a45ee340;m=11f52ce0;t=65c761cdf7a82;x=23615d5431ffdab",
+    "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071",
+    "_UDEV_SYSNAME": "0-0063"
+  },
+  "host_defects": [
+    "configure-only observer trust selected wrong historical known-hosts file",
+    "Oops substring falsely matched ramoops registration"
+  ],
+  "host_tests": 37,
+  "actual_CPU_fault_detected": false,
+  "rollback_all_five_181": true,
+  "restored_baseline": "Test331 exact accepted default-OFF",
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 930000,
+      "input_limit_ua": 1800000,
+      "soc": 76,
+      "temp_decic": 312,
+      "voltage_uv": 4203000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "205a240476ea4aaeb60e0e913a8cc2a8",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.139.153.55",
+      "wifi_authenticated": true
+    }
+  },
+  "next": "Charger-attached manual System boot after TWRP install, capture over pinned-key WiFi; retain same one-shot/kernel deadline and no PPS/pump scope"
+}

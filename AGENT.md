@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test332 stopped before fixed9 acquisition; exact331 restored.
+Candidate48cc5d16/3fe4adf1/paired181 PCstartup healthy7b5eef2d, but two host-only
+pre-collection defects (strict trust path, ramoops substring) consumed wait;
+both corrected/tested37PASS with originals preserved, no kernel/reflash/replay.
+Native301.280545s fixed-check wait expired onPC5,ret-110/lease0. No fixed9
+proof, lease acquisition, PPS or pumpON. Allfive/181 exact331 restoration,
+unique205a240476ea4aaeb60e0e913a8cc2a8, defaultOFF/no fixed-check flag,76%
+4.203V31.2C/+0.930A,ADB/deviceNCM/strictWiFi55/Windows normal.332original
+consumed,331-original323 retained. FullportNOT_READY. Next new OFF-only scope
+must attachC2 before manualSystem boot inTWRP, then pinnedWiFi journal/30s;
+reuse48cc5d16 build, no changed power policy or repeated PCboot deadline.
+See Test332RESULTS; original hostfailures/deadline are not a fixed9/ADC failure.
+
 2026-10-06 Test332 OFF-only fixed9 return scope registered/preflight READY:
 source48cc5d16 defaultfalse/readonly fixed_return_check, mutual exclusion with
 direct/PPS activation, one existing worker transaction/300s absolute probe
