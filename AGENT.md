@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test333 completed STOPPED entry limit, exact331 restored. Candidate
+unique49c58e20 onC2: SOC80/4.288V27.4C/fixed9budget1.5A; native10.470670s
+-ERANGE/lease0, exact native field unlogged. No proof/30s/PPS/pumpON; rawOFF01.
+Allfive/181 exact331 recovery and unique3ae598ff accepted: config51/notes03/no
+checkflag/directOFF,81%4.263V30.7C/+0.764A, ADB/WindowsCode0/deviceNCM/strict
+WiFi238/fulljournal/failedunits empty. Rollbackfalse;333-original consumed,
+331-original323 secondary retained. 43runner+5restore tests, existingkernel
+qualification reused/no build/fullrun. Next naturalSOC margin suggested≤75,
+fresh registered entry gates; no auto PPS/current increase. FullportNOT_READY.
+See333RESULTS/summary; historical pending states below superseded.
+
+
 2026-10-06 Test333 STOP at charger System boot49c58e20: SOC80/VBAT4.288V/
 pack27.4C/fixed9budget1.5A. Native -ERANGE(-34)/lease0 agrees entry refusal;
 read pump OFF, fulljournal preserved. No physical proof/30s acceptance/PPS/ON.

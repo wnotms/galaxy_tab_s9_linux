@@ -1,0 +1,19 @@
+{
+  "window": "Test324\u2013Test333",
+  "deleted": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test323/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+      "reason": "Expired Test323 Windows staging duplicate; current333 uses its own stage,331 rollback and explicitly recorded323 secondary formal artifact"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test323/rollback-accepted311-boot.img",
+      "bytes": 100663296,
+      "sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+      "reason": "Expired Test323 Windows staging duplicate; current333 uses its own stage,331 rollback and explicitly recorded323 secondary formal artifact"
+    }
+  ],
+  "bytes_removed": 201326592,
+  "scope": "Windows stale boot copies only; no running/registered formal artifact, archive, original log or device file removed"
+}

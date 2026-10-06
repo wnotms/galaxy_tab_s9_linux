@@ -1,0 +1,93 @@
+{
+  "PPS": false,
+  "affected_host_tests": {
+    "errors": 0,
+    "failures": 0,
+    "restoration": 5,
+    "runner": 43,
+    "skips": 0
+  },
+  "baseline_boot_id": "205a240476ea4aaeb60e0e913a8cc2a8",
+  "boot_attribution": "two unique attributed System boots",
+  "build_executed": false,
+  "candidate_boot_id": "49c58e20fa9740899e0944a0df5d375b",
+  "candidate_identity": {
+    "boot_sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "notes_sha256": "ff706409f519e5592f5f42579cc8354a6861d86433a95c9bea0f14e9f4771c3f"
+  },
+  "detected_CPU_fault_signatures": 0,
+  "entry_snapshot": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "80",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "1642000",
+    "POWER_SUPPLY_CURRENT_NOW": "1804000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "274",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4284000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4288000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4178000"
+  },
+  "final_verdict": "STOPPED_ENTRY_LIMIT_EXACT331_RESTORED",
+  "full_charging_port_verdict": "NOT_READY",
+  "full_host_tests_executed": false,
+  "installation_commit": "e8313d46",
+  "kernel_qualification_reused": "reference/charging/sm5440-fixed-return-check/RESULTS.md",
+  "kernel_source": "48cc5d1624357d115f265be93f6985b4fce6ead5",
+  "native_refusal": {
+    "lease": 0,
+    "message": "sm5440-fedora 0-0063: fixed return check failed: -34; lease=0",
+    "source_seconds": 10.47067
+  },
+  "next_step": "New scope only after naturally reduced SOC with margin (suggest <=75) and fresh identity/pack gates; no automatic PPS or current increase",
+  "observation_executed": false,
+  "physical_fixed_return_proof": false,
+  "pump_ON": false,
+  "pump_read": {
+    "boot_after": "49c58e20-fa97-4089-9e09-44a0df5d375b",
+    "boot_before": "49c58e20-fa97-4089-9e09-44a0df5d375b",
+    "config_data_written": false,
+    "driver": "sm5440-fedora",
+    "register": 16,
+    "value": 1
+  },
+  "registered_observation_seconds": 30,
+  "registration_commit": "c23b9ad4",
+  "restoration": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 764000,
+      "input_limit_ua": 1800000,
+      "soc": 81,
+      "temp_decic": 307,
+      "voltage_uv": 4263000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "3ae598ff00c94ecfa1378a74e1731fe3",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.139.153.238",
+      "wifi_authenticated": true
+    }
+  },
+  "restoration_registration_commit": "daf8ac64",
+  "restored_allfive_and_181": true,
+  "restored_boot_id": "3ae598ff00c94ecfa1378a74e1731fe3",
+  "rollback_required": false,
+  "stop_reason": "SOC80 is outside registered20<=SOC<80 entry; kernel independently refused -ERANGE without logging which field",
+  "test": "Test333"
+}
