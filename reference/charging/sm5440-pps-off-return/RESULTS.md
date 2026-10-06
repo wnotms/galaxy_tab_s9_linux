@@ -14,7 +14,9 @@ Installed accepted331 was not modified.
   at unchanged1.8A/8.2–10.5V formula. Never calls hw_init/start/pump_on; no reset/
   current/frequency/protection programming. Actual/source-bound three samples
   over100ms/range≤100mV/±500mV/zeroIBUS/OFF. Primary and cleanup errors separately
-  logged; existing terminal fixed9 proof/release always attempted. No rearm.
+  logged; existing terminal fixed9 proof/release always attempted. No rearm. One owned API transaction can issue several TCPM Requests through
+  the existing ONLINE/current/voltage property adapter; it is not a claim of
+  exactly one PD frame. Only diagnostic transaction retries/refreshes are absent.
 - ordinary_charge_window.py: bounded WAIT→SETTLING≤10s→OBSERVE≥30s. First335
   negative-current packet now waits for healthy ordinary charge without
   bypassing safety gates. Any loss after entry/timeout/clock gap/fault latches
