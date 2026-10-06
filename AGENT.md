@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test329 deviceUSBrecovery PASS: one ordinaryunchanged327 reboot,
+7f9c0caa→094c2a35 uniquelyattributed, sameconfig51ba6a9c/notes5ec694b4/normalcmd,
+FedoraN/CNTL5=01 OFF. NativeADB/WindowsCode0/WiFi152/deviceNCM/15s endpoint/no
+newfault;84%4.294V30.9C/input1.8A/pack+1.105A. Early7.64s SSHactivating/WiFinotready
+hostgateerror preserved, missingready evidencecompleted within150s sameboot,
+no secondreboot/reflash/retest. No software/rootfs/USBchange/PPS/pumpON. Retain
+327defaultOFF, rollbacknotneeded; notpermanentUSBfix. Test328stilluninstalled/
+unstarted, SOC84 fails PPS<80, no thresholdraise. Results329; fullportNOT_READY.
+
+
 2026-10-06 Test329 registered one unchanged327 ordinarywarm reboot for persistent
 incomingCode43 after ownerportretry. WiFi7f9c0caa healthy/defaultOFF, latestSOC83;
 ordinaryrecovery20–<95 distinctfromPPS<80 (notwaived). No flash/BCB/rootfs/gadget/
