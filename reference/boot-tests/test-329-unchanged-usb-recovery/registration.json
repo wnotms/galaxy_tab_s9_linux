@@ -1,0 +1,48 @@
+{
+  "test": "Test329",
+  "purpose": "One unchanged Test327 ordinary warm reboot to recover incoming Windows descriptor Code43 after owner cable/port retry",
+  "maximum_reboots": 1,
+  "request": "systemctl reboot",
+  "incoming_boot_id": "7f9c0caac4ae471a95f492941ceb7ccc",
+  "source_revision": "376693d732e2aede470643c611d4cc31d93d4893",
+  "registration_parent": "88c6a789",
+  "baseline_config": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "baseline_notes": "5ec694b48a1234a269695e50d1293c597f045adf28992b8a70a513411a73cb41",
+  "runtime_cmdline": "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277",
+  "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+  "minimum_soc": 20,
+  "maximum_soc_exclusive": 95,
+  "pack_decic_range": [
+    200,
+    380
+  ],
+  "vbat_max_uv": 4400000,
+  "PPS": false,
+  "pump_ON": false,
+  "flash": false,
+  "BCB": false,
+  "service_restart": false,
+  "gadget_rebind": false,
+  "rootfs_change": false,
+  "module_replacement": false,
+  "maximum_readiness_seconds": 150,
+  "endpoint_seconds": 15,
+  "preflight_max_age_seconds": 300,
+  "preflight_at_epoch": 1791266516.2729447,
+  "preflight_battery": {
+    "soc": 83,
+    "voltage_uv": 4274000,
+    "temp_decic": 264,
+    "current_ua": 396000,
+    "input_limit_ua": 1800000
+  },
+  "transport": "strict enrolled WiFi; native ADB absent on incoming Code43, required after recovery",
+  "wifi": "10.139.153.224",
+  "rollback_required": false,
+  "failure_action": "Preserve first non-clean and stop, no second reboot, no configuration repair; retain unmodified Test327 OFF baseline",
+  "qualification": {
+    "kernel_build_executed": false,
+    "host_tests_executed": false,
+    "reason": "unchanged recovery hardware/software; reuse registered identity/pump/journal/boot-attribution helpers; no new runner or parser"
+  }
+}
