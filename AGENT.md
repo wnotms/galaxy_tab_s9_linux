@@ -98,9 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test325 candidate boot/181 installed viaTWRP, allfive readback match,
+BCBclear/rootunmounted; no automaticcandidate reboot. OwnermustC2bootSystemonce,
+hold>=30s afterlogin thenreturnPCsameboot. CurrentdeviceTWRP/rollback_requiredtrue;
+accepted323original181saved .gts9-test325-original, independent311backupretained.
+Fresh68%4.111V30.0CGood/allfive/rescue entry. Captureonce rawbeforeparse and
+unconditional323restoreinfinally, manualTWRP ifrescue lost. No newPPS/pump/current/
+protection/USB grants. CURRENT_STATUS325/installation evidence; build/testsfalse
+reuse exactqualifiedinputs. FullportNOTREADY.
+
+
 2026-10-06 Test325 newretained-evidence fixed9V OFF registration: reuse80d590f0/
 d910fe06 candidate;32new runner/parser/cleanup testsPASS0.092s, no kernelrebuild.
-Freshaccepted323 normal4cf32922/confignotes/allfive181/67%/pack27.9CGood/input1800/
+Freshaccepted323 normal4cf32922/confignotes/allfive181/68%/pack30.0CGood/input1800/
 fast115float45/ADB+WiFi+NCM+WindowsCode0. OneTWRPboot-only181 install thenownerC2
 bootonce, hold>=30s andreturnPCwithoutreboot; no staleDHCPcollector. Actualkernel
 source timestamps mustspanfour100ms native samples/fixed9 budget/2newsameclass
