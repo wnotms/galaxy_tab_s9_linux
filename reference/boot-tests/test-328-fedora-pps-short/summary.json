@@ -1,0 +1,16 @@
+{
+  "verdict": "STOP_HOST_CMDLINE_WHITESPACE_BEFORE_PPS",
+  "PPS_executed": false,
+  "pump_observation_executed": false,
+  "baseline_boot_id": "094c2a35399a4547845afa141b135b22",
+  "candidate_boot_id": "4d64e99638a34287908378de0734280b",
+  "final_boot_id": "222efdcc800043dd89ed97c90396b7b3",
+  "software_restored": "Test327 default-OFF boot and unchanged181 modules",
+  "rollback_required": false,
+  "host_error": "strict byte comparison after opt-in removal rejected single versus double separator; exact ordered token list matches baseline",
+  "device_kernel_faults_detected": false,
+  "build_executed": false,
+  "host_tests_executed": false,
+  "qualification_reused": "b33b6d65 34 host tests and f105ffed kernel qualification",
+  "next": "Fix host-only comparison, separately register Test330; retain original STOP and do not replay PPS window"
+}

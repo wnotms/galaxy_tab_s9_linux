@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test328 STOP_HOST_CMDLINE_WHITESPACE beforePPS: boot-onlyopt-in
+4d64e996 exactconfig/notes/orderedtokens exceptflag, bytecomparison rejected
+one/twospaces. No newkernelfault or charger/PPS/pumpobservation. Originalerror
+andfulljournal retained. Automaticexact327defaultOFFrestore completed allfive/
+181/BCB/unmount; normal222efdcc,52%3.937V29.4C/FedoraN/OFF/nativeADB/no43/
+WiFi150/deviceNCM healthy,rollbackfalse. Next host-only parserfix and separate
+Test330 registration; do not rewrite STOP/replay PPS or rebuildkernel.
+
+
 2026-10-06 Test328 resumed preflight READY after ownerdischarge and PCreturn:
 accepted327/329boot094c2a35,52%3.928V29.4C, ADB/Windowsno43/WiFi152 healthy,
 allfive partitions/exact181/confignotes/OFF match. Original highSOC/Code43
