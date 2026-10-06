@@ -1,0 +1,15 @@
+test_boot_pump_role_and_response_faults (test_ordinary_charge_window.WindowTests.test_boot_pump_role_and_response_faults) ... ok
+test_detach_during_settling_stops (test_ordinary_charge_window.WindowTests.test_detach_during_settling_stops) ... ok
+test_invalid_clock_stops (test_ordinary_charge_window.WindowTests.test_invalid_clock_stops) ... ok
+test_negative_does_not_wait_forever (test_ordinary_charge_window.WindowTests.test_negative_does_not_wait_forever) ... ok
+test_observation_does_not_restart_after_negative_current (test_ordinary_charge_window.WindowTests.test_observation_does_not_restart_after_negative_current) ... ok
+test_offline_wait_is_not_observation (test_ordinary_charge_window.WindowTests.test_offline_wait_is_not_observation) ... ok
+test_real_initial_negative_current_waits_then_full_30s (test_ordinary_charge_window.WindowTests.test_real_initial_negative_current_waits_then_full_30s) ... ok
+test_safety_faults_still_stop_during_settling (test_ordinary_charge_window.WindowTests.test_safety_faults_still_stop_during_settling) ... ok
+test_settling_boundary_is_inclusive (test_ordinary_charge_window.WindowTests.test_settling_boundary_is_inclusive) ... ok
+test_unbounded_settling_and_short_observation_rejected (test_ordinary_charge_window.WindowTests.test_unbounded_settling_and_short_observation_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.006s
+
+OK
