@@ -1,0 +1,26 @@
+{
+  "window": "Test320\u2013Test329",
+  "deleted": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test318/candidate-boot.img",
+      "sha256": "9e92a06e8828dfa451b51abd45719737636c7cc90ebaa2381b9eabaa2c38b324",
+      "bytes": 100663296
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test318/rollback-accepted311-boot.img",
+      "sha256": "f4efa07e88ca3bc012b373827529fe4f92f35105e0040623da6486f1509fdacb",
+      "bytes": 100663296
+    },
+    {
+      "path": "out/boot-bundle-x710-318-continuous-timing/boot.img",
+      "sha256": "9e92a06e8828dfa451b51abd45719737636c7cc90ebaa2381b9eabaa2c38b324",
+      "bytes": 100663296
+    }
+  ],
+  "reason": "superseded Test318 image names beyond owner latest10 window; no current Test323/327/328 image or module touched",
+  "bytes_removed_from_names": 301989888,
+  "physical_reclaim": "not estimated: sparse/hardlink content may remain at other valid names",
+  "module_archive_retained": "/mnt/d/android/gts9-active/gts9-test318/candidate-modules.tar.gz",
+  "test319": "no Windows stage or named out bundle present",
+  "tests_build_executed": false
+}
