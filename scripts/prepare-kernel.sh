@@ -14,7 +14,7 @@ rpmh_debug=${GTS9_RPMH_DEBUG:-0}
 idle_ablation=${GTS9_IDLE_ABLATION:-}
 charging_profile=${GTS9_CHARGING_PROFILE:-}
 case "$charging_profile" in
-    ''|sm5440-passive|sm5440-policy-offline|sm5440-native-control|sm5440-adc-condition|sm5440-adc-timing|sm5440-adc-raw|sm5440-adc-oneshot) ;;
+    ''|sm5440-passive|sm5440-policy-offline|sm5440-native-control|sm5440-adc-condition|sm5440-adc-timing|sm5440-adc-raw|sm5440-adc-oneshot|sm5440-fedora) ;;
     *) echo "unknown GTS9_CHARGING_PROFILE: $charging_profile" >&2; exit 2 ;;
 esac
 if [ -n "$charging_profile" ] && [ -n "$idle_ablation" ]; then
@@ -201,7 +201,7 @@ for drv in "$driver_src"/*.c; do
 		panel-*) dest=$panel_dir ;;
 		keyboard-*) dest="$tree/drivers/input/keyboard" ;;
 		sm5714-battery.c) dest="$tree/drivers/power/supply" ;;
-		sm5440-direct.c) dest="$tree/drivers/power/supply" ;;
+		sm5440-direct.c|sm5440-fedora.c) dest="$tree/drivers/power/supply" ;;
 		sm5440-watchdog.c|sm5440-actuator.c|sm5440-conversion.c|sm5440-supervisor.c) dest="$tree/drivers/power/supply" ;;
 		sm5440-control.c) dest="$tree/drivers/power/supply" ;;
 		sm5440-timing.c) dest="$tree/drivers/power/supply" ;;

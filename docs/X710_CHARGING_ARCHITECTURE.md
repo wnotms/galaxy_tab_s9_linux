@@ -1,4 +1,15 @@
 # X710 mainline charging architecture
+
+Current owner direction (2026-10-06): use the same-model Fedora charging source.
+The separately built `sm5440-fedora.c` ports its real continuous ADC/PPS/pump
+worker, adapted to the existing source/lease APIs and1.8A initial cap. See
+[Fedora source port](X710_FEDORA_CHARGING_PORT.md). The prior custom single-shot
+ADC/native activation route below is historical and is not the new candidate's
+runtime. Test326 stopped at its actual100ms request timeout and exact Test323
+boot/modules were restored. Device3f4cf492 remains accepted ordinary Test323.
+The new driver defaults OFF and is not physically accepted or deployed yet.
+Full higher-power charging remains unaccepted; no new ADC repair round is planned.
+
 Current continuation (2026-10-03): Test303 supplies an explicitly invoked kernel pump-OFF
 PPS consumer, real provider integration, PM drain and source-bound authorization
 release; see [owned consumer](X710_OWNED_PPS_CONSUMER.md). The active core's

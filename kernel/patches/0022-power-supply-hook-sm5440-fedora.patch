@@ -1,0 +1,23 @@
+From: X710 mainline port <bringup@localhost>
+Subject: [PATCH] power: supply: select the Fedora X710 charging source port
+
+Keep the existing diagnostic driver separately selectable. The new source port
+uses same-model continuous ADC/PPS policy with conservative X710 integration.
+Default n; direct charging remains opt-in and off at probe.
+
+--- a/drivers/power/supply/Kconfig
++++ b/drivers/power/supply/Kconfig
+@@ -1240 +1240,9 @@
++config CHARGER_SM5440_FEDORA
++	bool "Samsung X710 Fedora SM5440 charging source port"
++	depends on I2C && OF && BATTERY_SM5714=y && TYPEC_SM5714=y
++	depends on !CHARGER_SM5440_DIRECT
++	help
++	  Same-model Fedora continuous ADC, PPS and charge-pump worker.
++	  Direct charging defaults off; use an explicitly registered candidate.
++
+ endif # POWER_SUPPLY
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -145,0 +146 @@
++obj-$(CONFIG_CHARGER_SM5440_FEDORA) += sm5440-fedora.o

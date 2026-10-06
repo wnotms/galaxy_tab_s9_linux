@@ -16,8 +16,15 @@ def verify(text, baseline=None, profile="sm5440-passive"):
     before = STAGE2.CONTAINER.read_config(baseline or BASE.read_text())
     after = STAGE2.CONTAINER.read_config(text)
     expected = {"CONFIG_CHARGER_SM5440_DIRECT": [before.get("CONFIG_CHARGER_SM5440_DIRECT", "absent"), "y"]}
-    if profile not in ("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw", "sm5440-adc-oneshot"):
+    if profile not in ("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw", "sm5440-adc-oneshot", "sm5440-fedora"):
         return {"valid": False, "errors": ["unknown charging profile"]}
+    fedora = "CONFIG_CHARGER_SM5440_FEDORA"
+    if fedora in after and fedora not in before:
+        expected[fedora] = ["absent", "n"]
+    if profile == "sm5440-fedora":
+        expected[fedora] = [before.get(fedora, "absent"), "y"]
+        expected["CONFIG_CHARGER_SM5440_DIRECT"] = [
+            before.get("CONFIG_CHARGER_SM5440_DIRECT", "absent"), "n"]
     policy = "CONFIG_X710_CHARGING_POLICY"
     if policy in after and policy not in before:
         expected[policy] = ["absent", "n"]
@@ -60,10 +67,14 @@ def verify(text, baseline=None, profile="sm5440-passive"):
         allowed.add(raw)
     if profile == "sm5440-adc-oneshot":
         allowed.add(oneshot)
+    if profile == "sm5440-fedora":
+        allowed.add(fedora)
     result["errors"] += [f"{name}: forbidden advanced feature" for name in sorted(
         STAGE2.FORBIDDEN - allowed) if after.get(name) in ("y", "m")]
     if profile != "sm5440-native-control" and after.get(native) in ("y", "m"):
         result["errors"].append("native control requires its isolated profile")
+    if profile != "sm5440-fedora" and after.get(fedora) in ("y", "m"):
+        result["errors"].append("Fedora source port requires its isolated profile")
     result["valid"] = not result["errors"]
     result["profile"] = profile
     result["pump_activation_available"] = False
@@ -73,7 +84,7 @@ def verify(text, baseline=None, profile="sm5440-passive"):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", type=Path)
-    parser.add_argument("--profile", choices=("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw", "sm5440-adc-oneshot"), default="sm5440-passive")
+    parser.add_argument("--profile", choices=("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw", "sm5440-adc-oneshot", "sm5440-fedora"), default="sm5440-passive")
     args = parser.parse_args()
     result = verify(args.config.read_text(), profile=args.profile)
     print(json.dumps(result, indent=2))
