@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test324，窗口为 **Test315–Test324**；没有生成镜像的轮次仍占一轮。
+  编号为 Test325，窗口为 **Test316–Test325**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test325 newretained-evidence fixed9V OFF registration: reuse80d590f0/
+d910fe06 candidate;32new runner/parser/cleanup testsPASS0.092s, no kernelrebuild.
+Freshaccepted323 normal4cf32922/confignotes/allfive181/67%/pack27.9CGood/input1800/
+fast115float45/ADB+WiFi+NCM+WindowsCode0. OneTWRPboot-only181 install thenownerC2
+bootonce, hold>=30s andreturnPCwithoutreboot; no staleDHCPcollector. Actualkernel
+source timestamps mustspanfour100ms native samples/fixed9 budget/2newsameclass
+confirmations; latePCpacket distinct. Unconditional323restoreinfinally; first
+faultstops/no replay/PPS/pump/current/protection/USBchange. Candidate not yet
+installed; live323 retained. Windows324completedstage verified/renamed325/no
+second248MBcopy. Registration325, currentretention316–325. FullportNOTREADY.
+
 
 2026-10-06 isolated fixed9V startup correction source80d590f0 qualifiedoffline:
 onlyONESHOT acceptsOFF8.5–9.5V initialinactiveREVBLK then2freshclean/sameclass/
