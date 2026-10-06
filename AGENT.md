@@ -106,7 +106,10 @@ attaches C2 18W/C1empty before single System boot. Native300s/physical proof/
 admission preserves unique boot history; complete journal retains early proof.
 No PPS/pumpON/current raise. Restore exact331 after owner PC return regardless
 of result;331-original323 secondary retained. Registration333README; no physical
-execution yet. Fresh preflight READY same205a2404,79%4.254V32.3C, exact
+acceptance yet. Installation completed: allfive/181 verified, BCBclear/root
+unmounted, stays in TWRP awaiting owner C2-before-System boot. No host System
+reboot issued; exact331 saved333-original, rollback required. Fresh preflight
+READY same205a2404,79%4.254V32.3C, exact
 allfive/181/OFF/ADB/deviceNCM/strictWiFi55/WindowsCode0, fresh333slots.
 This is already-fixed9 return, not PPS transition/calibration.
 
