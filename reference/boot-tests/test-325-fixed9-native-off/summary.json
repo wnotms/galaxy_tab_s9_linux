@@ -1,0 +1,50 @@
+{
+  "test": "Test325",
+  "verdict": "STOP_INITIAL_FIXED9_FAULT_RECHECK_RESTORED",
+  "candidate_boot_id": "1931c9ef988b45d1a01b052bcdb4b29f",
+  "original_host_stop": {
+    "charging_authorized": false,
+    "error": "duplicate section",
+    "observed_boot_id": null,
+    "phase": "retained-candidate-capture",
+    "stopped": true
+  },
+  "derived_boundary_normalization": {
+    "all_three_boot_ids_equal": true,
+    "original_packet_preserved": true,
+    "original_runner_pass": false
+  },
+  "native_attempted": 0,
+  "native_count": 0,
+  "startup_pending": 2,
+  "fault": 1,
+  "startup_retained": 1,
+  "initial_vbus_uv": 9437000,
+  "initial_vbat_uv": 4079500,
+  "initial_ibus_ua": 0,
+  "initial_die_decic": 280,
+  "initial_gauge_uv": 4160000,
+  "initial_ADC_gauge_gap_uv": 80500,
+  "CPU_fault_counts": {},
+  "kernel_rows": 1112,
+  "boot_attribution": "attributed",
+  "rollback": {
+    "final": {
+      "battery": {
+        "soc": 70,
+        "temp_decic": 293,
+        "voltage_uv": 4127000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "abc27877c32a4f3bac4440001b80d12d",
+      "charging_authorized": false,
+      "device_NCM": true,
+      "host_NCM_probe_status": 0
+    },
+    "phase": "accepted323-restored",
+    "rollback_required": false
+  },
+  "PPS": false,
+  "pump_ON": false,
+  "full_port_verdict": "NOT_READY"
+}

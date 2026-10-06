@@ -1,0 +1,84 @@
+{
+  "rows": 1112,
+  "fault_counts": {},
+  "suspects": [
+    {
+      "row": 8,
+      "priority": 3,
+      "message": "OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-heap@b0200000': base 0x00000000b0200000, size 0 MiB"
+    },
+    {
+      "row": 9,
+      "priority": 3,
+      "message": "OF: reserved mem: Reserved memory: failed to reserve memory for node 'uh-guest@b1000000': base 0x00000000b1000000, size 48 MiB"
+    },
+    {
+      "row": 75,
+      "priority": 3,
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nkaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)"
+    },
+    {
+      "row": 76,
+      "priority": 3,
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nuh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)"
+    },
+    {
+      "row": 77,
+      "priority": 3,
+      "message": "OF: reserved mem: OVERLAP DETECTED!\nuh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)"
+    },
+    {
+      "row": 641,
+      "priority": 3,
+      "message": "remoteproc remoteproc0: request_firmware failed: -2"
+    },
+    {
+      "row": 721,
+      "priority": 3,
+      "message": "msm_dpu ae01000.display-controller: no GPU device was found"
+    },
+    {
+      "row": 848,
+      "priority": 3,
+      "message": "Failed to find module 'autofs4'"
+    },
+    {
+      "row": 1005,
+      "priority": 3,
+      "message": "[drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]"
+    }
+  ],
+  "known_warning_count": 34,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "first_source_timestamp": "0",
+  "last_source_timestamp": "87472689",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "event_count": 0,
+    "setup_count": 3,
+    "cycles": [
+      {
+        "setup_source_seconds": 3.582611,
+        "events": [],
+        "completion_source_seconds": 4.577243
+      },
+      {
+        "setup_source_seconds": 4.786701,
+        "events": [],
+        "completion_source_seconds": 5.640913
+      },
+      {
+        "setup_source_seconds": 8.010751,
+        "events": [],
+        "completion_source_seconds": 8.908494
+      }
+    ],
+    "event_rows": [],
+    "state": "absent"
+  }
+}

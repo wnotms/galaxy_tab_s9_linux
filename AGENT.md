@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test325 STOP/nativeattempt0count0, exact323 restored normalabc27877/
+70%4.127V29.3C/ADB+NCM+WiFi/allfive181/rollbackfalse. Rawcandidateboot/config/notes
+uniquehistory proof; duplicateboot-end hostproducer bug retained, normalized
+onlyderivedanalysis with3matchingIDs. InitialOFF9.437V/REVBLK/livecleanfault,
+VBAT4.0795/gauge4.160V gap80.5mV. New9Ventryadmitted/pending2 butgenericfault
+recheckusedordinaryPC classifier, immediately fault1/no confirms/native. Not100ms
+failure/CPUcause/calibration. Nextfixbothdispatch sites andactualfullworker mock,
+newregistration singleclosingmarker. No repeat325/PPS/pump/current/protection/
+USBchange. RESULTS325/fullportNOTREADY.
+
+
 2026-10-06 Test325 candidate boot/181 installed viaTWRP, allfive readback match,
 BCBclear/rootunmounted; no automaticcandidate reboot. OwnermustC2bootSystemonce,
 hold>=30s afterlogin thenreturnPCsameboot. CurrentdeviceTWRP/rollback_requiredtrue;
