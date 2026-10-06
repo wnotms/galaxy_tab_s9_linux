@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test326，窗口为 **Test317–Test326**；没有生成镜像的轮次仍占一轮。
+  编号为 Test327，窗口为 **Test318–Test327**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,9 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-06 Test327 registered Fedora source default-OFF PC acceptance; source376693d7/qualificationf105ffed reused,21 new host PASS0.003s/no kernel rebuild. One pairedboot181 install/normalstartup/30s pack+OFF/ADB+deviceNCM+WiFi; retain onlyPASS, exact323 first-failure rollback. NoPPS/pumpON/ADCrepair; ordinaryflashSOC20–<95 separated from futurePPS<80. Device still3233f4cf492 at initial read82%/4.276V32.2C. NewWindowsstage327; finalpreflight83%/4.290V32.2C/allfive181/pumpOFF/ADB+authenticatedUSB NCM pass. HostWiFi unreachable retained; PC-onlyOFF stage allowsNCM rescue, no wirelessPPS grant. PhysicalNOTEXECUTED untilregistrationpush.
+
 
 2026-10-06 Fedora X710 source route now supersedes custom ADC repair: kernel source
 376693d7 imports ab123e7d SM5440 charging worker, continuous ADC and PPS/settle/ON

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-327-fedora-default-off/host_flow.py", line 174, in <module>
+    print(json.dumps(restore(args.from_recovery) if args.action=='restore' else globals()[args.action](),indent=2),flush=True)
+                                                                                ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-327-fedora-default-off/host_flow.py", line 53, in preflight
+    transport=rescue(rec,sec,boot);pump(rec,boot,'baseline')
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-327-fedora-default-off/host_flow.py", line 26, in pump
+    raw,_=rec.adb('pump-off','python3 -c '+shlex.quote((R/'read-pump.py').read_text()),timeout=8)
+          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 160, in adb
+    return self.command(name, [ADB, "-s", SERIAL, "shell", script], timeout, required)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: pump-off: status=1; b'                  ~~~~~~~^^\r\n  File "<string>", line 14, in capture\r\n    if driver not in (\'sm5440-direct\',\'sm5440-fedora\'):raise ValueError(\'unknown pump provider\')\r\n                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nValueError: unknown pump provider\r\n'

@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-327-fedora-default-off/host_flow.py", line 163, in <module>
+    print(json.dumps(restore(args.from_recovery) if args.action=='restore' else globals()[args.action](),indent=2),flush=True)
+                                                                                ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-327-fedora-default-off/host_flow.py", line 42, in preflight
+    wifi=base.wifi_rescue(rec,sec,boot);pump(rec,boot,'baseline')
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-323-pc-source-budget/host_flow.py", line 197, in wifi_rescue
+    h.ssh(rec,'wifi-rescue',addresses[0],boot)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-292-passive-observation/host_flow.py", line 48, in ssh
+    raw,_=rec.command(name,['ssh','-i','/home/ms/.ssh/gts9_ed25519','-o','BatchMode=yes','-o','ConnectTimeout=5','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+str(TRUST),'-o','HostKeyAlias=gts9-test292','root@'+wifi,'cat /proc/sys/kernel/random/boot_id; uname -a'],timeout=12)
+          ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/scripts/production_reboot_stability.py", line 156, in command
+    raise CaptureError(f"{name}: status={status}; {stderr[-300:]!r}")
+production_reboot_stability.CaptureError: wifi-rescue: status=255; b'ssh: connect to host 10.139.153.163 port 22: No route to host\r\n'
