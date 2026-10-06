@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@uname; uname -a; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@network; ip -4 -o addr; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@dcc; if test ! -e /dev/hvc0 && test ! -e /sys/class/tty/hvc0 && ! systemctl is-active --quiet serial-getty@hvc0.service; then echo absent; else echo present; fi; echo @@host-key; cat /etc/ssh/ssh_host_ed25519_key.pub; echo @@tcpm; set -- /sys/class/power_supply/tcpm-source-psy-*/uevent; test \"$#\" = 1; cat \"$1\"; echo @@pack-thermal; pack=; for z in /sys/class/thermal/thermal_zone*; do if test \"$(cat \"$z/type\")\" = sm5714-battery; then test -z \"$pack\"; pack=$z; fi; done; test -n \"$pack\"; cat \"$pack/type\" \"$pack/mode\" \"$pack/temp\"; echo @@direct-default; cat /sys/module/sm5440_fedora/parameters/direct_charge; echo @@driver; readlink /sys/bus/i2c/devices/0-0063/driver; echo @@boot-end; cat /proc/sys/kernel/random/boot_id"
+  ],
+  "ended_utc": "2026-10-06T02:38:11.756821+00:00",
+  "started_utc": "2026-10-06T02:38:11.539548+00:00",
+  "status": 0
+}

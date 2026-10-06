@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test327 physical default-OFF PASS; pushedregistrationbd4251e6/source376693d7,
+paired boot181 installed/TWRP/allfive readback/BCBclear/rootunmount/one normal
+7f9c0caa uniquelyfrom3233f4cf492. Fedora0-0063 ID0x21/paramN/CNTL5=01/OFF across4
+samples;30.480s PC ordinaryinput1.8A/packpositive1.192A/84%4.296V31.9C. ADB/
+deviceNCM/newWiFi224authenticated/Code0/no newkernel fault; retainedcandidate,
+rollback_requiredfalse. Exact323boot + .gts9-test327-original181 kept. Earlier
+hostWiFi163/refusedoldprovider reader errors archived, no mutation/replay there.
+21new runner testsPASS, reusedoffline build/155tests/configDT/181/protectedaudit,
+no rebuild/full suite. PPS/pumpON nottested/customADCroute stopped. Owner asked
+USBunplug forSOC<80 before separate1.8A registration; no threshold/current ramp.
+RESULTS327; full higher-power hardware NOT_READY.
+
+
 2026-10-06 Test327 registered Fedora source default-OFF PC acceptance; source376693d7/qualificationf105ffed reused,21 new host PASS0.003s/no kernel rebuild. One pairedboot181 install/normalstartup/30s pack+OFF/ADB+deviceNCM+WiFi; retain onlyPASS, exact323 first-failure rollback. NoPPS/pumpON/ADCrepair; ordinaryflashSOC20–<95 separated from futurePPS<80. Device still3233f4cf492 at initial read82%/4.276V32.2C. NewWindowsstage327; finalpreflight83%/4.290V32.2C/allfive181/pumpOFF/ADB+authenticatedUSB NCM pass. HostWiFi unreachable retained; PC-onlyOFF stage allowsNCM rescue, no wirelessPPS grant. PhysicalNOTEXECUTED untilregistrationpush.
 
 

@@ -1,0 +1,43 @@
+{
+  "PPS": false,
+  "battery": {
+    "current_ua": 889000,
+    "input_limit_ua": 1800000,
+    "soc": 84,
+    "temp_decic": 312,
+    "voltage_uv": 4295000
+  },
+  "boot_attribution": "attributed",
+  "boot_id": "7f9c0caac4ae471a95f492941ceb7ccc",
+  "device_NCM": true,
+  "endpoint_battery": {
+    "current_ua": 1192000,
+    "input_limit_ua": 1800000,
+    "soc": 84,
+    "temp_decic": 319,
+    "voltage_uv": 4296000
+  },
+  "observation_seconds": 30.479597329999706,
+  "pump_ON": false,
+  "transport": {
+    "rescue": "WiFi",
+    "wifi": "10.139.153.224",
+    "wifi_authenticated": true
+  },
+  "verdict": "FEDORA_DEFAULT_OFF_DEVICE_SCOPE_PASS",
+  "test": "Test327",
+  "physical_executed": true,
+  "registration_revision": "bd4251e6",
+  "source_revision": "376693d732e2aede470643c611d4cc31d93d4893",
+  "candidate_boot_sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "notes_sha256": "5ec694b48a1234a269695e50d1293c597f045adf28992b8a70a513411a73cb41",
+  "modules": 181,
+  "DTB_unchanged": true,
+  "kernel_rows": 1093,
+  "kernel_fault_counts": {},
+  "PPS_test_executed": false,
+  "ADC_custom_repair": false,
+  "full_port_verdict": "NOT_READY",
+  "next_stage": "Separate PPS1.8A registration when SOC<80/VBAT<4.3/temperature/actual WiFi admit"
+}
