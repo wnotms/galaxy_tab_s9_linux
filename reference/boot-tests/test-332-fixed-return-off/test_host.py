@@ -154,3 +154,15 @@ class FixedEvidence(unittest.TestCase):
     def test_actual_pps_endpoint_is_not_fixed_return(self):
         self.endpoint['tcpm']['POWER_SUPPLY_ONLINE']='2'
         with self.assertRaises(ValueError):G.fixed_result(self.raw(),BOOT)
+
+class CollectorTrust(unittest.TestCase):
+    def test_configure_only_collection_uses_actual_enrolled_file_and_strict_check(self):
+        import subprocess
+        with tempfile.TemporaryDirectory() as t:
+            d=Path(t);(d/'startup-summary.json').write_text(json.dumps({'boot_id':BOOT,'transport':{'wifi':'10.0.0.1'}}));(d/'observe.py').write_text('# observer')
+            with patch.object(H,'R',d),patch.object(H,'PLAN',P,create=True),patch.object(H,'verify_inputs'),patch.object(H.h,'TRUST',Path('/tmp/wrong-historical-file')),patch.object(H.subprocess,'run',side_effect=subprocess.TimeoutExpired('ssh',290)) as run:
+                with self.assertRaises(subprocess.TimeoutExpired):H.collect()
+                args=run.call_args.args[0]
+                self.assertIn('UserKnownHostsFile=/tmp/gts9-test323-known-hosts',args)
+                self.assertIn('StrictHostKeyChecking=yes',args)
+                self.assertIn('HostKeyAlias=gts9-test292',args)

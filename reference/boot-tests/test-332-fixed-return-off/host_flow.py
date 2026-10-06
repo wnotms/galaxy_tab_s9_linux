@@ -167,11 +167,12 @@ def run():
 
 
 def collect():
+    verify_inputs(require_push=True)
     state=read(R/'startup-summary.json');boot=state['boot_id']
     address=state['transport']['wifi']
-    rec=p.Recorder(R/'fixed-observation')
+    rec=p.Recorder(R/('fixed-observation' if not (R/'fixed-observation').exists() else 'fixed-observation-trust-corrected'))
     source=(R/'observe.py').read_text()
-    trust=str(h.TRUST)
+    trust='/tmp/gts9-test323-known-hosts'  # base.wifi_rescue enrolls this exact file
     command='python3 -u -c '+shlex.quote(source)+' '+shlex.quote(boot)+' '+PLAN['candidate_config_sha256']+' '+PLAN['candidate_notes_sha256']
     argv=['ssh','-i','/home/ms/.ssh/gts9_ed25519','-o','BatchMode=yes','-o','ConnectTimeout=5','-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+trust,'-o','HostKeyAlias=gts9-test292','root@'+address,command]
     start=time.monotonic()
