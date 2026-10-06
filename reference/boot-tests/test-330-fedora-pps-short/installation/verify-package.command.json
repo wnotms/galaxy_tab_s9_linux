@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "printf %s 'c064e61acc744a85b1738a2e9472b47741a4e6e190946391bb8f76f222e5e4ae  /tmp/gts9-test330/candidate-boot.img\nc7eac30ba63f3aea7bcdc6802a072b42b77e25e968c889be04cbdfdfa30eaf83  /tmp/gts9-test330/candidate-modules.sha256\nf8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0  /tmp/gts9-test330/emergency323-boot.img\naba5809de0da43cb3b2697be4d0004c09384ed8ba1b63cc82182048d5d47fe9e  /tmp/gts9-test330/guard.py\n442a819b0189ad6951ba87bda87af2f609bef0a4190b93e4c914d3105ae2af0d  /tmp/gts9-test330/module-swap.sh\n3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca  /tmp/gts9-test330/mount-debian.sh\nf2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec  /tmp/gts9-test330/rollback-defaultOFF-boot.img\n882e47cbf7c8d937d2f99dcb7e2bb70ae54cc46481632d75a4b3050c098a967f  /tmp/gts9-test330/rollback323-modules.sha256\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-06T09:54:18.307293+00:00",
+  "started_utc": "2026-10-06T09:54:18.034600+00:00",
+  "status": 0
+}

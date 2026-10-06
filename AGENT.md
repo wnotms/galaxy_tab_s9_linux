@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test330 c064e61a boot-only opt-in installed, allfive readback/181
+unchanged/BCBclear/rootunmount; new32a075d2 uniquelyfrom222efdcc. Correctordered
+cmd/confignotes, FedoraY but PC CNTL5=01 OFF,54%3.960V30.5C, ADB/no43/WiFi108/
+deviceNCM healthy. Device-local guard armed in /tmp/gts9-test330/capture;
+awaitownerC1alone/C2empty, wait240s,30s PPS1.8A then finallyunbind/OFF/fixed9.
+rollback_requiredTRUE; afterownerPC return defaultOFF327restore or firstreal
+PPSfault323boot/saved327original181. Guardexpiry is not permissiontoactivate;
+checkstatus first. No new kernel/driver/rootfs/USBchange;38affectedhostPASS.
+
+
 2026-10-06 Test330 new independent firstPPS1.8A/30s registration after328host
 separatorbug. Only hostidentity compares exactordered tokens afterone opt-in;
 allflags/order/duplicates/confignotes/safety preserved. Exact328guard/payload/

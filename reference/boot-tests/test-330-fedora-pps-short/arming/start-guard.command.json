@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test330-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test328",
+    "root@10.139.153.108",
+    "set -e; test \"$(cat /proc/sys/kernel/random/boot_id | tr -d -)\" = 32a075d2bf7b48aaa134c7b6bede8f5d; test \"$(sha256sum /tmp/gts9-test330/guard.py | cut -d \" \" -f1)\" = aba5809de0da43cb3b2697be4d0004c09384ed8ba1b63cc82182048d5d47fe9e; test ! -e /tmp/gts9-test330/capture; nohup python3 /tmp/gts9-test330/guard.py --boot 32a075d2bf7b48aaa134c7b6bede8f5d --out /tmp/gts9-test330/capture >/tmp/gts9-test330/guard-console.txt 2>&1 </dev/null &"
+  ],
+  "ended_utc": "2026-10-06T09:55:16.459035+00:00",
+  "started_utc": "2026-10-06T09:55:15.334103+00:00",
+  "status": 0
+}

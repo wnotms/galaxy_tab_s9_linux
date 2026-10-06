@@ -1,0 +1,27 @@
+{
+  "status": "CANDIDATE_PC_ACCEPTED_GUARD_ARMED",
+  "state": {
+    "armed_at_epoch": 1791280517.8576596,
+    "candidate": {
+      "battery": {
+        "current_ua": 985000,
+        "input_limit_ua": 1800000,
+        "soc": 54,
+        "temp_decic": 305,
+        "voltage_uv": 3960000
+      },
+      "boot_id": "32a075d2bf7b48aaa134c7b6bede8f5d",
+      "wifi": "10.139.153.108"
+    },
+    "phase": "guardian-armed-awaiting-C1",
+    "rollback_required": true
+  },
+  "registration_commit": "31376fb9",
+  "only_boot_written": true,
+  "modules_unchanged": 181,
+  "allfive_readback_verified": true,
+  "BCB_cleared": true,
+  "rootfs_unmounted": true,
+  "PPS_charger_observation": "awaiting_owner_C1",
+  "full_port": "NOT_READY"
+}
