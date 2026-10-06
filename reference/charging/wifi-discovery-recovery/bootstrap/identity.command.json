@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; cat /sys/module/sm5440_fedora/parameters/direct_charge; echo @@network; ip -4 -o addr; echo @@battery; cat /sys/class/power_supply/sm5714-battery/capacity /sys/class/power_supply/sm5714-battery/temp /sys/class/power_supply/sm5714-battery/status"
+  ],
+  "ended_utc": "2026-10-06T14:33:59.303076+00:00",
+  "started_utc": "2026-10-06T14:33:59.234103+00:00",
+  "status": 1
+}

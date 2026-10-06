@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 host discovery cd667ae7 read-only livePASS: previousIP19→current163
+matched32.154s/drained32.156s, strict same331f1e9a45a/config51/notes03/machine/
+boot, TCPpeak≤16/23affectedtests. No reboot/flash/charging replay/PPS/ON/build/
+fullrun. ADB bootstrap absent (rawpreserved), authenticatedknownWiFi fallback;
+69%24.6CDischarging. New helper ready for separately registered use, no historical
+334 verdict rewrite/cause overclaim. Next ordinaryfixed9 30s observation on331
+without nativecheckreflash, no PPS/current advance. See wifi-discovery-recoveryRESULTS.
+
+
 2026-10-06 host-only WiFi discovery correction OFFLINE qualified23PASS0.112s.
 New charging_wifi_discovery.py: recentIP directstrictSSH, fallback RFC1918-/24,
 TCP3s/16workers/SSH2slots/shared90s/two passes, perattempt JSONL, identity/boot/

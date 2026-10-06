@@ -1,0 +1,27 @@
+{
+  "verdict": "HOST_HELPER_OFFLINE_AND_READ_ONLY_CHANGED_IP_PASS",
+  "source_commit": "cd667ae7",
+  "affected_tests": 23,
+  "previous_ip": "10.139.153.19",
+  "found_ip": "10.139.153.163",
+  "boot_id": "f1e9a45a55054b88ab05b969775657e9",
+  "match_seconds": 32.155158909998136,
+  "drain_seconds": 32.155695611996634,
+  "TCP_peak_in_flight": 16,
+  "key_learning": false,
+  "kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "reboot": false,
+  "partition_write": false,
+  "charging_replay": false,
+  "PPS": false,
+  "pump_ON": false,
+  "device_snapshot": {
+    "soc": 69,
+    "temp_decic": 246,
+    "status": "Discharging"
+  },
+  "bootstrap_ADB_unavailable": true,
+  "bootstrap_fallback": "strict enrolled known WiFi, machine/config/notes/defaultOFF bound",
+  "limitation": "One current-baseline changed-IP discovery; not a new charger boot or unique proof of Test334 failure cause"
+}
