@@ -1,0 +1,33 @@
+{
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 863000,
+      "input_limit_ua": 1800000,
+      "soc": 61,
+      "temp_decic": 311,
+      "voltage_uv": 4048000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "6b76a591f91648c0917d207b772175b4",
+    "device_NCM": true,
+    "endpoint_battery": {
+      "current_ua": 1264000,
+      "input_limit_ua": 1800000,
+      "soc": 62,
+      "temp_decic": 319,
+      "voltage_uv": 4059000
+    },
+    "observation_seconds": 30.50799246299721,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.139.153.193",
+      "wifi_authenticated": true
+    },
+    "verdict": "FEDORA_DEFAULT_OFF_DEVICE_SCOPE_PASS"
+  },
+  "phase": "defaultOFF-candidate-retained-after-PASS",
+  "rollback_original_slot": ".gts9-test331-original",
+  "rollback_required": false
+}

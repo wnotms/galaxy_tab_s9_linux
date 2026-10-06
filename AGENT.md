@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test331 defaultOFF physicalPASS retained: corrected1f1d8568 candidate
+025ebea4+paired181 installed via TWRP/allfive/BCBclear/unmount, unique67673895→
+6b76a591f91648c0917d207b772175b4. Exactconfig51ba6a9c/notes03c9c46e/defaultN/
+sm5440-fedora, fourCNTL5=01OFF across30.508s, endpoint62%4.059V31.9C/+1.264A/
+PCinput1.8A. NativeADB/WindowsCode0/deviceNCM/WiFi193 authenticated, failedunits
+empty/fullkerneljournal/no newfault. Original323181 saved .gts9-test331-original,
+rollbackfalse/retain candidate;323formal boot+archive remain. No PPS/pumpON/
+ADC/current/proof change or kernel rebuild. 27newhostPASS and187/build reused.
+Independentfixedreturn proof stillunresolved/fullportNOT_READY; this accepts
+OFF-only scope, not activePPS. See Test331RESULTS/summary.
+
+
 2026-10-06 Test331 independent defaultOFF PC acceptance registered after owner
 continue-testing. Reuse corrected1f1d8568/11c5967f artifacts/187tests/build/static;
 no PPS/pump/currentraise or proofrelaxation. Fresh331 module backup slots, each

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c '#!/usr/bin/env python3\n\"\"\"Read only stable CNTL5; atomic pointer/read, no INT/ADC/config writes.\"\"\"\nimport ctypes as c\nimport fcntl,json,os\nfrom pathlib import Path\nclass Msg(c.Structure):\n    _fields_=[('\"'\"'addr'\"'\"',c.c_uint16),('\"'\"'flags'\"'\"',c.c_uint16),('\"'\"'length'\"'\"',c.c_uint16),('\"'\"'buf'\"'\"',c.POINTER(c.c_uint8))]\nclass Transfer(c.Structure):\n    _fields_=[('\"'\"'msgs'\"'\"',c.POINTER(Msg)),('\"'\"'nmsgs'\"'\"',c.c_uint32)]\ndef capture():\n    boot=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"');before=boot.read_text().strip()\n    node=Path('\"'\"'/sys/bus/i2c/devices/0-0063'\"'\"').resolve(strict=True)\n    driver=(node/'\"'\"'driver'\"'\"').resolve(strict=True).name\n    if driver not in ('\"'\"'sm5440-passive'\"'\"','\"'\"'sm5440-fedora'\"'\"'):raise ValueError('\"'\"'unknown pump provider'\"'\"')\n    if b'\"'\"'siliconmitus,sm5440'\"'\"' not in (node/'\"'\"'of_node/compatible'\"'\"').read_bytes().split(b'\"'\"'\\0'\"'\"'):raise ValueError('\"'\"'pump compatible'\"'\"')\n    fd=os.open('\"'\"'/dev/i2c-0'\"'\"',os.O_RDWR)\n    try:\n        pointer=(c.c_uint8*1)(0x10);out=(c.c_uint8*1)()\n        messages=(Msg*2)(Msg(0x63,0,1,pointer),Msg(0x63,1,1,out))\n        packet=Transfer(messages,2);fcntl.ioctl(fd,0x0707,packet)\n    finally:os.close(fd)\n    return dict(boot_before=before,boot_after=boot.read_text().strip(),driver=driver,register=0x10,value=out[0],config_data_written=False)\nif __name__=='\"'\"'__main__'\"'\"':print(json.dumps(capture()))\n'"
+  ],
+  "ended_utc": "2026-10-06T10:32:12.895665+00:00",
+  "started_utc": "2026-10-06T10:32:12.577980+00:00",
+  "status": 0
+}
