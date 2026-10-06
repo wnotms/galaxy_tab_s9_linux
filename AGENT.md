@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-06 Test328 incoming PC USB Code43 before mutation; no flash/PPS/pump.
+Same327boot7f9c0caa/config51ba6a9c/notes5ec694b4/WiFi224 healthy, FedoraN/
+CNTL5=01 OFF,75%4.153V25.5C. Windows descriptorfailure/ADBempty despite device
+UDCconfigured/usb0up; full journal no newfault. RawUSB/PnP/service/kernel/OFF
+saved usb-incident-01; PnP event-log queryunavailable explicitlyrecorded. Await
+one owner20s cable/otherdirectPCport reconnect, requirefresh nativeADB/no43
+before anyPPSdeployment. No livegadget/adbd reset/configchange; fullportNOT_READY.
+
+
 2026-10-06 Test328 registered first Fedora PPS1.8A/30s; source376693d7 and
 qualificationf105ffed unchanged. Boot-only opt-in, exact327 config/DT/notes/181;
 no source rebuild/ADC repair/current ramp. PCpreflight79%4.234V31.2C/WiFi224,

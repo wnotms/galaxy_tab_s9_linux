@@ -1,0 +1,21 @@
+{
+  "verdict": "USB_CODE43_PRE_MUTATION",
+  "boot_id": "7f9c0caac4ae471a95f492941ceb7ccc",
+  "baseline": "Test327 Fedora default-OFF",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "kernel_notes_sha256": "5ec694b48a1234a269695e50d1293c597f045adf28992b8a70a513411a73cb41",
+  "soc": 75,
+  "temp_decic": 255,
+  "windows_code43": true,
+  "adb_available": false,
+  "wifi_authenticated": true,
+  "device_NCM_present": true,
+  "device_UDC_state": "configured/super-speed-plus",
+  "pump_OFF_verified": true,
+  "PPS_started": false,
+  "device_mutation_executed": false,
+  "kernel_gate": "no new kernel fault/suspect within captured journal",
+  "windows_pnp_event_query_status": 1,
+  "windows_pnp_event_query_note": "event-log query returned no output; current PnP Code43 and InstanceId captured successfully",
+  "next_action": "one owner cable/port reconnect; require fresh native ADB/Code0 before any deployment"
+}

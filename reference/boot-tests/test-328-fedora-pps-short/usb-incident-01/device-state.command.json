@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=5",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test328-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test328",
+    "root@10.139.153.224",
+    "set -e; echo @@boot; cat /proc/sys/kernel/random/boot_id; echo @@cmdline; cat /proc/cmdline; echo @@uptime; cat /proc/uptime; echo @@identity; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes; echo @@battery; cat /sys/class/power_supply/sm5714-battery/uevent; echo @@usb; cat /sys/class/power_supply/sm5714-usb/uevent; echo @@tcpm; cat /sys/class/power_supply/tcpm-source-psy-*/uevent; echo @@roles; cat /sys/class/typec/port0/power_role /sys/class/typec/port0/data_role; echo @@services; systemctl is-active ssh gts9-adbd gts9-usb-acm; echo @@failed; systemctl --failed --no-legend --plain --no-pager; echo @@UDC; for n in /sys/class/udc/*; do echo \"$n\"; cat \"$n/state\" \"$n/current_speed\"; done; echo @@gadget; for n in /sys/kernel/config/usb_gadget/*; do echo \"$n\"; cat \"$n/UDC\"; done; echo @@direct; cat /sys/module/sm5440_fedora/parameters/direct_charge; echo @@network; ip -br addr"
+  ],
+  "ended_utc": "2026-10-06T05:26:41.642166+00:00",
+  "started_utc": "2026-10-06T05:26:40.531466+00:00",
+  "status": 0
+}
