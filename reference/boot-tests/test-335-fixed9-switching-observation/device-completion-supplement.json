@@ -1,0 +1,13 @@
+{
+  "test": "Test335",
+  "original_result": "charge/summary.json STOP retained; no 30-second observation had started",
+  "purpose": "Collect only missing first 30-second device observation on already connected healthy fixed9 source, under owner device-completion workflow",
+  "basis": "Same boot/config/notes and OFF, current endpoint Charging +1436000uA at24.9C, fixed9/1.5A, no new severe kernel fault",
+  "scope": "Existing sealed observe.py, existing pack/OFF/identity/journal/continuity gates; fresh namespace, no new attach, no source/software mutation",
+  "after_success": "Original runner result remains STOP; device scope may complete after missing charging window and original15s discharge checks. Record each separately.",
+  "no_reflash": true,
+  "no_reboot": true,
+  "no_cable_replay": true,
+  "PPS": false,
+  "pump_ON": false
+}
