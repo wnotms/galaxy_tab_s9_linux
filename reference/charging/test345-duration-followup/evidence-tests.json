@@ -1,0 +1,13 @@
+{
+  "command": "PYTHONPATH=tests python3 -m unittest tests/test_sm5440_refresh_reserve_deployment.py tests/test_sm5440_duration_evidence.py",
+  "tests": 23,
+  "passed": true,
+  "seconds": 0.415,
+  "duration_parser_tests": 8,
+  "inherited_guardian_tests": 15,
+  "syntax_passed": true,
+  "full_suite_executed": false,
+  "new_kernel_build_required": false,
+  "historical_gate": "Current changed kernel must still fail Test345 live input gate; positive unit fixture uses exact hash-verified registered Git objects. Historical manifests and executable gates unchanged.",
+  "physical_operations": []
+}

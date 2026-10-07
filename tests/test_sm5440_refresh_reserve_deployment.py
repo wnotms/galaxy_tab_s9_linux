@@ -1,7 +1,9 @@
 """Test345 bounded OFF settling witnesses and inherited guardian cleanup."""
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
+import subprocess
 import unittest
 from unittest.mock import patch
 import test_sm5440_bounded_direct as old
@@ -77,7 +79,33 @@ class SettlingEvidenceTests(unittest.TestCase):
         self.assertNotIn('.gts9-test344-original',(R/'module-swap.sh').read_text())
         spec=importlib.util.spec_from_file_location('flow345',R/'host_flow.py')
         f=importlib.util.module_from_spec(spec);spec.loader.exec_module(f);f.configure()
-        self.assertTrue(f.authorized());f.verify_inputs()
+        self.assertTrue(f.authorized())
+        # This round is immutable and closed. A subsequent kernel candidate
+        # must still fail its live deployment gate. Exercise the positive gate
+        # using the actual registered source, not by changing the old manifest.
+        name='kernel/drivers/sm5440-fedora.c'
+        path=ROOT/name
+        expected=json.loads((R/'INPUTS.json').read_text())[name]
+        historical=subprocess.check_output(['git','-C',str(ROOT),'show',
+                                            plan['source_revision']+':'+name])
+        self.assertEqual(hashlib.sha256(historical).hexdigest(),expected)
+        test_name='tests/test_sm5440_refresh_reserve_deployment.py'
+        registered_test=subprocess.check_output(['git','-C',str(ROOT),'show',
+                                                '7c596eedbb3c76a2c0c5cf278f48921ea10f4dd6:'+test_name])
+        self.assertEqual(hashlib.sha256(registered_test).hexdigest(),
+                         json.loads((R/'INPUTS.json').read_text())[test_name])
+        read_bytes=Path.read_bytes
+        if hashlib.sha256(read_bytes(path)).hexdigest()!=expected:
+            with self.assertRaisesRegex(ValueError,'input drift: '+name):
+                f.verify_inputs()
+        def registered_bytes(candidate):
+            if candidate==path:
+                return historical
+            if candidate==ROOT/test_name:
+                return registered_test
+            return read_bytes(candidate)
+        with patch.object(Path,'read_bytes',registered_bytes):
+            f.verify_inputs()
 
 
 class FinalReserveEvidenceTests(unittest.TestCase):
