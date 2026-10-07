@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from pathlib import Path; import json; p=Path('/tmp/gts9-test341-monitor/evidence'); assert not (p/"finished").exists(); assert (p/"awaiting-owner").read_text()=='0570988d233646bfb6056b6a08c352cc'; assert not (p/"activation-started").exists(); import importlib.util, os, time; spec=importlib.util.spec_from_file_location("activation_guard",'/tmp/gts9-test341-monitor/guard.py'); g=importlib.util.module_from_spec(spec); spec.loader.exec_module(g); hw=g.Hardware('0570988d233646bfb6056b6a08c352cc'); marker={'boot_id': '0570988d233646bfb6056b6a08c352cc', 'token': '1f497d8adcbe0e32574b5dd99b43abd3', 'owner_confirmed_C1': True}
+                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

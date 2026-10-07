@@ -1,0 +1,178 @@
+{
+  "PPS_attempted": false,
+  "activation": {
+    "error": "CaptureError('single-activation-marker: status=1; b\"0988d233646bfb6056b6a08c352cc\\'); marker={\\'boot_id\\': \\'0570988d233646bfb6056b6a08c352cc\\', \\'token\\': \\'1f497d8adcbe0e32574b5dd99b43abd3\\', \\'owner_confirmed_C1\\': True}\\\\n                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^\\\\nAssertionError\\\\n\"')",
+    "no_retry": true
+  },
+  "activation_started": false,
+  "actual_pump_window_seconds": 0,
+  "candidate_boot_id": "0570988d233646bfb6056b6a08c352cc",
+  "current_sameboot": {
+    "adc": {
+      "adc_enabled": false,
+      "die_decic": 285,
+      "ibus_ua": 0,
+      "mode": 0,
+      "vbat_uv": 3988000,
+      "vbus_mv": 9267
+    },
+    "battery": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_CAPACITY": "70",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "1863000",
+      "POWER_SUPPLY_CURRENT_NOW": "1923000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "285",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4172000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4161000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4074000"
+    },
+    "boot_id": "0570988d233646bfb6056b6a08c352cc",
+    "boottime_seconds": 250.455744226,
+    "calibrated": false,
+    "configuration_register_data_written": false,
+    "pack_mode": "enabled",
+    "pack_temp_mc": 28400,
+    "registers": {
+      "16": 1,
+      "28": 14,
+      "30": 161,
+      "31": 152,
+      "34": 0,
+      "35": 0,
+      "38": 12,
+      "39": 121,
+      "40": 64
+    },
+    "roles": [
+      "sink",
+      "device"
+    ],
+    "source_raw": "format=sm5714-current-port-v1\nret=0\ncharging_grant=0\nvalues_are_not_physical_measurements=1\ninstance=1\nsource_generation=13\nbudget_generation=26\nstarted_ms=250455\ncompleted_ms=250455\nonline=1\nusb_type=8\nvoltage_uv=9000000\ncurrent_ua=1500000\nbudget_mv=9000\nbudget_ma=1500\ncharge_requested=1\nnr_source_pdos=6\nsource_pdo_1=0x0801912c\nsource_pdo_2=0x0002d12c\nsource_pdo_3=0x0003c12c\nsource_pdo_4=0x0004b12c\nsource_pdo_5=0x00064145\nsource_pdo_6=0xc0dc323c\n",
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_NAME": "usbpd",
+      "POWER_SUPPLY_CURRENT_MAX": "1500000",
+      "POWER_SUPPLY_CURRENT_NOW": "1500000",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+      "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+    },
+    "usb": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+      "POWER_SUPPLY_NAME": "sm5714-usb",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+    }
+  },
+  "full_port_ready": false,
+  "guardian": {
+    "cleanup_error": "ValueError('pre-entry ordinary source limit')",
+    "error": "CleanupFailure(\"primary=ValueError('pre-entry ordinary source limit'); cleanup=ValueError('pre-entry ordinary source limit')\")",
+    "primary_error": "ValueError('pre-entry ordinary source limit')",
+    "verdict": "STOP_FIRST_NON_CLEAN"
+  },
+  "interpretation": "Kernel logs show implicit5V/3A budget with ordinary input1.8A then fixed9V/1.5A; guardian incorrectly caps advertised5V source budget at1.8A. Rejected sample was not emitted, so exact triggering sysfs tuple is unproven.",
+  "kernel_classification": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 43,
+    "last_source_timestamp": "150478907",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.158032,
+          "events": [],
+          "setup_source_seconds": 4.171646
+        },
+        {
+          "completion_source_seconds": 6.244701,
+          "events": [],
+          "setup_source_seconds": 5.354115
+        },
+        {
+          "completion_source_seconds": 9.752262,
+          "events": [],
+          "setup_source_seconds": 8.859162
+        }
+      ],
+      "event_count": 0,
+      "event_rows": [],
+      "setup_count": 3,
+      "state": "absent"
+    },
+    "rows": 1120,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "no_retry": true,
+  "pump_ON_observed": false,
+  "rollback_required": true,
+  "source_transition": [
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 0 mV 0 mA (not measured VBUS)",
+      "source_us": "145351347"
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 3000 mA (not measured VBUS)",
+      "source_us": "150094937"
+    },
+    {
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 2, 1800 mA input, 2100 mA battery",
+      "source_us": "150122292"
+    },
+    {
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 2, 500 mA input, 2100 mA battery",
+      "source_us": "150291202"
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 5000 mV 500 mA (not measured VBUS)",
+      "source_us": "150291211"
+    },
+    {
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery",
+      "source_us": "150440264"
+    },
+    {
+      "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1500 mA (not measured VBUS)",
+      "source_us": "150440276"
+    },
+    {
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery",
+      "source_us": "150478907"
+    }
+  ],
+  "test": "Test341",
+  "verdict": "STOP_PREENTRY_SOURCE_CAPABILITY_OBSERVER_ROLLBACK_PENDING"
+}

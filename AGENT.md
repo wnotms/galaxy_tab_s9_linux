@@ -105,6 +105,18 @@ rollback and323 secondary remain registered consumers of340/341, not permanent
 historical exemptions;339/341 qualified artifacts and source/config/DT/modules/
 rawlogs retained. See host-storage-cleanup/2026-10-07-test340-image-retirement.
 
+2026-10-07 Test341 STOP_PREENTRY_SOURCE_CAPABILITY_OBSERVER, ROLLBACK PENDING.
+Guardian stopped/unbound before marker/bind/entry/PPS/pump, primary+cleanup
+ordinary-source-limit error.97 validsamples; rejected tuple missing because emit
+aftervalidation. Fulljournal shows implicit5V/3A budget while actual ordinary input
+1.8A, then fixed9/1.5A: observer wrongly compares sourcecapability to drawlimit.
+Marker rejected finishedguardian; no replay. Current same0570988d/OFF/unbound/
+WiFi123/healthy70%4.161V28.5C/+1.923A/fixed9/1.5A, no classified CPU fault.
+Await ownerPCreturn for exact331 rollback; rollback_required=true. Next separate
+host correction: preentry5V advertised<=3A with actualinput<=1.8A; 9V/postentry
+strict1.5A unchanged, emit all rawsamples beforecheck. No kernel change/current
+increase. See341 PHYSICAL_STATUS/physical-summary-pending. FullportNOT_READY.
+
 2026-10-07 Test341 DEPLOYED/PREPARED, no PPS/pump attempt yet. Candidateboot
 0570988d uniquely attributed/allfive181/config51/notes e014/DCCabsent/normal
 onceflag/ADB/WiFi10.175.236.123/deviceNCM/noCode43/pack PASS;69%4.126V32.1C.
