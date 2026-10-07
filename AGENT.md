@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test343 follow-up READY_OFFLINE_DEFAULT_OFF, sourced60f2641.
+Bounded parkedzero wait preserving Fedora AVG32/OFF-PPS-VBUS-ON and old limits;
+68 actualC testsPASS0.354s, incrementalImage/DT/181 buildPASS94.976s,
+changedW1+sparsePASS14.708s/no newwarnings. Exact331config/DT/release,
+protected108+priorformal23 unchanged. DefaultOFF boot6cc62712,
+notes92fb9e6f; no armedflag/Windowsstage/deployment/PPS/pump.
+OwnerunplugPC,naturaldischarge same331dc8442f1,80%4.163V28.7C/-1.455A;
+aboveprep75%, no stressload. Next independent344registration only, no343replay;
+fullportNOT_READY, ADCfreshness/calibration and actualparkedsettle unresolved.
+See reference/charging/test343-parked-settle/RESULTS/qualification/PACKAGE.
+
 2026-10-07 Test343 follow-up OFFLINE_PARKED_SETTLE_IMPLEMENTED_BUILD_PENDING.
 Keep Fedora ab123e7d OFF/PPS/VBUSsettle/ON and AVG32 recipe; new boundedOFF
 wait observes3rawIBUSzero over>=100ms (30polls first20 then50ms), refuses
