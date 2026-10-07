@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<string>", line 351, in <module>
+    hw=Hardware('12dbf2677ebe4eeaa3ebd6df143394f3');s=hw.sample();rows=[json.loads(x) for x in subprocess.check_output(['journalctl','-k','-b','-o','json','--no-pager'],text=True).splitlines()];print(json.dumps(dict(proof=preparation_proof(rows,hw.boot,s,hw.is_bound()),sample=s)));os.close(hw.fd)
+                                                                                                                                                                                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 216, in preparation_proof
+    if s['pack_temp']!=int(b['POWER_SUPPLY_TEMP']):raise ValueError('pack thermal mismatch')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: pack thermal mismatch

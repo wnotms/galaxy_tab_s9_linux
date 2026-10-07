@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test340 CLOSED STOP_HOST_THERMAL_UNIT_ERROR_RESTORED331. Candidate
+12dbf267 admittedPC, initialqueue canceled/drained beforeentry/PPS/pump. New host
+check incorrectly compared thermal32000mC with battery320deciC; both32.0C.
+No guardian/ownerhandoff/activation; observer defect, not a battery fault.
+Exact331 allfive/original181 restored, normal f38e35d4/config51/notes03/OFF/DCC
+absent/ADB/WiFi241/deviceNCM/noCode43/fulljournal/no newfault/unit PASS.68%4.112V
+32.0C/+0.840A onPC, rollback_required=false. Firstfailure/input/raw evidence kept;
+no340replay. Next independent adapter uses existing ordinary_charge_window mC/
+deciC factor100 and500mC coherence, realistic-unit host tests; kernel unchanged.
+FullportNOT_READY. See340 PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256.
+
 2026-10-07 Test340 registered/host-qualified confirmed-source activation. Reuse
 exact339 Image/notes/config/DT/181/armedboot; no kernel/config/DTS/USB/adbd/rootfs
 change or build.33 affected guard/cleanup/activation/adapter/module-slot/script

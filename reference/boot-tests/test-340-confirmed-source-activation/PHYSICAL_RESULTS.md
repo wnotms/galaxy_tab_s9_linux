@@ -1,0 +1,7 @@
+# Test340 — host temperature-unit defect, exact Test331 restored
+
+The unchanged Test339 kernel/paired181 candidate boot `12dbf2677ebe4eeaa3ebd6df143394f3` passed PC admission. The initial readiness worker was canceled/drained before any lease, entry, PPS request or pump start. The following new host check stopped on `pack thermal mismatch`: it compared thermal-zone millidegrees directly with power_supply deci-degrees. Captured admission values were320 and32000, both32.0°C; this is an observer defect, not evidence of abnormal battery temperature.
+
+No owner charger handoff was requested, guardian activation never started and no pump attempt occurred. Under this round's registered first-non-clean handling, exact Test331 boot/original181/allfive were restored and checked. Final boot `f38e35d421cc4c57b7f53c68214e117f` is uniquely attributed; config/notes/normalcmdline/DCCabsence/OFF/ADB/WiFi10.175.236.241/deviceNCM/noCode43/fulljournal/no newfault/unit gates passed. Endpoint68%,4.112V,32.0°C,+0.840A on PC, rollback_required=false. Complete failed-boot kernel JSON retained; no classified CPU fault or native entry.
+
+Test340 results/input hashes remain frozen. A separate corrected adapter must use the existing ordinary-charge convention: thermal zone20,000–<38,000m°C; power_supply200–<380 deci°C; coherence abs(thermal_mc-100*battery_decic)<=500m°C. Add realistic-unit/range/coherence tests; no sensor/thermal/charging/kernel change, no Test340 replay. Qualified kernel/build reused; no full regression/Actions. Full charging port NOT_READY.

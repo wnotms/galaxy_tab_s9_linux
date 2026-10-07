@@ -1,0 +1,89 @@
+{
+  "PPS_attempted": false,
+  "actual_pump_window_seconds": 0,
+  "build": {
+    "executed": false,
+    "reuse": "exact339"
+  },
+  "candidate_admission_temperatures": {
+    "battery_decic": 320,
+    "thermal_mc": 32000
+  },
+  "candidate_boot_id": "12dbf2677ebe4eeaa3ebd6df143394f3",
+  "failed_boot_classification": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "40500239",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.101694,
+          "events": [],
+          "setup_source_seconds": 4.193035
+        },
+        {
+          "completion_source_seconds": 6.859019,
+          "events": [
+            {
+              "completion_source_seconds": 6.859019,
+              "event_source_seconds": 6.07392,
+              "recovery_seconds": 0.785099,
+              "row": 1049
+            }
+          ],
+          "setup_source_seconds": 5.99496
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1049
+      ],
+      "setup_count": 2,
+      "state": "accepted"
+    },
+    "rows": 1108,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "final_acceptance": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 840000,
+      "input_limit_ua": 1800000,
+      "soc": 68,
+      "temp_decic": 320,
+      "voltage_uv": 4112000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "f38e35d421cc4c57b7f53c68214e117f",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.241",
+      "wifi_authenticated": true
+    }
+  },
+  "full_port_ready": false,
+  "host_defect": "thermal zone millidegrees compared to power_supply deci-degrees without factor100",
+  "primary_error": {
+    "error": "CaptureError('parked-proof: status=1; b\\'^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\\\n  File \"<string>\", line 216, in preparation_proof\\\\n    if s[\\\\\\'pack_temp\\\\\\']!=int(b[\\\\\\'POWER_SUPPLY_TEMP\\\\\\']):raise ValueError(\\\\\\'pack thermal mismatch\\\\\\')\\\\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\\\nValueError: pack thermal mismatch\\\\n\\'')",
+    "phase": "preparation",
+    "stopped": true
+  },
+  "pump_ON_observed": false,
+  "rollback_required": false,
+  "test": "Test340",
+  "tests": {
+    "executed": false,
+    "reuse": "33 affected host tests before deployment"
+  },
+  "verdict": "STOP_HOST_THERMAL_UNIT_ERROR_RESTORED331"
+}
