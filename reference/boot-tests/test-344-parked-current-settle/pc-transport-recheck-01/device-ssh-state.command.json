@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ip -4 route; ss -ltnp; systemctl is-active ssh; cat /sys/class/net/wlp1s0/operstate"
+  ],
+  "ended_utc": "2026-10-07T14:51:10.290159+00:00",
+  "started_utc": "2026-10-07T14:51:10.182785+00:00",
+  "status": 0
+}

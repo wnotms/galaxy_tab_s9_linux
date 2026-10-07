@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 PREDEPLOYMENT_WIFI_NETWORK_MISMATCH. OwnerPC connected,
+ADBsame331dc8442f1/config/notes/52%30.6C; preflight WiFirescue timesout before
+mutation. Devicewlp1s0/sshd up10.175.236.14/24, WindowsWLAN changed10.30.254.86/16;
+not CPUstall/newcandidatefailure. Freshowner sameWiFi handoff requested; retain
+stricttrust, no deviceconfig/reboot/flash/PPS/pump. Hoststageverified, no mutation
+state/rollbackrequired. Preserve failedpreflight/pc-transport-recheck-01; fresh
+preflight required when transport returns. Evidencephase tests/build:false,
+qualification unchanged. FullportNOT_READY.
+
 2026-10-07 Test344 NATURAL_DISCHARGE_READY_AWAITING_OWNER_PC. Finite read-only
 watch five packets/125.610s ends75%4.070V26.4C/-1.726A/USBoffline/directN,
 exact331dc8442f1 unchanged. No stress/devicewrite/flash/reboot/PPS/pump. Qualified hoststage now verified;

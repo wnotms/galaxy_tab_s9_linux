@@ -1,0 +1,30 @@
+{
+  "test": "Test344",
+  "verdict": "PREDEPLOYMENT_WIFI_NETWORK_MISMATCH",
+  "timestamp_utc": "2026-10-07T14:52:06.355791+00:00",
+  "owner_PC_reply": "\u5df2\u63a5",
+  "baseline_boot": "dc8442f1b39f48f8855d8918979be1af",
+  "device_wifi": "10.175.236.14/24",
+  "windows_wifi": "10.30.254.86/16",
+  "soc": 52,
+  "temp_decic": 306,
+  "adb": "available",
+  "device_sshd": "active/listening22",
+  "wifi_link": "up",
+  "host_ssh": "direct and Windows TCP timeout",
+  "cpu_stall_inferred": false,
+  "device_mutation": false,
+  "kernel_deployment": false,
+  "PPS": false,
+  "pump_ON": false,
+  "rollback_required": false,
+  "awaiting": "owner joins same WiFi; fresh preflight before install",
+  "tests": {
+    "executed": false,
+    "reason": "read-only preflight/transport evidence; source unchanged"
+  },
+  "build": {
+    "executed": false,
+    "reason": "reuse qualified parked-settle candidate"
+  }
+}

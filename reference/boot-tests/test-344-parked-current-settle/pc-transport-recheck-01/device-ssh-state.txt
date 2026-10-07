@@ -1,0 +1,11 @@
+default via 10.175.236.122 dev wlp1s0 proto dhcp src 10.175.236.14 metric 600 
+10.175.236.0/24 dev wlp1s0 proto kernel scope link src 10.175.236.14 metric 600 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                   
+LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1108,fd=6))           
+LISTEN 0      4096       127.0.0.1:43891      0.0.0.0:*    users:(("containerd",pid=1045,fd=9))     
+LISTEN 0      128             [::]:22            [::]:*    users:(("sshd",pid=1108,fd=7))           
+LISTEN 0      4                  *:5555             *:*    users:(("gts9-adbd-recon",pid=856,fd=10))
+active
+up
