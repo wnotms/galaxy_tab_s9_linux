@@ -105,6 +105,13 @@ rollback and323 secondary remain registered consumers of340/341, not permanent
 historical exemptions;339/341 qualified artifacts and source/config/DT/modules/
 rawlogs retained. See host-storage-cleanup/2026-10-07-test340-image-retirement.
 
+2026-10-07 Test341 closure retirement: expired331/332 Windows duplicate images
+and eligible332 canonical images retired after recorded manifest/hash/no333–342
+PACKAGE consumer check. Canonical331 activeproduction/342registeredrollback,
+339/342 qualified candidates and all source/config/DT/modules/rawlogs preserved.
+See host-storage-cleanup/2026-10-07-test341-image-retirement/summary.json for exact
+paths/bytes and any retained consumers. No device/code/test/build operation.
+
 2026-10-07 Test342 PREPARED/NOT_DEPLOYED host source-capability correction.
 26 affected native/cleanup/thermal/activation/source tests PASS0.213s/no skip;
 Python/shell/input hashes PASS. Preentry5V advertised capability<=3A while actual

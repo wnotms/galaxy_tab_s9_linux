@@ -1,0 +1,81 @@
+{
+  "completed_window": "332\u2013341",
+  "prepared_next_window": "333\u2013342",
+  "removed": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test331/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+      "origin_test": 331,
+      "kind": "expired Windows duplicate",
+      "manifest": "reference/boot-tests/test-331-pps-fix-default-off/staged-files.json",
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test331/rollback-accepted323-boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+      "origin_test": 331,
+      "kind": "expired Windows duplicate",
+      "manifest": "reference/boot-tests/test-331-pps-fix-default-off/staged-files.json",
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test332/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+      "origin_test": 332,
+      "kind": "expired Windows duplicate",
+      "manifest": "reference/boot-tests/test-332-fixed-return-off/staged-files.json",
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test332/rollback-accepted331-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+      "origin_test": 332,
+      "kind": "expired Windows duplicate",
+      "manifest": "reference/boot-tests/test-332-fixed-return-off/staged-files.json",
+      "deleted": true
+    }
+  ],
+  "preserved_registered_consumers": [
+    {
+      "path": "out/kernel-x710-fedora-fixed-check/Image.gz",
+      "consumers": [
+        {
+          "test": 333,
+          "artifact": "Image.gz",
+          "package": "reference/boot-tests/test-333-fixed-return-charger-boot/PACKAGE.json"
+        },
+        {
+          "test": 334,
+          "artifact": "Image.gz",
+          "package": "reference/boot-tests/test-334-fixed-return-soc-margin/PACKAGE.json"
+        }
+      ]
+    },
+    {
+      "path": "out/boot-bundle-x710-fixed-return-check-on/boot.img",
+      "consumers": [
+        {
+          "test": 333,
+          "artifact": "boot.img",
+          "package": "reference/boot-tests/test-333-fixed-return-charger-boot/PACKAGE.json"
+        },
+        {
+          "test": 334,
+          "artifact": "boot.img",
+          "package": "reference/boot-tests/test-334-fixed-return-soc-margin/PACKAGE.json"
+        }
+      ]
+    }
+  ],
+  "current331_production_and342_rollback_preserved": true,
+  "freed_bytes": 402653184,
+  "device_operation": false,
+  "tests": {
+    "executed": false,
+    "reason": "Exact image-retention hashes only; no code change"
+  }
+}
