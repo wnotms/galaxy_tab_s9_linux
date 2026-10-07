@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test335，窗口为 **Test326–Test335**；没有生成镜像的轮次仍占一轮。
+  编号为 Test336（已安装，实机等待启动），窗口为 **Test327–Test336**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,21 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 owner authorized “重启并继续测试”. One unchanged331 normal reboot
+3d359c92→90274be1 uniquely attributed; normal cmdline/config51/notes03 recovered,
+fresh allfive/181/nativeADB/strictWiFi/deviceNCM/WindowsCode0/OFF/pack preflight
+PASS. Six endpoint packets16.427s;57%4.010V28.3C. Inline capture's duplicate final
+pump filename STOP retained; only missing final read-only evidence supplemented
+sameboot/no second reboot; device scope PASS, no retrospective host PASS.
+Registered336 PPS-OFF scope recorded/pushed96991b9d; qualified candidate staged
+and installed after fresh gate. Allfive readback/paired181/BCBclear/root unmount;
+currently TWRP, awaiting owner C1-only→System once. Candidatebootffb7bc94,
+notes59a97374/pps_return_check sole opt-in/directOFF. No PPS or pumpON yet.
+Unconditional exact331 restore remains required after this one run. New phase
+evidence only: no build/test rerun/fullsuite/Actions. Retire expired326 images
+when336 completes; preserve current331 rollback and qualified336 consumer.
+See336installation/RESULTS.md, mutation-state.json and normal-boot-recovery/.
 
 2026-10-07 owner returnedPC;336 read-only preflight STOP exact cmdline:
 newboot3d359c92 has lpcharge1 vendor tokens. Accepted331 config51/notes03,
