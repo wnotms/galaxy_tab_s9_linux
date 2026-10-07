@@ -1,0 +1,56 @@
+{
+  "timestamp_utc": "2026-10-07T11:57:54.579536+00:00",
+  "retention_window": [
+    335,
+    344
+  ],
+  "active_consumers": [],
+  "removed": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test334/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+      "evidence_manifest": "reference/boot-tests/test-334-fixed-return-soc-margin/staged-files.json",
+      "reason": "Expired334 last consumer of332 canonical; no335..344 consumer"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test334/rollback-accepted331-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+      "evidence_manifest": "reference/boot-tests/test-334-fixed-return-soc-margin/staged-files.json",
+      "reason": "Expired334 last consumer of332 canonical; no335..344 consumer"
+    },
+    {
+      "path": "out/kernel-x710-fedora-fixed-check/Image.gz",
+      "bytes": 22136596,
+      "sha256": "f81d73013a81ea5b9eadd3d3370299909129e7fcfc673b43990cc275e55bfc0a",
+      "evidence_manifest": "reference/boot-tests/test-334-fixed-return-soc-margin/PACKAGE.json",
+      "reason": "Expired334 last consumer of332 canonical; no335..344 consumer"
+    },
+    {
+      "path": "out/boot-bundle-x710-fixed-return-check-on/boot.img",
+      "bytes": 100663296,
+      "sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+      "evidence_manifest": "reference/boot-tests/test-334-fixed-return-soc-margin/PACKAGE.json",
+      "reason": "Expired334 last consumer of332 canonical; no335..344 consumer"
+    },
+    {
+      "path": "out/boot-bundle-x710-fedora-fixed-check/boot.img",
+      "bytes": 100663296,
+      "sha256": "d10180cb561cae603f4bea47db197588a03626abfef97e65e93b88e9329f4ae7",
+      "evidence_manifest": "reference/charging/sm5440-fixed-return-check/PACKAGE.json",
+      "reason": "Expired334 last consumer of332 canonical; no335..344 consumer"
+    }
+  ],
+  "total_bytes": 424789780,
+  "preserved": [
+    "exact Test331 current/rollback boot/modules",
+    "Test343 candidate source/config/DT/modules/logs/hashes",
+    "Test344 current candidate and paired modules"
+  ],
+  "linux_free_before": 888278892544,
+  "windows_free_before": 48713957376,
+  "deletion_complete": true,
+  "linux_free_after": 888345681920,
+  "windows_free_after": 48915283968
+}

@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 retentioncleanup: expired334 two Windowsduplicates192MiB
+and332canonical Image/defaultOFF/armedboot removed after last334consumerexpiry;
+5 exacthashed targets,405.11MiB total. No335..344consumer;
+source/config/DT/modules/rawlogs/hashes retained,331current/newrollback intact.
+No device operation ortests/build. See host-storage-cleanup/
+2026-10-07-test344-image-retirement/deletion-manifest/RESULTS.
+
 2026-10-07 Test344 REGISTERED_NOT_DEPLOYED. Reuse source d60f2641 qualified
 parked-settle kernel, soleonceboot/offlinepackage. Independent guardian requires
 ordered3zero/>=100ms witness before firstON and eachresume; prior1.7Aprogram/
