@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test339 registered/qualified, not yet deployed: source81583618 fixes
+pre-lease sourceENODATA→boundedEAGAIN only; realpack/I2C/activefaults unchanged.
+Ordered entry witness beforelease/PPS; new guardian phaseproof afterunbind with
+fullsameboot/Linuxstart, preentryOFF offline/PC5/fixed9 permitted; postentry fixed9
+strict; primary/cleanup preserved.69 C/guardian+8 adapter/module-swap tests PASS;
+build81.955s/staticW1sparse12.881s/no warning; exact331config/DT/release,181archive
+58f66same338, protected108/prior23files preserved. No fullsuite/Actions/current
+voltage/thermal/DTS/USB/adbd/rootfs change. Owner继续 independently registers
+same1.8A<=30s339, no338replay, unconditional331restore. Currentsame331a8c809d1,
+62%4.057V32.4C, allfive181/OFF/ADB/strictWiFi250/deviceNCM/noCode43/newfault
+preflightPASS. FullportNOT_READY; physical338STOP remains frozen.
+See339README and sm5440-preentry-detachRESULTS/PACKAGE/SHA256.
+
 2026-10-07 Test338 CLOSED STOP_PREENTRY_RESTORED331: owner-authorized bounded1.8A
 one<=30s pump candidate installed/admitted onPC, guardian armed. Normal PCdetach
 returned-ENODATA at73.54s; one-shot wait only handles EAGAIN/ENODEV, stopped
