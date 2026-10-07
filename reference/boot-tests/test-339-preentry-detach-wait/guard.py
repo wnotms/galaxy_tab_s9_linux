@@ -55,7 +55,7 @@ class Hardware:
 
 def validate_cleanup(rows,boot,mode,t,usb):
     if mode&12:raise ValueError('cleanup pump OFF not proven')
-    if not rows or any(r.get('_BOOT_ID')!=boot for r in rows) or min(int(r['__MONOTONIC_TIMESTAMP']) for r in rows)>5000000:
+    if not rows or any(r.get('_BOOT_ID')!=boot for r in rows) or min(int(r['__MONOTONIC_TIMESTAMP']) for r in rows)>5000000 or not any(str(r.get('MESSAGE','')).startswith(('Linux version ', 'Linux boot')) and int(r['__MONOTONIC_TIMESTAMP'])<=5000000 for r in rows):
         raise ValueError('cleanup full phase journal missing')
     entered=any(any(k in str(r.get('MESSAGE','')) for k in ('one-shot entry begins:', 'direct charge started:', 'one-shot pump started:', 'one-shot refresh ', 'one-shot pump complete:', 'fixed return verified:')) for r in rows)
     for r in rows:
