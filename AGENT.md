@@ -98,6 +98,8 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test345 native/ordinarycharge/dischargePASS; sameboot discharge15.650s/63%28.2C/-0.840A/offline. Waiting ownerPCreturn for onceADB/deviceNCM and unconditionalexact331restore. rollback_required=true, fullacceptancepending; evidence-onlytests/build:false.
+
 2026-10-07 Test345 NATIVE_AND_FIXED_RETURN_CHARGE_PASS_AWAITING_UNPLUG.
 One activation9d7a1a38/37activeframes/maxrawIBUS1.770625A/pack29.5C/die43.5C;
 five refreshes/sixzero proofs/onefinal<=2s deferral/native completionPASS.
