@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test343（已结束并恢复 Test331），窗口为 **Test334–Test343**；没有生成镜像的轮次仍占一轮。
+  编号为 Test344（已登记，未部署），窗口为 **Test335–Test344**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test344 REGISTERED_NOT_DEPLOYED. Reuse source d60f2641 qualified
+parked-settle kernel, soleonceboot/offlinepackage. Independent guardian requires
+ordered3zero/>=100ms witness before firstON and eachresume; prior1.7Aprogram/
+1.8APPS+rawcap/30s/PM/late-refresh/voltage/thermal/identity/cleanup kept.
+10 affected guardian testsPASS0.278s, syntax/inputhashPASS;68C/build/W1/sparse/
+exact331config/DT/181 reused. No fullsuite/Actions/Windowsstage/device mutation.
+Device accepted331dc8442f1 ownerunpluggedPC,naturaldischarge,last80%28.7C;
+preparationSOC20..75 gate pending, no stressload. No343replay orcurrentincrease.
+Retentionwindow335–344, expired334/332 lastconsumer image retirement pending;
+exact331 active/newrollback retained. FullportNOT_READY. See344 README/
+registration/INPUTS/EXECUTION_INPUTS/offline-summary/qualification-reference.
 
 2026-10-07 Test343 follow-up READY_OFFLINE_DEFAULT_OFF, sourced60f2641.
 Bounded parkedzero wait preserving Fedora AVG32/OFF-PPS-VBUS-ON and old limits;

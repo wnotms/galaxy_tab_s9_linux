@@ -1,0 +1,25 @@
+{
+  "verdict": "REGISTERED_NOT_DEPLOYED",
+  "test": "Test344",
+  "host_tests": {
+    "executed": true,
+    "count": 10,
+    "result": "PASS",
+    "seconds": 0.278,
+    "full_executed": false,
+    "pipeline_seconds": 0.493
+  },
+  "source_tests": {
+    "executed": false,
+    "reuse": "Test343 follow-up actualC68PASS + build/config/DT/W1/sparse/181 qualification"
+  },
+  "physical_executed": false,
+  "device_operations": [],
+  "Windows_staged": false,
+  "preparation_soc_max": 75,
+  "last_readonly_soc": 80,
+  "hardware_setpoint_ma": 1700,
+  "PPS_request_ma": 1800,
+  "raw_IBUS_stop_cap_ua": 1800000,
+  "full_port": "NOT_READY"
+}
