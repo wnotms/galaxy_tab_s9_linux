@@ -1,0 +1,33 @@
+{
+  "completed_window": "333\u2013342",
+  "registered_next_window": "334\u2013343",
+  "removed": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test333/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "3fe4adf1310c4e3b1c81f128135c0ebb66a0f687fe327d6402ece3e68ea41515",
+      "origin_test": 333,
+      "manifest": "reference/boot-tests/test-333-fixed-return-charger-boot/staged-files.json",
+      "kind": "expired Windows duplicate",
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test333/rollback-accepted331-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+      "origin_test": 333,
+      "manifest": "reference/boot-tests/test-333-fixed-return-charger-boot/staged-files.json",
+      "kind": "expired Windows duplicate",
+      "deleted": true
+    }
+  ],
+  "freed_bytes": 201326592,
+  "preserved_canonical332_consumer": "Test334 PACKAGE Image/armed boot exact paths",
+  "preserved331": "active production and Test343 exact rollback; not permanent historical exemption",
+  "preserved_sources_configs_DT_modules_rawlogs": true,
+  "device_operation": false,
+  "tests": {
+    "executed": false,
+    "reason": "Exact retention hashes only, no executable change"
+  }
+}
