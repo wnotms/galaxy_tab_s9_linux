@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 owner returnedPC;336 read-only preflight STOP exact cmdline:
+newboot3d359c92 has lpcharge1 vendor tokens. Accepted331 config51/notes03,
+allfive/181 match; nativeADB/strictWiFi10.91.255.247/WindowsCode0, physicalCNTL5
+01OFF/directN/checks absent, fulljournal no faults/suspects/failedunits. Initial
+56%3.969V25.4C/+0.935A. No flash/reboot/PPS/module/rootfs change; not a physical336
+failure. Preserve stopped packet, do not relax normal-cmdline gate. Separate
+one unchanged331 normal-reboot proposal awaits owner approval; no automaticrepair
+or Test336 PPS authorization inferred. No build/tests rerun for evidence only.
+See336preflight/RESULTS.md and normal-boot-recovery-plan.json. FullportNOT_READY.
+
 2026-10-07 Test336 PREPARED/REGISTERED for one pump-OFF PPS API transaction,
 native ADC/ordered fixed9 proof/release, bounded10s ordinary settling+30s charge,
 15s unplug, unconditional exact331 allfive/181 restoration. Frozen candidate
