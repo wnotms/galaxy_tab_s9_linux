@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 CLOSED STOP_DEADLINE_DURING_PARKED_REFRESH_RESTORED331.
+One ownerconfirmed activation41activeframes/maxIBUS1.770A/pack28.6C/die42C;
+initial+5refreshes parkedzero proofPASS. Sixthpark195.976859 only168ms before
+196145ms deadline; no resume/nativeSTOPprimary-62 cleanup0 lease0, fixedreturn
+physical8732mV/rawIBUS0/OFF. Guardian invalidfixedreturnorder masks later native
+primary; retainedseparately. Nonclean immutable, no replay/higherpower. Failed
+1143row journal CPUfaultcounts empty/nativeSTOP suspect retained. Exact331/
+original181/allfive restored, finalbeb65af6/WiFi10.175.236.97/54%31.6C/identity/
+rescue/kernelPASS/rollback_required=false. Next offline avoid late refresh start
+without extending30s; improve failedtransaction diagnostic, keep gates. Closure
+tests/build:false, unchanged68C/15host qualification reused. FullportNOT_READY.
+See344 PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256/rawguardian+finalacceptance.
+
 2026-10-07 Test344 DEPLOYED_PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1.
 Owner“已同网” restored transport; freshpreflight53%32C/331identity/rescuePASS.
 Candidateb7b4fa77/WiFi10.175.236.68/notes92fb/config51/allfive181/DCCabsent/

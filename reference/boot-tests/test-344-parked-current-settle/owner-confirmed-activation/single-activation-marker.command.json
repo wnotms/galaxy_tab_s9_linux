@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "-o",
+    "ProxyCommand=/mnt/f/msys64/ucrt64/bin/python.exe -u -c 'import socket,os,sys,threading,msvcrt\nif sys.platform!=\"win32\":raise RuntimeError(\"native Windows TCP required\")\nmsvcrt.setmode(0,os.O_BINARY);msvcrt.setmode(1,os.O_BINARY)\ns=socket.create_connection((sys.argv[1],22),3);s.settimeout(1)\nstop=threading.Event()\ndef upload():\n try:\n  while not stop.is_set():\n   data=os.read(0,65536)\n   if not data:break\n   s.sendall(data)\n finally:stop.set()\nthreading.Thread(target=upload,daemon=True).start()\ntry:\n while not stop.is_set():\n  try:data=s.recv(65536)\n  except socket.timeout:continue\n  if not data:break\n  pos=0\n  while pos<len(data):\n   n=os.write(1,data[pos:])\n   if n<=0:raise OSError(\"proxy stdout closed\")\n   pos+=n\nfinally:stop.set();s.close()\n' 10.175.236.68",
+    "root@10.175.236.68",
+    "python3 -c 'from pathlib import Path; import json; p=Path('\"'\"'/tmp/gts9-test344-monitor/evidence'\"'\"'); assert not (p/\"finished\").exists(); assert (p/\"awaiting-owner\").read_text()=='\"'\"'b7b4fa77ac094e85a458f0b8845b8026'\"'\"'; assert not (p/\"activation-started\").exists(); import importlib.util, os, time; spec=importlib.util.spec_from_file_location(\"activation_guard\",'\"'\"'/tmp/gts9-test344-monitor/guard.py'\"'\"'); g=importlib.util.module_from_spec(spec); spec.loader.exec_module(g); hw=g.Hardware('\"'\"'b7b4fa77ac094e85a458f0b8845b8026'\"'\"'); marker={'\"'\"'boot_id'\"'\"': '\"'\"'b7b4fa77ac094e85a458f0b8845b8026'\"'\"', '\"'\"'token'\"'\"': '\"'\"'cb7b8963b5e3e7a1916c5ab93205f603'\"'\"', '\"'\"'owner_confirmed_C1'\"'\"': True}\ntry:\n for i in range(5):\n  sample=hw.sample(); rows=[json.loads(x) for x in g.subprocess.check_output([\"journalctl\",\"-k\",\"-b\",\"-o\",\"json\",\"--no-pager\"],text=True,timeout=8).splitlines()]; g.preparation_proof(rows,hw.boot,sample,hw.is_bound())\n  if sample[\"tcpm\"].get(\"POWER_SUPPLY_VOLTAGE_NOW\")==\"9000000\":break\n  time.sleep(1)\n g.preparation_proof(rows,hw.boot,sample,hw.is_bound(),marker,marker[\"token\"]); print(json.dumps(sample))\nfinally: os.close(hw.fd)\nf=(p/\"activate.json\").open(\"x\"); f.write('\"'\"'{\"boot_id\": \"b7b4fa77ac094e85a458f0b8845b8026\", \"token\": \"cb7b8963b5e3e7a1916c5ab93205f603\", \"owner_confirmed_C1\": true}'\"'\"'); f.close()'"
+  ],
+  "ended_utc": "2026-10-07T14:56:04.380912+00:00",
+  "started_utc": "2026-10-07T14:56:03.735862+00:00",
+  "status": 0
+}

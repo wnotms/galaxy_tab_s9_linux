@@ -1,9 +1,23 @@
 {
-  "allfive_verified": true,
-  "candidate_boot_id": "b7b4fa77ac094e85a458f0b8845b8026",
-  "guardian_folder": "/tmp/gts9-test344-monitor",
-  "guardian_pid": 1770,
-  "modules": 181,
-  "phase": "guardian-armed-awaiting-owner-C1",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 832000,
+      "input_limit_ua": 1800000,
+      "soc": 54,
+      "temp_decic": 316,
+      "voltage_uv": 3951000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "beb65af6fa2b4ca09b4976bb134db772",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.97",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

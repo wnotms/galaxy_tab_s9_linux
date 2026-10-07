@@ -1,0 +1,132 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 23,
+  "last_source_timestamp": "31712586",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 5.346599,
+        "events": [],
+        "setup_source_seconds": 4.132164
+      },
+      {
+        "completion_source_seconds": 7.583757,
+        "events": [],
+        "setup_source_seconds": 6.704879
+      }
+    ],
+    "event_count": 0,
+    "event_rows": [],
+    "setup_count": 2,
+    "state": "absent"
+  },
+  "rows": 1097,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_fsr": 10
+  },
+  "suspects": [
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 601
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 603
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8077800, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 604
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 606
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80b3300, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 607
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 609
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80eb600, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 610
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 612
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8122200, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 613
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 615
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8163100, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 616
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 618
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8198100, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 619
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 621
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81cf200, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 622
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 624
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8208300, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 625
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 627
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb823af00, fsynr=0x660021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 628
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00660021 [S1CBNDX=102 PNU PLVL=1]",
+      "priority": 3,
+      "row": 630
+    }
+  ]
+}
