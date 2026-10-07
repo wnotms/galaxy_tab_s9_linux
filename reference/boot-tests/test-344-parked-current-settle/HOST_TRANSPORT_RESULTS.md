@@ -1,0 +1,9 @@
+# Test344 host TCP relay revision2, before deployment
+
+WSL direct SSH timeout revalidated, ADB empty as expected after owner unplug. Windows native TCP connects to enrolled10.175.236.14:22; Windows WLAN and WSL address both10.175.236.63/24. This proves a host-path asymmetry, not its firewall/router cause or a CPU fault. Native Windows OpenSSH could read original UNC trust with forward slashes but rejected private-key ACL representation; no permissions were weakened and no key was copied.
+
+WSL OpenSSH through existing native Windows Python encrypted TCP relay successfully reads exact331 machine/config51ba/notes03c9 and unchanged dc8442f1 boot. WSL alone reads privatekey/knownhosts and signs/verifies; Windows sees encrypted wire data only, no task file staged to Windows. Relay is bounded3s connect, binary stdin/stdout, partial-write aware, ends on socket/pipe EOF. Registered helper asserts nativewin32; no automatic insecure/fallback transport or host-key learning. A second read using the actual revised Test344 runner succeeds:77%,4.085V26.5C/-1.639A, USBoffline/directN. Last sample is not a PC preparation gate.
+
+15 affected host/guardian tests PASS0.257s, including binary packet/partial write/timeout/EOF and trust/alias/options preservation. Update Test344 registered host transport only before any staging/physical mutation, bind new helper/test hash and revised scope. Prior registration commit remains historical; no old Test343 helper/result changes. Kernel/config/DTB/modules/source d60f2641 reused, no build/fullsuite/Actions. No device/rootfs/USB/adbd/WiFi/PD/pump changes.
+
+Connection-question is resolved without owner reboot; natural discharge to<=75% remains pending. Then obtain fresh PC handoff/preflight before sole candidate install, fresh C1 confirmation before any activation. Full direct charging remains NOT_READY.

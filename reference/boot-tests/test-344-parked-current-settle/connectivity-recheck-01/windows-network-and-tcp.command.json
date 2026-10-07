@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "$ErrorActionPreference='Stop'\nGet-NetIPAddress -AddressFamily IPv4 | Where-Object {$_.IPAddress -notlike '127.*' -and $_.IPAddress -notlike '169.254.*'} | Select-Object InterfaceAlias,IPAddress,PrefixLength | ConvertTo-Json -Compress\n$c=New-Object System.Net.Sockets.TcpClient\ntry {$t=$c.ConnectAsync('10.175.236.14',22);if($t.Wait(3000) -and $c.Connected){'ENROLLED_TCP_OPEN'}else{'ENROLLED_TCP_TIMEOUT'}}catch {'ENROLLED_TCP_ERROR: '+$_.Exception.Message}finally {$c.Dispose()}\n"
+  ],
+  "ended_utc": "2026-10-07T12:04:12.560241+00:00",
+  "started_utc": "2026-10-07T12:04:09.910267+00:00",
+  "status": 0
+}

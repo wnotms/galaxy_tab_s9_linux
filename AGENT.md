@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 PREEXECUTION_SSH_RESTORED_BATTERY_PENDING, hostrevision2.
+WindowsTCP22 open while WSLdirecttimeout; encrypted nativeWindowsPython relay
+restores WSL strictSSH/originalkey+trust, exact331config/notes/machine/sameboot
+dc8442f1. No keycopy/permissionweakening/relearn/device/network changes. Runner
+registered windows-tcp profile;15affectedhost+guardian testsPASS0.257s, no build/
+fullsuite/Actions, reuse d60f2641 kernel/68C/config/DT/181. Latest77%4.085V26.5C/
+-1.639A/USBoffline/directN; prep75% pending, no stress. No Windowsstage/flash/
+reboot/PPS/pump/newkernel deployment; priorconnectivity question resolved,
+ownerphysicalPC+C1 confirmations still required. See344 HOST_TRANSPORT_RESULTS/
+connectivity-recheck-01/host-qualification and revised frozeninputs.
+
 2026-10-07 Test344 PREEXECUTION_CONNECTIVITY_PENDING, not a physical result.
 Candidate qualified/registered/pushed; no Windowsstage/preflight/install/reboot/
 PPS/pump. Lastconfirmed331dc8442f1 naturallydischarging80%28.7C; laterreadonly

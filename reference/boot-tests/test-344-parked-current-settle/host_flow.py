@@ -235,9 +235,10 @@ def admit():
     return result
 
 def wifi_command(rec,name,address,command):
-    argv=['ssh','-i',PLAN['key'],'-o','BatchMode=yes','-o','ConnectTimeout=3',
-          '-o','StrictHostKeyChecking=yes','-o','UserKnownHostsFile='+PLAN['known_hosts'],
-          '-o','HostKeyAlias='+PLAN['alias'],'root@'+address,command]
+    from windows_ssh_transport import ssh_argv
+    argv=ssh_argv(PLAN['key'],PLAN['known_hosts'],PLAN['alias'],address,command,
+                  transport=PLAN.get('ssh_transport','direct'),
+                  windows_python=PLAN.get('windows_python','/mnt/f/msys64/ucrt64/bin/python.exe'))
     return rec.command(name,argv,timeout=15)
 
 

@@ -1,0 +1,34 @@
+{
+  "verdict": "HOST_WINDOWS_TCP_RELAY_QUALIFIED",
+  "tests": {
+    "executed": true,
+    "count": 15,
+    "result": "PASS",
+    "seconds": 0.257,
+    "full_executed": false
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "host-only transport revision; reuse d60f2641 qualified kernel"
+  },
+  "device_identity": "exact331 machine/config/notes/same dc8442f1 boot via original trusted key",
+  "private_key_copied": false,
+  "trust_key_relearned": false,
+  "device_network_changes": false,
+  "current_state": {
+    "timestamp_utc": "2026-10-07T12:13:09.019670+00:00",
+    "verdict": "STRICT_SSH_RESTORED_VIA_WINDOWS_TCP",
+    "boot_id": "dc8442f1-b39f-48f8-855d-8918979be1af",
+    "soc": 77,
+    "temp_decic": 265,
+    "voltage_uv": 4085000,
+    "current_ua": -1639000,
+    "usb_online": false,
+    "direct": false,
+    "readonly": true,
+    "not_PC_preflight": true,
+    "transport": "windows-tcp/local-OpenSSH",
+    "private_key_copied": false,
+    "device_writes": false
+  }
+}
