@@ -1,9 +1,23 @@
 {
-  "allfive_verified": true,
-  "candidate_boot_id": "4b6d816565674fc7b135ecdcf6c897b9",
-  "guardian_folder": "/tmp/gts9-test343-monitor",
-  "guardian_pid": 1715,
-  "modules": 181,
-  "phase": "guardian-armed-awaiting-owner-C1",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 678000,
+      "input_limit_ua": 1800000,
+      "soc": 78,
+      "temp_decic": 318,
+      "voltage_uv": 4203000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "dc8442f1b39f48f8855d8918979be1af",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.14",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

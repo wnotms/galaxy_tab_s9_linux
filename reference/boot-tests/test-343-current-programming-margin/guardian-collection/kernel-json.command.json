@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.169",
+    "journalctl -k -b -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-07T11:35:45.835975+00:00",
+  "started_utc": "2026-10-07T11:35:45.093183+00:00",
+  "status": 0
+}

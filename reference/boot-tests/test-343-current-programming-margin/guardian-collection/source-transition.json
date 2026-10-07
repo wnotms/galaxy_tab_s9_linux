@@ -1,0 +1,62 @@
+[
+  {
+    "source_us": 333037570,
+    "message": "sm5440-fedora 0-0063: one-shot entry begins: fixed9=1"
+  },
+  {
+    "source_us": 333186589,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1500 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 333211033,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1800 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 333235410,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9240 mV 1800 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 333235540,
+    "message": "sm5440-fedora 0-0063: PPS contract requested: 9240 mV/1800 mA"
+  },
+  {
+    "source_us": 333299293,
+    "message": "sm5440-fedora 0-0063: direct charge started: PPS 9240 mV/1800 mA, ibus limit 1700 mA"
+  },
+  {
+    "source_us": 333299328,
+    "message": "sm5440-fedora 0-0063: one-shot pump started: target=9240mV/1800mA deadline=363188ms max_ms=30000 no_restart=1"
+  },
+  {
+    "source_us": 337394302,
+    "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+  },
+  {
+    "source_us": 337428349,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9260 mV 1800 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 337460738,
+    "message": "sm5440-fedora 0-0063: one-shot range rejected: running=0 mode=0x1 vbus=8976mV target=9260mV ibus=1744375uA cap=1800000uA vbat=4268500uV pack=4240000uV/2689000uA temp=287 die=420 status=00/00/20/00"
+  },
+  {
+    "source_us": 337469014,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9260 mV 269 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 337605345,
+    "message": "sm5714-usbpd 3-0033: TCPM Sink budget: 9000 mV 1500 mA (not measured VBUS)"
+  },
+  {
+    "source_us": 338602364,
+    "message": "sm5440-fedora 0-0063: fixed return verified: source=13 lease=1 vbus=9264000uV samples=3 range=9264..9264mV settled=119ms raw_ibus=0 pump_off=1"
+  },
+  {
+    "source_us": 338602400,
+    "message": "sm5440-fedora 0-0063: one-shot pump stopped: primary=-34 cleanup=0 lease=0 no_restart=1"
+  },
+  {
+    "source_us": 338645005,
+    "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery"
+  }
+]

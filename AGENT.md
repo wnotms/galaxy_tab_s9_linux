@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test343（已部署，OFF/解绑，等待接线），窗口为 **Test334–Test343**；没有生成镜像的轮次仍占一轮。
+  编号为 Test343（已结束并恢复 Test331），窗口为 **Test334–Test343**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test343 CLOSED STOP_PARKED_NONZERO_IBUS_RESTORED331.
+Source95159eec hardware1700/PPS1800/rawcap1800 witness; one ownerconfirmed
+activation,7 live mode4 frames,maxIBUS1751875uA. First refresh OFF at337.392397s
+then native337.460017s rejects OFF/nonzeroIBUS1744375uA; voltage/thermal/current
+cap pass that tuple. ADC freshness/current decay unknown, no gate relaxation.
+Nativeprimary=-34 cleanup=0 lease=0; physicalOFF/fixed9/rawIBUS0 return proved,
+guardian drained/unbound. No resumedrefresh/30scompletion/retry/highercurrent.
+Exact331/original181/allfive restored; bootdc8442f1,WiFi10.175.236.14,
+78%4.203V31.8C/+0.678A,finalidentity/rescue/kernelPASS,rollback_required=false.
+Full failed1154row journal CPUfaultcounts empty; native range/STOP suspects retained.
+Closure tests/build executed:false,reuse39host/58C/build; no fullsuite/Actions.
+Next offlineOFF/ADCfreshness+vendor/Fedorarefresh analysis; no new registration
+or physicaloperation. FullportNOT_READY. See343 PHYSICAL_RESULTS/physical-summary.
 
 2026-10-07 Test343 DEPLOYED_PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1.
 Candidate4b6d8165/WiFi10.175.236.169, boot840773ba/config51/notesb8d8/181,
