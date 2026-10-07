@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test345 DEPLOYED_PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1.
+Gitprotocol500 bypassed via verifiedexact GitAPIobjects/force:false fastforward;
+3commitSHA identical/38blobs/origin-test7b32d07f synchronized beforedeployment,
+no historyrewrite/Actions. Fresh331PCpreflight59%33.8C/allfive181/rescuePASS.
+Candidate9d7a1a38/WiFi10.175.236.233/60%32.9C/config51/notes893c/allfive181/
+DCCabsent/unique normalboot/rescue/journal/noCode43PASS. Preentryworker drained,
+physicalOFF/unbound; guardian1714 awaiting freshownerC1<=900s. No activation/PPS/
+pump yet; hardware1700/PPS+raw1800/<=30s/final2s reserve scope unchanged.
+Exact331rollback_required=true/original181saved; reused72C/build/20host,
+operationphase tests/build:false. See345PREPARED_STATUS/PUSH_RECOVERY/rawoperation.
+FullportNOT_READY.
+
 2026-10-07 Test345 REGISTRATION_PUSH_PENDING_NO_DEPLOYMENT. Local7c596eed
 registered/20hostPASS + candidate72C/buildPASS, but remote-test remains01747a5f.
 Four normalpushes rejected GitHubInternalServerError (includingHTTP1.1); request
