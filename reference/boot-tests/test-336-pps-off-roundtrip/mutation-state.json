@@ -1,6 +1,23 @@
 {
-  "allfive_verified": true,
-  "modules": 181,
-  "phase": "candidate-installed-awaiting-owner-C1-System-boot",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 957000,
+      "input_limit_ua": 1800000,
+      "soc": 58,
+      "temp_decic": 279,
+      "voltage_uv": 4021000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "245457825f864f33ac57d81714ebb776",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.91.255.52",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test336（已安装，实机等待启动），窗口为 **Test327–Test336**；没有生成镜像的轮次仍占一轮。
+  编号为 Test336（已停止并恢复 Test331），窗口为 **Test327–Test336**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,25 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+
+2026-10-07 Test336 CLOSED: STOP_RESTORED_ACCEPTED331. Native single pump-OFF
+PPS8920mV/1800mA→physical fixed9 proof/release PASS; ordinary switching did not
+recover (uptime118.09s: Not charging/-0.959A/input100mA despite fixed ONLINE1).
+Original admission KeyError(identity) retained; missing read-only sameboot
+proof only, no repeat PPS/boot, no completed30s/15s acceptance.412 enum8 warnings.
+USB_TYPE PD_PPS is source capability, not active PPS proof. Follow-up targets
+async-release poller reconfiguration, declared USB enum and flat discovery
+integration; source gap is inference, not captured internal flags. No fix yet.
+Exact331 boot025e/notes03/config51/allfive/original181 restored; normalboot
+24545782 attributed, ADB/strictWiFi10.91.255.52/deviceNCM/WindowsCode0/physicalOFF
+PASS,58%4.021V27.9C/+0.957A. No classified kernel fault/suspect/failedunits.
+Mutation rollback_required=false. No new device experiment or pump/current
+advance. Evidence/docs only; executed:false, unchanged qualification reused.
+Window327–336 expired326 four exacthash images removed324132788bytes; current
+331/323/qualified336 preserved. See336PHYSICAL_RESULTS.md/physical-summary.json
+and2026-10-07-test336-image-retirement/. FullportNOT_READY.
+
 
 2026-10-07 owner authorized “重启并继续测试”. One unchanged331 normal reboot
 3d359c92→90274be1 uniquely attributed; normal cmdline/config51/notes03 recovered,

@@ -1,0 +1,94 @@
+{
+  "candidate_boot_attribution": "attributed",
+  "candidate_boot_id": "b6cc488f92834c2eaae21dd8caa8ed50",
+  "candidate_kernel_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "candidate_kernel_notes_sha256": "59a9737423ad62691e6055376b683638a04b492a6dce11acf673e74d38371543",
+  "cleanup": "reference/host-storage-cleanup/2026-10-07-test336-image-retirement/summary.json",
+  "first_stop": {
+    "error": "KeyError('identity')",
+    "phase": "admit",
+    "verdict": "STOP"
+  },
+  "full_port_verdict": "NOT_READY",
+  "host_30s_observation_completed": false,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [],
+  "limitations": [
+    "Internal ADC is not independently calibrated VBUS/power measurement",
+    "TCPM USB_TYPE PD_PPS advertises source capability; ONLINE1 is fixed, not evidence of active PPS",
+    "Asynchronous release proves authorization, not completed Q4 programming",
+    "No pumpON, high-current, long charging or production reliability acceptance"
+  ],
+  "native_pps_off_roundtrip": {
+    "fixed_vbus_uv": 9266000,
+    "kernel_source_timestamps_us": [
+      10677752,
+      10826092,
+      11115613,
+      11115637
+    ],
+    "lease": 1,
+    "lease_released": true,
+    "pps_observed_mv": 9266,
+    "pump_ON": false,
+    "source": 8,
+    "target_ma": 1800,
+    "target_mv": 8920,
+    "timestamp_basis": "timestamps_us: journal __MONOTONIC_TIMESTAMP, retained parser output",
+    "timestamps_us": [
+      10676515,
+      10823927,
+      11112420,
+      11113186
+    ],
+    "verdict": "NATIVE_PROOF_PASS"
+  },
+  "no_repeated_candidate_boot": true,
+  "ordinary_charge_return": {
+    "battery_current_ua": -959000,
+    "battery_status": "Not charging",
+    "battery_temp_decic": 236,
+    "battery_voltage_uv": 3943000,
+    "seconds_after_native_completion": 106.976814,
+    "seconds_after_native_completion_source_timestamp": 106.97436300000001,
+    "soc": 58,
+    "tcpm_online": "1",
+    "tcpm_usb_type": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+    "tcpm_voltage_uv": 9000000,
+    "uptime_seconds": 118.09,
+    "usb_input_limit_ua": 100000,
+    "verdict": "NON_CLEAN"
+  },
+  "physical_pump_OFF": true,
+  "rollback": {
+    "final": {
+      "PPS": false,
+      "battery": {
+        "current_ua": 957000,
+        "input_limit_ua": 1800000,
+        "soc": 58,
+        "temp_decic": 279,
+        "voltage_uv": 4021000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "245457825f864f33ac57d81714ebb776",
+      "device_NCM": true,
+      "pump_ON": false,
+      "transport": {
+        "rescue": "WiFi",
+        "wifi": "10.91.255.52",
+        "wifi_authenticated": true
+      }
+    },
+    "phase": "accepted331-restored",
+    "rollback_required": false
+  },
+  "test": "Test336",
+  "tests": {
+    "executed": false,
+    "reason": "Hardware results and source analysis only; unchanged57 runner and kernel qualification reused"
+  },
+  "unplug_15s_observation_completed": false,
+  "unsupported_usb_enum_warning_count": 412,
+  "verdict": "STOP_RESTORED_ACCEPTED331"
+}
