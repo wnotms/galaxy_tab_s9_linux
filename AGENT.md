@@ -105,6 +105,17 @@ rollback and323 secondary remain registered consumers of340/341, not permanent
 historical exemptions;339/341 qualified artifacts and source/config/DT/modules/
 rawlogs retained. See host-storage-cleanup/2026-10-07-test340-image-retirement.
 
+2026-10-07 Test341 DEPLOYED/PREPARED, no PPS/pump attempt yet. Candidateboot
+0570988d uniquely attributed/allfive181/config51/notes e014/DCCabsent/normal
+onceflag/ADB/WiFi10.175.236.123/deviceNCM/noCode43/pack PASS;69%4.126V32.1C.
+InitialPC readinessqueue canceled/drained; corrected mC/deciC park proof PASS.
+Guardian1722 armed on knownOFF/unbound provider at /tmp/gts9-test341-monitor;
+no activation marker/bind/entry/PPS/pumpON. Await ownerC1confirmation, only then
+single fixed9-gated bind; manualhandoff <=900s OFF/unbound, active1.8A<=30s gates
+unchanged. Test331 rollback_required=true until unconditional finalrestoration;
+never call prepared hardware charging acceptance or reuse STOP340/339boot.
+See341 prepared-live/preparation-park/mutation-state. FullportNOT_READY.
+
 2026-10-07 Test341 registered/qualified corrected host thermal units. Exact339
 kernel/config/DT/181/boot reused; kernel source unchanged.34 affected tests PASS
 0.427s/no skip, Python/shell syntax PASS. Preparation thermistor uses mC while

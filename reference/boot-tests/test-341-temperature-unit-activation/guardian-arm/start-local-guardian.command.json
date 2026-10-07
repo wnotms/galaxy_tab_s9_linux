@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.123",
+    "nohup python3 /tmp/gts9-test341-monitor/guard.py --plan /tmp/gts9-test341-monitor/plan.json --out /tmp/gts9-test341-monitor/evidence >/tmp/gts9-test341-monitor/stdout.txt 2>/tmp/gts9-test341-monitor/stderr.txt </dev/null & echo $!"
+  ],
+  "ended_utc": "2026-10-07T10:33:16.154967+00:00",
+  "started_utc": "2026-10-07T10:33:15.903044+00:00",
+  "status": 0
+}

@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.123",
+    "python3 -c 'from pathlib import Path; Path(\"/sys/bus/i2c/drivers/sm5440-fedora/unbind\").write_text(\"0-0063\")'"
+  ],
+  "ended_utc": "2026-10-07T10:33:14.709985+00:00",
+  "started_utc": "2026-10-07T10:33:14.437945+00:00",
+  "status": 0
+}
