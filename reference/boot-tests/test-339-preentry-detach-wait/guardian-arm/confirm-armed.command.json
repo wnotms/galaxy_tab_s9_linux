@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.213",
+    "for i in 1 2 3 4 5; do if test -f /tmp/gts9-test339-monitor/evidence/armed; then cat /tmp/gts9-test339-monitor/evidence/armed; test ! -f /tmp/gts9-test339-monitor/evidence/finished; exit; fi; sleep 1; done; cat /tmp/gts9-test339-monitor/stderr.txt; exit 1"
+  ],
+  "ended_utc": "2026-10-07T10:02:15.455152+00:00",
+  "started_utc": "2026-10-07T10:02:15.215809+00:00",
+  "status": 0
+}

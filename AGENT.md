@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test339 STOP_PREENTRY_WAIT_TIMEOUT, ROLLBACK PENDING. Candidate
+80777a48 admittedonPC, guardian armed.300s-from-probe readiness expired atPC5,
+primary-110/cleanup0/lease0; noPPS/pump/entry. Guardian preservedprimary and
+provedunboundOFF/preentryPC cleanup (no falsefixed9secondary). OwnerC1reply
+afterSTOP; samebootordinary9/1.5A/OFF/healthy64%28.3C viaWiFi213. ADBabsent
+oncharger; restore failedbeforetargetread/no recovery/rollbackwrite. AwaitPC
+return then unconditionalexact331restore; do notrearm/replay339. Timing/handshake
+needsseparatefuture registration withOFF/unboundmanualhandoff andguardian-before-
+bind; unchanged kernel1.8A/30s/fault/thermal gates. FullportNOT_READY. See339
+PHYSICAL_STATUS/physical-summary-pending and mutationstate(rollback_required=true).
+
 2026-10-07 Test339 registered/qualified, not yet deployed: source81583618 fixes
 pre-lease sourceENODATA→boundedEAGAIN only; realpack/I2C/activefaults unchanged.
 Ordered entry witness beforelease/PPS; new guardian phaseproof afterunbind with

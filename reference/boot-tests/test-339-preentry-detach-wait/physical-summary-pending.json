@@ -1,0 +1,116 @@
+{
+  "test": "Test339",
+  "verdict": "STOP_PREENTRY_WAIT_TIMEOUT_ROLLBACK_PENDING",
+  "candidate_boot_id": "80777a48e1e4447e84fb3075baf22c70",
+  "PPS_attempted": false,
+  "pump_ON_observed": false,
+  "actual_pump_window_seconds": 0,
+  "kernel_primary_error": -110,
+  "kernel_cleanup_error": 0,
+  "lease_at_stop": 0,
+  "guardian": {
+    "cleanup_error": null,
+    "error": "ValueError('first native/kernel fault: sm5440-fedora 0-0063: one-shot pump stopped: primary=-110 cleanup=0 lease=0 no_restart=1')",
+    "primary_error": "ValueError('first native/kernel fault: sm5440-fedora 0-0063: one-shot pump stopped: primary=-110 cleanup=0 lease=0 no_restart=1')",
+    "verdict": "STOP_FIRST_NON_CLEAN"
+  },
+  "samples": 432,
+  "all_pump_modes": [
+    0
+  ],
+  "observed_source_voltages": [
+    "5000000"
+  ],
+  "cleanup_events": [
+    {
+      "kind": "cleanup",
+      "data": {
+        "pre_entry": true,
+        "fixed9_restored": false,
+        "ordinary_source_preserved": true,
+        "pump_mode": 1,
+        "driver_unbound": true,
+        "tcpm": {
+          "DEVTYPE": "power_supply",
+          "OF_NAME": "usbpd",
+          "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+          "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+          "OF_COMPATIBLE_N": "1",
+          "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+          "POWER_SUPPLY_TYPE": "USB",
+          "POWER_SUPPLY_ONLINE": "1",
+          "POWER_SUPPLY_VOLTAGE_MAX": "5000000",
+          "POWER_SUPPLY_VOLTAGE_MIN": "5000000",
+          "POWER_SUPPLY_VOLTAGE_NOW": "5000000",
+          "POWER_SUPPLY_CURRENT_MAX": "1800000",
+          "POWER_SUPPLY_CURRENT_NOW": "1800000",
+          "POWER_SUPPLY_USB_TYPE": "C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS"
+        },
+        "usb": {
+          "DEVTYPE": "power_supply",
+          "OF_NAME": "charger",
+          "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+          "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+          "OF_COMPATIBLE_N": "1",
+          "POWER_SUPPLY_NAME": "sm5714-usb",
+          "POWER_SUPPLY_TYPE": "USB",
+          "POWER_SUPPLY_ONLINE": "1",
+          "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1800000",
+          "POWER_SUPPLY_USB_TYPE": "Unknown [SDP] DCP CDP PD PD_PPS"
+        }
+      }
+    }
+  ],
+  "owner_C1_reply_after_stop": true,
+  "late_C1_state": {
+    "battery": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_CAPACITY": "64",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "1779000",
+      "POWER_SUPPLY_CURRENT_NOW": "1754000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "283",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4106000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4098000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4010000"
+    },
+    "boot_id": "80777a48e1e4447e84fb3075baf22c70",
+    "driver_unbound": true,
+    "kernel_deadline_consumed": true,
+    "no_rearm": true,
+    "owner_instruction": "已接入 (C1 response after registered wait expired)",
+    "pump_off": true,
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_NAME": "usbpd",
+      "POWER_SUPPLY_CURRENT_MAX": "1500000",
+      "POWER_SUPPLY_CURRENT_NOW": "1500000",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+      "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+    }
+  },
+  "rollback_required": true,
+  "rollback_attempt": "ADB absent before target read; no recovery/rollback write executed; waiting PC return",
+  "one_attempt_consumed": true,
+  "no_rearm": true
+}
