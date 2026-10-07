@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test341（已登记，准备实机测试），窗口为 **Test332–Test341**；没有生成镜像的轮次仍占一轮。
+  编号为 Test342（观察器修正已准备，尚未部署），窗口为 **Test333–Test342**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -104,6 +104,19 @@ and old Fedora Image/armed/default-OFF boot retired after exact hashes and no
 rollback and323 secondary remain registered consumers of340/341, not permanent
 historical exemptions;339/341 qualified artifacts and source/config/DT/modules/
 rawlogs retained. See host-storage-cleanup/2026-10-07-test340-image-retirement.
+
+2026-10-07 Test342 PREPARED/NOT_DEPLOYED host source-capability correction.
+26 affected native/cleanup/thermal/activation/source tests PASS0.213s/no skip;
+Python/shell/input hashes PASS. Preentry5V advertised capability<=3A while actual
+SM5714 input<=1.8A;9V/source/input/postentry fallback<=1.5A unchanged. Emit rejected
+raw sample beforevalidation; bad3A actualinput/source>3A/9V>1.5A still STOP.
+Reuse exact339 kernel/config/DT/181/boot/build; no kernel/current/thermal/source/
+rootfs/USB/adbd change, fullsuite/Actions or device action. No execution-scope/
+Windowsstage/flash/rebind/PPS/pump; needs fresh331 boundary and owner continuation.
+Current accepted331254a7cc9 healthy72%/32.1C, rollback_required=false;341 STOP/errors
+and missing tuple unchanged. FullportNOT_READY. See342 OFFLINE_RESULTS/offline-
+summary/SHA256 and341 physical closure. Current331 production/rollback still used
+by342, preserve canonical provider; it is not a permanent historical exemption.
 
 2026-10-07 Test341 CLOSED STOP_PREENTRY_SOURCE_OBSERVER_RESTORED331. Guardian
 stopped OFF/unbound on ordinary-source-limit beforemarker/bind/nativeentry/PPS/

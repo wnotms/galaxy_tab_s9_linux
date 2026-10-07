@@ -1,0 +1,38 @@
+{
+  "test": "Test342",
+  "verdict": "HOST_OBSERVER_FIX_PREPARED_NOT_DEPLOYED",
+  "tests": {
+    "executed": true,
+    "count": 26,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.213,
+    "suites": [
+      "test_sm5440_source_capability_observer.py"
+    ],
+    "full_executed": false,
+    "unchanged_adapter_qualification": "Test341 34 tests, adapter unchanged except independent namespace"
+  },
+  "syntax": {
+    "python": true,
+    "shell": true
+  },
+  "build": {
+    "executed": false,
+    "reuse": "Exact qualified339 Image/boot/config/DT/181 modules, source81583618"
+  },
+  "kernel_changes": false,
+  "config_diff": [],
+  "dtb_diff": [],
+  "protected341_kernel_inputs_verified": true,
+  "device_mutation": false,
+  "execution_authorized": false,
+  "limits": {
+    "preentry_five_volt_source_capability_max_ua": 3000000,
+    "actual_five_volt_input_max_ua": 1800000,
+    "fixed9_source_and_input_max_ua": 1500000,
+    "active_pump_input_max_ua": 1800000,
+    "active_max_ms": 30000
+  },
+  "capture": "Emit rejected preparation samples before validating"
+}
