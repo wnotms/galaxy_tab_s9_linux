@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 owner “继续，设备已连接电脑” continues registered337 single
+pump-OFF PPS/fixed-return scope. Fresh exact33124545782/config51/notes03/allfive/
+181/normalcmdline/Code0/ADB/strictWiFi10.91.255.52/deviceNCM/OFF preflight PASS,
+59%4.007V28.5C/+1.273A. New337 execution-scope binds frozen INPUTS; no old336
+scope reused. Install staged candidate39bf8476+paired181 only afterpush; stopTWRP
+for ownerC1→System once; unconditional exact331 restoration. No pumpON/current
+advance. Scope/results only; reused295+65/build/static, no rerun/CI/Actions.
+See337DEPLOYMENT.md/execution-scope.json/active-preflight.json. FullportNOT_READY.
+
+
 2026-10-07 Async-fixed-restore correction OFFLINE PASS/source86f7b678:
 295 affected actual-C/host PASS6.526s;65 final admission/window PASS0.442s,
 no skips. Build81.492s/W1+sparse13.395s no warning. Exact331 config51/DT233a/
