@@ -1,11 +1,23 @@
 {
-  "activation_started": false,
-  "allfive_verified": true,
-  "candidate_boot_id": "0570988d233646bfb6056b6a08c352cc",
-  "first_non_clean": "pre-entry source capability observer",
-  "guardian_folder": "/tmp/gts9-test341-monitor",
-  "guardian_pid": 1722,
-  "modules": 181,
-  "phase": "STOP-awaiting-owner-PC-return",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 871000,
+      "input_limit_ua": 1800000,
+      "soc": 72,
+      "temp_decic": 321,
+      "voltage_uv": 4156000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "254a7cc981f34e24a4a46e71aa69355f",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.126",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

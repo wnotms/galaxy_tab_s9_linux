@@ -105,17 +105,18 @@ rollback and323 secondary remain registered consumers of340/341, not permanent
 historical exemptions;339/341 qualified artifacts and source/config/DT/modules/
 rawlogs retained. See host-storage-cleanup/2026-10-07-test340-image-retirement.
 
-2026-10-07 Test341 STOP_PREENTRY_SOURCE_CAPABILITY_OBSERVER, ROLLBACK PENDING.
-Guardian stopped/unbound before marker/bind/entry/PPS/pump, primary+cleanup
-ordinary-source-limit error.97 validsamples; rejected tuple missing because emit
-aftervalidation. Fulljournal shows implicit5V/3A budget while actual ordinary input
-1.8A, then fixed9/1.5A: observer wrongly compares sourcecapability to drawlimit.
-Marker rejected finishedguardian; no replay. Current same0570988d/OFF/unbound/
-WiFi123/healthy70%4.161V28.5C/+1.923A/fixed9/1.5A, no classified CPU fault.
-Await ownerPCreturn for exact331 rollback; rollback_required=true. Next separate
-host correction: preentry5V advertised<=3A with actualinput<=1.8A; 9V/postentry
-strict1.5A unchanged, emit all rawsamples beforecheck. No kernel change/current
-increase. See341 PHYSICAL_STATUS/physical-summary-pending. FullportNOT_READY.
+2026-10-07 Test341 CLOSED STOP_PREENTRY_SOURCE_OBSERVER_RESTORED331. Guardian
+stopped OFF/unbound on ordinary-source-limit beforemarker/bind/nativeentry/PPS/
+pumpON;97 prep samples, rejectedtuple missing. Fullsourcejournal shows implicit
+5V/3A budget plus actualinputprogram1.8A then fixed9/1.5A: observer confuses
+capability with drawlimit; exact triggering tuple unproven. Owner marker refused
+finishedguardian, no replay. AfterPCreturn exact331 allfive/original181 restored,
+normalboot254a7cc9/config51/notes03/DCCabsent/OFF/ADB/WiFi10.175.236.126/deviceNCM/
+WindowsnoCode43/fulljournal/no newfault/unit PASS;72%4.156V32.1C/+0.871A onPC.
+rollback_required=false. Pending/prepared/raw errors retained; no build/fullrun/
+Actions/source/current/thermal change. Next prepared342 host-only sourcecapability
+and raw rejected-sample correction, not yet deployed. FullportNOT_READY. See341
+PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256.
 
 2026-10-07 Test341 DEPLOYED/PREPARED, no PPS/pump attempt yet. Candidateboot
 0570988d uniquely attributed/allfive181/config51/notes e014/DCCabsent/normal
