@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test344（已登记，未部署），窗口为 **Test335–Test344**；没有生成镜像的轮次仍占一轮。
+  编号为 Test345（已登记，未部署），窗口为 **Test336–Test345**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test345 REGISTERED_NOT_DEPLOYED. Reuse01747a5f/source72C/build/
+W1/sparse/config/DT/181, armedsoleonceboot. Guardian validates final<=2s deferral
+withoutpark/rearm/extendeddeadline; explicitnativefault pre-scan retains -62
+primary on actual344replay, inheritedzero/current/thermal/late-refresh/cleanup
+kept.20affectedhosttestsPASS0.256s/syntax/inputsPASS, no fullsuite/Actions/rebuild.
+Device accepted331beb65af6/PC54%31.6C, no newphysicaloperation/Windowsstage.
+Freshpreflight and pushedregistration beforemutation; ownerC1confirm then one
+<=30s/hardware1700/PPS+raw1800 attempt, unconditionalexact331restore. Window336–345,
+335noimage/Windowsstage. GitHub500 on priorqualification push; mustresolvepush
+before deployment. See345README/registration/OFFLINE_RESULTS/INPUTS/package.
+FullportNOT_READY.
 
 2026-10-07 Test344 follow-up READY_OFFLINE_DEFAULT_OFF, source01747a5f.
 Final<=2s refresh deferral/freshboottime, unchanged30s/current/faultgates;
