@@ -1,0 +1,41 @@
+{
+  "test": "Test336",
+  "verdict": "REGISTERED_OFFLINE_READY_LIVE_PREFLIGHT_PENDING",
+  "physical_executed": false,
+  "PPS_requested": false,
+  "pump_ON": false,
+  "execution_authorized": false,
+  "host_tests": {
+    "verdict": "PASS",
+    "executed": true,
+    "tests": 57,
+    "skipped": 0,
+    "errors": 0,
+    "failures": 0,
+    "seconds": 0.486989,
+    "modules": [
+      "test_pps_off_evidence",
+      "test_ordinary_charge_window",
+      "test_charging_wifi_discovery"
+    ],
+    "syntax": "PASS",
+    "full_suite": {
+      "executed": false,
+      "reason": "Owner changed/dependency-only scope; no routing change"
+    },
+    "build": {
+      "executed": false,
+      "reused": "reference/charging/sm5440-pps-off-return/summary.json",
+      "reason": "No kernel/config/DTS/build input change"
+    },
+    "device_mutation": false
+  },
+  "kernel_qualification_reused": "reference/charging/sm5440-pps-off-return/summary.json",
+  "new_kernel_build": false,
+  "installed_baseline_freshly_verified": false,
+  "last_accepted_baseline": "Test331; Test335 final acceptance",
+  "candidate_boot_sha256": "ffb7bc9401eac3664a063bcc22213001ffb07c636516cee92faf24b0a4941a79",
+  "rollback_boot_sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+  "full_port_verdict": "NOT_READY",
+  "Windows_stage_created": false
+}

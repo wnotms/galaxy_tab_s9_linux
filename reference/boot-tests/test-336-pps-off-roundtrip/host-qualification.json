@@ -1,0 +1,25 @@
+{
+  "verdict": "PASS",
+  "executed": true,
+  "tests": 57,
+  "skipped": 0,
+  "errors": 0,
+  "failures": 0,
+  "seconds": 0.486989,
+  "modules": [
+    "test_pps_off_evidence",
+    "test_ordinary_charge_window",
+    "test_charging_wifi_discovery"
+  ],
+  "syntax": "PASS",
+  "full_suite": {
+    "executed": false,
+    "reason": "Owner changed/dependency-only scope; no routing change"
+  },
+  "build": {
+    "executed": false,
+    "reused": "reference/charging/sm5440-pps-off-return/summary.json",
+    "reason": "No kernel/config/DTS/build input change"
+  },
+  "device_mutation": false
+}

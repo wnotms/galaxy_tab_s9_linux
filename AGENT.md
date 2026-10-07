@@ -98,6 +98,23 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test336 PREPARED/REGISTERED for one pump-OFF PPS API transaction,
+native ADC/ordered fixed9 proof/release, bounded10s ordinary settling+30s charge,
+15s unplug, unconditional exact331 allfive/181 restoration. Frozen candidate
+4d058527/armedbootffb7bc94/notes59a97374 reused; no kernel/config/DTS/rootfs changes,
+no Windows stage/new build/fullrun/Actions/physical execution/PPS/pumpON.
+Independent PPS-aware parser/observer and336 module slots; enrolled-key discovery
+and first-STOP gates retained.57 affected host tests PASS; syntax/input artifacts
+match. Current read-only preparation ADB empty/known-IP+boundedWiFi timed out;
+missing temporary trust restored from accepted334 key, no new enrollment.
+Current device identity/pack not reconfirmed; last accepted installed331/physical335
+remains historical status. Await PC/currentWiFi and fresh baseline preflight;
+explicit Test336 PPS-OFF execution scope required before stage/install/admission.
+No automatic direct charging/current advance. FullportNOT_READY.
+See reference/boot-tests/test-336-pps-off-roundtrip/README.md and RESULTS.md.
+Image-retention latest completed physical round remains335; prepared336 creates
+no new image/copy. Apply the327–336 window retirement when336 is executed/closed.
+
 2026-10-06 PPS-OFF-return candidate OFFLINE qualified; source4d058527,
 readonly/defaultfalse/exclusive pps_return_check, one existing worker/300s/one
 owned PPS call/ADC-only/zeroON, terminal fixed9 proof/release and separate errors.

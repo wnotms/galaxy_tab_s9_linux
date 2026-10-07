@@ -1,0 +1,75 @@
+{
+  "test": "Test336",
+  "source_revision": "4d058527fe437b21d381d25fd336278a3aed9e94",
+  "kernel_qualification": "single pump-OFF PPS/fixed return; direct_charge off; one explicit pps_return_check opt-in",
+  "write_partitions": [
+    "boot"
+  ],
+  "modules": 181,
+  "baseline_partitions": {
+    "boot": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "ffb7bc9401eac3664a063bcc22213001ffb07c636516cee92faf24b0a4941a79",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "rollback_baseline": "accepted Test331 default-OFF paired ordinary charging",
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-fedora-pps-off-return/Image.gz",
+      "bytes": 22137992,
+      "sha256": "bc2ec23da97a935a767534b2351b9fb66728e2264d373c8443742bebf79ab900"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-fedora-pps-off-return/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-fedora-pps-off-return/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-fedora-pps-off-return/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "59a9737423ad62691e6055376b683638a04b492a6dce11acf673e74d38371543"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-pps-off-return/modules-x710.tar.gz",
+      "bytes": 47319253,
+      "sha256": "76aedec2e8c18f15e8858c93afb9b88cf83dc7eeabbf8b646bb93562ee31b657"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-fedora-pps-off-return/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-pps-off-return-on/boot.img",
+      "bytes": 100663296,
+      "sha256": "ffb7bc9401eac3664a063bcc22213001ffb07c636516cee92faf24b0a4941a79"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    }
+  },
+  "all_other_partitions_unchanged": true,
+  "device_commands_executed": false,
+  "purpose": "One pump-OFF PPS transaction followed by physical fixed9 return and bounded ordinary switching observation",
+  "cmdline_flag": "sm5440_fedora.pps_return_check=1"
+}
