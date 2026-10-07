@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.173",
+    "python3 -c 'from pathlib import Path; import json; p=Path('\"'\"'/tmp/gts9-test342-monitor/evidence'\"'\"'); assert not (p/\"finished\").exists(); assert not (p/\"activate.json\").exists(); assert not (p/\"activation-started\").exists(); assert not Path(\"/sys/bus/i2c/devices/0-0063/driver\").exists(); rows=[json.loads(x) for x in (p/\"events.jsonl\").read_text().splitlines()]; samples=[x[\"data\"] for x in rows if x[\"kind\"]==\"preparation-sample\"]; assert samples and samples[-1][\"adc\"][\"mode\"]==0; print(json.dumps(dict(boot_id=(p/\"awaiting-owner\").read_text(),pump_OFF=True,worker_unbound=True,activation_started=False,latest=samples[-1])))'"
+  ],
+  "ended_utc": "2026-10-07T10:52:31.602265+00:00",
+  "started_utc": "2026-10-07T10:52:31.228610+00:00",
+  "status": 0
+}

@@ -112,6 +112,17 @@ PACKAGE consumer check. Canonical331 activeproduction/342registeredrollback,
 See host-storage-cleanup/2026-10-07-test341-image-retirement/summary.json for exact
 paths/bytes and any retained consumers. No device/code/test/build operation.
 
+2026-10-07 Test342 DEPLOYED/PREPARED, awaiting ownerC1confirmation. Candidate
+2fb982f0 uniquely attributed/config51/notes e014/allfive181/DCCabsent/onceflag/
+ADB/WiFi10.175.236.173/deviceNCM/noCode43/fulljournal/pack/OFF PASS,74%4.181V32.4C.
+InitialPC readinessqueue canceled/drained and corrected host park proof PASS.
+Guardian1696 ready on knownOFF/unbound provider, no marker/bind/nativeentry/PPS/
+pumpON. Manualhandoff <=900s while OFF/unbound, only fresh ownerC1confirmation
+and fixed9 gates permit sole bind/1.8A<=30s. No341replay/current increase/source
+change/build/fullrun/Actions. Test331 rollback_required=true until unconditional
+finalrestoration; preparation is not charging acceptance. See342 prepared-live/
+preparation-park/mutation-state/PREPARED_SHA256. FullportNOT_READY.
+
 2026-10-07 Test342 owner continues, execution scope recorded independently of
 frozen prepared metadata. Fresh331254a7cc9/config51/notes03/DCCabsent/OFF/allfive181/
 ADB/WiFi126/deviceNCM/noCode43/fulljournal/no newfault/unit PASS,73%4.175V33.5C.
