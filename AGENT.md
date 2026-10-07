@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 NATURAL_DISCHARGE_READY_AWAITING_OWNER_PC. Finite read-only
+watch five packets/125.610s ends75%4.070V26.4C/-1.726A/USBoffline/directN,
+exact331dc8442f1 unchanged. No stress/devicewrite/stage/flash/reboot/PPS/pump.
+Fresh preparation gate still required after ownerPC handoff; candidate/offline
+qualification unchanged, this results phase tests/build executed:false. See344
+PREEXECUTION_STATUS/natural-discharge-watch-01/watch-soc.py. FullportNOT_READY.
+
 2026-10-07 Test344 PREEXECUTION_SSH_RESTORED_BATTERY_PENDING, hostrevision2.
 WindowsTCP22 open while WSLdirecttimeout; encrypted nativeWindowsPython relay
 restores WSL strictSSH/originalkey+trust, exact331config/notes/machine/sameboot
