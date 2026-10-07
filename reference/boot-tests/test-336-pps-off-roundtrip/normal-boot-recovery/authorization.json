@@ -1,0 +1,21 @@
+{
+  "purpose": "One unchanged Test331 normal reboot to check whether lpcharge boot arguments clear",
+  "owner_approval_received": true,
+  "before_boot_id": "3d359c9296fe43ce871c0a40a9fb5bd4",
+  "installed_baseline": "Test331 accepted default OFF; allfive and181 hashes verified",
+  "transport": "ADB with strict enrolled WiFi rescue at10.91.255.247",
+  "reboot_command": "systemctl reboot",
+  "reboot_count_max": 1,
+  "before_action": "Fresh same-boot battery/temperature/OFF/rescue packet; PC connected, charger disconnected",
+  "readiness_max_seconds": 150,
+  "after_action": "Unique changed boot ID and journal attribution, exact normal cmdline/config/notes, physical pumpOFF/directOFF/checks absent, ADB/deviceNCM/strictWiFi, healthy pack,15s response, failed units and full kernel journal",
+  "first_non_clean": "Stop; preserve evidence; no second reboot or automatic repair",
+  "kernel_config_DTS_modules_rootfs_writes": false,
+  "partition_BCB_writes": false,
+  "PPS_requested": false,
+  "pump_ON": false,
+  "Test336_installation_authorized": "only after normal recovery and fresh full preflight",
+  "limitation": "Normal reboot may not clear lpcharge; verify rather than assume. Successful recovery does not constitute charging/PPS acceptance.",
+  "owner_instruction": "重启并继续测试",
+  "recorded_utc": "2026-10-07T01:03:05.433505+00:00"
+}
