@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test336（已停止并恢复 Test331），窗口为 **Test327–Test336**；没有生成镜像的轮次仍占一轮。
+  编号为 Test337（已安装，等待 TWRP→C1 System 启动），窗口为 **Test328–Test337**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test337 correction installed after owner scope/fresh331 gate:
+candidateboot39bf8476/notes39a825d1/paired181, allfive readback/BCBclear/root
+unmount PASS; original331181 preserved, exact331 rollback staged. CurrentlyTWRP,
+await owner PC→C1 (C2empty)→System once. No native PPS/pumpON yet. Single pump-OFF
+transaction/10ssettle+30scharge/15sunplug/unconditional331restore remains scope.
+No driver/config/DTS/rootfs change; tests/build not rerun. Installation evidence
+archived; retire expired327 when337 closes. See337installation/RESULTS.md and
+mutation-state.json; rollback_required=true. FullportNOT_READY.
+
 
 2026-10-07 owner “继续，设备已连接电脑” continues registered337 single
 pump-OFF PPS/fixed-return scope. Fresh exact33124545782/config51/notes03/allfive/
