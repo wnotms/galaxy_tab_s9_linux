@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test345 REGISTRATION_PUSH_PENDING_NO_DEPLOYMENT. Local7c596eed
+registered/20hostPASS + candidate72C/buildPASS, but remote-test remains01747a5f.
+Four normalpushes rejected GitHubInternalServerError (includingHTTP1.1); request
+IDs/times preserved345PUSH_STATUS. No force/bypass/Actions/Windowsstage/flash/
+PPS/pump. Device stays accepted331beb65af6 after344restoration. Next resolve
+ordinarypush then freshPCpreflight/onecandidate; do not weaken registered push
+requirement. FullportNOT_READY; no newtest/build for this statusrecord.
+
 2026-10-07 Test345 REGISTERED_NOT_DEPLOYED. Reuse01747a5f/source72C/build/
 W1/sparse/config/DT/181, armedsoleonceboot. Guardian validates final<=2s deferral
 withoutpark/rearm/extendeddeadline; explicitnativefault pre-scan retains -62

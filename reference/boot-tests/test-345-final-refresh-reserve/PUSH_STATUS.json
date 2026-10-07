@@ -1,0 +1,39 @@
+{
+  "timestamp_utc": "2026-10-07T15:15:04.206172+00:00",
+  "verdict": "REGISTRATION_PUSH_PENDING_NO_DEPLOYMENT",
+  "local_registration_commit": "7c596eed",
+  "last_verified_remote_test": "01747a5f44dacb7fa6a5d45ea814e8827998c4e1",
+  "push_failures": [
+    {
+      "remote_time_utc": "2026-10-07T15:07:58Z",
+      "request_id": "599E:2F7C24:1417CD:1BB97B:6AC6604D",
+      "error": "remote Internal Server Error"
+    },
+    {
+      "remote_time_utc": "2026-10-07T15:08:43Z",
+      "request_id": "B876:EE31A:142FBD:1BE156:6AC66079",
+      "error": "remote Internal Server Error"
+    },
+    {
+      "remote_time_utc": "2026-10-07T15:13:12Z",
+      "request_id": "B3D2:C1565:146924:1C4224:6AC66187",
+      "error": "remote Internal Server Error"
+    },
+    {
+      "remote_time_utc": "2026-10-07T15:14:01Z",
+      "request_id": "50FA:620A7:15568C:1D4194:6AC661B8",
+      "error": "remote Internal Server Error",
+      "http_version": "HTTP/1.1"
+    }
+  ],
+  "no_force_push": true,
+  "device_operations_after_test344_restore": [],
+  "device_baseline": "accepted Test331 beb65af6fa2b4ca09b4976bb134db772",
+  "Test345_staged": false,
+  "Test345_deployed": false,
+  "scope": "Resolve ordinary origin/test push before physical preflight/install; do not bypass committed-and-pushed registration gate",
+  "tests": {
+    "executed": false,
+    "reason": "transport/status only; reuse72C+20host qualification"
+  }
+}
