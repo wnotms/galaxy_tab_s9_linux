@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test343 follow-up OFFLINE_PARKED_SETTLE_IMPLEMENTED_BUILD_PENDING.
+Keep Fedora ab123e7d OFF/PPS/VBUSsettle/ON and AVG32 recipe; new boundedOFF
+wait observes3rawIBUSzero over>=100ms (30polls first20 then50ms), refuses
+persistentnonzero, all other unsafe readings/I2C/IRQfault/ownership/PM/deadline.
+Privatepending result differs from transportEAGAIN; no permission to ignore
+nonzero. ActualC mock now models delayed/stuck/oscillating OFF ADC;68testsPASS
+0.354s/no skip. Hardware1700/PPS+raw1800/30s/thermal/lease/fixed9 unchanged.
+Protected108sources and priorformal hashes unchanged. Incrementalbuildpending,
+no deploy/activation/replay343; device accepted331dc8442f1. FullportNOT_READY.
+See reference/charging/test343-parked-settle/PLAN/development.
+
 2026-10-07 Test343 CLOSED STOP_PARKED_NONZERO_IBUS_RESTORED331.
 Source95159eec hardware1700/PPS1800/rawcap1800 witness; one ownerconfirmed
 activation,7 live mode4 frames,maxIBUS1751875uA. First refresh OFF at337.392397s

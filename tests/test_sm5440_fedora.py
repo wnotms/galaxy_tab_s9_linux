@@ -66,6 +66,7 @@ struct notifier_block { int (*notifier_call)(struct notifier_block *,unsigned lo
 static bool direct_charge, direct_charge_once, fixed_return_check, pps_return_check;
 static int sm5440_once_settings(struct sm5440_direct *sm);
 static int sm5440_once_measure(struct sm5440_direct *sm, bool running);
+static int sm5440_once_wait_parked(struct sm5440_direct *sm);
 static struct sm5440_direct sm;
 static struct i2c_client client;
 static struct device dev;
@@ -82,6 +83,8 @@ static int fixed_sampling, fixed_sample_count, fixed_pattern, pps_offset, pps_dr
 static u64 fixed_return_started;
 static int settings_drift, refresh_wait, failure_on_sleep;
 static char range_log_buf[1024];
+static int off_adc_delay, off_pending_raw, off_adc_pattern, off_reads;
+static u64 off_adc_zero_at;
 static void log_stub(struct device *d,const char *fmt,...) {
  (void)d;
  if(strstr(fmt,"range rejected:")) {
@@ -109,13 +112,23 @@ static int i2c_smbus_write_byte_data(struct i2c_client *c,int reg,int value) {
  if(reg==SM5440_REG_CNTL5 && (value&12))pump_ons++;
  regs[reg]=value;
  if(reg==SM5440_REG_CNTL2 && settings_drift)regs[reg]^=1;
- if(direct_charge_once && reg==SM5440_REG_CNTL5)
-  raw13(SM5440_REG_ADC_IBUS1,(value&12)?2400:0);
+ if(direct_charge_once && reg==SM5440_REG_CNTL5) {
+  if(value&12)raw13(SM5440_REG_ADC_IBUS1,2400);
+  else if(off_adc_delay) {
+   off_pending_raw=(regs[SM5440_REG_ADC_IBUS1]<<5)|(regs[SM5440_REG_ADC_IBUS1+1]>>3);
+   off_adc_zero_at=clock_ms+(off_adc_delay>0?off_adc_delay:100000);
+  } else raw13(SM5440_REG_ADC_IBUS1,0);
+ }
  if(reg==SM5440_REG_CNTL1 && value==1){regs[reg]=0;regs[SM5440_REG_CNTL5]=0;}
  return 0;
 }
 static void msleep(unsigned int ms) {
  clock_ms+=ms;
+ if(off_adc_pattern && !(regs[SM5440_REG_CNTL5]&12))
+  raw13(SM5440_REG_ADC_IBUS1,(++off_reads%2)?0:2400);
+ if(off_pending_raw && !(regs[SM5440_REG_CNTL5]&12) && clock_ms>=off_adc_zero_at) {
+  raw13(SM5440_REG_ADC_IBUS1,0);off_pending_raw=0;
+ }
  if(fixed_sampling){
   fixed_sample_count++;
   int mv=9000+fixed_adc_offset;
@@ -145,6 +158,7 @@ int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out) {
 }
 int sm5714_pd_read_owned_snapshot(u64 instance,u64 generation,u64 lease,struct sm5714_pd_snapshot *out) {
  owned_snapshot_calls++;
+ if(source_error)return source_error;
  if(owned_snapshot_calls==fail_owned_at)return -EAGAIN;
  if(instance!=source.instance||generation!=source.source_generation||lease!=owned_lease||!source.pps_contract)return -ESTALE;
  *out=source;return 0;
@@ -192,7 +206,7 @@ int sm5714_pd_release_fixed(u64 instance,u64 generation,u64 lease,const struct s
                  'sm5440_eligible', 'sm5440_fixed_check_ready', 'sm5440_fixed_return_once',
                  'sm5440_pps_check_pack', 'sm5440_pps_return_once',
                  'sm5440_backoff', 'sm5440_once_settings', 'sm5440_once_measure',
-                 'sm5440_direct_once_work', 'sm5440_work',
+                 'sm5440_once_wait_parked', 'sm5440_direct_once_work', 'sm5440_work',
                  'sm5440_cancel_work', 'sm5440_pm_notify']
         for name in names:
             import re
@@ -208,6 +222,7 @@ void reset(void) {
  clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
  pps_return_check=direct_charge_once=false;pps_offset=pps_drift=suspend_wait=0;
  settings_drift=refresh_wait=failure_on_sleep=0;range_log_buf[0]=0;
+ off_adc_delay=off_pending_raw=off_adc_pattern=off_reads=0;off_adc_zero_at=0;
  sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
@@ -222,6 +237,7 @@ int cleanup(void) {return sm5440_restore_switching(&sm);}
 int set_limit(int ma) {return sm5440_set_ibus_limit(&sm,ma);}
 int settings(void) {return sm5440_once_settings(&sm);}
 int measure(void) {return sm5440_once_measure(&sm,true);}
+int parked(void) {return sm5440_once_wait_parked(&sm);}
 const char *range_log(void) {return range_log_buf;}
 void prepare_fixed_return(void) {sm.source=source;sm.lease=owned_lease=7;}
 void work(void) {sm5440_work(&sm.work.work);}
@@ -247,7 +263,10 @@ void input(int key,int value) {
  case 32:regs[SM5440_REG_ADC_DIETEMP]=value;break;case 33:refresh_wait=value;break;
  case 34:source.online=value;break;case 35:failure_on_sleep=value;break;
  case 36:regs[SM5440_REG_STATUS3]=value;break;case 37:source_error=value;break;
- case 38:regs[SM5440_REG_IBUSCNTL]=value;break;}
+ case 38:regs[SM5440_REG_IBUSCNTL]=value;break;
+ case 39:off_adc_delay=value;break;case 40:sm.stopping=value;break;
+ case 41:sm.direct_deadline_ms=clock_ms+value;break;
+ case 42:off_adc_pattern=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -258,7 +277,7 @@ int value(int key) {
  case 14:return sm.target_ma;case 15:return canceled;
  case 22:return sm.fixed_check_done;case 20:return clock_ms-fixed_return_started;case 21:return fixed_sample_count;
  case 23:return sm.direct_once_done;case 24:return sm.direct_positive_samples;
- case 25:return sm.direct_deadline_ms-clock_ms;
+ case 25:return sm.direct_deadline_ms-clock_ms;case 26:return clock_ms;
  case 18:return fixed_snapshot_calls;case 19:return owned_snapshot_calls;
  case 16:return scheduled_delay;case 17:return regs[SM5440_REG_CNTL1]&128;
  default:return -1;}
@@ -420,6 +439,91 @@ int value(int key) {
         self.lib.reset(); self.once(); self.lib.work()
         self.lib.input(16,self.v(19)+1); self.tick()
         self.assertEqual([self.v(k) for k in (1,7,23)], [0,1,1])
+
+    def reach_refresh(self):
+        for _ in range(45):
+            self.tick()
+            if self.v(4) > 1 or self.v(23):
+                return
+        self.fail('refresh never attempted')
+
+    def test_refresh_waits_off_for_delayed_average_without_raising_cap(self):
+        self.once(); self.lib.work(); self.lib.input(39, 180)
+        before = self.v(26)
+        self.reach_refresh()
+        self.assertEqual([self.v(k) for k in (0, 1, 9, 14, 23)], [1, 4, 2, 1800, 0])
+        self.assertEqual(self.v(10), 34)
+        self.assertGreaterEqual(self.v(26) - before, 4200)
+        self.assertEqual(self.v(6), 0)
+
+    def test_refresh_persistent_off_current_times_out_and_never_rearms(self):
+        self.once(); self.lib.work(); self.lib.input(39, -1)
+        self.reach_refresh()
+        self.assertEqual([self.v(k) for k in (0, 1, 9, 7, 23)], [0, 0, 1, 1, 1])
+        self.assertGreaterEqual(self.v(26), 6500)  # bounded OFF wait + cleanup
+        before = [self.v(k) for k in (4, 8, 9)]
+        self.tick(5000)
+        self.assertEqual(before, [self.v(k) for k in (4, 8, 9)])
+
+    def test_parked_three_zero_observations_span_100ms(self):
+        self.once(); self.lib.work(); self.lib.input(12, 0); self.lib.input(14, 0)
+        before = self.v(26)
+        self.assertEqual(self.lib.parked(), 0)
+        self.assertEqual(self.v(26) - before, 120)
+
+    def test_parked_rejects_actual_test343_tuple_until_current_clears(self):
+        self.once(); self.lib.work(); self.lib.input(12, 1)
+        self.lib.input(14, 2791)  # actual1,744,375uA OFF snapshot
+        before = self.v(26); ons = self.v(9)
+        self.assertEqual(self.lib.parked(), -110)
+        self.assertEqual(self.v(26) - before, 1470)
+        self.assertEqual(self.v(9), ons)
+
+    def test_parked_overcap_and_bad_pack_are_not_pending(self):
+        for key,value in ((14,2881),(31,6000),(30,3600001),(32,125)):
+            with self.subTest(key=key):
+                self.lib.reset(); self.once(); self.lib.work()
+                self.lib.input(12,0); self.lib.input(key,value)
+                before=self.v(26)
+                self.assertEqual(self.lib.parked(), -34)
+                self.assertEqual(self.v(26)-before,20)
+
+    def test_parked_latched_fault_is_not_cleared_and_ignored(self):
+        self.once(); self.lib.work(); self.lib.input(12,0);self.lib.input(11,2)
+        self.assertEqual(self.lib.parked(), -5)
+        self.assertEqual(self.v(9),1)
+
+    def test_parked_source_eagain_i2c_pm_detach_and_deadline_are_terminal(self):
+        for key,value,error in ((37,-11,-11),(4,-5,-5),(27,1,-108),
+                                (10,1,-116),(40,1,-108),(41,20,-62)):
+            with self.subTest(key=key):
+                self.lib.reset(); self.once(); self.lib.work()
+                self.lib.input(12,0); self.lib.input(14,1);self.lib.input(key,value)
+                before=self.v(26)
+                self.assertEqual(self.lib.parked(),error)
+                self.assertEqual(self.v(26)-before,20)
+                self.assertEqual(self.v(9),1)
+
+    def test_parked_intermittent_zero_does_not_count_as_settled(self):
+        self.once();self.lib.work();self.lib.input(12,0);self.lib.input(42,1)
+        before=self.v(26)
+        self.assertEqual(self.lib.parked(),-110)
+        self.assertEqual(self.v(26)-before,1470)
+        self.assertEqual(self.v(9),1)
+
+    def test_parked_fault_arriving_during_wait_stops_before_rearm(self):
+        self.once();self.lib.work();self.lib.input(12,0);self.lib.input(35,1)
+        self.assertEqual(self.lib.parked(),-5)
+        self.assertEqual(self.v(9),1)
+
+    def test_parked_i2c_fault_at_every_read_never_rearms(self):
+        self.once();self.lib.work();self.lib.input(12,0);self.lib.input(14,0)
+        before=self.v(8);self.assertEqual(self.lib.parked(),0);reads=self.v(8)-before
+        for offset in range(1,reads+1):
+            self.lib.reset();self.once();self.lib.work();self.lib.input(12,0);self.lib.input(14,0)
+            self.lib.input(9,self.v(8)+offset)
+            self.assertEqual(self.lib.parked(),-5)
+            self.assertEqual(self.v(9),1)
 
     def test_once_refresh_wait_cannot_rearm_after_absolute_deadline(self):
         self.once(); self.lib.work(); self.lib.input(33, 30000)

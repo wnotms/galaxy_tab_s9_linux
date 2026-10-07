@@ -63,6 +63,7 @@
 #define SM5440_REG_IBUSCNTL		0x16
 #define SM5440_REG_PRTNCNTL		0x19
 #define SM5440_REG_THEMCNTL1		0x1a
+#define SM5440_OFF_SAMPLE_PENDING	1 /* private, not transport -EAGAIN */
 #define SM5440_REG_ADCCNTL1		0x1c
 #define  SM5440_ADCCNTL1_AVG_32		BIT(3)
 #define  SM5440_ADCCNTL1_CONTINUOUS	BIT(1)
@@ -168,6 +169,7 @@ struct sm5440_direct {
 
 static int sm5440_once_settings(struct sm5440_direct *sm);
 static int sm5440_once_measure(struct sm5440_direct *sm, bool running);
+static int sm5440_once_wait_parked(struct sm5440_direct *sm);
 
 static int sm5440_update_bits(struct sm5440_direct *sm, u8 reg, u8 mask,
 			      u8 val)
@@ -516,7 +518,7 @@ static int sm5440_renegotiate_pps(struct sm5440_direct *sm)
 	if (READ_ONCE(direct_charge_once)) {
 		ret = sm5440_once_settings(sm);
 		if (!ret)
-			ret = sm5440_once_measure(sm, false);
+			ret = sm5440_once_wait_parked(sm);
 		if (ret)
 			return ret;
 	}
@@ -846,7 +848,7 @@ static int sm5440_once_measure(struct sm5440_direct *sm, bool running)
 	    (status[2] & SM5440_INT3_VBUSUVLO) ||
 	    vbus < sm->target_mv - 500 || vbus > sm->target_mv + 500 ||
 	    vbus > SM5440_MAX_PPS_MV + 300 ||
-	    ibus_ua > SM5440_MAX_PPS_MA * 1000U || (!running && ibus_raw) ||
+	    ibus_ua > SM5440_MAX_PPS_MA * 1000U ||
 	    vbat_uv < 3500000U || vbat_uv >= 4400000U ||
 	    abs((int)vbat_uv - pack.voltage_uv) > 200000 || die >= 850) {
 		dev_err(sm->dev, "one-shot range rejected: running=%u mode=0x%x vbus=%dmV target=%dmV ibus=%uuA cap=%uuA vbat=%uuV pack=%duV/%duA temp=%d die=%d status=%02x/%02x/%02x/%02x\n",
@@ -856,12 +858,69 @@ static int sm5440_once_measure(struct sm5440_direct *sm, bool running)
 			status[0], status[1], status[2], status[3]);
 		return -ERANGE;
 	}
+	/* AVG32 may still describe the preceding ON interval immediately after
+	 * parking. Only the bounded OFF waiter may consume this pending result;
+	 * it must observe zero before allowing ON. Never waive the raw cap.
+	 */
+	if (!running && ibus_raw)
+		return SM5440_OFF_SAMPLE_PENDING;
 	if (running && ibus_ua && pack.current_ua > 0)
 		sm->direct_positive_samples++;
 	dev_dbg(sm->dev, "one-shot sample: on=%u vbus=%dmV ibus=%uuA vbat=%uuV pack=%duV/%duA temp=%d die=%d\n",
 		running, vbus, ibus_ua, vbat_uv, pack.voltage_uv,
 		pack.current_ua, pack.pack_decic, die);
 	return 0;
+}
+
+
+/* Fedora ab123e7d retains continuous AVG32 across pump_OFF/PPS refresh.
+ * Keep that register recipe, but wait for our additional zero-current gate
+ * instead of treating the first OFF average as settled. Like fixed return,
+ * three observations spanning >=100ms are not independent conversion proof.
+ * This sole worker owns the read-to-clear latches; no mutex spans the wait.
+ */
+static int sm5440_once_wait_parked(struct sm5440_direct *sm)
+{
+	u8 events[4];
+	u64 began = ktime_to_ms(ktime_get_boottime()), zero_began = 0, now;
+	unsigned int zeros = 0;
+	int i, j, ret, value;
+
+	for (i = 0; i < 30; i++) {
+		msleep(i ? 50 : 20);
+		now = ktime_to_ms(ktime_get_boottime());
+		if (!sm5440_direct_enabled(sm))
+			return -ESHUTDOWN;
+		if (sm->direct_deadline_ms && now >= sm->direct_deadline_ms)
+			return -ETIME;
+		for (j = 0; j < ARRAY_SIZE(events); j++) {
+			value = i2c_smbus_read_byte_data(sm->client, j);
+			if (value < 0)
+				return value;
+			events[j] = value;
+		}
+		if (sm5440_decode_faults(events, false, 0) ||
+		    (events[2] & SM5440_INT3_VBUSUVLO))
+			return -EIO;
+		ret = sm5440_once_measure(sm, false);
+		if (ret == SM5440_OFF_SAMPLE_PENDING) {
+			zeros = 0;
+			continue;
+		}
+		if (ret)
+			return ret;
+		now = ktime_to_ms(ktime_get_boottime());
+		if (!zeros)
+			zero_began = now;
+		if (++zeros >= 3 && now - zero_began >= 100) {
+			dev_info(sm->dev, "one-shot parked settled: samples=%u waited=%llums raw_ibus=0 pump_OFF=1\n",
+				 zeros, now - began);
+			return 0;
+		}
+	}
+	dev_err(sm->dev, "one-shot parked settle failed: zero_samples=%u waited=%llums pump_OFF=1\n",
+		 zeros, ktime_to_ms(ktime_get_boottime()) - began);
+	return -ETIMEDOUT;
 }
 
 static int sm5440_start(struct sm5440_direct *sm)
@@ -915,7 +974,7 @@ static int sm5440_start(struct sm5440_direct *sm)
 		sm->target_ma = target_ma;
 		ret = sm5440_once_settings(sm);
 		if (!ret)
-			ret = sm5440_once_measure(sm, false);
+			ret = sm5440_once_wait_parked(sm);
 		if (ret)
 			goto restore;
 	}
