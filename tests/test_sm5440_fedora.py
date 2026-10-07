@@ -64,6 +64,7 @@ struct notifier_block { int (*notifier_call)(struct notifier_block *,unsigned lo
         prefix += function(src, 'struct sm5440_direct {') + ';\n'
         prefix += r'''
 static bool direct_charge, direct_charge_once, fixed_return_check, pps_return_check;
+static unsigned int direct_charge_once_ms = SM5440_ONCE_MS;
 static int sm5440_once_settings(struct sm5440_direct *sm);
 static int sm5440_once_measure(struct sm5440_direct *sm, bool running);
 static int sm5440_once_wait_parked(struct sm5440_direct *sm);
@@ -226,6 +227,7 @@ void reset(void) {
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
  clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
  pps_return_check=direct_charge_once=false;pps_offset=pps_drift=suspend_wait=0;
+ direct_charge_once_ms=SM5440_ONCE_MS;
  settings_drift=refresh_wait=failure_on_sleep=0;range_log_buf[0]=defer_log_buf[0]=0;
  off_adc_delay=off_pending_raw=off_adc_pattern=off_reads=0;off_adc_zero_at=0;
  sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
@@ -273,7 +275,8 @@ void input(int key,int value) {
  case 39:off_adc_delay=value;break;case 40:sm.stopping=value;break;
  case 41:sm.direct_deadline_ms=clock_ms+value;break;
  case 42:off_adc_pattern=value;break;
- case 43:sm.direct_refresh_ms=clock_ms+value;break;}
+ case 43:sm.direct_refresh_ms=clock_ms+value;break;
+ case 44:direct_charge_once_ms=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -326,6 +329,104 @@ int value(int key) {
 
     def once(self):
         self.lib.input(0, 0); self.lib.input(28, 1)
+
+    def test_duration_only_allows_reviewed_exclusive_boot_profiles(self):
+        import itertools
+        for duration in (0, 1, 29999, 30000, 30001, 299999, 300000, 300001, -1):
+            for direct, once, fixed, pps in itertools.product((0, 1), repeat=4):
+                with self.subTest(duration=duration, modes=(direct, once, fixed, pps)):
+                    self.lib.input(44, duration)
+                    for key, value in ((0, direct), (28, once), (20, fixed), (24, pps)):
+                        self.lib.input(key, value)
+                    allowed = (direct+once+fixed+pps <= 1 and
+                               (duration == 30000 or (once and duration == 300000)))
+                    self.assertEqual(self.lib.modes_valid(), int(allowed))
+        src = SOURCE.read_text()
+        self.assertIn('module_param(direct_charge_once_ms, uint, 0400);', src)
+        probe = function(src, 'static int sm5440_probe(')
+        self.assertLess(probe.index('sm5440_modes_valid()'), probe.index('i2c_check_functionality'))
+
+    def test_long_once_keeps_absolute_deadline_and_safe_terminal_return(self):
+        self.once(); self.lib.input(44, 300000); self.lib.work()
+        deadline = self.v(26)+self.v(25)
+        self.assertTrue(299000 <= self.v(25) <= 300000)
+        for _ in range(3200):
+            if self.v(23):
+                break
+            self.tick()
+            self.assertEqual(self.v(26)+self.v(25), deadline)
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7, 23)], [0, 0, 0, 1, 0, 1])
+        self.assertGreater(self.v(9), 30)  # repeated OFF/settle/ON refreshes
+        self.assertEqual(self.v(6), 0)  # no PPS Request with pump running
+        before = [self.v(k) for k in (4, 5, 8, 9)]
+        self.tick(); self.lib.pm(2); self.tick()
+        self.assertEqual(before, [self.v(k) for k in (4, 5, 8, 9)])
+
+    def test_long_once_final_window_uses_same_refresh_reserve(self):
+        self.once(); self.lib.input(44, 300000); self.lib.work()
+        # Traverse almost the entire window with normal monitoring/refresh.
+        while self.v(25) > 3000:
+            self.tick()
+        self.lib.input(41, 268); self.lib.input(43, 100)
+        requests, ons = self.v(4), self.v(9)
+        self.tick()
+        self.assertIn('remaining=168ms', self.lib.defer_log().decode())
+        self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+        for _ in range(3):
+            self.tick()
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 7, 23)], [0, 0, 0, 0, 1])
+
+    def test_long_once_faults_still_stop_without_rearm_or_retry(self):
+        for key, value in ((4, -5), (37, -5), (34, 0), (3, 420),
+                           (2, 4400000), (14, 2881), (11, 2), (12, 0)):
+            with self.subTest(key=key):
+                self.lib.reset(); self.once(); self.lib.input(44, 300000); self.lib.work()
+                for _ in range(100):
+                    self.tick()
+                self.lib.input(key, value)
+                self.tick()
+                self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+                ons = self.v(9); self.tick(); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
+
+    def test_long_once_pm_and_delivery_gap_remain_terminal(self):
+        for operation in ('suspend', 'remove', 'gap'):
+            with self.subTest(operation=operation):
+                self.lib.reset(); self.once(); self.lib.input(44, 300000); self.lib.work()
+                for _ in range(100):
+                    self.tick()
+                if operation == 'suspend':
+                    self.lib.pm(1)
+                elif operation == 'remove':
+                    self.lib.remove_worker()
+                else:
+                    self.tick(501)
+                self.assertEqual([self.v(k) for k in (0, 1, 2)], [0, 0, 0])
+                ons = self.v(9); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
+
+    def test_long_once_late_admitted_refresh_cannot_rearm(self):
+        self.once(); self.lib.input(44, 300000); self.lib.work()
+        self.lib.input(41, 2200); self.lib.input(43, 100)
+        self.lib.input(33, 3000)
+        ons = self.v(9)
+        self.tick()
+        self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+        self.assertEqual(self.v(9), ons)
+
+    def test_long_once_pps_and_cleanup_failures_remain_non_clean(self):
+        for key in (5, 6, 8):
+            with self.subTest(key=key):
+                self.lib.reset(); self.once(); self.lib.input(44, 300000); self.lib.work()
+                self.lib.input(key, -5)
+                if key == 5:
+                    self.lib.input(43, 100)
+                else:
+                    self.lib.input(41, 100)
+                self.tick()
+                self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+                ons = self.v(9); self.tick(); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
 
     def tick(self, ms=100):
         self.lib.advance(ms); self.lib.work()

@@ -1,0 +1,19 @@
+{
+  "actual_C_tests": 79,
+  "passed": true,
+  "seconds": 0.398,
+  "command": "PYTHONPATH=tests python3 -m unittest tests/test_sm5440_fedora.py",
+  "new_tests": 7,
+  "coverage": [
+    "Default30s inherited72 tests",
+    "Exclusive30s/300s selector gate before any I2C",
+    "300s full duration and absolute deadline",
+    "Final reserve unchanged",
+    "Long run I2C/source/detach/thermal/VBAT/OCP/latch/mode fault",
+    "Suspend/remove/gap no rearm",
+    "Late admitted refresh no rearm",
+    "PPS/fixed return/lease release errors terminal"
+  ],
+  "full_host_suite_executed": false,
+  "physical_operations": []
+}

@@ -102,6 +102,7 @@
 #define SM5440_PPS_V_STEP_MV 20
 #define SM5440_REFRESH_TICKS 4
 #define SM5440_ONCE_MS 30000
+#define SM5440_LONG_ONCE_MS 300000
 #define SM5440_ONCE_POLL_MS 100
 #define SM5440_ONCE_GAP_MS 500
 #define SM5440_ONCE_REFRESH_MS 4000
@@ -117,7 +118,14 @@ module_param(direct_charge, bool, 0400);
 MODULE_PARM_DESC(direct_charge, "Explicit registered 1.8A direct-charge bring-up (default off)");
 static bool direct_charge_once;
 module_param(direct_charge_once, bool, 0400);
-MODULE_PARM_DESC(direct_charge_once, "Registered one-shot <=30s 1.8A pump test, no restart (default off)");
+MODULE_PARM_DESC(direct_charge_once, "Registered bounded 1.8A pump test, no restart (default off, 30s)");
+/* A longer observation is a separate registered profile, never a runtime
+ * extension of an active attempt. Only the reviewed 30s/300s windows exist;
+ * a nondefault duration without exclusive one-shot opt-in refuses probe.
+ */
+static unsigned int direct_charge_once_ms = SM5440_ONCE_MS;
+module_param(direct_charge_once_ms, uint, 0400);
+MODULE_PARM_DESC(direct_charge_once_ms, "One-shot duration: 30000 (default) or separately registered 300000 ms");
 static bool fixed_return_check;
 module_param(fixed_return_check, bool, 0400);
 MODULE_PARM_DESC(fixed_return_check, "Registered one-shot fixed9V OFF return proof (default off, no PPS)");
@@ -248,8 +256,12 @@ static bool sm5440_direct_enabled(struct sm5440_direct *sm)
 
 static bool sm5440_modes_valid(void)
 {
-	return (direct_charge + direct_charge_once + fixed_return_check +
-		pps_return_check) <= 1;
+	if ((direct_charge + direct_charge_once + fixed_return_check +
+	     pps_return_check) > 1)
+		return false;
+	return direct_charge_once_ms == SM5440_ONCE_MS ||
+		(direct_charge_once &&
+		 direct_charge_once_ms == SM5440_LONG_ONCE_MS);
 }
 
 /* Public snapshots admit fixed contracts only. Once PPS owns the handoff,
@@ -996,9 +1008,9 @@ static int sm5440_start(struct sm5440_direct *sm)
 	if (ret)
 		goto restore;
 	if (READ_ONCE(direct_charge_once)) {
-		/* Includes the bounded VBUSPOK start wait in the30-second budget. */
+		/* Includes the bounded VBUSPOK start wait in the selected budget. */
 		sm->direct_deadline_ms = ktime_to_ms(ktime_get_boottime()) +
-			SM5440_ONCE_MS - 100;
+			direct_charge_once_ms - 100;
 		ret = sm5440_once_measure(sm, true);
 		if (ret)
 			goto restore;
@@ -1324,7 +1336,7 @@ static void sm5440_direct_once_work(struct sm5440_direct *sm)
 		sm->direct_refresh_ms = now + SM5440_ONCE_REFRESH_MS;
 		dev_info(sm->dev, "one-shot pump started: target=%dmV/%dmA deadline=%llums max_ms=%u no_restart=1\n",
 			sm->target_mv, sm->target_ma, sm->direct_deadline_ms,
-			SM5440_ONCE_MS);
+			direct_charge_once_ms);
 		goto schedule;
 	}
 	if (now <= sm->direct_sample_ms ||

@@ -98,6 +98,8 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 bounded-duration follow-up IMPLEMENTED_OFFLINE_BUILD_PENDING. Immutable once_ms selector accepts30s(default)/300s only;300s requires exclusiveonce, invalidprofile refused beforeI2C. Hardware1700/PPS+raw1800/thermal/fault/PM/lease/refresh reserve unchanged.79actualC PASS0.398s; buildnext using existingcache. Device exact33164440dd5 remains installed, no newdeviceoperation. Future300s physicalauthorization/guardian/registration absent. FullportNOT_READY. See charging/test345-duration-followup.
+
 2026-10-07 Test345 CLOSED BOUNDED_PPS_NATIVE_RETURN_CHARGE_DISCHARGE_PASS_RESTORED331.
 Oneactivation9d7a1a38/37activeframes/rawIBUSmax1.770625A/pack29.5C/die43.5C;
 five refreshes/sixzero proofs/final357ms deferral/native complete lease0PASS.

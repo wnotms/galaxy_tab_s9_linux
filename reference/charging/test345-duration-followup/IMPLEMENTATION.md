@@ -1,0 +1,5 @@
+# Offline bounded-duration candidate
+
+Existing direct_charge_once remains defaultOFF and defaults to30000ms. New immutable boot parameter direct_charge_once_ms accepts only30000 or300000;300000 requires exclusive direct_charge_once opt-in. Unknown/zero/out-of-range/mixed modes fail probe before any I2C. No sysfs runtime extension and no automatic restart. Only deadline allocation/logged max_ms use the selected duration. Existing hardware1.7A/PPS+raw1.8A, source/thermal/PM/OFF/settle/lease/fixed-return/current/protocol behavior unchanged.
+
+Seven new actual-C tests plus unchanged72 tests passed79/79. Long modeled run traverses repeated refreshes without extending the absolute deadline; initial and terminal failures remain fail-closed. Build/qualification still pending at this source commit. Test345 remains historically bound to30s source01747a5f and its own raw evidence. Future300s guardian/registration is required; no longer physical test is authorized by adding this parameter. Device exact331 remains installed, no device operation in development.
