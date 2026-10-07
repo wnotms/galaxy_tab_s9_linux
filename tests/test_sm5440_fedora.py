@@ -73,7 +73,7 @@ static struct sm5714_pack_snapshot pack;
 static u8 regs[64];
 static u64 clock_ms, owned_lease;
 static int calls, fail_at, pps_calls, fixed_calls, releases, pump_ons, unsafe_pps;
-static int request_error, fixed_error, off_error, release_error, pack_error;
+static int request_error, fixed_error, off_error, release_error, pack_error, source_error;
 static int detach_wait, scheduled, canceled;
 static int fixed_snapshot_calls, owned_snapshot_calls, fail_owned_at, mutate_pack, fixed_adc_offset;
 static unsigned long scheduled_delay;
@@ -130,6 +130,8 @@ static void cancel_delayed_work_sync(struct delayed_work *w) {(void)w;canceled++
 int sm5714_pd_read_snapshot(struct sm5714_pd_snapshot *out) {
  fixed_snapshot_calls++;
  /* Actual public API is fixed-only, not a universal snapshot mock. */
+ if(source_error)return source_error;
+ if(!source.online)return -ENODATA;
  if(source.pps_contract)return -EAGAIN;
  *out=source;return 0;
 }
@@ -202,7 +204,7 @@ void reset(void) {
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
  fixed_sampling=fixed_sample_count=fixed_pattern=0;fixed_return_started=0;
- request_error=fixed_error=off_error=release_error=pack_error=detach_wait=scheduled=canceled=0;
+ source_error=request_error=fixed_error=off_error=release_error=pack_error=detach_wait=scheduled=canceled=0;
 }
 int eligible(void) {return sm5440_eligible(&sm);}
 int modes_valid(void) {return sm5440_modes_valid();}
@@ -232,7 +234,7 @@ void input(int key,int value) {
  case 30:pack.current_ua=value;break;case 31:raw13(SM5440_REG_ADC_VBAT1,value);break;
  case 32:regs[SM5440_REG_ADC_DIETEMP]=value;break;case 33:refresh_wait=value;break;
  case 34:source.online=value;break;case 35:failure_on_sleep=value;break;
- case 36:regs[SM5440_REG_STATUS3]=value;break;}
+ case 36:regs[SM5440_REG_STATUS3]=value;break;case 37:source_error=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -303,6 +305,26 @@ int value(int key) {
         state=[self.v(k) for k in (4, 5, 8, 9, 11)]
         self.tick(); self.lib.pm(2); self.tick()
         self.assertEqual(state[:4], [self.v(k) for k in (4, 5, 8, 9)])
+
+    def test_once_pc_detach_no_source_then_fixed9_enters_only_once(self):
+        self.once();self.lib.input(22,5000);self.lib.work()
+        self.lib.input(34,0)
+        for _ in range(5):self.tick(1000)
+        self.assertEqual([self.v(k) for k in (0,1,2,4,8,9,7,23)],[0]*8)
+        self.lib.input(34,1);self.lib.input(22,9000);self.tick(1000)
+        self.assertEqual([self.v(k) for k in (0,1,2,4,9,7,23)],[1,4,7,1,1,0,0])
+
+    def test_once_preentry_source_absence_deadline_is_still_terminal(self):
+        self.once();self.lib.input(34,0);self.lib.input(21,1000);self.lib.work()
+        self.assertEqual([self.v(k) for k in (0,1,2,4,9,7,23)],[0,0,0,0,0,1,1])
+        self.lib.input(34,1);self.tick();self.assertEqual(self.v(4),0)
+
+    def test_once_pack_enodata_and_source_i2c_fault_are_not_waiting(self):
+        for key,error in ((4,-61),(37,-5),(37,-110),(37,-116)):
+            with self.subTest(key=key,error=error):
+                self.lib.reset();self.once();self.lib.input(key,error);self.lib.work()
+                self.assertEqual([self.v(k) for k in (0,1,2,4,9,7,23)],[0,0,0,0,0,1,1])
+                self.lib.input(key,0);self.tick();self.assertEqual(self.v(4),0)
 
     def test_once_waits_readonly_on_pc_but_deadline_stops(self):
         self.once(); self.lib.input(22, 5000); self.lib.work()

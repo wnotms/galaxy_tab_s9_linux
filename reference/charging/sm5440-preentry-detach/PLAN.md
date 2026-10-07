@@ -1,0 +1,3 @@
+# Test339 offline fix
+
+Test338 is frozen STOP. Public source ENODATA during normal PC detach becomes bounded EAGAIN only in pre-lease fixed readiness. Real source I2C/stale/pack errors and active loss stay terminal. An ordered entry witness precedes any lease/PPS operation; new guardian uses the full sameboot journal after worker unbind to prove cleanup phase. Known pre-entry OFF may be offline/PC5/fixed9; any entry or unproven journal/lease remains strict. Preserve primary and cleanup independently. DefaultOFF and1.8A/30s/100ms/500ms/no-retry/thermal/float policies unchanged. No DTS/config/USB/SM5714/TCPC change. Reuse exact cache, preserve prior artifacts. Later single new registered339 round; never rewrite/replay338.

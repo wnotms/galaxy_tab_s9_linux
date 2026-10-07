@@ -977,6 +977,13 @@ static int sm5440_fixed_check_ready(struct sm5440_direct *sm)
 	    READ_ONCE(sm->stopping) || sm->fault_latched || sm->lease)
 		return -EPERM;
 	ret = sm5714_pd_read_snapshot(&source);
+	/* The public fixed-source observer reports ENODATA while detached.
+	 * This readiness gate runs before any lease/PPS/pump entry; absence is
+	 * bounded waiting, not a retry after a failed charging transaction.
+	 * Pack ENODATA and real bus errors below remain terminal errors.
+	 */
+	if (ret == -ENODATA)
+		return -EAGAIN;
 	if (ret)
 		return ret;
 	if (source.pps_contract || !source.online || !source.charge_requested)
@@ -1227,8 +1234,11 @@ static void sm5440_direct_once_work(struct sm5440_direct *sm)
 			goto schedule;
 		if (!ret)
 			ret = sm5440_pps_check_pack(sm);
-		if (!ret)
+		if (!ret) {
+			/* Ordered witness before any switching lease or PPS operation. */
+			dev_info(sm->dev, "one-shot entry begins: fixed9=1\n");
 			ret = sm5440_start(sm);
+		}
 		if (ret)
 			goto finish;
 		now = ktime_to_ms(ktime_get_boottime());
