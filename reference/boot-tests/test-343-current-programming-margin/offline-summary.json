@@ -1,0 +1,49 @@
+{
+  "test": "Test343",
+  "verdict": "REGISTERED_PREPARED_NOT_DEPLOYED",
+  "tests": {
+    "executed": true,
+    "count": 39,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.45502101199963363,
+    "suites": [
+      "test_sm5440_current_margin_deployment.py"
+    ],
+    "full_executed": false,
+    "unchanged_C_qualification": "Current-margin source95159eec 58 actual-C tests; unchanged since b32142f6"
+  },
+  "syntax": {
+    "python": true,
+    "shell": true
+  },
+  "build": {
+    "executed": false,
+    "reuse": "Exact current-margin Image/config/DT/notes/181 from source95159eec"
+  },
+  "candidate_boot": {
+    "path": "out/boot-bundle-x710-current-margin-on/boot.img",
+    "bytes": 100663296,
+    "sha256": "840773ba5fbe92c08a10e3c850561707cb5bb828fae2c964b0b433976233d27f"
+  },
+  "config_diff": [],
+  "dtb_diff": [],
+  "hardware_input_setpoint_ma": 1700,
+  "PPS_requested_cap_ma": 1800,
+  "raw_stop_cap_ua": 1800000,
+  "physical_executed": false,
+  "Windows_staged": false,
+  "kernel_source_changed": false,
+  "rootfs_USB_adbd_changed": false,
+  "full_port_ready": false,
+  "latest_wireless_read": {
+    "boot_id": "2fc3593e-1fb1-4628-b978-b2469cfc73ae",
+    "current_ua": -1186000,
+    "health": "Good",
+    "read_only": true,
+    "soc": 76,
+    "temp_decic": 268,
+    "usb_online": false,
+    "voltage_uv": 4089000
+  }
+}

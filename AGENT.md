@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test342（实机停止，已恢复 Test331），窗口为 **Test333–Test342**；没有生成镜像的轮次仍占一轮。
+  编号为 Test343（已登记并准备，尚未部署），窗口为 **Test334–Test343**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test343 REGISTERED_PREPARED_NOT_DEPLOYED. Reuse source95159eec
+current-margin Image/notesb8d8d4a0/config51/DT233a/181; offline armedboot840773ba
+soleonceflag, no kernel rebuild/change. Independent guardian nativehardware1700/
+PPS1800/matchingtarget witness and terminal range-log STOP; rawstop1800000 and
+thermal/voltage/gap/no-retry/lease/fixed9/ownerconfirmedOFF-unbound gates retained.
+39 affected hosttests PASS/0.455s/no skip/syntax/inputhashes PASS; prior58C/build
+qualification reused, no fullsuite/Actions. FreshPCpreflight/push beforemutation.
+Device remains3312fc3593e on naturaldischarge,76%26.8C/-1.186A/USBoffline/Good;
+not a PC gate and above preparation75% max. No Windowsstage/flash/reboot/activation/
+PPS/pump yet. Test342 STOP immutable; fullportNOT_READY. Retentionwindow334–343,
+expired333 two Windowsduplicates exact-hashed/retired192MiB;332canonical provider
+still334consumer,331 activeproduction/343rollback preserved. See343 README/
+registration/INPUTS/EXECUTION_INPUTS/execution-scope/offline-summary/OFFLINE_RESULTS.
 
 2026-10-07 Test342 follow-up BUILT READY_OFFLINE_DEFAULT_OFF, no deployment.
 Source95159eec: SM5440 programmed1.7A, PPS/raw stop1.8A unchanged; terminal raw
