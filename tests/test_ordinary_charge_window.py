@@ -34,6 +34,15 @@ class WindowTests(unittest.TestCase):
             self.assertEqual(r['complete'], t == 32)
         self.assertEqual(r['observation_seconds'], 30)
 
+    def test_fixed_online_pps_source_capability_is_not_active_pps(self):
+        for capability in ('PD_PPS', 'PD_PPS_SPR_AVS'):
+            d = self.sample(0, True)
+            d['tcpm']['POWER_SUPPLY_USB_TYPE'] = 'PD [' + capability + ']'
+            self.assertEqual(ChargeWindow(P, 0).advance(d)['state'], 'OBSERVE')
+            d['tcpm']['POWER_SUPPLY_ONLINE'] = '2'
+            with self.assertRaises(ValueError):
+                ChargeWindow(P, 0).advance(d)
+
     def test_negative_does_not_wait_forever(self):
         for t in range(11): self.w.advance(self.sample(t))
         with self.assertRaises(TimeoutError): self.w.advance(self.sample(11))

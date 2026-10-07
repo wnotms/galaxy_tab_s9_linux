@@ -291,6 +291,33 @@ int main(int argc,char **argv) {
   if(arg==1||arg==12)sm5714_poll_work((void *)&sm.poll_work);
   if(arg==13){assert(sm5714_suspend((void *)&sm)==0);sm5714_poll_work((void *)&sm.poll_work);}
  }
+ if(op==32) {
+  /* Test336: poller already cached fixed PD, unlike cold-start fixtures. */
+  assert(sm5714_configure_charging(&sm)==0);
+  sm.last_online=true;sm.last_usb_type=type;
+  sm.last_status=POWER_SUPPLY_STATUS_NOT_CHARGING;
+  assert(sm5714_battery_switching_acquire(&lease)==0);
+  assert(!sm.charge_programmed);
+  assert(sm5714_battery_switching_release_async(lease)==0);
+  assert(sm.charge_restore_pending && !sm.charge_programmed);
+  if(arg==1)sm.charge_program_fault=true;
+  if(arg==2)assert(sm5714_suspend((void *)&sm)==0);
+  if(arg==3){online=0;assert(sm5714_battery_set_typec_charge(false)==0);}
+  if(arg==4)sm5714_battery_typec_fault();
+  if(arg==5)temp_error=-EIO;
+  if(arg==6)mode=1;
+  if(arg==7){assert(sm5714_battery_switching_acquire(&newlease)==0);assert(!sm.charge_restore_pending);}
+  if(arg==8)mode=7;
+  if(arg==9)temp=450;
+  sm5714_poll_work((void *)&sm.poll_work);
+  assert(!sm.charge_restore_pending);
+  assert(!sm.charge_recovery_used);
+  if(arg==0 || arg==9) {
+   assert(sm.charge_programmed);
+   io=0;sm5714_poll_work((void *)&sm.poll_work);
+   assert(io==6); /* fault check + stable-program readback, no reprogram loop */
+  }else assert(!sm.charge_programmed && !(regs[0x13]&8));
+ }
  printf("%d %u %u %u %u %llu %llu %u %u %d %d\n",r,regs[0x13]&8,regs[0x15]&127,
  sm.switching_inhibited,sm.typec_fault,lease,sm.switching_lease,sm.typec_mv,sm.typec_ma,sm.typec_pps,io);
 }
@@ -461,6 +488,20 @@ int main(int argc,char **argv) {
     def test_async_release_cannot_bypass_suspend_guard(self):
         r=self.run_case(31,13)
         self.assertEqual((r[0],r[1]),(0,0))
+
+
+    def test_async_release_restores_when_poller_already_cached_fixed_pd(self):
+        r = self.run_case(32)
+        self.assertEqual(r[:5], [0, 8, 56, 0, 0])
+
+    def test_queued_restore_preserves_fault_detach_suspend_full_and_i2c_gates(self):
+        for arg in range(1, 9):
+            with self.subTest(arg=arg):
+                self.assertEqual(self.run_case(32, arg)[1], 0)
+
+    def test_queued_restore_keeps_thermal_derating(self):
+        r = self.run_case(32, 9)
+        self.assertEqual(r[1:3], [8, 16])
 
 
 if __name__ == '__main__':

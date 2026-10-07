@@ -24,7 +24,9 @@ def validate_safety(d, plan):
     if d['pack']['mode'] != 'enabled' or abs(int(d['pack']['temp']) - 100 * int(b['POWER_SUPPLY_TEMP'])) > 500 or not plan['temp_min_decic'] * 100 <= int(d['pack']['temp']) < plan['temp_max_exclusive_decic'] * 100:
         raise ValueError('pack sensor')
     online = p.get('POWER_SUPPLY_ONLINE')
-    if online not in ('0', '1') or '[PD_PPS]' in p.get('POWER_SUPPLY_USB_TYPE', ''):
+    # TCPM USB_TYPE describes source capabilities, including at fixed ONLINE=1.
+    # ONLINE=2 identifies programmable operation; a PPS-capable source is valid.
+    if online not in ('0', '1'):
         raise ValueError('non-fixed/unknown source')
     if online == '1':
         mv = int(p['POWER_SUPPLY_VOLTAGE_NOW'])

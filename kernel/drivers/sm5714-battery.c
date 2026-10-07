@@ -127,6 +127,8 @@ struct sm5714_battery {
 	u64 switching_lease;
 	/* Only a verified ordinary configuration creates this witness. */
 	bool charge_programmed;
+	/* One async lease release must restore even with unchanged cached PD. */
+	bool charge_restore_pending;
 	bool charge_recovery_used;
 	bool charge_program_fault;
 	u8 programmed_input;
@@ -342,6 +344,7 @@ static void sm5714_revoke_switching_locked(struct sm5714_battery *sm)
 {
 	lockdep_assert_held(&sm->chg_lock);
 	sm5714_pack_changed_locked(sm);
+	sm->charge_restore_pending = false;
 	if (sm->switching_inhibited)
 		sm->switching_lease = 0;
 }
@@ -389,6 +392,8 @@ static int sm5714_configure_charging_locked(struct sm5714_battery *sm)
 	int ret;
 
 	lockdep_assert_held(&sm->chg_lock);
+	/* Consume once under the same lock as every live safety/ownership gate. */
+	sm->charge_restore_pending = false;
 	/* Never inherit Android's unknown limits or leave Q4 closed on error. */
 	ret = sm5714_disable_charging(sm);
 	if (ret)
@@ -567,6 +572,16 @@ static int sm5714_recover_programmed_charging(struct sm5714_battery *sm)
 	int ret, value, cleanup;
 
 	mutex_lock(&sm->chg_lock);
+	if (sm->charge_restore_pending) {
+		/* This is requested reconfiguration, not recovery of a lost witness.
+		 * The normal path rechecks faults, temperature, grant and suspend.
+		 * Never spend the single unexpected-program-loss recovery budget.
+		 */
+		ret = sm5714_configure_charging_locked(sm);
+		if (!ret)
+			ret = sm->charge_programmed ? 1 : 0;
+		goto out;
+	}
 	if (!sm->charge_programmed || sm->charge_program_fault || sm->suspended ||
 	    sm->switching_inhibited || sm->typec_pps || (sm->typec_owned &&
 	    (!sm->typec_charge || sm->typec_fault || sm->typec_ma < 100))) {
@@ -681,6 +696,7 @@ int sm5714_battery_switching_acquire(u64 *lease)
 	} else {
 		/* Inhibit before touching Q4, without destroying the fixed budget. */
 		sm5714_pack_changed_locked(sm);
+		sm->charge_restore_pending = false;
 		sm->switching_inhibited = true;
 		sm->switching_lease = ++sm5714_switching_issuer;
 		*lease = sm->switching_lease;
@@ -794,6 +810,7 @@ int sm5714_battery_switching_release_async(u64 lease)
 		sm->switching_inhibited = false;
 		sm->switching_lease = 0;
 		sm5714_switching_blocked = false;
+		sm->charge_restore_pending = true;
 		mod_delayed_work(system_percpu_wq, &sm->poll_work, 0);
 		ret = 0;
 	}
@@ -1485,7 +1502,8 @@ static const struct power_supply_desc sm5714_usb_desc = {
 			  BIT(POWER_SUPPLY_USB_TYPE_SDP) |
 			  BIT(POWER_SUPPLY_USB_TYPE_CDP) |
 			  BIT(POWER_SUPPLY_USB_TYPE_DCP) |
-			  BIT(POWER_SUPPLY_USB_TYPE_PD),
+			  BIT(POWER_SUPPLY_USB_TYPE_PD) |
+			  BIT(POWER_SUPPLY_USB_TYPE_PD_PPS),
 };
 
 /*

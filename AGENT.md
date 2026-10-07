@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test336 follow-up implemented: async release queues one locked
+ordinary reconfiguration even with cached fixedPD; acquire/revoke cancel it,
+normal temp/fault/PM/grant gates and prior program-loss budget preserved.
+sm5714-usb declares PD_PPS; host fixed gate uses ONLINE/contract rather than
+source capability label.295 affected tests PASS/no skip6.526s; no routing/fullrun.
+Candidate build/qualification pending in sm5714-async-fixed-restore namespace;
+installed device remains accepted331, no new device command/flash/PPS/pumpON.
+Historical336 runner/error/inputs unchanged; next admission needs flat-result
+integration before Test337 registration. No automatic current/pump advance.
+
+
 
 2026-10-07 Test336 CLOSED: STOP_RESTORED_ACCEPTED331. Native single pump-OFF
 PPS8920mV/1800mA→physical fixed9 proof/release PASS; ordinary switching did not

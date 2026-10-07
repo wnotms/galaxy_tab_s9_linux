@@ -72,7 +72,7 @@ struct sm5714_battery { int chg_lock, chg, dev, psy_usb, psy_bat; unsigned int f
        unsigned int typec_mv, typec_ma;
        bool typec_owned, typec_claimed, typec_charge, typec_pps, typec_fault, suspended;
        bool switching_inhibited; u64 switching_lease, pack_generation;
-       bool charge_programmed, charge_recovery_used, charge_program_fault;
+       bool charge_programmed, charge_restore_pending, charge_recovery_used, charge_program_fault;
        u8 programmed_input, programmed_fast;
        enum sm5714_charge_thermal_state thermal_state; };
 static unsigned int regs[256];
@@ -160,6 +160,12 @@ int main(int argc, char **argv) {
             self.assertEqual(self.run_charge(temp=temp)[1] & 8, 0)
         for temp in (100, 179, 420, 499):
             self.assertEqual(self.run_charge(temp=temp)[2] & 0x7f, 16)
+
+
+    def test_reported_pps_type_is_declared_to_power_supply(self):
+        source = (ROOT / 'kernel/drivers/sm5714-battery.c').read_text()
+        descriptor = function(source, 'static const struct power_supply_desc sm5714_usb_desc =')
+        self.assertIn('BIT(POWER_SUPPLY_USB_TYPE_PD_PPS)', descriptor)
 
 
 if __name__ == "__main__":

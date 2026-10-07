@@ -149,7 +149,10 @@ class RunnerTests(unittest.TestCase):
         cls.h.configure()
 
     def test_import_does_not_authorize_or_contact_device(self):
-        self.assertFalse(self.h.authorized())
+        # Historical physical authorization now exists; isolate the initial
+        # registration rather than assuming the archive is forever unexecuted.
+        with tempfile.TemporaryDirectory() as tmp, patch.object(self.h, 'R', Path(tmp)):
+            self.assertFalse(self.h.authorized())
         self.assertFalse(PLAN['execution_authorized'])
 
     def test_install_not_authorized_rejects_before_adb(self):
