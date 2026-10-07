@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 DEPLOYED_PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1.
+Owner“已同网” restored transport; freshpreflight53%32C/331identity/rescuePASS.
+Candidateb7b4fa77/WiFi10.175.236.68/notes92fb/config51/allfive181/DCCabsent/
+unique normalboot/fulljournal/rescue/noCode43PASS. Initial preentryqueue drained;
+physicalOFF/unbound proof; guardian1770 awaits ownerC1<=900s, no activation/PPS/
+pump yet. Hardware1700/PPS+raw1800/<=30s/orderedzero proof unchanged. Exact331
+rollback_required=true, original181 saved. Qualification reused, evidencephase
+build/tests:false. See344 PREPARED_STATUS/rawpreflight/install/admission/park/arm.
+FullportNOT_READY.
+
 2026-10-07 Test344 PREDEPLOYMENT_WIFI_NETWORK_MISMATCH. OwnerPC connected,
 ADBsame331dc8442f1/config/notes/52%30.6C; preflight WiFirescue timesout before
 mutation. Devicewlp1s0/sshd up10.175.236.14/24, WindowsWLAN changed10.30.254.86/16;
