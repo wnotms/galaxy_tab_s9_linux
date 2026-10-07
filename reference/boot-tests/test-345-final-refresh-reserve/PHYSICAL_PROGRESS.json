@@ -1,0 +1,133 @@
+{
+  "test": "Test345",
+  "verdict": "NATIVE_AND_FIXED_RETURN_CHARGE_PASS_AWAITING_UNPLUG",
+  "boot_id": "9d7a1a38a2154ed4ae87971c5fd7d591",
+  "native": {
+    "completed_us": 214390447,
+    "deadline_ms": 213473,
+    "fixed_return": true,
+    "hardware_input_ma": 1700,
+    "no_restart": true,
+    "parked_zero_proofs": 6,
+    "pump_ON_observed": true,
+    "refresh_deferrals": 1,
+    "refreshes": 5,
+    "started_us": 183606189,
+    "target_ma": 1800,
+    "target_mv": 8940
+  },
+  "statistics": {
+    "active_samples": 37,
+    "max_raw_ibus_ua": 1770625,
+    "max_pack_temp_decic": 295,
+    "max_die_temp_decic": 435,
+    "max_pack_ibat_ua": 2777000,
+    "raw_vbus_mv_range": [
+      8681,
+      9273
+    ],
+    "raw_vbus_calibrated": false
+  },
+  "ordinary_charge": {
+    "PPS": false,
+    "endpoint": {
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "63",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "2006000",
+        "POWER_SUPPLY_CURRENT_NOW": "2071000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Charging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "287",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4095000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4096000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "3999000"
+      },
+      "boot": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "boot_end": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "config_data_written": false,
+      "direct": "N",
+      "fixed_check": "N",
+      "monotonic": 518.837314645,
+      "pack": {
+        "mode": "enabled",
+        "temp": "28700"
+      },
+      "pps_check": "N",
+      "pump": 1,
+      "roles": [
+        "[sink]",
+        "[device]"
+      ],
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "1500000",
+        "POWER_SUPPLY_CURRENT_NOW": "1500000",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+        "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+      },
+      "uptime": 518.83,
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+      }
+    },
+    "kind": "verdict",
+    "native": {
+      "completed_us": 214390447,
+      "deadline_ms": 213473,
+      "fixed_return": true,
+      "hardware_input_ma": 1700,
+      "no_restart": true,
+      "parked_zero_proofs": 6,
+      "pump_ON_observed": true,
+      "refresh_deferrals": 1,
+      "refreshes": 5,
+      "started_us": 183606189,
+      "target_ma": 1800,
+      "target_mv": 8940
+    },
+    "observation_seconds": 30.845380874,
+    "phase": "charge",
+    "pump_ON_observed": true,
+    "ssh_returncode": 0,
+    "verdict": "PASS"
+  },
+  "rollback_required": true,
+  "final_acceptance_complete": false,
+  "tests": {
+    "executed": false,
+    "reason": "Physical evidence only; reuse qualified72C and20host tests"
+  },
+  "build": {
+    "executed": false
+  }
+}

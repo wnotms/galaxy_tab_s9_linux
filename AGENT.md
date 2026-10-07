@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test345 NATIVE_AND_FIXED_RETURN_CHARGE_PASS_AWAITING_UNPLUG.
+One activation9d7a1a38/37activeframes/maxrawIBUS1.770625A/pack29.5C/die43.5C;
+five refreshes/sixzero proofs/onefinal<=2s deferral/native completionPASS.
+PumpOFF/unbound/fixed9input1.5A cleanup verified. Sameboot ordinary charging
+30.845sPASS/63%4.096V28.7C/no new kernelfault or failedunit. Dischargeobserver
+armed; ownerunplug, PCreturn and unconditionalexact331restore pending.
+rollback_required=true, not fullacceptance/no replay/no currentincrease.
+See345PHYSICAL_PROGRESS/rawguardian/charge. Evidenceonlytests/build:false,
+reuse72C/build/20host. FullportNOT_READY.
+
 2026-10-07 Test345 DEPLOYED_PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1.
 Gitprotocol500 bypassed via verifiedexact GitAPIobjects/force:false fastforward;
 3commitSHA identical/38blobs/origin-test7b32d07f synchronized beforedeployment,
