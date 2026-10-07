@@ -98,6 +98,24 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Async-fixed-restore correction OFFLINE PASS/source86f7b678:
+295 affected actual-C/host PASS6.526s;65 final admission/window PASS0.442s,
+no skips. Build81.492s/W1+sparse13.395s no warning. Exact331 config51/DT233a/
+release unchanged;paired181/module runtime allocations/107protected+17formal
+preserved. Armedboot39bf8476/notes39a825d1 is PPS-OFF-only, not defaultproduction.
+Independent Test337 PREPARED/registered, flat-discovery admission corrected;
+unchanged/missing/extra boot history/transport stops tested. No execution-scope
+file, no Windows stage/device commands/flash/reboot/PPS/pumpON in this phase.
+Installed331 last physical proof remains336 final24545782; current live pack/
+transport not recollected. Fresh gates plus explicit337 PPS-OFF scope required.
+Single transaction/10ssettle+30scharge/15sunplug/unconditional exact331 rollback;
+no current/timeout/thermal/float/config/DTS/TCPM/USB/adbd/rootfs change.
+No routing/fullrun/Actions. Original336 STOP/source/runner/inputs unchanged.
+Latest completed physical336 window327–336; prepared337 images are a current
+candidate consumer, retire expired327 when337 physically closes. FullportNOT_READY.
+See charging/sm5714-async-fixed-restoreRESULTS and test337README/PACKAGE/INPUTS.
+
+
 2026-10-07 Test336 follow-up implemented: async release queues one locked
 ordinary reconfiguration even with cached fixedPD; acquire/revoke cancel it,
 normal temp/fault/PM/grant gates and prior program-loss budget preserved.

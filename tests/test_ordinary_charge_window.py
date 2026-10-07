@@ -43,6 +43,23 @@ class WindowTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 ChargeWindow(P, 0).advance(d)
 
+    def test_actual336_fixed_capability_packet_still_fails_charge_recovery(self):
+        raw = (ROOT / 'reference/boot-tests/test-336-pps-off-roundtrip/first-stop-evidence/current-state.txt').read_text()
+        sec = {part.splitlines()[0]: '\n'.join(part.splitlines()[1:]) for part in raw.split('@@')[1:]}
+        d = self.sample(0)
+        d['boot'] = d['boot_end'] = sec['boot'].strip().replace('-', '')
+        for name in ('battery', 'usb', 'tcpm'):
+            d[name] = dict(line.split('=', 1) for line in sec[name].splitlines() if '=' in line)
+        d['pack'] = dict(mode='enabled', temp='23600')
+        self.assertEqual(d['tcpm']['POWER_SUPPLY_ONLINE'], '1')
+        self.assertIn('[PD_PPS]', d['tcpm']['POWER_SUPPLY_USB_TYPE'])
+        self.assertLess(int(d['battery']['POWER_SUPPLY_CURRENT_NOW']), 0)
+        w = ChargeWindow(dict(P, boot_id=d['boot']), 0)
+        for t in range(11):
+            self.assertEqual(w.advance(dict(d, monotonic=t))['state'], 'SETTLING')
+        with self.assertRaises(TimeoutError):
+            w.advance(dict(d, monotonic=11))
+
     def test_negative_does_not_wait_forever(self):
         for t in range(11): self.w.advance(self.sample(t))
         with self.assertRaises(TimeoutError): self.w.advance(self.sample(11))
