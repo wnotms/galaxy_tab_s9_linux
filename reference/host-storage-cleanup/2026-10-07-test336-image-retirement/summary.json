@@ -1,0 +1,41 @@
+{
+  "window": "Test327–Test336",
+  "expired_test": 326,
+  "removed": [
+    {
+      "path": "out/kernel-x710-oneshot-dispatch/Image.gz",
+      "bytes": 22142900,
+      "sha256": "b54cf8b3525da54532ac95d629534b99db6900088927b778dbdf5d67c3b37b7c",
+      "current_package_consumers": [],
+      "deleted": true
+    },
+    {
+      "path": "out/boot-bundle-x710-oneshot-dispatch/boot.img",
+      "bytes": 100663296,
+      "sha256": "bb91198566923802c3acc68f04a149bc17433bc3daac5882facd27f9f76d6117",
+      "current_package_consumers": [],
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test326/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "bb91198566923802c3acc68f04a149bc17433bc3daac5882facd27f9f76d6117",
+      "current_package_consumers": [],
+      "deleted": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test326/rollback-accepted323-boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+      "current_package_consumers": [],
+      "deleted": true
+    }
+  ],
+  "freed_bytes": 324132788,
+  "kept": "Current Test331 accepted boot/modules and accepted323 secondary provider; qualified336 boot/Image/modules; all expired326 sources/config/DT/modules/original journals/hashes and nonimage stage files",
+  "device_operation": false,
+  "active_package_test_range": [
+    327,
+    336
+  ]
+}
