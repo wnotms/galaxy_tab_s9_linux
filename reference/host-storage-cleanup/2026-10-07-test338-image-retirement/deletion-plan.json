@@ -1,0 +1,54 @@
+{
+  "window": "Test329\u2013Test338",
+  "expired_test": 328,
+  "remove": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test328/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "c064e61acc744a85b1738a2e9472b47741a4e6e190946391bb8f76f222e5e4ae",
+      "canonical_provider": "out/boot-bundle-x710-fedora-pps/boot.img",
+      "current_stage_consumers": []
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test328/emergency323-boot.img",
+      "bytes": 100663296,
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+      "canonical_provider": "out/boot-bundle-x710-pc-ordinary/boot.img",
+      "current_stage_consumers": []
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test328/rollback-defaultOFF-boot.img",
+      "bytes": 100663296,
+      "sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec",
+      "canonical_provider": "out/boot-bundle-x710-fedora/boot.img",
+      "current_stage_consumers": []
+    }
+  ],
+  "preserved_current_consumers": [
+    {
+      "test": 330,
+      "package": "reference/boot-tests/test-330-fedora-pps-short/PACKAGE.json",
+      "artifact": "Image.gz",
+      "path": "out/kernel-x710-fedora/Image.gz",
+      "bytes": 22133146,
+      "sha256": "f4eddc132e844699b367296bd7ed364e9b88f7f48067aaacf9f7162c54ac10a6"
+    },
+    {
+      "test": 330,
+      "package": "reference/boot-tests/test-330-fedora-pps-short/PACKAGE.json",
+      "artifact": "boot.img",
+      "path": "out/boot-bundle-x710-fedora-pps/boot.img",
+      "bytes": 100663296,
+      "sha256": "c064e61acc744a85b1738a2e9472b47741a4e6e190946391bb8f76f222e5e4ae"
+    },
+    {
+      "test": 330,
+      "package": "reference/boot-tests/test-330-fedora-pps-short/PACKAGE.json",
+      "artifact": "rollback-boot.img",
+      "path": "out/boot-bundle-x710-fedora/boot.img",
+      "bytes": 100663296,
+      "sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec"
+    }
+  ],
+  "device_operation": false
+}
