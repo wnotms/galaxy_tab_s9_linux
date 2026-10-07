@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test342 follow-up offline current-margin implementation. Device stays
+accepted3312fc3593e on owner-requested natural discharge; strictWiFi packet77%/
+4.141V28.3C/-1.647A/USBoffline/directN. No flash/reboot/pump/PPS/devicewrite.
+Separate SM5440 programming1.7A from unchanged1.8A PPS/raw stop cap;50mA vendor
+encoding,100mA provisional margin not calibration guarantee. Preserve frequency/
+ADC/voltage/thermal/lease/30s/no-retry/fixed9 policy. Terminal rejected ranges log
+raw625uA/500uV pack/status values without extra bus reads.93 affected tests PASS,
+then58 changedC tests PASS after stronger old-register readback case;35 unchanged
+guardian tests reused. Build pending using same cache, oldformal artifacts frozen;
+protected108kernel inputs unchanged. Future343 plan only, no physical scope or
+activation; fullportNOT_READY. See reference/charging/test342-current-margin.
+
 2026-10-07 Test342 CLOSED STOP_ACTIVE_RANGE_CHECK_RESTORED331. One owner-
 confirmed activation/PPS9220mV1.8A and short pumpON; raw host ADC IBUS1.84375A
 exceeds registered1.8A. Guardian primary activePPSbudget; native primary-34

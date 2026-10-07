@@ -93,6 +93,11 @@
 
 /* First mainline bring-up cap; the Fedora 3A/5A controls are not imported. */
 #define SM5440_MAX_PPS_MA 1800
+/* Test342 raw IBUS exceeded the software cap with an equal hardware setting.
+ * Two 50mA steps of provisional bring-up margin; not an accuracy guarantee.
+ * Keep the PPS request and the precise raw-current stop ceiling at 1800mA.
+ */
+#define SM5440_PROGRAM_IBUS_MA 1700
 #define SM5440_PPS_V_STEP_MV 20
 #define SM5440_REFRESH_TICKS 4
 #define SM5440_ONCE_MS 30000
@@ -321,18 +326,16 @@ static int sm5440_pps_target_mv(int ma, int vbat_uv)
 	return clamp(mv, 8200, SM5440_MAX_PPS_MV);
 }
 
-/*
- * The chip's own input limit, kept a little above the requested PPS current so
- * the pump is not the thing throttling the contract, the way the vendor does it
- * (ibuslim = ci_gl + SM5440_CI_OFFSET).  IBUSCNTL encodes 50 mA per step up to
- * 0x7f, i.e. 6350 mA.
+/* Samsung X710 sm5440_charger.c get/set_ibuslim: IBUSCNTL uses 50mA steps.
+ * Unlike vendor/Fedora's positive margin, clamp below the bring-up stop cap.
+ * A PPS current request is an allowance, not measured input current.
  */
 static int sm5440_set_ibus_limit(struct sm5440_direct *sm, int ma)
 {
- /* Preserve the first bring-up hardware cap; omit Fedora's +300mA margin. */
 	if (ma < 1000 || ma > SM5440_MAX_PPS_MA)
 		return -ERANGE;
-	return i2c_smbus_write_byte_data(sm->client, SM5440_REG_IBUSCNTL, ma / 50);
+	return i2c_smbus_write_byte_data(sm->client, SM5440_REG_IBUSCNTL,
+				       min(ma, SM5440_PROGRAM_IBUS_MA) / 50);
 }
 
 /* Use TCPM's existing bounded APDO validation and source-bound lease. */
@@ -783,7 +786,7 @@ static int sm5440_once_settings(struct sm5440_direct *sm)
 		{ SM5440_REG_VBUSCNTL, 0x07 },
 		{ SM5440_REG_VBATCNTL, ((SM5440_VBATREG_MV - 3800) * 10) / 125 },
 		{ SM5440_REG_VOUTCNTL, 0x3f },
-		{ SM5440_REG_IBUSCNTL, SM5440_MAX_PPS_MA / 50 },
+		{ SM5440_REG_IBUSCNTL, SM5440_PROGRAM_IBUS_MA / 50 },
 		{ SM5440_REG_PRTNCNTL, 0xfe },
 		{ SM5440_REG_THEMCNTL1, 0x0c },
 		{ SM5440_REG_ADCCNTL1, SM5440_ADCCNTL1_AVG_32 |
@@ -817,8 +820,11 @@ static int sm5440_once_measure(struct sm5440_direct *sm, bool running)
 	if (ret)
 		return ret;
 	if (pack.capacity < 20 || pack.current_ua > 3600000 ||
-	    pack.voltage_uv >= 4400000 || pack.pack_decic < 200)
+	    pack.voltage_uv >= 4400000 || pack.pack_decic < 200) {
+		dev_err(sm->dev, "one-shot pack range rejected: soc=%d vbat=%duV ibat=%duA temp=%d\n",
+			pack.capacity, pack.voltage_uv, pack.current_ua, pack.pack_decic);
 		return -ERANGE;
+	}
 	mode = i2c_smbus_read_byte_data(sm->client, SM5440_REG_CNTL5);
 	vbus = sm5440_adc_vbus_mv(sm);
 	ibus_raw = sm5440_read_adc_pair(sm, SM5440_REG_ADC_IBUS1);
@@ -842,8 +848,14 @@ static int sm5440_once_measure(struct sm5440_direct *sm, bool running)
 	    vbus > SM5440_MAX_PPS_MV + 300 ||
 	    ibus_ua > SM5440_MAX_PPS_MA * 1000U || (!running && ibus_raw) ||
 	    vbat_uv < 3500000U || vbat_uv >= 4400000U ||
-	    abs((int)vbat_uv - pack.voltage_uv) > 200000 || die >= 850)
+	    abs((int)vbat_uv - pack.voltage_uv) > 200000 || die >= 850) {
+		dev_err(sm->dev, "one-shot range rejected: running=%u mode=0x%x vbus=%dmV target=%dmV ibus=%uuA cap=%uuA vbat=%uuV pack=%duV/%duA temp=%d die=%d status=%02x/%02x/%02x/%02x\n",
+			running, mode, vbus, sm->target_mv, ibus_ua,
+			SM5440_MAX_PPS_MA * 1000U, vbat_uv, pack.voltage_uv,
+			pack.current_ua, pack.pack_decic, die,
+			status[0], status[1], status[2], status[3]);
 		return -ERANGE;
+	}
 	if (running && ibus_ua && pack.current_ua > 0)
 		sm->direct_positive_samples++;
 	dev_dbg(sm->dev, "one-shot sample: on=%u vbus=%dmV ibus=%uuA vbat=%uuV pack=%duV/%duA temp=%d die=%d\n",
@@ -933,7 +945,7 @@ static int sm5440_start(struct sm5440_direct *sm)
 	dev_info(sm->dev,
 		 "direct charge started: PPS %d mV/%d mA, ibus limit %d mA\n",
 		 target_mv, target_ma,
-		 target_ma);
+		 min(target_ma, SM5440_PROGRAM_IBUS_MA));
 	return 0;
 
 restore:

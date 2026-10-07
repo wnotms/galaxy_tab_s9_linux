@@ -27,6 +27,7 @@ class FedoraPortTests(unittest.TestCase):
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <errno.h>
 typedef uint8_t u8; typedef uint32_t u32; typedef uint64_t u64;
 #define BIT(n) (1U<<(n))
@@ -80,7 +81,14 @@ static unsigned long scheduled_delay;
 static int fixed_sampling, fixed_sample_count, fixed_pattern, pps_offset, pps_drift, suspend_wait;
 static u64 fixed_return_started;
 static int settings_drift, refresh_wait, failure_on_sleep;
-static void log_stub(struct device *d,const char *fmt,...) {(void)d;(void)fmt;}
+static char range_log_buf[1024];
+static void log_stub(struct device *d,const char *fmt,...) {
+ (void)d;
+ if(strstr(fmt,"range rejected:")) {
+  va_list args;va_start(args,fmt);
+  vsnprintf(range_log_buf,sizeof(range_log_buf),fmt,args);va_end(args);
+ }
+}
 #define dev_info log_stub
 #define dev_info_ratelimited log_stub
 #define dev_dbg log_stub
@@ -199,7 +207,7 @@ void reset(void) {
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
  clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
  pps_return_check=direct_charge_once=false;pps_offset=pps_drift=suspend_wait=0;
- settings_drift=refresh_wait=failure_on_sleep=0;
+ settings_drift=refresh_wait=failure_on_sleep=0;range_log_buf[0]=0;
  sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
  fixed_snapshot_calls=owned_snapshot_calls=fail_owned_at=mutate_pack=fixed_adc_offset=0;
@@ -211,6 +219,10 @@ int modes_valid(void) {return sm5440_modes_valid();}
 int start(void) {if(!sm5440_eligible(&sm))return -EPERM;return sm5440_start(&sm);}
 int refresh(void) {return sm5440_renegotiate_pps(&sm);}
 int cleanup(void) {return sm5440_restore_switching(&sm);}
+int set_limit(int ma) {return sm5440_set_ibus_limit(&sm,ma);}
+int settings(void) {return sm5440_once_settings(&sm);}
+int measure(void) {return sm5440_once_measure(&sm,true);}
+const char *range_log(void) {return range_log_buf;}
 void prepare_fixed_return(void) {sm.source=source;sm.lease=owned_lease=7;}
 void work(void) {sm5440_work(&sm.work.work);}
 int pm(int n) {return sm5440_pm_notify(&sm.pm_nb,n,0);}
@@ -234,7 +246,8 @@ void input(int key,int value) {
  case 30:pack.current_ua=value;break;case 31:raw13(SM5440_REG_ADC_VBAT1,value);break;
  case 32:regs[SM5440_REG_ADC_DIETEMP]=value;break;case 33:refresh_wait=value;break;
  case 34:source.online=value;break;case 35:failure_on_sleep=value;break;
- case 36:regs[SM5440_REG_STATUS3]=value;break;case 37:source_error=value;break;}
+ case 36:regs[SM5440_REG_STATUS3]=value;break;case 37:source_error=value;break;
+ case 38:regs[SM5440_REG_IBUSCNTL]=value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -260,6 +273,7 @@ int value(int key) {
         if compiled.returncode:
             raise AssertionError(compiled.stderr)
         cls.lib = ctypes.CDLL(str(so))
+        cls.lib.range_log.restype = ctypes.c_char_p
 
     def setUp(self):
         self.lib.reset()
@@ -292,7 +306,7 @@ int value(int key) {
     def test_once_starts_and_finishes_without_restart(self):
         self.once(); self.lib.work()
         self.assertEqual([self.v(k) for k in (0, 1, 10, 14, 16, 23)],
-                         [1, 4, 36, 1800, 100, 0])
+                         [1, 4, 34, 1800, 100, 0])
         self.assertLessEqual(self.v(25), 30000)
         for _ in range(400):
             if self.v(23):
@@ -348,6 +362,47 @@ int value(int key) {
         self.assertEqual([self.v(k) for k in (0,1,2,7,23)], [0,0,0,1,1])
         self.assertEqual(self.v(4),requests)
         ons=self.v(9); self.tick(4000); self.assertEqual(self.v(9),ons)
+
+    def test_hardware_programming_margin_is_independent_of_pps_and_stop_cap(self):
+        for requested, encoded in ((1000, 20), (1500, 30), (1700, 34), (1800, 34)):
+            with self.subTest(requested=requested):
+                self.assertEqual(self.lib.set_limit(requested), 0)
+                self.assertEqual(self.v(10), encoded)
+        for requested in (999, 1801):
+            calls = self.v(8)
+            self.assertEqual(self.lib.set_limit(requested), -34)
+            self.assertEqual(self.v(8), calls)
+        self.once(); self.lib.work()
+        self.assertEqual((self.v(10), self.v(14)), (34, 1800))
+        self.assertEqual(self.lib.settings(), 0)
+        # Old Test342 setting must fail readback rather than pass silently.
+        self.lib.input(38, 36)
+        self.assertEqual(self.lib.settings(), -5)
+
+    def test_once_unchanged_raw_current_boundary_and_test342_sample(self):
+        self.once(); self.lib.work()
+        for raw in (2720, 2879, 2880):  # 1.7A, just below and exactly 1.8A
+            self.lib.input(14, raw)
+            self.assertEqual(self.lib.measure(), 0)
+        for raw in (2881, 2950):  # +625uA and actual rejected Test342 sample
+            self.lib.input(14, raw)
+            self.assertEqual(self.lib.measure(), -34)
+            log = self.lib.range_log().decode()
+            self.assertIn(f'ibus={raw * 625}uA cap=1800000uA', log)
+            self.assertIn('running=1 mode=0x4', log)
+            self.assertIn('status=', log)
+        self.tick()
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 7, 23)], [0, 0, 0, 1, 1])
+        requests, ons = self.v(4), self.v(9)
+        self.tick(4000)
+        self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+
+    def test_once_terminal_pack_values_are_logged_without_new_measurements(self):
+        self.once(); self.lib.work()
+        self.lib.input(30, 3600001)
+        self.assertEqual(self.lib.measure(), -34)
+        self.assertIn('one-shot pack range rejected:', self.lib.range_log().decode())
+        self.assertIn('ibat=3600001uA', self.lib.range_log().decode())
 
     def test_once_fault_sensor_generation_and_delivery_gap_stop(self):
         for key,val in [(11,2),(11,128),(11,64),(11,8),(12,0),
@@ -504,7 +559,7 @@ int value(int key) {
 
     def test_actual_entry_and_transactional_fixed_return(self):
         self.assertEqual(self.lib.start(), 0)
-        self.assertEqual([self.v(n) for n in (0, 1, 2, 10, 14)], [1, 4, 7, 36, 1800])
+        self.assertEqual([self.v(n) for n in (0, 1, 2, 10, 14)], [1, 4, 7, 34, 1800])
         self.assertTrue(8200 <= self.v(13) <= 10500)
         self.assertEqual(self.lib.cleanup(), 0)
         self.assertEqual([self.v(n) for n in (0, 1, 2, 3, 6, 7)], [0, 0, 0, 1, 0, 0])

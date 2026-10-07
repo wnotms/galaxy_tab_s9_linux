@@ -1,0 +1,12 @@
+{
+  "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c": {
+    "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+    "fact": "IBUSCNTL encodes 50mA per step; vendor/Fedora use positive margin, deliberately not imported"
+  },
+  "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c": {
+    "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+    "fact": "IBUSCNTL encodes 50mA per step; vendor/Fedora use positive margin, deliberately not imported"
+  },
+  "fedora_reference_url": "https://raw.githubusercontent.com/nacht20-de/gts9wifi-fedora-linux/ab123e7d1dbc0cbcd35661f9761197e977b15aa9/kernel/files/sm5440_direct.c",
+  "programming_1700ma": "BRINGUP_LIMIT hypothesis; no claimed vendor tolerance/calibration guarantee"
+}
