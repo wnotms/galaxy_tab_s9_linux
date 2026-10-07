@@ -1,0 +1,5 @@
+# Test344 — pre-execution connection pending
+
+Candidate registered/qualified/pushed; no Windows staging, preflight, installation, reboot, PPS request or pump activation has occurred. Exact331 was last confirmed dc8442f1 with owner-unplugged natural discharge80%28.7C. Subsequent read-only SSH to10.175.236.14 timed out; a bounded two-pass discovery on the enrolled private /24 found no matching machine/config/notes identity using the existing immutable trust key. Raw command errors and discovery events retained.
+
+Latest boot ID/battery/USB/CPU state is unknown; timeout is not proof of CPU stall, device power-off, reboot or a new-candidate regression. Do not count this pre-execution transport condition as a physical Test344 result. Owner was asked for Debian display/network/currentIP and any manual reboot, or PC reconnect. Await fresh transport/identity/boot attribution before staging/mutation, and retain75% preparation threshold. Source/build10guardian/68Cqualification stays valid; no repeated build/fullsuite/Actions. Full port NOT_READY.

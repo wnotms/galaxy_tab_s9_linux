@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 PREEXECUTION_CONNECTIVITY_PENDING, not a physical result.
+Candidate qualified/registered/pushed; no Windowsstage/preflight/install/reboot/
+PPS/pump. Lastconfirmed331dc8442f1 naturallydischarging80%28.7C; laterreadonly
+SSH10.175.236.14 timedout, boundedtwo-pass enrolled/24 scan no trustedendpoint.
+Latestboot/pack/CPU stateunknown; do not call CPUstall or newcandidatefailure.
+Ownerquestionpending Debian/network/IP/manualreboot or PCreconnect; frozen
+hosttrust retained, no blindretry/mutation. Keep75%preparation gate. Source/
+build/68C+10guardian qualification remains; results-onlytests executed:false.
+See344 PREEXECUTION_STATUS/wireless-readonly-01/status+rawdiscovery.
+
 2026-10-07 Test344 retentioncleanup: expired334 two Windowsduplicates192MiB
 and332canonical Image/defaultOFF/armedboot removed after last334consumerexpiry;
 5 exacthashed targets,405.11MiB total. No335..344consumer;

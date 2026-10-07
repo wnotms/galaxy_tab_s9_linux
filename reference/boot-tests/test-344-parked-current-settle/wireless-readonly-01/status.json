@@ -1,0 +1,21 @@
+{
+  "timestamp_utc": "2026-10-07T12:01:20.699133+00:00",
+  "verdict": "PREEXECUTION_CONNECTIVITY_PENDING",
+  "candidate_deployed": false,
+  "physical_test_started": false,
+  "current_boot_confirmed": false,
+  "last_confirmed_baseline": "Test331 dc8442f1; natural discharge80%/28.7C/USBoffline/directN at11:49UTC",
+  "last_IP": "10.175.236.14",
+  "SSH_read_error": "Connection timed out",
+  "discovery": {
+    "verdict": "ENDPOINT_NOT_FOUND",
+    "error": "TimeoutError('no enrolled endpoint in bounded two-pass discovery')"
+  },
+  "tcp_open_addresses": [],
+  "device_writes": false,
+  "tests": {
+    "executed": false,
+    "reason": "read-only evidence/documentation only"
+  },
+  "pending": "Owner Debian/network/IP/reboot confirmation or PC reconnect; no staging/flash/activation"
+}
