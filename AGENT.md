@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test340 registered/host-qualified confirmed-source activation. Reuse
+exact339 Image/notes/config/DT/181/armedboot; no kernel/config/DTS/USB/adbd/rootfs
+change or build.33 affected guard/cleanup/activation/adapter/module-slot/script
+syntax tests PASS/no skip. Initial healthyPC queue is canceled/drained before
+handoff, fulljournal forbids any prior entry/STOP. KnownOFF/unbound guardian then
+waits<=900s; fresh boot/token + actualownerC1confirmation and fixed9/pack gate
+permit one exclusive bind. New readiness/guardian budget starts after handshake;
+1.8A/30s/fault/thermal/no-retry unchanged. No stopped339replay. Current331boot
+953185ab,67%4.110V33.1C/allfive181/OFF/ADB/WiFi198/deviceNCM/noCode43 PASS.
+Registration/push before new mutation; fullportNOT_READY. See340 README/offline-
+summary/OFFLINE_RESULTS. No fullsuite/Actions; protected339inputs unchanged.
+
 2026-10-07 Test339 CLOSED STOP_PREENTRY_WAIT_TIMEOUT_RESTORED331. PC5 throughout
 432 samples; readiness deadline expired at source301.280435s primary-110/cleanup0/
 lease0; no entry/PPS/pumpON. Guardian drained/unbound and proved preentry ordinary

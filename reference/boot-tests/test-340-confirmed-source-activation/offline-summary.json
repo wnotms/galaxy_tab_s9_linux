@@ -1,0 +1,29 @@
+{
+  "test": "Test340",
+  "verdict": "HOST_QUALIFIED_REUSE_EXACT339_KERNEL",
+  "tests": {
+    "executed": true,
+    "count": 33,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.407,
+    "suites": [
+      "test_sm5440_confirmed_activation.py",
+      "test_sm5440_confirmed_deployment.py"
+    ],
+    "full_executed": false
+  },
+  "syntax": {
+    "python": true,
+    "shell": true
+  },
+  "build": {
+    "executed": false,
+    "reuse": "Test339 qualified source81583618 and frozen PACKAGE hashes"
+  },
+  "kernel_changes": false,
+  "config_diff": [],
+  "dtb_diff": [],
+  "hardware_executed": false,
+  "protected339_inputs_verified": true
+}
