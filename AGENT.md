@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test337 candidate abf8901d uniquely attributed, WiFi10.91.255.27.
+Native singlePPSOFF8940mV/1800mA→ADC9267→fixed9OFFproof/lease0 PASS;
+ordinary reprogram log 0.046988s after native terminal. Healthy ordinary fixed9
+30.925s/30samples PASS, input1.5A, endpoint61%4.086V25.3C/+2.067A,
+packnormal/SinkDevice/pumpOFF. Enum8warnings0/fulljournal/no newfault/unit gate.
+Unplug15s and unconditional exact331 rollback still pending; installed337,
+rollback_required=true. No source/build/test rerun; no pump/current advance.
+See337charge/RESULTS.md/native-recovery-timeline.json. FullportNOT_READY.
+
+
 2026-10-07 Test337 correction installed after owner scope/fresh331 gate:
 candidateboot39bf8476/notes39a825d1/paired181, allfive readback/BCBclear/root
 unmount PASS; original331181 preserved, exact331 rollback staged. CurrentlyTWRP,

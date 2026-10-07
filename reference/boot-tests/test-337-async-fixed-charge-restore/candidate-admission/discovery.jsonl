@@ -1,0 +1,72 @@
+{"kind": "start", "network": "10.91.255.0/24", "previous_ip": "10.91.255.52", "concurrency": 16, "tcp_seconds": 3, "ssh_seconds": 8, "total_seconds": 90}
+{"kind": "preferred", "address": "10.91.255.52", "pass_number": 1}
+{"kind": "ssh-start", "address": "10.91.255.52", "argv": ["ssh", "-i", "/home/ms/.ssh/gts9_ed25519", "-o", "BatchMode=yes", "-o", "ConnectTimeout=3", "-o", "StrictHostKeyChecking=yes", "-o", "UserKnownHostsFile=/tmp/gts9-test323-known-hosts", "-o", "HostKeyAlias=gts9-test292", "root@10.91.255.52", "set -e; cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes"], "timeout_seconds": 8}
+{"kind": "ssh", "address": "10.91.255.52", "argv": ["ssh", "-i", "/home/ms/.ssh/gts9_ed25519", "-o", "BatchMode=yes", "-o", "ConnectTimeout=3", "-o", "StrictHostKeyChecking=yes", "-o", "UserKnownHostsFile=/tmp/gts9-test323-known-hosts", "-o", "HostKeyAlias=gts9-test292", "root@10.91.255.52", "set -e; cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes"], "returncode": 255, "stdout": "", "stderr": "ssh: connect to host 10.91.255.52 port 22: Connection timed out\r\n", "matched": false, "seconds": 3.0242289869997876}
+{"kind": "tcp-start", "address": "10.91.255.1", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.2", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.3", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.4", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.5", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.6", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.7", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.8", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.9", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.10", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.11", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.12", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.13", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.14", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.15", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-start", "address": "10.91.255.16", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.1", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.17", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.2", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.18", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.3", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.19", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.4", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.20", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.5", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.21", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.6", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.22", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.7", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.23", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.8", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.24", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.9", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.25", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.10", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.26", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.11", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.27", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.12", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.28", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.13", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.29", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.14", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.30", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.15", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.31", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp-or-ssh-timeout", "address": "10.91.255.16", "pass_number": 1}
+{"kind": "tcp-start", "address": "10.91.255.32", "port": 22, "pass_number": 1, "timeout_seconds": 3}
+{"kind": "tcp", "address": "10.91.255.27", "port": 22, "pass_number": 1, "opened": true, "seconds": 0.2722679139997126}
+{"kind": "ssh-start", "address": "10.91.255.27", "argv": ["ssh", "-i", "/home/ms/.ssh/gts9_ed25519", "-o", "BatchMode=yes", "-o", "ConnectTimeout=3", "-o", "StrictHostKeyChecking=yes", "-o", "UserKnownHostsFile=/tmp/gts9-test323-known-hosts", "-o", "HostKeyAlias=gts9-test292", "root@10.91.255.27", "set -e; cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes"], "timeout_seconds": 8}
+{"kind": "ssh", "address": "10.91.255.27", "argv": ["ssh", "-i", "/home/ms/.ssh/gts9_ed25519", "-o", "BatchMode=yes", "-o", "ConnectTimeout=3", "-o", "StrictHostKeyChecking=yes", "-o", "UserKnownHostsFile=/tmp/gts9-test323-known-hosts", "-o", "HostKeyAlias=gts9-test292", "root@10.91.255.27", "set -e; cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; zcat /proc/config.gz | sha256sum; sha256sum /sys/kernel/notes"], "returncode": 0, "stdout": "3c2a1b8f2d624db4b5ffdc836050fcf6\nabf8901d-246d-4b65-ab52-5f74b9379869\n51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a  -\n39a825d12b9c4beb6a2cd2d8d7b5a62f120c00c4bc3d6da02382345e23e113d2  /sys/kernel/notes\n", "stderr": "", "matched": true, "seconds": 1.0163672310000038}
+{"kind": "matched", "address": "10.91.255.27", "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6", "boot_id": "abf8901d246d4b65ab525f74b9379869", "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a", "notes_sha256": "39a825d12b9c4beb6a2cd2d8d7b5a62f120c00c4bc3d6da02382345e23e113d2", "seconds": 7.324428896999962}
+{"kind": "tcp-cancelled", "address": "10.91.255.17", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.18", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.19", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.20", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.21", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.22", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.23", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.24", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.25", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.26", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.28", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.29", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.30", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.31", "pass_number": 1}
+{"kind": "tcp-cancelled", "address": "10.91.255.32", "pass_number": 1}
+{"kind": "drained", "seconds": 7.325072539000303}

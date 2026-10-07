@@ -1,0 +1,53 @@
+{
+  "events": [
+    {
+      "journal_timestamp_us": 1606949,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 2, 1800 mA input, 2100 mA battery",
+      "source_timestamp_us": 1399362
+    },
+    {
+      "journal_timestamp_us": 1727300,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 2, 500 mA input, 2100 mA battery",
+      "source_timestamp_us": 1729760
+    },
+    {
+      "journal_timestamp_us": 1861821,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery",
+      "source_timestamp_us": 1865224
+    },
+    {
+      "journal_timestamp_us": 4258786,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery",
+      "source_timestamp_us": 2194669
+    },
+    {
+      "journal_timestamp_us": 10712481,
+      "message": "sm5440-fedora 0-0063: PPS OFF negotiated: source=9 lease=1 target=8940mV/1800mA pump_ON=0",
+      "source_timestamp_us": 10715981
+    },
+    {
+      "journal_timestamp_us": 10892497,
+      "message": "sm5440-fedora 0-0063: PPS OFF sampled: target=8940mV/1800mA observed=9267mV range=9267..9267mV samples=3 settled=151ms raw_ibus=0 pump_ON=0",
+      "source_timestamp_us": 10894118
+    },
+    {
+      "journal_timestamp_us": 11200476,
+      "message": "sm5440-fedora 0-0063: fixed return verified: source=9 lease=1 vbus=9267000uV samples=3 range=9267..9267mV settled=116ms raw_ibus=0 pump_off=1",
+      "source_timestamp_us": 11201740
+    },
+    {
+      "journal_timestamp_us": 11201642,
+      "message": "sm5440-fedora 0-0063: PPS OFF return complete: target=8940mV/1800mA lease=0 fixed_return=1 pump_ON=0",
+      "source_timestamp_us": 11201766
+    },
+    {
+      "journal_timestamp_us": 11248068,
+      "message": "sm5714-battery 2-0049: ordinary charging: USB type 6, 1500 mA input, 2100 mA battery",
+      "source_timestamp_us": 11248754
+    }
+  ],
+  "kernel_journal_rows": 1113,
+  "limitation": "Internal ADC is not independent VBUS/power calibration; no pump ON/high-current acceptance",
+  "ordinary_restore_after_native_terminal_seconds": 0.046988,
+  "unsupported_usb_enum_warning_count": 0
+}
