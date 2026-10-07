@@ -98,6 +98,25 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test338 PREPARED/NOT_EXECUTED: bounded Fedora-source1.8A pump
+candidate cf02c822 qualified. Default-false direct_charge_once exclusive mode:
+one<=30s software budget/100ms monitoring/500ms gap stop, raw625uA current,
+traced init readback, pre/postON pack/ADC, firstfault terminal/no restart/resume,
+parked4s refresh refuses deadline rearm.284 affectedC/host +44 guardian/window/
+discovery/module-slot tests PASS/no skip; build81.939s, W1+sparse12.793s/no warning.
+Exact331config51/DT233a/release/181 runtime/protected108+formal16 preserved.
+Armedbootf7c5e153/notes03846e81 only once opt-in; no deployment/Windowsstage/
+reboot/devicePPS/pumpON. Current strictWiFi166 same331boot6dc80750/config51/notes03/
+normalcmdline/DCCabsent,58%3.883V24.4C/discharging; nativeADB empty, no complete
+new allfive/181/OFF preflight. This is preparation, not a338 physical failure.
+Explicit new pumpON scope + fresh rescue/identity/pack preflight required; no
+scope copied from337, no current increase/automaticactivation. Software monitor
+is not hard-realtime cutoff; vendor needs SW OCP, actual protection/current/
+calibration remain untested. FullportNOT_READY. Registered <=30s attempt +30s
+ordinary return/15sunplug/unconditionalexact331 restore. Latest physical337
+CLOSED PASS and retention328–337 remain authoritative;338 is current prepared
+consumer. See sm5440-bounded-directRESULTS and test338README/PACKAGE/INPUTS.
+
 2026-10-07 Test337 CLOSED PASS_RESTORED_ACCEPTED331 within registered pump-OFF
 scope. Native8940mV/1800mA→ADC9267/fixed9proof/lease0 PASS; verified ordinary
 reprogram0.046988s later, fixed9 charging30.925s/30samples PASS, unplug15.641s
