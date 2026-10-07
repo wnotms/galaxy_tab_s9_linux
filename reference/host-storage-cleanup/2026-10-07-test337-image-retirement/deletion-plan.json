@@ -1,0 +1,55 @@
+{
+  "device_operation": false,
+  "expired_test": 327,
+  "preserved_current_consumers": [
+    {
+      "current_package_consumers": [
+        [
+          "reference/boot-tests/test-328-fedora-pps-short/PACKAGE.json",
+          "Image.gz"
+        ],
+        [
+          "reference/boot-tests/test-330-fedora-pps-short/PACKAGE.json",
+          "Image.gz"
+        ]
+      ],
+      "path": "out/kernel-x710-fedora/Image.gz",
+      "reason": "Same exact image still attributed to in-window Test328/Test330, not an expired327-only backup",
+      "sha256": "f4eddc132e844699b367296bd7ed364e9b88f7f48067aaacf9f7162c54ac10a6"
+    },
+    {
+      "current_package_consumers": [
+        [
+          "reference/boot-tests/test-328-fedora-pps-short/PACKAGE.json",
+          "rollback-boot.img"
+        ],
+        [
+          "reference/boot-tests/test-330-fedora-pps-short/PACKAGE.json",
+          "rollback-boot.img"
+        ]
+      ],
+      "path": "out/boot-bundle-x710-fedora/boot.img",
+      "reason": "Same exact image still attributed to in-window Test328/Test330, not an expired327-only backup",
+      "sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec"
+    }
+  ],
+  "remove": [
+    {
+      "bytes": 100663296,
+      "canonical_provider": "out/boot-bundle-x710-fedora/boot.img",
+      "canonical_provider_sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec",
+      "current_package_consumers": [],
+      "path": "/mnt/d/android/gts9-active/gts9-test327/candidate-boot.img",
+      "sha256": "f2659b3150960e20d9c19f387a8b3dac268d7893e52ae867674bcc8cd4b52eec"
+    },
+    {
+      "bytes": 100663296,
+      "canonical_provider": "out/boot-bundle-x710-pc-ordinary/boot.img",
+      "canonical_provider_sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0",
+      "current_package_consumers": [],
+      "path": "/mnt/d/android/gts9-active/gts9-test327/rollback-accepted323-boot.img",
+      "sha256": "f8f7d0d9ef09524add9d14a1bb7e10d03b8e2978cc98e015a731f2e025a90ec0"
+    }
+  ],
+  "window": "Test328\u2013Test337"
+}
