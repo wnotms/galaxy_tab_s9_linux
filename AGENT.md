@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test337（已通过并恢复 Test331），窗口为 **Test328–Test337**；没有生成镜像的轮次仍占一轮。
+  编号为 Test338（启动前等待逻辑 STOP，已恢复 Test331），窗口为 **Test329–Test338**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,23 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test338 CLOSED STOP_PREENTRY_RESTORED331: owner-authorized bounded1.8A
+one<=30s pump candidate installed/admitted onPC, guardian armed. Normal PCdetach
+returned-ENODATA at73.54s; one-shot wait only handles EAGAIN/ENODEV, stopped
+primary=-61 cleanup=0 lease0 at73.954s before any PPS/pumpON.62 samples allOFF.
+Guardian unbound but unconditionalfixed9 predicate onONLINE0 masked outererror;
+primary preserved in raw events/full1133rowjournal. No charging/retry/currentadvance
+acceptance. Exact331 allfive/original181 restored, normalboot a8c809d1 uniquely
+attributed, config51/notes03/DCCabsent/OFF/ADB/strictWiFi10.175.236.250/deviceNCM/
+WindowsnoCode43/fulljournal/no newfault/unit PASS;58%4.022V29.3C/+0.958A onPC.
+rollback_required=false.7 adapter+9 guardian testsPASS, exactbuild/config/DT reused,
+no rebuild/fullsuite/Actions/source policychanges. Next separate repair: pre-entry
+ENODATA boundedwait only, preserve actual/active faults; guardianprimary/cleanup
+separation and OFF/offline pre-entry cleanup, then re-register (no338replay).
+FullportNOT_READY. See338PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256.
+Retention329–338; expired328 Windowsimage duplicates retire separately, canonical
+Fedora images still consumed by330 remain.
 
 2026-10-07 Test338 PREPARED/NOT_EXECUTED: bounded Fedora-source1.8A pump
 candidate cf02c822 qualified. Default-false direct_charge_once exclusive mode:

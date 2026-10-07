@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.72",
+    "python3 -c 'import time; from pathlib import Path; p=Path('\"'\"'/tmp/gts9-test338-monitor/evidence/finished'\"'\"'); stop=time.monotonic()+285\nwhile not p.exists() and time.monotonic()<stop: time.sleep(1)\nassert p.exists(), \"local guardian did not finish\"\nprint(Path('\"'\"'/tmp/gts9-test338-monitor/evidence/summary.json'\"'\"').read_text())'"
+  ],
+  "ended_utc": "2026-10-07T09:42:31.159578+00:00",
+  "started_utc": "2026-10-07T09:42:30.783321+00:00",
+  "status": 0
+}

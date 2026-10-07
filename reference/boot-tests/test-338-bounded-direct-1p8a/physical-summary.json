@@ -1,0 +1,141 @@
+{
+  "PPS_request_observed": false,
+  "actual_pump_window_seconds": 0,
+  "all_observed_pump_modes": [
+    0
+  ],
+  "build": {
+    "executed": false,
+    "reused": "313c28be qualified artifacts; immutable INPUTS/PACKAGE unchanged"
+  },
+  "candidate_boot_id": "49dbe396f171406c8b63a3251cda365c",
+  "charge_and_discharge_windows": {
+    "executed": false,
+    "reason": "first non-clean pre-entry; no native pump attempt completed"
+  },
+  "failed_boot_full_journal_rows": 1133,
+  "final_acceptance": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 958000,
+      "input_limit_ua": 1800000,
+      "soc": 58,
+      "temp_decic": 293,
+      "voltage_uv": 4022000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "a8c809d12e914e5492d745adfe8b7398",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.250",
+      "wifi_authenticated": true
+    }
+  },
+  "full_port_ready": false,
+  "guardian_samples": 62,
+  "guardian_secondary_error": "fixed9 not restored: cleanup checked ONLINE0 before charger contract; not proof of failed PPS fallback",
+  "kernel_classification": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 45,
+    "last_source_timestamp": "151408331",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.159397,
+          "events": [],
+          "setup_source_seconds": 4.240813
+        },
+        {
+          "completion_source_seconds": 6.748023,
+          "events": [
+            {
+              "completion_source_seconds": 6.748023,
+              "event_source_seconds": 5.955253,
+              "recovery_seconds": 0.79277,
+              "row": 1048
+            }
+          ],
+          "setup_source_seconds": 5.872598
+        },
+        {
+          "completion_source_seconds": 10.451986,
+          "events": [
+            {
+              "completion_source_seconds": 10.451986,
+              "event_source_seconds": 9.642704,
+              "recovery_seconds": 0.809282,
+              "row": 1075
+            }
+          ],
+          "setup_source_seconds": 9.564861
+        }
+      ],
+      "event_count": 2,
+      "event_rows": [
+        1048,
+        1075
+      ],
+      "setup_count": 3,
+      "state": "accepted"
+    },
+    "rows": 1133,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": [
+      {
+        "message": "sm5440-fedora 0-0063: one-shot pump stopped: primary=-61 cleanup=0 lease=0 no_restart=1",
+        "priority": 3,
+        "row": 1117
+      }
+    ]
+  },
+  "kernel_cleanup_error": 0,
+  "kernel_stop_source_us": 73954428,
+  "lease_at_stop": 0,
+  "no_retry": true,
+  "primary_error": -61,
+  "primary_error_name": "ENODATA during normal PC detach before activation",
+  "pump_ON_observed": false,
+  "registered_input_cap_ma": 1800,
+  "registered_pump_window_max_ms": 30000,
+  "source_revision": "cf02c8223fd0f6829be854f4663854d0f8b42475",
+  "test": "Test338",
+  "tests": {
+    "all_passed": true,
+    "existing_guardian": 9,
+    "full_executed": false,
+    "new_adapter": 7
+  },
+  "unconditional_rollback": {
+    "final": {
+      "PPS": false,
+      "battery": {
+        "current_ua": 958000,
+        "input_limit_ua": 1800000,
+        "soc": 58,
+        "temp_decic": 293,
+        "voltage_uv": 4022000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "a8c809d12e914e5492d745adfe8b7398",
+      "device_NCM": true,
+      "pump_ON": false,
+      "transport": {
+        "rescue": "WiFi",
+        "wifi": "10.175.236.250",
+        "wifi_authenticated": true
+      }
+    },
+    "phase": "accepted331-restored",
+    "rollback_required": false
+  },
+  "verdict": "STOP_PREENTRY_NORMAL_DETACH_MISCLASSIFIED_RESTORED331"
+}

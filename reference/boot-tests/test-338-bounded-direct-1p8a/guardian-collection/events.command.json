@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.72",
+    "cat /tmp/gts9-test338-monitor/evidence/events.jsonl"
+  ],
+  "ended_utc": "2026-10-07T09:42:31.994932+00:00",
+  "started_utc": "2026-10-07T09:42:31.159913+00:00",
+  "status": 0
+}

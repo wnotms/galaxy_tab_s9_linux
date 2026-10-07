@@ -1,0 +1,15 @@
+# Test338 — STOP before entry, exact Test331 restored
+
+Owner authorized one input-cap1.8A / software<=30s attempt. Scope and fresh preflight were pushed before recovery/paired install. A manually confirmed restart during interrupted preparation was recorded separately; frozen registration and prior results remain unchanged.
+
+Candidate boot `49dbe396f171406c8b63a3251cda365c` was uniquely attributed, admitted on PC fixed5V with matching candidate notes/config/allfive/181, healthy58% pack,28.7C, sink/device and ADB/NCM/strictWiFi/noCode43. Guardian armed at boot37s before the owner changed PC to C1.
+
+At source73.542501s normal detach removed the source budget. `sm5440_fixed_check_ready()` propagated `sm5714_pd_read_snapshot()` -ENODATA; the one-shot pre-entry wait recognizes only -EAGAIN/-ENODEV, so source73.954428s emitted `one-shot pump stopped: primary=-61 cleanup=0 lease=0 no_restart=1`. This consumed the sole attempt **before any PPS request or pump start**. No init/entry/refresh/return transaction was observed. All62 guardian samples showed pumpmode0; ADC disabled values are stale and are not physical voltage/power measurements.
+
+The guardian correctly stopped/unbound, but its unconditional fixed9 cleanup predicate then inspected ONLINE0 during the unplug transition and overwrote the outer error with `fixed9 not restored`. Primary error remains in events/native rawjournal. This is a cleanup-classification error; it does **not** prove that a PPS-to-fixed9 fallback failed. A later sameboot read independently verified unbound pumpOFF and healthy pack. Ordinary30s/unplug15s phases were skipped by stop-on-first-non-clean. No replay, current increase or protection-limit test.
+
+Owner reconnected PC. Exact accepted331 boot and original181 module files restored; allfive readbacks match, BCB cleared/root unmounted, one normalboot `a8c809d12e914e5492d745adfe8b7398` uniquely attributed. Final config51ba/notes03c9/normalcmdline/DCCabsent/physicalOFF/181/fulljournal/failedunits/ADB/strictWiFi10.175.236.250/deviceNCM/WindowswithoutCode43 passed. Endpoint58%,4.022V,29.3C,+0.958A on PC; no new classified CPU/kernel fault in final baseline. rollback_required=false. Failed candidate's complete1133row kerneljournal retained; its terminal driver error is not reclassified as clean.
+
+7 new admission/scope tests and9 affected guardian/native/module-slot tests passed. Existing exact build/config/DT qualification reused; rebuild/full host regression/Actions executed:false. Kernel/DTS/config/rootfs/adbd/charging policy were not edited during this execution.
+
+Next repair must be separate: treat source -ENODATA as bounded waiting **only before acquiring a lease/starting PPS**, preserve real I2C/pack faults and active detach as terminal; guardian must preserve primary vs cleanup errors and accept verified OFF/offline cleanup before entry while still requiring physical fixed9 restoration after any PPS lease. Add actual-C PC5→detach/no-source→fixed9 and pre-entry cleanup mocks. Do not weaken active fault/thermal/current/30s/no-retry gates, rewrite338 result or auto-replay. No pump/higher-power acceptance; overall port NOT_READY.
