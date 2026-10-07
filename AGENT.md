@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test342 follow-up BUILT READY_OFFLINE_DEFAULT_OFF, no deployment.
+Source95159eec: SM5440 programmed1.7A, PPS/raw stop1.8A unchanged; terminal raw
+range logs, no policy expansion. Final58 actualC tests PASS/0.487s;35 unchanged
+guardian tests reused from initial93PASS. Incremental Image/DT/181 buildPASS
+102.097s, changed-objectW1+sparsePASS/15.453s/no warnings. Exact331 config/DT/
+release unchanged, protected108inputs/14formal artifacts intact. DefaultOFF boot
+abe828fc/notesb8d8d4a0 paired181; no armedflag/Windowsstage/flash/reboot/PPS/pumpON.
+Device stays3312fc3593e on naturaldischarge,76%/27.0C/-1.579A USBoffline/Good.
+Proposed343 plan only, not registered physicaltest; do not replay342 or relax
+raw1800000 ceiling. No fullsuite/Actions/new cache tree. FullportNOT_READY; actual
+current accuracy/regulation margin remains unvalidated. See reference/charging/
+test342-current-margin RESULTS/qualification/PACKAGE/SHA256/NEXT_TEST_PLAN.
+
 2026-10-07 Test342 follow-up offline current-margin implementation. Device stays
 accepted3312fc3593e on owner-requested natural discharge; strictWiFi packet77%/
 4.141V28.3C/-1.647A/USBoffline/directN. No flash/reboot/pump/PPS/devicewrite.

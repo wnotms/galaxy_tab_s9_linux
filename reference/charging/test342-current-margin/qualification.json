@@ -1,0 +1,134 @@
+{
+  "DTB_delta_from_test331": [],
+  "PPS_requested_cap_ma": 1800,
+  "Windows_staged": false,
+  "armed_cmdline": false,
+  "artifacts": {
+    "Image.gz": {
+      "bytes": 22137892,
+      "path": "out/kernel-x710-current-margin/Image.gz",
+      "sha256": "db05f64f4cdd81103bcfc9e667489ea8dda6efdbb9ce1f5394e168efc61b4184"
+    },
+    "boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-x710-current-margin-off/boot.img",
+      "sha256": "abe828fc050fb59fccdccb40d77d07d4897f67a06d4c7c1941d0b812c549a329"
+    },
+    "config": {
+      "bytes": 243277,
+      "path": "out/kernel-x710-current-margin/config",
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "bytes": 84,
+      "path": "out/kernel-x710-current-margin/kernel-notes.bin",
+      "sha256": "b8d8d4a000081d4118ff91ab58471f60ecf82e353bf971e7e7172055e2876576"
+    },
+    "kernel.release": {
+      "bytes": 25,
+      "path": "out/kernel-x710-current-margin/kernel.release",
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "modules-x710.tar.gz": {
+      "bytes": 47319635,
+      "path": "out/kernel-x710-current-margin/modules-x710.tar.gz",
+      "sha256": "58f66a0829cdc077fc1485c2f2ae9e3e531340543cb0dc7599bb1cc0fee79c48"
+    },
+    "rollback-boot.img": {
+      "bytes": 100663296,
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "bytes": 47318838,
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 176935,
+      "path": "out/kernel-x710-current-margin/sm8550-samsung-gts9wifi.dtb",
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    }
+  },
+  "build": {
+    "device_operations": [],
+    "environment": {
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-fedora",
+      "JOBS": "8",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-current-margin",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "USE_CCACHE": "1"
+    },
+    "returncode": 0,
+    "seconds": 102.0967922789996,
+    "started_utc": "2026-10-07T11:09:21.508000+00:00"
+  },
+  "config_delta_from_test331": {},
+  "current_limit_physical_verification": false,
+  "device_mutations": false,
+  "full_direct_charge_port": "NOT_READY",
+  "hardware_input_setpoint_ma": 1700,
+  "hardware_margin_accuracy_validated": false,
+  "modules": 181,
+  "raw_ADC_stop_ceiling_ua": 1800000,
+  "read_only_device_check": {
+    "boot_id": "2fc3593e-1fb1-4628-b978-b2469cfc73ae",
+    "current_ua": -1579000,
+    "direct_charge": false,
+    "direct_charge_once": "absent",
+    "health": "Good",
+    "readonly": true,
+    "soc": 76,
+    "temp_decic": 270,
+    "uptime": "776.86 6171.74",
+    "usb_online": false,
+    "voltage_uv": 4113000
+  },
+  "registered_physical_test": false,
+  "source_revision": "95159eec14a0f8ee1c75b470f615026b650b2316",
+  "static": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "drivers/power/supply/sm5440-fedora.o"
+    ],
+    "formal_artifacts_relinked": false,
+    "qualified_object_restored": true,
+    "qualified_object_sha256": {
+      "drivers/power/supply/sm5440-fedora.o": "e668eb9c5fab4c783c8f3ba656c2b88247ec063ce4b803c7170ea5d3c7175fcc"
+    },
+    "returncode": 0,
+    "seconds": 15.45299869000064,
+    "standard_flags_returncode": 0,
+    "warnings": []
+  },
+  "tests": {
+    "executed": true,
+    "final_changed_C_run": {
+      "count": 58,
+      "report": "host-tests.json",
+      "result": "PASS",
+      "seconds": 0.48705922099998133
+    },
+    "full_executed": false,
+    "initial_combined_run": {
+      "command": "PYTHONPATH=tests python3 -m unittest test_sm5440_fedora test_sm5440_source_capability_observer test_sm5440_bounded_direct -q",
+      "count": 93,
+      "result": "PASS",
+      "seconds": 1.526
+    },
+    "unchanged_guardian_tests_reused": 35,
+    "unique_affected_tests": 93
+  },
+  "verdict": "READY_OFFLINE_DEFAULT_OFF"
+}
