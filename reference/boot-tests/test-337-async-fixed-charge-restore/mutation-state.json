@@ -1,7 +1,23 @@
 {
-  "allfive_verified": true,
-  "candidate_boot_id": "abf8901d246d4b65ab525f74b9379869",
-  "modules": 181,
-  "phase": "candidate-admitted",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 954000,
+      "input_limit_ua": 1800000,
+      "soc": 57,
+      "temp_decic": 281,
+      "voltage_uv": 3965000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "6dc80750ebdf41e7a4a898befdec7c63",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.91.255.166",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

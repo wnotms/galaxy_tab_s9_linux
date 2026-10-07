@@ -1,0 +1,233 @@
+{
+  "candidate_boot_attribution": "attributed",
+  "candidate_boot_id": "abf8901d246d4b65ab525f74b9379869",
+  "candidate_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "candidate_notes_sha256": "39a825d12b9c4beb6a2cd2d8d7b5a62f120c00c4bc3d6da02382345e23e113d2",
+  "charge": {
+    "endpoint": {
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "61",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "2067000",
+        "POWER_SUPPLY_CURRENT_NOW": "2067000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Charging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "253",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4086000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4086000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "3981000"
+      },
+      "boot": "abf8901d246d4b65ab525f74b9379869",
+      "boot_end": "abf8901d246d4b65ab525f74b9379869",
+      "config_data_written": false,
+      "direct": "N",
+      "fixed_check": "N",
+      "monotonic": 103.995392823,
+      "pack": {
+        "mode": "enabled",
+        "temp": "25300"
+      },
+      "pps_check": "Y",
+      "pump": 1,
+      "roles": [
+        "[sink]",
+        "[device]"
+      ],
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "1500000",
+        "POWER_SUPPLY_CURRENT_NOW": "1500000",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+        "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+      },
+      "uptime": 103.99,
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+      }
+    },
+    "observation_seconds": 30.925363165000007,
+    "sample_count": 30,
+    "verdict": "PASS"
+  },
+  "cleanup": "reference/host-storage-cleanup/2026-10-07-test337-image-retirement/summary.json",
+  "discharge": {
+    "endpoint": {
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "62",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "-735000",
+        "POWER_SUPPLY_CURRENT_NOW": "-628000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Discharging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "249",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4003000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4002000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "3994000"
+      },
+      "boot": "abf8901d246d4b65ab525f74b9379869",
+      "boot_end": "abf8901d246d4b65ab525f74b9379869",
+      "config_data_written": false,
+      "direct": "N",
+      "fixed_check": "N",
+      "monotonic": 330.672741695,
+      "pack": {
+        "mode": "enabled",
+        "temp": "24900"
+      },
+      "pps_check": "Y",
+      "pump": 1,
+      "roles": [
+        "[sink]",
+        "[device]"
+      ],
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "0",
+        "POWER_SUPPLY_CURRENT_NOW": "0",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "0",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "[C] PD PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "0",
+        "POWER_SUPPLY_VOLTAGE_MIN": "0",
+        "POWER_SUPPLY_VOLTAGE_NOW": "0"
+      },
+      "uptime": 330.67,
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "100000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "0",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "[Unknown] SDP DCP CDP PD PD_PPS"
+      }
+    },
+    "observation_seconds": 15.640535932000034,
+    "sample_count": 137,
+    "samples_include_pre_unplug_wait": true,
+    "verdict": "PASS"
+  },
+  "full_port_verdict": "NOT_READY",
+  "identity_final": {
+    "PPS": false,
+    "Windows_Code43": false,
+    "allfive_partitions_matched": true,
+    "authenticated_WiFi": true,
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "device_NCM": true,
+    "module_files": 181,
+    "native_ADB": true,
+    "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+    "pump_OFF": true
+  },
+  "kernel_fault_counts": {
+    "charge": {},
+    "discharge": {},
+    "final-acceptance": {}
+  },
+  "kernel_source_revision": "86f7b6787f4d807f488f39818ae08f2b08f6f0eb",
+  "limitations": [
+    "One bounded pump-OFF transaction; not active pump or high-current acceptance",
+    "Internal ADC is not independent VBUS or power calibration",
+    "30.925s ordinary/15.641s discharge do not prove long reliability",
+    "No automatic higher-current/pump-on progression; separate candidate/test required"
+  ],
+  "native": {
+    "fixed_vbus_uv": 9267000,
+    "lease": 1,
+    "lease_released": true,
+    "pps_observed_mv": 9267,
+    "pump_ON": false,
+    "source": 9,
+    "target_ma": 1800,
+    "target_mv": 8940,
+    "timestamps_us": [
+      10712481,
+      10892497,
+      11200476,
+      11201642
+    ]
+  },
+  "native_timestamp_basis": "native timestamps_us are original parser journal __MONOTONIC_TIMESTAMP; kernel-source timestamps retained separately in charge/native-recovery-timeline.json",
+  "ordinary_restore_after_native_terminal_seconds": 0.046988,
+  "physical_executed": true,
+  "rollback": {
+    "final": {
+      "PPS": false,
+      "battery": {
+        "current_ua": 954000,
+        "input_limit_ua": 1800000,
+        "soc": 57,
+        "temp_decic": 281,
+        "voltage_uv": 3965000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "6dc80750ebdf41e7a4a898befdec7c63",
+      "device_NCM": true,
+      "pump_ON": false,
+      "transport": {
+        "rescue": "WiFi",
+        "wifi": "10.91.255.166",
+        "wifi_authenticated": true
+      }
+    },
+    "phase": "accepted331-restored",
+    "rollback_required": false
+  },
+  "scope": "One corrected native pump-OFF PPS/fixed9 return, bounded ordinary charge and unplug, unconditional accepted331 restore",
+  "test": "Test337",
+  "tests": {
+    "executed": false,
+    "reason": "Physical results and evidence only; unchanged295 affected kernel/C and65 final host admission/window qualification reused, no build/fullrun/CI/Actions"
+  },
+  "unsupported_usb_enum_warning_count": 0,
+  "verdict": "PASS_RESTORED_ACCEPTED331"
+}

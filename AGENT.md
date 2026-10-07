@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test337（已安装，等待 TWRP→C1 System 启动），窗口为 **Test328–Test337**；没有生成镜像的轮次仍占一轮。
+  编号为 Test337（已通过并恢复 Test331），窗口为 **Test328–Test337**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,22 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test337 CLOSED PASS_RESTORED_ACCEPTED331 within registered pump-OFF
+scope. Native8940mV/1800mA→ADC9267/fixed9proof/lease0 PASS; verified ordinary
+reprogram0.046988s later, fixed9 charging30.925s/30samples PASS, unplug15.641s
+PASS/sameabf8901d, enum8warnings0. No pumpON/high-current/calibration acceptance.
+Exact331boot025e/notes03/config51/allfive/original181 restored; normal boot
+6dc80750 uniquely attributed, ADB/strictWiFi10.91.255.166/deviceNCM/noCode43,
+physicalOFF/PPSfalse/normalcmdline/fulljournal/no classifiedfault/unit PASS.
+Final57%3.965V28.1C/+0.954A on PC; raw SOC across boots is not capacity proof.
+Mutation rollback_required=false. Driver/config/DTS/rootfs unchanged thisphase;
+tests/build executedfalse/reused295+65/offlinebuild/static, nofullrun/Actions.
+Window328–337 expired327 Windows duplicate images192MiB removed; canonical
+327-origin files still consumed by in-window328/330 preserved, plus331/323/337.
+Original336STOP kept. No automatic new pump/current scope. FullportNOT_READY.
+See337PHYSICAL_RESULTS.md/physical-summary.json and test337-image-retirement.
+
 
 2026-10-07 Test337 unplug PASS/same abf8901d: offline/discharging held
 15.641s, endpoint62%/4.002V/24.9C/-0.628A,
