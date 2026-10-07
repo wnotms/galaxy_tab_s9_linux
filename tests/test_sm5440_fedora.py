@@ -83,6 +83,7 @@ static int fixed_sampling, fixed_sample_count, fixed_pattern, pps_offset, pps_dr
 static u64 fixed_return_started;
 static int settings_drift, refresh_wait, failure_on_sleep;
 static char range_log_buf[1024];
+static char defer_log_buf[1024];
 static int off_adc_delay, off_pending_raw, off_adc_pattern, off_reads;
 static u64 off_adc_zero_at;
 static void log_stub(struct device *d,const char *fmt,...) {
@@ -90,6 +91,10 @@ static void log_stub(struct device *d,const char *fmt,...) {
  if(strstr(fmt,"range rejected:")) {
   va_list args;va_start(args,fmt);
   vsnprintf(range_log_buf,sizeof(range_log_buf),fmt,args);va_end(args);
+ }
+ if(strstr(fmt,"refresh deferred:")) {
+  va_list args;va_start(args,fmt);
+  vsnprintf(defer_log_buf,sizeof(defer_log_buf),fmt,args);va_end(args);
  }
 }
 #define dev_info log_stub
@@ -221,7 +226,7 @@ void reset(void) {
  raw13(SM5440_REG_ADC_VBAT1,(4180-2048)*2);regs[SM5440_REG_ADC_DIETEMP]=15;
  clock_ms=1000;owned_lease=0;direct_charge=true;fixed_return_check=false;
  pps_return_check=direct_charge_once=false;pps_offset=pps_drift=suspend_wait=0;
- settings_drift=refresh_wait=failure_on_sleep=0;range_log_buf[0]=0;
+ settings_drift=refresh_wait=failure_on_sleep=0;range_log_buf[0]=defer_log_buf[0]=0;
  off_adc_delay=off_pending_raw=off_adc_pattern=off_reads=0;off_adc_zero_at=0;
  sm.fixed_check_deadline=clock_ms+SM5440_FIXED_CHECK_WAIT_MS;
  calls=fail_at=pps_calls=fixed_calls=releases=pump_ons=unsafe_pps=0;
@@ -239,6 +244,7 @@ int settings(void) {return sm5440_once_settings(&sm);}
 int measure(void) {return sm5440_once_measure(&sm,true);}
 int parked(void) {return sm5440_once_wait_parked(&sm);}
 const char *range_log(void) {return range_log_buf;}
+const char *defer_log(void) {return defer_log_buf;}
 void prepare_fixed_return(void) {sm.source=source;sm.lease=owned_lease=7;}
 void work(void) {sm5440_work(&sm.work.work);}
 int pm(int n) {return sm5440_pm_notify(&sm.pm_nb,n,0);}
@@ -266,7 +272,8 @@ void input(int key,int value) {
  case 38:regs[SM5440_REG_IBUSCNTL]=value;break;
  case 39:off_adc_delay=value;break;case 40:sm.stopping=value;break;
  case 41:sm.direct_deadline_ms=clock_ms+value;break;
- case 42:off_adc_pattern=value;break;}
+ case 42:off_adc_pattern=value;break;
+ case 43:sm.direct_refresh_ms=clock_ms+value;break;}
 }
 int value(int key) {
  switch(key){case 0:return sm.active;case 1:return regs[SM5440_REG_CNTL5]&12;
@@ -293,6 +300,7 @@ int value(int key) {
             raise AssertionError(compiled.stderr)
         cls.lib = ctypes.CDLL(str(so))
         cls.lib.range_log.restype = ctypes.c_char_p
+        cls.lib.defer_log.restype = ctypes.c_char_p
 
     def setUp(self):
         self.lib.reset()
@@ -532,6 +540,59 @@ int value(int key) {
                 break
             self.tick()
         self.assertEqual([self.v(k) for k in (1,7,9,23)], [0,1,1,1])
+
+    def test_final_refresh_reserve_boundaries_and_actual_test344_time(self):
+        for remaining in (1, 168, 1999, 2000, 2001):
+            with self.subTest(remaining=remaining):
+                self.lib.reset(); self.once(); self.lib.work()
+                self.lib.input(41, remaining + 100)
+                self.lib.input(43, 100)
+                requests, ons = self.v(4), self.v(9)
+                self.tick()
+                if remaining <= 2000:
+                    self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+                    self.assertEqual(self.v(25), remaining)
+                    self.assertIn(f'remaining={remaining}ms', self.lib.defer_log().decode())
+                    self.assertIn('pump_unchanged=1', self.lib.defer_log().decode())
+                else:
+                    self.assertEqual((self.v(4), self.v(9)), (requests + 1, ons + 1))
+                    self.assertEqual(self.lib.defer_log(), b'')
+                self.assertEqual([self.v(k) for k in (0, 1, 7, 23)], [1, 4, 0, 0])
+
+    def test_deadline_is_terminal_not_a_deferred_refresh(self):
+        self.once(); self.lib.work()
+        self.lib.input(41, 100); self.lib.input(43, 100)
+        requests, ons = self.v(4), self.v(9)
+        self.tick()
+        self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 7, 23)], [0, 0, 0, 0, 1])
+        self.assertEqual(self.lib.defer_log(), b'')
+
+    def test_final_reserve_keeps_fault_transport_and_delivery_gates(self):
+        for key, value in ((11, 2), (14, 2881), (4, -5), (37, -5),
+                           (34, 0), (3, 420), (12, 0)):
+            with self.subTest(key=key):
+                self.lib.reset(); self.once(); self.lib.work()
+                self.lib.input(41, 268); self.lib.input(43, 100)
+                requests, ons = self.v(4), self.v(9)
+                self.lib.input(key, value); self.tick()
+                self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+                self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+                self.assertEqual(self.lib.defer_log(), b'')
+
+    def test_delayed_average_full_window_finishes_without_late_rearm(self):
+        self.once(); self.lib.work(); self.lib.input(39, 1000)
+        original_deadline = self.v(26) + self.v(25)
+        for _ in range(400):
+            if self.v(23): break
+            self.tick()
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 7, 23)], [0, 0, 0, 0, 1])
+        self.assertGreater(self.v(4), 3)
+        self.assertLessEqual(self.v(26) - original_deadline, 3000)
+        self.assertIn('refresh deferred:', self.lib.defer_log().decode())
+        counts = [self.v(k) for k in (4, 5, 9)]
+        self.tick(4000); self.lib.pm(2); self.tick()
+        self.assertEqual(counts, [self.v(k) for k in (4, 5, 9)])
 
     def test_once_negotiation_and_cleanup_errors_never_retry(self):
         for key in (5,6,7,8):

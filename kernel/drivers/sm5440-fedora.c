@@ -105,6 +105,13 @@
 #define SM5440_ONCE_POLL_MS 100
 #define SM5440_ONCE_GAP_MS 500
 #define SM5440_ONCE_REFRESH_MS 4000
+/* Registered refresh observation bound; do not begin an OFF/PPS/settle/ON
+ * transaction inside this final window. Test344 began one with only 168ms
+ * left, correctly refused rearm at the deadline, and stopped with -ETIME.
+ * This reserve avoids that collision; an earlier refresh that overruns the
+ * absolute deadline still fails, and the observation window is not extended.
+ */
+#define SM5440_ONCE_REFRESH_RESERVE_MS 2000
 static bool direct_charge;
 module_param(direct_charge, bool, 0400);
 MODULE_PARM_DESC(direct_charge, "Explicit registered 1.8A direct-charge bring-up (default off)");
@@ -1333,11 +1340,25 @@ static void sm5440_direct_once_work(struct sm5440_direct *sm)
 		ret = sm5440_once_measure(sm, true);
 	if (ret)
 		goto finish;
+	/* Measurement includes I2C and companion reads; schedule from fresh time. */
+	now = ktime_to_ms(ktime_get_boottime());
 	if (now >= sm->direct_deadline_ms) {
 		ret = sm->direct_positive_samples ? 0 : -ENODATA;
 		goto finish;
 	}
 	if (now >= sm->direct_refresh_ms) {
+		if (sm->direct_deadline_ms - now <=
+		    SM5440_ONCE_REFRESH_RESERVE_MS) {
+			/* Keep monitoring the running pump until the same deadline.
+			 * No new PPS request, park or rearm in this branch. The last
+			 * successful refresh is at most ~6s before terminal cleanup.
+			 */
+			dev_info(sm->dev, "one-shot refresh deferred: remaining=%llums deadline=%llums pump_unchanged=1\n",
+				 sm->direct_deadline_ms - now,
+				 sm->direct_deadline_ms);
+			sm->direct_refresh_ms = sm->direct_deadline_ms;
+			goto watchdog;
+		}
 		ret = sm5440_renegotiate_pps(sm);
 		if (ret)
 			goto finish;
@@ -1347,6 +1368,7 @@ static void sm5440_direct_once_work(struct sm5440_direct *sm)
 		if (ret)
 			goto finish;
 	}
+watchdog:
 	ret = sm5440_update_bits(sm, SM5440_REG_CNTL1,
 		SM5440_CNTL1_WDT_EN, SM5440_CNTL1_WDT_EN);
 	if (ret)

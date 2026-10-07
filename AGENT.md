@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 follow-up OFFLINE_REFRESH_RESERVE_IMPLEMENTED_BUILD_PENDING.
+One-shot final<=2s defers nextOFF/PPS/ON transaction, continues100ms safety/WDT
+until unchanged30s deadline; freshboottime aftermeasurement. Earlier admitted
+refreshoverrun remainsfault, no -ETIME promotion/gap/current gate relaxation.
+72actualC testsPASS0.441s incl168ms/boundaries/full delayedAVG window/faults/
+no-rearm. Exact331beb65af6 staysinstalled54%31.6C; no newdevice operation.
+Protected108/priorformal frozen, samecache incrementbuildnext. Future345 only
+independentregistration, never replay344. See charging/test344-refresh-deadline.
+FullportNOT_READY.
+
 2026-10-07 Test344 CLOSED STOP_DEADLINE_DURING_PARKED_REFRESH_RESTORED331.
 One ownerconfirmed activation41activeframes/maxIBUS1.770A/pack28.6C/die42C;
 initial+5refreshes parkedzero proofPASS. Sixthpark195.976859 only168ms before

@@ -1,0 +1,25 @@
+{
+  "verdict": "OFFLINE_REFRESH_RESERVE_IMPLEMENTED",
+  "tests": {
+    "executed": true,
+    "count": 72,
+    "result": "PASS",
+    "seconds": 0.441,
+    "suite": "actual C test_sm5440_fedora",
+    "full_executed": false
+  },
+  "device_operations": [],
+  "build": {
+    "executed": false,
+    "status": "next incremental phase"
+  },
+  "deadline_ms": 30000,
+  "refresh_reserve_ms": 2000,
+  "limits": {
+    "hardware_ma": 1700,
+    "pps_ma": 1800,
+    "raw_ibus_ua": 1800000
+  },
+  "fixed_charging_unchanged": true,
+  "config_DT_USB_adbd_unchanged": true
+}
