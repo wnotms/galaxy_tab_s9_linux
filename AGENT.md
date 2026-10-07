@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test337 unplug PASS/same abf8901d: offline/discharging held
+15.641s, endpoint62%/4.002V/24.9C/-0.628A,
+realpack/OFF/fulljournal/no newfault/unit gate. Charge/native PASS already archived.
+137 samples include pre-unplug wait; actual15s separately measured. Await PC
+reconnect for unconditional exact331 restoration; installed337/rollback_required
+true. No replay/source/build/host rerun/pump or current advance. FullportNOT_READY.
+See337discharge/RESULTS.md and summary.json.
+
+
 2026-10-07 Test337 candidate abf8901d uniquely attributed, WiFi10.91.255.27.
 Native singlePPSOFF8940mV/1800mA→ADC9267→fixed9OFFproof/lease0 PASS;
 ordinary reprogram log 0.046988s after native terminal. Healthy ordinary fixed9
