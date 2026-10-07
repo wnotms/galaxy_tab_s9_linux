@@ -1,9 +1,23 @@
 {
-  "allfive_verified": true,
-  "candidate_boot_id": "80777a48e1e4447e84fb3075baf22c70",
-  "guardian_folder": "/tmp/gts9-test339-monitor",
-  "guardian_pid": 1667,
-  "modules": 181,
-  "phase": "STOP-awaiting-owner-unplug-and-restore",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 848000,
+      "input_limit_ua": 1800000,
+      "soc": 65,
+      "temp_decic": 319,
+      "voltage_uv": 4082000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "953185ab5602401aaea0bb40473a585d",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.198",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

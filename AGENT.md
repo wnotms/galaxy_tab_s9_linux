@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test338（启动前等待逻辑 STOP，已恢复 Test331），窗口为 **Test329–Test338**；没有生成镜像的轮次仍占一轮。
+  编号为 Test339（启动前等待超时 STOP，已恢复 Test331），窗口为 **Test330–Test339**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -98,16 +98,22 @@
 
 ## Current state (2026-10-03)
 
-2026-10-07 Test339 STOP_PREENTRY_WAIT_TIMEOUT, ROLLBACK PENDING. Candidate
-80777a48 admittedonPC, guardian armed.300s-from-probe readiness expired atPC5,
-primary-110/cleanup0/lease0; noPPS/pump/entry. Guardian preservedprimary and
-provedunboundOFF/preentryPC cleanup (no falsefixed9secondary). OwnerC1reply
-afterSTOP; samebootordinary9/1.5A/OFF/healthy64%28.3C viaWiFi213. ADBabsent
-oncharger; restore failedbeforetargetread/no recovery/rollbackwrite. AwaitPC
-return then unconditionalexact331restore; do notrearm/replay339. Timing/handshake
-needsseparatefuture registration withOFF/unboundmanualhandoff andguardian-before-
-bind; unchanged kernel1.8A/30s/fault/thermal gates. FullportNOT_READY. See339
-PHYSICAL_STATUS/physical-summary-pending and mutationstate(rollback_required=true).
+2026-10-07 Test339 CLOSED STOP_PREENTRY_WAIT_TIMEOUT_RESTORED331. PC5 throughout
+432 samples; readiness deadline expired at source301.280435s primary-110/cleanup0/
+lease0; no entry/PPS/pumpON. Guardian drained/unbound and proved preentry ordinary
+PC5/OFF without masked fixed9 secondary. Late C1 confirmation remains separate;
+no replay/rearm. Initial ADB-absent restoration failed before any recovery write,
+preserved in rollback-install; after ownerPCreturn exact331 boot/original181 and
+allfive restored in rollback-install-PC-return. Normalboot953185ab uniquely
+attributed, config51/notes03/DCCabsent/OFF/ADB/strictWiFi10.175.236.198/deviceNCM/
+WindowsnoCode43/fulljournal/no newfault/unit PASS;65%4.082V31.9C/+0.848A onPC.
+rollback_required=false. Failed339 full1132rowjournal preserved with native timeout
+suspect and no classified CPU fault. No new build/fulltests/Actions/source change.
+Next independent registration must keep worker unbound/OFF during manualhandoff,
+guardian ready before single activation after ownerC1confirmation; adapter tests
+required, not yet implemented/qualified, no automatic new pump attempt. Fullport
+NOT_READY. See339 PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256. Retention
+330–339;329 unchanged-USB recovery created no kernel image/provider to retire.
 
 2026-10-07 Test339 registered/qualified, not yet deployed: source81583618 fixes
 pre-lease sourceENODATA→boundedEAGAIN only; realpack/I2C/activefaults unchanged.

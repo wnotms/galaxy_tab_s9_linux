@@ -1,0 +1,262 @@
+{
+  "PPS_attempted": false,
+  "actual_pump_window_seconds": 0,
+  "all_pump_modes": [
+    0
+  ],
+  "build": {
+    "executed": false,
+    "reason": "Physical closure only; reuse qualified Test339 artifacts"
+  },
+  "candidate_boot_id": "80777a48e1e4447e84fb3075baf22c70",
+  "cleanup_events": [
+    {
+      "data": {
+        "driver_unbound": true,
+        "fixed9_restored": false,
+        "ordinary_source_preserved": true,
+        "pre_entry": true,
+        "pump_mode": 1,
+        "tcpm": {
+          "DEVTYPE": "power_supply",
+          "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+          "OF_COMPATIBLE_N": "1",
+          "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+          "OF_NAME": "usbpd",
+          "POWER_SUPPLY_CURRENT_MAX": "1800000",
+          "POWER_SUPPLY_CURRENT_NOW": "1800000",
+          "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+          "POWER_SUPPLY_ONLINE": "1",
+          "POWER_SUPPLY_TYPE": "USB",
+          "POWER_SUPPLY_USB_TYPE": "C [PD] PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS",
+          "POWER_SUPPLY_VOLTAGE_MAX": "5000000",
+          "POWER_SUPPLY_VOLTAGE_MIN": "5000000",
+          "POWER_SUPPLY_VOLTAGE_NOW": "5000000"
+        },
+        "usb": {
+          "DEVTYPE": "power_supply",
+          "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+          "OF_COMPATIBLE_N": "1",
+          "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+          "OF_NAME": "charger",
+          "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1800000",
+          "POWER_SUPPLY_NAME": "sm5714-usb",
+          "POWER_SUPPLY_ONLINE": "1",
+          "POWER_SUPPLY_TYPE": "USB",
+          "POWER_SUPPLY_USB_TYPE": "Unknown [SDP] DCP CDP PD PD_PPS"
+        }
+      },
+      "kind": "cleanup"
+    }
+  ],
+  "failed_boot_full_journal_rows": 1132,
+  "final_acceptance": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 848000,
+      "input_limit_ua": 1800000,
+      "soc": 65,
+      "temp_decic": 319,
+      "voltage_uv": 4082000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "953185ab5602401aaea0bb40473a585d",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.198",
+      "wifi_authenticated": true
+    }
+  },
+  "final_kernel_classification": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 43,
+    "last_source_timestamp": "31712334",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.302733,
+          "events": [],
+          "setup_source_seconds": 4.354766
+        },
+        {
+          "completion_source_seconds": 7.169023,
+          "events": [],
+          "setup_source_seconds": 6.303149
+        },
+        {
+          "completion_source_seconds": 10.618981,
+          "events": [],
+          "setup_source_seconds": 9.723131
+        }
+      ],
+      "event_count": 0,
+      "event_rows": [],
+      "setup_count": 3,
+      "state": "absent"
+    },
+    "rows": 1109,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": []
+  },
+  "full_port_ready": false,
+  "guardian": {
+    "cleanup_error": null,
+    "error": "ValueError('first native/kernel fault: sm5440-fedora 0-0063: one-shot pump stopped: primary=-110 cleanup=0 lease=0 no_restart=1')",
+    "primary_error": "ValueError('first native/kernel fault: sm5440-fedora 0-0063: one-shot pump stopped: primary=-110 cleanup=0 lease=0 no_restart=1')",
+    "verdict": "STOP_FIRST_NON_CLEAN"
+  },
+  "kernel_classification": {
+    "fault_counts": {},
+    "first_source_timestamp": "0",
+    "known_warning_count": 44,
+    "last_source_timestamp": "602191805",
+    "qca_baudrate_warning": {
+      "classification": "bounded-per-setup-cycle",
+      "cycles": [
+        {
+          "completion_source_seconds": 5.182709,
+          "events": [],
+          "setup_source_seconds": 4.301825
+        },
+        {
+          "completion_source_seconds": 6.961256,
+          "events": [],
+          "setup_source_seconds": 6.083761
+        },
+        {
+          "completion_source_seconds": 10.228706,
+          "events": [
+            {
+              "completion_source_seconds": 10.228706,
+              "event_source_seconds": 9.407436,
+              "recovery_seconds": 0.82127,
+              "row": 1072
+            }
+          ],
+          "setup_source_seconds": 9.327627
+        }
+      ],
+      "event_count": 1,
+      "event_rows": [
+        1072
+      ],
+      "setup_count": 3,
+      "state": "accepted"
+    },
+    "rows": 1132,
+    "startup_variant_counts": {
+      "boot_register_warning": 1,
+      "smmu_context_fault": 10,
+      "smmu_fsr": 10,
+      "smmu_fsynr": 10
+    },
+    "suspects": [
+      {
+        "message": "sm5440-fedora 0-0063: one-shot pump stopped: primary=-110 cleanup=0 lease=0 no_restart=1",
+        "priority": 3,
+        "row": 1113
+      }
+    ]
+  },
+  "kernel_cleanup_error": 0,
+  "kernel_primary_error": -110,
+  "kernel_stop_source_us": 301280435,
+  "late_C1_state": {
+    "battery": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_CAPACITY": "64",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "1779000",
+      "POWER_SUPPLY_CURRENT_NOW": "1754000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "283",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4106000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4098000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4010000"
+    },
+    "boot_id": "80777a48e1e4447e84fb3075baf22c70",
+    "driver_unbound": true,
+    "kernel_deadline_consumed": true,
+    "no_rearm": true,
+    "owner_instruction": "已接入 (C1 response after registered wait expired)",
+    "pump_off": true,
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_NAME": "usbpd",
+      "POWER_SUPPLY_CURRENT_MAX": "1500000",
+      "POWER_SUPPLY_CURRENT_NOW": "1500000",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+      "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+    }
+  },
+  "lease_at_stop": 0,
+  "no_rearm": true,
+  "no_retry": true,
+  "observed_source_voltages": [
+    "5000000"
+  ],
+  "one_attempt_consumed": true,
+  "owner_C1_reply_after_stop": true,
+  "pump_ON_observed": false,
+  "retention_window": "Test330–Test339",
+  "rollback_attempt": "ADB absent before target read; no recovery/rollback write executed; waiting PC return",
+  "rollback_required": false,
+  "samples": 432,
+  "test": "Test339",
+  "tests": {
+    "executed": false,
+    "reason": "Evidence/documentation only, frozen runner and kernel unchanged"
+  },
+  "unconditional_rollback": {
+    "final": {
+      "PPS": false,
+      "battery": {
+        "current_ua": 848000,
+        "input_limit_ua": 1800000,
+        "soc": 65,
+        "temp_decic": 319,
+        "voltage_uv": 4082000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "953185ab5602401aaea0bb40473a585d",
+      "device_NCM": true,
+      "pump_ON": false,
+      "transport": {
+        "rescue": "WiFi",
+        "wifi": "10.175.236.198",
+        "wifi_authenticated": true
+      }
+    },
+    "phase": "accepted331-restored",
+    "rollback_required": false
+  },
+  "verdict": "STOP_PREENTRY_WAIT_TIMEOUT_RESTORED331"
+}

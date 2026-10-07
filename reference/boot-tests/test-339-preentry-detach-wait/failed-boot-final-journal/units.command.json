@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b 80777a48e1e4447e84fb3075baf22c70 -u sm5440-direct-guard --no-pager"
+  ],
+  "ended_utc": "2026-10-07T10:14:36.596111+00:00",
+  "started_utc": "2026-10-07T10:14:36.479191+00:00",
+  "status": 0
+}
