@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-10-07T11:33:57.209748+00:00",
+  "verdict": "PREPARED_OFF_UNBOUND_AWAITING_OWNER_C1",
+  "startup": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 1198000,
+      "input_limit_ua": 1800000,
+      "soc": 76,
+      "temp_decic": 320,
+      "voltage_uv": 4176000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "4b6d816565674fc7b135ecdcf6c897b9",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.169",
+      "wifi_authenticated": true
+    }
+  },
+  "mutation": {
+    "allfive_verified": true,
+    "candidate_boot_id": "4b6d816565674fc7b135ecdcf6c897b9",
+    "guardian_folder": "/tmp/gts9-test343-monitor",
+    "guardian_pid": 1715,
+    "modules": 181,
+    "phase": "guardian-armed-awaiting-owner-C1",
+    "rollback_required": true
+  },
+  "charging_acceptance": false
+}

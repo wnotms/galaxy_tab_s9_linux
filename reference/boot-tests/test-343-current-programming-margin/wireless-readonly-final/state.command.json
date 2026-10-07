@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.207",
+    "set -e; cat /proc/sys/kernel/random/boot_id; cat /sys/class/power_supply/sm5714-battery/uevent; cat /sys/class/power_supply/sm5714-usb/uevent; cat /sys/module/sm5440_fedora/parameters/direct_charge"
+  ],
+  "ended_utc": "2026-10-07T11:26:12.493688+00:00",
+  "started_utc": "2026-10-07T11:26:11.415060+00:00",
+  "status": 0
+}
