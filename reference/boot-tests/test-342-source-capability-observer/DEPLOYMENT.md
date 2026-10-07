@@ -1,0 +1,5 @@
+# Test342 deployment scope
+
+Owner continues after prepared observer correction and exact Test331 restoration. This record activates the independently prepared Test3421.8A/input-cap, software<=30s scope. Frozen registration/README/PACKAGE/SHA256 describe preparation and remain unchanged; execution-scope.json binds authorization to those INPUTS, superseding only their historical prepared-only status.
+
+Fresh accepted331 boot254a7cc9:73%,4.175V,33.5°C, physicalOFF/config/notes/DCC/allfive181/ADB/authenticatedWiFi126/deviceNCM/WindowsnoCode43/fulljournal/no newfault/unit PASS. Deploy exact339 boot and matching181, PC normalboot once, unique admission then cancel initial pre-entry readiness queue. Guardian prepared OFF/unbound before C1 confirmation; one exclusive fresh fixed9-gated bind, no replay of STOP341. Active1.8A/30s/current/thermal/fault/parked-refresh/strictphysicalfixed9/no-retry gates unchanged. Success30s ordinary/15sunplug; first nonclean stops; unconditionalexact331 restoration. No Actions/rebuild/full regression; reuse26 affected tests and frozen build/artifact qualification. No new kernel/config/DT/rootfs/USB/adbd modification or power escalation.

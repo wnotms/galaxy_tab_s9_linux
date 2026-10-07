@@ -112,6 +112,15 @@ PACKAGE consumer check. Canonical331 activeproduction/342registeredrollback,
 See host-storage-cleanup/2026-10-07-test341-image-retirement/summary.json for exact
 paths/bytes and any retained consumers. No device/code/test/build operation.
 
+2026-10-07 Test342 owner continues, execution scope recorded independently of
+frozen prepared metadata. Fresh331254a7cc9/config51/notes03/DCCabsent/OFF/allfive181/
+ADB/WiFi126/deviceNCM/noCode43/fulljournal/no newfault/unit PASS,73%4.175V33.5C.
+Reuse exact339 artifacts/26 tests, no new source/build/fullsuite/Actions. Push
+scope before stage/install; PCqueue cancellation/OFF-unbound guardian before
+ownerC1confirmation, one fresh bind/1.8A<=30s, firstnonclean stops and exact331
+unconditionalrestoration. No341replay/current increase. See342 DEPLOYMENT/
+execution-scope/DEPLOYMENT_INPUTS. FullportNOT_READY.
+
 2026-10-07 Test342 PREPARED/NOT_DEPLOYED host source-capability correction.
 26 affected native/cleanup/thermal/activation/source tests PASS0.213s/no skip;
 Python/shell/input hashes PASS. Preentry5V advertised capability<=3A while actual
