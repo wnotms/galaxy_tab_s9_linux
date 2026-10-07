@@ -95,9 +95,16 @@
 #define SM5440_MAX_PPS_MA 1800
 #define SM5440_PPS_V_STEP_MV 20
 #define SM5440_REFRESH_TICKS 4
+#define SM5440_ONCE_MS 30000
+#define SM5440_ONCE_POLL_MS 100
+#define SM5440_ONCE_GAP_MS 500
+#define SM5440_ONCE_REFRESH_MS 4000
 static bool direct_charge;
 module_param(direct_charge, bool, 0400);
 MODULE_PARM_DESC(direct_charge, "Explicit registered 1.8A direct-charge bring-up (default off)");
+static bool direct_charge_once;
+module_param(direct_charge_once, bool, 0400);
+MODULE_PARM_DESC(direct_charge_once, "Registered one-shot <=30s 1.8A pump test, no restart (default off)");
 static bool fixed_return_check;
 module_param(fixed_return_check, bool, 0400);
 MODULE_PARM_DESC(fixed_return_check, "Registered one-shot fixed9V OFF return proof (default off, no PPS)");
@@ -148,8 +155,14 @@ struct sm5440_direct {
 	int last_cleanup_error;
 	u64 fixed_check_deadline;
 	bool fixed_check_done;
+	bool direct_once_done;
+	u64 direct_deadline_ms, direct_sample_ms, direct_refresh_ms;
+	unsigned int direct_positive_samples;
 	struct notifier_block pm_nb;
 };
+
+static int sm5440_once_settings(struct sm5440_direct *sm);
+static int sm5440_once_measure(struct sm5440_direct *sm, bool running);
 
 static int sm5440_update_bits(struct sm5440_direct *sm, u8 reg, u8 mask,
 			      u8 val)
@@ -211,7 +224,9 @@ static int sm5440_adc_die_temp(struct sm5440_direct *sm)
 
 static bool sm5440_direct_enabled(struct sm5440_direct *sm)
 {
-	return READ_ONCE(direct_charge) && !READ_ONCE(fixed_return_check) &&
+	return (READ_ONCE(direct_charge) ||
+		(READ_ONCE(direct_charge_once) && !sm->direct_once_done)) &&
+	       !READ_ONCE(fixed_return_check) &&
 	       !READ_ONCE(pps_return_check) &&
         !READ_ONCE(sm->stopping) &&
         !READ_ONCE(sm->suspending) && !sm->fault_latched;
@@ -219,7 +234,8 @@ static bool sm5440_direct_enabled(struct sm5440_direct *sm)
 
 static bool sm5440_modes_valid(void)
 {
-	return (direct_charge + fixed_return_check + pps_return_check) <= 1;
+	return (direct_charge + direct_charge_once + fixed_return_check +
+		pps_return_check) <= 1;
 }
 
 /* Public snapshots admit fixed contracts only. Once PPS owns the handoff,
@@ -397,6 +413,12 @@ static int sm5440_pump_on(struct sm5440_direct *sm)
 
 	if (!sm5440_direct_enabled(sm))
 		return -ESHUTDOWN;
+	/* Refresh may have waited in TCPM with the pump parked. Never re-enable
+	 * after the one-shot observation deadline, even if negotiation succeeded.
+	 */
+	if (READ_ONCE(direct_charge_once) && sm->direct_deadline_ms &&
+	    ktime_to_ms(ktime_get_boottime()) >= sm->direct_deadline_ms)
+		return -ETIME;
 	ret = sm5440_read_pack(sm, &pack);
 	if (ret)
 		return ret;
@@ -478,6 +500,8 @@ static int sm5440_renegotiate_pps(struct sm5440_direct *sm)
 	ret = sm5440_pump_off(sm);
 	if (ret)
 		return ret;
+	if (READ_ONCE(direct_charge_once))
+		dev_info(sm->dev, "one-shot refresh parked: pump_OFF=1\n");
 
 	ret = sm5440_refresh_pps(sm);
 	if (ret)
@@ -486,8 +510,19 @@ static int sm5440_renegotiate_pps(struct sm5440_direct *sm)
 	ret = sm5440_wait_vbus_settled(sm, sm->target_mv);
 	if (ret)
 		return ret;
+	if (READ_ONCE(direct_charge_once)) {
+		ret = sm5440_once_settings(sm);
+		if (!ret)
+			ret = sm5440_once_measure(sm, false);
+		if (ret)
+			return ret;
+	}
 
-	return sm5440_pump_on(sm);
+	ret = sm5440_pump_on(sm);
+	if (!ret && READ_ONCE(direct_charge_once))
+		dev_info(sm->dev, "one-shot refresh resumed: target=%dmV/%dmA deadline=%llums\n",
+			sm->target_mv, sm->target_ma, sm->direct_deadline_ms);
+	return ret;
 }
 
 /* Preserve every latch before refresh can re-arm a hardware-stopped pump. */
@@ -730,6 +765,93 @@ static int sm5440_hw_init(struct sm5440_direct *sm)
 	return 0;
 }
 
+/* Same-model Samsung init_reg_param()/Fedora hw_init(), read back before ON.
+ * CNTL2=0xf2 does NOT provide ordinary HW OCP: vendor need_to_sw_ocp=1.
+ * Keep the recipe unchanged; the bounded worker checks actual raw current.
+ * These checks are programming witnesses, not physical protection validation.
+ */
+static int sm5440_once_settings(struct sm5440_direct *sm)
+{
+	static const struct {
+		u8 reg, value;
+	} settings[] = {
+		{ SM5440_REG_CNTL2, 0xf2 },
+		{ SM5440_REG_CNTL3, 0xb8 },
+		{ SM5440_REG_CNTL4, 0xff },
+		{ SM5440_REG_CNTL6, 0x09 },
+		{ SM5440_REG_CNTL7, (SM5440_FREQUENCY_KHZ - 250) / 50 },
+		{ SM5440_REG_VBUSCNTL, 0x07 },
+		{ SM5440_REG_VBATCNTL, ((SM5440_VBATREG_MV - 3800) * 10) / 125 },
+		{ SM5440_REG_VOUTCNTL, 0x3f },
+		{ SM5440_REG_IBUSCNTL, SM5440_MAX_PPS_MA / 50 },
+		{ SM5440_REG_PRTNCNTL, 0xfe },
+		{ SM5440_REG_THEMCNTL1, 0x0c },
+		{ SM5440_REG_ADCCNTL1, SM5440_ADCCNTL1_AVG_32 |
+		  SM5440_ADCCNTL1_CONTINUOUS | SM5440_ADCCNTL1_ENABLE },
+		{ SM5440_REG_ADCCNTL2, 0xdf },
+	};
+	int i, value;
+
+	for (i = 0; i < ARRAY_SIZE(settings); i++) {
+		value = i2c_smbus_read_byte_data(sm->client, settings[i].reg);
+		if (value < 0)
+			return value;
+		if (value != settings[i].value)
+			return -EIO;
+	}
+	return 0;
+}
+
+/* First bring-up: retain625uA/500uV ADC precision through the safety check.
+ * The200mV pack/ADC coherence tolerance is a BRINGUP_LIMIT, not calibration.
+ * No independent pump IBAT ADC exists; use the real signed SM5714 gauge.
+ */
+static int sm5440_once_measure(struct sm5440_direct *sm, bool running)
+{
+	struct sm5714_pack_snapshot pack;
+	u8 status[4];
+	int ret, i, mode, vbus, ibus_raw, vbat_raw, die, value;
+	unsigned int ibus_ua, vbat_uv;
+
+	ret = sm5440_read_pack(sm, &pack);
+	if (ret)
+		return ret;
+	if (pack.capacity < 20 || pack.current_ua > 3600000 ||
+	    pack.voltage_uv >= 4400000 || pack.pack_decic < 200)
+		return -ERANGE;
+	mode = i2c_smbus_read_byte_data(sm->client, SM5440_REG_CNTL5);
+	vbus = sm5440_adc_vbus_mv(sm);
+	ibus_raw = sm5440_read_adc_pair(sm, SM5440_REG_ADC_IBUS1);
+	vbat_raw = sm5440_read_adc_pair(sm, SM5440_REG_ADC_VBAT1);
+	die = sm5440_adc_die_temp(sm);
+	if (mode < 0 || vbus < 0 || ibus_raw < 0 || vbat_raw < 0 || die < 0)
+		return -EIO;
+	ibus_ua = ibus_raw * 625U;
+	vbat_uv = 2048000U + vbat_raw * 500U;
+	for (i = 0; i < ARRAY_SIZE(status); i++) {
+		value = i2c_smbus_read_byte_data(sm->client, SM5440_REG_STATUS1 + i);
+		if (value < 0)
+			return value;
+		status[i] = value;
+	}
+	if (((mode & SM5440_CNTL5_OP_MODE_MASK) >> 2) != (running ? 1 : 0) ||
+	    sm5440_decode_faults(status, running,
+		(mode & SM5440_CNTL5_OP_MODE_MASK) >> 2) ||
+	    (status[2] & SM5440_INT3_VBUSUVLO) ||
+	    vbus < sm->target_mv - 500 || vbus > sm->target_mv + 500 ||
+	    vbus > SM5440_MAX_PPS_MV + 300 ||
+	    ibus_ua > SM5440_MAX_PPS_MA * 1000U || (!running && ibus_raw) ||
+	    vbat_uv < 3500000U || vbat_uv >= 4400000U ||
+	    abs((int)vbat_uv - pack.voltage_uv) > 200000 || die >= 850)
+		return -ERANGE;
+	if (running && ibus_ua && pack.current_ua > 0)
+		sm->direct_positive_samples++;
+	dev_dbg(sm->dev, "one-shot sample: on=%u vbus=%dmV ibus=%uuA vbat=%uuV pack=%duV/%duA temp=%d die=%d\n",
+		running, vbus, ibus_ua, vbat_uv, pack.voltage_uv,
+		pack.current_ua, pack.pack_decic, die);
+	return 0;
+}
+
 static int sm5440_start(struct sm5440_direct *sm)
 {
 	struct sm5714_pack_snapshot pack;
@@ -776,6 +898,15 @@ static int sm5440_start(struct sm5440_direct *sm)
 	ret = sm5440_wait_vbus_settled(sm, target_mv);
 	if (ret)
 		goto restore;
+	if (READ_ONCE(direct_charge_once)) {
+		sm->target_mv = target_mv;
+		sm->target_ma = target_ma;
+		ret = sm5440_once_settings(sm);
+		if (!ret)
+			ret = sm5440_once_measure(sm, false);
+		if (ret)
+			goto restore;
+	}
 
 	ret = sm5440_update_bits(sm, SM5440_REG_CNTL1,
 				 SM5440_CNTL1_WDT_EN,
@@ -786,6 +917,14 @@ static int sm5440_start(struct sm5440_direct *sm)
 	ret = sm5440_pump_on(sm);
 	if (ret)
 		goto restore;
+	if (READ_ONCE(direct_charge_once)) {
+		/* Includes the bounded VBUSPOK start wait in the30-second budget. */
+		sm->direct_deadline_ms = ktime_to_ms(ktime_get_boottime()) +
+			SM5440_ONCE_MS - 100;
+		ret = sm5440_once_measure(sm, true);
+		if (ret)
+			goto restore;
+	}
 
 	sm->active = true;
 	sm->target_mv = target_mv;
@@ -1065,6 +1204,96 @@ static unsigned long sm5440_backoff(struct sm5440_direct *sm)
 				    SM5440_MAX_RETRY_MS));
 }
 
+/* One worker owns entry, monitoring, refresh and terminal cleanup. No retry
+ * or automatic resume/re-attach grant in this test mode.100ms is a scheduling
+ * target, not a hard-realtime cutoff guarantee; excessive delivery gap stops.
+ * TCPM waits occur only with the pump OFF, never under a charger mutex.
+ */
+static void sm5440_direct_once_work(struct sm5440_direct *sm)
+{
+	u64 now = ktime_to_ms(ktime_get_boottime());
+	int ret = 0, cleanup;
+
+	if (sm->direct_once_done)
+		return;
+	if (READ_ONCE(sm->suspending) || READ_ONCE(sm->stopping) || sm->fault_latched) {
+		ret = -ESHUTDOWN;
+		goto finish;
+	}
+	if (!sm->active) {
+		ret = now >= sm->fixed_check_deadline ? -ETIMEDOUT :
+			sm5440_fixed_check_ready(sm);
+		if (ret == -EAGAIN || ret == -ENODEV)
+			goto schedule;
+		if (!ret)
+			ret = sm5440_pps_check_pack(sm);
+		if (!ret)
+			ret = sm5440_start(sm);
+		if (ret)
+			goto finish;
+		now = ktime_to_ms(ktime_get_boottime());
+		sm->direct_sample_ms = now;
+		sm->direct_refresh_ms = now + SM5440_ONCE_REFRESH_MS;
+		dev_info(sm->dev, "one-shot pump started: target=%dmV/%dmA deadline=%llums max_ms=%u no_restart=1\n",
+			sm->target_mv, sm->target_ma, sm->direct_deadline_ms,
+			SM5440_ONCE_MS);
+		goto schedule;
+	}
+	if (now <= sm->direct_sample_ms ||
+	    now - sm->direct_sample_ms > SM5440_ONCE_GAP_MS) {
+		ret = -ETIME;
+		goto finish;
+	}
+	/* Harvest read-to-clear latches AND measure before any refresh. A late
+	 * refresh must never re-arm a pump that hardware already stopped.
+	 */
+	ret = sm5440_monitor_faults(sm);
+	if (!ret)
+		ret = sm5440_once_measure(sm, true);
+	if (ret)
+		goto finish;
+	if (now >= sm->direct_deadline_ms) {
+		ret = sm->direct_positive_samples ? 0 : -ENODATA;
+		goto finish;
+	}
+	if (now >= sm->direct_refresh_ms) {
+		ret = sm5440_renegotiate_pps(sm);
+		if (ret)
+			goto finish;
+		now = ktime_to_ms(ktime_get_boottime());
+		sm->direct_refresh_ms = now + SM5440_ONCE_REFRESH_MS;
+		ret = sm5440_once_measure(sm, true);
+		if (ret)
+			goto finish;
+	}
+	ret = sm5440_update_bits(sm, SM5440_REG_CNTL1,
+		SM5440_CNTL1_WDT_EN, SM5440_CNTL1_WDT_EN);
+	if (ret)
+		goto finish;
+	sm->direct_sample_ms = ktime_to_ms(ktime_get_boottime());
+schedule:
+	if (!READ_ONCE(sm->suspending) && !READ_ONCE(sm->stopping))
+		schedule_delayed_work(&sm->work,
+			msecs_to_jiffies(sm->active ? SM5440_ONCE_POLL_MS : SM5440_POLL_MS));
+	return;
+finish:
+	sm->direct_once_done = true;
+	/* start() already attempted cleanup on failure. Preserve that refusal;
+	 * do not retry a failed fixed return just to obtain a clean terminal log.
+	 */
+	cleanup = sm->last_cleanup_error;
+	if (!cleanup && (sm->active || sm->lease || sm->adc_running))
+		cleanup = sm5440_restore_switching(sm);
+	if (ret || cleanup) {
+		sm->fault_latched = true;
+		dev_err(sm->dev, "one-shot pump stopped: primary=%d cleanup=%d lease=%llu no_restart=1\n",
+			ret, cleanup, sm->lease);
+	} else {
+		dev_info(sm->dev, "one-shot pump complete: lease=0 fixed_return=1 positive_samples=%u no_restart=1\n",
+			sm->direct_positive_samples);
+	}
+}
+
 static void sm5440_work(struct work_struct *work)
 {
 	struct sm5440_direct *sm =
@@ -1074,6 +1303,11 @@ static void sm5440_work(struct work_struct *work)
 	int capacity, die_temp, ibus, op_mode, pack_temp, status3;
 	int vbat, vbus;
 	int ret;
+
+	if (READ_ONCE(direct_charge_once)) {
+		sm5440_direct_once_work(sm);
+		return;
+	}
 
 	if (READ_ONCE(pps_return_check)) {
 		if (sm->fixed_check_done)
@@ -1279,6 +1513,8 @@ static int sm5440_pm_notify(struct notifier_block *nb, unsigned long action,
 	case PM_RESTORE_PREPARE:
 		WRITE_ONCE(sm->suspending, true);
 		cancel_delayed_work_sync(&sm->work);
+		if (READ_ONCE(direct_charge_once))
+			sm->direct_once_done = true;
 		if (sm->active || sm->lease || sm->adc_running) {
 			ret = sm5440_restore_switching(sm);
 			if (ret)

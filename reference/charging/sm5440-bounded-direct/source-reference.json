@@ -1,0 +1,24 @@
+{
+  "vendor": {
+    "path": "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c",
+    "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+    "initialization": "sm5440_init_reg_param, lines449\u2013465",
+    "software_OCP": "need_to_sw_ocp=1 at1761; ocp_check_work lines1255\u20131280; no valid ordinary hardware OCP assumption"
+  },
+  "fedora": {
+    "revision": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+    "path": "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c",
+    "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+    "use": "existing audited hw_init, continuous ADC, OFF/settle/ON refresh"
+  },
+  "new_limits": {
+    "one_shot_ms": 30000,
+    "monitor_schedule_ms": 100,
+    "delivery_gap_ms": 500,
+    "physical_ibus_ua": 1800000,
+    "gauge_ibat_ua": 3600000,
+    "adc_gauge_coherence_uv": 200000
+  },
+  "limits_are": "bring-up software checks, not hard-realtime protection or independent ADC calibration",
+  "device_commands_executed": false
+}
