@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test341 registered/qualified corrected host thermal units. Exact339
+kernel/config/DT/181/boot reused; kernel source unchanged.34 affected tests PASS
+0.427s/no skip, Python/shell syntax PASS. Preparation thermistor uses mC while
+power_supply uses deciC: factor100, both20–<38C, existing500mC coherence.340 host
+unit STOP/result immutable;341 new fresh candidate boot, no replay. Same owner-
+confirmed OFF/unbound manualhandoff/one exclusive bind and1.8A<=30s scope; no
+fault/thermal/current/deadline relaxation. Current331 f38e35d4 allfive181/OFF/
+ADB/WiFi241/deviceNCM/noCode43 preflight PASS,68%4.121V33.1C. Push registration
+before mutation; fullportNOT_READY. See341 README/offline-summary/OFFLINE_RESULTS.
+
 2026-10-07 Test340 CLOSED STOP_HOST_THERMAL_UNIT_ERROR_RESTORED331. Candidate
 12dbf267 admittedPC, initialqueue canceled/drained beforeentry/PPS/pump. New host
 check incorrectly compared thermal32000mC with battery320deciC; both32.0C.

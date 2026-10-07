@@ -1,0 +1,31 @@
+{
+  "test": "Test341",
+  "verdict": "HOST_QUALIFIED_THERMAL_UNIT_CORRECTION",
+  "tests": {
+    "executed": true,
+    "count": 34,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.427,
+    "full_executed": false,
+    "suites": [
+      "test_sm5440_temperature_activation.py",
+      "test_sm5440_temperature_deployment.py"
+    ]
+  },
+  "build": {
+    "executed": false,
+    "reuse": "exact frozen Test339 source81583618 and PACKAGE artifacts"
+  },
+  "config_diff": [],
+  "dtb_diff": [],
+  "hardware_executed": false,
+  "thermal_units": {
+    "battery": "deciC",
+    "thermal_zone": "mC",
+    "scale": 100,
+    "coherence_max_mc": 500,
+    "entry_min_mc": 20000,
+    "entry_max_exclusive_mc": 38000
+  }
+}
