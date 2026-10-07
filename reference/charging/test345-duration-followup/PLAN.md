@@ -1,6 +1,6 @@
 # After Test345: bounded duration progression, not registered or enabled
 
-Current source:01747a5f44dacb7fa6a5d45ea814e8827998c4e1. Test345 native completion and sameboot ordinary fixed9 charging30.845s/discharge15.650s passed; PC rescue and exact331 restoration remain pending. No full Test345 acceptance or next hardware authorization is inferred here.
+Current source:01747a5f44dacb7fa6a5d45ea814e8827998c4e1. Test345 native completion and sameboot ordinary fixed9 charging30.845s/discharge15.650s passed; PC rescue and exact331 restoration subsequently passed (finalboot64440dd59caa45c1a4a393510a1119b8). Test345 is closed with bounded acceptance; no next hardware authorization is inferred here.
 
 ## Next question
 

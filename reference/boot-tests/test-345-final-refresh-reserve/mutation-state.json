@@ -1,9 +1,23 @@
 {
-  "allfive_verified": true,
-  "candidate_boot_id": "9d7a1a38a2154ed4ae87971c5fd7d591",
-  "guardian_folder": "/tmp/gts9-test345-monitor",
-  "guardian_pid": 1714,
-  "modules": 181,
-  "phase": "owner-confirmed-single-activation",
-  "rollback_required": true
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 889000,
+      "input_limit_ua": 1800000,
+      "soc": 64,
+      "temp_decic": 328,
+      "voltage_uv": 4065000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "64440dd59caa45c1a4a393510a1119b8",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.106",
+      "wifi_authenticated": true
+    }
+  },
+  "phase": "accepted331-restored",
+  "rollback_required": false
 }

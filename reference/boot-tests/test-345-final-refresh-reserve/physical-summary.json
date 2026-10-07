@@ -1,0 +1,409 @@
+{
+  "test": "Test345",
+  "verdict": "BOUNDED_PPS_NATIVE_RETURN_CHARGE_DISCHARGE_PASS_RESTORED331",
+  "source_revision": "01747a5f44dacb7fa6a5d45ea814e8827998c4e1",
+  "boot_id": "9d7a1a38a2154ed4ae87971c5fd7d591",
+  "native": {
+    "completed_us": 214390447,
+    "deadline_ms": 213473,
+    "fixed_return": true,
+    "hardware_input_ma": 1700,
+    "no_restart": true,
+    "parked_zero_proofs": 6,
+    "pump_ON_observed": true,
+    "refresh_deferrals": 1,
+    "refreshes": 5,
+    "started_us": 183606189,
+    "target_ma": 1800,
+    "target_mv": 8940
+  },
+  "native_timeline": [
+    {
+      "source_monotonic_us": 183056594,
+      "message": "sm5440-fedora 0-0063: one-shot entry begins: fixed9=1"
+    },
+    {
+      "source_monotonic_us": 183536448,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=230ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 183604415,
+      "message": "sm5440-fedora 0-0063: direct charge started: PPS 8940 mV/1800 mA, ibus limit 1700 mA"
+    },
+    {
+      "source_monotonic_us": 183605391,
+      "message": "sm5440-fedora 0-0063: one-shot pump started: target=8940mV/1800mA deadline=213473ms max_ms=30000 no_restart=1"
+    },
+    {
+      "source_monotonic_us": 187640417,
+      "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 188666108,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=948ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 188700105,
+      "message": "sm5440-fedora 0-0063: one-shot refresh resumed: target=8960mV/1800mA deadline=213473ms"
+    },
+    {
+      "source_monotonic_us": 192748445,
+      "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 193056474,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=231ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 193092399,
+      "message": "sm5440-fedora 0-0063: one-shot refresh resumed: target=8960mV/1800mA deadline=213473ms"
+    },
+    {
+      "source_monotonic_us": 197152480,
+      "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 198356424,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=1121ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 198396405,
+      "message": "sm5440-fedora 0-0063: one-shot refresh resumed: target=8960mV/1800mA deadline=213473ms"
+    },
+    {
+      "source_monotonic_us": 202404427,
+      "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 203708514,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=1216ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 203752375,
+      "message": "sm5440-fedora 0-0063: one-shot refresh resumed: target=8960mV/1800mA deadline=213473ms"
+    },
+    {
+      "source_monotonic_us": 207836481,
+      "message": "sm5440-fedora 0-0063: one-shot refresh parked: pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 209016431,
+      "message": "sm5440-fedora 0-0063: one-shot parked settled: samples=3 waited=1117ms raw_ibus=0 pump_OFF=1"
+    },
+    {
+      "source_monotonic_us": 209044615,
+      "message": "sm5440-fedora 0-0063: one-shot refresh resumed: target=8960mV/1800mA deadline=213473ms"
+    },
+    {
+      "source_monotonic_us": 213120328,
+      "message": "sm5440-fedora 0-0063: one-shot refresh deferred: remaining=357ms deadline=213473ms pump_unchanged=1"
+    },
+    {
+      "source_monotonic_us": 214388078,
+      "message": "sm5440-fedora 0-0063: fixed return verified: source=13 lease=1 vbus=9251000uV samples=3 range=9251..9251mV settled=121ms raw_ibus=0 pump_off=1"
+    },
+    {
+      "source_monotonic_us": 214389271,
+      "message": "sm5440-fedora 0-0063: one-shot pump complete: lease=0 fixed_return=1 positive_samples=149 no_restart=1"
+    }
+  ],
+  "statistics": {
+    "active_samples": 37,
+    "max_raw_ibus_ua": 1770625,
+    "max_pack_temp_decic": 295,
+    "max_die_temp_decic": 435,
+    "max_pack_ibat_ua": 2777000,
+    "raw_vbus_mv_range": [
+      8681,
+      9273
+    ],
+    "raw_vbus_calibrated": false
+  },
+  "guardian_verdict": {
+    "verdict": "BOUNDED_NATIVE_RETURN_PASS",
+    "native": {
+      "target_mv": 8940,
+      "target_ma": 1800,
+      "hardware_input_ma": 1700,
+      "deadline_ms": 213473,
+      "started_us": 183606189,
+      "completed_us": 214390447,
+      "refreshes": 5,
+      "fixed_return": true,
+      "pump_ON_observed": true,
+      "no_restart": true,
+      "parked_zero_proofs": 6,
+      "refresh_deferrals": 1
+    },
+    "samples": 66
+  },
+  "cleanup": [
+    {
+      "pre_entry": false,
+      "fixed9_restored": true,
+      "pump_mode": 1,
+      "driver_unbound": true,
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_NAME": "usbpd",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+        "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "9000000",
+        "POWER_SUPPLY_CURRENT_MAX": "1500000",
+        "POWER_SUPPLY_CURRENT_NOW": "1500000",
+        "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS"
+      },
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_NAME": "charger",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+        "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+      }
+    }
+  ],
+  "ordinary_charge": {
+    "PPS": false,
+    "endpoint": {
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "63",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "2006000",
+        "POWER_SUPPLY_CURRENT_NOW": "2071000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Charging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "287",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4095000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4096000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "3999000"
+      },
+      "boot": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "boot_end": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "config_data_written": false,
+      "direct": "N",
+      "fixed_check": "N",
+      "monotonic": 518.837314645,
+      "pack": {
+        "mode": "enabled",
+        "temp": "28700"
+      },
+      "pps_check": "N",
+      "pump": 1,
+      "roles": [
+        "[sink]",
+        "[device]"
+      ],
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "1500000",
+        "POWER_SUPPLY_CURRENT_NOW": "1500000",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+        "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+      },
+      "uptime": 518.83,
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+      }
+    },
+    "kind": "verdict",
+    "native": {
+      "completed_us": 214390447,
+      "deadline_ms": 213473,
+      "fixed_return": true,
+      "hardware_input_ma": 1700,
+      "no_restart": true,
+      "parked_zero_proofs": 6,
+      "pump_ON_observed": true,
+      "refresh_deferrals": 1,
+      "refreshes": 5,
+      "started_us": 183606189,
+      "target_ma": 1800,
+      "target_mv": 8940
+    },
+    "observation_seconds": 30.845380874,
+    "phase": "charge",
+    "pump_ON_observed": true,
+    "ssh_returncode": 0,
+    "verdict": "PASS"
+  },
+  "discharge": {
+    "PPS": false,
+    "endpoint": {
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "63",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "-743000",
+        "POWER_SUPPLY_CURRENT_NOW": "-840000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Discharging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "282",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4022000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4023000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "4006000"
+      },
+      "boot": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "boot_end": "9d7a1a38a2154ed4ae87971c5fd7d591",
+      "config_data_written": false,
+      "direct": "N",
+      "fixed_check": "N",
+      "monotonic": 667.034428859,
+      "pack": {
+        "mode": "enabled",
+        "temp": "28200"
+      },
+      "pps_check": "N",
+      "pump": 1,
+      "roles": [
+        "[sink]",
+        "[device]"
+      ],
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "0",
+        "POWER_SUPPLY_CURRENT_NOW": "0",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "0",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "[C] PD PD_PPS PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "0",
+        "POWER_SUPPLY_VOLTAGE_MIN": "0",
+        "POWER_SUPPLY_VOLTAGE_NOW": "0"
+      },
+      "uptime": 667.03,
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "100000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "0",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "[Unknown] SDP DCP CDP PD PD_PPS"
+      }
+    },
+    "kind": "verdict",
+    "native": {
+      "completed_us": 214390447,
+      "deadline_ms": 213473,
+      "fixed_return": true,
+      "hardware_input_ma": 1700,
+      "no_restart": true,
+      "parked_zero_proofs": 6,
+      "pump_ON_observed": true,
+      "refresh_deferrals": 1,
+      "refreshes": 5,
+      "started_us": 183606189,
+      "target_ma": 1800,
+      "target_mv": 8940
+    },
+    "observation_seconds": 15.650194941999985,
+    "phase": "discharge",
+    "pump_ON_observed": true,
+    "ssh_returncode": 0,
+    "verdict": "PASS"
+  },
+  "PC_return": {
+    "ADB": true,
+    "Code43": false,
+    "boot_id": "9d7a1a38a2154ed4ae87971c5fd7d591",
+    "device_NCM": true,
+    "driver_unbound": true,
+    "pump_OFF": true,
+    "verdict": "PASS"
+  },
+  "final_acceptance": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 889000,
+      "input_limit_ua": 1800000,
+      "soc": 64,
+      "temp_decic": 328,
+      "voltage_uv": 4065000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "64440dd59caa45c1a4a393510a1119b8",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.106",
+      "wifi_authenticated": true
+    }
+  },
+  "allfive_181_restored": true,
+  "rollback_required": false,
+  "retry": false,
+  "full_kernel_rows": 1141,
+  "kernel_fault_counts": {},
+  "config_dt_unchanged": true,
+  "hardware_tested_scope": "One short current-bounded PPS/pump transaction plus fixed9 charging/discharge/PCreturn; exact331 restored",
+  "higher_current_or_long_duration_accepted": false,
+  "independent_adc_calibration": false,
+  "hard_realtime_cutoff_guaranteed": false,
+  "full_port_ready": false,
+  "tests": {
+    "executed": false,
+    "reason": "Evidence-only closure; reuse qualified72actualC and20affectedhost tests"
+  },
+  "build": {
+    "executed": false,
+    "reason": "Reuse qualified01747a5f incremental build/W1/sparse/config/DT/modules"
+  }
+}

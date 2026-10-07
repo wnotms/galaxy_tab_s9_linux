@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test345（已登记，未部署），窗口为 **Test336–Test345**；没有生成镜像的轮次仍占一轮。
+  编号为 Test345（实机完成，已恢复 Test331），窗口为 **Test336–Test345**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test345 CLOSED BOUNDED_PPS_NATIVE_RETURN_CHARGE_DISCHARGE_PASS_RESTORED331.
+Oneactivation9d7a1a38/37activeframes/rawIBUSmax1.770625A/pack29.5C/die43.5C;
+five refreshes/sixzero proofs/final357ms deferral/native complete lease0PASS.
+PumpOFF/unbound/fixed9input1.5A; ordinarycharge30.845s/discharge15.650sPASS.
+LivePCreturn sameboot/ADB/deviceNCM/SinkDevice/WindowsCode0PASS. Exact331/
+allfive/original181 restored, final64440dd5/WiFi10.175.236.106/64%32.8C/identity/
+rescue/journal/unitsPASS; rollback_required=false. Hardware1700/PPS+raw1800,
+no secondactivation/no highercurrent/longduration/calibration/45W acceptance.
+FullportNOT_READY. Next separate five-minute conservative duration candidate,
+not authorized physical300s by existing<=30s scope. Evidenceonlytests/build:false,
+reuse72C/build/20host. See345PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256.
 
 2026-10-07 Test345 native/ordinarycharge/dischargePASS; sameboot discharge15.650s/63%28.2C/-0.840A/offline. Waiting ownerPCreturn for onceADB/deviceNCM and unconditionalexact331restore. rollback_required=true, fullacceptancepending; evidence-onlytests/build:false.
 
