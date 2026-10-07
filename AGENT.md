@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 bounded-duration candidate READY_OFFLINE_DEFAULT_OFF, source5c90a4b5.
+Readonly once_ms accepts30s(default)/300s only;300s requires exclusiveonce,
+invalidprofiles refused beforeI2C. Hardware1700/PPS+raw1800 and safety unchanged.
+79actualC/23evidence testsPASS; incrementbuild104.643s/W1+sparse15.691s/no warnings.
+Exact331config/DT/release/181runtime, protected108/prior37 preserved. DefaultOFF
+boot497736be/notes10dcf27f/modules4399bcc1, no opt-in/Windowsstage/deviceoperation.
+Device still accepted33164440dd5. Newduration parser explicitwindow, actual345PASS/
+344STOP replays preserved; historical345livegate still rejects newkernel.
+Next independent300s guardian/runner/registration + explicitdurationauthorization;
+no physical300s registration yet, cannot deploy package as armed acceptance.
+FullportNOT_READY. See charging/test345-duration-followup RESULTS/PACKAGE/qualification.
+
 2026-10-07 bounded-duration follow-up IMPLEMENTED_OFFLINE_BUILD_PENDING. Immutable once_ms selector accepts30s(default)/300s only;300s requires exclusiveonce, invalidprofile refused beforeI2C. Hardware1700/PPS+raw1800/thermal/fault/PM/lease/refresh reserve unchanged.79actualC PASS0.398s; buildnext using existingcache. Device exact33164440dd5 remains installed, no newdeviceoperation. Future300s physicalauthorization/guardian/registration absent. FullportNOT_READY. See charging/test345-duration-followup.
 
 2026-10-07 Test345 CLOSED BOUNDED_PPS_NATIVE_RETURN_CHARGE_DISCHARGE_PASS_RESTORED331.

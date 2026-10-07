@@ -1,12 +1,14 @@
 # After Test345: bounded duration progression, not registered or enabled
 
-Current source:01747a5f44dacb7fa6a5d45ea814e8827998c4e1. Test345 native completion and sameboot ordinary fixed9 charging30.845s/discharge15.650s passed; PC rescue and exact331 restoration subsequently passed (finalboot64440dd59caa45c1a4a393510a1119b8). Test345 is closed with bounded acceptance; no next hardware authorization is inferred here.
+Offline implementation/build now qualified (source5c90a4b5/defaultOFF); see RESULTS.md. The physical300s guardian/registration and authorization remain pending.
+
+Accepted short-test source:01747a5f44dacb7fa6a5d45ea814e8827998c4e1. Test345 native completion and sameboot ordinary fixed9 charging30.845s/discharge15.650s passed; PC rescue and exact331 restoration subsequently passed (finalboot64440dd59caa45c1a4a393510a1119b8). Test345 is closed with bounded acceptance; no next hardware authorization is inferred here.
 
 ## Next question
 
 Can the accepted short-cycle PPS/SM5440 path maintain the same conservative current policy for five minutes and perform the same safe fixed9 return? This follows step E of docs/X710_CHARGING_TEST_PLAN.md. Do not raise current or simultaneously change register programming, ADC averaging, TCPM/SM5714, config/DT, USB/adbd or thermal policy. Preserve the immutable Test345 source/artifact/evidence pair.
 
-Kernel currently fixes SM5440_ONCE_MS=30000, and Test345 native_proof requires max_ms=30000 and a29..30s start/deadline relation. The current candidate must never be reused as a five-minute test by weakening the observer or rebinding the consumed worker. Implement a separate explicit bounded-duration profile only after Test345 closure; default must remain OFF, and existing <=30s mode remains30000ms. Longer duration needs its own opt-in identity and sole-activation proof, no writable runtime extension, no deadline restart, no automatic retry/reattach/resume. All admitted refreshes keep the same deadline; final<=2000ms reserve still defers a new transaction while maintaining fault/measurement/watchdog checks.
+The accepted Test345 kernel fixes SM5440_ONCE_MS=30000, and Test345 native_proof requires max_ms=30000 and a29..30s start/deadline relation. The current candidate must never be reused as a five-minute test by weakening the observer or rebinding the consumed worker. Implement a separate explicit bounded-duration profile only after Test345 closure; default must remain OFF, and existing <=30s mode remains30000ms. Longer duration needs its own opt-in identity and sole-activation proof, no writable runtime extension, no deadline restart, no automatic retry/reattach/resume. All admitted refreshes keep the same deadline; final<=2000ms reserve still defers a new transaction while maintaining fault/measurement/watchdog checks.
 
 The independent future runner must bind its expected duration to the new candidate/kernel witness and reject30s/300s mismatch, duplicate start/completion, changed deadline, refresh after deadline/deferral, unexplained boot and incomplete journal. Preserve fixed-return/lease0 proof, parkedzero>=3/span>=100ms, admitted refresh<=2s, response-gap and primary/cleanup separation. Never edit historical Test345 scripts or results to fit the new duration.
 

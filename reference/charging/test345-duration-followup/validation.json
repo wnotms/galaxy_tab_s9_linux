@@ -1,20 +1,25 @@
 {
-  "phase": "planning-only",
+  "phase": "offline-candidate-qualified-not-registered-for-physical",
   "current_test345_fully_closed": true,
-  "new_kernel_logic": false,
-  "new_candidate_built": false,
+  "new_kernel_logic": true,
+  "new_candidate_built": true,
   "new_physical_operation": false,
   "proposed_duration_ms": 300000,
   "hardware_input_ma": 1700,
   "pps_and_raw_cap_ma": 1800,
   "longer_duration_execution_authorized": false,
   "tests": {
-    "executed": false,
-    "reason": "Prose-only planning; inspected actual kernel duration and guardian dependencies"
+    "executed": true,
+    "actual_C": 79,
+    "evidence": 23,
+    "full_suite_executed": false
   },
   "build": {
-    "executed": false
+    "executed": true,
+    "returncode": 0,
+    "seconds": 104.64339125100014
   },
   "full_port_ready": false,
-  "accepted331_final_boot": "64440dd59caa45c1a4a393510a1119b8"
+  "accepted331_final_boot": "64440dd59caa45c1a4a393510a1119b8",
+  "physical_runner_registered": false
 }
