@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-07 Test344 follow-up READY_OFFLINE_DEFAULT_OFF, source01747a5f.
+Final<=2s refresh deferral/freshboottime, unchanged30s/current/faultgates;
+72actualC PASS0.441s/incrementbuildPASS101.591s/W1+sparsePASS13.799s/no warnings.
+Exact331config/DT/release/181runtime preserved; protected108+priorformal30 intact.
+DefaultOFFboot0af5fe72/notes893cb9a2/modules8e289739, no armedflag/Windowsstage/
+newdeployment. Device331beb65af6 onPC54%31.6C, no operationafteracceptedrestore.
+Future345 plan only, notregistered/activated; do not replay344. FullportNOT_READY.
+See charging/test344-refresh-deadline RESULTS/qualification/PACKAGE/SHA256.
+
 2026-10-07 Test344 follow-up OFFLINE_REFRESH_RESERVE_IMPLEMENTED_BUILD_PENDING.
 One-shot final<=2s defers nextOFF/PPS/ON transaction, continues100ms safety/WDT
 until unchanged30s deadline; freshboottime aftermeasurement. Earlier admitted
