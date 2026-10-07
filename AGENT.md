@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test342（观察器修正已准备，尚未部署），窗口为 **Test333–Test342**；没有生成镜像的轮次仍占一轮。
+  编号为 Test342（实机停止，已恢复 Test331），窗口为 **Test333–Test342**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-07 Test342 CLOSED STOP_ACTIVE_RANGE_CHECK_RESTORED331. One owner-
+confirmed activation/PPS9220mV1.8A and short pumpON; raw host ADC IBUS1.84375A
+exceeds registered1.8A. Guardian primary activePPSbudget; native primary-34
+cleanup0/lease0. Mixed TCPM9220/271mA frame overlaps fixedreturn, exact native
+predicate not logged; no host-only PASS or source-withdrew-PPS claim. Native
+start-to-terminal1.996855s includescleanup, no30s completion/refresh. PhysicalOFF/
+fixed9 verified/drained/unbound, ordinary charging resumed. OwnerPCreturn exact331
+allfive/original181 restored; unique normalboot2fc3593e/config51/notes03/DCCabsent/
+physicalOFF/ADB/WiFi10.175.236.207/deviceNCM/noCode43/fulljournal/no newfault/unit
+PASS,76%4.208V32.5C. rollback_required=false. Full failedboot1139rows retained;
+CPU fault counts empty, nativeSTOP remains nonclean. No retry/cap increase/build/
+fulltests/Actions/source/config/DT/rootfs/adbd change. Reuse34226tests/339 build.
+See342 PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256. FullportNOT_READY.
 
 2026-10-07 Test340 closure retention: expired330 three Windows duplicate images
 and old Fedora Image/armed/default-OFF boot retired after exact hashes and no

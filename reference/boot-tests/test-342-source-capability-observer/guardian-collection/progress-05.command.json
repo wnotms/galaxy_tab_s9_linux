@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.173",
+    "python3 -c 'from pathlib import Path; import json; p=Path('\"'\"'/tmp/gts9-test342-monitor'\"'\"'); q=p/\"evidence\"; d=dict(finished=(q/\"finished\").exists(),bound=Path(\"/sys/bus/i2c/devices/0-0063/driver\").exists(),activation_started=(q/\"activation-started\").exists()); d[\"summary\"]=json.loads((q/\"summary.json\").read_text()) if (q/\"summary.json\").exists() else None; print(json.dumps(d))'"
+  ],
+  "ended_utc": "2026-10-07T10:54:01.084295+00:00",
+  "started_utc": "2026-10-07T10:54:00.648873+00:00",
+  "status": 0
+}

@@ -1,0 +1,151 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 24,
+  "last_source_timestamp": "495788197",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 5.11844,
+        "events": [],
+        "setup_source_seconds": 4.1682
+      },
+      {
+        "completion_source_seconds": 7.137076,
+        "events": [],
+        "setup_source_seconds": 6.257118
+      },
+      {
+        "completion_source_seconds": 10.579556,
+        "events": [
+          {
+            "completion_source_seconds": 10.579556,
+            "event_source_seconds": 9.77494,
+            "recovery_seconds": 0.804616,
+            "row": 1067
+          }
+        ],
+        "setup_source_seconds": 9.692273
+      }
+    ],
+    "event_count": 1,
+    "event_rows": [
+      1067
+    ],
+    "setup_count": 3,
+    "state": "accepted"
+  },
+  "rows": 1139,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_fsr": 10
+  },
+  "suspects": [
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8efc100, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 597
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 599
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8f3d600, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 600
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 602
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8f6e100, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 603
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 605
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8f9dd00, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 606
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 608
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8001500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 614
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 616
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8070c00, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 617
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 619
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a1100, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 620
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 622
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80d1900, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 623
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 625
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8101300, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 626
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 628
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8130500, fsynr=0x670021, cbfrsynra=0x1c00, cb=9",
+      "priority": 3,
+      "row": 629
+    },
+    {
+      "message": "arm-smmu 15000000.iommu: FSYNR0 = 00670021 [S1CBNDX=103 PNU PLVL=1]",
+      "priority": 3,
+      "row": 631
+    },
+    {
+      "message": "sm5440-fedora 0-0063: one-shot pump stopped: primary=-34 cleanup=0 lease=0 no_restart=1",
+      "priority": 3,
+      "row": 1128
+    }
+  ]
+}

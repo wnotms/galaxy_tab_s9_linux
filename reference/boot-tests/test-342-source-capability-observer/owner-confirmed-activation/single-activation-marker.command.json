@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/tmp/gts9-test323-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "root@10.175.236.173",
+    "python3 -c 'from pathlib import Path; import json; p=Path('\"'\"'/tmp/gts9-test342-monitor/evidence'\"'\"'); assert not (p/\"finished\").exists(); assert (p/\"awaiting-owner\").read_text()=='\"'\"'2fb982f07cf24f10bacd629a8c58075c'\"'\"'; assert not (p/\"activation-started\").exists(); import importlib.util, os, time; spec=importlib.util.spec_from_file_location(\"activation_guard\",'\"'\"'/tmp/gts9-test342-monitor/guard.py'\"'\"'); g=importlib.util.module_from_spec(spec); spec.loader.exec_module(g); hw=g.Hardware('\"'\"'2fb982f07cf24f10bacd629a8c58075c'\"'\"'); marker={'\"'\"'boot_id'\"'\"': '\"'\"'2fb982f07cf24f10bacd629a8c58075c'\"'\"', '\"'\"'token'\"'\"': '\"'\"'49f6710eb323d77258689fe6f316834a'\"'\"', '\"'\"'owner_confirmed_C1'\"'\"': True}\ntry:\n for i in range(5):\n  sample=hw.sample(); rows=[json.loads(x) for x in g.subprocess.check_output([\"journalctl\",\"-k\",\"-b\",\"-o\",\"json\",\"--no-pager\"],text=True,timeout=8).splitlines()]; g.preparation_proof(rows,hw.boot,sample,hw.is_bound())\n  if sample[\"tcpm\"].get(\"POWER_SUPPLY_VOLTAGE_NOW\")==\"9000000\":break\n  time.sleep(1)\n g.preparation_proof(rows,hw.boot,sample,hw.is_bound(),marker,marker[\"token\"]); print(json.dumps(sample))\nfinally: os.close(hw.fd)\nf=(p/\"activate.json\").open(\"x\"); f.write('\"'\"'{\"boot_id\": \"2fb982f07cf24f10bacd629a8c58075c\", \"token\": \"49f6710eb323d77258689fe6f316834a\", \"owner_confirmed_C1\": true}'\"'\"'); f.close()'"
+  ],
+  "ended_utc": "2026-10-07T10:53:48.509460+00:00",
+  "started_utc": "2026-10-07T10:53:47.949164+00:00",
+  "status": 0
+}
