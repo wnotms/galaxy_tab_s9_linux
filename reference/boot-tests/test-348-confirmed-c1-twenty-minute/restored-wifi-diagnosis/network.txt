@@ -1,0 +1,85 @@
+ba4d8404-8d38-4d9c-8ae2-0f39b68c03bf
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+dummy0           DOWN           0e:ae:2b:78:7a:f2 <BROADCAST,NOARP> 
+ifb0             DOWN           26:71:db:49:c1:21 <BROADCAST,NOARP> 
+ifb1             DOWN           66:8e:bc:cc:04:df <BROADCAST,NOARP> 
+tunl0@NONE       DOWN           0.0.0.0 <NOARP> 
+gre0@NONE        DOWN           0.0.0.0 <NOARP> 
+gretap0@NONE     DOWN           00:00:00:00:00:00 <BROADCAST,MULTICAST> 
+erspan0@NONE     DOWN           00:00:00:00:00:00 <BROADCAST,MULTICAST> 
+ip_vti0@NONE     DOWN           0.0.0.0 <NOARP> 
+ip6_vti0@NONE    DOWN           :: <NOARP> 
+sit0@NONE        DOWN           0.0.0.0 <NOARP> 
+ip6tnl0@NONE     DOWN           :: <NOARP> 
+ip6gre0@NONE     DOWN           :: <NOARP> 
+usb0             UP             1a:98:27:23:ae:cb <BROADCAST,MULTICAST,UP,LOWER_UP> 
+wlp1s0           UP             00:03:7f:12:cb:05 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+docker0          DOWN           02:42:93:58:e2:7a <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+1: lo    inet 127.0.0.1/8 scope host lo\       valid_lft forever preferred_lft forever
+14: usb0    inet 169.254.42.1/16 scope global usb0\       valid_lft forever preferred_lft forever
+15: wlp1s0    inet 10.175.236.100/24 brd 10.175.236.255 scope global dynamic noprefixroute wlp1s0\       valid_lft 3569sec preferred_lft 3569sec
+16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\       valid_lft forever preferred_lft forever
+active
+active
+wlp1s0:wifi:connected:OnePlus 13s
+lo:loopback:connected (externally):lo
+docker0:bridge:connected (externally):docker0
+p2p-dev-wlp1s0:wifi-p2p:disconnected:
+dummy0:dummy:unmanaged:
+erspan0:erspan:unmanaged:
+usb0:ethernet:unmanaged:
+ifb0:ifb:unmanaged:
+ifb1:ifb:unmanaged:
+gre0:iptunnel:unmanaged:
+gretap0:iptunnel:unmanaged:
+ip6_vti0:iptunnel:unmanaged:
+ip6gre0:iptunnel:unmanaged:
+ip6tnl0:iptunnel:unmanaged:
+ip_vti0:iptunnel:unmanaged:
+sit0:iptunnel:unmanaged:
+tunl0:iptunnel:unmanaged:
+Sep 29 22:41:26 gts9 NetworkManager[807]: <info>  [1790692886.2965] device (docker0): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+Sep 29 22:41:26 gts9 NetworkManager[807]: <info>  [1790692886.3029] device (docker0): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+Sep 29 22:41:26 gts9 NetworkManager[807]: <info>  [1790692886.3037] device (docker0): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+Sep 29 22:41:26 gts9 NetworkManager[807]: <info>  [1790692886.3041] manager: NetworkManager state is now CONNECTED_LOCAL
+Sep 29 22:41:26 gts9 NetworkManager[807]: <info>  [1790692886.3044] device (docker0): Activation: successful, device activated.
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.5198] policy: auto-activating connection 'OnePlus 13s' (99d3f268-a281-4029-8a2b-5d8b4b770648)
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.5210] device (wlp1s0): Activation: starting connection 'OnePlus 13s' (99d3f268-a281-4029-8a2b-5d8b4b770648)
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.5212] device (wlp1s0): state change: disconnected -> prepare (reason 'none', managed-type: 'full')
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.5217] manager: NetworkManager state is now CONNECTING
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.5764] device (wlp1s0): set-hw-addr: reset MAC address to 00:03:7F:12:CB:05 (preserve)
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6291] device (wlp1s0): state change: prepare -> config (reason 'none', managed-type: 'full')
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6352] device (wlp1s0): Activation: (wifi) access point 'OnePlus 13s' has security, but secrets are required.
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6352] device (wlp1s0): state change: config -> need-auth (reason 'none', managed-type: 'full')
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6360] device (wlp1s0): state change: need-auth -> prepare (reason 'none', managed-type: 'full')
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6361] device (wlp1s0): state change: prepare -> config (reason 'none', managed-type: 'full')
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6362] device (wlp1s0): Activation: (wifi) connection 'OnePlus 13s' has security, and secrets exist.  No new secrets needed.
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'ssid' value 'OnePlus 13s'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'scan_ssid' value '1'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'bgscan' value 'simple:30:-65:300'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'key_mgmt' value 'WPA-PSK WPA-PSK-SHA256 FT-PSK SAE FT-SAE'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'auth_alg' value 'OPEN'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6363] Config: added 'psk' value '<hidden>'
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6665] device (wlp1s0): supplicant interface state: disconnected -> inactive
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.6665] device (p2p-dev-wlp1s0): supplicant management interface state: disconnected -> inactive
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.8679] device (wlp1s0): supplicant interface state: inactive -> authenticating
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.8680] device (p2p-dev-wlp1s0): supplicant management interface state: inactive -> authenticating
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.8758] device (wlp1s0): supplicant interface state: authenticating -> associating
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.8758] device (p2p-dev-wlp1s0): supplicant management interface state: authenticating -> associating
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.9355] device (wlp1s0): supplicant interface state: associating -> 4way_handshake
+Sep 29 22:42:07 gts9 NetworkManager[807]: <info>  [1790692927.9356] device (p2p-dev-wlp1s0): supplicant management interface state: associating -> 4way_handshake
+Sep 29 22:42:08 gts9 NetworkManager[807]: <info>  [1790692928.0189] device (wlp1s0): supplicant interface state: 4way_handshake -> completed
+Sep 29 22:42:08 gts9 NetworkManager[807]: <info>  [1790692928.0190] device (wlp1s0): Activation: (wifi) Stage 2 of 5 (Device Configure) successful. Connected to wireless network "OnePlus 13s"
+Sep 29 22:42:08 gts9 NetworkManager[807]: <info>  [1790692928.0190] device (p2p-dev-wlp1s0): supplicant management interface state: 4way_handshake -> completed
+Sep 29 22:42:08 gts9 NetworkManager[807]: <info>  [1790692928.0191] device (wlp1s0): state change: config -> ip-config (reason 'none', managed-type: 'full')
+Sep 29 22:42:08 gts9 NetworkManager[807]: <info>  [1790692928.0194] dhcp4 (wlp1s0): activation: beginning transaction (timeout in 45 seconds)
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.1023] dhcp4 (wlp1s0): state changed new lease, address=10.175.236.100, acd pending
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.2514] dhcp4 (wlp1s0): state changed new lease, address=10.175.236.100
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.2523] policy: set 'OnePlus 13s' (wlp1s0) as default for IPv4 routing and DNS
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.2926] device (wlp1s0): state change: ip-config -> ip-check (reason 'none', managed-type: 'full')
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.3768] device (wlp1s0): state change: ip-check -> secondaries (reason 'none', managed-type: 'full')
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.3774] device (wlp1s0): state change: secondaries -> activated (reason 'none', managed-type: 'full')
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.3784] manager: NetworkManager state is now CONNECTED_SITE
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.3798] device (wlp1s0): Activation: successful, device activated.
+Sep 29 22:42:10 gts9 NetworkManager[807]: <info>  [1790692930.3816] manager: NetworkManager state is now CONNECTED_GLOBAL
+Sep 29 22:42:22 gts9 NetworkManager[807]: <info>  [1790692942.6483] policy: set 'OnePlus 13s' (wlp1s0) as default for IPv6 routing and DNS

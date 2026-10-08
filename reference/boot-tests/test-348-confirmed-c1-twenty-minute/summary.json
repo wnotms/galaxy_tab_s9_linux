@@ -1,0 +1,99 @@
+{
+  "test": "Test348",
+  "verdict": "STOP_FIRST_NON_CLEAN",
+  "registered_pump_window_seconds": 1200,
+  "attempts": 1,
+  "passed": false,
+  "pump_start_seconds": 206.262635,
+  "native_range_stop_seconds": 1402.955604,
+  "elapsed_to_native_range_stop_seconds": 1196.692969,
+  "native_stop_message": "sm5440-fedora 0-0063: one-shot range rejected: running=1 mode=0x5 vbus=8718mV target=8960mV ibus=1811875uA cap=1800000uA vbat=4099500uV pack=4084000uV/2359000uA temp=275 die=425 status=00/80/20/08",
+  "raw_input_stop_ua": 1811875,
+  "raw_input_ceiling_ua": 1800000,
+  "hardware_input_setpoint_ma": 1700,
+  "independently_calibrated": false,
+  "host_samples": 1876,
+  "active_host_samples": 1467,
+  "sample_soc_first": 53,
+  "sample_soc_last": 60,
+  "max_active_host_pack_temp_decic": 276,
+  "max_active_host_die_temp_decic": 430,
+  "max_active_host_raw_ibus_ua": 1783750,
+  "max_active_host_adc_vbat_uv": 4114000,
+  "max_active_host_adc_vbus_mv": 8903,
+  "kernel_fault_counts": {},
+  "cleanup": {
+    "pre_entry": false,
+    "fixed9_restored": true,
+    "pump_mode": 1,
+    "driver_unbound": true,
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_NAME": "usbpd",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9000000",
+      "POWER_SUPPLY_CURRENT_MAX": "1500000",
+      "POWER_SUPPLY_CURRENT_NOW": "1500000",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS"
+    },
+    "usb": {
+      "DEVTYPE": "power_supply",
+      "OF_NAME": "charger",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "POWER_SUPPLY_NAME": "sm5714-usb",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+      "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+    }
+  },
+  "restore": {
+    "allfive": true,
+    "modules": 181,
+    "baseline": "Test331",
+    "runtime": {
+      "PPS": false,
+      "battery": {
+        "current_ua": 1196000,
+        "input_limit_ua": 1800000,
+        "soc": 61,
+        "temp_decic": 321,
+        "voltage_uv": 4055000
+      },
+      "boot_attribution": "attributed",
+      "boot_id": "ba4d84048d384d9c8ae20f39b68c03bf",
+      "charging_attempt_restarted": false,
+      "device_NCM": true,
+      "owner_endpoint_update": true,
+      "pump_ON": false,
+      "transport": {
+        "rescue": "WiFi",
+        "wifi": "10.175.236.100",
+        "wifi_authenticated": true
+      },
+      "verdict": "ACCEPTED331_RESTORED_NORMAL_DEBIAN"
+    }
+  },
+  "final_endpoint": "Debian",
+  "owner_changed_endpoint": true,
+  "second_attempt_executed": false,
+  "ordinary_charge_window_executed": false,
+  "discharge_window_executed": false,
+  "tests": {
+    "executed": false,
+    "reason": "evidence only; frozen qualified code/build unchanged"
+  },
+  "kernel_build": {
+    "executed": false
+  },
+  "physical_executed": true
+}

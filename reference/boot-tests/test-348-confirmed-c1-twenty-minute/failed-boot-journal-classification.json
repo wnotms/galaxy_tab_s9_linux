@@ -1,0 +1,53 @@
+{
+  "rows": 2049,
+  "fault_counts": {},
+  "suspects": [
+    {
+      "row": 2044,
+      "priority": 3,
+      "message": "sm5440-fedora 0-0063: one-shot range rejected: running=1 mode=0x5 vbus=8718mV target=8960mV ibus=1811875uA cap=1800000uA vbat=4099500uV pack=4084000uV/2359000uA temp=275 die=425 status=00/80/20/08"
+    },
+    {
+      "row": 2048,
+      "priority": 3,
+      "message": "sm5440-fedora 0-0063: one-shot pump stopped: primary=-34 cleanup=0 lease=0 no_restart=1"
+    }
+  ],
+  "known_warning_count": 44,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "first_source_timestamp": "0",
+  "last_source_timestamp": "1404103895",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "event_count": 1,
+    "setup_count": 2,
+    "cycles": [
+      {
+        "setup_source_seconds": 4.734077,
+        "events": [],
+        "completion_source_seconds": 5.645017
+      },
+      {
+        "setup_source_seconds": 6.535797,
+        "events": [
+          {
+            "row": 1049,
+            "event_source_seconds": 6.609046,
+            "completion_source_seconds": 7.429876,
+            "recovery_seconds": 0.82083
+          }
+        ],
+        "completion_source_seconds": 7.429876
+      }
+    ],
+    "event_rows": [
+      1049
+    ],
+    "state": "accepted"
+  }
+}

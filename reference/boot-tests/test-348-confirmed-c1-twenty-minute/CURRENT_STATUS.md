@@ -13,8 +13,10 @@ full kernel journal have been retrieved; collection correctly says STOP.
 Exact Test331 boot plus original 181 modules restored; all five partitions
 verified, root unmounted and TWRP endpoint confirmed. Owner subsequently
 changed the endpoint to normal Debian: see `OWNER_ENDPOINT_UPDATE.md` and
-`owner-endpoint-update.json`. One ordinary restored boot follows registration
-push; no new PPS attempt or current ceiling change is authorized by this update.
+`owner-endpoint-update.json`. Registered ordinary return completed: restored boot ba4d8404 is attributed;
+exact config/notes/all-five/181, DCC absence, ADB/NCM/trusted Wi-Fi and kernel
+health passed. Final endpoint is Debian, Wi-Fi 10.175.236.100. No new PPS
+attempt or current ceiling change is authorized by this update.
 
 Tests/build for these results: `executed: false`; frozen qualified inputs
-unchanged. Detailed results, archive/index and restored-runtime acceptance follow.
+unchanged. Detailed results and verified raw archive/index are in RESULTS.md and summary.json.

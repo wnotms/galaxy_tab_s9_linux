@@ -99,6 +99,20 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 Test348_STOP_EVIDENCE_COMPLETE_331_DEBIAN_RESTORED.
+Native rawIBUS1811875>1800000uA at1196.692969s ->STOP/no retry. Full2049row
+journal/1876samples; no parserCPU/panic/Oops faultcounts,2expectednativeerror
+suspects. NativeOFF/lease0/physicalfixed9.283V andguardianOFF/unbound/cleanup
+null proved. Activehostmaxpack27.6C/die43C/VBAT4.114V;SOC53->60. NotPASS,
+notcalibrated/toleranceunknown; do notraise cap.1367rawtransportlogs byte/hash
+verifiedinexecutionarchive; corejournal/eventsdirect. Exact331allfive/181
+restored; ownerchangedTWRPendpoint -> pushed39d16904 then1normalbootba4d8404,
+allidentity/rescue/healthpassed/WiFi10.175.236.100/61%32.1C Good/noCode43.
+CurrentDebian/PPSfalse/pumpOFF; no newattempt. Tests/buildfalse resultsonly.
+NextauthorizednativeSoCinfo offlinekernelprep afterevidencepush; SSC assets/
+packages/helpershostonly, no ADSPstart. Fullportgoal remainsincomplete/active.
+
+
 2026-10-08 Test348_RAW_INPUT_RANGE_STOP_RESTORED331_OWNER_DEBIAN_ENDPOINT.
 Soleattempt STOP atnative1196.693s afterpumpstart:rawIBUS1811875>1800000uA;
 pack27.5C/die42.5C/ADCvbat4.0995V/vbus8.718V. No pass/secondattempt. Native
