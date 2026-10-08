@@ -1,0 +1,32 @@
+{
+  "executed": true,
+  "command": "python3 -m unittest tests.test_ssc_asset_staging tests.test_ssc_vendor_layout tests.test_ssc_stock_assets -v",
+  "tests": 39,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "kernel_build": {
+    "executed": false,
+    "reason": "host asset staging only; kernel/DT/config unchanged"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "no suite routing or broad integration change"
+  },
+  "source_archives": [
+    {
+      "path": "out/ssc-stock-assets/source.tar.gz",
+      "bytes": 38400320,
+      "sha256": "e7c02f3e2cf29df5e7594fab329a3261a728c1517768e96c1853b79ddb191ff2"
+    },
+    {
+      "path": "out/ssc-vendor-config/source.tar.gz",
+      "bytes": 8217,
+      "sha256": "ea403016df2c87cf07bc03d73baa9b456d0829891dea46fcff338ec2c6075dc9"
+    }
+  ],
+  "scripts": {
+    "read-vendor-sensors.py": "e3df2c749198c8657dc924b143b26419092152b66514c5d86c32c97501e16ec9",
+    "stage-assets.py": "6555406458287cb8ebb3f62fea64ebed005aa823b98f356f5084a9f61f5ea026"
+  }
+}

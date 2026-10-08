@@ -1,0 +1,248 @@
+{
+  "boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+  "purpose": "READ_ONLY_VENDOR_SENSOR_CONFIG",
+  "source_device": "/dev/sda25",
+  "extent": {
+    "offset": 7227834368,
+    "bytes": 1723756544,
+    "super_bytes": 11643387904,
+    "slot": 0,
+    "metadata_sha256": "f53db5631582c8956c7c24284ae2b04ba4f6b9ef35144adc43241419ba8ae1dc",
+    "geometry_sha256": "266f8d746eebf5fd860ebe60debde12b4a21767a4a5862410320b86d03cb00f8",
+    "primary_backup_agree": true
+  },
+  "files": {
+    "vendor/etc/sensors/config/akmlib.json": {
+      "bytes": 3161,
+      "sha256": "d696c52725888cac8027b103b84007c61761f1f5f0799b1cd9f415cd3511baf5",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_ak991x_0.json": {
+      "bytes": 5956,
+      "sha256": "647a39ff11aa4275e52daae926cc2cd86a453791e8ad20a0e1bee98569b5f75a",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_ak991x_5.json": {
+      "bytes": 6097,
+      "sha256": "9b7f18c4a79a1387462a9bfe84bf92cc77928957cab03d78d97d19ce05ab8076",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_bridge_driver_0.json": {
+      "bytes": 1466,
+      "sha256": "e3765c303ad4b6bdc5096031980b3e8bb841f6ca3f07d9b238079f164d7068a5",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_default_sensors.json": {
+      "bytes": 5518,
+      "sha256": "a4e36067a384ed0037df1f51b82948245466162b659bac897f29e2905b9e4056",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_dynamic_sensors_template.json": {
+      "bytes": 556,
+      "sha256": "a248f6aebb52f1e08311a1150449b72040dbd2697e33e99bf6b4dbdbf5bddc60",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_iot_hdk_dae.json": {
+      "bytes": 803,
+      "sha256": "6fc75019b1c1ae0f17fd32d948fdc335e3a913d2f28f207db5300ff731c1e723",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_irq.json": {
+      "bytes": 179,
+      "sha256": "f9b329a2f18f92323b2a36b3397095a4dc9bdf0e74deb170a92076686e9128cf",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_lsm6dso_0_0.json": {
+      "bytes": 6804,
+      "sha256": "8658fa3344a68f2aade376c303ada9a2ca88d4db460536bc02b263fed4fb5dcf",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_power_0.json": {
+      "bytes": 308,
+      "sha256": "d75e639216b04ac44668acdec0c07452aa982e447c629cbc9b8dfc604eb5bd84",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_qsh_ble_0.json": {
+      "bytes": 397,
+      "sha256": "24858db68b8159e491ebd5b66aa79467ed041e463c1b18a0201109e3ea46540e",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_veml3328_0.json": {
+      "bytes": 3371,
+      "sha256": "501c7761146bde9b098175a8e2e4ae952ad0531bded260c67c6b0e16ecfb37d0",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/kailua_veml3328_1.json": {
+      "bytes": 3371,
+      "sha256": "cab9abba0507e8399abe82405a441833eb6b6ca51f4005a32d7ccc44d285b7a1",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/lsm6dso_0.json": {
+      "bytes": 2661,
+      "sha256": "b2891511274d07a434f1e35a8ba1b1cafd82f5d0c471ea10134e22ededd3d94a",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/qsh_ble.json": {
+      "bytes": 927,
+      "sha256": "92d3a18bd4243b7447ce7ddb1f9c94ada7f9debbcf63f36660f5174708708471",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_amd.json": {
+      "bytes": 801,
+      "sha256": "0701ec6cfe6442d86b23c20613fcbc350980435cf762cad82ec3c09ece38d009",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_amd_sw_disabled.json": {
+      "bytes": 314,
+      "sha256": "09a6fee9f70b068cc995447bae5498b422c95737196290cfddc154964714c81a",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_amd_sw_enabled.json": {
+      "bytes": 527,
+      "sha256": "a5441e5ff569a07bf9859d223292021a581aa0295d2a7cb4922ba37000dd15d4",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_cm.json": {
+      "bytes": 852,
+      "sha256": "b835b06bd2ec23954ec95b5b9e697f34c0335ec632c5978d62e541ed06095caa",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_dae.json": {
+      "bytes": 942,
+      "sha256": "7181a4de162f8caadc1e6addddf6e1b12d463075e60e2f4f231a83751234cff0",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_diag_filter.json": {
+      "bytes": 7306,
+      "sha256": "e683a4c8d3406246fb0744f116195f5454ddd456c405d727ae18e707ede1aca5",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_direct_channel.json": {
+      "bytes": 164,
+      "sha256": "4a6c1821edfb7b449edef4bf077f35920579f22af903d6512a4f858b364b33f6",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_flip_state.json": {
+      "bytes": 248,
+      "sha256": "2650d30cdf5edda0137aadb934df4c4eaa340b9da5986eb857958487dd31fe88",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_fmv.json": {
+      "bytes": 1523,
+      "sha256": "8f847925cedf57126e3e418a942aa38eb169b98e34526b21267acdee2e48d1d8",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_fmv_legacy.json": {
+      "bytes": 1583,
+      "sha256": "6453974dac7abc5fbcbc4b2c440610622af51006466ba5642cddcd07eb4f9df0",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_gyro_cal.json": {
+      "bytes": 949,
+      "sha256": "cb35dba47ea34b30d9cdacb0e1996900c4969b0b3652c6bd74b2dd175cc93cd9",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_mag_cal.json": {
+      "bytes": 702,
+      "sha256": "2d429f799792f210ec8795a52837367a639a06daf872a4b24fe948c55095b1b1",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_mag_cal_legacy.json": {
+      "bytes": 313,
+      "sha256": "c1a85962224ad1f69af4c7af9023af5a261e468691ce31942d9d89026a8aadea",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_offbody_detect_phone.json": {
+      "bytes": 173,
+      "sha256": "22c2fe309e4cf8e30931a70d96f9db3ea6b1c133fc73e58d156dd7688b3ce11f",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_rotv.json": {
+      "bytes": 908,
+      "sha256": "325e23678e1f312b87d00343591e17b4f01d01537fc85876a91420669834dcc2",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_tilt.json": {
+      "bytes": 819,
+      "sha256": "af0b552d5838333257bd0656cb9400eeb5d7cbd165195d783701094d2dbd6558",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_tilt_sw_disabled.json": {
+      "bytes": 330,
+      "sha256": "b751cf4fecdd1aa2e66d0a736c9d2fcd23765566814f4d18dd6f771d5f3d6ffe",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_tilt_sw_enabled.json": {
+      "bytes": 452,
+      "sha256": "54f1560d80ce22dbc06fbc34ff16fea186bfc7edb33a7300567c553717998105",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/sns_transport_ppe.json": {
+      "bytes": 438,
+      "sha256": "ba449f97affb7058dd609bff65e5cb9aca78a68a0c126790967903b574a7fc9c",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/config/veml3328_0.json": {
+      "bytes": 1018,
+      "sha256": "62c2b1ea84e94b0e7f1085b1bec1ecc2a40c9691d3359b6e341cab91ef5a4a9c",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/hals.conf": {
+      "bytes": 31,
+      "sha256": "d1716c05221f726b0e8bc16fe257363a4e4ec5a49a20c625230db0c04d010873",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    },
+    "vendor/etc/sensors/sns_reg_config": {
+      "bytes": 329,
+      "sha256": "f4c562ec31cf5b53eb26c151787f230dbef6cc89532860ed61aff94739936419",
+      "source_mtime_ns": 1640995200000000000,
+      "archive_mtime": 1640995200
+    }
+  },
+  "device_deployment": false,
+  "verified_mount": [
+    "/dev/loop0",
+    "/run/gts9-vendor-sensors-jguoopia",
+    "erofs",
+    "ro,nosuid,nodev,noexec,relatime,user_xattr,acl,cache_strategy=readaround",
+    "0",
+    "0"
+  ],
+  "temporary_mount_and_loop_removed": true
+}

@@ -137,7 +137,25 @@ python3 userspace/sensors/verify-stock-assets.py \
 python3 -m unittest tests.test_ssc_stock_assets -v
 ```
 
-The copied stock registry cache still needs its 35 Android vendor config inputs.
+The copied stock registry cache's 35 Android vendor config inputs have also been
+collected read-only, all with the exact cached input mtime. See
+`reference/desktop-bringup/ssc-vendor-config/RESULTS.md`. The offline asset tar
+has 328 verified files and preserves stock content/timestamps. Reproduce it
+using both recorded source archive SHA-256 values:
+
+```sh
+python3 userspace/sensors/stage-assets.py \
+  --stock out/ssc-stock-assets/source.tar.gz --stock-sha256 RECORDED_STOCK_SHA256 \
+  --vendor out/ssc-vendor-config/source.tar.gz --vendor-sha256 RECORDED_VENDOR_SHA256 \
+  --output out/ssc-assets
+python3 -m unittest tests.test_ssc_asset_staging tests.test_ssc_vendor_layout -v
+```
+
+Existing output is refused. This archive has no installer, units, enabled links
+or activation command. Stock `sns_reg_config` also references soc0 identity
+paths absent in current Debian; qualify their HexagonFS mapping and controlled
+early-boot ordering before deployment. Runtime discovery is not verified.
+
 Map stock paths relative to `persist/sensors/registry/` into `PREFIX/sensors/`
 to match this exact HexagonFS implementation, and preserve the cache's input
 mtimes. Do not copy an extra registry directory or apply S9 Ultra's zero-mtime
@@ -149,7 +167,8 @@ referenced segment from owner firmware, recording hashes. Both names are
 already requested by the current DTS. Also prepare sensorspd libraries and a
 device-specific **copy** of the registry; do not expose or chmod the actual
 Android persist partition. Fedora's registry permission helper is deliberately
-not installed. Complete vendor config availability remains unverified here.
+not installed. Firmware authentication and complete runtime discovery remain
+unverified here; vendor config availability and cache mtimes are now verified.
 
 Fedora's `docs/Known-Issues.md` records that starting ADSP late may hang/reset
 the SoC and leaves its ADSP-start service disabled. Do not copy or invoke its

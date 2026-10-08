@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_VENDOR_CONFIG_COLLECTED_OFFLINE_ASSETS_ASSEMBLED.
+Registered3658cb90 before1.217s read-onlyvendor export, same33128fcdaa6/SSH
+10.175.236.134/ADSPoffline. BothLPgeometry+slot0metadata checksums/copiesagree,
+one boundedROloop/EROFS ro,nosuid,nodev,noexec;37files62297bytes;35cacheJSON
+allpresent/exactmtime1640995200;normalunmount/detach/rmdir complete/no mounts
+after. Hostprivate328fileasset tar verified byte/mtime/owner;55firmware+57ADSP
+libs+180copiedregistry/version+35config+1sns_reg.conf, noCDSP/HAL/realpersist.
+39affected hosttests PASS/0skip; no kernel/fullbuild/routing change. Hashes/
+results:reference/desktop-bringup/ssc-vendor-config;bytesonlyignoredout.
+NOTdeploymentready: stocksoc0path absent, qualifyidentitymapping andcontrolled
+earlyboot(auto_boot=true)/oneattemptunits/account/dependencies beforeinstall;
+no lateADSPstart or inventedboardvalues. No firmware/packageinstall/persistent
+devicechange/flash/reboot/charging/PPS/pump/USB/input/kernel/DT/modulechange.
+Ownerpenpressurelater/348unused/fullportactive/331rescue unchanged.
+
 2026-10-08 SSC_STOCK_ASSETS_VERIFIED_VENDOR_CONFIG_PENDING.
 Registered b7575189 RO export on same331 boot28fcdaa6/SSH10.175.236.134:
 316files/73811754bytes/24.955s, exact per-file hashes/mtimes, no skipped links,
