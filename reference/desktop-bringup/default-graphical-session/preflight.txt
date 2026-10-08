@@ -1,0 +1,59 @@
+78ec1906-4713-4837-9acc-fe245647d7cf
+graphical.target
+masked
+masked
+masked
+not-found
+enabled
+inactive
+inactive
+inactive
+# Unit gdm.service is masked.
+# /etc/systemd/system/gts9-palm.service
+[Unit]
+Description=Qualified X710 Wacom and palm-aware touchscreen pair
+After=local-fs.target systemd-udevd.service
+Before=gdm.service
+Conflicts=gts9-touch.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/gts9-palm --load
+RemainAfterExit=yes
+TimeoutStartSec=30
+
+[Install]
+WantedBy=gdm.service
+/usr/bin/kgx
+ms:x:1000:1000::/home/ms:/bin/bash
+QQ
+cataclysm-dda
+dconf
+gnome-session
+goa-1.0
+gtk-3.0
+gtk-4.0
+htop
+ibus
+monitors.xml
+mozilla
+nautilus
+procps
+pulse
+user-dirs.dirs
+user-dirs.locale
+● gts9-power-key.service - X710 power key: backlight toggle, system keeps running
+     Loaded: loaded (/usr/lib/systemd/system/gts9-power-key.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-09-30 00:15:36 CST; 30s ago
+ Invocation: 1657a64ff95a41f5881e19a4a074d906
+   Main PID: 675 (gts9-power-key)
+      Tasks: 1 (limit: 14053)
+     Memory: 64K (peak: 1.7M)
+        CPU: 4ms
+     CGroup: /system.slice/gts9-power-key.service
+             └─675 /usr/libexec/gts9-power-key
+
+Sep 30 00:15:36 gts9 systemd[1]: Started gts9-power-key.service - X710 power key: backlight toggle, system keeps running.
+/usr/local/libexec/gts9-adbd-reconnect
+/usr/local/libexec/gts9-palm
+/usr/local/libexec/gts9-touch
