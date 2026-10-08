@@ -1,0 +1,47 @@
+{
+  "test": "Test346",
+  "verdict": "CLOSED_MANUAL_HANDOFF_TIMEOUT_NO_ACTIVATION_RESTORED331",
+  "target_boot_id": "0ad61ab72af840ff9ca05d195fbb7a6f",
+  "final_boot_id": "a96de8c0383b4f78b976ecc6db3ab793",
+  "workflow_stop": "TimeoutError('manual handoff expired while OFF/unbound')",
+  "cleanup_error": null,
+  "pump_activated": false,
+  "active_samples": 0,
+  "PPS_test_executed": false,
+  "five_minute_acceptance_completed": false,
+  "native_pump_failure_observed": false,
+  "scope_terminated_no_retry": true,
+  "allfive_accepted331_restored": true,
+  "original_module_files": 181,
+  "final_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "final_notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "final_pump_OFF": true,
+  "final": {
+    "PPS": false,
+    "battery": {
+      "current_ua": 948000,
+      "input_limit_ua": 1800000,
+      "soc": 69,
+      "temp_decic": 301,
+      "voltage_uv": 4101000
+    },
+    "boot_attribution": "attributed",
+    "boot_id": "a96de8c0383b4f78b976ecc6db3ab793",
+    "device_NCM": true,
+    "pump_ON": false,
+    "transport": {
+      "rescue": "WiFi",
+      "wifi": "10.175.236.117",
+      "wifi_authenticated": true
+    }
+  },
+  "target_kernel_fault_counts": {},
+  "final_kernel_fault_counts": {},
+  "rollback_required": false,
+  "full_port_verdict": "NOT_READY",
+  "tests": {
+    "executed": false,
+    "build_executed": false,
+    "reason": "physical evidence/closure only; reuse32host/79C/build/W1+sparse"
+  }
+}

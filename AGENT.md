@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test346 CLOSED_MANUAL_HANDOFF_TIMEOUT_NO_ACTIVATION_RESTORED331.
+Original900s guardianhandoff timeout whileOFF/unbound;0activeframes/noentry/no
+activationmarker/noPPS test, not CPU/pumpfailure or300s acceptance. OriginalSTOP
+andrawretained/no restart/rebind. Samecandidate0ad61ab7 OFF/unbound/fixed9/68%
+29.1C/no newkernelfault; ownerPCreturn then exact331/original181/allfive restored.
+Finala96de8c0/WiFi10.175.236.117/69%4.101V30.1C/config51/notes03/DCCabsent/
+pumpOFF/rescue/journal/units/WindowsPASS; rollback_required=false. Futurehandoff
+workflow review/newregistration/authorization required, no newround here.
+Evidenceonlytests/build:false/reuse32host/79C/build/W1sparse. FullportNOT_READY.
+See346PHYSICAL_RESULTS/physical-summary/PHYSICAL_SHA256/raw.
+
 2026-10-08 Test346 STOP_MANUAL_HANDOFF_EXPIRED_BEFORE_ACTIVATION.
 Originalguardian1717 finished900s ownerhandoff timeout/cleanup_error=null;
 handle absent, samecandidate0ad61ab7/noactivationmarker/noentry/0activeframes.
