@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test346 STOP_MANUAL_HANDOFF_EXPIRED_BEFORE_ACTIVATION.
+Originalguardian1717 finished900s ownerhandoff timeout/cleanup_error=null;
+handle absent, samecandidate0ad61ab7/noactivationmarker/noentry/0activeframes.
+NoPPS/pump test executed; workflowSTOP not CPU/chargingfailure or acceptance.
+Rawguardian/fulljournalretained; samebootOFF/unbound/fixed9/68%29.1C/no new
+kernelfault verified. Hosttemporarytrust absent restored onlyfromacceptedkey,
+failedquery retained/no keyscan. AwaitPC USB forunconditionalexact331restore,
+rollback_required=true; no guardianrestart/rebind/retry. Evidenceonlytests/build:false,
+reusequalification. FullportNOT_READY. See346STOP_STATUS/progress/raw.
+
 2026-10-08 Test346 DEPLOYED_GUARDIAN_READY_OFF_UNBOUND_AWAITING_OWNER_C1.
 Fresh331683bdd12 preflight68%29.1C/allfive181/confignotes/rescue/WindowsPASS;
 onepairedinstall, normalcandidate0ad61ab7/WiFi10.175.236.46/config51/notes10/

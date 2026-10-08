@@ -1,0 +1,28 @@
+{
+  "test": "Test346",
+  "verdict": "STOP_MANUAL_HANDOFF_EXPIRED_BEFORE_ACTIVATION",
+  "stage": "RESTORATION_PENDING_PC_USB",
+  "boot_id": "0ad61ab72af840ff9ca05d195fbb7a6f",
+  "primary_error": "TimeoutError('manual handoff expired while OFF/unbound')",
+  "cleanup_error": null,
+  "pump_activated": false,
+  "active_samples": 0,
+  "activation_marker_written": false,
+  "native_pump_failure_observed": false,
+  "hardware_acceptance_executed": false,
+  "guardian_terminal": true,
+  "guardian_restart_allowed": false,
+  "pump_OFF": true,
+  "driver_unbound": true,
+  "current_fixed_voltage_uv": 9000000,
+  "pack_temp_decic": 291,
+  "capacity": 68,
+  "kernel_fault_counts": {},
+  "rollback_required": true,
+  "full_port_verdict": "NOT_READY",
+  "tests": {
+    "executed": false,
+    "build_executed": false,
+    "reason": "physical evidence/status only; unchanged qualification reused"
+  }
+}
