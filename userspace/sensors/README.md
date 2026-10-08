@@ -44,19 +44,52 @@ The verified local output for this preparation is
 `out/ssc-sources/prepared-clean`; its manifest is preserved in the reference
 directory. The proxy availability patch applies with a two-line offset and
 zero fuzz. All five patch inputs match the pinned Fedora commit byte-for-byte.
-These are prepared sources, **not ARM64 binaries or hardware acceptance**.
+Source preparation alone is **not ARM64 compilation or hardware acceptance**.
+
+## Offline Debian ARM64 build
+
+```sh
+docker build -t gts9-ssc-builder:trixie-arm64 \
+  -f userspace/sensors/builder.Dockerfile userspace/sensors
+python3 userspace/sensors/build.py \
+  --sources out/ssc-sources/prepared-clean --output out/ssc-arm64
+python3 -m unittest tests.test_ssc_cross_build tests.test_ssc_source_preparation -v
+```
+
+The base Debian image is pinned by digest. The image's installed package versions,
+compiler version, image identity, recipe hashes and prepared-source hashes are
+recorded with the output; apt repositories themselves are not a frozen snapshot.
+On hosts where Docker needs the existing local proxy, build the image using
+`--network=host --build-arg http_proxy --build-arg https_proxy`. This is only for
+dependency provisioning; component compilation runs with `--network=none`.
+
+The builder checks prepared source identity, copies it into an isolated working
+directory, explicitly enables SSC in the proxy, and checks all staged ELF files
+for ARM64. The sources remain mounted read-only. HexagonRPC unit templates are
+relocated from multiarch libdir to Debian's standard unit directory. No units are
+enabled. `ssc-arm64-stage.tar.gz` is an **offline staging archive**, not an
+installation command or a qualified Debian package. Keep it on the host until
+runtime dependencies, firmware, registry isolation and boot ordering are qualified.
+Existing output is refused; preserve build logs/manifests before cleaning the
+same working output for a new build.
+
+The build runs HexagonRPC's buffer/filesystem tests and the proxy's orientation,
+mount-matrix and XML tests under QEMU as applicable. These do not exercise an ADSP.
+libssc's QRTR/mock-service tests are not run: a cross-compiled binary in the
+networkless container is not a qualified QRTR/SSC runtime environment. Their
+compilation does not establish that sensor discovery or GNOME rotation works.
 
 ## Remaining integration
 
-Build Debian ARM64 packages in a host sysroot/container with matching runtime
+Prepare Debian ARM64 packages with matching runtime
 dependencies. libssc needs GLib, libqmi >=1.33.4 and protobuf-c; the proxy needs
 GUdev, systemd and polkit development inputs as well as libssc. Configure it
 with `-Dssc-support=enabled`, so a missing dependency cannot silently select
 the kernel-IIO-only backend. Use Debian's `/usr/lib/systemd/system` for unit
 templates rather than the architecture library directory. Inspect package
 maintainer scripts before installation; keep ADSP/RPC units inactive until the
-separate physical registration. Current host compilation dependencies have
-not been provisioned and no component was compiled in this step.
+separate physical registration. Actual compilation status and logs are recorded
+in `reference/desktop-bringup/ssc-offline/BUILD_RESULTS.md`.
 
 Next prepare **Samsung X710 signed** `adsp.mdt` and `adsp_dtb.mdt` plus every
 referenced segment from owner firmware, recording hashes. Both names are

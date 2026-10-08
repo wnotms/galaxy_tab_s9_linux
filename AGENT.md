@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_ARM64_COMPILED_NOT_DEPLOYED.
+Fedora-pinned libssc/hexagonrpc/pd-mapper/iio-sensor-proxy compiled in isolated
+Debian trixie ARM64 container, proxy SSC explicitly enabled. All 205 prepared
+source files verified; 68 staged files/8 ARM64 ELF objects/2 relative links.
+24 affected host tests pass; 2 HexagonRPC + 3 proxy executable/XML checks pass,
+with one nested French-locale TAP skip. libssc QRTR runtime tests not run.
+First missing Python target dependency failure retained, fixed container only;
+two unchanged-source/tool warnings documented. No full host/kernel rebuild.
+Artifacts/hashes/logs: reference/desktop-bringup/ssc-offline/BUILD_RESULTS.md.
+No device action or firmware/service/kernel/DT/charging/input/USB changes.
+Next: package ABI/dependencies, signed ADSP+sensor PD, isolated registry and
+controlled boot registration; never late-start ADSP on live desktop. No physical
+rotation pass. Test363 third-party pen/no tip press: wait owner before new capture.
+348 grant unused/final331TWRP retained/full port incomplete.
+
 2026-10-08 SSC_OFFLINE_SOURCES_PREPARED_NOT_BUILT.
 Read-only28fcdaa6/331:ADSPoffline/missingfirmware/no fastrpc-adsp/onlyPMIC-IIO;
 libssc/hexagonrpcd/pd-mapper/iio-sensor-proxy not installed. Fedora remoteHEAD

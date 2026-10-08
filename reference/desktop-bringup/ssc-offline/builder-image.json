@@ -1,0 +1,49 @@
+{
+  "Id": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+  "RepoTags": [
+    "gts9-ssc-builder:trixie-arm64"
+  ],
+  "RepoDigests": [
+    "gts9-ssc-builder@sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0"
+  ],
+  "Comment": "buildkit.dockerfile.v0",
+  "Created": "2026-10-08T19:45:14.122776077+08:00",
+  "Config": {
+    "Env": [
+      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "DEBIAN_FRONTEND=noninteractive"
+    ],
+    "Cmd": [
+      "bash"
+    ]
+  },
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Size": 1780478436,
+  "RootFS": {
+    "Type": "layers",
+    "Layers": [
+      "sha256:a6dc765193a52cbaede3c93a9ff48b9540948dd0774bbe7031fcb5847606f9ac",
+      "sha256:8e05b897d219e8bafd0313fc427f2f632041a9329629efb8fef7d869a5121e28",
+      "sha256:df78ac28550a5b0e943c587d783bf8294a8d637a800e926a2b794b1e3e970c89",
+      "sha256:59f45ed8ab2ecaa9bc080839e5ec1cc0b379c377b66ec48f0d766f32bd0c811b",
+      "sha256:5dab89a3c0821ecc8a58c4dbbcfddf15794d9580f1935de3ac7ccbe81e93a13e"
+    ]
+  },
+  "Metadata": {
+    "LastTagTime": "2026-10-08T11:45:16.883050173Z"
+  },
+  "Descriptor": {
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "digest": "sha256:1b148977ce4662a9d9a28e44b92d3499934ce08fc11f096e32d0fc911b5b79b0",
+    "size": 856
+  },
+  "Identity": {
+    "Build": [
+      {
+        "Ref": "pp97dqj4s5x2f3cad9snmy3x1",
+        "CreatedAt": "2026-10-08T19:45:17.451885971+08:00"
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "verdict": "ARM64_COMPILED_NOT_DEPLOYED",
+  "source_head": "1f566163",
+  "components": [
+    "libssc 0.4.4",
+    "hexagonrpc 0.4.0",
+    "pd-mapper 1.1",
+    "iio-sensor-proxy 3.9 + SSC"
+  ],
+  "staged_files": 68,
+  "arm64_elf_files": 8,
+  "stage_archive": "out/ssc-arm64/ssc-arm64-stage.tar.gz",
+  "stage_archive_sha256": "d462146cb1c03a17789e61e86535c167fcf28ec54ccb0dbda72d853c7e90f7fb",
+  "host_tests": {
+    "executed": true,
+    "tests_run": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 0.0731423140005063,
+    "full_regression_executed": false,
+    "kernel_build_executed": false,
+    "device_operations": false
+  },
+  "upstream_test_executables": [
+    {
+      "component": "hexagonrpc",
+      "name": "iobuffer",
+      "result": "OK",
+      "returncode": 0,
+      "duration": 0.03277301788330078
+    },
+    {
+      "component": "hexagonrpc",
+      "name": "hexagonfs",
+      "result": "OK",
+      "returncode": 0,
+      "duration": 0.03502297401428223
+    },
+    {
+      "component": "proxy",
+      "name": "net.hadess.SensorProxy.policy",
+      "result": "OK",
+      "returncode": 0,
+      "duration": 0.0084228515625
+    },
+    {
+      "component": "proxy",
+      "name": "test-orientation",
+      "result": "OK",
+      "returncode": 0,
+      "duration": 0.08061003684997559
+    },
+    {
+      "component": "proxy",
+      "name": "test-mount-matrix",
+      "result": "OK",
+      "returncode": 0,
+      "duration": 0.08918023109436035
+    }
+  ],
+  "tap_subtest_skips": [
+    "comma-decimal-separator: fr_FR.UTF-8 unavailable"
+  ],
+  "libssc_runtime_tests_executed": false,
+  "device_operations": false,
+  "hardware_rotation_verified": false,
+  "package_installation_executed": false,
+  "warnings": [
+    "GLib resource generator assumes 2.54 after version detection warning",
+    "Pinned proxy source unused variable i at iio-sensor-proxy.c:722"
+  ],
+  "first_attempt": "STOP: target Python development dependency missing; fixed container dependency only",
+  "unresolved": [
+    "Debian package runtime dependency/ABI qualification",
+    "Samsung signed ADSP/ADSP DTB and sensor PD firmware",
+    "Isolated registry copy",
+    "Controlled boot-time ADSP startup registration",
+    "Sensor discovery and physical orientation acceptance"
+  ]
+}
