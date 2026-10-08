@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/home/ms/.ssh/gts9-test292-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "-o",
+    "ProxyCommand=/mnt/f/msys64/ucrt64/bin/python.exe -u -c 'import socket,os,sys,threading,msvcrt\nif sys.platform!=\"win32\":raise RuntimeError(\"native Windows TCP required\")\nmsvcrt.setmode(0,os.O_BINARY);msvcrt.setmode(1,os.O_BINARY)\ns=socket.create_connection((sys.argv[1],22),3);s.settimeout(1)\nstop=threading.Event()\ndef upload():\n try:\n  while not stop.is_set():\n   data=os.read(0,65536)\n   if not data:break\n   s.sendall(data)\n finally:stop.set()\nthreading.Thread(target=upload,daemon=True).start()\ntry:\n while not stop.is_set():\n  try:data=s.recv(65536)\n  except socket.timeout:continue\n  if not data:break\n  pos=0\n  while pos<len(data):\n   n=os.write(1,data[pos:])\n   if n<=0:raise OSError(\"proxy stdout closed\")\n   pos+=n\nfinally:stop.set();s.close()\n' 10.175.236.175",
+    "root@10.175.236.175",
+    "cat /proc/sys/kernel/random/boot_id; uname -a; ls -l /dev/dri /dev/input; ls -l /sys/bus/platform/devices/3d00000.gpu/driver /sys/bus/platform/devices/3d6a000.gmu/driver; cat /sys/module/msm/parameters/separate_gpu_kms; cat /sys/module/msm/parameters/skip_gpu; ls -l /lib/firmware/qcom/a740* /lib/firmware/qcom/a730* /lib/firmware/qcom/sm8550/*; dpkg-query -W libgl1-mesa-dri mesa-vulkan-drivers xserver-xorg-core xserver-xorg-video-fbdev xserver-xorg-input-libinput xfce4 gnome-shell weston libdrm-tests mesa-utils vulkan-tools 2>/dev/null; cat /proc/bus/input/devices; df -h /; systemctl get-default; ls -l /sys/class/power_supply/sm5714-usb; zcat /proc/config.gz | sed -n \"/^CONFIG_DRM/p; /^CONFIG_QCOM_AOSS_QMP/p; /^CONFIG_QCOM_IPCC/p; /^CONFIG_INPUT/p\"; true"
+  ],
+  "ended_utc": "2026-10-08T06:11:01.723977+00:00",
+  "started_utc": "2026-10-08T06:11:01.148066+00:00",
+  "status": 0
+}

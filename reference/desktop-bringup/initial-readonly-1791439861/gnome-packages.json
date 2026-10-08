@@ -1,0 +1,3323 @@
+{
+  "purpose": "GNOME Wayland/Mesa rootfs preparation; no device installation",
+  "baseline_boot_id": "be1baaaa47fc41f582558f7092c01653",
+  "suite": "Debian13 trixie; existing device signed APT indexes",
+  "package_count": 368,
+  "download_bytes": 165385796,
+  "upgrades": 0,
+  "removals": 0,
+  "packages": [
+    {
+      "package": "libheif-plugin-libde265",
+      "version": "1.23.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libheif-plugin-libde265_1.23.4-1~deb13u1_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/libh/libheif/libheif-plugin-libde265_1.23.4-1%7edeb13u1_arm64.deb",
+      "bytes": 19472,
+      "sha256": "fa3aefc0a8f41c5e8830828bb612e2b424109e03712e0918d548dabef97c07a1"
+    },
+    {
+      "package": "libheif-plugin-dav1d",
+      "version": "1.23.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libheif-plugin-dav1d_1.23.4-1~deb13u1_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/libh/libheif/libheif-plugin-dav1d_1.23.4-1%7edeb13u1_arm64.deb",
+      "bytes": 21468,
+      "sha256": "9b7250c973aa8c28c99568e319f7eb964cd35147cd2971fc309c9f40f8265a9a"
+    },
+    {
+      "package": "libheif1",
+      "version": "1.23.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libheif1_1.23.4-1~deb13u1_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/libh/libheif/libheif1_1.23.4-1%7edeb13u1_arm64.deb",
+      "bytes": 693080,
+      "sha256": "635055c0cc9e7459f42588ee0b6c9e462388cbb87008857638a22337b8c1d959"
+    },
+    {
+      "package": "heif-gdk-pixbuf",
+      "version": "1.23.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "heif-gdk-pixbuf_1.23.4-1~deb13u1_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/libh/libheif/heif-gdk-pixbuf_1.23.4-1%7edeb13u1_arm64.deb",
+      "bytes": 12992,
+      "sha256": "422abad8c3f0cb3d81e9c91287de579d7d44553bd19b6952616ee3a2172d7856"
+    },
+    {
+      "package": "heif-thumbnailer",
+      "version": "1.23.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "heif-thumbnailer_1.23.4-1~deb13u1_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/libh/libheif/heif-thumbnailer_1.23.4-1%7edeb13u1_arm64.deb",
+      "bytes": 21540,
+      "sha256": "7217a4b64548096876ae37011c2a7c398a8c8c9661e6b23f2a71ad52a0e506a6"
+    },
+    {
+      "package": "libgstreamer-plugins-base1.0-0",
+      "version": "1.26.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "libgstreamer-plugins-base1.0-0_1.26.2-1+deb13u2_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base1.0/libgstreamer-plugins-base1.0-0_1.26.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 897596,
+      "sha256": "fa937f08b9a1c7f868a8c6e997b0d7205440bf85429ad1f9a87e62cba99c748e"
+    },
+    {
+      "package": "libgstreamer-gl1.0-0",
+      "version": "1.26.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "libgstreamer-gl1.0-0_1.26.2-1+deb13u2_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base1.0/libgstreamer-gl1.0-0_1.26.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 247548,
+      "sha256": "61d3ce3107d55024a614a8f097df728e1306e3aabe3d96fea3a46ea5a7c550e4"
+    },
+    {
+      "package": "gstreamer1.0-plugins-base",
+      "version": "1.26.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "gstreamer1.0-plugins-base_1.26.2-1+deb13u2_arm64.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base1.0/gstreamer1.0-plugins-base_1.26.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 671264,
+      "sha256": "fe1dfdb103808bfe92966bc1ab66b4227ba8d3ba8dde46b51ca84894137c498b"
+    },
+    {
+      "package": "xserver-common",
+      "version": "2:21.1.16-1.3+deb13u4",
+      "architecture": "all",
+      "filename": "xserver-common_21.1.16-1.3+deb13u4_all.deb",
+      "url": "https://security.debian.org/debian-security/pool/updates/main/x/xorg-server/xserver-common_21.1.16-1.3%2bdeb13u4_all.deb",
+      "bytes": 2410256,
+      "sha256": "94bc0dcceeefabd4f706af19b3424de7f827758d0ebad5c18c52e73365d7f3ab"
+    },
+    {
+      "package": "libsane-common",
+      "version": "1.3.1-3",
+      "architecture": "all",
+      "filename": "libsane-common_1.3.1-3_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/sane-backends/libsane-common_1.3.1-3_all.deb",
+      "bytes": 1307040,
+      "sha256": "ab5887db59bb39c2f19063da069cb065d69f04675aa2f0b53600e621bc9ba07f"
+    },
+    {
+      "package": "libaccountsservice0",
+      "version": "23.13.9-7",
+      "architecture": "arm64",
+      "filename": "libaccountsservice0_23.13.9-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/accountsservice/libaccountsservice0_23.13.9-7_arm64.deb",
+      "bytes": 53152,
+      "sha256": "f34991751e1a47132cef6540ae36e32042287ce02c7338bde0bab9a7c0d3b539"
+    },
+    {
+      "package": "accountsservice",
+      "version": "23.13.9-7",
+      "architecture": "arm64",
+      "filename": "accountsservice_23.13.9-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/accountsservice/accountsservice_23.13.9-7_arm64.deb",
+      "bytes": 86684,
+      "sha256": "9f29eb30ef167b5dc3043d72a1b8d4f822a15298a00bace29f04012079c70416"
+    },
+    {
+      "package": "acl",
+      "version": "2.3.2-2+b1",
+      "architecture": "arm64",
+      "filename": "acl_2.3.2-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/acl/acl_2.3.2-2%2bb1_arm64.deb",
+      "bytes": 63336,
+      "sha256": "099b5f8bfa3ffea30a10308a89a5467d3fa7d8d16b94df931f0299344c2a4291"
+    },
+    {
+      "package": "bubblewrap",
+      "version": "0.12.0-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "bubblewrap_0.12.0-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/b/bubblewrap/bubblewrap_0.12.0-1%7edeb13u1_arm64.deb",
+      "bytes": 54820,
+      "sha256": "d1ac1d0d81c815fc15842b9f04fdf414830ed14a0a602bf6344740f90bb36c00"
+    },
+    {
+      "package": "colord-data",
+      "version": "1.4.7-3",
+      "architecture": "all",
+      "filename": "colord-data_1.4.7-3_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/colord/colord-data_1.4.7-3_all.deb",
+      "bytes": 1132212,
+      "sha256": "5ea4cc01026950a5f74e28b6109fd0f7a2863920e532e0bfa6d1df3572ec2923"
+    },
+    {
+      "package": "libjson-glib-1.0-common",
+      "version": "1.10.6+ds-2",
+      "architecture": "all",
+      "filename": "libjson-glib-1.0-common_1.10.6+ds-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/j/json-glib/libjson-glib-1.0-common_1.10.6%2bds-2_all.deb",
+      "bytes": 62300,
+      "sha256": "2c6352e0b10b3bf2fe184eeaa5f4e8cfa69b82053dc2e5ef137f951ba59315c8"
+    },
+    {
+      "package": "libjson-glib-1.0-0",
+      "version": "1.10.6+ds-2",
+      "architecture": "arm64",
+      "filename": "libjson-glib-1.0-0_1.10.6+ds-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/j/json-glib/libjson-glib-1.0-0_1.10.6%2bds-2_arm64.deb",
+      "bytes": 59056,
+      "sha256": "616d3789339acc49ba9bbdfc7e9d5ceb6f9ca6eafa9b466bdbea80f071027da9"
+    },
+    {
+      "package": "libgusb2",
+      "version": "0.4.9-1+b1",
+      "architecture": "arm64",
+      "filename": "libgusb2_0.4.9-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgusb/libgusb2_0.4.9-1%2bb1_arm64.deb",
+      "bytes": 34932,
+      "sha256": "4bfcd4fb459a8791f7ea3347373f5ad210462a4c01830072fb9bde04fd5610d1"
+    },
+    {
+      "package": "libcolorhug2",
+      "version": "1.4.7-3",
+      "architecture": "arm64",
+      "filename": "libcolorhug2_1.4.7-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/colord/libcolorhug2_1.4.7-3_arm64.deb",
+      "bytes": 38180,
+      "sha256": "02c634573fc671ba044048b82ed2e292cd51ed32ef2d3eac47b88a2388471c06"
+    },
+    {
+      "package": "libexif12",
+      "version": "0.6.25-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libexif12_0.6.25-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libe/libexif/libexif12_0.6.25-1%2bdeb13u1_arm64.deb",
+      "bytes": 417336,
+      "sha256": "722a35cafb4d17b470063c03e989cf0665162a9e74bea5b190151dafb169ca76"
+    },
+    {
+      "package": "libaom3",
+      "version": "3.12.1-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libaom3_3.12.1-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/aom/libaom3_3.12.1-1%2bdeb13u1_arm64.deb",
+      "bytes": 1670644,
+      "sha256": "552e2bd21772a39713a0c63e814039f558b355d048f0d0bfc4009658253cc1e9"
+    },
+    {
+      "package": "libgav1-1",
+      "version": "0.19.0-3+b1",
+      "architecture": "arm64",
+      "filename": "libgav1-1_0.19.0-3+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgav1/libgav1-1_0.19.0-3%2bb1_arm64.deb",
+      "bytes": 490940,
+      "sha256": "441bdfa9e19df94067968de72aafa71d7b09877fa14153f456f828e140f8e3ff"
+    },
+    {
+      "package": "librav1e0.7",
+      "version": "0.7.1-9+b2",
+      "architecture": "arm64",
+      "filename": "librav1e0.7_0.7.1-9+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/r/rust-rav1e/librav1e0.7_0.7.1-9%2bb2_arm64.deb",
+      "bytes": 661792,
+      "sha256": "1b81b3c3494033bb32573442ce49f253dc76e262de8b28d4bfa3f433cd9783d4"
+    },
+    {
+      "package": "libsvtav1enc2",
+      "version": "2.3.0+dfsg-1",
+      "architecture": "arm64",
+      "filename": "libsvtav1enc2_2.3.0+dfsg-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/svt-av1/libsvtav1enc2_2.3.0%2bdfsg-1_arm64.deb",
+      "bytes": 1557884,
+      "sha256": "9b7de4fcdaba3fdc0fe8eed956cd5ce270158c858493db901bfcb9bd4a432fb6"
+    },
+    {
+      "package": "libyuv0",
+      "version": "0.0.1904.20250204-1",
+      "architecture": "arm64",
+      "filename": "libyuv0_0.0.1904.20250204-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liby/libyuv/libyuv0_0.0.1904.20250204-1_arm64.deb",
+      "bytes": 136900,
+      "sha256": "46d8d7bf6e333b460aaeac9cec0a410ed8f1988a47cb481c191ddc689c02215a"
+    },
+    {
+      "package": "libavif16",
+      "version": "1.2.1-1.2",
+      "architecture": "arm64",
+      "filename": "libavif16_1.2.1-1.2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libavif/libavif16_1.2.1-1.2_arm64.deb",
+      "bytes": 125176,
+      "sha256": "1435e95c019f54b062b5526119664121dbb05d2b76f50f6733f90abc2ef700bc"
+    },
+    {
+      "package": "libde265-0",
+      "version": "1.0.15-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "libde265-0_1.0.15-1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libde265/libde265-0_1.0.15-1%2bdeb13u2_arm64.deb",
+      "bytes": 153012,
+      "sha256": "c110a500d23d37288e12dccb91aef3bcd9c596e4f2195191d6e5c95cd2d8a8ed"
+    },
+    {
+      "package": "libimagequant0",
+      "version": "2.18.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libimagequant0_2.18.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libimagequant/libimagequant0_2.18.0-1%2bb2_arm64.deb",
+      "bytes": 34596,
+      "sha256": "cac78241d9022f4107c9e167aa9e3fe68878eb8b0c6388b780b99ea1ad7eb628"
+    },
+    {
+      "package": "libxpm4",
+      "version": "1:3.5.17-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libxpm4_3.5.17-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxpm/libxpm4_3.5.17-1%2bdeb13u1_arm64.deb",
+      "bytes": 52884,
+      "sha256": "7af00645e130ee865951795dee7b504e82f59e871ec1c6e255904edcb8ed266f"
+    },
+    {
+      "package": "libgd3",
+      "version": "2.3.3-14~deb13u1",
+      "architecture": "arm64",
+      "filename": "libgd3_2.3.3-14~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgd2/libgd3_2.3.3-14%7edeb13u1_arm64.deb",
+      "bytes": 115120,
+      "sha256": "8664657bfecdd25ba555d27781f1a40f6bf05053d249c2997be8e250f8f353e9"
+    },
+    {
+      "package": "libltdl7",
+      "version": "2.5.4-4",
+      "architecture": "arm64",
+      "filename": "libltdl7_2.5.4-4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libt/libtool/libltdl7_2.5.4-4_arm64.deb",
+      "bytes": 414952,
+      "sha256": "f8877edda0d64026421de4e73c306903be05cf291721c6d0b9dee01af2445180"
+    },
+    {
+      "package": "libgphoto2-port12t64",
+      "version": "2.5.31-4",
+      "architecture": "arm64",
+      "filename": "libgphoto2-port12t64_2.5.31-4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgphoto2/libgphoto2-port12t64_2.5.31-4_arm64.deb",
+      "bytes": 135468,
+      "sha256": "4be36c9d15684aaf785fb636a2e935cd97d9aa47d1c319b72795af8800d9373c"
+    },
+    {
+      "package": "libgphoto2-6t64",
+      "version": "2.5.31-4",
+      "architecture": "arm64",
+      "filename": "libgphoto2-6t64_2.5.31-4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgphoto2/libgphoto2-6t64_2.5.31-4_arm64.deb",
+      "bytes": 722132,
+      "sha256": "3de0b458b0c4ae8c8dd8861dbe07e01e92688a5bbd6f5b9404c02bb6481685fb"
+    },
+    {
+      "package": "libieee1284-3t64",
+      "version": "0.2.11-14.1+b1",
+      "architecture": "arm64",
+      "filename": "libieee1284-3t64_0.2.11-14.1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libieee1284/libieee1284-3t64_0.2.11-14.1%2bb1_arm64.deb",
+      "bytes": 27448,
+      "sha256": "61bd3bcc7bacb674b6f015b3be883e28bcf0d6e9f592916a97494022d94c3597"
+    },
+    {
+      "package": "libgpg-error0",
+      "version": "1.51-4",
+      "architecture": "arm64",
+      "filename": "libgpg-error0_1.51-4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgpg-error/libgpg-error0_1.51-4_arm64.deb",
+      "bytes": 78544,
+      "sha256": "f9a8ee3f325360dbbb1c98331c60c7aa454a054a8a4564bc36b3e52fb53e019e"
+    },
+    {
+      "package": "libassuan9",
+      "version": "3.0.2-2",
+      "architecture": "arm64",
+      "filename": "libassuan9_3.0.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libassuan/libassuan9_3.0.2-2_arm64.deb",
+      "bytes": 59112,
+      "sha256": "a4c36f4cbc7c09064fa944bf4f5d704ed6e2290b12d07a4d766a5d415b7c120d"
+    },
+    {
+      "package": "libgcrypt20",
+      "version": "1.11.0-7+deb13u1",
+      "architecture": "arm64",
+      "filename": "libgcrypt20_1.11.0-7+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgcrypt20/libgcrypt20_1.11.0-7%2bdeb13u1_arm64.deb",
+      "bytes": 741128,
+      "sha256": "243a42b879c6675348279a3f9a40e535d57185af00dbfd51b7481e777f163da6"
+    },
+    {
+      "package": "gpgconf",
+      "version": "2.4.7-21+deb13u1+b5",
+      "architecture": "arm64",
+      "filename": "gpgconf_2.4.7-21+deb13u1+b5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gpgconf_2.4.7-21%2bdeb13u1%2bb5_arm64.deb",
+      "bytes": 121740,
+      "sha256": "ad72524b1155a7a0b8eb4ee58f46250de8a93e5aea3637ea0ad0feb35195197c"
+    },
+    {
+      "package": "libksba8",
+      "version": "1.6.7-2+b1",
+      "architecture": "arm64",
+      "filename": "libksba8_1.6.7-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libk/libksba/libksba8_1.6.7-2%2bb1_arm64.deb",
+      "bytes": 125004,
+      "sha256": "ee001c93cf2a5e495e1885fac2d7ec1474bd619539f0f33a0b326ac511e04297"
+    },
+    {
+      "package": "libnpth0t64",
+      "version": "1.8-3",
+      "architecture": "arm64",
+      "filename": "libnpth0t64_1.8-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/npth/libnpth0t64_1.8-3_arm64.deb",
+      "bytes": 22900,
+      "sha256": "68bca0187b0121e25706fc79cee63233168f4b4acbfa1c3f34f0880be6c16a5c"
+    },
+    {
+      "package": "dirmngr",
+      "version": "2.4.7-21+deb13u1+b5",
+      "architecture": "arm64",
+      "filename": "dirmngr_2.4.7-21+deb13u1+b5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/dirmngr_2.4.7-21%2bdeb13u1%2bb5_arm64.deb",
+      "bytes": 358500,
+      "sha256": "e98ad509c98d2c38364b6f86d5f217232c8a3ed6832bcd7be077bfeb9b41ba36"
+    },
+    {
+      "package": "gnupg-l10n",
+      "version": "2.4.7-21+deb13u1",
+      "architecture": "all",
+      "filename": "gnupg-l10n_2.4.7-21+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gnupg-l10n_2.4.7-21%2bdeb13u1_all.deb",
+      "bytes": 748620,
+      "sha256": "65c0b5b06123f81f08cfa9b0be313cbc9cf6255c550d70eabd8b175ce8928a35"
+    },
+    {
+      "package": "gpg",
+      "version": "2.4.7-21+deb13u1+b5",
+      "architecture": "arm64",
+      "filename": "gpg_2.4.7-21+deb13u1+b5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gpg_2.4.7-21%2bdeb13u1%2bb5_arm64.deb",
+      "bytes": 578012,
+      "sha256": "8bca990ef2b2c670024ccae80d903fc2edd163d6bee529bc4e51107a1e22ffaa"
+    },
+    {
+      "package": "pinentry-curses",
+      "version": "1.3.1-2",
+      "architecture": "arm64",
+      "filename": "pinentry-curses_1.3.1-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pinentry/pinentry-curses_1.3.1-2_arm64.deb",
+      "bytes": 83480,
+      "sha256": "038633a7ae80fb2cefc1d13eedfea7797254a08eaee7e9acdc481818011c0b0c"
+    },
+    {
+      "package": "gpg-agent",
+      "version": "2.4.7-21+deb13u1+b5",
+      "architecture": "arm64",
+      "filename": "gpg-agent_2.4.7-21+deb13u1+b5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gpg-agent_2.4.7-21%2bdeb13u1%2bb5_arm64.deb",
+      "bytes": 249956,
+      "sha256": "e029be364b3fd9495ad10a8043289bf35685364d813373232f510ffde2e5e469"
+    },
+    {
+      "package": "gpgsm",
+      "version": "2.4.7-21+deb13u1+b5",
+      "architecture": "arm64",
+      "filename": "gpgsm_2.4.7-21+deb13u1+b5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gpgsm_2.4.7-21%2bdeb13u1%2bb5_arm64.deb",
+      "bytes": 251836,
+      "sha256": "e826f13ae083ed057cd6e8868c00db4383e017ce84f34ceed6440c4996c30183"
+    },
+    {
+      "package": "gnupg",
+      "version": "2.4.7-21+deb13u1",
+      "architecture": "all",
+      "filename": "gnupg_2.4.7-21+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnupg2/gnupg_2.4.7-21%2bdeb13u1_all.deb",
+      "bytes": 417112,
+      "sha256": "e68f0fd24a7a62f1112ae3e442564e134f21040492f11d1aefa7b18de93ebf6e"
+    },
+    {
+      "package": "libgpgme11t64",
+      "version": "1.24.2-3",
+      "architecture": "arm64",
+      "filename": "libgpgme11t64_1.24.2-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gpgme1.0/libgpgme11t64_1.24.2-3_arm64.deb",
+      "bytes": 328860,
+      "sha256": "af1f36d7c88c0baf4139ba796fad3791cf45ac6c6103bb4194b7b167a94a39d0"
+    },
+    {
+      "package": "libgpgmepp6t64",
+      "version": "1.24.2-3",
+      "architecture": "arm64",
+      "filename": "libgpgmepp6t64_1.24.2-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gpgme1.0/libgpgmepp6t64_1.24.2-3_arm64.deb",
+      "bytes": 327620,
+      "sha256": "fcb993b006385fc5739a49eb07af9eef8137689b17ce8e3f1be06e46b9133bbc"
+    },
+    {
+      "package": "libnspr4",
+      "version": "2:4.36-1",
+      "architecture": "arm64",
+      "filename": "libnspr4_4.36-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/nspr/libnspr4_4.36-1_arm64.deb",
+      "bytes": 102088,
+      "sha256": "b8cd0221e4c35a77ec6e3b89959ca96deb75919a3c55b6735ca0288a1b61bdbb"
+    },
+    {
+      "package": "libnss3",
+      "version": "2:3.110-1+deb13u4",
+      "architecture": "arm64",
+      "filename": "libnss3_3.110-1+deb13u4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/nss/libnss3_3.110-1%2bdeb13u4_arm64.deb",
+      "bytes": 1292972,
+      "sha256": "1a9f35c238e8bbb570fbdae88ffe43a3cf3462e1582cbe0903a9aa949e61f3e8"
+    },
+    {
+      "package": "libpoppler147",
+      "version": "25.03.0-5+deb13u4",
+      "architecture": "arm64",
+      "filename": "libpoppler147_25.03.0-5+deb13u4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/poppler/libpoppler147_25.03.0-5%2bdeb13u4_arm64.deb",
+      "bytes": 1914408,
+      "sha256": "12559699354e7d70f329e9a3e631cfcdf875e57301c5fd849d8f7c289df1fd63"
+    },
+    {
+      "package": "libpoppler-glib8t64",
+      "version": "25.03.0-5+deb13u4",
+      "architecture": "arm64",
+      "filename": "libpoppler-glib8t64_25.03.0-5+deb13u4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/poppler/libpoppler-glib8t64_25.03.0-5%2bdeb13u4_arm64.deb",
+      "bytes": 139928,
+      "sha256": "153d1c63c1135ee1868963e2074bbfe6ebdb77235bd9b24f0a75793b49515343"
+    },
+    {
+      "package": "libsnmp-base",
+      "version": "5.9.4+dfsg-2+deb13u1",
+      "architecture": "all",
+      "filename": "libsnmp-base_5.9.4+dfsg-2+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/net-snmp/libsnmp-base_5.9.4%2bdfsg-2%2bdeb13u1_all.deb",
+      "bytes": 1769852,
+      "sha256": "a6221118a34ef418a77e923617ba009efae93b592abc4d7c373d46cb5daac69f"
+    },
+    {
+      "package": "libsnmp40t64",
+      "version": "5.9.4+dfsg-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "libsnmp40t64_5.9.4+dfsg-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/net-snmp/libsnmp40t64_5.9.4%2bdfsg-2%2bdeb13u1_arm64.deb",
+      "bytes": 2497440,
+      "sha256": "b53b661c800033d8d27cb20f75e8ea7302ea20b0e00bb97f4ce2ea48b5bbe739"
+    },
+    {
+      "package": "libv4lconvert0t64",
+      "version": "1.30.1-1",
+      "architecture": "arm64",
+      "filename": "libv4lconvert0t64_1.30.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/v4l-utils/libv4lconvert0t64_1.30.1-1_arm64.deb",
+      "bytes": 150968,
+      "sha256": "b7e56d6e148ef9dcff8074b953ed4c3f3c4014ee63a6bbc5d3e72c4d84697151"
+    },
+    {
+      "package": "libv4l-0t64",
+      "version": "1.30.1-1",
+      "architecture": "arm64",
+      "filename": "libv4l-0t64_1.30.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/v4l-utils/libv4l-0t64_1.30.1-1_arm64.deb",
+      "bytes": 115348,
+      "sha256": "0daab812f42d309969a867230d2ec9b6ad2127bf884bf8f208e5035e5defef5a"
+    },
+    {
+      "package": "libsane1",
+      "version": "1.3.1-3+b1",
+      "architecture": "arm64",
+      "filename": "libsane1_1.3.1-3+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/sane-backends/libsane1_1.3.1-3%2bb1_arm64.deb",
+      "bytes": 2404460,
+      "sha256": "d198fa92d9a98888e7add8d812a4ddd8a4920fa176b3c15c9d18204f9e9d06e0"
+    },
+    {
+      "package": "colord",
+      "version": "1.4.7-3",
+      "architecture": "arm64",
+      "filename": "colord_1.4.7-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/colord/colord_1.4.7-3_arm64.deb",
+      "bytes": 169352,
+      "sha256": "fd65eb0262b8289e451a4883bcf3ea88ef3467ced5a38c3a0fc295989874ff8a"
+    },
+    {
+      "package": "libisl23",
+      "version": "0.27-1",
+      "architecture": "arm64",
+      "filename": "libisl23_0.27-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/i/isl/libisl23_0.27-1_arm64.deb",
+      "bytes": 600836,
+      "sha256": "21c490db3fa5f0a517c55090a199334da6164589772ebd922dff1e569c78515d"
+    },
+    {
+      "package": "libmpfr6",
+      "version": "4.2.2-1",
+      "architecture": "arm64",
+      "filename": "libmpfr6_4.2.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mpfr4/libmpfr6_4.2.2-1_arm64.deb",
+      "bytes": 685000,
+      "sha256": "628a4ef58cc6815880f72e9d3953984a379a017e4042bc575f1fcbf3954d79ac"
+    },
+    {
+      "package": "libmpc3",
+      "version": "1.3.1-1+b3",
+      "architecture": "arm64",
+      "filename": "libmpc3_1.3.1-1+b3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mpclib3/libmpc3_1.3.1-1%2bb3_arm64.deb",
+      "bytes": 50480,
+      "sha256": "d4cfe026a624e51641c80ef2af77387185714f62f3b5c87035e62d9ed8d9eec1"
+    },
+    {
+      "package": "cpp-14-aarch64-linux-gnu",
+      "version": "14.2.0-19",
+      "architecture": "arm64",
+      "filename": "cpp-14-aarch64-linux-gnu_14.2.0-19_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcc-14/cpp-14-aarch64-linux-gnu_14.2.0-19_arm64.deb",
+      "bytes": 9168888,
+      "sha256": "8e588ac3efe06f7784b08feac584c70e6965b74c045bae7e4e80bb42938f7dbe"
+    },
+    {
+      "package": "cpp-14",
+      "version": "14.2.0-19",
+      "architecture": "arm64",
+      "filename": "cpp-14_14.2.0-19_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcc-14/cpp-14_14.2.0-19_arm64.deb",
+      "bytes": 1276,
+      "sha256": "0b440241f7c3e2e87f2d0f1dd36792c4e2705d38a699ed331818799f21ef9437"
+    },
+    {
+      "package": "cpp-aarch64-linux-gnu",
+      "version": "4:14.2.0-1",
+      "architecture": "arm64",
+      "filename": "cpp-aarch64-linux-gnu_14.2.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcc-defaults/cpp-aarch64-linux-gnu_14.2.0-1_arm64.deb",
+      "bytes": 4832,
+      "sha256": "bd9c9f4536a0aea285c4735d2dfedff624f8457b8f1bb3d15ab924e029cd7aff"
+    },
+    {
+      "package": "cpp",
+      "version": "4:14.2.0-1",
+      "architecture": "arm64",
+      "filename": "cpp_14.2.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcc-defaults/cpp_14.2.0-1_arm64.deb",
+      "bytes": 1568,
+      "sha256": "88b702b0fa5942a4ee52c27f1ccf6316b831357e86693b709d216ba43348172e"
+    },
+    {
+      "package": "dconf-cli",
+      "version": "0.40.0-5",
+      "architecture": "arm64",
+      "filename": "dconf-cli_0.40.0-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/d/dconf/dconf-cli_0.40.0-5_arm64.deb",
+      "bytes": 27868,
+      "sha256": "308c9e8e42040169fbeeee7f5dfe557b2031d7dca0dc90acb967ff30e1ad2ead"
+    },
+    {
+      "package": "fonts-quicksand",
+      "version": "0.2016-2.1",
+      "architecture": "all",
+      "filename": "fonts-quicksand_0.2016-2.1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/f/fonts-quicksand/fonts-quicksand_0.2016-2.1_all.deb",
+      "bytes": 128024,
+      "sha256": "1175e5c64f116887b37ec3c8faea1f411bdef356580bc22298c3c9da75fac120"
+    },
+    {
+      "package": "desktop-base",
+      "version": "13.0.4",
+      "architecture": "all",
+      "filename": "desktop-base_13.0.4_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/d/desktop-base/desktop-base_13.0.4_all.deb",
+      "bytes": 9867896,
+      "sha256": "dbcc12beace7044dfc29fcfdf653d8533b13821e5dd9075b5616be5563ee1776"
+    },
+    {
+      "package": "desktop-file-utils",
+      "version": "0.28-1",
+      "architecture": "arm64",
+      "filename": "desktop-file-utils_0.28-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/d/desktop-file-utils/desktop-file-utils_0.28-1_arm64.deb",
+      "bytes": 90076,
+      "sha256": "3d78d8418c90dfd1b07ef7941f032e398dacfd3766bbf7d99a79589610b4c5ab"
+    },
+    {
+      "package": "libdevmapper1.02.1",
+      "version": "2:1.02.205-2",
+      "architecture": "arm64",
+      "filename": "libdevmapper1.02.1_1.02.205-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/l/lvm2/libdevmapper1.02.1_1.02.205-2_arm64.deb",
+      "bytes": 117956,
+      "sha256": "4d783b235eb9857ec96fabd0f161a84426706d079ec82ef5a91cbbf9dd644904"
+    },
+    {
+      "package": "dmsetup",
+      "version": "2:1.02.205-2",
+      "architecture": "arm64",
+      "filename": "dmsetup_1.02.205-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/l/lvm2/dmsetup_1.02.205-2_arm64.deb",
+      "bytes": 76072,
+      "sha256": "f802c1ec2d6f45a6544f09c5da72f9688e06208d12bb76ac9b25f2cfa8033306"
+    },
+    {
+      "package": "eject",
+      "version": "2.41.5-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "eject_2.41.5-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/u/util-linux/eject_2.41.5-0%2bdeb13u1_arm64.deb",
+      "bytes": 63664,
+      "sha256": "ba1e8e9ea93305ff98c4a372df1af490be38ec38505f754a4f2b6f54e37c6a12"
+    },
+    {
+      "package": "evolution-data-server-common",
+      "version": "3.56.2-0+deb13u1",
+      "architecture": "all",
+      "filename": "evolution-data-server-common_3.56.2-0+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/evolution-data-server/evolution-data-server-common_3.56.2-0%2bdeb13u1_all.deb",
+      "bytes": 1444412,
+      "sha256": "5a217df61bf07fd06ec8cd045dab4c5a59bb34c5ddaeff437c9e6df5e6d55111"
+    },
+    {
+      "package": "fonts-cantarell",
+      "version": "0.303.1-4",
+      "architecture": "all",
+      "filename": "fonts-cantarell_0.303.1-4_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/f/fonts-cantarell/fonts-cantarell_0.303.1-4_all.deb",
+      "bytes": 113824,
+      "sha256": "21f8160696cd2b51ac104e735fd63d0e2245cd84cf75f17919f1425dce4ea258"
+    },
+    {
+      "package": "fonts-noto-core",
+      "version": "20201225-2",
+      "architecture": "all",
+      "filename": "fonts-noto-core_20201225-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/f/fonts-noto/fonts-noto-core_20201225-2_all.deb",
+      "bytes": 12188336,
+      "sha256": "97978d09b68445fcf85342b106cd2e812d7813e3d5626f9884a5f344c3a55973"
+    },
+    {
+      "package": "libfuse3-4",
+      "version": "3.17.2-3",
+      "architecture": "arm64",
+      "filename": "libfuse3-4_3.17.2-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/f/fuse3/libfuse3-4_3.17.2-3_arm64.deb",
+      "bytes": 93444,
+      "sha256": "66793b6b9a559e95a5ff853cbbff337076ef900c4b0d927f57fd986b3b1bea09"
+    },
+    {
+      "package": "fuse3",
+      "version": "3.17.2-3",
+      "architecture": "arm64",
+      "filename": "fuse3_3.17.2-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/f/fuse3/fuse3_3.17.2-3_arm64.deb",
+      "bytes": 39960,
+      "sha256": "713b5cb7d1a035a14d8267446796f4de02805381d657c2130cad25769b86894e"
+    },
+    {
+      "package": "libgdm1",
+      "version": "48.0-2",
+      "architecture": "arm64",
+      "filename": "libgdm1_48.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gdm3/libgdm1_48.0-2_arm64.deb",
+      "bytes": 67380,
+      "sha256": "31613512aa35777ed3402229156f7765ba4c0cf11cf15a694993ede497c4ab4f"
+    },
+    {
+      "package": "gir1.2-gdm-1.0",
+      "version": "48.0-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-gdm-1.0_48.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gdm3/gir1.2-gdm-1.0_48.0-2_arm64.deb",
+      "bytes": 23880,
+      "sha256": "db2f7d40a9d27381c8af3c8ee2202f3f6ef07df3b1333d61dfb721547c939f8a"
+    },
+    {
+      "package": "libglvnd0",
+      "version": "1.7.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libglvnd0_1.7.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libglvnd/libglvnd0_1.7.0-1%2bb2_arm64.deb",
+      "bytes": 41588,
+      "sha256": "29ec7b8cf1c9a47055de643eb0a1921854e762b4789a7f3bc3b0dea498fd4da9"
+    },
+    {
+      "package": "libegl-mesa0",
+      "version": "25.0.7-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "libegl-mesa0_25.0.7-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa/libegl-mesa0_25.0.7-2%2bdeb13u1_arm64.deb",
+      "bytes": 120960,
+      "sha256": "e344e0c87657d91ebfcb059bee3a3c87ba05871e2918079c3f9393665d4472af"
+    },
+    {
+      "package": "libegl1",
+      "version": "1.7.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libegl1_1.7.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libglvnd/libegl1_1.7.0-1%2bb2_arm64.deb",
+      "bytes": 33952,
+      "sha256": "b663ad1777df7ed8e320f897bbf678c2baef67f5458fe4a43195ac9b444c7afb"
+    },
+    {
+      "package": "libxcb-glx0",
+      "version": "1.17.0-2+b1",
+      "architecture": "arm64",
+      "filename": "libxcb-glx0_1.17.0-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxcb/libxcb-glx0_1.17.0-2%2bb1_arm64.deb",
+      "bytes": 122608,
+      "sha256": "a0d96ab5faea8fa1f3e095d6236597622a6b763f061f8f9fa23b77733608fdbc"
+    },
+    {
+      "package": "libxxf86vm1",
+      "version": "1:1.1.4-1+b4",
+      "architecture": "arm64",
+      "filename": "libxxf86vm1_1.1.4-1+b4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxxf86vm/libxxf86vm1_1.1.4-1%2bb4_arm64.deb",
+      "bytes": 19176,
+      "sha256": "9ed4bb25e311486207eeaa609decc3905aa9071c4c7f2a605829e3a79ec88b83"
+    },
+    {
+      "package": "libvulkan1",
+      "version": "1.4.309.0-1",
+      "architecture": "arm64",
+      "filename": "libvulkan1_1.4.309.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/vulkan-loader/libvulkan1_1.4.309.0-1_arm64.deb",
+      "bytes": 126808,
+      "sha256": "f5f576d8b9e5703702a9f3254c8c5d130bef17da9db4aecd46ba86cec7a08930"
+    },
+    {
+      "package": "libgl1-mesa-dri",
+      "version": "25.0.7-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "libgl1-mesa-dri_25.0.7-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa/libgl1-mesa-dri_25.0.7-2%2bdeb13u1_arm64.deb",
+      "bytes": 45852,
+      "sha256": "628245ff9d8e4f11edb66c0854915018402853e0eb588343d472111f6c4fb582"
+    },
+    {
+      "package": "libglx-mesa0",
+      "version": "25.0.7-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "libglx-mesa0_25.0.7-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa/libglx-mesa0_25.0.7-2%2bdeb13u1_arm64.deb",
+      "bytes": 142320,
+      "sha256": "18c02afcdd88f547ba66d3ae9290f93ab155381bf8d96b0127f9028374acfc64"
+    },
+    {
+      "package": "libglx0",
+      "version": "1.7.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libglx0_1.7.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libglvnd/libglx0_1.7.0-1%2bb2_arm64.deb",
+      "bytes": 31080,
+      "sha256": "0245aafaac5e68ca9511f23c5bebf010327e63c65790c03dbb80bf14d485956d"
+    },
+    {
+      "package": "libgl1",
+      "version": "1.7.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libgl1_1.7.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libglvnd/libgl1_1.7.0-1%2bb2_arm64.deb",
+      "bytes": 90876,
+      "sha256": "7943f99962aa3316515760bf44e66f0c15a3c813ad750b784b43e319fa2e6003"
+    },
+    {
+      "package": "libgles2",
+      "version": "1.7.0-1+b2",
+      "architecture": "arm64",
+      "filename": "libgles2_1.7.0-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libglvnd/libgles2_1.7.0-1%2bb2_arm64.deb",
+      "bytes": 18036,
+      "sha256": "c727fa1746ed3e343d1a2917932363d71e961eacca0443a1e2296587e03c47fb"
+    },
+    {
+      "package": "gnome-desktop3-data",
+      "version": "44.3-3",
+      "architecture": "all",
+      "filename": "gnome-desktop3-data_44.3-3_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/gnome-desktop3-data_44.3-3_all.deb",
+      "bytes": 433260,
+      "sha256": "e8f1dc3249d2d52412cd247928fdb22fd51cee4d153aa550e29eb2c79d67a432"
+    },
+    {
+      "package": "iso-codes",
+      "version": "4.18.0-1",
+      "architecture": "all",
+      "filename": "iso-codes_4.18.0-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/i/iso-codes/iso-codes_4.18.0-1_all.deb",
+      "bytes": 3124584,
+      "sha256": "969582afb02fd3f0833a666b2112931a999c4f6b23e7fe514f8051dfd7672a45"
+    },
+    {
+      "package": "libxkbregistry0",
+      "version": "1.7.0-2",
+      "architecture": "arm64",
+      "filename": "libxkbregistry0_1.7.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxkbcommon/libxkbregistry0_1.7.0-2_arm64.deb",
+      "bytes": 15248,
+      "sha256": "44a68103b35aa8dc9f0656c51fa288ed6a5a5635e056a3dd28c4107b19ea57bf"
+    },
+    {
+      "package": "libgnome-desktop-3-20t64",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "libgnome-desktop-3-20t64_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/libgnome-desktop-3-20t64_44.3-3_arm64.deb",
+      "bytes": 85032,
+      "sha256": "73e8bd5ab2638aa0f6dbaaa362ad59fe38967f26892a46d2afb2aae629d5059a"
+    },
+    {
+      "package": "gnome-session-bin",
+      "version": "48.0-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "gnome-session-bin_48.0-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-session/gnome-session-bin_48.0-1%2bdeb13u1_arm64.deb",
+      "bytes": 117588,
+      "sha256": "dba411a0aae2bbebe65b8aa30f7f0fd70ac24ba61f450382b9fb7076e5875a26"
+    },
+    {
+      "package": "gnome-session-common",
+      "version": "48.0-1+deb13u1",
+      "architecture": "all",
+      "filename": "gnome-session-common_48.0-1+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-session/gnome-session-common_48.0-1%2bdeb13u1_all.deb",
+      "bytes": 201792,
+      "sha256": "2daafdcbcdbfc1b6ceb39ee4d6f5f3f1196db0a1778cdaa8c5d0f620c3f02269"
+    },
+    {
+      "package": "gnome-settings-daemon-common",
+      "version": "48.1-1",
+      "architecture": "all",
+      "filename": "gnome-settings-daemon-common_48.1-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-settings-daemon/gnome-settings-daemon-common_48.1-1_all.deb",
+      "bytes": 639464,
+      "sha256": "7c6fa9f6f1bd3fa9d12c516255812645e17339604ae87efdd3fdbd4130ea4391"
+    },
+    {
+      "package": "libfreeaptx0",
+      "version": "0.2.2-1",
+      "architecture": "arm64",
+      "filename": "libfreeaptx0_0.2.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libf/libfreeaptx/libfreeaptx0_0.2.2-1_arm64.deb",
+      "bytes": 12304,
+      "sha256": "0e8fae31ef65740a9b499f158ccc8992205363ed5b388807e253f1f84b9f04b6"
+    },
+    {
+      "package": "liblc3-1",
+      "version": "1.1.3+dfsg-1",
+      "architecture": "arm64",
+      "filename": "liblc3-1_1.1.3+dfsg-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libl/liblc3/liblc3-1_1.1.3%2bdfsg-1_arm64.deb",
+      "bytes": 78756,
+      "sha256": "6e2720a6a7a7904c719729bef7434df33f1ba25c90155505bf7fc6109df62024"
+    },
+    {
+      "package": "libldacbt-enc2",
+      "version": "2.0.2.3+git20200429+ed310a0-5",
+      "architecture": "arm64",
+      "filename": "libldacbt-enc2_2.0.2.3+git20200429+ed310a0-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libl/libldac/libldacbt-enc2_2.0.2.3%2bgit20200429%2bed310a0-5_arm64.deb",
+      "bytes": 24200,
+      "sha256": "72b07f3abdb506ac4d5506ba6aadf2d6066a1f79fbc093522c0aa7fbc924b857"
+    },
+    {
+      "package": "libldacbt-abr2",
+      "version": "2.0.2.3+git20200429+ed310a0-5",
+      "architecture": "arm64",
+      "filename": "libldacbt-abr2_2.0.2.3+git20200429+ed310a0-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libl/libldac/libldacbt-abr2_2.0.2.3%2bgit20200429%2bed310a0-5_arm64.deb",
+      "bytes": 5408,
+      "sha256": "a92ee0393921c1694ffae70fa7c328a6bbd33941447cead62759a6a07ac2a184"
+    },
+    {
+      "package": "libsbc1",
+      "version": "2.1-1",
+      "architecture": "arm64",
+      "filename": "libsbc1_2.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/sbc/libsbc1_2.1-1_arm64.deb",
+      "bytes": 26596,
+      "sha256": "5fad812e85c434c4e9dfdc3c48e457fe78fe30dbd5949fd0edac25914e1760af"
+    },
+    {
+      "package": "libspa-0.2-bluetooth",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "libspa-0.2-bluetooth_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/libspa-0.2-bluetooth_1.4.2-1_arm64.deb",
+      "bytes": 367368,
+      "sha256": "81ee0c917139958080286051809adcfd707419175312c58bfd13ff621a07bc46"
+    },
+    {
+      "package": "libconfig++11",
+      "version": "1.7.3-2",
+      "architecture": "arm64",
+      "filename": "libconfig++11_1.7.3-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libconfig/libconfig%2b%2b11_1.7.3-2_arm64.deb",
+      "bytes": 41304,
+      "sha256": "d6b92f922a288aae212a9cd89951c7c154aba9965480a9ab9a5f5ff1ce576127"
+    },
+    {
+      "package": "libsigc++-2.0-0v5",
+      "version": "2.12.1-3",
+      "architecture": "arm64",
+      "filename": "libsigc++-2.0-0v5_2.12.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsigc%2b%2b-2.0/libsigc%2b%2b-2.0-0v5_2.12.1-3_arm64.deb",
+      "bytes": 24276,
+      "sha256": "3107ff3df00f987ff53e0ec83ffe2c3df4351417203bb24387cde1c98f455b5c"
+    },
+    {
+      "package": "libglibmm-2.4-1t64",
+      "version": "2.66.8-1",
+      "architecture": "arm64",
+      "filename": "libglibmm-2.4-1t64_2.66.8-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/glibmm2.4/libglibmm-2.4-1t64_2.66.8-1_arm64.deb",
+      "bytes": 569772,
+      "sha256": "f21505ba74df75f2882b47a8cb5daec02ab1282ed171e821476dd9dc3c29baf2"
+    },
+    {
+      "package": "libraw1394-11",
+      "version": "2.1.2-2+b2",
+      "architecture": "arm64",
+      "filename": "libraw1394-11_2.1.2-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libr/libraw1394/libraw1394-11_2.1.2-2%2bb2_arm64.deb",
+      "bytes": 38112,
+      "sha256": "23af99af78c3eaac033f14e62958f83a2748e8df1467c32840957431bacef911"
+    },
+    {
+      "package": "libiec61883-0",
+      "version": "1.2.0-7",
+      "architecture": "arm64",
+      "filename": "libiec61883-0_1.2.0-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libiec61883/libiec61883-0_1.2.0-7_arm64.deb",
+      "bytes": 29116,
+      "sha256": "d8c098b0fcee27a96a46d31155d63101e9d1e830e632127f6e26b241fb09c49e"
+    },
+    {
+      "package": "libxml++2.6-2v5",
+      "version": "2.42.3-2",
+      "architecture": "arm64",
+      "filename": "libxml++2.6-2v5_2.42.3-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxml%2b%2b2.6/libxml%2b%2b2.6-2v5_2.42.3-2_arm64.deb",
+      "bytes": 75372,
+      "sha256": "47795fa6cbd82661be578d5c65ab78bc9b5219f57d84dc992a4e40f0f389b7b1"
+    },
+    {
+      "package": "libffado2",
+      "version": "2.4.9-2",
+      "architecture": "arm64",
+      "filename": "libffado2_2.4.9-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libf/libffado/libffado2_2.4.9-2_arm64.deb",
+      "bytes": 586784,
+      "sha256": "e58d49b16cd6ea8d8da4d9ad0d3da4e79ffc12a19809b45c8e1e94f5759b7529"
+    },
+    {
+      "package": "libopenfec1",
+      "version": "1.4.2.11+dfsg-1",
+      "architecture": "arm64",
+      "filename": "libopenfec1_1.4.2.11+dfsg-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/openfec/libopenfec1_1.4.2.11%2bdfsg-1_arm64.deb",
+      "bytes": 114712,
+      "sha256": "2db9b9213d99ad60fa38f46dc835277b6d28dcc6397751a675033ee1163fdab5"
+    },
+    {
+      "package": "libspeexdsp1",
+      "version": "1.2.1-3",
+      "architecture": "arm64",
+      "filename": "libspeexdsp1_1.2.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/speexdsp/libspeexdsp1_1.2.1-3_arm64.deb",
+      "bytes": 38092,
+      "sha256": "edb6b04791bccdb37bedb570255d224b1e9c69efa6084e4dac61b3b4904329a2"
+    },
+    {
+      "package": "libroc0.4",
+      "version": "0.4.0+dfsg-5",
+      "architecture": "arm64",
+      "filename": "libroc0.4_0.4.0+dfsg-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/r/roc-toolkit/libroc0.4_0.4.0%2bdfsg-5_arm64.deb",
+      "bytes": 320960,
+      "sha256": "5433a9435ca3093c56ccff96a57b50be09d43d46a6e258ac7e4b0b2fe7b1e91c"
+    },
+    {
+      "package": "libpipewire-0.3-modules",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "libpipewire-0.3-modules_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/libpipewire-0.3-modules_1.4.2-1_arm64.deb",
+      "bytes": 729256,
+      "sha256": "d9cbca11fa44fded83f941124cba92ecd1771eaa45f5c4815f4f398d62e523e8"
+    },
+    {
+      "package": "pipewire-bin",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "pipewire-bin_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/pipewire-bin_1.4.2-1_arm64.deb",
+      "bytes": 567476,
+      "sha256": "e4516c5af7ee95390cc1b42feae844f69ed487e39b98962f13dc79b75175933e"
+    },
+    {
+      "package": "pipewire",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "pipewire_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/pipewire_1.4.2-1_arm64.deb",
+      "bytes": 117876,
+      "sha256": "5a79fe7a8ebaec93ea2acaaf638e67bce55daca23ea0296056bc02d68bbad4d7"
+    },
+    {
+      "package": "pipewire-alsa",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "pipewire-alsa_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/pipewire-alsa_1.4.2-1_arm64.deb",
+      "bytes": 57864,
+      "sha256": "3a2722e31fc00bec86a3498ed8c374126cd907a96fd1cc5a03d28bd2b8183512"
+    },
+    {
+      "package": "pipewire-pulse",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "pipewire-pulse_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/pipewire-pulse_1.4.2-1_arm64.deb",
+      "bytes": 24696,
+      "sha256": "b38032ad711e43dc7d4b00b67d93fb660bc548faac866c3deb68c0112ce62653"
+    },
+    {
+      "package": "liblua5.4-0",
+      "version": "5.4.7-1+b2",
+      "architecture": "arm64",
+      "filename": "liblua5.4-0_5.4.7-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/l/lua5.4/liblua5.4-0_5.4.7-1%2bb2_arm64.deb",
+      "bytes": 133868,
+      "sha256": "56c90caee447f0c9bc9390f822cb1d8ffd37e44041c736e2d8d86040c23547d8"
+    },
+    {
+      "package": "libwireplumber-0.5-0",
+      "version": "0.5.8-2",
+      "architecture": "arm64",
+      "filename": "libwireplumber-0.5-0_0.5.8-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/w/wireplumber/libwireplumber-0.5-0_0.5.8-2_arm64.deb",
+      "bytes": 255452,
+      "sha256": "708fc6cc892f44ca723969908ab90b174ef1850e1b09713a8892e2f4e3b5cbdc"
+    },
+    {
+      "package": "wireplumber",
+      "version": "0.5.8-2",
+      "architecture": "arm64",
+      "filename": "wireplumber_0.5.8-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/w/wireplumber/wireplumber_0.5.8-2_arm64.deb",
+      "bytes": 105900,
+      "sha256": "7a53f5b2f7fdec9ad92f1b3e2e15a3b7e508ba7de015d68f294c2bafeeeab6d0"
+    },
+    {
+      "package": "pipewire-audio",
+      "version": "1.4.2-1",
+      "architecture": "all",
+      "filename": "pipewire-audio_1.4.2-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/pipewire-audio_1.4.2-1_all.deb",
+      "bytes": 19496,
+      "sha256": "a118a3b35bf8fa818612f74595640b96e1069af337987d79bca7ab5fdc534668"
+    },
+    {
+      "package": "libtdb1",
+      "version": "2:1.4.13+samba4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libtdb1_1.4.13+samba4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libtdb1_1.4.13%2bsamba4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 82268,
+      "sha256": "cff11371a08e1b068aecb62bcdf64fb5390f0d6cf73a6cefa55d1abdb30f0cc5"
+    },
+    {
+      "package": "sound-theme-freedesktop",
+      "version": "0.8-6~deb13u1",
+      "architecture": "all",
+      "filename": "sound-theme-freedesktop_0.8-6~deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/sound-theme-freedesktop/sound-theme-freedesktop_0.8-6%7edeb13u1_all.deb",
+      "bytes": 383296,
+      "sha256": "b88c0a3f598c2e423f37db5af9e71324a122729edb8df4fb13b54252401c1a8a"
+    },
+    {
+      "package": "libcanberra0",
+      "version": "0.30-18",
+      "architecture": "arm64",
+      "filename": "libcanberra0_0.30-18_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcanberra/libcanberra0_0.30-18_arm64.deb",
+      "bytes": 35464,
+      "sha256": "8ec5d5316864daa4feda06906088414f335abd36fb8d42562e34d2797cb5e8e0"
+    },
+    {
+      "package": "libcanberra-gtk3-0",
+      "version": "0.30-18",
+      "architecture": "arm64",
+      "filename": "libcanberra-gtk3-0_0.30-18_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcanberra/libcanberra-gtk3-0_0.30-18_arm64.deb",
+      "bytes": 9512,
+      "sha256": "fe65dbc508bb083c3e58517712b41b706855c9704cc5b348158447c3ad84591b"
+    },
+    {
+      "package": "libgck-2-2",
+      "version": "4.4.0.1-3",
+      "architecture": "arm64",
+      "filename": "libgck-2-2_4.4.0.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcr4/libgck-2-2_4.4.0.1-3_arm64.deb",
+      "bytes": 68524,
+      "sha256": "898d263d06d5686dc99ad08f641670b50e9d782044bb8712b71b06b36be37d55"
+    },
+    {
+      "package": "libgcr-4-4",
+      "version": "4.4.0.1-3",
+      "architecture": "arm64",
+      "filename": "libgcr-4-4_4.4.0.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcr4/libgcr-4-4_4.4.0.1-3_arm64.deb",
+      "bytes": 188292,
+      "sha256": "a3428c1d1e6aa73a6f8f6d4c67002d031b587fc7497b49a56af261236a977d06"
+    },
+    {
+      "package": "libgeoclue-2-0",
+      "version": "2.7.2-2",
+      "architecture": "arm64",
+      "filename": "libgeoclue-2-0_2.7.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/geoclue-2.0/libgeoclue-2-0_2.7.2-2_arm64.deb",
+      "bytes": 42992,
+      "sha256": "683ef362733c0aee0990ac59b316f12ffc65343229d46186d0f003980ec41fc3"
+    },
+    {
+      "package": "geocode-glib-common",
+      "version": "3.26.4-1",
+      "architecture": "all",
+      "filename": "geocode-glib-common_3.26.4-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/geocode-glib/geocode-glib-common_3.26.4-1_all.deb",
+      "bytes": 18496,
+      "sha256": "1946650c4fcf97fb4e77df8f123f59bbf6a470706e59519e1b5ba32fb2d19de8"
+    },
+    {
+      "package": "libproxy1v5",
+      "version": "0.5.9-1",
+      "architecture": "arm64",
+      "filename": "libproxy1v5_0.5.9-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libp/libproxy/libproxy1v5_0.5.9-1_arm64.deb",
+      "bytes": 25376,
+      "sha256": "7758242ac0263b1fcefc01622160c6a965a25d7f284ee6a62a46a8784cfedd6e"
+    },
+    {
+      "package": "glib-networking-common",
+      "version": "2.80.1-1",
+      "architecture": "all",
+      "filename": "glib-networking-common_2.80.1-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/glib-networking/glib-networking-common_2.80.1-1_all.deb",
+      "bytes": 86004,
+      "sha256": "aa697ddbd07ba9e16391bd81f73661b2583859c8671d1ce92f28e6a870d37059"
+    },
+    {
+      "package": "glib-networking-services",
+      "version": "2.80.1-1",
+      "architecture": "arm64",
+      "filename": "glib-networking-services_2.80.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/glib-networking/glib-networking-services_2.80.1-1_arm64.deb",
+      "bytes": 12248,
+      "sha256": "231f911c07eb9cb4a68b6709e0963aaeddeda523f21d24f10a593d4c2963f982"
+    },
+    {
+      "package": "glib-networking",
+      "version": "2.80.1-1",
+      "architecture": "arm64",
+      "filename": "glib-networking_2.80.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/glib-networking/glib-networking_2.80.1-1_arm64.deb",
+      "bytes": 65472,
+      "sha256": "06815a6cfd3ad5386eba73db253ea1a25ede4a01b3b92d1dbc5315d001915e21"
+    },
+    {
+      "package": "libsoup-3.0-common",
+      "version": "3.6.5-3",
+      "architecture": "all",
+      "filename": "libsoup-3.0-common_3.6.5-3_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsoup3/libsoup-3.0-common_3.6.5-3_all.deb",
+      "bytes": 65552,
+      "sha256": "a5a1e8e37214cc4277fc56d6dffe68ff3447356202dfc0e611cea5fe457835d1"
+    },
+    {
+      "package": "libsoup-3.0-0",
+      "version": "3.6.5-3",
+      "architecture": "arm64",
+      "filename": "libsoup-3.0-0_3.6.5-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsoup3/libsoup-3.0-0_3.6.5-3_arm64.deb",
+      "bytes": 264492,
+      "sha256": "f3f318cbef19328be0e8d09a054bb93b0f26cac8a337398168723756fe2462c0"
+    },
+    {
+      "package": "libgeocode-glib-2-0",
+      "version": "3.26.4-1",
+      "architecture": "arm64",
+      "filename": "libgeocode-glib-2-0_3.26.4-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/geocode-glib/libgeocode-glib-2-0_3.26.4-1_arm64.deb",
+      "bytes": 42048,
+      "sha256": "9b2100170224bb9d587fc9de9a62e008fc983582aaeceea5aaa7aa84bcd0dbc5"
+    },
+    {
+      "package": "libgweather-4-common",
+      "version": "4.4.4-1",
+      "architecture": "all",
+      "filename": "libgweather-4-common_4.4.4-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgweather4/libgweather-4-common_4.4.4-1_all.deb",
+      "bytes": 2535568,
+      "sha256": "08f1d91503babfa764b77d4f2148d8b02de75c01fb9c337560281bdec4977186"
+    },
+    {
+      "package": "libgweather-4-0t64",
+      "version": "4.4.4-1",
+      "architecture": "arm64",
+      "filename": "libgweather-4-0t64_4.4.4-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgweather4/libgweather-4-0t64_4.4.4-1_arm64.deb",
+      "bytes": 313080,
+      "sha256": "c43a14ed19c8f1eaa9344a69e02077b3165f3e5949a11c522a567f237d68c1a3"
+    },
+    {
+      "package": "libnotify4",
+      "version": "0.8.6-1",
+      "architecture": "arm64",
+      "filename": "libnotify4_0.8.6-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnotify/libnotify4_0.8.6-1_arm64.deb",
+      "bytes": 25844,
+      "sha256": "7e4191671775c2766cea2cc1610fb054509ec71a5a24fe3a8da21b5586df6eee"
+    },
+    {
+      "package": "libpulse-mainloop-glib0",
+      "version": "17.0+dfsg1-2+b1",
+      "architecture": "arm64",
+      "filename": "libpulse-mainloop-glib0_17.0+dfsg1-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pulseaudio/libpulse-mainloop-glib0_17.0%2bdfsg1-2%2bb1_arm64.deb",
+      "bytes": 28244,
+      "sha256": "54db3ab8f353ca747ed9efd3efd5796701b49751e6194a98c93c002327238a12"
+    },
+    {
+      "package": "libwacom-common",
+      "version": "2.14.0-1",
+      "architecture": "all",
+      "filename": "libwacom-common_2.14.0-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libw/libwacom/libwacom-common_2.14.0-1_all.deb",
+      "bytes": 102748,
+      "sha256": "214956bd9b26600c4d5ac0d60c1685be6ef650644e36b712620c56fccd4d4f58"
+    },
+    {
+      "package": "libwacom9",
+      "version": "2.14.0-1",
+      "architecture": "arm64",
+      "filename": "libwacom9_2.14.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libw/libwacom/libwacom9_2.14.0-1_arm64.deb",
+      "bytes": 24192,
+      "sha256": "8fb8419c43fcc166f996c30cc262fcc86457bdd6f82656dad8619c88dc00b013"
+    },
+    {
+      "package": "gnome-settings-daemon",
+      "version": "48.1-1",
+      "architecture": "arm64",
+      "filename": "gnome-settings-daemon_48.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-settings-daemon/gnome-settings-daemon_48.1-1_arm64.deb",
+      "bytes": 314652,
+      "sha256": "2eeb1a23bcad78cf17e21bcee169b38b4931588203c3703f02aa2b151ba1a261"
+    },
+    {
+      "package": "gir1.2-accountsservice-1.0",
+      "version": "23.13.9-7",
+      "architecture": "arm64",
+      "filename": "gir1.2-accountsservice-1.0_23.13.9-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/accountsservice/gir1.2-accountsservice-1.0_23.13.9-7_arm64.deb",
+      "bytes": 10236,
+      "sha256": "11c3a66721d534bc1efbdedcf4e02153850230a0c17a3f2325652fa6ff2ceb51"
+    },
+    {
+      "package": "gir1.2-freedesktop",
+      "version": "1.84.0-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-freedesktop_1.84.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gobject-introspection/gir1.2-freedesktop_1.84.0-1_arm64.deb",
+      "bytes": 60504,
+      "sha256": "ce62f215747c79e018a4e3a21ad2d1d08351423a48b7b4b6a5070794da5c1e78"
+    },
+    {
+      "package": "gir1.2-gdkpixbuf-2.0",
+      "version": "2.42.12+dfsg-4+deb13u1",
+      "architecture": "arm64",
+      "filename": "gir1.2-gdkpixbuf-2.0_2.42.12+dfsg-4+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gdk-pixbuf/gir1.2-gdkpixbuf-2.0_2.42.12%2bdfsg-4%2bdeb13u1_arm64.deb",
+      "bytes": 14488,
+      "sha256": "5f7c9ad03d4eb2b2e1d4c5ce750da4bbb0d5b9bb8246dd02d727dc462f4a269b"
+    },
+    {
+      "package": "libgraphene-1.0-0",
+      "version": "1.10.8-5",
+      "architecture": "arm64",
+      "filename": "libgraphene-1.0-0_1.10.8-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/graphene/libgraphene-1.0-0_1.10.8-5_arm64.deb",
+      "bytes": 42068,
+      "sha256": "ee2ea1e4f968f294741f205fcca44ebb8024fb47aab3e1540b60fd3c390d7ad3"
+    },
+    {
+      "package": "gir1.2-graphene-1.0",
+      "version": "1.10.8-5",
+      "architecture": "arm64",
+      "filename": "gir1.2-graphene-1.0_1.10.8-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/graphene/gir1.2-graphene-1.0_1.10.8-5_arm64.deb",
+      "bytes": 12840,
+      "sha256": "9779f941d8a4afa8da04774a6c19f0536cd5d8f0965c22637b823cb1d4b673bb"
+    },
+    {
+      "package": "libharfbuzz-gobject0",
+      "version": "10.2.0-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libharfbuzz-gobject0_10.2.0-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/h/harfbuzz/libharfbuzz-gobject0_10.2.0-1%2bdeb13u1_arm64.deb",
+      "bytes": 32124,
+      "sha256": "2c7546cb9d672b5f222e008bdf1d437b9159f0e1aa263042d2fb9d496d0e2522"
+    },
+    {
+      "package": "gir1.2-harfbuzz-0.0",
+      "version": "10.2.0-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "gir1.2-harfbuzz-0.0_10.2.0-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/h/harfbuzz/gir1.2-harfbuzz-0.0_10.2.0-1%2bdeb13u1_arm64.deb",
+      "bytes": 42140,
+      "sha256": "5bf79978538c18db08c947bf7662823c2040863260aa3622818022a7bc50be19"
+    },
+    {
+      "package": "libxft2",
+      "version": "2.3.6-1+b4",
+      "architecture": "arm64",
+      "filename": "libxft2_2.3.6-1+b4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xft/libxft2_2.3.6-1%2bb4_arm64.deb",
+      "bytes": 51588,
+      "sha256": "c8053babb508229092aa98e80d9efb58eb157fe92781476edf5be2e21891c368"
+    },
+    {
+      "package": "libpangoxft-1.0-0",
+      "version": "1.56.3-1",
+      "architecture": "arm64",
+      "filename": "libpangoxft-1.0-0_1.56.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pango1.0/libpangoxft-1.0-0_1.56.3-1_arm64.deb",
+      "bytes": 27108,
+      "sha256": "61c62a40d2eb68c21bfd4209cb189d505692f1d3432ccbf526056dca6cce3230"
+    },
+    {
+      "package": "gir1.2-pango-1.0",
+      "version": "1.56.3-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-pango-1.0_1.56.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pango1.0/gir1.2-pango-1.0_1.56.3-1_arm64.deb",
+      "bytes": 39092,
+      "sha256": "3d682289d516906da0b4f0dc8eb8100ebf5ce482b8d02a1e89c4490d6deb5608"
+    },
+    {
+      "package": "liblzo2-2",
+      "version": "2.10-3+b1",
+      "architecture": "arm64",
+      "filename": "liblzo2-2_2.10-3+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/l/lzo2/liblzo2-2_2.10-3%2bb1_arm64.deb",
+      "bytes": 49588,
+      "sha256": "ee0f990bef6693c8249d7a3de4b17f65d549beae84b6d1413421618ac6427914"
+    },
+    {
+      "package": "libcairo-script-interpreter2",
+      "version": "1.18.4-1+b1",
+      "architecture": "arm64",
+      "filename": "libcairo-script-interpreter2_1.18.4-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/cairo/libcairo-script-interpreter2_1.18.4-1%2bb1_arm64.deb",
+      "bytes": 57372,
+      "sha256": "fc18434e2f046c14a08e86175e23976c5046edb27f82fb1b66be50457bad54b0"
+    },
+    {
+      "package": "libharfbuzz-subset0",
+      "version": "10.2.0-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libharfbuzz-subset0_10.2.0-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/h/harfbuzz/libharfbuzz-subset0_10.2.0-1%2bdeb13u1_arm64.deb",
+      "bytes": 508584,
+      "sha256": "94762ffe1961b0d3d042398fef3f56545f99c5e070b17a557782664056b05a00"
+    },
+    {
+      "package": "libgtk-4-common",
+      "version": "4.18.6+ds-2",
+      "architecture": "all",
+      "filename": "libgtk-4-common_4.18.6+ds-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gtk4/libgtk-4-common_4.18.6%2bds-2_all.deb",
+      "bytes": 2797392,
+      "sha256": "32f0ad042f983b1d53cd2c260d4042eda9041b6debb71beb91937196b1ff3f6b"
+    },
+    {
+      "package": "libgtk-4-1",
+      "version": "4.18.6+ds-2",
+      "architecture": "arm64",
+      "filename": "libgtk-4-1_4.18.6+ds-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gtk4/libgtk-4-1_4.18.6%2bds-2_arm64.deb",
+      "bytes": 2913396,
+      "sha256": "b9691c2cd154739e58f7648242c4db1e217f66e0f55a880e9f965ffe9475a05a"
+    },
+    {
+      "package": "gir1.2-gtk-4.0",
+      "version": "4.18.6+ds-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-gtk-4.0_4.18.6+ds-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gtk4/gir1.2-gtk-4.0_4.18.6%2bds-2_arm64.deb",
+      "bytes": 214652,
+      "sha256": "6189e92b9e24ee1789914b5cec4f808abe6cea265f4b9656b1f036e5ca526757"
+    },
+    {
+      "package": "libstemmer0d",
+      "version": "2.2.0-4+b2",
+      "architecture": "arm64",
+      "filename": "libstemmer0d_2.2.0-4+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/snowball/libstemmer0d_2.2.0-4%2bb2_arm64.deb",
+      "bytes": 110960,
+      "sha256": "f574898ea8d2905c8142af991ee291bb5d13b1c86e0e0d2e00c158a65daef99b"
+    },
+    {
+      "package": "libxmlb2",
+      "version": "0.3.22-1",
+      "architecture": "arm64",
+      "filename": "libxmlb2_0.3.22-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxmlb/libxmlb2_0.3.22-1_arm64.deb",
+      "bytes": 59332,
+      "sha256": "ca5ced6812ac5bf11ef9586e625002f0242764ce7f033fcae055719aa383c4bd"
+    },
+    {
+      "package": "libyaml-0-2",
+      "version": "0.2.5-2",
+      "architecture": "arm64",
+      "filename": "libyaml-0-2_0.2.5-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liby/libyaml/libyaml-0-2_0.2.5-2_arm64.deb",
+      "bytes": 49164,
+      "sha256": "c81500b4c93e29ac28cdded7ec5bf9950c75f8c76c386669ccb6fb854c4daf72"
+    },
+    {
+      "package": "libappstream5",
+      "version": "1.0.5-1",
+      "architecture": "arm64",
+      "filename": "libappstream5_1.0.5-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/appstream/libappstream5_1.0.5-1_arm64.deb",
+      "bytes": 210056,
+      "sha256": "a5fbc05f3b33e0568faf43e5820e056b0085984528e10d44e94b4d16877285cb"
+    },
+    {
+      "package": "libadwaita-1-0",
+      "version": "1.7.6-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libadwaita-1-0_1.7.6-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libadwaita-1/libadwaita-1-0_1.7.6-1%7edeb13u1_arm64.deb",
+      "bytes": 488760,
+      "sha256": "cb66417d6fb77ded3d3edaa6a7ece850c69eabf0e20b75c669957cfeaa03f794"
+    },
+    {
+      "package": "gir1.2-adw-1",
+      "version": "1.7.6-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "gir1.2-adw-1_1.7.6-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libadwaita-1/gir1.2-adw-1_1.7.6-1%7edeb13u1_arm64.deb",
+      "bytes": 42908,
+      "sha256": "eeb9762ebe482ba627c63bb5a57318a3ad280f8b2aa8ff45218a38f19ca22b7e"
+    },
+    {
+      "package": "gir1.2-atk-1.0",
+      "version": "2.56.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "gir1.2-atk-1.0_2.56.2-1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/at-spi2-core/gir1.2-atk-1.0_2.56.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 26044,
+      "sha256": "a0dac443f69aa52caaa907ec1fbef7d9073ec50d8e62a3d90d8fc1221da70023"
+    },
+    {
+      "package": "gir1.2-atspi-2.0",
+      "version": "2.56.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "gir1.2-atspi-2.0_2.56.2-1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/at-spi2-core/gir1.2-atspi-2.0_2.56.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 23892,
+      "sha256": "c1352a3d4d78db55922cdf9c3d93c322b130cff4c3055b015ae8fcdd1461cedc"
+    },
+    {
+      "package": "gir1.2-gck-2",
+      "version": "4.4.0.1-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-gck-2_4.4.0.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcr4/gir1.2-gck-2_4.4.0.1-3_arm64.deb",
+      "bytes": 13580,
+      "sha256": "2189c3a89a255ea7d0aec4c33bad1d03a5be1f5f8d0cf16ea75f669d5da23c56"
+    },
+    {
+      "package": "gir1.2-gcr-4",
+      "version": "4.4.0.1-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-gcr-4_4.4.0.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gcr4/gir1.2-gcr-4_4.4.0.1-3_arm64.deb",
+      "bytes": 16408,
+      "sha256": "270017e6a4c9a304235947f7909deccb619f58a63391122258d963fbe39dc0bc"
+    },
+    {
+      "package": "gir1.2-gdesktopenums-3.0",
+      "version": "48.0-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-gdesktopenums-3.0_48.0-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gsettings-desktop-schemas/gir1.2-gdesktopenums-3.0_48.0-1_arm64.deb",
+      "bytes": 10224,
+      "sha256": "fb8661bc8b506e3672536246a8e4996ffe5b7503d0be180427ba8ab6b4515653"
+    },
+    {
+      "package": "gir1.2-geoclue-2.0",
+      "version": "2.7.2-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-geoclue-2.0_2.7.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/geoclue-2.0/gir1.2-geoclue-2.0_2.7.2-2_arm64.deb",
+      "bytes": 18852,
+      "sha256": "afb9f0a764a577f40b1528a8558ea65d2bea3d8e7aa3f20bb33c54fe3cee4bbd"
+    },
+    {
+      "package": "libgnome-desktop-4-2t64",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "libgnome-desktop-4-2t64_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/libgnome-desktop-4-2t64_44.3-3_arm64.deb",
+      "bytes": 82900,
+      "sha256": "445199974cfda61ec1bb744b5b6170ca2f6a399bf94e5d39d4087d414735b63d"
+    },
+    {
+      "package": "gir1.2-gnomedesktop-4.0",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-gnomedesktop-4.0_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/gir1.2-gnomedesktop-4.0_44.3-3_arm64.deb",
+      "bytes": 14032,
+      "sha256": "47e875c37d808f1f8a125baa4420ef335248f8215d750cbe2eb6bfc8024aea97"
+    },
+    {
+      "package": "libgnome-bg-4-2t64",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "libgnome-bg-4-2t64_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/libgnome-bg-4-2t64_44.3-3_arm64.deb",
+      "bytes": 60700,
+      "sha256": "a335387074cd958d9f69ff347c3863745f7970e632a0bf6707c71dd84d0bf14b"
+    },
+    {
+      "package": "gir1.2-gnomebg-4.0",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-gnomebg-4.0_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/gir1.2-gnomebg-4.0_44.3-3_arm64.deb",
+      "bytes": 12816,
+      "sha256": "2afec6a1276723d69e6cbaf299b631adce718f3687d95e283c1aec600aadefa6"
+    },
+    {
+      "package": "gnome-bluetooth-3-common",
+      "version": "47.1-1",
+      "architecture": "all",
+      "filename": "gnome-bluetooth-3-common_47.1-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-bluetooth3/gnome-bluetooth-3-common_47.1-1_all.deb",
+      "bytes": 140132,
+      "sha256": "08936883bc180947ef010257c74317cc026f4c0cb47a8b1bbebcd8e7f918ec30"
+    },
+    {
+      "package": "libgnome-bluetooth-3.0-13",
+      "version": "47.1-1",
+      "architecture": "arm64",
+      "filename": "libgnome-bluetooth-3.0-13_47.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-bluetooth3/libgnome-bluetooth-3.0-13_47.1-1_arm64.deb",
+      "bytes": 53948,
+      "sha256": "ae0b23a0f9a18c2b54001a8abf8563b00896bbba930dfd166b350d91cfff7799"
+    },
+    {
+      "package": "gir1.2-gnomebluetooth-3.0",
+      "version": "47.1-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-gnomebluetooth-3.0_47.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-bluetooth3/gir1.2-gnomebluetooth-3.0_47.1-1_arm64.deb",
+      "bytes": 7164,
+      "sha256": "9ad7b35d45f0299724ac3a9ea75c1bbd8aeafa9758f8f816ec15b0c5a94b09ca"
+    },
+    {
+      "package": "libgstreamer1.0-0",
+      "version": "1.26.2-2",
+      "architecture": "arm64",
+      "filename": "libgstreamer1.0-0_1.26.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gstreamer1.0/libgstreamer1.0-0_1.26.2-2_arm64.deb",
+      "bytes": 1294408,
+      "sha256": "77d44e8bc93793f815ea7b8cdb9c1b0b0bf6fd5797e2e69a7ef95bb37f249a86"
+    },
+    {
+      "package": "gir1.2-gstreamer-1.0",
+      "version": "1.26.2-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-gstreamer-1.0_1.26.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gstreamer1.0/gir1.2-gstreamer-1.0_1.26.2-2_arm64.deb",
+      "bytes": 118264,
+      "sha256": "d6cfc3b58ee72d805e876c2f00a6179916463eea275c03da1b080ed507903615"
+    },
+    {
+      "package": "gir1.2-gweather-4.0",
+      "version": "4.4.4-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-gweather-4.0_4.4.4-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgweather4/gir1.2-gweather-4.0_4.4.4-1_arm64.deb",
+      "bytes": 10896,
+      "sha256": "26c8a2e646e665f19ba1832d75c597c0a2748d39b66e3b624cb5433e4e399583"
+    },
+    {
+      "package": "libibus-1.0-5",
+      "version": "1.5.32-2",
+      "architecture": "arm64",
+      "filename": "libibus-1.0-5_1.5.32-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/i/ibus/libibus-1.0-5_1.5.32-2_arm64.deb",
+      "bytes": 452584,
+      "sha256": "70ca5d33241c0b34b3ef617c3f87572810aeec8b10e002dc5660f7e86dc082d6"
+    },
+    {
+      "package": "gir1.2-ibus-1.0",
+      "version": "1.5.32-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-ibus-1.0_1.5.32-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/i/ibus/gir1.2-ibus-1.0_1.5.32-2_arm64.deb",
+      "bytes": 371760,
+      "sha256": "4c6e4b77e1df980825f953ad71b53bfb8fcabd286e4ad4afa7217cd1d3a707be"
+    },
+    {
+      "package": "mutter-common",
+      "version": "48.7-0+deb13u1",
+      "architecture": "all",
+      "filename": "mutter-common_48.7-0+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mutter/mutter-common_48.7-0%2bdeb13u1_all.deb",
+      "bytes": 503944,
+      "sha256": "1f64185f7be30ab32ee7b9ac08dbe4ce4dd5bbeadb354a4f29e8c78c4ec59e4d"
+    },
+    {
+      "package": "mutter-common-bin",
+      "version": "48.7-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "mutter-common-bin_48.7-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mutter/mutter-common-bin_48.7-0%2bdeb13u1_arm64.deb",
+      "bytes": 63692,
+      "sha256": "9150857fdca86bc7902ca5314765edb79c94ce67070a3c51ccbeb3e78b6de23e"
+    },
+    {
+      "package": "libdisplay-info2",
+      "version": "0.2.0-2",
+      "architecture": "arm64",
+      "filename": "libdisplay-info2_0.2.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libdisplay-info/libdisplay-info2_0.2.0-2_arm64.deb",
+      "bytes": 75536,
+      "sha256": "9719d01a5eaef520f41ee576af111c8f4c59246a8861178504d066b86d2ba7c9"
+    },
+    {
+      "package": "libeis1",
+      "version": "1.3.901-1",
+      "architecture": "arm64",
+      "filename": "libeis1_1.3.901-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libe/libei/libeis1_1.3.901-1_arm64.deb",
+      "bytes": 39512,
+      "sha256": "2b968b9bb1d779fc13033ea59af81e63ba25e552a2f154f2cedde3d7f90601f6"
+    },
+    {
+      "package": "libmtdev1t64",
+      "version": "1.1.7-1",
+      "architecture": "arm64",
+      "filename": "libmtdev1t64_1.1.7-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mtdev/libmtdev1t64_1.1.7-1_arm64.deb",
+      "bytes": 22456,
+      "sha256": "3433f77a9f96d0dc537e870db734a4dbb50528836782c86709845736e8897b47"
+    },
+    {
+      "package": "libinput-bin",
+      "version": "1.28.1-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libinput-bin_1.28.1-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libinput/libinput-bin_1.28.1-1%2bdeb13u1_arm64.deb",
+      "bytes": 26788,
+      "sha256": "9da373d042dd8e0c45e34a5a0dc361cb386fd5ff4f066b7b3e64e1ea66de0835"
+    },
+    {
+      "package": "libinput10",
+      "version": "1.28.1-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libinput10_1.28.1-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libinput/libinput10_1.28.1-1%2bdeb13u1_arm64.deb",
+      "bytes": 129616,
+      "sha256": "a2acd04f3b1e9e91d22a26b63650087a179b6b3dbaddadc92d89edfbb2075ae1"
+    },
+    {
+      "package": "libxcb-util1",
+      "version": "0.4.1-1",
+      "architecture": "arm64",
+      "filename": "libxcb-util1_0.4.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xcb-util/libxcb-util1_0.4.1-1_arm64.deb",
+      "bytes": 23564,
+      "sha256": "a82432686fcb65dbbf5319b79cc68ab9c8a0102e969163219c6f0e0b657e393e"
+    },
+    {
+      "package": "libstartup-notification0",
+      "version": "0.12-8",
+      "architecture": "arm64",
+      "filename": "libstartup-notification0_0.12-8_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/startup-notification/libstartup-notification0_0.12-8_arm64.deb",
+      "bytes": 20636,
+      "sha256": "a449744afd90d57ffc7caa864ed9c68845b641e130174e13ed6d1ec01b5a14f4"
+    },
+    {
+      "package": "libxcb-res0",
+      "version": "1.17.0-2+b1",
+      "architecture": "arm64",
+      "filename": "libxcb-res0_1.17.0-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxcb/libxcb-res0_1.17.0-2%2bb1_arm64.deb",
+      "bytes": 106328,
+      "sha256": "941c1aff2e7ec05168746f80028952854198bfceb1ba69c404da1043b70b8ede"
+    },
+    {
+      "package": "libxcb-xkb1",
+      "version": "1.17.0-2+b1",
+      "architecture": "arm64",
+      "filename": "libxcb-xkb1_1.17.0-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxcb/libxcb-xkb1_1.17.0-2%2bb1_arm64.deb",
+      "bytes": 128572,
+      "sha256": "739b023ad82b4c9ac2c6cc9e6cc8602a17a05f7f5387d45a5a60eafdc17bf0e5"
+    },
+    {
+      "package": "libxkbcommon-x11-0",
+      "version": "1.7.0-2",
+      "architecture": "arm64",
+      "filename": "libxkbcommon-x11-0_1.7.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxkbcommon/libxkbcommon-x11-0_1.7.0-2_arm64.deb",
+      "bytes": 15168,
+      "sha256": "414ec70596c8193b309279dc6d8a35f809ffe5047addc3587a6d52eb462bebc5"
+    },
+    {
+      "package": "libxkbfile1",
+      "version": "1:1.1.0-1+b4",
+      "architecture": "arm64",
+      "filename": "libxkbfile1_1.1.0-1+b4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxkbfile/libxkbfile1_1.1.0-1%2bb4_arm64.deb",
+      "bytes": 72440,
+      "sha256": "b63a122db743b338f65c9d50a15185aa1595f74cdcd42d70e61b48dcf6fd10ce"
+    },
+    {
+      "package": "libmutter-16-0",
+      "version": "48.7-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libmutter-16-0_48.7-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mutter/libmutter-16-0_48.7-0%2bdeb13u1_arm64.deb",
+      "bytes": 1366972,
+      "sha256": "8510321287171b96b9f743a74dbb8d02251112a959032a76b3ac6f6d1fe41476"
+    },
+    {
+      "package": "gir1.2-mutter-16",
+      "version": "48.7-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "gir1.2-mutter-16_48.7-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mutter/gir1.2-mutter-16_48.7-0%2bdeb13u1_arm64.deb",
+      "bytes": 146312,
+      "sha256": "3b4a659587248c08f18303ba01c4139282f2527547c78d8b010ac9d8576ad0a6"
+    },
+    {
+      "package": "gir1.2-nm-1.0",
+      "version": "1.52.1-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-nm-1.0_1.52.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/network-manager/gir1.2-nm-1.0_1.52.1-1_arm64.deb",
+      "bytes": 84616,
+      "sha256": "80dda8c0b30bdd98179e630687c99f2de77cc72c77db46e335ba2e8e406c9510"
+    },
+    {
+      "package": "libnma-common",
+      "version": "1.10.6-5",
+      "architecture": "all",
+      "filename": "libnma-common_1.10.6-5_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnma/libnma-common_1.10.6-5_all.deb",
+      "bytes": 136092,
+      "sha256": "67e260a3c26be7cd07acd5478c2aff1087593f42136ff3201e243b3165eedc16"
+    },
+    {
+      "package": "libnma-gtk4-0",
+      "version": "1.10.6-5",
+      "architecture": "arm64",
+      "filename": "libnma-gtk4-0_1.10.6-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnma/libnma-gtk4-0_1.10.6-5_arm64.deb",
+      "bytes": 81508,
+      "sha256": "bedfedbb01f4b659a045ecd23fe8590fce3c56b64c2ba3e50f6d5e10984550b1"
+    },
+    {
+      "package": "gir1.2-nma4-1.0",
+      "version": "1.10.6-5",
+      "architecture": "arm64",
+      "filename": "gir1.2-nma4-1.0_1.10.6-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnma/gir1.2-nma4-1.0_1.10.6-5_arm64.deb",
+      "bytes": 8216,
+      "sha256": "dbeb8d23e7976a6e49d821398ef4c2d120369fd2d82f8f7cfbb4af42a4973355"
+    },
+    {
+      "package": "gir1.2-polkit-1.0",
+      "version": "126-2",
+      "architecture": "arm64",
+      "filename": "gir1.2-polkit-1.0_126-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/policykit-1/gir1.2-polkit-1.0_126-2_arm64.deb",
+      "bytes": 18260,
+      "sha256": "88133452a3a943d7e0a4e543edcceaced7b4d5960bfb6aad14cb993240477e1f"
+    },
+    {
+      "package": "gir1.2-rsvg-2.0",
+      "version": "2.60.0+dfsg-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-rsvg-2.0_2.60.0+dfsg-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libr/librsvg/gir1.2-rsvg-2.0_2.60.0%2bdfsg-1_arm64.deb",
+      "bytes": 17204,
+      "sha256": "154c490b747409adaef33d024f60e65801a766f4182b872a099f972cacbc7735"
+    },
+    {
+      "package": "gir1.2-soup-3.0",
+      "version": "3.6.5-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-soup-3.0_3.6.5-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsoup3/gir1.2-soup-3.0_3.6.5-3_arm64.deb",
+      "bytes": 29704,
+      "sha256": "042848e2596735fe906e273881fe7858717b295b2906c0e43d61a0c2c894c41a"
+    },
+    {
+      "package": "gir1.2-upowerglib-1.0",
+      "version": "1.90.9-1",
+      "architecture": "arm64",
+      "filename": "gir1.2-upowerglib-1.0_1.90.9-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/u/upower/gir1.2-upowerglib-1.0_1.90.9-1_arm64.deb",
+      "bytes": 8844,
+      "sha256": "b6b3066ee278bfe82cd33da82a9e6955a1a421b2014f26a0dfbd1e07ed8f6be0"
+    },
+    {
+      "package": "gir1.2-gtk-3.0",
+      "version": "3.24.49-3",
+      "architecture": "arm64",
+      "filename": "gir1.2-gtk-3.0_3.24.49-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gtk%2b3.0/gir1.2-gtk-3.0_3.24.49-3_arm64.deb",
+      "bytes": 223804,
+      "sha256": "33527b14bc2c4311ec3254f955c200949939dd0cbf327adf36f484e84ac9b039"
+    },
+    {
+      "package": "libmozjs-128-0",
+      "version": "128.14.0-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libmozjs-128-0_128.14.0-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mozjs128/libmozjs-128-0_128.14.0-1%7edeb13u1_arm64.deb",
+      "bytes": 9741048,
+      "sha256": "dd5d224c3331e934b4d027cccfbced2a8bf475bdfbbdced0765166b95e7d93fb"
+    },
+    {
+      "package": "libgjs0g",
+      "version": "1.82.3-1",
+      "architecture": "arm64",
+      "filename": "libgjs0g_1.82.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gjs/libgjs0g_1.82.3-1_arm64.deb",
+      "bytes": 369016,
+      "sha256": "1b8edcf07270dbd7f5ca8468a6f8441080ed454249fbeb2ac63a3729be41144e"
+    },
+    {
+      "package": "gjs",
+      "version": "1.82.3-1",
+      "architecture": "arm64",
+      "filename": "gjs_1.82.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gjs/gjs_1.82.3-1_arm64.deb",
+      "bytes": 123392,
+      "sha256": "886e98ae3723252d940d32487333d2bfef000af53ec92f2d0574bcb59610f362"
+    },
+    {
+      "package": "gnome-control-center-data",
+      "version": "1:48.4-1~deb13u1",
+      "architecture": "all",
+      "filename": "gnome-control-center-data_48.4-1~deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-control-center/gnome-control-center-data_48.4-1%7edeb13u1_all.deb",
+      "bytes": 3777940,
+      "sha256": "5ba6d31b68844341fb38c0ea6d1a81ae7782cd0a71ae5b24f7375d7179da75ca"
+    },
+    {
+      "package": "libgoa-1.0-common",
+      "version": "3.54.5-1~deb13u1",
+      "architecture": "all",
+      "filename": "libgoa-1.0-common_3.54.5-1~deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-online-accounts/libgoa-1.0-common_3.54.5-1%7edeb13u1_all.deb",
+      "bytes": 199068,
+      "sha256": "43eae0517168e6d1111f07875a84d8896a1bf02bbb4d4fee03e9fe3efd666b8d"
+    },
+    {
+      "package": "libgoa-1.0-0b",
+      "version": "3.54.5-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libgoa-1.0-0b_3.54.5-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-online-accounts/libgoa-1.0-0b_3.54.5-1%7edeb13u1_arm64.deb",
+      "bytes": 59732,
+      "sha256": "029ad582eca93c600c81697a80960679982050c104837c2f997710ccf04cff19"
+    },
+    {
+      "package": "librest-1.0-0",
+      "version": "0.9.1-6+b2",
+      "architecture": "arm64",
+      "filename": "librest-1.0-0_0.9.1-6+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libr/librest/librest-1.0-0_0.9.1-6%2bb2_arm64.deb",
+      "bytes": 30952,
+      "sha256": "55cc52ce47cfbec849018341b11ad84ff695bcfaf717c08428a7f32d565c0e36"
+    },
+    {
+      "package": "libsecret-common",
+      "version": "0.21.7-1",
+      "architecture": "all",
+      "filename": "libsecret-common_0.21.7-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsecret/libsecret-common_0.21.7-1_all.deb",
+      "bytes": 27936,
+      "sha256": "ce336a4ea6d27bfe85c195b88ab9a8eb95ce197228648634b8ace35ddb9bd808"
+    },
+    {
+      "package": "libsecret-1-0",
+      "version": "0.21.7-1",
+      "architecture": "arm64",
+      "filename": "libsecret-1-0_0.21.7-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsecret/libsecret-1-0_0.21.7-1_arm64.deb",
+      "bytes": 102236,
+      "sha256": "48b439ab6dcaac0ea18ad31143fc673d2c5fbdc3e4c584c96429f24a7792d829"
+    },
+    {
+      "package": "libgoa-backend-1.0-2",
+      "version": "3.54.5-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libgoa-backend-1.0-2_3.54.5-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-online-accounts/libgoa-backend-1.0-2_3.54.5-1%7edeb13u1_arm64.deb",
+      "bytes": 100356,
+      "sha256": "0715dca6e4c1437bda9856a67abd4390791af51cbb20e25aae3ea1d64cf64170"
+    },
+    {
+      "package": "gnome-online-accounts",
+      "version": "3.54.5-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "gnome-online-accounts_3.54.5-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-online-accounts/gnome-online-accounts_3.54.5-1%7edeb13u1_arm64.deb",
+      "bytes": 86312,
+      "sha256": "0a3adfeed8623c6c1c5ff8d8a391513108d929c139d71cb7457f397b9590ca1b"
+    },
+    {
+      "package": "liborc-0.4-0t64",
+      "version": "1:0.4.41-1",
+      "architecture": "arm64",
+      "filename": "liborc-0.4-0t64_0.4.41-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/orc/liborc-0.4-0t64_0.4.41-1_arm64.deb",
+      "bytes": 170796,
+      "sha256": "e69ee68606246657ff19bfe13058a9aef177e686b97638728f9e0e911af07680"
+    },
+    {
+      "package": "libgtk-4-media-gstreamer",
+      "version": "4.18.6+ds-2",
+      "architecture": "arm64",
+      "filename": "libgtk-4-media-gstreamer_4.18.6+ds-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gtk4/libgtk-4-media-gstreamer_4.18.6%2bds-2_arm64.deb",
+      "bytes": 88636,
+      "sha256": "292c7ea06cfad2da82753abbad68c26f3190d96a30a0ec75cb4a37c1274b1c08"
+    },
+    {
+      "package": "libhwy1t64",
+      "version": "1.2.0-2+b2",
+      "architecture": "arm64",
+      "filename": "libhwy1t64_1.2.0-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/h/highway/libhwy1t64_1.2.0-2%2bb2_arm64.deb",
+      "bytes": 499300,
+      "sha256": "05d6a112f091902db1155b8ebf355e78f92889d97394eef242736ec326199da3"
+    },
+    {
+      "package": "libjxl0.11",
+      "version": "0.11.2-0.1~deb13u2",
+      "architecture": "arm64",
+      "filename": "libjxl0.11_0.11.2-0.1~deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/j/jpeg-xl/libjxl0.11_0.11.2-0.1%7edeb13u2_arm64.deb",
+      "bytes": 886724,
+      "sha256": "c8b2923516f9d2c4a3569e741e698b0db0a918beeac9e5e10fb9c7344cd46e8b"
+    },
+    {
+      "package": "libjxl-gdk-pixbuf",
+      "version": "0.11.2-0.1~deb13u2",
+      "architecture": "arm64",
+      "filename": "libjxl-gdk-pixbuf_0.11.2-0.1~deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/j/jpeg-xl/libjxl-gdk-pixbuf_0.11.2-0.1%7edeb13u2_arm64.deb",
+      "bytes": 21812,
+      "sha256": "b61fbe1f0a14c7e29992c0473facfd435aed41cc1d7dc76173ee88bc6d6737bf"
+    },
+    {
+      "package": "tecla",
+      "version": "48.0.2-1",
+      "architecture": "arm64",
+      "filename": "tecla_48.0.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/tecla/tecla_48.0.2-1_arm64.deb",
+      "bytes": 36236,
+      "sha256": "95d6c41a59e0e74db79c35cb4bdfc549d40e11807f7a33050aee712067e94e56"
+    },
+    {
+      "package": "libwebpmux3",
+      "version": "1.5.0-0.1",
+      "architecture": "arm64",
+      "filename": "libwebpmux3_1.5.0-0.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libw/libwebp/libwebpmux3_1.5.0-0.1_arm64.deb",
+      "bytes": 124504,
+      "sha256": "84a98af076003c5a502afb95b2a1412e14dbe029e10272ddcdf2ac6f75d8c0d1"
+    },
+    {
+      "package": "webp-pixbuf-loader",
+      "version": "0.2.7-1+b1",
+      "architecture": "arm64",
+      "filename": "webp-pixbuf-loader_0.2.7-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/w/webp-pixbuf-loader/webp-pixbuf-loader_0.2.7-1%2bb1_arm64.deb",
+      "bytes": 10516,
+      "sha256": "5dee1268ff82c504c49805760a8446c77729be31142080e20bcf9229d0c2bb5b"
+    },
+    {
+      "package": "libcolord-gtk4-1t64",
+      "version": "0.3.1-1+b1",
+      "architecture": "arm64",
+      "filename": "libcolord-gtk4-1t64_0.3.1-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/colord-gtk/libcolord-gtk4-1t64_0.3.1-1%2bb1_arm64.deb",
+      "bytes": 16452,
+      "sha256": "ee3cf2c95b2bf768cf918e1d0eaa460f427b011f8bc428b36fb255e0b3ce282b"
+    },
+    {
+      "package": "libgsound0t64",
+      "version": "1.0.3-3.2+b4",
+      "architecture": "arm64",
+      "filename": "libgsound0t64_1.0.3-3.2+b4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gsound/libgsound0t64_1.0.3-3.2%2bb4_arm64.deb",
+      "bytes": 8808,
+      "sha256": "cd9ad6d26953499dd443e09525540bb8fea6b994e6524b74d04674394d20857e"
+    },
+    {
+      "package": "libgnome-bluetooth-ui-3.0-13",
+      "version": "47.1-1",
+      "architecture": "arm64",
+      "filename": "libgnome-bluetooth-ui-3.0-13_47.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-bluetooth3/libgnome-bluetooth-ui-3.0-13_47.1-1_arm64.deb",
+      "bytes": 59684,
+      "sha256": "f6f2516b3e8f2f6776b412ae8e75c457818ab35cc200cb0df626d858403f1e6b"
+    },
+    {
+      "package": "libgnome-rr-4-2t64",
+      "version": "44.3-3",
+      "architecture": "arm64",
+      "filename": "libgnome-rr-4-2t64_44.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-desktop/libgnome-rr-4-2t64_44.3-3_arm64.deb",
+      "bytes": 73396,
+      "sha256": "b08a6b82c7d4a3266a02fec34958477828544253248942f768231670c1d3a0c0"
+    },
+    {
+      "package": "libgtop2-common",
+      "version": "2.41.3-1",
+      "architecture": "all",
+      "filename": "libgtop2-common_2.41.3-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgtop2/libgtop2-common_2.41.3-1_all.deb",
+      "bytes": 87672,
+      "sha256": "6b3b6d06d9d01a307206f5f68c7dab2b1888edcdae4555c162e6c327251743a7"
+    },
+    {
+      "package": "libgtop-2.0-11",
+      "version": "2.41.3-1+b2",
+      "architecture": "arm64",
+      "filename": "libgtop-2.0-11_2.41.3-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgtop2/libgtop-2.0-11_2.41.3-1%2bb2_arm64.deb",
+      "bytes": 66268,
+      "sha256": "4a22e24d127e5da5d5da4d066ce5a30ac9505f3a683c592a2a27fcbf227a9ba2"
+    },
+    {
+      "package": "libmalcontent-0-0",
+      "version": "0.13.0-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "libmalcontent-0-0_0.13.0-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/malcontent/libmalcontent-0-0_0.13.0-2%2bdeb13u1_arm64.deb",
+      "bytes": 21780,
+      "sha256": "3fdccdf7ec845766e2d3c3154185274d28e33db6dbdf557868dc353945466c09"
+    },
+    {
+      "package": "libpwquality-common",
+      "version": "1.4.5-5",
+      "architecture": "all",
+      "filename": "libpwquality-common_1.4.5-5_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libp/libpwquality/libpwquality-common_1.4.5-5_all.deb",
+      "bytes": 51856,
+      "sha256": "fd4faa77458c41c98507c94762e8a4fd663d8caf7d05865aba3f653c32d25d76"
+    },
+    {
+      "package": "libcrack2",
+      "version": "2.9.6-5.2+b1",
+      "architecture": "arm64",
+      "filename": "libcrack2_2.9.6-5.2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/cracklib2/libcrack2_2.9.6-5.2%2bb1_arm64.deb",
+      "bytes": 43844,
+      "sha256": "58c267cb9cac38bbe95bfe8e6ff97d6584047eb1c32ab8c97150ef2d92275c81"
+    },
+    {
+      "package": "libpwquality1",
+      "version": "1.4.5-5",
+      "architecture": "arm64",
+      "filename": "libpwquality1_1.4.5-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libp/libpwquality/libpwquality1_1.4.5-5_arm64.deb",
+      "bytes": 12824,
+      "sha256": "e441d3eaccca3f9e5a7d2e33ae39ac48c330693975c819990985ab98e5354fdc"
+    },
+    {
+      "package": "libicu76",
+      "version": "76.1-4",
+      "architecture": "arm64",
+      "filename": "libicu76_76.1-4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/i/icu/libicu76_76.1-4_arm64.deb",
+      "bytes": 9523672,
+      "sha256": "62eb15577c881b7d02aa861e3eb860902335630cc8174daf525b48c2fa39298f"
+    },
+    {
+      "package": "liblmdb0",
+      "version": "0.9.31-1+b2",
+      "architecture": "arm64",
+      "filename": "liblmdb0_0.9.31-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/l/lmdb/liblmdb0_0.9.31-1%2bb2_arm64.deb",
+      "bytes": 43504,
+      "sha256": "aaef40a5569a13235e4b067b07e170130fc50c5ff21d685e8961290323baff1d"
+    },
+    {
+      "package": "libtalloc2",
+      "version": "2:2.4.3+samba4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libtalloc2_2.4.3+samba4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libtalloc2_2.4.3%2bsamba4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 62496,
+      "sha256": "b5f1222932febe5fbd249f5f22345d664ae39852ee88713bca979a4390a3cec1"
+    },
+    {
+      "package": "libtevent0t64",
+      "version": "2:0.16.2+samba4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libtevent0t64_0.16.2+samba4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libtevent0t64_0.16.2%2bsamba4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 76276,
+      "sha256": "ade9323875ea5b1fedce936221ca9cff546cfb61fdae08aecbde3490b5f342b9"
+    },
+    {
+      "package": "libldb2",
+      "version": "2:2.11.0+samba4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libldb2_2.11.0+samba4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libldb2_2.11.0%2bsamba4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 172660,
+      "sha256": "8faef3dc4834d92cbd29002d0e0033706457acc5576e19bcb22a2eedc396c422"
+    },
+    {
+      "package": "libwbclient0",
+      "version": "2:4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libwbclient0_4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libwbclient0_4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 71156,
+      "sha256": "e16ac6c2c5d538474b27561dcb63d416da2bab0fef46009fdfb367a62a399f7a"
+    },
+    {
+      "package": "samba-libs",
+      "version": "2:4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "samba-libs_4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/samba-libs_4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 5647520,
+      "sha256": "8e20a1e57e7911f7db7242dac58fb5f99173453c6e99881b1940bfc80866a9f8"
+    },
+    {
+      "package": "libsmbclient0",
+      "version": "2:4.22.11+dfsg-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libsmbclient0_4.22.11+dfsg-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/samba/libsmbclient0_4.22.11%2bdfsg-0%2bdeb13u1_arm64.deb",
+      "bytes": 95544,
+      "sha256": "045c9dd84963aded62214fa9180cfe03dff118c78dea91fcd52b69488f20178d"
+    },
+    {
+      "package": "libudisks2-0",
+      "version": "2.10.1-12.1+deb13u2",
+      "architecture": "arm64",
+      "filename": "libudisks2-0_2.10.1-12.1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/u/udisks2/libudisks2-0_2.10.1-12.1%2bdeb13u2_arm64.deb",
+      "bytes": 143108,
+      "sha256": "98ec4e18947900a7a2a17e7dff6d7afcfad000fe50fd28844fd4e9cbdea6d6aa"
+    },
+    {
+      "package": "gnome-control-center",
+      "version": "1:48.4-1~deb13u1",
+      "architecture": "arm64",
+      "filename": "gnome-control-center_48.4-1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-control-center/gnome-control-center_48.4-1%7edeb13u1_arm64.deb",
+      "bytes": 1959244,
+      "sha256": "1d6d7f522c8ea2054f435c3cca0f399b5258993a7f1b5a6edc709187580f321b"
+    },
+    {
+      "package": "gnome-shell-common",
+      "version": "48.7-0+deb13u2",
+      "architecture": "all",
+      "filename": "gnome-shell-common_48.7-0+deb13u2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-shell/gnome-shell-common_48.7-0%2bdeb13u2_all.deb",
+      "bytes": 935216,
+      "sha256": "494fd0ac86c96189ab6fe19d41a9ad44263c9207cf7fe633b8dd412c1c9e9b3c"
+    },
+    {
+      "package": "gstreamer1.0-pipewire",
+      "version": "1.4.2-1",
+      "architecture": "arm64",
+      "filename": "gstreamer1.0-pipewire_1.4.2-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pipewire/gstreamer1.0-pipewire_1.4.2-1_arm64.deb",
+      "bytes": 77000,
+      "sha256": "bfee02ba71905327356802a2c0e2a8d9b8fe9cd95ab67b193abc4ceff85c1aa2"
+    },
+    {
+      "package": "libglib2.0-bin",
+      "version": "2.84.4-3~deb13u5",
+      "architecture": "arm64",
+      "filename": "libglib2.0-bin_2.84.4-3~deb13u5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/glib2.0/libglib2.0-bin_2.84.4-3%7edeb13u5_arm64.deb",
+      "bytes": 128488,
+      "sha256": "abc9841d2f924604510ca255fb069add0417023b593bfc9552b0d4ab1fa5fffb"
+    },
+    {
+      "package": "libcamel-1.2-64t64",
+      "version": "3.56.2-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libcamel-1.2-64t64_3.56.2-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/evolution-data-server/libcamel-1.2-64t64_3.56.2-0%2bdeb13u1_arm64.deb",
+      "bytes": 423444,
+      "sha256": "b262b4ff8c37d07adf87886808f80e73c71f69587e1f74a1ee8022674f27c7c3"
+    },
+    {
+      "package": "libedataserver-1.2-27t64",
+      "version": "3.56.2-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libedataserver-1.2-27t64_3.56.2-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/evolution-data-server/libedataserver-1.2-27t64_3.56.2-0%2bdeb13u1_arm64.deb",
+      "bytes": 251184,
+      "sha256": "de54717e63f8e78143c209a55da53cd95ae077c83298a0a37b803006ff475fa4"
+    },
+    {
+      "package": "libical3t64",
+      "version": "3.0.20-1+b1",
+      "architecture": "arm64",
+      "filename": "libical3t64_3.0.20-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libical3/libical3t64_3.0.20-1%2bb1_arm64.deb",
+      "bytes": 269552,
+      "sha256": "682718dc15c851caff7e50ac0c694fbbcc7ecde5f35360caaae768ec0433c5a6"
+    },
+    {
+      "package": "libecal-2.0-3",
+      "version": "3.56.2-0+deb13u1",
+      "architecture": "arm64",
+      "filename": "libecal-2.0-3_3.56.2-0+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/evolution-data-server/libecal-2.0-3_3.56.2-0%2bdeb13u1_arm64.deb",
+      "bytes": 154136,
+      "sha256": "fbafa8a19835712717c4f3b59614d6884db1f45d6a1d451fd97d30690b1ebd32"
+    },
+    {
+      "package": "libarchive13t64",
+      "version": "3.7.4-4+deb13u1",
+      "architecture": "arm64",
+      "filename": "libarchive13t64_3.7.4-4+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libarchive/libarchive13t64_3.7.4-4%2bdeb13u1_arm64.deb",
+      "bytes": 324064,
+      "sha256": "9dc7897bc1c83b03a69c581018010fbd9723ce199b99433639343d8b3a5bcf81"
+    },
+    {
+      "package": "libgnome-autoar-0-0",
+      "version": "0.4.5-2",
+      "architecture": "arm64",
+      "filename": "libgnome-autoar-0-0_0.4.5-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-autoar/libgnome-autoar-0-0_0.4.5-2_arm64.deb",
+      "bytes": 27948,
+      "sha256": "21ff1552b6fef46a5675cfc47d77eaa650b8cd778a48b45982b8a47b3952714f"
+    },
+    {
+      "package": "gnome-shell",
+      "version": "48.7-0+deb13u2",
+      "architecture": "arm64",
+      "filename": "gnome-shell_48.7-0+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-shell/gnome-shell_48.7-0%2bdeb13u2_arm64.deb",
+      "bytes": 891316,
+      "sha256": "1bf4882d88c43da852935b3bb776b68b4d4de62e187bea101238e92bc838077a"
+    },
+    {
+      "package": "gvfs-common",
+      "version": "1.57.2-2+deb13u1",
+      "architecture": "all",
+      "filename": "gvfs-common_1.57.2-2+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gvfs/gvfs-common_1.57.2-2%2bdeb13u1_all.deb",
+      "bytes": 497084,
+      "sha256": "8744ed0cebea670dbce38f72ba8bedbd7b8c66a02468b8e043a5fe8c6c75433b"
+    },
+    {
+      "package": "gvfs-libs",
+      "version": "1.57.2-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "gvfs-libs_1.57.2-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gvfs/gvfs-libs_1.57.2-2%2bdeb13u1_arm64.deb",
+      "bytes": 95908,
+      "sha256": "3060b948c6ee6951fdb626821d6ca2055094a2f621f56fdbbdbe5cffc649a2d7"
+    },
+    {
+      "package": "libblockdev-utils3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-utils3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-utils3_3.3.0-2.1_arm64.deb",
+      "bytes": 17632,
+      "sha256": "54b8fe5a179fd0d2f6e9a983f2c0843788900877dde7ddece233fc2eb376bded"
+    },
+    {
+      "package": "libjson-c5",
+      "version": "0.18+ds-1",
+      "architecture": "arm64",
+      "filename": "libjson-c5_0.18+ds-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/j/json-c/libjson-c5_0.18%2bds-1_arm64.deb",
+      "bytes": 45216,
+      "sha256": "f631829107005b15c2ca5c48ac74bc2df437c7eb608756eb865b147985f7bb45"
+    },
+    {
+      "package": "libcryptsetup12",
+      "version": "2:2.7.5-2",
+      "architecture": "arm64",
+      "filename": "libcryptsetup12_2.7.5-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/cryptsetup/libcryptsetup12_2.7.5-2_arm64.deb",
+      "bytes": 232200,
+      "sha256": "c09ef97b4ec26101b0812f32ce27c697ee2d88bf44b018a541c3afbf282ee56a"
+    },
+    {
+      "package": "libvolume-key1",
+      "version": "0.3.12-9",
+      "architecture": "arm64",
+      "filename": "libvolume-key1_0.3.12-9_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/volume-key/libvolume-key1_0.3.12-9_arm64.deb",
+      "bytes": 118388,
+      "sha256": "aac4b6e386fb383d75e77df8ecd6f26d9087869368888734cdc7e0315d1c9bac"
+    },
+    {
+      "package": "libblockdev-crypto3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-crypto3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-crypto3_3.3.0-2.1_arm64.deb",
+      "bytes": 24124,
+      "sha256": "946936bb69055892ba013debe78694ae0781d07e36f57627b5392e57a5465686"
+    },
+    {
+      "package": "libblockdev-fs3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-fs3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-fs3_3.3.0-2.1_arm64.deb",
+      "bytes": 37672,
+      "sha256": "b22fcd3ef706c3e189cf90160c40dbc3f5c5760af3c56475463288429728f047"
+    },
+    {
+      "package": "libblockdev-loop3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-loop3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-loop3_3.3.0-2.1_arm64.deb",
+      "bytes": 10596,
+      "sha256": "a0a321a82fb2070beff049d6c2a6b38b1b3178cb866187f8cbc092459590f55d"
+    },
+    {
+      "package": "libbytesize-common",
+      "version": "2.11-2",
+      "architecture": "all",
+      "filename": "libbytesize-common_2.11-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libbytesize/libbytesize-common_2.11-2_all.deb",
+      "bytes": 8252,
+      "sha256": "4e6a6640b24032fdb5c31ce2b061cd4eea039e0fab04e154c5ff62f8dba948c6"
+    },
+    {
+      "package": "libbytesize1",
+      "version": "2.11-2",
+      "architecture": "arm64",
+      "filename": "libbytesize1_2.11-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libbytesize/libbytesize1_2.11-2_arm64.deb",
+      "bytes": 11840,
+      "sha256": "b25258b1dab99bec963e364cec713fb43fcb90c81ee57ca6bf0c5dbf9c7f9fef"
+    },
+    {
+      "package": "libblockdev-mdraid3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-mdraid3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-mdraid3_3.3.0-2.1_arm64.deb",
+      "bytes": 17408,
+      "sha256": "c3bba459546a63d3f091555236feabac921e3e99219933a27c376a1bf6fce6d6"
+    },
+    {
+      "package": "libnvme1t64",
+      "version": "1.13-2",
+      "architecture": "arm64",
+      "filename": "libnvme1t64_1.13-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnvme/libnvme1t64_1.13-2_arm64.deb",
+      "bytes": 77376,
+      "sha256": "7b32b3e1f4737376ee88a8a05a58e71177d4948750ad51b36841dab7818f1a51"
+    },
+    {
+      "package": "libblockdev-nvme3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-nvme3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-nvme3_3.3.0-2.1_arm64.deb",
+      "bytes": 21556,
+      "sha256": "8f8cb2012339ac01f37a8074d34b415eba22f6be9104a6d385dcf857a11d69bf"
+    },
+    {
+      "package": "libblockdev-part3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-part3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-part3_3.3.0-2.1_arm64.deb",
+      "bytes": 19156,
+      "sha256": "f507c59ef79938b6fde0fd7837feff55f8fe84508d93e3336049784000c8459f"
+    },
+    {
+      "package": "libblockdev-swap3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev-swap3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev-swap3_3.3.0-2.1_arm64.deb",
+      "bytes": 13020,
+      "sha256": "27a7f917b425c7f5369777913b262144a23c3ae81906b273df9ea62cac3bd699"
+    },
+    {
+      "package": "libparted2t64",
+      "version": "3.6-5",
+      "architecture": "arm64",
+      "filename": "libparted2t64_3.6-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/parted/libparted2t64_3.6-5_arm64.deb",
+      "bytes": 293388,
+      "sha256": "cc441a27a61a0d7320cc991f147049b12444c6e290277f1a0a5a3fc5942ded63"
+    },
+    {
+      "package": "parted",
+      "version": "3.6-5",
+      "architecture": "arm64",
+      "filename": "parted_3.6-5_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/parted/parted_3.6-5_arm64.deb",
+      "bytes": 37960,
+      "sha256": "62006921ec2a8b10ad3e52d0bbaf41b31f6806ea5d3ee15c8544b379c6e712ab"
+    },
+    {
+      "package": "libatasmart4",
+      "version": "0.19-5+b2",
+      "architecture": "arm64",
+      "filename": "libatasmart4_0.19-5+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libatasmart/libatasmart4_0.19-5%2bb2_arm64.deb",
+      "bytes": 22268,
+      "sha256": "620b419f27ab3d29f93e85a751344f9a9e5bd92a50e14bf40964255fd7330c09"
+    },
+    {
+      "package": "libblockdev3",
+      "version": "3.3.0-2.1",
+      "architecture": "arm64",
+      "filename": "libblockdev3_3.3.0-2.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libblockdev/libblockdev3_3.3.0-2.1_arm64.deb",
+      "bytes": 47968,
+      "sha256": "c8af6dd9f4f17fc020158ce04f75d199a00a5bb98434d5c4dd1721c031ea8835"
+    },
+    {
+      "package": "udisks2",
+      "version": "2.10.1-12.1+deb13u2",
+      "architecture": "arm64",
+      "filename": "udisks2_2.10.1-12.1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/u/udisks2/udisks2_2.10.1-12.1%2bdeb13u2_arm64.deb",
+      "bytes": 432212,
+      "sha256": "fe3d5ab9b868fd31f553420798cbdd21aba733c4f5bc3fb9a570f81c43197d9f"
+    },
+    {
+      "package": "libudfread0",
+      "version": "1.1.2-1+b2",
+      "architecture": "arm64",
+      "filename": "libudfread0_1.1.2-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libu/libudfread/libudfread0_1.1.2-1%2bb2_arm64.deb",
+      "bytes": 17312,
+      "sha256": "badab108ac953987ced64c4b25a38c75ac391e6f4815cca4880619f313b4da22"
+    },
+    {
+      "package": "libbluray2",
+      "version": "1:1.3.4-1+b2",
+      "architecture": "arm64",
+      "filename": "libbluray2_1.3.4-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libb/libbluray/libbluray2_1.3.4-1%2bb2_arm64.deb",
+      "bytes": 125560,
+      "sha256": "14da09203931bdbff17b129d447850daecc8c72b87b296e3f7d0e0beb56e9f50"
+    },
+    {
+      "package": "gvfs-daemons",
+      "version": "1.57.2-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "gvfs-daemons_1.57.2-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gvfs/gvfs-daemons_1.57.2-2%2bdeb13u1_arm64.deb",
+      "bytes": 111172,
+      "sha256": "7ab6e7807dfb2734163fed1efe1a7c6af51d8064653583690e1ee9657b887a24"
+    },
+    {
+      "package": "gvfs",
+      "version": "1.57.2-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "gvfs_1.57.2-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gvfs/gvfs_1.57.2-2%2bdeb13u1_arm64.deb",
+      "bytes": 119668,
+      "sha256": "52108160695c8320cd0fb886e6266920f5cd29ba7173f054f49f48b9c9118384"
+    },
+    {
+      "package": "psmisc",
+      "version": "23.7-2",
+      "architecture": "arm64",
+      "filename": "psmisc_23.7-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/psmisc/psmisc_23.7-2_arm64.deb",
+      "bytes": 264676,
+      "sha256": "9ebae564434a8fb5f23b770b5810e9e9c887cde32c23498f340db353a629c993"
+    },
+    {
+      "package": "libavahi-glib1",
+      "version": "0.8-16",
+      "architecture": "arm64",
+      "filename": "libavahi-glib1_0.8-16_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/avahi/libavahi-glib1_0.8-16_arm64.deb",
+      "bytes": 29696,
+      "sha256": "02262d470d2e7b9289b8a6f03c0d92a57f4c0c1f385c9c5b460ea56a64138c41"
+    },
+    {
+      "package": "libcdio19t64",
+      "version": "2.2.0-4.1~deb13u1",
+      "architecture": "arm64",
+      "filename": "libcdio19t64_2.2.0-4.1~deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcdio/libcdio19t64_2.2.0-4.1%7edeb13u1_arm64.deb",
+      "bytes": 59316,
+      "sha256": "3c76de181f7018ca14e29f75ba6992cf5ec9099e3c3ee304d9d64454af48062f"
+    },
+    {
+      "package": "libcdio-cdda2t64",
+      "version": "10.2+2.0.2-1+b1",
+      "architecture": "arm64",
+      "filename": "libcdio-cdda2t64_10.2+2.0.2-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcdio-paranoia/libcdio-cdda2t64_10.2%2b2.0.2-1%2bb1_arm64.deb",
+      "bytes": 17172,
+      "sha256": "582a783ff88cdc8c78e4dd322456f3e604e39fae7fc7df5ec1b7429b874c4571"
+    },
+    {
+      "package": "libcdio-paranoia2t64",
+      "version": "10.2+2.0.2-1+b1",
+      "architecture": "arm64",
+      "filename": "libcdio-paranoia2t64_10.2+2.0.2-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcdio-paranoia/libcdio-paranoia2t64_10.2%2b2.0.2-1%2bb1_arm64.deb",
+      "bytes": 16512,
+      "sha256": "3d3d040c8bd0856c06e35234587dd0adb856eada9ab8fb61bfd4a3a3291c6410"
+    },
+    {
+      "package": "libsoup2.4-common",
+      "version": "2.74.3-10.1",
+      "architecture": "all",
+      "filename": "libsoup2.4-common_2.74.3-10.1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsoup2.4/libsoup2.4-common_2.74.3-10.1_all.deb",
+      "bytes": 57944,
+      "sha256": "aafe759eaee6f0fb2fdba7aa9c3e78b80f00e4d2b5d8cde6c7610ed2a638166c"
+    },
+    {
+      "package": "libsoup-2.4-1",
+      "version": "2.74.3-10.1",
+      "architecture": "arm64",
+      "filename": "libsoup-2.4-1_2.74.3-10.1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libsoup2.4/libsoup-2.4-1_2.74.3-10.1_arm64.deb",
+      "bytes": 262380,
+      "sha256": "0267770b01e4520eb65bb281b6f15bf1dd9d4afccb34c1a09ec51b0448ca764f"
+    },
+    {
+      "package": "libgdata-common",
+      "version": "0.18.1-9",
+      "architecture": "all",
+      "filename": "libgdata-common_0.18.1-9_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgdata/libgdata-common_0.18.1-9_all.deb",
+      "bytes": 107272,
+      "sha256": "72320bac67186451a21bce14da1d470e07393d8d221ee162ebe11568ce9716bc"
+    },
+    {
+      "package": "libgdata22",
+      "version": "0.18.1-9",
+      "architecture": "arm64",
+      "filename": "libgdata22_0.18.1-9_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgdata/libgdata22_0.18.1-9_arm64.deb",
+      "bytes": 251532,
+      "sha256": "a1cb1f49278a1fb05e5884032e5d56467987198d136d0d6269d345d64249697f"
+    },
+    {
+      "package": "libmsgraph-1-1",
+      "version": "0.3.3-3",
+      "architecture": "arm64",
+      "filename": "libmsgraph-1-1_0.3.3-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/msgraph/libmsgraph-1-1_0.3.3-3_arm64.deb",
+      "bytes": 32300,
+      "sha256": "031852c08ea8dfa36dd15dca714c4db3db7ad7a8efbc956da9db15a5f70f0784"
+    },
+    {
+      "package": "libmtp-common",
+      "version": "1.1.22-1",
+      "architecture": "all",
+      "filename": "libmtp-common_1.1.22-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libm/libmtp/libmtp-common_1.1.22-1_all.deb",
+      "bytes": 46984,
+      "sha256": "7646813236bc244ecf919f208c88a92ea27fe080771315e4b44422f18067fbca"
+    },
+    {
+      "package": "libmtp9t64",
+      "version": "1.1.22-1",
+      "architecture": "arm64",
+      "filename": "libmtp9t64_1.1.22-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libm/libmtp/libmtp9t64_1.1.22-1_arm64.deb",
+      "bytes": 196516,
+      "sha256": "e2e0c36cf7412d6c6a91ef8083b0e6872c710fd6ded553498c0bb6274421a136"
+    },
+    {
+      "package": "libnfs14",
+      "version": "5.0.2-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libnfs14_5.0.2-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libn/libnfs/libnfs14_5.0.2-1%2bdeb13u1_arm64.deb",
+      "bytes": 102304,
+      "sha256": "4441a413d33b97ee1530030f088d1c07fb444491836c5900bc91e369e0a0b523"
+    },
+    {
+      "package": "gvfs-backends",
+      "version": "1.57.2-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "gvfs-backends_1.57.2-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gvfs/gvfs-backends_1.57.2-2%2bdeb13u1_arm64.deb",
+      "bytes": 337988,
+      "sha256": "b806c06de74c6ed1c3542c57704a25a22c7d9ab3b47a504531422f3fd50c4e2c"
+    },
+    {
+      "package": "libnautilus-extension4",
+      "version": "48.3-2",
+      "architecture": "arm64",
+      "filename": "libnautilus-extension4_48.3-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/nautilus/libnautilus-extension4_48.3-2_arm64.deb",
+      "bytes": 19376,
+      "sha256": "4ca8505e49aa9d48031308d99d7087f93128423a02f3129cc5fd67875f92fea5"
+    },
+    {
+      "package": "nautilus-data",
+      "version": "48.3-2",
+      "architecture": "all",
+      "filename": "nautilus-data_48.3-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/nautilus/nautilus-data_48.3-2_all.deb",
+      "bytes": 1726304,
+      "sha256": "60e901c7a20b757dbf3e7d532774e8d1b5af8b2d78d90d53acd6d1d95354738f"
+    },
+    {
+      "package": "libcue2",
+      "version": "2.2.1-4.1+b2",
+      "architecture": "arm64",
+      "filename": "libcue2_2.2.1-4.1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcue/libcue2_2.2.1-4.1%2bb2_arm64.deb",
+      "bytes": 21844,
+      "sha256": "12f304f8aa9827e743bc361219be8f8715b986de427cfefb5fbb83962016c1ff"
+    },
+    {
+      "package": "libexempi8",
+      "version": "2.6.6-2",
+      "architecture": "arm64",
+      "filename": "libexempi8_2.6.6-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/exempi/libexempi8_2.6.6-2_arm64.deb",
+      "bytes": 520140,
+      "sha256": "21cb1c0d0118b02c66622299cf79fe07707fc87f926c1979b60916211e99d306"
+    },
+    {
+      "package": "libinih1",
+      "version": "59-1",
+      "architecture": "arm64",
+      "filename": "libinih1_59-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libinih/libinih1_59-1_arm64.deb",
+      "bytes": 6932,
+      "sha256": "fcbc936af8fdd3db56b2a8fc4891b27955ce48c7639cbd6905fd292ae20061fa"
+    },
+    {
+      "package": "libinireader0",
+      "version": "59-1",
+      "architecture": "arm64",
+      "filename": "libinireader0_59-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libinih/libinireader0_59-1_arm64.deb",
+      "bytes": 12188,
+      "sha256": "40937f22b74c8ac9bdb5f286b53ea7b81eb543d1d0497854412d0dd664e0c626"
+    },
+    {
+      "package": "libexiv2-data",
+      "version": "0.28.5+dfsg-1",
+      "architecture": "all",
+      "filename": "libexiv2-data_0.28.5+dfsg-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/exiv2/libexiv2-data_0.28.5%2bdfsg-1_all.deb",
+      "bytes": 1775296,
+      "sha256": "afc70f25e5223489d00347bc28f7eb05cf56f6b3faaf05a506ce6d0efbd5fa61"
+    },
+    {
+      "package": "libexiv2-28",
+      "version": "0.28.5+dfsg-1",
+      "architecture": "arm64",
+      "filename": "libexiv2-28_0.28.5+dfsg-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/e/exiv2/libexiv2-28_0.28.5%2bdfsg-1_arm64.deb",
+      "bytes": 820348,
+      "sha256": "62a590d7d09f4ef23acb53abe5f0be2027f71f73cda8c869e812f3fd17f8a1b7"
+    },
+    {
+      "package": "libgexiv2-2",
+      "version": "0.14.3-1+b1",
+      "architecture": "arm64",
+      "filename": "libgexiv2-2_0.14.3-1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gexiv2/libgexiv2-2_0.14.3-1%2bb1_arm64.deb",
+      "bytes": 75668,
+      "sha256": "6fdcd9854617a51d1a92ddf39316c3eecb9ff621bac6edca4fa6a6fd02675a3c"
+    },
+    {
+      "package": "libgif7",
+      "version": "5.2.2-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libgif7_5.2.2-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/giflib/libgif7_5.2.2-1%2bdeb13u1_arm64.deb",
+      "bytes": 44120,
+      "sha256": "658318d55d788a628836d35d994f60057d2655cb81b355648fbe2dc3003ddeb9"
+    },
+    {
+      "package": "libgsf-1-common",
+      "version": "1.14.53-1",
+      "architecture": "all",
+      "filename": "libgsf-1-common_1.14.53-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgsf/libgsf-1-common_1.14.53-1_all.deb",
+      "bytes": 162132,
+      "sha256": "a88b404a8f8e03a8db306c71a523856d3bee7977bb41990a7fc425539e2992e2"
+    },
+    {
+      "package": "libgsf-1-114",
+      "version": "1.14.53-1",
+      "architecture": "arm64",
+      "filename": "libgsf-1-114_1.14.53-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgsf/libgsf-1-114_1.14.53-1_arm64.deb",
+      "bytes": 147916,
+      "sha256": "01d2b21bad39a95c0d5d85eb807253004ea5de74263aaf1f83f72a6c324d5e7b"
+    },
+    {
+      "package": "libgxps2t64",
+      "version": "0.3.2-4+b2",
+      "architecture": "arm64",
+      "filename": "libgxps2t64_0.3.2-4+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libg/libgxps/libgxps2t64_0.3.2-4%2bb2_arm64.deb",
+      "bytes": 50156,
+      "sha256": "636ee1f7b8af67d029a56e56b4749ab905dacf81dac0602c16b79123bfbb8c7e"
+    },
+    {
+      "package": "libiptcdata0",
+      "version": "1.0.5-2.4",
+      "architecture": "arm64",
+      "filename": "libiptcdata0_1.0.5-2.4_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libiptcdata/libiptcdata0_1.0.5-2.4_arm64.deb",
+      "bytes": 23244,
+      "sha256": "f8647f13e1a7ae099ed9e9229aa4c3526dfeac070443299a61220281feb28b93"
+    },
+    {
+      "package": "libxslt1.1",
+      "version": "1.1.35-1.2+deb13u3",
+      "architecture": "arm64",
+      "filename": "libxslt1.1_1.1.35-1.2+deb13u3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxslt/libxslt1.1_1.1.35-1.2%2bdeb13u3_arm64.deb",
+      "bytes": 222332,
+      "sha256": "590a5d177dcfa2bf432f0d7db80b936ac7afadfebdb7f077d0c3305da20d1897"
+    },
+    {
+      "package": "usb.ids",
+      "version": "2025.07.26-1",
+      "architecture": "all",
+      "filename": "usb.ids_2025.07.26-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/u/usb.ids/usb.ids_2025.07.26-1_all.deb",
+      "bytes": 209204,
+      "sha256": "4b440f0f5d73d3412dad08b0d810b941e75fd4ca9a46f2a3fbd4b5ec852d5041"
+    },
+    {
+      "package": "libosinfo-l10n",
+      "version": "1.12.0-2",
+      "architecture": "all",
+      "filename": "libosinfo-l10n_1.12.0-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libo/libosinfo/libosinfo-l10n_1.12.0-2_all.deb",
+      "bytes": 184280,
+      "sha256": "3d8c424973c15f69c7c52916e6e27ebd522decdf004abd7ff88ff2380ca21808"
+    },
+    {
+      "package": "osinfo-db",
+      "version": "0.20250606-1",
+      "architecture": "all",
+      "filename": "osinfo-db_0.20250606-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/osinfo-db/osinfo-db_0.20250606-1_all.deb",
+      "bytes": 169020,
+      "sha256": "37ebe34c535ebb8883614d14a6e4fff972c9a57682dfc9600eeed73d23245655"
+    },
+    {
+      "package": "libosinfo-1.0-0",
+      "version": "1.12.0-2",
+      "architecture": "arm64",
+      "filename": "libosinfo-1.0-0_1.12.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libo/libosinfo/libosinfo-1.0-0_1.12.0-2_arm64.deb",
+      "bytes": 225436,
+      "sha256": "c572276f24b6485f7c0065c7aa60a37d6b5c33207bc48305def249fff0ef2410"
+    },
+    {
+      "package": "libtinysparql-3.0-0",
+      "version": "3.8.2-7",
+      "architecture": "arm64",
+      "filename": "libtinysparql-3.0-0_3.8.2-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/tinysparql/libtinysparql-3.0-0_3.8.2-7_arm64.deb",
+      "bytes": 265952,
+      "sha256": "c8321bd683efb9b63a714592b42a6e178a9619150bedad074b12d969ad2b34b3"
+    },
+    {
+      "package": "libtotem-plparser-common",
+      "version": "3.26.6-2",
+      "architecture": "all",
+      "filename": "libtotem-plparser-common_3.26.6-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/totem-pl-parser/libtotem-plparser-common_3.26.6-2_all.deb",
+      "bytes": 26860,
+      "sha256": "8aa65759fa00e270f92937a06ff60c1d74d7844826675025ccc52037101379b7"
+    },
+    {
+      "package": "libtotem-plparser18",
+      "version": "3.26.6-2",
+      "architecture": "arm64",
+      "filename": "libtotem-plparser18_3.26.6-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/totem-pl-parser/libtotem-plparser18_3.26.6-2_arm64.deb",
+      "bytes": 56796,
+      "sha256": "b76a9ab794e96f5a444c30edf814f014acea0b42fe698aeeb8bba1c0ed883119"
+    },
+    {
+      "package": "tinysparql",
+      "version": "3.8.2-7",
+      "architecture": "arm64",
+      "filename": "tinysparql_3.8.2-7_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/tinysparql/tinysparql_3.8.2-7_arm64.deb",
+      "bytes": 527540,
+      "sha256": "2a25552eaa5b06a3f920e6d8d61ef94dbe8b7e007c396d02c98f8d84a766f8c6"
+    },
+    {
+      "package": "tracker-extract",
+      "version": "3.8.2-4+b1",
+      "architecture": "arm64",
+      "filename": "tracker-extract_3.8.2-4+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/tracker-miners/tracker-extract_3.8.2-4%2bb1_arm64.deb",
+      "bytes": 728892,
+      "sha256": "5db26373ab99edee231ff275f622c422b75fe8984d9c67a74586ab7029645e2b"
+    },
+    {
+      "package": "xdg-user-dirs-gtk",
+      "version": "0.14-1",
+      "architecture": "arm64",
+      "filename": "xdg-user-dirs-gtk_0.14-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xdg-user-dirs-gtk/xdg-user-dirs-gtk_0.14-1_arm64.deb",
+      "bytes": 46008,
+      "sha256": "1f81edac4bf9fcbfa3b3aa628f7a82ed91f963f2ee3a613377dd072ab7734f56"
+    },
+    {
+      "package": "libportal-gtk4-1",
+      "version": "0.9.1-1",
+      "architecture": "arm64",
+      "filename": "libportal-gtk4-1_0.9.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libp/libportal/libportal-gtk4-1_0.9.1-1_arm64.deb",
+      "bytes": 12712,
+      "sha256": "d8515bcd5ee18ff35eb60bcb3349a681d9b8a26e4d40727dc337188ec5885f32"
+    },
+    {
+      "package": "libportal1",
+      "version": "0.9.1-1",
+      "architecture": "arm64",
+      "filename": "libportal1_0.9.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libp/libportal/libportal1_0.9.1-1_arm64.deb",
+      "bytes": 54092,
+      "sha256": "861c4a50bdffee1079b03202fab4c3e3152fbf0981d93e2ebece43b824c037c0"
+    },
+    {
+      "package": "nautilus",
+      "version": "48.3-2",
+      "architecture": "arm64",
+      "filename": "nautilus_48.3-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/nautilus/nautilus_48.3-2_arm64.deb",
+      "bytes": 509716,
+      "sha256": "0cfdbf910c5986e15805ce3cdf1292bfa711db59f9853b489bf43876f0bc1412"
+    },
+    {
+      "package": "libcdparanoia0",
+      "version": "3.10.2+debian-14+b1",
+      "architecture": "arm64",
+      "filename": "libcdparanoia0_3.10.2+debian-14+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/c/cdparanoia/libcdparanoia0_3.10.2%2bdebian-14%2bb1_arm64.deb",
+      "bytes": 41316,
+      "sha256": "c78b7bdfe272bb8d153ddf976a02f2f7a5775d6774c142ab6c7f93e741143d43"
+    },
+    {
+      "package": "libtheoradec1",
+      "version": "1.2.0~alpha1+dfsg-6",
+      "architecture": "arm64",
+      "filename": "libtheoradec1_1.2.0~alpha1+dfsg-6_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libt/libtheora/libtheoradec1_1.2.0%7ealpha1%2bdfsg-6_arm64.deb",
+      "bytes": 52560,
+      "sha256": "e233aa1a1d345e6db838040f0ced479c5cda3fcc04d6637468275c398f585924"
+    },
+    {
+      "package": "libtheoraenc1",
+      "version": "1.2.0~alpha1+dfsg-6",
+      "architecture": "arm64",
+      "filename": "libtheoraenc1_1.2.0~alpha1+dfsg-6_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libt/libtheora/libtheoraenc1_1.2.0%7ealpha1%2bdfsg-6_arm64.deb",
+      "bytes": 99108,
+      "sha256": "b09a5ad17f11b0f90b7d0f0262dc363b6ec59625a9b55d1cdc2a6feb7c7f349e"
+    },
+    {
+      "package": "libvisual-0.4-0",
+      "version": "0.4.2-2+b2",
+      "architecture": "arm64",
+      "filename": "libvisual-0.4-0_0.4.2-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libv/libvisual/libvisual-0.4-0_0.4.2-2%2bb2_arm64.deb",
+      "bytes": 131260,
+      "sha256": "73afc7b7a6f2b24ad47a29276243ec3bd7f7592798b99271f9590472bfa3f306"
+    },
+    {
+      "package": "libncurses6",
+      "version": "6.5+20250216-2",
+      "architecture": "arm64",
+      "filename": "libncurses6_6.5+20250216-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/n/ncurses/libncurses6_6.5%2b20250216-2_arm64.deb",
+      "bytes": 96112,
+      "sha256": "259fe5736ebb105df7c6a7b5cc6231a8743666f5f57885f6c7989babe2fc0082"
+    },
+    {
+      "package": "libaa1",
+      "version": "1.4p5-51.1+b1",
+      "architecture": "arm64",
+      "filename": "libaa1_1.4p5-51.1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/a/aalib/libaa1_1.4p5-51.1%2bb1_arm64.deb",
+      "bytes": 47980,
+      "sha256": "be6b46f64d9ac8f269dcb1bd71715a51597de890fa897151e06a0abcb1b8c4e0"
+    },
+    {
+      "package": "libavc1394-0",
+      "version": "0.5.4-5+b2",
+      "architecture": "arm64",
+      "filename": "libavc1394-0_0.5.4-5+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/liba/libavc1394/libavc1394-0_0.5.4-5%2bb2_arm64.deb",
+      "bytes": 17940,
+      "sha256": "3fb347cbe7782e595a94cc53697bcaf0ba9b5978ac319e4b8832b89f9e89bc52"
+    },
+    {
+      "package": "libcaca0",
+      "version": "0.99.beta20-5+deb13u1",
+      "architecture": "arm64",
+      "filename": "libcaca0_0.99.beta20-5+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libc/libcaca/libcaca0_0.99.beta20-5%2bdeb13u1_arm64.deb",
+      "bytes": 196352,
+      "sha256": "29534fbb3881e2c6181806d1f50cc511841553c5556146dfcbc8503e6093f761"
+    },
+    {
+      "package": "libdv4t64",
+      "version": "1.0.0-17.1+b1",
+      "architecture": "arm64",
+      "filename": "libdv4t64_1.0.0-17.1+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libdv/libdv4t64_1.0.0-17.1%2bb1_arm64.deb",
+      "bytes": 65860,
+      "sha256": "6b094b640c4b2b9c74b80dcb28e581fabeab14894796bf627bf7a3805cadd076"
+    },
+    {
+      "package": "libopencore-amrnb0",
+      "version": "0.1.6-1+b2",
+      "architecture": "arm64",
+      "filename": "libopencore-amrnb0_0.1.6-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/opencore-amr/libopencore-amrnb0_0.1.6-1%2bb2_arm64.deb",
+      "bytes": 90956,
+      "sha256": "56ff1db89f45f7e488fced4b6468001ab5da98638a19d115e7d87233d4f3915c"
+    },
+    {
+      "package": "libopencore-amrwb0",
+      "version": "0.1.6-1+b2",
+      "architecture": "arm64",
+      "filename": "libopencore-amrwb0_0.1.6-1+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/o/opencore-amr/libopencore-amrwb0_0.1.6-1%2bb2_arm64.deb",
+      "bytes": 49860,
+      "sha256": "d84b048ca977e5103d0c25ece28f07cbb1fe4146edf266febac42f20b2501692"
+    },
+    {
+      "package": "libspeex1",
+      "version": "1.2.1-3",
+      "architecture": "arm64",
+      "filename": "libspeex1_1.2.1-3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/s/speex/libspeex1_1.2.1-3_arm64.deb",
+      "bytes": 50368,
+      "sha256": "20e12b5754792b5d2c4386c4f405d652c4d6f91ec4e6f68b0c70a48bf3095a28"
+    },
+    {
+      "package": "libtheora0",
+      "version": "1.2.0~alpha1+dfsg-6",
+      "architecture": "arm64",
+      "filename": "libtheora0_1.2.0~alpha1+dfsg-6_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libt/libtheora/libtheora0_1.2.0%7ealpha1%2bdfsg-6_arm64.deb",
+      "bytes": 124612,
+      "sha256": "7e8732457c03a30906c61509de087746d90f2daf4619a6367b8d9c868252b6bc"
+    },
+    {
+      "package": "libshout3",
+      "version": "2.4.6-1+b3",
+      "architecture": "arm64",
+      "filename": "libshout3_2.4.6-1+b3_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libs/libshout/libshout3_2.4.6-1%2bb3_arm64.deb",
+      "bytes": 47700,
+      "sha256": "3e076980b155bff26eb9c7ad1a63a99066192fae3e03fd24780c7865590e41ee"
+    },
+    {
+      "package": "libtag2",
+      "version": "2.0.2-2",
+      "architecture": "arm64",
+      "filename": "libtag2_2.0.2-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/taglib/libtag2_2.0.2-2_arm64.deb",
+      "bytes": 310408,
+      "sha256": "7fcf13ab2eb9f7671ea1692bb78c168e712e17f16cbd1e39e7c8dcc89dd077a7"
+    },
+    {
+      "package": "libtwolame0",
+      "version": "0.4.0-2+b2",
+      "architecture": "arm64",
+      "filename": "libtwolame0_0.4.0-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/t/twolame/libtwolame0_0.4.0-2%2bb2_arm64.deb",
+      "bytes": 49288,
+      "sha256": "e83981a1c10e43b09c1b8b6624a2d814b7d0c965f0d9ddf771606feb7cd29b72"
+    },
+    {
+      "package": "libvpx9",
+      "version": "1.15.0-2.1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libvpx9_1.15.0-2.1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libv/libvpx/libvpx9_1.15.0-2.1%2bdeb13u1_arm64.deb",
+      "bytes": 1158384,
+      "sha256": "96b7d384a6f090cf11f4634a9ad443a767ce7fa930b9b3136c27886a17e21d41"
+    },
+    {
+      "package": "libwavpack1",
+      "version": "5.8.1-1",
+      "architecture": "arm64",
+      "filename": "libwavpack1_5.8.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/w/wavpack/libwavpack1_5.8.1-1_arm64.deb",
+      "bytes": 82900,
+      "sha256": "464cc2f7b2c5ae64f37668d834e5e0edd9c051976c92794a1560f0a639df225e"
+    },
+    {
+      "package": "gstreamer1.0-plugins-good",
+      "version": "1.26.2-1+deb13u2",
+      "architecture": "arm64",
+      "filename": "gstreamer1.0-plugins-good_1.26.2-1+deb13u2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gst-plugins-good1.0/gstreamer1.0-plugins-good_1.26.2-1%2bdeb13u2_arm64.deb",
+      "bytes": 2051756,
+      "sha256": "f609da9b63c274524b3eee119179fca1f98abd46242f62beea43a39896231ddf"
+    },
+    {
+      "package": "xdg-desktop-portal",
+      "version": "1.20.3+ds-1",
+      "architecture": "arm64",
+      "filename": "xdg-desktop-portal_1.20.3+ds-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xdg-desktop-portal/xdg-desktop-portal_1.20.3%2bds-1_arm64.deb",
+      "bytes": 383496,
+      "sha256": "2daec458c9422722ae1432b42fe14b8df6e83cabc017f4c4839a6aaebfcc3c31"
+    },
+    {
+      "package": "xdg-desktop-portal-gtk",
+      "version": "1.15.3-1",
+      "architecture": "arm64",
+      "filename": "xdg-desktop-portal-gtk_1.15.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xdg-desktop-portal-gtk/xdg-desktop-portal-gtk_1.15.3-1_arm64.deb",
+      "bytes": 120336,
+      "sha256": "20c2e4c7620f2720fdc731503b04ba5875f80148da8d3102f59e50c784d76d53"
+    },
+    {
+      "package": "xdg-desktop-portal-gnome",
+      "version": "48.0-2",
+      "architecture": "arm64",
+      "filename": "xdg-desktop-portal-gnome_48.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xdg-desktop-portal-gnome/xdg-desktop-portal-gnome_48.0-2_arm64.deb",
+      "bytes": 230876,
+      "sha256": "063be5cc424490735f7b3c827dc0a78fcb7b5b40dff3c53c060efacf6664c1d8"
+    },
+    {
+      "package": "libxaw7",
+      "version": "2:1.0.16-1",
+      "architecture": "arm64",
+      "filename": "libxaw7_1.0.16-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxaw/libxaw7_1.0.16-1_arm64.deb",
+      "bytes": 194860,
+      "sha256": "93a4df735b3986c3688bb24fe05add09eba807fca2d885ab280e48d093699337"
+    },
+    {
+      "package": "x11-xkb-utils",
+      "version": "7.7+9",
+      "architecture": "arm64",
+      "filename": "x11-xkb-utils_7.7+9_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/x11-xkb-utils/x11-xkb-utils_7.7%2b9_arm64.deb",
+      "bytes": 149276,
+      "sha256": "10ed52feb9520bddc6ecaa77fafb47e961b5f6310c539848ca478b31fe110cac"
+    },
+    {
+      "package": "libxcvt0",
+      "version": "0.1.3-1",
+      "architecture": "arm64",
+      "filename": "libxcvt0_0.1.3-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxcvt/libxcvt0_0.1.3-1_arm64.deb",
+      "bytes": 5496,
+      "sha256": "cae0bcff9cfaedcc2877dd62f852ede573141ac03ad5198b7a074628e8616020"
+    },
+    {
+      "package": "libxfont2",
+      "version": "1:2.0.6-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libxfont2_2.0.6-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libx/libxfont/libxfont2_2.0.6-1%2bdeb13u1_arm64.deb",
+      "bytes": 124836,
+      "sha256": "bd15438e61e968518e26f5f4a2523329f16e066652395db915d8b941bf71b5ba"
+    },
+    {
+      "package": "xwayland",
+      "version": "2:24.1.6-1",
+      "architecture": "arm64",
+      "filename": "xwayland_24.1.6-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/xwayland/xwayland_24.1.6-1_arm64.deb",
+      "bytes": 823116,
+      "sha256": "15d8ba1f5ddfab5872f61af5dfb383fab5862efaba30e330b0f276f485103363"
+    },
+    {
+      "package": "gnome-session",
+      "version": "48.0-1+deb13u1",
+      "architecture": "all",
+      "filename": "gnome-session_48.0-1+deb13u1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-session/gnome-session_48.0-1%2bdeb13u1_all.deb",
+      "bytes": 27300,
+      "sha256": "e7f2e75314725bbcb5c6cd78bac5a3a8b6e8d292b3d9885fe191f3c13716c7c0"
+    },
+    {
+      "package": "libvte-2.91-common",
+      "version": "0.80.1-1",
+      "architecture": "arm64",
+      "filename": "libvte-2.91-common_0.80.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/vte2.91/libvte-2.91-common_0.80.1-1_arm64.deb",
+      "bytes": 58880,
+      "sha256": "acc2454b43a42e82a2d468a53c36588c9434ab0adeb97b3cb04399fa8a11eb31"
+    },
+    {
+      "package": "libvte-2.91-gtk4-0",
+      "version": "0.80.1-1",
+      "architecture": "arm64",
+      "filename": "libvte-2.91-gtk4-0_0.80.1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/vte2.91/libvte-2.91-gtk4-0_0.80.1-1_arm64.deb",
+      "bytes": 272464,
+      "sha256": "2b59c97387b85b2f13534b6e6ef08880fd46f12bd07a495694199336c2682bbe"
+    },
+    {
+      "package": "gnome-console",
+      "version": "48.0.1-2+b1",
+      "architecture": "arm64",
+      "filename": "gnome-console_48.0.1-2+b1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gnome-console/gnome-console_48.0.1-2%2bb1_arm64.deb",
+      "bytes": 181152,
+      "sha256": "a1f9c0b10350ac9fd073017bb0032a7bf903cdf2e1aa2d41c6dcfc4d2c6212d6"
+    },
+    {
+      "package": "x11-xserver-utils",
+      "version": "7.7+11",
+      "architecture": "arm64",
+      "filename": "x11-xserver-utils_7.7+11_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/x/x11-xserver-utils/x11-xserver-utils_7.7%2b11_arm64.deb",
+      "bytes": 156400,
+      "sha256": "c9ef2bd9f9d0d84d832a99de00680a6afbd12c063c12989716bc5ce6ff247755"
+    },
+    {
+      "package": "gdm3",
+      "version": "48.0-2",
+      "architecture": "arm64",
+      "filename": "gdm3_48.0-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/g/gdm3/gdm3_48.0-2_arm64.deb",
+      "bytes": 825464,
+      "sha256": "8d7a5cd6a92465c0baa69da7f230fa747a853de1add65f1206bca2d2c3216596"
+    },
+    {
+      "package": "libdrm-etnaviv1",
+      "version": "2.4.124-2",
+      "architecture": "arm64",
+      "filename": "libdrm-etnaviv1_2.4.124-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libdrm/libdrm-etnaviv1_2.4.124-2_arm64.deb",
+      "bytes": 14488,
+      "sha256": "cf942e4973a79f77ab289c10c11228afae689a27ef93c9cf69b42bfff87ab3df"
+    },
+    {
+      "package": "libdrm-tegra0",
+      "version": "2.4.124-2",
+      "architecture": "arm64",
+      "filename": "libdrm-tegra0_2.4.124-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libdrm/libdrm-tegra0_2.4.124-2_arm64.deb",
+      "bytes": 11808,
+      "sha256": "7583a6e3c7f0cf56e504ec0f6da1c6166c49b078a23aa7f2c7dc67e5ec1d084e"
+    },
+    {
+      "package": "libdrm-tests",
+      "version": "2.4.124-2",
+      "architecture": "arm64",
+      "filename": "libdrm-tests_2.4.124-2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libd/libdrm/libdrm-tests_2.4.124-2_arm64.deb",
+      "bytes": 70400,
+      "sha256": "cb653db80ab2dc85f3603957881f665376f6c29f7c985e520ae63fb075a44d1f"
+    },
+    {
+      "package": "python3-libevdev",
+      "version": "0.11-2",
+      "architecture": "all",
+      "filename": "python3-libevdev_0.11-2_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/python-libevdev/python3-libevdev_0.11-2_all.deb",
+      "bytes": 18552,
+      "sha256": "e9c2a8693cc26b1a23d0aa026901a3ef14dcf937a486e9bfe9dc765c5f986b03"
+    },
+    {
+      "package": "python3-pyudev",
+      "version": "0.24.3-1",
+      "architecture": "all",
+      "filename": "python3-pyudev_0.24.3-1_all.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/p/pyudev/python3-pyudev_0.24.3-1_all.deb",
+      "bytes": 32640,
+      "sha256": "6830ddff92050b78371ea79411eb09f8992251f5def5c709ff684647e8badd9d"
+    },
+    {
+      "package": "libinput-tools",
+      "version": "1.28.1-1+deb13u1",
+      "architecture": "arm64",
+      "filename": "libinput-tools_1.28.1-1+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/libi/libinput/libinput-tools_1.28.1-1%2bdeb13u1_arm64.deb",
+      "bytes": 146620,
+      "sha256": "1516f89855ee861d0bdeba3a32f45270f41af8a5eaae5dd3f51a49e51a080032"
+    },
+    {
+      "package": "mesa-utils-bin",
+      "version": "9.0.0-2+b2",
+      "architecture": "arm64",
+      "filename": "mesa-utils-bin_9.0.0-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa-demos/mesa-utils-bin_9.0.0-2%2bb2_arm64.deb",
+      "bytes": 192896,
+      "sha256": "e7906035da53770d63ff477f626c0c7209a799caf781714b229263a3d75ec03c"
+    },
+    {
+      "package": "mesa-utils",
+      "version": "9.0.0-2+b2",
+      "architecture": "arm64",
+      "filename": "mesa-utils_9.0.0-2+b2_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa-demos/mesa-utils_9.0.0-2%2bb2_arm64.deb",
+      "bytes": 955092,
+      "sha256": "aaa2276c9e679c811fb980c98e20acbd5ea93403a8d92792315f05f82a2e2bee"
+    },
+    {
+      "package": "mesa-vulkan-drivers",
+      "version": "25.0.7-2+deb13u1",
+      "architecture": "arm64",
+      "filename": "mesa-vulkan-drivers_25.0.7-2+deb13u1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/m/mesa/mesa-vulkan-drivers_25.0.7-2%2bdeb13u1_arm64.deb",
+      "bytes": 11373712,
+      "sha256": "b73e1b64f26d55c981339533f3eb64397fda4a8e86dd5593ed15e1c48711141d"
+    },
+    {
+      "package": "vulkan-tools",
+      "version": "1.4.304.0+dfsg1-1",
+      "architecture": "arm64",
+      "filename": "vulkan-tools_1.4.304.0+dfsg1-1_arm64.deb",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/debian/pool/main/v/vulkan-tools/vulkan-tools_1.4.304.0%2bdfsg1-1_arm64.deb",
+      "bytes": 261792,
+      "sha256": "de3b21a2a8a2b2cf520cad433878589c70366050f52570a4fe37556b7c748647"
+    }
+  ]
+}

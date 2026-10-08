@@ -1,0 +1,15 @@
+lrwxrwxrwx 1 root root   11 Sep 29 15:01 /dev/disk/by-partlabel/apnhlos -> ../../sda17
+
+/lib/firmware:
+total 104
+drwxr-xr-x 3 root root  4096 Apr 14 08:37 ath11k
+drwxr-xr-x 2 root root  4096 Sep 22 18:18 keyboard_stm
+drwxr-xr-x 2 root root  4096 Sep 26 19:55 qca
+lrwxrwxrwx 1 root root    31 Jun  6 01:02 regulatory.db -> /etc/alternatives/regulatory.db
+-rw-r--r-- 1 root root  6380 Jun  6 01:02 regulatory.db-debian
+-rw-r--r-- 1 root root  6380 Jun  6 01:02 regulatory.db-upstream
+lrwxrwxrwx 1 root root    35 Jun  6 01:02 regulatory.db.p7s -> /etc/alternatives/regulatory.db.p7s
+-rw-r--r-- 1 root root  1118 Jun  6 01:02 regulatory.db.p7s-debian
+-rw-r--r-- 1 root root  1085 Jun  6 01:02 regulatory.db.p7s-upstream
+-rw-r--r-- 1 root root 67152 May 31  2024 skl_hda_dsp_generic-tplg.bin
+-r--r--r-- 1 root root 4096 Sep 29 15:10 /sys/class/power_supply/sm5714-usb/input_current_limit

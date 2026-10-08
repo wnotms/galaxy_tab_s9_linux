@@ -1,0 +1,932 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  libsodium23 vim-runtime
+Use 'apt autoremove' to remove them.
+The following additional packages will be installed:
+  accountsservice acl bubblewrap colord colord-data cpp cpp-14
+  cpp-14-aarch64-linux-gnu cpp-aarch64-linux-gnu dconf-cli desktop-base
+  desktop-file-utils dirmngr dmsetup eject evolution-data-server-common
+  fonts-cantarell fonts-quicksand fuse3 geocode-glib-common
+  gir1.2-accountsservice-1.0 gir1.2-adw-1 gir1.2-atk-1.0 gir1.2-atspi-2.0
+  gir1.2-freedesktop gir1.2-gck-2 gir1.2-gcr-4 gir1.2-gdesktopenums-3.0
+  gir1.2-gdkpixbuf-2.0 gir1.2-gdm-1.0 gir1.2-geoclue-2.0 gir1.2-gnomebg-4.0
+  gir1.2-gnomebluetooth-3.0 gir1.2-gnomedesktop-4.0 gir1.2-graphene-1.0
+  gir1.2-gstreamer-1.0 gir1.2-gtk-3.0 gir1.2-gtk-4.0 gir1.2-gweather-4.0
+  gir1.2-harfbuzz-0.0 gir1.2-ibus-1.0 gir1.2-mutter-16 gir1.2-nm-1.0
+  gir1.2-nma4-1.0 gir1.2-pango-1.0 gir1.2-polkit-1.0 gir1.2-rsvg-2.0
+  gir1.2-soup-3.0 gir1.2-upowerglib-1.0 gjs glib-networking
+  glib-networking-common glib-networking-services gnome-bluetooth-3-common
+  gnome-control-center-data gnome-desktop3-data gnome-online-accounts
+  gnome-session-bin gnome-session-common gnome-settings-daemon
+  gnome-settings-daemon-common gnome-shell-common gnupg gnupg-l10n gpg
+  gpg-agent gpgconf gpgsm gstreamer1.0-pipewire gstreamer1.0-plugins-base
+  gstreamer1.0-plugins-good gvfs gvfs-backends gvfs-common gvfs-daemons
+  gvfs-libs heif-gdk-pixbuf heif-thumbnailer iso-codes libaa1
+  libaccountsservice0 libadwaita-1-0 libaom3 libappstream5 libarchive13t64
+  libassuan9 libatasmart4 libavahi-glib1 libavc1394-0 libavif16
+  libblockdev-crypto3 libblockdev-fs3 libblockdev-loop3 libblockdev-mdraid3
+  libblockdev-nvme3 libblockdev-part3 libblockdev-swap3 libblockdev-utils3
+  libblockdev3 libbluray2 libbytesize-common libbytesize1 libcaca0
+  libcairo-script-interpreter2 libcamel-1.2-64t64 libcanberra-gtk3-0
+  libcanberra0 libcdio-cdda2t64 libcdio-paranoia2t64 libcdio19t64
+  libcdparanoia0 libcolord-gtk4-1t64 libcolorhug2 libconfig++11 libcrack2
+  libcryptsetup12 libcue2 libde265-0 libdevmapper1.02.1 libdisplay-info2
+  libdrm-etnaviv1 libdrm-tegra0 libdv4t64 libecal-2.0-3
+  libedataserver-1.2-27t64 libegl-mesa0 libegl1 libeis1 libexempi8 libexif12
+  libexiv2-28 libexiv2-data libffado2 libfreeaptx0 libfuse3-4 libgav1-1
+  libgck-2-2 libgcr-4-4 libgcrypt20 libgd3 libgdata-common libgdata22 libgdm1
+  libgeoclue-2-0 libgeocode-glib-2-0 libgexiv2-2 libgif7 libgjs0g libgl1
+  libgles2 libglib2.0-bin libglibmm-2.4-1t64 libglvnd0 libglx-mesa0 libglx0
+  libgnome-autoar-0-0 libgnome-bg-4-2t64 libgnome-bluetooth-3.0-13
+  libgnome-bluetooth-ui-3.0-13 libgnome-desktop-3-20t64
+  libgnome-desktop-4-2t64 libgnome-rr-4-2t64 libgoa-1.0-0b libgoa-1.0-common
+  libgoa-backend-1.0-2 libgpg-error0 libgpgme11t64 libgpgmepp6t64
+  libgphoto2-6t64 libgphoto2-port12t64 libgraphene-1.0-0 libgsf-1-114
+  libgsf-1-common libgsound0t64 libgstreamer-gl1.0-0
+  libgstreamer-plugins-base1.0-0 libgstreamer1.0-0 libgtk-4-1 libgtk-4-common
+  libgtk-4-media-gstreamer libgtop-2.0-11 libgtop2-common libgusb2
+  libgweather-4-0t64 libgweather-4-common libgxps2t64 libharfbuzz-gobject0
+  libharfbuzz-subset0 libheif-plugin-dav1d libheif-plugin-libde265 libheif1
+  libhwy1t64 libibus-1.0-5 libical3t64 libicu76 libiec61883-0 libieee1284-3t64
+  libimagequant0 libinih1 libinireader0 libinput-bin libinput10 libiptcdata0
+  libisl23 libjson-c5 libjson-glib-1.0-0 libjson-glib-1.0-common
+  libjxl-gdk-pixbuf libjxl0.11 libksba8 liblc3-1 libldacbt-abr2 libldacbt-enc2
+  libldb2 liblmdb0 libltdl7 liblua5.4-0 liblzo2-2 libmalcontent-0-0
+  libmozjs-128-0 libmpc3 libmpfr6 libmsgraph-1-1 libmtdev1t64 libmtp-common
+  libmtp9t64 libmutter-16-0 libnautilus-extension4 libncurses6 libnfs14
+  libnma-common libnma-gtk4-0 libnotify4 libnpth0t64 libnspr4 libnss3
+  libnvme1t64 libopencore-amrnb0 libopencore-amrwb0 libopenfec1
+  liborc-0.4-0t64 libosinfo-1.0-0 libosinfo-l10n libpangoxft-1.0-0
+  libparted2t64 libpipewire-0.3-modules libpoppler-glib8t64 libpoppler147
+  libportal-gtk4-1 libportal1 libproxy1v5 libpulse-mainloop-glib0
+  libpwquality-common libpwquality1 librav1e0.7 libraw1394-11 librest-1.0-0
+  libroc0.4 libsane-common libsane1 libsbc1 libsecret-1-0 libsecret-common
+  libshout3 libsigc++-2.0-0v5 libsmbclient0 libsnmp-base libsnmp40t64
+  libsoup-2.4-1 libsoup-3.0-0 libsoup-3.0-common libsoup2.4-common
+  libspa-0.2-bluetooth libspeex1 libspeexdsp1 libstartup-notification0
+  libstemmer0d libsvtav1enc2 libtag2 libtalloc2 libtdb1 libtevent0t64
+  libtheora0 libtheoradec1 libtheoraenc1 libtinysparql-3.0-0
+  libtotem-plparser-common libtotem-plparser18 libtwolame0 libudfread0
+  libudisks2-0 libv4l-0t64 libv4lconvert0t64 libvisual-0.4-0 libvolume-key1
+  libvpx9 libvte-2.91-common libvte-2.91-gtk4-0 libvulkan1 libwacom-common
+  libwacom9 libwavpack1 libwbclient0 libwebpmux3 libwireplumber-0.5-0 libxaw7
+  libxcb-glx0 libxcb-res0 libxcb-util1 libxcb-xkb1 libxcvt0 libxfont2 libxft2
+  libxkbcommon-x11-0 libxkbfile1 libxkbregistry0 libxml++2.6-2v5 libxmlb2
+  libxpm4 libxslt1.1 libxxf86vm1 libyaml-0-2 libyuv0 mesa-utils-bin
+  mutter-common mutter-common-bin nautilus-data osinfo-db parted
+  pinentry-curses pipewire pipewire-alsa pipewire-audio pipewire-bin
+  pipewire-pulse psmisc python3-libevdev python3-pyudev samba-libs
+  sound-theme-freedesktop tecla tinysparql tracker-extract udisks2 usb.ids
+  webp-pixbuf-loader wireplumber x11-xkb-utils x11-xserver-utils
+  xdg-desktop-portal xdg-desktop-portal-gnome xdg-desktop-portal-gtk
+  xdg-user-dirs-gtk xserver-common xwayland
+Suggested packages:
+  colord-sensor-argyll cpp-doc gcc-14-locales cpp-14-doc gnome | kde-standard
+  | xfce4 | wmaker pinentry-gnome3 tor orca libpam-fprintd libpam-sss
+  libpam-pkcs11 libpam-gnome-keyring gnome-software | gnome-packagekit
+  gnome-keyring usbguard gir1.2-malcontent-0 gir1.2-telepathyglib-0.12
+  gir1.2-telepathylogger-0.2 gnome-shell-extension-prefs gpg-wks-server
+  parcimonie xloadimage scdaemon tpm2daemon bluez-obexd pkexec samba-common
+  isoquery lrzip mdadm libbluray-bdj libcanberra-pulse libdv-bin oss-compat
+  exiv2 rng-tools libgd-tools gphoto2 libvisual-0.4-plugins gstreamer1.0-tools
+  libheif-plugin-ffmpegdec libheif-plugin-jpegdec libheif-plugin-jpegenc
+  libheif-plugin-j2kdec libheif-plugin-j2kenc libheif-plugin-kvazaar
+  libheif-plugin-rav1e libheif-plugin-svtenc nvme-cli libparted-dev
+  libparted-i18n libraw1394-doc avahi-daemon hplip snmp-mibs-downloader speex
+  libwacom-bin python3-argcomplete parted-doc pinentry-doc pulseaudio-utils
+  python-libevdev-doc python3-wxgtk4.0 python3-pyqt5 btrfs-progs f2fs-tools
+  nilfs-tools reiserfsprogs udftools udisks2-btrfs udisks2-lvm2 xfsprogs
+  libspa-0.2-libcamera wireplumber-doc nickle cairo-5c xorg-docs-core evince
+Recommended packages:
+  plymouth-label xserver-xephyr xserver-xorg zenity cracklib-runtime
+  cups-pk-helper fwupd gnome-bluetooth-sendto gnome-remote-desktop
+  gnome-user-docs gnome-user-share libcanberra-pulse libnss-myhostname
+  malcontent-gui mobile-broadband-provider-info nm-connection-editor
+  | network-manager-gnome power-profiles-daemon realmd rygel | rygel-tracker
+  system-config-printer-common evolution-ews-core gnome-session-xsession
+  iio-sensor-proxy pkexec bolt evolution-data-server gnome-browser-connector
+  gnome-menus ibus switcheroo-control unzip gnupg-utils gpg-wks-client gpgv
+  gstreamer1.0-x gnome-keyring | kwalletmanager wsdd libaacs0
+  libcanberra-gtk3-module libgpg-error-l10n libgphoto2-l10n gstreamer1.0-gl
+  libgtk-4-bin libheif-plugin-x265 libheif-plugin-aomenc libmtp-runtime
+  sane-airscan sane-utils ipp-usb gnome-sushi rtkit dosfstools ntfs-3g
+  exfatprogs xfonts-base
+The following NEW packages will be installed:
+  accountsservice acl bubblewrap colord colord-data cpp cpp-14
+  cpp-14-aarch64-linux-gnu cpp-aarch64-linux-gnu dconf-cli desktop-base
+  desktop-file-utils dirmngr dmsetup eject evolution-data-server-common
+  fonts-cantarell fonts-noto-core fonts-quicksand fuse3 gdm3
+  geocode-glib-common gir1.2-accountsservice-1.0 gir1.2-adw-1 gir1.2-atk-1.0
+  gir1.2-atspi-2.0 gir1.2-freedesktop gir1.2-gck-2 gir1.2-gcr-4
+  gir1.2-gdesktopenums-3.0 gir1.2-gdkpixbuf-2.0 gir1.2-gdm-1.0
+  gir1.2-geoclue-2.0 gir1.2-gnomebg-4.0 gir1.2-gnomebluetooth-3.0
+  gir1.2-gnomedesktop-4.0 gir1.2-graphene-1.0 gir1.2-gstreamer-1.0
+  gir1.2-gtk-3.0 gir1.2-gtk-4.0 gir1.2-gweather-4.0 gir1.2-harfbuzz-0.0
+  gir1.2-ibus-1.0 gir1.2-mutter-16 gir1.2-nm-1.0 gir1.2-nma4-1.0
+  gir1.2-pango-1.0 gir1.2-polkit-1.0 gir1.2-rsvg-2.0 gir1.2-soup-3.0
+  gir1.2-upowerglib-1.0 gjs glib-networking glib-networking-common
+  glib-networking-services gnome-bluetooth-3-common gnome-console
+  gnome-control-center gnome-control-center-data gnome-desktop3-data
+  gnome-online-accounts gnome-session gnome-session-bin gnome-session-common
+  gnome-settings-daemon gnome-settings-daemon-common gnome-shell
+  gnome-shell-common gnupg gnupg-l10n gpg gpg-agent gpgconf gpgsm
+  gstreamer1.0-pipewire gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+  gvfs gvfs-backends gvfs-common gvfs-daemons gvfs-libs heif-gdk-pixbuf
+  heif-thumbnailer iso-codes libaa1 libaccountsservice0 libadwaita-1-0 libaom3
+  libappstream5 libarchive13t64 libassuan9 libatasmart4 libavahi-glib1
+  libavc1394-0 libavif16 libblockdev-crypto3 libblockdev-fs3 libblockdev-loop3
+  libblockdev-mdraid3 libblockdev-nvme3 libblockdev-part3 libblockdev-swap3
+  libblockdev-utils3 libblockdev3 libbluray2 libbytesize-common libbytesize1
+  libcaca0 libcairo-script-interpreter2 libcamel-1.2-64t64 libcanberra-gtk3-0
+  libcanberra0 libcdio-cdda2t64 libcdio-paranoia2t64 libcdio19t64
+  libcdparanoia0 libcolord-gtk4-1t64 libcolorhug2 libconfig++11 libcrack2
+  libcryptsetup12 libcue2 libde265-0 libdevmapper1.02.1 libdisplay-info2
+  libdrm-etnaviv1 libdrm-tegra0 libdrm-tests libdv4t64 libecal-2.0-3
+  libedataserver-1.2-27t64 libegl-mesa0 libegl1 libeis1 libexempi8 libexif12
+  libexiv2-28 libexiv2-data libffado2 libfreeaptx0 libfuse3-4 libgav1-1
+  libgck-2-2 libgcr-4-4 libgcrypt20 libgd3 libgdata-common libgdata22 libgdm1
+  libgeoclue-2-0 libgeocode-glib-2-0 libgexiv2-2 libgif7 libgjs0g libgl1
+  libgl1-mesa-dri libgles2 libglib2.0-bin libglibmm-2.4-1t64 libglvnd0
+  libglx-mesa0 libglx0 libgnome-autoar-0-0 libgnome-bg-4-2t64
+  libgnome-bluetooth-3.0-13 libgnome-bluetooth-ui-3.0-13
+  libgnome-desktop-3-20t64 libgnome-desktop-4-2t64 libgnome-rr-4-2t64
+  libgoa-1.0-0b libgoa-1.0-common libgoa-backend-1.0-2 libgpg-error0
+  libgpgme11t64 libgpgmepp6t64 libgphoto2-6t64 libgphoto2-port12t64
+  libgraphene-1.0-0 libgsf-1-114 libgsf-1-common libgsound0t64
+  libgstreamer-gl1.0-0 libgstreamer-plugins-base1.0-0 libgstreamer1.0-0
+  libgtk-4-1 libgtk-4-common libgtk-4-media-gstreamer libgtop-2.0-11
+  libgtop2-common libgusb2 libgweather-4-0t64 libgweather-4-common libgxps2t64
+  libharfbuzz-gobject0 libharfbuzz-subset0 libheif-plugin-dav1d
+  libheif-plugin-libde265 libheif1 libhwy1t64 libibus-1.0-5 libical3t64
+  libicu76 libiec61883-0 libieee1284-3t64 libimagequant0 libinih1
+  libinireader0 libinput-bin libinput-tools libinput10 libiptcdata0 libisl23
+  libjson-c5 libjson-glib-1.0-0 libjson-glib-1.0-common libjxl-gdk-pixbuf
+  libjxl0.11 libksba8 liblc3-1 libldacbt-abr2 libldacbt-enc2 libldb2 liblmdb0
+  libltdl7 liblua5.4-0 liblzo2-2 libmalcontent-0-0 libmozjs-128-0 libmpc3
+  libmpfr6 libmsgraph-1-1 libmtdev1t64 libmtp-common libmtp9t64 libmutter-16-0
+  libnautilus-extension4 libncurses6 libnfs14 libnma-common libnma-gtk4-0
+  libnotify4 libnpth0t64 libnspr4 libnss3 libnvme1t64 libopencore-amrnb0
+  libopencore-amrwb0 libopenfec1 liborc-0.4-0t64 libosinfo-1.0-0
+  libosinfo-l10n libpangoxft-1.0-0 libparted2t64 libpipewire-0.3-modules
+  libpoppler-glib8t64 libpoppler147 libportal-gtk4-1 libportal1 libproxy1v5
+  libpulse-mainloop-glib0 libpwquality-common libpwquality1 librav1e0.7
+  libraw1394-11 librest-1.0-0 libroc0.4 libsane-common libsane1 libsbc1
+  libsecret-1-0 libsecret-common libshout3 libsigc++-2.0-0v5 libsmbclient0
+  libsnmp-base libsnmp40t64 libsoup-2.4-1 libsoup-3.0-0 libsoup-3.0-common
+  libsoup2.4-common libspa-0.2-bluetooth libspeex1 libspeexdsp1
+  libstartup-notification0 libstemmer0d libsvtav1enc2 libtag2 libtalloc2
+  libtdb1 libtevent0t64 libtheora0 libtheoradec1 libtheoraenc1
+  libtinysparql-3.0-0 libtotem-plparser-common libtotem-plparser18 libtwolame0
+  libudfread0 libudisks2-0 libv4l-0t64 libv4lconvert0t64 libvisual-0.4-0
+  libvolume-key1 libvpx9 libvte-2.91-common libvte-2.91-gtk4-0 libvulkan1
+  libwacom-common libwacom9 libwavpack1 libwbclient0 libwebpmux3
+  libwireplumber-0.5-0 libxaw7 libxcb-glx0 libxcb-res0 libxcb-util1
+  libxcb-xkb1 libxcvt0 libxfont2 libxft2 libxkbcommon-x11-0 libxkbfile1
+  libxkbregistry0 libxml++2.6-2v5 libxmlb2 libxpm4 libxslt1.1 libxxf86vm1
+  libyaml-0-2 libyuv0 mesa-utils mesa-utils-bin mesa-vulkan-drivers
+  mutter-common mutter-common-bin nautilus nautilus-data osinfo-db parted
+  pinentry-curses pipewire pipewire-alsa pipewire-audio pipewire-bin
+  pipewire-pulse psmisc python3-libevdev python3-pyudev samba-libs
+  sound-theme-freedesktop tecla tinysparql tracker-extract udisks2 usb.ids
+  vulkan-tools webp-pixbuf-loader wireplumber x11-xkb-utils x11-xserver-utils
+  xdg-desktop-portal xdg-desktop-portal-gnome xdg-desktop-portal-gtk
+  xdg-user-dirs-gtk xserver-common xwayland
+0 upgraded, 368 newly installed, 0 to remove and 1 not upgraded.
+Inst libsane-common (1.3.1-3 Debian:13.7/stable [all])
+Inst libaccountsservice0 (23.13.9-7 Debian:13.7/stable [arm64])
+Inst accountsservice (23.13.9-7 Debian:13.7/stable [arm64])
+Inst acl (2.3.2-2+b1 Debian:13.7/stable [arm64])
+Inst bubblewrap (0.12.0-1~deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst colord-data (1.4.7-3 Debian:13.7/stable [all])
+Inst libjson-glib-1.0-common (1.10.6+ds-2 Debian:13.7/stable [all])
+Inst libjson-glib-1.0-0 (1.10.6+ds-2 Debian:13.7/stable [arm64])
+Inst libgusb2 (0.4.9-1+b1 Debian:13.7/stable [arm64])
+Inst libcolorhug2 (1.4.7-3 Debian:13.7/stable [arm64])
+Inst libexif12 (0.6.25-1+deb13u1 Debian:13.7/stable [arm64])
+Inst libaom3 (3.12.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libgav1-1 (0.19.0-3+b1 Debian:13.7/stable [arm64])
+Inst librav1e0.7 (0.7.1-9+b2 Debian:13.7/stable [arm64])
+Inst libsvtav1enc2 (2.3.0+dfsg-1 Debian:13.7/stable [arm64])
+Inst libyuv0 (0.0.1904.20250204-1 Debian:13.7/stable [arm64])
+Inst libavif16 (1.2.1-1.2 Debian:13.7/stable [arm64])
+Inst libde265-0 (1.0.15-1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libheif-plugin-libde265 (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64]) []
+Inst libheif-plugin-dav1d (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64]) []
+Inst libheif1 (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Inst libimagequant0 (2.18.0-1+b2 Debian:13.7/stable [arm64])
+Inst libxpm4 (1:3.5.17-1+deb13u1 Debian:13.7/stable [arm64])
+Inst libgd3 (2.3.3-14~deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libltdl7 (2.5.4-4 Debian:13.7/stable [arm64])
+Inst libgphoto2-port12t64 (2.5.31-4 Debian:13.7/stable [arm64])
+Inst libgphoto2-6t64 (2.5.31-4 Debian:13.7/stable [arm64])
+Inst libieee1284-3t64 (0.2.11-14.1+b1 Debian:13.7/stable [arm64])
+Inst libgpg-error0 (1.51-4 Debian:13.7/stable [arm64])
+Inst libassuan9 (3.0.2-2 Debian:13.7/stable [arm64])
+Inst libgcrypt20 (1.11.0-7+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst gpgconf (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Inst libksba8 (1.6.7-2+b1 Debian:13.7/stable [arm64])
+Inst libnpth0t64 (1.8-3 Debian:13.7/stable [arm64])
+Inst dirmngr (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Inst gnupg-l10n (2.4.7-21+deb13u1 Debian:13.7/stable [all])
+Inst gpg (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Inst pinentry-curses (1.3.1-2 Debian:13.7/stable [arm64])
+Inst gpg-agent (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Inst gpgsm (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Inst gnupg (2.4.7-21+deb13u1 Debian:13.7/stable [all])
+Inst libgpgme11t64 (1.24.2-3 Debian:13.7/stable [arm64])
+Inst libgpgmepp6t64 (1.24.2-3 Debian:13.7/stable [arm64])
+Inst libnspr4 (2:4.36-1 Debian:13.7/stable [arm64])
+Inst libnss3 (2:3.110-1+deb13u4 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libpoppler147 (25.03.0-5+deb13u4 Debian:13.7/stable [arm64])
+Inst libpoppler-glib8t64 (25.03.0-5+deb13u4 Debian:13.7/stable [arm64])
+Inst libsnmp-base (5.9.4+dfsg-2+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [all])
+Inst libsnmp40t64 (5.9.4+dfsg-2+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libv4lconvert0t64 (1.30.1-1 Debian:13.7/stable [arm64])
+Inst libv4l-0t64 (1.30.1-1 Debian:13.7/stable [arm64])
+Inst libsane1 (1.3.1-3+b1 Debian:13.7/stable [arm64])
+Inst colord (1.4.7-3 Debian:13.7/stable [arm64])
+Inst libisl23 (0.27-1 Debian:13.7/stable [arm64])
+Inst libmpfr6 (4.2.2-1 Debian:13.7/stable [arm64])
+Inst libmpc3 (1.3.1-1+b3 Debian:13.7/stable [arm64])
+Inst cpp-14-aarch64-linux-gnu (14.2.0-19 Debian:13.7/stable [arm64])
+Inst cpp-14 (14.2.0-19 Debian:13.7/stable [arm64])
+Inst cpp-aarch64-linux-gnu (4:14.2.0-1 Debian:13.7/stable [arm64])
+Inst cpp (4:14.2.0-1 Debian:13.7/stable [arm64])
+Inst dconf-cli (0.40.0-5 Debian:13.7/stable [arm64])
+Inst fonts-quicksand (0.2016-2.1 Debian:13.7/stable [all])
+Inst desktop-base (13.0.4 Debian:13.7/stable [all])
+Inst desktop-file-utils (0.28-1 Debian:13.7/stable [arm64])
+Inst libdevmapper1.02.1 (2:1.02.205-2 Debian:13.7/stable [arm64]) []
+Inst dmsetup (2:1.02.205-2 Debian:13.7/stable [arm64])
+Inst eject (2.41.5-0+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst evolution-data-server-common (3.56.2-0+deb13u1 Debian:13.7/stable [all])
+Inst fonts-cantarell (0.303.1-4 Debian:13.7/stable [all])
+Inst fonts-noto-core (20201225-2 Debian:13.7/stable [all])
+Inst libfuse3-4 (3.17.2-3 Debian:13.7/stable [arm64])
+Inst fuse3 (3.17.2-3 Debian:13.7/stable [arm64])
+Inst libgdm1 (48.0-2 Debian:13.7/stable [arm64])
+Inst gir1.2-gdm-1.0 (48.0-2 Debian:13.7/stable [arm64])
+Inst libglvnd0 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Inst libegl-mesa0 (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libegl1 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Inst libxcb-glx0 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Inst libxxf86vm1 (1:1.1.4-1+b4 Debian:13.7/stable [arm64])
+Inst libvulkan1 (1.4.309.0-1 Debian:13.7/stable [arm64])
+Inst libgl1-mesa-dri (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libglx-mesa0 (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libglx0 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Inst libgl1 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Inst libgles2 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Inst gnome-desktop3-data (44.3-3 Debian:13.7/stable [all])
+Inst iso-codes (4.18.0-1 Debian:13.7/stable [all])
+Inst libxkbregistry0 (1.7.0-2 Debian:13.7/stable [arm64])
+Inst libgnome-desktop-3-20t64 (44.3-3 Debian:13.7/stable [arm64])
+Inst gnome-session-bin (48.0-1+deb13u1 Debian:13.7/stable [arm64])
+Inst gnome-session-common (48.0-1+deb13u1 Debian:13.7/stable [all])
+Inst gnome-settings-daemon-common (48.1-1 Debian:13.7/stable [all])
+Inst libfreeaptx0 (0.2.2-1 Debian:13.7/stable [arm64])
+Inst liblc3-1 (1.1.3+dfsg-1 Debian:13.7/stable [arm64])
+Inst libldacbt-enc2 (2.0.2.3+git20200429+ed310a0-5 Debian:13.7/stable [arm64])
+Inst libldacbt-abr2 (2.0.2.3+git20200429+ed310a0-5 Debian:13.7/stable [arm64])
+Inst libsbc1 (2.1-1 Debian:13.7/stable [arm64])
+Inst libspa-0.2-bluetooth (1.4.2-1 Debian:13.7/stable [arm64])
+Inst libconfig++11 (1.7.3-2 Debian:13.7/stable [arm64])
+Inst libsigc++-2.0-0v5 (2.12.1-3 Debian:13.7/stable [arm64])
+Inst libglibmm-2.4-1t64 (2.66.8-1 Debian:13.7/stable [arm64])
+Inst libraw1394-11 (2.1.2-2+b2 Debian:13.7/stable [arm64])
+Inst libiec61883-0 (1.2.0-7 Debian:13.7/stable [arm64])
+Inst libxml++2.6-2v5 (2.42.3-2 Debian:13.7/stable [arm64])
+Inst libffado2 (2.4.9-2 Debian:13.7/stable [arm64])
+Inst libopenfec1 (1.4.2.11+dfsg-1 Debian:13.7/stable [arm64])
+Inst libspeexdsp1 (1.2.1-3 Debian:13.7/stable [arm64])
+Inst libroc0.4 (0.4.0+dfsg-5 Debian:13.7/stable [arm64])
+Inst libpipewire-0.3-modules (1.4.2-1 Debian:13.7/stable [arm64])
+Inst pipewire-bin (1.4.2-1 Debian:13.7/stable [arm64])
+Inst pipewire (1.4.2-1 Debian:13.7/stable [arm64])
+Inst pipewire-alsa (1.4.2-1 Debian:13.7/stable [arm64])
+Inst pipewire-pulse (1.4.2-1 Debian:13.7/stable [arm64])
+Inst liblua5.4-0 (5.4.7-1+b2 Debian:13.7/stable [arm64])
+Inst libwireplumber-0.5-0 (0.5.8-2 Debian:13.7/stable [arm64])
+Inst wireplumber (0.5.8-2 Debian:13.7/stable [arm64])
+Inst pipewire-audio (1.4.2-1 Debian:13.7/stable [all])
+Inst libtdb1 (2:1.4.13+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst sound-theme-freedesktop (0.8-6~deb13u1 Debian:13.7/stable [all])
+Inst libcanberra0 (0.30-18 Debian:13.7/stable [arm64])
+Inst libcanberra-gtk3-0 (0.30-18 Debian:13.7/stable [arm64])
+Inst libgck-2-2 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Inst libgcr-4-4 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Inst libgeoclue-2-0 (2.7.2-2 Debian:13.7/stable [arm64])
+Inst geocode-glib-common (3.26.4-1 Debian:13.7/stable [all])
+Inst libproxy1v5 (0.5.9-1 Debian:13.7/stable [arm64])
+Inst glib-networking-common (2.80.1-1 Debian:13.7/stable [all])
+Inst glib-networking-services (2.80.1-1 Debian:13.7/stable [arm64])
+Inst glib-networking (2.80.1-1 Debian:13.7/stable [arm64])
+Inst libsoup-3.0-common (3.6.5-3 Debian:13.7/stable [all])
+Inst libsoup-3.0-0 (3.6.5-3 Debian:13.7/stable [arm64])
+Inst libgeocode-glib-2-0 (3.26.4-1 Debian:13.7/stable [arm64])
+Inst libgweather-4-common (4.4.4-1 Debian:13.7/stable [all])
+Inst libgweather-4-0t64 (4.4.4-1 Debian:13.7/stable [arm64])
+Inst libnotify4 (0.8.6-1 Debian:13.7/stable [arm64])
+Inst libpulse-mainloop-glib0 (17.0+dfsg1-2+b1 Debian:13.7/stable [arm64])
+Inst libwacom-common (2.14.0-1 Debian:13.7/stable [all])
+Inst libwacom9 (2.14.0-1 Debian:13.7/stable [arm64])
+Inst gnome-settings-daemon (48.1-1 Debian:13.7/stable [arm64])
+Inst gir1.2-accountsservice-1.0 (23.13.9-7 Debian:13.7/stable [arm64])
+Inst gir1.2-freedesktop (1.84.0-1 Debian:13.7/stable [arm64])
+Inst gir1.2-gdkpixbuf-2.0 (2.42.12+dfsg-4+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libgraphene-1.0-0 (1.10.8-5 Debian:13.7/stable [arm64])
+Inst gir1.2-graphene-1.0 (1.10.8-5 Debian:13.7/stable [arm64])
+Inst libharfbuzz-gobject0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Inst gir1.2-harfbuzz-0.0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Inst libxft2 (2.3.6-1+b4 Debian:13.7/stable [arm64])
+Inst libpangoxft-1.0-0 (1.56.3-1 Debian:13.7/stable [arm64])
+Inst gir1.2-pango-1.0 (1.56.3-1 Debian:13.7/stable [arm64])
+Inst liblzo2-2 (2.10-3+b1 Debian:13.7/stable [arm64])
+Inst libcairo-script-interpreter2 (1.18.4-1+b1 Debian:13.7/stable [arm64])
+Inst libharfbuzz-subset0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Inst libgtk-4-common (4.18.6+ds-2 Debian:13.7/stable [all])
+Inst libgtk-4-1 (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Inst gir1.2-gtk-4.0 (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Inst libstemmer0d (2.2.0-4+b2 Debian:13.7/stable [arm64])
+Inst libxmlb2 (0.3.22-1 Debian:13.7/stable [arm64])
+Inst libyaml-0-2 (0.2.5-2 Debian:13.7/stable [arm64])
+Inst libappstream5 (1.0.5-1 Debian:13.7/stable [arm64])
+Inst libadwaita-1-0 (1.7.6-1~deb13u1 Debian:13.7/stable [arm64])
+Inst gir1.2-adw-1 (1.7.6-1~deb13u1 Debian:13.7/stable [arm64])
+Inst gir1.2-atk-1.0 (2.56.2-1+deb13u2 Debian:13.7/stable [arm64])
+Inst gir1.2-atspi-2.0 (2.56.2-1+deb13u2 Debian:13.7/stable [arm64])
+Inst gir1.2-gck-2 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Inst gir1.2-gcr-4 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Inst gir1.2-gdesktopenums-3.0 (48.0-1 Debian:13.7/stable [arm64])
+Inst gir1.2-geoclue-2.0 (2.7.2-2 Debian:13.7/stable [arm64])
+Inst libgnome-desktop-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Inst gir1.2-gnomedesktop-4.0 (44.3-3 Debian:13.7/stable [arm64])
+Inst libgnome-bg-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Inst gir1.2-gnomebg-4.0 (44.3-3 Debian:13.7/stable [arm64])
+Inst gnome-bluetooth-3-common (47.1-1 Debian:13.7/stable [all])
+Inst libgnome-bluetooth-3.0-13 (47.1-1 Debian:13.7/stable [arm64])
+Inst gir1.2-gnomebluetooth-3.0 (47.1-1 Debian:13.7/stable [arm64])
+Inst libgstreamer1.0-0 (1.26.2-2 Debian:13.7/stable [arm64])
+Inst gir1.2-gstreamer-1.0 (1.26.2-2 Debian:13.7/stable [arm64])
+Inst gir1.2-gweather-4.0 (4.4.4-1 Debian:13.7/stable [arm64])
+Inst libibus-1.0-5 (1.5.32-2 Debian:13.7/stable [arm64])
+Inst gir1.2-ibus-1.0 (1.5.32-2 Debian:13.7/stable [arm64])
+Inst mutter-common (48.7-0+deb13u1 Debian:13.7/stable [all])
+Inst mutter-common-bin (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libdisplay-info2 (0.2.0-2 Debian:13.7/stable [arm64])
+Inst libeis1 (1.3.901-1 Debian:13.7/stable [arm64])
+Inst libmtdev1t64 (1.1.7-1 Debian:13.7/stable [arm64])
+Inst libinput-bin (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libinput10 (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libxcb-util1 (0.4.1-1 Debian:13.7/stable [arm64])
+Inst libstartup-notification0 (0.12-8 Debian:13.7/stable [arm64])
+Inst libxcb-res0 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Inst libxcb-xkb1 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Inst libxkbcommon-x11-0 (1.7.0-2 Debian:13.7/stable [arm64])
+Inst libxkbfile1 (1:1.1.0-1+b4 Debian:13.7/stable [arm64])
+Inst libmutter-16-0 (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Inst gir1.2-mutter-16 (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Inst gir1.2-nm-1.0 (1.52.1-1 Debian:13.7/stable [arm64])
+Inst libnma-common (1.10.6-5 Debian:13.7/stable [all])
+Inst libnma-gtk4-0 (1.10.6-5 Debian:13.7/stable [arm64])
+Inst gir1.2-nma4-1.0 (1.10.6-5 Debian:13.7/stable [arm64])
+Inst gir1.2-polkit-1.0 (126-2 Debian:13.7/stable [arm64])
+Inst gir1.2-rsvg-2.0 (2.60.0+dfsg-1 Debian:13.7/stable [arm64])
+Inst gir1.2-soup-3.0 (3.6.5-3 Debian:13.7/stable [arm64])
+Inst gir1.2-upowerglib-1.0 (1.90.9-1 Debian:13.7/stable [arm64])
+Inst gir1.2-gtk-3.0 (3.24.49-3 Debian:13.7/stable [arm64])
+Inst libmozjs-128-0 (128.14.0-1~deb13u1 Debian:13.7/stable [arm64])
+Inst libgjs0g (1.82.3-1 Debian:13.7/stable [arm64])
+Inst gjs (1.82.3-1 Debian:13.7/stable [arm64])
+Inst gnome-control-center-data (1:48.4-1~deb13u1 Debian:13.7/stable [all])
+Inst libgoa-1.0-common (3.54.5-1~deb13u1 Debian:13.7/stable [all])
+Inst libgoa-1.0-0b (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Inst librest-1.0-0 (0.9.1-6+b2 Debian:13.7/stable [arm64])
+Inst libsecret-common (0.21.7-1 Debian:13.7/stable [all])
+Inst libsecret-1-0 (0.21.7-1 Debian:13.7/stable [arm64])
+Inst libgoa-backend-1.0-2 (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Inst gnome-online-accounts (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Inst heif-gdk-pixbuf (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Inst heif-thumbnailer (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Inst liborc-0.4-0t64 (1:0.4.41-1 Debian:13.7/stable [arm64])
+Inst libgstreamer-plugins-base1.0-0 (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Inst libgstreamer-gl1.0-0 (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Inst libgtk-4-media-gstreamer (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Inst libhwy1t64 (1.2.0-2+b2 Debian:13.7/stable [arm64])
+Inst libjxl0.11 (0.11.2-0.1~deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libjxl-gdk-pixbuf (0.11.2-0.1~deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst tecla (48.0.2-1 Debian:13.7/stable [arm64])
+Inst libwebpmux3 (1.5.0-0.1 Debian:13.7/stable [arm64])
+Inst webp-pixbuf-loader (0.2.7-1+b1 Debian:13.7/stable [arm64])
+Inst libcolord-gtk4-1t64 (0.3.1-1+b1 Debian:13.7/stable [arm64])
+Inst libgsound0t64 (1.0.3-3.2+b4 Debian:13.7/stable [arm64])
+Inst libgnome-bluetooth-ui-3.0-13 (47.1-1 Debian:13.7/stable [arm64])
+Inst libgnome-rr-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Inst libgtop2-common (2.41.3-1 Debian:13.7/stable [all])
+Inst libgtop-2.0-11 (2.41.3-1+b2 Debian:13.7/stable [arm64])
+Inst libmalcontent-0-0 (0.13.0-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libpwquality-common (1.4.5-5 Debian:13.7/stable [all])
+Inst libcrack2 (2.9.6-5.2+b1 Debian:13.7/stable [arm64])
+Inst libpwquality1 (1.4.5-5 Debian:13.7/stable [arm64])
+Inst libicu76 (76.1-4 Debian:13.7/stable [arm64])
+Inst liblmdb0 (0.9.31-1+b2 Debian:13.7/stable [arm64])
+Inst libtalloc2 (2:2.4.3+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libtevent0t64 (2:0.16.2+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libldb2 (2:2.11.0+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libwbclient0 (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst samba-libs (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libsmbclient0 (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libudisks2-0 (2.10.1-12.1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst gnome-control-center (1:48.4-1~deb13u1 Debian:13.7/stable [arm64])
+Inst gnome-shell-common (48.7-0+deb13u2 Debian:13.7/stable [all])
+Inst gstreamer1.0-pipewire (1.4.2-1 Debian:13.7/stable [arm64])
+Inst libglib2.0-bin (2.84.4-3~deb13u5 Debian:13.7/stable [arm64])
+Inst libcamel-1.2-64t64 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libedataserver-1.2-27t64 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libical3t64 (3.0.20-1+b1 Debian:13.7/stable [arm64])
+Inst libecal-2.0-3 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Inst libarchive13t64 (3.7.4-4+deb13u1 Debian:13.7/stable [arm64])
+Inst libgnome-autoar-0-0 (0.4.5-2 Debian:13.7/stable [arm64])
+Inst gnome-shell (48.7-0+deb13u2 Debian:13.7/stable [arm64])
+Inst gvfs-common (1.57.2-2+deb13u1 Debian:13.7/stable [all])
+Inst gvfs-libs (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libblockdev-utils3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libjson-c5 (0.18+ds-1 Debian:13.7/stable [arm64])
+Inst libcryptsetup12 (2:2.7.5-2 Debian:13.7/stable [arm64])
+Inst libvolume-key1 (0.3.12-9 Debian:13.7/stable [arm64])
+Inst libblockdev-crypto3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libblockdev-fs3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libblockdev-loop3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libbytesize-common (2.11-2 Debian:13.7/stable [all])
+Inst libbytesize1 (2.11-2 Debian:13.7/stable [arm64])
+Inst libblockdev-mdraid3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libnvme1t64 (1.13-2 Debian:13.7/stable [arm64])
+Inst libblockdev-nvme3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libblockdev-part3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libblockdev-swap3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst libparted2t64 (3.6-5 Debian:13.7/stable [arm64])
+Inst parted (3.6-5 Debian:13.7/stable [arm64])
+Inst libatasmart4 (0.19-5+b2 Debian:13.7/stable [arm64])
+Inst libblockdev3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Inst udisks2 (2.10.1-12.1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libudfread0 (1.1.2-1+b2 Debian:13.7/stable [arm64])
+Inst libbluray2 (1:1.3.4-1+b2 Debian:13.7/stable [arm64])
+Inst gvfs-daemons (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Inst gvfs (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Inst psmisc (23.7-2 Debian:13.7/stable [arm64])
+Inst libavahi-glib1 (0.8-16 Debian:13.7/stable [arm64])
+Inst libcdio19t64 (2.2.0-4.1~deb13u1 Debian:13.7/stable [arm64])
+Inst libcdio-cdda2t64 (10.2+2.0.2-1+b1 Debian:13.7/stable [arm64])
+Inst libcdio-paranoia2t64 (10.2+2.0.2-1+b1 Debian:13.7/stable [arm64])
+Inst libsoup2.4-common (2.74.3-10.1 Debian:13.7/stable [all])
+Inst libsoup-2.4-1 (2.74.3-10.1 Debian:13.7/stable [arm64])
+Inst libgdata-common (0.18.1-9 Debian:13.7/stable [all])
+Inst libgdata22 (0.18.1-9 Debian:13.7/stable [arm64])
+Inst libmsgraph-1-1 (0.3.3-3 Debian:13.7/stable [arm64])
+Inst libmtp-common (1.1.22-1 Debian:13.7/stable [all])
+Inst libmtp9t64 (1.1.22-1 Debian:13.7/stable [arm64])
+Inst libnfs14 (5.0.2-1+deb13u1 Debian:13.7/stable [arm64])
+Inst gvfs-backends (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Inst libnautilus-extension4 (48.3-2 Debian:13.7/stable [arm64])
+Inst nautilus-data (48.3-2 Debian:13.7/stable [all])
+Inst libcue2 (2.2.1-4.1+b2 Debian:13.7/stable [arm64])
+Inst libexempi8 (2.6.6-2 Debian:13.7/stable [arm64])
+Inst libinih1 (59-1 Debian:13.7/stable [arm64])
+Inst libinireader0 (59-1 Debian:13.7/stable [arm64])
+Inst libexiv2-data (0.28.5+dfsg-1 Debian:13.7/stable [all])
+Inst libexiv2-28 (0.28.5+dfsg-1 Debian:13.7/stable [arm64])
+Inst libgexiv2-2 (0.14.3-1+b1 Debian:13.7/stable [arm64])
+Inst libgif7 (5.2.2-1+deb13u1 Debian:13.7/stable [arm64])
+Inst libgsf-1-common (1.14.53-1 Debian:13.7/stable [all])
+Inst libgsf-1-114 (1.14.53-1 Debian:13.7/stable [arm64])
+Inst libgxps2t64 (0.3.2-4+b2 Debian:13.7/stable [arm64])
+Inst libiptcdata0 (1.0.5-2.4 Debian:13.7/stable [arm64])
+Inst libxslt1.1 (1.1.35-1.2+deb13u3 Debian:13.7/stable [arm64])
+Inst usb.ids (2025.07.26-1 Debian:13.7/stable [all])
+Inst libosinfo-l10n (1.12.0-2 Debian:13.7/stable [all])
+Inst osinfo-db (0.20250606-1 Debian:13.7/stable [all])
+Inst libosinfo-1.0-0 (1.12.0-2 Debian:13.7/stable [arm64])
+Inst libtinysparql-3.0-0 (3.8.2-7 Debian:13.7/stable [arm64])
+Inst libtotem-plparser-common (3.26.6-2 Debian:13.7/stable [all])
+Inst libtotem-plparser18 (3.26.6-2 Debian:13.7/stable [arm64])
+Inst tinysparql (3.8.2-7 Debian:13.7/stable [arm64])
+Inst tracker-extract (3.8.2-4+b1 Debian:13.7/stable [arm64])
+Inst xdg-user-dirs-gtk (0.14-1 Debian:13.7/stable [arm64])
+Inst libportal-gtk4-1 (0.9.1-1 Debian:13.7/stable [arm64])
+Inst libportal1 (0.9.1-1 Debian:13.7/stable [arm64])
+Inst nautilus (48.3-2 Debian:13.7/stable [arm64])
+Inst libcdparanoia0 (3.10.2+debian-14+b1 Debian:13.7/stable [arm64])
+Inst libtheoradec1 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Inst libtheoraenc1 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Inst libvisual-0.4-0 (0.4.2-2+b2 Debian:13.7/stable [arm64])
+Inst gstreamer1.0-plugins-base (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Inst libncurses6 (6.5+20250216-2 Debian:13.7/stable [arm64])
+Inst libaa1 (1.4p5-51.1+b1 Debian:13.7/stable [arm64])
+Inst libavc1394-0 (0.5.4-5+b2 Debian:13.7/stable [arm64])
+Inst libcaca0 (0.99.beta20-5+deb13u1 Debian:13.7/stable [arm64])
+Inst libdv4t64 (1.0.0-17.1+b1 Debian:13.7/stable [arm64])
+Inst libopencore-amrnb0 (0.1.6-1+b2 Debian:13.7/stable [arm64])
+Inst libopencore-amrwb0 (0.1.6-1+b2 Debian:13.7/stable [arm64])
+Inst libspeex1 (1.2.1-3 Debian:13.7/stable [arm64])
+Inst libtheora0 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Inst libshout3 (2.4.6-1+b3 Debian:13.7/stable [arm64])
+Inst libtag2 (2.0.2-2 Debian:13.7/stable [arm64])
+Inst libtwolame0 (0.4.0-2+b2 Debian:13.7/stable [arm64])
+Inst libvpx9 (1.15.0-2.1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst libwavpack1 (5.8.1-1 Debian:13.7/stable [arm64])
+Inst gstreamer1.0-plugins-good (1.26.2-1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst xdg-desktop-portal (1.20.3+ds-1 Debian:13.7/stable [arm64])
+Inst xdg-desktop-portal-gtk (1.15.3-1 Debian:13.7/stable [arm64])
+Inst xdg-desktop-portal-gnome (48.0-2 Debian:13.7/stable [arm64])
+Inst libxaw7 (2:1.0.16-1 Debian:13.7/stable [arm64])
+Inst x11-xkb-utils (7.7+9 Debian:13.7/stable [arm64])
+Inst xserver-common (2:21.1.16-1.3+deb13u4 Debian-Security:13/stable-security [all])
+Inst libxcvt0 (0.1.3-1 Debian:13.7/stable [arm64])
+Inst libxfont2 (1:2.0.6-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst xwayland (2:24.1.6-1 Debian:13.7/stable [arm64])
+Inst gnome-session (48.0-1+deb13u1 Debian:13.7/stable [all])
+Inst libvte-2.91-common (0.80.1-1 Debian:13.7/stable [arm64])
+Inst libvte-2.91-gtk4-0 (0.80.1-1 Debian:13.7/stable [arm64])
+Inst gnome-console (48.0.1-2+b1 Debian:13.7/stable [arm64])
+Inst x11-xserver-utils (7.7+11 Debian:13.7/stable [arm64])
+Inst gdm3 (48.0-2 Debian:13.7/stable [arm64])
+Inst libdrm-etnaviv1 (2.4.124-2 Debian:13.7/stable [arm64])
+Inst libdrm-tegra0 (2.4.124-2 Debian:13.7/stable [arm64])
+Inst libdrm-tests (2.4.124-2 Debian:13.7/stable [arm64])
+Inst python3-libevdev (0.11-2 Debian:13.7/stable [all])
+Inst python3-pyudev (0.24.3-1 Debian:13.7/stable [all])
+Inst libinput-tools (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Inst mesa-utils-bin (9.0.0-2+b2 Debian:13.7/stable [arm64])
+Inst mesa-utils (9.0.0-2+b2 Debian:13.7/stable [arm64])
+Inst mesa-vulkan-drivers (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Inst vulkan-tools (1.4.304.0+dfsg1-1 Debian:13.7/stable [arm64])
+Conf libsane-common (1.3.1-3 Debian:13.7/stable [all])
+Conf libaccountsservice0 (23.13.9-7 Debian:13.7/stable [arm64])
+Conf accountsservice (23.13.9-7 Debian:13.7/stable [arm64])
+Conf acl (2.3.2-2+b1 Debian:13.7/stable [arm64])
+Conf bubblewrap (0.12.0-1~deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf colord-data (1.4.7-3 Debian:13.7/stable [all])
+Conf libjson-glib-1.0-common (1.10.6+ds-2 Debian:13.7/stable [all])
+Conf libjson-glib-1.0-0 (1.10.6+ds-2 Debian:13.7/stable [arm64])
+Conf libgusb2 (0.4.9-1+b1 Debian:13.7/stable [arm64])
+Conf libcolorhug2 (1.4.7-3 Debian:13.7/stable [arm64])
+Conf libexif12 (0.6.25-1+deb13u1 Debian:13.7/stable [arm64])
+Conf libaom3 (3.12.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libgav1-1 (0.19.0-3+b1 Debian:13.7/stable [arm64])
+Conf librav1e0.7 (0.7.1-9+b2 Debian:13.7/stable [arm64])
+Conf libsvtav1enc2 (2.3.0+dfsg-1 Debian:13.7/stable [arm64])
+Conf libyuv0 (0.0.1904.20250204-1 Debian:13.7/stable [arm64])
+Conf libavif16 (1.2.1-1.2 Debian:13.7/stable [arm64])
+Conf libde265-0 (1.0.15-1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libheif-plugin-libde265 (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Conf libheif-plugin-dav1d (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Conf libheif1 (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Conf libimagequant0 (2.18.0-1+b2 Debian:13.7/stable [arm64])
+Conf libxpm4 (1:3.5.17-1+deb13u1 Debian:13.7/stable [arm64])
+Conf libgd3 (2.3.3-14~deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libltdl7 (2.5.4-4 Debian:13.7/stable [arm64])
+Conf libgphoto2-port12t64 (2.5.31-4 Debian:13.7/stable [arm64])
+Conf libgphoto2-6t64 (2.5.31-4 Debian:13.7/stable [arm64])
+Conf libieee1284-3t64 (0.2.11-14.1+b1 Debian:13.7/stable [arm64])
+Conf libgpg-error0 (1.51-4 Debian:13.7/stable [arm64])
+Conf libassuan9 (3.0.2-2 Debian:13.7/stable [arm64])
+Conf libgcrypt20 (1.11.0-7+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf gpgconf (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Conf libksba8 (1.6.7-2+b1 Debian:13.7/stable [arm64])
+Conf libnpth0t64 (1.8-3 Debian:13.7/stable [arm64])
+Conf dirmngr (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Conf gnupg-l10n (2.4.7-21+deb13u1 Debian:13.7/stable [all])
+Conf gpg (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Conf pinentry-curses (1.3.1-2 Debian:13.7/stable [arm64])
+Conf gpg-agent (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Conf gpgsm (2.4.7-21+deb13u1+b5 Debian:13.7/stable [arm64])
+Conf gnupg (2.4.7-21+deb13u1 Debian:13.7/stable [all])
+Conf libgpgme11t64 (1.24.2-3 Debian:13.7/stable [arm64])
+Conf libgpgmepp6t64 (1.24.2-3 Debian:13.7/stable [arm64])
+Conf libnspr4 (2:4.36-1 Debian:13.7/stable [arm64])
+Conf libnss3 (2:3.110-1+deb13u4 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libpoppler147 (25.03.0-5+deb13u4 Debian:13.7/stable [arm64])
+Conf libpoppler-glib8t64 (25.03.0-5+deb13u4 Debian:13.7/stable [arm64])
+Conf libsnmp-base (5.9.4+dfsg-2+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [all])
+Conf libsnmp40t64 (5.9.4+dfsg-2+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libv4lconvert0t64 (1.30.1-1 Debian:13.7/stable [arm64])
+Conf libv4l-0t64 (1.30.1-1 Debian:13.7/stable [arm64])
+Conf libsane1 (1.3.1-3+b1 Debian:13.7/stable [arm64])
+Conf colord (1.4.7-3 Debian:13.7/stable [arm64])
+Conf libisl23 (0.27-1 Debian:13.7/stable [arm64])
+Conf libmpfr6 (4.2.2-1 Debian:13.7/stable [arm64])
+Conf libmpc3 (1.3.1-1+b3 Debian:13.7/stable [arm64])
+Conf cpp-14-aarch64-linux-gnu (14.2.0-19 Debian:13.7/stable [arm64])
+Conf cpp-14 (14.2.0-19 Debian:13.7/stable [arm64])
+Conf cpp-aarch64-linux-gnu (4:14.2.0-1 Debian:13.7/stable [arm64])
+Conf cpp (4:14.2.0-1 Debian:13.7/stable [arm64])
+Conf dconf-cli (0.40.0-5 Debian:13.7/stable [arm64])
+Conf fonts-quicksand (0.2016-2.1 Debian:13.7/stable [all])
+Conf desktop-base (13.0.4 Debian:13.7/stable [all])
+Conf desktop-file-utils (0.28-1 Debian:13.7/stable [arm64])
+Conf libdevmapper1.02.1 (2:1.02.205-2 Debian:13.7/stable [arm64])
+Conf dmsetup (2:1.02.205-2 Debian:13.7/stable [arm64])
+Conf eject (2.41.5-0+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf evolution-data-server-common (3.56.2-0+deb13u1 Debian:13.7/stable [all])
+Conf fonts-cantarell (0.303.1-4 Debian:13.7/stable [all])
+Conf fonts-noto-core (20201225-2 Debian:13.7/stable [all])
+Conf libfuse3-4 (3.17.2-3 Debian:13.7/stable [arm64])
+Conf fuse3 (3.17.2-3 Debian:13.7/stable [arm64])
+Conf libgdm1 (48.0-2 Debian:13.7/stable [arm64])
+Conf gir1.2-gdm-1.0 (48.0-2 Debian:13.7/stable [arm64])
+Conf libglvnd0 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Conf libegl-mesa0 (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libegl1 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Conf libxcb-glx0 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Conf libxxf86vm1 (1:1.1.4-1+b4 Debian:13.7/stable [arm64])
+Conf libvulkan1 (1.4.309.0-1 Debian:13.7/stable [arm64])
+Conf libgl1-mesa-dri (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libglx-mesa0 (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libglx0 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Conf libgl1 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Conf libgles2 (1.7.0-1+b2 Debian:13.7/stable [arm64])
+Conf gnome-desktop3-data (44.3-3 Debian:13.7/stable [all])
+Conf iso-codes (4.18.0-1 Debian:13.7/stable [all])
+Conf libxkbregistry0 (1.7.0-2 Debian:13.7/stable [arm64])
+Conf libgnome-desktop-3-20t64 (44.3-3 Debian:13.7/stable [arm64])
+Conf gnome-session-bin (48.0-1+deb13u1 Debian:13.7/stable [arm64])
+Conf gnome-session-common (48.0-1+deb13u1 Debian:13.7/stable [all])
+Conf gnome-settings-daemon-common (48.1-1 Debian:13.7/stable [all])
+Conf libfreeaptx0 (0.2.2-1 Debian:13.7/stable [arm64])
+Conf liblc3-1 (1.1.3+dfsg-1 Debian:13.7/stable [arm64])
+Conf libldacbt-enc2 (2.0.2.3+git20200429+ed310a0-5 Debian:13.7/stable [arm64])
+Conf libldacbt-abr2 (2.0.2.3+git20200429+ed310a0-5 Debian:13.7/stable [arm64])
+Conf libsbc1 (2.1-1 Debian:13.7/stable [arm64])
+Conf libspa-0.2-bluetooth (1.4.2-1 Debian:13.7/stable [arm64])
+Conf libconfig++11 (1.7.3-2 Debian:13.7/stable [arm64])
+Conf libsigc++-2.0-0v5 (2.12.1-3 Debian:13.7/stable [arm64])
+Conf libglibmm-2.4-1t64 (2.66.8-1 Debian:13.7/stable [arm64])
+Conf libraw1394-11 (2.1.2-2+b2 Debian:13.7/stable [arm64])
+Conf libiec61883-0 (1.2.0-7 Debian:13.7/stable [arm64])
+Conf libxml++2.6-2v5 (2.42.3-2 Debian:13.7/stable [arm64])
+Conf libffado2 (2.4.9-2 Debian:13.7/stable [arm64])
+Conf libopenfec1 (1.4.2.11+dfsg-1 Debian:13.7/stable [arm64])
+Conf libspeexdsp1 (1.2.1-3 Debian:13.7/stable [arm64])
+Conf libroc0.4 (0.4.0+dfsg-5 Debian:13.7/stable [arm64])
+Conf libpipewire-0.3-modules (1.4.2-1 Debian:13.7/stable [arm64])
+Conf pipewire-bin (1.4.2-1 Debian:13.7/stable [arm64])
+Conf pipewire (1.4.2-1 Debian:13.7/stable [arm64])
+Conf pipewire-alsa (1.4.2-1 Debian:13.7/stable [arm64])
+Conf pipewire-pulse (1.4.2-1 Debian:13.7/stable [arm64])
+Conf liblua5.4-0 (5.4.7-1+b2 Debian:13.7/stable [arm64])
+Conf libwireplumber-0.5-0 (0.5.8-2 Debian:13.7/stable [arm64])
+Conf wireplumber (0.5.8-2 Debian:13.7/stable [arm64])
+Conf pipewire-audio (1.4.2-1 Debian:13.7/stable [all])
+Conf libtdb1 (2:1.4.13+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf sound-theme-freedesktop (0.8-6~deb13u1 Debian:13.7/stable [all])
+Conf libcanberra0 (0.30-18 Debian:13.7/stable [arm64])
+Conf libcanberra-gtk3-0 (0.30-18 Debian:13.7/stable [arm64])
+Conf libgck-2-2 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Conf libgcr-4-4 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Conf libgeoclue-2-0 (2.7.2-2 Debian:13.7/stable [arm64])
+Conf geocode-glib-common (3.26.4-1 Debian:13.7/stable [all])
+Conf libproxy1v5 (0.5.9-1 Debian:13.7/stable [arm64])
+Conf glib-networking-common (2.80.1-1 Debian:13.7/stable [all])
+Conf glib-networking-services (2.80.1-1 Debian:13.7/stable [arm64])
+Conf glib-networking (2.80.1-1 Debian:13.7/stable [arm64])
+Conf libsoup-3.0-common (3.6.5-3 Debian:13.7/stable [all])
+Conf libsoup-3.0-0 (3.6.5-3 Debian:13.7/stable [arm64])
+Conf libgeocode-glib-2-0 (3.26.4-1 Debian:13.7/stable [arm64])
+Conf libgweather-4-common (4.4.4-1 Debian:13.7/stable [all])
+Conf libgweather-4-0t64 (4.4.4-1 Debian:13.7/stable [arm64])
+Conf libnotify4 (0.8.6-1 Debian:13.7/stable [arm64])
+Conf libpulse-mainloop-glib0 (17.0+dfsg1-2+b1 Debian:13.7/stable [arm64])
+Conf libwacom-common (2.14.0-1 Debian:13.7/stable [all])
+Conf libwacom9 (2.14.0-1 Debian:13.7/stable [arm64])
+Conf gnome-settings-daemon (48.1-1 Debian:13.7/stable [arm64])
+Conf gir1.2-accountsservice-1.0 (23.13.9-7 Debian:13.7/stable [arm64])
+Conf gir1.2-freedesktop (1.84.0-1 Debian:13.7/stable [arm64])
+Conf gir1.2-gdkpixbuf-2.0 (2.42.12+dfsg-4+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libgraphene-1.0-0 (1.10.8-5 Debian:13.7/stable [arm64])
+Conf gir1.2-graphene-1.0 (1.10.8-5 Debian:13.7/stable [arm64])
+Conf libharfbuzz-gobject0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Conf gir1.2-harfbuzz-0.0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Conf libxft2 (2.3.6-1+b4 Debian:13.7/stable [arm64])
+Conf libpangoxft-1.0-0 (1.56.3-1 Debian:13.7/stable [arm64])
+Conf gir1.2-pango-1.0 (1.56.3-1 Debian:13.7/stable [arm64])
+Conf liblzo2-2 (2.10-3+b1 Debian:13.7/stable [arm64])
+Conf libcairo-script-interpreter2 (1.18.4-1+b1 Debian:13.7/stable [arm64])
+Conf libharfbuzz-subset0 (10.2.0-1+deb13u1 Debian:13.7/stable [arm64])
+Conf libgtk-4-common (4.18.6+ds-2 Debian:13.7/stable [all])
+Conf libgtk-4-1 (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Conf gir1.2-gtk-4.0 (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Conf libstemmer0d (2.2.0-4+b2 Debian:13.7/stable [arm64])
+Conf libxmlb2 (0.3.22-1 Debian:13.7/stable [arm64])
+Conf libyaml-0-2 (0.2.5-2 Debian:13.7/stable [arm64])
+Conf libappstream5 (1.0.5-1 Debian:13.7/stable [arm64])
+Conf libadwaita-1-0 (1.7.6-1~deb13u1 Debian:13.7/stable [arm64])
+Conf gir1.2-adw-1 (1.7.6-1~deb13u1 Debian:13.7/stable [arm64])
+Conf gir1.2-atk-1.0 (2.56.2-1+deb13u2 Debian:13.7/stable [arm64])
+Conf gir1.2-atspi-2.0 (2.56.2-1+deb13u2 Debian:13.7/stable [arm64])
+Conf gir1.2-gck-2 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Conf gir1.2-gcr-4 (4.4.0.1-3 Debian:13.7/stable [arm64])
+Conf gir1.2-gdesktopenums-3.0 (48.0-1 Debian:13.7/stable [arm64])
+Conf gir1.2-geoclue-2.0 (2.7.2-2 Debian:13.7/stable [arm64])
+Conf libgnome-desktop-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Conf gir1.2-gnomedesktop-4.0 (44.3-3 Debian:13.7/stable [arm64])
+Conf libgnome-bg-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Conf gir1.2-gnomebg-4.0 (44.3-3 Debian:13.7/stable [arm64])
+Conf gnome-bluetooth-3-common (47.1-1 Debian:13.7/stable [all])
+Conf libgnome-bluetooth-3.0-13 (47.1-1 Debian:13.7/stable [arm64])
+Conf gir1.2-gnomebluetooth-3.0 (47.1-1 Debian:13.7/stable [arm64])
+Conf libgstreamer1.0-0 (1.26.2-2 Debian:13.7/stable [arm64])
+Conf gir1.2-gstreamer-1.0 (1.26.2-2 Debian:13.7/stable [arm64])
+Conf gir1.2-gweather-4.0 (4.4.4-1 Debian:13.7/stable [arm64])
+Conf libibus-1.0-5 (1.5.32-2 Debian:13.7/stable [arm64])
+Conf gir1.2-ibus-1.0 (1.5.32-2 Debian:13.7/stable [arm64])
+Conf mutter-common (48.7-0+deb13u1 Debian:13.7/stable [all])
+Conf mutter-common-bin (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libdisplay-info2 (0.2.0-2 Debian:13.7/stable [arm64])
+Conf libeis1 (1.3.901-1 Debian:13.7/stable [arm64])
+Conf libmtdev1t64 (1.1.7-1 Debian:13.7/stable [arm64])
+Conf libinput-bin (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libinput10 (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libxcb-util1 (0.4.1-1 Debian:13.7/stable [arm64])
+Conf libstartup-notification0 (0.12-8 Debian:13.7/stable [arm64])
+Conf libxcb-res0 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Conf libxcb-xkb1 (1.17.0-2+b1 Debian:13.7/stable [arm64])
+Conf libxkbcommon-x11-0 (1.7.0-2 Debian:13.7/stable [arm64])
+Conf libxkbfile1 (1:1.1.0-1+b4 Debian:13.7/stable [arm64])
+Conf libmutter-16-0 (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Conf gir1.2-mutter-16 (48.7-0+deb13u1 Debian:13.7/stable [arm64])
+Conf gir1.2-nm-1.0 (1.52.1-1 Debian:13.7/stable [arm64])
+Conf libnma-common (1.10.6-5 Debian:13.7/stable [all])
+Conf libnma-gtk4-0 (1.10.6-5 Debian:13.7/stable [arm64])
+Conf gir1.2-nma4-1.0 (1.10.6-5 Debian:13.7/stable [arm64])
+Conf gir1.2-polkit-1.0 (126-2 Debian:13.7/stable [arm64])
+Conf gir1.2-rsvg-2.0 (2.60.0+dfsg-1 Debian:13.7/stable [arm64])
+Conf gir1.2-soup-3.0 (3.6.5-3 Debian:13.7/stable [arm64])
+Conf gir1.2-upowerglib-1.0 (1.90.9-1 Debian:13.7/stable [arm64])
+Conf gir1.2-gtk-3.0 (3.24.49-3 Debian:13.7/stable [arm64])
+Conf libmozjs-128-0 (128.14.0-1~deb13u1 Debian:13.7/stable [arm64])
+Conf libgjs0g (1.82.3-1 Debian:13.7/stable [arm64])
+Conf gjs (1.82.3-1 Debian:13.7/stable [arm64])
+Conf gnome-control-center-data (1:48.4-1~deb13u1 Debian:13.7/stable [all])
+Conf libgoa-1.0-common (3.54.5-1~deb13u1 Debian:13.7/stable [all])
+Conf libgoa-1.0-0b (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Conf librest-1.0-0 (0.9.1-6+b2 Debian:13.7/stable [arm64])
+Conf libsecret-common (0.21.7-1 Debian:13.7/stable [all])
+Conf libsecret-1-0 (0.21.7-1 Debian:13.7/stable [arm64])
+Conf libgoa-backend-1.0-2 (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Conf gnome-online-accounts (3.54.5-1~deb13u1 Debian:13.7/stable [arm64])
+Conf heif-gdk-pixbuf (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Conf heif-thumbnailer (1.23.4-1~deb13u1 Debian-Security:13/stable-security [arm64])
+Conf liborc-0.4-0t64 (1:0.4.41-1 Debian:13.7/stable [arm64])
+Conf libgstreamer-plugins-base1.0-0 (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Conf libgstreamer-gl1.0-0 (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Conf libgtk-4-media-gstreamer (4.18.6+ds-2 Debian:13.7/stable [arm64])
+Conf libhwy1t64 (1.2.0-2+b2 Debian:13.7/stable [arm64])
+Conf libjxl0.11 (0.11.2-0.1~deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libjxl-gdk-pixbuf (0.11.2-0.1~deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf tecla (48.0.2-1 Debian:13.7/stable [arm64])
+Conf libwebpmux3 (1.5.0-0.1 Debian:13.7/stable [arm64])
+Conf webp-pixbuf-loader (0.2.7-1+b1 Debian:13.7/stable [arm64])
+Conf libcolord-gtk4-1t64 (0.3.1-1+b1 Debian:13.7/stable [arm64])
+Conf libgsound0t64 (1.0.3-3.2+b4 Debian:13.7/stable [arm64])
+Conf libgnome-bluetooth-ui-3.0-13 (47.1-1 Debian:13.7/stable [arm64])
+Conf libgnome-rr-4-2t64 (44.3-3 Debian:13.7/stable [arm64])
+Conf libgtop2-common (2.41.3-1 Debian:13.7/stable [all])
+Conf libgtop-2.0-11 (2.41.3-1+b2 Debian:13.7/stable [arm64])
+Conf libmalcontent-0-0 (0.13.0-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libpwquality-common (1.4.5-5 Debian:13.7/stable [all])
+Conf libcrack2 (2.9.6-5.2+b1 Debian:13.7/stable [arm64])
+Conf libpwquality1 (1.4.5-5 Debian:13.7/stable [arm64])
+Conf libicu76 (76.1-4 Debian:13.7/stable [arm64])
+Conf liblmdb0 (0.9.31-1+b2 Debian:13.7/stable [arm64])
+Conf libtalloc2 (2:2.4.3+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libtevent0t64 (2:0.16.2+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libldb2 (2:2.11.0+samba4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libwbclient0 (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf samba-libs (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libsmbclient0 (2:4.22.11+dfsg-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libudisks2-0 (2.10.1-12.1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf gnome-control-center (1:48.4-1~deb13u1 Debian:13.7/stable [arm64])
+Conf gnome-shell-common (48.7-0+deb13u2 Debian:13.7/stable [all])
+Conf gstreamer1.0-pipewire (1.4.2-1 Debian:13.7/stable [arm64])
+Conf libglib2.0-bin (2.84.4-3~deb13u5 Debian:13.7/stable [arm64])
+Conf libcamel-1.2-64t64 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libedataserver-1.2-27t64 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libical3t64 (3.0.20-1+b1 Debian:13.7/stable [arm64])
+Conf libecal-2.0-3 (3.56.2-0+deb13u1 Debian:13.7/stable [arm64])
+Conf libarchive13t64 (3.7.4-4+deb13u1 Debian:13.7/stable [arm64])
+Conf libgnome-autoar-0-0 (0.4.5-2 Debian:13.7/stable [arm64])
+Conf gnome-shell (48.7-0+deb13u2 Debian:13.7/stable [arm64])
+Conf gvfs-common (1.57.2-2+deb13u1 Debian:13.7/stable [all])
+Conf gvfs-libs (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libblockdev-utils3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libjson-c5 (0.18+ds-1 Debian:13.7/stable [arm64])
+Conf libcryptsetup12 (2:2.7.5-2 Debian:13.7/stable [arm64])
+Conf libvolume-key1 (0.3.12-9 Debian:13.7/stable [arm64])
+Conf libblockdev-crypto3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libblockdev-fs3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libblockdev-loop3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libbytesize-common (2.11-2 Debian:13.7/stable [all])
+Conf libbytesize1 (2.11-2 Debian:13.7/stable [arm64])
+Conf libblockdev-mdraid3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libnvme1t64 (1.13-2 Debian:13.7/stable [arm64])
+Conf libblockdev-nvme3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libblockdev-part3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libblockdev-swap3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf libparted2t64 (3.6-5 Debian:13.7/stable [arm64])
+Conf parted (3.6-5 Debian:13.7/stable [arm64])
+Conf libatasmart4 (0.19-5+b2 Debian:13.7/stable [arm64])
+Conf libblockdev3 (3.3.0-2.1 Debian:13.7/stable [arm64])
+Conf udisks2 (2.10.1-12.1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libudfread0 (1.1.2-1+b2 Debian:13.7/stable [arm64])
+Conf libbluray2 (1:1.3.4-1+b2 Debian:13.7/stable [arm64])
+Conf gvfs-daemons (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Conf gvfs (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Conf psmisc (23.7-2 Debian:13.7/stable [arm64])
+Conf libavahi-glib1 (0.8-16 Debian:13.7/stable [arm64])
+Conf libcdio19t64 (2.2.0-4.1~deb13u1 Debian:13.7/stable [arm64])
+Conf libcdio-cdda2t64 (10.2+2.0.2-1+b1 Debian:13.7/stable [arm64])
+Conf libcdio-paranoia2t64 (10.2+2.0.2-1+b1 Debian:13.7/stable [arm64])
+Conf libsoup2.4-common (2.74.3-10.1 Debian:13.7/stable [all])
+Conf libsoup-2.4-1 (2.74.3-10.1 Debian:13.7/stable [arm64])
+Conf libgdata-common (0.18.1-9 Debian:13.7/stable [all])
+Conf libgdata22 (0.18.1-9 Debian:13.7/stable [arm64])
+Conf libmsgraph-1-1 (0.3.3-3 Debian:13.7/stable [arm64])
+Conf libmtp-common (1.1.22-1 Debian:13.7/stable [all])
+Conf libmtp9t64 (1.1.22-1 Debian:13.7/stable [arm64])
+Conf libnfs14 (5.0.2-1+deb13u1 Debian:13.7/stable [arm64])
+Conf gvfs-backends (1.57.2-2+deb13u1 Debian:13.7/stable [arm64])
+Conf libnautilus-extension4 (48.3-2 Debian:13.7/stable [arm64])
+Conf nautilus-data (48.3-2 Debian:13.7/stable [all])
+Conf libcue2 (2.2.1-4.1+b2 Debian:13.7/stable [arm64])
+Conf libexempi8 (2.6.6-2 Debian:13.7/stable [arm64])
+Conf libinih1 (59-1 Debian:13.7/stable [arm64])
+Conf libinireader0 (59-1 Debian:13.7/stable [arm64])
+Conf libexiv2-data (0.28.5+dfsg-1 Debian:13.7/stable [all])
+Conf libexiv2-28 (0.28.5+dfsg-1 Debian:13.7/stable [arm64])
+Conf libgexiv2-2 (0.14.3-1+b1 Debian:13.7/stable [arm64])
+Conf libgif7 (5.2.2-1+deb13u1 Debian:13.7/stable [arm64])
+Conf libgsf-1-common (1.14.53-1 Debian:13.7/stable [all])
+Conf libgsf-1-114 (1.14.53-1 Debian:13.7/stable [arm64])
+Conf libgxps2t64 (0.3.2-4+b2 Debian:13.7/stable [arm64])
+Conf libiptcdata0 (1.0.5-2.4 Debian:13.7/stable [arm64])
+Conf libxslt1.1 (1.1.35-1.2+deb13u3 Debian:13.7/stable [arm64])
+Conf usb.ids (2025.07.26-1 Debian:13.7/stable [all])
+Conf libosinfo-l10n (1.12.0-2 Debian:13.7/stable [all])
+Conf osinfo-db (0.20250606-1 Debian:13.7/stable [all])
+Conf libosinfo-1.0-0 (1.12.0-2 Debian:13.7/stable [arm64])
+Conf libtinysparql-3.0-0 (3.8.2-7 Debian:13.7/stable [arm64])
+Conf libtotem-plparser-common (3.26.6-2 Debian:13.7/stable [all])
+Conf libtotem-plparser18 (3.26.6-2 Debian:13.7/stable [arm64])
+Conf tinysparql (3.8.2-7 Debian:13.7/stable [arm64])
+Conf tracker-extract (3.8.2-4+b1 Debian:13.7/stable [arm64])
+Conf xdg-user-dirs-gtk (0.14-1 Debian:13.7/stable [arm64])
+Conf libportal-gtk4-1 (0.9.1-1 Debian:13.7/stable [arm64])
+Conf libportal1 (0.9.1-1 Debian:13.7/stable [arm64])
+Conf nautilus (48.3-2 Debian:13.7/stable [arm64])
+Conf libcdparanoia0 (3.10.2+debian-14+b1 Debian:13.7/stable [arm64])
+Conf libtheoradec1 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Conf libtheoraenc1 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Conf libvisual-0.4-0 (0.4.2-2+b2 Debian:13.7/stable [arm64])
+Conf gstreamer1.0-plugins-base (1.26.2-1+deb13u2 Debian-Security:13/stable-security [arm64])
+Conf libncurses6 (6.5+20250216-2 Debian:13.7/stable [arm64])
+Conf libaa1 (1.4p5-51.1+b1 Debian:13.7/stable [arm64])
+Conf libavc1394-0 (0.5.4-5+b2 Debian:13.7/stable [arm64])
+Conf libcaca0 (0.99.beta20-5+deb13u1 Debian:13.7/stable [arm64])
+Conf libdv4t64 (1.0.0-17.1+b1 Debian:13.7/stable [arm64])
+Conf libopencore-amrnb0 (0.1.6-1+b2 Debian:13.7/stable [arm64])
+Conf libopencore-amrwb0 (0.1.6-1+b2 Debian:13.7/stable [arm64])
+Conf libspeex1 (1.2.1-3 Debian:13.7/stable [arm64])
+Conf libtheora0 (1.2.0~alpha1+dfsg-6 Debian:13.7/stable [arm64])
+Conf libshout3 (2.4.6-1+b3 Debian:13.7/stable [arm64])
+Conf libtag2 (2.0.2-2 Debian:13.7/stable [arm64])
+Conf libtwolame0 (0.4.0-2+b2 Debian:13.7/stable [arm64])
+Conf libvpx9 (1.15.0-2.1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf libwavpack1 (5.8.1-1 Debian:13.7/stable [arm64])
+Conf gstreamer1.0-plugins-good (1.26.2-1+deb13u2 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf xdg-desktop-portal (1.20.3+ds-1 Debian:13.7/stable [arm64])
+Conf xdg-desktop-portal-gtk (1.15.3-1 Debian:13.7/stable [arm64])
+Conf xdg-desktop-portal-gnome (48.0-2 Debian:13.7/stable [arm64])
+Conf libxaw7 (2:1.0.16-1 Debian:13.7/stable [arm64])
+Conf x11-xkb-utils (7.7+9 Debian:13.7/stable [arm64])
+Conf xserver-common (2:21.1.16-1.3+deb13u4 Debian-Security:13/stable-security [all])
+Conf libxcvt0 (0.1.3-1 Debian:13.7/stable [arm64])
+Conf libxfont2 (1:2.0.6-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf xwayland (2:24.1.6-1 Debian:13.7/stable [arm64])
+Conf gnome-session (48.0-1+deb13u1 Debian:13.7/stable [all])
+Conf libvte-2.91-common (0.80.1-1 Debian:13.7/stable [arm64])
+Conf libvte-2.91-gtk4-0 (0.80.1-1 Debian:13.7/stable [arm64])
+Conf gnome-console (48.0.1-2+b1 Debian:13.7/stable [arm64])
+Conf x11-xserver-utils (7.7+11 Debian:13.7/stable [arm64])
+Conf gdm3 (48.0-2 Debian:13.7/stable [arm64])
+Conf libdrm-etnaviv1 (2.4.124-2 Debian:13.7/stable [arm64])
+Conf libdrm-tegra0 (2.4.124-2 Debian:13.7/stable [arm64])
+Conf libdrm-tests (2.4.124-2 Debian:13.7/stable [arm64])
+Conf python3-libevdev (0.11-2 Debian:13.7/stable [all])
+Conf python3-pyudev (0.24.3-1 Debian:13.7/stable [all])
+Conf libinput-tools (1.28.1-1+deb13u1 Debian:13.7/stable, Debian-Security:13/stable-security [arm64])
+Conf mesa-utils-bin (9.0.0-2+b2 Debian:13.7/stable [arm64])
+Conf mesa-utils (9.0.0-2+b2 Debian:13.7/stable [arm64])
+Conf mesa-vulkan-drivers (25.0.7-2+deb13u1 Debian:13.7/stable [arm64])
+Conf vulkan-tools (1.4.304.0+dfsg1-1 Debian:13.7/stable [arm64])

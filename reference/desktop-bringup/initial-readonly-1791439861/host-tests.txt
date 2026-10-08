@@ -1,0 +1,18 @@
+test_complete_mbn_keeps_bytes_and_needs_no_split_files (test_gnome_gpu_firmware.FirmwareTests.test_complete_mbn_keeps_bytes_and_needs_no_split_files) ... ok
+test_corrupted_source_rejects_entire_set_before_publish (test_gnome_gpu_firmware.FirmwareTests.test_corrupted_source_rejects_entire_set_before_publish) ... ok
+test_missing_hash_rejected (test_gnome_gpu_firmware.FirmwareTests.test_missing_hash_rejected) ... ok
+test_program_header_table_bounds_rejected (test_gnome_gpu_firmware.FirmwareTests.test_program_header_table_bounds_rejected) ... ok
+test_split_segment_and_invalid_memory_rejected (test_gnome_gpu_firmware.FirmwareTests.test_split_segment_and_invalid_memory_rejected) ... ok
+test_truncated_and_wrong_format_rejected (test_gnome_gpu_firmware.FirmwareTests.test_truncated_and_wrong_format_rejected) ... ok
+test_wrong_source_set_rejected_without_output (test_gnome_gpu_firmware.FirmwareTests.test_wrong_source_set_rejected_without_output) ... ok
+test_download_verified_and_reused_without_fetch (test_gnome_package_prepare.PreparationTests.test_download_verified_and_reused_without_fetch) ... ok
+test_duplicate_names_and_wrong_total_rejected (test_gnome_package_prepare.PreparationTests.test_duplicate_names_and_wrong_total_rejected) ... ok
+test_existing_mismatch_preserved (test_gnome_package_prepare.PreparationTests.test_existing_mismatch_preserved) ... ok
+test_invalid_download_is_not_published (test_gnome_package_prepare.PreparationTests.test_invalid_download_is_not_published) ... ok
+test_manifest_rejects_wrong_architecture_path_and_hash (test_gnome_package_prepare.PreparationTests.test_manifest_rejects_wrong_architecture_path_and_hash) ... ok
+test_symlink_is_not_an_accepted_cache_entry (test_gnome_package_prepare.PreparationTests.test_symlink_is_not_an_accepted_cache_entry) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.005s
+
+OK

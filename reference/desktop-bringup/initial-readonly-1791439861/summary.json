@@ -1,0 +1,42 @@
+{
+  "verdict": "GNOME_GPU_HOST_PREPARED_NOT_DEPLOYED",
+  "baseline_boot_id": "be1baaaa47fc41f582558f7092c01653",
+  "baseline": "Test331",
+  "desktop": "GNOME Wayland",
+  "packages": 368,
+  "download_bytes": 165385796,
+  "package_installation_executed": false,
+  "gpu_firmware_files": 3,
+  "firmware_installation_executed": false,
+  "gpu_hardware_acceleration_verified": false,
+  "touch_input_available": false,
+  "touch_dt_node_already_present": true,
+  "touch_driver_ported": false,
+  "pc_input_inhibit_available": false,
+  "stock_buck_inhibit_sequence_identified": true,
+  "host_tests": {
+    "executed": true,
+    "tests": 13,
+    "failures": 0,
+    "seconds": 0.005
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel/config/DT/packaging changes"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "Affected host preparation tools only; no routing changes"
+  },
+  "physical_test": {
+    "executed": false
+  },
+  "test348_inputs": "INPUTS_MATCH",
+  "source_reference_commits": {
+    "fedora": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+    "s9ultra": "32273b0a410b3e73b20a3a2451e24260fb2a36bd",
+    "gpu_firmware": "3f6fff46e09fa359005653c2027d12525ec192ee"
+  },
+  "persistent_device_writes": false,
+  "temporary_stock_firmware_mount": "read-only; unmounted; volatile /run mountpoint removed"
+}

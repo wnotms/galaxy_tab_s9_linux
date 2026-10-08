@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 GPU/GNOME HOST_PREPARED_NOT_DEPLOYED during Test348 discharge.
+Owner selected GNOME/touch and authorized reference to Fedora/S9U/Samsung.
+Read-only current331 inventory: adreno renderD128 and DPU DSI2560x1600 present;
+GPU initialization/rendering not proven, rootfs SQE/GMU/ZAP and DRI/Vulkan/GNOME
+missing. Existing X710 FTS DT node has no driver/input yet. Host cache368 Debian
+ARM64/all packages165385796bytes verified; three pinned same-model GPU blobs
+staged, complete-MBN ZAP unchanged under requested.mdt name. No deployment,
+kernel/config/DT/rootfs-service change or GPU load;348 frozenqualification/grant
+unchanged. Affected preparation tests only; build/full/device tests:false.
+See docs/GPU_GNOME_BRINGUP.md and desktopinventory.
+Desktop installation/activation follows348 closure; final348endpoint stillTWRP.
+
 2026-10-08 Test348 READONLY_NATURAL_DISCHARGE_LIVE.
 Owner“已拔线”; read-only hostPID31327/unifiedsession68905 first authenticated
 sample same331be1baaaa, USBoffline/Discharging/100%/30.5C/4.371V/-1.563A.

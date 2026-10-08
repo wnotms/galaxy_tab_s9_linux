@@ -1,0 +1,31 @@
+{
+  "verdict": "HOST_FIRMWARE_STAGED_NOT_DEPLOYED",
+  "repository": "https://github.com/Azkali/gts9wifi-firmware",
+  "commit": "3f6fff46e09fa359005653c2027d12525ec192ee",
+  "device_operations": false,
+  "files": [
+    {
+      "source": "a740_sqe.fw",
+      "destination": "lib/firmware/qcom/a740_sqe.fw",
+      "sha256": "96fee336424b139100fc60b5b45a907360e4b3936d7e1d00406b9bd80ca48473",
+      "bytes": 76724
+    },
+    {
+      "source": "gmu_gen70200.bin",
+      "destination": "lib/firmware/qcom/gmu_gen70200.bin",
+      "sha256": "1a2a419c39046d3141fc5fed5aa7f971de2db40cc7a1d89693c3e26fad64dd98",
+      "bytes": 66844
+    },
+    {
+      "source": "a740_zap.mbn",
+      "destination": "lib/firmware/qcom/a740_zap.mdt",
+      "sha256": "2b4b40d101958a6546d47d72a2c6e46f5de96ca0349461192401cfcbf5ba77f4",
+      "bytes": 12088,
+      "format": "complete-ELF32-MBN",
+      "program_headers": 3,
+      "load_segments": 1,
+      "split_segments_required": false,
+      "cryptographic_authentication_verified": false
+    }
+  ]
+}
