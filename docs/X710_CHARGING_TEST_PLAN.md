@@ -8,17 +8,24 @@ Test256 plan below is historical; its thresholds and150s cable windows are not
 substitutes for later independently registered scope.
 
 - Short conservative pump step D: [Test345](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md) closed after one<=30s run with native completion, fixed9 ordinary return, discharge/PC rescue and exact331 restoration. Prior failed rounds remain failed.
-- Five-minute step E: [Test346](../reference/boot-tests/test-346-bounded-pps-five-minute/README.md) registered and ready offline, **not authorized or deployed**. Its entry/preparation SOC20..70, pack20..<38C/VBAT3.5..<4.3V and runtime SOC<80/pack<42C/die<85C/VBAT<4.4V apply. Hardware1700/PPS+raw1800mA remain unchanged. Manual cable waiting is outside the pump window; native absolute300s deadline cannot restart or extend.
-- Only a clean independently attributed Test346 can support proposing step F20min. No1200s kernel profile or physical20min authorization exists in this registration. A20min candidate would require separate implementation, affected tests/build/identity and authorization; do not reuse or repeatedly rebind300s.
+- Five-minute step E: [Test346](../reference/boot-tests/test-346-bounded-pps-five-minute/PHYSICAL_RESULTS.md) closed at the manual-handoff timeout before any PPS/pump activation, followed by exact Test331 restoration. It is neither a five-minute acceptance nor a charging hardware failure; its original STOP is retained and its guardian must not restart.
+- The active independent registration is [Test347](../reference/boot-tests/test-347-confirmed-c1-five-minute/README.md), carrying the still-unperformed one300s owner grant with the same qualified kernel and caps. It is staged, not installed; current device remains Test331 pending natural discharge to the entry range. Preparation/activation SOC20..70, pack20..<38C/VBAT3.5..<4.3V and runtime SOC<80/pack<42C/die<85C/VBAT<4.4V apply. Hardware1700/PPS+raw1800mA remain unchanged.
+- Only clean independently attributed five-minute acceptance can support proposing step F20min. No1200s kernel profile or physical20min authorization exists in Test347. A20min candidate would require separate implementation, affected tests/build/identity and authorization; do not reuse or repeatedly rebind300s.
 - Higher-current step G is later and independent; no2/2.25/2.5/3A activation or vendor-equivalent45W claim is granted by short or longer-duration acceptance.
 
-For Test346 use its actual runner: freshPC preflight/deployment admission,
-local guardian then explicit C1 handoff, one300s activation, native collection,
+For Test347 use its actual runner: freshPC preflight/deployment admission,
+drain the initial worker and verify OFF/unbound, then wait for the owner C1
+handoff with no guardian running. A fresh candidate-boot-bound C1 reply,
+received within120s, and fixed9 admission precede immediate guardian launch
+and the sole300s activation. Persist the launch request before starting; a
+lost launch response permits adoption of its original PID only, never replay.
+Follow that guardian for native collection,
 ordinary fixed9 charge30s, unplug/discharge15s, onePC device rescue check and
 unconditional exact331 paired restoration. First non-clean stops; a host
 observation timeout can only resume the same confirmed live guardian PID, not
 start another pump run. Device evidence and transport uncertainty are separate.
-No new physical operation has been performed for this documentation update.
+No new PPS/pump operation is performed by this documentation update. The
+separate live host watcher only reads natural-discharge telemetry over Wi-Fi.
 
 Independent ADC/current accuracy, protection calibration, hard-realtime cutoff,
 long-term reliability and all vendor production behavior remain unproven.
@@ -27,7 +34,7 @@ for physical measurements. Record entry/stop/rollback criteria in every later
 registration; do not implement future escalation before its prerequisites.
 
 Documentation-only validation: `executed: false` for host tests/kernel build;
-reviewed links and status against pushed346/qualified5c90/closed345 evidence.
+reviewed links and status against closed346/pushed347/qualified5c90/closed345 evidence.
 Reuse those qualifications; no new regression pass or hardware acceptance.
 
 ## Historical Test256 Stage3 plan — not a current registration

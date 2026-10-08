@@ -15,14 +15,20 @@ owner; the TCPC does not duplicate Samsung's private PD state machine.
 | SM5714 ordinary/fixed charging | Accepted Test331 boot and paired181 modules; fixed5V<=1.8A/9V<=1.5A, float4.44V and thermal/suspend gates retained | Fresh identity and boot attribution are required for a later deployment |
 | Fedora-derived conservative PPS/pump | [Test345 physical results](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md): one<=30s attempt, hardware1700mA/PPS+raw1800mA, five refreshes, native completion, verified fixed9 return, ordinary charge/discharge and exact331 restoration | No longer-duration or higher-current acceptance follows from this short run |
 | Immutable bounded-duration candidate | [Offline qualification](../reference/charging/test345-duration-followup/RESULTS.md), source5c90a4b5:79actual-C tests/build/W=1+sparse; resolved config/DT unchanged from331; matching module archive required | Only30s(default) or300s exclusive one-shot profiles; default pumpOFF, no runtime deadline extension/restart |
-| Independent300s runner | [Test346 registration](../reference/boot-tests/test-346-bounded-pps-five-minute/README.md):32affected host tests, expected-duration/native proof binding, original-PID observation, unconditional331 restoration | Explicit300s owner authorization, fresh preflight and physical acceptance pending; not deployed |
+| Closed first300s workflow | [Test346 physical results](../reference/boot-tests/test-346-bounded-pps-five-minute/PHYSICAL_RESULTS.md): manual-handoff timeout, zero entry/PPS/pump activation, exact331 restored | Original STOP retained; never restart its guardian or treat the timeout as hardware charging failure or300s acceptance |
+| Active independent300s runner | [Test347 registration](../reference/boot-tests/test-347-confirmed-c1-five-minute/README.md):60affected host tests, fresh confirmed-C1 launch without a human-wait timer, native300s binding, persisted original-PID adoption, unconditional331 restoration | Same unused one300s owner grant enrolled; stage verified, current331 naturally discharging. Fresh PCpreflight/install and candidate-boot-bound C1 reply precede any guardian; physical acceptance pending |
 | Full/vendor-equivalent charging | **NOT_READY** |20min, higher current, independent ADC/current calibration and protection/cutoff guarantees remain unproven |
 
-Ordinary fixed limits are independent of PPS/APDO capability. Test346 hardware
+Ordinary fixed limits are independent of PPS/APDO capability. Test347 hardware
 setpoint remains1700mA and PPS request/raw-current stop1800mA; no2A/3A or45W
 claim. APDO voltage limits are the independently registered PPS policy, not
 permission to extend ordinary fixed PDOs beyond5V/9V. No new SM5714/TCPM/DTS,
 USB/adbd, DCC, CPU or rootfs change accompanies the duration runner.
+
+This status correction is documentation-only: host tests/build executed:false,
+reusing Test347's60 affected host tests and the unchanged bounded-duration
+candidate's79 actual-C tests/build/W=1/sparse/config/DT qualification. It does
+not modify the frozen Test347 inputs or authorize another activation.
 
 Do not treat an old document's next-step text as authorization, current device
 identity or a live deployment gate. The current registered runner and fresh
