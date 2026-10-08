@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 NATIVE_300S_AND_FIXED9_CHARGE_PASS_PENDING_RESTORE.
+Fresh owner C1 reply launched sole guardian 1762 on candidate 19fbf941. Native
+300000ms proof passed: 62 PPS refreshes, 63 parked-zero proofs, 417 active frames,
+raw IBUS max 1.781875A, pack max 32.7°C, die max 48.5°C (ADC uncalibrated).
+Pump OFF/unbound and fixed9 restored; ordinary charge passed 31.022s, endpoint
+71% / 32.6°C / +2.069A. Complete raw guardian/full-journal collection passed.
+Discharge observer active awaiting owner unplug, then one PC rescue check and
+unconditional exact331/original181 restoration. No second activation. Overall
+round not yet closed; full port NOT_READY. Evidence-only tests/build false,
+reuse existing qualification. See Test347 PHYSICAL_PROGRESS.json.
+
 2026-10-08 Test347 DEPLOYED_OFF_UNBOUND_AWAITING_FRESH_OWNER_C1.
 Fresh PC preflight on Test331 a96de8c0 passed at 68% / 32.0°C. One paired install
 verified all five partitions and 181 module files. Normal candidate boot

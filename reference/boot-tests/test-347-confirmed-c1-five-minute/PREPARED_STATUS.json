@@ -1,14 +1,14 @@
 {
-  "verdict": "DEPLOYED_OFF_UNBOUND_AWAITING_FRESH_OWNER_C1",
+  "verdict": "NATIVE_300S_AND_FIXED9_CHARGE_PASS_PENDING_DISCHARGE_PC_RESTORE",
   "stage_verified": true,
   "stage": "D:/android/gts9-active/gts9-test347",
   "device_mutation": true,
   "kernel_installed": "registered347",
   "last_boot_id": "19fbf94136a64f7cb73e9e263da8549c",
-  "last_capacity": 69,
-  "last_temp_decic": 324,
+  "last_capacity": 71,
+  "last_temp_decic": 326,
   "entry_soc_max": 70,
-  "no_guardian_or_pump_started": true,
+  "no_guardian_or_pump_started": false,
   "owner_unplug_requested": false,
   "fresh_preflight_required": false,
   "authorization": "same unused one300s charging grant; AUTHORIZATION.md",
@@ -27,5 +27,10 @@
   "formal_preflight_completed": true,
   "preflight_result": "preflight/admission-status.json",
   "rollback_required": true,
-  "current_wifi": "10.175.236.175"
+  "current_wifi": "10.175.236.175",
+  "guardian_pid": 1762,
+  "guardian_terminal": true,
+  "pump_currently_OFF": true,
+  "driver_unbound": true,
+  "fixed9_restored": true
 }

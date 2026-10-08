@@ -1,0 +1,80 @@
+{
+  "active_samples": 417,
+  "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+  "cleanup": {
+    "driver_unbound": true,
+    "fixed9_restored": true,
+    "pre_entry": false,
+    "pump_mode": 1,
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_NAME": "usbpd",
+      "POWER_SUPPLY_CURRENT_MAX": "1500000",
+      "POWER_SUPPLY_CURRENT_NOW": "1500000",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+      "POWER_SUPPLY_VOLTAGE_MAX": "9000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "9000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9000000"
+    },
+    "usb": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "1500000",
+      "POWER_SUPPLY_NAME": "sm5714-usb",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP [PD] PD_PPS"
+    }
+  },
+  "guardian": {
+    "native": {
+      "completed_us": 417577839,
+      "deadline_ms": 417032,
+      "fixed_return": true,
+      "hardware_input_ma": 1700,
+      "no_restart": true,
+      "parked_zero_proofs": 63,
+      "pump_ON_observed": true,
+      "refresh_deferrals": 0,
+      "refreshes": 62,
+      "started_us": 117143450,
+      "target_ma": 1800,
+      "target_mv": 9040,
+      "window_ms": 300000
+    },
+    "samples": 508,
+    "verdict": "BOUNDED_NATIVE_RETURN_PASS"
+  },
+  "native": {
+    "completed_us": 417577839,
+    "deadline_ms": 417032,
+    "fixed_return": true,
+    "hardware_input_ma": 1700,
+    "no_restart": true,
+    "parked_zero_proofs": 63,
+    "pump_ON_observed": true,
+    "refresh_deferrals": 0,
+    "refreshes": 62,
+    "started_us": 117143450,
+    "target_ma": 1800,
+    "target_mv": 9040,
+    "window_ms": 300000
+  },
+  "rollback_required": true,
+  "statistics": {
+    "calibrated": false,
+    "max_die_temp_decic": 485,
+    "max_pack_temp_decic": 327,
+    "max_raw_ibus_ua": 1781875
+  },
+  "verdict": "PASS"
+}

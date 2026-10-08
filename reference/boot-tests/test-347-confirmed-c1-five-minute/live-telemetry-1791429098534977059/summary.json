@@ -1,0 +1,172 @@
+{
+  "last": {
+    "adc": {
+      "adc_enabled": true,
+      "die_decic": 455,
+      "ibus_ua": 1760625,
+      "mode": 4,
+      "vbat_uv": 4163000,
+      "vbus_mv": 8800
+    },
+    "battery": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_CAPACITY": "69",
+      "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+      "POWER_SUPPLY_CURRENT_AVG": "2418000",
+      "POWER_SUPPLY_CURRENT_NOW": "2331000",
+      "POWER_SUPPLY_HEALTH": "Good",
+      "POWER_SUPPLY_NAME": "sm5714-battery",
+      "POWER_SUPPLY_PRESENT": "1",
+      "POWER_SUPPLY_STATUS": "Not charging",
+      "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+      "POWER_SUPPLY_TEMP": "324",
+      "POWER_SUPPLY_TYPE": "Battery",
+      "POWER_SUPPLY_VOLTAGE_AVG": "4140000",
+      "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+      "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "4140000",
+      "POWER_SUPPLY_VOLTAGE_OCV": "4063000"
+    },
+    "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+    "boottime_seconds": 181.117941701,
+    "calibrated": false,
+    "configuration_register_data_written": false,
+    "pack_mode": "enabled",
+    "pack_temp_mc": 32400,
+    "registers": {
+      "16": 5,
+      "28": 11,
+      "30": 147,
+      "31": 0,
+      "34": 88,
+      "35": 8,
+      "38": 46,
+      "39": 132,
+      "40": 48
+    },
+    "roles": [
+      "sink",
+      "device"
+    ],
+    "source_raw": "format=sm5714-current-port-v1\nret=-11\ncharging_grant=0\nvalues_are_not_physical_measurements=1\n",
+    "tcpm": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+      "OF_NAME": "usbpd",
+      "POWER_SUPPLY_CURRENT_MAX": "3000000",
+      "POWER_SUPPLY_CURRENT_NOW": "1800000",
+      "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+      "POWER_SUPPLY_ONLINE": "2",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+      "POWER_SUPPLY_VOLTAGE_MAX": "11000000",
+      "POWER_SUPPLY_VOLTAGE_MIN": "5000000",
+      "POWER_SUPPLY_VOLTAGE_NOW": "9040000"
+    },
+    "usb": {
+      "DEVTYPE": "power_supply",
+      "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+      "OF_COMPATIBLE_N": "1",
+      "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+      "OF_NAME": "charger",
+      "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "100000",
+      "POWER_SUPPLY_NAME": "sm5714-usb",
+      "POWER_SUPPLY_ONLINE": "1",
+      "POWER_SUPPLY_TYPE": "USB",
+      "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP PD [PD_PPS]"
+    }
+  },
+  "last_event": {
+    "data": {
+      "adc": {
+        "adc_enabled": true,
+        "die_decic": 455,
+        "ibus_ua": 1760625,
+        "mode": 4,
+        "vbat_uv": 4163000,
+        "vbus_mv": 8800
+      },
+      "battery": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_CAPACITY": "69",
+        "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+        "POWER_SUPPLY_CURRENT_AVG": "2418000",
+        "POWER_SUPPLY_CURRENT_NOW": "2331000",
+        "POWER_SUPPLY_HEALTH": "Good",
+        "POWER_SUPPLY_NAME": "sm5714-battery",
+        "POWER_SUPPLY_PRESENT": "1",
+        "POWER_SUPPLY_STATUS": "Not charging",
+        "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+        "POWER_SUPPLY_TEMP": "324",
+        "POWER_SUPPLY_TYPE": "Battery",
+        "POWER_SUPPLY_VOLTAGE_AVG": "4140000",
+        "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+        "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "4140000",
+        "POWER_SUPPLY_VOLTAGE_OCV": "4063000"
+      },
+      "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+      "boottime_seconds": 181.117941701,
+      "calibrated": false,
+      "configuration_register_data_written": false,
+      "pack_mode": "enabled",
+      "pack_temp_mc": 32400,
+      "registers": {
+        "16": 5,
+        "28": 11,
+        "30": 147,
+        "31": 0,
+        "34": 88,
+        "35": 8,
+        "38": 46,
+        "39": 132,
+        "40": 48
+      },
+      "roles": [
+        "sink",
+        "device"
+      ],
+      "source_raw": "format=sm5714-current-port-v1\nret=-11\ncharging_grant=0\nvalues_are_not_physical_measurements=1\n",
+      "tcpm": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714-usbpd",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a4000/usbpd@33",
+        "OF_NAME": "usbpd",
+        "POWER_SUPPLY_CURRENT_MAX": "3000000",
+        "POWER_SUPPLY_CURRENT_NOW": "1800000",
+        "POWER_SUPPLY_NAME": "tcpm-source-psy-3-0033",
+        "POWER_SUPPLY_ONLINE": "2",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "C PD [PD_PPS] PD_SPR_AVS PD_PPS_SPR_AVS",
+        "POWER_SUPPLY_VOLTAGE_MAX": "11000000",
+        "POWER_SUPPLY_VOLTAGE_MIN": "5000000",
+        "POWER_SUPPLY_VOLTAGE_NOW": "9040000"
+      },
+      "usb": {
+        "DEVTYPE": "power_supply",
+        "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+        "OF_COMPATIBLE_N": "1",
+        "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+        "OF_NAME": "charger",
+        "POWER_SUPPLY_INPUT_CURRENT_LIMIT": "100000",
+        "POWER_SUPPLY_NAME": "sm5714-usb",
+        "POWER_SUPPLY_ONLINE": "1",
+        "POWER_SUPPLY_TYPE": "USB",
+        "POWER_SUPPLY_USB_TYPE": "Unknown SDP DCP CDP PD [PD_PPS]"
+      }
+    },
+    "kind": "sample"
+  },
+  "samples": 119
+}

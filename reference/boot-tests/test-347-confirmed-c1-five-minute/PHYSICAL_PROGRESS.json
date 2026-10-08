@@ -1,0 +1,36 @@
+{
+  "verdict": "NATIVE_300S_AND_FIXED9_CHARGE_PASS_PENDING_DISCHARGE_PC_RESTORE",
+  "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+  "guardian_pid": 1762,
+  "native": {
+    "completed_us": 417577839,
+    "deadline_ms": 417032,
+    "fixed_return": true,
+    "hardware_input_ma": 1700,
+    "no_restart": true,
+    "parked_zero_proofs": 63,
+    "pump_ON_observed": true,
+    "refresh_deferrals": 0,
+    "refreshes": 62,
+    "started_us": 117143450,
+    "target_ma": 1800,
+    "target_mv": 9040,
+    "window_ms": 300000
+  },
+  "active_samples": 417,
+  "statistics": {
+    "calibrated": false,
+    "max_die_temp_decic": 485,
+    "max_pack_temp_decic": 327,
+    "max_raw_ibus_ua": 1781875
+  },
+  "fixed_charge_observation_seconds": 31.021708477999994,
+  "fixed_charge_endpoint_soc": 71,
+  "rollback_required": true,
+  "tests": {
+    "executed": false,
+    "build_executed": false,
+    "reused": "60host/79actualC/ARM64/W1+sparse"
+  },
+  "full_port": "NOT_READY"
+}
