@@ -1,0 +1,22 @@
+{
+  "executed": true,
+  "test_command": "python3 -m unittest tests.test_ssc_stock_assets -v",
+  "tests": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "kernel_build": {
+    "executed": false,
+    "reason": "host asset verification only; kernel/DT/config unchanged"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "only new host asset parser affected; no test routing change"
+  },
+  "private_archive": {
+    "path": "out/ssc-stock-assets/source.tar.gz",
+    "bytes": 38400320,
+    "sha256": "e7c02f3e2cf29df5e7594fab329a3261a728c1517768e96c1853b79ddb191ff2"
+  },
+  "script_sha256": "8723cade1e3fb10ea6b5df0067e9b0f86cf71c595caad7613b8a902b593ee508"
+}

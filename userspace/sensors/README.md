@@ -124,12 +124,32 @@ maintainer scripts before installation; keep ADSP/RPC units inactive until the
 separate physical registration. Actual compilation status and logs are recorded
 in `reference/desktop-bringup/ssc-offline/BUILD_RESULTS.md`.
 
-Next prepare **Samsung X710 signed** `adsp.mdt` and `adsp_dtb.mdt` plus every
+The owner's stock `adsp.mdt` and `adsp_dtb.mdt` and all required data segments
+have now been collected read-only and structurally verified on the host. See
+`reference/desktop-bringup/ssc-stock-assets/RESULTS.md`; TrustZone authentication
+and runtime acceptance remain untested. Reproduce host verification using the
+archive hash recorded in that directory's `validation.json`:
+
+```sh
+python3 userspace/sensors/verify-stock-assets.py \
+  --archive out/ssc-stock-assets/source.tar.gz --sha256 RECORDED_SHA256 \
+  --report out/ssc-stock-assets/VERIFIED.json
+python3 -m unittest tests.test_ssc_stock_assets -v
+```
+
+The copied stock registry cache still needs its 35 Android vendor config inputs.
+Map stock paths relative to `persist/sensors/registry/` into `PREFIX/sensors/`
+to match this exact HexagonFS implementation, and preserve the cache's input
+mtimes. Do not copy an extra registry directory or apply S9 Ultra's zero-mtime
+normalization to this X710 cache. Firmware/registry content stays private in
+ignored host staging; it is not installed on the tablet.
+
+For future fresh stock collection prepare **Samsung X710 signed** `adsp.mdt` and `adsp_dtb.mdt` plus every
 referenced segment from owner firmware, recording hashes. Both names are
 already requested by the current DTS. Also prepare sensorspd libraries and a
 device-specific **copy** of the registry; do not expose or chmod the actual
 Android persist partition. Fedora's registry permission helper is deliberately
-not installed. Firmware content/availability remains unverified here.
+not installed. Complete vendor config availability remains unverified here.
 
 Fedora's `docs/Known-Issues.md` records that starting ADSP late may hang/reset
 the SoC and leaves its ADSP-start service disabled. Do not copy or invoke its

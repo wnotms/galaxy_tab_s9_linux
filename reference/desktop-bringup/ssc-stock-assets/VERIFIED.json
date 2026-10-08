@@ -1,0 +1,420 @@
+{
+  "verdict": "STOCK_ASSETS_VERIFIED_CONFIG_INPUTS_STILL_REQUIRED",
+  "archive_sha256": "e7c02f3e2cf29df5e7594fab329a3261a728c1517768e96c1853b79ddb191ff2",
+  "boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+  "files": 316,
+  "bytes": 73811754,
+  "partition_file_counts": {
+    "apnhlos": 55,
+    "dsp": 79,
+    "persist": 182
+  },
+  "firmware": {
+    "adsp.mdt": {
+      "program_headers": 51,
+      "loadable_segments": 49,
+      "split": true,
+      "metadata_location": "packed-after-header",
+      "required_split_files": [
+        "apnhlos/image/adsp.b01",
+        "apnhlos/image/adsp.b02",
+        "apnhlos/image/adsp.b03",
+        "apnhlos/image/adsp.b04",
+        "apnhlos/image/adsp.b05",
+        "apnhlos/image/adsp.b06",
+        "apnhlos/image/adsp.b07",
+        "apnhlos/image/adsp.b08",
+        "apnhlos/image/adsp.b09",
+        "apnhlos/image/adsp.b10",
+        "apnhlos/image/adsp.b11",
+        "apnhlos/image/adsp.b12",
+        "apnhlos/image/adsp.b13",
+        "apnhlos/image/adsp.b14",
+        "apnhlos/image/adsp.b15",
+        "apnhlos/image/adsp.b16",
+        "apnhlos/image/adsp.b17",
+        "apnhlos/image/adsp.b18",
+        "apnhlos/image/adsp.b19",
+        "apnhlos/image/adsp.b20",
+        "apnhlos/image/adsp.b21",
+        "apnhlos/image/adsp.b22",
+        "apnhlos/image/adsp.b23",
+        "apnhlos/image/adsp.b24",
+        "apnhlos/image/adsp.b25",
+        "apnhlos/image/adsp.b27",
+        "apnhlos/image/adsp.b28",
+        "apnhlos/image/adsp.b30",
+        "apnhlos/image/adsp.b31",
+        "apnhlos/image/adsp.b32",
+        "apnhlos/image/adsp.b33",
+        "apnhlos/image/adsp.b34",
+        "apnhlos/image/adsp.b35",
+        "apnhlos/image/adsp.b37",
+        "apnhlos/image/adsp.b38",
+        "apnhlos/image/adsp.b39",
+        "apnhlos/image/adsp.b40",
+        "apnhlos/image/adsp.b41",
+        "apnhlos/image/adsp.b42",
+        "apnhlos/image/adsp.b43",
+        "apnhlos/image/adsp.b44",
+        "apnhlos/image/adsp.b45",
+        "apnhlos/image/adsp.b46",
+        "apnhlos/image/adsp.b47",
+        "apnhlos/image/adsp.b48"
+      ],
+      "memory_start": 2661285888,
+      "memory_end": 2755346432,
+      "memory_bytes": 94060544,
+      "structurally_complete": true,
+      "authentication_verified": false,
+      "existing_reserved_region_fits": true
+    },
+    "adsp_dtb.mdt": {
+      "program_headers": 3,
+      "loadable_segments": 1,
+      "split": true,
+      "metadata_location": "packed-after-header",
+      "required_split_files": [
+        "apnhlos/image/adsp_dtb.b01"
+      ],
+      "memory_start": 2660761600,
+      "memory_end": 2660773888,
+      "memory_bytes": 12288,
+      "structurally_complete": true,
+      "authentication_verified": false,
+      "existing_reserved_region_fits": true
+    }
+  },
+  "registry": {
+    "completion_marker_present": true,
+    "config_inputs": [
+      {
+        "path": "/vendor/etc/sensors/config/akmlib.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_ak991x_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_ak991x_5.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_bridge_driver_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_default_sensors.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_dynamic_sensors_template.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_iot_hdk_dae.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_irq.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_lsm6dso_0_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_power_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_qsh_ble_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_veml3328_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/kailua_veml3328_1.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/lsm6dso_0.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/qsh_ble.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_amd.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_amd_sw_disabled.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_amd_sw_enabled.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_cm.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_dae.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_diag_filter.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_direct_channel.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_flip_state.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_fmv.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_fmv_legacy.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_gyro_cal.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_mag_cal.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_mag_cal_legacy.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_offbody_detect_phone.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_rotv.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_tilt.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_tilt_sw_disabled.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_tilt_sw_enabled.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/sns_transport_ppe.json",
+        "required_mtime": 1640995200
+      },
+      {
+        "path": "/vendor/etc/sensors/config/veml3328_0.json",
+        "required_mtime": 1640995200
+      }
+    ],
+    "copied_registry_mapping": {
+      "persist/sensors/registry/registry/ak0991x_0": "sensors/registry/ak0991x_0",
+      "persist/sensors/registry/registry/ak0991x_0.mag": "sensors/registry/ak0991x_0.mag",
+      "persist/sensors/registry/registry/ak0991x_0.mag.config": "sensors/registry/ak0991x_0.mag.config",
+      "persist/sensors/registry/registry/ak0991x_0.mag.config_2": "sensors/registry/ak0991x_0.mag.config_2",
+      "persist/sensors/registry/registry/ak0991x_0_platform": "sensors/registry/ak0991x_0_platform",
+      "persist/sensors/registry/registry/ak0991x_0_platform.config": "sensors/registry/ak0991x_0_platform.config",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag": "sensors/registry/ak0991x_0_platform.mag",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal": "sensors/registry/ak0991x_0_platform.mag.fac_cal",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal.bias": "sensors/registry/ak0991x_0_platform.mag.fac_cal.bias",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal.corr_mat": "sensors/registry/ak0991x_0_platform.mag.fac_cal.corr_mat",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal_2": "sensors/registry/ak0991x_0_platform.mag.fac_cal_2",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal_2.bias": "sensors/registry/ak0991x_0_platform.mag.fac_cal_2.bias",
+      "persist/sensors/registry/registry/ak0991x_0_platform.mag.fac_cal_2.corr_mat": "sensors/registry/ak0991x_0_platform.mag.fac_cal_2.corr_mat",
+      "persist/sensors/registry/registry/ak0991x_0_platform.orient": "sensors/registry/ak0991x_0_platform.orient",
+      "persist/sensors/registry/registry/ak0991x_0_platform.placement": "sensors/registry/ak0991x_0_platform.placement",
+      "persist/sensors/registry/registry/akmlib": "sensors/registry/akmlib",
+      "persist/sensors/registry/registry/akmlib.magcal": "sensors/registry/akmlib.magcal",
+      "persist/sensors/registry/registry/akmlib.magcal.config": "sensors/registry/akmlib.magcal.config",
+      "persist/sensors/registry/registry/akmlib.magcal.volatile": "sensors/registry/akmlib.magcal.volatile",
+      "persist/sensors/registry/registry/akmlib.rotv": "sensors/registry/akmlib.rotv",
+      "persist/sensors/registry/registry/akmlib.rotv.config": "sensors/registry/akmlib.rotv.config",
+      "persist/sensors/registry/registry/akmlib.rotv.volatile": "sensors/registry/akmlib.rotv.volatile",
+      "persist/sensors/registry/registry/bridge_driver_0_platform": "sensors/registry/bridge_driver_0_platform",
+      "persist/sensors/registry/registry/bridge_driver_0_platform.config": "sensors/registry/bridge_driver_0_platform.config",
+      "persist/sensors/registry/registry/dae": "sensors/registry/dae",
+      "persist/sensors/registry/registry/default_sensors": "sensors/registry/default_sensors",
+      "persist/sensors/registry/registry/default_sensors.accel": "sensors/registry/default_sensors.accel",
+      "persist/sensors/registry/registry/default_sensors.accel.attr_0": "sensors/registry/default_sensors.accel.attr_0",
+      "persist/sensors/registry/registry/default_sensors.accel_cal": "sensors/registry/default_sensors.accel_cal",
+      "persist/sensors/registry/registry/default_sensors.accel_cal.attr_0": "sensors/registry/default_sensors.accel_cal.attr_0",
+      "persist/sensors/registry/registry/default_sensors.ambient_light": "sensors/registry/default_sensors.ambient_light",
+      "persist/sensors/registry/registry/default_sensors.ambient_light.attr_0": "sensors/registry/default_sensors.ambient_light.attr_0",
+      "persist/sensors/registry/registry/default_sensors.amd": "sensors/registry/default_sensors.amd",
+      "persist/sensors/registry/registry/default_sensors.amd.attr_0": "sensors/registry/default_sensors.amd.attr_0",
+      "persist/sensors/registry/registry/default_sensors.fmv": "sensors/registry/default_sensors.fmv",
+      "persist/sensors/registry/registry/default_sensors.fmv.attr_0": "sensors/registry/default_sensors.fmv.attr_0",
+      "persist/sensors/registry/registry/default_sensors.game_rv": "sensors/registry/default_sensors.game_rv",
+      "persist/sensors/registry/registry/default_sensors.game_rv.attr_0": "sensors/registry/default_sensors.game_rv.attr_0",
+      "persist/sensors/registry/registry/default_sensors.geomag_rv": "sensors/registry/default_sensors.geomag_rv",
+      "persist/sensors/registry/registry/default_sensors.geomag_rv.attr_0": "sensors/registry/default_sensors.geomag_rv.attr_0",
+      "persist/sensors/registry/registry/default_sensors.gravity": "sensors/registry/default_sensors.gravity",
+      "persist/sensors/registry/registry/default_sensors.gravity.attr_0": "sensors/registry/default_sensors.gravity.attr_0",
+      "persist/sensors/registry/registry/default_sensors.gyro": "sensors/registry/default_sensors.gyro",
+      "persist/sensors/registry/registry/default_sensors.gyro.attr_0": "sensors/registry/default_sensors.gyro.attr_0",
+      "persist/sensors/registry/registry/default_sensors.gyro_cal": "sensors/registry/default_sensors.gyro_cal",
+      "persist/sensors/registry/registry/default_sensors.gyro_cal.attr_0": "sensors/registry/default_sensors.gyro_cal.attr_0",
+      "persist/sensors/registry/registry/default_sensors.gyro_rot_matrix": "sensors/registry/default_sensors.gyro_rot_matrix",
+      "persist/sensors/registry/registry/default_sensors.gyro_rot_matrix.attr_0": "sensors/registry/default_sensors.gyro_rot_matrix.attr_0",
+      "persist/sensors/registry/registry/default_sensors.mag": "sensors/registry/default_sensors.mag",
+      "persist/sensors/registry/registry/default_sensors.mag.attr_0": "sensors/registry/default_sensors.mag.attr_0",
+      "persist/sensors/registry/registry/default_sensors.mag_cal": "sensors/registry/default_sensors.mag_cal",
+      "persist/sensors/registry/registry/default_sensors.mag_cal.attr_0": "sensors/registry/default_sensors.mag_cal.attr_0",
+      "persist/sensors/registry/registry/default_sensors.motion_detect": "sensors/registry/default_sensors.motion_detect",
+      "persist/sensors/registry/registry/default_sensors.motion_detect.attr_0": "sensors/registry/default_sensors.motion_detect.attr_0",
+      "persist/sensors/registry/registry/default_sensors.proximity": "sensors/registry/default_sensors.proximity",
+      "persist/sensors/registry/registry/default_sensors.proximity.attr_0": "sensors/registry/default_sensors.proximity.attr_0",
+      "persist/sensors/registry/registry/default_sensors.rotv": "sensors/registry/default_sensors.rotv",
+      "persist/sensors/registry/registry/default_sensors.rotv.attr_0": "sensors/registry/default_sensors.rotv.attr_0",
+      "persist/sensors/registry/registry/default_sensors.sar": "sensors/registry/default_sensors.sar",
+      "persist/sensors/registry/registry/default_sensors.sar.attr_0": "sensors/registry/default_sensors.sar.attr_0",
+      "persist/sensors/registry/registry/default_sensors.sensor_temperature": "sensors/registry/default_sensors.sensor_temperature",
+      "persist/sensors/registry/registry/default_sensors.sensor_temperature.attr_0": "sensors/registry/default_sensors.sensor_temperature.attr_0",
+      "persist/sensors/registry/registry/default_sensors.sensor_temperature.attr_1": "sensors/registry/default_sensors.sensor_temperature.attr_1",
+      "persist/sensors/registry/registry/default_sensors.tilt": "sensors/registry/default_sensors.tilt",
+      "persist/sensors/registry/registry/default_sensors.tilt.attr_0": "sensors/registry/default_sensors.tilt.attr_0",
+      "persist/sensors/registry/registry/lsm6dso_0": "sensors/registry/lsm6dso_0",
+      "persist/sensors/registry/registry/lsm6dso_0.accel": "sensors/registry/lsm6dso_0.accel",
+      "persist/sensors/registry/registry/lsm6dso_0.accel.config": "sensors/registry/lsm6dso_0.accel.config",
+      "persist/sensors/registry/registry/lsm6dso_0.ff": "sensors/registry/lsm6dso_0.ff",
+      "persist/sensors/registry/registry/lsm6dso_0.ff.config": "sensors/registry/lsm6dso_0.ff.config",
+      "persist/sensors/registry/registry/lsm6dso_0.gyro": "sensors/registry/lsm6dso_0.gyro",
+      "persist/sensors/registry/registry/lsm6dso_0.gyro.config": "sensors/registry/lsm6dso_0.gyro.config",
+      "persist/sensors/registry/registry/lsm6dso_0.hs": "sensors/registry/lsm6dso_0.hs",
+      "persist/sensors/registry/registry/lsm6dso_0.hs.config": "sensors/registry/lsm6dso_0.hs.config",
+      "persist/sensors/registry/registry/lsm6dso_0.md": "sensors/registry/lsm6dso_0.md",
+      "persist/sensors/registry/registry/lsm6dso_0.md.config": "sensors/registry/lsm6dso_0.md.config",
+      "persist/sensors/registry/registry/lsm6dso_0.temp": "sensors/registry/lsm6dso_0.temp",
+      "persist/sensors/registry/registry/lsm6dso_0.temp.config": "sensors/registry/lsm6dso_0.temp.config",
+      "persist/sensors/registry/registry/lsm6dso_0_platform": "sensors/registry/lsm6dso_0_platform",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.accel": "sensors/registry/lsm6dso_0_platform.accel",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.accel.fac_cal": "sensors/registry/lsm6dso_0_platform.accel.fac_cal",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.accel.fac_cal.bias": "sensors/registry/lsm6dso_0_platform.accel.fac_cal.bias",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.accel.fac_cal.corr_mat": "sensors/registry/lsm6dso_0_platform.accel.fac_cal.corr_mat",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.config": "sensors/registry/lsm6dso_0_platform.config",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.ff": "sensors/registry/lsm6dso_0_platform.ff",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.ff.config": "sensors/registry/lsm6dso_0_platform.ff.config",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.gyro": "sensors/registry/lsm6dso_0_platform.gyro",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.gyro.fac_cal": "sensors/registry/lsm6dso_0_platform.gyro.fac_cal",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.gyro.fac_cal.bias": "sensors/registry/lsm6dso_0_platform.gyro.fac_cal.bias",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.gyro.fac_cal.corr_mat": "sensors/registry/lsm6dso_0_platform.gyro.fac_cal.corr_mat",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.hs": "sensors/registry/lsm6dso_0_platform.hs",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.hs.config": "sensors/registry/lsm6dso_0_platform.hs.config",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.md": "sensors/registry/lsm6dso_0_platform.md",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.md.config": "sensors/registry/lsm6dso_0_platform.md.config",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.orient": "sensors/registry/lsm6dso_0_platform.orient",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.placement": "sensors/registry/lsm6dso_0_platform.placement",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.temp": "sensors/registry/lsm6dso_0_platform.temp",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.temp.fac_cal": "sensors/registry/lsm6dso_0_platform.temp.fac_cal",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.temp.fac_cal.bias": "sensors/registry/lsm6dso_0_platform.temp.fac_cal.bias",
+      "persist/sensors/registry/registry/lsm6dso_0_platform.temp.fac_cal.scale": "sensors/registry/lsm6dso_0_platform.temp.fac_cal.scale",
+      "persist/sensors/registry/registry/power": "sensors/registry/power",
+      "persist/sensors/registry/registry/power.island": "sensors/registry/power.island",
+      "persist/sensors/registry/registry/qsh_ble_config": "sensors/registry/qsh_ble_config",
+      "persist/sensors/registry/registry/sensors_registry": "sensors/registry/sensors_registry",
+      "persist/sensors/registry/registry/sns_amd": "sensors/registry/sns_amd",
+      "persist/sensors/registry/registry/sns_cm": "sensors/registry/sns_cm",
+      "persist/sensors/registry/registry/sns_diag_config": "sensors/registry/sns_diag_config",
+      "persist/sensors/registry/registry/sns_diag_sensor_datatype": "sensors/registry/sns_diag_sensor_datatype",
+      "persist/sensors/registry/registry/sns_direct_channel": "sensors/registry/sns_direct_channel",
+      "persist/sensors/registry/registry/sns_flip_state": "sensors/registry/sns_flip_state",
+      "persist/sensors/registry/registry/sns_fmv_platform": "sensors/registry/sns_fmv_platform",
+      "persist/sensors/registry/registry/sns_fmv_platform.config": "sensors/registry/sns_fmv_platform.config",
+      "persist/sensors/registry/registry/sns_gyro_cal_config": "sensors/registry/sns_gyro_cal_config",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0": "sensors/registry/sns_gyro_cal_persist_s0",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0.bias": "sensors/registry/sns_gyro_cal_persist_s0.bias",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0.table_max_temp": "sensors/registry/sns_gyro_cal_persist_s0.table_max_temp",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0.table_max_temp.bias_max_temp": "sensors/registry/sns_gyro_cal_persist_s0.table_max_temp.bias_max_temp",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0.table_min_temp": "sensors/registry/sns_gyro_cal_persist_s0.table_min_temp",
+      "persist/sensors/registry/registry/sns_gyro_cal_persist_s0.table_min_temp.bias_min_temp": "sensors/registry/sns_gyro_cal_persist_s0.table_min_temp.bias_min_temp",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0": "sensors/registry/sns_gyro_cal_table_s0",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1": "sensors/registry/sns_gyro_cal_table_s0.g1",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1.12": "sensors/registry/sns_gyro_cal_table_s0.g1.12",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1.13": "sensors/registry/sns_gyro_cal_table_s0.g1.13",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1.17": "sensors/registry/sns_gyro_cal_table_s0.g1.17",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1.18": "sensors/registry/sns_gyro_cal_table_s0.g1.18",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g1.19": "sensors/registry/sns_gyro_cal_table_s0.g1.19",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2": "sensors/registry/sns_gyro_cal_table_s0.g2",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.20": "sensors/registry/sns_gyro_cal_table_s0.g2.20",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.21": "sensors/registry/sns_gyro_cal_table_s0.g2.21",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.22": "sensors/registry/sns_gyro_cal_table_s0.g2.22",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.23": "sensors/registry/sns_gyro_cal_table_s0.g2.23",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.24": "sensors/registry/sns_gyro_cal_table_s0.g2.24",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.25": "sensors/registry/sns_gyro_cal_table_s0.g2.25",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.26": "sensors/registry/sns_gyro_cal_table_s0.g2.26",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.27": "sensors/registry/sns_gyro_cal_table_s0.g2.27",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.28": "sensors/registry/sns_gyro_cal_table_s0.g2.28",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g2.29": "sensors/registry/sns_gyro_cal_table_s0.g2.29",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3": "sensors/registry/sns_gyro_cal_table_s0.g3",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.30": "sensors/registry/sns_gyro_cal_table_s0.g3.30",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.31": "sensors/registry/sns_gyro_cal_table_s0.g3.31",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.32": "sensors/registry/sns_gyro_cal_table_s0.g3.32",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.33": "sensors/registry/sns_gyro_cal_table_s0.g3.33",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.34": "sensors/registry/sns_gyro_cal_table_s0.g3.34",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.35": "sensors/registry/sns_gyro_cal_table_s0.g3.35",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.36": "sensors/registry/sns_gyro_cal_table_s0.g3.36",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.37": "sensors/registry/sns_gyro_cal_table_s0.g3.37",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.38": "sensors/registry/sns_gyro_cal_table_s0.g3.38",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g3.39": "sensors/registry/sns_gyro_cal_table_s0.g3.39",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g4": "sensors/registry/sns_gyro_cal_table_s0.g4",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g4.40": "sensors/registry/sns_gyro_cal_table_s0.g4.40",
+      "persist/sensors/registry/registry/sns_gyro_cal_table_s0.g4.41": "sensors/registry/sns_gyro_cal_table_s0.g4.41",
+      "persist/sensors/registry/registry/sns_irq": "sensors/registry/sns_irq",
+      "persist/sensors/registry/registry/sns_mag_cal_config": "sensors/registry/sns_mag_cal_config",
+      "persist/sensors/registry/registry/sns_offbody_detect_phone": "sensors/registry/sns_offbody_detect_phone",
+      "persist/sensors/registry/registry/sns_reg_config": "sensors/registry/sns_reg_config",
+      "persist/sensors/registry/registry/sns_rotv_platform": "sensors/registry/sns_rotv_platform",
+      "persist/sensors/registry/registry/sns_rotv_platform.config": "sensors/registry/sns_rotv_platform.config",
+      "persist/sensors/registry/registry/sns_tilt": "sensors/registry/sns_tilt",
+      "persist/sensors/registry/registry/sns_tppe_ble": "sensors/registry/sns_tppe_ble",
+      "persist/sensors/registry/registry/sns_tppe_ble.filter_msg_ids": "sensors/registry/sns_tppe_ble.filter_msg_ids",
+      "persist/sensors/registry/registry/veml3328_0": "sensors/registry/veml3328_0",
+      "persist/sensors/registry/registry/veml3328_0.ambient_light": "sensors/registry/veml3328_0.ambient_light",
+      "persist/sensors/registry/registry/veml3328_0.ambient_light.config": "sensors/registry/veml3328_0.ambient_light.config",
+      "persist/sensors/registry/registry/veml3328_0.rgb": "sensors/registry/veml3328_0.rgb",
+      "persist/sensors/registry/registry/veml3328_0.rgb.config": "sensors/registry/veml3328_0.rgb.config",
+      "persist/sensors/registry/registry/veml3328_0_platform": "sensors/registry/veml3328_0_platform",
+      "persist/sensors/registry/registry/veml3328_0_platform.ambient_light": "sensors/registry/veml3328_0_platform.ambient_light",
+      "persist/sensors/registry/registry/veml3328_0_platform.ambient_light.fac_cal": "sensors/registry/veml3328_0_platform.ambient_light.fac_cal",
+      "persist/sensors/registry/registry/veml3328_0_platform.config": "sensors/registry/veml3328_0_platform.config",
+      "persist/sensors/registry/registry/veml3328_0_platform.placement": "sensors/registry/veml3328_0_platform.placement",
+      "persist/sensors/registry/registry/veml3328_0_platform.rgb": "sensors/registry/veml3328_0_platform.rgb",
+      "persist/sensors/registry/registry/veml3328_0_platform.rgb.fac_cal": "sensors/registry/veml3328_0_platform.rgb.fac_cal",
+      "persist/sensors/registry/registry/veml3328_1_platform": "sensors/registry/veml3328_1_platform",
+      "persist/sensors/registry/registry/veml3328_1_platform.ambient_light": "sensors/registry/veml3328_1_platform.ambient_light",
+      "persist/sensors/registry/registry/veml3328_1_platform.ambient_light.fac_cal": "sensors/registry/veml3328_1_platform.ambient_light.fac_cal",
+      "persist/sensors/registry/registry/veml3328_1_platform.config": "sensors/registry/veml3328_1_platform.config",
+      "persist/sensors/registry/registry/veml3328_1_platform.placement": "sensors/registry/veml3328_1_platform.placement",
+      "persist/sensors/registry/registry/veml3328_1_platform.rgb": "sensors/registry/veml3328_1_platform.rgb",
+      "persist/sensors/registry/registry/veml3328_1_platform.rgb.fac_cal": "sensors/registry/veml3328_1_platform.rgb.fac_cal",
+      "persist/sensors/registry/sns_reg_version": "sensors/sns_reg_version"
+    },
+    "config_inputs_collected": false,
+    "timestamp_normalization_allowed": false,
+    "real_persist_exposed": false
+  },
+  "device_deployment_ready": false,
+  "remoteproc_started": false
+}

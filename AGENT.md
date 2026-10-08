@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_STOCK_ASSETS_VERIFIED_VENDOR_CONFIG_PENDING.
+Registered b7575189 RO export on same331 boot28fcdaa6/SSH10.175.236.134:
+316files/73811754bytes/24.955s, exact per-file hashes/mtimes, no skipped links,
+apnhlosVFAT+dsp/persistEXT4 noload mounts removed; ADSPoffline before/after.
+Host MDT check:45ADSP+1DTB required split data segments complete, both packed
+hash metadata, existingX710 reserved regions fit. Structural only/not PAS auth.
+17affected hosttests PASS/0skip, no kernel/fullbuild/routing change. Private
+firmware/calibration onlyout/ssc-stock-assets; results/hashes underreference/
+desktop-bringup/ssc-stock-assets. Registry35vendorJSON inputs stillmissing;
+HexagonFS maps virtualpersist/sensors/registry toPREFIX/sensors, so stripone
+registry level in copiedtree/preserve inputmtimes1640995200; no zero-normalize.
+Next ROvendorconfig collection/isolation then controlledearlyboot registration;
+no lateADSPstart/currentdevicewrites/packageinstall/flash/reboot/charging/input/
+USB/kernel/DT/modulechange. Owner pen tippressurelater/348unused/fullportactive.
+
 2026-10-08 SSC_DEBIAN_ARM64_PACKAGES_NOT_DEPLOYED.
 Four runtime debs from exact baa46693 build, no recompilation/source change:
 libssc2/gts9-hexagonrpc/pd-mapper/iio-sensor-proxy, target-symbol dependencies,
