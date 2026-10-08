@@ -9,3 +9,5 @@ No flash/reboot, kernel/config/DT/module/charging change, package installation, 
 Host suites and kernel build executed: false. Python syntax and raw evidence SHA checked; existing unchanged source qualification reused. To end this interactive session later: systemctl stop gdm.service.
 
 Owner confirmation was recorded without further device operations. The desktop was left active by the preceding activation; this update does not stop it, change automatic startup, or resume charging Test348.
+
+Subsequent incident: the owner reported poweroff before Test355 loaded touch. Test355 separately preserves the prior boot's power-key/GNOME VM-policy/orderly shutdown evidence. This ends the active desktop session; manual functional confirmation is retained, but it is not a power-key regression pass. The new boot starts with GDM masked/inactive.

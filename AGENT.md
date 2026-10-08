@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test355 STOP_BEFORE_TOUCH_LOAD_POWER_KEY_POWEROFF.
+Owner reports spontaneousoff/manual restart before module upload/insmod (zero).
+New331boot1adc0f13 at WiFi10.175.236.157, config/notes unchanged,83%32.4C Good.
+Priorboot power-key event -> GNOME48.1 VM-non-nothing policy -> logind PowerOff
+-> orderly shutdown. vm-other/defaultsuspend; existing logindignore/backlight
+helper correct. Full prior/current kernel no recorded stall/panic, pstore empty.
+No touch load/logdir. Next scoped GNOME nothing policy; new touch registration
+requires newboot; no charging activation. Tests/build:false for incidentresults.
+
 2026-10-08 Test355 REGISTERED_FEDORA_TOUCH_ONE_LOAD.
 Same331/activeGNOME; pinned same-model byte-identical module,37 imports CRCs
 match exact331 Image/module_layout; BTF.base normal loader gate/no force flags.

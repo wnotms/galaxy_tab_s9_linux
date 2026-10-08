@@ -1,0 +1,56 @@
+{"argv": ["systemd-detect-virt"], "rc": 0, "stdout": "vm-other\n", "stderr": ""}
+{"argv": ["systemctl", "is-active", "gts9-power-key.service"], "rc": 0, "stdout": "active\n", "stderr": ""}
+{"argv": ["systemd-analyze", "cat-config", "systemd/logind.conf"], "rc": 0, "stdout": "# /etc/systemd/logind.conf\n#  This file is part of systemd.\n#\n#  systemd is free software; you can redistribute it and/or modify it under the\n#  terms of the GNU Lesser General Public License as published by the Free\n#  Software Foundation; either version 2.1 of the License, or (at your option)\n#  any later version.\n#\n# Entries in this file show the compile time defaults. Local configuration\n# should be created by either modifying this file (or a copy of it placed in\n# /etc/ if the original file is shipped in /usr/), or by creating \"drop-ins\" in\n# the /etc/systemd/logind.conf.d/ directory. The latter is generally\n# recommended. Defaults can be restored by simply deleting the main\n# configuration file and all drop-ins located in /etc/.\n#\n# Use 'systemd-analyze cat-config systemd/logind.conf' to display the full config.\n#\n# See logind.conf(5) for details.\n\n[Login]\n#NAutoVTs=6\n#ReserveVT=6\n#KillUserProcesses=no\n#KillOnlyUsers=\n#KillExcludeUsers=root\n#InhibitDelayMaxSec=5\n#UserStopDelaySec=10\n#SleepOperation=suspend-then-hibernate suspend\n#HandlePowerKey=poweroff\n#HandlePowerKeyLongPress=ignore\n#HandleRebootKey=reboot\n#HandleRebootKeyLongPress=poweroff\n#HandleSuspendKey=suspend\n#HandleSuspendKeyLongPress=hibernate\n#HandleHibernateKey=hibernate\n#HandleHibernateKeyLongPress=ignore\n#HandleLidSwitch=suspend\n#HandleLidSwitchExternalPower=suspend\n#HandleLidSwitchDocked=ignore\n#HandleSecureAttentionKey=secure-attention-key\n#PowerKeyIgnoreInhibited=no\n#SuspendKeyIgnoreInhibited=no\n#HibernateKeyIgnoreInhibited=no\n#LidSwitchIgnoreInhibited=yes\n#RebootKeyIgnoreInhibited=no\n#HoldoffTimeoutSec=30s\n#IdleAction=ignore\n#IdleActionSec=30min\n#RuntimeDirectorySize=10%\n#RuntimeDirectoryInodesMax=\n#RemoveIPC=yes\n#InhibitorsMax=8192\n#SessionsMax=8192\n#StopIdleSessionSec=infinity\n#DesignatedMaintenanceTime=\n\n# /etc/systemd/logind.conf.d/60-gts9-power-key.conf\n# Short power-key press: backlight off, system keeps running.\n#\n# logind's own power-key actions are all machine-level: \"poweroff\" shuts the\n# tablet down and \"suspend\" freezes the SoC, which also takes the USB ACM\n# gadget (and therefore the ttyGS0 debug console) down with it.  There is no\n# \"blank\" action to ask for: logind 257 rejects HandlePowerKey=blank with\n# \"Failed to parse ..., ignoring: Invalid argument\" and then silently uses its\n# poweroff default, so a short press would shut the tablet down.\n#\n# The key is handled by gts9-power-key.service instead.  Short press: the\n# daemon writes the panel backlight (bl_power/brightness), which is a single\n# DSI brightness command - not a DPU modeset, and not /sys/class/graphics/fb0/blank.\n# Long press (>= 1.2 s): the daemon does nothing, so the PMIC's own\n# forced-power-off path stays in charge.\n[Login]\nHandlePowerKey=ignore\nHandlePowerKeyLongPress=ignore\n", "stderr": ""}
+{"argv": ["runuser", "-u", "ms", "--", "dbus-run-session", "--", "gsettings", "get", "org.gnome.settings-daemon.plugins.power", "power-button-action"], "rc": 0, "stdout": "'suspend'\n", "stderr": "dbus[1800]: Unable to set up transient service directory: XDG_RUNTIME_DIR \"/run/user/0\" is owned by uid 0, not our uid 1000\n\n(process:1801): dconf-CRITICAL **: 17:14:03.086: unable to create directory '/run/user/0/dconf': Permission denied.  dconf will not work properly.\n\n(process:1801): dconf-CRITICAL **: 17:14:03.087: unable to create directory '/run/user/0/dconf': Permission denied.  dconf will not work properly.\n\n(process:1801): dconf-CRITICAL **: 17:14:03.089: unable to create directory '/run/user/0/dconf': Permission denied.  dconf will not work properly.\n"}
+{"argv": ["runuser", "-u", "Debian-gdm", "--", "dbus-run-session", "--", "gsettings", "get", "org.gnome.settings-daemon.plugins.power", "power-button-action"], "rc": 0, "stdout": "'suspend'\n", "stderr": "dbus[1808]: Unable to set up transient service directory: XDG_RUNTIME_DIR \"/run/user/0\" is owned by uid 0, not our uid 103\n\n(process:1809): dconf-CRITICAL **: 17:14:03.113: unable to create directory '/run/user/0/dconf': Permission denied.  dconf will not work properly.\n\n(process:1809): dconf-CRITICAL **: 17:14:03.114: unable to create directory '/run/user/0/dconf': Permission denied.  dconf will not work properly.\n"}
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema gettext-domain="gnome-settings-daemon" id="org.gnome.settings-daemon.plugins.power" path="/org/gnome/settings-daemon/plugins/power/">
+    <key name="idle-brightness" type="i">
+      <default>30</default>
+      <summary>The brightness of the screen when idle</summary>
+      <description>This is the laptop panel screen brightness used when the session is idle.</description>
+    </key>
+    <key name="idle-dim" type="b">
+      <default>true</default>
+      <summary>Dim the screen after a period of inactivity</summary>
+      <description>If the screen should be dimmed to save power when the computer is idle.</description>
+    </key>
+    <key name="sleep-inactive-ac-timeout" type="i">
+      <default>900</default>
+      <summary>Sleep timeout computer when on AC</summary>
+      <description>The amount of time in seconds the computer on AC power needs to be inactive before it goes to sleep. A value of 0 means never.</description>
+    </key>
+    <key name="sleep-inactive-ac-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
+      <default>'suspend'</default>
+      <summary>Whether to hibernate, suspend or do nothing when inactive</summary>
+      <description>The type of sleeping that should be performed when the computer is inactive.</description>
+    </key>
+    <key name="sleep-inactive-battery-timeout" type="i">
+      <default>900</default>
+      <summary>Sleep timeout computer when on battery</summary>
+      <description>The amount of time in seconds the computer on battery power needs to be inactive before it goes to sleep. A value of 0 means never.</description>
+    </key>
+    <key name="sleep-inactive-battery-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
+      <default>'suspend'</default>
+      <summary>Whether to hibernate, suspend or do nothing when inactive</summary>
+      <description>The type of sleeping that should be performed when the computer is inactive.</description>
+    </key>
+    <key name="ambient-enabled" type="b">
+      <default>true</default>
+      <summary>Enable the ALS sensor</summary>
+      <description>If the ambient light sensor functionality is enabled.</description>
+    </key>
+    <key name="power-button-action" enum="org.gnome.settings-daemon.GsdPowerButtonActionType">
+      <default>'suspend'</default>
+      <summary>Power button action</summary>
+      <description>The action to take when the system power button is pressed. Virtual machines only honor the 'nothing' action, and will shutdown otherwise. Tablets always suspend, ignoring all the other action options.</description>
+    </key>
+    <key name="power-saver-profile-on-low-battery" type="b">
+      <default>true</default>
+      <summary>Enable power-saver profile when battery is low</summary>
+      <description>Automatically enable the "power-saver" profile using power-profiles-daemon if the battery is low.</description>
+    </key>
+  </schema>
+</schemalist>
+
