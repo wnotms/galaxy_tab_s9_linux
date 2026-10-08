@@ -1,12 +1,12 @@
-# Test348 execution is not yet authorized
+# Test348 one-attempt execution authorization
 
-Test347 consumed its one300s scope and closed with exact331 restoration to TWRP.
-The resumed porting goal authorizes offline development, not automatic physical
-1200s activation. This independently registered1200s scope needs a new explicit
-owner instruction before staging/deployment/starting. Both registration and scope
-flags remain false; no owner reply or approval is fabricated. After approval,
-record exact reply, update both flags and frozen inputs, commit/push, then act.
-A fresh candidate-boot-bound C1 reply is additionally required for the only launch.
-Keep device TWRP until the owner authorizes the next physical scope. Existing
-permissions suffice for offline build/registration, so no approval was sought for
-those reversible actions. Full charging port remains NOT_READY.
+Owner explicitly replied “允许执行 20 分钟测试” to the independently prepared
+Test348 scope: one1200s PPS attempt, hardware1700mA/PPS+raw1800mA ceiling,
+exact331 restoration and finalTWRP. See owner-physical-authorization.json.
+Registration and scope flags now reflect that reply; old offline flags and
+manifests are preserved in authorization-enrollment. No Test347 grant is reused.
+
+This permits the registered baseline boot, staging, installation and one test,
+not another activation after failure. Fresh current identity/rescue/battery
+preflight and candidate-bound C1 reply remain required. Physical acceptance
+is still pending. Full charging port remains NOT_READY.

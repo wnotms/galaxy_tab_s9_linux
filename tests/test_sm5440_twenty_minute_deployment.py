@@ -408,7 +408,8 @@ class TwentyMinuteRegistrationTests(unittest.TestCase):
         self.assertEqual((p['manual_handoff_seconds'],p['preparation_soc_max'],p['activation_soc_max']),
                          (0,60,60))
         self.assertEqual(p['final_endpoint'],'TWRP')
-        self.assertFalse(f.authorized())
+        with patch.dict(f.PLAN,execution_authorized=False):
+            self.assertFalse(f.authorized())
 
     def test_closed_test347_grant_cannot_authorize_twenty_minute_test(self):
         import hashlib

@@ -1,9 +1,6 @@
 # Test348 — confirmed-C1 twenty-minute PPS acceptance
 
-**AUTHORIZED for one1200s attempt; preparation not yet performed.**
-Owner reply: “允许执行 20 分钟测试”. Final restoration remains TWRP.
-Original offline status/seal are historical; see authorization-enrollment and
-owner-physical-authorization.json. No physical20min pass is claimed.
+**REGISTERED OFFLINE; execution not authorized, device stays TWRP.**
 Purpose: one independently attributed1200000ms conservative PPS/pump window,
 followed by fixed9 ordinary charging, discharge, PC rescue and exact331 paired
 restoration to TWRP. It is not a higher-current or vendor-equivalent charging test.
