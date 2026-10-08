@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test360 OWNER_NEWBOOT_LOGIN_AND_TOUCH_CONFIRMED_PASS.
+Owner“登录和触摸桌面正常” after installedGDM-Wants one normalnewbootload;
+functional persistentGNOMEtouch step complete on33125ff0ad0. GUI remainsactive,
+GDMautostart masks retained; no autoGUIboot/suspend/longtermheat reliability.
+Results-onlytests/build:false; no additionaldevice operation forconfirmation.
+Nextseparate desktopheat/idle analysis, no OPP/charging/thermal limit change;
+fullport incomplete/348grantunused/freshinactive admission/finalTWRP retained.
+
 2026-10-08 Test360 NEWBOOT_PERSISTENT_GDM_TOUCH_LOAD_PASS_OWNER_UI_PENDING.
 Same33125ff0ad0 ownerboot, oneGDMstart triggers installedGDM-Wants normal1insmod,
 loadedJSON/return0/client7-0049/event4. Finalalreadyloaded/GDMactive/SSHnormal,

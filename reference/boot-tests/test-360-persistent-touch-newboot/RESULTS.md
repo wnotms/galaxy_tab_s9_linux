@@ -1,11 +1,11 @@
-# Test360 — installed driver loads on new boot; visible UI pending
+# Test360 — new-boot installed touch and owner desktop pass
 
 Owner manual331 boot25ff0ad0 was in text mode with touch absent. Starting GDM
 once triggered its enabled Wants touch unit **without a separate manual
 insmod**. Service verdict loaded/1insmod, ordinary kernel loader return0; the
 existing7-0049/input4/event4 bound, doubletap remained0. Final readonly status
 already-loaded. All3persistent GDM masks were restored without --now; desktop
-and driver remain active for owner login/touch confirmation. This validates
+and driver remain active. Owner confirms “登录和触摸桌面正常”. This validates
 GDM-triggered installed loading in an actual new boot, not automatic graphical
 startup (which remains deliberately masked) or suspend/Spen/doubletap.
 
@@ -29,5 +29,6 @@ No rebuild/fullsuite/CI:17loader+8actualC/W1/37CRC inputs unchanged and reused;
 results-only tests/build executed:false. No package/kernel/config/DT/181 module
 change, firmware update, USB/ADB/charging change, flash or reboot command.
 3481200s grant unused; fresh desktop-inactive admission/final331TWRP remain.
-Owner new-boot visual login/touch confirmation is pending; previous357 physical
-coordinate acceptance is not silently substituted for this new UI observation.
+Owner confirms login and touch desktop in this new boot. Previous357 coordinate
+acceptance remains separately recorded; no ten-contact, suspend or thermal
+reliability claim follows from this functional result.

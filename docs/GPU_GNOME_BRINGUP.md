@@ -33,8 +33,8 @@ is explicitly recorded (MODULE_SIG_FORCE=n), not a forced-load bypass.
 After359 the owner manually rebooted to331 boot25ff0ad0-cf2f-4cc6-971d-2b38365da2db.
 Test360 now started GDM once: the enabled optional touch unit performed one
 normal load, bound7-0049/event4, sameboot/GDM/SSH/10s initial health passed.
-Persistent masks restored without --now; GUI remains active for owner login/
-touch confirmation, still pending. Text-only startup does not load touch. Kernel/config/DT/charging code and original181 modules
+Persistent masks restored without --now; GUI remains active, owner confirms login/
+touch desktop normal in this new boot. Text-only startup does not load touch. Kernel/config/DT/charging code and original181 modules
 remain unchanged. Test348's authorized1200s attempt is unused. Its original
 natural-discharge watcher is terminal, not running. Before future charging work,
 stop desktop and account for GPU/userspace/power-policy/touch changes in fresh
@@ -47,7 +47,7 @@ No charging test runs as part of this desktop work.
 | Display | Existing2560×1600 DPU/DSI, GNOME Wayland visible; owner touch orientation correct | UI scaling/dynamic rotation acceptance |
 | Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
 | Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
-| Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | New-boot owner UI, ten-contact and suspend/rotation checks |
+| Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | Ten-contact and suspend/dynamic-rotation checks |
 | S Pen | Not imported/loaded | Separate port |
 
 Initial read-only inventory remains at
