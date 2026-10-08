@@ -99,6 +99,16 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 SSC_EARLY_FIRMWARE_PAYLOAD_VERIFIED_HOST_ONLY_SIZE_CONSTRAINT.
+Stock55ADSP/PDmapfile CPIO/LZ4 exacthash/rootownership/no scripts/links verified.
+19885531bytes doesNOTfit8388608init_boot; do notflash/omitsegments. Nextqualify
+ADSP-onlyplatformvendor_ramdisk100663296bytes preservinggenericinit_boot/DTB/
+cmdline/root_handoff, thenregistercontrolledboot/actualSMEM/PAS/SSC/rotation.
+No firmware/deviceinstall/ADSPstart/newchargingattempt. Current331Debian;
+QCOM_SOCINFO+pairedinputcompiledoffline, exactnewidentityloadersstillpending.
+Sensorsfirstthencharge perowner;1.8AboundedbringupnotHWmax. Fullportactive.
+
+
 2026-10-08 OWNER_SENSOR_FIRST_THEN_HIGHER_POWER_SOURCE_COMPARISON.
 Ownerasksfinishsensors thencharge;1.8A isPPSinput/rawstopbringupcap, notpack
 current orhardwaremaximum. SameX710FedoraHEADab123e7d unchanged/default3A,
