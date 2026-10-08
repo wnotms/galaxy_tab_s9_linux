@@ -109,6 +109,15 @@ Currentboot-onlypen, existingFTSstub -> no penpalm suppression. No firmware/
 config/DT/181dir/charging/autoload/flash/reboot; tests/build:false results/reuse15
 C/W1/29CRC.348grantunused/freshdesktopinactive admission/finalexact331TWRP.
 
+2026-10-08 Test362 PEN_CAPTURE_DEADLINE_NO_EVENTS.
+Collector5264/start311022 ran600.606s non-grabbing and ended at its registered
+deadline with0events/0frames/0trailing bytes, same331 boot25ff0ad0,65%24.0C
+GoodDischarging, no failed unit/new fault. No owner pen interaction occurred;
+therefore physical pen input is incomplete, neither pass nor driver failure.
+Terminal/final-health/raw-empty evidence retained; future fresh scope needed for
+hover/tap/grid/button/pressure/release. No restart/unload/flash/reboot/charging.
+Full port active;348grantunused/finalexact331TWRP.
+
 2026-10-08 Test362 REGISTERED_FEDORA_WEZ01_S_PEN_ONE_LOAD.
 Same33125ff0ad0/currentGNOME+touch accepted,67%25.9C GoodDischarging/client6-0056
 unbound. Fedoraab123e7d remoteHEADunchanged; optional external WEZ01 module with

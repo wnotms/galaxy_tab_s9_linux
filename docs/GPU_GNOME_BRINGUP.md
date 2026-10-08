@@ -206,7 +206,8 @@ Build/ABI qualification is not physical input acceptance.
 
 Test362 now performed one normal load after pushed registration:6-0056 bound,
 controller query0x4018/pressure4095 and event5 classified as tablet. GNOME/touch/
-SSH remain healthy in the same331 boot. Bounded600s pen-only capture is live
-PID5264; owner input/coordinate confirmation pending, not inferred from probe.
-No permanent loading service was installed. See Test362 RESULTS and eventual
-raw/terminal records for the final input status; do not restart this observer.
+SSH remain healthy in the same331 boot. The bounded600s pen-only capture reached
+its deadline with no events because no owner pen interaction occurred; this is an
+evidence gap, not a functional failure. No permanent loading service was
+installed. A future physical scope must capture hover, tip, pressure, button and
+release before claiming S Pen input acceptance.
