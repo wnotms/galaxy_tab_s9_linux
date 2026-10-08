@@ -1,0 +1,25 @@
+test_apply_preserves_sources_and_records_before_write (test_keyboard_driver_mapping.MappingTests.test_apply_preserves_sources_and_records_before_write) ... ok
+test_bad_readback_restores_options (test_keyboard_driver_mapping.MappingTests.test_bad_readback_restores_options) ... ok
+test_changed_boot_after_write_never_blindly_restores (test_keyboard_driver_mapping.MappingTests.test_changed_boot_after_write_never_blindly_restores) ... ok
+test_empty_array_and_malformed_values (test_keyboard_driver_mapping.MappingTests.test_empty_array_and_malformed_values) ... ok
+test_exact_identity_rejects_old_notes_and_new_boot (test_keyboard_driver_mapping.MappingTests.test_exact_identity_rejects_old_notes_and_new_boot) ... ok
+test_identity_failure_does_not_write (test_keyboard_driver_mapping.MappingTests.test_identity_failure_does_not_write) ... ok
+test_interim_restoration_is_idempotent (test_keyboard_driver_mapping.MappingTests.test_interim_restoration_is_idempotent) ... ok
+test_native_removes_only_interim_option (test_keyboard_driver_mapping.MappingTests.test_native_removes_only_interim_option) ... ok
+test_private_and_existing_bus_commands_drop_root_bus (test_keyboard_driver_mapping.MappingTests.test_private_and_existing_bus_commands_drop_root_bus) ... ok
+test_already_loaded_bound_input_needs_no_insmod (test_wacom_wez01_loader.PenLoaderTests.test_already_loaded_bound_input_needs_no_insmod) ... ok
+test_bad_temperature_is_error_for_qualified_kernel (test_wacom_wez01_loader.PenLoaderTests.test_bad_temperature_is_error_for_qualified_kernel) ... ok
+test_charging_experiment_skips (test_wacom_wez01_loader.PenLoaderTests.test_charging_experiment_skips) ... ok
+test_loader_source_has_no_force_or_firmware_operations (test_wacom_wez01_loader.PenLoaderTests.test_loader_source_has_no_force_or_firmware_operations) ... ok
+test_unbound_client_is_ready_after_safety_gate (test_wacom_wez01_loader.PenLoaderTests.test_unbound_client_is_ready_after_safety_gate) ... ok
+test_unqualified_kernel_skips_without_reading_module (test_wacom_wez01_loader.PenLoaderTests.test_unqualified_kernel_skips_without_reading_module) ... ok
+test_bound_pair_is_only_accepted_for_post_load_poll (test_wacom_palm_loader.PalmLoaderTests.test_bound_pair_is_only_accepted_for_post_load_poll) ... ok
+test_existing_ordinary_touch_is_never_replaced (test_wacom_palm_loader.PalmLoaderTests.test_existing_ordinary_touch_is_never_replaced) ... ok
+test_source_orders_pen_before_touch_and_has_no_force_load (test_wacom_palm_loader.PalmLoaderTests.test_source_orders_pen_before_touch_and_has_no_force_load) ... ok
+test_unbound_exact_pair_is_ready (test_wacom_palm_loader.PalmLoaderTests.test_unbound_exact_pair_is_ready) ... ok
+test_unqualified_and_charging_boots_skip (test_wacom_palm_loader.PalmLoaderTests.test_unqualified_and_charging_boots_skip) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.020s
+
+OK

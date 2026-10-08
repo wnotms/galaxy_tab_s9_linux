@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_KEYBOARD_BUNDLE_AND_MAPPING_HOST_READY_NOT_DEPLOYED.
+Next sensor candidate now assembled from compiled Escape-driver kernel and exact
+accepted early-ADSP vendor_boot; new boot AVB/payload/headers verified. Requalified
+existing pen/palm source+binary+67 imported CRCs against current provider, generated
+new-notes loaders with AST-only PROFILE delta; 12 real-artifact mock gates PASS.
+Mapping transition helper removes only interim XKB on exact new kernel, restores
+it on exact331, preserves user sources/options and supports text-before-GNOME bus.
+20 affected host tests PASS/0skip. First offline header-field typo STOP preserved;
+corrected report succeeds, no gate waived. No flash/reboot/rootfs/SSC/ADSP/PPS/pump.
+Test366 runner/namespace recovery/trace integration and registration still pending;
+next physical MUST include keyboard per owner, default GNOME restored at endpoint.
+Current device baseline unchanged by this work; sensors/full port remain incomplete.
+Evidence: reference/desktop-bringup/ssc-keyboard-candidate/.
+
+
 2026-10-08 SSC_FAILURE_SOURCE_AUDIT_AND_TRACE_RECOVERY_HOST_READY.
 Same33178ec1906/authWiFi.210/offlineADSP read-onlyvendorRFSAinventory66entries:
 nooemconfig inbounded3roots, mount/loopremoved; stockDSPmanifestalsonoentry.

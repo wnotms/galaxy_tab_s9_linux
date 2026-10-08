@@ -1,5 +1,17 @@
 # EF-DX710 Esc preference in GNOME Wayland
 
+The compiled native driver candidate supersedes this option only after a
+registered deployment. `select-driver.py native --boot-id ... --evidence ...`
+removes just `gts9:swap_escape_grave` on the exact new kernel; `interim` restores
+it on exact Test331 rollback. Run before the candidate's first GNOME login to
+avoid two swaps cancelling each other. The helper preserves unrelated options
+and input sources, saves/readbacks settings, and can use a private user session
+bus on a controlled text boot. It is host-tested but not yet device-tested.
+Package the existing `evdev` and `gts9` files beside it for interim restoration
+validation. The next registration must integrate both paths; preparation alone
+does not change the installed mapping. Qualification is recorded in
+`reference/desktop-bringup/ssc-keyboard-candidate/`.
+
 The owner's normal top-left key emits grave; Fn+Esc provides Escape. The
 `gts9:swap_escape_grave` option swaps the corresponding XKB ESC and TLDE keys.
 Plain Esc then cancels, Fn+Esc enters grave (`), Shift+Fn+Esc enters tilde (~).
