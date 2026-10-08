@@ -99,6 +99,16 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 OWNER_SENSOR_FIRST_THEN_HIGHER_POWER_SOURCE_COMPARISON.
+Ownerasksfinishsensors thencharge;1.8A isPPSinput/rawstopbringupcap, notpack
+current orhardwaremaximum. SameX710FedoraHEADab123e7d unchanged/default3A,
+initial1.8A/+300mAHWmargin. VendorX710ci_gl+300(+600minimum) andneed_to_sw_ocp=1;
+no calibratedADC/controltoleranceproof. Sourcehashes/lines savedincharging/
+test348-current-margin. No current/driver/devicechange;do notrelabel348STOP.
+Charging architecture/gaps nowreflect actual348firstfailure/331Debianendpoint.
+SSCnativekernel+paircompiledoffline;controlledruntimepending/fullportactive.
+
+
 2026-10-08 SSC_BUILD_IMPORT_ISOLATED_HOST_SOURCE_VALIDATION_PASS.
 CombineddiscoveryGNOMEpreparecache caused6SSCerrors. Exact siblingSSCmodule
 load/uniqueidentity fixes it; cachedwrongmodule regression added.125affected

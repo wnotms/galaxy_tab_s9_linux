@@ -1,0 +1,108 @@
+{
+  "kind": "source_review_only_no_limit_change",
+  "fedora_local_revision": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "fedora_remote_head": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "sources": {
+    "/home/ms/Samsung/gts9wifi-fedora-linux/kernel/files/sm5440_direct.c": {
+      "sha256": "278d44ccc66044acf8f3376aa8d34f65ec8bcae02e1c9d1ce18c0738515f25e0",
+      "selected_lines": [
+        {
+          "line": 84,
+          "text": "#define SM5440_INITIAL_IBUS_MA\t\t1800"
+        },
+        {
+          "line": 95,
+          "text": "#define SM5440_MAX_PPS_MA\t\t3000"
+        },
+        {
+          "line": 97,
+          "text": "#define SM5440_MIN_PPS_MA\t\t1800"
+        },
+        {
+          "line": 99,
+          "text": "#define SM5440_IBUS_MARGIN_MA\t\t300"
+        },
+        {
+          "line": 103,
+          "text": "static unsigned int max_pps_ma = SM5440_MAX_PPS_MA;"
+        },
+        {
+          "line": 205,
+          "text": "return raw < 0 ? raw : (raw * 625) / 1000;"
+        },
+        {
+          "line": 274,
+          "text": "* (ibuslim = ci_gl + SM5440_CI_OFFSET).  IBUSCNTL encodes 50 mA per step up to"
+        },
+        {
+          "line": 279,
+          "text": "int limit = clamp_val(ma + SM5440_IBUS_MARGIN_MA, 0, 6350);"
+        },
+        {
+          "line": 299,
+          "text": "int ma = clamp_val(max_pps_ma, SM5440_MIN_PPS_MA, SM5440_PPS_CAP_MA);"
+        },
+        {
+          "line": 306,
+          "text": "for (; ma >= SM5440_MIN_PPS_MA; ma -= SM5440_PPS_STEP_MA) {"
+        },
+        {
+          "line": 572,
+          "text": "SM5440_WRITE(SM5440_REG_IBUSCNTL, SM5440_INITIAL_IBUS_MA / 50);"
+        },
+        {
+          "line": 648,
+          "text": "clamp_val(target_ma + SM5440_IBUS_MARGIN_MA, 0, 6350));"
+        }
+      ]
+    },
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.c": {
+      "sha256": "b9ba8a706baf5b3fd1310e2ea875b99ee74636091f26f23944ec5151e890fcf6",
+      "selected_lines": [
+        {
+          "line": 1123,
+          "text": "ibuslim = ci_gl + SM5440_CI_OFFSET * 2;"
+        },
+        {
+          "line": 1125,
+          "text": "ibuslim = ci_gl + SM5440_CI_OFFSET;"
+        },
+        {
+          "line": 1761,
+          "text": "pps_dc->config.need_to_sw_ocp = 1;           /* SM5440 can't used HW_OCP, please keep it. */"
+        }
+      ]
+    },
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/battery/charger/sm5440_charger/sm5440_charger.h": {
+      "sha256": "b42dde16d4c7dc9b0e3de2b688919e8b7131f3033246c3793466aa3704da50f5",
+      "selected_lines": [
+        {
+          "line": 19,
+          "text": "#define SM5440_CI_OFFSET        300"
+        }
+      ]
+    },
+    "/home/ms/Samsung/kernel_platform/msm-kernel/arch/arm64/boot/dts/samsung/galaxytab/gts9wifi/gts9wifi_eur_open_w00_r04.dts": {
+      "sha256": "f2b9f8030015c7e3c5079b9e7618448b527cba7de2c1f050fb653d82f5a6b909",
+      "selected_lines": [
+        {
+          "line": 574,
+          "text": "battery,pd_charging_charge_power = <0x3a98>;"
+        },
+        {
+          "line": 575,
+          "text": "battery,max_charging_current = <0xc4e>;"
+        },
+        {
+          "line": 589,
+          "text": "battery,max_input_current = <0xbb8>;"
+        }
+      ]
+    }
+  },
+  "observed_stop_uA": 1811875,
+  "registered_stop_uA": 1800000,
+  "hardware_setpoint_mA": 1700,
+  "physical_calibration_verified": false,
+  "device_operations": []
+}
