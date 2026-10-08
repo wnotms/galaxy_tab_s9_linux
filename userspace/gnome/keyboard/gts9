@@ -1,0 +1,7 @@
+// EF-DX710 reports the plain top-left key as KEY_GRAVE and Fn as KEY_ESC.
+// User preference: plain Esc cancels; Fn+Esc produces grave, Shift+Fn+Esc tilde.
+partial alphanumeric_keys
+xkb_symbols "swap_escape_grave" {
+    replace key <TLDE> { type[Group1] = "ONE_LEVEL", symbols[Group1] = [ Escape ] };
+    replace key <ESC> { type[Group1] = "TWO_LEVEL", symbols[Group1] = [ grave, asciitilde ] };
+};
