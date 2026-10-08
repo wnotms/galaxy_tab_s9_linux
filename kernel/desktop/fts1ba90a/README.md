@@ -21,6 +21,13 @@ unavailable until that separate driver is ported. Controller-classified palms
 are still rejected. The double-tap-to-wake sysfs toggle defaults off; this
 preparation does not enable it or test suspend.
 
+An opt-in paired build is described by `Makefile.palm`. It compiles the same
+FTS source with the Wacom implementation selected and supplies the Wacom
+module's `Module.symvers` through `KBUILD_EXTRA_SYMBOLS`; the resulting FTS
+module imports `wacom_wez01_should_suppress_touch` and must be loaded after the
+Wacom module. This separate artifact does not alter the accepted touch module
+or resolved kernel configuration.
+
 Build only into an output directory, using an identified prepared ARM64 kernel
 provider with matching config, generated headers and Module.symvers:
 

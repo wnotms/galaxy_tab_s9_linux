@@ -160,6 +160,15 @@ int last_command(void) { return ncommands?commands[ncommands-1]:-1; }
         self.assertEqual(header['imported_sha256'],header['upstream_sha256'])
         self.assertFalse(manifest['default_kernel_integration'])
 
+    def test_paired_touch_build_is_opt_in_and_imports_wacom_helper(self):
+        makefile = (DRIVER.parent / 'fts1ba90a' / 'Makefile.palm').read_text()
+        self.assertIn('CONFIG_TOUCHSCREEN_WACOM_WEZ01_MODULE=1', makefile)
+        self.assertNotIn('CONFIG_TOUCHSCREEN_WACOM_WEZ01_MODULE=1',
+                         (DRIVER.parent / 'fts1ba90a' / 'Makefile').read_text())
+        versions = (ROOT / 'reference/desktop-bringup/wacom-wez01-offline/palm-touch-module-versions.txt').read_text()
+        self.assertIn('wacom_wez01_should_suppress_touch', versions)
+        self.assertIn('module_layout', versions)
+
     def test_pen_hover_big_endian_swap_inversion_and_signed_tilt(self):
         v=self.feed();self.assertEqual(v[:10],[1,0,0,0,2000,13752,1234,12,-5,6])
         self.assertEqual(v[10:15],[1,1,1,0,1])

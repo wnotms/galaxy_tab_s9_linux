@@ -1,0 +1,4 @@
+# Separate opt-in build: link the FTS module to the optional Wacom module.
+# The default Makefile deliberately keeps the existing touch stub.
+obj-m += fts1ba90a.o
+ccflags-y += -I$(src)/include -DCONFIG_TOUCHSCREEN_WACOM_WEZ01_MODULE=1
