@@ -1,0 +1,7 @@
+# Test356 — short-press regression passed
+
+Exact331 newboot1adc0f13-a210-4856-bb15-c6e9df17867a remains. New schema default installed and compiled; ms and Debian-gdm effective GNOME power-button-action both verified as nothing. Both previously had no explicit dconf value (saved raw). Existing logind ignore and gts9-power-key backlight handler are unchanged. GNOME restarted once and remains active with all3persistentautostartmasks restored without --now.
+
+Initial10.140s health check: SSH responsive, no new kernel fault/failed system unit; pack82%,32.1°C,Good/Discharging. No touch driver loaded, kernel/config/DT/modules/charging change, flash/reboot or PPS/pump activation. Raw application commands, dconf values, journals and hashes retained in raw-apply.tar.gz. Owner confirmed “熄屏再亮屏，桌面正常”. Fresh authenticated SSH confirms unchanged boot ID, active GDM/backlight helper; journal records two short power-key events and no poweroff request. This proves the bounded physical short-press regression; long hold, suspend and long-duration reliability are not covered.
+
+One affected test compiled the actual Debian48.1 schema, confirmed power-button-action=nothing and unchanged other power settings. Kernel build/full regression executed:false; no routing or kernel-input change. Test348's sole20minute grant remains unused, desktop inactive/fresh admission before any future charging scope; final exact331/TWRP unchanged.

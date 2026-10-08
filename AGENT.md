@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test356 SHORT_PRESS_REGRESSION_PASS.
+Owner“熄屏再亮屏，桌面正常”; authenticated same1adc0f13/GDM/backlighthelper
+active, two short-key events/noPowerOff in new journal. GNOME nothing policy
+restores existingbacklight ownership; no logind/kernel/charging changes.
+Desktop staysactive, touch not loaded. Next fresh touchregistration onthisboot.
+
+2026-10-08 Test356 GNOME_POLICY_APPLIED_AWAITING_SHORT_PRESS_CONFIRMATION.
+GNOME default plus ms/greeter effective nothing verified, prior explicit values
+both absent, saved raw. Same3311adc0f13, GDMone10.140s PASS/leftactive/masked,
+SSH responsive/zero new kernelfault or failedunits,82%32.1C Good. Existing
+logindignore/backlighthelper untouched. Owner asked two short presses; physical
+pass not yet claimed. No touch/flash/reboot/charging.1real-schema testPASS,
+fulltests/build:false;348unused and freshdesktopinactive admission/finalTWRP.
+
 2026-10-08 Test356 REGISTERED_GNOME_POWER_KEY_NOTHING.
 Fix only GNOME48.1 VM-non-nothing shutdown path: schema default plus ms/greeter
 power-button-action=nothing; save exact old explicit dconf values. Same331new
