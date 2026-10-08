@@ -1,0 +1,53 @@
+{
+  "verdict": "OFFLINE_TOUCH_MODULE_COMPILED_NOT_LOADED",
+  "driver_source_commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "source_byte_identical": true,
+  "driver_directory": "kernel/desktop/fts1ba90a",
+  "kernel_provider": ".work/build/linux-out-x710-308-passive",
+  "provider_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "provider_symvers_sha256": "4781ff5d1f2fd060688496e2f1056568e6b3383c9eddb3291fcea4414797679d",
+  "module": {
+    "path": "out/gnome-trixie-arm64/touch-module/fts1ba90a.ko",
+    "sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+    "bytes": 441776,
+    "machine": "AArch64",
+    "consumed_symbol_crcs_match": 37,
+    "wacom_external_dependency": false
+  },
+  "build": {
+    "executed": true,
+    "returncode": 0,
+    "seconds": 5.107241820998752,
+    "W": 1,
+    "warnings": 0
+  },
+  "host_tests": {
+    "executed": true,
+    "tests": 8,
+    "failures": 0,
+    "seconds": 0.291,
+    "coverage": "actual imported C touch/gesture decoding; host input call capture"
+  },
+  "protected_inputs_unchanged": true,
+  "config_diff": {},
+  "DTB_diff": [],
+  "default_kernel_integration": false,
+  "full_kernel_build": {
+    "executed": false,
+    "reason": "External module only; frozen charging kernel unchanged"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "Affected decoder tests and module compilation; no routing change"
+  },
+  "sparse": {
+    "executed": false,
+    "reason": "sparse executable unavailable; W=1 build recorded"
+  },
+  "device_load": {
+    "executed": false
+  },
+  "device_writes": false,
+  "physical_acceptance": false,
+  "full_port_ready": false
+}

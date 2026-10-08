@@ -1,0 +1,14 @@
+{
+  "files": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/input/touchscreen/stm/fts1ba90a/fts_ts.c": "1bf335ab2b5e323a96201aa434d3593c0d6ad803f9570b2e75ea4b6e571a8825",
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/input/touchscreen/stm/fts1ba90a/fts_ts.h": "ad827f55af98f76df763a73ea6211be74a643c8b1a6b41cabe2202caf3b35d8a"
+  },
+  "protocol_crosscheck": [
+    "FTS_READ_ONE_EVENT=0x60",
+    "FTS_READ_ALL_EVENT=0x61",
+    "touch function=0x30",
+    "touch types normal0/glove3/palm5/wet6",
+    "reset=FA2000002481"
+  ],
+  "driver_source": "byte-identical Fedora same-model port, not Samsung framework import"
+}

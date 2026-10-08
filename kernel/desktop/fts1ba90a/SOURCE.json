@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/nacht20-de/gts9wifi-fedora-linux",
+  "commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "changes": "none; byte-identical driver and optional Wacom header",
+  "files": {
+    "fts1ba90a.c": {
+      "source": "kernel/files/fts1ba90a.c",
+      "sha256": "93ec9250a91f08e33b4d2ecb8f032a3061bb6a120f7f6626435694cc7ac09476",
+      "bytes": 18954
+    },
+    "include/linux/wacom_wez01.h": {
+      "source": "kernel/files/wacom_wez01.h",
+      "sha256": "8bce569cbb105e835a5e9282adbef9612abd97c4540e82a03648a953772caa13",
+      "bytes": 372
+    }
+  },
+  "default_kernel_integration": false,
+  "device_load_executed": false
+}

@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 X710 touch OFFLINE_MODULE_COMPILED_NOT_DEPLOYED.
+Byte-identical Fedoraab123e7d FTS1BA90A/header imported under kernel/desktop,
+outside defaultbuild. OptionalWacomstub used; noSpen/firmwareupdate. ARM64W1
+externalmodule compiled against qualified348provider, protectedfiles unchanged;
+eight actualC decoder tests PASS. No install/load/unload/devicewrite; samevermagic
+does not establish331acceptance. Touch/GNOME hardwarework follows348closure,
+frozen kernel/config/DT/modules remainunchanged. See desktop touchREADME/evidence.
+
 2026-10-08 GPU/GNOME HOST_PREPARED_NOT_DEPLOYED during Test348 discharge.
 Owner selected GNOME/touch and authorized reference to Fedora/S9U/Samsung.
 Read-only current331 inventory: adreno renderD128 and DPU DSI2560x1600 present;

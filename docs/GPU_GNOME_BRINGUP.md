@@ -22,7 +22,7 @@ under `/run`, inspected for firmware and unmounted; no partition was written.
 | GPU firmware | SQE/GMU/ZAP missing from rootfs | Install the three staged, pinned files |
 | Mesa | libgallium 25.0.7 installed; DRI/Vulkan missing | Install staged DRI and Turnip packages |
 | GNOME | No installed session or display manager | Install minimal session, controlled first start |
-| Touch | Existing DT already describes ST FTS1BA90A at i2c4/0x49; its driver is missing | Independent kernel integration and touch acceptance |
+| Touch | Existing DT describes ST FTS1BA90A at i2c4/0x49; optional Fedora module now compiled offline | Deployment, independent integration and touch acceptance |
 | Input fallback | EF-DX710 keyboard and power keys enumerated | No touchpad currently enumerated |
 
 DRM node presence does not prove hardware acceleration. The GMU has not yet been
@@ -108,10 +108,14 @@ in this inventory; do not equate it with Fedora's newer GNOME release.
    package-state delta. Do not touch charging, partitions or paired modules as
    a desktop recovery shortcut. End in the registered state.
 
-Touch is a separate, minimal same-model Fedora driver port; the DT node already
-exists. Its `linux/wacom_wez01.h` coordination dependency needs an explicit
-decision before import. Do not silently pull in S Pen or the whole Fedora patch
-queue to satisfy one include. No touch firmware update is planned.
+Touch is now prepared as a separate, byte-identical same-model Fedora external
+module in `kernel/desktop/fts1ba90a/`; the DT node already exists. The imported
+`linux/wacom_wez01.h` keeps its original optional false-returning stub while
+Wacom is unconfigured. No S Pen driver or wider Fedora patch queue is pulled
+in. The default build and Test348 inputs remain unchanged. The module compiled
+against the qualified Test348 provider with W=1 and passed eight actual-C
+decoder tests; it has not been installed or loaded. No touch firmware update
+is planned. See that directory's README and its separate offline evidence.
 
 ## Checks executed
 
