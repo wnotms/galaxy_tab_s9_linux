@@ -1,0 +1,8 @@
+{
+  "command": "python3 -m unittest discover -s reference/boot-tests/test-358-persistent-touch -p test_host.py -v",
+  "tests": 17,
+  "failures": 1,
+  "reason": "Test fixture called patch.get_original() after start, returning the mocked profile instead of the qualified profile; runtime gates unchanged. Test now snapshots the real profile before patching.",
+  "actual_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "incorrect_fixture_expected_sha256": "3d4f0e6a4fe97cd679247ee2ee2d471e84c0641412bbc5d09b53afb30b988c72"
+}

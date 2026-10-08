@@ -1,0 +1,22 @@
+test_ambiguous_or_missing_touch_client_is_error (test_host.TouchLoader.test_ambiguous_or_missing_touch_client_is_error) ... ok
+test_battery_sensor_invalid_or_hot_stops_new_load (test_host.TouchLoader.test_battery_sensor_invalid_or_hot_stops_new_load) ... ok
+test_boot_change_during_load_is_terminal (test_host.TouchLoader.test_boot_change_during_load_is_terminal) ... ok
+test_charging_opt_ins_skip_before_module_check (test_host.TouchLoader.test_charging_opt_ins_skip_before_module_check) ... ok
+test_current_qualification_matches_real_artifacts (test_host.TouchLoader.test_current_qualification_matches_real_artifacts) ... ok
+test_doubletap_or_loaded_unbound_module_is_error (test_host.TouchLoader.test_doubletap_or_loaded_unbound_module_is_error) ... ok
+test_loader_failure_or_timeout_is_terminal_without_retry (test_host.TouchLoader.test_loader_failure_or_timeout_is_terminal_without_retry) ... ok
+test_missing_and_corrupt_identity_skip_without_loading (test_host.TouchLoader.test_missing_and_corrupt_identity_skip_without_loading) ... ok
+test_one_normal_load_then_async_probe_ready (test_host.TouchLoader.test_one_normal_load_then_async_probe_ready) ... ok
+test_probe_timeout_has_no_reload_or_unload (test_host.TouchLoader.test_probe_timeout_has_no_reload_or_unload) ... ok
+test_qualified_existing_client_ignores_charger_same_address (test_host.TouchLoader.test_qualified_existing_client_ignores_charger_same_address) ... ok
+test_readonly_and_already_loaded_never_call_insmod (test_host.TouchLoader.test_readonly_and_already_loaded_never_call_insmod) ... ok
+test_real_systemd_unit_syntax (test_host.TouchLoader.test_real_systemd_unit_syntax) ... ok
+test_same_release_wrong_notes_or_config_is_skipped (test_host.TouchLoader.test_same_release_wrong_notes_or_config_is_skipped) ... ok
+test_unqualified_identity_never_calls_insmod (test_host.TouchLoader.test_unqualified_identity_never_calls_insmod) ... ok
+test_wrong_board_arch_or_release_is_skipped (test_host.TouchLoader.test_wrong_board_arch_or_release_is_skipped) ... ok
+test_wrong_module_hash_is_error (test_host.TouchLoader.test_wrong_module_hash_is_error) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.110s
+
+OK

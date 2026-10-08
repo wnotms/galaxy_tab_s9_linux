@@ -1,0 +1,13 @@
+[Unit]
+Description=Qualified X710 desktop touchscreen
+After=local-fs.target systemd-udevd.service
+Before=gdm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/gts9-touch --load
+RemainAfterExit=yes
+TimeoutStartSec=20
+
+[Install]
+WantedBy=gdm.service
