@@ -1,5 +1,37 @@
 # SM5714 / SM5440 transaction and fallback contract
 
+## Current hardware path — 2026-10-08
+
+The transaction principles below remain relevant, but the dated Test256–314
+implementation/deployment descriptions are historical. Current hardware work
+uses the Fedora-derived `sm5440-fedora.c`, not an unqualified replacement for
+the earlier native engine. See [architecture](X710_CHARGING_ARCHITECTURE.md).
+
+[Accepted Test345 evidence](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md)
+proves one bounded short handoff/refresh/exit: fixed9 admission and source-bound
+lease; switching inhibition; physicalOFF and>=3parked-zero samples spanning
+>=100ms; PPS/physicalVBUSsettle/ON; five parked refreshes; one final<=2s refresh
+reservation deferral without deadline extension; native complete/lease0;
+OFF/unbound and verified fixed9 return; subsequent ordinary charge/discharge.
+Exact331 boot/original181 were restored. This is bounded evidence, not physical
+protection calibration, hard-realtime cutoff or every fault/PM branch acceptance.
+
+[Test346](../reference/boot-tests/test-346-bounded-pps-five-minute/README.md)
+reuses the same current/protection/thermal/fault/PM/lease behavior. Its separately
+qualified immutable selector admits300000ms only with exclusive one-shot mode;
+unknown/mixed modes fail beforeI2C. The new runner requires the exact duration
+from cmdline/sysfs/native journal, follows the enrolled guardian PID and never
+restarts after fault, completion or observation timeout. It remains unauthorized
+and undeployed. Any later actual non-clean attempt requires OFF/fixed verification
+and exact331 restoration, with primary failure and cleanup result kept separate.
+
+Lock/epoch, PM drain and fail-closed principles below are not waived. Ordinary
+SM5714 ceilings5V<=1.8A/9V<=1.5A and float4.44V remain fixed. An approved APDO
+is not permission to raise input current. Source detach/reset invalidates old
+capabilities and ownership; no old lease may restore a contract on a new attach.
+
+## Historical offline Stage3C design and implementation notes
+
 This is an offline Stage3C design. It does not enable direct charging. The
 vendor audit and unresolved hardware OCP/ADC requirements are entry gates.
 Fixed Stage2 remains the installed fallback and primary build profile.

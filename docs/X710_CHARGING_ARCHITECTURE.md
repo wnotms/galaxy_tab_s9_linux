@@ -1,5 +1,36 @@
 # X710 mainline charging architecture
 
+## Current implementation and acceptance — 2026-10-08
+
+[AGENT.md](../AGENT.md) is authoritative for current deployment and work status.
+The implementation now uses the same-model Fedora-derived
+`kernel/drivers/sm5440-fedora.c` with this repository's source/lease, thermal,
+physical-measurement, bounded worker and fail-closed restoration gates.
+The earlier custom native/offline engines below are historical alternatives,
+not the current active candidate. Stock Linux TCPM remains the PD/PPS protocol
+owner; the TCPC does not duplicate Samsung's private PD state machine.
+
+| Layer or scope | Actual evidence | Remaining scope |
+| --- | --- | --- |
+| SM5714 ordinary/fixed charging | Accepted Test331 boot and paired181 modules; fixed5V<=1.8A/9V<=1.5A, float4.44V and thermal/suspend gates retained | Fresh identity and boot attribution are required for a later deployment |
+| Fedora-derived conservative PPS/pump | [Test345 physical results](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md): one<=30s attempt, hardware1700mA/PPS+raw1800mA, five refreshes, native completion, verified fixed9 return, ordinary charge/discharge and exact331 restoration | No longer-duration or higher-current acceptance follows from this short run |
+| Immutable bounded-duration candidate | [Offline qualification](../reference/charging/test345-duration-followup/RESULTS.md), source5c90a4b5:79actual-C tests/build/W=1+sparse; resolved config/DT unchanged from331; matching module archive required | Only30s(default) or300s exclusive one-shot profiles; default pumpOFF, no runtime deadline extension/restart |
+| Independent300s runner | [Test346 registration](../reference/boot-tests/test-346-bounded-pps-five-minute/README.md):32affected host tests, expected-duration/native proof binding, original-PID observation, unconditional331 restoration | Explicit300s owner authorization, fresh preflight and physical acceptance pending; not deployed |
+| Full/vendor-equivalent charging | **NOT_READY** |20min, higher current, independent ADC/current calibration and protection/cutoff guarantees remain unproven |
+
+Ordinary fixed limits are independent of PPS/APDO capability. Test346 hardware
+setpoint remains1700mA and PPS request/raw-current stop1800mA; no2A/3A or45W
+claim. APDO voltage limits are the independently registered PPS policy, not
+permission to extend ordinary fixed PDOs beyond5V/9V. No new SM5714/TCPM/DTS,
+USB/adbd, DCC, CPU or rootfs change accompanies the duration runner.
+
+Do not treat an old document's next-step text as authorization, current device
+identity or a live deployment gate. The current registered runner and fresh
+readbacks govern physical work. The historical sections below retain design,
+lock and safety rationale but their dated deployment statements are superseded.
+
+## Historical implementation notes and design (Test256–326)
+
 Current owner direction (2026-10-06): use the same-model Fedora charging source.
 The separately built `sm5440-fedora.c` ports its real continuous ADC/PPS/pump
 worker, adapted to the existing source/lease APIs and1.8A initial cap. See
