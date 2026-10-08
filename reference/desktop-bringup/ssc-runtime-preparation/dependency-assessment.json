@@ -1,0 +1,129 @@
+{
+  "device_boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+  "missing_dependencies": [
+    "libprotobuf-c1",
+    "libqrtr1"
+  ],
+  "checks": [
+    {
+      "package": "libssc2",
+      "dependency": "libc6 (>= 2.34)",
+      "available_version": "2.41-12+deb13u4",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "libssc2",
+      "dependency": "libglib2.0-0t64 (>= 2.80.0)",
+      "available_version": "2.84.4-3~deb13u5",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "libssc2",
+      "dependency": "libprotobuf-c1 (>= 1.0.1)",
+      "available_version": null,
+      "source": "missing",
+      "satisfies": false
+    },
+    {
+      "package": "libssc2",
+      "dependency": "libqmi-glib5 (>= 1.34.0)",
+      "available_version": "1.36.0-1",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "libssc2",
+      "dependency": "libqmi-proxy",
+      "available_version": "1.36.0-1",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "libssc2",
+      "dependency": "libqrtr-glib0 (>= 1.0.0)",
+      "available_version": "1.2.2-1+b2",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "gts9-hexagonrpc",
+      "dependency": "libc6 (>= 2.34)",
+      "available_version": "2.41-12+deb13u4",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "gts9-hexagonrpc",
+      "dependency": "systemd",
+      "available_version": "257.13-1~deb13u1",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "pd-mapper",
+      "dependency": "libc6 (>= 2.34)",
+      "available_version": "2.41-12+deb13u4",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "pd-mapper",
+      "dependency": "liblzma5 (>= 5.1.1alpha+20120614)",
+      "available_version": "5.8.1-1+deb13u1",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "pd-mapper",
+      "dependency": "libqrtr1 (>= 0.3)",
+      "available_version": null,
+      "source": "missing",
+      "satisfies": false
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "libc6 (>= 2.38)",
+      "available_version": "2.41-12+deb13u4",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "libglib2.0-0t64 (>= 2.68.0)",
+      "available_version": "2.84.4-3~deb13u5",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "libgudev-1.0-0 (>= 234)",
+      "available_version": "238-6",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "libpolkit-gobject-1-0 (>= 0.99)",
+      "available_version": "126-2",
+      "source": "installed",
+      "satisfies": true
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "libssc2 (>= 0.4.4+gts9.1)",
+      "available_version": "0.4.4+gts9.1",
+      "source": "prepared-candidate",
+      "satisfies": true
+    },
+    {
+      "package": "iio-sensor-proxy",
+      "dependency": "udev",
+      "available_version": "257.13-1~deb13u1",
+      "source": "installed",
+      "satisfies": true
+    }
+  ],
+  "device_installation": false
+}

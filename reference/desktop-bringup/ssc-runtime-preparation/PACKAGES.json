@@ -1,0 +1,135 @@
+{
+  "verdict": "DEBIAN_ARM64_PACKAGES_NOT_DEPLOYED",
+  "device_operations": false,
+  "installed": false,
+  "qualified_build_sha256": "68ba971fb677272c8167925d9b1138815677d6cdf4264f8c8ca5088b3ce074a6",
+  "recipe_sha256": "67bb8f7c52031a58289dc1d7d904e0fa9534e2821e1c55e90dc4cc13813e6abc",
+  "packages": {
+    "libssc2": {
+      "version": "0.4.4+gts9.1",
+      "depends": "libc6 (>= 2.34), libglib2.0-0t64 (>= 2.80.0), libprotobuf-c1 (>= 1.0.1), libqmi-glib5 (>= 1.34.0), libqmi-proxy, libqrtr-glib0 (>= 1.0.0)",
+      "filename": "libssc2_0.4.4+gts9.1_arm64.deb",
+      "sha256": "729be835b575ac42afa5568335e4aaa9131cde095a72ed91315cf96ff0d2769a",
+      "bytes": 47036,
+      "payload_files": {
+        "usr/bin/ssccli": "b33a7401fa35e87bd6d82e3ffc6f217cc28905eae72aa87c82f78447473b61ea",
+        "usr/lib/aarch64-linux-gnu/libssc.so.2": "612ae69d03bb40c507db7368225e4dfa22c1090f1ac867399789561c25261194",
+        "usr/share/doc/libssc2/copyright": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+      },
+      "control_files": [
+        "control",
+        "triggers"
+      ]
+    },
+    "gts9-hexagonrpc": {
+      "version": "0.4.0+gts9.1",
+      "depends": "libc6 (>= 2.34), systemd",
+      "filename": "gts9-hexagonrpc_0.4.0+gts9.1_arm64.deb",
+      "sha256": "d9a004cf836b7fb85032154f0949b98b79e8d7904eff04481e2d6795b90109a4",
+      "bytes": 31896,
+      "payload_files": {
+        "usr/bin/hexagonrpcd": "9db7e7c2537bd71535dced100cafb339c1aeada0defdbe0d58bc0cb33e7cf7ed",
+        "usr/lib/aarch64-linux-gnu/libhexagonrpc.so.0.4": "1be44d2fe0c9b5ca785ef27730fba586a7f678f82f91cfbfb01613b3dad76f6e",
+        "usr/lib/systemd/system/hexagonrpcd-adsp-rootpd.service": "0a1452d20e48f4b58c342ae985e802b84445046dbdb9801f573af34857bfe2aa",
+        "usr/lib/systemd/system/hexagonrpcd-adsp-sensorspd.service": "6fb0c7503f18b3a58027cb0dbb40e163be9cee7168e81622763cac8c8ad95494",
+        "usr/lib/systemd/system/hexagonrpcd-sdsp.service": "4cc2248b2491fa59a967a0a3d637bed8a386ae696322c3d5ae455fdf0559fa75",
+        "usr/lib/sysusers.d/gts9-fastrpc.conf": "099df0080af3e5e3173889cd885037cc371fb5a03bccb18b88fe6a905363c55e",
+        "usr/lib/udev/rules.d/10-fastrpc.rules": "41dfc4e8c4fd88f461a5a6e4a4e86849eb302f8bcb2b5ce2efa9690f5415d52d",
+        "usr/share/doc/gts9-hexagonrpc/copyright": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "usr/share/man/man1/hexagonrpcd.1": "a27b06f62256d82db65c8065794d6238bb75a37e480441ddd09d7346c39effd9"
+      },
+      "control_files": [
+        "control",
+        "triggers"
+      ]
+    },
+    "pd-mapper": {
+      "version": "1.1+gts9.1",
+      "depends": "libc6 (>= 2.34), liblzma5 (>= 5.1.1alpha+20120614), libqrtr1 (>= 0.3)",
+      "filename": "pd-mapper_1.1+gts9.1_arm64.deb",
+      "sha256": "fdaae442b8e11dc11cf87a31a54db9f70f25adf2205adcccbd2ca73885f6f096",
+      "bytes": 29968,
+      "payload_files": {
+        "usr/bin/pd-mapper": "6702492589aaebf891402167177854c93e0019e30cc95c464c17befbcb1f3a42",
+        "usr/lib/systemd/system/pd-mapper.service": "d41c52a71e5832eb724904d65715d07b3024a6af97c0fced30615016cbdc5b9b",
+        "usr/share/doc/pd-mapper/copyright": "7dee823e01767086947374629f3a5d03870c8c487d81f28e754eb2643f634362"
+      },
+      "control_files": [
+        "control"
+      ]
+    },
+    "iio-sensor-proxy": {
+      "version": "3.9+gts9.1",
+      "depends": "libc6 (>= 2.38), libglib2.0-0t64 (>= 2.68.0), libgudev-1.0-0 (>= 234), libpolkit-gobject-1-0 (>= 0.99), libssc2 (>= 0.4.4+gts9.1), udev",
+      "filename": "iio-sensor-proxy_3.9+gts9.1_arm64.deb",
+      "sha256": "7a57f42464ae94ac1dff7af938d6d415a129b3868414bc1147f4913a39072081",
+      "bytes": 48548,
+      "payload_files": {
+        "usr/bin/monitor-sensor": "b36fb14a213d42e74018fa94c50937ab3ca5fb06cdf16889c6cfc5c311127583",
+        "usr/lib/systemd/system/iio-sensor-proxy.service": "c95c921c82fffbd340fa68f2c32c7959b0b7fb0ad2a3ca6e5d9978958ba04922",
+        "usr/lib/udev/rules.d/80-iio-sensor-proxy.rules": "3d50c919f17e5140921fd6629f7d51ed89daef3a345e6ebaf70610c6299397d6",
+        "usr/libexec/iio-sensor-proxy": "64c7b98e76be330da7350abe67e6043c055324c0aeb68d1422f1a2fbd2aff88c",
+        "usr/share/dbus-1/system.d/net.hadess.SensorProxy.conf": "33c9d5ee47c839a640ce549c57ef91b85ccab7dd4a8097c3225662655030fb25",
+        "usr/share/doc/iio-sensor-proxy/copyright": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "usr/share/polkit-1/actions/net.hadess.SensorProxy.policy": "035194978c2d9f3ca53af81e1936334ffd97f6efeabdf44420f52e74dc8fcea9"
+      },
+      "control_files": [
+        "control"
+      ]
+    }
+  },
+  "excluded_build_files": [
+    "usr/include/libssc/libssc-sensor-accelerometer.h",
+    "usr/include/libssc/libssc-sensor-compass.h",
+    "usr/include/libssc/libssc-sensor-gyroscope.h",
+    "usr/include/libssc/libssc-sensor-light.h",
+    "usr/include/libssc/libssc-sensor-magnetometer.h",
+    "usr/include/libssc/libssc-sensor-proximity.h",
+    "usr/include/libssc/libssc-sensor.h",
+    "usr/include/libssc/libssc-version-private.h",
+    "usr/include/libssc/libssc.h",
+    "usr/include/libssc/ssc-common.pb-c.h",
+    "usr/include/libssc/ssc-sensor-accelerometer.pb-c.h",
+    "usr/include/libssc/ssc-sensor-gyroscope.pb-c.h",
+    "usr/include/libssc/ssc-sensor-light.pb-c.h",
+    "usr/include/libssc/ssc-sensor-magnetometer.pb-c.h",
+    "usr/include/libssc/ssc-sensor-proximity.pb-c.h",
+    "usr/include/libssc/ssc-sensor-rotationvector.pb-c.h",
+    "usr/include/libssc/ssc-sensor-suid.pb-c.h",
+    "usr/lib/aarch64-linux-gnu/pkgconfig/libssc.pc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/qmi.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_common_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_accelerometer_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_gyroscope_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_light_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_magnetometer_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_proximity_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_rotationvector_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/__pycache__/ssc_sensor_suid_pb2.cpython-313.pyc",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-accelerometer.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-light.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-magnetometer.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-no-sample-rate.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-proximity.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-registry.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-rotationvector.json",
+    "usr/lib/python3/dist-packages/ssc_server/data/sensor-unavailable.json",
+    "usr/lib/python3/dist-packages/ssc_server/qmi.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_common_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_accelerometer_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_gyroscope_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_light_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_magnetometer_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_proximity_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_rotationvector_pb2.py",
+    "usr/lib/python3/dist-packages/ssc_server/ssc_sensor_suid_pb2.py",
+    "usr/libexec/hexagonrpc/chrecd",
+    "usr/libexec/installed-tests/libssc/ssc-server",
+    "usr/share/doc/gts9-ssc-sources/hexagonrpc/COPYING",
+    "usr/share/doc/gts9-ssc-sources/iio-sensor-proxy/COPYING",
+    "usr/share/doc/gts9-ssc-sources/libssc/LICENSE",
+    "usr/share/doc/gts9-ssc-sources/pd-mapper/LICENSE"
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "filename": "libprotobuf-c1_1.5.1-1_arm64.deb",
+    "bytes": 19624,
+    "sha256": "6c34790825abb19889f351938430a1e3a4f263cc55812e00f1ba01399638b94b",
+    "control": "Package: libprotobuf-c1\nSource: protobuf-c\nVersion: 1.5.1-1\nArchitecture: arm64\nMaintainer: Robert Edmonds <edmonds@debian.org>\nInstalled-Size: 86\nDepends: libc6 (>= 2.17)\nSection: libs\nPriority: optional\nMulti-Arch: same\nHomepage: https://github.com/protobuf-c/protobuf-c\nDescription: Protocol Buffers C shared library (protobuf-c)\n Protocol Buffers are a flexible, efficient, automated mechanism for\n serializing structured data - similar to XML, but smaller, faster, and\n simpler. You define how you want your data to be structured once, then you can\n use special generated source code to easily write and read your structured\n data to and from a variety of data streams and using a variety of languages.\n You can even update your data structure without breaking deployed programs\n that are compiled against the \"old\" format.\n .\n This is the \"protobuf-c\" implementation of Protocol Buffers in C.\n .\n This package contains the shared library.\n"
+  },
+  {
+    "filename": "libqrtr1_1.1-2+b1_arm64.deb",
+    "bytes": 11436,
+    "sha256": "f6a6d0a25baf9e77435deab10e16ed5a4dcc36b3a7a9ecf57f7454943a773e89",
+    "control": "Package: libqrtr1\nSource: qrtr (1.1-2)\nVersion: 1.1-2+b1\nArchitecture: arm64\nMaintainer: DebianOnMobile Maintainers <debian-on-mobile-maintainers@alioth-lists.debian.net>\nInstalled-Size: 86\nDepends: libc6 (>= 2.17)\nSection: libs\nPriority: optional\nMulti-Arch: same\nHomepage: https://github.com/linux-msm/qrtr\nDescription: Userspace reference for QRTR -- shared libraries\n QRTR is Qualcomm's IPC Router protocol, used for communicating with\n services provided by remote processors. It is mandatory for taking\n advantage of most features of recent Qualcomm SoCs, such as Wi-Fi,\n cellular modem, sensors...\n .\n This package contains the shared library provided by the reference\n userspace implementation of this protocol.\n"
+  }
+]

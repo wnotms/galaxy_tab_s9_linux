@@ -81,8 +81,41 @@ compilation does not establish that sensor discovery or GNOME rotation works.
 
 ## Remaining integration
 
-Prepare Debian ARM64 packages with matching runtime
-dependencies. libssc needs GLib, libqmi >=1.33.4 and protobuf-c; the proxy needs
+### Debian runtime packages
+
+```sh
+python3 userspace/sensors/package.py --build out/ssc-arm64 --output out/ssc-debs
+python3 -m unittest tests.test_ssc_debian_packaging tests.test_ssc_cross_build -v
+```
+
+The packager requires the exact qualified `BUILD.json` in
+`reference/desktop-bringup/ssc-offline`, and compares every staged file/link before
+using the recorded build image. It creates four ARM64 packages in a networkless,
+unprivileged container: `libssc2`, `gts9-hexagonrpc`, `pd-mapper`, and
+`iio-sensor-proxy`. Runtime dependency minima come from Debian `dpkg-shlibdeps`
+and target symbol metadata, including the local libssc dependency. Mock servers,
+headers, Python test modules, unversioned development links and the unused CHRE
+client are excluded. Upstream licenses accompany each package.
+
+The FastRPC permission rule is byte-identical to the pinned Fedora
+`specs/hexagonrpcd-samsung/patches/10-fastrpc.rules`; the new sysusers file only
+declares its service account. There are no maintainer scripts or enabled-unit
+links. The two library packages request the standard `ldconfig` trigger.
+The wrapper reopens all four generated `.deb` files and verifies their metadata,
+root ownership, exact payload hashes, disjoint file ownership and absence of
+unexpected control scripts. It does not run `dpkg -i`, `apt install`, udev reload,
+service start, remoteproc start, firmware copy or any tablet command.
+
+These packages are prepared outputs, **not an installed or hardware-qualified
+sensor stack**. Original daemon units still carry their upstream restart policy;
+the eventual one-attempt physical registration must override it and inhibit
+activation during installation. The sysusers account must be provisioned before
+FastRPC permission rules are applied. Check existing package/file ownership and
+runtime dependency availability before deployment, retain an installation manifest,
+and reverse only newly owned files/packages on rollback. Detailed results are in
+`reference/desktop-bringup/ssc-runtime-preparation/RESULTS.md`.
+
+libssc needs GLib, libqmi >=1.33.4 and protobuf-c; the proxy needs
 GUdev, systemd and polkit development inputs as well as libssc. Configure it
 with `-Dssc-support=enabled`, so a missing dependency cannot silently select
 the kernel-IIO-only backend. Use Debian's `/usr/lib/systemd/system` for unit

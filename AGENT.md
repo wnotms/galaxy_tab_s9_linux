@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_DEBIAN_ARM64_PACKAGES_NOT_DEPLOYED.
+Four runtime debs from exact baa46693 build, no recompilation/source change:
+libssc2/gts9-hexagonrpc/pd-mapper/iio-sensor-proxy, target-symbol dependencies,
+qualified byte hashes/root ownership/no maintainer scripts or enabled links.
+30 affected tests pass; no full/kernel build. FastRPC rule pinned Fedora, sysusers
+account declaration only; original units need one-attempt overrides before use.
+Same331 boot28fcdaa6/53%26.5CDischarging/ADSPoffline; SSH restored after host
+returned from10.30.115.64/16 to10.175.236.63/24, not a demonstrated CPU failure.
+Only protobuf-c1/qrtr1 missing from observed runtime libs. Read-only blkid:
+apnhlos sda17/vfat,dsp sda16/ext4,persist sda5/ext4; none mounted in this step.
+Results/hashes:reference/desktop-bringup/ssc-runtime-preparation. No device writes,
+firmware/service/charging/USB/kernel/DT/input/reboot/flash. Next stock read-only
+asset staging then isolated registry/controlled early boot registration; no late
+ADSP start. Pen tip/pressure pending owner;348 unused/full port incomplete.
+
 2026-10-08 SSC_ARM64_COMPILED_NOT_DEPLOYED.
 Fedora-pinned libssc/hexagonrpc/pd-mapper/iio-sensor-proxy compiled in isolated
 Debian trixie ARM64 container, proxy SSC explicitly enabled. All 205 prepared
