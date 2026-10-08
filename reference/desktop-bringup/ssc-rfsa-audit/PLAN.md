@@ -1,0 +1,3 @@
+# Test365 first-failure RFSA source audit
+
+No unchanged SSC restart or ADSP activation. On authenticated current Test331, with ADSP offline, reuse the already-tested exact X710 LP metadata parser to mount vendor with a read-only bounded loop and ro/nosuid/nodev/noexec (+noload for ext4). Inventory only vendor RFSA ADSP library roots and report ELF architecture/size plus oemconfig hashes if present. No binary export, firmware installation, service changes or partition writes. Unmount/detach in finally; require same boot and ADSP offline afterwards. Results determine whether the logged missing oemconfig.so corresponds to a real X710 vendor asset or should remain only an optional lookup lead. Runtime SSC still unproven.
