@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test358（桌面触摸持久组件；Test348 仍未部署），窗口为 **Test349–Test358**；没有生成镜像的轮次仍占一轮。
+  编号为 Test359（触摸持久组件与备份限速恢复；Test348 仍未部署），窗口为 **Test350–Test359**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,15 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test358 STOP_BEFORE_INSTALL_DPKG_START_LIMIT; Test359 REGISTERED.
+358zeroownedwrites/insmod, same331/GDM/touch accepted remainsnormal; dpkgbackup
+five successfulruns then start-limit-hit/ExecMainStatus0, disk96GiBfree.
+Currenttimer/time stable; earlierOct25timestamp/rapid-trigger cause unproven.
+359one scoped reset-failed+one normalbackup mustverify success, then same3file
+optionalGNOME component/noop start. No timer/RTC/NTP/hardware/reboot/flash.
+17loaderqualification reused unchanged/syntax reviewed; priorSTOP/raw preserved.
+Historical350–359; active348grantunused/provider and331rollback retained.
 
 2026-10-08 Test358 REGISTERED_OPTIONAL_PERSISTENT_GNOME_TOUCH.
 Same3311adc0f13/Test357 owner+raw accepted module; install3 absent ownedfiles

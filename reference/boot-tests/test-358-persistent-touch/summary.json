@@ -1,0 +1,22 @@
+{
+  "verdict": "STOP_BEFORE_PERSISTENT_INSTALL_EXISTING_DPKG_START_LIMIT",
+  "boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+  "owned_files_created": 0,
+  "insmod_attempts": 0,
+  "new_reboot": false,
+  "battery": {
+    "capacity": "76",
+    "temp": "323",
+    "health": "Good",
+    "status": "Discharging",
+    "current_now": "-1114000"
+  },
+  "reason": "dpkg-db-backup.service failed before mutation; original gate required no failed units",
+  "diagnosis": "Five successful backups followed by start-limit-hit; ExecMainStatus=0. 96GiB available. Current daily timer nextOct9, current realtime/monotonic both advance normally; cause of earlier rapid trigger/time discrepancy not proven.",
+  "device_touch_GNOME": "Accepted357 remains normal; no component installation/load/reboot/charging mutation",
+  "tests": {
+    "executed": false,
+    "reason": "Results-only; 17 loader host tests already passed"
+  },
+  "next": "Independent359 registration permits exactly one acknowledgement and one normal dpkg backup before the same optional desktop installation."
+}

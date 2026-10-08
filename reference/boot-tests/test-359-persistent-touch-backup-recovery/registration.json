@@ -1,0 +1,49 @@
+{
+  "test": "Test359",
+  "purpose": "Persist accepted Fedora ordinary-touch module as optional GNOME-only component",
+  "expected_boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+  "reference_acceptance": "Test357 exact331/37 imports CRC/normal ABI-BTF loader/owner/raw two-touch acceptance",
+  "payload": {
+    "load.py": {
+      "sha256": "95968c95709c7939316e730adf74741f0e3dd4ce2598d991ca77ed48ee060dfb",
+      "bytes": 6360
+    },
+    "gts9-touch.service": {
+      "sha256": "f44bd9b745f5aa137d4a11693076d78ccd47a2bcbe27eab5d7b39479a3130a19",
+      "bytes": 276
+    },
+    "fts1ba90a.ko": {
+      "sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+      "bytes": 441776
+    }
+  },
+  "execution": "Install three absent owned files; daemon-reload/enable/start one optional service on already-loaded boot only; require zero new insmod",
+  "future_start": "WantedBy=gdm.service; skip unknown config/notes/board/SM5440 opts/lpcharge=1. No text-boot dependency, no retry, no forced loader, no ExecStop unload.",
+  "endpoint": "Current GNOME/touch remain active; GDM masks unchanged; future real-boot loading untested",
+  "stop_conditions": [
+    "boot/identity mismatch",
+    "battery unhealthy or >=42C",
+    "SSH loss",
+    "owned target conflict",
+    "new severe kernel fault",
+    "failed unit or non-noop loader verdict"
+  ],
+  "rollback": "Disable optional service and remove only its three owned files and empty directory; no live unload, no reboot, no partition changes.",
+  "flash": false,
+  "reboot": false,
+  "insmod_attempts": 0,
+  "kernel_config_DT_charging_USB_ADB_change": false,
+  "production_181_module_directory_change": false,
+  "suspend_doubletap_SPen_firmware_test": false,
+  "Test348": "1200s grant unused and candidate active/preserved beyond historical window. Future fresh desktop-inactive admission; eventual original331/TWRP unchanged.",
+  "host_tests": {
+    "executed": false,
+    "reason": "Same loader/module/unit payload, prior17 qualification reused; only reviewed installer prerequisite changes, Python syntax checked; real one-backup verification registered"
+  },
+  "retention_window": [
+    350,
+    359
+  ],
+  "prior_stop": "Test358 preserved zero-write stop, backup start-limit-hit/ExecMainStatus0; no clock/timer/RTC changes",
+  "prerequisite": "Require only the recorded dpkg backup start-limit condition, reset only that failed state and start once; verify Result=success/status0 then no failed units. Any failure stops, no retries."
+}
