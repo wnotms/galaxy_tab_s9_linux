@@ -1,0 +1,47 @@
+{
+  "arch": "arm64",
+  "binary_sha256": "a0f62ffe810ca6f5722256ef78b722b104de11a611e65c9435021f0cae896722",
+  "patch_sha256": "1d8d24734d6a98695ca248587b4b5f66bc365a607a0ff418351c2bec2f17d93a",
+  "source": {
+    "project": "Debian acpi",
+    "version": "1.8-1",
+    "source_url": "https://deb.debian.org/debian/pool/main/a/acpi/acpi_1.8.orig.tar.gz",
+    "archive_sha256": "e64c6e00b53cd797427ea32a160513425b03ed4f077733f71f1f09ff340f230b",
+    "source_page": "https://sources.debian.org/src/acpi/1.8-1/",
+    "license": "GPL-2.0-or-later",
+    "files": {
+      "acpi.c": "df3089d590d38b1bb67b47ead2bbb404fb0cb2d150585aa86ebdb8b84eedcac9",
+      "acpi.h": "b2fce69d50e15bc4a8ea7a4c61062f4e1bd9493cad0162ec28d7d57c9db2c770",
+      "main.c": "aebdb439858e01dec030cd2ac79b4bfeb438365fd2a06de83fbd4b8a8302298c",
+      "list.c": "4ce543963640718a43e9c138d7a2002b5158c4d1b75f6c8989543b8b205dabee",
+      "list.h": "b93711f796cc5000ceb413a880f523bd077666acc9b78bc43f8457700b92dbf1",
+      "COPYING": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    }
+  },
+  "compiler": "Ubuntu clang version 21.1.8 (6ubuntu1)",
+  "command": [
+    "clang",
+    "-O2",
+    "-Wall",
+    "-I/home/ms/Samsung/galaxy_tab_s9_linux/out/userspace/acpi-battery-compat/acpi-build-wektb3sk/source",
+    "--target=aarch64-linux-gnu",
+    "-fuse-ld=lld",
+    "--sysroot=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/acpi-arm64-sysroot",
+    "-nostdlib",
+    "-fPIE",
+    "-pie",
+    "-Wl,--dynamic-linker=/lib/ld-linux-aarch64.so.1",
+    "-Wl,-z,relro,-z,now",
+    "-L/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/acpi-arm64-sysroot/usr/lib/aarch64-linux-gnu",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/acpi-arm64-sysroot/usr/lib/aarch64-linux-gnu/Scrt1.o",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/acpi-arm64-sysroot/usr/lib/aarch64-linux-gnu/crti.o",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/userspace/acpi-battery-compat/acpi-build-wektb3sk/source/main.c",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/userspace/acpi-battery-compat/acpi-build-wektb3sk/source/acpi.c",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/userspace/acpi-battery-compat/acpi-build-wektb3sk/source/list.c",
+    "-lc",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/acpi-arm64-sysroot/usr/lib/aarch64-linux-gnu/crtn.o",
+    "-o",
+    "/home/ms/Samsung/galaxy_tab_s9_linux/out/userspace/acpi-battery-compat/acpi-build-wektb3sk/acpi"
+  ],
+  "device_modified": false
+}

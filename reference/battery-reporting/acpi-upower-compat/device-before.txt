@@ -1,0 +1,307 @@
+Tue Sep 29 03:10:50 UTC 2026
+a96de8c0-383b-4f78-b976-ecc6db3ab793
+/usr/bin/acpi
+/usr/bin/upower
+acpi	1.8-1
+upower	1.90.9-1
+Battery 0: Discharging, 0%,  remaining
+Battery 0: Discharging, 0%,  remaining
+Battery 0: design capacity 8160 mAh, last full capacity -81 mAh = -1%
+Cooling 0: devfreq-3d00000.gpu 0 of 7
+Cooling 1: cpu1-thermal no state information available
+Cooling 2: cpuss3-thermal no state information available
+Cooling 3: aoss2-thermal no state information available
+Cooling 4: cpu3-bottom-thermal no state information available
+Cooling 5: cpu6-top-thermal no state information available
+Cooling 6: mem-thermal no state information available
+Cooling 7: cpu4-bottom-thermal no state information available
+Cooling 8: gpuss-2-thermal no state information available
+Cooling 9: cpu7-top-thermal no state information available
+Cooling 10: modem1-thermal no state information available
+Cooling 11: cdsp1-thermal no state information available
+Cooling 12: cpufreq-cpu0 0 of 15
+Cooling 13: cpu7-bottom-thermal no state information available
+Cooling 14: cpuss0-thermal no state information available
+Cooling 15: modem3-thermal no state information available
+Cooling 16: cdsp3-thermal no state information available
+Cooling 17: cpufreq-cpu7 0 of 20
+Cooling 18: cpu0-thermal no state information available
+Cooling 19: cpuss2-thermal no state information available
+Cooling 20: camera1-thermal no state information available
+Cooling 21: sm5714-battery no state information available
+Cooling 22: ath11k_thermal 0 of 100
+Cooling 23: cpu2-thermal no state information available
+Cooling 24: cpu3-top-thermal no state information available
+Cooling 25: gpuss-0-thermal no state information available
+Cooling 26: cpu5-bottom-thermal no state information available
+Cooling 27: video-thermal no state information available
+Cooling 28: cpu4-top-thermal no state information available
+Cooling 29: gpuss-1-thermal no state information available
+Cooling 30: cpu6-bottom-thermal no state information available
+Cooling 31: modem0-thermal no state information available
+Cooling 32: cpu5-top-thermal no state information available
+Cooling 33: cdsp0-thermal no state information available
+Cooling 34: cpu7-middle-thermal no state information available
+Cooling 35: aoss0-thermal no state information available
+Cooling 36: modem2-thermal no state information available
+Cooling 37: cdsp2-thermal no state information available
+Cooling 38: cpufreq-cpu3 0 of 19
+Cooling 39: aoss1-thermal no state information available
+Cooling 40: cpuss1-thermal no state information available
+Cooling 41: camera0-thermal no state information available
+Cooling 42: gpuss-7-thermal no state information available
+Device: /org/freedesktop/UPower/devices/battery_sm5714_battery
+  native-path:          sm5714-battery
+  power supply:         yes
+  updated:              Tue Sep 29 11:10:50 2026 (0 seconds ago)
+  has history:          yes
+  has statistics:       yes
+  battery
+    present:             yes
+    rechargeable:        yes
+    state:               discharging
+    warning-level:       none
+    energy:              27.1728 Wh
+    energy-empty:        0 Wh
+    energy-full:         36.2304 Wh
+    energy-full-design:  36.2304 Wh
+    energy-rate:         4.71528 W
+    voltage:             4.087 V
+    charge-cycles:       N/A
+    time to empty:       5.8 hours
+    percentage:          75%
+    temperature:         30.7 degrees C
+    capacity:            100%
+    technology:          lithium-ion
+    icon-name:          'battery-full-symbolic'
+  History (charge):
+    1790651450	75.000	discharging
+    1790651450	0.000	unknown
+    1790655444	64.000	discharging
+    1790653913	65.000	discharging
+    1790651956	66.000	discharging
+  History (rate):
+    1790651450	4.715	unknown
+    1790651450	0.000	unknown
+    1790655989	0.129	charging
+    1790655959	0.071	charging
+    1790655929	0.133	discharging
+    1790655899	0.138	discharging
+    1790655869	1.217	discharging
+    1790655839	0.022	charging
+    1790655809	0.018	charging
+    1790655779	0.981	discharging
+    1790655749	1.150	discharging
+    1790655719	0.830	discharging
+    1790655689	0.519	discharging
+    1790655659	0.151	charging
+    1790655629	0.826	discharging
+    1790655599	1.177	discharging
+    1790655569	2.464	discharging
+    1790655539	1.114	discharging
+    1790655509	0.981	discharging
+    1790655479	0.786	discharging
+    1790655449	0.431	discharging
+    1790655444	0.271	discharging
+    1790655414	0.337	discharging
+    1790655384	1.057	discharging
+    1790655354	0.932	discharging
+    1790655324	1.012	discharging
+    1790655294	0.990	discharging
+    1790655264	0.262	discharging
+    1790655234	0.089	charging
+    1790655204	1.292	discharging
+    1790655174	0.875	discharging
+    1790655144	1.199	discharging
+    1790655114	0.435	discharging
+    1790655084	0.115	discharging
+    1790655054	0.830	discharging
+    1790655024	0.222	discharging
+    1790654994	0.835	discharging
+    1790654964	1.190	discharging
+    1790654934	0.675	discharging
+    1790654904	0.062	discharging
+    1790654874	0.204	discharging
+    1790654844	0.875	discharging
+    1790654813	0.080	charging
+    1790654783	0.817	discharging
+    1790654753	0.986	discharging
+    1790654723	0.533	discharging
+    1790654693	0.777	discharging
+    1790654663	0.586	discharging
+    1790654633	1.168	discharging
+    1790654603	0.817	discharging
+    1790654573	0.075	charging
+    1790654543	1.332	discharging
+    1790654513	1.123	discharging
+    1790654483	0.577	discharging
+    1790654453	0.608	discharging
+    1790654423	0.071	charging
+    1790654393	1.163	discharging
+    1790654363	0.422	discharging
+    1790654333	0.027	discharging
+    1790654303	1.163	discharging
+    1790654273	1.412	discharging
+    1790654243	0.981	discharging
+    1790654213	1.923	discharging
+    1790654183	1.443	discharging
+    1790654153	0.222	discharging
+    1790654123	1.012	discharging
+    1790654093	0.879	discharging
+    1790654063	0.635	discharging
+    1790654033	2.509	discharging
+    1790654003	1.185	discharging
+    1790653973	0.626	discharging
+    1790653943	0.608	discharging
+    1790653913	0.506	discharging
+    1790653894	1.021	discharging
+    1790653864	1.279	discharging
+    1790653834	1.030	discharging
+    1790653804	1.434	discharging
+    1790653774	1.296	discharging
+    1790653744	0.475	discharging
+    1790653714	0.089	charging
+    1790653684	1.150	discharging
+    1790653654	0.830	discharging
+    1790653624	0.120	discharging
+    1790653593	1.097	discharging
+    1790653563	0.040	discharging
+    1790653533	0.377	discharging
+    1790653503	1.487	discharging
+    1790653498	0.000	charging
+    1790653468	0.866	discharging
+    1790653438	1.123	discharging
+    1790653408	0.040	charging
+    1790653378	0.879	discharging
+    1790653348	1.066	discharging
+    1790653318	1.194	discharging
+    1790653288	0.937	discharging
+    1790653258	0.036	discharging
+    1790653228	0.870	discharging
+    1790653198	0.098	discharging
+    1790653168	0.879	discharging
+    1790653138	0.768	discharging
+    1790653108	0.608	discharging
+    1790653078	1.026	discharging
+    1790653048	0.879	discharging
+    1790653018	0.817	discharging
+    1790652988	1.257	discharging
+    1790652983	0.000	charging
+    1790652953	0.013	discharging
+    1790652923	0.124	charging
+    1790652893	0.506	discharging
+    1790652863	0.422	discharging
+    1790652833	0.431	discharging
+    1790652802	2.526	discharging
+    1790652772	0.240	discharging
+    1790652742	0.946	discharging
+    1790652712	1.172	discharging
+    1790652682	1.030	discharging
+    1790652652	1.199	discharging
+    1790652622	0.821	discharging
+    1790652592	0.733	discharging
+    1790652562	1.163	discharging
+    1790652532	1.106	discharging
+    1790652442	1.067	discharging
+    1790652352	0.111	charging
+    1790652172	0.719	discharging
+    1790652017	0.004	charging
+    1790651716	0.658	discharging
+    1790651416	0.147	charging
+    1790651371	0.535	discharging
+
+Device: /org/freedesktop/UPower/devices/line_power_sm5714_usb
+  native-path:          sm5714-usb
+  power supply:         yes
+  updated:              Tue Sep 29 11:10:50 2026 (0 seconds ago)
+  has history:          no
+  has statistics:       no
+  line-power
+    warning-level:       none
+    online:              no
+    icon-name:          'ac-adapter-symbolic'
+
+Device: /org/freedesktop/UPower/devices/line_power_tcpm_source_psy_3_0033
+  native-path:          tcpm-source-psy-3-0033
+  power supply:         yes
+  updated:              Tue Sep 29 11:10:50 2026 (0 seconds ago)
+  has history:          no
+  has statistics:       no
+  line-power
+    warning-level:       none
+    online:              no
+    icon-name:          'ac-adapter-symbolic'
+
+Device: /org/freedesktop/UPower/devices/DisplayDevice
+  power supply:         yes
+  updated:              Tue Sep 29 11:10:50 2026 (0 seconds ago)
+  has history:          no
+  has statistics:       no
+  battery
+    present:             yes
+    state:               discharging
+    warning-level:       none
+    energy:              27.1728 Wh
+    energy-full:         36.2304 Wh
+    energy-rate:         4.71528 W
+    charge-cycles:       N/A
+    time to empty:       5.8 hours
+    percentage:          75%
+    icon-name:          'battery-full-symbolic'
+
+Daemon:
+  daemon-version:  1.90.9
+  on-battery:      yes
+  lid-is-closed:   no
+  lid-is-present:  yes
+  critical-action: PowerOff
+active
+DEVTYPE=power_supply
+OF_NAME=charger
+OF_FULLNAME=/soc@0/geniqup@9c0000/i2c@9a0000/charger@49
+OF_COMPATIBLE_0=siliconmitus,sm5714
+OF_COMPATIBLE_N=1
+POWER_SUPPLY_NAME=sm5714-battery
+POWER_SUPPLY_TYPE=Battery
+POWER_SUPPLY_STATUS=Discharging
+POWER_SUPPLY_HEALTH=Good
+POWER_SUPPLY_PRESENT=1
+POWER_SUPPLY_TECHNOLOGY=Li-ion
+POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4440000
+POWER_SUPPLY_VOLTAGE_MIN_DESIGN=3400000
+POWER_SUPPLY_VOLTAGE_NOW=4098000
+POWER_SUPPLY_VOLTAGE_AVG=4088000
+POWER_SUPPLY_VOLTAGE_OCV=4125000
+POWER_SUPPLY_CURRENT_NOW=-1062000
+POWER_SUPPLY_CURRENT_AVG=-1271000
+POWER_SUPPLY_CHARGE_FULL_DESIGN=8160000
+POWER_SUPPLY_CAPACITY=75
+POWER_SUPPLY_TEMP=307
+POWER_SUPPLY_TYPE=Battery
+capacity
+charge_full_design
+current_avg
+current_now
+device
+extensions
+health
+of_node
+power
+present
+status
+subsystem
+technology
+temp
+type
+uevent
+voltage_avg
+voltage_max_design
+voltage_min_design
+voltage_now
+voltage_ocv
+waiting_for_supplier
+wakeup6
+Sep 29 11:10:50 gts9 systemd[1]: Starting upower.service - Daemon for power management...
+Sep 29 11:10:50 gts9 upowerd[2316]: g_udev_device_get_sysfs_path: assertion 'G_UDEV_IS_DEVICE (device)' failed
+Sep 29 11:10:50 gts9 upowerd[2316]: g_udev_client_query_by_sysfs_path: assertion 'sysfs_path != NULL' failed
+Sep 29 11:10:50 gts9 systemd[1]: Started upower.service - Daemon for power management.

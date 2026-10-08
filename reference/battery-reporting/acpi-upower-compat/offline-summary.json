@@ -1,0 +1,20 @@
+{
+  "verdict": "USERSPACE_FIX_READY_FOR_INSTALL",
+  "root_cause": "acpi1.8 ignores valid capacity and calculates from absent charge_now/charge_full",
+  "upower_before_percentage": 75,
+  "host_tests": {
+    "executed": true,
+    "count": 12,
+    "passed": 12,
+    "seconds": 0.522,
+    "coverage": "actual patched C CLI; capacity bounds; missing charge; charge/energy/proc regressions"
+  },
+  "arm64_build": "PASS",
+  "initial_cross_link": "failed missing merged-/usr alias; corrected locally",
+  "upstream_warning": "unchanged acpi.h header guard typo",
+  "kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "test347_frozen_inputs": "INPUTS_MATCH",
+  "device_modified": false,
+  "binary_sha256": "a0f62ffe810ca6f5722256ef78b722b104de11a611e65c9435021f0cae896722"
+}
