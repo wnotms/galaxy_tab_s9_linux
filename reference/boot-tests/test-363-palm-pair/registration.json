@@ -1,0 +1,31 @@
+{
+  "test": "Test363",
+  "purpose": "Fresh ordinary Test331 desktop boot with opt-in Wacom then palm-aware FTS pair",
+  "source_commit": "fad94dc97951703620b87ecc173cdd11a30ca224",
+  "current_boot": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "current_state": "ordinary FTS and Wacom are both loaded; no replacement in current boot",
+  "profile": {
+    "release": "7.2.0-rc3-gts9wifi-dirty",
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+    "pen_sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412",
+    "palm_touch_sha256": "7e71ca5816bf720ce4b3065727a4d43633be3c6abbcb070a4dd723c321d56171"
+  },
+  "required_order": ["wacom-wez01.ko", "fts1ba90a-palm.ko"],
+  "fresh_boot_required": true,
+  "normal_loader_only": true,
+  "persistent_autoload": false,
+  "owner_input_window_seconds": 600,
+  "evdev_grab": false,
+  "stop_conditions": [
+    "identity/boot mismatch",
+    "ordinary FTS already loaded",
+    "module ABI/BTF/signature/probe/I2C failure",
+    "IRQ storm or new severe kernel fault",
+    "battery health failure or pack temperature >=42C",
+    "SSH/GNOME/touch rescue loss"
+  ],
+  "forbidden": ["flash", "partition write", "reboot command", "force load", "firmware update", "charging/PPS/pump change", "I2C scan", "rail cycle"],
+  "rollback": "exact Test331 normal boot; no partition rollback needed",
+  "test348_grant_used": false
+}

@@ -118,6 +118,14 @@ Terminal/final-health/raw-empty evidence retained; future fresh scope needed for
 hover/tap/grid/button/pressure/release. No restart/unload/flash/reboot/charging.
 Full port active;348grantunused/finalexact331TWRP.
 
+2026-10-08 Test363 REGISTERED_PALM_AWARE_PAIR_FRESH_BOOT_REQUIRED.
+Current25ff0ad0 has ordinaryFTS+Wacom loaded, so no replacement/unload is
+allowed. Registrationfad94dc9 pushed before any future mutation: fresh ordinary
+331 boot only, normal Wacom then paired FTS loads, ordinary FTS collision stops.
+No force/firmware/I2C scan/rail/charging/flash/reboot command in loader;600s
+non-grabbing owner hover/tap/pressure/button/release/finger-after-pen window.
+Test348 unused/final331TWRP retained; pair physical acceptance pending.
+
 2026-10-08 Test362 REGISTERED_FEDORA_WEZ01_S_PEN_ONE_LOAD.
 Same33125ff0ad0/currentGNOME+touch accepted,67%25.9C GoodDischarging/client6-0056
 unbound. Fedoraab123e7d remoteHEADunchanged; optional external WEZ01 module with
