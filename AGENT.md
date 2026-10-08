@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test354（GNOME 手动键盘测试；Test348 仍未部署），窗口为 **Test345–Test354**；没有生成镜像的轮次仍占一轮。
+  编号为 Test355（Fedora X710 触摸验证；Test348 仍未部署），窗口为 **Test346–Test355**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,15 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test355 REGISTERED_FEDORA_TOUCH_ONE_LOAD.
+Same331/activeGNOME; pinned same-model byte-identical module,37 imports CRCs
+match exact331 Image/module_layout; BTF.base normal loader gate/no force flags.
+One insmod from var/tmp, no accepted181-dir/kernel/DT/config/charging change.
+5s IRQcheck and <=900s non-grabbing rawtouch capture/sleepinhibit; owner UI
+acceptance pending, no suspend/doubletap/Spen/firmwareupdate/unload/flash/reboot.
+8affected actual-C tests PASS; existingW1 modulebuild reused/no fullsuite.
+Retired expired345stage/images;331/348 protected,348grantunused/finalTWRP.
 
 2026-10-08 Test354 GNOME_KEYBOARD_SESSION_OWNER_CONFIRMED_FUNCTIONAL.
 Owner “已测试，功能正常” confirms reopened desktop manual functionality.

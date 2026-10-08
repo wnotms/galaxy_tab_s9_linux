@@ -1,0 +1,236 @@
+{
+  "verdict": "TEST331_ALL_CONSUMED_EXPORT_CRCS_MATCH",
+  "export_count": 14984,
+  "imports": [
+    {
+      "symbol": "i2c_register_driver",
+      "imported_crc": "0x78509441",
+      "kernel_crc": "0x78509441",
+      "match": true
+    },
+    {
+      "symbol": "i2c_del_driver",
+      "imported_crc": "0x08e35466",
+      "kernel_crc": "0x08e35466",
+      "match": true
+    },
+    {
+      "symbol": "devm_kmalloc",
+      "imported_crc": "0xcf100be8",
+      "kernel_crc": "0xcf100be8",
+      "match": true
+    },
+    {
+      "symbol": "devm_regulator_get",
+      "imported_crc": "0xd9fdcc70",
+      "kernel_crc": "0xd9fdcc70",
+      "match": true
+    },
+    {
+      "symbol": "dev_err_probe",
+      "imported_crc": "0xc38220a2",
+      "kernel_crc": "0xc38220a2",
+      "match": true
+    },
+    {
+      "symbol": "devm_input_allocate_device",
+      "imported_crc": "0x3f8704f0",
+      "kernel_crc": "0x3f8704f0",
+      "match": true
+    },
+    {
+      "symbol": "input_set_capability",
+      "imported_crc": "0x5af9797b",
+      "kernel_crc": "0x5af9797b",
+      "match": true
+    },
+    {
+      "symbol": "input_set_abs_params",
+      "imported_crc": "0x077bf26f",
+      "kernel_crc": "0x077bf26f",
+      "match": true
+    },
+    {
+      "symbol": "touchscreen_parse_properties",
+      "imported_crc": "0xb8abac3a",
+      "kernel_crc": "0xb8abac3a",
+      "match": true
+    },
+    {
+      "symbol": "input_mt_init_slots",
+      "imported_crc": "0x4afa7a07",
+      "kernel_crc": "0x4afa7a07",
+      "match": true
+    },
+    {
+      "symbol": "devm_request_threaded_irq",
+      "imported_crc": "0xcca4223c",
+      "kernel_crc": "0xcca4223c",
+      "match": true
+    },
+    {
+      "symbol": "input_register_device",
+      "imported_crc": "0x0362e0a6",
+      "kernel_crc": "0x0362e0a6",
+      "match": true
+    },
+    {
+      "symbol": "device_set_wakeup_capable",
+      "imported_crc": "0x922997e8",
+      "kernel_crc": "0x922997e8",
+      "match": true
+    },
+    {
+      "symbol": "device_wakeup_enable",
+      "imported_crc": "0x19d532c6",
+      "kernel_crc": "0x19d532c6",
+      "match": true
+    },
+    {
+      "symbol": "devm_device_add_group",
+      "imported_crc": "0x4443dcc9",
+      "kernel_crc": "0x4443dcc9",
+      "match": true
+    },
+    {
+      "symbol": "regulator_enable",
+      "imported_crc": "0xa93213da",
+      "kernel_crc": "0xa93213da",
+      "match": true
+    },
+    {
+      "symbol": "usleep_range_state",
+      "imported_crc": "0xc3055d20",
+      "kernel_crc": "0xc3055d20",
+      "match": true
+    },
+    {
+      "symbol": "regulator_disable",
+      "imported_crc": "0xfe002def",
+      "kernel_crc": "0xfe002def",
+      "match": true
+    },
+    {
+      "symbol": "__devm_add_action",
+      "imported_crc": "0x6d192a8d",
+      "kernel_crc": "0x6d192a8d",
+      "match": true
+    },
+    {
+      "symbol": "i2c_transfer_buffer_flags",
+      "imported_crc": "0xc0e44e1e",
+      "kernel_crc": "0xc0e44e1e",
+      "match": true
+    },
+    {
+      "symbol": "i2c_transfer",
+      "imported_crc": "0x785b13d8",
+      "kernel_crc": "0x785b13d8",
+      "match": true
+    },
+    {
+      "symbol": "msleep",
+      "imported_crc": "0xf9a482f9",
+      "kernel_crc": "0xf9a482f9",
+      "match": true
+    },
+    {
+      "symbol": "_dev_err",
+      "imported_crc": "0x6ead9009",
+      "kernel_crc": "0x6ead9009",
+      "match": true
+    },
+    {
+      "symbol": "__stack_chk_fail",
+      "imported_crc": "0xf0fdf6cb",
+      "kernel_crc": "0xf0fdf6cb",
+      "match": true
+    },
+    {
+      "symbol": "_dev_info",
+      "imported_crc": "0x631b88cd",
+      "kernel_crc": "0x631b88cd",
+      "match": true
+    },
+    {
+      "symbol": "_dev_warn",
+      "imported_crc": "0x3aa0b1ca",
+      "kernel_crc": "0x3aa0b1ca",
+      "match": true
+    },
+    {
+      "symbol": "input_event",
+      "imported_crc": "0xb4b4f7d8",
+      "kernel_crc": "0xb4b4f7d8",
+      "match": true
+    },
+    {
+      "symbol": "input_mt_report_slot_state",
+      "imported_crc": "0xb4d5284b",
+      "kernel_crc": "0xb4d5284b",
+      "match": true
+    },
+    {
+      "symbol": "touchscreen_report_pos",
+      "imported_crc": "0x3ec0d5b6",
+      "kernel_crc": "0x3ec0d5b6",
+      "match": true
+    },
+    {
+      "symbol": "input_mt_sync_frame",
+      "imported_crc": "0xc047c744",
+      "kernel_crc": "0xc047c744",
+      "match": true
+    },
+    {
+      "symbol": "pm_wakeup_dev_event",
+      "imported_crc": "0x7c4be7db",
+      "kernel_crc": "0x7c4be7db",
+      "match": true
+    },
+    {
+      "symbol": "sysfs_emit",
+      "imported_crc": "0xe783e261",
+      "kernel_crc": "0xe783e261",
+      "match": true
+    },
+    {
+      "symbol": "kstrtobool",
+      "imported_crc": "0x124bad4d",
+      "kernel_crc": "0x124bad4d",
+      "match": true
+    },
+    {
+      "symbol": "irq_set_irq_wake",
+      "imported_crc": "0xce2840e7",
+      "kernel_crc": "0xce2840e7",
+      "match": true
+    },
+    {
+      "symbol": "disable_irq",
+      "imported_crc": "0x3ce4ca6f",
+      "kernel_crc": "0x3ce4ca6f",
+      "match": true
+    },
+    {
+      "symbol": "enable_irq",
+      "imported_crc": "0xfcec0987",
+      "kernel_crc": "0xfcec0987",
+      "match": true
+    },
+    {
+      "symbol": "module_layout",
+      "imported_crc": "0xb6dc421b",
+      "kernel_crc": "0xb6dc421b",
+      "match": true
+    }
+  ],
+  "image_sha256": "efb2a1aaf68962270816d99ed54ebc94013f08ea82a95bf9b8c465618595d6cb",
+  "module_sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+  "runtime_symbols_evidence_sha256": "408fb8c145933674569a7cceca200efe20bad5dc6a083f5f75df260eb7b3abfd",
+  "source": "Byte-identical Fedora X710 ab123e7d",
+  "module_original_build_provider": "Test348",
+  "caveat": "Cross-build export ABI checked directly against exact331; kernel loader must still check version/BTF/signature with no force flags",
+  "BTF_base": "Module has distilled .BTF.base; Linux7.2 kernel/bpf/btf.c relocates against current vmlinux BTF",
+  "device_load_executed": false
+}
