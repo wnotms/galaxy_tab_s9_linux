@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test364_NATIVE_ADSP_OBSERVED_STOP_WIFI_BANNER_RESTORED331.
+Singleboot86f583ce actualADSP running/fastrpc/id519/fmt0.16/MTP/subtype0/version
+65536 observed at17.07s. FirstWiFi SSH banner timeout->STOP/no secondboot. Full
+failedboot kernel JSON retrieved afterrestore: noCPU/panic/Oops/unboundedfault.
+SSC services/rotation untested, noPPS/pump/current change. Exact331boot/vendor/
+allfive181/owned328assetsrestore; ordinaryDebianea91d666/authWiFi.198/ADB/NCM/
+30shealth/fulljournal/noCode43 passed. Baselinehealthy; noCPUwedge cause claim.
+Fix bounded new-WiFi readiness host gate next, then independently register SSC
+discovery/rotation without kernel/source changes. Sensor task/fullport active;
+charging after sensors.80affected host qualification reused, full3032NOTPASS.
+
+
 2026-10-08 Test364_REGISTERED_EARLY_ADSP_NATIVE_IDENTITY_ONLY.
 One controlled boot before SSC daemons/desktop: exact compiled native SoCinfo
 config/181 plus signed55file ADSP platform ramdisk; only boot/vendor_boot write.
