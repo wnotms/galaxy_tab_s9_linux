@@ -1,0 +1,19 @@
+{
+  "verdict": "INSTALLED_NATIVE_CAPACITY_REPORT_PASS",
+  "boot_id": "a96de8c0383b4f78b976ecc6db3ab793",
+  "binary_sha256": "a0f62ffe810ca6f5722256ef78b722b104de11a611e65c9435021f0cae896722",
+  "packaged_acpi_sha256": "b7da9983c2d3ba1f0f635765168d4b5f64b9b091c5456a371225c71605b73b07",
+  "packaged_acpi_unchanged": true,
+  "capacity_before": "74",
+  "capacity_after": "74",
+  "old_acpi": "Battery 0: Discharging, 0%,  remaining\n",
+  "new_acpi": "Battery 0: Discharging, 74%, time information unavailable\n",
+  "details": "Battery 0: Discharging, 74%, time information unavailable\nBattery 0: design capacity 8160 mAh, last full capacity unavailable\n",
+  "installation_output": "/tmp/gts9-acpi-jawzg5e9/acpi: OK\nBattery 0: Discharging, 74%, time information unavailable\n",
+  "kernel_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "kernel_notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "upower": "  native-path:          sm5714-battery\n  power supply:         yes\n  updated:              Tue Sep 29 11:18:25 2026 (15 seconds ago)\n  has history:          yes\n  has statistics:       yes\n  battery\n    present:             yes\n    rechargeable:        yes\n    state:               discharging\n    warning-level:       none\n    energy:              26.8105 Wh\n    energy-empty:        0 Wh\n    energy-full:         36.2304 Wh\n    energy-full-design:  36.2304 Wh\n    energy-rate:         3.36552 W\n    voltage:             4.082 V\n    charge-cycles:       N/A\n    time to empty:       8.0 hours\n    percentage:          74%\n    temperature:         30.7 degrees C\n    capacity:            100%\n    technology:          lithium-ion\n    icon-name:          'battery-full-symbolic'\n  History (charge):\n    1790655444\t64.000\tdischarging\n    1790653913\t65.000\tdischarging\n    1790651956\t66.000\tdischarging",
+  "kernel_changed": false,
+  "charging_policy_changed": false,
+  "services_restarted": false
+}

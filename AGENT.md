@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Independent ACPI reporting repair installed during347 discharge wait.
+Owner explicitly requested repair of acpi -b. Kernel/UPower percentage already
+correct; Debianacpi1.8 ignoredcapacity and calculatedfrommissingchargefields.
+PatchedoriginalC nowusesvalidcapacity, retainscharge/energy/procfallback,
+reportsunknown time/learnedfull honestly.12actualCLItestsPASS0.522s/ARM64build
+PASS; /usr/local/bin/acpi a0f62ffe installedatomically, original/usr/bin unchanged.
+NormalPATH/nativeacpi/sysfs/UPower all74%, same331a96de8c0/30.7C/discharging/
+USBoffline; no reboot/flash/service/charging/kernelchange,347INPUTS_MATCH.
+Naturalwatchsession58323 ongoing;347notinstalled/guardiannotstarted. No full
+regression/kernelbuild repeated. FullportNOT_READY. See userspace/acpi and
+reference/battery-reporting/acpi-upower-compat/RESULTS.md.
+
 2026-10-08 Test347 AUTHORIZED_STAGED_WAITING_NATURAL_DISCHARGE.
 Enrollment978c19ad pushed; Windows347transferstage verified, device stillexact331
 lastboot a96de8c0/74%31.5C. No formalpreflight/flash/newboot/guardian/PPS/pump.
