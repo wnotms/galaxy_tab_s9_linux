@@ -1,0 +1,34 @@
+{
+  "test": "Test360",
+  "purpose": "Verify installed optional GNOME touch unit loading in owner-confirmed new331 boot",
+  "expected_boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "reboot_attribution": "Owner manual restart/opening, previous359 raw shows orderly poweroff. No agent reboot.",
+  "baseline": "Exact331/config51ba/notes03c9; installed358loader95968/moduleac2f/unitf44b,37CRC/8C/W1/17loader qualifications reused",
+  "operations": "One GDM start after temporarily unmasking three recorded masks; enabled GDM-Wants touch unit loads once with normal loader. Restore masks without --now immediately. 10s observation then leave desktop/touch active for owner.",
+  "maximum_insmod_attempts": 1,
+  "expected_service_verdict": "loaded,1insmod; final readonly already-loaded",
+  "stop_conditions": [
+    "identity mismatch or unexpected module already loaded",
+    "battery health not Good or >=42C",
+    "loader or probe failure",
+    "new severe kernel/GPU/I2C fault",
+    "GDM failure",
+    "failed unit",
+    "SSH loss"
+  ],
+  "failure_action": "Stop GDM, restore original masks, preserve journal; no unload/retry/reboot/railcycle/flash.",
+  "owner_acceptance": "Confirm login screen, touch login/desktop. No coordinate claim from unit enumeration; prior357 owner orientation accepted.",
+  "flash": false,
+  "reboot_sent": false,
+  "kernel_config_DT_modules_charging_USB_ADB_change": false,
+  "suspend_doubletap_SPen_firmware_update": false,
+  "Test348": "grantunused/candidate not installed; future fresh desktop-inactive admission/final331TWRP remain",
+  "host_tests": {
+    "executed": false,
+    "reason": "Unchanged loader/module/unit, prior17+8C/W1/37CRC reused; registered activation script syntax reviewed, no new kernel/routing/build inputs"
+  },
+  "history_window": [
+    351,
+    360
+  ]
+}

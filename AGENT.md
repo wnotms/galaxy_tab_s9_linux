@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test359（触摸持久组件与备份限速恢复；Test348 仍未部署），窗口为 **Test350–Test359**；没有生成镜像的轮次仍占一轮。
+  编号为 Test360（手动重启后的桌面触摸加载；Test348 仍未部署），窗口为 **Test351–Test360**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,15 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test360 REGISTERED_INSTALLED_TOUCH_NEWBOOT_GDM_LOAD.
+Owner manual25ff0ad0 boot confirmed, exact331 installedloader/module gate ready;
+textboot/no load expected. OneGDMstart triggers enabledGDM-Wants touch service,
+normal1insmod/no force or retry;10s initialcheck thenownerUIpending. Restore
+3GDMmasks without --now; no reboot/flash/charging/config/DT/181-dir change.
+Existing17loader+8C/W1/37CRC reused, activationPython syntaxchecked/no fullbuild.
+Historical351–360/no350images to retire;348grantunused/provider/331protected,
+futurefreshdesktopinactive admission/finalTWRP unchanged.
 
 2026-10-08 Test359 INSTALLED_CURRENTBOOT_NOOP_PASS; LATER_OWNER_MANUAL_REBOOT.
 Onebackup recovery Resultsuccess/status0, no clock/timer/RTC/NTP policy change.
