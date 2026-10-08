@@ -1,0 +1,7 @@
+# Fedora-derived ARM64 SSC reverse-RPC trace — offline compiled
+
+Exact hexagonrpc 0.4.0 prepared Fedora X710 component verified: 55 source files, pinned archive/patch identities, no extra/modified/missing files. The whole previously compiled worktree validator initially rejected generated pd-mapper objects unrelated to this isolated component. That verifier remains strict; component identity was separately checked before qualification. Nothing was removed or waived to manufacture a whole-source-tree pass.
+
+The existing networkless Debian cross-builder compiled only hexagonrpc with upstream hexagonrpcd_verbose=true. Both upstream iobuffer and hexagonfs tests passed (2/2), and the final daemon is ELF64 little-endian AArch64 with verbose remote method/file-access messages present. Source/protocol, Samsung registry patches and buffer handling were not modified. No other package rebuild or kernel diagnostics. Source and binary hashes are recorded here.
+
+No device deployment/SSC start/ADSP activation. This is a diagnostic userspace binary, not a new production package or proof of sensor readiness. Next independently registered test will use the owner-requested keyboard driver candidate as well; its kernel/config/DTB/181 build qualification is already frozen in keyboard-escape-driver. Paired loader identity, rollback-helper integration, bounded trace capture/QRTR evidence and native registration are still pending. Do not overwrite the stopped Test365 result or restart its services.
