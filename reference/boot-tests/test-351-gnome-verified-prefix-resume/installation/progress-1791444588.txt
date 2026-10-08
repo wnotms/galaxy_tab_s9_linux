@@ -1,0 +1,20 @@
+{
+  "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+  "process_same": false,
+  "process_state": "gone",
+  "summary": {
+    "verdict": "STOP_BEFORE_INSTALLATION",
+    "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+    "package_installation_started": false,
+    "gdm_started": false,
+    "firmware_created": [],
+    "masks": [],
+    "error": "RuntimeError('apt-simulation failed: 100')"
+  },
+  "battery": {
+    "capacity": "90",
+    "temp": "320",
+    "health": "Good"
+  },
+  "progress": "Traceback (most recent call last):\n  File \"/var/tmp/gts9-test351/gts9-gnome/tools/install.py\", line 260, in <module>\n    main()\n    ~~~~^^\n  File \"/var/tmp/gts9-test351/gts9-gnome/tools/install.py\", line 250, in main\n    result = install(prepared, args.cache, args.firmware, args.evidence, args.expected_boot_id)\n  File \"/var/tmp/gts9-test351/gts9-gnome/tools/install.py\", line 183, in install\n    simulation = run(apt[:1] + ['--simulate'] + apt[1:], evidence, 'apt-simulation')\n  File \"/var/tmp/gts9-test351/gts9-gnome/tools/install.py\", line 146, in run\n    raise RuntimeError(name + ' failed: ' + str(result.returncode))\nRuntimeError: apt-simulation failed: 100\n"
+}

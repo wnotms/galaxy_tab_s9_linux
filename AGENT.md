@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test351 STOP_BEFORE_INSTALLATION_APT_LOCAL_ACQUISITION.
+Verified-prefix transfer PASS56.15s/full archive SHA;381members extracted.
+Sole installerPID3703 ended before masks/firmware/APT: --no-download prevented
+local .deb acquisition. Readonly corrected-source simulation exact368/no upgrade/
+removal PASS. Original STOP/raw kept; cache reusable. Same331 normal90%32.0C.
+No GPU/GDM/touch/reboot/charging;348grantunused/finalTWRP unchanged.
+
 2026-10-08 Test351 REGISTERED_VERIFIED_PREFIX_DESKTOP_RESUME.
 Reuse exact139493376-byte device prefix, hash matches qualified local archive;
 only26998784bytes upload, full SHA before extraction. Same331boot protected38/
