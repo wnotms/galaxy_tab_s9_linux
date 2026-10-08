@@ -39,3 +39,42 @@ python3 -m unittest discover -s tests -p 'test_gnome*.py' -v
 
 Installation and first GPU/GNOME activation are separate device stages described
 in the bring-up document. Neither preparer can perform them.
+
+## Controlled installation tool (not executed on the tablet)
+
+`install.py` defaults to host cache validation only:
+
+```sh
+python3 userspace/gnome/install.py \
+  reference/desktop-bringup/initial-readonly-1791439861/gnome-packages.json \
+  --cache out/gnome-trixie-arm64/packages \
+  --firmware out/gnome-trixie-arm64/firmware-root
+```
+
+After Test348 closes, a separate device stage can transfer this directory,
+manifest, package cache and firmware staging tree. Native X710 Debian execution
+requires explicit `--execute`, `--expected-boot-id <current UUID>` and a **new**
+`--evidence <directory>`. It refuses charging-test boots/parameters. It checks
+dpkg and a local APT simulation, forbids removals/upgrades/unexpected packages,
+then installs the verified local packages and firmware. Existing package
+versions and GPU firmware must match; differing files are not overwritten.
+
+The installer leaves **persistent masks** for `gdm.service`, `gdm3.service` and
+`display-manager.service`, including after a failed installation. Debian's GDM
+postinst respects the masked display-manager link. It temporarily denies
+package service actions with `policy-rc.d`, restoring the original file or
+symlink afterwards. Ordinary failures restore that policy in `finally`; a hard
+kill/power loss may leave its clearly named adjacent backup. Inspect the saved
+stage and confirm APT has ended before restoring an interrupted policy. The
+tool refuses a stale backup instead of overwriting it.
+
+Output logs stream to evidence files while APT runs; `summary.json` records
+checkpoints. A package failure retains the GDM guards and evidence, and needs
+reviewed dpkg recovery; it does not attempt automatic package removal/retry.
+It never starts GDM, loads touch, reboots, flashes, changes charging or updates
+APT indexes. Package installation alone is not desktop hardware acceptance.
+
+For the later first GUI test, remove only the recorded masks, then start
+`gdm.service` once from rescue. Inspect Mutter/GDM and the visible session before
+enabling GDM for future boots. The current Debian user `ms` already exists;
+no root auto-login or password change is part of this preparation.

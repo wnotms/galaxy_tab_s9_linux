@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 GNOME installer OFFLINE_PREPARED_NOT_EXECUTED.
+Local verifiedcache/simulation gate, no upgrade/removal, expectednativeX710boot;
+reject chargingtestparameters. Persistent gdm/gdm3/display-manager masks before
+APT, temporary policy-rc.d restored on ordinarysuccess/error, checkpoints/rawlogs.
+No GUIstart/touchload/reboot/flash. Existinguser ms confirmed readonly same331boot.
+Affectedmock/cache/policy tests only; actualAPTinstall/build/full/deviceGUI:false.
+Run only after348closure as separatedevice stage. See userspace/gnome/README.md.
+
 2026-10-08 X710 touch OFFLINE_MODULE_COMPILED_NOT_DEPLOYED.
 Byte-identical Fedoraab123e7d FTS1BA90A/header imported under kernel/desktop,
 outside defaultbuild. OptionalWacomstub used; noSpen/firmwareupdate. ARM64W1

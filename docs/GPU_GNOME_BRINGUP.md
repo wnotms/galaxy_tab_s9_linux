@@ -91,6 +91,10 @@ in this inventory; do not equate it with Fedora's newer GNOME release.
    any existing policy) and noninteractive debconf. Do not let GDM start as a
    package post-install side effect. Preserve USB/NCM/SSH units. Record the
    resulting package state and installed firmware hashes.
+   `userspace/gnome/install.py` now implements the local-cache/simulation gate,
+   temporary service policy and persistent GDM/display-manager masks. It defaults
+   to cache validation, and has not been executed on the tablet. The current
+   ordinary user `ms` was confirmed read-only on the same Test331 boot.
 5. From authenticated rescue, perform one controlled GPU initialization via
    Vulkan diagnostics. Save full journal; require an Adreno device and no GPU
    fault/firmware authentication failure. Node presence or a software renderer
@@ -99,6 +103,9 @@ in this inventory; do not equate it with Fedora's newer GNOME release.
    Mutter logs. Require visible GNOME Wayland, working keyboard and GPU-backed
    rendering with the separate DPU connector. Save logs on the first failure;
    stop GDM and return to tty/rescue rather than repeatedly rebooting.
+   Debian's actual primary unit is `gdm.service`; remove the installer's recorded
+   masks first and capture that unit's journal. Keep automatic startup disabled
+   until the controlled first session passes.
 7. Once touch is ported, test ten contacts, coordinate orientation and edge
    accuracy. Then use GNOME display settings for 200% scale (1280×800 logical)
    and test the on-screen keyboard. Do not present an untested scaling default

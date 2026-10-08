@@ -1,0 +1,65 @@
+{
+  "verdict": "OFFLINE_GNOME_INSTALLER_PREPARED_NOT_EXECUTED",
+  "tool": "userspace/gnome/install.py",
+  "source_sha256": "bb001fa71405c09ccade59ffb79444b84f9b8f4931d0bf30072dd64ef68f9866",
+  "host_tests": {
+    "executed": true,
+    "tests": 27,
+    "failures": 0,
+    "seconds": 0.016,
+    "coverage": [
+      "verified cache",
+      "strict APT plan",
+      "policy restoration on failure",
+      "preserve symlink/mode",
+      "actual three GDM unit masks",
+      "partial mask failure",
+      "mock successful install",
+      "mock APT failure",
+      "missing systemd response",
+      "wrong machine refusal"
+    ]
+  },
+  "cache_validation": {
+    "executed": true,
+    "packages": 368,
+    "firmware": 3,
+    "installation_executed": false
+  },
+  "gdm_package": {
+    "path": "out/gnome-trixie-arm64/packages/gdm3_48.0-2_arm64.deb",
+    "sha256": "8d7a5cd6a92465c0baa69da7f230fa747a853de1add65f1206bca2d2c3216596",
+    "postinst_sha256": "301c3bbafa76e9e0cd2c8fb42fe65945a8de94f748125a8282fcddf90f62c62f",
+    "primary_unit": "gdm.service",
+    "alias": "gdm3.service",
+    "display_manager_mask_respected": true
+  },
+  "normal_user_inventory": {
+    "executed": true,
+    "read_only": true,
+    "boot_id": "be1baaaa47fc41f582558f7092c01653",
+    "user": "ms",
+    "uid": 1000,
+    "gdm_config_present": false
+  },
+  "APT_installation": {
+    "executed": false
+  },
+  "GPU_activation": {
+    "executed": false
+  },
+  "touch_module_loading": {
+    "executed": false
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "Host/device installer source only; no kernel inputs changed"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "Affected GNOME tool tests only; no routing changes"
+  },
+  "test348_inputs": "INPUTS_MATCH",
+  "persistent_device_writes": false,
+  "full_port_ready": false
+}

@@ -1,0 +1,32 @@
+test_complete_mbn_keeps_bytes_and_needs_no_split_files (test_gnome_gpu_firmware.FirmwareTests.test_complete_mbn_keeps_bytes_and_needs_no_split_files) ... ok
+test_corrupted_source_rejects_entire_set_before_publish (test_gnome_gpu_firmware.FirmwareTests.test_corrupted_source_rejects_entire_set_before_publish) ... ok
+test_missing_hash_rejected (test_gnome_gpu_firmware.FirmwareTests.test_missing_hash_rejected) ... ok
+test_program_header_table_bounds_rejected (test_gnome_gpu_firmware.FirmwareTests.test_program_header_table_bounds_rejected) ... ok
+test_split_segment_and_invalid_memory_rejected (test_gnome_gpu_firmware.FirmwareTests.test_split_segment_and_invalid_memory_rejected) ... ok
+test_truncated_and_wrong_format_rejected (test_gnome_gpu_firmware.FirmwareTests.test_truncated_and_wrong_format_rejected) ... ok
+test_wrong_source_set_rejected_without_output (test_gnome_gpu_firmware.FirmwareTests.test_wrong_source_set_rejected_without_output) ... ok
+test_all_actual_gdm_entry_points_remain_masked (test_gnome_install.InstallTests.test_all_actual_gdm_entry_points_remain_masked) ... ok
+test_apt_failure_restores_policy_keeps_guard_and_records_failure (test_gnome_install.InstallTests.test_apt_failure_restores_policy_keeps_guard_and_records_failure) ... ok
+test_exact_new_package_plan (test_gnome_install.InstallTests.test_exact_new_package_plan) ... ok
+test_existing_unit_override_is_preserved_before_any_mask (test_gnome_install.InstallTests.test_existing_unit_override_is_preserved_before_any_mask) ... ok
+test_missing_systemd_response_stops_before_any_installation (test_gnome_install.InstallTests.test_missing_systemd_response_stops_before_any_installation) ... ok
+test_only_fully_installed_versions_are_accepted (test_gnome_install.InstallTests.test_only_fully_installed_versions_are_accepted) ... ok
+test_original_policy_mode_and_bytes_restored_on_failure (test_gnome_install.InstallTests.test_original_policy_mode_and_bytes_restored_on_failure) ... ok
+test_package_and_firmware_cache_validation (test_gnome_install.InstallTests.test_package_and_firmware_cache_validation) ... ok
+test_partial_mask_creation_failure_rolls_back_created_masks (test_gnome_install.InstallTests.test_partial_mask_creation_failure_rolls_back_created_masks) ... ok
+test_policy_absent_restored_to_absent (test_gnome_install.InstallTests.test_policy_absent_restored_to_absent) ... ok
+test_removal_upgrade_extra_missing_and_malformed_plan_rejected (test_gnome_install.InstallTests.test_removal_upgrade_extra_missing_and_malformed_plan_rejected) ... ok
+test_successful_mock_install_keeps_gdm_masks_and_does_not_start_gui (test_gnome_install.InstallTests.test_successful_mock_install_keeps_gdm_masks_and_does_not_start_gui) ... ok
+test_symlink_policy_preserved_and_stale_backup_rejected (test_gnome_install.InstallTests.test_symlink_policy_preserved_and_stale_backup_rejected) ... ok
+test_wrong_target_is_rejected_without_evidence_or_mutation (test_gnome_install.InstallTests.test_wrong_target_is_rejected_without_evidence_or_mutation) ... ok
+test_download_verified_and_reused_without_fetch (test_gnome_package_prepare.PreparationTests.test_download_verified_and_reused_without_fetch) ... ok
+test_duplicate_names_and_wrong_total_rejected (test_gnome_package_prepare.PreparationTests.test_duplicate_names_and_wrong_total_rejected) ... ok
+test_existing_mismatch_preserved (test_gnome_package_prepare.PreparationTests.test_existing_mismatch_preserved) ... ok
+test_invalid_download_is_not_published (test_gnome_package_prepare.PreparationTests.test_invalid_download_is_not_published) ... ok
+test_manifest_rejects_wrong_architecture_path_and_hash (test_gnome_package_prepare.PreparationTests.test_manifest_rejects_wrong_architecture_path_and_hash) ... ok
+test_symlink_is_not_an_accepted_cache_entry (test_gnome_package_prepare.PreparationTests.test_symlink_is_not_an_accepted_cache_entry) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.016s
+
+OK
