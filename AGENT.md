@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 DISCHARGE_PASS_AWAITING_PC_RESTORE.
+Owner unplug confirmed; same candidate 19fbf941 passed 15.606s discharge,
+USB/TCPM offline, battery 71% / 32.0°C / −0.646A, physical pump OFF/unbound.
+Native 300s and fixed9 ordinary charge already passed. Await owner PC return
+for one ADB/device-NCM/Windows check, then unconditional exact331/allfive/
+original181 restoration. No second PPS/pump attempt. Full round not closed,
+full port NOT_READY. Evidence-only tests/build false; qualification reused.
+See Test347 PHYSICAL_PROGRESS and discharge raw evidence.
+
 2026-10-08 Test347 NATIVE_300S_AND_FIXED9_CHARGE_PASS_PENDING_RESTORE.
 Fresh owner C1 reply launched sole guardian 1762 on candidate 19fbf941. Native
 300000ms proof passed: 62 PPS refreshes, 63 parked-zero proofs, 417 active frames,

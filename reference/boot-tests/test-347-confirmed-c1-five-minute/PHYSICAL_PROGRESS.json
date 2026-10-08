@@ -1,5 +1,5 @@
 {
-  "verdict": "NATIVE_300S_AND_FIXED9_CHARGE_PASS_PENDING_DISCHARGE_PC_RESTORE",
+  "verdict": "NATIVE_300S_FIXED9_AND_DISCHARGE_PASS_AWAITING_PC_RESTORE",
   "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
   "guardian_pid": 1762,
   "native": {
@@ -32,5 +32,8 @@
     "build_executed": false,
     "reused": "60host/79actualC/ARM64/W1+sparse"
   },
-  "full_port": "NOT_READY"
+  "full_port": "NOT_READY",
+  "discharge_observation_seconds": 15.605688795999981,
+  "discharge_endpoint_soc": 71,
+  "discharge_endpoint_temp_decic": 320
 }
