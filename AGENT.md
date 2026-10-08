@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Offline1200s duration candidate READY_OFFLINE_DEFAULT_OFF.
+Source0b731b4a adds only immutable1200000ms exclusive one-shot; defaultOFF/30s
+and300s retained, hardware1700/PPS+raw1800/current/voltage/fault/thermal/PM/
+lease/refresh/reserve unchanged.167 affected tests PASS (85actualC/11parser/
+71retained), historical frozen-parser comparisons use manifest-bound Git bytes.
+Incremental ARM64/modules84.982s/W1+sparse13.493s PASS/no new warnings;
+exact331 config/DT/release,108 protected sources/9 old formal artifacts preserved.
+181 modules match Test347 runtime; metadata pair changed. Formal defaultOFF
+outputs out/kernel-x710-twenty-minute, boot-bundle-x710-twenty-minute-off.
+Device remains TWRP/restored331; no device operation/Windowsstage/armedboot.
+No1200s physical runner or authorization yet; next independent registration,
+not Test347 restart. Full port NOT_READY. See charging/test347-twenty-minute-followup.
+
 2026-10-08 Test347 CLOSED_300S_PASS_RESTORED331_STAYING_TWRP.
 One owner-confirmed300s native attempt passed: 62 refreshes/63 zero proofs,
 417 active frames, rawIBUS max1.781875A, pack32.7°C/die48.5°C. OFF/unbound/

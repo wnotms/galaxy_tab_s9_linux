@@ -1,0 +1,21 @@
+{
+  "baseline": "Test347 qualified300s artifact",
+  "files": 181,
+  "runtime_unchanged": true,
+  "exact_files_unchanged": 180,
+  "changed": {
+    "modules.builtin.modinfo": {
+      "reason": "built-in SM5440 boot-parameter metadata"
+    }
+  },
+  "candidate_archive": {
+    "path": "out/kernel-x710-twenty-minute/modules-x710.tar.gz",
+    "bytes": 47319733,
+    "sha256": "e62ef2dec061a78fc1626c69e7d74dace08f78046ea53d6b6232029c0f6f1d38"
+  },
+  "old_archive": {
+    "path": "out/kernel-x710-bounded-duration/modules-x710.tar.gz",
+    "bytes": 47319735,
+    "sha256": "4399bcc1d2d7c360db24e64b14d33872de09f75206e50d0ff63f614b0329a19a"
+  }
+}

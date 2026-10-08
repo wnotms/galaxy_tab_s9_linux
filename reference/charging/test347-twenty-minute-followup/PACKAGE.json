@@ -1,0 +1,73 @@
+{
+  "test": "UNREGISTERED_TWENTY_MINUTE_OFF_CANDIDATE",
+  "source_revision": "0b731b4ac7721429202a747a4ccae82ce9624c0b",
+  "kernel_qualification": "explicit bounded30s/300s/1200s duration with unchanged hardware1.7A/PPS+raw1.8A; direct charging default OFF",
+  "write_partitions": [
+    "boot"
+  ],
+  "modules": 181,
+  "baseline_partitions": {
+    "boot": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "4e60f36ccb8f3f84745c0d456b074dde53371eeb29c01b00fa48aa62bcb8fd1e",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "rollback_baseline": "accepted Test331 default-OFF paired ordinary charging",
+  "artifacts": {
+    "Image.gz": {
+      "path": "out/kernel-x710-twenty-minute/Image.gz",
+      "bytes": 22140129,
+      "sha256": "7d0282c4f0d3c9ec1b6b38974a9dbcc8ea0a4e6b8e62d6496eeb83b2c15a503a"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "path": "out/kernel-x710-twenty-minute/sm8550-samsung-gts9wifi.dtb",
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e"
+    },
+    "config": {
+      "path": "out/kernel-x710-twenty-minute/config",
+      "bytes": 243277,
+      "sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a"
+    },
+    "kernel-notes.bin": {
+      "path": "out/kernel-x710-twenty-minute/kernel-notes.bin",
+      "bytes": 84,
+      "sha256": "ae4a273ec63861ec54ce1261aaec07d1588b6d0aabfbb1eb9ec3aec8ec0b0ae6"
+    },
+    "modules-x710.tar.gz": {
+      "path": "out/kernel-x710-twenty-minute/modules-x710.tar.gz",
+      "bytes": 47319733,
+      "sha256": "e62ef2dec061a78fc1626c69e7d74dace08f78046ea53d6b6232029c0f6f1d38"
+    },
+    "kernel.release": {
+      "path": "out/kernel-x710-twenty-minute/kernel.release",
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658"
+    },
+    "boot.img": {
+      "path": "out/boot-bundle-x710-twenty-minute-off/boot.img",
+      "bytes": 100663296,
+      "sha256": "4e60f36ccb8f3f84745c0d456b074dde53371eeb29c01b00fa48aa62bcb8fd1e"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-modules-x710.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    }
+  },
+  "all_other_partitions_unchanged": true,
+  "device_commands_executed": false
+}

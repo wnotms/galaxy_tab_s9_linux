@@ -1,0 +1,63 @@
+{
+  "phase": "offline1200s-candidate-qualified-default-OFF",
+  "source_revision": "0b731b4ac7721429202a747a4ccae82ce9624c0b",
+  "test347_closed": true,
+  "tests": {
+    "executed": true,
+    "actual_C": 85,
+    "duration_parser": 11,
+    "retained": 71,
+    "total": 167,
+    "full_suite_executed": false,
+    "skipped": 0
+  },
+  "build": {
+    "returncode": 0,
+    "seconds": 84.98226372499994,
+    "started_utc": "2026-10-08T05:48:54.813348+00:00",
+    "environment": {
+      "JOBS": "8",
+      "USE_CCACHE": "1",
+      "BUILD_MODULES": "1",
+      "GTS9_CHARGING_PROFILE": "sm5440-fedora",
+      "KERNEL_WORKTREE": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "KERNEL_BUILD_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "KERNEL_OUT_DIR": "/home/ms/Samsung/galaxy_tab_s9_linux/out/kernel-x710-twenty-minute"
+    },
+    "device_operations": []
+  },
+  "static": {
+    "argv": [
+      "make",
+      "-C",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-src-x710-charging",
+      "O=/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+      "ARCH=arm64",
+      "LLVM=1",
+      "CC=ccache clang",
+      "-j8",
+      "W=1",
+      "C=2",
+      "drivers/power/supply/sm5440-fedora.o"
+    ],
+    "returncode": 0,
+    "standard_flags_returncode": 0,
+    "seconds": 13.493074620999323,
+    "warnings": [],
+    "qualified_object_sha256": {
+      "drivers/power/supply/sm5440-fedora.o": "dcd367ea4d037aed145154dad41bafba0993dd899617b91f74738cbf03da33f2"
+    },
+    "qualified_object_restored": true,
+    "formal_artifacts_relinked": false
+  },
+  "exact_config_diff_from_Test331": {},
+  "exact_DTB_diff_from_Test331": [],
+  "module_runtime_unchanged_from_Test347": true,
+  "protected_sources": 108,
+  "retained_artifacts_preserved": 9,
+  "physical_executed": false,
+  "physical_runner_registered": false,
+  "twenty_minute_execution_authorized": false,
+  "device_endpoint": "TWRP",
+  "full_port_ready": false
+}
