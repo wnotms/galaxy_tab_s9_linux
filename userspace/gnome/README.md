@@ -78,3 +78,14 @@ For the later first GUI test, remove only the recorded masks, then start
 `gdm.service` once from rescue. Inspect Mutter/GDM and the visible session before
 enabling GDM for future boots. The current Debian user `ms` already exists;
 no root auto-login or password change is part of this preparation.
+
+## Single transfer artifact
+
+The verified archive is `out/gnome-trixie-arm64/gts9-gnome-deploy.tar` (about
+166 MB). Its 381 regular files include the local package cache, GPU firmware,
+installer, checksums and an explicitly optional/unloaded touch module. Source
+and archive identities are recorded in
+`reference/desktop-bringup/deploy-bundle/bundle.json`; reproduce it with that
+directory's `build.py`. No Windows mirror or device transfer has been made.
+Archive validation checks its actual full file set and content. It does not
+establish GPU, GNOME or touch hardware acceptance.

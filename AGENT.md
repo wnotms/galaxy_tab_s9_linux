@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 GNOME host transfer bundle VERIFIED_NOT_TRANSFERRED.
+out/gnome-trixie-arm64/gts9-gnome-deploy.tar,381 regularmembers/166492160bytes,
+368packages/3GPUfirmware/controlledinstaller/optionalunloadedtouch. Fulltar set/
+bytes checked; existing installer/touch qualification identities required.
+No device operation/Windowscopy/newkernel/fullsuite. This temporarytar follows
+desktopdeployment closurecleanup; manifests/source retained. See desktop deploy-bundle.
+
 2026-10-08 GNOME installer OFFLINE_PREPARED_NOT_EXECUTED.
 Local verifiedcache/simulation gate, no upgrade/removal, expectednativeX710boot;
 reject chargingtestparameters. Persistent gdm/gdm3/display-manager masks before

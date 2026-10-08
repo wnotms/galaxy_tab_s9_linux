@@ -1,0 +1,31 @@
+{
+  "verdict": "HOST_TRANSFER_ARTIFACT_READY_NOT_DEPLOYED",
+  "artifact_validation": {
+    "executed": true,
+    "complete_members": 381,
+    "full_bytes_checked": true,
+    "packaged_installer_preview": true
+  },
+  "new_host_unit_tests": {
+    "executed": false,
+    "reason": "Packaging-only change; actual archive verification and packaged entrypoint preview executed"
+  },
+  "reused_qualifications": [
+    "reference/desktop-bringup/gnome-installer-offline/summary.json",
+    "reference/desktop-bringup/fts1ba90a-offline/summary.json"
+  ],
+  "kernel_build": {
+    "executed": false
+  },
+  "full_regression": {
+    "executed": false
+  },
+  "device_transfer": {
+    "executed": false
+  },
+  "device_installation": {
+    "executed": false
+  },
+  "physical_acceptance": false,
+  "full_port_ready": false
+}
