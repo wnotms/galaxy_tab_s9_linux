@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test346 AUTHORIZED_STAGED_AWAITING_PC_USB.
+Enrollment e765eb4b pushed; Windows346 stage verified, no device mutation.
+FreshWiFi683bdd12 ownermanualattributed/69%24.8C/config51/notes03match331;
+ADBlistempty, pendingPC cableconnection beforefullpreflight/install. Reuse32host/
+79C/build/W1sparse; operationresults-onlytests/build:false. No newPPS/pump/reboot.
+FullportNOT_READY. See346PREPARED_STATUS/authorized-readiness/PC-connect-wait.
+
 2026-10-08 Test346 AUTHORIZED_ONE300S_ATTEMPT_NOT_DEPLOYED.
 Owner “允许测试，平板为手动关机重启” explicitly approves300s and attributes
 683bdd12 to manual poweroff/restart. Originalpendingtelemetry retained with
