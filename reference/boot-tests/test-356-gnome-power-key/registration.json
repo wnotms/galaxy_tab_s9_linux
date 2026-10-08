@@ -1,0 +1,38 @@
+{
+  "test": "Test356",
+  "purpose": "Prevent GNOME power-key-triggered shutdown; restore existing backlight-only short-press ownership",
+  "expected_boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+  "owner_scope": "Continue GPU/GNOME tablet port; reported spontaneous poweroff/manual restart",
+  "root_cause": "Test355 prior log + GNOME48.1 do_config_power_button_action(vm) maps non-nothing to PowerOff",
+  "rootfs_changes": [
+    "/usr/share/glib-2.0/schemas/99-gts9-power-key.gschema.override",
+    "recompiled gschemas.compiled",
+    "only ms/Debian-gdm dconf power-button-action=nothing (previous exact explicit values saved)"
+  ],
+  "other_power_settings": "unchanged, including idle/suspend/thermal",
+  "GNOME_start_attempts": 1,
+  "initial_window_seconds": 10,
+  "endpoint": "GNOME active, persistent3masks restored without --now; await two owner short presses",
+  "rollback": "On apply failure stop GDM, restore prior dconf explicit values or reset if absent, remove only new schema override, compile schemas; masks preserved",
+  "hardware_mutations": false,
+  "touch_load": false,
+  "kernel_config_DT_modules_charging_change": false,
+  "flash": false,
+  "reboot": false,
+  "PPS": false,
+  "pump_ON": false,
+  "stop_conditions": [
+    "identity drift",
+    "invalid schema/effective value",
+    "health not Good or pack>=42C",
+    "new serious kernel fault",
+    "SSH loss",
+    "GDM start failure"
+  ],
+  "Test348": "Attempt unused, no charging execution; future desktop-inactive fresh admission and exact331 finalTWRP unchanged",
+  "tests": {
+    "real_Debian_schema_test_passed": 1,
+    "kernel_build_executed": false,
+    "full_regression_executed": false
+  }
+}

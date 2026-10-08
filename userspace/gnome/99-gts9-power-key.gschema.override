@@ -1,0 +1,6 @@
+# X710: gts9-power-key.service owns short presses (backlight only).
+# GNOME 48 treats the Qualcomm vm-other chassis as a VM: every action except
+# 'nothing' issues PowerOff, even if logind's HandlePowerKey is ignore.
+# Keep kernel/PMIC long-hold recovery and the existing backlight helper intact.
+[org.gnome.settings-daemon.plugins.power]
+power-button-action='nothing'

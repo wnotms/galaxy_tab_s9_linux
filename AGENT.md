@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test355（Fedora X710 触摸验证；Test348 仍未部署），窗口为 **Test346–Test355**；没有生成镜像的轮次仍占一轮。
+  编号为 Test356（GNOME 电源键策略修正；Test348 仍未部署），窗口为 **Test347–Test356**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,14 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test356 REGISTERED_GNOME_POWER_KEY_NOTHING.
+Fix only GNOME48.1 VM-non-nothing shutdown path: schema default plus ms/greeter
+power-button-action=nothing; save exact old explicit dconf values. Same331new
+boot1adc0f13/WiFi157, one10s GDMstart/all3persistentmasks/no autostart. Existing
+logindignore/backlighthelper unchanged. Ask two short presses before acceptance.
+RealDebian48.1 schema test PASS; no fulltests/build/kernel/DT/module/charging/
+touch/reboot/flash.348scopeunused; freshdesktopinactive admission/finalTWRP.
 
 2026-10-08 Test355 STOP_BEFORE_TOUCH_LOAD_POWER_KEY_POWEROFF.
 Owner reports spontaneousoff/manual restart before module upload/insmod (zero).
