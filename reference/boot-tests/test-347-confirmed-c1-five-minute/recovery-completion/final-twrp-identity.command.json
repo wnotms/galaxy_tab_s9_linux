@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "getprop ro.product.device; getprop ro.twrp.version; uname -a; id; cat /proc/mounts"
+  ],
+  "ended_utc": "2026-10-08T03:24:58.104386+00:00",
+  "started_utc": "2026-10-08T03:24:57.978618+00:00",
+  "status": 0
+}

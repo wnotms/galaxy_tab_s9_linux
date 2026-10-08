@@ -1,0 +1,44 @@
+{
+  "reason": "Test347 physical attempt closed; exact Test331 restored and owner requested stay in TWRP; qualified WSL candidate and rollback artifacts remain verified",
+  "stage": "/mnt/d/android/gts9-active/gts9-test347",
+  "files": [
+    {
+      "name": "candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "b6ac504e1e662eb8fe8a852a4ad01a8120a59bad7cbd7036152783baf6ef4a45"
+    },
+    {
+      "name": "candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4bf814912c4f178bbbd06c7a234d338a0edfba39cc9960a7c886b5be609bf5e8"
+    },
+    {
+      "name": "candidate-modules.tar.gz",
+      "bytes": 47319735,
+      "sha256": "4399bcc1d2d7c360db24e64b14d33872de09f75206e50d0ff63f614b0329a19a"
+    },
+    {
+      "name": "module-swap.sh",
+      "bytes": 2636,
+      "sha256": "af28ba95dae7a9aa76ae689f9ef13da0c6ac9a5c285ff9111b6d57704fba97fe"
+    },
+    {
+      "name": "mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca"
+    },
+    {
+      "name": "rollback-accepted331-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    {
+      "name": "rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "ae20fbf4907770e2a831fbf321e23a1a5cd16a2e5d8cc9be391e21fd80643732"
+    }
+  ],
+  "bytes_removed": 248697284,
+  "stage_removed": true,
+  "ADB_tools_untouched": true
+}

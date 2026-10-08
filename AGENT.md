@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 CLOSED_300S_PASS_RESTORED331_STAYING_TWRP.
+One owner-confirmed300s native attempt passed: 62 refreshes/63 zero proofs,
+417 active frames, rawIBUS max1.781875A, pack32.7°C/die48.5°C. OFF/unbound/
+fixed9, ordinarycharge31.022s, discharge15.606s and one PC ADB/deviceNCM/noCode43
+all passed. No new journal fault. Owner “已接回电脑，本轮完成后保持在twrp”
+changed only final endpoint: exact331 boot/allfive/original181 restored and
+verified, Debian unmounted, final TWRP3.7.1 identity; no restored Debian reboot
+or fresh runtime acceptance. rollback_required=false. Device must remain TWRP.
+Seven-file Windows347 transfer stage retired after verification; qualified WSL
+candidate/current331 rollback retained. No second activation; 300s grant consumed.
+Evidence-only tests/build false, reused60host/79C/ARM64/W1+sparse; one-time
+completion syntax and actual recovery gates passed. Full port NOT_READY: next
+1200s candidate/independent registration and physical scope still required.
+See Test347 PHYSICAL_RESULTS/physical-summary and recovery-completion evidence.
+
 2026-10-08 Test347 DISCHARGE_PASS_AWAITING_PC_RESTORE.
 Owner unplug confirmed; same candidate 19fbf941 passed 15.606s discharge,
 USB/TCPM offline, battery 71% / 32.0°C / −0.646A, physical pump OFF/unbound.

@@ -1,0 +1,74 @@
+{
+  "test": "Test347",
+  "verdict": "PASS_BOUNDED_300S_RESTORED331_STAYING_TWRP",
+  "completed_attempts": 1,
+  "candidate_boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+  "guardian_pid": 1762,
+  "guardian_terminal": true,
+  "registered_window_ms": 300000,
+  "native": {
+    "completed_us": 417577839,
+    "deadline_ms": 417032,
+    "fixed_return": true,
+    "hardware_input_ma": 1700,
+    "no_restart": true,
+    "parked_zero_proofs": 63,
+    "pump_ON_observed": true,
+    "refresh_deferrals": 0,
+    "refreshes": 62,
+    "started_us": 117143450,
+    "target_ma": 1800,
+    "target_mv": 9040,
+    "window_ms": 300000
+  },
+  "active_samples": 417,
+  "statistics": {
+    "calibrated": false,
+    "max_die_temp_decic": 485,
+    "max_pack_temp_decic": 327,
+    "max_raw_ibus_ua": 1781875,
+    "max_vbus_mv": 9284,
+    "max_pack_voltage_uv": 4168000,
+    "sampled_input_power_w": {
+      "mean": 12.217926564748202,
+      "max": 15.796321875,
+      "calibrated": false,
+      "time_weighted": false,
+      "scope": "mode4 recorded samples; not wall power or continuous active-only efficiency"
+    }
+  },
+  "fixed_charge_seconds": 31.021708477999994,
+  "discharge_seconds": 15.605688795999981,
+  "PC_return": {
+    "ADB": true,
+    "Code43": false,
+    "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
+    "device_NCM": true,
+    "driver_unbound": true,
+    "pump_OFF": true,
+    "rollback_required": true,
+    "verdict": "PASS"
+  },
+  "kernel_fault_counts": {},
+  "restoration": {
+    "Debian_reboot_executed": false,
+    "allfive_verified": true,
+    "final_endpoint": "TWRP",
+    "modules": 181,
+    "owner_endpoint_override": true,
+    "restored_Debian_runtime_acceptance_executed": false,
+    "rollback_required": false,
+    "verdict": "ACCEPTED331_ALLFIVE_181_RESTORED_STAYING_TWRP"
+  },
+  "rollback_required": false,
+  "final_endpoint": "TWRP",
+  "restored_Debian_runtime_acceptance_executed": false,
+  "owner_endpoint_instruction": "已接回电脑，本轮完成后保持在twrp",
+  "tests": {
+    "executed": false,
+    "build_executed": false,
+    "reused": "60host/79actualC/ARM64/W1+sparse"
+  },
+  "full_charging_port": "NOT_READY",
+  "next_scope": "Separate 1200s candidate and registration; no further physical activation authorized by this result"
+}

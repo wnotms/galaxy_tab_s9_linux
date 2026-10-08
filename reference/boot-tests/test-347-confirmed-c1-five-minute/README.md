@@ -1,5 +1,10 @@
 # Test347 — confirmed-C1 five-minute PPS acceptance
 
+**Closed: registered 300s attempt PASS; exact Test331 restored offline, device stays
+in TWRP per owner request.** See [physical results](PHYSICAL_RESULTS.md) and
+[physical-summary.json](physical-summary.json). The text below is registration-time
+scope/history, not current device state. No additional activation is permitted.
+
 Purpose: execute one300s conservative PPS/pump observation with fresh owner-confirmed C1 admission, preserving the qualified kernel and native/cleanup gates. Test346 closed at its900s human-handoff timeout without activation; never restart or rewrite it. This is an independent registration, not a retry of its consumed guardian.
 
 ## Candidate and safety

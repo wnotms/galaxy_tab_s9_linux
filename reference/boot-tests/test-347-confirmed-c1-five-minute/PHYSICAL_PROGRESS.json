@@ -1,5 +1,5 @@
 {
-  "verdict": "NATIVE_300S_FIXED9_AND_DISCHARGE_PASS_AWAITING_PC_RESTORE",
+  "verdict": "PASS_BOUNDED_300S_RESTORED331_STAYING_TWRP",
   "boot_id": "19fbf94136a64f7cb73e9e263da8549c",
   "guardian_pid": 1762,
   "native": {
@@ -26,7 +26,7 @@
   },
   "fixed_charge_observation_seconds": 31.021708477999994,
   "fixed_charge_endpoint_soc": 71,
-  "rollback_required": true,
+  "rollback_required": false,
   "tests": {
     "executed": false,
     "build_executed": false,
@@ -35,5 +35,7 @@
   "full_port": "NOT_READY",
   "discharge_observation_seconds": 15.605688795999981,
   "discharge_endpoint_soc": 71,
-  "discharge_endpoint_temp_decic": 320
+  "discharge_endpoint_temp_decic": 320,
+  "final_endpoint": "TWRP",
+  "closed": true
 }
