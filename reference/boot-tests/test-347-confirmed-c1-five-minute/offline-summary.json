@@ -1,0 +1,31 @@
+{
+  "test": "Test347",
+  "verdict": "REGISTERED_READY_AWAITING_NEW_ROUND_AUTHORIZATION",
+  "source_revision": "5c90a4b541588974ecf1572c6d34adfe6bd191b9",
+  "physical_executed": false,
+  "execution_authorized": false,
+  "kernel_rebuilt": false,
+  "windows_staged": false,
+  "pump_window_ms": 300000,
+  "hardware_input_ma": 1700,
+  "PPS_raw_cap_ma": 1800,
+  "host_tests": {
+    "executed": true,
+    "command": "PYTHONPATH=tests python3 -m unittest tests/test_sm5440_confirmed_c1_start.py tests/test_sm5440_five_minute_deployment.py tests/test_sm5440_duration_evidence.py tests/test_windows_ssh_transport.py",
+    "passed": true,
+    "count": 60,
+    "seconds": 0.361,
+    "full_suite_executed": false,
+    "historical_346_gate_tests": 19,
+    "historical_manifests_unchanged": true
+  },
+  "build": {
+    "executed": false,
+    "reused": "reference/charging/test345-duration-followup/qualification.json",
+    "actual_C_tests": 79,
+    "config_delta_from331": {},
+    "DTB_delta": [],
+    "runtime_module_files": 181
+  },
+  "full_port_verdict": "NOT_READY"
+}

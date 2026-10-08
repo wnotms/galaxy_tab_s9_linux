@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test347（登记准备中，尚未部署），窗口为 **Test338–Test347**；没有生成镜像的轮次仍占一轮。
+  编号为 Test347（已登记，尚未部署），窗口为 **Test338–Test347**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test347 REGISTERED_READY_AWAITING_NEW_ROUND_AUTHORIZATION.
+Independenthost-only workflow: no guardian duringmanualhandoff/OFF-unbound;
+freshboot-bound C1reply<=120s/fixed9 precheck thenimmediateguard/solebind.
+Launchresponseambiguity persistsoriginalPID/adoptonly/no restart; prelaunch
+failure alsoforbids replay. PersistentWSL acceptedpublictrust/no keyscan/copy.
+60affectedhost PASS0.361s/Python+shellsyntax/frozeninputs+artifactsPASS. Reuse
+exact5c90/b6acboot/4399modules/79C/build/W1sparse/configDT/runtime181; no kernel
+or currentpolicychange/rebuild/fullsuite/Actions/deviceoperation/Windowsstage.
+executionfalse/newownerroundauthorization required, no auto retryofclosed346.
+Device lastaccepted331a96de8c0; futurefreshpreflight/one300s hardware1700/PPS+
+raw1800/unconditionalexact331restore. Retention338..347/expired337 retired.
+FullportNOT_READY. See347README/OFFLINE_RESULTS/inputs/scope.
 
 2026-10-08 Test346 CLOSED_MANUAL_HANDOFF_TIMEOUT_NO_ACTIVATION_RESTORED331.
 Original900s guardianhandoff timeout whileOFF/unbound;0activeframes/noentry/no
