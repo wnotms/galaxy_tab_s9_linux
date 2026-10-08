@@ -99,6 +99,20 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 NATIVE_SOCINFO_KERNEL_COMPILED_HOST_ONLY_NOT_DEPLOYMENT_READY.
+Onlyresolveddelta vs331 QCOM_SOCINFO n->y; DTB identical348; DCC/OCI/SM5714
+unchanged. StandardImage/dtbs/181modules buildPASS/reusedproviderinvalidated,
+formal331/348frozen. Pen+palmFTS W=1 newproviderbuild/29+38CRCchecksPASS;
+oldloaders/acceptedmodulesunchanged.41affectedPASS/0skip/52shellsyntaxPASS.
+Onefull3032run NOTPASS(8failrecords/22errors/25skip); rawreport/logarchived,
+historicalmissingimages/source/statefixtures plusSSC genericprepare import
+collision. Fixsensorimportnext; do notweakenoldgates orrecreateexpiredimages.
+No deviceops/firmware/SSC/ADSPstart/newPPS. Device lastaccepted331Debian;
+TWRP endpointno longerrequired. FinishcontrolledSSCcandidate/runtimeverification,
+thenresumecharging perowner;1.8AbringupnotHWmaximum, no currentraise yet.
+Fullportgoalactive/incomplete. Evidence:desktop-bringup/native-socinfo-kernel.
+
+
 2026-10-08 Test348_STOP_EVIDENCE_COMPLETE_331_DEBIAN_RESTORED.
 Native rawIBUS1811875>1800000uA at1196.692969s ->STOP/no retry. Full2049row
 journal/1876samples; no parserCPU/panic/Oops faultcounts,2expectednativeerror

@@ -1,0 +1,59 @@
+{
+  "device_operations": [],
+  "new_provider_config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "old_input_modules_preserved": true,
+  "loader_identity_unchanged": true,
+  "results": [
+    {
+      "label": "pen",
+      "argv": [
+        "make",
+        "-C",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+        "M=/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/pen",
+        "ARCH=arm64",
+        "LLVM=1",
+        "CC=ccache clang",
+        "-j8",
+        "W=1",
+        "modules"
+      ],
+      "returncode": 0,
+      "seconds": 3.8672413499998584,
+      "source_hashes": {
+        "Makefile": "8c60859909ce5b7209422892c014abacc83d9fe60145aa198306330db2914354",
+        "wacom-wez01.c": "6a2cf5b819be945445f287a2925a265012c87122918d38eda42cd8f7cc5d0e56",
+        "include/linux/wacom_wez01.h": "8bce569cbb105e835a5e9282adbef9612abd97c4540e82a03648a953772caa13"
+      },
+      "modules": {
+        "out/ssc-native-input-pair/pen/wacom-wez01.ko": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5"
+      }
+    },
+    {
+      "label": "palm-touch",
+      "argv": [
+        "make",
+        "-C",
+        "/home/ms/Samsung/galaxy_tab_s9_linux/.work/build/linux-out-x710-308-passive",
+        "M=/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/palm-touch",
+        "ARCH=arm64",
+        "LLVM=1",
+        "CC=ccache clang",
+        "-j8",
+        "W=1",
+        "KBUILD_EXTRA_SYMBOLS=/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-native-input-pair/pen/Module.symvers",
+        "modules"
+      ],
+      "returncode": 0,
+      "seconds": 3.5274111959997754,
+      "source_hashes": {
+        "fts1ba90a.c": "93ec9250a91f08e33b4d2ecb8f032a3061bb6a120f7f6626435694cc7ac09476",
+        "Makefile": "38dbf332f62c990906ab258f2e4ea8f16ea5961b429349846f123bfa8f61128e",
+        "include/linux/wacom_wez01.h": "8bce569cbb105e835a5e9282adbef9612abd97c4540e82a03648a953772caa13"
+      },
+      "modules": {
+        "out/ssc-native-input-pair/palm-touch/fts1ba90a.ko": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253"
+      }
+    }
+  ]
+}

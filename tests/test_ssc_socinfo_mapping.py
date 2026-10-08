@@ -16,6 +16,49 @@ def snapshot(**changes):
 
 
 class SocinfoMappingTests(unittest.TestCase):
+    def test_native_identity_dependency_is_builtin_and_build_gated(self):
+        fragment=(ROOT/'kernel/config/gts9wifi-mainline.fragment').read_text()
+        self.assertIn('CONFIG_QCOM_SMEM=y\n',fragment)
+        self.assertIn('CONFIG_QCOM_SOCINFO=y\n',fragment)
+        build=(ROOT/'scripts/build-kernel.sh').read_text()
+        required=build.split('required=(',1)[1].split('\n)',1)[0]
+        self.assertIn('    CONFIG_QCOM_SOCINFO\n',required)
+        self.assertIn('# CONFIG_HVC_DCC is not set',fragment)
+
+    @staticmethod
+    def charging_config(value='y', extra=None):
+        spec=importlib.util.spec_from_file_location('socinfo_charging_gate',ROOT/'scripts/verify-x710-charging-profile.py')
+        gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)
+        cfg=gate.STAGE2.CONTAINER.read_config(gate.BASE.read_text())
+        cfg.update(CONFIG_CHARGER_SM5440_DIRECT='n',CONFIG_CHARGER_SM5440_FEDORA='y',CONFIG_QCOM_SOCINFO=value)
+        cfg.update(extra or {})
+        text=''.join(f'# {k} is not set\n' if v=='n' else f'{k}={v}\n' for k,v in cfg.items())
+        return gate,text
+
+    def test_explicit_socinfo_gate_accepts_only_reviewed_delta(self):
+        gate,text=self.charging_config()
+        self.assertFalse(gate.verify(text,profile='sm5440-fedora')['valid'])
+        result=gate.verify(text,profile='sm5440-fedora',native_socinfo=True)
+        self.assertTrue(result['valid'])
+        self.assertTrue(result['native_socinfo_builtin'])
+        self.assertEqual(result['unexpected_delta'],{})
+
+    def test_explicit_socinfo_gate_rejects_disabled_or_module(self):
+        for value in ('n','m'):
+            gate,text=self.charging_config(value)
+            with self.subTest(value=value):
+                self.assertFalse(gate.verify(text,profile='sm5440-fedora',native_socinfo=True)['valid'])
+
+    def test_socinfo_flag_does_not_admit_hardware_or_dcc_changes(self):
+        for extra in (dict(CONFIG_USB_DWC3='n'),dict(CONFIG_HVC_DCC='y'),dict(CONFIG_TYPEC_DP_ALTMODE='y')):
+            gate,text=self.charging_config(extra=extra)
+            with self.subTest(extra=extra):
+                self.assertFalse(gate.verify(text,profile='sm5440-fedora',native_socinfo=True)['valid'])
+
+    def test_historical_charging_only_gate_unchanged(self):
+        gate,text=self.charging_config('n')
+        self.assertTrue(gate.verify(text,profile='sm5440-fedora')['valid'])
+
     def test_vendor_string_and_raw_platform_version(self):
         self.assertEqual(M.translate(snapshot()),dict(soc_id='519\n',hw_platform='MTP\n',
             platform_subtype='Unknown\n',platform_subtype_id='0\n',platform_version='65536\n'))

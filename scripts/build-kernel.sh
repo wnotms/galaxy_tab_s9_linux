@@ -148,7 +148,7 @@ make -C "$kernel_tree" O="$build_dir" ARCH=arm64 LLVM=1 olddefconfig
 # Host-only: preserve UPower sandboxing and gate OCI/network prerequisites.
 python3 "$repo_root/scripts/verify-container-config.py" "$build_dir/.config"
 if [ -n "$charging_profile" ]; then
-    python3 "$repo_root/scripts/verify-x710-charging-profile.py" "$build_dir/.config" --profile "$charging_profile"
+    python3 "$repo_root/scripts/verify-x710-charging-profile.py" "$build_dir/.config" --profile "$charging_profile" --native-socinfo
 else
     python3 "$repo_root/scripts/verify-sm5714-stage2.py" "$build_dir/.config"
 fi
@@ -180,6 +180,8 @@ required=(
     # /smp2p-adsp/slave-kernel. CONFIG_HWSPINLOCK alone is not enough: it is the
     # provider that must bind to hwlock@1f40000.
     CONFIG_HWSPINLOCK_QCOM
+    # Native SMEM board identity is needed by Samsung SSC registry mapping.
+    CONFIG_QCOM_SOCINFO
     # Reboot-mode support: the SDAM cell comes from SPMI and the driver turns
     # the reboot command string into the value ABL reads.
     CONFIG_NVMEM_SPMI_SDAM CONFIG_NVMEM_REBOOT_MODE

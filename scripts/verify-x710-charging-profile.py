@@ -12,7 +12,7 @@ SPEC.loader.exec_module(STAGE2)
 BASE = ROOT / "reference/boot-tests/test-255-sm5714-fixed-pd/validation/candidate.config"
 
 
-def verify(text, baseline=None, profile="sm5440-passive"):
+def verify(text, baseline=None, profile="sm5440-passive", *, native_socinfo=False):
     before = STAGE2.CONTAINER.read_config(baseline or BASE.read_text())
     after = STAGE2.CONTAINER.read_config(text)
     expected = {"CONFIG_CHARGER_SM5440_DIRECT": [before.get("CONFIG_CHARGER_SM5440_DIRECT", "absent"), "y"]}
@@ -55,6 +55,10 @@ def verify(text, baseline=None, profile="sm5440-passive"):
         expected[oneshot] = ["absent", "n"]
     if profile == "sm5440-adc-oneshot":
         expected[oneshot] = [before.get(oneshot, "absent"), "y"]
+    # Explicitly admit the reviewed desktop identity prerequisite. Historical
+    # charging-only checks retain their exact original delta by default.
+    if native_socinfo:
+        expected["CONFIG_QCOM_SOCINFO"] = [before.get("CONFIG_QCOM_SOCINFO", "absent"), "y"]
     result = STAGE2.CONTAINER.verify(text, baseline or BASE.read_text(), expected)
     result["errors"] += [f"{name}: expected built-in" for name in sorted(STAGE2.REQUIRED)
                           if after.get(name) != "y"]
@@ -77,6 +81,8 @@ def verify(text, baseline=None, profile="sm5440-passive"):
         result["errors"].append("Fedora source port requires its isolated profile")
     result["valid"] = not result["errors"]
     result["profile"] = profile
+    if native_socinfo:
+        result["native_socinfo_builtin"] = after.get("CONFIG_QCOM_SOCINFO") == "y"
     result["pump_activation_available"] = profile == "sm5440-fedora"
     if profile == "sm5440-fedora":
         result["direct_charge_default"] = False
@@ -88,8 +94,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("config", type=Path)
     parser.add_argument("--profile", choices=("sm5440-passive", "sm5440-policy-offline", "sm5440-native-control", "sm5440-adc-condition", "sm5440-adc-timing", "sm5440-adc-raw", "sm5440-adc-oneshot", "sm5440-fedora"), default="sm5440-passive")
+    parser.add_argument("--native-socinfo", action="store_true",
+                        help="require the reviewed QCOM_SOCINFO n-to-y identity prerequisite")
     args = parser.parse_args()
-    result = verify(args.config.read_text(), profile=args.profile)
+    result = verify(args.config.read_text(), profile=args.profile, native_socinfo=args.native_socinfo)
     print(json.dumps(result, indent=2))
     return 0 if result["valid"] else 1
 
