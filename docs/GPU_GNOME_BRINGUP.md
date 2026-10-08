@@ -212,4 +212,7 @@ SSH remain healthy in the same331 boot. The bounded600s pen-only capture reached
 its deadline with no events because no owner pen interaction occurred; this is an
 evidence gap, not a functional failure. No permanent loading service was
 installed. A future physical scope must capture hover, tip, pressure, button and
-release before claiming S Pen input acceptance.
+release before claiming S Pen input acceptance. The separate
+`userspace/gnome/palm` loader loads Wacom before its paired FTS module and
+refuses to replace an already loaded ordinary FTS driver; device activation is
+still pending.
