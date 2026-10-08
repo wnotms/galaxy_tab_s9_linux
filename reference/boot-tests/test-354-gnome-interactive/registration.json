@@ -1,0 +1,30 @@
+{
+  "test": "Test354",
+  "purpose": "Reopen GNOME for manual keyboard/password and Settings use",
+  "owner_request": "重新开启桌面测试",
+  "owner_confirmation": "上轮可以输入密码进入",
+  "expected_boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+  "baseline": "Same Test331 plus accepted Test352 userspace and Test353 render membership",
+  "start_attempts": 1,
+  "initial_observation_seconds": 10,
+  "automatic_stop_seconds": null,
+  "endpoint": "GDM active for owner use; persistent masks restored without --now to prevent automatic boot startup",
+  "stop_conditions": [
+    "identity drift",
+    "new severe kernel fault",
+    "battery health not Good or pack>=42C",
+    "GDM startup failure"
+  ],
+  "flash": false,
+  "reboot": false,
+  "package_install": false,
+  "touch_load": false,
+  "charging_changes": false,
+  "PPS": false,
+  "pump_ON": false,
+  "Test348": "Paused, attempt unused; fresh desktop-inactive admission required before resumption; original final TWRP endpoint unchanged",
+  "tests": {
+    "executed": false,
+    "reason": "Registered one-shot activation only; compile syntax and inspect diff; existing source qualification unchanged"
+  }
+}

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test353（GNOME render 权限修正；Test348 仍未部署），窗口为 **Test344–Test353**；没有生成镜像的轮次仍占一轮。
+  编号为 Test354（GNOME 手动键盘测试；Test348 仍未部署），窗口为 **Test345–Test354**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,13 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test354 REGISTERED_INTERACTIVE_GNOME_REOPEN.
+Owner requests desktop reopen, confirms previous keyboard/password login. One
+start/10s initial check then leave GDM active; no 60s autoclose. Restore all3
+persistent masks without --now, same331/no install/touch/charging/reboot/flash.
+348 remains paused/unused; future admission requires desktop stopped. Retired
+expired344stage/images,331/348 preserved; tests/build:false for registration.
 
 2026-10-08 Test353 ORDINARY_USER_ADRENO_AND_BOUNDED_GNOME_VALIDATED.
 Only render memberships added; user Turnip/FD740 EGL PASS, GDM60.055s/no new
