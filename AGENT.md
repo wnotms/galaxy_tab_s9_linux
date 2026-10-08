@@ -99,6 +99,17 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 SSC_EARLY_PLATFORM_BUNDLE_INPUT_LOADERS_STAGED_NOT_DEPLOYED.
+Offlineboot/vendor_boot assembled existingAOSPtools; onlynewkernel+single
+ADSP55filetype1platformramdisk. AVBfooter/100663296sizes/unpackexactpayload/
+absoluteaddresses/cmdline/board/DTB/bootconfigPASS; init_boot/dtbo/vbmetaunbuilt.
+Candidate-specificpen/palmloadercopies ASTonlyPROFILEdelta;10mockgatesPASS,
+29+38CRCs alreadyPASS. Originaldevice/templatesunchanged. BUNDLE+loaderhashes
+inssc-early-firmware; controlledbootregistration/installrollback stillpending,
+no ABL/PAS/SSC/rotationphysicalpass/no deviceops. Full3032 NOTPASS preserved.
+Current331Debian; fullportactive; finishsensors thennextchargingcandidate.
+
+
 2026-10-08 SSC_EARLY_FIRMWARE_PAYLOAD_VERIFIED_HOST_ONLY_SIZE_CONSTRAINT.
 Stock55ADSP/PDmapfile CPIO/LZ4 exacthash/rootownership/no scripts/links verified.
 19885531bytes doesNOTfit8388608init_boot; do notflash/omitsegments. Nextqualify

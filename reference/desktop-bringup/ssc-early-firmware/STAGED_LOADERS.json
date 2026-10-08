@@ -1,0 +1,46 @@
+{
+  "verdict": "OFFLINE_EXACT_IDENTITY_LOADERS_STAGED_NOT_INSTALLED",
+  "device_operations": [],
+  "profiles": {
+    "pen": {
+      "profile": {
+        "release": "7.2.0-rc3-gts9wifi-dirty",
+        "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+        "notes_sha256": "ee5e7513c130df77cdbe1ff165e6926a0427ff3de1aeaa2e78ce50f75bb90eb4",
+        "module_sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5"
+      },
+      "source_template": "userspace/gnome/pen/load.py",
+      "source_sha256": "3930beb37cddde052e1e6c470e47283894374eeeb7c06cc9b25e58e86dea4f17",
+      "output": "out/ssc-native-input-pair/loaders/pen.py",
+      "sha256": "dae0a97adf3a310566e9ff40752489bf6c07f116cc7ed0fc2e3ad423c65b835f",
+      "AST_delta_only_PROFILE": true
+    },
+    "palm": {
+      "profile": {
+        "release": "7.2.0-rc3-gts9wifi-dirty",
+        "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+        "notes_sha256": "ee5e7513c130df77cdbe1ff165e6926a0427ff3de1aeaa2e78ce50f75bb90eb4",
+        "pen_sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5",
+        "touch_sha256": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253"
+      },
+      "source_template": "userspace/gnome/palm/load.py",
+      "source_sha256": "3d2c9022b0a6726970ba07c517bdcad18c3d040e91183da22a74abc829f89157",
+      "output": "out/ssc-native-input-pair/loaders/palm.py",
+      "sha256": "3a48e48405e8bba25f2c29bacc7072a1a29090b763b3d567900b9969a87f0d48",
+      "AST_delta_only_PROFILE": true
+    }
+  },
+  "mock_checks": [
+    "pen: exact native identity/module => ready",
+    "pen: Test331 config rejected",
+    "pen: wrong notes rejected",
+    "pen: charging experiment rejected",
+    "pen: altered module rejected",
+    "palm: exact native identity/module => ready",
+    "palm: Test331 config rejected",
+    "palm: wrong notes rejected",
+    "palm: charging experiment rejected",
+    "palm: altered module rejected"
+  ],
+  "original_loader_sources_unchanged": true
+}

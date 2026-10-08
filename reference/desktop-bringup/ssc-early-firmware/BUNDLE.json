@@ -1,0 +1,156 @@
+{
+  "verdict": "OFFLINE_EARLY_ADSP_BUNDLE_STRUCTURALLY_VERIFIED_NOT_DEPLOYED",
+  "parent_revision": "d36fbb132013bb616f9202fabc95b8d5f5a5cbdc",
+  "artifacts": {
+    "boot.img": {
+      "path": "out/boot-bundle-ssc-early/boot.img",
+      "bytes": 100663296,
+      "sha256": "d186b70582b08a59fbb1a6769f17dbc82af1a1f6883112bb7d0fdc17e44d8754"
+    },
+    "vendor_boot.img": {
+      "path": "out/boot-bundle-ssc-early/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "158e3826bb24143d3da9aae7bdc2c2122758d276b2870ee7ab652f12050caf9c"
+    }
+  },
+  "changed_partitions": [
+    "boot",
+    "vendor_boot"
+  ],
+  "unchanged": [
+    "init_boot",
+    "dtbo",
+    "vbmeta",
+    "DTS/DTB",
+    "vendor cmdline",
+    "bootconfig",
+    "root handoff",
+    "charging source/limits"
+  ],
+  "one_platform_fragment": true,
+  "vendor_ramdisk_type": 1,
+  "firmware_payload_exact": true,
+  "AVB_footer_valid": true,
+  "same_absolute_load_addresses": true,
+  "new_config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "new_notes_sha256": "ee5e7513c130df77cdbe1ff165e6926a0427ff3de1aeaa2e78ce50f75bb90eb4",
+  "candidate_deployable": false,
+  "missing": [
+    "controlled boot registration",
+    "device rescue/battery preflight",
+    "ABL platform ramdisk delivery",
+    "signed ADSP authentication",
+    "actual SMEM/SSC/rotation acceptance"
+  ],
+  "device_operations": [],
+  "commands": [
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/mkbootimg.py",
+      "--header_version",
+      "4",
+      "--pagesize",
+      "0x00001000",
+      "--base",
+      "0x00000000",
+      "--kernel_offset",
+      "0x80008000",
+      "--ramdisk_offset",
+      "0x82000000",
+      "--tags_offset",
+      "0x81e00000",
+      "--dtb_offset",
+      "0x0000000081f00000",
+      "--vendor_cmdline",
+      "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32",
+      "--board",
+      "",
+      "--dtb",
+      "out/ssc-early-firmware/vendor-original/dtb",
+      "--vendor_bootconfig",
+      "out/ssc-early-firmware/vendor-original/bootconfig",
+      "--ramdisk_type",
+      "1",
+      "--ramdisk_name",
+      "",
+      "--vendor_ramdisk_fragment",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/ssc-early-firmware/adsp-firmware.lz4",
+      "--vendor_boot",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/vendor_boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "add_hash_footer",
+      "--image",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/vendor_boot.img",
+      "--partition_name",
+      "vendor_boot",
+      "--partition_size",
+      "100663296",
+      "--salt",
+      "dc2eb04b27d22e83bae2683330cbddfb0fdfcf54fb1e43d9b1299afb19de368e"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/mkbootimg.py",
+      "--kernel",
+      "/tmp/tmpsdnxefou/kernel",
+      "--cmdline",
+      "",
+      "--header_version",
+      "4",
+      "--os_version",
+      "13",
+      "--os_patch_level",
+      "2025-07",
+      "-o",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "add_hash_footer",
+      "--image",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/boot.img",
+      "--partition_name",
+      "boot",
+      "--partition_size",
+      "100663296",
+      "--salt",
+      "ab20ef1ffe70fd7529c6ccd04bf3b83dcbef8b20ad4a8e73902340e328f271bc"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "verify_image",
+      "--image",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+      "--boot_img",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/boot.img",
+      "--out",
+      "/tmp/tmpsdnxefou/boot"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/avbtool.py",
+      "verify_image",
+      "--image",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/vendor_boot.img"
+    ],
+    [
+      "python3",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/.work/tools/unpack_bootimg.py",
+      "--boot_img",
+      "/home/ms/Samsung/galaxy_tab_s9_linux/out/boot-bundle-ssc-early/vendor_boot.img",
+      "--out",
+      "/tmp/tmpsdnxefou/vendor_boot"
+    ]
+  ],
+  "exact_identity_loaders_staged": true,
+  "runtime_loader_controls_unchanged": true
+}
