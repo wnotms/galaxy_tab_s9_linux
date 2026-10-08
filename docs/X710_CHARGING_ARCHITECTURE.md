@@ -16,7 +16,8 @@ owner; the TCPC does not duplicate Samsung's private PD state machine.
 | Fedora-derived conservative PPS/pump | [Test345 physical results](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md): one<=30s attempt, hardware1700mA/PPS+raw1800mA, five refreshes, native completion, verified fixed9 return, ordinary charge/discharge and exact331 restoration | No longer-duration or higher-current acceptance follows from this short run |
 | Immutable bounded-duration candidate | [Offline qualification](../reference/charging/test345-duration-followup/RESULTS.md), source5c90a4b5:79actual-C tests/build/W=1+sparse; resolved config/DT unchanged from331; matching module archive required | Only30s(default) or300s exclusive one-shot profiles; default pumpOFF, no runtime deadline extension/restart |
 | Closed first300s workflow | [Test346 physical results](../reference/boot-tests/test-346-bounded-pps-five-minute/PHYSICAL_RESULTS.md): manual-handoff timeout, zero entry/PPS/pump activation, exact331 restored | Original STOP retained; never restart its guardian or treat the timeout as hardware charging failure or300s acceptance |
-| Accepted independent300s attempt | [Test347 physical results](../reference/boot-tests/test-347-confirmed-c1-five-minute/PHYSICAL_RESULTS.md): native300s, 62 refreshes/63 zero proofs, rawIBUS max1.781875A, pack32.7°C/die48.5°C; fixed9 ordinary charge/discharge and PC rescue passed | Exact331/allfive/original181 restored offline. Owner requested final TWRP; no restored Debian reboot/runtime acceptance. Grant consumed; no restart. Next1200s profile requires separate qualification and physical scope |
+| Accepted independent300s attempt | [Test347 physical results](../reference/boot-tests/test-347-confirmed-c1-five-minute/PHYSICAL_RESULTS.md): native300s, 62 refreshes/63 zero proofs, rawIBUS max1.781875A, pack32.7°C/die48.5°C; fixed9 ordinary charge/discharge and PC rescue passed | Exact331/allfive/original181 restored offline. Owner requested final TWRP; no restored Debian reboot/runtime acceptance. Grant consumed; no restart. The independent1200s profile is qualified offline and registered in Test348; physical scope remains pending |
+| Independent1200s profile | [Offline qualification](../reference/charging/test347-twenty-minute-followup/RESULTS.md), source0b731b4a:167 affected tests/build/W=1+sparse; [Test348 registration](../reference/boot-tests/test-348-confirmed-c1-twenty-minute/OFFLINE_RESULTS.md):49 runner/parser/transport tests, exact artifact identities | No physical execution authorized or performed; device remains restored331 in TWRP. Only immutable30/300/1200s exclusive one-shot windows; defaultOFF and all current/fault gates unchanged |
 | Full/vendor-equivalent charging | **NOT_READY** |20min, higher current, independent ADC/current calibration and protection/cutoff guarantees remain unproven |
 
 Ordinary fixed limits are independent of PPS/APDO capability. Test347 hardware
@@ -25,10 +26,11 @@ claim. APDO voltage limits are the independently registered PPS policy, not
 permission to extend ordinary fixed PDOs beyond5V/9V. No new SM5714/TCPM/DTS,
 USB/adbd, DCC, CPU or rootfs change accompanies the duration runner.
 
-This status correction is documentation-only: host tests/build executed:false,
-reusing Test347's60 affected host tests and the unchanged bounded-duration
-candidate's79 actual-C tests/build/W=1/sparse/config/DT qualification. It does
-not modify the frozen Test347 inputs or authorize another activation.
+This status correction is documentation-only: host tests/build executed:false.
+Reuse the separate source0b731b4a qualification and Test348 runner qualification
+linked above. Frozen Test347 inputs and its consumed300s grant are unchanged.
+See the [current completion gaps](X710_CHARGING_COMPLETION_GAPS.md); neither
+the accepted300s attempt nor an eventual1200s pass establishes full vendor policy.
 
 Do not treat an old document's next-step text as authorization, current device
 identity or a live deployment gate. The current registered runner and fresh

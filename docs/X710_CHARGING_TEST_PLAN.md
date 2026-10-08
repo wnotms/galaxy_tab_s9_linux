@@ -10,7 +10,7 @@ substitutes for later independently registered scope.
 - Short conservative pump step D: [Test345](../reference/boot-tests/test-345-final-refresh-reserve/PHYSICAL_RESULTS.md) closed after one<=30s run with native completion, fixed9 ordinary return, discharge/PC rescue and exact331 restoration. Prior failed rounds remain failed.
 - Five-minute step E: [Test346](../reference/boot-tests/test-346-bounded-pps-five-minute/PHYSICAL_RESULTS.md) closed at the manual-handoff timeout before any PPS/pump activation, followed by exact Test331 restoration. It is neither a five-minute acceptance nor a charging hardware failure; its original STOP is retained and its guardian must not restart.
 - Five-minute step E accepted in [Test347](../reference/boot-tests/test-347-confirmed-c1-five-minute/PHYSICAL_RESULTS.md): one native300s attempt,62 refreshes/63 parked-zero proofs, fixed9 ordinary charge31.022s, discharge15.606s and onePC rescue passed. Hardware1700/PPS+raw1800mA unchanged. Exact331/allfive/original181 restored offline; device stays **TWRP** per owner request. No restored Debian boot/runtime acceptance was executed. The one300s grant is consumed; no reactivation.
-- Step F20min may now be designed from the closed clean300s result. No1200s kernel profile or physical20min authorization exists in Test347. A20min candidate requires separate implementation, affected tests/build/identity and physical scope; do not reuse or repeatedly rebind300s.
+- Step F20min is independently prepared in [Test348](../reference/boot-tests/test-348-confirmed-c1-twenty-minute/README.md), using the [qualified1200s profile](../reference/charging/test347-twenty-minute-followup/RESULTS.md).49 runner/parser/transport tests pass; preparation/activationSOC<=60%, hardware1700/PPS+raw1800mA unchanged. New physical authorization remains pending, and the device stays restored331 in TWRP. Do not reuse Test347's consumed300s grant or repeatedly rebind300s. Final restoration again ends in TWRP.
 - Higher-current step G is later and independent; no2/2.25/2.5/3A activation or vendor-equivalent45W claim is granted by short or longer-duration acceptance.
 
 The closed Test347 used its registered runner: freshPC preflight/deployment admission,
@@ -35,7 +35,7 @@ for physical measurements. Record entry/stop/rollback criteria in every later
 registration; do not implement future escalation before its prerequisites.
 
 Documentation-only validation: `executed: false` for host tests/kernel build;
-reviewed links and status against closed346/closed347/qualified5c90/closed345 evidence.
+reviewed links and status against closed346/closed347/qualified0b731/registered348 evidence.
 Reuse those qualifications; no new regression pass or hardware acceptance.
 
 ## Historical Test256 Stage3 plan — not a current registration
