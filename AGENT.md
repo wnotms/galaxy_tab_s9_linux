@@ -99,6 +99,17 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 Test348_RAW_INPUT_RANGE_STOP_RESTORED331_OWNER_DEBIAN_ENDPOINT.
+Soleattempt STOP atnative1196.693s afterpumpstart:rawIBUS1811875>1800000uA;
+pack27.5C/die42.5C/ADCvbat4.0995V/vbus8.718V. No pass/secondattempt. Native
+pumpOFF/fixed9physical9283mV/lease0 plusguardianOFF/unbound/cleanup_errornull.
+Fullrawjournal/events retrieved. Exact331boot/allfive/181restored andunmounted
+TWRPverified. Owner“后续不要求停在twrp，继续推进” supersedesstayTWRPonly;
+registeroneordinary331Debianreturn thenidentity/rescue/health. No PPS/capraise.
+Chargingfailureanalysis/evidence archival pending; nativeSoCinfo rebuildafter
+cleanbaseline return; SSC helpersremainhostonly. Fullportgoalactive.
+
+
 2026-10-08 SSC_SOCINFO_MAPPING_SOURCE_AUDITED_HOST_ONLY.
 map-socinfo.py convertscapturedJSON to5SamsungSSCvalues, no sysfs/deviceops.
 23platformIDs/names exactstocktable; subtypeQRD/ordinary/sourcefieldschecked,
