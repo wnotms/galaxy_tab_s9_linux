@@ -27,8 +27,10 @@ pack42°C stop threshold or a calibrated tablet-surface measurement.
 
 Screen raw brightness was2047/2047 throughout both windows (earlier preflight
 was628). This is a useful next optimization preference, not a causal attribution
-of all heat to the display. User preference for50%/70%/retained brightness is
-pending. Keep animations false; do not kill owner QQ/apps or change their data.
+of all heat to the display. Owner clarifies “本次没有发热，上次运行时发热”. Current heat is not reproduced;
+historical cause remains unproven. Retain owner-controlled brightness, no
+automatic50/70% change or additional heat-reproduction trial. Keep animations
+false as a reversible preference; do not kill owner QQ/apps or change their data.
 
 Raw14snapshots/commands/full finalkernel and SHA-bound gzip are retained;
 owned device log directory contains partial checkpoints/terminal/original key.

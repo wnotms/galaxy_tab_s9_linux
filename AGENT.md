@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test361 OWNER_CURRENT_RUN_NO_HEAT_REPORTED.
+Owner“本次没有发热，上次运行时发热”; historicalheat causeunproven/notreproduced.
+Keep ownerbrightness unchanged/no50or70%write/no extraheat-reproduction stress.
+msreducedmotionfalse reversible viaoriginalabsent-key reset, GUI/touchnormal.
+Results-onlytests/build:false/no device action; continueotherport work, not
+block fullgoal on unobservedheat.348grantunused/freshinactive admission/finalTWRP.
+
 2026-10-08 Test361 REDUCED_MOTION_APPLIED_TWO_NORMAL_USE_WINDOWS_COMPLETE.
 Same33125ff0ad0,2x60s/14snapshots; onlymsenable-animations=false viaactivebus,
 originalexplicitabsent saved (resetrollback). GUI/touchleftactive/no newfailed

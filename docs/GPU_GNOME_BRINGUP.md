@@ -190,5 +190,6 @@ Test361 completed two60s ordinary-use windows and set only ms interface
 enable-animations=false through the active user bus. Original explicit key
 absent: reset it to roll back. GPU runtime suspend counters and CPU7 idle time
 advance normally. Screen was2047/2047, QQ/activity differed; pack26.0->26.8°C.
-No causal cooling claim; subsequent brightness preference is pending. Full raw
+Owner says current run has no heat, previous run did; historical cause remains
+unproven. Retain owner brightness, no lower-default change or extra heat trial. Full raw
 and exact counter semantics in test361. No hardware/charging policy change.
