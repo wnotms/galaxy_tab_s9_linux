@@ -8,6 +8,25 @@ def cmd(argv, timeout=20, accepted=(0,)):
  report.setdefault('commands',[]).append(result)
  if p.returncode not in accepted:raise RuntimeError(result)
  return p.stdout
+def thermal_snapshot():
+ r={'monotonic':time.monotonic(),'loadavg':Path('/proc/loadavg').read_text().strip(),'cpu_stat':Path('/proc/stat').read_text().splitlines()[0]}
+ b=Path('/sys/class/power_supply/sm5714-battery')
+ r['battery']={n:(b/n).read_text().strip() for n in ('capacity','temp','health','status','current_now')}
+ r['cpufreq']={}
+ for cpu in Path('/sys/devices/system/cpu').glob('cpu[0-9]*'):
+  f=cpu/'cpufreq';values={}
+  for n in ('scaling_cur_freq','scaling_governor','scaling_min_freq','scaling_max_freq'):
+   try:values[n]=(f/n).read_text().strip()
+   except OSError:pass
+  if values:r['cpufreq'][cpu.name]=values
+ r['devfreq']={}
+ for device in Path('/sys/class/devfreq').glob('*'):
+  values={}
+  for n in ('name','cur_freq','governor','min_freq','max_freq','trans_stat'):
+   try:values[n]=(device/n).read_text().strip()
+   except OSError:pass
+  if values:r['devfreq'][device.name]=values
+ return r
 masks=[Path('/etc/systemd/system')/n for n in ('gdm.service','gdm3.service','display-manager.service')]
 started=False
 try:
@@ -23,6 +42,7 @@ try:
  assert all(p.is_symlink() and os.readlink(p)=='/dev/null' for p in masks)
  report['kernel_before_json']=cmd(['journalctl','-k','-b','-o','json','--no-pager'])
  report['taint_before']=Path('/proc/sys/kernel/tainted').read_text().strip()
+ report['thermal_before']=thermal_snapshot()
  cmd(['systemctl','unmask','gdm.service','gdm3.service','display-manager.service'])
  started=True
  try:cmd(['systemctl','start','gdm.service'],timeout=40)
@@ -50,6 +70,7 @@ try:
  report['taint_after']=Path('/proc/sys/kernel/tainted').read_text().strip()
  b=Path('/sys/class/power_supply/sm5714-battery')
  report['battery']={n:(b/n).read_text().strip() for n in ('capacity','temp','health','status','current_now')}
+ report['thermal_after']=thermal_snapshot()
  assert report['battery']['health']=='Good' and 0<=int(report['battery']['temp'])<420
  report['verdict']='PERSISTENT_NEWBOOT_LOADER_PASS_OWNER_UI_PENDING'
 except Exception as exc:

@@ -15,3 +15,8 @@ No new host tests/build/full/CI; only registered activation syntax checked,
 unchanged input qualification reused. Latest historical351–360:350preparation
 created no images, no retirement needed; active348 unusedcandidate/provider
 and331rollback preserved. Fresh desktop-inactive admission/finalTWRP remain.
+
+Owner reports GUI heating. This same startup captures read-only battery temp,
+CPU counters/load/frequency and devfreq state before/after. No governor/OPP/
+thermal/current/brightness change.10s startup cannot establish thermal cause or
+long-duration temperature stability; use later idle/ordinary-use evidence.
