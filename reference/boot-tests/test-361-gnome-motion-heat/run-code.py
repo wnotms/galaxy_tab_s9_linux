@@ -1,9 +1,12 @@
 from pathlib import Path
-import gzip,hashlib,json,os,subprocess,sys,time,re
+import gzip,hashlib,json,os,subprocess,sys,time,re,pwd,stat
 BOOT='25ff0ad0-cf2f-4cc6-971d-2b38365da2db'
 ROOT=Path('/var/log/gts9-test361-heat')
 report={'started_monotonic':time.monotonic(),'boot_id':BOOT,'phases':[],'changed':False}
-settings=['runuser','-u','ms','--','env','-u','XDG_RUNTIME_DIR','-u','DBUS_SESSION_BUS_ADDRESS','dbus-run-session','--']
+user=pwd.getpwnam('ms')
+runtime=Path('/run/user')/str(user.pw_uid)
+bus=runtime/'bus'
+settings=['runuser','-u','ms','--','env','XDG_RUNTIME_DIR='+str(runtime),'DBUS_SESSION_BUS_ADDRESS=unix:path='+str(bus)]
 KEY='/org/gnome/desktop/interface/enable-animations'
 severe=re.compile(r'\bsoft lockup\b|\brcu.*(?:detected.*stall|stall detected)|\bCSD.*(?:non-responsive|stuck)|\bKernel panic\b|\bOops:|\bBUG:|\bInternal error:|\bSError\b|blocked for more than|workqueue.*lockup|(?:adreno|msm).*GPU.*(?:fault|hang)|fts1ba90a.*(?:failed|timeout|error)',re.I)
 def cmd(argv,timeout=15):
@@ -16,6 +19,7 @@ cursor=None
 namespace={'__name__':'heat_sampler'}
 try:
  assert not ROOT.exists(),'never restart the same scope'
+ assert stat.S_ISSOCK(bus.stat().st_mode) and bus.stat().st_uid==user.pw_uid,'require the active user bus for live preference notification'
  assert Path('/proc/sys/kernel/random/boot_id').read_text().strip()==BOOT
  assert hashlib.sha256(gzip.decompress(Path('/proc/config.gz').read_bytes())).hexdigest()=='51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a'
  assert hashlib.sha256(Path('/sys/kernel/notes').read_bytes()).hexdigest()=='03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95'

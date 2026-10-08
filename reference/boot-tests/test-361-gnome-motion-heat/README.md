@@ -24,3 +24,8 @@ kernel/touch qualification reused, no fullsuite/routing/CI/kernel rebuild.
 Window352–361:351desktop transfer created no image; none to retire. Active331
 rollback/348 pendingcandidate/provider preserved;348grantunused/fresh inactive
 admission/finalTWRP unchanged. Do not call sample comparison proven cooling.
+
+Use the active ms /run/user/<UID>/bus for the live setting write/read, with the
+correct user-owned runtime socket. An isolated dbus-run-session is suitable
+for a pre-launch schema read but must not be relied on to notify running GNOME.
+No other session bus or greeter preferences are changed.
