@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-347-confirmed-c1-five-minute/host_flow.py", line 357, in <module>
+    else:result=globals()[args.action]()
+                ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-347-confirmed-c1-five-minute/host_flow.py", line 90, in preflight
+    gate.preparation_margin(b,PLAN)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ms/Samsung/galaxy_tab_s9_linux/reference/boot-tests/test-334-fixed-return-soc-margin/gate.py", line 67, in preparation_margin
+    raise ValueError('preparation SOC margin')
+ValueError: preparation SOC margin

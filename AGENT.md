@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 PC_PREPARATION_MARGIN_PENDING_NO_MUTATION.
+OwnerPCreply“已接”; firstreadonlypreflightstopped SOC71>registered70 after
+PCcharge, same331a96de8c0/config51/notes03/31.9C/services+rolesnormal. No Test347
+recovery/write/modules/reboot/guardian/PPS/pump. Originalsnapshot/exception
+preserved, not hardwarechargingfailure oracceptance. Ownerunplugrequested,
+natural target68 nowreservesPC/installmargin; existing20..70 admission,
+one300s scope/currentcaps/331restoreunchanged. Freshpreflight onlyaftermargin
+andPCreturn, newnamespace; do not reuseincompletesnapshot. Evidenceonly
+tests/build:false. FullportNOT_READY. See347preflight/admission-status.json.
+
 2026-10-08 Test347 AUTHORIZED_STAGED_NATURAL_MARGIN_READY_AWAITING_PC.
 Originalread-only naturalwatch3972/session58323 terminalPASS2312.176s/75samples;
 76->70%/31.0C/4.034V/-1.538A, allUSBoffline/discharging/same331a96de8c0.
