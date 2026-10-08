@@ -1,0 +1,51 @@
+{
+  "purpose": "Retire completed Test346 Windows transfer-only duplicate files after exact331 acceptance; canonical artifacts preserved",
+  "removed": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/candidate-boot.img",
+      "bytes": 100663296,
+      "sha256": "b6ac504e1e662eb8fe8a852a4ad01a8120a59bad7cbd7036152783baf6ef4a45"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/candidate-modules.tar.gz",
+      "bytes": 47319735,
+      "sha256": "4399bcc1d2d7c360db24e64b14d33872de09f75206e50d0ff63f614b0329a19a"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/rollback-accepted331-boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/candidate-modules.sha256",
+      "bytes": 19503,
+      "sha256": "4bf814912c4f178bbbd06c7a234d338a0edfba39cc9960a7c886b5be609bf5e8"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/rollback-modules.sha256",
+      "bytes": 19503,
+      "sha256": "ae20fbf4907770e2a831fbf321e23a1a5cd16a2e5d8cc9be391e21fd80643732"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/module-swap.sh",
+      "bytes": 2636,
+      "sha256": "d03a36e5c82528e3aaed81424902a31a317d2c6ee860e54be51a49ddd6681f4e"
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test346/mount-debian.sh",
+      "bytes": 9315,
+      "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca"
+    }
+  ],
+  "removed_bytes": 248697284,
+  "free_before": 46710054912,
+  "free_after": 46958764032,
+  "stage_removed": true,
+  "canonical_package_providers_verified": true,
+  "ADB_platform_tools_untouched": true,
+  "device_mutation": false,
+  "tests": {
+    "executed": false,
+    "reason": "storage/evidence only; exact hashes checked"
+  }
+}
