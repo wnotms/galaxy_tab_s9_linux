@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "Get-NetIPAddress -AddressFamily IPv4 | Select-Object InterfaceAlias,IPAddress,PrefixLength | Format-List"
+  ],
+  "ended_utc": "2026-10-08T06:05:41.006140+00:00",
+  "started_utc": "2026-10-08T06:05:39.527237+00:00",
+  "status": 0
+}

@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test348 AUTHORIZED_STAGED_WAITING_WIFI_AND_DISCHARGE.
+FreshTWRP/exact331boot confirmed; one normal331 boot be1baaaa47fc41f582558f7092c01653
+with exactconfig/notes, ADB/deviceNCM/noCode43/zero failedunits/physicalpumpOFF.
+SOC100/31.2C/4.447V refuses <=60%/<4.3V preparation. No install/PPS/pumpON,
+scope unused. WiFi10.175.236.175 vsWindows10.30.54.214: firstSSH banner timedout;
+owner asked to joinsameOnePlus13s hotspot,USBstillconnected. No dischargewatcher
+running. SevenWindows348files staged/hashverified; device ordinary331Debian
+onlyforpreparation. Naturalheadroom58 afterWiFi+ownerunplug; finalTWRPunchanged.
+Evidence-only tests/build:false,reusequalification. FullportNOT_READY. See348
+PREPARATION/preparation-status and rawbaseline folders.
+
 2026-10-08 Test348 AUTHORIZED_ONE1200S_PENDING_FRESH_BASELINE.
 Owner “允许执行 20 分钟测试” authorizes the independent one1200s scope:
 hardware1700/PPS+raw1800, exact331/allfive/original181 restore, finalTWRP.
