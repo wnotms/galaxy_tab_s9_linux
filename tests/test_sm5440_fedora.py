@@ -332,14 +332,14 @@ int value(int key) {
 
     def test_duration_only_allows_reviewed_exclusive_boot_profiles(self):
         import itertools
-        for duration in (0, 1, 29999, 30000, 30001, 299999, 300000, 300001, -1):
+        for duration in (0, 1, 29999, 30000, 30001, 299999, 300000, 300001, 1199999, 1200000, 1200001, -1):
             for direct, once, fixed, pps in itertools.product((0, 1), repeat=4):
                 with self.subTest(duration=duration, modes=(direct, once, fixed, pps)):
                     self.lib.input(44, duration)
                     for key, value in ((0, direct), (28, once), (20, fixed), (24, pps)):
                         self.lib.input(key, value)
                     allowed = (direct+once+fixed+pps <= 1 and
-                               (duration == 30000 or (once and duration == 300000)))
+                               (duration == 30000 or (once and duration in (300000, 1200000))))
                     self.assertEqual(self.lib.modes_valid(), int(allowed))
         src = SOURCE.read_text()
         self.assertIn('module_param(direct_charge_once_ms, uint, 0400);', src)
@@ -423,6 +423,81 @@ int value(int key) {
                     self.lib.input(43, 100)
                 else:
                     self.lib.input(41, 100)
+                self.tick()
+                self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+                ons = self.v(9); self.tick(); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
+
+    def twenty_minute(self, near_end=False):
+        self.once(); self.lib.input(44, 1200000); self.lib.work()
+        if near_end:
+            while self.v(25) > 10000:
+                self.tick()
+
+    def test_twenty_minute_absolute_deadline_refresh_and_safe_return(self):
+        self.twenty_minute()
+        deadline = self.v(26) + self.v(25)
+        self.assertTrue(1199000 <= self.v(25) <= 1200000)
+        for _ in range(12500):
+            if self.v(23):
+                break
+            self.tick()
+            self.assertEqual(self.v(26) + self.v(25), deadline)
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 3, 7, 23)], [0, 0, 0, 1, 0, 1])
+        self.assertGreater(self.v(9), 200)
+        self.assertEqual(self.v(6), 0)
+        before = [self.v(k) for k in (4, 5, 8, 9)]
+        self.tick(); self.lib.pm(2); self.tick()
+        self.assertEqual(before, [self.v(k) for k in (4, 5, 8, 9)])
+
+    def test_twenty_minute_late_sensor_fault_source_and_detach_stop(self):
+        for key, value in ((4, -5), (37, -5), (34, 0), (3, 420),
+                           (2, 4400000), (14, 2881), (11, 2), (12, 0)):
+            with self.subTest(key=key):
+                self.lib.reset(); self.twenty_minute(near_end=True)
+                self.lib.input(key, value); self.tick()
+                self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+                ons = self.v(9); self.tick(); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
+
+    def test_twenty_minute_late_pm_remove_and_gap_are_terminal(self):
+        for operation in ('suspend', 'remove', 'gap'):
+            with self.subTest(operation=operation):
+                self.lib.reset(); self.twenty_minute(near_end=True)
+                if operation == 'suspend':
+                    self.lib.pm(1)
+                elif operation == 'remove':
+                    self.lib.remove_worker()
+                else:
+                    self.tick(501)
+                self.assertEqual([self.v(k) for k in (0, 1, 2)], [0, 0, 0])
+                ons = self.v(9); self.lib.pm(2); self.tick()
+                self.assertEqual(self.v(9), ons)
+
+    def test_twenty_minute_final_refresh_reserve_is_unchanged(self):
+        self.twenty_minute(near_end=True)
+        self.lib.input(41, 268); self.lib.input(43, 100)
+        requests, ons = self.v(4), self.v(9)
+        self.tick()
+        self.assertIn('remaining=168ms', self.lib.defer_log().decode())
+        self.assertEqual((self.v(4), self.v(9)), (requests, ons))
+        for _ in range(3):
+            self.tick()
+        self.assertEqual([self.v(k) for k in (0, 1, 2, 7, 23)], [0, 0, 0, 0, 1])
+
+    def test_twenty_minute_late_admitted_refresh_cannot_rearm(self):
+        self.twenty_minute(near_end=True)
+        self.lib.input(41, 2200); self.lib.input(43, 100); self.lib.input(33, 3000)
+        ons = self.v(9); self.tick()
+        self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
+        self.assertEqual(self.v(9), ons)
+
+    def test_twenty_minute_late_pps_and_cleanup_errors_are_non_clean(self):
+        for key in (5, 6, 8):
+            with self.subTest(key=key):
+                self.lib.reset(); self.twenty_minute(near_end=True)
+                self.lib.input(key, -5)
+                self.lib.input(43, 100) if key == 5 else self.lib.input(41, 100)
                 self.tick()
                 self.assertEqual([self.v(k) for k in (1, 7, 23)], [0, 1, 1])
                 ons = self.v(9); self.tick(); self.lib.pm(2); self.tick()

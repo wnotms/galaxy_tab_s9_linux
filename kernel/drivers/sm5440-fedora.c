@@ -103,6 +103,7 @@
 #define SM5440_REFRESH_TICKS 4
 #define SM5440_ONCE_MS 30000
 #define SM5440_LONG_ONCE_MS 300000
+#define SM5440_EXTENDED_ONCE_MS 1200000
 #define SM5440_ONCE_POLL_MS 100
 #define SM5440_ONCE_GAP_MS 500
 #define SM5440_ONCE_REFRESH_MS 4000
@@ -120,12 +121,12 @@ static bool direct_charge_once;
 module_param(direct_charge_once, bool, 0400);
 MODULE_PARM_DESC(direct_charge_once, "Registered bounded 1.8A pump test, no restart (default off, 30s)");
 /* A longer observation is a separate registered profile, never a runtime
- * extension of an active attempt. Only the reviewed 30s/300s windows exist;
+ * extension of an active attempt. Only the reviewed 30s/300s/1200s windows exist;
  * a nondefault duration without exclusive one-shot opt-in refuses probe.
  */
 static unsigned int direct_charge_once_ms = SM5440_ONCE_MS;
 module_param(direct_charge_once_ms, uint, 0400);
-MODULE_PARM_DESC(direct_charge_once_ms, "One-shot duration: 30000 (default) or separately registered 300000 ms");
+MODULE_PARM_DESC(direct_charge_once_ms, "One-shot duration: 30000 (default), or separately registered 300000/1200000 ms");
 static bool fixed_return_check;
 module_param(fixed_return_check, bool, 0400);
 MODULE_PARM_DESC(fixed_return_check, "Registered one-shot fixed9V OFF return proof (default off, no PPS)");
@@ -261,7 +262,8 @@ static bool sm5440_modes_valid(void)
 		return false;
 	return direct_charge_once_ms == SM5440_ONCE_MS ||
 		(direct_charge_once &&
-		 direct_charge_once_ms == SM5440_LONG_ONCE_MS);
+		 (direct_charge_once_ms == SM5440_LONG_ONCE_MS ||
+		  direct_charge_once_ms == SM5440_EXTENDED_ONCE_MS));
 }
 
 /* Public snapshots admit fixed contracts only. Once PPS owns the handoff,

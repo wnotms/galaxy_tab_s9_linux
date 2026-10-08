@@ -12,7 +12,7 @@ FAIL = re.compile(r'one-shot parked settle failed:|one-shot (?:pack )?range reje
 
 def native_proof(rows, boot, *, expected_window_ms, required=False):
     """Full journal, kernel source time, one attempt with paired parked refreshes."""
-    if type(expected_window_ms) is not int or expected_window_ms not in (30000, 300000):
+    if type(expected_window_ms) is not int or expected_window_ms not in (30000, 300000, 1200000):
         raise ValueError('unregistered bounded duration')
     if not rows or any(r.get('_BOOT_ID') != boot for r in rows) or min(int(r['__MONOTONIC_TIMESTAMP']) for r in rows) > 5000000:
         raise ValueError('incomplete/mixed kernel journal')

@@ -12,21 +12,21 @@ spec=importlib.util.spec_from_file_location('duration_evidence',ROOT/'scripts/sm
 e=importlib.util.module_from_spec(spec);spec.loader.exec_module(e)
 
 
-def long_journal():
+def long_journal(window_ms=300000):
     row=fixture.row
-    deadline=300900
+    deadline=window_ms+900
     rows=[row('Linux boot',0),
           row('one-shot parked settled: samples=3 waited=120ms raw_ibus=0 pump_OFF=1',900000),
           row('direct charge started: PPS 8940 mV/1800 mA, ibus limit 1700 mA',1000000),
-          row(f'one-shot pump started: target=8940mV/1800mA deadline={deadline}ms max_ms=300000 no_restart=1',1000100)]
-    for n in range(60):
+          row(f'one-shot pump started: target=8940mV/1800mA deadline={deadline}ms max_ms={window_ms} no_restart=1',1000100)]
+    for n in range(window_ms//5000):
         t=5000000+n*4900000
         rows.extend([row('one-shot refresh parked: pump_OFF=1',t),
                      row('one-shot parked settled: samples=3 waited=120ms raw_ibus=0 pump_OFF=1',t+120000),
                      row(f'one-shot refresh resumed: target=8940mV/1800mA deadline={deadline}ms',t+150000)])
-    rows.extend([row(f'one-shot refresh deferred: remaining=1000ms deadline={deadline}ms pump_unchanged=1',299900000),
-                 row('fixed return verified: source=9 lease=1 vbus=9267000uV samples=3 range=9267..9267mV settled=100ms raw_ibus=0 pump_off=1',301010000),
-                 row('one-shot pump complete: lease=0 fixed_return=1 positive_samples=2400 no_restart=1',301011000)])
+    rows.extend([row(f'one-shot refresh deferred: remaining=1000ms deadline={deadline}ms pump_unchanged=1',window_ms*1000-100000),
+                 row('fixed return verified: source=9 lease=1 vbus=9267000uV samples=3 range=9267..9267mV settled=100ms raw_ibus=0 pump_off=1',window_ms*1000+1010000),
+                 row('one-shot pump complete: lease=0 fixed_return=1 positive_samples=2400 no_restart=1',window_ms*1000+1011000)])
     return rows
 
 
@@ -95,3 +95,35 @@ class DurationEvidenceTests(unittest.TestCase):
         rows=[json.loads(x) for x in p.read_text().splitlines()]
         with self.assertRaisesRegex(ValueError,'first native/kernel fault'):
             e.native_proof(rows,rows[0]['_BOOT_ID'],expected_window_ms=30000,required=True)
+
+    def test_twenty_minute_history_requires_registered_exact_duration(self):
+        rows=long_journal(1200000)
+        result=self.proof(rows,1200000)
+        self.assertEqual((result['window_ms'],result['refreshes'],result['parked_zero_proofs']),
+                         (1200000,240,241))
+        for duration in (30000,300000,1199999,1200001):
+            with self.subTest(duration=duration),self.assertRaises(ValueError):
+                self.proof(rows,duration)
+        for short in (legacy.journal(),long_journal()):
+            with self.assertRaises(ValueError):self.proof(short,1200000)
+
+    def test_twenty_minute_late_fault_missing_park_and_extended_deadline_rejected(self):
+        for message in ('one-shot pump stopped: primary=-5 cleanup=0 lease=0 no_restart=1',
+                        'Kernel panic','CSD non-responsive','I2C timeout'):
+            rows=long_journal(1200000)
+            rows.insert(-2,fixture.row(message,1199901000))
+            with self.subTest(message=message),self.assertRaises(ValueError):
+                self.proof(rows,1200000)
+        rows=long_journal(1200000);rows.pop(-6)
+        with self.assertRaises(ValueError):self.proof(rows,1200000)
+        rows=long_journal(1200000)
+        rows[6]['MESSAGE']=rows[6]['MESSAGE'].replace('1200900','1201900')
+        with self.assertRaises(ValueError):self.proof(rows,1200000)
+
+    def test_actual_test347_pass_preserved_and_not_twenty_minute_acceptance(self):
+        r=ROOT/'reference/boot-tests/test-347-confirmed-c1-five-minute'
+        rows=[json.loads(x) for x in (r/'physical-collection/kernel-json.txt').read_text().splitlines()]
+        expected=json.loads((r/'physical-summary.json').read_text())['native']
+        self.assertEqual(e.native_proof(rows,rows[0]['_BOOT_ID'],expected_window_ms=300000,required=True),expected)
+        with self.assertRaises(ValueError):
+            e.native_proof(rows,rows[0]['_BOOT_ID'],expected_window_ms=1200000,required=True)
