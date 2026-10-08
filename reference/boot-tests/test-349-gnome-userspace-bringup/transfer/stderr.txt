@@ -1,0 +1,10 @@
+Exception in thread Thread-1 (upload):
+Traceback (most recent call last):
+  File "F:\msys64\ucrt64\lib\python3.12\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "F:\msys64\ucrt64\lib\python3.12\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "<string>", line 11, in upload
+TimeoutError: timed out
+Connection to 10.175.236.175 closed by remote host.
+client_loop: send disconnect: Broken pipe

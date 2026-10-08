@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/home/ms/.ssh/gts9-test292-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "-o",
+    "ProxyCommand=/mnt/f/msys64/ucrt64/bin/python.exe -u -c 'import socket,os,sys,threading,msvcrt\nif sys.platform!=\"win32\":raise RuntimeError(\"native Windows TCP required\")\nmsvcrt.setmode(0,os.O_BINARY);msvcrt.setmode(1,os.O_BINARY)\ns=socket.create_connection((sys.argv[1],22),3);s.settimeout(1)\nstop=threading.Event()\ndef upload():\n try:\n  while not stop.is_set():\n   data=os.read(0,65536)\n   if not data:break\n   s.sendall(data)\n finally:stop.set()\nthreading.Thread(target=upload,daemon=True).start()\ntry:\n while not stop.is_set():\n  try:data=s.recv(65536)\n  except socket.timeout:continue\n  if not data:break\n  pos=0\n  while pos<len(data):\n   n=os.write(1,data[pos:])\n   if n<=0:raise OSError(\"proxy stdout closed\")\n   pos+=n\nfinally:stop.set();s.close()\n' 10.175.236.175",
+    "root@10.175.236.175",
+    "python3 -c 'PROTECTED=['\"'\"'/usr/libexec/gts9-adbd-can-start'\"'\"', '\"'\"'/usr/libexec/gts9-adbd-run'\"'\"', '\"'\"'/usr/libexec/gts9-bluetooth-address'\"'\"', '\"'\"'/usr/libexec/gts9-device-changes'\"'\"', '\"'\"'/usr/libexec/gts9-enable-units'\"'\"', '\"'\"'/usr/libexec/gts9-journal-survey'\"'\"', '\"'\"'/usr/libexec/gts9-kmsg-console'\"'\"', '\"'\"'/usr/libexec/gts9-panel-recover'\"'\"', '\"'\"'/usr/libexec/gts9-power-key'\"'\"', '\"'\"'/usr/libexec/gts9-prev-boot-evidence'\"'\"', '\"'\"'/usr/libexec/gts9-record-boot-stage'\"'\"', '\"'\"'/usr/libexec/gts9-record-debian-stage'\"'\"', '\"'\"'/usr/libexec/gts9-record-poweroff-stage'\"'\"', '\"'\"'/usr/libexec/gts9-usb-acm'\"'\"', '\"'\"'/usr/libexec/gts9-usb-adb-hold'\"'\"', '\"'\"'/usr/libexec/gts9-usb-adb-prepare'\"'\"', '\"'\"'/usr/libexec/gts9-watchdog-debug'\"'\"', '\"'\"'/usr/local/libexec/gts9-adbd-reconnect'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-acm-getty.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-adbd.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-boot-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-debian-basic-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-debian-entered.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-debian-getty-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-debian-multi-user-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-dpu-flight.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-getty-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-kmsg-console.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-panel-recover.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-power-key.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-poweroff-stage.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-prev-boot-evidence.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-usb-acm.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-usb-adb-hold.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-usb-adb-prepare.service'\"'\"', '\"'\"'/usr/lib/systemd/system/gts9-watchdog-debug.service'\"'\"', '\"'\"'/etc/systemd/system/gts9-bluetooth-address.service'\"'\"', '\"'\"'/etc/systemd/system/gts9-prev-boot-evidence.service'\"'\"']\nfrom pathlib import Path\nimport json,hashlib,subprocess\nb=Path('\"'\"'/sys/class/power_supply/sm5714-battery'\"'\"');p=Path('\"'\"'/var/tmp/gts9-test349/deploy.tar'\"'\"')\nprint(json.dumps(dict(boot_id=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),battery={n:(b/n).read_text().strip() for n in ('\"'\"'capacity'\"'\"','\"'\"'status'\"'\"','\"'\"'health'\"'\"','\"'\"'temp'\"'\"','\"'\"'current_now'\"'\"')},protected_rootfs={n:hashlib.sha256(Path(n).read_bytes()).hexdigest() for n in PROTECTED},partial_bundle_bytes=p.stat().st_size,partial_bundle_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),extracted_bundle_present=Path('\"'\"'/var/tmp/gts9-test349/gts9-gnome'\"'\"').exists(),installer_evidence_present=Path('\"'\"'/var/log/gts9-test349-install'\"'\"').exists(),gdm_config_present=Path('\"'\"'/etc/gdm3'\"'\"').exists(),failed=subprocess.run(['\"'\"'systemctl'\"'\"','\"'\"'--failed'\"'\"','\"'\"'--no-legend'\"'\"','\"'\"'--no-pager'\"'\"'],capture_output=True,text=True).stdout),indent=2))\n'"
+  ],
+  "ended_utc": "2026-10-08T07:08:33.136189+00:00",
+  "started_utc": "2026-10-08T07:08:31.673245+00:00",
+  "status": 0
+}

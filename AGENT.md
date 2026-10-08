@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test349 STOP_HOST_PROXY_SEND_TIMEOUT_BEFORE_INSTALL.
+One bulk upload wrote only16154624bytes; native Windows sendall inherited1s
+socket timeout. No extraction/APT/firmware/GDM/GPU/touch/reboot occurred.
+Fresh authenticated same331be1baaaa responsive, protected38 hashes unchanged,
+zero failedunits,94%31.6C normaldischarge. Original348 observerPID31327/session68905
+is terminal at sample50 banner timeout during bulk transfer; raw/terminal kept,
+not live/not restarted. Fix isolated bulk transport before fresh desktop attempt.
+348one1200s grantunused/finalTWRP unchanged. Tests/build executed:false forresults.
+See Test349 RESULTS/summary and348natural-discharge terminal evidence.
+
 2026-10-08 Test349 REGISTERED_DESKTOP_DURING_DISCHARGE.
 Owner explicitly requested GPU/GNOME work during wait; earlier assistant-created
 after348 ordering superseded. Separate349 only adds verified desktop userspace/
