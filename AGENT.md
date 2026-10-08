@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test349（独立 GNOME bring-up；Test348 20分钟仍未部署），窗口为 **Test340–Test349**；没有生成镜像的轮次仍占一轮。
+  编号为 Test350（修正 bulk transport 的 GNOME bring-up；Test348 仍未部署），窗口为 **Test341–Test350**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,14 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test350 REGISTERED_CORRECTED_BULK_DESKTOP_TRANSPORT.
+Independent partial-send proxy avoids349sendall1s timeout;10 focused tests PASS.
+Original charging transport unchanged. Fresh same331boot/protected38/health PASS;
+no concurrent dischargewatch during900s transfer. Exact archive size/hash before
+extraction; oneinstall, optional boundedGPU/GDM as349, no touchload/flash/reboot/
+charging. GDMmasked endpoint,348grantunused/finalTWRP preserved. Superseded340
+Windowsstage retired;331/348 retained. Kernel/fulltests executed:false.
 
 2026-10-08 Test349 STOP_HOST_PROXY_SEND_TIMEOUT_BEFORE_INSTALL.
 One bulk upload wrote only16154624bytes; native Windows sendall inherited1s
