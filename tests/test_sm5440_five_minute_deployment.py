@@ -1,5 +1,7 @@
 """Test346 duration enrollment, guardian lifecycle and offline deployment gates."""
 import copy
+import hashlib
+import subprocess
 import importlib.util
 import json
 import tempfile
@@ -57,7 +59,16 @@ class FiveMinuteTests(unittest.TestCase):
         self.assertEqual((proof['window_ms'],proof['refreshes']),(300000,60))
         with self.assertRaises(ValueError):
             g.native_proof(duration.legacy.journal(),old.BOOT,required=True)
-        parser=(ROOT/'scripts/sm5440_bounded_evidence.py').read_text()
+        # Frozen guardians must match their registered parser, not a later
+        # duration allowlist. Verify exact historical bytes against INPUTS.
+        name='scripts/sm5440_bounded_evidence.py'
+        parser_bytes=subprocess.check_output(['git','-C',str(ROOT),'show',
+            'ac893e2d667f83b58c5fc8a37abe6e1f6f38fa0d:'+name])
+        self.assertEqual(hashlib.sha256(parser_bytes).hexdigest(),
+                         json.loads((R/'INPUTS.json').read_text())[name])
+        parser=parser_bytes.decode()
+        with self.assertRaises(ValueError):
+            g.native_proof(duration.long_journal(1200000),old.BOOT,required=True)
         copied=(R/'guard.py').read_text()
         body=parser[parser.index('def native_proof('):].replace('def native_proof(','def duration_native_proof(',1).strip()
         self.assertIn(body,copied)  # shared pure parser bytes, no weakened fork
