@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl is-active gdm gts9-palm ssh gts9-adbd; systemctl --failed --no-pager; runuser -u ms -- env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus gsettings get org.gnome.desktop.input-sources xkb-options; runuser -u ms -- env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus gsettings get org.gnome.desktop.input-sources sources; sha256sum /home/ms/.config/xkb/rules/evdev /home/ms/.config/xkb/symbols/gts9; journalctl -b _COMM=gnome-shell --since '-5 min' --no-pager"
+  ],
+  "ended_utc": "2026-10-08T15:28:54.350793+00:00",
+  "started_utc": "2026-10-08T15:28:54.033450+00:00",
+  "status": 0
+}

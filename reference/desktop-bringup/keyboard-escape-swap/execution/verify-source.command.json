@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf %s '84223b8854188e3938d029f258b5ce3f1898aa42f7fe6a386aefe6f896936f12  /tmp/desktop-keyboard-esc/apply.py\n4bf171f61a585ed2d9aceac7758524bfeae4dbbc4a03014eb1e0f25e327e0242  /tmp/desktop-keyboard-esc/validate.py\n815eee5706dbfd81a1a122aea847c184133ab3db652fc63e0ddccdee7d8612a9  /tmp/desktop-keyboard-esc/gts9\n53629ab839da4d42cd28305b15c5a8c3d3a7d768b7105c2931f6dcbf6bbf0b73  /tmp/desktop-keyboard-esc/evdev\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-08T15:28:21.619002+00:00",
+  "started_utc": "2026-10-08T15:28:21.530134+00:00",
+  "status": 0
+}

@@ -1,0 +1,61 @@
+{
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "xkb_options": "@as []",
+  "sources": "[('xkb', 'us')]",
+  "created_root": "/home/ms/.config/xkb"
+}
+{
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "xkb_options": "['gts9:swap_escape_grave']",
+  "sources": "[('xkb', 'us')]",
+  "compiled": {
+    "verdict": "PASS",
+    "only_changed_keys": {
+      "ESC": {
+        "before": [
+          [
+            [
+              "Escape"
+            ]
+          ]
+        ],
+        "after": [
+          [
+            [
+              "grave"
+            ],
+            [
+              "asciitilde"
+            ]
+          ]
+        ]
+      },
+      "TLDE": {
+        "before": [
+          [
+            [
+              "grave"
+            ],
+            [
+              "asciitilde"
+            ]
+          ]
+        ],
+        "after": [
+          [
+            [
+              "Escape"
+            ]
+          ]
+        ]
+      }
+    },
+    "layout": "us",
+    "option": "gts9:swap_escape_grave"
+  },
+  "physical_confirmation_pending": true
+}
+{
+  "/home/ms/.config/xkb/rules/evdev": "53629ab839da4d42cd28305b15c5a8c3d3a7d768b7105c2931f6dcbf6bbf0b73",
+  "/home/ms/.config/xkb/symbols/gts9": "815eee5706dbfd81a1a122aea847c184133ab3db652fc63e0ddccdee7d8612a9"
+}
