@@ -46,4 +46,6 @@ for timestamp, name, typ, code, value in sorted(joined):
 summary["touch_tracking_starts_during_observed_pen_proximity"] = starts_near
 summary["touch_tracking_starts_after_pen_out"] = starts_after_out
 summary["limitation"] = "No capture clock ioctl change; merge uses native evdev timestamps. No tip/pressure/side-button event observed; absence alone is not proof of either attempted operation or suppression."
+owner = json.loads((root / "owner-confirmation.json").read_text())
+summary["owner_clarification"] = owner.get("follow_up_answer")
 print(json.dumps(summary, indent=2, sort_keys=True))

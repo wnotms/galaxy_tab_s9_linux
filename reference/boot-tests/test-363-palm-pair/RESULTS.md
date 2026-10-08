@@ -28,11 +28,12 @@ palm suppression, and restored finger touch. These observations support that
 bounded position/palm result; input absence alone is not proof of suppression
 without the owner's attempted touch.
 
-No pen-tip, pressure-change, or side-button event was observed. The owner's
-general success response does not establish these separately; a clarification
-was requested before deciding whether they were exercised or require follow-up.
-Do not claim complete pressure/button acceptance or diagnose a driver failure
-from this missing coverage alone. Suspend/calibration extremes remain untested.
+No pen-tip, pressure-change, or side-button event was observed. The owner then
+clarified that a third-party pen was used and the tip was not pressed; tip and
+pressure testing will happen later. This explains the missing test coverage;
+it does not establish the pen's pressure/button capability or a driver failure.
+Do not start another capture until the owner is ready. Suspend/calibration
+extremes remain untested.
 
 Final boot ID unchanged; GDM/pair service active, no failed unit. Pack 63%,
 24.2 C, Good, Discharging. The nine new kernel records are expected module,

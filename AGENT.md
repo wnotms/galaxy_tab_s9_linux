@@ -106,7 +106,8 @@ Non-grabbingcollector1860/start20817 terminal afterownerresult/67.126s:
 11859pen/3980frames,297touch/53frames;6prox enter/leave pairs/allreleased,
 8fingercontacts/allreleased/none start during observedpenprox/touch resumes.
 Owner confirms position/palm/finger recovery; no tip/pressure/sidebutton event,
-clarification pending/notcompletepressureacceptance/notproven driverfailure.
+Owner clarified third-party pen/no tippress; tip/pressure later, capability
+unverified/notproven driverfailure. Wait owner readiness before newcapture.
 Sameboot/GDM+pairactive/SSHnormal/no failed unit/newkernel fault;63%24.2C Good.
 Raw archive/finaljournal retained. No unload/config/DT/181dir/charging/USB/
 flash/reboot command. Host/build:false evidence-only/reuse27+W1 pair artifacts.
