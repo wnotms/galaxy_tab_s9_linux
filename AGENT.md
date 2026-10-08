@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test362（S Pen 首次输入登记；Test348 仍未部署），窗口为 **Test353–Test362**；没有生成镜像的轮次仍占一轮。
+  编号为 Test364（early ADSP/native SoCinfo 登记；Test348 已停止并回退），窗口为 **Test355–Test364**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test364_REGISTERED_EARLY_ADSP_NATIVE_IDENTITY_ONLY.
+One controlled boot before SSC daemons/desktop: exact compiled native SoCinfo
+config/181 plus signed55file ADSP platform ramdisk; only boot/vendor_boot write.
+328stockassets isolatedcopy/ownedledger restore tested; originalpersist untouched.
+80affected hostPASS/0skip; build reused/no routing/full rerun; oldfull3032NOTPASS
+retained. Fresh331 sameboot allfive/181/config/notes/authWiFi/ADB/deviceNCM
+Good71%32.7C, ADSPoffline expected. No devicewrite at registration. Firstfailure
+restores exact331/vendor/181 and ownedassets only; healthyendpoint ordinaryDebian.
+331rollback belongs to activeTest364, formal348 archived qualification reused.
+No runtime SSC/inputloader/GDM activation; noPPS/pump/current change. Finish
+actual nativeADSP then separately sameboot SSC/rotation, thenchargingmarginwork.
+Fullport active;1.8A isbringupinput/rawstop ceiling, notvendorhardwaremaximum.
+
 
 
 2026-10-08 SSC_EARLY_PLATFORM_BUNDLE_INPUT_LOADERS_STAGED_NOT_DEPLOYED.
