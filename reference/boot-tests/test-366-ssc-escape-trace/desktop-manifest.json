@@ -1,0 +1,79 @@
+{
+  "usr/local/libexec/gts9-pen": {
+    "incoming": "overlay-00",
+    "source": "reference/desktop-bringup/ssc-keyboard-candidate/pen-loader.py",
+    "sha256": "ecb649faf025fc0c4303cc487862a0424fa50860da02694d69843ca7f36f0b12",
+    "original_sha256": "3930beb37cddde052e1e6c470e47283894374eeeb7c06cc9b25e58e86dea4f17",
+    "mode": 493
+  },
+  "usr/local/libexec/gts9-palm": {
+    "incoming": "overlay-01",
+    "source": "reference/desktop-bringup/ssc-keyboard-candidate/palm-loader.py",
+    "sha256": "2360699a0a75515f5278819e50b594258c5a8c5707aa2aba7030766911f0dd74",
+    "original_sha256": "3d2c9022b0a6726970ba07c517bdcad18c3d040e91183da22a74abc829f89157",
+    "mode": 493
+  },
+  "usr/local/lib/gts9-desktop/wacom-wez01.ko": {
+    "incoming": "overlay-02",
+    "source": "out/ssc-native-input-pair/pen/wacom-wez01.ko",
+    "sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5",
+    "original_sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412",
+    "mode": 420
+  },
+  "usr/local/lib/gts9-desktop/fts1ba90a-palm.ko": {
+    "incoming": "overlay-03",
+    "source": "out/ssc-native-input-pair/palm-touch/fts1ba90a.ko",
+    "sha256": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253",
+    "original_sha256": "7e71ca5816bf720ce4b3065727a4d43633be3c6abbcb070a4dd723c321d56171",
+    "mode": 420
+  },
+  "usr/local/lib/gts9-test366/hexagonrpcd": {
+    "incoming": "overlay-04",
+    "source": "out/ssc-rpc-trace/stage/usr/bin/hexagonrpcd",
+    "sha256": "de3317d005c913f87e9a63fc337f6c3cd7b4e5f3631bd9396720529595dbc2e3",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "var/lib/gts9-test366/text-scope": {
+    "incoming": "overlay-05",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/text-scope",
+    "sha256": "a6582d318ceef7d7d96069fad5f2aed4fb8c86b290f1155a9993159898743494",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test366.conf": {
+    "incoming": "overlay-06",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/text-condition.conf",
+    "sha256": "53ad5d22742e44c5664aefc747cbe1e94d03ee0e78889e8c0ae961865fe051af",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gts9-pen.service.d/91-gts9-test366.conf": {
+    "incoming": "overlay-07",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/text-condition.conf",
+    "sha256": "53ad5d22742e44c5664aefc747cbe1e94d03ee0e78889e8c0ae961865fe051af",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gts9-palm.service.d/91-gts9-test366.conf": {
+    "incoming": "overlay-08",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/text-condition.conf",
+    "sha256": "53ad5d22742e44c5664aefc747cbe1e94d03ee0e78889e8c0ae961865fe051af",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test366.conf": {
+    "incoming": "overlay-09",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/hexagonrpcd-adsp-rootpd-trace.conf",
+    "sha256": "c063d8593133324ad68efbf8d0af0412831436ac84cf31f68caf6cea6045d538",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test366.conf": {
+    "incoming": "overlay-10",
+    "source": "reference/boot-tests/test-366-ssc-escape-trace/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "sha256": "64138a485dd52a3547f6d9c268ca37d0019a0d390a38bed32c8136d22b4d4a49",
+    "original_sha256": null,
+    "mode": 420
+  }
+}

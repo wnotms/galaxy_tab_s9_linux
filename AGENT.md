@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test365（SSC discovery 登记；Test348/364 已停止并回退），窗口为 **Test356–Test365**；没有生成镜像的轮次仍占一轮。
+  编号为 Test366（SSC trace + native Escape 登记；Test365 已停止并回退），窗口为 **Test357–Test366**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,23 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST366_REGISTERED_SSC_TRACE_AND_NATIVE_ESCAPE_HOST_READY.
+One early-ADSP/native Escape boot, reused exact kernel/DTB/181/input CRC build.
+Standalone runner avoids364/365 host-flow inheritance; explicit366 module slot
+and desktop/assets ledgers before partition restore. Isolated upstream verbose
+Fedora hexagonrpc + identical library, line buffering, QRTR raw wildcard lists,
+60s actual SSC discovery/15s proxy, 2MiB trace cap/120s service backstop; one start.
+Native input overlay reversible; text condition only, graphical.target retained;
+newdriver XKB remove/exact331 restore integrated.73affectedPASS/0skip, failed
+fixture attempts preserved; source/artifact verify and host staging complete.
+No flash/reboot/SSC activation/PPS/pump yet. Fresh read-only33178ec1906 WiFi.210
+ADB present,81%34.7C/no failedunits/GNOME; install needs fresh allfive181/rescue
+preflight and pushed registration. SSC/rotation/physical newkeys pending; default
+GNOME endpoint; sensors/fullport incomplete and chargeaftersensors/capsunchanged.
+331rollback belongsactive366; keep Test365 firstfailure unchanged. Evidence:
+reference/boot-tests/test-366-ssc-escape-trace/.
+
 
 2026-10-08 SSC_KEYBOARD_BUNDLE_AND_MAPPING_HOST_READY_NOT_DEPLOYED.
 Next sensor candidate now assembled from compiled Escape-driver kernel and exact
