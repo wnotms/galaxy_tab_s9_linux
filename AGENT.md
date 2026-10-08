@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test360 NEWBOOT_PERSISTENT_GDM_TOUCH_LOAD_PASS_OWNER_UI_PENDING.
+Same33125ff0ad0 ownerboot, oneGDMstart triggers installedGDM-Wants normal1insmod,
+loadedJSON/return0/client7-0049/event4. Finalalreadyloaded/GDMactive/SSHnormal,
+3GDMmasks restored without --now; nofailedunit. Kernel1104->1111/seven startup
+records/no newsevere signature; knownunsignedO/E516->12804 preserved/no force.
+Read-only11.649s startup pack25.4C unchanged/73%GoodDischarging; GPUondemand
+220MHz endpoint. CPU7 cachedhigh bothphases !=proofsustainedCPU load; heat
+cause/longterm/SoC/surface unproven, ownerasks laterdesktop heatoptimization.
+Owner newboot login/touch confirmation pending; no silent reuse of357UIpass.
+Tests/build:false results-only/reuse17+8C/W1/37CRC; no charging/OPP/thermal/USB/
+config/DT/181dir/flash/reboot.348grantunused/freshinactive admission/finalTWRP.
+
 2026-10-08 Test360 REGISTERED_INSTALLED_TOUCH_NEWBOOT_GDM_LOAD.
 Owner manual25ff0ad0 boot confirmed, exact331 installedloader/module gate ready;
 textboot/no load expected. OneGDMstart triggers enabledGDM-Wants touch service,

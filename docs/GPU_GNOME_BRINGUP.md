@@ -31,9 +31,10 @@ The normal loader accepted all ABI/BTF checks; unsigned external-module taint
 is explicitly recorded (MODULE_SIG_FORCE=n), not a forced-load bypass.
 
 After359 the owner manually rebooted to331 boot25ff0ad0-cf2f-4cc6-971d-2b38365da2db.
-GDM and touch are currently inactive in text mode, persistent masks preserved;
-the installed loader reports ready in read-only mode. New-boot GDM-triggered
-touch loading still requires separate acceptance. Kernel/config/DT/charging code and original181 modules
+Test360 now started GDM once: the enabled optional touch unit performed one
+normal load, bound7-0049/event4, sameboot/GDM/SSH/10s initial health passed.
+Persistent masks restored without --now; GUI remains active for owner login/
+touch confirmation, still pending. Text-only startup does not load touch. Kernel/config/DT/charging code and original181 modules
 remain unchanged. Test348's authorized1200s attempt is unused. Its original
 natural-discharge watcher is terminal, not running. Before future charging work,
 stop desktop and account for GPU/userspace/power-policy/touch changes in fresh
@@ -46,7 +47,7 @@ No charging test runs as part of this desktop work.
 | Display | Existing2560×1600 DPU/DSI, GNOME Wayland visible; owner touch orientation correct | UI scaling/dynamic rotation acceptance |
 | Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
 | Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
-| Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | New-boot GDM-triggered load, ten-contact and suspend/rotation checks |
+| Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | New-boot owner UI, ten-contact and suspend/rotation checks |
 | S Pen | Not imported/loaded | Separate port |
 
 Initial read-only inventory remains at
@@ -174,3 +175,13 @@ Test356 stores exact before/after values and rollback. This keeps the existing
 gts9-power-key.service in charge of short-press backlight changes; do not change
 logind, falsify virtualization, or grab the PMIC key. Other power settings remain
 unchanged; this fix is not suspend/idle-power qualification.
+
+## Desktop heat observation
+
+Owner reports heat while GUI active. Test360 only recorded startup snapshots:
+pack25.4°C before/after11.649s; GPU simple_ondemand/final220MHz; CPU schedutil.
+CPU7 cached frequency is high before GUI too, insufficient to infer sustained
+load. Surface/SoC temperature and long-duration heat cause remain unmeasured.
+Prioritize an independent idle/ordinary-use profile, background rendering and
+reversible GNOME/display preferences. This is not permission to change charging
+current, OPP/clock/thermal protections or to reuse348 as a heat experiment.

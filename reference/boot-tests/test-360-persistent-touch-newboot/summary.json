@@ -1,0 +1,52 @@
+{
+  "verdict": "PERSISTENT_NEWBOOT_LOADER_PASS_OWNER_UI_PENDING",
+  "boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "module_sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+  "loader_sha256": "95968c95709c7939316e730adf74741f0e3dd4ce2598d991ca77ed48ee060dfb",
+  "loader_status": "loaded",
+  "insmod_attempts": 1,
+  "normal_kernel_loader_returncode": 0,
+  "touch_client": "7-0049",
+  "input": "event4 FTS1BA90A Touchscreen",
+  "GDM_active": true,
+  "GDM_persistent_masks_restored": true,
+  "new_failed_units": [],
+  "kernel_before_records": 1104,
+  "kernel_after_records": 1111,
+  "new_kernel_records": 7,
+  "new_kernel_faults": [],
+  "expected_external_signature_taint": {
+    "before": "516",
+    "after": "12804",
+    "messages": [
+      "fts1ba90a: loading out-of-tree module taints kernel.",
+      "fts1ba90a: module verification failed: signature and/or required key missing - tainting kernel"
+    ]
+  },
+  "thermal_startup": {
+    "monotonic_seconds": 11.649148536999974,
+    "pack_temperature_before_C": 25.4,
+    "pack_temperature_after_C": 25.4,
+    "gpu_governor": "simple_ondemand",
+    "GPU_final_Hz": 220000000,
+    "observation": "startup only; no long-duration heat cause/SoC/surface temperature inference. CPU7 cached frequency high in both snapshots; does not establish continuously active CPU at max frequency."
+  },
+  "battery": {
+    "capacity": "73",
+    "temp": "254",
+    "health": "Good",
+    "status": "Discharging",
+    "current_now": "-949000"
+  },
+  "owner_UI_confirmation": null,
+  "device_duration_seconds": 11.788132905960083,
+  "host_duration_seconds": 15.056871626999964,
+  "reboot_sent": false,
+  "flash": false,
+  "kernel_config_DT_181dir_USB_ADB_charging_change": false,
+  "Test348_attempt_consumed": false,
+  "tests": {
+    "executed": false,
+    "reason": "results-only; unchanged17loader+8C/W1/37CRC qualification reused"
+  }
+}

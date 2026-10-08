@@ -6,8 +6,8 @@ Byte-identical import from Fedora X710 commit
 preparation. Test357 accepted ordinary touch and two contacts; Test359 installed
 the optional identity-gated GNOME component in userspace/gnome/touch, outside
 the181 module directory. The default kernel queue/config/DT/firmware remain
-unchanged. A later owner manual reboot left text mode; new-boot GDM-triggered
-loading has not yet been accepted.
+unchanged. A later owner manual reboot left text mode; Test360 verifies new-boot GDM-triggered
+normal loading/bound input; owner new-boot visible UI confirmation is pending.
 
 The X710 DT already describes `st,fts1ba90a` on i2c4, address 0x49, GPIO25,
 3.3 V analog/1.8 V I/O supplies, portrait-native 1600×2560 coordinates with
@@ -50,7 +50,7 @@ normal loader accepts ABI/BTF without force flags; unsigned/out-of-tree taint
 is recorded. Input enumeration alone is not acceptance; Test357 now has owner-confirmed
 position/direction/UI and raw two-contact/release evidence. Test359 adds optional
 GDM-only loading; no181-directory change. See the component README for gates,
-rollback and the still-unvalidated new-boot load path.
+rollback and the new-boot loading result and pending visible UI acceptance.
 
 First physical stage: prepare rescue/logging, load once,
 check I2C/IRQ/input enumeration, then ask the owner to touch a grid and multiple
