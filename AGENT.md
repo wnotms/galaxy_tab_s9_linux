@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test357 FEDORA_TOUCH_OWNER_AND_RAW_EVENTS_PASS.
+One normal load of byte-identical X710Fedorafts; same3311adc0f13/7-0049/event4,
+37 importedCRCs match; GDM/SSH responsive and ownercoordinates/directionsPASS.
+191.244s raw12777events/2113frames/two simultaneous contacts; finalslot snapshot
+all10released. No newkernel fault/failedunit;80%32.8C Good. Unsigned/outoftree
+warning/taint516->12804 preserved, no force flags. Collector3294terminal after
+ownerconfirmation, no restart; module/GNOMEleftactive, no permanentautoload.
+No firmware/Spen/doubletap/suspend/unload/config/DT/charging/flash/reboot.
+8Ctests/W1 reused/currentCRCgatePASS; results-onlytests/build:false.
+34820minunused/fullportincomplete, futurefreshdesktopinactive admission/finalTWRP.
+
 2026-10-08 Test357 REGISTERED_NEWBOOT_FEDORA_TOUCH.
 Independent new1adc0f13 scope after355zero-load stop;356shortkey regressionPASS.
 Fresh same331/config/notes/81%32.1C Good/GDMactive/WiFi157/client7-0049 unbound.

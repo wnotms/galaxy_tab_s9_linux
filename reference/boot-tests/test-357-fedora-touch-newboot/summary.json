@@ -1,0 +1,79 @@
+{
+  "verdict": "FEDORA_X710_TOUCH_OWNER_AND_RAW_EVENTS_PASS",
+  "owner_confirmation": "触摸位置、方向正确，桌面正常",
+  "boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+  "module_sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+  "load_attempts": 1,
+  "event_device": "/dev/input/event4",
+  "captured_events": 12777,
+  "captured_frames": 2113,
+  "observation_seconds": 191.244301489,
+  "contact_starts": 113,
+  "contact_releases": 112,
+  "maximum_simultaneous_contacts": 2,
+  "remaining_active_slots_at_capture_end": [
+    0
+  ],
+  "coordinate_ranges": {
+    "53": [
+      42,
+      2486
+    ],
+    "54": [
+      1,
+      1541
+    ]
+  },
+  "new_kernel_faults": [],
+  "signature_warning": [
+    "fts1ba90a: module verification failed: signature and/or required key missing - tainting kernel"
+  ],
+  "taint_before": "516",
+  "taint_after": "12804",
+  "capture_terminal": {
+    "pid": 3294,
+    "reason": "host_requested_after_owner_result",
+    "seconds": 191.244301489,
+    "events": 12777,
+    "frames": 2113,
+    "trailing_bytes": 0
+  },
+  "final_state": {
+    "boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+    "battery": {
+      "capacity": "80",
+      "temp": "328",
+      "health": "Good",
+      "status": "Discharging",
+      "current_now": "-2119000"
+    },
+    "touch_driver": "/sys/bus/i2c/drivers/fts1ba90a",
+    "double_tap_to_wake": "0",
+    "gdm": "active",
+    "permanent_autoload": false
+  },
+  "GNOME_active": true,
+  "permanent_autoload": false,
+  "suspend_doubletap_SPen_tested": false,
+  "Test348_attempt_consumed": false,
+  "tests": {
+    "executed": false,
+    "reason": "Evidence/results only; unchanged 8 decoder/W1 build qualification plus new exact331 CRC replay already recorded"
+  },
+  "post_capture_slot_state": {
+    "tracking_ids": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1
+    ],
+    "active_slots": []
+  },
+  "note": "Capture ended while slot0 active; subsequent non-grabbing kernel slot snapshot records whether released. No zero-active assertion is inferred from stopping reader."
+}

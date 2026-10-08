@@ -2,38 +2,52 @@
 
 ## Current result — 2026-10-08
 
-Host preparation is complete; GNOME and GPU firmware are **not deployed**.
-Test349 now registers actual desktop work during the owner's discharge wait,
-superseding the earlier assistant-created after-Test348 ordering below. Charging
-kernel/config/DT/modules remain frozen; desktop is a separate userspace delta.
-Before Test348, GDM must be inactive/masked and fresh admission must record this
-new rootfs state. Its PPS scope and final TWRP endpoint remain unchanged.
-The device remains Test331, boot `be1baaaa47fc41f582558f7092c01653`, in the
-natural discharge preparation for Test348. Keep its frozen kernel/config/DT/
-modules and critical gts9 rootfs services unchanged. Test349 independently adds
-desktop userspace during this wait; record that delta and leave desktop inactive
-for Test348. Its eventual Test331 restoration/TWRP endpoint remains unchanged.
+GNOME and GPU firmware are deployed. Test352 installed368 verified packages and
+three pinned GPU files; Test353 fixed only render-group membership and verified
+ordinary-user freedreno FD740 EGL and Turnip Adreno740 Vulkan. GNOME48.7/Mutter
+Wayland obtained an accelerated EGL context with the existing separate DPU/GPU
+configuration. Test354 owner confirmed keyboard/password login and desktop use.
+These are functional checks, not performance or long-term reliability claims.
 
-Read-only evidence is in
-`reference/desktop-bringup/initial-readonly-1791439861/`. It includes the full
-kernel journal, input/DRM inventory, APT simulation, raw package metadata and
-download URLs. The stock APNHLOS partition was temporarily mounted read-only
-under `/run`, inspected for firmware and unmounted; no partition was written.
+Test355 stopped **before any touch load** after the owner reported poweroff and
+manual restart. Previous-boot logs show a short power-key event, GNOME48.1's
+VM policy requesting PowerOff, and orderly systemd shutdown. Existing logind
+ignore/backlight helper was already correct. Test356 sets only GNOME
+power-button-action=nothing; owner confirms screen off/on and usable desktop,
+authenticated SSH confirms sameboot and two short-key events with no poweroff.
+The policy source is userspace/gnome/99-gts9-power-key.gschema.override.
 
-| Component | Actual observation | Work remaining |
+Current exact331 boot is1adc0f13-a210-4856-bb15-c6e9df17867a, Wi-Fi10.175.236.157.
+Test357 loaded the byte-identical Fedora X710 touch module once from var/tmp
+outside the accepted181-module directory. Existing7-0049 DT client is bound and
+input event4 enumerated; five-second IRQ delta126, no new kernel fault.
+Test357 owner confirms correct position/direction and desktop use; raw191.244s capture confirms two simultaneous contacts and final all-slots released. Capture is terminal, not live.
+No persistent touch autoload, suspend/double-tap wake or S Pen acceptance yet.
+The normal loader accepted all ABI/BTF checks; unsigned external-module taint
+is explicitly recorded (MODULE_SIG_FORCE=n), not a forced-load bypass.
+
+GDM remains active for owner use, while persistent masks prevent automatic
+startup on a later boot. Kernel/config/DT/charging code and original181 modules
+remain unchanged. Test348's authorized1200s attempt is unused. Its original
+natural-discharge watcher is terminal, not running. Before future charging work,
+stop desktop and account for GPU/userspace/power-policy/touch changes in fresh
+admission; preserve original safety limits and eventual exact331/TWRP endpoint.
+No charging test runs as part of this desktop work.
+
+| Component | Evidence | Remaining |
 | --- | --- | --- |
-| GPU kernel | Mainline `adreno`, `CONFIG_DRM_MSM=y`, card0/renderD128 | First real GPU initialization and hardware rendering |
-| Display | DPU card1, DSI-1 connected, 2560×1600 | Mutter/Wayland scanout and GPU/DPU buffer sharing |
-| GPU firmware | SQE/GMU/ZAP missing from rootfs | Install the three staged, pinned files |
-| Mesa | libgallium 25.0.7 installed; DRI/Vulkan missing | Install staged DRI and Turnip packages |
-| GNOME | No installed session or display manager | Install minimal session, controlled first start |
-| Touch | Existing DT describes ST FTS1BA90A at i2c4/0x49; optional Fedora module now compiled offline | Deployment, independent integration and touch acceptance |
-| Input fallback | EF-DX710 keyboard and power keys enumerated | No touchpad currently enumerated |
+| GPU | Test353 ordinary-user freedreno FD740 / Turnip Adreno740 | Workload/performance and long-duration checks |
+| Display | Existing2560×1600 DPU/DSI, GNOME Wayland visible | Touch UI scaling/rotation acceptance |
+| Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
+| Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
+| Touch | Test357 normal module load, existing7-0049/input event4 | Ten-contact, persistent deployment and suspend/rotation checks |
+| S Pen | Not imported/loaded | Separate port |
 
-DRM node presence does not prove hardware acceleration. The GMU has not yet been
-shown initialized by a real workload, and renderers must be checked against
-llvmpipe/lavapipe fallback. Card numbers are observations, not permanent identity;
-select by sysfs driver/connector paths in later tests.
+Initial read-only inventory remains at
+reference/desktop-bringup/initial-readonly-1791439861/; its missing-firmware/desktop
+observations are historical and superseded by Test352–357. No partition was
+written for desktop work. Actual tests' RESULTS/summary/raw evidence take
+precedence over the original deployment plan below.
 
 ## Reused implementations
 
@@ -57,7 +71,7 @@ select by sysfs driver/connector paths in later tests.
   The source/hash manifest records each exact URL and byte count. The complete
   12,088-byte ZAP ELF has three program headers, one load segment, an embedded
   hash segment and no missing bNN segments. Staging it under the DT-requested
-  `.mdt` name changes no bytes. Secure-world authentication remains untested.
+  `.mdt` name changes no bytes. The later Test352/353 renderer initialization succeeded; this initial layout check alone did not prove secure-world authentication.
 
 Source files used for these conclusions are SHA-256 recorded alongside the
 inventory. Firmware is not committed or claimed to have been generated here.
@@ -69,7 +83,7 @@ files, Mesa DRI/Vulkan, diagnostic tools and fonts, without the larger desktop
 metapackage. Actual device APT simulation: **368 new packages, no upgrade or
 removal**, 165,385,796 download bytes and approximately 743 MB installed space.
 All 368 host downloads matched SHA-256 and size from the existing Debian APT
-metadata. This is package preparation, not an installation success.
+metadata. This original preparation was later installed successfully in Test352; exact versions and raw installation results are recorded there.
 
 The downloaded ARM64 packages contain `msm_dri.so`,
 `libvulkan_freedreno.so`, `freedreno_icd.json` and GNOME Wayland sessions.
@@ -77,7 +91,7 @@ No Zink/software-rendering environment overrides or third-party Mesa repository
 are needed for the first attempt. GNOME 48 is the current Debian trixie selection
 in this inventory; do not equate it with Fedora's newer GNOME release.
 
-## Device installation and first acceptance
+## Original installation sequence and remaining acceptance
 
 1. Register Test349 desktop bring-up separately. Save current
    boot/config/notes, package state, full journal and working ADB/Wi-Fi rescue.
@@ -98,7 +112,7 @@ in this inventory; do not equate it with Fedora's newer GNOME release.
    resulting package state and installed firmware hashes.
    `userspace/gnome/install.py` now implements the local-cache/simulation gate,
    temporary service policy and persistent GDM/display-manager masks. It defaults
-   to cache validation, and has not been executed on the tablet. The current
+   to cache validation; Test352 records the actual corrected local-only installation. The current
    ordinary user `ms` was confirmed read-only on the same Test331 boot.
 5. From authenticated rescue, perform one controlled GPU initialization via
    Vulkan diagnostics. Save full journal; require an Adreno device and no GPU
@@ -126,10 +140,10 @@ module in `kernel/desktop/fts1ba90a/`; the DT node already exists. The imported
 Wacom is unconfigured. No S Pen driver or wider Fedora patch queue is pulled
 in. The default build and Test348 inputs remain unchanged. The module compiled
 against the qualified Test348 provider with W=1 and passed eight actual-C
-decoder tests; it has not been installed or loaded. No touch firmware update
+decoder tests; Test357 loaded it transiently after direct exact331 export-CRC/BTF checks. Test357 ordinary touch/two contacts and owner position/direction acceptance passed. No touch firmware update
 is planned. See that directory's README and its separate offline evidence.
 
-## Checks executed
+## Initial host preparation checks (historical)
 
 - Thirteen affected host tests passed (package identity/download failure/cache
   preservation and ZAP ELF/staging validation), 0.005 seconds.
@@ -141,3 +155,16 @@ is planned. See that directory's README and its separate offline evidence.
 
 Computer input control findings are in
 [SM5714_USB_INPUT_CONTROL.md](SM5714_USB_INPUT_CONTROL.md).
+
+## GNOME power-key integration
+
+Install the owned99-gts9-power-key.gschema.override into
+/usr/share/glib-2.0/schemas/ and run glib-compile-schemas there. The prepared APT
+installer does not currently apply this later integration automatically. Existing
+users may have an explicit dconf value: record it and set only
+org.gnome.settings-daemon.plugins.power power-button-action to nothing for the
+ordinary user and Debian-gdm, using their own clean D-Bus/session environment.
+Test356 stores exact before/after values and rollback. This keeps the existing
+gts9-power-key.service in charge of short-press backlight changes; do not change
+logind, falsify virtualization, or grab the PMIC key. Other power settings remain
+unchanged; this fix is not suspend/idle-power qualification.

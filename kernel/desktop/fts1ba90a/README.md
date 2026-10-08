@@ -40,7 +40,14 @@ does not establish pairing. Revalidate the exact provider/CRC set and device
 identity at the future desktop deployment boundary. Do not install it during
 the frozen Test348 charging test.
 
-First physical stage after that test closes: prepare rescue/logging, load once,
+The owner subsequently authorized separate desktop work during discharge.
+Test357 now loads the qualified unchanged module in the current Test331 boot
+after checking all37 imported CRCs directly against its hash-bound Image. The
+normal loader accepts ABI/BTF without force flags; unsigned/out-of-tree taint
+is recorded. Input enumeration alone is not acceptance; Test357 now has owner-confirmed
+position/direction/UI and raw two-contact/release evidence. No autoload or181-directory change.
+
+First physical stage: prepare rescue/logging, load once,
 check I2C/IRQ/input enumeration, then ask the owner to touch a grid and multiple
 points. Check raw events and libinput before GNOME. Require the correct X710
 orientation and no interrupt storm/I2C errors. Stop at the first fault and save
