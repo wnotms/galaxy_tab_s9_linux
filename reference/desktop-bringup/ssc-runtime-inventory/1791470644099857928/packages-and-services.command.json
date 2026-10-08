@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; dpkg-query -W -f='${Package} ${Version} ${db:Status-Status}\\n' iio-sensor-proxy libssc2 gts9-hexagonrpc pd-mapper libprotobuf-c1 libqrtr1 2>&1; echo @@fastrpc-account; getent passwd fastrpc; getent group fastrpc; echo @@services; systemctl list-unit-files '*hexagonrpc*' '*pd-mapper*' '*iio-sensor*' --no-pager; echo @@payload-conflicts; for p in /usr/bin/hexagonrpcd /usr/bin/pd-mapper /usr/bin/ssccli /usr/lib/aarch64-linux-gnu/libssc.so.2 /usr/libexec/iio-sensor-proxy /usr/lib/udev/rules.d/10-fastrpc.rules; do if test -e \"$p\"; then sha256sum \"$p\"; dpkg-query -S \"$p\" 2>&1; fi; done"
+  ],
+  "ended_utc": "2026-10-08T14:44:04.242375+00:00",
+  "started_utc": "2026-10-08T14:44:04.101701+00:00",
+  "status": 0
+}

@@ -228,5 +228,11 @@ captured mainline SoC-bus/debugfs values to the five files expected by Samsung
 its output. See `reference/desktop-bringup/ssc-socinfo/RESULTS.md` for the exact
 source mapping and provenance; tests use fixtures that must never be deployed.
 Do not substitute SoC silicon `revision` for raw board `platform_version`, or
-a numeric platform ID for Samsung's platform name. Real native identity must
-still be collected after the authorized QCOM_SOCINFO kernel rebuild.
+a numeric platform ID for Samsung's platform name. Test364 physically captured native id519/format0.16/MTP/subtype0/boardversion65536
+with ADSP running and /dev/fastrpc-adsp. Its registered flow then stopped on
+a first host SSH banner timeout and restored Test331; SSC discovery/rotation
+remain untested. See `reference/boot-tests/test-364-early-adsp-socinfo/RESULTS.md`.
+The bounded host-only readiness helper and runtime inventory are recorded in
+`reference/desktop-bringup/ssc-ssh-readiness/`. Do not start an additional
+userspace pd-mapper automatically: the candidate already enables native
+QCOM_PD_MAPPER, with stock-matching ADSP domains/instance74.

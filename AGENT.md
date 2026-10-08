@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_BOUNDED_SSH_READINESS_POLICY_HOST_ONLY.
+Test364 firstbannercommand3.015s; cause unknown, do notrelabelSTOP. Newinjected
+helper max3/default30s/absolute<=90s with sameboothealth before/aftersuccess,
+strictauth/key/peer/unknownfaultstop, rawfirstfailure/recovery retained.15mock
+PASS/0skip; notintegrated/deployed/no newboot. Freshrootinventory noSSC/runtime
+packages/fastrpcaccount/conflicts. NativeQCOM_PD_MAPPER=y already mapsstock
+ADSPdomains/instance74: do notstartduplicateuserspacePDmapper. Nextregistered
+SSCdiscovery/D-Bus thenrotation; rootfsactivation rollback stillprepare. Exact
+331Debianea91d666 healthy, chargingcapsunchanged/fullport andsensors incomplete.
+
+
 2026-10-08 Test364_NATIVE_ADSP_OBSERVED_STOP_WIFI_BANNER_RESTORED331.
 Singleboot86f583ce actualADSP running/fastrpc/id519/fmt0.16/MTP/subtype0/version
 65536 observed at17.07s. FirstWiFi SSH banner timeout->STOP/no secondboot. Full
