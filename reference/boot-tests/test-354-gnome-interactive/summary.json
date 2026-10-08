@@ -10,7 +10,7 @@
     "current_now": "-1492000"
   },
   "automatic_stop_seconds": null,
-  "verdict": "GNOME_ACTIVE_FOR_MANUAL_KEYBOARD_TEST",
+  "verdict": "GNOME_KEYBOARD_SESSION_OWNER_CONFIRMED_FUNCTIONAL",
   "journal_start_cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=f7c47;b=be1baaaa47fc41f582558f7092c01653;m=18ff7e61a;t=65c9b50827163;x=12d68eb7126642e4",
   "new_kernel_faults": [],
   "initial_observation_seconds": 10.29371306900066,
@@ -26,7 +26,15 @@
   "touch_loaded": false,
   "tests": {
     "executed": false,
-    "reason": "Activation/evidence only; prior source qualification unchanged; activation Python syntax passed"
+    "reason": "Owner confirmation/status only; no source change or new automated/device execution"
   },
-  "Test348_attempt_consumed": false
+  "Test348_attempt_consumed": false,
+  "initial_verdict": "GNOME_ACTIVE_FOR_MANUAL_KEYBOARD_TEST",
+  "owner_confirmation": {
+    "date": "2026-10-08",
+    "message": "已测试，功能正常",
+    "scope": "Owner-reported functionality of the reopened GNOME keyboard session",
+    "touch_acceptance": false,
+    "additional_device_commands_executed": false
+  }
 }

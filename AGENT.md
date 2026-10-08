@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test354 GNOME_KEYBOARD_SESSION_OWNER_CONFIRMED_FUNCTIONAL.
+Owner “已测试，功能正常” confirms reopened desktop manual functionality.
+Prior accelerated EGL/Turnip and keyboard/password evidence retained; no touch
+acceptance or reliability claim. No new device operation; desktop left active,
+persistent autostart masks unchanged.348 paused/unused; tests/build:false for
+this owner-confirmation/status change. See354owner-confirmation/RESULTS/summary.
+
 2026-10-08 Test354 GNOME_ACTIVE_FOR_MANUAL_KEYBOARD_TEST.
 One GDMstart/10.294s check PASS, same331 boot/config/notes, SSH responsive,
 zero new kernelfault/failedunits/renderpermission fallback,86%32.2C Good.
