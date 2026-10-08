@@ -1,0 +1,7 @@
+# Namespace-explicit module recovery — host-qualified, not deployed
+
+A future caller supplies the actual test namespace explicitly; current/original/tested slot paths derive from that same namespace. Full original and current candidate 181-file manifests are verified before rename. Unknown machine, wrong namespace, corruption, unexpected symlinks or an occupied tested slot stop without partition writes. Already-restored modules are idempotently verified after a later partition-stage failure. Caller still owns TWRP identity, qualified manifests, root mount, partition identity and serialized recovery; this helper does not flash or reboot.
+
+10 executed host tests passed, zero skipped. Real temporary 181-file directory/hash transactions test the correct slot, wrong historical slot, corruption, unknown current files, occupied tested slot, wrong machine, symlink backup/extra link, extra file, malicious arguments and repeated verification. An initial test exposed shell set-e's AND-list exception in the occupied-slot guard; it was replaced with separate unconditional tests and the scenario now stops before rename. Existing historical runners/results remain unchanged.
+
+This qualifies only the new helper. Next Test366 must integrate it instead of the frozen Test364 restore function; no claim that integration or a device recovery using it has happened. No kernel build/full regression/Actions for this host-only change.

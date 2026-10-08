@@ -1,0 +1,15 @@
+test_correct_slot_and_idempotent_after_partition_failure (test_ssc_recovery_modules.RecoveryModules.test_correct_slot_and_idempotent_after_partition_failure) ... ok
+test_corrupt_baseline_refuses_before_rename (test_ssc_recovery_modules.RecoveryModules.test_corrupt_baseline_refuses_before_rename) ... ok
+test_existing_tested_slot_not_overwritten (test_ssc_recovery_modules.RecoveryModules.test_existing_tested_slot_not_overwritten) ... ok
+test_extra_file_refused (test_ssc_recovery_modules.RecoveryModules.test_extra_file_refused) ... ok
+test_symlink_backup_refused (test_ssc_recovery_modules.RecoveryModules.test_symlink_backup_refused) ... ok
+test_unexpected_extra_symlink_refused (test_ssc_recovery_modules.RecoveryModules.test_unexpected_extra_symlink_refused) ... ok
+test_unknown_current_modules_refused (test_ssc_recovery_modules.RecoveryModules.test_unknown_current_modules_refused) ... ok
+test_untrusted_namespace_release_or_paths_refused (test_ssc_recovery_modules.RecoveryModules.test_untrusted_namespace_release_or_paths_refused) ... ok
+test_wrong_historical_slot_refuses_candidate_and_preserves_backup (test_ssc_recovery_modules.RecoveryModules.test_wrong_historical_slot_refuses_candidate_and_preserves_backup) ... ok
+test_wrong_machine_refused (test_ssc_recovery_modules.RecoveryModules.test_wrong_machine_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.441s
+
+OK
