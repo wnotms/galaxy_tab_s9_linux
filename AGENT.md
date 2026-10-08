@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test348（已授权一次20分钟测试，尚未部署），窗口为 **Test339–Test348**；没有生成镜像的轮次仍占一轮。
+  编号为 Test349（独立 GNOME bring-up；Test348 20分钟仍未部署），窗口为 **Test340–Test349**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,16 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test349 REGISTERED_DESKTOP_DURING_DISCHARGE.
+Owner explicitly requested GPU/GNOME work during wait; earlier assistant-created
+after348 ordering superseded. Separate349 only adds verified desktop userspace/
+GPUfirmware on exact331; no kernel/config/DT/modules/charging change, no touchload.
+Readonly allfive181/config/notes/DCC/zero failed/38gts9hashes/WiFi PASS,95%31.6C.
+One install, one30s Vulkanprobe, one60s controlledGDM observation; GDMmasked after.
+Register/push before devicewrite. 348 grantunused and finalTWRP unchanged; fresh
+desktop-inactive admission/rootfsdelta required before348. Retired superseded339
+images/stage; source/config/DT/modules/raw preserved. See349README/registration.
 
 2026-10-08 GNOME host transfer bundle VERIFIED_NOT_TRANSFERRED.
 out/gnome-trixie-arm64/gts9-gnome-deploy.tar,381 regularmembers/166492160bytes,

@@ -3,11 +3,16 @@
 ## Current result — 2026-10-08
 
 Host preparation is complete; GNOME and GPU firmware are **not deployed**.
+Test349 now registers actual desktop work during the owner's discharge wait,
+superseding the earlier assistant-created after-Test348 ordering below. Charging
+kernel/config/DT/modules remain frozen; desktop is a separate userspace delta.
+Before Test348, GDM must be inactive/masked and fresh admission must record this
+new rootfs state. Its PPS scope and final TWRP endpoint remain unchanged.
 The device remains Test331, boot `be1baaaa47fc41f582558f7092c01653`, in the
-read-only natural discharge preparation for Test348. Keep that charging round's
-frozen kernel/config/DT/modules and rootfs services unchanged. First finish its
-registered test and exact restoration to Test331/TWRP, then perform desktop
-installation and activation as a separate attributable stage.
+natural discharge preparation for Test348. Keep its frozen kernel/config/DT/
+modules and critical gts9 rootfs services unchanged. Test349 independently adds
+desktop userspace during this wait; record that delta and leave desktop inactive
+for Test348. Its eventual Test331 restoration/TWRP endpoint remains unchanged.
 
 Read-only evidence is in
 `reference/desktop-bringup/initial-readonly-1791439861/`. It includes the full
@@ -74,7 +79,7 @@ in this inventory; do not equate it with Fedora's newer GNOME release.
 
 ## Device installation and first acceptance
 
-1. After Test348 is closed, register desktop bring-up separately. Save current
+1. Register Test349 desktop bring-up separately. Save current
    boot/config/notes, package state, full journal and working ADB/Wi-Fi rescue.
    Keep known-good boot/modules; desktop rollback must not depend on the GUI.
 2. Copy the verified cache to the Debian filesystem and the three firmware

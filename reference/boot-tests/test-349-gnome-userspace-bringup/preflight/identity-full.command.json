@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/home/ms/.ssh/gts9-test292-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "-o",
+    "ProxyCommand=/mnt/f/msys64/ucrt64/bin/python.exe -u -c 'import socket,os,sys,threading,msvcrt\nif sys.platform!=\"win32\":raise RuntimeError(\"native Windows TCP required\")\nmsvcrt.setmode(0,os.O_BINARY);msvcrt.setmode(1,os.O_BINARY)\ns=socket.create_connection((sys.argv[1],22),3);s.settimeout(1)\nstop=threading.Event()\ndef upload():\n try:\n  while not stop.is_set():\n   data=os.read(0,65536)\n   if not data:break\n   s.sendall(data)\n finally:stop.set()\nthreading.Thread(target=upload,daemon=True).start()\ntry:\n while not stop.is_set():\n  try:data=s.recv(65536)\n  except socket.timeout:continue\n  if not data:break\n  pos=0\n  while pos<len(data):\n   n=os.write(1,data[pos:])\n   if n<=0:raise OSError(\"proxy stdout closed\")\n   pos+=n\nfinally:stop.set();s.close()\n' 10.175.236.175",
+    "root@10.175.236.175",
+    "python3 -c 'from pathlib import Path\nimport hashlib,json,gzip,subprocess\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nb=Path('\"'\"'/sys/class/power_supply/sm5714-battery'\"'\"');u=Path('\"'\"'/sys/class/power_supply/sm5714-usb'\"'\"')\nconfig=gzip.decompress(Path('\"'\"'/proc/config.gz'\"'\"').read_bytes())\nprotected={}\nfor directory,pattern in [('\"'\"'/usr/libexec'\"'\"','\"'\"'gts9*'\"'\"'),('\"'\"'/usr/local/libexec'\"'\"','\"'\"'gts9*'\"'\"'),('\"'\"'/usr/lib/systemd/system'\"'\"','\"'\"'gts9*'\"'\"'),('\"'\"'/etc/systemd/system'\"'\"','\"'\"'gts9*'\"'\"')]:\n for path in sorted(Path(directory).glob(pattern)):\n  if path.is_file():protected[str(path)]=sha(path)\nmods=Path('\"'\"'/usr/lib/modules/7.2.0-rc3-gts9wifi-dirty'\"'\"')\nmodule_hashes={str(p.relative_to(mods)):sha(p) for p in sorted(mods.rglob('\"'\"'*'\"'\"')) if p.is_file()}\npartitions={}\nfor name in ('\"'\"'boot'\"'\"','\"'\"'vendor_boot'\"'\"','\"'\"'init_boot'\"'\"','\"'\"'dtbo'\"'\"','\"'\"'vbmeta'\"'\"'):\n path=Path('\"'\"'/dev/disk/by-partlabel'\"'\"')/name\n h=hashlib.sha256()\n with path.open('\"'\"'rb'\"'\"') as stream:\n  while data:=stream.read(1048576):h.update(data)\n partitions[name]=h.hexdigest()\nflags={}\nfor name in ('\"'\"'direct_charge'\"'\"','\"'\"'direct_charge_once'\"'\"','\"'\"'fixed_return_check'\"'\"','\"'\"'pps_return_check'\"'\"'):\n path=Path('\"'\"'/sys/module/sm5440_fedora/parameters'\"'\"')/name\n flags[name]=path.read_text().strip() if path.exists() else '\"'\"'absent'\"'\"'\ndef command(args):\n p=subprocess.run(args,capture_output=True,text=True)\n return dict(returncode=p.returncode,stdout=p.stdout,stderr=p.stderr)\nprint(json.dumps(dict(boot_id=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),machine_id=Path('\"'\"'/etc/machine-id'\"'\"').read_text().strip(),uname=command(['\"'\"'uname'\"'\"','\"'\"'-a'\"'\"']),cmdline=Path('\"'\"'/proc/cmdline'\"'\"').read_text(),uptime=Path('\"'\"'/proc/uptime'\"'\"').read_text(),config_sha256=hashlib.sha256(config).hexdigest(),notes_sha256=sha(Path('\"'\"'/sys/kernel/notes'\"'\"')),dcc_enabled=b'\"'\"'CONFIG_HVC_DCC=y'\"'\"' in config,hvc_dev=Path('\"'\"'/dev/hvc0'\"'\"').exists(),hvc_sys=Path('\"'\"'/sys/class/tty/hvc0'\"'\"').exists(),battery={n:(b/n).read_text().strip() for n in ('\"'\"'status'\"'\"','\"'\"'health'\"'\"','\"'\"'present'\"'\"','\"'\"'capacity'\"'\"','\"'\"'voltage_now'\"'\"','\"'\"'current_now'\"'\"','\"'\"'temp'\"'\"')},usb_online=(u/'\"'\"'online'\"'\"').read_text().strip(),pump_optins=flags,partitions=partitions,module_hashes=module_hashes,protected_rootfs=protected,services=command(['\"'\"'systemctl'\"'\"','\"'\"'is-active'\"'\"','\"'\"'ssh'\"'\"','\"'\"'gts9-adbd'\"'\"','\"'\"'gts9-usb-acm'\"'\"']),failed=command(['\"'\"'systemctl'\"'\"','\"'\"'--failed'\"'\"','\"'\"'--no-legend'\"'\"','\"'\"'--no-pager'\"'\"']),GDM=command(['\"'\"'systemctl'\"'\"','\"'\"'is-active'\"'\"','\"'\"'gdm.service'\"'\"','\"'\"'gdm3.service'\"'\"','\"'\"'display-manager.service'\"'\"']),root_space=command(['\"'\"'df'\"'\"','\"'\"'-B1'\"'\"','\"'\"'/'\"'\"']),network=command(['\"'\"'ip'\"'\"','\"'\"'-br'\"'\"','\"'\"'address'\"'\"'])),indent=2))\n'"
+  ],
+  "ended_utc": "2026-10-08T06:56:49.445324+00:00",
+  "started_utc": "2026-10-08T06:56:45.887313+00:00",
+  "status": 0
+}

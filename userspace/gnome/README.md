@@ -42,6 +42,10 @@ in the bring-up document. Neither preparer can perform them.
 
 ## Controlled installation tool (not executed on the tablet)
 
+Test349 separately registers desktop work during discharge, superseding the
+earlier after-Test348 ordering here. Keep charging inputs frozen and GDM inactive
+before Test348; record added rootfs packages/firmware in its fresh admission.
+
 `install.py` defaults to host cache validation only:
 
 ```sh
@@ -51,7 +55,7 @@ python3 userspace/gnome/install.py \
   --firmware out/gnome-trixie-arm64/firmware-root
 ```
 
-After Test348 closes, a separate device stage can transfer this directory,
+Test349 can transfer this directory,
 manifest, package cache and firmware staging tree. Native X710 Debian execution
 requires explicit `--execute`, `--expected-boot-id <current UUID>` and a **new**
 `--evidence <directory>`. It refuses charging-test boots/parameters. It checks

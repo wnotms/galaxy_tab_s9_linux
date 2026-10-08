@@ -1,0 +1,16 @@
+{
+  "test": "Test349",
+  "scope": "Owner requested desktop work during discharge; supersedes assistant-created after-Test348 ordering",
+  "kernel_inputs_changed": false,
+  "PPS": false,
+  "pump_ON": false,
+  "Test348_attempt_consumed": false,
+  "rootfs_additions": "GNOME/Mesa and GPU firmware only; protected gts9 files unchanged",
+  "before_Test348": [
+    "GDM inactive/masked",
+    "no graphical session or touch module active",
+    "fresh full candidate admission, journal/rescue/identity",
+    "record package delta"
+  ],
+  "final_Test348_endpoint": "TWRP"
+}

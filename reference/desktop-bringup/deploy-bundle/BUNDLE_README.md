@@ -4,8 +4,8 @@ This bundle is host-prepared only. It contains the exact Debian ARM64/all GNOME
 packages, pinned X710 SQE/GMU/ZAP firmware and controlled installer. It does not
 flash, reboot, start GNOME, enable charging or load touch automatically.
 
-After the independently registered Test348 charging test closes, transfer the
-tar to Debian and extract into a **new empty directory**, then:
+Test349 separately registers desktop work during the discharge wait. Transfer
+the tar to Debian and extract into a **new empty directory**, then:
 
 ```sh
 cd gts9-gnome
@@ -16,7 +16,8 @@ python3 tools/install.py packages.json --cache packages --firmware firmware
 Those commands only validate files. Native device installation requires an
 independent desktop stage and the explicit installer `--execute`, current
 `--expected-boot-id` and new `--evidence` arguments. See the repository's
-`userspace/gnome/README.md`; do not execute during the frozen charging test.
+`userspace/gnome/README.md`; do not execute during a PPS/pump observation. Charging inputs stay frozen;
+GDM must be inactive/masked before fresh Test348 admission.
 GDM remains persistently masked after installation until its controlled first
 activation. Existing user `ms` is available; no root auto-login is configured.
 
