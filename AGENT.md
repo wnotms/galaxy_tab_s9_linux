@@ -110,6 +110,13 @@ unchanged. Affected preparation tests only; build/full/device tests:false.
 See docs/GPU_GNOME_BRINGUP.md and desktopinventory.
 Desktop installation/activation follows348 closure; final348endpoint stillTWRP.
 
+2026-10-08 PC USB input-control source assessment only.
+Samsung BUCK_OFF differs from CHARGING_OFF: Q4on -> CNTL2SUSPEND -> Q4off;
+restore clearsSUSPEND then10-11ms wait. Currentmainline inputlimit readonly,
+no implemented PCinput-inhibit API. Q4off/100mA is not noVSYSinput. No charger
+register/driver write, no test/build executed for this documentation change.
+See docs/SM5714_USB_INPUT_CONTROL.md and desktopinventory sourcehashes.
+
 2026-10-08 Test348 READONLY_NATURAL_DISCHARGE_LIVE.
 Owner“已拔线”; read-only hostPID31327/unifiedsession68905 first authenticated
 sample same331be1baaaa, USBoffline/Discharging/100%/30.5C/4.371V/-1.563A.

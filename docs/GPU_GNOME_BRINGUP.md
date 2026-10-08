@@ -122,3 +122,6 @@ queue to satisfy one include. No touch firmware update is planned.
 - Kernel build, full regression, GPU activation, GNOME installation, touch and
   desktop hardware tests: **executed: false**. No kernel/config/DT/build routing
   changes; existing Test348 qualification is preserved separately.
+
+Computer input control findings are in
+[SM5714_USB_INPUT_CONTROL.md](SM5714_USB_INPUT_CONTROL.md).
