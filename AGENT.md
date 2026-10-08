@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 AUTHORIZED_STAGED_NATURAL_MARGIN_READY_AWAITING_PC.
+Originalread-only naturalwatch3972/session58323 terminalPASS2312.176s/75samples;
+76->70%/31.0C/4.034V/-1.538A, allUSBoffline/discharging/same331a96de8c0.
+Rawretained; no Test347preflight/install/newboot/guardian/PPS/pump operation.
+OwnerPCreconnect requested; freshidentity/rescue/battery/OFF/preflight required
+then onepairedinstall/admission/park. FreshcandidateC1reply precedessoleguard
+launch, no humanwaittimer/replay. Existingunusedone300s/currentcaps/331restore
+scope unchanged. IndependentACPItool repair recordedbelow; kernel/charging/
+frozen347inputsunchanged. Evidenceonlytests/build:false, reusequalification.
+FullportNOT_READY. See347PREPARED_STATUS/natural-discharge-1791425171.
+
 2026-10-08 Independent ACPI reporting repair installed during347 discharge wait.
 Owner explicitly requested repair of acpi -b. Kernel/UPower percentage already
 correct; Debianacpi1.8 ignoredcapacity and calculatedfrommissingchargefields.
