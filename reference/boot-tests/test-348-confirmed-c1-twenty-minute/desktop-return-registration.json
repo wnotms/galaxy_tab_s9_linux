@@ -1,0 +1,29 @@
+{
+  "test": "Test348",
+  "purpose": "Return from accepted desktop work to registered charging-only fresh baseline",
+  "owner_instruction": "查看电量，继续进行充电测试",
+  "owner_PC_reply": "已接",
+  "authorization": "Existing owner-approved one1200s scope, unused",
+  "current_boot_id": "28fcdaa615f04188a2a04e3e6cbb96af",
+  "baseline_config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "baseline_notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "first_operation": "One ordinary systemctl reboot on unchanged Test331, no flash",
+  "desktop_policy": "Existing three GDM masks remain; no service/package/module uninstall or forced unload",
+  "fresh_entry": [
+    "boot ID changes with journal attribution",
+    "GDM/gts9-palm/gts9-touch inactive",
+    "no fts1ba90a/wacom_wez01 module or bound client",
+    "Test331 config/notes, health and transports normal",
+    "full original allfive/181 preflight before install"
+  ],
+  "kernel_recompile": "Owner allowed; deferred until Test348 restore so registered inputs/artifacts remain unchanged",
+  "PPS": false,
+  "pump_ON": false,
+  "next_stage": "Existing host_flow preflight/install/admit/one owner-confirmed C1 launch",
+  "stop": "Any identity, safety, unexplained boot, transport or inactive-desktop gate failure; preserve first evidence/no retry",
+  "final_endpoint": "exact331 allfive/181 restored, staying TWRP",
+  "tests": {
+    "executed": false,
+    "reason": "registration/evidence only; unchanged runner/kernel qualification reused"
+  }
+}

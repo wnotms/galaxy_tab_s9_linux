@@ -1,0 +1,42 @@
+{
+  "battery": {
+    "current_ua": 1615000,
+    "input_limit_ua": 1800000,
+    "soc": 51,
+    "temp_decic": 303,
+    "voltage_uv": 3934000
+  },
+  "boot_id": "28fcdaa615f04188a2a04e3e6cbb96af",
+  "candidate_installed": false,
+  "desktop": {
+    "boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+    "desktop_packages": "gdm3 48.0-2 installed\ngnome-settings-daemon 48.1-1 installed\ngnome-shell 48.7-0+deb13u2 installed\nlibgl1-mesa-dri:arm64 25.0.7-2+deb13u1 installed\nmesa-vulkan-drivers:arm64 25.0.7-2+deb13u1 installed\nmutter  not-installed\nupower 1.90.9-1 installed\n",
+    "modules": {
+      "fts1ba90a": true,
+      "wacom_wez01": true
+    },
+    "services": {
+      "display-manager": {
+        "active": "inactive",
+        "enabled": "masked"
+      },
+      "gdm": {
+        "active": "active",
+        "enabled": "masked"
+      },
+      "gdm3": {
+        "active": "inactive",
+        "enabled": "masked"
+      },
+      "gts9-palm": {
+        "active": "active",
+        "enabled": "enabled"
+      },
+      "gts9-touch": {
+        "active": "inactive",
+        "enabled": "disabled"
+      }
+    }
+  },
+  "fresh_baseline_boot_required": true
+}

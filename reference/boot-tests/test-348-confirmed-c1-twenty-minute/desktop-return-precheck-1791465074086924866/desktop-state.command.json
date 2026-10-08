@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'from pathlib import Path;import subprocess,json\nr={\"boot_id\":Path(\"/proc/sys/kernel/random/boot_id\").read_text().strip(),\"modules\":{n:Path(\"/sys/module\",n).is_dir() for n in [\"fts1ba90a\",\"wacom_wez01\"]}}\nr[\"services\"]={n:{\"active\":subprocess.run([\"systemctl\",\"is-active\",n],capture_output=True,text=True,timeout=5).stdout.strip(),\"enabled\":subprocess.run([\"systemctl\",\"is-enabled\",n],capture_output=True,text=True,timeout=5).stdout.strip()} for n in [\"gdm\",\"gdm3\",\"display-manager\",\"gts9-palm\",\"gts9-touch\"]}\nr[\"desktop_packages\"]=subprocess.run([\"dpkg-query\",\"-W\",\"-f=${binary:Package} ${Version} ${db:Status-Status}\\n\",\"gdm3\",\"gnome-shell\",\"mutter\",\"libgl1-mesa-dri\",\"mesa-vulkan-drivers\",\"gnome-settings-daemon\",\"upower\"],capture_output=True,text=True,timeout=5).stdout\nprint(json.dumps(r,indent=2))'"
+  ],
+  "ended_utc": "2026-10-08T13:11:14.667444+00:00",
+  "started_utc": "2026-10-08T13:11:14.366787+00:00",
+  "status": 0
+}

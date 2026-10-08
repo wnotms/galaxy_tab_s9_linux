@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test348_DESKTOP_RETURN_FRESH331_BOOT_REGISTERED.
+Owner“查看电量，继续进行充电测试”+PC“已接”; originalone1200s authorization
+unused. Same33128fcdaa6/ADB+WiFi10.175.236.134/noCode43;PC51%30.3C Good.
+GDM+palm pairactive;threeGDMmasks retained. Beforecharging oneordinary331
+reboot, verifyattributednewboot/GDM+inputinactive/no loadedboundFTS/Wacom,
+thenoriginal fullallfive181preflight/pairedinstall/admission/C1confirmedlaunch.
+No driverunload/packageorlinkremoval;PPS/pumpOFF duringpreparation. Savefull
+journal/packages/identity in348desktop-return-precheck;registrationJSON+MD.
+Ownerkernelrecompileallowed butdeferreduntil348restore toavoidinputdrift.
+SSC bytes/debsstillhostonly/ADSPoffline/penpressurelater;finalexact331TWRP.
+host_flow verifyINPUTS_MATCH;tests/build:false docs/evidence-only reusequalified.
+
 2026-10-08 SSC_VENDOR_CONFIG_COLLECTED_OFFLINE_ASSETS_ASSEMBLED.
 Registered3658cb90 before1.217s read-onlyvendor export, same33128fcdaa6/SSH
 10.175.236.134/ADSPoffline. BothLPgeometry+slot0metadata checksums/copiesagree,
