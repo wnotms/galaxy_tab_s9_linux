@@ -1,9 +1,9 @@
 {
   "test": "Test347",
-  "verdict": "REGISTERED_READY_AWAITING_NEW_ROUND_AUTHORIZATION",
+  "verdict": "REGISTERED_READY_AUTHORIZED_UNUSED_ONE300S_SCOPE",
   "source_revision": "5c90a4b541588974ecf1572c6d34adfe6bd191b9",
   "physical_executed": false,
-  "execution_authorized": false,
+  "execution_authorized": true,
   "kernel_rebuilt": false,
   "windows_staged": false,
   "pump_window_ms": 300000,
@@ -17,7 +17,8 @@
     "seconds": 0.361,
     "full_suite_executed": false,
     "historical_346_gate_tests": 19,
-    "historical_manifests_unchanged": true
+    "historical_manifests_unchanged": true,
+    "enrollment_recheck_seconds": 0.326
   },
   "build": {
     "executed": false,
@@ -27,5 +28,7 @@
     "DTB_delta": [],
     "runtime_module_files": 181
   },
-  "full_port_verdict": "NOT_READY"
+  "full_port_verdict": "NOT_READY",
+  "authorization_basis": "AUTHORIZATION.md",
+  "tests_rechecked_after_scope_enrollment": true
 }

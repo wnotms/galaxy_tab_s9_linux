@@ -5,8 +5,11 @@
   "pump_window_max_ms": 300000,
   "input_cap_ma": 1800,
   "hardware_programming_ma": 1700,
-  "execution_authorized": false,
-  "owner_instruction": "",
-  "status": "AWAITING_NEW_ROUND_AUTHORIZATION",
-  "registration_sha256": "3252ba3eccd14f4f2f8ba71385cb7d904da6843a8ec902455d6bbd885bc1f6b1"
+  "execution_authorized": true,
+  "owner_instruction": "\u5141\u8bb8\u6d4b\u8bd5\uff0c\u5e73\u677f\u4e3a\u624b\u52a8\u5173\u673a\u91cd\u542f",
+  "status": "AUTHORIZED_UNUSED_ONE300S_SCOPE_NOT_DEPLOYED",
+  "registration_sha256": "d41bf249051923c2d1c51a62a85d3e961d66b16d40f1dcd237dd825a02a025b3",
+  "recorded_utc": "2026-10-08T01:59:53.424880+00:00",
+  "authorization_basis": "The owner five-minute charging approval remains unperformed: Test346 had zero entry/PPS/pump frames, then exact331 restored. Owner resumed the porting goal. Test347 corrects only host handoff timing and reuses identical kernel/artifacts/caps; no repeat of the consumed Test346 guardian, no extra activation/current/duration. Fresh boot-bound C1 reply required.",
+  "previous_round_result": "reference/boot-tests/test-346-bounded-pps-five-minute/physical-summary.json"
 }

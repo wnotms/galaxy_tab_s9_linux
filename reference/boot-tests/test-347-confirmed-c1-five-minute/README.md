@@ -10,7 +10,7 @@ Exactly once=1 and once_ms=300000 opt-ins. Hardware1700mA, PPS request/rawIBUS s
 
 ## Execution enrollment and sequence
 
-**Execution unauthorized** in registration and execution-scope. A new owner instruction for Test347 is required after Test346 terminal STOP. Record it, enable both flags, refresh INPUTS/scope binding/EXECUTION_INPUTS, commit and push before stage/install. Merely resuming the development goal does not enroll a physical round.
+**Execution enrolled under the owner’s still-unperformed one300s charging approval** (“允许测试，平板为手动关机重启”). Test346 terminated its guardian wait before any entry/PPS/pump activation and exact331 was restored. Test347 is independently registered with identical qualified artifacts/caps and host-only timing corrections; the existing grant is carried for that one actual test, without replaying Test346 or permitting extra activations. Both flags, scope and frozen inputs are refreshed and pushed before stage/install. A fresh347 candidate boot-bound C1 reply is still required; goal resumption alone is not permission for different current/duration/kernel policy.
 
 1. Exact331 fresh PCpreflight and rescue, staged/provider hashes, one paired install and normalPCboot admission with unique boot history/allfive/181/notes/config/300000parameter. Drain the initial pre-entry worker; proveOFF/unbound before owner cable handoff. No guardian exists yet, and the unbound driver cannot activate while the owner pauses.
 2. Ask for Lenovo YG65G C1 connection, C2 empty, WiFi retained/no reboot. Record a fresh reply in owner-C1-confirmation.json with test=Test347, current candidate boot_id, nonempty owner_reply and received_epoch. No test timer runs during manual cable waiting.

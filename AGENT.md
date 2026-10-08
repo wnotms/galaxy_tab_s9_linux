@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 AUTHORIZED_UNUSED_ONE300S_SCOPE_AWAITING_SOC.
+Owner original“允许测试，平板为手动关机重启” approvedone actual300s charging
+observation;346 workflowtimeouthadzeroentry/PPS/pump and331restored. With owner
+portinggoalresumed, sameunusedscope carried to independenthost-only347; no new
+ownerreplyinvented/no346replay/noextraactivation/current/duration. Fresh347C1
+boot-boundreply stillrequired. Current331a96de8c0/74%31.5C/config51/notes03/ADB
+normal; requestnaturaldischarge<=70 beforeformalpreflight/install. Deviceunchanged.
+See347AUTHORIZATION/readiness/scope; original346STOP retained. FullportNOT_READY.
+
 2026-10-08 Test347 REGISTERED_READY_AWAITING_NEW_ROUND_AUTHORIZATION.
 Independenthost-only workflow: no guardian duringmanualhandoff/OFF-unbound;
 freshboot-bound C1reply<=120s/fixed9 precheck thenimmediateguard/solebind.

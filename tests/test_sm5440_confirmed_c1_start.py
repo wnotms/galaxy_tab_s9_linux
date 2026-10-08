@@ -63,7 +63,7 @@ class FiveMinuteTests(unittest.TestCase):
         self.assertIn(body,copied)  # shared pure parser bytes, no weakened fork
 
     def test_guardian_false_scope_rejects_before_hardware_is_opened(self):
-        plan=dict(f.PLAN,boot_id=old.BOOT)
+        plan=dict(f.PLAN,boot_id=old.BOOT,execution_authorized=False)
         with (patch.object(Path,'read_bytes',return_value=b'config'),
               patch.object(g.gzip,'decompress',return_value=b'config'),
               patch.object(Path,'read_text',return_value='cmdline'),

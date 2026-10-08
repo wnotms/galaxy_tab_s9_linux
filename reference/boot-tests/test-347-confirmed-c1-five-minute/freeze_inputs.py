@@ -32,5 +32,5 @@ paths.update(R/name for name in ('registration.json','PACKAGE.json','guard.py','
 paths.update(ROOT/name for name in (*protected,'scripts/windows_ssh_transport.py','scripts/charging_wifi_discovery.py','scripts/ordinary_charge_window.py','scripts/sm5440_bounded_evidence.py','tests/test_sm5440_confirmed_c1_start.py','tests/test_sm5440_five_minute_deployment.py','tests/test_sm5440_duration_evidence.py','tests/test_windows_ssh_transport.py','reference/boot-tests/test-326-fixed9-native-dispatch/final-acceptance/kernel-json.txt'))
 write(R/'INPUTS.json',{str(p.relative_to(ROOT)):sha(p) for p in sorted(paths)})
 scope=json.loads((R/'execution-scope.json').read_text());scope.update(registration_sha256=sha(R/'INPUTS.json'));write(R/'execution-scope.json',scope)
-write(R/'EXECUTION_INPUTS.json',{str((R/name).relative_to(ROOT)):sha(R/name) for name in ('README.md','execution-scope.json','staged-files.json')})
+write(R/'EXECUTION_INPUTS.json',{str((R/name).relative_to(ROOT)):sha(R/name) for name in ('README.md','AUTHORIZATION.md','execution-scope.json','staged-files.json')})
 print('Frozen',len(paths),'inputs; execution authorization:',scope['execution_authorized'])
