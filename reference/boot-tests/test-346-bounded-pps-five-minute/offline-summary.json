@@ -1,0 +1,45 @@
+{
+  "test": "Test346",
+  "verdict": "REGISTERED_READY_AWAITING_EXPLICIT300S_AUTHORIZATION",
+  "source_revision": "5c90a4b541588974ecf1572c6d34adfe6bd191b9",
+  "physical_executed": false,
+  "execution_authorized": false,
+  "windows_staged": false,
+  "kernel_rebuilt": false,
+  "full_port_verdict": "NOT_READY",
+  "pump_window_ms": 300000,
+  "hardware_input_ma": 1700,
+  "PPS_cap_ma": 1800,
+  "raw_ibus_stop_ua": 1800000,
+  "host_tests": {
+    "command": "PYTHONPATH=tests python3 -m unittest tests/test_sm5440_five_minute_deployment.py tests/test_sm5440_duration_evidence.py tests/test_windows_ssh_transport.py",
+    "passed": true,
+    "count": 32,
+    "seconds": 0.211,
+    "new_deployment_tests": 19,
+    "duration_parser_tests": 8,
+    "transport_tests": 5,
+    "executed_during_implementation": true,
+    "repeated_for_documentation": false,
+    "full_suite_executed": false
+  },
+  "syntax": {
+    "python": true,
+    "bash": true
+  },
+  "build": {
+    "reused": true,
+    "reference": "reference/charging/test345-duration-followup/qualification.json",
+    "actual_c_tests": 79,
+    "incremental_build_seconds": 104.643,
+    "W1_sparse_seconds": 15.691,
+    "warnings": [],
+    "new_build_executed": false
+  },
+  "config_delta_from_accepted331": {},
+  "DTB_delta": [],
+  "module_runtime_file_count": 181,
+  "module_metadata_pairing_required": true,
+  "armed_boot_sha256": "b6ac504e1e662eb8fe8a852a4ad01a8120a59bad7cbd7036152783baf6ef4a45",
+  "GitHub_Actions_started": false
+}

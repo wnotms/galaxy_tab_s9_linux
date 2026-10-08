@@ -1,0 +1,249 @@
+"""Test346 duration enrollment, guardian lifecycle and offline deployment gates."""
+import copy
+import importlib.util
+import json
+import tempfile
+from pathlib import Path
+import unittest
+from unittest.mock import Mock,patch
+import test_sm5440_bounded_direct as old
+import test_sm5440_duration_evidence as duration
+
+ROOT=Path(__file__).resolve().parents[1]
+R=ROOT/'reference/boot-tests/test-346-bounded-pps-five-minute'
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path)
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+f=load('flow346_tests',R/'host_flow.py');f.configure()
+g=load('guard346_tests',R/'guard.py')
+op=load('operations346_tests',R/'operations.py')
+
+
+class FiveMinuteTests(unittest.TestCase):
+    def test_correct_unique_parameters_and_duration_are_required(self):
+        good=dict(once='Y',**{'once-duration':'300000'})
+        flags=f.PLAN['cmdline_flags']
+        self.assertEqual(f.validate_candidate_mode(['root=x']+flags,good),['root=x'])
+        for tokens,sec in ((flags[:1],good),(flags+flags[:1],good),
+                           (flags+['sm5440_fedora.direct_charge=1'],good),
+                           (flags+['sm5440_fedora.direct_charge_once_ms=30000'],good),
+                           (flags,dict(once='N',**{'once-duration':'300000'})),
+                           (flags,dict(once='Y',**{'once-duration':'30000'})),
+                           (flags,dict(once='Y'))):
+            with self.subTest(tokens=tokens,sec=sec),self.assertRaises(ValueError):
+                f.validate_candidate_mode(tokens,sec)
+
+    def test_unapproved_registration_cannot_stage_install_arm_or_activate(self):
+        self.assertFalse(f.authorized())
+        with (patch.object(f,'verify_inputs'),patch.object(f.base,'verify_stage') as stage,
+              patch.object(f.p,'Recorder') as recorder):
+            for action in (f.stage,f.install,f.arm,f.activate):
+                with self.subTest(action=action.__name__),self.assertRaises(ValueError):action()
+            stage.assert_not_called();recorder.assert_not_called()
+
+    def test_enrollment_rejects_prior30s_or_missing_explicit_owner_scope(self):
+        scope=dict(test='Test346',PPS=True,pump_ON=True,pump_window_max_ms=300000,
+                   input_cap_ma=1800,hardware_programming_ma=1700,
+                   registration_sha256='bad',execution_authorized=True,owner_instruction='Approve Test346300s')
+        with patch.object(f,'read',return_value=scope),patch.dict(f.PLAN,execution_authorized=True):
+            self.assertFalse(f.authorized())  # frozen registration binding mismatch
+            for key,value in (('pump_window_max_ms',30000),('execution_authorized',False),
+                              ('owner_instruction',''),('hardware_programming_ma',1800)):
+                rejected=dict(scope,**{key:value})
+                with patch.object(f,'read',return_value=rejected):self.assertFalse(f.authorized())
+
+    def test_guardian_only_accepts_long_native_witness(self):
+        long=duration.long_journal();proof=g.native_proof(long,old.BOOT,required=True)
+        self.assertEqual((proof['window_ms'],proof['refreshes']),(300000,60))
+        with self.assertRaises(ValueError):
+            g.native_proof(duration.legacy.journal(),old.BOOT,required=True)
+        parser=(ROOT/'scripts/sm5440_bounded_evidence.py').read_text()
+        copied=(R/'guard.py').read_text()
+        body=parser[parser.index('def native_proof('):].replace('def native_proof(','def duration_native_proof(',1).strip()
+        self.assertIn(body,copied)  # shared pure parser bytes, no weakened fork
+
+    def test_guardian_false_scope_rejects_before_hardware_is_opened(self):
+        plan=dict(f.PLAN,boot_id=old.BOOT)
+        with (patch.object(Path,'read_bytes',return_value=b'config'),
+              patch.object(g.gzip,'decompress',return_value=b'config'),
+              patch.object(Path,'read_text',return_value='cmdline'),
+              patch.object(g,'Hardware') as hardware):
+            with self.assertRaisesRegex(ValueError,'authorized300s'):g.run(plan,Path('/unused'))
+            hardware.assert_not_called()
+
+    def test_five_minute_uses_full_window_then_cleans_up_once(self):
+        hw=Mock();hw.sample.return_value=old.sample()
+        # Plain Mock fabricates activation methods; remove it for a registered
+        # already-activated observation, so no simulated rebind is requested.
+        del hw.activation
+        calls=[];clock=[0.0]
+        def sleep(seconds):clock[0]+=seconds
+        def journal():return []
+        proof=g.native_proof(duration.long_journal(),old.BOOT,required=True)
+        with patch.object(g,'native_proof',side_effect=lambda rows,boot:proof if clock[0]>=300 else None):
+            def sample():
+                s=old.sample(on=clock[0]<300)
+                if clock[0]>=300:s['tcpm']['POWER_SUPPLY_VOLTAGE_NOW']='9000000'
+                return s
+            hw.sample.side_effect=sample
+            result=g.observe(hw,journal,lambda *x:calls.append(x),old.BOOT,
+                             clock=lambda:clock[0],sleep=sleep)
+        self.assertEqual(result['verdict'],'BOUNDED_NATIVE_RETURN_PASS')
+        self.assertEqual(clock[0],300)
+        hw.stop.assert_called_once();hw.bind_once.assert_not_called()
+
+    def test_guardian_native_error_latches_and_cleans_up_without_restart(self):
+        hw=Mock();del hw.activation
+        with patch.object(g,'native_proof',side_effect=ValueError('native STOP')):
+            with self.assertRaisesRegex(ValueError,'native STOP'):
+                g.observe(hw,lambda:[],lambda *x:None,old.BOOT)
+        hw.stop.assert_called_once();hw.bind_once.assert_not_called()
+
+    def test_cleanup_failure_keeps_primary_and_cleanup_separate(self):
+        hw=Mock();del hw.activation;hw.stop.side_effect=ValueError('OFF failure')
+        with patch.object(g,'native_proof',side_effect=ValueError('primary')):
+            with self.assertRaises(g.CleanupFailure) as caught:
+                g.observe(hw,lambda:[],lambda *x:None,old.BOOT)
+        self.assertIn('primary',caught.exception.primary_error)
+        self.assertIn('OFF failure',caught.exception.cleanup_error)
+        hw.stop.assert_called_once()
+
+    def test_first_non_clean_forbids_post_charge_and_repeat_observer(self):
+        mock=Mock();mock.R=R;mock.PLAN=f.PLAN
+        with patch.object(op,'enrolled',return_value=({},{})):
+            with patch.object(Path,'exists',return_value=True):
+                for phase in ('charge','discharge'):
+                    with self.assertRaises(ValueError):op.observe(mock,phase)
+                with self.assertRaises(ValueError):op.pc_return(mock)
+        mock.p.Recorder.assert_not_called()
+
+    def test_monitor_timeout_keeps_live_handle_and_never_restarts(self):
+        start=dict(boot_id=old.BOOT,transport=dict(wifi='10.0.0.1'))
+        state=dict(phase='owner-confirmed-single-activation',guardian_folder='/tmp/gts9-test346-monitor',guardian_pid=123)
+        mock=Mock();mock.wifi_command.return_value=(json.dumps(dict(finished=False,alive=True,summary=None,stderr='')),0)
+        mock.R=R;clock=iter((0,401))
+        mock.p.Recorder.return_value.folder=Path('/mock-evidence')
+        with patch.object(op,'enrolled',return_value=(start,state)),patch.object(op.time,'monotonic',side_effect=lambda:next(clock)):
+            result=op.monitor(mock)
+        self.assertEqual(result['verdict'],'LIVE_GUARDIAN_OBSERVATION_PENDING')
+        self.assertFalse(result['restart_allowed']);self.assertEqual(result['guardian_pid'],123)
+        mock.arm.assert_not_called();mock.activate.assert_not_called();mock.restore.assert_not_called()
+
+    def test_monitor_finished_stop_or_missing_handle_are_terminal_without_retry(self):
+        start=dict(boot_id=old.BOOT,transport=dict(wifi='10.0.0.1'))
+        state=dict(phase='owner-confirmed-single-activation',guardian_folder='/tmp/gts9-test346-monitor',guardian_pid=123)
+        for status in (dict(finished=True,alive=False,summary=dict(verdict='STOP_FIRST_NON_CLEAN'),stderr=''),
+                       dict(finished=False,alive=False,summary=None,stderr='')):
+            mock=Mock();mock.R=R;mock.wifi_command.return_value=(json.dumps(status),0)
+            mock.p.Recorder.return_value.folder=Path('/mock-evidence')
+            with patch.object(op,'enrolled',return_value=(start,state)),patch.object(op,'record_failure') as failed:
+                result=op.monitor(mock)
+            self.assertIn('STOP',result['verdict']);failed.assert_called_once()
+            mock.activate.assert_not_called();mock.arm.assert_not_called()
+
+    def test_monitor_transport_timeout_is_unknown_not_native_failure_or_restart(self):
+        start=dict(boot_id=old.BOOT,transport=dict(wifi='10.0.0.1'))
+        state=dict(phase='owner-confirmed-single-activation',guardian_folder='/tmp/gts9-test346-monitor',guardian_pid=123)
+        mock=Mock();mock.R=R;mock.p.Recorder.return_value.folder=Path('/mock-evidence')
+        mock.wifi_command.side_effect=TimeoutError('probe timeout')
+        with patch.object(op,'enrolled',return_value=(start,state)),patch.object(op,'record_failure') as failed:
+            result=op.monitor(mock)
+        self.assertEqual(result['verdict'],'GUARDIAN_CURRENT_STATE_UNKNOWN_TRANSPORT_FAILURE')
+        self.assertFalse(result['native_failure_claim']);self.assertFalse(result['restart_allowed'])
+        failed.assert_not_called();mock.activate.assert_not_called();mock.restore.assert_not_called()
+
+    def test_status_only_tracks_enrolled_pid_and_guardian_path(self):
+        state=dict(guardian_folder='/tmp/gts9-test346-monitor',guardian_pid=123)
+        command=op.status_command(state)
+        self.assertIn('/proc/123/cmdline',command);self.assertIn('/tmp/gts9-test346-monitor/guard.py',command)
+        for bad in (dict(state,guardian_pid=1),dict(state,guardian_folder='/tmp/other')):
+            with self.assertRaises(ValueError):op.status_command(bad)
+
+    def test_post_return_module_and_duration_checks_are_present(self):
+        code=(R/'observe-post-return.py').read_text()
+        self.assertIn('from bounded346_guard import native_proof',code)
+        self.assertIn("parameters/direct_charge_once_ms')!='300000'",code)
+        self.assertEqual((f.PLAN['charge_seconds'],f.PLAN['discharge_seconds']),(30,15))
+        self.assertIn('.gts9-test346-original',(R/'module-swap.sh').read_text())
+        self.assertNotIn('.gts9-test345-original',(R/'module-swap.sh').read_text())
+
+    def test_activation_soc70_cap_does_not_relax_runtime_safety(self):
+        self.assertEqual((f.PLAN['preparation_soc_max'],f.PLAN['activation_soc_max']),(70,70))
+        self.assertEqual((f.PLAN['hardware_input_setpoint_ma'],f.PLAN['physical_ibus_max_ua']),(1700,1800000))
+        for section,key,value in (('adc','ibus_ua',1800625),('adc','die_decic',850),
+                                  ('battery','POWER_SUPPLY_TEMP','420')):
+            s=old.sample();s[section][key]=value
+            with self.assertRaises(ValueError):g.check_sample(s)
+
+    def test_actual_activation_refuses_soc71_but_accepts70(self):
+        s=old.sample(on=False)
+        s.update(roles=['sink','device'],pack_mode='enabled',pack_temp_mc=28000,
+                 registers={0x10:1},usb=dict(POWER_SUPPLY_ONLINE='1',POWER_SUPPLY_INPUT_CURRENT_LIMIT='1500000'))
+        s['tcpm'].update(POWER_SUPPLY_CURRENT_MAX='1500000',POWER_SUPPLY_VOLTAGE_NOW='9000000')
+        rows=[old.row('Linux boot',0)]
+        marker=dict(boot_id=old.BOOT,token='token',owner_confirmed_C1=True)
+        s['battery']['POWER_SUPPLY_CAPACITY']='70'
+        g.preparation_proof(rows,old.BOOT,s,False,marker,'token')
+        s['battery']['POWER_SUPPLY_CAPACITY']='71'
+        with self.assertRaisesRegex(ValueError,'SOC ceiling'):
+            g.preparation_proof(rows,old.BOOT,s,False,marker,'token')
+
+    def test_guardian_sysfs_duration_mismatch_refuses_before_i2c(self):
+        import hashlib,gzip
+        config=b'# CONFIG_HVC_DCC is not set\n';notes=b'notes'
+        plan=dict(f.PLAN,execution_authorized=True,boot_id=old.BOOT,machine_id='mid',
+                  candidate_config_sha256=hashlib.sha256(config).hexdigest(),
+                  candidate_notes_sha256=hashlib.sha256(notes).hexdigest())
+        data={'/proc/config.gz':gzip.compress(config),'/sys/kernel/notes':notes}
+        text={'/proc/cmdline':plan['runtime_cmdline']+' '+' '.join(plan['cmdline_flags']),'/etc/machine-id':'mid'}
+        prefix='/sys/module/sm5440_fedora/parameters/'
+        text.update({prefix+'direct_charge_once':'Y',prefix+'direct_charge_once_ms':'30000'})
+        text.update({prefix+x:'N' for x in ('direct_charge','fixed_return_check','pps_return_check')})
+        with (patch.object(Path,'read_bytes',lambda p:data[str(p)]),
+              patch.object(Path,'read_text',lambda p:text[str(p)]),patch.object(g,'Hardware') as hw):
+            with self.assertRaisesRegex(ValueError,'exclusive test mode'):
+                g.run(plan,Path('/unused'))
+            hw.assert_not_called()
+
+    def observation_entries(self,phase='charge'):
+        original=json.loads((ROOT/'reference/boot-tests/test-345-final-refresh-reserve'/phase/'summary.json').read_text())
+        endpoint=copy.deepcopy(original['endpoint'])
+        endpoint.update(boot=old.BOOT,boot_end=old.BOOT,monotonic=31,uptime=400)
+        rows=duration.long_journal();raw='\n'.join(json.dumps(x) for x in rows)
+        proof=g.native_proof(rows,old.BOOT,required=True)
+        samples=[]
+        for t in range(32):
+            d=copy.deepcopy(endpoint);d.update(kind='sample',monotonic=t);samples.append(d)
+        result=dict(kind='verdict',verdict='PASS',phase=phase,observation_seconds=31,
+                    native=proof,endpoint=endpoint)
+        return [dict(kind='armed'),dict(kind='journal-before',raw=raw),*samples,
+                dict(kind='journal-after',raw=raw),dict(kind='systemd-failed',raw=''),result]
+
+    def test_post_observer_requires_native_duration_transport_and_full_evidence(self):
+        plan=dict(f.PLAN,boot_id=old.BOOT)
+        entries=self.observation_entries()
+        with patch.object(op,'classify',return_value={}):
+            result,raw,_=op.accepted(f,entries,0,'charge',plan)
+            self.assertEqual(result['verdict'],'PASS')
+            self.assertIn('max_ms=300000',raw)
+            variants=[(entries,255),
+                      ([x for x in entries if x['kind']!='journal-after'],0),
+                      ([x for x in entries if x['kind']!='armed'],0),
+                      ([*entries,copy.deepcopy(entries[-1])],0)]
+            for mutated,rc in variants:
+                with self.assertRaises(ValueError):op.accepted(f,mutated,rc,'charge',plan)
+            for field,value in (('native',{}),('observation_seconds',29.9)):
+                mutated=copy.deepcopy(entries);mutated[-1][field]=value
+                with self.assertRaises(ValueError):op.accepted(f,mutated,0,'charge',plan)
+
+    def test_post_discharge_and_sample_faults_cannot_be_labeled_pass(self):
+        plan=dict(f.PLAN,boot_id=old.BOOT)
+        with patch.object(op,'classify',return_value={}):
+            result,_,_=op.accepted(f,self.observation_entries('discharge'),0,'discharge',plan)
+            self.assertEqual(result['verdict'],'PASS')
+            for key,value in (('boot','b'*32),('pump',5),('monotonic',4.1)):
+                entries=self.observation_entries();entries[3][key]=value
+                with self.assertRaises(ValueError):op.accepted(f,entries,0,'charge',plan)
+            entries=self.observation_entries('discharge')
+            entries[-1]['endpoint']['battery']['POWER_SUPPLY_CURRENT_NOW']='1'
+            with self.assertRaises(ValueError):op.accepted(f,entries,0,'discharge',plan)
