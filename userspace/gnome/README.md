@@ -11,7 +11,10 @@ Current deployment is newer than the original preparation below: Test352–357
 accepted GPU/GNOME/power-key/ordinary touch. Test359 installed the optional
 [touch component](touch/README.md), whose load gate permits only exact331 and
 whose enable link belongs to GDM, leaving text/charging boots alone. Existing
-GDM masks remain; Test360 accepted new-boot GDM-triggered loading and owner login/touch. The package
+GDM masks remain; Test360 accepted new-boot GDM-triggered loading and owner login/touch.
+Test362 prepared the separate optional [S Pen component](pen/README.md); its
+controller enumerated, but owner pen input was not observed in the bounded
+window. The package
 preparers/installer do not automatically deploy this later integration or the
 power-key schema override.
 

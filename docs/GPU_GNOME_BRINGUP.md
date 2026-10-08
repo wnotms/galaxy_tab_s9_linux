@@ -26,7 +26,9 @@ Test359 now installs an identity-gated optional touch loader and GDM-Wants unit,
 outside181dir; current-boot start was already-loaded/zero-insmod. Original358
 zero-write stop for dpkg backup start-limit remains recorded; one scoped backup
 acknowledgement/verification in359 succeeded without timer/clock policy changes.
-No suspend/double-tap wake or S Pen acceptance yet.
+No suspend/double-tap wake acceptance. Test362 now enumerates the optional
+WEZ01 controller and prepares a GDM-only loader, but its bounded capture had no
+owner pen interaction; S Pen input acceptance remains open.
 The normal loader accepted all ABI/BTF checks; unsigned external-module taint
 is explicitly recorded (MODULE_SIG_FORCE=n), not a forced-load bypass.
 

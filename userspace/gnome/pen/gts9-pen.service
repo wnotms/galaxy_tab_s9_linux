@@ -1,0 +1,13 @@
+[Unit]
+Description=Qualified X710 Wacom WEZ01 pen digitizer
+After=local-fs.target systemd-udevd.service
+Before=gdm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/gts9-pen --load
+RemainAfterExit=yes
+TimeoutStartSec=20
+
+[Install]
+WantedBy=gdm.service
