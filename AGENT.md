@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test352（GNOME 本地 APT 修正；Test348 仍未部署），窗口为 **Test343–Test352**；没有生成镜像的轮次仍占一轮。
+  编号为 Test353（GNOME render 权限修正；Test348 仍未部署），窗口为 **Test344–Test353**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,13 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test353 REGISTERED_RENDER_ACCESS_CORRECTION.
+Only add ms/Debian-gdm to existing render group; preserve other groups/udev/node
+modes. One userVulkan30s/surfacelessEGL30s, conditionalGDM60s; maskedendpoint.
+Same331/healthy/protected critical files; no kernel/DT/config/module/charging/
+touchload/reboot/flash. Original352partial retained;348grantunused/finalTWRP.
+Retired superseded343images/stage unless explicitly reused within344–353.
 
 2026-10-08 Test352 PARTIAL_DESKTOP_VISIBLE_RENDER_ACCESS_PENDING.
 Exact368packages/3GPUfirmware installed, existing versions preserved. Root
