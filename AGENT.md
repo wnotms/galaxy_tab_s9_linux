@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test364（early ADSP/native SoCinfo 登记；Test348 已停止并回退），窗口为 **Test355–Test364**；没有生成镜像的轮次仍占一轮。
+  编号为 Test365（SSC discovery 登记；Test348/364 已停止并回退），窗口为 **Test356–Test365**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test365_REGISTERED_SSC_DISCOVERY_WITH_BOUNDED_SSH.
+Reuse exact nativeSoCinfo+ADSP boot/vendor/181/DTB qualification, oneboot. New
+max3/30s authenticatedSSH startup admission retainsinitialfailure/recovery and
+sameboothealth;95affectedPASS/0skip. FourARM64packages gatedbeforeunpack,
+standardfastrpc/copyregistry/nativeSOC mapping, rootPD+sensorsPD once, then
+proxy once onlyafter realSSCsample. KernelPDmapper retained/no duplicateuser
+mapper/SDSP/GDM/inputactivation. Fresh331ea91d666 allfive181/authWiFi/ADB/NCM
+Good79%33.2C, nofault/Code43. Registrationonly/no devicewrite yet; pushbefore
+mutation. FailurestopSSC/gate+restore331/vendor/181/ownedassets; passive
+qualifiedpackages/account mayremaininactive perplan, notexactrootfsrollback.
+331rollback belongsactive365. NoPPS/pump/currentchange; sensors/fullportactive,
+chargeaftersensors. Kernelbuild/full reused; old3032NOTPASS notwaived.
+
 
 2026-10-08 SSC_BOUNDED_SSH_READINESS_POLICY_HOST_ONLY.
 Test364 firstbannercommand3.015s; cause unknown, do notrelabelSTOP. Newinjected

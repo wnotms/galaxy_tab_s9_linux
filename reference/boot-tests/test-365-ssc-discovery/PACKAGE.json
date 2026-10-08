@@ -1,0 +1,89 @@
+{
+  "test": "Test365",
+  "write_partitions": [
+    "boot",
+    "vendor_boot"
+  ],
+  "baseline_partitions": {
+    "boot": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+  },
+  "candidate_partitions": {
+    "boot": "d186b70582b08a59fbb1a6769f17dbc82af1a1f6883112bb7d0fdc17e44d8754",
+    "dtbo": "c17418be08365c03a5ce3a220af734b14ec2e6b03c0cbc1ed9721be6f21d3ef3",
+    "init_boot": "1a8c71487d30bf39d635ff52893cce22efc0b9a81a6f4788edf47945843f78c0",
+    "vbmeta": "9844859b45716a2a098c96cd38b15bb378e784dab34843d1edcd2704236d36e4",
+    "vendor_boot": "158e3826bb24143d3da9aae7bdc2c2122758d276b2870ee7ab652f12050caf9c"
+  },
+  "modules": 181,
+  "artifacts": {
+    "boot.img": {
+      "path": "out/boot-bundle-ssc-early/boot.img",
+      "bytes": 100663296,
+      "sha256": "d186b70582b08a59fbb1a6769f17dbc82af1a1f6883112bb7d0fdc17e44d8754"
+    },
+    "vendor_boot.img": {
+      "path": "out/boot-bundle-ssc-early/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "158e3826bb24143d3da9aae7bdc2c2122758d276b2870ee7ab652f12050caf9c"
+    },
+    "Image.gz": {
+      "bytes": 22146836,
+      "sha256": "e9cff24da3b6a2512898f411949d403c5fe36b820732b3fd0b80711488190eaf",
+      "path": "out/kernel-x710-native-socinfo/Image.gz"
+    },
+    "config": {
+      "bytes": 243266,
+      "sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+      "path": "out/kernel-x710-native-socinfo/config"
+    },
+    "kernel-notes.bin": {
+      "bytes": 84,
+      "sha256": "ee5e7513c130df77cdbe1ff165e6926a0427ff3de1aeaa2e78ce50f75bb90eb4",
+      "path": "out/kernel-x710-native-socinfo/kernel-notes.bin"
+    },
+    "sm8550-samsung-gts9wifi.dtb": {
+      "bytes": 176935,
+      "sha256": "233a9fee91dc725901f0c7c620a38e475d6d6e6880cde660ec85ae34d49e0a8e",
+      "path": "out/kernel-x710-native-socinfo/sm8550-samsung-gts9wifi.dtb"
+    },
+    "modules-x710.tar.gz": {
+      "bytes": 47319140,
+      "sha256": "e12b0b11b8e09ed8f698df077f077944c5876b5e4101d5b2a8175b265ca9cecc",
+      "path": "out/kernel-x710-native-socinfo/modules-x710.tar.gz"
+    },
+    "kernel.release": {
+      "bytes": 25,
+      "sha256": "b3f154357931f9e2ddce4bd3b37facae84a69e93a280dbb9bb877f7c824d5658",
+      "path": "out/kernel-x710-native-socinfo/kernel.release"
+    },
+    "rollback-boot.img": {
+      "path": "out/boot-bundle-x710-fedora-snapshot-fix/boot.img",
+      "bytes": 100663296,
+      "sha256": "025ebea4282524751bace461ce96beef85c01ea65a4d2b117106c7cdfe0ab815"
+    },
+    "rollback-modules.tar.gz": {
+      "path": "out/kernel-x710-fedora-snapshot-fix/modules-x710.tar.gz",
+      "bytes": 47318838,
+      "sha256": "ae1279b715e48df38bac5522f9d2d2c8be0305f80a46a34b7b8cebb8ca9c0983"
+    },
+    "sensor-assets.tar.gz": {
+      "path": "out/ssc-assets/sensor-assets.tar.gz",
+      "bytes": 23361334,
+      "sha256": "6abc10ecdb82c6abe175461ae483670be0c82c8e038cb9acbf5eb5f8ae9231e5"
+    },
+    "rollback-vendor_boot.img": {
+      "path": "out/boot-bundle-x710-263-passive/vendor_boot.img",
+      "bytes": 100663296,
+      "sha256": "efddf31cfac5da0fab55b44029629155076977cb2d7695a384d446dd4b5ad0d1"
+    }
+  },
+  "kernel_source_revision": "3911e89f8fb86aa3fc5f228d221cae5e6a4c886e",
+  "config_change_only": "CONFIG_QCOM_SOCINFO n->y",
+  "dtb_unchanged": true,
+  "device_commands_executed": false,
+  "firmware_policy": "signed X710 ADSP only; early platform ramdisk + mirrored root files; copied registry only; no runtime activation"
+}
