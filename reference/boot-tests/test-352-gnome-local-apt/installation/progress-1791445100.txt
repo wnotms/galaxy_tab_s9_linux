@@ -1,0 +1,28 @@
+{
+  "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+  "same_process": false,
+  "process_state": "gone",
+  "summary": {
+    "verdict": "INSTALLED_GDM_MASKED_HARDWARE_NOT_ACCEPTED",
+    "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+    "package_installation_started": true,
+    "gdm_started": false,
+    "firmware_created": [
+      "/lib/firmware/qcom/a740_sqe.fw",
+      "/lib/firmware/qcom/gmu_gen70200.bin",
+      "/lib/firmware/qcom/a740_zap.mdt"
+    ],
+    "masks": [
+      "/etc/systemd/system/gdm.service",
+      "/etc/systemd/system/gdm3.service",
+      "/etc/systemd/system/display-manager.service"
+    ],
+    "new_packages": 368
+  },
+  "battery": {
+    "capacity": "89",
+    "temp": "321",
+    "health": "Good"
+  },
+  "tail": "3u1) ...\nSetting up nautilus (48.3-2) ...\nSetting up gir1.2-gnomebg-4.0:arm64 (44.3-3) ...\nSetting up gnome-control-center (1:48.4-1~deb13u1) ...\nSetting up xdg-desktop-portal (1.20.3+ds-1) ...\nCreated symlink '/etc/systemd/user/graphical-session-pre.target.wants/xdg-desktop-portal-rewrite-launchers.service' -> '/usr/lib/systemd/user/xdg-desktop-portal-rewrite-launchers.service'.\nSetting up gnome-shell (48.7-0+deb13u2) ...\nSetting up gdm3 (48.0-2) ...\nDisplay manager service is masked\nCreating config file /etc/gdm3/greeter.dconf-defaults with new version\nupdate-alternatives: using /etc/pam.d/gdm-smartcard-sssd-exclusive to provide /etc/pam.d/gdm-smartcard (gdm-smartcard) in auto mode\nupdate-alternatives: using /etc/pam.d/gdm-smartcard-sssd-or-password to provide /etc/pam.d/gdm-smartcard (gdm-smartcard) in auto mode\ninvoke-rc.d: policy-rc.d denied execution of reload.\nSetting up xdg-desktop-portal-gtk (1.15.3-1) ...\nSetting up xdg-desktop-portal-gnome (48.0-2) ...\nSetting up gnome-session (48.0-1+deb13u1) ...\nupdate-alternatives: using /usr/bin/gnome-session to provide /usr/bin/x-session-manager (x-session-manager) in auto mode\nProcessing triggers for libc-bin (2.41-12+deb13u4) ...\n"
+}

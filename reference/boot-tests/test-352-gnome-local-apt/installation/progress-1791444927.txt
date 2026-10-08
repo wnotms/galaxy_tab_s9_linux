@@ -1,0 +1,28 @@
+{
+  "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+  "process_same": true,
+  "process_state": "S",
+  "summary": {
+    "verdict": "STARTED_NOT_ACCEPTED",
+    "boot_id": "be1baaaa-47fc-41f5-8255-8f7092c01653",
+    "package_installation_started": true,
+    "gdm_started": false,
+    "firmware_created": [
+      "/lib/firmware/qcom/a740_sqe.fw",
+      "/lib/firmware/qcom/gmu_gen70200.bin",
+      "/lib/firmware/qcom/a740_zap.mdt"
+    ],
+    "masks": [
+      "/etc/systemd/system/gdm.service",
+      "/etc/systemd/system/gdm3.service",
+      "/etc/systemd/system/display-manager.service"
+    ],
+    "new_packages": 368
+  },
+  "battery": {
+    "capacity": "90",
+    "temp": "321",
+    "health": "Good"
+  },
+  "progress": "acking libgpgmepp6t64:arm64 (1.24.2-3) ...\nSelecting previously unselected package libnspr4:arm64.\nPreparing to unpack .../043-libnspr4_4.36-1_arm64.deb ...\nUnpacking libnspr4:arm64 (2:4.36-1) ...\nSelecting previously unselected package libnss3:arm64.\nPreparing to unpack .../044-libnss3_3.110-1+deb13u4_arm64.deb ...\nUnpacking libnss3:arm64 (2:3.110-1+deb13u4) ...\nSelecting previously unselected package libpoppler147:arm64.\nPreparing to unpack .../045-libpoppler147_25.03.0-5+deb13u4_arm64.deb ...\nUnpacking libpoppler147:arm64 (25.03.0-5+deb13u4) ...\nSelecting previously unselected package libpoppler-glib8t64:arm64.\nPreparing to unpack .../046-libpoppler-glib8t64_25.03.0-5+deb13u4_arm64.deb ...\nUnpacking libpoppler-glib8t64:arm64 (25.03.0-5+deb13u4) ...\nSelecting previously unselected package libsnmp-base.\nPreparing to unpack .../047-libsnmp-base_5.9.4+dfsg-2+deb13u1_all.deb ...\nUnpacking libsnmp-base (5.9.4+dfsg-2+deb13u1) ...\nSelecting previously unselected package libsnmp40t64:arm64.\nPreparing to unpack .../048-libsnmp40t64_5.9.4+dfsg-2+deb13u1_arm64.deb ...\nUnpacking libsnmp40t64:arm64 (5.9.4+dfsg-2+deb13u1) ...\nSelecting previously unselected package libv4lconvert0t64:arm64.\nPreparing to unpack .../049-libv4lconvert0t64_1.30.1-1_arm64.deb ...\nUnpacking libv4lconvert0t64:arm64 (1.30.1-1) ...\nSelecting previously unselected package libv4l-0t64:arm64.\nPreparing to unpack .../050-libv4l-0t64_1.30.1-1_arm64.deb ...\nUnpacking libv4l-0t64:arm64 (1.30.1-1) ...\nSelecting previously unselected package libsane1:arm64.\nPreparing to unpack .../051-libsane1_1.3.1-3+b1_arm64.deb ...\nAdding scanner group...\nUnpacking libsane1:arm64 (1.3.1-3+b1) ...\nSelecting previously unselected package colord.\nPreparing to unpack .../052-colord_1.4.7-3_arm64.deb ...\nUnpacking colord (1.4.7-3) ...\n"
+}

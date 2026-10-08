@@ -1,0 +1,24 @@
+{
+  "verdict": "PARTIAL_DESKTOP_VISIBLE_RENDER_PERMISSION_FIX_REQUIRED",
+  "packages_installed": 368,
+  "firmware_files": 3,
+  "old_package_versions_preserved": true,
+  "root_vulkan_device": "Turnip Adreno (TM) 740",
+  "mesa": "25.0.7-2+deb13u1",
+  "visible_graphical_login_confirmed": true,
+  "gdm_observation_seconds": 60.044578415000615,
+  "gdm_final": "inactive/masked",
+  "new_kernel_faults": 0,
+  "hardware_accelerated_GNOME": false,
+  "reason": "renderD128 mode0660 render-group992; ms and Debian-gdm not members; Mutter permission denied/software framebuffer sharing",
+  "kernel_config_DT_modules_charging_unchanged": true,
+  "touch_loaded": false,
+  "Test348_attempt_consumed": false,
+  "tests": {
+    "affected": 29,
+    "passed": 29,
+    "kernel_build_executed": false,
+    "full_regression_executed": false
+  },
+  "next": "Scoped render group membership and ordinary-user renderer verification; no kernel patch"
+}

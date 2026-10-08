@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test352 PARTIAL_DESKTOP_VISIBLE_RENDER_ACCESS_PENDING.
+Exact368packages/3GPUfirmware installed, existing versions preserved. Root
+Vulkan TurnipAdreno740/Mesa25.0.7 identified. One60.045s GNOME/GDM observation,
+owner confirmed graphical login; same331boot/no new kernelfault; GDM stopped/
+remasked. ms/Debian-gdm lack render group; renderD1280660 caused permission
+failure/software framebuffer sharing. No desktop HWaccel acceptance yet.
+Next scoped group correction, no kernel patch. Touchunloaded/charging frozen;
+348grantunused/finalTWRP unchanged.29affected tests PASS; build/full:false.
+
 2026-10-08 Test352 REGISTERED_LOCAL_ONLY_APT_CORRECTION.
 Correct --no-download local-acquisition failure using invocation-local empty
 APT sources; no /etc/apt change/network fetch.29affected tests PASS including
