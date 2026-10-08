@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test353 ORDINARY_USER_ADRENO_AND_BOUNDED_GNOME_VALIDATED.
+Only render memberships added; user Turnip/FD740 EGL PASS, GDM60.055s/no new
+kernel fault or software fallback; owner confirms keyboard/password login.
+Greeter UID103 Xwayland exit during login retained separately from ms session.
+Endpoint GDM inactive/all3masked, touch unloaded. Same331;348 unused/paused.
+Evidence hashes reviewed; tests/build executed:false for results-only change.
+
 2026-10-08 Test353 REGISTERED_RENDER_ACCESS_CORRECTION.
 Only add ms/Debian-gdm to existing render group; preserve other groups/udev/node
 modes. One userVulkan30s/surfacelessEGL30s, conditionalGDM60s; maskedendpoint.
