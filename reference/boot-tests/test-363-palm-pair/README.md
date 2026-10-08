@@ -15,7 +15,9 @@ automatic reboot is allowed.
 The preparatory install step is also separate: it verifies the current Test362
 boot, copies only the two exact modules, loader and unit, leaves both current
 modules active, disables only the future `gts9-touch.service` enable link, and
-enables `gts9-palm.service`. It does not start the new service or reboot.
+enables `gts9-palm.service`. The historical GDM masks remain in place, so the
+fresh-boot SSH step must start `gts9-palm.service` once explicitly; it must not
+unmask or globally enable GDM. It does not start the new service or reboot.
 
 Preflight must retain boot ID/config/notes, battery health, GDM/SSH and failed
 units. After the pair binds, check both input devices and the kernel journal for
