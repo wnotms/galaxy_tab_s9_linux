@@ -1,0 +1,28 @@
+{
+  "test": "Test348",
+  "verdict": "REGISTERED_OFFLINE_PENDING_PHYSICAL_AUTHORIZATION",
+  "host_tests": {
+    "executed": true,
+    "count": 49,
+    "failed": 0,
+    "seconds": 0.643
+  },
+  "kernel_build": {
+    "executed": false,
+    "qualification_reused": "reference/charging/test347-twenty-minute-followup/summary.json"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "host runner only; affected tests and syntax checks; routing unchanged"
+  },
+  "artifact_hashes_verified": true,
+  "physical_executed": false,
+  "execution_authorized": false,
+  "device_operations": [],
+  "Windows_staging_executed": false,
+  "final_device_state": "TWRP; exact Test331 restored by completed Test347",
+  "registered_window_ms": 1200000,
+  "hardware_setpoint_ma": 1700,
+  "PPS_raw_ceiling_ma": 1800,
+  "full_port": "NOT_READY"
+}

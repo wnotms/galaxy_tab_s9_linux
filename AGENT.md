@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test347（已登记，尚未部署），窗口为 **Test338–Test347**；没有生成镜像的轮次仍占一轮。
+  编号为 Test348（已离线登记，尚未授权部署），窗口为 **Test339–Test348**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test348 REGISTERED_OFFLINE_PENDING_PHYSICAL_AUTHORIZATION.
+Independent1200000ms runner reuses qualified0b731 source/build, packages armed
+boot offline only.49 affected host tests and Python/shell syntax PASS; artifacts
+hash verified. No kernel rebuild/full regression (executed:false), no Windowsstage
+or device operation. Preparation/activationSOC<=60 (naturalheadroom58), hardware
+1700/PPS+raw1800 unchanged; native1200/guardian1260/monitor1300/outer1500.
+One fresh scope and candidate-bound C1 reply required; no Test347 grant reuse.
+Original-process timeout handling and exact331/allfive/181 restoration ending
+TWRP are host-tested. Device stays TWRP/restored331 per owner; no1200s hardware
+acceptance.339–348 retention expired338, nine verified files371499694 bytes
+retired. Full port NOT_READY. See Test348 OFFLINE_RESULTS/offline-summary.
 
 2026-10-08 Offline1200s duration candidate READY_OFFLINE_DEFAULT_OFF.
 Source0b731b4a adds only immutable1200000ms exclusive one-shot; defaultOFF/30s
