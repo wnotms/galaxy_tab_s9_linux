@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl -b -u gdm -u gts9-palm -u gts9-power-key --no-pager"
+  ],
+  "ended_utc": "2026-10-08T15:22:14.125878+00:00",
+  "started_utc": "2026-10-08T15:22:12.192958+00:00",
+  "status": 0
+}

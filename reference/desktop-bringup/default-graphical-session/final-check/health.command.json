@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl get-default; systemctl is-active gdm gts9-palm ssh gts9-adbd gts9-usb-acm gts9-power-key; systemctl --failed --no-pager; loginctl list-sessions --no-pager; cat /sys/class/power_supply/sm5714-battery/uevent; ip -br addr; ls -l /etc/systemd/system/display-manager.service /etc/systemd/system/gdm.service.wants/gts9-palm.service; cat /proc/bus/input/devices"
+  ],
+  "ended_utc": "2026-10-08T15:22:12.192672+00:00",
+  "started_utc": "2026-10-08T15:22:11.251334+00:00",
+  "status": 0
+}

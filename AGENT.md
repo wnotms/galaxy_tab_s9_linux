@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 DEFAULT_GNOME_LOGIN_AND_CTRL_ALT_T_ACCEPTED.
+Owner requests ordinaryboots defaultGNOME; on exact restored331 boot78ec1906
+removed only reviewed3GDMmasks/restored display-manager link, graphical.target
+retained, qualifiedpalm+pen dependency enabled andidentitygatePASS. Sameboot
+GDM/input/SSH/ADB/NCM/powerkey active/nofailedunits/kernelclassificationclean.
+ms dedicatedCtrlAltT -> /usr/bin/kgx; otherbindings/password/powerkeypolicy
+retained. Owner confirms terminal+touchnormal. Persistentstartupverified; no
+extra reboot/kernelbuild/fullrun. Future ordinaryendpointGNOME, nottext/TWRP.
+Any independentlyregisteredcharging/sensor text-only scope must restore this
+owner preference at a healthy endpoint; do not leave persistentGDMmasks behind.
+SSC/rotation/fullport incomplete; retain sensorfirstthencharging order andcaps.
+Evidence: reference/desktop-bringup/default-graphical-session/.
+
+
 2026-10-08 Test365_STOP_SSC_QMI_MISSING_EXACT331_RESTORED.
 One candidate2986590a earlyADSP/nativeSOC admissionPASS, root/sensorPD once,
 60s discovery no SSC QMI service; missingoemconfig.so diagnostic lead only.

@@ -1,0 +1,7 @@
+Sep 30 00:15:36 gts9 systemd[1]: Started gts9-power-key.service - X710 power key: backlight toggle, system keeps running.
+Sep 30 00:18:38 gts9 systemd[1]: Starting gts9-palm.service - Qualified X710 Wacom and palm-aware touchscreen pair...
+Sep 30 00:18:38 gts9 python3[1872]: {"boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf", "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a", "insmod_attempts": 2, "loader": [{"module": "/usr/local/lib/gts9-desktop/wacom-wez01.ko", "returncode": 0, "stderr": "", "stdout": ""}, {"module": "/usr/local/lib/gts9-desktop/fts1ba90a-palm.ko", "returncode": 0, "stderr": "", "stdout": ""}], "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95", "pen_client": "6-0056", "pen_loaded": false, "pen_sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412", "reason": "one normal Wacom then FTS pair load", "status": "loaded", "touch_client": "7-0049", "touch_loaded": false, "touch_sha256": "7e71ca5816bf720ce4b3065727a4d43633be3c6abbcb070a4dd723c321d56171"}
+Sep 30 00:18:38 gts9 systemd[1]: Finished gts9-palm.service - Qualified X710 Wacom and palm-aware touchscreen pair.
+Sep 30 00:18:38 gts9 systemd[1]: Starting gdm.service - GNOME Display Manager...
+Sep 30 00:18:38 gts9 systemd[1]: Started gdm.service - GNOME Display Manager.
+Sep 30 00:18:39 gts9 gdm-launch-environment][1902]: pam_unix(gdm-launch-environment:session): session opened for user Debian-gdm(uid=103) by (uid=0)

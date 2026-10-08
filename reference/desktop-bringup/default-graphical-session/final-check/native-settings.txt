@@ -1,0 +1,24 @@
+{
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "default_target": "graphical.target",
+  "masks": {
+    "/etc/systemd/system/gdm.service": "/dev/null",
+    "/etc/systemd/system/gdm3.service": "/dev/null",
+    "/etc/systemd/system/display-manager.service": "/dev/null"
+  },
+  "custom_keybindings": "@as []",
+  "terminal": {
+    "name": "''",
+    "command": "''",
+    "binding": "''"
+  }
+}
+{
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "default_target": "graphical.target",
+  "display_manager": "/usr/lib/systemd/system/gdm.service",
+  "services": "active\nactive\nactive\nactive",
+  "custom_keybindings": "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/gts9-terminal/']",
+  "binding": "'<Primary><Alt>t'",
+  "command": "'/usr/bin/kgx'"
+}

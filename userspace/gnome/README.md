@@ -123,3 +123,18 @@ notification. To restore this original state, reset only
 read-only activity/temperature/runtimePM; it changes no OPP/governor/charging
 policy and is not a permanent background service. Raw normal-use windows may
 have different interaction/apps, so they do not establish causal cooling.
+
+## Accepted ordinary startup (2026-10-08)
+
+The owner now requests GNOME login on ordinary boots. The restored accepted
+Test331 device has the three installation masks removed, the standard GDM
+display-manager link and graphical.target, and the accepted palm/pen loader
+enabled before GDM. Ctrl+Alt+T launches GNOME Console (`kgx`) for ms; the owner
+confirmed terminal and touch work. Password login and the backlight-only power
+key policy remain. Evidence and original settings are in
+`reference/desktop-bringup/default-graphical-session/`. `default-session.py`
+performs the reviewed same-boot identity-gated configuration and saves before/
+after state; it does not reboot or alter charging. The package installer still
+uses its protective masks during preparation; restore the accepted graphical
+startup at a healthy ordinary endpoint after a separately registered text-only
+test, rather than leaving those masks as the user default.
