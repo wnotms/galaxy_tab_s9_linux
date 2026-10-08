@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 NATURAL_HEADROOM_READY_AWAITING_PC.
+Read-only process 6681 / session 8056 ended normally: 29 samples over 915.390s,
+SOC 70→68%, final 31.3°C / 4.009V / −1.332A. Every sample was USB offline,
+discharging and from accepted Test331 boot a96de8c0. No Test347 install, reboot,
+guardian, PPS or pump command. Target 68 reserves PC/install headroom; the
+registered 20..70 admission and unused one300s scope are unchanged. The prior
+SOC71 preflight rejection remains preserved. Fresh PC preflight must use a new
+namespace before paired install/admission; fresh candidate-bound C1 reply must
+precede the only guardian launch. Evidence/docs-only tests/build executed:false;
+reuse existing qualification. Full port NOT_READY. See Test347 PREPARED_STATUS
+and natural-headroom-1791427878.
+
 2026-10-08 Test347 PC_PREPARATION_MARGIN_PENDING_NO_MUTATION.
 OwnerPCreply“已接”; firstreadonlypreflightstopped SOC71>registered70 after
 PCcharge, same331a96de8c0/config51/notes03/31.9C/services+rolesnormal. No Test347
