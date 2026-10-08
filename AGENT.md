@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test346 AUTHORIZED_ONE300S_ATTEMPT_NOT_DEPLOYED.
+Owner “允许测试，平板为手动关机重启” explicitly approves300s and attributes
+683bdd12 to manual poweroff/restart. Originalpendingtelemetry retained with
+separateattribution. Scope hardware1700/PPS+raw1800/oneactivation/no20min/no
+highercurrent/unconditionalexact331 restoration unchanged. Enrollmentrefrozen;
+freshPC rescue/identity/SOC20..70 preflight required beforedeployment. Reuse
+32host/79C/build/configDT qualification; record-onlytests/build:false.
+FullportNOT_READY. See346execution-scope/INPUTS anddevice-statusattribution.
+
 2026-10-08 Test346 REGISTERED_READY_AWAITING_EXPLICIT300S_AUTHORIZATION.
 Independent300s guardian/runner/native binding;19new+8parser+5transport=32host
 PASS0.211s/syntax/45frozeninputs/artifactsPASS. Old30s grant/witness rejected;

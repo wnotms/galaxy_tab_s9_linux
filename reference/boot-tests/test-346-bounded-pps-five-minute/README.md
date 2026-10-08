@@ -13,7 +13,7 @@ Hardware input1700mA, PPS request/rawIBUS stop1800mA unchanged. Switching fallba
 
 ## Enrollment and sequence
 
-Registration and frozen inputs must be committed/pushed before mutation. **Execution currently unauthorized** in registration.json and execution-scope.json. Prior<=30s grants do not authorize300s. After a specific owner approval, record its exact instruction, enable both enrollment fields, bind scope to the refreshed INPUTS SHA and freeze EXECUTION_INPUTS; commit/push before stage/install. No Windows staging or physical preflight/flash was executed during registration.
+Registration and frozen inputs must be committed/pushed before mutation. **Execution authorized for one300s attempt** in registration.json and execution-scope.json by the owner reply “允许测试，平板为手动关机重启”, recorded in execution-scope.json. No deployment has occurred yet. Prior<=30s grants do not authorize300s. This approval is recorded in both enrollment fields, bound to the refreshed INPUTS SHA and frozen EXECUTION_INPUTS; commit/push before stage/install. No Windows staging or physical preflight/flash was executed during registration.
 
 1. Fresh exact331 PC preflight: rescue/config/notes/boot history/full kernel journal/allfive/181/DCCabsence/noCode43, preparationSOC20..70, pack20..<38C/VBAT3.5..<4.3V. Current accepted331 result is64440dd5; a later startup needs fresh attribution, not an assumed boot ID.
 2. One paired boot install and normal PC startup; verify identity/partitions/modules, then drain initial pre-entry worker and proveOFF/unbound. No pump operation at PC5V.
