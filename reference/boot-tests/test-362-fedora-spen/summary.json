@@ -1,0 +1,52 @@
+{
+  "boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "verdict": "PEN_ENUMERATED_CAPTURE_LIVE_AWAITING_OWNER",
+  "insmod_attempts": 1,
+  "module_sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412",
+  "autoload": false,
+  "touch_palm_rejection": false,
+  "kernel_start_monotonic_us": 2591576452,
+  "event_device": "/dev/input/event5",
+  "driver_bound": "/sys/bus/i2c/drivers/wacom-wez01",
+  "initial_irq_delta_5s": 0,
+  "new_faults": [],
+  "query_messages": [
+    "wacom-wez01 6-0056: fw version 0x4018, max_x 14752, max_y 23603, max_pressure 4095"
+  ],
+  "capture_launcher_pid": 5263,
+  "capture_pid": 5264,
+  "capture_proc_start_ticks": "311022",
+  "battery": {
+    "capacity": "66",
+    "temp": "256",
+    "health": "Good",
+    "status": "Discharging",
+    "current_now": "-498000"
+  },
+  "device_load_executed": true,
+  "physical_probe": "enumerated",
+  "owner_pen_functionality": "pending",
+  "initial_live_check": {
+    "pid": 5264,
+    "proc_alive": true,
+    "start_match": true,
+    "proc_state": "S",
+    "terminal_exists": false,
+    "events_bytes": 0,
+    "boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+    "battery": {
+      "capacity": "66",
+      "temp": "255",
+      "health": "Good",
+      "status": "Discharging",
+      "current_now": "-441000"
+    }
+  },
+  "test_execution": {
+    "new_host_tests_executed": false,
+    "build_executed": false,
+    "reused": "15 affected C/manifest/lifecycle tests + W1 +29 exact331 CRCs from registrationab638aa9"
+  },
+  "full_port_complete": false,
+  "Test348_grant_used": false
+}

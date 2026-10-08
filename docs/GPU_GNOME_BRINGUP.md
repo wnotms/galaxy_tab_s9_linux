@@ -48,7 +48,7 @@ No charging test runs as part of this desktop work.
 | Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
 | Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
 | Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | Ten-contact and suspend/dynamic-rotation checks |
-| S Pen | Test362 optional Fedora-derived module compiled W=1;29 export CRCs match331 | First registered input/owner acceptance; palm integration separate |
+| S Pen | Test362 optional Fedora-derived module loads on331, controller0x4018/event5/tablet-class | Owner input/calibration/pressure acceptance pending; palm integration separate |
 
 Initial read-only inventory remains at
 reference/desktop-bringup/initial-readonly-1791439861/; its missing-firmware/desktop
@@ -203,3 +203,10 @@ exact331 Image. Existing DT already supplies i2c3/0x56/GPIO154. No firmware/
 charging/config/DT/181-module directory change. Accepted touch remains its
 disabled Wacom-stub build; kernel pen-proximity palm rejection is not yet wired.
 Build/ABI qualification is not physical input acceptance.
+
+Test362 now performed one normal load after pushed registration:6-0056 bound,
+controller query0x4018/pressure4095 and event5 classified as tablet. GNOME/touch/
+SSH remain healthy in the same331 boot. Bounded600s pen-only capture is live
+PID5264; owner input/coordinate confirmation pending, not inferred from probe.
+No permanent loading service was installed. See Test362 RESULTS and eventual
+raw/terminal records for the final input status; do not restart this observer.

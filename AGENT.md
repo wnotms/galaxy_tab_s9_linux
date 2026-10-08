@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test362 PEN_PROBED_CAPTURE_LIVE_OWNER_PENDING.
+Pushedab638aa9 precedes1normalinsmod, same33125ff0ad0/6-0056/event5/tabletclass.
+Queryfw4018/maxX14752/maxY23603/pressure4095, axesres100, no fallback/MPUerror;
+5sIRQdelta0 beforeownerpen -> notphysicalinputpass. No newkernel fault/failedunit,
+GNOME/touch/SSHnormal/66%25.6C GoodDischarging/taint12804unchanged/no force.
+Collector5264/start311022 confirmedlive/stateS/0events/no terminal, max600s;
+owner hover/stroke/grid/buttons pending; no restart whenSSHreturns.
+Currentboot-onlypen, existingFTSstub -> no penpalm suppression. No firmware/
+config/DT/181dir/charging/autoload/flash/reboot; tests/build:false results/reuse15
+C/W1/29CRC.348grantunused/freshdesktopinactive admission/finalexact331TWRP.
+
 2026-10-08 Test362 REGISTERED_FEDORA_WEZ01_S_PEN_ONE_LOAD.
 Same33125ff0ad0/currentGNOME+touch accepted,67%25.9C GoodDischarging/client6-0056
 unbound. Fedoraab123e7d remoteHEADunchanged; optional external WEZ01 module with
