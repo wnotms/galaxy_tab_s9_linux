@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test350 STOP_HOST_CANCELLED_UPLOAD_FOR_RESUME.
+Host explicitly cancelled bulk upload696.88s; SSH255 is cancellation, not send
+stall. Same331boot responsive/protected38 unchanged/no failedunits; exact device
+prefix hash matches qualified host archive. No extraction/APT/firmware/GUI.
+Preserve STOP/raw and verified prefix; fresh resumable registration next, not a
+whole-file blind retry. Original348watch remains terminal; grantunused/finalTWRP.
+
 2026-10-08 Test350 REGISTERED_CORRECTED_BULK_DESKTOP_TRANSPORT.
 Independent partial-send proxy avoids349sendall1s timeout;10 focused tests PASS.
 Original charging transport unchanged. Fresh same331boot/protected38/health PASS;

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "ssh",
+    "-i",
+    "/home/ms/.ssh/gts9_ed25519",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=3",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "UserKnownHostsFile=/home/ms/.ssh/gts9-test292-known-hosts",
+    "-o",
+    "HostKeyAlias=gts9-test292",
+    "-o",
+    "ProxyCommand=/mnt/f/msys64/ucrt64/bin/python.exe -u -c 'import socket,os,sys,threading,msvcrt,select,time\ndef send_pending(sock, data, stop, stall_seconds=30):\n    pos = 0\n    deadline = time.monotonic() + stall_seconds\n    while pos < len(data):\n        if stop.is_set():\n            raise ConnectionAbortedError('\"'\"'proxy stopped during upload'\"'\"')\n        remaining = deadline - time.monotonic()\n        if remaining <= 0:\n            raise TimeoutError('\"'\"'bulk proxy upload made no progress'\"'\"')\n        _, writable, _ = select.select([], [sock], [], min(1, remaining))\n        if not writable:\n            continue\n        try:\n            n = sock.send(memoryview(data)[pos:])\n        except (BlockingIOError, InterruptedError):\n            continue\n        if n <= 0:\n            raise ConnectionError('\"'\"'bulk proxy socket closed during upload'\"'\"')\n        pos += n\n        deadline = time.monotonic() + stall_seconds\n\nif sys.platform != \"win32\": raise RuntimeError(\"native Windows TCP required\")\nmsvcrt.setmode(0,os.O_BINARY);msvcrt.setmode(1,os.O_BINARY)\ns=socket.create_connection((sys.argv[1],22),3)\ns.setsockopt(socket.SOL_SOCKET,socket.SO_SNDBUF,65536)\ns.setblocking(False)\nstop=threading.Event()\nerrors=[]\ndef upload():\n try:\n  while not stop.is_set():\n   data=os.read(0,65536)\n   if not data:\n    s.shutdown(socket.SHUT_WR)\n    return\n   send_pending(s,data,stop)\n except BaseException as exc:\n  errors.append(exc);stop.set()\nthreading.Thread(target=upload,daemon=True).start()\ntry:\n while not stop.is_set():\n  readable,_,_=select.select([s],[],[],1)\n  if not readable:continue\n  try:data=s.recv(65536)\n  except (BlockingIOError,InterruptedError):continue\n  if not data:break\n  pos=0\n  while pos<len(data):\n   n=os.write(1,data[pos:])\n   if n<=0:raise OSError(\"proxy stdout closed\")\n   pos+=n\n if errors:raise errors[0]\nfinally:stop.set();s.close()\n' 10.175.236.175",
+    "root@10.175.236.175",
+    "python3 -c 'EXPECTED_BOOT='\"'\"'be1baaaa-47fc-41f5-8255-8f7092c01653'\"'\"'\nEXPECTED_SHA='\"'\"'83d7db40c190d68522cfce4d9d552149f6759a4a7d7d6f265feba4eee0d46458'\"'\"'\nEXPECTED_BYTES=166492160\nfrom pathlib import Path\nimport sys,json,hashlib,shutil,tarfile\nboot=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip()\nassert boot==EXPECTED_BOOT,'\"'\"'boot changed'\"'\"'\nroot=Path('\"'\"'/var/tmp/gts9-test350'\"'\"');root.mkdir(exist_ok=False)\nprint(json.dumps(dict(stage='\"'\"'RECEIVING_BUNDLE'\"'\"',boot_id=boot)),flush=True)\np=root/'\"'\"'deploy.tar'\"'\"'\nwith p.open('\"'\"'xb'\"'\"') as stream:shutil.copyfileobj(sys.stdin.buffer,stream,1048576)\nassert p.stat().st_size==EXPECTED_BYTES,'\"'\"'bundle size'\"'\"'\nwith p.open('\"'\"'rb'\"'\"') as stream:actual=hashlib.file_digest(stream,'\"'\"'sha256'\"'\"').hexdigest()\nassert actual==EXPECTED_SHA,'\"'\"'bundle hash'\"'\"'\nwith tarfile.open(p) as tar:\n rows=tar.getmembers();assert len(rows)==381\n assert all(m.isfile() and m.name.startswith('\"'\"'gts9-gnome/'\"'\"') and '\"'\"'..'\"'\"' not in Path(m.name).parts for m in rows)\n tar.extractall(root,filter='\"'\"'data'\"'\"')\nassert Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip()==boot\nprint(json.dumps(dict(verdict='\"'\"'BUNDLE_TRANSFERRED_EXTRACTED'\"'\"',boot_id=boot,sha256=actual,bytes=p.stat().st_size,members=381,installation_executed=False)),flush=True)\n'"
+  ],
+  "pid": 35483,
+  "started_epoch": 1791443683.6824265
+}
