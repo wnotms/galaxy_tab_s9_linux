@@ -1,0 +1,158 @@
+{
+  "boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+  "capture": {
+    "byte_counts": {
+      "pen": 284616,
+      "touch": 7128
+    },
+    "pid": 1860,
+    "reason": "owner_result_collected",
+    "seconds": 67.12555877599999
+  },
+  "devices": {
+    "pen": {
+      "axes": {
+        "0": {
+          "count": 3335,
+          "last": 15470,
+          "max": 19670,
+          "min": 12816
+        },
+        "1": {
+          "count": 3305,
+          "last": 8942,
+          "max": 10398,
+          "min": 6186
+        },
+        "25": {
+          "count": 1011,
+          "last": 0,
+          "max": 104,
+          "min": 0
+        },
+        "26": {
+          "count": 93,
+          "last": -7,
+          "max": 0,
+          "min": -22
+        },
+        "27": {
+          "count": 123,
+          "last": 19,
+          "max": 37,
+          "min": 9
+        }
+      },
+      "events": 11859,
+      "frames": 3980,
+      "keys": {
+        "320": {
+          "count": 12,
+          "last": 0,
+          "max": 1,
+          "min": 0
+        }
+      }
+    },
+    "touch": {
+      "axes": {
+        "0": {
+          "count": 20,
+          "last": 1422,
+          "max": 2466,
+          "min": 1129
+        },
+        "1": {
+          "count": 21,
+          "last": 1506,
+          "max": 1550,
+          "min": 28
+        },
+        "24": {
+          "count": 45,
+          "last": 0,
+          "max": 25,
+          "min": 0
+        },
+        "48": {
+          "count": 24,
+          "last": 9,
+          "max": 17,
+          "min": 4
+        },
+        "49": {
+          "count": 24,
+          "last": 6,
+          "max": 14,
+          "min": 3
+        },
+        "53": {
+          "count": 20,
+          "last": 1422,
+          "max": 2466,
+          "min": 1129
+        },
+        "54": {
+          "count": 21,
+          "last": 1506,
+          "max": 1550,
+          "min": 28
+        },
+        "57": {
+          "count": 16,
+          "last": -1,
+          "max": 7,
+          "min": -1
+        },
+        "58": {
+          "count": 37,
+          "last": 14,
+          "max": 25,
+          "min": 6
+        }
+      },
+      "events": 297,
+      "frames": 53,
+      "keys": {
+        "330": {
+          "count": 16,
+          "last": 0,
+          "max": 1,
+          "min": 0
+        }
+      }
+    }
+  },
+  "final_health": {
+    "battery": {
+      "capacity": "63",
+      "health": "Good",
+      "status": "Discharging",
+      "temp": "242"
+    },
+    "boot": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+    "failed_units": "",
+    "gdm_masks": {
+      "display-manager.service": "/dev/null",
+      "gdm.service": "/dev/null",
+      "gdm3.service": "/dev/null"
+    },
+    "services": {
+      "gdm.service": "active",
+      "gts9-palm.service": "active"
+    }
+  },
+  "host_tests": {
+    "executed": false,
+    "reason": "evidence-only stage; unchanged 27-test qualification reused"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "unchanged modules"
+  },
+  "kernel_final_records": 1102,
+  "limitation": "No capture clock ioctl change; merge uses native evdev timestamps. No tip/pressure/side-button event observed; absence alone is not proof of either attempted operation or suppression.",
+  "touch_tracking_starts_after_pen_out": 8,
+  "touch_tracking_starts_during_observed_pen_proximity": 0,
+  "verdict": "OWNER_POSITION_PALM_ACCEPTED_PRESSURE_BUTTON_UNOBSERVED"
+}

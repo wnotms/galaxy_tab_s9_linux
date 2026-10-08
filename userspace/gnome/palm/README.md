@@ -11,6 +11,10 @@ only in a newly registered desktop boot. The GDM Wants relationship avoids text
 boots and charging experiments. No kernel config, DTS, firmware, charging or
 USB/ADB setting is changed.
 
-The pair is offline-built and symbol-checked, but has not been loaded on the
-device. Physical pen hover, palm suppression, touch release, calibration,
-suspend and recovery remain a separate acceptance scope.
+Test363 loaded the offline-built, symbol-checked pair on a fresh exact Test331
+boot. The owner confirmed pen position, palm suppression and finger recovery;
+raw proximity and touch-release events support this bounded result. Pen tip,
+pressure and side-button events were not observed. Suspend and full calibration
+remain untested. Historical GDM masks remain, so the installed Wants link does
+not globally enable graphical startup; use the registered explicit service/GDM
+start sequence. No current-boot driver replacement is supported.

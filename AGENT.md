@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test363 PAIR_BOUND_OWNER_POSITION_PALM_PASS_TIP_PRESSURE_UNOBSERVED.
+Owner manual reboot ->28fcdaa6/SSH10.175.236.134, exact331 config51ba6a9c/
+notes03c9c46e. Normal Wacom then pairedFTS service load:6-0056/event4 and
+7-0049/event5 bound. OneGDM start/threehistoricalmasks restored without --now.
+Non-grabbingcollector1860/start20817 terminal afterownerresult/67.126s:
+11859pen/3980frames,297touch/53frames;6prox enter/leave pairs/allreleased,
+8fingercontacts/allreleased/none start during observedpenprox/touch resumes.
+Owner confirms position/palm/finger recovery; no tip/pressure/sidebutton event,
+clarification pending/notcompletepressureacceptance/notproven driverfailure.
+Sameboot/GDM+pairactive/SSHnormal/no failed unit/newkernel fault;63%24.2C Good.
+Raw archive/finaljournal retained. No unload/config/DT/181dir/charging/USB/
+flash/reboot command. Host/build:false evidence-only/reuse27+W1 pair artifacts.
+348grantunused/final331TWRP retained; fullport incomplete.
+
 2026-10-08 Test362 PEN_PROBED_CAPTURE_LIVE_OWNER_PENDING.
 Pushedab638aa9 precedes1normalinsmod, same33125ff0ad0/6-0056/event5/tabletclass.
 Queryfw4018/maxX14752/maxY23603/pressure4095, axesres100, no fallback/MPUerror;

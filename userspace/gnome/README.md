@@ -14,8 +14,9 @@ whose enable link belongs to GDM, leaving text/charging boots alone. Existing
 GDM masks remain; Test360 accepted new-boot GDM-triggered loading and owner login/touch.
 Test362 prepared the separate optional [S Pen component](pen/README.md); its
 controller enumerated, but owner pen input was not observed in the bounded
-window. The opt-in [paired palm component](palm/README.md) is prepared offline
-but has not been loaded on the device. The package
+window. Test363 loaded the opt-in [paired palm component](palm/README.md) on a
+fresh Test331 boot; the owner confirmed pen position, palm suppression and
+finger recovery. Pen pressure and side-button events remain unobserved. The package
 preparers/installer do not automatically deploy this later integration or the
 power-key schema override.
 
