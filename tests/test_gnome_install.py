@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import stat
 import subprocess
@@ -17,6 +18,34 @@ with patch.object(sys, 'path', [str(ROOT / 'userspace/gnome')] + sys.path):
 
 
 class InstallTests(unittest.TestCase):
+    def test_local_only_apt_sources_and_absolute_files(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            argv = p.local_apt_argv(root, self.rows(), root)
+            self.assertNotIn('--no-download', argv)
+            self.assertIn('Dir::Etc::sourcelist=' + str(root / 'empty-sources.list'), argv)
+            self.assertIn('Dir::Etc::sourceparts=' + str(root / 'empty-sources.d'), argv)
+            self.assertEqual((root / 'empty-sources.list').read_text(), '')
+            self.assertEqual(list((root / 'empty-sources.d').iterdir()), [])
+            self.assertEqual(argv[-1], str(root / 'foo_1_arm64.deb'))
+
+    def test_actual_apt_simulates_local_archive_with_repositories_disabled(self):
+        # Real APT acquisition semantics were missed by the original mock. This
+        # builds a harmless all-arch dummy and ONLY simulates, never installs it.
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder);control = root / 'pkg/DEBIAN';control.mkdir(parents=True)
+            (control / 'control').write_text('Package: gts9-gnome-offline-test\nVersion: 1\n'
+                'Architecture: all\nMaintainer: Test <test@example.invalid>\nDescription: simulation only\n')
+            archive = root / 'dummy.deb'
+            subprocess.run(['dpkg-deb', '--root-owner-group', '--build', str(control.parent),
+                            str(archive)], check=True, capture_output=True)
+            rows = [dict(package='gts9-gnome-offline-test', version='1', filename=archive.name)]
+            argv = p.local_apt_argv(root, rows, root)
+            result = subprocess.run(argv[:1] + ['--simulate'] + argv[1:],
+                capture_output=True, text=True, timeout=20, env=dict(os.environ, LC_ALL='C'))
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(p.verify_simulation(result.stdout, rows, {}), 1)
+
     def rows(self):
         return [dict(package='foo', version='1', architecture='arm64', filename='foo_1_arm64.deb',
                      bytes=3, sha256=hashlib.sha256(b'deb').hexdigest(), url='https://deb.debian.org/foo.deb')]

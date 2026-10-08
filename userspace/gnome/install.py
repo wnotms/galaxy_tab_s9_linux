@@ -156,6 +156,21 @@ def installed_versions(text):
     return installed
 
 
+def local_apt_argv(cache, rows, evidence):
+    # --no-download also forbids APT's acquisition of command-line local .debs
+    # outside its archive cache (Test351, Debian APT3). Disable repository
+    # sources for this invocation instead; every input is a verified local file.
+    # Do not edit /etc/apt or weaken the exact simulation/version gate.
+    source_list = evidence / 'empty-sources.list'
+    source_list.write_text('')
+    source_parts = evidence / 'empty-sources.d'
+    source_parts.mkdir()
+    return ['apt-get', '-o', 'Dir::Etc::sourcelist=' + str(source_list.resolve()),
+            '-o', 'Dir::Etc::sourceparts=' + str(source_parts.resolve()),
+            '--yes', '--no-remove', '--no-upgrade', '--no-install-recommends',
+            'install'] + [str((cache / r['filename']).resolve()) for r in rows]
+
+
 def install(prepared, cache, firmware, evidence, expected_boot):
     boot = target_identity(expected_boot)
     evidence.mkdir(parents=True, exist_ok=False)
@@ -177,9 +192,7 @@ def install(prepared, cache, firmware, evidence, expected_boot):
                 len(gdm.stdout.splitlines()) != len(GDM_UNITS) or
                 any(line not in ('inactive', 'unknown') for line in gdm.stdout.splitlines())):
             raise ValueError('display manager already active/failed; inspect first')
-        apt = ['apt-get', '--yes', '--no-download', '--no-remove', '--no-upgrade',
-               '--no-install-recommends', 'install'] + [str((cache / r['filename']).resolve())
-                                                       for r in prepared['packages']]
+        apt = local_apt_argv(cache, prepared['packages'], evidence)
         simulation = run(apt[:1] + ['--simulate'] + apt[1:], evidence, 'apt-simulation')
         status['new_packages'] = verify_simulation(simulation.stdout, prepared['packages'], installed)
         # Confirm all existing destination files before touching any firmware.

@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test351（GNOME 已校验前缀续传；Test348 仍未部署），窗口为 **Test342–Test351**；没有生成镜像的轮次仍占一轮。
+  编号为 Test352（GNOME 本地 APT 修正；Test348 仍未部署），窗口为 **Test343–Test352**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,14 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test352 REGISTERED_LOCAL_ONLY_APT_CORRECTION.
+Correct --no-download local-acquisition failure using invocation-local empty
+APT sources; no /etc/apt change/network fetch.29affected tests PASS including
+realAPT localdeb simulation; readonly device exact368plan PASS. Reuse complete
+351cache, upload only hash-bound installer/helper. Oneinstall, conditional30sGPU/
+60sGDM, maskedendpoint. Same331/protected38/charging frozen, no touchload/reboot/
+flash. OriginalSTOPs retained;348grantunused/finalTWRP unchanged.342stage retired.
 
 2026-10-08 Test351 STOP_BEFORE_INSTALLATION_APT_LOCAL_ACQUISITION.
 Verified-prefix transfer PASS56.15s/full archive SHA;381members extracted.

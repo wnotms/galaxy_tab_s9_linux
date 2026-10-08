@@ -40,9 +40,15 @@ python3 -m unittest discover -s tests -p 'test_gnome*.py' -v
 Installation and first GPU/GNOME activation are separate device stages described
 in the bring-up document. Neither preparer can perform them.
 
-## Controlled installation tool (not executed on the tablet)
+## Controlled installation tool
 
-Test349 separately registers desktop work during discharge, superseding the
+Test352 corrects local APT acquisition after Test351 stopped before installation.
+Sources are disabled only for the invocation using actual empty owned paths;
+all supplied archives are verified local files. No system source configuration
+is changed. `--no-download` is unsuitable here because APT must acquire the
+command-line local files outside its archive cache.
+
+Test349 originally registered desktop work during discharge, superseding the
 earlier after-Test348 ordering here. Keep charging inputs frozen and GDM inactive
 before Test348; record added rootfs packages/firmware in its fresh admission.
 
