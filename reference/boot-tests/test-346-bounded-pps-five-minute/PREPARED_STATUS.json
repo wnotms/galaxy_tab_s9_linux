@@ -1,15 +1,24 @@
 {
-  "verdict": "AUTHORIZED_STAGED_AWAITING_PC_USB",
-  "stage_verified": true,
-  "stage": "D:/android/gts9-active/gts9-test346",
-  "device_mutation": false,
-  "physical_preflight_complete": false,
-  "ADB_connected": false,
-  "owner_PC_reply_pending": true,
-  "execution_scope": "one300s hardware1700/PPS+raw1800mA",
+  "PPS_raw_cap_ma": 1800,
+  "PPS_requested": false,
+  "allfive_verified": true,
+  "boot_id": "0ad61ab72af840ff9ca05d195fbb7a6f",
+  "capacity": 69,
+  "full_port_verdict": "NOT_READY",
+  "guardian_live_verified": true,
+  "guardian_pid": 1717,
+  "hardware_setpoint_ma": 1700,
+  "modules": 181,
+  "pack_temperature_decic": 302,
+  "pump_activated": false,
+  "rollback_required": true,
+  "test": "Test346",
   "tests": {
+    "build_executed": false,
     "executed": false,
-    "reason": "unchanged qualified candidate and enrollment/staging results only",
-    "reused": "32affectedhost/79actualC/build/W1+sparse"
-  }
+    "reused": "32host/79actualC/build/W1+sparse"
+  },
+  "verdict": "DEPLOYED_GUARDIAN_READY_OFF_UNBOUND_AWAITING_OWNER_C1",
+  "wifi": "10.175.236.46",
+  "window_ms": 300000
 }

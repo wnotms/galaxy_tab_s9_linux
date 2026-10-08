@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test346 DEPLOYED_GUARDIAN_READY_OFF_UNBOUND_AWAITING_OWNER_C1.
+Fresh331683bdd12 preflight68%29.1C/allfive181/confignotes/rescue/WindowsPASS;
+onepairedinstall, normalcandidate0ad61ab7/WiFi10.175.236.46/config51/notes10/
+allfive181/once300000/uniqueattribution/journalPASS. Preentryworker drained,
+physicalOFF/unbound/69%30.2C; guardian1717 exactpathverifiedlive awaitingowner
+C1<=900s outside300s. No activation/PPS/pump yet. Scope hardware1700/PPS+raw1800,
+one300s only. Exact331rollback_required=true/original181saved. Reuse32host/79C/
+build/W1sparse; operationstests/build:false. FullportNOT_READY. See346progress/raw.
+
 2026-10-08 Test346 AUTHORIZED_STAGED_AWAITING_PC_USB.
 Enrollment e765eb4b pushed; Windows346 stage verified, no device mutation.
 FreshWiFi683bdd12 ownermanualattributed/69%24.8C/config51/notes03match331;
