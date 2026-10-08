@@ -14,6 +14,7 @@
   "required_order": ["wacom-wez01.ko", "fts1ba90a-palm.ko"],
   "fresh_boot_required": true,
   "gdm_masked_manual_service_start": true,
+  "gui_activation": "One GDM start with temporary removal and immediate restoration of three historical masks, as in Test360; no boot autostart enablement",
   "normal_loader_only": true,
   "persistent_autoload": false,
   "owner_input_window_seconds": 600,
