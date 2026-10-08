@@ -1,0 +1,20 @@
+test_coordinates_clamp_to_fedora_calibration (test_wacom_wez01_events.PenEvents.test_coordinates_clamp_to_fedora_calibration) ... ok
+test_devres_unregister_is_after_irq_and_timer_cleanup (test_wacom_wez01_events.PenEvents.test_devres_unregister_is_after_irq_and_timer_cleanup) ... ok
+test_final_cleanup_permanently_prevents_timer_rearm (test_wacom_wez01_events.PenEvents.test_final_cleanup_permanently_prevents_timer_rearm) ... ok
+test_manifest_binds_optional_source_and_original_header (test_wacom_wez01_events.PenEvents.test_manifest_binds_optional_source_and_original_header) ... ok
+test_out_of_range_releases_all_tools_once (test_wacom_wez01_events.PenEvents.test_out_of_range_releases_all_tools_once) ... ok
+test_pen_hover_big_endian_swap_inversion_and_signed_tilt (test_wacom_wez01_events.PenEvents.test_pen_hover_big_endian_swap_inversion_and_signed_tilt) ... ok
+test_pressure_masks_non_pressure_high_nibble (test_wacom_wez01_events.PenEvents.test_pressure_masks_non_pressure_high_nibble) ... ok
+test_query_block_offset_big_endian_and_limits (test_wacom_wez01_events.PenEvents.test_query_block_offset_big_endian_and_limits) ... ok
+test_query_short_read_bad_header_and_bus_error_are_bounded (test_wacom_wez01_events.PenEvents.test_query_short_read_bad_header_and_bus_error_are_bounded) ... ok
+test_reenter_after_range_out_rearms_silence_timer (test_wacom_wez01_events.PenEvents.test_reenter_after_range_out_rearms_silence_timer) ... ok
+test_send_propagates_errors_and_short_writes (test_wacom_wez01_events.PenEvents.test_send_propagates_errors_and_short_writes) ... ok
+test_short_i2c_read_error_and_non_coordinate_do_not_publish (test_wacom_wez01_events.PenEvents.test_short_i2c_read_error_and_non_coordinate_do_not_publish) ... ok
+test_silence_timeout_releases_then_next_report_rearms (test_wacom_wez01_events.PenEvents.test_silence_timeout_releases_then_next_report_rearms) ... ok
+test_suspend_releases_and_resume_allows_timer_rearm (test_wacom_wez01_events.PenEvents.test_suspend_releases_and_resume_allows_timer_rearm) ... ok
+test_tip_side_button_and_eraser (test_wacom_wez01_events.PenEvents.test_tip_side_button_and_eraser) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.136s
+
+OK

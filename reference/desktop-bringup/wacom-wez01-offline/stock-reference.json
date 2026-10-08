@@ -1,0 +1,16 @@
+{
+  "files": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/input/wacom/wacom_i2c.c": "8bc4fcc0ad2df13f663ee5f561050bc536538f2dee2fc6bf8acb1e55b9dd8603",
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/input/wacom/wacom_reg.h": "c240050561531a89b2167656d9c72b6c91b1895f8cfe9c3f18a614578e4b2eb6"
+  },
+  "protocol": [
+    "coordinate ready bit7, eraser bit6, side bit5, tip bit4",
+    "big-endian X bytes1..2, Y3..4",
+    "pressure ((byte5 & 0xf)<<8)|byte6, height7, signed tilt8..9",
+    "query32 bytes block starts16/header0x0f",
+    "stop0x30/start0x31/survey-exit0x2d"
+  ],
+  "hardware_reference": "Fedora exact X710 and existing DT; no vendor framework/firmware imported",
+  "Linux_timer_source_sha256": "c359e3a4924a382225a6eb2125be2d99a9f41debc0e984d0fb366c8ca70b954d",
+  "Linux_input_source_sha256": "b3ecf6d187bfa59ac0d0c534c49b7d92d9c56aff5a8bea0668d337b9d03f27a5"
+}

@@ -1,0 +1,71 @@
+--- Fedora/ab123e7d/wacom-wez01.c
++++ optional/wacom-wez01.c
+@@ -200,11 +200,16 @@
+ 		return IRQ_HANDLED;
+ 
+ 	if (!(data[0] & WEZ01_RDY)) {
+-		timer_shutdown_sync(&w->prox_timer);
++		timer_delete_sync(&w->prox_timer);
+ 		wacom_wez01_leave_range(w);
+ 		return IRQ_HANDLED;
+ 	}
+ 
++	/* Drain any in-flight silence callback before publishing a new frame.
++	 * Unlike shutdown, delete permits the next proximity interval to arm.
++	 */
++	timer_delete_sync(&w->prox_timer);
++
+ 	input_report_key(w->input, BTN_TOOL_RUBBER, !!(data[0] & WEZ01_ERASER));
+ 	input_report_key(w->input, BTN_TOOL_PEN, !(data[0] & WEZ01_ERASER));
+ 	input_report_key(w->input, BTN_TOUCH, !!(data[0] & WEZ01_TIP));
+@@ -295,10 +300,6 @@
+ 	}
+ 
+ 	timer_setup(&w->prox_timer, wacom_wez01_prox_timeout, 0);
+-	ret = devm_add_action_or_reset(dev, wacom_wez01_stop_timer, w);
+-	if (ret)
+-		return ret;
+-
+ 	input = devm_input_allocate_device(dev);
+ 	if (!input)
+ 		return -ENOMEM;
+@@ -325,17 +326,26 @@
+ 
+ 	__set_bit(INPUT_PROP_DIRECT, input->propbit);
+ 
++	ret = input_register_device(input);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to register input\n");
++
++	/* Reverse devres order: IRQ drained, timer stopped, input unregistered.
++	 * The release callback still needs a live registered input device.
++	 */
++	ret = devm_add_action_or_reset(dev, wacom_wez01_stop_timer, w);
++	if (ret)
++		return ret;
++
+ 	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+ 					wacom_wez01_irq_handler, IRQF_ONESHOT,
+ 					client->name, w);
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to request irq\n");
+ 
+-	ret = input_register_device(input);
++	ret = wacom_wez01_send(w, WEZ01_COM_SAMPLERATE_START);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "failed to register input\n");
+-
+-	wacom_wez01_send(w, WEZ01_COM_SAMPLERATE_START);
++		return dev_err_probe(dev, ret, "failed to start pen reports\n");
+ 
+ 	return 0;
+ }
+@@ -345,7 +355,7 @@
+ 	struct wacom_wez01 *w = dev_get_drvdata(dev);
+ 
+ 	disable_irq(w->client->irq);
+-	timer_shutdown_sync(&w->prox_timer);
++	timer_delete_sync(&w->prox_timer);
+ 	wacom_wez01_leave_range(w);
+ 	wacom_wez01_send(w, WEZ01_COM_SAMPLERATE_STOP);
+ 

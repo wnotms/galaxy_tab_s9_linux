@@ -48,7 +48,7 @@ No charging test runs as part of this desktop work.
 | Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
 | Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
 | Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | Ten-contact and suspend/dynamic-rotation checks |
-| S Pen | Not imported/loaded | Separate port |
+| S Pen | Test362 optional Fedora-derived module compiled W=1;29 export CRCs match331 | First registered input/owner acceptance; palm integration separate |
 
 Initial read-only inventory remains at
 reference/desktop-bringup/initial-readonly-1791439861/; its missing-firmware/desktop
@@ -193,3 +193,13 @@ advance normally. Screen was2047/2047, QQ/activity differed; pack26.0->26.8°C.
 Owner says current run has no heat, previous run did; historical cause remains
 unproven. Retain owner brightness, no lower-default change or extra heat trial. Full raw
 and exact counter semantics in test361. No hardware/charging policy change.
+
+## S Pen first-stage preparation
+
+Optional driver at kernel/desktop/wacom-wez01 reuses Fedora same-model WEZ01,
+with small timer/devres/probe-error fixes and15 affected actual-C tests. Test362
+registers one currentboot-only normal load after checking all29 imports against
+exact331 Image. Existing DT already supplies i2c3/0x56/GPIO154. No firmware/
+charging/config/DT/181-module directory change. Accepted touch remains its
+disabled Wacom-stub build; kernel pen-proximity palm rejection is not yet wired.
+Build/ABI qualification is not physical input acceptance.

@@ -1,0 +1,28 @@
+{
+  "repository": "https://github.com/nacht20-de/gts9wifi-fedora-linux",
+  "commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "remote_HEAD_checked": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "files": {
+    "wacom-wez01.c": {
+      "source": "kernel/files/wacom-wez01.c",
+      "upstream_sha256": "d0d0cf547ee387384ba7e69d169981044b829317dc27f5316770e0e30efd6118",
+      "imported_sha256": "6a2cf5b819be945445f287a2925a265012c87122918d38eda42cd8f7cc5d0e56",
+      "bytes": 11678
+    },
+    "include/linux/wacom_wez01.h": {
+      "source": "kernel/files/wacom_wez01.h",
+      "upstream_sha256": "8bce569cbb105e835a5e9282adbef9612abd97c4540e82a03648a953772caa13",
+      "imported_sha256": "8bce569cbb105e835a5e9282adbef9612abd97c4540e82a03648a953772caa13",
+      "bytes": 372
+    }
+  },
+  "changes": [
+    "use rearmable timer deletion for proximity-out/suspend",
+    "drain timer before reporting next coordinate frame",
+    "register input, timer cleanup, then IRQ in safe devres order",
+    "propagate probe sample-start command error"
+  ],
+  "default_kernel_integration": false,
+  "device_load_executed": false,
+  "touch_palm_suppression_in_existing_module": false
+}

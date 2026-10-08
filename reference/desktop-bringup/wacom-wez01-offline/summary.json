@@ -1,0 +1,26 @@
+{
+  "verdict": "OFFLINE_MODULE_AND_EXPORT_ABI_QUALIFIED",
+  "external_build": {
+    "path": "out/gnome-trixie-arm64/pen-module/wacom-wez01.ko",
+    "bytes": 427920,
+    "sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412"
+  },
+  "host_tests": {
+    "executed": true,
+    "count": 15,
+    "passed": 15,
+    "scope": "actual C with timer/I2C/input stubs plus source/manifest lifecycle guards"
+  },
+  "W1_warnings": 0,
+  "all_29_export_crcs_match": true,
+  "changed_protected": {},
+  "full_kernel_build_executed": false,
+  "full_host_tests_executed": false,
+  "device_load_executed": false,
+  "known_limitations": [
+    "current FTS has no pen suppression",
+    "calibration/tilt/PM/controller/IRQ behavior untested",
+    "probe query fallback is rejected by physical observer"
+  ],
+  "initial_host_fixture_errors": "Preserved; mock macro argument order fixed, unused kernel callback parameters allowed; not driver/kernel failure."
+}

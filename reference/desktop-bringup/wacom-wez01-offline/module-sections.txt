@@ -1,0 +1,65 @@
+There are 56 section headers, starting at offset 0x67990:
+
+Section Headers:
+  [Nr] Name              Type            Address          Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            0000000000000000 000000 000000 00      0   0  0
+  [ 1] __ksymtab         PROGBITS        0000000000000000 000040 00000c 00   A  0   0  8
+  [ 2] __kcrctab         PROGBITS        0000000000000000 00004c 000004 00   A  0   0  4
+  [ 3] __kflagstab       PROGBITS        0000000000000000 000050 000001 00   A  0   0  1
+  [ 4] .altinstructions  PROGBITS        0000000000000000 000058 00000c 00   A  0   0  8
+  [ 5] .text             PROGBITS        0000000000000000 000064 000bc4 00  AX  0   0  4
+  [ 6] .bss              NOBITS          0000000000000000 000c28 00000c 00  WA  0   0  4
+  [ 7] .data             PROGBITS        0000000000000000 000c28 000108 00  WA  0   0  8
+  [ 8] .rodata           PROGBITS        0000000000000000 000d30 000406 00 AMS  0   0  8
+  [ 9] .plt              PROGBITS        0000000000000000 001140 000001 00   A  0   0 16
+  [10] .init.plt         PROGBITS        0000000000000000 001141 000001 00   A  0   0  1
+  [11] .text.ftrace_trampoline PROGBITS        0000000000000000 001142 000001 00   A  0   0  1
+  [12] .init.text.ftrace_trampoline PROGBITS        0000000000000000 001143 000001 00   A  0   0  1
+  [13] .rela.text        RELA            0000000000000000 0020b8 000c60 18   I 51   5  8
+  [14] .init.text        PROGBITS        0000000000000000 001144 000034 00  AX  0   0  4
+  [15] .rela.init.text   RELA            0000000000000000 002d18 000078 18   I 51  14  8
+  [16] .exit.text        PROGBITS        0000000000000000 001178 00002c 00  AX  0   0  4
+  [17] .rela.exit.text   RELA            0000000000000000 002d90 000048 18   I 51  16  8
+  [18] .rela.altinstructions RELA            0000000000000000 002dd8 000030 18   I 51   4  8
+  [19] .rela.rodata      RELA            0000000000000000 002e08 000090 18   I 51   8  8
+  [20] __param           PROGBITS        0000000000000000 0011a8 0000a0 00   A  0   0  8
+  [21] .rela__param      RELA            0000000000000000 002e98 000180 18   I 51  20  8
+  [22] .modinfo          PROGBITS        0000000000000000 001248 000148 00   A  0   0  1
+  [23] .rela.data        RELA            0000000000000000 003018 000078 18   I 51   7  8
+  [24] .init.data        PROGBITS        0000000000000000 001390 000008 00  WA  0   0  8
+  [25] .rela.init.data   RELA            0000000000000000 003090 000018 18   I 51  24  8
+  [26] .exit.data        PROGBITS        0000000000000000 001398 000008 00  WA  0   0  8
+  [27] .rela.exit.data   RELA            0000000000000000 0030a8 000018 18   I 51  26  8
+  [28] .debug_loc        PROGBITS        0000000000000000 0030c0 001dc2 00      0   0  1
+  [29] .rela.debug_loc   RELA            0000000000000000 004e88 0009c0 18   I 51  28  8
+  [30] .debug_abbrev     PROGBITS        0000000000000000 005848 000a39 00      0   0  1
+  [31] .debug_info       PROGBITS        0000000000000000 006281 01cb6d 00      0   0  1
+  [32] .rela.debug_info  RELA            0000000000000000 022df0 02fa78 18   I 51  31  8
+  [33] .debug_ranges     PROGBITS        0000000000000000 052868 000640 00      0   0  1
+  [34] .rela.debug_ranges RELA            0000000000000000 052ea8 000e10 18   I 51  33  8
+  [35] .debug_str        PROGBITS        0000000000000000 053cb8 00b89f 01  MS  0   0  1
+  [36] .comment          PROGBITS        0000000000000000 05f557 000028 01  MS  0   0  1
+  [37] .debug_frame      PROGBITS        0000000000000000 05f580 000220 00      0   0  8
+  [38] .rela.debug_frame RELA            0000000000000000 05f7a0 000240 18   I 51  37  8
+  [39] .debug_line       PROGBITS        0000000000000000 05f9e0 00623f 00      0   0  1
+  [40] .rela.debug_line  RELA            0000000000000000 065c20 000060 18   I 51  39  8
+  [41] .llvm_addrsig     LLVM_ADDRSIG    0000000000000000 065c80 000032 00   E  0   0  1
+  [42] __ksymtab_strings PROGBITS        0000000000000000 0013a0 000023 01 AMS  0   0  1
+  [43] .rela__ksymtab    RELA            0000000000000000 065cb8 000048 18   I 51   1  8
+  [44] .gnu.linkonce.this_module PROGBITS        0000000000000000 001400 000500 00  WA  0   0 64
+  [45] .rela.gnu.linkonce.this_module RELA            0000000000000000 065d00 000030 18   I 51  44  8
+  [46] __versions        PROGBITS        0000000000000000 001900 000740 00   A  0   0  8
+  [47] .note.Linux       NOTE            0000000000000000 002040 000030 00   A  0   0  4
+  [48] .note.gnu.build-id NOTE            0000000000000000 002070 000024 00   A  0   0  4
+  [49] .note.gnu.property NOTE            0000000000000000 002098 000020 00   A  0   0  8
+  [50] .note.GNU-stack   PROGBITS        0000000000000000 065d30 000000 00      0   0  1
+  [51] .symtab           SYMTAB          0000000000000000 065d30 000e28 18     53 119  8
+  [52] .shstrtab         STRTAB          0000000000000000 066b58 00020f 00      0   0  1
+  [53] .strtab           STRTAB          0000000000000000 066d67 0006cc 00      0   0  1
+  [54] .BTF              PROGBITS        0000000000000000 067433 000416 00      0   0  1
+  [55] .BTF.base         PROGBITS        0000000000000000 067849 000143 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), p (processor specific)

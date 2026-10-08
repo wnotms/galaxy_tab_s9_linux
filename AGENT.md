@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test361（GNOME 动画与发热观察；Test348 仍未部署），窗口为 **Test352–Test361**；没有生成镜像的轮次仍占一轮。
+  编号为 Test362（S Pen 首次输入登记；Test348 仍未部署），窗口为 **Test353–Test362**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,17 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test362 REGISTERED_FEDORA_WEZ01_S_PEN_ONE_LOAD.
+Same33125ff0ad0/currentGNOME+touch accepted,67%25.9C GoodDischarging/client6-0056
+unbound. Fedoraab123e7d remoteHEADunchanged; optional external WEZ01 module with
+rearmabletimer/draincallback/devresordering/probestarterror fixes, no DT/config.
+W1 build0warnings/15actual-C+guards PASS, all29 importedCRCs match exact331Image;
+normal loader/BTF/signature remainsrequired/no force. Oneinsmodoutside181dir,
+5sIRQ then<=600s pen-onlynon-grab capture/ownerpending, no persistentautoload.
+ExistingFTSstub unchanged -> no penpalm suppression; no suspend/calibration/
+firmware/flash/reboot/charging. Window353–362/no352image retirement;348grantunused,
+futurefreshdesktopinactive admission includespen delta/finalexact331TWRP.
 
 2026-10-08 Test361 OWNER_CURRENT_RUN_NO_HEAT_REPORTED.
 Owner“本次没有发热，上次运行时发热”; historicalheat causeunproven/notreproduced.

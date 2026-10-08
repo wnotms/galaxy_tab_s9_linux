@@ -1,0 +1,49 @@
+{
+  "test": "Test362",
+  "purpose": "Fedora-derived X710 WEZ01 first S Pen input in accepted GNOME",
+  "owner_scope": "Continue full port; directly reuse same-model Fedora when useful; no charging activation",
+  "expected_boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "module": {
+    "path": "out/gnome-trixie-arm64/pen-module/wacom-wez01.ko",
+    "bytes": 427920,
+    "sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412"
+  },
+  "client": "6-0056; existing i2c3/wacom,w90xx/0x56/GPIO154, shared avdd/flash-mode179 low",
+  "source_reference": "Fedora ab123e7d with timer/devres/probe-error corrections",
+  "pairing": "29 imported CRCs directly checked vs exact331 Image; normal loader BTF/signature required, no force flags",
+  "insmod_attempts": 1,
+  "initial_IRQ_window_seconds": 5,
+  "raw_evdev_capture_max_seconds": 600,
+  "evdev_grab": false,
+  "sleep_inhibit": "capture lifetime only",
+  "touch_palm_rejection": false,
+  "endpoint": "Same331 GNOME/touch active, pen module currentboot only; no persistent autoload; owner pen acceptance pending",
+  "stop_conditions": [
+    "identity or boot mismatch",
+    "probe/query/I2C/MPU failure",
+    "module ABI/BTF/signature error",
+    "IRQ storm",
+    "new severe kernel/CPU/GPU fault",
+    "battery health failure or pack>=42C",
+    "Wi-Fi SSH rescue loss"
+  ],
+  "failure_action": "Preserve first evidence and stop input experiments; no reload, force unload, rail cycle, flash or automatic reboot. Healthy removal/reboot recovery separately scoped if needed.",
+  "flash": false,
+  "reboot": false,
+  "DTS_config_charging_change": false,
+  "181_module_directory_change": false,
+  "firmware_update": false,
+  "PPS": false,
+  "pump_ON": false,
+  "suspend_test": false,
+  "tests": {
+    "affected_tests": 15,
+    "passed": 15,
+    "external_W1_build": true,
+    "full_kernel_build_executed": false,
+    "full_host_tests_executed": false
+  },
+  "Test348": "1200s grant remains unused; future desktop-inactive admission includes this module delta, final exact331/TWRP retained"
+}

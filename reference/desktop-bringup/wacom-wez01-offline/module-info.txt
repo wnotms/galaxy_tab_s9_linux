@@ -1,0 +1,13 @@
+filename:       /home/ms/Samsung/galaxy_tab_s9_linux/out/gnome-trixie-arm64/pen-module/wacom-wez01.ko
+description:    Wacom WEZ01 EMR digitizer driver
+license:        GPL
+name:           wacom_wez01
+depends:        
+alias:          of:N*T*Cwacom,w90xx
+alias:          of:N*T*Cwacom,w90xxC*
+alias:          i2c:wacom-wez01
+vermagic:       7.2.0-rc3-gts9wifi-dirty SMP preempt mod_unload modversions aarch64
+parm:           pen_y_max:int
+parm:           pen_y_min:int
+parm:           pen_x_max:int
+parm:           pen_x_min:int
