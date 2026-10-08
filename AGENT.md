@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test348 READONLY_NATURAL_DISCHARGE_LIVE.
+Owner“已拔线”; read-only hostPID31327/unifiedsession68905 first authenticated
+sample same331be1baaaa, USBoffline/Discharging/100%/30.5C/4.371V/-1.563A.
+Natural58% target,60s reads/max6h,no load/write/PPS/pumpON. No candidateinstall,
+one1200s grantunused. Re-poll same livehandle; do not restart for observation
+timeout. At target freshPCpreflight/install/admission/C1 stillrequired. FinalTWRP.
+Evidencecollector syntax/actualread passed; tests/build:false,reusequalification.
+See348active-natural-watch/preparation-status and watchhandle. FullportNOT_READY.
+
 2026-10-08 Test348 WIFI_RESCUE_RECOVERED_AWAITING_UNPLUG.
 Owner“已同网”; Windows10.175.236.63 and tablet10.175.236.175, authenticatedSSH
 matches331be1baaaa/config/notes/machine. SOC100/31.0C/PCUSBonline, ownerasked
