@@ -9,15 +9,16 @@
   "final_endpoint": "TWRP",
   "host_wifi": "10.30.54.214",
   "natural_target_soc": 58,
+  "owner_same_network_reply": "\u5df2\u540c\u7f51",
   "owner_scope_consumed": false,
   "pack_decic": 312,
   "physical_PPS_executed": false,
   "physical_pump_ON_executed": false,
   "preparation_soc_max": 60,
   "pump_OFF": true,
-  "verdict": "WAITING_SAME_WIFI_AND_NATURAL_DISCHARGE_NO_INSTALL",
+  "verdict": "WAITING_OWNER_UNPLUG_FOR_NATURAL_DISCHARGE",
   "watcher_running": false,
   "wifi": "10.175.236.175",
-  "wifi_authenticated": false,
-  "wifi_error": "banner timeout; separate host network"
+  "wifi_authenticated": true,
+  "wifi_error": null
 }

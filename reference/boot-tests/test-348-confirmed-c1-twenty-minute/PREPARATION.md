@@ -28,3 +28,12 @@ Current device is ordinary331 Debian for preparation, not the candidate. Final
 restoration endpoint remainsTWRP. No physical20min acceptance is claimed.
 Tests/build executed:false for this evidence-only step; reuse the recorded49
 host and qualified kernel results. Full charging port remainsNOT_READY.
+
+## Network recovery
+
+Owner replied “已同网”. Windows WLAN now10.175.236.63/24; a new authenticated
+Wi-Fi SSH read matched the same331 boot/machine/config/notes. Original banner
+timeout is preserved. Latest battery100%/31.0C and PC online; owner asked to
+unplug for natural discharge to58%, with no stress load. No watcher has started
+yet, and no candidate/PPS/pump attempt has occurred. See preparation-recheck
+and wifi-rescue-after-owner evidence folders.

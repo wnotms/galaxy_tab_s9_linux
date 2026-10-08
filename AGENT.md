@@ -98,6 +98,13 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test348 WIFI_RESCUE_RECOVERED_AWAITING_UNPLUG.
+Owner“已同网”; Windows10.175.236.63 and tablet10.175.236.175, authenticatedSSH
+matches331be1baaaa/config/notes/machine. SOC100/31.0C/PCUSBonline, ownerasked
+unplugfornatural58% headroom; no watcherstarted yet. Candidate stagedonly,
+no install/PPS/pumpON, one1200s grantunused. Final331restore/TWRPunchanged.
+Evidence-only tests/build:false. See348PREPARATION and preparation-status.
+
 2026-10-08 Test348 AUTHORIZED_STAGED_WAITING_WIFI_AND_DISCHARGE.
 FreshTWRP/exact331boot confirmed; one normal331 boot be1baaaa47fc41f582558f7092c01653
 with exactconfig/notes, ADB/deviceNCM/noCode43/zero failedunits/physicalpumpOFF.
