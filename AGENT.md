@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+
+2026-10-08 Test348_FRESH331_FULL_PREFLIGHT_READY.
+One registered ordinary331 reboot attributed28fcdaa6->2effbc03; no otherboot.
+GDM/palm/touch inactive;FTS/Wacom neither loaded norbound. ADB+trustedWiFi
+10.175.236.41/noCode43;51%30.5C Good/3.934V, physicalpumpOFF. Exactconfig,
+notes, allfivepartitions and181rollbackmodule hashes PASS; fullkerneljournal
+classified. Originalone1200s grant unused;candidate notinstalled/PPSfalse.
+Next pairedinstall/PCadmission/park, then freshboot-boundownerC1reply before
+singleactivation. Kernelrecompile deferred; exact331restore/finalTWRP remains.
+Tests/build executed:false evidence-only; frozen348 qualification reused.
+
 2026-10-08 Test348_DESKTOP_RETURN_FRESH331_BOOT_REGISTERED.
 Owner“查看电量，继续进行充电测试”+PC“已接”; originalone1200s authorization
 unused. Same33128fcdaa6/ADB+WiFi10.175.236.134/noCode43;PC51%30.3C Good.

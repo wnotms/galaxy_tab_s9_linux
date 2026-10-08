@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'from pathlib import Path;import json,subprocess\nr={\"loaded\":{n:Path(\"/sys/module\",n).is_dir() for n in [\"fts1ba90a\",\"wacom_wez01\"]},\"bound\":{n:Path(n).exists() for n in [\"/sys/bus/i2c/devices/6-0056/driver\",\"/sys/bus/i2c/devices/7-0049/driver\"]},\"services\":{n:subprocess.run([\"systemctl\",\"is-active\",n],capture_output=True,text=True,timeout=5).stdout.strip() for n in [\"gdm\",\"gts9-palm\",\"gts9-touch\"]}}\nassert not any(r[\"loaded\"].values()) and not any(r[\"bound\"].values()) and all(v==\"inactive\" for v in r[\"services\"].values())\nprint(json.dumps(r))'"
+  ],
+  "ended_utc": "2026-10-08T13:13:31.185776+00:00",
+  "started_utc": "2026-10-08T13:13:30.838253+00:00",
+  "status": 0
+}

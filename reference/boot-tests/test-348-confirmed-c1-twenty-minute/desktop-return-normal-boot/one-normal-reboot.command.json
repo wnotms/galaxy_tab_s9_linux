@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(cat /proc/sys/kernel/random/boot_id)\" = 28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af; test \"$(systemctl is-enabled gdm)\" = masked; test \"$(systemctl is-enabled gdm3)\" = masked; test \"$(systemctl is-enabled display-manager)\" = masked; systemctl reboot"
+  ],
+  "ended_utc": "2026-10-08T13:12:54.000169+00:00",
+  "started_utc": "2026-10-08T13:12:53.856622+00:00",
+  "status": 0
+}

@@ -1,0 +1,31 @@
+{
+  "PPS": false,
+  "after_boot_id": "2effbc034847403c89cd9b66c494601b",
+  "battery": {
+    "current_ua": 859000,
+    "input_limit_ua": 1800000,
+    "soc": 51,
+    "temp_decic": 293,
+    "voltage_uv": 3923000
+  },
+  "before_boot_id": "28fcdaa615f04188a2a04e3e6cbb96af",
+  "candidate_installed": false,
+  "desktop": {
+    "bound": {
+      "/sys/bus/i2c/devices/6-0056/driver": false,
+      "/sys/bus/i2c/devices/7-0049/driver": false
+    },
+    "loaded": {
+      "fts1ba90a": false,
+      "wacom_wez01": false
+    },
+    "services": {
+      "gdm": "inactive",
+      "gts9-palm": "inactive",
+      "gts9-touch": "inactive"
+    }
+  },
+  "normal_reboots": 1,
+  "pump_ON": false,
+  "verdict": "FRESH331_ATTRIBUTED_DESKTOP_INACTIVE"
+}
