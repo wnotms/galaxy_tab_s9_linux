@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+import types
 import unittest
 from unittest.mock import patch
 
@@ -101,6 +102,13 @@ class SourceTests(unittest.TestCase):
 
     def test_verified_source(self):
         self.assertEqual(self.verify()['fedora_commit'], 'pinned')
+
+    def test_unrelated_prepare_module_cannot_override_source_validation(self):
+        unrelated = types.ModuleType('prepare')
+        # GNOME has a same-named module without relative(). Combined discovery
+        # must not replace the sensor validator with that cached module.
+        with patch.dict(sys.modules, {'prepare': unrelated}):
+            self.assertEqual(self.verify()['fedora_commit'], 'pinned')
 
     def test_source_changed(self):
         (self.tree / 'libssc/a.c').write_text('changed\n')

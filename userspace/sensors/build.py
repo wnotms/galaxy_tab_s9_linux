@@ -2,12 +2,17 @@
 """Cross-compile verified SSC sources in a networkless disposable container."""
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
 import subprocess
 
 BASE = Path(__file__).resolve().parent
+_PREPARE_SPEC = importlib.util.spec_from_file_location(
+    "gts9_ssc_source_prepare", BASE / "prepare.py")
+_PREPARE = importlib.util.module_from_spec(_PREPARE_SPEC)
+_PREPARE_SPEC.loader.exec_module(_PREPARE)
 
 
 def digest(path):
@@ -15,7 +20,6 @@ def digest(path):
 
 
 def verify_sources(tree):
-    from prepare import relative
     manifest = json.loads((BASE / 'sources.json').read_text())
     report = json.loads((tree / 'PREPARED.json').read_text())
     if report['fedora_commit'] != manifest['fedora_commit']:
@@ -39,7 +43,7 @@ def verify_sources(tree):
         if files != set(row['patched_files']):
             raise ValueError('prepared file set mismatch')
         for name, sha in row['patched_files'].items():
-            if digest(root / relative(name)) != sha:
+            if digest(root / _PREPARE.relative(name)) != sha:
                 raise ValueError('prepared source hash mismatch: ' + name)
     return report
 

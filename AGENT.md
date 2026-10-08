@@ -99,6 +99,15 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 SSC_BUILD_IMPORT_ISOLATED_HOST_SOURCE_VALIDATION_PASS.
+CombineddiscoveryGNOMEpreparecache caused6SSCerrors. Exact siblingSSCmodule
+load/uniqueidentity fixes it; cachedwrongmodule regression added.125affected
+GNOME/SSCtestsPASS/0skip;4components/205preparedfiles/68stagefiles/8ELFs
+revalidated, no runtimebinary/kernelrecompile/deploy. Oldfull3032 NOTPASS
+remains, notwaived. Sensorcontrolledearlyboot/nativeidentity runtimepending;
+331Debianlastaccepted/noPPS/ADSPstart. Fullportactive; chargeafter sensors.
+
+
 2026-10-08 NATIVE_SOCINFO_KERNEL_COMPILED_HOST_ONLY_NOT_DEPLOYMENT_READY.
 Onlyresolveddelta vs331 QCOM_SOCINFO n->y; DTB identical348; DCC/OCI/SM5714
 unchanged. StandardImage/dtbs/181modules buildPASS/reusedproviderinvalidated,
