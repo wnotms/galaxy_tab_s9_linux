@@ -1,0 +1,25 @@
+{
+  "verdict": "OFFLINE_SOURCE_MAPPING_AUDITED_NO_LIVE_IDENTITY",
+  "vendor_table_exact": true,
+  "mainline_pin": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "sources": {
+    "/home/ms/Samsung/kernel_platform/msm-kernel/drivers/soc/qcom/socinfo.c": "9742c68ef50f3d411718c1fbfa4992c475d91492c5189e4684014ebf48db584d",
+    ".work/linux-mainline/drivers/soc/qcom/socinfo.c": "5343e390637dc3af4f65c3d81c2ee2014583730b40ed0697decb07d4a6590390",
+    ".work/linux-mainline/include/dt-bindings/arm/qcom,ids.h": "f823babc5856936421d340c57244ad154cdc161100482e50badec3f441112311",
+    "userspace/sensors/map-socinfo.py": "4b3dc7fe842dc419b6660e680ba9c9926359ff72f3555224afcdf3170a0c9af7"
+  },
+  "soc_id_constant": 519,
+  "device_snapshot_collected": false,
+  "mapping_deployed": false,
+  "tests": {
+    "executed": true,
+    "count": 12,
+    "skipped": 0
+  },
+  "kernel_build": {
+    "executed": false
+  },
+  "full_regression": {
+    "executed": false
+  }
+}

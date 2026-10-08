@@ -219,3 +219,14 @@ A marker alone does not establish firmware, ADSP health or sensor readiness.
 all five original unit templates plus these drop-ins passed. Its executable and
 dependency fixtures only validate syntax/ordering, not ARM64 execution, ADSP
 attach or hardware isolation. Results: `ssc-runtime-preparation/RUNTIME_RESULTS.md`.
+
+## Native SoC identity mapping
+
+`map-socinfo.py --snapshot SNAPSHOT.json --output NEW_DIRECTORY` translates
+captured mainline SoC-bus/debugfs values to the five files expected by Samsung
+`sns_reg_config`. It runs only on JSON and never reads device sysfs or installs
+its output. See `reference/desktop-bringup/ssc-socinfo/RESULTS.md` for the exact
+source mapping and provenance; tests use fixtures that must never be deployed.
+Do not substitute SoC silicon `revision` for raw board `platform_version`, or
+a numeric platform ID for Samsung's platform name. Real native identity must
+still be collected after the authorized QCOM_SOCINFO kernel rebuild.

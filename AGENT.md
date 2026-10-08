@@ -99,6 +99,16 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 SSC_SOCINFO_MAPPING_SOURCE_AUDITED_HOST_ONLY.
+map-socinfo.py convertscapturedJSON to5SamsungSSCvalues, no sysfs/deviceops.
+23platformIDs/names exactstocktable; subtypeQRD/ordinary/sourcefieldschecked,
+rawplatformversion !=siliconrevision;nativeSM8550id519/format0.6..0.23 gated.
+12affectedtestsPASS/0skip, sourcehashes+mapping inssc-socinfo. No actualnative
+snapshot orfakeboardvalues/deployment;QCOM_SOCINFOrebuild deferreduntil348
+restore. No kernel/config/DT/charginginput/routingchange. ADSPofflinepreparation;
+348solePID1853 observationcontinues, final331TWRP promiseunchanged.
+
+
 2026-10-08 SSC_CONTROLLED_RUNTIME_OVERRIDES_HOST_ONLY.
 prepare-runtime.py stages5dropins only:4ADSP/mapper/proxy unitsvolatilegate,
 Restart=no/one-startlimit;SDSPseparateabsentgate. HexagonRPC -R exactX710prefix,
