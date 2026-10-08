@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test354 GNOME_ACTIVE_FOR_MANUAL_KEYBOARD_TEST.
+One GDMstart/10.294s check PASS, same331 boot/config/notes, SSH responsive,
+zero new kernelfault/failedunits/renderpermission fallback,86%32.2C Good.
+Desktop LEFT ACTIVE for owner use; no60s shutdown. All3persistent masks restored
+without --now; future autostart blocked. Touch unloaded, no flash/reboot/charging
+change.348 remains paused/unused and requires GDM stopped before future admission.
+Evidence SHA/syntax reviewed; tests/build:false (unchanged source qualification).
+
 2026-10-08 Test354 REGISTERED_INTERACTIVE_GNOME_REOPEN.
 Owner requests desktop reopen, confirms previous keyboard/password login. One
 start/10s initial check then leave GDM active; no 60s autoclose. Restore all3
