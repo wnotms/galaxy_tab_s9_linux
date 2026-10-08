@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 AUTHORIZED_STAGED_WAITING_NATURAL_DISCHARGE.
+Enrollment978c19ad pushed; Windows347transferstage verified, device stillexact331
+lastboot a96de8c0/74%31.5C. No formalpreflight/flash/newboot/guardian/PPS/pump.
+Ownerunplug requested; naturallyreach<=70 beforefreshPCpreflight/install. Fresh
+C1reply thenimmediateguard/start onthatcandidateboot, no humanwaittimer. Same
+unusedone300s scope/currentcaps/331restore; noextraactivation. Reuse60host/79C/
+build/W1sparse; stagingresults-onlytests/build:false. FullportNOT_READY.
+
 2026-10-08 Test347 AUTHORIZED_UNUSED_ONE300S_SCOPE_AWAITING_SOC.
 Owner original“允许测试，平板为手动关机重启” approvedone actual300s charging
 observation;346 workflowtimeouthadzeroentry/PPS/pump and331restored. With owner
