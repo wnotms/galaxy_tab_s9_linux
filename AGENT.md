@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 EF_DX710_ESC_DRIVER_COMPILED_NOT_DEPLOYED.
+Ownerconfirmed interimGNOME Esc/FnEscswap thenrequestsdriverimplementation.
+Nativepogo now KEY_GRAVE<->KEY_ESC only atdelivery/bothedges;cleanupoperates
+oninputlogicalstate, noFW/I2C/power/PM changes.7affectedASanUBSanPASS/0skip,
+standardARM64Image/dtbs/181modulebuildPASS andtargetW1no compilerwarning.
+Reuse308provider/newoutkernel-x710-esc-driver;nativeconfig/DTBexact, onlyprior
+SoCINFOy delta versusinstalled331. DCCoff/OCI/chargingprotectedunchanged.
+No flash/reboot; device331GNOME stillinterimXKBoption active. Futuredriver
+deployment MUST removeonlygts9:swap_escape_grave toavoiddoubleswap anduse
+newnotespairedinputloadergate; do notrelaxgate. Restoreoptionon331rollback.
+Sensors/fullportincomplete/chargecapsunchanged. Evidence:desktop-bringup/
+keyboard-escape-driver. Nofullhistoricalregression/Actions.
+
+
 2026-10-08 DEFAULT_GNOME_LOGIN_AND_CTRL_ALT_T_ACCEPTED.
 Owner requests ordinaryboots defaultGNOME; on exact restored331 boot78ec1906
 removed only reviewed3GDMmasks/restored display-manager link, graphical.target

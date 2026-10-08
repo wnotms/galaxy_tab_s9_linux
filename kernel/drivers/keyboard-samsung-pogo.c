@@ -1442,6 +1442,25 @@ static int pogo_hello(struct samsung_pogo *p, u8 model)
 	return ret;
 }
 
+/*
+ * EF-DX710 supplies the Fn layer itself: the top-left key reports KEY_GRAVE
+ * normally and KEY_ESC with Fn. Prefer Escape without Fn, as requested for
+ * this port. Translate both edges identically, before the input core tracks
+ * pressed keys, so detach/suspend still release the reported logical keys.
+ * This changes host input policy only; no MCU command/firmware is involved.
+ */
+static unsigned int pogo_keycode(unsigned int key)
+{
+	switch (key) {
+	case KEY_GRAVE:
+		return KEY_ESC;
+	case KEY_ESC:
+		return KEY_GRAVE;
+	default:
+		return key;
+	}
+}
+
 static irqreturn_t pogo_irq(int irq, void *data)
 {
 	struct samsung_pogo *p = data;
@@ -1561,7 +1580,8 @@ static irqreturn_t pogo_irq(int irq, void *data)
 			dev_dbg(&p->client->dev, "key %#x %s (from the MCU packet)\n",
 				event & 0x7fff,
 				(event & 0x8000) ? "pressed" : "released");
-			input_report_key(p->input, event & 0x7fff, !!(event & 0x8000));
+			input_report_key(p->input, pogo_keycode(event & 0x7fff),
+					 !!(event & 0x8000));
 			input_sync(p->input);
 		}
 	} else if (header[2] == 4 || header[2] == 5) {
