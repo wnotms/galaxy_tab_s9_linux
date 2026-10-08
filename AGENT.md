@@ -99,6 +99,16 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 SSC_CONTROLLED_RUNTIME_OVERRIDES_HOST_ONLY.
+prepare-runtime.py stages5dropins only:4ADSP/mapper/proxy unitsvolatilegate,
+Restart=no/one-startlimit;SDSPseparateabsentgate. HexagonRPC -R exactX710prefix,
+ProtectSystemstrict/onlycopiedsensorstree writable;no realmntpersist access.
+32affectedtestsPASS/0skip;5mergedunits isolatedsystemd259verifyPASS. No device
+install/daemon/ADSP/firmware/kernel/config/DT/chargingartifact/routingchange.
+Notdeploymentready:SoCinfo/account/earlybootadmission stillrequired.348original
+PID1853 single1200s observationcontinues; compilerchangesremain deferred.
+
+
 2026-10-08 Test348_OWNER_CONFIRMED_SINGLE1200S_ACTIVATION_LIVE.
 Owner“已接c1” boundto870edc39; fixed9precheck passed before solelaunch.
 GuardianPID1853 /tmp/gts9-test348-monitor live; originalmonitor handleonly,

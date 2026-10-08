@@ -1,0 +1,16 @@
+{
+  "verdict": "OFFLINE_SSC_OVERRIDES_NOT_DEPLOYED",
+  "device_operations": false,
+  "services_started": false,
+  "remoteproc_started": false,
+  "gate_created": false,
+  "prefix": "/usr/share/qcom/sm8550/Samsung/gts9wifi",
+  "gate": "/run/gts9-ssc-test/ready",
+  "files": {
+    "etc/systemd/system/pd-mapper.service.d/90-gts9-controlled-test.conf": "283086ca6d704af998081508eac62e432a15bfc4dcdc078f0d8d28146a107489",
+    "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/90-gts9-controlled-test.conf": "8b115d720c092ada06c1d48d7a682e49640f4927ab20c302ba6a665a79b96e03",
+    "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/90-gts9-controlled-test.conf": "7b4bce1c65675e1eed211f84b758578c0611a6495db3a452dcdfe64adccca81d",
+    "etc/systemd/system/iio-sensor-proxy.service.d/90-gts9-controlled-test.conf": "283086ca6d704af998081508eac62e432a15bfc4dcdc078f0d8d28146a107489",
+    "etc/systemd/system/hexagonrpcd-sdsp.service.d/90-gts9-controlled-test.conf": "1f2780f34bacea3bfa97daf2e40221e6f625ff4d50c69dfc96525a7f6ba820dc"
+  }
+}

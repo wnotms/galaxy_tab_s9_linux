@@ -185,3 +185,37 @@ charging, speaker routing, suspend or input calibration during that experiment.
 
 Imported source locations and licenses are retained in the patch headers and
 upstream archives. Fedora repository: https://github.com/nacht20-de/gts9wifi-fedora-linux
+
+## Controlled runtime overrides (offline only)
+
+```sh
+python3 userspace/sensors/prepare-runtime.py --output out/ssc-runtime-overrides
+python3 -m unittest tests.test_ssc_runtime_overrides -v
+```
+
+This prepares five drop-ins, without installing files or invoking any service.
+The four ADSP/mapper/proxy units require a future runner-owned volatile
+`/run/gts9-ssc-test/ready` marker; this preparer never creates it. Existing
+FastRPC-device conditions remain intact. `Restart=no` and a one-start limit
+for the lifetime of the manager prevent automatic attach/restart loops.
+Do not reset failed units to bypass the registered one-attempt scope.
+The packaged SDSP unit requires a separate deliberately absent marker.
+
+Both ADSP daemons use the supported `-R` argument to serve only the prepared
+X710 prefix `/usr/share/qcom/sm8550/Samsung/gts9wifi`. Their system filesystem
+view is read-only except the **copied** `PREFIX/sensors` tree; the service
+account must own that copy before admission. This does not mount, expose or
+change permissions on stock Android persist. RootPD and sensorsPD stay distinct;
+this preparation does not imply both must be started in the same experiment.
+
+No units are enabled and no remoteproc boot helper, sleeps, target activation,
+firmware copy or rootfs install is added. These are necessary runtime overrides,
+not a deployment-ready bundle: finish SoC identity mapping, account/dependencies,
+installation inhibition, controlled early firmware boot and rollback first.
+Kernel `auto_boot` firmware loading is separate from these userspace conditions.
+A marker alone does not establish firmware, ADSP health or sensor readiness.
+
+32 affected host tests passed; an isolated `systemd-analyze verify` check of
+all five original unit templates plus these drop-ins passed. Its executable and
+dependency fixtures only validate syntax/ordering, not ARM64 execution, ADSP
+attach or hardware isolation. Results: `ssc-runtime-preparation/RUNTIME_RESULTS.md`.
