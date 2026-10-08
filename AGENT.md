@@ -99,6 +99,17 @@
 ## Current state (2026-10-03)
 
 
+2026-10-08 Test348_CANDIDATE_ADMITTED_PARKED_OWNER_C1_PENDING.
+Pairedinstall allfive/181 verified; ordinaryPCcandidateboot870edc39 uniquely
+attributed from2effbc03; exact348config/notes/181, ADB/deviceNCM/trustedWiFi
+10.175.236.215/noCode43/fulljournalclean.52%30.7C admission/31.2Cpark Good.
+Readinessworker drained;SM5440OFF andunbound/pre-entryproved; noPPS/attempt.
+Originalone1200s grant unused; next freshboot-boundownerC1confirmation then
+soleguardianlaunch (hardware1700mA/PPS+raw1800mA). Awaithandoff withoutlive
+activationtimer. Aftertest unconditionalexact331/allfive181restore/stayTWRP.
+Tests/build executed:false evidence-only frozenqualifiedartifact reuse.
+
+
 2026-10-08 Test348_FRESH331_FULL_PREFLIGHT_READY.
 One registered ordinary331 reboot attributed28fcdaa6->2effbc03; no otherboot.
 GDM/palm/touch inactive;FTS/Wacom neither loaded norbound. ADB+trustedWiFi
