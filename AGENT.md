@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test356（GNOME 电源键策略修正；Test348 仍未部署），窗口为 **Test347–Test356**；没有生成镜像的轮次仍占一轮。
+  编号为 Test357（新启动触摸验证；Test348 仍未部署），窗口为 **Test348–Test357**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,15 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-08 Test357 REGISTERED_NEWBOOT_FEDORA_TOUCH.
+Independent new1adc0f13 scope after355zero-load stop;356shortkey regressionPASS.
+Fresh same331/config/notes/81%32.1C Good/GDMactive/WiFi157/client7-0049 unbound.
+Same qualified module/37CRC pairing; one load outside181dir/normal loader,
+unsigned external taint recorded (SIG_FORCE=n), no forced flags/retry.
+5sIRQ/input then<=900s rawnon-grabbingcapture withsleepinhibit; ownertouchpending.
+No firmware/Spen/doubletap/suspend/charging/flash/reboot. Expired347images retired
+unless348 consumer;348grantunused/finalTWRP. Existing8tests/W1 reused/no fullbuild.
 
 2026-10-08 Test356 SHORT_PRESS_REGRESSION_PASS.
 Owner“熄屏再亮屏，桌面正常”; authenticated same1adc0f13/GDM/backlighthelper
