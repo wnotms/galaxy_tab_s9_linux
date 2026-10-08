@@ -1,0 +1,58 @@
+● hexagonrpcd-adsp-rootpd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - RootPD
+     Loaded: loaded (/usr/lib/systemd/system/hexagonrpcd-adsp-rootpd.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d
+             └─90-gts9-controlled-test.conf
+     Active: active (running) since Wed 2026-09-30 00:08:48 CST; 1min 0s ago
+ Invocation: f703da7f644e4a3fa198e5e6a27d4ee2
+   Main PID: 1965 (hexagonrpcd)
+      Tasks: 1 (limit: 14053)
+     Memory: 200K (peak: 1.7M)
+        CPU: 25ms
+     CGroup: /system.slice/hexagonrpcd-adsp-rootpd.service
+             └─1965 /usr/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -R /usr/share/qcom/sm8550/Samsung/gts9wifi
+
+Sep 30 00:08:48 gts9 systemd[1]: Started hexagonrpcd-adsp-rootpd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - RootPD.
+
+● hexagonrpcd-adsp-sensorspd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - sensorspd
+     Loaded: loaded (/usr/lib/systemd/system/hexagonrpcd-adsp-sensorspd.service; disabled; preset: enabled)
+    Drop-In: /etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d
+             └─90-gts9-controlled-test.conf
+     Active: active (running) since Wed 2026-09-30 00:08:48 CST; 1min 0s ago
+ Invocation: 356ca580032041c7bbd46a67150d5035
+   Main PID: 1966 (hexagonrpcd)
+      Tasks: 1 (limit: 14053)
+     Memory: 932K (peak: 2M)
+        CPU: 55ms
+     CGroup: /system.slice/hexagonrpcd-adsp-sensorspd.service
+             └─1966 /usr/bin/hexagonrpcd -f /dev/fastrpc-adsp -d adsp -s -R /usr/share/qcom/sm8550/Samsung/gts9wifi
+
+Sep 30 00:08:48 gts9 systemd[1]: Started hexagonrpcd-adsp-sensorspd.service - Server for FastRPC remote procedure calls from Qualcomm ADSP - sensorspd.
+Sep 30 00:08:48 gts9 hexagonrpcd[1966]: Could not open oemconfig.so: No such file or directory
+
+○ iio-sensor-proxy.service - IIO Sensor Proxy service
+     Loaded: loaded (/usr/lib/systemd/system/iio-sensor-proxy.service; static)
+    Drop-In: /etc/systemd/system/iio-sensor-proxy.service.d
+             └─90-gts9-controlled-test.conf
+     Active: inactive (dead)
+@@fastrpc
+crw-rw---- 1 root fastrpc 10, 259 Sep 30 00:06 /dev/fastrpc-adsp
+@@native-mapper
+@@registry
+/usr/share/qcom/sm8550/Samsung/gts9wifi/sensors:
+total 32
+drwxrwxrwx. 4 fastrpc fastrpc  4096 Sep 30 00:05 .
+drwxrwxrwx. 5 root    root     4096 Sep 30 00:08 ..
+drwxrwxrwx. 2 fastrpc fastrpc  4096 Sep 30 00:05 config
+drwxrwxrwx. 2 fastrpc fastrpc 12288 Sep 30 00:05 registry
+-rw-r--r--. 1 fastrpc fastrpc   329 Jan  1  2022 sns_reg.conf
+-rw-r--r--. 1 fastrpc fastrpc    10 Jan 19  1970 sns_reg_version
+
+/usr/share/qcom/sm8550/Samsung/gts9wifi/socinfo:
+total 28
+drwxrwxrwx  2 root root 4096 Sep 30 00:08 .
+drwxrwxrwx. 5 root root 4096 Sep 30 00:08 ..
+-rw-r--r--  1 root root    4 Sep 30 00:08 hw_platform
+-rw-r--r--  1 root root    8 Sep 30 00:08 platform_subtype
+-rw-r--r--  1 root root    2 Sep 30 00:08 platform_subtype_id
+-rw-r--r--  1 root root    6 Sep 30 00:08 platform_version
+-rw-r--r--  1 root root    4 Sep 30 00:08 soc_id

@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test365_STOP_SSC_QMI_MISSING_EXACT331_RESTORED.
+One candidate2986590a earlyADSP/nativeSOC admissionPASS, root/sensorPD once,
+60s discovery no SSC QMI service; missingoemconfig.so diagnostic lead only.
+Proxy neverstarted; runtimegate removed/servicesstopped. Frozen364 restore
+checkedwrongbackupslot; hashgateSTOP beforepartitionrollback. Correct365slot
+restored,181/allfive/config/notes verified, ownedassetsremoved, failedboot
+journalretrieved; ordinary331Debian78ec1906/authWiFi.210/ADB/deviceNCM
+healthy/noCPUfault. Qualifiedpackages/accountretainedinactive perregistration.
+NoPPS/pump/currentchange;95affectedqualificationreused/results testsfalse.
+Ownernowrequests defaultGNOME login + CtrlAltT terminal; implement separately
+on restored accepted331. Sensors/fullport remainincomplete; chargeaftersensors.
+
+
 2026-10-08 Test365_REGISTERED_SSC_DISCOVERY_WITH_BOUNDED_SSH.
 Reuse exact nativeSoCinfo+ADSP boot/vendor/181/DTB qualification, oneboot. New
 max3/30s authenticatedSSH startup admission retainsinitialfailure/recovery and

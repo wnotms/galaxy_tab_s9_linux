@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "printf %s '3c92a5e08d9e2711383ef694e1f4855996aa12ce20ad34cda7dec9d8722a9ab6  /tmp/gts9-test365/runtime.py\nacf92727de0de2e07e0a35db7a440123802cc27ed35d0cd8bd41b9ac89a7e2e4  /tmp/gts9-test365/capture.py\n4b3dc7fe842dc419b6660e680ba9c9926359ff72f3555224afcdf3170a0c9af7  /tmp/gts9-test365/map-socinfo.py\n04f6da964c9a430b6b57a88dec9a0c1abc75f1d935a869e9bc6f2fcb1cb40b8b  /tmp/gts9-test365/runtime-packages.json\n53432b9dbe319becaed89e0e53f487b0b11487f9be0b646848bb3e81c79bdc11  /tmp/gts9-test365/runtime-overrides.json\n6c34790825abb19889f351938430a1e3a4f263cc55812e00f1ba01399638b94b  /tmp/gts9-test365/libprotobuf-c1_1.5.1-1_arm64.deb\n729be835b575ac42afa5568335e4aaa9131cde095a72ed91315cf96ff0d2769a  /tmp/gts9-test365/libssc2_0.4.4+gts9.1_arm64.deb\nd9a004cf836b7fb85032154f0949b98b79e8d7904eff04481e2d6795b90109a4  /tmp/gts9-test365/gts9-hexagonrpc_0.4.0+gts9.1_arm64.deb\n7a57f42464ae94ac1dff7af938d6d415a129b3868414bc1147f4913a39072081  /tmp/gts9-test365/iio-sensor-proxy_3.9+gts9.1_arm64.deb\n' | sha256sum -c -"
+  ],
+  "ended_utc": "2026-10-08T15:11:49.738379+00:00",
+  "started_utc": "2026-10-08T15:11:49.658437+00:00",
+  "status": 0
+}
