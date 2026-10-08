@@ -1,0 +1,44 @@
+{
+  "test": "Test361",
+  "purpose": "Read normal GNOME heat/activity and apply reversible user reduced-motion preference",
+  "boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "baseline": "Exact331 plus360 accepted desktop/touch; no charging experiment",
+  "owner_request": "开启桌面时设备发热，后续能否优化",
+  "windows": [
+    {
+      "animations": true,
+      "seconds": 60
+    },
+    {
+      "animations": false,
+      "seconds": 60
+    }
+  ],
+  "interval_seconds": 10,
+  "workload": "normal ongoing use, not controlled idle or stress; record processes/CPU ticks/pack and available CPU-GPU TSENS/devfreq/runtimePM/backlight",
+  "change": "only ms org.gnome.desktop.interface enable-animations=false; save explicit dconf value and effective original. Greeter/global/power-key unchanged.",
+  "stop_conditions": [
+    "unknown boot/config/notes",
+    "charging profile opt-in",
+    "battery health not Good/temp invalid or>=42C",
+    "kernel/CPU/GPU/touch fault",
+    "GDM failure/new failedunit/SSH loss"
+  ],
+  "failure_action": "stop subsequent sampling/preference experiment; restore exact original user key if modified, save partial/terminal/raw. No timer/thermal/OPP/charging/hardware change/retry.",
+  "rollback": "dconf write saved original explicit value or reset only animation key if absent. No force unload/reboot/flash.",
+  "data_privacy": "process comm+tick counters only, no command lines, environment, key/input capture or open file list",
+  "collector_device_path": "/var/log/gts9-test361-heat",
+  "collector_restarts": 0,
+  "hardware_config_changes": false,
+  "kernel_build_executed": false,
+  "host_tests": {
+    "executed": true,
+    "tests": 8,
+    "returncode": 0,
+    "seconds": 0.07531898500019452,
+    "full_regression_executed": false,
+    "kernel_build_executed": false
+  },
+  "inference_limits": "two short observational windows may have different owner activity. Do not claim thermal improvement or CPU7 stuck-high solely from cached frequency. Temps missing are unknown, never zero-filled.",
+  "Test348": "grantunused/candidate frozen; no PPS/pump action, future fresh desktop-inactive admission/finalTWRP unchanged"
+}
