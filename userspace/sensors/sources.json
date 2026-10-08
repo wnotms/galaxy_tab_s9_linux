@@ -1,0 +1,68 @@
+{
+  "fedora_repository": "https://github.com/nacht20-de/gts9wifi-fedora-linux",
+  "fedora_commit": "ab123e7d1dbc0cbcd35661f9761197e977b15aa9",
+  "sources": [
+    {
+      "name": "libssc",
+      "version": "0.4.4",
+      "filename": "libssc-v0.4.4.tar.gz",
+      "archive_root": "libssc",
+      "url": "https://codeberg.org/DylanVanAssche/libssc/archive/v0.4.4.tar.gz",
+      "bytes": 155242,
+      "sha256": "716d6bd6b34d2d753060c6b54c9a87e34fae75b724c763bf9ef487efa3621587",
+      "patches": []
+    },
+    {
+      "name": "pd-mapper",
+      "version": "1.1",
+      "filename": "pd-mapper-v1.1.tar.gz",
+      "archive_root": "pd-mapper-1.1",
+      "url": "https://codeload.github.com/andersson/pd-mapper/tar.gz/refs/tags/v1.1",
+      "bytes": 11340,
+      "sha256": "7654a7fb8b70b0c7670f98ad9313649abc48eabcef84dad086ed01408fd538a2",
+      "patches": []
+    },
+    {
+      "name": "hexagonrpc",
+      "version": "0.4.0",
+      "filename": "hexagonrpc-v0.4.0.tar.gz",
+      "archive_root": "hexagonrpc-0.4.0",
+      "url": "https://codeload.github.com/linux-msm/hexagonrpc/tar.gz/refs/tags/v0.4.0",
+      "bytes": 41978,
+      "sha256": "fe742549a2672902d59a90dafd741a9a0acbeca059e07ff5130e2b525a66574f",
+      "patches": [
+        {
+          "path": "patches/hexagonrpc/hexagonrpc-large-inbufs.patch",
+          "sha256": "026065aa341b5aa77b7519786cdc0ed79571582d154ebdfaccda4d608a4eb708"
+        },
+        {
+          "path": "patches/hexagonrpc/support-samsung-sensor-registry-writes.patch",
+          "sha256": "51f57f1fbd18895069506e38d4d6c2b5a038e39c56eca87c7551bbbfeeaa1ca1"
+        },
+        {
+          "path": "patches/hexagonrpc/systemd-services.patch",
+          "sha256": "1d8a444facce796676c8dad57292d37ad75c1b8289e34ca2325434f5aeafdbf8"
+        }
+      ]
+    },
+    {
+      "name": "iio-sensor-proxy",
+      "version": "3.9",
+      "filename": "iio-sensor-proxy-3.9.tar.gz",
+      "archive_root": "iio-sensor-proxy-3.9",
+      "url": "https://gitlab.freedesktop.org/hadess/iio-sensor-proxy/-/archive/3.9/iio-sensor-proxy-3.9.tar.gz",
+      "bytes": 78940,
+      "sha256": "af5edd307dcfa52dc3a242d13b7cc756e90a71640caf332efbad960e21649ae4",
+      "patches": [
+        {
+          "path": "patches/iio-sensor-proxy/notify-slow-sensor-discovery.patch",
+          "sha256": "e7e75f47d4c4b89112b482c7acc910078a6a45c33bf886d329183e8ed7a0e025"
+        },
+        {
+          "path": "patches/iio-sensor-proxy/start-polling-claimed-while-starting.patch",
+          "sha256": "9b1661eeb08f387f5691023c708aa29293e0c94dedd1d00c1111d8eeb3efac21"
+        }
+      ]
+    }
+  ]
+}

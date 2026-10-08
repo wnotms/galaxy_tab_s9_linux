@@ -1,0 +1,34 @@
+{
+  "boot_id": "28fcdaa6-15f0-4188-a2a0-4e3e6cbb96af",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "remoteproc": [
+    {
+      "name": "adsp",
+      "state": "offline",
+      "firmware": "qcom/sm8550/adsp.mdt"
+    }
+  ],
+  "iio": [
+    {
+      "device": "iio:device0",
+      "name": "spmi-adc5-gen3"
+    }
+  ],
+  "fastrpc_adsp": false,
+  "firmware_directory": false,
+  "dpkg": {
+    "args": [
+      "dpkg-query",
+      "-W",
+      "-f=${Package} ${db:Status-Abbrev} ${Version}\n",
+      "iio-sensor-proxy",
+      "hexagonrpcd",
+      "libssc0",
+      "pd-mapper"
+    ],
+    "returncode": 1,
+    "stdout": "iio-sensor-proxy un  \n",
+    "stderr": "dpkg-query: no packages found matching hexagonrpcd\ndpkg-query: no packages found matching libssc0\ndpkg-query: no packages found matching pd-mapper\n"
+  },
+  "failed_units": ""
+}

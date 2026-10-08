@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 SSC_OFFLINE_SOURCES_PREPARED_NOT_BUILT.
+Read-only28fcdaa6/331:ADSPoffline/missingfirmware/no fastrpc-adsp/onlyPMIC-IIO;
+libssc/hexagonrpcd/pd-mapper/iio-sensor-proxy not installed. Fedora remoteHEAD
+ab123e7d unchanged; reuse4versionpinned upstreamarchives+5byteidenticalpatches.
+userspace/sensors/prepare.py verifies SHA/allinputs/paths/zero-fuzz patching;
+10affectedhosttestsPASS/real4sourceprepPASS, manifests inreference/desktop-bringup/
+ssc-offline. NoARM64build/install yet; next packaging+Samsung signedADSP firmware/
+sensorspd/copiedregistry. Fedora lateADSPstart knownhang/reset: no currentdesktop
+echo start/helperactivation; separately register controlledboot with331rescue.
+No sensorrotationpass/no kernel/DT/config/routing/charging/USB/device mutation.
+Test363 penposition/palmaccepted; thirdpartypen/no tippress, waitownerreadiness
+forpressure/button capture.348grantunused/final331TWRP retained/fullportactive.
+
 2026-10-08 Test363 PAIR_BOUND_OWNER_POSITION_PALM_PASS_TIP_PRESSURE_UNOBSERVED.
 Owner manual reboot ->28fcdaa6/SSH10.175.236.134, exact331 config51ba6a9c/
 notes03c9c46e. Normal Wacom then pairedFTS service load:6-0056/event4 and
