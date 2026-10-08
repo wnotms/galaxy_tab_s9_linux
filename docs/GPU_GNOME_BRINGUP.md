@@ -17,17 +17,23 @@ power-button-action=nothing; owner confirms screen off/on and usable desktop,
 authenticated SSH confirms sameboot and two short-key events with no poweroff.
 The policy source is userspace/gnome/99-gts9-power-key.gschema.override.
 
-Current exact331 boot is1adc0f13-a210-4856-bb15-c6e9df17867a, Wi-Fi10.175.236.157.
+Test357's accepted331 boot was1adc0f13-a210-4856-bb15-c6e9df17867a, Wi-Fi10.175.236.157.
 Test357 loaded the byte-identical Fedora X710 touch module once from var/tmp
 outside the accepted181-module directory. Existing7-0049 DT client is bound and
 input event4 enumerated; five-second IRQ delta126, no new kernel fault.
 Test357 owner confirms correct position/direction and desktop use; raw191.244s capture confirms two simultaneous contacts and final all-slots released. Capture is terminal, not live.
-No persistent touch autoload, suspend/double-tap wake or S Pen acceptance yet.
+Test359 now installs an identity-gated optional touch loader and GDM-Wants unit,
+outside181dir; current-boot start was already-loaded/zero-insmod. Original358
+zero-write stop for dpkg backup start-limit remains recorded; one scoped backup
+acknowledgement/verification in359 succeeded without timer/clock policy changes.
+No suspend/double-tap wake or S Pen acceptance yet.
 The normal loader accepted all ABI/BTF checks; unsigned external-module taint
 is explicitly recorded (MODULE_SIG_FORCE=n), not a forced-load bypass.
 
-GDM remains active for owner use, while persistent masks prevent automatic
-startup on a later boot. Kernel/config/DT/charging code and original181 modules
+After359 the owner manually rebooted to331 boot25ff0ad0-cf2f-4cc6-971d-2b38365da2db.
+GDM and touch are currently inactive in text mode, persistent masks preserved;
+the installed loader reports ready in read-only mode. New-boot GDM-triggered
+touch loading still requires separate acceptance. Kernel/config/DT/charging code and original181 modules
 remain unchanged. Test348's authorized1200s attempt is unused. Its original
 natural-discharge watcher is terminal, not running. Before future charging work,
 stop desktop and account for GPU/userspace/power-policy/touch changes in fresh
@@ -37,10 +43,10 @@ No charging test runs as part of this desktop work.
 | Component | Evidence | Remaining |
 | --- | --- | --- |
 | GPU | Test353 ordinary-user freedreno FD740 / Turnip Adreno740 | Workload/performance and long-duration checks |
-| Display | Existing2560×1600 DPU/DSI, GNOME Wayland visible | Touch UI scaling/rotation acceptance |
+| Display | Existing2560×1600 DPU/DSI, GNOME Wayland visible; owner touch orientation correct | UI scaling/dynamic rotation acceptance |
 | Firmware/Mesa/GNOME | Test352 exact installation; Test353/354 runtime and owner confirmation | Optional userspace warning follow-ups |
 | Power key | Test356 nothing policy + owner two short presses + sameboot journal | Suspend/long-hold remain separate |
-| Touch | Test357 normal module load, existing7-0049/input event4 | Ten-contact, persistent deployment and suspend/rotation checks |
+| Touch | Test357 ordinary/two-contact acceptance; Test359 optional persistent component installed | New-boot GDM-triggered load, ten-contact and suspend/rotation checks |
 | S Pen | Not imported/loaded | Separate port |
 
 Initial read-only inventory remains at

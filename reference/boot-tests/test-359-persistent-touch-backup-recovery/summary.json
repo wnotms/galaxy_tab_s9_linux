@@ -1,0 +1,57 @@
+{
+  "verdict": "PERSISTENT_COMPONENT_INSTALLED_CURRENT_BOOT_NOOP_PASS",
+  "installation_boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+  "installation_seconds": 2.8749918937683105,
+  "insmod_attempts": 0,
+  "service_verdict": {
+    "boot_id": "1adc0f13-a210-4856-bb15-c6e9df17867a",
+    "client": "7-0049",
+    "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+    "insmod_attempts": 0,
+    "module_sha256": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45",
+    "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+    "reason": "no insmod or hardware write",
+    "status": "already-loaded"
+  },
+  "installed_sha256": {
+    "/usr/local/libexec/gts9-touch": "95968c95709c7939316e730adf74741f0e3dd4ce2598d991ca77ed48ee060dfb",
+    "/etc/systemd/system/gts9-touch.service": "f44bd9b745f5aa137d4a11693076d78ccd47a2bcbe27eab5d7b39479a3130a19",
+    "/usr/local/lib/gts9-desktop/fts1ba90a.ko": "ac2fbdc6489b847771a65a1971d28f0b5d601c796c50d68c92f85a70feaf5e45"
+  },
+  "Wants_only_GDM": true,
+  "GDM_masks_unchanged": true,
+  "backup_recovery": "Result=success\nExecMainStatus=0\n",
+  "kernel_before_records": 1143,
+  "kernel_after_records": 1143,
+  "kernel_new_records": 0,
+  "new_kernel_faults": [],
+  "battery_at_install_end": {
+    "capacity": "75",
+    "temp": "323",
+    "health": "Good",
+    "status": "Discharging",
+    "current_now": "-3629000"
+  },
+  "new_failed_units": [],
+  "host_tests": {
+    "executed": false,
+    "reason": "unchanged loader/module/unit reuses35817tests + original8C/W1/37CRC qualification; results-only checks SHA/JSON/boot attribution/source protection"
+  },
+  "kernel_build_executed": false,
+  "protected_changes": false,
+  "flash": false,
+  "reboot_sent": false,
+  "Test348_attempt_consumed": false,
+  "post_scope_boot_change": {
+    "owner_manual_confirmed": true,
+    "current_boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+    "current_kernel_faults": [],
+    "prior_final_kernel_records": 1154,
+    "prior_final_kernel_faults": [],
+    "prior_shutdown": "Orderly poweroff/SIGTERM/journal stopped; owner manual shutdown/restart confirmed",
+    "current_GDM": "inactive, persistent masks preserved",
+    "current_touch": "unloaded; read-only loader ready. GNOME-only service enabled; text boot does not request it.",
+    "real_newboot_GDM_touch_load_tested": false
+  },
+  "evidence_parser_notes": "Initial prior-boot UUID query with hyphens failed; raw retained, corrected compact UUID reads succeeded. Word boundary Oops avoids classifying ordinary ramoops boot registration as fault. No physical retry."
+}

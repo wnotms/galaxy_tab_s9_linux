@@ -7,6 +7,14 @@ The owner selected GNOME for tablet touch use. This directory prepares Debian
 Current inventory, pinned sources and qualification:
 [GPU_GNOME_BRINGUP.md](../../docs/GPU_GNOME_BRINGUP.md).
 
+Current deployment is newer than the original preparation below: Test352–357
+accepted GPU/GNOME/power-key/ordinary touch. Test359 installed the optional
+[touch component](touch/README.md), whose load gate permits only exact331 and
+whose enable link belongs to GDM, leaving text/charging boots alone. Existing
+GDM masks remain; new-boot graphical load is not yet accepted. The package
+preparers/installer do not automatically deploy this later integration or the
+power-key schema override.
+
 ```sh
 python3 userspace/gnome/prepare.py \
   reference/desktop-bringup/initial-readonly-1791439861/gnome-packages.json \

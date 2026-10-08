@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test359 INSTALLED_CURRENTBOOT_NOOP_PASS; LATER_OWNER_MANUAL_REBOOT.
+Onebackup recovery Resultsuccess/status0, no clock/timer/RTC/NTP policy change.
+3ownedtouchfiles installed outside181dir; GDM-Wants-only unit enabled/start
+alreadyloaded/0insmod,2.875s device/8.163s host; same331/GDM/SSH normal,75%32.3C.
+1143kernel records before/after/0new, nofailedunit; all3GDM masks retained.
+After scope ownerpaused/manualrebootconfirmed ->25ff0ad0, same331/73%31.8C.
+Nowtextboot/GDM+touch inactive/loaderready, no newload; future GDM-triggered
+newboot touch acceptance NOTyetproven. CorrectedcompactUUID priorjournal and
+currentjournal/pstore preserved/no severe fault; oldbootorderlypoweroff.
+17tests reused/results-onlytests/build:false; no kernel/DT/charging/USB/flash/
+reboot command.348grantunused; futurefreshdesktopinactive admission/finalTWRP.
+
 2026-10-08 Test358 STOP_BEFORE_INSTALL_DPKG_START_LIMIT; Test359 REGISTERED.
 358zeroownedwrites/insmod, same331/GDM/touch accepted remainsnormal; dpkgbackup
 five successfulruns then start-limit-hit/ExecMainStatus0, disk96GiBfree.
