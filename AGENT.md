@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test347 DEPLOYED_OFF_UNBOUND_AWAITING_FRESH_OWNER_C1.
+Fresh PC preflight on Test331 a96de8c0 passed at 68% / 32.0°C. One paired install
+verified all five partitions and 181 module files. Normal candidate boot
+19fbf94136a64f7cb73e9e263da8549c is uniquely attributed; exact identities/journal/
+ADB/device NCM/Wi-Fi SSH passed, address 10.175.236.175, 69% / 32.4°C.
+Initial worker drained, physical pump OFF/unbound and no-entry proof retained.
+No guardian/activation/PPS/pump run yet. Fresh boot-bound owner C1 reply precedes
+sole guardian start; no manual-handoff timer. Same one300s / hardware1700 /
+PPS+raw1800 scope, unconditional exact331/allfive/original181 restoration required.
+Evidence-only tests/build executed:false; reuse qualification. Full port NOT_READY.
+See Test347 DEPLOYED_STATUS, PREPARED_STATUS and raw admission/installation/park.
+
 2026-10-08 Test347 NATURAL_HEADROOM_READY_AWAITING_PC.
 Read-only process 6681 / session 8056 ended normally: 29 samples over 915.390s,
 SOC 70→68%, final 31.3°C / 4.009V / −1.332A. Every sample was USB offline,
