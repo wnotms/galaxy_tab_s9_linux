@@ -29,7 +29,10 @@ Rollback: disable `gts9-touch.service` and remove only these three owned files
 and the empty owned directory. Do not unload the live driver as a packaging
 shortcut; its removal and suspend remain unqualified. Future GDM-triggered
 loading after a real boot is a separate acceptance step; enabling the unit in
-an already-loaded boot does not prove that path works on a reboot.
+an already-loaded boot does not prove that path works on a reboot. Test360
+subsequently tested it in an owner-confirmed new boot: one GDM-Wants normal
+load, bound input and owner login/touch desktop acceptance passed. GDM itself
+still stays masked for automatic startup.
 
 Test348 remains unused. Stop desktop for its future freshly registered
 admission; its kernel identity is not allowed by this loader. No charging,

@@ -11,7 +11,7 @@ Current deployment is newer than the original preparation below: Test352–357
 accepted GPU/GNOME/power-key/ordinary touch. Test359 installed the optional
 [touch component](touch/README.md), whose load gate permits only exact331 and
 whose enable link belongs to GDM, leaving text/charging boots alone. Existing
-GDM masks remain; new-boot graphical load is not yet accepted. The package
+GDM masks remain; Test360 accepted new-boot GDM-triggered loading and owner login/touch. The package
 preparers/installer do not automatically deploy this later integration or the
 power-key schema override.
 
@@ -107,3 +107,14 @@ and archive identities are recorded in
 directory's `build.py`. No Windows mirror or device transfer has been made.
 Archive validation checks its actual full file set and content. It does not
 establish GPU, GNOME or touch hardware acceptance.
+
+## Desktop heat observation
+
+Test361 sets only the ordinary user ms interface enable-animations=false after
+saving its previously absent explicit dconf key. This is not a global schema
+override or an installer default. Use the active user's runtime bus for live
+notification. To restore this original state, reset only
+/org/gnome/desktop/interface/enable-animations on that bus. thermal.py collects
+read-only activity/temperature/runtimePM; it changes no OPP/governor/charging
+policy and is not a permanent background service. Raw normal-use windows may
+have different interaction/apps, so they do not establish causal cooling.

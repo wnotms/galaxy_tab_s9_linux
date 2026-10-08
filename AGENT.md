@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-08 Test361 REDUCED_MOTION_APPLIED_TWO_NORMAL_USE_WINDOWS_COMPLETE.
+Same33125ff0ad0,2x60s/14snapshots; onlymsenable-animations=false viaactivebus,
+originalexplicitabsent saved (resetrollback). GUI/touchleftactive/no newfailed
+unit/severekernel fault; collector4348terminal/no restart. Pack26.0->26.8C,
+GPU67.6/89.9% runtimesuspended; CPU7 deeperidle/WFI advances, cachedfreq !=busy.
+CPUcapacity13.51/4.46%,QQ/activitychanged -> no causal cooling claim. Rawbrightness
+2047/2047 bothwindows vs earlier628; owner50/70/retainedbrightness choicepending.
+8affectedtestsPASS/no full/build/CI; no OPP/governor/thermal/charging/USB/kernel/
+DT/181dir/flash/reboot.348grantunused/freshinactive admission/finalTWRP retained.
+
 2026-10-08 Test361 REGISTERED_GNOME_REDUCED_MOTION_HEAT_OBSERVATION.
 Same33125ff0ad0/currentowner360UIaccepted,72%25.5CGoodDischarging/animationson.
 60s normal-use snapshots thenonlymsenable-animations=false (save exact dconf),

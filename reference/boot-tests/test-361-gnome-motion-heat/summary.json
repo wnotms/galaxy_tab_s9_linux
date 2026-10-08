@@ -1,0 +1,252 @@
+{
+  "verdict": "GNOME_REDUCED_MOTION_APPLIED_TWO_BOUNDED_NORMAL_USE_WINDOWS",
+  "boot_id": "25ff0ad0-cf2f-4cc6-971d-2b38365da2db",
+  "setting": {
+    "user": "ms",
+    "key": "org.gnome.desktop.interface enable-animations",
+    "original_explicit_value": null,
+    "original_effective": "true",
+    "current_effective": "false",
+    "global_greeter_power_key_changed": false,
+    "rollback": "dconf reset /org/gnome/desktop/interface/enable-animations using active ms session bus (original explicit value absent)"
+  },
+  "phases": [
+    {
+      "name": "animations-on",
+      "seconds": 60.000182842000186,
+      "samples": 7,
+      "CPU_capacity_activity_percent": 13.509256418124169,
+      "top_persistent_processes": [
+        {
+          "pid": "2405",
+          "comm": "gnome-shell",
+          "one_cpu_percent": 4.916651683826198
+        },
+        {
+          "pid": "93",
+          "comm": "kworker/u32:6-ext4-rsv-conversion",
+          "one_cpu_percent": 0.7999975621140933
+        },
+        {
+          "pid": "188",
+          "comm": "kworker/0:1H-mmc_complete",
+          "one_cpu_percent": 0.6666646350950778
+        },
+        {
+          "pid": "2929",
+          "comm": "kworker/u32:1-ring2",
+          "one_cpu_percent": 0.5499983239534392
+        },
+        {
+          "pid": "131",
+          "comm": "sugov:0",
+          "one_cpu_percent": 0.5333317080760622
+        },
+        {
+          "pid": "4348",
+          "comm": "python3",
+          "one_cpu_percent": 0.5333317080760622
+        },
+        {
+          "pid": "133",
+          "comm": "sugov:3",
+          "one_cpu_percent": 0.4166653969344236
+        },
+        {
+          "pid": "340",
+          "comm": "jbd2/mmcblk1p1-8",
+          "one_cpu_percent": 0.3833321651796697
+        },
+        {
+          "pid": "2825",
+          "comm": "kworker/u32:0-events_unbound",
+          "one_cpu_percent": 0.3833321651796697
+        },
+        {
+          "pid": "136",
+          "comm": "sugov:7",
+          "one_cpu_percent": 0.2666658540380311
+        },
+        {
+          "pid": "145",
+          "comm": "gpu-worker",
+          "one_cpu_percent": 0.2666658540380311
+        },
+        {
+          "pid": "2325",
+          "comm": "dbus-daemon",
+          "one_cpu_percent": 0.1499995428963925
+        },
+        {
+          "pid": "398",
+          "comm": "systemd-journal",
+          "one_cpu_percent": 0.09999969526426167
+        },
+        {
+          "pid": "1152",
+          "comm": "dockerd",
+          "one_cpu_percent": 0.09999969526426167
+        },
+        {
+          "pid": "186",
+          "comm": "kworker/3:1H-kblockd",
+          "one_cpu_percent": 0.08333307938688472
+        }
+      ],
+      "pack_temperature_C_range": [
+        26.0,
+        26.4
+      ],
+      "available_CPU_GPU_TSENS_C_range": [
+        33.6,
+        47.2
+      ],
+      "GPU_runtime_counter_deltas_ms": {
+        "runtime_active_time": 19421,
+        "runtime_suspended_time": 40598
+      },
+      "GPU_suspended_counter_fraction": 0.6764191339409187,
+      "CPU7_idle_counter_deltas_us": {
+        "cpu-sleep-2-0": 24977303,
+        "WFI": 22626804
+      },
+      "raw_brightness": {
+        "ae94000.dsi.0": {
+          "brightness": "2047",
+          "max_brightness": "2047"
+        }
+      },
+      "raw_brightness_unchanged": true,
+      "battery_discharge_power_telemetry_estimate_W_mean": 5.983118857142857,
+      "power_estimate_limit": "Sampled VBAT*IBAT, not a meter/charger input measurement or exact component power",
+      "top_process_limit": "only PIDs present at both endpoints with unchanged starttime; new/exited PIDs not apportioned"
+    },
+    {
+      "name": "animations-off",
+      "seconds": 60.00061398699995,
+      "samples": 7,
+      "CPU_capacity_activity_percent": 4.4632976761342675,
+      "top_persistent_processes": [
+        {
+          "pid": "4394",
+          "comm": "qq",
+          "one_cpu_percent": 10.166562631045172
+        },
+        {
+          "pid": "4667",
+          "comm": "qq",
+          "one_cpu_percent": 5.033281827173184
+        },
+        {
+          "pid": "4484",
+          "comm": "qq",
+          "one_cpu_percent": 2.283309967956047
+        },
+        {
+          "pid": "2405",
+          "comm": "gnome-shell",
+          "one_cpu_percent": 1.949980045626697
+        },
+        {
+          "pid": "4711",
+          "comm": "qq",
+          "one_cpu_percent": 1.1999877203856597
+        },
+        {
+          "pid": "4417",
+          "comm": "Xwayland",
+          "one_cpu_percent": 0.6999928368916348
+        },
+        {
+          "pid": "4772",
+          "comm": "kworker/u32:2+flush-179:0",
+          "one_cpu_percent": 0.5166613796104924
+        },
+        {
+          "pid": "2929",
+          "comm": "kworker/u32:1-ext4-rsv-conversion",
+          "one_cpu_percent": 0.4499953951446224
+        },
+        {
+          "pid": "4348",
+          "comm": "python3",
+          "one_cpu_percent": 0.4499953951446224
+        },
+        {
+          "pid": "93",
+          "comm": "kworker/u32:6-ext4-rsv-conversion",
+          "one_cpu_percent": 0.4166624029116874
+        },
+        {
+          "pid": "4758",
+          "comm": "qq",
+          "one_cpu_percent": 0.2666639378634799
+        },
+        {
+          "pid": "136",
+          "comm": "sugov:7",
+          "one_cpu_percent": 0.24999744174701244
+        },
+        {
+          "pid": "131",
+          "comm": "sugov:0",
+          "one_cpu_percent": 0.19999795339760995
+        },
+        {
+          "pid": "133",
+          "comm": "sugov:3",
+          "one_cpu_percent": 0.14999846504820746
+        },
+        {
+          "pid": "4489",
+          "comm": "qq",
+          "one_cpu_percent": 0.13333196893173996
+        }
+      ],
+      "pack_temperature_C_range": [
+        26.4,
+        26.8
+      ],
+      "available_CPU_GPU_TSENS_C_range": [
+        32.8,
+        46.8
+      ],
+      "GPU_runtime_counter_deltas_ms": {
+        "runtime_active_time": 6053,
+        "runtime_suspended_time": 53990
+      },
+      "GPU_suspended_counter_fraction": 0.8991889146111953,
+      "CPU7_idle_counter_deltas_us": {
+        "cpu-sleep-2-0": 32171849,
+        "WFI": 26155904
+      },
+      "raw_brightness": {
+        "ae94000.dsi.0": {
+          "brightness": "2047",
+          "max_brightness": "2047"
+        }
+      },
+      "raw_brightness_unchanged": true,
+      "battery_discharge_power_telemetry_estimate_W_mean": 7.2870168571428575,
+      "power_estimate_limit": "Sampled VBAT*IBAT, not a meter/charger input measurement or exact component power",
+      "top_process_limit": "only PIDs present at both endpoints with unchanged starttime; new/exited PIDs not apportioned"
+    }
+  ],
+  "runtime_seconds": 120.47979083899986,
+  "collector_pid": 4348,
+  "collector_terminal": true,
+  "new_failed_units": [],
+  "new_kernel_faults": [],
+  "flash_reboot_kernel_config_DT_181dir_USB_ADB_charging_change": false,
+  "OPP_governor_thermal_limit_change": false,
+  "Test348_attempt_consumed": false,
+  "tests": {
+    "executed": true,
+    "tests": 8,
+    "passed": 8,
+    "full_regression_executed": false,
+    "kernel_build_executed": false
+  },
+  "inference": "Normal use is uncontrolled. QQ processes appeared, screen brightness at max differed from earlier preflight. No causal cooling claim from phase averages; no always-high CPU/GPU claim based on cached frequencies.",
+  "final_boot_kernel_faults": []
+}

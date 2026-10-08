@@ -185,3 +185,10 @@ load. Surface/SoC temperature and long-duration heat cause remain unmeasured.
 Prioritize an independent idle/ordinary-use profile, background rendering and
 reversible GNOME/display preferences. This is not permission to change charging
 current, OPP/clock/thermal protections or to reuse348 as a heat experiment.
+
+Test361 completed two60s ordinary-use windows and set only ms interface
+enable-animations=false through the active user bus. Original explicit key
+absent: reset it to roll back. GPU runtime suspend counters and CPU7 idle time
+advance normally. Screen was2047/2047, QQ/activity differed; pack26.0->26.8°C.
+No causal cooling claim; subsequent brightness preference is pending. Full raw
+and exact counter semantics in test361. No hardware/charging policy change.
