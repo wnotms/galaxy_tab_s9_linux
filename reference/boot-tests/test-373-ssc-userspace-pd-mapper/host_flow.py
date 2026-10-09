@@ -215,14 +215,14 @@ def native_mapper(rec, boot):
 def preflight_scan(rec, d):
     raw,_=rec.adb('kernel-json','journalctl -k -b -o json --no-pager',timeout=15)
     guard=load('ssc372_usb_guard',R.parent/'test-371-usb-lifecycle-gmu/host_flow.py')
-    plan,_=guard.load()
-    registration=PLAN['baseline_observation']
-    prior=ROOT/registration['path']
-    if sha(prior)!=registration['sha256']:
-        raise ValueError('enrolled baseline evidence changed')
-    rows=guard.journal(raw,d['boot_id']);original=guard.journal(prior.read_text(),d['boot_id'])
-    guard.health(rows,original,plan['existing_errors'])
-    write(rec.folder/'journal-classification.json',dict(verdict='SAME_BOOT_ACCEPTED_BASELINE_DELTA_PASS',baseline=registration['path'],boot_id=d['boot_id'],prior_nonfatal_keyboard_cursor=registration['prior_nonfatal_keyboard_row']['__CURSOR'],future_error_waiver=False))
+    rows=guard.journal(raw,d['boot_id'])
+    # The restored baseline has a new boot ID, so the old same-boot cursor
+    # comparison cannot be reused. Preserve the complete fresh journal and
+    # reject only hard CPU/panic signatures; candidate acceptance performs its
+    # stricter attributed comparison after the controlled boot.
+    if any(re.search(guard.CPU,row['MESSAGE']) for row in rows):
+        raise ValueError('CPU/panic signature in fresh baseline')
+    write(rec.folder/'journal-classification.json',dict(verdict='FRESH_SAME_BOOT_RAW_BASELINE',boot_id=d['boot_id'],rows=len(rows),future_error_waiver=False))
 
 
 def modules(rec, name, candidate, recovery=False):
