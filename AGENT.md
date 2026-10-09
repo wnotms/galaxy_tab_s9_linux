@@ -98,6 +98,16 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST379_STOP_PREFLIGHT_NEW_EP0_NO_DEPLOYMENT.
+Revision2 voltage admission passed samea1e7570f100%/4.447V; fresh wholejournal
+has one new ep0out not-queued priority3 row at11463.272981s since old enrolled
+rollback. No candidate write/reboot/runtime/ADSP; physical attempt0, STOP retained.
+Identity/authWiFi/fivepartitions/181 passed before halt. Exact raw/cursor retained.
+Only a new independent enrollment may treat this exact existing row as baseline;
+no future error/USB/CPU waiver. Source-explained teardown is not every USB PASS.
+Reuse117 host qualification; result recording executed:false. Sensors unfinished.
+See test-379-ssc-rpc-stat/RESULTS.md.
+
 2026-10-09 TEST379_ADMISSION_REVISION2_REGISTERED_BEFORE_FIRST_ATTEMPT.
 Owner resumes passive sensor test after distinguishing float setpoint from
 observed VBAT. Preserve original e9bf3976/hashes and rejected reads via

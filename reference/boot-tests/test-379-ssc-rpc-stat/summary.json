@@ -1,0 +1,33 @@
+{
+  "verdict": "STOP_PREFLIGHT_NEW_EP0_DIAGNOSTIC_NOT_DEPLOYED",
+  "preflight": "preflight-1791557520066382806",
+  "hardware_attempts": 0,
+  "partitions_written": false,
+  "runtime_started": false,
+  "new_priority3_rows": [
+    {
+      "_TRANSPORT": "kernel",
+      "__REALTIME_TIMESTAMP": "1791556945493574",
+      "_HOSTNAME": "gts9",
+      "_KERNEL_SUBSYSTEM": "platform",
+      "_SOURCE_BOOTTIME_TIMESTAMP": "11463272981",
+      "PRIORITY": "3",
+      "_BOOT_ID": "a1e7570f4f1b4068b7688e0edb0c457d",
+      "SYSLOG_FACILITY": "0",
+      "_KERNEL_DEVICE": "+platform:a600000.usb",
+      "_SOURCE_MONOTONIC_TIMESTAMP": "11463272981",
+      "SYSLOG_IDENTIFIER": "kernel",
+      "_MACHINE_ID": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+      "__SEQNUM": "1131050",
+      "MESSAGE": "dwc3-qcom a600000.usb: request 00000000d5d874b1 was not queued to ep0out",
+      "__CURSOR": "s=0e9cc8651fa34ae5875adb1b7f906071;i=11422a;b=a1e7570f4f1b4068b7688e0edb0c457d;m=2ab39bc5d;t=65d695b54be46;x=885070f84c5c8afe",
+      "__MONOTONIC_TIMESTAMP": "11462622301",
+      "_RUNTIME_SCOPE": "system",
+      "_UDEV_SYSNAME": "a600000.usb",
+      "__SEQNUM_ID": "0e9cc8651fa34ae5875adb1b7f906071"
+    }
+  ],
+  "before_boot_id": "a1e7570f-4f1b-4068-b768-8e0edb0c457d",
+  "host_tests_reused": "VALIDATION.json",
+  "host_tests_executed_for_result_recording": false
+}
