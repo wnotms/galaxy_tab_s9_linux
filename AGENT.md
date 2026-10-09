@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test368（独立 USB cable reconnect；不生成内核镜像），窗口为 **Test359–Test368**；没有生成镜像的轮次仍占一轮。
+  编号为 Test369（GMU 上游修复及原生 Escape 启动验证），窗口为 **Test360–Test369**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,27 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST369_REGISTERED_CORRECTED_GMU_NATIVE_ESCAPE_NO_DEPLOYMENT.
+Independent one-boot correction, not retry366/368. Reuse exact compiled2218b170
+kernel/bundle; original331 vendor/init/dtbo/vbmeta unchanged, ADSP stays offline.
+Only boot+181 matched modules and ledger-backed8 input/text-admission files.
+Archive's exact current-provider build symlink qualified; original331 has none,
+confirmed read-only. Namespace369 restore checks original/candidate hashes and
+links before rename/boot write, handles partial install; no old helper mutation.
+25 affected unit tests PASS/0skip incl real shell archive install/restore,7 overlay
+fixtures, bounded fault-history retention, native identity/thermal/OFF, first STOP.
+Old331/368 HFI errors remain unresolved/nonclean; corrective preflight allows only
+<=32 additional exact paired known HFI errors, not unknown faults or CPU failures.
+Candidate allows no HFI error. Observe30s text,60s normal GNOME; preserve unique
+boot/history and fullkernel. Native Escape removes only interimXKB; rollback
+restores it. Keep GNOME onPASS; physical keys/touch/S Pen confirmation stillneeded.
+No flash/reboot/overlay/ADSP/SSC/PPS/pump yet. Read-only same78ec at77%28.3C,
+Good/discharging/GDM+WiFi; USB unplugged per owner, ADB absent expected. Current
+retention360-369;359 created no images,331rollback active369 consumer. Next actual
+boot/USB reconnect and sensor/rotation/fullport remain unverified. Evidence
+reference/boot-tests/test-369-gmu-native-escape/README.md and VALIDATION.json.
+
 
 2026-10-09 GPU_RPMH_FULL_UPSTREAM_FIX_COMPILED_PAIRED_NOT_DEPLOYED.
 Test368 read-only STOP remains immutable. Complete upstream d9108bf backport

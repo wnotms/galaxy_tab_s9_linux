@@ -1,0 +1,58 @@
+{
+  "usr/local/libexec/gts9-pen": {
+    "incoming": "overlay-00",
+    "source": "reference/desktop-bringup/gmu-hfi-transport/pen-loader.py",
+    "sha256": "590d2f0d1bc40845862ff9ead008c4b33dab75a6c5a3e725b9b0485fca8bd706",
+    "original_sha256": "3930beb37cddde052e1e6c470e47283894374eeeb7c06cc9b25e58e86dea4f17",
+    "mode": 493
+  },
+  "usr/local/libexec/gts9-palm": {
+    "incoming": "overlay-01",
+    "source": "reference/desktop-bringup/gmu-hfi-transport/palm-loader.py",
+    "sha256": "8c6044a74c4113ed1870be17bd543a0e5e05252ab1493185fcc3be0f7b448d8c",
+    "original_sha256": "3d2c9022b0a6726970ba07c517bdcad18c3d040e91183da22a74abc829f89157",
+    "mode": 493
+  },
+  "usr/local/lib/gts9-desktop/wacom-wez01.ko": {
+    "incoming": "overlay-02",
+    "source": "out/ssc-native-input-pair/pen/wacom-wez01.ko",
+    "sha256": "6ddebabd6cd38d1d4e8b13610b32f0f4fb737d7c939c14854afac876b70c86e5",
+    "original_sha256": "bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412",
+    "mode": 420
+  },
+  "usr/local/lib/gts9-desktop/fts1ba90a-palm.ko": {
+    "incoming": "overlay-03",
+    "source": "out/ssc-native-input-pair/palm-touch/fts1ba90a.ko",
+    "sha256": "590c1a3e3a215e0dbfbdc9986697a2ef3dd82f64bb21e29539b328cf18746253",
+    "original_sha256": "7e71ca5816bf720ce4b3065727a4d43633be3c6abbcb070a4dd723c321d56171",
+    "mode": 420
+  },
+  "var/lib/gts9-test369/text-scope": {
+    "source": "reference/boot-tests/test-369-gmu-native-escape/text-scope",
+    "original_sha256": null,
+    "mode": 420,
+    "incoming": "overlay-04",
+    "sha256": "64ac11f37e3ceec475fa24d2f80c313900e351f6fda1fd96e9e8a8eca5a82c7a"
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test369.conf": {
+    "source": "reference/boot-tests/test-369-gmu-native-escape/text-condition.conf",
+    "original_sha256": null,
+    "mode": 420,
+    "incoming": "overlay-05",
+    "sha256": "33de8222bffb31c0427e24425e7292c5977c00af68e9c725c4d6899103084b79"
+  },
+  "etc/systemd/system/gts9-pen.service.d/91-gts9-test369.conf": {
+    "source": "reference/boot-tests/test-369-gmu-native-escape/text-condition.conf",
+    "original_sha256": null,
+    "mode": 420,
+    "incoming": "overlay-06",
+    "sha256": "33de8222bffb31c0427e24425e7292c5977c00af68e9c725c4d6899103084b79"
+  },
+  "etc/systemd/system/gts9-palm.service.d/91-gts9-test369.conf": {
+    "source": "reference/boot-tests/test-369-gmu-native-escape/text-condition.conf",
+    "original_sha256": null,
+    "mode": 420,
+    "incoming": "overlay-07",
+    "sha256": "33de8222bffb31c0427e24425e7292c5977c00af68e9c725c4d6899103084b79"
+  }
+}

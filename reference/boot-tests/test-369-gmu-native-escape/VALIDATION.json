@@ -1,0 +1,23 @@
+{
+  "executed": true,
+  "affected_unit_tests": {
+    "passed": 25,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "log": "host-tests.log"
+  },
+  "shell_syntax_pass": true,
+  "Python_AST_pass": true,
+  "build": {
+    "executed": false,
+    "reused": "reference/desktop-bringup/gmu-hfi-transport/BUILD_AUDIT.json",
+    "reason": "Kernel/artifacts unchanged; only registered runner/overlay/link handling and tests changed"
+  },
+  "full_regression": {
+    "executed": false,
+    "reason": "Owner affected-only instruction; routing unchanged; no claim of full PASS"
+  },
+  "device_acceptance": false,
+  "device_mutations": []
+}
