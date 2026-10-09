@@ -1,0 +1,60 @@
+{
+  "verdict": "STOP_NEW_EP0_TEARDOWN_DIAGNOSTIC",
+  "first_failure": {
+    "error": "new kernel error; preserve first boot evidence",
+    "evidence": "reference/boot-tests/test-367-usb-typec-lifecycle/install-1791515264365167536",
+    "time": 1791515272.4445446,
+    "verdict": "STOP"
+  },
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "same_boot": true,
+  "payload_files_restored": true,
+  "unit_stopped": true,
+  "bytecode_cleanup_pending": true,
+  "flash": false,
+  "reboot": false,
+  "PPS": false,
+  "pump": false,
+  "physical_cycles_completed": 0,
+  "ADB_reconnect_tested": false,
+  "device_services": {
+    "status": 0,
+    "stderr": "",
+    "stdout": "active\nactive\nactive\nactive\n"
+  },
+  "battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "96",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "-1143000",
+    "POWER_SUPPLY_CURRENT_NOW": "-1070000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Discharging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "295",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4312000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4324000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4351000"
+  },
+  "kernel_software_unchanged": true,
+  "host_tests": {
+    "executed": true,
+    "tests": 61,
+    "skip": 0
+  },
+  "build": {
+    "executed": false
+  },
+  "full_regression": {
+    "executed": false
+  }
+}

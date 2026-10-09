@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST367_STOP_NEW_EP0_TEARDOWN_NO_RETRY.
+Exact33178ec sameboot; one initial-detached unbind triggered new DWC3ep0
+not-queued priority3. Firstfailure saved, transient stopped/originalUDC restored,
+three absent payloads removed/hashchecked; GNOME/SSH/adbd active. No PCcycle,
+flash/reboot/PPS/pump/kernel/DT/config/adbd changes.96%29.5C preflight;61hostPASS.
+Additional SourceFileLoader-generated pyc ownership qualified; exact cleanup
+registered in367RESULTS, pending. Do not claim complete rootfs rollback yet.
+Pin source FunctionFS unconditional ep0 dequeue/DWC3 no-list EINVAL relevant;
+source audit needed before any narrowly classified next independentUSBscope.
+367STOP immutable; sensors/nativeEsc physical/fullport still open.
+
+
 2026-10-09 TEST367_USB_LIFECYCLE_REGISTERED_NO_FLASH.
 Owner physically unplugged and asks persistent USB no-response fix. Independent
 same33178ec boot USB scope, not Test366 retry/sensor activation. Three absent
