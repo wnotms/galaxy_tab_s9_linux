@@ -1,0 +1,27 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_native_mapper_snapshot.py",
+    "-v"
+  ],
+  "status": 0,
+  "tests": 12,
+  "skips": 0,
+  "executed": true,
+  "seconds": 0.11311650276184082,
+  "kernel_build": {
+    "executed": false,
+    "reason": "Read-only userspace observer only; no kernel/config/DT/build input changed"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "Owner requested affected-only checks; no routing change"
+  },
+  "device_mutation": false
+}

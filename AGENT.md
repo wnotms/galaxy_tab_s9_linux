@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 SSC_NATIVE_MAPPER_OBSERVER_CORRECTED_NO_RUNTIME_START.
+Test365's platform/qcom-pd-mapper lookup was wrong; pinned upstream registers
+auxiliary/qcom_pd_mapper.qcom-pdm-mapper. New read-only snapshot records actual
+device/driver links and unique boot; bound does not prove QMI/SSC response.
+12 affected fixtures PASS/0skip, including old-path/no-device, wrong/broken
+binding, boot change and no writes. Current33178ec live driver registered,
+no device while ADSP offline; source creates device during rproc prepare.
+Exit2 preserved, not SSC PASS. No DSP/service/kernel/DT/charging mutation;
+Test369 frozen registration/stage unchanged and not deployed, cable unplugged.
+USB permanent reconnect/native Escape physical/sensor rotation remain open.
+See docs/SSC_NATIVE_MAPPER_BINDING.md and reference/desktop-bringup/ssc-native-mapper/.
+
 2026-10-09 TEST369_REGISTERED_CORRECTED_GMU_NATIVE_ESCAPE_NO_DEPLOYMENT.
 Independent one-boot correction, not retry366/368. Reuse exact compiled2218b170
 kernel/bundle; original331 vendor/init/dtbo/vbmeta unchanged, ADSP stays offline.

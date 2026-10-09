@@ -236,3 +236,10 @@ The bounded host-only readiness helper and runtime inventory are recorded in
 `reference/desktop-bringup/ssc-ssh-readiness/`. Do not start an additional
 userspace pd-mapper automatically: the candidate already enables native
 QCOM_PD_MAPPER, with stock-matching ADSP domains/instance74.
+
+For future native mapper inspection, use `native-mapper-snapshot.py --boot-id
+<current-boot-id>` on the auxiliary bus. Test365's old platform-driver lookup
+was incorrect; retain that historical evidence rather than interpreting its
+missing path as a missing mapper. Driver binding still needs a separate service
+and actual SSC sample check. See `docs/SSC_NATIVE_MAPPER_BINDING.md` for source
+provenance and the read-only current-device result.
