@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl _BOOT_ID=e1d13b92bbe54306ae4e2e3ee79060d3 -u gts9-glink-test381.service -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-09T16:33:48.347892+00:00",
+  "started_utc": "2026-10-09T16:33:48.257286+00:00",
+  "status": 0
+}

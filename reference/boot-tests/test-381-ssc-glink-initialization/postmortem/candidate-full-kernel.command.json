@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "journalctl _TRANSPORT=kernel _BOOT_ID=e1d13b92bbe54306ae4e2e3ee79060d3 -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-09T16:34:27.298771+00:00",
+  "started_utc": "2026-10-09T16:34:27.115026+00:00",
+  "status": 0
+}

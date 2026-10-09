@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test ! -e /var/lib/gts9-test381/text-scope; test ! -e /usr/local/lib/gts9-test381; test ! -e /etc/systemd/system/gts9-glink-test381.service; test ! -e /etc/systemd/system/multi-user.target.d/91-gts9-test381.conf; test ! -e /usr/share/qcom/sm8550/Samsung/gts9wifi/sensors; test ! -e /run/gts9-ssc-test/ready; test \"$(systemctl get-default)\" = graphical.target; systemctl is-active gdm gts9-palm; systemctl is-active hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy || true"
+  ],
+  "ended_utc": "2026-10-09T16:35:53.171168+00:00",
+  "started_utc": "2026-10-09T16:35:53.016268+00:00",
+  "status": 0
+}

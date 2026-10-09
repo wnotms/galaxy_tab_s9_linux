@@ -1,0 +1,27 @@
+{
+  "accepted_page_size_bytes": 4096,
+  "actual_failed_field_unproven": true,
+  "actual_failed_instance_values_captured": false,
+  "data_bytes_per_page": 4080,
+  "next_scope": "new observer must report exact failed identity fields, require source-derived capacity and keep ownership/event/loss/boot guards; do not retry Test381",
+  "nr_pages": 33,
+  "observed_error": "owned trace instance/buffer identity",
+  "reported_buffer_size_kb": 131,
+  "requested_bytes": 131072,
+  "source_derived_page_header_bytes": 16,
+  "source_paths": {
+    "include/linux/ring_buffer_types.h": {
+      "path": ".work/linux-mainline/include/linux/ring_buffer_types.h",
+      "sha256": "c546d223d1829ce812c1253d56a7da6c9ea3c1382135976cf246c130fe44d309"
+    },
+    "kernel/trace/ring_buffer.c": {
+      "path": ".work/linux-mainline/kernel/trace/ring_buffer.c",
+      "sha256": "54a41a3ea5be53269a93241f9e2c3a9b00cd4efe9cf12b46f804189ec568f0c5"
+    },
+    "kernel/trace/trace.c": {
+      "path": ".work/linux-mainline/kernel/trace/trace.c",
+      "sha256": "ebd3fd6618d39af3bd6de1cd1c9183044c3d2bbd3c5616fd757489a22cc64ed1"
+    }
+  },
+  "source_proven_collector_bug": "exact128 display assumption incompatible with source page rounding"
+}

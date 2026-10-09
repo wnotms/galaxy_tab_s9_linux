@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST381_ADB_ATTEMPT_STOP_TRACE_OBSERVER_RESTORED370.
+Owner ADB amendmentecb0f2b4/40affectedPASS pushed then onecandidate e1d13b92.
+RootADB recovered; ownedwatcher combined instance/buffer admission failed before
+RPC/SSC. No actual trace/SSC/rotation PASS. Source demonstrates128K requests
+round to131KiB payload display on4K/16B geometry; failed livefield not captured,
+so no inferred actualvalue. Preserve1110candidatekernelrows/0fault/0suspect.
+Automatic exact370restore83f8c0a8 completed; original boots-after timeout kept,
+later uniquehistory/fivehashes/181/config/notes/GNOME/ADB/WindowsCode0 confirmed
+without another reboot. No manualTWRP now required; ADSPoffline/runtimeinactive.
+SSH/hostNCM untested. DCC/PPS/pump/charging/USB unchanged.31verifiedWindowscopies
+removed225MB; WSLartifacts retained. Results-only tests executed:false/reuse.
+No381retry; next independent observer corrects quantization and reports raw
+identity fields before admission. Sensors/fullport unfinished. See381RESULTS.
+
 2026-10-10 TEST381_ADB_ADMISSION_REVISION2_BEFORE_FIRST_DEPLOYMENT.
 Owner explicitly requests temporary ADB-only test. Original Wi-Fi STOP/raw/hash
 preserved, physicalattempt0. No Wi-Fi/SSH/hostNCM acceptance claim or net config.
