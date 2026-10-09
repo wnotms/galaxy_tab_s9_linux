@@ -1,0 +1,130 @@
+{
+  "DIAG_channel_observed": false,
+  "IPCRTR_open_ack_both_directions": true,
+  "RPC_started": false,
+  "SSC_test_completed": false,
+  "all_loss_counters_zero": true,
+  "boot_id": "a2646473-4160-45e2-bb69-50b181ca72cc",
+  "clock": "[local] global counter uptime perf mono mono_raw boot tai",
+  "entries": 17,
+  "events": [
+    {
+      "detail": "version: 1 features: 0x1",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_version",
+      "remote": "lpass"
+    },
+    {
+      "detail": "version: 1 features: 0x7",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_version",
+      "remote": "lpass"
+    },
+    {
+      "detail": "version: 1 features: 0x1",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_version_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "version: 1 features: 0x1",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_version_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: pcie_drv[0/1]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: mhi_sat[0/2]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: IPCRTR[0/3]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: IPCRTR[0/3]",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_open_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: IPCRTR[1/3]",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: IPCRTR[1/3]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: sleepmonglink-apps-adsp[0/4]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: adsp_apps[0/5]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: fastrpcglink-apps-dsp[0/6]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: fastrpcglink-apps-dsp[0/6]",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_open_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: fastrpcglink-apps-dsp[2/6]",
+      "direction": "tx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: fastrpcglink-apps-dsp[2/6]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open_ack",
+      "remote": "lpass"
+    },
+    {
+      "detail": "channel: LOOPBACK_CTL_LPASS[0/7]",
+      "direction": "rx",
+      "event": "qcom_glink_cmd_open",
+      "remote": "lpass"
+    }
+  ],
+  "fastrpc_open_ack_both_directions": true,
+  "full_registered_acceptance": false,
+  "precise_cross_CPU_duration_claimed": false,
+  "rpmsg_DIAG_present": false,
+  "rpmsg_names": [
+    "IPCRTR",
+    "LOOPBACK_CTL_LPASS",
+    "adsp_apps",
+    "fastrpcglink-apps-dsp",
+    "mhi_sat",
+    "pcie_drv",
+    "rpmsg_ctrl",
+    "sleepmonglink-apps-adsp"
+  ],
+  "trace_sha256": "fbb5cd461a18f6a978eb1e3ee08a4d49d9a0131e0229dbbc346a1489f807d2d7",
+  "version_exchange_completed": true
+}

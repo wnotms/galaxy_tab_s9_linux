@@ -98,6 +98,20 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST382_LIVE_GEOMETRY_PASS_PARTIAL_GLINK_STOP_RESTORED370.
+Onecandidatea2646473, actual8CPU131KiB/4K/nop/local, watcherOK/ADSP running.
+Old fullbootlist10s timesout bothcandidategate androllbackbefore; STOP retained,
+RPCneverstarted. RootADB responds; bounded n5 history device257 verified quick.
+Requiredrecovery adapter changes only exactlistquery withdevice8s timeout; no
+historywaiver/extra candidate. Captured2534B17/17GLINKevents/zero8CPUloss;version1,
+IPCRTR/FastRPC bothopen/ACK/nativebound, no earlyDIAG name. Pre-RPC only, notSSC
+or post-RPC DIAG proof.1102candidatekernelrows0fault/0suspect. Exact370 restored
+23798bfb fivehashes/181/config/notes/GNOME/ADB/fulljournal; ADSPoffline/runtimeOFF,
+manualTWRP notneeded.31verifiedWindowscopiesremoved225MB, WSLsourcesretained.
+158affectedPASS, resulttests executed:false/reuse; no kernelbuild/CI. PPS/pump/DCC
+OFF. No382retry; next scope bounded normalhistory then firstRPC channel window.
+See test-382-ssc-glink-geometry/RESULTS.md; sensors/rotation/fullport unfinished.
+
 2026-10-10 TEST382_SOURCE_GEOMETRY_OBSERVER_REGISTERED_BEFORE_DEPLOYMENT.
 Independent corrected observer after381 failed beforeRPC;381STOP immutable.
 New namespaced helper validates exact4K/16B/4080B/33pages/131KiB perCPU, unchanged

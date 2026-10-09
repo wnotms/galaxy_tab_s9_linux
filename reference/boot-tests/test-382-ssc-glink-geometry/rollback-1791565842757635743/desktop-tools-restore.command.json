@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test ! -e /mnt/debian/tmp/gts9-test382-desktop-restore; mkdir /mnt/debian/tmp/gts9-test382-desktop-restore; cp /tmp/gts9-test382/desktop.py /tmp/gts9-test382/desktop-manifest.json /mnt/debian/tmp/gts9-test382-desktop-restore/"
+  ],
+  "ended_utc": "2026-10-09T17:11:14.486415+00:00",
+  "started_utc": "2026-10-09T17:11:14.377172+00:00",
+  "status": 0
+}

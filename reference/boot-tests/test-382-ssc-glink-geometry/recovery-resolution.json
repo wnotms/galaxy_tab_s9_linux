@@ -1,0 +1,15 @@
+{
+  "accepted_rollback": "rollback-1791565842757635743",
+  "adapter": "recover_bounded_history.py",
+  "adapter_sha256": "0f0da45740554ae9d2fa8003048a4a58439ffdabea0fb31911dd952aa635f526",
+  "before_id_required": true,
+  "boot_id": "23798bfbfa614fac8468f656a8340969",
+  "bounded_history": "timeout 8 journalctl --list-boots -n 5 --no-pager",
+  "device_systemd_version": "257.13-1~deb13u1",
+  "exactly_one_successor_required": true,
+  "manual_TWRP_required_now": false,
+  "no_additional_candidate_or_RPC_launch": true,
+  "original_error": "boots-before read command timeout before recovery mutation",
+  "original_error_preserved": "recovery-required.json",
+  "resolved": true
+}
