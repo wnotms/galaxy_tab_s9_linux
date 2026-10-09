@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test366（SSC trace + native Escape 登记；Test365 已停止并回退），窗口为 **Test357–Test366**；没有生成镜像的轮次仍占一轮。
+  编号为 Test367（独立同 boot USB Type-C lifecycle；不生成内核镜像），窗口为 **Test358–Test367**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST367_USB_LIFECYCLE_REGISTERED_NO_FLASH.
+Owner physically unplugged and asks persistent USB no-response fix. Independent
+same33178ec boot USB scope, not Test366 retry/sensor activation. Three absent
+owned userspace files + one transient service1200s/Restart=no; no enable before
+physical qualification. Stable unplug/PC attach/unplug/reattach,30/15/30s, full
+raw journals/baseline cursors; existing GPU/manualep0 errors retained unresolved,
+any new error/repeat stops. Unknown edits refused; stop restores own binding,
+then exact partial/full three-file rollback. No flash/reboot/kernel/DT/modules/
+charging/adbd changes. SOC20..100 only non-flashing scope with temp/VBAT bounds;
+sensor flash20..85 unchanged.61 affected PASS/0skip, no routing/build/Actions.
+NativeEscape still compiled nextkernel test; interimXKB/defaultGNOME retained.
+USB physical/sensors/rotation/fullport unfinished. reference/boot-tests/
+test-367-usb-typec-lifecycle/README.md.331rollback now belongsactive367 too.
 
 2026-10-09 USB_TYPEC_LIFECYCLE_HOST_TESTED_NOT_DEPLOYED.
 Afterownerunplug same33178ec: partnerabsent/USBonline0/discharging, DWC3still

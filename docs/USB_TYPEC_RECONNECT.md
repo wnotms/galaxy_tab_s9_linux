@@ -42,7 +42,14 @@ configfs changes require explicit recovery; no unknown binding is adopted.
 This does not promise recovery from all USB faults or reset a healthy attached
 link merely because an application cannot see ADB.
 
-## Physical acceptance — not executed
+## Physical acceptance — registered, not yet executed
+
+Independent [Test367](../reference/boot-tests/test-367-usb-typec-lifecycle/README.md)
+now permits testing the userspace helper alone on the existing exact Test331
+boot, without waiting for a sensor/kernel flash. It freezes prior fault evidence,
+stops on any new error, deploys only three absent owned files and initially runs
+a bounded transient unit. It does not reuse stopped Test366 or deploy native
+Escape prematurely. Current GNOME and interim key mapping remain unchanged.
 
 [Host results](../reference/desktop-bringup/usb-typec-lifecycle/RESULTS.md):
 17 new lifecycle plus 24 existing adbd tests PASS/0skip. No installation or
