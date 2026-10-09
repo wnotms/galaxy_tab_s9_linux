@@ -98,6 +98,14 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST371_PHYSICAL_UNPLUG_PASS_FINAL_REATTACH_PENDING.
+Same d197,15s unplug observation passed one additional owned unbind, normal
+negative-current discharge, GNOME/SSH/adbd healthy/no new unclassified fault.
+Full kernel+unit/raw evidence retained; prior firstPC30s PASS. Await finalPC
+reattach30s then stop transient/verify original binding and remove three owned
+files. Not complete/permanent, no new build/flash/reboot/charging/SSC change.
+
+
 2026-10-09 TEST371_TRANSIENT_STARTED_FIRST_PC_ATTACH_PASS.
 Formal same d197/preflight passed, three absent payloads installed and one
 bounded transient started, initial detached owned unbind classified exactly.

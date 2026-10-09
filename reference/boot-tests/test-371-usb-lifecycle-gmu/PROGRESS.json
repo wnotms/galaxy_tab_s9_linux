@@ -1,5 +1,5 @@
 {
-  "verdict": "FIRST_PC_ATTACHMENT_PASS_SERIES_IN_PROGRESS",
+  "verdict": "ATTACH_AND_DETACH_PASS_AWAIT_FINAL_REATTACH",
   "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
   "first_attachment": true,
   "detach_reattach_complete": false,
@@ -15,6 +15,29 @@
       "message": "dwc3-qcom a600000.usb: request 00000000b3da69c2 was not queued to ep0out",
       "source_monotonic": 1653.306339,
       "unbind_monotonic": 1653.244927101
+    }
+  ],
+  "detach": true,
+  "detached_battery": {
+    "POWER_SUPPLY_STATUS": "Discharging",
+    "POWER_SUPPLY_CAPACITY": "73",
+    "POWER_SUPPLY_CURRENT_NOW": "-1500000",
+    "POWER_SUPPLY_TEMP": "324"
+  },
+  "owned_teardown": [
+    {
+      "classification": "source-explained empty ep0 teardown; pending transport gate",
+      "cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=10329d;b=d197715983304c90b5bee7cf8c67ea0f;m=628a8a79;t=65d6405b1b712;x=b3c6ece82c0fdba5",
+      "message": "dwc3-qcom a600000.usb: request 00000000b3da69c2 was not queued to ep0out",
+      "source_monotonic": 1653.306339,
+      "unbind_monotonic": 1653.244927101
+    },
+    {
+      "classification": "source-explained empty ep0 teardown; pending transport gate",
+      "cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=103478;b=d197715983304c90b5bee7cf8c67ea0f;m=7298ab92;t=65d6415bfd82b;x=47b4c0a1e2c0fc55",
+      "message": "dwc3-qcom a600000.usb: request 00000000050a7f14 was not queued to ep0out",
+      "source_monotonic": 1922.681161,
+      "unbind_monotonic": 1922.607989559
     }
   ]
 }
