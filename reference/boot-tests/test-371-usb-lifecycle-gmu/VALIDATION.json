@@ -1,0 +1,102 @@
+{
+  "executed": true,
+  "suites": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_usb_lifecycle_gmu_scope.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13353379799991671,
+      "stderr": [
+        "----------------------------------------------------------------------",
+        "Ran 24 tests in 0.043s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_usb_typec_lifecycle.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.15943074799997703,
+      "stderr": [
+        "----------------------------------------------------------------------",
+        "Ran 17 tests in 0.075s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_usb_teardown_evidence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1304421969998657,
+      "stderr": [
+        "----------------------------------------------------------------------",
+        "Ran 12 tests in 0.042s",
+        "",
+        "OK"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_adbd_reconnect.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 5.790697448000174,
+      "stderr": [
+        "----------------------------------------------------------------------",
+        "Ran 24 tests in 5.730s",
+        "",
+        "OK"
+      ]
+    }
+  ],
+  "initial_fixture_failure": {
+    "tests": 24,
+    "errors": 1,
+    "reason": "release looked up in final snapshot which records uname; fixture corrected to parse actual uname; no production logic weakened"
+  },
+  "build": {
+    "executed": false,
+    "reason": "no kernel/config/DT/module change; installed Test370 accepted artifacts reused"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "only affected transaction/helper/parser tests; no routing/build integration change"
+  }
+}

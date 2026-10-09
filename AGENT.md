@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test370（实际掌触服务布局的 GMU/原生 Escape 验证），窗口为 **Test361–Test370**；没有生成镜像的轮次仍占一轮。
+  编号为 Test371（已接受 GMU 内核的 USB 重连验证），窗口为 **Test362–Test371**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,21 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST371_USB_LIFECYCLE_ON_ACCEPTED370_REGISTERED_NOT_STARTED.
+Reuse actual accepted370 kernel/native inputs/GNOME; no flash/reboot/build.
+Independent371 profile/config599ca47a/notes5c0e8233/same0cdf, three initially
+absent files plus one bounded transient, never enable at boot here. One PC cycle
+30s/15s/30s with actual ADB/deviceNCM and full source-timestamp journals; unchanged
+bounded ep0 parser. No old331 HFI/manualep0 fault adopted; baseline exact hashed
+370 final journal, any new fault STOP. Affected local tests qualify actual371
+transaction/profile; initial fixture release lookup error corrected, recorded.
+Read-only preparation WiFi10.49.219.42 banner timeout; raw evidence preserved,
+computer10.49.219.63. No live identity/battery inferred, no device mutation;
+await current owner IP/status before formal preflight. Retention362-371,361 no
+image; current370 and namespace original331 rollback still active consumers.
+USB permanent fix/SSC rotation/higher charging remain unfinished.
+
 
 2026-10-09 GNOME_CLOCK_FIXED_STANDARD_NTP_SAME_ACCEPTED370_BOOT.
 Owner reports all370input checksPASS butwrongtime; actualShanghai zonecorrect,

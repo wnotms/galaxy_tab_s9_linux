@@ -1,0 +1,41 @@
+{
+  "host_tests": {
+    "executed": true,
+    "total": 77,
+    "skipped": 0
+  },
+  "syntax": {
+    "executed": true,
+    "result": "PASS"
+  },
+  "protected_files": {
+    "kernel_changed": false,
+    "DTS_changed": false,
+    "config_changed": false,
+    "modules_changed": false,
+    "adbd_changed": false,
+    "charging_changed": false,
+    "TCPM_changed": false
+  },
+  "build": {
+    "executed": false,
+    "reason": "reuse unchanged Test370"
+  },
+  "config_diff": {
+    "executed": false,
+    "reason": "no config mutation"
+  },
+  "dt_diff": {
+    "executed": false,
+    "reason": "no DTS/DTB mutation"
+  },
+  "retention": {
+    "window": "362-371",
+    "expired": 361,
+    "new_images": 0,
+    "expired_created_images": false,
+    "current_kernel": "Test370",
+    "rollback_original": "Test331 retained by active370/371 consumer"
+  },
+  "device_mutation": false
+}

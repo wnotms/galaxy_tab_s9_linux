@@ -1,0 +1,29 @@
+test_actual_same_boot_admission_rejects_old_identity_and_new_boot (test_usb_lifecycle_gmu_scope.AcceptedKernelScopeTests.test_actual_same_boot_admission_rejects_old_identity_and_new_boot) ... ok
+test_frozen_fault_multiset_has_exact_accepted_source_and_no_hfi (test_usb_lifecycle_gmu_scope.AcceptedKernelScopeTests.test_frozen_fault_multiset_has_exact_accepted_source_and_no_hfi) ... ok
+test_profile_is_exact_accepted370_not_old331 (test_usb_lifecycle_gmu_scope.AcceptedKernelScopeTests.test_profile_is_exact_accepted370_not_old331) ... ok
+test_repeated_bind_event_is_not_accepted (test_usb_lifecycle_gmu_scope.AcceptedKernelScopeTests.test_repeated_bind_event_is_not_accepted) ... ok
+test_cmdline_softlockup_parameter_not_fault (test_usb_lifecycle_gmu_scope.EvidenceTests.test_cmdline_softlockup_parameter_not_fault) ... ok
+test_complete_journal_requires_unique_boot_and_metadata (test_usb_lifecycle_gmu_scope.EvidenceTests.test_complete_journal_requires_unique_boot_and_metadata) ... ok
+test_cpu_signatures_fail_even_if_priority_warning (test_usb_lifecycle_gmu_scope.EvidenceTests.test_cpu_signatures_fail_even_if_priority_warning) ... ok
+test_existing_errors_preserved_without_classifying_new_repeat_clean (test_usb_lifecycle_gmu_scope.EvidenceTests.test_existing_errors_preserved_without_classifying_new_repeat_clean) ... ok
+test_first_failure_is_durable_and_not_overwritten (test_usb_lifecycle_gmu_scope.EvidenceTests.test_first_failure_is_durable_and_not_overwritten) ... ok
+test_missing_or_modified_history_fails (test_usb_lifecycle_gmu_scope.EvidenceTests.test_missing_or_modified_history_fails) ... ok
+test_new_ep0_error_not_waived_as_old_known_message (test_usb_lifecycle_gmu_scope.EvidenceTests.test_new_ep0_error_not_waived_as_old_known_message) ... ok
+test_normal_new_info_message_passes (test_usb_lifecycle_gmu_scope.EvidenceTests.test_normal_new_info_message_passes) ... ok
+test_repeated_unbind_and_wrong_boot_events_fail (test_usb_lifecycle_gmu_scope.EvidenceTests.test_repeated_unbind_and_wrong_boot_events_fail) ... ok
+test_corrupt_temporary_prevents_all_deletions (test_usb_lifecycle_gmu_scope.TransactionTests.test_corrupt_temporary_prevents_all_deletions) ... ok
+test_drift_prevents_cleanup_import_or_stop (test_usb_lifecycle_gmu_scope.TransactionTests.test_drift_prevents_cleanup_import_or_stop) ... ok
+test_drift_refuses_entire_rollback (test_usb_lifecycle_gmu_scope.TransactionTests.test_drift_refuses_entire_rollback) ... ok
+test_exact_three_file_install_rollback_and_no_retry (test_usb_lifecycle_gmu_scope.TransactionTests.test_exact_three_file_install_rollback_and_no_retry) ... ok
+test_existing_file_refused_before_any_mutation (test_usb_lifecycle_gmu_scope.TransactionTests.test_existing_file_refused_before_any_mutation) ... ok
+test_parent_symlink_refused (test_usb_lifecycle_gmu_scope.TransactionTests.test_parent_symlink_refused) ... ok
+test_partial_install_recovers_without_assuming_all_files_exist (test_usb_lifecycle_gmu_scope.TransactionTests.test_partial_install_recovers_without_assuming_all_files_exist) ... ok
+test_partial_start_cleanup_uses_frozen_source_not_device_import (test_usb_lifecycle_gmu_scope.TransactionTests.test_partial_start_cleanup_uses_frozen_source_not_device_import) ... ok
+test_partial_temporary_bytes_recover_only_registered_prefix (test_usb_lifecycle_gmu_scope.TransactionTests.test_partial_temporary_bytes_recover_only_registered_prefix) ... ok
+test_wrong_boot_refuses_rollback (test_usb_lifecycle_gmu_scope.TransactionTests.test_wrong_boot_refuses_rollback) ... ok
+test_wrong_payload_digest_refused_before_mutation (test_usb_lifecycle_gmu_scope.TransactionTests.test_wrong_payload_digest_refused_before_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.043s
+
+OK

@@ -1,0 +1,14 @@
+{
+  "usr/local/libexec/gts9-usb-typec-lifecycle": {
+    "source": "userspace/adbd/typec-lifecycle.py",
+    "mode": 493
+  },
+  "etc/gts9-usb-typec-profile.json": {
+    "source": "reference/boot-tests/test-371-usb-lifecycle-gmu/profile.json",
+    "mode": 420
+  },
+  "etc/systemd/system/gts9-usb-typec-lifecycle.service": {
+    "source": "userspace/adbd/gts9-usb-typec-lifecycle.service",
+    "mode": 420
+  }
+}
