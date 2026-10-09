@@ -1,0 +1,60 @@
+static void functionfs_unbind(struct ffs_data *ffs)
+{
+	if (!WARN_ON(!ffs->gadget)) {
+		/* dequeue before freeing ep0req */
+		usb_ep_dequeue(ffs->gadget->ep0, ffs->ep0req);
+		mutex_lock(&ffs->mutex);
+		usb_ep_free_request(ffs->gadget->ep0, ffs->ep0req);
+		ffs->ep0req = NULL;
+		ffs->gadget = NULL;
+		clear_bit(FFS_FL_BOUND, &ffs->flags);
+		mutex_unlock(&ffs->mutex);
+		ffs_data_put(ffs);
+	}
+}
+
+static void ffs_func_unbind(struct usb_configuration *c,
+			    struct usb_function *f)
+{
+	struct ffs_function *func = ffs_func_from_usb(f);
+	struct ffs_data *ffs = func->ffs;
+	struct f_fs_opts *opts =
+		container_of(f->fi, struct f_fs_opts, func_inst);
+	struct ffs_ep *ep = func->eps;
+	unsigned count = ffs->eps_count;
+	unsigned long flags;
+
+	if (ffs->func == func) {
+		ffs_func_eps_disable(func);
+		ffs->func = NULL;
+	}
+
+	/* Drain any pending AIO completions */
+	drain_workqueue(ffs->io_completion_wq);
+
+	ffs_event_add(ffs, FUNCTIONFS_UNBIND);
+	if (!--opts->refcnt)
+		functionfs_unbind(ffs);
+
+	/* cleanup after autoconfig */
+	spin_lock_irqsave(&func->ffs->eps_lock, flags);
+	while (count--) {
+		if (ep->ep && ep->req)
+			usb_ep_free_request(ep->ep, ep->req);
+		ep->req = NULL;
+		++ep;
+	}
+	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
+	kfree(func->eps);
+	func->eps = NULL;
+	/*
+	 * eps, descriptors and interfaces_nums are allocated in the
+	 * same chunk so only one free is required.
+	 */
+	func->function.fs_descriptors = NULL;
+	func->function.hs_descriptors = NULL;
+	func->function.ss_descriptors = NULL;
+	func->function.ssp_descriptors = NULL;
+	func->interfaces_nums = NULL;
+
+}

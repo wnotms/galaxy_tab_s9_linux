@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test367（独立同 boot USB Type-C lifecycle；不生成内核镜像），窗口为 **Test358–Test367**；没有生成镜像的轮次仍占一轮。
+  编号为 Test368（独立 USB cable reconnect；不生成内核镜像），窗口为 **Test359–Test368**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST368_REGISTERED_SOURCE_BOUNDED_EP0_CABLE_RECONNECT.
+367STOP preserved/no retry; three payloads and exact qualified generatedcache
+removed/originalUDC restored/same33178ec GNOME. Pinned7.2rc3 unchanged source
+explains FunctionFS unconditional dequeue/DWC3 empty-list EINVAL diagnostic;
+call-stack attribution inference, not live trace/allUSBcause. Independent368
+allows maxone exact ep0outpriority3 per uniqueownedunbind within250ms source
+time, fullrawlogs+actualADB/deviceNCM stillrequired. Allother/new CPU/kernel/
+Code43/identity/rescue faultsSTOP.53affectedPASS0skip/8transactionASTreuse,
+frozen-source execute avoids pyc; no newkernel/build/routing/Actions. Registered
+threeabsentfiles/one boundedtransient/noenable, no flash/reboot/PPS/pump/adbd/
+charge changes. Physicalcyclepending; nativeEsc nextkernel/interimXKB/GNOME
+retained. Sensors/fullportunfinished.331rollback belongsactive368 aswell.
+
 
 2026-10-09 TEST367_STOP_NEW_EP0_TEARDOWN_NO_RETRY.
 Exact33178ec sameboot; one initial-detached unbind triggered new DWC3ep0

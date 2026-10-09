@@ -1,0 +1,27 @@
+{
+  "linux_commit": "a13c140cc289c0b7b3770bce5b3ad42ab35074aa",
+  "files": {
+    "drivers/usb/gadget/configfs.c": {
+      "sha256": "71ad6b12bf36d969d72d0b4f752b4fecf0dd1df7f6c5f719c6a75b4486264fdc",
+      "bytes": 52601,
+      "matches_pinned_git_blob": true
+    },
+    "drivers/usb/gadget/function/f_fs.c": {
+      "sha256": "f8794cedc4b6d7289ce4711909a6c039283892dc57511b8245c048b93ba6b1e5",
+      "bytes": 106408,
+      "matches_pinned_git_blob": true
+    },
+    "drivers/usb/dwc3/gadget.c": {
+      "sha256": "8b8f9a7e96e1d09e13242f75849cfd997ee8a4ee88243f6d4803627119c2e4e6",
+      "bytes": 130693,
+      "matches_pinned_git_blob": true
+    }
+  },
+  "live_stack_trace_captured": false,
+  "correlation": {
+    "kernel_source_monotonic": 42552.32463,
+    "helper_unbind_monotonic": 42552.320601644,
+    "difference_seconds": 0.004028356
+  },
+  "new_classification_scope": "one exact priority3 empty ep0out diagnostic within250ms per owned unbind; actual final ADB/deviceNCM required; raw logs retained"
+}

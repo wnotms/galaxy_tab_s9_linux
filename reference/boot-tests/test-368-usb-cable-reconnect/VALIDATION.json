@@ -1,0 +1,25 @@
+{
+  "verdict": "HOST_READY_NOT_STARTED",
+  "host_tests": {
+    "executed": true,
+    "tests": 53,
+    "failures": 0,
+    "errors": 0,
+    "skip": 0,
+    "seconds": 5.763
+  },
+  "failed_fixture_attempt": "AST equivalence initially did not account for owned temporary path namespace; retained attempt01; corrected scope-only comparison",
+  "syntax": true,
+  "transaction_reuse": "actual AST equality of8 functions plus real three payload install/rollback on temp root;61 prior test367 suite qualification reused for unchanged core",
+  "new_context_tests": 12,
+  "build": {
+    "executed": false,
+    "reason": "kernel/build inputs unchanged"
+  },
+  "full_host": {
+    "executed": false,
+    "reason": "affected-only, routing unchanged"
+  },
+  "Actions": false,
+  "physical_started": false
+}

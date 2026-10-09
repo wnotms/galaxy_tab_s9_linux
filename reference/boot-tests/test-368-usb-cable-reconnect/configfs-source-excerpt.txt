@@ -1,0 +1,98 @@
+static ssize_t gadget_dev_desc_UDC_store(struct config_item *item,
+		const char *page, size_t len)
+{
+	struct gadget_info *gi = to_gadget_info(item);
+	char *name;
+	int ret;
+
+	if (strlen(page) < len)
+		return -EOVERFLOW;
+
+	name = kstrdup(page, GFP_KERNEL);
+	if (!name)
+		return -ENOMEM;
+	if (name[len - 1] == '\n')
+		name[len - 1] = '\0';
+
+	mutex_lock(&gi->lock);
+
+	if (!strlen(name)) {
+		ret = unregister_gadget(gi);
+		if (ret)
+			goto err;
+		kfree(name);
+	} else {
+		if (gi->composite.gadget_driver.udc_name) {
+			ret = -EBUSY;
+			goto err;
+		}
+		gi->composite.gadget_driver.udc_name = name;
+		ret = usb_gadget_register_driver(&gi->composite.gadget_driver);
+		if (ret) {
+			gi->composite.gadget_driver.udc_name = NULL;
+			goto err;
+		}
+	}
+	mutex_unlock(&gi->lock);
+	return len;
+err:
+	kfree(name);
+	mutex_unlock(&gi->lock);
+	return ret;
+}
+
+static void purge_configs_funcs(struct gadget_info *gi)
+{
+	struct usb_configuration	*c;
+
+	list_for_each_entry(c, &gi->cdev.configs, list) {
+		struct usb_function *f, *tmp;
+		struct config_usb_cfg *cfg;
+
+		cfg = container_of(c, struct config_usb_cfg, c);
+
+		list_for_each_entry_safe_reverse(f, tmp, &c->functions, list) {
+
+			list_move(&f->list, &cfg->func_list);
+			if (f->unbind) {
+				dev_dbg(&gi->cdev.gadget->dev,
+					"unbind function '%s'/%p\n",
+					f->name, f);
+				f->unbind(c, f);
+			}
+		}
+		c->next_interface_id = 0;
+		memset(c->interface, 0, sizeof(c->interface));
+		c->superspeed_plus = 0;
+		c->superspeed = 0;
+		c->highspeed = 0;
+		c->fullspeed = 0;
+	}
+}
+
+static void configfs_composite_unbind(struct usb_gadget *gadget)
+{
+	struct usb_composite_dev	*cdev;
+	struct gadget_info		*gi;
+	unsigned long flags;
+
+	/* the gi->lock is hold by the caller */
+
+	cdev = get_gadget_data(gadget);
+	gi = container_of(cdev, struct gadget_info, cdev);
+	spin_lock_irqsave(&gi->spinlock, flags);
+	gi->unbind = 1;
+	spin_unlock_irqrestore(&gi->spinlock, flags);
+
+	kfree(otg_desc[0]);
+	otg_desc[0] = NULL;
+	purge_configs_funcs(gi);
+	composite_dev_cleanup(cdev);
+	usb_ep_autoconfig_reset(cdev->gadget);
+	spin_lock_irqsave(&gi->spinlock, flags);
+	cdev->gadget = NULL;
+	cdev->deactivations = 0;
+	gadget->deactivated = false;
+	set_gadget_data(gadget, NULL);
+	spin_unlock_irqrestore(&gi->spinlock, flags);
+}

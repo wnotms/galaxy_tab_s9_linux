@@ -1,0 +1,60 @@
+test_actual_three_payload_transaction_restores_absent_files (test_usb_teardown_evidence.RunnerReuseTests.test_actual_three_payload_transaction_restores_absent_files) ... ok
+test_guard_requires_frozen_source_and_does_not_import_or_cache (test_usb_teardown_evidence.RunnerReuseTests.test_guard_requires_frozen_source_and_does_not_import_or_cache) ... ok
+test_transaction_functions_reused_without_logic_change (test_usb_teardown_evidence.RunnerReuseTests.test_transaction_functions_reused_without_logic_change) ... ok
+test_classifies_one_and_preserves_message (test_usb_teardown_evidence.TeardownTests.test_classifies_one_and_preserves_message) ... ok
+test_cpu_and_other_new_error_gates_remain_strict (test_usb_teardown_evidence.TeardownTests.test_cpu_and_other_new_error_gates_remain_strict) ... ok
+test_missing_event_or_source_timestamp_stops (test_usb_teardown_evidence.TeardownTests.test_missing_event_or_source_timestamp_stops) ... ok
+test_no_teardown_error_is_allowed_and_old_error_remains_baseline (test_usb_teardown_evidence.TeardownTests.test_no_teardown_error_is_allowed_and_old_error_remains_baseline) ... ok
+test_other_endpoint_message_or_severity_stops (test_usb_teardown_evidence.TeardownTests.test_other_endpoint_message_or_severity_stops) ... ok
+test_outside_bound_and_ambiguous_events_stop (test_usb_teardown_evidence.TeardownTests.test_outside_bound_and_ambiguous_events_stop) ... ok
+test_real_test367_raw_pair_matches_with_source_time (test_usb_teardown_evidence.TeardownTests.test_real_test367_raw_pair_matches_with_source_time) ... ok
+test_second_error_on_same_unbind_stops (test_usb_teardown_evidence.TeardownTests.test_second_error_on_same_unbind_stops) ... ok
+test_wrong_boot_or_foreign_unit_stops (test_usb_teardown_evidence.TeardownTests.test_wrong_boot_or_foreign_unit_stops) ... ok
+test_actual_event_loop_unbinds_then_binds_once (test_usb_typec_lifecycle.TypecLifecycleTests.test_actual_event_loop_unbinds_then_binds_once) ... {"boot_id": "accepted-boot", "event": "unbind", "cable": "detached", "monotonic": 1.0}
+{"boot_id": "accepted-boot", "event": "bind", "cable": "attached", "monotonic": 2.1}
+ok
+test_actual_stop_signal_cannot_strand_successful_unbind (test_usb_typec_lifecycle.TypecLifecycleTests.test_actual_stop_signal_cannot_strand_successful_unbind) ... ok
+test_event_origin_and_filter (test_usb_typec_lifecycle.TypecLifecycleTests.test_event_origin_and_filter) ... ok
+test_external_controller_not_overwritten_during_restore (test_usb_typec_lifecycle.TypecLifecycleTests.test_external_controller_not_overwritten_during_restore) ... ok
+test_external_unbind_not_adopted (test_usb_typec_lifecycle.TypecLifecycleTests.test_external_unbind_not_adopted) ... ok
+test_hard_reset_and_mixed_attach_are_unknown (test_usb_typec_lifecycle.TypecLifecycleTests.test_hard_reset_and_mixed_attach_are_unknown) ... ok
+test_identity_drift_rejected (test_usb_typec_lifecycle.TypecLifecycleTests.test_identity_drift_rejected) ... ok
+test_invalid_online_does_not_write (test_usb_typec_lifecycle.TypecLifecycleTests.test_invalid_online_does_not_write) ... ok
+test_io_read_fault_restores_owned_binding (test_usb_typec_lifecycle.TypecLifecycleTests.test_io_read_fault_restores_owned_binding) ... ok
+test_layout_drift_rejected (test_usb_typec_lifecycle.TypecLifecycleTests.test_layout_drift_rejected) ... ok
+test_rebind_io_failure_keeps_recovery_ownership (test_usb_typec_lifecycle.TypecLifecycleTests.test_rebind_io_failure_keeps_recovery_ownership) ... ok
+test_receive_error_restores_binding_and_does_not_restart (test_usb_typec_lifecycle.TypecLifecycleTests.test_receive_error_restores_binding_and_does_not_restart) ... ok
+test_service_stop_restores_only_owned_empty_binding (test_usb_typec_lifecycle.TypecLifecycleTests.test_service_stop_restores_only_owned_empty_binding) ... ok
+test_short_detach_does_not_reset (test_usb_typec_lifecycle.TypecLifecycleTests.test_short_detach_does_not_reset) ... ok
+test_signal_mask_covers_write_and_ownership (test_usb_typec_lifecycle.TypecLifecycleTests.test_signal_mask_covers_write_and_ownership) ... ok
+test_stale_detach_rebind_and_no_repeat_on_healthy_link (test_usb_typec_lifecycle.TypecLifecycleTests.test_stale_detach_rebind_and_no_repeat_on_healthy_link) ... ok
+test_unknown_resets_pending_debounce (test_usb_typec_lifecycle.TypecLifecycleTests.test_unknown_resets_pending_debounce) ... ok
+test_device_command_arguments_rejected (test_adbd_reconnect.AdbHostRescanTests.test_device_command_arguments_rejected) ... ok
+test_failed_host_stop_prevents_further_commands (test_adbd_reconnect.AdbHostRescanTests.test_failed_host_stop_prevents_further_commands) ... ok
+test_restarts_only_host_server_then_lists_devices (test_adbd_reconnect.AdbHostRescanTests.test_restarts_only_host_server_then_lists_devices) ... ok
+test_active_worker_wakes_and_joins (test_adbd_reconnect.AdbdReconnectTests.test_active_worker_wakes_and_joins) ... ok
+test_bulk_open_failure_keeps_existing_ep0 (test_adbd_reconnect.AdbdReconnectTests.test_bulk_open_failure_keeps_existing_ep0) ... ok
+test_dup_failure_keeps_existing_ep0 (test_adbd_reconnect.AdbdReconnectTests.test_dup_failure_keeps_existing_ep0) ... ok
+test_duplicate_enable_still_rejected (test_adbd_reconnect.AdbdReconnectTests.test_duplicate_enable_still_rejected) ... ok
+test_initial_enable_requires_real_bind (test_adbd_reconnect.AdbdReconnectTests.test_initial_enable_requires_real_bind) ... ok
+test_initial_read_failure_signals_completion (test_adbd_reconnect.AdbdReconnectTests.test_initial_read_failure_signals_completion) ... ok
+test_launcher_missing_fix_uses_package (test_adbd_reconnect.AdbdReconnectTests.test_launcher_missing_fix_uses_package) ... ok
+test_launcher_prefers_fix_and_keeps_args (test_adbd_reconnect.AdbdReconnectTests.test_launcher_prefers_fix_and_keeps_args) ... ok
+test_original_glibc_cleanup_reproduces_wait (test_adbd_reconnect.AdbdReconnectTests.test_original_glibc_cleanup_reproduces_wait) ... ok
+test_reconnect_retains_ep0_without_descriptor_writes (test_adbd_reconnect.AdbdReconnectTests.test_reconnect_retains_ep0_without_descriptor_writes) ... ok
+test_remembered_bind_accepts_reconnect_enable (test_adbd_reconnect.AdbdReconnectTests.test_remembered_bind_accepts_reconnect_enable) ... ok
+test_stop_without_started_worker (test_adbd_reconnect.AdbdReconnectTests.test_stop_without_started_worker) ... ok
+test_unbind_clears_remembered_bind (test_adbd_reconnect.AdbdReconnectTests.test_unbind_clears_remembered_bind) ... ok
+test_adb_crlf_and_ssh_lf_cmdlines_match (test_adbd_reconnect.ExistingUpowerGateTests.test_adb_crlf_and_ssh_lf_cmdlines_match) ... ok
+test_changed_cmdline_stops (test_adbd_reconnect.ExistingUpowerGateTests.test_changed_cmdline_stops) ... ok
+test_changed_namespace_prerequisite_stops (test_adbd_reconnect.ExistingUpowerGateTests.test_changed_namespace_prerequisite_stops) ... ok
+test_changed_unit_hash_stops (test_adbd_reconnect.ExistingUpowerGateTests.test_changed_unit_hash_stops) ... ok
+test_changed_upower_exit_stops (test_adbd_reconnect.ExistingUpowerGateTests.test_changed_upower_exit_stops) ... ok
+test_new_failed_unit_stops (test_adbd_reconnect.ExistingUpowerGateTests.test_new_failed_unit_stops) ... ok
+test_no_failed_units_is_allowed (test_adbd_reconnect.ExistingUpowerGateTests.test_no_failed_units_is_allowed) ... ok
+test_recognized_existing_upower_failure (test_adbd_reconnect.ExistingUpowerGateTests.test_recognized_existing_upower_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 53 tests in 5.763s
+
+OK
