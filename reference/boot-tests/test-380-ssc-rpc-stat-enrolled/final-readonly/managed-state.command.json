@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; cat /proc/sys/kernel/random/boot_id; systemctl get-default; systemctl is-active gdm ssh gts9-adbd gts9-usb-typec-lifecycle; pgrep -a gnome-shell; test ! -e /run/gts9-ssc-test/ready; for n in /usr/local/lib/gts9-test380/hexagonrpcd /var/lib/gts9-test380/text-scope /etc/systemd/system/gdm.service.d/91-gts9-test380.conf /etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test380.conf /etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test380.conf /usr/share/qcom/sm8550/Samsung/gts9wifi; do test ! -e \"$n\"; printf \"ABSENT %s\\n\" \"$n\"; done; for n in hexagonrpcd-adsp-rootpd hexagonrpcd-adsp-sensorspd iio-sensor-proxy; do systemctl is-active \"$n\" || true; done; cat /sys/class/remoteproc/remoteproc0/state; cat /sys/module/sm5440_fedora/parameters/direct_charge; systemctl --failed --no-legend --plain --no-pager"
+  ],
+  "ended_utc": "2026-10-09T15:04:18.909915+00:00",
+  "started_utc": "2026-10-09T15:04:18.730390+00:00",
+  "status": 0
+}

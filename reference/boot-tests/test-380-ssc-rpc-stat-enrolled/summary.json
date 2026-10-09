@@ -1,0 +1,110 @@
+{
+  "test": "Test380",
+  "verdict": "STOP_SSC_NOT_PUBLISHED_METADATA_PASS_RESTORED",
+  "registered_attempts": 1,
+  "executed_attempts": 1,
+  "before_boot_id": "a1e7570f-4f1b-4068-b768-8e0edb0c457d",
+  "candidate_boot_id": "16971083-2297-4220-a24f-24e113ba612d",
+  "restored_boot_id": "178facf3-7e1e-4004-8041-cd70eb48df6d",
+  "attributed": true,
+  "startup_observation_seconds": 37.250761530998716,
+  "registered_ssc_seconds": 60,
+  "accelerometer_probes": 23,
+  "accelerometer_samples": 0,
+  "HasAccelerometer_verified": false,
+  "physical_rotation_tested": false,
+  "config_metadata": {
+    "verdict": "RPC_CONFIG_METADATA_PASS",
+    "observed": 35,
+    "expected": 35,
+    "faults": [],
+    "missing": []
+  },
+  "native_domain_reply": {
+    "complete": true,
+    "sensor_domain_present": true,
+    "seconds": 0.0007475000000027876,
+    "domains": [
+      {
+        "instance": 74,
+        "name": "msm/adsp/audio_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      },
+      {
+        "instance": 74,
+        "name": "msm/adsp/root_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      },
+      {
+        "instance": 74,
+        "name": "msm/adsp/charger_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      },
+      {
+        "instance": 74,
+        "name": "msm/adsp/sensor_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      },
+      {
+        "instance": 76,
+        "name": "msm/cdsp/root_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      },
+      {
+        "instance": 180,
+        "name": "msm/modem/root_pd",
+        "service_data": 0,
+        "service_data_valid": false
+      }
+    ]
+  },
+  "kernel_config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "kernel_notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "kernel_rebuilt": false,
+  "config_changed": false,
+  "modules_changed": false,
+  "modules": 181,
+  "DTS_changed": false,
+  "USB_changed": false,
+  "charging_changed": false,
+  "PPS": false,
+  "pump_ON": false,
+  "kernel_fault_counts": {},
+  "rollback_verdict": "EXACT370_DEBIAN_RESTORED",
+  "rollback_folder": "rollback-1791558060907014915",
+  "final_battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "100",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "382000",
+    "POWER_SUPPLY_CURRENT_NOW": "425000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "282",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4447000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4447000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4390000"
+  },
+  "final_wifi": "1: lo    inet 127.0.0.1/8 scope host lo\\       valid_lft forever preferred_lft forever\n14: usb0    inet 169.254.42.1/16 scope global usb0\\       valid_lft forever preferred_lft forever\n15: wlp1s0    inet 10.49.219.77/24 brd 10.49.219.255 scope global dynamic noprefixroute wlp1s0\\       valid_lft 3554sec preferred_lft 3554sec\n16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\\       valid_lft forever preferred_lft forever",
+  "host_result_recording": {
+    "executed": false,
+    "qualification_reused": "VALIDATION.json:120 affected checks; c0ba0bfe ARM64/unchanged370 kernel",
+    "CI_started": false
+  },
+  "next_step": "inspect firmware sensor initialization/publication; do not repeat unchanged stat metadata/profile or reset registry"
+}

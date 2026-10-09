@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST380_ACTUAL_RPC_METADATA_PASS_SSC_ABSENT_RESTORED370.
+One attributedcandidate16971083 earlyADSP/FastRPC/native519/nativeServreg6domain
+PASS; rootPD then sensorsPD both startedactive once. Actual35/35configstat exact
+size/mtime1640995200.000000000 PASS/no missing/error;60s/23probes noSSC400/sample.
+Metadata is not content/group/electrical/service proof; do not repeat profile or
+resetregistry. Next firmware init/publication boundary; oemconfig.so necessity
+unknown. Firstfailure gateoff/runtimeinactive; exactfive/181/assets/text restored.
+Currentaccepted370 boot178facf3-7e1e-4004-8041-cd70eb48df6d, GNOME/SSH/ADB/nativeinput/
+persistentUSB; ADSPoffline/no gate/no failedunits/PPS+pump+DCC OFF. Kernel/config/
+DTB/modules/charging/USB/adbd unchanged, failedboot1110rawrows0fault/unclassified.
+Reuse120host/ARM64/build, results executed:false/no CI. Rotation/fullport unfinished.
+See test-380-ssc-rpc-stat-enrolled/RESULTS.md; no repeated physical attempt.
+
 2026-10-09 TEST380_ENROLLED_PASSIVE_SSC_REGISTERED_BEFORE_DEPLOYMENT.
 Test379 STOP preserved/physical0. Independent380 exact existing fullsameboot
 journal/cursors includes one new ep0 diagnostic; adjacent lifecycleunbind then

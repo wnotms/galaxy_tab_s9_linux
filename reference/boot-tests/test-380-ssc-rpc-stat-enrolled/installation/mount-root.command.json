@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; if grep -q \" /mnt/debian \" /proc/mounts; then test \"$(cat /mnt/debian/etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; else sh /tmp/gts9-test380/mount-debian.sh; fi"
+  ],
+  "ended_utc": "2026-10-09T14:58:16.047501+00:00",
+  "started_utc": "2026-10-09T14:58:15.699221+00:00",
+  "status": 0
+}

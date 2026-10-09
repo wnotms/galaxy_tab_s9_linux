@@ -1,0 +1,18 @@
+{
+  "boot_id": "16971083-2297-4220-a24f-24e113ba612d",
+  "bus": "auxiliary",
+  "driver": "qcom_pd_mapper.qcom-pdm-mapper",
+  "driver_registered": true,
+  "devices": [
+    {
+      "name": "qcom_common.pd-mapper.0",
+      "device_path": "/sys/devices/platform/soc@0/6800000.remoteproc/remoteproc/remoteproc0/qcom_common.pd-mapper.0",
+      "driver_path": "/sys/bus/auxiliary/drivers/qcom_pd_mapper.qcom-pdm-mapper",
+      "modalias": null,
+      "bound": true
+    }
+  ],
+  "binding_state": "bound",
+  "service_response_verified": false,
+  "sensor_discovery_verified": false
+}

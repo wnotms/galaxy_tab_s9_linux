@@ -121,3 +121,13 @@ with actual transport recovery and120 affected checks. No future error waiver,
 USB patch, charging change or retry of a failed physical379 boot. The same
 qualified stat diagnostic gets one bounded early-ADSP/ordered-RPC attempt;
 registration and fresh live admission precede deployment.
+
+
+Test380 executed one early-ADSP boot and restored370. Native Servreg replied
+with6domains; both RPC roles started once. All35 actual sensorsPD config stat
+sizes/mtimes match the frozen archive/cache.23 probes in60s still found noSSC400
+or accelerometer sample. Metadata correctness is not completed initialization or
+an electrical bus/sensor proof. Stop and complete rollback are preserved in
+[test380 RESULTS](../reference/boot-tests/test-380-ssc-rpc-stat-enrolled/RESULTS.md).
+Next inspect firmware init/publication; do not repeat the unchanged metadata
+question, clear registry or guess IMU bus/address from the raw vendor enum.

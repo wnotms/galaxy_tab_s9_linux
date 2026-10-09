@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "set -e; test \"$(cat /etc/machine-id)\" = 3c2a1b8f2d624db4b5ffdc836050fcf6; rm -f /run/gts9-ssc-test/ready; systemctl stop iio-sensor-proxy hexagonrpcd-adsp-sensorspd hexagonrpcd-adsp-rootpd"
+  ],
+  "ended_utc": "2026-10-09T15:01:01.323851+00:00",
+  "started_utc": "2026-10-09T15:01:01.176308+00:00",
+  "status": 0
+}

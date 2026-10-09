@@ -1,0 +1,20 @@
+{
+  "reason": "both scopes finished; accepted baseline fully restored; keep ADB and WSL providers, delete only verified duplicate Windows staging",
+  "directories": [
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test379",
+      "manifest": "reference/boot-tests/test-379-ssc-rpc-stat/staged-files.json",
+      "files": 28,
+      "bytes": 225110937,
+      "reusable_artifacts_retained_in_WSL": true
+    },
+    {
+      "path": "/mnt/d/android/gts9-active/gts9-test380",
+      "manifest": "reference/boot-tests/test-380-ssc-rpc-stat-enrolled/staged-files.json",
+      "files": 28,
+      "bytes": 225110973,
+      "reusable_artifacts_retained_in_WSL": true
+    }
+  ],
+  "reclaimed_bytes": 450221910
+}

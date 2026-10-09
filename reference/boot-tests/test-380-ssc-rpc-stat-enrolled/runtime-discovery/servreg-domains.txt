@@ -1,0 +1,70 @@
+{
+  "boot_id": "16971083-2297-4220-a24f-24e113ba612d",
+  "endpoint": [
+    1,
+    16385
+  ],
+  "layout": "linux-7.2",
+  "service": "tms/servreg",
+  "method": 33,
+  "request_hex": "00010021000e00010b00746d732f73657276726567",
+  "raw_packets": [
+    {
+      "peer": [
+        1,
+        16385
+      ],
+      "hex": "0201002100b800020400000000001002000600110200010012a40006116d736d2f616473702f617564696f5f70644a0000000000000000106d736d2f616473702f726f6f745f70644a0000000000000000136d736d2f616473702f636861726765725f70644a0000000000000000126d736d2f616473702f73656e736f725f70644a0000000000000000106d736d2f636473702f726f6f745f70644c0000000000000000116d736d2f6d6f64656d2f726f6f745f7064b40000000000000000",
+      "seconds": 0.0006635419999980741
+    }
+  ],
+  "complete": true,
+  "local": [
+    1,
+    16388
+  ],
+  "domains": [
+    {
+      "name": "msm/adsp/audio_pd",
+      "instance": 74,
+      "service_data_valid": false,
+      "service_data": 0
+    },
+    {
+      "name": "msm/adsp/root_pd",
+      "instance": 74,
+      "service_data_valid": false,
+      "service_data": 0
+    },
+    {
+      "name": "msm/adsp/charger_pd",
+      "instance": 74,
+      "service_data_valid": false,
+      "service_data": 0
+    },
+    {
+      "name": "msm/adsp/sensor_pd",
+      "instance": 74,
+      "service_data_valid": false,
+      "service_data": 0
+    },
+    {
+      "name": "msm/cdsp/root_pd",
+      "instance": 76,
+      "service_data_valid": false,
+      "service_data": 0
+    },
+    {
+      "name": "msm/modem/root_pd",
+      "instance": 180,
+      "service_data_valid": false,
+      "service_data": 0
+    }
+  ],
+  "total_domains": 6,
+  "database_revision": 1,
+  "sensor_domain_present": true,
+  "ssc_service_verified": false,
+  "accelerometer_verified": false,
+  "seconds": 0.0007475000000027876
+}
