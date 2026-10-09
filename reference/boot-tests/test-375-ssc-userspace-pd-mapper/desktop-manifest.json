@@ -1,0 +1,37 @@
+{
+  "usr/local/lib/gts9-test375/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "source": "out/ssc-rpc-trace/stage/usr/bin/hexagonrpcd",
+    "sha256": "de3317d005c913f87e9a63fc337f6c3cd7b4e5f3631bd9396720529595dbc2e3",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "var/lib/gts9-test375/text-scope": {
+    "incoming": "overlay-01",
+    "source": "reference/boot-tests/test-375-ssc-userspace-pd-mapper/text-scope",
+    "sha256": "db5455f8c35ebcda79934f74bf2a7e0b90ffbe44af37c6dbcedb8c11f07faf55",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test375.conf": {
+    "incoming": "overlay-02",
+    "source": "reference/boot-tests/test-375-ssc-userspace-pd-mapper/text-condition.conf",
+    "sha256": "f9e6e9a2101cc1d718e038bb324f6d426123cbe102e37e8f057a769d94348db2",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test375.conf": {
+    "incoming": "overlay-03",
+    "source": "reference/boot-tests/test-375-ssc-userspace-pd-mapper/hexagonrpcd-adsp-rootpd-trace.conf",
+    "sha256": "bb414d20ab84b0d75940c8625adc4baaaf45f1f2847ae6fa6207a9b5b60cb8b9",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test375.conf": {
+    "incoming": "overlay-04",
+    "source": "reference/boot-tests/test-375-ssc-userspace-pd-mapper/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "sha256": "94d6adb1b7c3528efaa23956b3d65466f66f3e59716eb383f5049baeffe74d0e",
+    "original_sha256": null,
+    "mode": 420
+  }
+}
