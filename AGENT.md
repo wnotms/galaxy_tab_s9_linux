@@ -98,6 +98,15 @@
 
 ## Current state (2026-10-03)
 
+2026-10-10 TEST381_ADB_ADMISSION_REVISION2_BEFORE_FIRST_DEPLOYMENT.
+Owner explicitly requests temporary ADB-only test. Original Wi-Fi STOP/raw/hash
+preserved, physicalattempt0. No Wi-Fi/SSH/hostNCM acceptance claim or net config.
+Require exact rootADB sameboot shell, deviceusb0/SinkDevice, WindowsnoCode43,
+fivepartitions/181/config/notes/DCC/health/fulljournal; firstADB loss STOP/manual
+TWRP if necessary. Same trace budget/one earlycandidate/one RPC/restore370GNOME.
+40affectedhostPASS/no skips; remaining unchanged qualification reused, no build/CI.
+Current178facf3 100%26C/Good; no mutation yet. See ADMISSION_AMENDMENT.json.
+
 2026-10-10 TEST381_STOP_READONLY_PREFLIGHT_WIFI_NOT_DEPLOYED.
 Registered5585b2cf/pushed,174affectedhostPASS/no skips; exact kernel reused.
 Firstpreflight no wlp1s0 IPv4, NM ssid-not-found/disconnected; ADB+GDM active.

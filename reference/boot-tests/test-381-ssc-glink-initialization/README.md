@@ -21,8 +21,10 @@ watcher stops tracing by boot uptime300s or when collected. It never enables
 or alters a global trace. Raw trace limit1MiB, complete JSON limit2MiB; any
 loss, missing ADSP event, stale identity or incomplete evidence stops.
 
+Admission revision2: owner explicitly requests temporary ADB-only testing.
+Original Wi-Fi-stopped preflight remains preserved; physical attempts before0.
 Preflight is read-only and fresh≤600s, proving exact five partitions/181 files,
-config/notes, DCC absent, ADB/device NCM/authenticated Wi-Fi and current sameboot
+config/notes, DCC absent, boot-bound root ADB shell/device NCM and current sameboot
 journal. ENROLLMENT.json records only exact pre-existing rows; every new severe
 error/CPU signature still stops. No future error waiver. Battery Good/present,
 SOC20–100%, temperature10–<42°C, VBAT3.4–4.45V measured observation bounds;
@@ -42,3 +44,7 @@ regular files; temporary text mode only, then normal default GNOME. No repeat
 candidate/reflash/restart, no permanent sensor/DIAG service, no CI. Reuse exact
 ARM64 library/daemon and kernel qualification; only affected host tests/syntax
 and offline vendor packaging validation are executed.
+
+Wi-Fi/host NCM/SSH are untested, not passed. No network configuration change.
+On ADB loss stop; manual TWRP rescue may be needed. Only transport admission
+changes; trace bounds, one candidate/one launch and exact rollback remain.

@@ -22,7 +22,6 @@ ROOT = Path(__file__).resolve().parents[3]
 R = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'scripts'))
 import production_reboot_stability as p
-from windows_ssh_transport import ssh_argv
 
 
 def load(name, path):
@@ -35,7 +34,6 @@ def load(name, path):
 h = load('early372_recovery', R.parent/'test-292-passive-observation/host_flow.py')
 parts = load('early372_partitions', R.parent/'test-323-pc-source-budget/host_flow.py')
 mapper = load('early372_socinfo', ROOT/'userspace/sensors/map-socinfo.py')
-ready = load('ssc372_ssh_admission', ROOT/'userspace/sensors/ssh_readiness.py')
 stat_evidence = load('ssc379_stat_evidence', ROOT/'userspace/sensors/rpc_stat_evidence.py')
 PLAN = json.loads((R/'registration.json').read_text())
 PACKAGE = json.loads((R/'PACKAGE.json').read_text())
@@ -154,31 +152,24 @@ def verify_stage():
     return rows
 
 
-def wifi(rec,name,d,phase='candidate'):
-    trust=Path(PLAN['known_hosts'])
-    if trust.is_symlink() or trust.read_text()!=PLAN['alias']+' '+PLAN['host_ed25519_key']+'\n':raise ValueError('SSH trust changed')
-    addresses=re.findall(r'\bwlp1s0\s+inet\s+(\d+\.\d+\.\d+\.\d+)/',d['network'])
-    if len(addresses)!=1:raise ValueError('WiFi address not unique')
-    counters=dict(device=0,probe=0)
-    def check(remaining):
-        counters['device']+=1
-        raw,_=rec.adb(name+'-device-%02d'%counters['device'],CAPTURE,timeout=min(8,remaining))
-        packet=json.loads(raw);identity(packet,phase,d['boot_id'].replace('-',''))
-        if phase=='candidate':native_gate(packet)
-        return packet['boot_id']
-    def probe(remaining):
-        counters['probe']+=1;n=name+'-probe-%02d'%counters['probe']
-        argv=ssh_argv(PLAN['key'],trust,PLAN['alias'],addresses[0],'cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id',transport=PLAN['ssh_transport'],windows_python=PLAN['windows_python'])
-        # Distinguish Windows process startup from the former fragile3s deadline.
-        argv=[x.replace('ConnectTimeout=3','ConnectTimeout=5') for x in argv]
-        raw,status=rec.command(n,argv,timeout=min(12,remaining),required=False)
-        return dict(stdout=raw,stderr=(rec.folder/(n+'.stderr')).read_text(),status=status)
-    try:
-        result=ready.admit(probe,check,machine_id=PLAN['machine_id'],boot_id=d['boot_id'],seconds=PLAN['ssh_readiness_seconds'],max_attempts=PLAN['ssh_max_attempts'])
-    except ready.ReadinessError as exc:
-        write(rec.folder/(name+'-admission.json'),exc.summary);raise
-    write(rec.folder/(name+'-admission.json'),result)
-    return addresses[0]
+def transport_admit(rec, name, d, phase='candidate'):
+    if PLAN['control_transport'] != 'adb':
+        raise ValueError('unregistered control transport')
+    identity(d, phase, d['boot_id'])
+    raw, _ = rec.host_adb(name+'-state', '-s', p.SERIAL, 'get-state', timeout=5)
+    if raw.strip() != 'device':
+        raise ValueError('ADB device transport unavailable')
+    raw, _ = rec.adb(name+'-identity',
+        'cat /etc/machine-id; cat /proc/sys/kernel/random/boot_id; id -u; cat /proc/sys/kernel/random/boot_id', timeout=8)
+    if raw.replace('\r', '').splitlines() != [PLAN['machine_id'], d['boot_id'], '0', d['boot_id']]:
+        raise ValueError('ADB root shell/boot identity mismatch')
+    result = dict(verdict='ADB_ROOT_SAME_BOOT_READY', control_transport='adb',
+                  boot_id=d['boot_id'], ADB=True, root_shell=True,
+                  authenticated_WiFi=None, SSH_tested=False, host_NCM_tested=False,
+                  device_NCM_present=True,
+                  wifi_ipv4=re.findall(r'\bwlp1s0\s+inet\s+(\d+\.\d+\.\d+\.\d+)/', d['network']))
+    write(rec.folder/(name+'-admission.json'), result)
+    return result
 
 
 
@@ -256,7 +247,7 @@ def preflight():
     rec = p.Recorder(folder); p.SERIAL = 'gts9wifi-0001'
     d = snapshot(rec, 'current-state', 'baseline')
     boot = identity(d, 'baseline', PLAN['before_boot_id'])
-    address = wifi(rec, 'wifi', d, phase='baseline')
+    admission = transport_admit(rec, 'transport', d, phase='baseline')
     raw, _ = rec.adb('partitions', parts.DEBIAN_PARTS, timeout=25)
     parts.require_debian_partitions(raw, PACKAGE['baseline_partitions'])
     modules(rec, 'modules', False)
@@ -267,7 +258,7 @@ def preflight():
     windows, _ = rec.ps('windows-usb', p.PS_USB, timeout=20)
     if p.has_code43(windows) or not re.search(r'ProblemCode\s*:\s*0\b', windows):
         raise ValueError('Windows USB gate')
-    result = dict(verdict='READY_FOR_ONE_CONTROLLED_BOOT', boot_id=boot, snapshot=d, wifi=address, epoch=time.time(), folder=folder.name)
+    result = dict(verdict='READY_FOR_ONE_CONTROLLED_BOOT', boot_id=boot, snapshot=d, transport=admission, epoch=time.time(), folder=folder.name)
     write(folder/'summary.json', result)
     write(R/'active-preflight.json', result)
     return result
@@ -313,7 +304,7 @@ def wait_debian(rec):
     while time.monotonic()-start < PLAN['readiness_max_seconds']:
         raw, status = rec.adb('readiness-%02d'%i, 'cat /proc/sys/kernel/random/boot_id; systemctl is-active ssh gts9-adbd gts9-usb-acm; ip -4 -o addr', timeout=5, required=False)
         i += 1
-        if status == 0 and raw.splitlines().count('active') == 3 and '169.254.42.1/' in raw and re.search(r'\bwlp1s0\s+inet\s+', raw):
+        if status == 0 and raw.splitlines().count('active') == 3 and '169.254.42.1/' in raw:
             return
         time.sleep(2)
     raise TimeoutError('one candidate boot unavailable; no second reboot')
@@ -326,7 +317,7 @@ def accept(rec, phase, before, boots_before):
     boots, _ = rec.adb('boots-after', 'journalctl --list-boots --no-pager', timeout=10)
     if h.g.evidence.attribute(before, boot, boots_before, boots) != 'attributed':
         raise ValueError('extra/missing boot attribution')
-    wifi(rec, 'wifi', d, phase=phase)
+    transport_admit(rec, 'transport', d, phase=phase)
     raw, _ = rec.adb('partitions', parts.DEBIAN_PARTS, timeout=25)
     parts.require_debian_partitions(raw, PACKAGE[phase+'_partitions'])
     modules(rec, 'modules', phase == 'candidate')
@@ -499,7 +490,7 @@ def discover():
     p.SERIAL='gts9wifi-0001';rec=p.Recorder(R/'runtime-discovery')
     boot=state['boot_id']
     try:
-        d=snapshot(rec,'boundary','candidate',boot);native_gate(d);wifi(rec,'wifi',d)
+        d=snapshot(rec,'boundary','candidate',boot);native_gate(d);transport_admit(rec,'transport',d)
         rows=verify_stage();wanted=['runtime.py','capture.py','map-socinfo.py','qrtr-native-snapshot.py','native-mapper-snapshot.py','servreg-domain-snapshot.py','ssc_lifecycle.py','runtime-packages.json','runtime-overrides.json']+[x['filename'] for x in read(R/'runtime-packages.json')]
         rec.adb('incoming-dir','mkdir '+TMP,timeout=8)
         for i,n in enumerate(wanted):
@@ -540,11 +531,13 @@ def discover():
             after = qrtr(rec, 'qrtr-after', boot)
             ssc_present = any(row['service'] == 400 for row in after['services'])
             runtime(rec, 'deactivate', boot)
-            current=snapshot(rec,'final-identity','candidate',boot);native_gate(current);wifi(rec,'final-wifi',current)
+            current=snapshot(rec,'final-identity','candidate',boot);native_gate(current);transport_admit(rec,'final-transport',current)
             faults=scan(rec,boot,current['uptime'])
             result=dict(verdict=('GLINK_COLLECTION_COMPLETE_SSC_NO_SAMPLE' if ssc_present else 'GLINK_COLLECTION_COMPLETE_SSC_ABSENT'), boot_id=d['boot_id'],
                         sensor_acceptance=False, SSC_service_present=ssc_present, accelerometer_sample=False,
-                        observation_seconds=time.monotonic()-started, kernel_fault_counts=faults['fault_counts'],
+                        observation_seconds=time.monotonic()-started, control_transport='adb', ADB=True,
+                        SSH_tested=False, authenticated_WiFi=None, host_NCM_tested=False,
+                        kernel_fault_counts=faults['fault_counts'],
                         PPS=False,pump_ON=False,physical_rotation_tested=False)
             write(rec.folder/'summary.json',result)
             state.update(phase='GLINK-diagnostic-complete-runtime-inactive');write(R/'mutation-state.json',state)
@@ -561,10 +554,10 @@ def discover():
         collect_runtime(rec)
         qrtr(rec, 'qrtr-after', boot)
         runtime(rec, 'deactivate', boot)
-        current=snapshot(rec,'final-identity','candidate',boot);native_gate(current);wifi(rec,'final-wifi',current)
+        current=snapshot(rec,'final-identity','candidate',boot);native_gate(current);transport_admit(rec,'final-transport',current)
         faults=scan(rec,boot,current['uptime'])
         result=dict(verdict='SSC_ACCELEROMETER_DBUS_BACKEND_PASS',boot_id=d['boot_id'],measurement=measurement,HasAccelerometer=True,
-                    ADB=True,device_NCM=True,authenticated_WiFi=True,kernel_fault_counts=faults['fault_counts'],PPS=False,pump_ON=False,
+                    ADB=True,device_NCM=True,authenticated_WiFi=None,SSH_tested=False,host_NCM_tested=False,control_transport='adb',kernel_fault_counts=faults['fault_counts'],PPS=False,pump_ON=False,
                     physical_rotation_tested=False,desktop_started=False,packages_retained=True)
         write(rec.folder/'summary.json',result)
         state.update(phase='SSC-backend-accepted-inactive-candidate-kept-text');write(R/'mutation-state.json',state)

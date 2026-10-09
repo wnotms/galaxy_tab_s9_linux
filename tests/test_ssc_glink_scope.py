@@ -293,5 +293,45 @@ class OwnedOverlayTests(unittest.TestCase):
         self.assertTrue(owned.exists()); self.assertEqual(self.unrelated.read_text(), 'keep')
 
 
+class ADBAdmissionTests(unittest.TestCase):
+    def setUp(self):
+        self.d = json.loads((ROOT / 'reference/boot-tests/test-377-ssc-userspace-pd-mapper/runtime-discovery/boundary.txt').read_text())
+        self.d['cmdline'] = H.PLAN['runtime_cmdline']
+        self.d['network'] = '14: usb0 inet 169.254.42.1/16'
+        self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+        self.rec = Mock(folder=Path(self.tmp.name))
+        self.rec.host_adb.return_value = ('device\r\n', 0)
+        self.reply = '\n'.join([H.PLAN['machine_id'], self.d['boot_id'], '0', self.d['boot_id']])+'\n'
+        self.rec.adb.return_value = (self.reply, 0)
+
+    def test_no_wifi_admits_only_actual_adb_identity_no_ssh_claim(self):
+        result = H.transport_admit(self.rec, 'transport', self.d)
+        self.assertTrue(result['ADB']); self.assertFalse(result['SSH_tested'])
+        self.assertFalse(result['host_NCM_tested']); self.assertIsNone(result['authenticated_WiFi'])
+        self.assertEqual(result['wifi_ipv4'], [])
+        self.rec.command.assert_not_called(); self.rec.ps.assert_not_called()
+
+    def test_offline_transport_blocks_before_shell(self):
+        self.rec.host_adb.return_value = ('offline', 0)
+        with self.assertRaises(ValueError): H.transport_admit(self.rec, 'transport', self.d)
+        self.rec.adb.assert_not_called()
+
+    def test_wrong_machine_nonroot_or_new_boot_cannot_admit(self):
+        for replacement in [self.reply.replace(H.PLAN['machine_id'], '0'*32),
+                            self.reply.replace('\n0\n', '\n1000\n'),
+                            self.reply.rsplit('\n', 2)[0]+'\n22222222-2222-2222-2222-222222222222\n']:
+            self.rec.adb.return_value = (replacement, 0)
+            with self.assertRaises(ValueError): H.transport_admit(self.rec, 'transport', self.d)
+
+    def test_adb_exception_preserved(self):
+        self.rec.adb.side_effect = TimeoutError('ADB shell timeout')
+        with self.assertRaises(TimeoutError): H.transport_admit(self.rec, 'transport', self.d)
+
+    def test_boot_readiness_does_not_wait_for_wifi(self):
+        self.rec.adb.return_value = (self.d['boot_id']+'\nactive\nactive\nactive\n14: usb0 inet 169.254.42.1/16\n', 0)
+        H.wait_debian(self.rec)
+        self.assertEqual(self.rec.adb.call_count, 1)
+
+
 if __name__ == '__main__':
     unittest.main()
