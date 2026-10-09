@@ -18,3 +18,14 @@ Test371 physical preflight/helper activation remains unstarted, registration
 and historical STOP results unchanged. Do not manufacture a CLEAN result.
 
 Host tests/build: executed:false (read-only transport evidence/docs only).
+
+## Owner update and recovery
+
+Phone hotspot, owner defers static IP. New actual address10.49.219.156 SSH
+succeeds, machine/config/notes match accepted370. Owner confirms manual reboot
+explains d1977159-8330-4c90-b5be-e7cf8c67ea0f (no host reboot issued).
+MAC00:03:7F:12:F4:14, actual gateway/DNS10.49.219.11, DHCP/24 retained.
+73%/30.8C/Good/discharging, required services active, no failed unit.
+Complete kernel journal passed unchanged Test370 startup classifier, no new
+HFI/CPU fault/suspect. Test371 initial enrollment updated before any formal
+preflight or device mutation; earlier registration retained. No static setting.

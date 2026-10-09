@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST371_OWNER_MANUAL_BOOT_REENROLLED_BEFORE_START.
+Owner hotspot/newDHCP10.49.219.156 recovered trustedSSH; confirms manual reboot
+from0cdf to d1977159-8330-4c90-b5be-e7cf8c67ea0f. Exact accepted370 config/notes,
+73%30.8C/Good/discharge/GNOME+SSH/adbd active; full newboot kernel passed unchanged
+370 startup classifier zerofault/suspect. Initial371 registration updated BEFORE
+any formal preflight/mutation; original enrollment archived, no failed371 retry.
+Exact new journal error multiset frozen, noHFI/ep0 adopted;24 actualscope testsPASS,
+unchanged53 helper/parser/adbd qualification reused. No build/staticIP/router/
+WiFi config/device change. Owner explicitly defers staticIP; next formal371
+read-only preflight/transient install then one PC cable cycle; no reboot/flash.
+
+
 2026-10-09 WIFI_FIXED_ADDRESS_PREPARATION_NO_DEVICE_CHANGE.
 Owner confirms desktop normal/IP10.49.219.42/private manageable router. Both
 Windows native TCP22 and direct WSL timed out; enrolled SSH snapshot did not run.

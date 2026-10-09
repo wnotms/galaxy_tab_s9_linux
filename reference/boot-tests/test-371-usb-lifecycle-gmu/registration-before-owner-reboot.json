@@ -1,10 +1,10 @@
 {
   "test": 371,
   "purpose": "qualify same-boot USB cable lifecycle on accepted corrected GMU kernel",
-  "baseline": "Accepted Test370 software/native inputs/GNOME plus standard NTP; owner-confirmed manual reboot enrolled before first physical attempt; Test253 adbd unchanged",
-  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "baseline": "Test370 accepted kernel/native inputs/GNOME plus independent standard NTP fix; Test253 adbd unchanged",
+  "boot_id": "0cdf0b75-9334-46bb-adcf-8e2ea97c3517",
   "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6",
-  "wifi_ip": "10.49.219.156",
+  "wifi_ip": "10.49.219.42",
   "key": "/home/ms/.ssh/gts9_ed25519",
   "known_hosts": "/home/ms/.ssh/gts9-test292-known-hosts",
   "alias": "gts9-test292",
@@ -14,24 +14,23 @@
     "OF: reserved mem: OVERLAP DETECTED!\nkaslr_region (0x00000000b01ff000--0x00000000b0200000) overlaps with kaslr@b01ff000 (0x00000000b01ff000--0x00000000b0200000)": 1,
     "OF: reserved mem: OVERLAP DETECTED!\nuh-heap@b0200000 (0x00000000b0200000--0x00000000b0240000) overlaps with uh_heap_region (0x00000000b0200000--0x00000000b0240000)": 1,
     "OF: reserved mem: OVERLAP DETECTED!\nuh-guest@b1000000 (0x00000000b1000000--0x00000000b4000000) overlaps with uh_guest_region (0x00000000b1000000--0x00000000b4600000)": 1,
-    "WARNING: x1-x3 nonzero in violation of boot protocol:\n\tx1: 0000000080000000\n\tx2: 0000000028248000\n\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel": 1,
+    "WARNING: x1-x3 nonzero in violation of boot protocol:\n\tx1: 0000000080000000\n\tx2: 0000000028170000\n\tx3: 0000000000000000\nThis indicates a broken bootloader or old kernel": 1,
     "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8000100, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
     "arm-smmu 15000000.iommu: FSR    = 00000402 [Format=2 TF], SID=0x1c00": 10,
     "arm-smmu 15000000.iommu: FSYNR0 = 00620021 [S1CBNDX=98 PNU PLVL=1]": 10,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8077000, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80a9800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80d7d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8108d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8137f00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8167400, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8194e00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81c3c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
-    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81f1800, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8070700, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb809e500, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80cc400, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb80f8200, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb812aa00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8162e00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8198d00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb81cb900, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
+    "arm-smmu 15000000.iommu: Unhandled context fault: fsr=0x402, iova=0xb8201c00, fsynr=0x620021, cbfrsynra=0x1c00, cb=9": 1,
     "remoteproc remoteproc0: request_firmware failed: -2": 1,
     "msm_dpu ae01000.display-controller: no GPU device was found": 1,
     "Failed to find module 'autofs4'": 1,
-    "[drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]": 1,
-    "Bluetooth: hci0: unexpected event for opcode 0xfc48": 1
+    "[drm:dpu_encoder_helper_wait_for_irq] *ERROR* encoder is disabled id=35, callback=dpu_encoder_phys_cmd_ctl_start_irq, IRQ=[1, 9]": 1
   },
   "observation": {
     "initial_detached_seconds": 3,
@@ -52,16 +51,7 @@
   "high_soc_admission": "SOC20..100 for non-flashing same-boot unplug/PC test only; temp10..<42C and actual VBAT<4.44V; old sensor-flash20..85 gate unchanged",
   "teardown_classification": "at most one exact ep0out no-queue message per owned unbind, within250ms source monotonic, priority3 only, unique sameboot unit event; full logs retained; final actual ADB/deviceNCM health required; all other faults stop",
   "existing_errors_source": {
-    "path": "reference/desktop-bringup/wifi-static-ip/current-kernel.jsonl",
-    "sha256": "7dea7003fe84f8bde4c834a00f10f28829d6f4e20060f5f159a9229a20fb53d3"
-  },
-  "owner_reboot_confirmed": true,
-  "enrollment_snapshot": "reference/desktop-bringup/wifi-static-ip/current-boot.json",
-  "enrollment_qualification": {
-    "parser": "unchanged Test370 scan",
-    "result": "reference/desktop-bringup/wifi-static-ip/journal-classification.json",
-    "fault_counts": {},
-    "suspects": [],
-    "reason": "owner manual reboot before any formal371 preflight/start; software baseline unchanged"
+    "path": "reference/boot-tests/test-370-gmu-native-palm-escape/final-acceptance/kernel.jsonl",
+    "sha256": "709a6397525863242e859a9a426f301aaeb7c3e2ee653a2a27b623a186c620ac"
   }
 }

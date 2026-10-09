@@ -3,9 +3,11 @@
 Independent registration; frozen STOP results Test367/368/369 remain unchanged.
 The installed and accepted Test370 kernel, native input pair, GNOME and Test253
 adbd are reused. No flash, reboot, build, PD/PPS, pump or charging-policy change.
-Exact config and notes come from Test370 final acceptance. Initial full journal
-priority<=3 multiset is frozen from its hashed final journal; no HFI/ep0 failures
-are adopted into this baseline. Any new unclassified fault stops the first attempt.
+Exact config and notes come from Test370 final acceptance. Before any formal preflight/start, owner confirmed manual reboot and new DHCP
+address10.49.219.156. Complete new boot journal passed unchanged Test370 startup
+classifier (zero fault/suspect); freeze this actual boot’s exact priority<=3
+multiset and snapshot hashes. Earlier enrollment preserved separately; no HFI/ep0
+failure is adopted into this baseline. Any new unclassified fault stops the first attempt.
 
 Three initially absent files only: event helper, exact kernel profile, disabled
 unit template. One transient service (1200s backstop), never enable at boot here.

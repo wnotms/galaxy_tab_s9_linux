@@ -1,22 +1,14 @@
 {
-  "verdict": "PREPARATION_ONLY_TRANSPORT_UNREACHABLE",
-  "owner_desktop_normal": true,
-  "owner_address": "10.49.219.42",
-  "router_manageable": true,
-  "preferred": "router DHCP reservation; tablet IPv4 remains auto",
+  "verdict": "SSH_RECOVERED_NEW_DHCP_OWNER_MANUAL_BOOT",
+  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "address": "10.49.219.156",
+  "owner_manual_reboot": true,
+  "static_ip": "deferred by owner",
   "device_modified": false,
   "router_modified": false,
   "tests": {
-    "executed": false
+    "executed": false,
+    "reason": "docs/read-only evidence"
   },
-  "build": {
-    "executed": false
-  },
-  "Test371_started": false,
-  "pending": [
-    "router model",
-    "actual active Wi-Fi MAC",
-    "router reservation eligibility",
-    "trusted live SSH"
-  ]
+  "Test371_started": false
 }

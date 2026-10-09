@@ -1,0 +1,35 @@
+{
+  "prior_physical_test_started": false,
+  "prior_failed_attempt": false,
+  "owner_manual_reboot": true,
+  "software_identity_unchanged": true,
+  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "wifi_ip": "10.49.219.156",
+  "classifier_fault_counts": {},
+  "classifier_suspects": [],
+  "device_mutation": false,
+  "tests": {
+    "executed": true,
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_usb_lifecycle_gmu_scope.py",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 0.1704976600003647,
+    "count": 24
+  },
+  "unchanged_helper_tests": {
+    "executed": false,
+    "reused": "VALIDATION.json remaining53 tests/source hashes unchanged"
+  },
+  "build": {
+    "executed": false
+  }
+}

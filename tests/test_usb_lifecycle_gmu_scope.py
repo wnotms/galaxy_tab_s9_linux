@@ -192,7 +192,8 @@ class AcceptedKernelScopeTests(unittest.TestCase):
         accepted=json.loads((ROOT/'reference/boot-tests/test-370-gmu-native-palm-escape/final-acceptance/snapshot.json').read_text())
         for k,v in profile.items():
             self.assertEqual(v,accepted['uname'].split()[2] if k=='release' else accepted[k])
-        self.assertEqual(plan['boot_id'],accepted['boot_id'])
+        self.assertEqual(plan['boot_id'],json.loads((ROOT/plan['enrollment_snapshot']).read_text())['boot_id'])
+        self.assertTrue(plan['owner_reboot_confirmed'])
         self.assertEqual(plan['test'],371)
         self.assertFalse(plan['flashing'])
         self.assertFalse(plan['reboot'])
