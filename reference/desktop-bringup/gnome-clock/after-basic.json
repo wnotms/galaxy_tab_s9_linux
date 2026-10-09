@@ -1,0 +1,34 @@
+{
+  "boot_id": "0cdf0b75-9334-46bb-adcf-8e2ea97c3517",
+  "device_epoch": 1791532154.142039,
+  "time": {
+    "status": 0,
+    "stdout": "Timezone=Asia/Shanghai\nLocalRTC=no\nCanNTP=yes\nNTP=yes\nNTPSynchronized=yes\nTimeUSec=Fri 2026-10-09 15:49:14 CST\nRTCTimeUSec=Mon 1970-01-05 12:16:45 CST\n",
+    "stderr": ""
+  },
+  "enabled": {
+    "status": 0,
+    "stdout": "enabled\n",
+    "stderr": ""
+  },
+  "services": {
+    "status": 0,
+    "stdout": "active\nactive\nactive\nactive\nactive\n",
+    "stderr": ""
+  },
+  "failed": {
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "clock_state": {
+    "status": 0,
+    "stdout": "  File: /var/lib/systemd/timesync/clock\n  Size: 0         \tBlocks: 0          IO Block: 4096   regular empty file\nDevice: 179,1\tInode: 1975620     Links: 1\nAccess: (0644/-rw-r--r--)  Uid: (  986/systemd-timesync)   Gid: (  986/systemd-timesync)\nAccess: 2026-10-09 15:48:29.240128000 +0800\nModify: 2026-10-09 15:48:29.240128000 +0800\nChange: 2026-10-09 15:48:29.334764983 +0800\n Birth: 2026-10-09 15:46:36.551999997 +0800\n",
+    "stderr": ""
+  },
+  "journal": {
+    "status": 0,
+    "stdout": "{\"_SYSTEMD_UNIT\":\"init.scope\",\"_HOSTNAME\":\"gts9\",\"CODE_FUNC\":\"job_emit_start_message\",\"_MACHINE_ID\":\"3c2a1b8f2d624db4b5ffdc836050fcf6\",\"MESSAGE\":\"Starting systemd-timesyncd.service - Network Time Synchronization...\",\"_CAP_EFFECTIVE\":\"1ffffffffff\",\"SYSLOG_IDENTIFIER\":\"systemd\",\"_EXE\":\"/usr/lib/systemd/systemd\",\"CODE_FILE\":\"src/core/job.c\",\"_SYSTEMD_SLICE\":\"-.slice\",\"_UID\":\"0\",\"_CMDLINE\":\"/sbin/init\",\"__REALTIME_TIMESTAMP\":\"1791531996462556\",\"_BOOT_ID\":\"0cdf0b75933446bbadcf8e2ea97c3517\",\"SYSLOG_FACILITY\":\"3\",\"_GID\":\"0\",\"__MONOTONIC_TIMESTAMP\":\"746736336\",\"__SEQNUM_ID\":\"0e9cc8651fa34ae5875adb1b7f906071\",\"_SOURCE_REALTIME_TIMESTAMP\":\"1791531996460400\",\"TID\":\"1\",\"INVOCATION_ID\":\"8bd2a0cca209440c8cc3fadbd04041bd\",\"__CURSOR\":\"s=0e9cc8651fa34ae5875adb1b7f906071;i=10261e;b=0cdf0b75933446bbadcf8e2ea97c3517;m=2c824ad0;t=65d638c40bddc;x=5c2a1a8747a1f44b\",\"JOB_TYPE\":\"start\",\"_SELINUX_CONTEXT\":\"kernel\",\"CODE_LINE\":\"627\",\"__SEQNUM\":\"1058334\",\"UNIT\":\"systemd-timesyncd.service\",\"_RUNTIME_SCOPE\":\"system\",\"MESSAGE_ID\":\"7d4958e842da4a758f6c1cdc7b36dcc5\",\"_TRANSPORT\":\"journal\",\"_PID\":\"1\",\"PRIORITY\":\"6\",\"_SYSTEMD_CGROUP\":\"/init.scope\",\"JOB_ID\":\"3196\",\"_COMM\":\"systemd\"}\n{\"CODE_LINE\":\"818\",\"_MACHINE_ID\":\"3c2a1b8f2d624db4b5ffdc836050fcf6\",\"JOB_RESULT\":\"done\",\"PRIORITY\":\"6\",\"_CAP_EFFECTIVE\":\"1ffffffffff\",\"UNIT\":\"systemd-timesyncd.service\",\"_GID\":\"0\",\"_PID\":\"1\",\"__SEQNUM_ID\":\"0e9cc8651fa34ae5875adb1b7f906071\",\"__SEQNUM\":\"1058335\",\"JOB_ID\":\"3196\",\"_BOOT_ID\":\"0cdf0b75933446bbadcf8e2ea97c3517\",\"_SELINUX_CONTEXT\":\"kernel\",\"_RUNTIME_SCOPE\":\"system\",\"CODE_FUNC\":\"job_emit_done_message\",\"_UID\":\"0\",\"_TRANSPORT\":\"journal\",\"MESSAGE_ID\":\"39f53479d3a045ac8e11786248231fbf\",\"_EXE\":\"/usr/lib/systemd/systemd\",\"__MONOTONIC_TIMESTAMP\":\"746831182\",\"_SYSTEMD_UNIT\":\"init.scope\",\"INVOCATION_ID\":\"8bd2a0cca209440c8cc3fadbd04041bd\",\"MESSAGE\":\"Started systemd-timesyncd.service - Network Time Synchronization.\",\"_CMDLINE\":\"/sbin/init\",\"__REALTIME_TIMESTAMP\":\"1791531996557403\",\"_HOSTNAME\":\"gts9\",\"CODE_FILE\":\"src/core/job.c\",\"_SYSTEMD_CGROUP\":\"/init.scope\",\"_SYSTEMD_SLICE\":\"-.slice\",\"TID\":\"1\",\"SYSLOG_FACILITY\":\"3\",\"_SOURCE_REALTIME_TIMESTAMP\":\"1791531996557183\",\"__CURSOR\":\"s=0e9cc8651fa34ae5875adb1b7f906071;i=10261f;b=0cdf0b75933446bbadcf8e2ea97c3517;m=2c83bd4e;t=65d638c42305b;x=96ed8e19f06f9b7c\",\"_COMM\":\"systemd\",\"JOB_TYPE\":\"start\",\"SYSLOG_IDENTIFIER\":\"systemd\"}\n{\"_SOURCE_REALTIME_TIMESTAMP\":\"1791531997220978\",\"_CAP_EFFECTIVE\":\"2000000\",\"SYSLOG_FACILITY\":\"9\",\"CODE_FUNC\":\"manager_receive_response\",\"_GID\":\"986\",\"_HOSTNAME\":\"gts9\",\"_SELINUX_CONTEXT\":\"kernel\",\"_UID\":\"986\",\"__MONOTONIC_TIMESTAMP\":\"746993629\",\"_EXE\":\"/usr/lib/systemd/systemd-timesyncd\",\"_SYSTEMD_UNIT\":\"systemd-timesyncd.service\",\"_TRANSPORT\":\"journal\",\"_COMM\":\"systemd-timesyn\",\"_SYSTEMD_CGROUP\":\"/system.slice/systemd-timesyncd.service\",\"SYSLOG_IDENTIFIER\":\"systemd-timesyncd\",\"PRIORITY\":\"6\",\"_RUNTIME_SCOPE\":\"system\",\"MESSAGE\":\"Contacted time server 95.111.202.5:123 (0.debian.pool.ntp.org).\",\"_BOOT_ID\":\"0cdf0b75933446bbadcf8e2ea97c3517\",\"CODE_LINE\":\"611\",\"__SEQNUM_ID\":\"0e9cc8651fa34ae5875adb1b7f906071\",\"__CURSOR\":\"s=0e9cc8651fa34ae5875adb1b7f906071;i=102622;b=0cdf0b75933446bbadcf8e2ea97c3517;m=2c8637dd;t=65d638c4c5f6f;x=b9096116ba7f8125\",\"_SYSTEMD_SLICE\":\"system.slice\",\"TID\":\"4172\",\"_MACHINE_ID\":\"3c2a1b8f2d624db4b5ffdc836050fcf6\",\"__REALTIME_TIMESTAMP\":\"1791531997224815\",\"_CMDLINE\":\"/usr/lib/systemd/systemd-timesyncd\",\"CODE_FILE\":\"src/timesync/timesyncd-manager.c\",\"_SYSTEMD_INVOCATION_ID\":\"8bd2a0cca209440c8cc3fadbd04041bd\",\"_PID\":\"4172\",\"__SEQNUM\":\"1058338\"}\n{\"__MONOTONIC_TIMESTAMP\":\"746994583\",\"_SYSTEMD_CGROUP\":\"/system.slice/systemd-timesyncd.service\",\"_SYSTEMD_UNIT\":\"systemd-timesyncd.service\",\"_CMDLINE\":\"/usr/lib/systemd/systemd-timesyncd\",\"_TRANSPORT\":\"journal\",\"CODE_LINE\":\"618\",\"_COMM\":\"systemd-timesyn\",\"SYSLOG_FACILITY\":\"9\",\"_UID\":\"986\",\"_MACHINE_ID\":\"3c2a1b8f2d624db4b5ffdc836050fcf6\",\"_EXE\":\"/usr/lib/systemd/systemd-timesyncd\",\"BOOTTIME_USEC\":\"746989693\",\"_SOURCE_REALTIME_TIMESTAMP\":\"1791531997221079\",\"MONOTONIC_USEC\":\"746989693\",\"_SYSTEMD_INVOCATION_ID\":\"8bd2a0cca209440c8cc3fadbd04041bd\",\"__REALTIME_TIMESTAMP\":\"1791531997225769\",\"__SEQNUM\":\"1058339\",\"_SELINUX_CONTEXT\":\"kernel\",\"SYSLOG_IDENTIFIER\":\"systemd-timesyncd\",\"_SYSTEMD_SLICE\":\"system.slice\",\"TID\":\"4172\",\"__CURSOR\":\"s=0e9cc8651fa34ae5875adb1b7f906071;i=102623;b=0cdf0b75933446bbadcf8e2ea97c3517;m=2c863b97;t=65d638c4c6329;x=628c02476b76a0a0\",\"_GID\":\"986\",\"_BOOT_ID\":\"0cdf0b75933446bbadcf8e2ea97c3517\",\"PRIORITY\":\"6\",\"_RUNTIME_SCOPE\":\"system\",\"_CAP_EFFECTIVE\":\"2000000\",\"CODE_FILE\":\"src/timesync/timesyncd-manager.c\",\"MESSAGE_ID\":\"7c8a41f37b764941a0e1780b1be2f037\",\"REALTIME_USEC\":\"1791531997220878\",\"_HOSTNAME\":\"gts9\",\"CODE_FUNC\":\"manager_receive_response\",\"__SEQNUM_ID\":\"0e9cc8651fa34ae5875adb1b7f906071\",\"MESSAGE\":\"Initial clock synchronization to Fri 2026-10-09 15:46:37.220878 CST.\",\"_PID\":\"4172\"}\n",
+    "stderr": ""
+  }
+}

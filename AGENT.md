@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 GNOME_CLOCK_FIXED_STANDARD_NTP_SAME_ACCEPTED370_BOOT.
+Owner reports all370input checksPASS butwrongtime; actualShanghai zonecorrect,
+wallclock9daysbehind/noNTP. Boot-bound trustedhostbootstrap and standardDebian
+timesyncd257.13 exactmatching systemd installed:1new/0upgrades/0removals.
+Enabled+active/NTPSynchronized=yes, actualservercontact+initialsyncjournal,
+deviceepoch withinhostinterval and standardpersistentclockstate present.
+Same0cdf/GNOME+palm+SSH+adbd active/nofailedunits. Initialformattedtimesync-status
+8s timeout preserved; independentbasic/journal qualification passed. NoRTC
+hardware/offlineboot claim; noreboot/kernel/DT/modules/USB/charging/ADSP mutation.
+GNOMEpackages now includes standardtimesyncd, docs+data nohostbuildtestexecuted.
+USB unplugged forownerdischarge; next exact370 USBlifecycle thenSSC remainsopen.
+See reference/desktop-bringup/gnome-clock/RESULTS.md.
+
 2026-10-09 TEST370_GMU_NATIVE_ESCAPE_GNOME_ACCEPTED_DEVICE_ACTIVE.
 Currentboot0cdf0b75-9334-46bb-adcf-8e2ea97c3517, WiFi10.49.219.42, newGPU
 fullupstreamfix/nativeEscape/nativesocinfo kernel accepted in bounded36s text+

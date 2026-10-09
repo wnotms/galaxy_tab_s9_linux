@@ -1,0 +1,34 @@
+{
+  "verdict": "CURRENT_CLOCK_CORRECT_NTP_SYNC_ENABLED_SAME_BOOT",
+  "boot_id": "0cdf0b75-9334-46bb-adcf-8e2ea97c3517",
+  "timezone": "Asia/Shanghai",
+  "package": "systemd-timesyncd",
+  "version": "257.13-1~deb13u1",
+  "new_packages": 1,
+  "upgrades": 0,
+  "removals": 0,
+  "NTP_synchronized": true,
+  "service_active": true,
+  "service_enabled": true,
+  "clock_state_present": true,
+  "GNOME_palm_SSH_adbd_active": true,
+  "no_failed_units": true,
+  "reboot_executed": false,
+  "RTC_hardware_correctness_verified": false,
+  "future_reboot_test_executed": false,
+  "initial_formatted_status_query_timeout_seconds": 8,
+  "journal_messages": [
+    "Starting systemd-timesyncd.service - Network Time Synchronization...",
+    "Started systemd-timesyncd.service - Network Time Synchronization.",
+    "Contacted time server 95.111.202.5:123 (0.debian.pool.ntp.org).",
+    "Initial clock synchronization to Fri 2026-10-09 15:46:37.220878 CST."
+  ],
+  "host_tests": {
+    "executed": false,
+    "reason": "Standard package installation and documentation/package-list change; no new algorithm or routing"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "No kernel/config/DT/module source change"
+  }
+}
