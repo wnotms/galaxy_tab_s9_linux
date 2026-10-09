@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 WIFI_FIXED_ADDRESS_PREPARATION_NO_DEVICE_CHANGE.
+Owner confirms desktop normal/IP10.49.219.42/private manageable router. Both
+Windows native TCP22 and direct WSL timed out; enrolled SSH snapshot did not run.
+Preferred router DHCP reservation for actual active WiFi MAC, keep Debian DHCP;
+await router model/MAC/reservation eligibility. No guessed gateway/staticprofile,
+router write, WiFi reconnect/SSH restart/USB/NCM/kernel/charging mutation.
+371 still unstarted awaiting trusted live connection; address unchanged does
+not explain current transport failure. Docs WIFI_FIXED_ADDRESS.md and raw
+wifi-static-ip evidence; host tests/build executed:false.
+
+
 2026-10-09 TEST371_USB_LIFECYCLE_ON_ACCEPTED370_REGISTERED_NOT_STARTED.
 Reuse actual accepted370 kernel/native inputs/GNOME; no flash/reboot/build.
 Independent371 profile/config599ca47a/notes5c0e8233/same0cdf, three initially
