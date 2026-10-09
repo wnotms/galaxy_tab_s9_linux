@@ -1,0 +1,20 @@
+test_event_origin_and_filter (test_usb_typec_lifecycle.TypecLifecycleTests.test_event_origin_and_filter) ... ok
+test_external_controller_not_overwritten_during_restore (test_usb_typec_lifecycle.TypecLifecycleTests.test_external_controller_not_overwritten_during_restore) ... ok
+test_external_unbind_not_adopted (test_usb_typec_lifecycle.TypecLifecycleTests.test_external_unbind_not_adopted) ... ok
+test_hard_reset_and_mixed_attach_are_unknown (test_usb_typec_lifecycle.TypecLifecycleTests.test_hard_reset_and_mixed_attach_are_unknown) ... ok
+test_identity_drift_rejected (test_usb_typec_lifecycle.TypecLifecycleTests.test_identity_drift_rejected) ... ok
+test_invalid_online_does_not_write (test_usb_typec_lifecycle.TypecLifecycleTests.test_invalid_online_does_not_write) ... ok
+test_io_read_fault_restores_owned_binding (test_usb_typec_lifecycle.TypecLifecycleTests.test_io_read_fault_restores_owned_binding) ... ok
+test_layout_drift_rejected (test_usb_typec_lifecycle.TypecLifecycleTests.test_layout_drift_rejected) ... ok
+test_rebind_io_failure_keeps_recovery_ownership (test_usb_typec_lifecycle.TypecLifecycleTests.test_rebind_io_failure_keeps_recovery_ownership) ... ok
+test_receive_error_restores_binding_and_does_not_restart (test_usb_typec_lifecycle.TypecLifecycleTests.test_receive_error_restores_binding_and_does_not_restart) ... ok
+test_service_stop_restores_only_owned_empty_binding (test_usb_typec_lifecycle.TypecLifecycleTests.test_service_stop_restores_only_owned_empty_binding) ... ok
+test_short_detach_does_not_reset (test_usb_typec_lifecycle.TypecLifecycleTests.test_short_detach_does_not_reset) ... ok
+test_signal_mask_covers_write_and_ownership (test_usb_typec_lifecycle.TypecLifecycleTests.test_signal_mask_covers_write_and_ownership) ... ok
+test_stale_detach_rebind_and_no_repeat_on_healthy_link (test_usb_typec_lifecycle.TypecLifecycleTests.test_stale_detach_rebind_and_no_repeat_on_healthy_link) ... ok
+test_unknown_resets_pending_debounce (test_usb_typec_lifecycle.TypecLifecycleTests.test_unknown_resets_pending_debounce) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.061s
+
+OK
