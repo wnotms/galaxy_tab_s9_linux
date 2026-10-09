@@ -1,0 +1,20 @@
+{
+  "test": "Test372",
+  "registered": true,
+  "candidate_boot_id": "9428ee51-5966-4ee9-a528-f54fa51c92eb",
+  "candidate_boot_passed": true,
+  "adsp_firmware": "qcom/sm8550/adsp.mdt",
+  "native_mapper_bound": true,
+  "qrtr_inventory_complete": true,
+  "ssc_qmi_service_present": false,
+  "accelerometer_sample": false,
+  "first_runtime_failure": "SSC QMI Service not found for 60 seconds",
+  "no_retry": true,
+  "rollback_required": false,
+  "restored_boot_id": "e4fe1038-5df4-458c-87e1-c65f63698da3",
+  "restored_config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "restored_notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "PPS": false,
+  "pump_ON": false,
+  "next_hypothesis": "install and start Fedora userspace pd-mapper with libqrtr1 before sensorspd"
+}
