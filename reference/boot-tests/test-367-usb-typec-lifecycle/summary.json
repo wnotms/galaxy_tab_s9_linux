@@ -10,7 +10,7 @@
   "same_boot": true,
   "payload_files_restored": true,
   "unit_stopped": true,
-  "bytecode_cleanup_pending": true,
+  "bytecode_cleanup_pending": false,
   "flash": false,
   "reboot": false,
   "PPS": false,
@@ -56,5 +56,6 @@
   },
   "full_regression": {
     "executed": false
-  }
+  },
+  "qualified_bytecode_removed": true
 }

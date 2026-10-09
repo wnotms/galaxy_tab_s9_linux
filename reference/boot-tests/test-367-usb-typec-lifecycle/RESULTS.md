@@ -47,3 +47,9 @@ or establish that all ep0 errors are harmless. Before another independent scope,
 record source evidence and decide a tightly bounded classification based on
 owned teardown events and actual transport recovery. Do not silence kernel
 logging or weaken unknown-error/CPU/USB safety gates merely to advance SSC.
+
+Follow-up cleanup completed: exact cache/hash/header/frozen code rechecked on
+same boot/inactive unit, cache removed, all three payloads absent, original UDC
+read back. Raw qualified-bytecode-cleanup transcript retained. Owned overlay and
+its generated cache are removed; ledger/empty parent directories remain. STOP
+and zero completed cable cycles unchanged.
