@@ -1,0 +1,20 @@
+{
+  "Actions": false,
+  "GPIO_driver_USB_TCPM_DT_config_changes": false,
+  "PPS": false,
+  "command": "PYTHONPATH=tests python3 -m unittest test_usb_typec_lifecycle test_adbd_reconnect -v",
+  "default_service_enabled": false,
+  "executed": true,
+  "existing_adbd_tests": 24,
+  "full_regression_executed": false,
+  "guard_service_installed": false,
+  "kernel_build_executed": false,
+  "new_lifecycle_tests": 17,
+  "physical_acceptance": false,
+  "pump_ON": false,
+  "reason": "userspace lifecycle only; compiled native Escape kernel/config/DTB/181 qualification reused unchanged",
+  "routing_changed": false,
+  "skipped": 0,
+  "tests": 41,
+  "verdict": "HOST_TESTED_NOT_DEPLOYED"
+}

@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 USB_TYPEC_LIFECYCLE_HOST_TESTED_NOT_DEPLOYED.
+Afterownerunplug same33178ec: partnerabsent/USBonline0/discharging, DWC3still
+configured/highspeed. Implementedminimaluserspacekerneluevent->configfs lifecycle
+bridge: stable1sdetachedunbind/attachedbind, ownbindingonly/nohealthyreset/noidle
+I2Cpoll. Exactboot/kernel/notes/DCCoff/directoff/SinkDevice/layoutguards; mixedPD
+statewaits; normalstop/read/socketfaultrestoreownbinding; signalcriticalsection.
+17newbehavioral +24existingadbd tests=41PASS/0skip, syntaxPASS; routingunchanged.
+Noadbdpatch/DWC3/TCPM/PHY/DT/config/firmware/charging edits orkernelrebuild.
+Notinstalled/enabled/physicallyqualified. Knownmanualep0dequeue diagnostic remains
+open/mustnotwhitelist; originalGMUsuspectsopen. Nextindependentphysicalscope
+retainnativeEsc/removetemporaryXKB, exactguardprofile/ownedoverlayrollback ifused.
+SSC/rotation/fullportunfinished; aftersensorcharge/capsunchanged. Evidence:
+reference/desktop-bringup/usb-typec-lifecycle/ and docs/USB_TYPEC_RECONNECT.md.
+
+
 2026-10-09 USB_ENUMERATION_LOSS_RECOVERED_SAME_BOOT_NO_SOFTWARE_CHANGE.
 AuthenticatedWiFi10.49.219.210 same33178ec; deviceUDCconfigured/Windowsabsent.
 One registeredruntimeUDCunbind/rebind restoredADB shell + composite/ADB/NCMCode0

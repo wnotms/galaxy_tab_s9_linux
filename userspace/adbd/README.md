@@ -42,3 +42,9 @@ Android scopeguard header used to compile behavioral host tests. Their upstream
 copyright/license notices and Apache2.0 NOTICE are retained. They are not a
 second daemon build source or proof of real USB enumeration. Test253 separately
 registers and records physical verification; stopped Test252 is not reclassified.
+
+The later fixed-peripheral cable-state issue is separate from this daemon
+patch. A host-tested, not-deployed Type-C lifecycle helper is described in
+[USB_TYPEC_RECONNECT.md](../../docs/USB_TYPEC_RECONNECT.md). It uses the unchanged
+patched daemon and only confirmed cable edges; it is not a change to Test253
+or authorization to reset a live gadget from the adbd restart path.

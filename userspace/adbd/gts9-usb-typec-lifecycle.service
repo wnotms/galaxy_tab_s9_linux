@@ -1,0 +1,15 @@
+[Unit]
+Description=GTS9 fixed-peripheral USB Type-C lifecycle
+After=gts9-usb-acm.service gts9-adbd.service
+Wants=gts9-usb-acm.service gts9-adbd.service
+ConditionPathExists=/etc/gts9-usb-typec-profile.json
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /usr/local/libexec/gts9-usb-typec-lifecycle --profile /etc/gts9-usb-typec-profile.json
+Restart=no
+TimeoutStopSec=5s
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
