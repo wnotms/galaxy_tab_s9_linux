@@ -1,0 +1,31 @@
+{
+  "tests": {
+    "executed": true,
+    "count": 10,
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_usb_lifecycle_permanent.py",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 0.11536080600126297
+  },
+  "helper_tests": {
+    "executed": false,
+    "reused": "Test371 exact helper17/parser12/adbd24; unchanged"
+  },
+  "build": {
+    "executed": false,
+    "reason": "rootfs deployment only"
+  },
+  "full": {
+    "executed": false,
+    "reason": "no routing/kernel/build integration change"
+  }
+}

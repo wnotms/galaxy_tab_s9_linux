@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 USB_LIFECYCLE_PERMANENT_DEPLOYMENT_REGISTERED_NOT_APPLIED.
+371 actual cablecycle PASS/temporarycleanup complete. Separate three exact
+absent payloads +one originally absent relative boot-enabled link, independent
+transaction namespace;10 fault/ownership fixturesPASS. Reuse qualified unchanged
+helper/current370 profile/unit; attachedPC15s and actualADB/deviceNCM/no newfault
+required. Registerpush before apply, firstfault restoreownedlink/files/binding;
+no repeatPC/reboot/flash/kernel/adbd/charging/SSC change. Enabled currentboot is
+not nextboot/charger-PC proof; newkernel requires explicit profile requalification.
+Scope reference/desktop-bringup/usb-lifecycle-permanent/PLAN.md.
+
+
 2026-10-09 TEST371_BOUNDED_PC_CYCLE_PASS_TRANSIENT_CLEANED.
 Same d197/exact370 kernel/nativeinput/GNOME, realPC30s→unplug15s→realPC30s passed
 actualADB machine/boot +deviceNCM, noCode43/new HFI/CPU/unclassified fault/failed

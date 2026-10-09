@@ -1,0 +1,15 @@
+test_corrupt_pending_preserves_link_and_payloads (test_usb_lifecycle_permanent.PersistentTransactionTests.test_corrupt_pending_preserves_link_and_payloads) ... ok
+test_file_drift_preserves_link_and_all_payloads (test_usb_lifecycle_permanent.PersistentTransactionTests.test_file_drift_preserves_link_and_all_payloads) ... ok
+test_install_and_full_original_absence_restore (test_usb_lifecycle_permanent.PersistentTransactionTests.test_install_and_full_original_absence_restore) ... ok
+test_interrupted_link_creation_recovers_three_files (test_usb_lifecycle_permanent.PersistentTransactionTests.test_interrupted_link_creation_recovers_three_files) ... ok
+test_link_drift_preserves_all_payloads (test_usb_lifecycle_permanent.PersistentTransactionTests.test_link_drift_preserves_all_payloads) ... ok
+test_matching_but_preexisting_link_not_adopted (test_usb_lifecycle_permanent.PersistentTransactionTests.test_matching_but_preexisting_link_not_adopted) ... ok
+test_parent_symlink_is_rejected (test_usb_lifecycle_permanent.PersistentTransactionTests.test_parent_symlink_is_rejected) ... ok
+test_preexisting_payload_refused (test_usb_lifecycle_permanent.PersistentTransactionTests.test_preexisting_payload_refused) ... ok
+test_unknown_link_refused_before_file_install (test_usb_lifecycle_permanent.PersistentTransactionTests.test_unknown_link_refused_before_file_install) ... ok
+test_wrong_boot_preserves_link_and_payloads (test_usb_lifecycle_permanent.PersistentTransactionTests.test_wrong_boot_preserves_link_and_payloads) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.024s
+
+OK
