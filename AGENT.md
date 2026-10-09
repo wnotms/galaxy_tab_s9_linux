@@ -98,6 +98,19 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST366_STOP_READ_ONLY_PREFLIGHT_BASELINE_GMU_HFI_ERRORS.
+Existing33178ec1906 contained2BWvote timeout/old-responsepairs at2334/2742s;
+full1171row rawkernel saved, CPUfaultcounts empty, rootcause notproven.
+Freshidentity/allfive/181/ADB/authWiFi passed; kernelSTOP beforehistory/PnP.
+No flash/reboot/modules/rootfs/ADSP/SSC/PPS/pump; no activepreflight/mutation.
+Actualpreflight83%34.1C/Good/GDMactive. firstfailure blocksretry/install;
+38exacthashcheckedownedDstagefiles removed; WSLcandidate/rollback retained.
+NativeEsccompiled/bundlednextphysical, notdeployed; interimXKB/GNOME unchanged.
+Closefirstfailure before independentnextscope; do notignoreGPUerrors toadvance.
+Sensors/rotation/fullport unfinished; ordinarychargingcaps unchanged.
+Evidence: reference/boot-tests/test-366-ssc-escape-trace/RESULTS.md.
+
+
 2026-10-09 TEST366_REGISTERED_SSC_TRACE_AND_NATIVE_ESCAPE_HOST_READY.
 One early-ADSP/native Escape boot, reused exact kernel/DTB/181/input CRC build.
 Standalone runner avoids364/365 host-flow inheritance; explicit366 module slot

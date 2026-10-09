@@ -1,0 +1,71 @@
+{
+  "ADSP_started": false,
+  "PPS": false,
+  "SSC_started": false,
+  "baseline": "Test331",
+  "battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "83",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "1367000",
+    "POWER_SUPPLY_CURRENT_NOW": "1348000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "341",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4279000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4282000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4212000"
+  },
+  "boot_id": "78ec1906-4713-4837-9acc-fe245647d7cf",
+  "config_sha256": "51ba6a9c2ba3d1d5c6ebd9288fb6d04765e8c200ce58fd932975f11588c66c6a",
+  "device_mutation": false,
+  "flash": false,
+  "host_tests_executed_for_results": false,
+  "kernel_fault_counts": {},
+  "kernel_suspects": [
+    {
+      "journal_monotonic_us": "2334696301",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 3056 timed out waiting for response",
+      "row": 1163,
+      "source_monotonic_us": "2334697683"
+    },
+    {
+      "journal_monotonic_us": "2334697064",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 3056 on the response queue",
+      "row": 1164,
+      "source_monotonic_us": "2334698339"
+    },
+    {
+      "journal_monotonic_us": "2742880198",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 2488 timed out waiting for response",
+      "row": 1165,
+      "source_monotonic_us": "2742883401"
+    },
+    {
+      "journal_monotonic_us": "2742890941",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 2488 on the response queue",
+      "row": 1166,
+      "source_monotonic_us": "2742884168"
+    }
+  ],
+  "keyboard_candidate_compiled_not_deployed": true,
+  "module_replacement": false,
+  "no_retry": true,
+  "notes_sha256": "03c9c46e21fcc587dbfd5a337f5c9cf68d9cbfa605e074d5a74d2f9a8073dc95",
+  "preflight": "preflight-1791477083497247548",
+  "pump_ON": false,
+  "reboot": false,
+  "rollback_required": false,
+  "test": "Test366",
+  "verdict": "STOP_PREFLIGHT_EXISTING_BASELINE_GMU_HFI_ERRORS"
+}

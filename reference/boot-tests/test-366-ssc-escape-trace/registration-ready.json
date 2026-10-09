@@ -1,12 +1,12 @@
 {
-  "status": "HOST_REGISTERED_NOT_DEPLOYED",
-  "test": "Test366",
-  "device_mutation": false,
-  "reused_build": true,
-  "new_driver_included": true,
-  "host_tests_passed": 73,
   "PPS": false,
+  "device_mutation": false,
+  "host_tests_passed": 73,
+  "new_driver_included": true,
   "pump_ON": false,
-  "unresolved": "SSC service/rotation and physical keyboard acceptance",
-  "rollback_baseline": "exact Test331"
+  "reused_build": true,
+  "rollback_baseline": "exact Test331",
+  "status": "STOP_PREFLIGHT_EXISTING_BASELINE_GMU_HFI_ERRORS",
+  "test": "Test366",
+  "unresolved": "existing baseline GMU HFI timeout; SSC/rotation/native keys not physically tested"
 }

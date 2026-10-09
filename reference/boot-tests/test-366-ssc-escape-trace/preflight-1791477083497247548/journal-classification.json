@@ -1,0 +1,76 @@
+{
+  "fault_counts": {},
+  "first_source_timestamp": "0",
+  "known_warning_count": 45,
+  "last_source_timestamp": "3144657465",
+  "qca_baudrate_warning": {
+    "classification": "bounded-per-setup-cycle",
+    "cycles": [
+      {
+        "completion_source_seconds": 5.144781,
+        "events": [],
+        "setup_source_seconds": 4.233558
+      },
+      {
+        "completion_source_seconds": 6.43643,
+        "events": [
+          {
+            "completion_source_seconds": 6.43643,
+            "event_source_seconds": 5.640932,
+            "recovery_seconds": 0.795498,
+            "row": 1043
+          }
+        ],
+        "setup_source_seconds": 5.5684
+      },
+      {
+        "completion_source_seconds": 9.790473,
+        "events": [
+          {
+            "completion_source_seconds": 9.790473,
+            "event_source_seconds": 8.989091,
+            "recovery_seconds": 0.801382,
+            "row": 1073
+          }
+        ],
+        "setup_source_seconds": 8.907512
+      }
+    ],
+    "event_count": 2,
+    "event_rows": [
+      1043,
+      1073
+    ],
+    "setup_count": 3,
+    "state": "accepted"
+  },
+  "rows": 1171,
+  "startup_variant_counts": {
+    "boot_register_warning": 1,
+    "smmu_context_fault": 10,
+    "smmu_fsr": 10,
+    "smmu_fsynr": 10
+  },
+  "suspects": [
+    {
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 3056 timed out waiting for response",
+      "priority": 3,
+      "row": 1163
+    },
+    {
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 3056 on the response queue",
+      "priority": 3,
+      "row": 1164
+    },
+    {
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 2488 timed out waiting for response",
+      "priority": 3,
+      "row": 1165
+    },
+    {
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 2488 on the response queue",
+      "priority": 3,
+      "row": 1166
+    }
+  ]
+}

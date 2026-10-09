@@ -1,0 +1,34 @@
+{
+  "device_mutation": false,
+  "error": "new kernel fault/suspect; no retry",
+  "events": [
+    {
+      "journal_monotonic_us": "2334696301",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 3056 timed out waiting for response",
+      "row": 1163,
+      "source_monotonic_us": "2334697683"
+    },
+    {
+      "journal_monotonic_us": "2334697064",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 3056 on the response queue",
+      "row": 1164,
+      "source_monotonic_us": "2334698339"
+    },
+    {
+      "journal_monotonic_us": "2742880198",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_wait_for_msg_interrupt] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 2488 timed out waiting for response",
+      "row": 1165,
+      "source_monotonic_us": "2742883401"
+    },
+    {
+      "journal_monotonic_us": "2742890941",
+      "message": "platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg] *ERROR* Unexpected message id 2488 on the response queue",
+      "row": 1166,
+      "source_monotonic_us": "2742884168"
+    }
+  ],
+  "evidence": "preflight-1791477083497247548",
+  "no_retry": true,
+  "phase": "read-only preflight",
+  "stopped": true
+}
