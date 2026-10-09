@@ -1,0 +1,24 @@
+78ec1906-4713-4837-9acc-fe245647d7cf
+# /etc/systemd/system/gts9-palm.service
+[Unit]
+Description=Qualified X710 Wacom and palm-aware touchscreen pair
+After=local-fs.target systemd-udevd.service
+Before=gdm.service
+Conflicts=gts9-touch.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/libexec/gts9-palm --load
+RemainAfterExit=yes
+TimeoutStartSec=30
+
+[Install]
+WantedBy=gdm.service
+LoadState=not-found
+ActiveState=inactive
+disabled
+3d2c9022b0a6726970ba07c517bdcad18c3d040e91183da22a74abc829f89157  /usr/local/libexec/gts9-palm
+bc3816a8f37c0f45bdaca3ac9548793df1784541364da9017d08d5c4841e1412  /usr/local/lib/gts9-desktop/wacom-wez01.ko
+7e71ca5816bf720ce4b3065727a4d43633be3c6abbcb070a4dd723c321d56171  /usr/local/lib/gts9-desktop/fts1ba90a-palm.ko
+total 0
+lrwxrwxrwx 1 root root 37 Sep 29 20:11 gts9-palm.service -> /etc/systemd/system/gts9-palm.service

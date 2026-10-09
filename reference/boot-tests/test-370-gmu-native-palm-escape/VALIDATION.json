@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_gmu_native_palm_escape_scope.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "executed": true,
+  "seconds": 1.4070992469787598,
+  "build": {
+    "executed": false,
+    "reused": "exact2218b170 kernel/provider/bundle"
+  },
+  "full_host_tests": {
+    "executed": false,
+    "reason": "Affected runner/transaction/ownership scope only; owner requested changed-only checks"
+  },
+  "physical_test_started": false
+}

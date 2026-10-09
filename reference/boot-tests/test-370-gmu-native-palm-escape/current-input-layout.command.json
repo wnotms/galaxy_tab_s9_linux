@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; systemctl cat gts9-palm; systemctl show gts9-pen -p LoadState -p ActiveState; systemctl is-enabled gts9-touch; sha256sum /usr/local/libexec/gts9-palm /usr/local/lib/gts9-desktop/wacom-wez01.ko /usr/local/lib/gts9-desktop/fts1ba90a-palm.ko; ls -l /etc/systemd/system/gdm.service.wants; test ! -e /usr/local/libexec/gts9-pen"
+  ],
+  "status": 0,
+  "read_only": true
+}

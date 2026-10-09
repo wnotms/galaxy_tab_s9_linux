@@ -1,110 +1,53 @@
 {
-  "INPUTS.json": {
-    "bytes": 6370,
-    "sha256": "ea28d4a795769ea624caa5f85803345aa7620210b3a4d9f7fe54414e74287647"
-  },
-  "PACKAGE.json": {
-    "bytes": 1657,
-    "sha256": "0c3384a6fa5670a66b9f04ca5e5002dd1cfcc367f7a62880624fff05b9e74de9"
-  },
-  "README.md": {
-    "bytes": 5988,
-    "sha256": "7e8dd5ecea0a160ac466deda55d740f8c6e5ae726a44aab0c54d7a576e99429c"
-  },
-  "VALIDATION.json": {
-    "bytes": 634,
-    "sha256": "7f099f8aa5e8b6c88f58d8a0aabad6bda76977cb76392510e667b377b704e0b5"
-  },
-  "candidate-modules.sha256": {
-    "bytes": 19865,
-    "sha256": "b28f6f04f8381e000b6528118ef089174a44e1eb49f805430b6fdf3fada0dcc1"
-  },
-  "capture.py": {
-    "bytes": 3076,
-    "sha256": "1d8735c57a5323c2f33bd26f841e30adde15ce828fd8a3fc3e1022229b4100d3"
-  },
-  "desktop-manifest.json": {
-    "bytes": 2561,
-    "sha256": "318c8092e1e25c2a647598a2f21b62be16b738ce536a38994670a1476abc2101"
-  },
-  "desktop.py": {
-    "bytes": 7986,
-    "sha256": "3aec2f9d922dcca030c9f720a66b6e93e6a6ebd885afeed3c2c64d27efdb54fb"
-  },
-  "host-tests.log": {
-    "bytes": 4110,
-    "sha256": "2a0f5a7bc2ed8a34f07ef9ddfe5271b03f5145c1c9501fa793c70ac444eb9a59"
-  },
-  "host_flow.py": {
-    "bytes": 28781,
-    "sha256": "58be470a8b950e62040b6211d4bb026a972bab1f200c949ddca2dfca4d02e45b"
-  },
-  "module-swap.sh": {
-    "bytes": 2784,
-    "sha256": "849ae9727c723a3ca01945572dd37c9db99a1f16b3d71d298954605a09229fcb"
-  },
-  "mount-debian.sh": {
-    "bytes": 9315,
-    "sha256": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca"
-  },
-  "read-only-preparation-1791528802244712552/current.command.json": {
-    "bytes": 1246,
-    "sha256": "31cb41dc19ba8ffad3ab362f77bdb879d1a6b84ce3bdbcde4bf5fb0f194196e1"
-  },
-  "read-only-preparation-1791528802244712552/current.json": {
-    "bytes": 3949,
-    "sha256": "a9e39a653261b0b44de1c218c87837daf0cab4f3af679c3e07bfcc5866bc8d9b"
-  },
-  "read-only-preparation-1791528802244712552/current.stderr": {
-    "bytes": 0,
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  },
-  "read-only-preparation-1791528802244712552/current.stdin.py": {
-    "bytes": 3076,
-    "sha256": "1d8735c57a5323c2f33bd26f841e30adde15ce828fd8a3fc3e1022229b4100d3"
-  },
-  "read-only-preparation-1791528802244712552/current.stdout": {
-    "bytes": 3949,
-    "sha256": "a9e39a653261b0b44de1c218c87837daf0cab4f3af679c3e07bfcc5866bc8d9b"
-  },
-  "read-only-preparation-1791528802244712552/module-links.command.json": {
-    "bytes": 1348,
-    "sha256": "26badb6623cdb02d6b473adf73d291dc88087da7d7169c49c34db12704e8b5cd"
-  },
-  "read-only-preparation-1791528802244712552/module-links.stderr": {
-    "bytes": 0,
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  },
-  "read-only-preparation-1791528802244712552/module-links.txt": {
-    "bytes": 0,
-    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  },
-  "recovery.py": {
-    "bytes": 2032,
-    "sha256": "e80df9f03232b6255a1cbb9867d0d82c18eafe2578b44be72150c1d0f030cdc5"
-  },
-  "registration.json": {
-    "bytes": 3999,
-    "sha256": "4a5127b469b8b15ee4104eed7f69d43899d3eed65f2d89fc665723a68bd42d41"
-  },
-  "retention.json": {
-    "bytes": 584,
-    "sha256": "1b8caf8d364d3521bbd2296558fc19285a5f455e5ce10757bbfc8711706d97e5"
-  },
-  "rollback-modules.sha256": {
-    "bytes": 19503,
-    "sha256": "ae20fbf4907770e2a831fbf321e23a1a5cd16a2e5d8cc9be391e21fd80643732"
-  },
-  "staged-files.json": {
-    "bytes": 2652,
-    "sha256": "28ca8eaf43689acde353c8a704583324421ec8c19a95563cd68798f6e9baa09c"
-  },
-  "text-condition.conf": {
-    "bytes": 61,
-    "sha256": "33de8222bffb31c0427e24425e7292c5977c00af68e9c725c4d6899103084b79"
-  },
-  "text-scope": {
-    "bytes": 68,
-    "sha256": "64ac11f37e3ceec475fa24d2f80c313900e351f6fda1fd96e9e8a8eca5a82c7a"
-  }
+  "INPUTS.json": "ea28d4a795769ea624caa5f85803345aa7620210b3a4d9f7fe54414e74287647",
+  "PACKAGE.json": "0c3384a6fa5670a66b9f04ca5e5002dd1cfcc367f7a62880624fff05b9e74de9",
+  "README.md": "7e8dd5ecea0a160ac466deda55d740f8c6e5ae726a44aab0c54d7a576e99429c",
+  "RESULTS.md": "abb3bf7142cb7044ca2dd5c5de94df4be42852c4848625bc4306cfb56bc2774b",
+  "VALIDATION.json": "7f099f8aa5e8b6c88f58d8a0aabad6bda76977cb76392510e667b377b704e0b5",
+  "candidate-modules.sha256": "b28f6f04f8381e000b6528118ef089174a44e1eb49f805430b6fdf3fada0dcc1",
+  "capture.py": "1d8735c57a5323c2f33bd26f841e30adde15ce828fd8a3fc3e1022229b4100d3",
+  "desktop-manifest.json": "318c8092e1e25c2a647598a2f21b62be16b738ce536a38994670a1476abc2101",
+  "desktop.py": "3aec2f9d922dcca030c9f720a66b6e93e6a6ebd885afeed3c2c64d27efdb54fb",
+  "first-failure.json": "5cbf3bf08f427160e1537cc660855e02d3674438c494c5cb768f69b29d3b1d3d",
+  "host-tests.log": "2a0f5a7bc2ed8a34f07ef9ddfe5271b03f5145c1c9501fa793c70ac444eb9a59",
+  "host_flow.py": "58be470a8b950e62040b6211d4bb026a972bab1f200c949ddca2dfca4d02e45b",
+  "module-swap.sh": "849ae9727c723a3ca01945572dd37c9db99a1f16b3d71d298954605a09229fcb",
+  "mount-debian.sh": "3e2a14448333e3d08f4f720ec4a3a504381dc1f53770abc30675e917884ce6ca",
+  "preflight-1791530901665357069/current-state.command.json": "72e8a7c7912865fd979981ad3fd82c88f32e5064b58bec17dac7d42cdeae4147",
+  "preflight-1791530901665357069/current-state.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/current-state.txt": "397cdbf06bddf58ce038a5566ffd5eede64ad1d947aab0f568a3aaac1f527db0",
+  "preflight-1791530901665357069/modules.command.json": "70a4248a137c349f48a3529da89614c4230ef3f6170cebe7c3953f43c5364be5",
+  "preflight-1791530901665357069/modules.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/modules.txt": "f4072572628b03297e991c3352bff36bb47ff444f7a8fccc9a962b0c67643ac2",
+  "preflight-1791530901665357069/original-overlay.command.json": "5f1e245b27007b2d8125b0787b7bdd2346a54a7fc8e74ada08d7e9aaae111d84",
+  "preflight-1791530901665357069/original-overlay.stderr": "1083e17e8d2b651bcb96d70224a599e8afc42dacbe79454ba12ee25b8562f4df",
+  "preflight-1791530901665357069/original-overlay.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/partitions.command.json": "6cd4c403382d93645690fdf3080f2b0d0add42a15481d00d7849772dcd8332cc",
+  "preflight-1791530901665357069/partitions.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/partitions.txt": "26290cac8a7b52e72f7ad93a80898f8d92c52f8642c4d85f3f263f18cdaa72d1",
+  "preflight-1791530901665357069/wifi-admission.json": "cbbc1c0b4915ee45ecb142945e95400e497a72633eebb805ba2d1b1c4b549636",
+  "preflight-1791530901665357069/wifi-device-01.command.json": "3b3c2795e35c39212d6a63c8044ee49f680084351bb1595934b10e21aa79bc5d",
+  "preflight-1791530901665357069/wifi-device-01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/wifi-device-01.txt": "811464ebe5922beccfe5a2a6f27c51586cc97672d50bc6d7dfa932c21464e977",
+  "preflight-1791530901665357069/wifi-device-02.command.json": "7a5d3e9c7d8ce5c09466b5061ae2d6065ac36900a514eea61312b7345edd768f",
+  "preflight-1791530901665357069/wifi-device-02.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/wifi-device-02.txt": "1b54c8801f056e936b693ea03c2b58e851b55d5c80e79d260a11f7559dfa5f60",
+  "preflight-1791530901665357069/wifi-probe-01.command.json": "d7d5c57a03611737a3eaf1ee4091c0c18270c3780d0ca989d7aebabe8054e4f2",
+  "preflight-1791530901665357069/wifi-probe-01.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "preflight-1791530901665357069/wifi-probe-01.txt": "cb1ecb90a4812c5ecc273a1d94ee01104fe134eb9d3f639fb97187728e186fa2",
+  "read-only-preparation-1791528802244712552/current.command.json": "31cb41dc19ba8ffad3ab362f77bdb879d1a6b84ce3bdbcde4bf5fb0f194196e1",
+  "read-only-preparation-1791528802244712552/current.json": "a9e39a653261b0b44de1c218c87837daf0cab4f3af679c3e07bfcc5866bc8d9b",
+  "read-only-preparation-1791528802244712552/current.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "read-only-preparation-1791528802244712552/current.stdin.py": "1d8735c57a5323c2f33bd26f841e30adde15ce828fd8a3fc3e1022229b4100d3",
+  "read-only-preparation-1791528802244712552/current.stdout": "a9e39a653261b0b44de1c218c87837daf0cab4f3af679c3e07bfcc5866bc8d9b",
+  "read-only-preparation-1791528802244712552/module-links.command.json": "26badb6623cdb02d6b473adf73d291dc88087da7d7169c49c34db12704e8b5cd",
+  "read-only-preparation-1791528802244712552/module-links.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "read-only-preparation-1791528802244712552/module-links.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "recovery.py": "e80df9f03232b6255a1cbb9867d0d82c18eafe2578b44be72150c1d0f030cdc5",
+  "registration.json": "4a5127b469b8b15ee4104eed7f69d43899d3eed65f2d89fc665723a68bd42d41",
+  "retention.json": "1b8caf8d364d3521bbd2296558fc19285a5f455e5ce10757bbfc8711706d97e5",
+  "rollback-modules.sha256": "ae20fbf4907770e2a831fbf321e23a1a5cd16a2e5d8cc9be391e21fd80643732",
+  "staged-files.json": "28ca8eaf43689acde353c8a704583324421ec8c19a95563cd68798f6e9baa09c",
+  "text-condition.conf": "33de8222bffb31c0427e24425e7292c5977c00af68e9c725c4d6899103084b79",
+  "text-scope": "64ac11f37e3ceec475fa24d2f80c313900e351f6fda1fd96e9e8a8eca5a82c7a"
 }

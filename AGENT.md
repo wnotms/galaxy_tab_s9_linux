@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test369（GMU 上游修复及原生 Escape 启动验证），窗口为 **Test360–Test369**；没有生成镜像的轮次仍占一轮。
+  编号为 Test370（实际掌触服务布局的 GMU/原生 Escape 验证），窗口为 **Test361–Test370**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,18 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-09 TEST369_STOP_READONLY_OVERLAY_ABSENT_TEST370_REGISTERED.
+369same33178ec original-overlay stopped because absent superseded gts9-pen
+helper was incorrectly required. ADB/WiFi/5partitions/181 original hashes passed;
+no recovery/flash/overlay/reboot/mutation, no rollback needed. STOP immutable.
+Actual accepted palm helper loads both native modules, standalone pen absent,
+legacytouch disabled. Independent370 exact6 owned files, same compiled GMU/
+nativeEscape bundle/181 and qualified palm module pair; no extra pen installation.
+25 affected tests PASS/0skip, no rebuild/full/routing/Actions. 30s text+60s GNOME;
+keep GNOME onPASS, real keys/touch confirmation separate. No USB helper/SSC/
+PPS/pump/current change. Retention361-370;360 no image, exact unused369 Windows
+stage removed after370 staging, formal current/rollback preserved.
 
 2026-10-09 QRTR_NATIVE_NODE_INVENTORY_FIXED_AND_LIVE_QUALIFIED.
 Frozen qrtr-snapshot bind(node0) returnedEINVAL on33178ec. Pinned qrtr_bind
