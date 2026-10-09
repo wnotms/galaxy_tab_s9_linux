@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test382（GLINK 容量修正采集登记），窗口为 **Test373–Test382**；没有生成镜像的轮次仍占一轮。
+  编号为 Test383（有界启动历史登记），窗口为 **Test374–Test383**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,20 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST383_BOUNDED_HISTORY_REGISTERED_NOT_DEPLOYED.
+Single host admission change: timeout8 journalctl list-boots n5, host10s;
+old boot must remain present and exactly one unique successor, no attribution
+waiver. Same command for rollback. Reuse exact382 vendor/helper, internaltrace
+instance gts9_test382; independent383 rootfs ownership, no repack/kernelbuild.
+One earlyADSP/orderedRPC/60sSSC only; original382STOP/preRPC17events preserved.
+51affectedhost PASS/0skip and syntax; prior158 unchanged qualification reused.
+31Windows stagedfiles225MB verified, not deployed. Current23798bfb accepted370,
+100%26.9C/GNOME/ADB, no new severe kernel delta. TemporaryADBonly; SSH/hostNCM
+untested. Fivepartitions/181/config/notes/charging/USB fixed; DCC/PPS/pumpOFF.
+Next authorized test requires freshpreflight then onecandidate/restore370GNOME;
+no automatic second hardware attempt in stopped382turn. Retention374–383;
+no newkernelimage. See test-383-ssc-bounded-boot-history/README.md.
 
 2026-10-10 TEST382_LIVE_GEOMETRY_PASS_PARTIAL_GLINK_STOP_RESTORED370.
 Onecandidatea2646473, actual8CPU131KiB/4K/nop/local, watcherOK/ADSP running.

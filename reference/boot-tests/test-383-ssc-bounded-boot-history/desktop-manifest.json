@@ -1,0 +1,58 @@
+{
+  "usr/local/lib/gts9-test383/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "source": "out/ssc-rpc-stat/build-output/stage/usr/bin/hexagonrpcd",
+    "sha256": "e1e9faa47f77e738f34280ff9eeb2165939358b25042bafe5981517b867f86fb",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "var/lib/gts9-test383/text-scope": {
+    "incoming": "overlay-01",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/text-scope",
+    "sha256": "2a999552daa0514b91d5e11b4e8a315d5e8e3f5bc90f7bc1c7e71494b56f9892",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test383.conf": {
+    "incoming": "overlay-02",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/text-condition.conf",
+    "sha256": "490ca48885f0e8ca9f14d4cbeb13f496bf8e4ce52bdc601947ca852d37244907",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test383.conf": {
+    "incoming": "overlay-03",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/hexagonrpcd-adsp-rootpd-trace.conf",
+    "sha256": "38ae237bb96289c4b167945abddbdb5d2900124f6cfa1623ef02f5a96c923cf6",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test383.conf": {
+    "incoming": "overlay-04",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "sha256": "14d110f8097f436b7f9efbfda56ceb0dc84027ef4a3cd421ba05f2b3bc8fda9b",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "usr/local/lib/gts9-test383/glink_trace.py": {
+    "incoming": "overlay-05",
+    "source": "userspace/sensors/glink_trace_382.py",
+    "sha256": "21a3ca57f89ca760439d30cb8896bf1aac40059247e2cd17e6064b9534f74303",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "etc/systemd/system/gts9-glink-test383.service": {
+    "incoming": "overlay-06",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/glink-watch.service",
+    "sha256": "ff8e2aeedc3bb195e626ac3ade676e5f3166ce4735901c34c93d63dc268d67bd",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test383.conf": {
+    "incoming": "overlay-07",
+    "source": "reference/boot-tests/test-383-ssc-bounded-boot-history/multi-user-trace.conf",
+    "sha256": "64dd63413e35e3391c132fd909438af4ac7a11853de5e70285eb9aefe371fa8e",
+    "original_sha256": null,
+    "mode": 420
+  }
+}
