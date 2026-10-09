@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST379_ADMISSION_REVISION2_REGISTERED_BEFORE_FIRST_ATTEMPT.
+Owner resumes passive sensor test after distinguishing float setpoint from
+observed VBAT. Preserve original e9bf3976/hashes and rejected reads via
+ADMISSION_AMENDMENT.json; no prior379 hardware attempt. Both host/RPC gates now
+use registered3.4..4.45V inclusive host observation bounds, not vendor OVP or a
+claimed gauge accuracy/safety rating.4.44V float/current/thermal/kernel/USB remain
+unchanged; health/presence/design/SOC20..100/temp10..<42 and OFF/rescue gates stay.
+117 affected host checks PASS/no skips; exact ARM64/kernel qualification reused.
+Fresh full preflight remains required; one bounded attempt/restoration only.
+This supersedes the older <4.44V admission status below, not historical results.
+Sensors/rotation/fullport unfinished. No hardware mutation before push.
+
 2026-10-09 CORE_IMU_CACHE_MATCH_OFFLINE_TEST379_VOLTAGE_GATE_PENDING.
 Four stock core IMU cache leaves (bus/config/orientation/accel/gyro) exactly match
 X710 source config. Do not infer active I3C from i3c_address: earlier commentary

@@ -98,7 +98,12 @@ bus_type3 remains an unverified X710 encoding despite the Ultra's SPI descriptio
 No AP bus probe, registry rewrite or bus ownership change is justified by these
 fields. Preserve factory calibration and vendor config extensions. Evidence and
 42 affected host checks: `reference/desktop-bringup/ssc-core-registry/RESULTS.md`.
-Test379's live RPC metadata question remains unexecuted behind its voltage gate.
+Test379's live RPC metadata question remains unexecuted. Admission revision2
+separates the unchanged4.44V float setpoint from the3.4..4.45V inclusive host
+observation bounds for passive SSC. This is a test stop policy, not a vendor OVP
+threshold or calibrated measurement tolerance. Original gate/reads remain in
+e9bf3976 and ADMISSION_AMENDMENT.json;117 affected checks pass. Fresh preflight
+and one bounded early-ADSP attempt are required before any acceptance claim.
 
 ## Desktop observation
 

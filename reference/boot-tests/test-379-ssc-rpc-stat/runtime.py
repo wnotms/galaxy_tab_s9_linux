@@ -39,8 +39,9 @@ def validate(d, plan):
         d['cmdline'] != plan['runtime_cmdline'] or not d['dcc_absent'] or d['direct_default'] not in ('N','0')):
         raise ValueError('live SSC identity/ordinary charging gate')
     b=d['battery']
-    if (b['POWER_SUPPLY_HEALTH'] != 'Good' or not 20 <= int(b['POWER_SUPPLY_CAPACITY']) <= 100 or
-        not 100 <= int(b['POWER_SUPPLY_TEMP']) < 420 or not 3400000 <= int(b['POWER_SUPPLY_VOLTAGE_NOW']) < 4440000):
+    if (b['POWER_SUPPLY_HEALTH'] != 'Good' or b['POWER_SUPPLY_PRESENT'] != '1' or
+        b['POWER_SUPPLY_VOLTAGE_MAX_DESIGN'] != '4440000' or not 20 <= int(b['POWER_SUPPLY_CAPACITY']) <= 100 or
+        not 100 <= int(b['POWER_SUPPLY_TEMP']) < 420 or not plan['voltage_observation_min_uv'] <= int(b['POWER_SUPPLY_VOLTAGE_NOW']) <= plan['voltage_observation_max_uv']):
         raise ValueError('SSC battery safety gate')
     if (d['failed_units'] or d['services']['gdm']=='active' or len(d['adsp'])!=1 or
         d['adsp'][0]['state']!='running' or d['adsp'][0]['firmware']!='qcom/sm8550/adsp.mdt' or

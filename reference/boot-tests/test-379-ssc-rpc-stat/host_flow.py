@@ -75,7 +75,7 @@ def identity(d, phase, expected=None, *, allow_desktop=False):
         b['POWER_SUPPLY_VOLTAGE_MAX_DESIGN'] != '4440000' or
         not PLAN['flash_soc_min'] <= int(b['POWER_SUPPLY_CAPACITY']) <= PLAN['flash_soc_max'] or
         not PLAN['pack_temp_min_decic'] <= int(b['POWER_SUPPLY_TEMP']) < PLAN['pack_temp_max_decic'] or
-        not 3400000 <= int(b['POWER_SUPPLY_VOLTAGE_NOW']) < 4440000):
+        not PLAN['voltage_observation_min_uv'] <= int(b['POWER_SUPPLY_VOLTAGE_NOW']) <= PLAN['voltage_observation_max_uv']):
         raise ValueError('battery safety gate')
     if (any(d['services'][n] != 'active' for n in ('ssh', 'gts9-adbd', 'gts9-usb-acm')) or
         (phase == 'candidate' and not allow_desktop and any(d['services'][n] == 'active' for n in ('gdm',))) or

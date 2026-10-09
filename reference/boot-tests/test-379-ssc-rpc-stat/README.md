@@ -17,9 +17,15 @@ in registration/PACKAGE/INPUTS. It preserves the96-byte successful stat ABI.
 
 Admission requires same accepted boot/machine/kernel/config/notes, complete
 partitions/modules, ADB/device NCM/authenticated wireless SSH, no Code43/new
-kernel/failed-unit issue, good battery20–100%,10–<42°C,3.4–<4.44V, PPS/pump/DCC
-OFF. A high SOC does not waive the voltage gate. Current pre-registration read
-reported100% and4.444V: no deployment is allowed until a fresh normal read passes.
+kernel/failed-unit issue, good battery20–100%,10–<42°C,3.4–4.45V inclusive, PPS/pump/DCC
+OFF. Admission revision2 separates the unchanged4.44V charger setpoint from
+the4.45V host observation stop limit. This limit is a conservative test policy,
+not a vendor OVP threshold, calibrated measurement tolerance, or permission to
+increase charging voltage/current. Unknown/absent battery, bad health, failed
+telemetry, voltage above4.45V or temperature outside bounds still stop.
+The original pre-registration100%/4.444V rejection remains historical evidence.
+See ADMISSION_AMENDMENT.json for original hashes/commit; no hardware attempt
+had started before this amendment. Fresh preflight is still required.
 If a user reboot changes the admitted boot, stop/rebind with fresh evidence rather
 than treating it as the planned transition or blindly restarting.
 

@@ -1,0 +1,17 @@
+{
+  "original_commit": "e9bf3976",
+  "original_sha256": {
+    "registration.json": "ca08b213fbfe52b5b50576e97b3bbbdfe2a3933c512fab27d0dd953aecd6eb24",
+    "INPUTS.json": "30e97922aac0bc641e32e06550db7133aff04fe13fd6d6c80fedfa1493506952",
+    "REGISTRATION_SHA256.json": "8e40ac4048bde1c68f68c384b7f00624be3f0a1d871e2e46787660341cdc085e",
+    "host_flow.py": "ebfe5be937124ab0dcc48177e554d4dfc7e4b0ac2d53166e4a786a5b26ea650f",
+    "runtime.py": "45893364170031d9b576ba22ca88ac56ca007bd15beaff3553dddbcd1299e301",
+    "README.md": "343759b4dc3507325fc0cca5ec11aab95c1179f76ca3791c00d34f27c31337d6"
+  },
+  "hardware_attempts_before_amendment": 0,
+  "owner_instruction": "\u7ee7\u7eed\u6d4b\u8bd5 after explanation of the inherited float-voltage gate",
+  "scope": "passive SSC only; no PPS/pump/charging changes",
+  "old_voltage_gate": "3400000 <= uV < 4440000",
+  "new_voltage_gate": "3400000 <= uV <= 4450000",
+  "classification": "host observation limit, not vendor OVP or measurement accuracy"
+}

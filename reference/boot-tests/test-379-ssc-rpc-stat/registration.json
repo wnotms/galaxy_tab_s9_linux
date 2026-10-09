@@ -77,5 +77,10 @@
   "rpc_launch_order": [
     "hexagonrpcd-adsp-rootpd.service",
     "hexagonrpcd-adsp-sensorspd.service"
-  ]
+  ],
+  "voltage_observation_min_uv": 3400000,
+  "voltage_observation_max_uv": 4450000,
+  "voltage_limit_category": "BRINGUP_OBSERVATION_LIMIT_NOT_CHARGER_SETPOINT",
+  "admission_revision": 2,
+  "admission_amendment": "ADMISSION_AMENDMENT.json"
 }
