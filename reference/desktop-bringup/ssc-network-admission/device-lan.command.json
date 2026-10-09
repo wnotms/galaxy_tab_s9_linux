@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "ip -4 route; ip neigh show dev wlp1s0; ss -lntp; nmcli -t -f GENERAL.CONNECTION device show wlp1s0; iw dev wlp1s0 link; ping -c 1 -W 2 10.49.219.63; ip neigh show dev wlp1s0"
+  ],
+  "ended_utc": "2026-10-09T10:16:49.504581+00:00",
+  "started_utc": "2026-10-09T10:16:47.317621+00:00",
+  "status": 0
+}

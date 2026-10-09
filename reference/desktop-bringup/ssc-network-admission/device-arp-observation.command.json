@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "python3 -c 'import socket,time,json\nfrom pathlib import Path\ns=socket.socket(socket.AF_PACKET,socket.SOCK_RAW,socket.htons(0x0806));s.bind(('\"'\"'wlp1s0'\"'\"',0));s.settimeout(.5)\nstart=time.monotonic();rows=[]\nwhile time.monotonic()-start<7:\n try:data,origin=s.recvfrom(128)\n except socket.timeout:continue\n if len(data)>=42:rows.append(dict(kind=origin[2],ethernet_dst=data[:6].hex('\"'\"':'\"'\"'),ethernet_src=data[6:12].hex('\"'\"':'\"'\"'),opcode=int.from_bytes(data[20:22],'\"'\"'big'\"'\"'),sender_ip=socket.inet_ntoa(data[28:32]),target_ip=socket.inet_ntoa(data[38:42])))\ns.close();print(json.dumps(dict(boot_id=Path('\"'\"'/proc/sys/kernel/random/boot_id'\"'\"').read_text().strip(),mac=Path('\"'\"'/sys/class/net/wlp1s0/address'\"'\"').read_text().strip(),arp=rows)))\n'"
+  ],
+  "ended_utc": "2026-10-09T10:18:57.308298+00:00",
+  "started_utc": "2026-10-09T10:18:49.984575+00:00",
+  "status": 0
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)\n$c=[Net.Sockets.TcpClient]::new();$ok=$false\ntry{$t=$c.ConnectAsync('10.49.219.156',22);if($t.Wait(5000)){$ok=$c.Connected}}catch{}finally{$c.Dispose()}\nConvertTo-Json -Compress -InputObject @{tcp22=$ok;neighbors=@(Get-NetNeighbor -AddressFamily IPv4 | Where-Object IPAddress -eq '10.49.219.156' | Select-Object IPAddress,LinkLayerAddress,State)}\n"
+  ],
+  "ended_utc": "2026-10-09T10:18:51.204707+00:00",
+  "started_utc": "2026-10-09T10:18:49.983513+00:00",
+  "status": 0
+}

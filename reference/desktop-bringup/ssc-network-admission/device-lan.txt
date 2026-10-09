@@ -1,0 +1,32 @@
+default via 10.49.219.11 dev wlp1s0 proto dhcp src 10.49.219.156 metric 600 
+10.49.219.0/24 dev wlp1s0 proto kernel scope link src 10.49.219.156 metric 600 
+169.254.0.0/16 dev usb0 proto kernel scope link src 169.254.42.1 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
+10.49.219.11 lladdr e6:fe:3e:c9:6c:65 STALE 
+10.49.219.63 lladdr f8:cf:52:cd:be:9b STALE 
+fe80::e4fe:3eff:fec9:6c65 lladdr e6:fe:3e:c9:6c:65 router STALE 
+State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                   
+LISTEN 0      4096       127.0.0.1:40701      0.0.0.0:*    users:(("containerd",pid=1105,fd=9))     
+LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1126,fd=6))           
+LISTEN 0      4                  *:5555             *:*    users:(("gts9-adbd-recon",pid=922,fd=10))
+LISTEN 0      128             [::]:22            [::]:*    users:(("sshd",pid=1126,fd=7))           
+GENERAL.CONNECTION:OnePlus 13s
+Connected to e6:fe:3e:c9:6c:65 (on wlp1s0)
+	SSID: OnePlus 13s
+	freq: 2437.0
+	RX: 1530059 bytes (7588 packets)
+	TX: 11925245 bytes (8469 packets)
+	signal: -44 dBm
+	rx bitrate: 1.0 MBit/s
+	tx bitrate: 1.0 MBit/s
+	bss flags: short-preamble short-slot-time
+	dtim period: 2
+	beacon int: 100
+PING 10.49.219.63 (10.49.219.63) 56(84) bytes of data.
+
+--- 10.49.219.63 ping statistics ---
+1 packets transmitted, 0 received, 100% packet loss, time 0ms
+
+10.49.219.11 lladdr e6:fe:3e:c9:6c:65 STALE 
+10.49.219.63 lladdr f8:cf:52:cd:be:9b DELAY 
+fe80::e4fe:3eff:fec9:6c65 lladdr e6:fe:3e:c9:6c:65 router STALE 

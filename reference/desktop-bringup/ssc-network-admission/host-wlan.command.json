@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-Command",
+    "[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false); netsh wlan show interfaces; Get-NetNeighbor -AddressFamily IPv4 | Where-Object IPAddress -eq 10.49.219.156 | Select-Object IPAddress,LinkLayerAddress,State | ConvertTo-Json -Compress"
+  ],
+  "ended_utc": "2026-10-09T10:16:50.628618+00:00",
+  "started_utc": "2026-10-09T10:16:49.504777+00:00",
+  "status": 0
+}
