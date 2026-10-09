@@ -1,0 +1,101 @@
+{
+  "verdict": "BOUNDED_PC_USB_LIFECYCLE_PASS_TEMPORARY_SCOPE_RESTORED",
+  "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+  "rounds": 1,
+  "edges": [
+    {
+      "edge": "attached",
+      "verdict": "EDGE_PASSED",
+      "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+      "observed_seconds": 32.27,
+      "evidence": "reference/boot-tests/test-371-usb-lifecycle-gmu/attached-1791534080835013776",
+      "ADB": "actual shell matched",
+      "device_NCM": "usb0 169.254.42.1"
+    },
+    {
+      "edge": "detached-again",
+      "verdict": "EDGE_PASSED",
+      "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+      "observed_seconds": 17.5,
+      "evidence": "reference/boot-tests/test-371-usb-lifecycle-gmu/detached-again-1791534314521070567",
+      "ADB": "unplugged expected",
+      "device_NCM": "unplugged expected"
+    },
+    {
+      "edge": "reattached",
+      "verdict": "EDGE_PASSED",
+      "boot_id": "d1977159-8330-4c90-b5be-e7cf8c67ea0f",
+      "observed_seconds": 32.51,
+      "evidence": "reference/boot-tests/test-371-usb-lifecycle-gmu/reattached-1791534367770913455",
+      "ADB": "actual shell matched",
+      "device_NCM": "usb0 169.254.42.1"
+    }
+  ],
+  "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "DCC": "absent via exact embedded config/profile guard",
+  "PPS": false,
+  "pump": false,
+  "first_failure": null,
+  "unclassified_new_kernel_faults": 0,
+  "source_explained_ep0_teardowns": 2,
+  "ep0_evidence": [
+    {
+      "cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=10329d;b=d197715983304c90b5bee7cf8c67ea0f;m=628a8a79;t=65d6405b1b712;x=b3c6ece82c0fdba5",
+      "message": "dwc3-qcom a600000.usb: request 00000000b3da69c2 was not queued to ep0out",
+      "source_monotonic": 1653.306339,
+      "unbind_monotonic": 1653.244927101,
+      "classification": "source-explained empty ep0 teardown; pending transport gate"
+    },
+    {
+      "cursor": "s=0e9cc8651fa34ae5875adb1b7f906071;i=103478;b=d197715983304c90b5bee7cf8c67ea0f;m=7298ab92;t=65d6415bfd82b;x=47b4c0a1e2c0fc55",
+      "message": "dwc3-qcom a600000.usb: request 00000000050a7f14 was not queued to ep0out",
+      "source_monotonic": 1922.681161,
+      "unbind_monotonic": 1922.607989559,
+      "classification": "source-explained empty ep0 teardown; pending transport gate"
+    }
+  ],
+  "permanent_enablement": false,
+  "cleanup": "rolled_back",
+  "original_UDC": "a600000.usb",
+  "final_failed_units": "",
+  "final_services": [
+    "active",
+    "active",
+    "active",
+    "active"
+  ],
+  "final_battery": {
+    "DEVTYPE": "power_supply",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_NAME": "charger",
+    "POWER_SUPPLY_CAPACITY": "74",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CURRENT_AVG": "971000",
+    "POWER_SUPPLY_CURRENT_NOW": "1160000",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_TEMP": "374",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4158000",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4158000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4112000"
+  },
+  "no_flash": true,
+  "no_reboot": true,
+  "build_executed": false,
+  "host_tests_reused": "77 qualified; 24 rerun after pre-start owner boot enrollment",
+  "limits": [
+    "one PC attachment/unplug/reattachment cycle",
+    "no reboot qualification",
+    "no charger-to-PC path qualification",
+    "not universal USB/Code43 root-cause proof"
+  ]
+}

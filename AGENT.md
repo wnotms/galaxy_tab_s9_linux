@@ -98,6 +98,18 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST371_BOUNDED_PC_CYCLE_PASS_TRANSIENT_CLEANED.
+Same d197/exact370 kernel/nativeinput/GNOME, realPC30s→unplug15s→realPC30s passed
+actualADB machine/boot +deviceNCM, noCode43/new HFI/CPU/unclassified fault/failed
+unit. Exact unbind/bind/unbind/bind, two owned emptyep0 diagnostics retained and
+source-classified within250ms with final realtransport pass. Transient stopped,
+three owned files removed/ledgerrolled_back/originalUDCbound, desktop/rescue
+preserved, no kernelrollback/flash/reboot/build/charging/SSC. StaticIP deferred.
+One boundedPCcycle only; not charger-PC/reboot/globalUSBrootcause proof. Next
+separate persistent helper deployment then actualSSC/sensors; goal unfinished.
+Results summary/hashes reference/boot-tests/test-371-usb-lifecycle-gmu/.
+
+
 2026-10-09 TEST371_PHYSICAL_UNPLUG_PASS_FINAL_REATTACH_PENDING.
 Same d197,15s unplug observation passed one additional owned unbind, normal
 negative-current discharge, GNOME/SSH/adbd healthy/no new unclassified fault.
