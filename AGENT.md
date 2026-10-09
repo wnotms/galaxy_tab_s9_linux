@@ -5,7 +5,7 @@
 - 删除已解决问题及已被后续版本替代的历史备份镜像，不继续积累其重复副本。
 - 后续历史测试镜像仅允许保留最近 **10 轮**。“前 10 轮”指最近的测试
   编号窗口，包含当前轮，不是最早 10 轮，也不是 10 个镜像文件。当前最新
-  编号为 Test380（独立 SSC RPC 元数据验证登记），窗口为 **Test371–Test380**；没有生成镜像的轮次仍占一轮。
+  编号为 Test381（独立 SSC GLINK 初始化采集登记），窗口为 **Test372–Test381**；没有生成镜像的轮次仍占一轮。
 - 每轮完成后清理窗口之外的历史镜像；同一规则覆盖仓库中的 `out/`、
   `.work/backups/`、迁移归档及其他镜像副本。不得把过期镜像移入另一个目录
   或压缩归档来规避上限。未来外部测试暂存也遵守该规则。
@@ -97,6 +97,19 @@
   `reference/host-storage-cleanup/2026-10-03-porting-leftovers/`。
 
 ## Current state (2026-10-03)
+
+2026-10-10 TEST381_GLINK_INIT_DIAGNOSTIC_REGISTERED_BEFORE_DEPLOYMENT.
+One independent earlyboot trace question after380 metadata/read-length PASS but
+SSC absent. Reuse370 Image/config/DTB/181/charging/USB; only earlyvendor two trace
+arguments +381-owned asset/text/RPC/watcher overlay. Six existing GLINK control
+events,128KiB/CPU, actualclock/rawlossstats, stop by300s bootuptime;1MiBraw/2MiBJSON.
+No DIAG packet/bind/payload, lateADSP, registryreset, kernelbuild or profile retry.
+Nativeinventory/root+sensors once/60sSSC; service400 and sample independent.
+Fresh178facf3 journal unchanged severeerror delta from380rollback, no futurewaiver.
+One fresh fullpreflight then attributedcandidate; restore370GNOME either result.
+174affectedhost PASS/no skips; syntax+offline vendor verify PASS, no fullrerun/CI.
+DCC/PPS/pump remainOFF; sensors/rotation/fullport unfinished; no deployment yet.
+See test-381-ssc-glink-initialization/README.md.
 
 2026-10-09 TEST380_REGISTRY_READ_LENGTHS_MATCH_OFFLINE_NEW_DIAGNOSTIC_BOUNDARY.
 Hash-bound replay of actual16971083/PID1985 trace:178/178nonemptycachegroups,

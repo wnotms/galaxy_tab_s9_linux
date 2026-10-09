@@ -1,0 +1,58 @@
+{
+  "usr/local/lib/gts9-test381/hexagonrpcd": {
+    "incoming": "overlay-00",
+    "source": "out/ssc-rpc-stat/build-output/stage/usr/bin/hexagonrpcd",
+    "sha256": "e1e9faa47f77e738f34280ff9eeb2165939358b25042bafe5981517b867f86fb",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "var/lib/gts9-test381/text-scope": {
+    "incoming": "overlay-01",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/text-scope",
+    "sha256": "fe8eb00c29b635053cd423714da7795c5e1f6f9cdcd16811cd7a9d54d58322f9",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/gdm.service.d/91-gts9-test381.conf": {
+    "incoming": "overlay-02",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/text-condition.conf",
+    "sha256": "21a57d29e660ccc3b1fbf82096da06c6a78e0b51dac128c4308ee1b39093ef57",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-rootpd.service.d/91-gts9-test381.conf": {
+    "incoming": "overlay-03",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/hexagonrpcd-adsp-rootpd-trace.conf",
+    "sha256": "ac3d12c33ef6b2b257d4354bbdd3447fdd587046e85791fff426a80c7fedee81",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/hexagonrpcd-adsp-sensorspd.service.d/91-gts9-test381.conf": {
+    "incoming": "overlay-04",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/hexagonrpcd-adsp-sensorspd-trace.conf",
+    "sha256": "6d3f5365598f35daf9018da85d12504a585e26c9df286d84af9e86478143d050",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "usr/local/lib/gts9-test381/glink_trace.py": {
+    "incoming": "overlay-05",
+    "source": "userspace/sensors/glink_trace.py",
+    "sha256": "0e0ff1fb69843f52ec5240b04d53846d5fc120375db00157b9515872758e5f75",
+    "original_sha256": null,
+    "mode": 493
+  },
+  "etc/systemd/system/gts9-glink-test381.service": {
+    "incoming": "overlay-06",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/glink-watch.service",
+    "sha256": "e4a1178b17c22d2e7fa5eddb30a87395a0b94d69b38aeaad04c00bad4b7b5d8d",
+    "original_sha256": null,
+    "mode": 420
+  },
+  "etc/systemd/system/multi-user.target.d/91-gts9-test381.conf": {
+    "incoming": "overlay-07",
+    "source": "reference/boot-tests/test-381-ssc-glink-initialization/multi-user-trace.conf",
+    "sha256": "a657f7bdc53578bb3a7433af91c63fe4a63e54193eb285997e0d521959f8562d",
+    "original_sha256": null,
+    "mode": 420
+  }
+}

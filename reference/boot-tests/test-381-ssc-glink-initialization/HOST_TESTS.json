@@ -1,0 +1,39 @@
+{
+  "executed": true,
+  "patterns": [
+    "test_glink_trace.py",
+    "test_ssc_glink_scope.py",
+    "test_ssc_rpc_enrolled_scope.py",
+    "test_ssc_rpc_stat_scope.py",
+    "test_rpc_stat_evidence.py",
+    "test_servreg_domain_snapshot.py",
+    "test_ssc_lifecycle.py",
+    "test_ssc_trace_scope.py",
+    "test_ssc_recovery_modules.py"
+  ],
+  "tests": 174,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "success": true,
+  "syntax_checked": [
+    "reference/boot-tests/test-381-ssc-glink-initialization/assets.py",
+    "reference/boot-tests/test-381-ssc-glink-initialization/runtime.py",
+    "reference/boot-tests/test-381-ssc-glink-initialization/desktop.py",
+    "reference/boot-tests/test-381-ssc-glink-initialization/capture.py",
+    "reference/boot-tests/test-381-ssc-glink-initialization/host_flow.py",
+    "userspace/sensors/glink_trace.py",
+    "tests/test_glink_trace.py",
+    "tests/test_ssc_glink_scope.py",
+    "reference/boot-tests/test-381-ssc-glink-initialization/mount-debian.sh"
+  ],
+  "full_regression": {
+    "executed": false,
+    "reason": "Only independent trace observer/owned runner changes; no routing/kernel/build integration changes"
+  },
+  "kernel_build": {
+    "executed": false,
+    "reason": "Exact accepted kernel/config/DTB/181 modules reused"
+  },
+  "github_actions_started": false
+}
