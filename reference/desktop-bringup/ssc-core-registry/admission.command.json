@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; cat /sys/class/power_supply/sm5714-battery/uevent; systemctl is-active gdm ssh gts9-adbd"
+  ],
+  "status": 0,
+  "elapsed_seconds": 0.10016921399983403,
+  "read_only": true
+}

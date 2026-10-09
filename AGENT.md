@@ -98,6 +98,17 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 CORE_IMU_CACHE_MATCH_OFFLINE_TEST379_VOLTAGE_GATE_PENDING.
+Four stock core IMU cache leaves (bus/config/orientation/accel/gyro) exactly match
+X710 source config. Do not infer active I3C from i3c_address: earlier commentary
+withdrawn; Ultra labels bus_type3 SPI but X710 encoding/electrical transport not
+proved. No guessed AP address/bus probe/pinctrl/registry reset/calibration rewrite.
+42 affectedhostchecks PASS/no skips; no build/device changes/Test379 input drift.
+Fresh samea1e7570f GDM/SSH/ADB active,100%27.1C VBAT4.445V still above<4.44V
+admission; requested unplug/discharge remains pending.379 registered/pushed and
+unexecuted; fresh valid preflight before deployment. Sensors/fullport unfinished.
+Evidence reference/desktop-bringup/ssc-core-registry/RESULTS.md.
+
 2026-10-09 TEST379_RPC_STAT_METADATA_REGISTERED_STAGED_NOT_DEPLOYED.
 Reuse accepted370/181/USB/GNOME and earlyADSP vendor; only new isolated RPC daemon
 e1e9faa4 plus own379 trace/text/assets. One native domain query/both RPC starts,

@@ -87,6 +87,19 @@ ARM64 diagnostic is compiled with an unchanged companion library,64 affected
 host tests pass, and nothing was deployed. Qualification and exact hashes:
 `reference/desktop-bringup/ssc-rpc-stat/RESULTS.md`.
 
+## Core IMU cache comparison
+
+The separate host checker `userspace/sensors/registry_core_audit.py` compares four
+X710 core IMU leaves against the copied registry: platform bus settings,
+orientation, accel and gyro config all match exactly. It reads the hash-bound
+archive without extracting or changing anything. This is not selector/electrical
+bus/SSC evidence. In particular, i3c_address alone does not identify active I3C;
+bus_type3 remains an unverified X710 encoding despite the Ultra's SPI description.
+No AP bus probe, registry rewrite or bus ownership change is justified by these
+fields. Preserve factory calibration and vendor config extensions. Evidence and
+42 affected host checks: `reference/desktop-bringup/ssc-core-registry/RESULTS.md`.
+Test379's live RPC metadata question remains unexecuted behind its voltage gate.
+
 ## Desktop observation
 
 The read-only current snapshot records boot
