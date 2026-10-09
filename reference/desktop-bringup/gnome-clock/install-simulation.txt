@@ -1,0 +1,15 @@
+chrony unknown ok not-installed 
+libsystemd-shared install ok installed 257.13-1~deb13u1
+systemd install ok installed 257.13-1~deb13u1
+systemd-timesyncd unknown ok not-installed 
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages were automatically installed and are no longer required:
+  libsodium23 vim-runtime
+Use 'apt autoremove' to remove them.
+The following NEW packages will be installed:
+  systemd-timesyncd
+0 upgraded, 1 newly installed, 0 to remove and 6 not upgraded.
+Inst systemd-timesyncd (257.13-1~deb13u1 Debian:13.7/stable [arm64])
+Conf systemd-timesyncd (257.13-1~deb13u1 Debian:13.7/stable [arm64])
