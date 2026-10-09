@@ -99,7 +99,7 @@
 ## Current state (2026-10-03)
 
 2026-10-09 TEST379_STOP_PREFLIGHT_NEW_EP0_NO_DEPLOYMENT.
-Revision2 voltage admission passed samea1e7570f100%/4.447V; fresh wholejournal
+Revision2 voltage admission passed samea1e7570f100%/28.8°C/4.446V; fresh wholejournal
 has one new ep0out not-queued priority3 row at11463.272981s since old enrolled
 rollback. No candidate write/reboot/runtime/ADSP; physical attempt0, STOP retained.
 Identity/authWiFi/fivepartitions/181 passed before halt. Exact raw/cursor retained.

@@ -1,7 +1,7 @@
 # Test379 — stopped before deployment
 
 Admission revision2 was committed/pushed as6fef507e before the fresh read-only
-preflight. Battery100%,28.5°C,4.447V passed the amended observation gate; original
+preflight. Battery100%,28.8°C,4.446V passed the amended observation gate; original
 4.44V float setpoint unchanged. Identity, authenticated Wi-Fi, allfive accepted
 partition hashes and181 module files passed. Same boota1e7570f as enrollment.
 
