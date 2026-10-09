@@ -1,0 +1,90 @@
+{
+  "boot_id": "5b6c083c-65ba-4f89-bd5e-f42410087ea5",
+  "machine_id": "3c2a1b8f2d624db4b5ffdc836050fcf6",
+  "uname": "Linux gts9 7.2.0-rc3-gts9wifi-dirty #1 SMP PREEMPT Sun Jul 12 21:16:39 UTC 2026 aarch64 GNU/Linux",
+  "cmdline": "console=tty0 msm.separate_gpu_kms=1 consoleblank=0 gts9_display_recover=1 gts9_rootfs=/dev/mmcblk1p1 gts9_sec_log=0x880200000,0x200000 loglevel=4 nokaslr panic=0 clk_ignore_unused pd_ignore_unused regulator_ignore_unused firmware_class.path=/lib/firmware systemd.ssh_auto=no fbcon=font:TER16x32  msm_drm.dsi_display0=GTS9_ANA38407_AMSA10FA01: msm_drm.lcd_id=800004 sec_common_fn.lcd_id=800004 console=null nokaslr watchdog.stop_on_reboot=0 softdog.soft_panic=1 sec_vibrator_inputff_module.vib_le_est=0 common_muic.muic_param_pdic_info=1 common_muic.muic_param_pmic_info=3 pdic_notifier_module.pdic_param_lpcharge=0 nfc_sec.nfc_param_lpcharge=0 flicker_sensor.flicker_param_lpcharge=0 common_muic.muic_param_afc_mode=0x00 sec-battery.charging_mode=0x00 sec-battery.pd_disable=0x00 abc.qet_loaded=0 mesh_qc.kq_mesh_drv_loading=0x0 sb-mfc.wireless_ic=0x0 p9320_charger.wireless_ic=0x0 s2miw04_charger.wireless_ic=0x0 cps4038_charger.wireless_ic=0x0 nu1668_charger.wireless_ic=0x0 msm_rtb.enable=0 nowatchdog sec-battery.sales_code=CHN sec_sysup.edtbo_ver=-1 sapa=0 sec_pon_alarm.rtcalarm=0 sec_pon_alarm.lpcharge=0 hdm.status=NONE frpc-adsprpc.signoff=0x7277",
+  "uptime": 19.03,
+  "config_sha256": "599ca47ab41a29469c3d5830e475049fca9f33bd2ab0923ad014e5ba3fa6ec6c",
+  "notes_sha256": "5c0e82337affafefff586613d4a84c4f1388c9716ce251fe69d3c70aad18a518",
+  "dcc_absent": true,
+  "battery": {
+    "DEVTYPE": "power_supply",
+    "OF_NAME": "charger",
+    "OF_FULLNAME": "/soc@0/geniqup@9c0000/i2c@9a0000/charger@49",
+    "OF_COMPATIBLE_0": "siliconmitus,sm5714",
+    "OF_COMPATIBLE_N": "1",
+    "POWER_SUPPLY_NAME": "sm5714-battery",
+    "POWER_SUPPLY_TYPE": "Battery",
+    "POWER_SUPPLY_STATUS": "Charging",
+    "POWER_SUPPLY_HEALTH": "Good",
+    "POWER_SUPPLY_PRESENT": "1",
+    "POWER_SUPPLY_TECHNOLOGY": "Li-ion",
+    "POWER_SUPPLY_VOLTAGE_MAX_DESIGN": "4440000",
+    "POWER_SUPPLY_VOLTAGE_MIN_DESIGN": "3400000",
+    "POWER_SUPPLY_VOLTAGE_NOW": "4396000",
+    "POWER_SUPPLY_VOLTAGE_AVG": "4403000",
+    "POWER_SUPPLY_VOLTAGE_OCV": "4347000",
+    "POWER_SUPPLY_CURRENT_NOW": "863000",
+    "POWER_SUPPLY_CURRENT_AVG": "960000",
+    "POWER_SUPPLY_CHARGE_FULL_DESIGN": "8160000",
+    "POWER_SUPPLY_CAPACITY": "95",
+    "POWER_SUPPLY_TEMP": "286"
+  },
+  "network": "1: lo    inet 127.0.0.1/8 scope host lo\\       valid_lft forever preferred_lft forever\n14: usb0    inet 169.254.42.1/16 scope global usb0\\       valid_lft forever preferred_lft forever\n15: wlp1s0    inet 10.49.219.72/24 brd 10.49.219.255 scope global dynamic noprefixroute wlp1s0\\       valid_lft 3597sec preferred_lft 3597sec\n16: docker0    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\\       valid_lft forever preferred_lft forever",
+  "services": {
+    "ssh": "active",
+    "gts9-adbd": "active",
+    "gts9-usb-acm": "active",
+    "gdm": "inactive",
+    "gts9-pen": "inactive",
+    "gts9-palm": "active"
+  },
+  "roles": {
+    "power_role": "[sink]",
+    "data_role": "[device]"
+  },
+  "failed_units": "",
+  "host_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINcDq5XdwKgjymVdJr/xPAwNQuYTr7rmdt9mxLzT9/PL root@DESKTOP-EAS21AS",
+  "direct_default": "N",
+  "adsp": [
+    {
+      "path": "/sys/class/remoteproc/remoteproc0",
+      "name": "adsp",
+      "state": "running",
+      "firmware": "qcom/sm8550/adsp.mdt"
+    }
+  ],
+  "native_socinfo": {
+    "boot_id": "5b6c083c-65ba-4f89-bd5e-f42410087ea5",
+    "family": "Snapdragon",
+    "machine": "SM8550",
+    "soc_id": "519",
+    "info_fmt": "0x00000010",
+    "hardware_platform": "8",
+    "hardware_platform_subtype": "0",
+    "platform_version": "65536"
+  },
+  "fastrpc": [
+    "/dev/fastrpc-adsp"
+  ],
+  "gpu_power": {
+    "3d00000.gpu": {
+      "runtime_status": "unsupported",
+      "control": "auto",
+      "runtime_active_time": "0",
+      "runtime_suspended_time": "0"
+    },
+    "3d6a000.gmu": {
+      "runtime_status": "suspended",
+      "control": "auto",
+      "runtime_active_time": "0",
+      "runtime_suspended_time": "18795"
+    }
+  },
+  "usb_lifecycle": {
+    "active": "active",
+    "enabled": "enabled",
+    "profile_sha256": "8507ce5a61ca59c826fc9f56e8c316e8497e545020b901b5ae01faec78b1f33e",
+    "helper_sha256": "06789c3c328d9c09d66743981584b54a47973972f597e2b53ee460e3d7734dfa"
+  }
+}

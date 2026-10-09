@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "set -e; test ! -e /mnt/debian/tmp/gts9-test378; mkdir /mnt/debian/tmp/gts9-test378; cp /tmp/gts9-test378/assets.py /tmp/gts9-test378/asset-manifest.json /tmp/gts9-test378/sensor-assets.tar.gz /mnt/debian/tmp/gts9-test378/"
+  ],
+  "ended_utc": "2026-10-09T11:27:37.104751+00:00",
+  "started_utc": "2026-10-09T11:27:37.001280+00:00",
+  "status": 0
+}

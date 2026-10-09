@@ -1,0 +1,80 @@
+{
+  "test": "Test378",
+  "verdict": "SSC_NOT_PUBLISHED_DESPITE_NATIVE_DOMAIN_RESPONSE",
+  "candidate_boot_id": "5b6c083c65ba4f89bd5ef42410087ea5",
+  "candidate_startup_seconds": 37.35621052499937,
+  "ssc_window_seconds": 60,
+  "accelerometer_probes": 23,
+  "all_probes_ssc_not_found": true,
+  "native_domain_response_verified": true,
+  "native_domain_query_seconds": 0.0010011460000072248,
+  "native_servreg_endpoint": [
+    1,
+    16385
+  ],
+  "native_mapper_domains": [
+    {
+      "instance": 74,
+      "name": "msm/adsp/audio_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/charger_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 74,
+      "name": "msm/adsp/sensor_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 76,
+      "name": "msm/cdsp/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    },
+    {
+      "instance": 180,
+      "name": "msm/modem/root_pd",
+      "service_data": 0,
+      "service_data_valid": false
+    }
+  ],
+  "rpc_requested": [
+    "hexagonrpcd-adsp-rootpd.service",
+    "hexagonrpcd-adsp-sensorspd.service"
+  ],
+  "rpc_active_at_start": [
+    "hexagonrpcd-adsp-rootpd.service",
+    "hexagonrpcd-adsp-sensorspd.service"
+  ],
+  "ssc_qmi_service_id": 400,
+  "accelerometer_sample": false,
+  "iio_proxy_started": false,
+  "PPS": false,
+  "pump_ON": false,
+  "dcc_absent": true,
+  "kernel_fault_counts": {},
+  "unclassified_suspects": 0,
+  "rollback_verified": true,
+  "restored_boot_id": "a1e7570f4f1b4068b7688e0edb0c457d",
+  "gdm_active_after_rollback": true,
+  "adb_active_after_rollback": true,
+  "ssh_active_after_rollback": true,
+  "host_tests": {
+    "executed": false,
+    "reason": "results-only recording; reuse105 affected checks in VALIDATION.json"
+  },
+  "kernel_build_executed": false,
+  "github_actions_started": false
+}

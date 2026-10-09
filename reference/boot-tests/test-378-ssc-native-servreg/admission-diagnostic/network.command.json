@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; ip -br link; rfkill list; systemctl status NetworkManager --no-pager; journalctl -b -u NetworkManager --no-pager -n 60"
+  ],
+  "returncode": 0,
+  "device_writes": false
+}

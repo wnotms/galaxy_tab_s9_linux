@@ -98,6 +98,21 @@
 
 ## Current state (2026-10-03)
 
+2026-10-09 TEST378_NATIVE_DOMAIN_RESPONSE_PASS_SSC_NOT_FOUND_ROLLED_BACK.
+One attributed candidate boot5b6c083c on exact370 passed earlyADSP/FastRPC,
+37.36s startup/ADB/deviceNCM/authenticatedWiFi. Exactly one native service64
+answered tms/servreg in~1ms with6 domains, including msm/adsp/sensor_pd74.
+RootPD then sensorsPD both actually started once/active;60s/23 accel probes
+still SSC QMI Service not found/no SSC400/sample/proxy. Gate removed/unitsoff;
+all5partitions/181 restored, currentboot a1e7570f accepted370 GNOME/SSH/ADB,
+permanentUSB active, ADSP offline/no failedunits/PPS+pump+DCC OFF. FinalGNOME
+process/DSIenabled/backlight0 observed; visualconfirmation separate. Complete
+failedboot kernel retrieved offline:0new fault signatures/unclassifiedsuspects.
+105 affectedhosttests PASS reused, resultrecording executed:false/no rebuild/CI.
+Sensors/fullport incomplete. Do not repeat mapper/RPC profile or rebuild registry;
+next inspect sensorsPD init/publication and exact RPC stat/result semantics.
+Evidence test-378-ssc-native-servreg/RESULTS.md; charging ceilings unchanged.
+
 2026-10-09 TEST377_SSC_NOT_FOUND_ROLLED_BACK_TEST378_NATIVE_SERVREG_REGISTERED.
 Authoritative current device: accepted Test370, boot9d6d50ca, config599ca47a,
 notes5c0e8233/181 paired modules, GNOME/SSH/ADB and persistent USB lifecycle;

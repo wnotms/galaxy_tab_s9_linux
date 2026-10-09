@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "gts9wifi-0001",
+    "shell",
+    "cat /proc/sys/kernel/random/boot_id; journalctl -b -k -o json --no-pager"
+  ],
+  "returncode": 0,
+  "device_writes": false
+}

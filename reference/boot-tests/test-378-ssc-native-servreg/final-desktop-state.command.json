@@ -1,0 +1,5 @@
+{
+  "command": "cat /proc/sys/kernel/random/boot_id; systemctl get-default; systemctl is-active gdm ssh gts9-adbd; pgrep -x gnome-shell; cat /sys/class/drm/card1-DSI-1/enabled; cat /sys/class/backlight/*/bl_power; cat /sys/class/remoteproc/remoteproc0/state; systemctl --failed --no-pager",
+  "returncode": 0,
+  "device_writes": false
+}

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/mnt/d/android/platform-tools/adb.exe",
+    "-s",
+    "R52X10045LT",
+    "shell",
+    "chroot /mnt/debian /usr/bin/journalctl --directory=/var/log/journal -u hexagonrpcd-adsp-rootpd -u hexagonrpcd-adsp-sensorspd _BOOT_ID=5b6c083c65ba4f89bd5ef42410087ea5 -o json --no-pager"
+  ],
+  "ended_utc": "2026-10-09T11:31:06.938899+00:00",
+  "started_utc": "2026-10-09T11:31:06.786030+00:00",
+  "status": 0
+}
